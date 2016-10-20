@@ -1,5 +1,5 @@
 Name: 	 alterator-console
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -38,6 +38,9 @@ and to return result. It also allow to upload file to an server.
 %_alterator_datadir/ui/*/*
 
 %changelog
+* Thu Oct 20 2016 Andrey Cherepanov <cas@altlinux.org> 0.1.3-alt1
+- Do not show this http module in alterator-browser-qt (ALT #32627)
+
 * Wed Mar 12 2014 Andrey Cherepanov <cas@altlinux.org> 0.1.2-alt1
 - Reset TERM environment variable to prevent run of interactive program
 - Remove attention message
