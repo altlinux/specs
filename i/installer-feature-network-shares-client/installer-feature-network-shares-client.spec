@@ -1,6 +1,6 @@
 Name: installer-feature-network-shares-client
 Version: 0.9
-Release: alt3
+Release: alt4
 
 %define hookdir %_datadir/install2/postinstall.d
 
@@ -21,7 +21,7 @@ Source: %name-%version.tar
 %package stage3
 Summary: %summary
 Group: System/Configuration/Other
-Requires: coreutils libshell sed
+Requires: coreutils libshell sed pam_mount
 
 %description stage3
 This package contains installer stage2 hooks for SMB and FTP services (client side).
@@ -38,6 +38,9 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Oct 20 2016 Andrey Cherepanov <cas@altlinux.org> 0.9-alt4
+- Require pam_mount for its own operation
+
 * Fri Oct 18 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.9-alt3
 - usage of unexistent umount.cifs removed 
 
