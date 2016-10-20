@@ -3,7 +3,7 @@
 
 Name: wine-vanilla
 Version: 1.9.21
-Release: alt1
+Release: alt2
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -118,13 +118,25 @@ Summary(ru_RU.UTF-8): Мета пакет Wine
 Group: Emulators
 BuildArch: noarch
 Requires: %name = %version-%release
+Requires: %name-programs = %version-%release
 Requires: lib%name-gl = %version-%release
 
 Requires: wine-mono >= %mono_version
 Requires: wine-gecko = %gecko_version
 
 %description full
-Wine meta package
+Wine meta package. Use it for install all wine subpackages.
+
+%package programs
+Summary: Wine programs
+Group: Emulators
+Requires: %name = %version-%release
+
+%description programs
+Wine GUI programs:
+ * winefile
+ * notepad
+ * winemine
 
 %package -n lib%name
 Summary: Main library for Wine
@@ -255,18 +267,15 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 %_bindir/regsvr32
 %_bindir/winecfg
+%_bindir/regedit
+%_bindir/msiexec
 
 %_bindir/winetricks
 %_bindir/wineconsole
 %_bindir/wineserver
 
-%_bindir/msiexec
-%_bindir/notepad
-%_bindir/regedit
 %_bindir/winedbg
 %_bindir/wineboot
-%_bindir/winefile
-%_bindir/winemine
 %_bindir/winepath
 %_libdir/wine/*.exe.so
 
@@ -279,14 +288,11 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %_man1dir/wine.*
 %endif
 %_man1dir/msiexec.*
-%_man1dir/notepad.*
 %_man1dir/regedit.*
 %_man1dir/regsvr32.*
 %_man1dir/wineboot.*
 %_man1dir/winecfg.*
 %_man1dir/wineconsole.*
-%_man1dir/winefile.*
-%_man1dir/winemine.*
 %_man1dir/winepath.*
 %_man1dir/wineserver.*
 %_man1dir/winedbg.*
@@ -329,6 +335,14 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/wined3d.dll.so
 
 %files full
+
+%files programs
+%_bindir/notepad
+%_bindir/winefile
+%_bindir/winemine
+%_man1dir/notepad.*
+%_man1dir/winefile.*
+%_man1dir/winemine.*
 
 %files -n lib%name-twain
 %_libdir/wine/twain*
@@ -379,6 +393,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Thu Oct 20 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.21-alt2
+- split wine-vanilla-programs subpackage (ALT bug #32587)
+
 * Sat Oct 15 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.21-alt1
 - new version 1.9.21
 
