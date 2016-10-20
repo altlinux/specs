@@ -260,7 +260,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt4_1.b15jpp8
+Release: alt5_1.b15jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -724,7 +724,7 @@ for file in %{SOURCE9} %{SOURCE10} ; do
     OUTPUT_FILE=$NAME$suffix.$EXT
     sed -e s:#JAVA_HOME#:%{sdkbindir}:g $file > $OUTPUT_FILE
     sed -i -e  s:#JRE_HOME#:%{jrebindir}:g $OUTPUT_FILE
-    sed -i -e  s:#ARCH#:%{version}-%{release}.%{_arch}$suffix:g $OUTPUT_FILE
+    sed -i -e  s:#ARCH#:%{_arch}$suffix:g $OUTPUT_FILE
 done
 done
 sed -i -e 's,DEF_OBJCOPY=/usr/bin/objcopy,DEF_OBJCOPY=/usr/bin/NO-objcopy,' jdk8/hotspot/make/linux/makefiles/defs.make
@@ -1419,6 +1419,9 @@ fi
 %endif
 
 %changelog
+* Thu Oct 20 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.71-alt5_1.b15jpp8
+- trimmed desktop names (closes: #32463)
+
 * Fri Apr 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.71-alt4_1.b15jpp8
 - hack around mkimage
 
