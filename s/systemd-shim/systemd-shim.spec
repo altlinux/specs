@@ -1,12 +1,12 @@
 Name: systemd-shim
-Version: 9
+Version: 10
 Release: alt1
 
 Summary: shim for systemd
 License: %gpl2plus
 Group: System/Base
 
-URL: https://launchpad.net/ubuntu/utopic/+source/systemd-shim
+URL: https://github.com/desrt/systemd-shim/
 Source: %name-%version.tar
 Source1: org.freedesktop.systemd1.conf
 Patch: %name-%version-%release.patch
@@ -17,7 +17,11 @@ BuildRequires: libgio-devel systemd-devel
 
 Requires: cgmanager
 
+Conflicts: systemd
+
 %define libexec_dir /lib
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 This package emulates the systemd function that are required to run
@@ -51,6 +55,12 @@ install -pDm0644 %SOURCE1 %buildroot%_sysconfdir/dbus-1/system.d/org.freedesktop
 %_datadir/dbus-1/system-services/org.freedesktop.systemd1.service
 
 %changelog
+* Thu Oct 20 2016 Mikhail Efremov <sem@altlinux.org> 10-alt1
+- Add conflict with sustemd (closes: #32611).
+- Update url.
+- Update org.freedesktop.systemd1.conf from systemd-231.
+- Update to 10.
+
 * Wed Nov 12 2014 Mikhail Efremov <sem@altlinux.org> 9-alt1
 - Add DBus policy from systemd package.
 - Drop obsoleted patch.
