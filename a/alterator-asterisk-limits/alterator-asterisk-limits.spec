@@ -1,5 +1,5 @@
 Name: alterator-asterisk-limits
-Version: 0.0.2
+Version: 0.0.3
 Release: alt1
 BuildArch: noarch
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -36,6 +36,9 @@ BuildRequires: alterator >= 3.3-alt8
 %_libexecdir/alterator/backend3/*
 
 %changelog
+* Thu Oct 20 2016 Andrey Cherepanov <cas@altlinux.org> 0.0.3-alt1
+- Do not show this html module in alterator-browser-qt (ALT #32624)
+
 * Thu Nov 26 2009 Stanislav Ievlev <inger@altlinux.org> 0.0.2-alt1
 - use libshell (shell-config) for backend
 - rename type 'uint' to 'asterisk-uint'
