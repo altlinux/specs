@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-l2tp
-Version: 0.0.4
+Version: 0.0.5
 Release: alt1
 Packager: Andriy Stepanov <stanv@altlinux.ru>
 BuildArch: noarch
@@ -38,6 +38,9 @@ Alterator module to configure L2TP connections
 %_libexecdir/%name/
 
 %changelog
+* Thu Oct 20 2016 Andrey Cherepanov <cas@altlinux.org> 0.0.5-alt1
+- Do not show this http module in alterator-browser-qt (ALT #32620)
+
 * Tue Feb 10 2015 Andriy Stepanov <stanv@altlinux.ru> 0.0.4-alt1
 - Add rpcbind startup helper
 
