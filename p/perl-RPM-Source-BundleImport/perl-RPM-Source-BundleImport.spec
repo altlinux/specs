@@ -1,25 +1,38 @@
 %define module RPM-Source-BundleImport
+%define _unpackaged_files_terminate_build 1
 
 Name: perl-%module
-Version: 0.039
+Version: 0.040
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
-Summary: %module - Perl extension for converting SRPM and spec files
+Summary: RPM-Source-Editor extension for converting tarballs to SRPMs
 Group: Development/Perl
 License: GPL or Artistic
 Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
 Url: http://search.cpan.org/dist/%module
 
 BuildRequires: perl-devel perl-RPM-Source-Editor perl-Source-Package perl-RPM-Source-Dependency-Analyzer perl(Pod/PlainText.pm)
-# for evalMakefilePL
-BuildRequires: perl(ExtUtils/Depends.pm) perl(YAML/Any.pm)
 Requires: perl-Source-Package > 0.04
 Requires: perl-RPM-Source-Editor > 0.869
 
 %description
 %summary
+
+%package Perl
+Summary: RPM-Source-BundleImport plugin for Perl source code
+Group: Development/Perl
+Conflicts: RPM-Source-BundleImport < 0.040
+# for evalMakefilePL
+BuildRequires: perl(ExtUtils/Depends.pm) perl(YAML/Any.pm)
+# Recommends: for meaningful eval
+Requires: perl-devel perl(Module/Build.pm) perl(Module/Build/Tiny.pm) perl(ExtUtils/MakeMaker.pm) 
+# TODO not implemented
+# perl(Module/Install.pm)
+
+%description Perl
+RPM-Source-BundleImport plugin for Perl source code
 
 %prep
 %setup -q -n %module-%version
@@ -33,10 +46,17 @@ Requires: perl-RPM-Source-Editor > 0.869
 %files
 #doc Changes
 #doc README
-%_bindir/*
 %perl_vendor_privlib/RPM*
+%exclude %perl_vendor_privlib/RPM/Source/BundleImport/Perl*
+
+%files Perl
+%_bindir/metadump-helper-perl-cpan2rpm
+%perl_vendor_privlib/RPM/Source/BundleImport/Perl
 
 %changelog
+* Thu Oct 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.040-alt1
+- added perl plugin
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.039-alt1
 - bugfix release
 
