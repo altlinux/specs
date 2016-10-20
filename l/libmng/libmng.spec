@@ -2,7 +2,7 @@
 
 Name: libmng
 Version: 1.0.10
-Release: alt2.2
+Release: alt3
 
 Summary: A library for handling MNG files
 License: Distributable (see LICENSE)
@@ -13,9 +13,10 @@ Url: http://www.libmng.com/
 Source: libmng-%version.tar
 Patch1: libmng-1.0.10-alt-build-fixes.patch
 Patch2: libmng-1.0.10-alt-player-build.patch
+Patch3: libmng-1.0.10-debian-support-lcms2.patch
 
 # Automatically added by buildreq on Tue Sep 23 2008
-BuildRequires: gcc-c++ libSDL-devel libXext-devel libXt-devel libjpeg-devel liblcms-devel openmotif-devel xorg-printproto-devel xorg-xextproto-devel zlib-devel
+BuildRequires: gcc-c++ libSDL-devel libXext-devel libXt-devel libjpeg-devel liblcms2-devel openmotif-devel xorg-printproto-devel xorg-xextproto-devel zlib-devel
 
 %package devel
 Summary: Include files for development with %name
@@ -57,6 +58,7 @@ This package contains various %name-based utilities.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 %build
 ln -s makefiles/{acinclude.m4,Makefile.am,configure.in} .
@@ -103,6 +105,9 @@ popd
 %_bindir/*
 
 %changelog
+* Thu Oct 20 2016 Anton Farygin <rider@altlinux.ru> 1.0.10-alt3
+- Build with lcms2
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.10-alt2.2
 - Fixed build
 
