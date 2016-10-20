@@ -1,26 +1,22 @@
 Name: chess
-Version: 5.07
-Release: alt3.qa1
+Version: 6.2.3
+Release: alt1
 
 %define real_name gnu%name
 
 Summary: The GNU chess program
 License: %gpl2plus
 Group: Games/Boards
-Packager: Egor Vyscrebentsov <evyscr@altlinux.org>
 
 Source: ftp://ftp.gnu.org/gnu/chess/%real_name-%version.tar
 Source1: book_1.00.pgn
-Patch0: gnuchess-5.07-alt-gcc4.patch
-Patch1: %real_name-5.07-alt-getline.patch
 
 Provides: %real_name = %version
 Obsoletes: %real_name
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Tue Aug 04 2009
-BuildRequires: flex libncurses-devel libreadline-devel
+BuildRequires: gcc-c++ flex libncurses-devel libreadline-devel help2man makeinfo
 
 %description
 The gnuchess package contains the GNU chess program.  By default, GNUchess
@@ -34,35 +30,34 @@ like to use a graphical interface with GNUchess, you'll also need to
 install the xboard package and the X Window System.
 
 %prep
-%setup -q -n %real_name-%version
-%patch0 -p1
-%patch1 -p2
+%setup  -n %real_name-%version
 
 %build
-%configure
+%configure --with-pluginsdir=%_gamesdatadir/%real_name/plugins
 %make_build
 
 #compile book
 pushd src
-./%real_name<<EOF
-book add %SOURCE1
-quit
-EOF
+./%real_name --addbook %SOURCE1
 popd
 
 %install
-mkdir -p %buildroot%_bindir
-cd src
-%make_install DESTDIR=%buildroot install
-#install -pm755 gnuchessx $RPM_BUILD_ROOT%_bindir
-install -d %buildroot%_gamesdatadir/%real_name
-install -pm644 book.dat %buildroot%_gamesdatadir/%real_name
+%makeinstall_std
+install -pm644 src/book.bin %buildroot%_datadir/%real_name/
 
-%files
+%find_lang %real_name
+
+%files -f %real_name.lang
 %_bindir/*
-%_datadir/games/%real_name
+%_gamesdatadir/%real_name/
+%_datadir/%real_name/
+%_man1dir/%real_name.1.*
+%_infodir/%real_name.info.*
 
 %changelog
+* Fri Oct 21 2016 Yuri N. Sedunov <aris@altlinux.org> 6.2.3-alt1
+- 6.2.3
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.07-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
