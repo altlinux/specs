@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-tc-lock
-Version: 0.0.1
-Release: alt2
+Version: 0.0.2
+Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
 Summary: Alterator module for lock thin station
@@ -38,6 +38,9 @@ Alterator module for lock thin station
 %_datadir/%name
 
 %changelog
+* Thu Oct 20 2016 Andrey Cherepanov <cas@altlinux.org> 0.0.2-alt1
+- Do not show this html module in alterator-browser-qt (ALT #32623)
+
 * Tue Jul 07 2015 Andrey Cherepanov <cas@altlinux.org> 0.0.1-alt2
 - Rebuild by cas@
 
