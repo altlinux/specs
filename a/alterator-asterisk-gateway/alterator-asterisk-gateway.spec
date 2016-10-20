@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-asterisk-gateway
-Version: 0.0.3
+Version: 0.0.4
 Release: alt1
 
 BuildArch: noarch
@@ -44,6 +44,9 @@ install -m 0644 -D GATEWAY_IP %buildroot/etc/asterisk/GATEWAY_IP
 %config(noreplace) %attr(0644,_asterisk,pbxadmin) /etc/asterisk/GATEWAY_IP
 
 %changelog
+* Thu Oct 20 2016 Andrey Cherepanov <cas@altlinux.org> 0.0.4-alt1
+- Do not show this http module in alterator-browser-qt (ALT #32625)
+
 * Fri Nov 27 2009 Stanislav Ievlev <inger@altlinux.org> 0.0.3-alt1
 - use workflow 'none'
 
