@@ -2,7 +2,7 @@
 
 Name: alterator-ports-access
 Version: 0.0.3
-Release: alt8
+Release: alt9
 Packager: Packager: Andriy Stepanov <stanv@altlinux.ru>
 BuildArch: noarch
 Source:%name-%version.tar
@@ -40,6 +40,9 @@ Alterator module to control serial/USB ports access
 /lib/udev/alterator-ports-access
 
 %changelog
+* Thu Oct 20 2016 Andrey Cherepanov <cas@altlinux.org> 0.0.3-alt9
+- Do not show this html module in alterator-browser-qt (ALT #32626)
+
 * Fri Oct 02 2015 Michael Shigorin <mike@altlinux.org> 0.0.3-alt8
 - Translations moved to alterator-l10n as of 2.9-alt49
 
