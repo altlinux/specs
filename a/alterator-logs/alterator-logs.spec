@@ -1,5 +1,5 @@
 Name: alterator-logs
-Version: 0.8.2
+Version: 0.9.0
 Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.ru>
@@ -40,7 +40,13 @@ System logs alterator module
 %_datadir/alterator/ui/*/*
 %_sysconfdir/alterator/logs
 
+%post
+touch /var/log/journald
+
 %changelog
+* Thu Oct 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.9.0-alt1
+- hackaround for journald logs added
+
 * Mon Apr 18 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.8.2-alt1
 - cups/page_log definition added
 
