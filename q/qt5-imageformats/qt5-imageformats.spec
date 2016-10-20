@@ -1,12 +1,12 @@
 
 %global qt_module qtimageformats
 
-%def_disable fmt_mng
-%def_disable fmt_jp2
+%def_enable fmt_mng
+%def_enable fmt_jp2
 
 Name: qt5-imageformats
 Version: 5.6.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtImageFormats component
@@ -79,6 +79,12 @@ rm -rf  config.tests/libmng
 %_qt5_docdir/*
 
 %changelog
+* Thu Oct 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt2
+- build with mng and jasper
+
+* Sun Oct 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt0.M80P.1
+- build for M80P
+
 * Wed Oct 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1
 - new version
 
