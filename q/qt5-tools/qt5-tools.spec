@@ -4,12 +4,14 @@
 %def_disable bootstrap
 %def_disable qtconfig
 
+%define kf5_bindir %prefix/lib/kf5/bin
+
 %define major 5
 %define minor 5
 %define bugfix 0
 Name: qt5-tools
 Version: 5.6.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
@@ -147,7 +149,6 @@ Requires: %name-common = %EVR
 %description -n libqt5-help
 %summary
 
-
 %prep
 %setup -n %qt_module-opensource-src-%version
 %patch1 -p1
@@ -156,7 +157,6 @@ Requires: %name-common = %EVR
 %endif
 syncqt.pl-qt5 -version %version -private
 %qmake_qt5
-
 
 %build
 %make_build
@@ -190,8 +190,13 @@ __EOF__
 cat > %buildroot/%_altdir/qdbusviewer-%_qt5 <<__EOF__
 %_bindir/qdbusviewer %_qt5_bindir/qdbusviewer $QDBUS_ALTPRIO
 __EOF__
-mkdir -p %buildroot/usr/lib/kf5/bin/
-ln -s `relative %_bindir/qdbus-%_qt5 /usr/lib/kf5/bin/qdbus` %buildroot/usr/lib/kf5/bin/qdbus
+mkdir -p %buildroot%kf5_bindir/
+#ln -s `relative %_bindir/qdbus-%_qt5 %kf5_bindir/qdbus` %buildroot%kf5_bindir/qdbus
+#ln -s `relative %_bindir/qtpaths-%_qt5 %kf5_bindir/qtpaths` %buildroot%kf5_bindir/qtpaths
+for qt_tool in qdbus qtpaths
+do
+    ln -s `relative %_bindir/${qt_tool}-%_qt5 %kf5_bindir/${qt_tool}` %buildroot%kf5_bindir/${qt_tool}
+done
 
 # icons
 install -m644 -p -D src/assistant/assistant/images/assistant.png %buildroot/%_iconsdir/hicolor/32x32/apps/assistant-qt5.png
@@ -207,7 +212,6 @@ for icon in src/linguist/linguist/images/icons/linguist-*-32.png ; do
   size=$(echo $(basename ${icon}) | cut -d- -f2)
   install -p -m644 -D ${icon} %buildroot/%_iconsdir/hicolor/${size}x${size}/apps/linguist.png
 done
-
 
 %files common
 %_qt5_datadir/phrasebooks/
@@ -235,6 +239,7 @@ done
 %_qt5_bindir/qtpaths*
 %_qt5_bindir/qtdiag*
 %_qt5_bindir/qtplugininfo*
+%kf5_bindir/qtpaths
 
 %if_enabled qtconfig
 %files -n qt5-qtconfig
@@ -258,7 +263,7 @@ done
 %_altdir/qdbus-%_qt5
 %_bindir/qdbus-qt5
 %_qt5_bindir/qdbus
-/usr/lib/kf5/bin/qdbus
+%kf5_bindir/qdbus
 %_altdir/qdbusviewer-%_qt5
 %_bindir/qdbusviewer*
 %_qt5_bindir/qdbusviewer*
@@ -317,8 +322,13 @@ done
 %files -n libqt5-help
 %_qt5_libdir/libQt5Help.so.*
 
-
 %changelog
+* Fri Oct 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt2
+- add qtpaths to KDE5 PATH
+
+* Sun Oct 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt0.M80P.1
+- build for M80P
+
 * Wed Oct 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1
 - new version
 
