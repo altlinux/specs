@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 5.5.4
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -76,7 +76,8 @@ Requires: kf5-kwrited
 Requires: kf5-user-manager
 Requires: kde5-konversation kde5-kate
 Requires: kde5-pim kde5-pim-addons kde5-baseapps kde5-kcron kde5-kruler kde5-ffmpegthumbs
-Requires: kf5-plasma-mediacenter kde5-krfb kde5-kdf
+#Requires: kf5-plasma-mediacenter
+Requires: kde5-krfb kde5-kdf
 Requires: kid3-ui-kde5 ring-client-kde5
 #Requires: kde5-kipi-plugins-core
 %description -n kde5-big
@@ -158,6 +159,9 @@ KDE image scanning support applications.
 %files -n kde5-scanning
 
 %changelog
+* Fri Oct 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.4-alt2
+- clean requires
+
 * Mon Oct 10 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.4-alt1
 - update requires
 
