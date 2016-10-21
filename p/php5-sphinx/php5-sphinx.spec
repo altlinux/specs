@@ -1,6 +1,6 @@
 %define		php5_extension	sphinx
 %define 	real_name	sphinx
-%define		real_version	1.2.0
+%define		real_version	1.3.3
 
 Name:	 	php5-%php5_extension
 Version:	%real_version
@@ -18,7 +18,7 @@ Source2:	php-%php5_extension-params.sh
 
 BuildRequires(pre): rpm-build-php5
 BuildRequires: php5-devel = %php5_version
-BuildRequires: libsphinxclient-devel
+BuildRequires: libsphinxclient-devel >= 2.2.11
 Requires: libsphinxclient
 
 %description
