@@ -7,7 +7,7 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A chess game for GNOME
 Group: Games/Boards
@@ -19,6 +19,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%versio
 Provides:  %__name = %version-%release
 Obsoletes: gnome-games-glchess
 Provides:  gnome-games-glchess = %version-%release
+Requires: gnuchess >= 6.2.3
 
 %define glib_ver 2.40
 %define gtk_ver 3.19.0
@@ -61,6 +62,9 @@ A chess game which supports several chess engines, with 2D and optionally
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Thu Oct 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt2
+- explicitly requires gnuchess
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
