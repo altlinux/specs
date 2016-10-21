@@ -1,6 +1,6 @@
 %define		php5_extension	redis
 %define 	real_name	redis
-%define		real_version	2.2.2
+%define		real_version	2.2.7
 
 Name:	 	php5-%php5_extension
 Version:	%real_version
@@ -13,8 +13,7 @@ Group:		System/Servers
 URL:		https://github.com/nicolasff/phpredis
 
 Source0:	%real_name-%real_version.tar
-Source1:	php-%php5_extension.ini
-Source2:	php-%php5_extension-params.sh
+Patch0: %name-%version.patch
 
 BuildRequires(pre): rpm-build-php5
 BuildRequires: php5-devel = %php5_version
@@ -24,6 +23,7 @@ The phpredis extension provides an API for communicating with the Redis key-valu
 
 %prep
 %setup -q -n %php5_extension-%version
+%patch0 -p1
 
 %build
 phpize
@@ -39,8 +39,8 @@ export LDFLAGS=-lphp-%_php5_version
 
 %install
 %php5_make_install
-install -D -m 644 -- %SOURCE1 %buildroot/%php5_extconf/%php5_extension/config
-install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
+install -D -m 644 -- rpm/redis.ini %buildroot/%php5_extconf/%php5_extension/config
+install -D -m 644 -- rpm/php-redis-params.sh %buildroot/%php5_extconf/%php5_extension/params
 
 %files
 %doc CREDITS *.markdown
@@ -57,6 +57,12 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%php5_version-%php5_release
+
+* Fri Oct 21 2016 Anton Farygin <rider@altlinux.ru> 2.2.7-alt5.6.27.20161014.alt1
+- update to 2.2.7
+
+* Mon Oct 17 2016 Anton Farygin <rider@altlinux.ru> 2.2.2-alt5.6.27.20161014.alt1
+- Rebuild with php5-5.6.27
 
 * Sun Dec 02 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.2.2-alt1
 - Initial build
