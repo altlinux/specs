@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.27.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch1: alt-update-scripts-path.patch
 
 # Automatically added by buildreq on Wed Dec 24 2014 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-gui libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools ruby ruby-stdlibs
@@ -53,6 +54,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -88,6 +90,12 @@ KF5 library
 %_K5lib/libKF5ConfigGui.so.*
 
 %changelog
+* Fri Oct 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.27.0-alt2
+- fix find update scripts
+
+* Thu Oct 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.27.0-alt0.M80P.1
+- build for M80P
+
 * Tue Oct 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.27.0-alt1
 - new version
 
