@@ -1,7 +1,7 @@
 Name: pve-common
 Summary: Proxmox VE base library
-Version: 4.0.74
-Release: alt10
+Version: 4.0.76
+Release: alt1
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -37,6 +37,8 @@ This package contains the base library used by other Proxmox VE components.
 %install
 cd src
 %make DESTDIR=%buildroot install
+cd ..
+install -pD -m0755 pve-etcnet-to-network %buildroot%_sbindir/pve-etcnet-to-network
 
 %check
 # upstream tests
@@ -45,9 +47,13 @@ make -C test check
 ./runtests.pl
 
 %files
+%_sbindir/pve-etcnet-to-network
 %perl_vendor_privlib/PVE
 
 %changelog
+* Fri Oct 21 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.76-alt1
+- 4.0-76
+
 * Thu Oct 13 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.74-alt10
 - vlan fixes
 
