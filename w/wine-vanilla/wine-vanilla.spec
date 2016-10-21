@@ -3,7 +3,7 @@
 
 Name: wine-vanilla
 Version: 1.9.21
-Release: alt2
+Release: alt3
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -243,6 +243,8 @@ mv *.directory %buildroot%_datadir/desktop-directories/
 # Do not pack non english man pages yet
 rm -rf %buildroot%_mandir/*.UTF-8
 
+# Do not pack dangerous association for run windows executables
+rm -f %buildroot%_desktopdir/wine.desktop
 
 %files
 %doc ANNOUNCE AUTHORS LICENSE README
@@ -281,7 +283,18 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 #%_initdir/wine
 #%_initdir/wine.outformat
-%_desktopdir/*.desktop
+
+%_desktopdir/wine-mime-msi.desktop
+%_desktopdir/wine-regedit.desktop
+#_desktopdir/wine-serverkill.desktop
+%_desktopdir/wine-uninstaller.desktop
+%_desktopdir/wine-winecfg.desktop
+%_desktopdir/wine-wineconsole.desktop
+#_desktopdir/wine-winehelp.desktop
+
+# danger
+#_desktopdir/wine.desktop
+
 %_datadir/desktop-directories/*.directory
 
 %if_without build64
@@ -343,6 +356,10 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %_man1dir/notepad.*
 %_man1dir/winefile.*
 %_man1dir/winemine.*
+%_desktopdir/wine-notepad.desktop
+%_desktopdir/wine-winefile.desktop
+%_desktopdir/wine-winemine.desktop
+
 
 %files -n lib%name-twain
 %_libdir/wine/twain*
@@ -393,6 +410,10 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Fri Oct 21 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.21-alt3
+- pack desktop files for programs to wine-vanilla-programs
+- do not pack wine.desktop for protect from suddenly running from GUI
+
 * Thu Oct 20 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.21-alt2
 - split wine-vanilla-programs subpackage (ALT bug #32587)
 
