@@ -1,6 +1,6 @@
 Name: alterator-logs
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Packager: Stanislav Ievlev <inger@altlinux.ru>
 
@@ -44,6 +44,9 @@ System logs alterator module
 touch /var/log/journald
 
 %changelog
+* Fri Oct 21 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.9.0-alt2
+- better line count for jourbald
+
 * Thu Oct 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.9.0-alt1
 - hackaround for journald logs added
 
