@@ -1,6 +1,6 @@
 Name: netdata
-Version: 1.3.0
-Release: alt1
+Version: 1.4.0
+Release: alt2
 
 Summary: Real-time performance monitoring, done right!
 
@@ -18,12 +18,16 @@ Source: %name-%version.tar
 # optimized out: perl pkg-config python-base python-modules python3 python3-base
 BuildRequires: rpm-build-intro libuuid-devel zlib-devel
 
+# FIXME: wait for new rpm-build-intro in p8
+%define _localstatedir /var
+
 %if_with nfacct
 BuildRequires: libmnl-devel
 BuildRequires: libnetfilter_acct-devel
 %endif
 
 %add_findreq_skiplist %_libexecdir/%name/plugins.d/*.plugin
+%add_findreq_skiplist %_libexecdir/%name/charts.d/*.sh
 
 %description
 netdata is the fastest way to visualize metrics. It is a resource
@@ -55,6 +59,9 @@ rm -rf %buildroot%_libexecdir/netdata/python.d/python_modules/pyyaml{2,3}
 mkdir -p %buildroot%_sysconfdir/%name/
 install -m 644 -p system/netdata.conf %buildroot%_sysconfdir/%name/netdata.conf
 
+mkdir -p %buildroot%_sysconfdir/logrotate.d/
+install -m 644 -p system/netdata.logrotate %buildroot%_sysconfdir/logrotate.d/%name
+
 find %buildroot -name .keep | xargs rm
 
 install -d %buildroot%_unitdir/
@@ -65,15 +72,17 @@ getent group netdata > /dev/null || groupadd -r netdata
 getent passwd netdata > /dev/null || useradd -r -g netdata -c netdata -s /sbin/nologin -d / netdata
 
 %files
-%attr(-,netdata,netdata) %dir %_localstatedir/cache/%name
-%attr(-,netdata,netdata) %dir %_localstatedir/log/%name
+%attr(0700,netdata,netdata) %dir %_localstatedir/cache/%name/
+%attr(0700,netdata,netdata) %dir %_localstatedir/log/%name/
+%attr(0700,netdata,netdata) %dir %_localstatedir/lib/%name/
 %dir %_sysconfdir/%name/
-%config(noreplace) %_sysconfdir/%name/netdata.conf
+#config(noreplace) %_sysconfdir/%name/netdata.conf
 %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/*.conf
 %dir %_sysconfdir/%name/health.d/
 %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/health.d/*.conf
 %dir %_sysconfdir/%name/python.d/
 %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/python.d/*.conf
+%config(noreplace) %_logrotatedir/%name
 %_sbindir/%name
 %_unitdir/netdata.service
 %dir %_libexecdir/%name/
@@ -83,11 +92,17 @@ getent passwd netdata > /dev/null || useradd -r -g netdata -c netdata -s /sbin/n
 %_libexecdir/%name/python.d/
 %dir %_datadir/%name
 
-# override defattr for web files
-#defattr(644,root,netdata,755)
-%_datadir/%name/web
+# override defattr for web files (see netdata.conf for web access user/group)
+%defattr(644,root,netdata,755)
+%_datadir/%name/web/
 
 %changelog
+* Sat Oct 22 2016 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt2
+- fix packing
+
+* Sat Oct 22 2016 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
+- new version 1.4.0 (with rpmrb script)
+
 * Mon Sep 26 2016 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
 - new version 1.3.0 (with rpmrb script)
 
