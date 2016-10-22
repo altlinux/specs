@@ -5,15 +5,15 @@
 %define firefox_datadir %_datadir/firefox
 
 %define gst_version 1.0
-%define nspr_version 4.12.0
-%define nss_version 3.26.0
+%define nspr_version 4.13.1
+%define nss_version 3.27.1
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        49.0.1
-Release:        alt2
+Version:        49.0.2
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -299,6 +299,11 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Fri Oct 21 2016 Alexey Gladkov <legion@altlinux.ru> 49.0.2-alt1
+- New release (49.0.2).
+- Fixed:
+  + 2016-87 Security vulnerabilities fixed in Firefox 49.0.2 
+
 * Tue Oct 04 2016 Alexey Gladkov <legion@altlinux.ru> 49.0.1-alt2
 - Fix scrolling.
 
