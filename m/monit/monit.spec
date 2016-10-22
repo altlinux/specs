@@ -4,8 +4,8 @@
 %def_with pam
 
 Name: monit
-Version: 5.19.0
-Release: alt2
+Version: 5.20.0
+Release: alt1
 
 Summary: Process monitor and restart utility
 License: AGPLv3
@@ -30,7 +30,7 @@ Requires(post,preun): service >= 0.5-alt1
 
 # Automatically added by buildreq on Fri Apr 06 2012
 # optimized out: libcom_err-devel libkrb5-devel
-BuildRequires: flex libpam-devel libssl-devel
+BuildRequires: flex libpam-devel libssl-devel zlib-devel
 
 %define _ssldir %_var/lib/ssl
 %define _pemdir %_ssldir/certs
@@ -182,6 +182,9 @@ fi
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Sat Oct 22 2016 Michael Shigorin <mike@altlinux.org> 5.20.0-alt1
+- new version (watch file uupdate)
+
 * Tue Aug 16 2016 Terechkov Evgenii <evg@altlinux.org> 5.19.0-alt2
 - add systemd unit (closes: #32374)
 
