@@ -14,7 +14,7 @@
 
 Name: libuniset2
 Version: 2.5
-Release: alt19
+Release: alt19.1
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -486,6 +486,9 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 # ..
 
 %changelog
+* Sat Oct 22 2016 Alexei Takaseev <taf@altlinux.org> 2.5-alt19.1
+- Rebuild with poco 1.7.6
+
 * Tue Oct 11 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt19
 - Calibration: fixed bug in getValue(), refactoring
 - correction after verification static analyzer
