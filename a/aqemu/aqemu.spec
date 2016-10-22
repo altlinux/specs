@@ -1,6 +1,6 @@
 Summary: QEMU GUI written in Qt5
 Name: aqemu
-Version: 0.9.1
+Version: 0.9.2
 Release: alt0.1
 License: GPL2
 Group: Emulators
@@ -10,7 +10,8 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Wed Mar 04 2009
-BuildRequires: gcc-c++ libvncserver-devel ImageMagick cmake
+BuildRequires(pre): cmake
+BuildRequires: gcc-c++ libvncserver-devel ImageMagick
 BuildRequires: qt5-base-devel
 
 %description
@@ -40,10 +41,6 @@ rm -rf %buildroot%_datadir/doc/%name
 %_bindir/%name
 %dir %_datadir/%name
 %_datadir/%name/*
-%dir %_datadir/%name/os_icons
-%_datadir/%name/os_icons/*
-%dir %_datadir/%name/os_templates
-%_datadir/%name/os_templates/*
 %_desktopdir/%name.desktop
 %_liconsdir/%name.png
 %_miconsdir/%name.png
@@ -52,6 +49,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %_pixmapsdir/*.png
 
 %changelog
+* Sat Oct 22 2016 L.A. Kostis <lakostis@altlinux.ru> 0.9.2-alt0.1
+- 0.9.2 release.
+
 * Sat May 28 2016 L.A. Kostis <lakostis@altlinux.ru> 0.9.1-alt0.1
 - New version, now with qt5 support.
 
