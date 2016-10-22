@@ -1,6 +1,6 @@
 Name: python-module-flamegraph
 Version: 0.1
-Release: alt1
+Release: alt2
 Summary: Statistical profiler which outputs in format suitable for FlameGraph
 
 Group: Monitoring
@@ -26,9 +26,12 @@ python setup.py install --root %buildroot
 %files
 %python_sitelibdir/flamegraph
 %python_sitelibdir/flamegraph-%{version}*
-%doc README.rst docs/*
+%doc README.rst docs/* example.py
  
 %changelog
+* Sat Oct 22 2016 Terechkov Evgenii <evg@altlinux.org> 0.1-alt2
+- v0.1-13-g378fd26
+
 * Tue Jul 21 2015 Terechkov Evgenii <evg@altlinux.org> 0.1-alt1
 - Initial build for ALT Linux Sisyphus
 - git-20150721
