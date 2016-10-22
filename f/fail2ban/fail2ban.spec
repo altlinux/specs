@@ -1,13 +1,12 @@
 Name: fail2ban
-Version: 0.9.3
-Release: alt3
+Version: 0.9.5
+Release: alt1
 
 Summary: Fail2Ban is an intrusion prevention framework
 
 License: GPL v2
 Group: Development/Python
 Url: http://www.fail2ban.org
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # Source-url: https://github.com/fail2ban/fail2ban/archive/%version.tar.gz
 Source: %name-%version.tar
@@ -17,8 +16,7 @@ Source3: fail2ban-logrotate
 Source4: paths-altlinux.conf
 
 BuildArch: noarch
-
-BuildPreReq: help2man python-modules-json
+BuildPreReq: help2man python-module-json
 %setup_python_module %name
 %py_requires json
 %add_python_req_skip systemd
@@ -47,8 +45,6 @@ cp man/*.1 %buildroot%_man1dir/
 mkdir -p %buildroot%_man5dir/
 cp man/*.5 %buildroot%_man5dir/
 install -d %buildroot%_var/run/fail2ban
-#install -d %buildroot%_datadir
-#ln -s %python_sitelibdir/%name %buildroot%_datadir/
 
 install -pD -m 744 %SOURCE1 %buildroot%_initdir/fail2ban
 install -pD -m 644 %SOURCE2 %buildroot%_unitdir/%name.service
@@ -61,12 +57,9 @@ echo "d /var/run/fail2ban 0755 root root -" >%buildroot%_tmpfilesdir/%name.conf
 %python_install --optimize=2
 
 rm -rf %buildroot/%_docdir/%name/
-rm -f %buildroot%_sysconfdir/%name/paths-{debian,fedora,freebsd,osx}.conf
+rm -f %buildroot%_sysconfdir/%name/paths-{debian,fedora,freebsd,osx,opensuse}.conf
 
 mkdir -p %buildroot%_var/lib/fail2ban/
-
-#%pre
-#rm -fR %_datadir/%name/
 
 %post
 %post_service %name
@@ -100,6 +93,9 @@ mkdir -p %buildroot%_var/lib/fail2ban/
 %_logrotatedir/%name
 
 %changelog
+* Sat Oct 22 2016 Anton Farygin <rider@altlinux.ru> 0.9.5-alt1
+- new version
+
 * Thu Dec 03 2015 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt3
 - add post/preun_service
 - add condreload/condrestart
