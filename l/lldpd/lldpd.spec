@@ -1,5 +1,5 @@
 Name: lldpd
-Version: 0.7.19
+Version: 0.9.5
 Release: alt1
 Summary: Link Layer Discovery Protocol Daemon
 Source: %name-%version.tar
@@ -23,7 +23,7 @@ Source4: lldpd.conf.chroot
 %def_with xml
 %def_with readline
 %def_with json
-%def_with seccomp
+%def_without seccomp
 
 BuildRequires: libssl-devel
 BuildRequires: doxygen
@@ -32,7 +32,7 @@ BuildRequires: libevent-devel
 %{?_with_readline:BuildRequires: libreadline-devel}
 %{?_with_snmp:BuildRequires: libnet-snmp-devel}
 %{?_with_xml:BuildRequires: libxml2-devel}
-%{?_with_json:BuildRequires: libjson-devel}
+%{?_with_json:BuildRequires: libjansson-devel}
 %{?_with_seccomp:BuildRequires: libseccomp-devel}
 
 %description
@@ -165,6 +165,11 @@ fi
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Sun Oct 23 2016 Afanasov Dmitry <ender@altlinux.org> 0.9.5-alt1
+- 0.9.5
+- switch from json-c to jannson: json-c too old
+- disable seccomp
+
 * Tue Dec 22 2015 Afanasov Dmitry <ender@altlinux.org> 0.7.19-alt1
 - 0.7.19
 
