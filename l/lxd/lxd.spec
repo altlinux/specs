@@ -11,7 +11,7 @@
 %define lxduser lxd
 
 Name:		lxd
-Version:	2.2.0
+Version:	2.4.1
 Release:	alt1
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
@@ -25,13 +25,11 @@ Source0:	%name-%version.tar
 Source2:	lxd-image-update.cron
 Source3:	lxd.default
 Source4:	lxd.dnsmasq
-Source5:	lxd-bridge.default
 
 # services
 Source11:	lxd.service
 Source12:	lxd.socket
 Source13:	lxd-startup.service
-Source14:	lxd-bridge.service
 
 
 ExclusiveArch:  %go_arches
@@ -39,7 +37,6 @@ BuildRequires(pre): rpm-build-golang
 
 Requires:	shadow-submap
 Requires:	lxc-libs
-Requires:	cgmanager
 Requires:	lxcfs
 Requires:	btrfs-progs
 Requires:	lvm2
@@ -94,7 +91,7 @@ export GOPATH="%go_path:$BUILDDIR"
 
 cd .build/src/%import_path
 
-for pkg in lxc lxd fuidshift lxd-bridge/lxd-bridge-proxy
+for pkg in lxc lxd fuidshift
 do
     %golang_build $pkg
 done
@@ -116,10 +113,6 @@ done
 
 # lxc-bridge
 mkdir -p -- %buildroot/%_libexecdir/lxd
-mv %buildroot/%_bindir/lxd-bridge-proxy %buildroot/%_libexecdir/lxd/
-cp -av lxd-bridge/lxd-bridge %buildroot/%_libexecdir/lxd/
-what="$(relative %_libexecdir/lxd/lxd-bridge-proxy %go_root/bin/lxd-bridge-proxy)"
-ln -fs -- "$what" %buildroot/%go_root/bin/lxd-bridge-proxy
 
 # Crontab entry for images update
 %__install -D %SOURCE2 %buildroot/%_sysconfdir/cron.hourly/lxd-image-update
@@ -128,8 +121,6 @@ ln -fs -- "$what" %buildroot/%go_root/bin/lxd-bridge-proxy
 %__install -D %SOURCE3 %buildroot/%_sysconfdir/sysconfig/lxd
 # configuration for dnsmasq called in lxd-bridge
 %__install -D %SOURCE4 %buildroot/%_sysconfdir/lxd/dnsmasq.conf
-# lxd-bridge config
-%__install -D %SOURCE5 %buildroot/%_sysconfdir/sysconfig/lxd-bridge
 
 #services
 # systemd
@@ -137,7 +128,6 @@ mkdir -p %buildroot/%_unitdir
 cp -av %SOURCE11 %buildroot/%_unitdir/
 cp -av %SOURCE12 %buildroot/%_unitdir/
 cp -av %SOURCE13 %buildroot/%_unitdir/
-cp -av %SOURCE14 %buildroot/%_unitdir/
 
 # install bash completion
 mkdir -p %buildroot/%_datadir/bash-completion/completions/
@@ -146,8 +136,6 @@ cp -av config/bash/lxd-client %buildroot/%_datadir/bash-completion/completions/
 # /var/{lib,log}/lxd
 mkdir -p %buildroot%_localstatedir/%name
 mkdir -p %buildroot%_logdir/%name
-# /var/lib/lxd/lxd-bridge
-mkdir -p %buildroot%_localstatedir/%name/lxd-bridge/misc
 
 mkdir -p %buildroot/%_bindir/
 cp -av scripts/lx* %buildroot/%_bindir/
@@ -163,11 +151,9 @@ cp -av scripts/lx* %buildroot/%_bindir/
 %_bindir/*
 %go_root/bin/*
 %attr(0751,%lxduser,%lxdgroup) %dir %_localstatedir/%name
-%attr(0751,%lxduser,%lxdgroup) %dir %_localstatedir/%name/lxd-bridge
-%attr(0751,%lxduser,%lxdgroup) %dir %_localstatedir/%name/lxd-bridge/misc
 %attr(0751,%lxduser,%lxdgroup) %dir %_logdir/%name
-%dir %_libexecdir/lxd
-%_libexecdir/lxd/*
+#dir %_libexecdir/lxd
+#_libexecdir/lxd/*
 
 %_unitdir/*
 
@@ -184,6 +170,14 @@ cp -av scripts/lx* %buildroot/%_bindir/
 %go_path/src/*
 
 %changelog
+* Sun Oct 23 2016 Denis Pynkin <dans@altlinux.org> 2.4.1-alt1
+- Release 2.4
+
+* Sat Oct 01 2016 Denis Pynkin <dans@altlinux.org> 2.3.0-alt1
+- Release 2.3
+- Removed cgmanager dependency
+- Removed lxd-bridge due new network API
+
 * Mon Sep 26 2016 Denis Pynkin <dans@altlinux.org> 2.2.0-alt1
 - Release 2.2
 - Fixed lxc-to-lxd script

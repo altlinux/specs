@@ -1,12 +1,12 @@
 %global import_path     github.com/golang/protobuf
 
-%global commit f592bd283e9ef86337a432eb50e592278c3d534d
+%global commit 98fa357170587e470c5f27d3c3ea0947b71eb455
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-github-golang-protobuf
 Version: 0
-Release: alt4.git%abbrev
+Release: alt5.git%abbrev
 Summary: Go support for Protocol Buffers
 License: BSD
 Group: Development/Other
@@ -72,6 +72,9 @@ rm -rf -- %buildroot/%go_path/src/%import_path/_conformance/_conformance
 %go_path/src/*
 
 %changelog
+* Sun Oct 23 2016 Denis Pynkin <dans@altlinux.org> 0-alt5.git98fa3571
+- Update
+
 * Mon Aug 22 2016 Denis Pynkin <dans@altlinux.org> 0-alt4.gitf592bd28
 - Update
 

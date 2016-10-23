@@ -1,12 +1,12 @@
 %global import_path golang.org/x/crypto
 
-%global commit 8e06e8ddd9629eb88639aba897641bff8031f1d3
+%global commit 3c0d69f1777220f1a1d2ec373cb94a282f03eb42
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-golang-x-crypto
 Version: 0
-Release: alt4.git%abbrev
+Release: alt5.git%abbrev
 Summary: Supplementary Go cryptography libraries
 License: MIT
 Group: Development/Other
@@ -93,6 +93,9 @@ export GOPATH="%go_path"
 %go_path/src/*
 
 %changelog
+* Sun Oct 23 2016 Denis Pynkin <dans@altlinux.org> 0-alt5.git3c0d69f1
+- Update
+
 * Mon Sep 26 2016 Denis Pynkin <dans@altlinux.org> 0-alt4.git8e06e8dd
 - Update
 
