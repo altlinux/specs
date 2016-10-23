@@ -1,11 +1,11 @@
 %global import_path     github.com/syndtr/gocapability
 
-%global commit 2c00daeb6c3b45114c80ac44119e7b8801fdd852
+%global commit e7cb7fa329f456b3855136a2642b197bad7366ba
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 Name: golang-github-syndtr-gocapability
 Version: 0
-Release: alt2.git%abbrev
+Release: alt3.git%abbrev
 Summary: Package capability provides utilities for manipulating POSIX capabilities.
 License: BSD
 Group: Development/Other
@@ -55,6 +55,9 @@ rm -rf -- %buildroot/%go_path/src/%import_path/capability/enumgen
 %go_path/src/*
 
 %changelog
+* Sun Oct 23 2016 Denis Pynkin <dans@altlinux.org> 0-alt3.gite7cb7fa3
+- Ambient capabilities support
+
 * Tue Feb 16 2016 Denis Pynkin <dans@altlinux.ru> 0-alt2.git2c00daeb
 - Initial package for development only
 
