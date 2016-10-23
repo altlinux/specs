@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=strict
 %def_without check
 Name: cmake
-Version: 3.4.3
-Release: alt0.1
+Version: 3.6.2
+Release: alt0.2
 
 Summary: Cross-platform, open-source make system
 
@@ -255,6 +255,15 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Sun Oct 23 2016 L.A. Kostis <lakostis@altlinux.ru> 3.6.2-alt0.2
+- Added some patches from debian:
+  - FindBoost_add_-lpthread_#563479.diff: Add -lpthread when using Boost::Thread.
+  - qt_import_dir_variable.diff: FindQt4: define QT_IMPORTS_DIR variable 
+    even if it is not present on the system.
+
+* Sat Oct 22 2016 L.A. Kostis <lakostis@altlinux.ru> 3.6.2-alt0.1
+- test build of 3.6.2.
+
 * Mon Jun 13 2016 L.A. Kostis <lakostis@altlinux.ru> 3.4.3-alt0.1
 - test build of 3.4.3.
 
