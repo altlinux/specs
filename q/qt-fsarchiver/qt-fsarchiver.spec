@@ -1,5 +1,5 @@
 %define subversion alt
-%define subver 0
+%define subver 03
 %define sname qt5-fsarchiver
 
 
@@ -159,6 +159,9 @@ install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%sname.desktop
 %_datadir/polkit-1/actions/org.project.pkexec.run-%sname.policy
 
 %changelog
+* Sun Oct 23 2016 Hihin Ruslan <ruslandh@altlinux.ru> 0.8.0.03-alt1
+- Version 0.8.0-3
+
 * Wed Sep 28 2016 Hihin Ruslan <ruslandh@altlinux.ru> 0.8.0.0-alt1
 - Version 0.8.0-0
 
