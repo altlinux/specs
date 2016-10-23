@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 4.3.3
-Release: alt6
+Version: 4.3.6
+Release: alt7
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -25,6 +25,7 @@ Patch4: pve-container-alt.patch
 Patch5: qemu-server-alt.patch
 Patch6: pve-manager-alt-bps-to-bit.patch
 Patch7: pve-container-altlinux-lxc.patch
+Patch8: pve-manager-alt-gzip.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -62,7 +63,7 @@ HA Manager Proxmox VE
 
 %package -n pve-qemu-server
 Summary: Qemu Server Tools
-Version: 4.0.91
+Version: 4.0.92
 Group: System/Servers
 Requires: nc6 socat pve-qemu-system >= 2.6.1-alt4
 Provides: qemu-server = %version-%release
@@ -84,6 +85,7 @@ This package contains the Qemu Server tools used by Proxmox VE
 %patch5 -p0 -b .alt
 %patch6 -p0 -b .alt
 %patch7 -p0 -b .alt
+%patch8 -p0 -b .alt
 
 %build
 for d in pve-manager pve-firewall/src pve-ha-manager/src qemu-server; do
@@ -344,6 +346,10 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Fri Oct 21 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.6-alt7
+- 4.3-6
+- qemu-server 4.0-92
+
 * Sun Oct 09 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.3-alt6
 - 4.3-3
 - qemu-server 4.0-91

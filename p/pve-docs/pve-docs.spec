@@ -1,7 +1,7 @@
 Name: pve-docs
 Summary: Proxmox VE Documentation
-Version: 4.3.5
-Release: alt2
+Version: 4.3.12
+Release: alt1
 License: GPLv3
 Group: Documentation
 Url: https://git.proxmox.com/
@@ -10,7 +10,8 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: asciidoc-a2x source-highlight xmlto inkscape mailcap perl(JSON.pm)
+BuildRequires: asciidoc-a2x source-highlight xmlto inkscape mailcap
+BuildRequires: perl(MediaWiki/API.pm) perl(JSON.pm)
 
 %description
 Proxmox VE Documentation files
@@ -27,28 +28,31 @@ Tool to auto-generate various Proxmox VE Documentation files
 
 %prep
 %setup -q -n %name-%version
-rm -fr .gear debian doc-debian *.spec
-tar -cf ../%name.tar *
 
 %build
 %make
 
 %install
 mkdir -p %buildroot%_datadir/pve-doc-generator
-tar -xf ../%name.tar -C %buildroot%_datadir/pve-doc-generator/
+cp *.adoc *.pl *.mk *.txt *.xml %buildroot%_datadir/pve-doc-generator/
 
 mkdir -p %buildroot%_datadir/%name/api-viewer
 install -m644 *.{html,epub,pdf} %buildroot%_datadir/%name/
 install -m644 api-viewer/apidoc.js %buildroot%_datadir/%name/api-viewer/
 install -m644 api-viewer/index.html %buildroot%_datadir/%name/api-viewer/
+install -pD -m755 asciidoc-pve %buildroot%_bindir/asciidoc-pve
 
 %files
 %_datadir/%name
 
 %files -n pve-doc-generator
+%_bindir/asciidoc-pve
 %_datadir/pve-doc-generator
 
 %changelog
+* Fri Oct 21 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.12-alt1
+- 4.3-12
+
 * Sun Oct 09 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.5-alt2
 - pve-doc-generator: fixed build man pages
 

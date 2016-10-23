@@ -1,7 +1,7 @@
 Name: pve-storage
 Summary: Proxmox VE storage management library
-Version: 4.0.66
-Release: alt2
+Version: 4.0.67
+Release: alt1
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -41,6 +41,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Fri Oct 21 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.67-alt1
+- 4.0-67
+
 * Thu Oct 13 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.66-alt2
 - added requires zfs-utils
 
