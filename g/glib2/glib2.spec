@@ -21,7 +21,7 @@
 
 Name: glib2
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -49,6 +49,7 @@ Patch: glib-2.35.9-alt-compat-version-script.patch
 Patch1: glib-2.36.1-alt-deprecated_paths-nowarning.patch
 Patch2: glib-2.39.3-alt-add-xvt.patch
 Patch3: glib-2.38.2-alt-lfs.patch
+Patch4: glib-2.50.1-alt-dbus_socket_path.patch
 
 %def_with locales
 %if_with locales
@@ -215,6 +216,7 @@ the functionality of the installed glib2/libgio packages.
 %patch1
 %patch2
 %patch3 -p1
+%patch4
 
 %if_with sys_pcre
 rm glib/pcre/*.[ch]
@@ -413,6 +415,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Sat Oct 22 2016 Yuri N. Sedunov <aris@altlinux.org> 2.50.1-alt2
+- gio/gdbusaddress.c: s|var/run/dbus|/run/dbus| (ALT #32444, #32642)
+
 * Mon Oct 10 2016 Yuri N. Sedunov <aris@altlinux.org> 2.50.1-alt1
 - 2.50.1
 
