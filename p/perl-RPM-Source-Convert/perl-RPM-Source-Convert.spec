@@ -4,7 +4,7 @@ BuildRequires: perl(Carp.pm) perl(File/Basename.pm) perl(File/Path.pm) perl(File
 %define module RPM-Source-Convert
 
 Name: perl-%module
-Version: 0.617
+Version: 0.618
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -42,6 +42,9 @@ Conflicts: perl-RPM-Source-Editor < 0.73
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Sun Oct 23 2016 Igor Vlasenko <viy@altlinux.ru> 0.618-alt1
+- bumped suse version to 1320 thnx to Ruslan Hihin 
+
 * Tue Oct 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.617-alt1
 - bugfix release
 
