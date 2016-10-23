@@ -171,7 +171,7 @@
 
 Name: pve-%rname
 Version: 2.7.0
-Release: alt2
+Release: alt3
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -257,6 +257,9 @@ Patch69: CVE-2016-8576-xhci-limit-the-number-of-link-trbs-we-are-willing-to.patc
 Patch70: CVE-2016-8577-9pfs-fix-potential-host-memory-leak-in-v9fs_read.patch
 Patch71: CVE-2016-8578-9pfs-allocate-space-for-guest-originated-empty-strin.patch
 Patch72: x86-lapic-Load-LAPIC-state-at-post_load.patch
+Patch73: 0043-vma-sizes-passed-to-blk_co_preadv-should-be-bytes-no.patch
+Patch74: CVE-2016-8668-net-rocker-set-limit-to-DMA-buffer-size.patch
+Patch75: CVE-2016-8669-char-serial-check-divider-value-against-baud-base.patch
 
 %set_verify_elf_method fhs=relaxed
 
@@ -498,6 +501,9 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch70 -p1
 %patch71 -p1
 %patch72 -p1
+%patch73 -p1
+%patch74 -p1
+%patch75 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -755,6 +761,12 @@ fi
 #_bindir/ivshmem-server
 
 %changelog
+* Sun Oct 23 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.7.0-alt3
+- various fixes
+
+* Mon Oct 17 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.7.0-alt1.M80P.1
+- backport to p8 branch
+
 * Mon Oct 17 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.7.0-alt2
 - 2.7.0-2
 
