@@ -1,5 +1,5 @@
 Name: autologin-sh-functions
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: helper functions for autologin setup
@@ -26,6 +26,9 @@ install -pDm644 %name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Mon Oct 24 2016 Michael Shigorin <mike@altlinux.org> 0.2.3-alt1
+- sddm wants nopasswdlogin now (like lightdm/gdm)
+
 * Tue May 03 2016 Michael Shigorin <mike@altlinux.org> 0.2.2-alt1
 - fixed lxqt/sddm case
 
