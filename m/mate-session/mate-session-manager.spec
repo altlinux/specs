@@ -28,9 +28,9 @@ Summary:        MATE Desktop session manager
 License:        GPLv2+
 Version:        %{branch}.0
 %if 0%{?rel_build}
-Release:        alt1_1
+Release:        alt2_1
 %else
-Release:        alt1_1
+Release:        alt2_0.2%{?git_rel}
 %endif
 URL:            http://mate-desktop.org
 
@@ -148,6 +148,7 @@ exec %_bindir/startmate
 __EOF__
 
 install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
+sed -i -e s,Exec=mate-session,Exec=%_bindir/startmate, %buildroot%_datadir/xsessions/mate.desktop
 
 
 %files -f %{oldname}.lang
@@ -177,6 +178,9 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 
 
 %changelog
+* Tue Oct 25 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt2_1
+- fix the value of 'Exec' field in mate.desktop (closes: #32656)
+
 * Thu Oct 06 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
 - update to mate 1.16
 
