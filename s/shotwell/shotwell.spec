@@ -1,11 +1,11 @@
 %set_verify_elf_method unresolved=relaxed
 %def_disable snapshot
 
-%define ver_major 0.24
+%define ver_major 0.25
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: digital photo organizer designed for the GNOME desktop environment
@@ -19,16 +19,23 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
+%define gtk_ver 3.14
+%define gexiv_ver 0.10.4
+%define soup_ver 2.42
+
 Requires: dconf
 # for video-thumbnailer
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-libav
 
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
-BuildRequires: libdconf-devel libdbus-glib-devel libgexiv2-devel >= 0.10.3
+BuildRequires: libdconf-devel libdbus-glib-devel libgexiv2-devel >= %gexiv_ver
 BuildRequires: libgphoto2-devel libgudev-devel libjson-glib-devel
 BuildRequires: libraw-devel libgomp-devel
 BuildRequires: libsqlite3-devel libstdc++-devel libunique3-devel libwebkit2gtk-devel
 BuildRequires: vala librest-devel libgee0.8-devel
+BuildRequires: gcr-libs-devel
 BuildRequires: desktop-file-utils gnome-doc-utils yelp-tools
 
 %description
@@ -72,6 +79,9 @@ mode, and export them to share with others.
 %doc AUTHORS COPYING NEWS README THANKS
 
 %changelog
+* Mon Oct 24 2016 Yuri N. Sedunov <aris@altlinux.org> 0.25.0-alt1
+- 0.25.0
+
 * Sun Oct 16 2016 Yuri N. Sedunov <aris@altlinux.org> 0.24.1-alt1
 - 0.24.1
 
