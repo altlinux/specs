@@ -1,10 +1,10 @@
 %define rname owncloudclient
 Name: owncloud-client
-Version: 2.0.2
+Version: 2.2.4
 Release: alt1
 
 Group: Networking/File transfer
-Summary: Applet for owncloud files syncronization
+Summary: ownCloud Desktop Client
 License: GPLv2
 
 Provides: mirall = %version-%release
@@ -16,13 +16,21 @@ Patch1: alt-dont-check-updates.patch
 Patch2: alt-confdir.patch
 Patch3: alt-static-libs.patch
 
-# Automatically added by buildreq on Fri Sep 19 2014 (-bi)
-# optimized out: cmake-modules elfutils fontconfig libcloog-isl4 libgst-plugins libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-webkit libqt4-xml libqt4-xmlpatterns libstdc++-devel pkg-config python-base texlive-latex-base
-#BuildRequires: cmake desktop-file-utils gcc-c++ libneon-devel libqt3-devel libqtkeychain-devel libsqlite3-devel phonon-devel python-module-sphinx qt4-designer ruby ruby-stdlibs
-BuildRequires: cmake desktop-file-utils gcc-c++ libneon-devel libqt4-devel libqtkeychain-devel libsqlite3-devel kde-common-devel
+# Automatically added by buildreq on Mon Oct 24 2016 (-bi)
+# optimized out: cmake cmake-modules desktop-file-utils elfutils gcc-c++ kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libgpg-error libgst-plugins1.0 libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-sensors libqt5-sql libqt5-svg libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libqtkeychain-qt5 libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-module-google python-module-sphinx python-modules python3 python3-base qt5-base-devel qt5-tools rpm-build-gir rpm-build-python3 texlive-latex-base zlib-devel
+#BuildRequires: doxygen extra-cmake-modules graphviz kf5-kio-devel libqtkeychain-qt5-devel libsqlite3-devel libssl-devel python3-dev qt5-tools-devel qt5-webkit-devel ruby ruby-stdlibs zlib-devel-static
+BuildRequires: kde-common-devel rpm-build-kf5
+BuildRequires: doxygen extra-cmake-modules graphviz kf5-kio-devel libqtkeychain-qt5-devel libsqlite3-devel libssl-devel python3-dev qt5-tools-devel qt5-webkit-devel zlib-devel
 
 %description
-Applet for file syncronization via owncloud.
+The ownCloud Desktop Client is a tool to synchronize files from ownCloud Server with your computer.
+
+%package kde5
+Summary: KDE5 %name integration
+Group: Graphical desktop/KDE
+Requires: %name
+%description kde5
+KDE5 %name integration
 
 %prep
 %setup -qn %rname-%version
@@ -33,9 +41,11 @@ Applet for file syncronization via owncloud.
 %build
 %add_optflags %optflags_shared
 %Kbuild \
-    -DBUILD_WITH_QT4=ON \
+    -DBUILD_WITH_QT4=OFF \
     -DDATA_INSTALL_DIR=%_datadir \
     -DCMAKE_INSTALL_SYSCONFDIR=/etc/owncloud-client \
+    -DKDE_INSTALL_PLUGINDIR=%_K5plug \
+    -DKDE_INSTALL_KSERVICES5DIR=%_K5srv \
     #
 
 %install
@@ -58,7 +68,16 @@ desktop-file-install \
 %_iconsdir/hicolor/*/apps/owncloud.*
 %_iconsdir/hicolor/*/apps/ownCloud_*.*
 
+%files kde5
+%_K5lib/libownclouddolphinpluginhelper.so
+%_K5plug/kf5/overlayicon/
+%_K5plug/*owncloud*.so
+%_K5srv/*owncloud*.desktop
+
 %changelog
+* Mon Oct 24 2016 Sergey V Turchin <zerg@altlinux.org> 2.2.4-alt1
+- new version (ALT#32649)
+
 * Mon Feb 08 2016 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt1
 - new version
 
