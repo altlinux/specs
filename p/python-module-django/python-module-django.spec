@@ -1,5 +1,5 @@
 %define branch 1.8
-%define version %branch.7
+%define version %branch.15
 %define release alt1
 %define origname Django
 %define oname django
@@ -19,7 +19,7 @@
 Summary: A high-level Python Web framework that encourages rapid development and clean, pragmatic design.
 Name: python-module-%oname
 Version: %version
-Release: alt1.1.1.1
+Release: %release
 Source0: %origname-%version.tar
 License: BSD
 Group: Development/Python
@@ -385,6 +385,10 @@ popd
 %endif
 
 %changelog
+* Mon Oct 24 2016 Alexey Shabalin <shaba@altlinux.ru> 1.8.15-alt1
+- 1.8.15
+- fixed CVE-2016-2512,CVE-2016-2513,CVE-2016-6186,CVE-2016-7401
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.8.7-alt1.1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
