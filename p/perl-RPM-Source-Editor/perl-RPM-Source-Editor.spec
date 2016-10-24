@@ -2,7 +2,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.881
+Version: 0.882
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -73,6 +73,9 @@ mkdir -p %buildroot%_datadir/srpmtools/hooks
 %_man1dir/hashertarbuild*
 
 %changelog
+* Mon Oct 24 2016 Igor Vlasenko <viy@altlinux.ru> 0.882-alt1
+- bugfix release
+
 * Thu Oct 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.881-alt1
 - development release
 
