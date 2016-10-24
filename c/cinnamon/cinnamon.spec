@@ -2,7 +2,7 @@
 
 Name: cinnamon
 Version: 3.0.7
-Release: alt2
+Release: alt3
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -100,6 +100,7 @@ experience.
 Summary: Arch independent files for Cinnamon
 Group: Graphical desktop/GNOME
 BuildArch: noarch
+Provides: python2.7(cme)
 
 %description data
 This package provides noarch data needed for Cinnamon to work.
@@ -140,9 +141,6 @@ export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 
 # Remove .la file
 rm -rf $RPM_BUILD_ROOT/%_libdir/cinnamon/libcinnamon.la
-
-#TODO: restore cinnamon-menu-editor
-rm -rf $RPM_BUILD_ROOT/%_bindir/cinnamon-menu-editor
 
 rm -f $RPM_BUILD_ROOT/%_datadir/man/man1/gnome-session-cinnamon.1
 rm -f $RPM_BUILD_ROOT/%_datadir/man/man1/gnome-session-cinnamon2d.1
@@ -199,6 +197,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Mon Oct 24 2016 Vladimir Didenko <cow@altlinux.org> 3.0.7-alt3
+- restore cinnamon-menu-editor (closes: #32646)
+
 * Mon Oct 3 2016 Vladimir Didenko <cow@altlinux.org> 3.0.7-alt2
 - fix build requires
 
