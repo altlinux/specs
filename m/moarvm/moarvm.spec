@@ -1,5 +1,5 @@
 Name: moarvm
-Version: 2016.09
+Version: 2016.10
 Release: alt1
 Summary: 6model-based VM for NQP and Rakudo Perl 6
 
@@ -18,10 +18,11 @@ Patch: %name-%version-%release.patch
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
-BuildRequires: libuv-devel libtommath-devel libffi-devel perl-Pod-Usage perl-devel perl-podlators
+BuildRequires: libuv-devel libffi-devel perl-Pod-Usage perl-devel perl-podlators
 # TODO:
 # libatomic_ops-devel - sisyphus version is old and static only
 # sha-devel - not exists in sisyphus
+# libtommath-devel - sisyphus version 0.42 is old
 
 Requires: lib%name = %version-%release
 
@@ -55,7 +56,7 @@ mv dynasm dyncall 3rdparty
 
 %build
 perl Configure.pl --prefix=%_prefix --libdir=%_libdir \
-    --has-libtommath  --has-libffi --has-libuv
+    --has-libffi --has-libuv
 %make_build
 
 %install
@@ -72,9 +73,14 @@ perl Configure.pl --prefix=%_prefix --libdir=%_libdir \
 %files -n lib%name-devel
 %_includedir/moar
 %exclude %_includedir/libatomic_ops
+%exclude %_includedir/libtommath
 %_datadir/pkgconfig/moar.pc
 
 %changelog
+* Mon Oct 24 2016 Vladimir Lettiev <crux@altlinux.ru> 2016.10-alt1
+- 2016.10
+- build with bundled libtommath (system libtommath is too old)
+
 * Fri Oct 07 2016 Vladimir Lettiev <crux@altlinux.ru> 2016.09-alt1
 - 2016.09
 
