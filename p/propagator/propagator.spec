@@ -3,7 +3,7 @@
 
 Name: propagator
 Version: 20161024
-Release: alt1
+Release: alt2
 
 Summary: 'Early userspace' set of binaries
 License: GPL
@@ -37,6 +37,10 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Mon Oct 24 2016 Michael Shigorin <mike@altlinux.org> 20161024-alt2
+- disk.c: retry uuid/label based autodetection upon a pause
+  if the first attempt has failed (e.g. flash not ready yet)
+
 * Mon Oct 24 2016 Michael Shigorin <mike@altlinux.org> 20161024-alt1
 - probing.c: load uas module too
 
