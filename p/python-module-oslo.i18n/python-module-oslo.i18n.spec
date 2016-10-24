@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 3.5.0
+Version: 3.9.0
 Release: alt1
 Summary: OpenStack i18n library
 Group: Development/Python
@@ -18,11 +18,11 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-babel >= 1.3
+BuildRequires: python-module-babel >= 2.3.4
 BuildRequires: python-module-sphinx >= 1.1.2
 BuildRequires: python-module-oslosphinx >= 2.5.0
 BuildRequires: python-module-fixtures
-BuildRequires: python-module-oslo.config >= 3.7.0
+BuildRequires: python-module-oslo.config >= 3.14.0
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -117,6 +117,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc doc/build/html
 
 %changelog
+* Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 3.9.0-alt1
+- 3.9.0
+
 * Fri Apr 08 2016 Alexey Shabalin <shaba@altlinux.ru> 3.5.0-alt1
 - 3.5.0
 

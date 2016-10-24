@@ -1,7 +1,7 @@
 %def_with python3
 
 Name:       python-module-magnumclient
-Version:    2.0.0
+Version:    2.3.0
 Release:    alt1
 Summary:    Client Library for OpenStack Magnum Container Management API
 License:    ASL 2.0
@@ -17,16 +17,18 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-babel >= 1.3
+BuildRequires: python-module-babel >= 2.3.4
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-keystoneauth1 >= 2.1.0
-BuildRequires: python-module-stevedore >= 1.5.0
-BuildRequires: python-module-requests >= 2.8.1
+BuildRequires: python-module-keystoneauth1 >= 2.10.0
+BuildRequires: python-module-stevedore >= 1.16.0
+BuildRequires: python-module-requests >= 2.10.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
 BuildRequires: python-module-os-client-config >= 1.13.1
 BuildRequires: python-module-prettytable >= 0.7
+BuildRequires: python-module-cryptography >= 1.0
+BuildRequires: python-module-decorator >= 3.4.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -38,12 +40,14 @@ BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-argparse
 BuildRequires: python3-module-requests >= 2.8.1
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-keystoneauth1 >= 2.1.0
+BuildRequires: python3-module-keystoneauth1 >= 2.10.0
 BuildRequires: python3-module-os-client-config >= 1.13.1
 BuildRequires: python3-module-oslo.i18n >= 2.1.0
 BuildRequires: python3-module-oslo.serialization >= 1.10.0
-BuildRequires: python3-module-oslo.utils >= 3.5.0
-BuildRequires: python3-module-stevedore >= 1.5.0
+BuildRequires: python3-module-oslo.utils >= 3.16.0
+BuildRequires: python3-module-stevedore >= 1.16.0
+BuildRequires: python-module-cryptography >= 1.0
+BuildRequires: python-module-decorator >= 3.4.0
 %endif
 
 %description
@@ -130,6 +134,9 @@ rm -fr html/.doctrees html/.buildinfo
 %doc LICENSE html
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 2.3.0-alt1
+- 2.3.0
+
 * Thu Apr 14 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt1
 - 2.0.0
 

@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 3.7.0
+Version: 3.14.0
 Release: alt1
 Summary: OpenStack oslo.concurrency library
 Group: Development/Python
@@ -18,17 +18,17 @@ Provides: python-module-oslo-concurrency = %EVR
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
-BuildRequires: python-module-babel >= 1.3
 BuildRequires: python-module-enum34
-BuildRequires: python-module-iso8601 >= 0.1.9
-BuildRequires: python-module-oslo.config >= 3.7.0
+BuildRequires: python-module-iso8601 >= 0.1.11
+BuildRequires: python-module-oslo.config >= 3.14.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-retrying >= 1.2.3
 BuildRequires: python-module-fasteners >= 0.7
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-reno
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -37,12 +37,11 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
-BuildRequires: python3-module-babel >= 1.3
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-iso8601 >= 0.1.9
-BuildRequires: python3-module-oslo.config >= 3.7.0
+BuildRequires: python3-module-iso8601 >= 0.1.11
+BuildRequires: python3-module-oslo.config >= 3.14.0
 BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.utils >= 3.5.0
+BuildRequires: python3-module-oslo.utils >= 3.16.0
 BuildRequires: python3-module-retrying >= 1.2.3
 BuildRequires: python3-module-fasteners >= 0.7
 %endif
@@ -136,6 +135,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 3.14.0-alt1
+- 3.14.0
+
 * Mon Apr 11 2016 Alexey Shabalin <shaba@altlinux.ru> 3.7.0-alt1
 - 3.7.0
 

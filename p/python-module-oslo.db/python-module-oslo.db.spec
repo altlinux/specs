@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 4.7.0
+Version: 4.13.3
 Release: alt1
 Summary: OpenStack oslo.db library
 Group: Development/Python
@@ -18,15 +18,15 @@ Provides: python-module-oslo-db = %EVR
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-alembic >= 0.8.0
-BuildRequires: python-module-babel >= 1.3
+BuildRequires: python-module-alembic >= 0.8.4
+BuildRequires: python-module-debtcollector >= 1.2.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.config >= 3.7.0
-BuildRequires: python-module-oslo.context >= 0.2.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-oslo.config >= 3.14.0
+BuildRequires: python-module-oslo.context >= 2.9.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
 BuildRequires: python-module-SQLAlchemy >= 1.0.10
 BuildRequires: python-module-migrate >= 0.9.6 python-module-migrate-tests
-BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: python-module-stevedore >= 1.16.0
 BuildRequires: python-module-six >= 1.9.0
 
 BuildRequires: python-module-fixtures >= 1.3.1
@@ -50,16 +50,16 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
-BuildRequires: python3-module-alembic >= 0.8.0
-BuildRequires: python3-module-babel >= 1.3
-BuildRequires: python3-module-oslo.utils >= 3.5.0
+BuildRequires: python3-module-alembic >= 0.8.4
+BuildRequires: python3-module-debtcollector >= 1.2.0
 BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.config >= 3.7.0
-BuildRequires: python3-module-oslo.context >= 0.2.0
+BuildRequires: python3-module-oslo.config >= 3.14.0
+BuildRequires: python3-module-oslo.context >= 2.9.0
+BuildRequires: python3-module-oslo.utils >= 3.16.0
 BuildRequires: python3-module-migrate python3-module-migrate-tests
 BuildRequires: python3-module-eventlet
 BuildRequires: python3-module-oslotest
-BuildRequires: python3-module-stevedore >= 1.5.0
+BuildRequires: python3-module-stevedore >= 1.16.0
 BuildRequires: python3-module-six >= 1.9.0
 
 BuildRequires: python3-module-testresources python3-module-testscenarios
@@ -170,6 +170,9 @@ popd
 %endif
 
 %changelog
+* Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 4.13.3-alt1
+- 4.13.3
+
 * Mon Apr 11 2016 Alexey Shabalin <shaba@altlinux.ru> 4.7.0-alt1
 - 4.7.0
 

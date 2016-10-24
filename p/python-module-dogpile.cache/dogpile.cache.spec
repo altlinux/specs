@@ -1,5 +1,3 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1
 %define mname dogpile
 %define oname %mname.cache
 
@@ -7,35 +5,37 @@ Release: alt1.1
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.5.7
-#Release: alt1
+Version: 0.6.2
+Release: alt1
 Summary: A caching front-end based on the Dogpile lock
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/dogpile.cache/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://bitbucket.org/zzzeek/dogpile.cache.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-%mname-core >= 0.4.1 python-module-coverage
-BuildPreReq: python-module-nose python-module-mock
-BuildPreReq: python-module-mako
-BuildPreReq: python-module-sphinx-devel python-module-changelog
-BuildPreReq: python-module-sphinx-paramlinks
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-coverage
+BuildRequires: python-module-nose python-module-mock
+BuildRequires: python-module-mako
+BuildRequires: python-module-sphinx-devel python-module-changelog
+BuildRequires: python-module-sphinx-paramlinks
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-%mname-core python3-module-coverage
+BuildPreReq: python3-module-coverage
 BuildPreReq: python3-module-nose python3-module-mock
 BuildPreReq: python3-module-mako
 %endif
 
 Provides: python-module-dogpile-cache = %EVR
 Obsoletes: python-module-dogpile-cache < %EVR
+Provides: python-module-dogpile-core = %EVR
+Obsoletes: python-module-dogpile-core < %EVR
+
 %py_provides %oname
-%py_requires %mname.core
+%py_provides %mname.core
 
 BuildRequires(pre): rpm-macros-sphinx
 
@@ -58,8 +58,10 @@ Summary: A caching front-end based on the Dogpile lock
 Group: Development/Python3
 Provides: python3-module-dogpile-cache = %EVR
 Obsoletes: python3-module-dogpile-cache < %EVR
+Provides: python3-module-dogpile-core = %EVR
+Obsoletes: python3-module-dogpile-core < %EVR
 %py3_provides %oname
-%py3_requires %mname.core
+%py3_provides %mname.core
 
 %description -n python3-module-%oname
 A caching API built around the concept of a "dogpile lock", which allows
@@ -146,9 +148,7 @@ popd
 
 %files
 %doc *.rst
-%dir %python_sitelibdir/*/pickle
-%python_sitelibdir/%mname/cache
-%python_sitelibdir/*.egg-info
+%python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 
 %files pickles
@@ -160,11 +160,14 @@ popd
 %if_with python3
 %files -n python3-module-%oname
 %doc *.rst
-%python3_sitelibdir/%mname/cache
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 0.6.2-alt1
+- 0.6.2
+- The dogpile.core package has been rolled into dogpile.cache directly
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.7-alt1.1
 - (AUTO) subst_x86_64.
 

@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 2.4.0
+Version: 2.13.0
 Release: alt1
 Summary: OpenStack oslo.serialization library
 Group: Development/Python
@@ -18,10 +18,9 @@ Provides: python-module-oslo-serialization = %EVR
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
-BuildRequires: python-module-babel >= 1.3
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-msgpack >= 0.4.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
 BuildRequires: python-module-pytz >= 2013.6
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
@@ -33,10 +32,9 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-babel >= 1.3
 BuildRequires: python3-module-msgpack >= 0.4.0
 BuildRequires: python3-module-iso8601 >= 0.1.9
-BuildRequires: python3-module-oslo.utils >= 3.5.0
+BuildRequires: python3-module-oslo.utils >= 3.16.0
 BuildRequires: python3-module-pytz
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
@@ -118,6 +116,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 2.13.0-alt1
+- 2.13.0
+
 * Mon Apr 11 2016 Alexey Shabalin <shaba@altlinux.ru> 2.4.0-alt1
 - 2.4.0
 

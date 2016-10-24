@@ -1,7 +1,7 @@
 %def_with python3
 
 Name: python-module-ceilometerclient
-Version: 2.4.0
+Version: 2.6.1
 Release: alt1
 Summary: Python API and CLI for OpenStack Ceilometer
 
@@ -18,31 +18,32 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-iso8601 >= 0.1.9
+BuildRequires: python-module-reno
+BuildRequires: python-module-iso8601 >= 0.1.11
 BuildRequires: python-module-keystoneauth1 >= 2.1.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
 BuildRequires: python-module-oslo.utils >= 3.5.0
 BuildRequires: python-module-prettytable >= 0.7
-BuildRequires: python-module-keystoneclient >= 1.6.0
 BuildRequires: python-module-requests >= 2.8.1
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: python-module-stevedore >= 1.10.0
+BuildRequires: python-module-keystoneauth1
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.6
-BuildRequires: python3-module-iso8601 >= 0.1.9
+BuildRequires: python3-module-iso8601 >= 0.1.11
 BuildRequires: python3-module-prettytable >= 0.7
 BuildRequires: python3-module-keystoneauth1 >= 2.1.0
 BuildRequires: python3-module-oslo.i18n >= 2.1.0
 BuildRequires: python3-module-oslo.serialization >= 1.10.0
 BuildRequires: python3-module-oslo.utils >= 3.5.0
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-keystoneclient >= 1.6.0
 BuildRequires: python3-module-requests >= 2.5.2
-BuildRequires: python3-module-stevedore >= 1.5.0
+BuildRequires: python3-module-stevedore >= 1.10.0
+BuildRequires: python3-module-keystoneauth1
 %endif
 
 
@@ -132,6 +133,9 @@ rm -rf html/.doctrees html/.buildinfo
 %doc html
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 2.6.1-alt1
+- 2.6.1
+
 * Wed Apr 20 2016 Alexey Shabalin <shaba@altlinux.ru> 2.4.0-alt1
 - 2.4.0
 

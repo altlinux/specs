@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 0.13.1
-Release: alt3
+Version: 0.18.0
+Release: alt1
 Summary: OpenStack Image Service Store Library
 Group: Development/Python
 License: ASL 2.0
@@ -18,26 +18,27 @@ BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-oslo.config >= 3.7.0
+BuildRequires: python-module-reno
+BuildRequires: python-module-oslo.config >= 3.14.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
-BuildRequires: python-module-oslo.concurrency >= 3.5.0
-BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
+BuildRequires: python-module-oslo.concurrency >= 3.8.0
+BuildRequires: python-module-stevedore >= 1.16.0
 BuildRequires: python-module-enum34
 BuildRequires: python-module-eventlet >= 0.18.2
 BuildRequires: python-module-debtcollector >= 1.2.0
 BuildRequires: python-module-jsonschema >= 2.0.0
-BuildRequires: python-module-keystoneclient >= 1.6.0
-BuildRequires: python-module-requests >= 2.8.1
+BuildRequires: python-module-keystoneclient >= 2.0.0
+BuildRequires: python-module-requests >= 2.10.0
 
 BuildRequires: python-module-boto >= 2.32.1
-BuildRequires: python-module-oslo.vmware >= 1.16.0
+BuildRequires: python-module-oslo.vmware >= 2.11.0
 BuildRequires: python-module-httplib2 >= 0.7.5
 BuildRequires: python-module-swiftclient >= 2.2.0
-BuildRequires: python-module-cinderclient >= 1.3.1
-BuildRequires: python-module-os-brick >= 1.0.0
-BuildRequires: python-module-oslo.rootwrap >= 2.0.0
+BuildRequires: python-module-cinderclient >= 1.6.0
+BuildRequires: python-module-os-brick >= 1.3.0
+BuildRequires: python-module-oslo.rootwrap >= 5.0.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -95,7 +96,6 @@ Documentation for OpenStack Image Service Store Library
 
 # Remove bundled egg-info
 #rm -rf %sname.egg-info
-
 sed 's/requests.packages.urllib3.util/urllib3.util/' -i glance_store/_drivers/vmware_datastore.py
 
 %if_with python3
@@ -110,7 +110,6 @@ pushd ../python3
 %python3_build
 popd
 %endif
-
 
 # disabling git call for last modification date from git repo
 sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
@@ -146,6 +145,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests/{unit,functional,utils.py,base.py}
 %doc doc/build/html
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 0.18.0-alt1
+- 0.18.0
+
 * Thu Jun 16 2016 Lenar Shakirov <snejok@altlinux.ru> 0.13.1-alt3
 - tests.fakes packed: needed for glance-{api,registry}
 

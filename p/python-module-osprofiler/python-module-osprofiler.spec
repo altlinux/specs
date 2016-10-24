@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 1.2.0
+Version: 1.4.0
 Release: alt1
 Summary: OpenStack cross-project profiling library
 Group: Development/Python
@@ -13,8 +13,9 @@ Source: %name-%version.tar
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr
+BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-oslo.messaging >= 5.2.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-oslo.utils >= 3.4.0
@@ -27,10 +28,10 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr
 BuildRequires: python3-module-six >= 1.9.0
+BuildRequires: python3-module-oslo.messaging >= 5.2.0
 BuildRequires: python3-module-oslo.utils >= 3.4.0
 BuildRequires: python3-module-webob >= 1.2.3
 BuildRequires: python3-module-oslo.config >= 3.2.0
-
 %endif
 
 BuildArch: noarch
@@ -110,6 +111,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc doc/build/html
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1.4.0-alt1
+- 1.4.0
+
 * Wed Apr 13 2016 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt1
 - 1.2.0
 

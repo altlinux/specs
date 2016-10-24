@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.3.0
+Version: 4.7.0
 Release: alt1
 Summary: OpenStack Sphinx Extensions and Theme
 License: ASLv2.0
@@ -17,7 +17,7 @@ BuildArch: noarch
 
 BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-requests >= 2.8.1
+BuildRequires: python-module-requests >= 2.10.0
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx-devel >= 1.1.2
 BuildRequires: python-module-hacking >= 0.10.0
@@ -27,7 +27,7 @@ BuildRequires: python-module-hacking >= 0.10.0
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-requests >= 2.8.1
+BuildRequires: python3-module-requests >= 2.10.0
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-sphinx-devel >= 1.1.2
 BuildRequires: python3-module-hacking >= 0.10.0
@@ -125,6 +125,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 4.7.0-alt1
+- 4.7.0
+
 * Tue Apr 12 2016 Alexey Shabalin <shaba@altlinux.ru> 4.3.0-alt1
 - 4.3.0
 

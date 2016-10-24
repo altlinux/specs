@@ -1,7 +1,7 @@
 %add_findreq_skiplist %python_sitelibdir/nova/cloudpipe/*.template
 
 Name: openstack-nova
-Version: 13.0.0
+Version: 14.0.1
 Release: alt1
 Epoch: 1
 Summary: OpenStack Compute (nova)
@@ -29,6 +29,8 @@ Source27: %name-cells.service
 Source28: %name-spicehtml5proxy.service
 Source29: %name-novncproxy.service
 Source31: %name-serialproxy.service
+Source32: %name-api-os-compute.service
+Source33: %name-placement-api.service
 
 Source110: %name-api.init
 Source111: %name-cert.init
@@ -44,6 +46,9 @@ Source127: %name-cells.init
 Source128: %name-spicehtml5proxy.init
 Source129: %name-novncproxy.init
 Source131: %name-serialproxy.init
+Source132: %name-api-os-compute.init
+Source133: %name-placement-api.init
+
 
 Source21: nova-polkit.pkla
 Source23: nova-polkit.rules
@@ -62,7 +67,7 @@ BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-SQLAlchemy >= 1.0.10
 BuildRequires: python-module-eventlet >= 0.18.2
 BuildRequires: python-module-migrate >= 0.9.6
-BuildRequires: python-module-iso8601 >= 0.1.9
+BuildRequires: python-module-iso8601 >= 0.1.11
 BuildRequires: python-module-keystonemiddleware >= 4.0.0
 BuildRequires: python-module-lxml >= 2.3
 BuildRequires: python-module-routes >= 1.12.3
@@ -71,41 +76,44 @@ BuildRequires: python-module-PasteDeploy >= 1.5.0
 BuildRequires: python-module-numpy
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-netaddr >= 0.7.12
+BuildRequires: python-module-netaddr >= 0.7.13
 BuildRequires: python-module-netifaces >= 0.10.4
+BuildRequires: python-module-paramiko >= 2.0
 BuildRequires: python-module-jsonschema >= 2.0.0
-BuildRequires: python-module-cinderclient >= 1.3.1
-BuildRequires: python-module-keystoneauth1 >= 2.1.0
-BuildRequires: python-module-neutronclient >= 2.6.0
-BuildRequires: python-module-glanceclient >= 2.0.0
-BuildRequires: python-module-requests >= 2.8.1
-BuildRequires: python-module-stevedore >= 1.5.0
-BuildRequires: python-module-setuptools >= 16.0
-BuildRequires: python-module-websockify >= 0.6.1
+BuildRequires: python-module-cinderclient >= 1.6.0
+BuildRequires: python-module-keystoneauth1 >= 2.10.0
+BuildRequires: python-module-neutronclient >= 5.1.0
+BuildRequires: python-module-glanceclient >= 2.3.0
+BuildRequires: python-module-requests >= 2.10.0
+BuildRequires: python-module-stevedore >= 1.16.0
+BuildRequires: python-module-websockify >= 0.8.0
 BuildRequires: python-module-oslo.cache >= 1.5.0
-BuildRequires: python-module-oslo.concurrency >= 3.5.0
-BuildRequires: python-module-oslo.config >= 3.7.0
-BuildRequires: python-module-oslo.context >= 0.2.0
+BuildRequires: python-module-oslo.concurrency >= 3.8.0
+BuildRequires: python-module-oslo.config >= 3.14.0
+BuildRequires: python-module-oslo.context >= 2.9.0
 BuildRequires: python-module-oslo.log >= 1.14.0
 BuildRequires: python-module-oslo.reports >= 0.6.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
-BuildRequires: python-module-oslo.db >= 4.1.0
-BuildRequires: python-module-oslo.rootwrap >= 2.0.0
-BuildRequires: python-module-oslo.messaging >= 4.0.0
-BuildRequires: python-module-oslo.policy >= 0.5.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
+BuildRequires: python-module-oslo.db >= 4.10.0
+BuildRequires: python-module-oslo.rootwrap >= 5.0.0
+BuildRequires: python-module-oslo.messaging >= 5.2.0
+BuildRequires: python-module-oslo.policy >= 1.9.0
+BuildRequires: python-module-oslo.privsep >= 1.9.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.service >= 1.0.0
-BuildRequires: python-module-rfc3986 >= 0.2.0
+BuildRequires: python-module-oslo.service >= 1.10.0
+BuildRequires: python-module-rfc3986 >= 0.2.2
 BuildRequires: python-module-oslo.middleware >= 3.0.0
 BuildRequires: python-module-psutil >= 1.1.1
-BuildRequires: python-module-oslo.versionedobjects >= 1.5.0
-BuildRequires: python-module-alembic >= 0.8.0
-BuildRequires: python-module-os-brick >= 1.0.0
+BuildRequires: python-module-oslo.versionedobjects >= 1.13.0
+BuildRequires: python-module-os-brick >= 1.6.1
+BuildRequires: python-module-os-vif >= 1.1.0
 BuildRequires: python-module-os-win >= 0.2.3
-BuildRequires: python-module-castellan >= 0.3.1
+BuildRequires: python-module-castellan >= 0.4.0
+BuildRequires: python-module-microversion-parse >= 0.1.2
+BuildRequires: python-module-wsgi_intercept >= 0.6.1
 BuildRequires: python-module-barbicanclient
-BuildRequires: python-module-oslo.vmware >= 1.16.0
+BuildRequires: python-module-oslo.vmware >= 2.11.0
 # Required to build module documents
 BuildRequires: python-module-boto
 BuildRequires: python-module-webob
@@ -347,6 +355,24 @@ standard hardware configurations and seven major hypervisors.
 This package contains the Nova noVNC Proxy service that can proxy
 VNC traffic over browser websockets connections.
 
+
+%package placement-api
+Summary: OpenStack Nova Placement Service
+Group: System/Servers
+Requires: openstack-nova-common = %EVR
+
+%description placement-api
+OpenStack Compute (codename Nova) is open source software designed to
+provision and manage large networks of virtual machines, creating a
+redundant and scalable cloud computing platform. It gives you the
+software, control panels, and APIs required to orchestrate a cloud,
+including running instances, managing networks, and controlling access
+through users and projects. OpenStack Compute strives to be both
+hardware and hypervisor agnostic, currently supporting a variety of
+standard hardware configurations and seven major hypervisors.
+
+This package contains the Nova Placement API Service.
+
 %package spicehtml5proxy
 Summary: OpenStack Nova Spice HTML5 console access service
 Group: System/Servers
@@ -489,36 +515,40 @@ EOF
 install -p -D -m 644 %SOURCE3 %buildroot%_tmpfilesdir/%name.conf
 
 # Install initscripts for Nova services
-install -p -D -m 644 %SOURCE10 %buildroot%_unitdir/openstack-nova-api.service
-install -p -D -m 644 %SOURCE11 %buildroot%_unitdir/openstack-nova-cert.service
-install -p -D -m 644 %SOURCE12 %buildroot%_unitdir/openstack-nova-compute.service
-install -p -D -m 644 %SOURCE13 %buildroot%_unitdir/openstack-nova-network.service
-install -p -D -m 644 %SOURCE15 %buildroot%_unitdir/openstack-nova-scheduler.service
-install -p -D -m 644 %SOURCE18 %buildroot%_unitdir/openstack-nova-xvpvncproxy.service
-install -p -D -m 644 %SOURCE19 %buildroot%_unitdir/openstack-nova-console.service
-install -p -D -m 644 %SOURCE20 %buildroot%_unitdir/openstack-nova-consoleauth.service
-install -p -D -m 644 %SOURCE25 %buildroot%_unitdir/openstack-nova-metadata-api.service
-install -p -D -m 644 %SOURCE26 %buildroot%_unitdir/openstack-nova-conductor.service
-install -p -D -m 644 %SOURCE27 %buildroot%_unitdir/openstack-nova-cells.service
-install -p -D -m 644 %SOURCE28 %buildroot%_unitdir/openstack-nova-spicehtml5proxy.service
-install -p -D -m 644 %SOURCE29 %buildroot%_unitdir/openstack-nova-novncproxy.service
-install -p -D -m 644 %SOURCE31 %buildroot%_unitdir/openstack-nova-serialproxy.service
+install -p -D -m 644 %SOURCE10 %buildroot%_unitdir/%name-api.service
+install -p -D -m 644 %SOURCE11 %buildroot%_unitdir/%name-cert.service
+install -p -D -m 644 %SOURCE12 %buildroot%_unitdir/%name-compute.service
+install -p -D -m 644 %SOURCE13 %buildroot%_unitdir/%name-network.service
+install -p -D -m 644 %SOURCE15 %buildroot%_unitdir/%name-scheduler.service
+install -p -D -m 644 %SOURCE18 %buildroot%_unitdir/%name-xvpvncproxy.service
+install -p -D -m 644 %SOURCE19 %buildroot%_unitdir/%name-console.service
+install -p -D -m 644 %SOURCE20 %buildroot%_unitdir/%name-consoleauth.service
+install -p -D -m 644 %SOURCE25 %buildroot%_unitdir/%name-metadata-api.service
+install -p -D -m 644 %SOURCE26 %buildroot%_unitdir/%name-conductor.service
+install -p -D -m 644 %SOURCE27 %buildroot%_unitdir/%name-cells.service
+install -p -D -m 644 %SOURCE28 %buildroot%_unitdir/%name-spicehtml5proxy.service
+install -p -D -m 644 %SOURCE29 %buildroot%_unitdir/%name-novncproxy.service
+install -p -D -m 644 %SOURCE31 %buildroot%_unitdir/%name-serialproxy.service
+install -p -D -m 644 %SOURCE32 %buildroot%_unitdir/%name-api-os-compute.service
+install -p -D -m 644 %SOURCE33 %buildroot%_unitdir/%name-placement-api.service
 
 # Install init scripts
-install -p -D -m 755 %SOURCE110 %buildroot%_initdir/openstack-nova-api
-install -p -D -m 755 %SOURCE111 %buildroot%_initdir/openstack-nova-cert
-install -p -D -m 755 %SOURCE112 %buildroot%_initdir/openstack-nova-compute
-install -p -D -m 755 %SOURCE113 %buildroot%_initdir/openstack-nova-network
-install -p -D -m 755 %SOURCE115 %buildroot%_initdir/openstack-nova-scheduler
-install -p -D -m 755 %SOURCE118 %buildroot%_initdir/openstack-nova-xvpvncproxy
-install -p -D -m 755 %SOURCE119 %buildroot%_initdir/openstack-nova-console
-install -p -D -m 755 %SOURCE120 %buildroot%_initdir/openstack-nova-consoleauth
-install -p -D -m 755 %SOURCE125 %buildroot%_initdir/openstack-nova-metadata-api
-install -p -D -m 755 %SOURCE126 %buildroot%_initdir/openstack-nova-conductor
-install -p -D -m 755 %SOURCE127 %buildroot%_initdir/openstack-nova-cells
-install -p -D -m 755 %SOURCE128 %buildroot%_initdir/openstack-nova-spicehtml5proxy
-install -p -D -m 755 %SOURCE129 %buildroot%_initdir/openstack-nova-novncproxy
-install -p -D -m 755 %SOURCE131 %buildroot%_initdir/openstack-nova-serialproxy
+install -p -D -m 755 %SOURCE110 %buildroot%_initdir/%name-api
+install -p -D -m 755 %SOURCE111 %buildroot%_initdir/%name-cert
+install -p -D -m 755 %SOURCE112 %buildroot%_initdir/%name-compute
+install -p -D -m 755 %SOURCE113 %buildroot%_initdir/%name-network
+install -p -D -m 755 %SOURCE115 %buildroot%_initdir/%name-scheduler
+install -p -D -m 755 %SOURCE118 %buildroot%_initdir/%name-xvpvncproxy
+install -p -D -m 755 %SOURCE119 %buildroot%_initdir/%name-console
+install -p -D -m 755 %SOURCE120 %buildroot%_initdir/%name-consoleauth
+install -p -D -m 755 %SOURCE125 %buildroot%_initdir/%name-metadata-api
+install -p -D -m 755 %SOURCE126 %buildroot%_initdir/%name-conductor
+install -p -D -m 755 %SOURCE127 %buildroot%_initdir/%name-cells
+install -p -D -m 755 %SOURCE128 %buildroot%_initdir/%name-spicehtml5proxy
+install -p -D -m 755 %SOURCE129 %buildroot%_initdir/%name-novncproxy
+install -p -D -m 755 %SOURCE131 %buildroot%_initdir/%name-serialproxy
+install -p -D -m 755 %SOURCE132 %buildroot%_initdir/%name-api-os-compute
+install -p -D -m 755 %SOURCE133 %buildroot%_initdir/%name-placement-api
 
 # Install sudoers
 install -p -D -m 400 %SOURCE24 %buildroot%_sysconfdir/sudoers.d/nova
@@ -612,9 +642,12 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %post api
 %post_service %name-api
 %post_service %name-metadata-api
+%post_service %name-api-os-compute
+
 %preun api
 %preun_service %name-api
 %preun_service %name-metadata-api
+%preun_service %name-api-os-compute
 
 %post conductor
 %post_service %name-conductor
@@ -639,6 +672,11 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %post_service %name-novncproxy
 %preun novncproxy
 %preun_service %name-novncproxy
+
+%post placement-api
+%post_service %name-placement-api
+%preun placement-api
+%preun_service %name-placement-api
 
 %post spicehtml5proxy
 %post_service %name-spicehtml5proxy
@@ -675,6 +713,7 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %_bindir/nova-manage
 %_bindir/nova-rootwrap
 %_bindir/nova-rootwrap-daemon
+%_bindir/nova-policy
 
 %_datadir/nova
 %_man1dir/nova*.1.*
@@ -732,8 +771,12 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %files api
 %config %_sysconfdir/nova/rootwrap.d/api-metadata.filters
 %_bindir/nova-api*
-%_unitdir/%name-*api.service
-%_initdir/%name-*api
+%_initdir/%name-api
+%_initdir/%name-metadata-api
+%_initdir/%name-api-os-compute
+%_unitdir/%name-api.service
+%_unitdir/%name-metadata-api.service
+%_unitdir/%name-api-os-compute.service
 
 %files conductor
 %_bindir/nova-conductor
@@ -759,6 +802,11 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %_initdir/%name-novncproxy
 %config(noreplace) %_sysconfdir/sysconfig/openstack-nova-novncproxy
 
+%files placement-api
+%_bindir/nova-placement-api
+%_unitdir/%name-placement-api.service
+%_initdir/%name-placement-api
+
 %files spicehtml5proxy
 %_bindir/nova-spicehtml5proxy
 %_unitdir/%name-spicehtml5proxy.service
@@ -778,6 +826,9 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Oct 21 2016 Alexey Shabalin <shaba@altlinux.ru> 1:14.0.1-alt1
+- 14.0.1 Newton release
+
 * Thu Apr 14 2016 Alexey Shabalin <shaba@altlinux.ru> 1:13.0.0-alt1
 - 13.0.0 Mitaka release
 

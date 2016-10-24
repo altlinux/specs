@@ -2,22 +2,17 @@
 %def_with python3
 %def_disable check
 
-Name:           python-module-%{pypi_name}
-Version:        1.3.1
-Release:        alt2.1
-Summary:        Fixtures, reusable state for writing clean tests and more
+Name: python-module-%pypi_name
+Version: 3.0.0
+Release: alt1
+Summary: Fixtures, reusable state for writing clean tests and more
 
-Group:		Development/Python
-License:        ASL 2.0 or BSD
-URL:            https://launchpad.net/python-fixtures
-Source0:        %{name}-%{version}.tar
-BuildArch:      noarch
+Group: Development/Python
+License: ASL 2.0 or BSD
+Url: https://launchpad.net/python-fixtures
+Source0: %name-%version.tar
+BuildArch: noarch
 
-#BuildRequires:  python-devel python-module-mock
-#BuildRequires:  python-module-setuptools-tests
-#BuildRequires:  python-module-mimeparse
-
-#Requires:       python-module-testtools
 BuildRequires: python-module-mimeparse python-module-pbr python-module-pytest python-module-unittest2
 
 %description
@@ -28,18 +23,14 @@ Glue code is provided that makes using fixtures that meet the Fixtures
 contract in unittest compatible test cases easy and straight forward.
 
 %if_with python3
-%package -n python3-module-%{pypi_name}
-Summary:        Fixtures, reusable state for writing clean tests and more
-Group:		Development/Python
-BuildArch:      noarch
+%package -n python3-module-%pypi_name
+Summary: Fixtures, reusable state for writing clean tests and more
+Group: Development/Python
+BuildArch: noarch
 BuildRequires(pre):  rpm-build-python3
-#BuildRequires:  python3-module-setuptools python3-module-mock
-#BuildRequires:  python3-module-setuptools-tests
-#BuildRequires:  python3-module-mimeparse
-#Requires:       python3-module-testtools
-BuildRequires: python3-module-html5lib python3-module-mimeparse python3-module-pbr python3-module-pytest python3-module-unittest2
+BuildRequires: python3-module-mimeparse python3-module-pbr python3-module-pytest python3-module-unittest2
 
-%description -n python3-module-%{pypi_name}
+%description -n python3-module-%pypi_name
 Fixtures defines a Python contract for reusable state / support logic,
 primarily for unit testing. Helper and adaption logic is included to
 make it easy to write your own fixtures using the fixtures contract.
@@ -84,17 +75,18 @@ popd
 
 %files
 %doc README GOALS NEWS Apache-2.0 BSD COPYING
-%{python_sitelibdir}/%{pypi_name}
-%{python_sitelibdir}/%{pypi_name}-%{version}-py?.?.egg-info
+%python_sitelibdir/*
 
 %if_with python3
-%files -n python3-module-%{pypi_name}
+%files -n python3-module-%pypi_name
 %doc README GOALS NEWS Apache-2.0 BSD COPYING
-%{python3_sitelibdir}/%{pypi_name}
-%{python3_sitelibdir}/%{pypi_name}-%{version}-py?.?.egg-info
+%python3_sitelibdir/*
 %endif
 
 %changelog
+* Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 3.0.0-alt1
+- 3.0.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.1-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

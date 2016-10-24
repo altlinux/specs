@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%pypi_name
-Version: 0.0.1
+Version: 0.4.0
 Release: alt1
 Summary: OpenStack Neutron shared routines and utilities
 Group: Development/Python
@@ -18,12 +18,19 @@ BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 0.1.1
-BuildRequires: python-module-babel >= 1.3
-BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-oslo.log >= 1.12.0
-BuildRequires: python-module-oslo.utils >= 2.8.0
-
+BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-babel >= 2.3.4
+BuildRequires: python-module-SQLAlchemy >= 1.0.10
+BuildRequires: python-module-debtcollector >= 1.2.0
+BuildRequires: python-module-oslo.config >= 3.14.0
+BuildRequires: python-module-oslo.context >= 2.9.0
+BuildRequires: python-module-oslo.db >= 4.10.0
+BuildRequires: python-module-oslo.i18n >= 2.1.0
+BuildRequires: python-module-oslo.log >= 1.14.0
+BuildRequires: python-module-oslo.messaging >= 5.2.0
+BuildRequires: python-module-oslo.policy >= 1.9.0
+BuildRequires: python-module-oslo.service >= 1.10.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -32,9 +39,17 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-babel >= 1.3
-BuildRequires: python3-module-oslo.i18n >= 1.5.0
-BuildRequires: python3-module-oslo.log >= 1.12.0
-BuildRequires: python3-module-oslo.utils >= 2.8.0
+BuildRequires: python3-module-SQLAlchemy >= 1.0.10
+BuildRequires: python3-module-debtcollector >= 1.2.0
+BuildRequires: python3-module-oslo.config >= 3.14.0
+BuildRequires: python3-module-oslo.context >= 2.9.0
+BuildRequires: python3-module-oslo.db >= 4.10.0
+BuildRequires: python3-module-oslo.i18n >= 2.1.0
+BuildRequires: python3-module-oslo.log >= 1.14.0
+BuildRequires: python3-module-oslo.messaging >= 5.2.0
+BuildRequires: python3-module-oslo.policy >= 1.9.0
+BuildRequires: python3-module-oslo.service >= 1.10.0
+BuildRequires: python3-module-oslo.utils >= 3.16.0
 %endif
 
 %description
@@ -109,5 +124,8 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc doc/build/html
 
 %changelog
+* Fri Oct 21 2016 Alexey Shabalin <shaba@altlinux.ru> 0.4.0-alt1
+- 0.4.0
+
 * Fri Apr 15 2016 Alexey Shabalin <shaba@altlinux.ru> 0.0.1-alt1
 - Initial package.

@@ -2,13 +2,13 @@
 %def_with python3
 
 Name: python-module-%pypi_name
-Version: 1.0.3
-Release: alt2.1.1
+Version: 1.2.1
+Release: alt1
 Summary: A lean WSGI object-dispatching web framework
 Group: Development/Python
 
 License: BSD
-Url: http://github.com/dreamhost/%pypi_name
+Url: http://github.com/pecan/pecan
 Source0: %name-%version.tar
 BuildArch: noarch
 
@@ -112,6 +112,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 
 
 %changelog
+* Fri Oct 21 2016 Alexey Shabalin <shaba@altlinux.ru> 1.2.1-alt1
+- 1.2.1
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.3-alt2.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

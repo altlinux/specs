@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%pypi_name
-Version: 2.5.0
+Version: 2.12.2
 Release: alt1
 Summary: OpenStack authenticating tools
 Group: Development/Python
@@ -15,30 +15,32 @@ BuildArch: noarch
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
-BuildRequires: python-module-iso8601 >= 0.1.9
+BuildRequires: python-module-iso8601 >= 0.1.11
 BuildRequires: python-module-positional >= 1.0.1
-BuildRequires: python-module-requests >= 2.8.1
+BuildRequires: python-module-requests >= 2.10.0
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: python-module-stevedore >= 1.16.0
 BuildRequires: python-module-requests-kerberos >= 0.6
 BuildRequires: python-module-lxml >= 2.3
+BuildRequires: python-module-oauthlib >= 0.6
 BuildRequires: python-module-fixtures >= 1.3.1
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 0.1.1
+BuildRequires: python-module-reno >= 1.8.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr
-BuildRequires: python3-module-iso8601 >= 0.1.9
+BuildRequires: python3-module-iso8601 >= 0.1.11
 BuildRequires: python3-module-positional >= 1.0.1
-BuildRequires: python3-module-requests >= 2.8.1
+BuildRequires: python3-module-requests >= 2.10.0
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-stevedore >= 1.5.0
+BuildRequires: python3-module-stevedore >= 1.16.0
 BuildRequires: python3-module-requests-kerberos >= 0.6
 BuildRequires: python3-module-lxml >= 2.3
+BuildRequires: python3-module-oauthlib >= 0.6
 BuildRequires: python3-module-fixtures >= 1.3.1
 %endif
 
@@ -119,5 +121,8 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc doc/build/html
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 2.12.2-alt1
+- 2.12.2
+
 * Tue Apr 12 2016 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt1
 - Initial package.

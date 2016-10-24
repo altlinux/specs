@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 3.3.0
-Release: alt2
+Version: 3.16.0
+Release: alt1
 Summary: OpenStack oslo.log library
 Group: Development/Python
 License: ASL 2.0
@@ -18,12 +18,11 @@ Provides: python-module-oslo-log = %EVR
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
-BuildRequires: python-module-babel >= 1.3
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-oslo.config >= 3.7.0
-BuildRequires: python-module-oslo.context >= 0.2.0
+BuildRequires: python-module-oslo.config >= 3.14.0
+BuildRequires: python-module-oslo.context >= 2.6.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
 BuildRequires: python-module-debtcollector >= 1.2.0
 BuildRequires: python-module-pyinotify >= 0.9.6
@@ -31,7 +30,7 @@ BuildRequires: python-module-dateutil >= 2.4.2
 
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-
+BuildRequires: python-module-reno >= 1.8.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -40,12 +39,11 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
-BuildRequires: python3-module-babel >= 1.3
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-oslo.config >= 3.7.0
-BuildRequires: python3-module-oslo.context >= 0.2.0
+BuildRequires: python3-module-oslo.config >= 3.14.0
+BuildRequires: python3-module-oslo.context >= 2.6.0
 BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.utils >= 3.5.0
+BuildRequires: python3-module-oslo.utils >= 3.16.0
 BuildRequires: python3-module-oslo.serialization >= 1.10.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
 BuildRequires: python3-module-pyinotify >= 0.9.6
@@ -110,7 +108,7 @@ popd
 %endif
 
 # generate html docs
-sphinx-build doc/source html
+python setup.py build_sphinx
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 
@@ -138,9 +136,12 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %endif
 
 %files doc
-%doc html
+%doc doc/build/html
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 3.16.0-alt1
+- 3.16.0
+
 * Thu Jun 16 2016 Lenar Shakirov <snejok@altlinux.ru> 3.3.0-alt2
 - Fix urllib3 import in _options.py
 

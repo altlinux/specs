@@ -4,7 +4,7 @@
 
 Name:       python-module-%sname
 Epoch:      1
-Version:    4.6.1
+Version:    5.10.0
 Release:    alt1
 Summary:    OpenStack common messaging library
 
@@ -21,17 +21,18 @@ BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-futurist >= 0.11.0
-BuildRequires: python-module-oslo.config >= 3.7.0
-BuildRequires: python-module-oslo.context >= 0.2.0
+BuildRequires: python-module-oslo.config >= 3.14.0
+BuildRequires: python-module-oslo.context >= 2.9.0
 BuildRequires: python-module-oslo.log >= 1.14.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.service >= 1.0.0
+BuildRequires: python-module-oslo.service >= 1.10.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: python-module-stevedore >= 1.16.0
 BuildRequires: python-module-debtcollector >= 1.2.0
+BuildRequires: python-module-monotonic >= 0.6
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-cachetools >= 1.0.0
+BuildRequires: python-module-cachetools >= 1.1.0
 BuildRequires: python-module-eventlet >= 0.18.2
 BuildRequires: python-module-greenlet >= 0.3.2
 BuildRequires: python-module-webob >= 1.2.3
@@ -40,14 +41,15 @@ BuildRequires: python-module-amqp >= 1.4.0
 BuildRequires: python-module-kombu >= 3.0.25
 BuildRequires: python-module-pika >= 0.10.0
 BuildRequires: python-module-pika-pool >= 0.1.3
-BuildRequires: python-module-fixtures
+BuildRequires: python-module-fixtures >= 3.0.0
 BuildRequires: python-module-futures >= 3.0
 BuildRequires: python-module-retrying >= 1.2.3
 
 BuildRequires: python-module-oslo.middleware >= 3.0.0
 
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-sphinx >= 1.2.1
+BuildRequires: python-module-oslosphinx >= 2.5.0
+BuildRequires: python-module-reno >= 1.8.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -66,6 +68,8 @@ BuildRequires: python3-module-oslo.i18n >= 2.1.0
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-cachetools >= 1.0.0
 BuildRequires: python3-module-stevedore >= 1.5.0
+BuildRequires: python3-module-debtcollector >= 1.2.0
+BuildRequires: python3-module-monotonic >= 0.6
 BuildRequires: python3-module-yaml >= 3.1.0
 BuildRequires: python3-module-amqp >= 1.4.0
 BuildRequires: python3-module-kombu >= 3.0.25
@@ -176,6 +180,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html LICENSE
 
 %changelog
+* Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 1:5.10.0-alt1
+- 5.10.0
+
 * Mon Apr 11 2016 Alexey Shabalin <shaba@altlinux.ru> 1:4.6.1-alt1
 - 4.6.1
 

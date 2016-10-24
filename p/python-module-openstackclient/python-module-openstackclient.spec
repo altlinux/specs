@@ -2,50 +2,51 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 1.7.2
+Version: 3.2.0
 Release: alt1
 Summary: OpenStack Command-line Client
 
 Group: Development/Python
 License: ASL 2.0
-Url: http://github.com/openstack/python-openstackclient
-Source: %name/%name-%version.tar
+Url: http://docs.openstack.org/developer/python-openstackclient
+Source: %name-%version.tar
 
 BuildArch: noarch
 
 
-Requires: python-module-cliff >= 1.14.0
-Requires: python-module-cliff-tablib >= 1.0
-Requires: python-module-os-client-config >= 1.4.0
-Requires: python-module-oslo.config >= 2.3.0
-Requires: python-module-oslo.i18n >= 1.5.0
-Requires: python-module-oslo.utils >= 2.0.0
-Requires: python-module-glanceclient >= 0.18.0
-Requires: python-module-keystoneclient >= 1.6.0
-Requires: python-module-novaclient >= 2.28.1
-Requires: python-module-cinderclient >= 1.3.1
+Requires: python-module-cliff >= 1.15.0
+Requires: python-module-keystoneauth1 >= 2.10.0
+Requires: python-module-openstacksdk >= 0.9.4
+Requires: python-module-osc-lib >= 1.0.2
+Requires: python-module-oslo.i18n >= 2.1.0
+Requires: python-module-oslo.utils >= 3.16.0
+Requires: python-module-glanceclient >= 2.3.0
+Requires: python-module-keystoneclient >= 2.0.0
+Requires: python-module-novaclient >= 2.29.0
+Requires: python-module-cinderclient >= 1.6.0
+
 Requires: python-module-neutronclient >= 2.6.0
-Requires: python-module-requests >= 2.5.2
-Requires: python-module-stevedore >= 1.5.0
+Requires: python-module-requests >= 2.10.0
+Requires: python-module-stevedore >= 1.16.0
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
-BuildRequires: python-module-d2to1
-BuildRequires: python-module-cliff >= 1.14.0
-BuildRequires: python-module-cliff-tablib >= 1.0
-BuildRequires: python-module-os-client-config >= 1.4.0
-BuildRequires: python-module-oslo.config >= 2.3.0
-BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-oslo.utils >= 2.0.0
+BuildRequires: python-module-cliff >= 1.15.0
+BuildRequires: python-module-keystoneauth1 >= 2.10.0
+BuildRequires: python-module-openstacksdk >= 0.9.4
+BuildRequires: python-module-osc-lib >= 1.0.2
+BuildRequires: python-module-oslo.i18n >= 2.1.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
+
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-glanceclient >= 0.18.0
-BuildRequires: python-module-keystoneclient >= 1.6.0
-BuildRequires: python-module-novaclient >= 2.28.1
-BuildRequires: python-module-cinderclient >= 1.3.1
+BuildRequires: python-module-glanceclient >= 2.3.0
+BuildRequires: python-module-keystoneclient >= 2.0.0
+BuildRequires: python-module-novaclient >= 2.29.0
+BuildRequires: python-module-cinderclient >= 1.6.0
 BuildRequires: python-module-neutronclient >= 2.6.0
-BuildRequires: python-module-requests >= 2.5.2
-BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: python-module-requests >= 2.10.0
+BuildRequires: python-module-stevedore >= 1.16.0
 
 # for build doc
 BuildRequires: python-module-mock
@@ -53,7 +54,8 @@ BuildRequires: python-module-requests-mock
 BuildRequires: python-module-fixtures
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-
+BuildRequires: python-module-reno
+BuildRequires: python-module-osprofiler >= 1.4.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -82,7 +84,7 @@ It is a thin wrapper to the stock python-*client modules that implement the
 actual REST API client actions.
 
 %package doc
-Summary: Documentation for OpenStack Nova API Client
+Summary: Documentation for OpenStack Client
 Group: Development/Documentation
 
 %description doc
@@ -165,6 +167,9 @@ rm -fr html/.doctrees html/.buildinfo
 %endif
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 3.2.0-alt1
+- 3.2.0
+
 * Mon Mar 28 2016 Alexey Shabalin <shaba@altlinux.ru> 1.7.2-alt1
 - 1.7.2
 

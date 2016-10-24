@@ -1,5 +1,5 @@
 Name: python-module-websockify
-Version: 0.6.1
+Version: 0.8.0
 Release: alt1
 Summary: WSGI based adapter for the Websockets protocol
 Group: Development/Python
@@ -17,8 +17,10 @@ Python WSGI based adapter for the Websockets protocol
 %prep
 %setup
 
-# TODO: Have the following handle multi line entries
-sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
+# remove unwanted shebang
+sed -i '1 { /^#!/ d }' websockify/websocket*.py
+# drop unneeded executable bit
+chmod -x include/web-socket-js/web_socket.js
 
 %build
 %python_build
@@ -26,17 +28,16 @@ sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 %install
 %python_install
 
-rm -Rf %buildroot/usr/share/websockify
-mkdir -p %buildroot%_mandir/man1/
-install -m 444 docs/websockify.1 %buildroot%_man1dir/
-
 %files
-%doc LICENSE.txt docs
-%_man1dir/websockify.1*
+%doc LICENSE.txt README.md CHANGES.txt
 %python_sitelibdir/*
 %_bindir/websockify
+%_datadir/websockify
 
 %changelog
+* Fri Oct 21 2016 Alexey Shabalin <shaba@altlinux.ru> 0.8.0-alt1
+- 0.8.0
+
 * Thu Oct 15 2015 Alexey Shabalin <shaba@altlinux.ru> 0.6.1-alt1
 - 0.6.1
 

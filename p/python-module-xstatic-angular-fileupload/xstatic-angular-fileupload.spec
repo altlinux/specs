@@ -1,14 +1,12 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1.1
 %define mname xstatic
 %define oname %mname-angular-fileupload
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.0.1
-#Release: alt1.1.1
-Summary: Angular-FileUpload 1.4.0 (XStatic packaging standard)
+Version: 12.0.4.0
+Release: alt1
+Summary: Angular-FileUpload (XStatic packaging standard)
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/XStatic-Angular-FileUpload/
@@ -39,7 +37,7 @@ This package is intended to be used by any project that needs these
 files.
 
 %package -n python3-module-%oname
-Summary: Angular-FileUpload 1.4.0 (XStatic packaging standard)
+Summary: Angular-FileUpload (XStatic packaging standard)
 Group: Development/Python3
 %py3_provides %mname.pkg.angular_fileupload
 %py3_requires %mname.pkg
@@ -90,17 +88,18 @@ popd
 
 %files
 %doc *.txt
-%python_sitelibdir/%mname/*
-%python_sitelibdir/*.egg-info
+%python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
 %doc *.txt
-%python3_sitelibdir/%mname/*
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*
 %endif
 
 %changelog
+* Mon Oct 24 2016 Alexey Shabalin <shaba@altlinux.ru> 12.0.4.0-alt1
+- 12.0.4.0
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.4.0.1-alt1.1.1.1
 - (AUTO) subst_x86_64.
 

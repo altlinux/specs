@@ -1,6 +1,6 @@
 
 Name:           python-module-django-openstack-auth
-Version:        2.2.1
+Version:        2.4.1
 Release:        alt1
 Summary:        Django authentication backend for OpenStack Keystone
 Group:          Development/Python
@@ -18,18 +18,18 @@ BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-django >= 1.8
-BuildRequires: python-module-oslo.config >= 3.7.0
-BuildRequires: python-module-oslo.policy >= 0.5.0
-BuildRequires: python-module-keystoneclient >= 1.6.0
-BuildRequires: python-module-keystoneauth1 >= 2.1.0
+BuildRequires: python-module-oslo.config >= 3.14.0
+BuildRequires: python-module-oslo.policy >= 1.9.0
+BuildRequires: python-module-keystoneclient >= 2.0.0
+BuildRequires: python-module-keystoneauth1 >= 2.10.0
 
 BuildRequires: python-module-django-dbbackend-sqlite3
 
 Requires: python-module-django
-Requires: python-module-oslo.config >= 2.3.0
-Requires: python-module-oslo.policy >= 0.5.0
-Requires: python-module-keystoneclient >= 1.6.0
-Requires: python-module-keystoneauth1 >= 2.1.0
+Requires: python-module-oslo.config >= 3.14.0
+Requires: python-module-oslo.policy >= 1.9.0
+Requires: python-module-keystoneclient >= 2.0.0
+Requires: python-module-keystoneauth1 >= 2.10.0
 
 %description
 Django OpenStack Auth is a pluggable Django authentication backend that
@@ -76,6 +76,9 @@ rm -rf %buildroot/%python_sitelibdir/openstack_auth/tests
 %python_sitelibdir/*
 
 %changelog
+* Mon Oct 24 2016 Alexey Shabalin <shaba@altlinux.ru> 2.4.1-alt1
+- 2.4.1
+
 * Tue Apr 19 2016 Alexey Shabalin <shaba@altlinux.ru> 2.2.1-alt1
 - 2.2.1
 

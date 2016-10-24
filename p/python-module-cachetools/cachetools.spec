@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.0
-Release: alt1.git20141230.1
+Version: 2.0.0
+Release: alt1
 Summary: Extensible memoizing collections and decorators
 License: MIT
 Group: Development/Python
@@ -15,12 +15,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-nose
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-nose
 %endif
 
 %py_provides %oname
@@ -84,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt1
+- 2.0.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.0-alt1.git20141230.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

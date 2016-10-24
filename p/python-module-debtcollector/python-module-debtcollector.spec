@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 1.3.0
+Version: 1.8.0
 Release: alt1
 Summary: A collection of Python deprecation patterns and strategies
 Group: Development/Python
@@ -122,6 +122,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc LICENSE
 
 %changelog
+* Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 1.8.0-alt1
+- 1.8.0
+
 * Fri Apr 08 2016 Alexey Shabalin <shaba@altlinux.ru> 1.3.0-alt1
 - 1.3.0
 
