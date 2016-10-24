@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.14.0
-Release: alt4
+Release: alt5
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -38,6 +38,7 @@ Patch104: alt-fix-desktop-session-name.patch
 Patch105: alt-branding-background.patch
 Patch106: alt-flicker-free-plymouth.patch
 Patch107: alt-def-breeze.patch
+Patch108: alt-show-avatars.patch
 
 # Automatically added by buildreq on Thu Apr 02 2015 (-bi)
 # optimized out: cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-test libqt5-xml libstdc++-devel libxcb-devel pkg-config python-base python-module-BeautifulSoup python-module-PyStemmer python-module-Pygments python-module-google python-module-google-apputils python-module-matplotlib python-module-numpy python-module-pyExcelerator python-module-pyparsing python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-zope.interface python-modules python-modules-compiler python-modules-email python-modules-encodings qt5-base-devel qt5-tools
@@ -66,6 +67,7 @@ ability to create smooth, animated user interfaces.
 %patch105 -p1
 %patch106 -p1
 %patch107 -p1
+%patch108 -p1
 
 %build
 %K5build \
@@ -132,6 +134,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Mon Oct 24 2016 Sergey V Turchin <zerg@altlinux.org> 0.14.0-alt5
+- fix to show user avatars (ALT#32629)
+
 * Tue Aug 30 2016 Sergey V Turchin <zerg@altlinux.org> 0.14.0-alt4
 - try Breeze theme by default first
 
