@@ -1,7 +1,7 @@
 %define module File-Lock-ParentLock
 
 Name: perl-%module
-Version: 0.03
+Version: 0.04
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -13,7 +13,8 @@ Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
 Url: http://search.cpan.org/dist/%module
 
 # Automatically added by buildreq on Wed Nov 06 2002
-BuildRequires: perl-devel perl(Pod/Usage.pm) perl-Proc-ProcessTable perl-podlators
+BuildRequires: perl-devel perl(Pod/Usage.pm) perl-Proc-ProcessTable perl-podlators perl(Module/Build/Tiny.pm) perl(Test/More.pm)
+BuildRequires: /proc
 
 %description
 %summary
@@ -35,6 +36,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl-Proc-ProcessTable perl-podlato
 %_man1dir/*
 
 %changelog
+* Tue Oct 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- CPAN release
+
 * Tue Mar 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
 - perl 5.20 fixes
 
