@@ -4,46 +4,75 @@
 Name: apache2-mod_nss
 Summary: Apache 2.0 module for implementing crypto using the Mozilla NSS crypto libraries
 Version: 1.0.14
-Release: alt1
+Release: alt2
 License: Apache 2.0
 Group: System/Servers
-Url: http://directory.fedoraproject.org
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
+Url: https://fedorahosted.org/mod_nss/
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar
 Source1: nss.conf
 Source2: nss.load
 Source3: default_nss.conf
-Patch: %name-include-alt.patch
+Patch1: %name-include-alt.patch
+Patch2: %name-gencert-alt.patch
+Patch3: %name-gencert-password-fedora.patch
 BuildPreReq: apache2-devel,libaprutil1-devel,libapr1-devel,gcc-c++,libnss-devel,libnspr-devel
 Provides: mod_nss
 PreReq: apache2
 Requires: nss-utils
+Requires: hostinfo
+
+%define apache_nssdb_dir %apache_confdir/nss
 
 %description
-An Apache 2.0 module for implementing crypto using the Mozilla NSS crypto libraries.  This supports SSLv3/TLSv1 including support for client certificate authentication.  NSS provides web applications with a FIPS 140 certified crypto provider and support for a full range of PKCS11 devices.
+An Apache 2.0 module for implementing crypto using the Mozilla NSS
+crypto libraries.  This supports SSL/TLS including support
+for client certificate authentication.  NSS provides web applications
+with a FIPS 140 certified crypto provider and support for a full range
+of PKCS11 devices.
 
 %prep
 %setup
-%patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %autoreconf
 %configure --with-apr-config --with-apxs=%apache2_apxs
-%__make
+%make_build
 
 %install
 mkdir -p %buildroot/%apache_moduledir
 mkdir -p %buildroot/%_sbindir
 mkdir -p %buildroot%apache_confdir/mods-available/
 mkdir -p %buildroot%apache_confdir/sites-available/
-mkdir -p %buildroot%apache_confdir/nss/
+mkdir -p %buildroot%apache_nssdb_dir
 install -m 755 .libs/libmodnss.so %buildroot/%apache_moduledir/mod_nss.so
 install -m 755 nss_pcache %buildroot/%_sbindir
 install -m 644 %SOURCE1 %buildroot%apache_confdir/mods-available/
 install -m 644 %SOURCE2 %buildroot%apache_confdir/mods-available/
 install -m 644 %SOURCE3 %buildroot%apache_confdir/sites-available/
 install -m 755 gencert %buildroot%apache_confdir/nss-gencert
+touch %buildroot%apache_nssdb_dir/secmod.db
+touch %buildroot%apache_nssdb_dir/cert8.db
+touch %buildroot%apache_nssdb_dir/key3.db
+touch %buildroot%apache_nssdb_dir/install.log
+
+%post
+if [ "$1" -eq 1 ] ; then
+	if [ ! -e %apache_nssdb_dir/key3.db ]; then
+		umask 077
+		%apache_confdir/nss-gencert %apache_nssdb_dir > %apache_nssdb_dir/install.log 2>&1
+		echo ""
+		echo "%name certificate database generated."
+		echo ""
+	fi
+
+	# Make sure that the database ownership is setup properly.
+	find %apache_nssdb_dir -user root -name "*.db" -exec chgrp apache2 {} \;
+	find %apache_nssdb_dir -user root -name "*.db" -exec chmod g+r {} \;
+fi
 
 %files
 %apache_moduledir/mod_nss.so
@@ -51,11 +80,24 @@ install -m 755 gencert %buildroot%apache_confdir/nss-gencert
 %apache_confdir/mods-available/nss.conf
 %apache_confdir/mods-available/nss.load
 %apache_confdir/sites-available/default_nss.conf
-%dir %apache_confdir/nss
+%dir %apache_nssdb_dir
 %apache_confdir/nss-gencert
+%ghost %attr(0640,root,apache2) %config(noreplace) %apache_nssdb_dir/secmod.db
+%ghost %attr(0640,root,apache2) %config(noreplace) %apache_nssdb_dir/cert8.db
+%ghost %attr(0640,root,apache2) %config(noreplace) %apache_nssdb_dir/key3.db
+%ghost %config(noreplace) %apache_nssdb_dir/install.log
 %doc docs/mod_nss.html README
 
 %changelog
+* Tue Oct 25 2016 Mikhail Efremov <sem@altlinux.org> 1.0.14-alt2
+- Fix url.
+- Tweak spec.
+- Create NSS database.
+- default_nss.conf: Don't use SSLv3 by default.
+- default_nss.conf: Fix cgi-bin path.
+- gencert: Generate a password-less NSS database.
+- gencert: Use hostinfo instead of hostname -a.
+
 * Wed Apr 27 2016 Sergey Alembekov <rt@altlinux.ru> 1.0.14-alt1
 - 1.0.14
 - rebuild with apache-2.4
