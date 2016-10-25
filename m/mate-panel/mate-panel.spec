@@ -25,9 +25,9 @@ BuildRequires: libXi-devel
 Name:           mate-panel
 Version:        %{branch}.0
 %if 0%{?rel_build}
-Release:        alt1_1
+Release:        alt1_2
 %else
-Release:        alt1_1
+Release:        alt2_0.3%{?git_rel}
 %endif
 Summary:        MATE Desktop panel and applets
 #libs are LGPLv2+ applications GPLv2+
@@ -44,6 +44,9 @@ Source1:        mate-panel_fedora.layout
 
 # fixes https://github.com/mate-desktop/mate-panel/issues/305
 Patch1:         mate-panel_0023-panel-Remove-popup-menu-for-items-in-applications-me.patch
+# https://github.com/mate-desktop/mate-panel/pull/492
+# https://github.com/mate-desktop/mate-panel/issues/491
+Patch2:         mate-panel_0025-Calendar-Window-force-minimum-size-1.16.patch
 
 Requires:       %{name}-libs%{?_isa} = %{version}
 # needed as nothing else requires it
@@ -96,6 +99,7 @@ Development files for mate-panel
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
 %patch1 -p1 -b .0023
+%patch2 -p1 -b .0025
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -168,6 +172,9 @@ install -D -m 0644 %{SOURCE1} %{buildroot}%{_datadir}/mate-panel/layouts/fedora.
 
 
 %changelog
+* Tue Oct 25 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.16.0-alt1_2
+- new fc release
+
 * Thu Oct 06 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.16.0-alt1_1
 - update to mate 1.16
 
