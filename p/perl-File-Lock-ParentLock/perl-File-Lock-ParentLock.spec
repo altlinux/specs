@@ -1,12 +1,12 @@
 %define module File-Lock-ParentLock
 
 Name: perl-%module
-Version: 0.04
+Version: 0.05
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
-Summary: %module - Perl extension for quering ALTLinux ACL files
+Summary: %module - share lock among child processes of given pid
 Group: Development/Perl
 License: GPL or Artistic
 Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
@@ -17,7 +17,10 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl-Proc-ProcessTable perl-podlato
 BuildRequires: /proc
 
 %description
-%summary
+File::Lock::ParentLock allows sharing a lock among child processes
+of given pid. It is useful for shell scripting where there are
+lots of nested script calls and we want to share a lock through the
+parent - child relationship.
 
 %prep
 %setup -q -n %module-%version
@@ -36,6 +39,9 @@ BuildRequires: /proc
 %_man1dir/*
 
 %changelog
+* Tue Oct 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- new version
+
 * Tue Oct 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
 - CPAN release
 
