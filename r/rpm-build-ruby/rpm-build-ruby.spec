@@ -2,7 +2,7 @@
 
 Name: rpm-build-ruby
 Epoch: 1
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 Summary: RPM helper scripts to calculate Ruby dependencies
 License: GPLv2
@@ -56,6 +56,9 @@ install -D -m 0755 testrb %buildroot%_bindir/testrb
 %_bindir/testrb
 
 %changelog
+* Tue Oct 25 2016 Andrey Cherepanov <cas@altlinux.org> 1:0.2.1-alt1
+- Support requires defined in double quotes in addition to single quotes
+
 * Fri Oct 07 2016 Denis Medvedev <nbr@altlinux.org> 1:0.2.0-alt1
 - Requires check changed to bash script instead of ruby
 
