@@ -2,7 +2,7 @@
 
 Name:    puppet
 Version: 4.7.0
-Release: alt1
+Release: alt2
 
 Summary: A network tool for managing many disparate systems
 Group:   System/Servers
@@ -30,7 +30,11 @@ BuildRequires: ruby-pathspec
 BuildRequires: ruby-plist
 BuildRequires: ruby-rgen
 BuildRequires: ruby-safe_yaml
-BuildRequires: ruby-spec_helper
+
+Requires: shadow-change
+Conflicts: ruby-semantic
+
+%filter_from_requires /^ruby(.*\(win32\|windows\|wmi-lite\|semantic\|spec_helper\).*)/d
 
 %description
 Puppet lets you centrally manage every important aspect of your
@@ -56,19 +60,20 @@ chmod +x ext/regexp_nodes/regexp_nodes.rb
 # remove vendor copy of libraries and support non-Linux platforms
 subst 's/require /#require /' \
        lib/puppet/util/windows.rb
-#       lib/puppet/vendor/require_vendored.rb \
+#      lib/puppet/vendor/require_vendored.rb \
 
 rm -rf \
+       ext/windows \
+       lib/puppet/feature/cfacter.rb \
+       lib/puppet/util/rdoc \
        lib/puppet/util/windows \
        lib/puppet/vendor/safe_yaml/spec \
        lib/puppet/module_tool/skeleton/templates/generator/spec
 
-# remove deprecated classes to prevent unmets
-rm -rf ext/puppetlisten \
-       lib/puppet/util/rdoc*
+echo "require 'rdoc'" > lib/puppet/util/rdoc.rb
 
 # Unbundle
-rm -r lib/puppet/vendor/*{pathspec,rgen}*
+rm -r lib/puppet/vendor/*{pathspec,rgen,deep_merge}*
 
 %build
 
@@ -186,6 +191,10 @@ install -d %buildroot%_localstatedir/puppet/ssl/private_keys
 %config(noreplace) %_sysconfdir/sysconfig/puppetmaster
 
 %changelog
+* Fri Oct 21 2016 Andrey Cherepanov <cas@altlinux.org> 4.7.0-alt2
+- Fix build without bundled libraries
+- Rebuild with fixed ruby autoreq (ALT #32601)
+
 * Thu Oct 06 2016 Andrey Cherepanov <cas@altlinux.org> 4.7.0-alt1
 - new version 4.7.0
 
