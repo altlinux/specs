@@ -1,13 +1,13 @@
-%define  pkgname semantic_puppet
+%define  pkgname simplecov
  
 Name: 	 ruby-%pkgname
-Version: 0.1.1 
+Version: 0.12.0 
 Release: alt1
  
-Summary: Library of useful tools for working with Semantic Versions and module dependencies
+Summary: Code coverage for Ruby 1.9+ with a powerful configuration library and automatic merging of coverage across test suites
 License: MIT/Ruby
 Group:   Development/Ruby
-Url:     https://github.com/puppetlabs/semantic_puppet
+Url:     https://github.com/colszowka/simplecov
  
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
@@ -18,9 +18,11 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
  
 %description
-Library of tools used by Puppet to parse, validate, and compare Semantic
-Versions and Version Ranges and to query and resolve module
-dependencies.
+SimpleCov is a code coverage analysis tool for Ruby. It uses Ruby's
+built-in Coverage library to gather code coverage data, but makes
+processing its results much easier by providing a clean API to filter,
+group, merge, format, and display those results, giving you a complete
+code coverage suite that can be set up with just a couple lines of code.
 
 %package doc
 Summary: Documentation files for %name
@@ -56,5 +58,5 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
-* Wed Dec 23 2015 Andrey Cherepanov <cas@altlinux.org> 0.1.1-alt1
-- Initial build for ALT Linux
+* Tue Oct 25 2016 Andrey Cherepanov <cas@altlinux.org> 0.12.0-alt1
+- Initial build in Sisyphus

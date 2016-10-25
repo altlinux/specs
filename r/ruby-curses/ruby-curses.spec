@@ -1,34 +1,27 @@
-%define  pkgname semantic
+%define  pkgname curses
  
 Name: 	 ruby-%pkgname
-Version: 1.4.1 
+Version: 1.0.2 
 Release: alt1
  
-Summary: Semantic Version utility class for parsing, storing, and comparing versions
+Summary: Ruby binding for curses, ncurses, and PDCurses
 License: MIT/Ruby
 Group:   Development/Ruby
-Url:     https://github.com/jlindsey/semantic
+Url:     https://github.com/ruby/curses
  
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch: noarch
  
 Source:  %pkgname-%version.tar
  
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
+BuildRequires: libruby-devel
+BuildRequires: libncursesw-devel
  
 %description
-A small Ruby utility class to aid in the storage, parsing, and
-comparison of SemVer-style Version strings.
-
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
- 
-BuildArch: noarch
- 
-%description doc
-Documentation files for %{name}.
+A Ruby binding for curses, ncurses, and PDCurses. curses is an extension
+library for text UI applications.  Formerly part of the Ruby standard
+library.
 
 %prep
 %setup -n %pkgname-%version
@@ -51,9 +44,6 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %doc README*
 %ruby_sitelibdir/*
  
-%files doc
-%ruby_ri_sitedir/*
- 
 %changelog
-* Tue Dec 22 2015 Andrey Cherepanov <cas@altlinux.org> 1.4.1-alt1
-- Initial build for ALT Linux
+* Fri Oct 21 2016 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt1
+- Initial build in Sisyphus
