@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install libICE-devel pkgconfig(x11)
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-terminal
-%define version 1.16.0
+%define version 1.16.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
@@ -22,11 +22,11 @@ BuildRequires: /usr/bin/desktop-file-install libICE-devel pkgconfig(x11)
 
 Summary:        Terminal emulator for MATE
 Name:           mate-terminal
-Version:        %{branch}.0
+Version:        %{branch}.1
 %if 0%{?rel_build}
-Release:        alt1_2
+Release:        alt1_1
 %else
-Release:        alt1_2
+Release:        alt1_1
 %endif
 License:        GPLv3+
 URL:            http://mate-desktop.org
@@ -39,9 +39,6 @@ URL:            http://mate-desktop.org
 
 #Default to black bg white fg, unlimited scrollback, turn off use theme default
 Patch0:        mate-terminal_better_defaults-1.15.1.patch
-# fix rhbz (#1377805)
-# https://github.com/mate-desktop/mate-terminal/pull/142
-Patch1:        mate-terminal_0003-fix-position-with-geometry-option.patch
 
 BuildRequires: libdconf-devel
 BuildRequires: desktop-file-utils
@@ -66,7 +63,6 @@ clickable URLs.
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
 %patch0 -p1 -b .better_defaults
-%patch1 -p1 -b .fix-position
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -111,6 +107,9 @@ EOF
 
 
 %changelog
+* Tue Oct 25 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.1-alt1_1
+- new fc release
+
 * Wed Oct 12 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_2
 - update to mate 1.16
 
