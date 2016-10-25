@@ -16,8 +16,8 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.8.1
-Release: alt3
+Version: 5.8.2
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -293,6 +293,12 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Tue Oct 25 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt1
+- new version
+
+* Thu Oct 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.1-alt2.M80P.1
+- build for M80P
+
 * Thu Oct 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.1-alt3
 - fix plasma load
 
