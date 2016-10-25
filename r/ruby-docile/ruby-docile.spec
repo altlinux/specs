@@ -1,13 +1,13 @@
-%define  pkgname simplecov
+%define  pkgname docile
  
 Name: 	 ruby-%pkgname
-Version: 0.12.0 
-Release: alt2
+Version: 1.1.5 
+Release: alt1
  
-Summary: Code coverage for Ruby 1.9+ with a powerful configuration library and automatic merging of coverage across test suites
+Summary: Docile keeps your Ruby DSLs tame and well-behaved
 License: MIT/Ruby
 Group:   Development/Ruby
-Url:     https://github.com/colszowka/simplecov
+Url:     https://ms-ati.github.io/docile/
  
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
@@ -16,15 +16,9 @@ Source:  %pkgname-%version.tar
  
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
-
-%filter_from_requires /^ruby(jruby)/d
-
+ 
 %description
-SimpleCov is a code coverage analysis tool for Ruby. It uses Ruby's
-built-in Coverage library to gather code coverage data, but makes
-processing its results much easier by providing a clean API to filter,
-group, merge, format, and display those results, giving you a complete
-code coverage suite that can be set up with just a couple lines of code.
+Docile is a small, self-contained Ruby library, that let's you map a DSL (domain specific language) to your Ruby objects in a snap.
 
 %package doc
 Summary: Documentation files for %name
@@ -60,8 +54,5 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
-* Tue Oct 25 2016 Andrey Cherepanov <cas@altlinux.org> 0.12.0-alt2
-- Rebuild with missing requirements
-
-* Tue Oct 25 2016 Andrey Cherepanov <cas@altlinux.org> 0.12.0-alt1
+* Tue Oct 25 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.5-alt1
 - Initial build in Sisyphus
