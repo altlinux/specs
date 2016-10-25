@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%pypi_name
-Version: 1.16.0
+Version: 1.21.1
 Release: alt1
 Summary: OpenStack Client Configuration Library
 Group: Development/Python
@@ -153,6 +153,9 @@ popd
 %endif
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1.21.1-alt1
+- 1.21.1
+
 * Thu Apr 14 2016 Alexey Shabalin <shaba@altlinux.ru> 1.16.0-alt1
 - 1.16.0
 

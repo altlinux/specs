@@ -3,9 +3,9 @@
 %def_without doc
 
 Name: python-module-%pypi_name
-Version: 1.6.2
+Version: 1.8.0
 Release: alt1
-Summary: Release NOtes manager
+Summary: Release Notes manager
 Group: Development/Python
 
 License: ASL 2.0
@@ -47,7 +47,7 @@ helps automate the hard parts.
 
 %if_with python3
 %package -n python3-module-%pypi_name
-Summary: RElease NOtes manager
+Summary: Release Notes manager
 Group: Development/Python3
 Requires: git-core
 
@@ -132,6 +132,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 1.8.0-alt1
+- 1.8.0
+
 * Thu Apr 14 2016 Alexey Shabalin <shaba@altlinux.ru> 1.6.2-alt1
 - 1.6.2
 - add git to requires

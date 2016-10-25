@@ -1,7 +1,7 @@
 %define sname neutron-lbaas
 
 Name: openstack-%sname
-Version: 8.0.0
+Version: 9.0.0
 Release: alt1
 Epoch: 1
 Summary: OpenStack Networking LBaaS
@@ -22,27 +22,30 @@ BuildRequires: python-module-reno
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-eventlet >= 0.18.2
-BuildRequires: python-module-requests >= 2.8.1
-BuildRequires: python-module-netaddr >= 0.7.12
+BuildRequires: python-module-requests >= 2.10.0
+BuildRequires: python-module-netaddr >= 0.7.13
+BuildRequires: python-module-neutron-lib >= 0.4.0
 BuildRequires: python-module-SQLAlchemy >= 1.0.10
-BuildRequires: python-module-alembic >= 0.8.0
-BuildRequires: python-module-oslo.config >= 3.7.0
-BuildRequires: python-module-oslo.db >= 4.1.0
+BuildRequires: python-module-alembic >= 0.8.4
+BuildRequires: python-module-oslo.config >= 3.14.0
+BuildRequires: python-module-oslo.db >= 4.10.0
 BuildRequires: python-module-oslo.log >= 1.14.0
-BuildRequires: python-module-oslo.messaging >= 4.0.0
+BuildRequires: python-module-oslo.messaging >= 5.2.0
+BuildRequires: python-module-oslo.reports >= 0.6.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.service >= 1.0.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
-BuildRequires: python-module-barbicanclient >= 3.3.0
+BuildRequires: python-module-oslo.service >= 1.10.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
+BuildRequires: python-module-barbicanclient >= 4.0.0
 BuildRequires: python-module-pyasn1
 BuildRequires: python-module-pyasn1-modules
 BuildRequires: python-module-OpenSSL >= 0.14
-BuildRequires: python-module-stevedore >= 1.5.0
-BuildRequires: python-module-keystoneauth1 >= 2.1.0
+BuildRequires: python-module-stevedore >= 1.16.0
+BuildRequires: python-module-cryptography >= 1.0
+BuildRequires: python-module-keystoneauth1 >= 2.10.0
 
-BuildRequires: python-module-neutron >= 8.0.0
+BuildRequires: python-module-neutron >= 9.0.0
 
-Requires: openstack-neutron >= 1:8.0.0-alt1
+Requires: openstack-neutron >= 1:9.0.0-alt1
 Requires: python-module-%sname = %EVR
 
 %description
@@ -53,11 +56,12 @@ requires Neutron to run.
 %package -n python-module-%sname
 Summary: Neutron LBaaS Python libraries
 Group: Development/Python
-Requires: python-module-neutron >= 1:7.0.0-alt1
+Requires: python-module-neutron >= 1:8.0.0-alt1
 %add_python_req_skip a10_neutron_lbaas
 %add_python_req_skip brocade_neutron_lbaas
 %add_python_req_skip heleosapi
 %add_python_req_skip kemptech_openstack_lbaas
+%add_python_req_skip f5lbaasdriver
 
 %description -n python-module-%sname
 This package contains the code for the Neutron Load Balancer as a
@@ -109,6 +113,9 @@ install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/neutron-lbaas-agent.service
 
 
 %changelog
+* Mon Oct 24 2016 Alexey Shabalin <shaba@altlinux.ru> 1:9.0.0-alt1
+- 9.0.0
+
 * Tue Apr 19 2016 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.0-alt1
 - 8.0.0
 

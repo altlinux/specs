@@ -4,8 +4,8 @@
 %def_with python3
 
 Name:		python-module-%oname
-Version:	1.5
-Release:	alt2.1
+Version:	2.0
+Release:	alt1
 
 Summary:	Compresses linked and inline JavaScript or CSS into single cached files
 
@@ -20,6 +20,10 @@ Source0:	%name-%version.tar
 BuildRequires:	python-devel
 BuildRequires:	python-module-setuptools
 BuildRequires:	python-module-django
+BuildRequires:	python-module-versiontools
+BuildRequires:	python-module-rcssmin >= 1.0.6
+BuildRequires:	python-module-rjsmin >= 1.0.12
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq:python3-devel python3-module-setuptools python3-module-django
@@ -27,14 +31,31 @@ BuildPreReq:python3-devel python3-module-setuptools python3-module-django
 
 Requires:	python-module-django-appconf >= 0.4
 Requires:	python-module-versiontools
+Requires:	python-module-rcssmin  >= 1.0.6
+Requires:	python-module-rjsmin >= 1.0.12
 
 %description
 Django Compressor combines and compresses linked and inline Javascript
 or CSS in a Django templates into cacheable static files by using the
-``compress`` template tag.  HTML in between ``{% compress js/css %}``
-and ``{% endcompress %}`` is parsed and searched for CSS or JS. These
+``compress`` template tag.  HTML in between ``{%% compress js/css %%}``
+and ``{%% endcompress %%}`` is parsed and searched for CSS or JS. These
 styles and scripts are subsequently processed with optional,
 configurable compilers and filters.
+
+%package tests
+Summary: Tests of %oname
+Group: Development/Python
+Requires:	python-module-%oname = %EVR
+
+%description tests
+Django Compressor combines and compresses linked and inline Javascript
+or CSS in a Django templates into cacheable static files by using the
+``compress`` template tag.  HTML in between ``{%% compress js/css %%}``
+and ``{%% endcompress %%}`` is parsed and searched for CSS or JS. These
+styles and scripts are subsequently processed with optional,
+configurable compilers and filters.
+
+This package contein tests.
 
 %package -n python3-module-%oname
 Summary: Compresses linked and inline JavaScript or CSS into single cached files
@@ -45,22 +66,31 @@ Requires:	python3-module-versiontools
 %description -n python3-module-%oname
 Django Compressor combines and compresses linked and inline Javascript
 or CSS in a Django templates into cacheable static files by using the
-``compress`` template tag.  HTML in between ``{% compress js/css %}``
-and ``{% endcompress %}`` is parsed and searched for CSS or JS. These
+``compress`` template tag.  HTML in between ``{%% compress js/css %%}``
+and ``{%% endcompress %%}`` is parsed and searched for CSS or JS. These
 styles and scripts are subsequently processed with optional,
 configurable compilers and filters.
 
+%package -n python3-module-%oname-tests
+Summary: Tests of %oname
+Group: Development/Python3
+Requires:	python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+Django Compressor combines and compresses linked and inline Javascript
+or CSS in a Django templates into cacheable static files by using the
+``compress`` template tag.  HTML in between ``{%% compress js/css %%}``
+and ``{%% endcompress %%}`` is parsed and searched for CSS or JS. These
+styles and scripts are subsequently processed with optional,
+configurable compilers and filters.
+
+This package contein tests.
+
 %prep
 %setup
+
 # Remove bundled egg-info
 rm -rf %pypi_name.egg-info
-
-# remove %_bindir/env from scripts
-for i in compressor/tests/precompiler.py \
-         compressor/filters/cssmin/cssmin.py \
-         compressor/filters/jsmin/rjsmin.py;
-  do sed -i -e "1d" $i;
-done
 
 %if_with python3
 cp -fR . ../python3
@@ -86,17 +116,30 @@ popd
 
 %files
 %doc README.rst LICENSE
-%python_sitelibdir/compressor
-%python_sitelibdir/%pypi_name-%version-py?.?.egg-info
+%python_sitelibdir/*
+%exclude %python_sitelibdir/*/tests
+%exclude %python_sitelibdir/*/test_settings.py
+
+%files tests
+%python_sitelibdir/*/tests
+%python_sitelibdir/*/test_settings.py
 
 %if_with python3
 %files -n python3-module-%oname
 %doc README.rst LICENSE
-%python3_sitelibdir/compressor
-%python3_sitelibdir/%pypi_name-*.egg-info
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/test_settings.py
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
+%python3_sitelibdir/*/test_settings.py
 %endif
 
 %changelog
+* Tue Apr 19 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0-alt1
+- 2.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

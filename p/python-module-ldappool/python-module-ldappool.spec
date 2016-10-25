@@ -1,38 +1,37 @@
-%define oname ldappool
 
-%def_without python3
+%def_with python3
 %def_disable check
 
-Name: python-module-%oname
-Version: 1.1
-Release: alt2.git20130422
+Name: python-module-ldappool
+Version: 2.0.0
+Release: alt1
 Summary: A connection pool for python-ldap
 License: MPL
 Group: Development/Python
 Url: https://pypi.python.org/pypi/ldappool/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/mozilla-services/ldappool.git
+# https://git.openstack.org/openstack/ldappool
 Source: %name-%version.tar
 BuildArch: noarch
 
+Requires: python-module-pyldap
+
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-ldap python-module-py
+BuildRequires: python-module-pyldap python-module-pbr
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-ldap python3-module-py
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-module-ldap python3-module-pbr
 %endif
 
-%py_provides %oname
+%py_provides ldappool
 
 %description
 The pool keeps LDAP connectors alive and let you reuse them, drastically
 reducing the time spent to initiate a ldap connection.
 
 %package tests
-Summary: Tests for %oname
+Summary: Tests for ldappool
 Group: Development/Python
 Requires: %name = %EVR
 
@@ -40,36 +39,37 @@ Requires: %name = %EVR
 The pool keeps LDAP connectors alive and let you reuse them, drastically
 reducing the time spent to initiate a ldap connection.
 
-This package contains tests for %oname.
+This package contains tests for ldappool.
 
 %if_with python3
-%package -n python3-module-%oname
+%package -n python3-module-ldappool
 Summary: A connection pool for python-ldap
 Group: Development/Python3
-%py3_provides %oname
+%py3_provides ldappool
 
-%description -n python3-module-%oname
+Requires: python3-module-pyldap
+
+%description -n python3-module-ldappool
 The pool keeps LDAP connectors alive and let you reuse them, drastically
 reducing the time spent to initiate a ldap connection.
 
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
+%package -n python3-module-ldappool-tests
+Summary: Tests for ldappool
 Group: Development/Python3
-Requires: python3-module-%oname = %EVR
+Requires: python3-module-ldappool = %EVR
 
-%description -n python3-module-%oname-tests
+%description -n python3-module-ldappool-tests
 The pool keeps LDAP connectors alive and let you reuse them, drastically
 reducing the time spent to initiate a ldap connection.
 
-This package contains tests for %oname.
+This package contains tests for ldappool.
 %endif
 
 %prep
-%setup
+%setup -q
 
 %if_with python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -109,16 +109,19 @@ popd
 %python_sitelibdir/*/tests
 
 %if_with python3
-%files -n python3-module-%oname
+%files -n python3-module-ldappool
 %doc CONTRIBUTORS *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
-%files -n python3-module-%oname-tests
+%files -n python3-module-ldappool-tests
 %python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt1
+- 2.0.0
+
 * Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt2.git20130422
 - Fixed build
 

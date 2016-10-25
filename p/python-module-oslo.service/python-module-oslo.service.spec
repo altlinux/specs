@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%pypi_name
-Version: 1.8.0
+Version: 1.16.0
 Release: alt1
 Summary: Oslo service library
 Group: Development/Python
@@ -15,14 +15,13 @@ BuildArch: noarch
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-babel >= 1.3
 BuildRequires: python-module-webob >= 1.2.3
 BuildRequires: python-module-eventlet >= 0.18.2
 BuildRequires: python-module-greenlet >= 0.3.2
 BuildRequires: python-module-monotonic >= 0.6
-BuildRequires: python-module-oslo.utils >= 3.5.0
-BuildRequires: python-module-oslo.concurrency >= 3.5.0
-BuildRequires: python-module-oslo.config >= 3.7.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
+BuildRequires: python-module-oslo.concurrency >= 3.8.0
+BuildRequires: python-module-oslo.config >= 3.14.0
 BuildRequires: python-module-oslo.log >= 1.14.0
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
@@ -40,9 +39,9 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-oslo-i18n >= 2.1.0
-BuildRequires: python3-module-oslo.utils >= 3.5.0
-BuildRequires: python3-module-oslo.concurrency >= 3.5.0
-BuildRequires: python3-module-oslo.config >= 3.7.0
+BuildRequires: python3-module-oslo.utils >= 3.16.0
+BuildRequires: python3-module-oslo.concurrency >= 3.8.0
+BuildRequires: python3-module-oslo.config >= 3.14.0
 BuildRequires: python3-module-oslo.log >= 1.14.0
 BuildRequires: python3-module-paste
 BuildRequires: python3-module-PasteDeploy >= 1.5.0
@@ -107,20 +106,21 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 
 %files
 %doc README.rst
-%python_sitelibdir/oslo*
-%python_sitelibdir/*.egg-info
+%python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%pypi_name
 %doc README.rst
-%python3_sitelibdir/oslo*
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*
 %endif
 
 %files doc
 %doc html
 
 %changelog
+* Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 1.16.0-alt1
+- 1.16.0
+
 * Mon Apr 11 2016 Alexey Shabalin <shaba@altlinux.ru> 1.8.0-alt1
 - 1.8.0
 

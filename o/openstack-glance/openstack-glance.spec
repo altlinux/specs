@@ -1,6 +1,6 @@
 
 Name: openstack-glance
-Version: 12.0.0
+Version: 13.0.0
 Release: alt1
 Epoch: 1
 Summary: OpenStack Image Service
@@ -33,38 +33,37 @@ BuildRequires: python-module-routes >= 1.12.3
 BuildRequires: python-module-migrate >= 0.9.6
 BuildRequires: python-module-httplib2 >= 0.7.5
 BuildRequires: python-module-pycrypto >= 2.6
-BuildRequires: python-module-oslo.config >= 3.7.0
-BuildRequires: python-module-oslo.concurrency >= 3.5.0
-BuildRequires: python-module-oslo.context >= 0.2.0
-BuildRequires: python-module-oslo.service >= 1.0.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
-BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: python-module-oslo.config >= 3.14.0
+BuildRequires: python-module-oslo.concurrency >= 3.8.0
+BuildRequires: python-module-oslo.context >= 0.2.9
+BuildRequires: python-module-oslo.service >= 1.10.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
+BuildRequires: python-module-stevedore >= 1.16.0
 BuildRequires: python-module-futurist >= 0.11.0
 BuildRequires: python-module-taskflow >= 1.26.0
-BuildRequires: python-module-keystoneauth1 >= 2.1.0
+BuildRequires: python-module-keystoneauth1 >= 2.10.0
 BuildRequires: python-module-keystonemiddleware >= 4.0.0
 BuildRequires: python-module-wsme >= 0.8
 BuildRequires: python-module-prettytable >= 0.7
 BuildRequires: python-module-paste
 BuildRequires: python-module-jsonschema >= 2.0.0
-BuildRequires: python-module-keystoneclient >= 1.6.0
+BuildRequires: python-module-keystoneclient >= 2.0.0
 BuildRequires: python-module-OpenSSL >= 0.14
-BuildRequires: python-module-oslo.db >= 4.1.0
+BuildRequires: python-module-oslo.db >= 4.10.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
 BuildRequires: python-module-oslo.log >= 1.14.0
-BuildRequires: python-module-oslo.messaging >= 4.0.0
+BuildRequires: python-module-oslo.messaging >= 5.2.0
 BuildRequires: python-module-oslo.middleware >= 3.0.0
-BuildRequires: python-module-oslo.policy >= 0.5.0
-BuildRequires: python-module-oslo.serialization >= 1.10.0
+BuildRequires: python-module-oslo.policy >= 1.9.0
 BuildRequires: python-module-retrying >= 1.2.3
-BuildRequires: python-module-osprofiler >= 1.1.0
+BuildRequires: python-module-osprofiler >= 1.4.0
 
-BuildRequires: python-module-glance_store >= 0.13.0
+BuildRequires: python-module-glance_store >= 0.18.0
 BuildRequires: python-module-semantic_version >= 2.3.1
-BuildRequires: python-module-castellan >= 0.3.1
 BuildRequires: python-module-cryptography >= 1.0
+BuildRequires: python-module-cursive >= 0.1.1
 BuildRequires: python-module-debtcollector >= 1.2.0
-BuildRequires: python-module-iso8601 >= 0.1.9
+BuildRequires: python-module-iso8601 >= 0.1.11
 BuildRequires: python-module-monotonic >= 0.6
 
 # Required to build module documents
@@ -73,8 +72,9 @@ BuildRequires: python-module-webob
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-elasticsearch
-BuildRequires: python-module-reno >= 0.1.1
+BuildRequires: python-module-reno >= 1.8.0
 BuildRequires: python-modules-sqlite3
+BuildRequires: python-module-networkx-drawing
 
 Requires(pre): shadow-utils
 Requires: python-module-glance = %EVR
@@ -136,14 +136,9 @@ This package contains documentation files for glance.
 # Remove bundled egg-info
 #rm -rf glance.egg-info
 
-sed -i "s|^#!.*||" tools/migrate_image_owners.py # Fix non-executable script warning
-sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py
-
-
 # Remove the requirements file so that pbr hooks don't add it
 # to distutils requiers_dist config
 rm -rf {test-,}requirements.txt tools/{pip,test}-requires
-
 
 %build
 %python_build
@@ -247,6 +242,9 @@ rm -rf %buildroot/usr/etc/glance
 %doc doc/build/html
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1:13.0.0-alt1
+- 13.0.0 (Newton Release)
+
 * Wed Apr 13 2016 Alexey Shabalin <shaba@altlinux.ru> 1:12.0.0-alt1
 - 12.0.0
 

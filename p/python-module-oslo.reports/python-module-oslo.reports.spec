@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%pypi_name
-Version: 1.7.0
+Version: 1.14.0
 Release: alt1
 Summary: Openstack common reports library
 
@@ -17,14 +17,13 @@ BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-jinja2 >= 2.8
-BuildRequires: python-module-babel >= 1.3
 BuildRequires: python-module-oslo.serialization >= 1.10.0
 BuildRequires: python-module-psutil >= 1.1.1
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
 
-BuildRequires: python-module-oslo.config >= 3.7.0
+BuildRequires: python-module-oslo.config >= 3.14.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 
@@ -34,14 +33,13 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-jinja2 >= 2.8
-BuildRequires: python3-module-babel >= 1.3
 BuildRequires: python3-module-oslo.serialization >= 1.10.0
 BuildRequires: python3-module-psutil >= 1.1.1
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.utils >= 3.5.0
+BuildRequires: python3-module-oslo.utils >= 3.16.0
 
-BuildRequires: python3-module-oslo.config >= 3.7.0
+BuildRequires: python3-module-oslo.config >= 3.14.0
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
 
@@ -131,6 +129,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc README.rst LICENSE
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1.14.0-alt1
+- 1.14.0
+
 * Mon Apr 11 2016 Alexey Shabalin <shaba@altlinux.ru> 1.7.0-alt1
 - 1.7.0
 

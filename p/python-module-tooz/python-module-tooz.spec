@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 1.34.0
+Version: 1.43.0
 Release: alt1
 Summary: Coordination library for distributed systems
 Group: Development/Python
@@ -16,23 +16,18 @@ BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-babel >= 1.3
-BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: python-module-stevedore >= 1.16.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-enum34
-BuildRequires: python-module-iso8601 >= 0.1.9
-BuildRequires: python-module-zake >= 0.1.6
-BuildRequires: python-module-voluptuous >= 0.8.6
+BuildRequires: python-module-voluptuous >= 0.8.9
 BuildRequires: python-module-msgpack >= 0.4.0
 BuildRequires: python-module-fasteners >= 0.7
 BuildRequires: python-module-retrying >= 1.2.3
 BuildRequires: python-module-futures >= 3.0
 BuildRequires: python-module-futurist >= 0.11.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-oslo.utils >= 3.15.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-requests >= 2.8.1
-
 
 # for doc
 BuildRequires: python-module-pymemcache
@@ -48,18 +43,14 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-babel >= 1.3
 BuildRequires: python3-module-stevedore >= 1.5.0
-BuildRequires: python3-module-iso8601 >= 0.1.9
-BuildRequires: python3-module-zake >= 0.1.6
-BuildRequires: python3-module-voluptuous >= 0.8.6
+BuildRequires: python3-module-voluptuous >= 0.8.9
 BuildRequires: python3-module-msgpack >= 0.4.0
 BuildRequires: python3-module-fasteners >= 0.7
 BuildRequires: python3-module-retrying >= 1.2.3
 BuildRequires: python3-module-futurist >= 0.11.0
-BuildRequires: python3-module-oslo.utils >= 3.5.0
+BuildRequires: python3-module-oslo.utils >= 3.15.0
 BuildRequires: python3-module-oslo.serialization >= 1.10.0
-BuildRequires: python3-module-requests >= 2.8.1
 %endif
 
 BuildArch: noarch
@@ -142,6 +133,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc doc/build/html
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1.43.0-alt1
+- 1.43.0
+
 * Wed Apr 13 2016 Alexey Shabalin <shaba@altlinux.ru> 1.34.0-alt1
 - 1.34.0
 

@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%pypi_name
-Version: 0.4.1
+Version: 1.2.1
 Release: alt1
 Summary: Windows Hyper-V library for OpenStack projects
 Group: Development/Python
@@ -20,15 +20,14 @@ BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-reno >= 0.1.1
-BuildRequires: python-module-babel
+BuildRequires: python-module-babel >= 2.3.4
 BuildRequires: python-module-eventlet >= 0.18.2
-BuildRequires: python-module-oslo.concurrency >= 3.5.0
-BuildRequires: python-module-oslo.config >= 3.7.0
+BuildRequires: python-module-oslo.concurrency >= 3.8.0
+BuildRequires: python-module-oslo.config >= 3.14.0
 BuildRequires: python-module-oslo.log >= 1.14.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.service >= 1.0.0
-
+BuildRequires: python-module-oslo.service >= 1.10.0
 
 
 %if_with python3
@@ -40,14 +39,14 @@ BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-reno >= 0.1.1
-BuildRequires: python3-module-babel
+BuildRequires: python3-module-babel >= 2.3.4
 BuildRequires: python3-module-eventlet >= 0.18.2
-BuildRequires: python3-module-oslo.concurrency >= 3.5.0
-BuildRequires: python3-module-oslo.config >= 3.7.0
+BuildRequires: python3-module-oslo.concurrency >= 3.8.0
+BuildRequires: python3-module-oslo.config >= 3.14.0
 BuildRequires: python3-module-oslo.log >= 1.14.0
-BuildRequires: python3-module-oslo.utils >= 3.5.0
+BuildRequires: python3-module-oslo.utils >= 3.16.0
 BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.service >= 1.0.0
+BuildRequires: python3-module-oslo.service >= 1.10.0
 %endif
 
 %description
@@ -126,5 +125,8 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1.2.1-alt1
+- 1.2.1
+
 * Wed Apr 13 2016 Alexey Shabalin <shaba@altlinux.ru> 0.4.1-alt1
 - Initial packaging

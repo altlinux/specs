@@ -1,12 +1,12 @@
 %def_with python3
 
 Name:       python-module-keystoneclient
-Version:    2.3.1
+Version:    3.5.0
 Release:    alt1
 Summary:    Client library for OpenStack Identity API
 License:    ASL 2.0
-URL:        http://pypi.python.org/pypi/%{name}
-Source:    %name-%version.tar
+URL:        http://docs.openstack.org/developer/python-keystoneclient
+Source:     %name-%version.tar
 Group:      Development/Python
 
 BuildArch:  noarch
@@ -14,40 +14,36 @@ BuildArch:  noarch
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
-BuildRequires: python-module-iso8601 >= 0.1.9
 BuildRequires: python-module-debtcollector >= 1.2.0
-BuildRequires: python-module-keystoneauth1 >= 2.1.0
-BuildRequires: python-module-oslo.config >= 3.7.0
+BuildRequires: python-module-keystoneauth1 >= 2.10.0
+BuildRequires: python-module-oslo.config >= 3.14.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
 BuildRequires: python-module-positional >= 1.0.1
-BuildRequires: python-module-prettytable >= 0.7
-BuildRequires: python-module-requests >= 2.8.1
+BuildRequires: python-module-requests >= 2.10.0
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: python-module-stevedore >= 1.16.0
 
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 0.1.1
+BuildRequires: python-module-reno >= 1.8.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr
-BuildRequires: python3-module-iso8601 >= 0.1.9
 BuildRequires: python3-module-debtcollector >= 1.2.0
-BuildRequires: python3-module-keystoneauth1 >= 2.1.0
-BuildRequires: python3-module-oslo.config >= 3.7.0
+BuildRequires: python3-module-keystoneauth1 >= 2.10.0
+BuildRequires: python3-module-oslo.config >= 3.14.0
 BuildRequires: python3-module-oslo.i18n >= 2.1.0
 BuildRequires: python3-module-oslo.serialization >= 1.10.0
-BuildRequires: python3-module-oslo.utils >= 3.5.0
+BuildRequires: python3-module-oslo.utils >= 3.16.0
 BuildRequires: python3-module-positional >= 1.0.1
-BuildRequires: python3-module-prettytable >= 0.7
-BuildRequires: python3-module-requests >= 2.8.1
+BuildRequires: python3-module-requests >= 2.10.0
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-stevedore >= 1.5.0
+BuildRequires: python3-module-stevedore >= 1.16.0
 %endif
 
 %description
@@ -101,11 +97,9 @@ rm -f doc/build/html/.buildinfo
 pushd ../python3
 %python3_install
 popd
-mv %buildroot%_bindir/keystone %buildroot%_bindir/python3-keystone
 %endif
 
 %python_install
-install -p -D -m 644 tools/keystone.bash_completion %buildroot%_sysconfdir/bash_completion.d/keystone.bash_completion
 
 # Delete tests
 rm -fr %buildroot%python_sitelibdir/keystoneclient/tests
@@ -113,13 +107,10 @@ rm -fr %buildroot%python3_sitelibdir/keystoneclient/tests
 
 %files
 %doc LICENSE README.rst
-%_bindir/keystone
-%_sysconfdir/bash_completion.d/keystone.bash_completion
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-keystoneclient
-%_bindir/python3-keystone
 %python3_sitelibdir/*
 %endif
 
@@ -127,6 +118,10 @@ rm -fr %buildroot%python3_sitelibdir/keystoneclient/tests
 %doc LICENSE doc/build/html
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 3.5.0-alt1
+- 3.5.0
+- The `keystone` CLI has been removed, using the `openstack` CLI is recommended
+
 * Tue Apr 12 2016 Alexey Shabalin <shaba@altlinux.ru> 2.3.1-alt1
 - 2.3.1
 

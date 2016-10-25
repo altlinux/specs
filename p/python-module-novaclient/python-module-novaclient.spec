@@ -1,13 +1,13 @@
 %def_with python3
 
 Name: python-module-novaclient
-Version: 3.3.1
+Version: 6.0.0
 Release: alt1
 Summary: Python API and CLI for OpenStack Nova
 
 Group: Development/Python
 License: ASL 2.0
-Url: http://pypi.python.org/pypi/python-novaclient
+Url: http://docs.openstack.org/developer/python-novaclient
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -22,32 +22,41 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-keystoneauth1 >= 2.1.0
-BuildRequires: python-module-iso8601 >= 0.1.9
+BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-keystoneauth1 >= 2.10.0
+BuildRequires: python-module-iso8601 >= 0.1.11
 BuildRequires: python-module-oslo.i18n >= 2.1.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
 BuildRequires: python-module-prettytable >= 0.7
-BuildRequires: python-module-requests >= 2.8.1
+BuildRequires: python-module-requests >= 2.10.0
 BuildRequires: python-module-simplejson >= 2.2.0
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-babel >= 1.3
+BuildRequires: python-module-babel >= 2.3.4
+
+BuildRequires: python-module-keystoneclient >= 2.0.0
+BuildRequires: python-module-cinderclient >= 1.6.0
+BuildRequires: python-module-glanceclient >= 2.3.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.6
-BuildRequires: python3-module-keystoneauth1 >= 2.1.0
-BuildRequires: python3-module-babel >= 1.3
+BuildRequires: python3-module-keystoneauth1 >= 2.10.0
+BuildRequires: python3-module-babel >= 2.3.4
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-iso8601 >= 0.1.9
+BuildRequires: python3-module-iso8601 >= 0.1.11
 BuildRequires: python3-module-prettytable >= 0.7
-BuildRequires: python3-module-requests >= 2.8.1
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.utils >= 3.5.0
+BuildRequires: python3-module-requests >= 2.10.0
+BuildRequires: python3-module-oslo.utils >= 3.16.0
 BuildRequires: python3-module-oslo.serialization >= 1.10.0
 BuildRequires: python3-module-simplejson >= 2.2.0
+
+BuildRequires: python3-module-keystoneclient >= 2.0.0
+BuildRequires: python3-module-cinderclient >= 1.6.0
+BuildRequires: python3-module-glanceclient >= 2.3.0
+
 %endif
 
 %description
@@ -149,6 +158,9 @@ install -p -D -m 644 doc/build/man/nova.1 %buildroot%_man1dir/nova.1
 %doc doc/build/html
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 6.0.0-alt1
+- 6.0.0
+
 * Thu Apr 14 2016 Alexey Shabalin <shaba@altlinux.ru> 3.3.1-alt1
 - 3.3.1
 

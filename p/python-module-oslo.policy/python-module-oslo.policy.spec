@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 1.6.0
+Version: 1.14.0
 Release: alt1
 Summary: RBAC policy enforcement library for OpenStack
 Group: Development/Python
@@ -16,11 +16,11 @@ BuildArch: noarch
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
-BuildRequires: python-module-requests >= 2.8.1
-BuildRequires: python-module-oslo.config >= 3.7.0
+BuildRequires: python-module-requests >= 2.10.0
+BuildRequires: python-module-oslo.config >= 3.14.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
 BuildRequires: python-module-six >= 1.9.0
 
 BuildRequires: python-module-sphinx
@@ -31,11 +31,11 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.6
-BuildRequires: python3-module-requests >= 2.8.1
-BuildRequires: python3-module-oslo.config >= 3.7.0
+BuildRequires: python3-module-requests >= 2.10.0
+BuildRequires: python3-module-oslo.config >= 3.14.0
 BuildRequires: python3-module-oslo.i18n >= 2.1.0
 BuildRequires: python3-module-oslo.serialization >= 1.10.0
-BuildRequires: python3-module-oslo.utils >= 3.5.0
+BuildRequires: python3-module-oslo.utils >= 3.16.0
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
@@ -90,8 +90,9 @@ rm -rf html/.{doctrees,buildinfo}
 %if_with python3
 pushd ../python3
 %python3_install
-mv %buildroot%_bindir/oslopolicy-checker \
-   %buildroot%_bindir/python3-oslopolicy-checker
+for bin_files in oslopolicy-list-redundant oslopolicy-policy-generator oslopolicy-sample-generator oslopolicy-checker; do
+    mv %buildroot%_bindir/$bin_files %buildroot%_bindir/python3-$bin_files
+done
 popd
 %endif
 %python_install
@@ -105,18 +106,22 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %files
 %doc CONTRIBUTING.rst HACKING.rst LICENSE PKG-INFO README.rst
 %python_sitelibdir/*
-%_bindir/oslopolicy-checker
+%_bindir/*
+%exclude %_bindir/python3-*
 
 %if_with python3
 %files -n python3-module-%sname
 %python3_sitelibdir/*
-%_bindir/python3-oslopolicy-checker
+%_bindir/python3-*
 %endif
 
 %files doc
 %doc html
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1.14.0-alt1
+- 1.14.0
+
 * Mon Apr 11 2016 Alexey Shabalin <shaba@altlinux.ru> 1.6.0-alt1
 - 1.6.0
 

@@ -1,13 +1,11 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1.1
 %define mname xstatic
 %define oname %mname-mdi
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.70.1
-#Release: alt1.1.1
+Version: 1.4.57.0
+Release: alt1
 Summary: mdi (XStatic packaging standard)
 License: MIT
 Group: Development/Python
@@ -85,17 +83,18 @@ popd
 
 %files
 %doc *.txt
-%python_sitelibdir/%mname/*
-%python_sitelibdir/*.egg-info
+%python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
 %doc *.txt
-%python3_sitelibdir/%mname/*
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*
 %endif
 
 %changelog
+* Mon Oct 24 2016 Alexey Shabalin <shaba@altlinux.ru> 1.4.57.0-alt1
+- 1.4.47.0
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.70.1-alt1.1.1.1
 - (AUTO) subst_x86_64.
 

@@ -1,6 +1,6 @@
 
 Name: openstack-neutron
-Version: 8.0.0
+Version: 9.0.0
 Release: alt1
 Epoch: 1
 Provides: openstack-quantum = %EVR
@@ -20,7 +20,6 @@ Source5: neutron.sysconfig
 Source10: neutron-server.service
 Source11: neutron-linuxbridge-agent.service
 Source12: neutron-openvswitch-agent.service
-Source13: neutron-bgp-dragent.service
 Source15: neutron-dhcp-agent.service
 Source16: neutron-l3-agent.service
 Source17: neutron-metadata-agent.service
@@ -34,7 +33,6 @@ Source29: neutron-rpc-server.service
 Source110: neutron-server.init
 Source111: neutron-linuxbridge-agent.init
 Source112: neutron-openvswitch-agent.init
-Source113: neutron-bgp-dragent.init
 Source115: neutron-dhcp-agent.init
 Source116: neutron-l3-agent.init
 Source117: neutron-metadata-agent.init
@@ -51,11 +49,10 @@ BuildRequires: crudini
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
-BuildRequires: python-module-d2to1
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 0.1.1
+BuildRequires: python-module-reno >= 1.8.0
 BuildRequires: python-module-paste
 BuildRequires: python-module-PasteDeploy >= 1.5.0
 BuildRequires: python-module-routes >= 1.12.3
@@ -64,36 +61,38 @@ BuildRequires: python-module-eventlet >= 0.18.2
 BuildRequires: python-module-pecan >= 1.0.0
 BuildRequires: python-module-greenlet >= 0.3.2
 BuildRequires: python-module-httplib2 >= 0.7.5
-BuildRequires: python-module-requests >= 2.8.1
+BuildRequires: python-module-requests >= 2.10.0
 BuildRequires: python-module-jinja2 >= 2.8
 BuildRequires: python-module-keystonemiddleware >= 4.0.0
-BuildRequires: python-module-netaddr >= 0.7.12
+BuildRequires: python-module-netaddr >= 0.7.13
 BuildRequires: python-module-netifaces >= 0.10.4
-BuildRequires: python-module-neutron-lib >= 0.0.1
-BuildRequires: python-module-neutronclient >= 2.6.0
+BuildRequires: python-module-neutron-lib >= 0.4.0
+BuildRequires: python-module-neutronclient >= 5.1.0
 BuildRequires: python-module-retrying >= 1.2.3
 BuildRequires: python-module-ryu >= 3.30
 BuildRequires: python-module-SQLAlchemy >= 1.0.10
 BuildRequires: python-module-webob >= 1.2.3
-BuildRequires: python-module-keystoneauth1 >= 2.1.0
-BuildRequires: python-module-alembic >= 0.8.0
-BuildRequires: python-module-stevedore >= 1.5.0
-BuildRequires: python-module-oslo.concurrency >= 3.5.0
-BuildRequires: python-module-oslo.config >= 3.7.0
-BuildRequires: python-module-oslo.context >= 0.2.0
-BuildRequires: python-module-oslo.db >= 4.1.0 python-module-oslo.db-tests
+BuildRequires: python-module-keystoneauth1 >= 2.10.0
+BuildRequires: python-module-alembic >= 0.8.4
+BuildRequires: python-module-stevedore >= 1.16.0
+BuildRequires: python-module-oslo.cache >= 1.5.0
+BuildRequires: python-module-oslo.concurrency >= 3.8.0
+BuildRequires: python-module-oslo.config >= 3.14.0
+BuildRequires: python-module-oslo.context >= 2.9.0
+BuildRequires: python-module-oslo.db >= 4.10.0 python-module-oslo.db-tests
 BuildRequires: python-module-oslo.i18n >= 2.1.0
 BuildRequires: python-module-oslo.log >= 1.14.0
-BuildRequires: python-module-oslo.messaging >= 4.0.0
+BuildRequires: python-module-oslo.messaging >= 5.2.0
 BuildRequires: python-module-oslo.middleware >= 3.0.0
-BuildRequires: python-module-oslo.policy >= 0.5.0
+BuildRequires: python-module-oslo.policy >= 1.9.0
 BuildRequires: python-module-oslo.reports >= 0.6.0
-BuildRequires: python-module-oslo.rootwrap >= 2.0.0
+BuildRequires: python-module-oslo.rootwrap >= 5.0.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.service >= 1.0.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
-BuildRequires: python-module-oslo.versionedobjects >= 1.5.0
-BuildRequires: python-module-openvswitch >= 2.4.0
+BuildRequires: python-module-oslo.service >= 1.10.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
+BuildRequires: python-module-oslo.versionedobjects >= 1.13.0
+BuildRequires: python-module-osprofiler >= 1.4.0
+BuildRequires: python-module-openvswitch >= 2.5.0
 BuildRequires: python-module-novaclient >= 2.28.1
 BuildRequires: python-module-designateclient >= 1.5.0
 
@@ -125,7 +124,7 @@ Requires: python-module-PasteDeploy
 Requires: python-module-keystoneauth1 >= 2.1.0
 Requires: python-module-keystonemiddleware >= 4.0.0
 Requires: python-module-oslo.config >= 3.7.0
-Requires: python-module-neutronclient >= 2.4.0
+Requires: python-module-neutronclient >= 5.1.0
 Requires: python-module-novaclient >= 2.22.0
 Requires: sudo conntrack-tools
 
@@ -217,14 +216,6 @@ Requires: %name = %EVR
 %description macvtap-agent
 This package provides the macvtap Agent.
 
-%package bgp-dragent
-Summary: OpenStack Network - bgp-dr
-Group: Development/Python
-Requires: %name = %EVR
-
-%description bgp-dragent
-This package provides the bgp-dr Agent.
-
 %package metadata-agent
 Summary: OpenStack Network - Meta Data Agent
 Group: Development/Python
@@ -305,7 +296,6 @@ install -p -D -m 644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/neutron
 install -p -D -m 644 %SOURCE10 %buildroot%_unitdir/neutron-server.service
 install -p -D -m 644 %SOURCE11 %buildroot%_unitdir/neutron-linuxbridge-agent.service
 install -p -D -m 644 %SOURCE12 %buildroot%_unitdir/neutron-openvswitch-agent.service
-install -p -D -m 644 %SOURCE13 %buildroot%_unitdir/neutron-bgp-dragent.service
 install -p -D -m 644 %SOURCE15 %buildroot%_unitdir/neutron-dhcp-agent.service
 install -p -D -m 644 %SOURCE16 %buildroot%_unitdir/neutron-l3-agent.service
 install -p -D -m 644 %SOURCE17 %buildroot%_unitdir/neutron-metadata-agent.service
@@ -320,7 +310,6 @@ install -p -D -m 644 %SOURCE29 %buildroot%_unitdir/neutron-rpc-server.service
 install -p -D -m 755 %SOURCE110 %buildroot%_initdir/neutron-server
 install -p -D -m 755 %SOURCE111 %buildroot%_initdir/neutron-linuxbridge-agent
 install -p -D -m 755 %SOURCE112 %buildroot%_initdir/neutron-openvswitch-agent
-install -p -D -m 755 %SOURCE113 %buildroot%_initdir/neutron-bgp-dragent
 install -p -D -m 755 %SOURCE115 %buildroot%_initdir/neutron-dhcp-agent
 install -p -D -m 755 %SOURCE116 %buildroot%_initdir/neutron-l3-agent
 install -p -D -m 755 %SOURCE117 %buildroot%_initdir/neutron-metadata-agent
@@ -338,7 +327,7 @@ install -d -m 755 %buildroot%_runtimedir/neutron
 install -d -m 750 %buildroot%_cachedir/neutron
 
 # configuration files
-for c in neutron.conf dhcp_agent.ini l3_agent.ini metadata_agent.ini metering_agent.ini bgp_dragent.ini ; do
+for c in neutron.conf dhcp_agent.ini l3_agent.ini metadata_agent.ini metering_agent.ini ; do
     install -p -D -m 644 etc/$c.sample %buildroot%_sysconfdir/neutron/$c
 done
 for c in linuxbridge_agent.ini ml2_conf.ini ml2_conf_sriov.ini openvswitch_agent.ini sriov_agent.ini macvtap_agent.ini ; do
@@ -390,12 +379,6 @@ crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespac
 %post_service neutron-metadata-agent
 %preun metadata-agent
 %preun_service neutron-metadata-agent
-
-%post bgp-dragent
-%post_service neutron-bgp-dragent
-%preun bgp-dragent
-%preun_service neutron-bgp-dragent
-
 
 
 %post linuxbridge-agent
@@ -537,12 +520,6 @@ fi
 %_unitdir/neutron-macvtap-agent.service
 %_initdir/neutron-macvtap-agent
 
-%files bgp-dragent
-%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/bgp_dragent.ini
-%_bindir/neutron-bgp-dragent
-%_unitdir/neutron-bgp-dragent.service
-%_initdir/neutron-bgp-dragent
-
 %files metering-agent
 %_unitdir/neutron-metering-agent.service
 %_initdir/neutron-metering-agent
@@ -555,6 +532,10 @@ fi
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Fri Oct 21 2016 Alexey Shabalin <shaba@altlinux.ru> 1:9.0.0-alt1
+- 9.0.0 Newton release
+- drop package bgp-dragent
+
 * Fri Apr 15 2016 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.0-alt1
 - 8.0.0 Mitaka release
 - rename packages:

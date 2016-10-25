@@ -2,24 +2,20 @@
 %def_with python3
 
 Name: python-module-%{pypi_name}
-Version: 1.3.0
-Release: alt1.git20150731.1.1
+Version: 2.0.0
+Release: alt1
 Summary: A Python Mocking and Patching Library for Testing
 
 Group: Development/Python
 License: BSD
 Url: https://pypi.python.org/pypi/%{pypi_name}
 
-# https://github.com/testing-cabal/mock.git
 Source: %name-%version.tar
 
 BuildArch: noarch
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
-BuildRequires: git-core python-module-pbr python3-module-html5lib python3-module-pbr rpm-build-python3
 
-#BuildRequires: python-devel python-module-setuptools git
-#BuildRequires: python-module-pbr
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-pbr
 
 %py_requires funcsigs
 
@@ -36,8 +32,7 @@ Summary:        A Python Mocking and Patching Library for Testing
 Group:		Development/Python
 BuildArch:      noarch
 BuildRequires(pre):  rpm-build-python3
-#BuildRequires: python3-module-pbr python3-module-setuptools
-%py3_requires funcsigs
+BuildRequires: python3-module-pbr python3-module-setuptools
 
 %description -n python3-module-%{pypi_name}
 Mock is a Python module that provides a core mock class. It removes the need
@@ -50,13 +45,6 @@ needed attributes in the normal way.
 
 %prep
 %setup
-
-git config --global user.email "real at altlinux.org"
-git config --global user.name "REAL"
-git init-db
-git add . -A
-git commit -a -m "%version"
-git tag -m "%version" %version
 
 %if_with python3
 rm -rf ../python3
@@ -83,15 +71,18 @@ popd
 
 %files
 %doc docs/index.txt README.rst LICENSE.txt NEWS
-%{python_sitelibdir}/*
+%python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-mock
 %doc docs/index.txt README.rst LICENSE.txt NEWS
-%{python3_sitelibdir}/*
+%python3_sitelibdir/*
 %endif
 
 %changelog
+* Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt1
+- 2.0.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.0-alt1.git20150731.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

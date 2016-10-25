@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%pypi_name
-Version: 1.30.0
+Version: 2.6.0
 Release: alt1
 Epoch: 1
 Summary: Taskflow structured state management library
@@ -24,15 +24,15 @@ BuildRequires: python-module-futurist >= 0.11.0
 BuildRequires: python-module-fasteners >= 0.7
 BuildRequires: python-module-networkx >= 1.10 python-module-networkx-tests
 BuildRequires: python-module-contextlib2 >= 0.4.0
-BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: python-module-stevedore >= 1.16.0
 BuildRequires: python-module-futures >= 3.0
 BuildRequires: python-module-monotonic >= 0.6
 BuildRequires: python-module-jsonschema >= 2.0.0
 BuildRequires: python-module-automaton >= 0.5.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
 BuildRequires: python-module-retrying >= 1.2.3
-BuildRequires: python-module-cachetools >= 1.0.0
+BuildRequires: python-module-cachetools >= 1.1.0
 BuildRequires: python-module-debtcollector >= 1.2.0
 
 # for build doc and tests
@@ -70,14 +70,14 @@ BuildRequires: python3-module-futurist >= 0.1.2
 BuildRequires: python3-module-fasteners >= 0.7
 BuildRequires: python3-module-networkx >= 1.10
 BuildRequires: python3-module-contextlib2 >= 0.4.0
-BuildRequires: python3-module-stevedore >= 1.5.0
+BuildRequires: python3-module-stevedore >= 1.16.0
 BuildRequires: python3-module-monotonic >= 0.3
 BuildRequires: python3-module-jsonschema >= 2.0.0
 BuildRequires: python3-module-automaton >= 0.5.0
-BuildRequires: python3-module-oslo.utils >= 2.0.0
-BuildRequires: python3-module-oslo.serialization >= 1.4.0
-BuildRequires: python3-module-cachetools >= 1.0.0
-BuildRequires: python3-module-debtcollector >= 0.3.0
+BuildRequires: python3-module-oslo.utils >= 3.16.0
+BuildRequires: python3-module-oslo.serialization >= 1.10.0
+BuildRequires: python3-module-cachetools >= 1.1.0
+BuildRequires: python3-module-debtcollector >= 1.2.0
 %endif
 
 %description
@@ -161,6 +161,9 @@ rm -fr %buildroot%python3_sitelibdir/*/examples
 %endif
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1:2.6.0-alt1
+- 2.6.0
+
 * Wed Apr 13 2016 Alexey Shabalin <shaba@altlinux.ru> 1:1.30.0-alt1
 - 1.30.0
 

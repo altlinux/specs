@@ -1,7 +1,7 @@
 %def_with python3
 
 Name: python-module-troveclient
-Version: 2.1.1
+Version: 2.5.0
 Release: alt1
 Summary: Client library for OpenStack DBaaS API
 Group: Development/Python
@@ -16,15 +16,18 @@ BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-reno >= 1.8.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-prettytable >= 0.7
-BuildRequires: python-module-requests >= 2.8.1
+BuildRequires: python-module-requests >= 2.10.0
+BuildRequires: python-module-oslo.i18n >= 2.1.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
+BuildRequires: python-module-babel >= 2.3.4
+BuildRequires: python-module-keystoneauth1 >= 2.10.0
 BuildRequires: python-module-simplejson >= 2.2.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
-BuildRequires: python-module-keystoneclient >= 1.6.0
-BuildRequires: python-module-babel >= 1.3
 BuildRequires: python-module-swiftclient >= 2.2.0
+BuildRequires: python-module-mistralclient >= 2.0.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -34,11 +37,13 @@ BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-prettytable >= 0.7
 BuildRequires: python3-module-requests >= 2.8.1
-BuildRequires: python3-module-oslo.utils >= 3.5.0
-BuildRequires: python3-module-keystoneclient >= 1.6.0
+BuildRequires: python3-module-oslo.i18n >= 2.1.0
+BuildRequires: python3-module-oslo.utils >= 3.16.0
 BuildRequires: python3-module-simplejson >= 2.2.0
-BuildRequires: python3-module-babel >= 1.3
+BuildRequires: python3-module-babel >= 2.3.4
+BuildRequires: python3-module-keystoneauth1 >= 2.10.0
 BuildRequires: python3-module-swiftclient >= 2.2.0
+BuildRequires: python3-module-mistralclient >= 2.0.0
 %endif
 
 
@@ -127,6 +132,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt1
+- 2.5.0
+
 * Tue Apr 19 2016 Alexey Shabalin <shaba@altlinux.ru> 2.1.1-alt1
 - 2.1.1
 

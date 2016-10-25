@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%pypi_name
-Version: 3.8.0
+Version: 3.16.0
 Release: alt1
 Summary: OpenStack Oslo Utility library
 Group: Development/Python
@@ -20,13 +20,14 @@ BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-funcsigs >= 0.4
-BuildRequires: python-module-iso8601 >= 0.1.9
+BuildRequires: python-module-iso8601 >= 0.1.11
 BuildRequires: python-module-oslo.i18n >= 2.1.0
 BuildRequires: python-module-monotonic >= 0.6
 BuildRequires: python-module-pytz >= 2013.6
 BuildRequires: python-module-netaddr >= 0.7.12
 BuildRequires: python-module-netifaces >= 0.10.4
 BuildRequires: python-module-debtcollector >= 1.2.0
+BuildRequires: python-module-pyparsing >= 2.0.1
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 
@@ -124,6 +125,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc doc/build/html LICENSE
 
 %changelog
+* Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 3.16.0-alt1
+- 3.16.0
+
 * Fri Apr 08 2016 Alexey Shabalin <shaba@altlinux.ru> 3.8.0-alt1
 - 3.8.0
 

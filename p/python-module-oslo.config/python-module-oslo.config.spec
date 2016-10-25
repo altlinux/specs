@@ -3,7 +3,7 @@
 %def_with python3
 
 Name:       python-module-%sname
-Version:    3.9.0
+Version:    3.17.0
 Release:    alt1
 Summary:    OpenStack common configuration library
 
@@ -28,9 +28,12 @@ BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-debtcollector >= 1.2.0
 BuildRequires: python-module-netaddr >= 0.7.12
-BuildRequires: python-module-stevedore >= 1.5.0
-BuildRequires: python-module-fixtures >= 1.3.1
-BuildRequires: python-module-reno >= 0.1.1
+BuildRequires: python-module-stevedore >= 1.16.0
+BuildRequires: python-module-oslo.i18n >= 2.1.0
+BuildRequires: python-module-rfc3986 >= 0.2.0
+BuildRequires: python-module-fixtures >= 3.0.0
+BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-mock >= 2.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -146,6 +149,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 3.17.0-alt1
+- 3.17.0
+
 * Fri Apr 08 2016 Alexey Shabalin <shaba@altlinux.ru> 3.9.0-alt1
 - 3.9.0
 

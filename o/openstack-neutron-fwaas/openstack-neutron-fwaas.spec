@@ -1,7 +1,7 @@
 %define sname neutron-fwaas
 
 Name: openstack-%sname
-Version: 8.0.0
+Version: 9.0.0
 Release: alt1
 Epoch: 1
 Summary: OpenStack Networking FWaaS
@@ -21,21 +21,21 @@ BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-eventlet >= 0.18.2
 BuildRequires: python-module-httplib2 >= 0.7.5
-BuildRequires: python-module-netaddr >= 0.7.12
+BuildRequires: python-module-netaddr >= 0.7.13
 BuildRequires: python-module-SQLAlchemy >= 1.0.10
-BuildRequires: python-module-alembic >= 0.8.0
-BuildRequires: python-module-neutron-lib >= 0.0.1
-BuildRequires: python-module-oslo.config >= 3.7.0
-BuildRequires: python-module-oslo.db >= 4.1.0
+BuildRequires: python-module-alembic >= 0.8.4
+BuildRequires: python-module-neutron-lib >= 0.4.0
+BuildRequires: python-module-oslo.config >= 3.14.0
+BuildRequires: python-module-oslo.db >= 4.10.0
 BuildRequires: python-module-oslo.log >= 1.14.0
-BuildRequires: python-module-oslo.messaging >= 4.0.0
+BuildRequires: python-module-oslo.messaging >= 5.2.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.service >= 1.0.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-oslo.service >= 1.10.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
 
-BuildRequires: python-module-neutron >= 8.0.0
+BuildRequires: python-module-neutron >= 9.0.0
 
-Requires: openstack-neutron >= 1:8.0.0-alt1
+Requires: openstack-neutron >= 1:9.0.0-alt1
 Requires: python-module-%sname = %version-%release
 
 %description
@@ -85,6 +85,9 @@ install -p -D -m 644 etc/fwaas_driver.ini.sample %buildroot%_sysconfdir/neutron/
 
 
 %changelog
+* Mon Oct 24 2016 Alexey Shabalin <shaba@altlinux.ru> 1:9.0.0-alt1
+- 9.0.0
+
 * Tue Apr 19 2016 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.0-alt1
 - 8.0.0
 

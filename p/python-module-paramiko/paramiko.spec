@@ -1,36 +1,26 @@
-%define	version	1.16.0
-%define release alt2
-%define source_version %version
-%define source_name  paramiko
-%setup_python_module paramiko
-
+%define oname paramiko
 %def_with python3
 
 Summary: SSH2 protocol for python
 Packager: Andriy Stepanov <stanv@altlinux.ru>
-Name: python-module-paramiko
-Version: %version
-Release: alt2.1.1.1
+Name: python-module-%oname
+Version: 2.0.2
+Release: alt1
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 License: GPL
 Group: Development/Python
-Url: http://www.lag.net/paramiko
+Url: http://www.lag.net/%oname
 BuildArch: noarch
 
-#BuildPreReq: python-module-setuptools-tests
-#BuildPreReq: python-module-ecdsa python-module-pycrypto
+BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-ecdsa python-module-pycrypto python-module-pyasn1
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-ecdsa python3-module-pycrypto
-#BuildPreReq: python-tools-2to3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-ecdsa python3-module-pycrypto python3-module-pyasn1
 %endif
-
-# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
-# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-ecdsa python-module-pycrypto python-module-setuptools-tests python3-module-ecdsa python3-module-pycrypto python3-module-setuptools-tests rpm-build-python3
 
 %description
 paramiko is a module for python that implements the SSH2 protocol for secure
@@ -39,11 +29,11 @@ entirely in python (no C or platform-dependent code).
 
 This module is built for python %_python_version.
 
-%package -n python3-module-%source_name
+%package -n python3-module-%oname
 Summary: SSH2 protocol for python
 Group: Development/Python3
 
-%description -n python3-module-%source_name
+%description -n python3-module-%oname
 paramiko is a module for python that implements the SSH2 protocol for secure
 (encrypted and authenticated) connections to remote machines. It is written
 entirely in python (no C or platform-dependent code).
@@ -51,14 +41,13 @@ entirely in python (no C or platform-dependent code).
 This module is built for python %_python3_version.
 
 %package doc
-Summary: %modulename documentation and example programs
+Summary: %oname documentation and example programs
 Group: Development/Python
-Prefix: %_prefix
-Requires: python-module-%modulename = %version
+
 %description doc
-%modulename paramiko is a module for python that implements the SSH2 protocol
+paramiko is a module for python that implements the SSH2 protocol
 for secure (encrypted and authenticated) connections to remote machines. This
-package contain API documentation and examples for python-%modulename module.
+package contain API documentation and examples for python-%oname module.
 
 %prep
 %setup
@@ -66,7 +55,6 @@ package contain API documentation and examples for python-%modulename module.
 
 %if_with python3
 cp -fR . ../python3
-#find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -96,21 +84,22 @@ popd
 %endif
 
 %files
-%python_sitelibdir/%source_name
-%python_sitelibdir/*.egg-info
-%doc README LICENSE
+%python_sitelibdir/*
+%doc README.rst LICENSE
 
 %files doc
 %doc demos
 
 %if_with python3
-%files -n python3-module-%source_name
-%python3_sitelibdir/%source_name
-%python3_sitelibdir/*.egg-info
-%doc README LICENSE
+%files -n python3-module-%oname
+%python3_sitelibdir/*
+%doc README.rst LICENSE
 %endif
 
 %changelog
+* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0.2-alt1
+- 2.0.2
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.16.0-alt2.1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
