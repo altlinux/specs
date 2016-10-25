@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.52
+Version: 0.53
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -79,6 +79,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Tue Oct 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1
+- new version
+
 * Sat Oct 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1
 - parallel build enabled
 
