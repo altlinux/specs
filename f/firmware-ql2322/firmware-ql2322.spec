@@ -1,41 +1,38 @@
 %define firmware_name ql2322
-%define firmware_fname ql2322_fw.bin
 
 Name: firmware-%firmware_name
-Version: 3.3.27
+Version: 3.03.28
 Release: alt1
 License: distributable
 Group: System/Kernel and hardware
 Summary: Firmware for the QLogic HBAs, based on ISP23xx chips (qla2xxx driver)
-Source0: %firmware_fname.%version
-Source1: %firmware_name-LICENSE
-Url: ftp://ftp.qlogic.com/outgoing/linux/firmware
+Url: https://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git
 BuildArch: noarch
-Requires: hotplug
+
+Source0: %{firmware_name}_fw.bin
+Source1: LICENCE.qla2xxx
 
 %description
 This package contains the firmware for the QLogic HBAs, based on
 ISP23xx chips (qla2xxx driver). Usage of the firmware is subject
-to the terms contained in %_docdir/%name-%version/%firmware_name-LICENSE.
+to the terms contained in %_docdir/%name-%version/LICENSE.qla2xxx
 Please read the license carefully.
 
 %install
-%__install -d %buildroot/lib/firmware
-%__install -d %buildroot/%_docdir/%name-%version
-
-%__install -m644 %SOURCE0 %buildroot/lib/firmware/%firmware_fname
-%__install -m644 %SOURCE1 %buildroot/%_docdir/%name-%version
+install -pD -m0644 %SOURCE0 %buildroot/lib/firmware/%{firmware_name}_fw.bin
+install -pD -m0644 %SOURCE1 %buildroot/%_docdir/%name-%version/LICENCE.qla2xxx
 
 %files
-/lib/firmware/%firmware_fname
-%dir %_docdir/%name-%version
-%_docdir/%name-%version/%firmware_name-LICENSE
+/lib/firmware/*.bin
+%_docdir/%name-%version
 
 %changelog
+* Tue Oct 25 2016 Valery Inozemtsev <shrek@altlinux.ru> 3.03.28-alt1
+- 3.03.28
+
 * Tue Oct 14 2008 Dmitry Lebkov <dlebkov@altlinux.ru> 3.3.27-alt1
 - new version - 3.3.27
 - fix firmware installation path on x86_64
 
 * Mon Jan 08 2007 Dmitry Lebkov <dlebkov@altlinux.ru> 3.3.20-alt1
 - initial release
-
