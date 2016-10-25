@@ -1,5 +1,5 @@
 Name: 		skrooge
-Version: 	2.4.0
+Version: 	2.5.0
 Release: 	alt1
 License: 	%gpl2plus
 Summary: 	Personal finances manager for KF5
@@ -107,6 +107,9 @@ and intuitive.
 %_datadir/%name
 
 %changelog
+* Tue Oct 25 2016 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1
+- new version 2.5.0
+
 * Sun Jul 24 2016 Andrey Cherepanov <cas@altlinux.org> 2.4.0-alt1
 - new version 2.4.0
 
