@@ -20,12 +20,16 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/g
 %{!?rel_build:%global git_rel .git%{commit_date}.%{shortcommit}}
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
+# http://git.mate-desktop.org/mate-notification-daemon/commit/?h=1.16&id=d9ed22c
+# rhbz (#1384691)
+Patch1:         mate-notification-daemon_0001-Fix-bold-formatting-111.patch
+
 Name:           mate-notification-daemon
 Version:        %{branch}.0
 %if 0%{?rel_build}
-Release:        alt1_1
+Release:        alt1_2
 %else
-Release:        alt1_1
+Release:        alt2_0.6%{?git_rel}
 %endif
 Summary:        Notification daemon for MATE Desktop
 License:        GPLv2+
@@ -53,6 +57,8 @@ Notification daemon for MATE Desktop
 
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
+
+%patch1 -p1 -b .bold
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -97,6 +103,9 @@ rm -f  %{buildroot}%{_datadir}/applications/mate-notification-daemon.desktop
 
 
 %changelog
+* Tue Oct 25 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_2
+- new fc release
+
 * Thu Oct 06 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
 - update to mate 1.16
 
