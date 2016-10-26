@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 %define oldname caja
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name caja
-%define version 1.16.0
+%define version 1.16.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
@@ -22,7 +22,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 
 Name:        mate-file-manager
 Summary:     File manager for MATE
-Version:     %{branch}.0
+Version:     %{branch}.1
 %if 0%{?rel_build}
 Release:     alt1_1
 %else
@@ -135,7 +135,7 @@ sed -i s/StartupNotify=true/StartupNotify=false/g data/caja-home.desktop.in.in
 %if 0%{?rel_build}
 %patch33 -p1
 %patch35 -p1
-#NOCONFIGURE=1 ./autogen.sh
+NOCONFIGURE=1 ./autogen.sh
 %else # 0%{?rel_build}
 # needed for git snapshots
 NOCONFIGURE=1 ./autogen.sh
@@ -220,6 +220,9 @@ EOF
 
 
 %changelog
+* Wed Oct 26 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.1-alt1_1
+- new fc release
+
 * Thu Oct 06 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
 - update to mate 1.16
 
