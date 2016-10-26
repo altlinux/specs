@@ -14,7 +14,7 @@
 
 %define major 4
 %define minor 14
-%define bugfix 23
+%define bugfix 25
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
@@ -360,6 +360,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Wed Oct 26 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.25-alt1
+- new version
+
 * Mon Aug 29 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.23-alt1
 - new version
 
