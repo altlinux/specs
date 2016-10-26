@@ -4,7 +4,7 @@ BuildRequires: perl(Carp.pm) perl(File/Basename.pm) perl(File/Path.pm) perl(File
 %define module RPM-Source-Convert
 
 Name: perl-%module
-Version: 0.619
+Version: 0.620
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -42,6 +42,9 @@ Conflicts: perl-RPM-Source-Editor < 0.73
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Wed Oct 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.620-alt1
+- moved SourceAnalyzer after prehooks
+
 * Mon Oct 24 2016 Igor Vlasenko <viy@altlinux.ru> 0.619-alt1
 - development release
 
