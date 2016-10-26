@@ -5,8 +5,8 @@
 
 Name:           python-module-%oname
 Version:        1.11
-Release:        alt1
-Epoch:          1
+Release:        alt2
+Epoch:          2
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python
 License:        LGPLv2+
@@ -18,11 +18,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 BuildArch:      noarch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-alabaster python-module-html5lib python-module-ipyparallel python-module-numpy-testing python-module-objects.inv python-module-pydot python-module-pygraphviz python-module-scipy python-module-sphinx-pickles python-module-yaml  time
+BuildRequires: python-module-alabaster python-module-html5lib python-module-ipyparallel python-module-numpy-testing python-module-objects.inv python-module-pydotplus python-module-pygraphviz python-module-scipy python-module-sphinx-pickles python-module-yaml  time
 
 BuildRequires: python-devel
 #BuildPreReq: python-module-pygraphviz ipython libnumpy-devel
-#BuildPreReq: python-module-pydot python-module-matplotlib
+#BuildPreReq: python-module-pydotplus python-module-matplotlib
 #BuildPreReq: python-module-yaml python-module-scipy python-module-pyparsing
 #BuildPreReq: python-module-sphinx-devel python-module-Pygments
 #BuildPreReq: graphviz python-module-setuptools python-module-decorator
@@ -58,7 +58,7 @@ Summary: Creates and Manipulates Graphs and Networks
 Group: Development/Python
 Requires: %name-core = %EVR
 Requires: python-module-pygraphviz
-Requires: python-module-pydot
+Requires: python-module-pydotplus
 Requires: python-module-matplotlib
 
 %description drawing
@@ -86,7 +86,7 @@ Summary: Creates and Manipulates Graphs and Networks (Python 3)
 Group: Development/Python3
 Requires: python3-module-%oname-core = %EVR
 Requires: python3-module-pygraphviz
-Requires: python3-module-pydot
+Requires: python3-module-pydotplus
 Requires: python3-module-matplotlib
 
 %description -n python3-module-%oname-drawing
@@ -270,6 +270,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Oct 26 2016 Alexey Shabalin <shaba@altlinux.ru> 2:1.11-alt2
+- update recuires pydot -> pydotplus
+
 * Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1:1.11-alt1
 - 1.11
 
