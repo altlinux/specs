@@ -6,7 +6,7 @@
 Summary: Python modules for implementing LDAP clients
 Name: python-module-%oname
 Version: 2.4.25.1
-Release: alt1
+Release: alt2
 Source: %name-%version.tar
 Patch: python-pyldap-dirs.patch
 License: Python-style license
@@ -22,6 +22,9 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel
 %endif
 
+Provides: python-module-ldap = %version-%release
+Conflicts: python-module-ldap < %version-%release
+
 %description
 pyldap is a fork of python-ldap, and provides an object-oriented API
 to access LDAP directory servers from Python programs.
@@ -33,6 +36,9 @@ stuff (e.g. processing LDIF, LDAPURLs, LDAPv3 sub-schema, etc.).
 %package -n python3-module-%oname
 Summary: LDAP client API for Python
 Group: Development/Python3
+
+Provides: python3-module-ldap = %version-%release
+Conflicts: python3-module-ldap < %version-%release
 
 %description -n python3-module-%oname
 pyldap is a fork of python-ldap, and provides an object-oriented API
@@ -47,6 +53,7 @@ Summary: Demos for python-%oname
 Group: Development/Documentation
 BuildArch: noarch
 Requires: %name = %version-%release
+Conflicts: python-module-ldap-demos
 
 %description demos
 pyldap is a fork of python-ldap, and provides an object-oriented API
@@ -67,6 +74,7 @@ Summary: Tests for python-ldap
 Group: Development/Python
 BuildArch: noarch
 Requires: %name = %version-%release
+Conflicts: python-module-ldap-tests
 
 %description tests
 pyldap is a fork of python-ldap, and provides an object-oriented API
@@ -82,6 +90,7 @@ This package contains tests for python-ldap.
 Summary: Documentation for python-ldap
 Group: Development/Documentation
 BuildArch: noarch
+Conflicts: python-module-ldap-doc
 
 %description doc
 pyldap is a fork of python-ldap, and provides an object-oriented API
@@ -96,6 +105,7 @@ This package contains documentation for python-ldap.
 %package pickles
 Summary: Pickles for python-ldap
 Group: Development/Python
+Conflicts: python-module-ldap-pickles
 
 %description pickles
 pyldap is a fork of python-ldap, and provides an object-oriented API
@@ -176,5 +186,8 @@ cp -fR Doc/.build/pickle %buildroot%python_sitelibdir/ldap/
 %endif
 
 %changelog
+* Wed Oct 26 2016 Alexey Shabalin <shaba@altlinux.ru> 2.4.25.1-alt2
+- add conflicts with python-module-ldap
+
 * Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 2.4.25.1-alt1
 - Initial build
