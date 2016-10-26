@@ -1,113 +1,97 @@
-%set_verify_elf_method textrel=relaxed
-# Disable cross-reference autoreq problem for shared libraries
-%add_findreq_skiplist  %_libdir/chromium/lib/lib*.so
-
-%def_disable debug
 %def_disable nacl
-%def_disable verbose
 %def_disable clang
+%def_enable  gtk3
 %def_enable  shared_libraries
-%def_disable v8_internal
 %def_disable libchromiumcontent
-%def_enable  vaapi
 %def_enable  widevine
+%def_disable wayland
+%def_enable  google_api_keys
 
-%define v8_version 4.9.385.33
+%define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
 
-%if_enabled debug
-%define buildtype Debug
-%else
-%define buildtype Release
-%endif
+%global gcc_version 4.8
+%global __find_debuginfo_files %nil
+
+# Leave this alone, please.
+%global target out/Release
+
+# Set up Google API keys, see http://www.chromium.org/developers/how-tos/api-keys .
+# Note: these are for ALT Linux use ONLY. For your own distribution,
+# please get your own set of keys.
+%define api_key               AIzaSyAIIWz7zaCwYcUSe3ZaRPviXjMjkBP4-xY
+%define default_client_id     1018394967181.apps.googleusercontent.com
+%define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        49.0.2623.108
-Release:        alt1
+Version:        54.0.2840.59
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
 Group:          Networking/WWW
-Url:            http://code.google.com/p/chromium/
+Url:            http://www.chromium.org
 
-Source0:        %name-%version.tar.gz
-Source10:       depot_tools.tar
-Source11:       libchromiumcontent.tar
+Source0:        chromium.tar.gz
+Source1:        depot_tools.tar
+Source2:        libchromiumcontent.tar
 
 Source30:       master_preferences
 Source31:       default_bookmarks.html
-Source99:       chrome-wrapper
-Source100:      %name.sh
+Source100:      chromium.sh
 Source101:      chromium.desktop
 Source102:      chromium.xml
-Source200:      %name.default
+Source200:      chromium.default
 
 Provides:       chromium-browser = %version
 Obsoletes:      chromium-browser < %version
+Obsoletes:      chromium-stable <= %version
 
-## Start Patches
-# Patches from SUSE
-# PATCH-FIX-OPENSUSE enables reading of the master preference
-Patch14:	chromium-master-prefs-path.patch
-# PATCH-FIX-OPENSUSE Fix some includes specifically for the GCC version used
-Patch20:	chromium-gcc-fixes.patch
-# PATCH-FIX-OPENSUSE patches in the system v8 library
-Patch63:    chromium-system-v8.patch
-# PATCH-FIX-UPSTREAM Add more charset aliases
-Patch64:	chromium-more-codec-aliases.patch
-# PATCH-FIX-OPENSUSE Compile the sandbox with -fPIE settings
-Patch66:	chromium-sandbox-pie.patch
-
-# TODO Obsoleted patches from SUSE
-# PATCH-FIX-OPENSUSE patches in system zlib library
-Patch8:		chromium-codechanges-zlib.patch
-# PATCH-FIX-OPENSUSE patches in system glew library
-Patch17:	chromium-system-glew.patch
-# PATCH-FIX-OPENSUSE patches in the system libvpx library
-Patch32:	chromium-system-libvpx.patch
-
-# Patches from other vendors
-# ALT: Fix krb5 includes path
-Patch69:	chromium-alt-krb5-fix-path.patch
-# Set appropriate desktop file name for default browser check
-Patch71:	chromium-set-desktop-file-name.patch
-
-# Patches from Debian
-Patch85:	chromium-fix-manpage.patch
-Patch86:	chromium-icon.patch
-# Old, but specific
-Patch87:	chromium-cups1.5.patch
-Patch90:	chromium-gcc4.7.patch
-# New from Debian
-Patch92:	chromium-third-party-cookies-off-by-default.patch
-Patch93:	chromium-ps-print.patch
-
-# Patches from ALT Linux
-Patch95:	chromium-fix-shrank-by-one-character.patch
-Patch96:	chromium-set-ffmpeg-flags-for-multimedia.patch
-Patch98: 	chromium-fix-ffmpeg-build-on-ia32.patch
-
-# Experimental patches
-# https://bugs.launchpad.net/ubuntu/+source/chromium-browser/+bug/1424201
-Patch300:	chromium-enable_vaapi_on_linux.patch
-# If exterior-sourced widevine library exists at run-time, use it.
-Patch301:	chromium-fix_building_widevinecdm_with_chromium.patch
-Patch302:   chromium-widevine.patch
+### Start Patches
+Patch001: 0001-OPENSUSE-patches-in-system-zlib-library.patch
+Patch002: 0002-OPENSUSE-enables-reading-of-the-master-preference.patch
+Patch003: 0003-OPENSUSE-patches-in-system-glew-library.patch
+Patch004: 0004-OPENSUSE-Compile-the-sandbox-with-fPIE-settings.patch
+Patch005: 0005-OPENSUSE-patches-in-the-system-libvpx-library.patch
+Patch006: 0006-ALT-Fix-krb5-includes-path.patch
+Patch007: 0007-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
+Patch008: 0008-DEBIAN-manpage-updates-fixes.patch
+Patch009: 0009-DEBIAN-change-icon.patch
+Patch010: 0010-DEBIAN-fix-gcc4.7.patch
+Patch011: 0011-DEBIAN-disable-third-party-cookies-by-default.patch
+Patch012: 0012-DEBIAN-add-ps-printing-capability-gtk2.patch
+Patch013: 0013-ALT-fix-shrank-by-one-character.patch
+Patch014: 0014-DEBIAN-10-seconds-may-not-be-enough-so-do-not-kill-t.patch
+Patch015: 0015-DEBIAN-avoid-gtk2-includes.patch
+Patch016: 0016-DEBIAN-better-integration-with-gtk3-themes.patch
+Patch017: 0017-FEDORA-path-max.patch
+Patch018: 0018-FEDORA-Ignore-broken-nacl-open-fd-counter.patch
+Patch019: 0019-FEDORA-Use-libusb_interrupt_event_handler-from-curre.patch
+Patch020: 0020-FEDORA-Add-ICU-Text-Codec-aliases-from-openSUSE-via-.patch
+Patch021: 0021-FEDORA-Enable-ARM-CPU-detection-for-webrtc-from-arch.patch
+Patch022: 0022-FEDORA-Disable-MADV_FREE-if-set-by-glibc.patch
+Patch023: 0023-FEDORA-Use-gn-system-files.patch
+Patch024: 0024-FEDORA-Fix-last-commit-position-issue.patch
+Patch025: 0025-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
+Patch026: 0026-FEDORA-Fix-gn-build-on-Linux.patch
+Patch027: 0027-FEDORA-Use-system-harfbuzz-header.patch
+Patch028: 0028-ALT-gzip-does-not-support-the-rsyncable-option.patch
+Patch029: 0029-OPENSUSE-Compile-the-sandbox-with-fPIE-settings.patch
+Patch030: 0030-GENTOO-Enable-VA-API-on-linux.patch
+Patch031: 0031-UBUNTU-Specify-max-resolution.patch
+### End Patches
 
 BuildRequires: /proc
 
 BuildRequires:  bison
 BuildRequires:  bzlib-devel
 BuildRequires:  flex
+BuildRequires:  gcc%gcc_version-c++
 %if_enabled clang
 BuildRequires:  clang
-BuildRequires:  gcc-c++
-%else
-# There is too many errors while build by gcc 5.x. See https://code.google.com/p/chromium/issues/detail?id=466760
-BuildRequires:  gcc4.9-c++
 %endif
 BuildRequires:  gperf
-BuildRequires:	gst-plugins-devel
-BuildRequires:	jsoncpp-devel
+BuildRequires:  gst-plugins-devel
+BuildRequires:  jsoncpp-devel
 BuildRequires:  libalsa-devel
 BuildRequires:  libavcodec-devel
 BuildRequires:  libavformat-devel
@@ -126,25 +110,17 @@ BuildRequires:  libgcrypt-devel
 BuildRequires:  libgnome-keyring-devel
 BuildRequires:  libhunspell-devel
 BuildRequires:  libharfbuzz-devel
-#BuildRequires:  libicu-devel >= 4.0
+BuildRequires:  libicu-devel
 BuildRequires:  libjpeg-devel
 BuildRequires:  libkrb5-devel
 BuildRequires:  libnspr-devel
 BuildRequires:  libnss-devel
-BuildRequires:  libopus-devel
 BuildRequires:  libpam-devel
 BuildRequires:  libpci-devel
-BuildRequires:  libpng12-devel
-BuildRequires:  libpulseaudio-devel
 BuildRequires:  libspeechd-devel >= 0.8
 BuildRequires:  libsqlite3-devel
 BuildRequires:  libssl-devel
 BuildRequires:  libudev-devel
-%if_disabled v8_internal
-BuildRequires:  libv8-chromium-devel = %v8_version
-BuildRequires:  libv8-chromium-bin = %v8_version
-Requires:       libv8-chromium-bin = %v8_version
-%endif
 BuildRequires:  libvpx-devel
 BuildRequires:  libwebp-devel
 BuildRequires:  libx264-devel
@@ -153,14 +129,24 @@ BuildRequires:  libXdamage-devel
 BuildRequires:  libXrandr-devel
 BuildRequires:  libXtst-devel
 BuildRequires:  libyasm-devel
+BuildRequires:  libpulseaudio-devel
+%if_enabled wayland
+BuildRequires:  libwayland-server-devel
+BuildRequires:  libwayland-client-devel
+BuildRequires:  libwayland-cursor-devel
+%endif
 BuildRequires:  perl-Switch
-BuildRequires:  ninja-build
 BuildRequires:  pkg-config
+BuildRequires:  pkgconfig(atk)
 BuildRequires:  pkgconfig(cairo) >= 1.6
 BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  pkgconfig(gconf-2.0)
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gtk+-2.0)
+%if_enabled gtk3
+BuildRequires:  pkgconfig(gtk+-3.0)
+%endif
+BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xcomposite)
@@ -168,6 +154,7 @@ BuildRequires:  pkgconfig(xcursor)
 BuildRequires:  pkgconfig(xext)
 BuildRequires:  pkgconfig(xfixes)
 BuildRequires:  pkgconfig(xi)
+BuildRequires:  pkgconfig(xkbcommon)
 BuildRequires:  pkgconfig(xrender)
 BuildRequires:  pkgconfig(xscrnsaver)
 BuildRequires:  pkgconfig(xt)
@@ -178,28 +165,32 @@ BuildRequires:  python-modules-email
 BuildRequires:  python-modules-encodings
 BuildRequires:  python-modules-json
 BuildRequires:  python-modules-logging
+BuildRequires:  python-module-jinja2
+BuildRequires:  python-module-markupsafe
+BuildRequires:  python-module-ply
+BuildRequires:  python-module-protobuf
 BuildRequires:  subversion
 BuildRequires:  wdiff
 BuildRequires:  yasm
 BuildRequires:  usbids
 BuildRequires:  xdg-utils
-BuildRequires:  zlib-devel
-%if_enabled vaapi
 BuildRequires:  libva-devel
-%endif
 
 Provides:       webclient, /usr/bin/xbrowser
-BuildPreReq: 	alternatives >= 0.2.0
+BuildPreReq:    alternatives >= 0.2.0
 PreReq(post,preun): alternatives >= 0.2
 
-Requires: libalsa libGConf libgtk+2 libjpeg libpci libpulseaudio libXScrnSaver libxslt libXtst
+Requires: libva
+
+%set_gcc_version %gcc_version
+%set_verify_elf_method textrel=relaxed
+%add_findreq_skiplist %_libdir/%name/*.so %_libdir/%name/Packages/*
 
 %description
 Chromium is an open-source browser project that aims to build a safer,
 faster, and more stable way for all Internet users to experience the web.
 
 %package kde
-
 Summary:        Update to chromium to use KDE's kwallet to store passwords
 License:        BSD-3-Clause and LGPL-2.1+
 Group:          Networking/WWW
@@ -208,7 +199,7 @@ Conflicts:      chromium-desktop-gnome
 Provides:       chromium-password = %version
 Provides:       chromium-desktop-kde = %version
 Obsoletes:      chromium-desktop-kde < %version
-Requires:       chromium = %version
+Requires:       %name = %version
 Requires:       kde4base-runtime-core
 
 %description kde
@@ -218,7 +209,6 @@ the old password are no longer accessible and are also not converted
 to kwallet.
 
 %package gnome
-
 Summary:        Update to chromium to use Gnome keyring to store passwords
 License:        BSD-3-Clause and LGPL-2.1+
 Group:          Networking/WWW
@@ -227,7 +217,7 @@ Conflicts:      chromium-kde
 Provides:       chromium-password = %version
 Provides:       chromium-desktop-gnome = %version
 Obsoletes:      chromium-desktop-gnome < %version
-Requires:       chromium = %version
+Requires:       %name = %version
 Requires:       gnome-keyring
 
 %description gnome
@@ -237,332 +227,221 @@ the old password are no longer accessible and are also not converted
 to Gnome's Keyring.
 
 %prep
-%setup -q -n %name
-tar xf %SOURCE10 -C src
-tar xf %SOURCE11 -C src
-cp -a src/libchromiumcontent/chromiumcontent src
+%setup -q -n chromium
+tar -xf %SOURCE1
+tar -xf %SOURCE2
+cp -a libchromiumcontent/chromiumcontent .
 
-%patch8  -p2
-%patch14 -p2
-%patch17 -p1
-%patch20 -p0 -d src
-%if_disabled v8_internal
-%patch63 -p1 -d src
-%endif
-%patch64 -p0 -d src
-%patch66 -p1
-%patch69 -p2
-%patch71 -p2
+### Begin to apply patches
+%patch001 -p1
+%patch002 -p1
+%patch003 -p1
+%patch004 -p1
+%patch005 -p1
+%patch006 -p1
+%patch007 -p1
+%patch008 -p1
+%patch009 -p1
+%patch010 -p1
+%patch011 -p1
+%patch012 -p1
+%patch013 -p1
+%patch014 -p1
+%patch015 -p1
+%patch016 -p1
+%patch017 -p1
+%patch018 -p1
+%patch019 -p1
+%patch020 -p1
+%patch021 -p1
+%patch022 -p1
+%patch023 -p1
+%patch024 -p1
+%patch025 -p1
+%patch026 -p1
+%patch027 -p1
+%patch028 -p1
+%patch029 -p1
+%patch030 -p1
+%patch031 -p1
+### Finish apply patches
 
-%patch85 -p1
-%patch86 -p0
-%patch87 -p1
-%patch90 -p1
-%patch92 -p0
-%patch93 -p1
-%patch95 -p0
-%patch96 -p0
-#patch98 -p0
-
-# VAAPI
-%if_enabled vaapi
-%patch300 -p1 -d src
-%endif
-%if_enabled widevine
-%patch301 -p1 -d src
-%patch302 -p0 -d src
-%endif
-
-%if_disabled v8_internal
-# Replace anywhere v8 to system package
-subst 's,v8/tools/gyp/v8.gyp,build/linux/system.gyp,' `find . -type f -a -name *.gyp*`
-subst 's,v8_libplatform,v8,' src/third_party/pdfium/samples/samples.gyp
-sed -i '/v8_shell#host/d' src/chrome/chrome_tests.gypi src/chrome/js_unittest_rules.gypi
-grep -Rl '^#include [<"]v8/include' * 2>/dev/null | while read f;do subst 's,^\(#include [<"]\)v8/include/,\1,' "$f";done
-%endif
-
-# Move vpx/internal/vpx_codec_internal.h to one directory up
-grep -Rl 'vpx/internal/vpx_codec_internal.h' src/third_party/libvpx | xargs subst 's,vpx/internal/vpx_codec_internal.h,vpx/vpx_codec_internal.h,'
-mv -f src/third_party/libvpx/source/libvpx/vpx/{internal/,}vpx_codec_internal.h
-
-# Make sure that the requires legal files can be found
-cp -a src/AUTHORS src/LICENSE .
-
-cd src
-
-# Set fake version for some components
-#sed '11i#define WIDEVINE_CDM_VERSION_STRING "The Cake Is a Lie"' -i third_party/widevine/cdm/stub/widevine_cdm_version.h
+# Enable support for the Widevine CDM plugin
+# libwidevinecdm.so is not included, but can be copied over from Chrome
+# (Version string doesn't seem to matter so let's go with "Pinkie Pie")
+sed '14i#define WIDEVINE_CDM_VERSION_STRING "Pinkie Pie"' -i third_party/widevine/cdm/stub/widevine_cdm_version.h
 echo > "third_party/adobe/flash/flapper_version.h"
 
-# Rebuild configuration of bundled ffmpeg
-pushd third_party/ffmpeg
-ffmpeg_target_arch=ia32
-build_ffmpeg_args=" --disable-asm"
-
-%ifarch x86_64
-ffmpeg_target_arch=x64
-%endif
-%ifarch arm armh
-ffmpeg_target_arch=arm
-%endif
-
-chromium/scripts/build_ffmpeg.py \
-	linux-noasm \
-	${ffmpeg_target_arch} \
-	--branding Chrome \
-	--config-only \
-	-- ${build_ffmpeg_args}
-chromium/scripts/copy_config.sh
-#chromium/scripts/generate_gyp.py
-popd
+# Work around bug in blink in which GCC 6 optimizes away null pointer checks
+# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833524
+# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=68853#c2
+sed -i '/config("compiler")/ a cflags_cc = [ "-fno-delete-null-pointer-checks" ]' \
+	build/config/linux/BUILD.gn
 
 %build
-## create make files
-
-PARSED_OPT_FLAGS=`echo \'%optflags -DUSE_SYSTEM_LIBEVENT -fPIC -fno-ipa-cp -fno-strict-aliasing \' | sed "s/ /',/g" | sed "s/',/', '/g"`
-for i in src/build/common.gypi; do
-	sed -i "s|'-march=pentium4',||g" $i
-%ifnarch x86_64
-	sed -i "s|'-mfpmath=sse',||g" $i
-%endif
-	sed -i "s|'-O<(debug_optimize)',||g" $i
-	sed -i "s|'-m32',||g" $i
-	sed -i "s|'-fno-exceptions',|$PARSED_OPT_FLAGS|g" $i
-	sed -i "s|'-Werror'|'-Wno-error'|g" $i
-done
-
-# Set up Google API keys, see http://www.chromium.org/developers/how-tos/api-keys .
-# Note: these are for ALT Linux use ONLY. For your own distribution,
-# please get your own set of keys.
-_google_api_key='AIzaSyAIIWz7zaCwYcUSe3ZaRPviXjMjkBP4-xY'
-_google_default_client_id='1018394967181.apps.googleusercontent.com'
-_google_default_client_secret='h_PrTP1ymJu83YTLyz-E25nP'
-
-cd src
-./build/gyp_chromium -f ninja build/all.gyp \
-    -Duse_sysroot=0 \
-%if_enabled shared_libraries
-	-Dcomponent=shared_library \
-%endif
-	-Dbuild_ffmpegsumo=1 \
-%if_disabled nacl
-	-Ddisable_nacl=1 \
-	-Ddisable_pnacl=1 \
-%endif
-	-Ddisable_sse2=1 \
-	-Denable_plugin_installation=0 \
-	-Ddisable_newlib_untar=1 \
 %if_enabled clang
-	-Dclang=1 \
-%else
-	-Dclang=0 \
+export CC="clang"
+export CXX="clang++"
 %endif
-	-Dgoogle_api_key="$_google_api_key" \
-	-Dgoogle_default_client_id="$_google_default_client_id" \
-	-Dgoogle_default_client_secret="$_google_default_client_secret" \
-	-Dffmpeg_branding=Chrome \
-	-Djavascript_engine=v8 \
-	-Dlinux_fpic=1 \
-	-Dlinux_dump_symbols=1 \
-	-Dlinux_link_gsettings=1 \
-	-Dlinux_link_libpci=1 \
-	-Dlinux_link_libspeechd=1 \
-	-Dlibspeechd_h_prefix=speech-dispatcher/ \
-	-Dlinux_link_pulseaudio=1 \
-	-Dlinux_strip_binary=1 \
-	-Dlinux_sandbox_chrome_path=%_libdir/chromium/chromium \
-	-Dlinux_sandbox_path=%_libdir/chromium/chrome-sandbox \
-	-Dclang_use_chrome_plugins=0 \
-	-Dhost_clang=0 \
-	-Dlinux_use_bundled_binutils=0 \
-	-Dlinux_use_bundled_gold=0 \
-	-Dlinux_use_gold_flags=0 \
-	-Dlogging_like_official_build=1 \
-	-Dproprietary_codecs=1 \
-	-Dremove_webcore_debug_symbols=1 \
-	-Dusb_ids_path=/usr/share/misc/usb.ids \
-	-Dwerror= \
-	-Ddisable_fatal_linker_warnings=1 \
-%ifarch x86_64
-	-Dtarget_arch=x64 \
-%endif
-%ifarch arm armh
-	-Dtarget_arch=arm \
-	-Denable_webrtc=0 \
-	-Denable_widevine=0 \
-	-Duse_cups=1 \
-%ifarch arm
-	-Dv8_use_arm_eabi_hardfloat=false \
-	-Darm_float_abi=soft \
-	-Darm_thumb=0 \
-	-Darmv7=0 \
-	-Darm_neon=0 \
-%endif
-%ifarch armh
-	-Dv8_use_arm_eabi_hardfloat=true \
-	-Darm_fpu=vfpv3 \
-	-Darm_float_abi=hard \
-	-Darm_thumb=1 \
-	-Darmv7=1 \
-	-Darm_neon=0 \
-%endif
-%endif
-%ifnarch arm armh
-        -Denable_webrtc=1 \
-%if_enabled widevine
-	-Denable_widevine=1 \
-%else
-	-Denable_widevine=0 \
-%endif
-%endif
-	-Duse_pulseaudio=1 \
-	-Duse_system_bzip2=1 \
-	-Duse_system_ffmpeg=0 \
-	-Duse_system_flac=1 \
-	-Duse_system_harfbuzz=1 \
-	-Duse_system_icu=0 \
-	-Duse_system_jsoncpp=1 \
-	-Duse_system_libbz2=1 \
-	-Duse_system_libevent=1 \
-	-Duse_system_libexif=1 \
-	-Duse_system_libjpeg=1 \
-	-Duse_system_libmtp=0 \
-	-Duse_system_libopus=1 \
-	-Duse_system_libpng=1 \
-	-Duse_system_libusb=0 \
-	-Duse_system_libvpx=0 \
-	-Duse_system_libwebp=1 \
-	-Duse_system_libxml=1 \
-	-Duse_system_libxnvctrl=0 \
-	-Duse_system_libxslt=1 \
-	-Duse_system_libyuv=1 \
-	-Duse_system_minizip=1 \
-	-Duse_system_nspr=0 \
-	-Duse_system_protobuf=0 \
-	-Duse_system_re2=1 \
-	-Duse_system_snappy=1 \
-	-Duse_system_sqlite=0 \
-	-Duse_system_ssl=0 \
-	-Duse_system_v8=1 \
-	-Duse_system_xdg_utils=1 \
-	-Duse_system_yasm=1 \
-	-Duse_system_zlib=1 \
-	-Dwant_separate_host_toolset=0 \
-	-Dmac_mas_build=0 \
-%if_enabled libchromiumcontent
-	-Ichromiumcontent/chromiumcontent.gypi \
-%endif
-	%nil
-# Unused flags
-#	-Dlinux_use_tcmalloc=0 \
 
-# Limit number of threads
-export NPROCS=4
+export AR="ar"
+export RANLIB="ranlib"
+export PATH="$PWD/.rpm/depot_tools:$PATH"
 
-# Build with ninja-build (see https://code.google.com/p/chromium/wiki/LinuxBuildInstructions)
-ninja-build -C out/Release \
-%if_enabled verbose
+CHROMIUM_SYSTEM_LIBS="\
+ flac \
+ libevent \
+ libjpeg \
+ libwebp \
+ libxml \
+ libxslt \
+ libusb \
+%if 0
+ libpng \
+ opus \
+ zlib \
+ re2 \
+%endif
+ yasm \
+"
+
+# gn args --list <builddir>
+CHROMIUM_GN_DEFINES="\
+ is_debug=false \
+ is_desktop_linux=true \
+ use_sysroot=false \
+ use_gio=true \
+ use_gconf=false \
+ use_libpci=true \
+ use_pulseaudio=true \
+ use_aura=true \
+ use_cups=true \
+ use_kerberos=true \
+ use_gold=false \
+ use_pulseaudio=true \
+ link_pulseaudio=true \
+ ffmpeg_branding=\"ChromeOS\" \
+ proprietary_codecs=true \
+ enable_hangout_services_extension=true \
+ fieldtrial_testing_like_official_build=true \
+ linux_use_bundled_binutils=false \
+ treat_warnings_as_errors=false \
+ fatal_linker_warnings=false \
+ system_libdir=\"%_lib\" \
+ use_allocator=\"none\" \
+ symbol_level=0 \
+ remove_webcore_debug_symbols=true \
+ is_clang=%{is_enabled clang} \
+ enable_nacl=%{is_enabled nacl} \
+ is_component_ffmpeg=%{is_enabled shared_libraries} \
+ is_component_build=%{is_enabled shared_libraries} \
+ enable_widevine=%{is_enabled widevine} \
+ use_gtk3=%{is_enabled gtk3} \
+ enable_wayland_server=%{is_enabled wayland} \
+%if_enabled google_api_keys
+ google_api_key=\"%api_key\" \
+ google_default_client_id=\"%default_client_id\" \
+ google_default_client_secret=\"%default_client_secret\" \
+%endif
+"
+
+#build/linux/unbundle/replace_gn_files.py \
+#	--system-libraries $CHROMIUM_SYSTEM_LIBS
+
+tools/gn/bootstrap/bootstrap.py -v \
+	--gn-gen-args "$CHROMIUM_GN_DEFINES"
+
+%target/gn gen %target \
 	-v \
-%endif
-	-j $NPROCS \
+	--args="$CHROMIUM_GN_DEFINES"
+
+ninja \
+	-v \
+	-C %target \
 	chrome \
 	chrome_sandbox \
 	chromedriver \
 	clearkeycdm \
 	widevinecdmadapter
-# Obsoleted or failed to build target
-#	pdf
 
 %install
-mkdir -p %buildroot%_libdir/chromium/
-%ifarch x86_64
-mkdir -p %buildroot%_prefix/lib/
-%endif
-install -m 755 %SOURCE100 %buildroot%_libdir/chromium/chromium-generic
-install -pD -m644 %SOURCE200 %buildroot%_sysconfdir/%name/default
+mkdir -p -- \
+	%buildroot/%_bindir \
+	%buildroot/%_man1dir \
+	%buildroot/%_libdir/%name \
+	%buildroot/%_sysconfdir/%name \
+#
+install -m 755 %SOURCE100 %buildroot%_libdir/%name/%name-generic
+install -m 644 %SOURCE200 %buildroot%_sysconfdir/%name/default
+
 # x86_64 capable systems need this
-sed -i "s|/usr/lib/chromium|%_libdir/chromium|g" %buildroot%_libdir/chromium/chromium-generic
+sed -i -e 's,/usr/lib/chromium,%_libdir/%name,g' %buildroot%_libdir/%name/%name-generic
+ln -s %name-generic %buildroot%_libdir/%name/%name-kde
+ln -s %name-generic %buildroot%_libdir/%name/%name-gnome
 
-#update the password-store settings for each alternative
-sed "s|password-store=detect|password-store=kwallet|g" %buildroot%_libdir/chromium/chromium-generic > %buildroot%_libdir/chromium/chromium-kde
-sed "s|password-store=detect|password-store=gnome|g" %buildroot%_libdir/chromium/chromium-generic > %buildroot%_libdir/chromium/chromium-gnome
-mkdir -p %buildroot%_mandir/man1/
+pushd %target
+cp -a chrome         %buildroot%_libdir/%name/%name
+cp -a chrome_sandbox %buildroot%_libdir/%name/chrome-sandbox
+cp -a chromedriver   %buildroot%_libdir/%name/chromedriver
 
-pushd src/out/%buildtype
+ln -s -- %_libdir/%name/chromedriver %buildroot/%_bindir/chromedriver
 
-# Strip Chromium executables to disable debuginfo generation (became too huge)
-strip chrome chrome_sandbox chromedriver
+cp -at %buildroot%_libdir/%name -- \
+ *.bin *.so *.pak \
+ Packages \
+ locales \
+ icudtl.dat \
+#
 
-cp -a chrome %buildroot%_libdir/chromium/chromium
-cp -a chrome_sandbox %buildroot%_libdir/chromium/chrome-sandbox
-cp -a *.pak locales %buildroot%_libdir/chromium/
-cp -a chromedriver %buildroot%_libdir/chromium/
-cp -a icudtl.dat %buildroot%_libdir/chromium/
-
-cp -a chrome.1 %buildroot%_mandir/man1/chrome.1
-cp -a chrome.1 %buildroot%_mandir/man1/chromium.1
-
-# Copy plugin libraries
-cp -av lib*.so %buildroot%_libdir/chromium/
-
-%if_enabled shared_libraries
-mkdir -p %buildroot%_libdir/chromium/lib
-pushd lib
-cp -av *.so %buildroot%_libdir/chromium/lib
-popd
-%endif
+cp -a chrome.1 %buildroot/%_man1dir/%name.1
+ln -s %name.1  %buildroot/%_man1dir/chrome.1
 
 # NaCl
 %if_enabled nacl
-cp -a nacl_helper %buildroot%_libdir/chromium/
-cp -a nacl_helper_bootstrap %buildroot%_libdir/chromium/
-cp -a nacl_irt_*.nexe %buildroot%_libdir/chromium/
-cp -a libppGoogleNaClPluginChrome.so %buildroot%_libdir/chromium/
+cp -at %buildroot%_libdir/%name -- \
+ nacl_helper \
+ nacl_helper_bootstrap \
+ nacl_irt_*.nexe
 %endif
 popd
 
 # Icons
 for size in 22 24 48 64 128 256; do
-	install -Dm644 "src/chrome/app/theme/chromium/product_logo_$size.png" \
-		"%buildroot%_iconsdir/hicolor/${size}x${size}/apps/%{name}.png"
+	install -Dm644 "chrome/app/theme/chromium/product_logo_$size.png" \
+		"%buildroot/%_iconsdir/hicolor/${size}x${size}/apps/%name.png"
 done
 for size in 16 32; do
-	install -Dm644 "src/chrome/app/theme/default_100_percent/chromium/product_logo_$size.png" \
-		"%buildroot%_iconsdir/hicolor/${size}x${size}/apps/%{name}.png"
+	install -Dm644 "chrome/app/theme/default_100_percent/chromium/product_logo_$size.png" \
+		"%buildroot/%_iconsdir/hicolor/${size}x${size}/apps/%name.png"
 done
 
 # Desktop file
-install -Dm0644 %SOURCE101 %buildroot%_desktopdir/%{name}.desktop
+install -Dm0644 %SOURCE101 %buildroot/%_desktopdir/%name.desktop
 
-mkdir -p %buildroot%_datadir/gnome-control-center/default-apps/
-cp -a %SOURCE102 %buildroot%_datadir/gnome-control-center/default-apps/
+mkdir -p -- %buildroot%_datadir/gnome-control-center/default-apps/
+cp -a %SOURCE102 %buildroot%_datadir/gnome-control-center/default-apps/%name.xml
 
 # link to browser plugin path.  Plugin patch doesn't work. Why?
-mkdir -p %buildroot%_libdir/browser-plugins
-pushd %buildroot%_libdir/%name
-ln -s %_libdir/browser-plugins plugins
+mkdir -p -- %buildroot%_libdir/browser-plugins
+ln -s -- %_libdir/browser-plugins %buildroot%_libdir/%name/plugins
 
 # Install the master_preferences file
-mkdir -p %buildroot%_sysconfdir/%name
+mkdir -p -- %buildroot%_sysconfdir/%name
 install -m 0644 %SOURCE30 %buildroot%_sysconfdir/%name
 install -m 0644 %SOURCE31 %buildroot%_sysconfdir/%name
 
 # Set alternative to xbrowser
-mkdir -p %buildroot%_altdir
-printf '%_bindir/xbrowser\t%_bindir/%name\t50\n' > %buildroot%_altdir/%name
+mkdir -p -- %buildroot%_altdir
+printf '%_bindir/xbrowser\t%_bindir/%name\t50\n'            > %buildroot%_altdir/%name
 printf '%_bindir/%name\t%_libdir/%name/%name-generic\t10\n' > %buildroot%_altdir/%name-generic
-printf '%_bindir/%name\t%_libdir/%name/%name-kde\t15\n' > %buildroot%_altdir/%name-kde
-printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%name-gnome
+printf '%_bindir/%name\t%_libdir/%name/%name-kde\t15\n'     > %buildroot%_altdir/%name-kde
+printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir/%name-gnome
 
-strip \
-%if_enabled shared_libraries
-      %buildroot/%_libdir/chromium/lib/lib*.so \
-%endif
-      %buildroot/%_libdir/chromium/lib*.so
-
-# Package link to external startup data from v8
-ln -s %_libdir/v8/natives_blob.bin  %buildroot%_libdir/chromium/natives_blob.bin
-ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bin
+# Strip Chromium executables to disable debuginfo generation (became too huge)
+find %buildroot/%_libdir/%name -type f -exec file -F'	' '{}' \+ |
+    grep -qs '[[:space:]]ELF' |
+    cut -f1 |
+    xargs -r strip
 
 %files
 %doc AUTHORS LICENSE
@@ -570,40 +449,36 @@ ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bi
 %dir %_datadir/gnome-control-center/default-apps
 %dir %_sysconfdir/%name
 %config %_sysconfdir/%name/*
-%dir %_libdir/chromium/
-%attr(4711,root,root) %_libdir/chromium/chrome-sandbox
-%_libdir/chromium/chromium
-%_libdir/chromium/chromedriver
-%_libdir/chromium/chromium-generic
-%_libdir/chromium/lib*.so
-%if_enabled shared_libraries
-%_libdir/chromium/lib/
-%endif
-%_libdir/chromium/icudtl.dat
-%_libdir/chromium/plugins/
-%_libdir/chromium/locales/
-%if_enabled nacl
-%_libdir/chromium/nacl_*
-%_libdir/chromium/libppGoogleNaClPluginChrome.so
-%endif
-%_libdir/chromium/*.pak
-%_man1dir/chrom*
+%attr(4711,root,root) %_libdir/%name/chrome-sandbox
+%_libdir/%name
+%_bindir/*
+%_man1dir/*
 %_desktopdir/%name.desktop
-%_datadir/gnome-control-center/default-apps/chromium.xml
-%_iconsdir/hicolor/*/apps/chromium.*
+%_datadir/gnome-control-center/default-apps/*.xml
+%_iconsdir/hicolor/*/apps/*.png
 %_altdir/%name
 %_altdir/%name-generic
-%_libdir/chromium/*.bin
+%exclude %_libdir/%name/%name-kde
+%exclude %_libdir/%name/%name-gnome
 
 %files kde
-%attr(755, root, root) %_libdir/chromium/chromium-kde
+%attr(755, root, root) %_libdir/%name/%name-kde
 %_altdir/%name-kde
 
 %files gnome
-%attr(755, root, root) %_libdir/chromium/chromium-gnome
+%attr(755, root, root) %_libdir/%name/%name-gnome
 %_altdir/%name-gnome
 
 %changelog
+* Tue Oct 25 2016 Alexey Gladkov <legion@altlinux.ru> 54.0.2840.59-alt2
+- Rename chromium-stable to chromium.
+- Enable VAAPI.
+
+* Fri Oct 14 2016 Alexey Gladkov <legion@altlinux.ru> 54.0.2840.59-alt1
+- New version (54.0.2840.59).
+- Major spec-file changes.
+- Many security fixes.
+
 * Fri Mar 25 2016 Andrey Cherepanov <cas@altlinux.org> 49.0.2623.108-alt1
 - New version
 - Security fixes:
