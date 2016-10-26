@@ -2,7 +2,7 @@
 
 Name: docker-%oname
 Version: 1.8.1
-Release: alt1
+Release: alt2
 
 Summary: Run multi-container applications with Docker
 
@@ -18,6 +18,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-licenses
 BuildPreReq: rpm-build-python
 BuildRequires: python-devel python-module-distribute
+Requires: python-module-dockerpty
 
 %setup_python_module %oname
 
@@ -45,6 +46,9 @@ everything that needs to be done to get it running.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Wed Oct 26 2016 Vladimir Didenko <cow@altlinux.ru> 1.8.1-alt2
+- add dockerpty to requires
+
 * Wed Oct 12 2016 Vladimir Didenko <cow@altlinux.ru> 1.8.1-alt1
 - 1.8.1
 
