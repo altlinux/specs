@@ -1,8 +1,8 @@
 %define _libname libfreshwrapper-flashplayer
 
 Name: freshplayerplugin
-Version: 0.3.5
-Release: alt2
+Version: 0.3.6
+Release: alt1
 Summary: PPAPI-host NPAPI-plugin adapter
 License: MIT
 Group: System/Libraries
@@ -13,9 +13,11 @@ Source: %name-%version.tar
 
 ExclusiveArch: %ix86 x86_64
 
-# Automatically added by buildreq on Wed Dec 30 2015
-# optimized out: cmake-modules fontconfig fontconfig-devel glib2-devel libEGL-devel libGL-devel libX11-devel libXrender-devel libatk-devel libavutil-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libjson-c libopencore-amrnb0 libopencore-amrwb0 libpango-devel libstdc++-devel libvdpau-devel libwayland-client libwayland-server pkg-config xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel
-BuildRequires: cmake gcc-c++ libXcursor-devel libXrandr-devel libalsa-devel libavcodec-devel libdrm-devel libevent-devel libgtk+3-devel libpulseaudio-devel libssl-devel libv4l-devel libva-devel ragel
+BuildRequires(pre): rpm-macros-cmake
+
+# Automatically added by buildreq on Wed Oct 26 2016
+# optimized out: cmake-modules fontconfig fontconfig-devel glib2-devel libGL-devel libX11-devel libXrender-devel libavutil-devel libcairo-devel libfreetype-devel libgpg-error libjson-c libopencore-amrnb0 libopencore-amrwb0 libstdc++-devel libvdpau-devel libwayland-client libwayland-server pkg-config python-base python-modules python3 python3-base xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel
+BuildRequires: cmake gcc-c++ libXcursor-devel libXrandr-devel libalsa-devel libavcodec-devel libdrm-devel libevent-devel libgio-devel libicu-devel libpango-devel libpulseaudio-devel libssl-devel libv4l-devel libva-devel pesign python3-dev ragel
 
 %{?!_without_check:%{?!_disable_check:BuildPreReq: ctest}}
 
@@ -53,6 +55,9 @@ make -C BUILD check
 %config(noreplace) %_sysconfdir/freshwrapper.conf
 
 %changelog
+* Wed Oct 26 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.6-alt1
+- Updated to 0.3.6 (ALT #32668).
+
 * Thu Sep 29 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.5-alt2
 - Replaced R: update-pepperflash with ppapi-plugin-adobe-flash
   (ALT#32516).
