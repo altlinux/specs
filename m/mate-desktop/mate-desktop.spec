@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/g
 %define fedora 24
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-desktop
-%define version 1.16.0
+%define version 1.16.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
@@ -24,7 +24,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/g
 Summary:        Shared code for mate-panel, mate-session, mate-file-manager, etc
 Name:           mate-desktop
 License:        GPLv2+ and LGPLv2+ and MIT
-Version:        %{branch}.0
+Version:        %{branch}.1
 %if 0%{?rel_build}
 Release:        alt1_1
 %else
@@ -50,7 +50,6 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  gobject-introspection-devel
 BuildRequires:  mate-common
 BuildRequires:  libstartup-notification-devel
-BuildRequires:  libunique3-devel
 BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:  itstool
 BuildRequires:  gobject-introspection-devel
@@ -149,7 +148,7 @@ libmatedesktop.
 # for releases
 %patch33 -p0
 %patch34 -p0
-#NOCONFIGURE=1 ./autogen.sh
+NOCONFIGURE=1 ./autogen.sh
 %else
 # needed for git snapshots
 NOCONFIGURE=1 ./autogen.sh
@@ -275,6 +274,9 @@ that is a hack around this problem.
 
 
 %changelog
+* Wed Oct 26 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.1-alt1_1
+- new fc release
+
 * Thu Oct 06 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
 - update to mate 1.16
 
