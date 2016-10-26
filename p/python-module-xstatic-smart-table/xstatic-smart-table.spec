@@ -1,14 +1,12 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1.1
 %define mname xstatic
 %define oname %mname-smart-table
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.5.3
-#Release: alt1.1.1
-Summary: smart-table 1.4.5 (XStatic packaging standard)
+Version: 1.4.13.2
+Release: alt1
+Summary: smart-table (XStatic packaging standard)
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/XStatic-smart-table/
@@ -101,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 26 2016 Alexey Shabalin <shaba@altlinux.ru> 1.4.13.2-alt1
+- 1.4.13.2
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.4.5.3-alt1.1.1.1
 - (AUTO) subst_x86_64.
 
