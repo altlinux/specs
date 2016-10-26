@@ -1,5 +1,5 @@
 Name: steam
-Version: 1.0.0.52
+Version: 1.0.0.53
 Release: alt1
 
 Summary: Launcher for the Steam software distribution service
@@ -39,7 +39,7 @@ savegame and screenshot functionality, and many social features.
 %makeinstall_std
 %__rm -rf %buildroot%_bindir/%{name}deps
 %__install -Dp -m0644 lib/udev/rules.d/99-%name-controller-perms.rules %buildroot%_udevrulesdir/99-%name-controller-perms.rules
-%__install -Dp -m0644 lib/udev/rules.d/99-HTC-Vive-perms.rules %buildroot%_udevrulesdir/99-HTC-Vive-perms.rules
+%__install -Dp -m0644 lib/udev/rules.d/60-HTC-Vive-perms.rules %buildroot%_udevrulesdir/60-HTC-Vive-perms.rules
 
 %files
 %_bindir/%name
@@ -59,9 +59,15 @@ savegame and screenshot functionality, and many social features.
 %_man6dir/*
 %_pixmapsdir/*
 %config %_udevrulesdir/99-%name-controller-perms.rules
-%config %_udevrulesdir/99-HTC-Vive-perms.rules
+%config %_udevrulesdir/60-HTC-Vive-perms.rules
 
 %changelog 
+* Wed Oct 26 2016 Nazarov Denis <nenderus@altlinux.org> 1.0.0.53-alt1
+- Version 1.0.0.53
+
+* Sat Apr 02 2016 Nazarov Denis <nenderus@altlinux.org> 1.0.0.52-alt0.M70P.1
+- Build for branch p7
+
 * Sat Apr 02 2016 Nazarov Denis <nenderus@altlinux.org> 1.0.0.52-alt1
 - Version 1.0.0.52
 
