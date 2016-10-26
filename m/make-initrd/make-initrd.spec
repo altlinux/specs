@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 0.8.11
-Release: alt1
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL3
@@ -168,6 +168,9 @@ fi
 %_datadir/%name/features/mdadm
 
 %changelog
+* Wed Oct 26 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.8.11-alt2
+- updated multipath feature to current multipath-tools
+
 * Mon Jul 25 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.8.11-alt1
 - fixed udev rules names for multipath
 
