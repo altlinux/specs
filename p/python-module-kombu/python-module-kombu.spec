@@ -1,12 +1,10 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1.1
 %define module_name kombu
 
 %def_with python3
 
 Name: python-module-%module_name
-Version: 3.0.32
-#Release: alt1.1.1
+Version: 3.0.37
+Release: alt1
 Epoch: 1
 Group: Development/Python
 License: BSD License
@@ -27,6 +25,7 @@ BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-SQLAlchemy python-module-amqp python-module-babel python-module-backports python-module-bson python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-ecdsa python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-ndg-httpsclient python-module-ntlm python-module-psycopg2 python-module-pyasn1 python-module-pycrypto python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python-modules-xml python3 python3-base
 BuildRequires: python-module-alabaster python-module-anyjson python-module-boto python-module-django python-module-docutils python-module-html5lib python-module-objects.inv python-module-pylibrabbitmq python-module-pymongo python3-module-setuptools rpm-build-python3 time
+BuildRequires: python-module-amqp >= 1:1.4.9
 
 %description
 AMQP is the Advanced Message Queuing Protocol, an open standard protocol
@@ -160,6 +159,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Wed Oct 26 2016 Alexey Shabalin <shaba@altlinux.ru> 1:3.0.37-alt1
+- 3.0.37
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:3.0.32-alt1.1.1.1
 - (AUTO) subst_x86_64.
 

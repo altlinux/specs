@@ -1,13 +1,11 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1.1
 %define module_name amqp
 
 %def_with python3
 
 Name: python-module-%module_name
-Version: 1.4.6
+Version: 1.4.9
 Epoch: 1
-#Release: alt1.1.1
+Release: alt1
 Group: Development/Python
 License: GPLv2
 Summary: fork of amqplib used by Kombu containing additional features and improvements
@@ -152,6 +150,9 @@ cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%module_name/
 %endif
 
 %changelog
+* Wed Oct 26 2016 Alexey Shabalin <shaba@altlinux.ru> 1:1.4.9-alt1
+- 1.4.9
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.4.6-alt1.1.1.1
 - (AUTO) subst_x86_64.
 

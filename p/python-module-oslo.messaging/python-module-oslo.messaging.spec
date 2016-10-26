@@ -5,7 +5,7 @@
 Name:       python-module-%sname
 Epoch:      1
 Version:    5.10.0
-Release:    alt1
+Release:    alt2
 Summary:    OpenStack common messaging library
 
 Group:      Development/Python
@@ -37,8 +37,8 @@ BuildRequires: python-module-eventlet >= 0.18.2
 BuildRequires: python-module-greenlet >= 0.3.2
 BuildRequires: python-module-webob >= 1.2.3
 BuildRequires: python-module-yaml >= 3.1.0
-BuildRequires: python-module-amqp >= 1.4.0
-BuildRequires: python-module-kombu >= 3.0.25
+BuildRequires: python-module-amqp >= 1:1.4.0
+BuildRequires: python-module-kombu >= 1:3.0.25
 BuildRequires: python-module-pika >= 0.10.0
 BuildRequires: python-module-pika-pool >= 0.1.3
 BuildRequires: python-module-fixtures >= 3.0.0
@@ -71,8 +71,8 @@ BuildRequires: python3-module-stevedore >= 1.5.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
 BuildRequires: python3-module-monotonic >= 0.6
 BuildRequires: python3-module-yaml >= 3.1.0
-BuildRequires: python3-module-amqp >= 1.4.0
-BuildRequires: python3-module-kombu >= 3.0.25
+BuildRequires: python3-module-amqp >= 1:1.4.0
+BuildRequires: python3-module-kombu >= 1:3.0.25
 BuildRequires: python3-module-pika >= 0.10.0
 BuildRequires: python3-module-pika-pool >= 0.1.3
 BuildRequires: python3-module-eventlet >= 0.17.4
@@ -180,6 +180,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html LICENSE
 
 %changelog
+* Wed Oct 26 2016 Alexey Shabalin <shaba@altlinux.ru> 1:5.10.0-alt2
+- fix BR with epoch
+
 * Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 1:5.10.0-alt1
 - 5.10.0
 
