@@ -2,7 +2,7 @@
 
 Name: openstack-nova
 Version: 14.0.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: OpenStack Compute (nova)
 
@@ -423,7 +423,6 @@ Requires: openssl
 Requires: openssh-common
 Requires: sudo
 
-Requires: python-module-ldap
 Requires: python-module-SQLAlchemy
 Requires: python-module-PasteDeploy
 
@@ -826,6 +825,9 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %doc LICENSE doc/build/html
 
 %changelog
+* Wed Oct 26 2016 Alexey Shabalin <shaba@altlinux.ru> 1:14.0.1-alt2
+- delete Requires: python-module-ldap
+
 * Fri Oct 21 2016 Alexey Shabalin <shaba@altlinux.ru> 1:14.0.1-alt1
 - 14.0.1 Newton release
 
