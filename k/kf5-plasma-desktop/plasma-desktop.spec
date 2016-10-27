@@ -8,7 +8,7 @@
 
 Name: kf5-%rname
 Version: 5.8.2
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -106,7 +106,7 @@ KF5 library
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1 -b .defpanel
+%patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch10 -p1
@@ -198,6 +198,12 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Thu Oct 27 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt2
+- fix default panel with absent widget
+
+* Tue Oct 25 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt0.M80P.1
+- build for M80P
+
 * Tue Oct 25 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt1
 - new version
 
