@@ -1,6 +1,6 @@
 Name: curl
 Version: 7.50.3
-Release: alt1
+Release: alt2
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -133,6 +133,7 @@ applications that utilize lib%name.
 %_libdir/*.so
 %_libdir/pkgconfig/libcurl.pc
 %_bindir/curl-config
+%_aclocaldir/libcurl.m4
 %_includedir/*
 %_man3dir/*
 %_man1dir/curl-config.1*
@@ -142,6 +143,9 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Thu Oct 27 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 7.50.3-alt2
+- libcurl-devel: packaged libcurl.m4
+
 * Wed Sep 14 2016 Anton Farygin <rider@altlinux.ru> 7.50.3-alt1
 - new version with security fixes (CVE-2016-7167)
 
