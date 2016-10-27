@@ -1,6 +1,6 @@
 %define module_name             lsadrv
 %define module_version          1.2.3
-%define module_release 		alt1
+%define module_release alt2
 
 %define flavour		un-def
 BuildRequires(pre): rpm-build-kernel
@@ -11,9 +11,9 @@ BuildRequires(pre): kernel-headers-modules-un-def
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
 
 Name: kernel-modules-%module_name-%flavour
+Epoch: 1
 Version: %module_version
 Release: %module_release.%kcode.%kbuildrelease
-Epoch: 1
 
 Summary: Linux Kernel drivers supporting Hitachi StarBoard interactive whiteboard
 License: GPL
@@ -70,6 +70,9 @@ cp -a %kversion-%flavour-%krelease/%module_name.ko %buildroot/%module_dir/
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %epoch:%version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Oct 27 2016 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:1.2.3-alt2
+- disabled all /proc related code
 
 * Wed Feb 24 2016 Andrey Cherepanov <cas@altlinux.org> 1:1.2.3-alt1
 - new version
