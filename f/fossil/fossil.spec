@@ -1,5 +1,5 @@
 Name: fossil
-Version: 1.35
+Version: 1.36
 Release: alt1
 
 Summary: A distributed SCM with bug tracking and wiki
@@ -10,7 +10,10 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: zlib-devel libsqlite3-devel libssl-devel libreadline-devel tcl
+BuildRequires: zlib-devel libssl-devel libreadline-devel tcl
+BuildRequires: libsqlite3-devel >= 3.15.0
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Fossil is a simple, high-reliability, distributed software configuration
@@ -53,6 +56,9 @@ install -pDm644 fossil.1 %buildroot%_man1dir/fossil.1
 #doc www
 
 %changelog
+* Thu Oct 27 2016 Mikhail Efremov <sem@altlinux.org> 1.36-alt1
+- Updated to 1.36.
+
 * Mon Jun 20 2016 Mikhail Efremov <sem@altlinux.org> 1.35-alt1
 - Updated to 1.35.
 
