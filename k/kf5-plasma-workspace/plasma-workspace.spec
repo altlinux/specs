@@ -17,7 +17,7 @@
 
 Name: kf5-%rname
 Version: 5.8.2
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -293,6 +293,12 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Thu Oct 27 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt2
+- set logout screen background
+
+* Tue Oct 25 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt0.M80P.1
+- build for M80P
+
 * Tue Oct 25 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt1
 - new version
 
