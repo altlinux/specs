@@ -8,26 +8,27 @@
 %ifndef x86_64
 %define x86_64 x86_64
 %endif
+
 %define set_without() %{expand:%%force_without %{1}} %{expand:%%undefine _with_%{1}}
 
-Summary: Xen is a virtual machine monitor
+Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.7.0
-%define pre %nil
-# Hypervisor ABI
-%define hv_abi 4.7
-Release: alt2
+Release: alt3
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
-%define qemu_ver %version%pre
 URL: http://www.xenproject.org/
 Packager: Dmitriy D. Shadrinov <shadrinov@altlinux.ru>
 
+%define pre %nil
+%define qemu_ver %version%pre
+
 Source0: %name-%version%pre.tar.bz2
-Source1: qemu-xen-%version%pre.tar.bz2
+Source1: qemu-xen-%qemu_ver.tar.bz2
 Source2: qemu-xen-traditional-%qemu_ver.tar.bz2
-Source3: mini-os-%qemu_ver.tar.bz2
+Source3: mini-os-%version%pre.tar.bz2
 Source4: %name.logrotate
+
 # used by stubdoms
 Source10: newlib-1.16.0.tar.gz
 Source11: zlib-1.2.3.tar.gz
@@ -39,6 +40,7 @@ Source15: pciutils-2.2.9.tar.bz2
 Source16: tpm_emulator-0.7.4.tar.gz
 Source17: gmp-4.3.2.tar.bz2
 %endif
+
 # systemd bits
 Source49: tmpfiles.d.xen.conf
 
@@ -133,10 +135,24 @@ BuildRequires: libpixman-devel >= 0.21.8 libpixman >= 0.21.8
 BuildRequires: libnettle-devel nettle
 BuildRequires: gcc5-c++
 BuildRequires: libsystemd-devel >= 209
+%{?_enable_vtpm:BuildRequires: cmake}
 
 %description
+The Xen Project hypervisor is an open-source type-1 or baremetal
+hypervisor, which makes it possible to run many instances of an
+operating system or indeed different operating systems in parallel on a
+single machine (or host). The Xen Project hypervisor is the only type-1
+hypervisor that is available as open source. It is used as the basis for
+a number of different commercial and open source applications, such as:
+server virtualization, Infrastructure as a Service (IaaS),
+desktop virtualization, security applications, embedded and hardware
+appliances. The Xen Project hypervisor is powering the largest clouds in
+production today.
+
 This package contains the command line tools, needed to manage virtual
 machines running under the Xen hypervisor.
+
+%filter_from_requires /^\s*\(open-iscsi\|nbd-client\|\/sbin\/drbdsetup\)\s*$/d
 
 
 %package -n lib%name
@@ -147,6 +163,11 @@ Obsoletes: %name-libs
 Requires: xen-licenses
 
 %description -n lib%name
+The Xen Project hypervisor is an open-source type-1 or baremetal
+hypervisor, which makes it possible to run many instances of an
+operating system or indeed different operating systems in parallel on a
+single machine (or host).
+
 This package contains the libraries needed to run applications
 which manage Xen virtual machines.
 
@@ -156,23 +177,29 @@ Summary: Core Xen runtime environment
 Group: Emulators
 Requires: lib%name = %version-%release
 Requires: %_bindir/qemu-img
-# Ensure we at least have a suitable kernel installed, though we can't
-# force user to actually boot it.
-%{?_with_hypervisor:Requires: %name-hypervisor-abi = %hv_abi}
 
 %description runtime
-This package contains the runtime programs and daemons which form the
-core Xen userspace environment.
+The Xen Project hypervisor is an open-source type-1 or baremetal
+hypervisor, which makes it possible to run many instances of an
+operating system or indeed different operating systems in parallel on a
+single machine (or host).
+
+This package contains the runtime programs which form the core Xen
+userspace environment.
 
 
 %if_with hypervisor
 %package hypervisor
 Summary: Xen hypervisor
 Group: System/Kernel and hardware
-Provides: xen-hypervisor-abi = %hv_abi
 Requires: xen-licenses
 
 %description hypervisor
+The Xen Project hypervisor is an open-source type-1 or baremetal
+hypervisor, which makes it possible to run many instances of an
+operating system or indeed different operating systems in parallel on a
+single machine (or host).
+
 This package contains the Xen hypervisor.
 %endif
 
@@ -184,6 +211,17 @@ BuildArch: noarch
 Requires: xen-licenses
 
 %description doc
+The Xen Project hypervisor is an open-source type-1 or baremetal
+hypervisor, which makes it possible to run many instances of an
+operating system or indeed different operating systems in parallel on a
+single machine (or host). The Xen Project hypervisor is the only type-1
+hypervisor that is available as open source. It is used as the basis for
+a number of different commercial and open source applications, such as:
+server virtualization, Infrastructure as a Service (IaaS),
+desktop virtualization, security applications, embedded and hardware
+appliances. The Xen Project hypervisor is powering the largest clouds in
+production today.
+
 This package contains the Xen documentation.
 
 
@@ -195,6 +233,11 @@ Requires: lib%name = %version-%release
 Requires: libuuid-devel
 
 %description devel
+The Xen Project hypervisor is an open-source type-1 or baremetal
+hypervisor, which makes it possible to run many instances of an
+operating system or indeed different operating systems in parallel on a
+single machine (or host).
+
 This package contains what's needed to develop applications
 which manage Xen virtual machines.
 
@@ -205,6 +248,11 @@ Group: Documentation
 BuildArch: noarch
 
 %description licenses
+The Xen Project hypervisor is an open-source type-1 or baremetal
+hypervisor, which makes it possible to run many instances of an
+operating system or indeed different operating systems in parallel on a
+single machine (or host).
+
 This package contains the license files from the source used
 to build the xen packages.
 
@@ -212,10 +260,15 @@ to build the xen packages.
 %if_enabled ocamltools
 %package ocaml
 Summary: Ocaml libraries for Xen tools
-Group: Development/Other
+Group: Emulators
 Requires: ocaml-runtime, lib%name = %version-%release
 
 %description ocaml
+The Xen Project hypervisor is an open-source type-1 or baremetal
+hypervisor, which makes it possible to run many instances of an
+operating system or indeed different operating systems in parallel on a
+single machine (or host).
+
 This package contains libraries for ocaml tools to manage Xen
 virtual machines.
 
@@ -226,8 +279,34 @@ Group: Development/Other
 Requires: %name-ocaml = %version-%release
 
 %description ocaml-devel
+The Xen Project hypervisor is an open-source type-1 or baremetal
+hypervisor, which makes it possible to run many instances of an
+operating system or indeed different operating systems in parallel on a
+single machine (or host).
+
 This package contains libraries for developing ocaml tools to
 manage Xen virtual machines.
+%endif
+
+
+%ifarch %ix86 %x86_64
+%package stubdoms
+Summary: Xen Hypervisor Stub Domains
+Group: Emulators
+
+%description stubdoms
+The Xen Project hypervisor is an open-source type-1 or baremetal
+hypervisor, which makes it possible to run many instances of an
+operating system or indeed different operating systems in parallel on a
+single machine (or host).
+
+Stubdoms (or stub domains) are lightweight 'service' or 'driver' domain
+to run device models and one technique to implement Dom0 Disaggregation.
+The initial purpose of stub domains were to offload qemu workloads from
+dom0 into a seperate domain.
+
+So with stub domains, a separate unprivileged stub domain is created per
+HVM guest. This boosts performance and makes your system more secure.
 %endif
 
 
@@ -253,7 +332,7 @@ ln -s ../mini-os-%version extras/mini-os
 
 sed -i '/^[[:blank:]]*\. \/etc\/rc\.status[[:blank:]]*$/s/\. /: # &/' tools/hotplug/Linux/xendomains.in
 
-# stubdom sources
+# stubdoms sources
 cd stubdom
 
 ln -s %SOURCE10
@@ -262,6 +341,11 @@ ln -s %SOURCE12
 ln -s %SOURCE13
 ln -s %SOURCE14
 ln -s %SOURCE15
+
+%if_enabled vtpm
+ln -s %SOURCE16
+ln -s %SOURCE17
+%endif
 
 cd ..
 
@@ -341,7 +425,7 @@ rm -f %buildroot/boot/xenpolicy.*
 
 ############ kill unwanted stuff ############
 
-# stubdom: newlib
+# stubdoms: newlib
 rm -rf %buildroot/usr/*-xen-elf
 
 # hypervisor symlinks
@@ -424,14 +508,14 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 %add_verify_elf_skiplist %_datadir/xen/qemu/openbios-* %_datadir/qemu-xen/qemu/* /boot/*
 
 
-%post runtime
+%post
 %post_service xen-watchdog
 %post_service xencommons
 %post_service xendomains
 %post_service xendriverdomain
 
 
-%preun runtime
+%preun
 %preun_service xendriverdomain
 %preun_service xendomains
 %preun_service xencommons
@@ -439,28 +523,6 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 
 
 %files
-%doc %dir %_docdir/%name-%version
-%doc %_docdir/%name-%version/COPYING
-%doc %_docdir/%name-%version/README
-%_bindir/xencons
-%python_sitelibdir/%name
-%python_sitelibdir/xen-*.egg-info
-
-%dir %_localstatedir/%name
-
-%dir %attr(0700,root,root) %_sysconfdir/%name
-# Guest autostart links
-%dir %attr(0700,root,root) %_sysconfdir/%name/auto
-
-
-%files -n lib%name
-%_libdir/*.so
-%_libdir/*.so.*
-%_libdir/fs
-
-
-# All runtime stuff
-%files runtime
 %dir %attr(0700,root,root) %_sysconfdir/%name
 %dir %attr(0700,root,root) %_sysconfdir/%name/auto
 %dir %attr(0700,root,root) %_sysconfdir/%name/scripts
@@ -488,7 +550,6 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 %_unitdir/var-lib-xenstored.mount
 
 %_unitdir/xen-init-dom0.service
-%_unitdir/xen-qemu-dom0-disk-backend.service
 %_unitdir/xen-watchdog.service
 %_unitdir/xenconsoled.service
 %_unitdir/xendomains.service
@@ -496,15 +557,19 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 
 %_tmpfilesdir/xen.conf
 
-%{?_with_efi:/boot/efi/EFI/altlinux}
-
-# Programs run by other programs
-%if_enabled stubdom
-%dir %_datadir/%name
-# QEMU runtime files
-%dir %_datadir/%name/qemu
-%_datadir/%name/qemu/keymaps
-%endif
+%dir %_libexecdir/%name/bin
+%_libexecdir/%name/bin/convert-legacy-stream
+%_libexecdir/%name/bin/init-xenstore-domain
+%_libexecdir/%name/bin/libxl-save-helper
+%_libexecdir/%name/bin/lsevtchn
+%_libexecdir/%name/bin/readnotes
+%_libexecdir/%name/bin/verify-stream-v2
+%_libexecdir/%name/bin/xen-init-dom0
+%_libexecdir/%name/bin/xenconsole
+%_libexecdir/%name/bin/xendomains
+%_libexecdir/%name/bin/xenctx
+%_libexecdir/%name/bin/xenpaging
+%_libexecdir/%name/bin/xenpvnetboot
 
 # man pages
 %_man1dir/xenstore*
@@ -516,38 +581,61 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 %_man5dir/xl.conf.*
 %_man5dir/xlcpupool.cfg.*
 
-%python_sitelibdir/fsimage.so
-%python_sitelibdir/grub
-%python_sitelibdir/pygrub-*.egg-info
+# Xen logfiles
+%dir %attr(0700,root,root) %_logdir/xen
 
-# The firmware
-%ifarch %ix86 %x86_64
-%dir %_libexecdir/%name
-%_libexecdir/%name/boot
-%{?_enable_vtpm:%_libexecdir/%name/boot/vtpm*.gz}
+
+%files -n lib%name
+%_libdir/*.so
+%_libdir/*.so.*
+%_libdir/fs
+
+
+%files runtime
+%_unitdir/xen-qemu-dom0-disk-backend.service
+
+# qemu-xen-traditional is only built with stubdoms
+%if_enabled stubdom
+%dir %_datadir/%name
+%dir %_datadir/%name/qemu
+%_datadir/%name/qemu/keymaps
 %endif
 
 %_datadir/qemu-xen/qemu
-%_libexecdir/%name/bin
-%_libexecdir/%name/libexec
+
+%dir %_libexecdir/%name/bin
+%_libexecdir/%name/bin/pygrub
+%_libexecdir/%name/bin/qemu-dm
+%_libexecdir/%name/bin/qemu-img
+%_libexecdir/%name/bin/qemu-io
+%_libexecdir/%name/bin/qemu-nbd
+%_libexecdir/%name/bin/qemu-system-i386
+
+%dir %_libexecdir/%name/libexec
+%_libexecdir/%name/libexec/qemu-bridge-helper
+
+%python_sitelibdir/%name
+%python_sitelibdir/xen-*.egg-info
+
+%python_sitelibdir/fsimage.so
+%python_sitelibdir/grub
+%python_sitelibdir/pygrub-*.egg-info
 
 # General Xen state
 %dir %_localstatedir/%name
 %dir %_localstatedir/%name/dump
 %dir %_localstatedir/%name/images
 
+%_bindir/*
 %_sbindir/*
 
+# Guest/HV console logs
+%dir %attr(0700,root,root) %_logdir/xen/console
+
 %{?_enable_ocamltools:%exclude %_sbindir/oxenstored}
-%_bindir/*
 
 %exclude %_bindir/xencons
 %exclude %_datadir/qemu-xen/qemu/s390-ccw.img
-
-# Xen logfiles
-%dir %attr(0700,root,root) %_logdir/xen
-# Guest/HV console logs
-%dir %attr(0700,root,root) %_logdir/xen/console
 
 %exclude %_datadir/pkgconfig/xenlight.pc
 %exclude %_datadir/pkgconfig/xlutil.pc
@@ -556,7 +644,8 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 %files hypervisor
 /boot/xen*
 %{?_with_xsm:/boot/flask}
-%{?_with_efi:%_efi_bindir/*}
+%{?_with_efi:%_efi_bindir}
+%{?_with_efi:%_efi_bootdir}
 %endif
 
 
@@ -564,6 +653,7 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 %doc %dir %_docdir/%name-%version
 %doc %_docdir/%name-%version/misc/
 %doc %_docdir/%name-%version/html
+%doc %_docdir/%name-%version/README
 
 
 %files devel
@@ -574,7 +664,8 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 
 %files licenses
 %dir %_docdir/%name-%version
-%_docdir/%name-%version/licenses
+%doc %_docdir/%name-%version/licenses
+%doc %_docdir/%name-%version/COPYING
 
 
 %if_enabled ocamltools
@@ -594,12 +685,46 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 %endif
 
 
+%ifarch %ix86 %x86_64
+%files stubdoms
+%dir %_libexecdir/%name
+%dir %_libexecdir/%name/bin
+%dir %_libexecdir/%name/boot
+
+%_libexecdir/%name/bin/stubdom-dm
+%_libexecdir/%name/bin/stubdompath.sh
+
+%_libexecdir/%name/boot/ioemu-stubdom.gz
+%_libexecdir/%name/boot/pv-grub-x86_*.gz
+%_libexecdir/%name/boot/xenstore-stubdom.gz
+
+%{?_enable_vtpm:%_libexecdir/%name/boot/vtpm*.gz}
+%endif
+
+
 %changelog
+* Sun Oct 23 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.0-alt3
+- ALT-specific SysV init-scripts adaptations (condstop, condrestart)
+- Fix unsafe usage of temp files in stubdom-dm script
+- Reorganization of file packaging
+
 * Fri Oct 07 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.0-alt2
 - Upstream updates
+ - x86emul: honor guest CR0.TS and CR0.EM
 
 * Mon Sep 26 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.0-alt1
 - 4.7.0 release
+- Upstream updates:
+ - x86/AMD: apply erratum 665 workaround
+ - x86emul: don't allow null selector for LTR
+ - x86emul: correct loading of %ss
+ - x86/Intel: hide CPUID faulting capability from guests
+ - xen: credit2: properly schedule migration of a running vcpu.
+ - xen: credit1: fix mask to be used for tickling in Credit1
+ - x86/domctl: Fix migration of guests which are not using xsave
+ - x86/domctl: Fix TOCTOU race with the use of XEN_DOMCTL_getvcpuextstate
+ - minios: fix build issue with xen_*mb defines
+ - minios: make mini-os_app.o depend on included xen libraries
 
 * Tue Sep 02 2014 Led <led@altlinux.ru> 4.4.1-alt1
 - 4.4.1 release
