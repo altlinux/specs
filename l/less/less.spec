@@ -3,7 +3,7 @@
 
 Name: less
 Version: 481
-Release: alt1
+Release: alt2
 
 Summary: A text file browser similar to more, but better
 License: GPLv3+
@@ -109,6 +109,9 @@ ln -s lesspipe.1 %buildroot%_man1dir/lessfile.1
 %doc NEWS.bz2 *.html
 
 %changelog
+* Thu Oct 27 2016 Ivan Zakharyaschev <imz@altlinux.org> 481-alt2
+- correctly detect and handle .xz files.
+
 * Wed Nov 25 2015 Alexey Gladkov <legion@altlinux.ru> 481-alt1
 - New version 481.
 
