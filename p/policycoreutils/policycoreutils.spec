@@ -3,8 +3,9 @@
 
 Summary: SELinux policy core utilities
 Name: policycoreutils
-Version: 2.4
-Release: alt2
+Epoch: 1
+Version: 2.3
+Release: alt1
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
@@ -216,7 +217,7 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 %_sbindir/semodule
 %_sbindir/sestatus
 %_bindir/secon
-%_libexecdir/selinux/hll/
+#%%_libexecdir/selinux/hll/
 %config(noreplace) %_sysconfdir/sestatus.conf
 
 #
@@ -398,6 +399,9 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 
 %changelog
+* Thu Sep 29 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:2.3-alt1
+- downgraded due regression (closes: #32254)
+
 * Mon Jul 18 2016 Sergey V Turchin <zerg@altlinux.org> 2.4-alt2
 - move _libexecdir/selinux/hll to main package
 

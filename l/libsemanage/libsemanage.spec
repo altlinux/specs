@@ -5,7 +5,8 @@
 %def_with python
 
 Name: libsemanage
-Version: 2.4
+Epoch: 1
+Version: 2.3
 Release: alt1
 Summary: Library, which provides an interface for SELinux management
 Group: System/Libraries
@@ -15,7 +16,6 @@ Source: %name-%version.tar
 Patch1: alt-extra-homedirs.patch
 Patch2: alt-linking.patch
 Patch3: alt-pkgconfig.patch
-Patch4: alt-lib-install-dir.patch
 
 %{?_with_python:BuildPreReq: rpm-build-python}
 BuildRequires: bzlib-devel flex libustr-devel libsepol-devel >= 2.1 libselinux-devel >= 2.1 libaudit-devel
@@ -85,7 +85,6 @@ on binary policies such as customizing policy boolean settings.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 
 %build
@@ -124,11 +123,15 @@ ln -sf /%_lib/libsemanage.so.1 %buildroot/%_libdir/libsemanage.so
 %files -n python-module-semanage
 %python_sitelibdir/*
 %files utils
-%_libexecdir/selinux/*
+#%%_libexecdir/selinux/*
 %endif
 
 
 %changelog
+* Thu Sep 29 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:2.3-alt1
+- downgraded due regression (closes: #32254)
+- alt-lib-install-dir.patch has been removed
+
 * Wed Feb 10 2016 Sergey V Turchin <zerg@altlinux.org> 2.4-alt1
 - new version
 
