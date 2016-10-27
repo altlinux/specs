@@ -1,8 +1,8 @@
 %define  themename Clearlooks-Phenix
 
 Name:    gtk3-theme-clearlooks-phenix
-Version: 6.0.3
-Release: alt4.git299f91c
+Version: 7.0.1
+Release: alt1.gite1bb5fe
 Epoch:   1
 
 Summary: GTK3 port of the Clearlooks theme
@@ -36,6 +36,11 @@ tar xf %SOURCE0 -C %buildroot%_datadir/themes
 %_datadir/themes/%themename
 
 %changelog
+* Thu Oct 27 2016 Andrey Cherepanov <cas@altlinux.org> 1:7.0.1-alt1.gite1bb5fe
+- New version
+- Fix background color of hovered menu item in Chromium 54.x
+- Fix transparent app-notifications
+
 * Mon May 23 2016 Andrey Cherepanov <cas@altlinux.org> 1:6.0.3-alt4.git299f91c
 - Base adapt theme to GTK 3.20
 
