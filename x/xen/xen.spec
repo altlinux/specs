@@ -14,7 +14,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.7.0
-Release: alt3
+Release: alt4
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -471,11 +471,11 @@ rm -f %buildroot%_libdir/*.a
 
 # logrotate
 install -pD -m 0644 %SOURCE4 %buildroot%_logrotatedir/%name
-install -pD -m 0644 %SOURCE49 %buildroot/lib/tmpfiles.d/xen.conf
+install -pD -m 0644 %SOURCE49 %buildroot%_tmpfilesdir/%name.conf
 
 ############ create dirs in /var ############
-install -d -m 0755 %buildroot%_localstatedir/%name/{xend-db/{domain,vnet,migrate},images}
-install -d -m 0755 %buildroot%_logdir/%name/console
+install -d -m 0700 %buildroot%_localstatedir/%name/save
+install -d -m 0700 %buildroot%_logdir/%name/console
 
 ############ assemble license files ############
 # avoid licensedir to avoid recursion, also stubdom/ioemu and dist
@@ -541,10 +541,13 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 %_initddir/xendomains
 %_initddir/xendriverdomain
 
-%_sysconfdir/bash_completion.d/*
+%_sysconfdir/bash_completion.d
 
 # Rotate console log files
 %config(noreplace) %_sysconfdir/logrotate.d/%name
+
+%dir /lib/systemd
+%dir %_unitdir
 
 %_unitdir/proc-xen.mount
 %_unitdir/var-lib-xenstored.mount
@@ -581,6 +584,9 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 %_man5dir/xl.conf.*
 %_man5dir/xlcpupool.cfg.*
 
+# General Xen state
+%_localstatedir/%name
+
 # Xen logfiles
 %dir %attr(0700,root,root) %_logdir/xen
 
@@ -592,6 +598,9 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 
 
 %files runtime
+%dir /lib/systemd
+%dir %_unitdir
+
 %_unitdir/xen-qemu-dom0-disk-backend.service
 
 # qemu-xen-traditional is only built with stubdoms
@@ -601,8 +610,10 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 %_datadir/%name/qemu/keymaps
 %endif
 
+%dir %_datadir/qemu-xen
 %_datadir/qemu-xen/qemu
 
+%dir %_libexecdir/%name
 %dir %_libexecdir/%name/bin
 %_libexecdir/%name/bin/pygrub
 %_libexecdir/%name/bin/qemu-dm
@@ -621,16 +632,10 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 %python_sitelibdir/grub
 %python_sitelibdir/pygrub-*.egg-info
 
-# General Xen state
-%dir %_localstatedir/%name
-%dir %_localstatedir/%name/dump
-%dir %_localstatedir/%name/images
-
 %_bindir/*
 %_sbindir/*
 
-# Guest/HV console logs
-%dir %attr(0700,root,root) %_logdir/xen/console
+%attr(0700,root,root) %_logdir/%name
 
 %{?_enable_ocamltools:%exclude %_sbindir/oxenstored}
 
@@ -651,7 +656,7 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 
 %files doc
 %doc %dir %_docdir/%name-%version
-%doc %_docdir/%name-%version/misc/
+%doc %_docdir/%name-%version/misc
 %doc %_docdir/%name-%version/html
 %doc %_docdir/%name-%version/README
 
@@ -674,7 +679,10 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 %exclude %_libdir/ocaml/site-lib/%{name}*/*.a
 %exclude %_libdir/ocaml/site-lib/%{name}*/*.cmxa
 %exclude %_libdir/ocaml/site-lib/%{name}*/*.cmx
+
 %_sbindir/oxenstored
+
+%dir %attr(0700,root,root) %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/oxenstored.conf
 
 
@@ -703,6 +711,9 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 
 
 %changelog
+* Thu Oct 27 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.0-alt4
+- fix files and directories package ownership
+
 * Sun Oct 23 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.0-alt3
 - ALT-specific SysV init-scripts adaptations (condstop, condrestart)
 - Fix unsafe usage of temp files in stubdom-dm script
