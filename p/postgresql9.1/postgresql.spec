@@ -4,8 +4,8 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     1
-%define postgresql_subminor  23
-%define postgresql_altrel    2
+%define postgresql_subminor  24
+%define postgresql_altrel    1
 %define libpq_major          5
 %define libpq_minor          4
 %define libecpg_major        6
@@ -705,6 +705,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Thu Oct 27 2016 Alexei Takaseev <taf@altlinux.org> 9.1.24-alt1
+- 9.1.24
+
 * Thu Sep 29 2016 Alexei Takaseev <taf@altlinux.org> 9.1.23-alt2
 - Add conflicts to 9.6
 
