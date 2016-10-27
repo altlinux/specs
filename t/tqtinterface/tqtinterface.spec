@@ -5,7 +5,7 @@
 
 Name: tqtinterface
 Version: 3.5.13.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Interface and abstraction library for Qt and Trinity
@@ -52,15 +52,22 @@ Interface for Qt and Trinity
 
 %files -n libtqt
 %_libdir/libtqt.so.*
-%_libdir/libtqassistantclient.so*
+%_libdir/libtqassistantclient.so.*
 
 %files -n libtqt-devel
 %_bindir/*
 %_libdir/libtqt.so
+%_libdir/libtqassistantclient.so
 %_includedir/%name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Oct 27 2016 Igor Vlasenko <viy@altlinux.ru> 3.5.13.2-alt2
+- NMU: fix for repocop altlinux-policy-shared-lib-contains-devel-so:
+   Shared Lib package should not contain symlink
+   /usr/lib64/libtqassistantclient.so but just
+   /usr/lib64/libtqassistantclient.so.4.2.0
+
 * Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
 - Release TDE version 3.5.13.2
 
