@@ -1,5 +1,5 @@
 Name: libva
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 
 Summary: Video Acceleration (VA) API for Linux
@@ -57,6 +57,9 @@ This package provides the development environment for libva
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Oct 28 2016 L.A. Kostis <lakostis@altlinux.ru> 1.7.2-alt1
+- 1.7.2.
+
 * Thu Jul 07 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.1-alt1
 - 1.7.1 released
 
