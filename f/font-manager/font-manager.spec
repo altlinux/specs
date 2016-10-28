@@ -1,21 +1,31 @@
-%define _name org.gnome.FontManager
+%define _libexecdir %_prefix/libexec
+
+%define xdg_name org.gnome.FontManager
+%define xdg_name1 org.gnome.FontViewer
+
+%def_with file_roller
+%def_with nautilus
+
 Name: font-manager
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 
 Summary: A font management application for the GNOME desktop
 License: GPLv3
 Group: Graphical desktop/GNOME
-Url: http://code.google.com/p/%name
+Url: http://fontmanager.github.io/
 
-#Source: http://%name.googlecode.com/files/%name-%version.tar.bz2
-Source: %name-%version.tar
+# VCS: https://github.com/FontManager/master.git
+Source: https://github.com/FontManager/master/releases/download/%version/%name-%version.tar.bz2
+
+%{?_with_file_roller:Requires: file-roller}
 
 BuildRequires: libgtk+3-devel libjson-glib-devel libgee0.8-devel
 BuildRequires: libgucharmap-devel libsqlite3-devel libxml2-devel
-BuildRequires: intltool yelp-tools
+BuildRequires: intltool yelp-tools libappstream-glib-devel
 BuildRequires: vala-tools
 BuildRequires: gobject-introspection-devel libgucharmap-gir-devel
+%{?_with_nautilus:BuildRequires: nautilus-python}
 
 %description
 Font Manager is an application that allows users to easily manage fonts
@@ -36,10 +46,10 @@ Enlightenment, and even KDE.
 
 %build
 %autoreconf
-export ac_cv_prog_HAVE_FILE_ROLLER="yes"
-%configure
-# SMP-incompatible build
-%make
+%{?_with_file_roller:export ac_cv_prog_HAVE_FILE_ROLLER="yes"}
+%configure %{?_with_file_roller:--with-file-roller} \
+	%{subst_with nautilus}
+%make_build
 
 %install
 %makeinstall_std
@@ -48,14 +58,27 @@ export ac_cv_prog_HAVE_FILE_ROLLER="yes"
 
 %files -f %name.lang
 %_bindir/%name
-%_desktopdir/%_name.desktop
-%_datadir/dbus-1/services/%_name.service
-%_datadir/glib-2.0/schemas/%_name.gschema.xml
-%_datadir/appdata/%name.appdata.xml
+%dir %_libexecdir/%name
+%_libexecdir/%name/font-viewer
+%_libdir/%name/
+%_desktopdir/%xdg_name.desktop
+%_desktopdir/%xdg_name1.desktop
+%_datadir/%name/
+%_datadir/dbus-1/services/%xdg_name.service
+%_datadir/dbus-1/services/%xdg_name1.service
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name1.gschema.xml
+%_man1dir/%name.1.*
+%_datadir/appdata/%xdg_name.appdata.xml
+%{?_with_nautilus:%_datadir/nautilus-python/extensions/font-manager.py*}
 %doc README
 
+%exclude %_libdir/%name/*.la
 
 %changelog
+* Fri Oct 28 2016 Yuri N. Sedunov <aris@altlinux.org> 0.7.3-alt1
+- 0.7.3
+
 * Fri May 29 2015 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
 - 0.7.2 release (rev 425)
 
