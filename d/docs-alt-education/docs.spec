@@ -7,8 +7,8 @@
 %define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher
 
 Name: docs-%variant
-Version: 8.0
-Release: alt2
+Version: 8.1
+Release: alt1
 
 Summary: %Variant documentation
 License: %fdl
@@ -43,6 +43,10 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Fri Oct 28 2016 Artem Zolochevskiy <azol@altlinux.ru> 8.1-alt1
+- updated to 8.1
+- added 'guest session' description
+
 * Sun Aug 07 2016 Artem Zolochevskiy <azol@altlinux.ru> 8.0-alt2
 - removed obsolete stuff
 
