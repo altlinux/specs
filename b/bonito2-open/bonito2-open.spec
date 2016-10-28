@@ -1,6 +1,6 @@
 Name: bonito2-open
-Version: 3.80.5
-Release: alt1.corbama5
+Version: 3.88.9
+Release: alt1.corbama1
 
 Summary: Bonito is a graphical user interface to corpora mantained by Manatee
 License: LGPLv2+
@@ -8,7 +8,7 @@ Group: System/Libraries
 Url: http://nlp.fi.muni.cz/trac/noske/wiki/Downloads
 Packager: Kirill Maslinsky <kirill@altlinux.org>
 BuildRequires: python-module-cheetah python-module-distribute time
-BuildArch: noarch
+ExclusiveArch: x86_64
 
 
 Source: %name-%version.tar
@@ -45,6 +45,11 @@ install %SOURCE100 %buildroot/%_sysconfdir/httpd2/conf/sites-available/bonito2.c
 
 
 %changelog
+* Wed Oct 19 2016 Kirill Maslinsky <kirill@altlinux.org> 3.88.9-alt1.corbama1
+- Verson up: 3.88.9
+- build exclusively on x86_64 due to discontinued support of 
+  manatee-open on i586.
+
 * Sat Sep 17 2016 Kirill Maslinsky <kirill@altlinux.org> 3.80.5-alt1.corbama5
 - Fix bug in concordance save template
 
