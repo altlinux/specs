@@ -14,7 +14,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.7.0
-Release: alt4
+Release: alt5
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -676,7 +676,6 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 %if_enabled ocamltools
 %files ocaml
 %_libdir/ocaml/site-lib/%{name}*
-%exclude %_libdir/ocaml/site-lib/%{name}*/*.a
 %exclude %_libdir/ocaml/site-lib/%{name}*/*.cmxa
 %exclude %_libdir/ocaml/site-lib/%{name}*/*.cmx
 
@@ -687,7 +686,6 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 
 
 %files ocaml-devel
-%_libdir/ocaml/site-lib/%{name}*/*.a
 %_libdir/ocaml/site-lib/%{name}*/*.cmxa
 %_libdir/ocaml/site-lib/%{name}*/*.cmx
 %endif
@@ -711,6 +709,9 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 
 
 %changelog
+* Fri Oct 28 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.0-alt5
+- Try to eliminate circular deps between xen-ocaml and xen-ocaml-devel
+
 * Thu Oct 27 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.0-alt4
 - fix files and directories package ownership
 
