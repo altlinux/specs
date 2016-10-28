@@ -17,9 +17,10 @@
 # TDE variables
 Name: rpm-macros-trinity
 Version: 14.0.3
-Release: alt2
+Release: alt3
 Summary: RPM helper macros to rebuild TDE packages
 BuildArch: noarch
+Provides: trinity-cmake-macros = %version-%release
 
 Group: Other
 Url: http://www.trinitydesktop.org/
@@ -33,7 +34,6 @@ License: GPL-2.0+
 %description
 These helper macros provide possibility to rebuild
 TDE packages by some Alt Linux Team Policy compatible way.
-Provides: trinity-cmake-macros
 
 %prep
 %build
@@ -46,6 +46,9 @@ install -m 0644 %SOURCE1 %buildroot/%_rpmmacrosdir/trinity
 %_rpmmacrosdir/trinity
 
 %changelog
+* Fri Oct 28 2016 Hihin Ruslan <ruslandh@altlinux.ru> 14.0.3-alt3
+- Fix provides trinity-cmake-macros
+
 * Thu Oct 27 2016 Hihin Ruslan <ruslandh@altlinux.ru> 14.0.3-alt2
 - add provides trinity-cmake-macros
 
