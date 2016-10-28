@@ -1,9 +1,9 @@
 # WARNING: Rebuild QGIS whenever a new version of GRASS is shipped! Even though the soname might stay the same, it won't work anymore.
 # http://hub.qgis.org/issues/5274
-%define grass_version 7.0.4
+%define grass_version 7.0.5
 
 Name:    qgis
-Version: 2.16.1
+Version: 2.18.0
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -14,6 +14,12 @@ Url:     http://qgis.org/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Source1: qbrowser.desktop
+Source2: qgis.desktop
+Source3: qgis-server-httpd.conf
+Source4: qgis-server-README
+Source5: qgis.xml
+Source6: %name-mimelnk.tar
 
 # Fix detection problem for GRASS libraries
 Patch1: %name-ignore-bundled-modules.patch
@@ -21,7 +27,6 @@ Patch2: %name-sip-flags.patch
 Patch3: %name-fix-unresolved-variable.patch
 # Need to build otb-python for otbAppication
 Patch4: %name-disable-otb-plugin.patch
-Patch5: %name-fix-typo-in-module-name.patch
 
 # Fix unresolved symbols in grass based libs
 %set_verify_elf_method unresolved=relaxed
@@ -136,7 +141,6 @@ Please refer to %name-server-README for details!
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
 # Delete bundled libs
 rm -rf src/core/gps/qextserialport
@@ -206,14 +210,14 @@ cmake \
 %makeinstall_std
 
 # Install desktop files
-desktop-file-install --dir=%buildroot%_datadir/applications ./altlinux/%name.desktop
-desktop-file-install --dir=%buildroot%_datadir/applications ./altlinux/qbrowser.desktop
+desktop-file-install --dir=%buildroot%_datadir/applications %SOURCE1
+desktop-file-install --dir=%buildroot%_datadir/applications %SOURCE2
 
 # Install MIME type definitions
 install -pd %buildroot%_datadir/mime/packages
-install -pm0644 ./altlinux/%name.xml %buildroot%_datadir/mime/packages/%name.xml
+install -pm0644 %SOURCE5 %buildroot%_datadir/mime/packages/%name.xml
 install -pd %buildroot%_datadir/mimelnk/application
-install -pt %buildroot%_datadir/mimelnk/application ./altlinux/mimelnk/*
+tar xf %SOURCE6 -C %buildroot%_datadir/mimelnk/application
 
 # Install application and MIME icons
 install -pd %buildroot%_datadir/pixmaps
@@ -238,8 +242,7 @@ install -pm0644 \
 
 # Install basic QGIS Mapserver configuration for Apache
 install -pd %buildroot%_sysconfdir/httpd/conf.d
-install -pm0644 altlinux/%{name}-server-httpd.conf \
-    %buildroot%_sysconfdir/httpd/conf.d/qgis-server.conf
+install -pm0644 %SOURCE3 %buildroot%_sysconfdir/httpd/conf.d/qgis-server.conf
 
 # Packed by %%doc in server, see qgis-server-README
 rm -f %buildroot%_libexecdir/%name/wms_metadata.xml
@@ -258,7 +261,7 @@ popd
 
 # Install server docs
 mkdir -p %buildroot%_datadir/doc/%name-server-%version
-cp src/server/admin.sld src/server/wms_metadata.xml altlinux/%name-server-README altlinux/%name-server-httpd.conf \
+cp src/server/admin.sld src/server/wms_metadata.xml %SOURCE4 %SOURCE3 \
    %buildroot%_datadir/doc/%name-server-%version
 
 # Copy test utilities form tests to plugins/processing/tests
@@ -326,6 +329,9 @@ echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
 %_libexecdir/%name
 
 %changelog
+* Fri Oct 28 2016 Andrey Cherepanov <cas@altlinux.org> 2.18.0-alt1
+- New version
+
 * Sun Aug 14 2016 Andrey Cherepanov <cas@altlinux.org> 2.16.1-alt1
 - New version
 

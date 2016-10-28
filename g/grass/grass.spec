@@ -1,5 +1,5 @@
 Name:    grass
-Version: 7.0.4
+Version: 7.0.5
 Release: alt1
 
 %def_with mysql
@@ -302,6 +302,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Fri Oct 28 2016 Andrey Cherepanov <cas@altlinux.org> 7.0.5-alt1
+- New version
+
 * Fri Sep 02 2016 Andrey Cherepanov <cas@altlinux.org> 7.0.4-alt1
 - New version
 - Fix gisbase path in startup script (ALT #31954)
