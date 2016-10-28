@@ -1,6 +1,6 @@
 Summary: A Pluggable Authentication Module for Kerberos 5.
 Name: pam_krb5
-Version: 3.15
+Version: 4.7
 Release: alt1
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
@@ -38,6 +38,9 @@ make install DESTDIR=%buildroot
 %doc README* LICENSE NEWS
 
 %changelog
+* Fri Oct 28 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.7-alt1
+- Upgrade to new 4.x release
+
 * Fri Sep 30 2016 Evgeny Sinelnikov <sin@altlinux.ru> 3.15-alt1
 - Update to latest 3.x release
 
