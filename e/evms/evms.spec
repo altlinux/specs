@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt34
+Release: alt35.3
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -168,6 +168,19 @@ EOF
 %endif
 
 %changelog
+* Fri Oct 28 2016 Michael Shigorin <mike@altlinux.org> 2.5.5-alt35.3
+- gpt plugin: just round_up_to_min_boundary() of 1MB/2048s either
+  (closes: #32679)
+
+* Fri Oct 28 2016 Michael Shigorin <mike@altlinux.org> 2.5.5-alt35.2
+- dos plugin: just round_up_to_min_boundary() of 1MB/2048s
+
+* Thu Oct 27 2016 Michael Shigorin <mike@altlinux.org> 2.5.5-alt35.1
+- revert 2.5.5-alt29 patches by timonbl4@ to avoid collisions
+
+* Thu Oct 27 2016 Michael Shigorin <mike@altlinux.org> 2.5.5-alt35
+- apply stanv@'s patch, see #26925 comment 5 (closes: #26925)
+
 * Wed Jul 20 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.5-alt34
 - built without ancient gtk1 gui
 - built with default gcc5
