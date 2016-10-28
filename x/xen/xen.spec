@@ -14,7 +14,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.7.0
-Release: alt5
+Release: alt6
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -709,6 +709,19 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 
 
 %changelog
+* Fri Oct 28 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.0-alt6
+- Upstream updates:
+ - Merge branch 'upstream/4.7' into alt/4.7
+ - x86: MISALIGNSSE feature depends on SSE
+ - vscsiif.h: replace PAGE_SIZE with VSCSIIF_PAGE_SIZE
+ - usbif.h: replace PAGE_SIZE with USBIF_RING_SIZE
+ - x86/Viridian: don't depend on undefined register state
+ - x86emul: fix pushing of selector registers
+ - x86/hvm: Clobber %cs.L when LME becomes set
+ - xen/trace: Fix trace metadata page count calculation (revert fbf96e6)
+ - x86: defer not-present segment checks
+ - xen: credit1: return the 'time remaining to the limit' as next timeslice.
+
 * Fri Oct 28 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.0-alt5
 - Try to eliminate circular deps between xen-ocaml and xen-ocaml-devel
 
