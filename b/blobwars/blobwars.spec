@@ -1,6 +1,6 @@
 Name: blobwars
-Version: 1.19
-Release: alt2
+Version: 2.00
+Release: alt1
 
 Summary: Mission and Objective based 2D Platform Game
 License: %gpl2plus
@@ -8,19 +8,21 @@ Group: Games/Arcade
 
 Url: http://www.parallelrealities.co.uk/blobWars.php
 Source: %name-%version.tar
-Patch1: %name-1.19-alt-fix-as-needed-linking.patch
-Patch2: %name-1.19-alt-fixes.patch
-#found in fc
-Patch3: blobwars-1.19-check-chdir-ret.patch
+Patch1: blobwars-2.00-alt-fix-build.patch
+Patch2: %name-2.00-alt-fixes.patch
 #found in suse
 Patch4: blobwars-icons_blobwars.desktop.patch
-Patch5: blobwars-1.19-fix-gzclose.patch
+Patch5: blobwars-2.00-fix-gzclose.patch
 Source1: %{name}.appdata.xml
 
 
 BuildRequires: rpm-build-licenses
 
-BuildRequires: gcc-c++ libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libSDL_net-devel zlib-devel
+BuildRequires: gcc-c++ libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel libSDL2_net-devel zlib-devel
+
+# TODO: The package should depend on fonts-ttf-dejavu in runtime and take
+# the font from there. rpm-build-fonts contains %_ttffontsdir macro.
+BuildRequires: rpm-build-fonts fonts-ttf-dejavu
 
 %description
 Blob Wars : Metal Blob Solid. This is Episode I of the Blob Wars Saga.
@@ -32,27 +34,25 @@ MIAs as possible.
 %setup -q
 %patch1
 %patch2
-%patch3 -p1
 %patch4
 %patch5
 
 %build
-%make_build VERSION=%version PREFIX=%_prefix USEPAK=1
-# RELEASE=0
+%make_build VERSION=%version RELEASE=1
 
 %install
-%makeinstall DESTDIR=%buildroot PREFIX=%_prefix  USEPAK=1
+%makeinstall DESTDIR=%buildroot
 
 # icons
 mkdir -p %buildroot%_liconsdir
-install -m 644 icons/blobwars-large.png %buildroot%_liconsdir/blobwars.png
+install -m 644 icons/blobwars48x48.png %buildroot%_liconsdir/blobwars.png
 
-# disabled because USEPAK=0 is broken
 # fonts
-#pushd %buildroot%_gamesdatadir/%name
-#rm data/vera.ttf
-#ln -s %_ttffontsdir/dejavu/DejaVuSans.ttf data/vera.ttf
-#popd
+pushd %buildroot%_gamesdatadir/%name
+rm data/vera.ttf
+# not Vera.ttf form fonts-ttf-vera, but DejaVuSans (fc-query data/vera.ttf for yourselves)
+ln -s %_ttffontsdir/dejavu/DejaVuSans.ttf data/vera.ttf
+popd
 
 # Install appdata
 mkdir -p %{buildroot}%{_datadir}/appdata
@@ -69,6 +69,10 @@ install -Dm 0644 %{S:1} %{buildroot}%{_datadir}/appdata
 %doc doc/*
 
 %changelog
+* Sat Oct 29 2016 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
+- new version by request
+- USEPAK=0
+
 * Sat Oct 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.19-alt2
 - added rh and suse patches
 - USEPAK=1 as build w/o pak seems to be broken
