@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	4.7
-%define kernel_sublevel .10
+%define kernel_base_version	4.8
+%define kernel_sublevel .5
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -20,7 +20,7 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define nprocs 12
 # Build options
 # You can change compiler version by editing this line:
-%define kgcc_version	4.7
+%define kgcc_version	5
 
 # Enable/disable SGML docs formatting
 %if "%sub_flavour" == "def"
@@ -64,7 +64,8 @@ ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: dev86 flex
 BuildRequires: libdb4-devel
-BuildRequires: gcc%kgcc_version
+BuildRequires: gcc%kgcc_version gcc%kgcc_version-c++
+BuildRequires: gcc%kgcc_version-plugin-devel libgmp-devel libmpc-devel
 BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeric
 BuildRequires: module-init-tools >= 3.16
 BuildRequires: lzma-utils
@@ -441,6 +442,7 @@ KbuildFiles="
 	scripts/gcc-x86_*-has-stack-protector.sh
 	scripts/module-common.lds
 	scripts/depmod.sh
+	scripts/gcc-plugins/cyc_complexity_plugin.so
 
 
 	.config
@@ -546,17 +548,23 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Fri Oct 28 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.5-alt1
+- v4.8.5
+- secured /proc/interrupts
+
+* Tue Oct 25 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.4-alt1
+- v4.8.4
+
 * Sat Oct 22 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.10-alt1
 - v4.7.10
 
-* Thu Oct 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.9-alt1
-- v4.7.9
+* Mon Oct 10 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.1-alt1
+- v4.8.1
 
-* Mon Oct 17 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.8-alt1
-- v4.7.8
-
-* Sun Oct 09 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.7-alt1
-- v4.7.7
+* Thu Oct 06 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.0-alt1
+- v4.8
+- gcc5 as kgcc
+- gcc plugin activated (uses gcc-c++, libgmp-devel, mpc-devel)
 
 * Fri Sep 30 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.6-alt1
 - v4.7.6
