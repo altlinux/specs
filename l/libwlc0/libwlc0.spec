@@ -1,5 +1,5 @@
 Name: libwlc0
-Version: 0.0.6
+Version: 0.0.7
 Release: alt1
 
 %define oname wlc
@@ -51,6 +51,9 @@ tar xvf %SOURCE1 -C lib
 %_libdir/pkgconfig/%oname.pc
 
 %changelog
+* Sat Oct 29 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.0.7-alt1
+- 0.0.7
+
 * Tue Oct 04 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.0.6-alt1
 - 0.0.6
 
