@@ -44,7 +44,7 @@
 %def_with libcephfs
 
 Name:    samba-DC
-Version: 4.5.0
+Version: 4.5.1
 Release: alt1
 
 Group:   System/Servers
@@ -1030,6 +1030,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/libdnsserver-common-samba4.so
 %_samba_mod_libdir/libdfs-server-ad-samba4.so
 %_samba_mod_libdir/libdsdb-module-samba4.so
+%_samba_mod_libdir/libdsdb-garbage-collect-tombstones-samba4.so
 %_samba_mod_libdir/ldb
 %_samba_mod_libdir/gensec
 %_samba_mod_libdir/libdb-glue-samba4.so
@@ -1256,6 +1257,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri Oct 28 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.5.1-alt1
+- Update with variety of fixes for autumn release
+
 * Thu Sep 08 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.5.0-alt1
 - Update to new autumn release
 
