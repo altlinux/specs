@@ -1,5 +1,5 @@
 Name:		sway
-Version:	0.9
+Version:	0.10
 Release:	alt1
 
 Summary:	i3wm drop-in replacement for Wayland
@@ -74,6 +74,9 @@ rm -- %buildroot%_man1dir/swaylock.*
 %_datadir/%name/*
 
 %changelog
+* Sat Oct 29 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.10-alt1
+- 0.10
+
 * Thu Sep 22 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9-alt1
 - Initial build
 
