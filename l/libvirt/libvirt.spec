@@ -104,7 +104,7 @@
 
 Name: libvirt
 Version: 2.3.0
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -118,6 +118,7 @@ Patch1: %name-%version-%release.patch
 %{?_with_network:Requires: %name-daemon-config-network = %version-%release}
 %{?_with_nwfilter:Requires: %name-daemon-config-nwfilter = %version-%release}
 %{?_with_qemu:Requires: %name-qemu-common = %version-%release}
+%{?_with_polkit:Requires: polkit}
 Requires: %name-client = %version-%release
 Requires: %name-libs = %version-%release
 
@@ -188,9 +189,22 @@ Group: System/Servers
 Requires: %name-libs = %version-%release
 Requires: iptables
 %{?_with_pm_utils:Requires: pm-utils}
-
+Requires: dmidecode
 # libvirtd depends on 'messagebus' service
 Requires: dbus
+
+Conflicts: %name-daemon-config-network < %version-%release
+Conflicts: %name-daemon-config-nwfilter < %version-%release
+Conflicts: %name-daemon-driver-interface < %version-%release
+Conflicts: %name-daemon-driver-qemu < %version-%release
+Conflicts: %name-daemon-driver-nodedev < %version-%release
+Conflicts: %name-daemon-driver-secret < %version-%release
+Conflicts: %name-daemon-driver-storage < %version-%release
+Conflicts: %name-daemon-driver-vbox < %version-%release
+Conflicts: %name-daemon-driver-nwfilter < %version-%release
+Conflicts: %name-daemon-driver-lxc < %version-%release
+Conflicts: %name-daemon-driver-network < %version-%release
+Conflicts: %name-lock-sanlock < %version-%release
 
 %description daemon
 Server side daemon required to manage the virtualization capabilities
@@ -723,13 +737,6 @@ done
 %_sbindir/useradd -M -r -d %_localstatedir/lib/%name -s /bin/false -c "libvirt user" -g %qemu_group %qemu_user >/dev/null 2>&1 || :
 
 %post daemon
-if [ $1 -eq 1 ]; then
-    if ! grep -q ^host_uuid /etc/libvirt/libvirtd.conf ; then
-	UUID2=`/usr/bin/uuidgen`
-	echo host_uuid = \"$UUID2\" >> /etc/libvirt/libvirtd.conf
-    fi
-fi
-
 %post_service virtlockd
 %post_service virtlogd
 %post_service libvirtd
@@ -1053,6 +1060,10 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Oct 28 2016 Alexey Shabalin <shaba@altlinux.ru> 2.3.0-alt2
+- add requires dmidecode to daemon package
+- drop generate host_uuid in post_install, default host_uuid_source = smbios
+
 * Fri Oct 07 2016 Alexey Shabalin <shaba@altlinux.ru> 2.3.0-alt1
 - 2.3.0
 
