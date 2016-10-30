@@ -1,6 +1,6 @@
 %define name speedtest-cli
 %define version 0.3.4
-%define release alt1
+%define release alt2
 
 %setup_python_module %name
 
@@ -29,7 +29,7 @@ speedtest.net
 %build
 %install
 mkdir -p %buildroot%_bindir
-install speedtest_cli.py %buildroot%_bindir/
+install speedtest_cli.py %buildroot%_bindir/%name
 
 mkdir -p %buildroot%_desktopdir
 cat > %buildroot%_desktopdir/%name.desktop <<EOF
@@ -51,6 +51,9 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Oct 30 2016 L.A. Kostis <lakostis@altlinux.ru> 0.3.4-alt2
+- Use correct naming during install.
+
 * Wed Oct 19 2016 L.A. Kostis <lakostis@altlinux.ru> 0.3.4-alt1
 - 0.3.4.
 
