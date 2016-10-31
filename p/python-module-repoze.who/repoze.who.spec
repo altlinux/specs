@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        2.2
-Release:        alt2.git20140327
+Release:        alt3.git20140327
 Summary:        Identification and authentication framework for WSGI
 Group:          Development/Python
 License:        BSD-derived
@@ -50,6 +50,10 @@ application.
 %package -n python3-module-%oname
 Summary: Identification and authentication framework for WSGI (Python 3)
 Group: Development/Python3
+%python3_req_hier
+# which helps to auto-detect the following:
+#py3_requires zope.interface
+# And one additional (not auto-detected):
 %py3_requires paste zope.interface
 Requires: python3-module-repoze = %EVR
 
@@ -67,7 +71,6 @@ application.
 %package -n python3-module-repoze
 Summary: Root files for repoze (Python 3)
 Group: Development/Python3
-%py3_provides repoze
 
 %description -n python3-module-repoze
 Root files for repoze.
@@ -260,6 +263,9 @@ popd
 %endif
 
 %changelog
+* Mon Oct 31 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.2-alt3.git20140327
+- %%python3_req_hier for more precise reqs.
+
 * Tue Jun 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.2-alt2.git20140327
 - (.spec) Python3 packaging fixes:
   package corresponding __pycache__/* & sources together.
