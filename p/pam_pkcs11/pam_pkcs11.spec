@@ -1,18 +1,18 @@
 # vim: set ft=spec: -*- rpm -spec -*-
 
 Name: pam_pkcs11
-Version: 0.6.8
-Release: alt1.git20140828
+Version: 0.6.9
+Release: alt1
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
 License: LGPL
-Url: http://www.opensc-project.org/pam_pkcs11/
+Url: https://github.com/OpenSC/pam_pkcs11
 
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Fri Jul 31 2009 (-bi)
-BuildRequires: cvs docbook-style-xsl flex libldap-devel libpam-devel libpcsclite-devel libssl-devel xsltproc
+BuildRequires: docbook-style-xsl flex libldap-devel libpam-devel libpcsclite-devel libssl-devel xsltproc
+BuildRequires: doxygen
 
 BuildPreReq: gcc-c++
 
@@ -74,6 +74,8 @@ sed -i -e '
 	--with-confdir=%_sysconfdir/security/%name \
 	#
 %make_build
+cd doc
+./generate-api.sh
 
 %install
 %makeinstall_std
@@ -82,6 +84,9 @@ mkdir -p %buildroot%_sysconfdir/security/%name/{cacerts,crls}
 for f in pam_pkcs11.conf card_eventmgr.conf pkcs11_eventmgr.conf; do
   install -pm644 "etc/$f.example" "%buildroot%_sysconfdir/security/%name/$f"
 done
+
+# Cleanup .la files
+rm -f %buildroot/%_lib/*/*.la
 
 %find_lang %name
 
@@ -125,7 +130,7 @@ done
 %doc doc/README.eventmgr
 %config(noreplace) %_sysconfdir/security/%name/card_eventmgr.conf
 %_bindir/card_eventmgr
-%_mandir/man1/card_eventmgr.1.gz
+%_mandir/man1/card_eventmgr.1*
 %_docdir/%name/card_eventmgr.conf.example
 
 %files ldap
@@ -133,6 +138,10 @@ done
 /%_lib/%name/ldap_mapper.so
 
 %changelog
+* Mon Oct 31 2016 Andrey Cherepanov <cas@altlinux.org> 0.6.9-alt1
+- New version 0.6.9
+- Fix project homepage
+
 * Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.8-alt1.git20140828
 - Version 0.6.8
 
