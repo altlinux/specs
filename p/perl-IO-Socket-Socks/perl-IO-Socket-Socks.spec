@@ -2,7 +2,7 @@
 %define dist IO-Socket-Socks
 
 Name: perl-%dist
-Version: 0.69
+Version: 0.71
 Release: alt1
 
 Summary: This module seeks to provide a full implementation of the SOCKS protocol
@@ -37,6 +37,9 @@ while behaving like a regular socket as much as possible.
 %perl_vendor_privlib/*
 
 %changelog
+* Mon Oct 31 2016 Igor Vlasenko <viy@altlinux.ru> 0.71-alt1
+- automated CPAN update
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.69-alt1
 - automated CPAN update
 
