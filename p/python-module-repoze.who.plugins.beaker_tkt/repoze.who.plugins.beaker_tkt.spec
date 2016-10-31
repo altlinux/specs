@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt5
+Release: alt6
 Summary: Identifier (auth_tkt) plugin with beaker.session cache implementation
 License: Free
 Group: Development/Python
@@ -27,10 +27,14 @@ BeakerAuthTktPlugin acts the same way as CookieAuthTktPlugin, but
 instead of caching identity through cookie, it stores it in Beaker
 session.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Identifier (auth_tkt) plugin with beaker.session cache implementation
 Group: Development/Python3
-%py3_requires repoze.who.plugins paste.script beaker repoze.who
+# For more precise deps:
+%python3_req_hier
+# which unfortunately doesn't auto-detect precisely the following:
+%py3_requires repoze.who.plugins paste.script beaker
 
 %description -n python3-module-%oname
 BeakerAuthTktPlugin acts the same way as CookieAuthTktPlugin, but
@@ -49,6 +53,7 @@ instead of caching identity through cookie, it stores it in Beaker
 session.
 
 This package contains tests for repoze.who.plugins.beaker_tkt.
+%endif
 
 %package tests
 Summary: Tests for repoze.who.plugins.beaker_tkt
@@ -139,6 +144,9 @@ popd
 %endif
 
 %changelog
+* Mon Oct 31 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt6
+- %%python3_req_hier for more precise deps.
+
 * Tue Jun 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt5
 - (.spec) Python3 packaging fixes: exclude extra __pycache__/* junk.
 - (AUTO) subst_x86_64.
