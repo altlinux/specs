@@ -2,14 +2,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 1.76
-Release: alt1.1
+Version: 1.76.1
+Release: alt1
 
 Summary: A tool for static C/C++ code analysis
 
 License: GPLv3
 Group: Development/Tools
-Url:  git://github.com/danmar/cppcheck.git
+Url: git://github.com/danmar/cppcheck.git
 
 Source: %name-%version.tar.bz2
 Patch1: cppcheck-makefile-docbook_xsl-1.70.patch
@@ -43,14 +43,13 @@ Requires: %name = %version-%release
 %patch4 -p1
 %endif
 
-
 cat > %name.desktop <<@@@
 [Desktop Entry]
 Type=Application
 
 Exec=%name-gui
 Icon=%name
- 
+
 Name=CppCheck
 Comment=Static analysis of C/C++ code
 GenericName=Code analyzer
@@ -118,6 +117,9 @@ install -D gui/%name-gui.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.sv
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 1.76.1-alt1
+- Autobuild version bump to 1.76.1
+
 * Tue Oct 18 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.76-alt1.1
 - Version 1.76.1
 
@@ -225,5 +227,4 @@ install -D gui/%name-gui.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.sv
 
 * Tue May 05 2009 Slava Semushin <php-coder@altlinux.ru> 1.31-alt1
 - Initial build for ALT Linux
-
 
