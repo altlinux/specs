@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: SDL2
-Version: 2.0.4
+Version: 2.0.5
 Release: alt1
 
 Summary: Simple DirectMedia Layer
@@ -92,6 +92,8 @@ This is the static libraries you can use to develop SDL applications.
 %dir %_includedir/%name
 %_includedir/%name/*.h
 %_libdir/lib%name.so
+%dir %_libdir/cmake
+%dir %_libdir/cmake/%name
 %_libdir/cmake/%name/sdl2-config.cmake
 %_pkgconfigdir/sdl2.pc
 %_aclocaldir/sdl2.m4
@@ -102,6 +104,15 @@ This is the static libraries you can use to develop SDL applications.
 %endif
 
 %changelog
+* Mon Oct 31 2016 Nazarov Denis <nenderus@altlinux.org> 2.0.5-alt1
+- Version 2.0.5
+
+* Thu Jan 07 2016 Nazarov Denis <nenderus@altlinux.org> 2.0.4-alt0.M70P.1
+- Build for branch p7
+
+* Mon Jan 04 2016 Nazarov Denis <nenderus@altlinux.org> 2.0.4-alt0.M70T.1
+- Build for branch t7
+
 * Sun Jan 03 2016 Nazarov Denis <nenderus@altlinux.org> 2.0.4-alt1
 - Version 2.0.4
 
