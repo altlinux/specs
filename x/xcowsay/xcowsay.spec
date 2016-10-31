@@ -1,6 +1,6 @@
 Name: xcowsay
-Version: 1.3
-Release: alt1.qa1
+Version: 1.4
+Release: alt1
 Summary: displays a cute cow and message on your desktop
 Group: Games/Other
 License: GPL
@@ -14,7 +14,7 @@ BuildRequires: libdbus-glib-devel libgtk+2-devel
 %description
 xcowsay displays a cute cow and message on your desktop. Inspired by the original cowsay
 %prep
-%setup -q
+%setup
 
 %build
 %configure --disable-rpath --enable-dbus
@@ -33,6 +33,9 @@ xcowsay displays a cute cow and message on your desktop. Inspired by the origina
 %_man6dir/xcow*
 
 %changelog
+* Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 1.4-alt1
+- Autobuild version bump to 1.4
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
