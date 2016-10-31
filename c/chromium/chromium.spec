@@ -10,7 +10,9 @@
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
 
 %global gcc_version 4.8
-%global __find_debuginfo_files %nil
+%set_gcc_version %gcc_version
+
+%set_verify_elf_method rpath=relaxed textrel=relaxed lfs=relaxed lint=relaxed
 
 # Leave this alone, please.
 %global target out/Release
@@ -24,7 +26,7 @@
 
 Name:           chromium
 Version:        54.0.2840.59
-Release:        alt2
+Release:        alt3
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -78,6 +80,7 @@ Patch028: 0028-ALT-gzip-does-not-support-the-rsyncable-option.patch
 Patch029: 0029-OPENSUSE-Compile-the-sandbox-with-fPIE-settings.patch
 Patch030: 0030-GENTOO-Enable-VA-API-on-linux.patch
 Patch031: 0031-UBUNTU-Specify-max-resolution.patch
+Patch032: 0032-ALT-Use-rpath-link-and-absolute-rpath.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -85,6 +88,7 @@ BuildRequires: /proc
 BuildRequires:  bison
 BuildRequires:  bzlib-devel
 BuildRequires:  flex
+BuildRequires:  chrpath
 BuildRequires:  gcc%gcc_version-c++
 %if_enabled clang
 BuildRequires:  clang
@@ -182,10 +186,6 @@ PreReq(post,preun): alternatives >= 0.2
 
 Requires: libva
 
-%set_gcc_version %gcc_version
-%set_verify_elf_method textrel=relaxed
-%add_findreq_skiplist %_libdir/%name/*.so %_libdir/%name/Packages/*
-
 %description
 Chromium is an open-source browser project that aims to build a safer,
 faster, and more stable way for all Internet users to experience the web.
@@ -264,6 +264,7 @@ cp -a libchromiumcontent/chromiumcontent .
 %patch029 -p1
 %patch030 -p1
 %patch031 -p1
+%patch032 -p1
 ### Finish apply patches
 
 # Enable support for the Widevine CDM plugin
@@ -287,6 +288,7 @@ export CXX="clang++"
 export AR="ar"
 export RANLIB="ranlib"
 export PATH="$PWD/.rpm/depot_tools:$PATH"
+export CHROMIUM_RPATH="%_libdir/%name"
 
 CHROMIUM_SYSTEM_LIBS="\
  flac \
@@ -437,11 +439,20 @@ printf '%_bindir/%name\t%_libdir/%name/%name-generic\t10\n' > %buildroot%_altdir
 printf '%_bindir/%name\t%_libdir/%name/%name-kde\t15\n'     > %buildroot%_altdir/%name-kde
 printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir/%name-gnome
 
-# Strip Chromium executables to disable debuginfo generation (became too huge)
-find %buildroot/%_libdir/%name -type f -exec file -F'	' '{}' \+ |
-    grep -qs '[[:space:]]ELF' |
-    cut -f1 |
-    xargs -r strip
+(set +x;
+	find %buildroot/%_libdir/%name -type f |
+	while read f; do
+		t="$(readlink -ev "$f")"
+
+		file "$t" | fgrep -qs ELF || continue
+
+		# Strip Chromium executables to disable debuginfo generation (became too huge)
+		#strip -d "$t" ||:
+
+		# Add real RPATH
+		chrpath -r '%_libdir/%name' "$t" ||:
+	done
+)
 
 %files
 %doc AUTHORS LICENSE
@@ -470,6 +481,10 @@ find %buildroot/%_libdir/%name -type f -exec file -F'	' '{}' \+ |
 %_altdir/%name-gnome
 
 %changelog
+* Sun Oct 30 2016 Alexey Gladkov <legion@altlinux.ru> 54.0.2840.59-alt3
+- Fix Requires.
+- Add debuginfo.
+
 * Tue Oct 25 2016 Alexey Gladkov <legion@altlinux.ru> 54.0.2840.59-alt2
 - Rename chromium-stable to chromium.
 - Enable VAAPI.
