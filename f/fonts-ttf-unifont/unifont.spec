@@ -1,12 +1,12 @@
 Name: fonts-ttf-unifont
-Version: 9.0.01
+Version: 9.0.04
 Release: alt1
 
 Summary: GNU Unifont, with glyphs for every printable code point in the Unicode 8.0
 License: GPLv2
 Group: System/Fonts/True type
 Url: http://unifoundry.com/unifont.html
-Source: unifont-9.0.01.ttf
+Source: unifont-9.0.04.ttf
 
 BuildArch: noarch
 PreReq: fontconfig
@@ -27,6 +27,9 @@ cp %SOURCE0 .
 
 %files -f unifont.files
 %changelog
+* Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 9.0.04-alt1
+- Autobuild version bump to 9.0.04
+
 * Thu Jul 14 2016 Fr. Br. George <george@altlinux.ru> 9.0.01-alt1
 - Autobuild version bump to 9.0.01
 
