@@ -25,9 +25,9 @@ BuildRequires: libmagic-devel libSM-devel
 Name:          mate-file-archiver
 Version:       %{branch}.0
 %if 0%{?rel_build}
-Release:       alt1_1
+Release:       alt2_1
 %else
-Release:       alt1_1
+Release:       alt2_0.3%{?git_rel}
 %endif
 Summary:       MATE Desktop file archiver
 License:       GPLv2+ and LGPLv2+
@@ -47,6 +47,7 @@ BuildRequires: libjson-glib libjson-glib-devel libjson-glib-gir-devel
 BuildRequires:  mate-file-manager-devel
 BuildRequires:  libSM-devel
 Source44: import.info
+Patch33: file-roller-2.28.2-alt-7z.patch
 
 
 %description
@@ -63,6 +64,7 @@ such as zip, xv, bzip2, cab, rar and other compress formats.
 # needed for git snapshots
 NOCONFIGURE=1 ./autogen.sh
 %endif # 0%{?rel_build}
+%patch33 -p0
 
 
 %build
@@ -106,6 +108,9 @@ find %{buildroot} -name "*.la" -exec rm -f {} ';'
 
 
 %changelog
+* Mon Oct 31 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt2_1
+- fixed zip archive encoding (closes: #32689)
+
 * Wed Oct 12 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
 - update to mate 1.16
 
