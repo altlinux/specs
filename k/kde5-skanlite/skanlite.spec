@@ -1,7 +1,7 @@
 %define rname skanlite
 
 Name: kde5-%rname
-Version: 2.0
+Version: 2.0.1
 Release: alt1
 %K5init
 
@@ -9,6 +9,8 @@ Group: Graphics
 Summary: Image scanning application
 Url: http://www.kde.org
 License: GPLv2+
+
+#Requires: hplip-sane
 
 Source: %rname-%version.tar
 
@@ -46,5 +48,8 @@ with auto-generated names and format.
 %_K5xdgapp/org.kde.skanlite.desktop
 
 %changelog
+* Mon Oct 31 2016 Sergey V Turchin <zerg@altlinux.org> 2.0.1-alt1
+- new version
+
 * Mon Feb 01 2016 Sergey V Turchin <zerg@altlinux.org> 2.0-alt1
 - initial build
