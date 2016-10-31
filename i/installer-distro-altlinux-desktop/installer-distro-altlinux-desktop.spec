@@ -1,5 +1,5 @@
 Name: installer-distro-altlinux-desktop
-Version: 8.0.0
+Version: 8.1.0
 Release: alt1
 
 Summary: Installer configuration (desktop)
@@ -78,6 +78,10 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Mon Oct 31 2016 Michael Shigorin <mike@altlinux.org> 8.1.0-alt1
+- synced default groups with current alterator-users
+- added 'vmusers' to those as well (for libvirt)
+
 * Tue Apr 19 2016 Michael Shigorin <mike@altlinux.org> 8.0.0-alt1
 - carried over 80-setup-user-groups from installer-distro-centaurus
 
