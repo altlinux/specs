@@ -1,4 +1,4 @@
-%define module_version 0.014
+%define module_version 0.024
 %define module_name Importer
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(base.pm)
@@ -7,14 +7,14 @@ BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.014
-Release: alt2
+Version: 0.024
+Release: alt1
 Summary: Alternative but compatible interface to modules that export symbols.
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/E/EX/EXODIST/%{module_name}-%{module_version}.tar.gz
+Source: http://www.cpan.org/authors/id/E/EX/EXODIST/Importer-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -38,6 +38,9 @@ other variables.
 %perl_vendor_privlib/I*
 
 %changelog
+* Mon Oct 31 2016 Igor Vlasenko <viy@altlinux.ru> 0.024-alt1
+- automated CPAN update
+
 * Mon Sep 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.014-alt2
 - to Sisyphus
 
