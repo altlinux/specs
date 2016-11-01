@@ -5,14 +5,14 @@ BuildRequires: /usr/bin/glib-gettextize
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-themes
-%define version 3.22.3
+%define version 3.22.4
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
 %global branch 3.22
 
-%global rel_ver 3.22.3
+%global rel_ver 3.22.4
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 59b3286ac467f19e9bce39783e71836ced239b7b}
@@ -109,6 +109,9 @@ fi
 
 
 %changelog
+* Tue Nov 01 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.22.4-alt1_1
+- new fc release
+
 * Thu Oct 06 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.22.3-alt1_1
 - update to mate 1.16
 
