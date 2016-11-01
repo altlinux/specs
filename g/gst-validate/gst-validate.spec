@@ -1,12 +1,12 @@
 %define _name gstvalidate
-%define ver_major 1.8
+%define ver_major 1.10
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
 %def_disable python3
 
 Name: gst-validate
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer Validate Tools and Library
@@ -30,6 +30,7 @@ AutoReqProv: nopython
 
 BuildRequires: gcc-c++ gst-plugins%gst_api_ver-devel >= %gst_ver gst-plugins-base%gst_api_ver libxml2-devel
 BuildRequires: libcairo-devel gobject-introspection-devel gst-plugins%gst_api_ver-gir-devel
+BuildRequires: libjson-glib-devel
 BuildRequires: gtk-doc
 %{?_enable_python3:BuildRequires: rpm-build-python3 python3-devel}
 
@@ -143,6 +144,9 @@ GObject introspection devel data for the Gst Validate library.
 %_datadir/gtk-doc/html/%name-plugins-%api_ver/
 
 %changelog
+* Tue Nov 01 2016 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Fri Aug 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.3-alt1
 - 1.8.3
 
