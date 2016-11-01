@@ -1,6 +1,6 @@
 Name: blender
-Version: 2.77a
-Release: alt1.1
+Version: 2.78a
+Release: alt1
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPLv2
@@ -44,8 +44,8 @@ BuildRequires(pre): rpm-build-python3
 
 
 Requires: libopenCOLLADA >= 0-alt3
-# Automatically added by buildreq on Mon Apr 04 2016
-# optimized out: boost-devel boost-devel-headers cmake-modules fontconfig libGL-devel libGLU-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libavcodec-devel libavutil-devel libfreetype-devel libstdc++-devel pkg-config python-base python-modules python3 python3-base xorg-inputproto-devel xorg-kbproto-devel xorg-xproto-devel zlib-devel
+# Automatically added by buildreq on Mon Oct 31 2016
+# optimized out: boost-devel boost-devel-headers cmake-modules fontconfig libGL-devel libGLU-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libavcodec-devel libavutil-devel libfreetype-devel libstdc++-devel pkg-config python-base python-modules python3 python3-base xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-xproto-devel zlib-devel
 BuildRequires: boost-filesystem-devel boost-locale-devel cmake fontconfig-devel gcc-c++ libGLEW-devel libXi-devel libavdevice-devel libavformat-devel libfftw3-devel libjack-devel libjpeg-devel libopenCOLLADA-devel libopenal-devel libopenjpeg-devel libpcre-devel libpng-devel libsndfile-devel libswscale-devel libtiff-devel libxml2-devel python3-dev
 
 BuildPreReq: libopenCOLLADA-devel >= 0-alt3
@@ -91,6 +91,9 @@ Languages support for blender
 %patch23 -p1
 
 %build
+BUILD_DATE="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%Y-%%m-%%d')"
+BUILD_TIME="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%H:%%M:%%S')"
+
 mkdir cmake-make
 cd cmake-make
 export CFLAGS="%optflags -fPIC -funsigned-char -fno-strict-aliasing"
@@ -120,6 +123,8 @@ cmake .. \
  -DWITH_CYCLES=OFF \
  -DWITH_OPENIMAGEIO=OFF \
  -DPYTHON_VERSION="%_python3_version" \
+ -DBUILDINFO_OVERRIDE_DATE="$BUILD_DATE" \
+ -DBUILDINFO_OVERRIDE_TIME="$BUILD_TIME" \
  #
 
 cd ..
@@ -148,12 +153,15 @@ install -d release/plugins/include
 %files i18n -f %name.lang
 
 %changelog
+* Mon Oct 31 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.78a-alt1
+- Updated to 2.78a.
+
 * Thu Apr 21 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.77a-alt1.1
 - (NMU) Rebuild with rpm-build-python3-0.1.10.2 (more autoreqs/provs).
 
 * Fri Apr 15 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.77a-alt1
 - Updated to 2.77a.
-- Enable localization by default (closes ALT#31561).
+- Enable localization by default (ALT#31561).
 
 * Wed Mar 30 2016 Denis Medvedev <nbr@altlinux.org> 2.76b-alt2
 - Changed provides to macros.
