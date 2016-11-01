@@ -1,7 +1,7 @@
 
 Name: kde5-set
-Version: 5.5.4
-Release: alt2
+Version: 5.6.0
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -15,7 +15,7 @@ BuildArch: noarch
 %package -n kde5-runtime
 Summary: %summary
 Group: Graphical desktop/KDE
-Requires: qt5-phonon-backend qt5-quickcontrols qt5-graphicaleffects qt5-imageformats qt5-translations
+Requires: qt5-phonon-backend qt5-quickcontrols qt5-quickcontrols2 qt5-graphicaleffects qt5-imageformats qt5-translations
 Requires: kf5-kio kf5-kded kf5-kinit kf5-kwayland-integration
 %description -n kde5-runtime
 %summary
@@ -56,6 +56,7 @@ Requires: kde5-small
 Requires: kde5-video-player
 Requires: kde5-audio-player
 Requires: kde5-network-manager
+Requires: kde5-plasma-applet-places-widget
 Requires: kf5-kde-gtk-config kf5-baloo kf5-bluedevil kf5-kscreen kf5-ksshaskpass
 Requires: kf5-khotkeys kf5-kinfocenter kf5-kdeplasma-addons
 Requires: kde5-khelpcenter kde5-kolourpaint
@@ -159,6 +160,9 @@ KDE image scanning support applications.
 %files -n kde5-scanning
 
 %changelog
+* Tue Nov 01 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
+- update requires
+
 * Fri Oct 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.4-alt2
 - clean requires
 
