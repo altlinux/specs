@@ -1,19 +1,19 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(gtk+-2.0) pkgconfig(libstartup-notification-1.0)
-# END SourceDeps(oneline)
 Summary: 	Desktop for the Matchbox Desktop
 Name: 		matchbox-desktop
 Version: 	2.0
-Release: 	alt1_11
+Release: 	alt1_12
 Url: 		http://matchbox-project.org/
 License: 	GPLv2+
 Group: 		Graphical desktop/Other
 Source: 	http://matchbox-project.org/sources/%name/%version/%{name}-%{version}.tar.bz2
+
+Source1:        22Matchbox.desktop
+
 # I also modify Makefile.in after giving up the fight with autotools
 Patch0:		matchbox-desktop-2.0-link.patch
 BuildRequires:	libmatchbox-devel
 BuildRequires:	libstartup-notification-devel
-BuildRequires:	libgtk+2-devel
+BuildRequires: gtk-builder-convert gtk-demo libgtk+2-devel libgtk+2-gir-devel
 Requires:	matchbox-panel
 Requires:	matchbox-window-manager
 Requires:	matchbox-common
@@ -38,6 +38,8 @@ This package contains the main desktop from Matchbox.
 %install
 %makeinstall_std
 
+%__install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/xsessions/22Matchbox.desktop
+
 # wmsession config
 mkdir -p $RPM_BUILD_ROOT/%_sysconfdir/X11/wmsession.d
 cat > $RPM_BUILD_ROOT/%_sysconfdir/X11/wmsession.d/22Matchbox <<EOF
@@ -52,12 +54,16 @@ EOF
 %files
 %doc AUTHORS README ChangeLog
 %_bindir/%name
+%config(noreplace) %{_datadir}/xsessions/22Matchbox.desktop
 %config(noreplace) %_sysconfdir/X11/wmsession.d/*
 
 
 
 
 %changelog
+* Tue Nov 01 2016 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_12
+- update by mgaimport
+
 * Thu Feb 18 2016 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_11
 - new release
 
