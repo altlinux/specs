@@ -1,6 +1,6 @@
 Name: lxqt-common
 Version: 0.11.0
-Release: alt1
+Release: alt1.1
 Serial: 1
 
 Summary: Default configuration files for LXQt desktop session
@@ -32,7 +32,8 @@ Obsoletes: razorqt-desktop < 0.7.0
 
 %prep
 %setup
-sed -i 's,^Exec=.*$,Exec=LXQt,' xsession/lxqt.desktop.in
+# https://bugzilla.altlinux.org/32657
+sed -i 's,Exec=,Exec=%_bindir/,' xsession/lxqt.desktop.in
 
 %build
 %cmake_insource
@@ -52,6 +53,9 @@ sed -i 's,^Exec=.*$,Exec=LXQt,' xsession/lxqt.desktop.in
 %_iconsdir/*/*/*/*
 
 %changelog
+* Tue Oct 25 2016 Michael Shigorin <mike@altlinux.org> 1:0.11.0-alt1.1
+- tweak desktop file differently (closes: #32657)
+
 * Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 1:0.11.0-alt1
 - 0.11.0
 - R: lxqt-l10n for translations
