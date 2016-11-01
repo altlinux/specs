@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define ver_major 3.22
@@ -9,7 +9,7 @@
 %def_with sysprofd
 
 Name: sysprof
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Sysprof kernel based performance profiler for Linux
@@ -87,6 +87,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%name-ui-%api_ver.pc
 
 %changelog
+* Wed Nov 02 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
+- 3.22.2
+
 * Wed Oct 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1 (3.22.1-1-g4b95b38)
 
