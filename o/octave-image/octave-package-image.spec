@@ -1,17 +1,17 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: makeinfo
+BuildRequires: /usr/bin/octave makeinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 2.4.1
+%define octave_pkg_version 2.6.1
 %define octave_pkg_name image
 %define octave_descr_name image
 Name: octave-%octave_pkg_name
-Version: 2.4.1
+Version: 2.6.1
 Release: alt1
 Summary: Image Processing
 
 Group: Sciences/Mathematics
-License: GPLv3+, MIT, FreeBSD
+License: GPLv3+
 URL: http://octave.sf.net
 
 Source0: http://downloads.sourceforge.net/octave/%{octave_pkg_name}-%{octave_pkg_version}.tar.gz
@@ -52,6 +52,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Nov 01 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.1-alt1
+- regenerated from template by package builder
+
 * Wed Apr 13 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1
 - initial import by package builder
 
