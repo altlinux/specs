@@ -2,7 +2,7 @@
 
 Name: libselinux
 Epoch: 1
-Version: 2.3
+Version: 2.5
 Release: alt1
 Summary: SELinux library
 License: Public Domain
@@ -13,8 +13,8 @@ Patch1: alt-man-selinuxconlist.patch
 Patch2: alt-linking.patch
 
 %{?_with_python:BuildPreReq: rpm-build-python}
-BuildRequires: libpcre-devel libsepol-devel >= 2.1.4
-%{?_with_python:BuildRequires: python-dev swig libsepol-devel-static >= 2.1.4}
+BuildRequires: libpcre-devel libsepol-devel >= 2.5
+%{?_with_python:BuildRequires: python-dev swig libsepol-devel-static >= 2.5}
 
 %description
 libselinux provides an API for SELinux applications to get and set
@@ -119,6 +119,9 @@ fi
 
 
 %changelog
+* Thu Oct 27 2016 Anton Farygin <rider@altlinux.ru> 1:2.5-alt1
+- new version
+
 * Thu Sep 29 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:2.3-alt1
 - downgraded due regression (closes: #32254)
 
