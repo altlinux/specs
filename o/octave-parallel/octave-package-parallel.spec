@@ -1,13 +1,12 @@
-%def_with _octave_arch
-%define octave_pkg_version 3.1.0
-%define octave_pkg_name parallel
-%define octave_descr_name parallel
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/octave-config libgnutls-devel makeinfo texinfo
+BuildRequires: /usr/bin/octave-config makeinfo texinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
+%define octave_pkg_version 3.1.1
+%define octave_pkg_name parallel
+%define octave_descr_name parallel
 Name: octave-%octave_pkg_name
-Version: 3.1.0
+Version: 3.1.1
 Release: alt1
 Summary: Parallel Computing.
 
@@ -24,7 +23,9 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 BuildArch: noarch
 %endif
 Provides: octave(parallel) = %version
-Provides: octave(parallel) = %version
+
+# octave module BuildRequires: libgnutls..-dev
+BuildRequires: libgnutls-devel
 # Depends: octave (>= 3.8.0), struct (>= 1.0.12)
 Requires: octave >= 3.8.0 octave(struct) >= 1.0.12
 
@@ -54,6 +55,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Nov 01 2016 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt1
+- regenerated from template by package builder
+
 * Tue Sep 27 2016 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1
 - regenerated from template by package builder
 
