@@ -1,5 +1,5 @@
 Name: gcovr
-Version: 3.1
+Version: 3.3
 Release: alt1
 
 Summary: Manages the compilation of coverage information from gcov
@@ -8,9 +8,7 @@ Group: Development/Tools
 
 Url: https://pypi.python.org/pypi/gcovr
 
-Packager: Igor Zubkov <icesik@altlinux.org>
-
-Source0: https://pypi.python.org/packages/source/g/%name/%name-%version.tar.gz
+Source: https://pypi.python.org/packages/source/g/%name/%name-%version.tar.gz
 
 BuildArch: noarch
 
@@ -24,7 +22,7 @@ Python. Further, gcovr can be viewed as a command-line alternative of
 the lcov utility, which runs gcov and generates an HTML output.
 
 %prep
-%setup -q
+%setup
 
 %build
 %python_build
@@ -39,6 +37,9 @@ the lcov utility, which runs gcov and generates an HTML output.
 %python_sitelibdir/*.egg-info/
 
 %changelog
+* Tue Nov 01 2016 Yuri N. Sedunov <aris@altlinux.org> 3.3-alt1
+- 3.3
+
 * Fri Dec 13 2013 Igor Zubkov <icesik@altlinux.org> 3.1-alt1
 - 3.1
 
