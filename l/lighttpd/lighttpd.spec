@@ -1,7 +1,7 @@
 %def_with mysql
 %def_with ssl
 %def_with ldap
-%def_with memcache
+%def_with memcached
 %def_with lua
 %def_with gamin
 
@@ -12,7 +12,7 @@
 %define docdir %_docdir/%name-%version-doc
 
 Name: lighttpd
-Version: 1.4.42
+Version: 1.4.43
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -37,7 +37,7 @@ BuildRequires: bzlib-devel libfcgi-devel libpcre-devel zlib-devel
 %{?_with_mysql:BuildPreReq: libmysqlclient-devel}
 %{?_with_ssl:BuildPreReq: libssl-devel}
 %{?_with_ldap:BuildPreReq: libldap-devel}
-%{?_with_memcache:BuildPreReq: libmemcache-devel}
+%{?_with_memcached:BuildPreReq: libmemcached-devel}
 %{?_with_lua:BuildPreReq:liblua5-devel}
 %{?_with_gamin:BuildPreReq: libgamin-devel}
 
@@ -98,7 +98,7 @@ libtoolize -f -c
     %{?_with_mysql:       --with-mysql} \
     %{?_with_ssl:         --with-openssl} \
     %{?_with_ldap:	  --with-ldap} \
-    %{?_with_memcache:	  --with-memcache} \
+    %{?_with_memcached:	  --with-memcached} \
     %{?_with_lua:	  --with-lua} \
     %{?_with_gamin:	  --with-fam} \
     %{?_with_lua:	  LUA_CFLAGS="-I/usr/include/" LUA_LIBS="-llua"}
@@ -172,7 +172,7 @@ gpasswd -a %lighttpd_user %webserver_group
 %if_with lua
 %exclude %_libdir/%name/*_cml.so
 %endif #cml
-%if_with memcache
+%if_with memcached
 %exclude %_libdir/%name/*_trigger_b4_dl.so
 %endif #trigger_b4_dl
 %exclude %_libdir/%name/*_rrdtool.so
@@ -192,15 +192,18 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*cml.so
 %endif lua
 
-%if_with memcache
+%if_with memcached
 %files trigger_b4_dl
 %_libdir/%name/*trigger_b4_dl.so
-%endif #memcache
+%endif #memcached
 
 %files rrdtool
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Tue Nov 01 2016 Alexei Takaseev <taf@altlinux.org> 1.4.43-alt1
+- 1.4.43
+
 * Mon Oct 17 2016 Alexei Takaseev <taf@altlinux.org> 1.4.42-alt1
 - 1.4.42
 
