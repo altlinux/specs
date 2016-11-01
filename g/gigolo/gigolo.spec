@@ -1,42 +1,52 @@
 Name:           gigolo
-Version:        0.4.1
+Version:        0.4.2
 Release:        alt1
 Summary:        frontend to manage connections to remote filesystems using GIO/GVfs
 Group:          File tools
-License:        GPL
+License:        %gpl2only
 URL:            http://www.uvena.de/gigolo/
-Source:         %name-%version.tar
-#Patch1:		%name-%version-%release.patch
+Packager: Xfce Team <xfce@packages.altlinux.org>
+Source:     %name-%version.tar
+Patch:		%name-%version-%release.patch
 
-# Automatically added by buildreq on Wed Oct 21 2009
-BuildRequires: intltool libgtk+2-devel
+BuildRequires(pre): rpm-build-licenses
+
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libgtk+2-devel
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Gigolo is a frontend to easily manage connections to remote filesystems
-using GIO/GVfs. It allows you to quickly connect/mount a remote filesystem
-and manage bookmarks of such.
+using GIO/GVfs. It allows you to quickly connect/mount a remote
+filesystem and manage bookmarks of such.
 
 %prep
 %setup
-#patch1 -p1
+%patch -p1
 
 %build
-autoreconf -fisv
+%xfce4reconf
 %configure
-%make
+%make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
-%find_lang %{name}
+%find_lang %name
 
-%files -f %{name}.lang
-%doc AUTHORS COPYING ChangeLog NEWS README TODO
+%files -f %name.lang
+%doc %_defaultdocdir/%name
 %_bindir/%name
 %_datadir/applications/gigolo.desktop
 %_man1dir/%name.*
 
 %changelog
+* Tue Nov 01 2016 Mikhail Efremov <sem@altlinux.org> 0.4.2-alt1
+- Fix icon.
+- Spec updated.
+- Updated to 0.4.2 (closes: #25308).
+
 * Thu Jun 02 2011 Mykola Grechukh <gns@altlinux.ru> 0.4.1-alt1
 - new version
 
