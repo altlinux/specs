@@ -1,24 +1,36 @@
+%def_disable snapshot
+
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.20
+%define ver_major 3.22
 %define api_ver 1.0
 %define xdg_name org.gnome.Todo
 
 Name: gnome-todo
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Todo manager for GNOME
 Group: Graphical desktop/GNOME
 License: GPLv3+
 Url: https://wiki.gnome.org/Apps/Todo
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 
-%define gtk_ver 3.19.5
+%define gtk_ver 3.22.0
 %define eds_ver 3.18.0
 
-BuildRequires: intltool yelp-tools libappstream-glib-devel
+# use python3
+AutoReqProv: nopython
+%define __python %nil
+%add_python3_path %_libdir/%name/plugins
+BuildPreReq: rpm-build-python3 python3-devel
+Requires: libpeas-python3-loader
+
+BuildRequires: intltool yelp-tools libappstream-glib-devel gtk-doc
 BuildRequires: libgtk+3-devel >= %gtk_ver evolution-data-server-devel >= %eds_ver
 BuildRequires: libgnome-online-accounts-devel libical-devel libpeas-devel
 BuildRequires: libgtk+3-gir-devel
@@ -68,6 +80,9 @@ GObject introspection devel data for the GNOME Todo.
 
 %files -f %name.lang
 %_bindir/%name
+%dir %_libdir/%name
+%dir %_libdir/%name/plugins
+%_libdir/%name/plugins/*
 %_desktopdir/%xdg_name.desktop
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/org.gnome.todo.gschema.xml
@@ -80,6 +95,7 @@ GObject introspection devel data for the GNOME Todo.
 %files devel
 %_includedir/%name/
 %_pkgconfigdir/%name.pc
+%_datadir/gtk-doc/html/%name/
 
 %files gir
 %_typelibdir/Gtd-%api_ver.typelib
@@ -88,6 +104,9 @@ GObject introspection devel data for the GNOME Todo.
 %_girdir/Gtd-%api_ver.gir
 
 %changelog
+* Tue Nov 01 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt2
 - rebuilt against libedataserver-1.2.so.22
 

@@ -5,13 +5,14 @@
 %def_disable js
 # removed since 1.10.0
 %def_disable gjs
-%def_enable lua
+# not ready for lua-5.3
+%def_disable lua
 %def_enable vala
 %def_enable gtk_doc
 
 Name: libpeas
 Version: %ver_major.0
-Release: alt1.1
+Release: alt2
 
 Summary: A gobject-based plugins engine
 Group: System/Libraries
@@ -34,7 +35,7 @@ BuildRequires: python3-devel python3-module-pygobject3-devel >= 3.1.1
 # for Javascript support
 %{?_enable_js:BuildRequires: libseed-devel >= 3.2.0}
 %{?_enable_gjs:BuildRequires: libgjs-devel >= 1.37.1}
-%{?_enable_lua:BuildRequires: liblua5-devel luajit libluajit-devel lgi >= 0.9.0 lua5.1-alt-compat}
+%{?_enable_lua:BuildRequires: liblua5-devel luajit libluajit-devel lgi >= 0.9.0}
 %{?_enable_vala:BuildRequires: vala-tools >= 0.14}
 
 %description
@@ -197,6 +198,9 @@ This package contains %name demonstration programs
 
 
 %changelog
+* Sun Oct 23 2016 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt2
+- disabled lua loader (not ready for lua-5.3)
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1.1
 - 1.20.0
 
