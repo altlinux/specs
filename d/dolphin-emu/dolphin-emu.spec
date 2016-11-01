@@ -1,6 +1,6 @@
 Name: dolphin-emu
 Version: 5.0
-Release: alt3
+Release: alt3.1
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -89,6 +89,12 @@ popd
 %_man6dir/%{name}*
 
 %changelog
+* Tue Nov 01 2016 Nazarov Denis <nenderus@altlinux.org> 5.0-alt3.1
+- Rebuilt with SFML 2.4.0
+
+* Sun Jul 17 2016 Nazarov Denis <nenderus@altlinux.org> 5.0-alt2.M80P.1
+- Build for branch p8
+
 * Sun Jul 17 2016 Nazarov Denis <nenderus@altlinux.org> 5.0-alt3
 - Rebuilt with shared enet and gtest libraries
 

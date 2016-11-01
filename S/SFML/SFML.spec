@@ -1,8 +1,8 @@
-%define soversion 2.3
+%define soversion 2.4
 
 Name: SFML
-Version: 2.3.2
-Release: alt2
+Version: 2.4.0
+Release: alt1
 
 Summary: Simple and Fast Multimedia Library
 License: zlib
@@ -13,7 +13,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 # https://github.com/%name/%name/archive/%version.tar.gz
 Source: %name-%version.tar.gz
 
-BuildRequires: cmake doxygen
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libGLU-devel
 BuildRequires: libXcomposite-devel
@@ -48,7 +48,7 @@ It is written in C++, and has bindings for various languages such as C, .Net, Ru
 %package -n lib%name-devel
 Summary: Development files for SFML
 Group: Development/C++
-Requires: lib%name%soversion = %version-%release
+Requires: lib%name%soversion = %EVR
 Conflicts: libsfml-devel
 
 %description -n lib%name-devel
@@ -63,7 +63,6 @@ developing applications that use SFML
 pushd %_target_platform
 
 cmake .. \
-	-DSFML_INSTALL_PKGCONFIG_FILES=TRUE \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_C_FLAGS:STRING='%optflags' \
 	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
@@ -71,7 +70,8 @@ cmake .. \
 	-DLIB_SUFFIX="64" \
 %endif
 	-DCMAKE_SKIP_RPATH:BOOL=TRUE \
-	-DCMAKE_BUILD_TYPE:STRING="Release"
+	-DCMAKE_BUILD_TYPE:STRING="Release" \
+	-DSFML_INSTALL_PKGCONFIG_FILES:BOOL=TRUE \
 
 popd
 
@@ -79,13 +79,11 @@ popd
 
 %install
 %makeinstall_std -C %_target_platform
-rm -rf %buildroot%_datadir/%name/{license,readme}.txt
+%__rm -rf %buildroot%_datadir/%name/{license,readme}.txt
 
 # move FindSFML.cmake to the standard location
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/cmake/Modules
-mv $RPM_BUILD_ROOT%{_datadir}/%{name}/cmake/Modules/FindSFML.cmake \
-   $RPM_BUILD_ROOT%{_datadir}/cmake/Modules
-
+%__mkdir_p %buildroot%_datadir/cmake/Modules
+%__mv %buildroot%_datadir/%name/cmake/Modules/Find%name.cmake %buildroot%_datadir/cmake/Modules
 
 %files -n lib%name%soversion
 %doc changelog.txt license.txt readme.txt
@@ -93,13 +91,17 @@ mv $RPM_BUILD_ROOT%{_datadir}/%{name}/cmake/Modules/FindSFML.cmake \
 
 %files -n lib%name-devel
 %dir %_datadir/%name
+%dir %_datadir/cmake
 %dir %_datadir/cmake/Modules
 %_datadir/cmake/Modules/Find%name.cmake
 %_includedir/%name
-%_pkgconfigdir/*
+%_pkgconfigdir/sfml-*.pc
 %_libdir/libsfml-*.so
 
 %changelog
+* Tue Nov 01 2016 Nazarov Denis <nenderus@altlinux.org> 2.4.0-alt1
+- Version 2.4.0
+
 * Sun Jun 12 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt2
 - NMU: added pkgconfig file, fixed cmake
 
