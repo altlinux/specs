@@ -1,18 +1,18 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/octave-config /usr/bin/pg_config libpq-devel makeinfo texinfo
+BuildRequires: /usr/bin/octave-config libpq-devel makeinfo texinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 2.4.1
+%define octave_pkg_version 2.4.2
 %define octave_pkg_name database
 %define octave_descr_name database
 Name: octave-%octave_pkg_name
-Version: 2.4.1
+Version: 2.4.2
 Release: alt1
 Summary: Database.
 
 Group: Sciences/Mathematics
 License: GPLv3+
-Url: http://octave.sourceforge.net/
+URL: http://octave.sf.net
 
 Source0: http://downloads.sourceforge.net/octave/%{octave_pkg_name}-%{octave_pkg_version}.tar.gz
 
@@ -23,6 +23,9 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 BuildArch: noarch
 %endif
 Provides: octave(database) = %version
+
+# octave module BuildRequires: Postgresql (>= 8.3)
+BuildRequires: postgresql-devel >= 8.3
 # Depends: octave (>= 3.6.2), struct (>= 1.0.12)
 Requires: octave >= 3.6.2 octave(struct) >= 1.0.12
 
@@ -52,6 +55,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Nov 01 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt1
+- regenerated from template by package builder
+
 * Fri Apr 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1
 - initial import by package builder
 
