@@ -8,7 +8,7 @@
 
 Name: kf5-%rname
 Version: 5.8.2
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -108,7 +108,7 @@ KF5 library
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
+#%patch8 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -198,6 +198,12 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Tue Nov 01 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt3
+- add Places widget to panel by default
+
+* Thu Oct 27 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt1.M80P.1
+- build for M80P
+
 * Thu Oct 27 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt2
 - fix default panel with absent widget
 
