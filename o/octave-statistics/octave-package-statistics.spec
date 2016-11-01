@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: makeinfo
 # END SourceDeps(oneline)
-%define octave_pkg_version 1.2.4
+%define octave_pkg_version 1.3.0
 %define octave_pkg_name statistics
 %define octave_descr_name statistics
 Serial: 1
 Name: octave-%octave_pkg_name
-Version: 1.2.4
+Version: 1.3.0
 Release: alt1
 Summary: Statistics
 
@@ -23,8 +23,8 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 BuildArch: noarch
 %endif
 Provides: octave(statistics) = %version
-# Depends: octave (>= 3.6.1), io (>= 1.0.18)
-Requires: octave >= 3.6.1 octave(io) >= 1.0.18
+# Depends: octave (>= 4.0.0), io (>= 1.0.18)
+Requires: octave >= 4.0.0 octave(io) >= 1.0.18
 
 
 %description
@@ -52,6 +52,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Nov 01 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.3.0-alt1
+- regenerated from template by package builder
+
 * Thu Apr 14 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.2.4-alt1
 - regenerated from template by package builder
 
