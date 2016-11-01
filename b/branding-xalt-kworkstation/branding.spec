@@ -6,11 +6,11 @@
 %define fakebrand xalt
 
 %define major 8
-%define minor 0
+%define minor 1
 %define bugfix 0
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt9
+Release: alt1
 BuildArch: noarch
 
 %define theme %name
@@ -465,6 +465,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Nov 01 2016 Sergey V Turchin <zerg at altlinux dot org> 8.1.0-alt1
+- bump version
+
 * Thu Oct 06 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt9
 - set Breeze GTK2/3 theme by default
 
