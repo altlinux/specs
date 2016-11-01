@@ -7,8 +7,8 @@ BuildRequires: gcc-c++
 %define devname lib%{shortname}-devel
 
 Name:           liblcf
-Version:        0.4.1
-Release:        alt1_3
+Version:        0.5.0
+Release:        alt1_1
 Summary:        Library to handle RPG Maker 2000/2003 and EasyRPG projects
 Group:          System/Libraries
 License:        MIT
@@ -17,7 +17,7 @@ Source0:        https://easy-rpg.org/downloads/player/%{name}-%{version}.tar.gz
 
 BuildRequires:  doxygen
 BuildRequires:  libicu-devel
-BuildRequires:  libtool-common
+BuildRequires:  libtool
 BuildRequires:  pkgconfig(expat)
 Source44: import.info
 
@@ -82,6 +82,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Tue Nov 01 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1_1
+- update by mgaimport
+
 * Sun Jun 12 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1_3
 - converted for ALT Linux by srpmconvert tools
 
