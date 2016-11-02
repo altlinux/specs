@@ -1,5 +1,5 @@
 Name: lrzip
-Version: 0.630
+Version: 0.631
 Release: alt1
 
 Summary: Long Range ZIP or Lzma RZIP
@@ -69,6 +69,9 @@ install -pDm644 Lrzip.h %buildroot%_includedir/Lrzip.h
 %_libdir/*.so
 
 %changelog
+* Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 0.631-alt1
+- Autobuild version bump to 0.631
+
 * Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 0.630-alt1
 - Autobuild version bump to 0.630
 
