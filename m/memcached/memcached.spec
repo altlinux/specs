@@ -1,14 +1,13 @@
-%set_automake_version 1.11
 
 Name: memcached
-Version: 1.4.13
-Release: alt4
+Version: 1.4.33
+Release: alt1
 
 Summary: memcached - memory caching daemon
 License: BSD
 Group: System/Servers
 Url: http://www.memcached.org/
-# http://memcached.googlecode.com/files/%name-%version.tar.gz
+#https://github.com/memcached/memcached.git
 Source: %name-%version.tar
 
 %define pkg_user memcached
@@ -81,8 +80,8 @@ fi
 %_bindir/%name
 %_man1dir/*
 %_initdir/*
-%systemd_unitdir/%name.service
-%doc AUTHORS doc/CONTRIBUTORS ChangeLog NEWS README doc/*.txt
+%_unitdir/%name.service
+%doc AUTHORS doc/CONTRIBUTORS ChangeLog NEWS README.md doc/*.txt
 
 %files devel
 %_includedir/%name/
@@ -93,6 +92,11 @@ fi
 %exclude %_datadir/%name/scripts/memcached.sysv
 
 %changelog
+* Wed Nov 02 2016 Alexey Shabalin <shaba@altlinux.ru> 1.4.33-alt1
+- 1.4.33
+- fixed CVE-2016-8705,CVE-2016-8704,CVE-2016-8706
+- update systemd unit
+
 * Wed Jun 15 2016 Lenar Shakirov <snejok@altlinux.ru> 1.4.13-alt4
 - Systemd unit file fixed
 
