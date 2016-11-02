@@ -3,8 +3,8 @@
 
 Summary: pip installs packages.  Python packages.  An easy_install replacement
 Name: python-module-pip
-Version: 8.0.2
-Release: alt1.1.1
+Version: 8.1.2
+Release: alt1
 Source0: pip-%version.tar.gz
 Patch: pip-1.5.6-alt-python3.patch
 License: MIT
@@ -23,6 +23,7 @@ BuildRequires: python-module-alabaster python-module-docutils python-module-html
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 #BuildRequires: python3-devel python3-module-setuptools-tests
+%add_python3_req_skip  UserDict
 %endif
 
 %description
@@ -116,6 +117,10 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%modulename/
 %endif
 
 %changelog
+* Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 8.1.2-alt1
+- Autobuild version bump to 8.1.2
+- Fix python3 version
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 8.0.2-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
