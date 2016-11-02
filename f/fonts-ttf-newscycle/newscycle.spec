@@ -1,5 +1,5 @@
 Name: fonts-ttf-newscycle
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 Summary: A realist sans-serif font family based on specimens of the 1908 News Gothic typeface from ATF
 License: OFL
@@ -34,6 +34,9 @@ outside of Western Europe.
 %doc FontLog.txt OFL.txt OFLB-sample-image.svg
 
 %changelog
+* Wed Nov 02 2016 Fr. Br. George <george@altlinux.ru> 0.5.2-alt1
+- Autobuild version bump to 0.5.2
+
 * Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 0.5.1-alt1
 - Autobuild version bump to 0.5.1
 
