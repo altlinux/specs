@@ -2,7 +2,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.886
+Version: 0.887
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -24,6 +24,8 @@ BuildRequires: perl(RPM/uscan.pm) perl-DistroMap perl(Pod/Strip.pm)
 Obsoletes: hashertarbuild < 0.73
 Conflicts: hashertarbuild < 0.73
 
+# recommends, in fact
+Requires: pax
 
 %description
 Perl extension for editing src.RPMs and spec files
@@ -73,6 +75,9 @@ mkdir -p %buildroot%_datadir/srpmtools/hooks
 %_man1dir/hashertarbuild*
 
 %changelog
+* Wed Nov 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.887-alt1
+- development release
+
 * Tue Nov 01 2016 Igor Vlasenko <viy@altlinux.ru> 0.886-alt1
 - development release
 
