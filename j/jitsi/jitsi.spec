@@ -1,9 +1,9 @@
 %set_verify_elf_method textrel=relaxed
-%define rev	5521
+%define rev	5534
 
 Name:           jitsi
 Version:        2.9.%rev
-Release:        alt2
+Release:        alt1
 
 Summary:        Multiprotocol (SIP, XMPP/Jabber, ecc.) VoIP and instant messaging software
 Group:          Networking/Instant messaging
@@ -86,6 +86,9 @@ done
 %_desktopdir/jitsi.desktop
 
 %changelog
+* Wed Nov 02 2016 Andrey Cherepanov <cas@altlinux.org> 2.9.5534-alt1
+- New version
+
 * Tue Jun 21 2016 Andrey Cherepanov <cas@altlinux.org> 2.9.5521-alt2
 - Add ExclusiveArch for support architectures
 
