@@ -1,16 +1,15 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/pkg-config /usr/bin/python /usr/bin/rst2man pkgconfig(glib-2.0) pkgconfig(libcaja-extension)
+BuildRequires: /usr/bin/python pkgconfig(glib-2.0)
 # END SourceDeps(oneline)
 BuildRequires: xvfb-run
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 %define oldname caja-dropbox
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.12
+%global branch 1.16
 
 Summary: 		Dropbox extension for caja
 Name: 			mate-file-manager-dropbox
-Version: 		1.12.0
+Version: 		1.16.0
 Release: 		alt1_1
 License: 		GPLv2+
 Group: 			Graphical desktop/MATE
@@ -20,16 +19,16 @@ Source0: 		http://pub.mate-desktop.org/releases/%{branch}/%{oldname}-%{version}.
 ExclusiveArch:  i686 x86_64
 
 BuildRequires:  mate-file-manager-devel
-BuildRequires:  python-module-docutils
-BuildRequires:  autoconf
-BuildRequires:  automake
-BuildRequires:  libtool
+BuildRequires: python-module-docutils python-module-docutils-compat
+BuildRequires:  autoconf-common
+BuildRequires:  automake-common
+BuildRequires:  libtool-common
 BuildRequires:  python-module-pygobject-devel
 BuildRequires:  python-module-pygtk-devel
 
-Requires:       dropbox-uploader 
+Requires:       dropbox-uploader
 Requires:       mate-file-manager-extensions
-Requires:       pygtk2
+Requires: python-module-pygtk python-module-pygtk-demo
 Source44: import.info
 
 %description
@@ -66,6 +65,9 @@ rm -rf ${RPM_BUILD_ROOT}%{_datadir}
 
 
 %changelog
+* Wed Nov 02 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
+- new fc release
+
 * Fri Nov 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_1
 - new version
 
