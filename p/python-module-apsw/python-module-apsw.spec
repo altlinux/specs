@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%_name
-Version: 3.8.3.1
-Release: alt1.%rel.1.1
+Version: 3.15.0
+Release: alt1.%rel
 
 Summary: Another Python SQLite Wrapper
 License: zlib/libpng License
@@ -12,16 +12,10 @@ Group: Development/Python
 Url: http://rogerbinns.github.io/apsw
 Source: https://github.com/rogerbinns/apsw/releases/download/%version-%rel/%_name-%version-%rel.zip
 
-#BuildPreReq: unzip rpm-build-python
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: elfutils python-base python-modules python-modules-compiler python-modules-email python3 python3-base
-BuildRequires: libsqlite3-devel python-devel python3-devel rpm-build-python3 unzip
+BuildRequires: libsqlite3-devel python-devel unzip
 
-#BuildRequires: libsqlite3-devel
-#BuildRequires: python-devel python-module-setuptools
 %if_with python3
-#BuildPreReq: rpm-build-python3
-#BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel rpm-build-python3
 %endif
 
 %description
@@ -78,9 +72,12 @@ popd
 %endif
 
 %changelog
+* Wed Nov 02 2016 Yuri N. Sedunov <aris@altlinux.org> 3.15.0-alt1.r1
+- 3.15.0-r1
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.8.3.1-alt1.r1.1.1
-- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
-  (for ABI dependence and new python3(*) reqs)
+ - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+   (for ABI dependence and new python3(*) reqs)
 
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.8.3.1-alt1.r1.1
 - NMU: Use buildreq for BR.
