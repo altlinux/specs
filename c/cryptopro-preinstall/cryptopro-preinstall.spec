@@ -1,6 +1,6 @@
 Name:     cryptopro-preinstall
 Version:  4.0.0
-Release:  alt3
+Release:  alt4
 Summary:  Prepare environment for install official CryptoPro SCP packages (with Rutoken S and ECP support)
 License:  GPL
 Group:    Security/Networking
@@ -10,8 +10,8 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source1:  cryptopro-paths.sh
 
-# Need for base CryptoPro packages
-Requires: lsb >= 3.0
+# CryptoPro packages requires lsb themself
+# Requires: lsb >= 3.0
 
 # Need for cprocsp-rdr-gui-gtk
 Requires: libpangox-compat
@@ -48,6 +48,9 @@ install -Dm0755 %SOURCE1 %buildroot%_sysconfdir/bashrc.d/cryptopro-paths.sh
 %attr(0755,root,root) %_sysconfdir/bashrc.d/cryptopro-paths.sh
 
 %changelog
+* Wed Nov 02 2016 Sergey V Turchin <zerg@altlinux.org> 4.0.0-alt4
+- fix requires
+
 * Wed Jul 20 2016 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt3
 - Add provides for fix unmet requirements for cprocsp-pki-cades and
   cprocsp-pki-plugin
