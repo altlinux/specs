@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt35.3
+Release: alt36
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -168,6 +168,11 @@ EOF
 %endif
 
 %changelog
+* Wed Nov 02 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.5.5-alt36
+- GPT: if the requested END < our calculated START, then make END = START.
+- GPT: if after rounding END<START, then leave END unrounded.
+- GPT: CreateDiskSegment(): do not move already aligned ends.
+
 * Fri Oct 28 2016 Michael Shigorin <mike@altlinux.org> 2.5.5-alt35.3
 - gpt plugin: just round_up_to_min_boundary() of 1MB/2048s either
   (closes: #32679)
