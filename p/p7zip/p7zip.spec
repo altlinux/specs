@@ -1,5 +1,5 @@
 Name: p7zip
-Version: 15.09
+Version: 16.02
 Release: alt1
 
 Summary: 7zip unofficial port - a file-archiver with highest compression ratio
@@ -70,6 +70,9 @@ mv -f %buildroot%_libdir/p7zip/{7z,7za} %buildroot%_bindir/
 %_man1dir/7za.*
 
 %changelog
+* Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 16.02-alt1
+- Autobuild version bump to 16.02
+
 * Sun Jan 03 2016 Fr. Br. George <george@altlinux.ru> 15.09-alt1
 - Autobuild version bump to 15.09
 
