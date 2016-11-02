@@ -1,12 +1,12 @@
 %define _name ges
-%define ver_major 1.8
+%define ver_major 1.10
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
 %def_disable python3
 
 Name: gstreamer-editing-services
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer Editing Services (GES)
@@ -130,6 +130,9 @@ library.
 %_datadir/gtk-doc/html/%_name-%api_ver/
 
 %changelog
+* Tue Nov 01 2016 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Fri Aug 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.3-alt1
 - 1.8.3
 

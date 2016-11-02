@@ -1,5 +1,5 @@
 %define _name gstreamer
-%define ver_major 1.8
+%define ver_major 1.10
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
@@ -7,7 +7,7 @@
 %def_disable gtk-doc
 
 Name: %_name%api_ver
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer streaming media framework runtime
@@ -143,9 +143,9 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 
 %files devel
 %_includedir/*
-%dir %_libdir/%_name-%api_ver/include/
-%dir %_libdir/%_name-%api_ver/include/gst
-%_libdir/%_name-%api_ver/include/gst/gstconfig.h
+#%dir %_libdir/%_name-%api_ver/include/
+#%dir %_libdir/%_name-%api_ver/include/gst
+#%_libdir/%_name-%api_ver/include/gst/gstconfig.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_datadir/aclocal/*
@@ -168,6 +168,9 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_datadir/doc/%_name-%api_ver
 
 %changelog
+* Tue Nov 01 2016 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Fri Aug 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.3-alt1
 - 1.8.3
 

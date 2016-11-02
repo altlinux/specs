@@ -1,6 +1,6 @@
 %define _name gst-plugins
 %define api_ver 1.0
-%define ver_major 1.8
+%define ver_major 1.10
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
@@ -8,7 +8,7 @@
 %def_enable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -22,7 +22,7 @@ Requires: gstreamer%api_ver >= %ver_major
 Source: http://gstreamer.freedesktop.org/src/%_name-bad/%_name-bad-%version.tar.xz
 Patch: gst-plugins-bad-0.11.94-alt-intltool.patch
 
-BuildRequires: gst-plugins%api_ver-devel
+BuildRequires: gst-plugins%api_ver-devel gst-plugins%api_ver-gir-devel
 BuildRequires: bzlib-devel gcc-c++ gtk-doc intltool libSDL-devel libX11-devel
 BuildRequires: libalsa-devel libcdaudio-devel libdca-devel libdirac-devel libdvdnav-devel libexif-devel
 BuildRequires: libfaad-devel libgio-devel libgsm-devel libjasper-devel libmjpegtools-devel libmms-devel
@@ -31,7 +31,7 @@ BuildRequires: libtimidity-devel libxvid-devel python-module-PyXML python-module
 BuildRequires: timidity-instruments libcelt-devel libdc1394-devel libkate-devel libtiger-devel
 BuildRequires: libvpx-devel librtmp-devel liborc-devel orc libofa-devel libmusicbrainz-devel libass-devel
 BuildRequires: libzbar-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel libEGL-devel
-BuildRequires: libwebp-devel libopenjpeg-devel libbluez-devel
+BuildRequires: libwebp-devel libopenjpeg2.0-devel libbluez-devel
 BuildRequires: libfluidsynth-devel libdbus-devel libxml2-devel libgnutls-devel libvdpau-devel
 BuildRequires: libsbc-devel libschroedinger-devel libusb-devel libgudev-devel libopus-devel libcurl-devel
 BuildRequires: libvo-amrwbenc-devel librsvg-devel libvo-aacenc-devel libgcrypt-devel
@@ -127,6 +127,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Tue Nov 01 2016 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Fri Aug 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.3-alt1
 - 1.8.3
 
