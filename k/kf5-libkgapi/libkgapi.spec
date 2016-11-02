@@ -1,8 +1,8 @@
 %define rname libkgapi
 
 Name: kf5-%rname
-Version: 5.3.0
-Release: alt2
+Version: 5.3.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -136,6 +136,9 @@ KF5 library
 %_K5lib/libKF5GAPITasks.so.*
 
 %changelog
+* Wed Nov 02 2016 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt1
+- new version
+
 * Thu Sep 01 2016 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt2
 - fix requires
 
