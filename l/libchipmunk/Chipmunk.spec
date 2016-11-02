@@ -1,5 +1,5 @@
 Name: libchipmunk
-Version: 6.2.2
+Version: 7.0.1
 Release: alt1
 Summary: Physics engine for 2D games
 
@@ -45,11 +45,7 @@ Demo binary and source for %name
 
 %build
 %add_optflags -DCHIPMUNK_FFI
-sed -i '/LIBRARY DESTINATION lib)/{
-s/LIBRARY DESTINATION lib)/LIBRARY DESTINATION %_lib)/
-i\
-target_link_libraries(chipmunk -lm)
-}' src/CMakeLists.txt
+sed -i 's@target_link_libraries(chipmunk m)@target_link_libraries(chipmunk m pthread)@' src/CMakeLists.txt
 
 %cmake -DBUILD_STATIC=False -DINSTALL_STATIC=False -DINSTALL_DEMOS=True
 %make_build -C BUILD
@@ -67,10 +63,14 @@ target_link_libraries(chipmunk -lm)
 %_libdir/*.so
 
 %files demos
-%doc Demo/
+%doc demo/
 %_bindir/*
 
 %changelog
+* Wed Nov 02 2016 Fr. Br. George <george@altlinux.ru> 7.0.1-alt1
+- Autobuild version bump to 7.0.1
+- Fix build
+
 * Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 6.2.2-alt1
 - Autobuild version bump to 6.2.2
 
