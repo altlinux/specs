@@ -1,12 +1,12 @@
 Name: mdds
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 Summary: A collection of multi-dimensional data structures and indexing algorithms
 
 Group: Development/C++
 License: MIT
 Url: http://code.google.com/p/multidimalgorithm/
-Source0: http://kohei.us/files/%name/src/%{name}-%version.tar.bz2
+Source0: http://kohei.us/files/%name/src/%name-%version.tar.bz2
 
 # Automatically added by buildreq on Mon Jul 11 2016
 # optimized out: libstdc++-devel python-base python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-ecdsa python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pycrypto python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python-modules-xml
@@ -78,6 +78,9 @@ cp -a ./example %buildroot/%_docdir/%name-%version/
 %_datadir/pkgconfig/*
 
 %changelog
+* Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 1.2.2-alt1
+- Autobuild version bump to 1.2.2
+
 * Mon Jul 11 2016 Fr. Br. George <george@altlinux.ru> 1.2.1-alt1
 - Autobuild version bump to 1.2.1
 - Build documentation
