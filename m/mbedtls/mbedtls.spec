@@ -2,7 +2,7 @@
 %def_disable static
 
 Name: mbedtls
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: Light-weight cryptographic and SSL/TLS library
@@ -12,9 +12,6 @@ Group: System/Libraries
 Url: https://tls.mbed.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 Source: https://tls.mbed.org/download/%name-%version-apache.tgz
-
-Patch0: %name-%version-alt-perl.patch
-Patch1: %name-%version-alt-time.patch
 
 BuildRequires: cmake
 BuildRequires: pkcs11-helper-devel
@@ -68,8 +65,6 @@ Cryptographic utilities based on mbed TLS
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
 
 %build
 %__mkdir_p %_target_platform
@@ -119,6 +114,12 @@ popd
 %_libexecdir/%name/*
 
 %changelog
+* Wed Nov 02 2016 Nazarov Denis <nenderus@altlinux.org> 2.4.0-alt1
+- Version 2.4.0
+
+* Sun Jul 17 2016 Nazarov Denis <nenderus@altlinux.org> 2.3.0-alt0.M80P.1
+- Build for branc p8
+
 * Wed Jul 13 2016 Nazarov Denis <nenderus@altlinux.org> 2.3.0-alt1
 - Version 2.3.0
 
