@@ -1,5 +1,5 @@
 Name:           python-module-Polygon
-Version:        2.0.6
+Version:        2.0.8
 Release:        alt1
 Summary:        Python package that handles polygonal shapes in 2D
 
@@ -52,5 +52,8 @@ GPC Commercial Use Licence from The University of Manchester.
 %python_sitelibdir/Polygon*.egg-info
 
 %changelog
+* Wed Nov 02 2016 Andrey Cherepanov <cas@altlinux.org> 2.0.8-alt1
+- new version 2.0.8
+
 * Thu Feb 20 2014 Andrey Cherepanov <cas@altlinux.org> 2.0.6-alt1
 - Initial build in Sisyphus
