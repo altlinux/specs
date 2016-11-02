@@ -1,6 +1,6 @@
 Name: curl
-Version: 7.50.3
-Release: alt2
+Version: 7.51.0
+Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -143,6 +143,21 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Nov 02 2016 Anton Farygin <rider@altlinux.ru> 7.51.0-alt1
+- new version with security fixes:
+  CVE-2016-8615: cookie injection for other servers 
+  CVE-2016-8616: case insensitive password comparison 
+  CVE-2016-8617: OOB write via unchecked multiplication 
+  CVE-2016-8618: double-free in curl_maprintf 
+  CVE-2016-8619: double-free in krb5 code 
+  CVE-2016-8620: glob parser write/read out of bounds 
+  CVE-2016-8621: curl_getdate read out of bounds 
+  CVE-2016-8622: URL unescape heap overflow via integer truncation 
+  CVE-2016-8623: Use-after-free via shared cookies 
+  CVE-2016-8624: invalid URL parsing with '#'
+  CVE-2016-8625: IDNA 2003 makes curl use wrong host
+
+
 * Thu Oct 27 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 7.50.3-alt2
 - libcurl-devel: packaged libcurl.m4
 
