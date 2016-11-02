@@ -1,6 +1,6 @@
 Name: MySQL
-Version: 5.5.43
-Release: alt2
+Version: 5.5.53
+Release: alt1
 
 %def_without debug
 %def_without libs
@@ -50,7 +50,6 @@ Patch102: mysql-strmov.patch
 Patch103: mysql-stack-guard.patch
 Patch104: mysql-va-list.patch
 Patch105: mysql-string-overflow.patch
-Patch106: mysql-dh1024.patch
 
 # Automatically added by buildreq on Wed Mar 16 2011 (-bi)
 BuildRequires: chrooted gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI zlib-devel
@@ -297,7 +296,6 @@ This package contains MySQL benchmark scripts and data.
 %patch103 -p1
 %patch104 -p1
 %patch105 -p1
-%patch106 -p1
 
 # Replace that horror.
 sed 's,@datadir@,%_datadir,g' <%SOURCE15 >scripts/mysql_install_db.sh
@@ -649,6 +647,10 @@ fi
 %_datadir/sql-bench
 
 %changelog
+* Wed Nov 02 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.5.53-alt1
+- 5.5.53
+- dh-1024 patch removed (2048 is upstream value now)
+
 * Sat Sep 12 2015 Michael Shigorin <mike@altlinux.org> 5.5.43-alt2
 - added aarch64 support (glebfm@)
 
