@@ -3,8 +3,8 @@
 #add_findreq_skiplist %python_sitelibdir/pyudev/*
 
 Name: python-module-pyudev
-Version: 0.16.1
-Release: alt1.1.1.1
+Version: 0.21.0
+Release: alt1
 %setup_python_module pyudev
 
 Group: System/Libraries
@@ -32,13 +32,44 @@ BuildRequires(pre): rpm-build-python3
 A Python binding to libudev, the hardware management library and service
 found in modern linux systems.
 
+%package -n python-module-pyudev-pyqt4
+Summary:            Udev PyQt4 bindings for Python
+Group:              Development/Python
+Requires: %name = %EVR
+%description -n python-module-pyudev-pyqt4
+A Python PyQt4 binding to libudev, the hardware management library and
+service found in modern linux systems.
+
+%package -n python-module-pyudev-pyqt5
+Summary:            Udev PyQt5 bindings for Python
+Group:              Development/Python
+Requires: %name = %EVR
+%description -n python-module-pyudev-pyqt5
+A Python PyQt5 binding to libudev, the hardware management library and
+service found in modern linux systems.
+
 %if_with python3
 %package -n python3-module-pyudev
 Summary:            Udev bindings for Python
-Group:              Development/Python3
-
+Group:              System/Libraries
 %description -n python3-module-pyudev
 A Python3 binding to libudev, the hardware management library and
+service found in modern linux systems.
+
+%package -n python3-module-pyudev-pyqt4
+Summary:            Udev PyQt4 bindings for Python
+Group:              Development/Python3
+Requires: python3-module-pyudev = %EVR
+%description -n python3-module-pyudev-pyqt4
+A Python3 PyQt4 binding to libudev, the hardware management library and
+service found in modern linux systems.
+
+%package -n python3-module-pyudev-pyqt5
+Summary:            Udev PyQt5 bindings for Python
+Group:              Development/Python3
+Requires: python3-module-pyudev = %EVR
+%description -n python3-module-pyudev-pyqt5
+A Python3 PyQt5 binding to libudev, the hardware management library and
 service found in modern linux systems.
 %endif
 
@@ -62,18 +93,36 @@ service found in modern linux systems.
 %files
 %doc CHANGES.rst COPYING README.rst
 %python_sitelibdir/pyudev
+%exclude %python_sitelibdir/pyudev/pyqt?.p*
 %python_sitelibdir/pyudev-*
+
+%files -n python-module-pyudev-pyqt4
+%python_sitelibdir/pyudev/pyqt4.p*
+
+%files -n python-module-pyudev-pyqt5
+%python_sitelibdir/pyudev/pyqt5.p*
 
 %if_with python3
 %files -n python3-module-pyudev
 %doc CHANGES.rst COPYING README.rst
 %python3_sitelibdir/pyudev
+%exclude %python3_sitelibdir/pyudev/pyqt?.p*
 %python3_sitelibdir/pyudev-*
+
+%files -n python3-module-pyudev-pyqt4
+%python3_sitelibdir/pyudev/pyqt4.p*
+
+%files -n python3-module-pyudev-pyqt5
+%python3_sitelibdir/pyudev/pyqt5.p*
 %endif
 
 
 
 %changelog
+* Wed Nov 02 2016 Sergey V Turchin <zerg@altlinux.org> 0.21.0-alt1
+- new version (ALT#32700)
+- split PyQt parts
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.16.1-alt1.1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
@@ -88,6 +137,9 @@ service found in modern linux systems.
 * Thu Jul 17 2014 Andrey Cherepanov <cas@altlinux.org> 0.16.1-alt1
 - New version
 - Package with Python3 too
+
+* Wed Feb 15 2012 Sergey V Turchin <zerg@altlinux.org> 0.14-alt0.M60P.1
+- built for M60P
 
 * Tue Feb 14 2012 Sergey V Turchin <zerg@altlinux.org> 0.14-alt1
 - initial build
