@@ -1,5 +1,5 @@
 Name: liblangtag
-Version: 0.5.8
+Version: 0.6.2
 Release: alt1
 Summary: An interface library to access tags for identifying languages
 
@@ -51,8 +51,11 @@ sed -i \
     -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
     libtool
-make %{?_smp_mflags} V=1 \
+%make_build V=1 \
     LD_LIBRARY_PATH=`pwd`/liblangtag/.libs${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+
+%check
+LD_LIBRARY_PATH=`pwd`/liblangtag/.libs make check
 
 %install
 make install DESTDIR=%buildroot
@@ -71,6 +74,13 @@ make install DESTDIR=%buildroot
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 0.6.2-alt1
+- Autobuild version bump to 0.6.2
+
+* Wed Apr 13 2016 Fr. Br. George <george@altlinux.ru> 0.6.0-alt1
+- Autobuild version bump to 0.6.0
+- Provide "check" section
+
 * Wed Nov 18 2015 Fr. Br. George <george@altlinux.ru> 0.5.8-alt1
 - Autobuild version bump to 0.5.8
 
