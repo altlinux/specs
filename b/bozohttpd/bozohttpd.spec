@@ -1,6 +1,6 @@
 Name: bozohttpd
-Version: 20150320
-Release: alt2
+Version: 20160415
+Release: alt1
 Group: System/Servers
 Summary: Tiny http 1.1 server
 License: BSD
@@ -64,7 +64,7 @@ Requires: lib%name-devel
 find . -name .\#\* -exec rm {} \;
 %patch -p1
 %patch1 -p1
-%patch2
+#patch2
 
 # XXX
 sed -i 's/-lssl /-lssl -lc /' libbozohttpd/Makefile
@@ -90,6 +90,7 @@ cd testsuite
 %bmake SIMPLETESTS='t1 t2 t3 t4 t5 t6 t7 t8 t9' check-simple
 
 %files
+%exclude %_bindir/httpd
 %exclude %_mandir/cat*
 %_bindir/%name
 %_man8dir/*
@@ -109,6 +110,10 @@ cd testsuite
 %_libdir/*.a
 
 %changelog
+* Wed Nov 02 2016 Fr. Br. George <george@altlinux.ru> 20160415-alt1
+- Autobuild version bump to 20160415
+- Drop patch
+
 * Mon Apr 11 2016 Fr. Br. George <george@altlinux.ru> 20150320-alt2
 - Fix build
 
