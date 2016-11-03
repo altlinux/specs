@@ -1,6 +1,6 @@
 Name: bozohttpd
 Version: 20160415
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: Tiny http 1.1 server
 License: BSD
@@ -9,6 +9,7 @@ Patch: bozohttpd-20140102-bozoname.patch
 Patch1: bozohttpd-20141225-small.patch
 Patch2: bozohttpd-20141225-namelen.patch
 Url: http://www.eterna.com.au/bozohttpd/
+Requires: webserver-common
 
 %define sum tiny http 1.1 server
 %define bmake MAKEFLAGS="" bmake
@@ -22,7 +23,7 @@ Url: http://www.eterna.com.au/bozohttpd/
 BuildRequires: bmake groff-base liblua5-devel libssl-devel unifdef
 
 %description
-the bozotic HTTP server
+The bozotic HTTP server
 
 bozohttpd is a small and secure http version 1.1 server. its main
 feature is the lack of features, reducing the code size and improving
@@ -66,6 +67,32 @@ find . -name .\#\* -exec rm {} \;
 %patch1 -p1
 #patch2
 
+cat > bozohttpd@.service <<@@@
+[Unit]
+Description=%sum
+Documentation=man:bozohttpd(8)
+
+[Service]
+ExecStart=/usr/bin/bozohttpd -s -X /var/www
+StandardInput=socket
+StandardError=journal
+Type=simple
+User=nobody
+Group=webmaster
+@@@
+
+cat > bozohttpd.socket <<@@@
+[Unit]
+Description=%sum socket
+
+[Socket]
+ListenStream=80
+Accept=yes
+
+[Install]
+WantedBy=sockets.target
+@@@
+
 # XXX
 sed -i 's/-lssl /-lssl -lc /' libbozohttpd/Makefile
 sed 's@#include "netbsd_queue.h"@#include <bozohttpd/netbsd_queue.h>@' < bozohttpd.h > libbozohttpd/bozohttpd.h
@@ -84,6 +111,8 @@ install *.h %buildroot%_includedir/%name/
 %bmakeinstall -C libbozohttpd
 install small/bozohttpd-small %buildroot%_bindir/bozohttpd-small
 ( cd %buildroot%_libdir; for N in *.so.*; do ln -s $N ${N%%.so.*}.so; done )
+install -D bozohttpd@.service %buildroot%_unitdir/bozohttpd@.service
+install -D bozohttpd.socket %buildroot%_unitdir/bozohttpd.socket
 
 %check
 cd testsuite
@@ -94,6 +123,7 @@ cd testsuite
 %exclude %_mandir/cat*
 %_bindir/%name
 %_man8dir/*
+%_unitdir/*
 
 %files small
 %_bindir/%name-small
@@ -110,6 +140,9 @@ cd testsuite
 %_libdir/*.a
 
 %changelog
+* Thu Nov 03 2016 Fr. Br. George <george@altlinux.ru> 20160415-alt2
+- Systemd units provided
+
 * Wed Nov 02 2016 Fr. Br. George <george@altlinux.ru> 20160415-alt1
 - Autobuild version bump to 20160415
 - Drop patch
