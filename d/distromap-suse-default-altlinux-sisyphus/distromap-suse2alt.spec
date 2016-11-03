@@ -3,7 +3,7 @@
 %define module %orepo-%obranch-altlinux-sisyphus
 
 Name: distromap-%module
-Version: 0.021
+Version: 0.022
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -42,11 +42,16 @@ for type in binary source ; do
 	fi
 done
 ln -s default %buildroot/usr/share/distromap/%orepo/tumbleweed
+ln -s %orepo %buildroot/usr/share/distromap/open%orepo
 
 %files
 /usr/share/distromap/*
 
 %changelog
+* Thu Nov 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.022-alt1
+- added packman
+- db update
+
 * Thu Oct 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.021-alt1
 - db update
 
