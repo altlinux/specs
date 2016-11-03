@@ -1,5 +1,5 @@
 Name: installer-feature-pve
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Prevonfigures PVE cluster node
@@ -25,6 +25,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Nov 03 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.4-alt1
+- rrdcache config location changed
+
 * Wed Oct 12 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.3-alt1
 - properly start nfs-client and pre-enable pve-cluster & pve-manager
 
