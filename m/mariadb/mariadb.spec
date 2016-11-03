@@ -27,7 +27,7 @@
 
 Name: mariadb
 Version: 10.1.18
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -105,8 +105,6 @@ Obsoletes: %name-galera < %EVR
 
 %define soname 18
 
-
-
 %description
 The MariaDB software delivers a very fast, multi-threaded, multi-user,
 and robust SQL (Structured Query Language) database server.
@@ -158,10 +156,21 @@ Provides: %name-galera-server = %EVR
 Obsoletes: %name-galera-server < %EVR
 Conflicts: MySQL-server
 Requires: libgalera_smm rsync lsof
+PreReq: chrooted %name-server-control
 
 %description server
 Core mysqld server. For a full MariaDB database server, install
 package 'mariadb'.
+
+%package server-control
+Summary: MariaDB database server facility control
+Group: System/Servers
+BuildArch: noarch
+Conflicts: %name-server < %EVR
+
+%description server-control
+This package contains control rules for the MariaDB database server facility.
+See control(8) for details.
 
 %package server-perl
 Summary: Perl utils for MySQL-server
@@ -169,9 +178,9 @@ Group: Databases
 Requires: %name-server = %EVR
 Conflicts: %name-server < %EVR
 Conflicts: MySQL-server-perl
+Conflicts: mytop
 Provides: %name-galera-server-perl = %EVR
 Obsoletes: %name-galera-server-perl < %EVR
-
 BuildArch: noarch
 
 %description server-perl
@@ -343,7 +352,7 @@ export LDFLAGS
 %cmake_build
 
 %install
-mkdir -p %buildroot{%_bindir,%_sbindir,%_includedir,%_mandir,%_infodir,%_datadir/sql-bench,/var/log/mysql}
+mkdir -p %buildroot{%_bindir,%_sbindir,%_includedir,%_mandir,%_infodir,%_datadir/sql-bench,%_logdir/mysql}
 mkdir -p %buildroot%ROOT/{etc,/%_lib,%_libdir,%_libdir/mysql/plugin/,%_libdir/galera,dev,log,tmp,run/systemd,/var/{nis,yp/binding},db/mysql,usr/share/mysql/charsets}
 touch %buildroot%ROOT{%_sysconfdir/{hosts,services,{host,nsswitch,resolv}.conf},/dev/urandom,/var/nis/NIS_COLD_START,/run/systemd/notify}
 
@@ -358,12 +367,11 @@ rm -f %buildroot%_sbindir/rcmysql
 rm -rf %buildroot{%_libdir/libmysqld.a,%_defaultdocdir/*}
 
 mkdir -p %buildroot%_var/run/mysqld
-mkdir -p %buildroot%_var/log/mysqld
 mkdir -p %buildroot/var/lib/mysql/db/{mysql,test}
 
 # Install various helper scripts.
 install -pD -m755 %SOURCE1 %buildroot%_initdir/mysqld
-install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/mysql
+install -pD -m644 %SOURCE2 %buildroot%_logrotatedir/mysql
 install -pD -m755 %SOURCE3 %buildroot%_sbindir/safe_mysqld
 install -pD -m755 %SOURCE4 %buildroot%_sbindir/mysqld_wrapper
 install -pD -m750 %SOURCE6 %buildroot%_sysconfdir/chroot.d/mysql.lib
@@ -471,8 +479,6 @@ install -p -m644 README %SOURCE14 BUILD/support-files/*.cnf %buildroot%_docdir/%
 rm -f %buildroot%_bindir/safe_mysqld
 rm -f %buildroot%_datadir/mysql/mysql{-*.spec,-log-rotate,.server}
 
-touch %buildroot%ROOT/log/queries
-touch %buildroot%_logdir/mysql/info
 
 rm -rf %buildroot%_datadir/mysql-test
 rm -f %buildroot%_libdir/mysql/plugin/*.la
@@ -557,8 +563,7 @@ fi
 %doc README COPYING
 %_initdir/mysqld
 %config(noreplace) %_sysconfdir/sysconfig/*
-%config(noreplace) %_sysconfdir/logrotate.d/*
-%config %_controldir/*
+%config(noreplace) %_logrotatedir/*
 %config %_sysconfdir/chroot.d/*
 %config(noreplace) %_sysconfdir/my.cnf
 %config(noreplace) %_sysconfdir/my.cnf.d/server.cnf
@@ -600,7 +605,6 @@ fi
 %_sbindir/*
 %_libdir/mysql/plugin
 %attr(3770,root,mysql) %dir %_logdir/mysql
-%ghost %verify(not md5 mtime size) %_logdir/mysql/*
 %dir %_docdir/%name-%version
 %_docdir/%name-%version/README
 %_docdir/%name-%version/README.*
@@ -628,7 +632,6 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/db
 %attr(750,mysql,mysql) %dir %ROOT/db/*
 %attr(3770,root,mysql) %dir %ROOT/log
-%attr(660,mysql,mysql) %ghost %verify(not md5 mtime size) %ROOT/log/*
 %attr(3770,root,mysql) %dir %ROOT/tmp
 %dir %ROOT/run
 %dir %ROOT/run/systemd
@@ -641,6 +644,9 @@ fi
 %exclude %_datadir/mysql/mroonga
 %endif
 %endif
+
+%files server-control
+%config %_controldir/*
 
 %files server-perl
 %_bindir/mysql_convert_table_format
@@ -727,6 +733,12 @@ fi
 %endif
 
 %changelog
+* Thu Nov 03 2016 Alexey Shabalin <shaba@altlinux.ru> 10.1.18-alt2
+- do not install and delete log files with rpm package
+- update logrotate config (ALT #32376)
+- add Conflicts: mytop
+- add mariadb-server-control package for fix upgrade (ALT #31936)
+
 * Tue Oct 25 2016 Alexey Shabalin <shaba@altlinux.ru> 10.1.18-alt1
 - 10.1.18
 - Fixes for the following security vulnerabilities:
