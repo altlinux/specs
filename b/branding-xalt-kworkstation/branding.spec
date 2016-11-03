@@ -10,7 +10,7 @@
 %define bugfix 0
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 %define theme %name
@@ -45,7 +45,7 @@ Source: %name.tar
 Group: Graphics
 Summary: System/Base
 License: GPL
-Url: http://altlinux.ru
+Url: http://www.basealt.ru
 
 %description
 Distro-specific packages with design and texts
@@ -109,7 +109,7 @@ This package contains some graphics for ALT design.
 
 %package release
 BuildArch: noarch
-Summary: %distribution %Theme release file
+Summary: %ProductName release file
 License: GPL
 Group: System/Configuration/Other
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme  branding-alt-%theme-release
@@ -117,7 +117,7 @@ Obsoletes: %obsolete_list  branding-alt-%theme-release
 Conflicts: %conflicts_list
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-release ";done )
 %description release
-%distribution %version %Theme release file.
+%ProductName release file.
 
 %package notes
 BuildArch: noarch
@@ -196,7 +196,7 @@ Slideshow for %Brand %version %Theme installer
 
 %package indexhtml
 BuildArch: noarch
-Summary: %name -- ALT Linux html welcome page
+Summary: %name -- ALT html welcome page
 License: distributable
 Group: System/Base
 Provides: indexhtml indexhtml-%theme = %version indexhtml-Desktop = 1:5.0
@@ -205,7 +205,7 @@ Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "brandi
 Requires: xdg-utils
 Requires(post): indexhtml-common
 %description indexhtml
-ALT Linux index.html welcome page.
+ALT index.html welcome page.
 
 %prep
 %setup -n %name
@@ -262,18 +262,18 @@ __EOF__
 #release
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/ignore.d/
 install -pD -m644 /dev/null %buildroot%_sysconfdir/buildreqs/packages/ignore.d/%name-release
-echo "%distribution %version %Theme %status (%codename)" >%buildroot%_sysconfdir/altlinux-release
+echo "%Brand %version %Theme %status (%codename)" >%buildroot%_sysconfdir/altlinux-release
 for n in fedora redhat system; do
 	ln -s altlinux-release %buildroot%_sysconfdir/$n-release
 done
 # os-release
 mkdir -p %buildroot/%_datadir/%name
 cat >>%buildroot/%_sysconfdir/os-release <<__EOF__
-NAME="%distribution"
+NAME="%Brand"
 VERSION="%version %Theme %status (%codename)"
 ID=altlinux
 VERSION_ID=%version
-PRETTY_NAME="%distribution %version %Theme %status (%codename)"
+PRETTY_NAME="%Brand %version %Theme %status (%codename)"
 ANSI_COLOR="1;33"
 CPE_NAME="cpe:/o:%brand:%smalltheme:%version"
 HOME_URL="%url"
@@ -465,6 +465,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Nov 03 2016 Sergey V Turchin <zerg at altlinux dot org> 8.1.0-alt2
+- clean titles
+
 * Tue Nov 01 2016 Sergey V Turchin <zerg at altlinux dot org> 8.1.0-alt1
 - bump version
 
