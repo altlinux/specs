@@ -5,7 +5,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: radvd
-Version: 2.14
+Version: 2.15
 Release: alt1
 
 Summary: A Router Advertisement daemon
@@ -19,7 +19,7 @@ Source0: %name-%version.tar
 Source1: %name.init
 Source2: %name.sysconfig
 Source3: %name-tmpfs.conf
-Source4: %name.service
+Patch: %name-%version-%release.patch
 
 BuildRequires: libcheck-devel
 BuildRequires: flex, byacc
@@ -37,11 +37,14 @@ services.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
 %add_optflags -fno-strict-aliasing -fno-strict-overflow
-%configure --with-pidfile=/var/run/radvd/radvd.pid
+%configure \
+	--with-pidfile=/var/run/radvd/radvd.pid \
+	--with-systemdsystemunitdir=%systemd_unitdir
 %make_build
 
 #check
@@ -58,7 +61,6 @@ install -m 644 redhat/radvd.conf.empty %buildroot%_sysconfdir/radvd.conf
 install -m 755 %SOURCE1 %buildroot%_initdir/radvd
 install -m 644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/radvd
 install -Dm0644 %SOURCE3 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
-install -Dm0644 %SOURCE4 %buildroot%systemd_unitdir/%name.service
 
 %post
 %post_service %name
@@ -85,6 +87,11 @@ install -Dm0644 %SOURCE4 %buildroot%systemd_unitdir/%name.service
 %_sbindir/radvdump
 
 %changelog
+* Thu Nov 03 2016 Mikhail Efremov <sem@altlinux.org> 2.15-alt1
+- Use service file from upstream.
+- radvd.service: Use sysconfig file.
+- Updated to 2.15.
+
 * Mon Jul 18 2016 Mikhail Efremov <sem@altlinux.org> 2.14-alt1
 - Updated to 2.14.
 
