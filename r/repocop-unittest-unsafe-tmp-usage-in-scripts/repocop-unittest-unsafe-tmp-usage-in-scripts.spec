@@ -1,7 +1,7 @@
 %define testname unsafe-tmp-usage-in-scripts
 Name: repocop-unittest-%testname
 Version: 0.6
-Release: alt6
+Release: alt7
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -21,6 +21,7 @@ The test is based on work of Dmitry E. Oboukhov <unera <at> debian.org>
 
 %build
 cat > %testname.whitelist <<'EOF'
+firehol
 installer-common-stage2
 installer-feature-desktop-other-fs-stage2
 installer-feature-services
@@ -123,6 +124,9 @@ install -Dm 755 %testname.graylist %buildroot%_datadir/repocop/pkgtests/%testnam
 %_datadir/repocop/pkgtests/%testname
 
 %changelog
+* Thu Nov 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.6-alt7
+- added firehol to whitelist
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt6
 - bugfixes
 
