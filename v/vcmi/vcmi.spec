@@ -1,7 +1,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: vcmi
-Version: 0.98h
+Version: 0.99
 Release: alt1
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
@@ -10,12 +10,10 @@ License: GPLv2+
 Group: Games/Strategy
 URL: http://wiki.vcmi.eu/index.php?title=Main_Page
 Packager: Anton Midyukov <antohami@altlinux.org>
-Source0: http://download.vcmi.eu/%name-%version.tar.gz
+Source: %name-%version.tar
 BuildPreReq: cmake rpm-macros-cmake gcc-c++
 
-# Automatically added by buildreq on Wed Feb 10 2016
-# optimized out: boost-devel boost-devel-headers cmake-modules gcc-c++ libEGL-devel libGL-devel libSDL2-devel libavcodec-devel libavutil-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-gui libqt5-network libqt5-widgets libstdc++-devel pkg-config zlib-devel
-BuildRequires: boost-asio-devel boost-filesystem-devel boost-interprocess-devel boost-locale-devel boost-program_options-devel cmake libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel libavdevice-devel libavformat-devel libminizip-devel libpostproc-devel libswscale-devel qt5-base-devel
+BuildRequires: doxygen boost-devel boost-filesystem-devel boost-locale-devel boost-program_options-devel boost-asio-devel boost-interprocess-devel gcc-c++ libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel libminizip-devel pkgconfig(libavcodec) pkgconfig(libavdevice) pkgconfig(libavformat) pkgconfig(libavutil) pkgconfig(libpostproc) pkgconfig(libswscale) pkgconfig(libavresample) qt5-base-devel zlib-devel
 
 %description
 The purpose of VCMI project is to rewrite entire HOMM 3: WoG engine from
@@ -51,7 +49,8 @@ VCMI это фанатский проект с открытым исходным
 
 %cmake_insource \
 	-DCMAKE_SKIP_RPATH=OFF \
-	-DENABLE_SDL2=ON
+	-DENABLE_SDL2=ON \
+	-DENABLE_TEST=0
 	
 %make_build
 
@@ -63,12 +62,17 @@ mv %buildroot/%_libdir/%name/libvcmi.so %buildroot/%_libdir/
 %doc AUTHORS ChangeLog README.linux
 %_bindir/*
 %_libdir/libvcmi.so
-%_libdir/%name/*
-%_datadir/%name/*
+%_libdir/%name
+%_datadir/%name
 %_desktopdir/*
 %_datadir/icons/*/*/apps/*
+%exclude %_libdir/*.a
+%exclude %_includedir/fl
 
 %changelog
+* Wed Nov 02 2016 Anton Midyukov <antohami@altlinux.org> 0.99-alt1
+- New version 0.99
+
 * Thu Mar 03 2016 Anton Midyukov <antohami@altlinux.org> 0.98h-alt1
 - New version.
 
