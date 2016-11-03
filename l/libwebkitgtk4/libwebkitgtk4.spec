@@ -15,7 +15,7 @@
 %def_enable wayland
 
 Name: libwebkitgtk4
-Version: 2.14.1
+Version: 2.14.2
 Release: alt1
 
 Summary: Web browser engine
@@ -91,9 +91,17 @@ where the web content (JavaScript, HTML, layout, etc) lives in a separate proces
 This model is very similar to what Google Chrome offers, with the major difference being
 that we have built the process split model directly into the framework, allowing other clients of WebKit to use it.
 
+%package -n %_name-minibrowser
+Summary: Simple WebKit browser
+Group: Networking/WWW
+Requires: %name = %version-%release
+
+%description -n %_name-minibrowser
+This package provides simple browser from webkitgtk project.
+
 %package -n libwebkit2gtk-devel
 Summary: Development files for WebKit GTK+ port
-Group: Development/GNOME and GTK+
+Group: Development/C++
 Provides: %name-devel = %version-%release
 Requires: libwebkit2gtk = %version-%release
 Requires: libjavascriptcoregtk4-devel = %version-%release
@@ -126,7 +134,7 @@ WebKit package.
 
 %package -n libjavascriptcoregtk4-devel
 Summary: Development files for JavaScriptCore library
-Group: Development/GNOME and GTK+
+Group: Development/C++
 Requires: libjavascriptcoregtk4 = %version-%release
 
 %description -n libjavascriptcoregtk4-devel
@@ -176,7 +184,7 @@ GObject introspection data for the JavaScriptCore library
 
 %package -n libjavascriptcoregtk4-gir-devel
 Summary: GObject introspection devel data for the JavaScriptCore library
-Group: Development/GNOME and GTK+
+Group: Development/Other
 BuildArch: noarch
 Requires: libjavascriptcoregtk4-gir = %version-%release
 Requires: libjavascriptcoregtk4-devel = %version-%release
@@ -241,8 +249,10 @@ rm -rf Source/ThirdParty/qunit/
 %_libdir/webkit2gtk-%api_ver/injected-bundle/libwebkit2gtkinjectedbundle.so
 %doc NEWS
 
-%files -n libwebkit2gtk-devel
+%files -n %_name-minibrowser
 %pkglibexecdir/MiniBrowser
+
+%files -n libwebkit2gtk-devel
 %_libdir/libwebkit2gtk-%api_ver.so
 %dir %_includedir/webkitgtk-%api_ver
 %_includedir/webkitgtk-%api_ver/webkit2
@@ -282,6 +292,10 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Thu Nov 03 2016 Yuri N. Sedunov <aris@altlinux.org> 2.14.2-alt1
+- 2.14.2
+- MiniBrowser moved to separate subpackage
+
 * Tue Oct 11 2016 Yuri N. Sedunov <aris@altlinux.org> 2.14.1-alt1
 - 2.14.1
 
