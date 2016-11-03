@@ -1,14 +1,17 @@
-Name: libqtkeychain 
-Version: 0.6.2
+Name: libqtkeychain
+Version: 0.7.0
 Release: alt1
+
+%define sover 1
+%define libqtkeychain libqtkeychain%sover
+%define libqt5keychain libqt5keychain%sover
 
 Group: Development/KDE and QT
 Summary: QtKeychain is a Qt API to store passwords and other secret data securely.
 License: 2-clause BSD
 Url: https://github.com/frankosterfeld/qtkeychain
-Source0: %name-%version.tar
-Provides: qtkeychain = %version
 
+Source0: %name-%version.tar
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: cmake gcc-c++ libqt4-devel qt5-tools-devel qt5-linguist pkgconfig(QtDBus) pkgconfig(Qt5DBus)
 
@@ -17,29 +20,31 @@ QtKeychain is a Qt API to store passwords and other secret data securely.
 If running, GNOME Keyring is used, otherwise  qtkeychain tries to use 
 KWallet (via D-Bus), if available.
 
+%package -n %libqtkeychain
+Group: Development/KDE and QT
+Summary:        A password store library
+Provides:       qtkeychain = %version
+%description -n %libqtkeychain
+The qtkeychain library allows you to store passwords easy and secure.
+
+%package -n %libqt5keychain
+Group: Development/KDE and QT
+Summary:        A password store library
+Provides:       qtkeychain-qt5 = %version
+%description -n %libqt5keychain
+The qt5keychain library allows you to store passwords easy and secure.
+
 %package devel
 Group: Development/KDE and QT
 Summary: QtKeychain devel files.
 Provides: qtkeychain-devel = %version
-
 %description devel
 QtKeychain devel files.
-
-%package qt5
-Group: Development/KDE and QT
-Summary:        A password store library
-Provides:       qtkeychain-qt5 = %version
-Requires:       libqtkeychain = %version
-
-%description qt5
-The qt5keychain library allows you to store passwords easy and secure.
 
 %package qt5-devel
 Group: Development/KDE and QT
 Summary:        Development files for %{name}-qt5
 Provides:       qtkeychain-qt5-devel = %version
-Requires:       libqtkeychain-qt5 = %version
-
 %description qt5-devel
 This package contains development files for qt5keychain.
 
@@ -79,21 +84,22 @@ make install DESTDIR=%{buildroot} -C build
 grep %{_qt4_translationdir} qtkeychain.lang > %{name}-qt4.lang
 grep %{_qt5_translationdir} qtkeychain.lang > %{name}-qt5.lang
 
-%files -f %{name}-qt4.lang
+%files -n %libqtkeychain -f %{name}-qt4.lang
 %doc ReadMe.txt
 %doc COPYING
+%_libdir/libqtkeychain.so.%sover
 %_libdir/libqtkeychain.so.*
+
+%files -n %libqt5keychain -f %{name}-qt5.lang
+%doc ReadMe.txt
+%doc COPYING
+%_libdir/libqt5keychain.so.%sover
+%_libdir/libqt5keychain.so.*
 
 %files devel
 %_includedir/qtkeychain/
 %_libdir/cmake/QtKeychain/
 %_libdir/libqtkeychain.so
-
-
-%files qt5 -f %{name}-qt5.lang
-%doc ReadMe.txt
-%doc COPYING
-%_libdir/libqt5keychain.so.0*
 
 %files qt5-devel
 %_includedir/qt5keychain/
@@ -102,9 +108,15 @@ grep %{_qt5_translationdir} qtkeychain.lang > %{name}-qt5.lang
 
 
 %changelog
+* Thu Nov 03 2016 Sergey V Turchin <zerg@altlinux.org> 0.7.0-alt1
+- new version
+
 * Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.2-alt1
 - NMU: new version
 - NMU: added libqtkeychain-qt5
+
+* Thu Sep 25 2014 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt1.M70P.1
+- built for M70P
 
 * Thu Sep 25 2014 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt2
 - fix compile flags, translation packaging

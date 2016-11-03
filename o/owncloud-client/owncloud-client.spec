@@ -1,7 +1,7 @@
 %define rname owncloudclient
 Name: owncloud-client
 Version: 2.2.4
-Release: alt1
+Release: alt2
 
 Group: Networking/File transfer
 Summary: ownCloud Desktop Client
@@ -75,6 +75,12 @@ desktop-file-install \
 %_K5srv/*owncloud*.desktop
 
 %changelog
+* Thu Nov 03 2016 Sergey V Turchin <zerg@altlinux.org> 2.2.4-alt2
+- rebuild with new libqt5keychain
+
+* Mon Oct 24 2016 Sergey V Turchin <zerg@altlinux.org> 2.2.4-alt0.M80P.1
+- build for M80P
+
 * Mon Oct 24 2016 Sergey V Turchin <zerg@altlinux.org> 2.2.4-alt1
 - new version (ALT#32649)
 
