@@ -1,6 +1,6 @@
 Name: bind
 Version: 9.9.8
-Release: alt4
+Release: alt5
 
 Summary: ISC BIND - DNS server
 License: BSD-style
@@ -48,6 +48,7 @@ Patch0008: 0008-bind-9.8.3-alt-nofile.patch
 Patch0009: 0009-bind-9.9.1-alt-ads-remove.patch
 Patch0010: 0010-bind-9.9.3-fc-exportlib.patch
 Patch0011: 0011-Fix-CVE-2016-2776.patch
+Patch0012: 0012-CVE-2016-8864-It-was-possible-to-trigger-assertions-.patch
 
 # root directory for chrooted environment.
 %define _chrootdir %_localstatedir/bind
@@ -196,6 +197,7 @@ rather than the DNS protocol.
 %patch0009 -p2
 %patch0010 -p2
 %patch0011 -p2
+%patch0012 -p2
 
 install -D -pm644 %_sourcedir/rfc1912.txt doc/rfc/rfc1912.txt
 install -pm644 %_sourcedir/bind.README.bind-devel README.bind-devel
@@ -454,6 +456,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Wed Nov 02 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.9.8-alt5
+- Applied upstream fix for CVE-2016-8864.
+
 * Tue Sep 27 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.9.8-alt4
 - Applied upstream fix for CVE-2016-2776.
 
