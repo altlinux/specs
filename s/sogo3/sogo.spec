@@ -3,8 +3,8 @@
 
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo3
-Version:      3.2.0
-Release:      alt1
+Version:      3.2.1
+Release:      alt2
 
 License:      GPL
 URL:          http://www.inverse.ca/contributions/sogo.html
@@ -36,6 +36,7 @@ BuildRequires: zlib-devel
 BuildRequires: python-module-samba-DC
 
 Requires:      stmpclean
+Requires:      tzdata
 Requires:      zip
 Conflicts:     sogo2
 
@@ -395,6 +396,12 @@ fi
 %preun_service sogo
 
 %changelog
+* Thu Nov 03 2016 Andrey Cherepanov <cas@altlinux.org> 3.2.1-alt2
+- Add tzdata to requirements
+
+* Thu Nov 03 2016 Andrey Cherepanov <cas@altlinux.org> 3.2.1-alt1
+- New version 3.2.1 (https://sogo.nu/news/2016/article/sogo-v321-released.html)
+
 * Tue Oct 04 2016 Andrey Cherepanov <cas@altlinux.org> 3.2.0-alt1
 - New version 3.2.0 (https://sogo.nu/news/2016/article/sogo-v320-released.html)
 - New features:
