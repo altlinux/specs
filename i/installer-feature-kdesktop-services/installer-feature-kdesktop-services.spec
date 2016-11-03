@@ -1,5 +1,5 @@
 Name: installer-feature-kdesktop-services
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: Setup services for start/not start on boot
@@ -26,6 +26,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Nov 03 2016 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt1
+- fix to enable services
+
 * Wed Nov 02 2016 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt1
 - enable fstrim.timer
 
