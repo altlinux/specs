@@ -1,6 +1,6 @@
 Name: alterator
 Version: 4.24
-Release: alt3
+Release: alt4
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -140,6 +140,11 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Nov  3 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.24-alt4
+- /usr/sbin/alteratord: Do no delay logging (force line-by-line).
+  (Note: stderr goes to our custom log,
+  stdout is captured by the system log if run as a service.)
+
 * Thu Mar 13 2014 Mikhail Efremov <sem@altlinux.org> 4.24-alt3
 - Fix permissions for /var/run/alteratord/.
 
