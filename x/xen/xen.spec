@@ -1,6 +1,6 @@
 %def_with efi
-%def_disable vtpm
-%def_without xsm
+%def_enable xsmpolicy
+%def_enable vtpm
 %def_enable ocamltools
 %def_enable monitors
 %def_enable xenapi
@@ -9,12 +9,10 @@
 %define x86_64 x86_64
 %endif
 
-%define set_without() %{expand:%%force_without %{1}} %{expand:%%undefine _with_%{1}}
-
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.7.0
-Release: alt6
+Release: alt7
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -44,7 +42,8 @@ Source17: gmp-4.3.2.tar.bz2
 # systemd bits
 Source49: tmpfiles.d.xen.conf
 
-Patch0: %name-%version-%release.patch
+Patch0: %name-%version-upstream.patch
+Patch1: %name-%version-%release.patch
 
 # Fedora
 Patch5: %name-net-disable-iptables-on-bridge.patch
@@ -53,11 +52,11 @@ Patch10: pygrubfix.patch
 Patch15: %name.use.fedora.ipxe.patch
 Patch17: %name.fedora.efi.build.patch
 Patch19: %name.pygrubtitlefix.patch
-Patch20: %name.xsm.enable.patch
 Patch21: %name.64.bit.hyp.on.ix86.patch
 
 # ALT
 Patch50: %name-4.0.0-libfsimage-soname-alt.patch
+Patch55: qemu-traditional-lost-parenthesis.patch
 
 ExclusiveArch: %ix86 %x86_64 armh aarch64
 
@@ -74,12 +73,12 @@ Requires: chkconfig
 
 # xen only supports efi boot images on x86_64
 %ifnarch %x86_64
-%set_without efi
+%def_without efi
 %endif
 
-%if_without hypervisor
 # no point in trying to build xsm on ix86 without a hypervisor
-%set_without xsm
+%if_without hypervisor
+%def_disable xsmpolicy
 %endif
 
 %ifarch %ix86 %x86_64
@@ -87,8 +86,6 @@ Requires: chkconfig
 %else
 %def_disable stubdom
 %endif
-
-%{?_with_hypervisor:Requires: %name-runtime = %version-%release}
 
 %{?_with_efi:BuildPreReq: rpm-macros-uefi}
 BuildRequires: zlib-devel libncurses-devel libaio-devel
@@ -116,25 +113,26 @@ BuildRequires: libe2fs-devel
 BuildRequires: libyajl-devel
 %{?_enable_ocamltools:BuildRequires: ocaml ocamlbuild ocamldoc findlib}
 %{?_enable_xenapi:BuildRequires: libxml2-devel}
-%if 0
 BuildRequires: %_includedir/gnu/stubs-32.h
 # for the VMX "bios"
 BuildRequires: dev86
+BuildRequires: libSDL-devel libXext-devel
 # xsm policy file needs needs checkpolicy and m4
-%{?_with_xsm:BuildRequires: checkpolicy m4}
+%{?_enable_xsmpolicy:BuildRequires: checkpolicy m4}
 # efi image needs an ld that has -mi386pep option
 %{?_with_efi:BuildRequires: mingw64-binutils}
 %{?_enable_stubdom:BuildRequires: makeinfo}
 %{?_with_hypervisor:BuildRequires: flex discount libfdt-devel libgcrypt-devel liblzo2-devel libvde-devel perl-HTML-Parser perl-devel}
-%else
-BuildRequires: rpm-build-xen >= 4.3.1
-%endif
 # from 4.7.0
 BuildRequires: libnl-devel >= 3.2.8 libnl3 >= 3.2.8 libnl3-utils >= 3.2.8
 BuildRequires: libpixman-devel >= 0.21.8 libpixman >= 0.21.8
 BuildRequires: libnettle-devel nettle
 BuildRequires: gcc5-c++
 BuildRequires: libsystemd-devel >= 209
+# VirtFS support
+BuildRequires: libcap-devel libattr-devel
+# Qemu-Xen VNC-PNGm VNC-JPEG support
+BuildRequires: libpng-devel libjpeg-devel
 %{?_enable_vtpm:BuildRequires: cmake}
 
 %description
@@ -169,6 +167,24 @@ operating system or indeed different operating systems in parallel on a
 single machine (or host).
 
 This package contains the libraries needed to run applications
+which manage Xen virtual machines.
+
+
+%package -n lib%name-devel
+Summary: Development libraries for Xen tools
+Group: Development/C
+Provides: %name-devel = %version-%release
+Obsoletes: %name-devel
+Requires: lib%name = %version-%release
+Requires: libuuid-devel
+
+%description -n lib%name-devel
+The Xen Project hypervisor is an open-source type-1 or baremetal
+hypervisor, which makes it possible to run many instances of an
+operating system or indeed different operating systems in parallel on a
+single machine (or host).
+
+This package contains what's needed to develop applications
 which manage Xen virtual machines.
 
 
@@ -223,23 +239,6 @@ appliances. The Xen Project hypervisor is powering the largest clouds in
 production today.
 
 This package contains the Xen documentation.
-
-
-%package devel
-Summary: Development libraries for Xen tools
-Group: Development/C
-BuildArch: noarch
-Requires: lib%name = %version-%release
-Requires: libuuid-devel
-
-%description devel
-The Xen Project hypervisor is an open-source type-1 or baremetal
-hypervisor, which makes it possible to run many instances of an
-operating system or indeed different operating systems in parallel on a
-single machine (or host).
-
-This package contains what's needed to develop applications
-which manage Xen virtual machines.
 
 
 %package licenses
@@ -312,29 +311,31 @@ HVM guest. This boosts performance and makes your system more secure.
 
 %prep
 %setup -q -n %name-%version%pre -a1 -a2 -a3
+
 mkdir extras
 ln -s ../qemu-xen-%version tools/qemu-xen
 ln -s ../qemu-xen-traditional-%version tools/qemu-xen-traditional
 ln -s ../mini-os-%version extras/mini-os
+
 %patch0 -p1
-
+%patch1 -p1
 %patch5 -p1
-
 %patch10 -p1
 %patch15 -p1
 %patch17 -p1
 #-%-patch18 -p1
 %patch19 -p1
-%{?_with_xsm:%patch20 -p1}
 %{?_with_hypervisor:%patch21 -p1}
-
 %patch50 -p2
+
+cd tools/qemu-xen-traditional
+%patch55 -p1
+cd ../..
 
 sed -i '/^[[:blank:]]*\. \/etc\/rc\.status[[:blank:]]*$/s/\. /: # &/' tools/hotplug/Linux/xendomains.in
 
 # stubdoms sources
 cd stubdom
-
 ln -s %SOURCE10
 ln -s %SOURCE11
 ln -s %SOURCE12
@@ -346,7 +347,6 @@ ln -s %SOURCE15
 ln -s %SOURCE16
 ln -s %SOURCE17
 %endif
-
 cd ..
 
 %build
@@ -376,6 +376,7 @@ export GIT=$(which true)
 	--with-systemd=%_unitdir \
 	--with-xenstored=xenstored \
 	--without-systemd-modules-load \
+	%{subst_enable xsmpolicy} \
 	%{subst_enable xenapi} \
 	%{subst_enable monitors} \
 	%{subst_enable stubdom} \
@@ -388,6 +389,7 @@ export GIT=$(which true)
 %endif
 	%{subst_enable ocamltools} \
 	--enable-tools \
+	--enable-kvm \
 	--disable-kernels \
 	--enable-docs
 %make_build %{?_with_efi:LD_EFI=x86_64-pc-mingw32-ld}
@@ -415,18 +417,13 @@ export GIT=$(which true)
 
 %{?_with_efi:mv %buildroot/boot/efi/efi %buildroot/boot/efi/EFI}
 
-%if_with xsm
+%if_enabled xsmpolicy
 # policy file should be in /boot/flask
 install -d -m 0755 %buildroot/boot/flask
-mv %buildroot/boot/xenpolicy.* %buildroot/boot/flask
-%else
-rm -f %buildroot/boot/xenpolicy.*
+mv %buildroot/boot/xenpolicy* %buildroot/boot/flask/
 %endif
 
 ############ kill unwanted stuff ############
-
-# stubdoms: newlib
-rm -rf %buildroot/usr/*-xen-elf
 
 # hypervisor symlinks
 %{!?_with_hypervisor:rm -rf %buildroot/boot}
@@ -436,36 +433,8 @@ mv %buildroot%_docdir/%name{,-%version}
 install -p -m 0644 COPYING README %buildroot%_docdir/%name-%version/
 mv %buildroot%_docdir/%name-%version/{html/,}misc
 
-# Pointless helper
-rm -f %buildroot%_sbindir/xen-python-path
-
-# qemu stuff (unused or available from upstream)
-rm -rf %buildroot{%_datadir/%name/man,%_bindir/qemu-*-%name}
-for i in img nbd; do
-	ln -s qemu-img %buildroot/%_bindir/qemu-$i-xen
-done
-for f in \
-	{bios,ppc_rom}.bin \
-	openbios-{ppc,sparc{32,64}} \
-	pxe-{e1000,ne2k_pci,pcnet,rtl8139}.bin \
-	vgabios{,-cirrus}.bin \
-	video.x \
-	bamboo.dtb
-do
-	rm -f %buildroot/%_datadir/%name/qemu/$f
-done
-
 # README's not intended for end users
 rm -f %buildroot/%_sysconfdir/%name/README*
-
-# standard gnu info files
-rm -rf %buildroot%_prefix/info
-
-# adhere to Static Library Packaging Guidelines
-rm -f %buildroot%_libdir/*.a
-
-# clean up extra efi files
-%{?_with_efi:#rm -rf %buildroot%_libdir/efi}
 
 ############ fixup files in /etc ############
 
@@ -491,12 +460,19 @@ while read f; do
 done
 
 %ifarch %x86_64
-rm -fr %buildroot%_docdir/%name-%version/licenses/stubdom/lwip-x86_64
-rm -fr %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_64
+rm -fr %buildroot%_docdir/%name-%version/licenses/stubdom/lwip-x86_32
+rm -fr %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32
+
+mv %buildroot%_docdir/%name-%version/licenses/stubdom/lwip-x86_64 %buildroot%_docdir/%name-%version/licenses/stubdom/lwip
+mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_64 %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl
+mv %buildroot%_docdir/%name-%version/licenses/stubdom/gmp-x86_64 %buildroot%_docdir/%name-%version/licenses/stubdom/gmp
 %endif
 
+%ifarch %ix86
 mv %buildroot%_docdir/%name-%version/licenses/stubdom/lwip-x86_32 %buildroot%_docdir/%name-%version/licenses/stubdom/lwip
 mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl
+mv %buildroot%_docdir/%name-%version/licenses/stubdom/gmp-x86_32 %buildroot%_docdir/%name-%version/licenses/stubdom/gmp
+%endif
 
 ############ all done now ############
 
@@ -505,6 +481,7 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 %else
 %add_strip_skiplist %_datadir/xen/qemu/* %_datadir/qemu-xen/qemu/*
 %endif
+
 %add_verify_elf_skiplist %_datadir/xen/qemu/openbios-* %_datadir/qemu-xen/qemu/* /boot/*
 
 
@@ -560,19 +537,83 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 
 %_tmpfilesdir/xen.conf
 
+%dir %_libexecdir/%name
 %dir %_libexecdir/%name/bin
-%_libexecdir/%name/bin/convert-legacy-stream
 %_libexecdir/%name/bin/init-xenstore-domain
 %_libexecdir/%name/bin/libxl-save-helper
 %_libexecdir/%name/bin/lsevtchn
 %_libexecdir/%name/bin/readnotes
-%_libexecdir/%name/bin/verify-stream-v2
+
 %_libexecdir/%name/bin/xen-init-dom0
 %_libexecdir/%name/bin/xenconsole
 %_libexecdir/%name/bin/xendomains
 %_libexecdir/%name/bin/xenctx
 %_libexecdir/%name/bin/xenpaging
 %_libexecdir/%name/bin/xenpvnetboot
+
+%_bindir/qemu-img-xen
+%_bindir/qemu-nbd-xen
+%_bindir/xen-cpuid
+%_bindir/xen-detect
+%_bindir/xenalyze
+%_bindir/xencov_split
+%_bindir/xenstore
+%_bindir/xenstore-chmod
+%_bindir/xenstore-control
+%_bindir/xenstore-exists
+%_bindir/xenstore-list
+%_bindir/xenstore-ls
+%_bindir/xenstore-read
+%_bindir/xenstore-rm
+%_bindir/xenstore-watch
+%_bindir/xenstore-write
+%_bindir/xentrace_format
+
+%_sbindir/flask-get-bool
+%_sbindir/flask-getenforce
+%_sbindir/flask-label-pci
+%_sbindir/flask-loadpolicy
+%_sbindir/flask-set-bool
+%_sbindir/flask-setenforce
+%_sbindir/gdbsx
+%_sbindir/gtracestat
+%_sbindir/gtraceview
+%_sbindir/img2qcow
+%_sbindir/kdd
+%_sbindir/lock-util
+%_sbindir/qcow-create
+%_sbindir/qcow2raw
+%_sbindir/tap-ctl
+%_sbindir/tapdisk-client
+%_sbindir/tapdisk-diff
+%_sbindir/tapdisk-stream
+%_sbindir/tapdisk2
+%_sbindir/td-util
+%_sbindir/vhd-update
+%_sbindir/vhd-util
+%_sbindir/xen-hptool
+%_sbindir/xen-hvmcrash
+%_sbindir/xen-hvmctx
+%_sbindir/xen-livepatch
+%_sbindir/xen-lowmemd
+%_sbindir/xen-mfndump
+%_sbindir/xen-ringwatch
+%_sbindir/xen-tmem-list-parse
+%_sbindir/xenbaked
+%_sbindir/xenconsoled
+%_sbindir/xencov
+%_sbindir/xenlockprof
+%_sbindir/xenmon.py
+%_sbindir/xenperf
+%_sbindir/xenpm
+%_sbindir/xenpmd
+%_sbindir/xenstored
+%_sbindir/xentop
+%_sbindir/xentrace
+%_sbindir/xentrace_setmask
+%_sbindir/xentrace_setsize
+%_sbindir/xenwatchdogd
+%_sbindir/xl
 
 # man pages
 %_man1dir/xenstore*
@@ -592,35 +633,49 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 
 
 %files -n lib%name
-%_libdir/*.so
 %_libdir/*.so.*
 %_libdir/fs
+
+
+%files -n lib%name-devel
+%_libdir/*.so
+%_libdir/*.a
+
+%_includedir/*.h
+%_includedir/%name
+%_includedir/%{name}store-compat
+
+%_datadir/pkgconfig/xenlight.pc
+%_datadir/pkgconfig/xlutil.pc
 
 
 %files runtime
 %dir /lib/systemd
 %dir %_unitdir
 
+%_bindir/pygrub
+%_sbindir/xen-bugtool
+
+%dir %_libexecdir/%name/bin
+%_libexecdir/%name/bin/convert-legacy-stream
+%_libexecdir/%name/bin/verify-stream-v2
+
 %_unitdir/xen-qemu-dom0-disk-backend.service
 
-# qemu-xen-traditional is only built with stubdoms
-%if_enabled stubdom
-%dir %_datadir/%name
-%dir %_datadir/%name/qemu
-%_datadir/%name/qemu/keymaps
-%endif
-
-%dir %_datadir/qemu-xen
-%_datadir/qemu-xen/qemu
+%_datadir/%name
+%_datadir/qemu-%name
 
 %dir %_libexecdir/%name
 %dir %_libexecdir/%name/bin
+%dir %_libexecdir/%name/boot
 %_libexecdir/%name/bin/pygrub
 %_libexecdir/%name/bin/qemu-dm
 %_libexecdir/%name/bin/qemu-img
 %_libexecdir/%name/bin/qemu-io
 %_libexecdir/%name/bin/qemu-nbd
 %_libexecdir/%name/bin/qemu-system-i386
+%_libexecdir/%name/bin/virtfs-proxy-helper
+%_libexecdir/%name/boot/hvmloader
 
 %dir %_libexecdir/%name/libexec
 %_libexecdir/%name/libexec/qemu-bridge-helper
@@ -632,23 +687,16 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 %python_sitelibdir/grub
 %python_sitelibdir/pygrub-*.egg-info
 
-%_bindir/*
-%_sbindir/*
-
 %attr(0700,root,root) %_logdir/%name
-
-%{?_enable_ocamltools:%exclude %_sbindir/oxenstored}
 
 %exclude %_bindir/xencons
 %exclude %_datadir/qemu-xen/qemu/s390-ccw.img
 
-%exclude %_datadir/pkgconfig/xenlight.pc
-%exclude %_datadir/pkgconfig/xlutil.pc
 
 %if_with hypervisor
 %files hypervisor
 /boot/xen*
-%{?_with_xsm:/boot/flask}
+%{?_enable_xsmpolicy:/boot/flask}
 %{?_with_efi:%_efi_bindir}
 %{?_with_efi:%_efi_bootdir}
 %endif
@@ -659,12 +707,6 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 %doc %_docdir/%name-%version/misc
 %doc %_docdir/%name-%version/html
 %doc %_docdir/%name-%version/README
-
-
-%files devel
-%_includedir/*.h
-%_includedir/%name
-%_includedir/%{name}store-compat
 
 
 %files licenses
@@ -709,6 +751,13 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 
 
 %changelog
+* Fri Nov 04 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.0-alt7
+- Fix: SharedLibs Policy Draft violation
+  (altlinux-policy-shared-lib-contains-devel-so)
+- stubdom: fix and enable stubdom-vtpm build
+- Typo fix in /etc/rc.d/init.d/xendriverdomain
+- Xen Security Modules is enabled: XSM-FLASK
+
 * Fri Oct 28 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.0-alt6
 - Upstream updates:
  - Merge branch 'upstream/4.7' into alt/4.7
@@ -717,10 +766,11 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
  - usbif.h: replace PAGE_SIZE with USBIF_RING_SIZE
  - x86/Viridian: don't depend on undefined register state
  - x86emul: fix pushing of selector registers
- - x86/hvm: Clobber %cs.L when LME becomes set
+ - x86/hvm: Clobber %%cs.L when LME becomes set
  - xen/trace: Fix trace metadata page count calculation (revert fbf96e6)
  - x86: defer not-present segment checks
- - xen: credit1: return the 'time remaining to the limit' as next timeslice.
+ - xen: credit1: return the 'time remaining to the limit' as next
+   timeslice.
 
 * Fri Oct 28 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.0-alt5
 - Try to eliminate circular deps between xen-ocaml and xen-ocaml-devel
@@ -742,7 +792,7 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 - Upstream updates:
  - x86/AMD: apply erratum 665 workaround
  - x86emul: don't allow null selector for LTR
- - x86emul: correct loading of %ss
+ - x86emul: correct loading of %%ss
  - x86/Intel: hide CPUID faulting capability from guests
  - xen: credit2: properly schedule migration of a running vcpu.
  - xen: credit1: fix mask to be used for tickling in Credit1
