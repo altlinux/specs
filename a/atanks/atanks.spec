@@ -1,5 +1,5 @@
 Name: atanks
-Version: 6.2
+Version: 6.5
 Release: alt1
 
 Summary: Atomic Tanks - multi-player game similar to worms
@@ -26,7 +26,7 @@ weapons to try and destroy the other tanks.
 %prep
 %setup -q -n %name-%version
 #patch0 -p1
-%__subst 's,-DDATA_DIR=\\\".\\\",-DDATA_DIR=\\\"%_gamesdatadir/%name\\\",' src/Makefile
+%__subst 's,-DDATA_DIR=\\\".\\\",-DDATA_DIR=\\\"%_gamesdatadir/%name\\\",' Makefile
 
 %build
 %__make
@@ -74,6 +74,9 @@ desktop-file-install \
 %_datadir/applications/*
 
 %changelog
+* Fri Nov 04 2016 Ilya Mashkin <oddity@altlinux.ru> 6.5-alt1
+- 6.5
+
 * Mon Apr 06 2015 Ilya Mashkin <oddity@altlinux.ru> 6.2-alt1
 - 6.2
 
