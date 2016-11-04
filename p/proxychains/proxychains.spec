@@ -1,6 +1,6 @@
 Name: proxychains
 Version: 3.1
-Release: alt1.1
+Release: alt2
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -43,6 +43,9 @@ servers.
 %_libdir/*.so*
 
 %changelog
+* Fri Nov  4 2016 Terechkov Evgenii <evg@altlinux.org> 3.1-alt2
+- Fix patch2 to make program really work (ALT#31662)
+
 * Mon Aug 22 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt1.1
 - Fixed build
 
