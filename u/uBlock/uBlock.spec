@@ -1,14 +1,14 @@
+%def_enable git
+%def_disable firefox
+
 %define cid            uBlock0@raymondhill.net
 %define cid_dir        %palemoon_noarch_extensionsdir/%cid
 
 %define cidf_dir       %firefox_noarch_extensionsdir/%cid
 
-%def_disable git
-%def_enable firefox
-
 Name: uBlock
-Version: 1.6.4.0
-Release: alt2
+Version: 1.9.16.0
+Release: alt1
 
 Summary: uBlock: an efficient blocker extension for your browser. Fast, potent, and lean
 License: GPLv3
@@ -19,12 +19,11 @@ BuildArch: noarch
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source: %name.tar
+Source1: META-INF.tar
 
-# Automatically added by buildreq on Tue Jul 28 2015
-# optimized out: python-base python-module-Zope2 python-modules python-modules-compiler python-modules-encodings python-modules-json
-BuildRequires: libdb4-devel
-BuildRequires: python-module-distribute
-BuildRequires: python-modules-json
+# Automatically added by buildreq on Sat Nov 05 2016
+# optimized out: python-base python-modules
+BuildRequires: python-modules-compiler python-modules-encodings python-modules-json
 
 
 %package -n palemoon-uBlock
@@ -76,10 +75,21 @@ uBock-origin - эффективный блокировщик: он исполь�
 %if_enabled git
 %build
 tools/make-firefox.sh
-tools/update-checksums.sh
+tar -x -f  %SOURCE1
 %endif
 
+
 %install
+pushd META-INF/
+%if_enabled firefox
+install -d -m755  %buildroot/%cidf_dir/META-INF/
+install -Dp -m644  ./* %buildroot/%cidf_dir/META-INF/
+%endif
+install -d -m755  %buildroot/%cid_dir/META-INF/
+install -Dp -m644  ./* %buildroot/%cid_dir/META-INF/
+popd
+
+
 %if_enabled git
 pushd dist/build/uBlock0.firefox/
 %endif
@@ -87,21 +97,8 @@ pushd dist/build/uBlock0.firefox/
 mkdir -p %buildroot/%cid_dir
 cp -r * %buildroot/%cid_dir
 
-%if_enabled firefox
 mkdir -p %buildroot/%cidf_dir
 cp -r * %buildroot/%cidf_dir
-
-%if_enabled git
-popd
-
-pushd META-INF/
-install -d -m755  %buildroot/%cidf_dir/META-INF/
-install -Dp -m644  ./* %buildroot/%cidf_dir/META-INF/
-popd
-%endif
-
-
-%endif
 
 
 %files -n palemoon-uBlock
@@ -113,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Sat Nov 05 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.9.16.0-alt1
+- Version 1.9.16
+
 * Sat Mar 19 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.6.4.0-alt2
 - Version from xpi
 
