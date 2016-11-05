@@ -3,7 +3,7 @@
 Name: python-module-ansible-augeas
 Summary: Augeas module for ansible
 Version: 0.0.1
-Release: alt4
+Release: alt5
 
 Group: System/Libraries
 License: GPLv3+
@@ -11,8 +11,7 @@ Url: https://github.com/paluh/ansible-augeas.git
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
 BuildArch: noarch
-Provides: ansible-augeas
-Obsoletes: ansible-augeas
+Obsoletes: ansible-augeas < %EVR
 
 # Ansible requires python 2.4+, so we require augeas module for python2:
 Requires: python-module-augeas
@@ -39,6 +38,11 @@ install -pD -m 644 augeas %buildroot%_ansibledir/files/augeas.py # modules have 
 %doc README.md
 
 %changelog
+* Sat Nov  5 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.1-alt5
+- Obsoletes etc.: For cleanliness, let's leave just it without Provides
+  (as it was, but with %%EVR for future;
+  https://www.altlinux.org/Girar_does_not_delete_obsoleted_pkgs )
+
 * Thu Nov  3 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.1-alt4
 - To delete old pkg, we need Provides: ansible-augeas
 
