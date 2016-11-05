@@ -1,7 +1,6 @@
-%def_without python
 
 Name: libvirt-glib
-Version: 0.2.3
+Version: 1.0.0
 Release: alt1
 Summary: libvirt glib integration for events
 Group: System/Libraries
@@ -132,14 +131,6 @@ Requires: %name-gir-devel = %version-%release libvirt-gconfig-gir-devel = %versi
 %description -n libvirt-gobject-gir-devel
 GObject introspection devel data for the libvirt-gobject library
 
-%package -n python-module-libvirt-glib
-Group: Development/Python
-Summary: libvirt glib integration for events python binding
-
-%description -n python-module-libvirt-glib
-This package provides a python module for integration between
-libvirt and the glib event loop
-
 %prep
 %setup -q
 
@@ -152,8 +143,7 @@ intltoolize --force
 	--disable-static \
 	--enable-introspection \
 	--enable-vala \
-	--enable-gtk-doc \
-	%{subst_with python}
+	--enable-gtk-doc
 
 %make_build
 
@@ -215,13 +205,10 @@ intltoolize --force
 %_includedir/libvirt-gobject-1.0/*
 %_vapidir/libvirt-gobject-*
 
-%if_with python
-%files -n python-module-libvirt-glib
-%doc examples/event-test.py
-%python_sitelibdir/*
-%endif
-
 %changelog
+* Sat Nov 05 2016 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt1
+- 1.0.0
+
 * Mon Dec 28 2015 Alexey Shabalin <shaba@altlinux.ru> 0.2.3-alt1
 - 0.2.3
 

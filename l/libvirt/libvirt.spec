@@ -103,8 +103,8 @@
 %define with_loader_nvram "%_datadir/OVMF/OVMF_CODE.fd:%_datadir/OVMF/OVMF_VARS.fd:%_datadir/AAVMF/AAVMF_CODE.fd:%_datadir/AAVMF/AAVMF_VARS.fd"
 
 Name: libvirt
-Version: 2.3.0
-Release: alt2
+Version: 2.4.0
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -1060,6 +1060,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Sat Nov 05 2016 Alexey Shabalin <shaba@altlinux.ru> 2.4.0-alt1
+- 2.4.0
+
 * Fri Oct 28 2016 Alexey Shabalin <shaba@altlinux.ru> 2.3.0-alt2
 - add requires dmidecode to daemon package
 - drop generate host_uuid in post_install, default host_uuid_source = smbios
