@@ -3,7 +3,7 @@
 %define real_name Canary-Stability
 
 Name: perl-Canary-Stability
-Version: 2011
+Version: 2012
 Release: alt1
 
 Summary: canary to check perl compatibility for schmorp's modules
@@ -46,6 +46,9 @@ See the Makefile.PL in Coro or AnyEvent for usage examples.
 %perl_vendor_privlib/Canary/Stability*
 
 %changelog
+* Sun Nov 06 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2012-alt1
+- New version
+
 * Sat Mar 19 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2011-alt1
 - New version
 
