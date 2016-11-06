@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Net::CUPS
 
 Name: perl-Net-CUPS
-Version: 0.62
+Version: 0.63
 Release: alt1
 
 Summary: Perl interface to the Common Unix Printing System API
@@ -49,6 +49,9 @@ Printing System (CUPS). Он предоставляет возможность �
 %perl_vendor_archlib/Net
 
 %changelog
+* Sun Nov 06 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.63-alt1
+- New version
+
 * Sat Jul 30 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.62-alt1
 - New version
 
