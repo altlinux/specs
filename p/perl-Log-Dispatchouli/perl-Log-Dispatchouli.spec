@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Log::Dispatchouli
 
 Name: perl-Log-Dispatchouli
-Version: 2.012
+Version: 2.015
 Release: alt1
 
 Summary: a simple wrapper around Log::Dispatch
@@ -50,6 +50,9 @@ memory. That last one is mostly useful for testing.
 %perl_vendor_privlib/Log/Dispatchouli*
 
 %changelog
+* Sun Nov 06 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.015-alt1
+- New version
+
 * Sun Jun 07 2015 Nikolay A. Fetisov <naf@altlinux.ru> 2.012-alt1
 - New version
 
