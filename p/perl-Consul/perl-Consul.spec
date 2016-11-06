@@ -3,8 +3,8 @@
 %define real_name Consul
 
 Name: perl-Consul
-Version: 0.016
-Release: alt2
+Version: 0.019
+Release: alt1
 
 Summary:  Perl client library for Consul
 
@@ -53,6 +53,9 @@ this module provides.
 %perl_vendor_privlib/Consul*
 
 %changelog
+* Sun Nov 06 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.019-alt1
+- New version
+
 * Mon Jul 04 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.016-alt2
 - Fix build (updating BuildRequires)
 
