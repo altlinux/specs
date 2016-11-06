@@ -1,5 +1,5 @@
 Name: redis
-Version: 3.0.7
+Version: 3.2.5
 Release: alt1
 
 Summary: Redis is an advanced key-value store
@@ -109,7 +109,7 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.
 %preun_service %name
 
 %files
-%doc COPYING 00-RELEASENOTES README BUGS
+%doc COPYING 00-RELEASENOTES README.md BUGS MANIFESTO
 
 %attr(0750,root,%redis_group) %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/redis.conf
@@ -122,7 +122,7 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.
 %_tmpfilesdir/%name.conf
 
 %_bindir/redis-check-aof
-%_bindir/redis-check-dump
+%_bindir/redis-check-rdb
 %_bindir/redis-cli
 %_bindir/redis-benchmark
 %_sbindir/redis-server
@@ -135,6 +135,9 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.
 
 
 %changelog
+* Sun Nov 06 2016 Nikolay A. Fetisov <naf@altlinux.ru> 3.2.5-alt1
+- New version
+
 * Sat Feb 06 2016 Nikolay A. Fetisov <naf@altlinux.ru> 3.0.7-alt1
 - New version
 
