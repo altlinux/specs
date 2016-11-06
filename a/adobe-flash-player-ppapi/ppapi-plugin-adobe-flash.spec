@@ -1,4 +1,5 @@
 %define browser_ppapi_plugins_path %_libdir/pepper-plugins
+%define browser_ppapi_plugins_path2 /usr/lib/pepperflashplugin-nonfree
 %brp_strip_none %_bindir/*
 %brp_strip_none %browser_ppapi_plugins_path/*
 %set_verify_elf_method textrel=relaxed
@@ -10,7 +11,7 @@ Name: adobe-flash-player-ppapi
 %define ver_fake   23
 %define ver_ix86   23.0.0.205
 %define ver_x86_64 23.0.0.205
-Release: alt5
+Release: alt6
 Epoch: 3
 
 %define ver_real %ver_fake
@@ -82,12 +83,15 @@ tar xfv %SOURCE11
 
 %install
 mkdir -p -m 0755 %buildroot/%browser_ppapi_plugins_path
+mkdir -p -m 0755 %buildroot/%browser_ppapi_plugins_path2
 %ifarch x86_64
 %if_enabled include_x86_64
 install -m 0644 libpepflashplayer.so %buildroot/%browser_ppapi_plugins_path
+ln -s `relative %browser_ppapi_plugins_path/libpepflashplayer.so %browser_ppapi_plugins_path2/libpepflashplayer.so`  %buildroot/%browser_ppapi_plugins_path2/libpepflashplayer.so
 %endif
 %else
 install -m 0644 libpepflashplayer.so %buildroot/%browser_ppapi_plugins_path
+ln -s `relative %browser_ppapi_plugins_path/libpepflashplayer.so %browser_ppapi_plugins_path2/libpepflashplayer.so`  %buildroot/%browser_ppapi_plugins_path2/libpepflashplayer.so
 %endif
 
 %if_enabled flash_props
@@ -125,14 +129,19 @@ echo "At this moment no x86 version of %name"
 %ifarch x86_64
 %if_enabled include_x86_64
 %browser_ppapi_plugins_path/*
+%browser_ppapi_plugins_path2/*
 %_desktopdir/ppapi-plugin-adobe-flash.desktop
 %endif
 %else
 %browser_ppapi_plugins_path/*
+%browser_ppapi_plugins_path2/*
 %_desktopdir/ppapi-plugin-adobe-flash.desktop
 %endif
 
 %changelog
+* Sun Nov 06 2016 Sergey V Turchin <zerg@altlinux.org> 3:23-alt6
+- add /usr/lib/pepperflashplugin-nonfree/libpepflashplayer.so symlink (ALT#32721)
+
 * Thu Oct 27 2016 Sergey V Turchin <zerg@altlinux.org> 3:23-alt5
 - new version
 - security fixes: CVE-2016-7855
