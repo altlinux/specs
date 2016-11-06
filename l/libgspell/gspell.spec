@@ -3,7 +3,7 @@
 %define api_ver 1
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A spell-checking library for GTK+ applications
@@ -101,6 +101,9 @@ This package contains development documentation for Gspell library.
 %_datadir/gtk-doc/html/%_name-*/
 
 %changelog
+* Sun Nov 06 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
 * Sun Sep 18 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
