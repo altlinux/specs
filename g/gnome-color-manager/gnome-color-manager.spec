@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: gnome-color-manager
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Color profile manager for the GNOME desktop
@@ -113,6 +113,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %doc README NEWS AUTHORS
 
 %changelog
+* Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
+- 3.22.2
+
 * Wed Oct 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 
