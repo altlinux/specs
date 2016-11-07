@@ -25,7 +25,7 @@ BuildRequires(pre):	rpm-macros-cmake
 
 Name: trinity-filesystem
 Version: 14.0.3
-Release: alt1_2
+Release: alt2
 Summary: Trinity Directory Layout
 Group: System/Base
 Url: http://www.trinitydesktop.org/
@@ -49,13 +49,8 @@ This package installs the Trinity directory structure.
 
 %dir %tde_docdir
 
-%dir %tde_includedir
 %dir %tde_tdeincludedir
 
-%dir %tde_libdir
-%dir %tde_libdir/java
-%dir %tde_libdir/jni
-%dir %tde_libdir/pkgconfig
 %dir %tde_tdelibdir
 
 %dir %tde_datadir/applications
@@ -66,7 +61,11 @@ This package installs the Trinity directory structure.
 %dir %tde_datadir/applnk/*/*
 %dir %tde_datadir/apps
 %dir %tde_datadir/apps/*
+%dir %tde_datadir/autostart
+%dir %tde_datadir/desktop-directories
+%dir %tde_datadir/doc
 %dir %tde_datadir/cmake
+%dir %tde_datadir/config
 %dir %tde_datadir/config.kcfg
 %dir %tde_datadir/autostart
 %dir %tde_datadir/emoticons
@@ -83,17 +82,15 @@ This package installs the Trinity directory structure.
 %dir %tde_datadir/locale
 %dir %tde_datadir/locale/*
 %dir %tde_datadir/locale/*/*
-%dir %tde_datadir/man
-%dir %tde_datadir/man/*
 %dir %tde_datadir/mimelnk
 %dir %tde_datadir/mimelnk/*
 %dir %tde_datadir/services
 %dir %tde_datadir/services/*
 %dir %tde_datadir/servicetypes
 %dir %tde_datadir/wallpapers
+%dir %tde_datadir/templates
 
-%dir %_sysconfdir/trinity
-%dir %_libexecdir/tde
+%dir %tde_libexec/
 
 ##########
 
@@ -175,6 +172,11 @@ install -d -m 755 %{?buildroot}%tde_datadir/services/tdeconfiguredialog
 install -d -m 755 %{?buildroot}%tde_datadir/servicetypes
 
 install -d -m 755 %{?buildroot}%tde_datadir/wallpapers
+install -d -m 755 %{?buildroot}%tde_datadir/autostart
+install -d -m 755 %{?buildroot}%tde_datadir/config
+install -d -m 755 %{?buildroot}%tde_datadir/desktop-directories
+install -d -m 755 %{?buildroot}%tde_datadir/doc
+install -d -m 755 %{?buildroot}%tde_datadir/templates
 
 # Create icons directories
 install -d -m 755 %{?buildroot}%tde_datadir/icons
@@ -575,6 +577,9 @@ for b in kcheckpass kgrantpty kpac_dhcp_helper kppp start_tdeinit tdmtsak tdekbd
 done
 
 %changelog
+* Mon Nov 07 2016 Hihin Ruslan <ruslandh@altlinux.ru> 14.0.3-alt2
+- modified:   rpm.macros.trinity.standalone
+
 * Sun Nov 06 2016 Hihin Ruslan <ruslandh@altlinux.ru> 14.0.3-alt1_2
 - converted rpmcs
 
