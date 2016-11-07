@@ -1,5 +1,5 @@
 Name: LibreSSL
-Version: 2.4.3
+Version: 2.4.4
 Release: alt1
 
 %define oname libressl
@@ -12,7 +12,9 @@ Group: Security/Networking
 Url: http://www.libressl.org/
 
 Packager: Vladimir D. Seleznev <vseleznv@altlinux.org>
-Source: %oname-%version.tar.gz
+# repacked http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/%oname-%version.tar.gz
+Source: %oname-%version.tar
+Source1: %name.watch
 Patch4: netcat-1.159-alt-usage.patch
 Patch8: netcat-1.159-alt-execcmd.patch
 Patch9: netcat-1.159-alt-proxy_pass.patch
@@ -219,6 +221,26 @@ popd
 %_man1dir/netcat.*
 
 %changelog
+* Mon Nov 07 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4.4-alt1
+- 2.4.4
+- packaged ungziped source tarball
+- changed watchfile to watch stable releases
+- packaged watchfile
+- Changes and fixes:
+  + Avoid continual processing of an unlimited number of TLS records,
+    which can cause a denial-of-service condition.
+  + In X509_cmp_time(), pass asn1_time_parse() the tag of the field
+    being parsed so that a malformed GeneralizedTime field is recognized
+    as an error instead of potentially being interpreted as if it was a
+    valid UTCTime.
+  + Improve ticket validity checking when tlsext_ticket_key_cb()
+    callback chooses a different HMAC algorithm.
+  + Check for packets with a truncated DTLS cookie.
+  + Detect zero-length encrypted session data early, instead of when
+    malloc(0) fails or the HMAC check fails.
+  + Check for and handle failure of HMAC_{Update,Final} or
+    EVP_DecryptUpdate()
+
 * Thu Sep 29 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4.3-alt1
 - 2.4.3
 - Bug fixes and reliability improvements:
