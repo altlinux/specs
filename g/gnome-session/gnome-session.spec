@@ -5,7 +5,7 @@
 %def_disable consolekit
 
 Name: gnome-session
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -58,7 +58,8 @@ BuildRequires: GConf browser-plugins-npapi-devel perl-XML-Parser xorg-xtrans-dev
 BuildRequires: docbook-dtds docbook-style-xsl
 %{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libpolkit-devel}
 %{?_enable_consolekit:BuildRequires: libdbus-glib-devel}
-
+# since 3.22.2
+BuildRequires: libepoxy-devel
 
 %description
 GNOME (GNU Network Object Model Environment) is a user-friendly set of
@@ -151,6 +152,9 @@ This package permits to log into GNOME using Wayland.
 
 
 %changelog
+* Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
+- 3.22.2
+
 * Wed Oct 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 

@@ -13,7 +13,7 @@
 %def_enable udev
 
 Name: %{_name}3
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
@@ -176,6 +176,9 @@ the functionality of the Gnome 3 desktop library.
 
 
 %changelog
+* Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
+- 3.22.2
+
 * Mon Oct 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 
