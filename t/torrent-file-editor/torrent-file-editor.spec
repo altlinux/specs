@@ -1,6 +1,6 @@
 Name:		torrent-file-editor
-Version:	0.2.1
-Release:	alt3.1
+Version:	0.3.0
+Release:	alt1
 License:	GPLv3+
 Summary:	Torrent File Editor
 Group:		File tools
@@ -9,8 +9,7 @@ Source0:	%name-%version.tar.gz
 
 Source1:	%name-qt5.desktop
 
-Patch0:		%name-0.2.1-cmake_version_down.diff
-Patch1:		%name-0.2.0-file_open_with.diff
+Patch0:		%name-0.3.0-cmake_version_down.diff
 
 Requires:	%name-common
 
@@ -39,7 +38,6 @@ Common files for Torrent File Editor (Qt4 & Qt5)
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 
 %build
 mkdir ./build && cd ./build
@@ -79,6 +77,9 @@ install -m 0644 %SOURCE1 %buildroot%_desktopdir/%name-qt5.desktop
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Mon Nov 07 2016 Motsyo Gennadi <drool@altlinux.ru> 0.3.0-alt1
+- 0.3.0
+
 * Wed Nov 18 2015 Motsyo Gennadi <drool@altlinux.ru> 0.2.1-alt3.1
 - fix build
 
