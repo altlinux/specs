@@ -1,6 +1,6 @@
 Name: make-initrd
-Version: 0.8.11
-Release: alt2
+Version: 0.8.12
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL3
@@ -86,7 +86,7 @@ Summary: multipath module for %name
 Group: System/Base
 Requires: %name = %version-%release
 Requires: %name-devmapper = %version-%release
-Requires: multipath-tools
+Requires: multipath-tools > 0.6.1-alt1
 AutoReq: noshell, noshebang
 
 %description multipath
@@ -168,6 +168,9 @@ fi
 %_datadir/%name/features/mdadm
 
 %changelog
+* Mon Nov 07 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.8.12-alt1
+- multipath working again
+
 * Wed Oct 26 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.8.11-alt2
 - updated multipath feature to current multipath-tools
 
