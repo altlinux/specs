@@ -28,7 +28,7 @@
 %def_enable admin
 
 Name: gvfs
-Version: %ver_major.1.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -560,6 +560,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name-mount 2>/dev/null ||:
 
 
 %changelog
+* Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 1.30.2-alt1
+- 1.30.2
+
 * Mon Oct 17 2016 Yuri N. Sedunov <aris@altlinux.org> 1.30.1.1-alt1
 - 1.30.1.1
 
