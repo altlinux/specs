@@ -1,6 +1,6 @@
 Name: xfce4
 Version: 4.12
-Release: alt4
+Release: alt5
 Summary: Set of Xfce4 Desktop installers.
 License: %gpl2plus
 Group: Graphical desktop/XFce
@@ -69,54 +69,58 @@ Requires: screen-saver-engine
 %name-default is a virtual package to provide default installation
 of Xfce4 Desktop.
 
+%define commonreqs \
+Requires: xfwm4-themes \
+Requires: xfce4-session-engines \
+Requires: xfce4-dict \
+Requires: orage \
+Requires: xfce4-screenshooter \
+Requires: xarchiver \
+Requires: ristretto \
+Requires: mousepad \
+Requires: parole \
+# Panel plugins \
+Requires: xfce4-clipman-plugin \
+Requires: xfce4-cpufreq-plugin \
+Requires: xfce4-xkb-plugin \
+Requires: xfce4-timer-plugin \
+Requires: xfce4-datetime-plugin \
+Requires: xfce4-places-plugin \
+Requires: xfce4-quicklauncher-plugin \
+Requires: xfce4-time-out-plugin \
+Requires: xfce4-fsguard-plugin \
+Requires: xfce4-mailwatch-plugin \
+Requires: xfce4-battery-plugin \
+Requires: xfce4-verve-plugin \
+Requires: xfce4-diskperf-plugin \
+Requires: xfce4-eyes-plugin \
+Requires: xfce4-notes-plugin \
+Requires: xfce4-netload-plugin \
+Requires: xfce4-mount-plugin \
+Requires: xfce4-weather-plugin \
+Requires: xfce4-genmon-plugin \
+Requires: xfce4-wmdock-plugin \
+Requires: xfce4-systemload-plugin \
+Requires: xfce4-cpugraph-plugin \
+Requires: xfce4-kbdleds-plugin \
+Requires: xfce4-sensors-plugin \
+Requires: xfce4-whiskermenu-plugin \
+Requires: xfce4-smartbookmark-plugin \
+Requires: xfce4-calculator-plugin \
+Requires: xfce4-hardware-monitor-plugin
+
 %package full
 Summary: Full installation of Xfce4 Desktop
 Group: Graphical desktop/XFce
 BuildArch: noarch
 Requires: %name-default = %version-%release
-Requires: xfwm4-themes
-Requires: xfce4-session-engines
 Requires: xfce-polkit
-Requires: xfce4-dict
-Requires: orage
-Requires: xfce4-screenshooter
-Requires: xarchiver
-Requires: ristretto
-Requires: mousepad
-Requires: parole
+%commonreqs
+Requires: xfce4-pulseaudio-plugin
 # For xfce4-pulseaudio-plugin
 Requires: pavucontrol
 # xfce4-volumed-pulse is alternative for xfce4-volumed.
 #Requires: xfce4-volumed
-# Panel plugins
-Requires: xfce4-clipman-plugin
-Requires: xfce4-cpufreq-plugin
-Requires: xfce4-xkb-plugin
-Requires: xfce4-timer-plugin
-Requires: xfce4-datetime-plugin
-Requires: xfce4-places-plugin
-Requires: xfce4-quicklauncher-plugin
-Requires: xfce4-time-out-plugin
-Requires: xfce4-fsguard-plugin
-Requires: xfce4-mailwatch-plugin
-Requires: xfce4-battery-plugin
-Requires: xfce4-verve-plugin
-Requires: xfce4-diskperf-plugin
-Requires: xfce4-eyes-plugin
-Requires: xfce4-notes-plugin
-Requires: xfce4-netload-plugin
-Requires: xfce4-mount-plugin
-Requires: xfce4-weather-plugin
-Requires: xfce4-genmon-plugin
-Requires: xfce4-wmdock-plugin
-Requires: xfce4-systemload-plugin
-Requires: xfce4-cpugraph-plugin
-Requires: xfce4-kbdleds-plugin
-Requires: xfce4-sensors-plugin
-Requires: xfce4-whiskermenu-plugin
-Requires: xfce4-pulseaudio-plugin
-Requires: xfce4-smartbookmark-plugin
-Requires: xfce4-calculator-plugin
 
 # Not needed for most users.
 #Requires: xfce4-radio-plugin
@@ -133,8 +137,9 @@ of Xfce4 Desktop.
 Summary: Virtual package for use in the regular-xfce distro
 Group: Graphical desktop/XFce
 BuildArch: noarch
-Requires: %name-full = %version-%release
+Requires: %name-default = %version-%release
 Requires: gnome-icon-theme
+%commonreqs
 
 %description regular
 %summary
@@ -159,6 +164,11 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %files regular
 
 %changelog
+* Mon Nov 07 2016 Michael Shigorin <mike@altlinux.org> 4.12-alt5
+- NMU: rework full/regular metapackages so that -regular one
+  is suitable for sysvinit-based systems again (xfce-polkit
+  fails to start properly there at the moment)
+
 * Wed May 11 2016 Mikhail Efremov <sem@altlinux.org> 4.12-alt4
 - default: Add gnome-icon-theme (closes: #32003).
 - full: Add xfce-polkit (closes: #32075).
