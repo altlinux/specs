@@ -1,6 +1,6 @@
 Name: ganttproject
 Version: 2.7.2
-Release: alt1
+Release: alt2
 
 Summary: GanttProject is a tool for creating a project schedule by means of Gantt chart and resource load chart
 
@@ -17,7 +17,7 @@ BuildRequires: rpm-build-java java-devel ant
 
 AutoProv: yes,noosgi
 
-Requires: /usr/bin/java
+Requires: java >= 1.8.0
 
 Requires(post): desktop-file-utils
 Requires(postun): desktop-file-utils
@@ -109,6 +109,9 @@ install -D ../ganttproject/data/resources/icons/ganttproject.png %buildroot%_dat
 %_datadir/icons/hicolor/32x32/apps/*
 
 %changelog
+* Mon Nov 07 2016 Andrey Cherepanov <cas@altlinux.org> 2.7.2-alt2
+- Require java-1.8.0 and later (ALT #32710)
+
 * Thu Jul 14 2016 Andrey Cherepanov <cas@altlinux.org> 2.7.2-alt1
 - New version
 - Build from upstream Git repository
