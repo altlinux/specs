@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name vte
 %define ver_major 0.46
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 %def_disable static
@@ -137,7 +137,7 @@ GObject introspection devel data for the %name library
 chmod 755 %buildroot%_sysconfdir/profile.d/vte.sh
 
 install -d -m755 %buildroot%pkgdocdir
-install -p -m644 AUTHORS MAINTAINERS NEWS README %buildroot%pkgdocdir/
+install -p -m644 AUTHORS NEWS README %buildroot%pkgdocdir/
 ln -s %_licensedir/LGPL-2 %buildroot%pkgdocdir/COPYING
 
 install -p -m644 doc/*.txt %buildroot%pkgdocdir/
@@ -156,7 +156,6 @@ find %buildroot -type f -name '*.la' -delete
 %dir %pkgdocdir
 %pkgdocdir/AUTHORS
 %pkgdocdir/COPYING
-%pkgdocdir/MAINTAINERS
 %pkgdocdir/NEWS
 %pkgdocdir/README
 %_libdir/*.so.*
@@ -187,6 +186,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 0.46.1-alt1
+- 0.46.1
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt1
 - 0.46.0
 
