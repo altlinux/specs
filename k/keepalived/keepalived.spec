@@ -8,7 +8,7 @@
 
 Name: keepalived
 Version: 1.2.24
-Release: alt2
+Release: alt3
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
 License: GPL
@@ -23,7 +23,7 @@ Patch2: 0002-update-systemd-unit-file.patch
 # Automatically added by buildreq on Thu Aug 09 2007 (-ba)
 BuildRequires: libpopt-devel libssl-devel
 %{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
-%{?_enable_libipset:BuildRequires: libipset6-devel}
+%{?_enable_libipset:BuildRequires: libipset-devel}
 BuildRequires: pkgconfig(libnl-genl-3.0) pkgconfig(libnl-route-3.0)
 BuildRequires: libnfnetlink-devel
 %{?_enable_snmp:BuildRequires: libnet-snmp-devel}
@@ -96,6 +96,9 @@ install -pD -m644 keepalived/etc/init.d/%name.sysconfig %buildroot%_sysconfdir/s
 %doc doc/samples
 
 %changelog
+* Mon Nov 07 2016 Anton Farygin <rider@altlinux.ru> 1.2.24-alt3
+- build with actual version of libipset-devel
+
 * Fri Sep 30 2016 Alexey Shabalin <shaba@altlinux.ru> 1.2.24-alt2
 - fix dlopen libipset
 - update systemd unit file
