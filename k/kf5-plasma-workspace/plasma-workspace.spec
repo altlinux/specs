@@ -17,7 +17,7 @@
 
 Name: kf5-%rname
 Version: 5.8.2
-Release: alt3
+Release: alt4
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -293,6 +293,12 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Mon Nov 07 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt4
+- fix to upscale splash background on big screen
+
+* Fri Oct 28 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt2.M80P.1
+- build for M80P
+
 * Fri Oct 28 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt3
 - set user switch screen background
 
