@@ -1,10 +1,13 @@
+%def_enable snapshot
+
 Name: compiz
 Version: 0.9.13.0
-Release: alt1
+Release: alt2
 Summary: OpenGL window and compositing manager
 License: MIT/X11 GPL
 Group: System/X11
-Url: http://www.compiz-fusion.org/
+Url: http://www.compiz.org/
+# https://launchpad.net/compiz
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: i586 x86_64
@@ -13,7 +16,14 @@ Provides: compiz-fusion-plugins-main compizconfig-backend-gconf ccsm emerald
 Obsoletes: libcompizconfig compiz-fusion-plugins-extra compiz-gtk python-module-compizconfig compiz-gnome
 Obsoletes: compiz-fusion-plugins-main compizconfig-backend-gconf ccsm emerald
 
+%if_disabled snapshot
+#https://launchpad.net/compiz/0.9.13/0.9.13.0/+download/compiz-0.9.13.0.tar.bz2
 Source: %name-%version.tar.xz
+%else
+# bzr export --format=tar --root=compiz-0.9.13.0 compiz-0.9.13.0.tar
+Source: %name-%version.tar
+%endif
+
 Patch0: compiz-0.9.13.0-alt-python_sitelibdir.patch
 Patch1: compiz-0.9.13.0-alt-mate-window-settings.patch
 Patch2: compiz-0.9.13.0-alt-po.patch
@@ -99,9 +109,15 @@ rm -fr %buildroot%_datadir/cmake*
 %_datadir/%name
 %_datadir/glib-2.0/schemas/*.gschema.xml
 %_iconsdir/hicolor/*/apps/*.png
+%_iconsdir/hicolor/*x*/apps/*.svg
 %_iconsdir/hicolor/scalable/apps/*.svg
 
+
 %changelog
+* Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 0.9.13.0-alt2
+- updated to rev.4097
+- built against libmetacity.so.1 (metacity-3.22)
+
 * Tue Jul 12 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.9.13.0-alt1
 - 0.9.13.0
 
