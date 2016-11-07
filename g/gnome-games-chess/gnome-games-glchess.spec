@@ -6,8 +6,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: A chess game for GNOME
 Group: Games/Boards
@@ -62,6 +62,9 @@ A chess game which supports several chess engines, with 2D and optionally
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Sun Nov 06 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
+- 3.22.2
+
 * Thu Oct 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt2
 - explicitly requires gnuchess
 
