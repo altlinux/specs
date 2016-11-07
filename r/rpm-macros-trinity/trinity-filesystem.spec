@@ -17,7 +17,7 @@
 # TDE variables
 Name: rpm-macros-trinity
 Version: 14.0.3
-Release: alt5
+Release: alt6
 Summary: RPM helper macros to rebuild TDE packages
 BuildArch: noarch
 Provides: trinity-cmake-macros
@@ -46,6 +46,9 @@ install -m 0644 %SOURCE1 %buildroot/%_rpmmacrosdir/trinity
 %_rpmmacrosdir/trinity
 
 %changelog
+* Mon Nov 07 2016 Hihin Ruslan <ruslandh@altlinux.ru> 14.0.3-alt6
+- Correct macros
+
 * Fri Nov 04 2016 Hihin Ruslan <ruslandh@altlinux.ru> 14.0.3-alt5
 - development release
 
