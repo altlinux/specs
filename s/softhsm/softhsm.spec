@@ -4,7 +4,7 @@
 Name: softhsm
 Version: 2.1.0
 
-Release: alt1
+Release: alt2
 Summary: Software version of a PKCS#11 Hardware Security Module
 License: BSD
 Group: System/Configuration/Other
@@ -62,6 +62,7 @@ sed -i 's:^full_libdir=":#full_libdir=":g' configure.ac
 sed -i "s:libdir)/@PACKAGE@:libdir):" Makefile.in
 
 %configure \
+	--localstatedir=/var \
 	--libdir=%_libdir/pkcs11 \
 	--with-openssl=%prefix \
 	--enable-ecc \
@@ -125,16 +126,20 @@ fi
 %attr(0770,ods,ods) %dir %_sharedstatedir/softhsm/tokens
 %doc LICENSE README.md NEWS
 %_man1dir/*
-%_man5dir/*
 
 %files -n lib%name
 %_libdir/libsofthsm2.so
 %config(noreplace) %_sysconfdir/softhsm2.conf
+%_man5dir/softhsm2.conf.5*
 
 %files devel
 %_includedir/softhsm
 
 %changelog
+* Thu Nov 03 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.1.0-alt2
+- Fixed tokendir in softhsm2.conf.
+- Moved softhsm2.conf.5 manpage to lib%name subpackage.
+
 * Wed Nov 02 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.1.0-alt1
 - Updated to 2.1.0.
 
