@@ -20,8 +20,8 @@
 %endif
 
 Name: glib2
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -415,6 +415,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 2.50.2-alt1
+- 2.50.2
+
 * Sat Oct 22 2016 Yuri N. Sedunov <aris@altlinux.org> 2.50.1-alt2
 - gio/gdbusaddress.c: s|var/run/dbus|/run/dbus| (ALT #32444, #32642)
 
