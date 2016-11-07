@@ -25,7 +25,7 @@ BuildRequires(pre):	rpm-macros-cmake
 
 Name: trinity-filesystem
 Version: 14.0.3
-Release: alt2
+Release: alt2.1
 Summary: Trinity Directory Layout
 Group: System/Base
 Url: http://www.trinitydesktop.org/
@@ -577,6 +577,9 @@ for b in kcheckpass kgrantpty kpac_dhcp_helper kppp start_tdeinit tdmtsak tdekbd
 done
 
 %changelog
+* Mon Nov 07 2016 Hihin Ruslan <ruslandh@altlinux.ru> 14.0.3-alt2.1
+- Correct spec
+
 * Mon Nov 07 2016 Hihin Ruslan <ruslandh@altlinux.ru> 14.0.3-alt2
 - modified:   rpm.macros.trinity.standalone
 
