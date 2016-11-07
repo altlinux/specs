@@ -24,7 +24,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Evolution Data Server
@@ -182,9 +182,6 @@ fi
 %define ldap_flags --without-openldap
 %endif
 
-#export CPPFLAGS="-I%{_includedir}/et"
-#export CFLAGS="$RPM_OPT_FLAGS -DLDAP_DEPRECATED -fPIC -I%{_includedir}/et"
-
 %autoreconf
 export ac_cv_path_SENDMAIL=%_sbindir/sendmail
 export CAMEL_LOCK_HELPER_GROUP=mail
@@ -290,6 +287,9 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
+- 3.22.2
+
 * Mon Oct 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 
