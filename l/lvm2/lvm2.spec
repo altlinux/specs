@@ -1,5 +1,5 @@
-%define lvm2version 2.02.165
-%define dmversion 1.02.134
+%define lvm2version 2.02.167
+%define dmversion 1.02.136
 
 %define _sbindir /sbin
 %define _runtimedir /run
@@ -135,7 +135,7 @@ Version: %dmversion
 Summary: Utilities for low level logical volume management
 Group: System/Kernel and hardware
 Requires: libdevmapper = %dmversion-%release
-Requires: udev >= 150-alt4
+Requires: lsblk udev >= 150-alt4
 
 %package -n dmeventd
 Version: %dmversion
@@ -558,6 +558,9 @@ __EOF__
 %python3_sitelibdir/*
 
 %changelog
+* Tue Nov 08 2016 Alexey Shabalin <shaba@altlinux.ru> 2.02.167-alt1
+- 2.02.167
+
 * Thu Sep 22 2016 Alexey Shabalin <shaba@altlinux.ru> 2.02.165-alt1
 - 2.02.165
 
