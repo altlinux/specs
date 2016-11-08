@@ -4,7 +4,7 @@
 
 Name: multipath-tools
 Version: 0.6.1
-Release: alt1
+Release: alt2
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPLv2+
@@ -61,7 +61,7 @@ kpartx manages partition creation and removal for device-mapper devices.
 %patch2 -p1
 
 %build
-# non-SMP build
+unset RPM_OPT_FLAGS
 %make_build LIB=%_lib RUN=run SYSTEMDPATH=lib
 
 %install
@@ -120,6 +120,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_man8dir/kpartx.8.*
 
 %changelog
+* Tue Nov 08 2016 Alexey Shabalin <shaba@altlinux.ru> 0.6.1-alt2
+- fix work inside initrd (shrek@)
+
 * Fri Jun 17 2016 Alexey Shabalin <shaba@altlinux.ru> 0.6.1-alt1
 - 0.6.1
 - use upstream udev rules
