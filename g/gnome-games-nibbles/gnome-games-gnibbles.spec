@@ -7,7 +7,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.2.2
 Release: alt1
 
 Summary: A cute little game that has no short description
@@ -64,6 +64,9 @@ it.
 %_datadir/appdata/%xdg_name.appdata.xml
 
 %changelog
+* Tue Nov 08 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.2.2-alt1
+- 3.22.2.2
+
 * Tue Nov 08 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
 - 3.22.2
 
