@@ -1,6 +1,6 @@
 Name: json-cpp
-Version: 2.0.6
-Release: alt0.1
+Version: 2.0.7
+Release: alt1
 
 Summary: JSON for Modern C++ (c++11) ("single header file")
 
@@ -36,5 +36,8 @@ mv -f src/json.hpp %buildroot%_includedir
 %_includedir/*.hpp
 
 %changelog
+* Tue Nov 08 2016 Pavel Vainerman <pv@altlinux.ru> 2.0.7-alt1
+- new version
+
 * Sun Oct 30 2016 Pavel Vainerman <pv@altlinux.ru> 2.0.6-alt0.1
 - initial commit 
