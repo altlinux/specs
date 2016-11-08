@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.28
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -36,6 +36,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm)
 %_man1dir/distro*
 
 %changelog
+* Tue Nov 08 2016 Igor Vlasenko <viy@altlinux.ru> 0.28-alt2
+- bugfix release
+
 * Fri Oct 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
 - development release
 
