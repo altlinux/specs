@@ -1,7 +1,7 @@
 
 Name: openstack-glance
 Version: 13.0.0
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: OpenStack Image Service
 
@@ -13,13 +13,13 @@ Source1: %name-api.service
 Source2: %name-registry.service
 Source3: %name-scrubber.service
 Source4: %name.logrotate
+Source6: %name-glare.service
 
 Source40: %name-api.init
 Source41: %name-registry.init
 Source42: %name-scrubber.init
 Source43: %name.tmpfiles
-
-Patch0001: 0001-notify-calling-process-we-are-ready-to-serve.patch
+Source46: %name-glare.init
 
 BuildArch: noarch
 BuildRequires: python-devel
@@ -131,7 +131,6 @@ This package contains documentation files for glance.
 
 %prep
 %setup
-%patch0001 -p1
 
 # Remove bundled egg-info
 #rm -rf glance.egg-info
@@ -175,11 +174,13 @@ install -d -m 755 %buildroot%_sharedstatedir/glance/images
 install -p -D -m 644 %SOURCE1 %buildroot%_unitdir/openstack-glance-api.service
 install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/openstack-glance-registry.service
 install -p -D -m 644 %SOURCE3 %buildroot%_unitdir/openstack-glance-scrubber.service
+install -p -D -m 644 %SOURCE6 %buildroot%_unitdir/openstack-glance-glare.service
 
 # Initscripts
 install -p -D -m 755 %SOURCE40 %buildroot%_initdir/openstack-glance-api
 install -p -D -m 755 %SOURCE41 %buildroot%_initdir/openstack-glance-registry
 install -p -D -m 755 %SOURCE42 %buildroot%_initdir/openstack-glance-scrubber
+install -p -D -m 755 %SOURCE46 %buildroot%_initdir/openstack-glance-glare
 
 install -p -D -m 644 %SOURCE43 %buildroot%_tmpfilesdir/%name.conf
 
@@ -205,11 +206,13 @@ rm -rf %buildroot/usr/etc/glance
 %post_service %name-api
 %post_service %name-registry
 %post_service %name-scrubber
+%post_service %name-glare
 
 %preun
 %preun_service %name-api
 %preun_service %name-registry
 %preun_service %name-scrubber
+%preun_service %name-glare
 
 %files
 %doc README.rst
@@ -242,6 +245,10 @@ rm -rf %buildroot/usr/etc/glance
 %doc doc/build/html
 
 %changelog
+* Wed Nov 09 2016 Alexey Shabalin <shaba@altlinux.ru> 1:13.0.0-alt3
+- add unit and init for glare
+- update systemd units
+
 * Wed Nov 09 2016 Alexey Shabalin <shaba@altlinux.ru> 1:13.0.0-alt2
 - fix dir permitions
 
