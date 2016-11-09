@@ -1,14 +1,10 @@
-%brp_strip_none %_bindir/*
-%brp_strip_none %browser_plugins_path/*
-%set_verify_elf_method textrel=relaxed
-%def_enable include_x86_64
 
 Name: adobe-flash-player
 %define bin_name mozilla-plugin-adobe-flash
-%define ver_fake   11
-%define ver_ix86   11.2.202.644
-%define ver_x86_64 11.2.202.644
-Release: alt68
+%define ver_fake   13
+%define ver_ix86   13.0.0.0
+%define ver_x86_64 13.0.0.0
+Release: alt1
 Serial: 3
 
 %define ver_real %ver_fake
@@ -23,29 +19,24 @@ Version: %ver_fake
 Group: Networking/WWW
 Summary: Adobe Flash Player
 URL: http://www.adobe.com/products/flashplayer/
-License: Adobe
+License: GPL
 
 ExclusiveArch: %ix86 x86_64
-BuildRequires: rpm-macros-browser-plugins libXt libgtk+2-devel fontconfig desktop-file-utils
+BuildArch: noarch
+BuildRequires: rpm-macros-browser-plugins
 
-Source: adobe_flash_player_eula.desktop
-#
-Source10: flash_player-x86_64-%ver_x86_64.tar
-Source11: flash_player-x86-%ver_ix86.tar
+Source: empty
 
 %description
 Adobe Flash Player %version (Macromedia Flash)
 Fully Supported: Mozilla 1.0+, Netscape 7.x, Firefox 0.8+
 Partially Supported: Opera, Konqueror 3.x
 
-See the distribution license in
- http://www.adobe.com/legal/licenses-terms.html
-
 %package -n %bin_name
 Version: %ver_real
 Group: Networking/WWW
 Summary: Adobe Flash Player
-Requires: libcurl /usr/bin/xdg-open
+Requires: firefox-pepperflash
 Provides: flash-plugin = %version-%release
 Obsoletes: flash-plugin <= %version
 Provides: mozilla-plugin-macromedia-flash = %version-%release
@@ -54,9 +45,6 @@ Obsoletes: mozilla-plugin-macromedia-flash < %version-%release
 Adobe Flash Player %version (Macromedia Flash)
 Fully Supported: Mozilla 1.0+, Netscape 7.x, Firefox 0.8+
 Partially Supported: Opera, Konqueror 3.x
-
-See the distribution license in
-  http://www.adobe.com/legal/licenses-terms.html
 
 %package fake
 Version: %ver_fake
@@ -68,67 +56,15 @@ fake
 
 %prep
 %setup -Tqcn flash_player_%{version}_linux
-%ifarch x86_64
-%if_enabled include_x86_64
-tar xfv %SOURCE10
-%endif
-%else
-tar xfv %SOURCE11
-%endif
 
-
-%build
-
-%install
-mkdir -p -m 0755 %buildroot/%browser_plugins_path
-%ifarch x86_64
-%if_enabled include_x86_64
-install -m 0644 libflashplayer.so %buildroot/%browser_plugins_path
-%endif
-%else
-install -m 0644 libflashplayer.so %buildroot/%browser_plugins_path
-%endif
-
-# install flash-player-properties
-mkdir -p %buildroot/{%_bindir,%_desktopdir,%_miconsdir,%_niconsdir,%_liconsdir}
-install -m0755 ./%_bindir/flash-player-properties %buildroot/%_bindir/
-desktop-file-install -m 0644 --dir %buildroot/%_desktopdir \
-    --add-category=X-PersonalSettings \
-    --remove-key=NotShowIn \
-    ./%_desktopdir/flash-player-properties.desktop
-for icondir in %_miconsdir %_niconsdir %_liconsdir
-do
-    install -m 0644 ./$icondir/flash-player-properties.png %buildroot/$icondir/
-done
-
-
-# menu
-mkdir -p -m0755 %buildroot/%_desktopdir
-install -m0644 %SOURCE0 %buildroot/%_desktopdir/
-
-%ifarch x86_64
-%if_disabled include_x86_64
-%post -n %bin_name
-echo "At this moment you must install manually nspluginwrapper and i586-%name (see bugs 23876 23877 23878 23903)"
-%endif
-%endif
 
 %files -n %bin_name
-%_bindir/flash-player-properties
-%_desktopdir/flash-player-properties.desktop
-%_iconsdir/hicolor/*/apps/flash-player-properties.*
-#
-%ifarch x86_64
-%if_enabled include_x86_64
-%browser_plugins_path/*
-%_desktopdir/adobe_flash_player_eula.desktop
-%endif
-%else
-%browser_plugins_path/*
-%_desktopdir/adobe_flash_player_eula.desktop
-%endif
 
 %changelog
+* Wed Nov 09 2016 Sergey V Turchin <zerg@altlinux.org> 3:13-alt1
+- empty package
+- require firefox-pepperflash
+
 * Wed Nov 09 2016 Sergey V Turchin <zerg@altlinux.org> 3:11-alt68
 - new version
 - security fixes:
