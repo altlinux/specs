@@ -2,7 +2,7 @@
 
 Name: opensc
 Version: 0.16.0
-Release: alt2
+Release: alt3
 
 Group: System/Configuration/Hardware
 Summary: OpenSC library - for accessing SmartCard devices using PC/SC Lite
@@ -88,12 +88,12 @@ install -p -m644 etc/opensc.conf %buildroot/%_sysconfdir/opensc.conf
 %files
 %doc NEWS README.md
 
-%config(noreplace) %_sysconfdir/opensc.conf
 %config %_sysconfdir/bash_completion.d/*
 %_bindir/*
 %doc %_mandir/*/*
 
 %files -n lib%name
+%config(noreplace) %_sysconfdir/opensc.conf
 %_libdir/lib*.so.*
 %_libdir/opensc-pkcs11.so*
 %_libdir/pkcs11-spy.so*
@@ -118,6 +118,10 @@ install -p -m644 etc/opensc.conf %buildroot/%_sysconfdir/opensc.conf
 %endif
 
 %changelog
+* Wed Nov 09 2016 Dmitry Derjavin <dd@altlinux.org> 0.16.0-alt3
+- opensc.conf moved to library package
+- (closes: 32735)
+
 * Thu Oct 13 2016 Dmitry Derjavin <dd@altlinux.org> 0.16.0-alt2
 - Reqs and configure params cleanup.
 
