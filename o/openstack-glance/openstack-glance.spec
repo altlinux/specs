@@ -1,7 +1,7 @@
 
 Name: openstack-glance
 Version: 13.0.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: OpenStack Image Service
 
@@ -190,7 +190,7 @@ install -p -D -m 644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/openstack-glanc
 install -d -m 755 %buildroot%_runtimedir/glance
 
 # Install log directory
-install -d -m 755 %buildroot%_logdir/glance
+install -d -m 770 %buildroot%_logdir/glance
 
 # Delete unneeded files
 rm -rf %buildroot/usr/etc/glance
@@ -228,10 +228,10 @@ rm -rf %buildroot/usr/etc/glance
 %_sysconfdir/glance/metadefs/README
 %config %_sysconfdir/glance/metadefs/*.json
 %config(noreplace) %_sysconfdir/logrotate.d/%name
-%dir %attr(0755, glance, glance) %_sharedstatedir/glance
-%dir %attr(0755, glance, glance) %_sharedstatedir/glance/images
-%dir %attr(0750, glance, glance) %_logdir/glance
-%dir %attr(0755, glance, glance) %_runtimedir/glance
+%dir %attr(0775, root, glance) %_sharedstatedir/glance
+%dir %attr(0775, root, glance) %_sharedstatedir/glance/images
+%dir %attr(0770, root, glance) %_logdir/glance
+%dir %attr(0775, root, glance) %_runtimedir/glance
 
 %files -n python-module-glance
 %doc README.rst
@@ -242,6 +242,9 @@ rm -rf %buildroot/usr/etc/glance
 %doc doc/build/html
 
 %changelog
+* Wed Nov 09 2016 Alexey Shabalin <shaba@altlinux.ru> 1:13.0.0-alt2
+- fix dir permitions
+
 * Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1:13.0.0-alt1
 - 13.0.0 (Newton Release)
 
