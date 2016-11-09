@@ -4,7 +4,7 @@
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo3
 Version:      3.2.1
-Release:      alt2
+Release:      alt3
 
 License:      GPL
 URL:          http://www.inverse.ca/contributions/sogo.html
@@ -90,7 +90,9 @@ Requires: cadaver
 Requires: libpst-tools
 Requires: vixie-cron
 Requires: openldap-clients
-Conflicts: task-sogo
+
+Provides:  task-sogo = %version-%release
+Obsoletes: task-sogo < %version-%release
 
 %description -n task-sogo3
 SOGo is a groupware server built around OpenGroupware.org (OGo) and
@@ -396,6 +398,11 @@ fi
 %preun_service sogo
 
 %changelog
+* Wed Nov 09 2016 Andrey Cherepanov <cas@altlinux.org> 3.2.1-alt3
+- Disable native spell checker (because it is only available for a
+  limited set of languages)
+- Provides task-sogo
+
 * Thu Nov 03 2016 Andrey Cherepanov <cas@altlinux.org> 3.2.1-alt2
 - Add tzdata to requirements
 
