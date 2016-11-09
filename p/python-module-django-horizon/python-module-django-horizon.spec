@@ -1,9 +1,9 @@
 %add_findreq_skiplist %_datadir/openstack-dashboard/openstack_dashboard/management/commands/horizon.wsgi.template
 
-%def_without compression
+%def_with compression
 
 Name: python-module-django-horizon
-Version: 10.0.0
+Version: 10.0.1
 Release: alt1
 Epoch: 1
 Summary: Django application for talking to Openstack
@@ -285,8 +285,8 @@ install -d -m 755 %buildroot%_sysconfdir/openstack-dashboard
 #mkdir -p %buildroot%_unitdir/httpd.service.d/
 #cp %SOURCE3 %buildroot%_unitdir/httpd.service.d/openstack-dashboard.conf
 
-mkdir -p %buildroot%_sysconfdir/systemd/system/httpd2.service.d
-cp %SOURCE3 %buildroot%_sysconfdir/systemd/system/httpd2.service.d/openstack-dashboard.conf
+#mkdir -p %buildroot%_sysconfdir/systemd/system/httpd2.service.d
+#cp %SOURCE3 %buildroot%_sysconfdir/systemd/system/httpd2.service.d/openstack-dashboard.conf
 
 
 # Copy everything to /usr/share
@@ -346,12 +346,16 @@ sed -i "/^SECRET_KEY.*$/{N;s/^.*$/SECRET_KEY='`openssl rand -hex 10`'/}" /etc/op
 %ghost %apache2_sites_enabled/*.conf
 %config(noreplace) %attr(0640, root, _webserver) %_sysconfdir/openstack-dashboard/local_settings
 %config(noreplace) %attr(0640, root, _webserver) %_sysconfdir/openstack-dashboard/*.json
-%config(noreplace) %_sysconfdir/systemd/system/httpd2.service.d/openstack-dashboard.conf
+#%config(noreplace) %_sysconfdir/systemd/system/httpd2.service.d/openstack-dashboard.conf
 
 %files doc
 %doc html
 
 %changelog
+* Wed Nov 09 2016 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.1-alt1
+- 10.0.1
+- delete drop-in config for systemd, use compressed files form rpm package
+
 * Mon Oct 24 2016 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.0-alt1
 - 10.0.0 Newton release
 
@@ -374,7 +378,7 @@ sed -i "/^SECRET_KEY.*$/{N;s/^.*$/SECRET_KEY='`openssl rand -hex 10`'/}" /etc/op
 - update apache config and run wsgi as user dashboard
 - install apache config to /etc/httpd2/conf/sites-available/openstack-dashboard.conf
 - add /etc/httpd2/conf/sites-available/openstack-dashboard-ssl.conf
-- add drop-in config /etc/systemd/system//httpd2.service.d/openstack-dashboard.conf for apache2
+- add drop-in config /etc/systemd/system/httpd2.service.d/openstack-dashboard.conf for apache2
 
 * Wed Sep 16 2015 Lenar Shakirov <snejok@altlinux.ru> 2015.1.1-alt2
 - Add Requires: python-module-django-tests
