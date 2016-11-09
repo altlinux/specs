@@ -1,7 +1,7 @@
 %define sname neutron-lbaas
 
 Name: openstack-%sname
-Version: 9.0.0
+Version: 9.1.0
 Release: alt1
 Epoch: 1
 Summary: OpenStack Networking LBaaS
@@ -11,8 +11,8 @@ License: ASL 2.0
 Url: http://launchpad.net/neutron/
 
 Source0: %name-%version.tar
-Source1: neutron-lbaas-agent.init
-Source2: neutron-lbaas-agent.service
+Source1: neutron-lbaasv2-agent.init
+Source2: neutron-lbaasv2-agent.service
 
 BuildArch: noarch
 
@@ -42,11 +42,12 @@ BuildRequires: python-module-OpenSSL >= 0.14
 BuildRequires: python-module-stevedore >= 1.16.0
 BuildRequires: python-module-cryptography >= 1.0
 BuildRequires: python-module-keystoneauth1 >= 2.10.0
-
-BuildRequires: python-module-neutron >= 9.0.0
+BuildRequires: python-module-neutron >= 1:9.0.0
+BuildRequires: python-module-neutron-lib  >= 0.4.0
 
 Requires: openstack-neutron >= 1:9.0.0-alt1
 Requires: python-module-%sname = %EVR
+Requires: haproxy
 
 %description
 This package contains the code for the Neutron Load Balancer as a
@@ -57,6 +58,7 @@ requires Neutron to run.
 Summary: Neutron LBaaS Python libraries
 Group: Development/Python
 Requires: python-module-neutron >= 1:8.0.0-alt1
+Requires: python-module-neutron-lib
 %add_python_req_skip a10_neutron_lbaas
 %add_python_req_skip brocade_neutron_lbaas
 %add_python_req_skip heleosapi
@@ -89,9 +91,9 @@ install -p -D -m 644 etc/lbaas_agent.ini.sample %buildroot%_sysconfdir/neutron/l
 install -p -D -m 644 etc/services_lbaas.conf.sample %buildroot%_sysconfdir/neutron/services_lbaas.conf
 
 # Install sysV init scripts
-install -p -D -m 755 %SOURCE1 %buildroot%_initdir/neutron-lbaas-agent
+install -p -D -m 755 %SOURCE1 %buildroot%_initdir/neutron-lbaasv2-agent
 # Install systemd units
-install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/neutron-lbaas-agent.service
+install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/neutron-lbaasv2-agent.service
 
 # Remove unused files
 
@@ -102,8 +104,8 @@ install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/neutron-lbaas-agent.service
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/*.ini
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/*.conf
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/rootwrap.d/*.filters
-%_initdir/neutron-lbaas-agent
-%_unitdir/neutron-lbaas-agent.service
+%_initdir/neutron-lbaasv2-agent
+%_unitdir/neutron-lbaasv2-agent.service
 
 %files -n python-module-%sname
 %doc LICENSE
@@ -113,6 +115,10 @@ install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/neutron-lbaas-agent.service
 
 
 %changelog
+* Wed Nov 09 2016 Alexey Shabalin <shaba@altlinux.ru> 1:9.1.0-alt1
+- 9.1.0
+- drop support lbaas v1
+
 * Mon Oct 24 2016 Alexey Shabalin <shaba@altlinux.ru> 1:9.0.0-alt1
 - 9.0.0
 
