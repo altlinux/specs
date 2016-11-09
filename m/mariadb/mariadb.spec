@@ -26,8 +26,8 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.1.18
-Release: alt2
+Version: 10.1.19
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -140,9 +140,9 @@ mariadb-obsolete package:
 %package server
 Summary: A very fast and reliable MariaDB database server
 Group: Databases
-Requires: lib%name = %EVR %name-client = %EVR
+Requires: libmysqlclient%soname = %EVR %name-client = %EVR
 Requires: %name-common = %EVR
-Provides: mysql-server = %version-%release
+Provides: mysql-server = %EVR
 Provides: mysql = %version
 Provides: %name-engine-extra = %EVR
 Obsoletes: %name-engine-extra < %EVR
@@ -193,8 +193,8 @@ This package contents perl utils for MySQL-server.
 %package client
 Summary: Client
 Group: Databases
-Requires: lib%name = %EVR %name-common = %EVR
-Provides: mysql-client = %version-%release
+Requires: libmysqlclient%soname = %EVR %name-common = %EVR
+Provides: mysql-client = %EVR
 Conflicts: MySQL-client
 
 %description client
@@ -214,7 +214,7 @@ This package contains the common files for MariaDB client and servers.
 Summary: Benchmarks and test system
 Group: System/Servers
 Requires: %name-client = %EVR
-Provides: mysql-bench = %version-%release
+Provides: mysql-bench = %EVR
 Conflicts: MySQL-bench
 
 %description bench
@@ -223,8 +223,6 @@ This package contains MariaDB benchmark scripts and data.
 %package -n libmysqlclient%soname
 Summary: Shared libraries
 Group: System/Libraries
-Provides: lib%name = %EVR
-Obsoletes: lib%name < %EVR
 
 %description -n	libmysqlclient%soname
 This package contains the shared libraries (*.so*) which certain languages
@@ -235,23 +233,22 @@ Summary: Development header files and libraries
 Group: Development/Other
 # see also #28676
 Requires: libssl-devel zlib-devel
-Requires: lib%name = %EVR
+Requires: libmysqlclient%soname = %EVR
 Provides: mysql-devel = %version
 Provides: MySQL-devel = %version
 Provides: libMySQL-devel = %version
-Provides: lib%name-devel = %version-%release
-Obsoletes: lib%name-devel < %EVR
 
 %description -n	libmysqlclient-devel
 This package contains the development header files and libraries necessary
 to develop MariaDB/MySQL client applications.
 
-%package -n libmariadbembedded
+%package -n libmysqld%soname
 Summary: MariaDB as an embeddable library
 Group: System/Libraries
 Requires: %name-common = %EVR
+Obsoletes: libmariadbembedded < %EVR
 
-%description -n libmariadbembedded
+%description -n libmysqld%soname
 MariaDB is a multi-user, multi-threaded SQL database server. This
 package contains a version of the MariaDB server that can be embedded
 into a client application instead of running as a separate process.
@@ -259,12 +256,14 @@ into a client application instead of running as a separate process.
 The API is identical for the embedded MariaDB version
 and the client/server version.
 
-%package -n libmariadbembedded-devel
+%package -n libmysqld-devel
 Summary: Development files for MySQL as an embeddable library
 Group: Development/Other
-Requires: libmariadbembedded = %EVR lib%name-devel = %EVR
+Requires: libmysqld%soname = %EVR
+Requires: libmysqlclient%soname = %EVR
+Obsoletes: libmariadbembedded-devel < %EVR
 
-%description -n libmariadbembedded-devel
+%description -n libmysqld-devel
 MariaDB is a multi-user, multi-threaded SQL database server. This
 package contains files needed for developing and testing with
 the embedded version of the MariaDB server.
@@ -701,7 +700,7 @@ fi
 %_libdir/*.so.*
 %exclude %_libdir/libmysqld.so.*
 
-%files -n libmariadbembedded
+%files -n libmysqld%soname
 %doc README COPYING
 %_libdir/libmysqld.so.*
 #%_libdir/libmysqld.so.%%libmysqlembedded_major*
@@ -722,7 +721,7 @@ fi
 %_libdir/libmysqlservices.a
 
 
-%files -n libmariadbembedded-devel
+%files -n libmysqld-devel
 %_libdir/libmysqld.so
 %_bindir/mysql_client_test_embedded
 %_bindir/mysqltest_embedded
@@ -733,6 +732,11 @@ fi
 %endif
 
 %changelog
+* Wed Nov 09 2016 Alexey Shabalin <shaba@altlinux.ru> 10.1.19-alt1
+- 10.1.19
+- rename package libmariadbembedded -> libmysqld%soname (ALT #29389)
+- drop provides and requires lib%name, change to libmysqlclient%soname
+
 * Thu Nov 03 2016 Alexey Shabalin <shaba@altlinux.ru> 10.1.18-alt2
 - do not install and delete log files with rpm package
 - update logrotate config (ALT #32376)
