@@ -3,7 +3,7 @@
 # see /usr/share/linuxmint/mintMenu/plugins/applications.py
 
 Name:           mintmenu
-Version:        5.7.2
+Version:        5.7.3
 Release:        alt1
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
@@ -146,6 +146,9 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-altlin
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Sat Nov 05 2016 Andrey Cherepanov <cas@altlinux.org> 5.7.3-alt1
+- new version 5.7.3
+
 * Fri Jun 24 2016 Andrey Cherepanov <cas@altlinux.org> 5.7.2-alt1
 - New version
 
