@@ -1,8 +1,8 @@
 %add_findreq_skiplist %python_sitelibdir/nova/cloudpipe/*.template
 
 Name: openstack-nova
-Version: 14.0.1
-Release: alt2
+Version: 14.0.2
+Release: alt1
 Epoch: 1
 Summary: OpenStack Compute (nova)
 
@@ -481,7 +481,7 @@ install -d -m 755 %buildroot%_sharedstatedir/nova/instances
 install -d -m 755 %buildroot%_sharedstatedir/nova/keys
 install -d -m 755 %buildroot%_sharedstatedir/nova/networks
 install -d -m 755 %buildroot%_sharedstatedir/nova/tmp
-install -d -m 750 %buildroot%_logdir/nova
+install -d -m 770 %buildroot%_logdir/nova
 install -d -m 750 %buildroot%_cachedir/nova
 
 # Setup ghost CA cert
@@ -706,8 +706,8 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %config(noreplace) %_sysconfdir/polkit-1/rules.d/50-nova.rules
 
 %_tmpfilesdir/%name.conf
-%dir %attr(0750, nova, adm) %_logdir/nova
-%dir %attr(0755, nova, root) %_runtimedir/nova
+%dir %attr(0770, root, nova) %_logdir/nova
+%dir %attr(0775, root, nova) %_runtimedir/nova
 
 %_bindir/nova-manage
 %_bindir/nova-rootwrap
@@ -825,6 +825,10 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %doc LICENSE doc/build/html
 
 %changelog
+* Wed Nov 09 2016 Alexey Shabalin <shaba@altlinux.ru> 1:14.0.2-alt1
+- 14.0.2
+- fix log dir permitions for logrotate
+
 * Wed Oct 26 2016 Alexey Shabalin <shaba@altlinux.ru> 1:14.0.1-alt2
 - delete Requires: python-module-ldap
 
