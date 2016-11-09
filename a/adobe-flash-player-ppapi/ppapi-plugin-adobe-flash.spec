@@ -9,9 +9,9 @@
 Name: adobe-flash-player-ppapi
 %define bin_name ppapi-plugin-adobe-flash
 %define ver_fake   23
-%define ver_ix86   23.0.0.205
-%define ver_x86_64 23.0.0.205
-Release: alt6
+%define ver_ix86   23.0.0.207
+%define ver_x86_64 23.0.0.207
+Release: alt7
 Epoch: 3
 
 %define ver_real %ver_fake
@@ -139,6 +139,13 @@ echo "At this moment no x86 version of %name"
 %endif
 
 %changelog
+* Wed Nov 09 2016 Sergey V Turchin <zerg@altlinux.org> 3:23-alt7
+- new version
+- security fixes:
+  CVE-2016-7857, CVE-2016-7858, CVE-2016-7859, CVE-2016-7860,
+  CVE-2016-7861, CVE-2016-7862, CVE-2016-7863, CVE-2016-7864,
+  CVE-2016-7865
+
 * Sun Nov 06 2016 Sergey V Turchin <zerg@altlinux.org> 3:23-alt6
 - add /usr/lib/pepperflashplugin-nonfree/libpepflashplayer.so symlink (ALT#32721)
 
