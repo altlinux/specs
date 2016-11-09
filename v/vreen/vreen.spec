@@ -5,7 +5,7 @@ Name: vreen
 Version: 0.9.5
 # to replace old libvreen from qutim package
 Epoch: 8
-Release: alt3.git%git_version
+Release: alt4.git%git_version
 Summary: Qt wrapper library for vk.com API
 
 Group: System/Libraries
@@ -16,7 +16,7 @@ Packager: Vladimir Didenko <cow@altlinux.org>
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses rpm-macros-cmake
+BuildRequires(pre): rpm-build-licenses rpm-macros-cmake rpm-macros-qt4
 BuildRequires: cmake gcc-c++ libqt4-devel
 
 %description
@@ -42,7 +42,7 @@ Development files for vreen library
 %patch0 -p1
 
 %build
-%cmake_insource
+%cmake_insource -DQT_IMPORTS_DIR:PATH=%_qt4dir/imports
 %make_build
 
 %install
@@ -51,7 +51,7 @@ Development files for vreen library
 %files -n lib%name
 %doc AUTHORS
 %_libdir/lib%name.so.%{abiversion}*
-%_libdir/qt4/imports/com/vk
+%_qt4dir/imports/com/vk
 
 %files -n lib%name-devel
 %_includedir/vreen
@@ -61,6 +61,9 @@ Development files for vreen library
 %_libdir/pkgconfig/vreenoauth.pc
 
 %changelog
+* Wed Nov 9 2016 Vladimir Didenko <cow@altlinux.org> 8:0.9.5-alt4.git20140410
+- Fix build.
+
 * Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 8:0.9.5-alt3.git20140410
 - Rebuilt for new format of LTO object (gcc5).
 
