@@ -1,5 +1,5 @@
 %define major_version 1.2
-%define minor_version 12
+%define minor_version 16
 
 %define shortname 389-ds
 %define pkgname   dirsrv
@@ -12,9 +12,9 @@ Url: http://port389.org
 License: GPLv2
 Summary: 389 Directory Server Management Console
 BuildArch: noarch
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires(Pre): rpm-build-java
 BuildRequires: java-devel
@@ -77,6 +77,9 @@ popd
 %doc %_datadir/%pkgname/manual/en/slapd/help/*.html
 
 %changelog
+* Wed Nov 02 2016 Andrey Cherepanov <cas@altlinux.org> 1.2.16-alt1
+- New version 1.2.16
+
 * Tue Nov 17 2015 Andrey Cherepanov <cas@altlinux.org> 1.2.12-alt1
 - New version
 
