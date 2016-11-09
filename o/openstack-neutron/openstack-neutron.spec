@@ -1,6 +1,6 @@
 
 Name: openstack-neutron
-Version: 9.0.0
+Version: 9.1.0
 Release: alt1
 Epoch: 1
 Provides: openstack-quantum = %EVR
@@ -16,6 +16,7 @@ Source1: neutron.logrotate
 Source2: neutron-sudoers
 Source3: %name.tmpfiles
 Source5: neutron.sysconfig
+Source6: neutron-enable-bridge-firewall.sh
 
 Source10: neutron-server.service
 Source11: neutron-linuxbridge-agent.service
@@ -169,6 +170,7 @@ Requires: conntrack-tools
 Requires: ebtables
 Requires: ipset
 Requires: iptables
+Requires: kmod
 Requires: %name = %EVR
 
 %description linuxbridge-agent
@@ -197,9 +199,11 @@ Provides:  %name-agent = %EVR
 
 Requires: %name = %EVR
 Requires: openvswitch
+Requires: python-module-openvswitch
 Requires: conntrack-tools
 Requires: ipset
 Requires: iptables
+Requires: kmod
 
 %description openvswitch-agent
 Neutron provides an API to dynamically request and configure virtual
@@ -291,6 +295,9 @@ install -p -D -m 644 %SOURCE3 %buildroot%_tmpfilesdir/%name.conf
 
 # Install sysconfig
 install -p -D -m 644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/neutron
+
+# Install helper scripts
+install -p -D -m 755 %SOURCE6 %buildroot%_bindir/neutron-enable-bridge-firewall.sh
 
 # Install systemd units
 install -p -D -m 644 %SOURCE10 %buildroot%_unitdir/neutron-server.service
@@ -432,6 +439,7 @@ fi
 %_bindir/neutron-ipset-cleanup
 %_bindir/neutron-keepalived-state-change
 %_bindir/neutron-netns-cleanup
+%_bindir/neutron-enable-bridge-firewall.sh
 %_bindir/neutron-ns-metadata-proxy
 %_bindir/neutron-rootwrap
 %_bindir/neutron-rootwrap-daemon
@@ -451,7 +459,7 @@ fi
 %config(noreplace) %_sysconfdir/logrotate.d/*
 %config(noreplace) %_sysconfdir/sudoers.d/neutron
 %dir %attr(0755, neutron, neutron) %_sharedstatedir/neutron
-%dir %attr(0750, neutron, adm) %_logdir/neutron
+%dir %attr(0770, root, neutron) %_logdir/neutron
 %dir %attr(0750, neutron, neutron) %_runtimedir/neutron
 %dir %attr(0750, neutron, neutron) %_cachedir/neutron
 %_tmpfilesdir/%name.conf
@@ -532,6 +540,11 @@ fi
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Wed Nov 09 2016 Alexey Shabalin <shaba@altlinux.ru> 1:9.1.0-alt1
+- update systemd units
+- fix log dir permitions for logrotate
+- add helper neutron-enable-bridge-firewall.sh
+
 * Fri Oct 21 2016 Alexey Shabalin <shaba@altlinux.ru> 1:9.0.0-alt1
 - 9.0.0 Newton release
 - drop package bgp-dragent
