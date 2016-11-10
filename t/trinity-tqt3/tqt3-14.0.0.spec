@@ -29,14 +29,14 @@ BuildRequires(pre):	rpm-macros-cmake
 
 # TDE variables
 %if "%{?tde_version}" == ""
-%define tde_version 14.0.3
+%define tde_version 14.0.4
 %endif
 
 %define libtqt3 libtqt3
 
 Name: trinity-tqt3
 Version: 3.5.0
-Release: alt3_14.0.3_1.1
+Release: alt3_14.0.4_1
 Summary: TQt GUI Library, Version 3
 Group: Graphical desktop/Other
 Url: http://www.trinitydesktop.org/
@@ -1483,6 +1483,9 @@ install -D -m644 "tqt3-examples.tar.gz" "%{?buildroot}%_docdir/tqt3-examples/tqt
 chmod 644 "%{?buildroot}%_datadir/tqt3/mkspecs/"*/*
 
 %changelog
+* Thu Nov 10 2016 Hihin Ruslan <ruslandh@altlinux.ru> 3.5.0-alt3_14.0.4_1
+- New Version
+
 * Mon Nov 07 2016 Hihin Ruslan <ruslandh@altlinux.ru> 3.5.0-alt3_14.0.3_1.1
 - Developers fix
 
