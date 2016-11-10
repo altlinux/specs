@@ -1,9 +1,8 @@
 %def_enable cupstifffilter
 %def_enable sane_backend
+%def_enable python_code
 %def_enable autostart
 %def_enable PPDs
-%def_enable python_code
-%def_without python3
 %def_disable qt3
 %def_enable qt4
 %def_disable qt5
@@ -12,7 +11,7 @@
 # note: flag dropped upstream
 %def_enable udevacl
 %def_disable halacl
-%def_without ernie
+%def_without python3
 %if_with backport
 %define cups_filters foomatic-filters
 %else
@@ -26,12 +25,12 @@
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
 Name: hplip
-Version: 3.16.10
-Release: alt1
+Epoch: 1
+Version: 3.16.7
+Release: alt2
 License: GPL/MIT/BSD
 Group: Publishing
-#URL: http://hplip.sourceforge.net -- old
-URL: http://hplipopensource.com/
+URL: http://hplip.sourceforge.net
 Packager: Igor Vlasenko <viy@altlinux.org>
 
 %define hpijsname hpijs
@@ -43,11 +42,11 @@ Obsoletes: cups-backend-ptal
 Conflicts: cups < 1.1.18-alt7
 
 PreReq:	cups
-Requires: %name-common = %version-%release
+Requires: %name-common = %{?epoch:%epoch:}%version-%release
 
 # TODO: split hplip and hplip-utils
 # and remove this Req:
-Requires: %name-hpcups = %version-%release
+Requires: %name-hpcups = %{?epoch:%epoch:}%version-%release
 
 # Main package requires wget to avoid
 # misleading errors about network connectivity (fc bug #705843).
@@ -74,15 +73,8 @@ BuildPreReq: libsane-devel
 BuildRequires: gcc-c++ libcups-devel libjpeg-devel libnet-snmp-devel libssl-devel libstdc++-devel libusb-devel libusb-compat-devel libdbus-devel
 
 %if_enabled python_code
-%if_enabled qt3
-BuildRequires: python%{pysuffix}-module-qt-devel
-%endif
-%if_enabled qt4
+#BuildRequires: python-module-qt-devel
 BuildRequires: python%{pysuffix}-module-PyQt4-devel
-%endif
-%if_enabled qt5
-BuildRequires: python%{pysuffix}-module-PyQt5-devel
-%endif
 #RemovedBuildRequires: python-base python-dev python-modules-compiler python-modules-encodings
 BuildRequires: python%{pysuffix}-devel
 %endif
@@ -107,9 +99,8 @@ Source9: upstream-signing-key.asc
 # fedora fdi acl policy
 Source100: hplip.fdi
 # cvs update: hplip.fdi is no longer in the repository (due to udev-acl)
-Source101: hpcups-update-ppds.sh
 Source102: copy-deviceids.py
-Source103: copy-deviceids-py3.py
+Source101: hpcups-update-ppds.sh
 
 # OpenSuSE based sources
 # deprecated; 2.7.7 shows 'can't connect to device'
@@ -130,33 +121,31 @@ Patch10: http://www.linuxprinting.org/download/printing/hpijs/hpijs-1.4.1-rss.1.
 Patch11: hpijs-1.4.1-rss-alt-for-2.7.7.patch
 
 # fedora patches
-Patch101: fedora-3.16.10-1-hplip-pstotiff-is-rubbish.patch
-Patch102: fedora-3.16.10-1-hplip-strstr-const.patch
-Patch103: fedora-3.16.10-1-hplip-ui-optional.patch
-Patch104: fedora-3.16.10-1-hplip-no-asm.patch
-Patch105: fedora-3.16.10-1-hplip-deviceIDs-drv.patch
-Patch106: fedora-3.16.10-1-hplip-udev-rules.patch
-Patch107: fedora-3.16.10-1-hplip-retry-open.patch
-Patch108: fedora-3.16.10-1-hplip-snmp-quirks.patch
-Patch109: fedora-3.16.10-1-hplip-hpijs-marker-supply.patch
-Patch110: fedora-3.16.10-1-hplip-clear-old-state-reasons.patch
-Patch111: fedora-3.16.10-1-hplip-hpcups-sigpipe.patch
-Patch112: fedora-3.16.10-1-hplip-logdir.patch
-Patch113: fedora-3.16.10-1-hplip-bad-low-ink-warning.patch
-Patch114: fedora-3.16.10-1-hplip-deviceIDs-ppd.patch
-Patch115: fedora-3.16.10-1-hplip-ppd-ImageableArea.patch
-Patch116: fedora-3.16.10-1-hplip-scan-tmp.patch
-Patch117: fedora-3.16.10-1-hplip-log-stderr.patch
-Patch118: fedora-3.16.10-1-hplip-avahi-parsing.patch
-Patch120: fedora-3.16.10-1-hplip-dj990c-margin.patch
-Patch121: fedora-3.16.10-1-hplip-strncpy.patch
-Patch122: fedora-3.16.10-1-hplip-no-write-bytecode.patch
-Patch123: fedora-3.16.10-1-hplip-silence-ioerror.patch
-Patch124: fedora-3.16.10-1-hplip-3165-sourceoption.patch
-Patch125: fedora-3.16.10-1-hplip-badwhitespace.patch
-%if_without ernie
-Patch126: fedora-3.16.10-1-hplip-noernie.patch
-%endif
+Patch101: fedora-3.16.7-1-hplip-pstotiff-is-rubbish.patch
+Patch102: fedora-3.16.7-1-hplip-strstr-const.patch
+Patch103: fedora-3.16.7-1-hplip-ui-optional.patch
+Patch104: fedora-3.16.7-1-hplip-no-asm.patch
+Patch105: fedora-3.16.7-1-hplip-deviceIDs-drv.patch
+Patch106: fedora-3.16.7-1-hplip-udev-rules.patch
+Patch107: fedora-3.16.7-1-hplip-retry-open.patch
+Patch108: fedora-3.16.7-1-hplip-snmp-quirks.patch
+Patch109: fedora-3.16.7-1-hplip-hpijs-marker-supply.patch
+Patch110: fedora-3.16.7-1-hplip-clear-old-state-reasons.patch
+Patch111: fedora-3.16.7-1-hplip-hpcups-sigpipe.patch
+Patch112: fedora-3.16.7-1-hplip-logdir.patch
+Patch113: fedora-3.16.7-1-hplip-bad-low-ink-warning.patch
+Patch114: fedora-3.16.7-1-hplip-deviceIDs-ppd.patch
+Patch115: fedora-3.16.7-1-hplip-ppd-ImageableArea.patch
+Patch116: fedora-3.16.7-1-hplip-scan-tmp.patch
+Patch117: fedora-3.16.7-1-hplip-log-stderr.patch
+Patch118: fedora-3.16.7-1-hplip-avahi-parsing.patch
+Patch120: fedora-3.16.7-1-hplip-dj990c-margin.patch
+Patch121: fedora-3.16.7-1-hplip-strncpy.patch
+Patch122: fedora-3.16.7-1-hplip-no-write-bytecode.patch
+Patch123: fedora-3.16.7-1-hplip-silence-ioerror.patch
+Patch124: fedora-3.16.7-1-hplip-3165-sourceoption.patch
+Patch125: fedora-3.16.7-1-hplip-include-ppdh.patch
+
 
 %description
 This is the HP driver package to supply Linux support for most
@@ -173,7 +162,7 @@ maintenance, along with python cups backends.
 Summary: Hpcups printer driver for Hewlett-Packard Co. Inkjet Printers and MFPs
 License: BSD
 Group: Publishing
-Requires: %name-common = %version-%release
+Requires: %name-common = %{?epoch:%epoch:}%version-%release
 Conflicts: %name-common < 3.13
 
 %description hpcups
@@ -203,8 +192,6 @@ Requires: python%{pysuffix}-module-PyQt5
 
 # some utils do require dbus user session
 Requires: dbus-tools-gui
-# and notification-daemon too
-Requires: notification-daemon
 # for hp-scan -n
 Requires: python%{pysuffix}-module-imaging
 # from fedora 3.10.9-9 patch 33 (= 133)
@@ -212,9 +199,9 @@ Requires: python%{pysuffix}-module-imaging
 # patch33 -p1 -b .dbus-threads
 Requires: python%{pysuffix}-module-pygobject
 
-Requires: %name = %version-%release
+Requires: %name = %{?epoch:%epoch:}%version-%release
 %if_enabled PPDs
-Requires: %name-PPDs >= %version-%release
+Requires: %name-PPDs >= %{?epoch:%epoch:}%version-%release
 %endif
 
 %description gui
@@ -235,7 +222,7 @@ maintenance can be done.
 Summary: GNOME/KDE/other XDGE autostart file for HPLIP graphical tools
 License: GPL
 Group: Publishing
-Requires: %name-gui = %version-%release
+Requires: %name-gui = %{?epoch:%epoch:}%version-%release
 BuildArch: noarch
 
 %description gui-autostart
@@ -255,9 +242,10 @@ for GNOME, KDE and other freedesktop compatible desktop environments.
 Summary: recommended packages for hplip
 License: GPL
 Group: Publishing
+Requires: cups-ddk
 Requires: foomatic-db >= 3.0.2-alt7
 Requires: %{cups_filters}
-Requires: %name = %version-%release
+Requires: %name = %{?epoch:%epoch:}%version-%release
 BuildArch: noarch
 
 %description recommends
@@ -298,9 +286,9 @@ flash memory cards.
 Summary: PPDs for Hewlett-Packard Co. Inkjet Printers and MFPs
 License: MIT
 Group: Publishing
-Requires: %name-ps-PPDs = %version-%release
-Requires: %name-hpcups-PPDs = %version-%release
-Requires: %name-hpijs-PPDs = %version-%release
+Requires: %name-ps-PPDs = %{?epoch:%epoch:}%version-%release
+Requires: %name-hpcups-PPDs = %{?epoch:%epoch:}%version-%release
+Requires: %name-hpijs-PPDs = %{?epoch:%epoch:}%version-%release
 # due to foomatic-rip
 Requires:	%{cups_filters}
 BuildArch: noarch
@@ -337,7 +325,7 @@ License: MIT
 Group: Publishing
 # due to foomatic-rip
 Requires:	%{cups_filters}
-Requires: %name-hpcups = %version-%release
+Requires: %name-hpcups = %{?epoch:%epoch:}%version-%release
 Conflicts: %name-PPDs < %version
 BuildArch: noarch
 
@@ -356,7 +344,7 @@ License: MIT
 Group: Publishing
 # due to foomatic-rip
 Requires:	%{cups_filters}
-Requires: %name-hpijs = %version-%release
+Requires: %name-hpijs = %{?epoch:%epoch:}%version-%release
 Conflicts: %name-PPDs < %version
 BuildArch: noarch
 
@@ -376,7 +364,7 @@ License: BSD
 Group: Publishing
 Obsoletes: hpijs < 2.7
 Provides: %hpijsname = %version
-Requires: %name-common = %version-%release
+Requires: %name-common = %{?epoch:%epoch:}%version-%release
 Requires: ghostscript
 
 %description hpijs
@@ -396,7 +384,7 @@ Summary: SANE driver for scanners in HP's multi-function devices (from HPLIP)
 License: GPL
 Group: Publishing
 Requires: libsane
-Requires: %name-common = %version-%release
+Requires: %name-common = %{?epoch:%epoch:}%version-%release
 Obsoletes: libsane-hpoj <= 0.91
 
 %description sane
@@ -436,14 +424,9 @@ SANE driver for scanners in HP's multi-function devices (from HPLIP)
 # Color LaserJet 2500 series (bug #659040)
 # LaserJet 4100 Series/2100 Series (bug #659039)
 %patch105 -p1 -b .deviceIDs-drv
-chmod +x %{SOURCE102} %{SOURCE103}
+chmod +x %{SOURCE102}
 mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
-%if_with python3
-%{SOURCE103} \
-%else
-%{SOURCE102} \
-%endif
-       prnt/drv/hpcups.drv.in \
+%{SOURCE102} prnt/drv/hpcups.drv.in \
        prnt/drv/hpijs.drv.in.deviceIDs-drv-hpijs \
        > prnt/drv/hpijs.drv.in
 
@@ -504,14 +487,7 @@ mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
 # [abrt] hplip: hp-scan:663:<module>:NameError: name 'source_option' is not defined (bug #1341304)
 %patch124 -p1 -b .sourceoption
 
-# Bad whitespaces (bug #1372343)
-%patch125 -p1 -b .badwhitespace
-
-%if_without ernie
-# hplip license problem (bug #1364711)
-%patch126 -p1 -b .no-ernie
-rm prnt/hpcups/ErnieFilter.{cpp,h} prnt/hpijs/ernieplatform.h
-%endif
+%patch125 -p1 -b .include-ppdh
 
 # from fedora 3.9.12-3/3.10.9-9
 sed -i.duplex-constraints \
@@ -1023,6 +999,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Thu Nov 10 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.16.7-alt2
+- reverted back to 3.16.7 due to problems in 3.16.10
+
 * Wed Nov 09 2016 Igor Vlasenko <viy@altlinux.ru> 3.16.10-alt1
 - new version
 
