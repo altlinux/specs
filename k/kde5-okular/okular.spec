@@ -6,8 +6,8 @@
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
-Version: 4.90.0
-Release: alt5
+Version: 16.11.60
+Release: alt1
 %K5init
 
 Group: Office
@@ -18,7 +18,6 @@ License: GPLv2+ / LGPLv2+
 Requires: %name-core = %EVR
 
 Source: %rname-%version.tar
-Patch1: alt-hide-unofficial-release.patch
 
 # Automatically added by buildreq on Tue Jan 19 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ gtk-update-icon-cache kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libfreetype-devel libgpg-error libjson-c libpoppler1-qt5 libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base python-modules python3 python3-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xz zlib-devel
@@ -82,7 +81,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K5build \
@@ -128,7 +126,7 @@ KF5 library
 %_K5cfg/*settings*
 %if_enabled msits
 %_K5plug/kio_msits.so
-%_K5srv/msits.protocol
+%_K5srv/ms-its.protocol
 #%_K5srv/okularChm.desktop
 %endif
 
@@ -142,6 +140,9 @@ KF5 library
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Thu Nov 10 2016 Sergey V Turchin <zerg@altlinux.org> 16.11.60-alt1
+- 16.12 beta
+
 * Tue Aug 30 2016 Sergey V Turchin <zerg@altlinux.org> 4.90.0-alt5
 - update from frameworks branch
 
