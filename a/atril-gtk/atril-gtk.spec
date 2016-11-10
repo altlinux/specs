@@ -11,7 +11,7 @@
 %def_disable epub
 
 Name:           %_name-gtk
-Version:        1.16.0
+Version:        1.16.1
 Release:        alt1
 Summary:        Document viewer
 
@@ -268,6 +268,9 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %endif
 
 %changelog
+* Thu Nov 10 2016 Mikhail Efremov <sem@altlinux.org> 1.16.1-alt1
+- Updated to 1.16.1.
+
 * Tue Sep 20 2016 Mikhail Efremov <sem@altlinux.org> 1.16.0-alt1
 - Updated to 1.16.0.
 
