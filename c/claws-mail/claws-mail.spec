@@ -12,7 +12,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:   	claws-mail
-Version:	3.14.0
+Version:	3.14.1
 Release: 	alt1
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
@@ -69,7 +69,7 @@ BuildRequires: libpoppler-glib-devel
 BuildRequires: perl-devel sed
 
 # For pligin-python
-BuildRequires: python-dev python-module-pygtk-devel
+BuildRequires: python-devel python-module-pygtk-devel
 
 # For plugin-notification
 %def_disable indicator
@@ -584,10 +584,8 @@ cp -va  tools %buildroot%_datadir/%name/
 rm -vf  %buildroot%_datadir/%name/tools/README*
 rm -vf  %buildroot%_datadir/%name/tools/Makefile*
 
-mkdir -p %buildroot/%_iconsdir
-install -p -m644 %name.png %buildroot/%_iconsdir/%name.png
 mkdir -p %buildroot%_pixmapsdir
-ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
+install -p -m644 %name.png %buildroot%_pixmapsdir/
 
 # XXX: Make sure the path below is the same as the path above.
 %define _claws_plugins_path %_libdir/%name/plugins
@@ -603,7 +601,6 @@ ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
 %if_enabled appdata
 %_datadir/appdata/claws-mail.appdata.xml
 %endif
-%_iconsdir/%name.png
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_pixmapsdir/%name.png
 %dir %_libdir/%name
@@ -815,6 +812,11 @@ ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Thu Nov 10 2016 Mikhail Efremov <sem@altlinux.org> 3.14.1-alt1
+- Fix BR (by Repocop Q. A. Robot).
+- Move claws-mail.png to %%_pixmapsdir (closes: #32112).
+- Updated to 3.14.1.
+
 * Mon Aug 22 2016 Mikhail Efremov <sem@altlinux.org> 3.14.0-alt1
 - Fixes from upstream.
 - Updated to 3.14.0.
