@@ -1,6 +1,6 @@
 Name: needrestart
-Version: 2.9
-Release: alt1
+Version: 2.10
+Release: alt3
 
 Summary: Restart daemons after library updates
 License: GPLv2
@@ -20,6 +20,14 @@ needrestart checks which daemons need to be restarted after library
 upgrades. It is inspired by checkrestart from the debian-goodies
 package.
 
+%package list
+Summary: Automaticaly list daemons needs restart after apt run
+Group: System/Servers
+Requires: %name = %version-%release
+
+%description list
+List daemons needs to be restarted after apt run
+
 %prep
 %setup -n %name-%version
 %patch0 -p1
@@ -33,6 +41,12 @@ install -pDm 644 man/%name.1 %buildroot%_man1dir/%name.1
 
 %find_lang --all-name %name
 
+# %name-list subpackage:
+mkdir -p %buildroot%_sysconfdir/apt/apt.conf.d
+cat > %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf << EOF
+RPM::Post-Invoke      { "if [ -x /usr/sbin/needrestart ]; then /usr/sbin/needrestart -q -l -r l; fi"; };
+EOF
+
 %files -f %name.lang
 %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/%name.conf
@@ -43,10 +57,21 @@ install -pDm 644 man/%name.1 %buildroot%_man1dir/%name.1
 %perl_vendor_privlib/NeedRestart*
 %_datadir/polkit-1/actions/net.fiasko-nw.needrestart.policy
 %_man1dir/%name.1.*
-
 %doc AUTHORS README* NEWS INSTALL* ChangeLog
 
+%files list
+%config(noreplace) %_sysconfdir/apt/apt.conf.d/%name.conf
+
 %changelog
+* Fri Nov 11 2016 Terechkov Evgenii <evg@altlinux.org> 2.10-alt3
+- Fix kernel version detection/reporting
+
+* Fri Nov 11 2016 Terechkov Evgenii <evg@altlinux.org> 2.10-alt2
+- Add subpackage with apt hook: %name-list
+
+* Fri Nov 11 2016 Terechkov Evgenii <evg@altlinux.org> 2.10-alt1
+- v2.10-1-gf28e5d4
+
 * Fri Oct 14 2016 Terechkov Evgenii <evg@altlinux.org> 2.9-alt1
 - 2.9
 
