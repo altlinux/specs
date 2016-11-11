@@ -9,8 +9,8 @@
 %define debug_package %{nil}
 
 Name:                wicd
-Version:             1.7.3
-Release:             alt2
+Version:             1.7.4
+Release:             alt1
 Summary:             Wireless and wired network connection manager
 
 Group:               System/Base
@@ -261,6 +261,9 @@ desktop-file-install \
 %{_datadir}/wicd/icons/*
 
 %changelog
+* Fri Nov 11 2016 Andrey Cherepanov <cas@altlinux.org> 1.7.4-alt1
+- New version
+
 * Thu Oct 08 2015 Andrey Cherepanov <cas@altlinux.org> 1.7.3-alt2
 - Rebuild with fixed python-module-babel
 
