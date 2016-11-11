@@ -1,6 +1,6 @@
 %define game_name Starcraft
 Name: stargus
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 Summary: %name mod for the %game_name engine
 License: GPLv2
@@ -48,5 +48,8 @@ done
 %_man6dir/*.6.*
 
 %changelog
+* Fri Nov 11 2016 Anton Midyukov <antohami@altlinux.org> 2.4.1-alt1
+- new version 2.4.1
+
 * Sat Jul 02 2016 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - Initial build for ALT Linux Sisyphus.

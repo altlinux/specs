@@ -1,7 +1,7 @@
 %define game_name Warcraft2
 Name: wargus
-Version: 2.4.0
-Release: alt2
+Version: 2.4.1
+Release: alt1
 Summary: %game_name mod for the Stratagus engine
 License: GPLv2
 Group: Games/Strategy
@@ -60,6 +60,9 @@ done
 %_man6dir/*.6.*
 
 %changelog
+* Fri Nov 11 2016 Anton Midyukov <antohami@altlinux.org> 2.4.1-alt1
+- new version 2.4.1-alt1
+
 * Wed Jul 27 2016 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt2
 - Fix arch-dep-package-has-big-usr-share.
 
