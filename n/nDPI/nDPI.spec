@@ -1,6 +1,6 @@
 Name: nDPI
 Version: 1.7.0
-Release: alt5
+Release: alt6
 Summary: Open source deep packet inspection
 Group: System/Libraries
 
@@ -100,6 +100,9 @@ rmdir %buildroot%_includedir/libndpi-%version
 %_bindir/ndpiReader
 
 %changelog
+* Fri Nov 11 2016 Alexei Takaseev <taf@altlinux.org> 1.7.0-alt6
+- Re-merge with 1.7-stable, drop i586 compatable patches
+
 * Wed Aug 03 2016 Alexei Takaseev <taf@altlinux.org> 1.7.0-alt5
 - Revert "Fix detect http/https"
 
