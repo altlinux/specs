@@ -4,7 +4,7 @@
 
 Summary: 389 Administration Server
 Name:    389-admin
-Version: 1.1.43
+Version: 1.1.46
 Release: alt1
 License: GPLv2
 Url:     http://port389.org/
@@ -13,7 +13,7 @@ Group:   System/Servers
 
 BuildRequires: 389-adminutil-devel apache2-devel apache2-mod_nss gcc-c++
 BuildRequires: libicu-devel libsasl2-devel perl-Mozilla-LDAP perl-CGI
-BuildRequires: 389-ds-base mozldap-devel
+BuildRequires: 389-ds-base mozldap-devel libaprutil1-devel
 
 Requires: apache2-httpd-worker
 Requires: apache2-mod_nss
@@ -22,9 +22,9 @@ Requires: 389-ds-base
 Provides: fedora-ds-adminserver = %version-%release
 Obsoletes: fedora-ds-adminserver < %version-%release
 
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
 Source1: %{pkgname}-admin
 
 %add_perl_lib_path %_libdir/%{pkgname}/perl
@@ -40,11 +40,12 @@ setup.
 export icu_lib=-L%_libdir/
 export adminutil_lib=-L%_libdir/
 export adminutil_inc=/usr/include/libadminutil/
-
+%add_optflags -I%_includedir/apu-1
 %undefine _configure_gettext
 %configure --localstatedir=/var \
            --with-modnss-lib=%_libdir/apache2/modules/ \
            --with-httpd=%_sbindir/httpd2.worker \
+	   --with-apr-config=/usr/bin/apr-1-config \
 	   --with-apxs=%apache2_apxs \
            --with-openldap \
 %if_with selinux
@@ -88,6 +89,9 @@ rm -f %buildroot%_libdir/*.so
 %_man8dir/*
 
 %changelog
+* Thu Nov 10 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.46-alt1
+- New version 1.1.46
+
 * Thu May 12 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.43-alt1
 - New version
 
