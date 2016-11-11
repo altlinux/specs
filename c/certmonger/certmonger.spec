@@ -2,16 +2,19 @@
 %global	sysvinit 0
 
 Name:		certmonger
-Version:	0.74
+Version:	0.78.6
 Release:	alt1
 Summary:	Certificate status monitor and PKI enrollment client
 
 Group:		System/Base
 License:	GPLv3+
 URL:		http://certmonger.fedorahosted.org
-Source0:	%{name}-%{version}.tar
+Source0:	%name-%version.tar
+Patch:      %name-%version-%release.patch
 
-BuildRequires:	libdbus-devel, libnspr-devel, libnss-devel, libssl-devel
+BuildRequires:  libldap-devel
+BuildRequires:  libpopt-devel
+BuildRequires:	libdbus-devel, libnspr-devel, libnss-devel, libssl-devel, libidn-devel
 BuildRequires:  libuuid-devel
 BuildRequires:	libtalloc-devel, libtevent-devel
 BuildRequires:	libcurl-devel
@@ -38,6 +41,7 @@ system enrolled with a certificate authority (CA) and keeping it enrolled.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 %autoreconf
@@ -53,9 +57,7 @@ system enrolled with a certificate authority (CA) and keeping it enrolled.
 	--with-homedir=/var/run/certmonger \
 	--with-tmpdir=/var/run/certmonger --enable-now
 
-# For some reason, some versions of xmlrpc-c-config in Fedora and RHEL just
-# tell us about libxmlrpc_client, but we need more.  Work around.
-%make_build XMLRPC_LIBS="-lxmlrpc_client -lxmlrpc_util -lxmlrpc" CFLAGS="-I/usr/include/krb5"
+%make_build
 
 %install
 %makeinstall_std
@@ -81,7 +83,6 @@ rm -rf tests/018-pembase
 %make check
 
 %files -f %{name}.lang
-%defattr(-,root,root,-)
 %doc README LICENSE STATUS doc/*.txt
 %config(noreplace) %{_sysconfdir}/dbus-1/system.d/*
 %{_datadir}/dbus-1/services/*
@@ -102,6 +103,14 @@ rm -rf tests/018-pembase
 %endif
 
 %changelog
+* Fri Nov 11 2016 Mikhail Efremov <sem@altlinux.org> 0.78.6-alt1
+- certsave: Fix double free.
+- Updated to 0.78.6.
+
+* Wed Oct 12 2016 Mikhail Efremov <sem@altlinux.org> 0.78-alt1
+- Fix XMLRPC_LIBS value.
+- Updated to 0.78.
+
 * Tue Apr 29 2014 Timur Aitov <timonbl4@altlinux.org> 0.74-alt1
 - first build for ALT
 
