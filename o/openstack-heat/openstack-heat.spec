@@ -1,9 +1,9 @@
-# TODO: fix build docs
 %def_disable doc
+%add_python_req_skip senlinclient
 
 Name: openstack-heat
 Summary: OpenStack Orchestration (heat)
-Version: 5.0.1
+Version: 6.1.0
 Release: alt1
 Epoch: 1
 License: ASL 2.0
@@ -22,71 +22,76 @@ Source13: openstack-heat-api-cfn.init
 Source14: openstack-heat-engine.init
 Source15: openstack-heat-api-cloudwatch.init
 
+Source20: heat-dist.conf
 Source21: %name.tmpfiles
 
+Patch0: %name-6.1.0-remove-bash3-header.patch
+
 BuildArch: noarch
-BuildRequires: crudini
-# BuildRequires: git
+BuildRequires: git
 BuildRequires: python-devel
+BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: python-module-oslo.cache >= 0.4.0
+BuildRequires: python-module-oslo.context >= 0.2.0
+BuildRequires: python-module-oslo.middleware >= 2.8.0
+BuildRequires: python-module-oslo.policy >= 0.5.0
+BuildRequires: python-module-oslo.messaging >= 1.16.0
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
+BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-oslo.i18n >= 1.5.0
+BuildRequires: python-module-oslo.db >= 2.4.1
+BuildRequires: python-module-oslo.utils >= 2.0.0
+BuildRequires: python-module-oslo.log >= 1.8.0
+BuildRequires: python-module-oslo.versionedobjects >= 0.9.0
 BuildRequires: python-module-argparse
-BuildRequires: python-module-croniter >= 0.3.4
-BuildRequires: python-module-cryptography >= 1.0
 BuildRequires: python-module-eventlet >= 0.17.4
 BuildRequires: python-module-greenlet >= 0.3.2
+BuildRequires: python-module-httplib2
+BuildRequires: python-module-iso8601
 BuildRequires: python-module-kombu >= 3.0.7
 BuildRequires: python-module-lxml >= 2.3
 BuildRequires: python-module-netaddr >= 0.7.12
 BuildRequires: python-module-memcached
 BuildRequires: python-module-migrate >= 0.9.6
+BuildRequires: python-module-osprofiler >= 1.2.0
+BuildRequires: python-module-qpid
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-yaml
 BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno
-BuildRequires: python-module-testresources
+BuildRequires: python-module-paramiko
+BuildRequires: python-module-dogpile.cache
+
 # These are required to build due to the requirements check added
 BuildRequires: python-module-PasteDeploy
 BuildRequires: python-module-routes >= 1.12.3
 BuildRequires: python-module-SQLAlchemy >= 0.9.9
 BuildRequires: python-module-webob
 BuildRequires: python-module-d2to1
-BuildRequires: python-module-stevedore >= 1.5.0
-BuildRequires: python-module-requests >= 2.5.2
-BuildRequires: python-module-oslo.cache >= 0.4.0
-BuildRequires: python-module-oslo.config >= 2.3.0
-BuildRequires: python-module-oslo.concurrency >= 2.3.0
-BuildRequires: python-module-oslo.context >= 0.2.0
-BuildRequires: python-module-oslo.db >= 2.4.1
-BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-oslo.log >= 1.8.0
-BuildRequires: python-module-oslo.messaging >= 1.16.0
-BuildRequires: python-module-oslo.middleware >= 2.8.0
-BuildRequires: python-module-oslo.policy >= 0.5.0
-BuildRequires: python-module-oslo.reports >= 0.1.0
-BuildRequires: python-module-oslo.serialization >= 1.4.0
-BuildRequires: python-module-oslo.service >= 0.7.0
-BuildRequires: python-module-oslo.utils >= 2.0.0
-BuildRequires: python-module-osprofiler >= 0.3.0
-BuildRequires: python-module-oslo.versionedobjects >= 0.9.0
-BuildRequires: python-module-keystonemiddleware >= 2.0.0
-BuildRequires: python-module-barbicanclient >= 3.3.0
-BuildRequires: python-module-ceilometerclient >= 1.5.0
-BuildRequires: python-module-cinderclient >= 1.3.1
-BuildRequires: python-module-designateclient >= 1.0.0
-BuildRequires: python-module-glanceclient >= 0.18.0
-BuildRequires: python-module-heatclient >= 0.3.0
+BuildRequires: python-module-cryptography >= 1.0
+
+BuildRequires: python-module-oslo.config >= 3.7.0
+BuildRequires: python-module-redis-py
+BuildRequires: python-module-zmq
+BuildRequires: python-module-retrying
 BuildRequires: python-module-keystoneclient >= 1.6.0
-BuildRequires: python-module-magnumclient >= 0.2.1
-BuildRequires: python-module-manilaclient >= 1.3.0
-BuildRequires: python-module-mistralclient >= 1.0.0
-BuildRequires: python-module-neutronclient >= 2.6.0
+
+%if_enabled doc
+BuildRequires: python-module-cinderclient >= 1.3.1
 BuildRequires: python-module-novaclient >= 2.28.1
 BuildRequires: python-module-saharaclient >= 0.10.0
+BuildRequires: python-module-neutronclient >= 2.6.0
 BuildRequires: python-module-swiftclient >= 2.2.0
+BuildRequires: python-module-heatclient >= 0.3.0
+BuildRequires: python-module-ceilometerclient >= 1.5.0
+BuildRequires: python-module-glanceclient >= 0.18.0
 BuildRequires: python-module-troveclient >= 1.2.0
-BuildRequires: python-module-zaqarclient >= 0.1.1
+%endif
+
+Requires: %name = %epoch:%version-%release
+Requires: %name-engine = %epoch:%version-%release
+Requires: %name-api = %epoch:%version-%release
+Requires: %name-api-cfn = %epoch:%version-%release
+Requires: %name-api-cloudwatch = %epoch:%version-%release
 
 Requires: python-module-heat = %EVR
 Requires(pre): shadow-utils
@@ -94,26 +99,29 @@ Requires(pre): shadow-utils
 Provides: %name-common  = %EVR
 Obsoletes: %name-common  < %EVR
 
+%description
+Heat provides AWS CloudFormation and CloudWatch functionality for OpenStack.
+
 %package -n python-module-heat
 Summary: Openstack Orchestration (Heat) - Python module
 Group:   Development/Python
 
+Requires: python-module-argparse
 Requires: python-module-PasteDeploy
 Requires: python-module-ceilometerclient
 Requires: python-module-cinderclient
 Requires: python-module-glanceclient
 Requires: python-module-heatclient
 Requires: python-module-keystoneclient
+Requires: python-module-keystonemiddleware
 Requires: python-module-neutronclient
 Requires: python-module-novaclient
+Requires: python-module-saharaclient
 Requires: python-module-swiftclient
 Requires: python-module-troveclient
 
 %description -n python-module-heat
 This package contains the core Python module of OpenStack Heat.
-
-%description
-Heat provides AWS CloudFormation and CloudWatch functionality for OpenStack.
 
 %package engine
 Summary: The Heat engine
@@ -160,8 +168,18 @@ Requires: %name-engine = %EVR
 %description plugin-heat_docker
 This plugin enables using Docker containers as resources in a Heat template.
 
+%package -n python-module-heat-tests
+Summary:        Heat tests
+Group:   Development/Python
+Requires:       %name = %epoch:%version-%release
+
+%description -n python-module-heat-tests
+Heat provides AWS CloudFormation and CloudWatch functionality for OpenStack.
+This package contains the Heat test files.
+
 %prep
 %setup
+%patch0 -p2
 
 # Remove the requirements file so that pbr hooks don't add it
 # to distutils requires_dist config
@@ -170,15 +188,14 @@ rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 # Remove tests in contrib
 find contrib -name tests -type d | xargs rm -r
 
-
 %build
 %python_build
 # Generate sample config
-oslo-config-generator --config-file=config-generator.conf
+PYTHONPATH=. oslo-config-generator --config-file=config-generator.conf
 
-pushd contrib/heat_docker
-OSLO_PACKAGE_VERSION=%version python setup.py build
-popd
+#pushd contrib/heat_docker
+#OSLO_PACKAGE_VERSION=%version python setup.py build
+#popd
 
 %install
 %python_install
@@ -210,7 +227,6 @@ install -p -D -m 755 %SOURCE15 %buildroot%_initdir/openstack-heat-api-cloudwatch
 
 install -d -m 755 %buildroot%_sharedstatedir/heat
 install -d -m 755 %buildroot%_sysconfdir/heat
-install -d -m 755 %buildroot%_cachedir/heat
 
 %if_enabled doc
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
@@ -223,23 +239,19 @@ install -p -D -m 644 build/man/*.1 %buildroot%_man1dir
 popd
 %endif
 
+rm -f %buildroot/%_bindir/heat-db-setup
+rm -f %buildroot/%_mandir/man1/heat-db-setup.*
 rm -rf %buildroot/var/lib/heat/.dummy
-rm -rf %buildroot/%python_sitelibdir/heat/tests
+rm -f %{buildroot}/usr/bin/cinder-keystone-setup
 
 install -p -D -m 640 etc/heat/heat.conf.sample %buildroot/%_sysconfdir/heat/heat.conf
-install -p -m 644 etc/heat/*{json,ini} %buildroot/%_sysconfdir/heat/
-install -d -m 755  %buildroot%_sysconfdir/heat/{environment.d,templates}
-install -p -m 644 etc/heat/environment.d/*.yaml %buildroot%_sysconfdir/heat/environment.d
-install -p -m 644 etc/heat/templates/*.yaml %buildroot%_sysconfdir/heat/templates
+install -p -D -m 640 %SOURCE20 %buildroot%_datadir/heat/heat-dist.conf
+install -p -D -m 640 etc/heat/api-paste.ini %buildroot/%_datadir/heat/api-paste-dist.ini
+install -p -D -m 640 etc/heat/policy.json %buildroot/%_sysconfdir/heat
 
-%define heat_conf %buildroot%_sysconfdir/heat/heat.conf
-crudini --set %heat_conf DEFAULT log_dir %_logdir/heat
-crudini --set %heat_conf oslo_concurrency lock_path %_runtimedir/heat
-crudini --set %heat_conf keystone_authtoken signing_dir %_cachedir/heat/keystone-signing
-crudini --set %heat_conf keystone_authtoken admin_tenant_name '%%SERVICE_TENANT_NAME%%'
-crudini --set %heat_conf keystone_authtoken admin_user heat
-crudini --set %heat_conf keystone_authtoken admin_password '%%SERVICE_PASSWORD%%'
-crudini --set %heat_conf database connection  'mysql://heat:heat@localhost/heat'
+# TODO: move this to setup.cfg
+cp -vr etc/heat/templates %{buildroot}/%{_sysconfdir}/heat
+cp -vr etc/heat/environment.d %{buildroot}/%{_sysconfdir}/heat
 
 %pre
 # 187:187 for heat (openstack-heat)
@@ -267,32 +279,32 @@ crudini --set %heat_conf database connection  'mysql://heat:heat@localhost/heat'
 %preun api-cloudwatch
 %preun_service %name-api-cloudwatch
 
-
-
 %files
 %doc LICENSE
-%_bindir/heat-db-setup
 %_bindir/heat-manage
 %_bindir/heat-keystone-setup
 %_bindir/heat-keystone-setup-domain
+%attr(-, root, heat) %_datadir/heat/heat-dist.conf
+%attr(-, root, heat) %_datadir/heat/api-paste-dist.ini
 %dir %attr(0755,heat,root) %_logdir/heat
 %dir %attr(0755,heat,root) %_runtimedir/heat
 %dir %attr(0755,heat,root) %_sharedstatedir/heat
-%dir %_sysconfdir/heat
+%dir %attr(0755,heat,root) %{_sysconfdir}/heat
 %_tmpfilesdir/%name.conf
 %config(noreplace) %_sysconfdir/logrotate.d/openstack-heat
-%config(noreplace) %attr(0640, root, heat) %_sysconfdir/heat/heat.conf
-%config %_sysconfdir/heat/api-paste.ini
-%config %_sysconfdir/heat/policy.json
-%config %_sysconfdir/heat/environment.d
-%config %_sysconfdir/heat/templates
+%config(noreplace) %attr(-, root, heat) %_sysconfdir/heat/heat.conf
+%config(noreplace) %attr(-, root, heat) %_sysconfdir/heat/policy.json
+%config(noreplace) %attr(-, root, heat) %_sysconfdir/heat/environment.d/
+%config(noreplace) %attr(-, root, heat) %_sysconfdir/heat/templates/
 %if_enabled doc
 %_mandir/man1/heat-keystone-setup.1.gz
+%_mandir/man1/heat-keystone-setup-domain.1.gz
 %_mandir/man1/heat-manage.1.gz
 %endif
 
 %files -n python-module-heat
 %python_sitelibdir/*
+%exclude %python_sitelibdir/heat/tests
 
 %files engine
 %doc README.rst LICENSE
@@ -304,7 +316,6 @@ crudini --set %heat_conf database connection  'mysql://heat:heat@localhost/heat'
 %_unitdir/%name-engine.service
 %_initdir/%name-engine
 
-
 %files api
 %doc README.rst LICENSE
 %if_enabled doc
@@ -312,6 +323,7 @@ crudini --set %heat_conf database connection  'mysql://heat:heat@localhost/heat'
 %_man1dir/heat-api.1.*
 %endif
 %_bindir/heat-api
+%_bindir/heat-wsgi-api
 %_unitdir/%name-api.service
 %_initdir/%name-api
 
@@ -322,6 +334,7 @@ crudini --set %heat_conf database connection  'mysql://heat:heat@localhost/heat'
 %_man1dir/heat-api-cfn.1.*
 %endif
 %_bindir/heat-api-cfn
+%_bindir/heat-wsgi-api-cfn
 %_unitdir/%name-api-cfn.service
 %_initdir/%name-api-cfn
 
@@ -332,6 +345,7 @@ crudini --set %heat_conf database connection  'mysql://heat:heat@localhost/heat'
 %_man1dir/heat-api-cloudwatch.1.*
 %endif
 %_bindir/heat-api-cloudwatch
+%_bindir/heat-wsgi-api-cloudwatch
 %_unitdir/%name-api-cloudwatch.service
 %_initdir/%name-api-cloudwatch
 
@@ -339,6 +353,9 @@ crudini --set %heat_conf database connection  'mysql://heat:heat@localhost/heat'
 %_prefix/lib/heat/docker
 
 %changelog
+* Thu Nov 11 2016 Lenar Shakirov <snejok@altlinux.ru> 1:6.1.0-alt1
+- 6.1.0 Mitaka Release
+
 * Mon Mar 28 2016 Alexey Shabalin <shaba@altlinux.ru> 1:5.0.1-alt1
 - 5.0.1
 
@@ -364,4 +381,3 @@ crudini --set %heat_conf database connection  'mysql://heat:heat@localhost/heat'
 
 * Tue Aug 12 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.2-alt1
 - First build for ALT (based on Fedora 2014.1.2-0.4.fc21.src)
-
