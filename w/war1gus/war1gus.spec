@@ -1,6 +1,6 @@
 %define game_name Warcraft
 Name: war1gus
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 Summary: %game_name mod for the Stratagus engine
 License: GPLv2
@@ -44,5 +44,8 @@ done
 %_gamesdatadir/stratagus/%name
 
 %changelog
+* Fri Nov 11 2016 Anton Midyukov <antohami@altlinux.org> 2.4.1-alt1
+- new version 2.4.1
+
 * Sat Jul 02 2016 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - Initial build for ALT Linux Sisyphus.

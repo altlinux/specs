@@ -1,5 +1,5 @@
 Name: stratagus
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 
 Summary: A free real time strategy game engine
@@ -36,6 +36,15 @@ Requires:       %name = %version-%release
 %description devel
 This package contains development files for %name.
 
+%package doc
+Summary:        Documentation  for %name
+Group:          Documentation 
+BuildArch:      noarch
+Requires:       %name = %version-%release
+
+%description doc
+This package contains documentation for %name.
+
 %prep
 %setup -n %name-%version
 
@@ -62,7 +71,6 @@ install -pD -m644 %SOURCE3 %buildroot%_liconsdir/%name.png
 %find_lang %name
 
 %files -f %name.lang
-%doc COPYING README.md doc/*
 %_gamesbindir/%name
 %_sbindir/metaserver
 %_bindir/png2%name
@@ -74,9 +82,14 @@ install -pD -m644 %SOURCE3 %buildroot%_liconsdir/%name.png
 
 %files devel
 %_includedir/*
-%exclude %_includedir/*maemo*.h
+
+%files doc
+%_docdir/%name
 
 %changelog
+* Fri Nov 11 2016 Anton Midyukov <antohami@altlinux.org> 2.4.1-alt1
+- New version 2.4.1
+
 * Sat Jul 02 2016 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 
