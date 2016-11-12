@@ -1,4 +1,6 @@
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
+
 %define ver_major 3.22
 %define api_ver 3.0
 %define xdg_name org.gnome.Cheese
@@ -11,18 +13,22 @@
 
 Name: cheese
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
 License: GPL
 Group: Video
-Url: http://www.gnome.org/projects/cheese
+Url: https://wiki.gnome.org/Apps/Cheese
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/cheese/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 # from configure.ac
 %define glib_ver 2.40.0
-%define gtk_ver 3.13.4
+%define gtk_ver 3.14.0
 %define desktop_ver 3.0.0
 %define gst_ver 1.4.0
 %define vala_ver 0.18.0
@@ -37,6 +43,7 @@ Requires: gst-plugins-bad%gst_api_ver
 # matroska (webmmux), vp8enc
 Requires: gst-plugins-good%gst_api_ver
 Requires: gst-plugins-ugly%gst_api_ver
+Requires: gst-libav
 
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -50,8 +57,8 @@ BuildPreReq: vala-tools >= %vala_ver
 BuildPreReq: libclutter-gst3.0-devel >= %clutter_gst_ver
 BuildRequires: gnome-common intltool yelp-tools gtk-doc desktop-file-utils libappstream-glib-devel
 BuildRequires: librsvg-devel libcanberra-gtk3-devel
-BuildRequires: libgudev-devel
-BuildRequires: libX11-devel libXtst-devel libXext-devel libclutter-gtk3-devel
+BuildRequires: libgudev-devel libclutter-gtk3-devel
+BuildRequires: libX11-devel libXtst-devel libXext-devel
 BuildRequires: gnome-video-effects-devel gsettings-desktop-schemas-devel
 #BuildRequires: nautilus-sendto-devel
 BuildRequires: libappstream-glib-devel
@@ -163,6 +170,9 @@ GObject introspection devel data for the Cheese library.
 %endif
 
 %changelog
+* Sat Nov 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt2
+- added gst-libav to reqs
+
 * Tue Oct 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 
