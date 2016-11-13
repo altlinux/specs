@@ -1,8 +1,10 @@
-%def_enable snapshot
+%def_disable snapshot
+%define ver_major 0.9.13
 
 Name: compiz
-Version: 0.9.13.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
+
 Summary: OpenGL window and compositing manager
 License: MIT/X11 GPL
 Group: System/X11
@@ -17,8 +19,8 @@ Obsoletes: libcompizconfig compiz-fusion-plugins-extra compiz-gtk python-module-
 Obsoletes: compiz-fusion-plugins-main compizconfig-backend-gconf ccsm emerald
 
 %if_disabled snapshot
-#https://launchpad.net/compiz/0.9.13/0.9.13.0/+download/compiz-0.9.13.0.tar.bz2
-Source: %name-%version.tar.xz
+Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version.tar.bz2
+#Source: %name-%version.tar.xz
 %else
 # bzr export --format=tar --root=compiz-0.9.13.0 compiz-0.9.13.0.tar
 Source: %name-%version.tar
@@ -114,6 +116,9 @@ rm -fr %buildroot%_datadir/cmake*
 
 
 %changelog
+* Sun Nov 13 2016 Yuri N. Sedunov <aris@altlinux.org> 0.9.13.1-alt1
+- 0.9.13.1
+
 * Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 0.9.13.0-alt2
 - updated to rev.4097
 - built against libmetacity.so.1 (metacity-3.22)
