@@ -1,9 +1,9 @@
 Name: xapps
-Version: 1.0.0
+Version: 1.0.2
 Release: alt1
 
 Summary: Libraries and common resources for XApps
-License: %gpl2plus
+License: %gpl3only
 Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/xapps
 Packager: Vladimir Didenko <cow@altlinux.org>
@@ -22,7 +22,7 @@ BuildPreReq: gtk-doc >= 1.4
 BuildPreReq: gnome-common >= 2.8.0
 BuildPreReq: gsettings-desktop-schemas-devel >= 3.5.91
 
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libgnomekbd-devel
 
 %description
 Libraries and common resources for XApps
@@ -103,6 +103,10 @@ GObject introspection devel data for the %name library
 
 %files -n %name-utils
 %_bindir/xfce4-set-wallpaper
+# TODO: this scripts don't work without modifications in Alt Linux. Need to fix.
+%exclude %_bindir/pastebin
+%exclude %_bindir/upload-system-info
+
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -119,5 +123,8 @@ GObject introspection devel data for the %name library
 %_girdir/*
 
 %changelog
+* Wed Nov 23 2016 Vladimir Didenko <cow@altlinux.org> 1.0.2-alt1
+- 1.0.2-3-g4b700fe
+
 * Tue Sep 27 2016 Vladimir Didenko <cow@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus

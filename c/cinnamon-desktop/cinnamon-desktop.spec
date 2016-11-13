@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.0
+%define ver_major 3.2
 %define api_ver 3.0
 %define gnome_distributor "%vendor"
 %define gnome_date "%(date "+%%B %%e %%Y"), Moscow"
@@ -8,8 +8,8 @@
 %def_enable introspection
 
 Name: cinnamon-desktop
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.0
+Release: alt3
 
 Summary: Library with common API for various Cinnamon modules
 License: %gpl2plus, %fdl
@@ -18,6 +18,7 @@ Url: https://github.com/linuxmint/cinnamon-desktop
 Packager: Vladimir Didenko <cow@altlinux.org>
 
 Source: %name-%version.tar
+Source1: cinnamon-desktop.pam
 Patch: %name-%version-%release.patch
 
 Requires: lib%name = %version-%release
@@ -40,6 +41,7 @@ BuildRequires: iso-codes-devel
 BuildRequires: libSM-devel libXrandr-devel libXext-devel xkeyboard-config-devel libxkbfile-devel
 BuildRequires: hwdatabase >= 0.3.31-alt1
 BuildRequires: libpulseaudio-devel
+BuildRequires: libpam0-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel}
 
 %description
@@ -126,16 +128,19 @@ GObject introspection devel data for the %name library
 
 %find_lang --with-gnome --output=%name.lang %name fdl gpl lgpl
 
+rm -f %buildroot/%_sysconfdir/pam.d/*
+install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
+
 %files -n %name-schemas
 %_bindir/%name-migrate-mediakeys
 %_datadir/glib-2.0/schemas/org.cinnamon.*.xml
 
 %files -n lib%name -f %name.lang
+%attr(640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/*
 %_libdir/*.so.*
 %doc AUTHORS README
 
 %files -n lib%name-devel
-%_libexecdir/cinnamon-rr-debug
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
@@ -155,6 +160,15 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Fri Nov 18 2016 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt3
+- return call of pam_setcred() function
+
+* Fri Nov 18 2016 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt2
+- return call of pam_acct_mgmt() but ignore its returned code
+
+* Sun Nov 13 2016 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Fri May 20 2016 Vladimir Didenko <cow@altlinux.org> 3.0.2-alt1
 - 3.0.2
 

@@ -1,10 +1,10 @@
-%define ver_major 3.0
+%define ver_major 3.2
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 %define _name cinnamon
 
 Name: %{_name}-session
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
@@ -127,6 +127,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Sat Nov 12 2016 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Thu Jul 7 2016 Vladimir Didenko <cow@altlinux.org> 3.0.1-alt1
 - 3.0.1
 

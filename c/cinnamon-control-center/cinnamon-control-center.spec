@@ -1,4 +1,4 @@
-%define ver_major 3.0
+%define ver_major 3.2
 %define api_ver 1.0
 
 %def_disable debug
@@ -8,7 +8,7 @@
 %def_enable ibus
 
 Name: cinnamon-control-center
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Cinnamon Control Center
@@ -116,6 +116,7 @@ you'll want to install this package.
 %patch0 -p1
 
 %build
+[ -d m4 ] || mkdir m4
 %autoreconf
 %configure \
 	%{subst_enable debug} \
@@ -166,6 +167,9 @@ you'll want to install this package.
 
 
 %changelog
+* Fri Nov 11 2016 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt1
+- 3.2.0-3-gf665a9c
+
 * Fri Jun 24 2016 Vladimir Didenko <cow@altlinux.org> 3.0.1-alt1
 - 3.0.1
 
