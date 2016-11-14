@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.98
+Version: 1.1.99
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -90,6 +90,10 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Nov 14 2016 Michael Shigorin <mike@altlinux.org> 1.1.99-alt1
+- xfce-sysv
+- preparing...
+
 * Mon Oct 31 2016 Michael Shigorin <mike@altlinux.org> 1.1.98-alt1
 - preparing for workstation 8.1
 
