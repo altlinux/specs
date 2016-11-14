@@ -1,6 +1,6 @@
 Name: libcdio
-Version: 0.93
-Release: alt1.1
+Version: 0.94
+Release: alt1
 
 Summary: CD-ROM/CD-image access library
 License: GPLv3+
@@ -94,6 +94,9 @@ info.
 %_man1dir/*.1*
 
 %changelog
+* Mon Nov 14 2016 Yuri N. Sedunov <aris@altlinux.org> 0.94-alt1
+- 0.94
+
 * Mon Nov 30 2015 Yuri N. Sedunov <aris@altlinux.org> 0.93-alt1.1
 - buildreqs: added makeinfo
 
