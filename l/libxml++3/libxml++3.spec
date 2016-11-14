@@ -3,7 +3,7 @@
 %define api_ver 3.0
 
 Name: %{_name}3
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: C++ wrapper for the libxml2 XML parser library
@@ -66,6 +66,9 @@ This package contains the development documentation for libxml++ library.
 %_docdir/%_name-%api_ver/*
 
 %changelog
+* Mon Nov 14 2016 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
 * Tue Feb 02 2016 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
 - 3.0.0
 
