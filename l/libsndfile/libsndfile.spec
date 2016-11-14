@@ -1,15 +1,18 @@
 Name: libsndfile
-Version: 1.0.25
-Release: alt1.1
+Version: 1.0.27
+Release: alt1
+
 Summary: A library to handle various audio file formats
-License: LGPL
 Group: System/Libraries
+License: LGPL
 Url: http://www.mega-nerd.com/%name/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: %url/%name-%version.tar.gz
+Source: %url/files/%name-%version.tar.gz
 
 BuildRequires: gcc-c++ libalsa-devel libflac-devel libsqlite3-devel libvorbis-devel
+# for check
+BuildRequires: python-modules
 
 %description
 %name is a C library for reading and writing sound files such as
@@ -37,15 +40,11 @@ Requires: %name = %version-%release
 This package contains utilities for %name
 
 %prep
-%setup -q
+%setup
 
 %build
-CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing"
-export CFLAGS
-%configure \
-	--disable-static
-
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
+%autoreconf
+%configure --disable-static
 %make_build
 
 %install
@@ -71,6 +70,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man1dir/*
 
 %changelog
+* Mon Nov 14 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0.27-alt1
+- 1.0.27 (fixed CVE-2014-9496, CVE-2014-9756, CVE-2015-7805)
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.25-alt1.1
 - Removed bad RPATH
 

@@ -1,15 +1,14 @@
 %def_disable static
 
 Name: libsamplerate
-Version: 0.1.8
+Version: 0.1.9
 Release: alt1
 
 Summary: Sample Rate Converter audio library
-License: GPL
+License: BSD
 Group: System/Libraries
 Url: http://www.mega-nerd.com/SRC
 Source: %url/%name-%version.tar.gz
-Patch: %name-0.1.7-test.patch
 
 %define libsndfile_ver 1.0.6
 Requires: libsndfile >= %libsndfile_ver
@@ -57,8 +56,7 @@ Requires: %name = %version-%release
 This package contains utilites and example programs from %name package.
 
 %prep
-%setup -q
-#%%patch -p1
+%setup
 
 %build
 %autoreconf -I M4
@@ -77,12 +75,12 @@ rm -f doc/Makefile*
 
 %files
 %_libdir/*.so.*
-%doc AUTHORS ChangeLog NEWS
+%doc AUTHORS ChangeLog NEWS COPYING
 
 %files devel
 %_includedir/*
 %_libdir/*.so
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*.pc
 %doc doc/*
 
 %if_enabled static
@@ -94,6 +92,9 @@ rm -f doc/Makefile*
 %_bindir/*
 
 %changelog
+* Mon Nov 14 2016 Yuri N. Sedunov <aris@altlinux.org> 0.1.9-alt1
+- 0.1.9
+
 * Mon Jan 16 2012 Yuri N. Sedunov <aris@altlinux.org> 0.1.8-alt1
 - 0.1.8
 
