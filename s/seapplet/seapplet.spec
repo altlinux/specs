@@ -1,5 +1,5 @@
 Name: seapplet
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 
 Summary: Applet for selinux
@@ -43,6 +43,12 @@ install -m644 %name.desktop %buildroot/%_sysconfdir/xdg/autostart/%name.desktop
 
 
 %changelog
+* Mon Nov 14 2016 Sergey V Turchin <zerg at altlinux dot org> 0.3.5-alt1
+- fix autostart in MATE
+
+* Fri Apr 08 2016 Sergey V Turchin <zerg at altlinux dot org> 0.3.4-alt0.M70C.1
+- build for M70C
+
 * Fri Apr 08 2016 Sergey V Turchin <zerg at altlinux dot org> 0.3.4-alt1
 - fix show initial state of categories
 - fix autostart in MATE
