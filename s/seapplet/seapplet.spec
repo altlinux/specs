@@ -1,5 +1,5 @@
 Name: seapplet
-Version: 0.3.5
+Version: 0.3.6
 Release: alt1
 
 Summary: Applet for selinux
@@ -43,6 +43,12 @@ install -m644 %name.desktop %buildroot/%_sysconfdir/xdg/autostart/%name.desktop
 
 
 %changelog
+* Mon Nov 14 2016 Sergey V Turchin <zerg at altlinux dot org> 0.3.6-alt1
+- wait for system tray
+
+* Mon Nov 14 2016 Sergey V Turchin <zerg at altlinux dot org> 0.3.5-alt0.M80P.1
+- build for M80P
+
 * Mon Nov 14 2016 Sergey V Turchin <zerg at altlinux dot org> 0.3.5-alt1
 - fix autostart in MATE
 
