@@ -1,6 +1,6 @@
 Name: luvcview
 Version: 0.2.6
-Release: alt1
+Release: alt2
 
 Summary: SDL-based video grabber
 License: GPLv2+
@@ -11,6 +11,8 @@ Source: %name-%version.tar.lzma
 Source1: dynctrl-logitech.h
 Source2: uvcvideo.h
 Source3: uvc_compat.h
+Source4: luvcview.1
+Source5: luvcview.desktop
 Patch: linuxvideodev2.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -34,12 +36,19 @@ sed -i '/printf("find DRI \\n");/d' utils.c
 
 %install
 install -pDm755 %name %buildroot%_bindir/%name
+install -pDm644 %SOURCE4 %buildroot%_man1dir/%name.1
+install -pDm644 %SOURCE5 %buildroot%_desktopdir/%name.desktop
 
 %files
 %doc README Changelog COPYING ToDo
 %_bindir/%name
+%_man1dir/%name.1*
+%_desktopdir/%name.desktop
 
 %changelog
+* Mon Nov 14 2016 Michael Shigorin <mike@altlinux.org> 0.2.6-alt2
+- added manpage from debian package and a desktop file (sigh)
+
 * Mon Nov 14 2016 Michael Shigorin <mike@altlinux.org> 0.2.6-alt1
 - initial build for ALT Linux Sisyphus (based on mageia package)
 
