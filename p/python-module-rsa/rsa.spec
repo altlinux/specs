@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.2
-Release: alt1.1
+Version: 3.3
+Release: alt1
 Summary: Pure-Python RSA implementation
 License: ASLv2
 Group: Development/Python
@@ -101,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Mon Nov 14 2016 Lenar Shakirov <snejok@altlinux.ru> 3.3-alt1
+- Version 3.3
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.2-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
