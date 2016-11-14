@@ -1,8 +1,8 @@
 %define qIF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
 %define _localstatedir %_var
 
-%define pkg_version 5.3.1
-%define api_ver 0.6.4
+%define pkg_version 5.4
+%define api_ver 0.6.5
 %define _exec_prefix %nil
 %define _jnidir %_libdir/java
 
@@ -24,14 +24,14 @@
 
 Name: brltty
 Version: %pkg_version
-Release: alt3
+Release: alt1
 
 Summary: Braille display driver for Linux/Unix
 Group: System/Servers
 License: GPLv2+
 Url: http://mielke.cc/brltty/
 
-Source: http://mielke.cc/brltty/archive/%name-%version.tar.gz
+Source: http://mielke.cc/brltty/archive/%name-%version.tar.xz
 # from fc
 Source1: %name.service
 Source2: ru_brltty.tar
@@ -299,12 +299,12 @@ _EOF_
 install -D -p -m644 Autostart/Udev/udev.rules %buildroot%_udevrulesdir/95-%name.rules
 
 # polkit rules
-#install -D -p -m644 Authorization/Polkit/org.%name.policy %buildroot%_datadir/polkit-1/rules.d/org.%name.policy
+install -D -p -m644 Authorization/Polkit/org.%name.policy %buildroot%_datadir/polkit-1/rules.d/org.%name.policy
 
 # systemd unit
 #install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%name.service
-install -D -p -m644  Autostart/Systemd/%name.service  %buildroot%_unitdir/%name.service
-
+#install -D -p -m644  Autostart/Systemd/%name.service %buildroot%_unitdir/%name.service
+%make -C Autostart/Systemd SYSTEMD_UNIT_DIRECTORY=%buildroot%_unitdir install
 
 %find_lang %name
 
@@ -314,6 +314,9 @@ install -D -p -m644  Autostart/Systemd/%name.service  %buildroot%_unitdir/%name.
 %_udevrulesdir/95-%name.rules
 %_tmpfilesdir/%name.conf
 %_unitdir/brltty.service
+%_unitdir/brltty@.service
+%_sbindir/brltty-systemd-wrapper
+%_datadir/polkit-1/rules.d/org.brltty.policy
 %_bindir/brltty
 %_bindir/brltty-*
 %_bindir/eutp
@@ -403,6 +406,9 @@ install -D -p -m644  Autostart/Systemd/%name.service  %buildroot%_unitdir/%name.
 %endif
 
 %changelog
+* Mon Nov 14 2016 Yuri N. Sedunov <aris@altlinux.org> 5.4-alt1
+- 5.4
+
 * Mon Apr 04 2016 Yuri N. Sedunov <aris@altlinux.org> 5.3.1-alt3
 - removed /lib/udev/devices/* (ALT #29446)
 
