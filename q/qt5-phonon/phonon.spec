@@ -1,8 +1,8 @@
 %def_disable zeitgeist
 
 Name: qt5-phonon
-Version: 4.8.3
-Release: alt4
+Version: 4.9.0
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE5 Multimedia Framework
@@ -12,11 +12,6 @@ License: LGPLv2+
 #Source: ftp://ftp.kde.org/pub/kde/stable/%name/%version/%name-%version.tar.bz2
 Source: phonon4qt5-%version.tar
 # FC
-Patch1: 0001-rename-phonon-meta-include-file-in-the-source-and-in.patch
-Patch2: 0002-Don-t-allocate-a-char-with-an-undefined-size.patch
-Patch3: 0003-Fix-build-with-Qt-5.4.2.patch
-Patch4: 0004-Specify-_include-dirs-as-INCLUDE_DIRECTORIES.patch
-Patch5: 0005-Yet-another-_include_dirs-fix.patch
 
 # ALT
 Patch100: alt-no-rpath.patch
@@ -26,7 +21,7 @@ Patch102: alt-fix-qt-visibility-test.patch
 BuildRequires(pre): qt5-base-devel
 BuildRequires: qt5-tools-devel qt5-quick1-devel
 BuildRequires: libEGL-devel libGL-devel
-BuildRequires: automoc cmake gcc-c++
+BuildRequires: automoc cmake extra-cmake-modules
 BuildRequires: libalsa-devel libpulseaudio-devel
 BuildRequires: kde-common-devel
 %if_enabled zeitgeist
@@ -58,11 +53,6 @@ with Phonon.
 
 %prep
 %setup -qn phonon4qt5-%version
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-#%patch5 -p1
 %patch100 -p1
 %patch101 -p1
 %patch102 -p1
@@ -102,12 +92,15 @@ mkdir -p %buildroot/%_qt5_plugindir/phonon4qt5_backend
 %dir %_datadir/phonon4qt5/
 %_datadir/phonon4qt5/buildsystem/
 %_libdir/cmake/phonon4qt5/
-%_qt5_plugindir/designer/libphononwidgets.so
+%_qt5_plugindir/designer/phononwidgets.so
 %_qt5_archdatadir/mkspecs/modules/qt_phonon4qt5.pri
 %_pkgconfigdir/phonon4qt5.pc
 %_datadir/dbus-1/interfaces/org.kde.Phonon4Qt5.AudioOutput.xml
 
 %changelog
+* Mon Nov 14 2016 Sergey V Turchin <zerg@altlinux.org> 4.9.0-alt1
+- new version
+
 * Mon Apr 18 2016 Sergey V Turchin <zerg@altlinux.org> 4.8.3-alt4
 - fix conflict with phonon debuginfo (ALT#31977)
 

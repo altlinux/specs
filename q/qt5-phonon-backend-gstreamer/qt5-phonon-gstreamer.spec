@@ -1,6 +1,6 @@
 
 Name: qt5-phonon-backend-gstreamer
-Version: 4.8.2
+Version: 4.9.0
 Release: alt1
 
 Group: System/Libraries
@@ -11,7 +11,8 @@ Url: http://phonon.kde.org/
 Source: %name-%version.tar
 
 BuildRequires(pre): qt5-base-devel qt5-phonon-devel
-BuildRequires: automoc cmake gcc-c++ glibc-devel gst-plugins1.0-devel libalsa-devel libxml2-devel libGL-devel libEGL-devel
+BuildRequires: qt5-x11extras-devel
+BuildRequires: automoc cmake extra-cmake-modules glibc-devel gst-plugins1.0-devel libalsa-devel libxml2-devel libGL-devel libEGL-devel
 BuildRequires: kde-common-devel
 
 %description
@@ -61,6 +62,9 @@ popd
 %_datadir/kf5/icons/hicolor/*/apps/phonon-gstreamer.*
 
 %changelog
+* Mon Nov 14 2016 Sergey V Turchin <zerg@altlinux.org> 4.9.0-alt1
+- new version
+
 * Wed Jul 01 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.2-alt1
 - new version
 
