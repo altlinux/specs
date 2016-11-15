@@ -1,5 +1,5 @@
 Name: rust
-Version: 1.12.1
+Version: 1.13.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -30,7 +30,7 @@ BuildRequires: curl gcc-c++ python-devel rust cmake
 # Since 1.12.0: striping debuginfo damages *.so files
 %add_debuginfo_skiplist %_libdir %_bindir
 
-%def_enable bootstrap
+%def_disable bootstrap
 
 %if_enabled bootstrap
 
@@ -116,6 +116,10 @@ cp %SOURCE7 %SOURCE8 dl
 %_libdir/rustlib/etc/*
 
 %changelog
+* Tue Nov 15 2016 Vladimir Lettiev <crux@altlinux.ru> 1.13.0-alt1
+- 1.13.0
+- disabled bootstrap
+
 * Tue Nov 15 2016 Vladimir Lettiev <crux@altlinux.ru> 1.12.1-alt1
 - 1.12.1
 - rebootstrap
