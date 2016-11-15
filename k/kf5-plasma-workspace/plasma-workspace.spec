@@ -16,8 +16,8 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.8.2
-Release: alt4
+Version: 5.8.3
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -293,6 +293,12 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Tue Nov 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt1
+- new version
+
+* Mon Nov 07 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt3.M80P.1
+- build for M80P
+
 * Mon Nov 07 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt4
 - fix to upscale splash background on big screen
 

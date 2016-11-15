@@ -6,7 +6,7 @@
 %define libplasmaweather libplasmaweather%plasmaweather_sover
 
 Name: kf5-%rname
-Version: 5.8.1
+Version: 5.8.3
 Release: alt1
 %K5init altplace
 
@@ -16,6 +16,8 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Requires: %name-common = %version-%release
+# plasma.diskquota
+Requires: quota
 
 Source: %rname-%version.tar
 Patch1: alt-comic-sover.patch
@@ -111,6 +113,15 @@ KF5 library
 %_K5lib/libplasmaweather.so.%plasmaweather_sover
 
 %changelog
+* Tue Nov 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt1
+- new version
+
+* Tue Oct 25 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt1
+- new version
+
+* Tue Oct 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.1-alt0.M80P.1
+- build for M80P
+
 * Fri Oct 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.1-alt1
 - new version
 
