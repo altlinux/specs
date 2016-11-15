@@ -1,8 +1,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: telepathy-gabble
-Version: 0.18.3
-Release: alt2
+Version: 0.18.4
+Release: alt1
 
 Summary: Jabber/XMPP connection manager
 License: LGPL
@@ -12,17 +12,18 @@ Url: http://telepathy.freedesktop.org/
 Source: http://telepathy.freedesktop.org/releases/telepathy-gabble/%name-%version.tar.gz
 
 %define telepathy_glib_ver 0.19.9
-%define glib_ver 2.32
+%define glib_ver 2.44
 
 Requires: ca-certificates
 
 BuildPreReq: libtelepathy-glib-devel >= %telepathy_glib_ver
-BuildPreReq: glib2-devel >= %glib_ver
+BuildPreReq: libgio-devel >= %glib_ver
 BuildRequires: libdbus-devel libdbus-glib-devel libxml2-devel libnice-devel
 BuildRequires: libsoup-devel xsltproc libsqlite3-devel libgnutls-devel libgcrypt-devel gtk-doc
 BuildRequires: python-module-twisted-words python-module-xmpp
 # for tests
 BuildRequires: /proc dbus-tools-gui python-module-dbus python-module-twisted-web python-module-twisted-core-gui
+BuildRequires: python-module-service-identity
 
 %description
 Gabble is a Jabber/XMPP connection manager for the Telepathy framework,
@@ -69,6 +70,9 @@ with Jabber/XMPP servers, including Google Talk.
 %exclude %_libdir/telepathy/gabble-0/*/*.la
 
 %changelog
+* Tue Nov 15 2016 Yuri N. Sedunov <aris@altlinux.org> 0.18.4-alt1
+- 0.18.4
+
 * Wed Dec 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.18.3-alt2
 - rebuilt against libgnutls.so.30
 
