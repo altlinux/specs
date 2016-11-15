@@ -11,8 +11,8 @@
 
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
-Version: 4.7.0
-Release: alt7
+Version: 4.7.1
+Release: alt1
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -26,6 +26,7 @@ Source1: qemu-xen-%qemu_ver.tar.bz2
 Source2: qemu-xen-traditional-%qemu_ver.tar.bz2
 Source3: mini-os-%version%pre.tar.bz2
 Source4: %name.logrotate
+Source5: %name-qemu-dom0
 
 # used by stubdoms
 Source10: newlib-1.16.0.tar.gz
@@ -122,7 +123,8 @@ BuildRequires: libSDL-devel libXext-devel
 # efi image needs an ld that has -mi386pep option
 %{?_with_efi:BuildRequires: mingw64-binutils}
 %{?_enable_stubdom:BuildRequires: makeinfo}
-%{?_with_hypervisor:BuildRequires: flex discount libfdt-devel libgcrypt-devel liblzo2-devel libvde-devel perl-HTML-Parser perl-devel}
+# with hypervisor
+BuildRequires: flex discount libfdt-devel libgcrypt-devel liblzo2-devel libvde-devel perl-HTML-Parser perl-devel
 # from 4.7.0
 BuildRequires: libnl-devel >= 3.2.8 libnl3 >= 3.2.8 libnl3-utils >= 3.2.8
 BuildRequires: libpixman-devel >= 0.21.8 libpixman >= 0.21.8
@@ -191,8 +193,8 @@ which manage Xen virtual machines.
 %package runtime
 Summary: Core Xen runtime environment
 Group: Emulators
+Requires: %name = %version-%release
 Requires: lib%name = %version-%release
-Requires: %_bindir/qemu-img
 
 %description runtime
 The Xen Project hypervisor is an open-source type-1 or baremetal
@@ -436,6 +438,9 @@ mv %buildroot%_docdir/%name-%version/{html/,}misc
 # README's not intended for end users
 rm -f %buildroot/%_sysconfdir/%name/README*
 
+# adhere to Static Library Packaging Guidelines
+rm -f %buildroot%_libdir/*.a
+
 ############ fixup files in /etc ############
 
 # logrotate
@@ -474,15 +479,18 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 mv %buildroot%_docdir/%name-%version/licenses/stubdom/gmp-x86_32 %buildroot%_docdir/%name-%version/licenses/stubdom/gmp
 %endif
 
+install -pD -m 0755 %SOURCE5 %buildroot%_initddir/%name-qemu-dom0
+mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/%name-qemu-dom0.service
+
 ############ all done now ############
 
 %ifdef brp_strip_none
-%brp_strip_none %_datadir/xen/qemu/* %_datadir/qemu-xen/qemu/*
+%brp_strip_none %_datadir/%name/qemu/* %_datadir/qemu-%name/qemu/*
 %else
-%add_strip_skiplist %_datadir/xen/qemu/* %_datadir/qemu-xen/qemu/*
+%add_strip_skiplist %_datadir/%name/qemu/* %_datadir/qemu-%name/qemu/*
 %endif
 
-%add_verify_elf_skiplist %_datadir/xen/qemu/openbios-* %_datadir/qemu-xen/qemu/* /boot/*
+%add_verify_elf_skiplist %_datadir/%name/qemu/openbios-* %_datadir/qemu-%name/qemu/* /boot/*
 
 
 %post
@@ -639,7 +647,6 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/gmp-x86_32 %buildroot%_doc
 
 %files -n lib%name-devel
 %_libdir/*.so
-%_libdir/*.a
 
 %_includedir/*.h
 %_includedir/%name
@@ -649,10 +656,15 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/gmp-x86_32 %buildroot%_doc
 %_datadir/pkgconfig/xlutil.pc
 
 
-%files runtime
-%dir /lib/systemd
-%dir %_unitdir
+%post runtime
+%post_service xen-qemu-dom0
 
+
+%preun runtime
+%preun_service xen-qemu-dom0
+
+
+%files runtime
 %_bindir/pygrub
 %_sbindir/xen-bugtool
 
@@ -660,7 +672,11 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/gmp-x86_32 %buildroot%_doc
 %_libexecdir/%name/bin/convert-legacy-stream
 %_libexecdir/%name/bin/verify-stream-v2
 
-%_unitdir/xen-qemu-dom0-disk-backend.service
+%_initddir/%name-qemu-dom0
+
+%dir /lib/systemd
+%dir %_unitdir
+%_unitdir/xen-qemu-dom0.service
 
 %_datadir/%name
 %_datadir/qemu-%name
@@ -751,6 +767,9 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/gmp-x86_32 %buildroot%_doc
 
 
 %changelog
+* Wed Nov 09 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.1-alt1
+- 4.7.1 release
+
 * Fri Nov 04 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.0-alt7
 - Fix: SharedLibs Policy Draft violation
   (altlinux-policy-shared-lib-contains-devel-so)
