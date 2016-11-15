@@ -2,7 +2,7 @@
 %def_disable openswan
 
 Name: kf5-%rname
-Version: 5.8.2
+Version: 5.8.3
 Release: alt1
 %K5init altplace
 
@@ -214,6 +214,12 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Tue Nov 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt1
+- new version
+
+* Tue Oct 25 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt0.M80P.1
+- build for M80P
+
 * Tue Oct 25 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt1
 - new version
 

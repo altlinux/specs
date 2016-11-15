@@ -1,7 +1,7 @@
 %define rname kactivitymanagerd
 
 Name: kf5-kactivitymanagerd
-Version: 5.8.2
+Version: 5.8.3
 Release: alt1
 %K5init altplace
 
@@ -51,6 +51,12 @@ BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-deve
 %_K5srvtyp/*.desktop
 
 %changelog
+* Tue Nov 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt1
+- new version
+
+* Tue Oct 25 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt0.M80P.1
+- build for M80P
+
 * Tue Oct 25 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt1
 - new version
 

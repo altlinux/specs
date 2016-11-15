@@ -7,8 +7,8 @@
 
 
 Name: kf5-%rname
-Version: 5.8.2
-Release: alt5
+Version: 5.8.3
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -198,6 +198,12 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Tue Nov 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt1
+- new version
+
+* Tue Nov 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt4.M80P.1
+- build for M80P
+
 * Tue Nov 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt5
 - show name and generic name in main menu by default
 

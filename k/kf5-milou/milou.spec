@@ -4,7 +4,7 @@
 %define libmilou libmilou%milou_sover
 
 Name: kf5-%rname
-Version: 5.8.1
+Version: 5.8.3
 Release: alt1
 %K5init altplace
 
@@ -81,6 +81,15 @@ KF5 library
 %_K5lib/libmilou.so.%milou_sover
 
 %changelog
+* Tue Nov 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt1
+- new version
+
+* Tue Oct 25 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt1
+- new version
+
+* Tue Oct 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.1-alt0.M80P.1
+- build for M80P
+
 * Fri Oct 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.1-alt1
 - new version
 
