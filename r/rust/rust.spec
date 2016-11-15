@@ -1,5 +1,5 @@
 Name: rust
-Version: 1.12.0
+Version: 1.12.1
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -30,6 +30,24 @@ BuildRequires: curl gcc-c++ python-devel rust cmake
 # Since 1.12.0: striping debuginfo damages *.so files
 %add_debuginfo_skiplist %_libdir %_bindir
 
+%def_enable bootstrap
+
+%if_enabled bootstrap
+
+Patch: rust-1.11.0-bootstrap.py.patch
+
+%ifarch x86_64
+Source7: https://static.rust-lang.org/dist/2016-08-16/rustc-1.11.0-x86_64-unknown-linux-gnu.tar.gz
+Source8: https://static.rust-lang.org/dist/2016-08-16/rustc-1.11.0-x86_64-unknown-linux-gnu.tar.gz.sha256
+%endif
+
+%ifarch %ix86
+Source7: https://static.rust-lang.org/dist/2016-08-16/rustc-1.11.0-i686-unknown-linux-gnu.tar.gz
+Source8: https://static.rust-lang.org/dist/2016-08-16/rustc-1.11.0-i686-unknown-linux-gnu.tar.gz.sha256
+%endif
+
+%endif
+
 %description
 Rust is a systems programming language that runs blazingly fast, prevents
 segfaults, and guarantees thread safety.
@@ -47,10 +65,19 @@ Requires: %name = %version-%release
 mv llvm jemalloc compiler-rt rust-installer liblibc src
 mv hoedown src/rt
 
+%if_enabled bootstrap
+%patch -p1
+
+mkdir dl
+cp %SOURCE7 %SOURCE8 dl
+%endif
+
 %build
 ./configure --disable-manage-submodules \
+%if_disabled bootstrap
     --enable-local-rust \
     --local-rust-root=%prefix \
+%endif
     --release-channel=stable \
     --disable-docs \
     --enable-dist-host-only \
@@ -89,6 +116,10 @@ mv hoedown src/rt
 %_libdir/rustlib/etc/*
 
 %changelog
+* Tue Nov 15 2016 Vladimir Lettiev <crux@altlinux.ru> 1.12.1-alt1
+- 1.12.1
+- rebootstrap
+
 * Wed Oct 05 2016 Vladimir Lettiev <crux@altlinux.ru> 1.12.0-alt1
 - 1.12.0
 - disable debuginfo packaging
