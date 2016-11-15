@@ -1,6 +1,6 @@
 Name: firmware-linux
 Version: 20160927
-Release: alt1
+Release: alt2
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -52,8 +52,7 @@ ln -s fw_sst_0f28.bin-48kHz_i2s_master intel/fw_sst_0f28.bin-i2s_master
 %install
 mkdir -p %buildroot/lib/firmware
 cp -a * %buildroot/lib/firmware
-rm %buildroot/lib/firmware/{WHENCE,LICENCE.*}
-
+rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 
 %files
 %doc WHENCE LICEN?E.*
@@ -61,6 +60,9 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*}
 %exclude /lib/firmware/carl9170fw
 
 %changelog
+* Tue Nov 15 2016 Michael Shigorin <mike@altlinux.org> 20160927-alt2
+- dropped /lib/firmware/check_whence.py (closes: #32754)
+
 * Mon Oct 24 2016 Michael Shigorin <mike@altlinux.org> 20160927-alt1
 - updated from git
 
