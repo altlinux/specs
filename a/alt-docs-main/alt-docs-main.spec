@@ -1,5 +1,5 @@
 Name: alt-docs-main
-Version: 0.6
+Version: 0.7
 Release: alt1
 Group: Documentation
 Packager: ALT Docs Team <docs@packages.altlinux.org>
@@ -13,39 +13,39 @@ Url: http://heap.altlinux.ru/alt-docs/index.html
 BuildRequires(pre): rpm-build-licenses >= 0.6
 PreReq: alt-docs-genextras >= 0.2
 
-Summary: ALT Linux Documentation main page
-Summary(ru_RU.KOI8-R): Главная страница документации ALT Linux
+Summary: ALT Documentation main page
+Summary(ru_RU.UTF-8): п⌠п╩п╟п╡п╫п╟я▐ я│я┌я─п╟п╫п╦я├п╟ п╢п╬п╨я┐п╪п╣п╫я┌п╟я├п╦п╦ п░п╩я▄я┌
 
 # Automatically added by buildreq on Fri Apr 07 2006
 BuildRequires: ALDConvert python-modules python-modules-compiler python-modules-encodings
 
 %description
-Main page for ALT Linux Documentation. This package does not contain 
-documentation itself but provides convenient interface for all installed 
-documentation resources via menu and desktop link. It is also intented to 
-serve as a main page of ALT Linux Documantation website.
+Main page for ALT Documentation. This package does not contain
+documentation itself but provides convenient interface for all
+installed documentation resources via menu and desktop link.
+It is also intented to serve as a main page of ALT Documentation
+website.
 
-%description -l ru_RU.KOI8-R
-Главная страница документации ALT Linux. Данный пакет не содержит 
-собственно документации, он нужен, чтобы обеспечить удобный доступ 
-к документации через меню и ссылку на десктопе. Он также будет служить 
-главной страницей сайта документации ALT Linux.
+%description -l ru_RU.UTF-8
+п⌠п╩п╟п╡п╫п╟я▐ я│я┌я─п╟п╫п╦я├п╟ п╢п╬п╨я┐п╪п╣п╫я┌п╟я├п╦п╦ п░п╩я▄я┌. п■п╟п╫п╫я▀п╧ п©п╟п╨п╣я┌ п╫п╣ я│п╬п╢п╣я─п╤п╦я┌ я│п╬п╠я│я┌п╡п╣п╫п╫п╬
+п╢п╬п╨я┐п╪п╣п╫я┌п╟я├п╦п╦, п╬п╫ п╫я┐п╤п╣п╫, я┤я┌п╬п╠я▀ п╬п╠п╣я│п©п╣я┤п╦я┌я▄ я┐п╢п╬п╠п╫я▀п╧ п╢п╬я│я┌я┐п© п╨ п╢п╬п╨я┐п╪п╣п╫я┌п╟я├п╦п╦
+я┤п╣я─п╣п╥ п╪п╣п╫я▌ п╦ я│я│я▀п╩п╨я┐ п╫п╟ п╢п╣я│п╨я┌п╬п©п╣. п·п╫ я┌п╟п╨п╤п╣ п╠я┐п╢п╣я┌ я│п╩я┐п╤п╦я┌я▄ пЁп╩п╟п╡п╫п╬п╧
+я│я┌я─п╟п╫п╦я├п╣п╧ я│п╟п╧я┌п╟ п╢п╬п╨я┐п╪п╣п╫я┌п╟я├п╦п╦ ALT.
 
 %prep
-%setup -q -n %name-%version
+%setup
 
 %build
 make
 
 %install
 # TODO: deprecated path; kde no more lives there
-install -Dm644 %_builddir/%name-%version/alt-docs-main-link.desktop %buildroot%_datadir/apps/kdesktop/DesktopLinks/%name.desktop
+install -pDm644 %_builddir/%name-%version/alt-docs-main-link.desktop %buildroot%_datadir/apps/kdesktop/DesktopLinks/%name.desktop
 # menu
-install -Dm644 %_builddir/%name-%version/alt-docs-main-menu.desktop %buildroot%_desktopdir/%name.desktop
+install -pDm644 %_builddir/%name-%version/alt-docs-main-menu.desktop %buildroot%_desktopdir/%name.desktop
 
 mkdir -p %buildroot%_docdir/alt-docs
-#cp -r %_builddir/%name-%version/* %buildroot%_docdir/alt-docs/
-make DESTDIR=%buildroot install
+%makeinstall_std
 
 %post
 %_bindir/alt-docs-genextras alt-docs
@@ -56,8 +56,11 @@ make DESTDIR=%buildroot install
 # TODO: deprecated path; kde no more lives there
 %_datadir/apps/kdesktop/DesktopLinks/%name.desktop
 
-
 %changelog
+* Tue Nov 15 2016 Michael Shigorin <mike@altlinux.org> 0.7-alt1
+- update for alt 8.x releases
+- minor spec cleanup
+
 * Mon Jun 06 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.6-alt1
 - don't require webclient. There are web clinent now in all desktop
   installations, but there is no need for it in server.
