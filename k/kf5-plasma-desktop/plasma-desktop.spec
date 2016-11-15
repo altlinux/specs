@@ -8,7 +8,7 @@
 
 Name: kf5-%rname
 Version: 5.8.2
-Release: alt3
+Release: alt5
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -23,7 +23,7 @@ Source: %rname-%version.tar
 Patch1: alt-def-font.patch
 Patch2: alt-menu-icon.patch
 Patch3: alt-def-apps-menu.patch
-Patch4: alt-kicker-width.patch
+Patch4: alt-def-kicker.patch
 Patch5: alt-multimedia-player-chooser.patch
 Patch6: alt-def-panel.patch
 Patch7: alt-def-desktop-containment.patch
@@ -198,6 +198,12 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Tue Nov 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt5
+- show name and generic name in main menu by default
+
+* Tue Nov 01 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt2.M80P.1
+- build for M80P
+
 * Tue Nov 01 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.2-alt3
 - add Places widget to panel by default
 
