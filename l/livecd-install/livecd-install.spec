@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.9.3
+Version: 0.9.5
 Release: alt1
 
 Summary: Permanently install Live system
@@ -61,6 +61,15 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Tue Nov 15 2016 Michael Shigorin <mike@altlinux.org> 0.9.5-alt1
+- Deactivate EVMS if a previous run has got down to
+  disk partitioning but not through (closes: #31582).
+- Update the icon in desktop file. :)
+
+* Fri Apr 08 2016 Michael Shigorin <mike@altlinux.org> 0.9.4-alt1
+- Drop dconf hook (thanks shaba@).
+  + NB: incompatible with p7/t7!
+
 * Tue Jun 16 2015 Michael Shigorin <mike@altlinux.org> 0.9.3-alt1
 - Security fix: purge LiveCD's sudoers (closes: #31071).
 
