@@ -2,8 +2,8 @@
 %def_without xtdesktop
 %def_without desklaunch
 Name: icewm-startup
-Version: 0.16
-Release: alt4
+Version: 0.17
+Release: alt1
 
 Summary: simple pluggable IceWM autostart manager
 
@@ -19,9 +19,6 @@ Source1: XXkb.conf
 BuildArch: noarch
 AutoReq: no
 
-# uncomment if you want to backport prior to M30
-#define icewmconfdir #_x11x11dir/icewm
-#Requires: icewm
 %define icewmconfdir %_sysconfdir/X11/icewm
 #due to new icewmconfdir in /etc/X11
 Requires: icewm >= 1.2.25
@@ -123,11 +120,26 @@ for take information about external mounting and unmounting.
 
 This package provides mount-tray plug-in for IceWM autostart manager.
 
-%description -l ru_RU.UTF-8 kdesktop
+%description -l ru_RU.UTF-8 mount-tray
 mount-tray - это небольшой аплет для монтирования и размонтирования
 извлекаемых устройств наподобие USB флешки, CD или DVD-ROM.
 
 Установите этот пакет, если вы хотите запускать mount-tray при старте IceWM.
+
+%package notification-daemon
+Group: Graphical desktop/Icewm
+Summary: notification-daemon autostart at IceWM startup
+Summary(ru_RU.UTF-8): автозапуск notification-daemon при старте IceWM
+Requires: %name notification-daemon
+AutoReq: no
+
+%description notification-daemon
+notification-daemon provides a notification server according to Desktop Notifications Specification.
+This package provides notification-daemon plug-in for IceWM autostart manager.
+
+%description -l ru_RU.UTF-8 notification-daemon
+notification-daemon используется для отображения уведомлений от других программ.
+Установите этот пакет, если вы хотите запускать notification-daemon при старте IceWM.
 
 %package xxkb
 Group: Graphical desktop/Icewm
@@ -394,6 +406,7 @@ echo 'kdesktop&'> %buildroot/%icewmconfdir/startup.d/kdesktop
 echo 'mount-tray&'> %buildroot/%icewmconfdir/startup.d/mount-tray
 echo 'ivman&'> %buildroot/%icewmconfdir/startup.d/ivman
 echo 'apt-indicator&'> %buildroot/%icewmconfdir/startup.d/apt-indicator
+echo "/usr/libexec/notification-daemon&" > %buildroot/%icewmconfdir/startup.d/notification-daemon
 
 cat <<EOF > %buildroot/%icewmconfdir/startup.d/020-idesk
 #!/bin/sh
@@ -554,6 +567,9 @@ fi
 %files mount-tray
 %config %icewmconfdir/startup.d/mount-tray
 
+%files notification-daemon
+%config %icewmconfdir/startup.d/notification-daemon
+
 %files update-menus
 %config %icewmconfdir/startup.d/001-update-menus
 
@@ -582,6 +598,9 @@ fi
 %config %icewmconfdir/shutdown.d/000-simple-sound
 
 %changelog
+* Tue Nov 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- added notification-daemon
+
 * Tue Oct 11 2016 Igor Vlasenko <viy@altlinux.ru> 0.16-alt4
 - added apt-indicator
 
