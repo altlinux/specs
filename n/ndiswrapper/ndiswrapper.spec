@@ -1,7 +1,7 @@
 %define _sbinrootdir /sbin
 
 Name: ndiswrapper
-Version: 1.60
+Version: 1.61
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -44,7 +44,7 @@ Summary: Linux %module_name modules sources
 %prep
 %setup
 #patch0 -p1 -b .spaces
-%patch1 -p1
+#patch1 -p1
 
 
 %build
@@ -93,6 +93,9 @@ echo -e "please download binary driver at http://ndiswrapper.sourceforge.net/wik
 %_usrsrc/kernel/sources/*ndis*
 
 %changelog
+* Wed Nov 16 2016 Ilya Mashkin <oddity@altlinux.ru> 1.61-alt1
+- 1.61
+
 * Mon Jun 06 2016 Ilya Mashkin <oddity@altlinux.ru> 1.60-alt1
 - 1.60: support kernel version up to 4.5
 
