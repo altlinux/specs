@@ -7,8 +7,8 @@
 %define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-basealt-desktop
 
 Name: docs-%variant
-Version: 8.0
-Release: alt3
+Version: 8.1
+Release: alt1
 
 Summary: %Variant documentation
 License: %fdl
@@ -43,6 +43,9 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Tue Nov 15 2016 Michael Shigorin <mike@altlinux.org> 8.1-alt1
+- update for 8.1 release
+
 * Tue Jun 21 2016 Michael Shigorin <mike@altlinux.org> 8.0-alt3
 - renamed to docs-alt-workstation
 
