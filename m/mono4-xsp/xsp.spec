@@ -2,7 +2,7 @@ Name: mono4-xsp
 Url: http://go-mono.com/
 License: X11/MIT
 Group: System/Servers
-Version: 4.2
+Version: 4.4
 Release: alt1
 Summary: Small Web Server Hosting ASP.NET
 Packager: Denis Medvedev <nbr@altlinux.org>
@@ -71,6 +71,9 @@ install -m 755 tools/mono-asp-apps/mono-asp-apps %buildroot%_bindir/mono-asp-app
 %_mandir/*/*
 
 %changelog
+* Thu Nov 17 2016 Denis Medvedev <nbr@altlinux.org> 4.4-alt1
+- new upstream version
+
 * Wed Jan 13 2016 Denis Medvedev <nbr@altlinux.org> 4.2-alt1
 - initial build for ALT Linux Sisyphus
 
