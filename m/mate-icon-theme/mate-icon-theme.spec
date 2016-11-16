@@ -19,11 +19,7 @@ Group: Graphical desktop/Other
 
 Name:           mate-icon-theme
 Version:        %{branch}.0
-%if 0%{?rel_build}
-Release:        alt1_1
-%else
-Release:        alt1_1
-%endif
+Release:        alt2_1
 Summary:        Icon theme for MATE Desktop
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
@@ -65,6 +61,7 @@ make %{?_smp_mflags} V=1
 
 %install
 %{makeinstall_std}
+find %buildroot -name package.png -delete
 
 %files
 %doc AUTHORS COPYING README
@@ -73,6 +70,9 @@ make %{?_smp_mflags} V=1
 
 
 %changelog
+* Wed Nov 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt2_1
+- temporarily removed package.png util synaptic will be fixed
+
 * Wed Oct 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_1
 - new fc release
 
