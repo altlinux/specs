@@ -1,6 +1,6 @@
 Name: guile-evms
 Version: 0.4
-Release: alt14
+Release: alt15
 
 Summary: Guile bindings for EVMS
 License: GPL
@@ -28,6 +28,9 @@ make install DESTDIR=%buildroot
 %_datadir/guile/site/evms.scm
 
 %changelog
+* Wed Nov 16 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4-alt15
+- do not treat as error nonexistent device during BLKRRPART
+
 * Tue Feb 05 2013 Michael Shigorin <mike@altlinux.org> 0.4-alt14
 - don't suggest to mkfs /boot/efi (see also #28163)
 
