@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libGL-devel zlib-devel
 
 Name:           frogatto
 Version:        1.3.3
-Release:        alt1_6
+Release:        alt2_6
 Summary:        An old-school 2D platform game
 
 # Artwork and music not released under an open license
@@ -143,6 +143,10 @@ pod2man --section=6 \
 
 
 %changelog
+* Wed Nov 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt2_6
+- set to ArcadeGame in frogatto.desktop
+- fixed font path (for the level editor)
+
 * Tue Nov 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt1_6
 - new version
 
