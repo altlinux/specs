@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.14.0
-Release: alt5
+Release: alt6
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -134,6 +134,12 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 0.14.0-alt6
+- use user icons from AccountsService first
+
+* Mon Oct 24 2016 Sergey V Turchin <zerg@altlinux.org> 0.14.0-alt4.M80P.1
+- build for M80P
+
 * Mon Oct 24 2016 Sergey V Turchin <zerg@altlinux.org> 0.14.0-alt5
 - fix to show user avatars (ALT#32629)
 
