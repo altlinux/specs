@@ -2,7 +2,7 @@
 %def_without tests
 
 Name: meson
-Version: 0.35.1
+Version: 0.36.0
 Release: alt1
 
 Summary: High productivity build system
@@ -54,9 +54,6 @@ reports, Valgrind, CCache and the like.
 %install
 %python3_install
 install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
-for f in %buildroot%_bindir/*.py; do
-  mv ${f} ${f%%.py}
-done
 
 %check
 %{?_with_tests:MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py}
@@ -77,6 +74,9 @@ done
 
 
 %changelog
+* Wed Nov 16 2016 Yuri N. Sedunov <aris@altlinux.org> 0.36.0-alt1
+- 0.36.0
+
 * Tue Oct 18 2016 Yuri N. Sedunov <aris@altlinux.org> 0.35.1-alt1
 - 0.35.1
 
