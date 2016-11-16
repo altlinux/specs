@@ -2,7 +2,7 @@
 
 Name: libcdio-paranoia
 Version: %(echo %_version |sed -e 's|\+|.|g')
-Release: alt1
+Release: alt2
 
 Summary: CD paranoia library from libcdio
 Group: System/Libraries
@@ -58,6 +58,9 @@ rm -rf %buildroot%_mandir/jp
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Nov 16 2016 Yuri N. Sedunov <aris@altlinux.org> 10.2.0.93.1-alt2
+- rebuild with libcdio-0.94
+
 * Mon Jul 20 2015 Yuri N. Sedunov <aris@altlinux.org> 10.2.0.93.1-alt1
 - first build for Sisyphus
 
