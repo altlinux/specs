@@ -4,7 +4,7 @@ Name: adobe-flash-player
 %define ver_fake   13
 %define ver_ix86   13.0.0.0
 %define ver_x86_64 13.0.0.0
-Release: alt1
+Release: alt2
 Serial: 3
 
 %define ver_real %ver_fake
@@ -23,6 +23,7 @@ License: GPL
 
 ExclusiveArch: %ix86 x86_64
 BuildArch: noarch
+
 BuildRequires: rpm-macros-browser-plugins
 
 Source: empty
@@ -36,7 +37,7 @@ Partially Supported: Opera, Konqueror 3.x
 Version: %ver_real
 Group: Networking/WWW
 Summary: Adobe Flash Player
-Requires: firefox-pepperflash
+Requires: freshplayerplugin ppapi-plugin-adobe-flash
 Provides: flash-plugin = %version-%release
 Obsoletes: flash-plugin <= %version
 Provides: mozilla-plugin-macromedia-flash = %version-%release
@@ -61,6 +62,9 @@ fake
 %files -n %bin_name
 
 %changelog
+* Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 3:13-alt2
+- clean requires
+
 * Wed Nov 09 2016 Sergey V Turchin <zerg@altlinux.org> 3:13-alt1
 - empty package
 - require firefox-pepperflash
