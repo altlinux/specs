@@ -8,9 +8,10 @@
 %define major 8
 %define minor 1
 %define bugfix 0
+%define altversion %major.%minor
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 BuildArch: noarch
 
 %define theme %name
@@ -35,8 +36,8 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel
 %define Brand_ru Альт
 %define status %nil
 %define status_ru %nil
-%define ProductName %Brand %major.%minor %Theme
-%define ProductName_ru %Brand_ru %major.%minor %Theme_ru
+%define ProductName %Brand %Theme %altversion
+%define ProductName_ru %Brand_ru %Theme_ru %altversion
 
 %define variants alt-kdesktop alt-server alt-starterkit alt-workstation altlinux-kdesktop altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench altlinux-sisyphus sisyphus-server school-master school-server school-teacher school-lite school-junior altlinux-gnome-desktop sisyphus-server-light
 
@@ -133,46 +134,46 @@ Distribution license and release notes
 
 %package kde4-settings
 BuildArch: noarch
-Summary: KDE4 settings for %Brand %version %Theme
+Summary: KDE4 settings for %ProductName
 License: Distributable
 Group: Graphical desktop/KDE
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-kde4-settings ";done )
 PreReq: %name-graphics
 %description kde4-settings
-KDE4 settings for %Brand %version %Theme
+KDE4 settings for %ProductName
 
 %package kde3-settings
 BuildArch: noarch
-Summary: KDE3 settings for %Brand %version %Theme
+Summary: KDE3 settings for %ProductName
 License: Distributable
 Group: Graphical desktop/KDE
 PreReq: %name-graphics
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-kde3-settings ";done )
 %description kde3-settings
-KDE3 settings for %Brand %version %Theme
+KDE3 settings for %ProductName
 
 %package fvwm-settings
 BuildArch: noarch
-Summary: FVWM2 settings for %Brand %version %Theme
+Summary: FVWM2 settings for %ProductName
 License: Distributable
 Group: Graphical desktop/FVWM based
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-fvwm-settings ";done )
 %description fvwm-settings
-FVWM2 settings for %Brand %version %Theme
+FVWM2 settings for %ProductName
 
 %package mate-settings
 BuildArch: noarch
-Summary: MATE settings for %Brand %version %Theme
+Summary: MATE settings for %ProductName
 License: Distributable
 Group:   Graphical desktop/GNOME
 Requires: gksu
 Requires: dconf
 %description mate-settings
-MATE settings for %Brand %version %Theme
+MATE settings for %ProductName
 
 %package gnome-settings
 BuildArch: noarch
-Summary: GNOME settings for %Brand %version %Theme
+Summary: GNOME settings for %ProductName
 License: Distributable
 Group: Graphical desktop/GNOME
 Requires: gtk2-theme-mist
@@ -183,16 +184,16 @@ Provides: metacity-theme
 Provides: gnome-menus = 2.30.4
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-gnome-settings ";done )
 %description gnome-settings
-GNOME settings for %Brand %version %Theme
+GNOME settings for %ProductName
 
 %package slideshow
 BuildArch: noarch
-Summary: Slideshow for %Brand %version %Theme installer
+Summary: Slideshow for %ProductName installer
 License: Distributable
 Group: System/Configuration/Other 
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-slideshow ";done )
 %description slideshow
-Slideshow for %Brand %version %Theme installer
+Slideshow for %ProductName installer
 
 %package indexhtml
 BuildArch: noarch
@@ -233,7 +234,7 @@ PRODUCT_NAME='%ProductName' \
 PRODUCT_NAME_RU='%ProductName_ru' \
 STATUS=%status \
 STATUS_RU=%status_ru \
-VERSION=%major.%minor \
+VERSION=%altversion \
 X86='%x86' \
     ./configure
 make
@@ -262,7 +263,7 @@ __EOF__
 #release
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/ignore.d/
 install -pD -m644 /dev/null %buildroot%_sysconfdir/buildreqs/packages/ignore.d/%name-release
-echo "%Brand %version %Theme %status (%codename)" >%buildroot%_sysconfdir/altlinux-release
+echo "%ProductName %status (%codename)" >%buildroot%_sysconfdir/altlinux-release
 for n in fedora redhat system; do
 	ln -s altlinux-release %buildroot%_sysconfdir/$n-release
 done
@@ -270,12 +271,12 @@ done
 mkdir -p %buildroot/%_datadir/%name
 cat >>%buildroot/%_sysconfdir/os-release <<__EOF__
 NAME="%Brand"
-VERSION="%version %Theme %status (%codename)"
+VERSION="%altversion %status"
 ID=altlinux
-VERSION_ID=%version
-PRETTY_NAME="%Brand %version %Theme %status (%codename)"
+VERSION_ID=%altversion
+PRETTY_NAME="%ProductName %status (%codename)"
 ANSI_COLOR="1;33"
-CPE_NAME="cpe:/o:%brand:%smalltheme:%version"
+CPE_NAME="cpe:/o:%brand:%smalltheme:%altversion"
 HOME_URL="%url"
 BUG_REPORT_URL="https://bugs.altlinux.org/"
 __EOF__
@@ -465,6 +466,10 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Nov 16 2016 Sergey V Turchin <zerg at altlinux dot org> 8.1.0-alt3
+- fix version
+- update backgrounds
+
 * Thu Nov 03 2016 Sergey V Turchin <zerg at altlinux dot org> 8.1.0-alt2
 - clean titles
 
