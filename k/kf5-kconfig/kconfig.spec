@@ -1,8 +1,8 @@
 %define rname kconfig
 
 Name: kf5-%rname
-Version: 5.27.0
-Release: alt2
+Version: 5.28.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -90,6 +90,12 @@ KF5 library
 %_K5lib/libKF5ConfigGui.so.*
 
 %changelog
+* Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt1
+- new version
+
+* Fri Oct 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.27.0-alt1.M80P.1
+- build for M80P
+
 * Fri Oct 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.27.0-alt2
 - fix find update scripts
 

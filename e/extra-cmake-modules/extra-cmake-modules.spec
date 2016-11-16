@@ -1,6 +1,6 @@
 
 Name: extra-cmake-modules
-Version: 5.27.0
+Version: 5.28.0
 Release: alt1
 
 Group: Development/Other
@@ -13,10 +13,11 @@ BuildArch: noarch
 Requires: cmake
 
 Source: %name-%version.tar
+Patch1: alt-find-qcollectiongenerator.patch
 
-# Automatically added by buildreq on Wed Dec 24 2014 (-bi)
-# optimized out: cmake-modules libcloog-isl4 libqt5-core python-base python-devel python-module-BeautifulSoup python-module-PyStemmer python-module-cffi python-module-docutils python-module-google python-module-google-apputils python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-numpy python-module-pyExcelerator python-module-pycparser python-module-pyparsing python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest qt5-base-devel qt5-tools
-#BuildRequires: cmake python-module-Pillow python-module-Pygments python-module-Reportlab python-module-html5lib python-module-matplotlib python-module-nss python-module-protobuf python-module-pygobject3 python-module-xlwt python-modules-tkinter qt5-tools-devel ruby ruby-stdlibs time
+# Automatically added by buildreq on Thu Nov 17 2016 (-bi)
+# optimized out: bzr cmake-modules fontconfig libqt4-clucene libqt4-core libqt4-devel libqt4-gui libqt4-help libqt4-network libqt4-sql libqt4-sql-sqlite policycoreutils python-base python-module-4Suite-XML python-module-IPy python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cssselect python-module-docutils python-module-enum34 python-module-google python-module-httplib2 python-module-imagesize python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mimeparse python-module-numpy python-module-pyasn1 python-module-pygobject3 python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-slip python-module-snowballstemmer python-module-sphinx python-module-twisted-core python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base rpm-build-python3 ruby xz
+#BuildRequires: cmake ctags dblatex gyp libicu56 openbabel python-module-BeautifulSoup python-module-Pillow python-module-Reportlab python-module-alabaster python-module-bzr-fastimport python-module-cups python-module-ecdsa python-module-ed25519 python-module-html5lib python-module-nss python-module-polib python-module-pyExcelerator python-module-pycrypto python-module-pygraphviz python-module-pyparsing python-module-sphinx_rtd_theme python-modules-tkinter python3-dev rpm-build-gir ruby-stdlibs time
 BuildRequires: cmake qt5-tools qt5-tools-devel
 BuildRequires: /usr/bin/sphinx-build
 
@@ -26,9 +27,13 @@ Additional modules for CMake build system needed by KDE Frameworks.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
-%cmake
+%cmake \
+    -DBUILD_TESTING:BOOL=FALSE \
+    #
+#    -DBUILD_QTHELP_DOCS:BOOL=TRUE \
 %cmake_build
 
 %install
@@ -41,6 +46,12 @@ Additional modules for CMake build system needed by KDE Frameworks.
 %doc %_man7dir/*
 
 %changelog
+* Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt1
+- new version
+
+* Thu Oct 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.27.0-alt0.M80P.1
+- build for M80P
+
 * Tue Oct 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.27.0-alt1
 - new version
 

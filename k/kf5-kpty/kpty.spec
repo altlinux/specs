@@ -3,7 +3,7 @@
 %define helperpath %_libexecdir/utempter/utempter
 
 Name: kf5-%rname
-Version: 5.27.0
+Version: 5.28.0
 Release: alt1
 %K5init altplace
 
@@ -55,8 +55,8 @@ KF5 library
 
 %build
 %K5build \
-    -DUTEMPTER_EXECUTABLE=%helperpath \
     #
+#    -DUTEMPTER_EXECUTABLE=%helperpath \
 
 %install
 %K5install
@@ -77,6 +77,12 @@ KF5 library
 %_K5lib/libKF5Pty.so.*
 
 %changelog
+* Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt1
+- new version
+
+* Thu Oct 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.27.0-alt0.M80P.1
+- build for M80P
+
 * Tue Oct 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.27.0-alt1
 - new version
 
