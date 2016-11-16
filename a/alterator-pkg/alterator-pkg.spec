@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-pkg
-Version: 2.6.20
+Version: 2.6.21
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -61,6 +61,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 2.6.21-alt1
+- get package list with comments in group content (ALT#32734)
+
 * Thu Apr 28 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.6.20-alt1
 - size calculations errors are placed into /tmp/install2.log now
 
