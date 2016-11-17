@@ -11,8 +11,8 @@
 %define licensepath	%_docdir
 
 Name: zarafa
-Version: 7.1.14
-Release: alt12
+Version: 7.1.15
+Release: alt13
 License: AGPLv3
 Group: Networking/Mail
 Summary: Server program for the Zarafa Collaboration Platform
@@ -690,6 +690,9 @@ export LDFLAGS=-lphp-%_php5_version
 # end noarch files
 
 %changelog
+* Wed Nov 16 2016 Anton Farygin <rider@altlinux.ru> 7.1.15-alt13
+- rebuild with php-5.6.28
+
 * Mon Oct 17 2016 Anton Farygin <rider@altlinux.ru> 7.1.14-alt12
 - rebuild with php-5.6.27
 
