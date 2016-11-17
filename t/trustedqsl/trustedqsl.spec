@@ -3,19 +3,19 @@
 # numbers change, otherwise the NEVR of the library may cause a package not to
 # be updated even if it should be.
 %global srcname tqsl
-%global tqslver 2.2.2
+%global tqslver 2.3
 %global libtqslver 2.5
 
 Name:           trustedqsl
-Version:        %tqslver
-Release:        alt3
+Version:        2.3
+Release:        alt4
 Summary:        TrustedQSL ham-radio applications
 
 Group:		Communications
 License:        BSD
-URL:            http://sourceforge.net/projects/trustedqsl/
+URL:            http://www.rickmurphy.net/trustedqsl.org/
 
-Source0:        http://downloads.sourceforge.net/%{name}/%{srcname}-%{version}.tar.gz
+Source0:        %srcname-%version.tar
 
 Patch0:         tqsl-2.0-rpath.patch
 Patch1:         tqsl-tqsllib.patch
@@ -108,6 +108,9 @@ rm -f %buildroot%_datadir/locale/*/LC_MESSAGES/wxstd.mo
 %_libdir/libtqsllib.so
 
 %changelog
+* Thu Nov 17 2016 Andrey Cherepanov <cas@altlinux.org> 2.3-alt4
+- new version 2.3
+
 * Mon Oct 10 2016 Andrey Cherepanov <cas@altlinux.org> 2.2.2-alt3
 - New version
 
