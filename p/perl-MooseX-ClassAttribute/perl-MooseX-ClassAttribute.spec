@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(MooseX/AttributeHelpers.pm) perl(MooseX/Role/Strict.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-MooseX-ClassAttribute
 Summary:        Declare class attributes Moose-style
-Version:        0.27
-Release:        alt2_7.1
+Version:        0.29
+Release:        alt1
 License:        Artistic 2.0
 Group:          Development/Perl
-Source0:        http://search.cpan.org/CPAN/authors/id/D/DR/DROLSKY/MooseX-ClassAttribute-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/D/DR/DROLSKY/MooseX-ClassAttribute-%{version}.tar.gz
 URL:            http://search.cpan.org/dist/MooseX-ClassAttribute/
 BuildArch:      noarch
 
@@ -74,11 +75,14 @@ make test
 
 
 %files
-%doc README Changes t/
+%doc README* Changes t/
 %{perl_vendor_privlib}/*
 
 
 %changelog
+* Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- automated CPAN update
+
 * Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.27-alt2_7.1
 - rebuild to restore role requires
 
