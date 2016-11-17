@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Summary:	Typical installation tasks for system administrators
 Name:		perl-Sysadm-Install
-Version:	0.47
+Version:	0.48
 Release:	alt1
 License:	GPL+ or Artistic
 Group:		Development/Perl
@@ -87,6 +88,9 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 %{perl_vendor_privlib}/Sysadm/
 
 %changelog
+* Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1
+- automated CPAN update
+
 * Sun Jun 05 2016 Igor Vlasenko <viy@altlinux.ru> 0.47-alt1
 - automated CPAN update
 
