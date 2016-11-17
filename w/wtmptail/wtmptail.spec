@@ -1,7 +1,7 @@
 Summary: generate wtmp statistics
 Name: wtmptail
 Version: 1.3
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group: Monitoring
 URL: http://www.vanheusden.com/wtmptail/
@@ -37,10 +37,12 @@ mkdir -p %buildroot%_bindir
 
 %files
 %doc license.txt
-%_man1dir/%name.1.gz
+%_man1dir/%name.1*
 %_bindir/%name
 
 %changelog
+* Thu Nov 17 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3-alt1.qa1
+- Fixed FTBFS (manpage packaging).
+
 * Wed Nov 15 2006 Mikhail Pokidko <pma@altlinux.ru> 1.3-alt1
 - Initial build
-
