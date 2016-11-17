@@ -1,22 +1,22 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Catalyst.pm) perl(Catalyst/Controller/HTML/FormFu.pm) perl(Catalyst/Engine/HTTP.pm) perl(Catalyst/Helper.pm) perl(Catalyst/Model/DBIC/Schema.pm) perl(Catalyst/Runtime.pm) perl(Catalyst/Test.pm) perl(Catalyst/View/TT.pm) perl(Catalyst/View/TT/Alloy.pm) perl(DBD/SQLite.pm) perl(DBIx/Class.pm) perl(DBIx/Class/Schema.pm) perl(Pod/Usage.pm) perl(Regexp/Assemble.pm) perl(Test/Aggregate/Nested.pm) perl(Try/Tiny.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
+BuildRequires: perl(Catalyst.pm) perl(Catalyst/Controller/HTML/FormFu.pm) perl(Catalyst/Engine/HTTP.pm) perl(Catalyst/Helper.pm) perl(Catalyst/Model/DBIC/Schema.pm) perl(Catalyst/Runtime.pm) perl(Catalyst/Test.pm) perl(Catalyst/View/TT.pm) perl(Catalyst/View/TT/Alloy.pm) perl(DBD/SQLite.pm) perl(DBIx/Class.pm) perl(DBIx/Class/Schema.pm) perl(Pod/Usage.pm) perl(Try/Tiny.pm) perl(inc/Module/Install.pm) perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(Encode/JP.pm)
 Name:           perl-HTML-FormFu
-Version:        2.01
-Release:        alt1_7
+Version:        2.05
+Release:        alt1_1
 Summary:        HTML Form Creation, Rendering and Validation Framework
 License:        GPL+ or Artistic
-Group:          Development/Perl
 URL:            http://search.cpan.org/dist/HTML-FormFu/
-Source0:        http://search.cpan.org/CPAN/authors/id/C/CF/CFRANKS/HTML-FormFu-%{version}.tar.gz
-# Do not use Test::Aggregate::Nested for running tests, bug #1231204
-Patch0:         HTML-FormFu-2.01-Execute-tests-recusively-under-t.patch
+Source0:        http://search.cpan.org/CPAN/authors/id/N/NI/NIGELM/HTML-FormFu-%{version}.tar.gz
+Patch0:         HTML-FormFu-2.03-mxcheck-disable.patch
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(CGI.pm)
 BuildRequires:  perl(CGI/Simple.pm)
@@ -61,13 +61,14 @@ BuildRequires:  perl(Number/Format.pm)
 BuildRequires:  perl(Path/Class/File.pm)
 BuildRequires:  perl(POSIX.pm)
 BuildRequires:  perl(Readonly.pm)
+BuildRequires:  perl(Regexp/Assemble.pm)
 BuildRequires:  perl(Regexp/Common.pm)
 BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(Storable.pm)
 BuildRequires:  perl(Task/Weaken.pm)
 BuildRequires:  perl(Template.pm)
-# Test::Aggregate::Nested disabled
 BuildRequires:  perl(Test/Exception.pm)
+BuildRequires:  perl(Test/Memory/Cycle.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(YAML/XS.pm)
 BuildRequires:  sed
@@ -105,25 +106,12 @@ anything else you might want to do (as long as it involves forms).
 find examples -type f | xargs chmod 644
 find examples -type f | xargs sed -i -e 's/\r//'
 
-# Do not use Test::Aggregate::Nested for running tests, bug #1231204
-rm t/aggregate.t
-sed -i -e '/^t\/aggregate\.t/d' MANIFEST
-mv t-aggregate/* t
-find t -type f -exec sed -i -e 's|\<t-aggregate\>|t|' {} +
-sed -i -e 's|^t-aggregate/|t/|' MANIFEST
-sed -i -e 's|^\^t-aggregate\\/|^t\\/|' MANIFEST.SKIP
-
-
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
 rm -rf $RPM_BUILD_ROOT/blib
 
 # %{_fixperms} $RPM_BUILD_ROOT/*
@@ -138,6 +126,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 2.05-alt1_1
+- new version
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1_7
 - update to new release by fcimport
 
