@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 0.07
+%define module_version 0.08
 %define module_name TOML-Parser
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Benchmark.pm) perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Encode.pm) perl(Exporter.pm) perl(JSON.pm) perl(MIME/Base64.pm) perl(Module/Build.pm) perl(Path/Tiny.pm) perl(Storable.pm) perl(TOML.pm) perl(Test/More.pm) perl(Types/Serialiser.pm) perl(constant.pm) perl(parent.pm) perl(Module/Build/Tiny.pm)
+BuildRequires: perl(Benchmark.pm) perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Encode.pm) perl(Exporter.pm) perl(JSON.pm) perl(MIME/Base64.pm) perl(Module/Build.pm) perl(Path/Tiny.pm) perl(Storable.pm) perl(TOML.pm) perl(Test/More.pm) perl(Types/Serialiser.pm) perl(constant.pm) perl(parent.pm) perl(Module/Build/Tiny.pm) perl(Test/Deep.pm) perl(Test/Deep/Fuzzy.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.07
+Version: 0.08
 Release: alt1
 Summary: simple toml parser
 Group: Development/Perl
@@ -34,6 +34,9 @@ From summary: %summary
 %perl_vendor_privlib/T*
 
 %changelog
+* Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Thu Apr 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
 - automated CPAN update
 
