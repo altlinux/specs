@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Compress-Bzip2
 Name: perl-%dist
-Version: 2.24
+Version: 2.25
 Release: alt1
 
 Summary: Interface to Bzip2 compression library
@@ -34,6 +34,9 @@ export BUILD_BZLIB=0
 %perl_vendor_autolib/Compress
 
 %changelog
+* Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 2.25-alt1
+- automated CPAN update
+
 * Tue Dec 15 2015 Igor Vlasenko <viy@altlinux.ru> 2.24-alt1
 - automated CPAN update
 
