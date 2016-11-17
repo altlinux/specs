@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Apache-AuthCookie
-Version: 3.25
+Version: 3.26
 Release: alt1
 
 Summary: Perl Authentication and Authorization via cookies
@@ -30,7 +30,7 @@ BuildArch: noarch
 Source: http://www.cpan.org/authors/id/M/MS/MSCHOUT/Apache-AuthCookie-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Apr 06 2010
-BuildRequires: apache2-mod_perl apache-mod_perl perl-CGI perl-libwww perl(Class/Load.pm) perl(autobox.pm) perl(Apache/TestMM.pm)
+BuildRequires: apache2-mod_perl apache-mod_perl perl-CGI perl-libwww perl(Class/Load.pm) perl(autobox.pm) perl(Apache/TestMM.pm) perl(WWW/Form/UrlEncoded.pm) perl(Hash/MultiValue.pm) perl(HTTP/Body.pm)
 
 %package -n perl-Apache2-AuthCookie
 Summary: Perl Authentication and Authorization via cookies
@@ -81,6 +81,9 @@ verifies them and returns a session key.
 %perl_vendor_privlib/Apache/AuthCookie
 
 %changelog
+* Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 3.26-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 3.25-alt1
 - automated CPAN update
 
