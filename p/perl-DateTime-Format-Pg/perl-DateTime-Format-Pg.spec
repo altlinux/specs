@@ -1,28 +1,27 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-Pg
-Version:        0.16011
+Version:        0.16012
 Release:        alt1_2
 Summary:        Parse and format PostgreSQL dates and times
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/DateTime-Format-Pg/
 Source0:        http://search.cpan.org/CPAN/authors/id/D/DM/DMAKI/DateTime-Format-Pg-%{version}.tar.gz
+# Support durations with fractional seconds again, bug #1377428,
+# <https://github.com/lestrrat/DateTime-Format-Pg/issues/12>, in upstream
+# after 0.16012
+Patch0:         DateTime-Format-Pg-0.16012-Fix-parse_duration-handling.patch
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
-BuildRequires:  perl(File/Basename.pm)
-BuildRequires:  perl(File/Copy.pm)
-BuildRequires:  perl(File/Spec.pm)
-BuildRequires:  perl(Module/Build.pm)
+BuildRequires:  rpm-build-perl
+BuildRequires:  perl(Module/Build/Tiny.pm)
 BuildRequires:  perl(strict.pm)
-BuildRequires:  perl(utf8.pm)
-BuildRequires:  perl(warnings.pm)
 # Runtime
 BuildRequires:  perl(Carp.pm)
-BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(DateTime.pm)
 BuildRequires:  perl(DateTime/Duration.pm)
 BuildRequires:  perl(DateTime/Format/Builder.pm)
@@ -31,7 +30,9 @@ BuildRequires:  perl(DateTime/TimeZone/Floating.pm)
 BuildRequires:  perl(DateTime/TimeZone/UTC.pm)
 BuildRequires:  perl(vars.pm)
 # Tests only
+BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(warnings.pm)
 # Optional tests only
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
@@ -46,13 +47,14 @@ it in a format accepted by PostgreSQL.
 
 %prep
 %setup -q -n DateTime-Format-Pg-%{version}
+%patch0 -p1
 
 %build
 perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 ./Build
 
 %install
-./Build install destdir=%{buildroot} create_packlist=0
+./Build install --destdir=%{buildroot} --create_packlist=0
 # %{_fixperms} %{buildroot}/*
 
 %check
@@ -64,6 +66,9 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.16012-alt1_2
+- new version
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.16011-alt1_2
 - update to new release by fcimport
 
