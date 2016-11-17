@@ -1,7 +1,8 @@
 Name: catfish
-Version: 1.2.2
+Version: 1.4.2
 Release: alt1
 Summary: A handy file search tool
+%setup_python_module catfish
 
 Group: File tools
 License: GPLv2+
@@ -9,18 +10,18 @@ Url: http://www.twotoasts.de/index.php/catfish/
 Source: %name-%version.tar.bz2
 BuildArch: noarch
 
-BuildRequires: intltool
+# Automatically added by buildreq on Thu Nov 17 2016
+# optimized out: at-spi2-atk fontconfig gobject-introspection gobject-introspection-x11 libat-spi2-core libatk-gir libcairo-gobject libdbus-glib libgdk-pixbuf libgdk-pixbuf-gir libgpg-error libgtk+3-gir libpango-gir libwayland-client libwayland-cursor libwayland-egl libwayland-server perl-Encode perl-XML-Parser python-base python-devel python-module-dbus python-module-ptyprocess python-module-pygobject3 python-modules python-modules-compiler python-modules-email python-modules-logging python-modules-xml python3 python3-base
+BuildRequires: intltool python-module-PyXML python-module-distutils-extra python-module-pexpect python-module-zeitgeist2.0 python3-dev
+
 # search engine
 Requires: %_bindir/locate
 Requires: %_bindir/find
+Requires: %packagename
 # This is dirty icon hack
-Requires: gnome-icon-theme-symbolic
+##Requires: gnome-icon-theme-symbolic
 
 #define _python_req_method normal
-
-# Automatically added by buildreq on Thu Oct 10 2013
-# optimized out: at-spi2-atk fontconfig gobject-introspection libat-spi2-core libatk-gir libcairo-gobject libgdk-pixbuf libgdk-pixbuf-gir libpango-gir libwayland-client libwayland-cursor libwayland-server python-base python-module-pygobject3 python-modules python-modules-compiler python-modules-email python-modules-logging python-modules-xml
-BuildRequires: libgtk+3-gir python-module-PyXML python-module-distribute python-module-zeitgeist2.0
 
 %description
 A handy file search tool using different backends which is
@@ -30,42 +31,65 @@ This program acts as a frontend for different file search engines.
 The interface is intentionally lightweight and simple. But it takes
 configuration options from the command line.
 
-%define symicons %_datadir/%name/data/icons/gnome
+%package -n %packagename
+Group: Development/Python
+License: GPLv2+
+Summary: Supplemental module for catfish
+
+%description -n %packagename
+Supplemental python2 module for catfish
+
+##define symicons %_datadir/%name/data/icons/gnome
 
 %prep
 %setup -n %name-%version
 # This is dirty icon hack
-sed -i '/Gtk.IconTheme.get_default/{
-p
-s@ *=.*@.append_search_path("%symicons")@
-}' catfish/CatfishWindow.py
+##sed -i.orig '/Gtk.IconTheme.get_default/{
+##p
+##s@ *=.*@.append_search_path("#symicons")@
+##}' catfish/CatfishWindow.py
 
 %build
 # This configure accepts only the option --prefix
 # and does not accept --libdir= option
-./configure --prefix=%prefix
+##./configure --prefix=%prefix
+%python_build
 
 %install
-%makeinstall DESTDIR=%buildroot
+install -D build/share/applications/%name.desktop %buildroot/%_desktopdir/%name.desktop
+%python_install
+#makeinstall DESTDIR=%buildroot
 rm -rf %buildroot%_defaultdocdir/%name
-
-install -D %name.desktop %buildroot/%_desktopdir/%name.desktop
+#mv %buildroot/%_bindir/%name %buildroot/%_bindir/%name.py
+#ln -s %name.py %buildroot/%_bindir/%name
 
 # This is dirty icon hack
-mkdir -p %buildroot/%symicons && ln -s %_iconsdir/gnome %buildroot/%symicons/hicolor
+##mkdir -p %buildroot/#symicons && ln -s %_iconsdir/gnome %buildroot/#symicons/hicolor
 
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog COPYING README TODO
+%doc AUTHORS ChangeLog COPYING README
 
-%_bindir/%name
+%_bindir/*
 %_desktopdir/%name.desktop
 %_datadir/%name
+%_datadir/appdata/%name.*
 %_datadir/icons/hicolor/scalable/apps/%name.svg
+%_man1dir/*
+
+%files -n %packagename
+%python_sitelibdir_noarch/*
 
 #files engines
 %changelog
+* Thu Nov 17 2016 Fr. Br. George <george@altlinux.ru> 1.4.2-alt1
+- Autobuild version bump to 1.4.2
+- Separate supplemental module
+
+* Wed Nov 18 2015 Fr. Br. George <george@altlinux.ru> 1.3.3-alt1
+- Autobuild version bump to 1.3.3
+
 * Sat Sep 27 2014 Fr. Br. George <george@altlinux.ru> 1.2.2-alt1
 - Autobuild version bump to 1.2.2
 
