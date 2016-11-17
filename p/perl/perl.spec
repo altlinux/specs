@@ -1,6 +1,6 @@
 Name: perl
 Version: 5.22.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -32,6 +32,7 @@ Patch17: perl-5.22.0-alt-viy-Unicode-Normalize-fix-deps.patch
 
 # cpan update patches here. use format below:
 #Patch50: cpan-update-Socket-2.013-to-Socket-2.016.diff
+Patch51: cpan-update-Scalar-List-Utils-1.41-to-Scalar-List-Utils-1.46.diff
 
 # there's a problem with strict.pm
 %add_findreq_skiplist */strict.pm
@@ -181,6 +182,7 @@ equivalent text will have identical binary representations.
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
+%patch51 -p1
 
 # .orig files can break some test
 # at least t/porting/readme.t :
@@ -754,6 +756,9 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%privlib/Unicode/Normalize.pm
 
 %changelog
+* Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 1:5.22.2-alt2
+- cpan-update-Scalar-List-Utils-1.41-to-Scalar-List-Utils-1.41-1.46
+
 * Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:5.22.2-alt1
 - 5.22.1 -> 5.22.2
 
