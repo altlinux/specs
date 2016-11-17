@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Term-ANSIColor
 Name: perl-Term-ANSIColor
-Version: 4.05
+Version: 4.06
 Release: alt1
 
 Summary: Color output using ANSI escape sequences
@@ -40,6 +40,9 @@ rm t/pod*.t
 %perl_vendor_privlib/Term
 
 %changelog
+* Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 4.06-alt1
+- automated CPAN update
+
 * Mon Mar 21 2016 Igor Vlasenko <viy@altlinux.ru> 4.05-alt1
 - automated CPAN update
 
