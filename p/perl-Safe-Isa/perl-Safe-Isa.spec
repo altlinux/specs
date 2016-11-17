@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(autodie.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Safe-Isa
-Version:        1.000005
-Release:        alt1_5
+Version:        1.000006
+Release:        alt1
 Summary:        Call isa, can, does and DOES safely on things that may not be objects
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Safe-Isa/
-Source0:        http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Safe-Isa-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/H/HA/HAARG/Safe-Isa-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
@@ -55,6 +56,9 @@ make test
 %{perl_vendor_privlib}/Safe/
 
 %changelog
+* Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.000006-alt1
+- automated CPAN update
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.000005-alt1_5
 - update to new release by fcimport
 
