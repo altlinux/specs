@@ -1,10 +1,10 @@
 %def_enable pulse
 %define ver_major 2
-%define api_ver 1.1
+%define api_ver 2.0
 %def_disable qt5
 
 Name: guvcview
-Version: %ver_major.0.3
+Version: %ver_major.0.4
 Release: alt1
 
 Summary: A GTK UVC video viewer
@@ -18,7 +18,7 @@ Requires: lib%name = %version-%release
 
 BuildPreReq: libSDL2-devel >= 2.0.0
 BuildRequires: gcc-c++
-BuildRequires: desktop-file-utils intltool
+BuildRequires: desktop-file-utils intltool libappstream-glib-devel
 BuildRequires: libavutil-devel libavcodec-devel
 BuildRequires: libgtk+3-devel libportaudio2-devel
 BuildRequires: libv4l-devel libpng-devel libudev-devel libusb-devel
@@ -74,7 +74,7 @@ export LIBS="$LIBS -lm"
 mkdir -p %buildroot%_niconsdir
 install -p -m644 %buildroot%_pixmapsdir/guvcview/guvcview.png %buildroot%_niconsdir/guvcview.png
 rm -f %buildroot%_pixmapsdir/guvcview/guvcview.png
-#ln -s %_niconsdir/guvcview.png %_pixmapsdir/guvcview/guvcview.png
+ln -s %_niconsdir/guvcview.png %buildroot%_pixmapsdir/guvcview/guvcview.png
 
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=Recorder \
@@ -106,6 +106,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/doc/%name
 
 %changelog
+* Thu Nov 17 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt1
+- 2.0.4
+
 * Wed Feb 24 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
 - 2.0.3
 
