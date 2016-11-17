@@ -1,20 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Class/Data/Inheritable.pm) perl(Config.pm) perl(Cwd.pm) perl(DateTime/Format/Natural.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(Test/MockTime.pm) perl(Test/More.pm) perl(YAML/Tiny.pm) perl(inc/Module/Install.pm) perl(parent.pm)
 # END SourceDeps(oneline)
-%define module_version 0.05
+%define module_version 0.06
 %define module_name Date-Extract
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.05
+Version: 0.06
 Release: alt1
 Summary: extract probable dates from strings
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/S/SH/SHARYANTO/Date-Extract-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/A/AL/ALEXMV/Date-Extract-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -38,6 +38,9 @@ my $parser = Date::Extract->new();
 %perl_vendor_privlib/D*
 
 %changelog
+* Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- automated CPAN update
+
 * Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
 - automated CPAN update
 
