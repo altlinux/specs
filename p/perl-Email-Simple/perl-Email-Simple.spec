@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Email-Simple
 Name: perl-%dist
-Version: 2.210
+Version: 2.211
 Release: alt1
 
 Summary: Simple parsing of RFC2822 message format and headers
@@ -47,6 +47,9 @@ sed -i- '/^if .* require Email::MIME/,/^}/s/^/#/' Makefile.PL
 %perl_vendor_privlib/Email
 
 %changelog
+* Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 2.211-alt1
+- automated CPAN update
+
 * Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 2.210-alt1
 - automated CPAN update
 
