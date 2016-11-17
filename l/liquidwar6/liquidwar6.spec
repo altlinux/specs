@@ -3,17 +3,17 @@ Version: 0.6.3902
 Summary: A unique multiplayer wargame
 Summary(fr): Un "wargame" multijoueur inédit.
 Summary(de): Ein einzigartiges Kriegspiel für mehrere Spieler.
-Release: alt1.1
+Release: alt1.1.qa1
 License: GPL
 Group: Games/Strategy
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 Url: http://www.gnu.org/software/liquidwar6
 
-# Automatically added by buildreq on Wed Aug 24 2011
-# optimized out: fontconfig fontconfig-devel glib2-devel guile18 libGL-devel libGLU-devel libSDL-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgmp-devel libgoogle-perftools libltdl7-devel libpango-devel libtinfo-devel pkg-config xz zlib-devel
-BuildRequires: glibc-devel-static guile18-devel lcov libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libcurl-devel libexpat-devel libgtk+2-devel libjpeg-devel libncurses-devel libolpcsound-devel libpng-devel libreadline-devel libsqlite3-devel
-# explicitly added texinfo for info files
-BuildRequires: texinfo
+Patch: liquidwar6-0.6.3902-alt-Wno-error=deprecated-declarations.patch
+
+# Automatically added by buildreq on Thu Nov 17 2016
+# optimized out: fontconfig fontconfig-devel glib2-devel guile18 libGL-devel libGLU-devel libSDL-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgmp-devel libgpg-error libjson-c libltdl7-devel libncurses-devel libpango-devel libpng-devel libtinfo-devel libwayland-client libwayland-server perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore pkg-config python-base python-modules xz zlib-devel
+BuildRequires: glibc-devel-static guile18-devel lcov libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libcurl-devel libexpat-devel libgtk+2-devel libjpeg-devel libolpcsound-devel libreadline-devel libsqlite3-devel makeinfo
 
 %description
 Liquid War 6 is a unique multiplayer wargame. Your army is a blob of
@@ -49,11 +49,12 @@ til multiplayer, og har netværks-support.
 # Preparation of the package
 %prep
 %setup
-%autoreconf
-%configure --docdir=%_defaultdocdir/%name-%version --enable-allinone --disable-mod-csound
+%patch -p1
 
 # Building the package
 %build
+%autoreconf
+%configure --docdir=%_defaultdocdir/%name-%version --enable-allinone --disable-mod-csound
 %make_build
 ( cd doc; make liquidwar6.html )
 
@@ -77,6 +78,9 @@ rm -rf %buildroot%prefix/libexec
 %_desktopdir/%{name}*
 
 %changelog
+* Thu Nov 17 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.3902-alt1.1.qa1
+- Fixed build with glibc >= 2.24.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.6.3902-alt1.1
 - NMU: added BR: texinfo
 
