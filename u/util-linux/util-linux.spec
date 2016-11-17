@@ -3,7 +3,7 @@
 ### Header
 Summary: A collection of basic system utilities
 Name: util-linux
-Version: 2.28.1
+Version: 2.29.0
 Release: alt1
 License: GPLv2 and GPLv2+ and BSD with advertising and Public Domain
 Group: System/Base
@@ -86,7 +86,7 @@ Patch5: util-linux-ng-2.21-login-lastlog.patch
 Patch13: util-linux-2.25.2-alt-hwclock-badyear.patch
 
 # Owl
-Patch41: util-linux-2.25.2-owl-write.patch
+Patch41: util-linux-2.29.0-owl-write.patch
 
 Patch50: util-linux-2.25.2-alt-pg.patch
 Patch51: util-linux-ng-2.25.2-mount-pamconsole.patch
@@ -442,7 +442,7 @@ cp -r -- %SOURCE8 %SOURCE9 %SOURCE10 %SOURCE11 %SOURCE12 .
 %patch5 -p1
 %patch13 -p1
 
-%patch41 -p1
+%patch41 -p1 -b .write
 
 %patch50 -p1
 %patch51 -p1 -b .pamconsole
@@ -912,6 +912,9 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Thu Nov 17 2016 Alexey Gladkov <legion@altlinux.ru> 2.29.0-alt1
+- New version (2.29).
+
 * Tue Aug 16 2016 Alexey Gladkov <legion@altlinux.ru> 2.28.1-alt1
 - New version (2.28.1).
 - Remove /lib/udev/devices/loop{0,1,2,3} (ALT#31890).
