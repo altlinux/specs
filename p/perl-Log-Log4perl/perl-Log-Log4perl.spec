@@ -2,7 +2,7 @@
 %add_findreq_skiplist %perl_vendor_privlib/Log/Log4perl/Filter/MDC.pm
 %define dist Log-Log4perl
 Name: perl-%dist
-Version: 1.47
+Version: 1.48
 Release: alt1
 
 Summary: Log4j implementation for Perl
@@ -48,6 +48,9 @@ popular (Java-based) Log4j logging package in pure Perl.
 %_bindir/l4p-tmpl
 
 %changelog
+* Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.48-alt1
+- automated CPAN update
+
 * Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.47-alt1
 - automated CPAN update
 
