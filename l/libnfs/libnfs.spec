@@ -1,7 +1,7 @@
 %def_enable utils
 
 Name: libnfs
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 
 Summary: NFS client library
@@ -41,8 +41,8 @@ This package provides utilities from LibNFS package.
 
 %build
 %autoreconf
-%configure --disable-static
-#	%{subst_enable utils}
+%configure --disable-static \
+	%{?_disable_utils:--disable-utils}
 
 %install
 %makeinstall_std
@@ -67,6 +67,9 @@ This package provides utilities from LibNFS package.
 %endif
 
 %changelog
+* Thu Nov 17 2016 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
+- 1.11.0
+
 * Fri Feb 05 2016 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
 - 1.10.0
 
