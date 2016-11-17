@@ -1,6 +1,6 @@
 Name: MySQL
 Version: 5.5.53
-Release: alt1
+Release: alt2
 
 %def_without debug
 %def_without libs
@@ -327,6 +327,7 @@ cmake \
 	-DCMAKE_INSTALL_PREFIX=%_prefix \
 	-DMYSQL_UNIX_ADDR="%ROOT/mysql.sock" \
 	-DMYSQL_DATADIR="%ROOT" \
+	-DINSTALL_SECURE_FILE_PRIVDIR="" \
 	-DMYSQL_USER=mysql \
 	-DINSTALL_LAYOUT=RPM \
 	-DWITH_ARCHIVE_STORAGE_ENGINE=ON \
@@ -647,6 +648,10 @@ fi
 %_datadir/sql-bench
 
 %changelog
+* Thu Nov 17 2016 Anton Farygin <rider@altlinux.ru> 5.5.53-alt2
+- disabled secure_file_priv in default cofiguration because still used 
+  chrooted environment (/var/lib/mysql) (closes: #32758)
+
 * Wed Nov 02 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.5.53-alt1
 - 5.5.53
 - dh-1024 patch removed (2048 is upstream value now)
