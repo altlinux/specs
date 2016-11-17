@@ -2,8 +2,8 @@ BuildRequires: desktop-file-utils
 %define oname gXNeur
 
 Name: gxneur
-Version: 0.17.0
-Release: alt4
+Version: 0.19.0
+Release: alt1
 
 Summary: GTK frontend for X Neural Switcher
 License: GPL
@@ -86,6 +86,9 @@ done
 %flagsdir/??.png
 
 %changelog
+* Thu Nov 17 2016 Fr. Br. George <george@altlinux.ru> 0.19.0-alt1
+- Autobuild version bump to 0.19.0
+
 * Mon Nov 09 2015 Michael Shigorin <mike@altlinux.org> 0.17.0-alt4
 - Changed to 24x24 flag icons for MATE (these fit better)
 

@@ -1,5 +1,5 @@
 Name: xneur
-Version: 0.17.0
+Version: 0.19.0
 Release: alt1
 
 Summary: X Neural Switcher
@@ -10,9 +10,9 @@ Url: http://xneur.ru/
 
 Source: %{name}_%version.orig.tar.gz
 
-# Automatically added by buildreq on Sun May 22 2011
-# optimized out: fontconfig glib2-devel libX11-devel libatk-devel libcairo-devel libdbus-glib libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libpango-devel libxml2-devel pkg-config xorg-kbproto-devel xorg-xproto-devel xz
-BuildRequires: gstreamer-devel libXext-devel libXinerama-devel libaspell-devel libnotify-devel libpcre-devel libxosd-devel zlib-devel
+# Automatically added by buildreq on Thu Nov 17 2016
+# optimized out: glib2-devel libX11-devel libXext-devel libXfixes-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libxml2-devel pkg-config python-base python-modules xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-xproto-devel xz zlib-devel
+BuildRequires: glibc-devel-static gstreamer-devel libXi-devel libXinerama-devel libaspell-devel libgtk+3-devel libnotify-devel libpcre-devel libxosd-devel
 
 BuildPreReq: zlib-devel
 
@@ -40,6 +40,8 @@ applications which will use %name.
 
 %prep
 %setup
+# Stupid unhack
+sed -i 's/loKg_message/log_message/' lib/main/program.c
 
 %build
 %autoreconf
@@ -79,6 +81,9 @@ rm -f %buildroot%_libdir/%name/*.so %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Nov 17 2016 Fr. Br. George <george@altlinux.ru> 0.19.0-alt1
+- Autobuild version bump to 0.19.0
+
 * Mon Oct 28 2013 Fr. Br. George <george@altlinux.ru> 0.17.0-alt1
 - Autobuild version bump to 0.17.0
 - Drop inactual patches
