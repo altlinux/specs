@@ -1,24 +1,25 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN/Meta/Requirements.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(CPAN/Meta/Requirements.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-Kwalitee
-Version:	1.22
-Release:	alt1_5
+Version:	1.23
+Release:	alt1_1
 Summary:	Test the Kwalitee of a distribution before you release it
 License:	GPL+ or Artistic
-Group:		Development/Perl
 URL:		http://metacpan.org/module/Test::Kwalitee
 Source0:	http://cpan.metacpan.org/authors/id/E/ET/ETHER/Test-Kwalitee-%{version}.tar.gz
 BuildArch:	noarch
 # Build
+BuildRequires:	coreutils
 BuildRequires:	perl
-BuildRequires:	perl(Module/Build/Tiny.pm)
+BuildRequires:	rpm-build-perl
+BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module
 BuildRequires:	perl(Cwd.pm)
 BuildRequires:	perl(Exporter.pm)
 BuildRequires:	perl(Module/CPANTS/Analyse.pm)
-BuildRequires:	perl(namespace/clean.pm)
 BuildRequires:	perl(parent.pm)
 BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(Test/Builder.pm)
@@ -26,7 +27,6 @@ BuildRequires:	perl(warnings.pm)
 # Test Suite
 BuildRequires:	perl(CPAN/Meta.pm)
 BuildRequires:	perl(CPAN/Meta/Check.pm)
-BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 BuildRequires:	perl(File/Spec.pm)
 BuildRequires:	perl(File/Temp.pm)
 BuildRequires:	perl(lib.pm)
@@ -36,7 +36,7 @@ BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Test/Tester.pm)
 BuildRequires:	perl(Test/Warnings.pm)
 Source44: import.info
-# Runtime
+# Dependencies
 
 %description
 Kwalitee is an automatically-measurable gauge of how good your software
@@ -48,18 +48,15 @@ computer science).
 %setup -q -n Test-Kwalitee-%{version}
 
 %build
-perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
-./Build
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PERLLOCAL=1 NO_PACKLIST=1
+make %{?_smp_mflags}
 
 %install
-./Build install --destdir=%{buildroot} --create_packlist=0
-chmod -c 755 %{buildroot}%{_bindir}/kwalitee-metrics
+make install DESTDIR=%{buildroot}
+# %{_fixperms} -c %{buildroot}
 
 %check
-./Build test
-
-# Support use of %%license for old distributions
-%{!?_licensedir:%global license %%doc}
+make test
 
 %files
 %doc LICENSE
@@ -69,6 +66,9 @@ chmod -c 755 %{buildroot}%{_bindir}/kwalitee-metrics
 %{_mandir}/man1/kwalitee-metrics.1*
 
 %changelog
+* Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1_1
+- new version
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1_5
 - update to new release by fcimport
 
