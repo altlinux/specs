@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-XPath
 Name: perl-%dist
-Version: 1.37
+Version: 1.40
 Release: alt1
 
 Summary: A set of modules for parsing and evaluating XPath statements
@@ -10,6 +10,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/M/MA/MANWAR/XML-XPath-%{version}.tar.gz
+# rewrite it if it is still needed
 Patch: perl-XML-XPath-1.18-alt-fixes.patch
 
 BuildArch: noarch
@@ -25,7 +26,6 @@ need to do this as they support functionality beyond XPath.
 
 %prep
 %setup -q -n %dist-%version
-%patch0 -p1
 
 # examples should not be installed into /usr/bin
 sed -i- '/EXE_FILES/d' Makefile.PL
@@ -41,6 +41,9 @@ sed -i- '/EXE_FILES/d' Makefile.PL
 %perl_vendor_privlib/XML
 
 %changelog
+* Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.40-alt1
+- automated CPAN update
+
 * Sun Jun 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.37-alt1
 - automated CPAN update
 
