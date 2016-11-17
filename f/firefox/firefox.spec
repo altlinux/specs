@@ -12,7 +12,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        49.0.2
+Version:        50.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -211,6 +211,8 @@ make -f client.mk \
 %install
 cd mozilla
 
+export SHELL=/bin/sh
+
 %__mkdir_p \
 	%buildroot/%mozilla_arch_extdir/%firefox_cid \
 	%buildroot/%mozilla_noarch_extdir/%firefox_cid \
@@ -299,10 +301,42 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Wed Nov 16 2016 Alexey Gladkov <legion@altlinux.ru> 50.0-alt1
+- New release (50.0).
+- Fixed:
+  + CVE-2016-5296: Heap-buffer-overflow WRITE in rasterize_edges_1
+  + CVE-2016-5292: URL parsing causes crash
+  + CVE-2016-5293: Write to arbitrary file with Mozilla Updater and Maintenance Service using updater.log hardlink
+  + CVE-2016-5294: Arbitrary target directory for result files of update process
+  + CVE-2016-5297: Incorrect argument length checking in JavaScript
+  + CVE-2016-9064: Add-ons update must verify IDs match between current and new versions
+  + CVE-2016-9065: Firefox for Android location bar spoofing using fullscreen
+  + CVE-2016-9066: Integer overflow leading to a buffer overflow in nsScriptLoadHandler
+  + CVE-2016-9067: heap-use-after-free in nsINode::ReplaceOrInsertBefore
+  + CVE-2016-9068: heap-use-after-free in nsRefreshDriver
+  + CVE-2016-9072: 64-bit NPAPI sandbox isn't enabled on fresh profile
+  + CVE-2016-9075: WebExtensions can access the mozAddonManager API and use it to gain elevated privileges
+  + CVE-2016-9077: Canvas filters allow feDisplacementMaps to be applied to cross-origin images, allowing timing attacks on them
+  + CVE-2016-5291: Same-origin policy violation using local HTML file and saved shortcut file
+  + CVE-2016-5295: Mozilla Maintenance Service: Ability to read arbitrary files as SYSTEM
+  + CVE-2016-5298: SSL indicator can mislead the user about the real URL visited
+  + CVE-2016-5299: Firefox AuthToken in broadcast protected with signature-level permission can be accessed by an application installed beforehand that defines the same permissions
+  + CVE-2016-9061: API key (glocation) in broadcast protected with signature-level permission can be accessed by an application installed beforehand that defines the same permissions
+  + CVE-2016-9062: Private browsing browser traces (Android) in browser.db and wal file
+  + CVE-2016-9070: Sidebar bookmark can have reference to chrome window
+  + CVE-2016-9073: windows.create schema doesn't specify "format": "relativeUrl"
+  + CVE-2016-9074: Insufficient timing side-channel resistance in divSpoiler
+  + CVE-2016-9076: select dropdown menu can be used for URL bar spoofing on e10s
+  + CVE-2016-9063: Possible integer overflow to fix inside XML_Parse in Expat
+  + CVE-2016-9071: Probe browser history via HSTS/301 redirect + CSP
+  + CVE-2016-5289: Memory safety bugs fixed in Firefox 50
+  + CVE-2016-5290: Memory safety bugs fixed in Firefox 50 and Firefox ESR 45.5
+
 * Fri Oct 21 2016 Alexey Gladkov <legion@altlinux.ru> 49.0.2-alt1
 - New release (49.0.2).
 - Fixed:
-  + 2016-87 Security vulnerabilities fixed in Firefox 49.0.2 
+  + CVE-2016-5287: Crash in nsTArray_base<T>::SwapArrayElements
+  + CVE-2016-5288: Web content can read cache entries
 
 * Tue Oct 04 2016 Alexey Gladkov <legion@altlinux.ru> 49.0.1-alt2
 - Fix scrolling.
@@ -310,7 +344,24 @@ done
 * Tue Sep 27 2016 Alexey Gladkov <legion@altlinux.ru> 49.0.1-alt1
 - New release (49.0.1).
 - Fixed:
-  + 2016-85 Security vulnerabilities fixed in Firefox 49 
+  + CVE-2016-2827: Out-of-bounds read in mozilla::net::IsValidReferrerPolicy
+  + CVE-2016-5270: Heap-buffer-overflow in nsCaseTransformTextRunFactory::TransformString
+  + CVE-2016-5271: Out-of-bounds read in PropertyProvider::GetSpacingInternal
+  + CVE-2016-5272: Bad cast in nsImageGeometryMixin
+  + CVE-2016-5273: crash in mozilla::a11y::HyperTextAccessible::GetChildOffset
+  + CVE-2016-5276: Heap-use-after-free in mozilla::a11y::DocAccessible::ProcessInvalidationList
+  + CVE-2016-5274: use-after-free in nsFrameManager::CaptureFrameState
+  + CVE-2016-5277: Heap-use-after-free in nsRefreshDriver::Tick
+  + CVE-2016-5275: A buffer overflow when working with empty filters during canvas rendering
+  + CVE-2016-5278: Heap-buffer-overflow in nsBMPEncoder::AddImageFrame
+  + CVE-2016-5279: Full local path of files is available to web pages after drag and drop
+  + CVE-2016-5280: Use-after-free in mozilla::nsTextNodeDirectionalityMap::RemoveElementFromMap
+  + CVE-2016-5281: use-after-free in DOMSVGLength
+  + CVE-2016-5282: Don't allow content to request favicons from non-whitelisted schemes
+  + CVE-2016-5283: Iframe src fragment timing attack can reveal cross-origin data
+  + CVE-2016-5284: Add-on update site certificate pin expiration
+  + CVE-2016-5256: Memory safety bugs fixed in Firefox 49
+  + CVE-2016-5257: Memory safety bugs fixed in Firefox 49 and Firefox ESR 45.4
 
 * Tue Sep 06 2016 Alexey Gladkov <legion@altlinux.ru> 48.0.2-alt1
 - New release (48.0.2).
