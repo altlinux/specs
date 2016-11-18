@@ -1,5 +1,5 @@
 Name: elfutils
-Version: 0.165
+Version: 0.167.0.13.507e7
 Release: alt1
 
 Summary: A collection of utilities and DSOs to handle compiled objects
@@ -14,12 +14,11 @@ Requires: libelf = %version-%release
 %def_enable static
 %def_enable check
 
-BuildRequires: bzlib-devel flex liblzma-devel zlib-devel
+BuildRequires: bzlib-devel flex liblzma-devel libstdc++-devel zlib-devel
 %{?_enable_check:BuildRequires: /proc}
 
 %define _gnu %nil
 %define _configure_script ../configure
-%define _programprefix eu-
 %define buildtarget build-%_target_platform
 
 %description
@@ -95,7 +94,6 @@ mkdir %buildtarget
 cd %buildtarget
 %configure \
 	--enable-dependency-tracking \
-	--program-prefix=%_programprefix \
 	--enable-dwz \
 	--enable-maintainer-mode
 %make_build
@@ -125,7 +123,6 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/eu-strings
 %_bindir/eu-strip
 %_bindir/eu-unstrip
-%exclude %_bindir/eu-ld
 %_libdir/libasm-*.so
 %_libdir/libdw-*.so
 %_libdir/libasm*.so.*
@@ -163,6 +160,10 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Nov 18 2016 Dmitry V. Levin <ldv@altlinux.org> 0.167.0.13.507e7-alt1
+- 0.165-3-g2d703bf -> 0.167-13-g507e7e2.
+- Enabled libstdc++ demangle support.
+
 * Thu Jan 14 2016 Dmitry V. Levin <ldv@altlinux.org> 0.165-alt1
 - 0.164-14-gf8443bd -> 0.165-3-g2d703bf.
 
