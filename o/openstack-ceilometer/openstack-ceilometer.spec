@@ -3,7 +3,7 @@
 
 Name: openstack-ceilometer
 Version: 7.0.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: OpenStack measurement collection service
 
@@ -15,7 +15,6 @@ Source2: %service.logrotate
 Source4: ceilometer-rootwrap-sudoers
 Source5: openstack-ceilometer-polkit.rules
 Source6: ceilometer.conf
-Source7: openstack-ceilometer-polling.sysconfig
 
 Source10: %name-api.service
 Source11: %name-collector.service
@@ -33,6 +32,12 @@ Source113: %name-central.init
 Source116: %name-notification.init
 Source117: %name-ipmi.init
 Source118: %name-polling.init
+
+Patch101: Add_http_proxy_to_wsgi_to_api-paste.patch
+Patch102: Add_http_proxy_to_wsgi_to_config-generator.patch
+Patch103: fix_graceful_shutdown.patch
+Patch104: fix_perf_when_libvirt-1.patch
+Patch105: fix_perf_when_libvirt-2.patch
 
 Provides: %name-common = %EVR
 Obsoletes: %name-common < %EVR
@@ -252,6 +257,11 @@ This package contains documentation files for ceilometer.
 
 %prep
 %setup
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
 
 find . \( -name .gitignore -o -name .placeholder \) -delete
 
@@ -302,7 +312,6 @@ install -p -D -m 644 etc/ceilometer/rootwrap.conf %buildroot%_sysconfdir/ceilome
 install -p -D -m 644 etc/ceilometer/rootwrap.d/ipmi.filters %buildroot%_sysconfdir/ceilometer/rootwrap.d/ipmi.filters
 install -p -D -m 640 ceilometer/meter/data/meters.yaml %buildroot%_sysconfdir/ceilometer/meters.yaml
 install -p -D -m 640 etc/ceilometer/gnocchi_resources.yaml %buildroot%_sysconfdir/ceilometer/gnocchi_resources.yaml
-install -p -D -m 644 %SOURCE7 %buildroot%_sysconfdir/sysconfig/openstack-ceilometer-polling
 
 # Install initscripts for services
 install -p -D -m 644 %SOURCE10 %buildroot%_unitdir/%name-api.service
@@ -488,9 +497,12 @@ crudini --set %ceilometer_conf database connection mongodb://localhost:27017/cei
 %_bindir/ceilometer-polling
 %_unitdir/%name-polling.service
 %_initdir/%name-polling
-%config(noreplace) %_sysconfdir/sysconfig/openstack-ceilometer-polling
 
 %changelog
+* Fri Nov 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.0-alt2
+- backport patches from stable/newton
+- fix logrotate
+
 * Tue Nov 15 2016 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.0-alt1
 - 7.0.0
 
