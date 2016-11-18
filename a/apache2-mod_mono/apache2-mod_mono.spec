@@ -8,7 +8,7 @@ Url: http://go-mono.com/
 License: Apache Software License
 Group: Networking/WWW
 Version: 3.12
-Release: alt1.1
+Release: alt2
 Summary: Run ASP.NET Pages on Unix with Apache and Mono
 Packager: Denis Medvedev <nbr@altlinux.org>
 
@@ -49,6 +49,9 @@ make
 %_man8dir/mod_mono.8*
 
 %changelog
+* Fri Nov 18 2016 Denis Medvedev <nbr@altlinux.org> 3.12-alt2
+- rebuild with mono-4.6
+
 * Tue Apr 05 2016 Sergey Alembekov <rt@altlinux.ru> 3.12-alt1.1
 - rebuild with apache-2.4
 
