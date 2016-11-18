@@ -1,6 +1,6 @@
 Name: libshell
-Version: 0.4.1
-Release: alt2
+Version: 0.4.2
+Release: alt1
 
 Summary: A library of shell functions
 License: GPL
@@ -11,6 +11,8 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 Url: https://github.com/legionus/libshell.git
 
 Source: %name-%version.tar
+
+BuildRequires: help2man md2man
 
 %description
 This package contains common functions for shell projects to increase code reuse.
@@ -23,11 +25,26 @@ Group: Development/Other
 This package contains common functions for shell projects to increase code reuse
 as single file.
 
+%package -n cgrep
+Epoch: 1
+Summary: Simple program output colorifer
+Group: Text tools
+
+%description -n cgrep
+This package contains simple wrapper to colorize output from any programs.
+
 %prep
 %setup -q
 
+sed -i -e 's,^#!/bin/ash,#!/bin/sh,' \
+	utils/cgrep.in
+
+%build
+%make
+
 %install
-%make_install DESTDIR=%buildroot install install-single
+%make_install DESTDIR=%buildroot install
+%make_install DESTDIR=%buildroot install-single
 
 %check
 %make check
@@ -42,7 +59,20 @@ as single file.
 %files single
 /bin/shell-lib
 
+%files -n cgrep
+%_bindir/*
+%_man1dir/*
+
 %changelog
+* Fri Nov 18 2016 Alexey Gladkov <legion@altlinux.ru> 0.4.2-alt1
+- New version (0.4.2).
+- Add more docs (ALT#17927).
+- New utilities:
+  + shell-terminfo to simplify work with terminfo.
+  + cgrep utility.
+- shell-getopt changes:
+  + Fix encoding in comment.
+
 * Thu Jun 30 2016 Alexey Gladkov <legion@altlinux.ru> 0.4.1-alt2
 - shell-ini-config changes:
   + Preserve file permissions (ALT#32139).
