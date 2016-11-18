@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.29.6
+Version: 0.29.7
 Release: alt1
 
 BuildArch: noarch
@@ -69,6 +69,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-ad
 
 %changelog
+* Fri Nov 18 2016 Andrey Cherepanov <cas@altlinux.org> 0.29.7-alt1
+- Wait 10 seconds for winbind to create krb5.conf file (ALT #32759)
+
 * Fri Oct 14 2016 Andrey Cherepanov <cas@altlinux.org> 0.29.6-alt1
 - Support offline login and set more usable parameters for pam_winbind
 - Register machine in domain DNS during Active Directory join
