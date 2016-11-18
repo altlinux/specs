@@ -1,6 +1,6 @@
 %define oname rem
 Name: librem
-Version: 0.4.6
+Version: 0.4.7
 Release: alt1
 
 Summary: Library for real-time audio and video processing
@@ -41,16 +41,16 @@ rm -f %buildroot%_libdir/lib%oname.a
 
 %files
 %doc docs/*
-# FIXME?
 %_libdir/lib%oname.so
 
 %files devel
 %_includedir/%oname/
-#%_datadir/%oname/
-#%_libdir/lib%oname.so
-#%_pkgconfigdir/*.pc
+%_pkgconfigdir/*.pc
 
 %changelog
+* Fri Nov 18 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.7-alt1
+- 0.4.7
+
 * Mon May 26 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.6-alt1
 - 0.4.6
 

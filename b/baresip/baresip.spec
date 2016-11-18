@@ -1,21 +1,20 @@
 Name: baresip
-Version: 0.4.12
-Release: alt2.qa1
+Version: 0.4.20
+Release: alt1
 
 Summary: Baresip is a portable and modular SIP User-Agent with audio and video support
-
+License: BSD
+Group: Communications
 Url: http://www.creytiv.com/baresip.html
-License: BSD Revised
-Group: System/X11
 
 Source: http://www.creytiv.com/pub/baresip-%version.tar
-
 Patch0: baresip-0.4.12-alt-fix-build-with-glibc-2.24.patch
 
 BuildRequires: libSDL-devel libXext-devel libalsa-devel
 BuildRequires: libavdevice-devel libavformat-devel libswscale-devel
 BuildRequires: libgsm-devel libmpg123-devel libopus-devel
-BuildRequires: libre-devel >= 0.4.11 librem-devel >= 0.4.5
+BuildRequires: libre-devel >= 0.4.17 librem-devel >= 0.4.7
+BuildRequires: libpulseaudio-devel
 BuildRequires: libsndfile-devel libspandsp-devel libspeex-devel libspeexdsp-devel
 BuildRequires: libssl-devel libuuid-devel libv4l-devel
 BuildRequires: libvpx-devel libx264-devel
@@ -33,7 +32,7 @@ and srtp media encoding.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
 sed -i 's,lib/baresip/modules,%_lib/baresip/modules,' src/config.c
 
 %build
@@ -49,6 +48,9 @@ sed -i 's,lib/baresip/modules,%_lib/baresip/modules,' src/config.c
 %_datadir/%name
 
 %changelog
+* Fri Nov 18 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.20-alt1
+- 0.4.20
+
 * Thu Nov 17 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.12-alt2.qa1
 - Fixed build with glibc >= 2.24.
 
