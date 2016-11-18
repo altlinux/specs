@@ -1,8 +1,8 @@
 %def_disable bootstrap
 
 Name: mono4
-Version: 4.3.1.1
-Release: alt9
+Version: 4.6.2.7
+Release: alt1
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -16,7 +16,7 @@ Source: mono4-%version.tar
 # Dec 2015 ALT
 Source2: mono.snk
 Source1: external.tar.gz
-Patch0: mono-4.0.0-ignore-reference-assemblies.patch
+#Patch0: mono-4.0.0-ignore-reference-assemblies.patch
 # ALT: for packaging, manually pack all external/* subpackage stuff into external.tar.gz because those are submodules and cannot be added normally to git tree without losing history.
 
 BuildRequires(pre): rpm-build-mono4
@@ -290,6 +290,9 @@ Development file for monodoc
 %define gac_dll(dll)  %_monogacdir/%1 \
 %_monodir/4.5/%1.dll \
 %nil
+%define gac_dll40(dll)  %_monogacdir/%1 \
+%_monodir/4.0/%1.dll \
+%nil
 %define mono_bin(bin) %_bindir/%1 \
 %_monodir/4.5/%1.exe \
 %_monodir/4.5/%1.exe.* \
@@ -299,7 +302,7 @@ Development file for monodoc
 %setup -n mono4-%version
 
 tar xzf /usr/src/RPM/SOURCES/external.tar.gz
-%patch0 -p1
+#%patch0 -p1
 
 # bash autogen.sh --prefix=%_prefix
 
@@ -314,7 +317,8 @@ chmod +x ./autogen.sh
 %__subst "61a #define ARG_MAX     _POSIX_ARG_MAX" mono/io-layer/wapi_glob.h
 
 # Remove prebuilt binaries
-find . -name "*.dll" -not -path "./mcs/class/lib/monolite/*" -print -delete
+#find . -name "*.dll" -not -path "./mcs/class/lib/monolite/*" -print -delete
+
 find . -name "*.exe" -not -path "./mcs/class/lib/monolite/*" -print -delete
 %if_enabled bootstrap
 # for bootstrap, keep monolite. Mono 2.10 is too old to compile Mono 4.0
@@ -328,6 +332,7 @@ rm -rf mcs/class/lib/monolite/*
 
 %configure --disable-rpath \
            --with-moonlight=no
+# Profiler gives undef symbols, so it is temporarily disabled.
 
 ##__subst 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 ##__subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
@@ -343,7 +348,6 @@ export PATH=$PATH:mcs/class/lib/monolite/
 %else
 rm -rf mcs/class/lib/monolite/*
 %endif
-
 %makeinstall_std
 
 # copy the mono.snk key into /etc/pki/mono
@@ -354,17 +358,17 @@ install -p -m0644 %SOURCE2 %buildroot%_sysconfdir/pki/mono/
 
 # This was removed upstream:
 # remove .la files (they are generally bad news)
-rm -f %buildroot%_libdir/*.la
+#rm -f %buildroot%_libdir/*.la
 # remove Windows-only stuff
 rm -rf %buildroot%_monodir/*/Mono.Security.Win32*
 rm -f %buildroot%_libdir/libMonoSupportW.*
 # remove .a files for libraries that are really only for us
-rm %buildroot%_libdir/*.a
+#rm %buildroot%_libdir/*.a
 # remove libgc cruft
-rm -rf %buildroot%_datadir/libgc-mono
+#rm -rf %buildroot%_datadir/libgc-mono
 # remove stuff that we don't package
-rm -f %buildroot%_bindir/cilc
-rm -f %buildroot%_man1dir/cilc.1*
+#rm -f %buildroot%_bindir/cilc
+#rm -f %buildroot%_man1dir/cilc.1*
 rm -f %buildroot%_monodir/*/browsercaps-updater.exe*
 rm -f %buildroot%_monodir/*/culevel.exe*
 rm -f %buildroot%_monodir/2.0/cilc.exe*
@@ -376,6 +380,8 @@ rm -rf %buildroot%_monodir/xbuild/Microsoft
 rm -f %buildroot%_monodir/4.0/dmcs.exe.so
 rm -rf %buildroot%_bindir/mono-configuration-crypto
 rm -rf %buildroot%_mandir/man?/mono-configuration-crypto*
+#temporarily remove profiler iomap -bad symbols
+rm -rf %buildroot%_libdir/libmono-profiler-iomap.so.0.0.0
 
 # remove the mono-nunit files
 rm -f %buildroot%_bindir/nunit-console
@@ -386,17 +392,23 @@ rm -Rf %buildroot%_monodir/gac/nunit*
 rm -f %buildroot%_pkgconfigdir/mono-nunit.pc
 #mkdir -p  %buildroot%_sysconfdir/mono-2.0/
 mkdir -p  %buildroot%_sysconfdir/mono-4.5/
-
+mkdir -p  %buildroot%_sysconfdir/mono-4.0/
+mkdir -p  %buildroot%_monodir/3.5-api/
+mkdir -p  %buildroot%_monodir/2.0-api/
+mkdir -p  %buildroot%_monodir/4.0-api/
+mkdir -p  %buildroot%_monodir/4.5-api/
 %find_lang mcs
 
 
 %files core -f mcs.lang
-%doc AUTHORS COPYING.LIB ChangeLog NEWS README.md
+%doc  CONTRIBUTING.md LICENSE COPYING.LIB  NEWS README.md PATENTS.TXT
 #%_sysconfdir/mono-2.0/
 %_sysconfdir/mono-4.5/
+%_sysconfdir/mono-4.0/
 %dir %_sysconfdir/mono/4.5/
 #%dir %_libexecdir/mono/4.0/
 %dir %_monodir/4.5
+%dir %_monodir/4.0
 %_bindir/mono
 %_bindir/mono-test-install
 %_bindir/mono-gdb.py
@@ -410,6 +422,7 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %mono_bin gacutil
 %mono_bin ikdasm
 %mono_bin lc
+%_monodir/4.5/linkeranalyzer*
 %_bindir/gacutil2
 %_bindir/mcs
 %_monodir/4.5/mcs.exe*
@@ -433,8 +446,11 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %_man1dir/lc.1*
 %_man1dir/mprof-report.1*
 %_libdir/libMonoPosixHelper.so*
+%_monodir/4.0/Mono.Posix.dll
+%_monodir/4.0/mscorlib.dll
 %dir %_monodir
-#%dir %_monodir/2.0/
+%dir %_monodir/4.0/
+
 
 %dir %_monodir/gac
 %gac_dll Commons.Xml.Relaxng
@@ -456,6 +472,9 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %gac_dll System.Core
 %gac_dll System.Security
 %gac_dll System.Xml
+%gac_dll System.Deployment
+%gac_dll System.Reflection.Context
+%gac_dll System.Runtime.InteropServices.RuntimeInformation
 %gac_dll Mono.Tasklets
 %gac_dll System.Net
 %gac_dll System.Xml.Linq
@@ -463,18 +482,21 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %gac_dll Mono.Security.Providers.DotNet
 %gac_dll Mono.Security.Providers.NewSystemSource
 %gac_dll Mono.Security.Providers.OldTls
+%gac_dll Mono.Security.Providers.NewTls
 %dir %_sysconfdir/mono
 %dir %_sysconfdir/mono/mconfig
 %config (noreplace) %_sysconfdir/mono/config
 #%config (noreplace) %_sysconfdir/mono/2.0/machine.config
 #%config (noreplace) %_sysconfdir/mono/2.0/settings.map
 #%_libdir/libmono*-2.0.so.*
-%_libdir/libmono-profiler-*.so.*
 %config (noreplace) %_sysconfdir/mono/4.5/settings.map
 %config (noreplace) %_sysconfdir/mono/4.0/DefaultWsdlHelpGenerator.aspx
 %config (noreplace) %_sysconfdir/mono/4.5/DefaultWsdlHelpGenerator.aspx
 %config (noreplace) %_sysconfdir/mono/4.5/machine.config
 %config (noreplace) %_sysconfdir/mono/4.5/web.config
+%config (noreplace) %_sysconfdir/mono/4.0/machine.config
+%config (noreplace) %_sysconfdir/mono/4.0/web.config
+%config (noreplace) %_sysconfdir/mono/4.0/settings.map
 %dir %_sysconfdir/mono/4.0
 #%dir %_sysconfdir/mono/2.0
 %_bindir/dmcs
@@ -532,6 +554,10 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %_monodir/4.5/mono-api-info.exe
 %_monodir/4.5/mono-symbolicate.exe
 %_monodir/4.5/mono-symbolicate.exe.mdb
+%_monodir/2.0-api/*
+%_monodir/4.0-api/*
+%_monodir/4.5-api/*
+%_monodir/3.5-api/*
 %_bindir/mono-symbolicate
 %mono_bin xbuild
 %_monodir/4.5/xbuild.rsp
@@ -620,7 +646,8 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %_monodir/xbuild/
 %_monodir/xbuild-frameworks/
 %_libdir/libikvm-native.so
-%_libdir/libmono-profiler-*.so
+# disabled profiler right now
+#%_libdir/libmono-profiler-*.so
 %_libdir/libmono*-2.0.so
 %_libdir/libmonosgen*
 %_libdir/libmonoboehm*
@@ -697,6 +724,8 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %mono_bin wsdl
 %_bindir/wsdl2
 %mono_bin xsd
+%mono_bin mono-api-html
+%mono_bin mono-api-info
 %gac_dll Microsoft.Web.Infrastructure
 %gac_dll Mono.Http
 %gac_dll System.ComponentModel.DataAnnotations
@@ -715,6 +744,12 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %gac_dll System.Web.WebPages
 %gac_dll System.Web.WebPages.Deployment
 %gac_dll System.Web.WebPages.Razor
+%gac_dll System.Web.Mobile
+%gac_dll System.Web.RegularExpressions
+%gac_dll System.Workflow.Activities
+%gac_dll System.Workflow.ComponentModel
+%gac_dll System.Workflow.Runtime
+
 %_man1dir/disco.1*
 %_man1dir/httpcfg.1*
 %_man1dir/mconfig.1*
@@ -798,6 +833,8 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %_man1dir/monodocer.1*
 %_man5dir/mdoc.5*
 %_man1dir/mdoc-*
+%_man1dir/mdoc*
+%_man1dir/mdassembler*
 %_man1dir/monodocs2html.1*
 %_man1dir/mdvalidater.1*
 %_man1dir/mono-symbolicate.1*
@@ -807,6 +844,9 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %_pkgconfigdir/monodoc.pc
 
 %changelog
+* Thu Oct 06 2016 Denis Medvedev <nbr@altlinux.org> 4.6.2.7-alt1
+- new version.
+
 * Sun Jul 17 2016 Denis Medvedev <nbr@altlinux.org> 4.3.1.1-alt9
 - Moved library libMonoPosixHelper to arch-depended dir (fixes #32246).
 
