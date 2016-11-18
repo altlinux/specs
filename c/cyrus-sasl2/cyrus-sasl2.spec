@@ -7,7 +7,7 @@
 
 Name: cyrus-sasl2
 Version: 2.1.26
-Release: alt6
+Release: alt7
 
 Summary: SASL2 is the Simple Authentication and Security Layer
 License: Freely Distributable
@@ -25,6 +25,8 @@ Source5: saslauthd.sysconfig
 # It's a converted server-plugin-flow.fig to JPEG
 Source7: %name-alt-server-plugin-flow.jpg
 Source8: README.ALT
+
+Patch1: bug_3920_rimap.patch
 
 Requires: libsasl2-%abiversion = %version-%release
 
@@ -107,6 +109,8 @@ This package contains documentations for SASL2
 
 %prep
 %setup
+
+%patch1 -p0
 
 %build
 
@@ -284,6 +288,10 @@ rm -f %buildroot%_libdir/sasl2-%abiversion/*.la
 %endif
 
 %changelog
+* Fri Nov 18 2016 Sergey Y. Afonin <asy@altlinux.ru> 2.1.26-alt7
+- applied patch for bug 3920 from bugzilla.cyrusimap.org:
+  auth_rimap infinite loop (hang) when IMAP server closes connection
+
 * Tue Jun 30 2015 Sergey Y. Afonin <asy@altlinux.ru> 2.1.26-alt6
 - 20141117 git snapshot
 - added lsb init header
