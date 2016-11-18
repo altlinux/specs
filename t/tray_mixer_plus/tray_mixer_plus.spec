@@ -1,6 +1,6 @@
 Name: tray_mixer_plus
 Version: 0.0.4
-Release: alt1
+Release: alt1.1
 
 Summary: Small tray sound volume
 License: GPL
@@ -48,6 +48,9 @@ install -pDm644 %SOURCE1 %buildroot%_datadir/applications/
 %_datadir/applications/*
 
 %changelog
+* Fri Nov 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.0.4-alt1.1
+- NMU: fixed .desktop category: not a Player, but Mixer.
+
 * Thu Mar 21 2013 Michael Shigorin <mike@altlinux.org> 0.0.4-alt1
 - new version with docking bugfixes and a new -s option:
   http://forum.altlinux.org/index.php/topic,28619.msg201123.html#msg201123
