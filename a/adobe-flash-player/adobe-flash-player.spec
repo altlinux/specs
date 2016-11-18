@@ -4,7 +4,7 @@ Name: adobe-flash-player
 %define ver_fake   13
 %define ver_ix86   13.0.0.0
 %define ver_x86_64 13.0.0.0
-Release: alt2
+Release: alt3
 Serial: 3
 
 %define ver_real %ver_fake
@@ -17,7 +17,7 @@ Serial: 3
 Version: %ver_fake
 
 Group: Networking/WWW
-Summary: Adobe Flash Player
+Summary: Adobe Flash Player NPAPI compatibility
 URL: http://www.adobe.com/products/flashplayer/
 License: GPL
 
@@ -29,23 +29,19 @@ BuildRequires: rpm-macros-browser-plugins
 Source: empty
 
 %description
-Adobe Flash Player %version (Macromedia Flash)
-Fully Supported: Mozilla 1.0+, Netscape 7.x, Firefox 0.8+
-Partially Supported: Opera, Konqueror 3.x
+Adobe Flash Player NPAPI compatibility collective package.
 
 %package -n %bin_name
 Version: %ver_real
 Group: Networking/WWW
-Summary: Adobe Flash Player
+Summary: Adobe Flash Player NPAPI compatibility
 Requires: freshplayerplugin ppapi-plugin-adobe-flash
 Provides: flash-plugin = %version-%release
 Obsoletes: flash-plugin <= %version
 Provides: mozilla-plugin-macromedia-flash = %version-%release
 Obsoletes: mozilla-plugin-macromedia-flash < %version-%release
 %description -n %bin_name
-Adobe Flash Player %version (Macromedia Flash)
-Fully Supported: Mozilla 1.0+, Netscape 7.x, Firefox 0.8+
-Partially Supported: Opera, Konqueror 3.x
+Adobe Flash Player NPAPI compatibility collective package.
 
 %package fake
 Version: %ver_fake
@@ -62,6 +58,9 @@ fake
 %files -n %bin_name
 
 %changelog
+* Fri Nov 18 2016 Sergey V Turchin <zerg@altlinux.org> 3:13-alt3
+- fix description (ALT#32764)
+
 * Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 3:13-alt2
 - clean requires
 
