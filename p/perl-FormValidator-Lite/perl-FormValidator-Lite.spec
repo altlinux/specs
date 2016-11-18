@@ -1,5 +1,5 @@
 Name: perl-FormValidator-Lite
-Version: 0.38
+Version: 0.39
 Release: alt1
 
 Summary: FormValidator::Lite perl module
@@ -11,7 +11,7 @@ Url: %CPAN FormValidator-Lite
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl-devel perl-Class-Load perl-Test-Requires perl-CGI perl-Class-Accessor-Lite perl-YAML perl-Module-Build perl-unicore perl-Email-Valid-Loose perl-Text-TestBase
+BuildRequires: perl-devel perl-Class-Load perl-Test-Requires perl-CGI perl-Class-Accessor-Lite perl-YAML perl-Module-Build-Tiny perl-unicore perl-Email-Valid-Loose perl-Text-TestBase
 
 %description
 %summary
@@ -30,6 +30,9 @@ BuildRequires: perl-devel perl-Class-Load perl-Test-Requires perl-CGI perl-Class
 %doc TODO Changes
 
 %changelog
+* Fri Nov 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1
+- automated CPAN update
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1
 - automated CPAN update
 
