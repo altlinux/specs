@@ -1,6 +1,6 @@
 %define dist Net-SMTP-SSL
 Name: perl-%dist
-Version: 1.03
+Version: 1.04
 Release: alt1
 
 Summary: SSL support for Net::SMTP
@@ -38,6 +38,9 @@ For interface documentation, please see Net::SMTP.
 %perl_vendor_privlib/Net/SMTP/
 
 %changelog
+* Fri Nov 18 2016 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
+- automated CPAN update
+
 * Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
 - automated CPAN update
 
