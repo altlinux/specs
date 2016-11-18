@@ -2,7 +2,7 @@
 
 Name: mono4
 Version: 4.6.2.7
-Release: alt1
+Release: alt2
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -844,6 +844,9 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 %_pkgconfigdir/monodoc.pc
 
 %changelog
+* Fri Nov 18 2016 Denis Medvedev <nbr@altlinux.org> 4.6.2.7-alt2
+- fix place of monoPosixHelper for x86_64
+
 * Thu Oct 06 2016 Denis Medvedev <nbr@altlinux.org> 4.6.2.7-alt1
 - new version.
 
