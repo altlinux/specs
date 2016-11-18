@@ -1,6 +1,6 @@
 Name: perl-Socket-Netlink
-Version: 0.04
-Release: alt1.1.1
+Version: 0.05
+Release: alt1
 
 Summary: interface to Linux's PF_NETLINK socket family
 Group: Development/Perl
@@ -30,6 +30,9 @@ BuildRequires: perl(Test/HexString.pm) perl(Module/Build/Compat.pm) perl(ExtUtil
 %doc Changes LICENSE README
 
 %changelog
+* Fri Nov 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1.1.1
 - rebuild with new perl 5.22.0
 
