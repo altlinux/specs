@@ -1,12 +1,11 @@
 %def_with libproxy
 %def_with stoken
-%def_without liboath
 # openssl or gnutls
-%def_with openssl
-%def_without gnutls
+%def_without openssl
+%def_with gnutls
 
 Name: openconnect
-Version: 7.06
+Version: 7.07
 Release: alt1
 Summary: Open client for Cisco AnyConnect VPN
 
@@ -17,13 +16,14 @@ Url: http://www.infradead.org/openconnect.html
 Source: %name-%version.tar
 
 Requires: lib%name = %version-%release
+BuildRequires: pkgconfig(liblz4)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(zlib)
-%{?_with_gnutls:BuildRequires: pkgconfig(gnutls) > 2.12.16 pkgconfig(p11-kit-1)}
-%{?_with_openssl:BuildRequires: pkgconfig(openssl)}
+%{?_with_gnutls:BuildRequires: pkgconfig(gnutls) > 2.12.16 pkgconfig(p11-kit-1) libtrousers-devel}
+%{?_with_openssl:BuildRequires: pkgconfig(openssl) pkgconfig(p11-kit-1) pkgconfig(libp11)}
 %{?_with_libproxy:BuildRequires: pkgconfig(libproxy-1.0)}
 %{?_with_stoken:BuildRequires: pkgconfig(stoken)}
-%{?_with_liboath:BuildRequires: pkgconfig(liboath)}
+BuildRequires: pkgconfig(libpcsclite)
 BuildRequires: vpnc-script
 BuildRequires: libkrb5-devel
 BuildRequires: python-modules python-modules-xml groff-extra
@@ -83,6 +83,11 @@ make DESTDIR=%buildroot install
 %_pkgconfigdir/*
 
 %changelog
+* Sat Nov 19 2016 Alexey Shabalin <shaba@altlinux.ru> 7.07-alt1
+- 7.07
+- switch to gnutls
+- build with pkcs11 support
+
 * Fri Oct 07 2016 Vladimir Didenko <cow@altlinux.ru> 7.06-alt1
 - 7.06 (closes: #32583)
 - build with stoken
@@ -96,7 +101,6 @@ make DESTDIR=%buildroot install
 
 * Wed Sep 04 2013 Alexey Shabalin <shaba@altlinux.ru> 5.01-alt1
 - 5.01
-- switch to gnutls
 
 * Wed Jan 30 2013 Alexey Shabalin <shaba@altlinux.ru> 4.07-alt1
 - 4.07
