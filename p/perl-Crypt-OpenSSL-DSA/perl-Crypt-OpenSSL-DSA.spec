@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module Crypt-OpenSSL-DSA
 
 Name: perl-%module
-Version: 0.17
+Version: 0.18
 Release: alt1
 
 Summary: Digital Signature Algorithm using OpenSSL 
@@ -35,6 +36,9 @@ library, located at http://www.openssl.org
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Sat Nov 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Mon Oct 31 2016 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - automated CPAN update
 
