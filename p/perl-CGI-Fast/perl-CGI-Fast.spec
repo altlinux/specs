@@ -2,12 +2,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(CGI.pm) perl(ExtUtils/MakeMaker.pm) perl(FCGI.pm) perl(Test/More.pm) perl(if.pm) perl(Test/Deep.pm)
 # END SourceDeps(oneline)
-%define module_version 2.10
+%define module_version 2.11
 %define module_name CGI-Fast
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.10
+Version: 2.11
 Release: alt1
 Summary: unknown
 Group: Development/Perl
@@ -40,6 +40,9 @@ see large performance improvements.
 %perl_vendor_privlib/C*
 
 %changelog
+* Sat Nov 19 2016 Igor Vlasenko <viy@altlinux.ru> 2.11-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1
 - automated CPAN update
 
