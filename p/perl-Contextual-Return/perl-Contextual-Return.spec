@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Contextual-Return
-Version:        0.004008
-Release:        alt1_2
+Version:        0.004009
+Release:        alt1
 Summary:        Create context-sensitive return values
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Contextual-Return
-Source0:        http://search.cpan.org/CPAN/authors/id/D/DC/DCONWAY/Contextual-Return-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/D/DC/DCONWAY/Contextual-Return-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
@@ -55,6 +56,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Nov 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.004009-alt1
+- automated CPAN update
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.004008-alt1_2
 - update to new release by fcimport
 
