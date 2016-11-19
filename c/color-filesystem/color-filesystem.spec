@@ -1,6 +1,6 @@
 Name:           color-filesystem
 Version:        1
-Release:        alt2
+Release:        alt3
 Summary:        Color filesystem layout
 
 Group:          System/Base
@@ -16,7 +16,7 @@ This package provides some directories that are required/used to store color.
 %package -n rpm-macros-color
 Summary: Set of RPM macros for packaging %name-based applications
 Group: Development/Other
-Requires: %{name} = %{version}-%{release}
+#Requires: %{name} = %{version}-%{release}
 
 %description -n rpm-macros-color
 Set of RPM macros for directories that are required/used to store color.
@@ -57,6 +57,9 @@ EOF
 %_rpmmacrosdir/color
 
 %changelog
+* Sat Nov 19 2016 Igor Vlasenko <viy@altlinux.ru> 1-alt3
+- removed Req: c-f from rpm-macros-color
+
 * Sat Jun 09 2012 Igor Vlasenko <viy@altlinux.ru> 1-alt2
 - renamed macros.color -> color (around altbug 27426)
 
