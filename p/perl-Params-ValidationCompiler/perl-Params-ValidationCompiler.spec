@@ -1,20 +1,20 @@
-%define module_version 0.13
+%define _unpackaged_files_terminate_build 1
+%define module_version 0.18
 %define module_name Params-ValidationCompiler
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Const/Fast.pm) perl(DateTime.pm) perl(Eval/Closure.pm) perl(Exception/Class.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(Hash/Util.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/Params/Validate.pm) perl(Scalar/Util.pm) perl(Specio.pm) perl(Test/More.pm) perl(Test/Without/Module.pm) perl(Test2/Bundle/Extended.pm) perl(Test2/Plugin/NoWarnings.pm) perl(Test2/Require/Module.pm) perl(Type/Params.pm) perl(Types/Standard.pm) perl(overload.pm) perl(strict.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.13
-Release: alt2
+Version: 0.18
+Release: alt1
 Summary: Build an optimized subroutine parameter validator once, use it forever
 Group: Development/Perl
 License: artistic_2
 URL: http://metacpan.org/release/Params-ValidationCompiler
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/D/DR/DROLSKY/%{module_name}-%{module_version}.tar.gz
+Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/Params-ValidationCompiler-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -39,6 +39,9 @@ specialized parameter checking subroutine.
 %perl_vendor_privlib/P*
 
 %changelog
+* Sat Nov 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2
 - to Sisyphus
 
