@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Exporter.pm) perl(ExtUtils/CBuilder.pm) perl(File/Temp.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(Test/Requires.pm) perl(parent.pm)
+BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Exporter.pm) perl(ExtUtils/CBuilder.pm) perl(File/Temp.pm) perl(Module/Build/Tiny.pm) perl(Test/More.pm) perl(Test/Requires.pm) perl(parent.pm)
 # END SourceDeps(oneline)
-%define module_version 0.06
+%define module_version 0.07
 %define module_name Devel-CheckCompiler
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.06
+Version: 0.07
 Release: alt1
 Summary: Check the compiler's availability
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/D*
 
 %changelog
+* Sat Nov 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - automated CPAN update
 
