@@ -1,20 +1,20 @@
-%define module_version 0.04
+%define _unpackaged_files_terminate_build 1
+%define module_version 0.05
 %define module_name Test2-Plugin-NoWarnings
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(IPC/Run3.pm) perl(Test/More.pm) perl(Test2/API.pm) perl(Test2/Bundle/Extended.pm) perl(Test2/Event.pm) perl(Test2/Require/Module.pm) perl(Test2/Util/HashBase.pm) perl(parent.pm) perl(strict.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.04
-Release: alt2
+Version: 0.05
+Release: alt1
 Summary: Fail if tests warn
 Group: Development/Perl
 License: artistic_2
 URL: http://metacpan.org/release/Test2-Plugin-NoWarnings
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/D/DR/DROLSKY/%{module_name}-%{module_version}.tar.gz
+Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/Test2-Plugin-NoWarnings-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -38,6 +38,9 @@ then this module will stop working.
 %perl_vendor_privlib/T*
 
 %changelog
+* Sat Nov 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- automated CPAN update
+
 * Fri Nov 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2
 - to Sisyphus
 
