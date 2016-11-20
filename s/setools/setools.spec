@@ -1,12 +1,12 @@
 %define setools_maj_ver 3.3
 %define setools_min_ver 8
-%define libsepol_ver 2.2
+%define libsepol_ver 2.5
 
 %define autoconf_ver 2.59
 
 Name: setools
 Version: %setools_maj_ver.%setools_min_ver
-Release: alt5
+Release: alt6
 License: %gpl2plus
 URL: http://oss.tresys.com/projects/setools
 Source: %name-%version.tar
@@ -29,7 +29,7 @@ Patch12: %name-fix-parentheses.patch
 Summary: Policy analysis tools for SELinux
 Group: System/Base
 Requires: lib%name = %version-%release lib%name-tcl = %version-%release %name-gui = %version-%release %name-console = %version-%release
-
+Conflicts: libsepol < %libsepol_ver
 BuildPreReq: rpm-build-licenses
 BuildPreReq: /proc
 #libsetools
@@ -343,6 +343,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/applications/*
 
 %changelog
+* Sat Oct 29 2016 Anton Farygin <rider@altlinux.ru> 3.3.8-alt6
+- rebuild with new libsepol 2.5
+
 * Mon Feb 29 2016 Mikhail Efremov <sem@altlinux.org> 3.3.8-alt5
 - Fix -Wformat-security issues (patch from Fedora).
 - Fix missing parentheses in policy_define.c (patch from upstream).

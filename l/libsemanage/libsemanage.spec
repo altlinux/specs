@@ -6,7 +6,7 @@
 
 Name: libsemanage
 Epoch: 1
-Version: 2.3
+Version: 2.5
 Release: alt1
 Summary: Library, which provides an interface for SELinux management
 Group: System/Libraries
@@ -16,11 +16,12 @@ Source: %name-%version.tar
 Patch1: alt-extra-homedirs.patch
 Patch2: alt-linking.patch
 Patch3: alt-pkgconfig.patch
+Patch4: alt-lib-install-dir.patch
 
 %{?_with_python:BuildPreReq: rpm-build-python}
-BuildRequires: bzlib-devel flex libustr-devel libsepol-devel >= 2.1 libselinux-devel >= 2.1 libaudit-devel
+BuildRequires: bzlib-devel flex libustr-devel libsepol-devel >= 2.5 libselinux-devel >= 2.5 libaudit-devel
 %{?_with_python:BuildRequires: swig python-dev}
-%{!?_disable_check:BuildRequires: CUnit-devel libsepol-devel-static >= 2.1 libselinux-devel-static >= 2.1}
+%{!?_disable_check:BuildRequires: CUnit-devel libsepol-devel-static >= 2.5 libselinux-devel-static >= 2.5}
 
 %description
 This package provides the shared libraries for the manipulation of
@@ -85,7 +86,7 @@ on binary policies such as customizing policy boolean settings.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-
+%patch4 -p1
 
 %build
 %make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_lib LIBEXECDIR=%_libexecdir all
@@ -128,6 +129,9 @@ ln -sf /%_lib/libsemanage.so.1 %buildroot/%_libdir/libsemanage.so
 
 
 %changelog
+* Tue Nov 01 2016 Anton Farygin <rider@altlinux.ru> 1:2.5-alt1
+- new version
+
 * Thu Sep 29 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:2.3-alt1
 - downgraded due regression (closes: #32254)
 - alt-lib-install-dir.patch has been removed

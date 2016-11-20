@@ -2,13 +2,14 @@
 
 Name: libsepol
 Epoch: 1
-Version: 2.3
+Version: 2.5
 Release: alt1
 Summary: SELinux binary policy manipulation library
 License: LGPLv2+
 Group: System/Libraries
 Url: http://userspace.selinuxproject.org/trac/
 Source: %name-%version.tar
+Conflicts: libsetools < 3.3.8-alt6
 
 %{!?_disable_check:BuildRequires: CUnit-devel}
 BuildRequires: flex
@@ -97,6 +98,9 @@ on binary policies such as customizing policy boolean settings.
 %exclude %_man8dir/genpol*
 
 %changelog
+* Thu Oct 27 2016 Anton Farygin <rider@altlinux.ru> 1:2.5-alt1
+- new version
+
 * Thu Sep 29 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:2.3-alt1
 - downgraded due regression (closes: #32254)
 

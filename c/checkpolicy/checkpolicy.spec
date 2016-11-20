@@ -1,6 +1,6 @@
 Name: checkpolicy
 Epoch: 1
-Version: 2.3
+Version: 2.5
 Release: alt1
 Summary: SELinux policy compiler
 Group: System/Configuration/Other
@@ -9,7 +9,7 @@ Url: http://userspace.selinuxproject.org
 Source: %name-%version.tar
 Patch1: alt-ddecl.patch
 
-BuildRequires: flex libselinux-devel >= 2.3 libsepol-devel >= 2.3 libsepol-devel-static >= 2.3
+BuildRequires: flex libselinux-devel >= 2.5 libsepol-devel >= 2.5 libsepol-devel-static >= 2.5
 
 %description
 Security-enhanced Linux is a patch of the Linux(R) kernel and a number
@@ -48,6 +48,9 @@ done
 
 
 %changelog
+* Thu Oct 27 2016 Anton Farygin <rider@altlinux.ru> 1:2.5-alt1
+- new version
+
 * Thu Sep 29 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:2.3-alt1
 - downgraded due regression (closes: #32254)
 
