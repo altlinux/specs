@@ -2,7 +2,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.9
-Release: alt1
+Release: alt2
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -10,11 +10,20 @@ License: LGPL
 Url: https://github.com/OpenSC/pam_pkcs11
 
 Source: %name-%version.tar
+Patch: %name-%version-alt-build.patch
+Patch1: %name-%version-docs.patch
+Patch2: %name-%version-option-global_ca.patch
+Patch3: %name-%version-ru.po.patch
+Patch4: %name-%version-buffer.patch
+Patch5: %name-%version-ask-pin-later.patch
 
 BuildRequires: docbook-style-xsl flex libldap-devel libpam-devel libpcsclite-devel libssl-devel xsltproc
 BuildRequires: doxygen
+BuildRequires: docbook-dtds
 
 BuildPreReq: gcc-c++
+# SCARD_READERSTATE_A will change to SCARD_READERSTATE afterwards:
+BuildPreReq: libpcsclite-devel >= 1.7.4
 
 %description
 This Linux-PAM login module allows a X.509 certificate based user login.
@@ -54,6 +63,12 @@ as a separate package.
 
 %prep
 %setup
+%patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 # fixup configs
 sed -i -e '
@@ -82,11 +97,11 @@ cd doc
 
 mkdir -p %buildroot%_sysconfdir/security/%name/{cacerts,crls}
 for f in pam_pkcs11.conf card_eventmgr.conf pkcs11_eventmgr.conf; do
-  install -pm644 "etc/$f.example" "%buildroot%_sysconfdir/security/%name/$f"
+  install -pm644 "etc/$f.example" -T "%buildroot%_sysconfdir/security/%name/$f"
 done
 
 # Cleanup .la files
-rm -f %buildroot/%_lib/*/*.la
+rm %buildroot/%_lib/*/*.la
 
 %find_lang %name
 
@@ -106,7 +121,6 @@ rm -f %buildroot/%_lib/*/*.la
 %_bindir/pkcs11_inspect
 %_bindir/pkcs11_listcerts
 %_bindir/pkcs11_setup
-%_bindir/pkcs11_make_hash_link
 %dir /%_lib/%name
 /%_lib/%name/openssh_mapper.so
 /%_lib/%name/opensc_mapper.so
@@ -116,28 +130,39 @@ rm -f %buildroot/%_lib/*/*.la
 %_man1dir/pkcs11_listcerts.1*
 %_man1dir/pkcs11_setup.1*
 %_man1dir/pklogin_finder.1*
-%_man1dir/pkcs11_make_hash_link.1*
 %_man8dir/pam_pkcs11.8*
-%dir %_docdir/%name
-%_docdir/%name/pam_pkcs11.conf.example
-%_docdir/%name/pam.d_login.example
-%_docdir/%name/subject_mapping.example
-%_docdir/%name/mail_mapping.example
-%_docdir/%name/digest_mapping.example
-%_docdir/%name/pkcs11_eventmgr.conf.example
+%dir %_datadir/%name
+%_datadir/%name/pam_pkcs11.conf.example
+%_datadir/%name/pam.d_login.example
+%_datadir/%name/subject_mapping.example
+%_datadir/%name/mail_mapping.example
+%_datadir/%name/digest_mapping.example
+%_datadir/%name/pkcs11_eventmgr.conf.example
 
 %files pcsc
 %doc doc/README.eventmgr
 %config(noreplace) %_sysconfdir/security/%name/card_eventmgr.conf
 %_bindir/card_eventmgr
 %_mandir/man1/card_eventmgr.1*
-%_docdir/%name/card_eventmgr.conf.example
+%_datadir/%name/card_eventmgr.conf.example
 
 %files ldap
 %doc doc/README.ldap_mapper
 /%_lib/%name/ldap_mapper.so
 
 %changelog
+* Sun Nov 20 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.9-alt2
+- Restored ALT-specific features (from p7's 0.6.4-alt2, originally by raorn@):
+  1. The example configs are placed in %_datadir/%name/.
+  2. The use of OpenSSL's c_hash instead of pkcs11_make_hash_links
+     is advised in the documentation; more options in example configs.
+  3. global_ca configuration option for the system-wide cert storage.
+  4. Russian translations updated
+     (and shortened "smart card" into "token" in some places).
+  5. Larger buffers (to hold localized strings) and safer operations
+     with them (no unjustified sprintf).
+  6. Check if there are any valid certificates before asking for PIN.
+
 * Mon Oct 31 2016 Andrey Cherepanov <cas@altlinux.org> 0.6.9-alt1
 - New version 0.6.9
 - Fix project homepage
