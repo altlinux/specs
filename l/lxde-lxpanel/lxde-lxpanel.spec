@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define origname lxpanel
+%define gtkver 2
 
 Name: lxde-%origname
-Version: 0.8.2
-Release: alt2
+Version: 0.9.0
+Release: alt1
 
 Summary: LXPanel is a lightweight X11 desktop panel
 License: GPL
@@ -19,10 +20,10 @@ Requires: menu-cache
 
 # Automatically added by buildreq on Wed Jan 23 2013
 # optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgtk+2-devel libmenu-cache libpango-devel libsystemd-daemon libwayland-client libwayland-server pkg-config xml-common xml-utils xorg-kbproto-devel xorg-xproto-devel xz
-BuildRequires: docbook-dtds docbook-style-xsl imake intltool libalsa-devel libmenu-cache-devel libwireless-devel libwnck-devel xorg-cf-files xsltproc
+BuildRequires: docbook-dtds docbook-style-xsl imake intltool libalsa-devel libmenu-cache-devel libwireless-devel libwnck-devel xorg-cf-files xsltproc 
 
 BuildRequires: libfm-devel libxml2-devel libkeybinder-devel
-BuildPreReq: rpm-build-xdg
+BuildPreReq: rpm-build-xdg libgtk+%gtkver-devel
 
 %description
 lxpanel is a program that provides a panel for desktop, usually LXDE.
@@ -67,6 +68,9 @@ for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Nov 20 2016 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
+- new version 0.9.0
+
 * Tue May 24 2016 Anton Midyukov <antohami@altlinux.org> 0.8.2-alt2
 - Replaced requires lxde-freedesktop-menu by altlinux-freedesktop-menu-lxde.
 
