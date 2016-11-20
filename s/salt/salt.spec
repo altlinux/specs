@@ -1,7 +1,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 2016.3.3
-Release: alt4
+Version: 2016.3.4
+Release: alt1
 Url: http://saltstack.org
 Source0: %name-%version.tar
 License: apache-2.0
@@ -34,7 +34,7 @@ servers. It handles them quickly and through a simple yet manageable interface.
 %package -n python-module-salt
 Summary: Management component for salt, a parallel remote execution system
 Group: Development/Python
-Requires: python-module-yaml python-module-msgpack python-module-json
+Requires: python-module-yaml python-module-msgpack python-module-json lxc /usr/bin/lxc-destroy
 
 %description  -n python-module-salt
 Salt is a distributed remote execution system used to execute commands and
@@ -217,6 +217,9 @@ ln -s ../../opennode/cli/actions onode
 %_man1dir/salt-minion.1.*
 
 %changelog
+* Fri Nov 18 2016 Lenar Shakirov <snejok@altlinux.ru> 2016.3.4-alt1
+- 2016.3.4
+
 * Thu Sep 08 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 2016.3.3-alt4
 - Add extra dependiens because master won't start
 
