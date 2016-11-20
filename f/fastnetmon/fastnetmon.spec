@@ -1,6 +1,6 @@
 Name: fastnetmon
 Version: 1.1.3
-Release: alt1.git10092016
+Release: alt1.git20161119
 Summary: A high performance DoS/DDoS load analyzer.
 Group: Networking/Other
 
@@ -57,6 +57,9 @@ install -m755 %name.init %buildroot%_initdir/%name
 
 
 %changelog
+* Sun Nov 20 2016 Alexei Takaseev <taf@altlinux.org> 1.1.3-alt1.git20161119
+- update to git:a1659df66a8b129784761cb068f5d0f44bf20239
+
 * Sun Sep 18 2016 Alexei Takaseev <taf@altlinux.org> 1.1.3-alt1.git10092016
 - update to git:70bbdf94836d32100dc03b8ff8b52c984f0d5d9a
 
