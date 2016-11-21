@@ -2,7 +2,7 @@
 
 Name: mono4
 Version: 4.6.2.7
-Release: alt2
+Release: alt3
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -381,7 +381,7 @@ rm -f %buildroot%_monodir/4.0/dmcs.exe.so
 rm -rf %buildroot%_bindir/mono-configuration-crypto
 rm -rf %buildroot%_mandir/man?/mono-configuration-crypto*
 #temporarily remove profiler iomap -bad symbols
-rm -rf %buildroot%_libdir/libmono-profiler-iomap.so.0.0.0
+#rm -rf %buildroot%_libdir/libmono-profiler-iomap.so.0.0.0
 
 # remove the mono-nunit files
 rm -f %buildroot%_bindir/nunit-console
@@ -844,6 +844,9 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 %_pkgconfigdir/monodoc.pc
 
 %changelog
+* Mon Nov 21 2016 Denis Medvedev <nbr@altlinux.org> 4.6.2.7-alt3
+- fix for profiler-iomap
+
 * Fri Nov 18 2016 Denis Medvedev <nbr@altlinux.org> 4.6.2.7-alt2
 - fix place of monoPosixHelper for x86_64
 
