@@ -1,12 +1,12 @@
 %def_with	enigmail
 %define 	r_name thunderbird
 
-%define enigmail_version  1.9.5
+%define enigmail_version  1.9.6.1
 %define gdata_version     2.6
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	45.4.0
+Version:	45.5.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -433,6 +433,10 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Mon Nov 21 2016 Andrey Cherepanov <cas@altlinux.org> 45.5.0-alt1
+- New version (45.5.0)
+- Enigmail 1.9.6.1
+
 * Sat Oct 01 2016 Andrey Cherepanov <cas@altlinux.org> 45.4.0-alt1
 - New version (45.4.0)
 
