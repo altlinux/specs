@@ -1,15 +1,14 @@
 
 Summary: Cloud image management utilities
 Name: cloud-utils
-Version: 0.27
-Release: alt1.20151203
+Version: 0.29
+Release: alt1.20161024
 License: GPLv3
 Group: System/Configuration/Boot and Init
-Url: https://launchpad.net/cloud-utils/trunk/0.27/+download/cloud-utils-0.27.tar.gz
+Url: https://launchpad.net/cloud-utils
 
-
-Source0: %name-%version.tar
-Patch1: %name-%version-%release.patch
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
@@ -37,10 +36,7 @@ Summary: Script for growing a partition
 Group: System/Configuration/Boot and Init
 
 Requires: gawk
-# gdisk is only required for resizing GPT partitions and depends on libicu
-# (25MB). We don't make this a hard requirement to save some space in non-GPT
-# systems.
-#Requires:	gdisk
+Requires: gdisk
 Requires: sfdisk
 Requires: util-linux
 
@@ -51,7 +47,7 @@ package to grow the root partition on first boot.
 
 %prep
 %setup
-%patch1 -p1
+%patch -p1
 
 %build
 
@@ -74,6 +70,9 @@ rm -f %buildroot%_bindir/*ubuntu*
 %_man1dir/growpart.*
 
 %changelog
+* Tue Nov 22 2016 Alexey Shabalin <shaba@altlinux.ru> 0.29-alt1.20161024
+- bzr snapshot 20161024
+
 * Thu Dec 03 2015 Alexey Shabalin <shaba@altlinux.ru> 0.27-alt1.20151203
 - Initial build upstream snapshot
 
