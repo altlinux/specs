@@ -1,16 +1,15 @@
 Name: libguess
 Version: 1.2
-Release: alt1
+Release: alt1.1
 
 Summary: high-speed character set detection library
-
 License: BSD
 Group: System/Libraries
 Url: http://rabbit.dereferenced.org/~nenolod
 
 Source: %url/distfiles/%name-%version.tar.bz2
 
-Obsoletes: %{name}1
+Obsoletes: %{name}1 < 1.2
 Provides: %{name}1 = %version-%release
 
 %description
@@ -43,6 +42,9 @@ This package contain header files for libguess.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Nov 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2-alt1.1
+- fixed "Obsoletes" tag
+
 * Wed Apr 22 2015 Yuri N. Sedunov <aris@altlinux.org> 1.2-alt1
 - 1.2
 - new source %url
