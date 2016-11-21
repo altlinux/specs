@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 4.4.2
-Release: alt1
+Release: alt2
 Summary: Scalable, non-blocking web server and tools
 
 License: Apache
@@ -26,7 +26,7 @@ BuildRequires(pre): rpm-build-python3
 Requires: python-module-simplejson
 Requires: ca-certificates
 # required by tornado/netutil.py for Python2 version.
-Requires: python-module-backports.ssl_match_hostname
+Requires: python-module-backports.ssl_match_hostname python-module-certifi
 # required by tornado/gen.py
 Requires: python-module-singledispatch
 # required by tornado/gen.py
@@ -46,7 +46,7 @@ ideal for real-time web services.
 %package -n python3-module-%module_name
 Summary: Scalable, non-blocking web server and tools (Python 3)
 Group: Development/Python3
-Requires: ca-certificates
+Requires: ca-certificates python3-module-certifi
 %add_python3_req_skip MySQLdb pycurl
 
 %description -n python3-module-%module_name
@@ -105,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Mon Nov 21 2016 Lenar Shakirov <snejok@altlinux.ru> 4.4.2-alt2
+- Requires: python-module-certifi added
+
 * Tue Oct 18 2016 Vladimir Didenko <cow@altlinux.org> 4.4.2-alt1
 - update version
 - update requires for Python 2 version
