@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -277,6 +277,14 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Mon Nov 21 2016 Anton Farygin <rider@altlinux.ru> 2.2.2-alt1
+- new version, in which following vulnerabilities have been fixed:
+     * CVE-2016-9372 Profinet I/O long loop.
+     * CVE-2016-9373 DCERPC crash.
+     * CVE-2016-9374 AllJoyn crash.
+     * CVE-2016-9375 DTN infinite loop.
+     * CVE-2016-9376 OpenFlow crash.
+
 * Thu Oct 13 2016 Anton Farygin <rider@altlinux.ru> 2.2.1-alt1
 - new version
 
