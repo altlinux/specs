@@ -1,16 +1,18 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat rpm-macros-java
-BuildRequires: gcc-c++ java-devel-default perl(APR/Const.pm) perl(CGI.pm) perl(CGI/Carp.pm) perl(Exporter.pm) perl(FileHandle.pm) perl(LWP/UserAgent.pm) perl(MIME/Base64.pm) perl(ModPerl/Registry.pm) perl(Mozilla/LDAP/Conn.pm) perl(Mozilla/LDAP/LDIF.pm) perl(Parse/RecDescent.pm) perl(URI/Escape.pm) perl(URI/URL.pm) perl(XML/Simple.pm) perl(subs.pm) python-devel rpm-build-java
+BuildRequires: gcc-c++ java-devel-default perl(APR/Const.pm) perl(CGI.pm) perl(CGI/Carp.pm) perl(Exporter.pm) perl(FileHandle.pm) perl(LWP/UserAgent.pm) perl(MIME/Base64.pm) perl(ModPerl/Registry.pm) perl(Mozilla/LDAP/Conn.pm) perl(Mozilla/LDAP/LDIF.pm) perl(Parse/RecDescent.pm) perl(URI/Escape.pm) perl(URI/URL.pm) perl(XML/Simple.pm) perl(subs.pm) python-devel
 # END SourceDeps(oneline)
+BuildRequires: sh4
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 24
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define fedora 24
 # Python
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
@@ -49,7 +51,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             pki-core
 Version:          10.2.6
-Release:          alt2_16jpp8
+Release:          alt2_19jpp8
 Summary:          Certificate System - PKI Core Components
 URL:              http://pki.fedoraproject.org/
 License:          GPLv2
@@ -65,16 +67,16 @@ BuildRequires:    apache-commons-io
 BuildRequires:    apache-commons-lang
 BuildRequires:    jakarta-commons-httpclient
 BuildRequires:    libnspr-devel
-BuildRequires:    nss-devel >= 3.14.3
+BuildRequires: libnss-devel libnss-devel-static
 
 %if 0%{?rhel}
-BuildRequires:    nuxwdog-client-java >= 1.0.1
+BuildRequires:    libnuxwdog-java >= 1.0.1
 %else
-BuildRequires:    nuxwdog-client-java >= 1.0.3
+BuildRequires:    libnuxwdog-java >= 1.0.3
 %endif
 
-BuildRequires:    openldap-devel
-BuildRequires:    pkgconfig
+BuildRequires:    libldap-devel
+BuildRequires:    pkg-config
 BuildRequires:    policycoreutils
 BuildRequires:    python-module-lxml
 BuildRequires:    python-module-sphinx
@@ -116,12 +118,11 @@ BuildRequires:    python-module-requests
 BuildRequires:    python-module-selinux
 BuildRequires: policycoreutils python-module-sepolgen
 %if 0%{?fedora} >= 23
-#BuildRequires:    policycoreutils-python-utils
-BuildRequires:    policycoreutils-gui policycoreutils-devel
+BuildRequires: policycoreutils policycoreutils-sandbox
 %endif
-BuildRequires:    python-module-ldap
+BuildRequires:    python-module-pyldap
 BuildRequires:    junit
-BuildRequires:    jpackage-utils >= 0:1.7.5
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:    jss >= 4.2.6
 
 %if 0%{?rhel}
@@ -130,7 +131,11 @@ BuildRequires:    tomcatjss >= 7.1.0
 %if 0%{?fedora} >= 23
 BuildRequires:    tomcatjss >= 7.1.3
 %else
+%if 0%{?fedora} == 22
 BuildRequires:    tomcatjss >= 7.1.2
+%else
+BuildRequires:    tomcatjss >= 7.1.2
+%endif
 %endif
 %endif
 
@@ -141,9 +146,9 @@ BuildRequires:    libapr1-devel
 BuildRequires:    libaprutil1-devel
 BuildRequires:    libsasl2-devel
 BuildRequires:    apache2-devel >= 2.4.2
-BuildRequires:    pcre-devel
+BuildRequires: libpcre-devel libpcrecpp-devel
 BuildRequires:    python
-BuildRequires:    systemd
+BuildRequires: journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-utils
 BuildRequires:    libsvrcore-devel
 BuildRequires:    zlib
 BuildRequires:    zlib-devel
@@ -220,10 +225,23 @@ Patch46:          pki-core-Fix-to-determine-supported-javadoc-options.patch
 ## pki-core-10.2.6-16
 Patch47:          pki-core-Modify-dnsdomainname-test-in-pkispawn.patch
 Patch48:          pki-core-Build-with-Tomcat-8.0.32.patch
-
-
-# alt
-Patch333: pki-core-alt-local-urllib3.patch
+## pki-core-10.2.6-17
+Patch49:          pki-core-Added-support-for-cloning-3rd-party-CA-certificates.patch
+Patch50:          pki-core-Fixed-certificate-chain-import-problem.patch
+Patch51:          pki-core-Fix-escaping-of-password-fields-to-prevent-interpolation.patch
+Patch52:          pki-core-Install-tools-clean-up.patch
+Patch53:          pki-core-Fixed-KRA-install-problem.patch
+Patch54:          pki-core-Fixed-missing-trust-flags-in-certificate-backup.patch
+Patch55:          pki-core-Implement-total-ordering-for-PKISubsystem-and-PKIInstance.patch
+Patch56:          pki-core-Added-pylint-build-scan-py-to-top-level.patch
+## BEGIN:  Manually-crafted patches for use with existing tarballs
+Patch57:          pki-core-Py3-modernization-libmodernize.fixes.fix_import.patch
+Patch58:          pki-core-Added-Python-wrapper-for-pki-pkcs12-import.patch
+## END:    Manually-crafted patches for use with existing tarballs
+## pki-core-10.2.6-18
+Patch59:          pki-core-Fixed-pki-pkcs12-import-backward-compatibility.patch
+## pki-core-10.2.6-19
+Patch60:          pki-core-Make-PKIInstance-and-PKISubsystem-hashable.patch
 
 %global saveFileContext() \
 if [ -s /etc/selinux/config ]; then \
@@ -308,6 +326,8 @@ least one PKI Theme package:                                           \
                                                                        \
 %{nil}
 Source44: import.info
+Patch61: pki-core-alt-local-urllib3.patch
+Patch62: pki-core-alt-fix-paths.patch
 
 %description %{overview}
 
@@ -316,8 +336,8 @@ Source44: import.info
 Summary:          Symmetric Key JNI Package
 Group:            System/Libraries
 
-Requires:         nss
-Requires:         jpackage-utils >= 0:1.7.5
+Requires:         libnss
+Requires: javapackages-tools rpm-build-java
 Requires:         jss >= 4.2.6
 
 Provides:         symkey = %{version}-%{release}
@@ -345,7 +365,7 @@ Provides:         pki-util = %{version}-%{release}
 Obsoletes:        pki-common < %{version}-%{release}
 Obsoletes:        pki-util < %{version}-%{release}
 
-Conflicts:        freeipa-server < 3.0.0
+Conflicts: freeipa-server freeipa-server-trust-ad
 Requires:         apache-commons-cli
 Requires:         apache-commons-codec
 Requires:         apache-commons-io
@@ -353,10 +373,10 @@ Requires:         apache-commons-lang
 Requires:         apache-commons-logging
 Requires:         jakarta-commons-httpclient
 Requires:         javassist
-Requires:         jpackage-utils >= 0:1.7.5
+Requires: javapackages-tools rpm-build-java
 Requires:         jss >= 4.2.6
 Requires:         ldapjdk
-Requires:         python-module-ldap
+Requires:         python-module-pyldap
 Requires:         python-module-lxml
 Requires:         python-module-nss
 Requires:         python-module-requests >= 1.1.0
@@ -409,14 +429,16 @@ Obsoletes:        pki-native-tools < %{version}-%{release}
 Obsoletes:        pki-java-tools < %{version}-%{release}
 
 Requires:         openldap-clients
-Requires:         nss
+Requires:         libnss
 Requires:         nss-utils
 Requires:         pki-base = %{version}
-Requires:         jpackage-utils >= 0:1.7.5
+Requires: javapackages-tools rpm-build-java
 %if 0%{?fedora} >= 23
 Requires:         tomcat-servlet-3.1-api >= 8.0.32
 %else
-%if 0%{?fedora} >= 22
+%if 0%{?fedora} == 22
+Requires:         tomcat-servlet-3.0-api >= 7.0.68
+%else
 Requires:         tomcat-servlet-3.0-api
 %endif
 %endif
@@ -446,12 +468,12 @@ Obsoletes:        pki-deploy < %{version}-%{release}
 Obsoletes:        pki-setup < %{version}-%{release}
 Obsoletes:        pki-silent < %{version}-%{release}
 
-Requires:         net-tools
+Requires: etherwake net-tools
 
 %if 0%{?rhel}
-Requires:    nuxwdog-client-java >= 1.0.1
+Requires:    libnuxwdog-java >= 1.0.1
 %else
-Requires:    nuxwdog-client-java >= 1.0.3
+Requires:    libnuxwdog-java >= 1.0.3
 %endif
 
 Requires:         policycoreutils
@@ -460,14 +482,14 @@ Requires:         pki-base = %{version}
 Requires:         pki-tools = %{version}
 Requires: policycoreutils python-module-sepolgen
 %if 0%{?fedora} >= 23
-#Requires:         policycoreutils-python-utils
+Requires: policycoreutils policycoreutils-sandbox
 %endif
 
 %if 0%{?fedora} >= 21
-#Requires:         selinux-policy-targeted >= 3.13.1
+Requires:         selinux-policy-targeted 
 %else
 # 0%{?rhel} || 0%{?fedora} < 21
-Requires:         selinux-policy-targeted >= 3.12.1
+Requires:         selinux-policy-targeted >= 3.13.1
 %endif
 Obsoletes:        pki-selinux
 
@@ -480,15 +502,22 @@ Requires:         tomcat-el-3.0-api >= 8.0.32
 Requires:         tomcat-jsp-2.3-api >= 8.0.32
 Requires:         tomcat-servlet-3.1-api >= 8.0.32
 %else
+%if 0%{?fedora} == 22
+Requires:         tomcat >= 7.0.68
+Requires:         tomcat-el-2.2-api >= 7.0.68
+Requires:         tomcat-jsp-2.2-api >= 7.0.68
+Requires:         tomcat-servlet-3.0-api >= 7.0.68
+%else
 Requires:         tomcat >= 7.0.47
 Requires:         tomcat-el-2.2-api
 Requires:         tomcat-jsp-2.2-api
 Requires:         tomcat-servlet-3.0-api
 %endif
 %endif
+%endif
 
 Requires:         velocity
-Requires(pre):    shadow-utils
+Requires(pre): shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
 
 %if 0%{?rhel}
 Requires:         tomcatjss >= 7.1.0
@@ -496,7 +525,11 @@ Requires:         tomcatjss >= 7.1.0
 %if 0%{?fedora} >= 23
 Requires:         tomcatjss >= 7.1.3
 %else
+%if 0%{?fedora} == 22
 Requires:         tomcatjss >= 7.1.2
+%else
+Requires:         tomcatjss >= 7.1.2
+%endif
 %endif
 %endif
 
@@ -647,7 +680,7 @@ Requires:         pki-server = %{version}
 
 # additional runtime requirements needed to run native 'tpsclient'
 # REMINDER:  Revisit these once 'tpsclient' is rewritten as a Java app
-Requires:         nss >= 3.14.3
+Requires:         libnss >= 3.14.3
 Requires:         nss-utils >= 3.14.3
 Requires:         openldap-clients
 Requires:         pki-symkey = %{version}
@@ -750,9 +783,25 @@ This package is a part of the PKI Core used by the Certificate System.
 %patch46 -p1
 %patch47 -p1
 %patch48 -p1
-
-
-%patch333 -p1
+%patch49 -p1
+%patch50 -p1
+%patch51 -p1
+%patch52 -p1
+%patch53 -p1
+%patch54 -p1
+%patch55 -p1
+%patch56 -p1
+%patch57 -p1
+%patch58 -p1
+%patch59 -p1
+%patch60 -p1
+%patch61 -p1
+%patch62 -p1
+# from sem@:
+# At least one script required bash4.
+# Just use sh4 for all scripts.
+egrep -rH '^#!/bin/(sh|bash)' . | cut -f1 -d: | sort -u | \
+	xargs sed -r -i 's;^#!/bin/(sh|bash)( -X)?;#!/bin/sh4;'
 
 %build
 
@@ -775,8 +824,6 @@ sed -i -e 's,"httpd/http_config.h","apache2/http_config.h",' \
 	base/tps-client/stubs/modules/nss/mod_nss_stub.c \
 	base/tps-client/src/modules/tps/mod_tps.cpp \
 	base/tps-client/src/modules/tokendb/mod_tokendb.cpp
-#sed -i -e 's,"httpd/apr_strings.h","apr_strings.h",' \
-#	base/tps-client/stubs/modules/nss/mod_nss_stub.c
 sed -i -e 's,include "httpd/http_,include "apache2/http_,' \
 	base/tps-client/stubs/modules/nss/mod_nss_stub.c \
 	base/tps-client/src/modules/tps/AP_Context.cpp \
@@ -784,7 +831,6 @@ sed -i -e 's,include "httpd/http_,include "apache2/http_,' \
 	base/tps-client/src/modules/tps/mod_tps.cpp \
 	base/tps-client/src/modules/tokendb/mod_tokendb.cpp
 # end ugly hacks
-
 %{__mkdir_p} build
 cd build
 %{fedora_cmake} -DVERSION=%{version}-%{release} \
@@ -839,7 +885,7 @@ done
 
 %if ! 0%{?rhel}
 # Scanning the python code with pylint.
-#sh ../pylint-build-scan.sh %{buildroot} `pwd`
+#python ../pylint-build-scan.py rpm --prefix %{buildroot}
 #if [ $? -ne 0 ]; then
 #    echo "pylint failed. RC: $?"
 #    exit 1
@@ -852,6 +898,9 @@ done
 
 %{__mkdir_p} %{buildroot}%{_var}/log/pki
 %{__mkdir_p} %{buildroot}%{_sharedstatedir}/pki
+# from sem@:
+# This file should be sourced only
+chmod -x %buildroot%_datadir/pki/scripts/operations
 
 %pre -n pki-server
 getent group %{pki_groupname} >/dev/null || groupadd -f -g %{pki_gid} -r %{pki_groupname}
@@ -888,11 +937,11 @@ fi
 
 %post -n pki-server
 echo "Upgrading PKI server configuration at `/bin/date`." >> /var/log/pki/pki-server-upgrade-%{version}.log 2>&1
-/usr/sbin/pki-server-upgrade --silent >> /var/log/pki/pki-server-upgrade-%{version}.log 2>&1
+ /usr/sbin/pki-server-upgrade --silent >> /var/log/pki/pki-server-upgrade-%{version}.log 2>&1
 echo >> /var/log/pki/pki-server-upgrade-%{version}.log 2>&1
 
 # Migrate Tomcat configuration
-/usr/sbin/pki-server migrate >> /var/log/pki/pki-server-upgrade-%{version}.log 2>&1
+ /usr/sbin/pki-server migrate >> /var/log/pki/pki-server-upgrade-%{version}.log 2>&1
 echo >> /var/log/pki/pki-server-upgrade-%{version}.log 2>&1
 
 
@@ -924,7 +973,6 @@ echo >> /var/log/pki/pki-server-upgrade-%{version}.log 2>&1
 %{_datadir}/pki/VERSION
 %{_datadir}/pki/etc/
 %{_datadir}/pki/upgrade/
-%dir %{_datadir}/pki/key
 %{_datadir}/pki/key/templates
 %dir %{_sysconfdir}/pki
 %config(noreplace) %{_sysconfdir}/pki/pki.conf
@@ -936,10 +984,12 @@ echo >> /var/log/pki/pki-server-upgrade-%{version}.log 2>&1
 %{python_sitelibdir_noarch}/pki/*.py
 %{python_sitelibdir_noarch}/pki/*.pyc
 %{python_sitelibdir_noarch}/pki/*.pyo
+%{python_sitelibdir_noarch}/pki/cli/
 %dir %{_var}/log/pki
 %{_sbindir}/pki-upgrade
 %{_mandir}/man8/pki-upgrade.8*
 %{_mandir}/man1/pki-python-client.1*
+%dir %{_datadir}/pki/key
 
 %files -n pki-tools
 %doc base/native-tools/LICENSE base/native-tools/doc/README
@@ -1090,6 +1140,9 @@ echo >> /var/log/pki/pki-server-upgrade-%{version}.log 2>&1
 %endif # %{with server}
 
 %changelog
+* Mon Nov 21 2016 Igor Vlasenko <viy@altlinux.ru> 10.2.6-alt2_19jpp8
+- bugfix thanks to @sem
+
 * Fri Oct 14 2016 Igor Vlasenko <viy@altlinux.ru> 10.2.6-alt2_16jpp8
 - added sem@ patch
 
