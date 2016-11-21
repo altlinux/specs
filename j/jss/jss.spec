@@ -1,14 +1,13 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: perl(Socket.pm)
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 24
 Name:           jss
 Version:        4.2.6
-Release:        alt6_37jpp8
+Release:        alt6_42jpp8
 Summary:        Java Security Services (JSS)
 
 Group:          System/Libraries
@@ -23,9 +22,12 @@ Source1:        http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{versi
 Source2:        http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}-%{release}/gpl.txt
 Source3:        http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}-%{release}/lgpl.txt
 
-BuildRequires:  nss-devel >= 3.14.3
-BuildRequires:  libnspr-devel >= 4.9.5
-Requires:       nss >= 3.14.3
+BuildRequires: libnss-devel libnss-devel-static
+BuildRequires:  libnspr-devel >= 4.11.0
+%if 0%{?fedora} >= 25
+BuildRequires:     perl
+%endif
+Requires:       libnss >= 3.21.0
 
 Patch1:         jss-key_pair_usage_with_op_flags.patch
 Patch2:         jss-javadocs-param.patch
@@ -53,8 +55,16 @@ Patch23:        jss-fixed-build-issue-on-F17-or-newer.patch
 Patch24:        jss-SHA-OID-fix.patch
 Patch25:        jss-RC4-strengh-verify.patch
 Patch26:        jss-support-TLS1_1-TLS1_2.patch
+Patch27:        jss-WindowsCompileFix.patch
+Patch28:        jss-WindowsLoadLibrary.patch
+Patch29:        jss-Fixed-build-failures.patch
+Patch30:        jss-VerifyCertificate-enhancement.patch
+Patch31:        jss-lunasaUnwrap.patch
+Patch32:        jss-symkey-enhancements.patch
+Patch33:        jss-crmf-envelopedData.patch
 Source44: import.info
-Patch33: jss-link-alt.patch
+Patch34: jss-link-alt.patch
+Patch35: jss-alt-sem-as-needed.patch
 
 
 %description
@@ -99,7 +109,15 @@ This package contains the API documentation for JSS.
 %patch24 -p1
 %patch25 -p1
 %patch26 -p1
+%patch27 -p1
+%patch28 -p1
+%patch29 -p1
+%patch30 -p1
+%patch31 -p1
+%patch32 -p1
 %patch33 -p1
+%patch34 -p1
+%patch35 -p1
 
 %build
 [ -z "$JAVA_HOME" ] && export JAVA_HOME=%{_jvmdir}/java
@@ -166,7 +184,7 @@ fix_kversion
 # The Makefile is not thread-safe
 make -C mozilla/security/coreconf
 make -C mozilla/security/jss
-make -C mozilla/security/jss javadoc ||:
+make -C mozilla/security/jss javadoc
 
 %install
 rm -rf $RPM_BUILD_ROOT docdir
@@ -219,6 +237,9 @@ ln -s %_jnidir/jss4.jar %buildroot%_javadir/jss4.jar
 
 
 %changelog
+* Mon Nov 21 2016 Igor Vlasenko <viy@altlinux.ru> 4.2.6-alt6_42jpp8
+- update (closes: #32779)
+
 * Sat Feb 13 2016 Igor Vlasenko <viy@altlinux.ru> 4.2.6-alt6_37jpp8
 - new version
 
