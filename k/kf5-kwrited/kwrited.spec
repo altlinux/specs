@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.8.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -58,11 +58,18 @@ KF5 library
 
 %files -f %name.lang
 %doc COPYING*
-%_K5plug/kf5/kded/kwrited.so
-#%_K5srv/kded/*writed*.desktop
+%_K5bin/kwrited
+#%_K5plug/kf5/kded/kwrited.so
+%_K5start/kwrited-autostart.desktop
 %_K5notif/*writed*
 
 %changelog
+* Mon Nov 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt2
+- fix package
+
+* Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt0.M80P.1
+- build for M80P
+
 * Tue Nov 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt1
 - new version
 
