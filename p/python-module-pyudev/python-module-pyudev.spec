@@ -4,7 +4,7 @@
 
 Name: python-module-pyudev
 Version: 0.21.0
-Release: alt1
+Release: alt1.1
 %setup_python_module pyudev
 
 Group: System/Libraries
@@ -32,10 +32,17 @@ BuildRequires(pre): rpm-build-python3
 A Python binding to libudev, the hardware management library and service
 found in modern linux systems.
 
+%package -n python-module-pyudev-qtbase
+Summary: Udev Base mixin class for Qt4,Qt5 support
+Group: Development/Python
+Requires: %name = %EVR
+%description -n python-module-pyudev-qtbase
+Udev Base mixin class for Qt4,Qt5 support
+
 %package -n python-module-pyudev-pyqt4
 Summary:            Udev PyQt4 bindings for Python
 Group:              Development/Python
-Requires: %name = %EVR
+Requires: %name = %EVR python-module-pyudev-qtbase = %EVR
 %description -n python-module-pyudev-pyqt4
 A Python PyQt4 binding to libudev, the hardware management library and
 service found in modern linux systems.
@@ -43,9 +50,33 @@ service found in modern linux systems.
 %package -n python-module-pyudev-pyqt5
 Summary:            Udev PyQt5 bindings for Python
 Group:              Development/Python
-Requires: %name = %EVR
+Requires: %name = %EVR python-module-pyudev-qtbase = %EVR
 %description -n python-module-pyudev-pyqt5
 A Python PyQt5 binding to libudev, the hardware management library and
+service found in modern linux systems.
+
+%package -n python-module-pyudev-pyside
+Summary:            Udev PySide bindings for Python
+Group:              Development/Python
+Requires: %name = %EVR
+%description -n python-module-pyudev-pyside
+A Python PySide binding to libudev, the hardware management library and
+service found in modern linux systems.
+
+%package -n python-module-pyudev-glib
+Summary:            Udev Glib bindings for Python
+Group:              Development/Python
+Requires: %name = %EVR
+%description -n python-module-pyudev-glib
+A Python Glib binding to libudev, the hardware management library and
+service found in modern linux systems.
+
+%package -n python-module-pyudev-wx
+Summary:            Udev Wx bindings for Python
+Group:              Development/Python
+Requires: %name = %EVR
+%description -n python-module-pyudev-wx
+A Python Wx binding to libudev, the hardware management library and
 service found in modern linux systems.
 
 %if_with python3
@@ -56,21 +87,53 @@ Group:              System/Libraries
 A Python3 binding to libudev, the hardware management library and
 service found in modern linux systems.
 
+%package -n python3-module-pyudev-qtbase
+Summary: Udev Base mixin class for Qt4,Qt5 support
+Group: Development/Python
+Requires: python3-module-pyudev = %EVR
+%description -n python3-module-pyudev-qtbase
+Udev Base mixin class for Qt4,Qt5 support
+
+%package -n python3-module-pyudev-pyqt5
+Summary:            Udev PyQt5 bindings for Python
+Group:              Development/Python
+Requires: python3-module-pyudev = %EVR python3-module-pyudev-qtbase = %EVR
+%description -n python3-module-pyudev-pyqt5
+A Python PyQt5 binding to libudev, the hardware management library and
+service found in modern linux systems.
+
 %package -n python3-module-pyudev-pyqt4
 Summary:            Udev PyQt4 bindings for Python
 Group:              Development/Python3
-Requires: python3-module-pyudev = %EVR
+Requires: python3-module-pyudev = %EVR python3-module-pyudev-qtbase = %EVR
 %description -n python3-module-pyudev-pyqt4
 A Python3 PyQt4 binding to libudev, the hardware management library and
 service found in modern linux systems.
 
-%package -n python3-module-pyudev-pyqt5
-Summary:            Udev PyQt5 bindings for Python
-Group:              Development/Python3
+%package -n python3-module-pyudev-pyside
+Summary:            Udev PySide bindings for Python
+Group:              Development/Python
 Requires: python3-module-pyudev = %EVR
-%description -n python3-module-pyudev-pyqt5
-A Python3 PyQt5 binding to libudev, the hardware management library and
+%description -n python3-module-pyudev-pyside
+A Python PySide binding to libudev, the hardware management library and
 service found in modern linux systems.
+
+%package -n python3-module-pyudev-glib
+Summary:            Udev Glib bindings for Python
+Group:              Development/Python
+Requires: python3-module-pyudev = %EVR
+%description -n python3-module-pyudev-glib
+A Python Glib binding to libudev, the hardware management library and
+service found in modern linux systems.
+
+%package -n python3-module-pyudev-wx
+Summary:            Udev Wx bindings for Python
+Group:              Development/Python
+Requires: python3-module-pyudev = %EVR
+%description -n python3-module-pyudev-wx
+A Python Wx binding to libudev, the hardware management library and
+service found in modern linux systems.
+
 %endif
 
 %prep
@@ -94,7 +157,14 @@ service found in modern linux systems.
 %doc CHANGES.rst COPYING README.rst
 %python_sitelibdir/pyudev
 %exclude %python_sitelibdir/pyudev/pyqt?.p*
+%exclude %python_sitelibdir/pyudev/_qt_base.p*
+%exclude %python_sitelibdir/pyudev/glib.p*
+%exclude %python_sitelibdir/pyudev/pyside.p*
+%exclude %python_sitelibdir/pyudev/wx.p*
 %python_sitelibdir/pyudev-*
+
+%files -n python-module-pyudev-qtbase
+%python_sitelibdir/pyudev/_qt_base.p*
 
 %files -n python-module-pyudev-pyqt4
 %python_sitelibdir/pyudev/pyqt4.p*
@@ -102,23 +172,51 @@ service found in modern linux systems.
 %files -n python-module-pyudev-pyqt5
 %python_sitelibdir/pyudev/pyqt5.p*
 
+%files -n python-module-pyudev-glib
+%python_sitelibdir/pyudev/glib.p*
+
+%files -n python-module-pyudev-pyside
+%python_sitelibdir/pyudev/pyside.p*
+
+%files -n python-module-pyudev-wx
+%python_sitelibdir/pyudev/wx.p*
+
 %if_with python3
 %files -n python3-module-pyudev
 %doc CHANGES.rst COPYING README.rst
 %python3_sitelibdir/pyudev
 %exclude %python3_sitelibdir/pyudev/pyqt?.p*
+%exclude %python3_sitelibdir/pyudev/_qt_base.p*
+%exclude %python3_sitelibdir/pyudev/glib.p*
+%exclude %python3_sitelibdir/pyudev/pyside.p*
+%exclude %python3_sitelibdir/pyudev/wx.p*
 %python3_sitelibdir/pyudev-*
+
+%files -n python3-module-pyudev-qtbase
+%python3_sitelibdir/pyudev/_qt_base.p*
 
 %files -n python3-module-pyudev-pyqt4
 %python3_sitelibdir/pyudev/pyqt4.p*
 
 %files -n python3-module-pyudev-pyqt5
 %python3_sitelibdir/pyudev/pyqt5.p*
+
+%files -n python3-module-pyudev-glib
+%python3_sitelibdir/pyudev/glib.p*
+
+%files -n python3-module-pyudev-pyside
+%python3_sitelibdir/pyudev/pyside.p*
+
+%files -n python3-module-pyudev-wx
+%python3_sitelibdir/pyudev/wx.p*
 %endif
 
 
 
 %changelog
+* Mon Nov 21 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.21.0-alt1.1
+- split bindings
+
 * Wed Nov 02 2016 Sergey V Turchin <zerg@altlinux.org> 0.21.0-alt1
 - new version (ALT#32700)
 - split PyQt parts
