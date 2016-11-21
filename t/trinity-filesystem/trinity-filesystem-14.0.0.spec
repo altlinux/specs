@@ -20,12 +20,12 @@ BuildRequires(pre):	rpm-macros-cmake
 
 # TDE variables
 %if "%{?tde_version}" == ""
-%define tde_version 14.0.3
+%define tde_version 14.0.4
 %endif
 
 Name: trinity-filesystem
-Version: 14.0.3
-Release: alt2.1
+Version: 14.0.4
+Release: alt1.1
 Summary: Trinity Directory Layout
 Group: System/Base
 Url: http://www.trinitydesktop.org/
@@ -567,7 +567,7 @@ install -d -m 755 %{?buildroot}%tde_datadir/locale/zh_CN/LC_MESSAGES/
 install -d -m 755 %{?buildroot}%tde_datadir/locale/zh_TW.Big5/LC_MESSAGES/
 install -d -m 755 %{?buildroot}%tde_datadir/locale/zh_TW/LC_MESSAGES/
 install -d -m 755 %{?buildroot}%tde_datadir/locale/zu/LC_MESSAGES/
-install -d -m 755 %buildroot%_libexecdir/tde
+install -d -m 755 %buildroot%tde_libexec/
 
 %post
 for b in kcheckpass kgrantpty kpac_dhcp_helper kppp start_tdeinit tdmtsak tdekbdledsync ; do
@@ -577,6 +577,9 @@ for b in kcheckpass kgrantpty kpac_dhcp_helper kppp start_tdeinit tdmtsak tdekbd
 done
 
 %changelog
+* Mon Nov 21 2016 Hihin Ruslan <ruslandh@altlinux.ru> 14.0.4-alt1.1
+- New version
+
 * Mon Nov 07 2016 Hihin Ruslan <ruslandh@altlinux.ru> 14.0.3-alt2.1
 - Correct spec
 
