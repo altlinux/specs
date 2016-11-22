@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,11 +7,11 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:    appframework
 Version: 1.03
-Release: alt2_15jpp8
+Release: alt2_16jpp8
 Summary: Swing Application Framework
 License: LGPLv2+
 URL:     https://appframework.dev.java.net/
-Group:   Development/Java
+Group:   Development/Other
 
 Source0: https://appframework.dev.java.net/downloads/AppFramework-1.03-src.zip
 Patch0:  %{name}-%{version}-no-local-storage.diff
@@ -22,7 +22,6 @@ BuildRequires: ant
 BuildRequires: ant-junit
 BuildRequires: swing-layout >= 1.0.3
 
-Requires: maven-local
 
 Requires: swing-layout >= 1.0.3
 
@@ -71,6 +70,9 @@ find . -name "*.jar" -exec %{__rm} -f {} \;
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_16jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_15jpp8
 - new version
 
