@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jetty-parent
 Version:        19
-Release:        alt2_13jpp8
+Release:        alt2_14jpp8
 Summary:        Jetty parent POM file
 License:        ASL 2.0 or EPL
 URL:            http://www.eclipse.org/jetty/
@@ -19,8 +22,6 @@ Source3:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildRequires:  maven-local
 BuildRequires:  maven-release-plugin
 Source44: import.info
-Provides: mvn(org.eclipse.jetty:jetty-parent) = 19
-
 
 %description
 Jetty parent POM file
@@ -41,6 +42,9 @@ cp -p %{SOURCE2} %{SOURCE3} .
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 19-alt2_14jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 19-alt2_13jpp8
 - new version
 
