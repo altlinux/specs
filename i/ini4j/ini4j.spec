@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -6,9 +7,9 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           ini4j
 Version:        0.5.1
-Release:        alt2_14jpp8
+Release:        alt2_15jpp8
 Summary:        Java API for handling files in Windows .ini format
-Group:          Development/Java
+Group:          Development/Other
 License:        ASL 2.0
 URL:            http://www.ini4j.org/
 
@@ -35,7 +36,7 @@ Patch8:         %{name}-java8-compat.patch
 BuildArch:      noarch
 
 # See http://ini4j.sourceforge.net/dependencies.html
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 
 BuildRequires:  maven-local
 
@@ -55,7 +56,7 @@ BuildRequires:  maven-surefire-plugin
 BuildRequires:  xmlrpc3-client
 BuildRequires:  xmlrpc3-common
 
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Source44: import.info
 
 
@@ -68,7 +69,7 @@ implementation based on the .ini file.
 %package javadoc
 Summary:        API documentation for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -115,6 +116,9 @@ find . -type f \( -iname "*.jar" -o -iname "*.class" -o -iname "*.exe" -o -iname
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_15jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_14jpp8
 - new version
 
