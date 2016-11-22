@@ -1,14 +1,16 @@
 Epoch: 0
-BuildRequires: jdepend
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jboss-reflect
 Version:        2.0.2
-Release:        alt4_9jpp8
+Release:        alt4_10jpp8
 Summary:        JBoss Reflection
 
-Group:          Development/Java
+Group:          Development/Other
 
 License:        LGPLv2+
 URL:            http://www.jboss.org
@@ -22,7 +24,7 @@ BuildArch:      noarch
 BuildRequires:  javassist
 BuildRequires:  jboss-common-core
 BuildRequires:  jboss-logging
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-enforcer-plugin
@@ -40,7 +42,7 @@ JBoss Reflection
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -73,6 +75,9 @@ find -type f -name *.class -delete
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.2-alt4_10jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.2-alt4_9jpp8
 - new version
 
