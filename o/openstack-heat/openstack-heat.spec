@@ -3,7 +3,7 @@
 
 Name: openstack-heat
 Summary: OpenStack Orchestration (heat)
-Version: 6.1.0
+Version: 7.0.1
 Release: alt1
 Epoch: 1
 License: ASL 2.0
@@ -22,7 +22,6 @@ Source13: openstack-heat-api-cfn.init
 Source14: openstack-heat-engine.init
 Source15: openstack-heat-api-cloudwatch.init
 
-Source20: heat-dist.conf
 Source21: %name.tmpfiles
 
 Patch0: %name-6.1.0-remove-bash3-header.patch
@@ -38,19 +37,30 @@ BuildRequires: python-module-oslo.policy >= 0.5.0
 BuildRequires: python-module-oslo.messaging >= 1.16.0
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-oslo.db >= 2.4.1
-BuildRequires: python-module-oslo.utils >= 2.0.0
-BuildRequires: python-module-oslo.log >= 1.8.0
-BuildRequires: python-module-oslo.versionedobjects >= 0.9.0
+BuildRequires: python-module-oslo.config >= 3.14.0
+BuildRequires: python-module-oslo.concurrency >= 3.8.0
+BuildRequires: python-module-oslo.context >= 2.9.0
+BuildRequires: python-module-oslo.db >= 4.10.0
+BuildRequires: python-module-oslo.i18n >= 2.1.0
+BuildRequires: python-module-oslo.log >= 1.14.0
+BuildRequires: python-module-oslo.messaging >= 5.2.0
+BuildRequires: python-module-oslo.policy >= 1.9.0
+BuildRequires: python-module-oslo.reports >= 0.6.0
+BuildRequires: python-module-oslo.serialization >= 1.10.0
+BuildRequires: python-module-oslo.service >= 1.10.0
+BuildRequires: python-module-oslo.utils >= 3.16.0
+BuildRequires: python-module-osprofiler >= 1.4.0
+BuildRequires: python-module-oslo.versionedobjects >= 1.13.0
 BuildRequires: python-module-argparse
 BuildRequires: python-module-eventlet >= 0.17.4
 BuildRequires: python-module-greenlet >= 0.3.2
+BuildRequires: python-module-keystoneauth1 >= 2.10.0
+BuildRequires: python-module-keystonemiddleware >= 4.0.0
 BuildRequires: python-module-httplib2
 BuildRequires: python-module-iso8601
 BuildRequires: python-module-kombu >= 3.0.7
 BuildRequires: python-module-lxml >= 2.3
-BuildRequires: python-module-netaddr >= 0.7.12
+BuildRequires: python-module-netaddr >= 0.7.13
 BuildRequires: python-module-memcached
 BuildRequires: python-module-migrate >= 0.9.6
 BuildRequires: python-module-osprofiler >= 1.2.0
@@ -69,11 +79,11 @@ BuildRequires: python-module-webob
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-cryptography >= 1.0
 
-BuildRequires: python-module-oslo.config >= 3.7.0
 BuildRequires: python-module-redis-py
 BuildRequires: python-module-zmq
 BuildRequires: python-module-retrying
 BuildRequires: python-module-keystoneclient >= 1.6.0
+BuildRequires: python-module-yaql >= 1.1.0
 
 %if_enabled doc
 BuildRequires: python-module-cinderclient >= 1.3.1
@@ -87,11 +97,11 @@ BuildRequires: python-module-glanceclient >= 0.18.0
 BuildRequires: python-module-troveclient >= 1.2.0
 %endif
 
-Requires: %name = %epoch:%version-%release
-Requires: %name-engine = %epoch:%version-%release
-Requires: %name-api = %epoch:%version-%release
-Requires: %name-api-cfn = %epoch:%version-%release
-Requires: %name-api-cloudwatch = %epoch:%version-%release
+Requires: %name = %EVR
+Requires: %name-engine = %EVR
+Requires: %name-api = %EVR
+Requires: %name-api-cfn = %EVR
+Requires: %name-api-cloudwatch = %EVR
 
 Requires: python-module-heat = %EVR
 Requires(pre): shadow-utils
@@ -171,7 +181,7 @@ This plugin enables using Docker containers as resources in a Heat template.
 %package -n python-module-heat-tests
 Summary:        Heat tests
 Group:   Development/Python
-Requires:       %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description -n python-module-heat-tests
 Heat provides AWS CloudFormation and CloudWatch functionality for OpenStack.
@@ -226,7 +236,6 @@ install -p -D -m 755 %SOURCE14 %buildroot%_initdir/openstack-heat-engine
 install -p -D -m 755 %SOURCE15 %buildroot%_initdir/openstack-heat-api-cloudwatch
 
 install -d -m 755 %buildroot%_sharedstatedir/heat
-install -d -m 755 %buildroot%_sysconfdir/heat
 
 %if_enabled doc
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
@@ -242,16 +251,14 @@ popd
 rm -f %buildroot/%_bindir/heat-db-setup
 rm -f %buildroot/%_mandir/man1/heat-db-setup.*
 rm -rf %buildroot/var/lib/heat/.dummy
-rm -f %{buildroot}/usr/bin/cinder-keystone-setup
+rm -f %buildroot/usr/bin/cinder-keystone-setup
 
-install -p -D -m 640 etc/heat/heat.conf.sample %buildroot/%_sysconfdir/heat/heat.conf
-install -p -D -m 640 %SOURCE20 %buildroot%_datadir/heat/heat-dist.conf
-install -p -D -m 640 etc/heat/api-paste.ini %buildroot/%_datadir/heat/api-paste-dist.ini
-install -p -D -m 640 etc/heat/policy.json %buildroot/%_sysconfdir/heat
-
-# TODO: move this to setup.cfg
-cp -vr etc/heat/templates %{buildroot}/%{_sysconfdir}/heat
-cp -vr etc/heat/environment.d %{buildroot}/%{_sysconfdir}/heat
+install -d -m 755 %buildroot%_sysconfdir/heat
+mv etc/heat/heat.conf{.sample,}
+install -p -m 644 etc/heat/*.{conf,json,ini} %buildroot%_sysconfdir/heat/
+install -d -m 755  %buildroot%_sysconfdir/heat/{environment.d,templates}
+install -p -m 644 etc/heat/environment.d/*.yaml %buildroot%_sysconfdir/heat/environment.d
+install -p -m 644 etc/heat/templates/*.yaml %buildroot%_sysconfdir/heat/templates
 
 %pre
 # 187:187 for heat (openstack-heat)
@@ -284,27 +291,31 @@ cp -vr etc/heat/environment.d %{buildroot}/%{_sysconfdir}/heat
 %_bindir/heat-manage
 %_bindir/heat-keystone-setup
 %_bindir/heat-keystone-setup-domain
-%attr(-, root, heat) %_datadir/heat/heat-dist.conf
-%attr(-, root, heat) %_datadir/heat/api-paste-dist.ini
-%dir %attr(0755,heat,root) %_logdir/heat
-%dir %attr(0755,heat,root) %_runtimedir/heat
-%dir %attr(0755,heat,root) %_sharedstatedir/heat
-%dir %attr(0755,heat,root) %{_sysconfdir}/heat
+%dir %attr(0775,root,heat) %_logdir/heat
+%dir %attr(0775,root,heat) %_runtimedir/heat
+%dir %attr(0775,root,heat) %_sharedstatedir/heat
 %_tmpfilesdir/%name.conf
 %config(noreplace) %_sysconfdir/logrotate.d/openstack-heat
-%config(noreplace) %attr(-, root, heat) %_sysconfdir/heat/heat.conf
-%config(noreplace) %attr(-, root, heat) %_sysconfdir/heat/policy.json
-%config(noreplace) %attr(-, root, heat) %_sysconfdir/heat/environment.d/
-%config(noreplace) %attr(-, root, heat) %_sysconfdir/heat/templates/
+%dir %attr(0755,root,heat) %_sysconfdir/heat
+%config(noreplace) %attr(0640, root, heat) %_sysconfdir/heat/heat.conf
+%config(noreplace) %attr(0640, root, heat) %_sysconfdir/heat/api-paste.ini
+%config(noreplace) %_sysconfdir/heat/policy.json
+%config %_sysconfdir/heat/environment.d
+%config %_sysconfdir/heat/templates
 %if_enabled doc
-%_mandir/man1/heat-keystone-setup.1.gz
-%_mandir/man1/heat-keystone-setup-domain.1.gz
-%_mandir/man1/heat-manage.1.gz
+%_man1dir/heat-keystone-setup.1*
+%_man1dir/heat-keystone-setup-domain.1*
+%_man1dir/heat-manage.1*
 %endif
 
 %files -n python-module-heat
 %python_sitelibdir/*
 %exclude %python_sitelibdir/heat/tests
+%exclude %python_sitelibdir/heat_integrationtests
+
+#%files -n python-module-heat-tests
+#%python_sitelibdir/heat/tests
+#%python_sitelibdir/heat_integrationtests
 
 %files engine
 %doc README.rst LICENSE
@@ -353,6 +364,12 @@ cp -vr etc/heat/environment.d %{buildroot}/%{_sysconfdir}/heat
 %_prefix/lib/heat/docker
 
 %changelog
+* Tue Nov 22 2016 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.1-alt1
+- 7.0.1
+- fix dir permitions
+- fix logrotate
+- drop dist config in datadir again
+
 * Thu Nov 11 2016 Lenar Shakirov <snejok@altlinux.ru> 1:6.1.0-alt1
 - 6.1.0 Mitaka Release
 
