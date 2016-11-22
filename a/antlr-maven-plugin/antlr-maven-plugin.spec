@@ -1,5 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:			antlr-maven-plugin
 Version:		2.2
-Release:		alt3_15jpp8
+Release:		alt3_16jpp8
 Summary:		Maven plugin that generates files based on grammar file(s)
 License:		ASL 2.0
 URL:			http://mojo.codehaus.org/antlr-maven-plugin/
@@ -23,14 +24,14 @@ Patch3:			0001-MANTLR-34-Fix-NPE-when-building-Jenkins.patch
 
 BuildArch:		noarch
 
-BuildRequires:		antlr
+BuildRequires:		antlr-tool
 BuildRequires:		maven-local
 BuildRequires:		maven-plugin-bundle
 BuildRequires:		apache-commons-exec
 BuildRequires:		modello
 Source44: import.info
 
-Provides: mojo-maven2-plugin-antlr = %version
+#Provides: mojo-maven2-plugin-antlr = %version
 Obsoletes: mojo-maven2-plugin-antlr = 17
 
 
@@ -78,6 +79,9 @@ find -name '*.jar' -exec rm -f '{}' \;
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_16jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_15jpp8
 - new version
 
