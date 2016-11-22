@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -8,12 +8,12 @@ BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name glassfish-hk2
 %define version 2.4.0
-%global namedreltag -b25
+%global namedreltag %nil
 %global namedversion %{version}%{?namedreltag}
 
 Name:          glassfish-hk2
 Version:       2.4.0
-Release:       alt1_0.7.b25jpp8
+Release:       alt1_2jpp8
 Summary:       Hundred Kilobytes Kernel
 License:       CDDL or GPLv2 with exceptions
 URL:           http://hk2.java.net/
@@ -25,8 +25,6 @@ Source1:       glassfish-LICENSE.txt
 Source2:       hk2-inhabitant-generator-osgi.bundle
 
 Patch0:        glassfish-hk2-2.3.0-hk2-utils-osgi_bundle.patch
-Patch1:        glassfish-hk2-2.4.0-b24-disable-asm-all-repackaged.patch
-Patch2:        glassfish-hk2-2.3.0-disable-external-aopalliance.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(aopalliance:aopalliance)
@@ -54,7 +52,6 @@ BuildRequires: mvn(org.apache.maven.plugins:maven-compiler-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires: mvn(org.apache.maven.shared:maven-osgi)
 BuildRequires: mvn(org.easymock:easymock)
-BuildRequires: mvn(org.glassfish.hk2:osgi-resource-locator)
 BuildRequires: mvn(org.hibernate:hibernate-validator)
 BuildRequires: mvn(org.javassist:javassist)
 BuildRequires: mvn(org.jvnet:tiger-types)
@@ -160,6 +157,27 @@ Summary:       HK2 ServiceLocator Default Implementation
 %description locator
 Hundred Kilobytes Kernel ServiceLocator Default Implementation.
 
+%package locator-extras
+Group: Development/Java
+Summary:       HK2 Locator unit tests
+
+%description locator-extras
+Extra unit tests for the HK2 Locator implementation.
+
+%package locator-no-proxies
+Group: Development/Java
+Summary:       HK2 Locator No Proxy Unit tests
+
+%description locator-no-proxies
+Tests the basic HK2 locator with no proxiable scopes.
+
+%package locator-no-proxies2
+Group: Development/Java
+Summary:       HK2 Locator No Proxy Unit tests (2)
+
+%description locator-no-proxies2
+Tests the basic HK2 locator using AOP proxies.
+
 %package maven
 Group: Development/Java
 Summary:       HK2 Module system maven support
@@ -191,6 +209,17 @@ Summary:       HK2 OSGi Adapter
 %description osgi
 HK2 Maven plugin for developing.
 
+%package osgi-resource-locator
+Group: Development/Java
+Summary:       HK2 OSGi resource locator bundle
+Obsoletes:     osgi-resource-locator < %{version}-%{release}
+Provides:      osgi-resource-locator = %{version}-%{release}
+
+%description osgi-resource-locator
+Hundred Kilobytes Kernel - OSGi resource locator bundle. Used by
+various API providers that rely on META-INF/services mechanism to
+locate providers.
+
 %package runlevel
 Group: Development/Java
 Summary:       HK2 Run Level Service
@@ -205,40 +234,19 @@ Summary:       HK2 Spring Bridge
 %description spring-bridge
 Hundred Kilobytes Kernel Spring Bridge.
 
-%package testing
-Group: Development/Java
-Summary:       Utilities for testing with HK2
-
-%description testing
-Hundred Kilobytes Kernel Utilities for testing.
-
-%package locator-extras
-Group: Development/Java
-Summary:       HK2 Locator unit tests
-
-%description locator-extras
-Extra unit tests for the HK2 Locator implementation.
-
-%package locator-no-proxies
-Group: Development/Java
-Summary:       HK2 Locator No Proxy Unit tests
-
-%description locator-no-proxies
-Tests the basic HK2 locator with no proxiable scopes.
-
-%package locator-no-proxies2
-Group: Development/Java
-Summary:       HK2 Locator No Proxy Unit tests (2)
-
-%description locator-no-proxies2
-Tests the basic HK2 locator using AOP proxies.
-
 %package runlevel-extras
 Group: Development/Java
 Summary:    HK2 RunLevel unit tests
 
 %description runlevel-extras
 Extra unit tests for the HK2 RunLevelService implementation.
+
+%package testing
+Group: Development/Java
+Summary:       Utilities for testing with HK2
+
+%description testing
+Hundred Kilobytes Kernel Utilities for testing.
 
 %package testng
 Group: Development/Java
@@ -269,26 +277,30 @@ find . -name '*.jar' ! -name "gendir.jar" -type f -print -delete
 find . -name '*.class' -print -delete
 
 %patch0 -p0
-%patch1 -p1
-%patch2 -p1
+# Use system libraries
+%pom_change_dep -r org.glassfish.hk2.external:asm-all-repackaged org.ow2.asm:asm-all:'${asm.version}'
+%pom_change_dep -r org.glassfish.hk2.external:aopalliance-repackaged aopalliance:aopalliance:'${aopalliance.version}'
+%pom_change_dep -r org.glassfish.hk2.external:javax.inject javax.inject::'${javax-inject.version}'
+%pom_change_dep -r org.glassfish.hk2.external:bean-validator org.hibernate:hibernate-validator:'${hibernate-validator.version}'
+%pom_change_dep -r org.glassfish.hk2.external:bean-validator-cdi org.hibernate:hibernate-validator-cdi:'${hibernate-validator.version}'
+%pom_change_dep -r org.glassfish.hk2:tiger-types-osgi org.jvnet:tiger-types:'${tiger-types.version}'
+# class-model hk2-inhabitant-generator hk2-testing/hk2-junitrunner
+find ./ -name "*.java" -exec sed -i "s/org.glassfish.hk2.external.org.objectweb.asm/org.objectweb.asm/g" {} +
+# hk2-api hk2-extras
+%pom_change_dep -r :osgi-resource-locator ::'${project.version}'
 
 %pom_remove_plugin :maven-resources-plugin
-%pom_remove_dep org.glassfish.hk2.external:aopalliance-repackaged hk2-extras
-%pom_add_dep aopalliance:aopalliance:'${aopalliance.version}' hk2-extras
-
 # org.apache.maven.wagon:wagon-webdav-jackrabbit:2.0
 %pom_xpath_remove pom:build/pom:extensions
 
 %pom_remove_plugin com.googlecode.maven-download-plugin:maven-download-plugin
 %pom_remove_plugin :maven-site-plugin
 %pom_remove_plugin :maven-eclipse-plugin
-%pom_remove_plugin :maven-release-plugin
 %pom_remove_plugin :findbugs-maven-plugin
+%pom_remove_plugin -r :jacoco-maven-plugin
+%pom_remove_dep -r :jacoco-maven-plugin
 
 %pom_disable_module external
-%pom_remove_dep org.glassfish.hk2.external: bom
-%pom_remove_dep org.glassfish.hk2:external bom
-%pom_remove_dep org.glassfish.hk2:tiger-types-osgi bom
 %pom_disable_module examples
 # Use unavailable: org.ops4j.pax.exam, org.ops4j.pax.url
 %pom_disable_module osgi-adapter-test osgi/adapter-tests
@@ -299,26 +311,24 @@ find . -name '*.class' -print -delete
 %pom_remove_dep org.ops4j.pax.tipi:
 %pom_remove_dep org.ops4j.pax.url:
 
+%pom_remove_dep -r org.apache.geronimo.specs:geronimo-atinject_1.0_spec
+%pom_remove_dep org.junit:com.springsource.org.junit
+%pom_remove_dep org.osgi:osgi_R4_core
+
 # disable tiger-types copy
 %pom_remove_plugin :maven-dependency-plugin hk2-utils
+%pom_remove_plugin :maven-dependency-plugin osgi/adapter-tests/sdp-management-bundle
 
 %pom_xpath_remove "pom:plugin[pom:artifactId ='maven-surefire-plugin']/pom:configuration" hk2-api
 %pom_xpath_remove "pom:plugin[pom:artifactId ='maven-surefire-plugin']/pom:configuration" hk2-locator
 
+
 %pom_xpath_set "pom:dependency[pom:groupId ='org.osgi']/pom:artifactId" org.osgi.core hk2-maven
 
-%pom_remove_dep org.apache.maven:maven-project hk2-maven
-%pom_add_dep org.apache.maven:maven-core hk2-maven
+%pom_change_dep -r :maven-project :maven-core
 %pom_add_dep org.apache.maven:maven-compat hk2-maven
-%pom_remove_dep org.apache.maven:maven-project hk2-inhabitant-generator
-%pom_add_dep org.apache.maven:maven-core::provided hk2-inhabitant-generator
-%pom_remove_dep org.apache.maven:maven-project hk2-configuration/persistence/hk2-xml-dom/config-generator
-%pom_add_dep org.apache.maven:maven-core hk2-configuration/persistence/hk2-xml-dom/config-generator
 
-%pom_remove_dep :org.osgi.enterprise class-model
-%pom_add_dep org.osgi:org.osgi.compendium:4.2.0:provided class-model
-
-%pom_remove_plugin :maven-dependency-plugin osgi/adapter-tests/sdp-management-bundle
+%pom_change_dep :org.osgi.enterprise org.osgi:org.osgi.compendium:4.2.0 class-model
 
 %pom_xpath_set "pom:dependency[pom:groupId ='com.sun']/pom:artifactId" tools hk2-testing/ant
 %pom_xpath_remove "pom:dependency[pom:groupId ='com.sun']/pom:scope" hk2-testing/ant
@@ -326,43 +336,18 @@ find . -name '*.class' -print -delete
 %pom_xpath_remove "pom:profiles/pom:profile[pom:id ='mac']" hk2-testing/ant
 
 # Unavailable test dep org.assertj:assertj-core:1.4.0 org.uncommons:reportng:jar:1.1.2
-%pom_remove_dep org.assertj:assertj-core hk2-testing/hk2-testng
-%pom_remove_dep org.uncommons:reportng hk2-testing/hk2-testng
+%pom_remove_dep -r org.assertj:assertj-core
+%pom_remove_dep -r org.uncommons:reportng
 rm -r hk2-testing/hk2-testng/src/test/java/*
-%pom_remove_dep org.assertj:assertj-core hk2-testing/hk2-mockito
-%pom_remove_dep org.uncommons:reportng hk2-testing/hk2-mockito
 rm -r hk2-testing/hk2-mockito/src/test/java/*
-%pom_remove_dep org.uncommons:reportng hk2-testing/hk2-runlevel-extras
 rm -r hk2-testing/hk2-runlevel-extras/src/test/java/*
 
-%pom_xpath_set "pom:plugin[pom:artifactId ='maven-jar-plugin']/pom:configuration/pom:archive/pom:manifest/pom:addClasspath" false dependency-verifier
+%pom_change_dep -r ant:ant org.apache.ant:ant
+
+%pom_xpath_set "pom:addClasspath" false dependency-verifier
 
 mkdir -p hk2/target/classes
 %pom_remove_plugin :maven-jar-plugin hk2
-
-for d in hk2-configuration/persistence/hk2-xml-dom/hub-integration \
-  hk2-configuration/persistence/hk2-xml-dom/hk2-config;do
-%pom_remove_dep org.glassfish.hk2.external:bean-validator $d
-%pom_add_dep org.hibernate:hibernate-validator:'${hibernate-validator.version}'  $d
-done
-
-for d in hk2-inhabitant-generator \
-  hk2-locator \
-  hk2-metadata-generator/main \
-  hk2-metadata-generator/test1 \
-  hk2-testing/hk2-junitrunner \
-  hk2-testing/hk2-locator-extras \
-  hk2-testing/hk2-locator-no-proxies \
-  hk2-testing/hk2-locator-no-proxies2 \
-  hk2-testing/hk2-mockito \
-  hk2-testing/hk2-runlevel-extras \
-  hk2-testing/hk2-testng \
-  hk2-testing/interceptor-events \
-  osgi/adapter-tests/no-hk2-bundle;do
-%pom_xpath_set "pom:dependency[pom:artifactId = 'javax.inject']/pom:groupId" javax.inject $d
-done
-
-%pom_xpath_set "pom:dependency[pom:artifactId ='ant']/pom:groupId" org.apache.ant hk2-inhabitant-generator
 
 # Drop pre-existent OSGI manifest file
 rm -r hk2-inhabitant-generator/src/main/resources/META-INF/MANIFEST.MF
@@ -454,16 +439,16 @@ sed -i 's/\r//' LICENSE.txt
 %mvn_package ":no-hk2-bundle" osgi
 %mvn_package ":sdp-management-bundle" osgi
 %mvn_package ":test-module-startup" osgi
+%mvn_package ":osgi-resource-locator" osgi-resource-locator
 
 %build
 
-%mvn_build -- -Dmaven.test.failure.ignore=true
+%mvn_build -- -Dmaven.test.failure.ignore=true -DsurefireArgLineExtra="-enableassertions"
 
 %install
 %mvn_install
 
 %files -f .mfiles-%{name}
-%dir %{_javadir}/%{name}
 %doc README.md
 %doc LICENSE.txt
 
@@ -504,27 +489,6 @@ sed -i 's/\r//' LICENSE.txt
 %files locator -f .mfiles-locator
 %doc LICENSE.txt
 
-%files maven -f .mfiles-maven
-%doc LICENSE.txt
-
-%files maven-plugins -f .mfiles-maven-plugins
-%doc LICENSE.txt
-
-%files metadata-generator -f .mfiles-metadata-generator
-%doc LICENSE.txt
-
-%files osgi -f .mfiles-osgi
-%doc LICENSE.txt
-
-%files runlevel -f .mfiles-runlevel
-%doc LICENSE.txt
-
-%files spring-bridge -f .mfiles-spring-bridge
-%doc LICENSE.txt
-
-%files testing -f .mfiles-testing
-%doc LICENSE.txt
-
 %files locator-extras -f .mfiles-locator-extras
 %doc hk2-testing/hk2-locator-extras/README.txt
 %doc LICENSE.txt
@@ -537,8 +501,32 @@ sed -i 's/\r//' LICENSE.txt
 %doc hk2-testing/hk2-locator-no-proxies2/README.txt
 %doc LICENSE.txt
 
+%files maven -f .mfiles-maven
+%doc LICENSE.txt
+
+%files maven-plugins -f .mfiles-maven-plugins
+%doc LICENSE.txt
+
+%files metadata-generator -f .mfiles-metadata-generator
+%doc LICENSE.txt
+
+%files osgi -f .mfiles-osgi
+%doc LICENSE.txt
+
+%files osgi-resource-locator -f .mfiles-osgi-resource-locator
+%doc LICENSE.txt
+
+%files runlevel -f .mfiles-runlevel
+%doc LICENSE.txt
+
 %files runlevel-extras -f .mfiles-runlevel-extras
 %doc hk2-testing/hk2-runlevel-extras/README.txt
+%doc LICENSE.txt
+
+%files spring-bridge -f .mfiles-spring-bridge
+%doc LICENSE.txt
+
+%files testing -f .mfiles-testing
 %doc LICENSE.txt
 
 %files testng -f .mfiles-testng
@@ -552,6 +540,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_2jpp8
+- new fc release
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_0.7.b25jpp8
 - java 8 mass update
 
