@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          minidns
 Version:       0.1.7
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Minimal DNS library for Java and Android systems
 License:       ASL 2.0 or LGPLv2+ or WTFPL
 URL:           https://github.com/rtreffer/minidns
@@ -92,6 +95,9 @@ cp -p %{SOURCE1} pom.xml
 %doc LICENCE*
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.7-alt1_3jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.7-alt1_2jpp8
 - java 8 mass update
 
