@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: gcc-c++ bcel
+BuildRequires(pre): rpm-macros-java
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             nar-maven-plugin
 Version:          3.0.0
-Release:          alt1_8jpp8
+Release:          alt1_11jpp8
 Summary:          Native ARchive plugin for Maven
 License:          ASL 2.0 and LGPLv2
 URL:              https://github.com/maven-nar/nar-maven-plugin/
@@ -22,13 +22,27 @@ Patch2:           0003-Added-PPC64LE-support.patch
 # also fixes bad C defines on ppc64le
 Patch3:           secarch.patch
 
-BuildRequires:    maven-plugins-pom
 BuildRequires:    maven-local
-BuildRequires:    maven-artifact-resolver
-BuildRequires:    maven-artifact
-BuildRequires:    maven-surefire
+BuildRequires:    mvn(commons-io:commons-io)
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(org.apache.ant:ant)
+BuildRequires:    mvn(org.apache.bcel:bcel)
+BuildRequires:    mvn(org.apache.maven:maven-core)
+BuildRequires:    mvn(org.apache.maven:maven-model)
+BuildRequires:    mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:    mvn(org.apache.maven:maven-project)
+BuildRequires:    mvn(org.apache.maven:maven-toolchain)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:    mvn(org.apache.maven.shared:maven-artifact-resolver)
+BuildRequires:    mvn(org.apache.maven.surefire:surefire-booter)
+BuildRequires:    mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires:    mvn(org.codehaus.plexus:plexus-compiler-api)
+BuildRequires:    mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:    mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:    mvn(xerces:xercesImpl)
 
-Requires:         gcc-c++
+Requires:         gcc-c++-common
 
 BuildArch:        noarch
 Source44: import.info
@@ -46,7 +60,7 @@ server, using the standard maven-install-plugin and maven-deploy-plugin.
 
 %package javadoc
 Group: Development/Java
-Summary:          Javadocs for %{name}
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -64,9 +78,13 @@ This package contains the API documentation for %{name}.
 rm -rf src/it/it0006-jni-3rdparty/src/nar/resources/aol
 
 %pom_xpath_remove "pom:build/pom:extensions"
-
-%pom_add_dep "org.apache.maven.surefire:surefire-booter"
+# Duplicate pom entry
+#%% pom_add_dep "org.apache.maven.surefire:surefire-booter"
 %pom_add_dep "org.apache.maven.shared:maven-artifact-resolver"
+
+%pom_remove_plugin :maven-gpg-plugin
+%pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-source-plugin
 
 cp %{SOURCE1} .
 
@@ -79,13 +97,17 @@ rm src/main/java/com/github/maven_nar/NarIntegrationTestMojo.java
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc README.md LICENSE-2.0.txt
+%doc README.md
+%doc LICENSE-2.0.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc README.md LICENSE-2.0.txt
+%doc README.md
+%doc LICENSE-2.0.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_11jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_8jpp8
 - new version
 
