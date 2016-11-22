@@ -1,13 +1,14 @@
 Epoch: 0
+Group: Text tools
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /.etc.java.jing-trang.conf/d
 %filter_from_requires /^.usr.bin.run/d
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 24
 # TODO:
 # - Install dtdinst's schemas, XSL etc as non-doc and to system catalogs?
 # - Drop isorelax and xerces license texts and references to them because
@@ -19,16 +20,12 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jing-trang
 Version:        20131210
-Release:        alt1_3jpp8
+Release:        alt1_6jpp8
 Summary:        Schema validation and conversion based on RELAX NG
 
-Group:          Text tools
 License:        BSD
-URL:            http://code.google.com/p/jing-trang/
-# Source0 generated with Source99, upstream does not distribute archives
-# containing the complete build system
-Source0:        %{name}-%{version}.tar.xz
-Source99:       %{name}-prepare-tarball.sh
+URL:            https://github.com/relaxng/jing-trang
+Source0:        https://github.com/relaxng/jing-trang/archive/V%{version}.tar.gz
 # Applicable parts submitted upstream:
 # http://code.google.com/p/jing-trang/issues/detail?id=129
 # http://code.google.com/p/jing-trang/issues/detail?id=130
@@ -50,7 +47,7 @@ BuildRequires:  isorelax
 BuildRequires:  java-devel-openjdk >= 1.6.0
 BuildRequires:  java-javadoc
 BuildRequires:  javacc
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  qdox
 BuildRequires:  relaxngDatatype
 BuildRequires:  relaxngDatatype-javadoc
@@ -67,7 +64,7 @@ Source44: import.info
 %package     -n jing
 Summary:        RELAX NG validator in Java
 Group:          Text tools
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Requires:       java%{?headless} >= 1.5.0
 Requires:       relaxngDatatype
 Requires:       xerces-j2
@@ -93,7 +90,7 @@ Javadoc API documentation for Jing.
 %package     -n trang
 Summary:        Multi-format schema converter based on RELAX NG
 Group:          Text tools
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Requires:       java%{?headless} >= 1.5.0
 Requires:       relaxngDatatype
 Requires:       xerces-j2
@@ -110,7 +107,7 @@ for output only, not for input.
 %package     -n dtdinst
 Summary:        XML DTD to XML instance format converter
 Group:          Text tools
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Requires:       java%{?headless} >= 1.5.0
 
 %description -n dtdinst
@@ -120,6 +117,7 @@ format.
 
 %prep
 %setup -q
+rm -r gcj mod/datatype/src/main/org $(find . -name "*.jar")
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -165,6 +163,8 @@ install -pm 644 dtdinst-%{version}/dtdinst.jar $RPM_BUILD_ROOT%{_javadir}
 %jpackage_script com.thaiopensource.xml.dtd.app.Driver "" "" dtdinst dtdinst true
 
 
+%{!?_licensedir:%global license %%doc}
+
 %files -n jing
 %if 0%{?_licensedir:1}
 %doc --no-dereference jing-%{version}/_licenses/*
@@ -196,6 +196,9 @@ install -pm 644 dtdinst-%{version}/dtdinst.jar $RPM_BUILD_ROOT%{_javadir}
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:20131210-alt1_6jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:20131210-alt1_3jpp8
 - new version
 
