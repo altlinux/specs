@@ -1,5 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          neethi
 Version:       3.0.1
-Release:       alt1_10jpp8
+Release:       alt1_11jpp8
 Summary:       Web Services Policy framework
 License:       ASL 2.0
 URL:           http://ws.apache.org/neethi/
@@ -63,6 +64,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_11jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_10jpp8
 - java 8 mass update
 
