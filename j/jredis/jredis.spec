@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -7,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 Name:          jredis
 # This release is compatible with newer Redis release
 Version:       2.0.0
-Release:       alt1_0.1.a.0jpp8
+Release:       alt1_0.2.a.0jpp8
 Summary:       Java Client and Connectors for Redis
 License:       ASL 2.0
 # https://code.google.com/p/jredis/
@@ -120,6 +123,9 @@ find . -name "*.jar" -delete
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_0.2.a.0jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_0.1.a.0jpp8
 - new version
 
