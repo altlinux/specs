@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           groovy18
 Version:        1.8.9
-Release:        alt1_23jpp8
+Release:        alt1_24jpp8
 Summary:        Dynamic language for the Java Platform
 
 # Some of the files are licensed under BSD and CPL terms, but the CPL has been superceded
@@ -46,7 +49,7 @@ BuildRequires:  junit
 BuildRequires:  glassfish-servlet-api
 BuildRequires:  xstream
 BuildRequires:  desktop-file-utils
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  apache-commons-cli
 BuildRequires:  unzip
 BuildRequires:  javapackages-local
@@ -55,7 +58,7 @@ BuildRequires:  mvn(org.apache.ant:ant-launcher)
 BuildRequires:  mvn(javax.servlet:servlet-api)
 BuildRequires:  mvn(javax.servlet:jsp-api)
 
-Requires:       %{name}-lib = %{version}-%{release}
+Requires:       %{name}-lib = %{version}
 # Following dependencies are optional from Maven POV,
 # but upstream ships them in binary distribution
 Requires:       mvn(junit:junit)
@@ -208,6 +211,9 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %doc LICENSE.txt LICENSE-2.0.txt NOTICE.txt cpl-v10.txt epl-v10.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.9-alt1_24jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.9-alt1_23jpp8
 - java 8 mass update
 
