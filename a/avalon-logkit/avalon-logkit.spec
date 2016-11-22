@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -40,11 +40,11 @@ BuildRequires: jpackage-generic-compat
 
 Name:        avalon-%{short_name}
 Version:     2.1
-Release:     alt2_22jpp8
+Release:     alt2_24jpp8
 Epoch:       0
 Summary:     Java logging toolkit
 License:     ASL 2.0
-Group:       Development/Java
+Group:       Development/Other
 URL:         http://avalon.apache.org/%{short_name}/
 Source0:     http://archive.apache.org/dist/excalibur/%{name}/source/%{name}-%{version}-src.zip
 Source1:     http://repo1.maven.org/maven2/avalon-logkit/avalon-logkit/%{version}/%{name}-%{version}.pom
@@ -54,7 +54,7 @@ Patch2:      avalon-logkit-encoding.patch
 Patch3:      java7.patch
 Requires:    avalon-framework >= 0:4.1.4
 Requires:    glassfish-servlet-api
-Requires:    jms
+Requires:    geronimo-jms
 Requires:    javamail
 
 BuildRequires:    javapackages-local
@@ -66,7 +66,7 @@ BuildRequires:    avalon-framework >= 0:4.1.4
 # Required for converting jars to OSGi bundles
 BuildRequires:    aqute-bnd
 BuildRequires:    glassfish-servlet-api
-BuildRequires:    jms
+BuildRequires:    geronimo-jms
 
 BuildArch:    noarch
 Source44: import.info
@@ -80,7 +80,7 @@ that you read the whitepaper and browse the API docs.
 %package javadoc
 Summary:    Javadoc for %{name}
 Group:        Development/Java
-Requires:     jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -114,7 +114,7 @@ install -d -m 755 $RPM_BUILD_ROOT/%{_mavenpomdir}
 install -m 644 %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "%{short_name}:%{short_name},org.apache.avalon.logkit:%{name},avalon:%{name}"
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "%{short_name}:%{short_name},org.apache.avalon.logkit:%{name}"
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -128,6 +128,9 @@ cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt2_24jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt2_22jpp8
 - new version
 
