@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:		vldocking
 Version:	2.1.5
-Release:	alt1_9jpp8
+Release:	alt1_10jpp8
 Summary:	A Java a.. docking system for JFC Swing applications
 Group:		Development/Java
 License:	CeCILL
@@ -20,9 +20,9 @@ Patch1:		vldocking-build.patch
 
 BuildArch:	noarch
 
-BuildRequires:	jpackage-utils ant
+BuildRequires: javapackages-tools rpm-build-java ant
 
-Requires:	jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Source44: import.info
 
 
@@ -39,8 +39,8 @@ according to his needs:
 %package	javadoc
 Summary:	Javadocs for %{name}
 Group:		Development/Java
-Requires:	%{name} = %{version}-%{release}
-Requires:	jpackage-utils
+Requires:	%{name} = %{version}
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 %description	javadoc
 This package contains the API documentation for %{name}.
@@ -70,6 +70,9 @@ cp -rp doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/*
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.5-alt1_10jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.5-alt1_9jpp8
 - new version
 
