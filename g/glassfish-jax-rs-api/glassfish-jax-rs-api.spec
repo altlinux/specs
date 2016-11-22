@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 %global oname javax.ws.rs-api
 Name:          glassfish-jax-rs-api
 Version:       2.0.1
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       JAX-RS API Specification (JSR 339)
 License:       CDDL or GPLv2 with exceptions
 URL:           http://jax-rs-spec.java.net/
@@ -140,6 +143,9 @@ cd src/jax-rs-api
 %endif
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_3jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_2jpp8
 - new version
 
