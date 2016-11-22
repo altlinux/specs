@@ -1,5 +1,6 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -14,9 +15,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:             cdi-api1
 Version:          1.0
-Release:          alt1_16.SP4jpp8
+Release:          alt1_18.SP4jpp8
 Summary:          CDI API 1.0
-Group:            Development/Java
 License:          ASL 2.0
 URL:              http://seamframework.org/Weld
 
@@ -28,41 +28,40 @@ Source1:          http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-surefire-provider-testng
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-plugin-build-helper
-BuildRequires:    testng
-BuildRequires:    jboss-el-2.2-api
-BuildRequires:    jboss-interceptors-1.1-api
-BuildRequires:    jboss-ejb-3.1-api
-BuildRequires:    geronimo-annotation
-BuildRequires:    geronimo-parent-poms
-BuildRequires:    weld-parent
-BuildRequires:    jpackage-utils
+BuildRequires:    mvn(javax.annotation:jsr250-api)
+BuildRequires:    mvn(javax.inject:javax.inject)
+BuildRequires:    mvn(org.apache.geronimo.specs:specs-parent:pom:)
+BuildRequires:    mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:    mvn(org.jboss.spec.javax.ejb:jboss-ejb-api_3.1_spec)
+BuildRequires:    mvn(org.jboss.spec.javax.el:jboss-el-api_2.2_spec)
+BuildRequires:    mvn(org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.1_spec)
+BuildRequires:    mvn(org.jboss.weld:weld-parent:pom:)
+BuildRequires:    mvn(org.testng:testng::jdk15:)
 Source44: import.info
+
 
 %description
 APIs for JSR-299: Contexts and Dependency Injection for Java EE
 
 %package javadoc
 Group: Development/Java
-Summary:          Javadocs for %{name}
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
-Group:            Documentation
 
 %prep
 %setup -q -n cdi-api-%{namedversion}
 
 cp %{SOURCE1} .
 
+# Use el-api 2.2 instead of (glassifish-el-api) 3.0
+%pom_xpath_set pom:properties/pom:uel.api.version 1.0.2.Final
+%pom_change_dep :el-api org.jboss.spec.javax.el:jboss-el-api_2.2_spec
+
 %build
+
 %mvn_compat_version : %{namedversion} %{upstreamversion} %{version} 1
 %mvn_build
 
@@ -70,13 +69,15 @@ cp %{SOURCE1} .
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc LICENSE-2.0.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE-2.0.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_18.SP4jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_16.SP4jpp8
 - java 8 mass update
 
