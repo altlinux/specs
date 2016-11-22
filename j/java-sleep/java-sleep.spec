@@ -1,16 +1,16 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 24
 Name:		java-sleep
 Version:	2.1
-Release:	alt1_10jpp8
+Release:	alt1_11jpp8
 Summary:	Multi-paradigm scripting language for Java
 
-Group:		Development/Java
+Group:		Development/Other
 License:	LGPLv2+ and BSD
 URL:		http://sleep.dashnine.org/
 Source0:	http://sleep.dashnine.org/download/sleep21-lgpl.tgz
@@ -18,9 +18,9 @@ Source0:	http://sleep.dashnine.org/download/sleep21-lgpl.tgz
 Patch0:		sleep-bootstrap.patch
 BuildArch:	noarch
 
-BuildRequires:	jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:	ant-contrib
-Requires:	jpackage-utils
+Requires: javapackages-tools rpm-build-java
 %if 0%{?fedora} >= 20 || 0%{?rhel} >= 7
 %else
 %endif
@@ -40,7 +40,7 @@ Sleep ...
 %package javadoc
 Summary:	Javadocs for %{name}
 Group:		Development/Java
-Requires:	jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -96,6 +96,9 @@ java -jar sleep.jar runtests.sl
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_11jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_10jpp8
 - new version
 
