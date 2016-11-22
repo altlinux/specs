@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -6,9 +9,9 @@ BuildRequires: jpackage-generic-compat
 Name:           aether-ant-tasks
 Epoch:          1
 Version:        1.0.1
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Ant tasks using Aether to resolve, install and deploy artifacts
-Group:          Development/Java
+Group:          Development/Other
 BuildArch:      noarch
 
 License:        EPL
@@ -86,6 +89,9 @@ install -p -m 644 %{SOURCE5} %{buildroot}/%{_sysconfdir}/ant.d/%{name}
 %doc epl-v10.html notice.html
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt1_4jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt1_3jpp8
 - new version
 
