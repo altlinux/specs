@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -5,16 +8,16 @@ BuildRequires: jpackage-generic-compat
 
 Name:    felix-osgi-foundation
 Version: 1.2.0
-Release: alt5_19jpp8
+Release: alt5_20jpp8
 Summary: Felix OSGi Foundation EE Bundle
-Group:   Development/Java
+Group:   Development/Other
 License: ASL 2.0
 URL:     http://felix.apache.org
 Source0: http://www.apache.org/dist/felix/%{bundle}-%{version}-project.tar.gz
 
 BuildArch: noarch
 
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires: maven-local
 BuildRequires: mockito
 BuildRequires: felix-parent
@@ -51,6 +54,9 @@ This package contains API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt5_20jpp8
+- new fc release
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt5_19jpp8
 - new version
 
