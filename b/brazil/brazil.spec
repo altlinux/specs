@@ -1,15 +1,15 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:      brazil
 Version:   2.3
-Release:   alt3_14jpp8
+Release:   alt3_15jpp8
 Summary:   Extremely small footprint Java HTTP stack
-Group:     Development/Java
+Group:     Development/Other
 License:   SPL
 URL:       https://github.com/mbooth101/brazil
 
@@ -20,9 +20,9 @@ Source2:   brazil-build.xml
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:    ant
-Requires:         jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Source44: import.info
 
 %description
@@ -41,8 +41,8 @@ API documentation for %{name}.
 
 %package demo
 Summary:   Demos for %{name}
-Group:     Development/Java
-Requires:  %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Group:     Development/Other
+Requires:  %{name} = %{version}
 Requires:  tcl
 
 %description demo
@@ -85,6 +85,9 @@ cp -pr samples %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_15jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_14jpp8
 - new version
 
