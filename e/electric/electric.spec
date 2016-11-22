@@ -1,6 +1,6 @@
 Group: Engineering
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           electric
 Version:        8.09
-Release:        alt1_10jpp8
+Release:        alt1_11jpp8
 Summary:        Sophisticated ASIC and MEM CAD System
 
 License:        GPLv3
@@ -107,6 +107,9 @@ install -d %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 8.09-alt1_11jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 8.09-alt1_10jpp8
 - new version
 
