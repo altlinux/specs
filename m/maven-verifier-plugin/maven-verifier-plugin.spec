@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -6,17 +7,17 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-verifier-plugin
 Version:        1.0
-Release:        alt4_14jpp8
+Release:        alt4_15jpp8
 Summary:        Maven Verifier Plugin
 
-Group:          Development/Java
+Group:          Development/Other
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-verifier-plugin/
 Source0:        http://www.apache.org/dist/maven/plugins/%{name}-%{version}-source-release.zip
 
 BuildArch: noarch
 
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires: maven-local
 BuildRequires: modello
 BuildRequires: plexus-utils
@@ -52,6 +53,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_15jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_14jpp8
 - new version
 
