@@ -1,5 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-deploy-plugin
 Version:        2.8.2
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Maven Deploy Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-deploy-plugin/
@@ -65,6 +66,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.8.2-alt1_5jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 2.8.2-alt1_4jpp8
 - new version
 
