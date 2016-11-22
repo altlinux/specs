@@ -1,25 +1,28 @@
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
+BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define oversion 1.1.4c
+%global oversion 1.1.4c
 
 Summary:        XML Pull Parser
 Name:           xpp3
 Version:        1.1.4
-Release:        alt1_7.cjpp8
+Release:        alt1_11.cjpp8
 License:        ASL 1.1
 URL:            http://www.extreme.indiana.edu/xgws/xsoap/xpp/mxp1/index.html
 Source0:        http://www.extreme.indiana.edu/dist/java-repository/xpp3/distributions/xpp3-%{oversion}_src.tgz
 Source1:        http://repo1.maven.org/maven2/xpp3/xpp3/%{oversion}/xpp3-%{oversion}.pom
 Source2:        http://repo1.maven.org/maven2/xpp3/xpp3_xpath/%{oversion}/xpp3_xpath-%{oversion}.pom
 Source3:        http://repo1.maven.org/maven2/xpp3/xpp3_min/%{oversion}/xpp3_min-%{oversion}.pom
+Source4:        %{name}-%{oversion}-OSGI-MANIFEST.MF
 Patch0:         %{name}-link-docs-locally.patch
 BuildRequires:  javapackages-local
+BuildRequires:  zip
 BuildRequires:  ant
 BuildRequires:  junit
 BuildRequires:  xml-commons-apis
@@ -53,6 +56,8 @@ Javadoc for %{name}.
 %setup -q -n %{name}-%{oversion}
 # remove all binary libs
 find -name \*.jar -delete
+# Remove class bundled from Axis (now it's bundled in JRE)
+rm -rf src/java/builder/javax
 
 %patch0
 
@@ -62,6 +67,15 @@ sed -i 's|depends="junit_main,junit_addons"|depends="junit_main"|' build.xml
 %build
 export CLASSPATH=$(build-classpath xml-commons-apis junit)
 ant xpp3 junit apidoc
+
+# Add OSGi metadata
+pushd build
+mkdir META-INF
+unzip -o %{name}-%{oversion}.jar META-INF/MANIFEST.MF
+cat %{SOURCE4} >> META-INF/MANIFEST.MF
+sed -i '/^\r$/d' META-INF/MANIFEST.MF
+zip -u %{name}-%{oversion}.jar META-INF/MANIFEST.MF
+popd
 
 %install
 install -d -m 755 %{buildroot}%{_javadir}
@@ -101,6 +115,9 @@ cp -pr doc/api/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.1.4-alt1_11.cjpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.1.4-alt1_7.cjpp8
 - new version
 
