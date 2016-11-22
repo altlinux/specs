@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           netbeans-javaparser
 Version:        8.0.1
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        NetBeans Java Parser
 License:        GPLv2 with exceptions
 Url:            http://netbeans.org/
@@ -24,9 +24,9 @@ Url:            http://netbeans.org/
 Source0:        %{name}-%{version}.tar.gz
 
 BuildRequires:  ant
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 
 BuildArch:      noarch
 Source44: import.info
@@ -58,6 +58,9 @@ install -m 644 make/netbeans/nb-javac/dist/javac-impl.jar %{buildroot}%{_javadir
 %{_javadir}/*.jar
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 8.0.1-alt1_3jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 8.0.1-alt1_2jpp8
 - new version
 
