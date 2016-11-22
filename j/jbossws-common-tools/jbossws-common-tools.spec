@@ -1,11 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-BuildRequires: jdepend
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 24
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jbossws-common-tools
 %define version 1.2.0
@@ -14,9 +13,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jbossws-common-tools
 Version:          1.2.0
-Release:          alt1_5jpp8
+Release:          alt1_6jpp8
 Summary:          JBossWS Common Tools
-Group:            Development/Java
+Group:            Development/Other
 License:          LGPLv2+ and ASL 2.0
 URL:              http://www.jboss.org/jbossws
 
@@ -85,6 +84,9 @@ cp %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_6jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_5jpp8
 - new version
 
