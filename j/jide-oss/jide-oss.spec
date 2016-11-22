@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		jide-oss
 Version:	2.7.6
-Release:	alt1_12.1340svnjpp8
+Release:	alt1_13.1340svnjpp8
 Summary:	Swing component library built on top of Java/Swing
 License:	GPLv2 with exceptions
 URL:		https://jide-oss.dev.java.net/
@@ -29,7 +29,7 @@ Patch2:		jide-oss-name-clash.patch
 
 BuildArch:	noarch
 
-BuildRequires:	jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:	dos2unix
 BuildRequires:	dos2unix
 BuildRequires:	ant
@@ -100,6 +100,9 @@ cp -rf -p javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %doc docs/JIDE_Common_Layer_Developer_Guide.pdf
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_13.1340svnjpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_12.1340svnjpp8
 - new version
 
