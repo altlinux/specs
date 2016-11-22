@@ -1,6 +1,6 @@
 
 Name: openstack-neutron
-Version: 9.1.0
+Version: 9.1.1
 Release: alt1
 Epoch: 1
 Provides: openstack-quantum = %EVR
@@ -540,6 +540,10 @@ fi
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Tue Nov 22 2016 Alexey Shabalin <shaba@altlinux.ru> 1:9.1.1-alt1
+- 9.1.1
+- fix logrotate
+
 * Wed Nov 09 2016 Alexey Shabalin <shaba@altlinux.ru> 1:9.1.0-alt1
 - update systemd units
 - fix log dir permitions for logrotate
