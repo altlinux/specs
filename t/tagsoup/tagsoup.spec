@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: xalan-j2
@@ -39,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           tagsoup
 Version:        1.2.1
-Release:        alt2_10jpp8
+Release:        alt2_11jpp8
 Epoch:          0
 Summary:        A SAX-compliant HTML parser written in Java 
 # AFL/GPLv2+ license for src/java/org/ccil/cowan/tagsoup/PYXScanner.java is
@@ -51,12 +51,12 @@ Group:          Development/Java
 Source1:        http://repo1.maven.org/maven2/org/ccil/cowan/tagsoup/tagsoup/%{version}/tagsoup-%{version}.pom
 # fix version
 Patch0:         tagsoup-1.2.1-man.patch
-BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant
 BuildRequires:  ant-apache-xalan2
-BuildRequires:  bash
+BuildRequires: bash sh
 BuildRequires:  xalan-j2
-Requires:       jpackage-utils >= 0:1.6
+Requires: javapackages-tools rpm-build-java
 BuildArch:      noarch
 Source44: import.info
 
@@ -71,7 +71,7 @@ applied to even the worst HTML.
 %package javadoc
 Summary:       Javadoc for %{name}
 Group:         Development/Java
-Requires:      jpackage-utils >= 0:1.6
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -118,6 +118,9 @@ install -m 644 %{name}.1 %{buildroot}%{_mandir}/man1/
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.2.1-alt2_11jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.2.1-alt2_10jpp8
 - new version
 
