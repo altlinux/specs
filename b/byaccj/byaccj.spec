@@ -35,7 +35,7 @@ BuildRequires: jpackage-generic-compat
 Summary:	Parser Generator with Java Extension
 Name:		byaccj
 Version:	1.15
-Release:	alt1_11jpp8
+Release:	alt1_12jpp8
 Epoch:		0
 License:	Public Domain
 URL:		http://byaccj.sourceforge.net/
@@ -75,6 +75,9 @@ cp -p src/yacc.linux \
 %attr(755, root, root) %{_bindir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt1_12jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt1_11jpp8
 - new version
 
