@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          mybatis-parent
 Version:       21
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       The MyBatis parent POM
 License:       ASL 2.0
 URL:           http://www.mybatis.org/
@@ -68,6 +71,9 @@ The MyBatis parent POM which has to be inherited by all MyBatis modules.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 21-alt1_4jpp8
+- new fc release
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 21-alt1_3jpp8
 - java 8 mass update
 
