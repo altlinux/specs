@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           kohsuke-pom
 Version:        14
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Summary:        Kohsuke parent POM
 
 # License is specified in pom file
@@ -47,6 +50,9 @@ cp %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 14-alt1_2jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 14-alt1_1jpp8
 - new version
 
