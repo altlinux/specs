@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          tuscany-parent
 Version:       2
-Release:       alt1_11jpp8
+Release:       alt1_12jpp8
 Summary:       Apache Tuscany Project Parent
 License:       ASL 2.0
 Url:           http://tuscany.apache.org/
@@ -23,7 +26,6 @@ BuildRequires: mvn(org.apache.maven.shared:maven-shared-components:pom:)
 
 BuildArch:     noarch
 Source44: import.info
-Provides: mvn(org.apache.tuscany:parent) = 2.incubating
 
 %description
 Parent POM defining settings that can be used across Tuscany.
@@ -47,6 +49,9 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %doc LICENSE-2.0.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2-alt1_12jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 2-alt1_11jpp8
 - new version
 
