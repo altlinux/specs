@@ -1,10 +1,9 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: subversion
-%define _without_maven 1
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -53,7 +52,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xmlbeans
 Version:        2.6.0
-Release:        alt1_10jpp8
+Release:        alt1_11jpp8
 Summary:        XML-Java binding tool
 URL:            http://xmlbeans.apache.org/
 Source0:        http://www.apache.org/dist/xmlbeans/source/%{name}-%{version}-src.tgz
@@ -75,12 +74,12 @@ License:        ASL 2.0
 %if %without bootstrap
 BuildRequires:  xmlbeans
 %endif
-BuildRequires:  jpackage-utils >= 0:1.5
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant >= 0:1.6 ant-junit ant-contrib junit
 BuildRequires:  xml-commons-resolver >= 0:1.1
 BuildRequires:  bea-stax-api
 BuildRequires:  saxon >= 8
-Requires:       jpackage-utils >= 0:1.6
+Requires: javapackages-tools rpm-build-java
 
 BuildArch:      noarch
 Source44: import.info
@@ -125,7 +124,7 @@ BuildArch: noarch
 %package scripts
 Group: Development/Java
 Summary:        Scripts for %{name}
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description scripts
 %{summary}.
@@ -160,7 +159,7 @@ ln -sf $(build-classpath saxon) external/lib/saxon9-dom.jar
 sed 's/\r//' -i LICENSE.txt NOTICE.txt README.txt docs/stylesheet.css docs/xmlbeans.css docs/guide/tools.html
 
 # Build
-ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 -Djavac.source=1.6 -Djavac.target=1.6 default docs
+ant -Djavac.source=1.6 -Djavac.target=1.6 default docs
 
 %install
 # jar
@@ -220,6 +219,9 @@ cp -pr build/docs/* README.txt $RPM_BUILD_ROOT%{_docdir}/%{name}
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt1_11jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt1_10jpp8
 - new version
 
