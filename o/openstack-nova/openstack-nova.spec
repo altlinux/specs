@@ -2,7 +2,7 @@
 
 Name: openstack-nova
 Version: 14.0.2
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: OpenStack Compute (nova)
 
@@ -825,6 +825,9 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %doc LICENSE doc/build/html
 
 %changelog
+* Tue Nov 22 2016 Alexey Shabalin <shaba@altlinux.ru> 1:14.0.2-alt2
+- fix logrotate
+
 * Wed Nov 09 2016 Alexey Shabalin <shaba@altlinux.ru> 1:14.0.2-alt1
 - 14.0.2
 - fix log dir permitions for logrotate
