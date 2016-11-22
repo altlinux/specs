@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -8,19 +8,19 @@ BuildRequires: jpackage-generic-compat
 
 Name:             ant-%{base_name}
 Version:          1.3
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          Provide antunit ant task
-Group:            Development/Java
+Group:            Development/Other
 License:          ASL 2.0
 URL:              http://ant.apache.org/antlibs/%{base_name}/
 Source0:          http://www.apache.org/dist/ant/antlibs/%{base_name}/source/apache-%{name}-%{version}-src.tar.bz2
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:    ant-junit
 BuildRequires:    ant-testutil
 
-Requires:         jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Requires:         ant
 Source44: import.info
 
@@ -90,6 +90,9 @@ echo "%{base_name} ant/%{name}" > %{buildroot}%{_sysconfdir}/ant.d/%{base_name}
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_4jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_3jpp8
 - new version
 
