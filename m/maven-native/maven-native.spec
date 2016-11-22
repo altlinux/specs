@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -15,10 +15,11 @@ BuildRequires: jpackage-generic-compat
 
 Name:          maven-native
 Version:       1.0
-Release:       alt1_0.10.alpha.8jpp8
+Release:       alt1_0.11.alpha.8jpp8
 Summary:       Compile c and c++ source under Maven
 License:       ASL 2.0 and MIT
-Url:           http://mojo.codehaus.org/maven-native/
+Url:           http://www.mojohaus.org/plugins.html
+# Source code available @ https://github.com/mojohaus/maven-native
 Source0:       http://repo2.maven.org/maven2/org/codehaus/mojo/natives/%{name}/%{namedversion}/%{name}-%{namedversion}-source-release.zip
 
 BuildRequires: maven-local
@@ -133,6 +134,9 @@ sed -i 's|<artifactId>maven-project|<artifactId>maven-compat|' pom.xml
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.11.alpha.8jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.10.alpha.8jpp8
 - new version
 
