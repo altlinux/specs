@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -17,10 +17,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jemmy
 Version:        2.3.0.0
-Release:        alt2_12jpp8
+Release:        alt2_13jpp8
 Summary:        Java UI testing library
 
-Group:          Development/Java
+Group:          Development/Other
 License:        CDDL
 URL:            https://jemmy.dev.java.net
 
@@ -38,9 +38,9 @@ Source0:        jemmy-2.3.0.0.tar.gz
 Source1:        %{name}.pom
 
 BuildRequires:  ant >= 1.6.5
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 
 BuildArch:      noarch
 Source44: import.info
@@ -56,7 +56,7 @@ also do any other operations needed to be done from test.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -94,6 +94,9 @@ install -p -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.0.0-alt2_13jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.0.0-alt2_12jpp8
 - new version
 
