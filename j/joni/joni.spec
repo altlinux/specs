@@ -1,5 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,16 +8,16 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             joni
 Version:          2.1.3
-Release:          alt2_2jpp8
+Release:          alt2_3jpp8
 Summary:          Java port of Oniguruma regexp library 
-Group:            Development/Java
+Group:            Development/Other
 License:          MIT
 URL:              http://github.com/jruby/%{name}
 Source0:          https://github.com/jruby/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.zip
 Patch1:           joni-remove-useless-wagon-dependency.patch
 
 BuildRequires:    jcodings
-BuildRequires:    jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:    junit
 BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
@@ -26,8 +27,8 @@ BuildRequires:    maven-surefire-plugin
 BuildRequires:    objectweb-asm
 
 Requires:         jcodings
-Requires:         jpackage-utils
-Requires:         objectweb-asm4
+Requires: javapackages-tools rpm-build-java
+Requires:         objectweb-asm
 
 BuildArch:      noarch
 Source44: import.info
@@ -40,7 +41,7 @@ to java. It is used by jruby.
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -69,6 +70,9 @@ sed -i -e 's|\r||' test/org/joni/test/TestA.java
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt2_3jpp8
+- new fc release
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt2_2jpp8
 - build with objectweb-asm
 
