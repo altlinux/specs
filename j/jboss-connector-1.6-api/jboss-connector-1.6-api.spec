@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -12,16 +12,16 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-connector-1.6-api
 Version:          1.0.1
-Release:          alt2_2jpp8
+Release:          alt2_3jpp8
 Summary:          Connector Architecture 1.6 API
-Group:            Development/Java
+Group:            Development/Other
 License:          CDDL or GPLv2 with exceptions
 URL:              http://www.jboss.org
 
 Source0:          https://github.com/jboss/jboss-connector-api_spec/archive/jboss-connector-api_1.6_spec-%{namedversion}.tar.gz
 
 BuildRequires:    jboss-specs-parent
-BuildRequires:    jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-enforcer-plugin
@@ -61,6 +61,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_3jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_2jpp8
 - new version
 
