@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          lettuce
 Version:       2.3.3
-Release:       alt1_1jpp8
+Release:       alt1_2jpp8
 Summary:       Scalable Java Redis client
 License:       ASL 2.0
 # Newer release available @ https://github.com/mp911de/lettuce
@@ -59,6 +62,9 @@ find . -name "*.jar" -print -delete
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_2jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_1jpp8
 - new version
 
