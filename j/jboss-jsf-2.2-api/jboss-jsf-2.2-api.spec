@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -11,32 +11,27 @@ BuildRequires: jpackage-generic-compat
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
-Name:       jboss-jsf-2.2-api
-Version:    2.2.0
-Release:    alt1_4jpp8
-Summary:    JavaServer Faces 2.2 API
-License:    (CDDL or GPLv2 with exceptions) and ASL 2.0
-URL:        http://www.jboss.org
-Source0:    https://github.com/jboss/jboss-jsf-api_spec/archive/jboss-jsf-api_2.2_spec-%{namedversion}.tar.gz
-Source1:    cddl.txt
-Source2:    http://www.apache.org/licenses/LICENSE-2.0.txt
+Name:          jboss-jsf-2.2-api
+Version:       2.2.0
+Release:       alt1_7jpp8
+Summary:       JavaServer Faces 2.2 API
+License:       (CDDL or GPLv2 with exceptions) and ASL 2.0
+URL:           http://www.jboss.org
+Source0:       https://github.com/jboss/jboss-jsf-api_spec/archive/jboss-jsf-api_2.2_spec-%{namedversion}.tar.gz
+Source1:       cddl.txt
+Source2:       http://www.apache.org/licenses/LICENSE-2.0.txt
 
-BuildRequires: jboss-parent
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: bean-validation-api
-BuildRequires: mojarra
-BuildRequires: jboss-jstl-1.2-api
-BuildRequires: jboss-jsp-2.2-api
-BuildRequires: jboss-el-2.2-api
-BuildRequires: atinject
-BuildRequires: cdi-api
+BuildRequires: mvn(com.sun.faces:jsf-impl)
+BuildRequires: mvn(javax.enterprise:cdi-api)
+BuildRequires: mvn(javax.inject:javax.inject)
+BuildRequires: mvn(javax.validation:validation-api)
+BuildRequires: mvn(org.jboss:jboss-parent:pom:)
+BuildRequires: mvn(org.jboss.spec.javax.el:jboss-el-api_2.2_spec)
+BuildRequires: mvn(org.jboss.spec.javax.servlet.jsp:jboss-jsp-api_2.2_spec)
+BuildRequires: mvn(org.jboss.spec.javax.servlet.jstl:jboss-jstl-api_1.2_spec)
 
-BuildArch: noarch
+BuildArch:     noarch
 Source44: import.info
 
 %description
@@ -44,7 +39,7 @@ This package contains JSR-344: JavaServer Faces 2.2 API.
 
 %package javadoc
 Group: Development/Java
-Summary: Javadocs for %{name}
+Summary: Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc	
@@ -71,17 +66,18 @@ sed -i "s,59 Temple Place,51 Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc LICENSE LICENSE-2.0.txt
+%doc cddl.txt LICENSE LICENSE-2.0.txt
 %doc README
-%doc cddl.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE LICENSE-2.0.txt
+%doc cddl.txt LICENSE LICENSE-2.0.txt
 %doc README
-%doc cddl.txt
+
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_7jpp8
+- new fc release
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_4jpp8
 - unbootsrap build
 
