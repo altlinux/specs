@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -12,9 +12,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-specs-parent
 Version:          1.0.0
-Release:          alt2_0.12.Beta2jpp8
+Release:          alt2_0.13.Beta2jpp8
 Summary:          JBoss Specification API Parent POM
-Group:            Development/Java
+Group:            Development/Other
 # The license is not included because it's not a part of this tag. License file
 # was pushed to trunk and no new tag will be created for this change.
 # http://anonsvn.jboss.org/repos/jbossas/projects/specs/trunk/jboss-specs-parent/LICENSE-2.0.txt
@@ -25,15 +25,14 @@ Url:              http://www.jboss.org/
 # tar czf jboss-specs-parent-1.0.0.Beta2-src-svn.tar.gz jboss-specs-parent-1.0.0.Beta2
 Source0:          %{name}-%{namedversion}-src-svn.tar.gz
 
-BuildRequires:    jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 
 Requires:         jboss-parent
 Requires:         maven-compiler-plugin
 Requires:         maven-release-plugin
-Requires:         jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch:        noarch
 Source44: import.info
-Provides: mvn(org.jboss.spec:jboss-specs-parent) = 1.0.0.Beta2
 
 %description
 Parent POM that allows building all specification projects at once.
@@ -52,6 +51,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.jboss-%{name}.pom
 %files -f .mfiles
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_0.13.Beta2jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_0.12.Beta2jpp8
 - new version
 
