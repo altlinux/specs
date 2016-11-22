@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -5,10 +8,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:           sonatype-plugins-parent
 Version:        8
-Release:        alt2_8jpp8
+Release:        alt2_9jpp8
 Summary:        Sonatype Plugins Parent POM
 BuildArch:      noarch
-Group:          Development/Java
+Group:          Development/Other
 License:        ASL 2.0
 URL:            https://github.com/sonatype/oss-parents
 Source:         https://github.com/sonatype/oss-parents/tarball/plugins-parent-%{version}#/%{name}-%{version}.tar.gz
@@ -17,7 +20,6 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildRequires:  maven-local
 BuildRequires:  forge-parent
 Source44: import.info
-Provides: mvn(org.sonatype.plugins:plugins-parent) = 8
 
 %description
 This package provides Sonatype plugins parent POM used by other Sonatype
@@ -39,6 +41,9 @@ cd ./plugins-parent
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 8-alt2_9jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 8-alt2_8jpp8
 - new version
 
