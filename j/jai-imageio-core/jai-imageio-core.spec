@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -8,12 +8,12 @@ BuildRequires: jpackage-generic-compat
 
 Name:		jai-imageio-core
 Version:	1.2
-Release:	alt1_0.16.20100217cvsjpp8
+Release:	alt1_0.18.20100217cvsjpp8
 Summary:	Core Java Advanced Imaging Image I/O Tools API
 
 Group:		System/Libraries
 License:	BSD
-URL:		https://jai-imageio.dev.java.net/
+URL:		https://java.net/projects/jai-imageio-core
 Source0:	jai-imageio-core-cvs%{cvs_ver}-CLEANED.tar.xz
 Source1:	README-fedora-epel.txt
 
@@ -29,9 +29,9 @@ Source1:	README-fedora-epel.txt
 # ./generate-tarball.sh USERNAME DATE
 Source2:	generate-tarball.sh
 
-BuildRequires:	ant jpackage-utils
-BuildRequires:	recode
-Requires:	jpackage-utils
+BuildRequires:	ant javapackages-tools rpm-build-java
+BuildRequires: librecode recode
+Requires:	javapackages-tools rpm-build-java
 
 
 Patch0:		jai-imageio-core-remove-imageio-services.patch
@@ -51,7 +51,7 @@ minus JPEG 2000, JAI Image I/O operations, and the C-based codecLib.
 %package javadoc
 Summary:	Javadocs for %{name}
 Group:		Development/Java
-Requires:	jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 
@@ -107,6 +107,9 @@ cp -av build/linux-i586/javadocs/docs-jcp/* $RPM_BUILD_ROOT%{_javadocdir}/%{name
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_0.18.20100217cvsjpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_0.16.20100217cvsjpp8
 - new version
 
