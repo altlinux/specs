@@ -1,7 +1,7 @@
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:     jgroups
 Version:  3.4.2
-Release:  alt1_4jpp8
+Release:  alt1_5jpp8
 Summary:  Toolkit for reliable multicast communication
 License:  LGPLv2+
 URL:      http://www.jgroups.org
@@ -91,6 +91,9 @@ sed -i 's|Log4J2LogImpl|Log4JLogImpl|g' src/org/jgroups/logging/LogFactory.java
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.4.2-alt1_5jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.4.2-alt1_4jpp8
 - java 8 mass update
 
