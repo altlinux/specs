@@ -1,11 +1,14 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          plexus-pom
 Version:       3.3.3
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Root Plexus Projects POM
-Group:         Development/Java
+Group:         Development/Other
 License:       ASL 2.0
 URL:           https://github.com/codehaus-plexus/plexus-pom
 Source0:       https://github.com/codehaus-plexus/plexus-pom/archive/plexus-%{version}.tar.gz
@@ -43,6 +46,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.3-alt1_3jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.3-alt1_2jpp8
 - new version
 
