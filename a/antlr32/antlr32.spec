@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -7,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           antlr32
 Version:        3.2
-Release:        alt1_9jpp8
+Release:        alt1_14jpp8
 Summary:        ANother Tool for Language Recognition
 
 License:        BSD
@@ -31,6 +34,9 @@ Source7:        http://repo1.maven.org/maven2/org/antlr/antlr3-maven-plugin/%{bo
 # See https://github.com/antlr/antlr3/commit/e88907c259c43d42fa5e9f5ad0e486a2c1e004bb
 Patch0:         java8-compat.patch
 
+# Generate OSGi metadata
+Patch1:         osgi-manifest.patch
+
 BuildRequires:  maven-local
 BuildRequires:  antlr-maven-plugin
 BuildRequires:  stringtemplate >= 3.2
@@ -52,7 +58,7 @@ dependency on this one.
 %package     maven-plugin
 Group: Development/Java
 Summary:     Maven plug-in for creating ANTLR-generated parsers
-Requires:    %{name}-tool = %{version}-%{release}
+Requires:    %{name}-tool = %{version}
 
 %description maven-plugin
 Maven plug-in for creating ANTLR-generated parsers.
@@ -60,7 +66,7 @@ Maven plug-in for creating ANTLR-generated parsers.
 %package     tool
 Group: Development/Java
 Summary:     Command line tool for creating ANTLR-generated parsers
-Requires:    %{name}-java = %{version}-%{release}
+Requires:    %{name}-java = %{version}
 
 %description tool
 Command line tool for creating ANTLR-generated parsers.
@@ -85,6 +91,7 @@ BuildArch: noarch
 %setup -q -n antlr-%{version}
 
 %patch0 -b .orig
+%patch1 -b .orig
 
 # remove pre-built artifacts
 find -type f -a -name *.jar -delete
@@ -113,8 +120,8 @@ find -name "pom.xml" | xargs sed -i -e "s|>jsr14<|>1.5<|"
 # set a build number
 sed -i -e "s|\${buildNumber}|%{release}|" tool/src/main/resources/org/antlr/antlr.properties
 
-%mvn_compat_version 'org.antlr:antlr3-maven-plugin' %{bootstrap_version}-1 %{version}
-%mvn_compat_version 'org.antlr:antlr{,-master,-runtime}' %{bootstrap_version} %{version}
+%mvn_compat_version 'org.antlr:antlr3-maven-plugin' %{version} %{bootstrap_version}-1
+%mvn_compat_version 'org.antlr:antlr{,-master,-runtime}' %{version} %{bootstrap_version}
 
 %build
 mkdir -p .m2/org/antlr/antlr-master/%{version}/
@@ -145,12 +152,15 @@ cp -p %{SOURCE6} %{SOURCE7} .m2/org/antlr/antlr3-maven-plugin/%{bootstrap_versio
 
 %files java -f .mfiles-java
 %doc tool/LICENSE.txt
-%dir %{_datadir}/java/%{name}
+%dir %{_datadir}/java/antlr32
 
 %files javadoc -f .mfiles-javadoc
 %doc tool/LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_14jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_9jpp8
 - new version
 
