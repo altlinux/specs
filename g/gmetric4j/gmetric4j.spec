@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          gmetric4j
 Version:       1.0.10
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       JVM instrumentation to Ganglia
 License:       BSD
 URL:           https://github.com/ganglia/gmetric4j
@@ -74,6 +74,9 @@ install -m 644 target/%{name}-%{version}-tests.jar \
 %doc COPYING
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.10-alt1_3jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.10-alt1_2jpp8
 - new version
 
