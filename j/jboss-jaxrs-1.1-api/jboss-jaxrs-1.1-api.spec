@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -12,9 +12,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jboss-jaxrs-1.1-api
 Version:       1.0.1
-Release:       alt2_10jpp8
+Release:       alt2_11jpp8
 Summary:       Java API for RESTful Web Services (JAX-RS) 1.1
-Group:         Development/Java
+Group:         Development/Other
 License:       CDDL
 URL:           http://www.jboss.org
 
@@ -60,6 +60,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_11jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_10jpp8
 - new version
 
