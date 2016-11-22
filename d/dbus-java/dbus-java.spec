@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/xsltproc
 %filter_from_requires /^java-headless/d
@@ -7,13 +7,13 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # the package is arch-dependent because scripts contain arch dependent paths
 # the debuginfo package will be empty if produced
-%define debug_package %{nil}
+%global debug_package %{nil}
 
 Name:       dbus-java
 Version:    2.7
-Release:    alt2_20jpp8
+Release:    alt2_22jpp8
 Summary:    Java implementation of the DBus protocol
-Group:      Development/Java
+Group:      Development/Other
 License:    AFL or LGPLv2
 URL:        http://freedesktop.org/wiki/Software/DBusBindings
 #URL2:      http://dbus.freedesktop.org/doc/dbus-java/
@@ -43,12 +43,11 @@ BuildRequires:  texlive-generic-recommended
 BuildRequires:  tex4ht
 BuildRequires:  texlive-base-bin
 BuildRequires:  docbook-utils
-BuildRequires:  gettext
+BuildRequires: gettext gettext-tools gettext-tools-python
 BuildRequires:  libmatthew-java
 BuildRequires:  docbook2X
 BuildRequires:  texlive-latex-recommended
 
-Requires:   maven-local
 Requires:   libmatthew-java
 Source44: import.info
 
@@ -72,8 +71,8 @@ Unix-sockets it requires a small JNI library to use Unix-Sockets.
 
 %package javadoc
 Summary:    Javadocs for %{name}
-Group:      Development/Java
-Requires:   jpackage-utils
+Group:      Development/Other
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 
@@ -141,12 +140,13 @@ make install \
 %{_bindir}/DBusViewer
 %{_bindir}/ListDBus
 %doc %{_defaultdocdir}/%{name}
-%doc %{_mandir}/man1/CreateInterface.1.*
-%doc %{_mandir}/man1/DBusCall.1.*
-%doc %{_mandir}/man1/DBusDaemon.1.*
-%doc %{_mandir}/man1/DBusViewer.1.*
-%doc %{_mandir}/man1/ListDBus.1.*
-%doc AUTHORS COPYING INSTALL README
+%doc %{_mandir}/man1/CreateInterface.1*
+%doc %{_mandir}/man1/DBusCall.1*
+%doc %{_mandir}/man1/DBusDaemon.1*
+%doc %{_mandir}/man1/DBusViewer.1*
+%doc %{_mandir}/man1/ListDBus.1*
+%doc AUTHORS INSTALL README
+%doc COPYING
 
 %files javadoc
 %{_javadocdir}/%{name}
@@ -154,6 +154,9 @@ make install \
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_22jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_20jpp8
 - %%_jnidir set to /usr/lib/java
 
