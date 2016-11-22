@@ -1,5 +1,8 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,10 +11,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:           plexus-velocity
 Version:        1.1.8
-Release:        alt4_19jpp8
+Release:        alt4_21jpp8
 Summary:        Plexus Velocity Component
 License:        ASL 2.0
-URL:            https://github.com/codehaus-plexus/plexus-velocity
+URL:            https://codehaus-plexus.github.io/plexus-velocity/
 BuildArch:      noarch
 
 # svn export http://svn.codehaus.org/plexus/plexus-components/tags/plexus-velocity-1.1.8/
@@ -27,20 +30,17 @@ BuildRequires:  mvn(velocity:velocity)
 Source44: import.info
 
 %description
-The Plexus project seeks to create end-to-end developer tools for
-writing applications. At the core is the container, which can be
-embedded or for a full scale application server. There are many
-reusable components for hibernate, form processing, jndi, i18n,
-velocity, etc. Plexus also includes an application server which
-is like a J2EE application server, without all the baggage.
+This package provides Plexus Velocity component - a wrapper for
+Apache Velocity template engine, which allows easy use of Velocity
+by applications built on top of Plexus container.
 
 %package javadoc
 Group: Development/Java
-Summary:        Javadoc for %{name}
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}.
+This package provides %{summary}.
 
 %prep
 %setup -q -n plexus-velocity-%{version}
@@ -62,6 +62,9 @@ done
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.8-alt4_21jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.8-alt4_19jpp8
 - new version
 
