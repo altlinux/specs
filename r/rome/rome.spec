@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
@@ -6,7 +9,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:       rome
 Version:    0.9
-Release:    alt3_19jpp8
+Release:    alt3_20jpp8
 Summary:    RSS and Atom Utilities
 
 License:    ASL 2.0
@@ -28,8 +31,8 @@ Patch1:     %{name}-%{version}-pom.patch
 
 BuildRequires:  javapackages-local
 BuildRequires:  ant
-BuildRequires:  jdom >= 1.1.2-3
-Requires: jdom >= 1.1.2-3
+BuildRequires:  jdom >= 1.1.2
+Requires: jdom >= 1.1.2
 Source44: import.info
 
 %description
@@ -39,7 +42,7 @@ publishing RSS and Atom feeds.
 %package	javadoc
 Group: Development/Java
 Summary:  Javadocs for %{name}
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{version}
 BuildArch: noarch
 
 %description javadoc
@@ -68,6 +71,9 @@ ant -Dnoget=true dist
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.9-alt3_20jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.9-alt3_19jpp8
 - new version
 
