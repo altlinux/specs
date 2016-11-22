@@ -1,18 +1,18 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 24
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define fedora 23
 %if 0%{?fedora}
 %bcond_without itext
 %bcond_without markdown
@@ -20,7 +20,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           maven-doxia
 Version:        1.6
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Epoch:          0
 Summary:        Content generation framework
 License:        ASL 2.0
@@ -35,7 +35,7 @@ Patch1:         0001-Fix-itext-dependency.patch
 # Forwarded upstream: DOXIA-504
 Patch2:         0002-Update-to-Plexus-Container-1.5.5.patch
 
-# Forwarded upstream: DOXIA-505
+# Accepted upstream: DOXIA-505
 Patch3:         0003-Update-to-Commons-Collections-1.10.patch
 
 # Don't run bad tests which rely on ordering in set (they fail with Java 8)
@@ -293,6 +293,9 @@ API documentation for %{name}.
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_5jpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_4jpp8
 - java8 mass update
 
