@@ -1,6 +1,6 @@
 Name: ceph-deploy
 Version: 1.5.34
-Release: alt2
+Release: alt3
 Summary: Admin and deploy tool for Ceph
 Group: System/Base
 
@@ -24,6 +24,7 @@ BuildRequires: python-module-remoto
 BuildRequires: python-module-tox
 
 Requires: python-module-remoto
+Requires: ceph > 0.94.7-alt2
 
 %description
 An easy to use admin tool for deploy ceph storage clusters.
@@ -51,6 +52,10 @@ export CEPH_DEPLOY_NO_VENDOR=1
 %python_sitelibdir/*
 
 %changelog
+* Tue Nov 22 2016 Lenar Shakirov <snejok@altlinux.ru> 1.5.34-alt3
+- Doesn't remove librados2 and librbd1 on purge: needed by qemu-img
+- Req: ceph > 0.94.7-alt2 (because we want ceph-mds) (ALT: #32309)
+
 * Mon Jun 20 2016 Lenar Shakirov <snejok@altlinux.ru> 1.5.34-alt2
 - Add 0001-altlinux-distro-added.patch
 
