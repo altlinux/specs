@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          libreadline-java
 Version:       0.8.0
-Release:       alt3_40jpp8
+Release:       alt3_42jpp8
 Summary:       Java wrapper for the EditLine library
 License:       LGPLv2+
 URL:           http://java-readline.sf.net/
@@ -20,9 +20,9 @@ Source1:       %{name}-%{version}-pom.xml
 Patch0:        %{name}-ncurses.patch
 Patch1:        %{name}-libdir.patch
 
-BuildRequires: jpackage-utils >= 1.5
+BuildRequires: javapackages-local
 BuildRequires: libedit-devel >= %{editline_ver}
-BuildRequires: ncurses-devel
+BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 
 Requires:      libedit >= %{editline_ver}
 Source44: import.info
@@ -33,8 +33,8 @@ wrapper.
 
 %package javadoc
 Group: Development/Java
-Summary:   Javadoc for %{name}
-BuildArch: noarch
+Summary:       Javadoc for %{name}
+BuildArch:     noarch
 
 %description javadoc
 API documentation for %{name}.
@@ -46,6 +46,8 @@ API documentation for %{name}.
 sed -i 's|@LIBDIR@|%{_libdir}|' src/org/gnu/readline/Readline.java
 
 sed -i 's|javadoc |javadoc -Xdoclint:none |' Makefile
+
+%mvn_file net.sourceforge:%{name} %{name}
 %__subst s,termcap,tinfo, src/native/Makefile
 
 %build
@@ -63,35 +65,27 @@ done
 
 %install
 
-# install jar file and JNI library under %{_libdir}/%{name}
+# install jar file and JNI library under %%{_libdir}/%%{name}
 # FIXME: fix jpackage-utils to handle multilib correctly
 mkdir -p %{buildroot}%{_libdir}/%{name}
 install -m 755 libJavaEditline.so %{buildroot}%{_libdir}/%{name}
-
-mkdir -p %{buildroot}%{_jnidir}
-install -pm 644 %{name}.jar %{buildroot}%{_jnidir}/%{name}.jar
-ln -sf ../../lib/java/%{name}.jar %{buildroot}%{_libdir}/%{name}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap
-
-# javadoc
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -a api/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_artifact %{SOURCE1} %{name}.jar
+ln -sf %{_jnidir}/%{name}.jar %{buildroot}%{_libdir}/%{name}/%{name}.jar
+%mvn_install -J api
 
 %files -f .mfiles
 %doc ChangeLog NEWS README README.1st VERSION
 %dir %{_libdir}/%{name}
 %{_libdir}/%{name}/*
-%{_jnidir}/*
 %doc COPYING.LIB
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc COPYING.LIB
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.8.0-alt3_42jpp8
+- new fc release
+
 * Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.8.0-alt3_40jpp8
 - %%_jnidir set to /usr/lib/java
 
