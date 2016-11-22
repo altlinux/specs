@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: docbook-dtds
 %define _without_tests 1
@@ -38,11 +38,11 @@ BuildRequires: jpackage-generic-compat
 
 Name:           mx4j
 Version:        3.0.1
-Release:        alt2_21jpp8
+Release:        alt2_22jpp8
 Epoch:          1
 Summary:        Open source implementation of JMX Java API
 License:        ASL 1.1
-Group:          Development/Java
+Group:          Development/Other
 Source0:        %{name}-%{version}-src.tar.gz
 Source1:        %{name}-build.policy
 Source2:        CatalogManager.properties
@@ -64,10 +64,10 @@ Patch3:         mx4j-docbook.patch
 Patch5:         mx4j-caucho-build.patch
 Patch6:         mx4j-no-iiop.patch
 URL:            http://mx4j.sourceforge.net/
-BuildRequires:  jpackage-utils > 0:1.6
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  ant-apache-resolver
-BuildRequires:  javamail
+BuildRequires:  javamail >= 0:1.2
 BuildRequires:  log4j >= 0:1.2.7
 BuildRequires:  apache-commons-logging >= 0:1.0.1
 BuildRequires:  xml-commons-apis
@@ -79,18 +79,18 @@ BuildRequires:  apache-commons-discovery
 BuildRequires:  docbook-dtds >= 0:1.0
 BuildRequires:  docbook-style-xsl >= 0:1.61
 BuildRequires:  xml-commons-resolver
-BuildRequires:  xml-commons-apis
+BuildRequires:  xml-commons
 BuildRequires:  xerces-j2
 BuildRequires:  dos2unix
 BuildArch:      noarch
-Requires:       javamail
+Requires:       javamail >= 0:1.2
 Requires:       log4j >= 0:1.2.7
 Requires:       apache-commons-logging >= 0:1.0.1
 Requires:       xml-commons-apis
 Requires:       bcel >= 0:5.0
 Requires:       axis >= 0:1.1
 Requires:       xml-commons-resolver
-Requires:       xml-commons-apis
+Requires:       xml-commons
 Source44: import.info
 
 %description
@@ -100,14 +100,14 @@ Java(TM) Management Extensions (JMX).
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
 Javadoc for %{name}.
 
 %package manual
-Group:          Development/Java
+Group:          Development/Other
 Summary:        Documentation for %{name}
 BuildArch: noarch
 
@@ -215,6 +215,9 @@ rm -f %{_javadir}/%{name}.jar
 %doc dist/docs/*
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt2_22jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt2_21jpp8
 - new version
 
