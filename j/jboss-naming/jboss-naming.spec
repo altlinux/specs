@@ -1,6 +1,8 @@
 Epoch: 0
 Group: Development/Java
-BuildRequires: jdepend
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-naming
 Version:          5.0.6
-Release:          alt2_0.11.CR1jpp8
+Release:          alt2_0.12.CR1jpp8
 Summary:          JBoss Naming
 License:          LGPLv2+
 URL:              http://www.jboss.org
@@ -28,7 +30,7 @@ BuildArch:        noarch
 BuildRequires:    jboss-common-core
 BuildRequires:    jboss-logging
 BuildRequires:    jboss-parent
-BuildRequires:    jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:    maven-local
 BuildRequires:    maven-antrun-plugin
 BuildRequires:    maven-enforcer-plugin
@@ -66,6 +68,9 @@ This package contains the API documentation for %{name}.
 %doc JBossORG-EULA.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.0.6-alt2_0.12.CR1jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.0.6-alt2_0.11.CR1jpp8
 - new version
 
