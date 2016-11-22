@@ -1,5 +1,8 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
@@ -14,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          apache-%{short_name}
 Version:       1.10
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Implementations of common encoders and decoders
 License:       ASL 2.0
 URL:           http://commons.apache.org/%{base_name}/
@@ -64,6 +67,9 @@ sed -i 's/\r//' RELEASE-NOTES*.txt LICENSE.txt NOTICE.txt
 %doc LICENSE.txt NOTICE.txt aspell-mail.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt1_3jpp8
+- new fc release
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt1_2jpp8
 - new version
 
