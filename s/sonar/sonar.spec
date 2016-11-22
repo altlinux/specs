@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           sonar
 Version:        3.2
-Release:        alt1_5jpp8
+Release:        alt1_7jpp8
 Summary:        An open platform to manage code quality
 License:        LGPLv3+
 URL:            http://www.sonarqube.org
@@ -17,6 +17,7 @@ Source0:        https://github.com/SonarSource/sonarqube/archive/%{version}.tar.
 Patch0:        0001-Remove-oracle-DB-support.patch
 Patch1:        0002-Port-to-guava-18.patch
 Patch2:        0003-Never-thrown-exception.patch
+Patch3:        0004-Port-maven-plugin-to-current-maven-dependency-tree.patch
 
 BuildRequires: maven-local
 
@@ -283,6 +284,7 @@ tests.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 find . -name "*.bat" -delete
 find . -name "*.class" -delete
@@ -387,6 +389,9 @@ rm -r plugins/sonar-squid-java-plugin/test-resources/ sonar-duplications/src/tes
 %files jacoco-plugin -f .mfiles-%{name}-jacoco-plugin
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_7jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_5jpp8
 - unbootstrap build
 
