@@ -1,7 +1,7 @@
 Epoch: 0
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 Summary:          Bouncy Castle Crypto Package for Java
 Name:             bouncycastle
 Version:          %{ver}
-Release:          alt1_7jpp8
+Release:          alt1_8jpp8
 License:          MIT
 URL:              http://www.bouncycastle.org
 # Use original sources from here on out.
@@ -25,13 +25,10 @@ Source2:          bouncycastle-OSGi.bnd
 BuildRequires:    aqute-bnd
 BuildRequires:    junit
 BuildRequires:    jpackage-utils
-Requires(post):   maven-local
-Requires(postun): maven-local
 
 BuildArch:        noarch
 
 Provides:         bcprov = %{version}-%{release}
-Provides:	  bouncycastle = 1.46
 Source44: import.info
 
 %description
@@ -105,7 +102,6 @@ install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-bcprov.pom
 %add_maven_depmap -a "bouncycastle:bcprov-jdk15,org.bouncycastle:bcprov-jdk16,org.bouncycastle:bcprov-jdk15" JPP-bcprov.pom bcprov.jar
 
 %check
-exit 0
 pushd src
   export CLASSPATH=$PWD:$(build-classpath junit hamcrest/core)
   for test in $(find . -name AllTests.class) ; do
@@ -175,6 +171,9 @@ fi
 %doc LICENSE.html
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.52-alt1_8jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.52-alt1_7jpp8
 - new version
 
