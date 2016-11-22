@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -8,9 +8,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:    felix-osgi-compendium
 Version: 1.4.0
-Release: alt5_21jpp8
+Release: alt5_22jpp8
 Summary: Felix OSGi R4 Compendium Bundle
-Group:   Development/Java
+Group:   Development/Other
 License: ASL 2.0
 URL:     http://felix.apache.org
 Source0: http://www.apache.org/dist/felix/%{bundle}-%{version}-project.tar.gz
@@ -26,7 +26,7 @@ Patch4:         0005-Add-getResourceURL-method-to-make-jbosgi-framework-h.patch
 
 BuildArch:      noarch
 
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires: maven-local
 BuildRequires: felix-osgi-core
 BuildRequires: felix-osgi-foundation
@@ -77,6 +77,9 @@ This package contains API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt5_22jpp8
+- new fc release
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt5_21jpp8
 - new version
 
