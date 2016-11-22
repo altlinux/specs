@@ -1,12 +1,15 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jutils
 Version:        1.0.1
-Release:        alt2_12.20110719svnjpp8
+Release:        alt2_13.20110719svnjpp8
 Summary:        Common utilities for the Java Gaming Interface
 
-Group:          Development/Java
+Group:          Development/Other
 License:        BSD
 URL:            http://java.net/projects/jutils
 ### upstream only provides subversion checkout
@@ -16,7 +19,7 @@ URL:            http://java.net/projects/jutils
 Source0:        %{name}-%{version}.tar.xz
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  maven-local
 Source44: import.info
 
@@ -53,6 +56,9 @@ sed -i 's/-SNAPSHOT//' pom.xml
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_13.20110719svnjpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_12.20110719svnjpp8
 - new version
 
