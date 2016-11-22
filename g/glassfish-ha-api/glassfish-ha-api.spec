@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          glassfish-ha-api
 Version:       3.1.9
-Release:       alt1_6jpp8
+Release:       alt1_8jpp8
 Summary:       High Availability APIs and SPI
 License:       CDDL or GPLv2 with exceptions
 URL:           http://glassfish.java.net/
@@ -15,16 +18,12 @@ Source0:       %{name}-%{version}-src-svn.tar.gz
 # glassfish-ha-api package don't include the license file
 Source1:       glassfish-LICENSE.txt
 
-BuildRequires: jvnet-parent
-BuildRequires: glassfish-hk2-api
-# test dep
-BuildRequires: junit
-
-BuildRequires: glassfish-hk2-maven-plugins
 BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-plugin-bundle
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(net.java:jvnet-parent:pom:)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.glassfish.hk2:hk2-api)
+BuildRequires: mvn(org.glassfish.hk2:osgiversion-maven-plugin)
 
 BuildArch:     noarch
 Source44: import.info
@@ -43,29 +42,20 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q -n %{name}-%{version}
 
-sed -i "s|<packaging>hk2-jar</packaging>|<packaging>jar</packaging>|" pom.xml
-
-sed -i "s|<artifactId>hk2</artifactId>|<artifactId>hk2-api</artifactId>|" pom.xml
-
-%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId ='maven-bundle-plugin']/pom:configuration"
-
+# Remove support for hk2-jar
+%pom_xpath_remove "pom:supportedProjectTypes"
 %pom_remove_plugin org.glassfish.hk2:hk2-maven-plugin
-%pom_add_plugin org.apache.maven.plugins:maven-jar-plugin . '
-<configuration>
-  <archive>
-    <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
-  </archive>
-</configuration>'
 
-sed -i "s|<artifactId>hk2</artifactId>|<artifactId>hk2-api</artifactId>|" pom.xml
+%pom_xpath_set pom:packaging bundle
+%pom_xpath_inject "pom:plugin[pom:artifactId ='maven-bundle-plugin']" "
+<version>2.5.4</version>
+<extensions>true</extensions>"
+
+%pom_change_dep :hk2 :hk2-api
 
 # META-INF/inhabitants/default contents ...not available without hk2
 #class=org.glassfish.ha.store.impl.NoOpBackingStoreFactory,index=org.glassfish.ha.store.api.BackingStoreFactory:noop
 #class=org.glassfish.ha.store.spi.ObjectInputStreamWithLoader
-
-# in hk2 some modules require unavailable libraries. and i cant build ha-api as hk2-jar
-#%%pom_xpath_remove "pom:project/pom:packaging"
-#%%pom_xpath_inject "pom:project" "<packaging>jar</packaging>"
 
 cp -p %{SOURCE1} LICENSE.txt
 sed -i 's/\r//' LICENSE.txt
@@ -86,6 +76,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.1.9-alt1_8jpp8
+- new fc release
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 3.1.9-alt1_6jpp8
 - java 8 mass update
 
