@@ -1,13 +1,13 @@
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: docbook-dtds
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 24
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name hibernate3
 %define version 3.6.10
@@ -18,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    hibernate3
 Version: 3.6.10
-Release: alt3_17jpp8
+Release: alt3_19jpp8
 Summary: Relational persistence and query service
 License: LGPLv2+
 URL:     http://www.hibernate.org/
@@ -34,7 +34,7 @@ Patch4:  hibernate-orm-cglib-3.1.patch
 
 BuildArch: noarch
 
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires: maven-local >= 0.7.2
 BuildRequires: maven-local
 BuildRequires: maven-release-plugin
@@ -228,6 +228,9 @@ export LANG=en_US.UTF-8
 %doc lgpl.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt3_19jpp8
+- new fc release
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt3_17jpp8
 - java 8 mass update
 
