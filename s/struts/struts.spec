@@ -1,16 +1,14 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
-%global master_version 4
 Name:          struts
 Version:       1.3.10
-Release:       alt4_15jpp8
+Release:       alt4_17jpp8
 Summary:       Web application framework
 License:       ASL 2.0
 URL:           http://struts.apache.org/
@@ -20,29 +18,16 @@ URL:           http://struts.apache.org/
 # rm -r struts-1.3.10/src/core/src/main/resources/org/apache/struts/resources/web-app_2_3.dtd
 # tar czf struts-1.3.10-clean-src.tar.gz struts-1.3.10
 Source0:       %{name}-%{version}-clean-src.tar.gz
-# wget -O struts-master-4-pom.xml http://svn.apache.org/repos/asf/struts/maven/tags/STRUTS_MASTER_4/pom.xml
-Source1:       %{name}-master-%{master_version}-pom.xml
-# add struts-master relativePath
-Patch0:        %{name}-%{version}-parent-pom.patch
-# add 
-#  org.jboss.spec.javax.el
-#  org.apache.maven.plugins maven-resources-plugin configuration
-# change 
-#  myfaces myfaces-jsf-api 1.0.9 with org.jboss.spec.javax.faces
-#  jakarta-taglibs-standard with taglibs-standard-jstlel
-#  javax.servlet servlet-api with org.jboss.spec.javax.servlet
-#  javax.servlet jsp-api with org.jboss.spec.javax.servlet.jsp
-# fix
-#  bsf gId
-#  maven-compiler-plugin build source/target
-#  build for junit servlet-3.1-api
-Patch1:        %{name}-%{version}-jboss.patch
+
+# fix build for junit servlet-3.0-api
+Patch1:        struts-1.3.10-fix-build.patch
 # Thanks to Arun Babu Neelicattu aneelica@redhat.com
 # and Brandon.Vincent@asu.edu
 Patch2:        struts-1.3.10-CVE-2014-0114.patch
 
 Patch3:        struts-1.3.10-CVE-2015-0899.patch
 
+BuildRequires: maven-local
 BuildRequires: mvn(antlr:antlr)
 BuildRequires: mvn(commons-beanutils:commons-beanutils)
 BuildRequires: mvn(commons-chain:commons-chain)
@@ -51,11 +36,7 @@ BuildRequires: mvn(commons-fileupload:commons-fileupload)
 BuildRequires: mvn(commons-logging:commons-logging)
 BuildRequires: mvn(commons-validator:commons-validator)
 BuildRequires: mvn(junit:junit)
-%if %{?fedora} >= 21
 BuildRequires: mvn(log4j:log4j:1.2.17)
-%else
-BuildRequires: mvn(log4j:log4j)
-%endif
 BuildRequires: mvn(org.apache.bsf:bsf)
 BuildRequires: mvn(org.apache.taglibs:taglibs-standard-jstlel)
 BuildRequires: mvn(org.jboss.spec.javax.el:jboss-el-api_3.0_spec)
@@ -63,8 +44,6 @@ BuildRequires: mvn(org.jboss.spec.javax.faces:jboss-jsf-api_2.2_spec)
 BuildRequires: mvn(org.jboss.spec.javax.servlet.jsp:jboss-jsp-api_2.3_spec)
 BuildRequires: mvn(org.jboss.spec.javax.servlet:jboss-servlet-api_3.1_spec)
 BuildRequires: mvn(oro:oro)
-
-BuildRequires: maven-local
 
 BuildArch:     noarch
 Obsoletes:     %{name}-manual < %{version}
@@ -100,7 +79,7 @@ This package contains javadoc for %{name}.
 %setup -q
 find -name "*.jar" -delete
 find -name "*.class" -delete
-%patch0 -p0
+
 %patch1 -p1
 %patch2 -p0
 %patch3 -p1
@@ -112,10 +91,21 @@ for s in src/tiles/src/main/java/org/apache/struts/tiles/ComponentDefinition.jav
   native2ascii -encoding UTF8 ${s} ${s}
 done
 
-%pom_remove_parent src
-#cp -p %%{SOURCE1} pom.xml
-
 cd src
+
+%pom_remove_parent
+
+%pom_change_dep -r :servlet-api org.jboss.spec.javax.servlet:jboss-servlet-api_3.1_spec:1.0.0.Beta1
+%pom_change_dep -r :jstl org.apache.taglibs:taglibs-standard-jstlel:1.2.3
+%pom_remove_dep -r taglibs:standard
+
+%pom_change_dep -r :jsp-api org.jboss.spec.javax.servlet.jsp:jboss-jsp-api_2.3_spec:1.0.0.Beta1
+%pom_change_dep -r :myfaces-jsf-api org.jboss.spec.javax.faces:jboss-jsf-api_2.2_spec:2.2.0
+%pom_change_dep -r :bsf org.apache.bsf:
+
+# package javax.servlet.jsp.el does not exist
+%pom_add_dep org.jboss.spec.javax.servlet.jsp:jboss-jsp-api_2.3_spec:1.0.0.Beta1 core
+
 %mvn_file :%{name}-core %{name}/core
 %mvn_file :%{name}-el %{name}/el
 %mvn_file :%{name}-extras %{name}/extras
@@ -139,13 +129,15 @@ cd src
 rm -rf $RPM_BUILD_ROOT/var/lib/tomcat?/webapps/struts-documentation/download.cgi
 
 %files -f src/.mfiles
-%dir %{_javadir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %files javadoc -f src/.mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt4_17jpp8
+- new fc release
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt4_15jpp8
 - java 8 mass update
 
