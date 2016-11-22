@@ -1,11 +1,14 @@
 Epoch: 1
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jbossxb
 Version:        2.0.3
-Release:        alt2_9jpp8
+Release:        alt2_10jpp8
 Summary:        JBoss XML Binding
 
 License:        LGPLv2+
@@ -68,6 +71,9 @@ find -type f -name *.class -delete
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.0.3-alt2_10jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.0.3-alt2_9jpp8
 - java8 mass update
 
