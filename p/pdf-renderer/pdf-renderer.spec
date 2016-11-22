@@ -1,8 +1,10 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global alternate_name PDFRenderer
 %global svn_date 20110310
 %global svn_version 128svn
@@ -10,23 +12,22 @@ BuildRequires: jpackage-compat
 Summary:        A 100% Java PDF renderer and viewer
 Name:           pdf-renderer
 Version:        0
-Release:        alt3_0.14.128svn.20110310jpp8
+Release:        alt3_0.18.128svn.20110310jpp8
 #src/com/sun/pdfview/decode/CCITTFaxDecoder.java under a BSD-alike License
 #src/com/sun/pdfview/font/ttf/resource/glyphlist.txt and src/com/sun/pdfview/font/ttf/AdobeGlyphList.java
 #are under Adobe Glyph List License
 License:        LGPLv2+ and MIT and BSD
-URL:            https://pdf-renderer.dev.java.net/
-Group:          Development/Java
+URL:            https://java.net/projects/pdf-renderer/
 Source0:        %{name}-%{svn_version}-%{svn_date}.tar.bz2
 # To fetch the source code
 Source1:        %{name}-snapshot.sh
 BuildRequires:  ant
 BuildRequires:  ant-apache-regexp
-BuildRequires:  jpackage-utils
-BuildRequires:  urw-fonts
+BuildRequires:  javapackages-local
+BuildRequires:  fonts-type1-urw
 BuildArch:      noarch
-Requires:       jpackage-utils >= 1.5
-Requires:       urw-fonts
+
+Requires:       fonts-type1-urw
 Provides:       %{alternate_name} == %{version}-%{release}
 Source44: import.info
 
@@ -39,10 +40,8 @@ used to draw on top of PDFs, share them over a network, convert
 PDFs to PNG images, or maybe even project PDFs into a 3D scene.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{alternate_name}
-Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -89,32 +88,31 @@ popd
 # -------------------------------------------------------------
 
 %build
-%ant ||:
+%ant \
+ -Djavadoc.additionalparam="-Xdoclint:none" \
+ -Djavac.source=1.6 -Djavac.target=1.6
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-install -m 644 dist/%{alternate_name}.jar \
-      $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr dist/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_file com.sun.pdfview:pdfrenderer %{name}
+%mvn_artifact com.sun.pdfview:pdfrenderer:%{version} dist/%{alternate_name}.jar
+%mvn_install -J dist/javadoc
 
 # compat symlink (requected by @REAL); just let it be (but use pdf-renderer.jar, please!)
 pushd %buildroot%_javadir
 ln -s pdf-renderer.jar PDFRenderer.jar
 
-%files
+%files -f .mfiles
 %doc demos
-%{_javadir}/%{name}.jar
 %_javadir/PDFRenderer.jar
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 # -----------------------------------------------------------------------------
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt3_0.18.128svn.20110310jpp8
+- new fc release
+
 * Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt3_0.14.128svn.20110310jpp8
 - fixed build with javadoc 8
 
