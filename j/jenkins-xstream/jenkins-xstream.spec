@@ -1,15 +1,15 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
-BuildRequires: /proc android-json-org-java
+BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 %global patchlvl 1
 
 Name:           jenkins-xstream
 Version:        1.4.7
-Release:        alt1_6.jenkins1jpp8
+Release:        alt1_8.jenkins1jpp8
 Summary:        Jenkins XStream library
 
 License:        BSD
@@ -87,8 +87,10 @@ API documentation for %{name}.
 # unavailable deps
 %pom_xpath_remove "pom:extension[pom:artifactId[text()='wagon-webdav']]"
 %pom_remove_dep :xml-writer xstream
-%pom_remove_dep :xmlpull xstream
 %pom_remove_dep :kxml2-min xstream
+
+# Replace old xmlpull dependency with xpp3
+%pom_change_dep :xmlpull xpp3:xpp3:1.1.4c xstream
 
 # missing dep proxytoys:proxytoys
 %pom_remove_plugin :maven-dependency-plugin xstream
@@ -111,6 +113,9 @@ API documentation for %{name}.
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.7-alt1_8.jenkins1jpp8
+- new fc release
+
 * Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.7-alt1_6.jenkins1jpp8
 - java 8 mass update
 
