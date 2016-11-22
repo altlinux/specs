@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    jboss-jsf-2.1-api
 Version: 2.0.2
-Release: alt3_11jpp8
+Release: alt3_12jpp8
 Summary: JavaServer Faces 2.1 API
 License: CDDL or GPLv2 with exceptions
 URL:     http://www.jboss.org
@@ -72,6 +75,9 @@ This package contains the API documentation for %{name}.
 %doc README
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt3_12jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt3_11jpp8
 - new version
 
