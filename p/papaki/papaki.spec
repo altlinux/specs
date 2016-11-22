@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           papaki
 Version:        1.0.0
-Release:        alt1_0.7.Beta3jpp8
+Release:        alt1_0.8.Beta3jpp8
 Summary:        An annotation scanner and repository
 
 License:        LGPLv2+
@@ -44,7 +44,7 @@ Patch2:         %{name}-javadoc.patch
  
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 
 BuildRequires:  apache-ivy
 BuildRequires:  junit
@@ -53,7 +53,7 @@ BuildRequires:  apiviz
 BuildRequires:  jdepend
 BuildRequires:  javassist
 
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Requires:       javassist
 Source44: import.info
 
@@ -64,7 +64,7 @@ and generate a repository of these annotations.
 %package javadoc
 Summary:          Javadocs for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -117,6 +117,9 @@ cp -rp target/docs/indexer/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/%{name}-index
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.8.Beta3jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.7.Beta3jpp8
 - new version
 
