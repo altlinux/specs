@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -14,20 +14,20 @@ BuildRequires: jpackage-generic-compat
 
 Name:           sblim-cim-client2
 Version:        2.2.5
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Java CIM Client library
 
-Group:          Development/Java
+Group:          Development/Other
 License:        EPL
 URL:            http://sourceforge.net/projects/sblim/
 Source0:        http://downloads.sourceforge.net/project/sblim/%{name}/%{version}/%{name}-%{version}-src.zip
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils >= 0:1.5.32
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant >= 0:1.6
 
-Requires:       jpackage-utils >= 0:1.5.32
+Requires: javapackages-tools rpm-build-java
 Source44: import.info
 
 %description
@@ -41,8 +41,8 @@ http://www.jcp.org and http://www.jcp.org/en/jsr/detail?id=48.
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires:       sblim-cim-client2 = %{version}-%{release}
-Requires:       jpackage-utils
+Requires:       sblim-cim-client2 = %{version}
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -51,7 +51,7 @@ Javadoc for %{name}.
 %package manual
 Summary:        Manual and sample code for %{name}
 Group:          Development/Java
-Requires:       sblim-cim-client2 = %{version}-%{release}
+Requires:       sblim-cim-client2 = %{version}
 BuildArch: noarch
 
 %description manual
@@ -123,6 +123,9 @@ cp -pr %{archive_folder}/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt1_5jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt1_4jpp8
 - new version
 
