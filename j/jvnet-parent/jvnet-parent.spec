@@ -1,12 +1,15 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jvnet-parent
 Version:        4
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Java.net parent POM file
 
-Group:          Development/Java
+Group:          Development/Other
 License:        ASL 2.0
 URL:            http://www.java.net
 Source0:        http://repo1.maven.org/maven2/net/java/%{name}/%{version}/%{name}-%{version}.pom
@@ -14,11 +17,10 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  maven-local
 BuildRequires:  maven-enforcer-plugin
 Source44: import.info
-Provides: mvn(net.java:jvnet-parent) = 4
 
 
 %description
@@ -41,6 +43,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 4-alt1_7jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 4-alt1_6jpp8
 - new version
 
