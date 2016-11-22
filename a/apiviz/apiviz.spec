@@ -1,8 +1,11 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 24
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name apiviz
 %define version 1.3.2
@@ -11,9 +14,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apiviz
 Version:          1.3.2
-Release:          alt1_9jpp8
+Release:          alt1_10jpp8
 Summary:          APIviz is a JavaDoc doclet to generate class and package diagrams
-Group:            Development/Java
+Group:            Development/Other
 License:          LGPLv2+
 URL:              http://code.google.com/p/apiviz/
 Source0:          http://apiviz.googlecode.com/files/apiviz-%{namedversion}-dist.tar.gz
@@ -22,7 +25,7 @@ Patch1:           0002-JDK8-compatibility.patch
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:    maven-local
 BuildRequires:    maven-antrun-plugin
 BuildRequires:    maven-compiler-plugin
@@ -85,6 +88,9 @@ find -name '*.jar' -exec rm -f '{}' \;
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt1_10jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt1_9jpp8
 - java 8 mass update
 
