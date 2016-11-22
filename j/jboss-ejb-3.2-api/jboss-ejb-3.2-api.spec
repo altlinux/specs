@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 %global pname jboss-ejb-api_spec
 Name:          jboss-ejb-3.2-api
 Version:       1.0.0
-Release:       alt1_0.5.Alpha2jpp8
+Release:       alt1_0.6.Alpha2jpp8
 Summary:       Enterprise JavaBeans 3.2 API
 License:       CDDL or GPLv2 with exceptions
 URL:           https://github.com/jboss/jboss-ejb-api_spec
@@ -67,6 +70,9 @@ cp -p %{SOURCE1} .
 %doc cddl.txt LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.6.Alpha2jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.5.Alpha2jpp8
 - java 8 mass update
 
