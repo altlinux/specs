@@ -1,11 +1,14 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           plexus-build-api
 Version:        0.0.7
-Release:        alt3_15jpp8
+Release:        alt3_16jpp8
 Summary:        Plexus Build API
 License:        ASL 2.0
 URL:            https://github.com/sonatype/sisu-build-api
@@ -57,6 +60,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.0.7-alt3_16jpp8
+- new fc release
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.0.7-alt3_15jpp8
 - new version
 
