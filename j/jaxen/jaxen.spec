@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -34,7 +37,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jaxen
 Version:        1.1.6
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Epoch:          0
 Summary:        An XPath engine written in Java
 License:        BSD
@@ -64,7 +67,7 @@ with XPath too.
 %package demo
 Group: Development/Documentation
 Summary:        Samples for %{name}
-Requires:       jaxen = 0:%{version}-%{release}
+Requires:       jaxen = 0:%{version}
 
 %description demo
 %{summary}.
@@ -106,6 +109,9 @@ cp -pr src/java/samples/* %{buildroot}%{_datadir}/%{name}/samples
 %{_datadir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.6-alt1_8jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.6-alt1_7jpp8
 - new version
 
