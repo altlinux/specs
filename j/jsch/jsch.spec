@@ -1,5 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
@@ -9,9 +10,9 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jsch
 Version:        0.1.53
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Pure Java implementation of SSH2
-Group:          Development/Java
+Group:          Development/Other
 License:        BSD
 URL:            http://www.jcraft.com/jsch/
 BuildArch:      noarch
@@ -78,6 +79,9 @@ zip target/%{name}-%{version}.jar plugin.properties
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.1.53-alt1_4jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.1.53-alt1_3jpp8
 - new version
 
