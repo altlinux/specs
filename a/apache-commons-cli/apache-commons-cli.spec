@@ -1,4 +1,7 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -6,9 +9,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-%{short_name}
 Version:          1.3.1
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          Command Line Interface Library for Java
-Group:            Development/Java
+Group:            Development/Other
 License:          ASL 2.0
 URL:              http://commons.apache.org/cli/
 Source0:          http://www.apache.org/dist/commons/cli/source/%{short_name}-%{version}-src.tar.gz
@@ -16,11 +19,11 @@ Source0:          http://www.apache.org/dist/commons/cli/source/%{short_name}-%{
 Patch0:           CLI-253-workaround.patch
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:    maven-local
 BuildRequires:    jacoco-maven-plugin
 
-Requires:         jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Source44: import.info
 Obsoletes: jakarta-%{short_name} < 1:%{version}-%{release}
 Conflicts: jakarta-%{short_name} < 1:%{version}-%{release}
@@ -33,7 +36,7 @@ command line arguments and options.
 %package javadoc
 Summary:          Javadoc for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -61,6 +64,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt1_3jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt1_2jpp8
 - java 8 mass update
 
