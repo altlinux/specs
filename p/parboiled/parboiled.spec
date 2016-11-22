@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %global scala_short_version 2.10
 Name:          parboiled
 Version:       1.1.6
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       Java/Scala library providing parsing of input text based on PEGs
 License:       ASL 2.0
 URL:           http://parboiled.org/
@@ -163,6 +163,9 @@ sed -i "s|@VERSION@|%{version}|" pom.xml
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_9jpp8
+- new fc release
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_8jpp8
 - new version
 
