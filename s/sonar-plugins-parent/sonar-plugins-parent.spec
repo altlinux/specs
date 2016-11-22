@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           sonar-plugins-parent
 Version:        16
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        Sonar Plugins Parent POM
 
 License:        LGPLv3+
@@ -31,6 +34,7 @@ Sonar Plugins Parent POM.
 %pom_xpath_remove pom:build/pom:extensions
 %pom_remove_plugin :maven-license-plugin
 %pom_remove_plugin :animal-sniffer-maven-plugin
+%pom_remove_plugin :maven-enforcer-plugin
 
 %mvn_file ':{*}' @1
 
@@ -43,6 +47,9 @@ Sonar Plugins Parent POM.
 %files -f .mfiles
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 16-alt1_4jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 16-alt1_2jpp8
 - new version
 
