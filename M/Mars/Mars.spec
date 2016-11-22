@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           Mars
 Version:        4.5
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        An interactive development environment for programming in MIPS assembly language
 
 Group:          Development/Java
@@ -20,10 +20,10 @@ Source3:        build.xml
 BuildArch:      noarch
 
 BuildRequires:  ant
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  desktop-file-utils
 
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Source44: import.info
 
 %description
@@ -58,6 +58,9 @@ desktop-file-install                                \
 %doc MARSlicense.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 4.5-alt1_3jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 4.5-alt1_2jpp8
 - new version
 
