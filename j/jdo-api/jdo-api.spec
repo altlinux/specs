@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          jdo-api
 Version:       3.1
-Release:       alt1_0.7.rc1jpp8
+Release:       alt1_0.8.rc1jpp8
 Summary:       JDO 3.1 API
 License:       ASL 2.0
 URL:           http://db.apache.org/jdo/
@@ -111,6 +114,9 @@ rm -r api/test/java/javax/jdo/EnhancerTest.java \
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_0.8.rc1jpp8
+- new fc release
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_0.7.rc1jpp8
 - unbootsrap build
 
