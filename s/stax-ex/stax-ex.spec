@@ -1,11 +1,14 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          stax-ex
 Version:       1.7.7
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       StAX API extensions
 License:       CDDL or GPLv2
 Url:           https://stax-ex.dev.java.net
@@ -71,6 +74,9 @@ dos2unix LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.7.7-alt1_4jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.7.7-alt1_3jpp8
 - new version
 
