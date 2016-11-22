@@ -1,15 +1,23 @@
 Epoch: 1
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          annogen 
 Version:       0.1.0
-Release:       alt1_12jpp8
+Release:       alt1_14jpp8
 Summary:       Java framework for JSR-175 annotations 
 License:       ASL 2.0
-URL:           http://annogen.codehaus.org/
-# svn export http://svn.codehaus.org/annogen/annogen/tags/release-0_1_0/ annogen-0.1.0
+URL:           https://github.com/codehaus/annogen
+# git clone https://github.com/codehaus/annogen/ annogen-0.1.0
+# rm -rf annogen-0.1.0/annogen/ide-projects rm -rf annogen-0.1.0/annogen/trunk
+# mv annogen-0.1.0/annogen/tags/release-0_1_0 annogen-0.1.0
+# rm -rf annogen-0.1.0/annogen
+# mv annogen-0.1.0/release-0_1_0/* annogen-0.1.0
+# rm -rf annogen-0.1.0/release-0_1_0
 # find annogen-0.1.0/ -name '*.jar' -delete
 # tar cJf annogen-0.1.0-CLEAN.tar.xz annogen-0.1.0
 Source0:       %{name}-%{version}-CLEAN.tar.xz
@@ -59,8 +67,8 @@ done
 %build
 
 export CLASSPATH=$( build-classpath qdox)
-ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 jars
-ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 docs
+ant jars
+ant docs
 
 %install
 %mvn_file %{name}:%{name} %{name}
@@ -75,6 +83,9 @@ ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 docs
 %doc license/LICENSE.txt license/NOTICE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.1.0-alt1_14jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.1.0-alt1_12jpp8
 - new version
 
