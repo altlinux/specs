@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -6,10 +7,10 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-install-plugin
 Version:        2.5.2
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Maven Install Plugin
 
-Group:          Development/Java
+Group:          Development/Other
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-install-plugin
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
@@ -38,7 +39,7 @@ Copies the project artifacts to the user's local repository.
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -68,6 +69,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1_4jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1_3jpp8
 - new version
 
