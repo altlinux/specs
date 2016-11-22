@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             felix-gogo-parent
 Version:          0.6.0
-Release:          alt3_13jpp8
+Release:          alt3_14jpp8
 Summary:          Parent package for Felix Gogo
 License:          ASL 2.0
 URL:              http://felix.apache.org/site/apache-felix-gogo.html
@@ -43,6 +46,9 @@ dynamic service deployment framework that is amenable to remote management.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt3_14jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt3_13jpp8
 - new version
 
