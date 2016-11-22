@@ -1,6 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -8,9 +8,9 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             jacorb
 Version:          2.3.1
-Release:          alt1_15jpp8
+Release:          alt1_16jpp8
 Summary:          The Java implementation of the OMG's CORBA standard
-Group:            Development/Java
+Group:            Development/Other
 License:          LGPLv2
 URL:              http://www.jacorb.org/index.html
 
@@ -61,7 +61,7 @@ This package contains the Java implementation of the OMG's CORBA standard
 %package javadoc
 Summary:          Javadocs for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -124,6 +124,9 @@ ant all doc
 %doc doc/LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.3.1-alt1_16jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.3.1-alt1_15jpp8
 - new version
 
