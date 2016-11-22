@@ -1,28 +1,29 @@
+Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global server_ver      2.2.0
-%global short_name      apache-james
+Name:           apache-james-project
+Version:        1.8.1
+Release:        alt1_13jpp8
+Summary:        Main project POM files and resources
+License:        ASL 2.0
+URL:            http://james.apache.org/
+BuildArch:      noarch
 
-Name:             %{short_name}-project
-Version:          1.8.1
-Release:          alt1_11jpp8
-Summary:          Main project POM files and resources
-License:          ASL 2.0
-Group:            Development/Java
-URL:              http://james.apache.org/
 # ./create-tarball.sh %%{VERSION}
-Source0:          james-project-1.8.1-clean.tar.gz
-Source1:          create-tarball.sh
-BuildArch:        noarch
+Source0:        james-project-1.8.1-clean.tar.gz
+Source1:        create-tarball.sh
 
-BuildRequires:    maven-local
-BuildRequires:    maven-site-plugin
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-site-plugin)
 Source44: import.info
 
-
 %description
-Main project POM files and resources for Apache James project
+Main project POM files and resources for Apache James project.
 
 %prep
 %setup -q -n james-project-%{version}
@@ -43,6 +44,9 @@ Main project POM files and resources for Apache James project
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_13jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_11jpp8
 - new version
 
