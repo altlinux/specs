@@ -1,16 +1,22 @@
 Name: rpm2html
-Version: 1.9.7
-Release: alt1.2
+Version: 1.11.2
+Release: alt1
 
 Summary: Translates an RPM database and dependency information into HTML
 License: W3C Copyright (BSD like).
 Group: Text tools
-Packager: Eugeny A. Rostovtsev (REAL) <real@altlinux.org>
 
 Url: http://rufus.w3.org/linux/rpm2html/
-Source0: http://ftp.twaren.net/Unix/NonGNU/rpm2html/rpm2html-1.9.7.tar.gz
-Source1: %name-README.ALT
-Patch4: rpm2html-1.9.7-alt-rpmts.patch
+# repacked http://download.savannah.gnu.org/releases/rpm2html/rpm2html-%version.tar.gz
+Source0: %name-%version.tar
+
+# Debian
+Patch10: manpage.patch
+Patch11: rpm-4.9.patch
+Patch12: fix-segfault.patch
+Patch13: cve-syntax.patch
+Patch14: fix-strndup.patch
+Patch15: int_32.patch
 
 # Automatically added by buildreq on Mon Jan 05 2009
 BuildRequires: bzlib-devel libdb4.7-devel librpm-devel libxml2-devel
@@ -28,7 +34,12 @@ files.
 
 %prep
 %setup
-%patch4 -p0
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
 
 %add_findreq_skiplist %_datadir/%name
 
@@ -43,7 +54,6 @@ install -d %buildroot%_datadir/%name
 install -pD -m755 %name %buildroot%_bindir/%name
 install -pD -m644 %name.config  %buildroot%_sysconfdir/%name.config
 install -pD -m644 %name.1  %buildroot%_man1dir/%name.1
-install -p -m644 %SOURCE1 README.ALT-ru_RU.KOI8-R
 subst 's@url\=\/rpm2html@url=/var/www/html/rpm2html@g' \
 	%buildroot/etc/rpm2html.config
 
@@ -57,6 +67,9 @@ subst 's@url\=\/rpm2html@url=/var/www/html/rpm2html@g' \
 /var/www/html/rpm2html
 
 %changelog
+* Tue Aug 16 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.11.2-alt1
+- Updated to 1.11.2.
+
 * Sat Mar 05 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.7-alt1.2
 - Fixed build
 

@@ -9,7 +9,7 @@
 
 Name: synaptic
 Version: 0.58
-Release: alt15
+Release: alt15.qa1
 
 Summary: Graphical front-end for APT
 Summary(ru_RU.UTF-8): Графическая оболочка для APT
@@ -128,6 +128,10 @@ install -p -m644 %SOURCE4 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 %exclude %_datadir/pixmaps/%name.png
 
 %changelog
+* Wed Nov 23 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.58-alt15.qa1
+- Rebuilt with libapt-pkg-libc6.9-6.so.6.
+- Fixed build with rpm 4.13.
+
 * Wed May 04 2016 Denis Medvedev <nbr@altlinux.org> 0.58-alt15
 - Fix bug with missing history.
 
