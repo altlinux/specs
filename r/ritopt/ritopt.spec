@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: /usr/bin/find gcc-c++ java-devel-default
+BuildRequires(pre): rpm-macros-java
+BuildRequires: gcc-c++ java-devel-default
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           ritopt
 Version:        0.2.1
-Release:        alt1_14jpp8
+Release:        alt1_15jpp8
 Summary:        A Java library for parsing command-line options
 License:        GPLv2+
 Group:          Development/Java
@@ -18,11 +18,11 @@ Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}-all.
 ## Patch for javadoc build
 Patch0:         %{name}-0.2.1-javadoc.patch
 
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant
 BuildRequires: /usr/bin/latex texlive-latex-recommended
 
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Source44: import.info
 
 %description
@@ -31,7 +31,7 @@ Ritopt is an options parser for the Java programming language
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 %description javadoc
 Documentation for the ritopt library
@@ -76,6 +76,9 @@ cp -r javadoc ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_15jpp8
+- new fc release
+
 * Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_14jpp8
 - java8 mass update
 
