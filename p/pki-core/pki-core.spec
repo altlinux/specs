@@ -51,7 +51,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             pki-core
 Version:          10.2.6
-Release:          alt2_19jpp8
+Release:          alt3_19jpp8
 Summary:          Certificate System - PKI Core Components
 URL:              http://pki.fedoraproject.org/
 License:          GPLv2
@@ -365,7 +365,6 @@ Provides:         pki-util = %{version}-%{release}
 Obsoletes:        pki-common < %{version}-%{release}
 Obsoletes:        pki-util < %{version}-%{release}
 
-Conflicts: freeipa-server freeipa-server-trust-ad
 Requires:         apache-commons-cli
 Requires:         apache-commons-codec
 Requires:         apache-commons-io
@@ -486,7 +485,7 @@ Requires: policycoreutils policycoreutils-sandbox
 %endif
 
 %if 0%{?fedora} >= 21
-Requires:         selinux-policy-targeted 
+#Requires:         selinux-policy-targeted 
 %else
 # 0%{?rhel} || 0%{?fedora} < 21
 Requires:         selinux-policy-targeted >= 3.13.1
@@ -1140,6 +1139,9 @@ echo >> /var/log/pki/pki-server-upgrade-%{version}.log 2>&1
 %endif # %{with server}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 10.2.6-alt3_19jpp8
+- cleanup: removed conflict glitch and selinux dependency
+
 * Mon Nov 21 2016 Igor Vlasenko <viy@altlinux.ru> 10.2.6-alt2_19jpp8
 - bugfix thanks to @sem
 
