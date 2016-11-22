@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:       aesh
 Version:    0.33.7
-Release:    alt1_3jpp8
+Release:    alt1_4jpp8
 Summary:    Another Extendable SHell
 License:    EPL
 URL:        http://aeshell.github.io/
@@ -58,6 +58,9 @@ This package contains the API documentation for %{name}.
 %doc license.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.33.7-alt1_4jpp8
+- new fc release
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0.33.7-alt1_3jpp8
 - java 8 mass update
 
