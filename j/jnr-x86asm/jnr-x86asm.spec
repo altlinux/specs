@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -6,10 +9,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jnr-x86asm
 Version:        1.0.2
-Release:        alt2_8jpp8
+Release:        alt2_9jpp8
 Summary:        Pure-java port of asmjit
 
-Group:          Development/Java
+Group:          Development/Other
 License:        MIT
 URL:            http://github.com/jnr/%{name}/
 Source0:        https://github.com/jnr/%{name}/tarball/%{version}/jnr-%{name}-%{version}-0-g%{commit_hash}.tar.gz
@@ -51,6 +54,9 @@ find ./ -name '*.class' -delete
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_9jpp8
+- new fc release
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_8jpp8
 - java 8 mass update
 
