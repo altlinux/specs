@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -39,12 +39,12 @@ BuildRequires: jpackage-generic-compat
 
 Name:        avalon-%{short_name}
 Version:     4.3
-Release:     alt4_14jpp8
+Release:     alt4_15jpp8
 Epoch:       0
 Summary:     Java components interfaces
 License:     ASL 2.0
 URL:         http://avalon.apache.org/%{short_name}/
-Group:       Development/Java
+Group:       Development/Other
 Source0:     http://archive.apache.org/dist/excalibur/avalon-framework/source/%{name}-api-%{version}-src.tar.gz
 Source1:     http://archive.apache.org/dist/excalibur/avalon-framework/source/%{name}-impl-%{version}-src.tar.gz
 
@@ -89,7 +89,7 @@ ancestors and children.
 %package javadoc
 Summary:      API documentation %{name}
 Group:        Development/Java
-Requires:     jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -158,6 +158,9 @@ cp -pr %{name}-impl-%{version}/dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{n
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.3-alt4_15jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.3-alt4_14jpp8
 - java 8 mass update
 
