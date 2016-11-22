@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -39,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           maven-scm
 Version:        1.9.4
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Common API for doing SCM operations
 License:        ASL 2.0
 URL:            http://maven.apache.org/scm
@@ -56,14 +56,14 @@ Patch8:         %{name}-jgit-4-compat.patch
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  maven-local
 BuildRequires:  modello
 BuildRequires:  plexus-utils >= 1.5.6
 BuildRequires:  maven-invoker-plugin
 BuildRequires:  maven-plugin-testing-harness
 BuildRequires:  bzr
-BuildRequires:  subversion
+BuildRequires: subversion subversion-server-common
 BuildRequires:  plexus-containers-component-metadata
 BuildRequires:  plexus-containers-container-default
 BuildRequires:  plexus-classworlds
@@ -77,7 +77,7 @@ tools (e.g. Continuum) in providing them a common API for doing SCM operations.
 %package test
 Group: Development/Java
 Summary:        Tests for %{name}
-Requires:       maven-scm = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       maven-scm = %{version}
 
 %description test
 Tests for %{name}.
@@ -143,6 +143,9 @@ sed -i s/cvsjava.CvsJava/cvsexe.CvsExe/ maven-scm-client/src/main/resources/META
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.4-alt1_4jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.4-alt1_3jpp8
 - new version
 
