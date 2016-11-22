@@ -1,6 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
@@ -10,7 +10,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name: sac
 Version: 1.3
-Release: alt3_21jpp8
+Release: alt3_23jpp8
 Summary: Java standard interface for CSS parser
 License: W3C
 Group: System/Libraries
@@ -20,10 +20,10 @@ Group: System/Libraries
 Source0: %{name}java-%{version}-jarsdeleted.zip
 Source1: %{name}-build.xml
 Source2: %{name}-MANIFEST.MF
-Source3: http://mirrors.ibiblio.org/pub/mirrors/maven2/org/w3c/css/sac/1.3/sac-1.3.pom
+Source3: https://repo1.maven.org/maven2/org/w3c/css/sac/1.3/sac-1.3.pom
 URL: http://www.w3.org/Style/CSS/SAC/
-BuildRequires: ant jpackage-utils zip
-Requires: jpackage-utils
+BuildRequires: ant javapackages-tools rpm-build-java zip
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 Source44: import.info
 
@@ -78,6 +78,9 @@ install -pm 644 %{SOURCE3} \
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_23jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_21jpp8
 - new version
 
