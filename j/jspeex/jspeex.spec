@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,21 +7,21 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jspeex
 Version:        0.9.7
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        Java Implementation of Speex
 
-Group:          Development/Java
+Group:          Development/Other
 License:        BSD with advertising
 URL:            http://jspeex.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/project/%{name}/%{name}/%{version}/%{name}-%{version}.zip
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant
 BuildRequires:  proguard
 BuildRequires:  junit
   
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Source44: import.info
 
 %description
@@ -32,7 +32,7 @@ the decoder and the encoder in pure Java, as well as a JavaSound SPI.
 %package javadoc
 Summary:        Java docs for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -67,6 +67,9 @@ cp -rp doc/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.7-alt1_8jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.7-alt1_7jpp8
 - new version
 
