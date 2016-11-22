@@ -1,6 +1,9 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
-BuildRequires: /proc jdepend
+BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-logging
@@ -10,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-logging
 Version:          3.1.4
-Release:          alt1_4jpp8
+Release:          alt1_6jpp8
 Summary:          The JBoss Logging Framework
 License:          ASL 2.0
 URL:              https://github.com/jboss-logging/jboss-logging
@@ -20,21 +23,19 @@ Patch0:           0001-SLF4j-1.7-upgrade.patch
 
 BuildArch:        noarch
 
+BuildRequires:    git
+BuildRequires: graphviz libgraphviz
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    jboss-logmanager
-BuildRequires:    slf4j
-BuildRequires:    log4j
-BuildRequires:    apiviz
-BuildRequires:    jboss-parent
-BuildRequires:    maven-surefire-provider-junit
+BuildRequires:    mvn(log4j:log4j:12)
+BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:    mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
+BuildRequires:    mvn(org.jboss.apiviz:apiviz)
+BuildRequires:    mvn(org.jboss.logmanager:jboss-logmanager)
+BuildRequires:    mvn(org.slf4j:slf4j-api)
+# Missing apiviz dep ...
+BuildRequires:    mvn(jdepend:jdepend)
 Source44: import.info
 
 %description
@@ -42,7 +43,7 @@ This package contains the JBoss Logging Framework.
 
 %package javadoc
 Group: Development/Java
-Summary:          Javadocs for %{name}
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -52,6 +53,10 @@ This package contains the API documentation for %{name}.
 %setup -q -n jboss-logging-%{namedversion}
 
 %patch0 -p1
+
+%pom_change_dep log4j: ::12
+# Unneeded task
+%pom_remove_plugin :maven-source-plugin
 
 %build
 %mvn_build -f
@@ -66,6 +71,9 @@ This package contains the API documentation for %{name}.
 %doc src/main/resources/META-INF/LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.1.4-alt1_6jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 3.1.4-alt1_4jpp8
 - java 8 mass update
 
