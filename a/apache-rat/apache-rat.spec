@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 %filter_from_requires /^java-headless/d
@@ -7,10 +7,10 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           apache-rat
 Version:        0.11
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Apache Release Audit Tool (RAT)
 
-Group:          Development/Java
+Group:          Development/Other
 License:        ASL 2.0
 URL:            http://creadur.apache.org/rat/
 Source0:        http://www.apache.org/dist/creadur/%{name}-%{version}/%{name}-%{version}-src.tar.bz2
@@ -153,6 +153,9 @@ touch $RPM_BUILD_ROOT/etc/java/apache-rat.conf
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_3jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_2jpp8
 - new version
 
