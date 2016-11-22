@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          evo-inflector
 Version:       1.2.1
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Implements English pluralization algorithm
 License:       ASL 2.0
 URL:           https://github.com/atteo/evo-inflector
@@ -55,6 +58,9 @@ find . -name "*.class" -print -delete
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_3jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_2jpp8
 - new version
 
