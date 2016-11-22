@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 Name:          springframework-data-redis
 # Newer release require springframework >= 4.0.7.RELEASE
 Version:       1.3.5
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Provides support to increase developer productivity in Java when using Redis
 License:       ASL 2.0
 URL:           http://projects.spring.io/spring-data-redis/
@@ -154,6 +157,9 @@ rm -r src/test/java/org/springframework/data/redis/cache/AbstractNativeCacheTest
 %doc license.txt notice.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.5-alt1_3jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.5-alt1_2jpp8
 - new version
 
