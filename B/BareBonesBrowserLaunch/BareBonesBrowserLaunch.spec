@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          BareBonesBrowserLaunch
 Version:       3.1
-Release:       alt1_11jpp8
+Release:       alt1_12jpp8
 Summary:       Simple library to launch a browser window from Java
 License:       Public Domain
 URL:           http://www.centerkey.com/java/browser/
@@ -49,6 +52,9 @@ rm -rf doc/*
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_12jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_11jpp8
 - new version
 
