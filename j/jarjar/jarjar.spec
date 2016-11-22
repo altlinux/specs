@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -39,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jarjar
 Version:        1.4
-Release:        alt1_15jpp8
+Release:        alt1_16jpp8
 Summary:        Jar Jar Links
 License:        ASL 2.0
 URL:            http://code.google.com/p/jarjar/
@@ -72,7 +72,7 @@ another library.
 Group: Development/Java
 Summary:        Maven plugin for %{name}
 Requires:       maven
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description maven-plugin
 %{summary}.
@@ -142,6 +142,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc COPYING
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_16jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_15jpp8
 - new version
 
