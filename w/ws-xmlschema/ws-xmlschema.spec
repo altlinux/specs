@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -7,9 +7,9 @@ BuildRequires: jpackage-generic-compat
 # vim: set ts=4 sw=4 sts=4 et:
 Name:           ws-xmlschema
 Version:        2.0.2
-Release:        alt2_12jpp8
+Release:        alt2_13jpp8
 Summary:        Apache XMLSchema
-Group:          Development/Java
+Group:          Development/Other
 License:        ASL 2.0
 URL:            http://ws.apache.org/commons/xmlschema20/
 
@@ -21,7 +21,7 @@ Source0:        %{name}-%{version}.tar.xz
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  apache-resource-bundles
 BuildRequires:  maven-local
 BuildRequires:  maven-assembly-plugin
@@ -72,6 +72,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt2_13jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt2_12jpp8
 - new version
 
