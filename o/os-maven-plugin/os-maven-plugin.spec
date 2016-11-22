@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           os-maven-plugin
 Version:        1.2.3
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Maven plugin for generating platform-dependent properties
 License:        ASL 2.0
 URL:            https://github.com/trustin/os-maven-plugin/
@@ -71,6 +71,9 @@ find -name plugin.xml -delete
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_5jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_4jpp8
 - new version
 
