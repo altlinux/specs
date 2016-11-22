@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           assertj-core
 Version:        2.2.0
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Summary:        Library of assertions similar to fest-assert
 License:        ASL 2.0
 URL:            http://joel-costigliola.github.io/assertj/
@@ -65,6 +68,9 @@ rm -rf ./src/test/java/org/assertj/core/error/ShouldContainString_create_Test.ja
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_2jpp8
+- new fc release
+
 * Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_1jpp8
 - added osgi provides
 
