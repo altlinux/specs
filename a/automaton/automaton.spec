@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           automaton
 Version:        %{upver}r%{uprel}
-Release:        alt1_11jpp8
+Release:        alt1_12jpp8
 Summary:        A Java finite state automata/regular expression library
 
 License:        BSD
@@ -78,6 +78,9 @@ cp -p %{SOURCE1} %{buildroot}%{_mavenpomdir}/%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.11r8-alt1_12jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.11r8-alt1_11jpp8
 - new version
 
