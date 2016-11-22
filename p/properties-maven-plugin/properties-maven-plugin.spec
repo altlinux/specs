@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,13 +12,15 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          properties-maven-plugin
 Version:       1.0
-Release:       alt3_0.10.alpha2jpp8
+Release:       alt3_0.11.alpha2jpp8
 Summary:       Properties Maven Plugin
 License:       ASL 2.0
-URL:           http://mojo.codehaus.org/properties-maven-plugin/
+URL:           http://www.mojohaus.org/properties-maven-plugin/
+# Source code available @ https://github.com/mojohaus/properties-maven-plugin
 # svn export http://svn.codehaus.org/mojo/tags/properties-maven-plugin-1.0-alpha-2/
 # tar czf properties-maven-plugin-1.0-alpha-2-src-svn.tar.gz properties-maven-plugin-1.0-alpha-2
 Source0:       %{name}-%{namedversion}-src-svn.tar.gz
+# reported @ https://github.com/mojohaus/properties-maven-plugin/issues/2
 Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildRequires: maven-local
@@ -68,6 +73,9 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %doc LICENSE-2.0.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.11.alpha2jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.10.alpha2jpp8
 - new version
 
