@@ -1,6 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -8,7 +9,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          gsbase
 Version:       2.0.1
-Release:       alt9_7jpp8
+Release:       alt9_8jpp8
 Summary:       A collection of java utility classes
 # http://gsbase.sourceforge.net/license.html Apache style license
 License:       ASL 2.0
@@ -75,6 +76,9 @@ rm -r src/test/com/gargoylesoftware/base/gui/TableLayoutTest.java
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.1-alt9_8jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.1-alt9_7jpp8
 - new version
 
