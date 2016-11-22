@@ -1,11 +1,14 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %def_with repolib
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name: jcommon
 Version: 1.0.23
-Release: alt1_2jpp8
+Release: alt1_3jpp8
 Summary: JFree Java utility classes
 License: LGPLv2+
 Group: System/Libraries
@@ -18,7 +21,7 @@ Source: %%{name}-%%{version}.tar.gz
 URL: http://www.jfree.org/jcommon
 BuildRequires: maven-local
 BuildRequires: maven-plugin-bundle
-Requires: jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 Source44: import.info
 
@@ -29,8 +32,8 @@ JFreeChart, JFreeReport and other projects.
 %package javadoc
 Summary: Javadoc for %{name}
 Group: Development/Documentation
-Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires: jpackage-utils
+Requires: %{name} = %{version}
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -74,6 +77,9 @@ MVN_BUNDLE_PLUGIN_EXTRA_XML="<extensions>true</extensions>
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.23-alt1_3jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.23-alt1_2jpp8
 - new version
 
