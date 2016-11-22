@@ -1,5 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-invoker-plugin
 Version:        1.10
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Maven Invoker Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-invoker-plugin/
@@ -70,6 +71,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_3jpp8
+- new fc release
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_2jpp8
 - new version
 
