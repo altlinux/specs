@@ -1,5 +1,8 @@
 Epoch: 1
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 %global oname jboss-jaxr-api_1.0_spec
 Name:          jboss-jaxr-1.0-api
 Version:       1.0.2
-Release:       alt2_9jpp8
+Release:       alt2_10jpp8
 Summary:       Java API for XML Registries 1.0 (JAXR)
 License:       CDDL or GPLv2 with exceptions
 URL:           http://www.jboss.org/
@@ -61,6 +64,9 @@ This package contains javadoc for %{name}.
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_10jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_9jpp8
 - new version
 
