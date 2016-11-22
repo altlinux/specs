@@ -1,11 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: python-devel
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 24
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name scala
 %define version 2.10.4
@@ -36,10 +35,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:           scala
 Version:        2.10.4
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        A hybrid functional/object-oriented language for the JVM
 BuildArch:      noarch
-Group:          Development/Java
+Group:          Development/Other
 # License was confirmed to be standard BSD by fedora-legal
 # https://www.redhat.com/archives/fedora-legal-list/2007-December/msg00012.html
 License:        BSD
@@ -98,13 +97,13 @@ BuildRequires:  shtool
 BuildRequires:  aqute-bnd
 BuildRequires:  %{junit_pkg}
 BuildRequires:  felix-framework
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 
 %if !(0%{?bootstrap_build})
 BuildRequires:  scala
 %endif
 
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Requires:       jansi
 
 %if 0%{?fedora} > 20
@@ -141,8 +140,8 @@ reference and API documentation for the Scala programming language.
 
 %package swing
 Summary:        The swing library for the scala programming languages
-Group:          Development/Java
-Requires:       scala = %{version}-%{release}
+Group:          Development/Other
+Requires:       scala = %{version}
 
 %if 0%{?fedora} > 20
 %endif
@@ -153,8 +152,8 @@ is not the original version from upstream because this version is not compatible
 
 %package -n ant-scala
 Summary:        Development files for Scala
-Group:          Development/Java
-Requires:       scala = %{version}-%{release} ant
+Group:          Development/Other
+Requires:       scala = %{version} ant
 
 %description -n ant-scala
 Scala is a general purpose programming language for the JVM that blends
@@ -164,10 +163,10 @@ the scala ant tasks.
 %if 0
 %package examples
 Summary:        Examples for the Scala programming language
-Group:          Development/Java
+Group:          Development/Other
 # Otherwise it will pick up some perl module
 Autoprov:       0
-Requires:       scala = %{version}-%{release}
+Requires:       scala = %{version}
 Requires:       ant
 
 %description examples
@@ -177,8 +176,8 @@ the Scala programming language
 
 %package swing-examples
 Summary:        Examples for the Scala Swing library
-Group:          Development/Java
-Requires:       scala = %{version}-%{release}
+Group:          Development/Other
+Requires:       scala = %{version}
 Requires:       ant
 
 %description swing-examples
@@ -387,6 +386,9 @@ install -p -m 644 build/scaladoc/manual/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man
 %endif
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.10.4-alt1_9jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.10.4-alt1_8jpp8
 - new version
 
