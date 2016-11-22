@@ -1,11 +1,14 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           plexus-io
 Version:        2.6
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Plexus IO Components
 License:        ASL 2.0
 URL:            https://github.com/codehaus-plexus/plexus-io
@@ -56,6 +59,9 @@ cp %{SOURCE1} .
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt1_3jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt1_2jpp8
 - new version
 
