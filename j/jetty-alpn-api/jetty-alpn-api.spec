@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -6,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jetty-alpn-api
 Version:        1.1.0
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Jetty ALPN API
 License:        ASL 2.0 and EPL
 URL:            http://www.eclipse.org/jetty
@@ -58,6 +61,9 @@ cp %{SOURCE1} %{SOURCE2} .
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_4jpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_3jpp8
 - new version
 
