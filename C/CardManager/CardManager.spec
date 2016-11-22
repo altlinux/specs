@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           CardManager
 Version:        3
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Java application to allows you to play any, especially collectible, card game
 
 Group:          Games/Other
@@ -19,11 +19,11 @@ Patch0:         removeManifestEntries.patch
 Patch1:         jdk8-javadoc.patch
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant
 BuildRequires:  desktop-file-utils
 
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Source44: import.info
 
 %description
@@ -42,7 +42,7 @@ collection under ~/CardManager/collection
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -100,6 +100,9 @@ cp -r dist/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3-alt1_7jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 3-alt1_6jpp8
 - new version
 
