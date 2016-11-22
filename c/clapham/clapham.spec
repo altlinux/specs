@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           clapham
 Version:        0.1.003
-Release:        alt1_12jpp8
+Release:        alt1_13jpp8
 Summary:        Railroad diagram generator for computer languages
 URL:            http://clapham.hydromatic.net/
 License:        GPLv2
@@ -32,13 +32,13 @@ BuildArch:      noarch
 
 BuildRequires:  dos2unix
 BuildRequires:  batik javacc
-BuildRequires:  ant jpackage-utils
+BuildRequires:  ant javapackages-tools rpm-build-java
 %if 0%{?rhel}
 BuildRequires:  ant-nodeps
 %endif
 
 Requires:       batik xml-commons-apis
-Requires:       jpackage-utils
+Requires:       javapackages-tools rpm-build-java
 Source44: import.info
 
 
@@ -53,7 +53,7 @@ understand by non- or semi-technical users.
 %package javadoc
 Group: Engineering
 Summary:        Javadocs for clapham
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 BuildArch: noarch
 
 %description javadoc
@@ -96,6 +96,9 @@ cp -a doc/api %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.003-alt1_13jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.003-alt1_12jpp8
 - new version
 
