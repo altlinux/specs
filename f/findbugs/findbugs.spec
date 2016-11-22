@@ -1,7 +1,7 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: perl(FileHandle.pm) unzip
+BuildRequires(pre): rpm-macros-java
+BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -10,10 +10,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:           findbugs
 Version:        3.0.1
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Find bugs in Java code
 
-Group:          Development/Java
+Group:          Development/Other
 License:        LGPLv2+
 URL:            http://findbugs.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}-source.zip
@@ -59,7 +59,7 @@ BuildRequires:  jaxen
 BuildRequires:  jcip-annotations
 BuildRequires:  jdepend
 BuildRequires:  jFormatString
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  jsr-305
 BuildRequires:  junit
 BuildRequires:  objectweb-asm
@@ -68,7 +68,7 @@ BuildRequires: /usr/bin/latex texlive-latex-recommended
 BuildRequires:  texlive-publishers
 
 # For generating HTML version of manual using xsltproc
-BuildRequires: xsltproc libxslt
+BuildRequires: libxslt xsltproc
 BuildRequires:  docbook-style-xsl
 
 Requires:       findbugs-bcel
@@ -76,7 +76,7 @@ Requires:       apache-commons-lang
 Requires:       jaxen
 Requires:       jcip-annotations
 Requires:       jFormatString
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Requires:       jsr-305
 Requires:       junit
 Requires:       objectweb-asm
@@ -106,7 +106,7 @@ BuildArch: noarch
 Javadoc documentation for findbugs.
 
 %package tools
-Group:          Development/Java
+Group:          Development/Other
 Summary:        Addon tools for findbugs
 Requires:       %{name} = %{version}
 Requires:       junit
@@ -236,6 +236,9 @@ fi ||:
 %{_javadir}/findbugs-tools.jar
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_5jpp8
+- new fc release
+
 * Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_4jpp8
 - new version
 
