@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jdiff
 Version:       1.1.1
-Release:       alt2_9jpp8
+Release:       alt2_10jpp8
 Summary:       An HTML Report of API Differences
 License:       GPL+ and LGPLv2+
 URL:           http://javadiff.sourceforge.net/
@@ -26,7 +26,7 @@ Source2:       jdiff-script
 
 Patch0:        jdiff-java8.patch
 
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 
 BuildRequires: ant
 BuildRequires: junit
@@ -35,7 +35,7 @@ BuildRequires: xerces-j2
 Requires:      ant
 Requires:      xerces-j2
 
-Requires:      jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch:     noarch
 Source44: import.info
 
@@ -115,6 +115,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt2_10jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt2_9jpp8
 - new version
 
