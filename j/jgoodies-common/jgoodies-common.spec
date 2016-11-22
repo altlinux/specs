@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -8,10 +9,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jgoodies-common
 Version:        1.8.0
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Common library shared by JGoodies libraries and applications
 
-Group:          Development/Java
+Group:          Development/Other
 License:        BSD
 URL:            http://www.jgoodies.com/
 Source0:        http://www.jgoodies.com/download/libraries/%{shortname}/%{name}-%(tr "." "_" <<<%{version}).zip
@@ -19,11 +20,11 @@ Source0:        http://www.jgoodies.com/download/libraries/%{shortname}/%{name}-
 # fontconfig and DejaVu fonts needed for tests
 BuildRequires:  fonts-ttf-dejavu
 BuildRequires:  fontconfig
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  maven-local
 BuildRequires:  maven-clean-plugin
 BuildRequires:  maven-dependency-plugin
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch:      noarch
 Source44: import.info
 
@@ -35,7 +36,7 @@ libraries and applications.
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -83,6 +84,9 @@ done
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_3jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_2jpp8
 - new version
 
