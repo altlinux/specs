@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: python-devel
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 #BuildRequires(pre): j2se-jdbc = 1.4.2
 BuildRequires: jline
@@ -21,7 +21,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:                      jython
 Version:                   2.7
-Release:                   alt1_2jpp8
+Release:                   alt1_3jpp8
 Summary:                   Jython is an implementation of Python written in pure Java.
 License:                   ASL 1.1 and BSD and CNRI and JPython and Python
 URL:                       http://www.jython.org/
@@ -242,6 +242,9 @@ fi || :
 %{_datadir}/%{name}/Demo
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.7-alt1_3jpp8
+- new fc release
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.7-alt1_2jpp8
 - java 8 mass update
 
