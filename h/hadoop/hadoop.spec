@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java rpm-macros-fedora-compat
-BuildRequires: gcc-c++
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
+BuildRequires: /usr/bin/openssl bzlib-devel gcc-c++ java-devel-default libcurl-devel rpm-build-java
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 BuildRequires: zlib-devel
@@ -9,13 +9,13 @@ BuildRequires: avro-maven-plugin
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 24
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define fedora 23
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name hadoop
 %define version 2.4.1
@@ -45,7 +45,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:   hadoop
 Version: 2.4.1
-Release: alt2_14jpp8
+Release: alt2_17jpp8
 Summary: A software platform for processing vast amounts of data
 # The BSD license file is missing
 # https://issues.apache.org/jira/browse/HADOOP-9849
@@ -202,10 +202,10 @@ BuildRequires: servlet3
 BuildRequires: slf4j
 BuildRequires: libsnappy-devel
 BuildRequires: snappy-java
-BuildRequires: systemd
+BuildRequires: journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-utils
 BuildRequires: tomcat
 BuildRequires: tomcat-el-3.0-api
-BuildRequires: tomcat-log4j
+BuildRequires: tomcat
 BuildRequires: tomcat-servlet-3.1-api
 BuildRequires: txw2
 BuildRequires: xmlenc
@@ -1121,6 +1121,9 @@ fi
 %attr(6010,root,yarn) %{_bindir}/container-executor
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt2_17jpp8
+- new fc release
+
 * Wed Jun 01 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt2_14jpp8
 - fixed build w/tomcat 8
 
