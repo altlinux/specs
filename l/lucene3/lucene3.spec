@@ -1,18 +1,18 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ perl(LWP/UserAgent.pm) unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 24
 %global majorversion 3
 
 Summary:        High-performance, full-featured text search engine
 Name:           lucene3
 Version:        3.6.2
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Epoch:          0
 License:        ASL 2.0 and BSD
 URL:            http://lucene.apache.org/
@@ -30,7 +30,7 @@ Patch1:         lucene-3.6.2-hamcrest-core.patch
 #tar caf dev-tools.tar.xz dev-tools/
 Source4:        dev-tools.tar.xz
 
-BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  ant-junit >= 0:1.6
 BuildRequires:  junit
@@ -45,7 +45,7 @@ BuildRequires:  lucene
 BuildRequires:  apache-commons-codec
 
 # for tests
-BuildRequires:  subversion
+BuildRequires: subversion subversion-server-common
 BuildRequires:  hamcrest-core
 
 %if 0%{?fedora}
@@ -54,7 +54,7 @@ BuildRequires:  icu4j
 
 BuildArch:      noarch
 
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Source44: import.info
 
 %description
@@ -223,6 +223,9 @@ cp -pr build/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %endif
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.6.2-alt1_8jpp8
+- new fc release
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.6.2-alt1_7jpp8
 - unbootsrap build
 
