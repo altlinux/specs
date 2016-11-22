@@ -1,6 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 AutoReq: yes,noosgi
@@ -14,9 +14,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:          xerces-j2
 Version:       2.11.0
-Release:       alt3_23jpp8
+Release:       alt3_24jpp8
 Summary:       Java XML parser
-Group:         Development/Java
+Group:         Development/Other
 License:       ASL 2.0
 URL:           http://xerces.apache.org/xerces2-j/
 
@@ -47,15 +47,15 @@ Patch2:        xerces-j2-CVE-2013-4002.patch
 
 BuildArch:     noarch
 
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires: xalan-j2 >= 2.7.1
 BuildRequires: xml-commons-apis >= 1.4.01
 BuildRequires: xml-commons-resolver >= 1.2
 BuildRequires: ant
-BuildRequires: jaxp_parser_impl
+BuildRequires: xerces-j2
 BuildRequires: fonts-ttf-dejavu
 BuildRequires: xerces-j2
-Requires:      jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Requires:      xalan-j2 >= 2.7.1
 Requires:      xml-commons-apis >= 1.4.01
 Requires:      xml-commons-resolver >= 1.2
@@ -64,8 +64,8 @@ Provides:      jaxp_parser_impl = 1.4
 Provides:      %{name}-scripts = %{version}-%{release}
 Obsoletes:     %{name}-scripts < 2.11.0-6
 
-Requires(post): jaxp_parser_impl
-Requires(preun): jaxp_parser_impl
+Requires(post): xerces-j2
+Requires(preun): xerces-j2
 
 # This documentation is provided by xml-commons-apis
 Obsoletes:     %{name}-javadoc-apis < %{version}-%{release}
@@ -104,7 +104,7 @@ APIs are in use.
 %package        javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 
 # Consolidating all javadocs into one package
 Obsoletes:      %{name}-javadoc-impl < %{version}-%{release}
@@ -118,8 +118,8 @@ This package contains the API documentation for %{name}.
 
 %package        demo
 Summary:        Demonstrations and samples for %{name}
-Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Group:          Development/Other
+Requires:       %{name} = %{version}
 
 %description    demo
 %{summary}.
@@ -220,6 +220,9 @@ EOF
 %{_datadir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.11.0-alt3_24jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.11.0-alt3_23jpp8
 - new version
 
