@@ -1,6 +1,6 @@
 Serial: 1
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -8,18 +8,18 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jlatexmath
 Version:        1.0.3
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Java API to display mathematical formulas written in LaTeX
 
-Group:          Development/Java
+Group:          Development/Other
 License:        GPLv2+
 URL:            http://forge.scilab.org/index.php/p/jlatexmath/
 Source0:        http://forge.scilab.org/index.php/p/jlatexmath/downloads/get/%{name}-src-all-%{version}.zip
 
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant
 
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 
 BuildArch:      noarch
 Source44: import.info
@@ -32,14 +32,14 @@ JLaTeXMath is a fork of the excellent project JMathTeX.
 
 %package fop
 Summary:        FOP plug-in for %{name}
-Group:          Development/Java
+Group:          Development/Other
 
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant
 BuildRequires:  fop
 
-Requires:       jpackage-utils
-Requires:       %{name} = %{?serial:%serial:}%{version}-%{release}
+Requires: javapackages-tools rpm-build-java
+Requires:       %{name} = %{version}
 Requires:       fop
 
 
@@ -49,8 +49,8 @@ This package contains the FOP plug-in for %{name}.
 %package javadoc
 Summary:        API Documentation for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
-Requires:       %{name} = %{?serial:%serial:}%{version}-%{release}
+Requires: javapackages-tools rpm-build-java
+Requires:       %{name} = %{version}
 BuildArch: noarch
 
 %description javadoc
@@ -94,6 +94,9 @@ cp -rp doc/ $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.3-alt1_4jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.3-alt1_3jpp8
 - new version
 
