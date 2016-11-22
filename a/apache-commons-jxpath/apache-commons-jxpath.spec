@@ -1,11 +1,14 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
-BuildRequires: /proc glassfish-jsp
+BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           apache-commons-jxpath
 Version:        1.3
-Release:        alt3_24jpp8
+Release:        alt3_25jpp8
 Summary:        Simple XPath interpreter
 License:        ASL 2.0
 URL:            http://commons.apache.org/jxpath/
@@ -64,6 +67,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_25jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_24jpp8
 - java 8 mass update
 
