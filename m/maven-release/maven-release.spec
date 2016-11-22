@@ -1,6 +1,7 @@
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -8,7 +9,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-release
 Version:        2.2.1
-Release:        alt6_14jpp8
+Release:        alt6_15jpp8
 Summary:        Release a project updating the POM and tagging in the SCM
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-release-plugin/
@@ -114,6 +115,9 @@ EOT
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt6_15jpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt6_14jpp8
 - java8 mass update
 
