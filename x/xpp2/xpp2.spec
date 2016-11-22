@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -39,11 +39,11 @@ BuildRequires: jpackage-generic-compat
 Summary:        XML Pull Parser
 Name:           xpp2
 Version:        2.1.10
-Release:        alt4_22jpp8
+Release:        alt4_23jpp8
 Epoch:          0
 License:        xpp and ASL 1.1 and Public Domain
 URL:            http://www.extreme.indiana.edu/xgws/xsoap/xpp/
-Group:          Development/Java
+Group:          Development/Other
 Source0:        http://www.extreme.indiana.edu/xgws/xsoap/xpp/download/PullParser2/PullParser2.1.10.tgz
 Patch0:         xpp2-build_xml.patch
 BuildRequires:  ant >= 0:1.6
@@ -52,7 +52,7 @@ BuildRequires:  javapackages-local
 BuildRequires:  junit
 BuildRequires:  xml-commons-apis
 Requires:       xml-commons-apis
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch:      noarch
 Provides:  xpp2-doc = 0:%{version}-%{release}
 Obsoletes: xpp2-doc < 0:2.1.10-18
@@ -135,6 +135,9 @@ cp -pr src/java/samples/* $RPM_BUILD_ROOT%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.10-alt4_23jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.10-alt4_22jpp8
 - new version
 
