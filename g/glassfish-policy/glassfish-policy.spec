@@ -1,11 +1,14 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
-BuildRequires: /proc woodstox-core
+BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 %global oname policy
 Name:          glassfish-policy
 Version:       2.5
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       GlassFish WS-Policy implementation
 License:       CDDL or GPLv2 with exceptions
 URL:           http://policy.java.net/
@@ -22,6 +25,7 @@ BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(net.java:jvnet-parent:pom:)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.codehaus.woodstox:woodstox-core-asl)
 #BuildRequires: mvn(org.apache.maven.plugins:maven-assembly-plugin)
 #BuildRequires: mvn(org.apache.maven.plugins:maven-deploy-plugin)
 
@@ -74,6 +78,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt Licenses/license-policy.html
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_4jpp8
+- new fc release
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_3jpp8
 - java 8 mass update
 
