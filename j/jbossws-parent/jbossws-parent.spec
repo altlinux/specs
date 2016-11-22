@@ -1,4 +1,7 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,9 +13,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jbossws-parent
 Version:          1.1.0
-Release:          alt1_9jpp8
+Release:          alt1_11jpp8
 Summary:          JBossWS Parent
-Group:            Development/Java
+Group:            Development/Other
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossws
 Source0:          https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/jboss/ws/jbossws-parent/%{namedversion}/jbossws-parent-%{namedversion}.pom
@@ -21,12 +24,12 @@ BuildArch:        noarch
 
 BuildRequires:    maven-local
 Source44: import.info
-Provides: mvn(org.jboss.ws:jbossws-parent) = 1.1.0.GA
 
 %description
 This package contains the JBossWS Parent
 
 %prep
+%setup -c -T
 cp %{SOURCE0} pom.xml
 
 %build
@@ -38,6 +41,9 @@ cp %{SOURCE0} pom.xml
 %files -f .mfiles
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt1_11jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt1_9jpp8
 - new version
 
