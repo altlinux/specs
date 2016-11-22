@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Graphics
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
@@ -11,7 +11,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           batik
 Version:        1.8
-Release:        alt2_2jpp8
+Release:        alt2_6jpp8
 Summary:        Scalable Vector Graphics for Java
 License:        ASL 2.0 and W3C
 URL:            http://xml.apache.org/batik/
@@ -34,9 +34,10 @@ Source7:        %{name}-repack.sh
 #
 Source8:        %{name}-1.7-orbit-manifests.tar.gz
 
+Source9:        %{name}-security.policy
+
 
 Patch0:         %{name}-manifests.patch
-Patch1:         %{name}-policy.patch
 # remove dependency on bundled rhino from pom
 Patch2:         %{name}-script-remove-js.patch
 
@@ -47,15 +48,17 @@ Patch3:         %{name}-javadoc-task-failonerror-and-oom.patch
 
 Patch4:         %{name}-disable-doclint.patch
 
+Patch5:         %{name}-fix-codec-lookup.patch
+
 BuildArch:      noarch
 
 BuildRequires:  maven-local >= 1.5
 BuildRequires:  ant
-BuildRequires:  subversion
+BuildRequires: subversion subversion-server-common
 BuildRequires:  zip
 
 BuildRequires:  rhino >= 1.5
-BuildRequires:  jpackage-utils >= 1.5
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  xerces-j2
 BuildRequires:  xalan-j2
 BuildRequires:  xml-commons-apis >= 1.3.04
@@ -63,13 +66,12 @@ BuildRequires:  xmlgraphics-commons
 
 BuildRequires:  java-javadoc >= 1:1.6.0
 
-Requires:       maven-local
 #full support for tiff
 Requires:       jai-imageio-core
 Requires:       rhino >= 1.5
 Requires:       xalan-j2
 Requires:       xml-commons-apis >= 1.3.04
-Requires:       %{name}-css = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-css = %{version}
 Source44: import.info
 #19119
 Provides: xmlgraphics-batik = 0:%version-%release
@@ -90,6 +92,7 @@ purposes, such as viewing, generation or manipulation.
 Group: Graphics
 Summary:        Batik CSS engine
 Obsoletes:      %{name} < 1.8-0.17.svn1230816
+#32067
 Conflicts: batik < 0:1.8-alt1_1
 
 %description css
@@ -98,7 +101,7 @@ CSS component of the Apache Batik SVG manipulation and rendering library.
 %package        squiggle
 Summary:        Batik SVG browser
 Group:          Graphics
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}
 Requires:       xerces-j2 >= 2.3
 #19119
 Provides: xmlgraphics-batik-squiggle = 0:%version-%release
@@ -116,7 +119,7 @@ in the content and select text items in the image and much more.
 %package        svgpp
 Summary:        Batik SVG pretty printer
 Group:          Graphics
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}
 Requires:       xerces-j2 >= 2.3
 #19119
 Provides: xmlgraphics-batik-svgpp = 0:%version-%release
@@ -135,7 +138,7 @@ also be used to modify the DOCTYPE declaration on SVG files.
 %package        ttf2svg
 Summary:        Batik SVG font converter
 Group:          Graphics
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}
 #19119
 Provides: xmlgraphics-batik-ttf2svg = 0:%version-%release
 Obsoletes: xmlgraphics-batik-ttf2svg < 0:%version
@@ -154,7 +157,7 @@ rendered exactly the same on all systems.
 %package        rasterizer
 Summary:        Batik SVG rasterizer
 Group:          Graphics
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}
 Requires:       xerces-j2 >= 2.3
 #19119
 Provides: xmlgraphics-batik-rasterizer = 0:%version-%release
@@ -175,7 +178,7 @@ to be added easily.
 %package        slideshow
 Summary:        Batik SVG slideshow
 Group:          Graphics
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}
 Requires:       xerces-j2 >= 2.3
 #19119
 Provides: xmlgraphics-batik-slideshow = 0:%version-%release
@@ -200,7 +203,7 @@ Javadoc for %{name}.
 %package        demo
 Group: Development/Java
 Summary:        Demo for %{name}
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description    demo
 Demonstrations and samples for %{name}.
@@ -213,13 +216,15 @@ find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 
 #%patch0 -p1
-%patch1 -p1
 rm -f `find -name readOnly.png`
 rm -f `find -name properties`
 mkdir orbit
 pushd orbit
 tar xzf %{SOURCE8}
 popd
+
+cp -p %{SOURCE9} resources/org/apache/batik/apps/rasterizer/resources/rasterizer.policy.ref
+cp -p %{SOURCE9} resources/org/apache/batik/apps/svgbrowser/resources/svgbrowser.policy.ref
 
 # create poms from templates
 for module in anim awt-util bridge codec css dom ext extension gui-util \
@@ -232,6 +237,7 @@ done
 
 #%patch3
 %patch4
+%patch5 -p1
 
 rm -fr sources/org/apache/batik/ext/awt/image/codec/tiff
 
@@ -464,6 +470,9 @@ popd
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt2_6jpp8
+- new fc release
+
 * Thu May 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt2_2jpp8
 - added conflicts (closes: #32067)
 
