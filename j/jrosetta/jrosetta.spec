@@ -1,12 +1,15 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jrosetta
 Version:        1.0.4
-Release:        alt1_12jpp8
+Release:        alt1_13jpp8
 Summary:        A common base to build a graphical console
 
-Group:          Development/Java
+Group:          Development/Other
 License:        GPLv2
 URL:            http://dev.artenum.com/projects/JRosetta
 Source0:        http://maven.artenum.com/content/groups/public/com/artenum/%{name}/%{version}/%{name}-%{version}-sources.jar
@@ -15,7 +18,6 @@ BuildArch:      noarch
 
 BuildRequires:  maven-local
 
-Requires:       maven-local
 Source44: import.info
 
 %description
@@ -27,7 +29,7 @@ or command line.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -57,6 +59,9 @@ rm CHANGE.txt.CRLF
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_13jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_12jpp8
 - new version
 
