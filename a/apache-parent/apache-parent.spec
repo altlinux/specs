@@ -1,5 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           apache-parent
 Version:        17
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Parent POM file for Apache projects
 License:        ASL 2.0
 URL:            http://apache.org/
@@ -15,13 +16,12 @@ Source0:        http://repo1.maven.org/maven2/org/apache/apache/%{version}/apach
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  apache-resource-bundles
 BuildRequires:  maven-remote-resources-plugin
 
 Requires:       apache-resource-bundles
 Source44: import.info
-Provides: mvn(org.apache:apache) = 17
 
 %description
 This package contains the parent pom file for apache projects.
@@ -41,6 +41,9 @@ This package contains the parent pom file for apache projects.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 17-alt1_3jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 17-alt1_2jpp8
 - new version
 
