@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -8,11 +8,11 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          axis
 Version:       1.4
-Release:       alt4_27jpp8
+Release:       alt4_28jpp8
 Epoch:         0
 Summary:       SOAP implementation in Java
 License:       ASL 2.0
-Group:         Development/Java
+Group:         Development/Other
 URL:           http://ws.apache.org/axis/
 Source0:       axis-1.4-src.tar.gz
 # svn export http://svn.apache.org/repos/asf/webservices/axis/branches/AXIS_1_4_FINAL/
@@ -41,7 +41,7 @@ Patch2:        axis-1.4-wsdl-pom.patch
 Patch3:        %{name}-CVE-2012-5784.patch
 # Patch to use newer xml-commons-apis
 Patch4:        axis-xml-commons-apis.patch
-BuildRequires: jpackage-utils >= 0:1.6
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires: ant >= 0:1.6
 BuildRequires: ant-junit
 BuildRequires: httpunit
@@ -70,7 +70,7 @@ BuildRequires: zip
 # optional requires
 #BuildRequires: jimi
 
-Requires:      jpackage-utils >= 0:1.6
+Requires: javapackages-tools rpm-build-java
 Requires:      apache-commons-discovery
 Requires:      apache-commons-logging
 Requires:      jakarta-commons-httpclient >= 1:3.0
@@ -241,6 +241,9 @@ build-jar-repository %{buildroot}%{_javadir}/javax.xml.rpc/ javax.wsdl \
 %doc --no-dereference docs/*
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt4_28jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt4_27jpp8
 - added osgi provides
 
