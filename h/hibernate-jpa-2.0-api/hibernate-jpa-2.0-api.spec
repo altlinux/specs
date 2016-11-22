@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -14,10 +14,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:             hibernate-jpa-2.0-api
 Version:          1.0.1
-Release:          alt3_16jpp8
+Release:          alt3_17jpp8
 Summary:          Java Persistence 2.0 (JSR 317) API
 
-Group:            Development/Java
+Group:            Development/Other
 License:          EPL and BSD
 URL:              http://www.hibernate.org/
 
@@ -81,6 +81,9 @@ ln -s ../%{name}.jar $RPM_BUILD_ROOT%{_javadir}/hibernate/%{name}.jar
 %doc license.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_17jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_16jpp8
 - new version
 
