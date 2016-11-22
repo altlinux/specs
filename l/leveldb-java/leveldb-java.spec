@@ -1,17 +1,17 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 24
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define fedora 23
 %global oname leveldb
 %if 0%{?fedora}
 #def_with test
@@ -21,7 +21,7 @@ BuildRequires: jpackage-generic-compat
 %endif
 Name:          leveldb-java
 Version:       0.7
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Port of LevelDB to Java
 License:       ASL 2.0
 URL:           https://github.com/dain/leveldb
@@ -114,6 +114,9 @@ args=$args" -j"
 %endif
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_5jpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_4jpp8
 - new version
 
