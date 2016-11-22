@@ -1,5 +1,6 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -36,21 +37,18 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jdepend
 Version:        2.9.1
-Release:        alt3_13jpp8
+Release:        alt3_15jpp8
 Epoch:          0
 Summary:        Java Design Quality Metrics
 License:        BSD
 URL:            http://www.clarkware.com/
-Group:          Development/Java
 #Downloaded from http://github.com/clarkware/jdepend/tarball/2.9.1
 Source0:        clarkware-jdepend-5798059.tar.gz
 Source1:        %{name}-%{version}.pom
 BuildArch:      noarch
 
-Requires:      jpackage-utils
-
-BuildRequires: ant
-BuildRequires: jpackage-utils
+BuildRequires:  ant
+BuildRequires:  javapackages-local
 Source44: import.info
 
 %description
@@ -61,18 +59,17 @@ extensibility, reusability, and maintainability to effectively manage
 and control package dependencies.
 
 %package javadoc
-Summary:    Javadoc for %{name}
-Group:      Development/Java
-Requires:   %{name} = %{version}-%{release}
+Group: Development/Java
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 Javadoc for %{name}.
 
 %package demo
-Summary:    Demos for %{name}
-Group:      Development/Java
-Requires:   %{name} = %{version}-%{release}
+Group: Development/Java
+Summary:        Demos for %{name}
+Requires:       %{name} = %{version}
 
 %description demo
 Demonstrations and samples for %{name}.
@@ -80,42 +77,37 @@ Demonstrations and samples for %{name}.
 %prep
 %setup -q -n clarkware-jdepend-5798059
 # remove all binary libs
-find . -name "*.jar" -exec rm -f {} \;
+find . -name "*.jar" -delete
 # fix strange permissions
 find . -type d -exec chmod 755 {} \;
+
+%mvn_file %{name}:%{name} %{name}
 
 %build
 ant jar javadoc
 
 %install
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 dist/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr build/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} 
+%mvn_artifact %{SOURCE1} dist/%{name}-%{version}.jar
+%mvn_install -J build/docs/api
 rm -rf build/docs/api
 # demo
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
 cp -pr sample $RPM_BUILD_ROOT%{_datadir}/%{name}
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-# depmap
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 %files -f .mfiles
-%doc README LICENSE docs
+%doc README docs
+%doc LICENSE
 
-%files javadoc
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE
 
 %files demo
 %{_datadir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt3_15jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt3_13jpp8
 - new version
 
