@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           bolzplatz2006
 Version:        1.0.3
-Release:        alt1_30jpp8
+Release:        alt1_32jpp8
 Summary:        Slam Soccer 2006 is a funny football game in 3D-comic-style
 Summary(fr):    Coup de Foot 2006 est un jeu comique en 3D
 Summary(de):    Bolzplatz 2006 ist ein spaßiges Fußballspiel im 3D-Comic-Stil
@@ -26,7 +26,7 @@ Source1:        %{name}.png
 Source2:        %{name}.sh
 Source3:        %{name}-settings.sh
 Source4:        %{name}.desktop
-Source5:        %{name}-settings.desktop
+Source5:        %{name}.appdata.xml
 Source6:        %{name}-jirr-no-crash.patch
 Source7:        %{name}-functions.sh
 Source8:        %{name}.autodlrc
@@ -43,12 +43,14 @@ Patch8:         %{name}-versioned-openal.patch
 Patch9:         %{name}-1.0.3-libpng15.patch
 Patch10:        %{name}-class-version15.patch
 Patch11:        %{name}-use-system-extgl.patch
+Patch12:        %{name}-gcc6.patch
 BuildRequires:  ant sdljava dom4j vecmath1.2 swig xml-commons-apis
 BuildRequires:  libGLU-devel libdevil-devel libXxf86vm-devel libjpeg-devel
 BuildRequires:  libpng-devel libXext-devel libXrandr-devel libXcursor-devel
 BuildRequires:  libXt-devel libXrender-devel libvorbis-devel desktop-file-utils
 # Building ( & running) only works with openjdk
-Requires:       sdljava dom4j vecmath1.2 jpackage-utils
+BuildRequires:  libappstream-glib
+Requires:       sdljava dom4j vecmath1.2 javapackages-tools rpm-build-java
 Requires:       icon-theme-hicolor autodownloader
 # These are dynamically opened by lwjgl:
 Requires:       libopenal1
@@ -137,6 +139,7 @@ popd
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 cp %{SOURCE7} .
 sed -i 's/\r//' license.txt
 # we use the system versions of these
@@ -197,9 +200,10 @@ jar cf %{name}.jar -C classes .
 # dirs
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/%{name}
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
 mkdir -p $RPM_BUILD_ROOT%{_javadir}/%{name}
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
 
 # jars
 install -m 644 %{name}.jar libsrc/jirr-dev/lib/irrlicht.jar \
@@ -215,9 +219,11 @@ install -m 755 %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/%{name}-settings
 
 # icon and menu-entry
 install -p -m 644 %{SOURCE1} \
-  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps
+  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
 desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE4}
-desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE5}
+install -p -m 644 %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/appdata
+appstream-util validate-relax --nonet \
+  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
 # needed "data" files
 install -p -m 644 %{name}-functions.sh %{SOURCE8} %{SOURCE9} \
@@ -230,11 +236,15 @@ install -p -m 644 %{name}-functions.sh %{SOURCE8} %{SOURCE9} \
 %{_libdir}/%{name}
 %{_datadir}/%{name}
 %{_javadir}/%{name}
-%{_datadir}/applications/%{name}*.desktop
-%{_datadir}/icons/hicolor/16x16/apps/%{name}.png
+%{_datadir}/appdata/%{name}.appdata.xml
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_32jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_30jpp8
 - new version
 
