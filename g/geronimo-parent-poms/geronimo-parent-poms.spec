@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           geronimo-parent-poms
 Version:        1.6
-Release:        alt3_20jpp8
+Release:        alt3_21jpp8
 Summary:        Parent POM files for geronimo-specs
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/
@@ -20,9 +23,6 @@ BuildRequires:  maven-local
 Provides:       geronimo-specs = %{version}-%{release}
 Source44: import.info
 Conflicts: geronimo-specs < 0:1.2-alt9_16jpp6
-Provides: mvn(org.apache.geronimo.specs:specs-parent) = 1.6
-Provides: mvn(org.apache.geronimo.specs:specs) = 1.6
-
 
 %description
 The Project Object Model files for the geronimo-specs modules.
@@ -47,6 +47,9 @@ cp -p %{SOURCE1} LICENSE
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.6-alt3_21jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.6-alt3_20jpp8
 - new version
 
