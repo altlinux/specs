@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Text tools
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 AutoReq: yes,noosgi
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 Name:           fop
 Summary:        XSL-driven print formatter
 Version:        2.0
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 # ASL 1.1:
 # several files in src/java/org/apache/fop/render/awt/viewer/resources/
 # rest is ASL 2.0
@@ -151,6 +151,9 @@ ln -s fop %buildroot%_bindir/xmlgraphics-fop
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_3jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_2jpp8
 - new version
 
