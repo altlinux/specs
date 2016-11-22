@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          opensaml-java-xmltooling
 Version:       1.3.4
-Release:       alt4_11jpp8
+Release:       alt4_12jpp8
 Summary:       Java XMLTooling library
 License:       ASL 2.0 and W3C
 
@@ -77,6 +80,9 @@ sed -i "s|\${xerces.groupId}|xerces|" pom.xml
 %doc doc/LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt4_12jpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt4_11jpp8
 - java8 mass update
 
