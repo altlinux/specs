@@ -1,5 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -10,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          bouncycastle-pg
 Version:       1.52
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       Bouncy Castle OpenPGP API
 # modified BZIP2 library org/bouncycastle/apache/bzip2 ASL 2.0
 License:       ASL 2.0 and MIT
@@ -97,6 +98,9 @@ ant jar javadoc
 %doc LICENSE.html
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.52-alt1_9jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.52-alt1_8jpp8
 - java 8 mass update
 
