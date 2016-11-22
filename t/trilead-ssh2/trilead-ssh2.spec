@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           trilead-ssh2
 Version:        217
-Release:        alt1_6.jenkins8jpp8
+Release:        alt1_7.jenkins8jpp8
 Summary:        SSH-2 protocol implementation in pure Java
 
 # project is under BSD, but some parts are MIT licensed
@@ -64,6 +64,9 @@ API documentation for %{name}.
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:217-alt1_7.jenkins8jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:217-alt1_6.jenkins8jpp8
 - new version
 
