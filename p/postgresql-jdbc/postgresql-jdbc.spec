@@ -1,6 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -42,7 +42,7 @@ BuildRequires: jpackage-generic-compat
 Summary:	JDBC driver for PostgreSQL
 Name:		postgresql-jdbc
 Version:	9.4.%{upstreamrel}
-Release:	alt1_2jpp8
+Release:	alt1_3jpp8
 # ASL 2.0 applies only to postgresql-jdbc.pom file, the rest is BSD
 License:	BSD and ASL 2.0
 Group:		Databases
@@ -59,13 +59,13 @@ Source1:	%{name}.pom
 Patch0:		postgresql-jdbc-9.3-1102-revert-88b9a034.patch
 
 BuildArch:	noarch
-BuildRequires:	jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:	ant
 BuildRequires:	ant-junit
 BuildRequires:	junit
 # gettext is only needed if we try to update translations
 #BuildRequires:	gettext
-Requires:	jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Source44: import.info
 
 %description
@@ -154,6 +154,9 @@ ant test 2>&1 | tee "$test_log" || :
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:9.4.1200-alt1_3jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:9.4.1200-alt1_2jpp8
 - new version
 
