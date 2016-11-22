@@ -1,6 +1,6 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 Summary:          S/MIME and CMS libraries for Bouncy Castle
 Name:             bouncycastle-mail
 Version:          %{ver}
-Release:          alt1_6jpp8
+Release:          alt1_7jpp8
 License:          MIT
 URL:              http://www.bouncycastle.org/
 Source0:          http://www.bouncycastle.org/download/bcmail-%{archivever}.tar.gz
@@ -29,7 +29,6 @@ BuildRequires:    junit
 Requires:         bouncycastle = %{version}
 Requires:         bouncycastle-pkix = %{version}
 Requires:         javamail
-Requires:         maven-local
 Provides:         bcmail = %{version}-%{release}
 Source44: import.info
 
@@ -42,7 +41,7 @@ generators/processors for S/MIME and CMS, for Bouncy Castle.
 %package javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 BuildArch: noarch
 
 %description javadoc
@@ -119,6 +118,9 @@ popd
 %doc LICENSE.html
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.52-alt1_7jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.52-alt1_6jpp8
 - java 8 mass update
 
