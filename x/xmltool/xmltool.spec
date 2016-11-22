@@ -1,13 +1,16 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           xmltool
 Version:        3.3
-Release:        alt3_14jpp8
+Release:        alt3_15jpp8
 Summary:        Tool to manage XML documents through a Fluent Interface
 
-Group:          Development/Java
+Group:          Development/Other
 License:        ASL 2.0
 URL:            http://code.google.com/p/xmltool
 ### upstream only provides binaries or source without build scripts
@@ -17,7 +20,7 @@ URL:            http://code.google.com/p/xmltool
 Source0:        %{name}-%{version}.tar.xz
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  maven-local
 BuildRequires:  maven-remote-resources-plugin
 BuildRequires:  maven-surefire-provider-testng
@@ -64,6 +67,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt3_15jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt3_14jpp8
 - new version
 
