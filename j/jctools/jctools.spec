@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jctools
 Version:       1.1
-Release:       alt1_0.2.alphajpp8
+Release:       alt1_0.3.alphajpp8
 Summary:       Java Concurrency Tools for the JVM
 License:       ASL 2.0
 URL:           http://jctools.github.io/JCTools/
@@ -86,6 +89,9 @@ find . -name '*.jar' -print -delete
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_0.3.alphajpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_0.2.alphajpp8
 - new version
 
