@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           sequence-library
 Version:        1.0.2
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        Textual diff and merge library
 
 License:        Sequence     
@@ -22,9 +22,9 @@ Source2:        %{name}-build.xml
 BuildArch:      noarch
 
 BuildRequires:  junit
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant
-Requires:  jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Source44: import.info
 
 %description
@@ -33,7 +33,7 @@ A textual diff and merge library.
 %package        javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 %description    javadoc
 This package contains the API documentation for %{name}.
@@ -86,6 +86,9 @@ cp -rp docs/api/ %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_9jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_8jpp8
 - new version
 
