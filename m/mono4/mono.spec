@@ -2,7 +2,7 @@
 
 Name: mono4
 Version: 4.6.2.7
-Release: alt3
+Release: alt4
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -446,6 +446,10 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 %_man1dir/lc.1*
 %_man1dir/mprof-report.1*
 %_libdir/libMonoPosixHelper.so*
+%_libdir/libMonoPosixHelper.a
+%_libdir/*profiler*.so*
+%_libdir/*profiler*.a
+%_libdir/libikvm-native.a
 %_monodir/4.0/Mono.Posix.dll
 %_monodir/4.0/mscorlib.dll
 %dir %_monodir
@@ -844,6 +848,9 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 %_pkgconfigdir/monodoc.pc
 
 %changelog
+* Tue Nov 22 2016 Denis Medvedev <nbr@altlinux.org> 4.6.2.7-alt4
+- fix libraries for profiler
+
 * Mon Nov 21 2016 Denis Medvedev <nbr@altlinux.org> 4.6.2.7-alt3
 - fix for profiler-iomap
 
