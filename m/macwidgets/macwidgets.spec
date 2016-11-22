@@ -1,6 +1,6 @@
 Name: macwidgets
 Version: 0.9.5
-Release: alt1_0jpp6
+Release: alt2_0jpp6
 Summary: Collection of Mac style widgets written in Java
 
 Group: Development/Java
@@ -11,13 +11,9 @@ Source0: %name-%version.tar
 
 BuildPreReq: rpm-build-java
 BuildRequires: /proc ant jgoodies-forms
-BuildRequires: jpackage-utils >= 0:5.0.0
+BuildRequires: jpackage-utils
+BuildRequires: java-devel-default
 #BuildRequires: junit4
-
-Requires: jpackage-utils >= 0:5.0.0
-
-Requires(post): jpackage-utils >= 0:5.0.0
-Requires(postun): jpackage-utils >= 0:5.0.0
 
 BuildArch: noarch
 
@@ -43,5 +39,8 @@ ln -s mac_widgets-%version.jar %buildroot%_javadir/mac_widgets.jar
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.5-alt2_0jpp6
+- NMU: fixed build
+
 * Fri Mar 01 2013 Paul Wolneykien <manowar@altlinux.ru> 0.9.5-alt1_0jpp6
 - Initial build for ALT Linux.
