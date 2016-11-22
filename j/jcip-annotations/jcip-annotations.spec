@@ -1,16 +1,16 @@
 Epoch: 1
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jcip-annotations
 Version:        1
-Release:        alt3_17.20060626jpp8
+Release:        alt3_18.20060626jpp8
 Summary:        Java annotations for multithreaded software
 
-Group:          Development/Java
+Group:          Development/Other
 License:        CC-BY
 URL:            http://www.jcip.net/
 Source0:        http://jcip.net.s3-website-us-east-1.amazonaws.com/%{name}-src.jar
@@ -19,9 +19,9 @@ Source1:        http://mirrors.ibiblio.org/pub/mirrors/maven2/net/jcip/%{name}/1
 # There is no point in building native libraries, as the sources contain only
 # annotation definitions, so no code would be generated.
 BuildArch:      noarch
-BuildRequires:  jpackage-utils
+BuildRequires:  javapackages-tools rpm-build-java
 
-Requires:       jpackage-utils
+Requires:       javapackages-tools rpm-build-java
 Source44: import.info
 
 
@@ -82,6 +82,9 @@ cp -pr docs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1-alt3_18.20060626jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1:1-alt3_17.20060626jpp8
 - new version
 
