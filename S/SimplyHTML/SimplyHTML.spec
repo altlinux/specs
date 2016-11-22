@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:	SimplyHTML		
 Version:	0.16.7
-Release:	alt1_6jpp8
+Release:	alt1_7jpp8
 Summary:	Application and a java component for rich text processing
 
 License:	GPLv2 and BSD
@@ -19,11 +19,11 @@ Patch1:	simplyhtml-manifest-classpath.patch
 BuildRequires:	ant
 BuildRequires:	gnu-regexp
 BuildRequires:	javahelp2
-BuildRequires:	jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 
 Requires:	gnu-regexp
 Requires:	javahelp2
-Requires:	jpackage-utils
+Requires: javapackages-tools rpm-build-java
 
 BuildArch: noarch
 Source44: import.info
@@ -40,7 +40,7 @@ storing textual information and styles.
 %package javadoc
 Group: Development/Java
 Summary: API documentation for %{name}
-Requires:	jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -84,6 +84,9 @@ cp -a dist/help/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.16.7-alt1_7jpp8
+- new fc release
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.16.7-alt1_6jpp8
 - new version
 
