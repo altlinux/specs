@@ -1,15 +1,15 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          xapool
 Version:       1.5.0
-Release:       alt4_7jpp8
+Release:       alt4_9jpp8
 Summary:       Open source XA JDBC Pool
-Group:         Development/Java
 License:       LGPLv2+
 URL:           http://xapool.ow2.org/
 # wget http://download.forge.objectweb.org/xapool/xapool-1.5.0-src.tgz
@@ -25,13 +25,11 @@ Source1:       http://repo1.maven.org/maven2/com/experlog/%{name}/%{version}/%{n
 Patch0:        %{name}-%{version}-build.patch
 Patch1:        %{name}-%{version}-jdk7.patch
 
-BuildRequires: jpackage-utils
-
 BuildRequires: ant
 BuildRequires: apache-commons-logging
 BuildRequires: geronimo-jta
+BuildRequires: javapackages-local
 
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -43,9 +41,8 @@ XAPool is a software component which allows to:
  - Export a XADataSource (javax.sql.XADataSource)
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -69,30 +66,25 @@ ln -sf $(build-classpath geronimo-jta) externals/
 rm -r src/org/enhydra/jdbc/instantdb \
   src/org/enhydra/jdbc/oracle
 
+%mvn_file com.experlog:%{name} %{name}
+
 %build
 
 ant dist
 
 %install
-
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 output/dist/lib/%{name}.jar \
-  %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr output/dist/jdoc/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_artifact %{SOURCE1} output/dist/lib/%{name}.jar
+%mvn_install -J output/dist/jdoc
 
 %files -f .mfiles
 %doc README.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0-alt4_9jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0-alt4_7jpp8
 - new version
 
