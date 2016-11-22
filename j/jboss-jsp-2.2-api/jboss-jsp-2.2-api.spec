@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-jsp-2.2-api
 Version:          1.0.1
-Release:          alt5_12jpp8
+Release:          alt5_13jpp8
 Summary:          JavaServer(TM) Pages 2.2 API
 License:          CDDL or GPLv2 with exceptions
 URL:              http://www.jboss.org/
@@ -61,6 +64,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_13jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_12jpp8
 - java8 mass update
 
