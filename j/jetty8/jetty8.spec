@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jetty8
 Version:        8.1.17
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Java Webserver and Servlet Container
 # Jetty is dual licensed under both ASL 2.0 and EPL 1.0, see NOTICE.txt
 # some MIT-licensed code (from Utf8Appendable) is used too
@@ -218,6 +221,9 @@ rm -Rf LICENSE-CONTRIBUTOR/
 %doc NOTICE.txt LICENSE*
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 8.1.17-alt1_3jpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 8.1.17-alt1_2jpp8
 - java8 mass update
 
