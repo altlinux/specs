@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           spice-parent
 Version:        26
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Sonatype Spice Components
 License:        ASL 2.0
 URL:            http://github.com/sonatype/oss-parents
@@ -18,7 +21,6 @@ Patch0:         pom.patch
 BuildRequires:  maven-local
 BuildRequires:  forge-parent
 Source44: import.info
-Provides: mvn(org.sonatype.spice:spice-parent) = 26
 
 %description
 Spice components and libraries are common components
@@ -42,6 +44,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 26-alt1_5jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 26-alt1_4jpp8
 - new version
 
