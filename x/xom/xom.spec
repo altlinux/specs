@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: dom4j
 %filter_from_requires /^java-headless/d
@@ -44,17 +44,18 @@ BuildRequires: jpackage-generic-compat
 Summary:        XML Object Model
 Name:           xom
 Version:        1.2.10
-Release:        alt1_3jpp8
+Release:        alt1_6jpp8
 Epoch:          1
 License:        LGPLv2
 URL:            http://www.xom.nu
-# clean-tarball %{version}
-Source0:        %{name}-%{version}-clean.tar.gz
+Source0:        http://www.cafeconleche.org/XOM/%{name}-%{version}-src.tar.gz
 
 # Don't download jaxen, set javac target/source to 1.5
 Patch0:         %{name}-build.patch
 
 BuildRequires:  ant >= 0:1.6
+BuildRequires:  javapackages-local
+BuildRequires:  maven-local
 BuildRequires:  jarjar
 BuildRequires:  jaxen
 BuildRequires:  junit
@@ -98,7 +99,7 @@ This package provides %{summary}.
 %package demo
 Group: Development/Java
 Summary:        Samples for %{name}
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description demo
 This package provides %{summary}.
@@ -120,16 +121,22 @@ sed -i "s,59 Temple Place,51 Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1
  LICENSE.txt lgpl.txt
 
 %build
-mkdir lib
+mkdir -p lib
 pushd lib
 ln -sf $(build-classpath junit) junit.jar
 ln -sf $(build-classpath xerces-j2) dtd-xercesImpl.jar
 ln -sf $(build-classpath xalan-j2) xalan.jar
 ln -sf $(build-classpath xml-commons-apis) xmlParserAPIs.jar
 ln -sf $(build-classpath jaxen) jaxen.jar
-ln -sf $(build-classpath jarjar) jarjar-1.0.jar
+
+# jarjar has more than one jars
+while IFS=':' read -ra JARJAR_JARS; do 
+    for j in "${JARJAR_JARS[@]}";do 
+        ln -sf $j $(basename $j .jar)-1.0.jar
+    done
+done <<<$(build-classpath jarjar)
 popd
-mkdir lib2
+mkdir -p lib2
 pushd lib2
 ln -sf $(build-classpath tagsoup) tagsoup-1.2.jar
 ln -sf $(build-classpath xml-commons-resolver) resolver.jar
@@ -141,7 +148,7 @@ ln -sf $(build-classpath dom4j) dom4j.jar
 ln -sf $(build-classpath servlet) servlet.jar
 popd
 
-ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 -v compile15 jar samples betterdoc maven2
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -v compile15 jar samples betterdoc maven2
 
 pushd build/apidocs
 for f in `find -name \*.css -o -name \*.html`; do
@@ -151,12 +158,17 @@ popd
 
 mv build/maven2/project.xml build/maven2/pom.xml
 %pom_add_dep jaxen:jaxen build/maven2/pom.xml
+%mvn_artifact build/maven2/pom.xml build/%{name}-%{version}.jar
+%mvn_alias xom:xom com.io7m.xom:xom
 
 %install
+%mvn_install
+# For compatibility
 # jars
-install -d -m 755 %{buildroot}%{_javadir}
-install -m 644 build/%{name}-%{version}.jar \
-  %{buildroot}%{_javadir}/%{name}.jar
+ln -s xom/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
+#install -d -m 755 %{buildroot}%{_javadir}
+#install -m 644 build/%{name}-%{version}.jar \
+#  %{buildroot}%{_javadir}/%{name}.jar
 
 # javadoc
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
@@ -168,8 +180,9 @@ install -m 644 build/xom-samples.jar %{buildroot}%{_datadir}/%{name}
 
 # POM
 install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -m 644 build/maven2/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+ln -s xom/xom.pom %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+#install -m 644 build/maven2/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+#%add_maven_1depmap JPP-%{name}.pom %{name}.jar
 
 %files -f .mfiles
 %doc README.txt
@@ -189,6 +202,9 @@ install -m 644 build/maven2/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_datadir}/%{name}/xom-samples.jar
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.2.10-alt1_6jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.2.10-alt1_3jpp8
 - new version
 
