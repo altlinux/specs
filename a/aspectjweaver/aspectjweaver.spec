@@ -1,11 +1,14 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          aspectjweaver 
 Version:       1.8.4
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Java byte-code weaving library
 License:       EPL
 URL:           http://eclipse.org/aspectj/
@@ -75,6 +78,9 @@ LANG=en_US.ISO8859-1 CLASSPATH=$( build-classpath objectweb-asm/asm commons-logg
 %doc epl-v10.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.4-alt1_4jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.4-alt1_3jpp8
 - new version
 
