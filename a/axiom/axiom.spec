@@ -1,14 +1,14 @@
 Serial: 2
 Group: Sciences/Mathematics
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           axiom
 Version:        1.2.12
-Release:        alt1_11jpp8
+Release:        alt1_12jpp8
 Summary:        Axis Object Model
 License:        ASL 2.0
 Url:            http://ws.apache.org/commons/axiom/
@@ -83,6 +83,9 @@ rm -rf modules/axiom-jaxen-testsuite/src/main/
 %doc NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2:1.2.12-alt1_12jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 2:1.2.12-alt1_11jpp8
 - java 8 mass update
 
