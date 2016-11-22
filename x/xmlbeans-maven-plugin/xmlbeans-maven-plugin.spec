@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          xmlbeans-maven-plugin
 Version:       2.3.3
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Maven XML Beans Plugin
 License:       ASL 2.0
 Url:           http://mojo.codehaus.org/xmlbeans-maven-plugin/
@@ -81,6 +84,9 @@ rm -r pom.xml.orig
 %doc LICENSE-2.0.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_6jpp8
+- new fc release
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_5jpp8
 - java 8 mass update
 
