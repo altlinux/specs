@@ -1,6 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -8,9 +8,9 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:		uddi4j
 Version:	2.0.5
-Release:	alt2_11jpp8
+Release:	alt2_12jpp8
 Summary:	Universal Description, Discovery and Integration registry API for Java
-Group:		Development/Java
+Group:		Development/Other
 License:	IBM
 URL:		http://sourceforge.net/projects/uddi4j/
 
@@ -29,11 +29,11 @@ BuildArch:	noarch
 BuildRequires:	ant
 BuildRequires:	axis
 BuildRequires:	xerces-j2
-BuildRequires:	jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 
 Requires:	axis
 Requires:	xerces-j2
-Requires:	jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Source44: import.info
 
 %description
@@ -43,7 +43,7 @@ UDDI (Universal Description, Discovery and Integration) registry.
 %package javadoc
 Summary:	Javadocs for %{name}
 Group:		Development/Java
-Requires:	jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -96,6 +96,9 @@ install -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt2_12jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt2_11jpp8
 - new version
 
