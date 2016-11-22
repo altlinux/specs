@@ -1,22 +1,25 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           felix-gogo-shell
-Version:        0.10.0
-Release:        alt2_15jpp8
+Version:        0.12.0
+Release:        alt1_1jpp8
 Summary:        Community OSGi R4 Service Platform Implementation - Basic Commands
 License:        ASL 2.0
 URL:            http://felix.apache.org/site/apache-felix-gogo.html
 BuildArch:      noarch
 
-Source0:        http://mirror.catn.com/pub/apache//felix/org.apache.felix.gogo.shell-0.10.0-project.tar.gz
+Source0:        http://repo1.maven.org/maven2/org/apache/felix/org.apache.felix.gogo.shell/%{version}/org.apache.felix.gogo.shell-%{version}-project.tar.gz
   
 # Changed GroupID from osgi to felix
 Patch0:         %{name}-groupid.patch
 
 Patch1:         ignoreActivatorException.patch
-%define pkg_name %name
+
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:gogo-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -38,11 +41,11 @@ dynamic service deployment framework that is amenable to remote management.
 
 %package javadoc
 Group: Development/Java
-Summary:        Javadoc for %{pkg_name}
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{pkg_name}.
+This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n org.apache.felix.gogo.shell-%{version}
@@ -62,6 +65,9 @@ This package contains the API documentation for %{pkg_name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.12.0-alt1_1jpp8
+- new version
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt2_15jpp8
 - java 8 mass update
 
