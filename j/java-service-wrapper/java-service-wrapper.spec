@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -45,7 +45,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           java-service-wrapper
 Version:        3.2.5
-Release:        alt1_22jpp8
+Release:        alt1_23jpp8
 Summary:        Java service wrapper
 License:        MIT
 URL:            https://bitbucket.org/ivertex/yaja-wrapper
@@ -67,7 +67,7 @@ Patch2:         %{name}-3.2.4-docbuild.patch
 Patch3:         %{name}-3.2.5-rhbz1037144.patch
 Patch99:	ppc64le-support.patch
 BuildRequires:  ant
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 Source44: import.info
 
 %description
@@ -98,9 +98,9 @@ unzip -q %{cocoon}/cocoon.war ; mv WEB-INF/lib %{cocoon}/
 cd ..
 %endif
 (cd src/c; cp Makefile-linux-ppc64le-64.make Makefile-linux-aarch64-64.make)
-
-
+# -Wl,as-needed
 perl -i -npe 's,(\$[({]COMPILE[)}](?: -pthread)?) -lm(.*)$,$1$2 -lm,' src/c/Makefile-linux-*
+
 
 %build
 %ant -Dbits=%{__isa_bits} -Djavac.target.version=%{javaver}
@@ -140,6 +140,9 @@ cp -pR javadoc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc doc/license.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.2.5-alt1_23jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 3.2.5-alt1_22jpp8
 - new version
 
