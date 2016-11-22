@@ -15,9 +15,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-web-native
 Version:          2.0.10
-Release:          alt1_8jpp8
+Release:          alt1_9jpp8
 Summary:          JBoss Web Native
-Group:            Development/Java
+Group:            Development/Other
 License:          LGPLv2+ and ASL 2.0
 URL:              http://www.jboss.org/
 
@@ -28,10 +28,10 @@ Source0:          http://downloads.jboss.org/jbossnative/%{namedversion}/jboss-n
 Patch0: %{name}-rename-so-to-jbnative.patch
 
 BuildRequires:    libapr1-devel
-BuildRequires:    autoconf
-BuildRequires:    automake
-BuildRequires:    gcc
-BuildRequires:    jpackage-utils
+BuildRequires:    autoconf-common
+BuildRequires:    automake-common
+BuildRequires:    gcc-common
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:    make
 BuildRequires:    libssl-devel
 Source44: import.info
@@ -40,9 +40,9 @@ Source44: import.info
 This package contains support for Apache Portable Runtime (APR) in JBoss AS.
 
 %package devel
-Group: Development/Java
+Group: Development/Other
 Summary: JBoss Web Native development files
-Requires: jboss-web-native = %{version}-%{release}
+Requires: jboss-web-native = %{version}
 Requires: libapr1-devel
 Requires: libssl-devel
 
@@ -80,6 +80,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/pkgconfig/jbnative-1.pc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt1_9jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt1_8jpp8
 - new version
 
