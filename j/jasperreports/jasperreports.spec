@@ -1,18 +1,18 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 24
 Name:          jasperreports
 # the JR newest release requires
 # xmlbeans >= 2.5.0
 # castor-xml modules see also https://bugzilla.redhat.com/show_bug.cgi?id=820676
 Version:       4.0.2
-Release:       alt2_14jpp8
+Release:       alt2_15jpp8
 Summary:       Report-generating tool
 License:       LGPLv3+
 URL:           http://jasperforge.org/projects/jasperreports/
@@ -44,7 +44,7 @@ Patch7:        %{name}-%{version}-ecj4.patch
 Patch8:        %{name}-%{version}-batik1.8.patch
 Patch9:        %{name}-%{version}-doclint.patch
 
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 
 BuildRequires: ant
 BuildRequires: antlr-tool
@@ -59,7 +59,7 @@ BuildRequires: batik
 BuildRequires: bcel
 BuildRequires: bsh
 BuildRequires: dom4j
-BuildRequires: ecj >= 1:3.4.2-13
+BuildRequires: ecj >= 1:3.4.2
 BuildRequires: geronimo-saaj
 BuildRequires: hibernate3
 BuildRequires: hibernate-jpa-2.0-api
@@ -94,7 +94,7 @@ Requires:      apache-commons-javaflow
 Requires:      apache-commons-logging
 Requires:      batik
 Requires:      bcel
-Requires:      ecj >= 1:3.4.2-13
+Requires:      ecj >= 1:3.4.2
 Requires:      geronimo-saaj
 Requires:      hsqldb1
 Requires:      itext-core
@@ -104,7 +104,7 @@ Requires:      springframework
 Requires:      springframework-beans
 Requires:      glassfish-servlet-api
 
-Requires:      jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch:     noarch
 Source44: import.info
 
@@ -290,6 +290,9 @@ rm -rf dist/docs/api
 %doc license.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.0.2-alt2_15jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.0.2-alt2_14jpp8
 - java 8 mass update
 
