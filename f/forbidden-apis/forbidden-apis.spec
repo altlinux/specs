@@ -1,9 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          forbidden-apis
 Version:       1.7
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Generics Policeman's Forbidden API check
 
 Group:         Development/Java
@@ -78,6 +81,9 @@ install -pm 644 %{name}-ant %{buildroot}%{_sysconfdir}/ant.d/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.7-alt1_3jpp8
+- new fc release
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.7-alt1_2jpp8
 - java 8 mass update
 
