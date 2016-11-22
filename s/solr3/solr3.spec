@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             solr3
 Version:          3.6.2
-Release:          alt1_10jpp8
+Release:          alt1_11jpp8
 Summary:          Apache Solr
 License:          ASL 2.0
 Url:              http://lucene.apache.org/solr/
@@ -136,6 +136,9 @@ sed -i "s|wstx-asl|woodstox-core-asl|" solrj/pom.xml
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.6.2-alt1_11jpp8
+- new fc release
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 3.6.2-alt1_10jpp8
 - java 8 mass update
 
