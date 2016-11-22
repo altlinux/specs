@@ -1,8 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-BuildRequires: jdepend
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-msc
 Version:          1.2.2
-Release:          alt1_2jpp8
+Release:          alt1_4jpp8
 Summary:          JBoss Modular Service Container
 License:          LGPLv2+
 URL:              https://github.com/jbossas/jboss-msc
@@ -23,18 +22,21 @@ Source0:          https://github.com/jbossas/jboss-msc/archive/%{namedversion}.t
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-BuildRequires:    maven-surefire-provider-junit
-BuildRequires:    javassist
-BuildRequires:    jboss-parent
-BuildRequires:    junit
-BuildRequires:    byteman
-BuildRequires:    jboss-logging
-BuildRequires:    jboss-vfs
-BuildRequires:    jboss-threads
-BuildRequires:    jboss-logging-tools
-BuildRequires:    maven-injection-plugin
-BuildRequires:    jboss-modules
-BuildRequires:    apiviz
+BuildRequires:    mvn(jdepend:jdepend)
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(org.javassist:javassist)
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
+BuildRequires:    mvn(org.jboss:jboss-vfs)
+BuildRequires:    mvn(org.jboss.apiviz:apiviz)
+BuildRequires:    mvn(org.jboss.byteman:byteman)
+BuildRequires:    mvn(org.jboss.byteman:byteman-bmunit)
+BuildRequires:    mvn(org.jboss.byteman:byteman-install)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging-processor)
+BuildRequires:    mvn(org.jboss.logmanager:jboss-logmanager)
+BuildRequires:    mvn(org.jboss.maven.plugins:maven-injection-plugin)
+BuildRequires:    mvn(org.jboss.modules:jboss-modules)
+BuildRequires:    mvn(org.jboss.threads:jboss-threads)
 Source44: import.info
 
 %description
@@ -42,7 +44,7 @@ This package contains the JBoss Modular Service Container.
 
 %package javadoc
 Group: Development/Java
-Summary:          Javadocs for %{name}
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -59,11 +61,13 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_4jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_2jpp8
 - new version
 
