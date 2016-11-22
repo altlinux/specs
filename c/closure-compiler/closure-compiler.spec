@@ -1,5 +1,8 @@
 Serial: 1
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,14 +13,14 @@ Name:       closure-compiler
 #define commit ad29f06d581fb8c54ad031334b82a5c301b6ce0a
 #define shorthash %(printf %%.7s %commit)
 Version:    20141215
-Release:    alt1_2jpp8
+Release:    alt1_3jpp8
 License:    ASL 2.0
 URL:        https://developers.google.com/closure/compiler/
 Source0:    https://github.com/google/closure-compiler/archive/maven-release-v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 Source1:    closure-compiler.xml
 BuildArch:  noarch
 
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires: maven-local
 BuildRequires: jarjar
 BuildRequires: args4j
@@ -35,10 +38,10 @@ BuildRequires: findbugs
 %if 0%{?_check}
 BuildRequires: mockito
 %endif
-BuildRequires: xsltproc libxslt
+BuildRequires: libxslt xsltproc
 BuildRequires: docbook-style-xsl
 
-Requires:      jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Requires:      args4j
 Requires:      guava
 Requires:      google-gson
@@ -122,6 +125,9 @@ install -Dm0644 %{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
 %doc COPYING
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:20141215-alt1_3jpp8
+- new fc release
+
 * Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 1:20141215-alt1_2jpp8
 - java 8 mass update
 
