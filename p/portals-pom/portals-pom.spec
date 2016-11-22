@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          portals-pom
 Version:       1.3
-Release:       alt2_12jpp8
+Release:       alt2_13jpp8
 Summary:       Apache Portals parent pom
 License:       ASL 2.0
 Url:           http://portals.apache.org/
@@ -15,7 +18,6 @@ BuildRequires: maven-local
 BuildRequires: maven-install-plugin
 BuildArch:     noarch
 Source44: import.info
-Provides: mvn(org.apache.portals:portals-pom) = 1.3
 
 %description
 Apache Portals is a collaborative software development project
@@ -47,6 +49,9 @@ done
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_13jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_12jpp8
 - new version
 
