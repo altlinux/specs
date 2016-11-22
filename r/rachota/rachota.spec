@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %global checkout 20130104cvs
 Name:           rachota
 Version:        2.3
-Release:        alt1_10.20130104cvsjpp8
+Release:        alt1_11.20130104cvsjpp8
 Summary:        Straightforward timetracking
 
 Group:          Development/Java
@@ -27,14 +27,14 @@ Patch0:         doclint.patch
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 
 
 BuildRequires:  ant
 
 BuildRequires:  desktop-file-utils
 
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 
 Source44: import.info
 
@@ -47,7 +47,7 @@ time usage. The totally portable yet personal timetracker.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -91,6 +91,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_11.20130104cvsjpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_10.20130104cvsjpp8
 - java8 mass update
 
