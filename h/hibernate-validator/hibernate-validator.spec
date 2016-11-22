@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 %global majorversion 5
 Name:          hibernate-validator
 Version:       5.0.1
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Bean Validation 1.1 (JSR 349) Reference Implementation
 License:       ASL 2.0
 URL:           http://www.hibernate.org/subprojects/validator.html
@@ -200,6 +200,9 @@ install -m 644 engine/target/hibernate-validator-%{namedversion}-testing.jar \
 %doc copyright.txt license.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt1_6jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt1_5jpp8
 - java 8 mass update
 
