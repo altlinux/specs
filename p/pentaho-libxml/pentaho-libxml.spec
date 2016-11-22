@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name: pentaho-libxml
 Version: 1.1.3
-Release: alt1_13jpp8
+Release: alt1_14jpp8
 Summary: Namespace aware SAX-Parser utility library
 License: LGPLv2
 Group: System/Libraries
@@ -18,8 +18,8 @@ Group: System/Libraries
 #to simplify the licensing
 Source: %{origname}-%{version}-jarsdeleted.zip
 URL: http://reporting.pentaho.org/
-BuildRequires: ant ant-contrib jpackage-utils libbase libloader
-Requires: jpackage-utils libbase >= 1.1.2 libloader >= 1.1.2
+BuildRequires: ant ant-contrib javapackages-tools rpm-build-java libbase libloader
+Requires: javapackages-tools rpm-build-java libbase >= 1.1.2 libloader >= 1.1.2
 BuildArch: noarch
 Patch0: libxml-1.1.2-build.patch
 Source44: import.info
@@ -31,8 +31,8 @@ pain of implementing non-trivial SAX input handlers.
 %package javadoc
 Summary: Javadoc for %{name}
 Group: Development/Java
-Requires: %{name} = %{version}-%{release}
-Requires: jpackage-utils
+Requires: %{name} = %{version}
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -69,6 +69,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{origname}
 %{_javadocdir}/%{origname}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_14jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_13jpp8
 - new version
 
