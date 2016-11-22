@@ -1,6 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -16,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          apacheds
 Version:       2.0.0
-Release:       alt1_0.1.M21jpp8
+Release:       alt1_0.2.M21jpp8
 Summary:       Apache Directory Server
 License:       ASL 2.0
 Url:           http://directory.apache.org/
@@ -298,6 +299,9 @@ sed -i '/ConcurrentJunitRunner/d' $(find */src/test/java -name "*.java")
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_0.2.M21jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_0.1.M21jpp8
 - new version
 
