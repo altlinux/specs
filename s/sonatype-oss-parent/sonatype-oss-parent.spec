@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           sonatype-oss-parent
 Version:        7
-Release:        alt1_10jpp8
+Release:        alt1_11jpp8
 Summary:        Sonatype OSS Parent
 
 License:        ASL 2.0
@@ -18,7 +21,7 @@ BuildArch: noarch
 
 BuildRequires:  maven-local
 Source44: import.info
-Provides: mvn(org.sonatype.oss:oss-parent) = 7
+
 
 %description
 Sonatype OSS parent pom used by other sonatype packages.
@@ -38,6 +41,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 7-alt1_11jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 7-alt1_10jpp8
 - new version
 
