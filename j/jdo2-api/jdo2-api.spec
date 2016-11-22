@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          jdo2-api
 Version:       2.2
-Release:       alt2_11jpp8
+Release:       alt2_12jpp8
 Summary:       Implementation of JSR 243: Java Data Objects 2.0
 License:       ASL 2.0
 Url:           http://db.apache.org/jdo/
@@ -18,7 +18,7 @@ Source1:       jdo2-api-2.2-build.xml
 Source2:       http://repo1.maven.org/maven2/javax/jdo/jdo2-api/2.2/jdo2-api-2.2.pom
 
 Patch0:        jdo2-api-2.2-pom.patch
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 
 BuildRequires: ant
 BuildRequires: geronimo-jpa
@@ -30,7 +30,7 @@ Requires:      geronimo-jpa
 Requires:      geronimo-jta
 Requires:      junit
 
-Requires:      jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch:     noarch
 Source44: import.info
 
@@ -78,6 +78,9 @@ cp -pr  dist/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_12jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_11jpp8
 - new version
 
