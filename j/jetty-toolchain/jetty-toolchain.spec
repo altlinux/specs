@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jetty-toolchain
 Version:        1.4
-Release:        alt3_11jpp8
+Release:        alt3_12jpp8
 Summary:        Jetty Toolchain main POM file
 
 License:        ASL 2.0 or EPL
@@ -18,7 +21,6 @@ BuildRequires:  maven-local
 BuildRequires:  jetty-parent
 BuildRequires:  maven-release-plugin
 Source44: import.info
-Provides: mvn(org.eclipse.jetty.toolchain:jetty-toolchain) = 1.4
 
 %description
 Jetty Toolchain main POM file
@@ -40,6 +42,9 @@ pushd %{name}
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_12jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_11jpp8
 - new version
 
