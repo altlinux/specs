@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -8,10 +8,10 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           h2
 Version:        1.3.176
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Summary:        Java SQL database
 
-License:        EPL
+License:        EPL or MPLv1.1
 URL:            http://www.h2database.com
 Source0:        http://www.h2database.com/h2-2014-04-05.zip
 Source1:        http://repo2.maven.org/maven2/com/h2database/h2/%{version}/h2-%{version}.pom
@@ -90,6 +90,9 @@ cp -rp %SOURCE1 $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc src/docsrc/html/license.html
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.176-alt1_6jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.176-alt1_4jpp8
 - java 8 mass update
 
