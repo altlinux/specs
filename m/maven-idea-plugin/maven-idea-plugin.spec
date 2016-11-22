@@ -1,15 +1,15 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-idea-plugin
 Version:        2.2.1
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Maven IDEA Plugin
 
-Group:          Development/Java
+Group:          Development/Other
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/%{name}
 # svn export http://svn.apache.org/repos/asf/maven/plugins/tags/maven-idea-plugin-2.2.1
@@ -68,6 +68,9 @@ cp %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_6jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_5jpp8
 - new version
 
