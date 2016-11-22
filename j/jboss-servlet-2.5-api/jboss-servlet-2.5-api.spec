@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-servlet-2.5-api
 Version:          1.0.1
-Release:          alt3_10jpp8
+Release:          alt3_11jpp8
 Summary:          Java Servlet 2.5 API
 License:          ASL 2.0 and W3C
 Url:              http://www.jboss.org
@@ -55,6 +58,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_11jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_10jpp8
 - java8 mass update
 
