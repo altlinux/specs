@@ -1,5 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -12,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          native2ascii-maven-plugin
 Version:       1.0
-Release:       alt3_0.11.beta1jpp8
+Release:       alt3_0.12.beta1jpp8
 Summary:       Native2Ascii Maven Plugin
 License:       MIT
 URL:           http://mojo.codehaus.org/%{name}/
@@ -69,6 +70,9 @@ This package contains javadoc for %{name}.
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.12.beta1jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.11.beta1jpp8
 - new version
 
