@@ -1,11 +1,14 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jetty-build-support
 Version:        1.1
-Release:        alt3_15jpp8
+Release:        alt3_16jpp8
 Summary:        Jetty build support files
 # licensing bug upstream
 # https://bugs.eclipse.org/bugs/show_bug.cgi?id=362646
@@ -55,6 +58,9 @@ BuildArch: noarch
 %doc jetty-distribution-remote-resources/src/main/resources/*
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt3_16jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt3_15jpp8
 - new version
 
