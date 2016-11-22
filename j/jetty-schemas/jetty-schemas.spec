@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global     toolchain_id org.eclipse.jetty.toolchain
 Name:       jetty-schemas
 Version:    3.1
-Release:    alt1_4jpp8
+Release:    alt1_5jpp8
 Summary:    XML Schemas for Jetty
 
 License:    CDDL or GPLv2 with exceptions
@@ -43,6 +43,9 @@ pushd %{name}
 %doc CDDL+GPL_1_1.html
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_5jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_4jpp8
 - java 8 mass update
 
