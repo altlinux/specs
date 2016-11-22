@@ -1,5 +1,7 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,32 +9,32 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           apache-mime4j
 Version:        0.7.2
-Release:        alt3_11jpp8
+Release:        alt3_13jpp8
 Summary:        Apache JAMES Mime4j
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://james.apache.org/mime4j
-Source0:        http://apache.online.bg//james/mime4j/apache-mime4j-project-%{version}-source-release.zip
 BuildArch:      noarch
 
+Source0:        http://apache.online.bg//james/mime4j/apache-mime4j-project-%{version}-source-release.zip
+
 BuildRequires:  maven-local
-BuildRequires:  apache-commons-logging
-BuildRequires:  log4j
-BuildRequires:  junit
-BuildRequires:  apache-commons-io
-BuildRequires:  apache-james-project
-BuildRequires:  javacc-maven-plugin
-BuildRequires:  maven-remote-resources-plugin
-BuildRequires:  apache-rat-plugin
-BuildRequires:  apache-resource-bundles
-BuildRequires:  maven-surefire-provider-junit
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.james:james-project:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.apache.rat:apache-rat-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
 Source44: import.info
 
 %description
 Java stream based MIME message parser.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
 BuildArch: noarch
 
@@ -57,12 +59,16 @@ done
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE RELEASE_NOTES.txt
+%doc RELEASE_NOTES.txt
+%doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.7.2-alt3_13jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.7.2-alt3_11jpp8
 - new version
 
