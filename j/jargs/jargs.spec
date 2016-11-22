@@ -1,23 +1,23 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jargs
 Version:        1.0
-Release:        alt1_16jpp8
+Release:        alt1_17jpp8
 Summary:        Java command line option parsing suite
 
-Group:          Development/Java
+Group:          Development/Other
 License:        BSD
 URL:            http://jargs.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
 Source1:        https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/net/sf/jargs/1.0/jargs-1.0.pom
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant
 BuildRequires:  junit
 Source44: import.info
@@ -70,6 +70,9 @@ cp -p %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_17jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_16jpp8
 - new version
 
