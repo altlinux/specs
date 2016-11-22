@@ -1,11 +1,14 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jboss-parent
 Version:        11
-Release:        alt3_6jpp8
+Release:        alt3_7jpp8
 Summary:        JBoss Parent POM
 License:        Public Domain
 URL:            http://www.jboss.org/
@@ -19,7 +22,6 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 Source44: import.info
-Provides: mvn(org.jboss:jboss-parent) = 11
 
 %description
 The Project Object Model files for JBoss packages.
@@ -45,6 +47,9 @@ The Project Object Model files for JBoss packages.
 %doc README.md
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:11-alt3_7jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:11-alt3_6jpp8
 - new version
 
