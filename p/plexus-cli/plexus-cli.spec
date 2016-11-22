@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           plexus-cli
 Version:        1.6
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Epoch:          0
 Summary:        Command Line Interface facilitator for Plexus
 License:        ASL 2.0
@@ -58,6 +61,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_3jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_2jpp8
 - new version
 
