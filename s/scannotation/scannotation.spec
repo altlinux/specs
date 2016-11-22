@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          scannotation
 Version:       1.0.3
-Release:       alt2_0.12.r12jpp8
+Release:       alt2_0.13.r12jpp8
 Summary:       A Java annotation scanner
 License:       ASL 2.0
 URL:           http://scannotation.sourceforge.net
@@ -76,6 +79,9 @@ cp -p %SOURCE1 .
 %doc License.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_0.13.r12jpp8
+- new fc release
+
 * Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_0.12.r12jpp8
 - java8 mass update
 
