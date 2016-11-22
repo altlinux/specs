@@ -4,7 +4,7 @@
 # {{{ Perl/Python/Ruby/Tcl/MzScheme support
 %def_enable perlinterp
 %def_enable pythoninterp
-%def_disable python3interp
+%def_enable python3interp
 %def_enable rubyinterp
 %def_enable tclinterp
 %def_disable mzschemeinterp
@@ -45,28 +45,22 @@
 %if "%gui" != "%nil"
 %force_enable gui_any
 %endif
-
-# Can't move tests to %%check section since multiple targets are built
-%if %{disabled check} || %{without check}
-%global make_test %nil
-%else
-%global make_test %make -C src testclean test
-%endif
 # }}}
 
 # vimspell interface version
 %define vimspell_version	50.1
 
 Name: vim
-%define branch 7.3
-Version: %branch.353
-Release: alt4.2
+%define branch 8.0
+Version: %branch.95
+Release: alt1
 Epoch: 4
 
 Summary: VIsual editor iMproved
 License: Charityware
 Group: Editors
 Url: http://www.vim.org
+Packager: Gleb F-Malinovskiy <glebfm@altlinux.org>
 
 %add_findreq_skiplist %_datadir/vim/*
 
@@ -77,8 +71,7 @@ Url: http://www.vim.org
 %define vim_runtime_dir %_datadir/vim/vimfiles
 # }}}
 
-Source: %name-%branch.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version-%release.tar
 
 # {{{ BuildRequires
 # Automatically added by buildreq on Mon Apr 28 2003 and filtered by raorn
@@ -135,7 +128,8 @@ BuildConflicts: python-devel-static
 %endif
 # Python
 %if_enabled python3interp
-%{error:wtf?}
+BuildPreReq: python3-devel
+BuildConflicts: python3-devel-static
 %endif
 # Ruby
 %if_enabled rubyinterp
@@ -155,13 +149,18 @@ BuildPreReq: liblua5-devel
 %endif
 # }}}
 
+# /proc: for "<(command)" bash syntax
+# /dev/pts and expect: for some tests which require terminal
+# python-module-json: for testdir/test_channel.py
+%{?!_without_check:%{?!_disable_check:BuildPreReq: /dev/pts /proc python-module-json expect}}
+
 # {{{ Description
 %description
-VIM (VIsual editor iMproved) is an updated and improved version of the vi
-editor.  Vi was the first real screen-based editor for UNIX, and is still
-very popular.  VIM improves on vi by adding new features: multiple windows,
-multi-level undo, block highlighting and more.  The vim-common package
-contains files which every VIM binary will need in order to run.
+VIM (VIsual editor iMproved) is an updated and improved version of the
+vi editor.  Vi was the first real screen-based editor for UNIX, and is
+still very popular.  VIM improves on vi by adding new features: multiple
+windows, multi-level undo, block highlighting and more.  The vim-common
+package contains files which every VIM binary will need in order to run.
 # }}}
 
 # {{{ vim-common
@@ -211,11 +210,11 @@ Provides: vim-plugin-vimruby = 20070302.vim
 Obsoletes: vim-plugin-vimruby < 20070302.vim
 
 %description common
-VIM (VIsual editor iMproved) is an updated and improved version of the vi
-editor.  Vi was the first real screen-based editor for UNIX, and is still
-very popular.  VIM improves on vi by adding new features: multiple windows,
-multi-level undo, block highlighting and more.  The vim-common package
-contains files which every VIM binary will need in order to run.
+VIM (VIsual editor iMproved) is an updated and improved version of the
+vi editor.  Vi was the first real screen-based editor for UNIX, and is
+still very popular.  VIM improves on vi by adding new features: multiple
+windows, multi-level undo, block highlighting and more.  The vim-common
+package contains files which every VIM binary will need in order to run.
 
 If you are installing any version of the VIM editor, you'll also need to
 the vim-common package installed.
@@ -229,11 +228,11 @@ PreReq: %name-common = %epoch:%version-%release
 Requires: %_bindir/vim
 
 %description -n vimtutor
-VIM (VIsual editor iMproved) is an updated and improved version of the vi
-editor.  Vi was the first real screen-based editor for UNIX, and is still
-very popular.  VIM improves on vi by adding new features: multiple windows,
-multi-level undo, block highlighting and more.  The vim-common package
-contains files which every VIM binary will need in order to run.
+VIM (VIsual editor iMproved) is an updated and improved version of the
+vi editor.  Vi was the first real screen-based editor for UNIX, and is
+still very popular.  VIM improves on vi by adding new features: multiple
+windows, multi-level undo, block highlighting and more.  The vim-common
+package contains files which every VIM binary will need in order to run.
 
 This package contains VIM tutor.
 # }}}
@@ -245,13 +244,14 @@ BuildArch: noarch
 Requires: rpm-build-vim = %epoch:%version-%release
 
 %description spell-source
-VIM (VIsual editor iMproved) is an updated and improved version of the vi
-editor.  Vi was the first real screen-based editor for UNIX, and is still
-very popular.  VIM improves on vi by adding new features: multiple windows,
-multi-level undo, block highlighting and more.  The vim-common package
-contains files which every VIM binary will need in order to run.
+VIM (VIsual editor iMproved) is an updated and improved version of the
+vi editor.  Vi was the first real screen-based editor for UNIX, and is
+still very popular.  VIM improves on vi by adding new features: multiple
+windows, multi-level undo, block highlighting and more.  The vim-common
+package contains files which every VIM binary will need in order to run.
 
-This package contains vimspell sources for building additional dictionaries.
+This package contains vimspell sources for building additional
+dictionaries.
 # }}}
 # {{{ vim-minimal
 %package minimal
@@ -262,12 +262,12 @@ Provides: vi = %epoch:%version-%release
 Provides: /bin/vi
 
 %description minimal
-VIM (VIsual editor iMproved) is an updated and improved version of the vi
-editor.  Vi was the first real screen-based editor for UNIX, and is still
-very popular.  VIM improves on vi by adding new features: multiple windows,
-multi-level undo, block highlighting and more.  The vim-minimal package
-includes a minimal version of VIM, which is installed into /bin/vi for use
-when only the root partition is present.
+VIM (VIsual editor iMproved) is an updated and improved version of the
+vi editor.  Vi was the first real screen-based editor for UNIX, and is
+still very popular.  VIM improves on vi by adding new features: multiple
+windows, multi-level undo, block highlighting and more.  The vim-minimal
+package includes a minimal version of VIM, which is installed into
+/bin/vi for use when only the root partition is present.
 
 Just install it because you'll need it.
 # }}}
@@ -283,12 +283,12 @@ Provides: %_bindir/vim
 Obsoletes: vim-color
 
 %description enhanced
-VIM (VIsual editor iMproved) is an updated and improved version of the vi
-editor.  Vi was the first real screen-based editor for UNIX, and is still
-very popular.  VIM improves on vi by adding new features: multiple windows,
-multi-level undo, block highlighting and more.  The vim-enhanced package
-contains a version of VIM with extra, recently introduced features like
-Python and Perl interpreters.
+VIM (VIsual editor iMproved) is an updated and improved version of the
+vi editor.  Vi was the first real screen-based editor for UNIX, and is
+still very popular.  VIM improves on vi by adding new features: multiple
+windows, multi-level undo, block highlighting and more.  The
+vim-enhanced package contains a version of VIM with extra, recently
+introduced features like Python and Perl interpreters.
 
 Install the vim-enhanced package if you'd like to use a full-featured
 VIM, but you don't want to use GUI version of VIM.
@@ -306,17 +306,17 @@ Provides: %_bindir/vim
 Obsoletes: vim-color
 
 %description console
-VIM (VIsual editor iMproved) is an updated and improved version of the vi
-editor.  Vi was the first real screen-based editor for UNIX, and is still
-very popular.  VIM improves on vi by adding new features: multiple windows,
-multi-level undo, block highlighting and more.  The vim-console package
-contains a version of VIM with extra, recently introduced features like
-Python and Perl interpreters.
+VIM (VIsual editor iMproved) is an updated and improved version of the
+vi editor.  Vi was the first real screen-based editor for UNIX, and is
+still very popular.  VIM improves on vi by adding new features: multiple
+windows, multi-level undo, block highlighting and more.  The vim-console
+package contains a version of VIM with extra, recently introduced
+features like Python and Perl interpreters.
 
 Install the vim-console package if you'd like to use a full-featured
-VIM, but you don't use X11 or don't want to use GUI version of VIM nor want
-to use perl/python/ruby/tcl interface.  You'll also need to install the
-vim-common package.
+VIM, but you don't use X11 or don't want to use GUI version of VIM nor
+want to use perl/python/ruby/tcl interface.  You'll also need to install
+the vim-common package.
 # }}}
 # {{{ vim-X11
 %package X11
@@ -333,18 +333,18 @@ Provides: %_bindir/vim
 Obsoletes: vim-color
 
 %description X11
-VIM (VIsual editor iMproved) is an updated and improved version of the vi
-editor.  Vi was the first real screen-based editor for UNIX, and is still
-very popular.  VIM improves on vi by adding new features: multiple windows,
-multi-level undo, block highlighting and more.
+VIM (VIsual editor iMproved) is an updated and improved version of the
+vi editor.  Vi was the first real screen-based editor for UNIX, and is
+still very popular.  VIM improves on vi by adding new features: multiple
+windows, multi-level undo, block highlighting and more.
 
-VIM-X11 is a full version of the VIM editor, including the GUI. You can run it
-either in terminal or within the X Window System. This package supersedes
-vim-ehnanced package.
+VIM-X11 is a full version of the VIM editor, including the GUI. You can
+run it either in terminal or within the X Window System. This package
+supersedes vim-ehnanced package.
 
-Install the vim-X11 package if you'd like to use a full-featured VIM with both
-terminal and X11 interface.  You'll also need to install the vim-common
-package.
+Install the vim-X11 package if you'd like to use a full-featured VIM
+with both terminal and X11 interface.  You'll also need to install the
+vim-common package.
 # }}}
 # {{{ vim-X11-athena
 %package X11-athena
@@ -358,18 +358,18 @@ Provides: %_bindir/vim-X11
 Obsoletes: vim-color
 
 %description X11-athena
-VIM (VIsual editor iMproved) is an updated and improved version of the vi
-editor.  Vi was the first real screen-based editor for UNIX, and is still
-very popular.  VIM improves on vi by adding new features: multiple windows,
-multi-level undo, block highlighting and more.
+VIM (VIsual editor iMproved) is an updated and improved version of the
+vi editor.  Vi was the first real screen-based editor for UNIX, and is
+still very popular.  VIM improves on vi by adding new features: multiple
+windows, multi-level undo, block highlighting and more.
 
-VIM-X11 is a full version of the VIM editor, including the GUI. You can run it
-either in terminal or within the X Window System. This package supersedes
-vim-ehnanced package.
+VIM-X11 is a full version of the VIM editor, including the GUI. You can
+run it either in terminal or within the X Window System. This package
+supersedes vim-ehnanced package.
 
-Install the vim-X11 package if you'd like to use a full-featured VIM with both
-terminal and X11 Xaw interface.  You'll also need to install the vim-X11
-package.
+Install the vim-X11 package if you'd like to use a full-featured VIM
+with both terminal and X11 Xaw interface.  You'll also need to install
+the vim-X11 package.
 # }}}
 # {{{ vim-X11-gnome2
 %package X11-gnome2
@@ -383,18 +383,18 @@ Provides: %_bindir/vim-X11
 Obsoletes: vim-color
 
 %description X11-gnome2
-VIM (VIsual editor iMproved) is an updated and improved version of the vi
-editor.  Vi was the first real screen-based editor for UNIX, and is still
-very popular.  VIM improves on vi by adding new features: multiple windows,
-multi-level undo, block highlighting and more.
+VIM (VIsual editor iMproved) is an updated and improved version of the
+vi editor.  Vi was the first real screen-based editor for UNIX, and is
+still very popular.  VIM improves on vi by adding new features: multiple
+windows, multi-level undo, block highlighting and more.
 
-VIM-X11 is a full version of the VIM editor, including the GUI. You can run it
-either in terminal or within the X Window System. This package supersedes
-vim-ehnanced package.
+VIM-X11 is a full version of the VIM editor, including the GUI. You can
+run it either in terminal or within the X Window System. This package
+supersedes vim-ehnanced package.
 
-Install the vim-X11 package if you'd like to use a full-featured VIM with both
-terminal and X11 GNOME interface.  You'll also need to install the vim-X11
-package.
+Install the vim-X11 package if you'd like to use a full-featured VIM
+with both terminal and X11 GNOME interface.  You'll also need to install
+the vim-X11 package.
 # }}}
 # {{{ vim-X11-gtk2
 %package X11-gtk2
@@ -409,18 +409,18 @@ Provides: %_bindir/vim-X11
 Obsoletes: vim-color
 
 %description X11-gtk2
-VIM (VIsual editor iMproved) is an updated and improved version of the vi
-editor.  Vi was the first real screen-based editor for UNIX, and is still
-very popular.  VIM improves on vi by adding new features: multiple windows,
-multi-level undo, block highlighting and more.
+VIM (VIsual editor iMproved) is an updated and improved version of the
+vi editor.  Vi was the first real screen-based editor for UNIX, and is
+still very popular.  VIM improves on vi by adding new features: multiple
+windows, multi-level undo, block highlighting and more.
 
-VIM-X11 is a full version of the VIM editor, including the GUI. You can run it
-either in terminal or within the X Window System. This package supersedes
-vim-ehnanced package.
+VIM-X11 is a full version of the VIM editor, including the GUI. You can
+run it either in terminal or within the X Window System. This package
+supersedes vim-ehnanced package.
 
-Install the vim-X11 package if you'd like to use a full-featured VIM with both
-terminal and X11 gtk+2 interface.  You'll also need to install the vim-X11
-package.
+Install the vim-X11 package if you'd like to use a full-featured VIM
+with both terminal and X11 gtk+2 interface.  You'll also need to install
+the vim-X11 package.
 # }}}
 # {{{ vim-X11-motif
 %package X11-motif
@@ -434,18 +434,18 @@ Provides: %_bindir/vim-X11
 Obsoletes: vim-color
 
 %description X11-motif
-VIM (VIsual editor iMproved) is an updated and improved version of the vi
-editor.  Vi was the first real screen-based editor for UNIX, and is still
-very popular.  VIM improves on vi by adding new features: multiple windows,
-multi-level undo, block highlighting and more.
+VIM (VIsual editor iMproved) is an updated and improved version of the
+vi editor.  Vi was the first real screen-based editor for UNIX, and is
+still very popular.  VIM improves on vi by adding new features: multiple
+windows, multi-level undo, block highlighting and more.
 
-VIM-X11 is a full version of the VIM editor, including the GUI. You can run it
-either in terminal or within the X Window System. This package supersedes
-vim-ehnanced package.
+VIM-X11 is a full version of the VIM editor, including the GUI. You can
+run it either in terminal or within the X Window System. This package
+supersedes vim-ehnanced package.
 
-Install the vim-X11 package if you'd like to use a full-featured VIM with both
-terminal and X11 Motif interface.  You'll also need to install the vim-X11
-package.
+Install the vim-X11 package if you'd like to use a full-featured VIM
+with both terminal and X11 Motif interface.  You'll also need to install
+the vim-X11 package.
 # }}}
 # {{{ vim-X11-neXtaw
 %package X11-neXtaw
@@ -459,18 +459,18 @@ Provides: %_bindir/vim-X11
 Obsoletes: vim-color
 
 %description X11-neXtaw
-VIM (VIsual editor iMproved) is an updated and improved version of the vi
-editor.  Vi was the first real screen-based editor for UNIX, and is still
-very popular.  VIM improves on vi by adding new features: multiple windows,
-multi-level undo, block highlighting and more.
+VIM (VIsual editor iMproved) is an updated and improved version of the
+vi editor.  Vi was the first real screen-based editor for UNIX, and is
+still very popular.  VIM improves on vi by adding new features: multiple
+windows, multi-level undo, block highlighting and more.
 
-VIM-X11 is a full version of the VIM editor, including the GUI. You can run it
-either in terminal or within the X Window System. This package supersedes
-vim-ehnanced package.
+VIM-X11 is a full version of the VIM editor, including the GUI. You can
+run it either in terminal or within the X Window System. This package
+supersedes vim-ehnanced package.
 
-Install the vim-X11 package if you'd like to use a full-featured VIM with both
-terminal and X11 neXtaw interface.  You'll also need to install the vim-X11
-package.
+Install the vim-X11 package if you'd like to use a full-featured VIM
+with both terminal and X11 neXtaw interface.  You'll also need to
+install the vim-X11 package.
 # }}}
 # {{{ vim-devel
 %package -n rpm-build-vim
@@ -483,11 +483,11 @@ Provides: %name-devel = %epoch:%version-%release
 Obsoletes: %name-devel < 4:7.2
 
 %description -n rpm-build-vim
-VIM (VIsual editor iMproved) is an updated and improved version of the vi
-editor.  Vi was the first real screen-based editor for UNIX, and is still
-very popular.  VIM improves on vi by adding new features: multiple windows,
-multi-level undo, block highlighting and more.  The vim-common package
-contains files which every VIM binary will need in order to run.
+VIM (VIsual editor iMproved) is an updated and improved version of the
+vi editor.  Vi was the first real screen-based editor for UNIX, and is
+still very popular.  VIM improves on vi by adding new features: multiple
+windows, multi-level undo, block highlighting and more.  The vim-common
+package contains files which every VIM binary will need in order to run.
 
 This package contains RPM macros needed to build additional VIM plugin
 packages.
@@ -510,14 +510,13 @@ used to perform binary file patching.
 
 # {{{ prep section
 %prep
-%setup -n vim-%branch
-%patch -p1
+%setup -n %name-%version-%release
 touch src/auto/*
 
 # Compressed documentation
 #__subst 's|^.*#[[:blank:]]*define[[:blank:]]\+DFLT_HELPFILE[[:blank:]]\+.*$|#define DFLT_HELPFILE "$VIMRUNTIME/doc/help.txt.gz"|' src/feature.h
 
-VIMSPELLVERSION=`grep '^[[:blank:]]*#define[[:blank:]]\+VIMSPELLVERSION[[:blank:]]\+[[:digit:]]\+[[:blank:]]*$' src/spell.c | sed -e 's/^[[:blank:]]*#define[[:blank:]]\+VIMSPELLVERSION[[:blank:]]\+\([[:digit:]]\+\)[[:blank:]]*$/\1/'`
+VIMSPELLVERSION=`grep '^[[:blank:]]*#define[[:blank:]]\+VIMSPELLVERSION[[:blank:]]\+[[:digit:]]\+[[:blank:]]*$' src/spellfile.c | sed -e 's/^[[:blank:]]*#define[[:blank:]]\+VIMSPELLVERSION[[:blank:]]\+\([[:digit:]]\+\)[[:blank:]]*$/\1/'`
 VIMSUGVERSION=`grep '^[[:blank:]]*#define[[:blank:]]\+VIMSUGVERSION[[:blank:]]\+[[:digit:]]\+[[:blank:]]*$' src/spell.c | sed -e 's/^[[:blank:]]*#define[[:blank:]]\+VIMSUGVERSION[[:blank:]]\+\([[:digit:]]\+\)[[:blank:]]*$/\1/'`
 if [ "$VIMSPELLVERSION.$VIMSUGVERSION" != "%vimspell_version" ]; then
   echo "FATAL: %%vimspell_version (%vimspell_version) does not match source ($VIMSPELLVERSION.$VIMSUGVERSION)"
@@ -528,8 +527,6 @@ fi
 %build
 # autoreconf
 %make -C src autoconf
-# SMP-incompatible
-%define __nprocs 1
 PLTHOME=%_libdir/plt2; export PLTHOME
 # {{{ Build CFLAGS
 # Load (g)vimrc file(s) from %_sysconfdir
@@ -540,6 +537,8 @@ PLTHOME=%_libdir/plt2; export PLTHOME
 # }}}
 # {{{ minimal
 %if_enabled minimal
+make -C src shadow
+cd src/shadow
 %configure \
 	--exec-prefix=/ \
 	--with-features=tiny \
@@ -552,9 +551,10 @@ PLTHOME=%_libdir/plt2; export PLTHOME
 	--with-compiledby="%packager" \
 	#
 
-%make_build -C src clean all
-%make_test
-mv src/vim vim-minimal
+%make_build
+cd -
+ls src/shadow/vim
+mv src/shadow src/build-minimal
 %endif
 # }}}
 
@@ -575,6 +575,8 @@ interp_opts="%{subst_enable perlinterp} \
 	%{subst_enable luainterp}"
 
 # {{{ full without GUI and interpreters
+make -C src shadow
+cd src/shadow
 %configure \
 	$common_opts \
 	--with-features=big \
@@ -588,28 +590,17 @@ interp_opts="%{subst_enable perlinterp} \
 	--enable-gui=no \
 	--with-compiledby="%packager" \
 	#
-%make_build -C src clean all
-%make_test
-mv src/vim vim-console
-# }}}
-
-# {{{ full without GUI
-%configure \
-	$common_opts \
-	$interp_opts \
-	--with-x \
-	--enable-gui=no \
-	--disable-xsmp \
-	--with-compiledby="%packager" \
-	#
-%make_build -C src clean all
-%make_test
-mv src/vim vim-enhanced
+%make_build
+cd -
+ls src/shadow/vim
+mv src/shadow src/build-console
 # }}}
 
 # {{{ full version with GUI
 %if_enabled gui_any
 for gui in %{gui}; do
+make -C src shadow
+cd src/shadow
 %configure \
 	$common_opts \
 	$interp_opts \
@@ -621,32 +612,49 @@ for gui in %{gui}; do
 	--enable-xsmp \
 	--with-compiledby="%packager" \
 	#
-%make_build -C src clean all
-%make_test
-mv src/vim "vim-$gui"
+%make_build
+cd -
+ls src/shadow/vim
+mv src/shadow src/build-$gui
 done
 %endif
 # }}}
-# STFU make install
-touch src/vim
+# {{{ full without GUI
+make -C src shadow
+cd src/shadow
+%configure \
+	$common_opts \
+	$interp_opts \
+	--with-x \
+	--enable-gui=no \
+	--disable-xsmp \
+	--with-compiledby="%packager" \
+	#
+%make_build
+cd -
+ls src/shadow/vim
+mv src/shadow src/build-enhanced
+# }}}
 # }}}
 # {{{ install section
 %install
 mkdir -p %buildroot{%_altdir,%_sysconfdir/vim,/bin,%_bindir,%_man1dir,%_datadir/vim/{ftdetect,langmap,langrc},%_customdocdir,%_usrsrc/vimspell,%_rpmmacrosdir}
 # {{{2 make install
-%makeinstall_std -C src
+for gui in %{gui}; do
+	%makeinstall_std -C src/build-"$gui"
+	break
+done
+%makeinstall_std -C src/build-enhanced
 
-# Where is our baby?..
-rm %buildroot%_bindir/vim
+mv %buildroot%_bindir/vim %buildroot%_bindir/vim-enhanced
 
 %if_enabled minimal
 # Install the minimal version into the /bin
-install -p -m755 vim-minimal %buildroot/bin/vi
+install -p -m755 "src/build-minimal/vim" %buildroot/bin/vi
 %endif
 
-# ... Here it is!
-for ui in console enhanced %{gui}; do
-	install -p -m755 "vim-$ui" "%buildroot%_bindir/vim-$ui"
+for ui in console %{gui}; do
+	install -p -m755 "src/build-$ui/vim" "%buildroot%_bindir/vim-$ui"
 done
 %if_enabled gui_any
 for ui in %{gui}; do
@@ -850,15 +858,41 @@ install -p -m644 alternatives/vim-X11-neXtaw %buildroot%_altdir/vim-X11-neXtaw
 %endif
 # 2}}}
 # {{{2 Language-specific parts
-%find_lang --with-man --output vim.lang /vim /ex /rview /rvim /view /vimdiff
-%find_lang --with-man --output xxd.lang /xxd
-%find_lang --with-man --output vimtutor.lang --custom-file-script 's:\(%_datadir/vim/tutor/tutor\)\(\.\([a-z][a-z]\)\(\..*\)\?\)$:%%lang(\3) \1\2:; s:^\([^%%].*\)::; s:%%lang(en) ::;' /vimtutor
-%find_lang --with-man --output vim-X11.lang /evim /eview /gvim /gview /gvimdiff /rgvim /rgview
+%find_lang --with-man --output vim.lang vim ex rview rvim view vimdiff
+%find_lang --with-man --output xxd.lang xxd
+%find_lang --with-man --output vimtutor.lang --custom-file-script 's:\(%_datadir/vim/tutor/tutor\)\(\.\([a-z][a-z]\)\(\..*\)\?\)$:%%lang(\3) \1\2:; s:^\([^%%].*\)::; s:%%lang(en) ::;' vimtutor
+%find_lang --with-man --output vim-X11.lang evim eview gvim gview gvimdiff rgvim rgview
 install -p -m644 runtime/langrc/* %buildroot%_datadir/vim/langrc
 install -p -m644 runtime/langmap/*.vim %buildroot%_datadir/vim/langmap
 
 # 2}}}
 # }}}
+
+%check
+# This testsuite requires terminal for some tests
+# At least, expect is not worse way to do this.
+# May be, there is better.
+cat > check.exp <<@@@
+set dir [lindex \$argv 0]
+
+spawn /bin/sh
+send "make -C \$dir test\r"
+send "echo \\\$?\r"
+expect '0'
+@@@
+
+for ui in minimal console enhanced console %{gui}; do
+	if expect -f check.exp src/build-"$ui"; then
+		echo "testsuite for $ui variant PASSED" >> check-log
+	else
+		echo "testsuite for $ui variant FAILED" >> check-log
+	fi
+done
+
+cat check-log
+if grep -q 'FAILED$' check-log; then
+	exit 1
+fi
 
 # {{{ triggers
 %if_enabled minimal
@@ -902,8 +936,10 @@ fi
 %_datadir/vim/langmap
 %_datadir/vim/langrc
 %_datadir/vim/macros
+%_datadir/vim/pack
 %_datadir/vim/plugin
 %_datadir/vim/print
+%_datadir/vim/rgb.txt
 %dir %_datadir/vim/spell
 %_datadir/vim/spell/cleanadd.vim
 %_datadir/vim/spell/fixdup.vim
@@ -923,7 +959,9 @@ fi
 # }}}
 # {{{ vimtutor
 %files -n vimtutor -f vimtutor.lang
+%if_enabled gui_any
 %_bindir/gvimtutor
+%endif
 %_bindir/vimtutor
 %dir %_datadir/vim/tutor
 %_datadir/vim/tutor/tutor
@@ -1025,6 +1063,9 @@ fi
 
 # {{{ changelog
 %changelog
+* Tue Nov 22 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.0.95-alt1
+- Updated to v8.0.0095.
+
 * Fri Sep 23 2016 Andrey Cherepanov <cas@altlinux.org> 4:7.3.353-alt4.2
 - rebuild with Ruby 2.3.1
 
@@ -1254,7 +1295,7 @@ fi
  + accessing wrong memory with completion and composing char
  + if 'ff' is "mac" then "ga" on a ^J shows 0x0d instead of 0x0a
  + ":tag" doesn't return to the right tag entry in the tag stack
- + Python: vim.eval() is wrong for recursive structures 
+ + Python: vim.eval() is wrong for recursive structures
  + ":set <M-b>=<Esc>b" does not work when 'encoding' is utf-8
  + using ":diffget 1" in buffer 1 corrupts the text
  + adding URL to 'path' doesn't work to edit a file
@@ -1554,7 +1595,7 @@ fi
  + internal error when using "0 ? {'a': 1} : {}"
  + ":messages" doesn't quit listing on ":"
  + Visual block mode "s" that auto-indents fails in other lines
- + GTK GUI: click on arrow left of tab 
+ + GTK GUI: click on arrow left of tab
  + after ":vimgrep /pat/j *" folds can be wrong
  + using input() with a wrong argument may crash Vim
  + map() on an empty list causes memory to be freed twice
