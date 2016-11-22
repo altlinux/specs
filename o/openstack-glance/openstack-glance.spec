@@ -1,7 +1,7 @@
 
 Name: openstack-glance
 Version: 13.0.0
-Release: alt3
+Release: alt4
 Epoch: 1
 Summary: OpenStack Image Service
 
@@ -245,6 +245,9 @@ rm -rf %buildroot/usr/etc/glance
 %doc doc/build/html
 
 %changelog
+* Tue Nov 22 2016 Alexey Shabalin <shaba@altlinux.ru> 1:13.0.0-alt4
+- fix logrotate
+
 * Wed Nov 09 2016 Alexey Shabalin <shaba@altlinux.ru> 1:13.0.0-alt3
 - add unit and init for glare
 - update systemd units
