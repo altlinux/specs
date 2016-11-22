@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -12,9 +12,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-servlet-3.0-api
 Version:          1.0.2
-Release:          alt1_4jpp8
+Release:          alt1_5jpp8
 Summary:          Java Servlet 3.0 API
-Group:            Development/Java
+Group:            Development/Other
 License:          CDDL
 Url:              http://www.jboss.org
 Source0:          https://github.com/jboss/jboss-servlet-api_spec/archive/jboss-servlet-api_3.0_spec-1.0.2.Final.tar.gz
@@ -63,6 +63,9 @@ cp %{SOURCE1} .
 %doc LICENSE README cddl.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_5jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_4jpp8
 - new version
 
