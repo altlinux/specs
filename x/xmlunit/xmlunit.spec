@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: docbook-simple
@@ -39,14 +39,14 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xmlunit
 Version:        1.6
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Epoch:          0
 Summary:        Provides classes to do asserts on xml
 License:        BSD
 Source0:        http://downloads.sourceforge.net/xmlunit/xmlunit-1.6-src.zip
 Source1:        http://repo1.maven.org/maven2/xmlunit/xmlunit/1.0/xmlunit-1.0.pom
 URL:            http://xmlunit.sourceforge.net/
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant
 BuildRequires:  ant-junit
 BuildRequires:  junit
@@ -57,7 +57,7 @@ BuildRequires:  xml-commons-apis
 Requires:       junit
 Requires:       xalan-j2
 Requires:       xml-commons-apis
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 
 BuildArch:      noarch
 Source44: import.info
@@ -131,6 +131,9 @@ ant
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_3jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_2jpp8
 - new version
 
