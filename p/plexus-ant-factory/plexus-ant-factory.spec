@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -39,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           %{parent}-%{subname}
 Version:        1.0
-Release:        alt5_0.16.a2.2jpp8
+Release:        alt5_0.17.a2.2jpp8
 Epoch:          0
 Summary:        Plexus Ant component factory
 # Email from copyright holder confirms license.
@@ -101,6 +101,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.17.a2.2jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.16.a2.2jpp8
 - new version
 
