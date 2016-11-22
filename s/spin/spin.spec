@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -6,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           spin
 Version:        1.5
-Release:        alt2_13jpp8
+Release:        alt2_14jpp8
 Summary:        A transparent threading solution for non-freezing Swing applications
 License:        LGPLv2
 Group:          Development/Java
@@ -17,7 +18,7 @@ Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}-all.
 Patch0:         %{name}-pom_xml.patch
 
 BuildRequires:  maven-local
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 
 BuildRequires:  cglib
 BuildRequires:  objectweb-asm
@@ -61,6 +62,9 @@ Documentation for the spin Java library.
 %doc license.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_14jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_13jpp8
 - new version
 
