@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             weld-api
 Version:          2.2
-Release:          alt1_2.SP3jpp8
+Release:          alt1_4.SP3jpp8
 Summary:          Weld API
 License:          ASL 2.0
 URL:              http://seamframework.org/Weld
@@ -21,25 +21,20 @@ Source0:          https://github.com/weld/api/archive/%{namedversion}.tar.gz
 
 BuildArch:        noarch
 
-BuildRequires:    bean-validation-api
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-surefire-provider-testng
-BuildRequires:    cdi-api
-BuildRequires:    jboss-servlet-3.0-api
-BuildRequires:    jboss-interceptors-1.2-api
-BuildRequires:    jboss-ejb-3.2-api
-BuildRequires:    jboss-jsf-2.1-api
-BuildRequires:    hibernate-jpa-2.0-api
-BuildRequires:    geronimo-jta
-BuildRequires:    geronimo-jpa
-BuildRequires:    geronimo-annotation
-BuildRequires:    weld-parent
-BuildRequires:    geronimo-parent-poms
-BuildRequires:    maven-plugin-build-helper
+BuildRequires:    mvn(javax.enterprise:cdi-api)
+BuildRequires:    mvn(javax.inject:javax.inject)
+BuildRequires:    mvn(javax.persistence:persistence-api)
+BuildRequires:    mvn(javax.transaction:jta)
+BuildRequires:    mvn(javax.validation:validation-api)
+BuildRequires:    mvn(org.apache.maven.surefire:surefire-testng)
+BuildRequires:    mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:    mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+BuildRequires:    mvn(org.jboss.spec.javax.ejb:jboss-ejb-api_3.2_spec)
+BuildRequires:    mvn(org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.2_spec)
+BuildRequires:    mvn(org.jboss.spec.javax.servlet:jboss-servlet-api_3.0_spec)
+BuildRequires:    mvn(org.jboss.weld:weld-parent:pom:)
+BuildRequires:    mvn(org.testng:testng::jdk15:)
 Source44: import.info
 
 %description
@@ -47,7 +42,7 @@ Weld specifc extensions to the CDI API
 
 %package javadoc
 Group: Development/Java
-Summary:          Javadocs for %{name}
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -56,6 +51,7 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n api-%{namedversion}
 
+%pom_remove_plugin -r :maven-deploy-plugin
 %pom_remove_plugin ":maven-checkstyle-plugin" weld/pom.xml
 %pom_remove_plugin ":maven-checkstyle-plugin" weld-spi/pom.xml
 
@@ -71,6 +67,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_4.SP3jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_2.SP3jpp8
 - java 8 mass update
 
