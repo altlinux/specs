@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          opennlp
 Version:       1.5.3
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       A machine learning based toolkit for the processing of natural language text
 License:       ASL 2.0
 URL:           https://opennlp.apache.org/
@@ -114,6 +117,9 @@ rm -r opennlp-maxent/src/test/java/opennlp/perceptron/PerceptronPrepAttachTest.j
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_3jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_2jpp8
 - new version
 
