@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -12,9 +12,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jaxws-jboss-httpserver-httpspi
 Version:          1.0.1
-Release:          alt1_9jpp8
+Release:          alt1_10jpp8
 Summary:          JBoss httpserver to JAXWS 2.2 HTTP SPI bridge
-Group:            Development/Java
+Group:            Development/Other
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossws
 
@@ -24,7 +24,7 @@ Source0:          %{name}-%{namedversion}.tar.xz
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
@@ -69,6 +69,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_10jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_9jpp8
 - java 8 mass update
 
