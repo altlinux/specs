@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 %filter_from_requires /^java-headless/d
@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           nekohtml
 Version:        1.9.22
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Epoch:          0
 Summary:        HTML scanner and tag balancer
 License:        ASL 2.0
@@ -94,7 +94,7 @@ Javadoc for %{name}.
 %package demo
 Group: Development/Java
 Summary:        Demo for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 
 %description demo
 Demonstrations and samples for %{name}.
@@ -153,6 +153,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %files demo -f .mfiles-demo
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.22-alt1_2jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.22-alt1_1jpp8
 - new version
 
