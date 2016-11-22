@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -35,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Open Source XML framework for Java
 Name:           dom4j
 Version:        1.6.1
-Release:        alt6_25jpp8
+Release:        alt6_26jpp8
 Epoch:          0
 License:        BSD
 URL:            http://sourceforge.net/projects/dom4j
@@ -50,13 +53,13 @@ Patch1:         dom4j-1.6.1-Remove-references-to-ConcurrentReaderHashMap.patch
 Patch2:         dom4j-1.6.1-Port-to-JAXP-1.4.patch
 # Needed by stapler web framework
 Patch3:         dom4j-1.6.1-Add-ability-to-disable-HTML-handling.patch
-BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant >= 0:1.6
 #BuildRequires:  junit
 BuildRequires:  jtidy
 #BuildRequires:  junitperf
 BuildRequires:  isorelax
-BuildRequires:  jaxen-bootstrap >= 0:1.1-0.b7
+BuildRequires:  jaxen-bootstrap >= 0:1.1
 BuildRequires:  msv-msv
 BuildRequires:  relaxngDatatype
 BuildRequires:  bea-stax
@@ -79,7 +82,7 @@ DOM and SAX and is seamlessly integrated with full XPath support.
 %package demo
 Group: Development/Java
 Summary:        Samples for %{name}
-Requires:       dom4j = 0:%{version}-%{release}
+Requires:       dom4j = 0:%{version}
 
 %description demo
 Samples for %{name}.
@@ -192,6 +195,9 @@ install -m 755 run.sh $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 %{_datadir}/%{name}-%{version}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt6_26jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt6_25jpp8
 - new version
 
