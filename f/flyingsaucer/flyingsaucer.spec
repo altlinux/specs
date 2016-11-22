@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -8,9 +8,10 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          flyingsaucer
 Version:       8
-Release:       alt1_11jpp8
+Release:       alt1_13jpp8
 Summary:       XML/XHTML and CSS 2.1 renderer in pure Java
-License:       LGPLv2+
+# licensed under CC-BY-SA: demos/svg/xhtml/dat/*.svg
+License:       LGPLv2+ and CC-BY-SA
 URL:           https://github.com/flyingsaucerproject/flyingsaucer
 Source0:       http://flying-saucer.googlecode.com/files/%{name}-R%{version}-src.zip
 Source1:       http://repo1.maven.org/maven2/org/xhtmlrenderer/core-renderer/R%{version}/core-renderer-R%{version}.pom
@@ -49,7 +50,7 @@ This package contains javadoc for %{name}.
 %package demos
 Group: Development/Java
 Summary:       Demostrations and samples for %{name}
-Requires:      %{name} = %{version}-%{release}
+Requires:      %{name} = %{version}
 
 %description demos
 This package contains demostrations and samples for %{name}.
@@ -62,8 +63,12 @@ find -name '*.dll' -delete
 find -name '*.exe' -delete
 find -name '*.jar' -delete
 
-# file non free licensed under CC-2.5
+# file non free licensed
+# under CC-2.5
 rm -rf demos/browser/xhtml/recipebook-xml.css
+# under CC-BY-NC-SA
+rm -rf demos/svg/xhtml/dat/face-crying.svg
+rm -rf demos/svg/xhtml/dat/face-sad.svg
 # unclear license, unimportant file anyway
 rm -rf demos/docbook/xml/plugin-implement.xml
 
@@ -74,7 +79,8 @@ cp -p %{SOURCE1} pom.xml
 iconv -f iso8859-1 -t utf-8 LICENSE-W3C-TEST > LICENSE-W3C-TEST.conv && mv -f LICENSE-W3C-TEST.conv LICENSE-W3C-TEST
 sed -i 's/\r//' LICENSE-W3C-TEST
 
-sed -i 's/Class-Path: joshy-common.jar ss_css2.jar core-renderer.jar xalan.jar//' src/packaging/manifest
+sed -i '/Class-Path/d' src/packaging/manifest
+
 # requires
 # lib/xml-apis-xerces-2.9.1.jar x
 # lib/iText-2.0.8.jar x
@@ -143,6 +149,9 @@ install -pm 644 build/svg.jar %{buildroot}%{_javadir}/%{name}/
 %doc LICENSE*
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 8-alt1_13jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 8-alt1_11jpp8
 - java 8 mass update
 
