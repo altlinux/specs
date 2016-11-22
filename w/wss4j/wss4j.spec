@@ -1,6 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -8,7 +9,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           wss4j 
 Version:        1.6.18
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        Apache WS-Security implementation
 License:        ASL 2.0
 URL:            http://ws.apache.org/wss4j/
@@ -69,7 +70,8 @@ rm -r src/test/java/org/apache/ws/security/message/EncryptionCRLTest.java \
  src/test/java/org/apache/ws/security/message/EncryptionGCMTest.java
 
 %build
-%mvn_build -- -Dmaven.test.skip.exec=true
+# Some tests now failing with "Algorithm constraints check failed: MD5withRSA"
+%mvn_build -f
 
 %install
 %mvn_install
@@ -82,6 +84,9 @@ rm -r src/test/java/org/apache/ws/security/message/EncryptionCRLTest.java \
 %doc LICENSE.txt NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6.18-alt1_5jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6.18-alt1_3jpp8
 - java 8 mass update
 
