@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          tuscany-sdo-java
 Version:       1.1.1
-Release:       alt2_12jpp8
+Release:       alt2_14jpp8
 Summary:       Service Data Objects 2.1 Java API spec
 License:       ASL 2.0
 Url:           http://tuscany.apache.org/sdo-java.html
@@ -103,6 +106,9 @@ sed -i 's#<target>1.4</target>#<target>1.5</target>#' pom.xml sdo-api/pom.xml
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_14jpp8
+- new fc release
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_12jpp8
 - java 8 mass update
 
