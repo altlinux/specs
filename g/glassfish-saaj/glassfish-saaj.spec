@@ -1,14 +1,14 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             glassfish-saaj
 Version:          1.3.19
-Release:          alt2_8jpp8
+Release:          alt2_9jpp8
 Summary:          JSR-67 implementation
-Group:            Development/Java
+Group:            Development/Other
 License:          CDDL and GPLv2 with exceptions
 URL:              http://java.net/projects/saaj
 
@@ -60,6 +60,9 @@ This package contains the API documentation for %{name}.
 %doc license.html
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.19-alt2_9jpp8
+- new fc release
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.19-alt2_8jpp8
 - java 8 mass update
 
