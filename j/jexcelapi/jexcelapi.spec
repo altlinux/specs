@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jexcelapi
 Version:        2.6.12
-Release:        alt3_10jpp8
+Release:        alt3_11jpp8
 Summary:        A Java API to read, write and modify Excel spreadsheets
 License:        LGPLv3
 URL:            http://www.andykhan.com/jexcelapi
@@ -18,9 +18,9 @@ Source0:        http://www.andykhan.com/jexcelapi/jexcelapi_2_6_12.tar.gz
 Source1:        http://repo1.maven.org/maven2/net/sourceforge/jexcelapi/jxl/2.6.12/jxl-2.6.12.pom
 Patch0:         jexcelapi-build.patch
 Requires:       log4j12
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 
-BuildRequires:  jpackage-utils >= 0:1.7.3
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant
 BuildRequires:  jflex
 BuildRequires:  findutils
@@ -111,6 +111,9 @@ cp -r docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6.12-alt3_11jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6.12-alt3_10jpp8
 - new version
 
