@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -6,10 +7,10 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           buildnumber-maven-plugin
 Version:        1.3
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Build Number Maven Plugin
 
-Group:          Development/Java
+Group:          Development/Other
 License:        MIT and ASL 2.0
 URL:            http://svn.codehaus.org/mojo/tags/buildnumber-maven-plugin-%{version}
 
@@ -19,7 +20,7 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch: 	noarch
 
 # Basic stuff
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 
 # Maven and its dependencies
 BuildRequires: maven-local
@@ -30,7 +31,7 @@ Requires: maven
 Requires: maven-project
 Requires: maven-scm
 Requires: jna
-Requires: jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Requires: mojo-parent
 Requires: plexus-containers-container-default
 Requires: plexus-utils
@@ -58,7 +59,7 @@ SCM system. Note that currently, the only supported SCM is subversion.
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -89,6 +90,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_5jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_4jpp8
 - new version
 
