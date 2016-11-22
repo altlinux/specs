@@ -1,11 +1,14 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           aqute-bnd
 Version:        2.4.1
-Release:        alt2_2jpp8
+Release:        alt2_3jpp8
 Summary:        BND Tool
 License:        ASL 2.0
 URL:            http://www.aqute.biz/Bnd/Bnd
@@ -144,6 +147,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc biz.aQute.bnd/LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt2_3jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt2_2jpp8
 - new versio
 
