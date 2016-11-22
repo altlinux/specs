@@ -1,11 +1,14 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           plexus-interpolation
 Version:        1.22
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Plexus Interpolation API
 License:        ASL 2.0 and ASL 1.1 and MIT
 URL:            https://github.com/codehaus-plexus/plexus-interpolation
@@ -48,6 +51,9 @@ API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.22-alt1_5jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.22-alt1_4jpp8
 - new version
 
