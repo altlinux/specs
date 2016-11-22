@@ -1,5 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-indexer
 Version:        5.1.1
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        Standard for producing indexes of Maven repositories
 
 License:        ASL 2.0
@@ -35,7 +36,7 @@ BuildRequires:  felix-osgi-core
 BuildRequires:  google-guice
 BuildRequires:  jetty-start
 BuildRequires:  jmock
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  junit
 BuildRequires:  lucene3
 BuildRequires:  lucene3-contrib
@@ -116,6 +117,9 @@ find -name *.java -exec sed -i -e "s/org.sonatype.aether/org.eclipse.aether/g" {
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 5.1.1-alt1_9jpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 5.1.1-alt1_8jpp8
 - new version
 
