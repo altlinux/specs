@@ -1,8 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-BuildRequires: jdepend
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-web
 Version:          8.0.0
-Release:          alt1_0.5.Alpha1jpp8
+Release:          alt1_0.6.Alpha1jpp8
 Summary:          JBoss Web
 License:          LGPLv2+ and ASL 2.0 and MIT and (LGPLv2+ or ASL 2.0)
 URL:              http://www.jboss.org/jbossweb
@@ -29,7 +28,7 @@ Patch0:           servlet-beta1-changes.patch
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:    jboss-annotations-1.1-api
 BuildRequires:    jboss-el-2.2-api
 BuildRequires:    jboss-jsp-2.2-api
@@ -69,20 +68,17 @@ This package contains the API documentation for %{name}.
 %install
 %mvn_install
 
-# jni dir/name
-#if [ %_libdir != /usr/lib ]; then
-#    mv %buildroot/usr/lib %buildroot%_libdir
-#        sed -i -e s,/usr/lib/,%_libdir/,g %buildroot/usr/share/maven-metadata/* .mfiles*
-#fi
-
 %files -f .mfiles
-#%dir %{_jnidir}/%{name}
+%dir %{_jnidir}/%{name}
 %doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 8.0.0-alt1_0.6.Alpha1jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 8.0.0-alt1_0.5.Alpha1jpp8
 - new version
 
