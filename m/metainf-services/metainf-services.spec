@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           metainf-services
 Version:        1.5
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Small java library for generating META-INF/services files
 
 # License is specified in pom file
@@ -52,6 +55,9 @@ cp %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_6jpp8
+- new fc release
+
 * Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_5jpp8
 - new version
 
