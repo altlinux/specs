@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           istack-commons
 Version:        2.21
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Common code for some Glassfish projects
 License:        CDDL and GPLv2 with exceptions
 URL:            http://istack-commons.java.net
@@ -179,6 +179,9 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.21-alt1_4jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 2.21-alt1_3jpp8
 - new version
 
