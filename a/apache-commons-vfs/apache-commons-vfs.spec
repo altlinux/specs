@@ -1,5 +1,8 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -7,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %global short_name commons-%{base_name}
 Name:          apache-commons-vfs
 Version:       2.0
-Release:       alt4_16jpp8
+Release:       alt4_17jpp8
 Summary:       Commons Virtual File System
 License:       ASL 2.0
 Url:           http://commons.apache.org/%{base_name}/
@@ -54,7 +57,7 @@ Some of the features of Commons VFS are:
 %package ant
 Group: Development/Java
 Summary:       Development files for Commons VFS
-Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:      %{name} = %{version}
 
 %description ant
 This package enables support for the Commons VFS ant tasks.
@@ -62,7 +65,7 @@ This package enables support for the Commons VFS ant tasks.
 %package examples
 Group: Development/Java
 Summary:       Commons VFS Examples
-Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:      %{name} = %{version}
 
 %description examples
 VFS is a Virtual File System library - Examples.
@@ -179,6 +182,9 @@ install -p -m 644 %{short_name} %{buildroot}%{_sysconfdir}/ant.d/%{short_name}
 %config %{_sysconfdir}/ant.d/%{short_name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt4_17jpp8
+- new fc release
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt4_16jpp8
 - new version
 
