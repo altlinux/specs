@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -7,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           plexus-archiver
 Version:        3.0.1
-Release:        alt1_0.2.gitdc873a4jpp8
+Release:        alt1_0.3.gitdc873a4jpp8
 Epoch:          0
 Summary:        Plexus Archiver Component
 License:        ASL 2.0
@@ -18,6 +21,7 @@ Source0:        https://github.com/codehaus-plexus/plexus-archiver/archive/%{com
 
 # This prevents "Too many open files" when building Eclipse documentation
 # bundles inside a slow VM/mock environment
+# This problem is reported upstream: https://github.com/codehaus-plexus/plexus-archiver/issues/6
 Patch0:         0001-Avoid-using-ParallelScatterZipCreator.patch
 
 BuildRequires:  maven-local
@@ -66,6 +70,9 @@ Javadoc for %{name}.
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_0.3.gitdc873a4jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_0.2.gitdc873a4jpp8
 - new version
 
