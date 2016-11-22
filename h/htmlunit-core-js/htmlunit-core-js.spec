@@ -1,6 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: perl(Getopt/Mixed.pm)
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -9,13 +10,11 @@ BuildRequires: jpackage-generic-compat
 %global rhino_fork_githash ef0faa3e34ef6c3b42c1be4474d0252d96eb4535
 Name:          htmlunit-core-js
 Version:       2.17
-Release:       alt1_1jpp8
+Release:       alt1_3jpp8
 Summary:       Rhino fork for htmlunit
 License:       MPLv2.0
 URL:           http://htmlunit.sourceforge.net/
 Source0:       https://github.com/HtmlUnit/htmlunit-core-js/archive/core-js-%{version}.tar.gz
-# Modified version of Mozilla Rhino 1.7.7
-# see http://central.maven.org/maven2/net/sourceforge/htmlunit/htmlunit-core-js/2.17/htmlunit-core-js-2.17-sources.jar#rhinoDiff.txt
 Source1:       https://github.com/HtmlUnit/htmlunit-rhino-fork/archive/%{rhino_fork_githash}/htmlunit-rhino-fork-%{rhino_fork_githash}.tar.gz
 
 Patch0:        %{name}-2.17-build.patch
@@ -33,6 +32,11 @@ BuildRequires: emma
 BuildRequires: hamcrest
 BuildRequires: xmlbeans
 %endif
+
+# Modified version of Mozilla Rhino 1.7.7
+# see http://central.maven.org/maven2/net/sourceforge/htmlunit/htmlunit-core-js/2.17/htmlunit-core-js-2.17-sources.jar#rhinoDiff.txt
+# https://fedorahosted.org/fpc/ticket/538
+Provides:      bundled(rhino)
 
 BuildArch:     noarch
 Source44: import.info
@@ -104,6 +108,9 @@ done
 %doc LICENSE.txt LICENSE-MPL.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.17-alt1_3jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.17-alt1_1jpp8
 - new version
 
