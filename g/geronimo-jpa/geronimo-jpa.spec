@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           geronimo-jpa
 Version:        1.1.1
-Release:        alt3_16jpp8
+Release:        alt3_17jpp8
 Summary:        Java persistence API implementation
 
 License:        ASL 2.0
@@ -32,9 +32,6 @@ BuildRequires:  maven-resources-plugin
 Provides:       jpa_api = %{spec_ver}
 Provides:       javax.persistence = %{spec_ver}
 Source44: import.info
-
-#Provides:       jpa_3_0_api = %{version}-%{release}
-#Provides:       jpa_api = 0:3.0
 
 
 %description
@@ -66,27 +63,18 @@ BuildArch: noarch
 install -d -m 755 %{buildroot}%{_javadir}/javax.persistence/
 ln -sf ../%{name}.jar %{buildroot}%{_javadir}/javax.persistence/
 
-#install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jpa_api_geronimo-jpa<<EOF
-#%{_javadir}/jpa_api.jar	%{_javadir}/geronimo-jpa.jar	30100
-#EOF
-#install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jpa_3_0_api_geronimo-jpa<<EOF
-#%{_javadir}/jpa_3_0_api.jar	%{_javadir}/geronimo-jpa.jar	30100
-#EOF
-
-
 %files -f .mfiles
 %doc LICENSE.txt NOTICE.txt
 %{_javadir}/javax.persistence/
-
-#%_altdir/jpa_3_0_api_geronimo-jpa
-#%_altdir/jpa_api_geronimo-jpa
-
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_17jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_16jpp8
 - new version
 
