@@ -1,11 +1,11 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 24
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name hibernate-search
 %define version 4.5.1
@@ -18,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             hibernate-search
 Version:          4.5.1
-Release:          alt1_5jpp8
+Release:          alt1_6jpp8
 Summary:          Hibernate Search
 License:          LGPLv2+
 Url:              http://search.hibernate.org
@@ -122,6 +122,9 @@ sed -i "s|luceneVersion>3.6.2</luceneVersion|luceneVersion>3</luceneVersion|" po
 %doc lgpl.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 4.5.1-alt1_6jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 4.5.1-alt1_5jpp8
 - new version
 
