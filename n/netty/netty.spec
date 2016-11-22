@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           netty
 Version:        4.0.28
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        An asynchronous event-driven network application framework and tools for Java
 License:        ASL 2.0
 URL:            https://netty.io/
@@ -139,6 +142,9 @@ export CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS"
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.28-alt1_3jpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.28-alt1_2jpp8
 - new version
 
