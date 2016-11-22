@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          xmlenc
 Version:       0.53
-Release:       alt1_12jpp8
+Release:       alt1_13jpp8
 Summary:       Light-weight XML output library for Java
 License:       BSD
 #  http://xmlenc.sourceforge.net/
@@ -60,6 +63,9 @@ find . -name "*.jar" -type f -delete
 %doc COPYRIGHT.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1_13jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1_12jpp8
 - new version
 
