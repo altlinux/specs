@@ -1,13 +1,16 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jhighlight
 Version:        1.0.1
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        An embeddable pure Java syntax highlighting library
 
-Group:          Development/Java
+Group:          Development/Other
 License:        LGPLv2+ or CDDL
 URL:            http://svn.rifers.org/jhighlight
 
@@ -58,6 +61,9 @@ This package contains the API documentation for %{name}.
 %doc COPYING
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt1_5jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt1_4jpp8
 - new version
 
