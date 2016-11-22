@@ -1,5 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -9,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jmatio
 Version:       1.1
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Java Matlab IO library
 License:       BSD
 URL:           https://sourceforge.net/projects/jmatio/
@@ -60,6 +61,9 @@ done
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_4jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_3jpp8
 - new version
 
