@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -10,15 +10,13 @@ BuildRequires: jpackage-generic-compat
 Name:           aether
 Epoch:          1
 Version:        1.0.2
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        Library to resolve, install and deploy artifacts the Maven way
 License:        EPL
 URL:            http://eclipse.org/aether
 BuildArch:      noarch
 
 Source0:        http://git.eclipse.org/c/%{name}/%{name}-core.git/snapshot/%{name}-%{version}.%{vertag}.tar.bz2
-
-Patch1:         0001-Revert-Bug-433953-Remove-support-for-Plexus-IoC-fram.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.inject:guice::no_aop:)
@@ -148,7 +146,6 @@ for Aether.
 
 %prep
 %setup -q -n %{name}-%{version}.%{vertag}
-%patch1 -p1
 
 # Remove clirr plugin
 %pom_remove_plugin :clirr-maven-plugin
@@ -180,12 +177,6 @@ rm -rf aether-transport-http/src/test
 %install
 %mvn_install
 
-pushd %buildroot/usr/share/java/aether
-    ln -s aether-api.jar api.jar
-    ln -s aether-util.jar util.jar
-popd
-
-
 %files -f .mfiles-%{name}
 %doc README.md
 %doc epl-v10.html notice.html
@@ -194,7 +185,6 @@ popd
 %doc README.md
 %doc epl-v10.html notice.html
 %dir %{_javadir}/%{name}
-/usr/share/java/aether/api.jar
 
 %files connector-basic -f .mfiles-%{name}-connector-basic
 %files impl -f .mfiles-%{name}-impl
@@ -205,11 +195,13 @@ popd
 %files transport-http -f .mfiles-%{name}-transport-http
 %files transport-wagon -f .mfiles-%{name}-transport-wagon
 %files util -f .mfiles-%{name}-util
-/usr/share/java/aether/util.jar
 %files javadoc -f .mfiles-javadoc
 %doc epl-v10.html notice.html
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_4jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_2jpp8
 - new version
 
