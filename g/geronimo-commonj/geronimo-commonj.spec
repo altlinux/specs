@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -6,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global spec_name geronimo-commonj_%{spec_ver}_spec
 Name:    geronimo-commonj
 Version: 1.1.0
-Release: alt2_12jpp8
+Release: alt2_13jpp8
 Summary: CommonJ Specification
 License: ASL 2.0
 URL:     http://geronimo.apache.org/
@@ -53,6 +56,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_13jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_12jpp8
 - new version
 
