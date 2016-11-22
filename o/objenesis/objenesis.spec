@@ -1,5 +1,8 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -36,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        A library for instantiating Java objects
 Name:           objenesis
 Version:        2.1
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 License:        ASL 2.0
 URL:            http://objenesis.org/
 Source0:        https://github.com/easymock/%{name}/archive/%{version}.tar.gz
@@ -128,6 +131,9 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_3jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_2jpp8
 - new version
 
