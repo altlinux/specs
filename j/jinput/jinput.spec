@@ -1,25 +1,23 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# Upstream is not in the habit of releasing tarballs.  We pull from git.
+%global gitdate         20160519
+%global gittag          b813d5594edaeeffee2f7d03326d2712fac356a1
+%global shorttag        %(cut -b -7 <<< %{gittag})
+
 Name:           jinput
 Version:        2.0.7
-Release:        alt2_5.20140526svnjpp8
+Release:        alt2_6.20160519git.b813d55jpp8
 Summary:        Java Game Controller API
 
-Group:          Development/Java
 License:        BSD
-URL:            http://java.net/projects/jinput
-# Upstream only provides subversion checkout or nightly build.
-# Also, some (non-Linux) plugin code is non-free.  As long as we are deleting
-# non-free plugins, we also delete plugins for non-Linux operating systems.
-# Create the source tarball as follows:
-# svn export -r 253 https://svn.java.net/svn/jinput~svn/trunk jinput-2.0.7
-# rm -rf jinput-2.0.7/plugins/{OSX,windows,wintab}
-# tar cJf jinput-2.0.7.tar.xz jinput-2.0.7
-Source0:        %{name}-%{version}.tar.xz
+URL:            https://github.com/jinput/jinput
+Source0:        https://github.com/jinput/jinput/tarball/%{gittag}/%{name}-%{name}-%{shorttag}.tar.gz
 # Fedora-specific patch: will not be sent upstream.  Remove build.xml rules
 # for building non-free plugin code.
 Patch0:         001_jinput_build.patch
@@ -29,9 +27,6 @@ Patch1:         002_jinput_dontstripso.patch
 # Fedora-specific patch: will not be sent upstream.  Load the shared library
 # from the Fedora-mandated location.
 Patch2:         003_jinput_usesystemload.patch
-# Patch from https://java.net/jira/browse/JINPUT-44 to not access usage bits,
-# which are not supported in current Linux kernels
-Patch3:         004_jinput_usagebits.patch
 # Patch from https://java.net/jira/browse/JINPUT-51 to fix a resource leak
 Patch4:         005_jinput_leak.patch
 # Patch to be sent upstream to migrate to Java 5 (Java generics)
@@ -40,12 +35,13 @@ Patch5:         006_jinput_java5.patch
 Patch6:         007_jinput_linux_4.5.patch
 
 BuildRequires:  ant
+BuildRequires:  gcc-common
 BuildRequires:  java-javadoc >= 1:1.6.0
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  jutils
 BuildRequires:  jutils-javadoc
 
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Requires:       jutils
 Source44: import.info
 
@@ -60,8 +56,8 @@ handle arbitrary controllers and returns both human and machine
 understandable descriptions of the inputs available.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
 Requires:       %{name} = %{version}
 Requires:       jutils-javadoc
 BuildArch:      noarch
@@ -70,12 +66,11 @@ BuildArch:      noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{name}-%{shorttag}
 %patch0
 %patch1
 %patch2
-%patch3
-%patch4
+%patch4 -p1
 %patch5
 %patch6
 
@@ -162,6 +157,9 @@ ant versiontest
 %{_javadocdir}/%{name}/
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt2_6.20160519git.b813d55jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt2_5.20140526svnjpp8
 - %%_jnidir set to /usr/lib/java
 
