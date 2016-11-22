@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -10,7 +10,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           atinject
 Version:        1
-Release:        alt7_21.20100611svn86jpp8
+Release:        alt7_22.20100611svn86jpp8
 Summary:        Dependency injection specification for Java (JSR-330)
 License:        ASL 2.0
 URL:            http://code.google.com/p/atinject/
@@ -114,6 +114,9 @@ cp -pr build/tck/javadoc/* %{buildroot}%{_javadocdir}/%{name}/tck
 %{_javadocdir}/atinject
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1-alt7_22.20100611svn86jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:1-alt7_21.20100611svn86jpp8
 - added osgi provides
 
