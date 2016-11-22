@@ -1,8 +1,11 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 24
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name infinispan
 %define version 6.0.2
@@ -15,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             infinispan
 Version:          6.0.2
-Release:          alt1_7jpp8
+Release:          alt1_8jpp8
 Summary:          Data grid platform
 License:          LGPLv2+
 URL:              http://www.jboss.org/infinispan
@@ -208,6 +211,9 @@ sed -i "s|error|first|" lucene/lucene-directory/pom.xml
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 6.0.2-alt1_8jpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 6.0.2-alt1_7jpp8
 - new version
 
