@@ -1,14 +1,17 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 24
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define fedora 23
 # Conditionals to help breaking org.apache.felix.scr.generator <-> org.apache.felix.scr.annotations dependency cycle
 %if 0%{?fedora}
 #def_with annotations
@@ -20,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          felix-scr-generator
 Version:       1.13.0
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Descriptor Generator Implementation
 License:       ASL 2.0
 URL:           http://felix.apache.org/
@@ -82,6 +85,9 @@ This package contains javadoc for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.13.0-alt1_3jpp8
+- new fc release
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.13.0-alt1_2jpp8
 - java 8 mass update
 
