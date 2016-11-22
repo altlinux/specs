@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: perl(DBD/ODBC.pm) perl(DBI.pm) unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           hsqldb
 Version:        2.3.3
-Release:        alt1_1jpp8
+Release:        alt1_4jpp8
 Epoch:          1
 Summary:        HyperSQL Database Engine
 License:        BSD
@@ -42,7 +42,7 @@ BuildRequires:  junit
 BuildRequires:  glassfish-servlet-api
 
 Requires:       %{name}-lib = %{epoch}:%{version}
-Requires(pre):  shadow-utils
+Requires(pre): shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
 Source44: import.info
 Source45: hsqldb.init
 
@@ -82,7 +82,7 @@ Documentation for %{name}.
 %package javadoc
 Summary:    Javadoc for %{name}
 Group:      Development/Java
-Requires:   jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -196,6 +196,7 @@ install -m 755 %{SOURCE45} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 %{_var}/lib/%{name}/webserver.properties
 %attr(0600,hsqldb,hsqldb) %{_var}/lib/%{name}/sqltool.rc
 %dir %{_var}/lib/%{name}
+%dir %{_prefix}/lib/%{name}
 %{_initrddir}/%{name}
 
 %files lib -f .mfiles
@@ -209,6 +210,9 @@ install -m 755 %{SOURCE45} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 %files demo
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.3.3-alt1_4jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.3.3-alt1_1jpp8
 - new version
 
