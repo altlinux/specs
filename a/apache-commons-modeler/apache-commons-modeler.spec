@@ -1,5 +1,8 @@
 Epoch: 1
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-%{short_name}
 Version:          2.0.1
-Release:          alt1_16jpp8
+Release:          alt1_17jpp8
 Summary:          Model MBeans utility classes
 License:          ASL 2.0
 URL:              http://commons.apache.org/%{base_name}/
@@ -17,7 +20,7 @@ Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short
 Source1:          pom.xml
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:    ant
 BuildRequires:    apache-commons-beanutils
 BuildRequires:    apache-commons-digester
@@ -35,7 +38,7 @@ actual Model MBean instances.
 %package javadoc
 Summary:          Javadoc for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -73,6 +76,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.0.1-alt1_17jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.0.1-alt1_16jpp8
 - new version
 
