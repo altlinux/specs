@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-transaction-spi
 Version:          7.1.0
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          JBoss Transaction SPI
 License:          LGPLv2+
 URL:              http://www.jboss.org
@@ -60,6 +60,9 @@ sed -i "s|>jboss-connector-api_1.5_spec<|>jboss-connector-api_1.7_spec<|" pom.xm
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 7.1.0-alt1_4jpp8
+- new fc release
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 7.1.0-alt1_3jpp8
 - java 8 mass update
 
