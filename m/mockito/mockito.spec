@@ -1,20 +1,25 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 24
 Name:           mockito
 Version:        1.10.19
-Release:        alt1_4jpp8
+Release:        alt1_10jpp8
 Summary:        A Java mocking framework
 
 License:        MIT
-URL:            http://mockito.org
-Source0:        mockito-%{version}.tar.xz
-Source1:        make-mockito-sourcetarball.sh
+URL:            http://%{name}.org
+Source0:        %{name}-%{version}.tar.xz
+Source1:        make-%{name}-sourcetarball.sh
 Patch0:         fixup-ant-script.patch
 Patch1:         fix-bnd-config.patch
-Patch2:         mockito-matcher.patch
+Patch2:         %{name}-matcher.patch
 # Workaround for NPE in setting NamingPolicy in cglib
 Patch3:         setting-naming-policy.patch
 # because we have old objenesis
@@ -52,41 +57,59 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q
 %patch0
-%patch1 -p1
+%patch1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+# workaround rhbz#1292777 Files not found for javadoc generation
+touch javadoc/stylesheet.css
 
-%pom_add_dep net.sf.cglib:cglib maven/mockito-core.pom
-find . -name "*.java" -exec sed -i "s|org\.mockito\.cglib|net\.sf\.cglib|g" {} +
+%pom_add_dep net.sf.cglib:cglib:3.1 maven/mockito-core.pom
+find . -name "*.java" -exec sed -i "s|org\.%{name}\.cglib|net\.sf\.cglib|g" {} +
 mkdir -p lib/compile
 
 %build
 build-jar-repository lib/compile objenesis cglib junit hamcrest/core
 ant jar javadoc
+
 # Convert to OSGi bundle
 pushd target
-bnd wrap --output mockito-core-%{version}.bar --properties ../conf/mockito-core.bnd \
-    --version %{version} mockito-core-%{version}.jar
-mv mockito-core-%{version}.bar mockito-core-%{version}.jar
+%if 0%{?fedora} >= 23
+bnd wrap \
+ --version %{version} \
+ --output %{name}-core-%{version}.bar \
+ --properties ../conf/%{name}-core.bnd \
+%else
+java -jar $(build-classpath aqute-bnd) wrap \
+ -output %{name}-core-%{version}.bar \
+ -properties ../conf/%{name}-core.bnd \
+%endif
+ %{name}-core-%{version}.jar
+mv %{name}-core-%{version}.bar %{name}-core-%{version}.jar
+
+# Explicit Require-Bundle on hamcrest
+unzip mockito-core-%{version}.jar META-INF/MANIFEST.MF
+sed -i -e '2iRequire-Bundle: org.hamcrest.core' META-INF/MANIFEST.MF
+jar umf META-INF/MANIFEST.MF mockito-core-%{version}.jar
 popd
 
-sed -i -e "s|@version@|%{version}|g" maven/mockito-core.pom
-%mvn_artifact maven/mockito-core.pom target/mockito-core-%{version}.jar
-%mvn_alias org.mockito:mockito-core org.mockito:mockito-all
+sed -i -e "s|@version@|%{version}|g" maven/%{name}-core.pom
+%mvn_artifact maven/%{name}-core.pom target/%{name}-core-%{version}.jar
+%mvn_alias org.%{name}:%{name}-core org.%{name}:%{name}-all
 
 %install
 %mvn_install -J target/javadoc
 
 %files -f .mfiles
-%doc NOTICE
-%doc LICENSE
+%doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
-%doc NOTICE
+%doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10.19-alt1_10jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10.19-alt1_4jpp8
 - java 8 mass update
 
