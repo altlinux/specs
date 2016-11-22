@@ -1,6 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -16,16 +16,16 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jansi-native
 Version:        1.5
-Release:        alt2_9jpp8
+Release:        alt2_10jpp8
 Summary:        Jansi Native implements the JNI Libraries used by the Jansi project
-Group:          Development/Java
+Group:          Development/Other
 License:        ASL 2.0
 URL:            http://jansi.fusesource.org/
 Source0:        https://github.com/fusesource/jansi-native/archive/jansi-native-1.5.tar.gz
 
-BuildRequires:  autoconf
-BuildRequires:  automake
-BuildRequires:  libtool
+BuildRequires:  autoconf-common
+BuildRequires:  automake-common
+BuildRequires:  libtool-common
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -67,6 +67,9 @@ This package contains the API documentation for %{name}.
 %doc license.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt2_10jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt2_9jpp8
 - %%_jnidir set to /usr/lib/java
 
