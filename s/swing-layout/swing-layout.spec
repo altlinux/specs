@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define _without_gcj 1
@@ -9,7 +9,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           swing-layout
 Version:        1.0.4
-Release:        alt1_11jpp8
+Release:        alt1_12jpp8
 Summary:        Natural layout for Swing panels
 License:        LGPLv2
 URL:            https://swing-layout.dev.java.net/
@@ -21,7 +21,7 @@ Source1:        %{name}-pom.xml
 Patch0:         %{name}-%{version}-project_properties.patch
 Patch1:         %{name}-%{version}-fix-incorrect-fsf-address.patch
 
-BuildRequires:  jpackage-utils >= 1.6
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant
 BuildRequires:  dos2unix
 
@@ -91,6 +91,9 @@ cp -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %endif
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_12jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_11jpp8
 - new version
 
