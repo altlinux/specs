@@ -1,15 +1,15 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          xml-stylebook
 Version:       1.0
-Release:       alt2_0.17.b3_xalan2.svn313293jpp8
+Release:       alt2_0.18.b3_xalan2.svn313293jpp8
 Summary:       Apache XML Stylebook
-Group:         Development/Java
+Group:         Development/Other
 License:       ASL 1.1
 URL:           http://xml.apache.org/
 
@@ -27,12 +27,12 @@ Patch1:        %{name}-build-javadoc.patch
 BuildArch:     noarch
 
 BuildRequires: java-javadoc
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires: ant
 BuildRequires: xml-commons-apis
 BuildRequires: xerces-j2
 BuildRequires: fonts-ttf-dejavu
-Requires:      jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Requires:      xml-commons-apis
 Requires:      xerces-j2
 Source44: import.info
@@ -53,8 +53,8 @@ BuildArch: noarch
 
 %package       demo
 Summary:       Examples for %{name}
-Group:         Development/Java
-Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Group:         Development/Other
+Requires:      %{name} = %{version}
 
 %description   demo
 Examples demonstrating the use of %{name}.
@@ -121,6 +121,9 @@ ln -s xml-stylebook.jar $RPM_BUILD_ROOT/%{_javadir}/stylebook.jar
 %{_datadir}/%{name} 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.18.b3_xalan2.svn313293jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.17.b3_xalan2.svn313293jpp8
 - new version
 
