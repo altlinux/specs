@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -7,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           geronimo-validation
 Version:        1.1
-Release:        alt2_13jpp8
+Release:        alt2_15jpp8
 Summary:        Geronimo implementation of JSR 303
 License:        ASL 2.0
 # should be http://geronimo.apache.org/
@@ -58,6 +61,9 @@ Javadoc for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_15jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_13jpp8
 - new version
 
