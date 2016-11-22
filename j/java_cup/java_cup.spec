@@ -1,16 +1,16 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define pkg_version     11b
-%define with_bootstrap  0
+%global pkg_version     11b
+%global with_bootstrap  0
 
 Name:           java_cup
 Version:        0.11b
-Release:        alt1_1jpp8
+Release:        alt1_3jpp8
 Epoch:          2
 Summary:        LALR parser generator for Java
 License:        MIT
@@ -28,7 +28,7 @@ Source4:        %{name}-runtime-MANIFEST.MF
 Patch0:         %{name}-build.patch
 
 BuildRequires:  ant
-BuildRequires:  jpackage-utils >= 0:1.5
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  jflex
 %if ! %{with_bootstrap}
 BuildRequires:  java_cup >= 1:0.11a
@@ -122,6 +122,9 @@ cp -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2:0.11b-alt1_3jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 2:0.11b-alt1_1jpp8
 - java 8 mass update
 
