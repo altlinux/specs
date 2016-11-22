@@ -1,30 +1,33 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-Name:          spring-ldap
-Version:       1.3.1
-Release:       alt4_12jpp8
-Summary:       Java library for simplifying LDAP operations
-License:       ASL 2.0
-URL:           http://www.springframework.org/ldap
+Name:           spring-ldap
+Version:        1.3.1
+Release:        alt4_14jpp8
+Summary:        Java library for simplifying LDAP operations
+License:        ASL 2.0
+URL:            http://www.springframework.org/ldap
+# https://github.com/spring-projects/spring-ldap
 # svn export https://src.springframework.org/svn/spring-ldap/tags/spring-ldap-1.3.1.RELEASE spring-ldap-1.3.1
 # tar cfJ spring-ldap-1.3.1.tar.xz spring-ldap-1.3.1
-Source0:       %{name}-%{version}.tar.xz
+Source0:        %{name}-%{version}.tar.xz
 # Don't use ldapbp.jar, as I couldn't find the source and I doubt it has a valid
 # open source license:
-Patch0:        %{name}-remove-ldapbp.patch
+Patch0:         %{name}-remove-ldapbp.patch
 # Use Java 5 to build the core as the JavaCC generated source code uses Java 5
 # features like generics and annotations:
-Patch1:        %{name}-use-java-5-to-build-core.patch
+Patch1:         %{name}-use-java-5-to-build-core.patch
 # Remove the dependency on spring-orm:
-Patch2:        %{name}-remove-spring-orm.patch
+Patch2:         %{name}-remove-spring-orm.patch
 
-BuildArch:     noarch
+BuildArch:      noarch
 
-BuildRequires: dos2unix
-
+BuildRequires:  dos2unix
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-cli:commons-cli)
 BuildRequires:  mvn(commons-codec:commons-codec)
@@ -39,16 +42,14 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
 BuildRequires:  mvn(org.easymock:easymock)
 BuildRequires:  mvn(org.freemarker:freemarker)
-BuildRequires:  mvn(org.springframework.ldap:spring-ldap-core)
-BuildRequires:  mvn(org.springframework.ldap:spring-ldap-core-tiger)
-BuildRequires:  mvn(org.springframework.ldap:spring-ldap-ldif-core)
-BuildRequires:  mvn(org.springframework.ldap:spring-ldap-parent:pom:)
-BuildRequires:  mvn(org.springframework.ldap:spring-ldap-parent-tiger:pom:)
 BuildRequires:  mvn(org.springframework:spring-beans)
 BuildRequires:  mvn(org.springframework:spring-context)
 BuildRequires:  mvn(org.springframework:spring-core)
 BuildRequires:  mvn(org.springframework:spring-jdbc)
 BuildRequires:  mvn(org.springframework:spring-tx)
+BuildRequires:  mvn(org.springframework.batch:spring-batch-core)
+BuildRequires:  mvn(org.springframework.batch:spring-batch-infrastructure)
+BuildRequires:  mvn(org.springframework.batch:spring-batch-test)
 Source44: import.info
 
 %description
@@ -69,7 +70,7 @@ several utilities for working with filters, LDAP paths and Attributes.
 
 %package javadoc
 Group: Development/Java
-Summary:       Javadoc for %{name}
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -118,6 +119,9 @@ dos2unix readme.txt
 %doc license.txt notice.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt4_14jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt4_12jpp8
 - java 8 mass update
 
