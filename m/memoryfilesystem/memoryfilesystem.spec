@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           memoryfilesystem
 Version:        0.6.7
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Summary:        An in memory implementation of a JSR-203 file system
 License:        MIT
 URL:            https://github.com/marschall/%{name}
@@ -59,6 +62,9 @@ rm -rf ./src/test/java/com/github/marschall/memoryfilesystem/ZipFileSystemIntero
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.7-alt1_2jpp8
+- new fc release
+
 * Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.7-alt1_1jpp8
 - new version
 
