@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           werken-xpath
 Version:        0.9.4
-Release:        alt1_14.beta.12.6jpp8
+Release:        alt1_15.beta.12.7jpp8
 Epoch:          0
 Summary:        XPath implementation using JDOM
 License:        Saxpath
@@ -58,12 +58,12 @@ Patch8:         %{name}-runtests_sh.patch
 URL:            http://sourceforge.net/projects/werken-xpath/
 Requires:       jdom
 BuildRequires:  ant >= 0:1.6
-BuildRequires:  antlr
+BuildRequires:  antlr-tool
 BuildRequires:  jdom
 BuildRequires:  xerces-j2
 BuildRequires:  xml-commons-apis
-BuildRequires:  jpackage-utils >= 0:1.6
-Group:          Development/Java
+BuildRequires:  javapackages-local
+Group:          Development/Other
 BuildArch:      noarch
 Provides:       werken.xpath = %{epoch}:%{version}-%{release}
 Obsoletes:      werken.xpath < 0.9.4
@@ -149,6 +149,9 @@ install -pm 644 %{name}-%{version}.pom \
 # -----------------------------------------------------------------------------
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.9.4-alt1_15.beta.12.7jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.9.4-alt1_14.beta.12.6jpp8
 - new version
 
