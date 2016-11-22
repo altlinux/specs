@@ -1,8 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-BuildRequires: jdepend
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-dmr
 Version:          1.2.0
-Release:          alt1_4jpp8
+Release:          alt1_6jpp8
 Summary:          JBoss DMR
 License:          LGPLv2+
 URL:              https://github.com/jbossas/jboss-dmr
@@ -34,6 +33,7 @@ BuildRequires:    mvn(junit:junit)
 BuildRequires:    mvn(org.jboss.apiviz:apiviz:pom:)
 BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
 BuildRequires:    mvn(org.jboss.logmanager:jboss-logmanager)
+BuildRequires:    mvn(jdepend:jdepend)
 Source44: import.info
 
 %description
@@ -41,7 +41,7 @@ This package contains the Dynamic Model Representation.
 
 %package javadoc
 Group: Development/Java
-Summary:          Javadocs for %{name}
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -62,11 +62,13 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_6jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_4jpp8
 - java8 update
 
