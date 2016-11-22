@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           microba
 Version:        0.4.4.3
-Release:        alt1_13jpp8
+Release:        alt1_14jpp8
 Summary:        Set of JFC (Swing) components
 License:        BSD
 URL:            http://microba.sourceforge.net/
@@ -24,9 +24,9 @@ BuildRequires:  ant
 BuildRequires:  dos2unix
 # sinjdoc doesn't do the job for us in f12, drag in real javadoc
 BuildRequires:  java-devel-openjdk
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 # BuildRequires:  jgraph
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch:      noarch
 Source44: import.info
 
@@ -77,6 +77,9 @@ cp -r javadoc %{buildroot}%{_javadocdir}/%{name}
 %doc license.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.4.3-alt1_14jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.4.3-alt1_13jpp8
 - new version
 
