@@ -1,11 +1,14 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             fusesource-pom
 Version:          1.9
-Release:          alt1_10jpp8
+Release:          alt1_12jpp8
 Summary:          Parent POM for FuseSource Maven projects
 License:          ASL 2.0
 URL:              http://fusesource.com/
@@ -15,12 +18,12 @@ BuildArch:        noarch
 
 BuildRequires:    maven-local
 Source44: import.info
-Provides: mvn(org.fusesource:fusesource-pom) = 1.9
 
 %description
 This is a shared POM parent for FuseSource Maven projects
 
 %prep
+%setup -c -T
 cp %{SOURCE0} pom.xml
 cp -p %{SOURCE1} LICENSE
 
@@ -39,6 +42,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt1_12jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt1_10jpp8
 - new release
 
