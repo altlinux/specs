@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -12,9 +12,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jandex
 Version:          1.2.2
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          Java Annotation Indexer
-Group:            Development/Java
+Group:            Development/Other
 License:          LGPLv2+
 URL:              https://github.com/jbossas/jandex
 Source0:          https://github.com/wildfly/jandex/archive/%{namedversion}.tar.gz
@@ -61,6 +61,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_3jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_2jpp8
 - new version
 
