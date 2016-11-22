@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,10 +7,10 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-shared-incremental
 Version:        1.1
-Release:        alt1_9jpp8
+Release:        alt1_10jpp8
 Summary:        Maven Incremental Build support utilities
 License:        ASL 2.0
-Group:          Development/Java
+Group:          Development/Other
 URL:            http://maven.apache.org/shared/maven-shared-incremental/
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
 BuildArch:      noarch
@@ -54,6 +54,9 @@ This package provides %{summary}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_10jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_9jpp8
 - new version
 
