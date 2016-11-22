@@ -1,11 +1,14 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name: rngom
 Version: 201103
-Release: alt2_0.12.20120119svnjpp8
+Release: alt2_0.13.20120119svnjpp8
 Summary: Java library for parsing RELAX NG grammars
 License: MIT
 URL: https://java.net/projects/rngom
@@ -68,6 +71,9 @@ This package contains javadoc for %{name}.
 %doc licenceheader.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:201103-alt2_0.13.20120119svnjpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:201103-alt2_0.12.20120119svnjpp8
 - new version
 
