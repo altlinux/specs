@@ -1,12 +1,15 @@
 Epoch: 1
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 24
 Name:           apache-commons-fileupload
 Version:        1.3.1
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        API to work with HTML file upload
 License:        ASL 2.0
 URL:            http://commons.apache.org/fileupload/
@@ -85,6 +88,9 @@ rm src/test/java/org/apache/commons/fileupload/*Portlet*
 # -----------------------------------------------------------------------------
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.3.1-alt1_8jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.3.1-alt1_7jpp8
 - java 8 mass update
 
