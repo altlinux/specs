@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Bitronix Transaction Manager
 Name:           btm
 Version:        2.1.2
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Epoch:          0
 License:        LGPLv3
 URL:            http://bitronix.be
@@ -18,7 +18,7 @@ Source1:        http://repo1.maven.org/maven2/org/codehaus/btm/btm-parent/2.1.2/
 Source2:        http://repo1.maven.org/maven2/org/codehaus/btm/btm/2.1.2/btm-2.1.2.pom
 Patch0:         %{name}-use-shared-jars.patch
 Patch1:         btm-jdbc4.1.patch
-BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  junit
 BuildRequires:  slf4j
@@ -27,10 +27,10 @@ BuildRequires:  geronimo-jta
 BuildRequires:  xml-commons-apis
 # Turn this on to make "ant test" work
 # BuildRequires:  mockito
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Requires:       junit
 Requires:       xml-commons-apis
-Requires:       jpackage-utils >= 0:1.6
+Requires: javapackages-tools rpm-build-java
 Requires:       slf4j
 Requires:       geronimo-jms
 Requires:       geronimo-jta
@@ -92,6 +92,9 @@ install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %doc %{_javadocdir}/*
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_8jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_7jpp8
 - new version
 
