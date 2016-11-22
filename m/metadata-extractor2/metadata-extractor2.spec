@@ -1,11 +1,14 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 %global majorversion 2
 Name:          metadata-extractor2
 Version:       2.8.1
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Extracts EXIF, IPTC, XMP, ICC and other metadata from image files
 License:       ASL 2.0
 URL:           http://drewnoakes.com/code/exif/
@@ -95,6 +98,9 @@ sed -i 's/\r//' LICENSE-2.0.txt README.md CONTRIBUTING.md Resources/javadoc-styl
 %doc LICENSE-2.0.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.8.1-alt1_3jpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 2.8.1-alt1_2jpp8
 - new version
 
