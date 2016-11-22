@@ -1,27 +1,27 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 24
 Name:           jilter
 Version:        1.2
-Release:        alt1_10jpp8
+Release:        alt1_11jpp8
 Summary:        Sendmail milter protocol for Java
 
-Group:          Development/Java
+Group:          Development/Other
 License:        Sendmail
 URL:            http://sendmail-jilter.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/sendmail-jilter/%{version}/jilter-%{version}-src.tar.gz
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant-junit
 BuildRequires:  log4j
 BuildRequires:  junit
 
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 %if 0%{?fedora} >= 20 || 0%{?rhel} >= 7
 %else
 %endif
@@ -37,7 +37,7 @@ Sendmail MTA.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -75,6 +75,9 @@ cp -rp build/doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_11jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_10jpp8
 - new version
 
