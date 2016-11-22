@@ -1,5 +1,8 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-vfs
 Version:          3.2.5
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          JBoss Virtual File System
 License:          LGPLv2+
 URL:              https://github.com/jbossas/jboss-vfs/
@@ -58,6 +61,9 @@ rm -rf src/test/resources/vfs/test/zipeinit.jar
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.2.5-alt1_4jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.2.5-alt1_3jpp8
 - new version
 
