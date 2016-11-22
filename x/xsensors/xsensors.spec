@@ -1,5 +1,5 @@
 Name:           xsensors
-Version:        0.75
+Version:        0.80
 Release:        alt1
 Summary:        An X11 interface to lm_sensors
 
@@ -36,11 +36,14 @@ install -p -D -m 0644 xdg/%name.1 %buildroot/%_man1dir/%name.1
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.png
-%_pixmapsdir/%name.xpm
+%_datadir/%name/theme.tiff
 %_datadir/appdata/%name.appdata.xml
 %_man1dir/%name.1*
 
 %changelog
+* Tue Nov 22 2016 Andrey Cherepanov <cas@altlinux.org> 0.80-alt1
+- new version 0.80
+
 * Wed Sep 28 2016 Andrey Cherepanov <cas@altlinux.org> 0.75-alt1
 - New version
 
