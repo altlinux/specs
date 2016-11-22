@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           bluecove
 Version:        2.1.1
-Release:        alt1_0.11.20101024snap63jpp8
+Release:        alt1_0.12.20101024snap63jpp8
 Summary:        Implementation of JSR-82 Java Bluetooth API
 
 Group:          System/Libraries
@@ -31,12 +31,12 @@ Source3:        http://snapshot.bluecove.org/distribution/download/%{version}-SN
 
 Source4:        README.dist
 
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant
 BuildRequires:  libbluez-devel
 BuildRequires:  libmatthew-java
 BuildRequires:  dbus-java >= 2.5.1
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Requires:       libmatthew-java
 Requires:       dbus-java >= 2.5.1
 Source44: import.info
@@ -141,6 +141,9 @@ cp -p bluecove-emu-%{version}-SNAPSHOT/target/bluecove-emu-%{version}.jar \
 %doc AUTHORS.txt README.txt LICENSE.txt stacks.txt todo.txt AUTHORS-gpl.txt LICENSE-gpl.txt README.dist
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1_0.12.20101024snap63jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1_0.11.20101024snap63jpp8
 - new version
 
