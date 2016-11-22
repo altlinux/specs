@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          jackcess
 Version:       2.1.2
-Release:       alt1_1jpp8
+Release:       alt1_2jpp8
 Summary:       Java library for reading from and writing to MS Access databases
 License:       ASL 2.0
 URL:           http://jackcess.sourceforge.net/
@@ -65,6 +68,9 @@ find . -name "*.jar" -print -delete
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.2-alt1_2jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.2-alt1_1jpp8
 - new version
 
