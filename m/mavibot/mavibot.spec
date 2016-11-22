@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          mavibot
 Version:       1.0.0
-Release:       alt1_0.1.M8jpp8
+Release:       alt1_0.2.M8jpp8
 Summary:       ApacheDS MVCC BTree implementation
 License:       ASL 2.0
 URL:           http://directory.apache.org/mavibot/
@@ -76,6 +79,9 @@ rm -r mavibot/src/test/java/org/apache/directory/mavibot/btree/BulkLoaderTest.ja
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.2.M8jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.1.M8jpp8
 - new version
 
