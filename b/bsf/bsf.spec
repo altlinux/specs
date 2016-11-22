@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -36,12 +36,12 @@ BuildRequires: jpackage-generic-compat
 
 Name:           bsf
 Version:        2.4.0
-Release:        alt3_22jpp8
+Release:        alt3_23jpp8
 Epoch:          1
 Summary:        Bean Scripting Framework
 License:        ASL 2.0
 URL:            http://commons.apache.org/bsf/
-Group:          Development/Java
+Group:          Development/Other
 Source0:        http://apache.mirror.anlx.net//commons/%{name}/source/%{name}-src-%{version}.tar.gz
 Source1:        %{name}-pom.xml
 Patch0:         build-file.patch
@@ -53,7 +53,7 @@ BuildRequires:  rhino
 BuildRequires:  apache-commons-logging
 Requires:       xalan-j2
 Requires:       apache-commons-logging
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch:      noarch
 Source44: import.info
 %add_findreq_skiplist /usr/share/bsf-*
@@ -87,7 +87,7 @@ engines:
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -128,6 +128,9 @@ install -DTm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt3_23jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt3_22jpp8
 - new version
 
