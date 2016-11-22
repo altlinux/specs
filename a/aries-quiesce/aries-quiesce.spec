@@ -1,15 +1,15 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          aries-quiesce
 Version:       0.3
-Release:       alt2_9jpp8
+Release:       alt2_10jpp8
 Summary:       Apache Aries Quiesce
 License:       ASL 2.0
-Group:         Development/Java
+Group:         Development/Other
 URL:           http://aries.apache.org/
 
 # svn export http://svn.apache.org/repos/asf/aries/tags/quiesce-0.3/ aries-quiesce-0.3
@@ -64,6 +64,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2_10jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2_9jpp8
 - new version
 
