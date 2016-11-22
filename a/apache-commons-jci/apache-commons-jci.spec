@@ -1,7 +1,7 @@
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -16,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          apache-commons-jci
 Version:       1.1
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Commons Java Compiler Interface
 License:       ASL 2.0
 URL:           http://commons.apache.org/jci/
@@ -26,7 +26,7 @@ Patch0:        %{name}-1.1-janino27.patch
 BuildRequires: maven-local
 BuildRequires: maven-antrun-plugin
 BuildRequires: maven-plugin-bundle
-BuildRequires: ecj >= 3.4.2-13
+BuildRequires: ecj >= 3.4.2
 BuildRequires: mvn(commons-logging:commons-logging)
 BuildRequires: mvn(commons-io:commons-io)
 BuildRequires: mvn(org.apache.commons:commons-parent:pom:)
@@ -39,7 +39,7 @@ BuildRequires: mvn(junit:junit)
 BuildRequires: objectweb-asm3
 BuildRequires: mvn(org.apache.commons:commons-lang3)
 
-Requires:      %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
+Requires:      %{name}-core = %{version}
 BuildArch:     noarch
 Source44: import.info
 
@@ -170,6 +170,9 @@ find . -name "*.jar" -delete
 %files rhino -f .mfiles-%{short_name}-rhino
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_3jpp8
+- new fc release
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_2jpp8
 - new version
 
