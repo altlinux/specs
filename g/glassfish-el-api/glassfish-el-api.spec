@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -6,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           glassfish-el-api
 Version:        3.0.0
-Release:        alt2_7jpp8
+Release:        alt2_8jpp8
 Summary:        Expression Language API 2.2.4
 # Part of implementation files contain ASL 2.0 copyright
 License:        (CDDL or GPLv2 with exceptions) and ASL 2.0
@@ -63,6 +66,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt2_8jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt2_7jpp8
 - new version
 
