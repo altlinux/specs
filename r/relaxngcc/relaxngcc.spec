@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -9,7 +9,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name: relaxngcc
 Version: 1.12
-Release: alt2_9jpp8
+Release: alt2_10jpp8
 Summary: RELAX NG Compiler Compiler
 
 License: ASL 1.1
@@ -21,7 +21,7 @@ Source1: %{name}-build.xml
 
 BuildRequires: ant
 BuildRequires: javacc
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires: msv-msv
 BuildRequires: msv-xsdlib
 BuildRequires: relaxngDatatype
@@ -125,6 +125,9 @@ cp -pr javadoc/* %{buildroot}%{_javadocdir}/%{name}/.
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.12-alt2_10jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.12-alt2_9jpp8
 - new version
 
