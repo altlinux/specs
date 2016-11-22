@@ -1,5 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -11,16 +12,16 @@ BuildRequires: jpackage-generic-compat
 
 Name:     yecht
 Version:  1.0
-Release:  alt1_2jpp8
+Release:  alt1_3jpp8
 Summary:  A YAML processor based on Syck
 License:  MIT
 URL:      http://github.com/%{cluster}/%{name}
 Source0:  https://github.com/%{cluster}/%{name}/archive/%{name}-%{version}.zip
 Patch0:   disable-jruby-dep.patch
 
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires: maven-local
-Requires: jpackage-utils
+Requires: javapackages-tools rpm-build-java
 
 BuildArch:      noarch
 Source44: import.info
@@ -31,7 +32,7 @@ Yecht is a Syck port, a YAML 1.0 processor for Ruby.
 %package javadoc
 Group: Development/Java
 Summary:        Javadocs for %{name}
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -55,6 +56,9 @@ find ./ -name '*.class' -exec rm -f '{}' \;
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_3jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_2jpp8
 - new version
 
