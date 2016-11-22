@@ -1,5 +1,8 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        1.10
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Commons Configuration Package
 
 License:        ASL 2.0
@@ -80,6 +83,9 @@ BuildArch: noarch
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt1_6jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt1_5jpp8
 - java 8 mass update
 
