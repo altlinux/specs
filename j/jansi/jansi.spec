@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 Requires: fusesource-pom
 %filter_from_requires /^java-headless/d
@@ -9,7 +9,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             jansi
 Version:          1.11
-Release:          alt1_9jpp8
+Release:          alt1_10jpp8
 Summary:          Jansi is a java library for generating and interpreting ANSI escape sequences
 License:          ASL 2.0
 URL:              http://jansi.fusesource.org/
@@ -75,6 +75,9 @@ This package contains the API documentation for %{name}.
 %doc license.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.11-alt1_10jpp8
+- new fc release
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.11-alt1_9jpp8
 - unbootsrap build
 
