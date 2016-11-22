@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:       narayana
 Version:    5.0.0
-Release:    alt1_4jpp8
+Release:    alt1_5jpp8
 Summary:    Distributed Transaction Manager
 License:    LGPLv2+
 URL:        http://www.jboss.org/narayana/
@@ -148,6 +148,9 @@ sed -i "s|<systemPath*systemPath>||" pom.xml
 %doc common/copyright.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1_5jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1_4jpp8
 - unbootstrap build
 
