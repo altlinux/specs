@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define pkg_name geronimo-jaspic_%{api_version}_spec
 Name:          geronimo-jaspic-spec
 Version:       1.1
-Release:       alt3_12jpp8
+Release:       alt3_13jpp8
 Summary:       Java Authentication SPI for Containers
 License:       ASL 2.0 and W3C
 URL:           http://geronimo.apache.org/
@@ -21,7 +21,7 @@ BuildRequires: maven-local
 BuildRequires: maven-plugin-bundle
 BuildRequires: geronimo-osgi-support
 BuildRequires: geronimo-parent-poms
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 
 Provides:      javax.security.auth.message
 Source44: import.info
@@ -73,6 +73,9 @@ ln -sf ../%{name}.jar %{buildroot}%{_javadir}/javax.security.auth.message/
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_13jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_12jpp8
 - new version
 
