@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 24
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name rxtx
 %define version 2.2
@@ -23,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 Summary:	Parallel communication for the Java Development Toolkit
 Name:		rxtx
 Version:	%{upver}
-Release:	alt3_0.14.20100211.1jpp8
+Release:	alt3_0.14.20100211.3jpp8
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://rxtx.qbang.org/
@@ -43,14 +43,14 @@ Patch6:		rxtx-2.2-java-version-fix.patch
 Patch7:         rxtx-2.2-convert-strcpy-to-strncpy.patch
 
 #BuildRequires:	java-devel >= 1:1.6.0
-BuildRequires:	jpackage-utils
-BuildRequires:	libtool automake
+BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:	libtool-common automake-common
 BuildRequires:	ant >= 1.7.0
 BuildRequires:	ant-junit >= 1.7.0
 BuildRequires:	junit
 BuildRequires:	maven-local
 #Requires:	java >= 1:1.6.0
-Requires:	jpackage-utils
+Requires: javapackages-tools rpm-build-java
 ExcludeArch:	ppc ppc64 s390 s390x
 Source44: import.info
 
@@ -103,6 +103,9 @@ ln -s %{_jnidir}/RXTXcomm.jar %{buildroot}%{_datadir}/java/RXTXcomm.jar
 %attr(644, root, root) %{_datadir}/maven-metadata/%{name}.xml
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_0.14.20100211.3jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_0.14.20100211.1jpp8
 - %%_jnidir set to /usr/lib/java
 
