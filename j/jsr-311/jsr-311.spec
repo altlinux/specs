@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          jsr-311
 Version:       1.1.1
-Release:       alt2_11jpp8
+Release:       alt2_12jpp8
 Summary:       JAX-RS: Java API for RESTful Web Services
 License:       CDDL
 URL:           http://jsr311.java.net
@@ -56,6 +56,9 @@ This package contains javadoc for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_12jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_11jpp8
 - new version
 
