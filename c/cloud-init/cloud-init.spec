@@ -1,6 +1,6 @@
 Name:    cloud-init
-Version: 0.7.6
-Release: alt2.20151202
+Version: 0.7.8
+Release: alt1.git9d826b88
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -9,12 +9,25 @@ Url:     http://launchpad.net/cloud-init
 
 Source0: %name-%version.tar
 
+Source1: cloud-init-alt.cfg
+Source3: cloud-init-tmpfiles.conf
+
+Source11: cloud-config
+Source12: cloud-final
+Source13: cloud-init
+Source14: cloud-init-local
+
 Patch1: %name-%version-%release.patch
 
+%add_findreq_skiplist /lib/systemd/system-generators/cloud-init-generator
+
 BuildArch: noarch
+# /proc for tests
+BuildRequires: /proc
 
 BuildRequires: python-devel python-module-distribute python-module-nose python-module-mocker
 BuildRequires: python-module-yaml python-module-cheetah python-module-oauth
+BuildRequires: systemd-devel
 # For tests
 BuildRequires: python-modules-json python-module-requests python-module-jsonpatch python-module-configobj python-module-mock python-module-oauthlib
 BuildRequires: python-module-httpretty python-module-serial iproute2 util-linux net-tools python-module-jinja2 python-module-contextlib2 python-module-prettytable
@@ -45,12 +58,12 @@ ssh keys and to let the user run various scripts.
 %install
 %python_install --init-system=systemd
 
-install -pD -m644 altlinux/cloud-init-alt.cfg %buildroot%_sysconfdir/cloud/cloud.cfg
-install -pD -m644 altlinux/cloud-init-tmpfiles.conf %buildroot%_tmpfilesdir/cloud-init.conf
-install -pD -m755 altlinux/cloud-config %buildroot%_initdir/cloud-config
-install -pD -m755 altlinux/cloud-final %buildroot%_initdir/cloud-final
-install -pD -m755 altlinux/cloud-init %buildroot%_initdir/cloud-init
-install -pD -m755 altlinux/cloud-init-local %buildroot%_initdir/cloud-init-local
+install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/cloud/cloud.cfg
+install -pD -m644 %SOURCE3 %buildroot%_tmpfilesdir/cloud-init.conf
+install -pD -m755 %SOURCE11 %buildroot%_initdir/cloud-config
+install -pD -m755 %SOURCE12 %buildroot%_initdir/cloud-final
+install -pD -m755 %SOURCE13 %buildroot%_initdir/cloud-init
+install -pD -m755 %SOURCE14 %buildroot%_initdir/cloud-init-local
 
 mkdir -p %buildroot%_libexecdir
 mv %buildroot/usr/libexec/%name %buildroot%_libexecdir/
@@ -67,9 +80,7 @@ rm -f %buildroot%_sysconfdir/cloud/templates/*.suse.*
 rm -f %buildroot%_sysconfdir/cloud/templates/*.ubuntu.*
 
 %check
-export PATH=/sbin:/usr/sbin:/bin:/usr/bin:$PATH
-# Ignore test_netconfig.py because test_simple_write_freebsd is broken
-make test noseopts="-I test_cloudstack.py"
+make unittest noseopts=" -I test_cloudstack.py -I test_handler_apt_source_v3.py"
 
 %post
 %post_service cloud-config
@@ -91,10 +102,12 @@ make test noseopts="-I test_cloudstack.py"
 %doc               %_sysconfdir/cloud/cloud.cfg.d/README
 %dir               %_sysconfdir/cloud/templates
 %config(noreplace) %_sysconfdir/cloud/templates/*
+%_sysconfdir/NetworkManager/dispatcher.d/hook-network-manager
 /lib/udev/rules.d/66-azure-ephemeral.rules
 %_initdir/*
 %_unitdir/*
 %_tmpfilesdir/*
+/lib/systemd/system-generators/cloud-init-generator
 %python_sitelibdir/*
 %_libexecdir/%name
 %_bindir/cloud-init*
@@ -102,6 +115,9 @@ make test noseopts="-I test_cloudstack.py"
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Mon Nov 21 2016 Alexey Shabalin <shaba@altlinux.ru> 0.7.8-alt1.git9d826b88
+- git snapshot 9d826b8855797bd37e477b6da43153c49529afe8
+
 * Wed Dec 02 2015 Alexey Shabalin <shaba@altlinux.ru> 0.7.6-alt2.20151202
 - upstream snapshot
 - add ALTLinux support
