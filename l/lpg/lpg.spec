@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: gcc-c++
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:      lpg
 Version:   %{_version}
-Release:   alt1_18jpp8
+Release:   alt1_19jpp8
 Summary:   LALR Parser Generator
 # although the text of the licence isn't distributed with some of the source,
 # the author has exlicitly stated that everything is covered under the EPL
@@ -60,9 +60,9 @@ Summary:       Java runtime library for LPG
 
 BuildArch:     noarch
 
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires: ant-apache-regexp
-Requires:      jpackage-utils
+Requires: javapackages-tools rpm-build-java
 
 %description   java
 Java runtime library for parsers generated with the LALR Parser Generator
@@ -75,9 +75,9 @@ Summary:       Compatibility Java runtime library for LPG 1.x
 
 BuildArch:     noarch
 
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires: ant
-Requires:      jpackage-utils
+Requires: javapackages-tools rpm-build-java
 
 %description   java-compat
 Compatibility Java runtime library for parsers generated with the LALR Parser
@@ -144,6 +144,9 @@ install -pD -T lpg-generator-cpp/bin/%{name}-linux_x86 \
 %{_javadir}/%{name}javaruntime.jar
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_19jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_18jpp8
 - new version
 
