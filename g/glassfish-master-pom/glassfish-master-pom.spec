@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          glassfish-master-pom
 Version:       8
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Master POM for Glassfish Maven projects
 License:       CDDL or GPLv2 with exceptions
 URL:           http://glassfish.java.net/
@@ -18,7 +21,6 @@ Source1:       glassfish-LICENSE.txt
 BuildRequires: maven-local
 BuildArch:     noarch
 Source44: import.info
-Provides: mvn(org.glassfish:pom) = 8
 
 %description
 This is a shared POM parent for Glassfish Maven projects.
@@ -42,6 +44,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 8-alt1_8jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 8-alt1_7jpp8
 - new version
 
