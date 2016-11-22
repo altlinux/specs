@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             picketbox-xacml
 Version:          2.0.7
-Release:          alt3_10jpp8
+Release:          alt3_11jpp8
 Summary:          JBoss XACML
 License:          LGPLv2+
 URL:              http://www.jboss.org/picketbox
@@ -61,6 +64,9 @@ rm .classpath
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt3_11jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt3_10jpp8
 - new version
 
