@@ -104,7 +104,7 @@
 
 Name: libvirt
 Version: 2.4.0
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -114,13 +114,13 @@ Source1: gnulib-%name-%version.tar
 Patch1: %name-%version-%release.patch
 
 
-%{?_with_libvirtd:Requires: %name-daemon = %version-%release}
-%{?_with_network:Requires: %name-daemon-config-network = %version-%release}
-%{?_with_nwfilter:Requires: %name-daemon-config-nwfilter = %version-%release}
-%{?_with_qemu:Requires: %name-qemu-common = %version-%release}
+%{?_with_libvirtd:Requires: %name-daemon = %EVR}
+%{?_with_network:Requires: %name-daemon-config-network = %EVR}
+%{?_with_nwfilter:Requires: %name-daemon-config-nwfilter = %EVR}
+%{?_with_qemu:Requires: %name-qemu-common = %EVR}
 %{?_with_polkit:Requires: polkit}
-Requires: %name-client = %version-%release
-Requires: %name-libs = %version-%release
+Requires: %name-client = %EVR
+Requires: %name-libs = %EVR
 
 %{?_with_xen:BuildRequires: xen-devel xen-runtime}
 %{?_with_libxl:BuildRequires: xen-devel}
@@ -186,25 +186,25 @@ Copy of the libvirt website documentation
 %package daemon
 Summary: Server side daemon and supporting files for libvirt library
 Group: System/Servers
-Requires: %name-libs = %version-%release
+Requires: %name-libs = %EVR
 Requires: iptables
 %{?_with_pm_utils:Requires: pm-utils}
 Requires: dmidecode
 # libvirtd depends on 'messagebus' service
 Requires: dbus
 
-Conflicts: %name-daemon-config-network < %version-%release
-Conflicts: %name-daemon-config-nwfilter < %version-%release
-Conflicts: %name-daemon-driver-interface < %version-%release
-Conflicts: %name-daemon-driver-qemu < %version-%release
-Conflicts: %name-daemon-driver-nodedev < %version-%release
-Conflicts: %name-daemon-driver-secret < %version-%release
-Conflicts: %name-daemon-driver-storage < %version-%release
-Conflicts: %name-daemon-driver-vbox < %version-%release
-Conflicts: %name-daemon-driver-nwfilter < %version-%release
-Conflicts: %name-daemon-driver-lxc < %version-%release
-Conflicts: %name-daemon-driver-network < %version-%release
-Conflicts: %name-lock-sanlock < %version-%release
+Conflicts: %name-daemon-config-network < %EVR
+Conflicts: %name-daemon-config-nwfilter < %EVR
+Conflicts: %name-daemon-driver-interface < %EVR
+Conflicts: %name-daemon-driver-qemu < %EVR
+Conflicts: %name-daemon-driver-nodedev < %EVR
+Conflicts: %name-daemon-driver-secret < %EVR
+Conflicts: %name-daemon-driver-storage < %EVR
+Conflicts: %name-daemon-driver-vbox < %EVR
+Conflicts: %name-daemon-driver-nwfilter < %EVR
+Conflicts: %name-daemon-driver-lxc < %EVR
+Conflicts: %name-daemon-driver-network < %EVR
+Conflicts: %name-lock-sanlock < %EVR
 
 %description daemon
 Server side daemon required to manage the virtualization capabilities
@@ -215,11 +215,10 @@ for specific drivers.
 Summary: Default configuration files for the libvirtd daemon
 Group: System/Servers
 BuildArch: noarch
-Requires: %name-daemon = %version-%release
 Requires: bridge-utils
 Requires: dnsmasq
 %if_with driver_modules
-Requires: %name-daemon-driver-network = %version-%release
+Requires: %name-daemon-driver-network = %EVR
 %endif
 
 %description daemon-config-network
@@ -229,9 +228,8 @@ Default configuration files for setting up NAT based networking
 Summary: Network filter configuration files for the libvirtd daemon
 Group: System/Servers
 BuildArch: noarch
-Requires: %name-daemon = %version-%release
 %if_with driver_modules
-Requires: %name-daemon-driver-nwfilter = %version-%release
+Requires: %name-daemon-driver-nwfilter = %EVR
 %endif
 
 %description daemon-config-nwfilter
@@ -242,7 +240,6 @@ Network filter configuration files for cleaning guest traffic
 %package daemon-driver-network
 Summary: Network driver plugin for the libvirtd daemon
 Group: System/Libraries
-Requires: %name-daemon = %version-%release
 
 %description daemon-driver-network
 The network driver plugin for the libvirtd daemon, providing
@@ -254,7 +251,6 @@ bridge capabilities.
 %package daemon-driver-nwfilter
 Summary: Nwfilter driver plugin for the libvirtd daemon
 Group: System/Libraries
-Requires: %name-daemon = %version-%release
 Requires: ebtables
 
 %description daemon-driver-nwfilter
@@ -267,7 +263,6 @@ iptables and ip6tables capabilities
 %package daemon-driver-nodedev
 Summary: Nodedev driver plugin for the libvirtd daemon
 Group: System/Libraries
-Requires: %name-daemon = %version-%release
 
 %description daemon-driver-nodedev
 The nodedev driver plugin for the libvirtd daemon, providing
@@ -277,7 +272,6 @@ capabilities.
 %package daemon-driver-interface
 Summary: Interface driver plugin for the libvirtd daemon
 Group: System/Libraries
-Requires: %name-daemon = %version-%release
 
 %description daemon-driver-interface
 The interface driver plugin for the libvirtd daemon, providing
@@ -288,7 +282,6 @@ netcf library or udev.
 %package daemon-driver-secret
 Summary: Secret driver plugin for the libvirtd daemon
 Group: System/Libraries
-Requires: %name-daemon = %version-%release
 
 %description daemon-driver-secret
 The secret driver plugin for the libvirtd daemon, providing
@@ -297,7 +290,6 @@ an implementation of the secret key APIs.
 %package daemon-driver-storage
 Summary: Storage driver plugin for the libvirtd daemon
 Group: System/Libraries
-Requires: %name-daemon = %version-%release
 
 %description daemon-driver-storage
 The storage driver plugin for the libvirtd daemon, providing
@@ -308,9 +300,8 @@ parted and more.
 %package daemon-driver-qemu
 Summary: Qemu driver plugin for the libvirtd daemon
 Group: System/Libraries
-Requires: %name-daemon = %version-%release
-Requires: %name-daemon-driver-network = %version-%release
-Requires: %name-daemon-driver-storage = %version-%release
+Requires: %name-daemon-driver-network = %EVR
+Requires: %name-daemon-driver-storage = %EVR
 Requires: /usr/bin/qemu-img
 # For image compression
 Requires: gzip
@@ -327,8 +318,7 @@ QEMU
 %package daemon-driver-lxc
 Summary: LXC driver plugin for the libvirtd daemon
 Group: System/Libraries
-Requires: %name-daemon = %version-%release
-Requires: %name-daemon-driver-network = %version-%release
+Requires: %name-daemon-driver-network = %EVR
 
 %description daemon-driver-lxc
 The LXC driver plugin for the libvirtd daemon, providing
@@ -340,7 +330,6 @@ the Linux kernel
 %package daemon-driver-uml
 Summary: Uml driver plugin for the libvirtd daemon
 Group: System/Libraries
-Requires: %name-daemon = %version-%release
 
 %description daemon-driver-uml
 The UML driver plugin for the libvirtd daemon, providing
@@ -352,7 +341,6 @@ User Mode Linux
 %package daemon-driver-xen
 Summary: Xen driver plugin for the libvirtd daemon
 Group: System/Libraries
-Requires: %name-daemon = %version-%release
 
 %description daemon-driver-xen
 The Xen driver plugin for the libvirtd daemon, providing
@@ -364,7 +352,6 @@ Xen
 %package daemon-driver-libxl
 Summary: Libxl driver plugin for the libvirtd daemon
 Group: System/Libraries
-Requires: %name-daemon = %version-%release
 
 %description daemon-driver-libxl
 The Libxl driver plugin for the libvirtd daemon, providing
@@ -376,7 +363,6 @@ Libxl
 %package daemon-driver-vbox
 Summary: VirtualBox driver plugin for the libvirtd daemon
 Group: System/Libraries
-Requires: %name-daemon = %version-%release
 
 %description daemon-driver-vbox
 The vbox driver plugin for the libvirtd daemon, providing
@@ -390,15 +376,14 @@ VirtualBox
 Summary: Server side daemon, driver & default configs required to run QEMU or KVM guests
 Group: System/Servers
 BuildArch: noarch
-Requires: %name-daemon-config-network = %version-%release
-Requires: %name-daemon-driver-interface = %version-%release
-Requires: %name-daemon-config-nwfilter = %version-%release
-Requires: %name-daemon = %version-%release
+Requires: %name-daemon-config-network = %EVR
+Requires: %name-daemon-driver-interface = %EVR
+Requires: %name-daemon-config-nwfilter = %EVR
 %if_with driver_modules
-Requires: %name-daemon-driver-qemu = %version-%release
-Requires: %name-daemon-driver-nodedev = %version-%release
-Requires: %name-daemon-driver-secret = %version-%release
-Requires: %name-daemon-driver-storage = %version-%release
+Requires: %name-daemon-driver-qemu = %EVR
+Requires: %name-daemon-driver-nodedev = %EVR
+Requires: %name-daemon-driver-secret = %EVR
+Requires: %name-daemon-driver-storage = %EVR
 %endif
 
 %description qemu-common
@@ -409,7 +394,7 @@ required to manage the virtualization capabilities of QEMU or KVM.
 Summary: Server side daemon, driver & default configs required to run QEMU guests
 Group: System/Servers
 BuildArch: noarch
-Requires: %name-qemu-common = %version-%release
+Requires: %name-qemu-common = %EVR
 Requires: qemu
 
 %description qemu
@@ -420,7 +405,7 @@ required to manage the virtualization capabilities of QEMU.
 Summary: Server side daemon, driver & default configs required to run KVM guests
 Group: System/Servers
 BuildArch: noarch
-Requires: %name-qemu-common = %version-%release
+Requires: %name-qemu-common = %EVR
 Requires: qemu-kvm
 
 %description kvm
@@ -430,15 +415,14 @@ required to manage the virtualization capabilities of KVM.
 %package lxc
 Summary: Server side daemon, driver & default configs required to run LXC guests
 Group: System/Servers
-Requires: %name-daemon-config-network = %version-%release
-Requires: %name-daemon-config-nwfilter = %version-%release
-Requires: %name-daemon = %version-%release
+Requires: %name-daemon-config-network = %EVR
+Requires: %name-daemon-config-nwfilter = %EVR
 Requires: lxc
 %if_with driver_modules
-Requires: %name-daemon-driver-lxc = %version-%release
-Requires: %name-daemon-driver-nodedev = %version-%release
-Requires: %name-daemon-driver-secret = %version-%release
-Requires: %name-daemon-driver-storage = %version-%release
+Requires: %name-daemon-driver-lxc = %EVR
+Requires: %name-daemon-driver-nodedev = %EVR
+Requires: %name-daemon-driver-secret = %EVR
+Requires: %name-daemon-driver-storage = %EVR
 %endif
 
 %description lxc
@@ -448,14 +432,13 @@ required to manage the virtualization capabilities of LXC.
 %package uml
 Summary: Server side daemon, driver & default configs required to run UML guests
 Group: System/Servers
-Requires: %name-daemon-config-network = %version-%release
-Requires: %name-daemon-config-nwfilter = %version-%release
-Requires: %name-daemon = %version-%release
+Requires: %name-daemon-config-network = %EVR
+Requires: %name-daemon-config-nwfilter = %EVR
 %if_with driver_modules
-Requires: %name-daemon-driver-uml = %version-%release
-Requires: %name-daemon-driver-nodedev = %version-%release
-Requires: %name-daemon-driver-secret = %version-%release
-Requires: %name-daemon-driver-storage = %version-%release
+Requires: %name-daemon-driver-uml = %EVR
+Requires: %name-daemon-driver-nodedev = %EVR
+Requires: %name-daemon-driver-secret = %EVR
+Requires: %name-daemon-driver-storage = %EVR
 %endif
 
 %description uml
@@ -466,20 +449,19 @@ required to manage the virtualization capabilities of UML.
 Summary: Server side daemon, driver & default configs required to run XEN guests
 Group: System/Servers
 BuildArch: noarch
-Requires: %name-daemon-config-network = %version-%release
-Requires: %name-daemon-config-nwfilter = %version-%release
-Requires: %name-daemon = %version-%release
+Requires: %name-daemon-config-network = %EVR
+Requires: %name-daemon-config-nwfilter = %EVR
 Requires: xen
 %if_with driver_modules
 %if_with xen
-Requires: %name-daemon-driver-xen = %version-%release
+Requires: %name-daemon-driver-xen = %EVR
 %endif
 %if_with libxl
-Requires: %name-daemon-driver-libxl = %version-%release
+Requires: %name-daemon-driver-libxl = %EVR
 %endif
-Requires: %name-daemon-driver-nodedev = %version-%release
-Requires: %name-daemon-driver-secret = %version-%release
-Requires: %name-daemon-driver-storage = %version-%release
+Requires: %name-daemon-driver-nodedev = %EVR
+Requires: %name-daemon-driver-secret = %EVR
+Requires: %name-daemon-driver-storage = %EVR
 %endif #driver_modules
 
 %description xen
@@ -490,14 +472,13 @@ required to manage the virtualization capabilities of Xen.
 Summary: Server side daemon, driver & default configs required to run VirtualBox guests
 Group: System/Servers
 BuildArch: noarch
-Requires: %name-daemon-config-network = %version-%release
-Requires: %name-daemon-config-nwfilter = %version-%release
-Requires: %name-daemon = %version-%release
+Requires: %name-daemon-config-network = %EVR
+Requires: %name-daemon-config-nwfilter = %EVR
 %if_with driver_modules
-Requires: %name-daemon-driver-vbox = %version-%release
-Requires: %name-daemon-driver-nodedev = %version-%release
-Requires: %name-daemon-driver-secret = %version-%release
-Requires: %name-daemon-driver-storage = %version-%release
+Requires: %name-daemon-driver-vbox = %EVR
+Requires: %name-daemon-driver-nodedev = %EVR
+Requires: %name-daemon-driver-secret = %EVR
+Requires: %name-daemon-driver-storage = %EVR
 %endif
 
 %description vbox
@@ -507,7 +488,7 @@ required to manage the virtualization capabilities of VirtualBox.
 %package client
 Summary: Client side utilities of the libvirt library
 Group: System/Libraries
-Requires: %name-libs = %version-%release
+Requires: %name-libs = %EVR
 # Needed by libvirt-guests init script.
 Requires: gettext
 # For virConnectGetSysinfo
@@ -535,7 +516,7 @@ Shared libraries for accessing the libvirt daemon.
 %package admin
 Summary: Set of tools to control libvirt daemon
 Group: System/Servers
-Requires: %name-libs = %version-%release
+Requires: %name-libs = %EVR
 
 %description admin
 The client side utilities to control the libvirt daemon.
@@ -544,7 +525,7 @@ The client side utilities to control the libvirt daemon.
 Summary: Wireshark dissector plugin for libvirt RPC transactions
 Group: Networking/Other
 Requires: wireshark
-Requires: %name-libs = %version-%release
+Requires: %name-libs = %EVR
 
 %description -n wireshark-plugin-%name
 Wireshark dissector plugin for better analysis of libvirt RPC traffic.
@@ -552,7 +533,7 @@ Wireshark dissector plugin for better analysis of libvirt RPC traffic.
 %package login-shell
 Summary: Login shell for connecting users to an LXC container
 Group: System/Libraries
-Requires: %name-libs = %version-%release
+Requires: %name-libs = %EVR
 
 %description login-shell
 Provides the set-uid virt-login-shell binary that is used to
@@ -562,7 +543,7 @@ namespaces.
 %package devel
 Summary: Libraries, includes, etc. to compile with the libvirt library
 Group: Development/C
-Requires: %name-libs = %version-%release
+Requires: %name-libs = %EVR
 
 %description devel
 Includes and documentations for the C library providing an API to use
@@ -574,8 +555,7 @@ Group: System/Libraries
 PreReq: sanlock >= 2.4
 #for virt-sanlock-cleanup require augeas
 Requires: augeas
-Requires: %name-daemon = %version-%release
-Requires: %name-libs = %version-%release
+Requires: %name-libs = %EVR
 
 %description lock-sanlock
 Includes the Sanlock lock manager plugin for the QEMU
@@ -584,7 +564,7 @@ driver
 %package -n nss-%name
 Summary: Libvirt plugin for Name Service Switch
 Group: System/Libraries
-Requires: %name-daemon-driver-network = %version-%release
+Requires: %name-daemon-driver-network = %EVR
 
 %description -n nss-%name
 Libvirt plugin for NSS for translating domain names into IP addresses.
@@ -1060,6 +1040,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Nov 22 2016 Alexey Shabalin <shaba@altlinux.ru> 2.4.0-alt2
+- libvirt-daemon must will update after all subpackes for restart successfuly
+
 * Sat Nov 05 2016 Alexey Shabalin <shaba@altlinux.ru> 2.4.0-alt1
 - 2.4.0
 
