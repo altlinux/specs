@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           cortado
 Version:        0.6.0
-Release:        alt1_11jpp8
+Release:        alt1_12jpp8
 Summary:        Java media framework
 URL:            http://www.theora.org/cortado/
 # The codecs are all LGPLv2+, the jst framework is mixed, the player applet GPL
@@ -15,8 +15,8 @@ Group:          System/Libraries
 Source0:        http://downloads.xiph.org/releases/%{name}/%{name}-%{version}.tar.gz
 Patch0:         cortado-0.6.0-javadoc-fix.patch
 BuildArch:      noarch
-BuildRequires:  jpackage-utils jorbis
-Requires:       jpackage-utils jorbis
+BuildRequires: javapackages-tools rpm-build-java jorbis
+Requires:       javapackages-tools rpm-build-java jorbis
 Source44: import.info
 
 %description
@@ -26,7 +26,7 @@ Cortado is a Java media framework based on GStreamer's design.
 %package javadoc
 Summary:        Java docs for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -74,6 +74,9 @@ cp -a doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_12jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_11jpp8
 - new version
 
