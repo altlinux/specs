@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          disruptor
 Version:       3.3.2
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Concurrent Programming Framework
 License:       ASL 2.0
 URL:           http://lmax-exchange.github.io/disruptor/
@@ -83,7 +86,7 @@ rm -r src/test/java/com/lmax/disruptor/dsl/DisruptorTest.java
 
 %build
 
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8 -Dmaven.test.skip.exec=true
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
@@ -96,6 +99,9 @@ rm -r src/test/java/com/lmax/disruptor/dsl/DisruptorTest.java
 %doc LICENCE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.2-alt1_4jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.2-alt1_3jpp8
 - java 8 mass update
 
