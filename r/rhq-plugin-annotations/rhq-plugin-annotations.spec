@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             rhq-plugin-annotations
 Version:          3.0.4
-Release:          alt2_10jpp8
+Release:          alt2_11jpp8
 Summary:          RHQ plugin annotations
 License:          GPL and LGPLv2+
 URL:              http://rhq-project.org
@@ -49,6 +52,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.4-alt2_11jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.4-alt2_10jpp8
 - new version
 
