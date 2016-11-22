@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -5,10 +8,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:		geronimo-jta
 Version:	1.1.1
-Release:	alt3_18jpp8
+Release:	alt3_19jpp8
 Summary:	J2EE JTA v1.1 API
 
-Group:		Development/Java
+Group:		Development/Other
 License:	ASL 2.0
 URL:		http://geronimo.apache.org/
 # svn export http://svn.apache.org/repos/asf/geronimo/specs/tags/%{spec_name}-%{version}/
@@ -26,11 +29,6 @@ Provides:	jta = %{version}-%{release}
 Obsoletes:	geronimo-specs <= 1.0-3.3
 Obsoletes:	geronimo-specs-compat <= 1.0-3.3
 Source44: import.info
-
-#Provides:       jta_1_1_api = %{version}-%{release}
-#Provides:       jta_api = 0:1.1
-# drop asap
-#Provides:       jta = 0:1.1
 
 %description
 Java Transaction API (JTA) specifies standard Java interfaces between a
@@ -59,17 +57,6 @@ BuildArch:	noarch
 %install
 %mvn_install
 
-install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jta_geronimo-jta<<EOF
-%{_javadir}/jta.jar	%{_javadir}/geronimo-jta.jar	10200
-EOF
-#install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jta_api_geronimo-jta<<EOF
-#%{_javadir}/jta_api.jar	%{_javadir}/geronimo-jta.jar	10200
-#EOF
-#install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jta_1_1_api_geronimo-jta<<EOF
-#%{_javadir}/jta_1_1_api.jar	%{_javadir}/geronimo-jta.jar	10200
-#EOF
-
-
 %pre javadoc
 [ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
 rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
@@ -77,17 +64,14 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %files -f .mfiles
 %doc LICENSE.txt NOTICE.txt
 
-#%_altdir/jta_1_1_api_geronimo-jta
-#%_altdir/jta_api_geronimo-jta
-%_altdir/jta_geronimo-jta
-%exclude %{_javadir}*/jta.jar
-
-
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_19jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_18jpp8
 - new version
 
