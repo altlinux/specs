@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jacknativeclient
 Version:        0
-Release:        alt2_0.10.20120218gitjpp8
+Release:        alt2_0.11.20120218gitjpp8
 Summary:        Java bindings for JACK clients
 
 License:        LGPLv3+
@@ -22,9 +22,9 @@ Source0:        https://github.com/%{user}/%{name}/tarball/%{gittag}/%{user}-%{n
 BuildRequires:  ant
 BuildRequires:  libjack-devel
 BuildRequires:  java-javadoc
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Source44: import.info
 
 %description
@@ -90,6 +90,9 @@ cp -a api %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}/
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.11.20120218gitjpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.10.20120218gitjpp8
 - %%_jnidir set to /usr/lib/java
 
