@@ -1,11 +1,14 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          activeio
 Version:       3.1.4
-Release:       alt1_13jpp8
+Release:       alt1_14jpp8
 Summary:       Apache ActiveMQ ActiveIO :: Core
 License:       ASL 2.0
 Url:           http://activemq.apache.org/
@@ -148,6 +151,9 @@ sed -i 's/\r//' NOTICE
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.1.4-alt1_14jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.1.4-alt1_13jpp8
 - bugfix release
 
