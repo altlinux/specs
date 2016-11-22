@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -37,16 +37,16 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jline1
 Version:        1.0
-Release:        alt3_11jpp8
+Release:        alt3_12jpp8
 Summary:        Java library for reading and editing user input in console applications
 License:        BSD
 URL:            http://jline.sourceforge.net/
-Group:          Development/Java
+Group:          Development/Other
 Source0:        http://download.sourceforge.net/sourceforge/jline/jline-%{version}.zip
 Source1:        CatalogManager.properties
 Patch1:         jline-0.9.94-crosslink.patch
 
-Requires:      bash
+Requires: bash sh
 # for /bin/stty
 Requires:      coreutils
 
@@ -125,6 +125,9 @@ mv tmp/* .
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_12jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_11jpp8
 - %%_jnidir set to /usr/lib/java
 
