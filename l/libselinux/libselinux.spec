@@ -3,12 +3,13 @@
 Name: libselinux
 Epoch: 1
 Version: 2.5
-Release: alt1
+Release: alt2
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
 Url: http://userspace.selinuxproject.org/
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 Patch1: alt-man-selinuxconlist.patch
 Patch2: alt-linking.patch
 
@@ -66,6 +67,7 @@ This package contains SELinux python bindings.
 
 %prep
 %setup -q
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 
@@ -119,6 +121,9 @@ fi
 
 
 %changelog
+* Tue Nov 22 2016 Anton Farygin <rider@altlinux.ru> 1:2.5-alt2
+- upstream fixes for /proc mounting (closes: #32778)
+
 * Thu Oct 27 2016 Anton Farygin <rider@altlinux.ru> 1:2.5-alt1
 - new version
 
