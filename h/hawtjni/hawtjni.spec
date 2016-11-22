@@ -1,14 +1,14 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             hawtjni
 Version:          1.10
-Release:          alt1_5jpp8
+Release:          alt1_6jpp8
 Summary:          Code generator that produces the JNI code
 License:          ASL 2.0 and EPL and BSD
 URL:              http://hawtjni.fusesource.org/
@@ -36,9 +36,9 @@ BuildRequires:    junit
 BuildRequires:    fusesource-pom
 BuildRequires:    xbean
 
-Requires:         autoconf
-Requires:         automake
-Requires:         libtool
+Requires:         autoconf-common
+Requires:         automake-common
+Requires:         libtool-common
 Source44: import.info
 
 %description
@@ -110,6 +110,9 @@ This package allows to use HawtJNI from a maven plugin.
 %files -n maven-hawtjni-plugin -f .mfiles-maven-plugin
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt1_6jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt1_5jpp8
 - new version
 
