@@ -1,14 +1,17 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 24
 %global site_name org.apache.felix.bundlerepository
 %global grp_name  felix
 
 Name:           felix-bundlerepository
 Version:        1.6.6
-Release:        alt4_18jpp8
+Release:        alt4_19jpp8
 Summary:        Bundle repository service
 License:        ASL 2.0 and MIT
 URL:            http://felix.apache.org/site/apache-felix-osgi-bundle-repository.html
@@ -89,6 +92,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE LICENSE.kxml2 NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.6-alt4_19jpp8
+- new fc release
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.6-alt4_18jpp8
 - new version
 
