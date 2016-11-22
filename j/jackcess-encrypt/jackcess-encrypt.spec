@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          jackcess-encrypt
 Version:       2.1.0
-Release:       alt1_1jpp8
+Release:       alt1_2jpp8
 Summary:       Java implementation of the encryption service for MS Access
 License:       ASL 2.0
 URL:           http://jackcessencrypt.sourceforge.net/
@@ -123,6 +126,9 @@ rm -r src/test/java/com/healthmarketscience/jackcess/CryptCodecProviderTest.java
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_2jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_1jpp8
 - new version
 
