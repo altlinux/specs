@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jzlib
 Version:        1.1.3
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Epoch:          0
 Summary:        Re-implementation of zlib in pure Java
 License:        BSD
@@ -36,7 +39,7 @@ BuildArch: noarch
 %package        demo
 Group: Development/Java
 Summary:        Examples for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 
 %description    demo
 %{summary}.
@@ -67,6 +70,9 @@ cp -pr example/* %{buildroot}%{_datadir}/%{name}
 %doc %{_datadir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt1_4jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt1_3jpp8
 - new version
 
