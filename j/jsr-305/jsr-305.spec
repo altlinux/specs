@@ -1,11 +1,14 @@
 Epoch: 1
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jsr-305
 Version:        0
-Release:        alt4_0.18.20130910svnjpp8
+Release:        alt4_0.19.20130910svnjpp8
 Summary:        Correctness annotations for Java code
 
 # The majority of code is BSD-licensed, but some Java sources
@@ -63,6 +66,9 @@ cp %{SOURCE1} NOTICE-CC-BY
 %doc ri/LICENSE NOTICE-CC-BY
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:0-alt4_0.19.20130910svnjpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1:0-alt4_0.18.20130910svnjpp8
 - new version
 
