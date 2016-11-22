@@ -1,8 +1,8 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-BuildRequires: jdepend
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,9 +14,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-remoting
 Version:          4.0.3
-Release:          alt1_2jpp8
+Release:          alt1_4jpp8
 Summary:          JBoss Remoting
-Group:            Development/Java
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossremoting
 
@@ -29,13 +28,14 @@ Source0:          jboss-remoting-%{namedversion}-CLEAN.tar.xz
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-BuildRequires:    jboss-parent
-BuildRequires:    xnio
-BuildRequires:    jboss-logging
-BuildRequires:    jboss-logmanager
-BuildRequires:    jboss-logging-tools
-BuildRequires:    junit
-BuildRequires:    apiviz
+BuildRequires:    mvn(jdepend:jdepend)
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
+BuildRequires:    mvn(org.jboss.apiviz:apiviz)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging-processor)
+BuildRequires:    mvn(org.jboss.xnio:xnio-api)
+BuildRequires:    mvn(org.jboss.xnio:xnio-nio)
 Source44: import.info
 
 %description
@@ -45,8 +45,8 @@ various modes of interaction, including invocations, one way messaging,
 and asynchronous callbacks.
 
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
+Group: Development/Java
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -63,13 +63,15 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc COPYING.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc COPYING.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.0.3-alt1_4jpp8
+- new fc release
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.0.3-alt1_2jpp8
 - java 8 mass update
 
