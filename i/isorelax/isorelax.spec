@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -43,7 +43,7 @@ URL:            http://iso-relax.sourceforge.net/
 Epoch:          2
 Version:        0
 # I can't use %%{cvstag} as dashes aren't allowed in Release tags
-Release:        alt1_0.18.release20050331jpp8
+Release:        alt1_0.19.release20050331jpp8
 License:        MIT and ASL 1.1
 BuildArch:      noarch
 
@@ -111,6 +111,9 @@ install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/*
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2:0-alt1_0.19.release20050331jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2:0-alt1_0.18.release20050331jpp8
 - new version
 
