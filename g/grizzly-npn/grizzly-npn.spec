@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          grizzly-npn
 Version:       1.2
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Grizzly Next Protocol Negotiation API
 License:       CDDL or GPLv2 with exceptions
 URL:           https://grizzly.java.net/spdy.html
@@ -121,6 +124,9 @@ rm -r bootstrap/src/main/java/sun/security/ssl/Alerts.java \
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_4jpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_3jpp8
 - java8 mass update
 
