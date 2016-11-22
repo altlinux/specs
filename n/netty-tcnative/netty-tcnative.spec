@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           netty-tcnative
 Version:        1.1.30
-Release:        alt2_2jpp8
+Release:        alt2_3jpp8
 Summary:        Fork of Tomcat Native with improved OpenSSL and mavenized build
 License:        ASL 2.0
 URL:            https://github.com/netty/netty/wiki/Forked-Tomcat-Native
@@ -23,9 +23,9 @@ Patch1:         fixLibNames.patch.in
 Patch2:         i388aprFix.patch
 
 BuildRequires:  maven-local
-BuildRequires:  autoconf
-BuildRequires:  automake
-BuildRequires:  libtool
+BuildRequires:  autoconf-common
+BuildRequires:  automake-common
+BuildRequires:  libtool-common
 BuildRequires:  glibc-devel
 BuildRequires:  libapr1-devel
 BuildRequires:  libssl-devel
@@ -87,6 +87,9 @@ javac -d . -cp $RPM_BUILD_ROOT%{_jnidir}/%{name}/%{name}.jar %{SOURCE1}
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.30-alt2_3jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.30-alt2_2jpp8
 - %%_jnidir set to /usr/lib/java
 
