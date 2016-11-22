@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          pegdown
 Version:       1.4.2
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Java library for Markdown processing
 License:       ASL 2.0
 URL:           http://pegdown.org
@@ -116,6 +119,9 @@ rm -r src/test/scala/*
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1_8jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1_7jpp8
 - new version
 
