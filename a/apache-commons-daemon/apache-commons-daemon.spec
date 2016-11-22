@@ -1,4 +1,7 @@
 Epoch: 1
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,10 +11,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        1.0.15
-Release:        alt1_10jpp8
+Release:        alt1_11jpp8
 Summary:        Defines API to support an alternative invocation mechanism
 License:        ASL 2.0
-Group:          Development/Java
+Group:          System/Base
 URL:            http://commons.apache.org/%{base_name}
 Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 Patch1:         apache-commons-daemon-JAVA_OS.patch
@@ -21,7 +24,7 @@ Patch2:         apache-commons-daemon-secondary.patch
 # https://issues.apache.org/jira/browse/DAEMON-308
 Patch3:         apache-commons-daemon-aarch64.patch
 BuildRequires:  maven-local
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  apache-commons-parent
 BuildRequires:  maven-surefire-provider-junit
 BuildRequires:  xmlto
@@ -38,7 +41,7 @@ Java applications.
 
 %package        jsvc
 Summary:        Java daemon launcher
-Group:          Development/Java
+Group:          System/Base
 Provides:       jsvc = 1:%{version}-%{release}
 
 %description    jsvc
@@ -47,7 +50,7 @@ Provides:       jsvc = 1:%{version}-%{release}
 %package        javadoc
 Summary:        API documentation for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch:      noarch
 
 %description    javadoc
@@ -108,6 +111,9 @@ install -Dpm 644 src/native/unix/jsvc.1 $RPM_BUILD_ROOT%{_mandir}/man1/jsvc.1
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.15-alt1_11jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.15-alt1_10jpp8
 - new version
 
