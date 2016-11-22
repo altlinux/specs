@@ -1,6 +1,9 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
-BuildRequires: /proc netty-tcnative
+BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name netty3
@@ -10,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           netty3
 Version:        3.9.3
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        An asynchronous event-driven network application framework and tools for Java
 License:        ASL 2.0 and BSD
 URL:            http://netty.io/
@@ -133,6 +136,9 @@ sed -i s/org.jboss.netty.util.internal.jzlib/com.jcraft.jzlib/ \
 %doc LICENSE.txt NOTICE.txt
  
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.9.3-alt1_4jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 3.9.3-alt1_3jpp8
 - full build
 
