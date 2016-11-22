@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jpathwatch
 Version:          0.95
-Release:          alt1_7jpp8
+Release:          alt1_9jpp8
 Summary:          Java library for monitoring directories for changes
 License:          GPLv2
 # http://jpathwatch.wordpress.com/
@@ -60,7 +60,7 @@ This package contains the API documentation for %{name}.
 
 # native part
 cd %{name}-native/prj/linux/%{name}-native-linux
-%ifarch x86_64 s390x sparc64 ppc64
+%if 0%{?__isa_bits} == 64
   make DEFAULTCONF=Release_x86-64bit %{?_smp_mflags} CXXFLAGS="%{optflags}"
 %else
   make DEFAULTCONF=Release_x86-32bit %{?_smp_mflags} CXXFLAGS="%{optflags}"
@@ -85,6 +85,9 @@ find %{name}-java/src -name '*.java' | xargs javadoc -Xdoclint:none -classpath d
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.95-alt1_9jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.95-alt1_7jpp8
 - new version
 
