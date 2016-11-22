@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -7,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             geronimo-interceptor
 Version:          1.0.1
-Release:          alt2_14jpp8
+Release:          alt2_15jpp8
 Summary:          Java EE: Interceptor API v3.0
 License:          ASL 2.0
 URL:              http://geronimo.apache.org/
@@ -17,7 +20,7 @@ URL:              http://geronimo.apache.org/
 Source0:          %{spec_name}-%{version}.tar.gz
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:    maven-local
 BuildRequires:    geronimo-parent-poms
 
@@ -57,6 +60,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_15jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_14jpp8
 - new version
 
