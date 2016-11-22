@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          activemq-protobuf
 Version:       1.1
-Release:       alt3_10jpp8
+Release:       alt3_12jpp8
 Summary:       ActiveMQ Protocol Buffers
 License:       ASL 2.0
 Url:           http://activemq.apache.org/
@@ -71,6 +71,9 @@ chmod 644 LICENSE
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_12jpp8
+- new fc release
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_10jpp8
 - java 8 mass update
 
