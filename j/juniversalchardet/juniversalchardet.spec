@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ swig
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global githash 3fd330c443272699cd8ba5d7da7e56c27a567ec1
 Name:          juniversalchardet
 Version:       1.0.3
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       A Java port of Mozilla's universalchardet
 # ALL files are under MPL (v1.1) GPL license
 # build.xml and c/* under MPL 1.1/GPL 2.0/LGPL 2.1 license
@@ -71,6 +71,9 @@ install -pm 644 dist/%{name}-example-%{version}.jar \
 %doc MPL-1.1.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_7jpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_6jpp8
 - new version
 
