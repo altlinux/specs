@@ -1,11 +1,11 @@
 %define policy_name altlinux
-%define date 20160704
+%define date 20161122
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
-Version: 0.0.25
+Version: 0.0.26
 Release: alt1
 License: %distributable
 Group: System/Base
@@ -262,6 +262,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/psql.pp
 
 %changelog
+* Tue Nov 22 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.26-alt1
+- compatibilituy with policycoreutils 2.4
+
 * Tue Jul 12 2016 Sergey V Turchin <zerg@altlinux.org> 0.0.25-alt1
 - set object_r:trusted_exec_t:s0 for /usr/sbin/crond
 
