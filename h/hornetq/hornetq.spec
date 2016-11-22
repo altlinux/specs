@@ -1,18 +1,18 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: gcc-c++ hornetq
+BuildRequires(pre): rpm-macros-java
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 24
 # fedora __isa_bits tmp hack
 %ifarch x86_64
 %define __isa_bits 64
 %else
 %define __isa_bits 32
 %endif
-%define fedora 23
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name hornetq
 %define version 2.4.1
@@ -26,13 +26,13 @@ BuildRequires: jpackage-generic-compat
 
 Name:             hornetq
 Version:          2.4.1
-Release:          alt1_6jpp8
+Release:          alt1_7jpp8
 Summary:          High performance messaging system
 License:          ASL 2.0
 URL:              http://www.jboss.org/hornetq
 Source0:          https://github.com/hornetq/hornetq/archive/HornetQ_%{customnamedversion}.tar.gz
 
-BuildRequires:    automake libtool autoconf
+BuildRequires:    automake-common libtool-common autoconf-common
 BuildRequires:    apiviz
 BuildRequires:    aether
 BuildRequires:    apache-commons-logging
@@ -182,6 +182,9 @@ cp -L hornetq-native/bin/libHornetQAIO.so %{buildroot}/%{_libdir}/libHornetQAIO.
 %doc NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1_7jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1_6jpp8
 - build with narayana
 
