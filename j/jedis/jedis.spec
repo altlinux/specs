@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          jedis
 Version:       2.7.2
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       A redis Java client
 License:       MIT
 URL:           https://github.com/xetorthio/jedis
@@ -88,6 +91,9 @@ rm -r src/test/java/redis/clients/jedis/tests/ConnectionCloseTest.java \
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.2-alt1_3jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.2-alt1_2jpp8
 - new version
 
