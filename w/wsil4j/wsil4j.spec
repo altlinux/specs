@@ -1,15 +1,15 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:		wsil4j
 Version:	1.0
-Release:	alt2_11jpp8
+Release:	alt2_12jpp8
 Summary:	Web Services Inspection Language for Java API
 
-Group:		Development/Java
+Group:		Development/Other
 License:	ASL 1.1
 URL:		http://svn.apache.org/repos/asf/webservices/archive/wsil4j/
 
@@ -24,11 +24,11 @@ BuildRequires:	zip
 BuildRequires:	ant
 BuildRequires:	uddi4j
 BuildRequires:	wsdl4j
-BuildRequires:	jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 
 Requires:	uddi4j
 Requires:	wsdl4j
-Requires:	jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Source44: import.info
 
 %description
@@ -40,7 +40,7 @@ site where you could look for Web service descriptions.
 %package javadoc
 Summary:	Javadocs for %{name}
 Group:		Development/Java
-Requires:	jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -90,6 +90,9 @@ install -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_12jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_11jpp8
 - new version
 
