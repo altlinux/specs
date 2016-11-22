@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           sbinary
 Version:        %{sbinary_version}
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Library for describing binary formats for Scala types
 
 License:        MIT
@@ -34,7 +34,6 @@ BuildRequires:	mvn(xml-resolver:xml-resolver)
 BuildRequires:	mvn(org.freemarker:freemarker)
 BuildRequires:	maven-local
 BuildRequires:	maven-local
-Requires:	maven-local
 Requires:       scala
 Source44: import.info
 
@@ -152,6 +151,9 @@ cp -rp core/target/scala-%{scala_version}/api/* %{buildroot}/%{_javadocdir}/%{na
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_5jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_4jpp8
 - new version
 
