@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:    osgi-annotation
 Version: 6.0.0
-Release: alt1_2jpp8
+Release: alt1_3jpp8
 Summary: Annotations for use in compiling OSGi bundles
 
 License: ASL 2.0
@@ -78,6 +78,9 @@ cp -p %{SOURCE1} pom.xml
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt1_3jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt1_2jpp8
 - new version
 
