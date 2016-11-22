@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          glassfish-dtd-parser
 Version:       1.2
-Release:       alt2_0.12.20120120svnjpp8
+Release:       alt2_0.13.20120120svnjpp8
 Summary:       Library for parsing XML DTDs
 License:       CDDL 1.1 and GPLv2 with exceptions
 Url:           http://java.net/projects/dtd-parser
@@ -49,6 +52,9 @@ This package contains javadoc for %{name}.
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_0.13.20120120svnjpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_0.12.20120120svnjpp8
 - new version
 
