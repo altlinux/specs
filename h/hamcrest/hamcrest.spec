@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -58,7 +58,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           hamcrest
 Version:        1.3
-Release:        alt3_13jpp8
+Release:        alt3_14jpp8
 Epoch:          0
 Summary:        Library of matchers for building test expressions
 License:        BSD
@@ -88,9 +88,9 @@ Patch4:         %{name}-%{version}-qdox-2.0.patch
 
 Requires:       qdox
 Requires:       easymock >= 3.0
-Requires:       %{name}-core = %{epoch}:%{version}-%{release}
+Requires:       %{name}-core = %{epoch}:%{version}
 
-BuildRequires:  jpackage-utils >= 0:1.7.4
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant >= 0:1.6.5
 BuildRequires:  ant-junit
 BuildRequires:  zip
@@ -132,9 +132,9 @@ BuildArch: noarch
 Javadoc for %{name}.
 
 %package demo
-Group:          Development/Java
+Group:          Development/Other
 Summary:        Demos for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 Requires:       junit
 %if %with tests
 Requires:       testng
@@ -268,6 +268,9 @@ cp -pr %{name}-examples $RPM_BUILD_ROOT%{_datadir}/%{name}/
 %{_datadir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_14jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_13jpp8
 - new version
 
