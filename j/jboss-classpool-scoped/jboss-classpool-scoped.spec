@@ -1,12 +1,15 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jboss-classpool-scoped
 Version:        1.0.0
-Release:        alt2_10jpp8
+Release:        alt2_11jpp8
 Summary:        A custom class pool for several JBoss products
 
-Group:          Development/Java
+Group:          Development/Other
 License:        LGPLv2+
 URL:            http://www.jboss.org/jbossreflect
 
@@ -26,7 +29,7 @@ A custom class pool for several JBoss products.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -53,6 +56,9 @@ find -type f -name *.class -delete
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_11jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_10jpp8
 - new version
 
