@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: docbook-dtds
 %filter_from_requires /^java-headless/d
@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           ws-jaxme
 Version:        0.5.2
-Release:        alt5_14jpp8
+Release:        alt5_15jpp8
 Epoch:          0
 Summary:        Open source implementation of JAXB
 License:        ASL 2.0
@@ -68,10 +68,10 @@ Patch5:         ws-jaxme-use-commons-codec.patch
 Patch6:         ws-jaxme-remove-xmldb.patch
 Patch7:         ws-jaxme-0.5.2-class-version15.patch
 BuildArch:      noarch
-BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  ant-apache-resolver
-BuildRequires:  antlr
+BuildRequires:  antlr-tool
 BuildRequires:  apache-commons-codec
 BuildRequires:  junit
 BuildRequires:  hsqldb1
@@ -81,14 +81,14 @@ BuildRequires:  xerces-j2
 BuildRequires:  docbook-style-xsl
 BuildRequires:  docbook-dtds
 BuildRequires:  zip
-Requires:       antlr
+Requires:       antlr-tool
 Requires:       apache-commons-codec
 Requires:       junit
 Requires:       hsqldb1
 Requires:       log4j12
 Requires:       xalan-j2
 Requires:       xerces-j2
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Source44: import.info
 
 %description
@@ -185,6 +185,9 @@ rm -rf build/docs/src/documentation/content/apidocs
 %doc build/docs/src/documentation/content/manual
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt5_15jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt5_14jpp8
 - dropped dep on xmldb-api-sdk
 
