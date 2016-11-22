@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             xnio
 Version:          3.3.0
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          JBoss XNIO
 License:          ASL 2.0
 URL:              http://www.jboss.org/xnio
@@ -32,7 +32,7 @@ BuildRequires:    maven-surefire-provider-junit
 BuildRequires:    junit
 BuildRequires:    maven-shared
 BuildRequires:    jmock
-BuildRequires:    byteman >= 2.0.4-4
+BuildRequires:    byteman >= 2.0.4
 Source44: import.info
 
 %description
@@ -69,6 +69,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_3jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_2jpp8
 - java 8 mass update
 
