@@ -1,6 +1,6 @@
 Name: cups
-Version: 2.1.0
-Release: alt2
+Version: 2.1.4
+Release: alt1
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -63,9 +63,6 @@ Patch35: FC-synconclose.patch
 Patch36: FC-lspp.patch
 
 ## Ubuntu patches
-Patch101: Ubuntu-usb-backend-fix-infinite-loop-when-usblp-module-attached.patch
-Patch102: Ubuntu-usb-backend-delayed-closing-for-old-laserjets.patch
-Patch103: Ubuntu-fix-ppd-file-load-for-ipp-printers.patch
 Patch104: Ubuntu-pwg-raster-attributes.patch
 Patch105: Ubuntu-manpage-hyphen-minus.patch
 Patch106: Ubuntu-rootbackends-worldreadable.patch
@@ -223,9 +220,6 @@ services using the main CUPS library "libcups".
 %patch36 -p1 -b .lspp
 
 ## Ubuntu apply patches
-%patch101 -p1
-%patch102 -p1
-%patch103 -p1
 #patch104 -p1
 ##patch105 -p1
 %patch106 -p1
@@ -427,6 +421,17 @@ install -D %name.alternative %buildroot%_altdir/%name
 %_man1dir/ipptool.*
 
 %changelog
+* Tue Nov 22 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.1.4-alt1
+- bugfix realese
+- Remove upstreamed patches:
+     Patch101: Ubuntu-usb-backend-fix-infinite-loop-when-usblp-module-attached.patch
+     Patch102: Ubuntu-usb-backend-delayed-closing-for-old-laserjets.patch
+     Patch103: Ubuntu-fix-ppd-file-load-for-ipp-printers.patch
+- refresh:
+     ALT-1.6.2-lpd-utf8.patch
+     FC-dnssd-deviceid.patch
+     FC-libusb-quirks.patch
+
 * Mon Jan 18 2016 Fr. Br. George <george@altlinux.ru> 2.1.0-alt2
 - Fix build
 
