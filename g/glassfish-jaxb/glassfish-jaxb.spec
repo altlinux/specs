@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -9,7 +9,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           glassfish-jaxb
 Version:        2.2.11
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        JAXB Reference Implementation
 
 License:        CDDL and GPLv2 with exceptions
@@ -42,23 +42,23 @@ BuildRequires:  mvn(org.jvnet.staxex:stax-ex)
 BuildRequires:  mvn(relaxngDatatype:relaxngDatatype)
 BuildRequires:  mvn(xmlunit:xmlunit)
 
-Requires:       glassfish-jaxb1-impl = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-bom = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-bom-ext = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-codemodel = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-codemodel-annotation-compiler = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-codemodel-parent = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-external-parent = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-jxc = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-parent = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-rngom = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-runtime = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-runtime-parent = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-txw2 = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-txwc2 = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-txw-parent = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-xjc = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       glassfish-jaxb1-impl = %{version}
+Requires:       %{name}-bom = %{version}
+Requires:       %{name}-bom-ext = %{version}
+Requires:       %{name}-codemodel = %{version}
+Requires:       %{name}-codemodel-annotation-compiler = %{version}
+Requires:       %{name}-codemodel-parent = %{version}
+Requires:       %{name}-core = %{version}
+Requires:       %{name}-external-parent = %{version}
+Requires:       %{name}-jxc = %{version}
+Requires:       %{name}-parent = %{version}
+Requires:       %{name}-rngom = %{version}
+Requires:       %{name}-runtime = %{version}
+Requires:       %{name}-runtime-parent = %{version}
+Requires:       %{name}-txw2 = %{version}
+Requires:       %{name}-txwc2 = %{version}
+Requires:       %{name}-txw-parent = %{version}
+Requires:       %{name}-xjc = %{version}
 
 BuildArch:      noarch
 Source44: import.info
@@ -286,6 +286,9 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.2.11-alt1_4jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.2.11-alt1_3jpp8
 - new version
 
