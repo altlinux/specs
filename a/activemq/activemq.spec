@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          activemq
 Version:       5.6.0
-Release:       alt2_12jpp8
+Release:       alt2_15jpp8
 Summary:       Open source messaging and Integration Patterns server
 License:       ASL 2.0
 URL:           http://activemq.apache.org
@@ -14,8 +17,10 @@ URL:           http://activemq.apache.org
 Source0:       activemq-5.6.0.tar.xz
 
 Patch0:        activemq-5.6.0-jaas-CVE-2015-6524.patch
+Patch1:        activemq-5.6.0-CVE-2015-5254.patch
 
 BuildRequires: maven-local
+BuildRequires: mvn(com.thoughtworks.xstream:xstream)
 BuildRequires: mvn(commons-net:commons-net)
 BuildRequires: mvn(org.apache.derby:derby)
 BuildRequires: mvn(org.apache.activemq:activeio-core)
@@ -71,6 +76,7 @@ and provides faster recovery than its predecessor, the AMQ Message Store.
 
 %setup -q -n %{name}-%{version}
 %patch0 -p1
+%patch1 -p1
 
 # Disable modules
 for m in all camel console fileserver blueprint karaf \
@@ -96,11 +102,6 @@ done
 
 # Remove missing optional dependencies
 %pom_remove_dep org.apache.geronimo.specs:geronimo-j2ee-management_1.1_spec
-
-# Remove xstream support (fedora version is out of date)
-rm -rf %{name}-core/src/main/java/org/apache/activemq/transport/stomp
-rm -rf %{name}-core/src/main/java/org/apache/activemq/util/XStreamFactoryBean.java
-%pom_remove_dep com.thoughtworks.xstream:xstream %{name}-core/pom.xml
 
 # Remove jmdns support
 rm -rf %{name}-core/src/main/java/org/apache/activemq/transport/discovery/zeroconf
@@ -156,6 +157,9 @@ iconv -f iso-8859-1 -t utf-8 LICENSE.orig > LICENSE
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt2_15jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt2_12jpp8
 - new version
 
