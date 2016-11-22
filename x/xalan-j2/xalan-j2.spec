@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -41,7 +41,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xalan-j2
 Version:        2.7.1
-Release:        alt4_27jpp8
+Release:        alt4_28jpp8
 Epoch:          0
 Summary:        Java XSLT processor
 # src/org/apache/xpath/domapi/XPathStylesheetDOM3Exception.java is W3C
@@ -117,7 +117,7 @@ Javadoc for %{name}.
 %package        demo
 Group: Development/Java
 Summary:        Demo for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 Requires:       tomcat-servlet-3.1-api
 
 %description    demo
@@ -142,7 +142,7 @@ sed -i '/<!-- Expand jaxp sources/,/<delete file="${xml-commons-srcs.tar}"/{d}' 
 sed -i '/class-path/I d' $(find -iname '*manifest*')
 
 # Convert CR-LF to LF-only
-sed -i s/// KEYS LICENSE.txt NOTICE.txt xdocs/style/resources/script.js \
+sed -i 's/\r//' KEYS LICENSE.txt NOTICE.txt xdocs/style/resources/script.js \
     xdocs/sources/xsltc/README* `find -name '*.sh'`
 
 %build
@@ -248,6 +248,9 @@ grep -r -m 1 -l -Z '^#!/bin/sh' $RPM_BUILD_ROOT%_bindir | xargs -0 dos2unix
 %{_datadir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt4_28jpp8
+- new fc release
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt4_27jpp8
 - new version
 
