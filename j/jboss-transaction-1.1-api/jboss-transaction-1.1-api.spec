@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -12,9 +12,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-transaction-1.1-api
 Version:          1.0.1
-Release:          alt2_11jpp8
+Release:          alt2_12jpp8
 Summary:          Transaction 1.1 API
-Group:            Development/Java
+Group:            Development/Other
 License:          CDDL or GPLv2 with exceptions
 Url:              http://www.jboss.org
 
@@ -42,7 +42,7 @@ The Java Transaction 1.1 API classes.
 
 %package javadoc
 Summary:          Javadocs for %{name}
-Group:            Development/Java
+Group:            Development/Other
 BuildArch: noarch
 
 %description javadoc
@@ -65,6 +65,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_12jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_11jpp8
 - new version
 
