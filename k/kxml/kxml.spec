@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           kxml
 Version:        2.3.0
-Release:        alt3_8jpp8
+Release:        alt3_11jpp8
 Summary:        Small XML pull parser
 License:        MIT
 URL:            http://kxml.sourceforge.net/
@@ -48,8 +48,11 @@ Source1:        http://repo1.maven.org/maven2/net/sf/kxml/kxml2/%{version}/kxml2
 Source2:        http://repo1.maven.org/maven2/net/sf/kxml/kxml2-min/%{version}/kxml2-min-%{version}.pom
 Source3:        %{name}-%{version}-OSGI-MANIFEST.MF
 
+Patch0:         0001-Unbundle-xpp3-classes.patch
+
 BuildRequires:  ant >= 0:1.6.5
 BuildRequires:  xpp3 >= 0:1.1.3.1
+BuildRequires:  zip
 Requires:       xpp3 >= 0:1.1.3.1
 
 BuildArch:      noarch
@@ -72,9 +75,10 @@ API documentation for %{name}.
 
 %prep
 %setup -q
-ln -sf $(build-classpath xpp3) lib/xmlpull_1_1_3_1.jar
+%patch0 -p1
 
 %build
+export OPT_JAR_LIST=xpp3
 ant
 
 pushd dist
@@ -119,6 +123,9 @@ ln -s kxml.jar %buildroot%_javadir/kxml2.jar
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt3_11jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt3_8jpp8
 - new version
 
