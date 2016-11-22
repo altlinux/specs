@@ -1,5 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-rar-plugin
 Version:        2.4
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Summary:        Plugin to create Resource Adapter Archive which can be deployed to a J2EE server
 
 License:        ASL 2.0
@@ -64,6 +65,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_2jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_1jpp8
 - new version
 
