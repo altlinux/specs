@@ -1,14 +1,14 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           cal10n
 Version:        0.7.7
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Compiler assisted localization library (CAL10N)
 License:        MIT
 URL:            http://cal10n.qos.ch
@@ -76,6 +76,9 @@ find . -name \*.jar -delete
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.7.7-alt1_7jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.7.7-alt1_6jpp8
 - new version
 
