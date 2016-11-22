@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           antlrworks
 Version:        1.5.2
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Grammar development environment for ANTLR v3 grammars
 
 Group:          Development/Java
@@ -29,7 +29,7 @@ BuildRequires:  jgoodies-forms >= 1.7.1
 BuildRequires:  stringtemplate
 BuildRequires:  stringtemplate4
 Requires:       antlr3-tool >= 3.5
-Requires:       graphviz
+Requires: graphviz libgraphviz
 # Owns /usr/share/icons/hicolor
 Requires:       icon-theme-hicolor
 # Antlrworks requires javac
@@ -102,6 +102,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_4jpp8
+- new fc release
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_3jpp8
 - java8 mass update
 
