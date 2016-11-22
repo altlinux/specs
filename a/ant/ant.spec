@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -41,7 +41,7 @@ BuildRequires: jpackage-generic-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%bcond_with tests
+%bcond_without tests
 %bcond_without javadoc
 
 %global ant_home %{_datadir}/ant
@@ -49,7 +49,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           ant
 Version:        1.9.6
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Epoch:          0
 Summary:        Java build tool
 Summary(it):    Tool per la compilazione di programmi java
@@ -62,7 +62,7 @@ Source2:        apache-ant-1.8.ant.conf
 # Fix some places where copies of classes are included in the wrong jarfiles
 Patch4:         apache-ant-class-path-in-manifest.patch
 
-BuildRequires:  jpackage-utils >= 0:1.7.5
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  ant
 BuildRequires:  ant-junit
 BuildRequires:  junit
@@ -77,7 +77,7 @@ BuildRequires:  xml-commons-apis
 Requires:       xerces-j2
 Requires:       xml-commons-apis
 
-Requires:       %{name}-lib = %{epoch}:%{version}-%{release}
+Requires:       %{name}-lib = %{epoch}:%{version}
 
 Obsoletes:      %{name}-scripts < %{epoch}:%{version}-%{release}
 Provides:       %{name}-scripts = %{epoch}:%{version}-%{release}
@@ -154,7 +154,7 @@ Core part of Apache Ant that can be used as a library.
 %package jmf
 Group: Development/Java
 Summary:        Optional jmf tasks for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 
 %description jmf
 Optional jmf tasks for %{name}.
@@ -165,7 +165,7 @@ Taches jmf optionelles pour %{name}.
 %package swing
 Group: Development/Java
 Summary:        Optional swing tasks for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 
 %description swing
 Optional swing tasks for %{name}.
@@ -176,9 +176,9 @@ Taches swing optionelles pour %{name}.
 %package antlr
 Group: Development/Java
 Summary:        Optional antlr tasks for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       antlr
-BuildRequires:  antlr
+Requires:       %{name} = %{epoch}:%{version}
+Requires:       antlr-tool
+BuildRequires:  antlr-tool
 
 %description antlr
 Optional antlr tasks for %{name}.
@@ -189,7 +189,7 @@ Taches antlr optionelles pour %{name}.
 %package apache-bsf
 Group: Development/Java
 Summary:        Optional apache bsf tasks for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 Requires:       bsf
 BuildRequires:  bsf
 
@@ -205,7 +205,7 @@ Taches apache bsf optionelles pour %{name}.
 %package apache-resolver
 Group: Development/Java
 Summary:        Optional apache resolver tasks for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 Requires:       xml-commons-resolver
 BuildRequires:  xml-commons-resolver
 
@@ -221,7 +221,7 @@ Taches apache resolver optionelles pour %{name}.
 %package commons-logging
 Group: Development/Java
 Summary:        Optional commons logging tasks for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 Requires:       apache-commons-logging
 BuildRequires:  apache-commons-logging
 
@@ -234,7 +234,7 @@ Taches commons logging optionelles pour %{name}.
 %package commons-net
 Group: Development/Java
 Summary:        Optional commons net tasks for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 Requires:       apache-commons-net
 BuildRequires:  apache-commons-net
 
@@ -249,7 +249,7 @@ Taches commons net optionelles pour %{name}.
 %package jai
 Group: Development/Java
 Summary:        Optional jai tasks for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 Requires:       jai
 BuildRequires:  jai
 
@@ -263,7 +263,7 @@ Taches jai optionelles pour %{name}.
 %package apache-bcel
 Group: Development/Java
 Summary:        Optional apache bcel tasks for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 Requires:       bcel
 BuildRequires:  bcel
 
@@ -279,7 +279,7 @@ Taches apache bcel optionelles pour %{name}.
 %package apache-log4j
 Group: Development/Java
 Summary:        Optional apache log4j tasks for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 Requires:       log4j
 BuildRequires:  log4j
 
@@ -295,7 +295,7 @@ Taches apache log4j optionelles pour %{name}.
 %package apache-oro
 Group: Development/Java
 Summary:        Optional apache oro tasks for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 Requires:       jakarta-oro
 BuildRequires:  jakarta-oro
 
@@ -308,7 +308,7 @@ Taches apache oro optionelles pour %{name}.
 %package apache-regexp
 Group: Development/Java
 Summary:        Optional apache regexp tasks for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 Requires:       regexp
 BuildRequires:  regexp
 
@@ -321,7 +321,7 @@ Taches apache regexp optionelles pour %{name}.
 %package apache-xalan2
 Group: Development/Tools
 Summary:        Optional apache xalan2 tasks for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 Requires:       regexp
 BuildRequires:  regexp
 Requires:       xalan-j2
@@ -335,9 +335,9 @@ Taches apache xalan2 optionelles pour %{name}.
 %package javamail
 Group: Development/Java
 Summary:        Optional javamail tasks for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       javamail 
-BuildRequires:  javamail 
+Requires:       %{name} = %{epoch}:%{version}
+Requires:       javamail >= 0:1.2
+BuildRequires:  javamail >= 0:1.2
 
 %description javamail
 Optional javamail tasks for %{name}.
@@ -348,7 +348,7 @@ Taches javamail optionelles pour %{name}.
 %package jdepend
 Group: Development/Java
 Summary:        Optional jdepend tasks for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 Requires:       jdepend
 BuildRequires:  jdepend
 
@@ -361,7 +361,7 @@ Taches jdepend optionelles pour %{name}.
 %package jsch
 Group: Development/Java
 Summary:        Optional jsch tasks for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 Requires:       jsch
 BuildRequires:  jsch
 
@@ -374,7 +374,7 @@ Taches jsch optionelles pour %{name}.
 %package junit
 Group: Development/Java
 Summary:        Optional junit tasks for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 Requires:       junit
 Requires:       xalan-j2
 
@@ -387,7 +387,7 @@ Taches junit optionelles pour %{name}.
 %package testutil
 Group: Development/Tools
 Summary:        Test utility classes for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 Requires:       junit
 
 %description testutil
@@ -688,6 +688,9 @@ cat .mfiles-junit4 >> .mfiles-junit
 # -----------------------------------------------------------------------------
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.6-alt1_3jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.6-alt1_2jpp8
 - new version
 
