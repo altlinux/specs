@@ -1,5 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: perl(JSON.pm) perl(Net/LDAP/LDIF.pm) perl(POSIX.pm) perl(Sort/Versions.pm)
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -12,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          apacheds-ldap-api
 Version:       1.0.0
-Release:       alt1_0.1.M33jpp8
+Release:       alt1_0.2.M33jpp8
 Summary:       Apache Directory LDAP API
 License:       ASL 2.0
 Url:           http://directory.apache.org/api/
@@ -116,6 +117,9 @@ chmod 644 README.txt
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.2.M33jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.1.M33jpp8
 - new version
 
