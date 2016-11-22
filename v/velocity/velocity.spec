@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           velocity
 Version:        1.7
-Release:        alt3_18jpp8
+Release:        alt3_19jpp8
 Epoch:          1
 Summary:        Java-based template engine
 License:        ASL 2.0
@@ -25,7 +28,7 @@ Patch7:         velocity-1.7-osgi.patch
 
 BuildRequires:  javapackages-local
 BuildRequires:  ant
-BuildRequires:  antlr
+BuildRequires:  antlr-tool
 BuildRequires:  junit
 BuildRequires:  ant-junit
 BuildRequires:  hsqldb-lib
@@ -193,6 +196,9 @@ cp -pr examples test %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt3_19jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt3_18jpp8
 - unbootstrap build
 
