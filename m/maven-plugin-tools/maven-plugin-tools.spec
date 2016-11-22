@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-plugin-tools
 Version:        3.4
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Epoch:          0
 Summary:        Maven Plugin Tools
 License:        ASL 2.0
@@ -281,6 +281,9 @@ API documentation for %{name}.
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.4-alt1_4jpp8
+- new fc release
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.4-alt1_3jpp8
 - new version
 
