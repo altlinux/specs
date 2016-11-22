@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          sslext
 Version:       1.2
-Release:       alt2_8jpp8
+Release:       alt2_9jpp8
 Summary:       Struts SSL Switching Extension
 License:       ASL 1.1
 Url:           http://sslext.sourceforge.net/
@@ -86,6 +89,9 @@ export CLASSPATH=$(build-classpath tomcat-servlet-api tomcat-jsp-api)
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_9jpp8
+- new fc release
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_8jpp8
 - java 8 mass update
 
