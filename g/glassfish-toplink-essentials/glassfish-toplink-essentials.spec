@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          glassfish-toplink-essentials
 Version:       2.0.46
-Release:       alt2_10jpp8
+Release:       alt2_11jpp8
 Summary:       Glassfish JPA Toplink Essentials
 License:       CDDL or GPLv2 with exceptions
 URL:           http://glassfish.java.net/javaee5/persistence/
@@ -26,7 +26,7 @@ Patch1:        glassfish-persistence-2.0.41-jdk7.patch
 Patch2:        glassfish-persistence-2.0.41-agent-remove-manifest-classpath.patch
 Patch3:        glassfish-persistence-2.0.41-use_system_antlr.patch
 
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 
 BuildRequires: ant
 BuildRequires: antlr-tool
@@ -37,7 +37,7 @@ Requires:      antlr-tool
 Requires:      geronimo-jpa
 Requires:      geronimo-jta
 
-Requires:      jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildArch:     noarch
 Source44: import.info
 
@@ -109,6 +109,9 @@ cp -pr glassfish/entity-persistence/build/javadoc/* %{buildroot}%{_javadocdir}/%
 %doc glassfish/bootstrap/legal/LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.46-alt2_11jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.46-alt2_10jpp8
 - new version
 
