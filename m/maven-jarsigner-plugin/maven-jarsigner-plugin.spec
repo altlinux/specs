@@ -1,5 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             maven-jarsigner-plugin
 Version:          1.4
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          Signs or verifies a project artifact and attachments using jarsigner
 License:          ASL 2.0
 URL:              http://maven.apache.org/plugins/%{name}/
@@ -66,6 +67,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_3jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_2jpp8
 - new version
 
