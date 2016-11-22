@@ -1,6 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -10,10 +10,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{jarname}
 Version:        2.1.1
-Release:        alt2_14jpp8
+Release:        alt2_15jpp8
 Summary:        Java Expression Language (JEXL)
 
-Group:          Development/Java
+Group:          Development/Other
 License:        ASL 2.0
 URL:            http://commons.apache.org/jexl
 Source0:        http://www.apache.org/dist/commons/jexl/source/%{jarname}-%{version}-src.tar.gz
@@ -48,7 +48,7 @@ needed Velocity-ish method access, it just had to have it.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Provides:       %{jarname}-javadoc = %{version}-%{release}
 BuildArch: noarch
 
@@ -100,6 +100,9 @@ echo "
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_15jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_14jpp8
 - new version
 
