@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             hibernate-hql
 Version:          1.0.0
-Release:          alt1_0.6.Alpha6jpp8
+Release:          alt1_0.7.Alpha6jpp8
 Summary:          Hibernate Query Parser
 License:          LGPLv2 and ASL 2.0
 Url:              https://github.com/hibernate/hibernate-hql-parser
@@ -147,6 +150,9 @@ EOF
 %doc copyright.txt license.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.7.Alpha6jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.6.Alpha6jpp8
 - full build
 
