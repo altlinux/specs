@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             jboss-ejb3-ext-api
 Version:          2.1.0
-Release:          alt1_5jpp8
+Release:          alt1_6jpp8
 Summary:          JBoss EJB 3 Extension API
 License:          LGPLv3+
 URL:              http://www.jboss.org/ejb3
@@ -56,6 +56,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_6jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_5jpp8
 - new version
 
