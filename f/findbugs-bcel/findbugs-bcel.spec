@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -10,10 +10,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:           findbugs-bcel
 Version:        6.0
-Release:        alt1_0.5.20140707svn1547656jpp8
+Release:        alt1_0.6.20140707svn1547656jpp8
 Summary:        Byte Code Engineering Library for FindBugs
 
-Group:          Development/Java
+Group:          Development/Other
 License:        ASL 2.0
 URL:            http://commons.apache.org/proper/commons-bcel/
 
@@ -23,8 +23,8 @@ URL:            http://commons.apache.org/proper/commons-bcel/
 Source0:        bcel-%{findbugsver}.tgz
 Source1:        http://central.maven.org/maven2/com/google/code/findbugs/bcel-findbugs/%{version}/bcel-findbugs-%{version}.pom
 
-BuildRequires:  jpackage-utils
-Requires:       jpackage-utils
+BuildRequires:  javapackages-tools rpm-build-java
+Requires:       javapackages-tools rpm-build-java
 
 BuildArch:      noarch
 Source44: import.info
@@ -63,18 +63,19 @@ install -d -m 755 %{buildroot}%{_mavenpomdir}
 cp -p classes/findbugs-bcel.jar $RPM_BUILD_ROOT%{_javadir}
 install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "com.google.code.findbugs:bcel"
 
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}
 cp -a javadoc $RPM_BUILD_ROOT%{_javadocdir}/findbugs-bcel
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "com.google.code.findbugs:bcel"
-
-
-%pre javadoc 
+# set_javadoc_namelink_check
+%pre javadoc
 path = "%{_javadocdir}/%{name}"
 if [ -L $path ]; then
   rm -f $path
-fi
+fi ||:
+
+
 
 %files -f .mfiles
 %doc LICENSE.txt NOTICE.txt README.txt
@@ -84,6 +85,9 @@ fi
 %{_javadocdir}/findbugs-bcel*
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 6.0-alt1_0.6.20140707svn1547656jpp8
+- new fc release
+
 * Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 6.0-alt1_0.5.20140707svn1547656jpp8
 - new version
 
