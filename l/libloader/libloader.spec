@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name: libloader
 Version: 1.1.3
-Release: alt1_13jpp8
+Release: alt1_14jpp8
 Summary: Resource Loading Framework
 License: LGPLv2
 Group: System/Libraries
@@ -16,9 +16,9 @@ Group: System/Libraries
 #to simplify the licensing
 Source: %{name}-%{version}-jarsdeleted.zip
 URL: http://reporting.pentaho.org/
-BuildRequires: ant ant-contrib jpackage-utils
+BuildRequires: ant ant-contrib javapackages-tools rpm-build-java
 BuildRequires: libbase >= 1.1.3
-Requires: jpackage-utils libbase >= 1.1.3
+Requires: javapackages-tools rpm-build-java libbase >= 1.1.3
 BuildArch: noarch
 Patch0: libloader-1.1.2.build.patch
 Source44: import.info
@@ -32,8 +32,8 @@ transparent to the user of that library.
 %package javadoc
 Summary: Javadoc for %{name}
 Group: Development/Java
-Requires: %{name} = %{version}-%{release}
-Requires: jpackage-utils
+Requires: %{name} = %{version}
+Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -70,6 +70,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_14jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_13jpp8
 - new version
 
