@@ -1,5 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Requires: xpp3-minimal
@@ -9,7 +10,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-war-plugin
 Version:        2.5
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Maven WAR Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-war-plugin/
@@ -68,6 +69,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_4jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_3jpp8
 - new version
 
