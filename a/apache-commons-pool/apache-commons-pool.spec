@@ -1,5 +1,8 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,14 +11,14 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-%{short_name}
 Version:          1.6
-Release:          alt2_11jpp8
+Release:          alt2_12jpp8
 Summary:          Apache Commons Pool Package
 License:          ASL 2.0
 URL:              http://commons.apache.org/%{base_name}/
 Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:    maven-local
 Source44: import.info
 
@@ -52,6 +55,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_12jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_11jpp8
 - new version
 
