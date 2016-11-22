@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:    jackson
 Version: 1.9.11
-Release: alt1_6jpp8
+Release: alt1_8jpp8
 Summary: Jackson Java JSON-processor
 License: ASL 2.0 or LGPLv2
 URL:     http://jackson.codehaus.org
@@ -26,13 +26,13 @@ Patch4:  %{name}-1.9.11-javadoc.patch
 
 BuildArch: noarch
 
-Requires: jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Requires: joda-time >= 1.6.2
 Requires: stax2-api >= 3.1.1
 Requires: jsr-311 >= 1.1.1
 Requires: objectweb-asm3 >= 3.3
 
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires: ant >= 1.8.2
 BuildRequires: joda-time >= 1.6.2
 BuildRequires: stax2-api >= 3.1.1
@@ -130,6 +130,9 @@ cp -rp dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}/.
 %doc release-notes
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.11-alt1_8jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.11-alt1_6jpp8
 - java 8 mass update
 
