@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           powermock
 Version:        1.6.2
-Release:        alt2_2jpp8
+Release:        alt2_3jpp8
 Summary:        A Java mocking framework
 
 License:        ASL 2.0
@@ -58,7 +58,7 @@ This package contains common files for all PowerMock modules.
 %package reflect
 Group: Development/Java
 Summary:        Reflection module of PowerMock
-Requires:       %{name}-common = %{version}-%{release}
+Requires:       %{name}-common = %{version}
 
 %description reflect
 %{desc}
@@ -68,7 +68,7 @@ This package contains the reflection module of PowerMock.
 %package core
 Group: Development/Java
 Summary:        Core module of PowerMock
-Requires:       %{name}-common = %{version}-%{release}
+Requires:       %{name}-common = %{version}
 
 %description core
 %{desc}
@@ -78,7 +78,7 @@ This package contains the core module of PowerMock.
 %package junit4
 Group: Development/Java
 Summary:        JUnit4 common module of PowerMock
-Requires:       %{name}-common = %{version}-%{release}
+Requires:       %{name}-common = %{version}
 
 %description junit4
 %{desc}
@@ -88,7 +88,7 @@ This package contains the JUnit4 module of PowerMock.
 %package api-support
 Group: Development/Java
 Summary:        PowerMock API support module
-Requires:       %{name}-common = %{version}-%{release}
+Requires:       %{name}-common = %{version}
 
 %description api-support
 %{desc}
@@ -98,7 +98,7 @@ This package contains support code for the PowerMock API extensions.
 %package api-mockito
 Group: Development/Java
 Summary:        PowerMock Mockito API module
-Requires:       %{name}-common = %{version}-%{release}
+Requires:       %{name}-common = %{version}
 
 %description api-mockito
 %{desc}
@@ -108,7 +108,7 @@ This package contains the PowerMock Mockito API extension.
 %package api-easymock
 Group: Development/Java
 Summary:        PowerMock EasyMock API module
-Requires:       %{name}-common = %{version}-%{release}
+Requires:       %{name}-common = %{version}
 
 %description api-easymock
 %{desc}
@@ -193,6 +193,9 @@ rm modules/module-impl/junit4-common/src/test/java/org/powermock/modules/junit4/
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt2_3jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt2_2jpp8
 - new version
 
