@@ -1,4 +1,7 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -6,16 +9,16 @@ BuildRequires: jpackage-generic-compat
 
 Name:    felix-osgi-core
 Version: 1.4.0
-Release: alt5_18jpp8
+Release: alt5_19jpp8
 Summary: Felix OSGi R4 Core Bundle
-Group:   Development/Java
+Group:   Development/Other
 License: ASL 2.0
 URL:     http://felix.apache.org/site/apache-felix-osgi-core.html
 Source0: http://www.apache.org/dist/felix/%{bundle}-%{version}-project.tar.gz
 
 BuildArch: noarch
 
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires: maven-local
 BuildRequires: felix-parent
 BuildRequires: mockito
@@ -52,6 +55,9 @@ export LC_ALL=en_US.UTF-8
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4.0-alt5_19jpp8
+- new fc release
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4.0-alt5_18jpp8
 - new version
 
