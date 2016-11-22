@@ -1,25 +1,23 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           cglib
 Version:        3.1
-Release:        alt1_7jpp8
+Release:        alt1_10jpp8
 Summary:        Code Generation Library for Java
 License:        ASL 2.0 and BSD
 Url:            http://cglib.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-src-%{version}.jar
-Source1:        http://mirrors.ibiblio.org/pub/mirrors/maven2/%{name}/%{name}/%{version}/%{name}-%{version}.pom
+Source1:        https://repo1.maven.org/maven2/cglib/cglib/%{version}/cglib-%{version}.pom
 Source2:        bnd.properties
 
-Requires: objectweb-asm
-
 BuildRequires:  ant
-BuildRequires:  jpackage-utils >= 0:1.5
+BuildRequires:  javapackages-local
 BuildRequires:  objectweb-asm
 BuildRequires:  unzip
 BuildRequires:  aqute-bnd
@@ -29,7 +27,7 @@ Source44: import.info
 %description
 cglib is a powerful, high performance and quality code generation library
 for Java. It is used to extend Java classes and implements interfaces
-at runtime.
+at run-time.
 
 %package javadoc
 Group: Development/Java
@@ -42,39 +40,42 @@ Documentation for the cglib code generation library.
 %prep
 %setup -q -c %{name}-%{version}
 cp -p %{SOURCE1} pom.xml
+
 rm lib/*.jar
+build-jar-repository -s lib objectweb-asm ant
+
 # Remove the repackaging step that includes other jars into the final thing
 sed -i "/<taskdef name=.jarjar/,/<.jarjar>/d" build.xml
+sed -i '/doctitle/a additionalparam="-Xdoclint:none"' build.xml
 
 %pom_xpath_remove "pom:dependency[pom:artifactId = 'asm-util']/pom:optional"
+%pom_xpath_set "pom:dependency[pom:groupId = 'ant']/pom:groupId" "org.apache.ant"
+
+%mvn_file :cglib cglib
+%mvn_alias :cglib "net.sf.cglib:cglib" "cglib:cglib-full" "cglib:cglib-nodep" "org.sonatype.sisu.inject:cglib"
 
 %build
-export OPT_JAR_LIST=objectweb-asm
 ant jar javadoc
 # Convert to OSGi bundle
-bnd wrap --output dist/%{name}-%{version}.bar --properties %{SOURCE2} \
-         --version %{version} dist/%{name}-%{version}.jar
+bnd wrap --output dist/cglib-%{version}.bar --properties %{SOURCE2} \
+         --version %{version} dist/cglib-%{version}.jar
+
+mv dist/cglib-%{version}.bar dist/cglib-%{version}.jar
+%mvn_artifact pom.xml dist/cglib-%{version}.jar
 
 %install
-install -d -m 755 %{buildroot}%{_javadir}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-mkdir -p %{buildroot}%{_mavenpomdir}
-# yes, this is really *.bar - aqute bnd created it
-install -p -m 644 dist/%{name}-%{version}.bar %{buildroot}%{_javadir}/%{name}.jar
-install -p -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap -a net.sf.cglib:cglib,cglib:cglib-full,cglib:cglib-nodep,org.sonatype.sisu.inject:cglib
-
-cp -rp docs/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_install -J docs
 
 %files -f .mfiles
 %doc LICENSE NOTICE
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
-%{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt1_10jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt1_7jpp8
 - java 8 mass update
 
