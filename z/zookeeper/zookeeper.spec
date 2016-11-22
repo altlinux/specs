@@ -1,12 +1,12 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java rpm-build-python
-BuildRequires: gcc-c++ perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(threads.pm) perl-devel perl-podlators
+BuildRequires(pre): rpm-build-python rpm-macros-java
+BuildRequires: gcc-c++ perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(threads.pm) perl-devel python-devel
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 24
 %global commit          601207e1151b2691112c431fc3b4130a85ac93b5
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 %global _hardened_build 1
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          zookeeper
 Version:       3.4.6
-Release:       alt1_15jpp8
+Release:       alt1_16jpp8
 Summary:       A high-performance coordination service for distributed applications
 License:       ASL 2.0 and BSD
 URL:           http://zookeeper.apache.org/
@@ -30,18 +30,18 @@ Patch3:        %{name}-3.4.6-server.patch
 Patch4:        https://issues.apache.org/jira/secure/attachment/12570030/mt_adaptor.c.patch
 
 
-BuildRequires: autoconf
-BuildRequires: automake
-BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+BuildRequires: autoconf-common
+BuildRequires: automake-common
+BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
 BuildRequires: cppunit-devel
 BuildRequires: dos2unix
 BuildRequires: doxygen
-BuildRequires: graphviz
+BuildRequires: graphviz libgraphviz
 BuildRequires: java-javadoc
-BuildRequires: jpackage-utils
-BuildRequires: libtool
+BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: libtool-common
 BuildRequires: libxml2-devel
-BuildRequires: python-devel
+BuildRequires: python-base python-dev
 
 BuildRequires: ant
 BuildRequires: ant-junit
@@ -77,7 +77,7 @@ BuildRequires: xml-commons-apis
 BuildRequires: apache-commons-parent
 BuildRequires: jetty-server
 BuildRequires: jetty-servlet
-BuildRequires: systemd
+BuildRequires: journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-utils
 
 Requires:      checkstyle
 Requires:      jline1
@@ -86,7 +86,7 @@ Requires:      junit
 Requires:      mockito
 Requires:      netty3
 Requires:      slf4j
-Requires:      jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Requires:      %{name}-java = %{version}
 Source44: import.info
 
@@ -106,7 +106,7 @@ Development files for the ZooKeeper C client library.
 ##############################################
 %package java
 Summary:        Java interface for %{name}
-Group:          Development/Java
+Group:          Development/Other
 Requires:       %{name}%{?_isa} = %{version}
 
 %description java
@@ -314,6 +314,9 @@ getent passwd zookeeper >/dev/null || \
 %doc LICENSE.txt NOTICE.txt src/contrib/zkpython/README
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.4.6-alt1_16jpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 3.4.6-alt1_15jpp8
 - new version
 
