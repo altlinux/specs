@@ -1,6 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -8,10 +8,10 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           not-yet-commons-ssl
 Version:        0.3.17
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Library to make SSL and Java Easier
 
-Group:          Development/Java
+Group:          Development/Other
 License:        ASL 2.0
 URL:            http://juliusdavies.ca/commons-ssl
 Source0:        http://juliusdavies.ca/commons-ssl/not-yet-commons-ssl-%{version}.zip
@@ -38,7 +38,7 @@ bleed into the rest of your system.
 %package javadoc
 Summary:        API documentation for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}
 BuildArch: noarch
 
 %description javadoc
@@ -82,6 +82,9 @@ install -pm 644 %{SOURCE2} \
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.3.17-alt1_3jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.3.17-alt1_2jpp8
 - java 8 mass update
 
