@@ -1,5 +1,8 @@
 Epoch: 1
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -7,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %global short_name commons-%{base_name}
 Name:          apache-commons-chain
 Version:       1.2
-Release:       alt1_12jpp8
+Release:       alt1_13jpp8
 Summary:       An implementation of the GoF Chain of Responsibility pattern
 License:       ASL 2.0
 URL:           http://commons.apache.org/%{base_name}/
@@ -98,6 +101,9 @@ rm -r src/test/org/apache/commons/chain/config/ConfigParserTestCase.java
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_13jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_12jpp8
 - java 8 mass update
 
