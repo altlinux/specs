@@ -1,9 +1,11 @@
 Group: Development/Java
-BuildRequires: jdepend
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 24
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-marshalling
 %define version 1.4.6
@@ -12,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-marshalling
 Version:          1.4.6
-Release:          alt1_2jpp8
+Release:          alt1_4jpp8
 Summary:          JBoss Marshalling
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossmarshalling
@@ -21,11 +23,13 @@ BuildArch:        noarch
 Source0:          https://github.com/jboss-remoting/jboss-marshalling/archive/%{namedversion}.tar.gz
 
 BuildRequires:    maven-local
-BuildRequires:    jboss-parent
-BuildRequires:    jboss-modules
-BuildRequires:    maven-injection-plugin
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
+BuildRequires:    mvn(org.jboss.maven.plugins:maven-injection-plugin)
+BuildRequires:    mvn(org.jboss.modules:jboss-modules)
+BuildRequires:    mvn(org.testng:testng)
 %if 0%{?fedora}
-BuildRequires:    apiviz
+BuildRequires:    mvn(jdepend:jdepend)
+BuildRequires:    mvn(org.jboss.apiviz:apiviz)
 %endif
 Source44: import.info
 
@@ -71,6 +75,9 @@ fi
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.6-alt1_4jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.6-alt1_2jpp8
 - new version
 
