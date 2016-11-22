@@ -1,17 +1,17 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 22
+%define fedora 24
 %if %{?fedora} > 19 || 0%{?rhel} > 6
 %global headless -headless
 %endif
 
 Name:           xml-commons-resolver
 Version:        1.2
-Release:        alt1_18jpp8
+Release:        alt1_19jpp8
 Epoch:          0
 Summary:        Resolver subproject of xml-commons
 License:        ASL 2.0
@@ -25,10 +25,10 @@ Patch0:         %{name}-1.2-crosslink.patch
 Patch1:         %{name}-1.2-osgi.patch
 
 Requires:       java%{?headless} >= 1.6.0
-Requires:       jpackage-utils
+Requires: javapackages-tools rpm-build-java
 BuildRequires:  ant
-BuildRequires:  jpackage-utils
-Group:          Development/Java
+BuildRequires: javapackages-tools rpm-build-java
+Group:          Development/Other
 BuildArch:      noarch
 Source44: import.info
 # jpackage deprecations
@@ -109,6 +109,9 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 %doc LICENSE.resolver.txt NOTICE-resolver.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_19jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_18jpp8
 - new version
 
