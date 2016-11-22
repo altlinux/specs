@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 %global archivever  jdk15on-%(echo %{version}|sed 's|\\\.||')
 Name:          bouncycastle-pkix
 Version:       1.52
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Bouncy Castle PKIX, CMS, EAC, TSP, PKCS, OCSP, CMP, and CRMF APIs
 License:       MIT
 URL:           http://www.bouncycastle.org/
@@ -29,7 +29,6 @@ BuildRequires: maven-local
 BuildRequires: junit
 BuildRequires: mvn(org.bouncycastle:bcprov-jdk15on) = %{version}
 Requires:      mvn(org.bouncycastle:bcprov-jdk15on) = %{version}
-Requires:      maven-local
 BuildArch:     noarch
 Obsoletes:     bouncycastle-tsp < 1.50-2
 Provides:      bouncycastle-tsp = %{version}-%{release}
@@ -149,6 +148,9 @@ install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-bcpkix.pom
 %doc LICENSE.html
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.52-alt1_8jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.52-alt1_7jpp8
 - java 8 mass update
 
