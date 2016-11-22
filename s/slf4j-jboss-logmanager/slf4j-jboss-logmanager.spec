@@ -1,5 +1,8 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             slf4j-jboss-logmanager
 Version:          1.0.0
-Release:          alt1_11jpp8
+Release:          alt1_12jpp8
 Summary:          SLF4J backend for JBoss LogManager
 License:          LGPLv2+
 URL:              http://www.jboss.org
@@ -54,6 +57,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.0-alt1_12jpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.0-alt1_11jpp8
 - java8 mass update
 
