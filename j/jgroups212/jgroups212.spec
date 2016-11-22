@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:         jgroups212
 Version:      2.12.3
-Release:      alt1_11jpp8
+Release:      alt1_12jpp8
 Summary:      A toolkit for reliable multicast communication
 License:      LGPLv2
 URL:          http://www.jgroups.org
@@ -72,6 +75,9 @@ chmod 644 README
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.12.3-alt1_12jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.12.3-alt1_11jpp8
 - new version
 
