@@ -1,4 +1,7 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
@@ -10,10 +13,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        2.6
-Release:        alt5_17jpp8
+Release:        alt5_18jpp8
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
-Group:          Development/Java
+Group:          Development/Other
 URL:            http://commons.apache.org/%{base_name}
 Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 Patch1:         0002-Fix-FastDateFormat-for-Java-7-behaviour.patch
@@ -74,6 +77,9 @@ sed -i 's/\r//' *.txt *.html
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt5_18jpp8
+- new fc release
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt5_17jpp8
 - new version
 
