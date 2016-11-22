@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          josql
 Version:       2.2
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Library to apply SQL-like syntax to Java objects
 License:       ASL 2.0
 Url:           http://josql.sourceforge.net/
@@ -85,6 +88,9 @@ sed -i "s|@version@|%{version}|" pom.xml
 %doc LICENSE-2.0.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_7jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_6jpp8
 - new version
 
