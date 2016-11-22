@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           exec-maven-plugin
 Version:        1.4.0
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Exec Maven Plugin
 
 License:        ASL 2.0
@@ -69,6 +69,9 @@ find . -name *.jar -delete
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_3jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_2jpp8
 - new version
 
