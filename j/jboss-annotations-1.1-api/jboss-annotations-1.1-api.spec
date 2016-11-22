@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jboss-annotations-1.1-api
 Version:       1.0.1
-Release:       alt2_0.11.20120212git76e1a2jpp8
+Release:       alt2_0.12.20120212git76e1a2jpp8
 Summary:       Common Annotations 1.1 API
 License:       CDDL or GPLv2 with exceptions
 URL:           http://www.jboss.org
@@ -58,6 +61,9 @@ This package contains the API documentation for %{name}.
 %doc README
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_0.12.20120212git76e1a2jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_0.11.20120212git76e1a2jpp8
 - java8 mass update
 
