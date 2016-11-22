@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -5,10 +8,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:           %{short_name}-pom
 Version:        1.3.1
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Plexus Components POM
 BuildArch:      noarch
-Group:          Development/Java
+Group:          Development/Other
 License:        ASL 2.0
 URL:            https://github.com/codehaus-plexus/plexus-components
 Source0:        http://repo.maven.apache.org/maven2/org/codehaus/plexus/%{short_name}/%{version}/%{short_name}-%{version}.pom
@@ -36,6 +39,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_6jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_5jpp8
 - new version
 
