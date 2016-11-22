@@ -1,7 +1,7 @@
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        1.0
-Release:        alt1_35jpp8
+Release:        alt1_36jpp8
 Summary:        The Apache Commons Extension Language
 License:        ASL 1.1
 URL:            http://commons.apache.org/%{base_name}
@@ -104,6 +104,9 @@ cp -pr dist/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_36jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_35jpp8
 - new version
 
