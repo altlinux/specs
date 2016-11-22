@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          rxjava
 Version:       1.0.13
-Release:       alt1_1jpp8
+Release:       alt1_2jpp8
 Summary:       Reactive Extensions for the JVM
 License:       ASL 2.0
 URL:           https://github.com/ReactiveX/RxJava
@@ -118,6 +121,9 @@ rm -r src/test/java/rx/internal/operators/OperatorRetryWithPredicateTest.java
 %doc LICENSE
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.13-alt1_2jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.13-alt1_1jpp8
 - new version
 
