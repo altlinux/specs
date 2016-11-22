@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 %filter_from_requires /^java-headless/d
@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jtidy
 Version:          1.0
-Release:          alt3_0.21.20100930svn1125jpp8
+Release:          alt3_0.22.20100930svn1125jpp8
 Epoch:            3
 Summary:          HTML syntax checker and pretty printer
 License:          zlib
@@ -21,11 +21,11 @@ Source0:          %{name}.tar.xz
 Source1:          %{name}.jtidy.script
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
+BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:    ant
 BuildRequires:    xml-commons-apis
 
-Requires:         jpackage-utils
+Requires: javapackages-tools rpm-build-java
 Requires:         xml-commons-apis
 Source44: import.info
 
@@ -90,6 +90,9 @@ EOF
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3:1.0-alt3_0.22.20100930svn1125jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 3:1.0-alt3_0.21.20100930svn1125jpp8
 - new version
 
