@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jsilver
 Version:        1.0.0
-Release:        alt1_9jpp8
+Release:        alt1_10jpp8
 Summary:        A pure-Java implementation of Clearsilver
 
 License:        ASL 2.0 
@@ -57,6 +57,9 @@ mv build/site target
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_10jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_9jpp8
 - new version
 
