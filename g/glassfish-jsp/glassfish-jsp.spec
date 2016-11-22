@@ -1,9 +1,9 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
-BuildRequires: rpm-build-java-osgi ecj
+BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:       glassfish-jsp
 Version:    2.3.3
-Release:    alt1_0.3.b02jpp8
+Release:    alt1_0.4.b02jpp8
 Summary:    Glassfish J2EE JSP API implementation
 
 License:    (CDDL or GPLv2 with exceptions) and ASL 2.0
@@ -113,6 +113,9 @@ popd
 
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_0.4.b02jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_0.3.b02jpp8
 - java 8 mass update
 
