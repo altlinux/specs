@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:		jpf
 Version:	1.5.1
-Release:	alt2_12jpp8
+Release:	alt2_14jpp8
 Summary:	Java Plug-in Framework
 License:	LGPLv2
 URL:		http://jpf.sourceforge.net/
@@ -66,6 +66,7 @@ cp -p %{SOURCE1} .
 
 %install
 %mvn_install
+mkdir -p %{buildroot}%{_mavenpomdir}/jpf
 
 %files -f .mfiles
 %doc license.txt
@@ -76,6 +77,9 @@ cp -p %{SOURCE1} .
 %doc license.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2_14jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2_12jpp8
 - new version
 
