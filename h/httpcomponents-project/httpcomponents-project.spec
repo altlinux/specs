@@ -1,11 +1,14 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:              httpcomponents-project
 Summary:           Common POM file for HttpComponents
 Version:           7
-Release:           alt1_2jpp8
-Group:             Development/Java
+Release:           alt1_3jpp8
+Group:             Development/Other
 License:           ASL 2.0
 URL:               http://hc.apache.org/
 # svn export http://svn.apache.org/repos/asf/httpcomponents/project/tags/%{version} %{name}-%{version}
@@ -45,6 +48,9 @@ use it as runtime requirement.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 7-alt1_3jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 7-alt1_2jpp8
 - new version
 
