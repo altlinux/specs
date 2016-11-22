@@ -1,12 +1,15 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 %global githash 6f4d22725ef28f09bfd5422939b83e1865b5daef
 Name:          proxytoys
 Version:       1.0
-Release:       alt1_4jpp8
+Release:       alt1_6jpp8
 Summary:       An implementation neutral API for creation of dynamic proxies
 License:       BSD
 Url:           http://proxytoys.codehaus.org/
@@ -22,9 +25,9 @@ Patch0:        proxytoys-1.0-tests.patch
 BuildRequires: maven-local
 BuildRequires: mvn(cglib:cglib)
 BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(net.sf.kxml:kxml2)
 BuildRequires: mvn(org.jvnet.hudson:xstream)
 BuildRequires: mvn(org.mockito:mockito-all)
+BuildRequires: mvn(xpp3:xpp3)
 
 BuildArch:     noarch
 Source44: import.info
@@ -108,7 +111,7 @@ find -name '*.jar' -print -delete
 %pom_xpath_set "pom:dependency[pom:artifactId = 'xstream' ]/pom:groupId" org.jvnet.hudson
 %pom_xpath_set "pom:dependency[pom:artifactId = 'xstream' ]/pom:groupId" org.jvnet.hudson %{name}
 # NoClassDefFoundError: org/xmlpull/v1/XmlPullParserFactory
-%pom_add_dep net.sf.kxml:kxml2::test %{name}
+%pom_add_dep xpp3:xpp3:1.1.4c:test %{name}
 
 %mvn_file :%{name} %{name}
 %mvn_file :%{name}-example-code %{name}-example-code
@@ -132,6 +135,9 @@ find -name '*.jar' -print -delete
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_6jpp8
+- new fc release
+
 * Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_4jpp8
 - new version
 
