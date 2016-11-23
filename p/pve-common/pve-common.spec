@@ -1,6 +1,6 @@
 Name: pve-common
-Summary: Proxmox VE base library
-Version: 4.0.76
+Summary: PVE base library
+Version: 4.0.81
 Release: alt1
 License: GPLv3
 Group: Development/Perl
@@ -27,12 +27,15 @@ BuildRequires: perl(Linux/Inotify2.pm)
 BuildRequires: perl(JSON.pm)
 # alt regressive tests
 BuildRequires: perl(TAP/Harness.pm)
+BuildRequires: perl(RPM/Source/Tools/SourceBundle.pm)
+BuildRequires: perl(RPM/Source/Dependency/Analyzer.pm)
 
 %description
-This package contains the base library used by other Proxmox VE components.
+This package contains the base library used by other PVE components.
 
 %prep
 %setup -q -n %name-%version
+sed -i 's|Proxmox VE|PVE|' src/PVE/Tools.pm
 
 %install
 cd src
@@ -51,6 +54,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Wed Nov 23 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.81-alt1
+- 4.0-81
+
 * Fri Oct 21 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.76-alt1
 - 4.0-76
 
