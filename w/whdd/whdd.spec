@@ -1,6 +1,6 @@
 Name: whdd
 Version: 2.2
-Release: alt3
+Release: alt4
 
 Summary: Diagnostic and recovery tool for block devices
 License: GNU GPL
@@ -49,6 +49,9 @@ WHDD может работать с жёстким диском на низко�
 %attr(4711, root, root) %_sbindir/whdd*
 
 %changelog
+* Wed Nov 23 2016 Pavel Isopenko <pauli@altlinux.org> 2.2-alt4
+- Fix crash caused by async call to nested function
+
 * Sun Oct 16 2016 Pavel Isopenko <pauli@altlinux.org> 2.2-alt3
 - Description fix (ALT #32556)
 
