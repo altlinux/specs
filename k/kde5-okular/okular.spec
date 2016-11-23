@@ -6,7 +6,7 @@
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
-Version: 16.11.60
+Version: 16.11.80
 Release: alt1
 %K5init
 
@@ -140,6 +140,12 @@ KF5 library
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Wed Nov 23 2016 Sergey V Turchin <zerg@altlinux.org> 16.11.80-alt1
+- new beta
+
+* Thu Nov 10 2016 Sergey V Turchin <zerg@altlinux.org> 16.11.60-alt0.M80P.2
+- build for M80P
+
 * Thu Nov 10 2016 Sergey V Turchin <zerg@altlinux.org> 16.11.60-alt1
 - 16.12 beta
 
