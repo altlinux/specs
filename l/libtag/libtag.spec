@@ -1,7 +1,7 @@
 %define rname taglib
 
 Name: libtag
-Version: 1.10
+Version: 1.11.1
 Release: alt1
 
 Summary: TagLib, is well, a library for reading and editing audio meta data
@@ -17,7 +17,6 @@ Source2: version-script.libtag
 
 # SuSE
 Patch2: taglib-1.8-ds-rusxmms-r2.patch
-Patch3: taglib-1.8-strip-rpath.patch
 # ALT
 Patch10: taglib-1.8-alt-versioning.patch
 
@@ -56,7 +55,6 @@ library.
 %setup -q -n %rname-%version
 install -m0644 %SOURCE2 ./
 #%patch2 -p1
-%patch3 -p0
 %patch10 -p1
 
 
@@ -64,7 +62,11 @@ install -m0644 %SOURCE2 ./
 %Kcmake \
     -DINCLUDE_INSTALL_DIR=%_includedir \
     -DWITH_ASF:BOOL=ON \
-    -DWITH_MP4:BOOL=ON
+    -DWITH_MP4:BOOL=ON \
+    -DBUILD_EXAMPLES:BOOL=OFF \
+    -DBUILD_TESTS:BOOL=OFF \
+    -DBUILD_SHARED_LIBS:BOOL=ON \
+    #
 %Kmake
 %Kmake docs
 
@@ -89,6 +91,9 @@ install -m0644 %SOURCE2 ./
 %_includedir/taglib/*.tcc
 
 %changelog
+* Wed Nov 23 2016 Sergey V Turchin <zerg@altlinux.org> 1.11.1-alt1
+- new version
+
 * Thu Nov 12 2015 Sergey V Turchin <zerg@altlinux.org> 1.10-alt1
 - new version
 
