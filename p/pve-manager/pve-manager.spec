@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 4.3.6
-Release: alt7
+Version: 4.3.11
+Release: alt8
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -26,6 +26,7 @@ Patch5: qemu-server-alt.patch
 Patch6: pve-manager-alt-bps-to-bit.patch
 Patch7: pve-container-altlinux-lxc.patch
 Patch8: pve-manager-alt-gzip.patch
+Patch9: pve-manager-alt-pve.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -33,44 +34,44 @@ BuildRequires: perl-IO-Multiplex perl-Locale-PO perl-UUID unzip xmlto
 BuildRequires: perl(File/Sync.pm) perl(Net/DNS/Resolver.pm) perl(Pod/Select.pm) perl(Crypt/Eksblowfish/Bcrypt.pm)
 
 %description
-This package contains the Proxmox Virtual Environment management tools
+This package contains the PVE management tools
 
 %package -n pve-container
-Summary: Proxmox VE Container management tool
-Version: 1.0.78
+Summary: PVE Container management tool
+Version: 1.0.83
 Group: Development/Perl
 Requires: pve-lxc dtach perl-Crypt-Eksblowfish >= 0.009-alt5_15
 
 %description -n pve-container
-Tool to manage Linux Containers on Proxmox VE
+Tool to manage Linux Containers on PVE
 
 %package -n pve-firewall
-Summary: Proxmox VE Firewall
+Summary: PVE Firewall
 Version: 2.0.31
 Group: System/Servers
 Requires: ipset iptables iptables-ipv6
 
 %description -n pve-firewall
-This package contains the Proxmox VE Firewall
+This package contains the PVE Firewall
 
 %package -n pve-ha-manager
-Summary: Proxmox VE HA Manager
-Version: 1.0.35
+Summary: PVE HA Manager
+Version: 1.0.37
 Group: System/Servers
 
 %description -n pve-ha-manager
-HA Manager Proxmox VE
+HA Manager PVE
 
 %package -n pve-qemu-server
 Summary: Qemu Server Tools
-Version: 4.0.92
+Version: 4.0.96
 Group: System/Servers
 Requires: nc6 socat pve-qemu-system >= 2.6.1-alt4
 Provides: qemu-server = %version-%release
 Obsoletes: qemu-server < %version-%release
 
 %description -n pve-qemu-server
-This package contains the Qemu Server tools used by Proxmox VE
+This package contains the Qemu Server tools used by PVE
 
 %add_findreq_skiplist %_datadir/cluster/pvevm
 %add_findreq_skiplist %perl_vendor_privlib/PVE/HA/Env/PVE2.pm
@@ -86,6 +87,7 @@ This package contains the Qemu Server tools used by Proxmox VE
 %patch6 -p0 -b .alt
 %patch7 -p0 -b .alt
 %patch8 -p0 -b .alt
+%patch9 -p0 -b .alt
 
 %build
 for d in pve-manager pve-firewall/src pve-ha-manager/src qemu-server; do
@@ -346,6 +348,12 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Wed Nov 23 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.11-alt8
+- 4.3-11
+- pve-container 1.0-83
+- pve-ha-manager 1.0-37
+- qemu-server 4.0-96
+
 * Fri Oct 21 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.6-alt7
 - 4.3-6
 - qemu-server 4.0-92
