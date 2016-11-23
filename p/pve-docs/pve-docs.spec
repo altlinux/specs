@@ -1,6 +1,6 @@
 Name: pve-docs
 Summary: Proxmox VE Documentation
-Version: 4.3.12
+Version: 4.3.16
 Release: alt1
 License: GPLv3
 Group: Documentation
@@ -9,8 +9,9 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar
 
+ExclusiveArch: x86_64
 BuildArch: noarch
-BuildRequires: asciidoc-a2x source-highlight xmlto inkscape mailcap
+BuildRequires: asciidoc-a2x source-highlight xmlto inkscape mailcap pve-common pve-ha-manager
 BuildRequires: perl(MediaWiki/API.pm) perl(JSON.pm)
 
 %description
@@ -33,8 +34,9 @@ Tool to auto-generate various Proxmox VE Documentation files
 %make
 
 %install
-mkdir -p %buildroot%_datadir/pve-doc-generator
-cp *.adoc *.pl *.mk *.txt *.xml %buildroot%_datadir/pve-doc-generator/
+mkdir -p %buildroot%_datadir/pve-doc-generator/asciidoc
+cp *.adoc *.pl *.mk *.xml %buildroot%_datadir/pve-doc-generator/
+cp asciidoc/*pve*.conf %buildroot%_datadir/pve-doc-generator/asciidoc/
 
 mkdir -p %buildroot%_datadir/%name/api-viewer
 install -m644 *.{html,epub,pdf} %buildroot%_datadir/%name/
@@ -50,6 +52,9 @@ install -pD -m755 asciidoc-pve %buildroot%_bindir/asciidoc-pve
 %_datadir/pve-doc-generator
 
 %changelog
+* Wed Nov 23 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.16-alt1
+- 4.3-16
+
 * Fri Oct 21 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.12-alt1
 - 4.3-12
 
