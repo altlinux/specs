@@ -13,7 +13,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
 Version:        50.0
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -37,6 +37,7 @@ Patch17:        firefox-mediasource-crash.patch
 
 # Upstream
 Patch200:       mozilla-bug-256180.patch
+Patch201:       mozilla-bug-1196777.patch
 
 # Red Hat
 Patch301:       rhbz-1291190-appchooser-crash.patch
@@ -136,6 +137,7 @@ tar -xf %SOURCE2
 %patch17 -p2
 
 %patch200 -p1
+%patch201 -p1
 
 %patch301 -p1
 %patch302 -p1
@@ -301,6 +303,9 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Wed Nov 23 2016 Alexey Gladkov <legion@altlinux.ru> 50.0-alt2
+- Set "system colors" off by default (ALT#32787).
+
 * Wed Nov 16 2016 Alexey Gladkov <legion@altlinux.ru> 50.0-alt1
 - New release (50.0).
 - Fixed:
