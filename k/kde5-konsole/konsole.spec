@@ -4,8 +4,8 @@
 %define libkonsoleprivate libkonsoleprivate%sover
 
 Name: kde5-%rname
-Version: 16.08.1
-Release: alt3
+Version: 16.08.3
+Release: alt1
 %K5init
 
 Group: Terminals
@@ -116,6 +116,9 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Wed Nov 23 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt1
+- new version
+
 * Tue Oct 04 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt3
 - add upstream fix for KDEBUG#367746
 
