@@ -1,12 +1,17 @@
 Name: guile-evms
 Version: 0.4
-Release: alt15
+Release: alt16
 
 Summary: Guile bindings for EVMS
 License: GPL
 Group: Development/Scheme
 
 Buildrequires: guile18-devel libblkid-devel libe2fs-devel libevms-devel swig
+# SIMPLE_MAPs for (unsigned) long long were defined in typemaps.i since 1.3.29;
+# an up-to-date SIMPLE_MAP for boolean is also present there.
+BuildPreReq: swig >= 1.3.29
+# scm_car, scm_cdr, scm_is_null needed to be defined additionally before 1.7:
+BuildPreReq: guile18-devel >= 1.7
 
 Source: %name-%version-%release.tar
 
@@ -28,6 +33,9 @@ make install DESTDIR=%buildroot
 %_datadir/guile/site/evms.scm
 
 %changelog
+* Wed Nov 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4-alt16
+- the dangerous use of an implicit declaration replaced by current guile API
+
 * Wed Nov 16 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4-alt15
 - do not treat as error nonexistent device during BLKRRPART
 
