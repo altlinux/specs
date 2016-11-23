@@ -1,8 +1,8 @@
 %define api_ver 3.0
 
 Name: nemo-extensions
-Version: 3.0.1
-Release: alt2
+Version: 3.2.1
+Release: alt1
 Summary: Extensions for Nemo
 
 License: %gpl2plus and %lgpl2only
@@ -289,6 +289,9 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_datadir/applications/nemo-compare-preferences.desktop
 
 %changelog
+* Fri Nov 11 2016 Vladimir Didenko <cow@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
 * Thu Sep 29 2016 Vladimir Didenko <cow@altlinux.org> 3.0.1-alt2
 - Fix build with gnome 3.22
 - Fix requires to file-roller

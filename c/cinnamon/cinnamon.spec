@@ -1,8 +1,8 @@
 %def_enable gtk_doc
 
 Name: cinnamon
-Version: 3.0.7
-Release: alt3
+Version: 3.2.1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -55,6 +55,9 @@ Requires: python-module-lxml
 Requires: polkit-gnome
 Requires: typelib(Keybinder) >= 3.0
 Requires: python-module-PAM
+Requires: xapps-utils
+# required by keyboard applet
+Requires: libxapps-gir
 
 BuildPreReq: rpm-build-gir >= 0.7.1-alt6
 BuildPreReq: libclutter-devel >= %clutter_ver
@@ -179,6 +182,7 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %_datadir/cinnamon/
 %_datadir/polkit-1/actions/org.cinnamon.settings-users.policy
 %_datadir/icons/hicolor/*/actions/*.svg
+%_datadir/icons/hicolor/*/apps/*.svg
 %_datadir/icons/hicolor/*/categories/*.svg
 %_datadir/icons/hicolor/*/emblems/*.svg
 %_datadir/icons/hicolor/*/devices/*.svg
@@ -189,7 +193,7 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %_datadir/dbus-1/services/org.Cinnamon.Melange.service
 %_datadir/dbus-1/services/org.Cinnamon.Slideshow.service
 %_mandir/man1/*.1.*
-%doc NEWS README
+%doc README
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -197,6 +201,12 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Wed Nov 23 2016 Vladimir Didenko <cow@altlinux.org> 3.2.1-alt2
+- 3.2.1-29-gb781072
+
+* Sun Nov 13 2016 Vladimir Didenko <cow@altlinux.org> 3.2.1-alt1
+- 3.2.1-5-g43c61aa
+
 * Mon Oct 24 2016 Vladimir Didenko <cow@altlinux.org> 3.0.7-alt3
 - restore cinnamon-menu-editor (closes: #32646)
 

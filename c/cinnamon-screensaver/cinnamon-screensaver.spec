@@ -1,13 +1,7 @@
-%define ver_major 3.0
-%def_disable static
-%def_disable docbook
-%def_enable consolekit
-%def_with systemd
-
-%define _libexecdir %_prefix/libexec
+%define ver_major 3.2
 
 Name: cinnamon-screensaver
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: Cinnamon Screensaver
@@ -20,37 +14,55 @@ Provides: screen-saver-frontend
 Provides: cinnamon-screensaver-module
 
 Source: %name-%version.tar
-
 Patch: %name-%version-%release.patch
 
 # From configure.ac
-%define dbus_ver 0.30
-%define glib_ver 2.28.0
-%define gtk_ver 3.0.2
-%define desktop_ver 1.9.0
-%define libgnomekbd_ver 2.91.91
-%define systemd_ver 37
-
-BuildPreReq: gnome-common
-BuildPreReq: xscreensaver-devel
-# From configure.ac
-BuildPreReq: intltool >= 0.35
-BuildPreReq: libdbus-glib-devel >= %dbus_ver libdbus-devel >= %dbus_ver
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libcinnamon-desktop-devel >= %desktop_ver
-BuildPreReq: libgnomekbd-devel >= %libgnomekbd_ver
-BuildRequires: libpam-devel gsettings-desktop-schemas-devel
-BuildRequires: xorg-proto-devel libXxf86vm-devel libSM-devel
-BuildRequires: libXScrnSaver-devel libXext-devel libXtst-devel xorg-xf86vidmodeproto-devel
-BuildRequires: libwebkit2gtk-devel
-%{?_enable_docbook:Requires: xmlto}
-%{?_with_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel libsystemd-daemon-devel}
+BuildPreReq: intltool
+BuildRequires: python3-dev
+BuildRequires: libgio-devel
+BuildRequires: libgtk+3-devel
+BuildRequires: libgtk+3-gir-devel
+BuildRequires: gobject-introspection-devel
+BuildRequires: libdbus-glib-devel
 
 %description
 cinnamon-screensaver is a screen saver and locker that aims to have
 simple, sane, secure defaults and be well integrated with the Cinnamon desktop.
 
+%package -n lib%name
+Summary: Shared libraries needed to run %name
+Group: System/Libraries
+
+%description -n lib%name
+This package contains shared libraries needed to run %name and its
+components.
+
+%package -n lib%name-devel
+Summary: Libraries and include files for developing %name components
+Group: Development/GNOME and GTK+
+Requires: lib%name = %version-%release
+
+%description -n lib%name-devel
+This package provides the necessary development libraries and include
+files to allow you to develop %name components.
+
+%package -n lib%name-gir
+Summary: GObject introspection data for the %name library
+Group: System/Libraries
+Requires: lib%name = %version-%release
+Requires: libxapps-gir
+
+%description -n lib%name-gir
+GObject introspection data for the %name library
+
+%package -n lib%name-gir-devel
+Summary: GObject introspection devel data for the %name library
+Group: System/Libraries
+BuildArch: noarch
+Requires: lib%name-gir = %version-%release
+
+%description -n lib%name-gir-devel
+GObject introspection devel data for the %name library
 
 %prep
 %setup -q
@@ -58,33 +70,50 @@ simple, sane, secure defaults and be well integrated with the Cinnamon desktop.
 
 %build
 %autoreconf
-%add_optflags -D_GNU_SOURCE
-%configure  \
-	%{subst_enable static} \
-	--disable-schemas-compile \
-	--enable-locking \
-	--with-pam-prefix=%_sysconfdir \
-	--with-kbd-layout-indicator \
-	%{?_enable_docbook:--enable-docbook-docs} \
-	%{?_enable_consolekit:--with-console-kit} \
-	%{subst_with systemd}
+%configure
 
 %make_build
 
 %install
 %makeinstall_std
 
+%filter_from_requires /python3[(]dbusdepot[)]/d
+%filter_from_requires /python3[(]util[)]/d
+%filter_from_requires /python3[(]widgets[)]/d
+
 %files
-%_bindir/*
-%_datadir/dbus-1/services/org.cinnamon.ScreenSaver.service
-%_datadir/applications/%name.desktop
-%attr(2711,root,chkpwd) %_libexecdir/%name-dialog
+%attr(2711,root,chkpwd) %_bindir/%name
+%_bindir/%name-command
 %_datadir/%name
-%_man1dir/*
-%attr(640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/*
-%doc AUTHORS NEWS README
+%_datadir/dbus-1/services/*.service
+%_datadir/applications/*.desktop
+%_datadir/icons/hicolor/scalable/*/*.svg
+%_datadir/icons/hicolor/scalable/*/*.svg
+%doc AUTHORS NEWS README.md
+
+%files -n lib%name
+%_libdir/libcscreensaver.so.*
+
+%files -n lib%name-devel
+%_libdir/*.so
+%_pkgconfigdir/*
+
+%files -n lib%name-gir
+%_libdir/girepository-1.0/*
+
+%files -n lib%name-gir-devel
+%_datadir/gir-1.0/*
 
 %changelog
+* Fri Nov 18 2016 Vladimir Didenko <cow@altlinux.org> 3.2.3-alt1
+- 3.2.3-2-gac3d612
+
+* Thu Nov 17 2016 Vladimir Didenko <cow@altlinux.org> 3.2.2-alt1
+- 3.2.2-9-g53b3ef5
+
+* Sun Nov 13 2016 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt1
+- 3.2.0-5-g0dd6f89
+
 * Wed Jun 1 2016 Vladimir Didenko <cow@altlinux.org> 3.0.1-alt1
 - 3.0.1
 

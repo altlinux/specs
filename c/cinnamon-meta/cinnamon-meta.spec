@@ -1,4 +1,4 @@
-%define ver_major 2.8
+%define ver_major 3.2
 
 Name: cinnamon-meta
 Version: %ver_major.0
@@ -29,6 +29,11 @@ Requires: cinnamon-session
 # Window manager
 Requires: muffin >= %ver_major
 
+# Nemo and cinnamon-screensaver are required components in cinnamon.session
+# files.
+Requires: nemo
+Requires: cinnamon-screensaver
+
 %description -n cinnamon-minimal
 This package provides minimal set of components to run
 Cinnamon desktop.
@@ -41,8 +46,8 @@ Requires: cinnamon-minimal = %version-%release
 Provides: cinnamon-full = %version-%release
 # Sound support
 Requires: pulseaudio-daemon alsa-plugins-pulse
-# Default file manager
-Requires: nemo nemo-share
+# Samba support for nemo
+Requires: nemo-share
 # Control Center
 Requires: cinnamon-control-center
 # Default terminal
@@ -92,10 +97,9 @@ Requires: thunderbird
 Requires: pidgin
 
 # Default Document viewer
-Requires: evince
+Requires: xreader
 # Default text editor
-Requires: gedit
-Requires: gedit-plugins
+Requires: xed
 
 # Utilities
 Requires: gnome-utils
@@ -106,9 +110,9 @@ Requires: gcalctool
 # Default music player
 Requires: gnome-music
 # Default video player
-Requires: totem gst-libav
+Requires: xplayer gst-libav
 # Default image viewer
-Requires: gthumb
+Requires: xviewer
 # Default CD/DVD burning interface
 Requires: brasero
 
@@ -128,6 +132,10 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Sun Nov 13 2016 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt1
+- new requirements for cinnamon 3.2
+- switch to xapps
+
 * Wed Oct 21 2015 Vladimir Didenko <cow@altlinux.org> 2.8.0-alt1
 - 2.8.0
 

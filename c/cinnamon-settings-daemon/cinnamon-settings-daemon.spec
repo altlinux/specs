@@ -1,4 +1,4 @@
-%define ver_major 3.0
+%define ver_major 3.2
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -9,8 +9,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A program that manages general Cinnamon settings
 License: GPLv2+
@@ -196,6 +196,9 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libexecdir/csd-test-background
 
 %changelog
+* Fri Nov 11 2016 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Tue May 31 2016 Vladimir Didenko <cow@altlinux.org> 3.0.1-alt2
 - Revert color plugin changes
 

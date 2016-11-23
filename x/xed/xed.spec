@@ -4,7 +4,7 @@
 %def_enable python
 
 Name: xed
-Version: 1.0.5
+Version: 1.2.1
 Release: alt1
 
 Summary: xed is a small and lightweight text editor.
@@ -13,6 +13,7 @@ Group: Editors
 Url: https://github.com/linuxmint/xed
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 %define pkglibdir %_libdir/%name
 %define pkgdatadir %_datadir/%name
@@ -68,6 +69,7 @@ Libraries needed to develop plugins for xed.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %autoreconf
@@ -139,6 +141,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pkgconfigdir/*
 
 %changelog
+* Sun Nov 13 2016 Vladimir Didenko <cow@altlinux.org> 1.2.1-alt1
+- New version
+
 * Tue May 26 2016 Vladimir Didenko <cow@altlinux.org> 1.0.5-alt1
 - New version
 
