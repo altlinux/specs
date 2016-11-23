@@ -1,7 +1,7 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for Proxmox Virtual Environment
-Version: 4.0.46
-Release: alt3
+Version: 4.0.47
+Release: alt4
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -17,7 +17,6 @@ Patch0: %name.patch
 Patch1: pve-access-control.patch
 
 Source2: pve-firsttime
-Source3: pve-etcnet-to-deb
 
 BuildRequires: pve-common pve-doc-generator libcheck-devel librrd-devel glib2-devel libfuse-devel libcorosync2-devel libsqlite3-devel xmlto
 BuildRequires: perl(ExtUtils/Embed.pm) perl(Term/ReadLine.pm) perl(Digest/HMAC_SHA1.pm) perl(XML/Parser.pm) perl(RRDs.pm)
@@ -59,7 +58,6 @@ cd ../pve-access-control
 
 mkdir -p %buildroot%_datadir/doc/%name
 install -m644 %SOURCE2 %buildroot%_datadir/doc/%name/
-install -m644 %SOURCE3 %buildroot%_datadir/doc/%name/
 
 mkdir -p %buildroot%_sysconfdir/pve
 mkdir -p %buildroot%_localstatedir/%name
@@ -87,6 +85,9 @@ __EOF__
 
 %preun
 %preun_service %name
+if [ $1 -eq 0 ] ; then
+        /sbin/systemctl disable %name.service >/dev/null 2>&1 || :
+fi
 
 %pre
 %_sbindir/groupadd -r -f www-data 2>/dev/null ||:
@@ -131,6 +132,9 @@ __EOF__
 %_man1dir/pveum.1*
 
 %changelog
+* Wed Nov 23 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.47-alt4
+- 4.0-47
+
 * Mon Oct 03 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.46-alt3
 - 4.0-46
 
