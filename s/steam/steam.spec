@@ -1,5 +1,5 @@
 Name: steam
-Version: 1.0.0.53
+Version: 1.0.0.54
 Release: alt1
 
 Summary: Launcher for the Steam software distribution service
@@ -62,6 +62,15 @@ savegame and screenshot functionality, and many social features.
 %config %_udevrulesdir/60-HTC-Vive-perms.rules
 
 %changelog 
+* Thu Nov 24 2016 Nazarov Denis <nenderus@altlinux.org> 1.0.0.54-alt1
+- Version 1.0.0.54
+
+* Sat Oct 29 2016 Nazarov Denis <nenderus@altlinux.org> 1.0.0.53-alt0.M70P.1
+- Build for branch p7
+
+* Thu Oct 27 2016 Andrey Cherepanov <cas@altlinux.org> 1.0.0.53-alt0.M80P.1
+- Backport new version to p8 branch
+
 * Wed Oct 26 2016 Nazarov Denis <nenderus@altlinux.org> 1.0.0.53-alt1
 - Version 1.0.0.53
 
