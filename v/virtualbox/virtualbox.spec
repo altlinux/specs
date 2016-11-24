@@ -56,7 +56,7 @@
 %define gcc_version 5
 
 Name: virtualbox
-Version: 5.1.6
+Version: 5.1.10
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -778,6 +778,9 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Tue Nov 22 2016 Denis Medvedev <nbr@altlinux.org> 5.1.10-alt1
+- new version 5.1.10
+
 * Thu Sep 15 2016 Denis Medvedev <nbr@altlinux.org> 5.1.6-alt1
 - new version 5.1.6, ALT Linux types marked as "do not use", fixed
 overflow bug.

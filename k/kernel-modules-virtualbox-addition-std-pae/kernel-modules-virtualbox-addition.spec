@@ -1,5 +1,5 @@
 %define module_name	virtualbox-addition
-%define module_version  5.1.6
+%define module_version  5.1.10
 %define module_release	alt1
 
 %define flavour		std-pae
@@ -80,6 +80,8 @@ cp kernel-source-%guest_module_name-%module_version/Module.symvers \
     kernel-source-%vfs_module_name-%module_version
 %make -C kernel-source-%vfs_module_name-%module_version \
     KERN_DIR=%_usrsrc/linux-%kversion-%flavour/
+cp kernel-source-%guest_module_name-%module_version/Module.symvers \
+    kernel-source-%video_module_name-%module_version
 %make -C kernel-source-%video_module_name-%module_version \
     KERN_DIR=%_usrsrc/linux-%kversion-%flavour/
 
@@ -99,6 +101,12 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Nov 22 2016 Denis Medvedev <nbr@altlinux.org> 5.1.10-alt1
+- Updated template for virtualbox 5.1.10
+
+* Fri Oct 14 2016 Evgeny Sinelnikov <sin@altlinux.ru> 5.1.6-alt2
+- Copy Module.symvers during video module building
 
 * Thu Jul 28 2016 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.1.2-alt1
 - Updated template for virtualbox 5.1.2
