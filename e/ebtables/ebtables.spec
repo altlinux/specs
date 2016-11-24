@@ -1,6 +1,6 @@
 Name: ebtables
 Version: 2.0.10
-Release: alt3
+Release: alt4
 
 Summary: A filtering tool for a bridging firewall
 License: GPL
@@ -42,6 +42,9 @@ mv %buildroot/%_lib/ebtables/libebtc.so %buildroot/%_lib/libebtc.so.0.0.0
 %_man8dir/*
 
 %changelog
+* Thu Nov 24 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.10-alt4
+- properly link ebtables-restore (closes: #32792)
+
 * Tue Sep 06 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.10-alt3
 - updated from git 4c3e5cd3dbae
 
