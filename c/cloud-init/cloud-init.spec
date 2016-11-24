@@ -1,6 +1,6 @@
 Name:    cloud-init
 Version: 0.7.8
-Release: alt1.git9d826b88
+Release: alt2.git9d826b88
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -115,6 +115,9 @@ make unittest noseopts=" -I test_cloudstack.py -I test_handler_apt_source_v3.py"
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Thu Nov 24 2016 Alexey Shabalin <shaba@altlinux.ru> 0.7.8-alt2.git9d826b88
+- fixed run
+
 * Mon Nov 21 2016 Alexey Shabalin <shaba@altlinux.ru> 0.7.8-alt1.git9d826b88
 - git snapshot 9d826b8855797bd37e477b6da43153c49529afe8
 
