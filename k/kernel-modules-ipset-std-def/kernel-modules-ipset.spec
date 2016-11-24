@@ -1,6 +1,6 @@
 %define module_name	ipset
-%define module_version	6.29
-%define module_release	alt2
+%define module_version	6.30
+%define module_release	alt1
 
 %define flavour		std-def
 BuildRequires(pre): kernel-headers-modules-std-def
@@ -32,7 +32,6 @@ PreReq: coreutils
 PreReq: kernel-image-%flavour = %kversion-%krelease
 Requires(postun): kernel-image-%flavour = %kversion-%krelease
 ExclusiveArch: %karch
-Patch: ipset-kernel-4.7.patch
 
 %description
 ipset kernel modules.
@@ -41,7 +40,6 @@ ipset kernel modules.
 rm -rf kernel-source-%module_name-%module_version
 tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
-%patch -p1
 autoreconf -fisv
 
 %build

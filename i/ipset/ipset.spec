@@ -2,8 +2,8 @@
 %define exec_prefix /
 %define _prefix /
 Name: ipset
-Version: 6.29
-Release: alt3.git.caaa86
+Version: 6.30
+Release: alt1
 
 Summary: Tools for managing sets of IP or ports with iptables
 License: GPLv2
@@ -97,6 +97,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Thu Nov 24 2016 Anton Farygin <rider@altlinux.ru> 6.30-alt1
+- new version
+
 * Sun Oct 02 2016 Anton Farygin <rider@altlinux.ru> 6.29-alt3.git.caaa86
 - add pkgconfig files (closes: #32543)
 - devel package renamed
