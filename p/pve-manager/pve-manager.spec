@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 4.3.11
-Release: alt8
+Release: alt9
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -27,6 +27,7 @@ Patch6: pve-manager-alt-bps-to-bit.patch
 Patch7: pve-container-altlinux-lxc.patch
 Patch8: pve-manager-alt-gzip.patch
 Patch9: pve-manager-alt-pve.patch
+Patch10: pve-manager-lxc-ssh-key.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -38,7 +39,7 @@ This package contains the PVE management tools
 
 %package -n pve-container
 Summary: PVE Container management tool
-Version: 1.0.83
+Version: 1.0.84
 Group: Development/Perl
 Requires: pve-lxc dtach perl-Crypt-Eksblowfish >= 0.009-alt5_15
 
@@ -88,6 +89,7 @@ This package contains the Qemu Server tools used by PVE
 %patch7 -p0 -b .alt
 %patch8 -p0 -b .alt
 %patch9 -p0 -b .alt
+%patch10 -p0 -b .alt
 
 %build
 for d in pve-manager pve-firewall/src pve-ha-manager/src qemu-server; do
@@ -348,6 +350,9 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Thu Nov 24 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.11-alt9
+- pve-container 1.0-84
+
 * Wed Nov 23 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.11-alt8
 - 4.3-11
 - pve-container 1.0-83
