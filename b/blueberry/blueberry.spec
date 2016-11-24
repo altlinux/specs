@@ -1,5 +1,5 @@
 Name: blueberry
-Version: 1.1.5
+Version: 1.1.8
 Release: alt1
 Summary: A Bluetooth configuration tool
 License: GPLv3
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildArch: noarch
-Requires: libgtk+3-gir libgnome-bluetooth-gir rfkill wmctrl
+Requires: libgtk+3-gir libgnome-bluetooth-gir rfkill wmctrl gnome-bluetooth
 
 %description
 Utility for Bluetooth devices graphical configuration
@@ -39,6 +39,10 @@ Utility for Bluetooth devices graphical configuration
 %_iconsdir/hicolor/*/status/*
 
 %changelog
+* Thu Nov 24 2016 Vladimir Didenko <cow@altlinux.org> 1.1.8-alt1
+- 1.1.8
+- add gnome-bluetooth to requires
+
 * Tue Jul 12 2016 Valery Inozemtsev <shrek@altlinux.ru> 1.1.5-alt1
 - 1.1.5
 - obsoletes blueman
