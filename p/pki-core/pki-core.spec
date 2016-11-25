@@ -51,7 +51,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             pki-core
 Version:          10.2.6
-Release:          alt3_19jpp8
+Release:          alt4_19jpp8
 Summary:          Certificate System - PKI Core Components
 URL:              http://pki.fedoraproject.org/
 License:          GPLv2
@@ -337,7 +337,7 @@ Summary:          Symmetric Key JNI Package
 Group:            System/Libraries
 
 Requires:         libnss
-Requires: javapackages-tools rpm-build-java
+Requires: javapackages-tools
 Requires:         jss >= 4.2.6
 
 Provides:         symkey = %{version}-%{release}
@@ -372,7 +372,7 @@ Requires:         apache-commons-lang
 Requires:         apache-commons-logging
 Requires:         jakarta-commons-httpclient
 Requires:         javassist
-Requires: javapackages-tools rpm-build-java
+Requires: javapackages-tools
 Requires:         jss >= 4.2.6
 Requires:         ldapjdk
 Requires:         python-module-pyldap
@@ -431,7 +431,7 @@ Requires:         openldap-clients
 Requires:         libnss
 Requires:         nss-utils
 Requires:         pki-base = %{version}
-Requires: javapackages-tools rpm-build-java
+Requires: javapackages-tools
 %if 0%{?fedora} >= 23
 Requires:         tomcat-servlet-3.1-api >= 8.0.32
 %else
@@ -1139,6 +1139,9 @@ echo >> /var/log/pki/pki-server-upgrade-%{version}.log 2>&1
 %endif # %{with server}
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 10.2.6-alt4_19jpp8
+- cleanup: removed rpm-build-java
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 10.2.6-alt3_19jpp8
 - cleanup: removed conflict glitch and selinux dependency
 
