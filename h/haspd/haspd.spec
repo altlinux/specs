@@ -11,7 +11,7 @@
 
 Name: haspd
 Version: 7.40
-Release: alt4
+Release: alt4.1
 
 Summary: Hardware key protection drivers and license managers
 
@@ -126,6 +126,12 @@ MODULEVERSION=%version MAN_DIR=%buildroot%_mandir/ INIT_DIR=%buildroot%_initdir/
 # Install udev rules
 install -m0644 -D aksusbd/udev/rules.d/80-hasp.rules %buildroot%_udevrulesdir/80-hasp.rules
 
+%if %_vendor == "alt"
+# Make symlink to /lib/libusb-1.0.so.0 for require i586-libusb in ALT Linux arepo
+mkdir -p %buildroot/lib/%name
+ln -s /lib/libusb-1.0.so.0 %buildroot/lib/%name/libusb-1.0.so.0
+%endif
+
 %post
 %post_service %name
 %start_service %name
@@ -139,6 +145,9 @@ install -m0644 -D aksusbd/udev/rules.d/80-hasp.rules %buildroot%_udevrulesdir/80
 %files
 %_initdir/%name
 %_initdir/haspd.outformat
+%if %_vendor == "alt"
+/lib/%name/libusb-1*
+%endif
 
 # Aladdin
 %_sbindir/aksusbd
@@ -185,6 +194,9 @@ install -m0644 -D aksusbd/udev/rules.d/80-hasp.rules %buildroot%_udevrulesdir/80
 #module_dir/2*
 
 %changelog
+* Fri Nov 25 2016 Andrey Cherepanov <cas@altlinux.org> 7.40-alt4.1
+- require i586-libusb in ALT Linux arepo
+
 * Fri Dec 04 2015 Vitaly Lipatov <lav@altlinux.ru> 7.40-alt4
 - allow override with KERNELVERSION
 
