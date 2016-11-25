@@ -10,7 +10,7 @@
 
 Name: kde5-%rname
 %define lname lib%name
-Version: 5.2.0
+Version: 5.3.0
 Release: alt1
 %K5init
 
@@ -227,6 +227,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Fri Nov 25 2016 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- new version
+
 * Mon Sep 26 2016 Sergey V Turchin <zerg@altlinux.org> 5.2.0-alt1
 - new version
 
