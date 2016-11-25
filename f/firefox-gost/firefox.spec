@@ -16,7 +16,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (с поддержкой шифрования по ГОСТ)
 
 Name:           firefox-gost
-Version:        45.4.0
+Version:        45.5.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -339,6 +339,10 @@ done
 %firefox_prefix/dictionaries/*
 
 %changelog
+* Fri Nov 25 2016 Andrey Cherepanov <cas@altlinux.org> 45.5.0-alt1
+- New ESR version with GOST encryption support
+- Add script update-l10n-ru for download new localization
+
 * Wed Sep 21 2016 Andrey Cherepanov <cas@altlinux.org> 45.4.0-alt1
 - New ESR version with GOST encryption support
 
