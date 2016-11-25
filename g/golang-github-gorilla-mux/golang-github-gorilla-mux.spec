@@ -1,12 +1,12 @@
 %global import_path     github.com/gorilla/mux
 
-%global commit cf79e51a62d8219d52060dfc1b4e810414ba2d15
+%global commit 757bef944d0f21880861c2dd9c871ca543023cba
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-github-gorilla-mux
 Version: 0
-Release: alt6.git%abbrev
+Release: alt7.git%abbrev
 Summary: Package `gorilla/mux` implements a request router and dispatcher.
 License: BSD
 Group: Development/Other
@@ -55,6 +55,9 @@ export GOPATH="%go_path"
 %go_path/src/*
 
 %changelog
+* Fri Nov 25 2016 Denis Pynkin <dans@altlinux.org> 0-alt7.git757bef94
+- Update
+
 * Tue Aug 23 2016 Denis Pynkin <dans@altlinux.org> 0-alt6.gitcf79e51a
 - Update
 

@@ -1,12 +1,12 @@
 %global import_path gopkg.in/tomb.v2
 
-%global commit 14b3d72120e8d10ea6e6b7f87f7175734b1faab8
+%global commit 9dde971544235898fc9720ed594059f79fd3273c
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-gopkg-tomb-v2
 Version: 2.0
-Release: alt1.git%abbrev
+Release: alt2.git%abbrev
 Summary: The tomb package handles clean goroutine tracking and termination.
 License: BSD
 Group: Development/Other
@@ -53,6 +53,9 @@ export GOPATH="%go_path"
 %go_path/src/*
 
 %changelog
+* Fri Nov 25 2016 Denis Pynkin <dans@altlinux.org> 2.0-alt2.git9dde9715
+- Update
+
 * Tue Feb 16 2016 Denis Pynkin <dans@altlinux.ru> 2.0-alt1.git14b3d721
 - Initial package
 
