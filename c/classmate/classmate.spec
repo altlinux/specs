@@ -1,20 +1,23 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          classmate
-Version:       1.1.0
-Release:       alt1_2jpp8
+Version:       1.2.0
+Release:       alt1_3jpp8
 Summary:       Java introspection library
 License:       ASL 2.0
 Url:           http://github.com/cowtowncoder/java-classmate/
 Source0:       https://github.com/cowtowncoder/java-classmate/archive/%{name}-%{version}.tar.gz
 
-BuildRequires: junit
 BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-plugin-bundle
-BuildRequires: sonatype-oss-parent
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildArch:     noarch
 Source44: import.info
@@ -38,7 +41,7 @@ find . -name "*.class" -delete
 find . -name "*.jar" -delete
 
 %pom_remove_plugin :maven-source-plugin
-%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-javadoc-plugin']/pom:executions"
+%pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-javadoc-plugin']/pom:executions"
 
 sed -i 's/\r//' src/main/resources/META-INF/LICENSE src/main/resources/META-INF/NOTICE
 cp -p src/main/resources/META-INF/LICENSE .
@@ -64,6 +67,9 @@ rm -r src/test/java/com/fasterxml/classmate/AnnotationsTest.java
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_3jpp8
+- new version
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_2jpp8
 - new version
 
