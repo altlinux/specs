@@ -10,8 +10,8 @@ BuildRequires: jpackage-generic-compat
 %global		_newname Vuze
 
 Name:		azureus
-Version:	5.7.0.0
-Release:	alt2_3jpp8
+Version:	5.7.1.0
+Release:	alt1_2jpp8
 Summary:	A BitTorrent Client
 Group:		Networking/WWW
 
@@ -21,7 +21,7 @@ License:	GPLv2 with exceptions
 
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5700_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5710_source.zip
 
 Source2:	Azureus.desktop
 Source3:	azureus.applications
@@ -57,7 +57,9 @@ Requires:	apache-commons-cli log4j12
 Requires:	apache-commons-lang
 Requires:	eclipse-swt >= 3.5
 Requires:	 bouncycastle >= 1.33
+Requires:	 java >= 1.6.0
 Requires:	json_simple
+BuildRequires:	 java-devel >= 1.6.0
 BuildRequires:	 desktop-file-utils
 Requires(post):	 desktop-file-utils
 Requires(postun):	desktop-file-utils
@@ -159,6 +161,9 @@ sed -i 's,uname -i,uname -m,' %buildroot%_bindir/%name
 %{_datadir}/azureus
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 5.7.1.0-alt1_2jpp8
+- new version
+
 * Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 5.7.0.0-alt2_3jpp8
 - %%_jnidir set to /usr/lib/java
 
