@@ -1,7 +1,11 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 25
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -17,8 +21,8 @@ BuildRequires: jpackage-generic-compat
 #global failjunit yes
 
 Name:          rabbitmq-java-client
-Version:       3.5.5
-Release:       alt1_1jpp8
+Version:       3.6.0
+Release:       alt1_2jpp8
 Summary:       Java Advanced Message Queue Protocol client library
 License:       ASL 2.0 and GPLv2+ and MPLv1.1
 URL:           http://www.rabbitmq.com/java-client.html
@@ -27,6 +31,7 @@ Source0:       http://www.rabbitmq.com/releases/%{name}/v%{version}/%{name}-%{ve
 BuildArch:     noarch
 BuildRequires: maven-local mvn(commons-cli:commons-cli) mvn(commons-io:commons-io) mvn(junit:junit)
 BuildRequires: ant ant-junit
+BuildRequires: java-headless
 BuildRequires: python >= 2.6 python-module-simplejson
 
 %if 0%{?with buildtex}
@@ -34,8 +39,10 @@ BuildRequires: texi2html
 BuildRequires: %{_bindir}/pdflatex
 %endif
 
+%if 0%{?fedora}
 Requires:       rabbitmq-server
 Requires:       activemq
+%endif
 Source44: import.info
 
 
@@ -134,6 +141,9 @@ ant test-client
 
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 3.6.0-alt1_2jpp8
+- new version
+
 * Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 3.5.5-alt1_1jpp8
 - java 8 mass update
 
