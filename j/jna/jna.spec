@@ -1,41 +1,51 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 25
 Name:           jna
-Version:        4.1.0
-Release:        alt1_9jpp8
+Version:        4.2.1
+Release:        alt1_2jpp8
 Summary:        Pure Java access to native libraries
 # Most of code is dual-licensed under either LGPL 2.1 only or Apache
 # License 2.0.  WeakIdentityHashMap.java was taken from Apache CXF,
 # which is pure Apache License 2.0.
 License:        (LGPLv2 or ASL 2.0) and ASL 2.0
-URL:            https://github.com/twall/jna
+URL:            https://github.com/java-native-access/jna/
 # ./generate-tarball.sh
 Source0:        %{name}-%{version}-clean.tar.xz
 Source1:        package-list
+%if 0%{?fedora}
 Source2:        generate-tarball.sh
+%else
+Source2:        generate-tarball-rhel.sh
+%endif
 Patch0:         jna-3.5.0-build.patch
 # This patch is Fedora-specific for now until we get the huge
 # JNI library location mess sorted upstream
-Patch1:         jna-4.0.0-loadlibrary.patch
+Patch1:         jna-4.2.0-loadlibrary.patch
 # The X11 tests currently segfault; overall I think the X11 JNA stuff is just a 
 # Really Bad Idea, for relying on AWT internals, using the X11 API at all,
 # and using a complex API like X11 through JNA just increases the potential
 # for problems.
 Patch2:         jna-4.0.0-tests-headless.patch
-Patch6:         jna-4.0.0-ffi.patch
-Patch7:         jna-4.0.0-fix-native-test.patch
 
 # We manually require libffi because find-requires doesn't work
 # inside jars.
-Requires:       jpackage-utils libffi
-BuildRequires:  jpackage-utils libffi-devel
-BuildRequires:  ant ant-junit junit reflections
+Requires:       java jpackage-utils libffi6
+BuildRequires:  java-devel jpackage-utils libffi-devel
+BuildRequires:  ant ant-junit junit
 BuildRequires:  libX11-devel libXt-devel
+%if 0%{?fedora}
+BuildRequires:  reflections
+%endif
+# no 
+%if 0%{?rhel} && 0%{?rhel} < 7
+BuildRequires:  ant-nodeps ant-trax
+%endif
 Source44: import.info
 
 
@@ -49,9 +59,11 @@ of use take priority.
 
 
 %package        javadoc
-Group: Development/Java
 Summary:        Javadocs for %{name}
+Group:          Development/Java
+%if 0%{?fedora} || 0%{?rhel} > 5
 BuildArch:      noarch
+%endif
 
 
 %description    javadoc
@@ -62,8 +74,10 @@ This package contains the javadocs for %{name}.
 Group: Development/Java
 Summary:        Contrib for %{name}
 License:        LGPLv2 or ASL 2.0
+Requires:       %{name} = %{version}
+%if 0%{?fedora} || 0%{?rhel} > 5
 BuildArch:      noarch
-Requires:       %{name} = %{version}-%{release}
+%endif
 
 
 %description    contrib
@@ -76,8 +90,6 @@ cp %{SOURCE1} .
 %patch0 -p1 -b .build
 %patch1 -p1 -b .loadlib
 %patch2 -p1 -b .tests-headless
-%patch6 -p1 -b .ffi
-%patch7 -p1
 
 chmod -Rf a+rX,u+w,g-w,o-w .
 sed -i 's|@LIBDIR@|%{_libdir}/%{name}|' src/com/sun/jna/Native.java
@@ -87,10 +99,16 @@ sed -i 's/\r//' LICENSE
 
 chmod -c 0644 LICENSE OTHERS CHANGES.md
 
+%if 0%{?rhel}
+sed s,'<include name="junit.jar"/>,&<include name="reflections-0.9.8.jar"/>,' -i build.xml
+build-jar-repository -s -p lib junit
+%else
 sed s,'<include name="junit.jar"/>,&<include name="reflections.jar"/>,' -i build.xml
-
 build-jar-repository -s -p lib junit reflections
+%endif
+
 cp lib/native/aix-ppc64.jar lib/clover.jar
+
 
 %build
 # We pass -Ddynlink.native which comes from our patch because
@@ -111,6 +129,7 @@ find contrib -name '*.jar' -exec cp {} %{buildroot}%{_javadir}/%{name}/ \;
 install -d -m 755 %{buildroot}%{_libdir}/%{name}
 install -m 755 build/native*/libjnidispatch*.so %{buildroot}%{_libdir}/%{name}/
 
+%if 0%{?fedora}
 # install maven pom file
 install -Dm 644 pom-%{name}.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 install -Dm 644 pom-%{name}-platform.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-platform.pom
@@ -118,32 +137,59 @@ install -Dm 644 pom-%{name}-platform.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}
 # ... and maven depmap
 %add_maven_depmap JPP-%{name}.pom %{name}.jar
 %add_maven_depmap JPP.%{name}-%{name}-platform.pom -f platform %{name}/%{name}-platform.jar -a "net.java.dev.jna:platform"
+%endif
 
 # javadocs
 install -p -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 cp -a doc/javadoc/* %{buildroot}%{_javadocdir}/%{name}
+# multiple -f flags in %files: merging -f  into -f .mfiles
+cat  >> .mfiles
+# multiple -f flags in %files: merging -f  into -f .mfiles-platform
+cat  >> .mfiles-platform
 
 
-#%check
+#if 0%{?rhel} >= 6 || 0%{?fedora}
+#ifnarch ppc s390 s390x
+#check
 #ant -Dcflags_extra.native="%{optflags}" -Ddynlink.native=true -Dnomixedjar.native=true test
+#endif
+#endif
 
 
+%if 0%{?fedora}
 %files -f .mfiles
+%else
+%{_javadir}/%{name}.jar
+%endif
 %doc OTHERS README.md CHANGES.md TODO
+%if 0%{?fedora}
 %doc LICENSE LGPL2.1 ASL2.0
+%else
+%doc LICENSE LGPL2.1 ASL2.0
+%endif
 %{_libdir}/%{name}
 
 
 %files javadoc
+%if 0%{?fedora}
 %doc LICENSE LGPL2.1 ASL2.0
+%else
+%doc LICENSE LGPL2.1 ASL2.0
+%endif
 %{_javadocdir}/%{name}
 
 
+%if 0%{?fedora}
 %files contrib -f .mfiles-platform
+%else
+%endif
 %{_javadir}/%{name}
 
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt1_2jpp8
+- new version
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 4.1.0-alt1_9jpp8
 - java 8 mass update
 
