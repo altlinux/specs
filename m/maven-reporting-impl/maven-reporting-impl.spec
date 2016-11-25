@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 25
 Name:           maven-reporting-impl
-Version:        2.3
+Version:        2.4
 Release:        alt1_2jpp8
 Summary:        Abstract classes to manage report generation
 License:        ASL 2.0
@@ -17,21 +17,20 @@ BuildArch:      noarch
 
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/reporting/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-# Forwarded upstream: https://issues.apache.org/jira/browse/MSHARED-344
-Patch0:         0001-Update-to-Doxia-1.6.patch
-
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-validator:commons-validator)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
-BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-project)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-%{?fedora:BuildRequires: junit-addons}
+BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
+%{?fedora:BuildRequires: mvn(junit-addons:junit-addons)}
 
 Obsoletes:      maven-shared-reporting-impl < %{version}-%{release}
 Provides:       maven-shared-reporting-impl = %{version}-%{release}
@@ -55,15 +54,17 @@ API documentation for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
-%mvn_build %{!?fedora:-f}
+# integration tests try to download stuff from the internet
+# and therefore they don't work in Koji
+%mvn_build %{!?fedora:-f} -- -Dinvoker.skip=true
 
 %install
 %mvn_install
 
 %files -f .mfiles
+%{!?_licensedir:%global license %%doc}
 %dir %{_javadir}/%{name}
 %doc LICENSE NOTICE
 
@@ -71,6 +72,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_2jpp8
+- new version
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_2jpp8
 - unbootsrap build
 
