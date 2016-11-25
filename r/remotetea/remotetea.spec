@@ -1,21 +1,23 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          remotetea
-Version:       1.1.2
-Release:       alt1_2jpp8
+Version:       1.1.3
+Release:       alt1_1jpp8
 Summary:       Java implementation of Sun's ONC/RPC Remote Procedure Protocol
 # GPL with exceptions: src/org/acplt/oncrpc/apps/jrpcgen/JrpcgenSHA.java original
+# Incorrect Free Software Foundation address https://github.com/remotetea/remotetea/issues/2
 License:       LGPLv2+
 URL:           http://remotetea.sourceforge.net/
+
 # git clone git://git.code.sf.net/p/remotetea/code remotetea
-# (cd remotetea/remotetea/ && git archive --format=tar --prefix=remotetea-1.1.2/ 1.1.2 | xz > ../../remotetea-1.1.2.tar.xz)
-#Source0:       http://downloads.sourceforge.net/remotetea/remotetea-src-1.0.7.zip
-Source0:       remotetea-1.1.2.tar.xz
+# (cd remotetea/remotetea/ && git archive --format=tar --prefix=remotetea-1.1.3/ 1.1.3 | xz > ../../remotetea-1.1.3.tar.xz)
+
+Source0:       remotetea-1.1.3.tar.xz
 # Use system java_cup
 Patch0:        remotetea-1.1.2-system-java_cup.patch
 
@@ -91,7 +93,6 @@ cp -p information/src/main/resources/META-INF/readme.html .
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc changelog.html docstyle.css readme.html
 %doc LICENSE.txt
 
@@ -102,6 +103,9 @@ cp -p information/src/main/resources/META-INF/readme.html .
 %doc LICENSE.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_1jpp8
+- new version
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_2jpp8
 - new version
 
