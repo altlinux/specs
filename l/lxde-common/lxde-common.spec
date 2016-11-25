@@ -8,7 +8,7 @@
 %define gtkver 2
 Name: lxde-common
 Version: 0.99.1
-Release: alt3
+Release: alt4
 BuildArch: noarch
 
 Summary: Basic infrastructure for LXDE.
@@ -125,6 +125,9 @@ rm -fR %_sysconfdir/xdg/lxsession/LXDE/desktop.conf \
 #_iconsdir/nuoveXT2
 
 %changelog
+* Fri Nov 25 2016 Anton Midyukov <antohami@altlinux.org> 0.99.1-alt4
+- Added volume control on the panel.
+
 * Wed Jun 29 2016 Anton Midyukov <antohami@altlinux.org> 0.99.1-alt3
 - Replace config files to /usr/share/lxde
 - Fix config panel.
