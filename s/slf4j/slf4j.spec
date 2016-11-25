@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -37,11 +37,11 @@ BuildRequires: jpackage-generic-compat
 #
 
 Name:           slf4j
-Version:        1.7.14
+Version:        1.7.18
 Release:        alt1_1jpp8
 Epoch:          0
 Summary:        Simple Logging Facade for Java
-Group:          Development/Java
+Group:          Development/Other
 # the log4j-over-slf4j and jcl-over-slf4j submodules are ASL 2.0, rest is MIT
 License:        MIT and ASL 2.0
 URL:            http://www.slf4j.org/
@@ -50,6 +50,7 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils >= 0:1.7.5
+BuildRequires:  java-devel >= 1.5.0
 BuildRequires:  ant >= 0:1.6.5
 BuildRequires:  ant-junit >= 0:1.6.5
 BuildRequires:  javassist >= 0:3.4
@@ -222,6 +223,9 @@ cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
 %{_defaultdocdir}/%{name}-manual
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.7.18-alt1_1jpp8
+- new version
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.7.14-alt1_1jpp8
 - added osgi provides
 
