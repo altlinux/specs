@@ -1,9 +1,12 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          kryo
-Version:       3.0.1
+Version:       3.0.3
 Release:       alt1_2jpp8
 Summary:       Object graph serialization framework for Java
 # ASL: src/com/esotericsoftware/kryo/util/IdentityMap.java src/com/esotericsoftware/kryo/util/IntMap.java
@@ -86,6 +89,9 @@ sed -i 's/\r//' license.txt LICENSE-2.0.txt
 %doc license.txt LICENSE-2.0.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.3-alt1_2jpp8
+- new version
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_2jpp8
 - new version
 
