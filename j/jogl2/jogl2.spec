@@ -1,29 +1,30 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jogl2
-Version:        2.2.4
-Release:        alt1_4jpp8
+Version:        2.3.2
+Release:        alt1_2jpp8
 %global src_name jogl-v%{version}
 Summary:        Java bindings for the OpenGL API
 
-Group:          Development/Java
+Group:          Development/Other
 # For a breakdown of the licensing, see LICENSE.txt 
 License:        BSD and MIT and ASL 2.0 and ASL 1.1 
 URL:            http://jogamp.org/
-Source0:        http://jogamp.org/deployment/jogamp-current/archive/Sources/%{src_name}.tar.7z
+Source0:        http://jogamp.org/deployment/v%{version}/archive/Sources/%{src_name}.tar.xz
 Source1:        %{name}-pom.xml
 
-# https://github.com/sgothel/jogl/pull/51
-Patch1:         %{name}-0001-fix-gluegen-gl-classpath.patch
 Patch2:         %{name}-0002-deactivate-debug-printf.patch
 Patch3:         %{name}-0003-delete-not-supported-API.patch
 Patch4:         %{name}-0004-disable-some-tests.patch
+Patch5:         %{name}-add-secarchs.patch
 
-BuildRequires: javapackages-tools rpm-build-java
-BuildRequires: p7zip-standalone p7zip
+BuildRequires:  java-devel
+BuildRequires:  jpackage-utils
 BuildRequires:  gluegen2-devel = %{version}
 BuildRequires:  eclipse-swt
 BuildRequires:  libXt-devel
@@ -33,7 +34,8 @@ BuildRequires:  libXrandr-devel
 BuildRequires:  libXcursor-devel
 BuildRequires:  maven-local
 
-Requires: javapackages-tools rpm-build-java
+Requires:       java
+Requires:       jpackage-utils
 Requires:       gluegen2 = %{version}
 Source44: import.info
 Patch33: jogl2-disable-build-native-broadcom.patch
@@ -57,19 +59,12 @@ BuildArch:      noarch
 User manual for jogl2.
 
 %prep
-# inline %%setup as 7z archive are not supported
-%setup -c -T -n %{src_name}
-cd ..
-/usr/bin/7za e -y %{SOURCE0}
-tar -xf %{src_name}.tar
-rm %{src_name}.tar
-cd %{src_name}
-chmod -Rf a+rX,u+w,g-w,o-w .
+%setup -n %{src_name}
 
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 # Remove bundled dependencies
 find -name "*.jar" -type f -exec rm {} \;
@@ -98,6 +93,7 @@ cd make
 export TARGET_PLATFORM_ROOT=/
 
 xargs -t ant <<EOF
+ -verbose
  -Dc.compiler.debug=true
  -Djavacdebug=true
  -Djavac.memorymax=512m
@@ -111,12 +107,12 @@ xargs -t ant <<EOF
  -Dgluegen-rt.jar=%{_jnidir}/gluegen2-rt.jar 
  -Dswt.jar=%{_libdir}/eclipse/swt.jar 
 
- -Djava.excludes.all='com/jogamp/newt/util/applet/* com/jogamp/audio/**/*.java'
+ -Djava.excludes.all='com/jogamp/newt/util/applet*/**/*.java com/jogamp/audio/**/*.java jogamp/opengl/gl2/fixme/**/*.java com/jogamp/opengl/test/**/*.java'
 
  -Djavadoc.link=%{_javadocdir}/java 
  -Dgluegen.link=%{_javadocdir}/gluegen2 
  
- all
+ build.nativewindow build.jogl build.newt one.dir javadoc.public
 EOF
 
 %install
@@ -147,6 +143,9 @@ cp -t %{buildroot}%{_docdir}/%{name}/ README.txt LICENSE.txt CHANGELOG.txt
 %{_docdir}/%{name}
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_2jpp8
+- new version
+
 * Fri Oct 14 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt1_4jpp8
 - replaced with fc imported package
 
