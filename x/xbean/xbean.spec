@@ -1,19 +1,19 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 25
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define fedora 23
 # Conditionals to help breaking eclipse <-> xbean dependency cycle
 # when bootstrapping for new architectures
 %if 0%{?fedora}
@@ -22,8 +22,8 @@ BuildRequires: jpackage-generic-compat
 %endif
 
 Name:           xbean
-Version:        4.3
-Release:        alt1_1jpp8
+Version:        4.4
+Release:        alt1_2jpp8
 Summary:        Java plugin based web server
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/xbean/
@@ -36,8 +36,8 @@ Patch0:         0001-Unshade-ASM.patch
 # Compatibility with Eclipse Luna (rhbz#1087461)
 Patch1:         0002-Port-to-Eclipse-Luna-OSGi.patch
 Patch2:         0003-Port-to-QDox-2.0.patch
-Patch3:         0004-Port-to-Groovy-2.3.7.patch
 
+BuildRequires:  java-devel
 BuildRequires:  apache-commons-beanutils
 BuildRequires:  apache-commons-logging
 BuildRequires:  objectweb-asm
@@ -143,10 +143,16 @@ rm src/site/site.xml
 %patch1 -p1
 %endif
 %patch2 -p1
-%patch3 -p1
 
 %pom_remove_parent
 %pom_remove_dep mx4j:mx4j
+
+%pom_remove_dep -r :xbean-asm-util
+%pom_remove_dep -r :xbean-asm5-shaded
+%pom_remove_dep -r :xbean-finder-shaded
+%pom_disable_module xbean-asm-util
+%pom_disable_module xbean-asm5-shaded
+%pom_disable_module xbean-finder-shaded
 
 # Prevent modules depending on springframework from building.
 %if %{without spring}
@@ -210,6 +216,9 @@ sed -i "s|</Private-Package>|</Private-Package-->|" xbean-blueprint/pom.xml
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.4-alt1_2jpp8
+- new version
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.3-alt1_1jpp8
 - unbootsrap build
 
