@@ -1,16 +1,14 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global tag 201505241946
-
 Name:      jacoco
-Version:   0.7.5
-Release:   alt1_2jpp8
+Version:   0.7.6
+Release:   alt1_1jpp8
 Summary:   Java Code Coverage for Eclipse 
 Group:     System/Libraries
 License:   EPL
@@ -111,6 +109,9 @@ echo %{name} %{name}/org.jacoco.ant objectweb-asm/asm-debug-all > %{buildroot}%{
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.7.6-alt1_1jpp8
+- new version
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0.7.5-alt1_2jpp8
 - java 8 mass update
 
