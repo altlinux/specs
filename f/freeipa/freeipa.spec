@@ -8,7 +8,7 @@
 
 Name: freeipa
 Version: 4.3.2
-Release: alt2
+Release: alt3
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -60,7 +60,7 @@ BuildRequires: python-module-six
 BuildRequires: python-module-gssapi
 BuildRequires: libsss_idmap-devel
 BuildRequires: libsss_nss_idmap-devel
-BuildRequires: java-1.7.0-openjdk
+BuildRequires: java-1.8.0-openjdk
 BuildRequires: libverto-devel
 BuildRequires: systemd
 BuildRequires: libunistring-devel
@@ -87,6 +87,9 @@ Requires: %name-admintools = %version-%release
 Requires: krb5-kinit
 Requires: ntpd
 Requires: certmonger
+Requires: pki-server
+Requires: pki-ca
+Requires: java-1.8.0-openjdk
 Requires: apache2-mod_nss
 Requires: apache2-mod_auth_gssapi
 Requires: apache2-mod_wsgi
@@ -606,6 +609,11 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 %_man1dir/ipa-test-task.1.*
 
 %changelog
+* Fri Nov 25 2016 Mikhail Efremov <sem@altlinux.org> 4.3.2-alt3
+- Require java-1.8.0-openjdk.
+- Require pki.
+- Drop hack for old certmonger.
+
 * Thu Nov 10 2016 Mikhail Efremov <sem@altlinux.org> 4.3.2-alt2
 - Merge spec with Fedora.
 
