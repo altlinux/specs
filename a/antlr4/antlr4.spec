@@ -1,38 +1,34 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           antlr4
-Version:        4.5
-Release:        alt1_4jpp8
+Version:        4.5.2
+Release:        alt1_1jpp8
 Summary:        Java parser generator
+# C# runtime is MIT-licensed, but currently it is not used in this package
 License:        BSD
 URL:            http://www.antlr.org/
 BuildArch:      noarch
 
 Source0:        https://github.com/antlr/antlr4/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
-# Upstream uses an experimental bulid tool (http://bildtool.org/),
-# which is not available in Fedora.  RPMs are built with Maven using
-# POMs maintained by package maintainer.
-Source1:        antlr4-runtime.pom
-Source2:        antlr4-tool.pom
-Source3:        antlr4-maven-plugin.pom
-Source4:        antlr4-aggregator.pom
-
 BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.abego.treelayout:org.abego.treelayout.core)
 BuildRequires:  mvn(org.antlr:antlr3-maven-plugin)
 BuildRequires:  mvn(org.antlr:antlr4-maven-plugin)
 BuildRequires:  mvn(org.antlr:antlr-runtime)
 BuildRequires:  mvn(org.antlr:ST4)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-api)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
 Source44: import.info
 
@@ -70,23 +66,26 @@ This package contains %{summary}.
 
 %prep
 %setup -q
-cp -a %{SOURCE1} runtime/Java/pom.xml
-cp -a %{SOURCE2} tool/pom.xml
-cp -a %{SOURCE3} antlr4-maven-plugin/pom.xml
-cp -a %{SOURCE4} pom.xml
 find -name \*.jar -delete
+
+# Missing test deps: org.seleniumhq.selenium:selenium-java
+%pom_disable_module runtime-testsuite
+%pom_disable_module tool-testsuite
+
+# Don't bundle dependencies
+%pom_remove_plugin :maven-shade-plugin tool
 
 # On ARM builder
 # Tests run: 3, Failures: 0, Errors: 1, Skipped: 1, Time elapsed: 32.898 sec <<< FAILURE!
 # - in org.antlr.v4.test.tool.TestPerformance
 # testExponentialInclude(org.antlr.v4.test.tool.TestPerformance)  Time elapsed: 20.027 sec  <<< ERROR!
 # org.junit.runners.model.TestTimedOutException: test timed out after 20000 milliseconds
-rm -r tool/test/org/antlr/v4/test/tool/TestPerformance.java
+find -name TestPerformance.java -delete
 
-%mvn_package :aggregator-project __noinstall
+%mvn_package :%{name}-master %{name}-runtime
 
 %build
-%mvn_build -s
+%mvn_build -s -f
 
 %install
 %mvn_install
@@ -111,6 +110,9 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 %doc LICENSE.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 4.5.2-alt1_1jpp8
+- new version
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 4.5-alt1_4jpp8
 - unbootsrap build
 
