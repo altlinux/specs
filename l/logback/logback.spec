@@ -1,33 +1,54 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# https://bugzilla.redhat.com/show_bug.cgi?id=1208381
+#def_with gmavenplus
+%bcond_with gmavenplus
+
 Name:           logback
-Version:        1.1.2
-Release:        alt1_5jpp8
+Version:        1.1.3
+Release:        alt1_2jpp8
 Summary:        A Java logging library
 License:        LGPLv2 or EPL
 URL:            http://logback.qos.ch/
 Source0:        http://logback.qos.ch/dist/%{name}-%{version}.tar.gz
-# use antrun-plugin instead of gmaven
-Patch0:         %{name}-1.0.10-antrunplugin.patch
+
 # servlet 3.1 support
-Patch1:         %{name}-1.1.2-servlet.patch
-Patch2:         %{name}-1.1.2-jetty9.3.0.patch
+Patch0:         %{name}-1.1.2-servlet.patch
+# Remove deprecate methods
+Patch1:         %{name}-1.1.3-jetty9.3.0.patch
+Patch2:         %{name}-1.1.3-tomcat.patch
+# use antrun-plugin instead of gmavenplus-plugin
+Patch3:         %{name}-1.1.3-antrun-plugin.patch
 
-# Java dependencies
-
-# Required libraries
+BuildRequires: java-devel >= 1.6.0
+BuildRequires: maven-local
 BuildRequires: mvn(javax.mail:mail)
+BuildRequires: mvn(javax.servlet:javax.servlet-api)
+BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(log4j:log4j:1.2.17)
+BuildRequires: mvn(org.apache.ant:ant-junit)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.felix:org.apache.felix.main)
 BuildRequires: mvn(org.apache.geronimo.specs:geronimo-jms_1.1_spec)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.apache.tomcat:tomcat-catalina)
-BuildRequires: mvn(org.apache.tomcat:tomcat-servlet-api)
+BuildRequires: mvn(org.apache.tomcat:tomcat-coyote)
+%if %{with gmavenplus}
+BuildRequires: mvn(org.codehaus.gmavenplus:gmavenplus-plugin)
+%endif
+BuildRequires: mvn(org.codehaus.groovy:groovy-all)
 BuildRequires: mvn(org.codehaus.janino:janino)
 BuildRequires: mvn(org.eclipse.jetty:jetty-server)
 BuildRequires: mvn(org.eclipse.jetty:jetty-util)
@@ -35,19 +56,10 @@ BuildRequires: mvn(org.fusesource:fusesource-pom:pom:)
 BuildRequires: mvn(org.fusesource.jansi:jansi)
 BuildRequires: mvn(org.slf4j:slf4j-api)
 BuildRequires: mvn(org.slf4j:slf4j-ext)
-
-%if %{?fedora} > 21
-# use groovy 2.x
-BuildRequires: mvn(org.codehaus.groovy:groovy-all)
-BuildRequires: mvn(org.ow2.asm:asm-all)
-%else
-# use groovy 1.8.9
-BuildRequires: mvn(org.codehaus.groovy:groovy:1.8.9)
-BuildRequires: mvn(asm:asm-all)
-%endif
 # groovy-all embedded libraries
 BuildRequires: mvn(antlr:antlr)
 BuildRequires: mvn(commons-cli:commons-cli)
+BuildRequires: mvn(org.ow2.asm:asm-all)
 BuildRequires: mvn(org.slf4j:slf4j-nop)
 
 # test deps
@@ -68,18 +80,7 @@ BuildRequires: mvn(com.icegreen:greenmail:1.3)
 BuildRequires: mvn(org.subethamail:subethasmtp:2.1.0)
 # mvn(ch.qos.logback:logback-core:%%{version}:test-jar)
 %endif
-
-# antrun plugin deps
-BuildRequires: mvn(org.apache.ant:ant-junit)
-BuildRequires: mvn(org.apache.felix:org.apache.felix.main)
-BuildRequires: mvn(junit:junit)
-
-BuildRequires: maven-local
-BuildRequires: maven-antrun-plugin
-BuildRequires: maven-plugin-build-helper
-BuildRequires: maven-plugin-bundle
-#BuildRequires: maven-source-plugin
-
+# BuildRequires: maven-plugin-build-helper
 BuildArch:     noarch
 Source44: import.info
 
@@ -129,14 +130,17 @@ find . -name "*.class" -delete
 find . -name "*.cmd" -delete
 find . -name "*.jar" -delete
 
-%patch0 -p0
-sed -i 's|source="1.5" target="1.5"|source="1.6" target="1.6"|' %{name}-classic/pom.xml
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%if %{without gmavenplus}
+%patch3 -p1
+%pom_remove_plugin -r :gmavenplus-plugin
+%endif
 
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :findbugs-maven-plugin
-%pom_remove_plugin :gmaven-plugin %{name}-classic
+%pom_remove_plugin -r :maven-dependency-plugin
 
 # Clean up the documentation
 sed -i 's/\r//' LICENSE.txt README.txt docs/*.* docs/*/*.* docs/*/*/*.*
@@ -144,53 +148,18 @@ sed -i 's#"apidocs#"%{_javadocdir}/%{name}#g' docs/*.html
 rm -rf docs/apidocs docs/project-reports docs/testapidocs docs/project-reports.html
 rm -f docs/manual/.htaccess docs/css/site.css # Zero-length file
 
-sed -i 's#<artifactId>groovy-all</artifactId#<artifactId>groovy</artifactId#' $(find . -name "pom.xml")
-
-# Fix build with groovy2
-%if %{?fedora} > 21
-sed -i 's#groupId>asm#groupId>org.ow2.asm#' %{name}-classic/pom.xml
-sed -i 's#artifactId>groovy#artifactId>groovy-all#' %{name}-classic/pom.xml
-%endif
-
-# force tomcat apis
-sed -i 's#<groupId>javax.servlet#<groupId>org.apache.tomcat#' $(find . -name "pom.xml")
-sed -i 's#<artifactId>servlet-api#<artifactId>tomcat-servlet-api#' $(find . -name "pom.xml")
+# Force servlet 3.1 apis
+%pom_change_dep -r :servlet-api javax.servlet:javax.servlet-api:3.1.0
 sed -i 's#javax.servlet.*;version="2.5"#javax.servlet.*;version="3.1"#' %{name}-access/pom.xml
-sed -i 's#<version>2.5</version>#<version>${tomcat.version}</version>#' pom.xml
-
-sed -i 's#<version>1.2.14</version>#<version>1.2.17</version>#' %{name}-examples/pom.xml
 
 rm -r %{name}-*/src/test/java/*
 # remove test deps
 # ch.qos.logback:logback-core:test-jar
-%pom_xpath_remove "pom:project/pom:dependencyManagement/pom:dependencies/pom:dependency[pom:type = 'test-jar']"
-
-while read f
-do
-
-%pom_xpath_remove "pom:project/pom:dependencies/pom:dependency[pom:type = 'test-jar']" ${f}
-
-done << EOF
-%{name}-access/pom.xml
-%{name}-classic/pom.xml
-EOF
-
-while read f
-do
-
-%pom_xpath_remove "pom:project/pom:dependencies/pom:dependency[pom:scope = 'test']" ${f}
-
-done << EOF
-pom.xml
-%{name}-access/pom.xml
-%{name}-classic/pom.xml
-%{name}-core/pom.xml
-EOF
+%pom_xpath_remove -r "pom:dependency[pom:type = 'test-jar']"
+%pom_xpath_remove -r "pom:dependency[pom:scope = 'test']"
 
 # bundle-test-jar
-%pom_xpath_remove "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-jar-plugin']/pom:executions" %{name}-access
-%pom_xpath_remove "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-jar-plugin']/pom:executions" %{name}-classic
-%pom_xpath_remove "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-jar-plugin']/pom:executions" %{name}-core
+%pom_xpath_remove -r "pom:plugin[pom:artifactId = 'maven-jar-plugin']/pom:executions"
 
 # com.oracle:ojdbc14:10.2.0.1 com.microsoft.sqlserver:sqljdbc4:2.0
 %pom_xpath_remove "pom:project/pom:profiles/pom:profile[pom:id = 'host-orion']" %{name}-access
@@ -203,10 +172,11 @@ EOF
 
 %pom_xpath_remove "pom:build/pom:extensions"
 
-%build
-
 %mvn_package ":%{name}-access" access
 %mvn_package ":%{name}-examples" examples
+
+%build
+
 # unavailable test dep maven-scala-plugin
 # slf4jJAR and org.apache.felix.main are required by logback-examples modules for maven-antrun-plugin
 %mvn_build -f -- \
@@ -216,13 +186,12 @@ EOF
 %install
 %mvn_install
 
-install -d -m 755 %{buildroot}%{_datadir}/%{name}-%{version}/examples
-cp -r %{name}-examples/pom.xml %{name}-examples/src %{buildroot}%{_datadir}/%{name}-%{version}/examples
+install -d -m 755 %{buildroot}%{_datadir}/%{name}/examples
+cp -r %{name}-examples/pom.xml %{name}-examples/src %{buildroot}%{_datadir}/%{name}/examples
 
 %files -f .mfiles
 %doc README.txt docs/*
 %doc LICENSE.txt
-%dir %{_javadir}/%{name}
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
@@ -232,9 +201,12 @@ cp -r %{name}-examples/pom.xml %{name}-examples/src %{buildroot}%{_datadir}/%{na
 
 %files examples -f .mfiles-examples
 %doc LICENSE.txt
-%{_datadir}/%{name}-%{version}
+%{_datadir}/%{name}
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt1_2jpp8
+- new version
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.2-alt1_5jpp8
 - java 8 mass update
 
