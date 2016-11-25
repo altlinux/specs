@@ -1,19 +1,20 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           sablecc
-Version:        3.2
-Release:        alt3_10jpp8
+Version:        3.7
+Release:        alt1_2jpp8
 Summary:        A parser generator written in Java
 License:        LGPLv2+
 URL:            http://sablecc.org
-Source0:        http://downloads.sourceforge.net/sablecc/sablecc-3.2.zip
+# https://github.com/SableCC/sablecc
+Source0:        http://downloads.sourceforge.net/sablecc/sablecc-3.7.zip
 #Source1:        http://repo1.maven.org/maven2/sablecc/sablecc/3.2/sablecc-3.2.pom
 Patch0:         sablecc-fsf-addr.patch
 BuildArch:      noarch
@@ -58,8 +59,8 @@ ant -Dsablecc-anttask_available=true jar
 %mvn_artifact %{name}:%{name}:%{version} lib/%{name}.jar
 %mvn_install
 
-install -d -m 0755 $RPM_BUILD_ROOT%{_bindir}
-install -pm 0755 bin/%{name} $RPM_BUILD_ROOT%{_bindir}/%{name}
+mkdir -p %{buildroot}%{_bindir}
+install -pm 0755 bin/%{name} %{buildroot}%{_bindir}/%{name}
 
 %files -f .mfiles
 %{_bindir}/%{name}
@@ -68,6 +69,9 @@ install -pm 0755 bin/%{name} $RPM_BUILD_ROOT%{_bindir}/%{name}
 %doc doc/*
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.7-alt1_2jpp8
+- new version
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt3_10jpp8
 - new version
 
