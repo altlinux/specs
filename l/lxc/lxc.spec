@@ -26,7 +26,7 @@
 %define init_script systemd
 
 Name: lxc
-Version: 2.0.5
+Version: 2.0.6
 Release: alt1
 Packager: Denis Pynkin <dans@altlinux.org>
 
@@ -169,6 +169,9 @@ mkdir -p %buildroot%_cachedir/%name
 
 
 %changelog
+* Fri Nov 25 2016 Denis Pynkin <dans@altlinux.org> 2.0.6-alt1
+- Version updated
+
 * Sun Oct 23 2016 Denis Pynkin <dans@altlinux.org> 2.0.5-alt1
 - Version updated
 

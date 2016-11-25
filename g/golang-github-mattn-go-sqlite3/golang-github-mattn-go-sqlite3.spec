@@ -1,12 +1,12 @@
 %global import_path github.com/mattn/go-sqlite3
 
-%global commit b5c99a720374818b629fd1fbf6d2cbb4fb9a5644
-%global abbrev %(c=%{commit}; echo ${c:0:8})
+#global commit b5c99a720374818b629fd1fbf6d2cbb4fb9a5644
+#global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-github-mattn-go-sqlite3
-Version: 0
-Release: alt3.git%abbrev
+Version: 1.2.0
+Release: alt1
 Summary: sqlite3 driver conforming to the built-in database/sql interface
 License: MIT
 Group: Development/Other
@@ -28,6 +28,7 @@ sqlite3 driver conforming to the built-in database/sql interface
 Summary: sqlite3 driver conforming to the built-in database/sql interface
 Group: Development/Other
 Requires: golang
+Requires: golang(golang.org/x/net/context)
 Provides: golang(%import_path) = %version-%release
 
 %description devel
@@ -58,6 +59,9 @@ rm -rf -- %buildroot/%go_path/src/%import_path/sqlite3_test
 %go_path/src/*
 
 %changelog
+* Fri Nov 25 2016 Denis Pynkin <dans@altlinux.org> 1.2.0-alt1
+- Update
+
 * Tue Aug 23 2016 Denis Pynkin <dans@altlinux.org> 0-alt3.gitb5c99a72
 - Update
 
