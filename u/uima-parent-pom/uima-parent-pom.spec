@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          uima-parent-pom
-Version:       8
-Release:       alt1_8jpp8
+Version:       10
+Release:       alt1_2jpp8
 Summary:       Apache UIMA Parent POM
 License:       ASL 2.0
 URL:           http://uima.apache.org/
@@ -12,17 +15,15 @@ Source0:       https://github.com/apache/uima-build/archive/parent-pom-%{version
 # uima-parent-pom package don't include the license file
 # reported @ https://issues.apache.org/jira/browse/UIMA-3575
 Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
-# fix maven-plugin-bundle configuration
-Patch0:        uima-parent-pom-8.patch
 
 BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-plugin-build-helper
-#BuildRequires: maven-remote-resources-plugin
-BuildRequires: maven-antrun-plugin
 BuildRequires: mvn(ant-contrib:ant-contrib)
+BuildRequires: mvn(jakarta-regexp:jakarta-regexp)
 BuildRequires: mvn(org.apache.ant:ant-apache-regexp)
-#BuildRequires: maven-resources-plugin
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
 
 BuildArch:     noarch
 Source44: import.info
@@ -40,7 +41,12 @@ This package provides Parent for Apache UIMA Projects.
 %prep
 %setup -q -n uima-build-parent-pom-%{version}
 
-%patch0 -p0
+%pom_xpath_remove pom:Embed-Dependency
+%pom_xpath_remove pom:Embed-Directory
+%pom_xpath_remove pom:Bundle-ClassPath
+%pom_xpath_set pom:Include-Resource '{maven-resources}'
+# Deprecated entry
+%pom_xpath_remove pom:Bundle-RequiredExecutionEnvironment
 
 %pom_remove_plugin org.apache.uima:uima-build-helper-maven-plugin
 %pom_remove_plugin com.agilejava.docbkx:docbkx-maven-plugin
@@ -71,6 +77,9 @@ sed -i 's/\r//' LICENSE-2.0.txt README.txt
 %doc LICENSE-2.0.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 10-alt1_2jpp8
+- new version
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 8-alt1_8jpp8
 - java 8 mass update
 
