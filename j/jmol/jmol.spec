@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ perl(CGI.pm) perl(CGI/Carp.pm) perl(English.pm) perl(HTML/Parser.pm) perl(LWP.pm) perl(LWP/UserAgent.pm) unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -11,13 +11,13 @@ BuildRequires: jpackage-generic-compat
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%global pkgdate 2015.01.22
+%global pkgdate 2015.10.13
 # Build jsmol by default
 %bcond_without jsmol
 
 Name:        jmol
-Version:     14.2.12
-Release:     alt2_3.2015.01.22jpp8
+Version:     14.4.0
+Release:     alt1_2.2015.10.13jpp8
 Summary:     An open-source Java viewer for chemical structures in 3D
 Group:       Engineering
 # most is LGPLv2+, src/com/obrador is combination of IJG and BSD
@@ -35,18 +35,20 @@ Patch1:      jmol-14.0.11-dontsign.patch
 
 BuildRequires:    ant ant-contrib
 BuildRequires:    desktop-file-utils
-BuildRequires:    gettext-devel
+BuildRequires: gettext-tools libasprintf-devel
 BuildRequires:    apache-commons-cli
+BuildRequires:    java-devel >= 1.6.0
 BuildRequires:    jpackage-utils
-BuildRequires:    jspecview >= 2-6.1464svn
+BuildRequires:    jspecview >= 2
 BuildRequires:    naga
 # In newer releases some of the necessary Java classes are
 # in the browser plugin package
-BuildRequires:    icedtea-web
-Requires:         icedtea-web
+BuildRequires: java-1.8.0-openjdk-javaws mozilla-plugin-java-1.8.0-openjdk
+Requires: java-1.8.0-openjdk-javaws mozilla-plugin-java-1.8.0-openjdk
+Requires:         java >= 1.6.0
 Requires:         jpackage-utils
 Requires:         apache-commons-cli
-Requires:         jspecview >= 2-6.1464svn
+Requires:         jspecview >= 2
 Requires:         naga
 Source44: import.info
 
@@ -58,7 +60,7 @@ and researchers in chemistry and biochemistry.
 %package -n jsmol
 Summary:     JavaScript-Based Molecular Viewer From Jmol
 Group:       Engineering
-Requires:    %{name} = %{version}-%{release}
+Requires:    %{name} = %{version}
 BuildRequires: web-assets-devel
 Requires:    web-assets-filesystem
 
@@ -87,7 +89,7 @@ A "lite" version of JSmol provides minimal functionality
 %package javadoc
 Summary:     Java docs for %{name}
 Group:       Development/Java
-Requires:    %{name} = %{version}-%{release}
+Requires:    %{name} = %{version}
 Requires:    jpackage-utils
 BuildArch: noarch
 
@@ -98,7 +100,7 @@ This package contains the API documentation for %{name}.
 %package doc
 Summary:     Documentation for %{name}
 Group:       Development/Java
-Requires:    %{name} = %{version}-%{release}
+Requires:    %{name} = %{version}
 
 %description doc
 The documentation for %{name}.
@@ -193,6 +195,9 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 %doc build/doc/*
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 14.4.0-alt1_2.2015.10.13jpp8
+- new version
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 14.2.12-alt2_3.2015.01.22jpp8
 - rebuild with mozilla-plugin-java-1.8.0-openjdk
 
