@@ -1,12 +1,12 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:		canl-java
-Version:	2.2.0
+Version:	2.2.1
 Release:	alt1_1jpp8
 Summary:	EMI Common Authentication library - bindings for Java
 
@@ -20,6 +20,8 @@ URL:		https://github.com/eu-emi/%{name}/
 Source0:	https://github.com/eu-emi/%{name}/archive/canl-%{version}.tar.gz
 #		Disable tests that require network connections
 Patch0:		%{name}-test.patch
+#		https://github.com/eu-emi/canl-java/pull/86
+Patch1:		%{name}-javadoc.patch
 BuildArch:	noarch
 
 BuildRequires:	maven-local
@@ -43,6 +45,7 @@ Javadoc documentation for EMI caNl.
 %prep
 %setup -q -n %{name}-canl-%{version}
 %patch0 -p1
+%patch1 -p1
 
 # Remove maven-wagon-webdav-jackrabbit dependency
 %pom_xpath_remove pom:build/pom:extensions
@@ -69,6 +72,9 @@ Javadoc documentation for EMI caNl.
 %doc LICENSE.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_1jpp8
+- new version
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_1jpp8
 - new version
 
