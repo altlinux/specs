@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global bcver   1.51
 
 Name:           portecle
-Version:        1.9
+Version:        1.10
 Release:        alt1_1jpp8
 Summary:        Multipurpose keystore and certificate tool
 
@@ -27,8 +27,9 @@ BuildRequires:  jpackage-utils
 Requires:       bouncycastle >= %{bcver}
 Requires:       bouncycastle-pkix >= %{bcver}
 # >= 1.7.5-3.9 for _prefer_jre in launcher script (#461683, #498831)
-Requires:       jpackage-utils >= 1.7.5-3.9
+Requires:       jpackage-utils >= 1.7.5
 Requires:       icon-theme-hicolor
+BuildRequires:  java-devel >= 1.7.0
 Requires:       jre >= 1.7.0
 Source44: import.info
 
@@ -86,6 +87,9 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_1jpp8
+- new version
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.9-alt1_1jpp8
 - java 8 mass update
 
