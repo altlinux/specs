@@ -3,7 +3,7 @@
 %define gtkver 2
 
 Name: lxde-%origname
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: LXPanel is a lightweight X11 desktop panel
@@ -68,6 +68,9 @@ for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Nov 23 2016 Anton Midyukov <antohami@altlinux.org> 0.9.1-alt1
+- new version 0.9.1
+
 * Sun Nov 20 2016 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
 - new version 0.9.0
 
