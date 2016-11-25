@@ -1,21 +1,24 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name android-json-org-java
-%define version 5.0.2
+%define version 6.0.0
 %global namedreltag _r1
 %global namedversion %{version}%{?namedreltag}
 %global oname json
 Name:          android-json-org-java
-Version:       5.0.2
-Release:       alt1_0.2.r1jpp8
+Version:       6.0.0
+Release:       alt1_0.3.r1jpp8
 Summary:       Androids rewrite of the evil licensed Json.org
 License:       ASL 2.0
 URL:           https://android.googlesource.com/platform/libcore/+/master/json
 # git clone https://android.googlesource.com/platform/libcore/ android-json-org-java
-# (cd android-json-org-java/json/ && git archive --format=tar --prefix=android-json-org-java-5.0.2_r1/ android-5.0.2_r1 | xz > ../../android-json-org-java-5.0.2_r1.tar.xz)
+# (cd android-json-org-java/json/ && git archive --format=tar --prefix=android-json-org-java-6.0.0_r1/ android-6.0.0_r1 | xz > ../../android-json-org-java-6.0.0_r1.tar.xz)
 Source0:       %{name}-%{namedversion}.tar.xz
 Source1:       %{name}-template.pom
 # android-json-org-java package don't include the license file
@@ -74,6 +77,9 @@ rm -rf MODULE_LICENSE_BSD_LIKE
 %doc LICENSE-2.0.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt1_0.3.r1jpp8
+- new version
+
 * Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.2-alt1_0.2.r1jpp8
 - new version
 
