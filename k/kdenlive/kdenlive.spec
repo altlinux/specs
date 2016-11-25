@@ -1,8 +1,8 @@
 %define req_ver_mlt 0.9.0
 
 Name: kdenlive
-Version: 16.08.2
-Release: alt2
+Version: 16.08.3
+Release: alt1
 %K5init no_altplace man
 
 Summary: KDE Non Linear Video Editor
@@ -75,6 +75,12 @@ sed -i 's|^Exec=\(.*\)|Exec=kde5 \1|' %buildroot/%_K5xdgapp/org.kde.kdenlive.des
 %_man1dir/kdenlive*
 
 %changelog
+* Fri Nov 25 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt1
+- new version
+
+* Thu Oct 20 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.2-alt1.M80P.1
+- build for M80P
+
 * Thu Oct 20 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.2-alt2
 - don't use ffmpeg for audio thumbnails by default(ALT#32544)
 
