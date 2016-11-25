@@ -1,27 +1,26 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          staxmate
-Version:       2.2.1
-Release:       alt1_3jpp8
+Version:       2.3.0
+Release:       alt1_2jpp8
 Summary:       Light-weight Java framework for streaming XML processing
 License:       BSD
-URL:           http://github.com/FasterXML/StaxMate
+URL:           https://github.com/FasterXML/StaxMate
 Source0:       https://github.com/FasterXML/StaxMate/archive/%{name}-%{version}.tar.gz
 
-BuildRequires: mvn(javax.xml.stream:stax-api)
-BuildRequires: mvn(org.codehaus.woodstox:stax2-api)
-
-# test deps
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.codehaus.woodstox:woodstox-core-asl)
-
-BuildRequires: mvn(net.java:jvnet-parent:pom:)
-BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
-
 BuildRequires: maven-local
-BuildRequires: maven-plugin-bundle
+BuildRequires: mvn(javax.xml.stream:stax-api)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(net.java:jvnet-parent:pom:)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.codehaus.woodstox:stax2-api)
+BuildRequires: mvn(org.codehaus.woodstox:woodstox-core-asl)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildArch:     noarch
 Source44: import.info
@@ -52,10 +51,11 @@ find . -name '*.class' -delete
 
 # Unwanted
 %pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :cobertura-maven-plugin
 
 # these tests fails
-rm -r src/test/java/org/codehaus/staxmate/dom/TestDOMConverter.java \
- src/test/java/org/codehaus/staxmate/out/TestBinary.java
+#rm src/test/java/org/codehaus/staxmate/dom/TestDOMConverter.java \
+# src/test/java/org/codehaus/staxmate/out/TestBinary.java
 
 %mvn_file : %{name}
 
@@ -74,6 +74,9 @@ rm -r src/test/java/org/codehaus/staxmate/dom/TestDOMConverter.java \
 %doc LICENSE.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_2jpp8
+- new version
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_3jpp8
 - java8 mass update
 
