@@ -1,11 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
 Name:          apache-commons-pool2
-Version:       2.4.1
-Release:       alt1_1jpp8
+Version:       2.4.2
+Release:       alt1_2jpp8
 Summary:       Apache Commons Object Pooling Library 2.x series
 License:       ASL 2.0
 URL:           http://commons.apache.org/proper/commons-pool/
@@ -14,11 +16,7 @@ Source0:       http://www.apache.org/dist/commons/pool/source/commons-pool2-%{ve
 BuildRequires: maven-local
 BuildRequires: mvn(cglib:cglib)
 BuildRequires: mvn(junit:junit)
-%if %{fedora} > 20
 BuildRequires: mvn(org.apache.commons:commons-parent:pom:)
-%else
-BuildRequires: mvn(org.apache.commons:commons-parent)
-%endif
 BuildRequires: mvn(org.ow2.asm:asm-util)
 
 BuildArch:     noarch
@@ -63,6 +61,9 @@ This package contains javadoc for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt1_2jpp8
+- new version
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1_1jpp8
 - new version
 
