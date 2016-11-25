@@ -1,13 +1,14 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           pdfbox
-Version:        1.8.10
+Version:        1.8.11
 Release:        alt1_1jpp8
 Summary:        Java library for working with PDF documents
 License:        ASL 2.0
@@ -18,7 +19,7 @@ Patch0:         %{name}-nodownload.patch
 #Use sysytem bitream-vera-sans-fonts instead of bundled fonts
 Patch1:         %{name}-1.2.0-bitstream.patch
 
-Patch2:         pdfbox-1.8.10-port-to-bouncycastle1.50.patch
+Patch2:         pdfbox-1.8.11-port-to-bouncycastle1.50.patch
 
 BuildRequires:  fonts-ttf-vera
 BuildRequires:  fontconfig
@@ -38,6 +39,7 @@ BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
 
 BuildArch:      noarch
 
+Requires:       java >= 1.6.0
 Requires:       fonts-ttf-vera
 Source44: import.info
 
@@ -121,12 +123,13 @@ find -name '*.jar' -delete
 %pom_disable_module preflight-app
 %pom_disable_module app
 
+%pom_remove_plugin -r :animal-sniffer-maven-plugin
 # cobertura-maven-plugin has been retired
 %pom_remove_plugin :cobertura-maven-plugin preflight
 %pom_remove_dep javax.activation:activation preflight
 
 %pom_change_dep -r :ant-nodeps :ant
-%pom_xpath_set -r "pom:dependency[pom:artifactId = 'log4j']/pom:version" 1.2.17
+%pom_change_dep -r :log4j ::1.2.17
 
 #Fix line endings
 sed -i -e 's|\r||' RELEASE-NOTES.txt
@@ -222,6 +225,9 @@ sed -i -e /filtering/d examples/pom.xml
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.11-alt1_1jpp8
+- new version
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.10-alt1_1jpp8
 - new version
 
