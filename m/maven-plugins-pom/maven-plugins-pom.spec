@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,11 +8,11 @@ BuildRequires: jpackage-generic-compat
 %global short_name maven-plugins
 
 Name:           %{short_name}-pom
-Version:        27
-Release:        alt1_3jpp8
+Version:        28
+Release:        alt1_2jpp8
 Summary:        Maven Plugins POM
 BuildArch:      noarch
-Group:          Development/Java
+Group:          Development/Other
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/
 Source:         http://repo.maven.apache.org/maven2/org/apache/maven/plugins/%{short_name}/%{version}/%{short_name}-%{version}-source-release.zip
@@ -42,6 +43,9 @@ Apache Maven plugins.
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 28-alt1_2jpp8
+- new version
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 27-alt1_3jpp8
 - new version
 
