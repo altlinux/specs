@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.7.1
-Release: alt1
+Release: alt2
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -767,6 +767,25 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Fri Nov 25 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.1-alt2
+- Upstream updates:
+ - x86/hvm: Fix the handling of non-present segments.
+   This is CVE-2016-9386 / XSA-191.
+ - x86/HVM: don't load LDTR with VM86 mode attrs during task switch.
+   This is CVE-2016-9382 / XSA-192.
+ - x86/PV: writes of %%fs and %%gs base MSRs require canonical addresses
+   This is CVE-2016-9385 / XSA-193.
+ - libelf: fix stack memory leak when loading 32 bit symbol tables.
+   This is CVE-2016-9384 / XSA-164.
+ - x86emul: fix huge bit offset handling.
+   This is CVE-2016-9383 / XSA-195.
+ - x86/emul: correct the IDT entry calculation in inject_swint().
+   This is CVE-2016-9377 / part of XSA-196.
+ - x86/svm: fix injection of software interrupts.
+   This is CVE-2016-9378 / part of XSA-196.
+ - pygrub: Properly quote results, when returning them to the caller.
+   This is CVE-2016-9379 and CVE-2016-9380 / XSA-198.
+
 * Wed Nov 09 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.1-alt1
 - 4.7.1 release
 
