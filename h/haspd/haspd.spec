@@ -1,4 +1,4 @@
-# Etersoft (c) 2006, 2007, 2008, 2009, 2010, 2013, 2015
+# Etersoft (c) 2006, 2007, 2008, 2009, 2010, 2013, 2015, 2016
 # Multiplatform spec for autobuild system Korinf
 
 # For build install,
@@ -11,7 +11,7 @@
 
 Name: haspd
 Version: 7.40
-Release: alt4.1
+Release: alt10
 
 Summary: Hardware key protection drivers and license managers
 
@@ -28,6 +28,10 @@ BuildRequires(pre): rpm-build-intro rpm-build-compat
 BuildRequires: kernel-build-tools libusb-devel libncurses-devel
 
 %define module_dir /lib/modules
+
+# forbid future stripping
+# http://bugs.etersoft.ru/show_bug.cgi?id=10819
+%global __strip /bin/true
 
 Obsoletes: aksusbd
 Provides: aksusbd
@@ -194,8 +198,26 @@ ln -s /lib/libusb-1.0.so.0 %buildroot/lib/%name/libusb-1.0.so.0
 #module_dir/2*
 
 %changelog
+* Fri Nov 25 2016 Vitaly Lipatov <lav@altlinux.ru> 7.40-alt10
+- require i586-libusb in ALT Linux arepo (ALT bug 32808) (thanks, cas@)
+
 * Fri Nov 25 2016 Andrey Cherepanov <cas@altlinux.org> 7.40-alt4.1
 - require i586-libusb in ALT Linux arepo
+
+* Tue Apr 05 2016 Konstantin Artyushkin <akv@altlinux.org> 7.40-alt9
+- fix KERNELVERSION at DEPMODULEPATH
+
+* Wed Mar 16 2016 Konstantin Artyushkin <akv@altlinux.org> 7.40-alt8
+- aksparlnx/build.sh: added support for kernels > 3.15
+
+* Tue Mar 15 2016 Konstantin Artyushkin <akv@altlinux.org> 7.40-alt7
+- add support for kervel > 3.15
+
+* Wed Feb 03 2016 Vitaly Lipatov <lav@altlinux.ru> 7.40-alt6
+- skip prebuilt binary stripping again (eterbug #10819)
+
+* Wed Feb 03 2016 Vitaly Lipatov <lav@altlinux.ru> 7.40-alt5
+- skip prebuilt binary stripping (eterbug #10819)
 
 * Fri Dec 04 2015 Vitaly Lipatov <lav@altlinux.ru> 7.40-alt4
 - allow override with KERNELVERSION
