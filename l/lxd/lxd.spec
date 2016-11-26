@@ -11,7 +11,7 @@
 %define lxduser lxd
 
 Name:		lxd
-Version:	2.6
+Version:	2.6.2
 Release:	alt1
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
@@ -22,6 +22,7 @@ URL:		https://%import_path
 Packager:	Denis Pynkin <dans@altlinux.ru>
 
 Source0:	%name-%version.tar
+Patch:		%name-%version-%release.patch
 Source2:	lxd-image-update.cron
 Source3:	lxd.default
 Source4:	lxd.dnsmasq
@@ -37,6 +38,7 @@ BuildRequires(pre): rpm-build-golang
 
 Requires:	shadow-submap
 Requires:	lxc-libs
+Requires:	cgmanager
 Requires:	lxcfs
 Requires:	btrfs-progs
 Requires:	lvm2
@@ -81,6 +83,7 @@ which use the supplementary Go tools libraries with %import_path imports.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -170,6 +173,13 @@ cp -av scripts/lx* %buildroot/%_bindir/
 %go_path/src/*
 
 %changelog
+* Sat Nov 26 2016 Denis Pynkin <dans@altlinux.org> 2.6.2-alt1
+- new version 2.6.2
+
+* Sat Nov 26 2016 Denis Pynkin <dans@altlinux.org> 2.6-alt2
+- Added cgmanager dependency back
+- Patch included
+
 * Fri Nov 25 2016 Denis Pynkin <dans@altlinux.org> 2.6-alt1
 - new version 2.6
 
