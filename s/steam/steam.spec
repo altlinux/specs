@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.54
-Release: alt2
+Release: alt3
 
 Summary: Launcher for the Steam software distribution service
 License: Proprietary
@@ -64,6 +64,9 @@ savegame and screenshot functionality, and many social features.
 %config %_udevrulesdir/60-HTC-Vive-perms.rules
 
 %changelog 
+* Sat Nov 26 2016 Nazarov Denis <nenderus@altlinux.org> 1.0.0.54-alt3
+- Fix udev rules for correctly emulation gamepad with Steam Controller after reconnect
+
 * Sat Nov 26 2016 Nazarov Denis <nenderus@altlinux.org> 1.0.0.54-alt2
 - Add patch to fix udev rules for correctly emulation gamepad with Steam Controller
 
