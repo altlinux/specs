@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.54
-Release: alt1
+Release: alt2
 
 Summary: Launcher for the Steam software distribution service
 License: Proprietary
@@ -14,6 +14,7 @@ ExclusiveArch: %ix86
 
 Source0: http://repo.steampowered.com/%name/pool/%name/s/%name/%{name}_%version.tar.gz
 Patch0: %name-apt-alt.patch
+Patch1: %name-udev-alt.patch
 
 Requires: curl
 Requires: glibc-pthread >= 2.15
@@ -34,6 +35,7 @@ savegame and screenshot functionality, and many social features.
 %prep
 %setup -n %name
 %patch0 -p1
+%patch1 -p1
 
 %install
 %makeinstall_std
@@ -62,6 +64,9 @@ savegame and screenshot functionality, and many social features.
 %config %_udevrulesdir/60-HTC-Vive-perms.rules
 
 %changelog 
+* Sat Nov 26 2016 Nazarov Denis <nenderus@altlinux.org> 1.0.0.54-alt2
+- Add patch to fix udev rules for correctly emulation gamepad with Steam Controller
+
 * Thu Nov 24 2016 Nazarov Denis <nenderus@altlinux.org> 1.0.0.54-alt1
 - Version 1.0.0.54
 
