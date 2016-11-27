@@ -1,36 +1,38 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 BuildRequires: rpm-build-java-osgi
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name eclipselink-persistence-api
-%define version 2.0.5
+%define version 2.1.0
 %global oname javax.persistence
-%global namedreltag %{nil}
+%global namedreltag .v201304241213
 %global namedversion %{version}%{?namedreltag}
+%global api_version 2.1
 Name:          eclipselink-persistence-api
-Version:       2.0.5
-Release:       alt1_5jpp8
-Summary:       JPA 2.0 Spec OSGi Bundle
+Version:       2.1.0
+Release:       alt1_2jpp8
+Summary:       JPA 2.1 Spec OSGi Bundle
 License:       EPL and ASL 2.0
 URL:           http://www.eclipse.org/eclipselink/
-#Source0:       https://github.com/eclipse/javax.persistence/archive/2.0.5.v201212031355.tar.gz
-Source0:       http://maven.eclipse.org/nexus/content/repositories/build/org/eclipse/persistence/%{oname}/%{namedversion}/%{oname}-%{namedversion}-sources.jar
-Source1:       http://maven.eclipse.org/nexus/content/repositories/build/org/eclipse/persistence/%{oname}/%{namedversion}/%{oname}-%{namedversion}.pom
-# add org.eclipse.osgi as build dep
-# add maven-bundle-plugin conf
-Patch0:        %{name}-2.0.5-build.patch
+#Source0:       https://github.com/eclipse/javax.persistence/archive/%%{namedversion}.tar.gz
+Source0:       http://git.eclipse.org/c/eclipselink/javax.persistence.git/snapshot/%{oname}-%{namedversion}.tar.xz
+Source1:       eclipse-javax.persistence-template.pom.xml
 
-BuildRequires: mvn(org.eclipse.osgi:org.eclipse.osgi)
+BuildRequires: java-javadoc
 BuildRequires: maven-local
-BuildRequires: maven-plugin-bundle
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.eclipse.osgi:org.eclipse.osgi)
 
 BuildArch:     noarch
 Source44: import.info
 
 %description
-EclipseLink definition of the Java Persistence 2.0 API.
+EclipseLink definition of the Java Persistence 2.1 API.
 
 %package javadoc
 Group: Development/Java
@@ -41,34 +43,22 @@ BuildArch: noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q -c
-
-# fixing incomplete source directory structure
-mkdir -p src/main/java
-mv org src/main/java/
-mv javax src/main/java/
-
-mkdir src/main/resources
-cp -p *.html src/main/resources/
-
-# clone source directory structure
-find src/main/java/ -type d | while read dirname ; do
-  newdirname=`echo $dirname | sed "s:src/main/java:src/main/resources:g"`
-  mkdir -p $newdirname
-done
-
-# copy everything except *.java sources
-find src/main/java/ -type f | grep -v "\.java" | while read cpfrom ; do
-  cpto=`echo $cpfrom | sed "s:src/main/java:src/main/resources:g"`
-  cp $cpfrom $cpto
-done
+%setup -q -n %{oname}-%{namedversion}
 
 cp -p %{SOURCE1} pom.xml
-%patch0 -p0
+sed -i "s|@VERSION@|%{version}|" pom.xml
+sed -i "s|@API_VERSION@|%{api_version}|" pom.xml
+sed -i "s|@IMPL_VERSION@|%{namedversion}|" pom.xml
+
+cp -p resource/{about,license,readme}.html .
+
+mkdir -p target/classes
+rm -r META-INF/MANIFEST.MF
+mv META-INF target/classes/
 
 # fix non ASCII chars
-for s in src/main/java/javax/persistence/EntityManager.java\
-  src/main/java/javax/persistence/MapsId.java;do
+for s in src/javax/persistence/EntityManager.java\
+  src/javax/persistence/MapsId.java;do
   native2ascii -encoding UTF8 ${s} ${s}
 done
 
@@ -82,13 +72,16 @@ done
 %mvn_install
 
 %files -f .mfiles
-%doc about.html readme.html
+%doc about.html changes readme.html changes readme.txt
 %doc license.html
 
 %files javadoc -f .mfiles-javadoc
-%doc license.html
+%doc license.html readme.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_2jpp8
+- new version
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.5-alt1_5jpp8
 - java 8 mass update
 
