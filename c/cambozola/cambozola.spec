@@ -1,18 +1,19 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           cambozola
-Version:        0.93
-Release:        alt1_3jpp8
+Version:        0.936
+Release:        alt1_2jpp8
 Summary:        A viewer for multipart jpeg streams
 
-Group:          Development/Java
+Group:          Development/Other
 License:        GPLv2+
 URL:            http://www.charliemouse.com/code/cambozola/index.html
-Source0:        http://www.charliemouse.com:8080/code/cambozola/%{name}-latest.tar.gz
+Source0:        http://www.andywilcock.com/code/cambozola/%{name}-latest.tar.gz
+
 
 #patch to add javadoc generation in build.xml
 Patch0:         %{name}-%{version}-add_javadoc.patch
@@ -20,9 +21,11 @@ Patch0:         %{name}-%{version}-add_javadoc.patch
 
 BuildArch:      noarch
 BuildRequires:  jpackage-utils
+BuildRequires:  java-devel
 BuildRequires:  ant
 #BuildRequires:  ant-nodeps
 Requires:       jpackage-utils
+Requires:       java
 Source44: import.info
 
 %description
@@ -76,6 +79,9 @@ cp -rp javadoc/*  \
 
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.936-alt1_2jpp8
+- new version
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.93-alt1_3jpp8
 - new version
 
