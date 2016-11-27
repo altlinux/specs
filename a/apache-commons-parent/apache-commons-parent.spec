@@ -1,19 +1,22 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 %global short_name      commons-parent
 
 Name:             apache-%{short_name}
-Version:          38
-Release:          alt1_1jpp8
+Version:          39
+Release:          alt1_2jpp8
 Summary:          Apache Commons Parent Pom
-Group:            Development/Java
+Group:            Development/Other
 License:          ASL 2.0
 URL:              http://svn.apache.org/repos/asf/commons/proper/%{short_name}/tags/%{short_name}-%{version}/
 
-# svn export http://svn.apache.org/repos/asf/commons/proper/commons-parent/tags/commons-parent-38
-# tar caf commons-parent-38.tar.xz commons-parent-38
+# svn export http://svn.apache.org/repos/asf/commons/proper/commons-parent/tags/commons-parent-39
+# tar caf commons-parent-39.tar.xz commons-parent-39
 Source0:          %{short_name}-%{version}.tar.xz
 
 BuildArch:        noarch
@@ -53,6 +56,9 @@ The Project Object Model files for the apache-commons packages.
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:39-alt1_2jpp8
+- new version
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:38-alt1_1jpp8
 - new version
 
