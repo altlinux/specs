@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java rpm-macros-fedora-compat
-BuildRequires: gcc-c++
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
+BuildRequires: gcc-c++ java-devel-default python-devel rpm-build-java rpm-build-python
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             dogtag-pki-theme
-Version:          10.2.6
+Version:          10.3.1
 Release:          alt1_1jpp8
 Summary:          Certificate System - Dogtag PKI Theme Components
 URL:              http://pki.fedoraproject.org/
@@ -17,7 +17,8 @@ BuildArch:        noarch
 
 
 BuildRequires: ctest cmake
-BuildRequires:    jpackage-utils >= 1.7.5-10
+BuildRequires:    java-devel >= 1.7.0
+BuildRequires:    jpackage-utils >= 1.7.5
 
 %if 0%{?rhel}
 # NOTE:  In the future, as a part of its path, this URL will contain a release
@@ -97,6 +98,7 @@ This package is used by the Dogtag Certificate System.
 Summary:          Certificate System - PKI Console User Interface
 Group:            System/Base
 
+Requires:         java >= 1.7.0
 
 %if 0%{?rhel}
 # EPEL version of Dogtag "theme" conflicts with all versions of Red Hat "theme"
@@ -141,16 +143,9 @@ cd build
 
 
 # NOTE:  Several "theme" packages require ownership of the "/usr/share/pki"
-#        directory because the PKI subsystems (CA, DRM, OCSP, TKS, RA, TPS)
+#        directory because the PKI subsystems (CA, KRA, OCSP, TKS, TPS)
 #        which require them may be installed either independently or in
 #        multiple combinations.
-#
-#        Since CA, DRM, OCSP, and TKS subsystems all require the
-#        "dogtag-pki-common-theme" as well as their individual "themes",
-#        only "dogtag-pki-common-theme" needs to require this directory.
-#
-#        However, RA and TPS subsystems still require their own individual
-#        ownership of this directory.
 
 %files -n dogtag-pki-server-theme
 %doc dogtag/common-ui/LICENSE
@@ -164,6 +159,9 @@ cd build
 
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 10.3.1-alt1_1jpp8
+- new version
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 10.2.6-alt1_1jpp8
 - new version
 
