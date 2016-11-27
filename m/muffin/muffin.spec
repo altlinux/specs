@@ -1,7 +1,7 @@
 %def_enable gtk_doc
 
 Name: muffin
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 
 Summary: Window and compositing manager based on Clutter
@@ -12,7 +12,6 @@ Url: https://github.com/linuxmint/muffin
 # To generate tarball
 # wget https://github.com/linuxmint/muffin/tarball/1.0.2 -O muffin-1.0.2.tar.gz
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 Requires: lib%name = %version-%release
 Requires(post,preun): GConf
@@ -106,7 +105,6 @@ GObject introspection devel data for the Muffin library
 
 %prep
 %setup -n %name-%version
-%patch -p1
 
 %build
 %autoreconf
@@ -165,6 +163,9 @@ GObject introspection devel data for the Muffin library
 
 
 %changelog
+* Fri Nov 25 2016 Vladimir Didenko <cow@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
 * Fri Nov 11 2016 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt1
 - 3.2.0
 

@@ -1,7 +1,7 @@
 %define ver_major 3.2
 
 Name: cinnamon-screensaver
-Version: %ver_major.3
+Version: %ver_major.6
 Release: alt1
 
 Summary: Cinnamon Screensaver
@@ -105,6 +105,9 @@ GObject introspection devel data for the %name library
 %_datadir/gir-1.0/*
 
 %changelog
+* Fri Nov 25 2016 Vladimir Didenko <cow@altlinux.org> 3.2.6-alt1
+- 3.2.6
+
 * Fri Nov 18 2016 Vladimir Didenko <cow@altlinux.org> 3.2.3-alt1
 - 3.2.3-2-gac3d612
 
