@@ -1,19 +1,23 @@
 Epoch: 1
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 %global short_name      commons-validator
 
 Name:             apache-%{short_name}
-Version:          1.4.1
-Release:          alt1_1jpp8
+Version:          1.5.0
+Release:          alt1_2jpp8
 Summary:          Apache Commons Validator
-Group:            Development/Java
+Group:            Development/Other
 License:          ASL 2.0
 URL:              http://commons.apache.org/validator/
 Source0:          http://www.apache.org/dist/commons/validator/source/%{short_name}-%{version}-src.tar.gz
 BuildArch:        noarch
 
+BuildRequires:    java-devel >= 1.6.0
 BuildRequires:    jpackage-utils
 BuildRequires:    apache-commons-beanutils
 BuildRequires:    apache-commons-digester
@@ -62,6 +66,9 @@ sed -i 's/\r//' NOTICE.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.5.0-alt1_2jpp8
+- new version
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.4.1-alt1_1jpp8
 - new version
 
