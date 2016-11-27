@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -10,12 +10,12 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name objectweb-asm
-%define version 5.0.3
+%define version 5.0.4
 %{?scl:%scl_package objectweb-asm}
 %{!?scl:%global pkg_name %{name}}
 
 Name:           %{?scl_prefix}objectweb-asm
-Version:        5.0.3
+Version:        5.0.4
 Release:        alt1_2jpp8
 Summary:        Java bytecode manipulation and analysis framework
 License:        BSD
@@ -82,6 +82,9 @@ done
 %doc LICENSE.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.0.4-alt1_2jpp8
+- new version
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.0.3-alt1_2jpp8
 - java 8 mass update
 
