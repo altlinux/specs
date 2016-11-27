@@ -1,18 +1,22 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jnr-unixsocket
-Version:        0.8
-Release:        alt1_3jpp8
+Version:        0.10
+Release:        alt1_1jpp8
 Summary:        Unix sockets for Java
-Group:          Development/Java
+Group:          Development/Other
 License:        ASL 2.0
 URL:            http://github.com/jnr/%{name}/
-Source0:        https://github.com/jnr/%{name}/archive/%{version}.tar.gz
+Source0:        https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
 Source1:	MANIFEST.MF
 Patch0:		add-manifest.patch
 BuildArch:      noarch
 
+BuildRequires:  java-devel
 BuildRequires:  jnr-constants
 BuildRequires:  jnr-enxio
 BuildRequires:  jnr-ffi
@@ -39,7 +43,7 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{name}-%{version}
 %patch0
 cp %{SOURCE1} .
 
@@ -62,6 +66,9 @@ find ./ -name '*.class' -delete
 %doc LICENSE
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_1jpp8
+- new version
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_3jpp8
 - java 8 mass update
 
