@@ -1,16 +1,17 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 25
 Name:           openprops
-Version:        0.6
-Release:        alt1_9jpp8
+Version:        0.7.1
+Release:        alt1_1jpp8
 Summary:        An improved java.util.Properties from OpenJDK
 
-Group:          Development/Java
+Group:          Development/Other
 License:        GPLv2 with exceptions
 URL:            https://github.com/zanata/%{name}
 Source0:        https://github.com/zanata/%{name}/archive/%{name}-%{version}.zip
@@ -18,7 +19,6 @@ Source0:        https://github.com/zanata/%{name}/archive/%{name}-%{version}.zip
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -68,6 +68,14 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version} 
+%pom_remove_plugin org.apache.maven.plugins:maven-gpg-plugin
+
+%if 0%{?fedora} >= 21
+%pom_xpath_inject "pom:build/pom:plugins" "<plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-javadoc-plugin</artifactId><version>2.9.1</version><configuration><additionalparam>-Xdoclint:none</additionalparam></configuration><executions><execution><id>attach-javadocs</id><goals><goal>jar</goal></goals></execution></executions></plugin>" 
+%else
+%pom_xpath_inject "pom:build/pom:plugins" "<plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-javadoc-plugin</artifactId><version>2.9.1</version><executions><execution><id>attach-javadocs</id><goals><goal>jar</goal></goals></execution></executions></plugin>"
+%endif
+
  
 %build
 %mvn_build
@@ -85,6 +93,9 @@ cat .mfiles-javadoc >> .mfiles
 
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_1jpp8
+- new version
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.6-alt1_9jpp8
 - new version
 
