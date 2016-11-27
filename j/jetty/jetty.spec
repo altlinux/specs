@@ -1,6 +1,6 @@
 Group: Networking/WWW
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
@@ -8,16 +8,16 @@ BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 25
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define fedora 23
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jetty
-%define version 9.3.0
+%define version 9.3.7
 # Copyright (c) 2000-2007, JPackage Project
 # All rights reserved.
 #
@@ -61,7 +61,7 @@ BuildRequires: jpackage-generic-compat
 %global appdir      %{jettylibdir}/webapps
 
 
-%global addver v20150612
+%global addver v20160115
 
 # Conditionals to help breaking eclipse <-> jetty dependency cycle
 # when bootstrapping for new architectures
@@ -74,8 +74,8 @@ BuildRequires: jpackage-generic-compat
 %endif
 
 Name:           jetty
-Version:        9.3.0
-Release:        alt1_6jpp8
+Version:        9.3.7
+Release:        alt1_2.v20160115jpp8
 Summary:        Java Webserver and Servlet Container
 
 # Jetty is dual licensed under both ASL 2.0 and EPL 1.0, see NOTICE.txt
@@ -89,6 +89,7 @@ Source5:        %{name}.service
 Source6:        LICENSE-MIT
 
 Patch1:         0001-Fedora-jetty.home.patch
+Patch2:         0002-Port-to-current-mongo-java-driver.patch
 
 BuildRequires:  geronimo-annotation
 BuildRequires:  geronimo-jaspic-spec
@@ -103,6 +104,7 @@ BuildRequires:  glassfish-jsp
 BuildRequires:  glassfish-jsp-api
 BuildRequires:  tomcat-taglibs-standard
 BuildRequires:  tomcat-lib
+BuildRequires:  java-devel >= 1.7.0
 BuildRequires:  jpackage-utils
 BuildRequires:  maven-local >= 0.7.0
 BuildRequires:  jvnet-parent
@@ -204,13 +206,7 @@ Requires:       %{name}-http2-hpack = %{version}
 Requires:       %{name}-http2-http-client-transport = %{version}
 Requires:       %{name}-http2-server = %{version}
 
-# javax.servlet-api is provided by both glassfish-servlet-api and
-# tomcat-servlet-3.0-api, but we need version 3.1
-# this is a temporary solution, that should be removed when the duplicate
-# provides problem is solved
-Requires:       glassfish-servlet-api
-
-Requires(pre):    shadow-utils
+Requires(pre): shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
 
 
 Provides:       group(%username) = %jtuid
@@ -676,11 +672,10 @@ BuildArch: noarch
 %setup -q -n %{jettyname}-%{version}.%{addver}
 
 %patch1 -p1
+%patch2 -p1
 
 find . -name "*.?ar" -exec rm {} \;
 find . -name "*.class" -exec rm {} \;
-
-%pom_xpath_set -r 'pom:goal[text()="xdoc"]' report
 
 # Use proper groupId for apache ant
 %pom_xpath_replace "pom:groupId[text()='ant']" "<groupId>org.apache.ant</groupId>" jetty-ant/pom.xml
@@ -692,9 +687,6 @@ find . -name "*.class" -exec rm {} \;
 %pom_change_dep -r "org.glassfish.web:javax.servlet.jsp.jstl" "javax.servlet:jstl"
 
 %pom_change_dep -r org.mortbay.jasper:apache-jsp org.apache.tomcat:tomcat-jasper
-
-# Remove when alias is added to ecj
-%pom_change_dep -r 'org.eclipse.jetty.orbit:org.eclipse.jdt.core' 'org.eclipse.jdt:core'
 
 %pom_remove_plugin ":clirr-maven-plugin" jetty-websocket
 %pom_remove_plugin ":maven-eclipse-plugin" jetty-osgi
@@ -732,6 +724,7 @@ sed -i 's#;</Export-Package>#</Export-Package>#' jetty-http2/http2-common/pom.xm
 %pom_xpath_remove "pom:artifactItem[pom:artifactId[text()='test-jaas-webapp']]" jetty-distribution/pom.xml
 %pom_xpath_remove "pom:artifactItem[pom:artifactId[text()='test-jndi-webapp']]" jetty-distribution/pom.xml
 %pom_xpath_remove "pom:artifactItem[pom:artifactId[text()='test-spec-webapp']]" jetty-distribution/pom.xml
+%pom_remove_plugin :maven-dependency-plugin jetty-http2/http2-http-client-transport/pom.xml
 
 # Missing jars (jetty-setuid-java-1.0.0.jar,jetty-setuid-java-1.0.0-config.jar)
 %pom_xpath_remove "pom:execution[pom:id[text()='copy-setuid-deps']]" jetty-distribution/pom.xml
@@ -764,6 +757,10 @@ sed -i 's#;</Export-Package>#</Export-Package>#' jetty-http2/http2-common/pom.xm
 # Our resolver obviously can't handle this so we have to unpack these
 # manually before building distribution
 %pom_xpath_remove "pom:execution[pom:id[text()='unpack-config-deps']]" jetty-distribution
+
+# We don't have gcloud-java-datastore in Fedora
+%pom_disable_module jetty-gcloud
+%pom_remove_dep :jetty-gcloud-session-manager jetty-distribution
 
 # Disable OSGi
 %if %{without osgi}
@@ -877,6 +874,9 @@ done
 # replace remaining deps
 xmvn-subst "%{buildroot}%{apphomedir}/lib"
 
+# ecj doesn't have javapackages metadata in manifest
+ln -sf %{_javadir}/ecj.jar %{buildroot}%{apphomedir}/lib/apache-jsp/org.eclipse.jdt.core.compiler.ecj-*.jar
+
 remaining=`find %{buildroot}%{apphomedir}/ -type f -name '*.jar'`
 if [ -n "$remaining" ]; then echo "Unsymlinked jars in homedir: $remaining"; exit 1; fi
 
@@ -891,11 +891,11 @@ JETTY_PID=\$JETTY_RUN/jetty.pid
 EO_RC
 ) > %{buildroot}%{apphomedir}/.jettyrc
 
-mkdir -p %{buildroot}%{_sysconfdir}/tmpfiles.d
+mkdir -p %{buildroot}%{_tmpfilesdir}
 ( cat << EOF
-D /var/run/%{name} 0755 %username %{username} -
+D %{rundir} 0755 %username %{username} -
 EOF
-) > %{buildroot}%{_sysconfdir}/tmpfiles.d/%{name}.conf
+) > %{buildroot}%{_tmpfilesdir}/%{name}.conf
 
 rm -fr %{buildroot}%{apphomedir}/logs
 ln -s %{logdir} %{buildroot}%{apphomedir}/logs
@@ -951,7 +951,7 @@ exit 0
 %endif # with service
 %files
 %if %{with service}
-%config(noreplace) %{_sysconfdir}/tmpfiles.d/%{name}.conf
+%{_tmpfilesdir}/%{name}.conf
 %config(noreplace) %attr(644, root, root) %{_sysconfdir}/logrotate.d/%{name}
 %config(noreplace) %{confdir}
 %dir %{jettylibdir}
@@ -1044,6 +1044,9 @@ exit 0
 %doc NOTICE.txt LICENSE*
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 9.3.7-alt1_2.v20160115jpp8
+- new version
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 9.3.0-alt1_6jpp8
 - new version
 
