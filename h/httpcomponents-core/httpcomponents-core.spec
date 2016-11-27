@@ -1,11 +1,11 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 25
 # READ BEFORE UPDATING: After updating this package to new upstream
 # version eclipse-ecf should be rebuilt.  For more info, see:
 # https://fedoraproject.org/wiki/SIGs/Java#Package_Update.2FRebuild_Notes
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:              httpcomponents-core
 Summary:           Set of low level Java HTTP transport components for HTTP services
-Version:           4.4.1
+Version:           4.4.4
 Release:           alt1_2jpp8
 # The project is licensed under ASL 2.0, but it contains annotations
 # in the package org.apache.http.annotation which are derived
@@ -26,6 +26,7 @@ BuildArch:         noarch
 
 BuildRequires:     maven-local
 BuildRequires:     httpcomponents-project
+BuildRequires:     java >= 1.6.0
 BuildRequires:     jpackage-utils
 BuildRequires:     apache-commons-logging
 BuildRequires:     junit
@@ -107,6 +108,9 @@ done
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 4.4.4-alt1_2jpp8
+- new version
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 4.4.1-alt1_2jpp8
 - new version
 
