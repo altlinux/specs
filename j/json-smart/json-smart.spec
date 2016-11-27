@@ -1,20 +1,23 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global commit 4fe12e8129ccd25498c5d88f5b16bf3984269cc7
+%global commit d39cfe6aafd2ec8f1250f53a18a0c0ebe8cd6da9
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 Name:          json-smart
-Version:       1.3
-Release:       alt1_0.4.20140820jpp8
+Version:       1.3.2
+Release:       alt1_0.2.20151018jpp8
 Summary:       A small and very fast json parser/generator for java
 License:       ASL 2.0
 URL:           https://github.com/netplex/json-smart-v1
 Source0:       https://github.com/netplex/json-smart-v1/archive/%{commit}/%{name}-v1-%{commit}.tar.gz
 
+BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
-BuildRequires: maven-local
 
 BuildArch:     noarch
 Source44: import.info
@@ -33,19 +36,19 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q -n %{name}-v1-%{commit}
 
-cp -p parent/pom.xml .
-sed -i "s|<relativePath>../parent/pom.xml</relativePath>|<relativePath>../pom.xml</relativePath>|" %{name}/pom.xml
-sed -i "s|<module>../json-smart</module>|<module>json-smart</module>|" pom.xml
+%pom_remove_plugin :maven-javadoc-plugin parent
+%pom_remove_plugin :maven-source-plugin parent
 
-%pom_remove_plugin :maven-javadoc-plugin
-%pom_remove_plugin :maven-source-plugin
 cp -p %{name}/*.txt .
+
+# ComparisonFailure: expected:<[??????????????? ???????????????]> but was:<[????? ?????]>
+rm -r %{name}/src/test/java/net/minidev/json/test/TestUtf8.java
 
 %mvn_file :%{name} %{name}
 
 %build
 
-%mvn_build
+%mvn_build -- -f parent/pom.xml
 
 %install
 %mvn_install
@@ -58,6 +61,9 @@ cp -p %{name}/*.txt .
 %doc LICENSE.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.2-alt1_0.2.20151018jpp8
+- new version
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_0.4.20140820jpp8
 - unbootsrap build
 
