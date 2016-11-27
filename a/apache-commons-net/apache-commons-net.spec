@@ -1,5 +1,8 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
@@ -10,8 +13,8 @@ BuildRequires: jpackage-generic-compat
 %global short_name   commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        3.3
-Release:        alt1_6jpp8
+Version:        3.4
+Release:        alt1_3jpp8
 Summary:        Internet protocol suite Java library
 License:        ASL 2.0
 URL:            http://commons.apache.org/%{base_name}/
@@ -19,10 +22,11 @@ Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{sho
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  maven-plugin-build-helper
-BuildRequires:  apache-commons-parent
-# Test dependency
-BuildRequires:  junit
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
 Source44: import.info
 
 
@@ -47,12 +51,17 @@ sed -i 's/\r//' NOTICE.txt LICENSE.txt README RELEASE-NOTES.txt
 
 # This test fails with "Connection timed out"
 rm src/test/java/org/apache/commons/net/time/TimeTCPClientTest.java
+# Fails in Koji with "Address already in use"
+rm src/test/java/org/apache/commons/net/tftp/TFTPServerPathTest.java
+# Workaround for suprious test failure (NET-586)
+# Reported upstream: https://issues.apache.org/jira/browse/NET-586
+sed -i 's/testFeb29IfLeapYear/ignored_&/' $(find -name FTPTimestampParserImplTest.java)
 
 %mvn_file  : %{short_name} %{name}
 %mvn_alias : org.apache.commons:%{short_name}
 
 %build
-%mvn_build -- -Dmaven.test.failure.ignore=true
+%mvn_build
 
 %install
 %mvn_install
@@ -65,6 +74,9 @@ rm src/test/java/org/apache/commons/net/time/TimeTCPClientTest.java
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.4-alt1_3jpp8
+- new version
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt1_6jpp8
 - new version
 
