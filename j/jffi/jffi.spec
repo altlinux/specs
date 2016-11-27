@@ -1,6 +1,6 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ texinfo unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -10,8 +10,8 @@ BuildRequires: jpackage-generic-compat
 %global sover 1.2
 
 Name:           jffi
-Version:        1.2.9
-Release:        alt2_8jpp8
+Version:        1.2.10
+Release:        alt1_1jpp8
 Summary:        Java Foreign Function Interface
 
 License:        LGPLv3+ or ASL 2.0
@@ -119,6 +119,9 @@ ant -Duse.system.libffi=1 test
 %doc COPYING.GPL COPYING.LESSER LICENSE
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.10-alt1_1jpp8
+- new version
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.9-alt2_8jpp8
 - %%_jnidir set to /usr/lib/java
 
