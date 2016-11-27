@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:    jnr-netdb
-Version: 1.1.4
-Release: alt1_2jpp8
+Version: 1.1.5
+Release: alt1_1jpp8
 Summary: Network services database access for java
 
 Group:   System/Libraries
@@ -15,6 +15,7 @@ URL:     http://github.com/jnr/%{name}/
 Source0: https://github.com/jnr/%{name}/archive/%{version}.tar.gz
 BuildArch: noarch
 
+BuildRequires: java-devel
 BuildRequires: jpackage-utils
 BuildRequires: jnr-ffi
 BuildRequires: junit
@@ -55,6 +56,9 @@ find ./ -name '*.class' -exec rm -f '{}' \;
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.5-alt1_1jpp8
+- new version
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.4-alt1_2jpp8
 - java 8 mass update
 
