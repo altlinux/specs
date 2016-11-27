@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.94
+Release: alt100.95
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -532,6 +532,13 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Sun Nov 27 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt100.95
+- verify-elf: honor RUNPATH in addition to RPATH, too (like in lib.req).
+- (unnoticeable) shell.req: generalize the shebang regexp w.r.t. other
+  hardcoded locations of /usr/bin/env. (No need to be too strict here:
+  shebang.req should catch bad locations. It's not our job.)
+- %%distribution: ALT Linux --> ALT (ALT#32707).
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt100.94
 - shell.req: use the version of (ba|)sh from the shebang.
 - find-{requires,provides}: run all scripts even for empty lists of files.
