@@ -1,76 +1,117 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 25
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name bval
-%define version 0.5
+%define version 1.1.1
 %global namedreltag %{nil}
 %global namedversion %{version}%{?namedreltag}
-# disable guice module for now
-%global with_guice 0
+
+%if 0%{?fedora}
+# https://bugzilla.redhat.com/show_bug.cgi?id=1289726
+# https://issues.apache.org/jira/browse/BVAL-142
+# https://issues.apache.org/jira/browse/WEAVER-10
+#def_with commons-weaver
+%bcond_with commons-weaver
+%endif
+
 Name:          bval
-Version:       0.5
-Release:       alt1_11jpp8
+Version:       1.1.1
+Release:       alt1_1jpp8
 Summary:       Apache Bean Validation
 License:       ASL 2.0
 Url:           http://bval.apache.org/
-Source0:       http://www.apache.org/dist/%{name}/%{namedversion}/%{name}-parent-%{namedversion}-source-release.zip
-# add JSR303 full support
-Source1:       %{name}-0.5-depmap
-Patch0:        %{name}-0.3-incubating-core-FeaturesCapable.patch
-# fix jaxb 2.2 apis
-Patch1:        %{name}-0.4-jsr303-fix-jaxb-apis.patch
-# https://issues.apache.org/jira/browse/BVAL-127
-Patch2:        bval-0.5-java8.patch
+Source0:       http://www.apache.org/dist/bval/%{namedversion}/%{name}-parent-%{namedversion}-source-release.zip
 
-BuildRequires: apache-commons-beanutils
-BuildRequires: apache-commons-lang3
-#BuildRequires: bean-validation-api provides incopatible JSR349 APIs
-BuildRequires: freemarker
-BuildRequires: geronimo-parent-poms
-BuildRequires: geronimo-validation
-BuildRequires: glassfish-jaxb
-BuildRequires: glassfish-jaxb-api
-BuildRequires: hibernate-jpa-2.0-api
-BuildRequires: slf4j
-BuildRequires: xstream
-
-%if %with_guice
-BuildRequires: aopalliance
-BuildRequires: atinject
-BuildRequires: google-guice
-%endif
-
-# test deps
-BuildRequires: geronimo-osgi-support
-BuildRequires: junit
-BuildRequires: mockito
-BuildRequires: mvn(org.slf4j:jcl-over-slf4j)
-BuildRequires: mvn(org.slf4j:slf4j-simple)
-
-#BuildRequires: apache-rat-plugin
-#BuildRequires: buildnumber-maven-plugin
-BuildRequires: maven-antrun-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: jaxb2-maven-plugin
 BuildRequires: maven-local
-BuildRequires: maven-plugin-bundle
-BuildRequires: maven-surefire-provider-junit
-# force JSR303 apis
-Requires:      geronimo-validation
+BuildRequires: mvn(com.sun.xml.bind:jaxb-impl)
+BuildRequires: mvn(com.thoughtworks.xstream:xstream)
+BuildRequires: mvn(commons-beanutils:commons-beanutils-core)
+BuildRequires: mvn(javax.annotation:javax.annotation-api)
+BuildRequires: mvn(javax.el:javax.el-api)
+BuildRequires: mvn(javax.enterprise:cdi-api)
+BuildRequires: mvn(javax.inject:javax.inject)
+BuildRequires: mvn(javax.validation:validation-api)
+BuildRequires: mvn(javax.xml.bind:jaxb-api)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache:apache:pom:)
+BuildRequires: mvn(org.apache.ant:ant)
+BuildRequires: mvn(org.apache.commons:commons-lang3)
+%if %{with commons-weaver}
+BuildRequires: mvn(org.apache.commons:commons-weaver-privilizer)
+BuildRequires: mvn(org.apache.commons:commons-weaver-privilizer-api)
+BuildRequires: mvn(org.apache.commons:commons-weaver-processor)
+BuildRequires: mvn(org.apache.commons:commons-weaver-maven-plugin)
+%endif
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.geronimo.specs:geronimo-interceptor_3.0_spec)
+BuildRequires: mvn(org.apache.geronimo.specs:specs-parent:pom:)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
+BuildRequires: mvn(org.apache.rat:apache-rat-plugin)
+BuildRequires: mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+BuildRequires: mvn(org.codehaus.mojo:jaxb2-maven-plugin)
+BuildRequires: mvn(org.freemarker:freemarker)
+BuildRequires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.1-api)
+BuildRequires: mvn(org.mockito:mockito-core)
+BuildRequires: mvn(xpp3:xpp3)
+
 BuildArch:     noarch
 Source44: import.info
 
 %description
 Apache BVal delivers an implementation of the Bean Validation
-Specification (JSR303), which is TCK compliant and
+Specification (JSR-303 and JSR-346), which is TCK compliant and
 works on Java SE 5 or later. The initial codebase for the
 project was donated to the ASF by a SGA from Agimatec GmbH.
+
+%package extras
+Group: Development/Java
+Summary:       Apache BVal :: Extras
+
+%description extras
+BVal - non-JSR303 routines and constraints.
+
+%package json
+Group: Development/Java
+Summary:       Apache BVal :: JSON
+
+%description json
+BVal - Optional JSON Component.
+
+%package jsr
+Group: Development/Java
+Summary:       Apache BVal :: JSR 349
+
+%description jsr
+Implementation specific classes for JSR 349 Bean Validation 1.1.
+
+%package parent
+Group: Development/Java
+Summary:       Apache BVal :: Parent POM
+
+%description parent
+Apache BVal Parent POM.
+
+%package xstream
+Group: Development/Java
+Summary:       Apache BVal :: XStream
+
+%description xstream
+BVal XML Metadata with XStream.
 
 %package javadoc
 Group: Development/Java
@@ -85,126 +126,95 @@ This package contains javadoc for %{name}.
 find . -name "*.class" -delete
 find . -name "*.jar" -delete
 
-%patch0 -p0
-%patch1 -p0
-%patch2 -p1
-
-# Don't use buildnumber-plugin, because jna is required and currently broken in f17
-%pom_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
-
-%pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
-%pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin bval-xstream
-%pom_remove_plugin org.codehaus.mojo:ianal-maven-plugin
-%pom_remove_plugin org.codehaus.mojo:jdepend-maven-plugin
-%pom_remove_plugin :maven-source-plugin
-
-
-%pom_remove_dep org.apache.geronimo.specs:geronimo-jpa_2.0_spec
-%pom_xpath_inject "pom:project/pom:dependencyManagement/pom:dependencies" "
-  <dependency>
-    <groupId>org.hibernate.javax.persistence</groupId>
-    <artifactId>hibernate-jpa-2.0-api</artifactId>
-    <version>1.0.1.Final</version>
-  </dependency>"
-
-%if %with_guice
-# require guice with aop support
-# build failure bval-guice/src/main/java/org/apache/bval/guice/ValidationModule.java:[61,12] error: cannot find symbol
-%pom_remove_dep org.apache.bval:org.apache.bval.bundle bval-guice
-%pom_xpath_inject "pom:project/pom:dependencies" '
-  <dependency>
-    <groupId>org.apache.bval</groupId>
-    <artifactId>bval-core</artifactId>
-    <version>${project.version}</version>
-  </dependency>
-  <dependency>
-    <groupId>org.apache.bval</groupId>
-    <artifactId>bval-jsr303</artifactId>
-    <version>${project.version}</version>
-  </dependency>' bval-guice
-%else
-%pom_disable_module bval-guice
-%endif
-%pom_remove_dep org.apache.bval:org.apache.bval.bundle bval-extras
-%pom_xpath_inject "pom:project/pom:dependencies" '
-  <dependency>
-    <groupId>org.apache.bval</groupId>
-    <artifactId>bval-core</artifactId>
-    <version>${project.version}</version>
-  </dependency>' bval-extras
-%pom_xpath_inject "pom:project/pom:dependencies" '
-  <dependency>
-    <groupId>org.apache.bval</groupId>
-    <artifactId>bval-jsr303</artifactId>
-    <version>${project.version}</version>
-  </dependency>' bval-extras
-
-# fix koji build problems missing org.apache.geronimo.osgi.locator.ProviderLocator
-%pom_xpath_inject "pom:project/pom:dependencies" '
-  <dependency>
-    <groupId>org.apache.geronimo.specs</groupId>
-    <artifactId>geronimo-osgi-locator</artifactId>
-    <version>1.0</version>
-    <scope>test</scope>
-  </dependency>' bval-jsr303
-
-%pom_remove_dep :geronimo-jpa_2.0_spec bval-jsr303
-%pom_xpath_inject "pom:project/pom:dependencies" '
-  <dependency>
-    <groupId>org.hibernate.javax.persistence</groupId>
-    <artifactId>hibernate-jpa-2.0-api</artifactId>
-    <scope>provided</scope>
-    <optional>true</optional>
-  </dependency>' bval-jsr303
-  
-# unavailable deps
-# org.hibernate.jsr303.tck jsr303-tck 1.0.6.GA
-# org.jboss.test-harness jboss-test-harness-jboss-as-51 1.0.0
 %pom_disable_module bval-tck
-
+# org.hibernate.beanvalidation.tck:beanvalidation-tck-tests:1.1.3.Final
+%pom_disable_module bval-tck11
 %pom_disable_module bundle
 
-# fix non ASCII chars
-for s in bval-extras/src/main/java/org/apache/bval/extras/constraints/net/DomainValidator.java;do
-  native2ascii -encoding UTF8 ${s} ${s}
-done
+%pom_xpath_remove pom:Embed-Dependency bundle
 
-# Break build
-%pom_remove_plugin org.apache.rat:apache-rat-plugin
-rm -r bval-xstream/src/test/java/org/apache/bval/xml/BeanValidatorTest.java \
- bval-xstream/src/test/java/org/apache/bval/xml/XMLMetaBeanInfosTest.java \
- bval-xstream/src/test/java/org/apache/bval/xml/XMLMetaBeanManagerTest.java \
- bval-json/src/test/java/org/apache/bval/json/JSONGeneratorTest.java \
- bval-jsr303/src/test/java/org/apache/bval/jsr303/ValidationTest.java
+%pom_remove_plugin -r :findbugs-maven-plugin
+%pom_remove_plugin org.codehaus.mojo:ianal-maven-plugin
+%pom_remove_plugin org.codehaus.mojo:jdepend-maven-plugin
+%pom_remove_plugin -r :maven-source-plugin
 
-sed -i "s|<groupId>javax.validation</groupId>|<groupId>org.apache.geronimo.specs</groupId>|" \
- bval-jsr303/pom.xml bval-extras/pom.xml
-sed -i "s|<artifactId>validation-api</artifactId>|<artifactId>geronimo-validation_1.0_spec</artifactId>|" \
- bval-jsr303/pom.xml bval-extras/pom.xml
+# NoClassDefFoundError: org/xmlpull/v1/XmlPullParserFactory
+%pom_add_dep xpp3:xpp3:1.1.4c:test %{name}-json
+%pom_add_dep xpp3:xpp3:1.1.4c:test %{name}-xstream
+
+%if %{without commons-weaver}
+# Remove commons-weaver support
+%pom_remove_plugin -r :commons-weaver-maven-plugin
+%pom_remove_dep -r :commons-weaver-privilizer-api
+sed -i '/Privilizing/d' \
+ bval-core/src/main/java/org/apache/bval/model/MetaBean.java \
+ bval-core/src/main/java/org/apache/bval/util/BValVersion.java \
+ bval-core/src/main/java/org/apache/bval/util/FieldAccess.java \
+ bval-core/src/main/java/org/apache/bval/util/MethodAccess.java \
+ bval-core/src/main/java/org/apache/bval/util/reflection/Reflection.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/AnnotationConstraintBuilder.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/AnnotationProcessor.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/ApacheFactoryContext.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/ApacheValidatorFactory.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/BeanDescriptorImpl.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/ClassValidator.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/ConfigurationImpl.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/ConstraintAnnotationAttributes.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/ConstraintDefaults.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/DefaultMessageInterpolator.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/DefaultValidationProviderResolver.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/JsrMetaBeanFactory.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/resolver/DefaultTraversableResolver.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/xml/AnnotationProxyBuilder.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/xml/ValidationMappingParser.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/xml/ValidationParser.java \
+ bval-xstream/src/main/java/org/apache/bval/xml/XMLMetaBeanManager.java
+sed -i '/Privileged/d' \
+ bval-jsr/src/main/java/org/apache/bval/jsr/AnnotationConstraintBuilder.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/ApacheValidatorFactory.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/ConfigurationImpl.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/xml/AnnotationProxyBuilder.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/xml/ValidationMappingParser.java \
+ bval-jsr/src/main/java/org/apache/bval/jsr/xml/ValidationParser.java
+%endif
+
+%pom_change_dep -r :geronimo-annotation_1.2_spec javax.annotation:javax.annotation-api:1.2
+%pom_change_dep -r :geronimo-atinject_1.0_spec javax.inject:javax.inject:1
+%pom_change_dep -r :geronimo-interceptor_1.2_spec :geronimo-interceptor_3.0_spec
+# https://bugzilla.redhat.com/show_bug.cgi?id=1276632
+%pom_change_dep -r :geronimo-jcdi_1.1_spec javax.enterprise:cdi-api:1.1
+%pom_change_dep -r :geronimo-jpa_2.0_spec org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Draft-16
+
+%pom_change_dep -r :tomcat-el-api javax.el:javax.el-api:3.0.0
+
+%mvn_alias :bval-jsr :bval-jsr303
+%mvn_package ":{*}::tests:" @1
 
 %build
 
-%mvn_file :%{name}-core %{name}/core
-%mvn_file :%{name}-extras %{name}/extras
-%mvn_file :%{name}-json %{name}/json
-%mvn_file :%{name}-jsr303 %{name}/jsr303
-%mvn_file :%{name}-xstream %{name}/xstream
-
-%mvn_build -- -Dri -Dproject.build.sourceEncoding=UTF-8 \
- -Dmaven.local.depmap.file="%{SOURCE1}"
+%mvn_build -s -- -Dri -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install 
 
-%files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc CHANGES.txt README.txt
+%files -f .mfiles-%{name}-core
+%doc CHANGES.txt README.txt RELEASE-NOTES.adoc
 %doc LICENSE NOTICE
+
+%files extras -f .mfiles-%{name}-extras
+%files json -f .mfiles-%{name}-json
+%files jsr -f .mfiles-%{name}-jsr
+%files parent -f .mfiles-%{name}-parent
+%doc LICENSE NOTICE
+%files xstream -f .mfiles-%{name}-xstream
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_1jpp8
+- new version
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_11jpp8
 - java 8 mass update
 
