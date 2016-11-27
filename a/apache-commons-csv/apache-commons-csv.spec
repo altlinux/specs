@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           apache-commons-csv
-Version:        1.1
-Release:        alt1_2jpp8
+Version:        1.2
+Release:        alt1_1jpp8
 Summary:        Utilities to assist with handling of CSV files
 License:        ASL 2.0
 URL:            https://commons.apache.org/proper/commons-csv/
@@ -58,6 +61,9 @@ find -name profile.jacoco -delete
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_1jpp8
+- new version
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_2jpp8
 - java 8 mass update
 
