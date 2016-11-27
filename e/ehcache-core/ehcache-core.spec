@@ -1,23 +1,25 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          ehcache-core
-Version:       2.6.7
-Release:       alt3_9jpp8
+Version:       2.6.11
+Release:       alt1_2jpp8
 Summary:       Easy Hibernate Cache
 License:       ASL 2.0
 URL:           http://ehcache.org/
-# svn export http://svn.terracotta.org/svn/ehcache/tags/ehcache-core-2.6.7
-# find ehcache-core-2.6.7 -name '*.jar' -delete
-# ehcache-core-2.6.7/tools/maven-ant-tasks-2.0.7.jar
-# ehcache-core-2.6.7/src/test/resources/resourceclassloader/private-classpath.jar
-# find ehcache-core-2.6.7 -name '*.class' -delete
-# tar czf ehcache-core-2.6.7-clean-src-svn.tar.gz ehcache-core-2.6.7
-Source0:       %{name}-%{version}-clean-src-svn.tar.gz
+# svn export http://svn.terracotta.org/svn/ehcache/tags/ehcache-core-2.6.11
+# find ehcache-core-2.6.11 -name '*.jar' -delete
+# tools/maven-ant-tasks-2.0.7.jar
+# src/test/resources/resourceclassloader/private-classpath.jar
+# find ehcache-core-2.6.11 -name '*.class' -delete
+# tar cJf ehcache-core-2.6.11.tar.xz ehcache-core-2.6.11
+Source0:       %{name}-%{version}.tar.xz
 Patch0:        %{name}-2.6.7-java8.patch
-Patch1:        %{name}-2.6.7-java8doc.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(javax.servlet:javax.servlet-api)
@@ -67,22 +69,25 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q
 %patch0 -p0
-%patch1 -p1
+# Use net.sf.ehcache:ehcache-parent:2.5
+# Remove its support because it breaks build during javadoc task
+%pom_remove_parent
+# disable doclint
+%pom_remove_plugin :maven-javadoc-plugin
+%pom_xpath_inject "pom:project" "<groupId>net.sf.ehcache</groupId>"
 
-%pom_remove_plugin org.codehaus.gmaven:gmaven-plugin
-%pom_remove_plugin org.eclipse.m2e:lifecycle-mapping
-%pom_remove_plugin org.apache.maven.plugins:maven-checkstyle-plugin
-%pom_remove_plugin org.apache.maven.plugins:maven-source-plugin
+%pom_remove_plugin :gmaven-plugin
+%pom_remove_plugin :lifecycle-mapping
+%pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin :maven-source-plugin
 
 # don't generate source archive
-%pom_remove_plugin org.apache.maven.plugins:maven-assembly-plugin
+%pom_remove_plugin :maven-assembly-plugin
 
 # Make sure we require version '3' of Hibernate
-%pom_xpath_remove "pom:dependency[pom:groupId = 'org.hibernate']/pom:version"
-%pom_xpath_inject "pom:dependency[pom:groupId = 'org.hibernate']" "<version>3</version>"
+%pom_xpath_set "pom:dependency[pom:groupId = 'org.hibernate']/pom:version" 3
 
-%pom_xpath_set "pom:dependency[pom:groupId = 'javax.servlet']/pom:version" 3.1.0
-%pom_xpath_set "pom:dependency[pom:groupId = 'javax.servlet']/pom:artifactId" javax.servlet-api
+%pom_change_dep :servlet-api :javax.servlet-api:3.1.0
 
 # Don't use buildnumber-plugin, because jna is required (and currently broken)
 %pom_xpath_remove "pom:profiles/pom:profile[pom:id = 'buildnumber-git']"
@@ -98,16 +103,13 @@ This package contains javadoc for %{name}.
 # disable embedded ehcache-sizeof-agent.jar copy
 %pom_remove_plugin :maven-dependency-plugin
 
-# disable doclint in javadoc
-%pom_remove_plugin :maven-javadoc-plugin
-
 %mvn_file :%{name} %{name}
 %mvn_alias :%{name} net.sf.ehcache:ehcache
 
 %build
 
 # tests skipped. cause: missing dependencies
-%mvn_build -f
+%mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
@@ -119,6 +121,9 @@ This package contains javadoc for %{name}.
 %doc src/assemble/EHCACHE-CORE-LICENSE.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6.11-alt1_2jpp8
+- new version
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6.7-alt3_9jpp8
 - unbootsrap build
 
