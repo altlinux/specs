@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 
 Name: palemoon
 Version: 26.5.0
-Release: alt1
+Release: alt1_git.1.edd5
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -208,11 +208,7 @@ echo "ac_add_options --with-arch=i586" >> .mozconfig
 echo 'ac_add_options --enable-optimize="-O2 -msse2 -mfpmath=sse" ' >> .mozconfig
 %endif
 
-%if_enabled gst1
-echo "ac_add_options --enable-gstreamer=1.0" >> .mozconfig
-%else
-echo "ac_add_options --enable-gstreamer=0.10" >> .mozconfig
-%endif
+echo "ac_add_options --enable-gstreamer" >> .mozconfig
 
 %build
 cd %sname
@@ -235,7 +231,7 @@ export CXXFLAGS="$MOZ_OPT_FLAGS -D_GNUC_"
 # Add fake RPATH
 rpath="/$(printf %%s '%palemoon_prefix' |tr '[:print:]' '_')"
 export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
-export LDFLAGS="-Wl,-rpath,%palemoon_prefix"
+#export LDFLAGS="-Wl,-rpath,%palemoon_prefix"
 #make -f client.mk build STRIP="/bin/true" MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
 
 export PREFIX="%prefix"
@@ -396,6 +392,9 @@ done
 %exclude %_datadir/idl/*
 
 %changelog
+* Sat Nov 26 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.5.0-alt1_git.1.edd5
+- Update from git
+
 * Mon Oct 03 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.5.0-alt1
 - Version 26.5.0 Release
 
@@ -571,6 +570,3 @@ done
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
-
-
-palemoon-26.5.0-ui_picker_false.patch
