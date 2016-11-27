@@ -1,31 +1,30 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          javaparser
-Version:       1.0.8
-Release:       alt2_10jpp8
-Summary:       Java 1.5 Parser and AST
+Version:       1.0.11
+Release:       alt1_2jpp8
+Summary:       Java 1.7 Parser and AST
 License:       GPLv3+ and LGPLv3+
+# https://github.com/before/javaparser/
 URL:           http://javaparser.github.io/javaparser/
-Source0:       http://javaparser.googlecode.com/files/%{name}-%{version}-src.zip
-Source1:       http://%{name}.googlecode.com/svn/maven2/com/google/code/%{name}/%{name}/%{version}/%{name}-%{version}.pom
+Source0:       https://github.com/javaparser/javaparser/archive/%{name}-%{version}.tar.gz
 
-# test deps
-BuildRequires: junit
-
-BuildRequires: javacc
 BuildRequires: maven-local
-BuildRequires: sonatype-oss-parent
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires: mvn(org.codehaus.mojo:javacc-maven-plugin)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildArch:     noarch
 Source44: import.info
 
 %description
-A Java 1.5 Parser with AST generation and visitor support.
+A Java 1.7 Parser with AST generation and visitor support.
 The AST records the source code structure, java doc and
 comments. It is also possible to change the AST nodes or
 create new ones to modify the source code.
@@ -39,48 +38,31 @@ BuildArch: noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q -c
+%setup -q -n %{name}-%{name}-%{version}
 
-cp -p %{SOURCE1} pom.xml
-# remove org.jvnet.wagon-svn wagon-svn 1.9
-%pom_xpath_remove "pom:project/pom:build/pom:extensions"
-
-for s in $(find . -name "*.java");do
-  native2ascii -encoding UTF8 ${s} ${s}
-done
-
-for d in COPYING readme.txt ; do
-  iconv -f iso8859-1 -t utf-8 $d > $d.conv && mv -f $d.conv $d
-  sed -i 's/\r//' $d
-done
-
-sed -i 's/\r//' COPYING.LESSER
+sed -i 's/\r//' readme.md
 
 %mvn_file :%{name} %{name}
 
 %build
 
-(
-  cd src/japa/parser
-  rm JavaCharStream.java ParseException.java Token.java TokenMgrError.java
-  javacc.sh java_1_5.jj
-)
-
 # test skip http://code.google.com/p/javaparser/issues/detail?id=43
-%mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc readme.txt
+%doc readme.md
 %doc COPYING COPYING.LESSER
 
 %files javadoc -f .mfiles-javadoc
-%doc readme.txt
 %doc COPYING COPYING.LESSER
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt1_2jpp8
+- new version
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_10jpp8
 - new version
 
