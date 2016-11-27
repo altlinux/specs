@@ -1,42 +1,35 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
 Name:          je
-Version:       5.0.97
-Release:       alt1_4jpp8
+Version:       6.3.8
+Release:       alt1_2jpp8
 Summary:       Berkeley DB Java Edition
-License:       BSD
+License:       AGPLv3 and BSD
 URL:           http://www.oracle.com/us/products/database/berkeley-db/je/overview/index.html
 # use SOURCE2: sh je-create-tarball.sh < VERSION >
 Source0:       %{name}-%{version}-clean.tar.xz
 Source1:       http://download.oracle.com/maven/com/sleepycat/%{name}/%{version}/%{name}-%{version}.pom
 Source2:       %{name}-create-tarball.sh
-# fix javadoc build
-Patch0:        %{name}-5.0.84-build.patch
-Patch1:        %{name}-5.0.97-use-system-asm4.patch
-
-BuildRequires: java-javadoc
-BuildRequires: maven-local
+# fix build
+Patch0:        %{name}-6.3.8-build.patch
+Patch1:        %{name}-6.3.8-use-system-asm.patch
 
 BuildRequires: ant
 BuildRequires: ant-junit
-BuildRequires: junit
-%if 0
-# TODO set -Dandroid.libdir
-# https://bugzilla.redhat.com/show_bug.cgi?id=837450
-BuildRequires: android
-%endif
+BuildRequires: hamcrest-core
+BuildRequires: coreutils
+BuildRequires: java-javadoc
+BuildRequires: javapackages-local
 BuildRequires: jboss-connector-1.6-api
 BuildRequires: jboss-ejb-3.1-api
+BuildRequires: junit
 BuildRequires: mvn(org.ow2.asm:asm)
-Requires:      mvn(org.ow2.asm:asm)
 
-Requires:      maven-local
 BuildArch:     noarch
 Source44: import.info
 
@@ -55,7 +48,6 @@ quickly, simply and reliably.
 Group: Development/Java
 Summary:       Examples for %{name}
 Requires:      %{name} = %{version}
-Requires:      maven-local
 
 %description examples
 This package contains examples for %{name}.
@@ -63,7 +55,6 @@ This package contains examples for %{name}.
 %package javadoc
 Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      maven-local
 BuildArch: noarch
 
 %description javadoc
@@ -73,50 +64,42 @@ This package contains javadoc for %{name}.
 Group: Development/Java
 Summary:       Javadoc for %{name}-examples
 Requires:      %{name}-javadoc = %{version}
-Requires:      maven-local
 
 %description examples-javadoc
 This package contains javadoc for %{name}-examples.
 
 %prep
 %setup -q
-%patch0 -p0
+%patch0 -p1
 cp -p %{SOURCE1} pom.xml
 %patch1 -p1
-%if %{?fedora} >= 20
-sed -i "s|objectweb-asm4|objectweb-asm|" build.xml
-%endif
+rm -rf src/com/sleepycat/asm
+
+%mvn_file com.sleepycat:%{name} %{name}
 
 %build
 
 ant \
  -Dj2ee.jarfile="$(build-classpath jboss-connector-1.6-api):$(build-classpath jboss-ejb-3.1-api)" \
+ -Djdk6.home=%{_jvmdir}/java \
  -Dant.library.dir=%{_javadir} \
- jar javadoc
+ jar javadoc compile-examples
 
 cd build/classes
 %jar -cf ../../%{name}-examples.jar collections je jmx persist
 
 %install
-
-mkdir -p %{buildroot}%{_javadir}
-install -pm 644 build/lib/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap
+%mvn_artifact pom.xml build/lib/%{name}.jar
+%mvn_install -J docs/java
 
 install -pm 644 %{name}-examples.jar %{buildroot}%{_javadir}/%{name}-examples.jar
-
-mkdir -p %{buildroot}%{_javadocdir}
-cp -a docs/java %{buildroot}%{_javadocdir}/%{name}
 cp -a docs/examples %{buildroot}%{_javadocdir}/%{name}-examples
 
 %files -f .mfiles
-%doc LICENSE README
+%doc README
+%doc LICENSE
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %files examples
@@ -128,6 +111,9 @@ cp -a docs/examples %{buildroot}%{_javadocdir}/%{name}-examples
 %doc LICENSE
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 6.3.8-alt1_2jpp8
+- new version
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.97-alt1_4jpp8
 - new version
 
