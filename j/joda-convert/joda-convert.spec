@@ -1,12 +1,15 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           joda-convert
-Version:        1.7
+Version:        1.8.1
 Release:        alt1_2jpp8
 Summary:        Java library for conversion to and from standard string formats
-License:        ASL 2.0 
+License:        ASL 2.0
 URL:            https://github.com/JodaOrg/joda-convert/
 BuildArch:      noarch
 
@@ -48,6 +51,9 @@ sed -i s/// *.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_2jpp8
+- new version
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.7-alt1_2jpp8
 - unbootsrap build
 
