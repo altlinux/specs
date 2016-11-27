@@ -1,11 +1,14 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jnr-enxio
-Version:        0.9
-Release:        alt1_3jpp8
+Version:        0.10
+Release:        alt1_1jpp8
 Summary:        Unix sockets for Java
-Group:          Development/Java
+Group:          Development/Other
 # src/main/java/jnr/enxio/channels/PollSelectionKey.java is LGPLv3
 # rest of the source code is ASL 2.0
 License:        ASL 2.0 and LGPLv3
@@ -15,6 +18,7 @@ Source1:	MANIFEST.MF
 Patch0:		add-manifest.patch
 BuildArch:      noarch
 
+BuildRequires:  java-devel
 BuildRequires:  jpackage-utils
 BuildRequires:  jnr-constants
 BuildRequires:  jnr-ffi
@@ -63,6 +67,9 @@ find ./ -name '*.class' -delete
 %doc LICENSE
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_1jpp8
+- new version
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_3jpp8
 - java 8 mass update
 
