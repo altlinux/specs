@@ -1,19 +1,17 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:     jnr-ffi
-Version:  2.0.3
-Release:  alt1_4jpp8
+Version:  2.0.6
+Release:  alt1_1jpp8
 Summary:  Java Abstracted Foreign Function Layer
 License:  ASL 2.0
 URL:      http://github.com/jnr/%{name}/
 Source0:  https://github.com/jnr/%{name}/archive/%{version}.tar.gz
-Source1:  MANIFEST.MF
-Patch0:   add-manifest.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.github.jnr:jffi)
@@ -48,9 +46,6 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
-cp %{SOURCE1} .
-sed -i -e's/@VERSION/%{version}/g' MANIFEST.MF
-%patch0
 
 # remove all builtin jars
 find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
@@ -74,6 +69,9 @@ sed -i 's|-Werror||' libtest/GNUmakefile
 %doc LICENSE
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.6-alt1_1jpp8
+- new version
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt1_4jpp8
 - java 8 mass update
 
