@@ -1,12 +1,15 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global githash 833f4ba0bb73751ebf048bb179a61b535a0936d9
+%global githash 91af9aa088b9e29d36c44b53e63b378a2ba501cd
 
 Name:          reflections
-Version:       0.9.9
-Release:       alt1_4jpp8
+Version:       0.9.10
+Release:       alt1_2jpp8
 Summary:       Java run-time meta-data analysis
 License:       WTFPL
 URL:           https://github.com/ronmamo/reflections
@@ -17,7 +20,7 @@ BuildRequires: mvn(com.google.code.findbugs:annotations)
 BuildRequires: mvn(com.google.code.gson:gson)
 BuildRequires: mvn(com.google.guava:guava)
 BuildRequires: mvn(dom4j:dom4j)
-BuildRequires: mvn(javax.servlet:servlet-api)
+BuildRequires: mvn(javax.servlet:javax.servlet-api)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.commons:commons-vfs2)
 BuildRequires: mvn(org.javassist:javassist)
@@ -61,6 +64,9 @@ find -name "*.jar" -print -delete
 # Use system maven default conf
 %pom_remove_plugin :maven-javadoc-plugin
 
+# Force servlet 3.1 apis
+%pom_change_dep :servlet-api :javax.servlet-api:3.1.0
+
 # Cannot find symbol package javax.annotation
 %pom_add_dep org.jsr-305:ri
 
@@ -81,6 +87,9 @@ find -name "*.jar" -print -delete
 %doc COPYING.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.10-alt1_2jpp8
+- new version
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.9-alt1_4jpp8
 - new version
 
