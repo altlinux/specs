@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 4.3.11
-Release: alt9
+Version: 4.3.12
+Release: alt10
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -16,6 +16,9 @@ Source2: pve-firewall.tar.xz
 Source3: pve-ha-manager.tar.xz
 Source4: qemu-server.tar.xz
 Source6: basealt_logo.png
+Source7: basealt_bootsplash.jpg
+Source8: basealt_favicon.ico
+Source9: basealt_logo-128.png
 
 Patch0: pve-manager-www.patch
 Patch1: pve-manager-alt.patch
@@ -27,7 +30,7 @@ Patch6: pve-manager-alt-bps-to-bit.patch
 Patch7: pve-container-altlinux-lxc.patch
 Patch8: pve-manager-alt-gzip.patch
 Patch9: pve-manager-alt-pve.patch
-Patch10: pve-manager-lxc-ssh-key.patch
+#Patch10: pve-manager-lxc-ssh-key.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -89,7 +92,6 @@ This package contains the Qemu Server tools used by PVE
 %patch7 -p0 -b .alt
 %patch8 -p0 -b .alt
 %patch9 -p0 -b .alt
-%patch10 -p0 -b .alt
 
 %build
 for d in pve-manager pve-firewall/src pve-ha-manager/src qemu-server; do
@@ -106,6 +108,9 @@ for d in pve-manager pve-firewall/src pve-ha-manager/src pve-container/src qemu-
 done
 
 install -m0644 %SOURCE6 %buildroot%_datadir/pve-manager/images/basealt_logo.png
+install -m0644 %SOURCE8 %buildroot%_datadir/pve-manager/images/favicon.ico
+install -m0644 %SOURCE9 %buildroot%_datadir/pve-manager/images/logo-128.png
+install -m0644 %SOURCE7 %buildroot%_datadir/qemu-server/bootsplash.jpg
 
 install -m0644 pve-firewall/debian/*.service %buildroot%systemd_unitdir/
 install -m0644 pve-firewall/debian/pve-firewall.logrotate %buildroot%_sysconfdir/logrotate.d/pve-firewall
@@ -160,7 +165,7 @@ __EOF__
 %systemd_unitdir/pvestatd.service
 %systemd_unitdir/spiceproxy.service
 /lib/tmpfiles.d/%name.conf
-%_bindir/pveam
+#_bindir/pveam
 #_bindir/pvebanner
 %_bindir/pveceph
 %_bindir/pvedaemon
@@ -238,7 +243,7 @@ __EOF__
 #_man1dir/pveupgrade.1*
 %_man1dir/pveversion.1*
 %_man1dir/vzdump.1*
-%_man1dir/pveam.1.xz
+#_man1dir/pveam.1.xz
 %_man8dir/pvedaemon.8*
 %_man8dir/pveproxy.8*
 %_man8dir/pvestatd.8*
@@ -350,6 +355,9 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Mon Nov 28 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.12-alt10
+- 4.3-12
+
 * Thu Nov 24 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.11-alt9
 - pve-container 1.0-84
 
