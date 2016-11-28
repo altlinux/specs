@@ -1,13 +1,16 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define git_commit 659fc71
+%global git_commit 659fc71
 
 Summary:       Java connection pool library
 Name:          proxool
 Version:       0.9.1
-Release:       alt2_16jpp8
+Release:       alt2_18jpp8
 Epoch:         0
 License:       ASL 2.0
 URL:           http://proxool.sourceforge.net/
@@ -20,6 +23,7 @@ Patch0:        proxool-no-embedded-cglib.patch
 
 BuildRequires: ant >= 0:1.7.1
 BuildRequires: ant-junit
+BuildRequires: java-devel >= 1.6.0
 BuildRequires: javapackages-local
 BuildRequires: mvn(avalon-framework:avalon-framework-api)
 BuildRequires: mvn(avalon-framework:avalon-framework-impl)
@@ -63,6 +67,10 @@ rm -rf lib jarjar
 
 %patch0 -p1 -b .sav0
 
+sed -i.new_checkstyle "s|com.puppycrawl.tools.checkstyle.CheckStyleTask|com.puppycrawl.tools.checkstyle.ant.CheckstyleAntTask|" build.xml
+
+sed -i.doclint "s|public="true"|public="true" additionalparam="-Xdoclint:none"|" build.xml
+
 %mvn_file %{name}:%{name} %{name}
 
 %build
@@ -80,6 +88,9 @@ CLASSPATH=$(build-classpath cglib avalon-framework glassfish-servlet-api) ant bu
 %doc LICENCE.txt
 
 %changelog
+* Mon Nov 28 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.9.1-alt2_18jpp8
+- new fc release
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.9.1-alt2_16jpp8
 - new version
 
