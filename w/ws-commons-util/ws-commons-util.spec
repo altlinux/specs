@@ -1,24 +1,31 @@
 Epoch: 1
 Group: System/Libraries
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           ws-commons-util
-Version:        1.0.1
-Release:        alt1_32jpp8
+Version:        1.0.2
+Release:        alt1_2jpp8
 Summary:        Common utilities from the Apache Web Services Project
 
 License:        ASL 2.0
-URL:            http://archive.apache.org/dist/ws/commons/util/
-Source0:        http://archive.apache.org/dist/ws/commons/util/sources/ws-commons-util-1.0.1-src.tar.gz
-Patch0:         %{name}-addosgimanifest.patch
+URL:            http://ws.apache.org/commons/util
+
+# svn checkout http://svn.apache.org/repos/asf/webservices/commons/tags/util/1.0.2/ ws-commons-util-1.0.2
+# tar cJf ws-commons-util-1.0.2.tar.xz ws-commons-util-1.0.2
+Source0:        ws-commons-util-1.0.2.tar.xz
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+BuildRequires:  junit >= 3.8.1
+BuildRequires:  xml-commons-apis >= 1.0
 Source44: import.info
 
 %description
-This is version 1.0.1 of the common utilities from the Apache Web
+This is version 1.0.2 of the common utilities from the Apache Web
 Services Project.
 
 %package        javadoc
@@ -31,14 +38,28 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0
-
-# Remove maven-eclipse-plugin from build dependencies to simplify the
-# dependency chain.
-%pom_remove_plugin :maven-eclipse-plugin
-
 %mvn_file : %{name}
 %mvn_alias org.apache.ws.commons:ws-commons-util org.apache.ws.commons.util:ws-commons-util
+%pom_xpath_inject "pom:project" "<packaging>bundle</packaging>"
+%pom_add_plugin org.apache.felix:maven-bundle-plugin . '
+<extensions>true</extensions>
+<configuration>
+  <instructions>
+    <Bundle-SymbolicName>org.apache.ws.commons.util</Bundle-SymbolicName>
+    <Bundle-Name>${project.name}</Bundle-Name>
+    <Bundle-Localization>plugin</Bundle-Localization>
+    <Bundle-Version>${project.version}</Bundle-Version>
+  </instructions>
+</configuration>
+<executions>
+  <execution>
+    <id>bundle-manifest</id>
+    <phase>process-classes</phase>
+    <goals>
+      <goal>manifest</goal>
+    </goals>
+  </execution>
+</executions>'
 
 %build
 %mvn_build
@@ -53,6 +74,9 @@ BuildArch: noarch
 %doc LICENSE.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_2jpp8
+- new version
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt1_32jpp8
 - new version
 
