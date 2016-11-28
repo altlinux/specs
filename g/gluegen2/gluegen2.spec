@@ -1,20 +1,21 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /.opt-share.etc.profile.ant/d
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           gluegen2
-Version:        2.2.4
-Release:        alt2_3jpp8
+Version:        2.3.2
+Release:        alt1_4jpp8
 %global src_name gluegen-v%{version}
 Summary:        Java/JNI glue code generator to call out to ANSI C
 
-Group:          Development/Java
+Group:          Development/Other
 License:        BSD
 URL:            http://jogamp.org/
-Source0:        http://jogamp.org/deployment/jogamp-current/archive/Sources/%{src_name}.tar.7z
+Source0:        http://jogamp.org/deployment/v%{version}/archive/Sources/%{src_name}.tar.xz
+Source1:        http://jogamp.org/deployment/v%{version}/archive/Sources/jcpp-v%{version}.tar.xz
 Patch1:         %{name}-0001-renamed-library.patch
 # gluegen2.spec: W: patch-not-applied Patch2: 0002-use-fedora-jni.patch
 #                Applied with %%{_libdir} and %%{name} resolved
@@ -23,10 +24,11 @@ Patch3:         %{name}-0003-disable-executable-tmp-tests.patch
 Patch4:         %{name}-0004-add-antlr-jar-to-all-targets.patch
 Patch5:         %{name}-0005-use-system-antlib.patch
 Patch6:         %{name}-0006-disable-static-libgcc.patch
-Patch7:         %{name}-add-ppc64-aarch64.patch
+Patch7:         %{name}-0007-add-ppc64-aarch64.patch
+Patch8:         %{name}-0008-jcpp-remove-javax-api.patch
 
+BuildRequires:  java-devel
 BuildRequires:  jpackage-utils
-BuildRequires: p7zip-standalone p7zip
 BuildRequires:  ant-antlr
 BuildRequires:  ant-contrib
 BuildRequires:  ant-junit
@@ -47,7 +49,7 @@ generates interfaces.
 
 %package devel
 Summary:        GlueGen2 devel utilities required to build JOGL2
-Group:          Development/Java
+Group:          Development/Other
 BuildArch:      noarch
 
 Requires:       %{name} = %{version}
@@ -77,13 +79,8 @@ BuildArch:      noarch
 GlueGen's user manual.
 
 %prep
-# inline %%setup as 7z archive are not supported
-%setup -c -T -n %{src_name}
-cd ..
-7za e -y %{SOURCE0}
-tar -xf %{src_name}.tar
-rm %{src_name}.tar
-cd %{src_name}
+%setup -n %{src_name}
+tar -xJf %{SOURCE1} -C jcpp --strip 1
 
 %patch1 -p1
 sed -e "s|%%{_libdir}|%{_libdir}|;s|%%{name}|%{name}|" %{PATCH2} \
@@ -94,9 +91,7 @@ sed -e "s|%%{_libdir}|%{_libdir}|;s|%%{name}|%{name}|" %{PATCH2} \
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-
-# Remove any JNI files
-rm -fr make/stub_includes/jni
+%patch8 -p1
 
 # Remove bundled dependencies
 find -name "*.jar" -type f -exec rm {} \;
@@ -109,7 +104,6 @@ rm make/scripts/*.bat
 # Fix spurious-executable-perm
 chmod -x LICENSE.txt
 chmod -x doc/manual/index.html
-chmod -x make/stub_includes/*/*
 chmod -x src/native/*/*
 find src/java/ -type f -exec chmod -x {} +
 find make/scripts -type f -not -name "*.sh" -exec chmod -x {} +
@@ -200,7 +194,6 @@ _JAVA_OPTIONS="-Djogamp.debug=true -Djava.library.path=../build/test/build/nativ
  -verbose
  -Djavacdebug=true
  -Dc.compiler.debug=true
- -Djavacdebug=true
  -Djavacdebuglevel=lines,vars,source
  -Dcommon.gluegen.build.done=true
 
@@ -237,6 +230,9 @@ rm -fr %{buildroot}%{_jnidir}/test
 %{_docdir}/%{name}
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_4jpp8
+- new version
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt2_3jpp8
 - %%_jnidir set to /usr/lib/java
 
