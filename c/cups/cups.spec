@@ -1,5 +1,5 @@
 Name: cups
-Version: 2.1.4
+Version: 2.2.1
 Release: alt1
 
 Summary: Common Unix Printing System - server package
@@ -19,7 +19,7 @@ Source20: cups.control
 Source21: cups.startup
 
 # support
-Source95: repatch_spec.unused
+Source95: %name.unused
 Source96: repatch_spec.sh
 Source97: alt_ru.po
 Source98: pofix.py
@@ -60,49 +60,53 @@ Patch32: FC-avahi-no-threaded.patch
 Patch33: FC-ipp-multifile.patch
 Patch34: FC-web-devices-timeout.patch
 Patch35: FC-synconclose.patch
-Patch36: FC-lspp.patch
+Patch36: FC-iso88591.patch
+Patch37: FC-lspp.patch
 
 ## Ubuntu patches
-Patch104: Ubuntu-pwg-raster-attributes.patch
-Patch105: Ubuntu-manpage-hyphen-minus.patch
-Patch106: Ubuntu-rootbackends-worldreadable.patch
-Patch107: Ubuntu-fixes-for-jobs-with-multiple-files-and-multiple-formats.patch
-Patch108: Ubuntu-cupsd-upstart-support.patch
-Patch109: Ubuntu-tests-ignore-warnings.patch
-Patch110: Ubuntu-tests-ignore-usb-crash.patch
-Patch111: Ubuntu-tests-ignore-kfreebsd-amd64-not-a-pdf.patch
-Patch112: Ubuntu-tests-ignore-system-bus-failure.patch
-Patch113: Ubuntu-tests-ignore-ipv6-address-family-not-supported.patch
-Patch114: Ubuntu-test-i18n-nonlinux.patch
-Patch115: Ubuntu-tests-wait-on-unfinished-jobs-everytime.patch
-Patch116: Ubuntu-tests-fix-ppdLocalize-on-unclean-env.patch
-Patch117: Ubuntu-tests-use-cupsfilters.patch
-Patch118: Ubuntu-tests-fix-mips-getjobs.patch
-Patch119: Ubuntu-tests-use-ipv4-lo-address.patch
-Patch120: Ubuntu-move-cupsd-conf-default-to-share.patch
-Patch121: Ubuntu-drop_unnecessary_dependencies.patch
-Patch122: Ubuntu-read-embedded-options-from-incoming-postscript-and-add-to-ipp-attrs.patch
-Patch123: Ubuntu-deviced-allow-device-ids-with-newline.patch
-Patch124: Ubuntu-airprint-support.patch
-Patch125: Ubuntu-snmp-oids-device-id-hp-ricoh.patch
-Patch126: Ubuntu-no-conffile-timestamp.patch
-Patch127: Ubuntu-pidfile.patch
-Patch128: Ubuntu-ppd-poll-with-client-conf.patch
-Patch129: Ubuntu-removecvstag.patch
-Patch130: Ubuntu-rename-systemd-units.patch
-Patch131: Ubuntu-do-not-broadcast-with-hostnames.patch
-Patch132: Ubuntu-reactivate_recommended_driver.patch
-Patch133: Ubuntu-add-ipp-backend-of-cups-1.4.patch
-Patch134: Ubuntu-logfiles_adm_readable.patch
-Patch135: Ubuntu-default_log_settings.patch
-Patch136: Ubuntu-confdirperms.patch
-Patch137: Ubuntu-printer-filtering.patch
-Patch138: Ubuntu-show-compile-command-lines.patch
-Patch139: Ubuntu-ppdc-dynamic-linking.patch
-Patch140: Ubuntu-log-debug-history-nearly-unlimited.patch
-Patch141: Ubuntu-cupsd-set-default-for-SyncOnClose-to-Yes.patch
-Patch142: Ubuntu-man-cups-lpd-drop-dangling-references.patch
-Patch143: Ubuntu-debianize_cups-config.patch
+Patch101: Ubuntu-pwg-raster-attributes.patch
+Patch102: Ubuntu-manpage-hyphen-minus.patch
+Patch103: Ubuntu-rootbackends-worldreadable.patch
+Patch104: Ubuntu-fixes-for-jobs-with-multiple-files-and-multiple-formats.patch
+Patch105: Ubuntu-cupsd-upstart-support.patch
+Patch106: Ubuntu-tests-ignore-warnings.patch
+Patch107: Ubuntu-tests-ignore-usb-crash.patch
+Patch108: Ubuntu-tests-ignore-kfreebsd-amd64-not-a-pdf.patch
+Patch109: Ubuntu-tests-ignore-ipv6-address-family-not-supported.patch
+Patch110: Ubuntu-tests-ignore-kfreebsd-unable-to-write-uncompressed-print-data.pdf.patch
+Patch111: Ubuntu-test-i18n-nonlinux.patch
+Patch112: Ubuntu-tests-wait-on-unfinished-jobs-everytime.patch
+Patch113: Ubuntu-tests-fix-ppdLocalize-on-unclean-env.patch
+Patch114: Ubuntu-tests-fix-mips-getjobs.patch
+Patch115: Ubuntu-tests-use-ipv4-lo-address.patch
+Patch116: Ubuntu-tests-make-lpstat-call-reproducible.patch
+Patch117: Ubuntu-tests-no-pdftourf.patch
+Patch118: Ubuntu-move-cupsd-conf-default-to-share.patch
+Patch119: Ubuntu-drop_unnecessary_dependencies.patch
+Patch120: Ubuntu-read-embedded-options-from-incoming-postscript-and-add-to-ipp-attrs.patch
+Patch121: Ubuntu-deviced-allow-device-ids-with-newline.patch
+Patch122: Ubuntu-airprint-support.patch
+Patch123: Ubuntu-snmp-oids-device-id-hp-ricoh.patch
+Patch124: Ubuntu-no-conffile-timestamp.patch
+Patch125: Ubuntu-pidfile.patch
+Patch126: Ubuntu-removecvstag.patch
+Patch127: Ubuntu-rename-systemd-units.patch
+Patch128: Ubuntu-do-not-broadcast-with-hostnames.patch
+Patch129: Ubuntu-reactivate_recommended_driver.patch
+Patch130: Ubuntu-add-ipp-backend-of-cups-1.4.patch
+Patch131: Ubuntu-logfiles_adm_readable.patch
+Patch132: Ubuntu-default_log_settings.patch
+Patch133: Ubuntu-confdirperms.patch
+Patch134: Ubuntu-printer-filtering.patch
+Patch135: Ubuntu-show-compile-command-lines.patch
+Patch136: Ubuntu-ppdc-dynamic-linking.patch
+Patch137: Ubuntu-log-debug-history-nearly-unlimited.patch
+Patch138: Ubuntu-cupsd-set-default-for-SyncOnClose-to-Yes.patch
+Patch139: Ubuntu-set-default-error-policy-retry-job.patch
+Patch140: Ubuntu-man-cups-lpd-drop-dangling-references.patch
+Patch141: Ubuntu-debianize_cups-config.patch
+Patch142: Ubuntu-0042-Build-mantohtml-with-the-build-architecture-compiler.patch
+Patch143: Ubuntu-0043-Do-not-execute-genstrings-during-build.patch
 Patch144: Ubuntu-manpage-translations.patch
 
 ## ALT patches
@@ -217,14 +221,18 @@ services using the main CUPS library "libcups".
 %patch33 -p1 -b .ipp-multifile
 %patch34 -p1 -b .web-devices-timeout
 %patch35 -p1 -b .synconclose
-%patch36 -p1 -b .lspp
+%patch36 -p1 -b .iso88591
+%patch37 -p1 -b .lspp
 
 ## Ubuntu apply patches
+#patch101 -p1
+##patch102 -p1
+%patch103 -p1
 #patch104 -p1
-##patch105 -p1
+#patch105 -p1
 %patch106 -p1
-#patch107 -p1
-#patch108 -p1
+%patch107 -p1
+%patch108 -p1
 %patch109 -p1
 %patch110 -p1
 %patch111 -p1
@@ -235,31 +243,31 @@ services using the main CUPS library "libcups".
 %patch116 -p1
 %patch117 -p1
 %patch118 -p1
-%patch119 -p1
+#patch119 -p1
 %patch120 -p1
-#patch121 -p1
+%patch121 -p1
 %patch122 -p1
-%patch123 -p1
+#patch123 -p1
 %patch124 -p1
-##patch125 -p1
+%patch125 -p1
 %patch126 -p1
 %patch127 -p1
 %patch128 -p1
 %patch129 -p1
 %patch130 -p1
-%patch131 -p1
+#patch131 -p1
 %patch132 -p1
 %patch133 -p1
-#patch134 -p1
+%patch134 -p1
 %patch135 -p1
-%patch136 -p1
+##patch136 -p1
 %patch137 -p1
-%patch138 -p1
-##patch139 -p1
-%patch140 -p1
+#patch138 -p1
+%patch139 -p1
+##patch140 -p1
 #patch141 -p1
-##patch142 -p1
-#patch143 -p1
+%patch142 -p1
+##patch143 -p1
 ##patch144 -p1
 
 ## ALT apply patches
@@ -421,6 +429,10 @@ install -D %name.alternative %buildroot%_altdir/%name
 %_man1dir/ipptool.*
 
 %changelog
+* Wed Nov 23 2016 Fr. Br. George <george@altlinux.ru> 2.2.1-alt1
+- Version up
+- Update patches
+
 * Tue Nov 22 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.1.4-alt1
 - bugfix realese
 - Remove upstreamed patches:
