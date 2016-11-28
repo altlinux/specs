@@ -52,7 +52,7 @@
 
 Name: vim
 %define branch 8.0
-Version: %branch.95
+Version: %branch.104
 Release: alt1
 Epoch: 4
 
@@ -60,7 +60,7 @@ Summary: VIsual editor iMproved
 License: Charityware
 Group: Editors
 Url: http://www.vim.org
-Packager: Gleb F-Malinovskiy <glebfm@altlinux.org>
+Packager: Gleb Fotengauer-Malinovskiy <glebfm@altlinux.org>
 
 %add_findreq_skiplist %_datadir/vim/*
 
@@ -915,7 +915,7 @@ fi
 # Note to self: NEVER try to use %%doc in subpackages
 %doc README*.txt runtime/gvimrc_example.vim
 %doc runtime/termcap runtime/vimrc_example.vim vimrc_hebrew
-%doc README.ALT-ru_RU.KOI8-R
+%doc README.ALT-ru_RU.UTF-8
 
 %dir %_sysconfdir/vim
 %config(noreplace) %_sysconfdir/vim/vimrc
@@ -1063,6 +1063,11 @@ fi
 
 # {{{ changelog
 %changelog
+* Mon Nov 28 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.0.104-alt1
+- Updated to v8.0.0104.
+- Disabled default.vim.
+- Fixed spec.vim issues.
+
 * Tue Nov 22 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.0.95-alt1
 - Updated to v8.0.0095.
 
