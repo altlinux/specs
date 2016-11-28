@@ -1,5 +1,8 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -35,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 #
 
 Name:           checkstyle
-Version:        6.6
+Version:        6.13
 Release:        alt1_2jpp8
 Summary:        Java source code checker
 URL:            http://checkstyle.sourceforge.net/
@@ -50,16 +53,18 @@ Source2:        %{name}.catalog
 BuildRequires:  maven-local
 BuildRequires:  mvn(antlr:antlr)
 BuildRequires:  mvn(com.google.guava:guava)
-BuildRequires:  mvn(commons-beanutils:commons-beanutils-core)
+BuildRequires:  mvn(commons-beanutils:commons-beanutils)
 BuildRequires:  mvn(commons-cli:commons-cli)
 BuildRequires:  mvn(com.sun:tools)
-BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(de.thetaphi:forbiddenapis)
 BuildRequires:  mvn(org.antlr:antlr4-maven-plugin)
 BuildRequires:  mvn(org.antlr:antlr4-runtime)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.ant:ant-nodeps)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:antlr-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 
@@ -95,6 +100,7 @@ sed -i s/guava-jdk5/guava/ pom.xml
 %pom_remove_plugin :maven-linkcheck-plugin
 %pom_remove_plugin :maven-pmd-plugin
 %pom_remove_plugin :findbugs-maven-plugin
+%pom_remove_plugin :xml-maven-plugin
 
 # get rid of system scope
 %pom_remove_dep com.sun:tools
@@ -111,8 +117,10 @@ sed -i '/testUnexpectedChar/s/./@org.junit.Ignore/' src/test/java/com/puppycrawl
 
 %build
 %mvn_file  : %{name}
-%mvn_build
-
+# Tests are skipped due to unavailable test dependencies
+# (com.github.stefanbirkner:system-rules:jar:1.9.0 and
+# nl.jqno.equalsverifier:equalsverifier:jar:1.7.2)
+%mvn_build -f
 
 %install
 %mvn_install
@@ -160,6 +168,9 @@ fi
 
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:6.13-alt1_2jpp8
+- new version
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 0:6.6-alt1_2jpp8
 - unbootsrap build
 
