@@ -1,26 +1,30 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-clean-plugin
-Version:        2.6.1
-Release:        alt1_3jpp8
+Version:        3.0.0
+Release:        alt1_2jpp8
 Summary:        Maven Clean Plugin
-
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-clean-plugin/
+BuildArch:      noarch
+
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-BuildArch: noarch
-
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 Source44: import.info
 
 %description
@@ -29,20 +33,15 @@ at build-time in a project's directory.
 
 %package javadoc
 Group: Development/Java
-Summary:        Javadoc for %{name}
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
-API documentation for %{name}.
+This package provides %{summary}.
 
 
 %prep
 %setup -q 
-# maven-core has scope "provided" in Plugin Testing Harness, so we
-# need to provide it or tests will fail to compile.  This works for
-# upstream because upstream uses a different version of Plugin Testing
-# Harness in which scope of maven-core dependency is "compile".
-%pom_add_dep org.apache.maven:maven-core::test
 
 # junit dependency was removed in Plexus 1.6
 %pom_add_dep junit:junit::test
@@ -54,13 +53,15 @@ API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_2jpp8
+- new version
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.1-alt1_3jpp8
 - new version
 
