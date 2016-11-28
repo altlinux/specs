@@ -1,5 +1,3 @@
-%set_automake_version 1.11
-
 %define abi_ver 3.0
 %define ver_major 3.0
 %def_enable spell
@@ -8,11 +6,11 @@
 %def_with libical
 %def_with eds
 %def_with python
-%def_disable collabnet
+%def_enable collabnet
 
 Name: abiword
-Version: %ver_major.1
-Release: alt5
+Version: %ver_major.2
+Release: alt1
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -29,8 +27,10 @@ Source13: abiword.xml
 Patch11: abiword-2.8.3-desktop.patch
 Patch12: abiword-2.6.0-boolean.patch
 Patch16: abiword-3.0.0-librevenge.patch
-Patch18: abiword-3.0.0-link-grammar-5.patch
-Patch19: abiword-3.0.0-link-grammar-5-second.patch
+Patch20: abiword-3.0.0-libwp.patch
+Patch21: abiword-3.0.1-libwps-0.4.patch
+Patch24: abiword-3.0.1-fixwps.patch
+Patch25: abiword-3.0.2-fix-black-drawing-regression.patch
 
 Obsoletes: abisuite, abisuite-koi8, abisuite-cp1251, abisuite-iso8859-8
 Obsoletes: %name-%abi_ver
@@ -43,7 +43,7 @@ BuildRequires: gcc-c++ boost-devel asio libreadline-devel flex
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libgsf-gir-devel
 BuildRequires: libgtk+3-devel librsvg-devel libfribidi-devel libredland-devel libots-devel
 BuildRequires: liblink-grammar-devel libgsf-devel bzlib-devel zlib-devel libjpeg-devel libpng-devel libxslt-devel
-BuildRequires: libwv-devel libwpd10-devel libwpg-devel libwmf-devel libexpat-devel
+BuildRequires: libwv-devel libwpd10-devel libwpg-devel libwmf-devel libwps-devel libexpat-devel
 BuildRequires: telepathy-glib-devel libdbus-glib-devel
 #BuildRequires: libaiksaurus-devel
 %{?_enable_spell:BuildRequires: libenchant-devel}
@@ -133,10 +133,13 @@ Python bindings for developing with AbiWord library
 %patch11 -p1 -b .desktop
 %patch12 -p1 -b .boolean
 %patch16 -p0 -b .librevenge
-%patch18 -p1 -b .link-grammar-5
-%patch19 -p1 -b .link-grammar-5-second
+#%%patch20 -p1 -b .libwp
+#%%patch21 -p1 -b .libwps-0.4
+#%%patch24 -p1 -b .wps2
+%patch25 -p1 -b .black
 
 %build
+%add_optflags -std=c++11
 %autoreconf
 %configure \
 	--enable-print \
@@ -151,9 +154,7 @@ Python bindings for developing with AbiWord library
 	%{?_without_eds:--without-evolution-data-server} \
 	%{?_enable_collabnet:--enable-collab-backend-service} \
 	--disable-static
-
-# failed paralell build
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -194,6 +195,12 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python_sitelibdir/gi/overrides/*
 
 %changelog
+* Sun Dec 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt1
+- 3.0.2
+- enabled abicollab.net support again
+- enabled WPS support
+- built against liblink-grammar-5.3.13
+
 * Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt5
 - renamed to abiword
 - built against libical.so.2

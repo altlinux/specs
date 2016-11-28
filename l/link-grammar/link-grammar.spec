@@ -3,11 +3,12 @@
 %def_disable aspell
 %def_enable hunspell
 %def_disable perl
+%def_enable system_minisat
 
 %define dictdir %_datadir/myspell
 
 Name: link-grammar
-Version: 5.0.8
+Version: 5.3.13
 Release: alt1
 
 Summary: The link grammar parsing system for Unix
@@ -16,18 +17,19 @@ Group: Text tools
 Url: http://www.link.cs.cmu.edu/link/
 
 Source: http://www.abisource.com/downloads/%name/%version/%name-%version.tar.gz
-Source1: ax_pkg_swig.m4
+Patch: link-grammar-5.3.9-alt-man_build.patch
 
 Requires: lib%name = %version-%release
 
-BuildRequires: gcc-c++ swig
-BuildRequires: libedit-devel libsqlite3-devel
+BuildRequires: gcc-c++ autoconf-archive swig
+BuildRequires: libedit-devel libsqlite3-devel zlib-devel
 %{?_enable_aspell:BuildRequires:libaspell-devel}
 %{?_enable_hunspell:BuildRequires:libhunspell-devel}
 %{?_enable_perl:BuildRequires: perl-devel}
+%{?_enable_system_minisat:BuildRequires:libminisat-devel}
 
 %description
-The link grammar parsing system for Unix
+The link grammar parsing system for Unix.
 
 %package -n lib%name
 Summary: Library files for %name
@@ -54,16 +56,16 @@ Perl bindings for %name library.
 
 %prep
 %setup
-[ ! -d m4 ] && mkdir m4
-cp %SOURCE1 ac-helpers/
+%patch -b .man
 
 %build
-%autoreconf -I ac-helpers
+%autoreconf
 %configure \
 	--with-hunspell-dictdir=%dictdir \
 	%{?_disable_java:--disable-java-bindings} \
 	%{subst_enable aspell} \
-	%{subst_enable hunspell}
+	%{subst_enable hunspell} \
+	%{?_disable_system_minisat:--enable-sat-solver=bundled}
 %make_build
 
 %install
@@ -92,6 +94,12 @@ cp %SOURCE1 ac-helpers/
 %endif
 
 %changelog
+* Mon Nov 28 2016 Yuri N. Sedunov <aris@altlinux.org> 5.3.13-alt1
+- 5.3.13
+
+* Sat Oct 01 2016 Yuri N. Sedunov <aris@altlinux.org> 5.3.11-alt1
+- 5.3.11
+
 * Sun Jun 29 2014 Yuri N. Sedunov <aris@altlinux.org> 5.0.8-alt1
 - 5.0.8
 
