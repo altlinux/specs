@@ -1,16 +1,17 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          tiger-types
-Version:       1.4
-Release:       alt2_8jpp8
+Version:       2.2
+Release:       alt1_1jpp8
 Summary:       Type arithmetic library for Java5
 License:       CDDL or GPLv2 with exceptions
-Url:           http://java.net/projects/tiger-types
-# svn export https://svn.java.net/svn/tiger-types~svn/tags/tiger-types-1.4
-# tar czf tiger-types-1.4-src-svn.tar.gz tiger-types-1.4
-Source0:       %{name}-%{version}-src-svn.tar.gz
+Url:           https://github.com/kohsuke/tiger-types
+Source0:       https://github.com/kohsuke/%{name}/archive/%{name}-%{version}.tar.gz
 # wget -O glassfish-LICENSE.txt https://svn.java.net/svn/glassfish~svn/tags/legal-1.1/src/main/resources/META-INF/LICENSE.txt
 # tiger-types package don't include the license file
 Source1:       glassfish-LICENSE.txt
@@ -35,7 +36,7 @@ BuildArch: noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{name}-%{version}
 # add OSGi support required by glassfish hk2
 %pom_add_plugin org.apache.felix:maven-bundle-plugin . '
 <configuration>
@@ -54,17 +55,10 @@ This package contains javadoc for %{name}.
       </goals>
   </execution>
 </executions>'
-# removed some warning
-%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId ='maven-compiler-plugin']" "
-  <groupId>org.apache.maven.plugins</groupId>
-  <version>any</version>"
-%pom_xpath_inject "pom:reporting/pom:plugins/pom:plugin[pom:artifactId ='maven-javadoc-plugin']" "
-  <groupId>org.apache.maven.plugins</groupId>
-  <version>any</version>"
 
-# Unneeded
-%pom_remove_plugin :maven-idea-plugin
+# not needed
 %pom_remove_plugin :maven-release-plugin
+%pom_xpath_remove "pom:extensions/pom:extension[pom:artifactId[text()='wagon-gitsite']]"
 
 %mvn_file :%{name} %{name}
 
@@ -72,7 +66,6 @@ cp -p %{SOURCE1} LICENSE.txt
 sed -i 's/\r//' LICENSE.txt
 
 %build
-
 %mvn_build
 
 %install
@@ -85,6 +78,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_1jpp8
+- new version
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_8jpp8
 - new version
 
