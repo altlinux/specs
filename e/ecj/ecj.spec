@@ -3,6 +3,10 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 Obsoletes: ecj-standalone <= 3.4.2-alt4_0jpp6
+# gcj support
+BuildRequires: gcc-java >= 4.0.0
+BuildRequires: /usr/bin/aot-compile-rpm
+	    
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +17,7 @@ Epoch: 1
 Summary: Eclipse Compiler for Java
 Name: ecj
 Version: 4.5.2
-Release: alt1_3jpp8
+Release: alt2_3jpp8
 URL: http://www.eclipse.org
 License: EPL
 
@@ -26,7 +30,6 @@ Source4: MANIFEST.MF
 # Always generate debug info when building RPMs (Andrew Haley)
 Patch0: %{name}-rpmdebuginfo.patch
 
-BuildArch: noarch
 
 BuildRequires: gzip gzip-utils less
 BuildRequires: ant
@@ -34,6 +37,13 @@ BuildRequires: javapackages-local
 
 Obsoletes: %{name}-native < 1:4.2.1-10
 Source44: import.info
+# Use ECJ for GCJ
+# cvs -d:pserver:anonymous@sourceware.org:/cvs/rhug \
+# export -D 2013-12-11 eclipse-gcj
+# tar cjf ecj-gcj.tar.bz2 eclipse-gcj
+Source2: ecj-gcj.tar.bz2
+Patch1: ecj-defaultto1.5.patch
+Patch5: eclipse-gcj-nodummysymbol.patch
 
 AutoReq: yes, noosgi
 AutoProv: yes, noosgi
@@ -41,6 +51,17 @@ AutoProv: yes, noosgi
 %description
 ECJ is the Java bytecode compiler of the Eclipse Platform.  It is also known as
 the JDT Core batch compiler.
+
+%package native
+Summary:       Native(gcj) bits for %{name}
+Group:         Development/Java
+Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires: libgcj >= 4.0.0
+Requires(post): java-gcj-compat
+Requires(postun): java-gcj-compat
+
+%description native
+AOT compiled ecj to speed up when running under GCJ.
 
 %prep
 %setup -q -c
@@ -68,6 +89,18 @@ rm -f org/eclipse/jdt/core/JDTCompilerAdapter.java
   org.eclipse.tycho:org.eclipse.jdt.core org.eclipse.tycho:org.eclipse.jdt.compiler.apt \
   org.eclipse.jetty.orbit:org.eclipse.jdt.core org.eclipse.jetty.orbit:org.eclipse.jdt.compiler.apt \
   org.eclipse.jdt:core
+%patch1 -p1
+
+# Use ECJ for GCJ's bytecode compiler
+tar jxf %{SOURCE2}
+mv eclipse-gcj/org/eclipse/jdt/internal/compiler/batch/GCCMain.java \
+  org/eclipse/jdt/internal/compiler/batch/
+%patch5 -p1
+cat eclipse-gcj/gcc.properties >> \
+  org/eclipse/jdt/internal/compiler/batch/messages.properties
+rm -rf eclipse-gcj
+
+#patch5 -p1
 
 %build
 ant 
@@ -84,12 +117,20 @@ install -p -D -m0755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/ecj
 mkdir -p $RPM_BUILD_ROOT%{_mandir}/man1
 install -m 644 -p ecj.1.gz $RPM_BUILD_ROOT%{_mandir}/man1/ecj.1.gz
 
+aot-compile-rpm
+
 %files -f .mfiles
 %doc about.html
 %{_bindir}/ecj
 %{_mandir}/man1/ecj*
 
+%files native
+%{_libdir}/gcj/%{name}
+
 %changelog
+* Mon Nov 28 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.5.2-alt2_3jpp8
+- merged eclipse-gcj code && native by glebfm@
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.5.2-alt1_3jpp8
 - new version
 
