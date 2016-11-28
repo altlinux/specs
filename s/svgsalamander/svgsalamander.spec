@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -5,11 +8,11 @@ BuildRequires: jpackage-generic-compat
 # spec file for package svgsalamander
 
 Name:           svgsalamander
-Version:        0.1.33
+Version:        0.1.39
 Release:        alt1_2jpp8
 Summary:        An SVG engine for Java
 
-Group:          Development/Java
+Group:          Development/Other
 License:        LGPLv2+ or BSD
 URL:            http://svgsalamander.java.net/
 Source0:        %{name}-%{version}.tar.gz
@@ -19,6 +22,7 @@ Source1:        %{name}-generate-tarball.sh
 BuildArch:      noarch
 BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
+BuildRequires:  java-devel
 BuildRequires:  javacc-maven-plugin
 BuildRequires:  maven-enforcer-plugin
 Source44: import.info
@@ -73,6 +77,9 @@ popd
 %doc www/license/*
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.39-alt1_2jpp8
+- new version
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.33-alt1_2jpp8
 - new version
 
