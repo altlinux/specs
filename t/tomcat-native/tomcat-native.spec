@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(IO/File.pm)
+BuildRequires: gcc-c++ java-devel-default perl(File/Spec/Functions.pm) perl(IO/File.pm) rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           tomcat-native
-Version:        1.1.33
+Version:        1.2.4
 Release:        alt1_2jpp8
 Summary:        Tomcat native library
 
@@ -14,9 +14,10 @@ License:        ASL 2.0
 URL:            http://tomcat.apache.org/tomcat-8.0-doc/apr.html
 Source0:        http://www.apache.org/dist/tomcat/tomcat-connectors/native/%{version}/source/%{name}-%{version}-src.tar.gz
 
+BuildRequires:  java-devel
 BuildRequires:  jpackage-utils
-BuildRequires:  libapr1-devel >= 1.2.1
-BuildRequires:  libssl-devel
+BuildRequires:  libapr1-devel >= 1.4.3
+BuildRequires:  libssl-devel >= 1.0.2
 # Upstream compatibility:
 Provides:       tcnative = %{version}-%{release}
 Source44: import.info
@@ -39,16 +40,15 @@ f=CHANGELOG.txt ; iconv -f iso-8859-1 -t utf-8 $f > $f.utf8 ; mv $f.utf8 $f
 
 
 %build
-cd jni/native
+cd native
 %configure \
     --with-apr=%{_bindir}/apr-1-config \
-    --with-java-home=%{java_home} \
-    --with-java-platform=2
+    --with-java-home=%{java_home}
 make %{?_smp_mflags}
 
 
 %install
-make -C jni/native install DESTDIR=$RPM_BUILD_ROOT
+make -C native install DESTDIR=$RPM_BUILD_ROOT
 # Perhaps a devel package sometime?  Not for now; no headers are installed.
 rm -f $RPM_BUILD_ROOT%{_libdir}/libtcnative*.*a
 rm -rf $RPM_BUILD_ROOT%{_libdir}/pkgconfig
@@ -63,6 +63,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/pkgconfig
 
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt1_2jpp8
+- new version
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.33-alt1_2jpp8
 - new version
 
