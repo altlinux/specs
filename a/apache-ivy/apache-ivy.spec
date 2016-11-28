@@ -1,11 +1,14 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           apache-ivy
 Version:        2.4.0
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Java-based dependency manager
 
 License:        ASL 2.0
@@ -93,7 +96,7 @@ sed -i /ivy:publish/s/local/xmvn/ build.xml
 sed -i -e s,yyyyMMddHHmmss,yyyyMMddHH, build.xml
 
 %build
-%ant -Divy.mode=local -Dtarget.ivy.bundle.version=%{version} -Dtarget.ivy.bundle.version.qualifier= -Dtarget.ivy.pubdate=20160205060000 -Dtarget.ivy.version=%{version} jar javadoc publish-local
+%ant -Divy.mode=local -Dtarget.ivy.bundle.version=%{version} -Dtarget.ivy.bundle.version.qualifier= -Dtarget.ivy.version=%{version} jar javadoc publish-local
 
 
 %install
@@ -111,6 +114,9 @@ echo "apache-ivy/ivy" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Nov 28 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4.0-alt1_5jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4.0-alt1_4jpp8
 - java 8 mass update
 
