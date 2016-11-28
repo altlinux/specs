@@ -1,27 +1,23 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           plantuml
-Version:        8027
-Release:        alt2_1jpp8
+Version:        8033
+Release:        alt1_4jpp8
 Summary:        Program to generate UML diagram from a text description
 
 License:        LGPLv3+
-URL:            http://plantuml.sourceforge.net
-Source0:        http://downloads.sourceforge.net/sourceforge/plantuml/plantuml-lgpl-%{version}.tar.gz
+URL:            http://plantuml.com/
+Source0:        http://downloads.sourceforge.net/plantuml/%{name}-lgpl-%{version}.tar.gz
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
 BuildRequires:  ant
-
-Requires:       jpackage-utils
-
-Patch1:         plantuml-doc-errors.patch
+BuildRequires:  javapackages-local
 Source44: import.info
 
 %description
@@ -39,9 +35,8 @@ PlantUML supports the following diagram types
   - state diagram
 
 %package javadoc
-Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
+Group: Development/Java
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -49,36 +44,44 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -c -n plantuml
-%patch1 -p1 -b .doc-errors
+
+# Convert from dos to unix line ending
+sed -i.orig 's|\r||g' README
+touch -r README.orig README
+rm README.orig
 
 %build
+
 ant
 
 # build javadoc
-javadoc -d javadoc -sourcepath src net.sourceforge.plantuml
+%javadoc -encoding UTF-8 -Xdoclint:none -classpath %{name}.jar -d javadoc $(find src -name "*.java") -windowtitle "PlantUML %{version}"
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p %{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+# Set jar location
+%mvn_file net.sourceforge.%{name}:%{name} %{name}
+# Configure maven depmap
+%mvn_artifact net.sourceforge.%{name}:%{name}:%{version} %{name}.jar
+%mvn_install -J javadoc
 
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%jpackage_script net.sourceforge.plantuml.Run "" "" plantuml plantuml true 
+%jpackage_script net.sourceforge.plantuml.Run "" "" plantuml plantuml true
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
-%files
-%{_javadir}/%{name}.jar
+%files -f .mfiles
 %{_bindir}/plantuml
-%doc README COPYING
+%doc README
+%doc COPYING
 %config(noreplace,missingok) /etc/java/%{name}.conf
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc COPYING
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 8033-alt1_4jpp8
+- new version
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 8027-alt2_1jpp8
 - new version
 
