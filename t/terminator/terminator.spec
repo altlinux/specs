@@ -1,21 +1,23 @@
+%add_typelib_req_skiplist typelib(Gnome)
+%define ver_major 1.9
+
 Name: terminator
-Version: 0.98
+Version: %{ver_major}0
 Release: alt1
 
 Summary: Store and run multiple GNOME terminals in one window
 Group: Terminals
 License: GPLv2
-Url: http://gnometerminator.blogspot.com/p/introduction.html
+Url: https://launchpad.net/%name
 
-Source: https://launchpad.net/terminator/trunk/%version/+download/terminator-%version.tar.gz
+Source: %url/gtk3/%ver_major/+download/%name-%version.tar.gz
+
 # fc patches
 Patch: terminator-0.97-fc-fix-desktop-file.patch
 
 BuildArch: noarch
 
-%py_requires vte gconf pynotify keybinder
-
-BuildRequires: python-devel intltool
+BuildRequires: python-devel intltool rpm-build-gir
 
 %description
 Multiple GNOME terminals in one window. This is a project to produce an
@@ -48,13 +50,14 @@ sed -i '/#! \?\/usr.*/d' terminatorlib/*.py
 %_datadir/appdata/%name.appdata.xml
 %_man1dir/%name.*
 %_man5dir/%{name}_config.*
-%_defaultdocdir/%name/html/
 %doc README ChangeLog
 
 %exclude %python_sitelibdir_noarch/Terminator-%version-py*.egg-info
-%exclude %_defaultdocdir/%name/apidoc/
 
 %changelog
+* Mon Nov 28 2016 Yuri N. Sedunov <aris@altlinux.org> 1.90-alt1
+- 1.90
+
 * Sun Sep 13 2015 Yuri N. Sedunov <aris@altlinux.org> 0.98-alt1
 - 0.98
 
