@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          simple
 Version:       6.0.1
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Asynchronous HTTP server for Java
 License:       ASL 2.0 and LGPLv2+
 URL:           http://www.simpleframework.org/
@@ -70,7 +70,7 @@ sed -i 's/\r//' LICENSE-2.0.txt
 
 %build
 
-%mvn_build -- -Dmaven.test.skip.exec=true
+%mvn_build -- -Dmaven.test.skip=true
 
 %install
 %mvn_install
@@ -83,6 +83,9 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %doc LICENSE-2.0.txt
 
 %changelog
+* Mon Nov 28 2016 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_3jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_2jpp8
 - java 8 mass update
 
