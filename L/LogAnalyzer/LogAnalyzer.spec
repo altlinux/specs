@@ -2,7 +2,7 @@
 
 Summary: A syslog data viewer for the web
 Name: LogAnalyzer
-Version: 3.6.5
+Version: 4.1.5
 Release: alt1
 License: GPLv3+
 Group: Monitoring
@@ -13,7 +13,9 @@ BuildArch: noarch
 Provides: phplogcon
 
 Requires: webserver webserver-common
-Requires: php5-gd2 php5-jpgraph fonts-ttf-vera
+Requires: php5-gd2
+#Requires: php5-jpgraph
+Requires: fonts-ttf-vera
 
 BuildPreReq: rpm-macros-webserver-common
 
@@ -27,14 +29,14 @@ syslog, windows event log and many other event sources.
 %patch -p1
 
 %build
-rm -rf src/classes/jpgraph
+#rm -rf src/classes/jpgraph
 rm -rf src/BitstreamVeraFonts
 
 %install
 mkdir -p %buildroot{%_sysconfdir/cron.d,%wwwdir,%_sysconfdir/%name}
 cp -aRf src/* %buildroot%wwwdir/
 
-touch             %buildroot%_sysconfdir/%name/config.php
+touch %buildroot%_sysconfdir/%name/config.php
 ln -s ../../..%_sysconfdir/%name/config.php %buildroot%wwwdir/config.php
 
 # It is the file in the package named Thumbs.db or Thumbs.db.gz, 
@@ -52,6 +54,10 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %wwwdir/*
 
 %changelog
+* Mon Nov 28 2016 Alexey Shabalin <shaba@altlinux.ru> 4.1.5-alt1
+- 4.1.5
+- use bundled jpgraph
+
 * Tue Oct 22 2013 Alexey Shabalin <shaba@altlinux.ru> 3.6.5-alt1
 - 3.6.5
 
