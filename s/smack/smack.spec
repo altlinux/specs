@@ -1,21 +1,22 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          smack
-Version:       4.1.3
-Release:       alt1_1jpp8
+Version:       4.1.5
+Release:       alt1_2jpp8
 Summary:       Open Source XMPP (Jabber) client library
 License:       ASL 2.0
 URL:           http://www.igniterealtime.org/projects/smack/index.jsp
 Source0:       https://github.com/igniterealtime/Smack/archive/%{version}.tar.gz
+# Default use gradle
 # sh smack-get-poms.sh < VERSION >
 Source1:       smack-%{version}-poms.tar.xz
 Source2:       smack-get-poms.sh
-# Default use gradle
-Source10:      smack-pom.xml
-
 Patch0:        smack-4.1.1-antrun-plugin.patch
 
 BuildRequires: maven-local
@@ -24,6 +25,7 @@ BuildRequires: mvn(com.jcraft:jzlib)
 BuildRequires: mvn(de.measite.minidns:minidns)
 BuildRequires: mvn(dnsjava:dnsjava)
 BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(net.iharder:base64)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.igniterealtime.jbosh:jbosh)
@@ -191,8 +193,44 @@ find . -name "*.jar" -print  -delete
 # remove prebuilt documentation
 rm -rf javadoc/* documentation/*
 
-cp -p %{SOURCE10} pom.xml
-sed -i "s|@VERSION@|%{version}|" pom.xml
+# This is a dummy POM added just to ease building in the RPM platforms
+# These are not all the modules, only those that we can currently build
+cat > pom.xml << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.igniterealtime.smack</groupId>
+  <artifactId>smack-parent</artifactId>
+  <packaging>pom</packaging>
+  <name>Smack Parent POM</name>
+  <version>%{version}</version>
+  <description>Smack Project</description>
+
+  <modules>
+    <module>smack-bosh</module>
+    <module>smack-compression-jzlib</module>
+    <module>smack-core</module>
+    <module>smack-debug</module>
+    <module>smack-debug-slf4j</module>
+    <module>smack-experimental</module>
+    <module>smack-extensions</module>
+    <module>smack-im</module>
+    <module>smack-java7</module>
+    <module>smack-legacy</module>
+    <module>smack-resolver-dnsjava</module>
+    <module>smack-resolver-javax</module>
+    <module>smack-resolver-minidns</module>
+    <module>smack-sasl-javax</module>
+    <module>smack-sasl-provided</module>
+    <module>smack-tcp</module>
+  </modules>
+
+</project>
+EOF
 
 for m in bosh \
  compression-jzlib \
@@ -343,6 +381,9 @@ done
 %doc LICENSE
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.1.5-alt1_2jpp8
+- new version
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.1.3-alt1_1jpp8
 - new version
 
