@@ -1,13 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-shared-jar
-Version:        1.1
-Release:        alt1_9jpp8
+Version:        1.2
+Release:        alt1_2jpp8
 # Maven-shared defines maven-shared-jar version as 1.1
 Epoch:          1
 Summary:        Maven JAR Utilities
@@ -18,14 +19,16 @@ Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(com.google.code.findbugs:bcel-findbugs)
 BuildRequires:  mvn(commons-collections:commons-collections)
-BuildRequires:  mvn(org.apache.bcel:bcel)
+BuildRequires:  mvn(org.apache.maven:maven-artifact:2.2.1)
+BuildRequires:  mvn(org.apache.maven:maven-model:2.2.1)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-digest)
-
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 
 Obsoletes:      maven-shared-jar < %{epoch}:%{version}-%{release} 
 Provides:       maven-shared-jar = %{epoch}:%{version}-%{release}
@@ -49,15 +52,7 @@ API documentation for %{name}.
 %prep
 %setup -q
 
-%pom_add_dep org.codehaus.plexus:plexus-container-default
-
 find -type f -iname '*.jar' -delete
-
-# Replace plexus-maven-plugin with plexus-component-metadata
-find -name 'pom.xml' -exec sed \
-    -i 's/<artifactId>plexus-maven-plugin<\/artifactId>/<artifactId>plexus-component-metadata<\/artifactId>/' '{}' ';'
-find -name 'pom.xml' -exec sed \
-    -i 's/<goal>descriptor<\/goal>/<goal>generate-metadata<\/goal>/' '{}' ';'
 
 %build
 # Tests require the jars that were removed
@@ -74,6 +69,9 @@ find -name 'pom.xml' -exec sed \
 
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_2jpp8
+- new version
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_9jpp8
 - new version
 
