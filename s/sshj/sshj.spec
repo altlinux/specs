@@ -1,29 +1,27 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          sshj
-Version:       0.8.1
-Release:       alt3_10jpp8
+Version:       0.13.0
+Release:       alt1_2jpp8
 Summary:       SSHv2 library for Java
 License:       ASL 2.0
-URL:           http://schmizz.net/sshj/
-Source0:       https://github.com/shikhar/sshj/archive/v%{version}.tar.gz
-# Thanks to Michal Srb
-# Update bouncycastle to 1.50
-Patch0:        sshj-0.8.1-port-to-bouncycastle-1.50.patch
+URL:           https://github.com/hierynomus/sshj
+Source0:       https://github.com/hierynomus/sshj/archive/v%{version}.tar.gz
 
-BuildRequires: maven-local
+BuildRequires: gradle-local
 BuildRequires: mvn(ch.qos.logback:logback-classic)
-BuildRequires: mvn(ch.qos.logback:logback-core)
 BuildRequires: mvn(com.jcraft:jzlib) >= 1.1.0
 BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.apache.mina:mina-core)
+BuildRequires: mvn(net.iharder:base64)
 BuildRequires: mvn(org.apache.sshd:sshd-core)
 BuildRequires: mvn(org.bouncycastle:bcprov-jdk15on)
 BuildRequires: mvn(org.bouncycastle:bcpkix-jdk15on)
-BuildRequires: mvn(org.mockito:mockito-all)
+BuildRequires: mvn(org.mockito:mockito-core)
 BuildRequires: mvn(org.slf4j:slf4j-api)
 
 BuildArch:     noarch
@@ -42,40 +40,67 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
+find . -name "*.jar" -print -delete
 
-%pom_remove_plugin :maven-assembly-plugin
-%pom_remove_plugin :maven-javadoc-plugin
-%pom_remove_plugin :maven-source-plugin
+# Enable local mode
+perl -p -e "s/mavenCentral/xmvn()\n  mavenCentral/" build.gradle > build.gradle.temp
+mv  build.gradle.temp  build.gradle
 
-# SmokeTest.setUp:37 ? NoClassDefFound org/apache/mina/core/service/IoHandler
-%pom_add_dep org.apache.mina:mina-core::test
+# fix non ASCII chars
+native2ascii -encoding UTF8 \
+  src/main/java/net/schmizz/sshj/SSHClient.java \
+  src/main/java/net/schmizz/sshj/SSHClient.java
 
-# NoClassDefFound org/bouncycastle/openssl/PEMReader apache sshd
-rm -r src/test/java/net/schmizz/sshj/SmokeTest.java
-# NoClassDefFoundError: Could not initialize class org.mockito.internal.creation.jmock.ClassImposterizer$3
-rm -r src/test/java/net/schmizz/sshj/sftp/PacketReaderTest.java \
- src/test/java/net/schmizz/sshj/sftp/SFTPClientTest.java
+# Remove bundle library
+rm -r src/main/java/net/schmizz/sshj/common/Base64.java
+sed -i "s|net.schmizz.sshj.common.Base64|net.iharder.Base64|" \
+  src/main/java/net/schmizz/sshj/transport/verification/OpenSSHKnownHosts.java \
+  src/main/java/net/schmizz/sshj/userauth/keyprovider/OpenSSHKeyFile.java \
+  src/main/java/net/schmizz/sshj/userauth/keyprovider/PuTTYKeyFile.java
+perl -p -e 's/compile "com.jcraft:jzlib:1.1.3"/compile "net.iharder:base64:2.3.8"\n  compile "com.jcraft:jzlib:1.1.3"/' \
+ build.gradle > build.gradle.temp
+mv build.gradle.temp build.gradle
 
-# Some classes moved from JUnit to hamcrest
-sed -i -e 's/org.junit.internal.matchers/org.hamcrest.core/' src/test/java/net/schmizz/sshj/transport/verification/OpenSSHKnownHostsTest.java
-%mvn_file :%{name} %{name}
+# Fix javadoc task
+perl -p -e 's/task javadocJar/task javadocs(type: Javadoc) {\n  source = sourceSets.main.allJava\n}\n\ntask javadocJar/' \
+ build.gradle > build.gradle.temp
+mv build.gradle.temp build.gradle
+
+# https://discuss.gradle.org/t/rootproject-name-in-settings-gradle-vs-projectname-in-build-gradle/5704/2
+echo 'rootProject.name="sshj"' >> settings.gradle
+
+# Test fails on koji only, cause: authenticated FAILED 
+rm -r src/test/java/com/hierynomus/sshj/userauth/GssApiTest.java
+
+%mvn_file com.hierynomus:%{name} %{name}
+%mvn_alias com.hierynomus:%{name} net.schmizz:%{name}
 
 %build
 
-%mvn_build
+# Disable test suite
+# On ARM builder test fails @ random
+# com.hierynomus.sshj.transport.DisconnectionTest > listenerNotifiedOnServerDisconnect FAILED
+#     net.schmizz.sshj.transport.TransportException at DisconnectionTest.java:36
+#         Caused by: java.util.concurrent.TimeoutException at DisconnectionTest.java:36
+# ? Test com.hierynomus.sshj.transport.DisconnectionTest; Executed: 4/3/1
+# 69 tests completed, 1 failed
+gradle -s --offline -x javadocs install
 
 %install
-%mvn_install
+%mvn_artifact build/poms/pom-default.xml build/libs/%{name}-%{version}.jar
+%mvn_install -J build/docs/javadoc
 
 %files -f .mfiles
-%doc CONTRIBUTORS README.rst
+%doc CONTRIBUTORS README.adoc
 %doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.13.0-alt1_2jpp8
+- new version
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_10jpp8
 - java 8 mass update
 
