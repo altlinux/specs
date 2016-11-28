@@ -1,50 +1,51 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          truezip
-Version:       7.7.5
-Release:       alt1_7jpp8
+Version:       7.7.9
+Release:       alt1_2jpp8
 Summary:       Java based VFS for treating archive files as virtual directories
+
 License:       EPL
 URL:           http://truezip.java.net/
 
 # hg clone https://hg.java.net/hg/truezip~v7 && cd truezip~v7/
-# hg archive -r truezip-7.7.5 truezip-7.7.5.tar.gz -X ".hg*"
+# hg archive -r truezip-7.7.9 truezip-7.7.9.tar.gz -X ".hg*"
 Source0:       %{name}-%{version}.tar.gz
 Source1:       http://www.eclipse.org/legal/epl-v10.html
-
-# bouncycastle-1.50 has some small api changes
-Patch0:        %{name}-bouncycastle-api-change.patch
 
 BuildArch:     noarch
 BuildRequires: maven-local
 BuildRequires: mvn(com.google.code.findbugs:annotations)
 BuildRequires: mvn(junit:junit)
-# Use truecommons-parent:68
+# Use truecommons-parent:107
 BuildRequires: mvn(net.java.truecommons:truecommons-parent:pom:)
 BuildRequires: mvn(org.apache.commons:commons-compress)
 BuildRequires: mvn(org.apache.httpcomponents:httpclient)
 BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires: mvn(org.bouncycastle:bcprov-jdk16)
+BuildRequires: mvn(org.bouncycastle:bcprov-jdk15on)
 BuildRequires: mvn(org.jsr-305:ri)
 BuildRequires: mvn(org.netbeans:jemmy)
 BuildRequires: mvn(org.tukaani:xz)
 
-Requires:      %{name}-driver-parent = %{version}-%{release}
-Requires:      %{name}-driver-file = %{version}-%{release}
-Requires:      %{name}-driver-http = %{version}-%{release}
-Requires:      %{name}-driver-tar = %{version}-%{release}
-Requires:      %{name}-driver-tzp = %{version}-%{release}
-Requires:      %{name}-driver-zip = %{version}-%{release}
-Requires:      %{name}-extension-parent = %{version}-%{release}
-Requires:      %{name}-extension-jmx-jul = %{version}-%{release}
-Requires:      %{name}-extension-pace = %{version}-%{release}
-Requires:      %{name}-file = %{version}-%{release}
-Requires:      %{name}-kernel = %{version}-%{release}
-Requires:      %{name}-path = %{version}-%{release}
-Requires:      %{name}-samples = %{version}-%{release}
-Requires:      %{name}-swing = %{version}-%{release}
+Requires:      %{name}-driver-parent = %{version}
+Requires:      %{name}-driver-file = %{version}
+Requires:      %{name}-driver-http = %{version}
+Requires:      %{name}-driver-tar = %{version}
+Requires:      %{name}-driver-tzp = %{version}
+Requires:      %{name}-driver-zip = %{version}
+Requires:      %{name}-extension-parent = %{version}
+Requires:      %{name}-extension-jmx-jul = %{version}
+Requires:      %{name}-extension-pace = %{version}
+Requires:      %{name}-file = %{version}
+Requires:      %{name}-kernel = %{version}
+Requires:      %{name}-path = %{version}
+Requires:      %{name}-samples = %{version}
+Requires:      %{name}-swing = %{version}
 Source44: import.info
 
 %description
@@ -235,8 +236,6 @@ find -type f -name *.zip -delete
 find -type f -name *.jar -delete
 find -type f -name *.class -delete
 
-%patch0
-
 # Add jsr-305 as dependency for javax.annotation.concurrent
 %pom_add_dep org.jsr-305:ri
 
@@ -250,6 +249,8 @@ find -name pom.xml -exec \
  sed -i -e "s/\${project.groupId}/de.schlichtherle.truezip/g" -e "s/\${project.version}/%{version}/g" {} \;
 
 %pom_disable_module %{name}-archetype
+
+%pom_remove_plugin -r :maven-assembly-plugin
 
 cp -p %{SOURCE1} .
 
@@ -280,6 +281,9 @@ cp -p %{SOURCE1} .
 %files swing -f .mfiles-%{name}-swing
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 7.7.9-alt1_2jpp8
+- new version
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 7.7.5-alt1_7jpp8
 - java 8 mass update
 
