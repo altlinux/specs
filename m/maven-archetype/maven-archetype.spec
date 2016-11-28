@@ -1,16 +1,17 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-archetype
-Version:        2.3
+Version:        2.4
 Release:        alt1_2jpp8
 Summary:        Maven project templating toolkit
 
-Group:          Development/Java
 License:        ASL 2.0
 URL:            https://maven.apache.org/archetype/
 Source0:        http://repo.maven.apache.org/maven2/org/apache/maven/archetype/%{name}/%{version}/%{name}-%{version}-source-release.zip
@@ -90,51 +91,51 @@ within your organization.
 
 
 %package javadoc
+Group: Development/Java
 Summary:        API documentation for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description    javadoc
 %{summary}.
 
 %package catalog
+Group: Development/Java
 Summary:        Maven Archetype Catalog model
-Group:          Development/Java
 
 %description catalog
 %{summary}.
 
 %package descriptor
+Group: Development/Java
 Summary:        Maven Archetype Descriptor model
-Group:          Development/Java
 
 %description descriptor
 %{summary}.
 
 %package registry
+Group: Development/Java
 Summary:        Maven Archetype Registry model
-Group:          Development/Java
 
 %description registry
 %{summary}.
 
 %package common
+Group: Development/Java
 Summary:        Maven Archetype common classes
-Group:          Development/Java
 
 %description common
 %{summary}.
 
 %package packaging
+Group: Development/Java
 Summary:        Maven Archetype packaging configuration for archetypes
-Group:          Development/Java
 
 %description packaging
 %{summary}.
 
 %package -n %{name}-plugin
+Group: Development/Java
 Summary:        Maven Plugin for using archetypes
-Group:          Development/Java
 
 %description -n %{name}-plugin
 %{summary}.
@@ -215,6 +216,9 @@ popd
 %doc LICENSE
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_2jpp8
+- new version
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt1_2jpp8
 - new version
 
