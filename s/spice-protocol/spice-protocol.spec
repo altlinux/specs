@@ -1,5 +1,5 @@
 Name: spice-protocol
-Version: 0.12.11
+Version: 0.12.12
 Release: alt1
 Summary: Spice protocol header files
 Group: Development/C
@@ -33,6 +33,9 @@ Header files describing the spice protocol and the para-virtual graphics card QX
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Mon Nov 28 2016 Alexey Shabalin <shaba@altlinux.ru> 0.12.12-alt1
+- 0.12.12
+
 * Tue May 17 2016 Alexey Shabalin <shaba@altlinux.ru> 0.12.11-alt1
 - 0.12.11
 

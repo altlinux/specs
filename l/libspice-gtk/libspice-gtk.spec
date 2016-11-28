@@ -15,7 +15,7 @@
 %def_enable epoxy
 
 Name: libspice-gtk
-Version: 0.32
+Version: 0.33
 Release: alt1
 Summary: A GTK widget for SPICE clients
 
@@ -38,7 +38,7 @@ BuildRequires: hwdatabase >= 0.3.31-alt1
 
 BuildRequires: gcc-c++ gtk-doc intltool
 BuildRequires: libjpeg-devel libpixman-devel >= 0.17.7 libssl-devel zlib-devel
-BuildRequires: spice-protocol >= 0.12.11
+BuildRequires: spice-protocol >= 0.12.12
 BuildRequires: glib2-devel >= 2.36 libgio-devel >= 2.36 libcairo-devel >= 1.2.0
 BuildRequires: libopus-devel >= 0.9.14
 %{?_enable_webdav:BuildRequires: libphodav-devel >= 2.0 glib2-devel >= 2.43.90 libsoup-devel >= 2.49.91}
@@ -240,6 +240,9 @@ echo "%version" > .tarball-version
 %endif
 
 %changelog
+* Mon Nov 28 2016 Alexey Shabalin <shaba@altlinux.ru> 0.33-alt1
+- 0.33
+
 * Fri Jun 24 2016 Alexey Shabalin <shaba@altlinux.ru> 0.32-alt1
 - 0.32
 - drop gtk+ 2.0 support
