@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -8,8 +8,8 @@ BuildRequires: jpackage-generic-compat
 %global parent  plexus
 
 Name:       plexus-compiler
-Version:    2.4
-Release:    alt1_3jpp8
+Version:    2.7
+Release:    alt1_2jpp8
 Epoch:      0
 Summary:    Compiler call initiators for Plexus
 # extras subpackage has a bit different licensing
@@ -17,7 +17,7 @@ Summary:    Compiler call initiators for Plexus
 License:    MIT and ASL 2.0
 URL:        https://github.com/codehaus-plexus/plexus-compiler
 
-Source0:    https://github.com/sonatype/%{name}/archive/%{name}-%{version}.tar.gz
+Source0:    https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
 Source1:    http://www.apache.org/licenses/LICENSE-2.0.txt
 Source2:    LICENSE.MIT
 
@@ -90,6 +90,8 @@ cp %{SOURCE2} LICENSE.MIT
 # don't generate requires on test dependency (see #1007498)
 %pom_xpath_remove "pom:dependency[pom:artifactId[text()='plexus-compiler-test']]" plexus-compilers
 
+%pom_remove_plugin :maven-site-plugin
+
 %build
 # Tests are skipped because of unavailable plexus-compiler-test artifact
 %mvn_build -f
@@ -107,6 +109,9 @@ cp %{SOURCE2} LICENSE.MIT
 %doc LICENSE LICENSE.MIT
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.7-alt1_2jpp8
+- new version
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_3jpp8
 - new version
 
