@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          mybatis
 Version:       3.2.8
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       SQL Mapping Framework for Java
 License:       ASL 2.0
 # http://code.google.com/p/mybatis/
@@ -108,6 +111,9 @@ rm -r src/test/java/org/apache/ibatis/submitted/multipleresultsetswithassociatio
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Nov 28 2016 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_4jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_3jpp8
 - java 8 mass update
 
