@@ -1,5 +1,5 @@
 Name: ghostscript
-Version: 9.19
+Version: 9.20
 Release: alt1
 
 %define ijsver	0.35
@@ -21,29 +21,35 @@ Source2: ghostscript.unused
 Source3: README.patches
 
 ## FC patches
-Patch1: FC-multilib.patch
-Patch2: FC-scripts.patch
-Patch3: FC-noopt.patch
-Patch4: FC-runlibfileifexists.patch
-Patch5: FC-icc-missing-check.patch
-Patch6: FC-Fontmap.local.patch
-Patch7: FC-wrf-snprintf.patch
-Patch8: FC-system-openjpeg2.patch
-Patch9: FC-system-zlib.patch
-Patch10: FC-urw-fonts-naming.patch
+Patch1: FC-9.20-fix-openjpeg-system-build.patch
+Patch2: FC-9.20-runlibfileifexists.patch
+Patch3: FC-9.20-run-dvipdf-securely.patch
+Patch4: FC-9.20-urw-fonts-naming.patch
+Patch5: FC-9.20-cve-2016-7979.patch
+Patch6: FC-9.20-cve-2016-7976.patch
+Patch7: FC-9.20-cve-2016-7978.patch
+Patch8: FC-9.20-cve-2016-8602.patch
+Patch9: FC-9.20-cve-2016-7977.patch
+Patch10: FC-9.20-handle-glyphdirectory-correctly.patch
 
 ## Ubuntu patches
-Patch101: Ubuntu-020160315~15240a6.patch
-Patch102: Ubuntu-1001_fix_openjp2_dynamic_linking.patch
-Patch103: Ubuntu-2001_docdir_fix_for_debian.patch
-Patch104: Ubuntu-2002_gs_man_fix_debian.patch
-Patch105: Ubuntu-2003_support_multiarch.patch
-Patch106: Ubuntu-2004_remove_non-Debian_paths_from_docs.patch
-Patch107: Ubuntu-2005_fix_Debian_paths_in_docs.patch
-Patch108: Ubuntu-2006_suggest_install_ghostscript-doc_in_docs.patch
-Patch109: Ubuntu-2007_suggest_install_ghostscript-doc_in_code.patch
-Patch110: Ubuntu-2008_mention_ghostscript-x_in_docs.patch
-Patch111: Ubuntu-2010_add_build_timestamp_setting.patch
+Patch101: Ubuntu-020160929~273a133.patch
+Patch102: Ubuntu-020160929~727aeab.patch
+Patch103: Ubuntu-020161003~8abd220.patch
+Patch104: Ubuntu-020161005~6d444c2.patch
+Patch105: Ubuntu-020161005~6f749c0.patch
+Patch106: Ubuntu-020161005~875a009.patch
+Patch107: Ubuntu-020161008~f5c7555.patch
+Patch108: Ubuntu-1001_fix_openjp2_dynamic_linking.patch
+Patch109: Ubuntu-2001_docdir_fix_for_debian.patch
+Patch110: Ubuntu-2002_gs_man_fix_debian.patch
+Patch111: Ubuntu-2003_support_multiarch.patch
+Patch112: Ubuntu-2004_remove_non-Debian_paths_from_docs.patch
+Patch113: Ubuntu-2005_fix_Debian_paths_in_docs.patch
+Patch114: Ubuntu-2006_suggest_install_ghostscript-doc_in_docs.patch
+Patch115: Ubuntu-2007_suggest_install_ghostscript-doc_in_code.patch
+Patch116: Ubuntu-2008_mention_ghostscript-x_in_docs.patch
+Patch117: Ubuntu-2010_add_build_timestamp_setting.patch
 
 ## ALT patches
 Patch500: ghostscript-alt-ijs-version.patch
@@ -184,33 +190,39 @@ Common files for the %name
 rm -rf expat freetype icclib jasper jpeg jpegxr lcms lcms2 libpng openjpeg zlib cups/libs
 
 ## FC apply patches
-#patch1 -p1 -b .multilib
-%patch2 -p1 -b .scripts
-#patch3 -p1 -b .noopt
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 %patch4 -p1
-#patch5 -p1 -b .icc-missing-check
+%patch5 -p1
 %patch6 -p1
-#patch7 -p1 -b .wrf-snprintf
-#patch8 -p1 -b .system-openjpeg2
-#patch9 -p1 -b .system-zlib
-#patch10 -p1 -b .urw-fonts-naming
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
 
 ## Ubuntu apply patches
 %patch101 -p1
 %patch102 -p1
-%patch103 -p1
+#patch103 -p1
 #patch104 -p1
 #patch105 -p1
-%patch106 -p1
+#patch106 -p1
 #patch107 -p1
 #patch108 -p1
-#patch109 -p1
+%patch109 -p1
 #patch110 -p1
-%patch111 -p1
+#patch111 -p1
+%patch112 -p1
+#patch113 -p1
+#patch114 -p1
+#patch115 -p1
+#patch116 -p1
+%patch117 -p1
 
 ## ALT apply patches
 %patch500 -p1
-%patch501 -p2
+##patch501 -p2
 
 %build
 %autoreconf
@@ -317,6 +329,10 @@ mv %buildroot/%_datadir/doc/ghostscript/examples %buildroot%_docdir/%name-%versi
 %_includedir/ijs
 
 %changelog
+* Mon Nov 28 2016 Fr. Br. George <george@altlinux.ru> 9.20-alt1
+- Autobuild version bump to 9.20
+- Freshen third-party patches
+
 * Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 9.19-alt1
 - Autobuild version bump to 9.19
 - Freshen third-party patches
