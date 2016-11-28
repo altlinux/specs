@@ -1,35 +1,36 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mvel
-%define version 2.2.2
+%define version 2.2.7
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:          mvel
-Version:       2.2.2
-Release:       alt1_3jpp8
+Version:       2.2.7
+Release:       alt1_1jpp8
 Summary:       MVFLEX Expression Language
 License:       ASL 2.0
-Url:           http://mvel.codehaus.org/
+Url:           https://github.com/mvel
 Source0:       https://github.com/mvel/mvel/archive/%{name}2-%{namedversion}.tar.gz
 Source1:       %{name}-script
-Patch0:        %{name}-2.2.2.Final-use-system-asm.patch
+Patch0:        %{name}-2.2.7.Final-use-system-asm.patch
 # remove tests which require internal objectweb-asm libraries
-Patch1:        %{name}-2.2.2.Final-tests.patch
-
-BuildRequires: mvn(org.ow2.asm:asm)
-BuildRequires: mvn(org.ow2.asm:asm-util)
-# test deps 
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(com.thoughtworks.xstream:xstream)
+Patch1:        %{name}-2.2.7.Final-tests.patch
 
 BuildRequires: maven-local
-BuildRequires: maven-plugin-bundle
-BuildRequires: maven-surefire-report-plugin
+BuildRequires: mvn(com.thoughtworks.xstream:xstream)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-surefire-report-plugin)
+BuildRequires: mvn(org.ow2.asm:asm)
+BuildRequires: mvn(org.ow2.asm:asm-util)
 
 BuildArch:     noarch
 Source44: import.info
@@ -53,7 +54,9 @@ find . -name "*.jar" -delete
 find . -name "*.class" -delete
 
 rm ASM-LICENSE.txt
+
 %patch0 -p1
+rm -rf src/main/java/org/mvel2/asm
 %patch1 -p1
 
 # See https://bugzilla.redhat.com/show_bug.cgi?id=1095339
@@ -94,6 +97,9 @@ touch $RPM_BUILD_ROOT/etc/mvel.conf
 %doc LICENSE.txt
 
 %changelog
+* Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt1_1jpp8
+- new version
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt1_3jpp8
 - java 8 mass update
 
