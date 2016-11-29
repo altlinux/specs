@@ -9,7 +9,7 @@
 %def_enable gtk_doc
 
 Name: gnome-builder
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -32,7 +32,7 @@ Source: %name-%version.tar
 %define gjs_ver 1.42
 %define xml_ver 2.9.0
 %define vala_ver 0.30
-%define sysprof_ver 3.22.2
+%define sysprof_ver 3.22.3
 
 # use python3
 AutoReqProv: nopython
@@ -199,6 +199,9 @@ This package provides noarch data needed for Gnome Builder to work.
 
 
 %changelog
+* Tue Nov 29 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
+- 3.22.3
+
 * Wed Nov 02 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
 - 3.22.2
 
