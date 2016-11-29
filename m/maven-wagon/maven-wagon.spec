@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -10,8 +10,8 @@ BuildRequires: jpackage-generic-compat
 %global split_verrel 2.6-4
 
 Name:           maven-%{bname}
-Version:        2.9
-Release:        alt1_4jpp8
+Version:        2.10
+Release:        alt1_2jpp8
 Epoch:          0
 Summary:        Tools to manage artifacts and deployment
 License:        ASL 2.0
@@ -47,17 +47,17 @@ Obsoletes:      %{name}-provider-test < %{epoch}:%{version}-%{release}
 
 # Require all submodules for now until all packages migrate to wagon
 # subpackages.
-Requires:       %{name}-provider-api = %{version}-%{release}
-Requires:       %{name}-providers = %{version}-%{release}
-Requires:       %{name}-file = %{version}-%{release}
-Requires:       %{name}-ftp = %{version}-%{release}
-Requires:       %{name}-http = %{version}-%{release}
-Requires:       %{name}-http-shared = %{version}-%{release}
-Requires:       %{name}-http-lightweight = %{version}-%{release}
-Requires:       %{name}-scm = %{version}-%{release}
-Requires:       %{name}-ssh-external = %{version}-%{release}
-Requires:       %{name}-ssh-common = %{version}-%{release}
-Requires:       %{name}-ssh = %{version}-%{release}
+Requires:       %{name}-provider-api = %{version}
+Requires:       %{name}-providers = %{version}
+Requires:       %{name}-file = %{version}
+Requires:       %{name}-ftp = %{version}
+Requires:       %{name}-http = %{version}
+Requires:       %{name}-http-shared = %{version}
+Requires:       %{name}-http-lightweight = %{version}
+Requires:       %{name}-scm = %{version}
+Requires:       %{name}-ssh-external = %{version}
+Requires:       %{name}-ssh-common = %{version}
+Requires:       %{name}-ssh = %{version}
 Source44: import.info
 
 %description
@@ -213,6 +213,9 @@ Javadoc for %{name}.
 %doc LICENSE NOTICE DEPENDENCIES
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.10-alt1_2jpp8
+- new version
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.9-alt1_4jpp8
 - java 8 mass update
 
