@@ -1,11 +1,13 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 22
 Name:          maven-jaxb2-plugin
-Version:       0.12.3
+Version:       0.13.0
 Release:       alt1_2jpp8
 Summary:       Provides the capability to generate java sources from schemas
 License:       BSD and ASL 2.0
@@ -13,24 +15,34 @@ URL:           http://java.net/projects/maven-jaxb2-plugin/pages/Home
 Source0:       https://github.com/highsource/maven-jaxb2-plugin/archive/%{version}.tar.gz
 # Don't try to use an internal bundled resolver, as this is not available in
 # Fedora:
-Patch0:        %{name}-0.12.3-dont-use-internal-resolver.patch
+Patch0:        %{name}-0.13.0-dont-use-internal-resolver.patch
 # Adapt for Maven 3:
-Patch1:        %{name}-0.12.3-adapt-for-maven-3.patch
+Patch1:        %{name}-0.13.0-adapt-for-maven-3.patch
 # Remove the enconding option as the version of the XJC compiler that we build
 # in Fedora doesn't have it:
-Patch2:        %{name}-0.12.3-remove-enconding-option.patch
+Patch2:        %{name}-0.13.0-remove-enconding-option.patch
 
 BuildArch:     noarch
+BuildRequires: java-headless
 BuildRequires: maven-local
-BuildRequires: xml-commons-resolver
-BuildRequires: maven-enforcer-plugin
-BuildRequires: junit
-BuildRequires: glassfish-jaxb
-BuildRequires: codemodel
+BuildRequires: mvn(com.sun.codemodel:codemodel)
+BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.commons:commons-lang3)
+BuildRequires: mvn(org.apache.maven:maven-compat)
+BuildRequires: mvn(org.apache.maven:maven-core)
+BuildRequires: mvn(org.apache.maven:maven-plugin-api)
+BuildRequires: mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires: mvn(org.glassfish.jaxb:jaxb-runtime)
+BuildRequires: mvn(org.glassfish.jaxb:jaxb-xjc)
 BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires: mvn(org.sonatype.plexus:plexus-build-api)
+BuildRequires: mvn(xml-resolver:xml-resolver)
 Source44: import.info
-
 
 %description
 This Maven 2 plugin wraps the JAXB 2.x XJC compiler and provides the capability
@@ -50,29 +62,15 @@ The API documentation of %{name}.
 %patch1 -p1
 %patch2 -p1
 
-# Build only version 2.2
+# use glassfish-jaxb = 2.0.5
 %pom_disable_module plugin-2.0
-%pom_disable_module plugin
-%pom_disable_module testing
-
+# use glassfish-jaxb = 2.1.13
+%pom_disable_module plugin-2.1
 
 # Add dependency on codemodel:
+# because org.glassfish.jaxb:codemodel:2.2.11 have missing classes use @ runtime by these plugins:
+%pom_add_dep com.sun.codemodel:codemodel:2.6 plugin
 %pom_add_dep com.sun.codemodel:codemodel:2.6 plugin-2.2
-
-sed -i "s|MavenProjectBuilder.ROLE|org.apache.maven.project.MavenProjectHelper.ROLE|" \
- plugin-2.1/src/test/java/org/jvnet/mjiip/v_2_1/JAXBGenerateTest.java
-
-%if %{?fedora} <= 21
-# use glassfish-jaxb >= 2.2.7
-%pom_disable_module plugin-2.2
-%mvn_file :maven-jaxb21-plugin %{name}
-%else
-# use glassfish-jaxb >= 2.1.14
-%pom_disable_module plugin-2.1
-%mvn_file :maven-jaxb22-plugin %{name}
-%endif
-
-%mvn_file :%{name}-core %{name}-core
 
 %build
 
@@ -89,6 +87,9 @@ sed -i "s|MavenProjectBuilder.ROLE|org.apache.maven.project.MavenProjectHelper.R
 %doc LICENSE
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.13.0-alt1_2jpp8
+- new version
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.12.3-alt1_2jpp8
 - new version
 
