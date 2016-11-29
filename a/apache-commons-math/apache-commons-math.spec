@@ -1,22 +1,23 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 25
 %global short_name commons-math3
 
 Name:             apache-commons-math
 Version:          3.4.1
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          Java library of lightweight mathematics and statistics components
-Group:            Development/Java
+Group:            Development/Other
 License:          ASL 1.1 and ASL 2.0 and BSD
 URL:              http://commons.apache.org/math/
 Source0:          http://www.apache.org/dist/commons/math/source/%{short_name}-%{version}-src.tar.gz
 
+BuildRequires:    java-devel >= 1.6.0
 BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 
@@ -75,6 +76,9 @@ rm src/site/resources/profile.jacoco
 
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.4.1-alt1_3jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.4.1-alt1_2jpp8
 - java 8 mass update
 
