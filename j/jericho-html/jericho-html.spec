@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -8,14 +8,14 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jericho-html
 Version:        3.3
-Release:        alt1_7jpp8
+Release:        alt1_9jpp8
 Summary:        Java library allowing analysis and manipulation of parts of an HTML document
 License:        EPL or LGPLv2+
 URL:            http://jericho.htmlparser.net/
 Source0:        http://downloads.sf.net/jerichohtml/%{name}-%{version}.zip
 BuildArch:      noarch
-ExcludeArch:    ppc64
 
+BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  javapackages-local
 BuildRequires:  apache-commons-logging
 BuildRequires:  log4j
@@ -94,6 +94,9 @@ export CLASSPATH=classes:samples/console/classes:$(build-classpath junit hamcres
 %doc licence-epl-1.0.html licence-lgpl-2.1.txt licence.txt
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 3.3-alt1_9jpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 3.3-alt1_7jpp8
 - java8 mass update
 
