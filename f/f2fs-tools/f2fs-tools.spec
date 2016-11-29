@@ -3,8 +3,8 @@
 
 %define fsname f2fs
 Name: %fsname-tools
-Version: 1.3.0
-Release: alt11
+Version: 1.7.0
+Release: alt1
 Summary: Tools for Flash-Friendly File System (F2FS)
 License: GPLv2
 Group: System/Kernel and hardware
@@ -16,16 +16,44 @@ Provides: mkfs.%fsname = %version-%release
 Provides: fsck.%fsname = %version-%release
 Provides: dump.%fsname = %version-%release
 
-BuildRequires: libuuid-devel
+BuildRequires: libuuid-devel libselinux-devel
 
 %description
-Tools for Flash-Friendly File System (F2FS).
-Currently, the tools include mkfs.%fsname, fsck.%fsname and dump.%fsname.
+NAND flash memory-based storage devices, such as SSD, and SD cards,
+have been widely being used for ranging from mobile to server systems.
+Since they are known to have different characteristics from the
+conventional rotational disks,a file system, an upper layer to
+the storage device, should adapt to the changes
+from the sketch.
+
+F2FS is a new file system carefully designed for the
+NAND flash memory-based storage devices.
+We chose a log structure file system approach,
+but we tried to adapt it to the new form of storage.
+Also we remedy some known issues of the very old log
+structured file system, such as snowball effect
+of wandering tree and high cleaning overhead.
+
+Because a NAND-based storage device shows different characteristics
+according to its internal geometry or flash memory management
+scheme aka FTL, we add various parameters not only for configuring
+on-disk layout, but also for selecting allocation
+and cleaning algorithms.
+
+%package devel
+Summary: Development files for %name
+Group: Development/C
+Requires: %name = %version-%release
+
+%description devel
+This package contains the libraries needed to develop applications
+that use %name
 
 
 %prep
 %setup -q
 %patch -p1
+sed -i 's/AC_PROG_LIBTOOL/LT_INIT/' configure.ac
 
 
 %build
@@ -42,21 +70,32 @@ Currently, the tools include mkfs.%fsname, fsck.%fsname and dump.%fsname.
 
 %install
 %makeinstall_std
+mkdir -m 755 -p %buildroot%_includedir
+install -m 644 include/f2fs_fs.h %buildroot%_includedir
+install -m 644 mkfs/f2fs_format_utils.h %buildroot%_includedir
 
 
 %files
-%doc AUTHORS
+%doc COPYING AUTHORS ChangeLog
 %_sbindir/*
 %_man8dir/*
 %if_enabled shared
 %_libdir/*.so.*
-%exclude %_libdir/*.so
 %else
 %exclude %_libdir
 %endif
 
+%files devel
+%_includedir/*.h
+%if_enabled shared
+%_libdir/*.so
+%endif
+
 
 %changelog
+* Wed Nov 23 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1.7.0-alt1
+- Update to latest release
+
 * Sun Jun 15 2014 Led <led@altlinux.ru> 1.3.0-alt11
 - upstream updates
 
