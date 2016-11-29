@@ -1,7 +1,7 @@
 %define rname pugixml
 
 Name: libpugixml
-Version: 1.7
+Version: 1.8.1
 Release: alt1
 Summary: A light-weight C++ XML processing library
 
@@ -36,10 +36,9 @@ Development files for package %name
 
 %prep
 %setup -n %rname-%version
-cp scripts/CMakeLists.txt .
 
 %build
-%cmake -DBUILD_SHARED_LIBS=1 ../scripts
+%cmake -DBUILD_SHARED_LIBS=1
 %cmake_build
 
 %install
@@ -56,6 +55,9 @@ cp scripts/CMakeLists.txt .
 %_includedir/*.hpp
 
 %changelog
+* Tue Nov 29 2016 Andrey Cherepanov <cas@altlinux.org> 1.8.1-alt1
+- new version 1.8.1
+
 * Thu Oct 29 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7-alt1
 - Updated to 1.7.
 
