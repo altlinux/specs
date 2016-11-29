@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -21,7 +24,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          springframework-amqp
 Version:       1.3.9
-Release:       alt1_1jpp8
+Release:       alt1_4jpp8
 Summary:       Support for Spring programming model with AMQP
 License:       ASL 2.0
 URL:           http://projects.spring.io/spring-amqp/
@@ -31,8 +34,10 @@ Source0:       https://github.com/spring-projects/spring-amqp/archive/v%{namedve
 Source1:       http://repo1.maven.org/maven2/org/springframework/amqp/spring-amqp/%{namedversion}/spring-amqp-%{namedversion}.pom
 Source2:       http://repo1.maven.org/maven2/org/springframework/amqp/spring-erlang/%{namedversion}/spring-erlang-%{namedversion}.pom
 Source3:       http://repo1.maven.org/maven2/org/springframework/amqp/spring-rabbit/%{namedversion}/spring-rabbit-%{namedversion}.pom
-# rabbitmq-java-client 3.5.x support
-Patch0:        springframework-amqp-1.3.9-amqp-client35.patch
+# rabbitmq-java-client 3.6.x support
+Patch0:        springframework-amqp-1.3.9-amqp-client36.patch
+# Security fix for CVE-2016-2173
+Patch1:        springframework-amqp-1.3.9-CVE-2016-2173.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(cglib:cglib)
@@ -90,6 +95,7 @@ find . -name "*.class" -delete
 find . -name "*.jar" -delete
 
 %patch0 -p1
+%patch1 -p1
 
 # This is a dummy POM added just to ease building in the RPM platforms
 cat > pom.xml << EOF
@@ -190,6 +196,9 @@ opts="-f"
 %doc src/dist/apache-license.txt src/dist/notice.txt
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.9-alt1_4jpp8
+- new fc release
+
 * Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.9-alt1_1jpp8
 - java 8 mass update
 
