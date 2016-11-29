@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/xprop gcc-c++ java-devel-default libICE-devel libSM-devel pkgconfig(atk) pkgconfig(atk-bridge-2.0) pkgconfig(atspi-2) pkgconfig(dbus-1) pkgconfig(gdk-2.0) pkgconfig(gdk-3.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0)
+BuildRequires: /usr/bin/xprop gcc-c++ imake java-devel-default libXt-devel pkgconfig(dbus-1) xorg-cf-files
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -10,10 +10,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:       java-atk-wrapper
 Version:    %{major_version}.%{minor_version}
-Release:    alt1_0jpp8
+Release:    alt1_2jpp8
 Summary:    Java ATK Wrapper
 
-Group:      Development/Java
+Group:      Development/Other
 License:    LGPLv2+
 URL:        http://git.gnome.org/browse/java-atk-wrapper
 Source0:    http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{major_version}/%{name}-%{version}.tar.xz
@@ -22,17 +22,19 @@ Source0:    http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{major_version}/%{na
 Source1:    README.fedora
 Patch1:		removeNotExistingManifestInclusion.patch
 
+BuildRequires:  java-devel
 
-BuildRequires:  atk-devel
-BuildRequires:  libGConf-devel
-BuildRequires:  glib2-devel
-BuildRequires:  gtk2-devel
+BuildRequires: libatk-devel libatk-gir-devel
+BuildRequires: GConf libGConf-devel libGConf-gir-devel
+BuildRequires: glib2-devel libgio libgio-devel
+BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
 BuildRequires:  xorg-utils
-BuildRequires:  libgtk+3-devel
+BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:  at-spi2-atk-devel
-BuildRequires:  libat-spi2-core-devel
+BuildRequires: libat-spi2-core-devel libat-spi2-core-gir-devel
 
 
+Requires:   java
 Requires:   xorg-utils
 Source44: import.info
 
@@ -49,10 +51,14 @@ change of underlying communication mechanism.
 %prep
 %setup -q
 %patch1
+# Source contains a pre-built AtkWrapper.java with incorrect path to xprop (should 
+# be in /usr/bin/ not /opt/X11/bin/). The real source file is AtkWrapper.java.in, 
+# so explicitly remove the pre-built file before building.
+rm wrapper/org/GNOME/Accessibility/AtkWrapper.java
 
 %build
 %configure
-make 
+make -j2
 cp %{SOURCE1} .
 
 %install
@@ -79,6 +85,9 @@ ln -s %{_libdir}/%{name}/libatk-wrapper.so.%{libver} \
 
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.33.2-alt1_2jpp8
+- new fc release
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.33.2-alt1_0jpp8
 - java 8 mass update
 
