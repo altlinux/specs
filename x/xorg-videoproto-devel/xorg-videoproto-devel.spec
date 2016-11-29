@@ -1,5 +1,5 @@
 Name: xorg-videoproto-devel
-Version: 2.3.2
+Version: 2.3.3
 Release: alt1
 
 Summary: X.org VideoProto protocol headers
@@ -36,6 +36,9 @@ X.org VideoProto protocol headers.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Nov 29 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.3.3-alt1
+- 2.3.3
+
 * Thu Jan 30 2014 Valery Inozemtsev <shrek@altlinux.ru> 2.3.2-alt1
 - 2.3.2
 
