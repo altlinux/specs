@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          morphia
 Version:       1.0.1
-Release:       alt1_1jpp8
+Release:       alt1_3jpp8
 Summary:       A type-safe Java library for MongoDB
 License:       ASL 2.0
 URL:           https://github.com/mongodb/morphia
@@ -21,7 +24,7 @@ BuildRequires: mvn(javax.validation:validation-api)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-release-plugin)
-BuildRequires: mvn(org.mongodb:mongo-java-driver) >= 2.11.12
+BuildRequires: mvn(org.mongodb:mongo-java-driver:2.14.1)
 BuildRequires: mvn(org.reflections:reflections)
 BuildRequires: mvn(org.scannotation:scannotation)
 BuildRequires: mvn(org.slf4j:slf4j-api)
@@ -111,14 +114,13 @@ sed -i "s|relocated.morphia.||" $(find %{name} -name "*.java")
 %pom_xpath_set "pom:parent/pom:version" %{version} %{name}
 %pom_xpath_set "pom:parent/pom:version" %{version} validation
 
-%pom_xpath_set "pom:dependency[pom:groupId = 'cglib' ]/pom:artifactId" cglib %{name}
+%pom_xpath_set "pom:project/pom:properties/pom:java-driver.version" 2.14.1
 
-%pom_xpath_set "pom:dependency[pom:artifactId = 'scannotation' ]/pom:groupId" org.scannotation entityscanner-plug
+%pom_change_dep cglib: :cglib %{name}
+%pom_change_dep :scannotation org.scannotation: entityscanner-plug
+%pom_change_dep com.google.collections:google-collections com.google.guava:guava:18.0 entityscanner-plug
 
 %pom_remove_plugin :maven-shade-plugin entityscanner-plug
-
-%pom_remove_dep com.google.collections:google-collections entityscanner-plug
-%pom_add_dep com.google.guava:guava:18.0 entityscanner-plug
 
 # Add OSGi manifest
 for p in entityscanner-plug guice-plug logging-slf4j validation; do
@@ -167,6 +169,9 @@ done
 %doc %{name}/LICENSE.txt
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_3jpp8
+- new fc release
+
 * Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_1jpp8
 - new version
 
