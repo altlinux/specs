@@ -1,6 +1,6 @@
 Name: kbdd
-Version: 0.7
-Release: alt1.git.4.g56674ff
+Version: 0.7.1
+Release: alt1.git.7.g9dca0b7
 License: GPLv3
 Summary: Simple daemon and library to make per window layout using XKB.
 Group: System/X11
@@ -31,10 +31,13 @@ autoreconf -i
 %defattr(-, root, root, 0755)
 %_bindir/kbdd
 %_datadir/dbus-1/interfaces/kbdd-service-interface.xml
-%_man1dir/kbdd.1.gz
+%_man1dir/*
 
 
 %changelog
+* Fri Nov 25 2016 Ildar Mulyukov <ildar@altlinux.ru> 0.7.1-alt1.git.7.g9dca0b7
+- new version
+
 * Wed Jul 17 2013 Ildar Mulyukov <ildar@altlinux.ru> 0.7-alt1.git.4.g56674ff
 - new version
 
