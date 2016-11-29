@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-logging-tools
 Version:          1.2.0
-Release:          alt1_0.3.Beta1jpp8
+Release:          alt1_0.4.Beta1jpp8
 Summary:          JBoss Logging I18n Annotation Processor
 License:          LGPLv2+
 URL:              https://github.com/jboss-logging/jboss-logging-tools
@@ -56,6 +56,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_0.4.Beta1jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_0.3.Beta1jpp8
 - java 8 mass update
 
