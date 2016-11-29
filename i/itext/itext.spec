@@ -1,7 +1,7 @@
 Epoch: 1
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: /usr/bin/desktop-file-install
+BuildRequires(pre): rpm-macros-java
+BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 Summary:          A Free Java-PDF library
 Name:             itext
 Version:          2.1.7
-Release:          alt2_29jpp8
+Release:          alt2_31jpp8
 #src/toolbox/com/lowagie/toolbox/Versions.java is MPLv1.1 or MIT
 #src/toolbox/com/lowagie/toolbox/plugins/XML2Bookmarks.java is MPLv1.1 or LGPLv2+
 #src/rups/com/lowagie/rups/Rups.java is LGPLv2+
@@ -23,13 +23,12 @@ Release:          alt2_29jpp8
 #src/core/com/lowagie/text/pdf/codec/TIFFConstants.java is under libtiff
 License:          (LGPLv2+ or MPLv1.1) and ASL 2.0 and BSD and LGPLv2+ and (MPLv1.1 or MIT) and CC-BY and APAFML and libtiff
 URL:              http://www.lowagie.com/iText/
-Group:            Development/Java
+Group:            Development/Other
 # sh itext-create-tarball.sh 2.1.7
 Source0:          %{name}-%{version}.tar.xz
 Source2:          http://repo2.maven.org/maven2/com/lowagie/itext/%{version}/itext-%{version}.pom
 Source3:          itext-rups.sh
 Source4:          itext-rups.desktop
-Source5:          itext-toolbox.sh
 Source6:          itext-toolbox.desktop
 # cvs -d :pserver:anonymous@dev.eclipse.org:/cvsroot/tools checkout -r v2_1_7 org.eclipse.orbit/com.lowagie.text/META-INF/MANIFEST.MF
 # tar cf export-manifest.tar org.eclipse.orbit/com.lowagie.text/META-INF/MANIFEST.MF
@@ -77,12 +76,13 @@ BuildRequires:    desktop-file-utils
 BuildRequires:    dom4j
 BuildRequires:    ImageMagick
 BuildRequires:    pdf-renderer
+BuildRequires:    java-devel >= 1.7
 BuildRequires:    jpackage-utils
 
 BuildArch:        noarch
 
 Provides:         %{alternate_name} == %{version}-%{release}
-Requires:         %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
+Requires:         %{name}-core = %{version}
 Source44: import.info
 
 %description
@@ -95,7 +95,7 @@ exactly how your servlet's output will look.
 
 %package core
 Summary:          The core iText Java-PDF library
-Group:            Development/Java
+Group:            Development/Other
 BuildArch:        noarch
 Requires:         bouncycastle-mail >= 1.52
 Requires:         bouncycastle-pkix >= 1.52
@@ -109,10 +109,10 @@ files.
 
 %package rtf
 Summary:        Library to output Rich Text Files
-Group:          Development/Java
+Group:          Development/Other
 BuildArch:      noarch
 License:        MPLv1.1 or LGPLv2+
-Requires:       %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-core = %{version}
 
 %description rtf
 The RTF package is an extension of the iText library and allows iText to output
@@ -124,7 +124,7 @@ Summary:        Reading/Updating PDF Syntax
 Group:          Development/Java
 BuildArch:      noarch
 License:        LGPLv2+ and CC-BY
-Requires:       %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-core = %{version}
 Requires:       dom4j
 Requires:       pdf-renderer
 
@@ -138,7 +138,7 @@ Summary:        Some %{alternate_name} tools
 Group:          Development/Java
 BuildArch:      noarch
 License:        MPLv1.1 or MIT
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description toolbox
 iText is a free open source Java-PDF library released on SF under the MPL/LGPL;
@@ -151,7 +151,7 @@ iText tools.
 Summary:        Javadoc for %{alternate_name}
 Group:          Development/Java
 BuildArch:      noarch
-Requires:       %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-core = %{version}
 Requires:       jpackage-utils
 
 %description javadoc
@@ -242,19 +242,20 @@ cp -p lib/iText-rups.jar \
 cp -p lib/iText-toolbox.jar \
       $RPM_BUILD_ROOT%{_javadir}/%{name}-toolbox.jar
 
-mkdir -p $RPM_BUILD_ROOT%{_bindir}
+
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
+
+# toolbox stuff
+desktop-file-install \
+      --dir=${RPM_BUILD_ROOT}%{_datadir}/applications \
+      %{SOURCE6}
+%jpackage_script com.lowagie.toolbox.Toolbox "" "" %{name}:%{name}-toolbox:bcmail:bcprov:bctsp %{name}-toolbox true
+
 # rups stuff
 install -pm 755 %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/%{name}-rups
 desktop-file-install \
       --dir=${RPM_BUILD_ROOT}%{_datadir}/applications \
       %{SOURCE4}
-
-# toolbox stuff
-install -pm 755 %{SOURCE5} $RPM_BUILD_ROOT%{_bindir}/%{name}-toolbox
-desktop-file-install \
-      --dir=${RPM_BUILD_ROOT}%{_datadir}/applications \
-      %{SOURCE6}
 
 # icon for rups and toolbox
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
@@ -308,6 +309,9 @@ cp -pr JPP-%{name}-rups.pom $RPM_BUILD_ROOT%{_mavenpomdir}
 # -----------------------------------------------------------------------------
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.1.7-alt2_31jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.1.7-alt2_29jpp8
 - java 8 mass update
 
