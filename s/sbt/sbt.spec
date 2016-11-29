@@ -1,11 +1,11 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 25
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sbt
 %define version 0.13.1
@@ -60,7 +60,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		sbt
 Version:	%{sbt_version}
-Release:	alt1_8jpp8
+Release:	alt2_8.1jpp8
 Summary:	The simple build tool for Scala and Java projects
 
 BuildArch:	noarch
@@ -322,6 +322,7 @@ Source184:	%sbt_ivy_descriptor%%20precompiled-2_9_3
 %endif
 
 BuildRequires:	mvn(org.scala-lang:scala-compiler)
+BuildRequires:	java-devel
 BuildRequires:	python
 # maven is required because climbing-nemesis.py uses xmvn-resolve
 BuildRequires:	maven-local
@@ -334,7 +335,6 @@ BuildRequires:	jline2
 BuildRequires:	proguard
 
 BuildRequires:	maven-local
-Requires:	maven-local
 
 BuildRequires:	mvn(oro:oro)
 BuildRequires:	mvn(com.jcraft:jsch)
@@ -735,6 +735,9 @@ done
 %doc README.md LICENSE NOTICE
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt2_8.1jpp8
+- new fc release
+
 * Sat Feb 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt1_8jpp8
 - unbootstrap build
 
