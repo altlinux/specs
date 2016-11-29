@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: perl(Output.pm) perl(Statistics/Descriptive.pm) perl(Statistics/Distributions.pm) perl(XML/LibXML.pm)
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
@@ -10,12 +10,11 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           icu4j
 Version:        54.1.1
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Epoch:          1
 Summary:        International Components for Unicode for Java
 License:        MIT and EPL
 URL:            http://site.icu-project.org/
-%define pkg_name %name
 
 #CAUTION
 #to create a tarball use following procedure
@@ -59,28 +58,28 @@ Java text and internationalization API design.
 
 %package charset
 Group: Development/Java
-Summary:        Charset converter library of %{pkg_name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Summary:        Charset converter library of %{name}
+Requires:       %{name} = %{epoch}:%{version}
 
 %description charset
-Charset converter library of %{pkg_name}.
+Charset converter library of %{name}.
 
 %package localespi
 Group: Development/Java
-Summary:        Locale SPI library of %{pkg_name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Summary:        Locale SPI library of %{name}
+Requires:       %{name} = %{epoch}:%{version}
 
 %description localespi
-Locale SPI library of %{pkg_name}.
+Locale SPI library of %{name}.
 
 %package javadoc
 Group: Development/Java
-Summary:        Javadoc for %{pkg_name}
+Summary:        Javadoc for %{name}
 Requires:       java-javadoc
 BuildArch: noarch
 
 %description javadoc
-API documentation for %{pkg_name}.
+API documentation for %{name}.
 
 %prep
 %setup -q -n icu4j-%{version}
@@ -118,6 +117,9 @@ install -m 644 icu4j-localespi.jar %{buildroot}%{_javadir}/icu4j/
 %doc main/shared/licenses/license.html
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1:54.1.1-alt1_7jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1:54.1.1-alt1_6jpp8
 - java 8 mass update
 
