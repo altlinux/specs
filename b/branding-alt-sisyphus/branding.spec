@@ -7,7 +7,7 @@
 
 Name: branding-%brand-%theme
 Version: 20161129
-Release: alt1
+Release: alt2
 
 Url: http://en.altlinux.org
 
@@ -463,6 +463,10 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 
 
 %changelog
+* Tue Nov 29 2016 Michael Shigorin <mike@altlinux.org> 20161129-alt2
+- updated logo as well
+- fixed gfxboot help menu colour
+
 * Tue Nov 29 2016 Michael Shigorin <mike@altlinux.org> 20161129-alt1
 - updated branding: altlinux->basealt/alt
   (see also p8 starterkits)
