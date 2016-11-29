@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
@@ -9,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        2.4
-Release:        alt5_14jpp8
+Release:        alt5_15jpp8
 Epoch:          1
 Summary:        Utilities to assist with developing IO functionality
 License:        ASL 2.0
@@ -17,6 +20,7 @@ URL:            http://commons.apache.org/%{base_name}
 Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 BuildArch:      noarch
 
+BuildRequires:  java-devel >= 1.6
 BuildRequires:  maven-local
 BuildRequires:  apache-commons-parent
 Source44: import.info
@@ -59,6 +63,9 @@ ln -sf %{name}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}.jar
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.4-alt5_15jpp8
+- new fc release
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.4-alt5_14jpp8
 - new version
 
