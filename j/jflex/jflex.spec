@@ -1,6 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-emacs rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -9,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Fast Scanner Generator
 Name:           jflex
 Version:        1.6.1
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 License:        BSD
 URL:            http://jflex.de/
 BuildArch:      noarch
@@ -26,6 +27,7 @@ BuildRequires:  ant
 BuildRequires:  emacs
 BuildRequires:  jflex
 BuildRequires:  junit
+BuildRequires:  java-devel
 BuildRequires:  java_cup
 BuildRequires:  desktop-file-utils
 Source44: import.info
@@ -67,7 +69,7 @@ jflex -d src/main/java/jflex --skel src/main/jflex/skeleton.nested src/main/jfle
 %mvn_build
 
 # Compile Emacs jflex-mode source
-#%{byte_compile_file} lib/jflex-mode.el
+%byte_compile_file lib/jflex-mode.el
 
 %install
 %mvn_install
@@ -88,7 +90,7 @@ install -p -m 644 %{SOURCE3} %{buildroot}%{_datadir}/pixmaps/%{name}.png
 
 # Emacs files
 install -p -m 644 lib/jflex-mode.el %{buildroot}%{_emacslispdir}/%{name}
-#install -p -m 644 lib/jflex-mode.elc %{buildroot}%{_emacslispdir}/%{name}
+install -p -m 644 lib/jflex-mode.elc %{buildroot}%{_emacslispdir}/%{name}
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
@@ -109,6 +111,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt1_3jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt1_2jpp8
 - java 8 mass update
 
