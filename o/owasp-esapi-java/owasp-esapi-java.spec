@@ -1,53 +1,111 @@
-Name: owasp-esapi-java
-Version: 2.1.0
-Summary: OWASP Enterprise Security API
-License: BSD
-Url: http://code.google.com/p/owasp-esapi-java/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.owasp.esapi:esapi) = 2.1.0
-Provides: mvn(org.owasp.esapi:esapi:pom:) = 2.1.0
-Provides: owasp-esapi-java = 2.1.0-2.fc22
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(commons-beanutils:commons-beanutils-core)
-Requires: mvn(commons-collections:commons-collections)
-Requires: mvn(commons-configuration:commons-configuration)
-Requires: mvn(commons-fileupload:commons-fileupload)
-Requires: mvn(log4j:log4j:12)
-Requires: mvn(org.apache.tomcat:tomcat-jsp-api)
-Requires: mvn(org.beanshell:bsh)
-Requires: mvn(xom:xom)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: owasp-esapi-java-2.1.0-2.fc22.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:             owasp-esapi-java
+Version:          2.1.0
+Release:          alt1_5jpp8
+Summary:          OWASP Enterprise Security API
+License:          BSD
+URL:              https://www.owasp.org/index.php/Main_Page
+# 3.x series is available @ https://github.com/ESAPI/esapi-java/
+Source0:          https://github.com/ESAPI/esapi-java-legacy/archive/esapi-%{version}.tar.gz
+
+# Antisammy is not available
+Patch0:           0001-Remove-validator-implementation-bsed-on-Antisammy.patch
+# Use different directory in tests
+Patch1:           0002-Use-different-directory-to-testing-bin-is-a-symlink.patch
+# Missing implementations
+Patch2:           0003-Implement-missing-servlet-3.0-methods-in-mock.patch
+Patch3:           owasp-esapi-java-2.1.0-servlet3.1.patch
+
+BuildArch:        noarch
+
+BuildRequires:    maven-local
+BuildRequires:    mvn(commons-beanutils:commons-beanutils-core)
+BuildRequires:    mvn(commons-collections:commons-collections)
+BuildRequires:    mvn(commons-configuration:commons-configuration)
+BuildRequires:    mvn(commons-fileupload:commons-fileupload)
+BuildRequires:    mvn(commons-io:commons-io)
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(log4j:log4j:12)
+BuildRequires:    mvn(org.apache.tomcat:tomcat-jsp-api)
+BuildRequires:    mvn(org.apache.tomcat:tomcat-servlet-api)
+BuildRequires:    mvn(org.beanshell:bsh)
+BuildRequires:    mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires:    mvn(xom:xom)
+Source44: import.info
 
 %description
 OWASP ESAPI (The OWASP Enterprise Security API) is a free, open source,
 web application security control library that makes it easier for programmers
 to write lower-risk applications. The ESAPI for Java library is designed to
 make it easier for programmers to retrofit security into existing applications.
-ESAPI for Java also serves as a solid foundation for new development.
+ESAPI for Java also serves as a solid foundation for new development. 
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:          Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
+%package doc
+Group: Development/Java
+Summary:          Documentation for %{name}
+License:          CC-BY-SA
+
+%description doc
+This package contains the documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n esapi-java-legacy-esapi-%{version}
+
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+
+# Plugin not available
+%pom_remove_plugin "org.codehaus.mojo:versions-maven-plugin"
+# Unwanted task
+%pom_remove_plugin "org.apache.maven.plugins:maven-eclipse-plugin"
+
+# Atisammy not available
+%pom_remove_dep "org.owasp.antisamy:antisamy"
+
+%pom_change_dep ":bsh-core" "org.beanshell:bsh"
+
+%pom_change_dep ":log4j" "::12"
+%pom_change_dep "javax.servlet:jsp-api" "org.apache.tomcat:tomcat-jsp-api"
+%pom_change_dep "javax.servlet:servlet-api" "org.apache.tomcat:tomcat-servlet-api"
+
+sed -i "s|public void testSetCookie()|public void ignoredSetCookie()|" src/test/java/org/owasp/esapi/reference/HTTPUtilitiesTest.java
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE LICENSE-README
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE LICENSE-README
+
+%files doc
+%doc documentation/*
+%doc LICENSE-CONTENT LICENSE-README
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_5jpp8
+- new version
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
