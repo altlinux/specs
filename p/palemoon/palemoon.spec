@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 
 Name: palemoon
 Version: 26.5.0
-Release: alt1_git.1.edd5
+Release: alt1_git.2.edd5
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -81,12 +81,12 @@ BuildPreReq: autoconf_2.13
 
 %set_autoconf_version 2.13
 
-%if_enabled gst1
+## %%if_enabled gst1
 BuildPreReq: gstreamer1.0-devel gst-plugins1.0-devel
-%else
-BuildRequires(pre): gst-plugins-devel
-BuildPreReq: gstreamer-devel gst-plugins-devel
-%endif
+# %%else
+# BuildRequires(pre): gst-plugins-devel
+# BuildPreReq: gstreamer-devel gst-plugins-devel
+# %%endif
 
 %description
 The %sname project is a redesign of Mozilla's  Firefox browser component,
@@ -104,15 +104,15 @@ Group: Networking/WWW
 
 Obsoletes: palemoon  <= 26.2.2
 Provides: palemoon = %version-%release
-Conflicts: palemoon
+Conflicts: palemoon < %version-%release
 
-%if_enabled gst1
+# %%if_enabled gst1
 Requires: libgstreamer1.0 gst-libav
 Requires: gst-plugins-base1.0
-%else
-Requires: libgstreamer gst-ffmpeg
-Requires: gst-plugins-base gst-plugins-good
-%endif
+# %%else
+# Requires: libgstreamer gst-ffmpeg
+# Requires: gst-plugins-base gst-plugins-good
+# %%endif
 # Protection against fraudulent DigiNotar certificates
 Requires: libnss
 
@@ -208,7 +208,7 @@ echo "ac_add_options --with-arch=i586" >> .mozconfig
 echo 'ac_add_options --enable-optimize="-O2 -msse2 -mfpmath=sse" ' >> .mozconfig
 %endif
 
-echo "ac_add_options --enable-gstreamer" >> .mozconfig
+echo "ac_add_options --enable-gstreamer=1.0" >> .mozconfig
 
 %build
 cd %sname
@@ -392,6 +392,9 @@ done
 %exclude %_datadir/idl/*
 
 %changelog
+* Tue Nov 29 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.5.0-alt1_git.2.edd5
+- Fix BuildRequires
+
 * Sat Nov 26 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.5.0-alt1_git.1.edd5
 - Update from git
 
