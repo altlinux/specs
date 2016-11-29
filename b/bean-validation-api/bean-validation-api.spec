@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,12 +13,13 @@ BuildRequires: jpackage-generic-compat
 
 Name:             bean-validation-api
 Version:          1.1.0
-Release:          alt1_4jpp8
+Release:          alt1_5jpp8
 Summary:          Bean Validation API (JSR 349)
 License:          ASL 2.0
 URL:              http://beanvalidation.org/
 Source0:          https://github.com/beanvalidation/beanvalidation-api/archive/%{namedversion}.tar.gz
 
+BuildRequires:    java-devel
 
 # test deps
 BuildRequires:    mvn(org.testng:testng)
@@ -61,6 +65,9 @@ This package contains the API documentation for %{name}.
 %doc license.txt
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_5jpp8
+- new fc release
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_4jpp8
 - java 8 mass update
 
