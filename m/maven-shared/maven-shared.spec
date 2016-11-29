@@ -1,6 +1,7 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -8,13 +9,13 @@ BuildRequires: jpackage-generic-compat
 Summary:        Maven Shared Components
 URL:            http://maven.apache.org/shared/
 Name:           maven-shared
-Version:        21
+Version:        22
 Release:        alt1_2jpp8
 License:        ASL 2.0
-Group:          Development/Java
 
 Source0:        https://github.com/apache/%{name}/archive/%{name}-components-%{version}.tar.gz
 
+BuildRequires:  java-devel
 BuildRequires:  maven-local
 
 BuildArch:      noarch
@@ -50,6 +51,9 @@ chmod -R go=u-w *
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:22-alt1_2jpp8
+- new version
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:21-alt1_2jpp8
 - new version
 
