@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: /usr/bin/desktop-file-install
+BuildRequires(pre): rpm-macros-java
+BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           bsh
 Version:        1.3.0
-Release:        alt6_33jpp8
+Release:        alt6_34jpp8
 Epoch:          0
 Summary:        Lightweight Scripting for Java
 License:        (SPL or LGPLv2+) and Public Domain
@@ -52,6 +52,7 @@ Source3:        %{name}-desktop.desktop
 
 Patch0:         %{name}-build.patch
 Patch1:         %{name}-xsl-fixes.patch
+BuildRequires:  java-devel
 BuildRequires:  ant bsf ImageMagick desktop-file-utils
 BuildRequires:  servlet
 Requires:       bsf
@@ -99,7 +100,7 @@ This package provides %{summary}.
 Group: Development/Java
 Summary:        Demo for %{name}
 AutoReqProv:    no
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 
 %description demo
 Demonstrations and samples for %{name}.
@@ -107,7 +108,7 @@ Demonstrations and samples for %{name}.
 %package utils
 Group: Development/Java
 Summary:        %{name} utilities
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 Requires:       jline1
 Provides:       %{name}-desktop = %{epoch}:%{version}-%{release}
 
@@ -244,6 +245,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %{_datadir}/icons/hicolor/*x*/apps/%{name}.png
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.0-alt6_34jpp8
+- new fc release
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.0-alt6_33jpp8
 - new version
 
