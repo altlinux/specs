@@ -1,5 +1,5 @@
 Name: installer-feature-centaurus-profiles
-Version: 1.0
+Version: 2.0
 Release: alt1
 
 Summary: Setups package groups from selected vm-profile
@@ -24,6 +24,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Nov 29 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.0-alt1
+- error with absent groups fixed
+
 * Wed May 08 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0-alt1
 - profile-based selection used (see http://www.altlinux.org/Alterator-pkg)
 
