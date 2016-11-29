@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -8,12 +8,13 @@ BuildRequires: jpackage-generic-compat
 Name:          simple-xml
 Summary:       An XML serialization framework for Java
 Version:       2.7.1
-Release:       alt1_6jpp8
+Release:       alt1_8jpp8
 License:       ASL 2.0
 Url:           http://simple.sourceforge.net/
 Source0:       http://downloads.sourceforge.net/simple/%{name}-%{version}.tar.gz
 Source1:       http://repo1.maven.org/maven2/org/simpleframework/%{name}/%{version}/%{name}-%{version}.pom
 
+BuildRequires: java-devel
 BuildRequires: maven-local
 BuildRequires: ant
 BuildRequires: ant-junit
@@ -25,7 +26,6 @@ BuildRequires: xpp3
 Requires:      bea-stax
 Requires:      xpp3
 
-Requires:      maven-local
 BuildArch:     noarch
 Source44: import.info
 
@@ -78,6 +78,9 @@ cp -pr javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt1_8jpp8
+- new fc release
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt1_6jpp8
 - java 8 mass update
 
