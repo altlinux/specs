@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          jasypt
 Version:       1.9.2
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Java Simplified Encryption
 License:       ASL 2.0
 Url:           http://www.jasypt.org/
@@ -94,6 +97,9 @@ This package contains javadoc for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt1_3jpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt1_2jpp8
 - java 8 mass update
 
