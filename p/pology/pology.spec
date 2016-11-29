@@ -1,5 +1,5 @@
 Name:           pology
-Version:        0.10
+Version:        0.12
 Release:        alt1
 Summary:        Pology is a Python library and collection of command-line tools for in-depth processing of PO files
 
@@ -49,6 +49,9 @@ popd
 %python_sitelibdir/%name
 
 %changelog
+* Tue Nov 29 2016 Andrey Cherepanov <cas@altlinux.org> 0.12-alt1
+- New version
+
 * Fri Mar 16 2012 Andrey Cherepanov <cas@altlinux.org> 0.10-alt1
 - Initial build in Sisyphus
 
