@@ -1,14 +1,17 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 25
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define fedora 23
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name querydsl
 %define version 4.0.3
@@ -28,7 +31,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          querydsl
 Version:       4.0.3
-Release:       alt1_1jpp8
+Release:       alt1_3jpp8
 Summary:       Type-safe queries for Java
 License:       LGPLv2+
 URL:           http://www.querydsl.com
@@ -84,7 +87,7 @@ BuildRequires: mvn(org.hibernate:hibernate-validator)
 BuildRequires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.0-api)
 BuildRequires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.1-api)
 BuildRequires: mvn(org.jenkins-ci:annotation-indexer)
-BuildRequires: mvn(org.mongodb:mongo-java-driver)
+BuildRequires: mvn(org.mongodb:mongo-java-driver:2.14.1)
 BuildRequires: mvn(org.mongodb.morphia:morphia)
 %if %{with postgis}
 BuildRequires: mvn(org.postgis:postgis-jdbc)
@@ -400,6 +403,8 @@ rm -r querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310InstantType.java \
  querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310LocalDateType.java \
  querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310OffsetDateTimeType.java
 
+%pom_xpath_set "pom:properties/pom:mongodb.version" 2.14.1 querydsl-mongodb
+
 %mvn_package :%{name}-jdo::apt: %{name}-jdo
 %mvn_package :%{name}-jpa::apt: %{name}-jpa
 
@@ -456,6 +461,9 @@ rm -r querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310InstantType.java \
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.3-alt1_3jpp8
+- new fc release
+
 * Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.3-alt1_1jpp8
 - new version
 
