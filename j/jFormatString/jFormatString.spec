@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -10,10 +10,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jFormatString
 Version:        0
-Release:        alt1_0.21.20131227gitjpp8
+Release:        alt1_0.22.20131227gitjpp8
 Summary:        Java format string compile-time checker
 
-Group:          Development/Java
+Group:          Development/Other
 License:        GPLv2 with exceptions
 URL:            http://code.google.com/p/j-format-string/
 
@@ -23,8 +23,8 @@ Source1:        http://search.maven.org/remotecontent?filepath=com/google/code/f
 # This patch has not been sent upstream, since it is Fedora specific.
 Patch0:         %{name}-build.patch
 
-BuildRequires:  ant java-javadoc jpackage-utils junit
-Requires:       jpackage-utils
+BuildRequires:  ant java-devel java-javadoc jpackage-utils junit
+Requires: jpackage-utils
 
 BuildArch:      noarch
 Source44: import.info
@@ -83,16 +83,15 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -rp docs/* %{buildroot}%{_javadocdir}/%{name}
 
-%pre
-path = "%{_javadocdir}/%{name}"
-[ -e $path ] && [ -L $path ] && rm -f $path
-
 %files -f .mfiles
 
 %files javadoc
 %{_javadocdir}/%{name}*
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.22.20131227gitjpp8
+- new fc release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.21.20131227gitjpp8
 - java 8 mass update
 
