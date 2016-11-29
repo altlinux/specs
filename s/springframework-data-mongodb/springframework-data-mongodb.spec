@@ -1,14 +1,17 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 25
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define fedora 23
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name springframework-data-mongodb
 %define version 1.5.2
@@ -27,7 +30,7 @@ BuildRequires: jpackage-generic-compat
 Name:          springframework-data-mongodb
 # Newer release require springframework >= 4.0.7.RELEASE
 Version:       1.5.2
-Release:       alt1_1jpp8
+Release:       alt1_3jpp8
 Summary:       MongoDB support for Spring Data
 License:       ASL 2.0
 URL:           http://projects.spring.io/spring-data-mongodb/
@@ -42,7 +45,7 @@ BuildRequires: mvn(javax.enterprise:cdi-api)
 BuildRequires: mvn(javax.validation:validation-api)
 BuildRequires: mvn(log4j:log4j:1.2.17)
 BuildRequires: mvn(net.sf.cglib:cglib)
-BuildRequires: mvn(org.mongodb:mongo-java-driver)
+BuildRequires: mvn(org.mongodb:mongo-java-driver:2.14.1)
 BuildRequires: mvn(org.objenesis:objenesis)
 BuildRequires: mvn(org.springframework:spring-beans)
 BuildRequires: mvn(org.springframework:spring-context)
@@ -115,11 +118,6 @@ cp -p src/main/resources/*.txt .
 # org.springframework.data.build:spring-data-parent:pom:1.4.2.RELEASE
 %pom_remove_parent
 
-sed -i 's|<version>${cdi}</version>|<version>1.0</version>|' %{oname}/pom.xml
-
-%pom_xpath_set "pom:dependency[pom:artifactId='querydsl-apt']/pom:version" 3.6.4 %{oname}
-%pom_xpath_set "pom:dependency[pom:artifactId='querydsl-mongodb']/pom:version" 3.6.4 %{oname}
-
 %if %{without aspectj}
 %pom_disable_module %{oname}-cross-store
 %endif
@@ -132,7 +130,19 @@ sed -i 's|<version>${cdi}</version>|<version>1.0</version>|' %{oname}/pom.xml
 %pom_remove_plugin :wagon-maven-plugin %{oname}-distribution
 
 # Fix version
+%pom_xpath_set "pom:project/pom:properties/pom:mongo" 2.14.1
+%pom_xpath_set "pom:project/pom:properties/pom:mongo.osgi" 2.14.1
 %pom_xpath_set "pom:properties/pom:log4j" 1.2.17 %{oname}-log4j
+
+%pom_change_dep :cdi-api ::1.0 %{oname}
+%pom_change_dep :cditest-owb ::1.2.8 %{oname}
+%pom_change_dep :querydsl-apt ::3.6.4 %{oname}
+%pom_change_dep :querydsl-mongodb ::3.6.4 %{oname}
+%pom_change_dep :el-api ::3.0.0 %{oname}
+%pom_change_dep :joda-time ::2.8.1 %{oname}
+%pom_change_dep :jul-to-slf4j ::1.7.12 %{oname}
+%pom_change_dep :objenesis ::2.1 %{oname}
+%pom_change_dep :validation-api ::1.1.0.Final %{oname}
 
 # Remove internal cglib
 find ./ -name "*.java" -exec sed -i "s/org.springframework.cglib/net.sf.cglib/g" {} +
@@ -209,6 +219,9 @@ opts="-f"
 %doc license.txt notice.txt
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_3jpp8
+- new fc release
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_1jpp8
 - new version
 
