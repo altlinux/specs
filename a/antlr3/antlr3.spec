@@ -1,31 +1,31 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java rpm-build-python
-BuildRequires: gcc-c++ perl(Digest.pm) perl(English.pm) perl(Error.pm) perl(Exception/Class.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Slurp.pm) perl(File/Spec/Unix.pm) perl(FindBin.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(Moose.pm) perl(Moose/Role.pm) perl(Moose/Util/TypeConstraints.pm) perl(Params/Validate.pm) perl(Readonly.pm) perl(Switch.pm) perl(Test/Builder/Module.pm) perl(Test/Class/Load.pm) perl(Test/More.pm) perl(Test/Perl/Critic.pm) perl(UNIVERSAL.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(blib.pm) perl(overload.pm) perl-devel perl-podlators python-devel unzip
+BuildRequires(pre): rpm-macros-java
+BuildRequires: gcc-c++ perl(Digest.pm) perl(English.pm) perl(Error.pm) perl(Exception/Class.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Slurp.pm) perl(File/Spec/Unix.pm) perl(FindBin.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(Moose.pm) perl(Moose/Role.pm) perl(Moose/Util/TypeConstraints.pm) perl(Params/Validate.pm) perl(Readonly.pm) perl(Switch.pm) perl(Test/Builder/Module.pm) perl(Test/Class/Load.pm) perl(Test/More.pm) perl(Test/Perl/Critic.pm) perl(UNIVERSAL.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(blib.pm) perl(overload.pm) perl-devel unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-#%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
-
 %global antlr_version 3.5.2
 %global c_runtime_version 3.4
-#%global python_runtime_version 3.1.3
 %global javascript_runtime_version 3.1
-%global baserelease 9
+%global baserelease 11
 
 Summary:            ANother Tool for Language Recognition
 Name:               antlr3
 Version:            %{antlr_version}
-Release:            alt1_9jpp8
+Release:            alt1_11jpp8
 Epoch:              1
 URL:                http://www.antlr3.org/
 Source0:            https://github.com/antlr/antlr3/archive/%{antlr_version}.tar.gz
 #Source2:            http://www.antlr3.org/download/Python/antlr_python_runtime-%{python_runtime_version}.tar.gz
 Source3:            http://www.antlr3.org/download/antlr-javascript-runtime-%{javascript_runtime_version}.zip
-Source9:            antlr-runtime-MANIFEST.MF
-Patch1:             0001-java8-fix.patch
+Patch0:             0001-java8-fix.patch
+
+# Generate OSGi metadata
+Patch1:         osgi-manifest.patch
+
 License:            BSD
 
 BuildRequires:      maven-local
@@ -37,9 +37,9 @@ BuildRequires:      stringtemplate4
 BuildRequires:      stringtemplate
 BuildRequires:      antlr3-tool
 
-BuildRequires:      autoconf
-BuildRequires:      automake
-BuildRequires:      libtool
+BuildRequires:      autoconf-common
+BuildRequires:      automake-common
+BuildRequires:      libtool-common
 
 # we don't build it now
 Obsoletes:       antlr3-gunit < 3.2-15
@@ -88,7 +88,6 @@ BuildArch:      noarch
 Group: Development/Java
 Summary:      Javascript run-time support for ANTLR-generated parsers
 Version:      %{javascript_runtime_version}
-#Release:      %{antlr_version}.%{baserelease}%{?dist}
 BuildArch:    noarch
 
 %description  javascript
@@ -98,7 +97,6 @@ Javascript run-time support for ANTLR-generated parsers
 Group: Development/Java
 Summary:   C run-time support for ANTLR-generated parsers
 Version:   %{c_runtime_version}
-#Release:      %{antlr_version}.%{baserelease}%{?dist}
 
 %description C
 C run-time support for ANTLR-generated parsers
@@ -108,8 +106,6 @@ Group: Development/Java
 Summary:   Header files for the C bindings for ANTLR-generated parsers
 Requires:  %{name}-C = %{epoch}:%{c_runtime_version}
 Version:   %{c_runtime_version}
-#Release:      %{antlr_version}.%{baserelease}%{?dist}
-BuildArch:      noarch
 
 
 %description C-devel
@@ -118,12 +114,11 @@ Header files for the C bindings for ANTLR-generated parsers
 %package        C-docs
 Group: Development/Java
 Summary:        API documentation for the C run-time support for ANTLR-generated parsers
-#BuildArch:      noarch
-BuildRequires:  graphviz
+BuildArch:      noarch
+BuildRequires: graphviz libgraphviz
 BuildRequires:  doxygen
 Requires:       %{name}-C = %{epoch}:%{c_runtime_version}
 Version:   %{c_runtime_version}
-#Release:      %{antlr_version}.%{baserelease}%{?dist}
 
 %description    C-docs
 This package contains doxygen documentation with instruction
@@ -133,27 +128,15 @@ C run-time support for ANTLR-generated parsers.
 %package C++-devel
 Group: Development/Java
 Summary:        C++ runtime support for ANTLR-generated parsers
-BuildArch:      noarch
 
 %description C++-devel
 C++ runtime support for ANTLR-generated parsers.
 
-#%package        python
-#Group:          Development/Libraries
-#Summary:        Python run-time support for ANTLR-generated parsers
-#BuildRequires:  python-devel
-#BuildRequires:  python-setuptools-devel
-#BuildArch:      noarch
-#Version:        %{python_runtime_version}
-#
-#%description    python
-#Python run-time support for ANTLR-generated parsers
-
-
 %prep
 %setup -q -n antlr3-%{antlr_version} -a 3
 sed -i "s,\${buildNumber},`cat %{_sysconfdir}/fedora-release` `date`," tool/src/main/resources/org/antlr/antlr.properties
-%patch1 -p1
+%patch0 -p1
+%patch1
 
 # remove pre-built artifacts
 find -type f -a -name *.jar -delete
@@ -189,11 +172,6 @@ sed -i 's/jsr14/1.6/' antlr3-maven-archetype/src/main/resources/archetype-resour
 %build
 %mvn_build -f
 
-## Build the python runtime
-#pushd antlr_python_runtime-%{python_runtime_version}
-#%{__python} setup.py build
-#popd
-
 # Build the C runtime
 pushd runtime/C
 autoreconf -i
@@ -219,12 +197,6 @@ jar cvf ant-antlr3.jar \
   -C antlr3-src org/apache/tools/ant/antlr/ANTLR3.class
 popd
 
-# inject OSGi manifests
-mkdir -p META-INF
-cp -p %{SOURCE9} META-INF/MANIFEST.MF
-touch META-INF/MANIFEST.MF
-zip runtime/Java/target/antlr-runtime-%{antlr_version}.jar META-INF/MANIFEST.MF
-
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_mandir}
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/antlr
@@ -240,12 +212,6 @@ EOF
 
 # install wrapper script
 %jpackage_script org.antlr.Tool '' '' 'stringtemplate4.jar:antlr3.jar:antlr3-runtime.jar' antlr3 true
-
-## install python runtime
-#pushd antlr_python_runtime-%{python_runtime_version}
-#%{__python} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
-#chmod a+x $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/antlr_python_runtime-*
-#popd
 
 # install C runtime
 pushd runtime/C
@@ -271,16 +237,13 @@ popd
 mkdir -p $RPM_BUILD_ROOT/%{_includedir}/%{name}
 install -pm 644 runtime/Cpp/include/* $RPM_BUILD_ROOT/%{_includedir}/
 
+rm -f runtime/C/api/*.png
+
 %files tool -f .mfiles-tool
 %doc README.txt tool/{LICENSE.txt,CHANGES.txt}
 %{_bindir}/antlr3
 %{_javadir}/ant/ant-antlr3.jar
 %config(noreplace) %{_sysconfdir}/ant.d/ant-antlr3
-
-#%files python
-#%doc tool/LICENSE.txt
-#%{python_sitelibdir_noarch}/antlr3/*
-#%{python_sitelibdir_noarch}/antlr_python_runtime-*
 
 %files C
 %doc tool/LICENSE.txt
@@ -309,6 +272,9 @@ install -pm 644 runtime/Cpp/include/* $RPM_BUILD_ROOT/%{_includedir}/
 %doc tool/LICENSE.txt
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.5.2-alt1_11jpp8
+- new fc release
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.5.2-alt1_9jpp8
 - full-fledged build
 
