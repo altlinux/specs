@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 Obsoletes: jakarta-regexp = 1.4-alt1
 Obsoletes: jakarta-regexp = 1.4-alt2
@@ -12,19 +12,21 @@ BuildRequires: jpackage-generic-compat
 Name:           regexp
 Epoch:          1
 Version:        1.5
-Release:        alt1_20jpp8
+Release:        alt1_23jpp8
 Summary:        Simple regular expressions API
 License:        ASL 2.0
 URL:            http://jakarta.apache.org/%{name}/
 BuildArch:      noarch
 
 Source0:        http://archive.apache.org/dist/jakarta/%{name}/jakarta-%{name}-%{version}.tar.gz
+Source2:        jakarta-%{name}-osgi-manifest.MF
+Patch0:         jakarta-%{name}-attach-osgi-manifest.patch
 
 BuildRequires:  ant
 BuildRequires:  javapackages-local
-
 Source44: import.info
 Provides: jakarta-regexp = %{version}-%{release}
+
 
 %description
 Regexp is a 100% Pure Java Regular Expression package that was
@@ -44,35 +46,48 @@ Javadoc for %{name}.
 
 %prep
 %setup -q -n jakarta-%{name}-%{version}
+%patch0
+cp -p %{SOURCE2} MANIFEST.MF
 # remove all binary libs
 find . -name "*.jar" -exec rm -f {} \;
+
+cat > pom.xml << EOF
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>jakarta-%{name}</groupId>
+  <artifactId>jakarta-%{name}</artifactId>
+  <version>%{version}</version>
+</project>
+EOF
+
+%mvn_file : %{name}
+
+%mvn_alias jakarta-%{name}:jakarta-%{name} %{name}:%{name}
 
 %build
 mkdir lib
 %ant -Djakarta-site2.dir=. jar javadocs
 
+%mvn_artifact pom.xml build/*.jar
+
 %install
-# jars
-install -d -m 755 %{buildroot}%{_javadir}
-install -m 644 build/*.jar %{buildroot}%{_javadir}/%{name}.jar
-
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr docs/api/* %{buildroot}%{_javadocdir}/%{name}
-
-%add_maven_depmap jakarta-%{name}:jakarta-%{name}:%{version} -a %{name}:%{name} %{name}.jar
+%mvn_install -J docs/api
 
 %check
 %ant -Djakarta-site2.dir=. test
 
+# Workaround for RPM bug #646523 - can't change symlink to directory
+# TODO: Remove this in F-23
 %files -f .mfiles
 %doc LICENSE
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
-%{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.5-alt1_23jpp8
+- new fc release
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.5-alt1_20jpp8
 - new version
 
