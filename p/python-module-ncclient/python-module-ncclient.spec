@@ -3,7 +3,7 @@
 
 Summary: Python library for NETCONF clients
 Name: python-module-%oname
-Version: 0.4.7
+Version: 0.5.2
 Release: alt1
 Url: https://github.com/leopoul/ncclient
 Source: %name-%version.tar
@@ -12,7 +12,7 @@ License: ASL 2.0
 Group: Development/Python
 
 BuildArch: noarch
-BuildRequires: python-dev python-module-setupdocs python-module-setuptools
+BuildRequires: python-devel python-module-setupdocs python-module-setuptools
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -77,6 +77,9 @@ popd
 
 
 %changelog
+* Wed Nov 30 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 0.5.2-alt1
+- New version
+
 * Fri Jun 10 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 0.4.7-alt1
 - New version
 
