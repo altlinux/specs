@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.95
+Release: alt100.96
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -532,6 +532,10 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Wed Nov 30 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt100.96
+- verify-elf: don't confuse the initial verify_rpath() in case
+  of two RUNPATH/RPATHs (ALT#32826).
+
 * Sun Nov 27 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt100.95
 - verify-elf: honor RUNPATH in addition to RPATH, too (like in lib.req).
 - (unnoticeable) shell.req: generalize the shebang regexp w.r.t. other
