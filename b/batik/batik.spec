@@ -11,7 +11,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           batik
 Version:        1.8
-Release:        alt2_6jpp8
+Release:        alt3_6jpp8
 Summary:        Scalable Vector Graphics for Java
 License:        ASL 2.0 and W3C
 URL:            http://xml.apache.org/batik/
@@ -52,13 +52,14 @@ Patch5:         %{name}-fix-codec-lookup.patch
 
 BuildArch:      noarch
 
+BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  maven-local >= 1.5
 BuildRequires:  ant
 BuildRequires: subversion subversion-server-common
 BuildRequires:  zip
 
 BuildRequires:  rhino >= 1.5
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils >= 1.5
 BuildRequires:  xerces-j2
 BuildRequires:  xalan-j2
 BuildRequires:  xml-commons-apis >= 1.3.04
@@ -404,13 +405,6 @@ pushd $RPM_BUILD_ROOT%_javadir/xmlgraphics-batik
   ln -s ../batik-rasterizer.jar rasterizer.jar
 popd
 
-# due to #19119
-#1: xmlgraphics-batik         error: unpacking of archive failed on file
-#/usr/share/java/batik: cpio: rename failed - Is a directory
-#E: Some errors occurred while running transaction
-%pre
-[ -d /usr/share/java/batik ] && rm -rf /usr/share/java/batik ||:
-
 
 %files -f .mfiles
 %doc LICENSE NOTICE
@@ -435,8 +429,6 @@ popd
 %_javadir/xmlgraphics-batik/batik-transcoder.jar
 %_javadir/xmlgraphics-batik/batik-util.jar
 %_javadir/xmlgraphics-batik/batik-xml.jar
-%_javadir/batik
-%dir %_javadir/xmlgraphics-batik
 
 %files css -f .mfiles-css
 
@@ -470,6 +462,9 @@ popd
 
 
 %changelog
+* Wed Nov 30 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt3_6jpp8
+-dropped deprecated upgrade hack (closes: #32819)
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt2_6jpp8
 - new fc release
 
