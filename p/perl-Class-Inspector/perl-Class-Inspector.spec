@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Class-Inspector
 Name: perl-%dist
-Version: 1.28
+Version: 1.31
 Release: alt1
 
 Summary: Get information about a class and its structure
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/A/AD/ADAMK/Class-Inspector-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/P/PL/PLICEASE/Class-Inspector-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -37,6 +38,9 @@ information.
 %perl_vendor_privlib/Class
 
 %changelog
+* Wed Nov 30 2016 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1
+- automated CPAN update
+
 * Tue Oct 23 2012 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1
 - automated CPAN update
 
