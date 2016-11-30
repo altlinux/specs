@@ -2,7 +2,7 @@
 %define module_name auth_gssapi
 
 Name: apache2-%modname
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: A GSSAPI Authentication module for Apache2
@@ -22,6 +22,8 @@ BuildRequires: libssl-devel libkrb5-devel gssntlmssp-devel libaprutil1-devel
 Requires: apache2
 
 Provides: %modname
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 The mod_auth_gssapi module is an authentication service that implements
@@ -50,6 +52,9 @@ install -p -m 644 -- %SOURCE1 %buildroot%apache2_mods_available/%module_name.loa
 %exclude %apache2_libexecdir/*.la
 
 %changelog
+* Wed Nov 30 2016 Mikhail Efremov <sem@altlinux.org> 1.4.1-alt1
+- 1.4.1.
+
 * Fri Jul 29 2016 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1
 - Initial build.
 
