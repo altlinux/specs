@@ -6,8 +6,8 @@
 %define distro_name Regular
 
 Name: branding-%brand-%theme
-Version: 20161129
-Release: alt2
+Version: 20161130
+Release: alt1
 
 Url: http://en.altlinux.org
 
@@ -219,6 +219,9 @@ Conflicts: indexhtml-school_master
 Conflicts: indexhtml-school_terminal
 Conflicts: indexhtml-small_business
 Conflicts: indexhtml-school-server
+Conflicts: branding-sisyphus-server-light-indexhtml
+
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-indexhtml";done )
 
 Requires: xdg-utils
 Requires(post): indexhtml-common
@@ -463,6 +466,10 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 
 
 %changelog
+* Wed Nov 30 2016 Michael Shigorin <mike@altlinux.org> 20161130-alt1
+- added missing Conflicts:
+  (see also p8-starterkits 20130427-alt1.M70P.2)
+
 * Tue Nov 29 2016 Michael Shigorin <mike@altlinux.org> 20161129-alt2
 - updated logo as well
 - fixed gfxboot help menu colour
