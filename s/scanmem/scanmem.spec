@@ -1,7 +1,7 @@
 Summary: Simple debugging utility
 Name: scanmem
-Version: 0.15.4
-Release: alt4
+Version: 0.15.8
+Release: alt1
 Url: http://taviso.decsystem.org/
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -84,6 +84,9 @@ The devel package contains the symlincs for sharedlib
 %_datadir/appdata/GameConqueror.appdata.xml
 
 %changelog
+* Wed Nov 30 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 0.15.8-alt1
+- New version
+
 * Wed May 11 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.15.4-alt4
 - gameconqueror: fixed work without devel subpackage.
 
