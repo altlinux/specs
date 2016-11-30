@@ -2,8 +2,8 @@
 
 Summary: Junos 'EZ' automation for non-programmers
 Name: python-module-%oname
-Version: 1.3.1
-Release: alt2
+Version: 2.0.1
+Release: alt1
 Url: https://github.com/Juniper/py-junos-eznc
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -11,7 +11,7 @@ License: ASL 2.0
 Group: Development/Python
 
 BuildArch: noarch
-BuildRequires: python-dev python-module-setupdocs python-module-setuptools
+BuildRequires: python-devel python-module-setupdocs python-module-setuptools
 
 # For more detailed autoreqs (under jnpr.*), which will be self-satisfied;
 # this fixes the general UNMET python2.X(jnpr), which used to appear.
@@ -77,6 +77,9 @@ popd
 
 
 %changelog
+* Wed Nov 30 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 2.0.1-alt1
+- New version
+
 * Thu Jun 16 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.1-alt2
 - Do not move jnpr/junos stuff to jnpr directory (ALT#32198)
   (thx Andrey Cherepanov cas@).
