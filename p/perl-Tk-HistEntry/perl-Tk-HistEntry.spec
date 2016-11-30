@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Tk-HistEntry
 Name: perl-%dist
-Version: 0.43_50
+Version: 0.44
 Release: alt1
 
 Summary: Entry widget with history capability
@@ -8,7 +9,7 @@ Group: Development/Perl
 License: GPL or Artistic
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SR/SREZIC/Tk-HistEntry-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -39,6 +40,9 @@ xvfb-run -a make test
 %perl_vendor_privlib/Tk/HistEntry.pm
 
 %changelog
+* Wed Nov 30 2016 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
+- automated CPAN update
+
 * Sat Apr 23 2011 Alexey Tourbin <at@altlinux.ru> 0.43_50-alt1
 - 0.42 -> 0.43_50
 
