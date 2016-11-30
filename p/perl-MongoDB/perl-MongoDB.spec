@@ -3,7 +3,7 @@
 %add_findreq_skiplist %perl_vendor_archlib/MongoDB/Collection.pm
 %define dist MongoDB
 Name: perl-%dist
-Version: 1.4.5
+Version: 1.6.0
 Release: alt1
 
 Summary: Mongo Driver for Perl
@@ -14,7 +14,7 @@ URL: http://www.cpan.org
 Source: http://www.cpan.org/authors/id/M/MO/MONGODB/MongoDB-v%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011 (-bb)
-BuildRequires: perl-Any-Moose perl-Class-Method-Modifiers perl-Data-Types perl-DateTime perl-File-Slurp perl-JSON perl-Module-Install perl-Moose perl-Package-Stash-XS perl-Readonly perl-Readonly-XS perl-Test-Exception perl-Tie-IxHash perl-boolean perl(Config/AutoConf.pm) perl(Path/Tiny.pm) perl(Throwable.pm) perl(Syntax/Keyword/Junction.pm) perl(Safe/Isa.pm) perl(DateTime/Locale.pm) perl(Authen/SCRAM/Client.pm) perl(Digest/SHA.pm)
+BuildRequires: perl-Any-Moose perl-Class-Method-Modifiers perl-Data-Types perl-DateTime perl-File-Slurp perl-JSON perl-Module-Install perl-Moose perl-Package-Stash-XS perl-Readonly perl-Readonly-XS perl-Test-Exception perl-Tie-IxHash perl-boolean perl(Config/AutoConf.pm) perl(Path/Tiny.pm) perl(Throwable.pm) perl(Syntax/Keyword/Junction.pm) perl(Safe/Isa.pm) perl(DateTime/Locale.pm) perl(Authen/SCRAM/Client.pm) perl(Digest/SHA.pm) perl(BSON/Decimal128.pm)
 
 %description
 This is the Perl driver for MongoDB, a document-oriented database.
@@ -37,6 +37,9 @@ This is the Perl driver for MongoDB, a document-oriented database.
 %perl_vendor_autolib/MongoDB
 
 %changelog
+* Wed Nov 30 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1
+- automated CPAN update
+
 * Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.5-alt1
 - automated CPAN update
 
