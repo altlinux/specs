@@ -1,5 +1,5 @@
 Name: ccache
-Version: 3.3.2
+Version: 3.3.3
 Release: alt1
 
 Summary: Compiler cache
@@ -48,6 +48,10 @@ EOF
 %_sysconfdir/buildreqs/packages/ignore.d/*
 
 %changelog
+* Wed Nov 30 2016 Evgeny Sinelnikov <sin@altlinux.ru> 3.3.3-alt1
+- Detects usage of `.incbin` assembler directives in the source code
+  and avoids caching such compilations.
+
 * Fri Oct 07 2016 Evgeny Sinelnikov <sin@altlinux.ru> 3.3.2-alt1
 - Update to latest release
 - Enabled -Werror compiler flag during merge with v3.3.2
