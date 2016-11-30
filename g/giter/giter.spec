@@ -1,5 +1,5 @@
 Name: giter
-Version: 1.11
+Version: 1.12
 Release: alt1
 
 Summary: Etersoft wrapper for git commands
@@ -41,6 +41,9 @@ RECOMMENDED packages: git-core gitum
 %_bindir/*
 
 %changelog
+* Wed Nov 30 2016 Vitaly Lipatov <lav@altlinux.ru> 1.12-alt1
+- gpush: use origin by default if alone
+
 * Fri Aug 26 2016 Vitaly Lipatov <lav@altlinux.ru> 1.11-alt1
 - fix error when .ssh/config is missed
 - gremote: add missed .git support when print out public url
