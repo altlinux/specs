@@ -3,7 +3,7 @@
 
 Summary: ABC-Backports
 Name: python-module-%oname
-Version: 0.4
+Version: 0.5
 Release: alt1
 Url: https://github.com/cython/backports_abc
 Source: %name-%version.tar
@@ -12,7 +12,7 @@ License: PYTHON SOFTWARE FOUNDATION LICENSE VERSION 2
 Group: Development/Python
 
 BuildArch: noarch
-BuildRequires: python-dev python-module-setupdocs python-module-setuptools
+BuildRequires: python-devel python-module-setupdocs python-module-setuptools
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -72,6 +72,9 @@ popd
 
 
 %changelog
+* Wed Nov 30 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 0.5-alt1
+- New version
+
 * Thu Sep 08 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 0.4-alt1
 - Initial build for ALT
 
