@@ -1,5 +1,5 @@
 Name: unbound
-Version: 1.5.9
+Version: 1.5.10
 Release: alt1
 License: BSD
 Url: http://unbound.net/
@@ -195,6 +195,9 @@ rm %buildroot%python_sitelibdir/*.la
 %endif
 
 %changelog
+* Wed Nov 30 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.5.10-alt1
+- New version
+
 * Wed Jun 29 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.5.9-alt1
 - New version, see Changelog
 - Removed /sbin/restorecon (not real, something old) from unbound-keygen.service
