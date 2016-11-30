@@ -7,7 +7,7 @@
 
 Name: branding-%brand-%theme
 Version: 20161130
-Release: alt1
+Release: alt2
 
 Url: http://en.altlinux.org
 
@@ -220,6 +220,7 @@ Conflicts: indexhtml-school_terminal
 Conflicts: indexhtml-small_business
 Conflicts: indexhtml-school-server
 Conflicts: branding-sisyphus-server-light-indexhtml
+Conflicts: branding-xalt-kworkstation-indexhtml
 
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-indexhtml";done )
 
@@ -466,6 +467,9 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 
 
 %changelog
+* Wed Nov 30 2016 Michael Shigorin <mike@altlinux.org> 20161130-alt2
+- indexhtml: stopgap conflict (*sigh*)
+
 * Wed Nov 30 2016 Michael Shigorin <mike@altlinux.org> 20161130-alt1
 - added missing Conflicts:
   (see also p8-starterkits 20130427-alt1.M70P.2)
