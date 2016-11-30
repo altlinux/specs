@@ -2,7 +2,7 @@
 
 Name: SDL2
 Version: 2.0.5
-Release: alt1
+Release: alt2
 
 Summary: Simple DirectMedia Layer
 License: zlib
@@ -49,6 +49,9 @@ multiple platforms.
 Summary: Libraries, includes and more to develop SDL applications.
 Group: Development/C
 Requires: lib%name = %version-%release
+# Since 2.0.5, `sdl2-config --libs` forces new dtags;
+# the support for RUNPATH (a new tag) has been added in:
+Conflicts: rpm-build < 4.0.4-alt100.96
 
 %description -n lib%name-devel
 This is the Simple DirectMedia Layer, a generic API that provides low
@@ -104,6 +107,10 @@ This is the static libraries you can use to develop SDL applications.
 %endif
 
 %changelog
+* Wed Nov 30 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.5-alt2
+- Conflicts: rpm-build < 4.0.4-alt100.96 (which adds support for
+  RUNPATH) because `sdl2-config --libs` forces new dtags since 2.0.5.
+
 * Mon Oct 31 2016 Nazarov Denis <nenderus@altlinux.org> 2.0.5-alt1
 - Version 2.0.5
 
