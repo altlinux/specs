@@ -4,7 +4,7 @@
 Summary: Python API for interaction with the vSphere Web Services SDK
 Name: python-module-%oname
 Version: 0.1.8
-Release: alt2
+Release: alt3
 Url: http://code.google.com/p/pysphere/
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -14,7 +14,7 @@ Group: Development/Python
 Patch1: python-module-pysphere-0.1.8-py3-value-error.patch
 
 BuildArch: noarch
-BuildRequires: python-dev python-module-setupdocs python-module-setuptools
+BuildRequires: python-devel python-module-setupdocs python-module-setuptools
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -88,6 +88,9 @@ popd
 
 
 %changelog
+* Wed Nov 30 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 0.1.8-alt3
+- Nothing changed just replaced python-dev with python-devel in BuildReq section
+
 * Mon Feb 02 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 0.1.8-alt2
 - Dropped py3 module caused dependiences issues
 
