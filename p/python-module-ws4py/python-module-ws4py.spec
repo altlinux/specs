@@ -3,8 +3,8 @@
 
 Summary: WebSocket for Python (ws4py)
 Name: python-module-ws4py
-Version: 0.3.4
-Release: alt1.1.1
+Version: 0.3.5.git.fd55907a
+Release: alt1
 Url: https://github.com/Lawouach/WebSocket-for-Python
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -80,6 +80,9 @@ popd
 
 
 %changelog
+* Wed Nov 30 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 0.3.5.git.fd55907a-alt1
+- New version
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.4-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
