@@ -1,7 +1,7 @@
 %def_without smb
 
 Name: mc
-Version: 4.8.17
+Version: 4.8.18
 Release: alt1
 
 License: %gpl3plus
@@ -98,7 +98,7 @@ cat <<EOF > version.h
 #endif
 EOF
 
-sed 's|@@VERSION@@|%version-%release|' -i version.h
+sed 's|@@VERSION@@|%version-%release-20161130|' -i version.h
 
 #%%autoreconf
 ./autogen.sh
@@ -176,6 +176,9 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Wed Nov 30 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.8.18-alt1
+- 4.8.18 (updated to 20161130 git snapshot)
+
 * Mon May 23 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.8.17-alt1
 - 4.8.17 (with MC tickets #3643, #3637, #3648 of 4.8.18 roadmap)
 - added sqlite3 to requires of mc-full
