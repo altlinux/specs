@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 3.0223
+%define module_version 3.0225
 %define module_name Cpanel-JSON-XS
 # BEGIN SourceDeps(oneline):
 BuildRequires: libsowing-devel perl(Carp.pm) perl(Encode.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Pod/Text.pm) perl(Pod/Usage.pm) perl(Test.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(common/sense.pm) perl(overload.pm)
@@ -7,7 +7,7 @@ BuildRequires: libsowing-devel perl(Carp.pm) perl(Encode.pm) perl(Exporter.pm) p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 3.0223
+Version: 3.0225
 Release: alt1
 Summary: JSON::XS for Cpanel, fast and correct serialising, also for 5.6.2
 Group: Development/Perl
@@ -59,6 +59,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Wed Nov 30 2016 Igor Vlasenko <viy@altlinux.ru> 3.0225-alt1
+- automated CPAN update
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 3.0223-alt1
 - automated CPAN update
 
