@@ -1,14 +1,14 @@
-%define module_version 0.000060
+%define _unpackaged_files_terminate_build 1
+%define module_version 0.000061
 %define module_name Test2-Suite
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(B.pm) perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(Importer.pm) perl(List/Util.pm) perl(Scalar/Util.pm) perl(Test2.pm) perl(Unicode/GCString.pm) perl(overload.pm) perl(utf8.pm)
 # END SourceDeps(oneline)
 %define _without_test 1
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.000060
+Version: 0.000061
 Release: alt1
 Summary: Distribution with a rich set of tools built upon the Test2 framework.
 Group: Development/Perl
@@ -36,6 +36,9 @@ you.
 %perl_vendor_privlib/T*
 
 %changelog
+* Wed Nov 30 2016 Igor Vlasenko <viy@altlinux.ru> 0.000061-alt1
+- automated CPAN update
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.000060-alt1
 - automated CPAN update
 
