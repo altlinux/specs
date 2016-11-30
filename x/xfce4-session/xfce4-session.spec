@@ -1,6 +1,6 @@
 Name: xfce4-session
 Version: 4.12.1
-Release: alt3
+Release: alt4
 
 Summary: Session manager for Xfce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
@@ -32,6 +32,8 @@ Requires: wm-common-freedesktop
 Requires: xfce4-about
 
 Obsoletes: xfce-utils < %version
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 %name is the session manager for the Xfce desktop environment.
@@ -121,6 +123,9 @@ install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/polkit-gnome-authe
 %_libdir/xfce4/session/balou*
 
 %changelog
+* Wed Nov 30 2016 Mikhail Efremov <sem@altlinux.org> 4.12.1-alt4
+- Use absolute path in the xsessions/xfce.desktop (closes: #32828).
+
 * Mon May 23 2016 Mikhail Efremov <sem@altlinux.org> 4.12.1-alt3
 - Use Exec to start gnome authentication agent again.
 
