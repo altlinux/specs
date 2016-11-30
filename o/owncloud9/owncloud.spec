@@ -1,8 +1,8 @@
 %define major 9
 
 Name: owncloud%major
-Version: 9.1.1
-Release: alt3
+Version: 9.1.2
+Release: alt1
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 %define installdir %webserver_webappsdir/%name
@@ -63,6 +63,9 @@ chown -R apache2:apache2 %installdir
 %dir %attr(0770,root,_webserver) %_localstatedir/%name
 
 %changelog
+* Wed Nov 30 2016 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.2-alt1
+- 9.1.2
+
 * Tue Oct 04 2016 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.1-alt3
 - Fix path to %installdir
 
