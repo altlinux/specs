@@ -4,7 +4,7 @@
 %add_python_req_skip ADM_resize ADM_image
 
 Name: avidemux-qt
-Version: 2.6.13
+Version: 2.6.15
 Release: alt1
 
 Group: Video
@@ -179,6 +179,9 @@ ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 %exclude %_includedir/avidemux
 
 %changelog
+* Wed Nov 30 2016 Sergey V Turchin <zerg@altlinux.org> 2.6.15-alt1
+- new version
+
 * Tue Aug 30 2016 Sergey V Turchin <zerg@altlinux.org> 2.6.13-alt1
 - new version
 
