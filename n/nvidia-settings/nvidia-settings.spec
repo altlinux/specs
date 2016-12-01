@@ -1,6 +1,6 @@
 Name: nvidia-settings
-Version: 367.35
-Release: alt1
+Version: 375.20
+Release: alt1%ubt
 
 Group: System/Configuration/Hardware
 Summary: Tool for configuring the NVIDIA driver
@@ -21,6 +21,7 @@ Patch3: alt-ui-modules-dir.patch
 # Automatically added by buildreq on Mon May 13 2013 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel libGL-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-server pkg-config python-base xorg-randrproto-devel xorg-renderproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
 #BuildRequires: libXrandr-devel libXv-devel libXxf86vm-devel libgtk+2-devel libvdpau-devel ruby ruby-stdlibs
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: libXrandr-devel libXv-devel libXxf86vm-devel libGL-devel libvdpau-devel
 BuildRequires: libgtk+2-devel libgtk+3-devel
 
@@ -110,6 +111,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Thu Dec 01 2016 Sergey V Turchin <zerg@altlinux.org> 375.20-alt1%ubt
+- new version
+
 * Mon Jul 18 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt1
 - new version
 
