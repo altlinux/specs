@@ -39,7 +39,7 @@
 
 Name: samba
 Version: 4.5.1
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -106,10 +106,10 @@ BuildRequires: libiniparser-devel
 BuildRequires: libkrb5-devel libssl-devel libcups-devel
 BuildRequires: gawk libgtk+2-devel libcap-devel libuuid-devel
 BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-xsl
-%{?_without_talloc:BuildRequires: libtalloc-devel >= 2.1.3 libpytalloc-devel}
-%{?_without_tevent:BuildRequires: libtevent-devel >= 0.9.25 python-module-tevent}
-%{?_without_tdb:BuildRequires: libtdb-devel >= 1.3.7  python-module-tdb}
-%{?_without_ldb:BuildRequires: libldb-devel >= 1.1.21 python-module-pyldb-devel}
+%{?_without_talloc:BuildRequires: libtalloc-devel >= 2.1.8 libpytalloc-devel}
+%{?_without_tevent:BuildRequires: libtevent-devel >= 0.9.29 python-module-tevent}
+%{?_without_tdb:BuildRequires: libtdb-devel >= 1.3.10  python-module-tdb}
+%{?_without_ldb:BuildRequires: libldb-devel >= 1.1.27 python-module-pyldb-devel}
 #{?_with_clustering_support:BuildRequires: ctdb-devel}
 %{?_with_testsuite:BuildRequires: ldb-tools}
 %{?_with_systemd:BuildRequires: libsystemd-devel}
@@ -374,6 +374,9 @@ Requires: %name-common-tools = %version-%release
 Requires: %name-libs = %version-%release
 Provides: samba4-winbind = %version-%release
 Obsoletes: samba4-winbind < %version-%release
+%if_with libwbclient
+Conflicts: libwbclient-sssd
+%endif
 
 %description winbind
 The %name-winbind package provides the winbind NSS library, and some
@@ -1333,6 +1336,10 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Sat Dec 03 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.5.1-alt2
+- Add conflict winbind with libwbclient-sssd due compatibility
+- Update build dependencies versions for external samba libraries
+
 * Sat Oct 29 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.5.1-alt1
 - Update with variety of fixes for autumn release
 
