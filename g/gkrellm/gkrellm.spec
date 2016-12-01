@@ -1,12 +1,13 @@
 Name: gkrellm
-Version: 2.3.5
-Release: alt3
-Packager: Roman Savochenko <rom_as at altlinux.ru>
+Version: 2.3.10
+Release: alt1
 
 Summary: Multiple stacked system monitors
 License: GPLv3+
 Group: Monitoring
 Url: http://gkrellm.net/
+
+Packager: L.A. Kostis <lakostis@altlinux.org>
 
 Source0: %name-%version.tar
 Source1: gkrellm_16.xpm
@@ -14,9 +15,7 @@ Source2: gkrellm_32.xpm
 Source3: gkrellm_48.xpm
 Source4: gkrellm-2.3.1-alt-init
 Source5: gkrellm-2.2.8-alt-sysconfig
-Patch0: %name-%version-aticonfig.patch
-Patch1: UK_RU_translation.patch
-Patch2: gkrellm-2.3.5-build.patch
+Patch0: %name-2.3.8-aticonfig.patch
 
 # for gkrellm >= 2.2.0
 Requires: libgtk+2 >= 2.3.1
@@ -53,8 +52,6 @@ Gkrellm server allows connections from Gkrellm clients over network.
 %prep
 %setup
 %patch0 -p2
-%patch1 -p1
-%patch2 -p1
 
 subst 's|^FLAGS = \(.*\)|FLAGS = %optflags \1|' src/Makefile
 
@@ -70,7 +67,6 @@ subst 's,/usr/lib,%_libdir,g' src/gkrellm.h server/gkrellmd.h
 %make_build enable_nls=1 \
 	INSTALLROOT=%prefix \
 	SMC_LIBS='-L%_x11libdir -lSM -lICE'
-#SYS_LIBS=-L%_x11libdir
 
 %install
 mkdir -p %buildroot%_bindir
@@ -140,11 +136,22 @@ __EOF__
 
 
 %changelog
+* Thu Dec 01 2016 L.A. Kostis <lakostis@altlinux.ru> 2.3.10-alt1
+- Updated to 2.3.10.
+- Update -aticonfig patch.
+- Remove old patches (merged by upstream/not needed).
+
 * Wed May 23 2012 Roman Savochenko <rom_as@altlinux.ru> 2.3.5-alt3
 - Build fix for direct add -lgmodule-2.0.
 
 * Tue Aug 16 2011 Roman Savochenko <rom_as@altlinux.ru> 2.3.5-alt2
 - The patch aticonfig.patch for 2.3.5 is included.
+
+* Mon Aug 15 2011 L.A. Kostis <lakostis@altlinux.ru> 2.3.5-alt1.1
+- technical rebuild.
+
+* Sat Aug 13 2011 L.A. Kostis <lakostis@altlinux.ru> 2.3.5-alt1
+- New upstream release.
 
 * Wed Jul 27 2011 Roman Savochenko <rom_as@altlinux.ru> 2.3.5-alt1
 - 2.3.5
