@@ -2,8 +2,8 @@ Summary: The New Moon browser, an unofficial branding of the Pale Moon project b
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 26.5.0
-Release: alt1_git.2.edd5
+Version: 27.0.2
+Release: alt1
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -48,30 +48,29 @@ Patch6: firefox3-alt-disable-werror.patch
 #Patch14:	firefox-fix-install.patch
 Patch16: firefox-cross-desktop.patch
 #Patch17:	mozilla-disable-installer.patch
-Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
+#Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
 Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
 
-Patch21: cpp_check.patch
-Patch23: palemoon_version-26.4.0.1.patch
-Patch25: palemoon-26.5.0-ui_picker_false.patch
+# Patch21: cpp_check.patch
+# Patch23: palemoon_version-26.4.0.1.patch
+# palemoon-26.5.0-ui_picker_false.patch
+Patch26:	palemoon-27.0.0-rpath.patch
+# Patch21: cpp_check.patch
+Patch23: palemoon_version-27.0.0.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
 
-# Automatically added by buildreq on Sat Aug 13 2016
-# optimized out: alternatives fontconfig fontconfig-devel glib2-devel gstreamer1.0-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel libwayland-client libwayland-server perl pkg-config python-base python-devel python-module-PyStemmer python-module-cssselect python-module-ferari python-module-fiat python-module-instant python-module-mpmath python-module-numpy python-module-pyasn1 python-module-pyparsing python-module-ufl python-module-uflacs python-modules python-modules-compiler python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python3 xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: doxygen gcc-c++ imake java-devel libGConf-devel libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpulseaudio-devel libsocket libvpx-devel 
-BuildRequires: python-module-cmd2 python-module-contextlib2 python-module-dns python-module-docutils python-module-ecdsa python-module-ed25519 python-module-ffc python-module-greenlet python-module-html5lib python-module-kerberos
-BuildRequires: python-module-libcf python-module-mimeparse python-module-netaddr python-module-nss python-module-paste python-module-pbr python-module-polib python-module-psycopg2 python-module-pycrypto
-BuildRequires: python-module-pycurl python-module-pyev python-module-pygobject3 python-module-pyinotify python-module-pysnmp4 python-module-pytz python-module-sidl python-module-sidlx python-module-snappy
-BuildRequires: python-module-snowballstemmer python-module-wrapt python-module-yaml python-module-zope python-modules-wsgiref python3-base 
-BuildRequires: unzip wget xorg-cf-files xsltproc yasm zip
 
-BuildPreReq: bzlib-devel fontconfig-devel gcc-c++-common glib2-devel libSM-devel libX11-devel libXcomposite-devel libXext-devel libcairo-devel libdbus-devel libdbus-glib-devel libevent-devel libffi-devel libfreetype-devel
-BuildPreReq: libgio-devel libgnomeui-devel libgraphite2-devel libgtk+3-devel libhunspell-devel libjpeg-devel libnspr libpango-devel libpixman-devel libpng-devel libproxy-devel libqt4-devel libreadline-devel
-BuildPreReq: libsqlite3-devel libssl-devel libstartup-notification-devel libunwind-devel libwebp-devel libwine-devel
-BuildPreReq: perl perl-Archive-Zip perl-CGI perl-DBI perl-GD perl-GD-Graph perl-HTTP-Message perl-XML-LibXML perl-XML-LibXSLT perl-devel perl-libwww python-base python-devel
-BuildPreReq: qt4-mobility-devel qt5-base-devel texinfo wcslib-devel xsltproc zlib-devel gst-transcoder-devel
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/autoconf /usr/bin/python /usr/bin/widl at-spi2-atk-devel bzlib-devel fontconfig-devel glib2-devel gobject-introspection-devel libSM-devel libX11-devel libXext-devel libcairo-devel libdbus-devel libdbus-glib-devel libevent-devel libfreetype-devel libgio-devel libgnomeui-devel libgraphite2-devel libgtk+3-devel libhunspell-devel libjpeg-devel libnspr libpango-devel libpixman-devel libpng-devel libproxy-devel libqt4-devel libreadline-devel libsqlite3-devel libssl-devel libstartup-notification-devel libunwind-devel libwebp-devel perl-Archive-Zip perl-CGI perl-XML-LibXML perl-XML-LibXSLT perl-devel perl-libwww qt4-mobility-devel qt5-base-devel qt5-declarative-devel qt5-location-devel swig texinfo wcslib-devel zlib-devel
+# END SourceDeps(oneline)
+
+
+# Automatically added by buildreq on Wed Nov 30 2016
+# optimized out: alternatives ca-certificates fontconfig fontconfig-devel glib2-devel gstreamer1.0-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins1.0 libpango-devel libstdc++-devel perl pkg-config python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python3 xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: doxygen gcc-c++ glibc-devel-static gst-plugins1.0-devel imake java-devel libGConf-devel libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpulseaudio-devel libsocket libvpx-devel
+BuildRequires: python-module-future python-module-yaml python-modules-json python-modules-wsgiref python3-base unzip wget xorg-cf-files xsltproc yasm zip
 
 BuildPreReq: python3-base unzip xorg-cf-files
 
@@ -81,12 +80,7 @@ BuildPreReq: autoconf_2.13
 
 %set_autoconf_version 2.13
 
-## %%if_enabled gst1
 BuildPreReq: gstreamer1.0-devel gst-plugins1.0-devel
-# %%else
-# BuildRequires(pre): gst-plugins-devel
-# BuildPreReq: gstreamer-devel gst-plugins-devel
-# %%endif
 
 %description
 The %sname project is a redesign of Mozilla's  Firefox browser component,
@@ -106,13 +100,9 @@ Obsoletes: palemoon  <= 26.2.2
 Provides: palemoon = %version-%release
 Conflicts: palemoon < %version-%release
 
-# %%if_enabled gst1
 Requires: libgstreamer1.0 gst-libav
 Requires: gst-plugins-base1.0
-# %%else
-# Requires: libgstreamer gst-ffmpeg
-# Requires: gst-plugins-base gst-plugins-good
-# %%endif
+
 # Protection against fraudulent DigiNotar certificates
 Requires: libnss
 
@@ -139,20 +129,23 @@ Requires: rpm-build-mozilla.org
 These helper macros provide possibility to rebuild
 %sname packages by some Alt Linux Team Policy compatible way.
 
+
 %prep
+
 %setup -n %sname-%version -c
 
-%patch21 -p1
+## patch21 -p1
 %patch20 -p1
 %patch23 -p1
 ##patch25 -p1
+##patch26 -p1
 
 cd %sname
 
 #%%patch1  -p1
-%patch6  -p1
-%patch16 -p1
-%patch18 -p1
+# %%patch6  -p1
+# %%patch16 -p1
+# %%patch18 -p1
 
 tar -xf %SOURCE1
 
@@ -164,6 +157,10 @@ popd
 #patch14 -p1
 #patch17 -p1
 
+%patch6  -p1
+%patch16 -p1
+
+#patch18 -p1
 
 
 cat >> browser/confvars.sh <<EOF
@@ -184,6 +181,8 @@ echo %version > browser/config/version.txt
 
 cp -f %SOURCE4 .mozconfig
 
+#echo "ac_add_options --enable-rpath"  >> .mozconfig
+
 %ifnarch %ix86 x86_64
 echo "ac_add_options --disable-methodjit" >> .mozconfig
 echo "ac_add_options --disable-monoic" >> .mozconfig
@@ -203,18 +202,20 @@ echo "ac_add_options --enable-shared-js"  >> .mozconfig
 echo "ac_add_options --enable-jemalloc --enable-jemalloc-lib" >> .mozconfig
 echo "ac_add_options --x-libraries=/usr/lib/X11" >> .mozconfig
 
+
 %ifarch %ix86
 echo "ac_add_options --with-arch=i586" >> .mozconfig
 echo 'ac_add_options --enable-optimize="-O2 -msse2 -mfpmath=sse" ' >> .mozconfig
 %endif
 
-echo "ac_add_options --enable-gstreamer=1.0" >> .mozconfig
+echo "ac_add_options --enable-gstreamer" >> .mozconfig
 
 %build
 cd %sname
 
 %add_optflags %optflags_shared
 %add_findprov_lib_path %palemoon_prefix
+
 export MOZ_BUILD_APP=browser
 
 # Mozilla builds with -Wall with exception of a few warnings which show up
@@ -232,6 +233,8 @@ export CXXFLAGS="$MOZ_OPT_FLAGS -D_GNUC_"
 rpath="/$(printf %%s '%palemoon_prefix' |tr '[:print:]' '_')"
 export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
 #export LDFLAGS="-Wl,-rpath,%palemoon_prefix"
+export LD_LIBRARY_PATH="-Wl,-rpath,$rpath"
+
 #make -f client.mk build STRIP="/bin/true" MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
 
 export PREFIX="%prefix"
@@ -240,7 +243,10 @@ export LIBIDL_CONFIG=%_bindir/libIDL-config-2
 export srcdir="$PWD"
 export SHELL=/bin/sh
 
+
+
 %__autoconf
+
 # On x86 architectures, Mozilla can build up to 4 jobs at once in parallel,
 # however builds tend to fail on other arches when building in parallel.
 MOZ_SMP_FLAGS=-j1
@@ -249,12 +255,18 @@ MOZ_SMP_FLAGS=-j1
 [ "%__nprocs" -ge 4 ] && MOZ_SMP_FLAGS=-j4
 %endif
 
+#export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
+#export LD_LIBRARY_PATH="$rpath"
+
+
+
 make -f client.mk \
-	MAKENSISU= \
-	STRIP="/bin/true" \
-	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
-	mozappdir=%buildroot/%palemoon_prefix \
-	clobber
+ 	MAKENSISU= \
+ 	STRIP="/bin/true" \
+ 	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
+ 	mozappdir=%buildroot/%palemoon_prefix \
+ 	clobber
+
 
 make -f client.mk \
 	MAKENSISU= \
@@ -263,6 +275,7 @@ make -f client.mk \
 	mozappdir=%buildroot/%palemoon_prefix \
 	build
 
+
 #	MOZ_APP_VERSION="" \
 
 gcc %optflags \
@@ -270,6 +283,7 @@ gcc %optflags \
 	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
 	-DMOZ_PROGRAM=\"%palemoon_prefix/%sname-bin\" \
 	%SOURCE7 -o %sname
+
 
 %install
 cd %sname
@@ -354,11 +368,11 @@ rm -f -- \
 
 		file "$t" | fgrep -qs ELF || continue
 
-		if chrpath -l "$t" | fgrep -qs "RPATH=$rpath"; then
+		if chrpath -l "$t" | fgrep -qs "PATH=$rpath"; then
 			chrpath -r "%palemoon_prefix" "$t"
 		fi
 	done
-)
+    )
 
 popd
 
@@ -392,6 +406,9 @@ done
 %exclude %_datadir/idl/*
 
 %changelog
+* Wed Nov 30 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.0.2-alt1
+- Version 27.0.2
+
 * Tue Nov 29 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.5.0-alt1_git.2.edd5
 - Fix BuildRequires
 
