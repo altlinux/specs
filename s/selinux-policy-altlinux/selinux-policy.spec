@@ -1,11 +1,11 @@
 %define policy_name altlinux
-%define date 20161122
+%define date 20161201
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
-Version: 0.0.26
+Version: 0.0.27
 Release: alt1
 License: %distributable
 Group: System/Base
@@ -262,6 +262,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/psql.pp
 
 %changelog
+* Thu Dec 01 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.27-alt1
+- fixes from rider@
+
 * Tue Nov 22 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.26-alt1
 - compatibilituy with policycoreutils 2.4
 
