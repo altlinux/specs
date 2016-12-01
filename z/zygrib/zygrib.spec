@@ -2,10 +2,10 @@
 %def_without system_qwt
 
 Name: zygrib
-Version: 7.0.0
-Release: alt2
+Version: 8.0.1
+Release: alt1
 
-Summary: Visualisation of meteo data from files in GRIB Format 1
+Summary: Visualisation of meteo data from files in GRIB formats
 
 License: %gpl3plus
 Group: Networking/Other
@@ -17,19 +17,19 @@ Source2: %binname.desktop
 Requires: fonts-ttf-liberation
 Requires: %name-data = %{version}-%{release}
 
-BuildRequires: bzlib-devel gcc-c++ libproj-devel libqt4-devel libnova-devel
+BuildRequires: qt5-base-devel bzlib-devel libjasper-devel libnova-devel libpng-devel libproj-devel
 
 %if_with system_qwt
-BuildRequires: libqwt6-devel
+BuildRequires: libqwt6-qt5-devel
 %endif
 
 BuildRequires: rpm-build-licenses
 
 %description
-Visualization of meteo data from files in GRIB Format 1
-Grib data are used to display weather data in detailed format for
-a certain area of sea. ZYGrib is a QT4 program to display and use
-grib data on Linux.
+Visualization of meteo data from files in GRIB formats v1 and v2.
+GRIB data are used to display weather data in detailed format for
+a certain area of sea or land. ZYGrib is a QT5 program to display
+and use GRIB data on Linux.
 
 %package data
 Summary: Architecture independent files for ZYGrib.
@@ -54,12 +54,17 @@ rm -rf data/fonts
 
 %if_with system_qwt
 #perl -p -e 's|cd src/qwt-6.0.1/src|# cd src/qwt-6.0.1/src|g;' -i $RPM_BUILD_DIR/%binname-%version/Makefile
-sed 's|cd src/qwt-6.0.1/src|# cd src/qwt-6.0.1/src|' -i $RPM_BUILD_DIR/%binname-%version/Makefile
+sed 's|cd ..QWTDIR./src|# cd \$(QWTDIR)/src|' -i Makefile
 %endif
 
-%build
+%if "%(getconf LONG_BIT)" == "32"
+sed -i "s|^CFLAGS= -O3 -g -m64 .*$|CFLAGS= -O3 -g \$(INC) \$(DEFS)|" src/g2clib/makefile
+%endif
 
-%make QTBIN=%_libdir/qt4/bin
+sed -i "s|QMAKE=/usr/bin/qmake|QMAKE=%_qt5_qmake|" Makefile
+
+%build
+%make QTBIN=%_qt5_bindir
 
 %install
 
@@ -109,8 +114,14 @@ fi
 %_datadir/%binname
 
 %changelog
+* Wed Nov 30 2016 Sergey Y. Afonin <asy@altlinux.ru> 8.0.1-alt1
+- New version (switched to QT5; added GRIB v2 support)
+
+* Thu Feb 04 2016 Sergey Y. Afonin <asy@altlinux.ru> 7.0.0-alt3
+- rebuilt with libproj 4.9.2
+
 * Tue Apr 14 2015 Sergey Y. Afonin <asy@altlinux.ru> 7.0.0-alt2
-- rebuilt with internal qwt (6.0.1)
+- rebuilt with internal qwt (ALT 30678#c2)
 
 * Mon Feb 09 2015 Sergey Y. Afonin <asy@altlinux.ru> 7.0.0-alt1
 - New version
