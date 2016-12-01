@@ -13,7 +13,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        45.5.0
+Version:        45.5.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -298,6 +298,11 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Thu Dec 01 2016 Andrey Cherepanov <cas@altlinux.org> 45.5.1-alt1
+- New ESR version
+- Security fixes:
+  + MFSA 2016-92 Firefox SVG Animation Remote Code Execution
+
 * Thu Nov 17 2016 Andrey Cherepanov <cas@altlinux.org> 45.5.0-alt1
 - New ESR version
 
