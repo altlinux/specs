@@ -1,17 +1,17 @@
 # check deps/npm/package.json for it
-%define npmver 3.10.3
+%define npmver 3.10.8
 # note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 6.7
+%define major 6.9
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
 %global nodejs_abi %major
+
+# TODO: really we have no configure option to build with shared libv8
 # V8 presently breaks ABI at least every x.y release while never bumping SONAME,
 # so we need to be more explicit until spot fixes that
 %global v8_abi 5.1
-
-# TODO: build with system libv8
 %def_without systemv8
 
 # supports only openssl >= 1.0.2
@@ -27,8 +27,8 @@
 %define oversion %version
 
 Name: node
-Version: %major.0
-Release: alt6
+Version: %major.1
+Release: alt1
 
 Summary: Evented I/O for V8 Javascript
 
@@ -41,11 +41,13 @@ Source: %name-%version.tar
 Source7: nodejs_native.req.files
 Patch: addon.gypi-alt-linkage-fixes.patch
 
-BuildRequires: python-devel gcc-c++ zlib-devel libcares-devel gyp
+BuildRequires: python-devel gcc-c++ zlib-devel libcares-devel
+# can we use external gyp (not yet released)
+#BuildRequires: gyp
+BuildRequires: python-modules-json python-module-simplejson
 
 %if_with systemv8
-#BuildRequires: libv8-%v8_abi-devel
-%define libv8_package libv8-chromium
+%define libv8_package libv8-nodejs
 BuildRequires: %libv8_package-devel >= %v8_abi-devel
 %endif
 
@@ -133,6 +135,11 @@ node programs. It manages dependencies and does other cool stuff.
 %prep
 %setup
 %patch -p1
+%if_with systemv8
+# hack against https://bugzilla.altlinux.org/show_bug.cgi?id=32573#c3
+cp -a deps/v8/include/libplatform src
+rm -rf deps/v8
+%endif
 
 %build
 ./configure \
@@ -149,8 +156,7 @@ node programs. It manages dependencies and does other cool stuff.
     --shared-libuv \
 %endif
 %if_with systemv8
-    --shared-v8 \
-    --shared-v8-includes=%_includedir
+    --without-bundled-v8
 %endif
 
 #mkdir -p ./tools/doc/node_modules/.bin
@@ -237,6 +243,10 @@ rm -rf %buildroot%_libexecdir/node_modules/npm/node_modules/request/node_modules
 %exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
 
 %changelog
+* Wed Nov 30 2016 Vitaly Lipatov <lav@altlinux.ru> 6.9.1-alt1
+- new version 6.9.1 (with rpmrb script)
+- 2016-10-19 Node.js v6.9.1 'Boron' (LTS) Release
+
 * Wed Oct 05 2016 Vitaly Lipatov <lav@altlinux.ru> 6.7.0-alt6
 - new version 6.7.0 (with rpmrb script)
 
