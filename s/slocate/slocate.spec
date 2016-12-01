@@ -1,7 +1,7 @@
 Name: slocate
 Version: 0.2.16
-Release: alt1.qa1
-Serial: 1
+Release: alt2
+Epoch: 1
 
 Summary: Finds files on a system via central file name database
 License: GPLv2+
@@ -43,6 +43,9 @@ install -pD -m644 /dev/null %buildroot%_localstatedir/locate/locatedb
 %attr(640,root,%name) %verify(not md5 mtime size) %ghost %_localstatedir/locate/locatedb
 
 %changelog
+* Wed Nov 30 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:0.2.16-alt2
+- Enabled large-file support (LFS).
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:0.2.16-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
