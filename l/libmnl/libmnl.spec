@@ -1,6 +1,6 @@
 Name:           libmnl
-Version:        1.0.3
-Release:        alt1.git20151003
+Version:        1.0.4
+Release:        alt1
 Summary:        Minimalistic Netlink library
 Group:          System/Libraries
 License:         LGPLv2.1+
@@ -45,6 +45,9 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Dec 01 2016 Alexei Takaseev <taf@altlinux.org> 1.0.4-alt1
+- 1.0.4
+
 * Mon Dec 21 2015 Alexei Takaseev <taf@altlinux.org> 1.0.3-alt1.git20151003
 - New snapshot
 
