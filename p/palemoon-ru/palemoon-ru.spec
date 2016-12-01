@@ -5,13 +5,13 @@
 %define cid_dict_dir   %palemoon_noarch_extensionsdir/%cid_dict
 
 
-%define min_version	25.8.1
-%define max_version	26.*
+%define min_version	27.0.0
+%define max_version	27.*
 
 
 Name: palemoon-ru
-Version: 26.0.1
-Release: alt5
+Version: 27.0.0
+Release: alt1
 Summary: Russian (RU) Language Pack for Pale Moon
 
 License: MPL/GPL/LGPL
@@ -83,6 +83,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %cid_dict_dir
 
 %changelog
+* Thu Dec 01 2016 Hihin Ruslan <ruslandh@altlinux.ru> 27.0.0-alt1
+- Version 27.0.0
+
 * Thu Feb 11 2016 Hihin Ruslan <ruslandh@altlinux.ru> 26.0.1-alt5
 - Fix Translate
 
