@@ -1,5 +1,5 @@
 Name: volumes-profile-centaurus
-Version: 0.8
+Version: 0.10
 Release: alt1
 
 Summary: Volumes description for Centaurus distribution
@@ -28,6 +28,12 @@ install -pm755 20-*.sh %buildroot%hook2dir/
 %hook2dir/*
 
 %changelog
+* Fri Dec 02 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.10-alt1
+- more space for rootfs and even more on real hardware
+
+* Fri Mar 22 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.9-alt1
+- server and workstation profiles reordered
+
 * Wed Sep 28 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8-alt1
 - make usable inb hasher (while livecd building)
 
