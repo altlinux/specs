@@ -1,6 +1,6 @@
 
 Name: ubt-devel
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Group: Development/Other
@@ -22,7 +22,8 @@ Set of RPM macroses and utilities for building one tag for all binary package br
 %package -n rpm-build-ubt
 Summary: Universal Branch Tag macros and utils
 Group: Development/Other
-Requires: rpm-macros-ubt
+Requires: rpm-macros-ubt >= 0.2
+Requires: /usr/bin/add_changelog
 %description -n rpm-build-ubt
 Set of RPM macroses and utilities for building one tag for all binary package branches.
 
@@ -31,6 +32,10 @@ Set of RPM macroses and utilities for building one tag for all binary package br
 
 %install
 install -D -m 0644 %SOURCE1 %buildroot/%_rpmmacrosdir/ubt-build
+cat <<__EOF__ >%buildroot/%_rpmmacrosdir/ubt-build
+%%ubt    %%{__ubt_branch_prefix}%%{__ubt_branch_id}%%{__ubt_branch_suffix}
+%%ubt_id %%{__ubt_branch_id}
+__EOF__
 mkdir -p %buildroot/%_bindir/
 install -m 0755 %SOURCE2 %buildroot/%_bindir/
 install -m 0755 %SOURCE3 %buildroot/%_bindir/
@@ -40,5 +45,8 @@ install -m 0755 %SOURCE3 %buildroot/%_bindir/
 %_bindir/ubt-*
 
 %changelog
+* Fri Dec 02 2016 Sergey V Turchin <zerg@altlinux.org> 0.2-alt1
+- extend macros
+
 * Thu Dec 01 2016 Sergey V Turchin <zerg@altlinux.org> 0.1-alt1
 - initial build
