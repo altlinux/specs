@@ -12,8 +12,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        50.0
-Release:        alt2
+Version:        50.0.2
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -303,6 +303,12 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Fri Dec 02 2016 Alexey Gladkov <legion@altlinux.ru> 50.0.2-alt1
+- New release (50.0.2).
+- Fixed:
+  + CVE-2016-9078: data: URL can inherit wrong origin after an HTTP redirect
+  + CVE-2016-9079: Use-after-free in SVG Animation
+
 * Wed Nov 23 2016 Alexey Gladkov <legion@altlinux.ru> 50.0-alt2
 - Set "system colors" off by default (ALT#32787).
 
