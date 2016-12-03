@@ -52,7 +52,7 @@
 
 Name: vim
 %define branch 8.0
-Version: %branch.104
+Version: %branch.118
 Release: alt1
 Epoch: 4
 
@@ -955,6 +955,7 @@ fi
 %_bindir/rview
 %_bindir/vimdiff
 %_bindir/update-vimhelp
+%_man1dir/*
 %_rpmlibdir/vim.filetrigger
 # }}}
 # {{{ vimtutor
@@ -1063,6 +1064,11 @@ fi
 
 # {{{ changelog
 %changelog
+* Fri Dec 02 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.0.118-alt1
+- Updated to v8.0.0118.
+- vi, ex: Disabled reading of vimrc files (ALT#32833).
+- Packaged missing manpages.
+
 * Mon Nov 28 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.0.104-alt1
 - Updated to v8.0.0104.
 - Disabled default.vim.
