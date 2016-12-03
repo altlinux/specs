@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 
 Name: palemoon
 Version: 27.0.2
-Release: alt1
+Release: alt2
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -40,6 +40,7 @@ Source7: firefox.c
 Source8: firefox-prefs.js
 Source9: HISTORY_GIT
 Source10: Changelog
+Source11: content.tar
 
 #Patch1: palemoon_google_add-26.4.0.patch
 
@@ -50,27 +51,26 @@ Patch16: firefox-cross-desktop.patch
 #Patch17:	mozilla-disable-installer.patch
 #Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
 Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
+# Patch21: palemoon_rpath-27.0.2.patch
 
-# Patch21: cpp_check.patch
-# Patch23: palemoon_version-26.4.0.1.patch
-# palemoon-26.5.0-ui_picker_false.patch
-Patch26:	palemoon-27.0.0-rpath.patch
-# Patch21: cpp_check.patch
-Patch23: palemoon_version-27.0.0.patch
+#Patch22: palemoon_version-26.4.0.1.patch
+Patch24: palemoon-27.0.2-ui_picker_false.patch
+Patch23: palemoon_version-27.0.2.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
 
 
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/autoconf /usr/bin/python /usr/bin/widl at-spi2-atk-devel bzlib-devel fontconfig-devel glib2-devel gobject-introspection-devel libSM-devel libX11-devel libXext-devel libcairo-devel libdbus-devel libdbus-glib-devel libevent-devel libfreetype-devel libgio-devel libgnomeui-devel libgraphite2-devel libgtk+3-devel libhunspell-devel libjpeg-devel libnspr libpango-devel libpixman-devel libpng-devel libproxy-devel libqt4-devel libreadline-devel libsqlite3-devel libssl-devel libstartup-notification-devel libunwind-devel libwebp-devel perl-Archive-Zip perl-CGI perl-XML-LibXML perl-XML-LibXSLT perl-devel perl-libwww qt4-mobility-devel qt5-base-devel qt5-declarative-devel qt5-location-devel swig texinfo wcslib-devel zlib-devel
+# BuildRequires: /usr/bin/autoconf /usr/bin/python /usr/bin/widl at-spi2-atk-devel bzlib-devel fontconfig-devel glib2-devel gobject-introspection-devel libSM-devel libX11-devel libXext-devel libcairo-devel libdbus-devel libdbus-glib-devel libevent-devel libfreetype-devel libgio-devel libgnomeui-devel libgraphite2-devel libgtk+3-devel libhunspell-devel libjpeg-devel libnspr libpango-devel libpixman-devel libpng-devel libproxy-devel libqt4-devel libreadline-devel libsqlite3-devel libssl-devel libstartup-notification-devel libunwind-devel libwebp-devel perl-Archive-Zip perl-CGI perl-XML-LibXML perl-XML-LibXSLT perl-devel perl-libwww qt4-mobility-devel qt5-base-devel qt5-declarative-devel qt5-location-devel swig texinfo wcslib-devel zlib-devel
 # END SourceDeps(oneline)
 
 
-# Automatically added by buildreq on Wed Nov 30 2016
+# Automatically added by buildreq on Sat Dec 03 2016
 # optimized out: alternatives ca-certificates fontconfig fontconfig-devel glib2-devel gstreamer1.0-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins1.0 libpango-devel libstdc++-devel perl pkg-config python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python3 xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
 BuildRequires: doxygen gcc-c++ glibc-devel-static gst-plugins1.0-devel imake java-devel libGConf-devel libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpulseaudio-devel libsocket libvpx-devel
 BuildRequires: python-module-future python-module-yaml python-modules-json python-modules-wsgiref python3-base unzip wget xorg-cf-files xsltproc yasm zip
+
 
 BuildPreReq: python3-base unzip xorg-cf-files
 
@@ -134,11 +134,11 @@ These helper macros provide possibility to rebuild
 
 %setup -n %sname-%version -c
 
-## patch21 -p1
 %patch20 -p1
+%patch24 -p1
+#patch26 -p1
 %patch23 -p1
-##patch25 -p1
-##patch26 -p1
+##patch21 -p1
 
 cd %sname
 
@@ -151,6 +151,11 @@ tar -xf %SOURCE1
 
 pushd browser/locales/en-US/
  tar -xf %SOURCE2
+popd
+
+
+pushd browser/branding/unofficial
+    tar --overwrite  -xf %SOURCE11
 popd
 
 #patch5  -p1
@@ -181,7 +186,8 @@ echo %version > browser/config/version.txt
 
 cp -f %SOURCE4 .mozconfig
 
-#echo "ac_add_options --enable-rpath"  >> .mozconfig
+
+echo "ac_add_options --enable-rpath"  >> .mozconfig
 
 %ifnarch %ix86 x86_64
 echo "ac_add_options --disable-methodjit" >> .mozconfig
@@ -230,9 +236,11 @@ export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS -D_GNUC_"
 
 # Add fake RPATH
+#export LDFLAGS="-Wl,-rpath,%palemoon_prefix"
+#export LD_LIBRARY_PATH="-Wl,-rpath,%palemoon_prefix"
+
 rpath="/$(printf %%s '%palemoon_prefix' |tr '[:print:]' '_')"
 export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
-#export LDFLAGS="-Wl,-rpath,%palemoon_prefix"
 export LD_LIBRARY_PATH="-Wl,-rpath,$rpath"
 
 #make -f client.mk build STRIP="/bin/true" MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
@@ -260,12 +268,13 @@ MOZ_SMP_FLAGS=-j1
 
 
 
-make -f client.mk \
- 	MAKENSISU= \
- 	STRIP="/bin/true" \
- 	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
- 	mozappdir=%buildroot/%palemoon_prefix \
- 	clobber
+# make -f client.mk \
+#  	MAKENSISU= \
+#  	STRIP="/bin/true" \
+#  	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
+#  	mozappdir=%buildroot/%palemoon_prefix \
+#  	clobber
+
 
 
 make -f client.mk \
@@ -286,6 +295,8 @@ gcc %optflags \
 
 
 %install
+# %%set_verify_elf_method unresolved=strict
+
 cd %sname
 
 mkdir -p \
@@ -308,12 +319,6 @@ install  %sname  %buildroot/%_bindir/%sname
 
 #cp  %buildroot/%palemoon_prefix/%name-bin  %buildroot%_bindir/%name
 
-# icons
-for s in 16 32 48; do
-	install -D -m 644 \
-		browser/branding/unofficial/default$s.png \
-		%buildroot/%_iconsdir/hicolor/${s}x${s}/apps/%bname.png
-done
 
 # install rpm-build-%sname
 mkdir -p -- \
@@ -373,8 +378,18 @@ rm -f -- \
 		fi
 	done
     )
-
 popd
+
+
+pwd
+# icons
+for s in 16 32 48; do
+	install -D -m 644 \
+		browser/branding/unofficial/content/default$s.png \
+		%buildroot/%_iconsdir/hicolor/${s}x${s}/apps/%bname.png
+done
+
+
 
 # Add Docdir
 install -D -m 644 %SOURCE9 ../
@@ -406,6 +421,9 @@ done
 %exclude %_datadir/idl/*
 
 %changelog
+* Fri Dec 02 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.0.2-alt2
+- Add patch`s 
+
 * Wed Nov 30 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.0.2-alt1
 - Version 27.0.2
 
@@ -590,3 +608,5 @@ done
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
+
+
