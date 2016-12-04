@@ -1,5 +1,5 @@
 Name: clamtk
-Version: 5.22
+Version: 5.24
 Release: alt1
 
 Summary: Easy to use front-end for ClamAV
@@ -51,7 +51,7 @@ done
 %find_lang %name
 
 %files -f %name.lang
-%doc README DISCLAIMER CHANGES LICENSE
+%doc README.md DISCLAIMER CHANGES LICENSE
 %_bindir/%name
 %perl_vendor_privlib/ClamTk/
 %_desktopdir/%name.desktop
@@ -59,6 +59,9 @@ done
 %_man1dir/*
 
 %changelog
+* Sun Dec 04 2016 Vitaly Lipatov <lav@altlinux.ru> 5.24-alt1
+- new version 5.24 (with rpmrb script)
+
 * Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 5.22-alt1
 - new version 5.22 (with rpmrb script)
 
