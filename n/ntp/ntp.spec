@@ -1,7 +1,7 @@
 Name: ntp
 Version: 4.2.8
 #define patchlevel p6
-Release: alt6
+Release: alt7
 %define srcname %name-%version%{?patchlevel:%patchlevel}
 
 Summary: The Network Time Protocol (NTP)
@@ -167,6 +167,7 @@ find -type f -print0 |
 #autoreconf --force --verbose
 
 %configure \
+	--enable-ntp-signd \
 	--enable-linuxcaps \
 	--without-readline
 echo '#define HAVE_LIBREADLINE 1' >>config.h
@@ -336,6 +337,10 @@ fi
 %ghost %ROOT/%_lib/libresolv.so.2
 
 %changelog
+* Sun Dec 04 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8-alt7
+- 4.2.8p8
+- built with --enable-ntp-signd (ALT #32313)
+
 * Tue Jul 05 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8-alt6
 - 4.2.8p8 (CVE-2016-4957 and other CVEs)
 
