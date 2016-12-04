@@ -1,5 +1,5 @@
 Name: bubblewrap
-Version: 0.1.2
+Version: 0.1.4
 Release: alt1
 
 Summary: Unprivileged sandboxing tool
@@ -12,7 +12,7 @@ BuildPreReq: gcc-c++ binutils-devel libelf-devel
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/projectatomic/bubblewrap/archive/%version.tar.gz
+# Source-url: https://github.com/projectatomic/bubblewrap/releases/download/v%version/bubblewrap-%version.tar.xz
 Source: %name-%version.tar
 
 # manually removed: python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs 
@@ -44,6 +44,9 @@ because it is trivial to turn such access into to a fully privileged root shell 
 %_datadir/bash-completion/completions/bwrap
 
 %changelog
+* Sun Dec 04 2016 Vitaly Lipatov <lav@altlinux.ru> 0.1.4-alt1
+- new version 0.1.4 (with rpmrb script)
+
 * Sun Sep 25 2016 Vitaly Lipatov <lav@altlinux.ru> 0.1.2-alt1
 - new version 0.1.2 (with rpmrb script)
 
