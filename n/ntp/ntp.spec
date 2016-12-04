@@ -1,7 +1,7 @@
 Name: ntp
 Version: 4.2.8
 #define patchlevel p6
-Release: alt7
+Release: alt8
 %define srcname %name-%version%{?patchlevel:%patchlevel}
 
 Summary: The Network Time Protocol (NTP)
@@ -337,8 +337,11 @@ fi
 %ghost %ROOT/%_lib/libresolv.so.2
 
 %changelog
+* Sun Dec 04 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8-alt8
+- fixed version in changelog in 4.2.8-alt7
+
 * Sun Dec 04 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8-alt7
-- 4.2.8p8
+- 4.2.8p9
 - built with --enable-ntp-signd (ALT #32313)
 
 * Tue Jul 05 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8-alt6
