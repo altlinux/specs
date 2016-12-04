@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-acme
-Version: 0.9.1
+Version: 0.9.3
 Release: alt1
 
 Summary: Python library for the ACME protocol
@@ -15,7 +15,7 @@ Url: https://pypi.python.org/pypi/acme
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 ## Source-url: https://pypi.python.org/packages/source/a/%modulename/%modulename-%version.tar.gz
-# Source-url: https://pypi.python.org/packages/7a/ef/4ad0ecc0ee8b01ddad42c13d1380d483a848198fc1eb31f4ee727427b293/acme-0.9.1.tar.gz
+# Source-url: https://pypi.python.org/packages/d4/ae/f5fb9f5f50121aad2fe43c5d8e9fe9c90701a1bf51893df89d045476647b/acme-0.9.3.tar.gz
 Source: %modulename-%version.tar
 
 BuildRequires: python-devel
@@ -161,6 +161,9 @@ grep -q python %buildroot%_bindir/jws
 #%doc docs/_build/html
 
 %changelog
+* Sun Dec 04 2016 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt1
+- new version 0.9.3 (with rpmrb script)
+
 * Fri Oct 07 2016 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
 - new version (0.9.1) with rpmgs script
 
