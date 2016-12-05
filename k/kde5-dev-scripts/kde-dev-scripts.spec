@@ -4,8 +4,8 @@
 %add_findreq_skiplist %_K5bin/package_crystalsvg
 
 Name: kde5-dev-scripts
-Version: 16.08.1
-Release: alt1
+Version: 16.08.3
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -20,7 +20,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Thu Oct 01 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl kf5-kdoctools-devel less libgpg-error libqt5-core libstdc++-devel perl-Encode perl-HTTP-Date perl-HTTP-Message perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage perl-Term-ANSIColor perl-URI perl-XML-Parser perl-XML-RegExp perl-libwww python-base python3 python3-base rpm-build-gir termutils xml-common xml-utils
 #BuildRequires: cvs extra-cmake-modules gcc-c++ git-core graphviz kde5-konqueror kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static perl-XML-DOM perl-podlators python-module-google qt5-base-devel rpm-build-python3 ruby ruby-stdlibs subversion
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: graphviz perl-XML-DOM perl-podlators rpm-build-python rpm-build-python3 ruby ruby-stdlibs
 BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
@@ -56,6 +56,9 @@ popd
 %_K5bin/*
 
 %changelog
+* Mon Dec 05 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt1%ubt
+- new version
+
 * Mon Sep 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
 - new version
 

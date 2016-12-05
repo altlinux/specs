@@ -1,8 +1,8 @@
 %define rname poxml
 
 Name: kde5-%rname
-Version: 16.08.1
-Release: alt1
+Version: 16.08.3
+Release: alt1%ubt
 %K5init
 
 Group: Graphical desktop/KDE
@@ -15,7 +15,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Thu Jan 14 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ kf5-kdoctools-devel libgpg-error libqt5-core libqt5-xml libstdc++-devel python-base python3 python3-base xml-common xml-utils xz
 #BuildRequires: extra-cmake-modules kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static qt5-base-devel rpm-build-python3 ruby ruby-stdlibs
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
 
@@ -37,6 +37,9 @@ BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
 %_K5bin/*
 
 %changelog
+* Mon Dec 05 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt1%ubt
+- new version
+
 * Mon Sep 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
 - new version
 
