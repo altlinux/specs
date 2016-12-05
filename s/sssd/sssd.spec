@@ -2,7 +2,7 @@
 
 Name: sssd
 Version: 1.14.2
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -472,6 +472,7 @@ unset CK_TIMEOUT_MULTIPLIER
 #chown %sssd_user:%sssd_user %mcpath/*
 #chown %sssd_user:%sssd_user %pubconfpath/kdcinfo* %pubconfpath/kpasswdinfo*
 #chown %sssd_user:%sssd_user  %_logdir/%name/sssd_*
+chown root:root %_sysconfdir/sssd/sssd.conf
 %post_service %name
 %post_service sssd-secrets
 
@@ -537,7 +538,7 @@ unset CK_TIMEOUT_MULTIPLIER
 %attr(770,root,%sssd_user) %dir %_logdir/%name
 %attr(750,root,%sssd_user) %dir %_sysconfdir/sssd
 %attr(750,root,%sssd_user) %dir %_sysconfdir/sssd/conf.d
-%attr(0600,%sssd_user,%sssd_user) %config(noreplace) %_sysconfdir/sssd/sssd.conf
+%attr(0600,root,root) %config(noreplace) %_sysconfdir/sssd/sssd.conf
 %dir %_sysconfdir/systemd/system/sssd.service.d
 %config(noreplace) %_sysconfdir/systemd/system/sssd.service.d/journal.conf
 %config(noreplace) %_sysconfdir/logrotate.d/sssd
@@ -704,6 +705,10 @@ unset CK_TIMEOUT_MULTIPLIER
 %files nfs-idmap
 /%_lib/libnfsidmap/sss.so
 %changelog
+* Mon Dec 05 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.2-alt2
+- Set sssd.conf owner to root:root
+  due it hardcoded in sss_ini_config_access_check()
+
 * Mon Nov 07 2016 Alexey Shabalin <shaba@altlinux.ru> 1.14.2-alt1
 - 1.14.2
 

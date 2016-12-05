@@ -2,7 +2,7 @@
 
 Name: gssntlmssp
 Version: 0.7.0
-Release: alt1
+Release: alt2
 Summary: GSSAPI NTLMSSP Mechanism
 
 Group: System/Libraries
@@ -12,6 +12,7 @@ Source: https://fedorahosted.org/released/gss-ntlmssp/%name-%version.tar
 Packager: Alexey Shabalin <shaba@altlinux.org>
 
 Requires: libkrb5 >= 1.13
+Requires: libwbclient
 
 BuildRequires: xsltproc xml-utils
 BuildRequires: docbook-style-xsl docbook-dtds
@@ -67,6 +68,9 @@ make test_gssntlmssp
 %_includedir/gssapi/*
 
 %changelog
+* Thu Dec 01 2016 Evgeny Sinelnikov <sin@altlinux.ru> 0.7.0-alt2
+- Strict requires for libwbclient, not for libwbclient-sssd
+
 * Tue Jun 14 2016 Alexey Shabalin <shaba@altlinux.ru> 0.7.0-alt1
 - 0.7.0
 
