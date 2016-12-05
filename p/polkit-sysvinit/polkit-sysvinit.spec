@@ -1,6 +1,6 @@
 Name: polkit-sysvinit
 Version: 0.3.2
-Release: alt2
+Release: alt3
 
 Summary: Allow media/network changes to xgrp users
 License: public domain
@@ -15,6 +15,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildArch: noarch
 AutoReqProv: no
+Requires: polkit
 
 %define pkdir %_sysconfdir/polkit-1/rules.d
 
@@ -32,6 +33,9 @@ install -pm644 %SOURCE0 %SOURCE1 %SOURCE2 %SOURCE3 %buildroot%pkdir
 %pkdir/*
 
 %changelog
+* Tue Dec 06 2016 Michael Shigorin <mike@altlinux.org> 0.3.2-alt3
+- R: polkit
+
 * Fri Nov 04 2016 Michael Shigorin <mike@altlinux.org> 0.3.2-alt2
 - built for sisyphus (closes: #31501)
 
