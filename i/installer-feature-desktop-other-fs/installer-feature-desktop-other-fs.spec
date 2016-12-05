@@ -1,5 +1,5 @@
 Name: installer-feature-desktop-other-fs
-Version: 0.7.4
+Version: 0.7.5
 Release: alt1
 
 Summary: Mount existing filesystems too
@@ -35,6 +35,9 @@ Conflicts: installer-ltsp-school-stage2
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Mon Dec 05 2016 Michael Shigorin <mike@altlinux.org> 0.7.5-alt1
+- exclude /boot/efi (closes: #32698)
+
 * Tue Jan 21 2014 Michael Shigorin <mike@altlinux.org> 0.7.4-alt1
 - tweak ntfs options to avoid systemd blowing up dirty boot (thx sem@)
 
