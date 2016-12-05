@@ -1,5 +1,5 @@
 Name: altlinux-repos
-Version: 0.7
+Version: 0.7.1
 Release: alt1
 
 Summary: A set of ALT repos desktop files
@@ -9,8 +9,8 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-Conflicts: apt-conf-branch < 8.0.0-alt3
-Conflicts: apt-conf-sisyphus < 7.1-alt1
+Conflicts: apt-conf-branch < 7.0.0-alt3
+Conflicts: apt-conf-sisyphus < 7.0-alt2
 
 %description
 A set of desktop files describing ALTLinux repositories and mirrors
@@ -20,15 +20,16 @@ A set of desktop files describing ALTLinux repositories and mirrors
 
 %install
 mkdir -p %buildroot%_sysconfdir/apt
-cp -a mirrors repositories vendors.list vendors.list.d %buildroot%_sysconfdir/apt/
+cp -a mirrors repositories %buildroot%_sysconfdir/apt/
 
 %files
 %_sysconfdir/apt/mirrors
 %_sysconfdir/apt/repositories
-%_sysconfdir/apt/vendors.list
-%_sysconfdir/apt/vendors.list.d/alt.list
 
 %changelog
+* Mon Dec 05 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.1-alt1
+- Removed accidentally added vendors.list.d/alt.list file.
+
 * Mon Dec 05 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7-alt1
 - Added mirror.datacenter.by mirror.
 
