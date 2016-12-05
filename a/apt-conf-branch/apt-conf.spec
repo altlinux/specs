@@ -3,8 +3,8 @@
 %define Distro p8 branch
 
 Name: %base_name-%distro
-Version: 8.0.0
-Release: alt2
+Version: 8.1.0
+Release: alt1
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL
@@ -14,6 +14,7 @@ Source: %name-%version.tar
 
 BuildRequires: altlinux-repos
 
+Requires: altlinux-repos >= 0.6-alt1
 Provides: %base_name = %version-%release, %_sysconfdir/apt/pkgpriorities apt-conf-centaurus = %version-%release
 Obsoletes: apt-conf-centaurus
 Conflicts: apt <= 0:0.5.15cnc6-alt14, apt-conf-sisyphus
@@ -46,6 +47,12 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Mon Dec 05 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.1.0-alt1
+- Rebuilt with altlinux-repos 0.7 (for dcby mirror).
+
+* Wed Jun 22 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.0.0-alt3
+- Moved vendors.list.d/alt to altlinux-repos package.
+
 * Thu Apr 14 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.0.0-alt2
 - Added missing p8 key to vendor.list.
 

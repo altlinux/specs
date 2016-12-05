@@ -3,8 +3,8 @@
 %define Distro Sisyphus
 
 Name: %base_name-%distro
-Version: 7.0
-Release: alt2
+Version: 7.1
+Release: alt1
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL
@@ -46,6 +46,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Mon Dec 05 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.1-alt1
+- Rebuilt with altlinux-repos 0.7 (for dcby mirror; ALT#32803).
+
 * Mon Jun 03 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.0-alt2
 - move desktop files to altlinux-repos package
 
