@@ -1,6 +1,6 @@
 Name: fail2ban
 Version: 0.9.5
-Release: alt1
+Release: alt2
 
 Summary: Fail2Ban is an intrusion prevention framework
 
@@ -19,9 +19,7 @@ BuildArch: noarch
 BuildPreReq: help2man python-module-json
 %setup_python_module %name
 %py_requires json
-%add_python_req_skip systemd
 
-Requires: iptables >= 1.4.20
 
 %description
 Fail2Ban is an intrusion prevention framework written in the Python
@@ -93,6 +91,10 @@ mkdir -p %buildroot%_var/lib/fail2ban/
 %_logrotatedir/%name
 
 %changelog
+* Mon Dec 05 2016 Anton Farygin <rider@altlinux.ru> 0.9.5-alt2
+- removed iptables requires
+- added requires to python-module-systemd (closes: #32592)
+
 * Sat Oct 22 2016 Anton Farygin <rider@altlinux.ru> 0.9.5-alt1
 - new version
 
