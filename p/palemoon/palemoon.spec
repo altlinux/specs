@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 
 Name: palemoon
 Version: 27.0.2
-Release: alt2
+Release: alt4_git.1.6e62
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -51,8 +51,8 @@ Patch16: firefox-cross-desktop.patch
 #Patch17:	mozilla-disable-installer.patch
 #Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
 Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
-# Patch21: palemoon_rpath-27.0.2.patch
-
+Patch21: palemoon-build-el5-nss.patch
+Patch22: palemoon_rpath-27.0.2.patch
 #Patch22: palemoon_version-26.4.0.1.patch
 Patch24: palemoon-27.0.2-ui_picker_false.patch
 Patch23: palemoon_version-27.0.2.patch
@@ -66,10 +66,11 @@ BuildRequires(pre): browser-plugins-npapi-devel
 # END SourceDeps(oneline)
 
 
-# Automatically added by buildreq on Sat Dec 03 2016
+# Automatically added by buildreq on Sun Dec 04 2016
 # optimized out: alternatives ca-certificates fontconfig fontconfig-devel glib2-devel gstreamer1.0-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins1.0 libpango-devel libstdc++-devel perl pkg-config python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python3 xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
 BuildRequires: doxygen gcc-c++ glibc-devel-static gst-plugins1.0-devel imake java-devel libGConf-devel libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpulseaudio-devel libsocket libvpx-devel
 BuildRequires: python-module-future python-module-yaml python-modules-json python-modules-wsgiref python3-base unzip wget xorg-cf-files xsltproc yasm zip
+
 
 
 BuildPreReq: python3-base unzip xorg-cf-files
@@ -131,6 +132,14 @@ These helper macros provide possibility to rebuild
 
 
 %prep
+# Add fake RPATH
+#export LDFLAGS="-Wl,-rpath,%palemoon_prefix"
+#export LD_LIBRARY_PATH="-Wl,-rpath,%palemoon_prefix"
+rpath="/$(printf %%s '%palemoon_prefix' |tr '[:print:]' '_')"
+export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
+
+# for  palemoon_rpath-27.0.2.patch
+export RPATH_PATH="$rpath"     
 
 %setup -n %sname-%version -c
 
@@ -138,7 +147,8 @@ These helper macros provide possibility to rebuild
 %patch24 -p1
 #patch26 -p1
 %patch23 -p1
-##patch21 -p1
+%patch21 -p1
+%patch22 -p1
 
 cd %sname
 
@@ -208,6 +218,11 @@ echo "ac_add_options --enable-shared-js"  >> .mozconfig
 echo "ac_add_options --enable-jemalloc --enable-jemalloc-lib" >> .mozconfig
 echo "ac_add_options --x-libraries=/usr/lib/X11" >> .mozconfig
 
+# echo "ac_add_options --with-system-nss"  >> .mozconfig
+
+echo "ac_add_options --with-nss-prefix=$RPATH_PATH" >> .mozconfig
+
+# echo "ac_add_options --with-nss-prefix=%_libdir" >> .mozconfig
 
 %ifarch %ix86
 echo "ac_add_options --with-arch=i586" >> .mozconfig
@@ -238,10 +253,11 @@ export CXXFLAGS="$MOZ_OPT_FLAGS -D_GNUC_"
 # Add fake RPATH
 #export LDFLAGS="-Wl,-rpath,%palemoon_prefix"
 #export LD_LIBRARY_PATH="-Wl,-rpath,%palemoon_prefix"
-
 rpath="/$(printf %%s '%palemoon_prefix' |tr '[:print:]' '_')"
 export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
-export LD_LIBRARY_PATH="-Wl,-rpath,$rpath"
+
+# for  palemoon_rpath-27.0.2.patch
+export RPATH_PATH="$rpath"     
 
 #make -f client.mk build STRIP="/bin/true" MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
 
@@ -268,12 +284,12 @@ MOZ_SMP_FLAGS=-j1
 
 
 
-# make -f client.mk \
-#  	MAKENSISU= \
-#  	STRIP="/bin/true" \
-#  	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
-#  	mozappdir=%buildroot/%palemoon_prefix \
-#  	clobber
+make -f client.mk \
+  	MAKENSISU= \
+  	STRIP="/bin/true" \
+  	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
+  	mozappdir=%buildroot/%palemoon_prefix \
+  	clobber
 
 
 
@@ -295,7 +311,7 @@ gcc %optflags \
 
 
 %install
-# %%set_verify_elf_method unresolved=strict
+%set_verify_elf_method unresolved=strict
 
 cd %sname
 
@@ -381,7 +397,6 @@ rm -f -- \
 popd
 
 
-pwd
 # icons
 for s in 16 32 48; do
 	install -D -m 644 \
@@ -421,6 +436,12 @@ done
 %exclude %_datadir/idl/*
 
 %changelog
+* Mon Dec 05 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.0.2-alt4_git.1.6e62
+- Update from git
+
+* Sun Dec 04 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.0.2-alt3
+- Add palemoon-build-el5-nss.patch
+
 * Fri Dec 02 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.0.2-alt2
 - Add patch`s 
 
@@ -608,5 +629,3 @@ done
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
-
-
