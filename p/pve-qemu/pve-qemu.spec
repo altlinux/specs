@@ -171,7 +171,7 @@
 
 Name: pve-%rname
 Version: 2.7.0
-Release: alt8
+Release: alt9
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -271,6 +271,7 @@ Patch83: CVE-2016-9105-9pfs-fix-memory-leak-in-v9fs_link.patch
 Patch84: CVE-2016-9102-9pfs-fix-memory-leak-in-v9fs_xattrcreate.patch
 Patch85: CVE-2016-9106-9pfs-fix-memory-leak-in-v9fs_write.patch
 Patch86: x86-lapic-Load-LAPIC-state-at-post_load.patch
+Patch87: 0047-glusterfs-allow-partial-reads.patch
 
 %set_verify_elf_method fhs=relaxed
 
@@ -526,6 +527,7 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch84 -p1
 %patch85 -p1
 %patch86 -p1
+%patch87 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -783,6 +785,12 @@ fi
 #_bindir/ivshmem-server
 
 %changelog
+* Mon Dec 05 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.7.0-alt9
+- 2.7.0-9
+
+* Tue Nov 22 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.7.0-alt7.M80P.1
+- backport to p8 branch
+
 * Tue Nov 22 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.7.0-alt8
 - 2.7.0-8
 
