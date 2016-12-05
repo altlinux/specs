@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 16.08.3
-Release: alt1
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -13,11 +13,12 @@ License: GPLv2+ / LGPLv2+
 Requires: kde5-akonadi
 
 Source: %rname-%version.tar
+Patch1: alt-krunner-plugin-disable.patch
 
 # Automatically added by buildreq on Thu Aug 13 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base ruby ruby-stdlibs
 #BuildRequires: boost-devel-headers extra-cmake-modules gcc-c++ kde5-akonadi-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-kmime-devel kde5-pimlibs-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libdb4-devel libical-devel libxapian-devel python-module-google qt5-base-devel rpm-build-python3 rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: boost-devel-headers libical-devel libxapian-devel
 BuildRequires: kde5-akonadi-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-kmime-devel kde5-akonadi-mime-devel
@@ -78,6 +79,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -115,6 +117,12 @@ KF5 library
 %_K5lib/libKF5AkonadiSearchDebug.so.*
 
 %changelog
+* Mon Dec 05 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt2%ubt
+- disable krunner contacts search plugin by default (ALT#32846)
+
+* Mon Nov 28 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt0.M80P.1
+- build for M80P
+
 * Fri Nov 25 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt1
 - new version
 
