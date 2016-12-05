@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.5.8
+Version: 0.5.10
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -30,13 +30,32 @@ install -pDm755 scripts/install2-remount-functions \
 	%buildroot%_sbindir/install2-remount-functions
 
 install -pDm755 initinstall/stop-md-dm.sh \
-	%buildroot%_datadir/install2/initinstall.d/89-stop-md-dm.sh
+	%buildroot%_datadir/install2/initinstall.d/80-stop-md-dm.sh
+
+cat << __EOF__ > %buildroot%_datadir/install2/initinstall.d/85-start-multipath.sh
+#!/bin/sh
+
+. install2-remount-functions
+
+start_multipath
+
+:
+__EOF__
 
 %files
 %_sbindir/*
-%_datadir/install2/initinstall.d/89-stop-md-dm.sh
+%_datadir/install2/initinstall.d/80-stop-md-dm.sh
+%attr(0755,root,root) %_datadir/install2/initinstall.d/85-start-multipath.sh
 
 %changelog
+* Mon Dec 05 2016 Michael Shigorin <mike@altlinux.org> 0.5.10-alt1
+- fixed multipath support when multipathd is there
+  but there are no multipath-capable devices available
+
+* Thu Nov 24 2016 Michael Shigorin <mike@altlinux.org> 0.5.9-alt1
+- *added* multipath support (shrek@)
+  + stopping dm drops multipath setup, care for that too
+
 * Wed Nov 16 2016 Michael Shigorin <mike@altlinux.org> 0.5.8-alt1
 - added multipath support (shrek@)
 
