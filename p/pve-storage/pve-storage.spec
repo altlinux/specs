@@ -1,6 +1,6 @@
 Name: pve-storage
 Summary: PVE storage management library
-Version: 4.0.68
+Version: 4.0.70
 Release: alt1
 License: GPLv3
 Group: Development/Perl
@@ -42,6 +42,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Mon Dec 05 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.70-alt1
+- 4.0-70
+
 * Wed Nov 23 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.68-alt1
 - 4.0-68
 

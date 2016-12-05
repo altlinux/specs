@@ -1,7 +1,7 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for Proxmox Virtual Environment
-Version: 4.0.47
-Release: alt5
+Version: 4.0.48
+Release: alt6
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -132,6 +132,9 @@ fi
 %_man1dir/pveum.1*
 
 %changelog
+* Mon Dec 05 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.48-alt6
+- 4.0-48
+
 * Mon Nov 28 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.47-alt5
 - 4.0-47+git.ab224148
 

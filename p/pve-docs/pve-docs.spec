@@ -1,6 +1,6 @@
 Name: pve-docs
-Summary: Proxmox VE Documentation
-Version: 4.3.16
+Summary: PVE Documentation
+Version: 4.3.19
 Release: alt1
 License: GPLv3
 Group: Documentation
@@ -15,7 +15,7 @@ BuildRequires: asciidoc-a2x source-highlight xmlto inkscape mailcap pve-common p
 BuildRequires: perl(MediaWiki/API.pm) perl(JSON.pm)
 
 %description
-Proxmox VE Documentation files
+PVE Documentation files
 
 %package -n pve-doc-generator
 Summary: Proxmox VE Documentation helpers
@@ -29,6 +29,11 @@ Tool to auto-generate various Proxmox VE Documentation files
 
 %prep
 %setup -q -n %name-%version
+grep 'proxmox.com' * -rl | while read f; do
+	sed -i 's|proxmox.com|basealt.ru|' $f
+done
+
+rm -f getting-help.adoc howto-improve-pve-docs.adoc pve-package-repos.adoc
 
 %build
 %make
@@ -37,12 +42,13 @@ Tool to auto-generate various Proxmox VE Documentation files
 mkdir -p %buildroot%_datadir/pve-doc-generator/asciidoc
 cp *.adoc *.pl *.mk *.xml %buildroot%_datadir/pve-doc-generator/
 cp asciidoc/*pve*.conf %buildroot%_datadir/pve-doc-generator/asciidoc/
+install -pD -m755 asciidoc-pve %buildroot%_bindir/asciidoc-pve
 
-mkdir -p %buildroot%_datadir/%name/api-viewer
+mkdir -p %buildroot%_datadir/%name/{api-viewer,images/screenshot}
 install -m644 *.{html,epub,pdf} %buildroot%_datadir/%name/
 install -m644 api-viewer/apidoc.js %buildroot%_datadir/%name/api-viewer/
 install -m644 api-viewer/index.html %buildroot%_datadir/%name/api-viewer/
-install -pD -m755 asciidoc-pve %buildroot%_bindir/asciidoc-pve
+install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screenshot/
 
 %files
 %_datadir/%name
@@ -52,6 +58,12 @@ install -pD -m755 asciidoc-pve %buildroot%_bindir/asciidoc-pve
 %_datadir/pve-doc-generator
 
 %changelog
+* Mon Dec 05 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.19-alt1
+- 4.3-19
+
+* Fri Dec 02 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.18-alt1
+- 4.3-18
+
 * Wed Nov 23 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.16-alt1
 - 4.3-16
 

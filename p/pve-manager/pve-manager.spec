@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 4.3.12
-Release: alt10
+Version: 4.3.13
+Release: alt1
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -30,7 +30,7 @@ Patch6: pve-manager-alt-bps-to-bit.patch
 Patch7: pve-container-altlinux-lxc.patch
 Patch8: pve-manager-alt-gzip.patch
 Patch9: pve-manager-alt-pve.patch
-#Patch10: pve-manager-lxc-ssh-key.patch
+Patch10: pve-manager-help.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -42,7 +42,7 @@ This package contains the PVE management tools
 
 %package -n pve-container
 Summary: PVE Container management tool
-Version: 1.0.84
+Version: 1.0.87
 Group: Development/Perl
 Requires: pve-lxc dtach perl-Crypt-Eksblowfish >= 0.009-alt5_15
 
@@ -51,7 +51,7 @@ Tool to manage Linux Containers on PVE
 
 %package -n pve-firewall
 Summary: PVE Firewall
-Version: 2.0.31
+Version: 2.0.33
 Group: System/Servers
 Requires: ipset iptables iptables-ipv6
 
@@ -60,7 +60,7 @@ This package contains the PVE Firewall
 
 %package -n pve-ha-manager
 Summary: PVE HA Manager
-Version: 1.0.37
+Version: 1.0.38
 Group: System/Servers
 
 %description -n pve-ha-manager
@@ -68,7 +68,7 @@ HA Manager PVE
 
 %package -n pve-qemu-server
 Summary: Qemu Server Tools
-Version: 4.0.96
+Version: 4.0.100
 Group: System/Servers
 Requires: nc6 socat pve-qemu-system >= 2.6.1-alt4
 Provides: qemu-server = %version-%release
@@ -92,6 +92,7 @@ This package contains the Qemu Server tools used by PVE
 %patch7 -p0 -b .alt
 %patch8 -p0 -b .alt
 %patch9 -p0 -b .alt
+%patch10 -p0 -b .alt
 
 %build
 for d in pve-manager pve-firewall/src pve-ha-manager/src qemu-server; do
@@ -355,6 +356,13 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Mon Dec 05 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.13-alt1
+- 4.3-13
+- pve-container 1.0-87
+- pve-firewall 2.0-33
+- pve-ha-manager 1.0-38
+- qemu-server 4.0-100
+
 * Mon Nov 28 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.12-alt10
 - 4.3-12
 
