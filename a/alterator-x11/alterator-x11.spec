@@ -1,5 +1,5 @@
 Name: alterator-x11
-Version: 1.98.11
+Version: 1.98.12
 Release: alt1
 
 Url: http://www.altlinux.com
@@ -85,6 +85,9 @@ Scripts which creates simple configuration files in
 %_bindir/xsetup*
 
 %changelog
+* Mon Dec 05 2016 Michael Shigorin <mike@altlinux.org> 1.98.12-alt1
+- suppress sed's stderr noise (missing videoaliases aren't a problem)
+
 * Mon Jun 27 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.98.11-alt1
 - bug with unexisting (always) xorg.conf fixed
 
