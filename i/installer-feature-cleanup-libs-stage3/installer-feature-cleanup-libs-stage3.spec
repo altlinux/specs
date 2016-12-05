@@ -1,5 +1,5 @@
 Name: installer-feature-cleanup-libs-stage3
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Purge the libraries that became unneeded
@@ -30,6 +30,9 @@ install -pm755 99-cleanup-libs.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Dec 05 2016 Michael Shigorin <mike@altlinux.org> 0.3-alt1
+- hardwired skiplist (libre{cad,office} and libvirt)
+
 * Wed Feb 25 2015 Michael Shigorin <mike@altlinux.org> 0.2-alt1
 - up to three rounds
 
