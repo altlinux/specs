@@ -7,8 +7,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-openconnect
-Version: 1.2.2
-Release: alt2
+Version: 1.2.4
+Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN integration for openconnect
@@ -90,11 +90,15 @@ NetworkManager panel applet.
 %_libexecdir/NetworkManager/nm-openconnect-auth-dialog
 %_datadir/gnome-vpn-properties/openconnect
 %_libdir/NetworkManager/libnm-vpn-plugin-openconnect.so
+%_libdir/NetworkManager/libnm-vpn-plugin-openconnect-editor.so
 %_datadir/appdata/*.xml
 
 %exclude %_libdir/NetworkManager/lib*.la
 
 %changelog
+* Mon Dec 05 2016 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt1
+- Updated to 1.2.4.
+
 * Mon Oct 10 2016 Vladimir Didenko <cow@altlinux.org> 1.2.2-alt2
 - Rebuild with openconnect-7.06
 
