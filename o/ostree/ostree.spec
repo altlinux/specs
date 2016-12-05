@@ -1,5 +1,5 @@
 Name: ostree
-Version: 2016.10
+Version: 2016.12
 Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
@@ -122,6 +122,9 @@ rm -rf %buildroot%_sysconfdir/grub.d/15_ostree
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Dec 05 2016 Vitaly Lipatov <lav@altlinux.ru> 2016.12-alt1
+- new version 2016.12 (with rpmrb script)
+
 * Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 2016.10-alt1
 - new version 2016.10 (with rpmrb script)
 
