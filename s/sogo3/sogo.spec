@@ -3,8 +3,8 @@
 
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo3
-Version:      3.2.1
-Release:      alt3
+Version:      3.2.4
+Release:      alt1
 
 License:      GPL
 URL:          http://www.inverse.ca/contributions/sogo.html
@@ -398,6 +398,12 @@ fi
 %preun_service sogo
 
 %changelog
+* Tue Dec 06 2016 Andrey Cherepanov <cas@altlinux.org> 3.2.4-alt1
+- new version 3.2.4
+
+* Thu Nov 24 2016 Andrey Cherepanov <cas@altlinux.org> 3.2.2-alt1
+- new version 3.2.2
+
 * Wed Nov 09 2016 Andrey Cherepanov <cas@altlinux.org> 3.2.1-alt3
 - Disable native spell checker (because it is only available for a
   limited set of languages)
