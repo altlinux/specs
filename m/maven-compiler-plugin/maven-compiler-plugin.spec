@@ -1,13 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-compiler-plugin
-Version:        3.3
-Release:        alt1_2jpp8
+Version:        3.5.1
+Release:        alt1_1jpp8
 Summary:        Maven Compiler Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-compiler-plugin
@@ -59,6 +60,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 3.5.1-alt1_1jpp8
+- new version
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 3.3-alt1_2jpp8
 - new version
 
