@@ -1,5 +1,5 @@
 Name: supervisor
-Version: 3.2.3
+Version: 3.3.1
 Release: alt1
 
 Summary: A System for Allowing the Control of Process State on UNIX
@@ -10,7 +10,7 @@ Url: http://supervisord.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pypi.python.org/packages/source/s/%name/%name-%version%{?prever}.tar
+Source: http://pypi.io/packages/source/s/%name/%name-%version%{?prever}.tar
 Source1: supervisord.init
 Source2: supervisord.conf
 Source3: supervisor.logrotate
@@ -69,6 +69,9 @@ rm -f %buildroot%prefix/doc/*.txt
 %config(noreplace) %_sysconfigdir/supervisord
 
 %changelog
+* Tue Dec 06 2016 Vitaly Lipatov <lav@altlinux.ru> 3.3.1-alt1
+- new version 3.3.1 (with rpmrb script)
+
 * Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 3.2.3-alt1
 - new version 3.2.3 (with rpmrb script)
 
