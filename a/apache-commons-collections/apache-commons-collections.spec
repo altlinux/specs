@@ -1,6 +1,7 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -9,29 +10,21 @@ BuildRequires: jpackage-generic-compat
 %global short_name      commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        3.2.1
-Release:        alt10_26jpp8
+Version:        3.2.2
+Release:        alt1_3jpp8
 Summary:        Provides new interfaces, implementations and utilities for Java Collections
 License:        ASL 2.0
-Group:          Development/Java
 URL:            http://commons.apache.org/%{base_name}/
 Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-Source1:        commons-collections-testframework.pom
 
-Patch0:         java8-compat.patch
-Patch1:         jakarta-%{short_name}-javadoc-nonet.patch
-
-Patch4:         commons-collections-3.2-build_xml.patch
-
+Patch0:         0001-Port-to-Java-8.patch
 
 BuildArch:      noarch
 
-BuildRequires: jpackage-utils
-BuildRequires: maven-local
-BuildRequires: ant
-BuildRequires: apache-commons-parent
-BuildRequires: dos2unix
-Requires:      jpackage-utils
+BuildRequires:  ant
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 Source44: import.info
 Obsoletes: jakarta-%{short_name} < 1:%{version}-%{release}
 Conflicts: jakarta-%{short_name} < 1:%{version}-%{release}
@@ -52,26 +45,21 @@ Java2-style collections.
 such as union, intersection, and closure.
 
 %package testframework
+Group: Development/Java
 Summary:        Testframework for %{name}
-Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description testframework
 %{summary}.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
+Provides:       %{name}-testframework-javadoc = %{version}-%{release}
+Obsoletes:      %{name}-testframework-javadoc < %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
-
-%package testframework-javadoc
-Summary:        Javadoc for %{name}-testframework
-Group:          Development/Java
-
-%description testframework-javadoc
 %{summary}.
 
 %prep
@@ -80,81 +68,39 @@ Group:          Development/Java
 # remove all binary libs
 find . -name "*.jar" -exec rm -f {} \;
 find . -name "*.class" -exec rm -f {} \;
-find . -name "*.java" |xargs dos2unix
 
 %patch0 -p1
-%patch1 -p1
-%patch4 -b .sav
 
 # Fix file eof
-%{__sed} -i 's/\r//' LICENSE.txt
-%{__sed} -i 's/\r//' PROPOSAL.html
-%{__sed} -i 's/\r//' RELEASE-NOTES.html
-%{__sed} -i 's/\r//' README.txt
-%{__sed} -i 's/\r//' NOTICE.txt
+sed -i 's/\r//' LICENSE.txt PROPOSAL.html README.txt NOTICE.txt
 
-# Substitute version into testframework pom
-cp -p %{SOURCE1} pom-testframework.xml
-sed -i 's/@VERSION@/%{version}/' pom-testframework.xml
+%mvn_package :%{short_name}-testframework testframework
+%mvn_file ':%{short_name}{,-testframework}' %{name}@1 %{short_name}@1
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.test.skip.exec=true
 
-ant tf.javadoc
+ant tf.javadoc -Dtf.build.docs=target/site/apidocs/
+
+%mvn_artifact %{short_name}:%{short_name}-testframework:%{version} target/%{short_name}-testframework-%{version}.jar
 
 %install
+%mvn_install
 
-# jars
-install -Dm 644 target/%{short_name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-install -Dm 644 target/%{short_name}-testframework-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-testframework.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *; do ln -sf ${jar} `echo $jar| sed  "s|apache-||g"`; done)
-
-
-# poms
-mkdir -p %{buildroot}%{_datadir}/maven-poms/
-install -Dpm 644 pom.xml %{buildroot}%{_datadir}/maven-poms/%{short_name}.pom
-install -Dpm 644 pom-testframework.xml %{buildroot}%{_datadir}/maven-poms/%{short_name}-testframework.pom
-
-
-# fragments
-%add_maven_depmap %{short_name}.pom %{short_name}.jar -a "org.apache.commons:%{short_name}"
-%add_maven_depmap %{short_name}-testframework.pom %{short_name}-testframework.jar -f "testframework" -a "org.apache.commons:%{short_name}-testframework"
-
-
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-rm -rf target/site/apidocs
-
-
-# testframework-javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-testframework-%{version}
-cp -pr build/docs/testframework/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-testframework-%{version}
-ln -s %{name}-testframework-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}-testframework
-
-
+# Workaround for RPM bug #646523 - can't change symlink to directory
 %files -f .mfiles
-%doc PROPOSAL.html README.txt LICENSE.txt RELEASE-NOTES.html NOTICE.txt
-%{_javadir}/%{name}.jar
-%{_javadir}/%{short_name}.jar
+%doc PROPOSAL.html README.txt LICENSE.txt NOTICE.txt
 
 %files testframework -f .mfiles-testframework
-%{_javadir}/%{name}-testframework.jar
-%{_javadir}/%{short_name}-testframework.jar
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
-
-%files testframework-javadoc
-%doc LICENSE.txt NOTICE.txt
-%{_javadocdir}/%{name}-testframework-%{version}
-%{_javadocdir}/%{name}-testframework
 
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.2.2-alt1_3jpp8
+- new version
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.2.1-alt10_26jpp8
 - new version
 
