@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -10,7 +10,7 @@ BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           log4j
-Version:        2.3
+Version:        2.5
 Release:        alt1_2jpp8
 Summary:        Java logging package
 BuildArch:      noarch
@@ -23,13 +23,15 @@ BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core)
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
 BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-xml)
 BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-yaml)
-BuildRequires:  mvn(com.lmax:disruptor) >= 3.3.2
+BuildRequires:  mvn(com.lmax:disruptor)
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(com.sun.mail:javax.mail)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(javax.servlet.jsp:jsp-api)
 BuildRequires:  mvn(javax.servlet:servlet-api)
 BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(org.apache.commons:commons-compress)
+BuildRequires:  mvn(org.apache.commons:commons-csv)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
@@ -41,10 +43,12 @@ BuildRequires:  mvn(org.fusesource.jansi:jansi)
 BuildRequires:  mvn(org.hibernate.javax.persistence:hibernate-jpa-2.1-api)
 BuildRequires:  mvn(org.jboss.spec.javax.jms:jboss-jms-api_1.1_spec)
 BuildRequires:  mvn(org.lightcouch:lightcouch)
+BuildRequires:  mvn(org.liquibase:liquibase-core)
 BuildRequires:  mvn(org.mongodb:mongo-java-driver)
 BuildRequires:  mvn(org.osgi:org.osgi.core)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.slf4j:slf4j-ext)
+BuildRequires:  mvn(org.zeromq:jeromq)
 BuildRequires:  mvn(sun.jdk:jconsole)
 
 Obsoletes:      %{name}-osgi < %{version}-%{release}
@@ -111,6 +115,13 @@ Summary:        Apache Log4j NoSql
 %description nosql
 Use NoSQL databases such as MongoDB and CouchDB to append log messages.
 
+%package liquibase
+Group: Development/Java
+Summary:        Apache Log4j Liquibase Binding
+
+%description liquibase
+The Apache Log4j Liquibase binding to Log4j 2 Core.
+
 %package        javadoc
 Group: Development/Java
 Summary:        API documentation for %{name}
@@ -137,6 +148,10 @@ rm -rf docs/api
 
 # jmh not available
 %pom_disable_module %{name}-perf
+
+# kafka not available
+rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
+%pom_remove_dep -r :kafka-clients
 
 # System scoped dep provided by JDK
 %pom_remove_dep :jconsole %{name}-jmx-gui
@@ -173,6 +188,7 @@ rm -rf docs/api
 %mvn_package ':%{name}-web' web
 %mvn_package ':%{name}-bom' bom
 %mvn_package ':%{name}-nosql' nosql
+%mvn_package ':%{name}-liquibase' liquibase
 
 %build
 # missing test deps (mockejb)
@@ -215,6 +231,7 @@ fi
 %files web -f .mfiles-web
 %files bom -f .mfiles-bom
 %files nosql -f .mfiles-nosql
+%files liquibase -f .mfiles-liquibase
 %files jmx-gui -f .mfiles-jmx-gui
 %{_bindir}/%{name}-jmx
 
@@ -223,6 +240,9 @@ fi
 
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt1_2jpp8
+- new version
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt1_2jpp8
 - unbootsrap build
 
