@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           test-interface
 Version:        %{test_interface_version}
-Release:        alt1_7jpp8
+Release:        alt2_7jpp8
 Summary:        Uniform interface to Scala and Java test frameworks
 
 License:        BSD
@@ -24,9 +24,9 @@ BuildArch:	noarch
 %if %{build_with_sbt}
 BuildRequires:  sbt
 %else
+BuildRequires:	java-devel
 %endif
 BuildRequires:	javapackages-local
-Requires:	javapackages-local
 Source44: import.info
 
 %description
@@ -108,6 +108,9 @@ cp pom.xml target/%{name}-%{version}.pom
 %doc LICENSE
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_7jpp8
+- cleaned up req on javapackages
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_7jpp8
 - new fc release
 
