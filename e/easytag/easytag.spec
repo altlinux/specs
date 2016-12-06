@@ -2,7 +2,7 @@
 %def_enable nautilus
 
 Name: easytag
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 
 Summary: Audio files tag viewer/editor
@@ -82,6 +82,9 @@ Monkey's звуковых файлов.
 %doc ChangeLog HACKING README THANKS TODO
 
 %changelog
+* Tue Dec 06 2016 Yuri N. Sedunov <aris@altlinux.org> 2.4.3-alt1
+- 2.4.3
+
 * Mon Feb 22 2016 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt1
 - 2.4.2
 
