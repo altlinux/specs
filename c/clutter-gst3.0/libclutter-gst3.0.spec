@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name clutter-gst
 %define ver_major 3.0
@@ -11,8 +11,8 @@
 %def_enable hw
 
 Name: %_name%api_ver
-Version: %ver_major.21
-Release: alt0.1
+Version: %ver_major.22
+Release: alt1
 
 Summary: Library integrating clutter with GStreamer
 License: LGPL v2+
@@ -133,6 +133,9 @@ that use Clutter-Gst libraries.
 %endif
 
 %changelog
+* Tue Dec 06 2016 Yuri N. Sedunov <aris@altlinux.org> 3.0.22-alt1
+- 3.0.22
+
 * Sat Nov 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.0.21-alt0.1
 - updated to 3.0.20-5-ga71607b (fixed BGO #773810)
 
