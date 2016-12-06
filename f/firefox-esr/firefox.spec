@@ -1,4 +1,5 @@
-%set_verify_elf_method relaxed
+%define rname firefox
+%set_verify_elf_method unresolved=strict
 %def_without gtk3
 
 %define firefox_cid     \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
@@ -14,7 +15,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
 Version:        45.5.1
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -99,7 +100,7 @@ Obsoletes:	firefox-3.6 firefox-4.0 firefox-5.0
 Conflicts:	firefox-settings-desktop
 
 Provides:	webclient
-Provides:	firefox = %name-%version
+Provides:	firefox = %EVR
 Conflicts:	firefox
 Requires:	mozilla-common
 Requires:	gst-plugins-ugly1.0
@@ -180,6 +181,13 @@ MOZ_OPT_FLAGS=$(echo $RPM_OPT_FLAGS -fPIC -Wl,-z,relro -Wl,-z,now | \
 )
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
+# Add fake RPATH
+rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
+export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
+%if_without system_nss
+# see mozilla/security/nss/coreconf/Linux.mk:203
+export RPATH="-Wl,-rpath,$rpath"
+%endif
 
 export PREFIX="%_prefix"
 export LIBDIR="%_libdir"
@@ -278,6 +286,23 @@ rm -rf -- \
 	./%_libdir/%rname-devel \
 #
 
+# Add real RPATH
+rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
+find \
+     %buildroot/%firefox_prefix \
+-type f -print0 |
+(set +x
+        while read -r -d '' f; do
+              t="$(readlink -ev -- "$f")"
+
+              file -- "$t" | fgrep -qs ELF || continue
+
+              if chrpath -l "$t" | fgrep -qs "PATH=$rpath"; then
+                 chrpath -r "%firefox_prefix" "$t"
+              fi
+        done
+)
+
 %pre
 for n in defaults browserconfig.properties; do
 	[ ! -L "%firefox_prefix/$n" ] || rm -f "%firefox_prefix/$n"
@@ -298,6 +323,12 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Tue Dec  6 2016 Ivan Zakharyaschev <imz@altlinux.org> 45.5.1-alt2
+- Make it pass strict verification of unresolved ELF symbols; this will also
+  protect us from missing dependencies on libgtk symbols. (Thx legion@ for
+  the original hack, removed in 44.0.2-alt3, but found to be restorable by
+  ruslandh@'s work on strict unresolved symbols verification in palemoon.)
+
 * Thu Dec 01 2016 Andrey Cherepanov <cas@altlinux.org> 45.5.1-alt1
 - New ESR version
 - Security fixes:
