@@ -1,5 +1,5 @@
 Name: uncrustify
-Version: 0.62
+Version: 0.64
 Release: alt1
 
 Summary: Uncrustify is a source code beautifier
@@ -13,6 +13,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: http://prdownloads.sf.net/%name/%name-%version.tar
 Patch: uncrustify-0.59-alt-glibc-2.16.patch
 
+BuildPreReq: rpm-macros-cmake cmake
+
 # Automatically added by buildreq on Tue Jul 18 2006
 BuildRequires: gcc-c++
 
@@ -25,22 +27,24 @@ configurable, and is easy to modify.
 
 %prep
 %setup
-%patch -p2
 
 %build
-%configure
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %files
 %doc ChangeLog AUTHORS
 %_bindir/*
-%_datadir/%name/
+#_datadir/%name/
 %_man1dir/*
 
 %changelog
+* Tue Dec 06 2016 Vitaly Lipatov <lav@altlinux.ru> 0.64-alt1
+- new version 0.64 (with rpmrb script)
+
 * Fri Apr 22 2016 Vitaly Lipatov <lav@altlinux.ru> 0.62-alt1
 - new version 0.62 (with rpmrb script)
 
