@@ -1,14 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl rpm-build-python rpm-macros-fedora-compat rpm-macros-java
-BuildRequires: /usr/bin/ant /usr/bin/bundle /usr/bin/cabal /usr/bin/go /usr/bin/perl /usr/bin/php /usr/bin/php-config /usr/bin/phpunit /usr/bin/rake /usr/bin/ruby /usr/bin/runhaskell /usr/bin/trial gcc-c++ libevent-devel libsocket perl(Encode.pm) perl(HTTP/Request.pm) perl(IO/Select.pm) perl(IO/Socket/INET.pm) perl(IO/String.pm) perl(LWP/UserAgent.pm) perl(Test/Harness.pm) perl(Time/HiRes.pm) perl(base.pm) perl-devel perl-podlators pkgconfig(QtCore) pkgconfig(QtNetwork) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(mono)
+BuildRequires: /usr/bin/bundle /usr/bin/cabal /usr/bin/perl /usr/bin/php /usr/bin/phpunit /usr/bin/rake /usr/bin/ruby /usr/bin/runhaskell /usr/bin/trial gcc-c++ libevent-devel perl(Encode.pm) perl(HTTP/Request.pm) perl(IO/Select.pm) perl(IO/Socket/INET.pm) perl(IO/String.pm) perl(LWP/UserAgent.pm) perl(Time/HiRes.pm) perl(base.pm) perl-podlators pkgconfig(mono)
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 25
 %global pkg_version 0.9.1
 %global fb303_version 1.0.0.dev0
-%global pkg_rel 16
+%global pkg_rel 17
 
 %global py_version 2.7
 
@@ -19,7 +19,12 @@ BuildRequires: jpackage-generic-compat
 
 %global have_mongrel 0
 
+%if 0%{?fedora} >= 19 && 0%{?fedora} < 21
+# erlang-jsx is available in F19 but orphaned in F22
+%global have_jsx 1
+%else
 %global have_jsx 0
+%endif
 
 # We should be able to enable this in the future
 %global want_d 0
@@ -63,7 +68,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		thrift
 Version:	%{pkg_version}
-Release:	alt1_16.4
+Release:	alt2_17.3jpp8
 Summary:	Software framework for cross-language services development
 
 # Parts of the source are used under the BSD and zlib licenses, but
@@ -97,28 +102,32 @@ Patch0:		thrift-0.9.1-buildxml.patch
 Patch1:		thrift-0.9.1-rebar.patch
 # for fb303, excise maven ant tasks; build against system libraries; etc.
 Patch2:		fb303-0.9.1-buildxml.patch
+# required to get it build on aarch64
+Patch3:         thrift-0.9.1-THRIFT-2214-System-header-sys-param.h-is-included-in.patch
+# Adapt to GCC 6, bug #1306671, in 0.9.3
+Patch4:     thrift-0.9.1-Adapt-to-GCC-6.patch
 
-Group:		Development/Java
+Group:		Development/Other
 
 # BuildRequires for language-specific bindings are listed under these
 # subpackages, to facilitate enabling or disabling individual language
 # bindings in the future
 
 BuildRequires:	libstdc++-devel
-BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
-BuildRequires:	automake
-BuildRequires:	autoconf
+BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires:	automake-common
+BuildRequires:	autoconf-common
 BuildRequires:	libssl-devel
 BuildRequires:	zlib-devel
 BuildRequires:	bison
 BuildRequires:	flex
-BuildRequires:	glib2-devel
+BuildRequires: glib2-devel libgio libgio-devel
 BuildRequires: texlive-latex-recommended texlive-base-bin texlive-generic-recommended
-BuildRequires:	qt4-devel
+BuildRequires: libqt4-declarative libqt4-devel qt4-designer
 
-BuildRequires:	libtool
-BuildRequires:	autoconf
-BuildRequires:	automake
+BuildRequires:	libtool-common
+BuildRequires:	autoconf-common
+BuildRequires:	automake-common
 
 BuildRequires:	bison
 BuildRequires:	flex
@@ -145,8 +154,8 @@ Python, %{?php_langname}and other languages.
 Group: Development/C++
 Summary:	Development files for %{name}
 Requires:	%{name}%{?_isa} = %{version}
-Requires:	pkgconfig
-Requires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+Requires:	pkg-config
+Requires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
 
 %description	devel
 The %{name}-devel package contains libraries and header files for
@@ -206,7 +215,7 @@ The perl-%{name} package contains Perl bindings for %{name}.
 %package -n	d-%{name}
 Group: Development/Java
 Summary:	D support for %{name}
-BuildRequires:	ldc
+BuildRequires:	dmd
 
 %description -n d-%{name}
 The d-%{name} package contains D bindings for %{name}.
@@ -218,9 +227,9 @@ Group: Development/Java
 Summary:	PHP support for %{name}
 Requires:	%{name}%{?_isa} = %{version}
 Requires:	php(language) >= 5.3.0
-Requires:	php-date
+Requires: php5-bz2 php5-calendar php5-curl php5-exif php5-fileinfo php5-sockets
 Requires:	php-json
-BuildRequires:	php-devel
+BuildRequires:	php5-devel
 
 %description -n php-%{name}
 The php-%{name} package contains PHP bindings for %{name}.
@@ -240,6 +249,7 @@ Java bindings for %{name}.
 Group: Development/Java
 Summary:	Java support for %{name}
 
+BuildRequires:	java-devel
 BuildRequires:	maven-local
 BuildRequires:	apache-commons-codec
 BuildRequires:	apache-commons-lang
@@ -251,7 +261,6 @@ BuildRequires:	log4j
 BuildRequires:	slf4j
 BuildRequires:	tomcat-servlet-3.1-api
 
-Requires:	maven-local
 Requires:	mvn(org.slf4j:slf4j-api)
 Requires:	mvn(commons-lang:commons-lang)
 Requires:	mvn(org.apache.httpcomponents:httpclient)
@@ -282,7 +291,7 @@ Requires:	%{name}%{?_isa} = %{version}
 Requires:	erlang
 Requires:	erlang-jsx
 BuildRequires:	erlang
-BuildRequires:	erlang-rebar
+BuildRequires:	rebar
 
 %description -n erlang-%{name}
 The erlang-%{name} package contains Erlang bindings for %{name}.
@@ -318,7 +327,7 @@ The python-fb303 package contains Python bindings for fb303.
 %package -n fb303-java
 Group: Development/Java
 Summary:	Java bindings for fb303
-Requires:	maven-local
+Requires:	java >= 1.6.0
 Requires:	mvn(org.slf4j:slf4j-api)
 Requires:	mvn(commons-lang:commons-lang)
 Requires:	mvn(org.apache.httpcomponents:httpclient)
@@ -334,6 +343,8 @@ The fb303-java package contains Java bindings for fb303.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %{?!el5:sed -i -e 's/^AC_PROG_LIBTOOL/LT_INIT/g' configure.ac}
 
@@ -350,8 +361,6 @@ echo 'EXTRA_libthriftqt_la_DEPENDENCIES = libthrift.la' >> lib/cpp/Makefile.am
 echo 'EXTRA_libthriftz_la_DEPENDENCIES = libthrift.la' >> lib/cpp/Makefile.am
 
 # echo 'libfb303_so_LIBADD = -lthrift -L../../../lib/cpp/.libs' >> contrib/fb303/cpp/Makefile.am
-
-#sed -i 's|libfb303_so_LDFLAGS = $(SHARED_LDFLAGS)|libfb303_so_LDFLAGS = $(SHARED_LDFLAGS) -lthrift -L../../../lib/cpp/.libs -Wl,--as-needed|g' contrib/fb303/cpp/Makefile.am
 
 sed -i 's|libfb303_so_LDFLAGS = $(SHARED_LDFLAGS)|libfb303_so_LDFLAGS = $(SHARED_LDFLAGS) -L../../../lib/cpp/.libs -Wl,--no-as-needed -lthrift -Wl,--as-needed|g' contrib/fb303/cpp/Makefile.am
 
@@ -399,13 +408,13 @@ install: build/libfb303.jar
 sh ./bootstrap.sh
 
 # use unversioned doc dirs where appropriate (via _pkgdocdir macro)
-%configure --disable-dependency-tracking --disable-static --without-libevent --with-boost=/usr %{ruby_configure} %{erlang_configure} %{golang_configure} %{php_configure} --without-csharp --docdir=%{?_pkgdocdir}%{!?_pkgdocdir:%{_docdir}/%{name}-%{version}} \
---without-haskell --without-csharp 
+%configure --disable-dependency-tracking --disable-static --without-libevent --with-boost=/usr %{ruby_configure} %{erlang_configure} %{golang_configure} %{php_configure} --docdir=%{?_pkgdocdir}%{!?_pkgdocdir:%{_docdir}/%{name}-%{version}} \
+--without-haskell --without-csharp
 
 # eliminate unused direct shlib dependencies
 sed -i -e 's/ -shared / -Wl,--as-needed\0/g' libtool
 
-make 
+make
 # alt -non-safe16
 #%{?_smp_mflags}
 
@@ -415,8 +424,9 @@ make
   chmod 755 bootstrap.sh
   sh bootstrap.sh
   %configure --disable-static --with-java --without-php --libdir=%{_libdir}
-  make 
-  #%{?_smp_mflags}
+  make
+# alt -non-safe16
+#%{?_smp_mflags}
   (
       cd java
       ant dist
@@ -561,6 +571,9 @@ find %{buildroot} -name \*.py -exec grep -q /usr/bin/env {} \; -print | xargs -r
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_17.3jpp8
+- cleaned up req on javapackages
+
 * Tue Feb 23 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1_16.4
 - new version
 - --without-haskell --without-csharp
