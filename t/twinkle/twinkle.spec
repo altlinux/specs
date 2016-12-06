@@ -1,5 +1,5 @@
 Name: twinkle
-Version: 1.10.0
+Version: 1.10.1
 Release: alt1
 
 Summary: twinkle Qt5 port - SIP Soft Phone
@@ -59,6 +59,9 @@ install -pD -m0644 src/gui/images/twinkle16.png %buildroot%_miconsdir/%name.png
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Dec 06 2016 Vitaly Lipatov <lav@altlinux.ru> 1.10.1-alt1
+- new version 1.10.1 (with rpmrb script)
+
 * Wed Aug 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1.10.0-alt1
 - new version 1.10.0 (with rpmrb script)
 
