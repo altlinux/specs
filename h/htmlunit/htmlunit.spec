@@ -1,18 +1,19 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           htmlunit
-Version:        2.17
-Release:        alt1_1jpp8
+Version:        2.19
+Release:        alt1_2jpp8
 Summary:        A headless web browser for automated testing
 License:        ASL 2.0 
 URL:            http://htmlunit.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}-src.zip
+Source0:        http://downloads.sourceforge.net/htmlunit/%{name}-%{version}-src.zip
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-codec:commons-codec)
@@ -20,7 +21,7 @@ BuildRequires:  mvn(commons-collections:commons-collections)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(net.sourceforge.cssparser:cssparser)
-BuildRequires:  mvn(net.sourceforge.htmlunit:htmlunit-core-js) >= %{version}
+BuildRequires:  mvn(net.sourceforge.htmlunit:htmlunit-core-js)
 BuildRequires:  mvn(net.sourceforge.nekohtml:nekohtml)
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
@@ -30,6 +31,7 @@ BuildRequires:  mvn(org.eclipse.jetty.websocket:websocket-client)
 BuildRequires:  mvn(xalan:xalan)
 BuildRequires:  mvn(xalan:xsltc)
 BuildRequires:  mvn(xerces:xercesImpl)
+
 BuildArch:      noarch
 Source44: import.info
 
@@ -51,14 +53,10 @@ This package contains the API documentation for %{name}.
 find -name '*.jar' -print -delete 
 find -name '*.class' -print -delete
 
-%pom_add_dep xalan:xsltc:2.7.1
+%pom_xpath_remove "pom:build/pom:extensions"
 
-# Unavailable test deps
-%pom_remove_dep :gsbase
-%pom_remove_dep org.seleniumhq.selenium:
-%pom_xpath_remove "pom:dependency[pom:type = 'test-jar']"
-# org.apache.httpcomponents:httpclient:4.1.2:test-jar
-%pom_xpath_remove "pom:project/pom:dependencies/pom:dependency[pom:scope = 'test']"
+%pom_xpath_set "pom:packaging" bundle
+%pom_xpath_remove "pom:Embed-Dependency"
 
 # unwanted plugin
 %pom_remove_plugin :maven-assembly-plugin
@@ -68,7 +66,14 @@ find -name '*.class' -print -delete
 %pom_remove_plugin :maven-site-plugin
 %pom_remove_plugin :maven-source-plugin
 
-%pom_xpath_remove "pom:build/pom:extensions"
+# Unavailable test deps
+%pom_remove_dep :gsbase
+%pom_remove_dep org.seleniumhq.selenium:
+%pom_xpath_remove "pom:dependency[pom:type = 'test-jar']"
+# org.apache.httpcomponents:httpclient:4.1.2:test-jar
+%pom_xpath_remove "pom:project/pom:dependencies/pom:dependency[pom:scope = 'test']"
+
+%pom_add_dep xalan:xsltc:2.7.1
 
 %mvn_file : %{name}
 
@@ -87,6 +92,9 @@ find -name '*.class' -print -delete
 %doc LICENSE.txt
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.19-alt1_2jpp8
+- new version
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.17-alt1_1jpp8
 - java 8 mass update
 
