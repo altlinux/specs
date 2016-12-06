@@ -1,38 +1,39 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
+BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-shared-io
-Version:        1.1
-Release:        alt3_12jpp8
-# Maven-shared defines maven-shared-io version as 1.2
 Epoch:          1
-Summary:        API for I/O support like logging, download or file scanning.
+Version:        3.0.0
+Release:        alt1_2jpp8
+Summary:        API for I/O support like logging, download or file scanning
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-shared-io
-# svn export http://svn.apache.org/repos/asf/maven/shared/tags/maven-shared-io-1.1 maven-shared-io-1.1
-# tar caf maven-shared-io-1.1.tar.xz maven-shared-io-1.1/
-Source0:        %{name}-%{version}.tar.xz
-# ASL mandates that the licence file be included in redistributed source
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
-Patch1:         0001-Update-to-easymock-3.2.patch
 BuildArch:      noarch
 
-BuildRequires:  maven-local
-BuildRequires:  maven-shared
-BuildRequires:  easymock3
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-Obsoletes:      maven-shared-io < %{epoch}:%{version}-%{release}
-Provides:       maven-shared-io = %{epoch}:%{version}-%{release}
+# Forwarded upstream: https://issues.apache.org/jira/browse/MSHARED-490
+Patch0:         0001-Fix-running-tests-with-Maven-3.3.9.patch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
+BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.easymock:easymock)
 Source44: import.info
 
 %description
 API for I/O support like logging, download or file scanning.
-
-This is a replacement package for maven-shared-io
 
 %package javadoc
 Group: Development/Java
@@ -44,16 +45,7 @@ API documentation for %{name}.
 
 %prep
 %setup -q
-%patch1 -p1
-
-%pom_add_dep org.apache.maven:maven-compat
-%pom_add_dep junit:junit::test
-
-# Failing tests
-rm src/test/java/org/apache/maven/shared/io/location/ArtifactLocatorStrategyTest.java
-rm src/test/java/org/apache/maven/shared/io/download/DefaultDownloadManagerTest.java
-
-cp %{SOURCE1} LICENSE.txt
+%patch0 -p1
 
 %build
 %mvn_build
@@ -62,13 +54,15 @@ cp %{SOURCE1} LICENSE.txt
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc LICENSE.txt
+%doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc LICENSE NOTICE
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.0.0-alt1_2jpp8
+- new version
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt3_12jpp8
 - new version
 
