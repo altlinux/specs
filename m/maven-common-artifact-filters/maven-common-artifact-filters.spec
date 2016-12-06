@@ -1,32 +1,35 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-Name:          maven-common-artifact-filters
-Version:       1.4
-Release:       alt5_16jpp8
-Summary:       Maven Common Artifact Filters
-License:       ASL 2.0
-Url:           http://maven.apache.org/shared/
-Source0:       http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
-BuildArch:     noarch
+Name:           maven-common-artifact-filters
+Version:        3.0.0
+Release:        alt1_2jpp8
+Summary:        Maven Common Artifact Filters
+License:        ASL 2.0
+URL:            http://maven.apache.org/shared/
+BuildArch:      noarch
 
-BuildRequires: maven-local
-BuildRequires: easymock3
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-BuildRequires: maven-shared
-BuildRequires: maven-resources-plugin
-BuildRequires: plexus-containers-container-default
-BuildRequires: maven-test-tools
-BuildRequires: maven-plugin-testing-harness
+Patch0:         0001-Remove-Maven-3.0-specific-code.patch
 
-
-Provides:      maven-shared-common-artifact-filters = %{version}-%{release}
-Obsoletes:     maven-shared-common-artifact-filters < %{version}-%{release}
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
+BuildRequires:  mvn(org.easymock:easymock)
+BuildRequires:  mvn(org.eclipse.aether:aether-api)
+BuildRequires:  mvn(org.eclipse.aether:aether-util)
 Source44: import.info
 
 %description
@@ -35,7 +38,7 @@ during dependency resolution.
 
 %package javadoc
 Group: Development/Java
-Summary:       Javadoc for %{name}
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -43,36 +46,29 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
 
-# Maven 2 -> Maven 3
-%pom_remove_dep :maven-project
-%pom_add_dep org.apache.maven:maven-core
-%pom_add_dep org.apache.maven:maven-compat
-%pom_xpath_set "pom:dependency[pom:groupId[text()='org.apache.maven']]/pom:version" 3.0.4
-
-# Workaround for rhbz#911365
-%pom_add_dep aopalliance:aopalliance::test
-%pom_add_dep cglib:cglib::test
-
-# Migrate from easymock 1 to easymock 3
-%pom_remove_dep easymock:
-%pom_add_dep org.easymock:easymock:3.2:test
+# We don't want to support legacy Maven versions (older than 3.1)
+%pom_remove_dep org.sonatype.sisu:
+%pom_remove_dep org.sonatype.aether:
+find -name SonatypeAether\*.java -delete
 
 %build
-# NoSuchMethodError: org.easymock.internal.ObjectMethodsFilter.<init>(Ljava/lang/reflect/InvocationHandler;)V
-%mvn_build -f
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_2jpp8
+- new version
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt5_16jpp8
 - new version
 
