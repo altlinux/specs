@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define _without_maven 1
@@ -41,12 +41,13 @@ BuildRequires: jpackage-generic-compat
 #
 
 Name:           xstream
-Version:        1.4.8
-Release:        alt1_2jpp8
+Version:        1.4.9
+Release:        alt1_1jpp8
 Summary:        Java XML serialization library
 License:        BSD
 URL:            http://xstream.codehaus.org/
-Source0:        https://nexus.codehaus.org/content/repositories/releases/com/thoughtworks/xstream/xstream-distribution/%{version}/xstream-distribution-%{version}-src.zip
+Source0:        http://repo1.maven.org/maven2/com/thoughtworks/%{name}/%{name}-distribution/%{version}/%{name}-distribution-%{version}-src.zip
+BuildRequires: java-devel
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(cglib:cglib)
@@ -144,6 +145,12 @@ find . -name "*.jar" -print -delete
 %pom_xpath_remove "pom:project/pom:build/pom:extensions"
 # Require org.codehaus.xsite:xsite-maven-plugin
 %pom_disable_module xstream-distribution
+
+# missing artifacts:
+#  org.openjdk.jmh:jmh-core:jar:1.11.1
+#  org.openjdk.jmh:jmh-generator-annprocess:jar:1.11.1
+%pom_disable_module xstream-jmh
+
 %pom_remove_plugin :xsite-maven-plugin
 %pom_remove_plugin :jxr-maven-plugin
 # Unwanted
@@ -154,12 +161,15 @@ find . -name "*.jar" -print -delete
 %pom_xpath_set "pom:dependency[pom:groupId = 'org.codehaus.woodstox' ]/pom:artifactId" woodstox-core-asl xstream
 %pom_xpath_set "pom:dependency[pom:groupId = 'cglib' ]/pom:artifactId" cglib
 %pom_xpath_set "pom:dependency[pom:groupId = 'cglib' ]/pom:artifactId" cglib xstream
-# Remove xmlpull classes provides by xpp3
-%pom_remove_dep :xmlpull xstream
+# Replace old xmlpull dependency with xpp3
+%pom_change_dep :xmlpull xpp3:xpp3:1.1.4c xstream
 # Require unavailable proxytoys:proxytoys
 %pom_remove_plugin :maven-dependency-plugin xstream
 
 %pom_remove_plugin :maven-javadoc-plugin xstream
+
+# provided by JDK
+%pom_remove_dep javax.activation:activation xstream
 
 %pom_xpath_set "pom:project/pom:dependencies/pom:dependency[pom:groupId = 'cglib' ]/pom:artifactId" cglib xstream-hibernate
 %pom_xpath_inject "pom:project/pom:dependencies/pom:dependency[pom:groupId = 'junit' ]" "<scope>test</scope>" xstream-hibernate
@@ -192,6 +202,9 @@ find . -name "*.jar" -print -delete
 %doc LICENSE.txt
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4.9-alt1_1jpp8
+- new version
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4.8-alt1_2jpp8
 - unbootstrap build
 
