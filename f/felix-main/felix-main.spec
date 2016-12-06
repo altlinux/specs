@@ -1,18 +1,23 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global bundle org.apache.felix.main
 
 Name:    felix-main
-Version: 4.2.0
-Release: alt1_4jpp7
+Version: 5.4.0
+Release: alt1_1jpp8
 Summary: Apache Felix Main
-Group:   Development/Java
+Group:   Development/Other
 License: ASL 2.0
 URL:     http://felix.apache.org
 Source0: http://www.apache.org/dist/felix/%{bundle}-%{version}-source-release.tar.gz
 
 BuildArch: noarch
 
+BuildRequires: java-devel >= 1.6.0
 BuildRequires: jpackage-utils
 BuildRequires: felix-bundlerepository
 BuildRequires: felix-gogo-command
@@ -20,10 +25,11 @@ BuildRequires: felix-gogo-runtime
 BuildRequires: felix-gogo-shell
 BuildRequires: felix-osgi-compendium
 BuildRequires: felix-osgi-core
+BuildRequires: felix-parent
 BuildRequires: felix-framework >= 4.2.0
 BuildRequires: maven-local
 BuildRequires: maven-dependency-plugin
-BuildRequires: maven-surefire-provider-junit4
+BuildRequires: maven-surefire-provider-junit
 BuildRequires: mockito
 
 Requires: felix-bundlerepository
@@ -65,6 +71,9 @@ This package contains API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 5.4.0-alt1_1jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1_4jpp7
 - new release
 
