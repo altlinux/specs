@@ -1,32 +1,25 @@
 %{!?python_sitelib: %define python_sitelib %(%__python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
-%define name sos
-%define version 1.7
-%define release 9.1
-
 %define _localedir %_datadir/locale
 
 Summary: A set of tools to gather troubleshooting information from a system
 Name: sos
-Version: %version.%release
-Release: alt1.1.1
-# The source for this package was pulled from upstream's svn.  Use the
-# following commands to generate the tarball:
-#  svn --username guest export https://sos.108.redhat.com/svn/sos/tags/r1-7 sos-1.7
-#  tar -czvf sos-1.7.tar.gz sos-1.7
-Packager: Denis Medvedev <nbr@altlinux.ru>
+Version: 3.3
+Release: alt1
+Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
-Source: %name-%version-%release.tar
-Patch0: sos-tty-sysreport.diff
-Patch1: sos-temp-backport.diff
-License: GPL
+Source: %name-%version.tar
+License: GPLv2+
 Group: System/Configuration/Other
 
 BuildArch: noarch
-Url: http://sos.108.redhat.com/
-BuildPreReq: python-devel
+Url: http://github.com/sosreport/sos
+BuildPreReq: python-devel python-module-sphinx-devel
 Requires: libxml2-python
 Provides: sysreport = 1.3.15-8
+
+Patch: %name-%version-%release.patch
+Source1: sos.conf
 
 %description
 Sos is a set of tools that gathers information about system
@@ -35,29 +28,32 @@ diagnostic purposes and debugging. Sos is commonly used to help
 support technicians and developers.
 
 %prep
-%setup -q -n %name-%version-%release
-%patch0 -p1
-%patch1 -p1
+%setup -q -n %name-%version
+%patch -p1
 
 %build
-%__python setup.py build
+%make_build
 
 %install
-%__python setup.py install --optimize 1 --root=%buildroot
-ln -s %_sbindir/sosreport %buildroot%_sbindir/sysreport
+%makeinstall_std
+cp -f %SOURCE1 %buildroot%_sysconfdir/
+rm -f %buildroot%_datadir/%name/{AUTHORS,README.md}
+%find_lang %name
 
-%files
+%files -f %name.lang
+%config(noreplace) %_sysconfdir/sos.conf
 %_sbindir/sosreport
-%_bindir/rh-upload-core
-%_sbindir/sysreport
-%_sbindir/sysreport.legacy
-%_datadir/sysreport
 %python_sitelibdir/sos/
-%_man1dir/sosreport.1*
+%_man1dir/sos*.1*
+%_man5dir/sos.conf.5*
 %_localedir/*/LC_MESSAGES/sos.mo
-%doc README README.rh-upload-core TODO LICENSE ChangeLog
+%doc AUTHORS README.md LICENSE
+%doc %_defaultdocdir/sos/html
 
 %changelog
+* Tue Dec 06 2016 Evgeny Sinelnikov <sin@altlinux.ru> 3.3-alt1
+- Update to latest release
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.7.9.1-alt1.1.1
 - Rebuild with Python-2.7
 
