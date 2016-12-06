@@ -3,7 +3,7 @@
 
 Name: sane
 Version: 1.0.25
-Release: alt2
+Release: alt3
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -14,8 +14,8 @@ Url: http://www.sane-project.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-#Source: ftp://ftp.sane-project.org/pub/sane/%oname-%version/%oname-%version.tar
-Source: https://alioth.debian.org/frs/download.php/file/3958/%oname-%version.tar
+# NOTE: check version!
+Source: https://alioth.debian.org/frs/download.php/latestfile/176/%oname-%version.tar
 #Source1: %name-%version.ru.po
 Source2: %name.xinetd
 
@@ -207,6 +207,7 @@ rm -f %buildroot%_libdir/%name/*.a
 %_bindir/sane-find-scanner
 %_bindir/scanimage
 %_bindir/gamma4scanimage
+%_bindir/umax_pp
 %_man1dir/*
 %exclude %_man8dir/saned*
 %exclude %_man1dir/sane-config*
@@ -219,7 +220,9 @@ rm -f %buildroot%_libdir/%name/*.a
 %_man8dir/saned*
 
 %files -n lib%name -f %oname.lang
-%_libdir/*.so.*
+%_libdir/*.so.1
+# to check we updated correctly
+%_libdir/*.so.%version
 %_sysconfdir/udev/rules.d/*
 %_man5dir/*
 %dir %_sysconfdir/sane.d/
@@ -252,6 +255,9 @@ rm -f %buildroot%_libdir/%name/*.a
 %endif
 
 %changelog
+* Tue Dec 06 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.25-alt3
+- real build 1.0.25 (ALT bug #32851)
+
 * Tue Apr 12 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.25-alt2
 - move .so plugins from -devel (ALT bug #31920)
 
