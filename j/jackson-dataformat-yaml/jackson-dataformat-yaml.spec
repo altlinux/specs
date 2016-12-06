@@ -1,10 +1,12 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
 Name:          jackson-dataformat-yaml
-Version:       2.5.0
+Version:       2.6.3
 Release:       alt1_2jpp8
 Summary:       Jackson module to add YAML back-end (parser/generator adapters)
 License:       ASL 2.0
@@ -12,23 +14,17 @@ URL:           http://wiki.fasterxml.com/JacksonExtensionYAML
 Source0:       https://github.com/FasterXML/jackson-dataformat-yaml/archive/%{name}-%{version}.tar.gz
 Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
 
+BuildRequires: maven-local
+BuildRequires: mvn(com.fasterxml.jackson:jackson-parent:pom:)
+BuildRequires: mvn(com.fasterxml.jackson.core:jackson-annotations)
 BuildRequires: mvn(com.fasterxml.jackson.core:jackson-core)
 BuildRequires: mvn(com.fasterxml.jackson.core:jackson-databind)
-%if %{?fedora} > 20
-BuildRequires: mvn(com.fasterxml.jackson:jackson-parent:pom:)
-%else
-BuildRequires: mvn(com.fasterxml.jackson:jackson-parent)
-%endif
-BuildRequires: mvn(org.yaml:snakeyaml)
-# Test deps
-BuildRequires: mvn(com.fasterxml.jackson.core:jackson-annotations)
+BuildRequires: mvn(com.google.code.maven-replacer-plugin:replacer)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.felix:org.apache.felix.framework)
-BuildRequires: mvn(org.slf4j:slf4j-log4j12)
-
-BuildRequires: maven-local
-BuildRequires: mvn(com.google.code.maven-replacer-plugin:replacer)
 BuildRequires: mvn(org.apache.maven.plugins:maven-failsafe-plugin)
+BuildRequires: mvn(org.slf4j:slf4j-log4j12)
+BuildRequires: mvn(org.yaml:snakeyaml)
 
 BuildArch:     noarch
 Source44: import.info
@@ -76,11 +72,9 @@ org.yaml.snakeyaml.reader
 </osgi.import>"
 
 # test deps
-# pax-exam 4.3.0
 %pom_remove_dep org.ops4j.pax.exam:pax-exam-container-native
 %pom_remove_dep org.ops4j.pax.exam:pax-exam-junit4
 %pom_remove_dep org.ops4j.pax.exam:pax-exam-link-mvn
-# pax-url 2.2.0
 %pom_remove_dep org.ops4j.pax.url:pax-url-aether
 rm -r src/test/java/com/fasterxml/jackson/dataformat/yaml/failsafe/OSGiIT.java
 
@@ -101,6 +95,9 @@ rm -r src/test/java/com/fasterxml/jackson/dataformat/yaml/failsafe/OSGiIT.java
 %doc LICENSE LICENSE-2.0.txt NOTICE
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_2jpp8
+- new version
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt1_2jpp8
 - new version
 
