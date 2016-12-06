@@ -1,7 +1,7 @@
 %def_without test
 
 Name: gscan2pdf
-Version: 1.5.4
+Version: 1.6.0
 Release: alt1
 
 Summary: A GUI to ease the process of producing a multipage PDF from a scan
@@ -25,7 +25,7 @@ Requires: perl(Gtk2/Ex/PodViewer.pm) xdg-utils unpaper
 # optimized out: fontconfig libX11-locales libgdk-pixbuf libwayland-client libwayland-server perl-Cairo perl-Compress-Raw-Bzip2 perl-Compress-Raw-Zlib perl-Encode perl-Exporter-Tiny perl-Glib perl-Gtk2 perl-HTML-Parser perl-HTML-Tagset perl-IO-Compress perl-IO-String perl-IO-Zlib perl-Math-Complex perl-Pango perl-Pod-Escapes perl-Pod-Simple perl-Try-Tiny perl-devel perl-parent perl-threads python-base python3 python3-base
 BuildRequires: libdb4-devel perl-Archive-Tar perl-Config-General perl-Filesys-Df perl-Goo-Canvas perl-Gtk2-Ex-Simple-List perl-Gtk2-ImageView perl-List-MoreUtils perl-Locale-gettext perl-Log-Log4perl perl-Magick perl-PDF-API2 perl-Proc-ProcessTable perl-Readonly perl-Sane perl-Set-IntSpan perl-Sub-Name perl-podlators perl-Text-Balanced
 
-BuildPreReq: perl-Data-UUID perl-JSON-PP
+BuildPreReq: perl-Data-UUID perl-JSON-PP perl-Date-Calc
 
 BuildPreReq: perl-Magick perl-Sane >= 0.05
 
@@ -90,6 +90,9 @@ find %buildroot -name .packlist | xargs rm -f
 %perl_vendor_privlib/Gscan2pdf/
 
 %changelog
+* Sun Dec 04 2016 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
+- new version 1.6.0 (with rpmrb script)
+
 * Thu Oct 20 2016 Vitaly Lipatov <lav@altlinux.ru> 1.5.4-alt1
 - new version 1.5.4 (with rpmrb script)
 
