@@ -3,7 +3,7 @@
 %define dist Log-Log4perl
 Name: perl-%dist
 Version: 1.48
-Release: alt1
+Release: alt2
 
 Summary: Log4j implementation for Perl
 License: GPL or Artistic
@@ -22,6 +22,31 @@ BuildRequires: perl-DBD-CSV perl-Data-Dump perl-Filter perl-IPC-SysV perl-Log-Di
 Log::Log4perl lets you remote-control and fine-tune the logging
 behaviour of your system from the outside. It implements the widely
 popular (Java-based) Log4j logging package in pure Perl.
+
+%package Appender-RRDs
+Summary: %dist backend - Log to a RRDtool Archive
+Group: Development/Perl
+Requires: %name = %{?epoch:%epoch:}%version-%release
+
+%description Appender-RRDs
+Log::Log4perl::Appender::RRDs appenders facilitate writing data
+to RRDtool round-robin archives via Log4perl. For documentation
+on RRD and its Perl interface RRDs (which comes with the distribution),
+check out http://rrdtool.org.
+
+Messages sent to Log4perl's RRDs appender are expected to be numerical values
+(ints or floats), which then are used to run a rrdtool update command
+on an existing round-robin database. The name of this database needs to
+be set in the appender's dbname configuration parameter.
+
+If there's more parameters you wish to pass to the update method,
+use the rrdupd_params configuration parameter:
+
+    log4perl.appender.RRDapp.rrdupd_params = --template=in:out
+
+To read out the round robin database later on, use rrdtool fetch
+or rrdtool graph for graphic displays.
+
 
 %prep
 %setup -q -n %dist-%version
@@ -46,8 +71,15 @@ popular (Java-based) Log4j logging package in pure Perl.
 %doc Changes README
 %perl_vendor_privlib/Log
 %_bindir/l4p-tmpl
+%exclude %perl_vendor_privlib/Log/Log4perl/Appender/RRDs.pm
+
+%files Appender-RRDs
+%perl_vendor_privlib/Log/Log4perl/Appender/RRDs.pm
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.48-alt2
+- Appender-RRDs moved to subpackage (closes: #32850)
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.48-alt1
 - automated CPAN update
 
