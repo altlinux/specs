@@ -1,19 +1,19 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           imagej
-Version:        1.48
-Release:        alt1_7.ejpp8
+Version:        1.50
+Release:        alt1_1.hjpp8
 Summary:        Image Processing and Analysis in Java
 
 Group:          Engineering
 License:        Public Domain
 URL:            http://rsbweb.nih.gov/ij/index.html
-Source0:        http://rsbweb.nih.gov/ij/download/src/ij148e-src.zip
+Source0:        http://rsbweb.nih.gov/ij/download/src/ij150h-src.zip
 Source1:        %{name}.desktop
 Source2:        http://rsbweb.nih.gov/ij/macros/macros.zip
 Source3:        http://rsb.info.nih.gov/ij/download/linux/unix-script.txt
@@ -27,13 +27,14 @@ BuildArch:      noarch
 
 
 BuildRequires:  jpackage-utils
+BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  ant
 BuildRequires:  desktop-file-utils
 
 
 Requires:       jpackage-utils
-# java-devel not java for plugins build
 Source44: import.info
+# java-devel not java for plugins build
 
 %description
 ImageJ is a public domain Java image processing program. It can display,        
@@ -109,7 +110,7 @@ cp -p imagej.sh $RPM_BUILD_ROOT%{_bindir}/%{name}
 
 # directory for plugins
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}/plugins
-cp source/plugins/JavaScriptEvaluator.source $RPM_BUILD_ROOT%{_datadir}/%{name}/plugins/JavaScriptEvaluator.java
+#cp source/plugins/JavaScriptEvaluator.source $RPM_BUILD_ROOT%{_datadir}/%{name}/plugins/JavaScriptEvaluator.java
 
 # desktop file
 desktop-file-install --vendor=""                     \
@@ -129,6 +130,9 @@ desktop-file-install --vendor=""                     \
 
 
 %changelog
+* Wed Dec 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.50-alt1_1.hjpp8
+- new version
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.48-alt1_7.ejpp8
 - java 8 mass update
 
