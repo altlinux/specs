@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 4.3.13
-Release: alt1
+Version: 4.3.14
+Release: alt2
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -68,7 +68,7 @@ HA Manager PVE
 
 %package -n pve-qemu-server
 Summary: Qemu Server Tools
-Version: 4.0.100
+Version: 4.0.101
 Group: System/Servers
 Requires: nc6 socat pve-qemu-system >= 2.6.1-alt4
 Provides: qemu-server = %version-%release
@@ -356,6 +356,10 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Wed Dec 07 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.14-alt2
+- 4.3-14
+- qemu-server 4.0-101
+
 * Mon Dec 05 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.13-alt1
 - 4.3-13
 - pve-container 1.0-87
