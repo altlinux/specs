@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: gcc-c++
+BuildRequires(pre): rpm-macros-java
+BuildRequires: gcc-c++ java-devel-default rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             ironjacamar
 Version:          1.1.10
-Release:          alt1_1jpp8
+Release:          alt1_2jpp8
 Summary:          Java Connector Architecture 1.7 implementation
 License:          LGPLv2+
 URL:              http://www.ironjacamar.org/
@@ -46,6 +46,7 @@ BuildRequires:    ant
 BuildRequires:    apache-ivy
 BuildRequires:    apiviz
 BuildRequires:    bean-validation-api
+BuildRequires:    java-devel >= 1.6.0
 BuildRequires:    javamail
 BuildRequires:    javassist
 BuildRequires:    jboss-connector-1.6-api
@@ -154,6 +155,9 @@ cp -rp target/docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Wed Dec 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt1_2jpp8
+- new fc release
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt1_1jpp8
 - new version
 
