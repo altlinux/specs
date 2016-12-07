@@ -9,12 +9,14 @@
 #%def_enable modbus
 %def_disable tests
 %def_disable mqtt
+%def_disable netdata
+%def_enable api
 
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.5
-Release: alt19.1
+Version: 2.6
+Release: alt4
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -60,6 +62,10 @@ BuildRequires: librrd-devel
 
 %if_enabled mqtt
 BuildRequires: libmosquitto-devel
+%endif
+
+%if_enabled netdata
+BuildRequires: netdata
 %endif
 
 %if_enabled python
@@ -116,6 +122,16 @@ Requires: %name = %version-%release
 
 %description -n python-module-%oname
 Python interface for %name
+%endif
+
+%if_enabled netdata
+%package netdata-plugin
+Group: Development/Tools
+Summary: python plugin for netdata
+Requires: python-module-%oname
+
+%description netdata-plugin
+python plugin for netdata
 %endif
 
 %package utils
@@ -299,7 +315,7 @@ SharedMemoryPlus extension ('all in one') for libuniset
 
 %build
 %autoreconf
-%configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt}
+%configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt} %{subst_enable api}
 %make
 
 %install
@@ -383,6 +399,12 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 %if_enabled python
 %files -n python-module-%oname
 %python_sitelibdir/%oname/
+%endif
+
+%if_enabled netdata
+%files netdata-plugin
+%_libdir/netdata/python.d/*.*
+%config(noreplace) %_sysconfdir/netdata/python.d/*.conf
 %endif
 
 %if_enabled docs
@@ -483,9 +505,61 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 %exclude %_pkgconfigdir/libUniSet2.pc
         
 # history of current unpublished changes
-# ..
 
 %changelog
+* Wed Dec 07 2016 Pavel Vainerman <pv@altlinux.ru> 2.6-alt4
+- new version
+- getChangedTime --> getTimeChange
+- getInfo( long param ) --> getInfo( string param )
+- IDL Interface: added new function: string apiRequest( string query )
+- getInfo() deprecated..
+
+* Sun Dec 04 2016 Pavel Vainerman <pv@altlinux.ru> 2.6-alt3.3
+- IOC rest api: reformat json reply
+
+* Sat Dec 03 2016 Pavel Vainerman <pv@altlinux.ru> 2.6-alt3.2
+- getChangedTime --> getTimeChange
+- getInfo( long param ) --> getInfo( string param )
+- IDL Interface: added new function: string apiRequest( string query )
+  / ..getInfo() deprecated now.. /
+
+* Tue Nov 22 2016 Pavel Vainerman <pv@altlinux.ru> 2.6-alt3.1
+- CommonEventLoop: refactoring prepare process (part. 2)
+
+* Tue Nov 22 2016 Pavel Vainerman <pv@altlinux.ru> 2.6-alt3
+- CommonEventLoop: refactoring prepare process
+
+* Mon Nov 21 2016 Pavel Vainerman <pv@altlinux.ru> 2.6-alt2
+- UNet: fixed bug in change receive channel
+
+* Sat Nov 19 2016 Pavel Vainerman <pv@altlinux.ru> 2.6-alt1.5
+- LogServer: attempt to fixed bug in run fuction (infinity lock)
+
+* Sat Nov 19 2016 Pavel Vainerman <pv@altlinux.ru> 2.6-alt1.4
+- LogServer: attempt to fixed bug in run fuction (infinity lock)
+
+* Sat Nov 19 2016 Pavel Vainerman <pv@altlinux.ru> 2.6-alt1.3
+- (codegen): add process state info for getInfo()
+
+* Fri Nov 18 2016 Pavel Vainerman <pv@altlinux.ru> 2.6-alt1.2
+- set default activate-timeout 30 sec
+- show pid() in getInfo()
+- minor fixes
+
+* Fri Nov 18 2016 Pavel Vainerman <pv@altlinux.ru> 2.6-alt1.1
+- add try/catch for run log server
+
+* Fri Nov 11 2016 Pavel Vainerman <pv@altlinux.ru> 2.6-alt1
+- build new version
+- remove 'fastSaveValue'
+- add suppor HTTP REST API
+- (SM): add new statistics for consumers
+
+* Mon Oct 24 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt20
+- correction after verification static analyzer (part 2)
+- LogServer: fixed bug "connection refuse" (again)
+- DebugStream: refactoring, add showMicroseconds(),showMilliseconds
+
 * Sat Oct 22 2016 Alexei Takaseev <taf@altlinux.org> 2.5-alt19.1
 - Rebuild with poco 1.7.6
 
