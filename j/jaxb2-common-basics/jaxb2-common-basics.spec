@@ -1,54 +1,38 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          jaxb2-common-basics
-Version:       0.6.3
-Release:       alt2_12jpp8
+Version:       0.9.5
+Release:       alt1_2jpp8
 Summary:       JAXB2 Basics
 License:       BSD
-Url:           http://java.net/projects/jaxb2-commons/pages/Home
-# svn export https://svn.java.net/svn/jaxb2-commons~svn/basics/tags/0.6.3 jaxb2-common-basics-0.6.3
-# tar czf jaxb2-common-basics-0.6.3-src-svn.tar.gz jaxb2-common-basics-0.6.3
-Source0:       %{name}-%{version}-src-svn.tar.gz
-# from http://confluence.highsource.org/display/J2B/License
-# jaxb2-common-basics package don't include the license file
-# but jaxb2-commons developers allowed us to redistribute their
-# work only if we include this notice. So we HAVE TO include these notices.
-Source1:       %{name}-LICENSE
-# remove 
-#    org.springframework spring 2.0.7
-#   test deps
-#    org.jvnet.jaxb2.maven2 maven-jaxb2-plugin-testing
-#    com.vividsolutions jts 1.8
-# change
-#    groupId ant in org.apache.ant
-#    artifactId ant-optional in ant
-#    version 1.5.3-1 in 1.8.2
-Patch0:        %{name}-0.6.3-fixbuild.patch
-# todo BR/R org.springframework spring-beans spring-context-support 2.5.6
-#atch1:        jaxb2-common-basics-0.6.2-spring2.patch
-
-BuildRequires: sonatype-oss-parent
-
-BuildRequires: annox
-BuildRequires: ant
-BuildRequires: apache-commons-beanutils
-BuildRequires: apache-commons-io
-BuildRequires: apache-commons-lang
-BuildRequires: apache-commons-logging
-BuildRequires: glassfish-jaxb
-BuildRequires: junit
-BuildRequires: xmlunit
+Url:           https://github.com/highsource/jaxb2-basics
+Source0:       https://github.com/highsource/jaxb2-basics/archive/%{version}.tar.gz
 
 BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-jaxb2-plugin
-BuildRequires: maven-plugin-bundle
-BuildRequires: maven-source-plugin
+BuildRequires: mvn(com.google.code.javaparser:javaparser)
+BuildRequires: mvn(com.vividsolutions:jts)
+BuildRequires: mvn(commons-beanutils:commons-beanutils)
+BuildRequires: mvn(commons-io:commons-io)
+BuildRequires: mvn(javax.xml.bind:jaxb-api)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.ant:ant)
+BuildRequires: mvn(org.apache.ant:ant-launcher)
+BuildRequires: mvn(org.apache.commons:commons-lang3)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.glassfish.jaxb:jaxb-runtime)
+BuildRequires: mvn(org.glassfish.jaxb:jaxb-xjc)
+BuildRequires: mvn(org.jvnet.jaxb2.maven2:maven-jaxb22-plugin)
+BuildRequires: mvn(org.jvnet.jaxb2.maven2:maven-jaxb2-plugin-testing)
+BuildRequires: mvn(org.slf4j:jcl-over-slf4j)
+BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires: mvn(org.springframework:spring-context-support)
+BuildRequires: mvn(xmlunit:xmlunit)
 
 BuildArch:     noarch
 Source44: import.info
@@ -67,23 +51,29 @@ BuildArch: noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q
-find \( -name '*.jar' -o -name '*.class' -o -name '*.bat' \) -exec rm -f '{}' \;
+%setup -q -n jaxb2-basics-%{version}
+# Cleanup
+find -name "*.bat" -print -delete
+find -name "*.class" -print -delete
+find -name "*.jar" -print -delete
 
-cp -p %{SOURCE1} LICENSE
-sed -i 's/\r//' LICENSE
+%pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :maven-deploy-plugin plugins
+%pom_remove_plugin :maven-shade-plugin plugins
+%pom_disable_module dist
+%pom_disable_module samples
+%pom_disable_module tests
 
-%patch0 -p1
-# require jts 1.8
-rm -rf runtime/src/test/java/org/jvnet/jaxb2_commons/lang/tests/CopyStrategyTest.java
-# require maven-jaxb2-plugin-testing
-rm -rf basic/src/test/*
-rm -rf annotate/src/test/java/org/jvnet/jaxb2_commons/plugin/annotate/tests/*
-# require spring framework
-rm -rf tools/src/main/java/org/jvnet/jaxb2_commons/plugin/spring/*
+%pom_change_dep :ant-optional org.apache.ant:ant
+%pom_change_dep -r org.springframework:spring org.springframework:spring-context-support
+# rm -rf tools/src/main/java/org/jvnet/jaxb2_commons/plugin/spring
+%pom_change_dep :maven-jaxb2-plugin :maven-jaxb22-plugin
 
-sed -i "s|com.sun.tools.xjc.outline.Aspect|com.sun.tools.xjc.model.Aspect|" \
- tools/src/main/java/org/jvnet/jaxb2_commons/xjc/model/concrete/XJCCMInfoFactory.java
+%pom_xpath_set "pom:dependency[pom:artifactId = 'tools' ]/pom:groupId" com.sun
+%pom_xpath_remove "pom:dependency[pom:artifactId = 'tools' ]/pom:scope"
+%pom_xpath_remove "pom:dependency[pom:artifactId = 'tools' ]/pom:systemPath"
+
+%pom_xpath_set "pom:plugin[pom:groupId = 'org.jvnet.jaxb2.maven2' ]/pom:artifactId" maven-jaxb22-plugin
 
 %build
 
@@ -93,12 +83,16 @@ sed -i "s|com.sun.tools.xjc.outline.Aspect|com.sun.tools.xjc.model.Aspect|" \
 %mvn_install
 
 %files -f .mfiles
+%doc README.md TODO.md
 %doc LICENSE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.5-alt1_2jpp8
+- new version
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.3-alt2_12jpp8
 - new version
 
