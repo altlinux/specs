@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ perl(LWP/UserAgent.pm)
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
@@ -8,86 +8,55 @@ BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# Copyright (c) 2000-2005, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
 Summary:        High-performance, full-featured text search engine
 Name:           lucene
-Version:        5.3.0
+Version:        5.5.0
 Release:        alt1_1jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
-Source0:        http://www.apache.org/dist/lucene/java/%{version}/lucene-%{version}-src.tgz
-#svn export http://svn.apache.org/repos/asf/lucene/dev/tags/lucene_solr_5_3_0/dev-tools/
-#tar caf dev-tools-5.3.0.tar.xz dev-tools/
-Source4:        dev-tools-%{version}.tar.xz
+# solr source contains both lucene and dev-tools
+Source0:        http://www.apache.org/dist/lucene/solr/%{version}/solr-%{version}-src.tgz
 
-Patch0:         0001-disable-ivy-settings.patch
-Patch1:         0001-dependency-generation.patch
+Patch0:         0001-Disable-ivy-settings.patch
+Patch1:         0002-Dependency-generation.patch
 
-BuildRequires:  git
-BuildRequires:  ant
 BuildRequires:  ivy-local
-BuildRequires:  icu4j
-BuildRequires:  httpcomponents-client
-BuildRequires:  jetty-continuation
-BuildRequires:  jetty-http
-BuildRequires:  jetty-io
-BuildRequires:  jetty-server
-BuildRequires:  jetty-servlet
-BuildRequires:  jetty-util
-BuildRequires:  morfologik-stemming
-BuildRequires:  uimaj
-BuildRequires:  uima-addons
-BuildRequires:  spatial4j
-BuildRequires:  nekohtml
-BuildRequires:  xerces-j2
-BuildRequires:  mvn(javax.servlet:servlet-api)
-BuildRequires:  mvn(org.antlr:antlr-runtime)
 BuildRequires:  maven-local
-BuildRequires:  apache-parent
-BuildRequires:  forbidden-apis
-
-# test-framework deps
-BuildRequires:  junit
-BuildRequires:  randomizedtesting-junit4-ant
-BuildRequires:  randomizedtesting-runner
+BuildRequires:  mvn(com.carrotsearch.randomizedtesting:randomizedtesting-runner)
+BuildRequires:  mvn(com.ibm.icu:icu4j)
+BuildRequires:  mvn(commons-codec:commons-codec)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(com.spatial4j:spatial4j)
+BuildRequires:  mvn(jakarta-regexp:jakarta-regexp)
+BuildRequires:  mvn(javax.servlet:javax.servlet-api)
+BuildRequires:  mvn(javax.servlet:servlet-api)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(net.sourceforge.nekohtml:nekohtml)
+BuildRequires:  mvn(org.antlr:antlr4-runtime)
+BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(org.apache.commons:commons-compress)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
+BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
+BuildRequires:  mvn(org.apache.uima:Tagger)
+BuildRequires:  mvn(org.apache.uima:uimaj-core)
+BuildRequires:  mvn(org.apache.uima:WhitespaceTokenizer)
+BuildRequires:  mvn(org.carrot2:morfologik-fsa)
+BuildRequires:  mvn(org.carrot2:morfologik-polish)
+BuildRequires:  mvn(org.carrot2:morfologik-stemming)
+BuildRequires:  mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-continuation)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-http)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-io)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-server)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-servlet)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-util)
+BuildRequires:  mvn(org.ow2.asm:asm)
+BuildRequires:  mvn(org.ow2.asm:asm-commons)
+BuildRequires:  mvn(xerces:xercesImpl)
 
 Provides:       %{name}-core = %{epoch}:%{version}-%{release}
-# previously used by eclipse but no longer needed
-Obsoletes:      %{name}-devel < %{epoch}:%{version}-%{release}
-Obsoletes:      %{name}-demo  < %{epoch}:%{version}-%{release}
-# previously distributed separately, but merged into main package
-Provides:       %{name}-contrib = %{version}-%{release}
-Obsoletes:      %{name}-contrib < %{version}-%{release}
 
 BuildArch:      noarch
 Source44: import.info
@@ -323,23 +292,27 @@ BuildArch: noarch
 %{summary}.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n solr-%{version}
+
 %patch0 -p1
 %patch1 -p1
 
-# dependency generator expects that the directory name is just lucene
-mkdir %{name}
-find -maxdepth 1 ! -name CHANGES.txt ! -name LICENSE.txt ! -name README.txt \
-    ! -name NOTICE.txt ! -name MIGRATE.txt  ! -name ivy-settings.xml \
-    ! -path %{name} -exec mv \{} %{name}/ \;
+rm -rf solr
 
-tar xf %{SOURCE4}
-pushd dev-tools/maven
-sed -i -e "s|/Export-Package>|/Export-Package><_nouses>true</_nouses>|g" pom.xml.template
-popd
+find -name "*.jar" -delete
 
-# remove all binary libs
-find . -name "*.jar" -exec rm -f {} \;
+mv lucene/*.txt .
+
+sed -i -e "s|/Export-Package>|/Export-Package><_nouses>true</_nouses>|g" dev-tools/maven/pom.xml.template
+
+# unresolvable test dep
+%pom_remove_dep com.spatial4j:spatial4j::test lucene/spatial
+
+# suggest provides spellchecker
+%mvn_alias :%{name}-suggest :%{name}-spellchecker
+
+# compatibility with existing packages
+%mvn_alias :%{name}-analyzers-common :%{name}-analyzers
 
 %mvn_package ":%{name}-analysis-modules-aggregator" %{name}-analysis
 %mvn_package ":%{name}-analyzers-common" %{name}-analysis
@@ -348,7 +321,7 @@ find . -name "*.jar" -exec rm -f {} \;
 %build
 pushd %{name}
 # generate dependencies
-ant filter-pom-templates -Divy.mode=local -Dversion=%{version}
+ant generate-maven-artifacts -Divy.mode=local -Dversion=%{version}
 
 # fix source dir + move to expected place
 for pom in `find build/poms/%{name} -name pom.xml`; do
@@ -380,19 +353,12 @@ mv lucene/build/poms/pom.xml .
 %mvn_build -s -f
 
 %install
-# suggest provides spellchecker
-%mvn_alias :%{name}-suggest :%{name}-spellchecker
-
-# compatibility with existing packages
-%mvn_alias :%{name}-analyzers-common :%{name}-analyzers
-
 %mvn_install
 
 # Use the same directory of the main package for subpackage licence and docs
 %global _docdir_fmt %{name}
 
 %files -f .mfiles-%{name}-core
-%dir %{_javadir}/%{name}
 %doc CHANGES.txt README.txt MIGRATE.txt
 %doc LICENSE.txt NOTICE.txt
 
@@ -431,6 +397,9 @@ mv lucene/build/poms/pom.xml .
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.5.0-alt1_1jpp8
+- new version
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.3.0-alt1_1jpp8
 - java8 mass update
 
