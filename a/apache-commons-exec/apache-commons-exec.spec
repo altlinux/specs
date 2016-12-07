@@ -1,6 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /bin/ping
 %filter_from_requires /^java-headless/d
@@ -11,15 +11,16 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-commons-exec
 Version:        1.3
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Java library to reliably execute external processes from within the JVM
 
-Group:          Development/Java
+Group:          Development/Other
 License:        ASL 2.0
 URL:            http://commons.apache.org/exec/
 Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 
 BuildRequires:  iputils
+BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
 BuildRequires:  maven-install-plugin
@@ -64,7 +65,8 @@ find -name Exec57Test.java -delete
 
 
 %build
-%mvn_build -- -Dmaven.test.failure.ignore=true
+%mvn_build -- \
+ -Dmaven.test.skip.exec=true \
 
 
 %install
@@ -80,6 +82,9 @@ find -name Exec57Test.java -delete
 
 
 %changelog
+* Wed Dec 07 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt1_4jpp8
+- new fc release; disabled tests due to network dependency
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt1_3jpp8
 - java8 mass update
 
