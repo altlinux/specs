@@ -1,5 +1,5 @@
 # check deps/npm/package.json for it
-%define npmver 3.10.8
+%define npmver 3.10.9
 # note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
 %define major 6.9
@@ -27,7 +27,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.1
+Version: %major.2
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -41,7 +41,8 @@ Source: %name-%version.tar
 Source7: nodejs_native.req.files
 Patch: addon.gypi-alt-linkage-fixes.patch
 
-BuildRequires: python-devel gcc-c++ zlib-devel libcares-devel
+BuildRequires: python-devel gcc-c++ zlib-devel
+
 # can we use external gyp (not yet released)
 #BuildRequires: gyp
 BuildRequires: python-modules-json python-module-simplejson
@@ -63,7 +64,7 @@ BuildRequires: libuv-devel >= %libuv_abi
 
 BuildRequires: libicu-devel
 BuildRequires: libhttp-parser-devel
-BuildRequires: libcares-devel >= 1.10.0
+BuildRequires: libcares-devel >= 1.11.0
 
 BuildRequires: curl
 Provides: nodejs(engine) = %version
@@ -95,7 +96,7 @@ Requires:       gcc-c++ zlib-devel libcares-devel
 Requires:	%libv8_package-devel >= %{v8_abi}
 %endif
 %if_with systemssl
-Requires:	openssl-devel >= 1.0.2
+Requires:	openssl-devel >= %openssl_version
 %endif
 %if_with systemuv
 Requires: libuv-devel >= %libuv_abi
@@ -202,7 +203,7 @@ chmod 0755 %buildroot%_rpmlibdir/nodejs_native.req
 rm -rf %buildroot/usr/lib/dtrace/
 rm -rf %buildroot/usr/share/doc/node/gdbinit
 
-# gnuplot and convert reqs
+# skip gnuplot and convert reqs
 rm -rf %buildroot%_libexecdir/node_modules/npm/node_modules/request/node_modules/node-uuid/benchmark/
 
 %files
@@ -243,6 +244,10 @@ rm -rf %buildroot%_libexecdir/node_modules/npm/node_modules/request/node_modules
 %exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
 
 %changelog
+* Wed Dec 07 2016 Vitaly Lipatov <lav@altlinux.ru> 6.9.2-alt1
+- new version 6.9.2 (with rpmrb script)
+- 2016-12-06 Node.js v6.9.2 'Boron' (LTS) Release
+
 * Wed Nov 30 2016 Vitaly Lipatov <lav@altlinux.ru> 6.9.1-alt1
 - new version 6.9.1 (with rpmrb script)
 - 2016-10-19 Node.js v6.9.1 'Boron' (LTS) Release
