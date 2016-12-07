@@ -97,14 +97,15 @@
 
 # Non-server/HV driver defaults which are always enabled
 %def_with sasl
+%def_with libssh
 
 %def_without wireshark
 
 %define with_loader_nvram "%_datadir/OVMF/OVMF_CODE.fd:%_datadir/OVMF/OVMF_VARS.fd:%_datadir/AAVMF/AAVMF_CODE.fd:%_datadir/AAVMF/AAVMF_VARS.fd"
 
 Name: libvirt
-Version: 2.4.0
-Release: alt2
+Version: 2.5.0
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -135,6 +136,7 @@ Requires: %name-libs = %EVR
 %{?_with_network:BuildRequires: dnsmasq iptables iptables-ipv6 radvd}
 %{?_with_nwfilter:BuildRequires: ebtables}
 %{?_with_sasl:BuildRequires: libsasl2-devel}
+%{?_with_libssh:BuildRequires: pkgconfig(libssh) >= 0.7}
 %{?_with_dbus:BuildRequires: libdbus-devel >= 1.0.0}
 %{?_with_polkit:BuildRequires: polkit}
 %{?_with_storage_fs:BuildRequires: util-linux}
@@ -790,7 +792,6 @@ fi
 %dir %_localstatedir/lib/libvirt
 %_datadir/libvirt/schemas/*.rng
 %_datadir/libvirt/cpu_map.xml
-%_datadir/libvirt/libvirtLogo.png
 
 %if_with sasl
 %config(noreplace) %_sysconfdir/sasl2/libvirt.conf
@@ -806,6 +807,7 @@ fi
 %config(noreplace) %_sysconfdir/sysconfig/libvirtd
 %config /lib/tmpfiles.d/libvirtd.conf
 %_unitdir/libvirtd.service
+%_unitdir/virt-guest-shutdown.target
 %_initdir/libvirtd
 %config(noreplace) %_sysconfdir/libvirt/libvirtd.conf
 /lib/sysctl.d/*
@@ -1040,6 +1042,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Dec 07 2016 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt1
+- 2.5.0
+
 * Tue Nov 22 2016 Alexey Shabalin <shaba@altlinux.ru> 2.4.0-alt2
 - libvirt-daemon must will update after all subpackes for restart successfuly
 
