@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 16.08.3
-Release: alt2%ubt
+Release: alt3%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -13,7 +13,6 @@ License: GPLv2+ / LGPLv2+
 Requires: kde5-akonadi
 
 Source: %rname-%version.tar
-Patch1: alt-krunner-plugin-disable.patch
 
 # Automatically added by buildreq on Thu Aug 13 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base ruby ruby-stdlibs
@@ -79,7 +78,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K5build
@@ -117,6 +115,9 @@ KF5 library
 %_K5lib/libKF5AkonadiSearchDebug.so.*
 
 %changelog
+* Wed Dec 07 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt3%ubt
+- enable krunner contacts search plugin by default back
+
 * Mon Dec 05 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt2%ubt
 - disable krunner contacts search plugin by default (ALT#32846)
 
