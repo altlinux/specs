@@ -10,7 +10,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-l2tp
-Version: 1.2.2
+Version: 1.2.4
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -74,7 +74,7 @@ NetworkManager panel applet.
 %if_without libnm_glib
 	--without-libnm-glib \
 %endif
-	--enable-more-warnings=error
+	--enable-more-warnings=yes
 %make_build
 
 %install
@@ -98,12 +98,17 @@ NetworkManager panel applet.
 %_libexecdir/NetworkManager/nm-l2tp-auth-dialog
 %_datadir/gnome-vpn-properties/l2tp
 %_libdir/NetworkManager/libnm-vpn-plugin-l2tp.so
+%_libdir/NetworkManager/libnm-vpn-plugin-l2tp-editor.so
 %_datadir/appdata/*.xml
 
 %exclude %_libdir/NetworkManager/*.la
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Dec 05 2016 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt1
+- Don't treat warrnings as errors.
+- Updated to 1.2.4.
+
 * Tue May 24 2016 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt1
 - Updated to 1.2.2.
 
