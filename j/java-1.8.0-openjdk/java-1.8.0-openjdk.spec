@@ -260,7 +260,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt5_1.b15jpp8
+Release: alt6_1.b15jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -575,7 +575,7 @@ The OpenJDK source bundle.
 %package javadoc
 Summary: OpenJDK API Documentation
 Group:   Development/Java
-Requires: maven-local
+#Requires: maven-local
 BuildArch: noarch
 
 # Post requires alternatives to install javadoc alternative.
@@ -1419,6 +1419,9 @@ fi
 %endif
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.71-alt6_1.b15jpp8
+- dropped dependency on maven-local in javadoc
+
 * Thu Oct 20 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.71-alt5_1.b15jpp8
 - trimmed desktop names (closes: #32463)
 
