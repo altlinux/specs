@@ -1,38 +1,36 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
 Name:          jackson-dataformat-xml
-Version:       2.5.0
-Release:       alt1_2jpp8
+Version:       2.6.3
+Release:       alt1_3jpp8
 Summary:       XML data binding extension for Jackson
 License:       ASL 2.0
 URL:           http://wiki.fasterxml.com/JacksonExtensionXmlDataBinding
 Source0:       https://github.com/FasterXML/jackson-dataformat-xml/archive/%{name}-%{version}.tar.gz
+# fix for CVE-2016-3720 (jackson-dataformat-xml issues#190)
+# https://github.com/FasterXML/jackson-dataformat-xml/commit/f0f19a4c924d9db9a1e2830434061c8640092cc0
+Patch0:        jackson-dataformat-xml-2.6.3-CVE-2016-3720.patch
 
-%if %{?fedora} > 20
+BuildRequires: maven-local
 BuildRequires: mvn(com.fasterxml.jackson:jackson-parent:pom:)
-%else
-BuildRequires: mvn(com.fasterxml.jackson:jackson-parent)
-%endif
 BuildRequires: mvn(com.fasterxml.jackson.core:jackson-annotations)
 BuildRequires: mvn(com.fasterxml.jackson.core:jackson-core)
 BuildRequires: mvn(com.fasterxml.jackson.core:jackson-databind)
 BuildRequires: mvn(com.fasterxml.jackson.module:jackson-module-jaxb-annotations)
+BuildRequires: mvn(com.fasterxml.woodstox:woodstox-core)
+BuildRequires: mvn(com.google.code.maven-replacer-plugin:replacer)
 BuildRequires: mvn(javax.xml.stream:stax-api)
-BuildRequires: mvn(org.codehaus.woodstox:stax2-api)
-
-# test deps
 BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.codehaus.woodstox:woodstox-core-asl)
-
-BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-plugin-build-helper
-BuildRequires: maven-site-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: replacer
+BuildRequires: mvn(org.codehaus.woodstox:stax2-api)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-site-plugin)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
 
 BuildArch:     noarch
 Source44: import.info
@@ -55,6 +53,7 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
+%patch0 -p1
 
 cp -p src/main/resources/META-INF/LICENSE .
 cp -p src/main/resources/META-INF/NOTICE .
@@ -78,6 +77,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_3jpp8
+- new version
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt1_2jpp8
 - new version
 

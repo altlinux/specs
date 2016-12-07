@@ -1,32 +1,27 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
 Name:          jackson-dataformat-cbor
-Version:       2.5.0
+Version:       2.6.3
 Release:       alt1_2jpp8
 Summary:       Jackson data format module for Concise Binary Object Representation (CBOR)
 License:       ASL 2.0
 URL:           http://wiki.fasterxml.com/
 Source0:       https://github.com/FasterXML/jackson-dataformat-cbor/archive/%{name}-%{version}.tar.gz
 
-%if %{?fedora} > 20
+BuildRequires: maven-local
 BuildRequires: mvn(com.fasterxml.jackson:jackson-parent:pom:)
-%else
-BuildRequires: mvn(com.fasterxml.jackson:jackson-parent)
-%endif
 BuildRequires: mvn(com.fasterxml.jackson.core:jackson-core)
 BuildRequires: mvn(com.fasterxml.jackson.core:jackson-databind)
-# test deps
+BuildRequires: mvn(com.google.code.maven-replacer-plugin:replacer)
 BuildRequires: mvn(junit:junit)
-
-BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-plugin-build-helper
-BuildRequires: maven-site-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: replacer
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-site-plugin)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
 
 BuildArch:     noarch
 Source44: import.info
@@ -66,6 +61,9 @@ sed -i 's/\r//' LICENSE
 %doc LICENSE
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_2jpp8
+- new version
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt1_2jpp8
 - new version
 
