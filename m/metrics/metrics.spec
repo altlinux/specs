@@ -1,47 +1,62 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
 Name:          metrics
-Version:       3.0.1
-Release:       alt1_6jpp8
+Version:       3.1.2
+Release:       alt1_3jpp8
 Summary:       Java library which gives you what your code does in production
 License:       ASL 2.0
 URL:           http://metrics.dropwizard.io
 Source0:       https://github.com/dropwizard/metrics/archive/v%{version}.tar.gz
+# Add rabbitmq-java-client 3.5.x support
+Patch0:        metrics-3.1.2-amqp-client35.patch
+# Use ehcache-core instead of net.sf.ehcache:ehcache:2.8.3
+Patch1:        metrics-3.1.2-ehcache-core.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(ch.qos.logback:logback-classic)
 BuildRequires: mvn(com.fasterxml.jackson.core:jackson-databind)
-BuildRequires: mvn(com.sun.jersey:jersey-server:1.19)
+BuildRequires: mvn(com.google.guava:guava)
+BuildRequires: mvn(com.rabbitmq:amqp-client)
+BuildRequires: mvn(com.sun.jersey:jersey-server:1)
 BuildRequires: mvn(info.ganglia.gmetric4j:gmetric4j)
 BuildRequires: mvn(javax.servlet:javax.servlet-api)
+BuildRequires: mvn(javax.ws.rs:javax.ws.rs-api)
 BuildRequires: mvn(log4j:log4j:1.2.17)
 BuildRequires: mvn(net.sf.ehcache:ehcache-core)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.httpcomponents:httpasyncclient)
 BuildRequires: mvn(org.apache.httpcomponents:httpclient)
+BuildRequires: mvn(org.apache.logging.log4j:log4j-api)
+BuildRequires: mvn(org.apache.logging.log4j:log4j-core)
+BuildRequires: mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires: mvn(org.glassfish.jersey.core:jersey-server)
 BuildRequires: mvn(org.jdbi:jdbi)
+BuildRequires: mvn(org.openjdk.jmh:jmh-core)
+BuildRequires: mvn(org.openjdk.jmh:jmh-generator-annprocess)
 BuildRequires: mvn(org.slf4j:slf4j-api)
 
 %if 0
-# metrics-jetty9 deps
-BuildRequires: mvn(org.eclipse.jetty:jetty-client)
-BuildRequires: mvn(org.eclipse.jetty:jetty-server)
-
-# metrics-benchmarks deps
-BuildRequires: mvn(com.google.caliper:caliper:1.0-beta-1)
-BuildRequires: mvn(com.google.guava:guava:14.0.1)
-
+# metrics-jetty8
+BuildRequires: mvn(org.eclipse.jetty:jetty-server:8.1.11.v20130520)
+# metrics-jetty9
+BuildRequires: mvn(org.eclipse.jetty:jetty-client:9.2.2.v20140723)
+BuildRequires: mvn(org.eclipse.jetty:jetty-server:9.2.2.v20140723)
+# metrics-jetty9-legacy
+BuildRequires: mvn(org.eclipse.jetty:jetty-server:9.0.4.v20130625)
+BuildRequires: mvn(org.eclipse.jetty:jetty-client:9.0.4.v20130625)
 # Test deps
-BuildRequires: mvn(com.sun.jersey.jersey-test-framework:jersey-test-framework-inmemory:1.19)
+BuildRequires: mvn(com.sun.jersey.jersey-test-framework:jersey-test-framework-inmemory)
+BuildRequires: mvn(org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-inmemory)
 BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.easytesting:fest-assert-core:2.0M10)
+BuildRequires: mvn(org.assertj:assertj-core:jar:1.6.1)
 BuildRequires: mvn(org.eclipse.jetty:jetty-servlet)
 BuildRequires: mvn(org.mockito:mockito-all)
+BuildRequires: mvn(org.python:jython-standalone)
 BuildRequires: mvn(org.slf4j:slf4j-simple)
 %endif
 
@@ -76,7 +91,6 @@ Summary:       Annotations for Metrics
 A dependency-less package of just the
 annotations used by other Metrics modules.
 
-%if 0
 %package benchmarks
 Group: Development/Java
 Summary:       Benchmarks for Metrics
@@ -84,7 +98,6 @@ Summary:       Benchmarks for Metrics
 %description benchmarks
 A development module for performance benchmarks of
 Metrics classes.
-%endif
 
 %package ehcache
 Group: Development/Java
@@ -118,6 +131,15 @@ An addition to Metrics which provides the ability to
 run application-specific health checks, allowing you
 to check your application's heath in production.
 
+%package httpasyncclient
+Group: Development/Java
+Summary:       Metrics Integration for Apache HttpAsyncClient
+
+%description httpasyncclient
+An Apache HttpAsyncClient wrapper providing Metrics
+instrumentation of connection pools, request
+durations and rates, and other useful information.
+
 %package httpclient
 Group: Development/Java
 Summary:       Metrics Integration for Apache HttpClient
@@ -137,19 +159,27 @@ query durations and rates.
 
 %package jersey
 Group: Development/Java
-Summary:       Metrics Integration for Jersey
+Summary:       Metrics Integration for Jersey 1.x
 
 %description jersey
-A set of class providing Metrics integration for Jersey,
+A set of class providing Metrics integration for Jersey 1.x,
+the reference JAX-RS implementation.
+
+%package jersey2
+Group: Development/Java
+Summary:       Metrics Integration for Jersey 2.x
+
+%description jersey2
+A set of class providing Metrics integration for Jersey 2.x,
 the reference JAX-RS implementation.
 
 %if 0
 %package jetty
 Group: Development/Java
-Summary:       Metrics Integration for Jetty 9
+Summary:       Metrics Integration for Jetty 8/9
 
 %description jetty
-A set of extensions for Jetty 9 which provide instrumentation of
+A set of extensions for Jetty 8/9 which provide instrumentation of
 thread pools, connector metrics, and application latency and
 utilization.
 %endif
@@ -171,12 +201,17 @@ A set of classes which allow you to monitor
 critical aspects of your Java Virtual Machine
 using Metrics.
 
+%package log4j2
+Group: Development/Java
+Summary:       Metrics Integration for Log4j 2.x
+
+%description log4j2
+An instrumented appender for Log4j 2.x.
+
 %package log4j
 Group: Development/Java
 Summary:       Metrics Integration for Log4j
-%if %{?fedora} > 20
 Requires:      log4j12
-%endif
 
 %description log4j
 An instrumented appender for Log4j.
@@ -187,6 +222,13 @@ Summary:       Metrics Integration for Logback
 
 %description logback
 An instrumented appender for Logback.
+
+%package parent
+Group: Development/Java
+Summary:       Metrics Parent POM
+
+%description parent
+This package provides Metrics Parent POM.
 
 %package servlet
 Group: Development/Java
@@ -221,35 +263,44 @@ This package contains %{name}'s user manual.
 
 %prep
 %setup -q -n %{name}-%{version}
-
+# Cleanup
 find . -name "*.class" -delete
 find . -name "*.jar" -type f -delete
 
+%patch0 -p1
+%patch1 -p1
+
 # Unavailable build deps:
+# see rhbz#861502#c3 rhbz#861502#c5 disable jetty9 sub-module (use jetty 9.0.4.v20130625)
 %pom_disable_module metrics-jetty8
-%pom_disable_module metrics-benchmarks
-
-# TODO see rhbz#861502#c3 rhbz#861502#c5 disable jetty9 sub-module (use jetty 9.0.4.v20130625) org.eclipse.jetty.server.HttpChannelState.isDispatched method was removed
 %pom_disable_module metrics-jetty9
-
-# org.easytesting:fest-assert-core:2.0M10 *
-%pom_remove_dep org.easytesting:fest-assert-core
+%pom_disable_module metrics-jetty9-legacy
 
 %pom_remove_plugin :findbugs-maven-plugin
 %pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin -r :maven-shade-plugin
 
 # Disable javadoc jar
 %pom_xpath_remove "pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:executions"
 # Disable source jar
 %pom_remove_plugin :maven-source-plugin
 
-%pom_xpath_set "pom:properties/pom:jersey.version" 1.19 %{name}-jersey
+%pom_xpath_set "pom:properties/pom:jersey.version" 1 %{name}-jersey
+%pom_add_dep javax.ws.rs:javax.ws.rs-api metrics-jersey2
+sed -i "s|jersey.repackaged.||" \
+ metrics-jersey2/src/main/java/com/codahale/metrics/jersey2/InstrumentedResourceMethodApplicationListener.java
+%pom_add_dep com.google.guava:guava metrics-jersey2
 
-%mvn_package ":%{name}-core" %{name}
-%mvn_package ":%{name}-parent" %{name}
+# org.assertj:assertj-core:1.6.1 *
+%pom_remove_dep -r org.assertj:assertj-core
+
 %if 0
+%mvn_package ":%{name}-jetty8" %{name}-jetty
 %mvn_package ":%{name}-jetty9" %{name}-jetty
+%mvn_package ":%{name}-jetty9-legacy" %{name}-jetty
 %endif
+
+%mvn_alias io.dropwizard.metrics: com.codahale.metrics:
 
 %build
 
@@ -273,18 +324,16 @@ install -pm 644 docs/target/man/%{name}.1 %{buildroot}%{_mandir}/man1/
 
 rm -rf docs/target/singlehtml/.buildinfo
 
-%files  -f .mfiles-%{name}
-%dir %{_javadir}/%{name}
+%files  -f .mfiles-%{name}-core
 %doc README.md
 %doc LICENSE NOTICE
 
 %files annotation -f .mfiles-%{name}-annotation
 %doc LICENSE NOTICE
 
-%if 0
 %files benchmarks -f .mfiles-%{name}-benchmarks
+%doc %{name}-benchmarks/README.md
 %doc LICENSE NOTICE
-%endif
 
 %files ehcache -f .mfiles-%{name}-ehcache
 %doc LICENSE NOTICE
@@ -298,6 +347,9 @@ rm -rf docs/target/singlehtml/.buildinfo
 %files healthchecks -f .mfiles-%{name}-healthchecks
 %doc LICENSE NOTICE
 
+%files httpasyncclient -f .mfiles-%{name}-httpasyncclient
+%doc LICENSE NOTICE
+
 %files httpclient -f .mfiles-%{name}-httpclient
 %doc LICENSE NOTICE
 
@@ -305,6 +357,9 @@ rm -rf docs/target/singlehtml/.buildinfo
 %doc LICENSE NOTICE
 
 %files jersey -f .mfiles-%{name}-jersey
+%doc LICENSE NOTICE
+
+%files jersey2 -f .mfiles-%{name}-jersey2
 %doc LICENSE NOTICE
 
 %if 0
@@ -318,10 +373,16 @@ rm -rf docs/target/singlehtml/.buildinfo
 %files jvm -f .mfiles-%{name}-jvm
 %doc LICENSE NOTICE
 
+%files log4j2 -f .mfiles-%{name}-log4j2
+%doc LICENSE NOTICE
+
 %files log4j -f .mfiles-%{name}-log4j
 %doc LICENSE NOTICE
 
 %files logback -f .mfiles-%{name}-logback
+%doc LICENSE NOTICE
+
+%files parent -f .mfiles-%{name}-parent
 %doc LICENSE NOTICE
 
 %files servlet -f .mfiles-%{name}-servlet
@@ -342,6 +403,9 @@ rm -rf docs/target/singlehtml/.buildinfo
 %endif
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 3.1.2-alt1_3jpp8
+- new version
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_6jpp8
 - new version
 
