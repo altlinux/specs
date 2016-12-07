@@ -1,6 +1,6 @@
 
 Name: ubt-devel
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Group: Development/Other
@@ -45,6 +45,9 @@ install -m 0755 %SOURCE3 %buildroot/%_bindir/
 %_bindir/ubt-*
 
 %changelog
+* Wed Dec 07 2016 Sergey V Turchin <zerg@altlinux.org> 0.3-alt1
+- fix to current packager in changelog entry
+
 * Fri Dec 02 2016 Sergey V Turchin <zerg@altlinux.org> 0.2-alt1
 - extend macros
 
