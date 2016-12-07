@@ -1,6 +1,6 @@
 Name: sphinx
 Version: 2.2.11
-Release: alt1
+Release: alt2%ubt
 Summary: Free open-source SQL full-text search engine
 
 Group: Text tools
@@ -10,6 +10,7 @@ Url: http://sphinxsearch.com
 Source0: http://sphinxsearch.com/downloads/%name-%version.tar.gz
 Source1: %name.init
 Source2: %name.unit
+BuildRequires(pre): rpm-build-ubt
 
 Packager: Dmitriy Kulik <lnkvisitor@altlinux.org>
 
@@ -170,6 +171,9 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 %_libdir/libsphinxclient.a
 
 %changelog
+* Wed Dec 07 2016 Anton Farygin <rider@altlinux.ru> 2.2.11-alt2%ubt
+- added %%ubt macros for easy backporting process to stable branches
+
 * Fri Oct 21 2016 Anton Farygin <rider@altlinux.ru> 2.2.11-alt1
 - new version
 
