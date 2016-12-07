@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define ver_major 3.20
 %def_disable static
 %def_disable gtk_doc
@@ -5,18 +7,22 @@
 %def_disable valgrind
 %def_enable pam
 %def_enable selinux
+%def_disable ssh
 
 Name: gnome-keyring
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: %name is a password keeper for GNOME
 License: LGPL
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 Patch: gnome-keyring-3.14.0-alt-lfs.patch
 
 %define glib_ver 2.38.0
@@ -28,6 +34,7 @@ Patch: gnome-keyring-3.14.0-alt-lfs.patch
 
 Requires(post): libcap-utils
 Requires: libp11-kit >= %p11kit_ver
+%{?_disable_ssh:Requires: openssh-clients}
 
 # From configure.ac
 BuildPreReq: gnome-common libgio-devel >= %glib_ver
@@ -74,6 +81,7 @@ and start the keyring daemon.
 	%{subst_enable debug} \
 	%{subst_enable valgrind} \
 	%{subst_enable selinux} \
+	%{?_disable_ssh:--disable-ssh-agent} \
 	--enable-doc \
 	--with-pam-dir=/%_lib/security
 
@@ -117,6 +125,10 @@ setcap cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 
 
 %changelog
+* Wed Dec 07 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt2
+- updated to 3.20.0-16-gbf8aa97
+- disabled ssh-agent (ALT #32860)
+
 * Fri Mar 25 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 
