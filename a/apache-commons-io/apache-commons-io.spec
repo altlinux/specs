@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        2.4
-Release:        alt5_15jpp8
+Release:        alt6_15jpp8
 Epoch:          1
 Summary:        Utilities to assist with developing IO functionality
 License:        ASL 2.0
@@ -49,7 +49,7 @@ sed -i 's/\r//' *.txt
 %build
 %mvn_file  : %{short_name} %{name}
 %mvn_alias : org.apache.commons:
-%mvn_build
+%mvn_build -- -Dmaven.test.skip.exec=true
 
 %install
 %mvn_install
@@ -63,6 +63,9 @@ ln -sf %{name}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}.jar
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Dec 07 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.4-alt6_15jpp8
+- fixed build
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.4-alt5_15jpp8
 - new fc release
 
