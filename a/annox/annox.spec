@@ -1,29 +1,38 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%global githash b8565e1faa39c4eb8841902cf65a1615f5a933d7
 Name:          annox
-Version:       0.5.0
-Release:       alt2_11jpp8
+Version:       1.0.1
+Release:       alt1_2jpp8
 Summary:       Java annotations in XML resources
 License:       BSD
 Url:           http://java.net/projects/annox
-# svn export https://svn.java.net/svn/annox~svn/tags/0.5.0 annox-0.5.0
-# tar czf annox-0.5.0-src-svn.tar.gz annox-0.5.0
-Source0:       annox-0.5.0-src-svn.tar.gz
+# https://svn.java.net/svn/annox~svn/tags/
+Source0:       https://github.com/highsource/annox/archive/%{githash}/%{name}-%{githash}.tar.gz
 # from http://confluence.highsource.org/display/ANX/License
 # annox package don't include the license file
 # but annox developers allowed us to redistribute their
 # work only if we include this notice. So we HAVE TO include these notices.
+# https://github.com/highsource/annox/issues/3
 Source1:       annox-LICENSE
 
-BuildRequires: ant
-BuildRequires: apache-commons-lang
-BuildRequires: glassfish-jaxb
-BuildRequires: junit
 BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
-BuildRequires: sonatype-oss-parent
+BuildRequires: mvn(com.google.code.javaparser:javaparser)
+BuildRequires: mvn(com.sun.xml.bind:jaxb-impl)
+BuildRequires: mvn(commons-io:commons-io)
+BuildRequires: mvn(javax.transaction:jta)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.commons:commons-lang3)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires: mvn(org.hibernate:hibernate-search-engine)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildArch:     noarch
 Source44: import.info
@@ -45,21 +54,26 @@ BuildArch: noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q
-find \( -name '*.jar' -o -name '*.class' -o -name '*.bat' \) -exec rm -f '{}' \;
+%setup -q -n %{name}-%{githash}
+# Cleanup
+find -name "*.bat" -print -delete
+find -name "*.class" -print -delete
+find -name "*.jar" -print -delete
 
 %pom_disable_module samples
 
-%pom_xpath_remove "pom:project/pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId='maven-antrun-plugin']/pom:dependencies/pom:dependency[pom:artifactId='ant-optional']"
-%pom_xpath_inject "pom:project/pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId='maven-antrun-plugin']/pom:dependencies" "
-<dependency>
-  <groupId>org.apache.ant</groupId>
-  <artifactId>ant</artifactId>
-  <version>1.8.2</version>
-</dependency>"
+%pom_remove_plugin :maven-deploy-plugin
 
-%pom_remove_dep org.hibernate:hibernate-search
-%pom_remove_dep org.hibernate:hibernate-search core
+%pom_change_dep :ant-optional org.apache.ant:ant
+
+%pom_xpath_set "pom:dependency[pom:artifactId = 'tools' ]/pom:groupId" com.sun
+%pom_xpath_remove "pom:dependency[pom:artifactId = 'tools' ]/pom:scope"
+%pom_xpath_remove "pom:dependency[pom:artifactId = 'tools' ]/pom:systemPath"
+
+%pom_change_dep -r :hibernate-search :hibernate-search-engine
+sed -i "s|org.hibernate.search.annotations.Field(index=TOKENIZED, store=NO|org.hibernate.search.annotations.Field(store=NO|" \
+ core/src/test/java/org/jvnet/annox/parser/tests/XAnnotationParserTest.java
+sed -i '/TOKENIZED/d' core/src/test/resources/org/jvnet/annox/parser/tests/field.xml
 
 cp -p %{SOURCE1} LICENSE
 sed -i 's/\r//' LICENSE
@@ -69,18 +83,22 @@ sed -i 's/\r//' LICENSE
 %build
 
 # unavailable deps for run test: org.hibernate hibernate-search 3.0.0.GA
-%mvn_build -f
-  
+%mvn_build
+
 %install
 %mvn_install
 
 %files -f .mfiles
+%doc README.md
 %doc LICENSE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_2jpp8
+- new version
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_11jpp8
 - new version
 
