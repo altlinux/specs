@@ -1,4 +1,8 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
+BuildRequires: protobuf-c-compiler
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             protostream
 Version:          1.0.0
-Release:          alt1_0.8.Alpha7jpp8
+Release:          alt1_0.10.Alpha7jpp8
 Summary:          Infinispan ProtoStream
 License:          ASL 2.0 and BSD
 Url:              http://infinispan.org/
@@ -29,7 +33,7 @@ BuildRequires:    mvn(org.codehaus.mojo:exec-maven-plugin)
 BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
 BuildRequires:    mvn(org.jboss.logging:jboss-logging)
 BuildRequires:    mvn(org.jboss.logging:jboss-logging-processor)
-BuildRequires:    protobuf-c-compiler
+BuildRequires:    protobuf-compiler
 Source44: import.info
 Patch33: protostream-1.0.0.Alpha7-alt-protoc-c.patch
 BuildArch: noarch
@@ -70,6 +74,9 @@ cp %{SOURCE1} .
 %doc LICENSE.txt
 
 %changelog
+* Wed Dec 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.10.Alpha7jpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.8.Alpha7jpp8
 - new version
 
