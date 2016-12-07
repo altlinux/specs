@@ -1,6 +1,6 @@
 Name: curl
 Version: 7.51.0
-Release: alt1
+Release: alt2%ubt
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -10,12 +10,13 @@ Url: http://curl.haxx.se
 
 Source: %url/download/%name-%version.tar
 Source1: %name.watch
-Patch0: curl-%version-%release.patch
+Patch0: curl-%version-alt.patch
 
 Requires: lib%name = %version-%release
 
 # Automatically added by buildreq on Tue Mar 15 2011
 BuildRequires: glibc-devel-static groff-base libidn-devel libssh2-devel libssl-devel zlib-devel python-modules libnghttp2-devel
+BuildRequires(pre):rpm-build-ubt
 
 %package -n lib%name
 Summary: The shared library for file transfer
@@ -109,7 +110,7 @@ applications that utilize lib%name.
 	--disable-rpat \
 	--disable-ldap \
 	--enable-threaded-resolver \
-	--without-gssapi \
+	--with-gssapi \
 	--with-ca-bundle=%_datadir/ca-certificates/ca-bundle.crt
 
 %make_build
@@ -143,6 +144,9 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Dec 07 2016 Anton Farygin <rider@altlinux.ru> 7.51.0-alt2%ubt
+- enabled gssapi (closes: #32862)
+
 * Wed Nov 02 2016 Anton Farygin <rider@altlinux.ru> 7.51.0-alt1
 - new version with security fixes:
   CVE-2016-8615: cookie injection for other servers 
