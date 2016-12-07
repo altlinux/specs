@@ -2,8 +2,8 @@
 %define _cups_serverbin %_libexecdir/cups
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
-Version: 1.11.6
-Release: alt1
+Version: 1.12.0
+Release: alt1%ubt
 
 # For a breakdown of the licensing, see COPYING file
 # GPLv2:   filters: commandto*, imagetoraster, pdftops, rasterto*,
@@ -93,7 +93,7 @@ Summary: PHP5 module for the Common Unix Printing System
 License: GPL
 Group: System/Servers
 Requires: php5 = %php5_version
-BuildRequires(pre): rpm-build-php5
+BuildRequires(pre): rpm-build-php5 rpm-build-ubt
 
 %description -n php5-cups
 PHP5 module for the Common Unix Printing System
@@ -160,8 +160,7 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %config(noreplace) %_sysconfdir/cups/cups-browsed.conf
 %config(noreplace) %_initdir/cups-browsed
 %attr(0755,root,root) %_cups_serverbin/filter/*
-%_cups_serverbin/filter/gstopxl
-%_cups_serverbin/filter/gstoraster
+%attr(0755,root,root) %_cups_serverbin/driver/*
 %attr(0755,root,root) %_cups_serverbin/backend/parallel
 %attr(0755,root,root) %_cups_serverbin/backend/beh
 %attr(0755,root,root) %_cups_serverbin/backend/implicitclass
@@ -184,6 +183,7 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_datadir/ppd/cupsfilters
 %_bindir/ttfread
 %_bindir/foomatic-rip
+%_bindir/driverless
 %_sbindir/cups-browsed
 %_datadir/man/man*/*
 %_unitdir/*
@@ -210,6 +210,9 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Wed Dec 07 2016 Anton Farygin <rider@altlinux.ru> 1.12.0-alt1%ubt
+- new version 1.12.0
+
 * Wed Nov 16 2016 Anton Farygin <rider@altlinux.ru> 1.11.6-alt1
 - new version 1.11.6
 
