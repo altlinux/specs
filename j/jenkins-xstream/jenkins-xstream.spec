@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jenkins-xstream
 Version:        1.4.7
-Release:        alt1_8.jenkins1jpp8
+Release:        alt2_8.jenkins1jpp8
 Summary:        Jenkins XStream library
 
 License:        BSD
@@ -82,7 +82,8 @@ API documentation for %{name}.
 %pom_disable_module xstream-benchmark
 
 # fix gIds for parent POM, Jenkins upstream uses "org.jvnet.hudson"
-%pom_xpath_set "pom:project/pom:groupId" "org.jvnet.hudson"
+#pom_xpath_set "pom:project/pom:groupId" "org.jvnet.hudson"
+sed -i -e s,org.jvnet.hudson,com.thoughtworks.xstream,g xstream/pom.xml
 
 # unavailable deps
 %pom_xpath_remove "pom:extension[pom:artifactId[text()='wagon-webdav']]"
@@ -113,6 +114,9 @@ API documentation for %{name}.
 %doc LICENSE.txt
 
 %changelog
+* Wed Dec 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.7-alt2_8.jenkins1jpp8
+- fixed build
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.7-alt1_8.jenkins1jpp8
 - new fc release
 
