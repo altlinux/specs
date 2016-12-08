@@ -17,7 +17,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0
-Release: alt2
+Release: alt3
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 Source0: rpm-%version.tar
@@ -355,6 +355,8 @@ rm -f %buildroot/%rpmhome/{perldeps.pl,perl.*}
 # Axe unused cruft
 rm -f %buildroot/%rpmhome/{tcl.req,osgideps.pl}
 
+touch %buildroot%_sysconfdir/%name/macros
+
 touch %buildroot%_localstatedir/%name/delay-posttrans-filetriggers
 touch %buildroot%_localstatedir/%name/files-awaiting-filetriggers
 
@@ -388,6 +390,7 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 
 %attr(0755, root, root) %dir /var/lib/rpm
 %attr(0644, root, root) %verify(not md5 size mtime) %ghost %config(missingok,noreplace) /var/lib/rpm/*
+%config(noreplace,missingok) %_sysconfdir/%name/macros
 
 /bin/rpm
 %_bindir/rpm2cpio
@@ -524,6 +527,9 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %config(noreplace) %_sysconfdir/logrotate.d/rpm
 
 %changelog
+* Thu Dec 08 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0-alt3
+- Packaged /etc/rpm/macros file.
+
 * Thu Dec 08 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0-alt2
 - Updated to 4.13:
   + --checksig: do not use temporary files (ALT#5348);
