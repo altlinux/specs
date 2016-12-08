@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.97
+%define ver_major 0.98
 %define api_ver 1.0
 %define gst_api_ver 1.0
 
@@ -9,7 +9,7 @@
 %define gi_ver 1.32
 
 Name: pitivi
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Summary: PiTiVi allows users to easily edit audio/video projects
@@ -23,6 +23,10 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
+Conflicts: gst-transcoder
+Obsoletes: gst-transcoder
+Provides: gst-transcoder
+
 # use python3
 AutoReqProv: nopython
 %define __python %nil
@@ -30,6 +34,7 @@ AutoReqProv: nopython
 
 Requires: python3-module-gst%gst_api_ver >= %gst_ver
 Requires: gstreamer-editing-services
+Requires: gst-validate
 Requires: gst-libav >= %gst_ver
 Requires: gst-plugins-base%gst_api_ver >= %gst_ver
 Requires: gst-plugins-good%gst_api_ver >= %gst_ver
@@ -37,13 +42,14 @@ Requires: gst-plugins-bad%gst_api_ver >= %gst_ver
 Requires: gst-plugins-ugly%gst_api_ver >= %gst_ver
 Requires: python3-module-canberra
 
-BuildRequires: git meson python3-module-nose
+BuildRequires: git meson python3-module-nose2
 BuildRequires: intltool yelp-tools rpm-build-gir libappstream-glib-devel libcairo-devel
 BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel
 BuildRequires: python3-module-pycairo-devel
 BuildRequires: gst-plugins%gst_api_ver-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver gobject-introspection-devel >= %gi_ver
-BuildRequires: libgstreamer%gst_api_ver-gir-devel gst-plugins%gst_api_ver-gir-devel libgtk+3-gir-devel
+BuildRequires: libgstreamer%gst_api_ver-gir-devel gst-plugins%gst_api_ver-gir-devel
+BuildRequires: gst-validate libgtk+3-gir-devel
 
 %description
 Pitivi is a video editor built upon the GStreamer Editing Services.
@@ -52,7 +58,7 @@ newbies and professionals alike.
 
 %prep
 %setup
-subst 's/\(nosetests\)/\13/' tests/meson.build
+##subst 's/\(nosetests\)/\13/' tests/meson.build
 
 %build
 # python script since 0.97
@@ -73,9 +79,23 @@ subst 's/\(nosetests\)/\13/' tests/meson.build
 %_iconsdir/hicolor/*/*/*
 #%_man1dir/%name.1*
 %_datadir/appdata/%name.appdata.xml
+
+#gst-transcoder-1.8.1.1 ?!
+%_bindir/gst-transcoder-%api_ver
+%_libdir/libgsttranscoder-%api_ver.so.0
+%_typelibdir/GstTranscoder-%api_ver.typelib
+%_libdir/gstreamer-%api_ver/libgsttranscoderplugin.so
+# devel
+%_libdir/libgsttranscoder-%api_ver.so
+%_pkgconfigdir/gst-transcoder-%api_ver.pc
+%_includedir/gstreamer-%api_ver/gst/transcoder/
+%_girdir/GstTranscoder-%api_ver.gir
 %doc AUTHORS NEWS RELEASE
 
 %changelog
+* Thu Dec 08 2016 Yuri N. Sedunov <aris@altlinux.org> 0.98-alt1
+- 0.98
+
 * Mon Aug 08 2016 Yuri N. Sedunov <aris@altlinux.org> 0.97.1-alt1
 - 0.97.1
 
