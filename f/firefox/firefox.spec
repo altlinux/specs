@@ -1,4 +1,4 @@
-%set_verify_elf_method relaxed
+%set_verify_elf_method unresolved=strict
 
 %define firefox_cid     \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %define firefox_prefix  %_libdir/firefox
@@ -13,7 +13,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
 Version:        50.0.2
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -178,6 +178,9 @@ MOZ_OPT_FLAGS=$(echo $RPM_OPT_FLAGS -fPIC -Wl,-z,relro -Wl,-z,now | \
 )
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
+# Add fake RPATH
+rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
+export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
 
 export PREFIX="%_prefix"
 export LIBDIR="%_libdir"
@@ -280,6 +283,23 @@ rm -rf -- \
 	./%_libdir/%name-devel \
 #
 
+# Add real RPATH
+rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
+find \
+     %buildroot/%firefox_prefix \
+-type f |
+(set +x
+        while read -r f; do
+              t="$(readlink -ev -- "$f")"
+
+              file -- "$t" | fgrep -qs ELF || continue
+
+              if chrpath -l "$t" | fgrep -qs "PATH=$rpath"; then
+                 chrpath -r "%firefox_prefix" "$t"
+              fi
+        done
+)
+
 %pre
 for n in defaults browserconfig.properties; do
 	[ ! -L "%firefox_prefix/$n" ] || rm -f "%firefox_prefix/$n"
@@ -303,6 +323,12 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Tue Dec  6 2016 Ivan Zakharyaschev <imz@altlinux.org> 50.0.2-alt2
+- Precise calculation of the dependency on libgtk symbols (ALT#32297) and
+  strict verification of unresolved symbols. (Thx legion@ for the original
+  hack, which had to be removed in 44.0.2-alt3, but found to be restorable
+  by ruslandh@'s work on strict unresolved symbols verification in palemoon.)
+
 * Fri Dec 02 2016 Alexey Gladkov <legion@altlinux.ru> 50.0.2-alt1
 - New release (50.0.2).
 - Fixed:
