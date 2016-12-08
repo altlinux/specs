@@ -1,6 +1,6 @@
 Name: dblatex
 Version: 0.3
-Release: alt1.1.1
+Release: alt1.1.1.1
 
 Summary: DocBook to LaTeX/ConTeXt Publishing
 License: %gpl2plus
@@ -52,6 +52,10 @@ SGML or XML sources, by converting first to a high level set of TeX macros.
 
 %prep
 %setup
+# \cyrchar is not defined, attempts to use it are unjustified
+sed -i 's/\\cyrchar//g' lib/dbtexmf/dblatex/unient.py
+# invalid inkscape parameters order
+sed -i '/inkscape.*format, *input, *output/s/input, *output/output, input/' lib/dbtexmf/core/imagedata.py
 
 %build
 %python_build
@@ -83,9 +87,12 @@ mv %buildroot%_docdir/%name %buildroot%_docdir/%name-%version
 %python_sitelibdir/dbtexmf/
 %python_sitelibdir/*.egg-info
 %_docdir/%name-%version
-%_man1dir/dblatex.1.gz
+%_man1dir/dblatex.1.*
 
 %changelog
+* Thu Dec 08 2016 Fr. Br. George <george@altlinux.ru> 0.3-alt1.1.1.1
+- Fix inkscape call
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3-alt1.1.1
 - Rebuild with Python-2.7
 
