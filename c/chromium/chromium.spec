@@ -25,8 +25,8 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        54.0.2840.59
-Release:        alt3
+Version:        55.0.2883.75
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -51,36 +51,28 @@ Obsoletes:      chromium-stable <= %version
 ### Start Patches
 Patch001: 0001-OPENSUSE-patches-in-system-zlib-library.patch
 Patch002: 0002-OPENSUSE-enables-reading-of-the-master-preference.patch
-Patch003: 0003-OPENSUSE-patches-in-system-glew-library.patch
-Patch004: 0004-OPENSUSE-Compile-the-sandbox-with-fPIE-settings.patch
-Patch005: 0005-OPENSUSE-patches-in-the-system-libvpx-library.patch
-Patch006: 0006-ALT-Fix-krb5-includes-path.patch
-Patch007: 0007-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
-Patch008: 0008-DEBIAN-manpage-updates-fixes.patch
-Patch009: 0009-DEBIAN-change-icon.patch
-Patch010: 0010-DEBIAN-fix-gcc4.7.patch
-Patch011: 0011-DEBIAN-disable-third-party-cookies-by-default.patch
-Patch012: 0012-DEBIAN-add-ps-printing-capability-gtk2.patch
-Patch013: 0013-ALT-fix-shrank-by-one-character.patch
-Patch014: 0014-DEBIAN-10-seconds-may-not-be-enough-so-do-not-kill-t.patch
-Patch015: 0015-DEBIAN-avoid-gtk2-includes.patch
-Patch016: 0016-DEBIAN-better-integration-with-gtk3-themes.patch
-Patch017: 0017-FEDORA-path-max.patch
-Patch018: 0018-FEDORA-Ignore-broken-nacl-open-fd-counter.patch
-Patch019: 0019-FEDORA-Use-libusb_interrupt_event_handler-from-curre.patch
-Patch020: 0020-FEDORA-Add-ICU-Text-Codec-aliases-from-openSUSE-via-.patch
-Patch021: 0021-FEDORA-Enable-ARM-CPU-detection-for-webrtc-from-arch.patch
-Patch022: 0022-FEDORA-Disable-MADV_FREE-if-set-by-glibc.patch
-Patch023: 0023-FEDORA-Use-gn-system-files.patch
-Patch024: 0024-FEDORA-Fix-last-commit-position-issue.patch
-Patch025: 0025-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
-Patch026: 0026-FEDORA-Fix-gn-build-on-Linux.patch
-Patch027: 0027-FEDORA-Use-system-harfbuzz-header.patch
-Patch028: 0028-ALT-gzip-does-not-support-the-rsyncable-option.patch
-Patch029: 0029-OPENSUSE-Compile-the-sandbox-with-fPIE-settings.patch
-Patch030: 0030-GENTOO-Enable-VA-API-on-linux.patch
-Patch031: 0031-UBUNTU-Specify-max-resolution.patch
-Patch032: 0032-ALT-Use-rpath-link-and-absolute-rpath.patch
+Patch003: 0003-OPENSUSE-Compile-the-sandbox-with-fPIE-settings.patch
+Patch004: 0004-ALT-Fix-krb5-includes-path.patch
+Patch005: 0005-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
+Patch006: 0006-DEBIAN-manpage-updates-fixes.patch
+Patch007: 0007-DEBIAN-change-icon.patch
+Patch008: 0008-DEBIAN-fix-gcc4.7.patch
+Patch009: 0009-DEBIAN-disable-third-party-cookies-by-default.patch
+Patch010: 0010-DEBIAN-add-ps-printing-capability-gtk2.patch
+Patch011: 0011-ALT-fix-shrank-by-one-character.patch
+Patch012: 0012-DEBIAN-10-seconds-may-not-be-enough-so-do-not-kill-t.patch
+Patch013: 0013-DEBIAN-better-integration-with-gtk3-themes.patch
+Patch014: 0014-FEDORA-path-max.patch
+Patch015: 0015-FEDORA-Ignore-broken-nacl-open-fd-counter.patch
+Patch016: 0016-FEDORA-Use-libusb_interrupt_event_handler-from-curre.patch
+Patch017: 0017-FEDORA-Enable-ARM-CPU-detection-for-webrtc-from-arch.patch
+Patch018: 0018-FEDORA-Disable-MADV_FREE-if-set-by-glibc.patch
+Patch019: 0019-FEDORA-Fix-last-commit-position-issue.patch
+Patch020: 0020-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
+Patch021: 0021-ALT-gzip-does-not-support-the-rsyncable-option.patch
+Patch022: 0022-UBUNTU-Enable-VA-API-on-linux.patch
+Patch023: 0023-UBUNTU-Specify-max-resolution.patch
+Patch024: 0024-ALT-Use-rpath-link-and-absolute-rpath.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -257,14 +249,6 @@ cp -a libchromiumcontent/chromiumcontent .
 %patch022 -p1
 %patch023 -p1
 %patch024 -p1
-%patch025 -p1
-%patch026 -p1
-%patch027 -p1
-%patch028 -p1
-%patch029 -p1
-%patch030 -p1
-%patch031 -p1
-%patch032 -p1
 ### Finish apply patches
 
 # Enable support for the Widevine CDM plugin
@@ -481,6 +465,37 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Thu Dec 08 2016 Alexey Gladkov <legion@altlinux.ru> 55.0.2883.75-alt1
+- New version (55.0.2883.75).
+- Security fixes:
+  - CVE-2016-9651: Private property access in V8. Credit to Guang Gong of Alpha Team Of Qihoo 360
+  - CVE-2016-5208: Universal XSS in Blink. Credit to Mariusz Mlynski
+  - CVE-2016-5207: Universal XSS in Blink. Credit to Mariusz Mlynski
+  - CVE-2016-5206: Same-origin bypass in PDFium. Credit to Rob Wu (robwu.nl)
+  - CVE-2016-5205: Universal XSS in Blink. Credit to Anonymous
+  - CVE-2016-5204: Universal XSS in Blink. Credit to Mariusz Mlynski
+  - CVE-2016-5209: Out of bounds write in Blink. Credit to Giwan Go of STEALIEN
+  - CVE-2016-5203: Use after free in PDFium. Credit to Anonymous
+  - CVE-2016-5210: Out of bounds write in PDFium. Credit to Ke Liu of Tencent's Xuanwu LAB
+  - CVE-2016-5212: Local file disclosure in DevTools. Credit to Khalil Zhani
+  - CVE-2016-5211: Use after free in PDFium. Credit to Anonymous
+  - CVE-2016-5213: Use after free in V8. Credit to Khalil Zhani
+  - CVE-2016-5214: File download protection bypass. Credit to Jonathan Birch and MSVR
+  - CVE-2016-5216: Use after free in PDFium. Credit to Anonymous
+  - CVE-2016-5215: Use after free in Webaudio. Credit to Looben Yang
+  - CVE-2016-5217: Use of unvalidated data in PDFium. Credit to Rob Wu (robwu.nl)
+  - CVE-2016-5218: Address spoofing in Omnibox. Credit to Abdulrahman Alqabandi (@qab)
+  - CVE-2016-5219: Use after free in V8. Credit to Rob Wu (robwu.nl)
+  - CVE-2016-5221: Integer overflow in ANGLE. Credit to Tim Becker of ForAllSecure
+  - CVE-2016-5220: Local file access in PDFium. Credit to Rob Wu (robwu.nl)
+  - CVE-2016-5222: Address spoofing in Omnibox. Credit to xisigr of Tencent's Xuanwu Lab
+  - CVE-2016-9650: CSP Referrer disclosure. Credit to Jakub Zoczek
+  - CVE-2016-5223: Integer overflow in PDFium. Credit to Hwiwon Lee 
+  - CVE-2016-5226: Limited XSS in Blink. Credit to Jun Kokatsu (@shhnjk)
+  - CVE-2016-5225: CSP bypass in Blink. Credit to Scott Helme (@Scott_Helme, scotthelme.co.uk)
+  - CVE-2016-5224: Same-origin bypass in SVG. Credit to Roeland Krak
+  - CVE-2016-9652: Various fixes from internal audits, fuzzing and other initiatives
+
 * Sun Oct 30 2016 Alexey Gladkov <legion@altlinux.ru> 54.0.2840.59-alt3
 - Fix Requires.
 - Add debuginfo.
