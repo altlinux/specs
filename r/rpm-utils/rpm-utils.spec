@@ -1,5 +1,5 @@
 Name: rpm-utils
-Version: 0.9.21
+Version: 0.10
 Release: alt1
 
 Summary: Utilities every rpm packager must have
@@ -14,7 +14,7 @@ Requires: rpm-build > 0:4.0.4-alt96.8, mktemp >= 1:1.3.1
 Requires: strace >= 4.11
 
 # Automatically added by buildreq on Wed Mar 26 2008
-BuildRequires: gcc-c++ librpm-devel
+BuildRequires: gcc-c++ pkgconfig librpm-devel
 
 %description
 This package contains following utilities:
@@ -73,6 +73,9 @@ fi >&2
 %_datadir/buildreqs
 
 %changelog
+* Wed Aug 17 2016 Alexey Gladkov <legion@altlinux.ru> 0.10-alt1
+- port to rpm-4.13.
+
 * Mon May 09 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.21-alt1
 - paste_changelog: a trivial ed wrapper extracted from add_changelog.
   (It can be useful in combination with, e.g., gear-changelog.)

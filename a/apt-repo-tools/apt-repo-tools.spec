@@ -1,6 +1,6 @@
 Name: apt-repo-tools
-Version: 0.6.0.19
-Release: alt1.1.1
+Version: 0.6.0.20
+Release: alt1
 
 Summary: Utilities to create APT repositories
 License: GPLv2+
@@ -40,6 +40,9 @@ mkdir -p %buildroot/var/cache/apt/gen{pkg,src}list
 %dir /var/cache/apt/gensrclist
 
 %changelog
+* Tue Aug 30 2016 Alexey Gladkov <legion@altlinux.ru> 0.6.0.20-alt1
+- Port to rpm-4.13.
+
 * Thu May 28 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.0.19-alt1.1.1
 - Rebuilt for:
  + libapt-pkg-libc6.9-6.so.5.

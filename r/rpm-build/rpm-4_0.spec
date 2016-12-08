@@ -1,9 +1,11 @@
 # python-module-rpm overrides %%version
 %define rpm_version 4.0.4
 
-Name: rpm
+%define oname rpm
+
+Name: rpm-build
 Version: 4.0.4
-Release: alt100.96
+Release: alt100.97
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -13,7 +15,7 @@ Release: alt100.96
 %define if_without() %if %{expand:%%{?_without_%{1}:1}%%{!?_without_%{1}:0}}
 %define _rpmlibdir %_prefix/lib/rpm
 
-%def_with python
+%def_without python
 %def_with libelf
 %def_without apidocs
 %def_without db
@@ -24,80 +26,12 @@ Release: alt100.96
 # XXX enable at your own risk, CDB access to rpmdb isn't cooked yet.
 %define enable_cdb create cdb
 
-Summary: The RPM package management system
-Summary(ru_RU.UTF-8): Менеджер пакетов RPM
-License: GPL
-Group: System/Configuration/Packaging
-Url: http://www.rpm.org/
-
-# http://git.altlinux.org/gears/r/rpm.git
-Source: rpm-%version-%release.tar
-
-Provides: %_rpmlibdir/macros.d, %_sysconfdir/%name/macros.d
-
-PreReq: lib%name = %version-%release, librpmbuild = %version-%release
-PreReq: alt-gpgkeys, coreutils, /bin/sh
-
-# Due to rpm*cmp utilities.
-Conflicts: rpm-utils <= 0:0.9.10-alt1
-
-%{?_with_python:BuildPreReq: python-devel}
-%{?_with_apidocs:BuildPreReq: ctags doxygen}
-%{?_with_libelf:BuildPreReq: libelf-devel-static}
-%{?_with_selinux:BuildPreReq: libselinux-devel >= 2.0.96}
-%{?_with_profile:BuildPreReq: coreutils >= 6.0}
-
-BuildPreReq: automake >= 1.7.1, autoconf >= 2.53, libbeecrypt-devel-static >= 4.2.1,
-BuildPreReq: rpm >= 3.0.6-ipl24mdk, %_bindir/subst
-
-# For debugedit.
-BuildPreReq: elfutils-devel
-
-# Automatically added by buildreq on Thu Apr 23 2009 and edited manually.
-BuildRequires: bzlib-devel-static libdb4.7-devel-static libelf-devel-static liblzma-devel-static libpopt-devel-static python-devel zlib-devel-static
-
-%package -n lib%name
-Summary: Shared libraries required for applications which will manipulate RPM packages
-Summary(ru_RU.UTF-8): Файлы, необходимые для разработки приложений, взаимодействующих с RPM-пакетами
-License: GPL/LGPL
-Group: System/Libraries
-PreReq: zlib >= 1.1.4
-PreReq: bzlib >= 1:1.0.2-alt2
-PreReq: libpopt >= 1:1.7-alt3
-PreReq: libdb4.7
-
-%package -n librpmbuild
-Summary: Shared library required for applications which will build RPM packages
-Summary(ru_RU.UTF-8): Разделяемая библиотека для разработки приложений, собирающих RPM-пакеты
-License: GPL/LGPL
-Group: System/Libraries
-Requires: lib%name = %version-%release
-
-%package -n lib%name-devel
-Summary: Development files for applications which will manipulate RPM packages
-Summary(ru_RU.UTF-8): Файлы, необходимые для разработки приложений, взаимодействующих с RPM-пакетами
-License: GPL/LGPL
-Group: Development/C
-Provides: %name-devel = %version-%release
-Obsoletes: %name-devel
-Requires: lib%name = %version-%release, librpmbuild = %version-%release
-Requires: libpopt-devel
-
-%package -n lib%name-devel-static
-Summary: Static libraries for developing statically linked applications which will manipulate RPM packages
-Summary(ru_RU.UTF-8): Статические библиотеки, необходимые для разработки статических приложений, взаимодействующих с RPM-пакетами
-License: GPL/LGPL
-Group: Development/C
-Requires: lib%name-devel = %version-%release
-Requires: bzlib-devel-static, libbeecrypt-devel-static, libdb4.7-devel-static, libpopt-devel-static, zlib-devel-static
-
-%package build
 Summary: Scripts and executable programs used to build packages
 Summary(ru_RU.UTF-8): Файлы, необходимые для установки SRPM-пакетов и сборки RPM-пакетов
 License: GPL
 Group: Development/Other
 Obsoletes: spec-helper
-PreReq: librpmbuild = %version-%release, %name = %version-%release
+PreReq: librpmbuild = %version-%release
 PreReq: shadow-utils
 Requires: autoconf autoconf-common automake automake-common bison coreutils cpio
 Requires: gcc gettext-tools glibc-devel gnu-config file kernel-headers libtool m4 make
@@ -121,26 +55,77 @@ Conflicts: rpm-build-mono <= 1.0
 # Due to 'readelf --dyn-syms':
 Requires: binutils >= 1:2.20.51.0.7
 
+Url: http://www.rpm.org/
+
+# http://git.altlinux.org/gears/r/rpm.git
+Source: rpm-%version-%release.tar
+
+%{?_with_python:BuildPreReq: python-devel}
+%{?_with_apidocs:BuildPreReq: ctags doxygen}
+%{?_with_libelf:BuildPreReq: libelf-devel-static}
+%{?_with_selinux:BuildPreReq: libselinux-devel >= 2.0.96}
+%{?_with_profile:BuildPreReq: coreutils >= 6.0}
+
+BuildPreReq: automake >= 1.7.1, autoconf >= 2.53, libbeecrypt-devel-static >= 4.2.1,
+BuildPreReq: rpm >= 3.0.6-ipl24mdk, %_bindir/subst
+
+# For debugedit.
+BuildPreReq: elfutils-devel
+
+# Automatically added by buildreq on Thu Apr 23 2009 and edited manually.
+BuildRequires: bzlib-devel-static libdb4.7-devel-static libelf-devel-static liblzma-devel-static libpopt-devel-static python-devel zlib-devel-static
+
+%package -n lib%oname
+Summary: Shared libraries required for applications which will manipulate RPM packages
+Summary(ru_RU.UTF-8): Файлы, необходимые для разработки приложений, взаимодействующих с RPM-пакетами
+License: GPL/LGPL
+Group: System/Libraries
+PreReq: zlib >= 1.1.4
+PreReq: bzlib >= 1:1.0.2-alt2
+PreReq: libpopt >= 1:1.7-alt3
+PreReq: libdb4.7
+Provides: librpm = 4.0.4-alt100.96
+
+%package -n librpmbuild
+Summary: Shared library required for applications which will build RPM packages
+Summary(ru_RU.UTF-8): Разделяемая библиотека для разработки приложений, собирающих RPM-пакеты
+License: GPL/LGPL
+Group: System/Libraries
+Requires: lib%oname = %version-%release
+Provides: librpmbuild = 4.0.4-alt100.96
+
+%package -n lib%oname-devel
+Summary: Development files for applications which will manipulate RPM packages
+Summary(ru_RU.UTF-8): Файлы, необходимые для разработки приложений, взаимодействующих с RPM-пакетами
+License: GPL/LGPL
+Group: Development/C
+Provides: %oname-devel = %version-%release
+Obsoletes: %oname-devel
+Requires: lib%oname = %version-%release, librpmbuild = %version-%release
+Requires: libpopt-devel
+
+%package -n lib%oname-devel-static
+Summary: Static libraries for developing statically linked applications which will manipulate RPM packages
+Summary(ru_RU.UTF-8): Статические библиотеки, необходимые для разработки статических приложений, взаимодействующих с RPM-пакетами
+License: GPL/LGPL
+Group: Development/C
+Requires: lib%oname-devel = %version-%release
+Requires: bzlib-devel-static, libbeecrypt-devel-static, libdb4.7-devel-static, libpopt-devel-static, zlib-devel-static
+
+
 %package build-topdir
 Summary: RPM package installation and build directory tree
 Summary(ru_RU.UTF-8): Сборочное дерево, используемое для установки SRPM-пакетов и сборки RPM-пакетов
 License: GPL
 Group: Development/Other
-PreReq: %name-build = %version-%release
+PreReq: %oname-build = %version-%release
 
 %package static
 Summary: Static version of the RPM package management system
 Summary(ru_RU.UTF-8): Статическая версия менеджера пакетов RPM
 License: GPL
 Group: System/Configuration/Packaging
-PreReq: %name = %version-%release
-
-%description
-The RPM Package Manager (RPM) is a powerful command line driven
-package management system capable of installing, uninstalling,
-verifying, querying, and updating software packages.  Each software
-package consists of an archive of files along with information about
-the package like its version, a description, etc.
+PreReq: %oname = %version-%release
 
 %description -l ru_RU.UTF-8
 RPM - это мощный неинтерактивный менеджер пакетов, используемый для сборки,
@@ -148,7 +133,7 @@ RPM - это мощный неинтерактивный менеджер пак
 пакетов.  Каждый такой пакет состоит из набора файлов и информации о пакете,
 включающей название, версию, описание пакета, и т.д.
 
-%description -n lib%name
+%description -n lib%oname
 This package contains shared libraries required to run dynamically linked
 programs manipulating with RPM packages and databases.
 
@@ -156,7 +141,7 @@ programs manipulating with RPM packages and databases.
 This package contains shared library required to run dynamically linked
 programs building RPM packages.
 
-%description -n lib%name-devel
+%description -n lib%oname-devel
 This package contains the RPM C library and header files.  These
 development files will simplify the process of writing programs
 which manipulate RPM packages and databases and are intended to make
@@ -166,7 +151,7 @@ that need an intimate knowledge of RPM packages in order to function.
 This package should be installed if you want to develop programs that
 will manipulate RPM packages and databases.
 
-%description -n lib%name-devel-static
+%description -n lib%oname-devel-static
 This package contains the RPM C library and header files.  These
 development files will simplify the process of writing programs
 which manipulate RPM packages and databases and are intended to make
@@ -176,7 +161,7 @@ that need an intimate knowledge of RPM packages in order to function.
 This package should be installed if you want to develop statically linked
 programs that will manipulate RPM packages and databases.
 
-%description build
+%description
 This package contains scripts and executable programs that are used to
 build packages using RPM.
 
@@ -193,7 +178,7 @@ Summary: Python bindings for apps which will manipulate RPM packages
 Summary(ru_RU.UTF-8): Интерфейс для разработки Python-приложений, взаимодействующих с RPM-пакетами
 License: GPL/LGPL
 Group: Development/Python
-PreReq: lib%name = %rpm_version-%release
+PreReq: lib%oname = %rpm_version-%release
 Requires: python = %__python_version
 Provides: rpm-python = %{rpm_version}_%__python_version-%release
 Obsoletes: rpm-python
@@ -268,18 +253,18 @@ chmod a-w %buildroot%_usrsrc/RPM{,/RPMS/*}
 
 # Save list of packages through cron.
 #mkdir -p %buildroot%_sysconfdir/cron.daily
-#install -p -m750 scripts/%name.daily %buildroot%_sysconfdir/cron.daily/%name
+#install -p -m750 scripts/%oname.daily %buildroot%_sysconfdir/cron.daily/%oname
 #
 #mkdir -p %buildroot%_sysconfdir/logrotate.d
-#install -p -m640 scripts/%name.log %buildroot%_sysconfdir/logrotate.d/%name
+#install -p -m640 scripts/%oname.log %buildroot%_sysconfdir/logrotate.d/%oname
 
-mkdir -p %buildroot{%_rpmlibdir/macros.d,%_sysconfdir/%name/macros.d}
-touch %buildroot%_sysconfdir/%name/macros
-cat << E_O_F > %buildroot%_sysconfdir/%name/macros.cdb
+mkdir -p %buildroot{%_rpmlibdir/macros.d,%_sysconfdir/%oname/macros.d}
+touch %buildroot%_sysconfdir/%oname/macros
+cat << E_O_F > %buildroot%_sysconfdir/%oname/macros.cdb
 %{?enable_cdb:#%%__dbi_cdb	%enable_cdb}
 E_O_F
 
-mkdir -p %buildroot%_localstatedir/%name
+mkdir -p %buildroot%_localstatedir/%oname
 for dbi in \
 	Basenames Conflictname Dirnames Group Installtid Name Providename \
 	Provideversion Removetid Requirename Requireversion Triggername \
@@ -287,20 +272,20 @@ for dbi in \
 	__db.001 __db.002 __db.003 __db.004 __db.005 __db.006 __db.007 \
 	__db.008 __db.009
 do
-    touch "%buildroot%_localstatedir/%name/$dbi"
+    touch "%buildroot%_localstatedir/%oname/$dbi"
 done
-touch %buildroot%_localstatedir/%name/files-awaiting-filetriggers
+touch %buildroot%_localstatedir/%oname/files-awaiting-filetriggers
 
 # Prepare documentation.
 bzip2 -9k CHANGES ||:
-mkdir -p %buildroot%_docdir/%name-%rpm_version
+mkdir -p %buildroot%_docdir/%oname-%rpm_version
 install -p -m644 CHANGES.bz2 CREDITS README README.ALT* \
-	%buildroot%_docdir/%name-%rpm_version/
-cp -a doc/manual %buildroot%_docdir/%name-%rpm_version/
-rm -f %buildroot%_docdir/%name-%rpm_version/manual/{Makefile*,buildroot}
+	%buildroot%_docdir/%oname-%rpm_version/
+cp -a doc/manual %buildroot%_docdir/%oname-%rpm_version/
+rm -f %buildroot%_docdir/%oname-%rpm_version/manual/{Makefile*,buildroot}
 %if_with apidocs
 cp -a apidocs/man/man3 %buildroot%_mandir/
-cp -a apidocs/html %buildroot%_docdir/%name-%rpm_version/apidocs/
+cp -a apidocs/html %buildroot%_docdir/%oname-%rpm_version/apidocs/
 %endif #with apidocs
 
 # rpminit(1).
@@ -315,8 +300,8 @@ install -pD -m644 rpm-build.buildreq %buildroot%_sysconfdir/buildreqs/files/igno
 
 chmod a+x scripts/find-lang
 # Manpages have been moved to their own packages.
-#./scripts/find-lang --with-man %name rpm2cpio --output %name.lang
-RPMCONFIGDIR=./scripts ./scripts/find-lang %name rpm2cpio --output %name.lang
+#./scripts/find-lang --with-man %oname rpm2cpio --output %oname.lang
+RPMCONFIGDIR=./scripts ./scripts/find-lang %oname rpm2cpio --output %oname.lang
 
 pushd %buildroot%_rpmlibdir
 	for f in *-alt-%_target_os; do
@@ -327,7 +312,7 @@ popd
 
 /bin/ls -1d %buildroot%_rpmlibdir/*-%_target_os |
 	grep -Fv /brp- |
-	sed -e "s|^%buildroot|%%attr(-,root,%name) |g" >>%name.lang
+	sed -e "s|^%buildroot|%%attr(-,root,%oname) |g" >>rpmbuild.platform
 
 %ifdef add_findreq_skiplist
 # These shell libraries hopefully do not require anything special,
@@ -352,84 +337,77 @@ sed -n 's/^\(.\+\)64$/\1/p' all-funcs |
 	> %buildroot%_rpmlibdir/verify-elf-non-lfs-funcs.list
 %endif
 
+mv %buildroot%_rpmlibdir/rpm{,build}rc
+mv %buildroot%_rpmlibdir/{,build}macros
+
 %pre
 [ ! -L %_rpmlibdir/noarch-alt-%_target_os ] || rm -f %_rpmlibdir/noarch-alt-%_target_os ||:
-
-%post
-chgrp %name %_localstatedir/%name/[A-Z]*
-[ -n "$DURING_INSTALL" -o -n "$BTE_INSTALL" ] ||
-	%_rpmlibdir/pdeath_execute $PPID rpmdb -v --rebuilddb
-
-# Invalidate apt cache, due to e.g. rpmlib(PayloadIsLzma).
-if set /var/cache/apt/*.bin && [ -f "$1" ]; then
-	%_rpmlibdir/pdeath_execute $PPID rm -f "$@"
-fi
-:
 
 %files -n librpmbuild
 %_libdir/librpmbuild-*.so
 
-%define rpmattr %attr(755,root,%name)
-%define rpmdirattr %attr(2755,root,%name) %dir
-%define rpmdatattr %attr(644,root,%name)
-%define rpmdbattr %attr(644,root,%name) %verify(not md5 size mtime) %ghost %config(missingok,noreplace)
+%define rpmattr %attr(755,root,%oname)
+%define rpmdirattr %attr(2755,root,%oname) %dir
+%define rpmdatattr %attr(644,root,%oname)
+%define rpmdbattr %attr(644,root,%oname) %verify(not md5 size mtime) %ghost %config(missingok,noreplace)
 
-%files -n lib%name
+%files -n lib%oname
 %rpmdirattr %_rpmlibdir
-%rpmdatattr %_rpmlibdir/rpmrc
-%rpmdatattr %_rpmlibdir/macros
+%rpmdatattr %_rpmlibdir/rpmbuildrc
+%rpmdatattr %_rpmlibdir/buildmacros
 %_libdir/librpm-*.so
 %_libdir/librpmdb-*.so
 %_libdir/librpmio-*.so
 
-%files -n lib%name-devel
+%if 0
+%files -n lib%oname-devel
 %_libdir/librpm.so
 %_libdir/librpmdb.so
 %_libdir/librpmio.so
 %_libdir/librpmbuild.so
-%_includedir/%name
+%_includedir/%oname
 %if_with apidocs
 %_man3dir/*
-%dir %_docdir/%name-%rpm_version
-%_docdir/%name-%rpm_version/apidocs
+%dir %_docdir/%oname-%rpm_version
+%_docdir/%oname-%rpm_version/apidocs
 %endif #with apidocs
 
-%files -n lib%name-devel-static
+%files -n lib%oname-devel-static
 %_libdir/*.a
 
-%files -f %name.lang
-%dir %_docdir/%name-%rpm_version
-%_docdir/%name-%rpm_version/[A-Z]*
-%_docdir/%name-%rpm_version/manual
+%files -f %oname.lang
+%dir %_docdir/%oname-%rpm_version
+%_docdir/%oname-%rpm_version/[A-Z]*
+%_docdir/%oname-%rpm_version/manual
 
-#%config(noreplace,missingok) %_sysconfdir/cron.daily/%name
-#%config(noreplace,missingok) %_sysconfdir/logrotate.d/%name
+#%config(noreplace,missingok) %_sysconfdir/cron.daily/%oname
+#%config(noreplace,missingok) %_sysconfdir/logrotate.d/%oname
 
 %rpmdirattr %_rpmlibdir/macros.d
-%dir %_sysconfdir/%name
-%dir %_sysconfdir/%name/macros.d
-%config(noreplace,missingok) %_sysconfdir/%name/macros
-%config(noreplace,missingok) %_sysconfdir/%name/macros.??*
+%dir %_sysconfdir/%oname
+%dir %_sysconfdir/%oname/macros.d
+%config(noreplace,missingok) %_sysconfdir/%oname/macros
+%config(noreplace,missingok) %_sysconfdir/%oname/macros.??*
 
-%rpmdirattr %_localstatedir/%name
-%rpmdbattr %_localstatedir/%name/Basenames
-%rpmdbattr %_localstatedir/%name/Conflictname
-%rpmdbattr %_localstatedir/%name/__db.0*
-%rpmdbattr %_localstatedir/%name/Dirnames
-%rpmdbattr %_localstatedir/%name/Filemd5s
-%rpmdbattr %_localstatedir/%name/Group
-%rpmdbattr %_localstatedir/%name/Installtid
-%rpmdbattr %_localstatedir/%name/Name
-%rpmdbattr %_localstatedir/%name/Packages
-%rpmdbattr %_localstatedir/%name/Providename
-%rpmdbattr %_localstatedir/%name/Provideversion
-%rpmdbattr %_localstatedir/%name/Removetid
-%rpmdbattr %_localstatedir/%name/Requirename
-%rpmdbattr %_localstatedir/%name/Requireversion
-%rpmdbattr %_localstatedir/%name/Sigmd5
-%rpmdbattr %_localstatedir/%name/Sha1header
-%rpmdbattr %_localstatedir/%name/Triggername
-%rpmdbattr %_localstatedir/%name/files-awaiting-filetriggers
+%rpmdirattr %_localstatedir/%oname
+%rpmdbattr %_localstatedir/%oname/Basenames
+%rpmdbattr %_localstatedir/%oname/Conflictname
+%rpmdbattr %_localstatedir/%oname/__db.0*
+%rpmdbattr %_localstatedir/%oname/Dirnames
+%rpmdbattr %_localstatedir/%oname/Filemd5s
+%rpmdbattr %_localstatedir/%oname/Group
+%rpmdbattr %_localstatedir/%oname/Installtid
+%rpmdbattr %_localstatedir/%oname/Name
+%rpmdbattr %_localstatedir/%oname/Packages
+%rpmdbattr %_localstatedir/%oname/Providename
+%rpmdbattr %_localstatedir/%oname/Provideversion
+%rpmdbattr %_localstatedir/%oname/Removetid
+%rpmdbattr %_localstatedir/%oname/Requirename
+%rpmdbattr %_localstatedir/%oname/Requireversion
+%rpmdbattr %_localstatedir/%oname/Sigmd5
+%rpmdbattr %_localstatedir/%oname/Sha1header
+%rpmdbattr %_localstatedir/%oname/Triggername
+%rpmdbattr %_localstatedir/%oname/files-awaiting-filetriggers
 
 /bin/rpm
 %_bindir/rpm
@@ -460,8 +438,9 @@ fi
 %_man1dir/rpminit.*
 %_man8dir/rpm.*
 %_man8dir/rpm2cpio.*
+%endif
 
-%files build
+%files -f rpmbuild.platform
 %config %_sysconfdir/buildreqs/files/ignore.d/*
 %rpmattr %_bindir/gendiff
 %_bindir/rpmbuild
@@ -478,6 +457,7 @@ fi
 %rpmattr %_rpmlibdir/brp.d/*
 %rpmattr %_rpmlibdir/*_files
 %rpmattr %_rpmlibdir/cpp.*
+%rpmattr %_rpmlibdir/is_elf_so_executable
 %rpmattr %_rpmlibdir/ldd
 %rpmattr %_rpmlibdir/rpm2cpio.sh
 %rpmattr %_rpmlibdir/find-lang
@@ -513,13 +493,13 @@ fi
 
 %if_with build_topdir
 %files build-topdir
-%attr(0755,root,%name) %dir %_usrsrc/RPM
-%attr(0770,root,%name) %dir %_usrsrc/RPM/BUILD
-%attr(2770,root,%name) %dir %_usrsrc/RPM/SPECS
-%attr(2770,root,%name) %dir %_usrsrc/RPM/SOURCES
-%attr(2775,root,%name) %dir %_usrsrc/RPM/SRPMS
-%attr(0755,root,%name) %dir %_usrsrc/RPM/RPMS
-%attr(2775,root,%name) %dir %_usrsrc/RPM/RPMS/*
+%attr(0755,root,%oname) %dir %_usrsrc/RPM
+%attr(0770,root,%oname) %dir %_usrsrc/RPM/BUILD
+%attr(2770,root,%oname) %dir %_usrsrc/RPM/SPECS
+%attr(2770,root,%oname) %dir %_usrsrc/RPM/SOURCES
+%attr(2775,root,%oname) %dir %_usrsrc/RPM/SRPMS
+%attr(0755,root,%oname) %dir %_usrsrc/RPM/RPMS
+%attr(2775,root,%oname) %dir %_usrsrc/RPM/RPMS/*
 %endif #with build_topdir
 
 %if_with python
@@ -527,11 +507,19 @@ fi
 %_libdir/python*/site-packages/*module.so
 %endif #with python
 
+%if 0
 %files static
 %_bindir/rpm.static
 %_bindir/rpm2cpio.static
+%endif
 
 %changelog
+* Thu Dec 08 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt100.97
+- fixup-libraries: fixed recognition of PIEs (ldv@).
+- verify-elf: treat PIEs as executables in the check for unresolved symbols (ldv@).
+- Disabled rpm's installer part.
+- Built rpm-build in "compat" mode with rpm-4.13.
+
 * Wed Nov 30 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt100.96
 - verify-elf: don't confuse the initial verify_rpath() in case
   of two RUNPATH/RPATHs (ALT#32826).

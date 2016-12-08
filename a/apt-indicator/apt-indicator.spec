@@ -1,6 +1,6 @@
 Name: apt-indicator
 Version: 0.3.6
-Release: alt1
+Release: alt1.qa1
 
 Summary: Applet for indication that newer packages are available
 License: GPL
@@ -68,6 +68,9 @@ mkdir -p %buildroot/%_datadir/%name/pixmaps
 
 
 %changelog
+* Tue Nov 22 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.6-alt1.qa1
+- Rebuilt with libapt-pkg-libc6.9-6.so.6.
+
 * Tue Aug 02 2016 Sergey V Turchin <zerg at altlinux dot org> 0.3.6-alt1
 - don't package pixmaps
 - extend hide timer when app in use
