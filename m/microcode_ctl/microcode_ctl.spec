@@ -1,6 +1,8 @@
+%define orig_release 11
+
 Name: microcode_ctl
 Version: 2.1
-Release: alt0.2
+Release: alt0.3
 Epoch: 1
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
@@ -10,7 +12,7 @@ License: GPLv2+
 Group: System/Kernel and hardware
 
 URL: http://fedorahosted.org/microcode_ctl
-Source0: http://fedorahosted.org/released/microcode_ctl/%{name}-%{version}-8.tar.xz
+Source0: http://fedorahosted.org/released/microcode_ctl/%{name}-%{version}-%{orig_release}.tar.xz
 
 %description
 The microcode_ctl utility is a companion to the microcode driver written
@@ -33,7 +35,7 @@ The microcode data file for Linux contains the latest microcode
 definitions for all Intel processors.
 
 %prep
-%setup -q -n %name-%version-8
+%setup -q -n %name-%version-%{orig_release}
 
 %build
 %make_build CFLAGS="%optflags"
@@ -50,6 +52,10 @@ make DESTDIR=%{buildroot} PREFIX=%{_prefix} INSDIR=/usr/sbin install clean
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Thu Dec 08 2016 L.A. Kostis <lakostis@altlinux.ru> 1:2.1-alt0.3
+- Updated to 2.1-11 version:
+  + Intel CPU microcode 20161104 update.
+
 * Wed Jun 08 2016 L.A. Kostis <lakostis@altlinux.ru> 1:2.1-alt0.2
 - Updated to 2.1-8 version:
   + Intel CPU microcode 20151106 update.
