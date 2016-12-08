@@ -1,21 +1,22 @@
+%define upstreamname vdpau-video
+
 Name: libva-driver-vdpau
 Version: 0.7.4
-Release: alt3
+Release: alt3.1
 
 Summary: VDPAU-based backend for VA API
 License: GPLv2
 Group: System/Libraries
-Url: http://www.splitted-desktop.com/~gbeauchesne/vdpau-video/
+Url: http://www.freedesktop.org/wiki/Software/vaapi
 
-Source: %name-%version.tar
-
+Source: %upstreamname-%version.tar
 BuildRequires: libvdpau-devel libva-devel libX11-devel libGL-devel
 
 %description
-Video decode driver for NVIDIA chipsets (VDPAU implementation)
+A VDPAU-based backend for VA-API.
 
 %prep
-%setup
+%setup -q -n %upstreamname-%version
 
 %build
 %autoreconf
@@ -32,6 +33,10 @@ Video decode driver for NVIDIA chipsets (VDPAU implementation)
 %_libdir/dri/*.so
 
 %changelog
+* Thu Dec 08 2016 L.A. Kostis <lakostis@altlinux.ru> 0.7.4-alt3.1
+- Merge w/ sbolshakov@.
+- Compile fixes w/ recent libva.
+
 * Thu Nov 20 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.4-alt3
 - fixed build with recent libvdpau
 
@@ -40,6 +45,9 @@ Video decode driver for NVIDIA chipsets (VDPAU implementation)
 
 * Fri Jan 24 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.4-alt1
 - 0.7.4
+
+* Tue Dec 11 2012 L.A. Kostis <lakostis@altlinux.ru> 0.7.4-alt1
+- 0.7.4 release.
 
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.3-alt1.1
 - Fixed build
