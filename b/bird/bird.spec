@@ -1,8 +1,8 @@
 %define _localstatedir %_var
 
 Name: bird
-Version: 1.5.0
-Release: alt1
+Version: 1.6.2
+Release: alt1%ubt
 Summary: BIRD Internet Routing Daemon
 
 Group: Networking/Other
@@ -16,7 +16,8 @@ Source2: %name.service
 Source3: %{name}6.init
 Source4: %{name}6.service
 
-Patch: %name-%version-%release.patch
+Patch: %name-%version-alt.patch
+BuildRequires(pre):rpm-build-ubt
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
@@ -124,6 +125,10 @@ install -pD -m644 %SOURCE4 %buildroot%_unitdir/%{name}6.service
 %_sbindir/%{name}cl6
 
 %changelog
+* Thu Dec 08 2016 Anton Farygin <rider@altlinux.ru> 1.6.2-alt1%ubt
+- 1.6.2
+- added %%ubt macros for easy backporting to stable branches
+
 * Sun Oct 25 2015 Vladimir Lettiev <crux@altlinux.ru> 1.5.0-alt1
 - 1.5.0
 
