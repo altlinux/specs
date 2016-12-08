@@ -2,13 +2,13 @@
 %define ver_major 0.6
 %define api_ver 1.0
 %define asb_ver 5
-%def_disable rpm
+%def_enable rpm
 %def_enable stemmer
 %def_enable installed_tests
 
 Name: lib%_name
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 
 Summary: Library for AppStream metadata
 Group: System/Libraries
@@ -132,6 +132,7 @@ the functionality of the installed %_name library.
 %configure \
         --enable-gtk-doc \
         --disable-static \
+        %{subst_enable rpm} \
         %{subst_enable stemmer} \
         %{subst_enable installed_tests}
 %make_build
@@ -198,6 +199,9 @@ the functionality of the installed %_name library.
 #%_datadir/gtk-doc/html/appstream-builder/
 
 %changelog
+* Fri Dec 09 2016 Yuri N. Sedunov <aris@altlinux.org> 0.6.5-alt2
+- enabled rpm support
+
 * Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 0.6.5-alt1
 - 0.6.5
 
