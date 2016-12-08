@@ -1,7 +1,7 @@
 Name: pve-cluster
-Summary: Cluster Infrastructure for Proxmox Virtual Environment
+Summary: Cluster Infrastructure for PVE
 Version: 4.0.48
-Release: alt6
+Release: alt7
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -15,6 +15,7 @@ Source0: %name.tar.xz
 Source1: pve-access-control.tar.xz
 Patch0: %name.patch
 Patch1: pve-access-control.patch
+Patch2: pve-cluster-install_vzdump_cron_config.patch
 
 Source2: pve-firsttime
 
@@ -24,23 +25,24 @@ BuildRequires: perl(Crypt/OpenSSL/Random.pm) perl(Crypt/OpenSSL/RSA.pm) perl(Net
 BuildRequires: perl(MIME/Base32.pm) perl(Net/LDAP.pm) perl(Authen/PAM.pm) perl(UUID.pm)
 
 %description
-This package contains the Cluster Infrastructure for the Proxmox
-Virtual Environment, namely a distributed filesystem to store
-configuration data on all nodes.
+This package contains the Cluster Infrastructure for the PVE,
+namely a distributed filesystem to store configuration data
+on all nodes.
 
 %package -n pve-access-control
-Summary: Proxmox VE access control library
+Summary: PVE access control library
 Version: 4.0.19
 Group: Development/Perl
 
 %description -n pve-access-control
 This package contains the role based user management and access
-control function used by Proxmox VE.
+control function used by PVE.
 
 %prep
 %setup -q -n %name -a1
 %patch0 -p1
 %patch1 -p0
+%patch2 -p1
 
 %build
 cd data
@@ -59,7 +61,9 @@ cd ../pve-access-control
 mkdir -p %buildroot%_datadir/doc/%name
 install -m644 %SOURCE2 %buildroot%_datadir/doc/%name/
 
-mkdir -p %buildroot%_sysconfdir/pve
+mkdir -p %buildroot%_sysconfdir/cron.d
+touch %buildroot%_sysconfdir/cron.d/vzdump
+
 mkdir -p %buildroot%_localstatedir/%name
 
 mkdir -p %buildroot%_sysconfdir/network
@@ -93,12 +97,18 @@ fi
 %_sbindir/groupadd -r -f www-data 2>/dev/null ||:
 %_sbindir/useradd -g www-data -c 'www-data' -d /var/www -s '/sbin/nologin' -G www-data -r www-data 2>/dev/null || :
 
+%triggerun -- %name <= 4.0.48-alt7
+if [ -L %_sysconfdir/cron.d/vzdump ]; then
+	rm -f %_sysconfdir/cron.d/vzdump
+fi
+
 %files
 %systemd_unitdir/%name.service
 %_sysconfdir/bash_completion.d/pvecm
 %dir %_sysconfdir/network
 %ghost %_sysconfdir/network/interfaces
 %config(noreplace) %_sysconfdir/sysconfig/%name
+%ghost %_sysconfdir/cron.d/vzdump
 %_sysconfdir/sysctl.d/pve-cluster.conf
 %_bindir/create_pmxcfs_db
 %_bindir/pmxcfs
@@ -132,6 +142,9 @@ fi
 %_man1dir/pveum.1*
 
 %changelog
+* Thu Dec 08 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.48-alt7
+- don't make vzdump symlink in cron.d
+
 * Mon Dec 05 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.48-alt6
 - 4.0-48
 

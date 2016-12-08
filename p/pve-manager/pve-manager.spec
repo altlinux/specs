@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 4.3.14
-Release: alt2
+Release: alt3
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -9,6 +9,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64
 Requires: cstream lzop pve-vncterm pve-novnc pve-spiceterm pve-docs
+Requires: pve-cluster >= 4.0.48-alt7
 
 Source0: pve-manager.tar.xz
 Source1: pve-container.tar.xz
@@ -31,6 +32,7 @@ Patch7: pve-container-altlinux-lxc.patch
 Patch8: pve-manager-alt-gzip.patch
 Patch9: pve-manager-alt-pve.patch
 Patch10: pve-manager-help.patch
+Patch11: pve-manager-install_vzdump_cron_config.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -93,6 +95,7 @@ This package contains the Qemu Server tools used by PVE
 %patch8 -p0 -b .alt
 %patch9 -p0 -b .alt
 %patch10 -p0 -b .alt
+%patch11 -p0 -b .vzdump
 
 %build
 for d in pve-manager pve-firewall/src pve-ha-manager/src qemu-server; do
@@ -356,6 +359,9 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Thu Dec 08 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.14-alt3
+- install regular file to cron.d (closes: #32835)
+
 * Wed Dec 07 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.14-alt2
 - 4.3-14
 - qemu-server 4.0-101
