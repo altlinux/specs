@@ -49,7 +49,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -58,7 +58,6 @@ Group: Office
 Url: http://wiki.gnome.org/Projects/Tracker
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Patch: tracker-1.0.3-alt-build.patch
 
 Obsoletes: lib%name-client
 Requires: lib%name = %version-%release
@@ -235,7 +234,6 @@ Nautilus extension for managing tags
 
 %prep
 %setup
-#%patch -p1
 
 %build
 %autoreconf
@@ -394,6 +392,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 %endif
 
 %changelog
+* Thu Dec 08 2016 Yuri N. Sedunov <aris@altlinux.org> 1.10.2-alt1
+- 1.10.2
+
 * Fri Oct 14 2016 Yuri N. Sedunov <aris@altlinux.org> 1.10.1-alt1
 - 1.10.1
 
