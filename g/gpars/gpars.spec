@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           gpars
 Version:        1.2.1
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Summary:        Groovy Parallel Systems
 License:        ASL 2.0 and Public Domain
 URL:            http://gpars.codehaus.org
@@ -53,23 +53,19 @@ rm -rf src/main/groovy/groovyx/gpars/extra166y/
 %patch2 -p1
 
 %build
-gradle-local -s install --offline
-
-repo=$HOME/.m2/repository
-pom=$repo/org/codehaus/gpars/gpars/%{version}/gpars-%{version}.pom
-jar=$repo/org/codehaus/gpars/gpars/%{version}/gpars-%{version}.jar
-%mvn_artifact $pom $jar
+%gradle_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-%dir %{_mavenpomdir}/%{name}
-%doc LICENSE-2.0.txt
 %doc README.md
+%doc LICENSE-2.0.txt
 
 %changelog
+* Fri Dec 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_6jpp8
+- new fc release
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_4jpp8
 - unbootstrap build
 
