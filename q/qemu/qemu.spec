@@ -38,12 +38,12 @@
 %def_enable oss
 %def_enable aio
 %def_enable blobs
-%def_enable uuid
 %def_enable smartcard
 %def_enable libusb
 %def_enable usb_redir
 %def_enable vhost_net
 %def_enable vhost_scsi
+%def_enable vhost_vsock
 %def_disable opengl
 %def_enable guest_agent
 %def_enable tools
@@ -63,7 +63,9 @@
 %def_enable libssh2
 %def_enable vhdx
 %def_enable numa
-%def_enable jemalloc
+%def_enable tcmalloc
+%def_disable jemalloc
+%def_enable replication
 %def_enable rdma
 %def_enable lzo
 %def_enable snappy
@@ -146,7 +148,6 @@
 
 %if_with unicore32
 %global target_list_system %target_list_system unicore32-softmmu
-%global target_list_user %target_list_user unicore32-linux-user
 %endif
 
 %if_with xtensa
@@ -168,7 +169,7 @@
 # }}}
 
 Name: qemu
-Version: 2.6.2
+Version: 2.8.0
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -195,7 +196,7 @@ BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static
 BuildRequires: texinfo perl-podlators libattr-devel libcap-devel libcap-ng-devel
 BuildRequires: libxfs-devel
 BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
-BuildRequires: ipxe-roms-qemu >= 1.0.0-alt4.git93acb5d seavgabios seabios >= 1.7.4-alt2 libfdt-devel >= 1.4.0
+BuildRequires: ipxe-roms-qemu >= 1:20161208-alt1.git26050fd seavgabios seabios >= 1.7.4-alt2 libfdt-devel >= 1.4.0
 BuildRequires: libpixman-devel >= 0.21.8
 BuildRequires: iasl
 BuildRequires: libpcre-devel-static
@@ -211,7 +212,7 @@ BuildRequires: libpcre-devel-static
 %{?_enable_vde:BuildRequires: libvde-devel}
 %{?_enable_aio:BuildRequires: libaio-devel}
 %{?_enable_spice:BuildRequires: libspice-server-devel >= 0.12.0 spice-protocol >= 0.12.3}
-%{?_enable_uuid:BuildRequires: libuuid-devel}
+BuildRequires: libuuid-devel
 %{?_enable_smartcard:BuildRequires: libcacard-devel >= 2.5.0}
 %{?_enable_usb_redir:BuildRequires: libusbredir-devel >= 0.5}
 %{?_enable_opengl:BuildRequires: libX11-devel libepoxy-devel libdrm-devel libgbm-devel}
@@ -231,11 +232,12 @@ BuildRequires: libtasn1-devel
 %{?_enable_libusb:BuildRequires: libusb-devel >= 1.0.13}
 %{?_enable_rdma:BuildRequires: librdmacm-devel libibverbs-devel}
 %{?_enable_numa:BuildRequires: libnuma-devel}
+%{?_enable_tcmalloc:BuildRequires: libgperftools-devel}
 %{?_enable_jemalloc:BuildRequires: libjemalloc-devel}
 %{?_enable_lzo:BuildRequires: liblzo2-devel}
 %{?_enable_snappy:BuildRequires: libsnappy-devel}
 %{?_enable_bzip2:BuildRequires: bzlib-devel}
-%{?_enable_xen:BuildRequires: xen-devel}
+%{?_enable_xen:BuildRequires: libxen-devel}
 
 %description
 QEMU is a fast processor emulator using dynamic translation to achieve
@@ -262,7 +264,7 @@ Requires(pre): control >= 0.7.2
 Requires(pre): shadow-utils sysvinit-utils
 Requires: seavgabios
 Requires: seabios >= 1.7.4-alt2
-Requires: ipxe-roms-qemu >= 1.0.0-alt4.git93acb5d
+Requires: ipxe-roms-qemu >= 1:20161208-alt1.git26050fd
 Requires: %name-img = %version-%release
 Requires: edk2-ovmf
 
@@ -367,6 +369,10 @@ cp -f %SOURCE2 qemu-kvm.control.in
 
 %build
 export CFLAGS="%optflags"
+# --build-id option is used for giving info to the debug packages.
+export extraldflags="-Wl,--build-id"
+export buildldflags="VL_LDFLAGS=-Wl,--build-id"
+
 %if_enabled binfmt_misc
 # non-GNU configure
 ./configure \
@@ -377,7 +383,15 @@ export CFLAGS="%optflags"
 	--mandir=%_mandir \
 	--libexecdir=%_libexecdir \
 	--localstatedir=%_localstatedir \
+%ifnarch aarch64
+	--extra-ldflags="$extraldflags -Wl,-z,relro -Wl,-z,now" \
+%else
+	--extra-ldflags="$extraldflags" \
+%endif
+	--disable-pie \
+	--disable-werror \
 	--static \
+	--enable-kvm \
 	--disable-debug-tcg \
 	--disable-sparse \
 	--disable-strip \
@@ -386,8 +400,6 @@ export CFLAGS="%optflags"
 	--disable-xfsctl \
 	--disable-smartcard \
 	--disable-usb-redir \
-	--disable-linux-aio \
-	--disable-linux-aio \
 	--disable-libusb \
 	--disable-rdma \
 	--disable-libiscsi \
@@ -398,10 +410,20 @@ export CFLAGS="%optflags"
 	--disable-gnutls \
 	--disable-nettle \
 	--disable-gcrypt \
+	--disable-cap-ng \
+	--disable-curl \
 	--disable-virglrenderer \
 	--disable-lzo \
 	--disable-numa \
+	--disable-tcmalloc \
 	--disable-jemalloc \
+	--disable-replication \
+	--disable-tools \
+	--disable-guest-agent \
+	--disable-guest-agent-msi \
+	--disable-curses \
+	--disable-spice \
+	--disable-sdl \
 	--disable-gtk
 
 # Please do not touch this
@@ -410,11 +432,11 @@ N
 /cpu_model/ s,any,cortex-a8,
 }" linux-user/main.c
 
-%make_build
+%make_build V=1 $buildldflags
 mv arm-linux-user/qemu-arm arm-linux-user/qemu-armh
 
 sed -i '/cpu_model =/ s,cortex-a8,arm926,' linux-user/main.c
-%make_build
+%make_build V=1 $buildldflags
 find -regex '.*linux-user/qemu.*' -perm 755 -exec mv '{}' '{}'.static ';'
 %make_build clean
 sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
@@ -429,7 +451,12 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	--mandir=%_mandir \
 	--libexecdir=%_libexecdir \
 	--localstatedir=%_localstatedir \
-	--extra-cflags="%optflags" \
+%ifnarch aarch64
+	--extra-ldflags="$extraldflags -pie -Wl,-z,relro -Wl,-z,now" \
+%else
+	--extra-ldflags="$extraldflags" \
+%endif
+	--with-pkgversion=%name-%version-%release \
 	%{subst_enable werror} \
 	%{?_enable_sdl:--enable-sdl --with-sdlabi=1.2} \
 	%{?_enable_sdl2:--enable-sdl --with-sdlabi=2.0} \
@@ -445,7 +472,6 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	%{?_disable_aio:--disable-linux-aio} \
 	%{?_disable_blobs: --disable-blobs} \
 	%{subst_enable spice} \
-	%{?_disable_uuid:--disable-uuid} \
 	--disable-debug-tcg \
 	--disable-sparse \
 	--disable-strip \
@@ -461,6 +487,7 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	--with-system-pixman \
 	%{?_enable_vhost_net:--enable-vhost-net} \
 	%{?_enable_vhost_scsi:--enable-vhost-scsi } \
+	%{?_enable_vhost_vsock:--enable-vhost-vsock} \
 	%{subst_enable smartcard} \
 	%{subst_enable libusb} \
 	%{?_enable_usb_redir:--enable-usb-redir} \
@@ -477,7 +504,9 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	%{subst_enable nettle} \
 	%{subst_enable gcrypt} \
 	%{subst_enable numa} \
+	%{subst_enable tcmalloc} \
 	%{subst_enable jemalloc} \
+	%{subst_enable replication} \
 	%{subst_enable lzo} \
 	%{subst_enable snappy} \
 	%{subst_enable bzip2} \
@@ -485,7 +514,7 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	%{subst_enable tools} \
 	--enable-pie
 
-%make_build
+%make_build V=1 $buildldflags
 
 sed -i 's/@GROUP@/%_group/g' qemu-kvm.control.in
 
@@ -540,7 +569,7 @@ rm -f %buildroot%_datadir/%name/s390-ccw.img
 # /usr/share/ipxe, as QEMU doesn't know how to look
 # for other paths, yet.
 
-for rom in e1000 ne2k_pci pcnet rtl8139 virtio eepro100; do
+for rom in e1000 ne2k_pci pcnet rtl8139 virtio eepro100 e1000e vmxnet3 ; do
   ln -r -s %buildroot%_datadir/ipxe/pxe-${rom}.rom %buildroot%_datadir/%name/pxe-${rom}.rom
   ln -r -s %buildroot%_datadir/ipxe.efi/efi-${rom}.rom %buildroot%_datadir/%name/efi-${rom}.rom
 done
@@ -550,7 +579,6 @@ for bios in vgabios vgabios-cirrus vgabios-qxl vgabios-stdvga vgabios-vmware vga
 done
 
 ln -r -s %buildroot%_datadir/seabios/{bios,bios-256k}.bin %buildroot%_datadir/%name/
-ln -r -s %buildroot%_datadir/seabios/{acpi-dsdt,q35-acpi-dsdt}.aml %buildroot%_datadir/%name/
 
 mkdir -p %buildroot/lib/binfmt.d
 for i in dummy \
@@ -686,6 +714,10 @@ fi
 %_bindir/ivshmem-server
 
 %changelog
+* Wed Dec 21 2016 Alexey Shabalin <shaba@altlinux.ru> 2.8.0-alt1
+- 2.8.0
+- enable xen support
+
 * Sat Oct 01 2016 Alexey Shabalin <shaba@altlinux.ru> 2.6.2-alt1
 - 2.6.2
 
