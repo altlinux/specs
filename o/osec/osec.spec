@@ -1,6 +1,6 @@
 Name: osec
 Version: 1.2.7
-Release: alt1
+Release: alt2
 
 Summary: Lightweight file permission checker
 License: GPL3
@@ -10,7 +10,7 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 
 Source: osec-%version.tar
 
-PreReq: shadow-utils
+Requires(pre): shadow-utils
 
 Provides: mtree-sec = %version-%release
 Obsoletes: mtree-sec
@@ -36,7 +36,7 @@ Requires: %name = %version-%release
 Requires: %name-cronjob
 Requires: /bin/mail
 Requires: perl-base
-PreReq: coreutils
+Requires(pre): coreutils
 
 %description
 This package contains osec program which performs files integrity check
@@ -72,7 +72,7 @@ echo '0 0 * * * root %_datadir/osec/osec.cron' > etc/cron.d/osec
 
 #configs
 mkdir -pm700 -- etc/osec
-mv -- etc/dirs.conf .%_datadir/pipe.conf etc/osec/
+mv -- etc/dirs.conf etc/exclude.conf .%_datadir/pipe.conf etc/osec/
 chmod 600 -- etc/osec/*.conf
 
 #install directory for the databases
@@ -107,6 +107,10 @@ rm -f %osec_statedir/osec.db.*
 %_bindir/osec_rpm_reporter
 
 %changelog
+* Fri Dec 09 2016 Alexey Gladkov <legion@altlinux.ru> 1.2.7-alt2
+- Add large-file support.
+- Move exclude.conf to proper place.
+
 * Sat Sep 03 2016 Alexey Gladkov <legion@altlinux.ru> 1.2.7-alt1
 - New version (1.2.7);
 - Fix EXCLUDE_FILE handling (ALT#30413);
