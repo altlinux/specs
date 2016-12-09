@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 %global nameddottag  %(echo %{?namedreltag} | tr - . )
 Name:          spock
 Version:       0.7
-Release:       alt3_0.9.groovy.2.0jpp8
+Release:       alt3_0.13.groovy.2.0jpp8
 Summary:       A testing and specification framework
 License:       ASL 2.0
 URL:           https://github.com/spockframework/spock
@@ -24,7 +24,7 @@ BuildRequires: gradle-local
 BuildRequires: apache-parent
 
 BuildRequires: ant
-BuildRequires: antlr
+BuildRequires: antlr-tool
 BuildRequires: aopalliance
 BuildRequires: apache-commons-cli
 BuildRequires: cglib
@@ -32,9 +32,10 @@ BuildRequires: google-guice
 BuildRequires: groovy >= 2.0
 BuildRequires: hamcrest
 BuildRequires: junit
-BuildRequires: objectweb-asm
 BuildRequires: objenesis
+BuildRequires: objectweb-asm
 
+Requires:      java
 BuildArch:     noarch
 
 Obsoletes:     %{name}-javadoc < 0.7-0.5
@@ -65,30 +66,33 @@ testing Guice 2/3 based applications.
 find . -name "*.class" -delete
 find . -name "*.jar" -delete
 
+# Enable local mode
+perl -p -e "s/mavenCentral/xmvn()\n    mavenCentral/" build.gradle > build.gradle.temp
+mv build.gradle.temp build.gradle
+
+sed -i "s|sourceCompatibility = 1.5|sourceCompatibility = 1.6|" build.gradle
+
 # We don't need these modules.
-rm -rf spock-maven spock-spring spock-tapestry spock-unitils
+rm -rf spock-maven spock-specs spock-spring spock-tapestry spock-unitils
+%mvn_package ":spock-{maven,specs,spring,tapestry,unitils}" __noinstall
 
 %build
-gradle-local -s --offline -x javadoc install
+
+# install task used for generate pom files
+%gradle_build -s -- -x javadoc
 
 %install
-repo=$HOME/.m2/repository
-
-for mod in core guice; do
-    pom=$repo/org/spockframework/spock-$mod/%{namedversion}/spock-$mod-%{namedversion}.pom
-    jar=$repo/org/spockframework/spock-$mod/%{namedversion}/spock-$mod-%{namedversion}.jar
-    %mvn_artifact $pom $jar
-    %mvn_package :spock-$mod $mod
-done
-
 %mvn_install
 
-%files core -f .mfiles-core
+%files core -f .mfiles-spock-core
 %doc LICENSE NOTICE
 
-%files guice -f .mfiles-guice
+%files guice -f .mfiles-spock-guice
 
 %changelog
+* Fri Dec 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.7-alt3_0.13.groovy.2.0jpp8
+- new fc release
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.7-alt3_0.9.groovy.2.0jpp8
 - unbootstrap build
 
