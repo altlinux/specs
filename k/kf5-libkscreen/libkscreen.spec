@@ -1,8 +1,8 @@
 %define rname libkscreen
 
 Name: kf5-%rname
-Version: 5.8.3
-Release: alt1
+Version: 5.8.4
+Release: alt1%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -16,7 +16,7 @@ Patch1: alt-pnp-ids-path.patch
 # Automatically added by buildreq on Wed Feb 25 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-test libqt5-x11extras libstdc++-devel libxcb-devel libxkbfile-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
 #BuildRequires: extra-cmake-modules gcc-c++ python-module-google qt5-x11extras-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-x11extras-devel kf5-kwayland-devel
 
 %description
@@ -85,6 +85,12 @@ Requires: %name-common = %version-%release
 %_K5dbus_srv/org.kde.kscreen.service
 
 %changelog
+* Fri Dec 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.4-alt1%ubt
+- new version
+
+* Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt0.M80P.1
+- build for M80P
+
 * Tue Nov 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt1
 - new version
 

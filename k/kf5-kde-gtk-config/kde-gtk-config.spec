@@ -1,8 +1,8 @@
 %define rname kde-gtk-config
 
 Name: kf5-%rname
-Version: 5.8.3
-Release: alt1
+Version: 5.8.4
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -16,7 +16,7 @@ Patch1: alt-defaults.patch
 # Automatically added by buildreq on Tue Apr 07 2015 (-bi)
 # optimized out: at-spi2-atk cmake cmake-modules elfutils fontconfig fontconfig-devel glib2-devel kf5-attica-devel libEGL-devel libGL-devel libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcloog-isl4 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server libxcbutil-keysyms pkg-config python-base ruby ruby-stdlibs xorg-xproto-devel
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libgtk+2-devel libgtk+3-devel python-module-google qt5-base-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: libgtk+2-devel libgtk+3-devel libXcursor-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel
@@ -75,6 +75,12 @@ KF5 library
 %_K5icon/*/*/apps/kde-gtk-config.*
 
 %changelog
+* Fri Dec 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.4-alt1%ubt
+- new version
+
+* Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt0.M80P.1
+- build for M80P
+
 * Tue Nov 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt1
 - new version
 

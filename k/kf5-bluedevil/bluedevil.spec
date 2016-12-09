@@ -1,8 +1,8 @@
 %define rname bluedevil
 
 Name: kf5-%rname
-Version: 5.8.3
-Release: alt1
+Version: 5.8.4
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -17,7 +17,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Fri Feb 27 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base ruby ruby-stdlibs shared-mime-info
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libbluedevil-devel kf5-solid-devel kf5-sonnet-devel python-module-google qt5-base-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-declarative-devel
 BuildRequires: kf5-bluez-qt-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
@@ -91,6 +91,12 @@ mv %buildroot/%_K5xdgmime/bluedevil-mime.xml %buildroot/%_K5xdgmime/kf5-bluedevi
 %_K5xdgmime/*.xml
 
 %changelog
+* Fri Dec 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.4-alt1%ubt
+- new version
+
+* Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt0.M80P.1
+- build for M80P
+
 * Tue Nov 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt1
 - new version
 

@@ -4,8 +4,8 @@
 %define libmilou libmilou%milou_sover
 
 Name: kf5-%rname
-Version: 5.8.3
-Release: alt1
+Version: 5.8.4
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -18,7 +18,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Tue Apr 07 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libdbusmenu-qt52 libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kpackage-devel kf5-krunner-devel kf5-kservice-devel kf5-plasma-framework-devel python-module-google qt5-declarative-devel qt5-script-devel rpm-build-gir rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-declarative-devel qt5-script-devel
 BuildRequires: kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kpackage-devel
 BuildRequires: kf5-krunner-devel kf5-kservice-devel kf5-plasma-framework-devel
@@ -81,6 +81,12 @@ KF5 library
 %_K5lib/libmilou.so.%milou_sover
 
 %changelog
+* Fri Dec 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.4-alt1%ubt
+- new version
+
+* Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt0.M80P.1
+- build for M80P
+
 * Tue Nov 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt1
 - new version
 

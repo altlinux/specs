@@ -1,8 +1,8 @@
 %define rname breeze-gtk
 
 Name: kde5-%rname
-Version: 5.8.3
-Release: alt1
+Version: 5.8.4
+Release: alt1%ubt
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -18,7 +18,7 @@ Patch1: alt-conf-update.patch
 # Automatically added by buildreq on Wed Oct 05 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ libqt5-core libstdc++-devel perl python-base python-modules python3 python3-base rpm-build-python3
 #BuildRequires: extra-cmake-modules python-module-google python3-dev qt5-base-devel ruby ruby-stdlibs
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: gtk-engines-pixmap libgtk+3-devel pkg-config
 
@@ -53,6 +53,12 @@ Provides: gtk3-theme-breeze = %version-%release
 %_datadir/themes/Breeze*
 
 %changelog
+* Fri Dec 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.4-alt1%ubt
+- new version
+
+* Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt0.M80P.1
+- build for M80P
+
 * Tue Nov 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt1
 - new version
 

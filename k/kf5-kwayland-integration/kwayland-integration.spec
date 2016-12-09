@@ -1,8 +1,8 @@
 %define rname kwayland-integration
 
 Name: kf5-%rname
-Version: 5.8.3
-Release: alt1
+Version: 5.8.4
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -15,7 +15,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Thu Aug 27 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-widgets libqt5-x11extras libstdc++-devel libwayland-client libxcbutil-keysyms python-base python3 python3-base ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kidletime-devel kf5-kwayland-devel kf5-kwindowsystem-devel python-module-google qt5-base-devel rpm-build-python3 rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: kf5-kidletime-devel kf5-kwayland-devel kf5-kwindowsystem-devel
 
@@ -36,6 +36,12 @@ Provides integration plugins for various KDE frameworks for the wayland windowin
 %_K5plug/kf5/*/*Wayland*.so
 
 %changelog
+* Fri Dec 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.4-alt1%ubt
+- new version
+
+* Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt0.M80P.1
+- build for M80P
+
 * Tue Nov 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt1
 - new version
 
