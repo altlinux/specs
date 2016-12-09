@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          thredds
 Version:       4.6.2
-Release:       alt1_1jpp8
+Release:       alt1_3jpp8
 Summary:       Thematic Realtime Environmental Distributed Data Services (TDS)
 # GPLv3: opendap/src/main/java/opendap/dap/parsers/DapParser.java
 # LGPLv3: opendap/src/main/java/opendap/servlet/AsciiWriter.java
@@ -21,6 +24,9 @@ Patch0:        thredds-4.6.2-use-proper-system-environment-variables.patch
 # jj2000 is non free:
 # https://www.redhat.com/archives/fedora-legal-list/2008-December/msg00004.html
 Patch1:        thredds-4.6.2-remove-jj2000-support.patch
+
+# Support for log4j 2.5
+Patch2:        thredds-4.6.2-log4j.patch
 
 BuildRequires: bison >= 3.0
 BuildRequires: maven-local
@@ -55,11 +61,8 @@ BuildRequires: mvn(org.springframework:spring-web)
 BuildRequires: mvn(com.coverity.security:coverity-escapers:1.1.1)
 # https://github.com/eclipsesource/restfuse
 BuildRequires: mvn(com.restfuse:com.eclipsesource.restfuse:1.0.0)
-# https://gil.fedorapeople.org/threddsIso-2.2.6-1.fc20.src.rpm
 BuildRequires: mvn(EDS:threddsIso)
-# https://gil.fedorapeople.org/bounce-0.19-1.fc20.src.rpm
 BuildRequires: mvn(org.bounce:bounce)
-# https://gil.fedorapeople.org/imgscalr-lib-4.2-1.fc20.src.rpm
 BuildRequires: mvn(org.imgscalr:imgscalr-lib)
 # https://github.com/52North/OX-Framework/
 BuildRequires: mvn(org.n52.sensorweb:52n-oxf-xmlbeans)
@@ -69,7 +72,6 @@ BuildRequires: mvn(org.n52.sensorweb:52n-xml-om-v20)
 BuildRequires: mvn(org.n52.sensorweb:52n-xml-sampling-v20)
 BuildRequires: mvn(org.n52.sensorweb:52n-xml-sweCommon-v20)
 BuildRequires: mvn(org.n52.sensorweb:52n-xml-waterML-v20)
-# https://gil.fedorapeople.org/geoapi-3.1-0.1.M04.fc19.src.rpm
 BuildRequires: mvn(org.opengis:geoapi-pending)
 # https://github.com/Unidata/ncWMS/
 BuildRequires: mvn(uk.ac.rdg.resc:ncwms)
@@ -185,6 +187,7 @@ This package contains javadoc for %{name}.
 %patch0 -p1
 %patch1 -p1
 rm -rf grib/src/main/java/ucar/nc2/grib/grib2/Grib2JpegDecoder.java
+%patch2 -p1
 
 sed -i 's/\r//' cdm/CHANGES.txt LICENSE.txt
 
@@ -267,6 +270,9 @@ sed -i 's/\r//' cdm/CHANGES.txt LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 09 2016 Igor Vlasenko <viy@altlinux.ru> 4.6.2-alt1_3jpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 4.6.2-alt1_1jpp8
 - new version
 
