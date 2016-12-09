@@ -1,5 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-plugin-testing
 Version:        3.3.0
-Release:        alt1_3jpp8
+Release:        alt1_6jpp8
 Summary:        Maven Plugin Testing
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugin-testing/
@@ -16,6 +17,7 @@ BuildArch:      noarch
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugin-testing/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 Patch0:         0001-Port-to-plexus-utils-3.0.21.patch
+Patch1:         0002-Port-to-current-maven-artifact.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
@@ -74,16 +76,18 @@ Framework to test Maven Plugins with Easymock objects.
 
 %prep
 %setup -q
+
 %patch0 -p1
+%patch1 -p1
+
 %pom_remove_plugin :maven-enforcer-plugin
 
 sed -i -e "s/MockControl/IMocksControl/g" maven-test-tools/src/main/java/org/apache/maven/shared/tools/easymock/MockManager.java
 
-%build
 %mvn_alias : org.apache.maven.shared:
-# Tests are skipped due to some test failures most probably caused by issues 
-# with our plexus container
-%mvn_build -f -s
+
+%build
+%mvn_build -s
 
 %install
 %mvn_install
@@ -97,6 +101,9 @@ sed -i -e "s/MockControl/IMocksControl/g" maven-test-tools/src/main/java/org/apa
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 09 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_6jpp8
+- new fc release
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_3jpp8
 - new version
 
