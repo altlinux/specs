@@ -1,14 +1,15 @@
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java rpm-build-python3 rpm-macros-fedora-compat
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires(pre): rpm-build-python3 rpm-macros-java
+BuildRequires: python3-devel
 # END SourceDeps(oneline)
 # optional dependencies of jpackage-utils
 %filter_from_requires /^.usr.bin.jar/d
 %filter_from_requires /^objectweb-asm/d
-%define _unpackaged_files_terminate_build 0
+%define _unpackaged_files_terminate_build 1
 
+BuildRequires: source-highlight python3-module-nose python3-module-setuptools-tests
 %add_python3_path /usr/share/java-utils/
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -24,13 +25,13 @@ BuildRequires: jpackage-generic-compat
 %global __requires_exclude_from %{?__requires_exclude_from:%__requires_exclude_from|}/maven-metadata/javapackages-metadata.xml$
 
 # Avoid circular dependency on itself when bootstrapping
-%{!?_with_bootstrap: %global bootstrap 1}
+%{!?_with_bootstrap: %global bootstrap 0}
 
 %bcond_with tests
 
 Name:           javapackages-tools
 Version:        4.6.0
-Release:        alt9_12jpp8.1.1
+Release:        alt10_14jpp8
 
 Summary:        Macros and scripts for Java packaging support
 
@@ -44,7 +45,7 @@ Patch1:         0002-install-Move-mvn_build-and-builddep-from-maven-local.patch
 BuildArch:      noarch
 
 BuildRequires:  make
-BuildRequires:  asciidoc
+BuildRequires: asciidoc asciidoc-a2x
 BuildRequires:  xmlto
 BuildRequires:  dia
 %if ! 0%{?bootstrap}
@@ -53,12 +54,14 @@ BuildRequires:  xmvn-resolve >= 2
 %endif
 
 Requires:       coreutils
+Requires:       findutils
 Requires:       lua
 
 Provides:       jpackage-utils = %{version}-%{release}
 Source44: import.info
-Source45: maven.prov.files
-Source46: maven.env
+Source45: osgi-fc.prov.files
+Source46: maven.prov.files
+Source47: maven.env
 Patch33: javapackages-tools-4.6.0-alt-use-enviroment.patch
 Patch34: javapackages-tools-4.6.0-alt-req-headless-off.patch
 Patch35: javapackages-tools-4.6.0-alt-shade-jar.patch
@@ -169,7 +172,7 @@ artifact resolution using XMvn resolver.
 Group: Development/Java
 Summary:        Module for handling various files for Java packaging
 Requires:       python3-module-lxml
-Requires:       python3-module-matplotlib
+Requires:       python3-module-six
 Obsoletes:      python-javapackages < %{version}-%{release}
 
 %description -n python3-module-javapackages
@@ -197,7 +200,7 @@ This package provides non-essential macros and scripts to support Java packaging
 
 %prep
 %setup -q -n javapackages-%{version}
-#patch0 -p1
+%patch0 -p1
 %patch1 -p1
 
 sed -i '/fedora-review/d' install
@@ -223,16 +226,19 @@ pushd python
   %{__python3} setup.py install -O1 --skip-build --root %{buildroot}
 popd
 
-install -m755 -D %{SOURCE45} %buildroot/usr/lib/rpm/maven.prov.files
-install -m755 -D %{SOURCE45} %buildroot/usr/lib/rpm/maven.req.files
+install -m755 -D %{SOURCE46} %buildroot/usr/lib/rpm/maven.prov.files
+install -m755 -D %{SOURCE46} %buildroot/usr/lib/rpm/maven.req.files
 
-install -m755 -D %{SOURCE45} %buildroot/usr/lib/rpm/javadoc.req.files
+install -m755 -D %{SOURCE46} %buildroot/usr/lib/rpm/javadoc.req.files
 sed -i -e s,/usr/share/maven-metadata/,/usr/share/javadoc/, %buildroot/usr/lib/rpm/javadoc.req.files
+
+install -m755 -D %{SOURCE45} %buildroot/usr/lib/rpm/osgi-fc.prov.files
+install -m755 -D %{SOURCE45} %buildroot/usr/lib/rpm/osgi-fc.req.files
 
 chmod 755 %buildroot/usr/lib/rpm/*.req* %buildroot/usr/lib/rpm/*.prov*
 sed -i -e 's,^#!python,#!/usr/bin/python,' %buildroot/usr/lib/rpm/*.req* %buildroot/usr/lib/rpm/*.prov*
 
-install -m755 -D %{SOURCE46} %buildroot%_rpmmacrosdir/maven.env
+install -m755 -D %{SOURCE47} %buildroot%_rpmmacrosdir/maven.env
 
 # in rpm-build-java
 sed -i -e '/usr\/lib\/rpm/d' files-common
@@ -249,6 +255,11 @@ mv macros.fjava javapackages-fjava
 mv macros.jpackage javapackages-jpackage
 popd
 
+pushd %buildroot/usr/lib/rpm/
+mv osgi.prov osgi-fc.prov
+mv osgi.req osgi-fc.req
+popd
+
 
 
 %if %{with tests}
@@ -259,6 +270,12 @@ popd
 %files -f files-common
 
 %files -n javapackages-local -f files-local
+
+%_datadir/java-utils/__pycache__
+%exclude %_datadir/java-utils/__pycache__/maven_depmap.*
+%exclude %_datadir/java-utils/__pycache__/pom_editor.*
+%exclude %_datadir/java-utils/__pycache__/request-artifact.*
+
 
 %files -n maven-local -f files-maven
 
@@ -280,15 +297,21 @@ popd
 %files -n rpm-build-java
 /usr/lib/rpm/maven.*
 /usr/lib/rpm/javadoc.*
+/usr/lib/rpm/osgi-fc.*
 %_rpmmacrosdir/maven.env
 %_datadir/java-utils/maven_depmap.py
 %_datadir/java-utils/pom_editor.py
 %_datadir/java-utils/request-artifact.py
 %_bindir/xmvn-builddep
-
+%_datadir/java-utils/__pycache__/maven_depmap.*
+%_datadir/java-utils/__pycache__/pom_editor.*
+%_datadir/java-utils/__pycache__/request-artifact.*
 
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt10_14jpp8
+- update
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:4.6.0-alt9_12jpp8.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).

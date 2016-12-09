@@ -1,14 +1,14 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven
-Version:        3.3.3
-Release:        alt1_3jpp8
+Version:        3.3.9
+Release:        alt1_4jpp8
 Summary:        Java project management and project comprehension tool
 License:        ASL 2.0
 URL:            http://maven.apache.org/
@@ -18,6 +18,8 @@ Source0:        http://archive.apache.org/dist/%{name}/%{name}-3/%{version}/sour
 Source1:        maven-bash-completion
 Source2:        mvn.1
 Source200:      %{name}-script
+
+Patch0:         0001-Force-SLF4J-SimpleLogger-re-initialization.patch
 
 # If XMvn is part of the same RPM transaction then it should be
 # installed first to avoid triggering rhbz#1014355.
@@ -34,6 +36,7 @@ BuildRequires:  aopalliance
 BuildRequires:  apache-commons-cli
 BuildRequires:  apache-commons-io
 BuildRequires:  apache-commons-lang
+BuildRequires:  apache-commons-lang3
 BuildRequires:  apache-commons-codec
 BuildRequires:  apache-commons-jxpath
 BuildRequires:  apache-commons-logging
@@ -99,10 +102,10 @@ Requires:       aopalliance
 Requires:       apache-commons-cli
 Requires:       apache-commons-io
 Requires:       apache-commons-lang
+Requires:       apache-commons-lang3
 Requires:       apache-commons-codec
 Requires:       apache-commons-logging
 Requires:       atinject
-Requires:       geronimo-annotation
 Requires:       google-guice
 Requires:       guava
 Requires:       httpcomponents-client
@@ -148,6 +151,7 @@ BuildArch: noarch
 
 %prep
 %setup -q -n apache-%{name}-%{version}%{?ver_add}
+%patch0 -p1
 
 # not really used during build, but a precaution
 rm maven-ant-tasks-*.jar
@@ -234,10 +238,10 @@ ln -sf $(build-classpath plexus/classworlds) \
         commons-cli \
         commons-io \
         commons-lang \
+        commons-lang3 \
         guava \
         atinject \
         jsoup/jsoup \
-        geronimo-annotation \
         jsr-305 \
         org.eclipse.sisu.inject \
         org.eclipse.sisu.plexus \
@@ -295,6 +299,9 @@ touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.3.9-alt1_4jpp8
+- new version
+
 * Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.3.3-alt1_3jpp8
 - java 8 mass update
 
