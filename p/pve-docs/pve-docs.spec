@@ -1,7 +1,7 @@
 Name: pve-docs
 Summary: PVE Documentation
 Version: 4.3.19
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: Documentation
 Url: https://git.proxmox.com/
@@ -45,7 +45,7 @@ cp asciidoc/*pve*.conf %buildroot%_datadir/pve-doc-generator/asciidoc/
 install -pD -m755 asciidoc-pve %buildroot%_bindir/asciidoc-pve
 
 mkdir -p %buildroot%_datadir/%name/{api-viewer,images/screenshot}
-install -m644 *.{html,epub,pdf} %buildroot%_datadir/%name/
+install -m644 *.{html,epub} %buildroot%_datadir/%name/
 install -m644 api-viewer/apidoc.js %buildroot%_datadir/%name/api-viewer/
 install -m644 api-viewer/index.html %buildroot%_datadir/%name/api-viewer/
 install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screenshot/
@@ -58,6 +58,9 @@ install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screensho
 %_datadir/pve-doc-generator
 
 %changelog
+* Fri Dec 09 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.19-alt2
+- remove pve-admin-guide.pdf
+
 * Mon Dec 05 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.19-alt1
 - 4.3-19
 
