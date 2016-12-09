@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-assembly-plugin
-Version:        2.5.5
-Release:        alt1_3jpp8
+Version:        2.6
+Release:        alt1_6jpp8
 Summary:        Maven Assembly Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-assembly-plugin/
@@ -16,16 +16,20 @@ BuildArch:      noarch
 
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-Patch0:         0001-Port-to-current-plexus-archiver.patch
+# Patch merged upstream: https://issues.apache.org/jira/browse/MASSEMBLY-790
+# https://github.com/apache/maven-plugins/commit/18e37d5.patch
+Patch0:         0001-Port-to-Maven-Filtering-3.0.0.patch
+# Not forwarded - problem not reproducible with latest upstream SVN trunk
+Patch1:         0002-Port-to-Maven-Shared-IO-3.0.0.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven.shared:file-management)
 BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
-BuildRequires:  mvn(org.apache.maven.shared:maven-filtering)
+BuildRequires:  mvn(org.apache.maven.shared:maven-filtering) >= 3.0.0
 BuildRequires:  mvn(org.apache.maven.shared:maven-repository-builder)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-io)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-io) >= 3.0.0
 BuildRequires:  mvn(org.apache.maven:maven-archiver)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
@@ -55,8 +59,8 @@ This package provides %{summary}.
 
 %prep
 %setup -q
-
 %patch0 -p1
+%patch1 -p1
 
 %build
 # Tests need easymockclassextension version 2.x, which is incompatible
@@ -74,6 +78,9 @@ This package provides %{summary}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_6jpp8
+- new version
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.5-alt1_3jpp8
 - new version
 
