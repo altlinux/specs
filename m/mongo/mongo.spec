@@ -1,10 +1,13 @@
 Name: mongo
-Version: 3.2.11
-Release: alt1
+Version: 3.4.0
+Release: alt1.1
 Summary: mongo client shell and tools
 License: AGPL 3.0
 Url: http://www.mongodb.org
 Group: Development/Databases
+# From https://docs.mongodb.com/manual/installation
+# Changed in version 3.4: MongoDB no longer supports 32-bit x86 platforms.
+ExclusiveArch: x86_64
 
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
@@ -69,7 +72,6 @@ sed -i -r "s|(env.Append\(CCFLAGS=\['-DDEBUG_MODE=false')(\]\))|\1,'-O0'\2|"  sr
 	-j %__nprocs \\\
 	--use-system-tcmalloc \\\
 	--use-system-pcre \\\
-	--use-system-boost \\\
 	--use-system-snappy \\\
 	--use-system-valgrind \\\
 	--use-system-zlib \\\
@@ -77,12 +79,8 @@ sed -i -r "s|(env.Append\(CCFLAGS=\['-DDEBUG_MODE=false')(\]\))|\1,'-O0'\2|"  sr
 	--use-system-yaml \\\
 	--prefix=%buildroot%_prefix \\\
 	--nostrip \\\
-%ifarch x86_64 \
 	--use-sasl-client \\\
 	--wiredtiger=on \\\
-%else \
-	--wiredtiger=off \\\
-%endif \
 	--ssl \\\
 	--disable-warnings-as-errors \\\
 	MONGO_VERSION="%{version}-%{release}" \\\
@@ -141,16 +139,15 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 
 %_bindir/mongo
 %_bindir/mongoperf
-%_bindir/mongosniff
 
 %_man1dir/mongo.1*
-%_man1dir/mongosniff.1*
 %_man1dir/mongoperf.1*
 %exclude %_man1dir/mongodump.1*
 %exclude %_man1dir/mongoexport.1*
 %exclude %_man1dir/mongofiles.1*
 %exclude %_man1dir/mongoimport.1*
 %exclude %_man1dir/mongorestore.1*
+%exclude %_man1dir/mongosniff.1*
 %exclude %_man1dir/mongostat.1*
 %exclude %_man1dir/bsondump.1*
 %exclude %_man1dir/mongotop.1*
@@ -184,6 +181,13 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Fri Dec 9 2016 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt1.1
+- drop 32-bit packages
+
+* Thu Dec 8 2016 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt1
+- 3.4.0
+- use bundled boost
+
 * Fri Nov 25 2016 Vladimir Didenko <cow@altlinux.org> 3.2.11-alt1
 - 3.2.11
 
