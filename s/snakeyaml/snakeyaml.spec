@@ -1,20 +1,19 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global vertag 3f1ee79d50cf
+%global vertag 106418cae0ba
 
 Name:             snakeyaml
-Version:          1.13
-Release:          alt1_9jpp8
+Version:          1.16
+Release:          alt1_2jpp8
 Summary:          YAML parser and emitter for the Java programming language
 License:          ASL 2.0
-# http://code.google.com/p/snakeyaml
-URL:              http://code.google.com/p/%{name}
-Source0:          https://snakeyaml.googlecode.com/archive/v%{version}.zip#/%{name}-%{version}.zip
+URL:              https://bitbucket.org/asomov/%{name}/
+Source0:          https://bitbucket.org/asomov/snakeyaml/get/v%{version}.tar.bz2#/%{name}-%{version}.tar.bz2
 
 # Upstream has forked gdata-java and base64 and refuses [1] to
 # consider replacing them by external dependencies.  Bundled libraries
@@ -25,8 +24,6 @@ Source0:          https://snakeyaml.googlecode.com/archive/v%{version}.zip#/%{na
 Patch0:           0001-Replace-bundled-base64-implementation.patch
 # We don't have gdata-java in Fedora any longer, use commons-codec instead
 Patch1:           0002-Replace-bundled-gdata-java-client-classes-with-commo.patch
-# Fix tests on Java 8 (can be removed if version > 1.13)
-Patch2:           java8-use-linked-hashmap.patch
 
 BuildArch:        noarch
 
@@ -64,10 +61,9 @@ BuildArch: noarch
 This package contains %{summary}.
 
 %prep
-%setup -q -n %{name}-%{vertag}
+%setup -q -n asomov-%{name}-%{vertag}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %mvn_file : %{name}
 
@@ -102,6 +98,9 @@ sed -i 's/\r//g' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1_2jpp8
+- new version
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_9jpp8
 - unbootsrap build
 
