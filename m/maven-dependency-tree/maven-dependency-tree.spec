@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,16 +7,14 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 
 Name:          maven-dependency-tree
-Version:       2.2
+Version:       3.0
 Release:       alt1_2jpp8
 Summary:       Maven dependency tree artifact
-Group:         Development/Java
+Group:         Development/Other
 License:       ASL 2.0
 Url:           http://maven.apache.org/
 Source0:       http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
 BuildArch:     noarch
-
-Patch0001:     0001-Port-to-Maven-3.1.0-and-Eclipse-Aether.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.maven:maven-compat)
@@ -46,7 +44,9 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q
-%patch0001 -p1
+
+find -name Maven3DependencyGraphBuilder.java -delete
+%pom_remove_dep org.sonatype.aether:
 
 %pom_remove_plugin :apache-rat-plugin
 
@@ -65,6 +65,9 @@ This package contains javadoc for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_2jpp8
+- new version
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_2jpp8
 - new version
 
