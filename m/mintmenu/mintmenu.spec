@@ -3,8 +3,8 @@
 # see /usr/share/linuxmint/mintMenu/plugins/applications.py
 
 Name:           mintmenu
-Version:        5.7.5
-Release:        alt2
+Version:        5.7.6
+Release:        alt1
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
 Summary:        Advanced Menu for the MATE Desktop
@@ -36,7 +36,6 @@ Patch36:	mintmenu-alt-no-mintengines.patch
 Patch37:	mintmenu-alt-GPL-path.patch
 Patch38:	mintmenu-alt-use-rpminstall.patch
 #Patch39:	mintmenu-alt-cyrillic.patch
-Patch40:	mintmenu-alt-xfce-logout.patch
 # Use Synaptic via consolehelper intead of gksu
 Patch41:	mintmenu-alt-fix-package-manager.patch
 Patch42:	mintmenu-alt-do-not-use-mint-utils.patch
@@ -85,7 +84,6 @@ added to your gnome-panel or launched in its own window.
 %patch37 -p0
 %patch38 -p0
 #%%patch39 -p1
-%patch40 -p0
 %patch41 -p0
 %patch42 -p1
 %patch43 -p1
@@ -147,6 +145,9 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-altlin
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Fri Dec 09 2016 Andrey Cherepanov <cas@altlinux.org> 5.7.6-alt1
+- new version 5.7.6
+
 * Tue Dec 06 2016 Andrey Cherepanov <cas@altlinux.org> 5.7.5-alt2
 - Disable get APT cache by non-working python-module-apt
 
