@@ -1,17 +1,19 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           sonar-update-center
 Version:        1.12.1
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Summary:        Sonar Update Center
 License:        LGPLv3+
 URL:            http://www.sonarqube.org
 Source0:        https://github.com/SonarSource/%{name}/archive/%{version}.tar.gz
+
+Patch0:         0001-Port-to-current-maven-dependency-tree.patch
 
 BuildArch:      noarch
 
@@ -51,6 +53,8 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q
 
+%patch0 -p1
+
 find -name '*.jar' -delete
 
 # circular dependency - parent is part of sonar-plugins which needs
@@ -80,6 +84,9 @@ find -name '*.jar' -delete
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_6jpp8
+- new fc release
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_4jpp8
 - unbootsrap build
 
