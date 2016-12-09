@@ -1,5 +1,8 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
@@ -8,28 +11,28 @@ BuildRequires: jpackage-generic-compat
 
 %global group_id  org.testng
 
-Name:             testng
-Version:          6.8.21
-Release:          alt2_2jpp8
-Summary:          Java-based testing framework
+Name:           testng
+Version:        6.9.10
+Release:        alt1_2jpp8
+Summary:        Java-based testing framework
 # org/testng/remote/strprotocol/AbstractRemoteTestRunnerClient.java is CPL
-License:          ASL 2.0 and CPL
-URL:              http://testng.org/
-Source0:          https://github.com/cbeust/testng/archive/%{name}-%{version}.tar.gz
+License:        ASL 2.0 and CPL
+URL:            http://testng.org/
+Source0:        https://github.com/cbeust/testng/archive/%{version}.tar.gz
 
-BuildArch:        noarch
+BuildArch:      noarch
 
-BuildRequires:    mvn(com.beust:jcommander) >= 1.27
-BuildRequires:    mvn(com.google.guava:guava)
-BuildRequires:    mvn(com.google.inject:guice)
-BuildRequires:    mvn(junit:junit)
-BuildRequires:    mvn(org.apache.ant:ant)
-BuildRequires:    mvn(org.beanshell:bsh)
-BuildRequires:    mvn(org.sonatype.oss:oss-parent:pom:)
-BuildRequires:    mvn(org.yaml:snakeyaml)
-
-BuildRequires:    maven-local
-BuildRequires:    maven-plugin-bundle
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.beust:jcommander)
+BuildRequires:  mvn(com.google.inject:guice::no_aop:)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.assertj:assertj-core)
+BuildRequires:  mvn(org.beanshell:bsh)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires:  mvn(org.yaml:snakeyaml)
 Source44: import.info
 
 %description
@@ -40,60 +43,54 @@ functional, end-to-end, integration, etc.
 
 %package javadoc
 Group: Development/Java
-Summary:          API documentation for %{name}
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
+%setup -q -n %{name}-%{version}
 
-# build fix for new guice
-%pom_add_dep com.google.guava:guava::provided
-sed -i "s|com.google.inject.internal|com.google.common.collect|" \
-  src/main/java/org/testng/xml/XmlDependencies.java \
-  src/main/java/org/testng/xml/XmlGroups.java \
-  src/main/java/org/testng/xml/dom/TestNGTagFactory.java \
-  src/test/java/test/dependent/InstanceSkipSampleTest.java \
-  src/test/java/test/mustache/MustacheTest.java \
-  src/test/java/test/thread/B.java
+# remove any bundled libs, but not test resources
+find ! -path "*/test/*" -name *.jar -print -delete
+find -name *.class -delete
 
+# these are unnecessary
 %pom_remove_plugin :maven-gpg-plugin
 %pom_remove_plugin :maven-source-plugin
-  
-# remove bundled stuff
-rm -rf spring
-rm -rf 3rdparty
-rm -rf lib-supplied
-rm -rf gigaspaces
-rm -f *.jar
+%pom_remove_plugin :maven-javadoc-plugin
 
-# convert to UTF-8
-native2ascii -encoding UTF-8 src/main/java/org/testng/internal/Version.java \
-  src/main/java/org/testng/internal/Version.java
+# plugins not in Fedora
+%pom_remove_plugin com.coderplus.maven.plugins:copy-rename-maven-plugin
+sed -i -e 's/VersionTemplateJava/Version.java/' pom.xml
+mv ./src/main/resources/org/testng/internal/VersionTemplateJava ./src/main/resources/org/testng/internal/Version.java
 
-iconv --from-code=ISO-8859-2 --to-code=UTF-8 ANNOUNCEMENT.txt > ANNOUNCEMENT.txt.utf8
-mv -f ANNOUNCEMENT.txt.utf8 ANNOUNCEMENT.txt
+cp -p ./src/main/java/*.dtd.html ./src/main/resources/.
+
 
 %mvn_file : %{name}
 # jdk15 classifier is used by some other packages
 %mvn_alias : :::jdk15:
 
 %build
+
 %mvn_build -- -Dmaven.local.debug=true
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc ANNOUNCEMENT.txt CHANGES.txt README
+%doc CHANGES.txt README.md
 %doc LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:6.9.10-alt1_2jpp8
+- new version
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:6.8.21-alt2_2jpp8
 - added osgi provides
 
