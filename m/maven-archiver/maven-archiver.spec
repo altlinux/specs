@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-archiver
-Version:        2.6
+Version:        3.0.0
 Release:        alt1_2jpp8
 Epoch:          0
 Summary:        Maven Archiver
@@ -17,8 +17,10 @@ BuildArch:      noarch
 
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-# Port to Maven 3
-Patch0:         maven-archiver-maven-3.patch
+Patch0:         0001-Port-tests-to-Eclipse-Aether.patch
+# Test fails with OpenJDK on Linux
+# Reported upstream: https://issues.apache.org/jira/browse/MSHARED-448
+Patch1:         0002-MSHARED-448-Skip-failing-assertion.patch
 
 BuildRequires:  jpackage-utils >= 0:1.7.2
 BuildRequires:  maven-local
@@ -28,12 +30,9 @@ BuildRequires:  maven-site-plugin
 BuildRequires:  maven-doxia-sitetools
 BuildRequires:  maven-shared-jar
 BuildRequires:  plexus-interpolation
-BuildRequires:  plexus-archiver >= 2.1-1
+BuildRequires:  plexus-archiver >= 2.1
 BuildRequires:  plexus-utils
 BuildRequires:  apache-commons-parent
-
-Provides:       maven-shared-archiver = %{version}-%{release}
-Obsoletes:      maven-shared-archiver < %{version}-%{release}
 Source44: import.info
 
 %description
@@ -50,10 +49,8 @@ Javadoc for %{name}.
 
 %prep
 %setup -q
-%patch0
-%pom_add_dep org.apache.maven:maven-core
-# tests don't compile with maven 2.2.1
-rm -fr src/test/java/org/apache/maven/archiver/*.java
+%patch0 -p1
+%patch1 -p1
 
 %build
 %mvn_build
@@ -62,13 +59,15 @@ rm -fr src/test/java/org/apache/maven/archiver/*.java
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.0.0-alt1_2jpp8
+- new version
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt1_2jpp8
 - new version
 
