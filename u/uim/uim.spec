@@ -1,6 +1,6 @@
 Name: uim
 Version: 1.8.6
-Release: alt3
+Release: alt4.git89542ac
 
 Summary: useful input method metapackage
 
@@ -9,24 +9,28 @@ Group: Text tools
 Url: https://code.google.com/p/uim/
 
 Packager: Vladimir D. Seleznev <vseleznv@altlinux.org>
-Source: %name-%version.tar.gz
+Source: %name.tar
+Source1: sigscheme.tar
 Source2: UimSystemConfiguration
 Source3: UIMFep
 Source4: UIMEl
 
-Patch1: uim-1.8.6-configure.patch
-Patch2: uim-1.8.6-uim.desktop.patch
+# Automatically added by buildreq on Sat Dec 10 2016
+# optimized out: at-spi2-atk fontconfig fontconfig-devel gcc-c++ glib-networking glib2-devel gnu-config libGL-devel libICE-devel libX11-devel libXext-devel libXft-devel libXrender-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libncurses-devel libpango-devel libqt3-settings libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-qt3support libqt4-sql libqt4-xml libqt5-core libqt5-gui libqt5-widgets libqt5-x11extras libstdc++-devel libtinfo-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server perl perl-Encode pkg-config python-base python-modules qt5-base-devel qt5-declarative-devel shared-mime-info xorg-kbproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: asciidoc intltool libanthy-devel libedit-devel libgcroots-devel libgtk+2-devel libgtk+3-devel libm17n-devel libnotify-devel libqt3-devel libqt4-webkit-devel librsvg-utils phonon-devel qt5-tools-devel qt5-wayland-devel qt5-x11extras-devel ruby ruby-stdlibs
 
-# Automatically added by buildreq on Wed Mar 09 2016
-# optimized out: at-spi2-atk fontconfig fontconfig-devel glib2-devel gnu-config libICE-devel libX11-devel libXext-devel libXft-devel libXrender-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libncurses-devel libpango-devel libqt3-settings libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-qt3support libqt4-sql libqt4-xml libstdc++-devel libtinfo-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server perl-Encode pkg-config xorg-kbproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: gcc-c++ intltool libanthy-devel libedit-devel libgcroots-devel libgtk+2-devel libgtk+3-devel libm17n-devel libnotify-devel libqt3-devel libqt4-webkit-devel phonon-devel
+# BuildRequires: asciidoc-a2x
+# BuildRequires: ruby-tools ruby-stdlibs ruby-rip
+# BuildRequires: librsvg-utils
 
 Requires: uim-fep   = %version-%release
 Requires: uim-gtk   = %version-%release
 Requires: uim-gtk3  = %version-%release
 Requires: uim-qt4   = %version-%release
+Requires: uim-qt5   = %version-%release
 Requires: uim-utils = %version-%release
 Requires: uim-xim   = %version-%release
+Requires: uim-m17nlib   = %version-%release
 
 %define common_descr uim is a multilingual input method library and environment. \
 \
@@ -189,6 +193,17 @@ Requires: uim-utils = %version-%release
 
 Qt4 module for universal input method.
 
+%package qt5
+Summary: Qt5 module for universal input method
+Group: Text tools
+Requires: libuim8 = %version-%release
+Requires: uim-utils = %version-%release
+
+%description qt5
+%common_descr
+
+Qt5 module for universal input method.
+
 %package utils
 Summary: universal input method utilities
 Group: Text tools
@@ -211,23 +226,36 @@ Requires: uim-utils = %version-%release
 XIM module for universal input method.
 
 %prep
-%setup
-%patch1 -p2
-%patch2 -p2
+%setup -n %name -a 1
 cp %SOURCE2 .
 cp %SOURCE3 .
 cp %SOURCE4 .
 
 %build
+./autogen.sh
+pushd sigscheme
+	./autogen.sh
+popd
+
 %configure \
 	--enable-dict \
 	--enable-notify=libnotify \
 	--enable-qt4-qt3support \
+	--with-m17nlib \
 	--with-qt \
 	--with-qt-immodule \
 	--with-qt4 \
 	--with-qt4-immodule \
+	--with-qt5 \
+	--with-qt5-immodule \
+	--with-libgcroots=installed \
+	--enable-conf=uim \
+	--enable-maintainer-mode \
 	#
+# need for ruby scripts
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 %make_build
 
 %install
@@ -275,20 +303,23 @@ cp %SOURCE4 .
 
 %files -n libuim-custom2
 %_libdir/libuim-custom.so.2
-%_libdir/libuim-custom.so.2.1.0
+%_libdir/libuim-custom.so.2.*
 
 %files -n libuim-data -f %name.lang
 %_datadir/uim/*.scm
 %_datadir/uim/lib/*
 %dir %_datadir/uim
 %dir %_datadir/uim/lib
+%exclude %_datadir/%name/m17nlib.scm
+%exclude %_datadir/%name/m17nlib-custom.scm
 
 %files -n libuim-plugin
-%_libdir/uim/notify/*
-%_libdir/uim/plugin/*
+%_libdir/uim/notify/*.so
+%_libdir/uim/plugin/*.so
 %dir %_libdir/uim
 %dir %_libdir/uim/notify
 %dir %_libdir/uim/plugin
+%exclude %_libdir/%name/plugin/libuim-m17nlib.so
 
 %files -n libuim-scm0
 %_libdir/libuim-scm.so.0
@@ -301,7 +332,6 @@ cp %SOURCE4 .
 %_bindir/uim-pref-gtk
 %_bindir/uim-toolbar-gtk
 %_bindir/uim-toolbar-gtk-systray
-%_libdir/gtk-2.0/2.10.0/immodules/im-uim.la
 %_libdir/gtk-2.0/2.10.0/immodules/im-uim.so
 %_libexecdir/uim-candwin-gtk
 %_libexecdir/uim-candwin-horizontal-gtk
@@ -314,13 +344,16 @@ cp %SOURCE4 .
 %_bindir/uim-pref-gtk3
 %_bindir/uim-toolbar-gtk3
 %_bindir/uim-toolbar-gtk3-systray
-%_libdir/gtk-3.0/*
+%_libdir/gtk-3.0/3.0.0/immodules/im-uim.so
 %_libexecdir/uim-candwin-gtk3
 %_libexecdir/uim-candwin-horizontal-gtk3
 %_libexecdir/uim-candwin-tbl-gtk3
 
 %files m17nlib
 %_bindir/uim-m17nlib-relink-icons
+%_libdir/%name/plugin/libuim-m17nlib.so
+%_datadir/%name/m17nlib.scm
+%_datadir/%name/m17nlib-custom.scm
 
 %files qt
 %_bindir/uim-chardict-qt
@@ -328,7 +361,6 @@ cp %SOURCE4 .
 %_bindir/uim-pref-qt
 %_bindir/uim-toolbar-qt
 %_libexecdir/uim-candwin-qt
-%_libdir/qt3/plugins/inputmethods/libquiminputcontextplugin.la
 %_libdir/qt3/plugins/inputmethods/libquiminputcontextplugin.so
 
 %files qt4
@@ -338,6 +370,14 @@ cp %SOURCE4 .
 %_bindir/uim-toolbar-qt4
 %_libdir/qt4/plugins/inputmethods/libuiminputcontextplugin.so
 %_libexecdir/uim-candwin-qt4
+
+%files qt5
+%_bindir/uim-chardict-qt5
+%_bindir/uim-im-switcher-qt5
+%_bindir/uim-pref-qt5
+%_bindir/uim-toolbar-qt5
+%_libdir/qt5/plugins/platforminputcontexts/libuimplatforminputcontextplugin.so
+%_libexecdir/uim-candwin-qt5
 
 %files utils
 %_bindir/uim-help
@@ -350,6 +390,9 @@ cp %SOURCE4 .
 %_mandir/man1/uim-xim.1.xz
 
 %changelog
+* Sat Dec 10 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.6-alt4.git89542ac
+- import from upsteam git
+
 * Sat Apr  9 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.6-alt3
 - fix menu-related additional categories in uim.desktop
 
