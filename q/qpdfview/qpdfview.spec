@@ -1,11 +1,10 @@
 Name: qpdfview
-Version: 0.4.10
-Release: alt1
+Version: 0.4.17
+Release: alt1.beta1
 Summary: Tabbed PDF viewer using the poppler library
 License: GPLv2
 Group: Office
 Url: https://launchpad.net/qpdfview
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
@@ -34,11 +33,11 @@ install -d %buildroot%_liconsdir
 install -d %buildroot%_miconsdir
 install -d %buildroot%_niconsdir
 
-ln -s %_datadir/%name/%name.svg \
+ln -s %_iconsdir/hicolor/scalable/apps/%name.svg \
 	%buildroot%_liconsdir
-ln -s %_datadir/%name/%name.svg \
+ln -s %_iconsdir/hicolor/scalable/apps/%name.svg \
 	%buildroot%_miconsdir
-ln -s %_datadir/%name/%name.svg \
+ln -s %_iconsdir/hicolor/scalable/apps/%name.svg \
 	%buildroot%_niconsdir
 
 %files
@@ -51,8 +50,13 @@ ln -s %_datadir/%name/%name.svg \
 %_miconsdir/*
 %_niconsdir/*
 %_libexecdir/%name
+%_iconsdir/hicolor/scalable/apps/%name.svg
+%_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Sat Dec 10 2016 Terechkov Evgenii <evg@altlinux.org> 0.4.17-alt1.beta1
+- Version 0.4.17beta1 (ALT #32876)
+
 * Tue Jun 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.10-alt1
 - Version 0.4.10
 
