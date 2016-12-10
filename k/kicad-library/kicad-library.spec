@@ -1,7 +1,7 @@
 Summary: Library for kicad (creation of electronic schematic diagrams)
 Summary(ru_RU.UTF-8): Библиотеки для kicad (разработка печатных плат)
 Name: kicad-library
-Version: 4.0.4
+Version: 4.0.5
 Epoch: 1
 Release: alt1
 Source: %name-%version.tar
@@ -51,6 +51,9 @@ ln -f %buildroot%_datadir/kicad/template/fp-lib-table{.for-pretty,}
 %_datadir/kicad/template
 
 %changelog
+* Sat Dec 10 2016 Anton Midyukov <antohami@altlinux.org> 1:4.0.5-alt1
+- New version 4.0.5
+
 * Wed Aug 31 2016 Anton Midyukov <antohami@altlinux.org> 1:4.0.4-alt1
 - New version 4.0.4
 - Added script for update pretty.
