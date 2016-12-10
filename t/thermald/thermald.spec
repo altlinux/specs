@@ -1,16 +1,17 @@
 Name: thermald
-Version: 1.5.3
-Release: alt2
+Version: 1.5.4
+Release: alt1
 
 Summary: Thermal daemon for IA
 
 License: GPLv2+
 Group: Development/Other
 Url: https://github.com/01org/thermal_daemon
+# Source-url: https://github.com/01org/thermal_daemon/archive/v%version.tar.gz
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
-Source: https://github.com/01org/thermal_daemon/releases/%name-%version.tar.gz
+Source: %name-%version.tar.gz
 Source1: thermald.init
 
 Buildrequires: gcc-c++ glib-devel libdbus-glib-devel libgio-devel libgomp-devel libxml2-devel
@@ -63,6 +64,9 @@ install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
 %_man8dir/*
 
 %changelog
+* Sat Dec 10 2016 Anton Midyukov <antohami@altlinux.org> 1.5.4-alt1
+- new version (1.5.4) with rpmgs script
+
 * Wed Oct 05 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5.3-alt2
 - Fixed the adaption of the Debian-style .init for ALT:
   + .init: condrestart/condstop implemented in a simple way;
