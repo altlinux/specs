@@ -3,7 +3,7 @@
 %define oname keyutils
 
 Name: python-module-%oname
-Version: 0.3.0
+Version: 0.4
 Release: alt1
 
 Summary: %oname bindings for Python
@@ -14,10 +14,10 @@ Group: Development/Python
 
 Url: https://pypi.python.org/pypi/%oname/
 #Url: https://github.com/sassoftware/python-keyutils
-Packager: Anton Midyukov <antohami@altlinux.org>
+# Source-url: https://github.com/sassoftware/python-keyutils/archive/v%version.tar.gz
+Packager: Python Development Team <python at packages.altlinux.org>
 
 Source: python-module-%oname-%version.tar
-Patch1: python-module-keyutils-0.3-fix-build.patch
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -45,7 +45,6 @@ storing and retrieving sensitive infromation in your programs.
 
 %prep
 %setup
-%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -80,5 +79,8 @@ popd
 %endif
 
 %changelog
+* Sun Dec 11 2016 Anton Midyukov <antohami@altlinux.org> 0.4-alt1
+- new version (0.4) with rpmgs script
+
 * Thu Apr 07 2016 Anton Midyukov <antohami@altlinux.org> 0.3.0-alt1
 - Initial build for Alt Linux Sisyphus.
