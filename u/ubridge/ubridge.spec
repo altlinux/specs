@@ -1,5 +1,5 @@
 Name: ubridge
-Version: 0.9.4
+Version: 0.9.8
 Release: alt1
 
 Summary: Bridge for UDP tunnels, Ethernet, TAP and VMnet interfaces
@@ -36,5 +36,8 @@ chmod 4755 %_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sun Dec 11 2016 Anton Midyukov <antohami@altlinux.org> 0.9.8-alt1
+- New version 0.9.8
+
 * Mon Aug 08 2016 Anton Midyukov <antohami@altlinux.org> 0.9.4-alt1
 - Initial build for ALT Linux Sisyphus.
