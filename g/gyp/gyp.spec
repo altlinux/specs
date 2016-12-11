@@ -1,6 +1,6 @@
 Name: gyp
 Version: 0.1.g940a15e
-Release: alt1
+Release: alt2
 
 Summary: Generate Your Projects
 License: BSD
@@ -12,6 +12,7 @@ BuildArch: noarch
 
 # Source-git: https://chromium.googlesource.com/external/gyp
 Source: %name-%version.tar
+Patch: gyp-precompiled.patch
 
 BuildRequires: python-module-setuptools python-devel
 
@@ -26,6 +27,7 @@ differences.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %python_build
@@ -40,6 +42,9 @@ differences.
 %doc AUTHORS LICENSE
 
 %changelog
+* Sun Dec 11 2016 Vitaly Lipatov <lav@altlinux.ru> 0.1.g940a15e-alt2
+- add cmake_precompiled_header support from tdesktop project patch
+
 * Sun Dec 11 2016 Vitaly Lipatov <lav@altlinux.ru> 0.1.g940a15e-alt1
 - build lastest commit from git
 
