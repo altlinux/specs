@@ -13,7 +13,7 @@
 %def_disable fhs_media
 
 Name: %{_name}2
-Version: 2.1.8
+Version: 2.1.9
 Release: alt0.1
 
 Summary: Disk Management Service (Second Edition)
@@ -37,7 +37,7 @@ Obsoletes: %_name
 %define libatasmart_ver 0.17
 %define dbus_ver 1.4.0
 
-PreReq: control
+Requires(pre): control
 Requires: lib%name = %version-%release
 Requires: /lib/udev/rules.d
 Requires: /usr/sbin/cryptsetup
@@ -188,6 +188,9 @@ fi
 %endif
 
 %changelog
+* Sun Dec 11 2016 Yuri N. Sedunov <aris@altlinux.org> 2.1.9-alt0.1
+- updated to 2.1.8-3-g054d9c4
+
 * Wed Jul 27 2016 Yuri N. Sedunov <aris@altlinux.org> 2.1.8-alt0.1
 - updated to 2.1.7-5-ga05e89d
 - used mkfs.fat instead of old mkfs.vfat
