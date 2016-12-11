@@ -6,8 +6,8 @@
 %define distro_name Regular
 
 Name: branding-%brand-%theme
-Version: 20161130
-Release: alt2
+Version: 20161211
+Release: alt1
 
 Url: http://en.altlinux.org
 
@@ -220,9 +220,8 @@ Conflicts: indexhtml-school_terminal
 Conflicts: indexhtml-small_business
 Conflicts: indexhtml-school-server
 Conflicts: branding-sisyphus-server-light-indexhtml
-Conflicts: branding-xalt-kworkstation-indexhtml
 
-Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-indexhtml";done )
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-indexhtml ";done )
 
 Requires: xdg-utils
 Requires(post): indexhtml-common
@@ -467,6 +466,10 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 
 
 %changelog
+* Sun Dec 11 2016 Michael Shigorin <mike@altlinux.org> 20161211-alt1
+- indexhtml: fixed conflicts generation, dropped stopgap one;
+  thanks Nikolay Ulyanitsky (closes: #32881)
+
 * Wed Nov 30 2016 Michael Shigorin <mike@altlinux.org> 20161130-alt2
 - indexhtml: stopgap conflict (*sigh*)
 
