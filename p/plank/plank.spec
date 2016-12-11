@@ -3,7 +3,7 @@
 %def_disable apport
 
 Name: plank
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Elegant, simple, clean dock
@@ -81,6 +81,7 @@ This package provides Vala language bindings for plank library.
 %setup
 
 %build
+%autoreconf
 %configure \
   --enable-headless-tests \
   %{subst_enable dbusmenu} \
@@ -105,6 +106,7 @@ This package provides Vala language bindings for plank library.
 %dir %_libdir/plank/docklets
 %_libdir/plank/docklets/libdocklet-clippy.so
 %_libdir/plank/docklets/libdocklet-clock.so
+%_libdir/plank/docklets/libdocklet-cpumonitor.so
 %_libdir/plank/docklets/libdocklet-desktop.so
 %_libdir/plank/docklets/libdocklet-trash.so
 %_datadir/glib-2.0/schemas/net.launchpad.plank.gschema.xml
@@ -135,6 +137,9 @@ This package provides Vala language bindings for plank library.
 %_datadir/vala/vapi/plank.vapi
 
 %changelog
+* Sun Dec 11 2016 Yuri N. Sedunov <aris@altlinux.org> 0.11.3-alt1
+- 0.11.3
+
 * Mon Jun 13 2016 Yuri N. Sedunov <aris@altlinux.org> 0.11.2-alt1
 - 0.11.2
 
