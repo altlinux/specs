@@ -3,7 +3,7 @@
 
 Name: bamf
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: BAMF Application Matching Framework
 License: GPLv3/LGPLv3
@@ -104,7 +104,7 @@ GObject introspection devel data for bamf3 library.
 %prep
 %setup
 %patch0 -p1
-#%%patch1 -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -148,6 +148,9 @@ GObject introspection devel data for bamf3 library.
 %_datadir/gir-1.0/Bamf-3.gir
 
 %changelog
+* Sun Dec 11 2016 Yuri N. Sedunov <aris@altlinux.org> 0.5.3-alt2
+- fixed build
+
 * Thu Sep 29 2016 Yuri N. Sedunov <aris@altlinux.org> 0.5.3-alt1
 - 0.5.3
 
