@@ -1,17 +1,19 @@
 Name: gyp
-Version: 0.1
-Release: alt1.r1415
+Version: 0.1.g940a15e
+Release: alt1
 
 Summary: Generate Your Projects
 License: BSD
 Group: Development/Tools
+
 Url: http://code.google.com/p/gyp/
 
 BuildArch: noarch
-# subversion http://gyp.googlecode.com/svn/trunk
+
+# Source-git: https://chromium.googlesource.com/external/gyp
 Source: %name-%version.tar
 
-BuildRequires: python-devel
+BuildRequires: python-module-setuptools python-devel
 
 %add_python_req_skip TestCommon
 
@@ -23,7 +25,7 @@ sufficient per-platform flexibility to accommodate irreconcilable
 differences.
 
 %prep
-%setup -q
+%setup
 
 %build
 %python_build
@@ -34,10 +36,13 @@ differences.
 %files
 %_bindir/%name
 %python_sitelibdir/%name
-%python_sitelibdir/%name-%version-*
+%python_sitelibdir/%name-0.1-*
 %doc AUTHORS LICENSE
 
 %changelog
+* Sun Dec 11 2016 Vitaly Lipatov <lav@altlinux.ru> 0.1.g940a15e-alt1
+- build lastest commit from git
+
 * Sat Jun 16 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.1-alt1.r1415
 - Update to SVN r1415
 
