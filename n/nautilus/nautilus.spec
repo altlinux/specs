@@ -11,7 +11,7 @@
 %def_enable selinux
 
 Name: nautilus
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -43,36 +43,36 @@ Source: %name-%version.tar
 %define autoar_ver 0.1
 
 Requires(post): libcap-utils
-PreReq: lib%name = %version-%release
-PreReq: gnome-icon-theme >= %icon_theme_ver
+Requires: lib%name = %version-%release
+Requires: gnome-icon-theme >= %icon_theme_ver
 Requires: shared-mime-info
 Requires: common-licenses
 Requires: gvfs >= 1.26.1.1
 
-BuildPreReq: pkgconfig >= %pkgconfig_ver
-BuildPreReq: desktop-file-utils >= %desktop_file_utils_ver
-BuildPreReq: rpm-build-gnome rpm-build-licenses
+BuildRequires: pkgconfig >= %pkgconfig_ver
+BuildRequires: desktop-file-utils >= %desktop_file_utils_ver
+BuildRequires: rpm-build-gnome rpm-build-licenses
 # for %%check
-BuildPreReq: xvfb-run dbus-tools-gui /proc
+BuildRequires: xvfb-run dbus-tools-gui /proc
 
 # From configure.ac
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
-BuildPreReq: libpango-devel >= %pango_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: gsettings-desktop-schemas-devel
-BuildPreReq: libgail3-devel
-BuildPreReq: libxml2-devel >= %libxml2_ver
-BuildPreReq: intltool >= 0.40.1
-BuildPreReq: libexif-devel >= %exif_ver
-BuildPreReq: libnotify-devel >= %notify_ver
-BuildPreReq: libgnome-autoar-devel >= %autoar_ver
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libgnome-desktop3-devel >= %desktop_ver
+BuildRequires: libpango-devel >= %pango_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: gsettings-desktop-schemas-devel
+BuildRequires: libgail3-devel
+BuildRequires: libxml2-devel >= %libxml2_ver
+BuildRequires: intltool >= 0.40.1
+BuildRequires: libexif-devel >= %exif_ver
+BuildRequires: libnotify-devel >= %notify_ver
+BuildRequires: libgnome-autoar-devel >= %autoar_ver
 BuildRequires: libX11-devel xorg-xproto-devel
 BuildRequires: docbook-utils gtk-doc
-%{?_enable_exempi:BuildPreReq: libexempi-devel >= %exempi_ver}
-%{?_enable_tracker:BuildPreReq: tracker-devel >= %tracker_ver}
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
+%{?_enable_exempi:BuildRequires: libexempi-devel >= %exempi_ver}
+%{?_enable_tracker:BuildRequires: tracker-devel >= %tracker_ver}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 
 %description
@@ -205,6 +205,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Sun Dec 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
+- 3.22.2
+
 * Fri Oct 14 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 
@@ -448,7 +451,7 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 * Mon Mar 17 2008 Alexey Shabalin <shaba@altlinux.ru> 2.22.0-alt2
 - build for Sisyphus
-- remove BuildPreReq gnome-vfs-devel
+- remove BuildRequires gnome-vfs-devel
 - Remove buildreqs for beagle and tracker , as they are not necessary with
   the dynamic work (patch10 from fedora)
 
