@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: vips
-Version: 8.4.4
+Version: 8.4.5
 Release: alt1
 
 Summary: Large image processing library
@@ -113,6 +113,9 @@ find %buildroot \( -name '*.la' -o -name '*.a' \) -exec rm -f {} ';'
 # - package python bindings
 
 %changelog
+* Sun Dec 11 2016 Michael Shigorin <mike@altlinux.org> 8.4.5-alt1
+- new version (watch file uupdate)
+
 * Sat Nov 12 2016 Michael Shigorin <mike@altlinux.org> 8.4.4-alt1
 - new version (watch file uupdate)
 
