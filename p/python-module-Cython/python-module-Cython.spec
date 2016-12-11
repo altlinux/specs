@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%_name
-Version: 0.25.1
+Version: 0.25.2
 Release: alt1
 
 Summary: C-extensions for Python
@@ -23,8 +23,8 @@ Conflicts: python-module-Cython0.18
 
 %add_python_req_skip IPython
 
-BuildPreReq: rpm-build-python
-BuildPreReq: python-devel python-module-setuptools python-module-json
+BuildRequires: rpm-build-python
+BuildRequires: python-devel python-module-setuptools python-module-json
 
 %description
 Cython is a language that makes writing C extensions for the Python
@@ -91,7 +91,7 @@ Group: Development/Python3
 # since 0.20.1
 %py3_provides cython
 Conflicts: python3-module-Cython0.18
-BuildRequires(pre): rpm-build-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
 
 %description -n python3-module-%_name
@@ -223,6 +223,9 @@ mv %buildroot/%_bindir/cygdb %buildroot/%_bindir/cygdb3
 %endif
 
 %changelog
+* Sun Dec 11 2016 Yuri N. Sedunov <aris@altlinux.org> 0.25.2-alt1
+- 0.25.2
+
 * Thu Oct 27 2016 Yuri N. Sedunov <aris@altlinux.org> 0.25.1-alt1
 - 0.25.1
 
