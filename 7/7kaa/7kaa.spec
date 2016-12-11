@@ -1,18 +1,17 @@
 Name: 7kaa
-Version: 2.14.5
+Version: 2.14.6
 Release: alt1
 Summary: Seven Kingdoms: Ancient Adversaries
 
 License: GPLv3+ and GPLv2+
 Group: Games/Strategy
 Url: http://7kfans.com/
+# Source-url: https://github.com/the3dfxdude/7kaa/releases/download/v%version/7kaa-%version.tar.xz
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 Source1: %name.autodlrc
 Source2: %name-data-installer
-Patch: http://sf.net/p/skfans/bugs/4/attachment/%name-formatSecurity.patch
-Patch1: OGAMEMP.patch
 
 BuildRequires: gcc-c++ libSDL2-devel libSDL2_net-devel libenet-devel libopenal-devel desktop-file-utils ImageMagick-tools
 Requires: %name-data = %version-%release
@@ -50,8 +49,6 @@ Due to license issue, you need to run 7kaa-data-installer install the music.
 
 %prep
 %setup
-%patch0 -p0 -b .formatSecurity
-%patch1 -p2
 
 %build
 export CXXFLAGS="%optflags -fsigned-char"
@@ -136,5 +133,8 @@ fi
 %prj_music_dir/%name.autodlrc
 
 %changelog
+* Sun Dec 11 2016 Anton Midyukov <antohami@altlinux.org> 2.14.6-alt1
+- new version (2.14.6) with rpmgs script
+
 * Tue Jul 26 2016 Anton Midyukov <antohami@altlinux.org> 2.14.5-alt1
 - Initial build for ALT Linux Sisyphus (Thanks Fedora Team).
