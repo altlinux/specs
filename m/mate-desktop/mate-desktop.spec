@@ -26,7 +26,7 @@ Name:           mate-desktop
 License:        GPLv2+ and LGPLv2+ and MIT
 Version:        %{branch}.1
 %if 0%{?rel_build}
-Release:        alt1_1
+Release:        alt1_1.1
 %else
 Release:        alt1_1
 %endif
@@ -206,37 +206,7 @@ install -m 644 %SOURCE6 %{buildroot}/%{_datadir}/applications/mate-mimeapps.list
 
 %find_lang %{name} --with-gnome --all-name
 
-# touching all ghosts; hack for rpm 4.0.4
-for rpm_404_ghost in %{_sysconfdir}/X11/xorg.conf.d/99-synaptics-mate.conf
-do
-    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
-    touch %buildroot"$rpm_404_ghost"
-done
-
 mkdir -p %buildroot%{_datadir}/mate-about
-
-
- 
-mkdir -p %buildroot%{_datadir}/X11/xorg.conf.d/
-ln -sf %{_datadir}/X11/xorg.conf.d/50-synaptics.conf %buildroot%{_datadir}/X11/xorg.conf.d/99-synaptics-mate.conf
- 
-%package synaptics
-Group: Graphical desktop/MATE
-Summary:    Synaptics touchpad support for mate-desktop
-Requires:   %name = %version-%release
-Requires:   xorg-drv-synaptics
-%description synaptics
-Synaptics touchpad stops working as MATE starts.
-This has to do with libinput, which is going to replace the other input
-drivers. As the old synaptics touchpad driver use evdev, we need to give it
-a higher priority to be preferred over libinput for your touchpad.
-
-This package contains symlink /usr/share/X11/xorg.conf.d/99-synaptics-mate.conf
-that is a hack around this problem.
-
-%files synaptics
-%{_datadir}/X11/xorg.conf.d/99-synaptics-mate.conf
-
 
 %files
 %doc AUTHORS COPYING COPYING.LIB NEWS README
@@ -255,9 +225,6 @@ that is a hack around this problem.
 %{_datadir}/icons/hicolor/*/apps/*.png
 %{_datadir}/icons/hicolor/scalable/apps/mate-symbolic.svg
 %{_datadir}/icons/hicolor/scalable/apps/mate.svg
-%if 0%{?fedora}
-%ghost %{_sysconfdir}/X11/xorg.conf.d/99-synaptics-mate.conf
-%endif
 %{_mandir}/man1/*
 
 %files -n libmate-desktop -f %{name}.lang
@@ -274,6 +241,9 @@ that is a hack around this problem.
 
 
 %changelog
+* Tue Dec 13 2016 Valery Inozemtsev <shrek@altlinux.ru> 1.16.1-alt1_1.1
+- drop mate-desktop-synaptics
+
 * Wed Oct 26 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.1-alt1_1
 - new fc release
 

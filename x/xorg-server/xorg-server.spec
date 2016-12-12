@@ -21,8 +21,8 @@
 %endif
 
 Name: xorg-server
-Version: 1.18.4
-Release: alt2
+Version: 1.19.0
+Release: alt1
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -31,9 +31,9 @@ Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 # grep ABI_ hw/xfree86/common/xf86Module.h
-Provides: XORG_ABI_VIDEODRV = 20.0
-Provides: XORG_ABI_XINPUT = 22.1
-Provides: XORG_ABI_EXTENSION = 9.0
+Provides: XORG_ABI_VIDEODRV = 23.0
+Provides: XORG_ABI_XINPUT = 24.1
+Provides: XORG_ABI_EXTENSION = 10.0
 Provides: xorg-x11-server = %epoch:%version-%release xorg-extensions-glx = %epoch:%version-%release
 %if_enabled glamor
 Provides: xorg-glamor = %epoch:%version-%release
@@ -56,12 +56,12 @@ BuildRequires: libpciaccess-devel libpixman-devel libssl-devel libxkbfile-devel 
 BuildRequires: xorg-damageproto-devel xorg-dri2proto-devel xorg-randrproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel
 BuildRequires: xorg-xcmiscproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel
 BuildRequires: xorg-font-utils xorg-xtrans-devel xorg-util-macros libselinux-devel libaudit-devel xmlto xorg-sgml-doctools
-BuildRequires: xorg-glproto-devel xorg-dri3proto-devel xorg-presentproto-devel libxshmfence-devel libdrm-devel
+BuildRequires: xorg-glproto-devel xorg-dri3proto-devel xorg-presentproto-devel libxshmfence-devel libdrm-devel libXfont2-devel
 %if_enabled glamor
 BuildRequires: libEGL-devel libgbm-devel libepoxy-devel
 %endif
 %if_enabled xwayland
-BuildRequires: libwayland-client-devel
+BuildRequires: libwayland-client-devel wayland-protocols
 %endif
 %if_enabled xephyr
 BuildRequires: libxcbutil-devel libxcbutil-image-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel libxcb-render-util-devel
@@ -214,7 +214,6 @@ drivers, input drivers, or other X modules should install this package.
 	%{subst_enable xnest} \
 	%{subst_enable xephyr} \
 	%{subst_enable kdrive} \
-	--enable-aiglx \
 	--disable-xfbdev \
 	%{subst_enable ipv6} \
 	--enable-docs \
@@ -327,6 +326,12 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Wed Nov 30 2016 Valery Inozemtsev <shrek@altlinux.ru> 2:1.19.0-alt1
+- 1.19.0
+
+* Tue Sep 27 2016 Valery Inozemtsev <shrek@altlinux.ru> 2:1.18.4-alt1.M80P.1
+- backport to p8 branch
+
 * Tue Sep 27 2016 Valery Inozemtsev <shrek@altlinux.ru> 2:1.18.4-alt2
 - nvidia added to the list of drivers (closes: #24632)
 

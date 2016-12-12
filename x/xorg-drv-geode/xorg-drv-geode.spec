@@ -1,5 +1,5 @@
 Name: xorg-drv-geode
-Version: 2.11.17
+Version: 2.11.18
 Release: alt1
 Epoch: 2
 Summary: AMD Geode GX and LX Xorg graphics Driver
@@ -44,6 +44,9 @@ framebuffer depths: 8, 16 and 24.
 %_x11modulesdir/drivers/*.so
 
 %changelog
+* Thu Dec 01 2016 Valery Inozemtsev <shrek@altlinux.ru> 2:2.11.18-alt1
+- 2.11.18
+
 * Thu Nov 26 2015 Valery Inozemtsev <shrek@altlinux.ru> 2:2.11.17-alt1
 - 2.11.17
 

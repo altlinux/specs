@@ -1,7 +1,7 @@
 %define uname xf86-video-vmware
 Name: xorg-drv-vmware
-Version: 13.1.0
-Release: alt2
+Version: 13.2.1
+Release: alt1
 Summary: VMware SVGA Device video driver
 License: MIT/X11
 Epoch: 1
@@ -10,17 +10,19 @@ Url: http://cgit.freedesktop.org/xorg/driver/xf86-video-vmware
 
 PreReq: XORG_ABI_VIDEODRV = %get_xorg_abi_videodrv
 
-Source: xf86-video-vmware-%version.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk xorg-util-macros
 BuildRequires: libXext-devel xorg-fontsproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel
-BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel libxatracker-devel
+BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel libxatracker-devel libudev-devel
 
 %description
 %summary
 
 %prep
-%setup -n %uname-%version
+%setup -q
+%patch -p1
 
 %build
 %autoreconf
@@ -39,6 +41,9 @@ BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel libxatracker-d
 %_man4dir/*
 
 %changelog
+* Mon Dec 12 2016 Valery Inozemtsev <shrek@altlinux.ru> 1:13.2.1-alt1
+- 13.2.1
+
 * Fri Nov 27 2015 Valery Inozemtsev <shrek@altlinux.ru> 1:13.1.0-alt2
 - rebuild for XORG_ABI_VIDEODRV = 20.0
 
