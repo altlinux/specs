@@ -1,7 +1,7 @@
 %define ver_major 3.22
 
 Name: evolution-ews
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Group: Networking/Mail
@@ -14,9 +14,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define ver_base 3.22
 %define evo_ver_base %ver_base
 
-%define evolution_ver 3.22.2
+%define evolution_ver 3.22.3
 # from configure.ac
-%define eds_ver 3.22.2
+%define eds_ver 3.22.3
 %define glib_ver 2.40
 %define libmspack_ver 0.4
 %define soup_ver 2.42
@@ -25,12 +25,12 @@ Requires: evolution >= %evolution_ver
 Requires: evolution-data-server >= %eds_ver
 Requires: libmspack >= %libmspack_ver
 
-BuildPreReq: gnome-common rpm-build-gnome gtk-doc
-BuildPreReq: evolution-data-server-devel >= %eds_ver
-BuildPreReq: evolution-devel >= %evolution_ver
-BuildPreReq: libmspack-devel >= %libmspack_ver
+BuildRequires: gnome-common rpm-build-gnome gtk-doc
+BuildRequires: evolution-data-server-devel >= %eds_ver
+BuildRequires: evolution-devel >= %evolution_ver
+BuildRequires: libmspack-devel >= %libmspack_ver
 
-BuildPreReq: intltool
+BuildRequires: intltool
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= 3.0
 BuildRequires: libsoup-devel >= %soup_ver
@@ -79,6 +79,9 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_datadir/appdata/evolution-ews.metainfo.xml
 
 %changelog
+* Mon Dec 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
+- 3.22.3
+
 * Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
 - 3.22.2
 

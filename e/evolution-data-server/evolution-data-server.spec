@@ -24,7 +24,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Evolution Data Server
@@ -55,27 +55,27 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 
 Requires: dconf
 
-BuildPreReq: gcc-c++ rpm-build-gnome rpm-build-licenses intltool
-BuildPreReq: gtk-doc >= 1.0
-BuildPreReq: gnome-common
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk3_ver
-BuildPreReq: libxml2-devel
-BuildPreReq: libsoup-devel >= %libsoup_ver
-BuildPreReq: libsqlite3-devel >= %sqlite_ver
-BuildPreReq: libgweather-devel >= %gweather_ver
-BuildPreReq: libical-devel >= %ical_ver
-BuildPreReq: libgdata-devel >= %gdata_ver
-BuildPreReq: libsecret-devel >= %secret_ver
-BuildPreReq: gcr-libs-devel >= %gcr_ver
+BuildRequires: gcc-c++ rpm-build-gnome rpm-build-licenses intltool
+BuildRequires: gtk-doc >= 1.0
+BuildRequires: gnome-common
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk3_ver
+BuildRequires: libxml2-devel
+BuildRequires: libsoup-devel >= %libsoup_ver
+BuildRequires: libsqlite3-devel >= %sqlite_ver
+BuildRequires: libgweather-devel >= %gweather_ver
+BuildRequires: libical-devel >= %ical_ver
+BuildRequires: libgdata-devel >= %gdata_ver
+BuildRequires: libsecret-devel >= %secret_ver
+BuildRequires: gcr-libs-devel >= %gcr_ver
 BuildRequires: gperf docbook-utils flex bison libcom_err-devel libnss-devel libnspr-devel zlib-devel libicu-devel
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver liboauth-devel libgdata-devel >= %gdata_ver}
 %{?_enable_google:BuildRequires: libwebkit2gtk-devel >= %webkit_ver libjson-glib-devel}
 %{?_enable_uoa:BuildRequires: libaccounts-glib-devel}
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel libsoup-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libsoup-gir-devel}
 %{?_with_sys_db4:BuildRequires: libdb4-devel}
 %{?_with_krb5:BuildRequires: libkrb5-devel}
-%{?_enable_vala:BuildPreReq: vala >= %vala_ver vala-tools >= %vala_ver}
+%{?_enable_vala:BuildRequires: vala >= %vala_ver vala-tools >= %vala_ver}
 
 # /usr/libexec/evolution-data-server/csv2vcard uses perl(diagnostics.pm)
 BuildRequires: perl-devel
@@ -287,6 +287,9 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Mon Dec 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
+- 3.22.3
+
 * Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
 - 3.22.2
 
