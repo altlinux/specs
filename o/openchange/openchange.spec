@@ -1,12 +1,12 @@
 %def_enable python
 %def_enable server
-%define samba_version 4.5.1
+%define samba_version 4.5.2
 
 # Licensing Note: The code is GPLv3+ and the IDL files are public domain.
 
 Name:    openchange
 Version: 2.4
-Release: alt10.zentyal23
+Release: alt11.zentyal23%ubt
 Group:   Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
@@ -14,8 +14,9 @@ Url:     http://www.openchange.org/
 # VCS:   https://github.com/zentyal/openchange
 
 Source:  %name-%version.tar
-Patch:   %name-%version-%release.patch
+Patch:   %name-%version-alt.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-apache2
 BuildRequires(pre): apache2-common
 BuildRequires(pre): rpm-build-python
@@ -316,6 +317,9 @@ subst 's,^\(Cflags:.*\)$,\1 -I%_includedir/samba-4.0/private,' %buildroot%_pkgco
 %_libexecdir/openchange/web/rpcproxy
 
 %changelog
+* Mon Dec 19 2016 Evgeny Sinelnikov <sin@altlinux.ru> 2.4-alt11.zentyal23%ubt
+- Rebuild with headers from new release of Samba-4.5.2
+
 * Sat Oct 29 2016 Evgeny Sinelnikov <sin@altlinux.ru> 2.4-alt10.zentyal23
 - Rebuild with headers from new release of Samba-4.5.1
 
