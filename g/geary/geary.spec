@@ -1,11 +1,11 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 0.11
 %def_enable contractor
 
 Name: geary
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Email client
 License: LGPLv2.1+
@@ -23,9 +23,9 @@ Source: %name-%version.tar
 %define sqlite_ver 3.12.0
 %define gcr_ver 3.10.1
 
-BuildPreReq: vala-tools >= %vala_ver libvala-devel
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libsqlite3-devel >= %sqlite_ver
+BuildRequires: vala-tools >= %vala_ver libvala-devel
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libsqlite3-devel >= %sqlite_ver
 BuildRequires: cmake intltool desktop-file-utils gnome-doc-utils
 BuildRequires: libnotify-devel libcanberra-devel libgee0.8-devel
 BuildRequires: libgmime-devel libgnome-keyring-devel libexpat-devel
@@ -85,6 +85,9 @@ Geary's development.
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Mon Dec 12 2016 Yuri N. Sedunov <aris@altlinux.org> 0.11.2-alt2
+- updated to geary-0.11.2-14-gd02629c
+
 * Sun Aug 28 2016 Yuri N. Sedunov <aris@altlinux.org> 0.11.2-alt1
 - 0.11.2
 
