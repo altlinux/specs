@@ -1,0 +1,113 @@
+%define libname libqtav
+Name: QtAV
+Version: 1.11.0
+Release: alt1
+
+Summary: A cross-platform multimedia framework based on Qt and FFmpeg
+License: LGPL v2.1
+Group: System/Libraries
+
+# Source-git: https://github.com/wang-bin/QtAV.git
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-macros-qt5
+
+BuildRequires: gcc-c++
+
+# Automatically added by buildreq on Mon Dec 12 2016
+# optimized out: fontconfig gcc-c++ libGL-devel libX11-devel libXext-devel libavcodec-devel libavutil-devel libcdio-paranoia libdc1394-22 libgpg-error libjson-c libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-qml libqt5-quick libqt5-sql libqt5-svg libqt5-widgets libraw1394-11 libstdc++-devel python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-xmlpatterns-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: libXv-devel libass-devel libuchardet-devel libva-devel
+BuildRequires: qt5-base-devel qt5-multimedia-devel qt5-phonon-devel qt5-websockets-devel qt5-quick1-devel qt5-declarative-devel
+BuildRequires: libavdevice-devel libavfilter-devel libavformat-devel libavresample-devel libswscale-devel
+BuildRequires: libopenal-devel libpulseaudio-devel
+
+
+%description
+A cross-platform multimedia framework based on Qt and FFmpeg.
+High performance. User & developer friendly.
+Supports Android, iOS, Windows store and desktops.
+
+%package -n %libname-devel-doc
+BuildArch: noarch
+Summary: Documentation files for %name
+Group: Development/C++
+
+%description -n %libname-devel-doc
+Documentation files for %name.
+
+%package -n %libname
+Summary: A cross-platform multimedia framework based on Qt and FFmpeg
+Group: System/Libraries
+
+%description -n %libname
+A cross-platform multimedia framework based on Qt and FFmpeg.
+High performance. User & developer friendly.
+Supports Android, iOS, Windows store and desktops.
+
+%package -n %libname-widgets
+Summary: A cross-platform multimedia framework based on Qt and FFmpeg
+Group: System/Libraries
+Requires: %libname = %version-%release
+
+%description -n %libname-widgets
+A cross-platform multimedia framework based on Qt and FFmpeg.
+High performance. User & developer friendly.
+Supports Android, iOS, Windows store and desktops.
+Widgets part.
+
+%package -n %libname-devel
+Summary: Development files for %name
+Group: Development/Other
+Requires: %libname = %version-%release
+Requires: qt5-base-devel
+
+%description -n %libname-devel
+Development files for %name.
+
+%package -n %libname-qml-devel
+Summary: Development files for %name qml
+Group: Development/Other
+Requires: %libname-devel = %version-%release
+
+%description -n %libname-qml-devel
+Development files for %name qml.
+
+%prep
+%setup
+
+%build
+%qmake_qt5 -config no_rpath
+%make_build
+
+%install
+make install INSTALL_ROOT=%buildroot
+# drop Player / QML Player
+rm -rf %buildroot/{%_desktopdir,%_docdir,%_iconsdir,%_qt5_prefix/bin}
+
+%files -n %libname
+%doc README.md
+%_libdir/libQtAV.so.*
+
+%files -n %libname-widgets
+%_libdir/libQtAVWidgets.so.*
+
+%files -n %libname-devel
+%_qt5_headerdir/QtAV/
+%_qt5_headerdir/QtAVWidgets/
+%_qt5_prefix/mkspecs/features/*.prf
+%_qt5_prefix/mkspecs/modules/*.pri
+%_libdir/libQtAV.prl
+%_libdir/libQtAVWidgets.prl
+%_libdir/libQtAV.so
+%_libdir/libQtAVWidgets.so
+
+%files -n %libname-qml-devel
+%_qt5_qmldir/QtAV/
+
+%files -n %libname-devel-doc
+%doc examples Changelog
+%doc doc/UseQtAVinYourProjects.md
+
+%changelog
+* Mon Dec 12 2016 Vitaly Lipatov <lav@altlinux.ru> 1.11.0-alt1
+- initial build for ALT Linux Sisyphus
