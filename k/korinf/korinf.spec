@@ -1,5 +1,5 @@
 Name: korinf
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 
 Summary: Korinf multidistro single source build system
@@ -18,6 +18,7 @@ BuildArchitectures: noarch
 Requires: eepm >= 1.8.5
 Requires: etersoft-build-utils >= 2.5.2
 Requires: alien >= 8.86-alt3
+Requires: lsof
 
 %description
 This package contains Korinf multidistro build system.
@@ -46,6 +47,15 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Mon Dec 12 2016 Vitaly Lipatov <lav@altlinux.ru> 2.1.4-alt1
+- checked with rpm-4.13
+- fix typo in INITIALBOOTSTRAP (fix rpm-build-altlinux-compat bootstrap)
+- fix epm checking
+- update lists, add Fedora 25 and Ubuntu 16.10
+- add x86_64/GosLinux
+- fix last_rpm against broken rpmquery -p for src.rpm
+- add SRPMGPGCHECKING for enable rpmsign --checksig (disabled since now by default)
+
 * Thu Jul 21 2016 Vitaly Lipatov <lav@altlinux.ru> 2.1.3-alt1
 - use epm print binpkgfilelist instead obsoleted internal func get_binpkg_list
 - skip libx11-private requires in dh_shlibdeps (eterbug #11025) drop setarch
