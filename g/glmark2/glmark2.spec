@@ -1,17 +1,19 @@
 %define flavors	x11-gl,drm-gl,x11-glesv2,drm-glesv2,wayland-gl,wayland-glesv2
 
 Name:		glmark2
-Version:	0.0.0.0.833.gdc1b7fa
+Version:	0.0.0.0.834.f413c5b
 Release:	alt1
 
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark
+Url:		https://github.com/glmark2/glmark2
 Group:		Graphics
 License:	GPLv3
 
-Source:		%name-%version.tar.gz
+# repacked imported tarball from git
+Source:		%name-%version.tar
 
-BuildPreReq:	gcc-c++ python
-BuildRequires:	libpng12-devel
+BuildRequires(pre): gcc-c++ python
+BuildRequires:	libpng-devel
 BuildRequires:	libjpeg-devel
 
 # GL support
@@ -99,6 +101,8 @@ This package contains data files.
 %setup
 
 %build
+export CFLAGS="%optflags"
+export CXXFLAGS="${CFLAGS}"
 ./waf configure \
 	--with-flavors="%flavors" \
 	--data-path=%_datadir/%name \
@@ -137,6 +141,12 @@ This package contains data files.
 %_datadir/%name
 
 %changelog
+* Mon Dec 12 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.0.0.0.834.f413c5b-alt1
+- recent upstream commit
+- added URL
+- fixed CFLAGS and CXXFLAGS
+- rebuilt against libpng15
+
 * Fri Sep 09 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.0.0.0.833.gdc1b7fa-alt1
 - Initial build.
 
