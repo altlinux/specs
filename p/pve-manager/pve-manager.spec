@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 4.3.14
-Release: alt3
+Version: 4.4.1
+Release: alt4
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -44,7 +44,7 @@ This package contains the PVE management tools
 
 %package -n pve-container
 Summary: PVE Container management tool
-Version: 1.0.87
+Version: 1.0.88
 Group: Development/Perl
 Requires: pve-lxc dtach perl-Crypt-Eksblowfish >= 0.009-alt5_15
 
@@ -359,6 +359,10 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Mon Dec 12 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt4
+- 4.4-1
+- pve-container 1.0-88
+
 * Thu Dec 08 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.14-alt3
 - install regular file to cron.d (closes: #32835)
 
