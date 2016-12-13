@@ -19,14 +19,14 @@
 %def_with pam_helper
 
 Name: enlightenment
-Version: %ver_major.4
+Version: %ver_major.5
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
 %else
 Release: %rel
 %endif
-Serial: 1
+Epoch: 1
 
 Summary: The Enlightenment window manager
 License: BSD
@@ -208,6 +208,9 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Tue Dec 13 2016 Yuri N. Sedunov <aris@altlinux.org> 1:0.21.5-alt1
+- 0.21.5
+
 * Sun Dec 04 2016 Yuri N. Sedunov <aris@altlinux.org> 1:0.21.4-alt1
 - 0.21.4
 
