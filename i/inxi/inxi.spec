@@ -1,5 +1,5 @@
 Name: inxi
-Version: 2.3.1
+Version: 2.3.5
 Release: alt1
 
 Summary: A full featured system information script
@@ -50,6 +50,9 @@ install -p -D -m 644 %name.1.gz %buildroot/%_man1dir/%name.1.gz
 %_man1dir/%name.1*
 
 %changelog
+* Tue Dec 13 2016 Mikhail Kolchin <mvk@altlinux.org> 2.3.5-alt1
+- New version
+
 * Fri Sep 16 2016 Mikhail Kolchin <mvk@altlinux.org> 2.3.1-alt1
 - New version
 
@@ -81,4 +84,3 @@ install -p -D -m 644 %name.1.gz %buildroot/%_man1dir/%name.1.gz
 
 * Sun Apr 26 2015 Andrey Cherepanov <cas@altlinux.org> 2.2.19-alt1
 - Initial build for Sisyphus (thanks Fedora team for the spec)
-
