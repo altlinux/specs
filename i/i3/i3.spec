@@ -1,5 +1,5 @@
 Name: i3
-Version: 4.12
+Version: 4.13
 Release: alt1
 
 Summary: I3 window manager
@@ -17,7 +17,7 @@ Packager: %packager
 Requires: dmenu
 
 # Automatically added by buildreq on Tue Mar 03 2015
-BuildRequires: libev-devel libpango-devel libpcre-devel libstartup-notification-devel libxcbutil-cursor-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel libxkbcommon-x11-devel libyajl-devel
+BuildRequires: libev-devel libpango-devel libpcre-devel libstartup-notification-devel libxcbutil-cursor-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel libxkbcommon-x11-devel libyajl-devel libxcbutil-xrm-devel
 
 # Добавлено вручную - автоматика, увы, не находит.
 BuildRequires: perl-Pod-Parser perl-AnyEvent-I3
@@ -58,14 +58,21 @@ that can interact with i3 window manager via it's IPC.
 %setup -n %name-%version
 
 %build
-%make
+%configure
+
+%make_build -C *-alt-linux-gnu
 
 # Сжимаем страницы руководств
 cd man
 bzip -9 *.1
 
+cd ..
+
 %install
-make DESTDIR=%buildroot install
+
+mkdir -p %buildroot%_bindir
+
+%make install -C *-alt-linux-gnu DESTDIR=%buildroot 
 
 #%%ifarch x86_64
 #install -d %buildroot%_libdir
@@ -122,6 +129,9 @@ install -pm644 -D %SOURCE1 %buildroot%docdir/
 %_includedir/*
 
 %changelog
+* Mon Dec 12 2016 Andrey Bergman <vkni@altlinux.org> 4.13-alt1
+- Version update
+
 * Sun Mar 06 2016 Andrey Bergman <vkni@altlinux.org> 4.12-alt1
 - Version update
 
