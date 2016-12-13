@@ -17,7 +17,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0
-Release: alt3
+Release: alt4
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 Source0: rpm-%version.tar
@@ -30,7 +30,7 @@ License: GPLv2+
 
 Requires: coreutils
 Requires: popt >= 1.10.2.1
-Requires: curl
+Conflicts: apt < 0.5.15lorg2-alt54
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: %bdbname-devel
@@ -338,6 +338,10 @@ do
 done
 %endif
 
+sed -i '1i .\\" -*- mode: troff; coding: utf8 -*-' \
+	%buildroot%_mandir/*/man1/*.1 \
+	%buildroot%_mandir/*/man8/*.8
+
 #%%if_enabled rpmbuild
 #chmod a+x scripts/find-lang.sh
 #RPMCONFIGDIR=./scripts ./scripts/find-lang.sh %name --output %name.lang
@@ -527,6 +531,20 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %config(noreplace) %_sysconfdir/logrotate.d/rpm
 
 %changelog
+* Tue Dec 13 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0-alt4
+- rpmspec: restored support of BuildRequires(pre) (ALT#32870),
+  and Serial (ALT#32888) tags.
+- rpmspec: fixed support of long lines in specfile.
+- rpm: restored --with{,out} and --{en,dis}able aliases for rpmbuild.
+- Added conflict to apt < 0.5.15lorg2-alt54 (ALT#32873).
+- Fixed retrieving of remote files.
+- Dropped R: curl (it is optional).
+- Fixed encoding of translataed manpages.
+- Changed rpmlog to write to stderr.
+- Fixed support of APT external tags (ALT#32887).
+- Define RPM_INSTALL_{NAME,ARG1,ARG2} env variables only for per-package
+  scripts (ALT#32890).
+
 * Thu Dec 08 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0-alt3
 - Packaged /etc/rpm/macros file.
 
