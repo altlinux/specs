@@ -171,7 +171,7 @@
 
 Name: pve-%rname
 Version: 2.7.0
-Release: alt9
+Release: alt10
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -191,6 +191,8 @@ Source9: qemu-guest-agent.service
 Source10: qemu-guest-agent.init
 Source11: OVMF_CODE-pure-efi.fd
 Source12: OVMF_VARS-pure-efi.fd
+
+Source100: Logo.bmp
 
 Patch0: qemu-2.6-alt.patch
 
@@ -244,34 +246,46 @@ Patch56: 0043-vma-sizes-passed-to-blk_co_preadv-should-be-bytes-no.patch
 Patch57: 0044-glusterfs-daemonize.patch
 Patch58: 0045-qmp_delete_drive_snapshot-add-aiocontext.patch
 Patch59: 0046-convert-savevm-async-to-threads.patch
-Patch60: CVE-2016-7155-scsi-check-page-count-while-initialising-descriptor-.patch
-Patch61: CVE-2016-7156-scsi-pvscsi-avoid-infinite-loop-while-building-SG-li.patch
-Patch62: CVE-2016-7157-scsi-mptconfig-fix-an-assert-expression.patch
-Patch63: CVE-2016-7170-vmsvga-correct-bitmap-and-pixmap-size-checks.patch
-Patch64: CVE-2016-7421-scsi-pvscsi-limit-process-IO-loop-to-ring-size.patch
-Patch65: CVE-2016-7422-virtio-add-check-for-descriptor-s-mapped-address.patch
-Patch66: CVE-2016-7423-scsi-mptsas-use-g_new0-to-allocate-MPTSASRequest-obj.patch
-Patch67: CVE-2016-7466-usb-xhci-fix-memory-leak-in-usb_xhci_exit.patch
-Patch68: CVE-2016-7907-net-imx-limit-buffer-descriptor-count.patch
-Patch69: CVE-2016-7908-net-mcf-limit-buffer-descriptor-count.patch
-Patch70: CVE-2016-7909-net-pcnet-check-rx-tx-descriptor-ring-length.patch
-Patch71: CVE-2016-7994-virtio-gpu-fix-memory-leak-in-virtio_gpu_resource_cr.patch
-Patch72: CVE-2016-7995-usb-ehci-fix-memory-leak-in-ehci_process_itd.patch
-Patch73: CVE-2016-8576-xhci-limit-the-number-of-link-trbs-we-are-willing-to.patch
-Patch74: CVE-2016-8577-9pfs-fix-potential-host-memory-leak-in-v9fs_read.patch
-Patch75: CVE-2016-8578-9pfs-allocate-space-for-guest-originated-empty-strin.patch
-Patch76: CVE-2016-8668-net-rocker-set-limit-to-DMA-buffer-size.patch
-Patch77: CVE-2016-8669-char-serial-check-divider-value-against-baud-base.patch
-Patch78: CVE-2016-8909-audio-intel-hda-check-stream-entry-count-during-tran.patch
-Patch79: CVE-2016-8910-net-rtl8139-limit-processing-of-ring-descriptors.patch
-Patch80: CVE-2016-9101-net-eepro100-fix-memory-leak-in-device-uninit.patch
-Patch81: CVE-2016-9103-9pfs-fix-information-leak-in-xattr-read.patch
-Patch82: CVE-2016-9104-9pfs-fix-integer-overflow-issue-in-xattr-read-write.patch
-Patch83: CVE-2016-9105-9pfs-fix-memory-leak-in-v9fs_link.patch
+Patch60: 0047-glusterfs-allow-partial-reads.patch
+Patch61: CVE-2016-7155-scsi-check-page-count-while-initialising-descriptor-.patch
+Patch62: CVE-2016-7156-scsi-pvscsi-avoid-infinite-loop-while-building-SG-li.patch
+Patch63: CVE-2016-7157-scsi-mptconfig-fix-an-assert-expression.patch
+Patch64: CVE-2016-7170-vmsvga-correct-bitmap-and-pixmap-size-checks.patch
+Patch65: CVE-2016-7421-scsi-pvscsi-limit-process-IO-loop-to-ring-size.patch
+Patch66: CVE-2016-7422-virtio-add-check-for-descriptor-s-mapped-address.patch
+Patch67: CVE-2016-7423-scsi-mptsas-use-g_new0-to-allocate-MPTSASRequest-obj.patch
+Patch68: CVE-2016-7466-usb-xhci-fix-memory-leak-in-usb_xhci_exit.patch
+Patch69: CVE-2016-7907-net-imx-limit-buffer-descriptor-count.patch
+Patch70: CVE-2016-7908-net-mcf-limit-buffer-descriptor-count.patch
+Patch71: CVE-2016-7909-net-pcnet-check-rx-tx-descriptor-ring-length.patch
+Patch72: CVE-2016-7994-virtio-gpu-fix-memory-leak-in-virtio_gpu_resource_cr.patch
+Patch73: CVE-2016-7995-usb-ehci-fix-memory-leak-in-ehci_process_itd.patch
+Patch74: CVE-2016-8576-xhci-limit-the-number-of-link-trbs-we-are-willing-to.patch
+Patch75: CVE-2016-8577-9pfs-fix-potential-host-memory-leak-in-v9fs_read.patch
+Patch76: CVE-2016-8578-9pfs-allocate-space-for-guest-originated-empty-strin.patch
+Patch77: CVE-2016-8668-net-rocker-set-limit-to-DMA-buffer-size.patch
+Patch78: CVE-2016-8669-char-serial-check-divider-value-against-baud-base.patch
+Patch79: CVE-2016-8909-audio-intel-hda-check-stream-entry-count-during-tran.patch
+Patch80: CVE-2016-8910-net-rtl8139-limit-processing-of-ring-descriptors.patch
+Patch82: CVE-2016-9101-net-eepro100-fix-memory-leak-in-device-uninit.patch
 Patch84: CVE-2016-9102-9pfs-fix-memory-leak-in-v9fs_xattrcreate.patch
+Patch81: CVE-2016-9103-9pfs-fix-information-leak-in-xattr-read.patch
+Patch86: CVE-2016-9104-9pfs-fix-integer-overflow-issue-in-xattr-read-write.patch
+Patch83: CVE-2016-9105-9pfs-fix-memory-leak-in-v9fs_link.patch
 Patch85: CVE-2016-9106-9pfs-fix-memory-leak-in-v9fs_write.patch
-Patch86: x86-lapic-Load-LAPIC-state-at-post_load.patch
-Patch87: 0047-glusterfs-allow-partial-reads.patch
+Patch87: CVE-2016-9776-net-mcf-check-receive-buffer-size-register-value.patch
+Patch88: CVE-2016-9845-virtio-gpu-fix-information-leak-in-getting-capset-in.patch
+Patch89: CVE-2016-9846-virtio-gpu-fix-memory-leak-in-update_cursor_data_vir.patch
+Patch90: CVE-2016-9907-usbredir-free-vm_change_state_handler-in-usbredir-de.patch
+Patch91: CVE-2016-9908-virtio-gpu-fix-information-leak-in-capset-get-dispat.patch
+Patch92: CVE-2016-9911-usb-ehci-fix-memory-leak-in-ehci_init_transfer.patch
+Patch93: CVE-2016-9912-virtio-gpu-call-cleanup-mapping-function-in-resource.patch
+Patch94: CVE-2016-9913-9pfs-adjust-the-order-of-resource-cleanup-in-device-.patch
+Patch95: CVE-2016-9914-9pfs-add-cleanup-operation-in-FileOperations.patch
+Patch96: CVE-2016-9915-9pfs-add-cleanup-operation-for-handle-backend-driver.patch
+Patch97: CVE-2016-9916-9pfs-add-cleanup-operation-for-proxy-backend-driver.patch
+Patch98: CVE-2016-9921-display-cirrus-check-vga-bits-per-pixel-bpp-value.patch
+Patch99: x86-lapic-Load-LAPIC-state-at-post_load.patch
 
 %set_verify_elf_method fhs=relaxed
 
@@ -528,6 +542,18 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch85 -p1
 %patch86 -p1
 %patch87 -p1
+%patch88 -p1
+%patch89 -p1
+%patch90 -p1
+%patch91 -p1
+%patch92 -p1
+%patch93 -p1
+%patch94 -p1
+%patch95 -p1
+%patch96 -p1
+%patch97 -p1
+%patch98 -p1
+%patch99 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -785,6 +811,12 @@ fi
 #_bindir/ivshmem-server
 
 %changelog
+* Tue Dec 13 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.7.0-alt10
+- 2.7.0-10
+
+* Mon Dec 05 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.7.0-alt8.M80P.1
+- backport to p8 branch
+
 * Mon Dec 05 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.7.0-alt9
 - 2.7.0-9
 
