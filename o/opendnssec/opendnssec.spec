@@ -1,6 +1,6 @@
 Name: opendnssec
 Version: 1.4.12
-Release: alt1
+Release: alt2
 
 Summary: DNSSEC key and zone management software
 License: %bsd
@@ -43,7 +43,7 @@ SoftHSM.
 %patch -p1
 
 %build
-#autoreconf
+%autoreconf
 %configure \
 	--with-ldns=%_libdir
 %make_build
@@ -67,8 +67,8 @@ useradd -g %_pseudouser_group -G ods -c 'OpenDNSSEC daemon account' \
         -d %_pseudouser_home -s /dev/null -r %_pseudouser_user >/dev/null 2>&1 ||:
 
 %post
-# Initialise a slot on the softhsm on first install
 if [ "$1" -eq 1 ]; then
+	# Initialise a slot on the softhsm on first install
 	su -s /bin/sh -c 'softhsm2-util --init-token --slot 0 \
 		--label "OpenDNSSEC" --pin 1234 --so-pin 1234' %_pseudouser_user
 	if [ ! -s %_localstatedir/opendnssec/kasp.db ]; then
@@ -97,13 +97,17 @@ ods-ksmutil update all >/dev/null 1>&2 ||:
 %_man5dir/*
 %_man7dir/*
 %_man8dir/*
-%_localstatedir/opendnssec/
+%attr(0755,%_pseudouser_user,%_pseudouser_group) %_localstatedir/opendnssec/
 %_datadir/opendnssec/
-%dir %_runtimedir/opendnssec/
+%dir %attr(0755,%_pseudouser_user,%_pseudouser_group) %_runtimedir/opendnssec/
 
 %exclude %_sysconfdir/opendnssec/*.sample
 
 %changelog
+* Tue Dec 13 2016 Mikhail Efremov <sem@altlinux.org> 1.4.12-alt2
+- Fix dirs owner.
+- Fix pidfile location.
+
 * Wed Nov 02 2016 Mikhail Efremov <sem@altlinux.org> 1.4.12-alt1
 - Initial build.
 
