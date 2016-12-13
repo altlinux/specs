@@ -11,13 +11,13 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
 License: LGPL
-Url: http://www.projects.gnome.org/
+Url: http://www.gtk.org
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 Source1: %_name.map
@@ -31,7 +31,7 @@ Requires: %name-locales = %version
 Provides: %name-loaders = %version
 Obsoletes: %name-loaders <= %version
 
-BuildPreReq: libgio-devel >= %glib_ver
+BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: docbook-utils gtk-doc libjpeg-devel libpng-devel libtiff-devel
 %{?_with_x11:BuildRequires: libX11-devel}
 %{?_with_libjasper:BuildRequires: libjasper-devel}
@@ -161,6 +161,7 @@ echo : >>%_name/abicheck.sh
 
 %files
 %_bindir/gdk-pixbuf-query-loaders
+%_bindir/gdk-pixbuf-thumbnailer
 %_libdir/libgdk_pixbuf-2.0.so.*
 %dir %_libdir/%_name-%api_ver
 %dir %_libdir/%_name-%api_ver/%binary_ver
@@ -182,6 +183,7 @@ echo : >>%_name/abicheck.sh
 %{?_with_libjasper:%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-jasper.so}
 %exclude %_libdir/%_name-%api_ver/%binary_ver/loaders/*.la
 %ghost %_libdir/%_name-%api_ver/%binary_ver/loaders.cache
+%_datadir/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer
 %_man1dir/gdk-pixbuf-query-loaders*
 %_rpmlibdir/gdk-pixbuf-loaders.filetrigger
 
@@ -223,6 +225,9 @@ echo : >>%_name/abicheck.sh
 
 
 %changelog
+* Tue Dec 13 2016 Yuri N. Sedunov <aris@altlinux.org> 2.36.1-alt1
+- 2.36.1
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 2.36.0-alt1
 - 2.36.0
 
