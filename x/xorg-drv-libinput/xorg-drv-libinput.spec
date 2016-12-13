@@ -1,10 +1,10 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name xf86-input-libinput
 %define _xconfdir %_sysconfdir/X11/xorg.conf.d
 
 Name: xorg-drv-libinput
-Version: 0.22.0
+Version: 0.23.0
 Release: alt1
 
 Summary: Xorg libinput input driver
@@ -21,11 +21,11 @@ Patch: xf86-input-libinput-0.14.0-alt-include.patch
 
 %define libinput_ver 1.0
 
-PreReq: XORG_ABI_XINPUT = %get_xorg_abi_xinput
+Requires(pre): XORG_ABI_XINPUT = %get_xorg_abi_xinput
 Requires: libinput >= %libinput_ver
 Requires: xkeyboard-config
 
-BuildRequires(Pre): xorg-sdk >= 1.14
+BuildRequires: xorg-sdk >= 1.14
 BuildRequires: libinput-devel >= %libinput_ver xorg-resourceproto-devel xorg-scrnsaverproto-devel
 
 %description
@@ -71,6 +71,9 @@ Xorg libinput input driver development files.
 %_includedir/xorg/libinput-properties.h
 
 %changelog
+* Mon Dec 12 2016 Yuri N. Sedunov <aris@altlinux.org> 0.23.0-alt1
+- 0.23.0
+
 * Fri Oct 21 2016 Yuri N. Sedunov <aris@altlinux.org> 0.22.0-alt1
 - 0.22.0 (0.22.0-1-gbf7fffd)
 

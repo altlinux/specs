@@ -3,7 +3,7 @@
 
 Name: xorg-drv-vmmouse
 Version: 13.1.0
-Release: alt2
+Release: alt3
 
 Summary: VMWare mouse input driver
 License: MIT/X11
@@ -55,6 +55,9 @@ install -m 0644 %buildroot/%_xorgsysconfigdir/*vmmouse*.conf %buildroot/%_xconfd
 %_man4dir/*vmmouse*.*
 
 %changelog
+* Mon Dec 12 2016 Valery Inozemtsev <shrek@altlinux.ru> 13.1.0-alt3
+- requires XORG_ABI_XINPUT = 24.1
+
 * Fri Jul 22 2016 Sergey V Turchin <zerg@altlinux.org> 13.1.0-alt2
 - install configuration
 

@@ -1,6 +1,6 @@
 Name: xorg-installers
 Version: 7.8
-Release: alt2
+Release: alt3
 Summary: Set of various Xorg-related installers
 License: MIT/X11
 Group: System/X11
@@ -30,8 +30,8 @@ Graphical applications for Xorg
 %package -n xorg-drv-video
 Summary: video drivers for X Window System
 Group: System/X11
-Requires: xorg-drv-ati xorg-drv-intel xorg-drv-nv xorg-drv-openchrome xorg-drv-cirrus xorg-drv-mga
-Requires: xorg-drv-s3virge xorg-drv-savage xorg-drv-sis xorg-drv-nouveau xorg-drv-qxl xorg-drv-modesetting
+Requires: xorg-drv-ati xorg-drv-intel xorg-drv-nv xorg-drv-openchrome xorg-drv-cirrus
+Requires: xorg-drv-nouveau xorg-drv-qxl
 
 %description -n xorg-drv-video
 xorg-drv-video requires video drivers for X Window System for PCI, AGP
@@ -65,6 +65,9 @@ X proto header files
 %files -n xorg-proto-devel
 
 %changelog
+* Mon Dec 12 2016 Valery Inozemtsev <shrek@altlinux.ru> 7.8-alt3
+- removed very very old video drivers
+
 * Wed Mar 13 2013 Mikhail Efremov <sem@altlinux.org> 7.8-alt2
 - Added xorg-proto-devel subpackage.
 

@@ -1,6 +1,6 @@
 Name: xorg-drv-void
 Version: 1.4.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: null input driver
 License: MIT/X11
@@ -44,6 +44,9 @@ server to operate without a core pointer and/or core keyboard.
 %_man4dir/*
 
 %changelog
+* Thu Dec 01 2016 Valery Inozemtsev <shrek@altlinux.ru> 1:1.4.1-alt2
+- requires XORG_ABI_XINPUT = 24.1
+
 * Fri Nov 27 2015 Valery Inozemtsev <shrek@altlinux.ru> 1:1.4.1-alt1
 - 1.4.1
 

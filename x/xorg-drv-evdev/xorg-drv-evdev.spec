@@ -2,7 +2,7 @@
 
 Name: xorg-drv-evdev
 Version: 2.10.4
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: Generic Linux input driver
 License: MIT/X11
@@ -62,6 +62,9 @@ install -m644 *.conf %buildroot%_xconfdir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Nov 30 2016 Valery Inozemtsev <shrek@altlinux.ru> 2:2.10.4-alt2
+- requires XORG_ABI_XINPUT = 24.1
+
 * Mon Nov 21 2016 Valery Inozemtsev <shrek@altlinux.ru> 2:2.10.4-alt1
 - 2.10.4
 
