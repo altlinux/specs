@@ -1,5 +1,7 @@
+%define gtkver 2
+
 Name: pcmanfm
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 
 Summary: PCMan File Manager
@@ -13,7 +15,7 @@ Provides: pcmanfm2 = %version-%release
 Obsoletes: pcmanfm2 < 1.2.0
 
 BuildRequires: rpm-build-xdg
-BuildRequires: libgtk+2-devel >= 2.18.0
+BuildRequires: libgtk+%gtkver-devel >= 2.18.0
 BuildRequires: libfm-devel >= 1.2.0
 BuildRequires: libgio-devel
 
@@ -33,14 +35,24 @@ Features:
     * Handles non-UTF-8 encoded filenames correctly
     * Provides icon view and detailed list view
     * Standards compliant (follows freedesktop.org)
-    * Clean and user-friendly interface (GTK+2)
+    * Clean and user-friendly interface (GTK+%gtkver)
+
+%package devel
+Summary: Development files for %name
+Group: Development/Other
+Buildarch: noarch
+
+%description devel
+This package contains header files.
 
 %prep
 %setup
 
 %build
 %autoreconf
-%configure --enable-largefile
+%configure \
+    --enable-largefile \
+    --with-gtk=%gtkver
 %make_build
 
 %install
@@ -51,11 +63,17 @@ ln -s %name %buildroot%_bindir/pcmanfm2
 %files -f %name.lang
 %_bindir/*
 %_desktopdir/*
-%_datadir/%name/
-%_xdgconfigdir/%name/*
+%_datadir/%name
+%_xdgconfigdir/%name
 %_man1dir/*
 
+%files devel
+%_includedir/*
+
 %changelog
+* Tue Dec 13 2016 Anton Midyukov <antohami@altlinux.org> 1.2.5-alt1
+- new version 1.2.5
+
 * Tue Oct 04 2016 Michael Shigorin <mike@altlinux.org> 1.2.4-alt1
 - 1.2.4
 
