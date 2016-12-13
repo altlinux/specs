@@ -1,5 +1,5 @@
 Name: dropbox-uploader
-Version: 0.16
+Version: 1.0
 Release: alt1
 
 Summary: A bash script to manage Dropbox from the CLI
@@ -33,8 +33,11 @@ install -D -m 755 dropShell.sh %buildroot%_bindir/dropShell
 %_bindir/*
 
 %changelog
+* Tue Dec 13 2016 Mikhail Kolchin <mvk@altlinux.org> 1.0-alt1
+- New version
+
 * Fri Jul 31 2015 Mikhail Kolchin <mvk@altlinux.org> 0.16-alt1
-- new version
+- New version
 
 * Tue Jun 30 2015 Mikhail Kolchin <mvk@altlinux.org> 0.15-alt1
-- initial build for ALT Linux Sisyphus
+- Initial build for ALT Linux Sisyphus
