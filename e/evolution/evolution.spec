@@ -18,7 +18,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -48,7 +48,7 @@ Provides: camel
 %define glib_ver 2.40.0
 %define gtk_ver 3.10
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.22.2
+%define eds_ver 3.22.3
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define libsoup_ver 2.42.0
@@ -69,23 +69,23 @@ Requires: gnome-icon-theme
 Requires: gnome-settings-daemon
 Requires: highlight
 
-BuildPreReq: gnome-common
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libgail3-devel >= %gtk_ver
-BuildPreReq: gnome-icon-theme >= %gnome_icon_ver
-BuildPreReq: evolution-data-server-devel >= %eds_ver
-BuildPreReq: libgnome-desktop3-devel >= %gnome_desktop_ver
-BuildPreReq: libsoup-gnome-devel >= %libsoup_ver
-BuildPreReq: libnotify-devel >= %libnotify_ver
-BuildPreReq: libgweather-devel >= %gweather_ver
-BuildPreReq: libical-devel >= %ical_ver libicu-devel
-BuildPreReq: libgdata-devel >= %gdata_ver
-BuildPreReq: libpst-devel >= %pst_ver
-BuildPreReq: libwebkit2gtk-devel >= %webkit_ver
-BuildPreReq: libclutter-gtk3-devel >= %clutter_gtk_ver
-BuildPreReq: gcr-libs-devel >= %gcr_ver libcryptui-devel
-%{?_enable_map:BuildPreReq: libchamplain-gtk3-devel >= %champlain_ver libgeoclue-devel libgeocode-glib-devel >= %geocode_ver}
+BuildRequires: gnome-common
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libgail3-devel >= %gtk_ver
+BuildRequires: gnome-icon-theme >= %gnome_icon_ver
+BuildRequires: evolution-data-server-devel >= %eds_ver
+BuildRequires: libgnome-desktop3-devel >= %gnome_desktop_ver
+BuildRequires: libsoup-gnome-devel >= %libsoup_ver
+BuildRequires: libnotify-devel >= %libnotify_ver
+BuildRequires: libgweather-devel >= %gweather_ver
+BuildRequires: libical-devel >= %ical_ver libicu-devel
+BuildRequires: libgdata-devel >= %gdata_ver
+BuildRequires: libpst-devel >= %pst_ver
+BuildRequires: libwebkit2gtk-devel >= %webkit_ver
+BuildRequires: libclutter-gtk3-devel >= %clutter_gtk_ver
+BuildRequires: gcr-libs-devel >= %gcr_ver libcryptui-devel
+%{?_enable_map:BuildRequires: libchamplain-gtk3-devel >= %champlain_ver libgeoclue-devel libgeocode-glib-devel >= %geocode_ver}
 %{?_enable_tnef:BuildRequires: libytnef-devel}
 %{?_enable_autoar:BuildRequires: libgnome-autoar-devel >= %autoar_ver}
 
@@ -317,6 +317,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Mon Dec 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
+- 3.22.3
+
 * Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
 - 3.22.2
 
@@ -878,7 +881,7 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 - 2.2.1
 
 * Thu Mar 10 2005 Yuri N. Sedunov <aris@altlinux.ru> 2.2.0-alt1.1
-- put symlinks to libeshell É libeutil in %%_libdir
+- put symlinks to libeshell & libeutil in %%_libdir
   so connector can find thease libararies. (reported by Alex Gorbachenko).
 
 * Tue Mar 08 2005 Yuri N. Sedunov <aris@altlinux.ru> 2.2.0-alt1
@@ -960,7 +963,7 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 - new version
 
 * Mon Jul 14 2003 AEN <aen@altlinux.ru> 1.4.3-alt2
-- PreReq and BuildPreReq on liborbi2 & libbonobo2 added (thnks to Vyt)
+- PreReq and BuildRequires on liborbi2 & libbonobo2 added (thnks to Vyt)
 
 * Fri Jul 11 2003 AEN <aen@altlinux.ru> 1.4.3-alt1
 - release
