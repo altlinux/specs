@@ -1,6 +1,6 @@
 Name: guile-evms
 Version: 0.4
-Release: alt16
+Release: alt17
 
 Summary: Guile bindings for EVMS
 License: GPL
@@ -33,6 +33,10 @@ make install DESTDIR=%buildroot
 %_datadir/guile/site/evms.scm
 
 %changelog
+* Tue Dec 13 2016 Michael Shigorin <mike@altlinux.org> 0.4-alt17
+- added /tmp to well-known mountpoints (to avoid default "noexec"
+  which breaks 50-initrd trying to run make-initrd there)
+
 * Wed Nov 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4-alt16
 - the dangerous use of an implicit declaration replaced by current guile API
 
