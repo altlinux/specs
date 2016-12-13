@@ -20,7 +20,7 @@
 %def_enable installed_tests
 
 Name: libgtk+3
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -62,18 +62,18 @@ Requires: icon-theme-adwaita
 Requires: gtk+3-themes-incompatible
 %{?_enable_colord:Requires: colord}
 
-BuildPreReq: rpm-build-licenses rpm-build-gnome
-BuildPreReq: glib2-devel >= %glib_ver libgio-devel
-BuildPreReq: libcairo-devel >= %cairo_ver
-BuildPreReq: libcairo-gobject-devel >= %cairo_ver
-BuildPreReq: libpango-devel >= %pango_ver
-BuildPreReq: libatk-devel >= %atk_ver
-BuildPreReq: at-spi2-atk-devel >= %atspi_ver
-BuildPreReq: libgdk-pixbuf-devel >= %pixbuf_ver
-BuildPreReq: fontconfig-devel >= %fontconfig_ver
-BuildPreReq: gtk-doc >= %gtk_doc_ver
-BuildPreReq: libcups-devel >= %cups_ver
-BuildPreReq: libepoxy-devel >= %epoxy_ver
+BuildRequires: rpm-build-licenses rpm-build-gnome
+BuildRequires: glib2-devel >= %glib_ver libgio-devel
+BuildRequires: libcairo-devel >= %cairo_ver
+BuildRequires: libcairo-gobject-devel >= %cairo_ver
+BuildRequires: libpango-devel >= %pango_ver
+BuildRequires: libatk-devel >= %atk_ver
+BuildRequires: at-spi2-atk-devel >= %atspi_ver
+BuildRequires: libgdk-pixbuf-devel >= %pixbuf_ver
+BuildRequires: fontconfig-devel >= %fontconfig_ver
+BuildRequires: gtk-doc >= %gtk_doc_ver
+BuildRequires: libcups-devel >= %cups_ver
+BuildRequires: libepoxy-devel >= %epoxy_ver
 BuildRequires: gtk-update-icon-cache docbook-utils zlib-devel
 
 BuildRequires: libXdamage-devel libXcomposite-devel libX11-devel libXcursor-devel
@@ -415,6 +415,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Fri Dec 09 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.5-alt1
+- 3.22.5
+
 * Sat Nov 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.4-alt1
 - 3.22.4
 
