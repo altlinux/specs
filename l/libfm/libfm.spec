@@ -1,7 +1,8 @@
 %define soname 4
+%define gtkver 2
 
 Name: libfm
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 
 Summary: Core library of PCManFM file manager
@@ -14,14 +15,14 @@ Source: %name-%version.tar
 BuildPreReq: rpm-build-xdg
 BuildRequires: intltool libmenu-cache-devel
 BuildRequires: libdbus-glib-devel libudisks2-devel
-BuildRequires: glib2-devel libgtk+2-devel gtk-doc
+BuildRequires: glib2-devel libgtk+%gtkver-devel gtk-doc
 BuildRequires: vala >= 0.13.0
 BuildRequires: libexif-devel
 BuildRequires: libxslt-devel
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: qt5-base-devel
-BuildRequires: libqtxdg-devel
+#BuildRequires: qt5-base-devel
+#BuildRequires: libqtxdg-devel
 
 %description
 LibFM is a core library of PCManFM file manager.
@@ -65,7 +66,7 @@ sed -ri '/AM_INIT_AUTOMAKE/s,-Werror,\0 -Wno-portability,' configure.ac
 %configure \
     --disable-static \
     --disable-silent-rules \
-    --with-gtk=2 \
+    --with-gtk=%gtkver \
     --enable-gtk-doc \
     --enable-largefile \
     --enable-udisks \
@@ -82,11 +83,18 @@ sed -i 's,\~[a-z0-9]*,,g' libfm*.pc
 
 # Remove unnecessary files
 rm -f %buildroot%_libdir/%name/modules/*.la
-rm -f %buildroot%_pkgconfigdir/libfm-gtk3.pc
+%if %gtkver==3
+    rm -f %buildroot%_pkgconfigdir/libfm-gtk.pc
+%endif
+%if %gtkver==2
+    rm -f %buildroot%_pkgconfigdir/libfm-gtk3.pc
+%endif
 
 %files -n %name%soname -f libfm.lang
 %_xdgconfigdir/*
 %_libdir/*.so.*
+%dir %_libdir/%name
+%dir %_libdir/%name/modules
 %_libdir/%name/modules/*.so
 %_xdgmimedir/packages/*
 %_datadir/%name/
@@ -98,7 +106,7 @@ rm -f %buildroot%_pkgconfigdir/libfm-gtk3.pc
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*
-%doc %_datadir/gtk-doc/html/%name/*
+%doc %_datadir/gtk-doc/html/%name
 
 %files -n lxde-lxshortcut
 %_bindir/lxshortcut
@@ -106,6 +114,9 @@ rm -f %buildroot%_pkgconfigdir/libfm-gtk3.pc
 %_man1dir/lxshortcut.1*
 
 %changelog
+* Tue Dec 13 2016 Anton Midyukov <antohami@altlinux.org> 1.2.5-alt1
+- new version 1.2.5
+
 * Tue Oct 04 2016 Michael Shigorin <mike@altlinux.org> 1.2.4-alt1
 - 1.2.4
 
