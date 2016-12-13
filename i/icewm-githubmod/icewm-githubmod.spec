@@ -4,7 +4,7 @@
 
 Name: %realname-githubmod
 Version: 1.3.12.56
-Release: alt2%gitrev
+Release: alt3%gitrev
 
 Summary: X11 Window Manager
 Group: Graphical desktop/Icewm
@@ -88,7 +88,7 @@ mv %buildroot/%_x11x11dir/%realname/themes/default ./Default
 rm -rf %buildroot/%_x11x11dir/%realname/themes/*
 mv ./Default %buildroot/%_x11x11dir/%realname/themes/
 rm -rf %buildroot/%_datadir/doc/%realname
-rm -rf %buildroot/%_datadir/xsessions
+rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 
 %files -f %realname.lang
 %dir %_sysconfdir/X11/%realname
@@ -113,10 +113,14 @@ rm -rf %buildroot/%_datadir/xsessions
 %_liconsdir/*
 %_pixmapsdir/*
 %_man1dir/*
+%_datadir/xsessions/*.desktop
 
 %doc AUTHORS NEWS README.ALT README.md BUILD/doc/*.html icewm-old-changelog.bz2
 
 %changelog
+* Tue Dec 13 2016 Dmitriy Khanzhin <jinn@altlinux.org> 1.3.12.56-alt3.gitcbb3423
+- packaged desktop file for xsession
+
 * Sun Nov 13 2016 Dmitriy Khanzhin <jinn@altlinux.org> 1.3.12.56-alt2.gitcbb3423
 - don't install debian-menu file, also desktop file
 - packaged theme "Default"
