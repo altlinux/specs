@@ -1,15 +1,15 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-suse-compat
-BuildRequires: libXt-devel libfreetds-devel libjpeg-devel libpng12-devel zlib-devel
+BuildPreReq: rpm-build-suse-compat
+BuildPreReq: libXt-devel libfreetds-devel libjpeg-devel libpng-devel zlib-devel
 # END SourceDeps(oneline)
 BuildPreReq: libsqlite3-devel libunixODBC-devel libuuid-devel postgresql9.6-devel
-BuildPreReq: libXmu-devel libXrandr-devel libaudio-devel libcups-devel libmng-devel libmysqlclient-devel libpng12-devel
+BuildPreReq: libXmu-devel libXrandr-devel libaudio-devel libcups-devel libmng-devel libmysqlclient-devel libpng-devel
 BuildPreReq: firebird-devel gcc-c++ glib2-devel glibc-devel-static libGLU-devel libXcursor-devel libXft-devel libXi-devel libXinerama-devel
 %define with_ibase 1
-BuildRequires(pre): rpm-macros-trinity
+BuildRequires: rpm-macros-trinity
 %define suse_version 1320
-BuildRequires(pre):	rpm-macros-suse-compat
-BuildRequires(pre):	rpm-macros-cmake
+BuildRequires:	rpm-macros-suse-compat
+BuildRequires:	rpm-macros-cmake
 #
 # spec file for package tqt3 (version R14)
 #
@@ -36,7 +36,7 @@ BuildRequires(pre):	rpm-macros-cmake
 
 Name: trinity-tqt3
 Version: 3.5.0
-Release: alt3_14.0.4_1
+Release: alt4_14.0.4_1
 Summary: TQt GUI Library, Version 3
 Group: Graphical desktop/Other
 Url: http://www.trinitydesktop.org/
@@ -1483,6 +1483,9 @@ install -D -m644 "tqt3-examples.tar.gz" "%{?buildroot}%_docdir/tqt3-examples/tqt
 chmod 644 "%{?buildroot}%_datadir/tqt3/mkspecs/"*/*
 
 %changelog
+* Tue Dec 13 2016 Hihin Ruslan <ruslandh@altlinux.ru> 3.5.0-alt4_14.0.4_1
+- Correct BuildRequires
+
 * Thu Nov 10 2016 Hihin Ruslan <ruslandh@altlinux.ru> 3.5.0-alt3_14.0.4_1
 - New Version
 
