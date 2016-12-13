@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=strict
 %def_without check
 Name: cmake
-Version: 3.6.2
-Release: alt0.2
+Version: 3.6.3
+Release: alt0.1
 
 Summary: Cross-platform, open-source make system
 
@@ -17,11 +17,11 @@ Source1: %name.macros
 Source2: CMakeCache.txt
 Patch: %name-%version-%release.patch
 
-BuildPreReq: bzlib-devel gcc-c++ libarchive-devel >= 2.8.4
-BuildPreReq: libcurl-devel libexpat-devel libncurses-devel qt5-base-devel libxml2-devel
-BuildPreReq: liblzma-devel jsoncpp-devel doxygen graphviz zlib-devel
-BuildPreReq: python-module-sphinx-devel
-BuildRequires(pre): shared-mime-info rpm-build-vim
+BuildRequires: bzlib-devel gcc-c++ libarchive-devel >= 2.8.4
+BuildRequires: libcurl-devel libexpat-devel libncurses-devel qt5-base-devel libxml2-devel
+BuildRequires: liblzma-devel jsoncpp-devel doxygen graphviz zlib-devel
+BuildRequires: python-module-sphinx-devel
+BuildRequires: shared-mime-info rpm-build-vim
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc gcc-fortran java-devel cvs subversion mercurial git-core}}
 
 Obsoletes: cpack < 2.4.5-alt3
@@ -255,6 +255,10 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Tue Dec 13 2016 L.A. Kostis <lakostis@altlinux.ru> 3.6.3-alt0.1
+- Updated to 3.6.3.
+- .spec cleanup for new rpm.
+
 * Sun Oct 23 2016 L.A. Kostis <lakostis@altlinux.ru> 3.6.2-alt0.2
 - Added some patches from debian:
   - FindBoost_add_-lpthread_#563479.diff: Add -lpthread when using Boost::Thread.
