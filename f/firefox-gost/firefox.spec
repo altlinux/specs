@@ -1,5 +1,5 @@
 %define rname firefox
-%set_verify_elf_method relaxed
+%set_verify_elf_method unresolved=strict
 %def_without system_nss
 %def_without gtk3
 
@@ -17,7 +17,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (с под
 
 Name:           firefox-gost
 Version:        45.5.0
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -212,6 +212,13 @@ MOZ_OPT_FLAGS=$(echo $RPM_OPT_FLAGS -fPIC -Wl,-z,relro -Wl,-z,now | \
 )
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
+# Add fake RPATH
+rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
+export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
+%if_without system_nss
+# see mozilla/security/nss/coreconf/Linux.mk:203
+export RPATH="-Wl,-rpath,$rpath"
+%endif
 
 export PREFIX="%_prefix"
 export LIBDIR="%_libdir"
@@ -317,6 +324,23 @@ cp %SOURCE9 %buildroot%firefox_noarch_extensionsdir/langpack-ru@firefox.mozilla.
 ln -s %_datadir/myspell/ru_RU.dic %buildroot%firefox_prefix/dictionaries/ru.dic
 ln -s %_datadir/myspell/ru_RU.aff %buildroot%firefox_prefix/dictionaries/ru.aff
 
+# Add real RPATH
+rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
+find \
+     %buildroot/%firefox_prefix \
+-type f -print0 |
+(set +x
+        while read -r -d '' f; do
+              t="$(readlink -ev -- "$f")"
+
+              file -- "$t" | fgrep -qs ELF || continue
+
+              if chrpath -l "$t" | fgrep -qs "PATH=$rpath"; then
+                 chrpath -r "%firefox_prefix" "$t"
+              fi
+        done
+)
+
 %pre
 for n in defaults browserconfig.properties; do
 	[ ! -L "%firefox_prefix/$n" ] || rm -f "%firefox_prefix/$n"
@@ -339,6 +363,12 @@ done
 %firefox_prefix/dictionaries/*
 
 %changelog
+* Tue Dec  6 2016 Ivan Zakharyaschev <imz@altlinux.org> 45.5.0-alt2
+- Strictly verify unresolved ELF symbols (incl. the bundled patched libnss); it
+  will also save us from missing dependencies on libgtk symbols. (Thx legion@
+  for the original hack, removed in 44.0.2-alt3, but found to be restorable by
+  ruslandh@'s work on strict unresolved symbols verification in palemoon.)
+
 * Fri Nov 25 2016 Andrey Cherepanov <cas@altlinux.org> 45.5.0-alt1
 - New ESR version with GOST encryption support
 - Add script update-l10n-ru for download new localization
