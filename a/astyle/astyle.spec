@@ -1,17 +1,27 @@
 Name: astyle
 Version: 2.05.1
-Release: alt1
+Release: alt2
 
 Summary: A small, fast automatic indentation filter for C/C++/Java code
-License:: GPL
+License: GPL
 Group: Development/Other
 
 Url: http://%name.sourceforge.net/
 Source: %{name}_%{version}_linux.tar.gz
 
-# Automatically added by buildreq on Tue Apr 24 2012
-# optimized out: libstdc++-devel
 BuildRequires: gcc-c++
+
+%package -n lib%name
+Group: Development/C++
+Summary: Separated dynamc library for linking with astyle
+%description -n lib%name
+Separated dynamc library for linking with astyle
+
+%package -n lib%name-devel
+Group: Development/C++
+Summary: Separated dynamc library for linking with astyle (development environment)
+%description -n lib%name-devel
+Separated dynamc library for linking with astyle (development environment)
 
 %description
 Artistic Style is a reindenter and reformatter of C++, C and Java source code.
@@ -36,16 +46,31 @@ incorporated as classes in another C++ program.
 %setup -n %name
 
 %build
-%make_build -C src -f ../build/gcc/Makefile
+%make_build CFLAGS=-O2 -C src -f ../build/gcc/Makefile shareddebug astyled
 
 %install
-install -p -m755 -D src/bin/%name %buildroot%_bindir/%name
+install -D src/bin/%{name}d %buildroot%_bindir/%name
+install -d %buildroot%_libdir/
+install src/bin/lib* %buildroot%_libdir/
+( cd %buildroot%_libdir; ln -s lib* lib%name.so )
+install -D src/%name.h %buildroot%_includedir/%name.h
 
 %files
 %doc doc/*
 %_bindir/%name
 
+%files -n lib%name
+%_libdir/lib*.*.so
+
+%files -n lib%name-devel
+%_libdir/lib%name.so
+%_includedir/%name.h
+
+
 %changelog
+* Wed Dec 14 2016 Fr. Br. George <george@altlinux.ru> 2.05.1-alt2
+- Build isolated shared library (closes: #32855)
+
 * Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 2.05.1-alt1
 - Autobuild version bump to 2.05.1
 
