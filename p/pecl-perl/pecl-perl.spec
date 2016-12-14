@@ -3,7 +3,7 @@
 
 Name: pecl-%pecl_name
 Version: 1.0.1
-Release: alt19
+Release: alt19%ubt
 # see commit a3d7db22eb7964ea9cb39ea2f866d10df26655d4
 # of git://github.com/do-aki/php-ext-perl.git
 Patch0: %name-1.0.1-alt-fix_php5.4.patch
@@ -19,6 +19,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: http://pecl.php.net/get/%pecl_name-%version.tar.bz2
 
 BuildPreReq: rpm-build-pecl
+BuildRequires(pre): rpm-build-ubt
 
 # Automatically added by buildreq on Tue Oct 18 2011
 BuildRequires: perl-devel php5-devel
@@ -55,7 +56,10 @@ phpize
 %pecl_files
 
 %changelog
-* Wed Nov 16 2016 Anton Farygin <rider@altlinux.ru> 1.0.1-alt19
+* Wed Dec 14 2016 Anton Farygin <rider@altlinux.ru> 1.0.1-alt19%ubt
+- rebuild with php5-5.6.28
+
+* Wed Nov 16 2016 Anton Farygin <rider@altlinux.ru> 1.0.1-alt18%ubt
 - rebuild with php5-5.6.28
 
 * Mon Oct 17 2016 Anton Farygin <rider@altlinux.ru> 1.0.1-alt18
