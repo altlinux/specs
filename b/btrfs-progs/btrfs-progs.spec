@@ -1,15 +1,16 @@
 Name: btrfs-progs
-Version: 4.8.4
-Release: alt1
+Version: 4.8.5
+Release: alt1%ubt
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
 Group: System/Kernel and hardware
 Url: http://btrfs.wiki.kernel.org/
 Source: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Patch0: %name-%version-alt.patch
 
 BuildRequires: libacl-devel libe2fs-devel libuuid-devel zlib-devel libblkid-devel libattr-devel liblzo2-devel asciidoc xmlto
+BuildRequires(pre): rpm-build-ubt
 
 %description
 Btrfs (B-tree FS or usually pronounced "Butter FS") is a copy-on-write
@@ -75,6 +76,9 @@ ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/libbtrfs.so
 %_includedir/btrfs
 
 %changelog
+* Wed Dec 14 2016 Anton Farygin <rider@altlinux.ru> 4.8.5-alt1%ubt
+- new version
+
 * Tue Nov 29 2016 Anton Farygin <rider@altlinux.ru> 4.8.4-alt1
 - new version (closes: #32818)
 
