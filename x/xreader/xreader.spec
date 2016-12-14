@@ -5,7 +5,7 @@
 %def_enable introspection
 
 Name: xreader
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: A document viewer
@@ -162,6 +162,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nemo/extensions-3.0/*.la
 
 %changelog
+* Wed Dec 14 2016 Vladimir Didenko <cow@altlinux.org> 1.2.2-alt1
+- New version
+
 * Sun Nov 13 2016 Vladimir Didenko <cow@altlinux.org> 1.2.1-alt1
 - New version
 
