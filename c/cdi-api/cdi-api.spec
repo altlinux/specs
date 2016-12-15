@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             cdi-api
 Version:          1.1
-Release:          alt2_13jpp8
+Release:          alt3_13jpp8
 Summary:          CDI API
 License:          ASL 2.0
 URL:              http://seamframework.org/Weld
@@ -100,6 +100,9 @@ build-jar-repository %{buildroot}%{_javadir}/javax.enterprise.inject/ \
 %files javadoc -f api/.mfiles-javadoc
 
 %changelog
+* Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_13jpp8
+- added osgi provides
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_13jpp8
 - new fc release
 
