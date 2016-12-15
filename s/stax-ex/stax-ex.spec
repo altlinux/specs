@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          stax-ex
 Version:       1.7.7
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       StAX API extensions
 License:       CDDL or GPLv2
 Url:           https://stax-ex.dev.java.net
@@ -22,7 +22,9 @@ BuildRequires: maven-local
 BuildRequires: mvn(javax.xml.stream:stax-api)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(net.java:jvnet-parent:pom:)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+
 BuildArch:     noarch
 Source44: import.info
 
@@ -74,6 +76,9 @@ dos2unix LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.7.7-alt1_5jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.7.7-alt1_4jpp8
 - new fc release
 
