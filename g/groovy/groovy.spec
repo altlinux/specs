@@ -1,6 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
@@ -12,8 +13,8 @@ BuildRequires: jpackage-generic-compat
 # the Requires list.
 
 Name:           groovy
-Version:        2.4.4
-Release:        alt1_1jpp8
+Version:        2.4.5
+Release:        alt1_7jpp8
 Summary:        Dynamic language for the Java Platform
 
 # Some of the files are licensed under BSD and CPL terms, but the CPL has been superceded
@@ -28,6 +29,7 @@ Source1:        groovy-script.sh
 Source3:        groovy.desktop
 Source4:        cpl-v10.txt
 Source5:        epl-v10.txt
+Source6:        http://central.maven.org/maven2/org/codehaus/groovy/groovy-all/%{version}/groovy-all-%{version}.pom
 
 Patch0:         0001-Port-to-Servlet-API-3.1.patch
 Patch1:         0002-Gradle-local-mode.patch
@@ -38,6 +40,7 @@ Patch4:         0005-Port-to-QDox-2.0.patch
 
 BuildRequires:  gradle-local >= 2.1
 BuildRequires:  javapackages-local
+BuildRequires:  java-devel >= 1.8
 BuildRequires:  ant
 BuildRequires:  antlr-tool
 BuildRequires:  ant-antlr
@@ -75,7 +78,7 @@ Requires:       apache-commons-cli
 
 # optional in pom.xml, but present in upstream binary tarball
 Requires:       xstream
-Requires:       xpp3
+Requires:       xpp3-minimal
 Requires:       gpars
 Requires:       apache-ivy
 
@@ -114,24 +117,13 @@ find \( -name *.jar -o -name *.class \) -delete
 %patch4 -p1
 
 %build
-gradle --offline -s install distBin -x groovydoc -x javadoc
+%gradle_build -f -G distBin -- -x groovydoc -x javadoc
 
 %install
-repo=$HOME/.m2/repository
+%mvn_artifact %{SOURCE6} target/libs/groovy-all-%{version}-indy.jar
+%mvn_install
 
-for mod in groovy groovy-all groovy-ant groovy-backports-compat23 \
-           groovy-bsf groovy-console groovy-docgenerator groovy-groovydoc \
-           groovy-groovysh groovy-jmx groovy-json groovy-jsr223 groovy-nio \
-           groovy-servlet groovy-sql groovy-swing groovy-templates groovy-test \
-           groovy-testng groovy-xml; do
-    pom=$repo/org/codehaus/groovy/$mod/%{version}/$mod-%{version}.pom
-    jar=$repo/org/codehaus/groovy/$mod/%{version}/$mod-%{version}.jar
-    indy=$repo/org/codehaus/groovy/$mod/%{version}/$mod-%{version}-indy.jar
-    [ -f $indy ] && jar=$indy
-    %mvn_artifact $pom $jar
-done
-
-unzip $repo/org/codehaus/groovy/groovy-binary/%{version}/groovy-binary-%{version}.zip
+unzip target/distributions/apache-groovy-binary-%{version}.zip
 rm -rf groovy-%{version}/{*LICENSE.txt,NOTICE.txt,bin/*.bat,META-INF}
 install -d -m 755 %{buildroot}%{_datadir}/
 cp -a groovy-%{version} %{buildroot}%{_datadir}/%{name}
@@ -176,10 +168,10 @@ ln -sf `build-classpath multiverse/multiverse-core` %{buildroot}%{_datadir}/%{na
 ln -sf `build-classpath qdox` %{buildroot}%{_datadir}/%{name}/lib/qdox.jar
 ln -sf `build-classpath glassfish-servlet-api` %{buildroot}%{_datadir}/%{name}/lib/servlet-api.jar
 ln -sf `build-classpath testng` %{buildroot}%{_datadir}/%{name}/lib/testng.jar
-ln -sf `build-classpath xpp3` %{buildroot}%{_datadir}/%{name}/lib/xmlpull.jar
+ln -sf `build-classpath xpp3-minimal` %{buildroot}%{_datadir}/%{name}/lib/xpp3-minimal.jar
 ln -sf `build-classpath xstream/xstream` %{buildroot}%{_datadir}/%{name}/lib/xstream.jar
-
-%mvn_install
+# upstream bundles extra166y in gpars
+ln -sf `build-classpath extra166y` %{buildroot}%{_datadir}/%{name}/lib/extra166y.jar
 
 # Startup scripts
 install -d -m 755 %{buildroot}%{_bindir}/
@@ -228,7 +220,7 @@ SentUpstream: No public bugtracker
       interactive console for evaluating scripts in the Groovy language.
     </p>
   </description>
-  <url type="homepage">http://groovy.codehaus.org/</url>
+  <url type="homepage">http://groovy-lang.org/</url>
   <screenshots>
     <screenshot type="default">https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/groovy/a.png</screenshot>
   </screenshots>
@@ -254,6 +246,9 @@ touch $RPM_BUILD_ROOT/etc/groovy-starter.conf
 %doc LICENSE NOTICE README.adoc
 
 %changelog
+* Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4.5-alt1_7jpp8
+- new version
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4.4-alt1_1jpp8
 - unbootstrap build
 
