@@ -1,30 +1,44 @@
-Name: maven-license-plugin
-Version: 1.8.0
-Summary: Maven plugin to update header licenses of source files
-License: ASL 2.0
-Url: http://code.google.com/p/maven-license-plugin
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-license-plugin = 1.8.0-18.fc23
-Provides: mvn(com.mycila.maven-license-plugin:maven-license-plugin) = 1.8.0
-Provides: mvn(com.mycila.maven-license-plugin:maven-license-plugin:pom:) = 1.8.0
-Requires: java-headless
-Requires: java-headless
-Requires: jpackage-utils
-Requires: jpackage-utils
-Requires: maven
-Requires: maven-shared
-Requires: mvn(com.mycila.xmltool:xmltool)
-Requires: mvn(org.apache.maven:maven-compat)
-Requires: mvn(org.apache.maven:maven-plugin-api)
-Requires: mvn(org.apache.maven:maven-project)
-Requires: mvn(org.codehaus.plexus:plexus-utils)
-Requires: xmltool
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           maven-license-plugin
+Version:        1.8.0
+Release:        alt6_20jpp8
+Summary:        Maven plugin to update header licenses of source files
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt5jpp
-Source: maven-license-plugin-1.8.0-18.fc23.cpio
+Group:          Development/Other
+License:        ASL 2.0
+URL:            http://code.google.com/p/maven-license-plugin
+### upstream only provides binaries or source without build scripts
+# tar creation instructions
+# svn export http://maven-license-plugin.googlecode.com/svn/tags/maven-license-plugin-1.8.0 maven-license-plugin
+# tar cfJ maven-license-plugin-1.8.0.tar.xz maven-license-plugin
+Source0:        %{name}-%{version}.tar.xz
+# remove testng dep (tests are skipped) and maven-license-plugin call
+Patch0:         001-mavenlicenseplugin-fixbuild.patch
+BuildArch:      noarch
+
+BuildRequires:  java-devel
+BuildRequires:  jpackage-utils
+BuildRequires:  apache-resource-bundles
+BuildRequires:  maven-local
+BuildRequires:  maven-plugin-plugin
+BuildRequires:  maven-shared
+BuildRequires:  plexus-utils
+BuildRequires:  plexus-classworlds
+BuildRequires:  xml-commons-apis
+BuildRequires:  xmltool
+BuildRequires:  maven-source-plugin
+
+Requires:       jpackage-utils
+Requires:       maven
+Requires:       maven-shared
+Requires:       xmltool
+Source44: import.info
 
 %description
 maven-license-plugin is a Maven plugin that help you managing license
@@ -35,24 +49,48 @@ This plugin lets you maintain the headers, including checking if the
 header is present, generating a report and of course having the
 possibility to update / reformat missing license headers.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+
+%package javadoc
+Summary:        Javadocs for %{name}
+Group:          Development/Java
+Requires:       jpackage-utils
+BuildArch:      noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}
+%patch0 -p1
+# fix EOL
+sed -i 's/\r//' LICENSE.txt
+sed -i 's/\r//' NOTICE.txt
+
+# Remove wagon-webdav extension which is not available
+%pom_xpath_remove pom:build/pom:extensions
+
+# Set sources/resources encoding
+%pom_xpath_inject "pom:properties" "<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>"
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
+mkdir -p $RPM_BUILD_ROOT%{_javadir}
 
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE.txt
+%doc NOTICE.txt
 
-%files -f %name-list
+%files javadoc  -f .mfiles-javadoc
 
 %changelog
+* Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0-alt6_20jpp8
+- new version
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0-alt5jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
