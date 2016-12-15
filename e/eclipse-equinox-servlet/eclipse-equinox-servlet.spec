@@ -1,17 +1,17 @@
 Name: eclipse-equinox-servlet
-Version: 4.5.1
+Version: 4.6.0
 Summary: Eclipse OSGi - Equinox
 License: EPL
 Url: http://www.eclipse.org/
 Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: eclipse-platform = 1:4.5.1-1
-Provides: mvn(org.eclipse.equinox.http:servlet) = 1.2.1.v20151005.1500
-Provides: mvn(org.eclipse.equinox.http:servlet:pom:) = 1.2.1.v20151005.1500
+Provides: eclipse-platform = 1:4.6.0-1
+Provides: mvn(org.eclipse.equinox.http:servlet) = 1.3.0.v20160511.1000
+Provides: mvn(org.eclipse.equinox.http:servlet:pom:) = 1.3.0.v20160511.1000
 
 BuildArch: noarch
 Group: Development/Java
-Release: alt0.3jpp
-Source: eclipse-equinox-servlet-4.5.1-1.tar
+Release: alt0.1jpp
+Source: eclipse-equinox-servlet-4.6.0-1.tar
 
 %description
 Eclipse OSGi - Equinox
@@ -34,6 +34,9 @@ done
 %files -f %name-list
 
 %changelog
+* Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 4.6.0-alt0.1jpp
+- bootstrap pack of jars
+
 * Wed Feb 24 2016 Igor Vlasenko <viy@altlinux.ru> 4.5.1-alt0.3jpp
 - added org.eclipse.core.resources (for maven-eclipse-plugin)
 
