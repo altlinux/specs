@@ -3,13 +3,13 @@
 
 Summary: The PHP5 scripting language
 Name:	 php5
-Version: 5.6.28
-Release: alt1
+Version: 5.6.29
+Release: alt1%ubt
 
 %define php5_name      %name
 %define _php5_version  %version
 %define _php5_major  5.6
-%define _php5_snapshot 20161109
+%define _php5_snapshot 20161208
 %define php5_release   %release
 %define rpm_build_version %_php5_version%([ -z "%_php5_snapshot" ] || echo ".%_php5_snapshot")
 
@@ -58,6 +58,7 @@ Provides: %name = %rpm_build_version-%release
 BuildRequires: chrpath libmm-devel libxml2-devel ssmtp termutils zlib-devel re2c bison
 
 BuildRequires(pre): rpm-build-php5
+BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: libtool_1.5 chrpath
 %set_libtool_version 1.5
@@ -405,7 +406,10 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %doc tests run-tests.php 
 
 %changelog
-* Tue Nov 15 2016 Anton Farygin <rider@altlinux.ru> 5.6.28-alt1
+* Wed Dec 14 2016 Anton Farygin <rider@altlinux.ru> 5.6.29-alt1%ubt
+- new version
+
+* Wed Dec 7 2016 Anton Farygin <rider@altlinux.ru> 5.6.28-alt0%ubt
 - new version
 
 * Mon Oct 17 2016 Anton Farygin <rider@altlinux.ru> 5.6.27-alt1

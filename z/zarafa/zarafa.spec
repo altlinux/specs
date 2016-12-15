@@ -12,7 +12,7 @@
 
 Name: zarafa
 Version: 7.1.15
-Release: alt13
+Release: alt13%ubt
 License: AGPLv3
 Group: Networking/Mail
 Summary: Server program for the Zarafa Collaboration Platform
@@ -29,7 +29,7 @@ Patch4: zarafa-7.1.14-alt-configure.patch
 Patch5: zarafa-7.1.14-alt-boost.m4-update.patch
 Patch6: zarafa-7.1.14-wrong-assert.patch
 
-BuildRequires(pre): rpm-build-php5
+BuildRequires(pre): rpm-build-php5 rpm-build-ubt
 BuildRequires(pre): rpm-build-apache2
 # Automatically added by buildreq on Fri Apr 15 2011
 # optimized out: boost-devel boost-devel-headers libcom_err-devel libgpg-error libkrb5-devel libncurses-devel libstdc++-devel libtinfo-devel pkg-config python-base python-modules
@@ -690,7 +690,10 @@ export LDFLAGS=-lphp-%_php5_version
 # end noarch files
 
 %changelog
-* Wed Nov 16 2016 Anton Farygin <rider@altlinux.ru> 7.1.15-alt13
+* Wed Dec 14 2016 Anton Farygin <rider@altlinux.ru> 7.1.15-alt13%ubt
+- rebuild with php-5.6.28
+
+* Wed Dec 7 2016 Anton Farygin <rider@altlinux.ru> 7.1.15-alt12%ubt
 - rebuild with php-5.6.28
 
 * Mon Oct 17 2016 Anton Farygin <rider@altlinux.ru> 7.1.14-alt12

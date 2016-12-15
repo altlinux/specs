@@ -3,7 +3,7 @@
 
 Name: xaira
 Version: 1.26
-Release: alt36
+Release: alt36%ubt
 
 Summary: XML Aware Indexing and Retrieval Application 
 License: GPLv2+
@@ -19,7 +19,7 @@ Patch3: alt-linking.patch
 #Patch4: alt-100buffer.patch
 Patch5: alt-php-make.patch
 
-BuildRequires(pre): rpm-build-php5
+BuildRequires(pre): rpm-build-php5 rpm-build-ubt
 BuildRequires: gcc-c++ libxerces-c-devel libicu-devel libreadline-devel zlib-devel libtinfo-devel
 BuildRequires: php5-devel php5
 
@@ -122,7 +122,10 @@ popd
 
 
 %changelog
-* Wed Nov 16 2016 Anton Farygin <rider@altlinux.ru> 1.26-alt36
+* Wed Dec 14 2016 Anton Farygin <rider@altlinux.ru> 1.26-alt36%ubt
+- Rebuild with php-5.6.29
+
+* Wed Nov 16 2016 Anton Farygin <rider@altlinux.ru> 1.26-alt35%ubt
 - Rebuild with php-5.6.28
 
 * Mon Oct 17 2016 Anton Farygin <rider@altlinux.ru> 1.26-alt35
