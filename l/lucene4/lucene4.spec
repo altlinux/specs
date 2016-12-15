@@ -1,5 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ perl(LWP/UserAgent.pm)
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -45,7 +46,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        High-performance, full-featured text search engine
 Name:           %{?scl_prefix}%{lbasename}4
 Version:        4.10.4
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -57,7 +58,11 @@ Source1:        dev-tools-%{version}.tar.xz
 Patch0:         0001-disable-ivy-settings.patch
 Patch1:         0001-dependency-generation.patch
 
+# Build fix for morfologik-stemming 2.x
+Patch2:         lucene-4.10.4-morfologik-stemming.patch
+
 BuildRequires:  git
+BuildRequires: subversion subversion-server-common
 BuildRequires:  ant
 %{!?scl:BuildRequires:  ivy-local}
 %{?scl:BuildRequires:  apache-ivy}
@@ -79,6 +84,8 @@ BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(org.antlr:antlr-runtime)
 BuildRequires:  maven-local
 BuildRequires:  apache-parent
+BuildRequires:  buildnumber-maven-plugin
+BuildRequires:  maven-plugin-bundle
 
 # test-framework deps
 BuildRequires:  junit
@@ -107,9 +114,7 @@ BuildArch: noarch
 %{summary}.
 
 %prep
-%setup -q -n %{lbasename}-%{version}
-%patch0 -p1
-%patch1 -p1
+%setup -n %{lbasename}-%{version}
 
 # dependency generator expects that the directory name is just lucene
 mkdir %{lbasename}
@@ -121,6 +126,8 @@ find -maxdepth 1 \
 tar xf %{SOURCE1}
 
 pushd %{lbasename}
+%patch0 -p1
+%patch1 -p1
 
 # remove all binary libs
 find . -name "*.jar" -delete
@@ -134,6 +141,8 @@ rm -r replicator/src/test/*
 %{?scl:ln -s %{_sysconfdir}/ivy/ivysettings.xml}
 
 popd
+
+%patch2 -p1
 
 # suggest provides spellchecker
 %mvn_alias :%{lbasename}-suggest :%{lbasename}-spellchecker
@@ -166,9 +175,12 @@ mv lucene/build/poms/pom.xml .
 %pom_disable_module solr
 %pom_remove_plugin :gmaven-plugin
 %pom_remove_plugin -r :forbiddenapis
+# Duplicate pom entries is not allowed in maven 3.4+
+%pom_remove_dep org.eclipse.jetty.orbit:javax.servlet
+%pom_change_dep org.eclipse.jetty.orbit:javax.servlet javax.servlet:javax.servlet-api:3.1.0 lucene/replicator
 %pom_change_dep -r :servlet-api javax.servlet:javax.servlet-api:3.1.0
-# org.eclipse.jetty.orbit:javax.servlet is the alias of javax.servlet:javax.servlet-api and break the build on F<=22
-%pom_change_dep -r org.eclipse.jetty.orbit:javax.servlet javax.servlet:javax.servlet-api:3.1.0
+# Prevent build failure
+%pom_remove_plugin -r :maven-enforcer-plugin
 
 %{?scl:scl enable %{scl} - <<"EOF"}
 # For some reason TestHtmlParser.testTurkish fails when building inside SCLs
@@ -188,6 +200,9 @@ mv lucene/build/poms/pom.xml .
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.10.4-alt1_5jpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.10.4-alt1_3jpp8
 - new version
 
