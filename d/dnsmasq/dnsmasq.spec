@@ -1,7 +1,7 @@
 Name: dnsmasq
 Version: 2.76
 
-Release: alt1
+Release: alt2
 Summary: A lightweight caching nameserver
 License: %gpl2plus
 Group: System/Servers
@@ -13,6 +13,12 @@ Source2: %name.sysconfig
 Source3: %name-helper
 Source4: %name.service
 Patch: %name-%version-%release.patch
+# Patch from Fedora based on upstream's commits.
+# Changes will be included in the next release
+# and this patch must be dropped.
+# https://bugzilla.redhat.com/show_bug.cgi?id=1367772
+# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=834722
+Patch1: dnsmasq-2.76-fedora-dns-sleep-resume.patch
 
 BuildPreReq: glibc-kernheaders
 BuildRequires(pre): rpm-build-licenses
@@ -61,6 +67,7 @@ query/remove a DHCP server's leases.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 # Setup version
 sed -r -i "s;-DVERSION=.+;-DVERSION='\\\\\"%version\\\\\"';" Makefile
@@ -129,6 +136,10 @@ fi
 %_man1dir/dhcp_*
 
 %changelog
+* Thu Dec 15 2016 Mikhail Efremov <sem@altlinux.org> 2.76-alt2
+- Rebuilt with libnettle-3.3 due to ABI breakage.
+- Handle binding upstream servers to an interface.
+
 * Fri May 20 2016 Mikhail Efremov <sem@altlinux.org> 2.76-alt1
 - Updated to 2.76.
 
