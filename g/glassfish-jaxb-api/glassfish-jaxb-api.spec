@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global oname jaxb-api
 Name:          glassfish-jaxb-api
 Version:       2.2.12
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Java Architecture for XML Binding
 License:       CDDL or GPLv2 with exception
 URL:           http://jaxb.java.net/
@@ -19,15 +19,13 @@ URL:           http://jaxb.java.net/
 Source0:       http://repo1.maven.org/maven2/javax/xml/bind/%{oname}/%{version}/%{oname}-%{version}-b141001.1542-sources.jar
 Source1:       http://repo1.maven.org/maven2/javax/xml/bind/%{oname}/%{version}/%{oname}-%{version}-b141001.1542.pom
 
-BuildRequires: java-javadoc
-BuildRequires: jvnet-parent
 
-BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-plugin-bundle
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-shared-osgi
-Requires:      jvnet-parent
+BuildRequires:  java-javadoc
+BuildRequires:  maven-local
+BuildRequires:  mvn(net.java:jvnet-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+
 BuildArch:     noarch
 Source44: import.info
 
@@ -89,6 +87,9 @@ mv %{buildroot}%{_javadocdir}/%{name} \
 %{_javadocdir}/%{oname}
 
 %changelog
+* Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.12-alt1_5jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.12-alt1_4jpp8
 - new fc release
 
