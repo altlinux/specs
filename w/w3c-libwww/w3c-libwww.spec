@@ -2,7 +2,7 @@
 
 Name: w3c-libwww
 Version: 5.4.1
-Release: alt3.1.qa1
+Release: alt4
 
 Summary: HTTP library of common code
 License: W3C
@@ -19,7 +19,7 @@ Patch6: %name-alt-perl.patch
 Patch7: %name-alt-makefile-install-fix.patch
 Patch8: %name-5.4.1-alt-DSO.patch
 
-BuildRequires: expat-devel openssl-devel zlib-devel
+BuildRequires: libexpat-devel libssl-devel zlib-devel
 
 %description
 Libwww is a general-purpose Web API written in C for Unix and Windows (Win32).
@@ -35,7 +35,7 @@ Requires: %name = %version-%release
 Requires: expat-devel
 
 %description devel
-Static libraries and header files for libwww, which are available as public
+Libraries and header files for libwww, which are available as public
 libraries.
 
 %package apps
@@ -73,6 +73,7 @@ touch wwwconf.h.in
 %build
 %configure \
 	--enable-shared \
+	--disable-static \
 	--with-gnu-ld \
 	--with-regex \
 	--with-zlib \
@@ -92,8 +93,8 @@ touch wwwconf.h.in
 %files devel
 %_bindir/*-config
 %_libdir/*.so
-%_libdir/*.*a
-%_includedir/*
+%_includedir/%name/
+%_includedir/wwwconf.h
 %doc *.html Icons/*/*.gif
 
 %files apps
@@ -102,6 +103,9 @@ touch wwwconf.h.in
 %_bindir/www
 
 %changelog
+* Thu Dec 15 2016 Vitaly Lipatov <lav@altlinux.ru> 5.4.1-alt4
+- update requires, disable build static libs
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.4.1-alt3.1.qa1
 - NMU: rebuilt for updated dependencies.
 
