@@ -7,8 +7,8 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.5
-Release: alt2
+Version: %ver_major.6
+Release: alt1
 
 Summary: Library for AppStream metadata
 Group: System/Libraries
@@ -23,6 +23,7 @@ Source: http://people.freedesktop.org/~hughsient/%_name/releases/%_name-%version
 
 Obsoletes: appdata-tools < 0.1.9
 Provides: appdata-tools = %version-%release
+Provides: %_bindir/appstream-util
 
 BuildRequires: autoconf-archive glib2-devel >= %glib_ver libgtk+3-devel
 BuildRequires: libarchive-devel libsoup-devel >= %soup_ver libgdk-pixbuf-devel
@@ -199,6 +200,9 @@ the functionality of the installed %_name library.
 #%_datadir/gtk-doc/html/appstream-builder/
 
 %changelog
+* Thu Dec 15 2016 Yuri N. Sedunov <aris@altlinux.org> 0.6.6-alt1
+- 0.6.6
+
 * Fri Dec 09 2016 Yuri N. Sedunov <aris@altlinux.org> 0.6.5-alt2
 - enabled rpm support
 
