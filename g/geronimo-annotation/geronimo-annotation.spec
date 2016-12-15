@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             geronimo-annotation
 Version:          1.0
-Release:          alt3_18jpp8
+Release:          alt4_18jpp8
 Summary:          Java EE: Annotation API v1.1
 License:          ASL 2.0
 URL:              http://geronimo.apache.org/
@@ -20,12 +20,13 @@ URL:              http://geronimo.apache.org/
 Source0:          http://repo2.maven.org/maven2/org/apache/geronimo/specs/%{spec_name}/%{version}/%{spec_name}-%{version}-source-release.tar.gz
 BuildArch:        noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:    java-devel >= 1.6.0
+BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 BuildRequires:    geronimo-parent-poms
 BuildRequires:    maven-resources-plugin
 
-Requires: javapackages-tools rpm-build-java
+Requires:         jpackage-utils
 
 Provides:         annotation_api = %{spec_ver}
 Source44: import.info
@@ -66,6 +67,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_18jpp8
+- added osgi provides
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_18jpp8
 - new fc release
 
