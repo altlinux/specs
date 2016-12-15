@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          sshj
 Version:       0.13.0
-Release:       alt1_2jpp8
+Release:       alt1_4jpp8
 Summary:       SSHv2 library for Java
 License:       ASL 2.0
 URL:           https://github.com/hierynomus/sshj
@@ -23,6 +23,7 @@ BuildRequires: mvn(org.bouncycastle:bcprov-jdk15on)
 BuildRequires: mvn(org.bouncycastle:bcpkix-jdk15on)
 BuildRequires: mvn(org.mockito:mockito-core)
 BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: /usr/bin/perl
 
 BuildArch:     noarch
 Source44: import.info
@@ -98,6 +99,9 @@ gradle -s --offline -x javadocs install
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.13.0-alt1_4jpp8
+- new fc release
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.13.0-alt1_2jpp8
 - new version
 
