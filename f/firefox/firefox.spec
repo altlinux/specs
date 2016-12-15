@@ -12,8 +12,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        50.0.2
-Release:        alt2
+Version:        50.1.0
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -323,6 +323,23 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Thu Dec 15 2016 Alexey Gladkov <legion@altlinux.ru> 50.1.0-alt1
+- New release (50.1.0).
+- Fixed:
+  + CVE-2016-9894: Buffer overflow in SkiaGL
+  + CVE-2016-9899: Use-after-free while manipulating DOM events and audio elements
+  + CVE-2016-9895: CSP bypass using marquee tag
+  + CVE-2016-9896: Use-after-free with WebVR
+  + CVE-2016-9897: Memory corruption in libGLES
+  + CVE-2016-9898: Use-after-free in Editor while manipulating DOM subtrees
+  + CVE-2016-9900: Restricted external resources can be loaded by SVG images through data URLs
+  + CVE-2016-9904: Cross-origin information leak in shared atoms
+  + CVE-2016-9901: Data from Pocket server improperly sanitized before execution
+  + CVE-2016-9902: Pocket extension does not validate the origin of events
+  + CVE-2016-9903: XSS injection vulnerability in add-ons SDK
+  + CVE-2016-9080: Memory safety bugs fixed in Firefox 50.1
+  + CVE-2016-9893: Memory safety bugs fixed in Firefox 50.1 and Firefox ESR 45.6
+
 * Tue Dec  6 2016 Ivan Zakharyaschev <imz@altlinux.org> 50.0.2-alt2
 - Precise calculation of the dependency on libgtk symbols (ALT#32297) and
   strict verification of unresolved symbols. (Thx legion@ for the original
