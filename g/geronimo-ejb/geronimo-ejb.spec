@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             geronimo-ejb
 Version:          1.0
-Release:          alt3_16jpp8
+Release:          alt4_16jpp8
 Summary:          Java EE: EJB API v3.1
 Group:            Development/Other
 License:          ASL 2.0
@@ -21,7 +21,8 @@ Source0:          http://repo2.maven.org/maven2/org/apache/geronimo/specs/%{spec
 
 BuildArch:        noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:    java-devel
+BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 BuildRequires:    geronimo-parent-poms
 BuildRequires:    jta
@@ -73,6 +74,9 @@ sed -i 's/\r//' LICENSE
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_16jpp8
+- added osgi provides
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_16jpp8
 - new fc release
 
