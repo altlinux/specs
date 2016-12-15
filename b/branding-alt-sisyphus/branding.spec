@@ -6,7 +6,7 @@
 %define distro_name Regular
 
 Name: branding-%brand-%theme
-Version: 20161211
+Version: 20161215
 Release: alt1
 
 Url: http://en.altlinux.org
@@ -466,6 +466,10 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 
 
 %changelog
+* Thu Dec 15 2016 Michael Shigorin <mike@altlinux.org> 20161215-alt1
+- replaced license step icon
+- downscaled slideshow images for 6x less space
+
 * Sun Dec 11 2016 Michael Shigorin <mike@altlinux.org> 20161211-alt1
 - indexhtml: fixed conflicts generation, dropped stopgap one;
   thanks Nikolay Ulyanitsky (closes: #32881)
