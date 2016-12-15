@@ -8,13 +8,13 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-metadata
-%define version 8.0.0
+%define version 10.0.0
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:           jboss-metadata
-Version:        8.0.0
-Release:        alt1_5jpp8
+Version:        10.0.0
+Release:        alt1_1jpp8
 Summary:        JBoss Metadata
 License:        LGPLv2+
 URL:            https://github.com/jboss/metadata
@@ -25,12 +25,15 @@ BuildArch:      noarch
 BuildRequires:  dos2unix
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.sun.xml.bind:jaxb-impl)
-#BuildRequires:  mvn(org.apache.maven.plugins:maven-checkstyle-plugin)
+BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 BuildRequires:  mvn(org.hibernate.javax.persistence:hibernate-jpa-2.1-api)
 BuildRequires:  mvn(org.jboss:jboss-parent:pom:)
 BuildRequires:  mvn(org.jboss.ejb3:jboss-ejb3-ext-api)
+BuildRequires:  mvn(org.jboss.jandex:jandex-maven-plugin)
 BuildRequires:  mvn(org.jboss.logging:jboss-logging)
 BuildRequires:  mvn(org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec)
 BuildRequires:  mvn(org.jboss.spec.javax.ejb:jboss-ejb-api_3.2_spec)
@@ -57,11 +60,8 @@ This package contains the API documentation for %{name}.
 # Fix the line ending in the license file:
 dos2unix common/LICENSE.txt
 
-# maven-checkstyle-plugin:2.12:checkstyle (check-style) on project jboss-metadata-common:
-# An error has occurred in Checkstyle report generation. Failed during checkstyle configuration:
-# cannot initialize module TreeWalker - Unable to instantiate RedundantThrows:
-# Unable to instantiate RedundantThrowsCheck -> [Help 1]
 %pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin :maven-dependency-plugin
 
 %build
 # Skip tests - no test deps
@@ -78,6 +78,9 @@ dos2unix common/LICENSE.txt
 %doc common/LICENSE.txt
 
 %changelog
+* Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0:10.0.0-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:8.0.0-alt1_5jpp8
 - new fc release
 
