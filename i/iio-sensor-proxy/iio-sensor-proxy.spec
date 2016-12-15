@@ -1,8 +1,9 @@
-%define ver_major 1.3
+%define ver_major 2.0
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 %def_enable gtk_doc
+%def_disable gtk_tests
 
 Name: iio-sensor-proxy
 Version: %ver_major
@@ -19,6 +20,7 @@ Patch: %name-%version-%release.patch
 BuildRequires: gnome-common intltool gtk-doc
 BuildRequires: libgio-devel systemd-devel
 BuildRequires: libudev-devel libgudev-devel
+%{?_enable_gtk_tests:BuildRequires: libgtk+3-devel}
 # for check
 BuildRequires: /proc dbus-tools-gui
 
@@ -55,7 +57,8 @@ Developer documentation for %name.
 %build
 %autoreconf
 %configure \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
+	%{?_enable_gtk_doc:--enable-gtk-doc} \
+	%{?_disable_gtk_tests:--disable-gtk-tests}
 %make_build
 
 %install
@@ -77,6 +80,9 @@ Developer documentation for %name.
 
 
 %changelog
+* Thu Dec 15 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt1
+- 2.0
+
 * Mon Sep 26 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
 - 1.3
 
