@@ -10,7 +10,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           plexus-containers
 Version:        1.6
-Release:        alt2_5jpp8
+Release:        alt3_5jpp8
 Summary:        Containers for Plexus
 License:        ASL 2.0 and MIT
 URL:            https://github.com/codehaus-plexus/plexus-containers
@@ -150,6 +150,9 @@ sed -i "s|<version>2.3</version>|<version> %{javadoc_plugin_version}</version>|"
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt3_5jpp8
+- added osgi provides
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_5jpp8
 - new fc release
 
