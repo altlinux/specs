@@ -1,59 +1,157 @@
-Name: jibx
-Version: 1.2.6
-Summary: Framework for binding XML data to Java objects
-License: BSD and ASL 1.1
-Url: http://sourceforge.net/projects/jibx/
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jibx = 1.2.6-3.fc23
-Provides: mvn(org.jibx.config:main-reactor:pom:) = 1.2.6
-Provides: mvn(org.jibx:jibx-bind) = 1.2.6
-Provides: mvn(org.jibx:jibx-bind:pom:) = 1.2.6
-Provides: mvn(org.jibx:jibx-extras) = 1.2.6
-Provides: mvn(org.jibx:jibx-extras:pom:) = 1.2.6
-Provides: mvn(org.jibx:jibx-run) = 1.2.6
-Provides: mvn(org.jibx:jibx-run:pom:) = 1.2.6
-Provides: mvn(org.jibx:jibx-schema) = 1.2.6
-Provides: mvn(org.jibx:jibx-schema:pom:) = 1.2.6
-Provides: mvn(org.jibx:jibx-tools) = 1.2.6
-Provides: mvn(org.jibx:jibx-tools:pom:) = 1.2.6
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(bcel:bcel)
-Requires: mvn(com.thoughtworks.qdox:qdox)
-Requires: mvn(dom4j:dom4j)
-Requires: mvn(joda-time:joda-time)
-Requires: mvn(log4j:log4j)
-Requires: mvn(org.jdom:jdom)
-Requires: mvn(xpp3:xpp3)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: jibx-1.2.6-3.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global debug_package %{nil}
+%global _version 1_2_6
+Name:          jibx
+Version:       1.2.6
+Release:       alt1_5jpp8
+Summary:       Framework for binding XML data to Java objects
+License:       BSD and ASL 1.1
+URL:           http://sourceforge.net/projects/jibx/
+Source0:       http://sourceforge.net/projects/jibx/files/jibx/jibx-%{version}/%{name}_%{_version}.zip
+Patch0:        %{name}-classpath.patch
+Patch1:        %{name}-1.2.6-poms.patch
+Patch2:        %{name}-port-to-qdox-2.patch
+
+BuildRequires: ant
+BuildRequires: ant-junit
+BuildRequires: junit
+BuildRequires: objectweb-asm3
+BuildRequires: bcel
+BuildRequires: bea-stax-api
+BuildRequires: eclipse-equinox-osgi >= 1:4.6.0
+BuildRequires: eclipse-jdt >= 1:4.6.0
+BuildRequires: eclipse-platform >= 1:4.6.0
+BuildRequires: joda-time
+BuildRequires: qdox
+BuildRequires: dom4j
+BuildRequires: jdom
+BuildRequires: xpp3
+BuildRequires: log4j12
+BuildRequires: javapackages-local
+Source44: import.info
+BuildArch: noarch
 
 %description
 JiBX is a framework for binding XML data to Java objects. It lets you
-work with data from XML documents using your own class structures.
+work with data from XML documents using your own class structures. 
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:       Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}
+#Patch to add the bundled jar dependencies in the classpath
+%patch0 -p1
+#Patch to add maven poms
+%patch1 -p1
+%patch2 -p0
+
+find -name '*.class' -delete
+find -name '*.jar' -delete
+
+rm -rf %{_builddir}/%{name}/build/docs/src/*
+
+
+#Symlink the eclipse dependencies
+# platform
+plugin_file=`ls %{_javadir}/eclipse/core.contenttype*.jar`
+ln -s "$plugin_file" lib/org.eclipse.core.contenttype.jar
+
+plugin_file=`ls %{_javadir}/eclipse/core.jobs*.jar`
+ln -s "$plugin_file" lib/org.eclipse.core.jobs.jar
+
+plugin_file=`ls %{_javadir}/eclipse/core.runtime*.jar`
+ln -s "$plugin_file" lib/org.eclipse.core.runtime.jar
+
+plugin_file=`ls %{_javadir}/eclipse/core.resources*.jar`
+ln -s "$plugin_file" lib/org.eclipse.core.resources.jar
+
+plugin_file=`ls %{_javadir}/eclipse/equinox.common*.jar`
+ln -s "$plugin_file" lib/org.eclipse.equinox.common.jar
+
+plugin_file=`ls %{_javadir}/eclipse/equinox.preferences*.jar`
+ln -s "$plugin_file" lib/org.eclipse.equinox.preferences.jar
+
+plugin_file=`ls %{_javadir}/eclipse/text*.jar`
+ln -s "$plugin_file" lib/org.eclipse.text.jar
+
+# new location in eclipse 4.6.0-0.5.git201604261105
+plugin_file=`ls %{_datadir}/eclipse/droplets/eclipse-jdt/eclipse/plugins/org.eclipse.jdt.core_*jar`
+ln -s "$plugin_file" lib/org.eclipse.jdt.core.jar
+
+# equinox-osgi
+#plugin_file=`ls %%{_javadir}/eclipse/osgi_*.jar`
+#ln -s "$plugin_file" lib/org.eclipse.osgi.jar
+ln -s $(build-classpath eclipse/osgi) lib/org.eclipse.osgi.jar
+
+# jdt
+plugin_file=`ls %{_datadir}/eclipse/droplets/eclipse-jdt/eclipse/plugins/org.eclipse.jdt.core.manipulation_*.jar`
+ln -s "$plugin_file" lib/org.eclipse.jdt.core.manipulation.jar
+
+
+build-jar-repository -p lib \
+bcel \
+bea-stax-api \
+dom4j \
+jdom \
+joda-time \
+qdox \
+xpp3 
+
+ln -s $(build-classpath objectweb-asm3/asm) lib/
+ln -s $(build-classpath objectweb-asm3/asm-commons) lib/
+ln -s $(build-classpath log4j12-1.2.17) lib/
+
+sed -i '/Class-Path/I d' %{_builddir}/%{name}/build/build.xml
+
+#sed -i 's|log4j*.jar|log4j12-1.2.17.jar|' %%{_builddir}/%%{name}/build/build.xml
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
-%install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+for sub_component in bind extras run schema tools; do
+%mvn_file org.%{name}:%{name}-${sub_component} %{name}/${sub_component}
 done
 
+pushd build/
+sed -i -e s:stax-api.jar:bea-stax-api.jar:g build.xml
+# thanks to msrb@redhat.com
+sed -i 's|version}" arg2="1.5"|version}" arg2="1.8"|g' build.xml
+javac jenable/JEnable.java
 
-%files -f %name-list
+export CLASSPATH=$(build-classpath junit)
+ant current -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 devdoc #test-multiples test-singles test-extras basic-blackbox blackbox devdoc javadoc
+
+%install
+%mvn_artifact build/maven/pom.xml
+for sub_component in bind extras run schema tools; do
+%mvn_artifact build/maven/jibx-${sub_component}/pom.xml lib/%{name}-${sub_component}.jar
+done
+
+%mvn_install -J %{_builddir}/%{name}/build/api
+
+
+%files -f .mfiles
+
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.2.6-alt1_5jpp8
+- new version
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.2.6-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
