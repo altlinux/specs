@@ -1,6 +1,6 @@
 Name: osec
 Version: 1.2.7
-Release: alt2
+Release: alt3
 
 Summary: Lightweight file permission checker
 License: GPL3
@@ -107,6 +107,10 @@ rm -f %osec_statedir/osec.db.*
 %_bindir/osec_rpm_reporter
 
 %changelog
+* Sat Dec 10 2016 Alexey Gladkov <legion@altlinux.ru> 1.2.7-alt3
+- Use _FILE_OFFSET_BITS=64 (ALT#32805).
+- Add default value to identify parser error (ALT#28770).
+
 * Fri Dec 09 2016 Alexey Gladkov <legion@altlinux.ru> 1.2.7-alt2
 - Add large-file support.
 - Move exclude.conf to proper place.
