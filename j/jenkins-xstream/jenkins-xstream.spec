@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jenkins-xstream
 Version:        1.4.7
-Release:        alt2_8.jenkins1jpp8
+Release:        alt3_8.jenkins1jpp8
 Summary:        Jenkins XStream library
 
 License:        BSD
@@ -103,6 +103,7 @@ sed -i -e s,org.jvnet.hudson,com.thoughtworks.xstream,g xstream/pom.xml
 %build
 # tests require old JMock library (version 1.x)
 %mvn_build -f
+%mvn_alias com.thoughtworks.xstream:xstream org.jvnet.hudson:xstream 
 
 %install
 %mvn_install
@@ -114,6 +115,9 @@ sed -i -e s,org.jvnet.hudson,com.thoughtworks.xstream,g xstream/pom.xml
 %doc LICENSE.txt
 
 %changelog
+* Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.7-alt3_8.jenkins1jpp8
+- added org.jvnet.hudson:xstream alias
+
 * Wed Dec 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.7-alt2_8.jenkins1jpp8
 - fixed build
 
