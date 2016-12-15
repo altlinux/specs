@@ -1,29 +1,33 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             jline
-Version:          2.12.1
+Version:          2.13
 Release:          alt1_2jpp8
 Summary:          JLine is a Java library for handling console input
 License:          BSD and ASL 2.0
 URL:              https://github.com/jline/jline2
 
 # git clone git://github.com/jline/jline2.git
-# cd jline2/ && git archive --format=tar --prefix=jline-2.12.1/ jline-2.12.1 | xz > jline-2.12.1.tar.xz
+# cd jline2/ && git archive --format=tar --prefix=jline-2.13/ jline-2.13 | xz > jline-2.13.tar.xz
 Source0:          jline-%{version}.tar.xz
 
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
+BuildRequires:    java-devel
 BuildRequires:    maven-local
 BuildRequires:    maven-site-plugin
 BuildRequires:    jansi
 BuildRequires:    fusesource-pom
+BuildRequires:    mvn(org.powermock:powermock-module-junit4)
+BuildRequires:    mvn(org.powermock:powermock-api-easymock)
+BuildRequires:    mvn(org.easymock:easymock)
 
 Obsoletes: jline2 < %{version}-%{release}
 Provides: jline2 = %{version}-%{release}
@@ -60,13 +64,17 @@ This package contains the API documentation for %{name}.
 
 # Do not import non-existing internal package
 %pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:executions/pom:execution/pom:configuration/pom:instructions/pom:Import-Package"
-%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:executions/pom:execution/pom:configuration/pom:instructions" "<Import-Package>javax.swing;resolution:=optional,!org.fusesource.jansi.internal</Import-Package>"
+%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:executions/pom:execution/pom:configuration/pom:instructions" "<Import-Package>javax.swing;resolution:=optional,org.fusesource.jansi,!org.fusesource.jansi.internal</Import-Package>"
 
 # Let maven bundle plugin figure out the exports.
 %pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:executions/pom:execution/pom:configuration/pom:instructions/pom:Export-Package"
 
+# For some reason these directories do not exist, failing compilation due to -Werror
+mkdir -p target/generated-sources/annotations
+mkdir -p target/generated-test-sources/test-annotations
+
 %build
-%mvn_build -- -Dmaven.test.failure.ignore=true
+%mvn_build -- -Dmaven.test.skip.exec=true
 
 %install
 %mvn_install
@@ -78,6 +86,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.13-alt1_2jpp8
+- new version
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.12.1-alt1_2jpp8
 - unbootstrap build
 
