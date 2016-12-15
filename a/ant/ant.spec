@@ -49,7 +49,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           ant
 Version:        1.9.6
-Release:        alt1_3jpp8
+Release:        alt2_3jpp8
 Epoch:          0
 Summary:        Java build tool
 Summary(it):    Tool per la compilazione di programmi java
@@ -62,7 +62,8 @@ Source2:        apache-ant-1.8.ant.conf
 # Fix some places where copies of classes are included in the wrong jarfiles
 Patch4:         apache-ant-class-path-in-manifest.patch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils >= 0:1.7.5
+BuildRequires:  java-devel >= 1.8.0
 BuildRequires:  ant
 BuildRequires:  ant-junit
 BuildRequires:  junit
@@ -688,6 +689,9 @@ cat .mfiles-junit4 >> .mfiles-junit
 # -----------------------------------------------------------------------------
 
 %changelog
+* Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.6-alt2_3jpp8
+- added osgi provides
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.6-alt1_3jpp8
 - new fc release
 
