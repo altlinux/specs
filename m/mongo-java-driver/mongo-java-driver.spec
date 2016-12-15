@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mongo-java-driver
-%define version 2.13.2
+%define version 3.2.1
 %{?scl:%scl_package mongo-java-driver}
 %{!?scl:%global pkg_name %{name}}
 
@@ -16,29 +16,30 @@ BuildRequires: jpackage-generic-compat
 %endif
 
 Name:		%{?scl_prefix}mongo-java-driver
-Version:	2.13.2
-Release:	alt2_5jpp8
+Version:	3.2.1
+Release:	alt1_2jpp8
 Summary:	A Java driver for MongoDB
 
-Group:		Development/Java
+Group:		Development/Other
 BuildArch:	noarch
 License:	ASL 2.0
 URL:		http://www.mongodb.org/display/DOCS/Java+Language+Center
 Source0:	https://github.com/mongodb/%{pkg_name}/archive/r%{version}.tar.gz
+Patch0:         %{pkg_name}-gradle-local-fixes.patch
 
 %{!?scl:
+BuildRequires:	java-devel
 }
+BuildRequires:  %{?scl_prefix_java_common}gradle-local
 BuildRequires:  maven-local
 BuildRequires:  %{?scl_prefix_java_common}javapackages-local
-BuildRequires:  %{?scl_prefix_java_common}maven-local
-BuildRequires:  %{?scl_prefix_java_common}ant
-BuildRequires:  %{?scl_prefix_maven}ant-contrib
-BuildRequires:  %{?scl_prefix_maven}testng
-BuildRequires:  git
+BuildRequires:  mvn(io.netty:netty-buffer)
+BuildRequires:  mvn(io.netty:netty-transport)
+BuildRequires:  mvn(io.netty:netty-handler)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
 
 
 %{!?scl:
-Requires:	maven-local
 }
 %{?scl:
 Requires:       %{scl_runtime}
@@ -46,13 +47,12 @@ Requires:       %{scl_runtime}
 Source44: import.info
 
 %description
-This is the Java driver for MongoDB.
+This is an ueber jar for the MongoDB Java driver.
 
 %package bson
 Summary:	A Java-based BSON implementation
-Group:		Development/Java
+Group:		Development/Other
 %{!?scl:
-Requires:	maven-local
 }
 %{?scl:
 Requires:       %{scl_runtime}
@@ -67,88 +67,95 @@ that require BSON.
 # To make things easier for when that does happen, for now the jar
 # and javadocs for this are in separate subpackages.
 
-%package javadoc
-Summary:	Javadoc for %{name}
-Group:		Development/Java
+%package driver
+Summary:	The MongoDB Java Driver
+Group:		Development/Other
 %{!?scl:
-Requires:	maven-local
-}
-%{?scl:
-Requires:       %{scl_runtime}
-}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
-%package bson-javadoc
-Summary:	Javadoc for %{name}-bson
-Group:		Development/Java
-%{!?scl:
-Requires:	maven-local
 }
 %{?scl:
 Requires:       %{scl_runtime}
 }
 
-%description bson-javadoc
-This package contains the API documentation for %{name}-bson.
+%description driver
+The MongoDB Java Driver
+
+%package driver-core
+Summary:	The MongoDB Java Operations Layer
+Group:		Development/Other
+%{!?scl:
+}
+%{?scl:
+Requires:       %{scl_runtime}
+}
+
+%description driver-core
+The Java operations layer for the MongoDB Java Driver. Third
+parties can wrap this layer to provide custom higher-level APIs
+
+%package driver-async
+Summary:	The MongoDB Java Async Driver
+Group:		Development/Other
+%{!?scl:
+}
+%{?scl:
+Requires:       %{scl_runtime}
+}
+
+%description driver-async
+The MongoDB Asynchronous Driver.
 
 %prep
 %{?scl:scl enable %{scl_maven} %{scl} - << "EOF"}
 %setup -qn %{pkg_name}-r%{version}
 
+%patch0 -p2
+
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
-sed -i -e "s|@VERSION@|%{version}|g" maven/maven-bson.xml maven/maven-mongo-java-driver.xml
+
 set -ex
 %mvn_package org.mongodb:bson:* %{pkg_name}-bson
 %mvn_package org.mongodb:%{pkg_name}:* %{pkg_name}
+%mvn_package org.mongodb:mongodb-driver-core:* %{pkg_name}-driver-core
+%mvn_package org.mongodb:mongodb-driver-async:* %{pkg_name}-driver-async
+%mvn_package org.mongodb:mongodb-driver:* %{pkg_name}-driver
+%mvn_package org.mongodb:mongodb-javadoc-utils:* __noinstall
 %mvn_file org.mongodb:bson:* %{pkg_name}/bson
 %mvn_file org.mongodb:%{pkg_name}:* %{pkg_name}/mongo
+%mvn_file org.mongodb:mongodb-driver-core:* %{pkg_name}/driver-core
+%mvn_file org.mongodb:mongodb-driver-async:* %{pkg_name}/driver-async
+%mvn_file org.mongodb:mongodb-driver:* %{pkg_name}/driver
 %{?scl:EOF}
 
 %build
 %{?scl:scl enable %{scl_maven} %{scl} - << "EOF"}
-(
-  ln -s $(build-classpath testng) lib/testng-6.3.1.jar
-  ant -Dfile.encoding=UTF-8 -Denv.JAVA_HOME=/usr/lib/jvm/java -Dplatforms.JDK_1.5.home=/usr/lib/jvm/java jar javadocs
-)
-%mvn_artifact maven/maven-bson.xml bson.jar
-%mvn_artifact maven/maven-mongo-java-driver.xml mongo.jar
+%gradle_build -f -- -s -i
 %{?scl:EOF}
 
 %install
 %{?scl:scl enable %{scl_maven} %{scl} - << "EOF"}
 %mvn_install
-# Java-docs
-install -d -m 755                 %{buildroot}%{_javadocdir}/%{pkg_name}
-install -d -m 755                 %{buildroot}%{_javadocdir}/%{pkg_name}-bson
-cp -r -p docs/mongo-java-driver/* %{buildroot}%{_javadocdir}/%{pkg_name}
-cp -r -p docs/bson/*              %{buildroot}%{_javadocdir}/%{pkg_name}-bson
 %{?scl:EOF}
 
 %files -f .mfiles-%{pkg_name}
-%dir %{_javadir}/%{pkg_name}
-%dir %{_mavenpomdir}/%{pkg_name}
-%dir %{_datadir}/maven-metadata
 %doc README.md LICENSE.txt
 
 %files bson -f .mfiles-%{pkg_name}-bson
-%dir %{_javadir}/%{pkg_name}
-%dir %{_mavenpomdir}/%{pkg_name}
-%dir %{_datadir}/maven-metadata
 %doc README.md LICENSE.txt
 
-%files javadoc
-%{_javadocdir}/%{pkg_name}
+%files driver -f .mfiles-%{pkg_name}-driver
 %doc README.md LICENSE.txt
 
-%files bson-javadoc
-%{_javadocdir}/%{pkg_name}-bson
+%files driver-core -f .mfiles-%{pkg_name}-driver-core
+%doc README.md LICENSE.txt
+
+%files driver-async -f .mfiles-%{pkg_name}-driver-async
 %doc README.md LICENSE.txt
 
 %changelog
+* Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1_2jpp8
+- new version
+
 * Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 2.13.2-alt2_5jpp8
 - new version
 
