@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,26 +11,23 @@ BuildRequires: jpackage-generic-compat
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%global with_grizzly 1
 # Use jetty 9.1.1.v20140108.
 #def_with jetty
 %bcond_with jetty
 Name:          jersey
-Version:       2.18
-Release:       alt1_3jpp8
+Version:       2.22.2
+Release:       alt1_1jpp8
 Summary:       JAX-RS (JSR 311) production quality Reference Implementation
 # One file in jersey-core/ is under ASL 2.0 license
-# https://java.net/jira/browse/JERSEY-2870
 License:       (CDDL or GPLv2 with exceptions) and ASL 2.0
 URL:           http://jersey.java.net/
 Source0:       https://github.com/jersey/jersey/archive/%{version}.tar.gz
 Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
-# Remove repackaged dependencies: guava, atinject
-Patch0:        jersey-2.18-use-system-libraries.patch
+
 # Support fo servlet 3.1 apis
 Patch1:        jersey-2.17-mvc-jsp-servlet31.patch
-# Update istack plugin reference
-Patch2:        jersey-2.17-new-istack-plugin.patch
+# Support for simple 6.0.1
+Patch2:        jersey-2.22.2-simple.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(com.esotericsoftware:kryo)
@@ -37,6 +37,7 @@ BuildRequires: mvn(com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider)
 BuildRequires: mvn(com.github.spullara.mustache.java:compiler)
 BuildRequires: mvn(com.google.guava:guava)
 BuildRequires: mvn(com.sun.istack:istack-commons-maven-plugin)
+BuildRequires: mvn(commons-io:commons-io)
 BuildRequires: mvn(commons-logging:commons-logging)
 BuildRequires: mvn(io.reactivex:rxjava)
 BuildRequires: mvn(javax.annotation:javax.annotation-api)
@@ -82,16 +83,22 @@ BuildRequires: mvn(org.glassfish.hk2:osgi-resource-locator)
 BuildRequires: mvn(org.glassfish.hk2:spring-bridge)
 BuildRequires: mvn(org.glassfish.web:javax.el)
 BuildRequires: mvn(org.hamcrest:hamcrest-library)
+# org.hibernate:hibernate-validator:5.1.3.Final
+# https://bugzilla.redhat.com/show_bug.cgi?id=1182918
 BuildRequires: mvn(org.hibernate:hibernate-validator)
+BuildRequires: mvn(org.hibernate:hibernate-validator-cdi)
 BuildRequires: mvn(org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.2_spec)
 BuildRequires: mvn(org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec)
 BuildRequires: mvn(org.jboss:jboss-vfs)
+# https://bugzilla.redhat.com/show_bug.cgi?id=1204638
 BuildRequires: mvn(org.jboss.weld.se:weld-se-core)
 BuildRequires: mvn(org.jvnet.jaxb2.maven2:maven-jaxb22-plugin)
-# mimepull >= 1.9.5 https://bugzilla.redhat.com/show_bug.cgi?id=1189216
 BuildRequires: mvn(org.jvnet.mimepull:mimepull)
 BuildRequires: mvn(org.osgi:org.osgi.core)
 BuildRequires: mvn(org.ow2.asm:asm-all)
+BuildRequires: mvn(org.simpleframework:simple-common)
+BuildRequires: mvn(org.simpleframework:simple-http)
+BuildRequires: mvn(org.simpleframework:simple-transport)
 BuildRequires: mvn(org.springframework:spring-aop)
 BuildRequires: mvn(org.springframework:spring-beans)
 BuildRequires: mvn(org.springframework:spring-core)
@@ -131,9 +138,37 @@ This package contains javadoc for %{name}.
 find . -name "*.jar" -print -delete
 find . -name "*.class" -print -delete
 
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
+
+# Remove repackaged dependencies: guava, atinject
+sed -i '/jersey.repackaged/d' \
+ ext/cdi/jersey-cdi1x/src/main/java/org/glassfish/jersey/ext/cdi1x/internal/CdiComponentProvider.java
+find ./ -name "*.java" -exec sed -i "s|jersey.repackaged.||" {} +
+%pom_change_dep org.glassfish.hk2.external:javax.inject javax.inject:javax.inject:1 
+%pom_change_dep org.glassfish.hk2.external:javax.inject javax.inject:javax.inject:1 containers/grizzly2-http
+%pom_change_dep org.glassfish.hk2.external:javax.inject javax.inject:javax.inject:1 containers/jersey-servlet-core
+%pom_change_dep org.glassfish.hk2.external:javax.inject javax.inject:javax.inject:1 containers/jetty-http
+%pom_change_dep org.glassfish.hk2.external:javax.inject javax.inject:javax.inject:1 containers/simple-http
+%pom_change_dep org.glassfish.hk2.external:javax.inject javax.inject:javax.inject:1 core-client
+%pom_change_dep org.glassfish.hk2.external:javax.inject javax.inject:javax.inject:1 core-common
+%pom_change_dep org.glassfish.hk2.external:javax.inject javax.inject:javax.inject:1 core-server
+%pom_change_dep org.glassfish.hk2.external:javax.inject javax.inject:javax.inject:1 ext/bean-validation
+%pom_change_dep org.glassfish.hk2.external:javax.inject javax.inject:javax.inject:1 ext/mvc-jsp
+%pom_change_dep org.glassfish.hk2.external:javax.inject javax.inject:javax.inject:1 media/jaxb
+%pom_change_dep org.glassfish.hk2.external:javax.inject javax.inject:javax.inject:1 media/sse
+%pom_change_dep org.glassfish.jersey.bundles.repackaged:jersey-guava com.google.guava:guava:'${guava.version}' bom
+%pom_change_dep org.glassfish.jersey.bundles.repackaged:jersey-guava com.google.guava:guava:'${guava.version}' core-common
+%pom_change_dep -r org.glassfish.hk2.external:aopalliance-repackaged aopalliance:aopalliance:1.0
+
+# Force servlet 3.1 apis
+%pom_change_dep -r :servlet-api :javax.servlet-api
+%pom_xpath_set "pom:properties/pom:servlet2.version" 3.1.0
+%pom_xpath_set "pom:properties/pom:servlet3.version" 3.1.0
+%pom_remove_dep -r org.mortbay.jetty:servlet-api-2.5
+%pom_remove_dep -r org.jmockit:jmockit
+
+%pom_xpath_set -r "pom:plugin[pom:groupId = 'com.sun.istack' ]/pom:artifactId" istack-commons-maven-plugin
 
 cp -p %{SOURCE1} .
 sed -i 's/\r//' LICENSE-2.0.txt
@@ -143,9 +178,7 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %pom_remove_plugin :buildnumber-maven-plugin
 %pom_remove_plugin :buildnumber-maven-plugin core-common
 %pom_remove_plugin :findbugs-maven-plugin
-%pom_remove_plugin :maven-source-plugin
-%pom_remove_plugin :maven-source-plugin ext/wadl-doclet
-%pom_remove_plugin :maven-source-plugin incubator/declarative-linking
+%pom_remove_plugin -r :maven-source-plugin
 %pom_remove_plugin :maven-jflex-plugin media/moxy
 %pom_remove_plugin :maven-jflex-plugin media/jaxb
 %pom_remove_plugin :maven-shade-plugin core-server
@@ -159,10 +192,13 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %pom_remove_dep org.glassfish.jersey.bundles.repackaged: bom
 %pom_disable_module jersey-guava bundles/repackaged
 %pom_disable_module examples
+%pom_disable_module examples/feed-combiner-java8-webapp
 %pom_disable_module examples/java8-webapp
 %pom_disable_module examples/rx-client-java8-webapp
 %pom_disable_module gae-integration incubator
 %pom_disable_module html-json incubator
+# org.codehaus.groovy:groovy-eclipse-compiler:2.9.2-01
+%pom_disable_module container-runner-maven-plugin test-framework/maven
 
 # Use jersey-jsr166e bundle of Doug Lea's JCP JSR-166 APIS
 %pom_disable_module rx-client-jsr166e ext/rx
@@ -191,20 +227,9 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %pom_remove_dep :jersey-test-framework-provider-jetty test-framework/providers/bundle
 %endif
 
-# simple:5.1.4
-%pom_disable_module simple-http containers
-%pom_disable_module simple test-framework/providers
-%pom_remove_dep :jersey-container-simple-http bom
-%pom_remove_dep :jersey-test-framework-provider-simple bom
-%pom_remove_dep :jersey-test-framework-provider-simple test-framework/providers/bundle
 # eclipselink:2.6.0
 %pom_disable_module moxy media
 %pom_remove_dep :jersey-media-moxy bom
-
-# Force servlet 3.1 apis
-%pom_remove_dep org.mortbay.jetty:servlet-api-2.5
-%pom_remove_dep org.mortbay.jetty:servlet-api-2.5 tests/osgi/functional
-sed -i "s|<artifactId>servlet-api|<artifactId>javax.servlet-api|" $(find . -name "pom.xml")
 
 # Fix asm aId (asm-debug-all)
 %pom_xpath_set "pom:dependency[pom:groupId = 'org.ow2.asm']/pom:artifactId" asm-all
@@ -252,14 +277,15 @@ sed -i 's|schemaLocation="http://www.w3.org/2001/xml.xsd"|schemaLocation="./xml.
   </execution>
 </executions>'
 
-%pom_xpath_remove "pom:plugin[pom:artifactId ='maven-surefire-plugin']/pom:configuration/pom:argLine" core-common
-%pom_xpath_remove "pom:plugin[pom:artifactId ='maven-surefire-plugin']/pom:configuration/pom:argLine" core-server
+%pom_xpath_remove "pom:surefire.security.argline" core-common
+%pom_xpath_remove "pom:surefire.security.argline" core-server
 
 %pom_remove_dep :javaee-api ext/cdi/jersey-cdi1x-transaction
 # package javax.enterprise.context javax.enterprise.event javax.enterprise.inject.spi does not exist
 %pom_add_dep javax.enterprise:cdi-api:'${cdi.api.version}':provided ext/cdi/jersey-cdi1x-transaction
 # package javax.interceptor does not exist
 %pom_add_dep org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.2_spec:1.0.0.Alpha3:provided ext/cdi/jersey-cdi1x-transaction
+%pom_add_dep org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.2_spec:1.0.0.Alpha3:provided ext/cdi/jersey-cdi1x-validation
 # cannot find symbol javax.transaction.Transactional javax.transaction.TransactionalException
 %pom_add_dep org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec:1.0.0.Alpha3:provided ext/cdi/jersey-cdi1x-transaction
 
@@ -275,6 +301,7 @@ sed -i 's|schemaLocation="http://www.w3.org/2001/xml.xsd"|schemaLocation="./xml.
 
 # NoClassDefFoundError: org/objectweb/asm/ClassVisitor
 %pom_add_dep org.ow2.asm:asm-all:5.0.3:test containers/jdk-http
+%pom_add_dep org.ow2.asm:asm-all:5.0.3:test containers/simple-http
 %pom_add_dep org.ow2.asm:asm-all:5.0.3:test media/json-processing
 
 # Jersey core server unit tests should run with active security manager
@@ -284,7 +311,6 @@ rm -r core-server/src/test/java/org/glassfish/jersey/server/SecurityManagerConfi
 rm -r core-server/src/test/java/org/glassfish/jersey/server/SecurityContextTest.java \
  core-server/src/test/java/org/glassfish/jersey/server/internal/process/ProxyInjectablesTest.java \
  core-server/src/test/java/org/glassfish/jersey/server/internal/inject/JaxRsInjectablesTest.java \
- core-server/src/test/java/org/glassfish/jersey/server/internal/routing/ResourcePushingTest.java \
  core-server/src/test/java/org/glassfish/jersey/server/model/ResourceInfoTest.java
 # Exception: Unexpected exception, expected<java.security.AccessControlException> but was<java.lang.AssertionError>
 rm -r core-common/src/test/java/org/glassfish/jersey/internal/util/ReflectionHelperTest.java
@@ -295,12 +321,12 @@ rm -r core-server/src/test/java/org/glassfish/jersey/server/internal/scanning/Ja
 
 rm -r test-framework/providers/grizzly2/src/test/java/org/glassfish/jersey/test/grizzly/web/GrizzlyWebInjectionTest.java
 
-# NO test dep
-%pom_remove_dep org.jmockit:jmockit ext/cdi/jersey-cdi1x
-rm -r ext/cdi/jersey-cdi1x/src/test/java/org/glassfish/jersey/ext/cdi1x/internal/CdiUtilTest.java
+# NO test dep org.jmockit:jmockit
+rm -r ext/cdi/jersey-cdi1x/src/test/java/org/glassfish/jersey/ext/cdi1x/internal/CdiUtilTest.java \
+ core-server/src/test/java/org/glassfish/jersey/server/ResourceConfigTest.java \
+ core-client/src/test/java/org/glassfish/jersey/client/ClientRequestTest.java
 rm -r ext/cdi/jersey-cdi1x/src/test/java/*
 %pom_remove_dep org.glassfish.jersey.connectors:jersey-grizzly-connector media/multipart
-%pom_remove_dep org.jmockit:jmockit media/multipart
 rm -r media/multipart/src/test/java/org/glassfish/jersey/media/multipart/internal/MultiPartHeaderModificationTest.java \
  media/multipart/src/test/java/org/glassfish/jersey/media/multipart/internal/FormDataMultiPartReaderWriterTest.java \
  media/multipart/src/test/java/org/glassfish/jersey/media/multipart/MultipartMixedWithApacheClientTest.java \
@@ -326,13 +352,17 @@ rm -r media/multipart/src/test/java/org/glassfish/jersey/media/multipart/interna
 %mvn_package ":%{name}-test-framework-provider-external" test-framework
 %mvn_package ":%{name}-test-framework-provider-grizzly2" test-framework
 %mvn_package ":%{name}-test-framework-provider-inmemory" test-framework
+%mvn_package ":custom-enforcer-rules" test-framework
+%mvn_package ":memleak-test-common" test-framework
 %if %{with jetty}
 %mvn_package ":%{name}-test-framework-provider-jetty" test-framework
 %endif
 %mvn_package ":%{name}-test-framework-provider-jdk-http" test-framework
+%mvn_package ":%{name}-test-framework-provider-simple" test-framework
 %mvn_package ":%{name}-test-framework-util" test-framework
 # Conflict with org.glassfish.jersey:project
 %mvn_file "org.glassfish.jersey.test-framework:project" %{name}/test-framework-project
+%mvn_file "org.glassfish.jersey.test-framework.maven:project" %{name}/test-framework-maven-project
 %mvn_file "org.glassfish.jersey.test-framework.providers:project" %{name}/test-framework-providers-project
 %mvn_file "org.glassfish.jersey.connectors:project" %{name}/connectors-project
 %mvn_file "org.glassfish.jersey.containers:project" %{name}/containers-project
@@ -345,7 +375,8 @@ rm -r media/multipart/src/test/java/org/glassfish/jersey/media/multipart/interna
 
 %build
 
-%mvn_build -- -Dmaven.test.failure.ignore=true
+%mvn_build -- -Dmaven.test.failure.ignore=true \
+ -Dmaven.test.skip.exec=true
 
 %install
 %mvn_install
@@ -361,6 +392,9 @@ rm -r media/multipart/src/test/java/org/glassfish/jersey/media/multipart/interna
 %doc LICENSE.html LICENSE.txt LICENSE-2.0.txt etc/config/copyright.txt
 
 %changelog
+* Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.22.2-alt1_1jpp8
+- new version
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 2.18-alt1_3jpp8
 - new version
 
