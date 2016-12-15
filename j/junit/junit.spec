@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 Name:           junit
 Epoch:          1
 Version:        4.12
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Java regression test package
 License:        EPL
 URL:            http://www.junit.org/
@@ -21,8 +21,9 @@ Source0:        %{name}-%{version}-clean.tar.gz
 Source3:        create-tarball.sh
 
 BuildRequires:  maven-local
-BuildRequires:  hamcrest
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:  mvn(org.hamcrest:hamcrest-core)
 
 Obsoletes:      %{name}-demo < 4.12
 Source44: import.info
@@ -108,6 +109,9 @@ sed s/@version@/%{version}/ src/main/java/junit/runner/Version.java.template >sr
 %doc doc/*
 
 %changelog
+* Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.12-alt1_5jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.12-alt1_4jpp8
 - new fc release
 
