@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %global short_name commons-%{base_name}
 Name:          apache-commons-chain
 Version:       1.2
-Release:       alt1_13jpp8
+Release:       alt1_14jpp8
 Summary:       An implementation of the GoF Chain of Responsibility pattern
 License:       ASL 2.0
 URL:           http://commons.apache.org/%{base_name}/
@@ -34,6 +34,7 @@ BuildRequires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-site-plugin)
 BuildRequires: mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 BuildRequires: mvn(org.jboss.spec.javax.faces:jboss-jsf-api_2.1_spec)
+BuildRequires: /usr/bin/perl
 
 BuildArch:     noarch
 Source44: import.info
@@ -101,6 +102,9 @@ rm -r src/test/org/apache/commons/chain/config/ConfigParserTestCase.java
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_14jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_13jpp8
 - new fc release
 
