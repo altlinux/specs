@@ -6,11 +6,11 @@ BuildRequires(pre): rpm-macros-java
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global tzversion tzdata2016a
+%global tzversion tzdata2016c
 
 Name:             joda-time
-Version:          2.9.2
-Release:          alt1_1jpp8
+Version:          2.9.3
+Release:          alt1_2.tzdata2016cjpp8
 Summary:          Java date and time API
 
 License:          ASL 2.0
@@ -19,10 +19,12 @@ Source0:          https://github.com/JodaOrg/%{name}/archive/v%{version}.tar.gz
 Source1:          ftp://ftp.iana.org/tz/releases/%{tzversion}.tar.gz
 BuildArch:        noarch
 
-BuildRequires:    java-devel >= 1.6.0
-BuildRequires:    maven-local
-BuildRequires:    joda-convert
-BuildRequires:    exec-maven-plugin
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.apache.velocity:velocity)
+BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
+BuildRequires:  mvn(org.joda:joda-convert)
 Source44: import.info
 
 
@@ -77,6 +79,9 @@ tar -xzf %{SOURCE1} -C src/main/java/org/joda/time/tz/src/
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.9.3-alt1_2.tzdata2016cjpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.9.2-alt1_1jpp8
 - new version
 
