@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          jedis
 Version:       2.7.2
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       A redis Java client
 License:       MIT
 URL:           https://github.com/xetorthio/jedis
@@ -16,6 +16,8 @@ Source0:       https://github.com/xetorthio/jedis/archive/%{name}-%{version}.tar
 BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.commons:commons-pool2)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildArch:     noarch
 Source44: import.info
@@ -91,6 +93,9 @@ rm -r src/test/java/redis/clients/jedis/tests/ConnectionCloseTest.java \
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.2-alt1_4jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.2-alt1_3jpp8
 - new fc release
 
