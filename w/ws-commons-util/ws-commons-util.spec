@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           ws-commons-util
 Version:        1.0.2
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Common utilities from the Apache Web Services Project
 
 License:        ASL 2.0
@@ -20,8 +20,9 @@ Source0:        ws-commons-util-1.0.2.tar.xz
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  junit >= 3.8.1
-BuildRequires:  xml-commons-apis >= 1.0
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(xml-apis:xml-apis)
 Source44: import.info
 
 %description
@@ -74,6 +75,9 @@ BuildArch: noarch
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_3jpp8
+- new fc release
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_2jpp8
 - new version
 
