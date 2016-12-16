@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
@@ -7,20 +8,22 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             decentxml
 Version:          1.4
-Release:          alt3_12jpp8
+Release:          alt3_13jpp8
 Summary:          XML parser optimized for round-tripping and code reuse
 License:          BSD
-Group:            Development/Other
 URL:              http://code.google.com/p/%{name}
+BuildArch:        noarch
+
 Source0:          https://decentxml.googlecode.com/files/decentxml-1.4-src.zip
 # for running w3c conformance test suite
 Source1:          http://www.w3.org/XML/Test/xmlts20031210.zip
-BuildArch:        noarch
 
-BuildRequires: javapackages-tools rpm-build-java
-BuildRequires:    maven-local
-BuildRequires:    apache-commons-parent
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 Source44: import.info
+
 
 %description
 XML parser optimized for round-tripping and code reuse with main
@@ -34,10 +37,9 @@ features being:
  * XML 1.1 compatible
 
 %package javadoc
+Group: Development/Java
 Summary:          API documentation for %{name}
-Group:            Development/Java
 BuildArch: noarch
-
 
 %description javadoc
 This package contains the API documentation for %{name}.
@@ -69,6 +71,9 @@ sed -i '/not_wf_sa_16[89] /d' src/test/java/de/pdark/decentxml/XMLConformanceTes
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_13jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_12jpp8
 - new fc release
 
