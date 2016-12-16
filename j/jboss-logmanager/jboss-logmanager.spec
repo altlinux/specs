@@ -8,22 +8,23 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-logmanager
-%define version 1.5.2
+%define version 2.0.4
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-logmanager
-Version:          1.5.2
-Release:          alt1_5jpp8
+Version:          2.0.4
+Release:          alt1_1jpp8
 Summary:          JBoss Log Manager
-License:          LGPLv2+
+License:          ASL 2.0
 URL:              https://github.com/jboss-logging/jboss-logmanager
-Source0:          https://github.com/jboss-logging/jboss-logmanager/archive/%{namedversion}.tar.gz
+Source0:          https://github.com/jboss-logging/jboss-logmanager/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
 
 BuildArch:        noarch
 
 BuildRequires:    maven-local
 BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
 BuildRequires:    mvn(org.jboss.modules:jboss-modules)
 Source44: import.info
@@ -40,10 +41,10 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n jboss-logmanager-%{namedversion}
+%setup -q -n %{name}-%{namedversion}
 
-# We won't run on JDK 6
-%pom_remove_plugin "org.jboss.seven2six:seven2six"
+# Unneeded task
+%pom_remove_plugin :maven-source-plugin
 
 %build
 %mvn_build
@@ -52,12 +53,15 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc COPYING.txt
+%doc LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc COPYING.txt
+%doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.4-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.5.2-alt1_5jpp8
 - new fc release
 
