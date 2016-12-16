@@ -10,7 +10,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           icu4j
 Version:        54.1.1
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Epoch:          1
 Summary:        International Components for Unicode for Java
 License:        MIT and EPL
@@ -87,6 +87,9 @@ API documentation for %{name}.
 %patch0
 %patch1
 
+# Disable doclinting
+sed -i '/additionalparam/ s/additionalparam="/additionalparam="-Xdoclint:none /' build.xml
+
 %build
 export JAVA_HOME=%{_jvmdir}/java/
 ant -Dicu4j.api.doc.jdk.link=%{_javadocdir}/java all check
@@ -117,6 +120,9 @@ install -m 644 icu4j-localespi.jar %{buildroot}%{_javadir}/icu4j/
 %doc main/shared/licenses/license.html
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:54.1.1-alt1_8jpp8
+- new fc release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1:54.1.1-alt1_7jpp8
 - new fc release
 
