@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.5
+Version: 0.8.7
 Release: alt1
 
 Summary: Module for creating simple ASCII tables
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 16 2016 Vladimir Didenko <cow@altlinux.ru> 0.8.7-alt1
+- 0.8.7
+
 * Wed Oct 12 2016 Vladimir Didenko <cow@altlinux.ru> 0.8.5-alt1
 - 0.8.5
 
