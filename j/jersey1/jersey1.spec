@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          jersey1
 Version:       1.19
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       JAX-RS (JSR 311) production quality Reference Implementation
 # One file in jersey-core/ is under ASL 2.0 license
 # License file with incorrect fsf address https://java.net/jira/browse/JERSEY-2870
@@ -47,7 +47,6 @@ BuildRequires: mvn(javax.persistence:persistence-api)
 BuildRequires: mvn(javax.servlet:javax.servlet-api)
 BuildRequires: mvn(javax.ws.rs:jsr311-api)
 BuildRequires: mvn(javax.xml.bind:jaxb-api)
-BuildRequires: mvn(jdom:jdom)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(net.java:jvnet-parent:pom:)
 BuildRequires: mvn(org.apache.ant:ant)
@@ -87,7 +86,6 @@ BuildRequires: mvn(org.springframework:spring-context)
 BuildRequires: mvn(org.springframework:spring-core)
 BuildRequires: mvn(org.springframework:spring-web)
 BuildRequires: mvn(org.testng:testng)
-BuildRequires: mvn(rome:rome)
 BuildRequires: mvn(xerces:xercesImpl)
 
 BuildArch:     noarch
@@ -164,11 +162,11 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %pom_disable_module scala contribs
 %pom_disable_module jersey-simple-server contribs
 %pom_disable_module maven-wadl-plugin contribs
+# Conflicts with jdom and jdom2 packages
+%pom_disable_module jersey-atom
 
 %pom_remove_plugin -r :maven-source-plugin
-
 %pom_remove_plugin :maven-javadoc-plugin
-
 %pom_remove_plugin :cobertura-maven-plugin jersey-json
 %pom_remove_plugin :cobertura-maven-plugin samples
 
@@ -358,6 +356,9 @@ install -p -m 644 ant-wadl-task %{buildroot}%{_sysconfdir}/ant.d/ant-wadl-task
 %doc license.html legal/LICENSE.txt legal/maintenance/copyright.txt LICENSE-2.0.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1_7jpp8
+- new fc release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1_6jpp8
 - new fc release
 
