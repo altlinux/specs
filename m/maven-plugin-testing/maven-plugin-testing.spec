@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-plugin-testing
 Version:        3.3.0
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Maven Plugin Testing
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugin-testing/
@@ -84,6 +84,9 @@ Framework to test Maven Plugins with Easymock objects.
 
 sed -i -e "s/MockControl/IMocksControl/g" maven-test-tools/src/main/java/org/apache/maven/shared/tools/easymock/MockManager.java
 
+# needs network for some reason
+rm maven-plugin-testing-tools/src/test/java/org/apache/maven/shared/test/plugin/ProjectToolTest.java
+
 %mvn_alias : org.apache.maven.shared:
 
 %build
@@ -101,6 +104,9 @@ sed -i -e "s/MockControl/IMocksControl/g" maven-test-tools/src/main/java/org/apa
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_7jpp8
+- new fc release
+
 * Fri Dec 09 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_6jpp8
 - new fc release
 
