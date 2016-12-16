@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jetty-test-policy
 Version:        1.2
-Release:        alt3_15jpp8
+Release:        alt3_16jpp8
 Summary:        Jetty test policy files
 License:        ASL 2.0 or EPL
 URL:            http://www.eclipse.org/jetty/
@@ -40,6 +40,14 @@ This package provides %{summary}.
 %patch0 -p1
 cp -p %{SOURCE2} %{SOURCE3} .
 
+# Disable default-jar execution of maven-jar-plugin, which is causing
+# problems with version 3.0.0 of the plugin.
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions" "
+    <execution>
+      <id>default-jar</id>
+      <phase>skip</phase>
+    </execution>"
+
 %build
 %mvn_build
 
@@ -53,6 +61,9 @@ cp -p %{SOURCE2} %{SOURCE3} .
 %doc epl-v10.html LICENSE-2.0.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_16jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_15jpp8
 - new fc release
 
