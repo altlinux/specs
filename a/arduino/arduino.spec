@@ -7,7 +7,7 @@ BuildRequires: jpackage-generic-compat
 Name:		arduino
 Epoch:		1
 Version:	1.6.4
-Release:	alt1_6jpp8
+Release:	alt1_8jpp8
 Summary:	An IDE for Arduino-compatible electronics prototyping platforms
 Group:		Development/Java
 License:	GPLv2+ and LGPLv2+ and CC-BY-SA
@@ -234,6 +234,9 @@ fi
 %{_datadir}/%{name}/lib/version.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.6.4-alt1_8jpp8
+- new fc release
+
 * Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.6.4-alt1_6jpp8
 - new version
 
