@@ -7,13 +7,15 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           forge-parent
 Version:        38
-Release:        alt1_5jpp8
+Release:        alt1_7jpp8
 Summary:        Sonatype Forge Parent Pom
 License:        ASL 2.0
 URL:            https://docs.sonatype.org/display/FORGE/Index
+BuildArch:      noarch
+
 Source0:        http://repo1.maven.org/maven2/org/sonatype/forge/%{name}/%{version}/%{name}-%{version}.pom
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
-BuildArch:      noarch
+
 BuildRequires:  maven-local
 Source44: import.info
 
@@ -27,6 +29,8 @@ cp -p %{SOURCE0} pom.xml
 cp -p %{SOURCE1} LICENSE
 # We don't have nexus-staging-maven-plugin in Fedora
 %pom_remove_plugin :nexus-staging-maven-plugin
+# We don't use source JARs in Fedora
+%pom_remove_plugin :maven-source-plugin
 
 %build
 %mvn_build
@@ -38,6 +42,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 38-alt1_7jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 38-alt1_5jpp8
 - new fc release
 
