@@ -6,14 +6,14 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jsoup
-Version:        1.8.3
-Release:        alt1_2jpp8
+Version:        1.9.2
+Release:        alt1_1jpp8
 Summary:        Java library for working with real-world HTML
 License:        MIT
-URL:            http://%{name}.org/
+URL:            http://jsoup.org/
 BuildArch:      noarch
 
-Source0:        https://github.com/jhy/jsoup/archive/jsoup-%{version}%{?vertag}.tar.gz
+Source0:        https://github.com/jhy/%{name}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
@@ -50,8 +50,10 @@ BuildArch: noarch
 API documentation for %{name}.
 
 %prep
-%setup -q -n jsoup-jsoup-%{version}%{?vertag}
+%setup -q -n %{name}-%{name}-%{version}
+
 %pom_remove_plugin :animal-sniffer-maven-plugin
+%pom_remove_plugin :maven-javadoc-plugin
 
 %build
 %mvn_build
@@ -67,6 +69,9 @@ API documentation for %{name}.
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.3-alt1_2jpp8
 - new version
 
