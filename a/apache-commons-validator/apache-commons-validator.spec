@@ -1,4 +1,5 @@
 Epoch: 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -9,21 +10,22 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-%{short_name}
 Version:          1.5.0
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          Apache Commons Validator
-Group:            Development/Other
 License:          ASL 2.0
 URL:              http://commons.apache.org/validator/
-Source0:          http://www.apache.org/dist/commons/validator/source/%{short_name}-%{version}-src.tar.gz
 BuildArch:        noarch
 
-BuildRequires:    java-devel >= 1.6.0
-BuildRequires:    jpackage-utils
-BuildRequires:    apache-commons-beanutils
-BuildRequires:    apache-commons-digester
-BuildRequires:    apache-commons-logging
-BuildRequires:    maven-local
-Requires:         jpackage-utils
+Source0:          http://www.apache.org/dist/commons/validator/source/%{short_name}-%{version}-src.tar.gz
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-beanutils:commons-beanutils)
+BuildRequires:  mvn(commons-collections:commons-collections)
+BuildRequires:  mvn(commons-digester:commons-digester)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 Source44: import.info
 
 %description
@@ -35,9 +37,8 @@ by locale. This package attempts to address some of these issues and speed
 development and maintenance of validation rules.
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadoc for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -66,6 +67,9 @@ sed -i 's/\r//' NOTICE.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.5.0-alt1_3jpp8
+- new fc release
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.5.0-alt1_2jpp8
 - new version
 
