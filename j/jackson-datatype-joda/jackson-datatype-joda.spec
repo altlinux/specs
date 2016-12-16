@@ -6,8 +6,8 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          jackson-datatype-joda
-Version:       2.6.3
-Release:       alt1_2jpp8
+Version:       2.7.6
+Release:       alt1_1jpp8
 Summary:       Add-on module for Jackson to support Joda data-types
 License:       ASL 2.0
 URL:           http://wiki.fasterxml.com/JacksonModuleJoda
@@ -68,6 +68,9 @@ rm -r src/test/java/com/fasterxml/jackson/datatype/joda/JodaSerializationTest.ja
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_1jpp8
+- new version
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_2jpp8
 - new version
 
