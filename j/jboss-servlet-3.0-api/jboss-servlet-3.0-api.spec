@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -12,23 +13,18 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-servlet-3.0-api
 Version:          1.0.2
-Release:          alt1_5jpp8
+Release:          alt1_6jpp8
 Summary:          Java Servlet 3.0 API
-Group:            Development/Other
 License:          CDDL
 Url:              http://www.jboss.org
 Source0:          https://github.com/jboss/jboss-servlet-api_spec/archive/jboss-servlet-api_3.0_spec-1.0.2.Final.tar.gz
 Source1:          cddl.txt
 
-BuildRequires:    jboss-parent
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-dependency-plugin
-BuildRequires:    maven-ear-plugin
+BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
 
 BuildArch:        noarch
 Source44: import.info
@@ -38,7 +34,7 @@ The Java Servlet 3.0 API classes.
 
 %package javadoc
 Group: Development/Java
-Summary:          Javadocs for %{name}
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -56,13 +52,15 @@ cp %{SOURCE1} .
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc LICENSE README cddl.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE README cddl.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_6jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_5jpp8
 - new fc release
 
