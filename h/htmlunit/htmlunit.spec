@@ -2,18 +2,32 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           htmlunit
-Version:        2.19
+Version:        2.20
 Release:        alt1_2jpp8
 Summary:        A headless web browser for automated testing
 License:        ASL 2.0 
 URL:            http://htmlunit.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/htmlunit/%{name}-%{version}-src.zip
+# Source0:        http://downloads.sourceforge.net/htmlunit/%%{name}-%%{version}-src.zip
+# Steps for generate the archive:
+# svn checkout svn://svn.code.sf.net/p/htmlunit/code/tags/HtmlUnit-2.20/  htmlunit-2.20
+# Cleanup, remove unused test resources (taraball become more lightweight: 60MB >> 24MB)
+# find htmlunit-2.20 -name '*.jar' -print -delete
+# find htmlunit-2.20 -name '*.js' -print -delete 
+# find htmlunit-2.20 -name '*.class' -print -delete
+# find htmlunit-2.20 -name '*.dll' -print -delete
+# find htmlunit-2.20 -name '*.exe' -print -delete
+# find htmlunit-2.20 -name '*.gz' -print -delete
+# find htmlunit-2.20 -name 'php-cgi' -print -delete
+# rm -rf htmlunit-2.20/src/test/resources/libraries
+# rm -rf htmlunit-2.20/src/test/resources/pjl-comp-filter
+# tar cJf htmlunit-2.20.tar.xz htmlunit-2.20
+
+Source0:        %{name}-%{version}.tar.xz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-codec:commons-codec)
@@ -24,6 +38,7 @@ BuildRequires:  mvn(net.sourceforge.cssparser:cssparser)
 BuildRequires:  mvn(net.sourceforge.htmlunit:htmlunit-core-js)
 BuildRequires:  mvn(net.sourceforge.nekohtml:nekohtml)
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
 BuildRequires:  mvn(org.apache.httpcomponents:httpmime)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
@@ -50,8 +65,8 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
-find -name '*.jar' -print -delete 
-find -name '*.class' -print -delete
+#find -name '*.jar' -print -delete 
+#find -name '*.class' -print -delete
 
 %pom_xpath_remove "pom:build/pom:extensions"
 
@@ -92,6 +107,9 @@ find -name '*.class' -print -delete
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.20-alt1_2jpp8
+- new version
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.19-alt1_2jpp8
 - new version
 
