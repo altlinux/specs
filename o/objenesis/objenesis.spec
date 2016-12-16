@@ -39,18 +39,18 @@ BuildRequires: jpackage-generic-compat
 Summary:        A library for instantiating Java objects
 Name:           objenesis
 Version:        2.1
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 License:        ASL 2.0
 URL:            http://objenesis.org/
 Source0:        https://github.com/easymock/%{name}/archive/%{version}.tar.gz
 
+Patch1:         0001-Fix-build-with-current-jar-plugin.patch
+
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-site-plugin)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-ssh-external)
 
 BuildArch:      noarch
@@ -86,17 +86,10 @@ BuildArch:      noarch
 This package contains the API documentation for %{name}.
 
 
-# Skipped till xsite avilable in fedora
-#%%package manual
-#Group:          Documentation
-#Summary:        Documents for %%{name}
-#
-#%%description manual
-#This package contains the %%{name} manual.
-
-
 %prep
-%setup -q 
+%setup -q
+
+%patch1 -p1
 
 # Enable generation of pom.properties (rhbz#1017850)
 %pom_xpath_remove pom:addMavenDescriptor
@@ -108,16 +101,6 @@ This package contains the API documentation for %{name}.
 %build
 # tests are skipped because of missing dependency spring-osgi-test
 %mvn_build -- -Dyear=2009 -Dmaven.test.skip=true
-
-# Below is for manual (requires xsite), skipped
-#pushd website
-#mvn-jpp -e \
-#        -s ${M2SETTINGS} \
-#        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-#        -Dmaven2.jpp.depmap.file=%%{SOURCE1} \
-#        antrun:run 
-#popd
-
 
 %install
 %mvn_install
@@ -131,6 +114,9 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_4jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_3jpp8
 - new fc release
 
