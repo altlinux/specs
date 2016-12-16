@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           woden
 Version:        1.0
-Release:        alt1_0.12.M9jpp8
+Release:        alt1_0.13.M9jpp8
 Summary:        Web Service Description Language (WSDL) validating parser
 License:        ASL 2.0
 URL:            http://ws.apache.org/woden/
@@ -24,6 +24,7 @@ BuildRequires: apache-commons-logging
 BuildRequires: log4j12
 BuildRequires: xerces-j2
 BuildRequires: axiom
+BuildRequires: maven-plugin-bundle
 Source44: import.info
 
 Provides: ws-commons-%name = %version-%release
@@ -77,6 +78,9 @@ mv LICENSE.utf8 LICENSE
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.13.M9jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.12.M9jpp8
 - new fc release
 
