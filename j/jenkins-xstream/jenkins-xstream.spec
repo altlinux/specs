@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jenkins-xstream
 Version:        1.4.7
-Release:        alt3_8.jenkins1jpp8
+Release:        alt4_8.jenkins1jpp8
 Summary:        Jenkins XStream library
 
 License:        BSD
@@ -40,6 +40,10 @@ BuildRequires:  mvn(xpp3:xpp3_min)
 
 BuildArch:      noarch
 Source44: import.info
+
+Source11: jenkins-xstream.xml
+Source12: xstream-parent.pom
+Source13: xstream.pom
 
 %description
 XStream is a simple library to serialize objects to XML
@@ -83,7 +87,7 @@ API documentation for %{name}.
 
 # fix gIds for parent POM, Jenkins upstream uses "org.jvnet.hudson"
 #pom_xpath_set "pom:project/pom:groupId" "org.jvnet.hudson"
-sed -i -e s,org.jvnet.hudson,com.thoughtworks.xstream,g xstream/pom.xml
+#sed -i -e s,org.jvnet.hudson,com.thoughtworks.xstream,g xstream/pom.xml
 
 # unavailable deps
 %pom_xpath_remove "pom:extension[pom:artifactId[text()='wagon-webdav']]"
@@ -103,10 +107,19 @@ sed -i -e s,org.jvnet.hudson,com.thoughtworks.xstream,g xstream/pom.xml
 %build
 # tests require old JMock library (version 1.x)
 %mvn_build -f
-%mvn_alias com.thoughtworks.xstream:xstream org.jvnet.hudson:xstream 
+#mvn_alias com.thoughtworks.xstream:xstream org.jvnet.hudson:xstream 
 
 %install
 %mvn_install
+
+diff -u %{S:11} %buildroot%_datadir/maven-metadata/%name.xml ||:
+diff -u %{S:12} %buildroot%_datadir/maven-poms/%name/xstream-parent.pom ||:
+diff -u %{S:13} %buildroot%_datadir/maven-poms/%name/xstream.pom ||:
+
+install -m 644 %{S:11} %buildroot%_datadir/maven-metadata/
+install -m 644 %{S:12} %buildroot%_datadir/maven-poms/%name/
+install -m 644 %{S:13} %buildroot%_datadir/maven-poms/%name/
+
 
 %files -f .mfiles
 %dir %{_javadir}/%{name}
@@ -115,6 +128,9 @@ sed -i -e s,org.jvnet.hudson,com.thoughtworks.xstream,g xstream/pom.xml
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.7-alt4_8.jenkins1jpp8
+- removed alias; should have org.jvnet.hudson
+
 * Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.7-alt3_8.jenkins1jpp8
 - added org.jvnet.hudson:xstream alias
 
