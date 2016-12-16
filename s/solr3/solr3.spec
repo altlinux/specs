@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             solr3
 Version:          3.6.2
-Release:          alt1_11jpp8
+Release:          alt1_12jpp8
 Summary:          Apache Solr
 License:          ASL 2.0
 Url:              http://lucene.apache.org/solr/
@@ -41,6 +41,8 @@ BuildRequires:    jcl-over-slf4j
 BuildRequires:    xmlstarlet
 
 BuildRequires:    regexp
+BuildRequires:    buildnumber-maven-plugin
+BuildRequires:    maven-plugin-bundle
 
 BuildArch:        noarch
 Source44: import.info
@@ -136,6 +138,9 @@ sed -i "s|wstx-asl|woodstox-core-asl|" solrj/pom.xml
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.6.2-alt1_12jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.6.2-alt1_11jpp8
 - new fc release
 
