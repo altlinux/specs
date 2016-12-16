@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          activemq
 Version:       5.6.0
-Release:       alt2_15jpp8
+Release:       alt2_17jpp8
 Summary:       Open source messaging and Integration Patterns server
 License:       ASL 2.0
 URL:           http://activemq.apache.org
@@ -25,52 +25,57 @@ BuildRequires: mvn(commons-net:commons-net)
 BuildRequires: mvn(org.apache.derby:derby)
 BuildRequires: mvn(org.apache.activemq:activeio-core)
 BuildRequires: mvn(org.apache.activemq.protobuf:activemq-protobuf)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.geronimo.specs:geronimo-jms_1.1_spec)
 BuildRequires: mvn(org.apache.geronimo.specs:geronimo-jta_1.1_spec)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-clean-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.apache.rat:apache-rat-plugin)
 BuildRequires: mvn(org.apache.xbean:maven-xbean-plugin)
 BuildRequires: mvn(org.codehaus.jettison:jettison)
 BuildRequires: mvn(org.codehaus.mojo:javacc-maven-plugin)
 BuildRequires: mvn(org.jasypt:jasypt)
 BuildRequires: mvn(org.springframework:spring-jms)
 
-BuildArch: noarch
+BuildArch:     noarch
 Source44: import.info
 
 %description
 The most popular and powerful open source messaging and Integration Patterns
 server.
 
-%package javadoc
-Group: Development/Java
-Summary: Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains javadoc for %{name}
-
 %package core
 Group: Development/Java
-Summary: ActiveMQ Core
+Summary:       ActiveMQ Core
 
 %description core
-ActiveMQ Core Library
+ActiveMQ Core Library.
 
 %package jaas
 Group: Development/Java
-Summary: ActiveMQ Jaas
+Summary:       ActiveMQ Jaas
 
 %description jaas
-ActiveMQ Jaas Library
+ActiveMQ Jaas Library.
 
 %package kahadb
 Group: Development/Java
-Summary: ActiveMQ KahaDB
+Summary:       ActiveMQ KahaDB
 
 %description kahadb
 A file based persistence database that is local to the message broker that
 is using it. It has been optimized for fast persistence and is the the default
 storage mechanism from ActiveMQ 5.4 onwards. KahaDB uses less file descriptors
 and provides faster recovery than its predecessor, the AMQ Message Store.
+
+%package javadoc
+Group: Development/Java
+Summary:       Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains javadoc for %{name}.
 
 %prep
 
@@ -129,34 +134,33 @@ mv LICENSE LICENSE.orig
 iconv -f iso-8859-1 -t utf-8 LICENSE.orig > LICENSE
 
 %mvn_package ":activemq-core:{xsd}::" __noinstall
-%mvn_package ":activemq-core:{jar,pom}:{}:" core
-%mvn_package ":activemq-jaas:{jar,pom}:{}:" jaas
-%mvn_package ":kahadb:{jar,pom}:{}:" kahadb
-
 
 %build
-%mvn_build -f
+%mvn_build -sf
 
 %install
 %mvn_install
 
-%files -f .mfiles
+%files -f .mfiles-activemq-parent
 %doc README.txt
 %doc LICENSE NOTICE
 
-%files javadoc -f .mfiles-javadoc
+%files core -f .mfiles-activemq-core
 %doc LICENSE NOTICE
 
-%files core -f .mfiles-core
-%doc LICENSE NOTICE
-
-%files jaas -f .mfiles-jaas
+%files jaas -f .mfiles-activemq-jaas
 %doc LICENSE NOTICE
 
 %files kahadb -f .mfiles-kahadb
 %doc LICENSE NOTICE
 
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
+
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt2_17jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt2_15jpp8
 - new fc release
 
