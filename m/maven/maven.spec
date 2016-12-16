@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven
 Version:        3.3.9
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Summary:        Java project management and project comprehension tool
 License:        ASL 2.0
 URL:            http://maven.apache.org/
@@ -20,9 +20,6 @@ Source2:        mvn.1
 Source200:      %{name}-script
 
 Patch0:         0001-Force-SLF4J-SimpleLogger-re-initialization.patch
-
-# If XMvn is part of the same RPM transaction then it should be
-# installed first to avoid triggering rhbz#1014355.
 
 BuildRequires:  maven-local
 
@@ -54,6 +51,7 @@ BuildRequires:  jsr-305
 BuildRequires:  junit
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-compiler-plugin
+BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-javadoc-plugin
@@ -82,6 +80,8 @@ BuildRequires:  xmlunit
 BuildRequires:  mvn(ch.qos.logback:logback-classic)
 BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
+
+Requires:       %{name}-lib = %{version}
 
 # Theoretically Maven might be usable with just JRE, but typical Maven
 # workflow requires full JDK, so we recommend it here.
@@ -141,6 +141,15 @@ Maven is a software project management and comprehension tool. Based on the
 concept of a project object model (POM), Maven can manage a project's build,
 reporting and documentation from a central piece of information.
 
+%package        lib
+Summary:        Core part of Maven
+Group:          Development/Java
+# If XMvn is part of the same RPM transaction then it should be
+# installed first to avoid triggering rhbz#1014355.
+
+%description    lib
+Core part of Apache Maven that can be used as a library.
+
 %package        javadoc
 Summary:        API documentation for %{name}
 Group:          Development/Java
@@ -177,6 +186,8 @@ sed -i -e s:'-classpath "${M2_HOME}"/boot/plexus-classworlds-\*.jar':'-classpath
 # its scope to provided
 %pom_xpath_inject "pom:dependency[pom:artifactId='logback-classic']" "<scope>provided</scope>" maven-embedder
 
+%mvn_package :apache-maven __noinstall
+
 
 %build
 # Put all JARs in standard location, but create symlinks in Maven lib
@@ -207,10 +218,12 @@ install -d -m 755 %{buildroot}%{_sysconfdir}/%{name}
 install -d -m 755 %{buildroot}%{_datadir}/bash-completion/completions
 install -d -m 755 %{buildroot}%{_mandir}/man1
 
-for cmd in mvn mvnDebug mvnyjp; do
+for cmd in mvnDebug mvnyjp; do
     sed s/@@CMD@@/$cmd/ %{SOURCE200} >%{buildroot}%{_bindir}/$cmd
     echo ".so man1/mvn.1" >%{buildroot}%{_mandir}/man1/$cmd.1
 done
+sed s/@@CMD@@/mvn/ %{SOURCE200} >%{buildroot}%{_datadir}/%{name}/bin/mvn-script
+ln -sf %{_datadir}/%{name}/bin/mvn-script %{buildroot}%{_bindir}/mvn
 install -p -m 644 %{SOURCE2} %{buildroot}%{_mandir}/man1
 install -p -m 644 %{SOURCE1} %{buildroot}%{_datadir}/bash-completion/completions/mvn
 mv $M2_HOME/bin/m2.conf %{buildroot}%{_sysconfdir}
@@ -279,16 +292,19 @@ touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
 
 
-%files -f .mfiles
+%files lib -f .mfiles
 %doc LICENSE NOTICE README.md
 %{_datadir}/%{name}
-%attr(0755,root,root) %{_bindir}/mvn*
+%attr(0755,root,root) %{_datadir}/%{name}/bin/mvn-script
 %dir %{_javadir}/%{name}
 %dir %{_sysconfdir}/%{name}
 %dir %{_sysconfdir}/%{name}/logging
 %config(noreplace) %{_sysconfdir}/m2.conf
 %config(noreplace) %{_sysconfdir}/%{name}/settings.xml
 %config(noreplace) %{_sysconfdir}/%{name}/logging/simplelogger.properties
+
+%files
+%attr(0755,root,root) %{_bindir}/mvn*
 %{_datadir}/bash-completion/completions/mvn
 %{_mandir}/man1/mvn*.1*
 %config(noreplace,missingok) /etc/mavenrc
@@ -299,6 +315,9 @@ touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.3.9-alt1_6jpp8
+- new fc release
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.3.9-alt1_4jpp8
 - new version
 
