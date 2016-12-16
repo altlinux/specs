@@ -6,31 +6,19 @@ BuildRequires(pre): rpm-macros-java
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# https://bugzilla.redhat.com/show_bug.cgi?id=1208381
-#def_with gmavenplus
-%bcond_with gmavenplus
-
 Name:           logback
-Version:        1.1.3
-Release:        alt1_2jpp8
+Version:        1.1.7
+Release:        alt1_1jpp8
 Summary:        A Java logging library
 License:        LGPLv2 or EPL
 URL:            http://logback.qos.ch/
 Source0:        http://logback.qos.ch/dist/%{name}-%{version}.tar.gz
 
 # servlet 3.1 support
-Patch0:         %{name}-1.1.2-servlet.patch
+Patch0:         %{name}-1.1.7-servlet.patch
 # Remove deprecate methods
-Patch1:         %{name}-1.1.3-jetty9.3.0.patch
-Patch2:         %{name}-1.1.3-tomcat.patch
-# use antrun-plugin instead of gmavenplus-plugin
-Patch3:         %{name}-1.1.3-antrun-plugin.patch
+Patch1:         %{name}-1.1.7-jetty.patch
+Patch2:         %{name}-1.1.7-tomcat.patch
 
 BuildRequires: java-devel >= 1.6.0
 BuildRequires: maven-local
@@ -45,9 +33,7 @@ BuildRequires: mvn(org.apache.geronimo.specs:geronimo-jms_1.1_spec)
 BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.apache.tomcat:tomcat-catalina)
 BuildRequires: mvn(org.apache.tomcat:tomcat-coyote)
-%if %{with gmavenplus}
 BuildRequires: mvn(org.codehaus.gmavenplus:gmavenplus-plugin)
-%endif
 BuildRequires: mvn(org.codehaus.groovy:groovy-all)
 BuildRequires: mvn(org.codehaus.janino:janino)
 BuildRequires: mvn(org.eclipse.jetty:jetty-server)
@@ -71,16 +57,15 @@ BuildRequires: mvn(mysql:mysql-connector-java:5.1.9)
 BuildRequires: mvn(postgresql:postgresql:8.4-701.jdbc4)
 BuildRequires: mvn(org.easytesting:fest-assert:1.2)
 BuildRequires: mvn(org.mockito:mockito-core:1.9.0)
-BuildRequires: mvn(org.slf4j:integration:1.7.5)
-BuildRequires: mvn(org.slf4j:jul-to-slf4j:1.7.5)
-BuildRequires: mvn(org.slf4j:log4j-over-slf4j:1.7.5)
-BuildRequires: mvn(org.slf4j:slf4j-api:1.7.5:test-jar)
-BuildRequires: mvn(org.slf4j:slf4j-ext:1.7.5)
+BuildRequires: mvn(org.slf4j:integration:1.7.16)
+BuildRequires: mvn(org.slf4j:jul-to-slf4j:1.7.16)
+BuildRequires: mvn(org.slf4j:log4j-over-slf4j:1.7.16)
+BuildRequires: mvn(org.slf4j:slf4j-api:1.7.16:test-jar)
+BuildRequires: mvn(org.slf4j:slf4j-ext:1.7.16)
 BuildRequires: mvn(com.icegreen:greenmail:1.3)
 BuildRequires: mvn(org.subethamail:subethasmtp:2.1.0)
-# mvn(ch.qos.logback:logback-core:%%{version}:test-jar)
 %endif
-# BuildRequires: maven-plugin-build-helper
+
 BuildArch:     noarch
 Source44: import.info
 
@@ -133,14 +118,11 @@ find . -name "*.jar" -delete
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%if %{without gmavenplus}
-%patch3 -p1
-%pom_remove_plugin -r :gmavenplus-plugin
-%endif
 
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :findbugs-maven-plugin
 %pom_remove_plugin -r :maven-dependency-plugin
+%pom_remove_plugin -r :cobertura-maven-plugin
 
 # Clean up the documentation
 sed -i 's/\r//' LICENSE.txt README.txt docs/*.* docs/*/*.* docs/*/*/*.*
@@ -172,6 +154,20 @@ rm -r %{name}-*/src/test/java/*
 
 %pom_xpath_remove "pom:build/pom:extensions"
 
+# Use not available org.codehaus.groovy:groovy-eclipse-compiler:2.9.1-01, org.codehaus.groovy:groovy-eclipse-batch:2.3.7-01
+%pom_remove_plugin :maven-compiler-plugin logback-classic
+%pom_add_plugin org.codehaus.gmavenplus:gmavenplus-plugin:1.5 logback-classic "
+ <executions>
+  <execution>
+   <goals>
+    <goal>generateStubs</goal>
+    <goal>testGenerateStubs</goal>
+    <!--goal>compile</goal>
+    <goal>testCompile</goal-->
+   </goals>
+  </execution>
+ </executions>"
+
 %mvn_package ":%{name}-access" access
 %mvn_package ":%{name}-examples" examples
 
@@ -180,7 +176,7 @@ rm -r %{name}-*/src/test/java/*
 # unavailable test dep maven-scala-plugin
 # slf4jJAR and org.apache.felix.main are required by logback-examples modules for maven-antrun-plugin
 %mvn_build -f -- \
-  -Dslf4jJAR=$(build-classpath slf4j/api) \
+  -Dorg.slf4j:slf4j-api:jar=$(build-classpath slf4j/api) \
   -Dorg.apache.felix:org.apache.felix.main:jar=$(build-classpath felix/org.apache.felix.main)
 
 %install
@@ -204,6 +200,9 @@ cp -r %{name}-examples/pom.xml %{name}-examples/src %{buildroot}%{_datadir}/%{na
 %{_datadir}/%{name}
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.7-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt1_2jpp8
 - new version
 
