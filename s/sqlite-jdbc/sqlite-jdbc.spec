@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          sqlite-jdbc
 Version:       3.8.11.2
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       SQLite JDBC library
 
 # ASL 2.0:
@@ -52,6 +55,8 @@ Patch0:        %{name}-build.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires: libsqlite3-devel
 Source44: import.info
@@ -154,7 +159,7 @@ sed -i "s|package org.sqlite.util;|package org.sqlite;|" lib/OSInfo.java
 
 CCFLAGS="${CFLAGS:-%optflags}"
 export CCFLAGS
-%mvn_build
+%mvn_build -- -Dmaven.test.failure.ignore=true
 
 %install
 %mvn_install
@@ -167,6 +172,9 @@ export CCFLAGS
 %doc LICENSE* NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.8.11.2-alt1_4jpp8
+- new fc release
+
 * Sat Feb 13 2016 Igor Vlasenko <viy@altlinux.ru> 3.8.11.2-alt1_3jpp8
 - new version
 
