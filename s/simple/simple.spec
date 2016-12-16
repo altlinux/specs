@@ -7,15 +7,19 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          simple
 Version:       6.0.1
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Asynchronous HTTP server for Java
 License:       ASL 2.0 and LGPLv2+
 URL:           http://www.simpleframework.org/
 Source0:       http://sourceforge.net/projects/simpleweb/files/simpleweb/%{version}/%{name}-%{version}.tar.gz
 # https://github.com/ngallagher/simpleframework/issues/7
 Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
+
 BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
+
 BuildArch:     noarch
 Source44: import.info
 
@@ -69,20 +73,26 @@ cp -p %{SOURCE1} .
 sed -i 's/\r//' LICENSE-2.0.txt
 
 %build
-
-%mvn_build -- -Dmaven.test.skip=true
+# disable test suite
+# Created Tue, 21 Jun 2016 00:15:55 UTC
+# Started Tue, 21 Jun 2016 00:15:59 UTC
+# Canceled Tue, 21 Jun 2016 13:14:20 UTC
+# blocked on Running org.simpleframework.http.core.ReactorProcessorTest
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc LICENSE-2.0.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE-2.0.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_4jpp8
+- new fc release
+
 * Mon Nov 28 2016 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_3jpp8
 - new fc release
 
