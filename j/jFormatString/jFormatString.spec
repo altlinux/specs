@@ -6,11 +6,12 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 %global commit f159b88a16be4d103c7e7beb90e07a92617980b9
-%global shortcommit %(c=%{commit}; echo ${c:0:12})
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global zipcommit %(c=%{commit}; echo ${c:0:12})
 
 Name:           jFormatString
 Version:        0
-Release:        alt1_0.22.20131227gitjpp8
+Release:        alt1_0.23.20131227gitf159b88jpp8
 Summary:        Java format string compile-time checker
 
 Group:          Development/Other
@@ -48,7 +49,7 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n j-format-string-%{shortcommit}
+%setup -q -n j-format-string-%{zipcommit}
 %patch0 -p1
 
 cp %{SOURCE1} pom.xml
@@ -89,6 +90,9 @@ cp -rp docs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}*
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.23.20131227gitf159b88jpp8
+- new fc release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.22.20131227gitjpp8
 - new fc release
 
