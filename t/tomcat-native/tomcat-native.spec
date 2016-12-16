@@ -5,8 +5,8 @@ BuildRequires: gcc-c++ java-devel-default perl(File/Spec/Functions.pm) perl(IO/F
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           tomcat-native
-Version:        1.2.4
-Release:        alt1_2jpp8
+Version:        1.2.8
+Release:        alt1_1jpp8
 Summary:        Tomcat native library
 
 Group:          System/Libraries
@@ -63,6 +63,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/pkgconfig
 
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.8-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt1_2jpp8
 - new version
 
