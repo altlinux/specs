@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           maven-eclipse-plugin
 Version:        2.9
-Release:        alt5_15jpp8
+Release:        alt6_15jpp8
 Summary:        Maven Eclipse Plugin
 
 License:        ASL 2.0
@@ -81,7 +81,7 @@ CORE_PLUGIN_DIR=$MAVEN_REPO_LOCAL/org/eclipse/core/resources/$CORE_FAKE_VERSION
 
 mkdir -p $CORE_PLUGIN_DIR
 #plugin_file=`ls /usr/lib{,64}/eclipse/plugins/org.eclipse.core.resources_*jar || :`
-plugin_file=`ls /usr/share/java/eclipse/org.eclipse.core.resources_*jar || :`
+plugin_file=`ls /usr/share/java/eclipse/core.resources.jar || :`
 
 ln -s "$plugin_file" $CORE_PLUGIN_DIR/resources-$CORE_FAKE_VERSION.jar
 
@@ -102,6 +102,9 @@ ln -s "$plugin_file" $CORE_PLUGIN_DIR/resources-$CORE_FAKE_VERSION.jar
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.9-alt6_15jpp8
+- fixed build
+
 * Wed Feb 24 2016 Igor Vlasenko <viy@altlinux.ru> 2.9-alt5_15jpp8
 - jpp8 update
 
