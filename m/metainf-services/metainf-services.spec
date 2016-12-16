@@ -6,8 +6,8 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           metainf-services
-Version:        1.5
-Release:        alt1_6jpp8
+Version:        1.7
+Release:        alt1_1jpp8
 Summary:        Small java library for generating META-INF/services files
 
 # License is specified in pom file
@@ -19,6 +19,7 @@ Source1:        https://raw.github.com/kohsuke/youdebug/youdebug-1.5/LICENSE.txt
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(org.kohsuke:pom:pom:)
 Source44: import.info
 
 %description
@@ -39,7 +40,6 @@ This package contains the API documentation for %{name}.
 
 cp %{SOURCE1} LICENSE
 
-%pom_xpath_remove "pom:extension[pom:artifactId[text()='wagon-gitsite']]"
 %pom_xpath_remove "pom:plugin[pom:artifactId[text()='animal-sniffer-maven-plugin']]"
 
 %build
@@ -55,6 +55,9 @@ cp %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.7-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_6jpp8
 - new fc release
 
