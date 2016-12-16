@@ -49,7 +49,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           ant
 Version:        1.9.6
-Release:        alt2_3jpp8
+Release:        alt3_3jpp8
 Epoch:          0
 Summary:        Java build tool
 Summary(it):    Tool per la compilazione di programmi java
@@ -557,6 +557,7 @@ cat .mfiles-ant >> .mfiles
 cat .mfiles-launcher >> .mfiles
 # multiple -f flags in %files: merging -f .mfiles-junit4 into -f .mfiles-junit
 cat .mfiles-junit4 >> .mfiles-junit
+sed -i -e '1s,^#! *,#!,' %buildroot/%_bindir/*
 
 %if %with tests
 %check
@@ -689,6 +690,9 @@ cat .mfiles-junit4 >> .mfiles-junit
 # -----------------------------------------------------------------------------
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.6-alt3_3jpp8
+- fixed shabang
+
 * Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.6-alt2_3jpp8
 - added osgi provides
 
