@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-injection-plugin
 Version:        1.0.2
-Release:        alt3_14jpp8
+Release:        alt3_15jpp8
 Summary:        Bytecode injection at Maven build time
 License:        LGPLv2+
 URL:            http://www.jboss.org
@@ -23,7 +23,7 @@ BuildRequires:  mvn(javassist:javassist)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.jboss:jboss-parent:pom:)
 Source44: import.info
 
@@ -52,6 +52,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt3_15jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt3_14jpp8
 - new fc release
 
