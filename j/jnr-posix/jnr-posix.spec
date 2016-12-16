@@ -6,12 +6,12 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jnr-posix
-Version:        3.0.27
+Version:        3.0.29
 Release:        alt1_1jpp8
 Summary:        Java Posix layer
 License:        CPL or GPLv2+ or LGPLv2+
 URL:            http://github.com/jnr/jnr-posix
-Source0:        https://github.com/jnr/%{name}/archive/%{version}.tar.gz
+Source0:        https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
 Patch0:		    fix-manifest.patch
 
 BuildRequires:  maven-local
@@ -36,7 +36,7 @@ BuildArch: noarch
 Javadoc for %{name}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{name}-%{version}
 %patch0
 
 # fix test which assumes that there is a group named "nogroup"
@@ -60,6 +60,9 @@ sed -i 's|"nogroup"|"root"|' src/test/java/jnr/posix/GroupTest.java
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.29-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.27-alt1_1jpp8
 - new version
 
