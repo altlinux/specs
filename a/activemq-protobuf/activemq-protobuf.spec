@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          activemq-protobuf
 Version:       1.1
-Release:       alt3_12jpp8
+Release:       alt3_13jpp8
 Summary:       ActiveMQ Protocol Buffers
 License:       ASL 2.0
 Url:           http://activemq.apache.org/
@@ -15,13 +15,14 @@ Url:           http://activemq.apache.org/
 # tar czf activemq-protobuf-1.1-src-svn.tar.gz activemq-protobuf-1.1
 Source0:       activemq-protobuf-1.1-src-svn.tar.gz
 
+BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.maven:maven-plugin-api)
 BuildRequires: mvn(org.apache.maven:maven-project)
-BuildRequires: maven-local
-BuildRequires: javacc-maven-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-plugin-plugin
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires: mvn(org.codehaus.mojo:javacc-maven-plugin)
 
 BuildArch:     noarch
 Source44: import.info
@@ -71,6 +72,9 @@ chmod 644 LICENSE
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_13jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_12jpp8
 - new fc release
 
