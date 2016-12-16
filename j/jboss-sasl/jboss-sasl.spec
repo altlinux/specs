@@ -7,20 +7,17 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-sasl
-%define version 1.0.0
+%define version 1.0.5
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-sasl
-Version:          1.0.0
-Release:          alt2_13jpp8
+Version:          1.0.5
+Release:          alt1_1jpp8
 Summary:          SASL Provider for J2SE
 License:          LGPLv2+
-URL:              https://github.com/jboss-remoting/jboss-sasl
-
-# git clone git://github.com/jboss-remoting/jboss-sasl.git
-# cd jboss-sasl/ && git archive --format=tar --prefix=jboss-sasl-1.0.0.Final/ 1.0.0.Final | xz > jboss-sasl-1.0.0.Final.tar.xz
-Source0:          %{name}-%{namedversion}.tar.xz
+URL:              https://github.com/wildfly-security/jboss-sasl
+Source0:          https://github.com/wildfly-security/jboss-sasl/archive/%{namedversion}.tar.gz
 
 BuildArch:        noarch
 
@@ -53,10 +50,14 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
+%doc README.md
 
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_13jpp8
 - new fc release
 
