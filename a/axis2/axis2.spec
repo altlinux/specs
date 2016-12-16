@@ -9,7 +9,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          axis2
 Version:       1.6.1
-Release:       alt2_16jpp8
+Release:       alt2_17jpp8
 Summary:       Java-based Web Services / SOAP / WSDL engine
 License:       ASL 2.0
 URL:           http://axis.apache.org/axis2/java/core/
@@ -38,6 +38,7 @@ BuildRequires: apache-commons-fileupload
 BuildRequires: glassfish-servlet-api
 BuildRequires: geronimo-saaj
 BuildRequires: maven-plugin-build-helper
+BuildRequires: maven-antrun-plugin
 
 Requires:      log4j12
 Requires:      xerces-j2
@@ -140,13 +141,15 @@ dos2unix NOTICE.txt
 
 %files -f .mfiles
 %doc README.txt release-notes.html
-%dir %{_javadir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt2_17jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt2_16jpp8
 - new fc release
 
