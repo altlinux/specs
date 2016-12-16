@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           base64coder
 Version:        20101219
-Release:        alt3_14jpp8
+Release:        alt3_15jpp8
 Summary:        Fast and compact Base64 encoder/decoder Java library
 License:        EPL or LGPLv2+ or GPLv2+ or ASL 2.0+ or BSD
 BuildArch:      noarch
@@ -18,8 +18,11 @@ URL:            http://www.source-code.biz/%{name}/java/
 Source0:        http://repo2.maven.org/maven2/biz/source_code/%{name}/%{long_ver}/%{name}-%{long_ver}-distribution.zip
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -54,6 +57,9 @@ sed -i 's/\r//g' README.txt CHANGES.txt
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 20101219-alt3_15jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 20101219-alt3_14jpp8
 - new fc release
 
