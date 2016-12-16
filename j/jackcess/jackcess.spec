@@ -6,13 +6,13 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          jackcess
-Version:       2.1.2
+Version:       2.1.3
 Release:       alt1_2jpp8
 Summary:       Java library for reading from and writing to MS Access databases
 License:       ASL 2.0
 URL:           http://jackcess.sourceforge.net/
-# svn checkout http://svn.code.sf.net/p/jackcess/code/jackcess/tags/jackcess-2.1.2
-# tar cJf jackcess-2.1.2.tar.xz jackcess-2.1.2
+# svn checkout http://svn.code.sf.net/p/jackcess/code/jackcess/tags/jackcess-2.1.3
+# tar cJf jackcess-2.1.3.tar.xz jackcess-2.1.3
 Source0:       %{name}-%{version}.tar.xz
 
 BuildRequires: maven-local
@@ -21,6 +21,7 @@ BuildRequires: mvn(commons-logging:commons-logging)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(log4j:log4j:12)
 BuildRequires: mvn(org.apache.poi:poi)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 
 BuildArch:     noarch
 Source44: import.info
@@ -47,7 +48,13 @@ find . -name "*.jar" -print -delete
 %pom_remove_parent
 %pom_remove_plugin :cobertura-maven-plugin
 %pom_remove_plugin :maven-changes-plugin
-%pom_xpath_set "pom:dependency[pom:groupId='log4j']/pom:version" 12
+
+%pom_change_dep :log4j ::12
+
+sed -i 's|"1582-10-15", "1582-10-14"|"1582-10-14", "1582-10-13"|' \
+ src/test/java/com/healthmarketscience/jackcess/DatabaseTest.java
+sed -i 's|"1492-01-10", "1392-01-10"|"1492-01-09", "1392-01-09"|' \
+ src/test/java/com/healthmarketscience/jackcess/DatabaseTest.java
 
 %mvn_file :%{name} %{name}
 %mvn_file :%{name}-tests::tests: %{name}-tests
@@ -68,6 +75,9 @@ find . -name "*.jar" -print -delete
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.3-alt1_2jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.2-alt1_2jpp8
 - new fc release
 
