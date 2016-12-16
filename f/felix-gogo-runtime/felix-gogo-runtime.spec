@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           felix-gogo-runtime
 Version:        0.16.2
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Community OSGi R4 Service Platform Implementation - Basic Commands
 License:        ASL 2.0
 URL:            http://felix.apache.org/site/apache-felix-gogo.html
@@ -34,6 +34,7 @@ BuildRequires:  mvn(org.easymock:easymock)
 BuildRequires:  mvn(org.mockito:mockito-all)
 BuildRequires:  mvn(org.osgi:org.osgi.compendium)
 BuildRequires:  mvn(org.osgi:org.osgi.core)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 Source44: import.info
 
 %description
@@ -75,6 +76,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.16.2-alt1_4jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.16.2-alt1_3jpp8
 - new fc release
 
