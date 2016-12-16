@@ -1,10 +1,10 @@
 
 Name: adobe-flash-player
 %define bin_name mozilla-plugin-adobe-flash
-%define ver_fake   13
-%define ver_ix86   13.0.0.0
-%define ver_x86_64 13.0.0.0
-Release: alt3
+%define ver_fake   24
+%define ver_ix86   24.0.0.0
+%define ver_x86_64 24.0.0.0
+Release: alt2
 Serial: 3
 
 %define ver_real %ver_fake
@@ -58,6 +58,9 @@ fake
 %files -n %bin_name
 
 %changelog
+* Fri Dec 16 2016 Sergey V Turchin <zerg@altlinux.org> 3:24-alt2
+- bump version
+
 * Fri Nov 18 2016 Sergey V Turchin <zerg@altlinux.org> 3:13-alt3
 - fix description (ALT#32764)
 
