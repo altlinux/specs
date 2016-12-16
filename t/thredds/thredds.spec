@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          thredds
 Version:       4.6.2
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Thematic Realtime Environmental Distributed Data Services (TDS)
 # GPLv3: opendap/src/main/java/opendap/dap/parsers/DapParser.java
 # LGPLv3: opendap/src/main/java/opendap/servlet/AsciiWriter.java
@@ -210,6 +210,10 @@ sed -i 's/\r//' cdm/CHANGES.txt LICENSE.txt
 
 #%% pom_xpath_set -r "pom:plugin[pom:artifactId = 'maven-jar-plugin']/pom:configuration/pom:archive/pom:manifest/pom:addClasspath" false
 
+# fix for httpcore-4.4.5
+sed -i '/org.apache.http.annotation/d' \
+ httpservices/src/main/java/ucar/httpservices/HTTPAuthScope.java
+
 %pom_remove_plugin -r :maven-source-plugin
 %pom_remove_plugin -r :maven-shade-plugin
 %pom_xpath_set "pom:properties/pom:org.quartz-scheduler.version" 2.2.1
@@ -270,6 +274,9 @@ sed -i 's/\r//' cdm/CHANGES.txt LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 4.6.2-alt1_4jpp8
+- new fc release
+
 * Fri Dec 09 2016 Igor Vlasenko <viy@altlinux.ru> 4.6.2-alt1_3jpp8
 - new fc release
 
