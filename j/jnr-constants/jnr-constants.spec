@@ -6,14 +6,12 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jnr-constants
-Version:        0.9.0
-Release:        alt1_2jpp8
+Version:        0.9.2
+Release:        alt1_1jpp8
 Summary:        Java Native Runtime constants 
 License:        ASL 2.0
 URL:            http://github.com/jnr/%{name}/
-Source0:        https://github.com/jnr/%{name}/archive/%{version}.tar.gz
-Source1:        MANIFEST.MF
-Patch0:         add-manifest.patch
+Source0:        https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 
@@ -35,9 +33,7 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q
-cp %{SOURCE1} .
-%patch0
+%setup -q -n %{name}-%{name}-%{version}
 find ./ -name '*.jar' -delete
 find ./ -name '*.class' -delete
 %mvn_file : %{name}/%{name} %{name} constantine
@@ -55,6 +51,9 @@ find ./ -name '*.class' -delete
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1_2jpp8
 - new fc release
 
