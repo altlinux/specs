@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             fusesource-pom
 Version:          1.9
-Release:          alt1_12jpp8
+Release:          alt1_13jpp8
 Summary:          Parent POM for FuseSource Maven projects
 License:          ASL 2.0
 URL:              http://fusesource.com/
@@ -17,6 +17,8 @@ Source1:          http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:        noarch
 
 BuildRequires:    maven-local
+BuildRequires:    mvn(org.apache.maven.plugins:maven-scm-plugin)
+BuildRequires:    mvn(org.apache.maven.scm:maven-scm-provider-gitexe)
 Source44: import.info
 
 %description
@@ -42,6 +44,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt1_13jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt1_12jpp8
 - new fc release
 
