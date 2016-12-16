@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          xmlstreambuffer
 Version:       1.5.4
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       XML Stream Buffer
 License:       CDDL or GPLv2 with exceptions
 Url:           http://java.net/projects/xmlstreambuffer/
@@ -24,6 +24,7 @@ Source1:       glassfish-LICENSE.txt
 BuildRequires: jvnet-parent
 BuildRequires: maven-local
 BuildRequires: maven-enforcer-plugin
+BuildRequires: maven-plugin-bundle
 BuildRequires: maven-surefire-provider-junit
 BuildRequires: stax-ex >= 1.7.1
 # test deps
@@ -96,6 +97,9 @@ rm -r test/com/sun/xml/stream/buffer/stax/InscopeNamespaceTest.java
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt1_4jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt1_3jpp8
 - new fc release
 
