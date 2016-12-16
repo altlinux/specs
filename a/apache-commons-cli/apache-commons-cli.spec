@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -9,21 +10,22 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-%{short_name}
 Version:          1.3.1
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          Command Line Interface Library for Java
-Group:            Development/Other
 License:          ASL 2.0
 URL:              http://commons.apache.org/cli/
-Source0:          http://www.apache.org/dist/commons/cli/source/%{short_name}-%{version}-src.tar.gz
-# workaround for https://issues.apache.org/jira/browse/CLI-253
-Patch0:           CLI-253-workaround.patch
 BuildArch:        noarch
 
-BuildRequires: javapackages-tools rpm-build-java
-BuildRequires:    maven-local
-BuildRequires:    jacoco-maven-plugin
+Source0:          http://www.apache.org/dist/commons/cli/source/%{short_name}-%{version}-src.tar.gz
 
-Requires: javapackages-tools rpm-build-java
+# workaround for https://issues.apache.org/jira/browse/CLI-253
+Patch0:           CLI-253-workaround.patch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.jacoco:jacoco-maven-plugin)
 Source44: import.info
 Obsoletes: jakarta-%{short_name} < 1:%{version}-%{release}
 Conflicts: jakarta-%{short_name} < 1:%{version}-%{release}
@@ -34,9 +36,8 @@ The CLI library provides a simple and easy to use API for working with the
 command line arguments and options.
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadoc for %{name}
-Group:            Development/Java
-Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -64,6 +65,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt1_4jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt1_3jpp8
 - new fc release
 
