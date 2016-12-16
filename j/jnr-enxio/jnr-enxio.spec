@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jnr-enxio
-Version:        0.10
+Version:        0.12
 Release:        alt1_1jpp8
 Summary:        Unix sockets for Java
 Group:          Development/Other
@@ -13,9 +13,7 @@ Group:          Development/Other
 # rest of the source code is ASL 2.0
 License:        ASL 2.0 and LGPLv3
 URL:            http://github.com/jnr/%{name}/
-Source0:        https://github.com/jnr/%{name}/archive/%{version}.tar.gz
-Source1:	MANIFEST.MF
-Patch0:		add-manifest.patch
+Source0:        https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  java-devel
@@ -47,9 +45,7 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q
-cp %{SOURCE1} .
-%patch0
+%setup -q -n %{name}-%{name}-%{version}
 
 find ./ -name '*.jar' -delete
 find ./ -name '*.class' -delete
@@ -67,6 +63,9 @@ find ./ -name '*.class' -delete
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_1jpp8
 - new version
 
