@@ -7,8 +7,8 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-source-plugin
-Version:        2.4
-Release:        alt1_4jpp8
+Version:        3.0.1
+Release:        alt1_1jpp8
 Summary:        Plugin creating source JAR
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-source-plugin/
@@ -20,9 +20,10 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-archiver)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
@@ -31,7 +32,7 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
 %description
-The Maven Source Plugin creates a JAR archive of the 
+The Maven Source Plugin creates a JAR archive of the
 source files of the current project.
 
 %package javadoc
@@ -43,11 +44,11 @@ BuildArch: noarch
 API documentation for %{name}.
 
 %prep
-%setup -q 
+%setup -q
 
 %build
 %mvn_file : %{name}
-%mvn_build -f
+%mvn_build
 
 %install
 %mvn_install
@@ -59,6 +60,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_4jpp8
 - new fc release
 
