@@ -7,8 +7,8 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 %global oname oss-parent
 Name:          fasterxml-oss-parent
-Version:       24
-Release:       alt1_3jpp8
+Version:       26
+Release:       alt1_1jpp8
 Summary:       FasterXML parent pom
 # pom file licenses ASL 2.0 and LGPL 2.1
 License:       ASL 2.0 and LGPLv2+
@@ -55,7 +55,7 @@ This package contains the parent pom file for FasterXML.com projects.
 %pom_remove_plugin :maven-enforcer-plugin
 
 %build
-%mvn_build
+%mvn_build -j
 
 %install
 %mvn_install
@@ -65,6 +65,9 @@ This package contains the parent pom file for FasterXML.com projects.
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 26-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 24-alt1_3jpp8
 - new version
 
