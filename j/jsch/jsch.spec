@@ -9,8 +9,8 @@ BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jsch
-Version:        0.1.53
-Release:        alt1_4jpp8
+Version:        0.1.54
+Release:        alt1_2jpp8
 Summary:        Pure Java implementation of SSH2
 Group:          Development/Other
 License:        BSD
@@ -30,8 +30,10 @@ Source0:        http://download.sourceforge.net/sourceforge/jsch/jsch-%{version}
 Source1:        MANIFEST.MF
 Source2:        plugin.properties
 
-BuildRequires:  jzlib >= 0:1.0.5
 BuildRequires:  maven-local
+BuildRequires:  mvn(com.jcraft:jzlib)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires:  zip
 
 Requires:       jzlib >= 0:1.0.5
@@ -56,6 +58,7 @@ BuildArch: noarch
 %mvn_file : jsch
 
 %pom_xpath_remove pom:project/pom:build/pom:extensions
+%pom_xpath_set pom:project/pom:version %{version}
 
 %build
 %mvn_build
@@ -79,6 +82,9 @@ zip target/%{name}-%{version}.jar plugin.properties
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.1.54-alt1_2jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.1.53-alt1_4jpp8
 - new fc release
 
