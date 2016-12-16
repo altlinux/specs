@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           plexus-digest
 Version:        1.1
-Release:        alt2_20jpp8
+Release:        alt2_21jpp8
 Epoch:          0
 Summary:        Plexus Digest / Hashcode Components
 License:        ASL 2.0
@@ -23,7 +23,10 @@ Patch1:         %{name}-fix-test-dependencies.patch
 Patch2:         0001-Do-not-use-algorithm-name-as-regular-expression.patch
 
 BuildRequires:  maven-local
-BuildRequires:  plexus-containers-component-metadata
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
 
@@ -61,6 +64,9 @@ Javadoc for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_21jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_20jpp8
 - new fc release
 
