@@ -49,7 +49,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -134,7 +134,7 @@ BuildPreReq: libgee0.8-devel >= %gee_ver
 %{?_enable_libcue:BuildPreReq: libcue-devel}
 %{?_enable_libosinfo:BuildPreReq: libosinfo-devel >= %libosinfo_ver}
 %{?_enable_playlist:BuildPreReq: libtotem-pl-parser-devel}
-BuildRequires: systemd-devel
+BuildRequires: systemd-devel libseccomp-devel
 
 %description
 Tracker is a powerful desktop-neutral first class object
@@ -392,6 +392,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 %endif
 
 %changelog
+* Fri Dec 16 2016 Yuri N. Sedunov <aris@altlinux.org> 1.10.3-alt1
+- 1.10.3
+
 * Thu Dec 08 2016 Yuri N. Sedunov <aris@altlinux.org> 1.10.2-alt1
 - 1.10.2
 
