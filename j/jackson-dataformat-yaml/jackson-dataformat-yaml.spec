@@ -6,13 +6,12 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          jackson-dataformat-yaml
-Version:       2.6.3
-Release:       alt1_2jpp8
+Version:       2.7.6
+Release:       alt1_1jpp8
 Summary:       Jackson module to add YAML back-end (parser/generator adapters)
 License:       ASL 2.0
 URL:           http://wiki.fasterxml.com/JacksonExtensionYAML
 Source0:       https://github.com/FasterXML/jackson-dataformat-yaml/archive/%{name}-%{version}.tar.gz
-Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildRequires: maven-local
 BuildRequires: mvn(com.fasterxml.jackson:jackson-parent:pom:)
@@ -44,32 +43,13 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
-cp -p %{SOURCE1} .
 cp -p src/main/resources/META-INF/{LICENSE,NOTICE} .
-sed -i 's/\r//' LICENSE NOTICE LICENSE-2.0.txt
+sed -i 's/\r//' LICENSE NOTICE
 
 %pom_remove_plugin :maven-shade-plugin
 %pom_remove_plugin org.apache.servicemix.tooling:depends-maven-plugin
 
 %pom_xpath_remove "pom:properties/pom:osgi.private"
-%pom_xpath_remove "pom:properties/pom:osgi.import"
-%pom_xpath_inject "pom:properties" "
-    <osgi.import>
-com.fasterxml.jackson.core,
-com.fasterxml.jackson.core.base,
-com.fasterxml.jackson.core.format,
-com.fasterxml.jackson.core.io,
-com.fasterxml.jackson.core.json,
-com.fasterxml.jackson.core.type,
-com.fasterxml.jackson.core.util,
-com.fasterxml.jackson.databind,
-org.yaml.snakeyaml,
-org.yaml.snakeyaml.emitter,
-org.yaml.snakeyaml.error,
-org.yaml.snakeyaml.events,
-org.yaml.snakeyaml.parser,
-org.yaml.snakeyaml.reader
-</osgi.import>"
 
 # test deps
 %pom_remove_dep org.ops4j.pax.exam:pax-exam-container-native
@@ -89,12 +69,15 @@ rm -r src/test/java/com/fasterxml/jackson/dataformat/yaml/failsafe/OSGiIT.java
 
 %files -f .mfiles
 %doc README.md release-notes/*
-%doc LICENSE LICENSE-2.0.txt NOTICE
+%doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE LICENSE-2.0.txt NOTICE
+%doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_1jpp8
+- new version
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_2jpp8
 - new version
 
