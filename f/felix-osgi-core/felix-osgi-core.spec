@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -7,28 +8,26 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 %global bundle org.osgi.core
 
-Name:    felix-osgi-core
-Version: 1.4.0
-Release: alt5_19jpp8
-Summary: Felix OSGi R4 Core Bundle
-Group:   Development/Other
-License: ASL 2.0
-URL:     http://felix.apache.org/site/apache-felix-osgi-core.html
-Source0: http://www.apache.org/dist/felix/%{bundle}-%{version}-project.tar.gz
+Name:           felix-osgi-core
+Version:        1.4.0
+Release:        alt5_20jpp8
+Summary:        Felix OSGi R4 Core Bundle
+License:        ASL 2.0
+URL:            http://felix.apache.org/site/apache-felix-osgi-core.html
+BuildArch:      noarch
 
-BuildArch: noarch
+Source0:        http://www.apache.org/dist/felix/%{bundle}-%{version}-project.tar.gz
 
-BuildRequires: javapackages-tools rpm-build-java
-BuildRequires: maven-local
-BuildRequires: felix-parent
-BuildRequires: mockito
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.felix:felix-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 Source44: import.info
 
 %description
 OSGi Service Platform Release 4 Core Interfaces and Classes.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        API documentation for %{name}
 BuildArch: noarch
 
@@ -55,6 +54,9 @@ export LC_ALL=en_US.UTF-8
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4.0-alt5_20jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4.0-alt5_19jpp8
 - new fc release
 
