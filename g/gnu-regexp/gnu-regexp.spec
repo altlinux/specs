@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           gnu-regexp
 Version:        1.1.4
-Release:        alt1_21jpp8
+Release:        alt1_22jpp8
 Summary:        Java NFA regular expression engine implementation
 # GPLv2+: gnu/regexp/util/Egrep.java
 #         gnu/regexp/util/Grep.java
@@ -48,8 +48,10 @@ Summary:        Java NFA regular expression engine implementation
 # Rest is LGPLv2+
 # Note files under GPLv2+ and Public Domain are included in -demo subpackage
 License:        LGPLv2+
-Source0:        http://ftp.frugalware.org/pub/other/sources/gnu.regexp/gnu.regexp-1.1.4.tar.gz
+Source0:        http://ftp.frugalware.org/pub/other/sources/gnu.regexp/gnu.regexp-%{version}.tar.gz
 Source1:        %{name}.build.xml
+Source2:        http://repo1.maven.org/maven2/gnu-regexp/gnu-regexp/%{version}/gnu-regexp-%{version}.pom
+BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  gnu-getopt
 URL:            http://savannah.gnu.org/projects/gnu-regexp
@@ -102,6 +104,13 @@ install -d -m 755 %{buildroot}%{_javadir}
 install -p -m 644 build/lib/gnu.regexp.jar %{buildroot}%{_javadir}/%{name}.jar
 ln -s %{name}.jar %{buildroot}%{_javadir}/gnu.regexp.jar
 
+# pom
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -p -m 644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+
+# depmap
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+
 # demo
 install -d -m 755 %{buildroot}%{_datadir}/%{name}/gnu/regexp/util
 install -p -m 644 build/classes/gnu/regexp/util/*.class \
@@ -111,7 +120,7 @@ install -p -m 644 build/classes/gnu/regexp/util/*.class \
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 cp -rp build/api/* %{buildroot}%{_javadocdir}/%{name}
 
-%files
+%files -f .mfiles
 %doc COPYING COPYING.LIB README TODO docs/*.html
 %{_javadir}/*
 
@@ -123,6 +132,9 @@ cp -rp build/api/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt1_22jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt1_21jpp8
 - new fc release
 
