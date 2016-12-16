@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -9,18 +10,17 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-%{short_name}
 Version:          1.3.1
-Release:          alt1_5jpp8
+Release:          alt1_6jpp8
 Summary:          Apache Commons Email Package
-Group:            Development/Other
 License:          ASL 2.0
 URL:              http://commons.apache.org/proper/%{short_name}/
-Source0:          http://archive.apache.org/dist/commons/email/source/%{short_name}-%{version}-src.tar.gz
-
 BuildArch:        noarch
 
-BuildRequires: javapackages-tools rpm-build-java
-BuildRequires:    maven-local
-BuildRequires:    javamail
+Source0:          http://archive.apache.org/dist/commons/email/source/%{short_name}-%{version}-src.tar.gz
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(javax.mail:mail)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 Source44: import.info
 
 %description
@@ -28,8 +28,8 @@ Commons-Email aims to provide an API for sending email. It is built on top of
 the JavaMail API, which it aims to simplify.
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadoc for %{name}
-Group:            Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -64,6 +64,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt1_6jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt1_5jpp8
 - new fc release
 
