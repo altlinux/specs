@@ -8,15 +8,15 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-vfs
-%define version 3.2.5
+%define version 3.2.12
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-vfs
-Version:          3.2.5
-Release:          alt1_4jpp8
+Version:          3.2.12
+Release:          alt1_1jpp8
 Summary:          JBoss Virtual File System
-License:          LGPLv2+
+License:          ASL 2.0
 URL:              https://github.com/jbossas/jboss-vfs/
 Source0:          https://github.com/jbossas/jboss-vfs/archive/jboss-vfs-%{namedversion}.tar.gz
 
@@ -45,7 +45,11 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n jboss-vfs-jboss-vfs-%{namedversion}
 
-rm -rf src/test/resources/vfs/test/zipeinit.jar
+find . -name "*.ear" -type f -print -delete
+find . -name "*.jar" -type f -print -delete
+find . -name "*.war" -type f -print -delete
+find . -name "*.zip" -type f -print -delete
+
 # break build see for e.g. jboss-metadata.spec
 %pom_remove_plugin :maven-checkstyle-plugin
 
@@ -57,10 +61,15 @@ rm -rf src/test/resources/vfs/test/zipeinit.jar
 %mvn_install
 
 %files -f .mfiles
+%doc LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.2.12-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.2.5-alt1_4jpp8
 - new fc release
 
