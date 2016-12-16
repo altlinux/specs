@@ -7,8 +7,8 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           apache-parent
-Version:        17
-Release:        alt1_3jpp8
+Version:        18
+Release:        alt1_1jpp8
 Summary:        Parent POM file for Apache projects
 License:        ASL 2.0
 URL:            http://apache.org/
@@ -16,7 +16,7 @@ Source0:        http://repo1.maven.org/maven2/org/apache/apache/%{version}/apach
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils
 BuildRequires:  apache-resource-bundles
 BuildRequires:  maven-remote-resources-plugin
 
@@ -41,6 +41,9 @@ This package contains the parent pom file for apache projects.
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 18-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 17-alt1_3jpp8
 - new fc release
 
