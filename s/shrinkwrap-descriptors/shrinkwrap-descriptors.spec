@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          shrinkwrap-descriptors
 Version:       2.0.0
-Release:       alt3_0.16.alpha9jpp8
+Release:       alt3_0.17.alpha9jpp8
 Summary:       ShrinkWrap sub-project for creating Archive Descriptors
 # Some file are without license headers
 # reported @ https://github.com/shrinkwrap/descriptors/issues/106
@@ -44,6 +44,7 @@ BuildRequires: mvn(org.apache.maven:maven-plugin-api)
 #BuildRequires: mvn(org.apache.maven.plugins:maven-checkstyle-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-clean-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-release-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires: mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
@@ -286,6 +287,9 @@ export JAVA5_HOME=%{_jvmdir}/java
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt3_0.17.alpha9jpp8
+- new fc release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt3_0.16.alpha9jpp8
 - new fc release
 
