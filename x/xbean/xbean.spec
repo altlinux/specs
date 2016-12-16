@@ -22,8 +22,8 @@ BuildRequires: jpackage-generic-compat
 %endif
 
 Name:           xbean
-Version:        4.4
-Release:        alt1_2jpp8
+Version:        4.5
+Release:        alt1_3jpp8
 Summary:        Java plugin based web server
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/xbean/
@@ -55,6 +55,7 @@ BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-site-plugin
 BuildRequires:  maven-shade-plugin
+BuildRequires:  maven-source-plugin
 %if %{with equinox}
 BuildRequires:  eclipse-equinox-osgi
 %else
@@ -147,12 +148,13 @@ rm src/site/site.xml
 %pom_remove_parent
 %pom_remove_dep mx4j:mx4j
 
-%pom_remove_dep -r :xbean-asm-util
 %pom_remove_dep -r :xbean-asm5-shaded
 %pom_remove_dep -r :xbean-finder-shaded
-%pom_disable_module xbean-asm-util
 %pom_disable_module xbean-asm5-shaded
 %pom_disable_module xbean-finder-shaded
+
+%pom_xpath_remove pom:scope xbean-asm-util
+%pom_xpath_remove pom:optional xbean-asm-util
 
 # Prevent modules depending on springframework from building.
 %if %{without spring}
@@ -216,6 +218,9 @@ sed -i "s|</Private-Package>|</Private-Package-->|" xbean-blueprint/pom.xml
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.5-alt1_3jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.4-alt1_2jpp8
 - new version
 
