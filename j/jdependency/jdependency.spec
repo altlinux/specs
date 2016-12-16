@@ -7,8 +7,8 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jdependency
-Version:        0.9
-Release:        alt1_4jpp8
+Version:        1.1
+Release:        alt1_1jpp8
 Summary:        This project provides an API to analyse class dependencies
 License:        ASL 2.0
 URL:            http://github.com/tcurdt/%{name}
@@ -50,12 +50,16 @@ BuildArch: noarch
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt README.md
+%doc README.md
+%doc LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.9-alt1_4jpp8
 - new fc release
 
