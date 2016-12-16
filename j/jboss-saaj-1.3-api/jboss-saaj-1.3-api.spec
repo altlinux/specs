@@ -7,23 +7,22 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-saaj-1.3-api
-%define version 1.0.2
+%define version 1.0.3
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:          jboss-saaj-1.3-api
-Version:       1.0.2
-Release:       alt4_12jpp8
+Version:       1.0.3
+Release:       alt1_1jpp8
 Summary:       SOAP with Attachments API for Java 1.3
 License:       CDDL or GPLv2 with exceptions
 URL:           http://www.jboss.org
 
-# git clone git://github.com/jboss/jboss-saaj-api_spec.git jboss-saaj-1.3-api
-# cd jboss-saaj-1.3-api/ && git archive --format=tar --prefix=jboss-saaj-1.3-api-1.0.2.Final/ jboss-saaj-api_1.3_spec-1.0.2.Final | xz > jboss-saaj-1.3-api-1.0.2.Final.tar.xz
-Source0:       %{name}-%{namedversion}.tar.xz
+Source0:       https://github.com/jboss/jboss-saaj-api_spec/archive/jboss-saaj-api_1.3_spec-%{namedversion}.tar.gz
 
 BuildArch:     noarch
 BuildRequires: maven-local
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.jboss:jboss-parent:pom:)
 Source44: import.info
 
@@ -39,7 +38,7 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
+%setup -q -n jboss-saaj-api_spec-jboss-saaj-api_1.3_spec-%{namedversion}
 
 # Unneeded plugin
 %pom_remove_plugin :maven-source-plugin
@@ -62,6 +61,9 @@ This package contains the API documentation for %{name}.
 %doc README
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt4_12jpp8
 - new fc release
 
