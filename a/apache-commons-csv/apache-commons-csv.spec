@@ -6,7 +6,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           apache-commons-csv
-Version:        1.2
+Version:        1.4
 Release:        alt1_1jpp8
 Summary:        Utilities to assist with handling of CSV files
 License:        ASL 2.0
@@ -19,7 +19,9 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(com.h2database:h2)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 Source44: import.info
 
 %description
@@ -61,6 +63,9 @@ find -name profile.jacoco -delete
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_1jpp8
 - new version
 
