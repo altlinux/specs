@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          glassfish-fastinfoset
 Version:       1.2.13
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Fast Infoset
 License:       ASL 2.0
 URL:           https://fi.java.net
@@ -27,6 +27,7 @@ BuildRequires: mvn(com.sun.xml.stream.buffer:streambuffer)
 BuildRequires: mvn(com.sun.xsom:xsom)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(net.java:jvnet-parent:pom:)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-tools-api)
 BuildRequires: mvn(org.apache.maven.plugins:maven-release-plugin)
 
@@ -66,6 +67,14 @@ cp %{SOURCE1} .
 %pom_disable_module roundtrip-tests
 %pom_disable_module samples
 
+# Disable default-jar execution of maven-jar-plugin, which is causing
+# problems with version 3.0.0 of the plugin.
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions" "
+ <execution>
+  <id>default-jar</id>
+  <phase>skip</phase>
+ </execution>" fastinfoset
+
 %mvn_file :FastInfoset %{name}
 %mvn_file :FastInfosetUtilities %{name}-utilities
 
@@ -82,6 +91,9 @@ cp %{SOURCE1} .
 %doc copyright.txt LICENSE-2.0.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.13-alt1_5jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.13-alt1_4jpp8
 - new fc release
 
