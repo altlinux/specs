@@ -8,27 +8,31 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           pmd
 Epoch:          0
-Version:        5.4.1
+Version:        5.5.0
 Release:        alt1_2jpp8
 Summary:        Scans Java source code and looks for potential problems
 License:        BSD and ASL 2.0 and LGPLv3+
 URL:            http://pmd.sourceforge.net/
 BuildArch:      noarch
 
+# Upstream also has github: https://github.com/pmd/pmd
 Source0:        http://downloads.sourceforge.net/project/pmd/pmd/%{version}/pmd-src-%{version}.zip
 
 # fix api incompatibilities with newer saxon
 # not sent upstream
-Patch1:         saxon.patch
+Patch1:         0001-Port-to-current-saxon.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.beust:jcommander)
+BuildRequires:  mvn(com.google.code.gson:gson)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(jaxen:jaxen)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.java.dev.javacc:javacc)
-BuildRequires:  mvn(net.sf.saxon:saxon)
+BuildRequires:  mvn(net.sf.saxon:Saxon-HE)
 BuildRequires:  mvn(net.sourceforge.pmd:pmd-build)
+BuildRequires:  mvn(org.antlr:antlr4-maven-plugin)
+BuildRequires:  mvn(org.antlr:antlr4-runtime)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.ant:ant-testutil)
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
@@ -82,6 +86,23 @@ sed -i 's/net.sourceforge.saxon/net.sf.saxon/' `find -name pom.xml`
 
 %pom_xpath_set -r '//pom:property[@name="javacc.jar"]/@value' `xmvn-resolve net.java.dev.javacc:javacc`
 
+%pom_remove_plugin :maven-toolchains-plugin
+
+# unavailable : apex:apex-jorje-ide
+%pom_disable_module pmd-apex
+%pom_remove_dep :pmd-apex pmd-dist
+
+# Set stack sizes to prevent overflows on i686
+%pom_xpath_inject 'pom:pluginManagement//pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration' '
+<compilerArgs>
+  <arg>-J-Xss1m</arg>
+</compilerArgs>
+<fork>true</fork>'
+%pom_xpath_inject 'pom:pluginManagement//pom:plugin[pom:artifactId="maven-javadoc-plugin"]' '
+<configuration>
+    <additionalJOption>-J-Xss1m</additionalJOption>
+</configuration>'
+
 %build
 # tests require com.github.tomakehurst:wiremock
 %mvn_build -f -- -P!jdk9-disabled
@@ -96,6 +117,9 @@ sed -i 's/net.sourceforge.saxon/net.sf.saxon/' `find -name pom.xml`
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.5.0-alt1_2jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.4.1-alt1_2jpp8
 - new fc release
 
