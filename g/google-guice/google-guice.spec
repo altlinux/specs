@@ -8,7 +8,7 @@ BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 24
+%define fedora 25
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -23,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           google-%{short_name}
 Version:        4.0
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Lightweight dependency injection framework for Java 5 and above
 License:        ASL 2.0
 URL:            https://github.com/google/%{short_name}
@@ -40,16 +40,18 @@ Patch100:       https://raw.githubusercontent.com/sonatype/sisu-guice/master/PAT
 # Forwarded upstream: https://github.com/google/guice/issues/618
 Patch101:       https://raw.githubusercontent.com/sonatype/sisu-guice/master/PATCHES/GUICE_618_extensible_filter_pipeline.patch
 
-BuildRequires:  maven-local >= 3.2.4
-BuildRequires:  maven-remote-resources-plugin
-BuildRequires:  munge-maven-plugin
-BuildRequires:  maven-gpg-plugin
-BuildRequires:  apache-resource-bundles
-BuildRequires:  aopalliance
-BuildRequires:  atinject
-BuildRequires:  cglib
-BuildRequires:  guava
-BuildRequires:  slf4j
+BuildRequires:  maven-local
+BuildRequires:  mvn(aopalliance:aopalliance)
+BuildRequires:  mvn(cglib:cglib)
+BuildRequires:  mvn(com.google.guava:guava)
+BuildRequires:  mvn(javax.inject:javax.inject)
+BuildRequires:  mvn(javax.servlet:servlet-api)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.ow2.asm:asm)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
+BuildRequires:  mvn(org.sonatype.plugins:munge-maven-plugin)
 
 %if %{with extensions}
 BuildRequires:  hibernate-jpa-2.0-api
@@ -227,6 +229,8 @@ This package provides %{summary}.
 %pom_remove_plugin :animal-sniffer-maven-plugin core
 %pom_remove_plugin :animal-sniffer-maven-plugin extensions
 
+%pom_remove_plugin :maven-gpg-plugin
+
 # We don't have the custom doclet used by upstream. Remove
 # maven-javadoc-plugin to generate javadocs with default style.
 %pom_remove_plugin :maven-javadoc-plugin
@@ -289,6 +293,9 @@ This package provides %{summary}.
 
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.0-alt1_5jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.0-alt1_4jpp8
 - new fc release
 
