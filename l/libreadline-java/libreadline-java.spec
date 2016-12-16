@@ -6,12 +6,12 @@ BuildRequires(pre): rpm-macros-java
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global editline_ver    2.9
+%global editline_ver    3.1-15
 %global src_dirs        org test
 
 Name:          libreadline-java
 Version:       0.8.0
-Release:       alt3_42jpp8
+Release:       alt3_43jpp8
 Summary:       Java wrapper for the EditLine library
 License:       LGPLv2+
 URL:           http://java-readline.sf.net/
@@ -19,7 +19,9 @@ Source0:       http://download.sf.net/java-readline/%{name}-%{version}-src.tar.g
 Source1:       %{name}-%{version}-pom.xml
 Patch0:        %{name}-ncurses.patch
 Patch1:        %{name}-libdir.patch
+Patch2:        %{name}-editline.patch
 
+BuildRequires: java-devel >= 1.4.2
 BuildRequires: javapackages-local
 BuildRequires: libedit-devel >= %{editline_ver}
 BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
@@ -43,6 +45,7 @@ API documentation for %{name}.
 %setup -q
 %patch0
 %patch1
+%patch2
 sed -i 's|@LIBDIR@|%{_libdir}|' src/org/gnu/readline/Readline.java
 
 sed -i 's|javadoc |javadoc -Xdoclint:none |' Makefile
@@ -83,6 +86,9 @@ ln -sf %{_jnidir}/%{name}.jar %{buildroot}%{_libdir}/%{name}/%{name}.jar
 %doc COPYING.LIB
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.8.0-alt3_43jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.8.0-alt3_42jpp8
 - new fc release
 
