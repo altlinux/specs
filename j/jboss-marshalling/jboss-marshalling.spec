@@ -5,24 +5,26 @@ BuildRequires(pre): rpm-macros-java
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 24
+%define fedora 25
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-marshalling
-%define version 1.4.6
+%define version 1.4.11
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-marshalling
-Version:          1.4.6
-Release:          alt1_4jpp8
+Version:          1.4.11
+Release:          alt1_1jpp8
 Summary:          JBoss Marshalling
-License:          LGPLv2+
-URL:              http://www.jboss.org/jbossmarshalling
+# LGPLv2 ./serial/src/main/java/org/jboss/marshalling/serial/UnknownDescriptor.java
+License:          ASL 2.0 and LGPLv2+
+URL:              http://jbossmarshalling.jboss.org/
 BuildArch:        noarch
 
-Source0:          https://github.com/jboss-remoting/jboss-marshalling/archive/%{namedversion}.tar.gz
+Source0:          https://github.com/jboss-remoting/jboss-marshalling/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
 
 BuildRequires:    maven-local
+BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
 BuildRequires:    mvn(org.jboss.maven.plugins:maven-injection-plugin)
 BuildRequires:    mvn(org.jboss.modules:jboss-modules)
@@ -50,17 +52,25 @@ BuildArch: noarch
 %description javadoc
 This package contains %{summary}.
 
+%package osgi
+Group: Development/Java
+Summary:          JBoss Marshalling OSGi Bundle
+
+%description osgi
+JBoss Marshalling OSGi Bundle.
+
 %prep
 %setup -q -n %{name}-%{namedversion}
 
-%pom_remove_plugin :maven-shade-plugin
+%pom_remove_plugin -r :maven-shade-plugin
 %pom_disable_module tests
-%pom_disable_module osgi
 
 # Conditionally remove dependency on apiviz
 if [ %{?rhel} ]; then
     %pom_remove_plugin :maven-javadoc-plugin
 fi
+
+%mvn_package :jboss-marshalling-osgi osgi
 
 %build
 %mvn_build
@@ -74,7 +84,12 @@ fi
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
+%files osgi -f .mfiles-osgi
+
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.11-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.6-alt1_4jpp8
 - new fc release
 
