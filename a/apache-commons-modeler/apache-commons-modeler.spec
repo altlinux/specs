@@ -11,21 +11,23 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-%{short_name}
 Version:          2.0.1
-Release:          alt1_17jpp8
+Release:          alt1_18jpp8
 Summary:          Model MBeans utility classes
 License:          ASL 2.0
 URL:              http://commons.apache.org/%{base_name}/
+BuildArch:        noarch
+
 Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 # POM file based on the one from an unreleased upstream snapstream
 Source1:          pom.xml
-BuildArch:        noarch
 
-BuildRequires: javapackages-tools rpm-build-java
-BuildRequires:    ant
-BuildRequires:    apache-commons-beanutils
-BuildRequires:    apache-commons-digester
-BuildRequires:    apache-commons-logging
-BuildRequires:    maven-local
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-digester:commons-digester)
+BuildRequires:  mvn(commons-logging:commons-logging-api)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(xml-apis:xml-apis)
 Source44: import.info
 
 
@@ -36,9 +38,8 @@ descriptor. In addition, Modeler provides a factory mechanism to create the
 actual Model MBean instances.
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadoc for %{name}
-Group:            Development/Java
-Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -76,6 +77,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.0.1-alt1_18jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.0.1-alt1_17jpp8
 - new fc release
 
