@@ -7,24 +7,21 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name staxmapper
-%define version 1.1.0
+%define version 1.2.0
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             staxmapper
-Version:          1.1.0
-Release:          alt2_13jpp8
+Version:          1.2.0
+Release:          alt1_1jpp8
 Summary:          StAX Mapper
 License:          LGPLv2+
 URL:              https://github.com/jbossas/staxmapper
-
-# git clone git://github.com/jbossas/staxmapper.git
-# cd staxmapper/ && git archive --format=tar --prefix=staxmapper-1.1.0.Final/ 1.1.0.Final | xz > staxmapper-1.1.0.Final.tar.xz
-Source0:          %{name}-%{namedversion}.tar.xz
-
+Source0:          https://github.com/jbossas/staxmapper/archive/%{namedversion}.tar.gz
 BuildArch:        noarch
 
 BuildRequires:    maven-local
+BuildRequires:    mvn(junit:junit)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
 Source44: import.info
@@ -42,8 +39,6 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{namedversion}
-# Unneeded
-%pom_remove_plugin :maven-source-plugin
 
 %build
 %mvn_build
@@ -56,6 +51,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_1jpp8
+- new version
+
 * Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_13jpp8
 - updated gradle support
 
