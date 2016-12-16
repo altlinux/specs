@@ -38,8 +38,8 @@ BuildRequires: jpackage-generic-compat
 #
 
 Name:           checkstyle
-Version:        6.13
-Release:        alt1_2jpp8
+Version:        7.1
+Release:        alt1_1jpp8
 Summary:        Java source code checker
 URL:            http://checkstyle.sourceforge.net/
 # src/checkstyle/com/puppycrawl/tools/checkstyle/grammars/java.g is GPLv2+
@@ -55,13 +55,12 @@ BuildRequires:  mvn(antlr:antlr)
 BuildRequires:  mvn(com.google.guava:guava)
 BuildRequires:  mvn(commons-beanutils:commons-beanutils)
 BuildRequires:  mvn(commons-cli:commons-cli)
+BuildRequires:  mvn(commons-collections:commons-collections)
 BuildRequires:  mvn(com.sun:tools)
-BuildRequires:  mvn(de.thetaphi:forbiddenapis)
 BuildRequires:  mvn(org.antlr:antlr4-maven-plugin)
 BuildRequires:  mvn(org.antlr:antlr4-runtime)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.ant:ant-nodeps)
-BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
@@ -94,6 +93,7 @@ sed -i s/guava-jdk5/guava/ pom.xml
 # not needed for package build
 %pom_remove_plugin :maven-eclipse-plugin
 %pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :nexus-staging-maven-plugin
 
 # these are only needed for upstream QA
 %pom_remove_plugin :cobertura-maven-plugin
@@ -101,6 +101,7 @@ sed -i s/guava-jdk5/guava/ pom.xml
 %pom_remove_plugin :maven-pmd-plugin
 %pom_remove_plugin :findbugs-maven-plugin
 %pom_remove_plugin :xml-maven-plugin
+%pom_remove_plugin :forbiddenapis
 
 # get rid of system scope
 %pom_remove_dep com.sun:tools
@@ -157,7 +158,8 @@ if [ -x %{_bindir}/install-catalog -a -d %{_sysconfdir}/sgml ]; then
 fi
 
 %files -f .mfiles
-%doc LICENSE README.md
+%doc LICENSE
+%doc README.md
 %{_datadir}/xml/%{name}
 %{_bindir}/%{name}
 %config(noreplace) %{_sysconfdir}/ant.d/%{name}
@@ -168,6 +170,9 @@ fi
 
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:7.1-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:6.13-alt1_2jpp8
 - new version
 
