@@ -11,20 +11,22 @@ BuildRequires: jpackage-generic-compat
 %global majorversion 1
 Name:          hsqldb1
 Version:       1.8.1.3
-Release:       alt1_10jpp8
+Release:       alt1_11jpp8
 Summary:       HyperSQL Database Engine
 License:       BSD
 URL:           http://hsqldb.sourceforge.net/
 Source0:       http://downloads.sourceforge.net/hsqldb/hsqldb_%{cvs_version}.zip
 Source1:       http://mirrors.ibiblio.org/pub/mirrors/maven2/hsqldb/hsqldb/1.8.0.10/hsqldb-1.8.0.10.pom
 Patch0:        hsqldb-jdbc-4.1.patch
+
 BuildRequires: ant
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: java-devel
+BuildRequires: javapackages-local
 BuildRequires: junit
 BuildRequires: glassfish-servlet-api
 
 Requires:      glassfish-servlet-api
-Requires: javapackages-tools rpm-build-java
+
 BuildArch:     noarch
 Source44: import.info
 
@@ -71,6 +73,10 @@ chmod -R go=u-w *
 
 cp %{SOURCE1} ./pom.xml
 
+%mvn_file hsqldb:hsqldb %{name}
+
+%mvn_compat_version : %{majorversion}
+
 %build
 export CLASSPATH=$(build-classpath glassfish-servlet-api junit)
 pushd build
@@ -78,28 +84,19 @@ ant jar javadoc
 popd
 
 %install
-
-# jar
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 lib/hsqldb.jar %{buildroot}%{_javadir}/%{name}.jar
-
-# Maven metadata
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -v "%{majorversion}"
-
-# javadoc
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -r doc/src/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_artifact pom.xml lib/hsqldb.jar
+%mvn_install -J doc/src
 
 %files -f .mfiles
 %doc doc/hsqldb_lic.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc doc/hsqldb_lic.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.1.3-alt1_11jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.1.3-alt1_10jpp8
 - new fc release
 
