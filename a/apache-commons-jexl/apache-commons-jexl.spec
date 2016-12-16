@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -10,22 +11,24 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{jarname}
 Version:        2.1.1
-Release:        alt2_15jpp8
+Release:        alt2_16jpp8
 Summary:        Java Expression Language (JEXL)
-
-Group:          Development/Other
 License:        ASL 2.0
 URL:            http://commons.apache.org/jexl
+BuildArch:      noarch
+
 Source0:        http://www.apache.org/dist/commons/jexl/source/%{jarname}-%{version}-src.tar.gz
+
 # Patch to fix test failure with junit 4.11
 Patch0:         001-Fix-tests.patch
 # Fix javadoc build
 Patch1:         apache-commons-jexl-javadoc.patch
 
 BuildRequires:  maven-local
-BuildRequires:  javacc-maven-plugin
-
-BuildArch:      noarch
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
 
 Provides:       %{jarname} = %{version}-%{release}
 Source44: import.info
@@ -48,7 +51,7 @@ needed Velocity-ish method access, it just had to have it.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 Provides:       %{jarname}-javadoc = %{version}-%{release}
 BuildArch: noarch
 
@@ -100,6 +103,9 @@ echo "
 
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_16jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_15jpp8
 - new fc release
 
