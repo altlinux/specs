@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          rxjava
 Version:       1.0.13
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Reactive Extensions for the JVM
 License:       ASL 2.0
 URL:           https://github.com/ReactiveX/RxJava
@@ -121,6 +121,9 @@ rm -r src/test/java/rx/internal/operators/OperatorRetryWithPredicateTest.java
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.13-alt1_3jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.13-alt1_2jpp8
 - new fc release
 
