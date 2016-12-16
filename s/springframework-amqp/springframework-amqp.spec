@@ -24,7 +24,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          springframework-amqp
 Version:       1.3.9
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Support for Spring programming model with AMQP
 License:       ASL 2.0
 URL:           http://projects.spring.io/spring-amqp/
@@ -50,6 +50,7 @@ BuildRequires: mvn(commons-io:commons-io)
 BuildRequires: mvn(javax.annotation:jsr250-api)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(log4j:log4j:1.2.17)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.codehaus.jackson:jackson-core-asl)
 BuildRequires: mvn(org.codehaus.jackson:jackson-mapper-asl)
 %if %{with jinterface}
@@ -196,6 +197,9 @@ opts="-f"
 %doc src/dist/apache-license.txt src/dist/notice.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.9-alt1_5jpp8
+- new fc release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.9-alt1_4jpp8
 - new fc release
 
