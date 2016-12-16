@@ -6,20 +6,15 @@ BuildRequires(pre): rpm-macros-java
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define parent plexus
-%define subname velocity
-
 Name:           plexus-velocity
-Version:        1.1.8
-Release:        alt4_21jpp8
+Version:        1.2
+Release:        alt1_1jpp8
 Summary:        Plexus Velocity Component
 License:        ASL 2.0
 URL:            https://codehaus-plexus.github.io/plexus-velocity/
 BuildArch:      noarch
 
-# svn export http://svn.codehaus.org/plexus/plexus-components/tags/plexus-velocity-1.1.8/
-# tar czf plexus-velocity-1.1.8-src.tar.gz plexus-velocity-1.1.8/
-Source0:        plexus-velocity-%{version}-src.tar.gz
+Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildRequires:  maven-local
@@ -43,11 +38,11 @@ BuildArch: noarch
 This package provides %{summary}.
 
 %prep
-%setup -q -n plexus-velocity-%{version}
+%setup -q -n %{name}-%{name}-%{version}
+
+find -name '*.jar' -delete
+
 cp -p %{SOURCE1} LICENSE
-for j in $(find . -name "*.jar"); do
-        mv $j $j.no
-done
 
 %build
 %mvn_build
@@ -62,6 +57,9 @@ done
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.8-alt4_21jpp8
 - new fc release
 
