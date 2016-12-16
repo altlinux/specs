@@ -1,5 +1,5 @@
 Name:     setbranding
-Version:  1.1.1
+Version:  1.1.2
 Release:  alt1
 
 Summary:  Script for manipulation ALT Linux branding packages
@@ -25,6 +25,9 @@ install -Dm755 %SOURCE0 %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri Dec 16 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1
+- Remove path from rpm
+
 * Tue Oct 08 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1
 - Abort script on apt-get interrupt
 - Support verbose output
