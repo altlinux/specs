@@ -36,7 +36,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.4.2
+Version: 1.4.4
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -673,6 +673,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri Dec 16 2016 Mikhail Efremov <sem@altlinux.org> 1.4.4-alt1
+- Updated to 1.4.4.
+
 * Mon Oct 03 2016 Mikhail Efremov <sem@altlinux.org> 1.4.2-alt1
 - etcnet-alt: Fix get_property().
 - Updated to 1.4.2.
