@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        0.5
-Release:        alt3_15jpp8
+Release:        alt3_16jpp8
 Epoch:          2
 Summary:        Apache Commons Discovery
 License:        ASL 2.0
@@ -21,7 +21,10 @@ Patch1:         %{name}-remove-unreliable-test.patch
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  apache-commons-logging >= 1.1.1
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 Source44: import.info
 
 %description
@@ -44,10 +47,10 @@ BuildArch: noarch
 %setup -q -n %{short_name}-%{version}-src
 %patch0
 %patch1 -p1
+%mvn_file : %{short_name} %{name}
 
 %build
-%mvn_file  : %{short_name} %{name}
-%mvn_build -X
+%mvn_build
 
 %install
 %mvn_install
@@ -60,6 +63,9 @@ BuildArch: noarch
 
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt3_16jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt3_15jpp8
 - new fc release
 
