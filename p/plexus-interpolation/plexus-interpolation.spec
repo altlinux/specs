@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           plexus-interpolation
 Version:        1.22
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Plexus Interpolation API
 License:        ASL 2.0 and ASL 1.1 and MIT
 URL:            https://github.com/codehaus-plexus/plexus-interpolation
@@ -18,7 +18,6 @@ Source0:        https://github.com/sonatype/%{name}/archive/%{name}-%{version}.t
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
 Source44: import.info
 
@@ -38,6 +37,7 @@ API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
+%pom_remove_plugin :maven-release-plugin
 
 %build
 %mvn_file : plexus/interpolation
@@ -51,6 +51,9 @@ API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.22-alt1_6jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.22-alt1_5jpp8
 - new fc release
 
