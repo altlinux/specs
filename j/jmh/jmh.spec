@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %global hghash 534d83d9137f
 Name:          jmh
 Version:       1.11.3
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Java Microbenchmark Harness
 # BSD jmh-samples/src/main/java/*
 # 2 files have unknown license, reported @ http://mail.openjdk.java.net/pipermail/jmh-dev/2015-August/002037.html
@@ -24,6 +24,9 @@ BuildRequires: mvn(org.apache.commons:commons-math3)
 BuildRequires: mvn(org.apache.maven.plugins:maven-site-plugin)
 BuildRequires: mvn(org.ow2.asm:asm)
 
+Obsoletes:     %{name}-core-ct
+Obsoletes:     %{name}-core-it
+
 BuildArch:     noarch
 Source44: import.info
 
@@ -38,20 +41,6 @@ Summary:       JMH Core Benchmarks
 
 %description core-benchmarks
 JMH Core Benchmarks.
-
-%package core-ct
-Group: Development/Java
-Summary:       JMH Core Compilation Tests
-
-%description core-ct
-JMH Core Compilation Tests.
-
-%package core-it
-Group: Development/Java
-Summary:       JMH Core Integration Tests
-
-%description core-it
-JMH Core Integration Tests.
 
 %package generator-annprocess
 Group: Development/Java
@@ -110,6 +99,8 @@ This package contains javadoc for %{name}.
 %setup -q -n %{name}-%{hghash}
 
 %pom_disable_module %{name}-archetypes
+%pom_disable_module %{name}-core-ct
+%pom_disable_module %{name}-core-it
 
 %pom_remove_plugin -r :maven-eclipse-plugin
 %pom_remove_plugin -r :maven-license-plugin
@@ -138,7 +129,7 @@ sed -i "s,59,51,;s,Temple Place,Franklin Street,;s,Suite 330,Fifth Floor,;s,0211
 
 %build
 
-%mvn_build -s -- -Dmaven.test.skip.exec=true
+%mvn_build -s
 
 %install
 %mvn_install
@@ -148,12 +139,6 @@ sed -i "s,59,51,;s,Temple Place,Franklin Street,;s,Suite 330,Fifth Floor,;s,0211
 
 %files core-benchmarks -f .mfiles-%{name}-core-benchmarks
 %doc %{name}-core-benchmarks/LICENSE
-
-%files core-ct -f .mfiles-%{name}-core-ct
-%doc LICENSE
-
-%files core-it -f .mfiles-%{name}-core-it
-%doc %{name}-core-it/LICENSE
 
 %files generator-annprocess -f .mfiles-%{name}-generator-annprocess
 %doc %{name}-generator-annprocess/LICENSE
@@ -177,6 +162,9 @@ sed -i "s,59,51,;s,Temple Place,Franklin Street,;s,Suite 330,Fifth Floor,;s,0211
 %doc LICENSE src/license/*
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.11.3-alt1_3jpp8
+- new fc release
+
 * Wed Dec 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.11.3-alt1_2jpp8
 - new version
 
