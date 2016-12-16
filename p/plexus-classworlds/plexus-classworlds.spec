@@ -10,16 +10,19 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           plexus-classworlds
 Version:        2.5.2
-Release:        alt2_4jpp8
+Release:        alt2_5jpp8
 Summary:        Plexus Classworlds Classloader Framework
 License:        ASL 2.0 and Plexus
 URL:            https://github.com/codehaus-plexus/plexus-classworlds
-Source0:        https://github.com/sonatype/%{name}/archive/%{name}-%{version}.tar.gz
 BuildArch:      noarch
+
+Source0:        https://github.com/sonatype/%{name}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 
 Obsoletes:      classworlds < 1.1-13
 Source44: import.info
@@ -60,6 +63,9 @@ API documentation for %{name}.
 %doc LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.5.2-alt2_5jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.5.2-alt2_4jpp8
 - new fc release
 
