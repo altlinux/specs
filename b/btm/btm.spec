@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Bitronix Transaction Manager
 Name:           btm
 Version:        2.1.2
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Epoch:          0
 License:        LGPLv3
 URL:            http://bitronix.be
@@ -18,20 +18,22 @@ Source1:        http://repo1.maven.org/maven2/org/codehaus/btm/btm-parent/2.1.2/
 Source2:        http://repo1.maven.org/maven2/org/codehaus/btm/btm/2.1.2/btm-2.1.2.pom
 Patch0:         %{name}-use-shared-jars.patch
 Patch1:         btm-jdbc4.1.patch
-BuildRequires: javapackages-tools rpm-build-java
+
 BuildRequires:  ant >= 0:1.6
-BuildRequires:  junit
-BuildRequires:  slf4j
-BuildRequires:  geronimo-jms
 BuildRequires:  geronimo-jta
+BuildRequires:  java-devel
+BuildRequires:  javapackages-local
 BuildRequires:  xml-commons-apis
+#BuildRequires:  mvn(javax.transaction:jta)
+BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-jms_1.1_spec)
+BuildRequires:  mvn(org.codehaus:codehaus-parent:pom:)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
+
 # Turn this on to make "ant test" work
 # BuildRequires:  mockito
-Requires: javapackages-tools rpm-build-java
 Requires:       junit
 Requires:       xml-commons-apis
-Requires: javapackages-tools rpm-build-java
-Requires:       slf4j
+Requires:       java >= 1.6.0
 Requires:       geronimo-jms
 Requires:       geronimo-jta
 
@@ -62,36 +64,29 @@ find -name '*.jar' -exec rm -f '{}' \;
 %patch0 -p1
 %patch1 -p1
 
+%mvn_file org.codehaus.%{name}:%{name} %{name}
+
 %build
+
 ant build
 
 %install
-
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -p -m 644 dist/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}-parent.pom
-install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}-parent.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%mvn_artifact %{SOURCE1}
+%mvn_artifact %{SOURCE2} dist/%{name}-%{version}.jar
+%mvn_install -J doc/api
 
 %files -f .mfiles
 %doc release-notes-%{version}.txt
 %doc license.txt
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc license.txt
-%doc %{_javadocdir}/*
+
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_9jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_8jpp8
 - new fc release
 
