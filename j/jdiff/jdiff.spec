@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jdiff
 Version:       1.1.1
-Release:       alt2_10jpp8
+Release:       alt2_11jpp8
 Summary:       An HTML Report of API Differences
 License:       GPL+ and LGPLv2+
 URL:           http://javadiff.sourceforge.net/
@@ -26,16 +26,18 @@ Source2:       jdiff-script
 
 Patch0:        jdiff-java8.patch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: java-devel
+BuildRequires: jpackage-utils
 
 BuildRequires: ant
 BuildRequires: junit
 BuildRequires: xerces-j2
+BuildRequires: /usr/bin/perl
 
 Requires:      ant
 Requires:      xerces-j2
 
-Requires: javapackages-tools rpm-build-java
+Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -115,6 +117,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt2_11jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt2_10jpp8
 - new fc release
 
