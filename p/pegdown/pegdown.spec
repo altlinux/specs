@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          pegdown
 Version:       1.4.2
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       Java library for Markdown processing
 License:       ASL 2.0
 URL:           http://pegdown.org
@@ -18,8 +18,9 @@ Source1:       http://repo1.maven.org/maven2/org/pegdown/pegdown/%{version}/pegd
 Patch0:        %{name}-rhbz1096735.patch
 
 BuildRequires: maven-local
-BuildRequires: mvn(org.parboiled:parboiled-java)
 BuildRequires: mvn(net.sf.jtidy:jtidy)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.parboiled:parboiled-java)
 %if 0
 # test deps
 BuildRequires: mvn(org.specs2:specs2_2.9.3)
@@ -119,6 +120,9 @@ rm -r src/test/scala/*
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1_9jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1_8jpp8
 - new fc release
 
