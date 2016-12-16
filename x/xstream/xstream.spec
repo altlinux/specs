@@ -42,45 +42,38 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xstream
 Version:        1.4.9
-Release:        alt1_1jpp8
+Release:        alt1_3jpp8
 Summary:        Java XML serialization library
 License:        BSD
 URL:            http://xstream.codehaus.org/
+BuildArch:      noarch
+
 Source0:        http://repo1.maven.org/maven2/com/thoughtworks/%{name}/%{name}-distribution/%{version}/%{name}-distribution-%{version}-src.zip
-BuildRequires: java-devel
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(cglib:cglib)
-BuildRequires:  mvn(commons-cli:commons-cli)
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(commons-lang:commons-lang)
 BuildRequires:  mvn(dom4j:dom4j)
 BuildRequires:  mvn(javassist:javassist)
 BuildRequires:  mvn(joda-time:joda-time)
 BuildRequires:  mvn(net.sf.kxml:kxml2)
 BuildRequires:  mvn(net.sf.kxml:kxml2-min)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.codehaus:codehaus-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.codehaus.jettison:jettison)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
 BuildRequires:  mvn(org.hibernate:hibernate-core)
 BuildRequires:  mvn(org.hibernate:hibernate-envers)
-BuildRequires:  mvn(org.hsqldb:hsqldb)
 BuildRequires:  mvn(org.jdom:jdom)
 BuildRequires:  mvn(org.jdom:jdom2)
-BuildRequires:  mvn(org.json:json)
 BuildRequires:  mvn(org.slf4j:slf4j-simple)
-BuildRequires:  mvn(oro:oro)
 BuildRequires:  mvn(stax:stax)
 BuildRequires:  mvn(stax:stax-api)
 BuildRequires:  mvn(xom:xom)
+BuildRequires:  mvn(xpp3:xpp3)
 BuildRequires:  mvn(xpp3:xpp3_min)
-
-
-BuildArch:     noarch
 Source44: import.info
+
 
 %description
 XStream is a simple library to serialize objects to XML 
@@ -156,6 +149,8 @@ find . -name "*.jar" -print -delete
 # Unwanted
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :maven-dependency-plugin
+%pom_remove_plugin :maven-eclipse-plugin
+%pom_remove_plugin :maven-release-plugin
 
 %pom_xpath_set "pom:dependency[pom:groupId = 'org.codehaus.woodstox' ]/pom:artifactId" woodstox-core-asl
 %pom_xpath_set "pom:dependency[pom:groupId = 'org.codehaus.woodstox' ]/pom:artifactId" woodstox-core-asl xstream
@@ -202,6 +197,9 @@ find . -name "*.jar" -print -delete
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4.9-alt1_3jpp8
+- new fc release
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4.9-alt1_1jpp8
 - new version
 
