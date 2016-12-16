@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:    jackson
 Version: 1.9.11
-Release: alt1_8jpp8
+Release: alt1_9jpp8
 Summary: Jackson Java JSON-processor
 License: ASL 2.0 or LGPLv2
 URL:     http://jackson.codehaus.org
@@ -26,13 +26,14 @@ Patch4:  %{name}-1.9.11-javadoc.patch
 
 BuildArch: noarch
 
-Requires: javapackages-tools rpm-build-java
+Requires: jpackage-utils
 Requires: joda-time >= 1.6.2
 Requires: stax2-api >= 3.1.1
 Requires: jsr-311 >= 1.1.1
 Requires: objectweb-asm3 >= 3.3
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: jpackage-utils
+BuildRequires: java-devel
 BuildRequires: ant >= 1.8.2
 BuildRequires: joda-time >= 1.6.2
 BuildRequires: stax2-api >= 3.1.1
@@ -79,7 +80,7 @@ ln -s $(build-classpath stax2-api) lib/xml/sta2-api.jar
 ln -s $(build-classpath jsr-311) lib/jaxrs/jsr-311.jar
 ln -s $(build-classpath objectweb-asm3/asm) lib/ext/asm/asm.jar
 ln -s $(build-classpath objectweb-asm3/asm) lib/repackaged/jackson-asm.jar
-ln -s $(build-classpath cglib) lib/ext/cglib/cglib-nodep.jar
+ln -s $(build-classpath cglib/cglib) lib/ext/cglib/cglib-nodep.jar
 ln -s $(build-classpath groovy18-1.8) lib/ext/groovy/groovy.jar
 ln -s $(build-classpath junit) lib/junit/junit.jar
 
@@ -120,7 +121,6 @@ install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 cp -rp dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}/.
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc README.txt
 %doc release-notes
 
@@ -130,6 +130,9 @@ cp -rp dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}/.
 %doc release-notes
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.11-alt1_9jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.11-alt1_8jpp8
 - new fc release
 
