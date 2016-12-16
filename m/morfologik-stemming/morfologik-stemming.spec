@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          morfologik-stemming
 Version:       2.0.1
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Morfologik stemming library
 License:       BSD
 URL:           http://morfologik.blogspot.com/
@@ -19,6 +19,7 @@ BuildRequires: mvn(com.carrotsearch:hppc)
 BuildRequires: mvn(com.google.guava:guava)
 BuildRequires: mvn(commons-cli:commons-cli)
 BuildRequires: mvn(commons-lang:commons-lang)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 
 %if 0
@@ -84,6 +85,9 @@ done
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_4jpp8
+- new fc release
+
 * Mon Nov 28 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_3jpp8
 - new version
 
