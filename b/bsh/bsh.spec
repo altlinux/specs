@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           bsh
 Version:        1.3.0
-Release:        alt6_34jpp8
+Release:        alt6_35jpp8
 Epoch:          0
 Summary:        Lightweight Scripting for Java
 License:        (SPL or LGPLv2+) and Public Domain
@@ -53,7 +53,10 @@ Source3:        %{name}-desktop.desktop
 Patch0:         %{name}-build.patch
 Patch1:         %{name}-xsl-fixes.patch
 BuildRequires:  java-devel
-BuildRequires:  ant bsf ImageMagick desktop-file-utils
+BuildRequires:  ant
+BuildRequires:  bsf
+BuildRequires:  ImageMagick
+BuildRequires:  desktop-file-utils
 BuildRequires:  servlet
 Requires:       bsf
 URL:            http://www.beanshell.org/
@@ -62,20 +65,20 @@ Source44: import.info
 
 %description
 BeanShell is a small, free, embeddable, Java source interpreter with
-object scripting language features, written in Java.  BeanShell
+object scripting language features, written in Java. BeanShell
 executes standard Java statements and expressions, in addition to
-obvious scripting commands and syntax.  BeanShell supports scripted
+obvious scripting commands and syntax. BeanShell supports scripted
 objects as simple method closures like those in Perl and
-JavaScript(tm).  You can use BeanShell interactively for Java
+JavaScript(tm). You can use BeanShell interactively for Java
 experimentation and debugging or as a simple scripting engine for your
-applications.  In short: BeanShell is a dynamically interpreted Java,
-plus some useful stuff.  Another way to describe it is to say that in
+applications. In short: BeanShell is a dynamically interpreted Java,
+plus some useful stuff. Another way to describe it is to say that in
 many ways BeanShell is to Java as Tcl/Tk is to C: BeanShell is
 embeddable - You can call BeanShell from your Java applications to
 execute Java code dynamically at run-time or to provide scripting
-extensibility for your applications.  Alternatively, you can call your
+extensibility for your applications. Alternatively, you can call your
 Java applications and objects from BeanShell; working with Java
-objects and APIs dynamically.  Since BeanShell is written in Java and
+objects and APIs dynamically. Since BeanShell is written in Java and
 runs in the same space as your application, you can freely pass
 references to "real live" objects into scripts and return them as
 results.
@@ -100,7 +103,7 @@ This package provides %{summary}.
 Group: Development/Java
 Summary:        Demo for %{name}
 AutoReqProv:    no
-Requires:       %{name} = %{epoch}:%{version}
+Requires:       bsh-utils = %{epoch}:%{version}
 
 %description demo
 Demonstrations and samples for %{name}.
@@ -108,7 +111,7 @@ Demonstrations and samples for %{name}.
 %package utils
 Group: Development/Java
 Summary:        %{name} utilities
-Requires:       %{name} = %{epoch}:%{version}
+Requires:       bsh-utils = %{epoch}:%{version}
 Requires:       jline1
 Provides:       %{name}-desktop = %{epoch}:%{version}-%{release}
 
@@ -179,7 +182,7 @@ convert src/bsh/util/lib/icon.gif \
 
 # demo
 for i in `find tests -name \*.bsh`; do
-  perl -p -i -e 's,^\n?#!(/(usr/)?bin/java bsh\.Interpreter|/bin/sh),#!/usr/bin/env %{_bindir}/%{name},' $i
+  sed -ri '1s,^#!(/(usr/)?bin/java bsh\.Interpreter|/bin/sh),#!/usr/bin/env %{_bindir}/%{name},' $i
   if head -1 $i | grep '#!/usr/bin/env %{_bindir}/%{name}' >/dev/null; then
     chmod 755 $i
   fi
@@ -245,6 +248,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %{_datadir}/icons/hicolor/*x*/apps/%{name}.png
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.0-alt6_35jpp8
+- new fc release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.0-alt6_34jpp8
 - new fc release
 
