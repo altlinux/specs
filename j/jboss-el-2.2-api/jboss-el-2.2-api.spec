@@ -13,23 +13,20 @@ BuildRequires: jpackage-generic-compat
 
 Name:         jboss-el-2.2-api
 Version:      1.0.2
-Release:      alt1_4jpp8
+Release:      alt1_5jpp8
 Summary:      Expression Language 2.2 API
 License:      CDDL or GPLv2 with exceptions
 URL:          http://www.jboss.org
+BuildArch:    noarch
 
 Source0:      https://github.com/jboss/jboss-el-api_spec/archive/%{namedversion}.tar.gz
 
-BuildRequires: jboss-parent
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-
-BuildArch: noarch
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires: mvn(org.jboss:jboss-parent:pom:)
 Source44: import.info
+
 
 %description
 Expression Language 2.2 API classes.
@@ -52,15 +49,16 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc LICENSE
 %doc README
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE
-%doc README
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_5jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_4jpp8
 - new fc release
 
