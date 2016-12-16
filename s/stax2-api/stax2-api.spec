@@ -6,8 +6,8 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             stax2-api
-Version:          3.1.4
-Release:          alt1_4jpp8
+Version:          4.0.0
+Release:          alt1_1jpp8
 Summary:          Experimental API extending basic StAX implementation
 License:          BSD
 URL:              http://wiki.fasterxml.com/WoodstoxStax2
@@ -16,11 +16,9 @@ Source0:          https://github.com/FasterXML/%{name}/archive/%{name}-%{version
 BuildArch:        noarch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(com.fasterxml:oss-parent:pom:)
 BuildRequires:  mvn(javax.xml.stream:stax-api)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -60,6 +58,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.1.4-alt1_4jpp8
 - new fc release
 
