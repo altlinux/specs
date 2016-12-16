@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          tuscany-parent
 Version:       2
-Release:       alt1_12jpp8
+Release:       alt1_13jpp8
 Summary:       Apache Tuscany Project Parent
 License:       ASL 2.0
 Url:           http://tuscany.apache.org/
@@ -49,6 +49,9 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %doc LICENSE-2.0.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2-alt1_13jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2-alt1_12jpp8
 - new fc release
 
