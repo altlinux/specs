@@ -9,10 +9,10 @@ BuildRequires: jpackage-generic-compat
 %global githash 6f4d22725ef28f09bfd5422939b83e1865b5daef
 Name:          proxytoys
 Version:       1.0
-Release:       alt1_6jpp8
+Release:       alt1_8jpp8
 Summary:       An implementation neutral API for creation of dynamic proxies
 License:       BSD
-Url:           http://proxytoys.codehaus.org/
+Url:           http://proxytoys.github.io/
 # svn export http://svn.codehaus.org/proxytoys/tags/1.0/ proxytoys-1.0
 # tar cJf proxytoys-1.0.tar.xz proxytoys-1.0
 Source0:       https://github.com/proxytoys/proxytoys/archive/%{githash}/%{name}-%{githash}.tar.gz
@@ -59,7 +59,14 @@ Summary:       ProxyToys Example Code
 
 %description example-code
 This package contains ProxyToys example code.
-  
+
+%package parent
+Group: Development/Java
+Summary:       ProxyToys parent POM
+
+%description parent
+ProxyToys parent POM.
+
 %package javadoc
 Group: Development/Documentation
 Summary:       Javadoc for %{name}
@@ -80,9 +87,6 @@ find -name '*.jar' -print -delete
 # remove wagon-webdav-jackrabbit
 %pom_xpath_remove "pom:build/pom:extensions"
 
-%pom_xpath_remove "pom:dependency[pom:classifier='javadoc']"
-%pom_xpath_set "pom:dependency[pom:groupId = 'cglib' ]/pom:artifactId" cglib
-
 %pom_remove_plugin :xsite-maven-plugin
 # Unwanted source jar
 %pom_remove_plugin :maven-source-plugin
@@ -90,11 +94,6 @@ find -name '*.jar' -print -delete
 %pom_remove_plugin :maven-source-plugin %{name}
 %pom_remove_plugin :cobertura-maven-plugin
 %pom_remove_plugin :cobertura-maven-plugin %{name}
-
-%pom_xpath_set "pom:dependency[pom:groupId = 'cglib' ]/pom:artifactId" cglib %{name}
-# cglib isnt an optional dep
-%pom_xpath_remove "pom:dependency[pom:groupId='cglib']/pom:optional" %{name}
-
 # Unwanted javadoc jar. required only for build website module
 %pom_remove_plugin :maven-javadoc-plugin %{name}
 
@@ -104,23 +103,30 @@ find -name '*.jar' -print -delete
 %pom_remove_plugin :jxr-maven-plugin %{name}
 %pom_remove_plugin :maven-pmd-plugin %{name}
 
+%pom_xpath_remove "pom:dependency[pom:classifier='javadoc']"
+
+%pom_change_dep cglib: :cglib
+%pom_change_dep cglib: :cglib %{name}
+# cglib is not an optional dep
+%pom_xpath_set "pom:dependency[pom:groupId='cglib']/pom:optional" false %{name}
+
 # Fix test deps
 # see https://issues.jenkins-ci.org/browse/JENKINS-4752
 # solved in https://kenai.com/projects/hudson/sources/xstream/revision/23
-# com.thoughtworks.xstream.converters.ConversionException: java.lang.Class cannot be cast to java.lang.ref.WeakReference
-%pom_xpath_set "pom:dependency[pom:artifactId = 'xstream' ]/pom:groupId" org.jvnet.hudson
-%pom_xpath_set "pom:dependency[pom:artifactId = 'xstream' ]/pom:groupId" org.jvnet.hudson %{name}
+# com.thoughtworks.xstream.converters.ConversionException:
+# java.lang.Class cannot be cast to java.lang.ref.WeakReference
+%pom_change_dep :xstream org.jvnet.hudson:
+%pom_change_dep :xstream org.jvnet.hudson: %{name}
 # NoClassDefFoundError: org/xmlpull/v1/XmlPullParserFactory
 %pom_add_dep xpp3:xpp3:1.1.4c:test %{name}
 
 %mvn_file :%{name} %{name}
 %mvn_file :%{name}-example-code %{name}-example-code
 %mvn_alias :%{name} "proxytoys:proxytoys"
-%mvn_package :%{name}-parent %{name}
 
 %build
-
-%mvn_build -s -- -Dproject.build.sourceEncoding=UTF-8
+# Disable test suite incompatibility with newer cglib
+%mvn_build -sf -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
@@ -131,10 +137,16 @@ find -name '*.jar' -print -delete
 %files example-code -f .mfiles-%{name}-example-code
 %doc LICENSE.txt
 
+%files parent -f .mfiles-%{name}-parent
+%doc LICENSE.txt
+
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_8jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_6jpp8
 - new fc release
 
