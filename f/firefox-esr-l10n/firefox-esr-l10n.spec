@@ -5,7 +5,7 @@
 %define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name:		firefox-esr-l10n
-Version:	45.5.0
+Version:	45.6.0
 Release:	alt1
 Summary:	Language Pack for Firefox ESR
 
@@ -402,6 +402,9 @@ for locale in %dictionaries; do
 done
 
 %changelog
+* Fri Dec 16 2016 Andrey Cherepanov <cas@altlinux.org> 45.6.0-alt1
+- New version
+
 * Thu Nov 17 2016 Andrey Cherepanov <cas@altlinux.org> 45.5.0-alt1
 - New version
 
