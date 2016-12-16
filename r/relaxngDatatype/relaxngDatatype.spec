@@ -8,16 +8,18 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           relaxngDatatype
 Version:        2011.1
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        RELAX NG Datatype API
 License:        BSD
 URL:            https://github.com/java-schema-utilities/relaxng-datatype-java
+BuildArch:      noarch
+
 Source0:        https://github.com/java-schema-utilities/relaxng-datatype-java/archive/relaxngDatatype-%{version}.tar.gz
 # License is not available in the tarball, this copy fetched from the tarball on the old sourceforge.net site
 Source1:        copying.txt
 
-BuildArch:      noarch
 BuildRequires:  maven-local
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -57,6 +59,9 @@ cp -p %{SOURCE1} .
 %doc copying.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2011.1-alt1_4jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2011.1-alt1_3jpp8
 - new fc release
 
