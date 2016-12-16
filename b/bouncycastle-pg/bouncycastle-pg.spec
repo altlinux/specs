@@ -6,27 +6,33 @@ BuildRequires: unzip
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global ver 152
+%global ver 1.54
 %global archivever  jdk15on-%(echo %{ver}|sed 's|\\\.||')
 
 Name:          bouncycastle-pg
-Version:       1.52
-Release:       alt1_9jpp8
+Version:       %{ver}
+Release:       alt1_1jpp8
 Summary:       Bouncy Castle OpenPGP API
 # modified BZIP2 library org/bouncycastle/apache/bzip2 ASL 2.0
 License:       ASL 2.0 and MIT
 URL:           http://www.bouncycastle.org/
+
+# Source tarball contains everything except test suite rousources
 Source0:       http://www.bouncycastle.org/download/bcpg-%{archivever}.tar.gz
-Source1:       http://repo2.maven.org/maven2/org/bouncycastle/bcpg-jdk15on/%{version}/bcpg-jdk15on-%{version}.pom
-Source2:       bouncycastle-pg-build.xml
-Source3:       bouncycastle-pg-OSGi.bnd
+# Test suite resources are found in this jar
+Source1:       http://www.bouncycastle.org/download/bctest-%{archivever}.jar
+
+Source2:       http://repo2.maven.org/maven2/org/bouncycastle/bcpg-jdk15on/%{version}/bcpg-jdk15on-%{version}.pom
+Source3:       bouncycastle-pg-build.xml
+Source4:       bouncycastle-pg-OSGi.bnd
 
 BuildRequires: ant
 BuildRequires: ant-junit
 BuildRequires: aqute-bnd
-BuildRequires: bouncycastle = %{version}
 BuildRequires: javapackages-local
 BuildRequires: junit
+BuildRequires: mvn(org.bouncycastle:bcprov-jdk15on) = %{version}
+Requires:      mvn(org.bouncycastle:bcprov-jdk15on) = %{version}
 
 BuildArch:     noarch
 Source44: import.info
@@ -47,47 +53,41 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n bcpg-%{archivever}
-# fixing incomplete source directory structure
+
+# Unzip source and test suite resources
 mkdir -p src/java src/test
 unzip -qq src.zip -d src/java
+unzip -qq %{SOURCE1} 'org/bouncycastle/openpgp/*' -x '*.class' -d src/java
 
-mkdir -p src/test/org/bouncycastle/openpgp/
+mkdir -p src/test/org/bouncycastle/openpgp/examples
 mv src/java/org/bouncycastle/openpgp/test \
   src/test/org/bouncycastle/openpgp/
-mkdir -p src/test/org/bouncycastle/openpgp/examples
 mv src/java/org/bouncycastle/openpgp/examples/test \
   src/test/org/bouncycastle/openpgp/examples/
 
 # Remove provided binaries and apidocs
 find . -type f -name "*.class" -exec rm -f {} \;
 find . -type f -name "*.jar" -exec rm -f {} \;
-rm -rf docs/*
+rm -rf docs/* javadocs/*
 
-cp -p %{SOURCE2} build.xml
-cp -p %{SOURCE3} bcpg.bnd
+cp -p %{SOURCE3} build.xml
+cp -p %{SOURCE4} bcpg.bnd
 sed -i "s|@VERSION@|%{version}|" build.xml bcpg.bnd
 
-# this test fails: bc.test.data.home property not set
-rm src/test/org/bouncycastle/openpgp/test/DSA2Test.java
-sed -i "s|suite.addTestSuite(DSA2Test.class);|//&|" \
-  src/test/org/bouncycastle/openpgp/test/AllTests.java
+# this test fails: source encoding error
 rm src/test/org/bouncycastle/openpgp/test/PGPUnicodeTest.java
 sed -i "s|suite.addTestSuite(PGPUnicodeTest.class);|//&|" \
   src/test/org/bouncycastle/openpgp/test/AllTests.java
 
-# another failing test
-# missing resource "bigpub.asc"
-rm src/test/org/bouncycastle/openpgp/test/PGPParsingTest.java
-sed -i 's/new PGPParsingTest()//' src/test/org/bouncycastle/openpgp/test/RegressionTest.java
-
 %build
-
-ant jar javadoc
+mkdir lib
+build-jar-repository -s -p lib bcprov junit ant/ant-junit aqute-bnd
+ant -Dbc.test.data.home=$(pwd)/src/test jar javadoc
 
 %install
 %mvn_file org.bouncycastle:bcpg-jdk15on bcpg
 %mvn_alias org.bouncycastle:bcpg-jdk15on org.bouncycastle:bcpg-jdk16 org.bouncycastle:bcpg-jdk15
-%mvn_artifact %{SOURCE1} build/bcpg.jar
+%mvn_artifact %{SOURCE2} build/bcpg.jar
 %mvn_install -J build/apidocs
 
 %files -f .mfiles
@@ -98,6 +98,9 @@ ant jar javadoc
 %doc LICENSE.html
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.54-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.52-alt1_9jpp8
 - new fc release
 
