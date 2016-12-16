@@ -9,12 +9,14 @@ BuildRequires: jpackage-generic-compat
 BuildRequires: rpm-build-java-osgi
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name eclipselink
-%define version 2.5.2
-%global reltag .v20140319-9ad6abd
+%define version 2.6.3
+
+%global reltag .v20160428-59c81c5
 %global namedversion %{version}%{?reltag}
 
 %global core org.eclipse.persistence.core
 %global dbws org.eclipse.persistence.dbws
+%global extension org.eclipse.persistence.extension
 %global jpa org.eclipse.persistence.jpa
 %global jpql org.eclipse.persistence.jpa.jpql
 %global modelgen org.eclipse.persistence.jpa.modelgen.processor
@@ -22,42 +24,34 @@ BuildRequires: rpm-build-java-osgi
 %global sdo org.eclipse.persistence.sdo
 
 Name:          eclipselink
-Version:       2.5.2
-Release:       alt1_2jpp8
+Version:       2.6.3
+Release:       alt1_1jpp8
 Summary:       Eclipse Persistence Services Project
 License:       EPL and BSD
 Url:           http://www.eclipse.org/eclipselink/
-Source0:       http://www.mirrorservice.org/sites/download.eclipse.org/eclipseMirror/rt/%{name}/releases/%{version}/%{name}-src-%{namedversion}.zip
-Source1:       %{name}-2.4.2-build.properties
-Source2:       %{name}-2.5.2-build.xml
 # http://git.eclipse.org/c/eclipselink/eclipselink.runtime
-#Source3:       http://maven.eclipse.org/nexus/content/repositories/build/org/eclipse/persistence/eclipselink/2.4.2/eclipselink-2.4.2.pom
+Source0:       http://www.mirrorservice.org/sites/download.eclipse.org/eclipseMirror/rt/%{name}/releases/%{version}/%{name}-src-%{namedversion}.zip
+Source1:       %{name}-%{version}-build.properties
+Source2:       %{name}-%{version}-build.xml
 
 Source3:       http://repo1.maven.org/maven2/org/eclipse/persistence/%{name}/%{version}/%{name}-%{version}.pom
 Source4:       http://repo1.maven.org/maven2/org/eclipse/persistence/%{core}/%{version}/%{core}-%{version}.pom
 Source5:       http://repo1.maven.org/maven2/org/eclipse/persistence/%{dbws}/%{version}/%{dbws}-%{version}.pom
-Source6:       http://repo1.maven.org/maven2/org/eclipse/persistence/%{jpa}/%{version}/%{jpa}-%{version}.pom
-Source7:       http://repo1.maven.org/maven2/org/eclipse/persistence/%{jpql}/%{version}/%{jpql}-%{version}.pom
-Source8:       http://repo1.maven.org/maven2/org/eclipse/persistence/%{modelgen}/%{version}/%{modelgen}-%{version}.pom
-Source9:       http://repo1.maven.org/maven2/org/eclipse/persistence/%{moxy}/%{version}/%{moxy}-%{version}.pom
-Source10:      http://repo1.maven.org/maven2/org/eclipse/persistence/%{sdo}/%{version}/%{sdo}-%{version}.pom
-
-# thanks to Andrew Ross ubuntu[at]rossfamily.co.uk
-# build fix for openjdk https://bugs.eclipse.org/bugs/show_bug.cgi?id=413186
-Patch0:        %{name}-2.5.2-openjdk.patch
-# use system libraries asm3 and antlr3
-Patch1:        %{name}-2.5.2-use-system-libraries.patch
+Source6:       http://repo1.maven.org/maven2/org/eclipse/persistence/%{extension}/%{version}/%{extension}-%{version}.pom
+Source7:       http://repo1.maven.org/maven2/org/eclipse/persistence/%{jpa}/%{version}/%{jpa}-%{version}.pom
+Source8:       http://repo1.maven.org/maven2/org/eclipse/persistence/%{jpql}/%{version}/%{jpql}-%{version}.pom
+Source9:       http://repo1.maven.org/maven2/org/eclipse/persistence/%{modelgen}/%{version}/%{modelgen}-%{version}.pom
+Source10:      http://repo1.maven.org/maven2/org/eclipse/persistence/%{moxy}/%{version}/%{moxy}-%{version}.pom
+Source11:      http://repo1.maven.org/maven2/org/eclipse/persistence/%{sdo}/%{version}/%{sdo}-%{version}.pom
 
 BuildRequires: ant
-#BuildRequires: ant-antlr3
 BuildRequires: antlr3-java
 BuildRequires: antlr3-tool
 BuildRequires: aqute-bnd
+BuildRequires: bean-validation-api
 BuildRequires: cdi-api
 BuildRequires: eclipse-equinox-osgi
 BuildRequires: eclipselink-persistence-api
-BuildRequires: geronimo-jms
-BuildRequires: geronimo-validation
 BuildRequires: glassfish-jaxb-api
 BuildRequires: glassfish-jaxb-codemodel
 BuildRequires: glassfish-jaxb-core
@@ -68,12 +62,15 @@ BuildRequires: java-javadoc
 BuildRequires: javamail
 BuildRequires: javapackages-local
 BuildRequires: jboss-connector-1.7-api
+BuildRequires: jboss-jaxrs-2.0-api
+BuildRequires: jboss-jms-2.0-api
 BuildRequires: jboss-transaction-1.2-api
-BuildRequires: jsr-311
-BuildRequires: objectweb-asm3
+BuildRequires: jgroups
+BuildRequires: jsonp
+BuildRequires: objectweb-asm
 BuildRequires: stringtemplate4
 BuildRequires: tuscany-sdo-java
-BuildRequires: wsdl4j
+BuildRequires: xsom
 
 BuildArch:     noarch
 Source44: import.info
@@ -104,46 +101,13 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q -c
 
-%patch0 -p1
-%patch1 -p1
-rm -rf org/eclipse/persistence/internal/libraries/*
+rm -r org/eclipse/persistence/internal/libraries/*
+find ./ -name "*.java" -exec sed -i "s/org.eclipse.persistence.internal.libraries.antlr/org.antlr/g" {} +
+find ./ -name "*.java" -exec sed -i "s/org.eclipse.persistence.internal.libraries.asm/org.objectweb.asm/g" {} +
+
 # temporary fix for antlr 3.5.2
 sed -i "s|Token.EOF_TOKEN|Token.EOF|" \
  org/eclipse/persistence/internal/jpa/parsing/jpql/JPQLParser.java
-
-
-%if 0
-sed -i "s|org.eclipse.persistence.internal.libraries.antlr|org.antlr|" \
- org/eclipse/persistence/internal/jpa/parsing/jpql/CaseInsensitiveANTLRStringStream.java \
- org/eclipse/persistence/internal/jpa/parsing/jpql/CaseInsensitiveJPQLLexer.java \
- org/eclipse/persistence/internal/jpa/parsing/jpql/InvalidIdentifierException.java \
- org/eclipse/persistence/internal/jpa/parsing/jpql/InvalidIdentifierStartException.java \
- org/eclipse/persistence/internal/jpa/parsing/jpql/JPQLParser.java \
- org/eclipse/persistence/internal/jpa/parsing/jpql/antlr/JPQLLexer.java \
- org/eclipse/persistence/internal/jpa/parsing/jpql/antlr/JPQLParser.java \
- org/eclipse/persistence/internal/jpa/parsing/jpql/antlr/JPQLParserBuilder.java \
- org/eclipse/persistence/internal/oxm/record/json/JSONLexer.java \
- org/eclipse/persistence/internal/oxm/record/json/JSONParser.java \
- org/eclipse/persistence/internal/oxm/record/json/JSONReader.java
-
-sed -i "s|org.eclipse.persistence.internal.libraries.asm|org.objectweb.asm|" \
- org/eclipse/persistence/dynamic/DynamicClassWriter.java \
- org/eclipse/persistence/internal/dbws/SOAPResponseClassLoader.java \
- org/eclipse/persistence/internal/jpa/metadata/MetadataDynamicClassWriter.java \
- org/eclipse/persistence/internal/jpa/metadata/accessors/objects/MetadataAsmFactory.java \
- org/eclipse/persistence/internal/jpa/metadata/accessors/objects/MetadataClass.java \
- org/eclipse/persistence/internal/jpa/weaving/AttributeDetails.java \
- org/eclipse/persistence/internal/jpa/weaving/ClassWeaver.java \
- org/eclipse/persistence/internal/jpa/weaving/ComputeClassWriter.java \
- org/eclipse/persistence/internal/jpa/weaving/MethodWeaver.java \
- org/eclipse/persistence/internal/jpa/weaving/PersistenceWeaver.java \
- org/eclipse/persistence/internal/jpa/weaving/RestAdapterClassWriter.java \
- org/eclipse/persistence/internal/jpa/weaving/TransformerFactory.java \
- org/eclipse/persistence/internal/xr/XRClassWriter.java \
- org/eclipse/persistence/jaxb/compiler/AnnotationsProcessor.java \
- org/eclipse/persistence/jaxb/compiler/MappingsGenerator.java \
- org/eclipse/persistence/sdo/helper/DynamicClassWriter.java \
-%endif
 
 cp -p %{SOURCE1} build.properties
 cp -p %{SOURCE2} build.xml
@@ -152,29 +116,24 @@ cp -p %{SOURCE3} pom.xml
 %pom_change_dep org.eclipse.persistence:commonj.sdo org.apache.tuscany.sdo:tuscany-sdo-api-r2.1:1.1.1
 
 cp -p %{SOURCE4} core-pom.xml
-%pom_change_dep org.eclipse.persistence:org.eclipse.persistence.asm asm:asm:3.3.1 core-pom.xml
-%pom_add_dep asm:asm-commons:3.3.1:compile core-pom.xml
-%pom_add_dep asm:asm-tree:3.3.1:compile core-pom.xml
-%pom_add_dep asm:asm-tree:3.3.1:compile core-pom.xml
-%pom_add_dep asm:asm-util:3.3.1:compile core-pom.xml
-%pom_add_dep asm:asm-xml:3.3.1:compile core-pom.xml
+%pom_change_dep org.eclipse.persistence:org.eclipse.persistence.asm org.ow2.asm:asm:5.0.4 core-pom.xml
+%pom_add_dep org.ow2.asm:asm-commons:5.0.4:compile core-pom.xml
+%pom_add_dep org.ow2.asm:asm-tree:5.0.4:compile core-pom.xml
+%pom_add_dep org.ow2.asm:asm-tree:5.0.4:compile core-pom.xml
+%pom_add_dep org.ow2.asm:asm-util:5.0.4:compile core-pom.xml
+%pom_add_dep org.ow2.asm:asm-xml:5.0.4:compile core-pom.xml
 
-cp -p %{SOURCE6} jpa-pom.xml
+cp -p %{SOURCE7} jpa-pom.xml
 %pom_change_dep org.eclipse.persistence:org.eclipse.persistence.antlr org.antlr:antlr-runtime:3.5.2 jpa-pom.xml
-#%% pom_add_dep org.antlr:antlr:3.5.2:compile jpa-pom.xml
-%pom_change_dep org.eclipse.persistence:org.eclipse.persistence.asm asm:asm:3.3.1 jpa-pom.xml
-%pom_add_dep asm:asm:3.3.1:compile jpa-pom.xml
-%pom_add_dep asm:asm-commons:3.3.1:compile jpa-pom.xml
-%pom_add_dep asm:asm-tree:3.3.1:compile jpa-pom.xml
-%pom_add_dep asm:asm-tree:3.3.1:compile jpa-pom.xml
-%pom_add_dep asm:asm-util:3.3.1:compile jpa-pom.xml
-%pom_add_dep asm:asm-xml:3.3.1:compile jpa-pom.xml
+%pom_change_dep org.eclipse.persistence:org.eclipse.persistence.asm org.ow2.asm:asm:5.0.4 jpa-pom.xml
+%pom_add_dep org.ow2.asm:asm:5.0.4:compile jpa-pom.xml
+%pom_add_dep org.ow2.asm:asm-commons:5.0.4:compile jpa-pom.xml
+%pom_add_dep org.ow2.asm:asm-tree:5.0.4:compile jpa-pom.xml
+%pom_add_dep org.ow2.asm:asm-tree:5.0.4:compile jpa-pom.xml
+%pom_add_dep org.ow2.asm:asm-util:5.0.4:compile jpa-pom.xml
+%pom_add_dep org.ow2.asm:asm-xml:5.0.4:compile jpa-pom.xml
 
-cp -p %{SOURCE9} moxy-pom.xml
-%pom_change_dep org.eclipse.persistence:org.eclipse.persistence.antlr org.antlr:antlr-runtime:3.5.2 moxy-pom.xml
-#%% pom_add_dep org.antlr:antlr:3.5.2:compile moxy-pom.xml
-
-cp -p %{SOURCE10} sdo-pom.xml
+cp -p %{SOURCE11} sdo-pom.xml
 %pom_change_dep org.eclipse.persistence:commonj.sdo org.apache.tuscany.sdo:tuscany-sdo-api-r2.1:1.1.1 sdo-pom.xml
 
 # fix non ASCII chars
@@ -207,10 +166,11 @@ ant
 %mvn_artifact pom.xml target/%{name}.jar
 %mvn_artifact core-pom.xml target/%{core}-%{version}.jar
 %mvn_artifact %{SOURCE5} target/%{dbws}-%{version}.jar
+%mvn_artifact %{SOURCE6} target/%{extension}-%{version}.jar
 %mvn_artifact jpa-pom.xml target/%{jpa}-%{version}.jar
-%mvn_artifact %{SOURCE7} target/%{jpql}-%{version}.jar
-%mvn_artifact %{SOURCE8} target/%{modelgen}-%{version}.jar
-%mvn_artifact moxy-pom.xml target/%{moxy}-%{version}.jar
+%mvn_artifact %{SOURCE8} target/%{jpql}-%{version}.jar
+%mvn_artifact %{SOURCE9} target/%{modelgen}-%{version}.jar
+%mvn_artifact %{SOURCE10} target/%{moxy}-%{version}.jar
 %mvn_artifact sdo-pom.xml target/%{sdo}-%{version}.jar
 %mvn_install -J target/api
 
@@ -222,6 +182,9 @@ ant
 %doc license.html
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1_2jpp8
 - new version
 
