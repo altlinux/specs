@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Fast Scanner Generator
 Name:           jflex
 Version:        1.6.1
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 License:        BSD
 URL:            http://jflex.de/
 BuildArch:      noarch
@@ -27,6 +27,7 @@ BuildRequires:  ant
 BuildRequires:  emacs
 BuildRequires:  jflex
 BuildRequires:  junit
+BuildRequires:  sonatype-oss-parent
 BuildRequires:  java-devel
 BuildRequires:  java_cup
 BuildRequires:  desktop-file-utils
@@ -111,6 +112,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt1_4jpp8
+- new fc release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt1_3jpp8
 - new fc release
 
