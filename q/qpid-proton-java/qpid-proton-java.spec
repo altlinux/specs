@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/doxygen /usr/bin/epydoc /usr/bin/gem /usr/bin/go /usr/bi
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          qpid-proton-java
-Version:       0.12.0
+Version:       0.12.2
 Release:       alt1_1jpp8
 Summary:       Java libraries for Qpid Proton
 License:       ASL 2.0
@@ -51,9 +51,9 @@ rm -r tools docs config.* examples/c examples/javascript \
   tests/smoke tests/ruby tests/python tests/tools tests/javascript
 
 %pom_remove_dep org.python:jython-standalone tests
-rm -r tests/java/org/apache/qpid/proton/JythonTest.java
+rm tests/java/org/apache/qpid/proton/JythonTest.java
 
-rm -r contrib/proton-hawtdispatch/src/test/java/org/apache/qpid/proton/hawtdispatch/api/SampleTest.java
+rm contrib/proton-hawtdispatch/src/test/java/org/apache/qpid/proton/hawtdispatch/api/SampleTest.java
 
 %mvn_alias :proton-j org.apache.qpid:proton-api org.apache.qpid:proton-j-impl
 
@@ -72,6 +72,9 @@ rm -r contrib/proton-hawtdispatch/src/test/java/org/apache/qpid/proton/hawtdispa
 %doc proton-j/LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.12.2-alt1_1jpp8
+- new version
+
 * Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.12.0-alt1_1jpp8
 - new version
 
