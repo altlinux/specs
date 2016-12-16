@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-ports-access
-Version: 0.0.3
-Release: alt9
+Version: 0.1
+Release: alt1
 Packager: Packager: Andriy Stepanov <stanv@altlinux.ru>
 BuildArch: noarch
 Source:%name-%version.tar
@@ -40,6 +40,9 @@ Alterator module to control serial/USB ports access
 /lib/udev/alterator-ports-access
 
 %changelog
+* Thu Dec 15 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.1-alt1
+- sub-device interfaces support added
+
 * Thu Oct 20 2016 Andrey Cherepanov <cas@altlinux.org> 0.0.3-alt9
 - Do not show this html module in alterator-browser-qt (ALT #32626)
 
