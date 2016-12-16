@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           findbugs
 Version:        3.0.1
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Find bugs in Java code
 
 Group:          Development/Other
@@ -55,15 +55,17 @@ BuildRequires:  ant
 BuildRequires:  docbook-style-xsl
 BuildRequires:  apache-commons-lang
 BuildRequires:  dom4j
+BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  jaxen
 BuildRequires:  jcip-annotations
 BuildRequires:  jdepend
 BuildRequires:  jFormatString
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils
 BuildRequires:  jsr-305
 BuildRequires:  junit
 BuildRequires:  objectweb-asm
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires: /usr/bin/latex texlive-latex-recommended
 BuildRequires:  texlive-publishers
 
@@ -73,10 +75,12 @@ BuildRequires:  docbook-style-xsl
 
 Requires:       findbugs-bcel
 Requires:       apache-commons-lang
+Requires:       dom4j
+Requires:       java >= 1.6.0
 Requires:       jaxen
 Requires:       jcip-annotations
 Requires:       jFormatString
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 Requires:       jsr-305
 Requires:       junit
 Requires:       objectweb-asm
@@ -236,6 +240,9 @@ fi ||:
 %{_javadir}/findbugs-tools.jar
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_6jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_5jpp8
 - new fc release
 
