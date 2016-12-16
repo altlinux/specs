@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -8,17 +9,18 @@ BuildRequires: jpackage-generic-compat
 
 Name:           %{short_name}-pom
 Version:        1.3.1
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Plexus Components POM
-BuildArch:      noarch
-Group:          Development/Other
 License:        ASL 2.0
 URL:            https://github.com/codehaus-plexus/plexus-components
+BuildArch:      noarch
+
 Source0:        http://repo.maven.apache.org/maven2/org/codehaus/plexus/%{short_name}/%{version}/%{short_name}-%{version}.pom
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildRequires:  maven-local
-BuildRequires:  plexus-pom
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 Source44: import.info
 
 %description
@@ -26,6 +28,7 @@ This package provides Plexus Components parent POM used by different
 Plexus packages.
 
 %prep
+%setup -qcT
 cp -p %{SOURCE0} pom.xml
 cp -p %{SOURCE1} LICENSE
 
@@ -39,6 +42,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_7jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_6jpp8
 - new fc release
 
