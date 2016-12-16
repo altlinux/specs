@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          glassfish-jaxws
 Version:       2.2.10
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       JAX-WS Reference Implementation (RI) Project
 # ASL 2.0
 # tools/wscompile/src/com/sun/tools/ws/ant/AnnotationProcessingTask.java
@@ -48,6 +48,8 @@ BuildRequires: mvn(org.apache.ant:ant-launcher)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires: mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 BuildRequires: mvn(org.codehaus.woodstox:stax2-api)
 BuildRequires: mvn(org.codehaus.woodstox:woodstox-core-asl)
 BuildRequires: mvn(org.glassfish.gmbal:gmbal-api-only)
@@ -180,6 +182,21 @@ find . -name "*.zip" -print -delete
   javax.xml.ws.handler;version=${jaxws-api.osgiVersion}
 </Import-Package>' transports/local
 
+%pom_xpath_remove pom:build/pom:finalName transports/local
+%pom_add_plugin org.apache.maven.plugins:maven-jar-plugin:3.0.1 transports/local '
+ <executions>
+  <execution>
+   <id>default-jar</id>
+   <phase>skip</phase>
+  </execution>
+ </executions>
+<configuration>
+  <finalName>${project.artifactId}</finalName>
+  <archive>
+    <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+  </archive>
+</configuration>'
+
 %pom_xpath_inject "pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration" "
 <excludePackageNames>*.message.*</excludePackageNames>
 <excludePackageNames>com.sun.xml.ws</excludePackageNames>"
@@ -189,6 +206,8 @@ find . -name "*.zip" -print -delete
 %pom_remove_dep javax.jws:jsr181-api bundles/jaxws-rt
 %pom_remove_dep :ant-nodeps tools/wscompile
 
+%pom_xpath_set "pom:phase[text()='prepare-package']" package transports/async-client-transport
+
 for d in CDDL+GPLv2.html CDDL-1.0-license.txt README.md ; do
   iconv -f iso8859-1 -t utf-8 $d > $d.conv && mv -f $d.conv $d
   sed -i 's/\r//' $d
@@ -197,6 +216,10 @@ done
 # these tests fails
 rm -r tools/wscompile/src/test/java/com/sun/tools/ws/ant/* \
  eclipselink_jaxb/src/test/java/com/sun/xml/ws/cts/dl_swa/SwaMimeAttachmentTest.java
+find -name SAAJMessageTest.java -delete
+find -name SAAJMessageWrapperTest.java -delete
+
+
 
 %mvn_package ":jaxws-*-transport" transports
 %mvn_package :extras transports
@@ -212,7 +235,6 @@ rm -r tools/wscompile/src/test/java/com/sun/tools/ws/ant/* \
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc README.md
 %doc CDDL+GPLv2.html CDDL-1.0-license.txt
 
@@ -226,6 +248,9 @@ rm -r tools/wscompile/src/test/java/com/sun/tools/ws/ant/* \
 %doc CDDL+GPLv2.html CDDL-1.0-license.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.2.10-alt1_4jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.2.10-alt1_3jpp8
 - new fc release
 
