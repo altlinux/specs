@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name querydsl
-%define version 4.0.3
+%define version 4.0.4
 %global _version %( echo %{version} | tr . _ )
 
 %if 0%{?fedora}
@@ -30,7 +30,8 @@ BuildRequires: jpackage-generic-compat
 %endif
 
 Name:          querydsl
-Version:       4.0.3
+# NOTE: newer release use hibernate-core:4.3.11.Final
+Version:       4.0.4
 Release:       alt1_3jpp8
 Summary:       Type-safe queries for Java
 License:       LGPLv2+
@@ -75,8 +76,8 @@ BuildRequires: mvn(org.apache.maven:maven-core)
 BuildRequires: mvn(org.apache.maven:maven-model)
 BuildRequires: mvn(org.apache.maven:maven-plugin-api)
 BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
-# eclipselink :2.5.1
 BuildRequires: mvn(org.eclipse.persistence:eclipselink)
 BuildRequires: mvn(org.geolatte:geolatte-geom)
 BuildRequires: mvn(org.hamcrest:hamcrest-core)
@@ -87,7 +88,7 @@ BuildRequires: mvn(org.hibernate:hibernate-validator)
 BuildRequires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.0-api)
 BuildRequires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.1-api)
 BuildRequires: mvn(org.jenkins-ci:annotation-indexer)
-BuildRequires: mvn(org.mongodb:mongo-java-driver:2.14.1)
+BuildRequires: mvn(org.mongodb:mongo-java-driver:2)
 BuildRequires: mvn(org.mongodb.morphia:morphia)
 %if %{with postgis}
 BuildRequires: mvn(org.postgis:postgis-jdbc)
@@ -97,6 +98,7 @@ BuildRequires: mvn(org.scala-lang:scala-library)
 BuildRequires: mvn(org.scala-lang:scala-compiler)
 BuildRequires: mvn(org.slf4j:slf4j-api)
 BuildRequires: mvn(org.slf4j:slf4j-log4j12)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires: mvn(org.sonatype.plexus:plexus-build-api)
 BuildRequires: mvn(org.springframework:spring-jdbc)
 
@@ -105,7 +107,6 @@ BuildRequires: mvn(org.springframework:spring-jdbc)
 BuildRequires: mvn(com.h2database:h2)
 # https://bugzilla.redhat.com/show_bug.cgi?id=1217563
 BuildRequires: mvn(com.jolbox:bonecp:0.7.1.RELEASE)
-# https://bugzilla.redhat.com/show_bug.cgi?id=1217162
 BuildRequires: mvn(com.mysema.maven:apt-maven-plugin)
 BuildRequires: mvn(com.oracle:ojdbc6)
 BuildRequires: mvn(cubrid:cubrid-jdbc:9.3.1.0005)
@@ -284,9 +285,9 @@ find . -name "*.jar" -print -delete
 
 %pom_remove_parent
 %pom_remove_plugin :maven-assembly-plugin
-%pom_remove_plugin :maven-pmd-plugin
-%pom_remove_plugin :maven-source-plugin
-%pom_remove_plugin :maven-version-plugin
+%pom_remove_plugin -r :maven-pmd-plugin
+%pom_remove_plugin -r :maven-source-plugin
+%pom_remove_plugin -r :maven-version-plugin
 %pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin
 %pom_xpath_remove "pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration/pom:outputDirectory"
 %pom_xpath_remove "pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration/pom:reportOutputDirectory"
@@ -403,7 +404,10 @@ rm -r querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310InstantType.java \
  querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310LocalDateType.java \
  querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310OffsetDateTimeType.java
 
-%pom_xpath_set "pom:properties/pom:mongodb.version" 2.14.1 querydsl-mongodb
+%pom_xpath_set "pom:properties/pom:mongodb.version" 2 querydsl-mongodb
+
+# fix build failure. 'useDefaultManifestFile' has been removed from the maven-jar-plugin >= 3.0.0
+%pom_remove_plugin :maven-jar-plugin
 
 %mvn_package :%{name}-jdo::apt: %{name}-jdo
 %mvn_package :%{name}-jpa::apt: %{name}-jpa
@@ -461,6 +465,9 @@ rm -r querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310InstantType.java \
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt1_3jpp8
+- new version
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.3-alt1_3jpp8
 - new fc release
 
