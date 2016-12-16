@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -9,19 +10,19 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-%{short_name}
 Version:          1.5
-Release:          alt1_10jpp8
+Release:          alt1_11jpp8
 Summary:          Apache Commons DbUtils Package
-Group:            Development/Other
 License:          ASL 2.0
 URL:              http://commons.apache.org/dbutils/
-Source0:          http://www.apache.org/dist/commons/dbutils/source/%{short_name}-%{version}-src.tar.gz
 BuildArch:        noarch
 
-BuildRequires: javapackages-tools rpm-build-java
-BuildRequires:    maven-local
-BuildRequires:    hamcrest
-BuildRequires:    mockito
-Requires: javapackages-tools rpm-build-java
+Source0:          http://www.apache.org/dist/commons/dbutils/source/%{short_name}-%{version}-src.tar.gz
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.hamcrest:hamcrest-all)
+BuildRequires:  mvn(org.mockito:mockito-core)
 Source44: import.info
 
 %description
@@ -31,9 +32,8 @@ abstract out all of the cleanup tasks from your code leaving you with what you
 really wanted to do with JDBC in the first place: query and update data.
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadoc for %{name}
-Group:            Development/Java
-Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -60,6 +60,9 @@ sed -i 's/\r//' *.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_11jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_10jpp8
 - new fc release
 
