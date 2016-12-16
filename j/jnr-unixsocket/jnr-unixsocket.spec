@@ -5,15 +5,13 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jnr-unixsocket
-Version:        0.10
+Version:        0.12
 Release:        alt1_1jpp8
 Summary:        Unix sockets for Java
 Group:          Development/Other
 License:        ASL 2.0
 URL:            http://github.com/jnr/%{name}/
 Source0:        https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
-Source1:	MANIFEST.MF
-Patch0:		add-manifest.patch
 BuildArch:      noarch
 
 BuildRequires:  java-devel
@@ -44,8 +42,6 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
-%patch0
-cp %{SOURCE1} .
 
 # remove unnecessary wagon extension
 %pom_xpath_remove pom:build/pom:extensions
@@ -66,6 +62,9 @@ find ./ -name '*.class' -delete
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_1jpp8
 - new version
 
