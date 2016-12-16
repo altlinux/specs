@@ -12,10 +12,10 @@ BuildRequires: jpackage-generic-compat
 Summary:       ANother Tool for Language Recognition
 Name:          antlr
 Version:       2.7.7
-Release:       alt12_40jpp8
+Release:       alt12_43jpp8
 Epoch:         0
 License:       Public Domain
-URL:           http://www.antlr.org/
+URL:           http://www.antlr2.org/
 Source0:       http://www.antlr2.org/download/antlr-%{version}.tar.gz
 Source1:       %{name}-build.xml
 Source2:       %{name}-script
@@ -31,9 +31,11 @@ BuildRequires: mono-winforms
 %endif
 %endif
 BuildRequires: ant
+BuildRequires: java-devel >= 1.7.0
 BuildRequires: java-javadoc
 BuildRequires: javapackages-local
-BuildRequires: doxygen
+BuildRequires: doxygen graphviz libgraphviz
+# Do not support Python3
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 Source44: import.info
@@ -139,7 +141,7 @@ popd
 
 # build python
 cd lib/python
-%{__python} setup.py build
+%python_build
 cd ../../
 
 %install
@@ -159,7 +161,7 @@ install -p -m 755 scripts/antlr-config $RPM_BUILD_ROOT%{_bindir}
 
 # python
 cd lib/python
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
+%python_install
 cd ../..
 chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 
@@ -194,6 +196,9 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %{python_sitelibdir_noarch}/antlr-*
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.7.7-alt12_43jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.7.7-alt12_40jpp8
 - new fc release
 
