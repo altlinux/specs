@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           antlr32
 Version:        3.2
-Release:        alt1_14jpp8
+Release:        alt1_15jpp8
 Summary:        ANother Tool for Language Recognition
 
 License:        BSD
@@ -39,6 +39,8 @@ Patch1:         osgi-manifest.patch
 
 BuildRequires:  maven-local
 BuildRequires:  antlr-maven-plugin
+BuildRequires:  maven-plugin-bundle
+BuildRequires:  maven-plugin-plugin
 BuildRequires:  stringtemplate >= 3.2
 
 # Cannot require ourself when bootstrapping
@@ -158,6 +160,9 @@ cp -p %{SOURCE6} %{SOURCE7} .m2/org/antlr/antlr3-maven-plugin/%{bootstrap_versio
 %doc tool/LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_15jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_14jpp8
 - new fc release
 
