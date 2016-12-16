@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           felix-parent
 Version:        2.1
-Release:        alt1_9jpp8
+Release:        alt1_10jpp8
 Summary:        Parent POM file for Apache Felix Specs
 License:        ASL 2.0
 URL:            http://felix.apache.org/
@@ -16,9 +16,14 @@ Source0:        http://repo1.maven.org/maven2/org/apache/felix/felix-parent/%{ve
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+BuildRequires:  easymock
 BuildRequires:  mockito
 BuildRequires:  maven-site-plugin
 BuildRequires:  maven-release-plugin
+
+# FIXME auto-requires are not generated
+Requires: easymock
+Requires: mockito
 Source44: import.info
 
 %description
@@ -44,6 +49,9 @@ Parent POM file for Apache Felix Specs.
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_10jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_9jpp8
 - new fc release
 
