@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           geronimo-parent-poms
 Version:        1.6
-Release:        alt3_21jpp8
+Release:        alt3_22jpp8
 Summary:        Parent POM files for geronimo-specs
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/
@@ -18,6 +18,7 @@ Source0:        http://svn.apache.org/repos/asf/geronimo/specs/tags/specs-parent
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 
 # Dependencies and plugins from the POM files
 Provides:       geronimo-specs = %{version}-%{release}
@@ -34,9 +35,9 @@ cp -p %{SOURCE1} LICENSE
 %pom_remove_parent
 # IDEA plugin is not really useful in Fedora
 %pom_remove_plugin :maven-idea-plugin
+%mvn_alias : org.apache.geronimo.specs:specs
 
 %build
-%mvn_alias : org.apache.geronimo.specs:specs
 %mvn_build
 
 %install
@@ -45,8 +46,10 @@ cp -p %{SOURCE1} LICENSE
 %files -f .mfiles
 %doc LICENSE
 
-
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.6-alt3_22jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.6-alt3_21jpp8
 - new fc release
 
