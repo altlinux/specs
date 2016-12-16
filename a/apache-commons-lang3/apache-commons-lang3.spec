@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        3.4
-Release:        alt4_4jpp8
+Release:        alt4_5jpp8
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
 URL:            http://commons.apache.org/%{base_name}
@@ -59,6 +59,7 @@ BuildArch: noarch
 %prep
 %setup -q -n %{short_name}-%{version}-src
 %patch0
+%patch1 -p1
 %mvn_file : %{name} %{short_name}
 
 %build
@@ -74,6 +75,9 @@ BuildArch: noarch
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.4-alt4_5jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.4-alt4_4jpp8
 - new fc release
 
