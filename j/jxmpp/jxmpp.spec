@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jxmpp
 Version:       0.4.2
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       An Open Source XMPP Java base-library
 License:       ASL 2.0
 URL:           https://github.com/igniterealtime/jxmpp
@@ -28,6 +28,7 @@ Source5:       http://repo1.maven.org/maven2/org/jxmpp/jxmpp-util-cache/%{namedv
 
 BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.gnu.inet:libidn)
 
 BuildArch:     noarch
@@ -168,6 +169,9 @@ done
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_3jpp8
+- new fc release
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_2jpp8
 - new version
 
