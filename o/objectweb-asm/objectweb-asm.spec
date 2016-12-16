@@ -10,13 +10,13 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name objectweb-asm
-%define version 5.0.4
+%define version 5.1
 %{?scl:%scl_package objectweb-asm}
 %{!?scl:%global pkg_name %{name}}
 
 Name:           %{?scl_prefix}objectweb-asm
-Version:        5.0.4
-Release:        alt1_2jpp8
+Version:        5.1
+Release:        alt1_4jpp8
 Summary:        Java bytecode manipulation and analysis framework
 License:        BSD
 URL:            http://asm.ow2.org/
@@ -28,6 +28,7 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildRequires:  ant
 BuildRequires:  aqute-bnd
 BuildRequires:  maven-local
+BuildRequires:  objectweb-pom
 %{?scl:Requires: %scl_runtime}
 
 Obsoletes:      %{?scl_prefix}objectweb-asm4 < 5
@@ -55,7 +56,7 @@ find -name *.jar -delete
 
 sed -i /Class-Path/d archive/*.bnd
 sed -i "s/Import-Package:/&org.objectweb.asm,org.objectweb.asm.util,/" archive/asm-xml.bnd
-sed -i "s|\${config}/biz.aQute.bnd.jar|`build-classpath aqute-bnd`|" archive/*.xml
+sed -i "s|\${config}/biz.aQute.bnd.jar|`build-classpath aqute-bnd slf4j/api slf4j/simple eclipse/osgi.services`|" archive/*.xml
 sed -i -e '/kind="lib"/d' -e 's|output/eclipse|output/build|' .classpath
 
 %build
@@ -82,6 +83,9 @@ done
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.1-alt1_4jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.0.4-alt1_2jpp8
 - new version
 
