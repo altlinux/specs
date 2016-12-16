@@ -11,14 +11,14 @@ BuildRequires: jpackage-generic-compat
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%global githash d426fc0a676eca0432c46be758414226ea07fd17
+%global githash c5ab6c87014779ce9399c162474e2d4ac652f6d0
 
 # Re-enable when https://bugzilla.redhat.com/show_bug.cgi?id=1234368 is fixed
 #def_with ruby
 %bcond_with ruby
 
 Name:          tesla-polyglot
-Version:       0.1.14
+Version:       0.1.18
 Release:       alt1_2jpp8
 Summary:       Modules to enable Maven usage in other JVM languages
 License:       EPL
@@ -27,29 +27,26 @@ Source0:       https://github.com/takari/maven-polyglot/archive/%{githash}/maven
 Source1:       eclipse-1.0.txt
 
 BuildRequires: maven-local
-BuildRequires: mvn(antlr:antlr)
-BuildRequires: mvn(commons-cli:commons-cli)
 BuildRequires: mvn(commons-logging:commons-logging)
 BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.apache.ant:ant)
-BuildRequires: mvn(org.apache.ant:ant-junit)
-BuildRequires: mvn(org.apache.ant:ant-launcher)
 BuildRequires: mvn(org.apache.maven:maven-core)
 BuildRequires: mvn(org.apache.maven:maven-model)
 BuildRequires: mvn(org.apache.maven:maven-model-builder)
 BuildRequires: mvn(org.apache.maven:maven-plugin-api)
-BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires: mvn(org.codehaus.gmavenplus:gmavenplus-plugin)
 BuildRequires: mvn(org.codehaus.groovy:groovy-all)
+BuildRequires: mvn(org.codehaus.modello:modello-maven-plugin)
 BuildRequires: mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires: mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires: mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
-BuildRequires: mvn(org.ow2.asm:asm-all)
 BuildRequires: mvn(org.slf4j:slf4j-api)
-BuildRequires: mvn(org.slf4j:slf4j-nop)
 BuildRequires: mvn(org.yaml:snakeyaml)
+
+# Maven POM doesn't require maven-parent
+BuildRequires: mvn(org.apache.maven:maven-parent:pom:)
 
 %if %{with ruby}
 # Ruby module
@@ -62,17 +59,18 @@ BuildRequires: mvn(org.jruby:jruby-core)
 # Clojure module
 BuildRequires: mvn(com.theoryinpractise:clojure-maven-plugin:1.3.1)
 BuildRequires: mvn(org.clojure:clojure:1.1.0)
-
 # Scala module
 BuildRequires: mvn(com.twitter:util-eval_2.10:6.23.0)
 BuildRequires: mvn(com.googlecode.kiama:kiama_2.10:1.8.0)
 BuildRequires: mvn(net.alchim31.maven:scala-maven-plugin:3.2.0)
 BuildRequires: mvn(org.scala-lang:scala-library:2.10.5)
-BuildRequires: mvn(org.specs2:specs2_2.10:2.4.17)
-
-# test deps
-# No more available retired
+# Test deps
+# Clojure module
 BuildRequires: mvn(org.easytesting:fest-assert)
+# Scala module
+BuildRequires: mvn(org.specs2:specs2-junit_2.10:2.4.17)
+# XML module
+BuildRequires: mvn(com.cedarsoftware:java-util)
 %endif
 
 Obsoletes:     %{name}-cli
@@ -147,6 +145,13 @@ Summary:       Polyglot Tesla :: Scala
 Polyglot Tesla :: Scala.
 %endif
 
+%package xml
+Group: Development/Java
+Summary:       Polyglot Tesla :: XML
+
+%description xml
+Polyglot Tesla :: XML.
+
 %package yaml
 Group: Development/Java
 Summary:       Polyglot Tesla :: YAML
@@ -172,6 +177,7 @@ find -name "*.jar" -delete
 # Unavailable build deps/tools
 %pom_disable_module polyglot-clojure
 %pom_disable_module polyglot-scala
+
 %pom_remove_dep :polyglot-scala polyglot-translate-plugin
 
 %if %{without ruby}
@@ -181,7 +187,6 @@ find -name "*.jar" -delete
 
 %pom_remove_dep org.eclipse.sisu:org.eclipse.sisu.inject.tests
 
-%pom_change_dep org.jruby:jruby-noasm org.jruby:jruby-core polyglot-ruby
 %pom_remove_dep rubygems:maven-tools polyglot-ruby
 # TODO: remove following line once maven-tools gem is in Fedora
 rm -Rf polyglot-ruby/src/{test,it}
@@ -189,57 +194,21 @@ rm -Rf polyglot-ruby/src/{test,it}
 
 # Unavailable plugin
 %pom_remove_plugin org.codehaus.groovy:groovy-eclipse-compiler polyglot-groovy
-# Use as deps: org.codehaus.groovy:groovy-eclipse-compiler:2.9.2-01 org.codehaus.groovy:groovy-eclipse-batch:2.4.3-01
+%pom_remove_dep org.codehaus.groovy:groovy-eclipse-batch polyglot-groovy
+%pom_remove_dep org.codehaus.groovy:groovy-eclipse-compiler polyglot-groovy
 %pom_remove_plugin :maven-compiler-plugin polyglot-groovy
-%pom_add_plugin org.apache.maven.plugins:maven-antrun-plugin:1.7 polyglot-groovy '
-<dependencies>
-  <dependency>
-    <groupId>org.codehaus.groovy</groupId>
-    <artifactId>groovy-all</artifactId>
-    <version>2.4.4</version>
-  </dependency>
-  <dependency>
-    <groupId>antlr</groupId>
-    <artifactId>antlr</artifactId>
-    <version>2.7.7</version>
-  </dependency>
-  <dependency>
-    <groupId>commons-cli</groupId>
-    <artifactId>commons-cli</artifactId>
-    <version>1.2</version>
-  </dependency>
-  <dependency>
-    <groupId>org.ow2.asm</groupId>
-    <artifactId>asm-all</artifactId>
-    <version>4.2</version>
-  </dependency>
-  <dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-nop</artifactId>
-    <version>1.7.5</version>
-  </dependency>
-</dependencies>
-<executions>
+# use gmavenplus
+%pom_add_plugin org.codehaus.gmavenplus:gmavenplus-plugin:1.5 polyglot-groovy "
+ <executions>
   <execution>
-    <id>compile</id>
-    <phase>compile</phase>
-    <configuration>
-      <tasks>
-        <taskdef name="groovyc"
-          classname="org.codehaus.groovy.ant.Groovyc">
-          <classpath refid="maven.plugin.classpath"/>
-        </taskdef>
-        <groovyc destdir="target/classes"
-          srcdir="src/main" listfiles="true">
-          <classpath refid="maven.compile.classpath"/>
-        </groovyc>
-      </tasks>
-    </configuration>
-    <goals>
-      <goal>run</goal>
-    </goals>
+   <goals>
+    <goal>generateStubs</goal>
+    <goal>testGenerateStubs</goal>
+    <!--goal>compile</goal>
+    <goal>testCompile</goal-->
+   </goals>
   </execution>
-</executions>'
+ </executions>"
 
 for p in maven-plugin translate-plugin; do
   %pom_add_plugin "org.apache.maven.plugins:maven-plugin-plugin:3.4" polyglot-${p} "
@@ -251,9 +220,9 @@ done
 
 %pom_xpath_inject "pom:project/pom:dependencies/pom:dependency[pom:groupId = 'org.apache.maven']" '<version>${mavenVersion}</version>'
 
-# atom common groovy maven-plugin translate-plugin
+# atom common maven-plugin translate-plugin
 # diamond operator
-for m in yaml
+for m in yaml groovy
 do
 %pom_add_plugin org.apache.maven.plugins:maven-compiler-plugin:3.0 polyglot-${m} '
 <configuration>
@@ -268,6 +237,10 @@ sed -i '/pyyaml/d' polyglot-yaml/src/test/java/org/sonatype/maven/polyglot/yaml/
 
 # test skipped for unavailable dependency org.easytesting:fest-assert:1.1
 rm -rf polyglot-clojure/src/test/java/*
+
+# com.cedarsoftware:java-util:1.19.3
+sed -i '/DeepEquals/d' polyglot-xml/src/test/java/org/sonatype/maven/polyglot/xml/TestReaderComparedToDefault.java
+%pom_remove_dep com.cedarsoftware:java-util polyglot-xml
 
 cp -p %{SOURCE1} .
 sed -i 's/\r//' eclipse-1.0.txt
@@ -302,12 +275,18 @@ sed -i 's/\r//' eclipse-1.0.txt
 %files maven-plugin -f .mfiles-polyglot-maven-plugin
 %files translate-plugin -f .mfiles-polyglot-translate-plugin
 
+%files xml -f .mfiles-polyglot-xml
+%doc polyglot-xml/README.md
+
 %files yaml -f .mfiles-polyglot-yaml
 
 %files javadoc -f .mfiles-javadoc
 %doc eclipse-1.0.txt license-header.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.18-alt1_2jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.14-alt1_2jpp8
 - new version
 
