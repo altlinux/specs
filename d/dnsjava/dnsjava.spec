@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          dnsjava
 Version:       2.1.3
-Release:       alt1_10jpp8
+Release:       alt1_11jpp8
 Summary:       Java DNS implementation
 License:       BSD and MIT
 URL:           http://www.dnsjava.org/
@@ -22,6 +22,7 @@ Source1:       %{name}-%{version}.pom
 Patch0:        dnsjava-2.0.6-java1.5.target.patch
 
 BuildRequires: ant
+BuildRequires: aqute-bnd
 # see https://fedorahosted.org/released/javapackages/doc/#_add_maven_depmap_macro_2
 BuildRequires: javapackages-local
 # For tests
@@ -64,7 +65,7 @@ rm -rf doc/
 find -name "*.class" -print -delete
 find -name "*.jar" -print -delete
 
-%patch0 -p1 -b .java1.5
+%patch0 -p0 -b .java1.5
 
 iconv -f iso8859-1 -t utf8 Changelog > Changelog.tmp
 touch -r Changelog Changelog.tmp
@@ -74,10 +75,10 @@ mv -f Changelog.tmp Changelog
 
 %build
 
-export CLASSPATH=%(build-classpath jce)
-ant -Dj2se.javadoc=%{_javadocdir}/java clean docsclean jar docs
+export CLASSPATH=%(build-classpath jce aqute-bnd)
+ant -Dj2se.javadoc=%{_javadocdir}/java clean docsclean bundle docs
 
-%mvn_artifact %{SOURCE1} %{name}-%{version}.jar
+%mvn_artifact %{SOURCE1} org.xbill.dns_%{version}.jar
 
 %install
 %mvn_install -J doc
@@ -90,11 +91,16 @@ ant -Dj2se.javadoc=%{_javadocdir}/java run_tests
 %endif
 
 %files -f .mfiles
+%doc LICENSE
 %doc Changelog README USAGE examples.html *.java
 
 %files javadoc -f .mfiles-javadoc
+%doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_11jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_10jpp8
 - new fc release
 
