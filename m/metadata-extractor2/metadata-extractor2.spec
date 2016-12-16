@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %global majorversion 2
 Name:          metadata-extractor2
 Version:       2.8.1
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Extracts EXIF, IPTC, XMP, ICC and other metadata from image files
 License:       ASL 2.0
 URL:           http://drewnoakes.com/code/exif/
@@ -17,6 +17,8 @@ Source0:       https://github.com/drewnoakes/metadata-extractor/archive/%{versio
 BuildRequires: maven-local
 BuildRequires: mvn(com.adobe.xmp:xmpcore)
 BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 
 Provides:      mvn(com.drewnoakes:metadata-extractor) = %{version}-%{release}
 
@@ -98,6 +100,9 @@ sed -i 's/\r//' LICENSE-2.0.txt README.md CONTRIBUTING.md Resources/javadoc-styl
 %doc LICENSE-2.0.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.8.1-alt1_4jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.8.1-alt1_3jpp8
 - new fc release
 
