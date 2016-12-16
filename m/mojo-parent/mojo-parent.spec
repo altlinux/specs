@@ -8,8 +8,8 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           mojo-parent
-Version:        38
-Release:        alt1_2jpp8
+Version:        39
+Release:        alt1_1jpp8
 Summary:        Codehaus MOJO parent project pom file
 
 License:        ASL 2.0
@@ -47,6 +47,9 @@ cp %SOURCE1 .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:39-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:38-alt1_2jpp8
 - new version
 
