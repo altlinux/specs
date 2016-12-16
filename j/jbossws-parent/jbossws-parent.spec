@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -7,33 +8,33 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jbossws-parent
-%define version 1.1.0
-%global namedreltag .GA
+%define version 1.2.0
+%global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jbossws-parent
-Version:          1.1.0
-Release:          alt1_11jpp8
+Version:          1.2.0
+Release:          alt1_1jpp8
 Summary:          JBossWS Parent
-Group:            Development/Other
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossws
-Source0:          https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/jboss/ws/jbossws-parent/%{namedversion}/jbossws-parent-%{namedversion}.pom
+Source0:          https://github.com/jbossws/jbossws-parent/archive/%{name}-%{namedversion}.tar.gz
 
 BuildArch:        noarch
 
 BuildRequires:    maven-local
+BuildRequires:    mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-source-plugin)
 Source44: import.info
 
 %description
-This package contains the JBossWS Parent
+This package contains the JBossWS Parent.
 
 %prep
-%setup -c -T
-cp %{SOURCE0} pom.xml
+%setup -q -n %{name}-%{name}-%{namedversion}
 
 %build
-%mvn_build
+%mvn_build -j
 
 %install
 %mvn_install
@@ -41,6 +42,9 @@ cp %{SOURCE0} pom.xml
 %files -f .mfiles
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt1_11jpp8
 - new fc release
 
