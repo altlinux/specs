@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -9,18 +10,19 @@ BuildRequires: jpackage-generic-compat
 
 Name:          apache-%{short_name}
 Version:       2.1
-Release:       alt3_6jpp8
+Release:       alt3_7jpp8
 Summary:       XML to Java object mapping module
-Group:         Development/Other
 License:       ASL 2.0
 URL:           http://commons.apache.org/digester/
-Source0:       http://archive.apache.org/dist/commons/digester/source/%{short_name}-%{version}-src.tar.gz
 BuildArch:     noarch
 
-BuildRequires: javapackages-tools rpm-build-java
-BuildRequires: apache-commons-beanutils >= 1.8
-BuildRequires: apache-commons-logging >= 1.1.1
-BuildRequires: maven-local
+Source0:       http://archive.apache.org/dist/commons/digester/source/%{short_name}-%{version}-src.tar.gz
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-beanutils:commons-beanutils)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 Source44: import.info
 
 %description
@@ -30,8 +32,8 @@ and the Digester component was designed to provide a common implementation
 that can be used in many different projects
 
 %package javadoc
+Group: Development/Java
 Summary:       API documentation for %{name}
-Group:         Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -57,6 +59,9 @@ This package contains the %{summary}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt3_7jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt3_6jpp8
 - new fc release
 
