@@ -8,27 +8,26 @@ BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-ejb-3.2-api
 %define version 1.0.0
-%global namedreltag .Alpha2
+%global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 %global apiversion 3.2
 %global oname jboss-ejb-api_%{apiversion}_spec
 %global pname jboss-ejb-api_spec
 Name:          jboss-ejb-3.2-api
 Version:       1.0.0
-Release:       alt1_0.6.Alpha2jpp8
+Release:       alt1_1jpp8
 Summary:       Enterprise JavaBeans 3.2 API
 License:       CDDL or GPLv2 with exceptions
 URL:           https://github.com/jboss/jboss-ejb-api_spec
 Source0:       https://github.com/jboss/jboss-ejb-api_spec/archive/%{oname}-%{namedversion}.tar.gz
 Source1:       http://jcp.org/aboutJava/communityprocess/cddl.txt
 
+BuildRequires: maven-local
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires: mvn(org.jboss:jboss-parent:pom:)
 BuildRequires: mvn(org.jboss.spec.javax.xml.rpc:jboss-jaxrpc-api_1.1_spec)
-BuildRequires: mvn(org.jboss.spec.javax.transaction:jboss-transaction-api_1.1_spec)
-
-BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-plugin-bundle
+BuildRequires: mvn(org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec)
 
 BuildArch:     noarch
 Source44: import.info
@@ -70,6 +69,9 @@ cp -p %{SOURCE1} .
 %doc cddl.txt LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_1jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.6.Alpha2jpp8
 - new fc release
 
