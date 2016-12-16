@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jeromq
 Version:        0.3.5
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Pure Java implementation of libzmq
 # License headers in source files seem to indicate LGPLv3+, but pom.xml as well
 # as upstream licensing page (http://zeromq.org/area:licensing) specify license
@@ -19,6 +19,9 @@ BuildArch:      noarch
 Source0:        https://github.com/zeromq/%{name}/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -51,6 +54,9 @@ This package contains the API documentation for %{name}.
 %doc COPYING.LESSER
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.5-alt1_5jpp8
+- new fc release
+
 * Wed Dec 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.5-alt1_4jpp8
 - new version
 
