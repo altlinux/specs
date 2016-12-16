@@ -6,8 +6,8 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          jackson-annotations
-Version:       2.6.3
-Release:       alt1_2jpp8
+Version:       2.7.6
+Release:       alt1_1jpp8
 Summary:       Core annotations for Jackson data processor 
 License:       ASL 2.0
 URL:           http://wiki.fasterxml.com/JacksonHome
@@ -58,6 +58,9 @@ sed -i 's/\r//' LICENSE
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_2jpp8
 - new version
 
