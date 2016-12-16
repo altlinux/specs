@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           axiom
 Version:        1.2.12
-Release:        alt1_12jpp8
+Release:        alt1_14jpp8
 Summary:        Axis Object Model
 License:        ASL 2.0
 Url:            http://ws.apache.org/commons/axiom/
@@ -21,18 +21,21 @@ Source0:        %{name}-%{version}.tar.xz
 # 3) Remove maven plugins not present in Fedora, which do not impact the build process
 # 4) Remove modules which require additional dependencies not yet in Fedora
 Patch0:         axiom-build-fixes.patch
+
+BuildRequires:  apache-rat-plugin
+BuildRequires:  apache-commons-logging
+BuildRequires:  bea-stax-api
+BuildRequires:  javamail
+BuildRequires:  jaxen
+BuildRequires:  jdepend
 BuildRequires:  junit
+BuildRequires:  woodstox-core
 BuildRequires:  maven-local
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-plugin-build-helper
-BuildRequires:  apache-rat-plugin
-BuildRequires:  bea-stax-api
-BuildRequires:  javamail
-BuildRequires:  apache-commons-logging
-BuildRequires:  jaxen
-BuildRequires:  jdepend
-BuildRequires:  woodstox-core
+BuildRequires:  maven-plugin-bundle
 BuildRequires:  xmlunit
+BuildRequires:  /usr/bin/perl
 
 BuildArch:      noarch
 Source44: import.info
@@ -66,6 +69,7 @@ rm -rf modules/axiom-jaxen-testsuite/src/main/
 %pom_remove_dep :axiom-testutils modules/axiom-api
 
 %pom_remove_plugin :build-helper-maven-plugin
+%pom_remove_plugin -r :maven-source-plugin
 
 %build
 # Skipping tests for now due to many extra deps
@@ -75,7 +79,6 @@ rm -rf modules/axiom-jaxen-testsuite/src/main/
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc *.txt
 %doc NOTICE
 
@@ -83,6 +86,9 @@ rm -rf modules/axiom-jaxen-testsuite/src/main/
 %doc NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2:1.2.12-alt1_14jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2:1.2.12-alt1_12jpp8
 - new fc release
 
