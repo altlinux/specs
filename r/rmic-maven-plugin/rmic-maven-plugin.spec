@@ -8,18 +8,27 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             rmic-maven-plugin
 Version:          1.2.1
-Release:          alt1_12jpp8
+Release:          alt1_13jpp8
 Summary:          Uses the java rmic compiler to generate classes used in remote method invocation
 License:          MIT
 URL:              http://mojo.codehaus.org/%{name}
-
-Source0:          http://repo2.maven.org/maven2/org/codehaus/mojo/%{name}/%{version}/%{name}-%{version}-source-release.zip
-Patch0:           pom-compiler-source-target.patch
-
 BuildArch:        noarch
 
-BuildRequires:    maven-local
-BuildRequires:    maven-invoker-plugin
+Source0:          http://repo2.maven.org/maven2/org/codehaus/mojo/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+Patch0:           pom-compiler-source-target.patch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven:maven-model:2.0.6)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:mojo-parent:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-api)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 Source44: import.info
 
 %description
@@ -56,6 +65,9 @@ sed -i -e "s|groupId>plexus|groupId>org.codehaus.plexus|g" pom.xml
 %doc License.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_13jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_12jpp8
 - new fc release
 
