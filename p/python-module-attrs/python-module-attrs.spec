@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%pkgname
-Version: 16.2.0
+Version: 16.3.0
 Release: alt1
 
 Summary: Python attributes without boilerplate
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 16 2016 Vladimir Didenko <cow@altlinux.org> 16.3.0-alt1
+- New version
+
 * Wed Oct 12 2016 Vladimir Didenko <cow@altlinux.org> 16.2.0-alt1
 - Initial build for Sisyphus
 
