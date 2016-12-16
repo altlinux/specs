@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          truezip
 Version:       7.7.9
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Java based VFS for treating archive files as virtual directories
 
 License:       EPL
@@ -281,6 +281,9 @@ cp -p %{SOURCE1} .
 %files swing -f .mfiles-%{name}-swing
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 7.7.9-alt1_3jpp8
+- new fc release
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 7.7.9-alt1_2jpp8
 - new version
 
