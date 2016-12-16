@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jetty-version-maven-plugin
 Version:        1.0.7
-Release:        alt4_14jpp8
+Release:        alt4_15jpp8
 Summary:        Jetty version management Maven plugin
 
 License:        ASL 2.0 or EPL
@@ -19,6 +19,7 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-toolchain:pom:)
 Source44: import.info
 
@@ -63,6 +64,9 @@ pushd %{name}
 %doc LICENSE-APACHE-2.0.txt LICENSE-ECLIPSE-1.0.html notice.html
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt4_15jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt4_14jpp8
 - new fc release
 
