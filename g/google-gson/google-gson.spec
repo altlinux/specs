@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             google-gson
 Version:          2.3.1
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          Java lib for conversion of Java objects into JSON representation
 License:          ASL 2.0
 URL:              https://github.com/google/gson
@@ -17,9 +17,6 @@ BuildArch:        noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-eclipse-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
@@ -50,6 +47,13 @@ rm src/test/java/com/google/gson/DefaultInetAddressTypeAdapterTest.java
 # Throwable has more fields serialized, probably incorrect test expectations
 rm src/test/java/com/google/gson/functional/ThrowableFunctionalTest.java
 
+# Fixes build with new maven-jar-plugin
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions" "
+    <execution>
+      <id>default-jar</id>
+      <phase>skip</phase>
+    </execution>"
+
 %build
 # LANG="C" or LANG="en_US.utf8" needed for the tests
 %mvn_build
@@ -64,6 +68,9 @@ rm src/test/java/com/google/gson/functional/ThrowableFunctionalTest.java
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_4jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_3jpp8
 - new fc release
 
