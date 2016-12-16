@@ -5,10 +5,10 @@ BuildRequires: unzip
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 24
+%define fedora 25
 Name:     tomcatjss
-Version:  7.1.3
-Release:  alt1_2jpp8
+Version:  7.1.4
+Release:  alt1_1jpp8
 Summary:  JSSE implementation using JSS for Tomcat
 URL:      http://pki.fedoraproject.org/
 License:  LGPLv2+
@@ -23,7 +23,8 @@ Source0:  http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}.ta
 # tomcat requires versioning to meet both build and runtime requirements
 BuildRequires:    ant
 BuildRequires:    apache-commons-lang
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:    java-devel
+BuildRequires:    jpackage-utils >= 0:1.7.5
 BuildRequires:    jss >= 4.2.6
 %if 0%{?fedora} >= 23
 BuildRequires:    tomcat >= 8.0.18
@@ -34,8 +35,9 @@ BuildRequires:    tomcat >= 7.0.40
 Requires:         apache-commons-lang
 %if 0%{?fedora} >= 21
 %else
+Requires:         java
 %endif
-Requires: javapackages-tools rpm-build-java
+Requires:         jpackage-utils >= 0:1.7.5
 Requires:         jss >= 4.2.6
 %if 0%{?fedora} >= 23
 Requires:         tomcat >= 8.0.18
@@ -91,6 +93,9 @@ ln -s %{name}-%{version}.jar %{name}.jar
 %{_javadir}/*
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 7.1.4-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 7.1.3-alt1_2jpp8
 - new fc release
 
