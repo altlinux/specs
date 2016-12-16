@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
@@ -9,17 +10,18 @@ BuildRequires: jpackage-generic-compat
 
 Name:           %{short_name}-pom
 Version:        28
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        Maven Plugins POM
-BuildArch:      noarch
-Group:          Development/Other
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/
+BuildArch:      noarch
+
 Source:         http://repo.maven.apache.org/maven2/org/apache/maven/plugins/%{short_name}/%{version}/%{short_name}-%{version}-source-release.zip
 
 BuildRequires:  maven-local
-BuildRequires:  maven-parent >= 25
-BuildRequires:  maven-site-plugin
+BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 Source44: import.info
 
 %description
@@ -32,6 +34,7 @@ Apache Maven plugins.
 %pom_remove_plugin :maven-enforcer-plugin
 # maven-scm-publish-plugin is not usable in Fedora.
 %pom_remove_plugin :maven-scm-publish-plugin
+%pom_remove_plugin :maven-site-plugin
 
 %build
 %mvn_build
@@ -43,6 +46,9 @@ Apache Maven plugins.
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 28-alt1_4jpp8
+- new fc release
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 28-alt1_2jpp8
 - new version
 
