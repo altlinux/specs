@@ -1,81 +1,31 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# Copyright (c) 2000-2007, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+Name:           avalon-framework
+Epoch:          0
+Version:        4.3
+Release:        alt4_16jpp8
+Summary:        Java components interfaces
+License:        ASL 2.0
+URL:            http://avalon.apache.org/
+BuildArch:    	noarch
 
-%global short_name    framework
-%global short_Name    Avalon
+Source0:        http://archive.apache.org/dist/excalibur/avalon-framework/source/%{name}-api-%{version}-src.tar.gz
+Source1:        http://archive.apache.org/dist/excalibur/avalon-framework/source/%{name}-impl-%{version}-src.tar.gz
 
-Name:        avalon-%{short_name}
-Version:     4.3
-Release:     alt4_15jpp8
-Epoch:       0
-Summary:     Java components interfaces
-License:     ASL 2.0
-URL:         http://avalon.apache.org/%{short_name}/
-Group:       Development/Other
-Source0:     http://archive.apache.org/dist/excalibur/avalon-framework/source/%{name}-api-%{version}-src.tar.gz
-Source1:     http://archive.apache.org/dist/excalibur/avalon-framework/source/%{name}-impl-%{version}-src.tar.gz
+Patch0001:      0001-Port-build-script-to-Maven-3.patch
 
-# pom files are not provided in tarballs so get them from external site
-Source2:     http://repo1.maven.org/maven2/avalon-framework/%{name}-api/%{version}/%{name}-api-%{version}.pom
-Source3:     http://repo1.maven.org/maven2/avalon-framework/%{name}-impl/%{version}/%{name}-impl-%{version}.pom
-
-# remove jmock from dependencies because we don't have it
-Patch0:     %{name}-impl-pom.patch
-Patch1:     %{name}-xerces.patch
-
-Requires:    apache-commons-logging
-Requires:    avalon-logkit
-Requires:    log4j
-Requires:    xalan-j2
-
-BuildRequires:    ant
-BuildRequires:	  ant-junit
-BuildRequires:	  apache-commons-logging
-BuildRequires:    avalon-logkit
-BuildRequires:    javapackages-local
-# For converting jar into OSGi bundle
-BuildRequires:    aqute-bnd
-BuildRequires:    junit
-BuildRequires:	  log4j
-
-
-BuildArch:    	  noarch
-
-Obsoletes:    %{name}-manual <= 0:4.1.4
+BuildRequires:  maven-local
+BuildRequires:  mvn(avalon-logkit:avalon-logkit)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(log4j:log4j)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 Source44: import.info
+
 
 %description
 The Avalon framework consists of interfaces that define relationships
@@ -87,77 +37,62 @@ also define the relationship (contract) a component has with peers,
 ancestors and children.
 
 %package javadoc
+Group: Development/Java
 Summary:      API documentation %{name}
-Group:        Development/Java
-Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
 %{summary}.
 
 %prep
-%setup -q -n %{name}-api-%{version}
+%setup -qcT
+tar xvf %{SOURCE0}
 tar xvf %{SOURCE1}
+%patch0001 -p1
 
-cp %{SOURCE2} .
+%mvn_package :aggregator __noinstall
+%mvn_file ":*api*" %{name}-api
+%mvn_file ":*impl*" %{name}-impl %{name}
 
-pushd %{name}-impl-%{version}/
-cp %{SOURCE3} .
-%patch0
-%patch1 -p2
-popd
+# Add proper Apache Felix Bundle Plugin instructions
+# so that we get a reasonable OSGi manifest.
+for mod in api impl; do
+    %pom_xpath_inject pom:project "<packaging>bundle</packaging>" *${mod}*/project.xml
+    %pom_xpath_inject pom:build "
+      <plugins>
+        <plugin>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>maven-bundle-plugin</artifactId>
+          <extensions>true</extensions>
+          <configuration>
+            <instructions>
+              <Bundle-SymbolicName>avalon-framework-${mod}-4.3</Bundle-SymbolicName>
+              <_nouses>true</_nouses>
+            </instructions>
+          </configuration>
+        </plugin>
+      </plugins>" *${mod}*/project.xml
+done
 
 %build
-export CLASSPATH=%(build-classpath avalon-logkit junit commons-logging log4j)
-export CLASSPATH="$CLASSPATH:../target/%{name}-api-%{version}.jar"
-ant jar test javadoc
-# Convert to OSGi bundle
-bnd wrap target/%{name}-api-%{version}.jar
-
-# build implementation now
-pushd %{name}-impl-%{version}
-# tests removed because we don't have jmock
-rm -rf src/test/*
-ant jar javadoc
-# Convert to OSGi bundle
-bnd wrap target/%{name}-impl-%{version}.jar
-popd
+# Test use old jmock
+%mvn_build -f
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/
-install -d -m 755 $RPM_BUILD_ROOT/%{_mavenpomdir}
-
-install -m 644 %{name}-api-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-api.jar
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}/%{name}-api
-
-# pom file
-install -pm 644 %{name}-api-%{version}.pom $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}-api.pom
-%add_maven_depmap JPP-%{name}-api.pom %{name}-api.jar -a "org.apache.avalon.framework:%{name}-api"
-
-# javadocs
-cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/%{name}-api/
-
-install -m 644 %{name}-impl-%{version}/%{name}-impl-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-impl.jar
-ln -sf %{_javadir}/%{name}-impl.jar ${RPM_BUILD_ROOT}%{_javadir}/%{name}.jar
-
-# pom file
-install -pm 644 %{name}-impl-%{version}/%{name}-impl-%{version}.pom $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}-impl.pom
-%add_maven_depmap JPP-%{name}-impl.pom %{name}-impl.jar -a "org.apache.avalon.framework:%{name}-impl,%{name}:%{name}"
-
-# javadocs
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}/%{name}-impl
-cp -pr %{name}-impl-%{version}/dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/%{name}-impl/
-
+%mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
-%{_javadir}/%{name}.jar
+%doc avalon-framework-api-4.3/LICENSE.txt
+%doc avalon-framework-api-4.3/NOTICE.txt
 
-%files javadoc
-%doc LICENSE.txt NOTICE.txt
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc avalon-framework-api-4.3/LICENSE.txt
+%doc avalon-framework-api-4.3/NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.3-alt4_16jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.3-alt4_15jpp8
 - new fc release
 
