@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           javacc-maven-plugin
 Version:        2.6
-Release:        alt5_21jpp8
+Release:        alt5_22jpp8
 Summary:        JavaCC Maven Plugin
 License:        ASL 2.0
 URL:            http://mojo.codehaus.org/javacc-maven-plugin/
@@ -33,6 +33,7 @@ BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
 BuildRequires:  mvn(org.codehaus.mojo:mojo-parent:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 Source44: import.info
 
 %description
@@ -64,6 +65,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE-2.0.txt src/main/resources/NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt5_22jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt5_21jpp8
 - new fc release
 
