@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -6,9 +7,8 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             glassfish-saaj
 Version:          1.3.19
-Release:          alt2_9jpp8
+Release:          alt2_10jpp8
 Summary:          JSR-67 implementation
-Group:            Development/Other
 License:          CDDL and GPLv2 with exceptions
 URL:              http://java.net/projects/saaj
 
@@ -20,15 +20,12 @@ Source0:          glassfish-saaj-%{version}.tar.xz
 
 BuildArch:        noarch
 
+BuildRequires:    java-devel
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    mimepull
-BuildRequires:    geronimo-saaj
-BuildRequires:    jvnet-parent
+BuildRequires:    mvn(net.java:jvnet-parent:pom:)
+BuildRequires:    mvn(javax.xml.soap:saaj-api)
+BuildRequires:    mvn(net.java:jvnet-parent:pom:)
+BuildRequires:    mvn(org.jvnet.mimepull:mimepull)
 Source44: import.info
 
 %description
@@ -36,8 +33,8 @@ Open source Reference Implementation of JSR-67: SOAP with Attachments
 API for Java (SAAJ MR: 1.3)
 
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
+Group: Development/Java
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -45,6 +42,9 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
+
+# Useless tasks
+%pom_remove_plugin :maven-source-plugin
 
 %build
 %mvn_build
@@ -60,6 +60,9 @@ This package contains the API documentation for %{name}.
 %doc license.html
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.19-alt2_10jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.19-alt2_9jpp8
 - new fc release
 
