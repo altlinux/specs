@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          jdom2
 Version:       2.0.6
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Java manipulation of XML made easy
 License:       ASL 1.1 or BSD
 URL:           http://www.jdom.org/
@@ -15,11 +15,14 @@ Source0:       https://github.com/hunterhacker/jdom/archive/JDOM-%{version}.tar.
 # originally taken from http://repo1.maven.org/maven2/org/jdom/jdom-contrib/1.1.3/jdom-contrib-1.1.3.pom
 Source1:       jdom-contrib-template.pom
 Source2:       jdom-junit-template.pom
+# Bnd tool configuration
+Source3:       bnd.properties
 # Use system libraries
 # Disable gpg signatures
 # Process contrib and junit pom files
 Patch0:        jdom-2.0.5-build.patch
 
+BuildRequires: java-devel
 BuildRequires: java-javadoc
 BuildRequires: javapackages-local
 BuildRequires: ant
@@ -30,9 +33,9 @@ BuildRequires: jaxen
 BuildRequires: xalan-j2
 BuildRequires: xerces-j2
 BuildRequires: xml-commons-apis
-#BuildRequires: jakarta-oro
 BuildRequires: log4j12
 BuildRequires: objectweb-asm3
+BuildRequires: aqute-bnd
 
 BuildArch:     noarch
 Source44: import.info
@@ -62,8 +65,6 @@ find . -name "*.class" -print -delete
 find . -name "*.jar" -print -delete
 
 %patch0 -p0
-#sed -i.asm "s|%{_javadir}/objectweb-asm|%{_javadir}/objectweb-asm3|" build.xml
-#sed -i.log4j "s|log4j.jar|log4j12-1.2.17.jar|" build.xml
 
 cp -p %{SOURCE1} maven/contrib.pom
 cp -p %{SOURCE2} maven/junit.pom
@@ -74,8 +75,12 @@ sed -i 's/\r//' LICENSE.txt README.txt
 sed -i.coverage "s|coverage, jars|jars|" build.xml
 
 %build
-
 ant -Dversion=%{version} -Dj2se.apidoc=%{_javadocdir}/java maven
+
+# Make jar into an OSGi bundle
+bnd wrap --output build/package/jdom-%{version}.bar --properties %{SOURCE3} \
+         --version %{version} build/package/jdom-%{version}.jar
+mv build/package/jdom-%{version}.bar build/package/jdom-%{version}.jar
 
 %install
 %mvn_artifact build/maven/core/%{name}-%{version}.pom build/package/jdom-%{version}.jar
@@ -84,7 +89,6 @@ ant -Dversion=%{version} -Dj2se.apidoc=%{_javadocdir}/java maven
 %mvn_install -J build/apidocs
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc CHANGES.txt COMMITTERS.txt README.txt TODO.txt
 %doc LICENSE.txt
 
@@ -92,6 +96,9 @@ ant -Dversion=%{version} -Dj2se.apidoc=%{_javadocdir}/java maven
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.6-alt1_6jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.6-alt1_5jpp8
 - new fc release
 
