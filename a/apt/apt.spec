@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt54
+Release: alt55
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -276,6 +276,9 @@ unset RPM_PYTHON
 # Probably %%doc with README.rsync?
 
 %changelog
+* Fri Dec 16 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt55
+- Optimized all rpmds operations.
+
 * Mon Nov 21 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt54
 - Fixed build with rpm-4.13 (legion@).
 - Disabled fancypercents by default.

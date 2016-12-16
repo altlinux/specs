@@ -17,9 +17,10 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0
-Release: alt4
+Release: alt5
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
+# http://git.altlinux.org/gears/r/rpm.git
 Source0: rpm-%version.tar
 
 # Partially GPL/LGPL dual-licensed and some bits with BSD
@@ -101,11 +102,8 @@ package into tarball.
 Summary: Libraries for manipulating RPM packages
 Group: System/Libraries
 License: GPLv2+ and LGPLv2+ with exceptions
-Requires: rpm = %EVR
-# Drag in SELinux support at least for transition phase
-%if_enabled plugins
-Requires: rpm-plugin-selinux = %EVR
-%endif
+Provides: rpm-plugin-selinux = %EVR
+Obsoletes: rpm-plugin-selinux < %EVR
 
 %description -n librpm%sover
 This package contains the RPM shared libraries.
@@ -198,24 +196,6 @@ BuildArch: noarch
 This package contains API documentation for developing applications
 that will manipulate RPM packages and databases.
 
-%package cron
-Summary: Create daily logs of installed packages
-Group: System/Base
-BuildArch: noarch
-Requires: crontabs logrotate rpm = %EVR
-
-%description cron
-This package contains a cron job which creates daily logs of installed
-packages on a system.
-
-%package plugin-selinux
-Summary: Rpm plugin for SELinux functionality
-Group: System/Configuration/Packaging
-Requires: librpm%sover = %EVR
-
-%description plugin-selinux
-%summary
-
 %package plugin-syslog
 Summary: Rpm plugin for syslog functionality
 Group: System/Configuration/Packaging
@@ -305,13 +285,6 @@ pushd python
 %python3_install
 popd
 
-# Save list of packages through cron
-mkdir -p %buildroot%_sysconfdir/cron.daily
-install -m 755 scripts/rpm.daily %buildroot%_sysconfdir/cron.daily/rpm
-
-mkdir -p %buildroot%_sysconfdir/logrotate.d
-install -m 644 scripts/rpm.log %buildroot%_sysconfdir/logrotate.d/rpm
-
 mkdir -p %buildroot/usr/lib/tmpfiles.d
 echo "r /var/lib/rpm/__db.*" > %buildroot/usr/lib/tmpfiles.d/rpm.conf
 
@@ -323,6 +296,8 @@ mkdir -p %buildroot/var/lib/rpm
 for dbi in \
     Basenames Conflictname Dirnames Group Installtid Name Obsoletename \
     Packages Providename Requirename Triggername Sha1header Sigmd5 \
+    Enhancename Filetriggername Recommendname Suggestname Supplementname \
+    Transfiletriggername \
     __db.001 __db.002 __db.003 __db.004 __db.005 __db.006 __db.007 \
     __db.008 __db.009
 do
@@ -338,6 +313,9 @@ do
 done
 %endif
 
+mkdir -p %buildroot/bin
+ln -sr %buildroot%_bindir/rpm %buildroot/bin/rpm
+
 sed -i '1i .\\" -*- mode: troff; coding: utf8 -*-' \
 	%buildroot%_mandir/*/man1/*.1 \
 	%buildroot%_mandir/*/man8/*.8
@@ -347,9 +325,6 @@ sed -i '1i .\\" -*- mode: troff; coding: utf8 -*-' \
 #RPMCONFIGDIR=./scripts ./scripts/find-lang.sh %name --output %name.lang
 #%%else
 %find_lang %name
-%find_lang --with-man --append --output %name.lang rpm rpm2cpio rpmdb rpmkeys rpmsign rpmspec
-%find_lang --with-man --output rpmbuild.lang gendiff rpmbuild rpmdeps
-%find_lang --with-man --output librpm-devel.lang rpmgraph
 #%%endif
 
 find %buildroot -name "*.la"|xargs rm -f
@@ -397,6 +372,7 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %config(noreplace,missingok) %_sysconfdir/%name/macros
 
 /bin/rpm
+%_bindir/rpm
 %_bindir/rpm2cpio
 %_bindir/rpmdb
 %_bindir/rpme
@@ -431,9 +407,6 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %rpmhome/rpmu
 %rpmhome/rpmv
 %rpmhome/rpmdb_*
-%rpmhome/rpm.daily
-%rpmhome/rpm.log
-%rpmhome/rpm.supp
 
 %rpmhome/.provides.sh
 %rpmhome/functions
@@ -458,6 +431,7 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_libdir/librpm.so.*
 %_libdir/librpmio.so.*
 %_libdir/librpmsign.so.*
+%_libdir/rpm-plugins/selinux.so
 %rpmhome/macros
 %rpmhome/rpmrc
 
@@ -466,9 +440,6 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 
 %files plugin-syslog
 %_libdir/rpm-plugins/syslog.so
-
-%files plugin-selinux
-%_libdir/rpm-plugins/selinux.so
 
 %files plugin-systemd-inhibit
 %_libdir/rpm-plugins/systemd_inhibit.so
@@ -484,7 +455,7 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_libdir/librpmbuild.so.*
 
 %if_enabled rpmbuild
-%files build -f rpmbuild.lang
+%files build
 %_bindir/rpmbuild
 %_bindir/gendiff
 
@@ -519,18 +490,22 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %python3_sitelibdir/rpm
 %python3_sitelibdir/rpm_python-%eggver-py%_python3_version.egg-info
 
-%files -n librpm-devel -f librpm-devel.lang
+%files -n librpm-devel
 %_mandir/man8/rpmgraph.8*
 %_bindir/rpmgraph
 %_libdir/librp*[a-z].so
 %_libdir/pkgconfig/rpm.pc
+%rpmhome/rpm.supp
 %_includedir/rpm
 
-%files cron
-%_sysconfdir/cron.daily/rpm
-%config(noreplace) %_sysconfdir/logrotate.d/rpm
-
 %changelog
+* Fri Dec 16 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0-alt5
+- Moved /bin/rpm back to %_bindir/rpm (ALT#32878).
+- Dropped useless cron subpackage.
+- Moved selinux plugin to librpm%sover package.
+- Dropped outdated translated manpages.
+- Moved rpm.supp to librpm-devel package.
+
 * Tue Dec 13 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0-alt4
 - rpmspec: restored support of BuildRequires(pre) (ALT#32870),
   and Serial (ALT#32888) tags.
@@ -539,7 +514,7 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 - Added conflict to apt < 0.5.15lorg2-alt54 (ALT#32873).
 - Fixed retrieving of remote files.
 - Dropped R: curl (it is optional).
-- Fixed encoding of translataed manpages.
+- Fixed encoding of translated manpages.
 - Changed rpmlog to write to stderr.
 - Fixed support of APT external tags (ALT#32887).
 - Define RPM_INSTALL_{NAME,ARG1,ARG2} env variables only for per-package

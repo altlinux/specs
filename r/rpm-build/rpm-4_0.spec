@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt100.97
+Release: alt100.98
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -423,7 +423,6 @@ mv %buildroot%_rpmlibdir/{,build}macros
 %rpmattr %_rpmlibdir/pdeath_execute
 %rpmattr %_rpmlibdir/rpm[dikq]
 %_rpmlibdir/rpm[euv]
-%rpmdatattr %_rpmlibdir/rpmpopt*
 %rpmdatattr %_rpmlibdir/GROUPS
 %_prefix/lib/rpmpopt
 %_prefix/lib/rpmrc
@@ -487,6 +486,7 @@ mv %buildroot%_rpmlibdir/{,build}macros
 %if "%_lib" == "lib"
 %rpmdatattr %_rpmlibdir/verify-elf-non-lfs-funcs.list
 %endif
+%rpmdatattr %_rpmlibdir/rpmpopt*
 
 %_mandir/man?/gendiff.*
 %_man8dir/rpmbuild.*
@@ -514,6 +514,9 @@ mv %buildroot%_rpmlibdir/{,build}macros
 %endif
 
 %changelog
+* Fri Dec 16 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt100.98
+- Restored rpmpopt file.
+
 * Thu Dec 08 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt100.97
 - fixup-libraries: fixed recognition of PIEs (ldv@).
 - verify-elf: treat PIEs as executables in the check for unresolved symbols (ldv@).
