@@ -2,7 +2,7 @@ Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: perl(Getopt/Mixed.pm) unzip
+BuildRequires: perl(Getopt/Mixed.pm)
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 AutoReq: yes,noosgi
@@ -40,15 +40,15 @@ BuildRequires: jpackage-generic-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define scm_version 1_7_7
+%define scm_version 1_7_7_1
 
 Name:           rhino
-Version:        1.7.7
-Release:        alt1_3jpp8
+Version:        1.7.7.1
+Release:        alt1_1jpp8
 Summary:        JavaScript for Java
 License:        MPLv2.0
 
-Source0:        https://github.com/mozilla/rhino/archive/Rhino%{scm_version}_RELEASE.zip
+Source0:        https://github.com/mozilla/rhino/archive/Rhino%{scm_version}_RELEASE.tar.gz
 Source1:        http://repo1.maven.org/maven2/org/mozilla/rhino/%{version}/rhino-%{version}.pom
 Source2:        %{name}.script
 
@@ -59,6 +59,9 @@ Patch1:         %{name}-addOrbitManifest.patch
 URL:            http://www.mozilla.org/rhino/
 
 BuildRequires:  ant
+BuildRequires:  java-devel >= 1.6.0.0
+BuildRequires:  sonatype-oss-parent
+BuildRequires:  javapackages-local
 Requires:       jline
 Obsoletes:      %{name}-javadoc < %{version}-%{release}
 Obsoletes:      %{name}-manual < %{version}-%{release}
@@ -92,8 +95,12 @@ sed -i -e '/^Class-Path:.*$/d' src/manifest
 # Add jpp release info to version
 sed -i -e 's|^implementation.version: Rhino .* release .* \${implementation.date}|implementation.version: Rhino %{version} release %{release} \${implementation.date}|' build.properties
 
+%mvn_alias : rhino:js
+%mvn_file : js %{name}
+
 %build
 ant deepclean jar copy-all -Dno-xmlbeans=1
+%mvn_artifact %{SOURCE1} build/%{name}%{version}/js.jar
 
 pushd examples
 
@@ -103,11 +110,7 @@ export CLASSPATH=../build/%{name}%{version}/js.jar:$(build-classpath xmlbeans/xb
 popd
 
 %install
-# jars
-mkdir -p %{buildroot}%{_javadir}
-cp -a build/%{name}%{version}/js.jar %{buildroot}%{_javadir}
-ln -s js.jar %{buildroot}%{_javadir}/%{name}.jar
-cp -a build/%{name}%{version}/%{name}-examples.jar %{buildroot}%{_javadir}/%{name}-examples.jar
+%mvn_install
 
 # man page
 mkdir -p %{buildroot}%{_mandir}/man1/
@@ -118,14 +121,10 @@ mkdir -p %{buildroot}%{_bindir}
 install -m 755 %{SOURCE2} %{buildroot}%{_bindir}/%{name}
 
 # examples
+cp -a build/%{name}%{version}/%{name}-examples.jar %{buildroot}%{_javadir}/%{name}-examples.jar
 mkdir -p %{buildroot}%{_datadir}/%{name}
 cp -a examples/* %{buildroot}%{_datadir}/%{name}
 find %{buildroot}%{_datadir}/%{name} -name '*.build' -delete
-
-# POM and depmap
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "rhino:js"
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/%{name}.conf
@@ -133,7 +132,6 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %files -f .mfiles
 %attr(0755,root,root) %{_bindir}/*
 %{_javadir}/*
-%{_mavenpomdir}/JPP-%{name}.pom
 %{_mandir}/man1/%{name}.1*
 %config(noreplace,missingok) /etc/%{name}.conf
 
@@ -141,6 +139,9 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %{_datadir}/%{name}
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.7.7.1-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.7.7-alt1_3jpp8
 - new fc release
 
