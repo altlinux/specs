@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 #
 Name:          janino
 Version:       2.7.8
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       An embedded Java compiler
 License:       BSD
 URL:           http://unkrig.de/w/Janino
@@ -57,6 +57,7 @@ BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.ant:ant)
 BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires: mvn(org.codehaus:codehaus-parent:pom:)
+BuildRequires: /usr/bin/perl
 
 BuildArch:     noarch
 Source44: import.info
@@ -136,6 +137,9 @@ perl -pi -e 's/\r$//g' new_bsd_license.txt README.txt
 %doc new_bsd_license.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.7.8-alt1_6jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.7.8-alt1_5jpp8
 - new fc release
 
