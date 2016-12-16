@@ -7,13 +7,13 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-jsf-2.2-api
-%define version 2.2.0
+%define version 2.2.13
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:          jboss-jsf-2.2-api
-Version:       2.2.0
-Release:       alt1_7jpp8
+Version:       2.2.13
+Release:       alt1_1jpp8
 Summary:       JavaServer Faces 2.2 API
 License:       (CDDL or GPLv2 with exceptions) and ASL 2.0
 URL:           http://www.jboss.org
@@ -26,9 +26,10 @@ BuildRequires: mvn(com.sun.faces:jsf-impl)
 BuildRequires: mvn(javax.enterprise:cdi-api)
 BuildRequires: mvn(javax.inject:javax.inject)
 BuildRequires: mvn(javax.validation:validation-api)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.jboss:jboss-parent:pom:)
-BuildRequires: mvn(org.jboss.spec.javax.el:jboss-el-api_2.2_spec)
-BuildRequires: mvn(org.jboss.spec.javax.servlet.jsp:jboss-jsp-api_2.2_spec)
+BuildRequires: mvn(org.jboss.spec.javax.el:jboss-el-api_3.0_spec)
+BuildRequires: mvn(org.jboss.spec.javax.servlet.jsp:jboss-jsp-api_2.3_spec)
 BuildRequires: mvn(org.jboss.spec.javax.servlet.jstl:jboss-jstl-api_1.2_spec)
 
 BuildArch:     noarch
@@ -39,7 +40,7 @@ This package contains JSR-344: JavaServer Faces 2.2 API.
 
 %package javadoc
 Group: Development/Java
-Summary: Javadoc for %{name}
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc	
@@ -49,7 +50,7 @@ This package contains the API documentation for %{name}.
 %setup -q -n jboss-jsf-api_spec-jboss-jsf-api_2.2_spec-%{namedversion}
 
 # We don't have this
-%pom_remove_dep "org.jboss.spec:jboss-javaee-all-6.0"
+%pom_remove_dep "org.jboss.spec:jboss-javaee-all-7.0"
 # But we have this
 %pom_add_dep "javax.inject:javax.inject"
 %pom_add_dep "javax.enterprise:cdi-api"
@@ -75,6 +76,9 @@ sed -i "s,59 Temple Place,51 Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1
 
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.13-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_7jpp8
 - new fc release
 
