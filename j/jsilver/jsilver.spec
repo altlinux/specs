@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jsilver
 Version:        1.0.0
-Release:        alt1_10jpp8
+Release:        alt1_11jpp8
 Summary:        A pure-Java implementation of Clearsilver
 
 License:        ASL 2.0 
@@ -21,6 +21,7 @@ BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  exec-maven-plugin
+BuildRequires:  maven-antrun-plugin
 BuildRequires:  sablecc
 Source44: import.info
 
@@ -57,6 +58,9 @@ mv build/site target
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_11jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_10jpp8
 - new fc release
 
