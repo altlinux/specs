@@ -1,3 +1,5 @@
+%def_disable snapshot
+
 %define ver_major 1.30
 
 %def_disable gdu
@@ -28,16 +30,19 @@
 %def_enable admin
 
 Name: gvfs
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
 Group: System/Libraries
-URL: ftp://ftp.gnome.org
+Url: https://wiki.gnome.org/Projects/gvfs
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 Patch1: gvfs-1.25.92-archive-integration.patch
 Patch3: gvfs-1.14.1-libgvfsdaemon+headers_install.patch
 Patch4: gvfs-1.16.2-alt-lfs.patch
@@ -560,6 +565,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name-mount 2>/dev/null ||:
 
 
 %changelog
+* Fri Dec 16 2016 Yuri N. Sedunov <aris@altlinux.org> 1.30.3-alt1
+- 1.30.3
+
 * Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 1.30.2-alt1
 - 1.30.2
 
