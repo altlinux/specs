@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 Summary:          A Free Java-PDF library
 Name:             itext
 Version:          2.1.7
-Release:          alt2_31jpp8
+Release:          alt2_33jpp8
 #src/toolbox/com/lowagie/toolbox/Versions.java is MPLv1.1 or MIT
 #src/toolbox/com/lowagie/toolbox/plugins/XML2Bookmarks.java is MPLv1.1 or LGPLv2+
 #src/rups/com/lowagie/rups/Rups.java is LGPLv2+
@@ -69,6 +69,15 @@ Patch5:           itext-remove-unmappable.patch
 # Port to bouncycastle 1.50 Thanks to Michal Srb
 Patch6:           0001-Port-to-bouncycastle-1.50.patch
 Patch7:           itext-2.1.7-bouncycastle1.52.patch
+
+#1 Fix for transparency issue with setClip method in PdfGraphics2D
+#2 Fix for transparency bleeding for Batik gradients
+#3 Fix for stroke opacity state in the create() method of PdfGraphics2D
+#4 Method to directly write AWT GlyphVectors to PDF for Indic scripts support
+#5 No character spacing in justified lines with a single word
+# Origin: other, http://jaspersoft.artifactoryonline.com/jaspersoft/third-party-ce-artifacts/com/lowagie/itext/2.1.7.js5/itext-2.1.7.js5-sources.jar
+Patch8:           itext-2.1.7-tibco-changes.patch
+
 BuildRequires:    ant
 BuildRequires:    bouncycastle-mail >= 1.52
 BuildRequires:    bouncycastle-pkix >= 1.52
@@ -166,6 +175,10 @@ API documentation for the %{alternate_name} package.
 %patch5 -p0
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
+
+sed -i.bcprov1.54 "s|algorithmidentifier.getObjectId().getId|algorithmidentifier.getAlgorithm().getId|" \
+ src/core/com/lowagie/text/pdf/PdfPublicKeySecurityHandler.java
 
 cp -pr %{SOURCE2} JPP-itext.pom
 %pom_remove_dep bouncycastle:bcmail-jdk14 JPP-itext.pom
@@ -309,6 +322,9 @@ cp -pr JPP-%{name}-rups.pom $RPM_BUILD_ROOT%{_mavenpomdir}
 # -----------------------------------------------------------------------------
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.1.7-alt2_33jpp8
+- new fc release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.1.7-alt2_31jpp8
 - new fc release
 
