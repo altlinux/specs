@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
@@ -7,22 +8,22 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-shared-incremental
 Version:        1.1
-Release:        alt1_10jpp8
+Release:        alt1_11jpp8
 Summary:        Maven Incremental Build support utilities
 License:        ASL 2.0
-Group:          Development/Other
 URL:            http://maven.apache.org/shared/maven-shared-incremental/
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
 BuildArch:      noarch
 
-BuildRequires:  maven-local
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
+BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-api)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 Source44: import.info
 
 %description
@@ -30,8 +31,8 @@ Various utility classes and plexus components for supporting
 incremental build functionality in maven plugins.
 
 %package javadoc
+Group: Development/Java
 Summary:          API documentation for %{name}
-Group:            Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -48,12 +49,14 @@ This package provides %{summary}.
 
 %files -f .mfiles
 %doc LICENSE NOTICE
-%dir %{_javadir}/%{name}
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_11jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_10jpp8
 - new fc release
 
