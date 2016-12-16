@@ -7,16 +7,17 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          spatial4j
 Version:       0.5.0
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       A Geospatial Library for Java
 License:       ASL 2.0
 URL:           https://github.com/locationtech/spatial4j
 Source0:       https://github.com/spatial4j/spatial4j/archive/%{name}-0.5.tar.gz
 
+BuildRequires: maven-local
 BuildRequires: mvn(com.vividsolutions:jts)
-BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.noggit:noggit)
-BuildRequires: mvn(org.jacoco:jacoco-maven-plugin)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 
 # test deps
 %if 0
@@ -24,7 +25,6 @@ BuildRequires: mvn(com.carrotsearch.randomizedtesting:randomizedtesting-runner)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.slf4j:slf4j-simple)
 %endif
-BuildRequires: maven-local
 
 BuildArch:     noarch
 Source44: import.info
@@ -46,8 +46,9 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q -n %{name}-%{name}-0.5
 
-# unavailable mvn plugin
+# Unwanted tasks
 %pom_remove_plugin de.thetaphi:forbiddenapis
+%pom_remove_plugin org.jacoco:jacoco-maven-plugin
 
 # the attach-sources execution breaks OSGi manifest generation
 %pom_remove_plugin :maven-jar-plugin
@@ -70,6 +71,9 @@ This package contains javadoc for %{name}.
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1_4jpp8
+- new fc release
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1_3jpp8
 - new version
 
