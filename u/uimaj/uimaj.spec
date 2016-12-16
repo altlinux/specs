@@ -8,11 +8,12 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          uimaj
 Version:       2.8.1
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Apache UIMA is an implementation of the OASIS-UIMA specifications
 License:       ASL 2.0
 URL:           http://uima.apache.org/
 Source0:       http://www.apache.org/dist/uima/%{name}-%{version}/%{name}-%{version}-source-release.zip
+Patch0:        uimaj-2.8.1-jackson2.7.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(ant-contrib:ant-contrib)
@@ -84,6 +85,8 @@ find .  -name "*.bat" -delete
 find .  -name "*.class" -delete
 find .  -name "*.cmd" -delete
 
+%patch0 -p1
+
 # Build @ random fails
 %pom_remove_plugin -r :apache-rat-plugin
 # org.semver:enforcer-rule:0.9.33
@@ -153,6 +156,9 @@ sed -i 's/\r//' NOTICE README
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.8.1-alt1_3jpp8
+- new fc release
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.8.1-alt1_2jpp8
 - new version
 
