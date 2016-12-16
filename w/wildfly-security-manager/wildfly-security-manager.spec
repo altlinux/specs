@@ -7,28 +7,32 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name wildfly-security-manager
-%define version 1.0.0
+%define version 1.1.2
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
-# TMP solution until the proper tag will be pushed
-%global namedversion 910aac63caf7a96f189fac832be22fccc416095d
 
 Name:             wildfly-security-manager
-Version:          1.0.0
-Release:          alt1_4jpp8
+Version:          1.1.2
+Release:          alt1_1jpp8
 Summary:          WildFly Security Manager
-License:          LGPLv2+
-Url:              http://www.jboss.org
-Source0:          https://github.com/wildfly/security-manager/archive/%{namedversion}.tar.gz
+# Not available license file https://github.com/wildfly-security/security-manager/issues/9
+# ASL 2.0: ./src/main/java/org/wildfly/security/ParametricPrivilegedExceptionAction.java
+# ./src/main/java/org/wildfly/security/manager/StackInspector.java
+# ./src/main/java/org/wildfly/security/ParametricPrivilegedAction.java
+# ./src/test/java/org/wildfly/security/manager/TestStackInspector.java
+License:          ASL 2.0 and LGPLv2+
+Url:              https://github.com/wildfly-security/security-manager/
+Source0:          https://github.com/wildfly-security/security-manager/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
 
-BuildRequires:    jboss-parent
-BuildRequires:    jboss-invocation
-BuildRequires:    jboss-logging
-BuildRequires:    jboss-logging-tools
-BuildRequires:    jboss-logmanager
-BuildRequires:    jboss-modules
-BuildRequires:    junit
 BuildRequires:    maven-local
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging-annotations)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging-processor)
+BuildRequires:    mvn(org.jboss.logmanager:jboss-logmanager)
+BuildRequires:    mvn(org.jboss.modules:jboss-modules)
+BuildRequires:    mvn(org.kohsuke.metainf-services:metainf-services)
 
 BuildArch:        noarch
 Source44: import.info
@@ -38,7 +42,7 @@ The Security Manager for WildFly Application Server.
 
 %package javadoc
 Group: Development/Java
-Summary:          Javadocs for %{name}
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -56,11 +60,12 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_4jpp8
 - new fc release
 
