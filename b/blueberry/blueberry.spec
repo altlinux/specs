@@ -1,5 +1,5 @@
 Name: blueberry
-Version: 1.1.8
+Version: 1.1.9
 Release: alt1
 Summary: A Bluetooth configuration tool
 License: GPLv3
@@ -39,6 +39,9 @@ Utility for Bluetooth devices graphical configuration
 %_iconsdir/hicolor/*/status/*
 
 %changelog
+* Wed Dec 14 2016 Vladimir Didenko <cow@altlinux.org> 1.1.9-alt1
+- 1.1.9
+
 * Thu Nov 24 2016 Vladimir Didenko <cow@altlinux.org> 1.1.8-alt1
 - 1.1.8
 - add gnome-bluetooth to requires

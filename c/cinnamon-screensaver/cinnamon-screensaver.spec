@@ -1,7 +1,8 @@
 %define ver_major 3.2
+%define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
-Version: %ver_major.6
+Version: %ver_major.9
 Release: alt1
 
 Summary: Cinnamon Screensaver
@@ -14,6 +15,7 @@ Provides: screen-saver-frontend
 Provides: cinnamon-screensaver-module
 
 Source: %name-%version.tar
+Source1: %name.pam
 Patch: %name-%version-%release.patch
 
 # From configure.ac
@@ -24,6 +26,7 @@ BuildRequires: libgtk+3-devel
 BuildRequires: libgtk+3-gir-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: libdbus-glib-devel
+BuildRequires: libpam0-devel
 
 %description
 cinnamon-screensaver is a screen saver and locker that aims to have
@@ -70,19 +73,27 @@ GObject introspection devel data for the %name library
 
 %build
 %autoreconf
-%configure
+%configure --enable-setres
 
 %make_build
 
 %install
 %makeinstall_std
 
+rm -f %buildroot/%_sysconfdir/pam.d/%name
+install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
+mkdir -p %buildroot%_libexecdir/
+mv %buildroot%_datadir/%name/pamhelper/%name-pam-helper %buildroot%_libexecdir/%name-pam-helper
+
 %filter_from_requires /python3[(]dbusdepot[)]/d
 %filter_from_requires /python3[(]util[)]/d
 %filter_from_requires /python3[(]widgets[)]/d
+%filter_from_requires /python3[(]pamhelper[)]/d
 
 %files
-%attr(2711,root,chkpwd) %_bindir/%name
+%_bindir/%name
+%attr(2711,root,chkpwd) %_libexecdir/%name-pam-helper
+%attr(640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/*
 %_bindir/%name-command
 %_datadir/%name
 %_datadir/dbus-1/services/*.service
@@ -97,6 +108,7 @@ GObject introspection devel data for the %name library
 %files -n lib%name-devel
 %_libdir/*.so
 %_pkgconfigdir/*
+%_includedir/%name
 
 %files -n lib%name-gir
 %_libdir/girepository-1.0/*
@@ -105,6 +117,12 @@ GObject introspection devel data for the %name library
 %_datadir/gir-1.0/*
 
 %changelog
+* Tue Dec 13 2016 Vladimir Didenko <cow@altlinux.org> 3.2.9-alt1
+- 3.2.9
+
+* Mon Dec 12 2016 Vladimir Didenko <cow@altlinux.org> 3.2.8-alt1
+- 3.2.8
+
 * Fri Nov 25 2016 Vladimir Didenko <cow@altlinux.org> 3.2.6-alt1
 - 3.2.6
 
