@@ -13,15 +13,15 @@ AutoReq: yes, nopython
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 %global cpython_version    2.7
-%global scm_tag            v2.7.0
+%global scm_tag            v2.7.1b3
 
 # Turn off the brp-python-bytecompile script
 # We generate JVM bytecode instead
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
 
 Name:                      jython
-Version:                   2.7
-Release:                   alt1_3jpp8
+Version:                   2.7.1
+Release:                   alt1_0.1.b3jpp8
 Summary:                   Jython is an implementation of Python written in pure Java.
 License:                   ASL 1.1 and BSD and CNRI and JPython and Python
 URL:                       http://www.jython.org/
@@ -35,6 +35,8 @@ Source1:                   fetch-jython.sh
 Patch0:                    jython-cachedir.patch
 # Avoid rebuilding and validating poms when installing maven stuff and don't gpg sign
 Patch1:                    jython-dont-validate-pom.patch
+# Dep for this feature is not yet in Fedora
+Patch2:                    jython-no-carrotsearch-sizeof.patch
 
 Requires:                  python >= %{cpython_version}
 Requires:                  antlr32-java
@@ -116,11 +118,14 @@ Demonstrations and samples for %{name}.
 
 %prep
 %setup -q -n jython-%{scm_tag}
+%patch2 -R -p1
 %patch0
 %patch1
 
-# Set correct encoding for source to fix javadoc generation
-sed -i -e '723i encoding="UTF-8"' build.xml
+rm -rf extlibs/*
+
+# Set correct encoding and disable doclint to fix javadoc generation
+sed -i -e '/<javadoc/a encoding="UTF-8" additionalparam="-Xdoclint:none"' build.xml
 
 %build
 build-jar-repository -p -s extlibs \
@@ -152,8 +157,9 @@ popd
 
 # data
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
-# these are not supposed to be distributed
-find dist/Lib -type d -name test | xargs rm -rf
+# don't distribute tests
+rm -rf dist/Lib/{distutils/tests,email/test,json/tests,test,unittest/test}
+# libs
 cp -pr dist/Lib $RPM_BUILD_ROOT%{_datadir}/%{name}
 # demo
 cp -pr Demo $RPM_BUILD_ROOT%{_datadir}/%{name}
@@ -217,7 +223,8 @@ fi || :
 
 
 %files -f .mfiles
-%doc ACKNOWLEDGMENTS NEWS LICENSE.txt README.txt
+%doc ACKNOWLEDGMENTS NEWS README.txt
+%doc LICENSE.txt
 %attr(0755,root,root) %{_bindir}/%{name}
 %dir %{_datadir}/java/%{name}
 %dir %{_datadir}/%{name}
@@ -238,10 +245,13 @@ fi || :
 %{_datadir}/%{name}/Doc
 
 %files demo
-%doc ACKNOWLEDGMENTS NEWS LICENSE.txt README.txt
+%doc LICENSE.txt
 %{_datadir}/%{name}/Demo
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt1_0.1.b3jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.7-alt1_3jpp8
 - new fc release
 
