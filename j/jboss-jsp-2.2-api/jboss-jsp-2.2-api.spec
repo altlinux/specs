@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-jsp-2.2-api
 Version:          1.0.1
-Release:          alt5_13jpp8
+Release:          alt5_14jpp8
 Summary:          JavaServer(TM) Pages 2.2 API
 License:          CDDL or GPLv2 with exceptions
 URL:              http://www.jboss.org/
@@ -23,6 +23,7 @@ URL:              http://www.jboss.org/
 Source0:          %{name}-%{namedversion}.tar.xz
 
 BuildRequires:    maven-local
+BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
 BuildRequires:    mvn(org.jboss.spec.javax.el:jboss-el-api_2.2_spec)
 BuildRequires:    mvn(org.jboss.spec.javax.servlet:jboss-servlet-api_3.0_spec)
@@ -64,6 +65,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_14jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_13jpp8
 - new fc release
 
