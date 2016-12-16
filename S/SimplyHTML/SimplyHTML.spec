@@ -5,27 +5,23 @@ BuildRequires(pre): rpm-macros-java
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-Name:	SimplyHTML		
-Version:	0.16.7
-Release:	alt1_7jpp8
-Summary:	Application and a java component for rich text processing
+Name:           SimplyHTML
+Version:        0.16.17
+Release:        alt1_1jpp8
+Summary:        Application and a java component for rich text processing
+License:        GPLv2 and BSD
+URL:            http://simplyhtml.sourceforge.net/
+BuildArch:      noarch
 
-License:	GPLv2 and BSD
-URL:		http://simplyhtml.sourceforge.net/
-Source0:	http://downloads.sourceforge.net/simplyhtml/%{name}_src_0_16_07.tar.gz
-Patch0:	simplyhtml-build.xml-classpath.patch
-Patch1:	simplyhtml-manifest-classpath.patch
+Source0:        http://heanet.dl.sourceforge.net/project/simplyhtml/stable/simplyhtml_src-%{version}.tar.gz
 
-BuildRequires:	ant
-BuildRequires:	gnu-regexp
-BuildRequires:	javahelp2
-BuildRequires: javapackages-tools rpm-build-java
+# Remove Gradle bintray plugin (not available in Fedora)
+Patch0:         %{name}-remove-bintray-plugin.patch
 
-Requires:	gnu-regexp
-Requires:	javahelp2
-Requires: javapackages-tools rpm-build-java
-
-BuildArch: noarch
+BuildRequires:  gradle-local
+BuildRequires:  mvn(gnu-regexp:gnu-regexp)
+BuildRequires:  mvn(javax.help:javahelp)
+BuildRequires:  mvn(org.dpolivaev.mnemonicsetter:mnemonicsetter)
 Source44: import.info
 
 %description
@@ -40,50 +36,32 @@ storing textual information and styles.
 %package javadoc
 Group: Development/Java
 Summary: API documentation for %{name}
-Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n simplyhtml-0_16_07
-%patch0 -p1
-%patch1 -p1
-find -name '*.class' -exec rm -f '{}' \;
-find -name '*.jar' -exec rm -f '{}' \;
+%setup -q -n simplyhtml-%{version}
+%patch0
+echo 'rootProject.name="%{name}"' >settings.gradle
 
 %build
-export CLASSPATH=
-CLASSPATH=
-cd src
-ant full-dist dist
-cd ..
+%gradle_build
 
 %install
-mkdir -p %{buildroot}%{_javadir}/%{name}
+%mvn_install -J build/docs/javadoc
 
-
-cp -a dist/lib/SimplyHTML.jar %{buildroot}%{_javadir}/%{name}/%{name}.jar
-
-cp -a dist/lib/SimplyHTMLHelp.jar %{buildroot}%{_javadir}/%{name}/%{name}-help.jar
-
-%jpackage_script com.lightdev.app.shtm.App "" "" gnu-regexp:javahelp2:SimplyHTML simplyhtml true
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -a dist/help/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}
-%{_bindir}/simplyhtml*
+%files -f .mfiles
+%doc readme.txt
 %doc gpl.txt 
 
-%files javadoc
-%{_javadocdir}/%{name}
-%doc readme.txt
-
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.16.17-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.16.7-alt1_7jpp8
 - new fc release
 
