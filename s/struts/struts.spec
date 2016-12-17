@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          struts
 Version:       1.3.10
-Release:       alt4_17jpp8
+Release:       alt4_18jpp8
 Summary:       Web application framework
 License:       ASL 2.0
 URL:           http://struts.apache.org/
@@ -24,8 +24,8 @@ Patch1:        struts-1.3.10-fix-build.patch
 # Thanks to Arun Babu Neelicattu aneelica@redhat.com
 # and Brandon.Vincent@asu.edu
 Patch2:        struts-1.3.10-CVE-2014-0114.patch
-
 Patch3:        struts-1.3.10-CVE-2015-0899.patch
+Patch4:        struts-1.3.10-CVE-2016-1181-CVE-2016-1182.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(antlr:antlr)
@@ -83,6 +83,7 @@ find -name "*.class" -delete
 %patch1 -p1
 %patch2 -p0
 %patch3 -p1
+%patch4 -p1
 
 sed -i 's/\r//' LICENSE.txt NOTICE.txt
 
@@ -135,6 +136,9 @@ rm -rf $RPM_BUILD_ROOT/var/lib/tomcat?/webapps/struts-documentation/download.cgi
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt4_18jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt4_17jpp8
 - new fc release
 
