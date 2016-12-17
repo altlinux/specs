@@ -39,10 +39,11 @@ BuildRequires: jpackage-generic-compat
 
 Name:           maven-scm
 Version:        1.9.4
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Common API for doing SCM operations
 License:        ASL 2.0
 URL:            http://maven.apache.org/scm
+BuildArch:      noarch
 
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/scm/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
@@ -54,20 +55,26 @@ Patch7:         vss-modello-config.patch
 # Compatibility with JGit 4.x, not yet forwarded
 Patch8:         %{name}-jgit-4-compat.patch
 
-BuildArch:      noarch
-
-BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  maven-local
-BuildRequires:  modello
-BuildRequires:  plexus-utils >= 1.5.6
-BuildRequires:  maven-invoker-plugin
-BuildRequires:  maven-plugin-testing-harness
-BuildRequires:  bzr
-BuildRequires: subversion subversion-server-common
-BuildRequires:  plexus-containers-component-metadata
-BuildRequires:  plexus-containers-container-default
-BuildRequires:  plexus-classworlds
-BuildRequires:  jgit
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(commons-lang:commons-lang)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-settings)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.shared:file-management)
+BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.eclipse.jgit:org.eclipse.jgit)
+BuildRequires:  mvn(org.sonatype.plexus:plexus-sec-dispatcher)
 Source44: import.info
 
 %description
@@ -134,7 +141,6 @@ sed -i s/cvsjava.CvsJava/cvsexe.CvsExe/ maven-scm-client/src/main/resources/META
 
 %files -f .mfiles
 %doc LICENSE NOTICE
-%dir %{_javadir}/%{name}
 
 %files test -f .mfiles-test
 %doc LICENSE NOTICE
@@ -143,6 +149,9 @@ sed -i s/cvsjava.CvsJava/cvsexe.CvsExe/ maven-scm-client/src/main/resources/META
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.4-alt1_5jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.4-alt1_4jpp8
 - new fc release
 
