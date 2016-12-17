@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javaewah
 Version:        0.8.4
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        A word-aligned compressed variant of the Java bitset class
 
 Group:          Development/Other
@@ -19,8 +19,11 @@ Source0:        https://github.com/lemire/%{name}/archive/%{commit}/%{name}-%{ve
 
 BuildArch:      noarch
 
-BuildRequires: maven-local
-BuildRequires: maven-surefire-provider-junit
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 
@@ -63,6 +66,9 @@ API documentation for %{name}.
 %doc LICENSE-2.0.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt1_7jpp8
+- new fc release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt1_6jpp8
 - new fc release
 
