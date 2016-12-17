@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          httpcomponents-asyncclient
 Version:       4.1.1
-Release:       alt1_2jpp8
+Release:       alt1_4jpp8
 Summary:       Apache components to build asynchronous client side HTTP services
 License:       ASL 2.0
 URL:           http://hc.apache.org/
@@ -17,6 +17,7 @@ BuildRequires: maven-local
 BuildRequires: mvn(commons-io:commons-io)
 BuildRequires: mvn(commons-logging:commons-logging)
 BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.httpcomponents:httpclient-cache)
 BuildRequires: mvn(org.apache.httpcomponents:httpclient)
 BuildRequires: mvn(org.apache.httpcomponents:httpcore)
@@ -94,6 +95,24 @@ for p in httpasyncclient httpasyncclient-cache; do
  </configuration>"
 done
 
+# Remove deprecated httpclient annotations
+sed -i '/ThreadSafe/d' \
+ httpasyncclient/src/main/java/org/apache/http/impl/nio/client/CloseableHttpPipeliningClient.java \
+ httpasyncclient/src/main/java/org/apache/http/impl/nio/client/CloseableHttpAsyncClient.java \
+ httpasyncclient/src/main/java/org/apache/http/impl/nio/conn/CPool.java \
+ httpasyncclient/src/main/java/org/apache/http/impl/nio/conn/CPoolEntry.java \
+ httpasyncclient/src/main/java/org/apache/http/impl/nio/conn/PoolingNHttpClientConnectionManager.java \
+ httpasyncclient/src/main/java-deprecated/org/apache/http/impl/nio/conn/AsyncSchemeRegistryFactory.java \
+ httpasyncclient-cache/src/main/java/org/apache/http/impl/client/cache/CachingHttpAsyncClient.java
+sed -i '/NotThreadSafe/d' \
+ httpasyncclient/src/main/java/org/apache/http/impl/nio/client/HttpAsyncClientBuilder.java \
+ httpasyncclient/src/main/java/org/apache/http/impl/nio/client/MinimalHttpAsyncClientBuilder.java \
+ httpasyncclient/src/main/java/org/apache/http/impl/nio/conn/CPoolProxy.java
+sed -i '/Immutable/d' \
+ httpasyncclient/src/main/java/org/apache/http/impl/nio/client/DefaultAsyncUserTokenHandler.java \
+ httpasyncclient/src/main/java/org/apache/http/impl/nio/client/HttpAsyncClients.java \
+ httpasyncclient/src/main/java/org/apache/http/impl/nio/conn/PoolingNHttpClientConnectionManager.java
+
 %mvn_file org.apache.httpcomponents:httpasyncclient httpasyncclient
 %mvn_file org.apache.httpcomponents:httpasyncclient-cache httpasyncclient-cache
 
@@ -118,6 +137,9 @@ done
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_4jpp8
+- new fc release
+
 * Wed Dec 07 2016 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_2jpp8
 - new version
 
