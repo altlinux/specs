@@ -39,14 +39,13 @@
 Name: openmpi
 #pkgname
 
-Version: 1.6.4
-Release: alt2
+Version: 2.0.1
+Release: alt1
 
 %define mpi_prefix %_libdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
 
-Summary: A powerful implementaion of MPI
-Summary(ru_RU.UTF8): Открытая реализация MPI
+Summary: A powerful implementation of MPI/SHMEM
 License: BSD
 Group: Development/Other
 Url: http://www.open-mpi.org/
@@ -55,7 +54,7 @@ Packager: Denis Pynkin <dans@altlinux.ru>
 Source:  openmpi-%version.tar
 #Source1: MPI_Status_c2f.3
 
-Patch0: openmpi-%version-%release.patch
+#Patch0: openmpi-%version-%release.patch
 #Patch1: openmpi-arm-%version.patch
 
 BuildPreReq: rpm-macros-mpi-selector
@@ -82,7 +81,8 @@ Requires: libibverbs >= 1.1.2
 BuildPreReq: /proc flex gcc-c++ gcc-fortran
 BuildPreReq: libibverbs-devel
 BuildPreReq: valgrind-devel libiberty-devel
-
+BuildRequires: libnuma-devel
+BuildRequires: libtorque-devel
 
 %package devel
 Summary: Development part of %name
@@ -95,10 +95,6 @@ Requires: libibverbs-devel libibumad-devel
 %ifdef udapl
 Requires: libdapl-devel
 %endif
-
-%package devel-vt
-Summary: Development part of %name. VampirTrace related stuff.
-Group: Development/Other
 
 Requires: %name-devel = %version-%release
 Requires: gcc-c++ gcc-fortran
@@ -115,26 +111,24 @@ Examples comming with upstream sources tarball.
 %endif
 
 %description
-Open MPI is a project combining technologies and resources from
-several other projects (FT-MPI, LA-MPI, LAM/MPI, and PACX-MPI) in
-order to build the best MPI library available. A completely new
-MPI-2 compliant implementation, Open MPI offers advantages for
-system and software vendors, application developers and computer
-science researchers.
+Open MPI is an open source implementation of the Message Passing
+Interface specification (http://www.mpi-forum.org/) developed and
+maintained by a consortium of research, academic, and industry
+partners.
 
-This part is attended for computing nodes.
-#description -l ru_RU.KOI8-R
+Open MPI also includes an implementation of the OpenSHMEM parallel
+programming API (http://www.openshmem.org/).  OpenSHMEM is a
+Partitioned Global Address Space (PGAS) abstraction layer, which
+provides fast inter-process communication using one-sided
+communication techniques.
 
 %description devel
-Package for development with Open MPI 
-
-%description devel-vt
-Package for development with Open MPI and VampirTrace 
+Package for development with Open MPI/SHMEM
 
 %prep
 %setup -q -n openmpi-%version
 #__cp -f SOURCE1 ompi/mpi/man/man3/
-%patch0 -p1
+#patch0 -p1
 #patch1 -p1
 
 %build
@@ -145,7 +139,7 @@ echo="/bin/echo"
 export CFLAGS CXXFLAGS LDFLAGS echo
 
 #autoreconf
-sh autogen.sh
+./autogen.pl
 
 function buildIt() {
 	./configure $* \
@@ -153,6 +147,8 @@ function buildIt() {
 			--enable-mpi-f90 \
 			--prefix=%mpi_prefix \
 			--with-ft=cr \
+			--with-verbs \
+			--with-tm \
 			--sysconfdir=%mpi_sysconfdir \
 			--bindir=%mpi_prefix/bin \
 			--libdir=%mpi_prefix/lib \
@@ -161,7 +157,11 @@ function buildIt() {
 			--mandir=%mpi_prefix/man \
 			--docdir=%_docdir/%name-%version \
 			--with-gnu-ld \
-			--with-wrapper-ldflags="-Wl,--no-as-needed,-Rpath=%mpi_prefix/lib"
+			--with-wrapper-ldflags="-Wl,-Rpath=%mpi_prefix/lib"
+
+#			--with-wrapper-ldflags="-Wl,--no-as-needed,-Rpath=%mpi_prefix/lib"
+
+#TODO: --with-cuda
 
 	%make_build
 }
@@ -178,11 +178,11 @@ export echo
 #ln -s ompi-checkpoint %buildroot%_libdir/%name/bin/orte-checkpoint
 
 # Avoid fail during man pages compression
-rm -f %buildroot%_libdir/%name/man/man1/mpiCC.1
-rm -f %buildroot%_libdir/%name/man/man1/orteCC.1
+#rm -f %buildroot%_libdir/%name/man/man1/mpiCC.1
+#rm -f %buildroot%_libdir/%name/man/man1/orteCC.1
 
-ln -s mpic++.1.gz %buildroot%_libdir/%name/man/man1/mpiCC.1.gz
-ln -s mpic++.1.gz %buildroot%_libdir/%name/man/man1/orteCC.1.gz
+#ln -s mpic++.1.gz %buildroot%_libdir/%name/man/man1/mpiCC.1.gz
+#ln -s mpic++.1.gz %buildroot%_libdir/%name/man/man1/orteCC.1.gz
 
 %find_lang %name
 
@@ -247,14 +247,16 @@ EOF
 %mpi_prefix/bin/mpivars.*
 %mpi_prefix/bin/mpirun
 %mpi_prefix/bin/ompi_info
-%mpi_prefix/bin/opal_wrapper
 %mpi_prefix/bin/orted
 %mpi_prefix/bin/orterun
 %mpi_prefix/bin/mpiexec
 
 %mpi_prefix/bin/ompi-*
 %mpi_prefix/bin/orte-*
-%mpi_prefix/bin/opal-*
+#mpi_prefix/bin/opal-*
+
+%mpi_prefix/bin/osh*
+%mpi_prefix/bin/shmem*
 
 %dir %mpi_prefix/lib
 %dir %mpi_prefix/lib/openmpi
@@ -276,17 +278,18 @@ EOF
 %mpi_prefix/data
 
 %files devel
+%mpi_prefix/bin/opal_wrapper
 %mpi_prefix/bin/mpic++
 %mpi_prefix/bin/mpicc
 %mpi_prefix/bin/mpiCC
 %mpi_prefix/bin/mpicxx
 %mpi_prefix/bin/mpif77
 %mpi_prefix/bin/mpif90
-%mpi_prefix/bin/otf*
+%mpi_prefix/bin/mpifort
 
-%mpi_prefix/bin/orte_wrapper_script
-%mpi_prefix/bin/orteCC
-%mpi_prefix/bin/ortec++
+#mpi_prefix/bin/orte_wrapper_script
+#mpi_prefix/bin/orteCC
+#mpi_prefix/bin/ortec++
 %mpi_prefix/bin/ortecc
 
 %dir %mpi_prefix/include
@@ -294,9 +297,16 @@ EOF
 %dir %mpi_prefix/include/openmpi
 %mpi_prefix/include/openmpi/*
 
+%dir %mpi_prefix/include/openshmem
+%mpi_prefix/include/openshmem/*
+
+%dir %mpi_prefix/include/mpp
+%mpi_prefix/include/mpp/*
+%mpi_prefix/include/shmem.fh
+
 %mpi_prefix/man/man3
 
-%mpi_prefix/lib/mpi.mod
+%mpi_prefix/lib/*.mod
 
 %mpi_prefix/lib/pkgconfig/*
 
@@ -304,23 +314,10 @@ EOF
 %mpi_prefix/lib/openmpi/*.a
 %mpi_prefix/lib/libotf.a
 %else
-%exclude %mpi_prefix/lib/libvt*.so
 %mpi_prefix/lib/lib*.so
 %mpi_prefix/lib/*.la
 %mpi_prefix/lib/openmpi/*.la
 %endif
-
-%files devel-vt
-%mpi_prefix/bin/mpic++-vt
-%mpi_prefix/bin/mpicc-vt
-%mpi_prefix/bin/mpiCC-vt
-%mpi_prefix/bin/mpicxx-vt
-%mpi_prefix/bin/mpif77-vt
-%mpi_prefix/bin/mpif90-vt
-%mpi_prefix/bin/vt*
-%mpi_prefix/lib/libvt*.so
-%dir %mpi_prefix/include/vampirtrace
-%mpi_prefix/include/vampirtrace/*
 
 %ifdef examples
 %files %name-examples
@@ -328,6 +325,14 @@ EOF
 %endif
 
 %changelog
+* Sat Dec 17 2016 Denis Pynkin <dans@altlinux.org> 2.0.1-alt1
+- New version
+- VampirTrace removed.
+
+* Sat Aug 29 2015 Denis Pynkin <dans@altlinux.org> 1.10.0-alt1
+- New version
+- OpenSHMEM enabled
+
 * Wed Feb 04 2015 Anton Farygin <rider@altlinux.ru> 1.6.4-alt2
 - rebuild witch new libibverbs
 
