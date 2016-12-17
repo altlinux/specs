@@ -13,12 +13,13 @@ BuildRequires: jpackage-generic-compat
 %global oname spring-hateoas
 Name:          springframework-hateoas
 Version:       0.16.0
-Release:       alt1_3jpp8
+Release:       alt1_5jpp8
 Summary:       Representations for hyper-text driven REST web services
 License:       ASL 2.0
 URL:           http://github.com/SpringSource/spring-hateoas
 # Newer release require springframework >= 4.0.9.RELEASE
 Source0:       https://github.com/spring-projects/spring-hateoas/archive/%{namedversion}.tar.gz
+Patch0:        springframework-hateoas-0.16.0-jackson2.7.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(com.fasterxml.jackson.core:jackson-annotations)
@@ -27,6 +28,7 @@ BuildRequires: mvn(com.jayway.jsonpath:json-path)
 BuildRequires: mvn(javax.servlet:javax.servlet-api)
 BuildRequires: mvn(javax.ws.rs:jsr311-api)
 BuildRequires: mvn(net.sf.cglib:cglib)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.atteo:evo-inflector)
 BuildRequires: mvn(org.objenesis:objenesis)
 # BuildRequires: mvn(org.projectlombok:lombok:1.14.4) @  https://github.com/rzwitserloot/lombok/
@@ -75,16 +77,19 @@ cp -p src/main/resources/license.txt .
 cp -p src/main/resources/notice.txt .
 sed -i 's/\r//' *.txt readme.md
 
+%patch0 -p1
+
 %pom_remove_plugin :com.springsource.bundlor.maven
 %pom_remove_plugin :maven-source-plugin
 %pom_xpath_remove "pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:executions"
 
-%pom_xpath_set "pom:dependency[pom:groupId='javax.servlet']/pom:artifactId" javax.servlet-api
-%pom_xpath_set "pom:dependency[pom:groupId='javax.servlet']/pom:version" 3.1.0
+%pom_change_dep :servlet-api javax.servlet:javax.servlet-api:3.1.0
 
 find ./ -name "*.java" -exec sed -i "s/org.springframework.cglib/net.sf.cglib/g" {} +
 %pom_add_dep net.sf.cglib:cglib
 
+%pom_remove_plugin :maven-jar-plugin
+%pom_xpath_inject "pom:project" "<packaging>bundle</packaging>"
 %pom_add_plugin org.apache.felix:maven-bundle-plugin . '
 <extensions>true</extensions>
 <configuration>
@@ -130,6 +135,9 @@ rm -r src/main/java/org/springframework/hateoas/alps/Alps.java \
 %doc license.txt notice.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt1_5jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt1_3jpp8
 - new fc release
 
