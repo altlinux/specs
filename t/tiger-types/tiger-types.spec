@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          tiger-types
 Version:       2.2
-Release:       alt1_1jpp8
+Release:       alt1_2jpp8
 Summary:       Type arithmetic library for Java5
 License:       CDDL or GPLv2 with exceptions
 Url:           https://github.com/kohsuke/tiger-types
@@ -16,10 +16,10 @@ Source0:       https://github.com/kohsuke/%{name}/archive/%{name}-%{version}.tar
 # tiger-types package don't include the license file
 Source1:       glassfish-LICENSE.txt
 
-BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(net.java:jvnet-parent:pom:)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: maven-local
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(net.java:jvnet-parent:pom:)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 
 BuildArch:     noarch
 Source44: import.info
@@ -58,7 +58,9 @@ This package contains javadoc for %{name}.
 
 # not needed
 %pom_remove_plugin :maven-release-plugin
-%pom_xpath_remove "pom:extensions/pom:extension[pom:artifactId[text()='wagon-gitsite']]"
+%pom_remove_plugin :maven-site-plugin
+%pom_xpath_remove "pom:build/pom:extensions"
+
 
 %mvn_file :%{name} %{name}
 
@@ -78,6 +80,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_2jpp8
+- new fc release
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_1jpp8
 - new version
 
