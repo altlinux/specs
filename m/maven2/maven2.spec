@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven2
 Version:        2.2.1
-Release:        alt6_53jpp8
+Release:        alt6_54jpp8
 Summary:        Java project management and project comprehension tool
 License:        ASL 2.0 and MIT and BSD
 URL:            http://maven.apache.org
@@ -25,8 +25,8 @@ Patch6:         %{name}-%{version}-strip-jackrabbit-dep.patch
 Patch8:         %{name}-%{version}-migrate-to-plexus-containers-container-default.patch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-pmd-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
@@ -206,6 +206,9 @@ done
 
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt6_54jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt6_53jpp8
 - new fc release
 
