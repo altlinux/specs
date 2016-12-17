@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jboss-interceptors-1.2-api
 Version:       1.0.0
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Java EE Interceptors 1.2 API
 License:       CDDL or GPLv2 with exceptions
 URL:           https://github.com/jboss/jboss-interceptors-api_spec
@@ -64,6 +64,9 @@ sed -i "s,59,51,;s,Temple Place,Franklin Street,;s,Suite 330,Fifth Floor,;s,0211
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_5jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_4jpp8
 - new fc release
 
