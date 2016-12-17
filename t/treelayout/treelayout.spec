@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %global core org.abego.treelayout
 Name:          treelayout
 Version:       1.0.3
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Efficient and customizable Tree Layout Algorithm in Java
 License:       BSD
 URL:           http://treelayout.sourceforge.net/
@@ -96,6 +96,9 @@ native2ascii -encoding UTF8 %{core}/src/main/java/org/abego/treelayout/package-i
 %doc %{core}/src/LICENSE.TXT
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_3jpp8
+- new fc release
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_2jpp8
 - new version
 
