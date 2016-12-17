@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -12,9 +13,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:           picketbox-commons
 Version:        1.0.0
-Release:        alt2_12jpp8
+Release:        alt2_13jpp8
 Summary:        Common classes for security projects
-Group:          Development/Other
 License:        LGPLv2+
 URL:            http://www.jboss.org/picketbox
 
@@ -23,20 +23,16 @@ URL:            http://www.jboss.org/picketbox
 Source0:        %{name}-%{namedversion}.tar.xz
 
 BuildArch:      noarch
-
-BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  maven-local
-
-Requires: javapackages-tools rpm-build-java
+BuildRequires:  mvn(org.jboss:jboss-parent:pom:)
 Source44: import.info
 
 %description
 Common classes for security projects.
 
 %package javadoc
-Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires: javapackages-tools rpm-build-java
+Group: Development/Java
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -52,11 +48,12 @@ API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_13jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_12jpp8
 - new fc release
 
