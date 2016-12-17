@@ -7,7 +7,6 @@ BuildRequires: docbook-dtds
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 24
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name hibernate3
 %define version 3.6.10
@@ -18,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    hibernate3
 Version: 3.6.10
-Release: alt3_19jpp8
+Release: alt3_20jpp8
 Summary: Relational persistence and query service
 License: LGPLv2+
 URL:     http://www.hibernate.org/
@@ -34,9 +33,10 @@ Patch4:  hibernate-orm-cglib-3.1.patch
 
 BuildArch: noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: jpackage-utils
 BuildRequires: maven-local >= 0.7.2
 BuildRequires: maven-local
+BuildRequires: maven-antrun-plugin
 BuildRequires: maven-release-plugin
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-injection-plugin
@@ -58,11 +58,7 @@ BuildRequires: ehcache-core
 # BuildRequires: infinispan
 BuildRequires: rhq-plugin-annotations
 BuildRequires: h2
-%if %{fedora} > 19
 BuildRequires: mvn(hsqldb:hsqldb:1)
-%else
-BuildRequires: mvn(hsqldb:hsqldb)
-%endif
 BuildRequires: mvn(org.slf4j:slf4j-log4j12)
 BuildRequires: glassfish-jaxb
 BuildRequires: shrinkwrap
@@ -203,7 +199,6 @@ export LANG=en_US.UTF-8
 
 %files -f .mfiles-%{name}
 %doc changelog.txt
-%dir %{_javadir}/%{name}
 %doc lgpl.txt
 
 %files javadoc -f .mfiles-javadoc
@@ -228,6 +223,9 @@ export LANG=en_US.UTF-8
 %doc lgpl.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt3_20jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt3_19jpp8
 - new fc release
 
