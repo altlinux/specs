@@ -8,26 +8,22 @@ BuildRequires: jpackage-generic-compat
 %global parent  plexus
 
 Name:       plexus-compiler
-Version:    2.7
-Release:    alt1_2jpp8
 Epoch:      0
+Version:    2.7
+Release:    alt1_3jpp8
 Summary:    Compiler call initiators for Plexus
 # extras subpackage has a bit different licensing
 # parts of compiler-api are ASL2.0/MIT
 License:    MIT and ASL 2.0
 URL:        https://github.com/codehaus-plexus/plexus-compiler
+BuildArch:  noarch
 
 Source0:    https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
 Source1:    http://www.apache.org/licenses/LICENSE-2.0.txt
 Source2:    LICENSE.MIT
 
-BuildArch:      noarch
 BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-gpg-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-api)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-compilers:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
@@ -109,6 +105,9 @@ cp %{SOURCE2} LICENSE.MIT
 %doc LICENSE LICENSE.MIT
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.7-alt1_3jpp8
+- new fc release
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.7-alt1_2jpp8
 - new version
 
