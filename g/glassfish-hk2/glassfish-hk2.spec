@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          glassfish-hk2
 Version:       2.4.0
-Release:       alt1_2jpp8
+Release:       alt1_6jpp8
 Summary:       Hundred Kilobytes Kernel
 License:       CDDL or GPLv2 with exceptions
 URL:           http://hk2.java.net/
@@ -24,6 +24,8 @@ Source0:       https://github.com/hk2-project/hk2/archive/hk2-parent-%{namedvers
 Source1:       glassfish-LICENSE.txt
 Source2:       hk2-inhabitant-generator-osgi.bundle
 
+# unbundles tiger-types from hk2-utils osgi metadata and
+# fixes invalid whitespace in hk2-core osgi metadata
 Patch0:        glassfish-hk2-2.3.0-hk2-utils-osgi_bundle.patch
 
 BuildRequires: maven-local
@@ -49,6 +51,7 @@ BuildRequires: mvn(org.apache.maven:maven-core)
 BuildRequires: mvn(org.apache.maven:maven-plugin-api)
 BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-compiler-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires: mvn(org.apache.maven.shared:maven-osgi)
 BuildRequires: mvn(org.easymock:easymock)
@@ -382,6 +385,80 @@ cp -p %SOURCE2 hk2-inhabitant-generator/osgi.bundle
   </archive>
 </configuration>"
 
+# fix build failure. 'useDefaultManifestFile' has been removed from the maven-jar-plugin >= 3.0.0
+%pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-jar-plugin']/pom:configuration/pom:useDefaultManifestFile"
+%pom_xpath_inject "pom:plugin[pom:artifactId = 'maven-jar-plugin']/pom:configuration" "
+  <manifestFile>\${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>"
+%pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:configuration"
+%pom_xpath_inject "pom:plugin[pom:artifactId = 'maven-bundle-plugin']" "
+<extensions>true</extensions>
+<executions>
+  <execution>
+    <id>bundle-manifest</id>
+    <phase>process-classes</phase>
+    <goals>
+      <goal>manifest</goal>
+    </goals>
+  </execution>
+</executions>"
+%pom_remove_plugin :maven-jar-plugin osgi-resource-locator
+%pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-jar-plugin']/pom:configuration/pom:useDefaultManifestFile" hk2-utils
+%pom_xpath_inject "pom:plugin[pom:artifactId = 'maven-jar-plugin']/pom:configuration" "
+  <manifestFile>\${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>" hk2-utils
+for m in class-model \
+ guice-bridge \
+ hk2 \
+ hk2-api \
+ hk2-configuration/hk2-integration \
+ hk2-configuration/manager \
+ hk2-configuration/persistence/hk2-xml/main \
+ hk2-configuration/persistence/hk2-xml/test1 \
+ hk2-configuration/persistence/hk2-xml-dom/config-types \
+ hk2-configuration/persistence/hk2-xml-dom/hk2-config \
+ hk2-configuration/persistence/hk2-xml-dom/hub-integration \
+ hk2-configuration/persistence/property-file \
+ hk2-core \
+ hk2-extras \
+ hk2-jmx \
+ hk2-locator \
+ hk2-runlevel \
+ hk2-testing/collections \
+ hk2-testing/hk2-junitrunner \
+ hk2-testing/hk2-locator-extras \
+ hk2-testing/hk2-locator-no-proxies \
+ hk2-testing/hk2-locator-no-proxies2 \
+ hk2-utils \
+ osgi/adapter \
+ osgi/adapter-tests/faux-sdp-bundle \
+ osgi/adapter-tests/sdp-management-bundle \
+ osgi-resource-locator \
+ spring-bridge
+do
+ %pom_xpath_inject "pom:project" "<packaging>bundle</packaging>" ${m}
+ %pom_xpath_inject "pom:plugin[pom:artifactId = 'maven-bundle-plugin']" "<extensions>true</extensions>" ${m}
+done
+for m in osgi/adapter-tests/contract-bundle \
+ osgi/adapter-tests/no-hk2-bundle \
+ osgi/adapter-tests/test-module-startup
+do
+ %pom_xpath_set "pom:project/pom:packaging" bundle ${m}
+ %pom_xpath_inject "pom:plugin[pom:artifactId = 'maven-bundle-plugin']" "<extensions>true</extensions>" ${m}
+done
+
+# use bnd instructions contained in osgi.bundle files
+%pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:configuration" hk2-utils
+for m in $(find -name osgi.bundle -exec dirname {} \;)
+do
+ # fix comments in bnd instruction files that are unacceptible for strict new bnd version
+ sed -i -e 's/^[ /]\*/# /' $m/osgi.bundle
+ # insert include instruction into maven-bundle-plugin configuration section
+ if [ "$(basename $m)" = "hk2-inhabitant-generator" ] ; then
+  %pom_xpath_inject "pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:configuration" "<instructions><_include>osgi.bundle</_include></instructions>" ${m}
+ else
+  %pom_xpath_inject "pom:plugin[pom:artifactId = 'maven-bundle-plugin']" "<configuration><instructions><_include>osgi.bundle</_include></instructions></configuration>" ${m}
+ fi
+done
+
 cp -p %{SOURCE1} LICENSE.txt
 sed -i 's/\r//' LICENSE.txt
 
@@ -540,6 +617,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_6jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_2jpp8
 - new fc release
 
