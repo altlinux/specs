@@ -7,19 +7,15 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          mybatis-parent
 Version:       21
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       The MyBatis parent POM
 License:       ASL 2.0
 URL:           http://www.mybatis.org/
 Source0:       https://github.com/mybatis/parent/archive/%{name}-%{version}.tar.gz
 
 BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-plugin-bundle
-%if 0
-BuildRequires: mvn(org.codehaus.mojo:animal-sniffer-maven-plugin)
-BuildRequires: mojo-signatures
-%endif
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 
 BuildArch:     noarch
 Source44: import.info
@@ -42,6 +38,8 @@ The MyBatis parent POM which has to be inherited by all MyBatis modules.
 
 # animal-sniffer is currently broken. it uses asm4, but asm3 is loaded
 %pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin
+
+%pom_remove_plugin :maven-scm-plugin
 
 # remove com.google.doclava:doclava:1.0.3
 # javac.target.version is set 1.5
@@ -71,6 +69,9 @@ The MyBatis parent POM which has to be inherited by all MyBatis modules.
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 21-alt1_5jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 21-alt1_4jpp8
 - new fc release
 
