@@ -8,31 +8,29 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-artifact-resolver
 Version:        1.0
-Release:        alt3_14jpp8
+Release:        alt3_15jpp8
 # Epoch is added because the original package's version in maven-shared is 1.1-SNAPSHOT
 Epoch:          1
 Summary:        Maven Artifact Resolution API
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/%{name}
+BuildArch:      noarch
+
 Source0:        http://central.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 # Replaced plexus-maven-plugin with plexus-component-metadata
 Patch0:         %{name}-plexus.patch
 
-BuildArch:      noarch
-
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-artifact-manager)
 BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.easymock:easymock)
-
-Obsoletes:      maven-shared-artifact-resolver < %{epoch}:%{version}-%{release}
-Provides:       maven-shared-artifact-resolver = %{epoch}:%{version}-%{release}
 Source44: import.info
 
 %description
@@ -76,6 +74,9 @@ rm src/test/java/org/apache/maven/shared/artifact/resolver/DefaultProjectDepende
 
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt3_15jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt3_14jpp8
 - new fc release
 
