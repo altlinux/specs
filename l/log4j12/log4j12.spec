@@ -13,29 +13,32 @@ BuildRequires: jpackage-generic-compat
 
 Name:          log4j12
 Version:       1.2.17
-Release:       alt1_12jpp8
+Release:       alt1_13jpp8
 Summary:       Java logging package
 License:       ASL 2.0
 URL:           http://logging.apache.org/log4j/1.2/
-Source0:       https://github.com/apache/log4j/archive/v%{archiversion}.tar.gz
+BuildArch:     noarch
 
+Source0:       https://github.com/apache/log4j/archive/v%{archiversion}.tar.gz
 Source1:       log4j.catalog
 
 Patch0:        0001-logfactor5-changed-userdir.patch
 Patch1:        0009-Fix-tests.patch
 Patch2:        0010-Fix-javadoc-link.patch
 
+BuildRequires: maven-local
 BuildRequires: mvn(ant-contrib:ant-contrib)
 BuildRequires: mvn(javax.mail:mail)
-BuildRequires: mvn(org.apache.ant:ant-junit)
-BuildRequires: mvn(org.apache.geronimo.specs:geronimo-jms_1.1_spec)
-BuildRequires: mvn(org.apache.geronimo.specs:specs:pom:)
-BuildRequires: mvn(oro:oro)
 BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.ant:ant-junit)
+BuildRequires: mvn(org.apache.ant:ant-nodeps)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.geronimo.specs:geronimo-jms_1.1_spec)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires: mvn(oro:oro)
 
-BuildRequires: maven-local
 Obsoletes:     log4j <= 0:1.2.17-14
-BuildArch:     noarch
 Source44: import.info
 
 %description
@@ -171,6 +174,9 @@ fi
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.17-alt1_13jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.17-alt1_12jpp8
 - new fc release
 
