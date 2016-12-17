@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %global oname mustache.java
 Name:          mustache-java
 Version:       0.9.1
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Implementation of mustache.js for Java
 License:       ASL 2.0
 URL:           https://github.com/spullara/mustache.java/
@@ -101,6 +101,13 @@ find . -name "*.jar" -print -delete
   </archive>
 </configuration>"
 
+# Fix build with current maven-jar-plugin
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions" "
+<execution>
+  <id>default-jar</id>
+  <phase>skip</phase>
+</execution>" compiler
+
 %mvn_package com.github.spullara.mustache.java:mustache-maven-plugin maven-plugin
 %mvn_package com.github.spullara.mustache.java:benchmarks benchmarks
 %mvn_package com.github.spullara.mustache.java:compiler::tests:
@@ -127,6 +134,9 @@ find . -name "*.jar" -print -delete
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1_3jpp8
+- new fc release
+
 * Wed Dec 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1_2jpp8
 - new fc release
 
