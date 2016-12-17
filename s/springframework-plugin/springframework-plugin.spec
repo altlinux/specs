@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 %global oname spring-plugin
 Name:          springframework-plugin
 Version:       1.1.0
-Release:       alt1_4jpp8
+Release:       alt1_6jpp8
 Summary:       Simple plugin infrastructure
 License:       ASL 2.0
 URL:           https://github.com/SpringSource/spring-plugin
@@ -21,17 +21,19 @@ Source0:       https://github.com/spring-projects/spring-plugin/archive/%{namedv
 # https://github.com/spring-projects/spring-plugin/issues/12
 Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
 
+BuildRequires: maven-local
 BuildRequires: mvn(ch.qos.logback:logback-classic)
 BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.hamcrest:hamcrest-library)
 BuildRequires: mvn(org.mockito:mockito-all)
+BuildRequires: mvn(org.slf4j:jcl-over-slf4j)
+BuildRequires: mvn(org.slf4j:slf4j-api)
 BuildRequires: mvn(org.springframework:spring-aop)
 BuildRequires: mvn(org.springframework:spring-beans)
 BuildRequires: mvn(org.springframework:spring-context)
 BuildRequires: mvn(org.springframework:spring-test)
-BuildRequires: mvn(org.slf4j:jcl-over-slf4j)
-BuildRequires: mvn(org.slf4j:slf4j-api)
-BuildRequires: maven-local
+
 BuildArch:     noarch
 Source44: import.info
 
@@ -92,8 +94,8 @@ sed -i 's/\r//' LICENSE
 %mvn_file :%{oname}-metadata %{oname}-metadata
 
 %build
-
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
+# Problem with new cglib: NoSuchFieldError: HASH_ASM_TYPE
+%mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
@@ -106,6 +108,9 @@ sed -i 's/\r//' LICENSE
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_6jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_4jpp8
 - new fc release
 
