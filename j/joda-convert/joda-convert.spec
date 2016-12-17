@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           joda-convert
 Version:        1.8.1
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Java library for conversion to and from standard string formats
 License:        ASL 2.0
 URL:            https://github.com/JodaOrg/joda-convert/
@@ -37,6 +37,7 @@ This package contains the %{summary}.
 %setup -q
 %mvn_file : %{name}
 sed -i s/// *.txt
+%pom_remove_plugin :maven-checkstyle-plugin
 
 %build
 %mvn_build
@@ -51,6 +52,9 @@ sed -i s/// *.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_3jpp8
+- new fc release
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_2jpp8
 - new version
 
