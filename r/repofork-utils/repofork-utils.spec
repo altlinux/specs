@@ -3,7 +3,7 @@ BuildRequires: perl(Pod/Usage.pm) perl(RPM/Header.pm)
 # END SourceDeps(oneline)
 URL: https://www.altlinux.org/Repofork-utils
 Name: repofork-utils
-Version: 0.04
+Version: 0.05
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -38,6 +38,9 @@ rm $RPM_BUILD_ROOT%_bindir/*.spec
 %_bindir/repofork*
 
 %changelog
+* Sat Dec 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- new version
+
 * Sat Nov 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
 - new version
 
