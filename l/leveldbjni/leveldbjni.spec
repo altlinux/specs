@@ -25,7 +25,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          leveldbjni
 Version:       1.8
-Release:       alt1_11jpp8
+Release:       alt1_13jpp8
 Summary:       A Java Native Interface to LevelDB
 License:       BSD
 URL:           https://github.com/fusesource/leveldbjni/
@@ -37,6 +37,7 @@ BuildRequires: libtool-common
 BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-tools-javadoc)
 BuildRequires: mvn(org.fusesource:fusesource-pom:pom:)
 BuildRequires: mvn(org.fusesource.hawtjni:hawtjni-runtime)
@@ -115,7 +116,7 @@ This package contains javadoc for %{name}.
 %endif
 
 rm -r %{name}/src/test/java/org/fusesource/%{name}/test/DBTest.java
-# cp -f /usr/lib/rpm/config.{sub,guess} leveldbjni/src/main/native-package/autotools/
+# cp -f /usr/lib/rpm/config.{sub,guess} /usr/share/automake-*/compile leveldbjni/src/main/native-package/autotools/
 
 %build
 
@@ -138,6 +139,9 @@ export JAVA_HOME=%{_jvmdir}/java LEVELDB_HOME=%{_prefix} SNAPPY_HOME=%{_prefix}
 %doc license.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_13jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_11jpp8
 - new fc release
 
