@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          springframework-data-commons
 Version:       1.8.4
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Interfaces between relational and non-relational data stores
 License:       ASL 2.0
 URL:           http://projects.spring.io/spring-data/
@@ -32,6 +32,7 @@ BuildRequires: mvn(javax.ejb:ejb-api)
 BuildRequires: mvn(javax.enterprise:cdi-api)
 BuildRequires: mvn(javax.servlet:javax.servlet-api)
 BuildRequires: mvn(joda-time:joda-time)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.springframework:spring-beans)
 BuildRequires: mvn(org.springframework:spring-context)
 BuildRequires: mvn(org.springframework:spring-core)
@@ -150,6 +151,9 @@ sed -i 's/\r//' *.txt
 %doc license.txt notice.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt1_7jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt1_6jpp8
 - new fc release
 
