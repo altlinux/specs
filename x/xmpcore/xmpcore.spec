@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          xmpcore
 Version:       5.1.2
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Java XMP Library
 License:       BSD
 URL:           http://www.adobe.com/devnet/xmp.html
@@ -63,6 +63,9 @@ sed -i 's/\r//' BSD-License.txt
 %doc BSD-License.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 5.1.2-alt1_6jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 5.1.2-alt1_5jpp8
 - new fc release
 
