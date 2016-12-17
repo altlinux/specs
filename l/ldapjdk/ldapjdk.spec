@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		ldapjdk
 Version:	4.18
-Release:	alt1_18jpp8
+Release:	alt1_19jpp8
 Epoch:		1
 Summary: 	The Mozilla LDAP Java SDK
 License:	MPLv1.1 or GPLv2+ or LGPLv2+
@@ -25,11 +25,13 @@ Source:		http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}.tar
 Source1:	http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}.pom
 Patch0: 	%{name}-jarnamefix.patch
 Patch1:         matching-rule-parsing-640750.patch
+Patch2:         %{name}-support-IPv6.patch
 
-Requires: javapackages-tools rpm-build-java
+Requires:	jpackage-utils >= 0:1.5
 Requires:       jss
 BuildRequires:  ant
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  java-devel
+BuildRequires:	jpackage-utils >= 0:1.5
 BuildRequires:  jss
 
 Provides:	jndi-ldap = 1.3.0
@@ -60,6 +62,7 @@ rm -f ./mozilla/directory/java-sdk/ldapjdk/lib/{jss32_stub,jsse,jnet,jaas,jndi}.
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 # cleanup CVS dirs
@@ -106,6 +109,9 @@ ln -s ldapjdk.jar %buildroot%_javadir/ldapsdk.jar
 %{_javadocdir}/%{name}/*
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.18-alt1_19jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.18-alt1_18jpp8
 - new fc release
 
