@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           pmd-build-tools
 Version:        0.9
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        PMD Build Plugin
 License:        BSD
 URL:            http://pmd.sourceforge.net/
@@ -27,8 +27,7 @@ BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-site-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
@@ -65,6 +64,9 @@ cp -a %{SOURCE1} .
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_4jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_3jpp8
 - new fc release
 
