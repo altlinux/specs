@@ -8,10 +8,10 @@ BuildRequires: /usr/bin/pod2man
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 24
+%define fedora 25
 Name:          jets3t
 Version:       0.9.3
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Java interface to Amazon S3 and CloudFront services
 # nuvola theme is under LGPL 2.1
 # src/org/jets3t/gui/TableSorter.java BSD
@@ -84,8 +84,9 @@ Requires:      geronimo-jms
 Requires:      glassfish-servlet-api
 Requires:      httpcomponents-client
 Requires:      httpcomponents-core
+Requires:      java
 Requires:      java-xmlbuilder
-Requires: javapackages-tools rpm-build-java
+Requires:      jpackage-utils
 %if %{?fedora} >= 21
 Requires:      log4j12
 %else
@@ -271,6 +272,9 @@ cp -pr servlets %{buildroot}%{_datadir}/%{name}/
 %doc LICENSE-2.0.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.9.3-alt1_4jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.9.3-alt1_3jpp8
 - new fc release
 
