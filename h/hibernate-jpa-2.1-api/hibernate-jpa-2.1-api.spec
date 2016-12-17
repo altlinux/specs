@@ -8,21 +8,24 @@ BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name hibernate-jpa-2.1-api
 %define version 1.0.0
-%global namedreltag .Draft-16
-%global namedversion %{version}%{?namedreltag}
+%global namedreltag .Final
 %global oname hibernate-jpa-api
 %global apiversion 2.1
+%global minversion 0
+%global pkgversion %{?apiversion}%{?minversion}%{?namedreltag}
+%global namedversion %{version}%{?namedreltag}
+
 Name:          hibernate-jpa-2.1-api
 Version:       1.0.0
-Release:       alt1_0.9.Draft.16jpp8
+Release:       alt1_1jpp8
 Summary:       Java Persistence 2.1 (JSR 338) API
 License:       EPL and BSD
 URL:           http://www.hibernate.org/
-Source0:       https://github.com/hibernate/hibernate-jpa-api/archive/2.1-%{namedversion}.tar.gz
+Source0:       https://github.com/hibernate/hibernate-jpa-api/archive/%{pkgversion}.tar.gz
 Source1:       http://repo1.maven.org/maven2/org/hibernate/javax/persistence/%{name}/%{namedversion}/%{name}-%{namedversion}.pom
 # fix mvn build, this project uses the default Gradle to build
 # sets various mvn plugins properties
-Patch0:        %{oname}-2.1-1.0.0.Draft-16-pom.patch
+Patch0:        hibernate-jpa-api-2.10.Final-pom.patch
 
 BuildRequires: maven-local
 BuildRequires: maven-plugin-bundle
@@ -42,18 +45,11 @@ BuildArch: noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n %{oname}-%{apiversion}-%{namedversion}
+%setup -q -n %{oname}-%{pkgversion}
 find . -name "*.jar" -delete
 
 cp -p %{SOURCE1} pom.xml
-%patch0 -p0
-
-for s in src/main/java/javax/persistence/MapsId.java \
-  src/main/java/javax/persistence/NamedStoredProcedureQuery.java \
-  src/main/java/javax/persistence/EntityManager.java \
-  src/main/java/javax/persistence/ForeignKey.java; do
- native2ascii -encoding UTF8 ${s} ${s}
-done
+%patch0 -p1
 
 # Fixing wrong-file-end-of-line-encoding
 sed -i 's/\r//' src/main/javadoc/jdstyle.css
@@ -75,6 +71,9 @@ sed -i 's/\r//' src/main/javadoc/jdstyle.css
 %doc license.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_1jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.9.Draft.16jpp8
 - new fc release
 
