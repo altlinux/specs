@@ -3,7 +3,7 @@
 %add_findreq_skiplist %_datadir/qtcreator/templates/wizards/classes/python/file.py
 
 Name:    qt-creator
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 Summary: Cross-platform IDE for Qt
 
@@ -21,6 +21,7 @@ Patch:   %name-%version-%release.patch
 Patch1:  qt-creator_ninja-build.patch
 
 Requires: %name-data = %version-%release
+Provides: qtcreator = %version-%release
 
 BuildRequires(pre): qt5-base-devel >= 5.5.0
 BuildRequires: gcc-c++ 
@@ -31,6 +32,9 @@ BuildRequires: qt5-x11extras-devel >= 5.5.0
 BuildRequires: qt5-xmlpatterns-devel >= 5.5.0
 BuildRequires: qt5-tools-devel >= 5.5.0
 BuildRequires: libbotan-devel
+BuildRequires: python-devel
+
+Requires: qt5-quickcontrols
 
 %description
 Qt Creator (previously known as Project Greenhouse) is a new,
@@ -93,6 +97,9 @@ install -Dpm0644 %SOURCE2 %buildroot%_datadir/appdata/qtcreator.appdata.xml
 
 %install_qt5 INSTALL_ROOT=%buildroot/%_prefix install_inst_qch_docs
 
+# Remove Windows cdb debugger support to prevent unmet python2.7(cdbext)
+rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
+
 %files
 %doc README* LICENSE*
 %_bindir/*
@@ -110,6 +117,11 @@ install -Dpm0644 %SOURCE2 %buildroot%_datadir/appdata/qtcreator.appdata.xml
 %_datadir/qtcreator/*
 
 %changelog
+* Sat Dec 17 2016 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt1
+- new version 4.2.0
+- provides qtcreator
+- remove Windows cdb debugger support to prevent unmet python2.7(cdbext)
+
 * Fri Aug 26 2016 Andrey Cherepanov <cas@altlinux.org> 4.1.0-alt1
 - new version 4.1.0
 
