@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 %global nameddottag  %(echo %{?namedreltag} | tr - . )
 Name:          spock
 Version:       0.7
-Release:       alt3_0.13.groovy.2.0jpp8
+Release:       alt3_0.14.groovy.2.0jpp8
 Summary:       A testing and specification framework
 License:       ASL 2.0
 URL:           https://github.com/spockframework/spock
@@ -34,6 +34,7 @@ BuildRequires: hamcrest
 BuildRequires: junit
 BuildRequires: objenesis
 BuildRequires: objectweb-asm
+BuildRequires: /usr/bin/perl
 
 Requires:      java
 BuildArch:     noarch
@@ -90,6 +91,9 @@ rm -rf spock-maven spock-specs spock-spring spock-tapestry spock-unitils
 %files guice -f .mfiles-spock-guice
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.7-alt3_0.14.groovy.2.0jpp8
+- new fc release
+
 * Fri Dec 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.7-alt3_0.13.groovy.2.0jpp8
 - new fc release
 
