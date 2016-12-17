@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           json-lib
 Version:        2.4
-Release:        alt1_10jpp8
+Release:        alt1_11jpp8
 Summary:        JSON library for Java
 License:        ASL 2.0
 URL:            http://json-lib.sourceforge.net/
@@ -28,29 +28,26 @@ Source100:      jenkins-%{name}-%{version}.tar.xz
 Source101:      http://repo.jenkins-ci.org/releases/org/kohsuke/stapler/json-lib/%{version}-jenkins-3/json-lib-%{version}-jenkins-3.pom
 Patch100:       %{name}-%{version}-Use-Jenkins-default-values.patch
 
-# compile dep
+BuildRequires:  java-devel
+BuildRequires:  maven-local
+BuildRequires:  maven-shared
+BuildRequires:  maven-surefire-provider-junit
 BuildRequires:  mvn(commons-beanutils:commons-beanutils)
 BuildRequires:  mvn(commons-collections:commons-collections)
 BuildRequires:  mvn(commons-lang:commons-lang)
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(log4j:log4j)
 BuildRequires:  mvn(net.sf.ezmorph:ezmorph)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-site-plugin)
 BuildRequires:  mvn(org.codehaus.groovy:groovy18:1.8)
 BuildRequires:  mvn(org.codehaus.groovy:groovy18-all:1.8)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(oro:oro)
 BuildRequires:  mvn(xom:xom)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-site-plugin)
-# runtime deps
-BuildRequires:  mvn(log4j:log4j)
-
-# test deps
 BuildRequires:  mvn(xmlunit:xmlunit)
 
-BuildRequires:  maven-local
-BuildRequires:  maven-shared
-BuildRequires:  maven-surefire-provider-junit
-
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 # antrun-plugin deps for groovy ant task
 BuildRequires:  mvn(antlr:antlr)
 BuildRequires:  mvn(asm:asm-all)
@@ -154,6 +151,9 @@ popd
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_11jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_10jpp8
 - new fc release
 
