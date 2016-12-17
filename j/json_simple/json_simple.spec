@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           json_simple
 Version:        1.1.1
-Release:        alt2_12jpp8
+Release:        alt2_13jpp8
 Summary:        Simple Java toolkit for JSON
 License:        ASL 2.0
 URL:            http://code.google.com/p/json-simple/
@@ -21,6 +21,8 @@ Source0:        json-simple-1.1.1-src-svn.tar.gz
 Patch0:         json-simple-hash-java-1.8.patch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 Source44: import.info
 
 %description
@@ -68,6 +70,9 @@ find . -type f -exec %{__sed} -i 's/\r//' {} \;
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_13jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_12jpp8
 - new fc release
 
