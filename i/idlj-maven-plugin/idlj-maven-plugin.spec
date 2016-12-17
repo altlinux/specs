@@ -7,9 +7,10 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             idlj-maven-plugin
 Version:          1.2.1
-Release:          alt1_6jpp8
+Release:          alt1_7jpp8
 Summary:          The CORBA IDL Compiler Maven Plugin 
 License:          ASL 2.0
+# http://www.mojohaus.org/plugins.html
 URL:              http://mojo.codehaus.org/idlj-maven-plugin
 
 # svn export http://svn.codehaus.org/mojo/tags/idlj-maven-plugin-1.2.1 idlj-maven-plugin-1.2.1
@@ -20,12 +21,13 @@ Source1:          LICENSE-2.0.txt
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-BuildRequires:    mojo-parent
-BuildRequires:    plexus-utils
-BuildRequires:    plexus-compiler
-BuildRequires:    jacorb
-BuildRequires:    junit
-BuildRequires:    avalon-logkit
+BuildRequires:    mvn(avalon-logkit:avalon-logkit)
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:    mvn(org.codehaus.mojo:mojo-parent:pom:)
+BuildRequires:    mvn(org.codehaus.plexus:plexus-compiler-api)
+BuildRequires:    mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:    mvn(org.jacorb:jacorb-idl-compiler)
 Source44: import.info
 
 %description
@@ -33,17 +35,18 @@ The CORBA IDL Compiler Maven Plugin is used for processing IDL files into java s
 
 %package javadoc
 Group: Development/Java
-Summary:          Javadocs for %{name}
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n idlj-maven-plugin-%{version}
+%setup -q -n %{name}-%{version}
 
-sed -i "s|>plexus<|>org.codehaus.plexus<|g" pom.xml
-sed -i "s|>idl-compiler<|>jacorb-idl-compiler<|g" pom.xml
+%pom_change_dep :plexus-compiler-api org.codehaus.plexus:
+%pom_change_dep org.jacorb: :jacorb-idl-compiler
+#%% pom_xpath_set "pom:dependency[pom:artifactId = 'jacorb-idl-compiler']/pom:optional" false
 
 cp %{SOURCE1} .
 
@@ -63,6 +66,9 @@ cp %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_7jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_6jpp8
 - new fc release
 
