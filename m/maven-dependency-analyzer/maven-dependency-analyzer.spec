@@ -8,27 +8,23 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-dependency-analyzer
 Version:        1.6
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Maven dependency analyzer
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-dependency-analyzer/
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
 BuildArch:      noarch
 
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
 BuildRequires:  maven-local
-BuildRequires:  mvn(asm:asm)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-tools)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-
-# This is a replacement package for maven-shared-dependency-analyzer
-Provides:       maven-shared-dependency-analyzer = %{version}-%{release}
-Obsoletes:      maven-shared-dependency-analyzer < %{version}-%{release}
+BuildRequires:  mvn(org.ow2.asm:asm)
 Source44: import.info
 
 %description
@@ -69,6 +65,9 @@ BuildArch: noarch
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_4jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_3jpp8
 - new fc release
 
