@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          littleproxy
 Version:       0.5.3
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       High Performance HTTP Proxy
 License:       ASL 2.0
 URL:           http://www.littleshoot.org/littleproxy/
@@ -102,6 +102,9 @@ rm -r src/test/java/org/littleshoot/proxy/HttpFilterTest.java \
 %doc COPYRIGHT.txt LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1_3jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1_2jpp8
 - new fc release
 
