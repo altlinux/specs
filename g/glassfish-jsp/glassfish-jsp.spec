@@ -11,14 +11,14 @@ BuildRequires: jpackage-generic-compat
 %global jspspec 2.3
 %global reltag b02
 
-
 Name:       glassfish-jsp
 Version:    2.3.3
-Release:    alt1_0.4.b02jpp8
+Release:    alt1_0.5.b02jpp8
 Summary:    Glassfish J2EE JSP API implementation
-
 License:    (CDDL or GPLv2 with exceptions) and ASL 2.0
 URL:        http://glassfish.org
+BuildArch:  noarch
+
 Source0:    %{artifactId}-%{version}-%{reltag}.tar.xz
 # no source releases, but this will generate tarball for you from an
 # SVN tag
@@ -29,12 +29,12 @@ Source3:    https://svn.java.net/svn/glassfish~svn/tags/legal-1.1/src/main/resou
 Patch0:     %{name}-build-eclipse-compilers.patch
 Patch1:     %{name}-port-to-servlet-3.1.patch
 
-BuildArch:  noarch
-
 BuildRequires:  maven-local
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(javax.servlet.jsp:javax.servlet.jsp-api)
 BuildRequires:  mvn(net.java:jvnet-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.eclipse.jdt:core)
 BuildRequires:  mvn(org.glassfish:javax.el)
 
@@ -113,6 +113,9 @@ popd
 
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_0.5.b02jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_0.4.b02jpp8
 - new fc release
 
