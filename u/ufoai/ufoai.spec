@@ -1,6 +1,6 @@
 Name: ufoai
 Version: 2.5
-Release: alt1
+Release: alt2
 Source: %name-%version.tar
 Summary: UFO: Alien Invasion - build your team and stop the aliens
 License: GPL
@@ -17,7 +17,7 @@ BuildPreReq: libtheora-devel libgtk+2-devel libgtkglext-devel libxml2-devel libg
 
 %define srcname %name-%version
 
-%set_verify_elf_method no
+%set_verify_elf_method unresolved=strict
 
 %description
 "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
@@ -259,6 +259,9 @@ install -m 644 -pD debian/uforadiant.6 %buildroot/%_man6dir
 #/usr/share/games/ufoai/base/maps
 
 %changelog
+* Sat Dec 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.5-alt2
+- (non-user-visible) verify-elf enabled.
+
 * Tue Dec 13 2016 Mikhail Efremov <sem@altlinux.org> 2.5-alt1
 - Build with SDL2.
 - Use latest compiler.
