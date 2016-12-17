@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global githash cb6709646eed97c271d73f50ad750cc43c8e052a
 Name:             paranamer
 Version:          2.8
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          Library for accessing non-private method parameter names at run-time
 License:          BSD
 URL:              https://github.com/paul-hammant/paranamer
@@ -18,9 +18,12 @@ Source0:          https://github.com/paul-hammant/paranamer/archive/%{githash}/%
 BuildRequires:    maven-local
 BuildRequires:    mvn(com.thoughtworks.qdox:qdox)
 BuildRequires:    mvn(javax.inject:javax.inject)
+BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:    mvn(org.codehaus:codehaus-parent:pom:)
 BuildRequires:    mvn(org.mockito:mockito-all)
 BuildRequires:    mvn(org.ow2.asm:asm)
+BuildRequires:    mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildArch:        noarch
 Source44: import.info
@@ -138,6 +141,9 @@ rm -r %{name}/src/test/com/thoughtworks/paranamer/BytecodeReadingParanamerTestCa
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.8-alt1_3jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.8-alt1_2jpp8
 - new fc release
 
