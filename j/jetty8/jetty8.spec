@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jetty8
 Version:        8.1.17
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        Java Webserver and Servlet Container
 # Jetty is dual licensed under both ASL 2.0 and EPL 1.0, see NOTICE.txt
 # some MIT-licensed code (from Utf8Appendable) is used too
@@ -143,6 +143,18 @@ Summary:        Jetty asynchronous API
 %description    continuation
 This package contains %{summary}.
 
+%package        deploy
+Group: Development/Java
+Summary:        Jetty deployers
+%description    deploy
+This package contains %{summary}.
+
+%package        servlets
+Group: Development/Java
+Summary:        Jetty utility servlets and filters
+%description    servlets
+This package contains %{summary}.
+
 %package        javadoc
 Group: Development/Java
 Summary:        API documentation for %{name}
@@ -168,7 +180,7 @@ find -name "*.class" -delete
 # minimal set of modules are being built.
 %pom_xpath_remove "pom:modules"
 %pom_xpath_inject "pom:project" "<modules/>"
-for mod in continuation http io jmx security server servlet util webapp websocket xml client rewrite; do
+for mod in continuation deploy http io jmx security server servlet servlets util webapp websocket xml client rewrite; do
   %pom_xpath_inject pom:modules "<module>jetty-$mod</module>"
   %pom_xpath_inject 'pom:plugin[pom:artifactId="maven-bundle-plugin"]/pom:executions/pom:execution' '
      <phase>process-classes</phase>' jetty-$mod
@@ -188,6 +200,20 @@ done
 %pom_remove_dep org.mortbay.jetty:jetty-util jetty-continuation
 rm jetty-continuation/src/main/java/org/eclipse/jetty/continuation/Jetty6Continuation.java
 
+# Disable default-jar executions of maven-jar-plugin in certain Jetty
+# modules, which define their own executions of the plugin.  This
+# avoids problems with version 3.0.0 of the plugin.
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions" "
+      <execution>
+        <id>default-jar</id>
+        <phase>skip</phase>
+      </execution>" \
+    jetty-continuation \
+    jetty-http \
+    jetty-io \
+    jetty-server \
+    jetty-websocket \
+
 # CCLAs and CLAs, we don't want to install these
 rm -Rf LICENSE-CONTRIBUTOR/
 
@@ -204,12 +230,14 @@ rm -Rf LICENSE-CONTRIBUTOR/
 
 %files rewrite -f .mfiles-jetty-rewrite
 %files client -f .mfiles-jetty-client
+%files deploy -f .mfiles-jetty-deploy
 %files xml -f .mfiles-jetty-xml
 %files websocket -f .mfiles-jetty-websocket
 %files webapp -f .mfiles-jetty-webapp
 %files util -f .mfiles-jetty-util
 %doc NOTICE.txt LICENSE*
 %files servlet -f .mfiles-jetty-servlet
+%files servlets -f .mfiles-jetty-servlets
 %files server -f .mfiles-jetty-server
 %files security -f .mfiles-jetty-security
 %files jmx -f .mfiles-jetty-jmx
@@ -221,6 +249,9 @@ rm -Rf LICENSE-CONTRIBUTOR/
 %doc NOTICE.txt LICENSE*
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 8.1.17-alt1_5jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 8.1.17-alt1_3jpp8
 - new fc release
 
