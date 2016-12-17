@@ -1,4 +1,5 @@
 Epoch: 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -13,27 +14,22 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-ejb-3.1-api
 Version:          1.0.2
-Release:          alt2_14jpp8
+Release:          alt2_15jpp8
 Summary:          EJB 3.1 API
-Group:            Development/Other
 License:          CDDL or GPLv2 with exceptions
 Url:              http://www.jboss.org
+BuildArch:        noarch
+
 Source0:          https://github.com/jboss/jboss-ejb-api_spec/archive/jboss-ejb-api_3.1_spec-%{namedversion}.tar.gz
 
-BuildRequires:    jboss-transaction-1.1-api
-BuildRequires:    jboss-jaxrpc-1.1-api
-BuildRequires:    jboss-specs-parent
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-dependency-plugin
-BuildRequires:    maven-ear-plugin
-
-BuildArch:        noarch
+BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
+BuildRequires:    mvn(org.jboss.spec.javax.transaction:jboss-transaction-api_1.1_spec)
+BuildRequires:    mvn(org.jboss.spec.javax.xml.rpc:jboss-jaxrpc-api_1.1_spec)
 Source44: import.info
+
 
 %description
 The Java EJB 3.1 API classes.
@@ -56,13 +52,16 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc README LICENSE
+%doc README
+%doc LICENSE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_15jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_14jpp8
 - new fc release
 
