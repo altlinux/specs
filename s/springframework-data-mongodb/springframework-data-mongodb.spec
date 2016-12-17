@@ -30,7 +30,7 @@ BuildRequires: jpackage-generic-compat
 Name:          springframework-data-mongodb
 # Newer release require springframework >= 4.0.7.RELEASE
 Version:       1.5.2
-Release:       alt1_3jpp8
+Release:       alt1_5jpp8
 Summary:       MongoDB support for Spring Data
 License:       ASL 2.0
 URL:           http://projects.spring.io/spring-data-mongodb/
@@ -45,7 +45,8 @@ BuildRequires: mvn(javax.enterprise:cdi-api)
 BuildRequires: mvn(javax.validation:validation-api)
 BuildRequires: mvn(log4j:log4j:1.2.17)
 BuildRequires: mvn(net.sf.cglib:cglib)
-BuildRequires: mvn(org.mongodb:mongo-java-driver:2.14.1)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.mongodb:mongo-java-driver:2)
 BuildRequires: mvn(org.objenesis:objenesis)
 BuildRequires: mvn(org.springframework:spring-beans)
 BuildRequires: mvn(org.springframework:spring-context)
@@ -130,8 +131,8 @@ cp -p src/main/resources/*.txt .
 %pom_remove_plugin :wagon-maven-plugin %{oname}-distribution
 
 # Fix version
-%pom_xpath_set "pom:project/pom:properties/pom:mongo" 2.14.1
-%pom_xpath_set "pom:project/pom:properties/pom:mongo.osgi" 2.14.1
+%pom_xpath_set "pom:project/pom:properties/pom:mongo" 2
+%pom_xpath_set "pom:project/pom:properties/pom:mongo.osgi" 2
 %pom_xpath_set "pom:properties/pom:log4j" 1.2.17 %{oname}-log4j
 
 %pom_change_dep :cdi-api ::1.0 %{oname}
@@ -219,6 +220,9 @@ opts="-f"
 %doc license.txt notice.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_5jpp8
+- new fc release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_3jpp8
 - new fc release
 
