@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %global scala_short_version 2.10
 Name:          parboiled
 Version:       1.1.6
-Release:       alt1_9jpp8
+Release:       alt1_10jpp8
 Summary:       Java/Scala library providing parsing of input text based on PEGs
 License:       ASL 2.0
 URL:           http://parboiled.org/
@@ -23,7 +23,8 @@ Patch0:        %{name}-1.1.6-scala-use-antrun-plugin.patch
 Patch1:        parboiled-port-to-objectweb-asm-5.0.1.patch
 
 BuildRequires: maven-local
-BuildRequires: maven-antrun-plugin
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.ow2.asm:asm)
 BuildRequires: mvn(org.ow2.asm:asm-analysis)
 BuildRequires: mvn(org.ow2.asm:asm-tree)
@@ -152,7 +153,6 @@ sed -i "s|@VERSION@|%{version}|" pom.xml
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc CHANGELOG README.markdown
 %doc LICENSE
 
@@ -163,6 +163,9 @@ sed -i "s|@VERSION@|%{version}|" pom.xml
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_10jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_9jpp8
 - new fc release
 
