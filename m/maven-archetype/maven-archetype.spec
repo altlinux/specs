@@ -9,15 +9,16 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-archetype
 Version:        2.4
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Maven project templating toolkit
 
 License:        ASL 2.0
 URL:            https://maven.apache.org/archetype/
 Source0:        http://repo.maven.apache.org/maven2/org/apache/maven/archetype/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-Patch2:         0003-Add-Maven-3-compatibility.patch
-Patch3:         %{name}-fix-jetty-namespace.patch
+Patch1:         0001-Add-Maven-3-compatibility.patch
+Patch2:         0002-Fix-jetty-namespace.patch
+Patch3:         0003-Port-to-current-plexus-utils.patch
 
 BuildArch:      noarch
 
@@ -143,8 +144,9 @@ Summary:        Maven Plugin for using archetypes
 %prep
 %setup -q
 
+%patch1 -p1
 %patch2 -p1
-%patch3
+%patch3 -p1
 
 # Add OSGI info to catalog and descriptor jars
 pushd archetype-models/archetype-catalog
@@ -216,6 +218,9 @@ popd
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_3jpp8
+- new fc release
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_2jpp8
 - new version
 
