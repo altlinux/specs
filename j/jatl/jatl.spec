@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          jatl
 Version:       0.2.2
-Release:       alt1_8jpp8
+Release:       alt1_10jpp8
 Summary:       Java Anti-Template Language
 License:       ASL 2.0
 # https://github.com/agentgt
@@ -15,11 +15,11 @@ URL:           https://github.com/chris-martin/jatl
 Source0:       https://github.com/chris-martin/jatl/archive/%{name}-%{version}.tar.gz
 
 BuildRequires: maven-local
-BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires: mvn(commons-lang:commons-lang)
-# test deps
 BuildRequires: mvn(junit:junit)
-
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 Requires:      mvn(commons-lang:commons-lang)
 
 BuildArch:     noarch
@@ -66,6 +66,9 @@ This package contains javadoc for %{name}.
 %doc COPYING
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1_10jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1_8jpp8
 - new fc release
 
