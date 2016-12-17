@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-repository-builder
 Version:        1.0
-Release:        alt3_4jpp8
+Release:        alt3_5jpp8
 # Maven-shared defines maven-repository-builder version as 1.0
 Epoch:          1
 Summary:        Maven repository builder
@@ -24,9 +24,7 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(commons-codec:commons-codec)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-artifact-manager)
 BuildRequires:  mvn(org.apache.maven:maven-compat)
-BuildRequires:  mvn(org.apache.maven:maven-project)
 BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
@@ -61,6 +59,8 @@ find -iname '*.jar' -delete
 
 cp %{SOURCE1} LICENSE.txt
 
+%pom_remove_dep :maven-project
+%pom_remove_dep :maven-artifact-manager
 %pom_add_dep org.apache.maven:maven-compat:3.3.3
 
 %build
@@ -77,6 +77,9 @@ cp %{SOURCE1} LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt3_5jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt3_4jpp8
 - new fc release
 
