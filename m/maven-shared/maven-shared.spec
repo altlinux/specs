@@ -10,26 +10,16 @@ Summary:        Maven Shared Components
 URL:            http://maven.apache.org/shared/
 Name:           maven-shared
 Version:        22
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 License:        ASL 2.0
+BuildArch:      noarch
 
 Source0:        https://github.com/apache/%{name}/archive/%{name}-components-%{version}.tar.gz
 
-BuildRequires:  java-devel
 BuildRequires:  maven-local
-
-BuildArch:      noarch
-
-# Obsoleting retired subpackages. The packages with hardcoded versions and
-# releases had their versions manually set in maven-shared-15 to something else
-# than {version}. To make the change effective, the release below is one
-# greater than the last release of maven-shared-15 in rawhide.
-Obsoletes:      maven-shared-ant < 1.0-32
-Obsoletes:      maven-shared-model-converter < 2.3-32
-Obsoletes:      maven-shared-runtime < 1.0-32
-Obsoletes:      maven-shared-monitor < 1.0-32
-Obsoletes:      maven-shared-javadoc < %{version}-%{release}
+BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 Source44: import.info
+
 
 %description
 Maven Shared Components
@@ -51,6 +41,9 @@ chmod -R go=u-w *
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:22-alt1_3jpp8
+- new fc release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:22-alt1_2jpp8
 - new version
 
