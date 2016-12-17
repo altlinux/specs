@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -12,22 +13,17 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jboss-jaxrs-1.1-api
 Version:       1.0.1
-Release:       alt2_11jpp8
+Release:       alt2_12jpp8
 Summary:       Java API for RESTful Web Services (JAX-RS) 1.1
-Group:         Development/Other
 License:       CDDL
 URL:           http://www.jboss.org
 
 # git clone git://github.com/jboss/jboss-jaxrs-api_spec.git
 # cd jboss-jaxrs-api_spec/ && git archive --format=tar --prefix=jboss-jaxrs-1.1-api/ jboss-jaxrs-api_1.1_spec-1.0.1.Final | xz > jboss-jaxrs-1.1-api-1.0.1.Final.tar.xz
-Source0:       jboss-jaxrs-1.1-api-%{namedversion}.tar.xz
+Source0:       %{name}-%{namedversion}.tar.xz
 
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-enforcer-plugin
+BuildRequires: mvn(org.jboss:jboss-parent:pom:)
 
 BuildArch:     noarch
 Source44: import.info
@@ -36,15 +32,16 @@ Source44: import.info
 JSR 311: The Javai API for RESTful Web Services (JAX-RS) 1.1
 
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
+Group: Development/Java
+Summary:          Javadoc for %{name}
 BuildArch: noarch
+
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n jboss-jaxrs-1.1-api
+%setup -q -n %{name}
 
 %build
 %mvn_build
@@ -60,6 +57,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_12jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_11jpp8
 - new fc release
 
