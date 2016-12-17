@@ -1,17 +1,18 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++ perl(LWP/UserAgent.pm)
+BuildRequires: gcc-c++ perl(LWP/UserAgent.pm) unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 25
 Summary:        High-performance, full-featured text search engine
 Name:           lucene
 Version:        5.5.0
-Release:        alt1_1jpp8
+Release:        alt1_4jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -21,6 +22,7 @@ Source0:        http://www.apache.org/dist/lucene/solr/%{version}/solr-%{version
 Patch0:         0001-Disable-ivy-settings.patch
 Patch1:         0002-Dependency-generation.patch
 
+BuildRequires:  ant
 BuildRequires:  ivy-local
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.carrotsearch.randomizedtesting:randomizedtesting-runner)
@@ -352,6 +354,23 @@ mv lucene/build/poms/pom.xml .
 # For some reason TestHtmlParser.testTurkish fails when building inside SCLs
 %mvn_build -s -f
 
+# Fix OSGi metadata in misc module
+pushd lucene/misc/target
+unzip lucene-misc-%{version}.jar META-INF/MANIFEST.MF
+sed -i -e '1aRequire-Bundle: org.apache.lucene.core' META-INF/MANIFEST.MF
+jar ufm lucene-misc-%{version}.jar META-INF/MANIFEST.MF 2>&1 > /dev/null
+popd
+
+# analyzers-common needs versioned requires on package from core
+# maven-bundle-plugin doesn't seem to recognize this case on F24
+%if 0%{?fedora} == 24
+pushd lucene/analysis/common/target
+unzip lucene-analyzers-common-%{version}.jar META-INF/MANIFEST.MF
+sed -i -e 's/org.apache.lucene.analysis,/org.apache.lucene.analysis;version="[5.5,6)",/' META-INF/MANIFEST.MF
+jar ufm lucene-analyzers-common-%{version}.jar META-INF/MANIFEST.MF 2>&1 > /dev/null
+popd
+%endif
+
 %install
 %mvn_install
 
@@ -397,6 +416,9 @@ mv lucene/build/poms/pom.xml .
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.5.0-alt1_4jpp8
+- new fc release
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.5.0-alt1_1jpp8
 - new version
 
