@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           plexus-active-collections
 Version:        1.0
-Release:        alt2_0.19.beta2jpp8
+Release:        alt2_0.20.beta2jpp8
 Summary:        Plexus Container-Backed Active Collections
 
 License:        ASL 2.0
@@ -24,7 +24,12 @@ Patch0:         %{name}-migration-to-component-metadata.patch
 BuildArch: noarch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-api)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 Source44: import.info
+
 
 %description
 Plexus Container-Backed Active Collections
@@ -55,6 +60,9 @@ cp %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.20.beta2jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.19.beta2jpp8
 - new fc release
 
