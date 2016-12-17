@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		plexus-component-factories-pom
 Version:	1.0
-Release:	alt1_0.11.alpha11jpp8
+Release:	alt1_0.12.alpha11jpp8
 Summary:	Plexus Component Factories POM
 BuildArch:	noarch
 Group:		Development/Other
@@ -17,7 +17,9 @@ URL:		https://github.com/codehaus-plexus/plexus-component-factories
 Source0:	http://repo1.maven.org/maven2/org/codehaus/plexus/%{artifactId}/%{version}-alpha-11/%{artifactId}-%{version}-alpha-11.pom
 Source1:	http://www.apache.org/licenses/LICENSE-2.0.txt
 
-BuildRequires:	maven-local
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 Source44: import.info
 
 
@@ -43,6 +45,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.12.alpha11jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.11.alpha11jpp8
 - new fc release
 
