@@ -11,7 +11,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           log4j
 Version:        2.5
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        Java logging package
 BuildArch:      noarch
 License:        ASL 2.0
@@ -34,7 +34,6 @@ BuildRequires:  mvn(org.apache.commons:commons-compress)
 BuildRequires:  mvn(org.apache.commons:commons-csv)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
 BuildRequires:  mvn(org.eclipse:osgi)
 BuildRequires:  mvn(org.eclipse.osgi:org.eclipse.osgi)
@@ -135,6 +134,7 @@ BuildArch: noarch
 %setup -q -n apache-%{name}-%{version}-src
 
 %pom_remove_plugin -r :maven-site-plugin
+%pom_remove_plugin -r :maven-remote-resources-plugin
 
 # remove all the stuff we'll build ourselves
 find -name "*.jar" -o -name "*.class" -delete
@@ -168,6 +168,9 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 # Old version of specification
 %pom_remove_dep :javax.persistence %{name}-core
 %pom_add_dep org.hibernate.javax.persistence:hibernate-jpa-2.1-api:any:provided %{name}-core
+
+# BOM package shouldn't require Apache RAT
+%pom_remove_plugin :apache-rat-plugin %{name}-bom
 
 # Required at compile-time not just test, but we don't want requires
 %pom_xpath_set "pom:dependency[pom:groupId='org.eclipse.persistence']/pom:scope" provided %{name}-core
@@ -240,6 +243,9 @@ fi
 
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt1_4jpp8
+- new fc release
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt1_2jpp8
 - new version
 
