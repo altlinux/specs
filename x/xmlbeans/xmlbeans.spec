@@ -52,7 +52,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xmlbeans
 Version:        2.6.0
-Release:        alt1_11jpp8
+Release:        alt1_12jpp8
 Summary:        XML-Java binding tool
 URL:            http://xmlbeans.apache.org/
 Source0:        http://www.apache.org/dist/xmlbeans/source/%{name}-%{version}-src.tgz
@@ -74,12 +74,13 @@ License:        ASL 2.0
 %if %without bootstrap
 BuildRequires:  xmlbeans
 %endif
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  java-devel
+BuildRequires:  jpackage-utils >= 0:1.5
 BuildRequires:  ant >= 0:1.6 ant-junit ant-contrib junit
 BuildRequires:  xml-commons-resolver >= 0:1.1
 BuildRequires:  bea-stax-api
 BuildRequires:  saxon >= 8
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils >= 0:1.6
 
 BuildArch:      noarch
 Source44: import.info
@@ -152,8 +153,8 @@ mkdir -p build/lib
 ln -sf $(build-classpath xml-commons-resolver) build/lib/resolver.jar
 ln -sf $(build-classpath xmlbeans/xbean) external/lib/oldxbean.jar
 ln -sf $(build-classpath bea-stax-api) external/lib/jsr173_1.0_api.jar
-ln -sf $(build-classpath saxon) external/lib/saxon9.jar
-ln -sf $(build-classpath saxon) external/lib/saxon9-dom.jar
+ln -sf $(build-classpath saxon/saxon) external/lib/saxon9.jar
+ln -sf $(build-classpath saxon/saxon) external/lib/saxon9-dom.jar
 
 # Fix CRLF
 sed 's/\r//' -i LICENSE.txt NOTICE.txt README.txt docs/stylesheet.css docs/xmlbeans.css docs/guide/tools.html
@@ -219,6 +220,9 @@ cp -pr build/docs/* README.txt $RPM_BUILD_ROOT%{_docdir}/%{name}
 
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt1_12jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt1_11jpp8
 - new fc release
 
