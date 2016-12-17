@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          gmetric4j
 Version:       1.0.10
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       JVM instrumentation to Ganglia
 License:       BSD
 URL:           https://github.com/ganglia/gmetric4j
@@ -16,6 +16,7 @@ Source0:       https://github.com/ganglia/gmetric4j/archive/%{version}.tar.gz
 BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.acplt.remotetea:remotetea-oncrpc)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildArch:     noarch
@@ -54,6 +55,7 @@ sed -i '/Class-Path/d' src/main/resources/META-INF/MANIFEST.MF
 rm -r src/test/java/info/ganglia/gmetric4j/gmetric/GMetricIT.java
 
 %mvn_file : %{name}
+%mvn_package :%{name}::tests:
 
 %build
 
@@ -62,11 +64,7 @@ rm -r src/test/java/info/ganglia/gmetric4j/gmetric/GMetricIT.java
 %install
 %mvn_install
 
-install -m 644 target/%{name}-%{version}-tests.jar \
-  %{buildroot}%{_javadir}/%{name}-tests.jar
-
 %files -f .mfiles
-%{_javadir}/%{name}-tests.jar
 %doc README
 %doc COPYING
 
@@ -74,6 +72,9 @@ install -m 644 target/%{name}-%{version}-tests.jar \
 %doc COPYING
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.10-alt1_4jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.10-alt1_3jpp8
 - new fc release
 
