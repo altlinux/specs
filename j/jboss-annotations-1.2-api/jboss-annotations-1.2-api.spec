@@ -8,27 +8,23 @@ BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-annotations-1.2-api
 %define version 1.0.0
-%global namedreltag .Alpha1
+%global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
-Name:       jboss-annotations-1.2-api
-Version:    1.0.0
-Release:    alt1_0.6.Alpha1jpp8
-Summary:    Common Annotations 1.2 API
-License:    CDDL or GPLv2 with exceptions
-URL:        http://www.jboss.org
-Source0:    https://github.com/jboss/jboss-annotations-api_spec/archive/jboss-annotations-api_1.2_spec-%{namedversion}.tar.gz
-Source1:    cddl.txt
+Name:          jboss-annotations-1.2-api
+Version:       1.0.0
+Release:       alt1_1jpp8
+Summary:       Common Annotations 1.2 API
+License:       CDDL or GPLv2 with exceptions
+URL:           https://github.com/jboss/jboss-annotations-api_spec
+Source0:       https://github.com/jboss/jboss-annotations-api_spec/archive/jboss-annotations-api_1.2_spec-%{namedversion}.tar.gz
+Source1:       cddl.txt
 
-BuildRequires: jboss-parent
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.jboss:jboss-parent:pom:)
 
-BuildArch: noarch
+BuildArch:     noarch
 Source44: import.info
 
 %description
@@ -36,7 +32,7 @@ This package contains Common Annotations 1.2 API.
 
 %package javadoc
 Group: Development/Java
-Summary: Javadocs for %{name}
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc	
@@ -47,6 +43,8 @@ This package contains the API documentation for %{name}.
 
 cp %{SOURCE1} .
 
+%pom_remove_plugin :maven-source-plugin
+
 %build
 %mvn_build
 
@@ -54,17 +52,16 @@ cp %{SOURCE1} .
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc LICENSE
 %doc README
-%doc cddl.txt
+%doc cddl.txt LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
-%doc README
-%doc cddl.txt
+%doc cddl.txt LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_1jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.6.Alpha1jpp8
 - new fc release
 
