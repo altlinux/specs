@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          morphia
 Version:       1.0.1
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       A type-safe Java library for MongoDB
 License:       ASL 2.0
 URL:           https://github.com/mongodb/morphia
@@ -24,7 +24,7 @@ BuildRequires: mvn(javax.validation:validation-api)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-release-plugin)
-BuildRequires: mvn(org.mongodb:mongo-java-driver:2.14.1)
+BuildRequires: mvn(org.mongodb:mongo-java-driver:2)
 BuildRequires: mvn(org.reflections:reflections)
 BuildRequires: mvn(org.scannotation:scannotation)
 BuildRequires: mvn(org.slf4j:slf4j-api)
@@ -114,7 +114,7 @@ sed -i "s|relocated.morphia.||" $(find %{name} -name "*.java")
 %pom_xpath_set "pom:parent/pom:version" %{version} %{name}
 %pom_xpath_set "pom:parent/pom:version" %{version} validation
 
-%pom_xpath_set "pom:project/pom:properties/pom:java-driver.version" 2.14.1
+%pom_xpath_set "pom:project/pom:properties/pom:java-driver.version" 2
 
 %pom_change_dep cglib: :cglib %{name}
 %pom_change_dep :scannotation org.scannotation: entityscanner-plug
@@ -169,6 +169,9 @@ done
 %doc %{name}/LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_4jpp8
+- new fc release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_3jpp8
 - new fc release
 
