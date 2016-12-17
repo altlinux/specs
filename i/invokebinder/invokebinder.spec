@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
@@ -7,26 +8,17 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           invokebinder
 Version:        1.2
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        A Java DSL for binding method handles forward, rather than backward
-Group:          Development/Other
 License:        ASL 2.0
 URL:            http://github.com/headius/%{name}/
-Source0:        https://github.com/headius/%{name}/archive/%{name}-%{version}.zip
 BuildArch:      noarch
 
-BuildRequires:  java-devel
-BuildRequires:  jpackage-utils
+Source0:        https://github.com/headius/%{name}/archive/%{name}-%{version}.zip
 
 BuildRequires:  maven-local
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit
-
-Requires:       jpackage-utils
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -37,9 +29,8 @@ way the transformations are pushed onto a stack and eventually applied in
 reverse order, as the standard API demands.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -63,6 +54,9 @@ find ./ -name '*.class' -exec rm -f '{}' \;
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_5jpp8
+- new fc release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_4jpp8
 - new version
 
