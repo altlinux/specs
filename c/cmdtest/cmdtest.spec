@@ -1,6 +1,6 @@
 
 Name: cmdtest
-Version: 0.16
+Version: 0.27
 Release: alt1
 
 Summary: Black-box testing for Unix command line tools
@@ -11,7 +11,7 @@ Url: http://liw.fi/%name/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://code.liw.fi/debian/pool/main/c/%name/%{name}_%version.orig.tar.gz
+Source: http://code.liw.fi/debian/pool/main/c/%name/%{name}_%version.orig.tar
 Source44: import.info
 
 BuildArch: noarch
@@ -57,6 +57,9 @@ rm -rf build
 %python_sitelibdir_noarch/*
 
 %changelog
+* Sat Dec 17 2016 Vitaly Lipatov <lav@altlinux.ru> 0.27-alt1
+- new version 0.27 (with rpmrb script)
+
 * Sat Jan 02 2016 Vitaly Lipatov <lav@altlinux.ru> 0.16-alt1
 - new version 0.16 (with rpmrb script)
 
