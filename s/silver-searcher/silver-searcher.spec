@@ -1,6 +1,6 @@
 Name: silver-searcher
-Version: 0.31.0
-Release: alt0.1
+Version: 1.0.2
+Release: alt1
 
 Summary: A code searching tool similar to ack, with a focus on speed.
 License: GPL
@@ -35,7 +35,7 @@ install -pm755 ag %buildroot/%_bindir/
 
 # Устанавливаем руководство.
 mkdir -p %buildroot%_man1dir
-install -pm644 doc/ag.1.bz2 %buildroot/%_man1dir/
+install -pm644 doc/ag.1.* %buildroot/%_man1dir/
 
 # Добавляем нехитрую документацию.
 %define docdir %_docdir/%name-%version
@@ -47,11 +47,14 @@ install -pm644 README.md %buildroot%docdir/
 
 %files
 %_bindir/ag
-%_man1dir/ag.1.bz2
+%_man1dir/ag.1.*
 %dir %docdir
 %docdir/*
 
 %changelog
+* Sat Dec 17 2016 Andrey Bergman <vkni@altlinux.org> 1.0.2-alt1
+- Version update.
+
 * Mon Oct 12 2015 Andrey Bergman <vkni@altlinux.org> 0.31.0-alt0.1
 - Version update.
 
