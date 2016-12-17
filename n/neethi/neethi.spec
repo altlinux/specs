@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          neethi
 Version:       3.0.1
-Release:       alt1_11jpp8
+Release:       alt1_12jpp8
 Summary:       Web Services Policy framework
 License:       ASL 2.0
 URL:           http://ws.apache.org/neethi/
@@ -18,6 +18,8 @@ BuildArch:     noarch
 BuildRequires: maven-local
 BuildRequires: wsdl4j
 BuildRequires: axiom
+BuildRequires: maven-plugin-bundle
+BuildRequires: maven-source-plugin
 Requires:      axiom
 Source44: import.info
 
@@ -64,6 +66,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_12jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_11jpp8
 - new fc release
 
