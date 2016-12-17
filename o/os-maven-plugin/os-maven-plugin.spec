@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           os-maven-plugin
 Version:        1.2.3
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Maven plugin for generating platform-dependent properties
 License:        ASL 2.0
 URL:            https://github.com/trustin/os-maven-plugin/
@@ -21,8 +21,14 @@ Patch0:         0001-Port-to-current-plexus-utils.patch
 Patch1:         0002-Don-t-fail-on-unknown-arch.patch
 
 BuildRequires:  maven-local
-BuildRequires:  maven-shared
-BuildRequires:  plexus-containers-component-metadata
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -71,6 +77,9 @@ find -name plugin.xml -delete
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_6jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_5jpp8
 - new fc release
 
