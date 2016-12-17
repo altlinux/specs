@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           sonar-update-center
 Version:        1.12.1
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Sonar Update Center
 License:        LGPLv3+
 URL:            http://www.sonarqube.org
@@ -18,10 +18,10 @@ Patch0:         0001-Port-to-current-maven-dependency-tree.patch
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
 BuildRequires:  mvn(com.google.guava:guava)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(commons-lang:commons-lang)
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-archiver)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
@@ -29,7 +29,6 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
-BuildRequires:  mvn(org.slf4j:slf4j-simple)
 Source44: import.info
 
 %description
@@ -84,6 +83,9 @@ find -name '*.jar' -delete
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_7jpp8
+- new fc release
+
 * Fri Dec 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_6jpp8
 - new fc release
 
