@@ -1,7 +1,7 @@
 %define dist Acme-Damn
 Name: perl-%dist
-Version: 0.06
-Release: alt1.1.1
+Version: 0.08
+Release: alt1
 
 Summary: 'Unbless' Perl objects
 License: GPL or Artistic
@@ -35,6 +35,9 @@ it.
 %perl_vendor_autolib/Acme
 
 %changelog
+* Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1.1.1
 - rebuild with new perl 5.22.0
 
