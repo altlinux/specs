@@ -12,8 +12,8 @@ BuildRequires: jpackage-generic-compat
 %global group_id  org.testng
 
 Name:           testng
-Version:        6.9.10
-Release:        alt1_2jpp8
+Version:        6.9.11
+Release:        alt1_1jpp8
 Summary:        Java-based testing framework
 # org/testng/remote/strprotocol/AbstractRemoteTestRunnerClient.java is CPL
 License:        ASL 2.0 and CPL
@@ -88,6 +88,9 @@ cp -p ./src/main/java/*.dtd.html ./src/main/resources/.
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:6.9.11-alt1_1jpp8
+- new version
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:6.9.10-alt1_2jpp8
 - new version
 
