@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
 Name:           flobopuyo
 Version:        0.20
-Release:        alt4_18
+Release:        alt4_19
 Summary:        2-player falling bubbles game
 
 License:        GPLv2+
@@ -17,10 +17,11 @@ Source1:        %{name}.desktop
 Patch0:         %{name}-0.20-64bit.patch
 # Patch by Andrea Musuruane
 Patch1:         %{name}-0.20-Makefile.patch
-# Fix segfault on Fedora 24
-# Patch by Sebastian Ott
+# Fix segfaults on Fedora 24
+# Patches by Sebastian Ott
 # https://bugzilla.redhat.com/show_bug.cgi?id=1352557
-Patch2:         %{name}-0.20-segfault.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=1380525
+Patch2:         %{name}-0.20-segfaults.patch
 # Set proper window title
 # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=537352
 Patch3:         %{name}-0.20-set_window_title.patch
@@ -49,7 +50,7 @@ can play against computer or another human.
 %setup -q
 %patch0 -p0
 %patch1 -p1
-%patch2 -p2
+%patch2 -p1
 %patch3 -p1
 %patch4 -p0
 
@@ -62,11 +63,11 @@ rm data/sfx/._bi
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS"
-make %{?_smp_mflags} PREFIX=%{_prefix}
+%make_build PREFIX=%{_prefix}
 
 
 %install
-make install DESTDIR=%{buildroot} PREFIX=%{_prefix}
+%makeinstall_std PREFIX=%{_prefix}
 
 # Install man page
 install -d -m 755 %{buildroot}%{_mandir}/man6
@@ -97,6 +98,9 @@ install -p -m 644 icon_128x128x32.png \
 
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.20-alt4_19
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.20-alt4_18
 - update to new release by fcimport
 
