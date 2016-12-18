@@ -7,8 +7,8 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 %define fedora 25
 Name:           jna
-Version:        4.2.1
-Release:        alt1_2jpp8
+Version:        4.2.2
+Release:        alt1_1jpp8
 Summary:        Pure Java access to native libraries
 # Most of code is dual-licensed under either LGPL 2.1 only or Apache
 # License 2.0.  WeakIdentityHashMap.java was taken from Apache CXF,
@@ -187,6 +187,9 @@ cat  >> .mfiles-platform
 
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 4.2.2-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt1_2jpp8
 - new version
 
