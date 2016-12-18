@@ -6,12 +6,12 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          jackson-parent
-Version:       2.6.2
-Release:       alt1_2jpp8
+Version:       2.7
+Release:       alt1_1.1jpp8
 Summary:       Parent pom for all Jackson components
 License:       ASL 2.0
 URL:           https://github.com/FasterXML/jackson-parent
-Source0:       https://github.com/FasterXML/jackson-parent/archive/%{name}-%{version}.tar.gz
+Source0:       https://github.com/FasterXML/jackson-parent/archive/%{name}-%{version}-1.tar.gz
 # jackson-parent package don't include the license file
 # reported @ https://github.com/FasterXML/jackson-parent/issues/1
 Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -28,14 +28,14 @@ Source44: import.info
 Project for parent pom for all Jackson components.
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
+%setup -q -n %{name}-%{name}-%{version}-1
 
 cp -p %{SOURCE1} LICENSE
 sed -i 's/\r//' LICENSE
 
 %build
 
-%mvn_build
+%mvn_build -j
 
 %install
 %mvn_install
@@ -45,6 +45,9 @@ sed -i 's/\r//' LICENSE
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_1.1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.2-alt1_2jpp8
 - new version
 
