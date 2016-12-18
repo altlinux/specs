@@ -1,14 +1,14 @@
 Group: Emulators
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/col /usr/bin/groff /usr/bin/gzip /usr/bin/valgrind /usr/bin/wine bzlib-devel gcc-c++
+BuildRequires: /usr/bin/col /usr/bin/groff /usr/bin/valgrind bzlib-devel gcc-c++
 # END SourceDeps(oneline)
 Name:           advancecomp
 Version:        1.20
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Recompression utilities for .PNG, .MNG and .ZIP files
 License:        GPLv3
-URL:            http://advancemame.sourceforge.net/
-Source0:        http://downloads.sf.net/advancemame/advancecomp-%{version}.tar.gz
+URL:            http://www.advancemame.it/
+Source0:        https://github.com/amadvance/advancecomp/releases/download/v%{version}/advancecomp-%{version}.tar.gz
 BuildRequires:  tofrodos
 BuildRequires:  zlib-devel
 Source44: import.info
@@ -47,6 +47,9 @@ make check
 %{_mandir}/man1/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1_3
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1_2
 - update to new release by fcimport
 
