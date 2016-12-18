@@ -10,8 +10,8 @@ BuildRequires: jpackage-generic-compat
 %global		_newname Vuze
 
 Name:		azureus
-Version:	5.7.1.0
-Release:	alt1_2jpp8
+Version:	5.7.2.0
+Release:	alt1_1jpp8
 Summary:	A BitTorrent Client
 Group:		Networking/WWW
 
@@ -21,7 +21,7 @@ License:	GPLv2 with exceptions
 
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5710_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5720_source.zip
 
 Source2:	Azureus.desktop
 Source3:	azureus.applications
@@ -161,6 +161,9 @@ sed -i 's,uname -i,uname -m,' %buildroot%_bindir/%name
 %{_datadir}/azureus
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 5.7.2.0-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 5.7.1.0-alt1_2jpp8
 - new version
 
