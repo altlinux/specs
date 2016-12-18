@@ -37,8 +37,8 @@ BuildRequires: jpackage-generic-compat
 #
 
 Name:           slf4j
-Version:        1.7.18
-Release:        alt1_1jpp8
+Version:        1.7.21
+Release:        alt1_2jpp8
 Epoch:          0
 Summary:        Simple Logging Facade for Java
 Group:          Development/Other
@@ -174,6 +174,14 @@ cp -p %{SOURCE1} APACHE-LICENSE
 # Remove wagon-ssh build extension
 %pom_xpath_remove pom:extensions
 
+# Disable default-jar execution of maven-jar-plugin, which is causing
+# problems with version 3.0.0 of the plugin.
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions" "
+    <execution>
+      <id>default-jar</id>
+      <phase>skip</phase>
+    </execution>" slf4j-api
+
 # The general pattern is that the API package exports API classes and does
 # not require impl classes. slf4j was breaking that causing "A cycle was
 # detected when generating the classpath slf4j.api, slf4j.nop, slf4j.api."
@@ -223,6 +231,9 @@ cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
 %{_defaultdocdir}/%{name}-manual
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.7.21-alt1_2jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.7.18-alt1_1jpp8
 - new version
 
