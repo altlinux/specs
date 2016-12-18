@@ -1,6 +1,6 @@
 %define dist Image-Xpm
 Name: perl-%dist
-Version: 1.12
+Version: 1.13
 Release: alt1
 
 Summary: Load, create, manipulate and save xpm image files
@@ -8,7 +8,7 @@ License: GPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SR/SREZIC/Image-Xpm-1.12.tar.gz
+Source: http://www.cpan.org/authors/id/S/SR/SREZIC/Image-Xpm-%{version}.tar.gz
 
 Patch1: perl-Image-Xpm-1.11-alt-perlio.patch
 Patch2: perl-Image-Xpm-1.11-alt-no-gensym.patch
@@ -40,6 +40,9 @@ additional manipulation functionality.
 %perl_vendor_privlib/Image/Xpm.pm
 
 %changelog
+* Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
 - automated CPAN update
 
