@@ -2,22 +2,19 @@
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
-###
-# This file is generated, please modified the .spec.in file instead!
-
 Name:           libUnihan
-%define         libUnihan_ver_major 0
-%define         libUnihan_ver_minor 5
+%global         libUnihan_ver_major 0
+%global         libUnihan_ver_minor 5
 Version:        %{libUnihan_ver_major}.%{libUnihan_ver_minor}.3
-Release:        alt4_14
-Group:          System/Libraries
+Release:        alt4_16
 License:        LGPLv2+
 Summary:        C library for Unihan character database in fifth normal form 
 Summary(zh_CN): 用于符合第五正规化之统汉字(Unihan)数据库的 C 库文件
 Summary(zh_TW): 用於符合第五正規化之統漢字(Unihan)資料庫的 C 函式庫
 
-BuildRequires:  glib2-devel libsqlite3-devel ctest cmake
+BuildRequires: glib2-devel libgio libgio-devel  libsqlite3-devel ctest cmake
 
 URL:            http://sourceforge.net/projects/libunihan
 Source0:        http://downloads.sourceforge.net/libunihan/%{name}-%{version}-Source.tar.gz
@@ -29,34 +26,33 @@ Source44: import.info
 libUnihan provides a C library for Unihan character database in fifth
 normal form (5NF).
 
-
-
 %package devel
+Group: Development/C
 Summary:    Development files of libUnihan
-Group:      Development/C
 License:        LGPLv2+
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
+Requires: libgio
 
 %description devel
 Development files of libUnihan such as header files.
 
 %package doc
+Group: Documentation
 Summary:    The libUnihan C API documents in Doxygen style
-Group:      Documentation
 License:        LGPLv2+
 BuildRequires:  doxygen
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description doc
 The libUnihan C API documents in Doxygen style.
 
-
 %prep
 %setup -q -n %{name}-%{version}-Source
+
 # HACK: Replace hard-coded docdir in CMakeList.txt
 sed -i \
-  -e "s|\${docdir}/\${DB_PRJ_NAME}|%{_pkgdocdir}|" \
-  -e "s|\${docdir}/\${PROJECT_NAME}-\${PRJ_VER}|%{_pkgdocdir}|" \
+  -e "s|\${docdir}/\${DB_PRJ_NAME}|%{_docdir}/%{name}|" \
+  -e "s|\${docdir}/\${PROJECT_NAME}-\${PRJ_VER}|%{_docdir}/%{name}|" \
   CMakeLists.txt
 
 %build
@@ -67,27 +63,32 @@ make doxygen
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 
 #%check
 #make test
 
 %files
-%doc AUTHORS NEWS README COPYING COPYING.LESSER
+%doc AUTHORS NEWS README
+%doc COPYING COPYING.LESSER
 %{_bindir}/unihan_query
 %{_libdir}/%{name}.so.%{libUnihan_ver_major}
 %{_libdir}/%{name}.so.%{libUnihan_ver_major}.%{libUnihan_ver_minor}
 
 %files devel
+%doc COPYING COPYING.LESSER
 %doc ChangeLog
 %{_includedir}/%{name}/
 %{_libdir}/%{name}.so
 %{_bindir}/unihan_converter
 
 %files doc
-%doc doc/html
+%doc %{_docdir}/%{name}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt4_16
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt4_14
 - update to new release by fcimport
 
