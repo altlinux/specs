@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/splint gcc-c++ pkgconfig(glib-2.0)
 %bcond_without syslog_tests
 
 Name:           libqb
-Version:        1.0
+Version:        1.0.1
 Release:        alt1_1
 Summary:        An IPC library for high performance servers
 
@@ -21,9 +21,9 @@ License:        LGPLv2+
 URL:            https://github.com/ClusterLabs/libqb
 Source0:        https://github.com/ClusterLabs/libqb/releases/download/v%{version}/%{name}-%{version}.tar.xz
 
-BuildRequires:  autoconf automake libtool doxygen procps libcheck-devel
+BuildRequires:  autoconf-common automake-common libtool-common doxygen procps sysvinit-utils libcheck-devel
 # https://fedoraproject.org/wiki/Packaging:C_and_C%2B%2B#BuildRequires_and_Requires
-BuildRequires:  gcc
+BuildRequires:  gcc-common
 Source44: import.info
 
 %description
@@ -53,11 +53,12 @@ rm -rf $RPM_BUILD_ROOT/%{_docdir}/*
 %doc COPYING
 %{_sbindir}/qb-blackbox
 %{_libdir}/libqb.so.*
+%{_mandir}/man8/qb-blackbox.8*
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name} = %{version} pkgconfig
+Group:          Development/Other
+Requires:       %{name} = %{version} pkg-config
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -70,9 +71,11 @@ developing applications that use %{name}.
 %{_libdir}/libqb.so
 %{_libdir}/pkgconfig/libqb.pc
 %{_mandir}/man3/qb*3*
-%{_mandir}/man8/qb-blackbox.8*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_1
+- update to new release by fcimport
+
 * Sun May 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_1
 - update to new release by fcimport
 
