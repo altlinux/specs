@@ -1,35 +1,34 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-Name:             cxf-build-utils
-Version:          2.6.0
-Release:          alt1_3jpp8
-Summary:          Apache CXF Build Utils
-Group:            Development/Other
-License:          ASL 2.0
-URL:              http://cxf.apache.org/build-utils.html
+Name:          cxf-build-utils
+Version:       3.2.0
+Release:       alt1_1jpp8
+Summary:       Apache CXF Build Utils
+License:       ASL 2.0
+URL:           http://cxf.apache.org/build-utils.html
+Source0:       https://github.com/apache/cxf-build-utils/archive/%{name}-%{version}.tar.gz
 
-# svn export http://svn.apache.org/repos/asf/cxf/build-utils/tags/cxf-build-utils-2.6.0/ cxf-build-utils-2.6.0
-# tar cafJ cxf-build-utils-2.6.0.tar.xz cxf-build-utils-2.6.0
-Source0:          cxf-build-utils-%{version}.tar.xz
+BuildRequires: maven-local
+BuildRequires: mvn(com.sun.xml.fastinfoset:FastInfoset)
+BuildRequires: mvn(jdom:jdom)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(net.sourceforge.pmd:pmd-java)
+BuildRequires: mvn(org.apache:apache:pom:)
+BuildRequires: mvn(org.apache.maven:maven-artifact)
+BuildRequires: mvn(org.apache.maven:maven-model)
+BuildRequires: mvn(org.apache.maven:maven-plugin-api)
+BuildRequires: mvn(org.apache.maven:maven-project)
+BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires: mvn(org.sonatype.plexus:plexus-build-api)
 
-# PMD support in Fedora
-Patch0:           0001-Support-for-PMD-from-Fedora.patch
-
-BuildArch:        noarch
-
-BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-shade-plugin
-BuildRequires:    glassfish-fastinfoset
-BuildRequires:    maven-surefire-provider-junit
-BuildRequires:    pmd
+BuildArch:     noarch
 Source44: import.info
 
 %description
@@ -37,32 +36,30 @@ The Apache CXF Build Utils contains common utilities and configuration files
 that are used by multiple versions of the CXF builds.
 
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
+Group: Development/Java
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n cxf-build-utils-%{version}
-%patch0 -p1
-
-%pom_remove_dep net.sourceforge.pmd:pmd buildtools/pom.xml
-%pom_add_dep net.sourceforge.pmd:pmd-java buildtools/pom.xml
+%setup -q -n %{name}-%{name}-%{version}
 
 %build
+
 %mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt1_3jpp8
 - new fc release
 
