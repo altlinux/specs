@@ -7,21 +7,26 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          xml-maven-plugin
-Version:       1.0
-Release:       alt5_13jpp8
+Version:       1.0.1
+Release:       alt1_1jpp8
 Summary:       Maven XML Plugin
 License:       ASL 2.0
-Url:           http://mojo.codehaus.org/xml-maven-plugin/
-Source0:       http://repo2.maven.org/maven2/org/codehaus/mojo/xml-maven-plugin/1.0/xml-maven-plugin-1.0-source-release.zip
+URL:           http://www.mojohaus.org/xml-maven-plugin/
+Source0:       http://repo2.maven.org/maven2/org/codehaus/mojo/xml-maven-plugin/%{version}/xml-maven-plugin-%{version}-source-release.zip
 
-BuildRequires: mojo-parent
-
-BuildRequires: apache-rat-plugin
-BuildRequires: maven-local
-BuildRequires: maven-checkstyle-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-invoker-plugin
-BuildRequires: maven-plugin-testing-harness
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.codehaus.mojo:mojo-parent:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-resources)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(xerces:xercesImpl)
+BuildRequires:  mvn(xml-apis:xml-apis)
+BuildRequires:  mvn(xml-resolver:xml-resolver)
 
 BuildArch:     noarch
 Source44: import.info
@@ -45,14 +50,8 @@ for d in LICENSE NOTICE ; do
   sed -i 's/\r//' $d.txt
 done
 
-rm -rf src/it/mojo-1438-validate
-
 # Add the version
 sed -i 's|stylesheet |stylesheet version="1.0" |'  src/it/it8/src/main/xsl/it8.xsl
-
-# In maven 3, the functionality we need has been moved to maven-core
-%pom_remove_dep org.apache.maven:maven-project
-%pom_add_dep org.apache.maven:maven-core
 
 %build
 %mvn_build -f
@@ -67,6 +66,9 @@ sed -i 's|stylesheet |stylesheet version="1.0" |'  src/it/it8/src/main/xsl/it8.x
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5_13jpp8
 - new fc release
 
