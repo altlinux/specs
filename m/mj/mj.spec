@@ -1,14 +1,17 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools
+# END SourceDeps(oneline)
 BuildRequires: libkmahjongg4-common
 Name:        mj
 Version:     1.14
-Release:     alt1_7
+Release:     alt1_9
 Summary:     Mah-Jong program with network option
 Summary(sv): Mah-Jong-program med nätmöjlighet
 
 Group:       Games/Other
 License:     GPLv2+
 URL:         http://mahjong.julianbradfield.org/
-# Upstreams: http://mahjong.julianbradfield.org/Source/%name-%version-src.tar.gz
+# Upstreams: http://mahjong.julianbradfield.org/Source/%%name-%%version-src.tar.gz
 Source0:     %name-GPL-%version-src.tar.bz2
 # The bundled tiles have a non-commercial-use license.  So instead we
 # use GPL tiles from kdegames instead.  The solution was suggested by
@@ -16,13 +19,13 @@ Source0:     %name-GPL-%version-src.tar.bz2
 # http://lists.fedoraproject.org/pipermail/legal/2010-February/001109.html
 # To produce the bundled sources from the upstreams, place them in a directory
 # and run the command:
-# ./remove-non-GPL.sh %version
+# ./remove-non-GPL.sh %%version
 Source1:     remove-non-GPL.sh
 Source2:     icon.svg
 Patch:	     mj-1.14-crash.patch
 
 BuildRequires: perl
-BuildRequires: gtk2-devel
+BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
 BuildRequires: libkmahjongglib4
 BuildRequires: inkscape
 BuildRequires: ImageMagick
@@ -50,7 +53,7 @@ kombination av de två.
 
 
 %global tiles /usr/share/kde4/apps/kmahjongglib/tilesets/default.svgz
-%global gettile() inkscape --without-gui --export-png=tile.png --export-id=%1 --file=tiles.svg --export-height=37 --export-width=27 --export-background=ivory; convert tile.png -crop 25x35+1+1 %2.xpm;
+%global gettile() inkscape --without-gui --export-png=tile.png --export-id=%1 --file=%tiles --export-height=37 --export-width=27 --export-background=ivory; convert tile.png -crop 25x35+1+1 %2.xpm;
 
 
 %prep
@@ -59,10 +62,6 @@ kombination av de två.
 # Convert the kdegames tiles to the format of the bundled ones.
 mkdir tiles-kdegames
 cd tiles-kdegames
-# For some reason I can't figure out, inkscape fails to uncompress the svgz
-# file when run in a mock chroot.  When I run on the command line it works
-# fine.  To work around, I uncompress the svgz file in a separate step.
-zcat %tiles > tiles.svg
 for suit in "BAMBOO B 9" "CHARACTER C 9" "ROD D 9" "FLOWER F 4" "SEASON S 4"
 do  set $suit
     for n in $(seq 1 $3)
@@ -74,12 +73,10 @@ done
 %gettile WIND_3 EW
 %gettile WIND_4 WW
 %gettile DRAGON_1 WD
-# A simpler path would be to convert WD.xpm here, but that breaks because
-# of bug 1217178
 # Pixmap representing the back of a tile.  Use chocolate3 as a bamboo color.
-convert tile.png -crop 25x35+1+1 -fill chocolate3 -opaque ivory ./--.xpm
+convert WD.xpm -fill chocolate3 -opaque ivory ./--.xpm
 # Pixmap used for programming errors.  Use red.  Should never show up.
-convert tile.png -crop 25x35+1+1 -fill red -opaque ivory XX.xpm
+convert WD.xpm -fill red -opaque ivory XX.xpm
 %gettile DRAGON_2 GD
 %gettile DRAGON_3 RD
 # The "tongs" are ok according to the README file.
@@ -170,6 +167,9 @@ fi
 
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_9
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_7
 - update to new release by fcimport
 
