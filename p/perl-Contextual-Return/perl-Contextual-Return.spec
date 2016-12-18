@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Contextual-Return
-Version:        0.004009
+Version:        0.004010
 Release:        alt1
 Summary:        Create context-sensitive return values
 License:        GPL+ or Artistic
@@ -56,6 +56,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.004010-alt1
+- automated CPAN update
+
 * Sat Nov 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.004009-alt1
 - automated CPAN update
 
