@@ -11,22 +11,15 @@ BuildRequires: jpackage-generic-compat
 %global with_tests 0
 
 Name:          openjpa
-Version:       2.4.0
-Release:       alt1_3jpp8
+Version:       2.4.1
+Release:       alt1_2jpp8
 Summary:       Java Persistence 2.0 API
 # For a breakdown of the licensing, see NOTICE file
 License:       ASL 2.0 and CDDL
 Url:           http://openjpa.apache.org/
 Source0:       http://www.apache.org/dist/openjpa/%{version}/%{name}-parent-%{version}-source-release.zip
-# fix test failure
-Patch0:        %{name}-2.2.0-persistence-jdbc-DynamicEnhancementSuite.patch
 # Thanks to Robert Rati
-Patch1:        %{name}-2.3.0-remove-WASRegistryManagedRuntime.patch
-# No idea why this is needed, but compiler complains loudly without it:
-# [ERROR] .../AnnotationPersistenceXMLMetaDataParser.java:[164,64] cannot find symbol
-# [ERROR] symbol:   method booleanValue()
-# [ERROR] location: class java.lang.Object
-Patch2:        openjpa-2.4.0-java8.patch
+Patch0:        %{name}-2.3.0-remove-WASRegistryManagedRuntime.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(ant-contrib:ant-contrib)
@@ -69,11 +62,12 @@ BuildRequires: mvn(org.apache.maven.plugins:maven-shade-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-site-plugin)
 BuildRequires: mvn(org.apache.xbean:xbean-finder)
 BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires: mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 BuildRequires: mvn(org.codehaus.mojo:javacc-maven-plugin)
 BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.0-api)
 BuildRequires: mvn(org.jmock:jmock)
-BuildRequires: mvn(org.jmock:jmock-junit3)
+BuildRequires: mvn(org.jmock:jmock-junit4)
 BuildRequires: mvn(org.osgi:org.osgi.core)
 BuildRequires: mvn(org.ow2.asm:asm)
 BuildRequires: mvn(org.slf4j:slf4j-api)
@@ -82,7 +76,6 @@ BuildRequires: mvn(simple-jndi:simple-jndi)
 
 # Test deps
 %if 0
-# https://gil.fedorapeople.org/mariadb-java-client-1.1.8-1.fc20.src.rpm
 BuildRequires: mvn(mariadb:mariadb-connector-java)
 %endif
 
@@ -119,12 +112,6 @@ find . -name "*.class" -delete
 find . -name "*.jar" -delete
 # openjpa-kernel/internal-repository/com/ibm/websphere/websphere_uow_api/0.0.1/websphere_uow_api-0.0.1.jar
 %patch0 -p0
-%patch1 -p0
-%patch2 -p1
-
-# Remove deprecated stuff which don't build with Java8
-rm -r %{name}-lib/src/main/java/org/apache/openjpa/lib/util/concurrent/NullSafeConcurrentHashMap.java \
- %{name}-lib/src/main/java/org/apache/openjpa/lib/util/concurrent/SizedConcurrentHashMap.java
 
 %pom_disable_module %{name}
 %pom_disable_module %{name}-all
@@ -161,17 +148,12 @@ for p in persistence-jdbc persistence-locking; do
 %pom_xpath_remove "pom:profile[pom:id='test-sybase']" %{name}-${p}
 done
 
-%pom_remove_dep org.apache.geronimo.specs:geronimo-jpa_2.0_spec
-%pom_xpath_inject "pom:project/pom:dependencyManagement/pom:dependencies" "
-  <dependency>
-    <groupId>org.hibernate.javax.persistence</groupId>
-    <artifactId>hibernate-jpa-2.0-api</artifactId>
-    <version>1.0.1.Final</version>
-  </dependency>"
+%pom_change_dep -r :geronimo-jpa_2.0_spec org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final
 
 %pom_remove_dep com.ibm.websphere:websphere_uow_api %{name}-kernel
 # Require non free com.ibm.websphere websphere_uow_api 0.0.1
 rm %{name}-kernel/src/main/java/org/apache/openjpa/ee/WASRegistryManagedRuntime.java
+
 # Remove bundled asm
 %pom_xpath_set "pom:dependency[pom:groupId = 'org.apache.xbean']/pom:artifactId" xbean-finder %{name}-kernel
 sed -i "s|org.apache.xbean.asm5|org.objectweb.asm|" \
@@ -179,40 +161,22 @@ sed -i "s|org.apache.xbean.asm5|org.objectweb.asm|" \
 %pom_add_dep org.ow2.asm:asm:5.0.3 %{name}-kernel
 
 # Use proper hsqldb version
-%pom_xpath_inject "pom:dependency[pom:artifactId='hsqldb']" "<version>1</version>" %{name}-jdbc
+%pom_change_dep -r :hsqldb ::1 %{name}-jdbc
 %pom_xpath_set "pom:properties/pom:hsqldb.version" 1
 
 # Use proper log4j version
-%pom_xpath_set "pom:dependency[pom:groupId='log4j']/pom:version" 1.2.17 
-%pom_xpath_set "pom:dependency[pom:groupId='log4j']/pom:version" 1.2.17 %{name}-tools/%{name}-maven-plugin
-%pom_xpath_inject "pom:dependency[pom:groupId='log4j']" "<version>1.2.17</version>" %{name}-lib
-
-# Fix jpa apis deps
-for p in %{name}-jest \
-  %{name}-persistence \
-  %{name}-slice \
-  %{name}-tools/%{name}-fetch-statistics \
-  %{name}-tools/%{name}-maven-plugin \
-  %{name}-tools/%{name}-maven-plugin/src/it/default_settings \
-  %{name}-tools/%{name}-maven-plugin/src/it/dependingArtifact \
-  %{name}-tools/%{name}-maven-plugin/src/it/nonDefaultPersistenceXml \
-  %{name}-tools/%{name}-maven-plugin/src/it/testDependencies \
-  ; do
-%pom_remove_dep org.apache.geronimo.specs:geronimo-jpa_2.0_spec ${p}
-%pom_add_dep org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final ${p}
-done
+%pom_change_dep -r log4j: ::1.2.17
 
 # Break build in f>=19
 %pom_remove_plugin :maven-invoker-plugin %{name}-tools/%{name}-maven-plugin
 
 # Fix bval deps
-%pom_xpath_set "pom:dependency[pom:groupId='org.apache.bval']/pom:artifactId" bval-core
-%pom_xpath_set "pom:dependency[pom:groupId='org.apache.bval']/pom:artifactId" bval-core %{name}-tools/%{name}-maven-plugin
-%pom_add_dep org.apache.bval:bval-jsr303:0.5 %{name}-tools/%{name}-maven-plugin
+%pom_change_dep org.apache.bval: :bval-core:1.1.1
+%pom_change_dep org.apache.bval: :bval-core:1.1.1 %{name}-tools/%{name}-maven-plugin
+%pom_add_dep org.apache.bval:bval-jsr:1.1.1 %{name}-tools/%{name}-maven-plugin
 
 # Force servlet 3.1 apis
-%pom_xpath_set "pom:dependency[pom:groupId='javax.servlet']/pom:artifactId" javax.servlet-api %{name}-jest
-%pom_xpath_set "pom:dependency[pom:groupId='javax.servlet']/pom:version" 3.1.0 %{name}-jest
+%pom_change_dep javax.servlet:servlet-api :javax.servlet-api:3.1.0 %{name}-jest
 
 %mvn_package ":%{name}-tools" tools
 %mvn_package ":%{name}-maven-plugin" tools
@@ -251,6 +215,9 @@ install -p -m 644 %{name}-ant %{buildroot}%{_sysconfdir}/ant.d/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt1_2jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4.0-alt1_3jpp8
 - new fc release
 
