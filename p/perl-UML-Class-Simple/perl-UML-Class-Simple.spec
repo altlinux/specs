@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-UML-Class-Simple
-Version: 0.20
+Version: 0.21
 Release: alt1
 
 Summary: Render simple UML class diagrams, by loading the code
@@ -67,6 +67,9 @@ libraries that they want to depict. This module does all the jobs for them! :)
 %doc Changes README.md samples 
 
 %changelog
+* Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - automated CPAN update
 
