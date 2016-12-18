@@ -8,7 +8,7 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           pdfbox
-Version:        1.8.11
+Version:        1.8.12
 Release:        alt1_1jpp8
 Summary:        Java library for working with PDF documents
 License:        ASL 2.0
@@ -33,6 +33,7 @@ BuildRequires:  mvn(log4j:log4j:1.2.17)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
 BuildRequires:  mvn(org.apache.rat:apache-rat-plugin)
 BuildRequires:  mvn(org.bouncycastle:bcmail-jdk15on)
 BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
@@ -88,6 +89,20 @@ Summary:        Apache JempBox
 JempBox is an open source Java library that implements Adobe's XMP(TM)
 specification. JempBox is a subproject of Apache PDFBox.
 
+%package parent
+Group: Development/Java
+Summary:        Apache PDFBox Parent POM
+
+%description parent
+Apache PDFBox Parent POM.
+
+%package reactor
+Group: Development/Java
+Summary:        Apache PDFBox Reactor POM
+
+%description reactor
+Apache PDFBox Reactor POM.
+
 %package -n preflight
 Group: Development/Java
 Summary:        Apache Preflight
@@ -115,6 +130,8 @@ find -name '*.jar' -delete
 %patch0 -p1 -b .nodownload
 %patch1 -p1 -b .bitstream
 %patch2 -p1 -b .bouncycastle1.50
+sed -i.bcprov1.54 "s|algorithmidentifier.getObjectId().getId()|algorithmidentifier.getAlgorithm().getId()|" \
+ pdfbox/src/main/java/org/apache/pdfbox/pdmodel/encryption/PublicKeySecurityHandler.java
 
 %pom_disable_module war
 #Disable lucene, not compatible with lucene 3.6
@@ -124,6 +141,7 @@ find -name '*.jar' -delete
 %pom_disable_module app
 
 %pom_remove_plugin -r :animal-sniffer-maven-plugin
+%pom_remove_plugin -r :maven-deploy-plugin
 # cobertura-maven-plugin has been retired
 %pom_remove_plugin :cobertura-maven-plugin preflight
 %pom_remove_dep javax.activation:activation preflight
@@ -165,11 +183,14 @@ sed -i -e /PDJpegTest/d pdfbox/src/test/java/org/apache/pdfbox/TestAll.java
 sed -i -e /PDCcittTest/d pdfbox/src/test/java/org/apache/pdfbox/TestAll.java
 sed -i -e /TestImageIOUtils/d pdfbox/src/test/java/org/apache/pdfbox/TestAll.java
 
+# com.googlecode.maven-download-plugin:download-maven-plugin:1.2.1 used for get 
+# test resources: http://www.pdfa.org/wp-content/uploads/2011/08/isartor-pdfa-2008-08-13.zip
+%pom_remove_plugin :download-maven-plugin preflight
+
 # Disable filtering
 sed -i -e /filtering/d examples/pom.xml
 
 # install all libraries in _javadir
-# NOTE: current guideline require all libraries must be installed in _javadir/%%name when JARs are > 2
 %mvn_file :jempbox jempbox
 %mvn_file :%{name} %{name}
 %mvn_file :%{name}-ant %{name}-ant
@@ -178,53 +199,47 @@ sed -i -e /filtering/d examples/pom.xml
 %mvn_file :xmpbox xmpbox
 %mvn_file :fontbox fontbox
 
-# Merge paret poms in main package
-%mvn_package :%{name} %{name}
-%mvn_package :%{name}-parent %{name}
-%mvn_package :%{name}-reactor %{name}
-
-%mvn_package :%{name}-ant %{name}-ant
-%mvn_package :%{name}-examples %{name}-examples
-%mvn_package :fontbox fontbox
-%mvn_package :jempbox jempbox
-%mvn_package :preflight preflight
-%mvn_package :xmpbox xmpbox
-
 %build
 
-%mvn_build -- -Dadobefiles.jar=$(build-classpath pcfi)
+%mvn_build -s -- -Dadobefiles.jar=$(build-classpath pcfi)
 
 %install
 %mvn_install
 
-#TODO - install/ship war
-
 %files -f .mfiles-%{name}
 %doc README.txt RELEASE-NOTES.txt
-%doc LICENSE.txt NOTICE.txt
 
 %files examples -f .mfiles-%{name}-examples
+%files ant -f .mfiles-%{name}-ant
+
+%files -n fontbox -f .mfiles-fontbox
+%doc fontbox/README.txt
+%doc LICENSE.txt NOTICE.txt
+
+%files -n jempbox -f .mfiles-jempbox
+%doc jempbox/README.txt
+%doc LICENSE.txt NOTICE.txt
+
+%files parent -f .mfiles-%{name}-parent
+%doc LICENSE.txt NOTICE.txt
+
+%files reactor -f .mfiles-%{name}-reactor
+%doc LICENSE.txt NOTICE.txt
+
+%files -n preflight -f .mfiles-preflight
+%doc preflight/README.txt
+
+%files -n xmpbox -f .mfiles-xmpbox
+%doc xmpbox/README.txt
 %doc LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
-%files ant -f .mfiles-%{name}-ant
-%doc LICENSE.txt NOTICE.txt
-
-%files -n fontbox -f .mfiles-fontbox
-%doc LICENSE.txt NOTICE.txt
-
-%files -n jempbox -f .mfiles-jempbox
-%doc LICENSE.txt NOTICE.txt
-
-%files -n preflight -f .mfiles-preflight
-%doc LICENSE.txt NOTICE.txt
-
-%files -n xmpbox -f .mfiles-xmpbox
-%doc LICENSE.txt NOTICE.txt
-
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.12-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.11-alt1_1jpp8
 - new version
 
