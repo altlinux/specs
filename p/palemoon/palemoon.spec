@@ -2,8 +2,8 @@ Summary: The New Moon browser, an unofficial branding of the Pale Moon project b
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 27.0.2
-Release: alt4_git.1.6e62
+Version: 27.0.3
+Release: alt1
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -55,7 +55,7 @@ Patch21: palemoon-build-el5-nss.patch
 Patch22: palemoon_rpath-27.0.2.patch
 #Patch22: palemoon_version-26.4.0.1.patch
 Patch24: palemoon-27.0.2-ui_picker_false.patch
-Patch23: palemoon_version-27.0.2.patch
+Patch23: palemoon_version-27.0.3.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
@@ -147,6 +147,7 @@ export RPATH_PATH="$rpath"
 %patch24 -p1
 #patch26 -p1
 %patch23 -p1
+
 %patch21 -p1
 %patch22 -p1
 
@@ -436,6 +437,9 @@ done
 %exclude %_datadir/idl/*
 
 %changelog
+* Sun Dec 18 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.0.3-alt1
+- Version 27.0.3
+
 * Mon Dec 05 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.0.2-alt4_git.1.6e62
 - Update from git
 
