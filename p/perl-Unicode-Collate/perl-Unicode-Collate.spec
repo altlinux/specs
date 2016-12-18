@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Unicode-Collate
 Name: perl-%dist
-Version: 1.18
+Version: 1.19
 Release: alt1
 
 Summary: Unicode Collation Algorithm
@@ -40,6 +40,9 @@ as described by Unicode Technical Standard #10 (UTS #10).
 %perl_vendor_autolib/Unicode
 
 %changelog
+* Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1
+- automated CPAN update
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
 - automated CPAN update
 
