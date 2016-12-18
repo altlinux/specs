@@ -1,19 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(File/Spec/Functions.pm) perl(Test/More.pm) perl(subs.pm) perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    ConfigReader-Simple
-%define upstream_version 1.29
+%define upstream_version 1.291
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_6
+Version:    1.291
+Release:    alt1
 
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Summary:    Read simple configuration file formats
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/ConfigReader/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/B/BD/BDFOY/ConfigReader-Simple-%{version}.tar.gz
 
 BuildRequires: perl(Test/Output.pm)
 BuildRequires: perl(Test/Warn.pm)
@@ -51,10 +52,13 @@ make test
 %makeinstall_std
 
 %files
-%doc Changes README LICENSE META.yml
+%doc Changes README* LICENSE META.yml
 %perl_vendor_privlib/*
 
 %changelog
+* Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 1.291-alt1
+- automated CPAN update
+
 * Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1_6
 - update by mgaimport
 
