@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTML-Lint
 Name: perl-%dist
-Version: 2.22
+Version: 2.24
 Release: alt1
 
 Summary: Check for HTML errors in a string or file
@@ -37,6 +37,9 @@ Test::More-style wrapper, Test::HTML::Lint.
 %perl_vendor_privlib/Test
 
 %changelog
+* Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 2.24-alt1
+- automated CPAN update
+
 * Mon Oct 26 2015 Igor Vlasenko <viy@altlinux.ru> 2.22-alt1
 - automated CPAN update
 
