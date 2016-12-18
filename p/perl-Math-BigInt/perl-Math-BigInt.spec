@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Math-BigInt
 Name: perl-%dist
-Version: 1.999802
+Version: 1.999806
 Release: alt1
 
 Summary: Arbitrary size integer math package
@@ -43,6 +43,9 @@ sed -i- 's/eval " require/eval " die/' Makefile.PL
 %perl_vendor_privlib/Math
 
 %changelog
+* Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 1.999806-alt1
+- automated CPAN update
+
 * Wed Nov 30 2016 Igor Vlasenko <viy@altlinux.ru> 1.999802-alt1
 - automated CPAN update
 
