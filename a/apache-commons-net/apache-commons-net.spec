@@ -13,8 +13,8 @@ BuildRequires: jpackage-generic-compat
 %global short_name   commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        3.4
-Release:        alt1_3jpp8
+Version:        3.5
+Release:        alt1_1jpp8
 Summary:        Internet protocol suite Java library
 License:        ASL 2.0
 URL:            http://commons.apache.org/%{base_name}/
@@ -47,15 +47,11 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
-sed -i 's/\r//' NOTICE.txt LICENSE.txt README RELEASE-NOTES.txt
 
 # This test fails with "Connection timed out"
 rm src/test/java/org/apache/commons/net/time/TimeTCPClientTest.java
 # Fails in Koji with "Address already in use"
 rm src/test/java/org/apache/commons/net/tftp/TFTPServerPathTest.java
-# Workaround for suprious test failure (NET-586)
-# Reported upstream: https://issues.apache.org/jira/browse/NET-586
-sed -i 's/testFeb29IfLeapYear/ignored_&/' $(find -name FTPTimestampParserImplTest.java)
 
 %mvn_file  : %{short_name} %{name}
 %mvn_alias : org.apache.commons:%{short_name}
@@ -68,12 +64,16 @@ sed -i 's/testFeb29IfLeapYear/ignored_&/' $(find -name FTPTimestampParserImplTes
 
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt README RELEASE-NOTES.txt
+%doc README.md RELEASE-NOTES.txt
+%doc LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.5-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.4-alt1_3jpp8
 - new version
 
