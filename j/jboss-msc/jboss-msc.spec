@@ -7,14 +7,15 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-msc
-%define version 1.2.2
+%define version 1.2.6
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-msc
-Version:          1.2.2
-Release:          alt1_4jpp8
+Version:          1.2.6
+Release:          alt1_1jpp8
 Summary:          JBoss Modular Service Container
+# Not available license file https://issues.jboss.org/browse/MSC-153
 License:          LGPLv2+
 URL:              https://github.com/jbossas/jboss-msc
 Source0:          https://github.com/jbossas/jboss-msc/archive/%{namedversion}.tar.gz
@@ -65,6 +66,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.6-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_4jpp8
 - new fc release
 
