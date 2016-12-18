@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name: liquibase
 Summary: Database Refactoring Tool
-Version: 3.5.1
+Version: 3.5.3
 Release: alt1_1jpp8
 License: ASL 2.0
 URL: http://www.liquibase.org
@@ -187,6 +187,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %files maven-plugin -f .mfiles-%{name}-maven-plugin
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.5.3-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 3.5.1-alt1_1jpp8
 - new version
 
