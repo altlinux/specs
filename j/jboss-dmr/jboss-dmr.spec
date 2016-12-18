@@ -7,13 +7,13 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-dmr
-%define version 1.2.0
+%define version 1.3.0
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-dmr
-Version:          1.2.0
-Release:          alt1_6jpp8
+Version:          1.3.0
+Release:          alt1_1jpp8
 Summary:          JBoss DMR
 License:          LGPLv2+
 URL:              https://github.com/jbossas/jboss-dmr
@@ -29,11 +29,11 @@ BuildArch:        noarch
 
 BuildRequires:    maven-local
 BuildRequires:    mvn(com.google.code.cookcc:cookcc)
+BuildRequires:    mvn(jdepend:jdepend)
 BuildRequires:    mvn(junit:junit)
 BuildRequires:    mvn(org.jboss.apiviz:apiviz:pom:)
 BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
 BuildRequires:    mvn(org.jboss.logmanager:jboss-logmanager)
-BuildRequires:    mvn(jdepend:jdepend)
 Source44: import.info
 
 %description
@@ -66,6 +66,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_6jpp8
 - new fc release
 
