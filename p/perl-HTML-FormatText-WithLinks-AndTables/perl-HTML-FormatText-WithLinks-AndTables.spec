@@ -3,15 +3,15 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-HTML-FormatText-WithLinks-AndTables
-Version:        0.06
-Release:        alt1_2
+Version:        0.07
+Release:        alt1
 Summary:        Converts HTML to Text with tables in tact
 License:        Artistic 2.0
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/HTML-FormatText-WithLinks-AndTables/
 BuildArch:      noarch
 
-Source0:        http://www.cpan.org/authors/id/D/DA/DALEEVANS/HTML-FormatText-WithLinks-AndTables-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/D/DA/DALEEVANS/HTML-FormatText-WithLinks-AndTables-%{version}.tar.gz
 
 BuildRequires:  coreutils
 BuildRequires:  findutils
@@ -61,6 +61,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_2
 - update to new release by fcimport
 
