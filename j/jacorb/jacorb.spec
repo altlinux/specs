@@ -1,129 +1,144 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-Name:             jacorb
-Version:          2.3.1
-Release:          alt1_16jpp8
-Summary:          The Java implementation of the OMG's CORBA standard
-Group:            Development/Other
-License:          LGPLv2
-URL:              http://www.jacorb.org/index.html
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name jacorb
+%define version 2.3.2
+%global namedreltag _jboss-5
+%global namedversion %(echo %{version}| tr . _)%{?namedreltag}
 
-Source0:          http://www.jacorb.org/releases/%{version}/jacorb-%{version}-src.zip
-Source1:          http://central.maven.org/maven2/org/jacorb/jacorb-parent/%{version}/jacorb-parent-%{version}.pom
-Source2:          http://central.maven.org/maven2/org/jacorb/jacorb/%{version}/jacorb-%{version}.pom
-Source3:          http://central.maven.org/maven2/org/jacorb/jacorb-idl-compiler/%{version}/jacorb-idl-compiler-%{version}.pom
+%global pomreltag -jbossorg-5
+%global pomversion %{version}%{?pomreltag}
 
-# These methods are not implemented in the current 
-Patch0:           jacorb-2.3.1-Implement-a-few-methods-in-GSSUPContextSpi-to-make-i.patch
+Name:          jacorb
+Version:       2.3.2
+Release:       alt1_1.jbossorg.5jpp8
+Summary:       The Java implementation of the OMG's CORBA standard
+License:       LGPLv2
+URL:           http://www.jacorb.org/index.html
+Source0:       https://github.com/JacORB/JacORB/archive/R_%{namedversion}/JacORB-R_%{namedversion}.tar.gz
 
-# Set proper versions
-Patch1:           jacorb-2.3.1-version.patch
+# These methods are not implemented in the current
+Patch0:        jacorb-2.3.1-Implement-a-few-methods-in-GSSUPContextSpi-to-make-i.patch
 
 # Fix "error: unmappable character for encoding ASCII" JDK issues
-Patch2:           jacorb-2.3.1-Set-encoding-to-UTF-8-when-generating-javadoc.patch
-
-# Remove the Class-Path entry to fix class-path-in-manifest issue
-Patch3:           jacorb-2.3.1-Removed-Class-Path-entry-from-MANIFEST.MF.patch
-
-# This patch resets the port of the primary address to zero when an
-# IORInterceptor adds a TAG_CSI_SEC_MECH_LIST component with transport
-# protection requirements (SSL), as it should be per the CSI v2 specification.
-Patch4:           jacorb-2.3.1-primaddress_port.patch
-
-# read_boolean() now only adjusts positions if the chunk_end_pos == pos,
-# no longer calling handle_chunking(). The problem with handle_chunking()
-# is that it aligns the current position and this can cause CDRInputStream
-# to "skip" valid boolean values, as those are not padded.
-Patch5:           jacorb-2.3.1-read_boolean.patch
+Patch1:        jacorb-2.3.1-Set-encoding-to-UTF-8-when-generating-javadoc.patch
 
 # Support for JDK 8
-Patch6:           JDK8-support.patch
+Patch2:        JDK8-support.patch
 
-BuildArch:        noarch
+# jacorb use java_cup = 0.9e for generate java stuff
+# Our java_cup (0.11b) generated wrong entries in the java code, e.g.
+# import org.jacorb.idl.runtime.XMLElement;
+# patch was generated using the following steps
+# find . -name "*.jar" ! -name "java_cup.jar" -print -delete
+# ln -s $(build-classpath avalon-logkit) lib/logkit-1.2.jar
+# ant -f src/org/jacorb/idl/build.xml
+# find . -name "*.jar" -print -delete
+# find . -name "*.class" -print -delete
+Patch3:        jacorb-2.3.2-java_cup.patch
 
-BuildRequires:    javapackages-local
-BuildRequires:    ant
-BuildRequires:    antlr-tool
-BuildRequires:    avalon-logkit
-BuildRequires:    bsh
-BuildRequires:    slf4j
+BuildRequires: ant
+BuildRequires: java-devel
+BuildRequires: maven-local
+BuildRequires: mvn(antlr:antlr)
+BuildRequires: mvn(avalon-logkit:avalon-logkit)
+BuildRequires: mvn(org.apache.ant:ant)
+BuildRequires: mvn(org.apache.ant:ant-apache-regexp)
+BuildRequires: mvn(org.apache.ant:ant-junit)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(org.slf4j:slf4j-jdk14)
+
+BuildArch:     noarch
 Source44: import.info
 
 %description
-This package contains the Java implementation of the OMG's CORBA standard
+This package contains the Java implementation of the OMG's CORBA standard.
 
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires: javapackages-tools rpm-build-java
+Group: Development/Java
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n jacorb-%{version}
-
-cp %{SOURCE1} jacorb-parent.pom
-cp %{SOURCE2} jacorb.pom
-cp %{SOURCE3} jacorb-idl-compiler.pom
-
-find -name '*.class' -exec rm -f '{}' \;
-find -name '*.jar' -exec rm -f '{}' \;
-find -name '*.zip' -exec rm -f '{}' \;
+%setup -q -n JacORB-R_%{namedversion}
+# Cleanup
+find . -name "*.class" -print -delete
+find . -name "*.dll" -print -delete
+find . -name "*.jar" -print -delete
+find . -name "*.zip" -print -delete
 
 %patch0 -p1
-%patch1 -p0
+%patch1 -p1
 %patch2 -p1
-%patch3 -p0
-%patch4 -p0
-%patch5 -p0
-%patch6 -p1
+%patch3 -p1
+
+%pom_disable_module maven/release
+%pom_disable_module maven/resources
+
+%pom_xpath_remove "pom:dependency[pom:artifactId = 'tools']/pom:scope"
+%pom_xpath_remove "pom:dependency[pom:artifactId = 'tools']/pom:systemPath"
+
+%pom_remove_plugin -r org.commonjava.maven.plugins:build-migration-maven-plugin
+
+%pom_remove_plugin -r :maven-assembly-plugin
+%pom_remove_plugin -r :maven-source-plugin
+
+%pom_add_dep avalon-logkit:avalon-logkit:1.2:compile maven/idl-compiler
 
 # No xdoclet available
 sed -i 's|,notification||' src/org/jacorb/build.xml
 
+sed -i '/Class-Path/d' build.xml
+
+%pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-javadoc-plugin']/pom:executions"
+%pom_xpath_inject "pom:plugin[pom:artifactId = 'maven-javadoc-plugin']/pom:configuration" "<additionalparam>-Xdoclint:none</additionalparam>" maven/core maven/idl-compiler
+
+sed -i 's|${IGNORED_TAGS}|${IGNORED_TAGS} -Xdoclint:none|' build.xml
+sed -i 's|,org.jacorb.notification.\*||' build.xml
+sed -i 's|org.jacorb.notification.filter.bsh|org.jacorb.notification.*|' build.xml
+
 ln -s $(build-classpath antlr) lib/antlr-2.7.2.jar
 ln -s $(build-classpath slf4j/api) lib/slf4j-api-1.5.6.jar
+ln -s $(build-classpath avalon-logkit) lib/logkit-1.2.jar
 
+%mvn_artifact org.jacorb:jacorb:jar:%{pomversion} lib/jacorb.jar
+%mvn_artifact org.jacorb:jacorb-idl-compiler:jar:%{pomversion} lib/idl.jar
 %mvn_alias "org.jacorb:" "jacorb:"
 
 %build
 
 # due to javadoc x86_64 out of memory
 subst 's,maxmemory="256m",maxmemory="512m",' build.xml
-export CLASSPATH=$(build-classpath avalon-logkit slf4j/api)
 
-sed -i "s|>avalon<|>avalon-logkit<|g" jacorb-idl-compiler.pom
-
-%pom_remove_dep "tanukisoft:wrapper" jacorb.pom
-%pom_remove_dep "picocontainer:picocontainer" jacorb.pom
-%pom_remove_dep "nanocontainer:nanocontainer" jacorb.pom
-%pom_remove_dep "nanocontainer:nanocontainer-remoting" jacorb.pom
-
-ant all doc
+%mvn_build -- -Dcompile=all -DskipTests=true -Djava-source-version=1.6 -Djavac-encoding=utf-8
 
 %install
-%mvn_artifact jacorb-parent.pom
-%mvn_artifact jacorb.pom lib/jacorb.jar
-%mvn_artifact jacorb-idl-compiler.pom lib/idl.jar
-
-%mvn_install -J doc/api
+%mvn_install
 
 %files -f .mfiles
 %dir %{_javadir}/%{name}
+%doc doc/REL_NOTES
 %doc doc/LICENSE
 
 %files javadoc -f .mfiles-javadoc
 %doc doc/LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.3.2-alt1_1.jbossorg.5jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.3.1-alt1_16jpp8
 - new fc release
 
