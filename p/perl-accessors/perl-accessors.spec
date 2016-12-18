@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-accessors
 Version:        1.01
-Release:        alt1_19
+Release:        alt1_20
 Summary:        Create accessor methods in caller's package
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/accessors/
 Source0:        http://www.cpan.org/authors/id/S/SP/SPURKIS/accessors-%{version}.tar.gz
 BuildArch:      noarch
@@ -44,6 +44,9 @@ find $RPM_BUILD_ROOT%{perl_vendor_privlib} -name *.pm | xargs chmod a-x
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_20
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_19
 - update to new release by fcimport
 
