@@ -8,31 +8,27 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jgroups
-%define version 3.4.2
+%define version 3.6.10
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
-Name:     jgroups
-Version:  3.4.2
-Release:  alt1_5jpp8
-Summary:  Toolkit for reliable multicast communication
-License:  LGPLv2+
-URL:      http://www.jgroups.org
-Source0:  https://github.com/belaban/JGroups/archive/JGroups-%{namedversion}.tar.gz
+Name:          jgroups
+Version:       3.6.10
+Release:       alt1_1jpp8
+Summary:       Toolkit for reliable multicast communication
+License:       ASL 2.0 and LGPLv2+
+URL:           http://www.jgroups.org
+Source0:       https://github.com/belaban/JGroups/archive/JGroups-%{namedversion}.tar.gz
 
-BuildRequires: bsh
-BuildRequires: log4j
-BuildRequires: byteman
 BuildRequires: maven-local
-BuildRequires: maven-antrun-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-source-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-plugin-bundle
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven-plugin-build-helper
-BuildRequires: testng
-BuildRequires: bouncycastle
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.logging.log4j:log4j-core)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.bouncycastle:bcprov-jdk15on)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires: mvn(org.jboss.byteman:byteman-bmunit)
+BuildRequires: mvn(org.testng:testng)
 
 BuildArch:     noarch
 Source44: import.info
@@ -45,7 +41,7 @@ whose members can send messages to each other.
 
 %package  javadoc
 Group: Development/Java
-Summary:  API documentation for %{name}
+Summary:       API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -57,14 +53,19 @@ This package contains the API documentation for %{name}.
 find . -name '*.class' -delete
 find . -name '*.jar' -delete
 
-%pom_remove_dep "bouncycastle:bcprov-jdk15"
-%pom_add_dep "org.bouncycastle:bcprov-jdk16"
+%pom_remove_plugin :nexus-staging-maven-plugin
+# Useless tasks
+%pom_remove_plugin :maven-jar-plugin
+%pom_remove_plugin :maven-source-plugin
 
-# log4j 2 is not available
-%pom_remove_dep "org.apache.logging.log4j:log4j-core"
+# Set encoding
+%pom_xpath_inject pom:project/pom:properties '
+  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>'
 
-rm src/org/jgroups/logging/Log4J2LogImpl.java
-sed -i 's|Log4J2LogImpl|Log4JLogImpl|g' src/org/jgroups/logging/LogFactory.java
+%pom_change_dep "bouncycastle:bcprov-jdk15" "org.bouncycastle:bcprov-jdk15on:1.52"
+
+chmod 644 README
 
 %build
 # A few failed tests:
@@ -84,13 +85,16 @@ sed -i 's|Log4J2LogImpl|Log4JLogImpl|g' src/org/jgroups/logging/LogFactory.java
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc INSTALL.html LICENSE README
+%doc INSTALL.html README
+%doc LICENSE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.4.2-alt1_5jpp8
 - new fc release
 
