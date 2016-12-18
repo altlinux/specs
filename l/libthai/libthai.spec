@@ -1,13 +1,12 @@
 %add_optflags %optflags_shared
 Summary:  Thai language support routines
 Name: libthai
-Version: 0.1.24
+Version: 0.1.25
 Release: alt1_1
 License: LGPLv2+
 Group: System/Libraries
 Source: ftp://linux.thai.net/pub/thailinux/software/libthai/libthai-%{version}.tar.xz
 Patch0: libthai-0.1.9-multilib.patch
-Patch1: libthai-0.1.24-gcc6.patch
 URL: http://linux.thai.net
 
 BuildRequires: pkgconfig(datrie-0.2)
@@ -22,9 +21,9 @@ output methods as well as basic character and string supports.
 
 %package devel
 Summary:  Thai language support routines
-Group: Development/C
+Group: Development/Other
 Requires: %{name} = %{version}
-Requires: pkgconfig
+Requires: pkg-config
 
 %description devel
 The libthai-devel package includes the header files and developer docs 
@@ -36,7 +35,6 @@ libthai.
 %prep
 %setup -q
 %patch0 -p1 -b .multilib
-%patch1 -p0 -b .gcc6
 
 %build
 %configure --disable-static
@@ -66,6 +64,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.25-alt1_1
+- update to new release by fcimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.24-alt1_1
 - update to new release by fcimport
 
