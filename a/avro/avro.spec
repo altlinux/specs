@@ -1,24 +1,24 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ python-devel
+BuildRequires(pre): rpm-macros-java
+BuildRequires: /usr/bin/asciidoc /usr/bin/source-highlight boost-devel boost-filesystem-devel boost-program_options-devel gcc-c++ pkgconfig(liblzma) zlib-devel
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             avro
-Version:          1.7.5
-Release:          alt1_13jpp8
+Version:          1.7.6
+Release:          alt1_1jpp8
 Summary:          Data serialization system
 License:          ASL 2.0
 URL:              http://avro.apache.org
 
-# svn export http://svn.apache.org/repos/asf/avro/tags/release-1.7.5/ avro-1.7.5
-# find avro-1.7.5/ -name '*.jar' -delete -or -name '*.dll' -delete
-# tar cJf avro-1.7.5-CLEAN.tar.xz avro-1.7.5
+# svn export http://svn.apache.org/repos/asf/avro/tags/release-1.7.6/ avro-1.7.6
+# find avro-1.7.6/ -name '*.jar' -delete -or -name '*.dll' -print -delete
+# tar cJf avro-1.7.6-CLEAN.tar.xz avro-1.7.6
 Source0:          avro-%{version}-CLEAN.tar.xz
-Patch0:           avro-ipc-changes-for-jetty-upgrade.patch
-Patch1:           Support-for-hadoop-2.2.0.patch
-Patch2:           avro-jdk8.patch
+Patch0:           avro-1.7.6-ipc-changes-for-jetty-upgrade.patch
+Patch1:           avro-1.7.6-jdk8.patch
 
 BuildArch:        noarch
 
@@ -28,6 +28,7 @@ BuildRequires:    mvn(io.netty:netty:3)
 BuildRequires:    mvn(org.apache.hadoop:hadoop-client)
 BuildRequires:    mvn(org.apache.maven:maven-project)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-checkstyle-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:    mvn(org.apache.thrift:libthrift)
 BuildRequires:    mvn(org.codehaus.jackson:jackson-core-asl)
 BuildRequires:    mvn(org.codehaus.jackson:jackson-mapper-asl)
@@ -37,6 +38,7 @@ BuildRequires:    mvn(org.eclipse.jetty:jetty-servlet)
 BuildRequires:    mvn(org.eclipse.jetty:jetty-util)
 BuildRequires:    mvn(org.slf4j:slf4j-api)
 BuildRequires:    mvn(org.slf4j:slf4j-simple)
+BuildRequires:    mvn(org.tukaani:xz)
 BuildRequires:    mvn(org.xerial.snappy:snappy-java)
 Source44: import.info
 
@@ -133,7 +135,6 @@ This package contains the API documentation for %{name}.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 # Unsupported features
 %pom_disable_module archetypes lang/java
@@ -151,6 +152,9 @@ This package contains the API documentation for %{name}.
 # Remove panamer plugin for test jar generation
 %pom_remove_plugin com.thoughtworks.paranamer:paranamer-maven-plugin lang/java/avro
 
+# package org.tukaani.xz does not exist
+%pom_add_dep org.tukaani:xz lang/java/avro
+
 # Need explicit maven-artifact declaration
 %pom_add_dep org.apache.maven:maven-artifact lang/java/maven-plugin
 
@@ -158,6 +162,17 @@ This package contains the API documentation for %{name}.
 %pom_remove_dep :avro-ipc lang/java/mapred
 %pom_add_dep org.apache.avro:avro-ipc:%{version} lang/java/mapred
 
+# Disable default-jar execution of maven-jar-plugin, which is causing
+# problems with version 3.0.0 of the plugin.
+%pom_xpath_remove "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions/pom:execution[pom:id = 'main']" lang/java/mapred
+for mod in mapred trevni/avro; do
+    %pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions" "
+        <execution>
+          <id>default-jar</id>
+          <phase>skip</phase>
+        </execution>" lang/java/${mod}
+done
+ 
 %mvn_package ":trevni-doc"  __noinstall
 %mvn_package ":trevni-avro" trevni
 %mvn_package ":trevni-core" trevni
@@ -207,6 +222,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.7.6-alt1_1jpp8
+- new version
+
 * Wed Feb 24 2016 Igor Vlasenko <viy@altlinux.ru> 1.7.5-alt1_13jpp8
 - full build
 
