@@ -6,13 +6,13 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          jackcess-encrypt
-Version:       2.1.0
+Version:       2.1.1
 Release:       alt1_2jpp8
 Summary:       Java implementation of the encryption service for MS Access
 License:       ASL 2.0
 URL:           http://jackcessencrypt.sourceforge.net/
-# svn checkout http://svn.code.sf.net/p/jackcessencrypt/code/tags/jackcess-encrypt-2.1.0
-# tar cJf jackcess-encrypt-2.1.0.tar.xz jackcess-encrypt-2.1.0
+# svn checkout http://svn.code.sf.net/p/jackcessencrypt/code/tags/jackcess-encrypt-2.1.1
+# tar cJf jackcess-encrypt-2.1.1.tar.xz jackcess-encrypt-2.1.1
 Source0:       %{name}-%{version}.tar.xz
 
 BuildRequires: maven-local
@@ -21,7 +21,8 @@ BuildRequires: mvn(com.healthmarketscience.jackcess:jackcess::tests:)
 BuildRequires: mvn(com.sun.xml.bind:jaxb-impl)
 BuildRequires: mvn(com.sun.xml.bind:jaxb-xjc)
 BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.bouncycastle:bcprov-jdk15)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.bouncycastle:bcprov-jdk15on)
 BuildRequires: mvn(org.codehaus.mojo:jaxb2-maven-plugin)
 
 BuildArch:     noarch
@@ -126,6 +127,9 @@ rm -r src/test/java/com/healthmarketscience/jackcess/CryptCodecProviderTest.java
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1_2jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_2jpp8
 - new fc release
 
