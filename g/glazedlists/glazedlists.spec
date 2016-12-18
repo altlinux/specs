@@ -1,34 +1,36 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 25
 # Work around koji build issues on ppc64
 # See https://www.redhat.com/archives/fedora-devel-list/2009-March/msg00022.html
 %global eclipse_dir $(ls -d /usr/lib*/eclipse)
 
 Name:           glazedlists
-Version:        1.9.0
-Release:        alt1_7jpp8
+Version:        1.9.1
+Release:        alt1_1jpp8
 Summary:        A toolkit for transformations in Java
 License:        (LGPLv2+ or MPLv1.1+) and ASL 2.0
-Url:            http://publicobject.com/glazedlists/
+Url:            http://www.glazedlists.com/
 BuildArch:      noarch
 
-Source0:        http://search.maven.org/remotecontent?filepath=net/java/dev/glazedlists/glazedlists_java15/1.9.0/glazedlists_java15-1.9.0-dist.zip
+Source0:        http://repo1.maven.org/maven2/net/java/dev/glazedlists/%{name}_java15/%{version}/glazedlists_java15-%{version}-dist.zip
 # Build against system jars instead of downloaded ones, and don't build things we don't
 # have requirements for
-Patch0:         %{name}-1.9.0-build.xml.patch
+Patch0:         %{name}-1.9.1-build.xml.patch
 # Use the new Hibernate API
-Patch1:         %{name}-1.9.0-hibernate.patch
+Patch1:         %{name}-1.9.1-hibernate.patch
 
 BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  dos2unix
 BuildRequires:  aqute-bnd
+BuildRequires:  aqute-bndlib
 BuildRequires:  eclipse-swt
 BuildRequires:  icu4j
 BuildRequires:  jcommon
@@ -57,14 +59,22 @@ Documentation for the %{name} Java library.
 %prep
 %setup -q -c %{name}-%{version}
 # Build against system jars, and disable unavailable extensions
-%patch0 -p1
+%patch0 -b .build-xml -p0
 rm -rf extensions/ktable extensions/swinglabs extensions/nachocalendar \
         extensions/japex extensions/issuesbrowser 
 # Use correct libdir for this build architecture
-sed -i "s#ECLIPSE_DIR#%{_jnidir}#" build.xml
+sed -i.eclipse_dir "s#ECLIPSE_DIR#%{_jnidir}#" build.xml
+
+%if 0%{?fedora} >= 23
+%global taskdef_classpath /usr/share/java/aqute-bnd/biz.aQute.bnd.jar:/usr/share/java/aqute-bnd/biz.aQute.bndlib.jar
+%else
+%global taskdef_classpath /usr/share/java/aqute-bnd.jar
+%endif
+
+sed -i.taskdef_classpath "s#TASKDEF_CLASSPATH#%{taskdef_classpath}#" build.xml
 
 # Use new hibernate API
-%patch1 -p1
+%patch1 -b .hibernate -p0
 
 # Clean up line endings
 dos2unix license
@@ -73,7 +83,7 @@ dos2unix license
 sed -i -e '/"deploy-init"/ s/download-mavenanttasks,//' build.xml
 
 %build
-ant dist jar sourcejar javadocjar deploy-init -DartifactId=%{name}
+ant -v dist jar sourcejar javadocjar deploy-init -DartifactId=%{name}
 
 # Maven artifact installation
 %mvn_artifact target/deploy/pom.xml target/deploy/%{name}-%{version}.jar
@@ -90,6 +100,9 @@ ant dist jar sourcejar javadocjar deploy-init -DartifactId=%{name}
 %doc license
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.1-alt1_1jpp8
+- new version
+
 * Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt1_7jpp8
 - unbootstrap build
 
