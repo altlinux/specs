@@ -1,4 +1,4 @@
-%define module_version 0.13
+%define module_version 0.15
 %define module_name Test-Timer
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Benchmark.pm) perl(Carp.pm) perl(English.pm) perl(Error.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(Module/Build.pm) perl(Pod/Coverage/TrustPod.pm) perl(Test/Builder.pm) perl(Test/Builder/Module.pm) perl(Test/CPAN/Changes.pm) perl(Test/Exception.pm) perl(Test/Kwalitee.pm) perl(Test/More.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(Test/Tester.pm)
@@ -7,14 +7,14 @@ BuildRequires: perl(Benchmark.pm) perl(Carp.pm) perl(English.pm) perl(Error.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators perl(JSON/PP.pm)
 
 Name: perl-%module_name
-Version: 0.13
-Release: alt2
+Version: 0.15
+Release: alt1
 Summary: a test module to test/assert response times
 Group: Development/Perl
 License: artistic_2
 URL: http://logiclab.jira.com/wiki/display/TESTT/Home
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/J/JO/JONASBN/%{module_name}-%{module_version}.tar.gz
+Source: http://www.cpan.org/authors/id/J/JO/JONASBN/Test-Timer-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/T*
 
 %changelog
+* Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- automated CPAN update
+
 * Thu Sep 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2
 - to Sisyphus
 
