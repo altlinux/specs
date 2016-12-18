@@ -3,8 +3,8 @@ BuildRequires: perl(Module/Build.pm) perl(namespace/autoclean.pm) perl(Sub/Expor
 BuildRequires: perl(Module/Build/Tiny.pm)
 %define dist MooseX-Types
 Name: perl-%dist
-Version: 0.46
-Release: alt1.1
+Version: 0.48
+Release: alt1
 
 Summary: Organise your Moose types in libraries
 License: GPL or Artistic
@@ -37,6 +37,9 @@ libraries. As a nice side effect, it catches typos at compile-time too.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1
+- automated CPAN update
+
 * Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.46-alt1.1
 - rebuild to restore role requires
 
