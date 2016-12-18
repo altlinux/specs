@@ -7,17 +7,15 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name codegen
-%define version 0.6.7
+%define version 0.6.8
 %global _version %( echo %{version} | tr . _ )
 Name:          codegen
-Version:       0.6.7
-Release:       alt1_3jpp8
+Version:       0.6.8
+Release:       alt1_2jpp8
 Summary:       Java/Scala Code generation tool
 License:       ASL 2.0
 URL:           http://www.querydsl.com
 Source0:       https://github.com/mysema/codegen/archive/CODEGEN_%{_version}.tar.gz
-# https://github.com/querydsl/codegen/issues/22
-Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildRequires: maven-local
 BuildRequires: mvn(com.google.guava:guava)
@@ -72,7 +70,7 @@ This package contains javadoc for %{name}.
  </execution>
 </executions>'
 
-%pom_xpath_remove "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-jar-plugin']/pom:configuration/pom:useDefaultManifestFile"
+%pom_xpath_remove "pom:useDefaultManifestFile"
 %pom_xpath_inject "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-jar-plugin']/pom:configuration" '
 <archive>
  <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
@@ -83,9 +81,9 @@ sed -i.javax.validation "s|ConstraintPayload|Payload|" \
  src/test/java/com/mysema/codegen/MinImpl.java \
  src/test/java/com/mysema/codegen/NotNullImpl.java
 
-cp -p %{SOURCE1} LICENSE
-sed -i 's/\r//' LICENSE
-
+sed -i.ecj4.6 "s|Map<String, Object> settings|Map<String, String> settings|" \
+ src/main/java/com/mysema/codegen/ECJEvaluatorFactory.java
+ 
 %mvn_file com.mysema.codegen:%{name} %{name}
 
 %build
@@ -97,12 +95,15 @@ sed -i 's/\r//' LICENSE
 
 %files -f .mfiles
 %doc README.md
-%doc LICENSE
+%doc LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.8-alt1_2jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.7-alt1_3jpp8
 - new fc release
 
