@@ -1,7 +1,7 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++ texinfo unzip
+BuildRequires: gcc-c++ texinfo
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -10,21 +10,24 @@ BuildRequires: jpackage-generic-compat
 %global sover 1.2
 
 Name:           jffi
-Version:        1.2.10
-Release:        alt1_1jpp8
+Version:        1.2.12
+Release:        alt1_3jpp8
 Summary:        Java Foreign Function Interface
 
 License:        LGPLv3+ or ASL 2.0
 URL:            http://github.com/jnr/jffi
-Source0:        https://github.com/%{cluster}/%{name}/archive/%{version}.zip
-Source1:        MANIFEST.MF
-Source2:        NATIVE-MANIFEST.MF
+Source0:        https://github.com/%{cluster}/%{name}/archive/%{name}-%{version}.tar.gz
 Source3:        p2.inf
 Patch0:         jffi-fix-dependencies-in-build-xml.patch
 Patch1:         jffi-add-built-jar-to-test-classpath.patch
 Patch2:         jffi-fix-compilation-flags.patch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires:  libffi-devel
 BuildRequires:  ant
 BuildRequires:  ant-junit
@@ -50,11 +53,7 @@ This package contains the API documentation for %{name}.
 
 
 %prep
-%setup -q
-cp %{SOURCE1} .
-cp %{SOURCE2} .
-sed -i -e's/@VERSION/%{version}/g' MANIFEST.MF
-sed -i -e's/@VERSION/%{version}/g' NATIVE-MANIFEST.MF
+%setup -q -n %{name}-%{name}-%{version}
 %patch0
 %patch1
 %patch2
@@ -88,17 +87,16 @@ cp -p dist/jffi-*-Linux.jar archive/
 
 mkdir -p META-INF/
 cp %{SOURCE3} META-INF/
-jar umf MANIFEST.MF %{buildroot}%{_jnidir}/%{name}/%{name}.jar META-INF/p2.inf
+jar uf %{buildroot}%{_jnidir}/%{name}/%{name}.jar META-INF/p2.inf
 
 # install *.so
 install -dm 755 %{buildroot}%{_libdir}/%{name}
 cp -rp target/jni/* %{buildroot}%{_libdir}/%{name}/
 # create version-less symlink for .so file
-sofile=`find %{buildroot}%{_libdir}/%{name} -name lib%{name}-%{sover}.so`
-chmod +x ${sofile}
-ln -sr ${sofile} `dirname ${sofile}`/lib%{name}.so
-
-jar umf NATIVE-MANIFEST.MF %{buildroot}%{_jnidir}/%{name}/%{name}-native.jar
+pushd %{buildroot}%{_libdir}/%{name}/*
+chmod +x lib%{name}-%{sover}.so
+ln -s lib%{name}-%{sover}.so lib%{name}.so
+popd
 
 %check
 # skip tests on s390 until https://bugzilla.redhat.com/show_bug.cgi?id=1084914 is resolved
@@ -119,6 +117,9 @@ ant -Duse.system.libffi=1 test
 %doc COPYING.GPL COPYING.LESSER LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt1_3jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.10-alt1_1jpp8
 - new version
 
