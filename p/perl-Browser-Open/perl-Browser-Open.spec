@@ -4,10 +4,10 @@ BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Browser-Open
 Version:        0.04
-Release:        alt2_13
+Release:        alt2_14
 Summary:        Open a browser in a given URL
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Browser-Open/
 Source0:        http://search.cpan.org/CPAN/authors/id/C/CF/CFRANKS/Browser-Open-%{version}.tar.gz
 BuildArch:      noarch
@@ -51,6 +51,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_14
+- update to new release by fcimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_13
 - update to new release by fcimport
 
