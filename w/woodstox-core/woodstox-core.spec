@@ -9,8 +9,8 @@ BuildRequires: jpackage-generic-compat
 %global core_name %{base_name}-core
 
 Name:           %{core_name}
-Version:        5.0.1
-Release:        alt1_2jpp8
+Version:        5.0.2
+Release:        alt1_1jpp8
 Summary:        High-performance XML processor
 License:        ASL 2.0 or LGPLv2+ or BSD
 URL:            https://github.com/FasterXML/woodstox
@@ -77,6 +77,9 @@ rm ./src/test/java/org/codehaus/stax/test/stream/TestNamespaces.java
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.2-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt1_2jpp8
 - new version
 
