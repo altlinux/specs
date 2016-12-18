@@ -6,8 +6,8 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           args4j
-Version:        2.32
-Release:        alt1_3jpp8
+Version:        2.33
+Release:        alt1_1jpp8
 Summary:        Java command line arguments parser
 License:        MIT
 URL:            http://args4j.kohsuke.org
@@ -20,6 +20,8 @@ BuildRequires:  mvn(com.sun:tools)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-site-plugin)
+BuildRequires:  mvn(org.apache.maven.scm:maven-scm-manager-plexus)
+BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-gitexe)
 BuildRequires:  mvn(org.kohsuke:pom:pom:)
 BuildRequires:  mvn(org.mockito:mockito-all)
 Source44: import.info
@@ -94,7 +96,6 @@ find -name '*.jar' -exec rm -f '{}' \;
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc %{name}/LICENSE.txt
 
 %files tools -f .mfiles-%{name}-tools
@@ -106,6 +107,9 @@ find -name '*.jar' -exec rm -f '{}' \;
 %doc %{name}/LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.33-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.32-alt1_3jpp8
 - new fc release
 
