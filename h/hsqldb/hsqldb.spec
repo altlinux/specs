@@ -1,3 +1,4 @@
+Group: Databases
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: perl(DBD/ODBC.pm) perl(DBI.pm) unzip
@@ -8,13 +9,12 @@ BuildRequires: jpackage-generic-compat
 %global pomversion 2.3.0
 
 Name:           hsqldb
-Version:        2.3.3
-Release:        alt1_4jpp8
+Version:        2.3.4
+Release:        alt1_1jpp8
 Epoch:          1
 Summary:        HyperSQL Database Engine
 License:        BSD
 URL:            http://hsqldb.sourceforge.net/
-Group:          Databases
 
 BuildArch:      noarch
 
@@ -65,32 +65,31 @@ database management system that is completely free under the Modified
 BSD License. Yes, that's right, completely free of cost or restrictions!
 
 %package lib
+Group: Development/Java
 Summary:    HyperSQL Database Engine library
-Group:      Development/Java
 
 %description lib
 Library part of %{name}.
 
 %package manual
+Group: Development/Java
 Summary:    Manual for %{name}
-Group:      Development/Java
 BuildArch: noarch
 
 %description manual
 Documentation for %{name}.
 
 %package javadoc
+Group: Development/Java
 Summary:    Javadoc for %{name}
-Group:      Development/Java
-Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
 Javadoc for %{name}.
 
 %package demo
+Group: Development/Java
 Summary:    Demo for %{name}
-Group:      Development/Java
 Requires:   %{name} = %{epoch}:%{version}
 
 %description demo
@@ -210,6 +209,9 @@ install -m 755 %{SOURCE45} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 %files demo
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.3.4-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.3.3-alt1_4jpp8
 - new fc release
 
