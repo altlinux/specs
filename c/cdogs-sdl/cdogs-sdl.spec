@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ libSDL2-devel
+BuildRequires: /usr/bin/desktop-file-validate gcc-c++ libSDL2-devel
 # END SourceDeps(oneline)
-%global extra_version -2
+#global extra_version -2
 
 Name:           cdogs-sdl
-Version:        0.6.2
+Version:        0.6.3
 Release:        alt1_1
 Summary:        C-Dogs is an arcade shoot-em-up
 Group:          Games/Other
@@ -14,8 +14,6 @@ Group:          Games/Other
 License:        GPLv2+ and CC-BY and CC-BY-SA and CC0
 URL:            http://cxong.github.io/cdogs-sdl/
 Source0:        https://github.com/cxong/cdogs-sdl/archive/%{version}%{?extra_version}.tar.gz#/%{name}-%{version}%{?extra_version}.tar.gz
-Source1:        %{name}.desktop
-Source2:        %{name}.appdata.xml
 Patch0:         cdogs-sdl-0.5.8-cmake.patch
 Patch1:         cdogs-sdl-0.6.2-system-enet.patch
 BuildRequires: ctest cmake libSDL2_mixer-devel libSDL2_image-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
@@ -38,7 +36,7 @@ like to thank Ronny for releasing the C-Dogs sources to the public.
 
 %prep
 %setup -q -n %{name}-%{version}%{?extra_version}
-%patch0 -p1
+%patch0 -p1 -b .cmake
 %patch1 -p1
 # We use the system enet
 rm -r src/cdogs/enet
@@ -57,19 +55,15 @@ icns2png -x build/macosx/cdogs-icon.icns
 %install
 %makeinstall_std
 
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
+desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop
 
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
-install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/appdata
 appstream-util validate-relax --nonet \
   $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
-for i in 16 32 48 128; do
-  mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/${i}x${i}/apps
-  install -m 644 cdogs-icon_${i}x${i}x32.png \
-    $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/${i}x${i}/apps/%{name}.png
-done
+# install 128x128 icon from build/macosx/cdogs-icon.icns
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
+install -m 644 cdogs-icon_128x128x32.png \
+  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
 
 %files
@@ -83,6 +77,9 @@ done
 
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.3-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.2-alt1_1
 - update to new release by fcimport
 
