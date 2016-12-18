@@ -6,7 +6,7 @@ BuildRequires: gcc-c++ java-devel-default python-devel rpm-build-java rpm-build-
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             dogtag-pki-theme
-Version:          10.3.1
+Version:          10.3.5
 Release:          alt1_1jpp8
 Summary:          Certificate System - Dogtag PKI Theme Components
 URL:              http://pki.fedoraproject.org/
@@ -17,7 +17,7 @@ BuildArch:        noarch
 
 
 BuildRequires: ctest cmake
-BuildRequires:    java-devel >= 1.7.0
+BuildRequires:    java-1.8.0-openjdk-devel
 BuildRequires:    jpackage-utils >= 1.7.5
 
 %if 0%{?rhel}
@@ -98,7 +98,7 @@ This package is used by the Dogtag Certificate System.
 Summary:          Certificate System - PKI Console User Interface
 Group:            System/Base
 
-Requires:         java >= 1.7.0
+Requires:         java-1.8.0-openjdk
 
 %if 0%{?rhel}
 # EPEL version of Dogtag "theme" conflicts with all versions of Red Hat "theme"
@@ -159,6 +159,9 @@ cd build
 
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 10.3.5-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 10.3.1-alt1_1jpp8
 - new version
 
