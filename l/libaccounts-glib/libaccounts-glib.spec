@@ -5,15 +5,15 @@ Group: System/Libraries
 %add_optflags %optflags_shared
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name libaccounts-glib
-%define version 1.21
+%define version 1.23
 
-%global commit0 00254a604a7c7bd38c41794a80ad8930e90f21aa
+%global commit0 8d14b10652b2fe6c25d8ad8334e2d5023d254313
 %global gittag0 VERSION_%{version}
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global snap0 20160216
+#global snap0 20160216
 
 Name:		libaccounts-glib
-Version:	1.21
+Version:	1.23
 Release:	alt1_1
 Summary:	Accounts framework for Linux and POSIX based platforms
 License:	LGPLv2
@@ -27,8 +27,8 @@ BuildRequires:	libsqlite3-devel
 BuildRequires:	libcheck-devel
 BuildRequires:	gobject-introspection-devel
 # no needed for final release tarball
-BuildRequires:	libtool
-BuildRequires:	gtk-doc
+BuildRequires:	libtool-common
+BuildRequires: gtk-doc gtk-doc-mkpdf
 Source44: import.info
 
 %description
@@ -56,6 +56,7 @@ The %{name}-docs package contains documentation for %{name}.
 
 
 %build
+test -x configure || \
 NOCONFIGURE=1 \
 ./autogen.sh
 
@@ -122,6 +123,9 @@ make check || cat tests/test-suite.log ||:
 
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1_1
+- update to new release by fcimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1_1
 - update to new release by fcimport
 
