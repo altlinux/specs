@@ -6,18 +6,18 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          classmate
-Version:       1.2.0
-Release:       alt1_3jpp8
+Version:       1.3.1
+Release:       alt1_1jpp8
 Summary:       Java introspection library
 License:       ASL 2.0
 Url:           http://github.com/cowtowncoder/java-classmate/
 Source0:       https://github.com/cowtowncoder/java-classmate/archive/%{name}-%{version}.tar.gz
 
 BuildRequires: maven-local
+BuildRequires: mvn(com.fasterxml:oss-parent:pom:)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildArch:     noarch
 Source44: import.info
@@ -67,6 +67,9 @@ rm -r src/test/java/com/fasterxml/classmate/AnnotationsTest.java
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_3jpp8
 - new version
 
