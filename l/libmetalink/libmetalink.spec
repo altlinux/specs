@@ -1,16 +1,16 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libexpat-devel libxml2-devel pkgconfig(cunit)
+BuildRequires: libxml2-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:		libmetalink
-Version:	0.1.2
-Release:	alt1_9
+Version:	0.1.3
+Release:	alt1_1
 Summary:	Metalink library written in C
 Group:		System/Libraries
 License:	MIT
 URL:		https://launchpad.net/libmetalink
-Source0:	http://launchpad.net/libmetalink/trunk/packagingfix/+download/%{name}-%{version}.tar.bz2
-BuildRequires:	expat-devel
+Source0:	https://launchpad.net/libmetalink/trunk/%{name}-%{version}/+download/%{name}-%{version}.tar.bz2
+BuildRequires:	libexpat-devel
 BuildRequires:	CUnit-devel
 Source44: import.info
 
@@ -20,7 +20,7 @@ parsing Metalink XML files to programs written in C.
 
 %package	devel
 Summary:	Files needed for developing with %{name}
-Group:		Development/C
+Group:		Development/Other
 Requires:	%{name}%{?_isa} = %{version}
 
 %description	devel
@@ -60,6 +60,9 @@ find $RPM_BUILD_ROOT -name *.la -exec rm {} \;
 
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.2-alt1_9
 - update to new release by fcimport
 
