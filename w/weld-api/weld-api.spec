@@ -7,32 +7,32 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name weld-api
-%define version 2.2
-%global namedreltag .SP3
+%define version 2.3
+%global namedreltag .SP2
 %global namedversion %{version}%{?namedreltag}
 
 Name:             weld-api
-Version:          2.2
-Release:          alt1_4.SP3jpp8
+Version:          2.3
+Release:          alt1_2.SP2jpp8
 Summary:          Weld API
 License:          ASL 2.0
-URL:              http://seamframework.org/Weld
-Source0:          https://github.com/weld/api/archive/%{namedversion}.tar.gz
+URL:              http://weld.cdi-spec.org
+Source0:          https://github.com/weld/api/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
 
 BuildArch:        noarch
 
 BuildRequires:    maven-local
 BuildRequires:    mvn(javax.enterprise:cdi-api)
 BuildRequires:    mvn(javax.inject:javax.inject)
-BuildRequires:    mvn(javax.persistence:persistence-api)
-BuildRequires:    mvn(javax.transaction:jta)
 BuildRequires:    mvn(javax.validation:validation-api)
 BuildRequires:    mvn(org.apache.maven.surefire:surefire-testng)
 BuildRequires:    mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:    mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+BuildRequires:    mvn(org.hibernate.javax.persistence:hibernate-jpa-2.1-api)
 BuildRequires:    mvn(org.jboss.spec.javax.ejb:jboss-ejb-api_3.2_spec)
 BuildRequires:    mvn(org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.2_spec)
-BuildRequires:    mvn(org.jboss.spec.javax.servlet:jboss-servlet-api_3.0_spec)
+BuildRequires:    mvn(org.jboss.spec.javax.servlet:jboss-servlet-api_3.1_spec)
+BuildRequires:    mvn(org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec)
 BuildRequires:    mvn(org.jboss.weld:weld-parent:pom:)
 BuildRequires:    mvn(org.testng:testng::jdk15:)
 Source44: import.info
@@ -51,7 +51,7 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n api-%{namedversion}
 
-%pom_remove_plugin -r :maven-deploy-plugin
+%pom_remove_plugin -r :maven-javadoc-plugin
 %pom_remove_plugin ":maven-checkstyle-plugin" weld/pom.xml
 %pom_remove_plugin ":maven-checkstyle-plugin" weld-spi/pom.xml
 
@@ -62,11 +62,13 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_2.SP2jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_4.SP3jpp8
 - new fc release
 
