@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -5,30 +6,27 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             weld-parent
-Version:          31
-Release:          alt1_4jpp8
+Version:          34
+Release:          alt1_2jpp8
 Summary:          Parent POM for Weld
-Group:            Development/Other
 License:          ASL 2.0
-URL:              http://seamframework.org/Weld
-
-Source0:          http://repo1.maven.org/maven2/org/jboss/weld/%{name}/%{version}/%{name}-%{version}.pom
-Source1:          http://www.apache.org/licenses/LICENSE-2.0.txt
+URL:              http://weld.cdi-spec.org
+Source0:          https://github.com/weld/parent/archive/%{version}.tar.gz
 
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-#BuildRequires:    maven-shared
 BuildRequires:    mvn(org.apache.maven.plugins:maven-install-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:    mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:    mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 Source44: import.info
 
 %description
 Parent POM for Weld
 
 %prep
-cp %{SOURCE0} pom.xml
-cp %{SOURCE1} LICENSE
+%setup -q -n parent-%{version}
 
 %pom_remove_plugin ":maven-enforcer-plugin"
 %pom_remove_plugin ":maven-remote-resources-plugin"
@@ -41,9 +39,11 @@ cp %{SOURCE1} LICENSE
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 34-alt1_2jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 31-alt1_4jpp8
 - new fc release
 
