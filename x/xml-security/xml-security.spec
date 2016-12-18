@@ -1,5 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
@@ -7,60 +8,27 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name xml-security
-%define version 2.0.4
-# Copyright (c) 2000-2009, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
+%define version 2.0.6
 %global oname xmlsec
 %global _version %(echo %{version} | tr . _ )
 
 Name:           xml-security
-Version:        2.0.4
-Release:        alt1_3jpp8
+Version:        2.0.6
+Release:        alt1_2jpp8
 Epoch:          0
 Summary:        Implementation of W3C security standards for XML
 License:        ASL 2.0
 URL:            http://santuario.apache.org/
-Source0:        http://archive.apache.org/dist/santuario/java-library/%{_version}/%{oname}-%{version}-source-release.zip
+Source0:        http://www.apache.org/dist/santuario/java-library/%{_version}/%{oname}-%{version}-source-release.zip
 # Unavailable class in jetty8/9 org.eclipse.jetty.io.Buffer
 Patch0:         xml-security-2.0.2-remove-Buffer.patch
 
 BuildRequires:  maven-local
-BuildRequires:  maven-shared
-BuildRequires:  maven-release-plugin
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(commons-codec:commons-codec)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(log4j:log4j:1.2.17)
 BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.bouncycastle:bcprov-jdk15on)
 BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-server)
@@ -78,8 +46,8 @@ BuildArch:      noarch
 Source44: import.info
 
 %description
-The XML Security project is aimed at providing implementation 
-of security standards for XML. Currently the focus is on the 
+The XML Security project is aimed at providing implementation
+of security standards for XML. Currently the focus is on the
 W3C standards :
 - XML-Signature Syntax and Processing; and
 - XML Encryption Syntax and Processing.
@@ -90,7 +58,7 @@ Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}.
+This package contains javadoc for %{name}.
 
 %package demo
 Group: Development/Java
@@ -106,6 +74,9 @@ Samples for %{name}.
 
 %pom_remove_plugin :maven-pmd-plugin
 %pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :animal-sniffer-maven-plugin
+# Use org.codehaus.mojo:extra-enforcer-rules:jar:1.0-beta-3
+%pom_remove_plugin :maven-enforcer-plugin
 %pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-javadoc-plugin']/pom:executions"
 
 %pom_xpath_set "pom:plugin[pom:groupId = 'org.jvnet.jaxb2.maven2' ]/pom:artifactId" maven-jaxb22-plugin
@@ -145,9 +116,15 @@ rm -r src/test/java/org/apache/xml/security/test/stax/signature/IAIKTest.java \
  src/test/java/org/apache/xml/security/test/stax/signature/SignatureVerificationTest.java \
  src/test/java/org/apache/xml/security/test/stax/XMLSecEventTest.java
 
+# NoSuchAlgorithmException: unsupported algorithm
+rm -r src/test/java/javax/xml/crypto/test/dsig/HMACSignatureAlgorithmTest.java
+# KeyException: ECKeyValue not supported
+rm -r src/test/java/javax/xml/crypto/test/dsig/CreateInteropXMLDSig11Test.java
+
 %mvn_file :%{oname} %{name} %{oname}
 
 %build
+
 # On ARM builder test suite fails @ random
 # java.lang.NoClassDefFoundError: Could not initialize class org.apache.xml.security.stax.ext.XMLSec
 %mvn_build -f
@@ -155,6 +132,7 @@ rm -r src/test/java/org/apache/xml/security/test/stax/signature/IAIKTest.java \
 %install
 %mvn_install
 
+chmod 644 samples/org/apache/xml/security/samples/encryption/*.java
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
 cp -pr samples/* $RPM_BUILD_ROOT%{_datadir}/%{name}
 
@@ -165,10 +143,13 @@ cp -pr samples/* $RPM_BUILD_ROOT%{_datadir}/%{name}
 %doc LICENSE NOTICE
 
 %files demo
-%doc LICENSE NOTICE
 %{_datadir}/%{name}
+%doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.6-alt1_2jpp8
+- new version
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.4-alt1_3jpp8
 - full build
 
