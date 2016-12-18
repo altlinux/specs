@@ -7,55 +7,45 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name picketbox
-%define version 4.0.21
-%global namedreltag .Beta1
+%define version 4.9.6
+%global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             picketbox
-Version:          4.0.21
-Release:          alt1_0.3.Beta1jpp8
+Version:          4.9.6
+Release:          alt1_1jpp8
 Summary:          Security framework for Java Applications
 License:          LGPLv2+
-URL:              http://www.jboss.org/picketbox
+URL:              http://picketbox.jboss.org
 
-# svn export http://anonsvn.jboss.org/repos/picketbox/tags/4.0.20.Final/ picketbox-4.0.20.Final
-# tar cafJ picketbox-4.0.20.Final.tar.xz picketbox-4.0.20.Final
-Source0:          https://github.com/picketbox/picketbox/archive/%{namedversion}.tar.gz
+Source0:          https://github.com/picketbox/picketbox/archive/v%{namedversion}.tar.gz
 Source1:          picketbox-%{namedversion}-pom.xml
 
-Patch0:           picketbox-%{namedversion}-assembly.patch
+# Until this is merged: https://github.com/picketbox/picketbox/pull/61
+Patch0:           picketbox-assembly.patch
 
 BuildArch:        noarch
 
-BuildRequires:    concurrent
-BuildRequires:    hibernate-jpa-2.0-api >= 1.0.1
-BuildRequires:    hibernate3
-BuildRequires:    hibernate3-entitymanager
-BuildRequires:    hibernate-commons-annotations
-BuildRequires:    hsqldb
-BuildRequires:    infinispan
-BuildRequires:    javacc-maven-plugin
-BuildRequires:    jboss-connector-1.6-api
-BuildRequires:    jboss-jacc-1.5-api
-BuildRequires:    jboss-jaspi-1.1-api
-BuildRequires:    jboss-parent
-BuildRequires:    jboss-servlet-3.0-api
-BuildRequires:    geronimo-jpa
-BuildRequires:    jboss-transaction-1.1-api
 BuildRequires:    maven-local
-BuildRequires:    jboss-logging-tools
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-injection-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    picketbox-commons
-BuildRequires:    picketbox-xacml
-BuildRequires:    rhq-plugin-annotations
+BuildRequires:    mvn(javax.persistence:persistence-api)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires:    mvn(org.codehaus.mojo:javacc-maven-plugin)
+BuildRequires:    mvn(org.hibernate:hibernate-core:3)
+BuildRequires:    mvn(org.hibernate:hibernate-entitymanager:3)
+BuildRequires:    mvn(org.infinispan:infinispan-core)
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging-annotations)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging-processor)
+BuildRequires:    mvn(org.jboss.maven.plugins:maven-injection-plugin)
+BuildRequires:    mvn(org.jboss.modules:jboss-modules)
+BuildRequires:    mvn(org.jboss.security:jbossxacml)
+BuildRequires:    mvn(org.jboss.spec.javax.resource:jboss-connector-api_1.6_spec)
+BuildRequires:    mvn(org.jboss.spec.javax.security.auth.message:jboss-jaspi-api_1.1_spec)
+BuildRequires:    mvn(org.jboss.spec.javax.security.jacc:jboss-jacc-api_1.5_spec)
+BuildRequires:    mvn(org.jboss.spec.javax.servlet:jboss-servlet-api_3.0_spec)
+BuildRequires:    mvn(org.picketbox:picketbox-commons)
 Source44: import.info
 
 %description
@@ -70,23 +60,34 @@ functionality:
 
 %package javadoc
 Group: Development/Java
-Summary:          Javadocs for %{name}
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n picketbox-%{namedversion}
+%setup -q -n %{name}-%{namedversion}
 
 %patch0 -p1
 
 # Change hibernate version
-sed -i 's|3.6.6.Final|3|g' security-jboss-sx/acl/pom.xml
+%pom_change_dep org.hibernate: ::3 security-jboss-sx/acl
 
 %pom_remove_dep "org.hibernate:hibernate-annotations" security-jboss-sx/acl/pom.xml
+%pom_change_dep :servlet-api org.jboss.spec.javax.servlet:jboss-servlet-api_3.0_spec security-spi/spi
+%pom_change_dep :servlet-api org.jboss.spec.javax.servlet:jboss-servlet-api_3.0_spec:1.0.2.Final security-spi/parent
+
+# Disable default-jar execution of maven-jar-plugin, which is causing
+# problems with version 3.0.0 of the plugin.
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions" "
+<execution>
+  <id>default-jar</id>
+  <phase>skip</phase>
+</execution>" security-jboss-sx/jbosssx-client
 
 %build
+
 %mvn_build -f
 
 %install
@@ -98,11 +99,12 @@ install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}.po
 %add_maven_depmap JPP.%{name}-%{name}.pom %{name}/%{name}.jar
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 4.9.6-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.21-alt1_0.3.Beta1jpp8
 - new fc release
 
