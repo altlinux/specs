@@ -5,23 +5,13 @@ BuildRequires(pre): rpm-macros-java
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name properties-maven-plugin
-%define version 1.0
-%global namedreltag -alpha-2
-%global namedversion %{version}%{?namedreltag}
 Name:          properties-maven-plugin
-Version:       1.0
-Release:       alt3_0.11.alpha2jpp8
+Version:       1.0.0
+Release:       alt1_2jpp8
 Summary:       Properties Maven Plugin
 License:       ASL 2.0
 URL:           http://www.mojohaus.org/properties-maven-plugin/
-# Source code available @ https://github.com/mojohaus/properties-maven-plugin
-# svn export http://svn.codehaus.org/mojo/tags/properties-maven-plugin-1.0-alpha-2/
-# tar czf properties-maven-plugin-1.0-alpha-2-src-svn.tar.gz properties-maven-plugin-1.0-alpha-2
-Source0:       %{name}-%{namedversion}-src-svn.tar.gz
-# reported @ https://github.com/mojohaus/properties-maven-plugin/issues/2
-Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
+Source0:       https://github.com/mojohaus/properties-maven-plugin/archive/%{name}-%{version}.tar.gz
 
 BuildRequires: maven-local
 BuildRequires: mvn(org.apache.maven:maven-core)
@@ -29,7 +19,9 @@ BuildRequires: mvn(org.apache.maven:maven-model)
 BuildRequires: mvn(org.apache.maven:maven-plugin-api)
 BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires: mvn(org.codehaus.mojo:mojo-parent:pom:)
+BuildRequires: mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
 
 BuildArch:     noarch
@@ -48,31 +40,42 @@ BuildArch: noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
+%setup -q -n %{name}-%{name}-%{version}
 
 # use maven 3.x apis
-sed -i "s|maven-project|maven-core|" pom.xml
+%pom_xpath_set pom:properties/pom:maven.api.version 3.0.3
+%pom_change_dep :maven-project :maven-core:'${maven.api.version}'
 
-cp -p %{SOURCE1} .
-sed -i 's/\r//' LICENSE-2.0.txt
+%pom_remove_plugin :plexus-maven-plugin
+%pom_add_plugin org.codehaus.plexus:plexus-component-metadata:1.5.5 . '
+<executions>
+ <execution>
+  <goals>
+   <goal>generate-metadata</goal>
+  </goals>
+ </execution>
+</executions>'
 
 %mvn_file :%{name} %{name}
 
 %build
 
-# no test to run
 %mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE-2.0.txt
+%doc README.md
+%doc LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE-2.0.txt
+%doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_2jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.11.alpha2jpp8
 - new fc release
 
