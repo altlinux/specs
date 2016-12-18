@@ -2,12 +2,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(CACertOrg/CA.pm) perl(Config.pm) perl(ConfigReader/Simple.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(IO/Null.pm) perl(Mojo/UserAgent.pm) perl(Scalar/Util.pm) perl(Test/More.pm) perl(Test/Output.pm) perl(Test/Without/Module.pm) perl(URI.pm) perl(base.pm) perl(version.pm) perl(CGI.pm)
 # END SourceDeps(oneline)
-%define module_version 2.122
+%define module_version 2.123
 %define module_name Module-Release
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.122
+Version: 2.123
 Release: alt1
 Summary: Automate Perl distribution releases
 Group: Development/Perl
@@ -46,6 +46,9 @@ scripts for %module_name
 %_man1dir/*
 
 %changelog
+* Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 2.123-alt1
+- automated CPAN update
+
 * Mon Mar 21 2016 Igor Vlasenko <viy@altlinux.ru> 2.122-alt1
 - automated CPAN update
 
