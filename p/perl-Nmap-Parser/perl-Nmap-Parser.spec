@@ -1,7 +1,7 @@
 %define module_name Nmap-Parser
 
 Name: perl-%module_name
-Version: 1.31
+Version: 1.33
 Release: alt1
 
 Summary: Parse nmap scan data with perl
@@ -38,6 +38,9 @@ rm -f ._*
 %perl_vendor_privlib/Nmap/
 
 %changelog
+* Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1
 - automated CPAN update
 
