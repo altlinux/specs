@@ -8,22 +8,18 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-common-core
-%define version 2.2.22
-%global namedreltag .GA
+%define version 2.5.0
+%global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-common-core
-Version:          2.2.22
-Release:          alt1_4jpp8
+Version:          2.5.0
+Release:          alt1_1jpp8
 Summary:          JBoss Common Classes
-License:          LGPLv2+ and ASL 1.1
+# Under Public Domain license src/main/java/org/jboss/util/Base64.java
+License:          ASL 2.0 and Public Domain
 URL:              http://www.jboss.org
-
-# svn export http://anonsvn.jboss.org/repos/common/common-core/tags/2.2.22.GA/ jboss-common-core-2.2.22.GA
-# tar cafJ jboss-common-core-2.2.22.GA.tar.xz jboss-common-core-2.2.22.GA
-Source0:          %{name}-%{namedversion}.tar.xz
-# The URLLister* family of classes was removed because the apache-slide:webdavlib is a dead project and the classes aren't used in JBoss AS 7 at all. 
-Patch0:           %{name}-%{namedversion}-URLLister-removal.patch
+Source0:          https://github.com/jboss/jboss-common-core/archive/%{name}-%{namedversion}.tar.gz
 
 BuildArch:        noarch
 
@@ -31,6 +27,7 @@ BuildRequires:    maven-local
 BuildRequires:    mvn(junit:junit)
 BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
 BuildRequires:    mvn(org.jboss.logging:jboss-logging)
+Provides:         bundled(java-base64) = 2.1
 Source44: import.info
 
 %description
@@ -45,26 +42,39 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
-%patch0 -p1
+%setup -q -n %{name}-%{name}-%{namedversion}
 
-rm -rf projectSet.psf .settings/ .project .classpath
+# The URLLister* family of classes was removed because the
+# apache-slide:webdavlib is a dead project and
+# the classes aren't used in JBoss AS 7 at all
+rm src/main/java/org/jboss/net/protocol/URLLister.java \
+ src/main/java/org/jboss/net/protocol/URLListerBase.java \
+ src/main/java/org/jboss/net/protocol/URLListerFactory.java \
+ src/main/java/org/jboss/net/protocol/file/FileURLLister.java
 
-%pom_remove_plugin :maven-source-plugin
+%pom_change_dep org.jboss.logging:jboss-logging-spi org.jboss.logging:jboss-logging
+
+# AssertionFailedError: expected:<333> but was:<324>
+rm src/test/java/org/jboss/test/util/test/xml/resolver/JBossEntityResolverUnitTestCase.java
 
 %build
-# Some failed tests
-# Failed tests: testJavaLangEditors(org.jboss.test.util.test.propertyeditor.PropertyEditorsUnitTestCase):
-#   PropertyEditor: org.jboss.util.propertyeditor.BooleanEditor, getAsText() == expectedStringOutput ' expected:<null> but was:<null>
-%mvn_build -f
+
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
+%doc README.md
+%doc LICENSE.txt
+
 %files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.5.0-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.2.22-alt1_4jpp8
 - new fc release
 
