@@ -1,20 +1,20 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: libsowing-devel perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/ParseXS.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test/Number/Delta.pm) perl(Test/Requires.pm) perl(Time/HiRes.pm) perl(XSLoader.pm) perl(YAML/Tiny.pm)
 # END SourceDeps(oneline)
-%define module_version 0.40
+%define module_version 0.41
 %define module_name Time-Moment
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.40
-Release: alt2
+Version: 0.41
+Release: alt1
 Summary: Represents a date and time of day with an offset from UTC
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/C/CH/CHANSEN/%{module_name}-%{module_version}.tar.gz
+Source: http://www.cpan.org/authors/id/C/CH/CHANSEN/Time-Moment-%{version}.tar.gz
 
 %description
 From summary: %summary
@@ -34,6 +34,9 @@ From summary: %summary
 %perl_vendor_autolib/*
 
 %changelog
+* Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1
+- automated CPAN update
+
 * Wed Nov 30 2016 Igor Vlasenko <viy@altlinux.ru> 0.40-alt2
 - regenerated from template by package builder
 
