@@ -1,8 +1,9 @@
+Epoch: 1
 %define _unpackaged_files_terminate_build 1
 %define dist Math-BigRat
 Name: perl-%dist
-Version: 0.260805
-Release: alt1
+Version: 0.2611
+Release: alt1.1
 
 Summary: Arbitrarily big rational numbers
 License: GPL or Artistic
@@ -34,6 +35,12 @@ by providing support for arbitrarily big rational numbers.
 %perl_vendor_privlib/Math
 
 %changelog
+* Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.2611-alt1.1
+- incremented epoch
+
+* Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.2611-alt1
+- automated CPAN update
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.260805-alt1
 - automated CPAN update
 
