@@ -6,7 +6,7 @@
 %define _libexecdir /usr/libexec
 
 Name: libgphoto2
-Version: 2.5.9
+Version: 2.5.11
 Release: alt1
 
 Group: System/Libraries
@@ -200,9 +200,10 @@ export utilsdir=%_libexecdir/%name
 %_libdir/%name/*/*.so
 %dir %_libexecdir/%name
 %_libexecdir/%name/print-camera-list
-%_datadir/%name
 %ghost /lib/udev/hwdb.d/*
 %ghost /lib/udev/rules.d/*
+%dir %_datadir/%name
+%_datadir/%name/*
 %dir %_datadir/doc/%name
 %_datadir/doc/%name/AUTHORS
 %_datadir/doc/%name/NEWS
@@ -217,6 +218,8 @@ export utilsdir=%_libexecdir/%name
 %dir %_libdir/%{name}_port
 %dir %_libdir/%{name}_port/*
 %_libdir/%{name}_port/*/*.so
+%dir %_datadir/%{name}_port
+%_datadir/%{name}_port/*
 %dir %_datadir/doc/%{name}_port
 %_datadir/doc/%{name}_port/*
 %exclude %_datadir/locale/*/LC_MESSAGES/%{name}*
@@ -242,6 +245,9 @@ export utilsdir=%_libexecdir/%name
 %endif
 
 %changelog
+* Sat Dec 17 2016 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.11-alt1
+- 2.5.11
+
 * Fri Mar 18 2016 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.9-alt1
 - 2.5.9
 
