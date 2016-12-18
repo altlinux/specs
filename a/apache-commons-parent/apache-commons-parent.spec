@@ -8,15 +8,15 @@ BuildRequires: jpackage-generic-compat
 %global short_name      commons-parent
 
 Name:             apache-%{short_name}
-Version:          39
+Version:          40
 Release:          alt1_2jpp8
 Summary:          Apache Commons Parent Pom
 Group:            Development/Other
 License:          ASL 2.0
 URL:              http://svn.apache.org/repos/asf/commons/proper/%{short_name}/tags/%{short_name}-%{version}/
 
-# svn export http://svn.apache.org/repos/asf/commons/proper/commons-parent/tags/commons-parent-39
-# tar caf commons-parent-39.tar.xz commons-parent-39
+# svn export http://svn.apache.org/repos/asf/commons/proper/commons-parent/tags/commons-parent-%{version}
+# tar caf commons-parent-%{version}.tar.xz commons-parent-%{version}
 Source0:          %{short_name}-%{version}.tar.xz
 
 BuildArch:        noarch
@@ -28,7 +28,9 @@ BuildRequires:    mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:    mvn(org.apache.rat:apache-rat-plugin)
+BuildRequires:    mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:    mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+Requires:         mvn(org.codehaus.mojo:build-helper-maven-plugin)
 Requires:         mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 Source44: import.info
 
@@ -56,6 +58,9 @@ The Project Object Model files for the apache-commons packages.
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:40-alt1_2jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:39-alt1_2jpp8
 - new version
 
