@@ -4,10 +4,10 @@ BuildRequires: perl(CPAN.pm) perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Lexical-SealRequireHints
 Version:        0.010
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Prevent leakage of lexical hints
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Lexical-SealRequireHints/
 Source0:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Lexical-SealRequireHints-%{version}.tar.gz
 BuildRequires:  findutils
@@ -60,6 +60,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -delete
 %{perl_vendor_archlib}/Lexical*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1_2
+- update to new release by fcimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1_1
 - update to new release by fcimport
 
