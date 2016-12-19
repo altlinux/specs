@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test/Perl/Critic.pm) perl-devel perl-podlators
+BuildRequires: perl(Test/Perl/Critic.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Statistics-Basic
 Version:        1.6611
-Release:        alt1_4
+Release:        alt1_5
 Summary:        A collection of very basic statistics modules
 License:        LGPLv2+
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Statistics-Basic/
 Source0:        http://www.cpan.org/authors/id/J/JE/JETTERO/Statistics-Basic-%{version}.tar.gz
 BuildArch:      noarch
@@ -63,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.6611-alt1_5
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.6611-alt1_4
 - update to new release by fcimport
 
