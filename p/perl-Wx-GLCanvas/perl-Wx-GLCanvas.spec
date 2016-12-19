@@ -1,7 +1,7 @@
 Group: Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: gcc-c++ perl(Class/Accessor/Fast.pm) perl(ExtUtils/MY_Metafile.pm) perl(Math/Trig.pm) perl(OpenGL.pm) perl-devel perl-podlators
+BuildRequires: gcc-c++ perl(Class/Accessor/Fast.pm) perl(ExtUtils/MY_Metafile.pm) perl(Math/Trig.pm) perl(OpenGL.pm) perl-podlators
 # END SourceDeps(oneline)
 #
 %add_findreq_skiplist %{perl_vendor_archlib}/Wx/DemoModules/*
@@ -11,7 +11,7 @@ BuildRequires: gcc-c++ perl(Class/Accessor/Fast.pm) perl(ExtUtils/MY_Metafile.pm
 BuildRequires: libGL-devel libGLU-devel
 Name:           perl-Wx-GLCanvas
 Version:        0.09
-Release:        alt1_10
+Release:        alt1_11
 Summary:        Interface to wxWidgets' OpenGL canvas
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Wx-GLCanvas/
@@ -23,7 +23,7 @@ BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Wx/build/MakeMaker.pm)
-BuildRequires:  wxGTK-devel
+BuildRequires: libwxGTK-contrib-gizmos-devel libwxGTK-contrib-ogl-devel libwxGTK-contrib-stc-devel libwxGTK-devel
 
 %if 0%{?with_tests}
 BuildRequires:  perl(base.pm)
@@ -69,6 +69,9 @@ DISPLAY=:0.0 make test
 %{perl_vendor_archlib}/Wx*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_11
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_10
 - update to new release by fcimport
 
