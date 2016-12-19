@@ -1,11 +1,11 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Set-Infinite
 Version:        0.65
-Release:        alt2_17
+Release:        alt2_18
 Summary:        Sets of intervals
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Set-Infinite/
@@ -53,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.65-alt2_18
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.65-alt2_17
 - update to new release by fcimport
 
