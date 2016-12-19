@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-DateManip
 Version:        0.04
-Release:        alt2_21
+Release:        alt2_22
 Summary:        Convert Date::Manip to DateTime and vice versa
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/DateTime-Format-DateManip/
 Source0:        http://www.cpan.org/authors/id/B/BB/BBENNETT/dt-fmt-datemanip/DateTime-Format-DateManip-%{version}.tar.gz
 # Use full time zone name instead of an ambiguous abbreviation, CPAN RT#55771
@@ -56,6 +56,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_22
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_21
 - update to new release by fcimport
 
