@@ -5,7 +5,7 @@
 
 Name: tdesktop
 Version: 0.10.19
-Release: alt1
+Release: alt2
 
 Summary: Telegram is a messaging app with a focus on speed and security
 License: %gpl3only
@@ -16,6 +16,7 @@ Url: https://telegram.org/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses rpm-macros-qt5 rpm-macros-cmake
+BuildRequires(pre): rpm-macros-kde-common-devel
 
 BuildRequires: gcc-c++ libstdc++-devel gyp cmake
 
@@ -49,10 +50,9 @@ Requires: dbus
 
 # some problems with t_assert
 %add_optflags -fpermissive
+
 # disable some warnings
 %add_optflags -Wno-strict-aliasing
-# try to fix precompiled (pch) header warning issue: stdafx.h.gch/.c++: not used because `_FORTIFY_SOURCE' is defined [-Winvalid-pch]
-#add_optflags -D__NO_INLINE__ -D_FORTIFY_SOURCE=1 -std=c++14
 
 
 %description
@@ -66,6 +66,9 @@ You can write to your phone contacts and find people by their usernames.
 As a result, Telegram is like SMS and email combined - and can take care of all your personal
 or business messaging needs.
 
+Workround for error cannot register existing type 'GdkDisplayManager':
+$ XDG_CURRENT_DESKTOP=NONE tdesktop
+
 %prep
 %setup
 #patch1 -p1
@@ -73,20 +76,17 @@ or business messaging needs.
 %build
 cd Telegram/gyp
 
-# TODO: set it externaly
-%__subst "s|/usr/local/tdesktop/Qt-<(qt_version)|%_qt5_datadir|" qt.gypi
-
 # Note! real build instructions are only in .travis/build.sh
 # TDESKTOP_DISABLE_CRASH_REPORTS disables BreakPad require
 gyp -Dtravis_defines=TDESKTOP_DISABLE_CRASH_REPORTS,TDESKTOP_DISABLE_AUTOUPDATE,TDESKTOP_DISABLE_UNITY_INTEGRATION \
 	-Dlinux_lib_ssl=-lssl \
 	-Dlinux_lib_crypto=-lcrypto \
+	-Dlinux_path_qt=%_qt5_datadir \
 	--no-parallel \
 	--check --depth=. --generator-output=../.. -Goutput_dir=out Telegram.gyp --format=cmake
-# FIXME: --no-parallel due /dev/shm hasher issue:
+# FIXME: --no-parallel due gyp related /dev/shm hasher issue:
 #    sl = self._semlock = _multiprocessing.SemLock(kind, value, maxvalue)
 #OSError: [Errno 38] Function not implemented
-
 
 cd - && cd out/%buildmode
 
@@ -96,7 +96,7 @@ cd - && cd out/%buildmode
 %__subst "s|libswresample|libavresample|g" CMakeLists.txt
 %endif
 
-# drop plugin linking
+# drop plugin static linking
 for i in qxcb qconnmanbearer qgenericbearer qnmbearer qwebp ; do
     %__subst "s|\"lib$i.a\"||g" CMakeLists.txt
 done
@@ -112,6 +112,7 @@ done
 # drop strange fcitx plugin
 %__subst "s|\"fcitxplatforminputcontextplugin\"||g" CMakeLists.txt
 
+# TODO configure, build static or dynamic xcb and xkb
 #	-Dlinux_path_xkbcommon=%_libdir
 %__subst "s|\"/usr/local/lib/|\"|g" CMakeLists.txt
 %__subst "s|\"/usr/lib/|\"|g" CMakeLists.txt
@@ -129,18 +130,35 @@ export ASM="gcc"
 %make_build || %make_build
 
 %install
+# XDG files
+install -m644 -D lib/xdg/telegramdesktop.desktop %buildroot%_desktopdir/%name.desktop
+install -m644 -D lib/xdg/tg.protocol %buildroot%_Kservices/tg.protocol
+for i in 16 32 48 64 128 256; do
+    install -m644 -D Telegram/Resources/art/icon$i.png %buildroot%_iconsdir/hicolor/${i}x${i}/apps/%name.png
+done
+
 cd out/%buildmode
 #makeinstall_std
 install -D Telegram %buildroot%_bindir/%name
 ln -s %name %buildroot%_bindir/Telegram
 
+
 %files
 %_bindir/%name
 %_bindir/Telegram
+%_desktopdir/%name.desktop
+%_Kservices/tg.protocol
+%_iconsdir/hicolor/48x48/apps/%name.png
+%_iconsdir/hicolor/128x128/apps/%name.png
+%_iconsdir/hicolor/256x256/apps/%name.png
 #_man1dir/*
 %doc README.md
 
 %changelog
+* Mon Dec 19 2016 Vitaly Lipatov <lav@altlinux.ru> 0.10.19-alt2
+- add desktop file, icons
+- cleanup spec
+
 * Sat Dec 17 2016 Vitaly Lipatov <lav@altlinux.ru> 0.10.19-alt1
 - new version 0.10.19 (with rpmrb script)
 
