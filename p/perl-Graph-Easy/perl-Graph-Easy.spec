@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Devel/Size.pm) perl(File/Find/Object.pm) perl(HTML/TokeParser.pm) perl(IO/All.pm) perl(LWP.pm) perl(Pod/Usage.pm) perl(Test/Run/CmdLine/Iface.pm) perl-devel perl-podlators
+BuildRequires: perl(Devel/Size.pm) perl(File/Find/Object.pm) perl(HTML/TokeParser.pm) perl(IO/All.pm) perl(LWP.pm) perl(Pod/Usage.pm) perl(Test/Run/CmdLine/Iface.pm) perl-podlators
 # END SourceDeps(oneline)
 %filter_from_requires /^perl.Graph.Easy.As_svg/d
 # fedora bcond_with macro
@@ -11,15 +11,16 @@ BuildRequires: perl(Devel/Size.pm) perl(File/Find/Object.pm) perl(HTML/TokeParse
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 Name:           perl-Graph-Easy
 Version:        0.76
-Release:        alt1
+Release:        alt1_1
 Summary:        Convert or render graphs as ASCII, HTML, SVG or via Graphviz
 License:        GPLv2+ and ASL 1.1
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Graph-Easy/
-Source:        http://www.cpan.org/authors/id/S/SH/SHLOMIF/Graph-Easy-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/S/SH/SHLOMIF/Graph-Easy-%{version}.tar.gz
 Patch0:         graph-easy-undefined-lc.patch
 BuildArch:      noarch
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(constant.pm)
@@ -90,6 +91,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.76-alt1_1
+- update to new release by fcimport
+
 * Mon Jun 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.76-alt1
 - automated CPAN update
 
