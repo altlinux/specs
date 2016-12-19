@@ -1,11 +1,11 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-File-Map
 Version:        0.64
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Memory mapping made simple and safe
 License:        GPL+ or Artistic
 
@@ -79,6 +79,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1_3
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1_2
 - update to new release by fcimport
 
