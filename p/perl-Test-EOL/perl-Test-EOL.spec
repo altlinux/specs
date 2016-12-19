@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
-%define fedora 23
+%define fedora 25
 Name:		perl-Test-EOL
 Version:	1.6
-Release:	alt1_2
+Release:	alt1_3
 Summary:	Check the correct line endings in your project
-Group:		Development/Perl
+Group:		Development/Other
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-EOL/
 Source0:	http://search.cpan.org/CPAN/authors/id/F/FR/FREW/Test-EOL-%{version}.tar.gz
@@ -77,6 +77,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_3
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_2
 - update to new release by fcimport
 
