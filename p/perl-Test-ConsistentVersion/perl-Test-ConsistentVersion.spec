@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-ConsistentVersion
 Version:        0.3.0
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Ensures a CPAN distribution has consistent versioning
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Test-ConsistentVersion/
 Source0:        http://www.cpan.org/authors/id/C/CE/CEBJYRE/Test-ConsistentVersion-v%{version}.tar.gz
 BuildArch:      noarch
@@ -60,6 +60,9 @@ TEST_AUTHOR=1 ./Build test
 %{perl_vendor_privlib}/Test*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_5
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_4
 - update to new release by fcimport
 
