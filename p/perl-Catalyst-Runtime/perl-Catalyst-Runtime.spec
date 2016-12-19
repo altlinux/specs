@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires:  perl(Encode/JP.pm)
+#BuildRequires:  perl(Encode/JP.pm) perl(Catalyst/Action/REST.pm) perl(Test/Most.pm)
+BuildRequires:  perl(Encode/JP.pm) perl(Test/Most.pm)
 BuildRequires: perl(Catalyst/Helper.pm) perl(Class/Accessor.pm) perl(Class/MOP/Object.pm) perl(Config.pm) perl(Devel/InnerPackage.pm) perl(Encode.pm) perl(Errno.pm) perl(Fcntl.pm) perl(File/Spec/Functions.pm) perl(File/Spec/Unix.pm) perl(FindBin.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(IO/Socket.pm) perl(IPC/Open3.pm) perl(LWP/Simple.pm) perl(List/Util.pm) perl(Module/Pluggable/Object.pm) perl(Moose/Meta/Class.pm) perl(Moose/Role.pm) perl(Moose/Util.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/MethodAttributes.pm) perl(MooseX/Role/Parameterized.pm) perl(Path/Class/Dir.pm) perl(Path/Class/File.pm) perl(Plack/Loader.pm) perl(Plack/Middleware/Conditional.pm) perl(Plack/Middleware/IIS6ScriptNameFix.pm) perl(Plack/Middleware/IIS7KeepAliveFix.pm) perl(Plack/Middleware/LighttpdScriptNameFix.pm) perl(Plack/Test.pm) perl(Pod/Usage.pm) perl(Term/Size/Any.pm) perl(Tree/Simple/Visitor/FindByUID.pm) perl(URI/QueryParam.pm) perl(URI/http.pm) perl(URI/https.pm) perl(attributes.pm) perl(overload.pm) perl-base perl-devel perl-pod perl-podlators perldoc perl(IO/Scalar.pm) perl(JSON/MaybeXS.pm) perl(Test/Fatal.pm) perl(CGI/Struct.pm) perl(Plack/Middleware/FixMissingBodyInRedirect.pm) perl(Plack/Middleware/MethodOverride.pm) perl(Plack/Middleware/RemoveRedundantBody.pm) perl(Type/Tiny.pm)
 # END SourceDeps(oneline)
 Name:           perl-Catalyst-Runtime
 Summary:        Catalyst Framework Runtime
-Version:        5.90111
+Version:        5.90113
 Release:        alt1
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -141,6 +142,9 @@ perldoc perlartistic > COPYING.artistic
 find .  -type f -exec chmod -c -x {} +
 find t/ -type f -exec perl -pi -e 's|^#!perl|#!%{__perl}|' {} +
 
+# timeout
+rm -f t/optional*
+
 %build
 PERL5_CPANPLUS_IS_RUNNING=1 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
@@ -181,6 +185,9 @@ make clean
 %{_mandir}/man1/*
 
 %changelog
+* Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 5.90113-alt1
+- automated CPAN update
+
 * Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 5.90111-alt1
 - automated CPAN update
 
