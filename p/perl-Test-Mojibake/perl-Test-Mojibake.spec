@@ -1,8 +1,8 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Encode.pm) perl-devel perl-podlators
+BuildRequires: perl(Encode.pm) perl-podlators
 # END SourceDeps(oneline)
-%define fedora 23
+%define fedora 25
 # We need to patch the test suite if we have an old version of Test::More and/or Test::Pod
 %global old_test_more %(perl -MTest::More -e 'print (($Test::More::VERSION < 0.96) ? 1 : 0);' 2>/dev/null || echo 0)
 %global old_test_pod %(perl -MTest::Pod -e 'print (($Test::Pod::VERSION < 1.41) ? 1 : 0);' 2>/dev/null || echo 0)
@@ -12,9 +12,9 @@ BuildRequires: perl(Encode.pm) perl-devel perl-podlators
 
 Name:		perl-Test-Mojibake
 Version:	1.1
-Release:	alt1_3
+Release:	alt1_5
 Summary:	Check your source for encoding misbehavior
-Group:		Development/Perl
+Group:		Development/Other
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-Mojibake/
 Source0:	http://search.cpan.org/CPAN/authors/id/S/SY/SYP/Test-Mojibake-%{version}.tar.gz
@@ -168,6 +168,9 @@ make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1} \
 %{_mandir}/man1/scan_mojibake.1*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_5
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_3
 - update to new release by fcimport
 
