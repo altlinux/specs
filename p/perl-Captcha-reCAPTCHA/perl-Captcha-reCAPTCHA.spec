@@ -3,16 +3,19 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CGI/Simple.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Captcha-reCAPTCHA
-Version:        0.97
-Release:        alt2_10
+Version:        0.98
+Release:        alt1_1
 Summary:        Perl implementation of the reCAPTCHA API
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Captcha-reCAPTCHA/
-Source0:        http://search.cpan.org/CPAN/authors/id/P/PH/PHRED/Captcha-reCAPTCHA-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/S/SU/SUNNYP/Captcha-reCAPTCHA-%{version}.tar.gz
+# Do not disable host name verification, CPAN RT#117852
+Patch0:         Captcha-reCAPTCHA-0.98-Do-not-disable-host-name-verification.patch
 BuildArch:      noarch
 BuildRequires:  findutils
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -23,6 +26,7 @@ BuildRequires:  perl(HTML/Tiny.pm)
 BuildRequires:  perl(LWP/UserAgent.pm)
 # Tests
 BuildRequires:  perl(Data/Dumper.pm)
+BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(HTTP/Response.pm)
 BuildRequires:  perl(Test/More.pm)
 # Optional tests
@@ -41,7 +45,10 @@ reCAPTCHA is a hybrid mechanical Turk and captcha that allows visitors who
 complete the captcha to assist in the digitization of books.
 
 %prep
-%setup -q -n Captcha-reCAPTCHA-%{version}
+%setup -q -n Captcha-reCaptcha
+%patch0 -p1
+# Remove stray MacOS files, CPAN RT#117790
+find -name '.*' -delete
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -60,6 +67,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1_1
+- update to new release by fcimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.97-alt2_10
 - update to new release by fcimport
 
