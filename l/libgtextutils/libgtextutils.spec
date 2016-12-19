@@ -4,13 +4,14 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:		libgtextutils
 Version:	0.7
-Release:	alt1_14
+Release:	alt1_16
 Summary:	Assaf Gordon text utilities    
 
 Group:		System/Libraries
 License:	AGPLv3+
 URL:		http://hannonlab.cshl.edu/fastx_toolkit/
-Source0:	http://hannonlab.cshl.edu/fastx_toolkit/%{name}-%{version}.tar.gz
+Source0:	https://github.com/agordon/%{name}/releases/download/%{version}/%{name}-%{version}.tar.gz
+Patch0:		libgtextutils-GCC6-iostream.patch
 Source44: import.info
 
 
@@ -19,8 +20,9 @@ Text utilities library used by the fastx_toolkit, from the Hannon Lab
 
 %package       devel
 Summary:       Development files for %{name}
-Group:	       Development/C
-Requires:      %{name} = %{version}-%{release}
+Group:	       Development/Other
+Requires:      %{name} = %{version}
+Requires:      pkg-config
 
 %description   devel
 The %{name}-devel package contains libraries and header files for
@@ -30,6 +32,7 @@ developing applications that use %{name}.
 %prep
 %setup -q
 
+%patch0 -p1
 
 %build
 %configure --disable-static
@@ -55,6 +58,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/gtextutils.pc
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_16
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_14
 - update to new release by fcimport
 
