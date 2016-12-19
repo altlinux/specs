@@ -1,11 +1,11 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-IO-Null
 Version:        1.01
-Release:        alt2_24
+Release:        alt2_25
 Summary:        Class for null filehandles
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/IO-Null/
@@ -48,6 +48,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2_25
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2_24
 - update to new release by fcimport
 
