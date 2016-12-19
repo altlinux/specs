@@ -1,19 +1,21 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators perl(Module/Metadata.pm) perl(Path/Tiny.pm) perl(Test/Fatal.pm)
+BuildRequires: perl(parent.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-App-Nopaste
 Version:        1.007
-Release:        alt1
+Release:        alt1_1
 Summary:        Easy access to any pastebin
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/App-Nopaste/
-Source:        http://www.cpan.org/authors/id/E/ET/ETHER/App-Nopaste-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/E/ET/ETHER/App-Nopaste-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
+BuildRequires:  sed
+BuildRequires:  perl(CPAN/Meta/Requirements.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -27,8 +29,10 @@ BuildRequires:  perl(File/Temp.pm)
 BuildRequires:  perl(Getopt/Long/Descriptive.pm)
 BuildRequires:  perl(JSON.pm)
 BuildRequires:  perl(JSON/MaybeXS.pm)
+BuildRequires:  perl(Module/Metadata.pm)
 BuildRequires:  perl(Module/Pluggable.pm)
 BuildRequires:  perl(Module/Runtime.pm)
+BuildRequires:  perl(Path/Tiny.pm)
 BuildRequires:  perl(POSIX.pm)
 BuildRequires:  perl(URI/Escape.pm)
 BuildRequires:  perl(WWW/Mechanize.pm)
@@ -38,7 +42,9 @@ BuildRequires:  perl(File/Spec/Functions.pm)
 BuildRequires:  perl(List/Util.pm)
 BuildRequires:  perl(LWP/Protocol.pm)
 BuildRequires:  perl(Test/Deep.pm)
+BuildRequires:  perl(Test/Fatal.pm)
 BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(Test/Trap.pm)
 BuildRequires:  perl(version.pm)
 # for ssh plugin
 Requires:       /usr/bin/scp
@@ -58,7 +64,7 @@ name nopaste).
 # needs to beat old nopaste-2835-3
 Epoch:          1
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 Summary:        Access pastebins from the command line
 Requires:       %{name} = 0:%{version}
 
@@ -72,6 +78,7 @@ normally be too long to give directly in the channel (hence the name nopaste).
 
 %prep
 %setup -q -n App-Nopaste-%{version}
+sed -i 's,^#!.*perl,#!%{__perl},' script/nopaste
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
@@ -94,6 +101,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.007-alt1_1
+- update to new release by fcimport
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.007-alt1
 - automated CPAN update
 
