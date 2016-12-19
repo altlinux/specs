@@ -1,12 +1,12 @@
 %add_optflags %optflags_shared
-%global snapshot 20160209
+%global snapshot 20161208
 # Do not create debuginfo sub-package because there is no binary executable
 %global debug_package %{nil}
 Name:       libecb
 Version:    0.%{snapshot}
 Release:    alt1_1
 Summary:    Compiler built-ins
-Group:      Development/C
+Group:      Development/Other
 License:    BSD or GPLv2+
 URL:        http://software.schmorp.de/pkg/libecb.html
 # Snapshot from CVS :pserver:anonymous@cvs.schmorp.de/schmorpforge libecb 
@@ -59,6 +59,9 @@ install -m 0644 -t %{buildroot}%{_mandir}/man3 *.3
 %{_mandir}/man3/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.20161208-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20160209-alt1_1
 - update to new release by fcimport
 
