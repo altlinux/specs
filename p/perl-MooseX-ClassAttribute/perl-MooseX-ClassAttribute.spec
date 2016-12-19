@@ -1,20 +1,18 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(MooseX/AttributeHelpers.pm) perl(MooseX/Role/Strict.pm) perl-devel perl-podlators
+BuildRequires: perl(MooseX/AttributeHelpers.pm) perl(MooseX/Role/Strict.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-MooseX-ClassAttribute
 Summary:        Declare class attributes Moose-style
 Version:        0.29
-Release:        alt1
+Release:        alt1_1
 License:        Artistic 2.0
-Group:          Development/Perl
-Source:        http://www.cpan.org/authors/id/D/DR/DROLSKY/MooseX-ClassAttribute-%{version}.tar.gz
+Group:          Development/Other
+Source0:        http://search.cpan.org/CPAN/authors/id/D/DR/DROLSKY/MooseX-ClassAttribute-%{version}.tar.gz
 URL:            http://search.cpan.org/dist/MooseX-ClassAttribute/
 BuildArch:      noarch
 
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(List/MoreUtils.pm)
 BuildRequires:  perl(Moose.pm)
 BuildRequires:  perl(Moose/Exporter.pm)
 BuildRequires:  perl(Moose/Meta/Role/Attribute.pm)
@@ -30,11 +28,6 @@ BuildRequires:  perl(warnings.pm)
 BuildRequires:  perl(Test/Fatal.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Requires.pm)
-
-# obsolete/provide old tests subpackage
-# can be removed during F19 development cycle
-Obsoletes:      %{name}-tests < 0.26-4
-Provides:       %{name}-tests = %{version}-%{release}
 
 
 Source44: import.info
@@ -59,14 +52,12 @@ not set it.
 sed -i '1s,#!.*perl,#!%{__perl},' t/*.t
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
 # %{_fixperms} %{buildroot}/*
 
 
@@ -75,11 +66,15 @@ make test
 
 
 %files
-%doc README* Changes t/
+%doc Changes t/
+%doc LICENSE
 %{perl_vendor_privlib}/*
 
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1_1
+- update to new release by fcimport
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
 - automated CPAN update
 
