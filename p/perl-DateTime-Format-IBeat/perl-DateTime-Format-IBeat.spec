@@ -4,9 +4,9 @@ BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-IBeat
 Version:        0.161
-Release:        alt2_25
+Release:        alt2_26
 Summary:        Format times in .beat notation 
-Group:          Development/Perl
+Group:          Development/Other
 License:        GPL+ or Artistic 
 URL:            http://search.cpan.org/dist/DateTime-Format-IBeat
 Source0:        http://backpan.perl.org/authors/id/E/EM/EMARTIN/DateTime-Format-IBeat-0.161.tar.gz
@@ -58,6 +58,9 @@ make test
 %{perl_vendor_privlib}/DateTime/
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.161-alt2_26
+- update to new release by fcimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.161-alt2_25
 - update to new release by fcimport
 
