@@ -4,9 +4,9 @@ BuildRequires: /usr/bin/gtkdocize texinfo
 %add_optflags %optflags_shared
 Summary:          Library to support IDNA2008 internationalized domain names
 Name:             libidn2
-Version:          0.10
-Release:          alt1_4
-License:          GPLv3+
+Version:          0.11
+Release:          alt1_1
+License:          (GPLv2+ or LGPLv3+) and GPLv3+
 Group:            System/Libraries
 URL:              http://www.gnu.org/software/libidn/#libidn2
 Source:           http://alpha.gnu.org/gnu/libidn/%{name}-%{version}.tar.gz
@@ -21,7 +21,7 @@ It is a standalone library, without any dependency on libidn.
 
 %package devel
 Summary:          Development files for libidn2
-Group:            Development/C
+Group:            Development/Other
 Requires:         %{name}%{?_isa} = %{version}
 
 %description devel
@@ -59,6 +59,8 @@ rm -f $RPM_BUILD_ROOT%{_bindir}/{lookup,register}
 make %{?_smp_mflags} -C tests check
 
 %files
+%{!?_licensedir:%global license %%doc}
+%doc COPYING
 %doc AUTHORS NEWS README
 %{_bindir}/idn2
 %{_mandir}/man1/idn2.1*
@@ -73,6 +75,9 @@ make %{?_smp_mflags} -C tests check
 %{_datadir}/gtk-doc/
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_4
 - update to new release by fcimport
 
