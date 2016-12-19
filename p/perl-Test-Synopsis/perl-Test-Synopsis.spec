@@ -1,15 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # noarch, but to avoid debug* files interfering with manifest test:
 %global debug_package %{nil}
 
 Name:		perl-Test-Synopsis
 Version:	0.15
-Release:	alt1_1
+Release:	alt1_3
 Summary:	Test your SYNOPSIS code
-Group:		Development/Perl
+Group:		Development/Other
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-Synopsis/
 Source0:	http://search.cpan.org/CPAN/authors/id/Z/ZO/ZOFFIX/Test-Synopsis-%{version}.tar.gz
@@ -94,6 +94,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_3
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_1
 - update to new release by fcimport
 
