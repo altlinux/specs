@@ -1,20 +1,24 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+%define fedora 25
 Summary:	Typical installation tasks for system administrators
 Name:		perl-Sysadm-Install
 Version:	0.48
-Release:	alt1
+Release:	alt1_1
 License:	GPL+ or Artistic
-Group:		Development/Perl
+Group:		Development/Other
 URL:		http://search.cpan.org/dist/Sysadm-Install/
-Source:	http://www.cpan.org/authors/id/M/MS/MSCHILLI/Sysadm-Install-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/M/MS/MSCHILLI/Sysadm-Install-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
+BuildRequires:	coreutils
 BuildRequires:	findutils
 BuildRequires:	perl
+%if 0%{?fedora} > 20 || 0%{?rhel} > 7
+BuildRequires:	rpm-build-perl
+%endif
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
 BuildRequires:	perl(Archive/Tar.pm)
@@ -77,8 +81,8 @@ make test TEST_VERBOSE=1
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
-# %{_fixperms} %{buildroot}
+find %{buildroot} -type f -name .packlist -delete
+# %{_fixperms} -c %{buildroot}
 
 %files
 %doc Changes README eg/
@@ -88,6 +92,9 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 %{perl_vendor_privlib}/Sysadm/
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1_1
+- update to new release by fcimport
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1
 - automated CPAN update
 
