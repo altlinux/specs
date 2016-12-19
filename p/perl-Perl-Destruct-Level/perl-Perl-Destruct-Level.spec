@@ -5,15 +5,15 @@ BuildRequires: perl-podlators
 Name:		perl-Perl-Destruct-Level
 Summary:	Allows you to change perl's internal destruction level
 Version:	0.02
-Release:	alt4_14
-Group:		Development/Perl
+Release:	alt4_15
+Group:		Development/Other
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Perl-Destruct-Level/
 Source0:	http://search.cpan.org/CPAN/authors/id/R/RG/RGARCIA/Perl-Destruct-Level-%{version}.tar.gz
 # Module Build
 BuildRequires:	coreutils
 BuildRequires:	findutils
-BuildRequires:	gcc
+BuildRequires:	gcc-common
 BuildRequires:	perl
 BuildRequires:	perl-devel
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
@@ -63,6 +63,9 @@ make test
 %{perl_vendor_archlib}/Perl/
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt4_15
+- update to new release by fcimport
+
 * Sun May 08 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt4_14
 - update to new release by fcimport
 
