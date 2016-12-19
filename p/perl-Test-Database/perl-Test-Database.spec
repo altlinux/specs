@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(DBD/mysql.pm) perl(Pod/Coverage/TrustPod.pm) perl(SQL/Statement.pm) perl(Test/CPAN/Meta.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-devel perl-podlators
+BuildRequires: perl(DBD/mysql.pm) perl(Pod/Coverage/TrustPod.pm) perl(SQL/Statement.pm) perl(Test/CPAN/Meta.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-Database
 Version:        1.113
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Database handles ready for testing
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Test-Database/
 Source0:        http://www.cpan.org/authors/id/B/BO/BOOK/Test-Database-%{version}.tar.gz
 BuildArch:      noarch
@@ -72,6 +72,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.113-alt1_5
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.113-alt1_4
 - update to new release by fcimport
 
