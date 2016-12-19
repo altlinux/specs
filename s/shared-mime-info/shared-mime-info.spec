@@ -3,7 +3,7 @@
 %def_enable updatedb
 
 Name: shared-mime-info
-Version: 1.7
+Version: 1.8
 Release: alt1
 
 Summary: Shared MIME-Info Specification
@@ -110,6 +110,9 @@ multipart,text,video,XMLnamespaces}
 %exclude %_datadir/locale
 
 %changelog
+* Mon Dec 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8-alt1
+- 1.8
+
 * Sun Sep 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1.7-alt1
 - 1.7
 
@@ -252,14 +255,14 @@ multipart,text,video,XMLnamespaces}
 * Mon Dec 09 2002 AVL <avl@altlinux.ru> 0.9-alt
 - initial rpm for sisyphus
 
-* Thu Jul 25 2002 Götz Waschk <waschk@linux-mandrake.com> 0.8-1mdk
+* Thu Jul 25 2002 GÃ¶tz Waschk <waschk@linux-mandrake.com> 0.8-1mdk
 - license changed to GPL
 - removed noarch
 - 0.8
 
-* Mon Jun  3 2002 Götz Waschk <waschk@linux-mandrake.com> 0.7-1mdk
+* Mon Jun  3 2002 GÃ¶tz Waschk <waschk@linux-mandrake.com> 0.7-1mdk
 - set license from free to Public Domain
 - adapt for Mandrake
 
-* Fri May 31 2002 José Romildo Malaquias <romildo@iceb.ufop.br> 1.3.1-1
+* Fri May 31 2002 JosÃ© Romildo Malaquias <romildo@iceb.ufop.br> 1.3.1-1
 - First spec file for rox.
