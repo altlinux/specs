@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Summary:	Parser that builds a tree of XML::Element objects
 Name:		perl-XML-TreeBuilder
 Version:	5.4
-Release:	alt1_5
+Release:	alt1_6
 License:	GPL+ or Artistic
-Group:		Development/Perl
+Group:		Development/Other
 URL:		http://search.cpan.org/dist/XML-TreeBuilder/
 # have to:
 #  push the patch upstream
@@ -55,6 +55,9 @@ find $RPM_BUILD_ROOT -type d -depth -exec rmdir {} 2>/dev/null ';'
 %{perl_vendor_privlib}/XML/
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 5.4-alt1_6
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 5.4-alt1_5
 - update to new release by fcimport
 
