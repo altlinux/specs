@@ -1,11 +1,11 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-File-Pid
 Version:        1.01
-Release:        alt3_19
+Release:        alt3_20
 Summary:        Pid File Manipulation
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/File-Pid/
@@ -53,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_20
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_19
 - update to new release by fcimport
 
