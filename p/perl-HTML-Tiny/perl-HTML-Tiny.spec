@@ -1,11 +1,11 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-HTML-Tiny
 Version:        1.05
-Release:        alt2_21
+Release:        alt2_22
 Summary:        Lightweight, dependency free HTML/XML generation
 License:        GPL+ or Artistic
 
@@ -43,6 +43,9 @@ make test
 %{perl_vendor_privlib}/HTML*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_22
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_21
 - update to new release by fcimport
 
