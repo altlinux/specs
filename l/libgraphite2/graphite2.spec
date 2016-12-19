@@ -2,7 +2,7 @@
 %def_enable docs
 
 Name: lib%_name
-Version: 1.3.8
+Version: 1.3.9
 Release: alt1
 
 Summary: Font rendering capabilities for complex non-Roman writing systems
@@ -74,6 +74,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %{?_enable_docs:%doc BUILD/doc/manual.html}
 
 %changelog
+* Mon Dec 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3.9-alt1
+- 1.3.9
+
 * Tue May 10 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3.8-alt1
 - 1.3.8
 
