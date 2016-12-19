@@ -1,7 +1,7 @@
 %def_with python3
 
 Name:           python-module-pymongo
-Version:        3.3.0
+Version:        3.4.0
 Release:        alt1
 Summary:        Python driver for MongoDB
 
@@ -146,6 +146,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 19 2016 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt1
+- Version 3.4.0
+
 * Wed Oct 26 2016 Vladimir Didenko <cow@altlinux.org> 3.3.0-alt1
 - Version 3.3.0
 - Build python 3 version
