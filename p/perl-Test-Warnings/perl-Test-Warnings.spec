@@ -1,14 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
-%define fedora 23
+%define fedora 25
 Name:		perl-Test-Warnings
 Version:	0.026
-Release:	alt1_2
+Release:	alt1_3
 Summary:	Test for warnings and the lack of them
 License:	GPL+ or Artistic
-Group:		Development/Perl
+Group:		Development/Other
 URL:		http://search.cpan.org/dist/Test-Warnings
 Source0:	http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
 BuildArch:	noarch
@@ -86,6 +86,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.026-alt1_3
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.026-alt1_2
 - update to new release by fcimport
 
