@@ -1,12 +1,15 @@
 Epoch: 0
 Group: Text tools
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name saxon
+%define version 9.4.0.9
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -36,11 +39,15 @@ BuildRequires: jpackage-generic-compat
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-
+%global version_str %(sed -e 's/\\./-/g' <<<"%{version}")
+%global version_major_minor %(sed -e 's/\\([0-9]*\\.[0-9]*\\)\\..*/\\1/g' <<<"%{version}")
+%global version_major_minor_str %(sed -e 's/\\./-/g' <<<"%{version_major_minor}")
+%global version_maven %(sed -e 's/\\(.*\\)\\.\\([0-9]*\\)/\\1-\\2/g' <<<"%{version}")
+%global artifact_id Saxon-HE
 Summary:        Java XPath, XSLT 2.0 and XQuery implementation
 Name:           saxon
-Version:        9.3.0.4
-Release:        alt3_16jpp8
+Version:        9.4.0.9
+Release:        alt1_2jpp8
 # net.sf.saxon.om.XMLChar is from ASL-licensed Xerces
 # net/sf/saxon/option/jdom/ is MPLv1.1
 # net/sf/saxon/serialize/codenorm/ is UCD
@@ -48,37 +55,44 @@ Release:        alt3_16jpp8
 # net/sf/saxon/expr/Tokenizer.java and few other bits are BSD
 License:        MPLv1.0 and MPLv1.1 and ASL 1.1 and UCD and MIT
 URL:            http://saxon.sourceforge.net/
-Source0:        https://downloads.sourceforge.net/project/saxon/Saxon-HE/9.3/saxon9-3-0-4source.zip
+Source0:        https://downloads.sourceforge.net/project/saxon/Saxon-HE/%{version_major_minor}/saxon%{version_str}source.zip
 Source1:        %{name}.saxon.script
 Source2:        %{name}.saxonq.script
 Source3:        %{name}.build.script
 Source4:        %{name}.1
 Source5:        %{name}q.1
-Source6:        https://downloads.sourceforge.net/project/saxon/Saxon-HE/9.3/saxon-resources9-3.zip
-Source7:        saxon-%{version}.pom
+Source6:        https://downloads.sourceforge.net/project/saxon/Saxon-HE/%{version_major_minor}/saxon-resources%{version_major_minor_str}.zip
 Source8:        http://www.mozilla.org/MPL/1.0/index.txt#/mpl-1.0.txt
 Source9:        http://www.mozilla.org/MPL/1.0/index.txt#/mpl-1.1.txt
 BuildRequires:  unzip
+BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  ant
 BuildRequires:  javapackages-local
 BuildRequires:  bea-stax-api
 BuildRequires:  xml-commons-apis
+BuildRequires:  xml-commons-resolver
 BuildRequires:  xom
-BuildRequires:  jdom >= 0:1.0-0.b7
 BuildRequires:  java-javadoc
-BuildRequires:  jdom-javadoc >= 0:1.0-0.b9.3jpp
+BuildRequires:  jdom >= 0:1.0
+BuildRequires:  jdom-javadoc >= 0:1.0
+BuildRequires:  jdom2
 BuildRequires:  dom4j
 Requires:       bea-stax-api
 Requires:       bea-stax
-Requires:       chkconfig
+Requires: chkconfig update-alternatives
 Provides:       jaxp_transform_impl = %{version}-%{release}
 
 # Older versions were split into multile packages
 Obsoletes:  %{name}-xpath < %{version}-%{release}
+Provides:   %{name}-xpath = %{version}-%{release}
 Obsoletes:  %{name}-xom < %{version}-%{release}
+Provides:   %{name}-xom = %{version}-%{release}
 Obsoletes:  %{name}-sql < %{version}-%{release}
+Provides:   %{name}-sql = %{version}-%{release}
 Obsoletes:  %{name}-jdom < %{version}-%{release}
+Provides:   %{name}-jdom = %{version}-%{release}
 Obsoletes:  %{name}-dom < %{version}-%{release}
+Provides:   %{name}-dom = %{version}-%{release}
 
 BuildArch:      noarch
 Source44: import.info
@@ -109,7 +123,7 @@ Javadoc for %{name}.
 %package        demo
 Group: Text tools
 Summary:        Demos for %{name}
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description    demo
 Demonstrations and samples for %{name}.
@@ -117,7 +131,7 @@ Demonstrations and samples for %{name}.
 %package        scripts
 Group: Text tools
 Summary:        Utility scripts for %{name}
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description    scripts
 Utility scripts for %{name}.
@@ -144,6 +158,34 @@ find . \( -name "*.jar" -name "*.pyc" \) -delete
 
 cp %{SOURCE8} %{SOURCE9} .
 
+cat >%{artifact_id}-%{version_maven}.pom <<POM_XML
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>net.sf.saxon</groupId>
+  <artifactId>%{artifact_id}</artifactId>
+  <version>%{version_maven}</version>
+  <packaging>jar</packaging>
+  <name>%{artifact_id}</name>
+  <url>http://saxon.sf.net/</url>
+  <description>The XSLT and XQuery Processor</description>
+  <licenses>
+    <license>
+      <name>Mozilla Public License Version 2.0</name>
+      <url>http://www.mozilla.org/MPL/2.0/</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:svn:https://dev.saxonica.com/repos/archive/opensource/latest%{version_major_minor}/</connection>
+    <developerConnection>scm:svn:https://dev.saxonica.com/repos/archive/opensource/latest%{version_major_minor}/</developerConnection>
+    <url>https://saxon.svn.sourceforge.net/svnroot/saxon/latest%{version_major_minor}/</url>
+  </scm>
+</project> 
+POM_XML
+
 %build
 mkdir -p build/classes
 cat >build/classes/edition.properties <<EOF
@@ -151,16 +193,20 @@ config=net.sf.saxon.Configuration
 platform=net.sf.saxon.java.JavaPlatform
 EOF
 
-export CLASSPATH=%(build-classpath xml-commons-apis jdom xom bea-stax-api dom4j)
+export CLASSPATH=%(build-classpath axiom xml-commons-apis xml-commons-resolver jdom jdom2 xom bea-stax-api dom4j)
 ant \
   -Dj2se.javadoc=%{_javadocdir}/java \
   -Djdom.javadoc=%{_javadocdir}/jdom
 
-%mvn_artifact %{SOURCE7} build/lib/saxon.jar
+%mvn_artifact %{artifact_id}-%{version_maven}.pom build/lib/saxon.jar
+%mvn_alias : :saxon
 %mvn_alias : net.sf.saxon:saxon::dom:
 
 %install
 %mvn_install
+
+# For compactability
+ln -s %{artifact_id}.jar $RPM_BUILD_ROOT/%{_javadir}/saxon/saxon.jar
 
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -182,14 +228,14 @@ install -p -m644 %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/man1/%{name}q.1
 ln -s %{_sysconfdir}/alternatives \
   $RPM_BUILD_ROOT%{_javadir}/jaxp_transform_impl.jar
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jaxp_transform_impl_saxon<<EOF
-%{_javadir}/jaxp_transform_impl.jar	%{_javadir}/saxon/saxon.jar	25
+%{_javadir}/jaxp_transform_impl.jar	%{_javadir}/saxon/%{artifact_id}.jar	25
 EOF
 chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 
 %files -f .mfiles
 %_altdir/jaxp_transform_impl_saxon
 %doc mpl-1.0.txt mpl-1.1.txt
-%dir %{_javadir}/%{name}
+%{_javadir}/%{name}/saxon.jar
 
 %files manual
 %doc doc/*
@@ -207,8 +253,10 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %{_mandir}/man1/%{name}.1*
 %{_mandir}/man1/%{name}q.1*
 
-
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:9.4.0.9-alt1_2jpp8
+- new version
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:9.3.0.4-alt3_16jpp8
 - new version
 
