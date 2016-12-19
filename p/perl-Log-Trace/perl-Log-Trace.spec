@@ -5,7 +5,7 @@ BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Log-Trace
 Version:        1.070
-Release:        alt2_20
+Release:        alt2_21
 License:        GPLv2+
 Summary:        A unified approach to tracing
 Source:         http://search.cpan.org/CPAN/authors/id/B/BB/BBC/Log-Trace-%{version}.tar.gz
@@ -63,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.070-alt2_21
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.070-alt2_20
 - update to new release by fcimport
 
