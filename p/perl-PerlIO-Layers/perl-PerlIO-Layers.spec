@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-PerlIO-Layers
 Version:        0.011
-Release:        alt1_7
+Release:        alt1_8
 Summary:        Querying your file handle capabilities
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/PerlIO-Layers/
 Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/PerlIO-Layers-%{version}.tar.gz
 BuildRequires:  perl
@@ -57,6 +57,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/PerlIO*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_8
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_7
 - update to new release by fcimport
 
