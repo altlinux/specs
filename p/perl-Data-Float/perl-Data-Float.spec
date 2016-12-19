@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Data-Float
 Version:        0.012
-Release:        alt2_8
+Release:        alt2_9
 Summary:        Details of the floating point data type
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Data-Float/
 Source0:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Data-Float-%{version}.tar.gz
 BuildArch:      noarch
@@ -56,6 +56,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.012-alt2_9
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.012-alt2_8
 - update to new release by fcimport
 
