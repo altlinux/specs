@@ -4,10 +4,10 @@ BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Color-Library
 Version:        0.021
-Release:        alt2_8
+Release:        alt2_9
 Summary:        Easy-to-use and comprehensive named-color library
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Color-Library/
 Source0:        http://www.cpan.org/authors/id/R/RO/ROKR/Color-Library-%{version}.tar.gz
 # Fix POD syntax, CPAN RT#86023
@@ -56,6 +56,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.021-alt2_9
+- update to new release by fcimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.021-alt2_8
 - update to new release by fcimport
 
