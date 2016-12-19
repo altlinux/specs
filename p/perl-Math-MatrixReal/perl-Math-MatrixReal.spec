@@ -1,17 +1,19 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(Data/Dump.pm) perl(List/MoreUtils.pm) perl(OpenGL.pm) perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Math-MatrixReal
 Version:        2.13
-Release:        alt1
+Release:        alt1_1
 Summary:        Manipulate matrix of reals
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Math-MatrixReal/
-Source:        http://www.cpan.org/authors/id/L/LE/LETO/Math-MatrixReal-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/L/LE/LETO/Math-MatrixReal-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  coreutils
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -50,6 +52,7 @@ does what you would like it to do.
 
 %prep
 %setup -q -n Math-MatrixReal-%{version}
+chmod -x example/*
 
 %build
 perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
@@ -63,10 +66,13 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 ./Build test
 
 %files
-%doc CHANGES CREDITS GOALS README.mkd OLD_README TODO
+%doc CHANGES CONTRIBUTING.md CREDITS example GOALS README.mkd OLD_README TODO
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1_1
+- update to new release by fcimport
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1
 - automated CPAN update
 
