@@ -1,17 +1,19 @@
 Group: Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-URI-Escape-XS
 Version:        0.14
-Release:        alt1
+Release:        alt1_1
 Summary:        Drop-In replacement for URI::Escape
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/URI-Escape-XS/
-Source:        http://www.cpan.org/authors/id/D/DA/DANKOGAI/URI-Escape-XS-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/D/DA/DANKOGAI/URI-Escape-XS-%{version}.tar.gz
 
+BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Encode.pm)
 BuildRequires:  perl(Exporter.pm)
@@ -49,6 +51,9 @@ make test
 %{perl_vendor_archlib}/URI*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_1
+- update to new release by fcimport
+
 * Mon Jun 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - automated CPAN update
 
