@@ -1,11 +1,11 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-IO-Socket-PortState
 Version:        0.03
-Release:        alt1_9
+Release:        alt1_10
 Summary:        Perl extension for checking the open or closed status of a port
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/IO-Socket-PortState/
@@ -46,6 +46,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_10
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_9
 - update to new release by fcimport
 
