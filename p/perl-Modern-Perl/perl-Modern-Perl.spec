@@ -1,19 +1,22 @@
 Serial: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Modern-Perl
-Version:        1.20150127
-Release:        alt1_4
+Version:        1.20161005
+Release:        alt1_1
 Summary:        Enable all of the features of Modern Perl with one command
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Modern-Perl/
 Source0:        http://www.cpan.org/authors/id/C/CH/CHROMATIC/Modern-Perl-%{version}.tar.gz
+Patch0:         Modern-Perl-1.20161005-version.patch
 BuildArch:      noarch
 # Module Build
+BuildRequires:  coreutils
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(autodie.pm)
 BuildRequires:  perl(Module/Build.pm)
 # Module Runtime
@@ -37,6 +40,10 @@ and modules.  Wouldn't it be nice to use them all with a single command?
 %prep
 %setup -q -n Modern-Perl-%{version}
 
+# Add back in the package version, needed for provides
+# https://github.com/chromatic/Modern-Perl/issues/5
+%patch0
+
 %build
 perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 ./Build
@@ -54,6 +61,9 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 %{perl_vendor_privlib}/Modern/
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.20161005-alt1_1
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.20150127-alt1_4
 - update to new release by fcimport
 
