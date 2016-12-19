@@ -38,8 +38,8 @@
 %def_with libcephfs
 
 Name: samba
-Version: 4.5.1
-Release: alt2
+Version: 4.5.2
+Release: alt1%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -60,7 +60,7 @@ Source12: ctdb.init
 Source200: README.dc
 Source201: README.downgrade
 
-Patch: %name-%version-%release.patch
+Patch: %name-%version-alt.patch
 Patch10: samba-grouppwd.patch
 
 # fedora patches
@@ -84,6 +84,8 @@ Requires: %name-common-tools = %version-%release
 %if_with libwbclient
 Requires: libwbclient = %version-%release
 %endif
+
+BuildRequires(pre):rpm-build-ubt
 
 BuildRequires: libe2fs-devel
 BuildRequires: libxfs-devel
@@ -1331,11 +1333,14 @@ TDB_NO_FSYNC=1 %make_build test
 %_libexecdir/ctdb/tests
 %_bindir/ctdb_run_tests
 %_bindir/ctdb_run_cluster_tests
-%_datadir/ctdb-tests
-#doc ctdb/tests/README
+%_datadir/ctdb/tests
+%doc ctdb/tests/README
 %endif
 
 %changelog
+* Mon Dec 12 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.5.2-alt1%ubt
+- Udpate to first winter release
+
 * Sat Dec 03 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.5.1-alt2
 - Add conflict winbind with libwbclient-sssd due compatibility
 - Update build dependencies versions for external samba libraries
