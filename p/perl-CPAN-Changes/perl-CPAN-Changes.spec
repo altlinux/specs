@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-CPAN-Changes
 Summary:	Read and write Changes files
 Version:	0.400002
-Release:	alt1_2
+Release:	alt1_3
 License:	GPL+ or Artistic
-Group:		Development/Perl
+Group:		Development/Other
 URL:		http://search.cpan.org/dist/CPAN-Changes/
 Source0:	http://search.cpan.org/CPAN/authors/id/H/HA/HAARG/CPAN-Changes-%{version}.tar.gz
 BuildArch:	noarch
@@ -72,6 +72,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{_mandir}/man1/tidy_changelog.1*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.400002-alt1_3
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.400002-alt1_2
 - update to new release by fcimport
 
