@@ -1,20 +1,21 @@
-Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ pkgconfig(libgda-bdb-5.0)
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+Group: System/Libraries
+%add_optflags %optflags_shared
 %global api_ver 5.0
 
 %global glibmm_version 2.46.1
 
 Name:           libgdamm
-Version:        4.99.10
-Release:        alt1_2
+Version:        4.99.11
+Release:        alt1_1
 Summary:        C++ wrappers for libgda
 License:        LGPLv2+
 URL:            http://www.gtkmm.org/
 Source0:        http://ftp.gnome.org/pub/GNOME/sources/libgdamm/4.99/%{name}-%{version}.tar.xz
 BuildRequires:  libglibmm-devel >= %{glibmm_version}
-BuildRequires:  libgda5-devel
+BuildRequires: libgda5-devel libgda5-gir-devel
 BuildRequires:  libgda5-bdb
 
 Requires:       libglibmm >= %{glibmm_version}
@@ -38,7 +39,7 @@ to develop applications which use libgdamm.
 Group: Documentation
 Summary:        API documentation for %{name}
 BuildArch:      noarch
-BuildRequires:  doxygen graphviz
+BuildRequires:  doxygen graphviz libgraphviz
 Requires:       libglibmm-doc
 
 %description    doc
@@ -48,7 +49,6 @@ This package contains the full API documentation for %{name}.
 %setup -q
 
 %build
-%add_optflags -std=c++11
 %configure --disable-static
 make %{?_smp_mflags}
 
@@ -75,6 +75,9 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 4.99.11-alt1_1
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 4.99.10-alt1_2
 - fixed build
 
