@@ -1,19 +1,20 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Set
 Version:        0.3900
-Release:        alt1
+Release:        alt1_1
 Summary:        Datetime sets and set math
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/DateTime-Set/
-Source:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Set-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Set-%{version}.tar.gz
 Patch0:         DateTime-Set-0.32-version.patch
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(strict.pm)
 # Runtime
@@ -64,6 +65,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.3900-alt1_1
+- update to new release by fcimport
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.3900-alt1
 - automated CPAN update
 
