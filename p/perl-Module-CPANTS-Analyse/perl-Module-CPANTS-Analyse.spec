@@ -1,13 +1,13 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 #TODO: BR:/R: perl(WorePAN) a.. 0.09 when available
 
 Name:           perl-Module-CPANTS-Analyse
 Version:        0.96
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Generate Kwalitee ratings for a distribution
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Module-CPANTS-Analyse/
@@ -128,6 +128,9 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 %{perl_vendor_privlib}/Module/CPANTS/Kwalitee/*.pm
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.96-alt1_5
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.96-alt1_4
 - update to new release by fcimport
 
