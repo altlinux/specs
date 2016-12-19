@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-mkenums pkgconfig(gio-unix-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-mkenums pkgconfig(gio-unix-2.0) pkgconfig(gmodule-2.0)
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 %add_optflags %optflags_shared
 Name:		libindicator
 Version:	12.10.1
-Release:	alt1_7
+Release:	alt1_8
 Summary:	Shared functions for Ayatana indicators
 
 Group:		System/Libraries
@@ -14,12 +14,12 @@ URL:		https://launchpad.net/libindicator
 Source0:	https://launchpad.net/libindicator/12.10/12.10.1/+download/%{name}-%{version}.tar.gz
 
 BuildRequires:	chrpath
-BuildRequires:	gtk-doc
-BuildRequires:	libtool
+BuildRequires: gtk-doc gtk-doc-mkpdf
+BuildRequires:	libtool-common
 
 BuildRequires:	libdbus-glib-devel
-BuildRequires:	gtk2-devel
-BuildRequires:	libgtk+3-devel
+BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 
 BuildRequires:	gnome-common
 Source44: import.info
@@ -32,9 +32,9 @@ likely to use.
 
 %package devel
 Summary:	Development files for %{name}
-Group:		Development/C
+Group:		Development/Other
 Requires:	%{name}%{?_isa} = %{version}
-Requires:	pkgconfig
+Requires:	pkg-config
 
 %description devel
 The %{name}-devel package contains libraries and header files for
@@ -45,7 +45,7 @@ developing applications that use %{name}.
 Summary:	Shared functions for Ayatana indicators - Tools
 Group:		Development/Tools
 Requires:	%{name}%{?_isa} = %{version}
-Requires:	pkgconfig
+Requires:	pkg-config
 
 %description tools
 This package contains tools used by the %{name} package, the
@@ -64,10 +64,10 @@ by GTK+ 3 apps.
 
 %package gtk3-devel
 Summary:	Development files for %{name}-gtk3
-Group:		Development/C
+Group:		Development/Other
 
 Requires:	%{name}-gtk3%{?_isa} = %{version}
-Requires:	pkgconfig
+Requires:	pkg-config
 
 %description gtk3-devel
 The %{name}-gtk3-devel package contains libraries and header files for
@@ -79,7 +79,7 @@ Summary:	Shared functions for Ayatana indicators - GTK3 Tools
 Group:		Development/Tools
 
 Requires:	%{name}-gtk3%{?_isa} = %{version}
-Requires:	pkgconfig
+Requires:	pkg-config
 
 %description gtk3-tools
 This package contains tools used by the %{name}-gtk3 package, the
@@ -141,10 +141,35 @@ popd
 pushd build-gtk2
 make install DESTDIR=%{buildroot}
 popd
+(
+	PKG_CONFIG_PATH=%{buildroot}%{_libdir}/pkgconfig
+	export PKG_CONFIG_PATH
+	for var in \
+		iconsdir \
+		indicatordir \
+		%{nil}
+	do
+		vardir=$(pkg-config --variable=${var} indicator-0.4)
+		mkdir -p %{buildroot}${vardir}
+	done
+)
 
 pushd build-gtk3
 make install DESTDIR=%{buildroot}
 popd
+(
+	PKG_CONFIG_PATH=%{buildroot}%{_libdir}/pkgconfig
+	export PKG_CONFIG_PATH
+	for var in \
+		iconsdir \
+		indicatordir \
+		%{nil}
+	do
+		vardir=$(pkg-config --variable=${var} indicator3-0.4)
+		mkdir -p %{buildroot}${vardir}
+	done
+)
+
 
 
 # Ubuntu doesn't package the dummy indicator
@@ -161,7 +186,9 @@ done
 %files
 %doc AUTHORS COPYING NEWS ChangeLog
 %{_libdir}/libindicator.so.*
-
+%dir %{_datadir}/libindicator/
+%dir %{_datadir}/libindicator/icons/
+%{_libdir}/indicators/
 
 %files devel
 %dir %{_includedir}/libindicator-0.4/
@@ -173,13 +200,15 @@ done
 
 %files tools
 %{_libexecdir}/indicator-loader
-%dir %{_datadir}/libindicator/
 %{_datadir}/libindicator/80indicator-debugging
 
 
 %files gtk3
 %doc AUTHORS COPYING NEWS ChangeLog
 %{_libdir}/libindicator3.so.*
+%dir %{_datadir}/libindicator/
+%dir %{_datadir}/libindicator/icons/
+%{_libdir}/indicators3/
 
 
 %files gtk3-devel
@@ -194,6 +223,9 @@ done
 %{_libexecdir}/indicator-loader3
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 12.10.1-alt1_8
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 12.10.1-alt1_7
 - update to new release by fcimport
 
