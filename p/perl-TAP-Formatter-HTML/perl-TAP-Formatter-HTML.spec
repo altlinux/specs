@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Alien/SeleniumRC.pm) perl(CPAN.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(Alien/SeleniumRC.pm) perl(CPAN.pm) perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-TAP-Formatter-HTML
 Version:        0.11
-Release:        alt1_9
+Release:        alt1_10
 Summary:        TAP Test Harness output delegate for html output
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/TAP-Formatter-HTML/
 Source0:        http://www.cpan.org/authors/id/S/SP/SPURKIS/TAP-Formatter-HTML-%{version}.tar.gz
 BuildArch:      noarch
@@ -52,6 +52,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_10
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_9
 - update to new release by fcimport
 
