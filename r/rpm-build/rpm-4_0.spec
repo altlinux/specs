@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt100.98
+Release: alt100.99
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -84,7 +84,6 @@ PreReq: zlib >= 1.1.4
 PreReq: bzlib >= 1:1.0.2-alt2
 PreReq: libpopt >= 1:1.7-alt3
 PreReq: libdb4.7
-Provides: librpm = 4.0.4-alt100.96
 
 %package -n librpmbuild
 Summary: Shared library required for applications which will build RPM packages
@@ -92,7 +91,6 @@ Summary(ru_RU.UTF-8): Разделяемая библиотека для раз�
 License: GPL/LGPL
 Group: System/Libraries
 Requires: lib%oname = %version-%release
-Provides: librpmbuild = 4.0.4-alt100.96
 
 %package -n lib%oname-devel
 Summary: Development files for applications which will manipulate RPM packages
@@ -330,7 +328,7 @@ if [ -s /lib/libc.so.6 -a -s /lib/libz.so.1 -a -n "$(getconf LFS_CFLAGS)" ]; the
 		sed -n 's/^[[:space:]]*[0-9]\+:[[:space:]]\+[0-9a-f]\+[[:space:]]\+[0-9]\+[[:space:]]\+FUNC[[:space:]]\+[^[:space:]]\+[[:space:]]\+DEFAULT[[:space:]]\+[0-9]\+[[:space:]]\+\([^@[:space:]]\+\)@\?.*/\1/p' |
 		sort -u
 fi > all-funcs
-sed -n 's/^\(.\+\)64$/\1/p' all-funcs |
+sed -r -n 's/^(.+)64(_.*|$)/\1\2/p' all-funcs |
 	sort -u |
 	comm -12 - all-funcs |
 	LC_ALL=C sort -u \
@@ -514,6 +512,10 @@ mv %buildroot%_rpmlibdir/{,build}macros
 %endif
 
 %changelog
+* Mon Dec 19 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt100.99
+- Fixed non-LFS check in verify-elf.
+- Dropped fake provides made for rpm 4.13.0 bootstrap.
+
 * Fri Dec 16 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt100.98
 - Restored rpmpopt file.
 

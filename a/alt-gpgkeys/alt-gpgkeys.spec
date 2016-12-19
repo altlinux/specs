@@ -1,5 +1,5 @@
 Name: alt-gpgkeys
-Version: 0.7.103
+Version: 0.7.104
 Release: alt1
 
 Summary: ALT GnuPG keys
@@ -61,6 +61,10 @@ install -pm755 alt-gpgkey-check alt-gpgkey-strip \
 %_bindir/*
 
 %changelog
+* Mon Dec 19 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.104-alt1
+- Replaced key: taf@ (9B769DEF -> 1AB92436; closes: #32897).
+- Added key: sotor@ (43502B3E; closes: #32551).
+
 * Wed Dec 07 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.103-alt1
 - Replaced key: alexvm@ (28E76F05 -> DAA60B03; closes: #31765).
 

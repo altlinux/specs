@@ -17,7 +17,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0
-Release: alt5
+Release: alt6
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -113,6 +113,7 @@ Summary: Libraries for building and signing RPM packages
 Group: System/Libraries
 License: GPLv2+ and LGPLv2+ with exceptions
 Requires: librpm%sover = %EVR
+Conflicts: librpm < 4.0.4-alt100.97
 
 %description -n librpmbuild%sover
 This package contains the RPM shared libraries for building and signing
@@ -499,6 +500,9 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Mon Dec 19 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0-alt6
+- librpm7: Added C: librpm < 4.0.4-alt100.97.
+
 * Fri Dec 16 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0-alt5
 - Moved /bin/rpm back to %_bindir/rpm (ALT#32878).
 - Dropped useless cron subpackage.
