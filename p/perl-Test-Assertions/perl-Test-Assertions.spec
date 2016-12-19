@@ -1,11 +1,11 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(IO/CaptureOutput.pm) perl-devel perl-podlators
+BuildRequires: perl(IO/CaptureOutput.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-Assertions
 Version:        1.054
-Release:        alt2_20
+Release:        alt2_21
 Summary:        Simple set of building blocks for both unit and runtime testing
 License:        GPLv2
 URL:            http://search.cpan.org/dist/Test-Assertions/
@@ -68,6 +68,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.054-alt2_21
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.054-alt2_20
 - update to new release by fcimport
 
