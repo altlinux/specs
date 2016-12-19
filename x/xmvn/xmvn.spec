@@ -22,7 +22,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xmvn
 Version:        2.5.0
-Release:        alt1_6jpp8
+Release:        alt1_11jpp8
 Summary:        Local Extensions for Apache Maven
 License:        ASL 2.0
 URL:            http://mizdebsk.fedorapeople.org/xmvn
@@ -32,8 +32,9 @@ Source0:        https://fedorahosted.org/released/%{name}/%{name}-%{version}.tar
 
 Patch0:         0001-Copy-core-dependencies-to-lib-core-in-assembly.patch
 Patch1:         0002-Try-to-procect-builddep-MOJO-against-patological-cas.patch
+Patch2:         0003-Don-t-install-POM-files-for-Tycho-projects.patch
 
-BuildRequires:  maven >= 3.3.9
+BuildRequires:  maven-lib >= 3.3.9
 BuildRequires:  maven-local
 BuildRequires:  beust-jcommander
 BuildRequires:  cglib
@@ -42,18 +43,18 @@ BuildRequires:  maven-plugin-build-helper
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-site-plugin
+BuildRequires:  maven-plugin-plugin
 BuildRequires:  objectweb-asm
 BuildRequires:  modello
 BuildRequires:  xmlunit
 BuildRequires:  apache-ivy
 BuildRequires:  sisu-mojos
 BuildRequires:  junit
+BuildRequires:  easymock
 BuildRequires:  gradle >= 2.5
 
-Requires:       maven >= 3.2.5
-Requires:       xmvn-api = %{version}
-Requires:       xmvn-connector-aether = %{version}
-Requires:       xmvn-core = %{version}
+Requires:       xmvn = %{version}
+Requires:       maven
 Source44: import.info
 %filter_from_requires /^osgi\\($/d
 
@@ -62,6 +63,18 @@ This package provides extensions for Apache Maven that can be used to
 manage system artifact repository and use it to resolve Maven
 artifacts in offline mode, as well as Maven plugins to help with
 creating RPM packages containing Maven artifacts.
+
+%package        minimal
+Group: Development/Java
+Summary:        Dependency-reduced version of XMvn
+Requires:       maven-lib >= 3.2.5
+Requires:       xmvn-api = %{version}
+Requires:       xmvn-connector-aether = %{version}
+Requires:       xmvn-core = %{version}
+
+%description    minimal
+This package provides minimal version of XMvn, incapable of using
+remote repositories.
 
 %package        parent-pom
 Group: Development/Java
@@ -190,6 +203,7 @@ This package provides %{summary}.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %mvn_package ":xmvn{,-it}" __noinstall
 
@@ -246,7 +260,7 @@ cp -r %{_datadir}/maven/lib/* %{buildroot}%{_datadir}/%{name}/lib/
 cat <<EOF >%{buildroot}%{_bindir}/%{name}
 #!/bin/sh -e
 export M2_HOME="\${M2_HOME:-%{_datadir}/%{name}}"
-exec mvn "\${@}"
+exec %{_datadir}/maven/bin/mvn-script "\${@}"
 EOF
 
 # mvn-local symlink
@@ -259,10 +273,42 @@ cp -P %{_datadir}/maven/bin/m2.conf %{buildroot}%{_datadir}/%{name}/bin/
 chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 
 %files
-%attr(755,-,-) %{_bindir}/%{name}
 %attr(755,-,-) %{_bindir}/mvn-local
+%{_datadir}/%{name}/lib/aether_aether-connector-basic.jar
+%{_datadir}/%{name}/lib/aether_aether-transport-wagon.jar
+%{_datadir}/%{name}/lib/aopalliance.jar
+%{_datadir}/%{name}/lib/cdi-apicdi-api.jar
+%{_datadir}/%{name}/lib/commons-codec.jar
+%{_datadir}/%{name}/lib/commons-io.jar
+%{_datadir}/%{name}/lib/commons-lang.jar
+%{_datadir}/%{name}/lib/commons-logging.jar
+%{_datadir}/%{name}/lib/httpcomponents_httpclient.jar
+%{_datadir}/%{name}/lib/httpcomponents_httpcore.jar
+%{_datadir}/%{name}/lib/jsoup_jsoup.jar
+%{_datadir}/%{name}/lib/jsr-305.jar
+%{_datadir}/%{name}/lib/maven-wagon_file.jar
+%{_datadir}/%{name}/lib/maven-wagon_http-shaded.jar
+%{_datadir}/%{name}/lib/maven-wagon_http-shared.jar
+
+%files minimal
+%attr(755,-,-) %{_bindir}/%{name}
 %dir %{_datadir}/%{name}/bin
 %dir %{_datadir}/%{name}/lib
+%exclude %{_datadir}/%{name}/lib/aether_aether-connector-basic.jar
+%exclude %{_datadir}/%{name}/lib/aether_aether-transport-wagon.jar
+%exclude %{_datadir}/%{name}/lib/aopalliance.jar
+%exclude %{_datadir}/%{name}/lib/cdi-apicdi-api.jar
+%exclude %{_datadir}/%{name}/lib/commons-codec.jar
+%exclude %{_datadir}/%{name}/lib/commons-io.jar
+%exclude %{_datadir}/%{name}/lib/commons-lang.jar
+%exclude %{_datadir}/%{name}/lib/commons-logging.jar
+%exclude %{_datadir}/%{name}/lib/httpcomponents_httpclient.jar
+%exclude %{_datadir}/%{name}/lib/httpcomponents_httpcore.jar
+%exclude %{_datadir}/%{name}/lib/jsoup_jsoup.jar
+%exclude %{_datadir}/%{name}/lib/jsr-305.jar
+%exclude %{_datadir}/%{name}/lib/maven-wagon_file.jar
+%exclude %{_datadir}/%{name}/lib/maven-wagon_http-shaded.jar
+%exclude %{_datadir}/%{name}/lib/maven-wagon_http-shared.jar
 %{_datadir}/%{name}/lib/*.jar
 %{_datadir}/%{name}/lib/ext
 %{_datadir}/%{name}/bin/m2.conf
@@ -331,6 +377,9 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt1_11jpp8
+- new fc release
+
 * Fri Dec 09 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt1_6jpp8
 - unbootstrup build
 
