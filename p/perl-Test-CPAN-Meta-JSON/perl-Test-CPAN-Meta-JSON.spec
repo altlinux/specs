@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-CPAN-Meta-JSON
 Version:	0.16
-Release:	alt1_4
+Release:	alt1_5
 Summary:	Validate a META.json file within a CPAN distribution
-Group:		Development/Perl
+Group:		Development/Other
 License:	Artistic 2.0
 URL:		http://search.cpan.org/dist/Test-CPAN-Meta-YAML/
 Source0:	http://search.cpan.org/CPAN/authors/id/B/BA/BARBIE/Test-CPAN-Meta-JSON-%{version}.tar.gz
@@ -68,6 +68,9 @@ make test AUTOMATED_TESTING=1
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_5
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_4
 - update to new release by fcimport
 
