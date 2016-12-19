@@ -1,11 +1,11 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Data-Denter
 Version:        0.15
-Release:        alt2_19
+Release:        alt2_20
 License:        GPL+ or Artistic
 Summary:        An alternative to Data::Dumper and Storable
 Source:         http://search.cpan.org/CPAN/authors/id/I/IN/INGY/Data-Denter-%{version}.tar.gz
@@ -58,6 +58,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_20
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_19
 - update to new release by fcimport
 
