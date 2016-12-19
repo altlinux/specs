@@ -29,7 +29,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          bval
 Version:       1.1.1
-Release:       alt1_1jpp8
+Release:       alt1_2jpp8
 Summary:       Apache Bean Validation
 License:       ASL 2.0
 Url:           http://bval.apache.org/
@@ -212,6 +212,9 @@ sed -i '/Privileged/d' \
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_2jpp8
+- new fc release
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_1jpp8
 - new version
 
