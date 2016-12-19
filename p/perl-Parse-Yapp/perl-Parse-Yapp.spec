@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 1.05
-Release: alt3.1.1
+Release: alt4
 
 Summary: %module module for perl
 License: distributable
@@ -18,6 +18,8 @@ BuildRequires: perl-devel
 # perl-podlators is required for pod2man conversion.
 BuildRequires: perl-podlators
 BuildArch: noarch
+# for compatibility with some broken packages
+Provides: perl(Parse/Yapp.pm) = 1.050
 
 %description
 %module module for perl
@@ -39,6 +41,9 @@ find . -type f -name '*.pm'|xargs chmod 644
 %_man1dir/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.05-alt4
+- added provides
+
 * Wed Nov 24 2010 Igor Vlasenko <viy@altlinux.ru> 1.05-alt3.1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
