@@ -5,34 +5,34 @@ BuildRequires(pre): rpm-macros-java
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 24
 %global site_name org.apache.felix.bundlerepository
 %global grp_name  felix
 
 Name:           felix-bundlerepository
 Version:        1.6.6
-Release:        alt4_19jpp8
+Release:        alt4_20jpp8
 Summary:        Bundle repository service
 License:        ASL 2.0 and MIT
 URL:            http://felix.apache.org/site/apache-felix-osgi-bundle-repository.html
+BuildArch:      noarch
 
 Source0:        http://www.fightrice.com/mirrors/apache/felix/org.apache.felix.bundlerepository-%{version}-source-release.tar.gz
-Patch1:         0001-Unbundle-libraries.patch
 
-BuildArch:      noarch
+Patch1:         0001-Unbundle-libraries.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.sf.kxml:kxml2)
 BuildRequires:  mvn(org.apache.felix:felix-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.felix:org.apache.felix.shell)
 BuildRequires:  mvn(org.apache.felix:org.apache.felix.utils)
 BuildRequires:  mvn(org.apache.felix:org.osgi.service.obr)
 BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
+BuildRequires:  mvn(org.easymock:easymock)
 BuildRequires:  mvn(org.osgi:org.osgi.compendium)
 BuildRequires:  mvn(org.osgi:org.osgi.core)
 BuildRequires:  mvn(xpp3:xpp3)
-%{?fedora:BuildRequires: mvn(org.easymock:easymock)}
 Source44: import.info
 
 
@@ -51,25 +51,6 @@ This package contains the API documentation for %{name}.
 %setup -q -n %{site_name}-%{version}
 %patch1 -p1
 
-# Parent POM pulls in unneeded dependencies (mockito)
-%pom_remove_parent
-%pom_xpath_inject "pom:project" "<groupId>org.apache.felix</groupId>"
-%pom_add_dep junit:junit::test
-%if 0%{?fedora}
-  # easymock is test dependency
-  %pom_xpath_inject "pom:dependency[pom:artifactId[text()='easymock']]" "<scope>test</scope>"
-%else
-  %pom_remove_dep org.easymock:easymock
-%endif
-
-%if !0%{?fedora}
-  # These tests won't work without easymock3
-  rm -f src/test/java/org/apache/felix/bundlerepository/impl/RepositoryAdminTest.java
-  rm -f src/test/java/org/apache/felix/bundlerepository/impl/RepositoryImplTest.java
-  rm -f src/test/java/org/apache/felix/bundlerepository/impl/StaxParserTest.java
-  rm -f src/test/java/org/apache/felix/bundlerepository/impl/ResolverImplTest.java
-%endif
-
 # Add xpp3 dependency (upstream bundles this)
 %pom_add_dep "xpp3:xpp3:1.1.3.4.O" pom.xml "<optional>true</optional>"
 
@@ -86,12 +67,16 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE LICENSE.kxml2 NOTICE DEPENDENCIES
+%doc LICENSE LICENSE.kxml2 NOTICE
+%doc DEPENDENCIES
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE LICENSE.kxml2 NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.6-alt4_20jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.6-alt4_19jpp8
 - new fc release
 
