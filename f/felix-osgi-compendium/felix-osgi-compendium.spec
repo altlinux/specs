@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -6,14 +7,15 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 %global bundle org.osgi.compendium
 
-Name:    felix-osgi-compendium
-Version: 1.4.0
-Release: alt5_22jpp8
-Summary: Felix OSGi R4 Compendium Bundle
-Group:   Development/Other
-License: ASL 2.0
-URL:     http://felix.apache.org
-Source0: http://www.apache.org/dist/felix/%{bundle}-%{version}-project.tar.gz
+Name:           felix-osgi-compendium
+Version:        1.4.0
+Release:        alt5_23jpp8
+Summary:        Felix OSGi R4 Compendium Bundle
+License:        ASL 2.0
+URL:            http://felix.apache.org
+BuildArch:      noarch
+
+Source0:        http://www.apache.org/dist/felix/%{bundle}-%{version}-project.tar.gz
 
 Patch0:         0001-Fix-servlet-api-dependency.patch
 Patch1:         0002-Fix-compile-target.patch
@@ -24,23 +26,19 @@ Patch3:         0004-Add-TARGET-property-to-ConfigurationPermission.patch
 # to a new version without the need for this patch, REMOVE it!
 Patch4:         0005-Add-getResourceURL-method-to-make-jbosgi-framework-h.patch
 
-BuildArch:      noarch
-
-BuildRequires: javapackages-tools rpm-build-java
-BuildRequires: maven-local
-BuildRequires: felix-osgi-core
-BuildRequires: felix-osgi-foundation
-BuildRequires: felix-parent
-BuildRequires: mvn(javax.servlet:javax.servlet-api)
-BuildRequires: mockito
-
+BuildRequires:  maven-local
+BuildRequires:  mvn(javax.servlet:javax.servlet-api)
+BuildRequires:  mvn(org.apache.felix:felix-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.felix:org.osgi.core)
+BuildRequires:  mvn(org.apache.felix:org.osgi.foundation)
 Source44: import.info
 
 %description
 OSGi Service Platform Release 4 Compendium Interfaces and Classes.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        API documentation for %{name}
 BuildArch: noarch
 
@@ -77,6 +75,9 @@ This package contains API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt5_23jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt5_22jpp8
 - new fc release
 
