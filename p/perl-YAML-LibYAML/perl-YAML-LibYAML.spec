@@ -1,44 +1,58 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(blib.pm) perl(overload.pm) perl-devel perl-podlators perl-unicore
+BuildRequires: perl(Test/Pod.pm) perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl-Filter
 Name:           perl-YAML-LibYAML
-Version:        0.63
-Release: alt1
+Version:        0.71
+Release:        alt1_1
 Summary:        Perl YAML Serialization using XS and libyaml
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/YAML-LibYAML/
-Source:        http://www.cpan.org/authors/id/T/TI/TINITA/YAML-LibYAML-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/R/RU/RURBAN/YAML-LibYAML-%{version}.tar.gz
 
-# Install
-BuildRequires:  perl(Cwd.pm)
+# Build
+BuildRequires:  coreutils
+BuildRequires:  findutils
+BuildRequires:  gcc-common
+BuildRequires:  perl
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
+BuildRequires:  perl(Config.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(File/Find.pm)
-BuildRequires:  perl(File/Path.pm)
-BuildRequires:  perl(File/Spec.pm)
+BuildRequires:  libyaml2, libyaml-devel
 
 # Module
-BuildRequires:  perl
 BuildRequires:  perl(B/Deparse.pm)
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(constant.pm)
 BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(Scalar/Util.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
 BuildRequires:  perl(XSLoader.pm)
 
 # Tests
-BuildRequires:  perl(Data/Dumper.pm)
+BuildRequires:  perl(blib.pm)
 BuildRequires:  perl(Devel/Peek.pm)
-BuildRequires:  perl(Scalar/Util.pm)
-BuildRequires:  perl(Test/Builder.pm)
-BuildRequires:  perl(Test/Builder/Module.pm)
+BuildRequires:  perl(Encode.pm)
+BuildRequires:  perl(File/Find.pm)
+BuildRequires:  perl(File/Path.pm)
+BuildRequires:  perl(IO/File.pm)
+BuildRequires:  perl(IO/Pipe.pm)
+BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(Test/Base.pm)
+BuildRequires:  perl(Test/Base/Filter.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Tie/Array.pm)
 BuildRequires:  perl(Tie/Hash.pm)
+BuildRequires:  perl(utf8.pm)
 
-# Runtime
+# Optional Tests
+BuildRequires:  perl(Path/Class.pm)
+
+# Dependencies
 
 # Avoid provides for perl shared objects
 
@@ -52,27 +66,29 @@ bound to Python and was later bound to Ruby.
 %prep
 %setup -q -n YAML-LibYAML-%{version}
 
-# Disable failed test (
-
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
+find %{buildroot} -type f -name .packlist -delete
+find %{buildroot} -type f -name '*.bs' -empty -delete
 # %{_fixperms} %{buildroot}
 
 %check
 make test
 
 %files
-%doc Changes README
+%doc LICENSE
+%doc Changes CONTRIBUTING README
 %{perl_vendor_archlib}/auto/YAML/
 %{perl_vendor_archlib}/YAML/
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.71-alt1_1
+- update to new release by fcimport
+
 * Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.63-alt1
 - automated CPAN update
 
