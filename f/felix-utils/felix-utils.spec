@@ -7,21 +7,21 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 %global bundle org.apache.felix.utils
 
-Name:             felix-utils
-Version:          1.8.2
-Release:          alt1_2jpp8
-Summary:          Utility classes for OSGi
-License:          ASL 2.0
-URL:              http://felix.apache.org
-Source0:          http://repo1.maven.org/maven2/org/apache/felix/%{bundle}/%{version}/%{bundle}-%{version}-source-release.tar.gz
+Name:           felix-utils
+Version:        1.8.2
+Release:        alt1_3jpp8
+Summary:        Utility classes for OSGi
+License:        ASL 2.0
+URL:            http://felix.apache.org
+BuildArch:      noarch
 
-BuildArch:        noarch
+Source0:        http://repo1.maven.org/maven2/org/apache/felix/%{bundle}/%{version}/%{bundle}-%{version}-source-release.tar.gz
 
-BuildRequires:    maven-local
-BuildRequires:    mvn(org.apache.felix:felix-parent:pom:)
-BuildRequires:    mvn(org.osgi:org.osgi.compendium)
-BuildRequires:    mvn(org.osgi:org.osgi.core)
-BuildRequires:    mvn(org.mockito:mockito-core)
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.felix:felix-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.osgi:org.osgi.compendium)
+BuildRequires:  mvn(org.osgi:org.osgi.core)
 Source44: import.info
 
 %description
@@ -52,12 +52,16 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE DEPENDENCIES
+%doc LICENSE NOTICE
+%doc DEPENDENCIES
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt1_3jpp8
+- new fc release
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt1_2jpp8
 - new version
 
