@@ -1,11 +1,11 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Convert-NLS_DATE_FORMAT
 Version:        0.06
-Release:        alt1_11
+Release:        alt1_12
 Summary:        Convert Oracle NLS_DATE_FORMAT <-> strftime Format Strings
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Convert-NLS_DATE_FORMAT/
@@ -46,6 +46,9 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_12
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_11
 - update to new release by fcimport
 
