@@ -3,7 +3,7 @@
 
 Name: perl-%module
 Serial: 1
-Version: 1.68
+Version: 1.70
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -18,7 +18,7 @@ Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-Format-Strptime-%{v
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Nov 16 2010
-BuildRequires: perl-DateTime perl-devel perl(Test/Fatal.pm) perl(Package/DeprecationManager.pm) perl(Test/Warnings.pm)
+BuildRequires: perl-DateTime perl-devel perl(Test/Fatal.pm) perl(Package/DeprecationManager.pm) perl(Test/Warnings.pm) perl(Encode.pm)
 
 %description
 This module replicates most of Strptime for DateTime. Strptime is the unix
@@ -39,6 +39,9 @@ returns the DateTime object associated.
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.70-alt1
+- automated CPAN update
+
 * Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.68-alt1
 - automated CPAN update
 
