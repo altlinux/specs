@@ -2,7 +2,7 @@
 %define _cups_serverbin %_libexecdir/cups
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
-Version: 1.13.0
+Version: 1.13.1
 Release: alt1%ubt
 
 # For a breakdown of the licensing, see COPYING file
@@ -164,6 +164,7 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %attr(0755,root,root) %_cups_serverbin/backend/parallel
 %attr(0755,root,root) %_cups_serverbin/backend/beh
 %attr(0755,root,root) %_cups_serverbin/backend/implicitclass
+%attr(0755,root,root) %_cups_serverbin/backend/driverless
 %_datadir/cups/banners
 %_datadir/cups/charsets
 %_datadir/cups/braille
@@ -210,6 +211,9 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Mon Dec 19 2016 Anton Farygin <rider@altlinux.ru> 1.13.1-alt1%ubt
+- new version 1.13.1
+
 * Wed Dec 14 2016 Anton Farygin <rider@altlinux.ru> 1.13.0-alt1%ubt
 - new version 1.13.0
 
