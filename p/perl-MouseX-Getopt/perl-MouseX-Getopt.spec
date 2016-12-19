@@ -1,25 +1,21 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-devel perl-podlators perl(Module/Build/Tiny.pm)
+BuildRequires: perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-MouseX-Getopt
 Summary:	Mouse role for processing command line options
 Version:	0.37
-Release:	alt1
+Release:	alt1_1
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/MouseX-Getopt/
-Source:	http://www.cpan.org/authors/id/G/GF/GFUJI/MouseX-Getopt-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/G/GF/GFUJI/MouseX-Getopt-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
 BuildRequires:	perl
-BuildRequires:	perl(File/Basename.pm)
-BuildRequires:	perl(File/Copy.pm)
-BuildRequires:	perl(File/Spec.pm)
-BuildRequires:	perl(Module/Build.pm)
+BuildRequires:	rpm-build-perl
+BuildRequires:	perl(Module/Build/Tiny.pm)
 BuildRequires:	perl(strict.pm)
-BuildRequires:	perl(utf8.pm)
 BuildRequires:	perl(warnings.pm)
 # Module Runtime
 BuildRequires:	perl(Carp.pm)
@@ -30,6 +26,7 @@ BuildRequires:	perl(Mouse/Meta/Attribute.pm)
 BuildRequires:	perl(Mouse/Role.pm)
 BuildRequires:	perl(Mouse/Util/TypeConstraints.pm)
 # Test Suite
+BuildRequires:	perl(File/Spec.pm)
 BuildRequires:	perl(Mouse/Meta/Class.pm)
 BuildRequires:	perl(Scalar/Util.pm)
 BuildRequires:	perl(Test/Exception.pm)
@@ -74,6 +71,9 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 %{perl_vendor_privlib}/MouseX/
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1_1
+- update to new release by fcimport
+
 * Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
 - automated CPAN update
 
