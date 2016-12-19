@@ -1,18 +1,21 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Module/Build.pm) perl-devel perl-podlators
+BuildRequires: perl(Module/Build.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-SUPER
 Version:	1.20141117
-Release:	alt2_4
+Release:	alt2_6
 Summary:	Sane superclass method dispatcher
 License:	GPL+ or Artistic
-Group:		Development/Perl
 URL:		http://search.cpan.org/dist/SUPER/
 Source0:	http://search.cpan.org/CPAN/authors/id/C/CH/CHROMATIC/SUPER-%{version}.tar.gz
 BuildArch:	noarch
 # =============== Module Build =================
+BuildRequires:	coreutils
+BuildRequires:	findutils
 BuildRequires:	perl
+BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # =============== Module Runtime ===============
 BuildRequires:	perl(Carp.pm)
@@ -44,17 +47,25 @@ make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
+find %{buildroot} -type f -name .packlist -delete
 # %{_fixperms} %{buildroot}
 
 %check
 make test
 
 %files
+%if 0%{?_licensedir:1}
+%doc LICENSE
+%else
+%doc LICENSE
+%endif
 %doc Changes README
 %{perl_vendor_privlib}/SUPER.pm
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.20141117-alt2_6
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.20141117-alt2_4
 - update to new release by fcimport
 
