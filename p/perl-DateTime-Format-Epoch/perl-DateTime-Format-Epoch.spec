@@ -1,11 +1,11 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Module/Build.pm) perl-devel perl-podlators
+BuildRequires: perl(Module/Build.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-Epoch
 Version:        0.16
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Convert DateTimes to/from epoch seconds
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/DateTime-Format-Epoch/
@@ -63,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_4
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_3
 - update to new release by fcimport
 
