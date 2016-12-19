@@ -1,19 +1,18 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # noarch, but to avoid debug* files interfering with manifest test:
 %global debug_package %{nil}
 
 Name:		perl-Test-Version
 Version:	2.05
-Release:	alt1
+Release:	alt1_1
 Summary:	Check to see that versions in modules are sane
 License:	Artistic 2.0
 URL:		http://search.cpan.org/dist/Test-Version/
-Source:	http://www.cpan.org/authors/id/P/PL/PLICEASE/Test-Version-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/P/PL/PLICEASE/Test-Version-%{version}.tar.gz
 BuildArch:	noarch
 # ===================================================================
 # Module build requirements
@@ -21,6 +20,7 @@ BuildArch:	noarch
 BuildRequires:	coreutils
 BuildRequires:	findutils
 BuildRequires:	perl
+BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # ===================================================================
 # Module requirements
@@ -38,6 +38,7 @@ BuildRequires:	perl(warnings.pm)
 # ===================================================================
 # Regular test suite requirements
 # ===================================================================
+BuildRequires:	perl(blib.pm)
 BuildRequires:	perl(CPAN/Meta.pm)
 BuildRequires:	perl(File/Spec.pm)
 BuildRequires:	perl(IO/Handle.pm)
@@ -83,7 +84,7 @@ make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
+find %{buildroot} -type f -name .packlist -delete
 # %{_fixperms} %{buildroot}
 
 %check
@@ -98,6 +99,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 2.05-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.05-alt1
 - automated CPAN update
 
