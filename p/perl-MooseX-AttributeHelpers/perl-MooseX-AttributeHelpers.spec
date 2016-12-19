@@ -1,11 +1,11 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Data/Dumper.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(Data/Dumper.pm) perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-MooseX-AttributeHelpers
 Version:        0.25
-Release:        alt1_1.1
+Release:        alt1_2
 Summary:        Extended Moose attribute interfaces
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/MooseX-AttributeHelpers/
@@ -53,6 +53,9 @@ sed -i '1s,#!perl,#!%{__perl},' t/*.t
 %{perl_vendor_privlib}/MooseX*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_2
+- update to new release by fcimport
+
 * Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_1.1
 - rebuild to restore role requires
 
