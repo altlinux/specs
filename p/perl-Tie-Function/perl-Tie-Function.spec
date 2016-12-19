@@ -1,13 +1,13 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 %global pkgname Tie-Function
 
 Name:           perl-Tie-Function
 Version:        0.02
-Release:        alt1_9
+Release:        alt1_10
 Summary:        Wrap functions in tied hash sugar
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Tie-Function/
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_10
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_9
 - update to new release by fcimport
 
