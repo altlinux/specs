@@ -1,12 +1,12 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(DBD/SQLite.pm) perl-devel perl-podlators
+BuildRequires: perl(DBD/SQLite.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-SQLite 
 Summary:        Parse and format SQLite dates and times 
 Version:        0.11
-Release:        alt2_18
+Release:        alt2_19
 License:        GPL+ or Artistic 
 Source0:        http://search.cpan.org/CPAN/authors/id/C/CF/CFAERBER/DateTime-Format-SQLite-%{version}.tar.gz
 URL:            http://search.cpan.org/dist/DateTime-Format-SQLite/
@@ -59,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt2_19
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt2_18
 - update to new release by fcimport
 
