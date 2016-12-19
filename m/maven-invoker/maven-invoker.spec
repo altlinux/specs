@@ -8,25 +8,26 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-invoker
 Version:        2.2
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Fires a maven build in a clean environment
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-invoker/
+BuildArch:      noarch
+
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
 # Patch rejected upstream
 Patch1:         %{name}-MSHARED-279.patch
 
-BuildArch:      noarch
-
-BuildRequires:  junit
 BuildRequires:  maven-local
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  maven-shared
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 # Required by tests
+BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-clean-plugin
-
-Obsoletes:      maven-shared-invoker < %{version}-%{release}
-Provides:       maven-shared-invoker = %{version}-%{release}
 Source44: import.info
 
 %description
@@ -67,6 +68,9 @@ API documentation for %{name}.
 
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_4jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_3jpp8
 - new fc release
 
