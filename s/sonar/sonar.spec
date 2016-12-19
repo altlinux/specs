@@ -7,27 +7,25 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           sonar
 Version:        3.2
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        An open platform to manage code quality
 License:        LGPLv3+
 URL:            http://www.sonarqube.org
+BuildArch:      noarch
+
 Source0:        https://github.com/SonarSource/sonarqube/archive/%{version}.tar.gz
 
 # dbunit with (unavailable) oracle support
-Patch0:        0001-Remove-oracle-DB-support.patch
-Patch1:        0002-Port-to-guava-18.patch
-Patch2:        0003-Never-thrown-exception.patch
-Patch3:        0004-Port-maven-plugin-to-current-maven-dependency-tree.patch
-
-BuildRequires: maven-local
+Patch0:         0001-Remove-oracle-DB-support.patch
+Patch1:         0002-Port-to-guava-18.patch
+Patch2:         0003-Never-thrown-exception.patch
+Patch3:         0004-Port-maven-plugin-to-current-maven-dependency-tree.patch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.hibernate:hibernate-core:3)
-BuildRequires:  mvn(org.hibernate:hibernate-ehcache:3)
-BuildRequires:  mvn(org.hibernate:hibernate-entitymanager:3)
 BuildRequires:  mvn(ch.qos.logback:logback-classic)
 BuildRequires:  mvn(ch.qos.logback:logback-core)
 BuildRequires:  mvn(com.fasterxml.staxmate:staxmate)
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
 BuildRequires:  mvn(com.googlecode.json-simple:json-simple)
 BuildRequires:  mvn(com.google.guava:guava)
 BuildRequires:  mvn(commons-codec:commons-codec)
@@ -40,9 +38,7 @@ BuildRequires:  mvn(com.puppycrawl.tools:checkstyle)
 BuildRequires:  mvn(com.thoughtworks.xstream:xstream)
 BuildRequires:  mvn(javax.persistence:persistence-api)
 BuildRequires:  mvn(javax.servlet:servlet-api)
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.jcip:jcip-annotations)
-BuildRequires:  mvn(net.sourceforge.jtds:jtds)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.commons:commons-email)
 BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-jta_1.1_spec)
@@ -53,18 +49,18 @@ BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-project)
 BuildRequires:  mvn(org.apache.maven:maven-settings)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
 BuildRequires:  mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:native2ascii-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-classworlds)
 BuildRequires:  mvn(org.codehaus.sonar:sonar-packaging-maven-plugin)
 BuildRequires:  mvn(org.codehaus.sonar:sonar-update-center-common)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-classworlds)
 BuildRequires:  mvn(org.codehaus.woodstox:stax2-api)
 BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-lgpl)
 BuildRequires:  mvn(org.hibernate.common:hibernate-commons-annotations)
+BuildRequires:  mvn(org.hibernate:hibernate-core:3)
+BuildRequires:  mvn(org.hibernate:hibernate-ehcache:3)
+BuildRequires:  mvn(org.hibernate:hibernate-entitymanager:3)
 BuildRequires:  mvn(org.jacoco:org.jacoco.agent)
 BuildRequires:  mvn(org.jacoco:org.jacoco.core)
 BuildRequires:  mvn(org.jfree:jfreechart)
@@ -73,13 +69,12 @@ BuildRequires:  mvn(org.picocontainer:picocontainer)
 BuildRequires:  mvn(org.slf4j:jcl-over-slf4j)
 BuildRequires:  mvn(org.slf4j:log4j-over-slf4j)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
-BuildRequires:  mvn(pmd:pmd)
 BuildRequires:  mvn(xalan:xalan)
 BuildRequires:  mvn(xerces:xercesImpl)
 BuildRequires:  mvn(xpp3:xpp3)
-
-BuildArch:     noarch
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 Source44: import.info
+
 
 %description
 Open source platform for continuous inspection of code quality.
@@ -389,6 +384,9 @@ rm -r plugins/sonar-squid-java-plugin/test-resources/ sonar-duplications/src/tes
 %files jacoco-plugin -f .mfiles-%{name}-jacoco-plugin
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_8jpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_7jpp8
 - new fc release
 
