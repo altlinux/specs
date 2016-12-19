@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Pod/Simple/HTML.pm) perl(Smart/Comments.pm) perl-devel perl-podlators
+BuildRequires: perl(Pod/Simple/HTML.pm) perl(Smart/Comments.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Pod-MinimumVersion
 Version:        50
-Release:        alt3_15
+Release:        alt3_16
 Summary:        Perl version for POD directives used
 License:        GPLv3+
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Pod-MinimumVersion/
 Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/Pod-MinimumVersion-%{version}.tar.gz
 BuildArch:      noarch
@@ -66,6 +66,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 50-alt3_16
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 50-alt3_15
 - update to new release by fcimport
 
