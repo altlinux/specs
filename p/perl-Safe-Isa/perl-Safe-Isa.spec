@@ -1,19 +1,21 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(autodie.pm) perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Safe-Isa
 Version:        1.000006
-Release:        alt1
+Release:        alt1_1
 Summary:        Call isa, can, does and DOES safely on things that may not be objects
+Group:          Development/Other
 License:        GPL+ or Artistic
-Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Safe-Isa/
-Source:        http://www.cpan.org/authors/id/H/HA/HAARG/Safe-Isa-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/H/HA/HAARG/Safe-Isa-%{version}.tar.gz
 BuildArch:      noarch
 # Build
+BuildRequires:  coreutils
+BuildRequires:  findutils
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Module
 BuildRequires:  perl(Exporter.pm)
@@ -23,18 +25,11 @@ BuildRequires:  perl(warnings.pm)
 # Test Suite
 BuildRequires:  perl(Test/More.pm)
 Source44: import.info
-# Runtime
+# Dependencies
 
 %description
-How many times have you found yourself writing:
-
-  if ($obj->isa('Something')) {
-
-and then shortly afterwards cursing and changing it to:
-
-  if (Scalar::Util::blessed($obj) and $obj->isa('Something')) {
-
-Right. That's why this module exists.
+This module allows you to call isa, can, does and DOES safely on things that
+may not be objects, without the risk of crashing.
 
 %prep
 %setup -q -n Safe-Isa-%{version}
@@ -45,8 +40,8 @@ make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-# %{_fixperms} %{buildroot}
+find %{buildroot} -type f -name .packlist -delete
+# %{_fixperms} -c %{buildroot}
 
 %check
 make test
@@ -56,6 +51,9 @@ make test
 %{perl_vendor_privlib}/Safe/
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.000006-alt1_1
+- update to new release by fcimport
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.000006-alt1
 - automated CPAN update
 
