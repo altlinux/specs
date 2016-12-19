@@ -1,17 +1,17 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Module/Build.pm) perl-devel perl-podlators
+BuildRequires: perl(Module/Build.pm) perl-podlators
 # END SourceDeps(oneline)
 %global pkgname DateTime-Format-Excel
 
 Summary:	Convert between DateTime and Excel dates
-Name:		perl-DateTime-Format-Excel 
+Name:		perl-DateTime-Format-Excel
 Epoch:		1
 Version:	0.31
-Release:	alt2_16
+Release:	alt2_18
 # lib/DateTime/Format/Excel.pm -> GPL+ or Artistic
-License:	GPL+ or Artistic 
+License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/%{pkgname}/
 Source:		http://search.cpan.org/CPAN/authors/id/A/AB/ABURS/%{pkgname}-%{version}.tar.gz
 Patch0:		perl-DateTime-Format-Excel-0.31-versioning.patch
@@ -21,13 +21,13 @@ BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 BuildRequires:	sed
 # Run-time
 BuildRequires:	perl(Carp.pm)
-BuildRequires:  perl(DateTime.pm)
+BuildRequires:	perl(DateTime.pm)
 BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(vars.pm)
 # Tests
 BuildRequires:	perl(Test/More.pm)
 # Optional tests
-BuildRequires:  perl(Test/Pod.pm)
+BuildRequires:	perl(Test/Pod.pm)
 BuildArch:	noarch
 Source44: import.info
 
@@ -63,6 +63,9 @@ make test
 %{perl_vendor_privlib}/DateTime/
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.31-alt2_18
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.31-alt2_16
 - update to new release by fcimport
 
