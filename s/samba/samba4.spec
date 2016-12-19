@@ -38,7 +38,7 @@
 %def_with libcephfs
 
 Name: samba
-Version: 4.5.2
+Version: 4.5.3
 Release: alt1%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1338,6 +1338,12 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Mon Dec 19 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.5.3-alt1%ubt
+- Update for release with security fixes:
+  - CVE-2016-2123 (ndr_pull_dnsp_name contains an integer wrap problem)
+  - CVE-2016-2125 (client code always requests a forwardable ticket)
+  - CVE-2016-2126 (crash winbindd using a legitimate Kerberos ticket)
+
 * Mon Dec 12 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.5.2-alt1%ubt
 - Udpate to first winter release
 
