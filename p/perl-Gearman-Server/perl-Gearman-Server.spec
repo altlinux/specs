@@ -1,23 +1,51 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Danga/Socket.pm) perl(Errno.pm) perl(FindBin.pm) perl(Gearman/Util.pm) perl(IO/Handle.pm) perl(IO/Socket/INET.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(Sys/Hostname.pm) perl(base.pm) perl(fields.pm) perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Gearman-Server
 Version:        1.130.1
-Release:        alt1
-Summary:        Function call "router" and load balancer
+Release:        alt1_2
+Summary:        Function call router and load balancer
 License:        GPL+ or Artistic
 Group:          System/Servers
 URL:            http://search.cpan.org/dist/Gearman-Server/
-Source:        http://www.cpan.org/authors/id/P/PA/PALIK/Gearman-Server-v%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/P/PA/PALIK/Gearman-Server-v%{version}.tar.gz
+# Use absolute interpreter
+Patch0:         Gearman-Server-v1.130.0-Do-not-use-usr-bin-env.patch
+# Load IO::Socket::INET in Gearman/Server.pm
+Patch1:         Gearman-Server-v1.130.1-Load-IO-Socket-INET.patch
 BuildArch:      noarch
-
-BuildRequires:  perl(ExtUtils/MakeMaker.pm) perl(Test/Script.pm)
+BuildRequires:  findutils
+BuildRequires:  perl
+BuildRequires:  rpm-build-perl
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Run-time:
+BuildRequires:  perl(base.pm)
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(constant.pm)
+BuildRequires:  perl(Danga/Socket.pm)
+BuildRequires:  perl(Errno.pm)
+BuildRequires:  perl(fields.pm)
+BuildRequires:  perl(Gearman/Util.pm)
+BuildRequires:  perl(Getopt/Long.pm)
+BuildRequires:  perl(IO/Handle.pm)
+BuildRequires:  perl(IO/Socket/INET.pm)
+BuildRequires:  perl(Pod/Usage.pm)
+BuildRequires:  perl(POSIX.pm)
+BuildRequires:  perl(Scalar/Util.pm)
+BuildRequires:  perl(Socket.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(Sys/Hostname.pm)
+BuildRequires:  perl(vars.pm)
+BuildRequires:  perl(version.pm)
+BuildRequires:  perl(warnings.pm)
+# Tests:
+BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(Test/Script.pm)
 
 
 Source44: import.info
-%filter_from_requires /^perl\\(Danga.Socket.pm\\)\s*$/d
+%filter_from_requires /^perl\\(Danga.Socket.pm\\)$/d
 
 %description
 You run a Gearman server (or more likely, many of them for both high-
@@ -29,6 +57,8 @@ one of the Gearman servers.
 
 %prep
 %setup -q -n Gearman-Server-v%{version}
+%patch0 -p1
+%patch1 -p1
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -36,19 +66,22 @@ make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
+find %{buildroot} -type f -name .packlist -delete
 # %{_fixperms} %{buildroot}/*
 
 %check
 make test
 
 %files
-%doc CHANGES
+%doc CHANGES README.md
 %{_bindir}/gearmand
 %{perl_vendor_privlib}/Gearman
 %{_mandir}/man1/gearmand.*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.130.1-alt1_2
+- update to new release by fcimport
+
 * Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.130.1-alt1
 - automated CPAN update
 
