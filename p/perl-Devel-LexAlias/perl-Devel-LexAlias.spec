@@ -4,16 +4,16 @@ BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Devel-LexAlias
 Version:        0.05
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Alias lexical variables
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Devel-LexAlias/
 Source0:        http://www.cpan.org/authors/id/R/RC/RCLAMP/Devel-LexAlias-%{version}.tar.gz
 # Module Build
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  gcc
+BuildRequires:  gcc-common
 BuildRequires:  perl
 BuildRequires:  perl-devel
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_archlib}/Devel/
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_11
+- update to new release by fcimport
+
 * Sun May 08 2016 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_10
 - update to new release by fcimport
 
