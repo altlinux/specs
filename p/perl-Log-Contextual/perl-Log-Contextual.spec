@@ -4,14 +4,16 @@ BuildRequires: perl(Test/PerlTidy.pm) perl(Test/Pod.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Log-Contextual
 Version:        0.007000
-Release:        alt1
+Release:        alt1_1
 Summary:        Simple logging interface with a contextual log
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Log-Contextual/
-Source:        http://www.cpan.org/authors/id/F/FR/FREW/Log-Contextual-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/F/FR/FREW/Log-Contextual-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  findutils
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -60,7 +62,7 @@ make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
+find $RPM_BUILD_ROOT -type f -name .packlist -delete
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -72,6 +74,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.007000-alt1_1
+- update to new release by fcimport
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.007000-alt1
 - automated CPAN update
 
