@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Module/Build/Tiny.pm) perl-devel perl-podlators
+BuildRequires: perl(Module/Build/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-experimental
 Version:        0.016
-Release:        alt1_2
+Release:        alt1_365
 Summary:        Experimental features made easy
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/experimental/
 Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/experimental-%{version}.tar.gz
 # Replace Build.PL to not require Module::Build::Tiny because experimental is
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1_365
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1_2
 - update to new release by fcimport
 
