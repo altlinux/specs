@@ -1,32 +1,40 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-podlators
+BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/CPAN/Changes.pm) perl(Test/CPAN/Meta.pm) perl(Test/CPAN/Meta/JSON.pm) perl(Test/EOL.pm) perl(Test/Kwalitee.pm) perl(Test/Mojibake.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(Test/Synopsis.pm) perl(Test/Version.pm) perl-podlators
 # END SourceDeps(oneline)
 # We need to patch the test suite if we have an old version of Test::More
 %global old_test_more %(perl -MTest::More -e 'print (($Test::More::VERSION < 0.88) ? 1 : 0);' 2>/dev/null || echo 0)
 
 Name:           perl-Test-Portability-Files
 Version:        0.07
-Release:        alt1
+Release:        alt1_1
 Summary:        Check file names portability
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Test-Portability-Files/
-Source:        http://www.cpan.org/authors/id/A/AB/ABRAXXA/Test-Portability-Files-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/A/AB/ABRAXXA/Test-Portability-Files-%{version}.tar.gz
 Patch1:         Test-Portability-Files-0.06-old-Test::More.patch
 BuildArch:      noarch
 # Build
+BuildRequires:  coreutils
+BuildRequires:  findutils
+BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
 # Runtime
 BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(ExtUtils/Manifest.pm)
+BuildRequires:  perl(File/Basename.pm)
+BuildRequires:  perl(File/Find.pm)
 BuildRequires:  perl(File/Spec.pm)
-BuildRequires:  perl(strict.pm)
-BuildRequires:  perl(warnings.pm)
-# Test Suite
-BuildRequires:  perl(File/Temp.pm)
 BuildRequires:  perl(Test/Builder.pm)
+# Test Suite
+BuildRequires:  perl(blib.pm)
+BuildRequires:  perl(File/Temp.pm)
+BuildRequires:  perl(IO/Handle.pm)
+BuildRequires:  perl(IPC/Open3.pm)
 BuildRequires:  perl(Test/More.pm)
 Source44: import.info
 
@@ -50,17 +58,21 @@ make
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
+find $RPM_BUILD_ROOT -type f -name .packlist -delete
 # %{_fixperms} $RPM_BUILD_ROOT
 
 %check
 make test
 
 %files
-%doc Changes LICENSE README
+%doc LICENSE
+%doc Changes README
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
 - automated CPAN update
 
