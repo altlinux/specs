@@ -1,17 +1,19 @@
+%def_disable snapshot
+
 %define _name gdk-pixbuf
 %define api_ver 2.0
 %define binary_ver 2.10.0
 %define ver_major 2.36
 %define _libexecdir %_prefix/libexec
 
-%def_disable gtk_doc
+%{?_enable_snapshot:%def_enable gtk_doc}
 %def_enable introspection
 %def_with x11
 %def_with libjasper
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -19,7 +21,12 @@ Group: System/Libraries
 License: LGPL
 Url: http://www.gtk.org
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
+
 Source1: %_name.map
 Source2: %_name.lds
 
@@ -124,6 +131,7 @@ install -p -m644 %_sourcedir/%_name.map %_name/compat.map
 install -p -m644 %_sourcedir/%_name.lds %_name/compat.lds
 
 %build
+%autoreconf
 %configure \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{subst_enable introspection} \
@@ -225,6 +233,12 @@ echo : >>%_name/abicheck.sh
 
 
 %changelog
+* Tue Dec 20 2016 Yuri N. Sedunov <aris@altlinux.org> 2.36.2-alt1
+- 2.36.2
+
+* Wed Dec 14 2016 Yuri N. Sedunov <aris@altlinux.org> 2.36.1-alt2
+- updated to 2.36.1-10-g9e7cd8b
+
 * Tue Dec 13 2016 Yuri N. Sedunov <aris@altlinux.org> 2.36.1-alt1
 - 2.36.1
 
