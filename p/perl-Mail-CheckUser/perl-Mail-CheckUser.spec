@@ -14,8 +14,8 @@
 %define _disable_test 1
 
 Name: perl-Mail-CheckUser
-Version: 1.21
-Release: alt3.1
+Version: 1.24
+Release: alt1
 
 Summary: check email addresses for validity
 
@@ -65,6 +65,9 @@ see "GLOBAL VARIABLES".
 %_man1dir/*
 
 %changelog
+* Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.24-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.21-alt3.1
 - repair after perl 5.12 upgrade using girar-nmu
 
