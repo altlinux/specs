@@ -1,5 +1,5 @@
 Name: libgit2
-Version: 0.24.3
+Version: 0.24.5
 Release: alt1
 
 Summary: linkable library for Git
@@ -58,6 +58,9 @@ sed -i 's/@CMAKE_INSTALL_PREFIX@\///' %name.pc.in
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Dec 20 2016 Yuri N. Sedunov <aris@altlinux.org> 0.24.5-alt1
+- 0.24.5
+
 * Tue Nov 08 2016 Yuri N. Sedunov <aris@altlinux.org> 0.24.3-alt1
 - 0.24.3 (fixed CVE-2016-8568, CVE-2016-8569)
 
