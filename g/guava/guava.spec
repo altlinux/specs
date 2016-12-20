@@ -1,29 +1,32 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-Name:          guava
-Version:       18.0
-Release:       alt2_4jpp8
-Summary:       Google Core Libraries for Java
-License:       ASL 2.0
-URL:           https://github.com/google/guava
+Name:           guava
+Version:        18.0
+Release:        alt2_8jpp8
+Summary:        Google Core Libraries for Java
+License:        ASL 2.0
+URL:            https://github.com/google/guava
+BuildArch:      noarch
 
-Source0:       https://github.com/google/guava/archive/v%{version}.tar.gz
-Patch0:        %{name}-java8.patch
+Source0:        https://github.com/google/guava/archive/v%{version}.tar.gz
 
-BuildRequires: maven-local
+Patch0:         %{name}-java8.patch
+Patch1:         guava-jdk8-HashMap-testfix.patch
 
-BuildRequires: mvn(com.google.code.findbugs:jsr305) >= 0
-BuildRequires: ant
-BuildRequires: apache-ivy
-
-BuildArch:     noarch
-
-# Use the same directory of the main package for subpackage licence and docs
-%global _docdir_fmt %{name}
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
+BuildRequires:  mvn(com.google.guava:guava)
+BuildRequires:  mvn(com.google.truth:truth)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -42,20 +45,29 @@ BuildArch: noarch
 %description javadoc
 API documentation for %{name}.
 
+%package testlib
+Group: Development/Java
+Summary:        The guava-testlib subartefact
+
+%description testlib
+guava-testlib provides additional functionality for conveinent unit testing
+
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 find . -name '*.jar' -delete
 
 %pom_disable_module guava-gwt
-%pom_disable_module guava-testlib
-%pom_disable_module guava-tests
-%pom_remove_plugin :animal-sniffer-maven-plugin guava
+%pom_remove_plugin -r :animal-sniffer-maven-plugin 
 %pom_remove_plugin :maven-gpg-plugin
 %pom_remove_dep jdk:srczip guava
+%pom_remove_dep :caliper guava-tests
+%mvn_package :guava-parent guava
+%mvn_package :guava-tests __noinstall
 
-# javadoc generation fails due to strict doclint in JDK 8
-%pom_remove_plugin :maven-javadoc-plugin guava
+# javadoc generation fails due to strict doclint in JDK 1.8.0_45
+%pom_remove_plugin -r :maven-javadoc-plugin
 
 %pom_xpath_inject /pom:project/pom:build/pom:plugins/pom:plugin/pom:configuration/pom:instructions "<_nouses>true</_nouses>" guava/pom.xml
 
@@ -63,19 +75,26 @@ find . -name '*.jar' -delete
 
 %mvn_file :%{name} %{name}
 %mvn_alias :%{name} com.google.collections:google-collections com.google.guava:guava-jdk5
-%mvn_build
+# Tests fail on Koji due to insufficient memory,
+# see https://bugzilla.redhat.com/show_bug.cgi?id=1332971
+%mvn_build -s -f
 
 %install
 %mvn_install
 
-%files -f .mfiles
+%files -f .mfiles-guava
 %doc AUTHORS CONTRIBUTORS README*
 %doc COPYING
 
 %files javadoc -f .mfiles-javadoc
 %doc COPYING
 
+%files testlib -f .mfiles-guava-testlib
+
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 18.0-alt2_8jpp8
+- new fc release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 18.0-alt2_4jpp8
 - added osgi provides
 
