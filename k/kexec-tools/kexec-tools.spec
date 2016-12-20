@@ -1,5 +1,5 @@
 Name: kexec-tools
-Version: 2.0.12
+Version: 2.0.14
 Release: alt1
 
 Summary: Load one kernel from another
@@ -57,6 +57,9 @@ install -pm0644 -D kexec/kexec.8 %buildroot%_man8dir/kexec.8
 %endif
 
 %changelog
+* Tue Dec 20 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.14-alt1
+- 2.0.14 released
+
 * Fri Apr 15 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.12-alt1
 - 2.0.12 released
 
