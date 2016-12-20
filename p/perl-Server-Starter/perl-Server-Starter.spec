@@ -1,5 +1,5 @@
 Name: perl-Server-Starter
-Version: 0.32
+Version: 0.33
 Release: alt1
 
 Summary: Server::Starter - a superdaemon for hot-deploying server programs
@@ -32,6 +32,9 @@ BuildRequires: perl-Test-TCP perl-Proc-Wait3 perl-Scope-Guard perl-List-MoreUtil
 %doc Changes README*
 
 %changelog
+* Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
+- automated CPAN update
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
 - automated CPAN update
 
