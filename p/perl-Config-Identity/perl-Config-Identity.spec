@@ -1,5 +1,5 @@
 Name: perl-Config-Identity
-Version: 0.0018
+Version: 0.0019
 Release: alt1
 
 Summary: Load (and optionally decrypt via GnuPG) user/pass identity information 
@@ -29,6 +29,9 @@ BuildRequires: perl(File/HomeDir.pm) perl(IPC/Run.pm) perl-devel perl(Test/Most.
 %doc Changes README
 
 %changelog
+* Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.0019-alt1
+- automated CPAN update
+
 * Mon May 12 2014 Vladimir Lettiev <crux@altlinux.ru> 0.0018-alt1
 - initial build for ALTLinux
 
