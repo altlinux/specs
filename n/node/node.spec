@@ -1,5 +1,6 @@
 # check deps/npm/package.json for it
 %define npmver 3.10.9
+%def_without npm
 # note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
 %define major 6.9
@@ -28,7 +29,7 @@
 
 Name: node
 Version: %major.2
-Release: alt1
+Release: alt2
 
 Summary: Evented I/O for V8 Javascript
 
@@ -40,6 +41,8 @@ Url: http://nodejs.org/
 Source: %name-%version.tar
 Source7: nodejs_native.req.files
 Patch: addon.gypi-alt-linkage-fixes.patch
+
+BuildRequires(pre): rpm-macros-nodejs
 
 BuildRequires: python-devel gcc-c++ zlib-devel
 
@@ -118,7 +121,7 @@ BuildArch: noarch
 %description doc
 Documentation files for %name.
 
-
+%if_with npm
 %package -n npm
 Version:	%npmver
 Group:		Development/Tools
@@ -132,6 +135,7 @@ Requires:	nodejs(abi) = %{nodejs_abi}
 %description -n npm
 npm is a package manager for node. You can use it to install and publish your
 node programs. It manages dependencies and does other cool stuff.
+%endif
 
 %prep
 %setup
@@ -153,6 +157,9 @@ rm -rf deps/v8
     --shared-openssl \
     --shared-openssl-includes=%_includedir \
 %endif
+%if_without npm
+    --without-npm \
+%endif
 %if_with systemuv
     --shared-libuv \
 %endif
@@ -171,6 +178,8 @@ rm -rf deps/v8
 %make_build test
 
 %install
+mkdir -p %buildroot%nodejs_sitelib/
+
 %makeinstall_std
 install -d %buildroot%_sysconfdir/profile.d
 echo 'export NODE_PATH="%{_libexecdir}/node_modules;%{_libexecdir}/node_altmodules"' >%buildroot%_sysconfdir/profile.d/node.sh
@@ -185,10 +194,12 @@ cp -p deps/uv/include/*.h %{buildroot}%{_includedir}/node
 #cp -p deps/uv/include/uv-private/*.h %{buildroot}%{_includedir}/node/uv-private
 %endif
 
+%if_with npm
 #node-gyp needs common.gypi too
 mkdir -p %{buildroot}%{_datadir}/node
 cp -p common.gypi %{buildroot}%{_datadir}/node
 #tar -xf %{SOURCE0} --directory=%{buildroot}%{_datadir}/node/sources
+%endif
 
 # ensure Requires are added to every native module that match the Provides from
 # the nodejs build in the buildroot
@@ -209,8 +220,7 @@ rm -rf %buildroot%_libexecdir/node_modules/npm/node_modules/request/node_modules
 %files
 %doc AUTHORS CHANGELOG.md LICENSE README.md
 %_bindir/node
-%dir %_libexecdir/node_modules/
-%dir %_datadir/node/
+%dir %nodejs_sitelib
 %_datadir/systemtap/tapset/node.stp
 %_man1dir/*
 %_sysconfdir/profile.d/*
@@ -220,6 +230,7 @@ rm -rf %buildroot%_libexecdir/node_modules/npm/node_modules/request/node_modules
 
 %files devel
 %dir %_includedir/node/
+#dir %_datadir/node/
 %if_without systemuv
 %_includedir/node/uv*
 %endif
@@ -234,16 +245,21 @@ rm -rf %buildroot%_libexecdir/node_modules/npm/node_modules/request/node_modules
 %_includedir/node/libplatform/
 # deps/http_parser
 #_includedir/node/nameser.h
-%_datadir/node/common.gypi
+#_datadir/node/common.gypi
 %_rpmlibdir/nodejs_native.req*
 #%_datadir/node/sources
 
+%if_with npm
 %files -n npm
 %_bindir/npm
-%_libexecdir/node_modules/npm/
+%nodejs_sitelib/npm/
 %exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
+%endif
 
 %changelog
+* Sun Dec 18 2016 Vitaly Lipatov <lav@altlinux.ru> 6.9.2-alt2
+- build without npm subpackage
+
 * Wed Dec 07 2016 Vitaly Lipatov <lav@altlinux.ru> 6.9.2-alt1
 - new version 6.9.2 (with rpmrb script)
 - 2016-12-06 Node.js v6.9.2 'Boron' (LTS) Release
