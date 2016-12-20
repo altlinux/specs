@@ -7,8 +7,8 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-javadoc-plugin
-Version:        2.10.3
-Release:        alt1_3jpp8
+Version:        2.10.4
+Release:        alt1_1jpp8
 Summary:        Maven Javadoc Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-javadoc-plugin
@@ -99,6 +99,9 @@ rm -f src/main/java/org/apache/maven/plugin/javadoc/*FixJavadocMojo.java
 %doc LICENSE NOTICE 
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.10.4-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.10.3-alt1_3jpp8
 - new fc release
 
