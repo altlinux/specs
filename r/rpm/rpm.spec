@@ -17,7 +17,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0
-Release: alt6
+Release: alt7
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -98,12 +98,21 @@ Group: Archiving/Other
 This package contains rpm2archive utility. It can be used to convert rpm
 package into tarball.
 
+%package -n rpmspec
+Summary: Program which allows to query rpm specfile.
+Group: Archiving/Other
+Conflicts: rpm < 4.13.0-alt6
+
+%description -n rpmspec
+This package contains rpmspec utility. It can be used to query rpm specfile.
+
 %package -n librpm%sover
 Summary: Libraries for manipulating RPM packages
 Group: System/Libraries
 License: GPLv2+ and LGPLv2+ with exceptions
 Provides: rpm-plugin-selinux = %EVR
 Obsoletes: rpm-plugin-selinux < %EVR
+Conflicts: librpm < 4.0.4-alt100.97
 
 %description -n librpm%sover
 This package contains the RPM shared libraries.
@@ -113,7 +122,6 @@ Summary: Libraries for building and signing RPM packages
 Group: System/Libraries
 License: GPLv2+ and LGPLv2+ with exceptions
 Requires: librpm%sover = %EVR
-Conflicts: librpm < 4.0.4-alt100.97
 
 %description -n librpmbuild%sover
 This package contains the RPM shared libraries for building and signing
@@ -381,7 +389,6 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_bindir/rpmkeys
 %_bindir/rpmquery
 %_bindir/rpmsign
-%_bindir/rpmspec
 %_bindir/rpmu
 %_bindir/rpmverify
 
@@ -393,7 +400,6 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_mandir/man8/rpmdb.8*
 %_mandir/man8/rpmkeys.8*
 %_mandir/man8/rpmsign.8*
-%_mandir/man8/rpmspec.8*
 
 %dir %_sysconfdir/rpm/macros.d
 %rpmhome/macros.d
@@ -424,6 +430,10 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 
 %files -n rpm2archive
 %_bindir/rpm2archive
+
+%files -n rpmspec
+%_bindir/rpmspec
+%_mandir/man8/rpmspec.8*
 
 %define rpmdirattr %attr(2755,root,%name) %dir
 
@@ -500,8 +510,14 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Tue Dec 20 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0-alt7
+- rpmquery: added -i alias for --info (ALT#32872).
+- librpmbuild7: removed C: librpm < 4.0.4-alt100.97.
+- librpm7: actually added C: librpm < 4.0.4-alt100.97.
+- Moved rpmspec utility to separate subpackage.
+
 * Mon Dec 19 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0-alt6
-- librpm7: Added C: librpm < 4.0.4-alt100.97.
+- librpm7: added C: librpm < 4.0.4-alt100.97.
 
 * Fri Dec 16 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0-alt5
 - Moved /bin/rpm back to %_bindir/rpm (ALT#32878).
