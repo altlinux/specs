@@ -1,7 +1,7 @@
 %define _name keepassx
 
 Name: %{_name}2
-Version:  2.0.2
+Version:  2.0.3
 Release:  alt1
 Summary: KeePassX Password Safe - light-weight cross-platform password manager
 Group: File tools
@@ -57,6 +57,9 @@ in KeePass Password Safe.
 %_datadir/%_name
 
 %changelog
+* Tue Dec 20 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0.3-alt1
+- 2.0.3
+
 * Tue Apr 19 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0.2-alt1
 - 2.0.2
 
