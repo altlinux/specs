@@ -6,7 +6,7 @@
 
 Name:    token-manager
 Version: 0.11
-Release: alt1
+Release: alt2.git540ad57
 Summary: Certificate manager for CryptoPro CSP
 
 License: MIT
@@ -46,6 +46,10 @@ install -Dm 0644 cpconfig-%cpro_arch %buildroot%_sysconfdir/security/console.app
 %config(noreplace) %_sysconfdir/security/console.apps/cpconfig-%cpro_arch
 
 %changelog
+* Tue Dec 20 2016 Andrey Cherepanov <cas@altlinux.org> 0.11-alt2.git540ad57
+- Fixed certmgr output parsing
+- Small fix of getting tokens names
+
 * Thu Nov 10 2016 Andrey Cherepanov <cas@altlinux.org> 0.11-alt1
 - Initial build in Sisyphus
 - Use ALT-specific pam rules
