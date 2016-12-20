@@ -1,6 +1,6 @@
 Name: lua5
 Version: 5.1.5
-Release: alt1
+Release: alt2
 
 Summary: Embeddable programming language
 License: MIT
@@ -23,15 +23,17 @@ Group: System/Libraries
 Provides: %_libdir/lua5
 Provides: %_datadir/lua5
 
-%package -n liblua5-devel
+%package -n liblua5.1-devel
 Summary: Embeddable programming language
 Group: Development/Other
+Provides: liblua5-devel = %version-%release
 Requires: liblua5.1 = %version-%release
 Conflicts: liblua4-devel
 
-%package -n liblua5-devel-static
+%package -n liblua5.1-devel-static
 Summary: Embeddable programming language
 Group: Development/Other
+Provides: liblua5-devel-static = %version-%release
 Requires: liblua5-devel = %version-%release
 Conflicts: liblua4-devel-static
 
@@ -55,14 +57,14 @@ API which allows the application to exchange data with Lua programs and also
 to extend Lua with C functions.  Lua is also used as a general-purpose,
 stand-alone language through the simple command line interpreter provided.
 
-%description -n liblua5-devel
+%description -n liblua5.1-devel
 Lua is a powerful, light-weight programming language designed for extending
 applications.  The language engine is accessible as a library, having a C
 API which allows the application to exchange data with Lua programs and also
 to extend Lua with C functions.  Lua is also used as a general-purpose,
 stand-alone language through the simple command line interpreter provided.
 
-%description -n liblua5-devel-static
+%description -n liblua5.1-devel-static
 Lua is a powerful, light-weight programming language designed for extending
 applications.  The language engine is accessible as a library, having a C
 API which allows the application to exchange data with Lua programs and also
@@ -143,12 +145,12 @@ mkdir -p %buildroot{%_libdir,%_datadir}/lua5
 %pkgdocdir/HISTORY
 %pkgdocdir/README
 
-%files -n liblua5-devel
+%files -n liblua5.1-devel
 %_includedir/*.*
 %_libdir/liblua.so
 %_pkgconfigdir/lua.pc
 
-%files -n liblua5-devel-static
+%files -n liblua5.1-devel-static
 %_libdir/liblua.a
 
 %files doc
@@ -158,6 +160,10 @@ mkdir -p %buildroot{%_libdir,%_datadir}/lua5
 %pkgdocdir/test
 
 %changelog
+* Tue Dec 20 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.1.5-alt2
+- renamed liblua5-devel package to liblua5.1-devel
+- renamed liblua5-devel-static package to liblua5.1-devel-static
+
 * Sun Sep  7 2014 Terechkov Evgenii <evg@altlinux.org> 5.1.5-alt1
 - Patch for CVE-2014-5461 applied
 - 5.1.4 -> 5.1.5
