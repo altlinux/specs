@@ -10,7 +10,7 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.2.8.11
+Version: 0.2.9.8
 Release: alt1%ubt
 
 Summary: Anonymizing overlay network for TCP (The onion router)
@@ -139,6 +139,9 @@ fi
 %_var/cache/%name
 
 %changelog
+* Tue Dec 20 2016 Vladimir Didenko <cow@altlinux.ru> 0.2.9.8-alt1%ubt
+- new version
+
 * Fri Dec 09 2016 Anton Farygin <rider@altlinux.ru> 0.2.8.11-alt1%ubt
 - new version
 - %%ubt macros added for easy backporting to stable branches
