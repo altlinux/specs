@@ -1,6 +1,6 @@
 Name: rpcbind
-Version: 0.2.3
-Release: alt4
+Version: 0.2.4
+Release: alt1
 
 Summary: RPC port mapper
 License: BSD
@@ -39,8 +39,6 @@ mkdir -p %buildroot%_localstatedir/rpcbind
 install -pm0755 -D rpcbind.init %buildroot%_initdir/rpcbind
 install -pm0755 -D rpcbind.control %buildroot%_controldir/rpcbind
 install -pm0600 -D rpcbind.sysconfig %buildroot%_sysconfdir/sysconfig/rpcbind
-install -pm0644 -D rpcbind.service %buildroot%systemd_unitdir/rpcbind.service
-install -pm0644 rpcbind.socket %buildroot%systemd_unitdir/rpcbind.socket
 
 %pre
 %pre_control rpcbind
@@ -89,6 +87,9 @@ fo=/var/run/control/portmap
 %dir %attr(770,root,rpc) %_localstatedir/rpcbind
 
 %changelog
+* Tue Dec 20 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.4-alt1
+- 0.2.4 released
+
 * Fri Jul 01 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.3-alt4
 - use CONTROL_ARGS in service file (closes: #32240)
 
