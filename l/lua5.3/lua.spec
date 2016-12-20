@@ -3,7 +3,7 @@
 
 Name:           lua5.3
 Version:        %{major_version}.3
-Release:        alt2
+Release:        alt3
 Summary:        Powerful light-weight programming language
 Group:          Development/Other
 License:        MIT
@@ -65,11 +65,12 @@ Summary:        Development files for %{oname}
 Group:          System/Libraries
 Requires:       %{name}%{?_isa} = %{version}
 Requires:       pkg-config
-Conflicts: liblua5-devel
 Provides: lua-devel = %version-%release
+Provides: liblua-devel = %version-%release
 Provides: liblua5-devel = %version-%release
 Conflicts: liblua5-devel < %version
 Conflicts: liblua4-devel < %version
+Conflicts: liblua-devel < %version
 
 %description -n liblua5-devel
 %common_descr
@@ -182,6 +183,9 @@ fi
 
 
 %changelog
+* Tue Dec 20 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.3.3-alt3
+- fixed liblua5-devel provides and conflicts
+
 * Tue Dec 20 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.3.3-alt2
 - separated doc package.
 - added watch files.
