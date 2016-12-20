@@ -25,11 +25,13 @@ BuildRequires: jpackage-generic-compat
 %if 0%{?fedora}
 #def_with jersey
 %bcond_with jersey
+#def_with jaxws
+%bcond_with jaxws
 %endif
 
 Name:          grizzly
 Version:       2.3.24
-Release:       alt1_1jpp8
+Release:       alt1_2jpp8
 Summary:       Java NIO Server Framework
 # see Grizzly_THIRDPARTYLICENSEREADME.txt
 License:       (CDDL or GPLv2 with exceptions) and BSD and ASL 2.0 and Public Domain
@@ -45,7 +47,9 @@ BuildRequires: mvn(com.sun.jersey:jersey-client)
 BuildRequires: mvn(com.sun.jersey:jersey-server)
 BuildRequires: mvn(com.sun.jersey:jersey-servlet)
 %endif
+%if %{with jaxws}
 BuildRequires: mvn(com.sun.xml.ws:rt)
+%endif
 BuildRequires: mvn(javax.servlet:javax.servlet-api)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(net.java:jvnet-parent:pom:)
@@ -159,8 +163,21 @@ sed -i 's/\r//' LICENSE.txt Grizzly_THIRDPARTYLICENSEREADME.txt
 # Force servlet 3.1 apis
 %pom_change_dep -r javax.servlet:servlet-api javax.servlet:javax.servlet-api:'${servlet-version}'
 
-%pom_xpath_set "pom:dependency[pom:groupId ='com.sun.xml.ws']/pom:artifactId" rt extras/http-server-jaxws
-%pom_xpath_set "pom:dependency[pom:groupId ='com.sun.xml.ws']/pom:artifactId" rt samples/http-jaxws-samples
+%if %{without jaxws}
+%pom_disable_module http-server-jaxws extras
+%pom_disable_module http-jaxws-samples samples
+%else
+%pom_change_dep com.sun.xml.ws: :rt extras/http-server-jaxws
+%pom_change_dep com.sun.xml.ws: :rt samples/http-jaxws-samples
+%endif
+
+for m in http2 spdy ; do
+%pom_xpath_remove "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:configuration/pom:useDefaultManifestFile" modules/${m}
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:configuration" '
+  <archive>
+    <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+  </archive>' modules/${m}
+done
 
 %mvn_package org.glassfish.grizzly.samples: samples
 
@@ -173,8 +190,8 @@ sed -i 's/\r//' LICENSE.txt Grizzly_THIRDPARTYLICENSEREADME.txt
  -f -- \
 %else
  -- -Dmaven.test.failure.ignore=true \
+  -Dmaven.test.skip.exec=true \
 %endif
- -Dmaven.test.skip.exec=true \
  -Dmaven.local.depmap.file="%{_mavendepmapfragdir}/glassfish-servlet-api.xml"
 
 %install
@@ -196,6 +213,9 @@ sed -i 's/\r//' LICENSE.txt Grizzly_THIRDPARTYLICENSEREADME.txt
 %doc LICENSE.txt Grizzly_THIRDPARTYLICENSEREADME.txt
 
 %changelog
+* Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.3.24-alt1_2jpp8
+- new version
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.3.24-alt1_1jpp8
 - new version
 
