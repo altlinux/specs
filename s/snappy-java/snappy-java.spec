@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             snappy-java
 Version:          1.1.2.4
-Release:          alt1_2jpp8
+Release:          alt2_2jpp8
 Summary:          Fast compressor/decompresser
 License:          ASL 2.0
 URL:              http://xerial.org/snappy-java/
@@ -163,6 +163,9 @@ export CXXFLAGS
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.2.4-alt2_2jpp8
+- new version
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.2.4-alt1_2jpp8
 - new version
 
