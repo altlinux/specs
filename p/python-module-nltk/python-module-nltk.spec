@@ -1,4 +1,4 @@
-%define version 3.0.1
+%define version 3.2.1
 %define release alt1
 %define oname nltk
 
@@ -10,17 +10,14 @@ Name: python-module-%oname
 Summary: Python modules for Natural Language Processing (NLP)
 Group: Development/Python
 Version: %version
-Release: alt1.1.1
+Release: alt1
 License: Apache
 Url: http://www.nltk.org
 BuildRequires(pre): rpm-build-python
 BuildArch: noarch
+Packager: Kirill Maslinsky <kirill@altlinux.org>
 
 Source: %name-%version.tar
-# https://github.com/nltk/nltk_contrib.git
-Source1: nltk_contrib-%version.tar
-
-Patch0: alt-setup.patch
 
 # Automatically added by buildreq on Fri Jan 29 2016 (-bi)
 # optimized out: fontconfig python-base python-devel python-module-numpy python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-numpy
@@ -34,7 +31,7 @@ BuildRequires(pre): rpm-build-python3
 #BuildPreReq: python3-module-setuptools python-tools-2to3
 %endif
 
-%add_python_req_skip MinEditDist Unitran Utils snow
+%add_python_req_skip twython
 
 %description
 Description: The Natural Language Toolkit (NLTK) is a Python package for
@@ -47,8 +44,7 @@ language
 %package -n python3-module-%oname
 Summary: Python modules for Natural Language Processing (NLP)
 Group: Development/Python3
-%add_python3_req_skip MinEditDist Unitran UserDict Utils md5 qt qtcanvas
-%add_python3_req_skip qttable snow
+%add_python3_req_skip twython
 
 %description -n python3-module-%oname
 Description: The Natural Language Toolkit (NLTK) is a Python package for
@@ -62,7 +58,8 @@ language
 Summary: Tests for NLTK
 Group: Development/Python
 Requires: %name = %EVR
-%add_python_req_skip featurechart treeview align_util distance_measures
+%add_python_req_skip featurechart twython
+#treeview align_util distance_measures
 
 %description tests
 Description: The Natural Language Toolkit (NLTK) is a Python package for
@@ -78,7 +75,8 @@ This package contains teets for NLTK.
 Summary: Tests for NLTK
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
-%add_python3_req_skip featurechart treeview
+%add_python3_req_skip featurechart twython
+#treeview
 
 %description -n python3-module-%oname-tests
 Description: The Natural Language Toolkit (NLTK) is a Python package for
@@ -92,98 +90,57 @@ This package contains teets for NLTK.
 
 %prep
 %setup
-rm -rvf nltk/yaml/
-# still hope to remove copy of ElementTree later, when it won't be used by any modules
-#rm -rvf nltk/etree
-
-tar xf %SOURCE1
-
-#patch0 -p2
 
 %if_with python3
 cp -fR . ../python3
-sed -i "s|u'||" \
-	../python3/nltk_contrib/nltk_contrib/scripttranscriber/Unitran/Tables.py
-#find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-for i in $(find ../python3 -type f -name '*.py' |grep -v 'Tables\.py')
-do
-	2to3 -w -n $i
-done
 %endif
 
 %build
 %python_build
-export PYTHONPATH=$PWD
-pushd nltk_contrib
-%python_build
-popd
 
 %if_with python3
 pushd ../python3
 %python3_build
-export PYTHONPATH=$PWD
-pushd nltk_contrib
-%python3_build
-popd
 popd
 %endif
 
 %install
 %python_install
-export PYTHONPATH=$PWD
-pushd nltk_contrib
-%python_install
-popd
 
 %if_with python3
 pushd ../python3
 %python3_install
-export PYTHONPATH=$PWD
-pushd nltk_contrib
-%python3_install
-popd
 popd
 %endif
 
 echo 'from Tkinter import *' >%buildroot%python_sitelibdir/tkinter.py
-mv nltk_contrib/doc nltk_contrib.doc
 
 %files
 %python_sitelibdir/tkinter.py*
 %python_sitelibdir/nltk/
-%python_sitelibdir/nltk_contrib/
 %python_sitelibdir/*.egg-info
-%doc README.txt LICENSE.txt nltk_contrib.doc
+%doc LICENSE.txt
 %exclude %python_sitelibdir/*/test
-%exclude %python_sitelibdir/*/*/test*
-%exclude %python_sitelibdir/*/*/*/*/test*
 
 %files tests
 %python_sitelibdir/*/test
-%python_sitelibdir/*/*/test*
-%python_sitelibdir/*/*/*/*/test*
 
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/nltk
-%python3_sitelibdir/nltk_contrib
 %python3_sitelibdir/*.egg-info
-%doc README.txt LICENSE.txt nltk_contrib.doc
+%doc LICENSE.txt
 %exclude %python3_sitelibdir/*/test
-%exclude %python3_sitelibdir/*/*/test*
-%exclude %python3_sitelibdir/*/*/*/test*
-%exclude %python3_sitelibdir/*/*/*/*/test*
-%exclude %python3_sitelibdir/*/*/*/*/*/test*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/test
-%python3_sitelibdir/*/*/test*
-%python3_sitelibdir/*/*/*/test*
-%python3_sitelibdir/*/*/*/*/test*
-%python3_sitelibdir/*/*/*/*/*/test*
 %endif
 
 %changelog
+* Mon Dec 19 2016 Kirill Maslinsky <kirill@altlinux.org> 3.2.1-alt1
+- Update to 3.2.1
+- Drop nltk_contrib from this package
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0.1-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
