@@ -5,7 +5,6 @@ BuildRequires(pre): rpm-macros-java
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 25
 # READ BEFORE UPDATING: After updating this package to new upstream
 # version eclipse-ecf should be rebuilt.  For more info, see:
 # https://fedoraproject.org/wiki/SIGs/Java#Package_Update.2FRebuild_Notes
@@ -14,26 +13,22 @@ BuildRequires: jpackage-generic-compat
 
 Name:              httpcomponents-core
 Summary:           Set of low level Java HTTP transport components for HTTP services
-Version:           4.4.4
+Version:           4.4.5
 Release:           alt1_2jpp8
-# The project is licensed under ASL 2.0, but it contains annotations
-# in the package org.apache.http.annotation which are derived
-# from JCIP-ANNOTATIONS project (CC-BY licensed)
-License:           ASL 2.0 and CC-BY
+License:           ASL 2.0
 URL:               http://hc.apache.org/
 Source0:           http://www.apache.org/dist/httpcomponents/httpcore/source/httpcomponents-core-%{version}-src.tar.gz
 BuildArch:         noarch
 
-BuildRequires:     maven-local
-BuildRequires:     httpcomponents-project
-BuildRequires:     java >= 1.6.0
-BuildRequires:     jpackage-utils
-BuildRequires:     apache-commons-logging
-BuildRequires:     junit
-BuildRequires:     mvn(org.codehaus.mojo:build-helper-maven-plugin)
-%if 0%{?fedora}
-BuildRequires:     mockito
-%endif
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.httpcomponents:project:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.apache.rat:apache-rat-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.mockito:mockito-core)
 Source44: import.info
 
 Obsoletes: hc-httpcore < 4.1.1
@@ -95,19 +90,21 @@ done
 %mvn_file ":{*}" httpcomponents/@1
 
 %build
-%mvn_build %{!?fedora -f}
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/httpcomponents
 %doc LICENSE.txt NOTICE.txt README.txt RELEASE_NOTES.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 4.4.5-alt1_2jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 4.4.4-alt1_2jpp8
 - new version
 
