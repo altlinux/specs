@@ -7,18 +7,24 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             maven-filtering
-Version:          3.0.0
+Version:          3.1.1
 Release:          alt1_2jpp8
 Summary:          Shared component providing resource filtering
 License:          ASL 2.0
 URL:              http://maven.apache.org/shared/%{name}/index.html
-Source0:          http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
 BuildArch:        noarch
 
-BuildRequires:    maven-local
-BuildRequires:    maven-shared
-BuildRequires:    plexus-build-api
-BuildRequires:    plexus-containers-component-metadata
+Source0:          http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
 Source44: import.info
 
 %description
@@ -51,6 +57,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt1_2jpp8
+- new version
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_2jpp8
 - new version
 
