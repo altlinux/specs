@@ -5,35 +5,35 @@ BuildRequires(pre): rpm-macros-java
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# READ BEFORE UPDATING: After updating this package to new upstream
-# version eclipse-ecf should be rebuilt.  For more info, see:
-# https://fedoraproject.org/wiki/SIGs/Java#Package_Update.2FRebuild_Notes
-
-%global base_name httpcomponents
-
 Name:              httpcomponents-client
 Summary:           HTTP agent implementation based on httpcomponents HttpCore
 Version:           4.5.2
-Release:           alt1_2jpp8
+Release:           alt1_4jpp8
 License:           ASL 2.0
 URL:               http://hc.apache.org/
 Source0:           http://www.apache.org/dist/httpcomponents/httpclient/source/%{name}-%{version}-src.tar.gz
 
 Patch0:            0001-Use-system-copy-of-effective_tld_names.dat.patch
+# Some compile-time only annotations were removed from httpcore
+Patch1:            0002-Remove-missing-compile-time-annotations.patch
 
 BuildArch:         noarch
 
 BuildRequires:     maven-local
 BuildRequires:     mvn(commons-codec:commons-codec)
 BuildRequires:     mvn(commons-logging:commons-logging)
+BuildRequires:     mvn(junit:junit)
+BuildRequires:     mvn(net.sf.ehcache:ehcache-core)
+BuildRequires:     mvn(net.spy:spymemcached)
+BuildRequires:     mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:     mvn(org.apache.httpcomponents:httpcore)
 BuildRequires:     mvn(org.apache.httpcomponents:project:pom:)
+BuildRequires:     mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:     mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:     mvn(org.easymock:easymock)
 BuildRequires:     mvn(org.mockito:mockito-core)
-BuildRequires:     mvn(net.sf.ehcache:ehcache-core)
-BuildRequires:     mvn(spy:spymemcached)
-BuildRequires:     publicsuffix-list
 
+BuildRequires:     publicsuffix-list
 Requires:          publicsuffix-list
 
 Obsoletes:         %{name}-tests < 4.4
@@ -68,6 +68,7 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1
+%patch1 -p1
 
 # Don't install javadoc and sources jars
 %mvn_package ":{*}::{sources,javadoc}:" __noinstall
@@ -169,6 +170,7 @@ rm httpclient/src/test/java/org/apache/http/client/config/TestRequestConfig.java
 %build
 %mvn_file ":{*}" httpcomponents/@1
 
+#mvn_build
 %mvn_build -- -Dmaven.test.skip.exec=true
 
 %install
@@ -184,6 +186,9 @@ rm httpclient/src/test/java/org/apache/http/client/config/TestRequestConfig.java
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 4.5.2-alt1_4jpp8
+- new version
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 4.5.2-alt1_2jpp8
 - new version
 
