@@ -1,6 +1,6 @@
 Name: libjasper
-Version: 1.900.1
-Release: alt3
+Version: 1.900.13
+Release: alt1
 
 Summary: Implementation of the codec specified in the JPEG-2000 Part-1 standard
 Summary(ru_RU.UTF8): Реализация кодеков по спецификации стандарта JPEG-2000, часть I
@@ -12,34 +12,6 @@ Url: http://www.ece.uvic.ca/~mdadams/jasper/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://www.ece.uvic.ca/~mdadams/jasper/software/jasper-%version.tar
-
-Patch1: jasper-1.701.0-GL.patch
-# autoconf/automake bits of patch1
-Patch2: jasper-1.701.0-GL-ac.patch
-# CVE-2007-2721 (bug #240397)
-# borrowed from http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=413041;msg=88
-Patch3: patch-libjasper-stepsizes-overflow.patch
-# borrowed from http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=469786 
-Patch4: jpc_dec.c.patch
-# OpenBSD hardening patches addressing couple of possible integer overflows
-# during the memory allocations
-# https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-3520
-Patch5: jasper-1.900.1-CVE-2008-3520.patch
-# https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2008-3522
-Patch6: jasper-1.900.1-CVE-2008-3522.patch
-# add pkg-config support
-Patch7: jasper-pkgconfig.patch
-
-Patch8: jasper-1.900.1-CVE-2011-4516-CVE-2011-4517-CERT-VU-887409.patch
-
-# Issues found by static analysis of code
-Patch10: jasper-1.900.1-Coverity-BAD_SIZEOF.patch
-Patch11: jasper-1.900.1-Coverity-CHECKED_RETURN.patch
-Patch12: jasper-1.900.1-Coverity-FORWARD_NULL.patch
-Patch13: jasper-1.900.1-Coverity-NULL_RETURNS.patch
-Patch14: jasper-1.900.1-Coverity-RESOURCE_LEAK.patch
-Patch15: jasper-1.900.1-Coverity-UNREACHABLE.patch
-Patch16: jasper-1.900.1-Coverity-UNUSED_VALUE.patch
 
 # jas_icc.c:744:2: warning: assuming signed overflow does not occur
 # when assuming that (X + c) < X is always false [-Wstrict-overflow]
@@ -57,7 +29,7 @@ Patch16: jasper-1.900.1-Coverity-UNUSED_VALUE.patch
 
 
 # Automatically added by buildreq on Wed Nov 18 2009
-BuildRequires: gcc-c++ imake libGL-devel libXext-devel libXi-devel libXmu-devel libGLUT-devel libjpeg-devel
+BuildRequires: gcc-c++ imake libGL-devel libXext-devel libXi-devel libXmu-devel libglut-devel libjpeg-devel
 
 %description
 JasPer is a collection
@@ -88,22 +60,6 @@ code stream format defined in ISO/IEC 15444-1:2000.
 
 %prep
 %setup -n jasper-%version
-%patch1 -p1 -b .GL
-%patch2 -p1 -b .GL-ac
-%patch3 -p1 -b .CVE-2007-2721
-%patch4 -p1 -b .jpc_dec_assertion
-%patch5 -p1 -b .CVE-2008-3520
-%patch6 -p1 -b .CVE-2008-3522
-%patch7 -p1 -b .pkgconfig
-%patch8 -p1 -b .CVE-2011-4516-4517
-
-%patch10 -p1 -b .BAD_SIZEOF
-%patch11 -p1 -b .CHECKED_RETURN
-%patch12 -p1 -b .FORWARD_NULL
-%patch13 -p1 -b .NULL_RETURNS
-%patch14 -p1 -b .RESOURCE_LEAK
-%patch15 -p1 -b .UNREACHABLE
-%patch16 -p1 -b .UNUSED_VALUE
 
 %autoreconf
 
@@ -136,6 +92,10 @@ make check
 #%prefix/lib/lib*.a
 
 %changelog
+* Tue Dec 20 2016 Vitaly Lipatov <lav@altlinux.ru> 1.900.13-alt1
+- new version 1.900.13 (with rpmrb script)
+- drop all packages (incorporated)
+
 * Thu Feb 06 2014 Vitaly Lipatov <lav@altlinux.ru> 1.900.1-alt3
 - add patches against multiple security vulnerabilities (ALT bug #29241)
 - add pkg-config file
