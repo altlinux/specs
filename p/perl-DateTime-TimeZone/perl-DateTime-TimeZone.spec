@@ -2,7 +2,7 @@
 %define dist DateTime-TimeZone
 %def_without bootstrap
 Name: perl-%dist
-Version: 2.01
+Version: 2.09
 Release: alt1
 
 Summary: Time zone object base class and factory
@@ -36,6 +36,13 @@ BuildRequires: perl-DateTime perl(Test/Requires.pm) perl(List/AllUtils.pm) perl(
 
 BuildRequires: perl-Class-Load perl-Class-Singleton perl-Test-Output perl-Params-Validate perl-parent
 
+# perl -c fails; let us skip it as in debian
+%add_findreq_skiplist */DateTime/TimeZone/OffsetOnly.pm
+%add_findreq_skiplist */DateTime/TimeZone.pm
+# and add requires manually
+Requires: perl(Module/Runtime.pm) perl(Params/ValidationCompiler.pm) perl(Specio/Library/Builtins.pm) perl(Specio/Library/String.pm) perl(Try/Tiny.pm)
+
+
 %description
 The DateTime::TimeZone modules provide a Perl interface to the Olson
 time zone database.  Rather than using the database directly, we parse
@@ -61,6 +68,11 @@ sed -i- '/Pod::Man/d' Makefile.PL
 sed -i- 's/eval "use DateTime/eval "die/' t/check_datetime_version.pl
 %endif
 
+if [ %version != 2.09 ]; then
+    echo update manual requires due to findreq_skiplist!
+    exit 1
+fi
+
 %build
 %perl_vendor_build
 
@@ -72,6 +84,9 @@ sed -i- 's/eval "use DateTime/eval "die/' t/check_datetime_version.pl
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 2.09-alt1
+- automated CPAN update
+
 * Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1
 - automated CPAN update
 
