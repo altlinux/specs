@@ -1,6 +1,6 @@
 Name: npm
 Version: 3.10.9
-Release: alt2
+Release: alt3
 
 Summary: A package manager for node
 
@@ -53,11 +53,17 @@ rm -rf %buildroot%nodejs_sitelib/test/
 # drop due docker requires
 rm -rf %buildroot%nodejs_sitelib/%name/node_modules/node-gyp/test/
 
+# skip gnuplot and convert reqs
+rm -rf %buildroot%nodejs_sitelib/%name/node_modules/request/node_modules/node-uuid/benchmark/
+
 %files -n npm
 %_bindir/npm
 %nodejs_sitelib/%name/
 
 %changelog
+* Wed Dec 21 2016 Vitaly Lipatov <lav@altlinux.ru> 3.10.9-alt3
+- drop gnuplot and convert requires
+
 * Sun Dec 18 2016 Vitaly Lipatov <lav@altlinux.ru> 3.10.9-alt2
 - new version 3.10.9 (with rpmrb script)
 
