@@ -6,8 +6,8 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          jackson-jaxrs-providers
-Version:       2.6.3
-Release:       alt1_2jpp8
+Version:       2.7.6
+Release:       alt1_1jpp8
 Summary:       Jackson JAX-RS providers
 License:       ASL 2.0
 URL:           http://wiki.fasterxml.com/JacksonHome
@@ -92,6 +92,13 @@ Summary:       Jackson-JAXRS-YAML
 Functionality to handle YAML input/output for JAX-RS implementations
 (like Jersey and RESTeasy) using standard Jackson data binding.
 
+%package parent
+Group: Development/Java
+Summary:       Jackson JAX-RS providers Parent POM
+
+%description parent
+Parent POM for Jackson JAX-RS providers.
+
 %package javadoc
 Group: Development/Java
 Summary:       Javadoc for %{name}
@@ -120,9 +127,6 @@ sed -i 's/\r//' LICENSE NOTICE
 %pom_remove_dep org.jboss.resteasy:resteasy-jackson2-provider json
 rm json/src/test/java/com/fasterxml/jackson/jaxrs/json/resteasy/RestEasyProviderLoadingTest.java
 
-%mvn_package ":jackson-jaxrs-providers" %{name}
-%mvn_package ":jackson-jaxrs-base" %{name}
-
 %build
 
 %mvn_build -s 
@@ -130,29 +134,25 @@ rm json/src/test/java/com/fasterxml/jackson/jaxrs/json/resteasy/RestEasyProvider
 %install
 %mvn_install
 
-%files -f .mfiles-%{name}
+%files -f .mfiles-jackson-jaxrs-base
 %doc README.md release-notes/*
 %doc LICENSE NOTICE
 
 %files -n jackson-jaxrs-cbor-provider -f .mfiles-jackson-jaxrs-cbor-provider
-%doc LICENSE NOTICE
-
 %files -n jackson-jaxrs-json-provider -f .mfiles-jackson-jaxrs-json-provider
-%doc LICENSE NOTICE
-
 %files -n jackson-jaxrs-smile-provider -f .mfiles-jackson-jaxrs-smile-provider
-%doc LICENSE NOTICE
-
 %files -n jackson-jaxrs-xml-provider -f .mfiles-jackson-jaxrs-xml-provider
-%doc LICENSE NOTICE
-
 %files -n jackson-jaxrs-yaml-provider -f .mfiles-jackson-jaxrs-yaml-provider
+%files parent -f .mfiles-jackson-jaxrs-providers
 %doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_1jpp8
+- new version
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_2jpp8
 - new version
 
