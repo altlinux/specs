@@ -1,7 +1,7 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.379
+Version: 0.380
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,6 +36,9 @@ Conflicts: perl-RPM-Source-Convert < 0.48
 %perl_vendor_privlib/Source*
 
 %changelog
+* Wed Dec 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.380-alt1
+- added pypi shared subroutines
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.379-alt1
 - stable release
 
