@@ -10,23 +10,21 @@ BuildRequires: jpackage-generic-compat
 %global short_name      commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        1.10
-Release:        alt3_0.3.svn1684406jpp8
+Version:        1.12
+Release:        alt1_1jpp8
 Summary:        Java API for working with compressed files and archivers
 License:        ASL 2.0
-URL:            http://commons.apache.org/%{base_name}/
+URL:            http://commons.apache.org/proper/commons-compress/
 BuildArch:      noarch
 
-# svn export http://svn.apache.org/repos/asf/commons/proper/compress/trunk/ commons-compress-1.10-src
-# tar caf commons-compress-1.10-SNAPSHOT.tar.xz commons-compress-1.10-src
-Source0:        %{short_name}-%{version}-SNAPSHOT.tar.xz
-#Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+Source0:        http://archive.apache.org/dist/commons/compress/source/%{short_name}-%{version}-src.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.powermock:powermock-api-mockito)
+BuildRequires:  mvn(org.powermock:powermock-module-junit4)
 BuildRequires:  mvn(org.tukaani:xz)
 Source44: import.info
 
@@ -45,8 +43,6 @@ This package provides %{summary}.
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
-# FIXME: test fails for unknown reason
-find -name X5455_ExtendedTimestampTest.java -delete
 
 %build
 %mvn_file  : %{short_name} %{name}
@@ -63,6 +59,9 @@ find -name X5455_ExtendedTimestampTest.java -delete
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.12-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt3_0.3.svn1684406jpp8
 - new fc release
 
