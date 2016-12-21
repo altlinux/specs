@@ -20,7 +20,7 @@
 %def_enable installed_tests
 
 Name: libgtk+4
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -346,6 +346,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Wed Dec 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.89.2-alt1
+- 3.89.2
+
 * Tue Nov 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.89.1-alt1
 - first build for Sisyphus
 
