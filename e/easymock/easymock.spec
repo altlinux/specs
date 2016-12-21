@@ -7,30 +7,31 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           easymock
-Version:        3.3.1
-Release:        alt1_4jpp8
+Version:        3.4
+Release:        alt1_2jpp8
 Summary:        Easy mock objects
 License:        ASL 2.0
 URL:            http://www.easymock.org
 
-Source0:        https://github.com/easymock/easymock/archive/easymock-%{version}.tar.gz
+Source0:        https://github.com/%{name}/%{name}/archive/%{name}-%{version}.tar.gz
 
-Patch5:         %{name}-remove-android-support.patch
+Patch1:         0001-Port-to-maven-jar-plugin-3.0.0.patch
+Patch2:         0002-Disable-android-support.patch
+Patch3:         0003-Unshade-cglib-and-asm.patch
+Patch4:         0004-Fix-OSGi-manifest.patch
 
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(cglib:cglib)
 BuildRequires:  mvn(com.mycila.maven-license-plugin:maven-license-plugin)
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(net.sf.cglib:cglib)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-compiler-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-jar-plugin)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-surefire-plugin)
-BuildRequires:  mvn(org.objenesis:objenesis)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.objenesis:objenesis)
 
-Obsoletes:      %{name}3 < %{version}-%{release}
+Obsoletes:      %{name}3 < 3.4
 Provides:       %{name}3 = %{version}-%{release}
 Obsoletes:      %{name}2 < 2.5.2-10
 Source44: import.info
@@ -53,20 +54,26 @@ Javadoc for %{name}.
 
 
 %prep
-# Unpack the sources:
-%setup -q -n easymock-easymock-%{version}
+%setup -q -n %{name}-%{name}-%{version}
 
-find . -name "*.zip" -delete
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 # remove android support
-rm -fr easymock/src/main/java/org/easymock/internal/Android*.java
-%patch5 -p1 -b .sav
-%pom_xpath_remove "pom:profile[pom:id[text()='android']]"
-%pom_remove_dep :dexmaker easymock
+rm core/src/main/java/org/easymock/internal/Android*.java
+rm core/src/test/java/org/easymock/tests2/ClassExtensionHelperTest.java
+%pom_disable_module test-android
+%pom_remove_dep :dexmaker core
 
-# fix cglib aId and gId
-%pom_remove_dep :cglib easymock
-%pom_add_dep net.sf.cglib:cglib easymock
+# unbundle asm and cglib
+%pom_disable_module test-nodeps
+%pom_remove_plugin :maven-shade-plugin core
+
+# missing test deps
+%pom_disable_module test-integration
+%pom_disable_module test-osgi
 
 # remove some warning caused by unavailable plugin
 %pom_remove_plugin org.codehaus.mojo:versions-maven-plugin
@@ -74,13 +81,10 @@ rm -fr easymock/src/main/java/org/easymock/internal/Android*.java
 # retired
 %pom_remove_plugin :maven-timestamp-plugin
 
-%pom_disable_module easymock-test-integration
-%pom_disable_module easymock-test-osgi
-
 # For compatibility reasons
 %mvn_file ":easymock{*}" easymock@1 easymock3@1
 
-# ssh not needed during our builds 
+# ssh not needed during our builds
 %pom_xpath_remove pom:extensions
 
 %build
@@ -91,13 +95,16 @@ rm -fr easymock/src/main/java/org/easymock/internal/Android*.java
 
 
 %files -f .mfiles
-%doc easymock/LICENSE.txt
+%doc core/LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc easymock/LICENSE.txt
+%doc core/LICENSE.txt
 
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.4-alt1_2jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.3.1-alt1_4jpp8
 - new fc release
 
