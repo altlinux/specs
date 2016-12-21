@@ -1,6 +1,6 @@
 Name: curl
-Version: 7.51.0
-Release: alt2%ubt
+Version: 7.52.0
+Release: alt1%ubt
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -144,6 +144,10 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Dec 21 2016 Anton Farygin <rider@altlinux.ru> 7.52.0-alt1%ubt
+- new version with security fixes:
+  CVE-2016-9586: printf floating point buffer overflow
+
 * Wed Dec 07 2016 Anton Farygin <rider@altlinux.ru> 7.51.0-alt2%ubt
 - enabled gssapi (closes: #32862)
 
