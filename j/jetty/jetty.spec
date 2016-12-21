@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jetty
-%define version 9.3.7
+%define version 9.4.0
 # Copyright (c) 2000-2007, JPackage Project
 # All rights reserved.
 #
@@ -48,7 +48,6 @@ BuildRequires: jpackage-generic-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%global jettyname   jetty
 %global jtuid       110
 %global username    %{name}
 %global confdir     %{_sysconfdir}/%{name}
@@ -61,7 +60,7 @@ BuildRequires: jpackage-generic-compat
 %global appdir      %{jettylibdir}/webapps
 
 
-%global addver v20160115
+%global addver M0
 
 # Conditionals to help breaking eclipse <-> jetty dependency cycle
 # when bootstrapping for new architectures
@@ -74,14 +73,14 @@ BuildRequires: jpackage-generic-compat
 %endif
 
 Name:           jetty
-Version:        9.3.7
-Release:        alt1_2.v20160115jpp8
+Version:        9.4.0
+Release:        alt1_0.2.M0jpp8
 Summary:        Java Webserver and Servlet Container
 
 # Jetty is dual licensed under both ASL 2.0 and EPL 1.0, see NOTICE.txt
 License:        ASL 2.0 or EPL
 URL:            http://www.eclipse.org/jetty/
-Source0:        http://git.eclipse.org/c/jetty/org.eclipse.jetty.project.git/snapshot/jetty-%{version}.%{addver}.tar.gz
+Source0:        https://github.com/eclipse/%{name}.project/archive/%{name}-%{version}.%{addver}.tar.gz
 Source1:        jetty.sh
 Source3:        jetty.logrotate
 Source5:        %{name}.service
@@ -89,7 +88,6 @@ Source5:        %{name}.service
 Source6:        LICENSE-MIT
 
 Patch1:         0001-Fedora-jetty.home.patch
-Patch2:         0002-Port-to-current-mongo-java-driver.patch
 
 BuildRequires:  geronimo-annotation
 BuildRequires:  geronimo-jaspic-spec
@@ -110,10 +108,13 @@ BuildRequires:  maven-local >= 0.7.0
 BuildRequires:  jvnet-parent
 BuildRequires:  ant
 BuildRequires:  maven-local
+BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-dependency-plugin
 BuildRequires:  maven-enforcer-plugin
+BuildRequires:  maven-plugin-plugin
 BuildRequires:  maven-shade-plugin
 BuildRequires:  maven-site-plugin
+BuildRequires:  maven-source-plugin
 BuildRequires:  maven-war-plugin
 BuildRequires:  exec-maven-plugin
 BuildRequires:  objectweb-asm
@@ -123,6 +124,7 @@ BuildRequires:  geronimo-parent-poms
 BuildRequires:  maven-plugin-build-helper
 BuildRequires:  weld-core
 BuildRequires:  infinispan
+BuildRequires:  jnr-unixsocket
 
 %if %{with osgi}
 BuildRequires:  eclipse-platform
@@ -178,6 +180,7 @@ Requires:       %{name}-servlet = %{version}
 Requires:       %{name}-servlets = %{version}
 Requires:       %{name}-spring = %{version}
 Requires:       %{name}-start = %{version}
+Requires:       %{name}-unixsocket = %{version}
 Requires:       %{name}-util = %{version}
 Requires:       %{name}-util-ajax = %{version}
 Requires:       %{name}-webapp = %{version}
@@ -454,6 +457,13 @@ Summary:        start module for Jetty
 %description    start
 %{extdesc} %{summary}.
 
+%package        unixsocket
+Group: Networking/WWW
+Summary:        unixsocket module for Jetty
+
+%description    unixsocket
+%{extdesc} %{summary}.
+
 %package        util
 Group: Networking/WWW
 Summary:        util module for Jetty
@@ -669,10 +679,9 @@ BuildArch: noarch
 %{summary}.
 
 %prep
-%setup -q -n %{jettyname}-%{version}.%{addver}
+%setup -q -n %{name}.project-%{name}-%{version}.%{addver}
 
 %patch1 -p1
-%patch2 -p1
 
 find . -name "*.?ar" -exec rm {} \;
 find . -name "*.class" -exec rm {} \;
@@ -726,6 +735,9 @@ sed -i 's#;</Export-Package>#</Export-Package>#' jetty-http2/http2-common/pom.xm
 %pom_xpath_remove "pom:artifactItem[pom:artifactId[text()='test-spec-webapp']]" jetty-distribution/pom.xml
 %pom_remove_plugin :maven-dependency-plugin jetty-http2/http2-http-client-transport/pom.xml
 
+# We don't have asciidoctor-maven-plugin
+%pom_disable_module jetty-documentation
+
 # Missing jars (jetty-setuid-java-1.0.0.jar,jetty-setuid-java-1.0.0-config.jar)
 %pom_xpath_remove "pom:execution[pom:id[text()='copy-setuid-deps']]" jetty-distribution/pom.xml
 # test-jaas-webapp artifact is disabled
@@ -758,9 +770,28 @@ sed -i 's#;</Export-Package>#</Export-Package>#' jetty-http2/http2-common/pom.xm
 # manually before building distribution
 %pom_xpath_remove "pom:execution[pom:id[text()='unpack-config-deps']]" jetty-distribution
 
+# Disable default-jar executions of maven-jar-plugin in certain Jetty
+# modules, which define their own executions of the plugin.  This
+# avoids problems with version 3.0.0 of the plugin.
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions" "
+      <execution>
+        <id>default-jar</id>
+        <phase>skip</phase>
+      </execution>" \
+    apache-jsp \
+    jetty-infinispan \
+    jetty-osgi/jetty-osgi-boot \
+    jetty-osgi/jetty-osgi-boot-jsp \
+    jetty-osgi/jetty-osgi-boot-warurl \
+    jetty-osgi/jetty-osgi-httpservice \
+    jetty-websocket/websocket-common \
+
 # We don't have gcloud-java-datastore in Fedora
 %pom_disable_module jetty-gcloud
 %pom_remove_dep :jetty-gcloud-session-manager jetty-distribution
+
+# we don't have com.googlecode.xmemcached:xmemcached yet
+%pom_disable_module jetty-memcached
 
 # Disable OSGi
 %if %{without osgi}
@@ -1001,6 +1032,7 @@ exit 0
 %files servlet -f .mfiles-jetty-servlet
 %files servlets -f .mfiles-jetty-servlets
 %files start -f .mfiles-jetty-start
+%files unixsocket -f .mfiles-jetty-unixsocket
 %files util -f .mfiles-jetty-util
 %doc NOTICE.txt README.TXT VERSION.txt LICENSE-eplv10-aslv20.html LICENSE-CONTRIBUTOR
 %doc LICENSE-MIT
@@ -1044,6 +1076,9 @@ exit 0
 %doc NOTICE.txt LICENSE*
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 9.4.0-alt1_0.2.M0jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 9.3.7-alt1_2.v20160115jpp8
 - new version
 
