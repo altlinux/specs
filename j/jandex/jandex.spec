@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -6,48 +7,47 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jandex
-%define version 1.2.2
+%define version 2.0.2
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jandex
-Version:          1.2.2
-Release:          alt1_3jpp8
+Version:          2.0.2
+Release:          alt1_1jpp8
 Summary:          Java Annotation Indexer
-Group:            Development/Other
-License:          LGPLv2+
-URL:              https://github.com/jbossas/jandex
-Source0:          https://github.com/wildfly/jandex/archive/%{namedversion}.tar.gz
+License:          ASL 2.0
+URL:              https://github.com/wildfly/jandex
+Source0:          https://github.com/wildfly/jandex/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
 
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-surefire-provider-junit
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    junit
-BuildRequires:    jboss-parent
+BuildRequires:    mvn(jdepend:jdepend)
+BuildRequires:    mvn(org.apache.ant:ant)
+BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
+BuildRequires:    mvn(org.jboss.apiviz:apiviz)
 Source44: import.info
+
 
 %description
 This package contains Java Annotation Indexer
 
 %package javadoc
 Group: Development/Java
-Summary:          Javadocs for %{name}
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n jandex-%{namedversion}
+%setup -q -n %{name}-%{namedversion}
+
+# org.jboss.jandex:typeannotation-test:1.0
+%pom_remove_dep :typeannotation-test
+rm src/test/java/org/jboss/jandex/test/TypeAnnotationTestCase.java
 
 %build
 %mvn_build
@@ -56,11 +56,16 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
+%doc README.md
+%doc LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_3jpp8
 - new fc release
 
