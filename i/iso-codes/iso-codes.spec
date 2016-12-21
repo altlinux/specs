@@ -1,5 +1,5 @@
 Name: iso-codes
-Version: 3.71
+Version: 3.72
 Release: alt1
 
 Group: System/Internationalization
@@ -53,6 +53,9 @@ ln -sf %_licensedir/LGPL-2.1 LICENSE
 %_datadir/pkgconfig/iso-codes.pc
 
 %changelog
+* Wed Dec 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.72-alt1
+- 3.72
+
 * Thu Nov 17 2016 Yuri N. Sedunov <aris@altlinux.org> 3.71-alt1
 - 3.71
 
@@ -166,7 +169,7 @@ ln -sf %_licensedir/LGPL-2.1 LICENSE
 * Fri Aug 26 2005 Christopher Aillon <caillon@redhat.com> 0.47-1
 - Update to 0.47
 
-* Mon Jun 10 2005 Christopher Aillon <caillon@redhat.com> 0.46-2
+* Fri Jun 10 2005 Christopher Aillon <caillon@redhat.com> 0.46-2
 - The .pc file should be installed in %%{_datadir} instead of %%{_libdir}
   since this is a noarch package.  64bit platforms will otherwise look in
   the 64bit version of the %%{_libdir} and not find the .pc file and
