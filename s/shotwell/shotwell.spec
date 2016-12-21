@@ -6,7 +6,7 @@
 
 Name: shotwell
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
@@ -32,11 +32,11 @@ BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
 BuildRequires: libdconf-devel libdbus-glib-devel libgexiv2-devel >= %gexiv_ver
 BuildRequires: libgphoto2-devel libgudev-devel libjson-glib-devel
-BuildRequires: libraw-devel libgomp-devel
+BuildRequires: libraw-devel libexif-devel libgomp-devel
 BuildRequires: libsqlite3-devel libstdc++-devel libunique3-devel libwebkit2gtk-devel
-BuildRequires: vala librest-devel libgee0.8-devel
-BuildRequires: gcr-libs-devel
+BuildRequires: librest-devel libgee0.8-devel gcr-libs-devel
 BuildRequires: desktop-file-utils gnome-doc-utils yelp-tools libappstream-glib-devel
+BuildRequires: vala gcr-libs-vala
 
 %description
 Shotwell is a digital photo organizer designed for the GNOME desktop
@@ -48,6 +48,7 @@ mode, and export them to share with others.
 
 %prep
 %setup
+find ./ -name "*.stamp" -delete
 
 %build
 %add_optflags -D_GIT_VERSION=%(echo %version | tr -d .)
@@ -79,6 +80,9 @@ mode, and export them to share with others.
 %doc AUTHORS COPYING NEWS README THANKS
 
 %changelog
+* Wed Dec 21 2016 Yuri N. Sedunov <aris@altlinux.org> 0.25.2-alt2
+- rebuilt from vala sources to avoid crash
+
 * Mon Dec 12 2016 Yuri N. Sedunov <aris@altlinux.org> 0.25.2-alt1
 - 0.25.2
 
