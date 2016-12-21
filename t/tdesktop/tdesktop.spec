@@ -5,7 +5,7 @@
 
 Name: tdesktop
 Version: 0.10.19
-Release: alt2
+Release: alt3
 
 Summary: Telegram is a messaging app with a focus on speed and security
 License: %gpl3only
@@ -148,13 +148,19 @@ ln -s %name %buildroot%_bindir/Telegram
 %_bindir/Telegram
 %_desktopdir/%name.desktop
 %_Kservices/tg.protocol
+%_iconsdir/hicolor/16x16/apps/%name.png
+%_iconsdir/hicolor/32x32/apps/%name.png
 %_iconsdir/hicolor/48x48/apps/%name.png
+%_iconsdir/hicolor/64x64/apps/%name.png
 %_iconsdir/hicolor/128x128/apps/%name.png
 %_iconsdir/hicolor/256x256/apps/%name.png
 #_man1dir/*
 %doc README.md
 
 %changelog
+* Wed Dec 21 2016 Vitaly Lipatov <lav@altlinux.ru> 0.10.19-alt3
+- add Belarusian Russian Ukrainian French Turkish Czech languages
+
 * Mon Dec 19 2016 Vitaly Lipatov <lav@altlinux.ru> 0.10.19-alt2
 - add desktop file, icons
 - cleanup spec
