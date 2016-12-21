@@ -7,49 +7,48 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name hibernate-validator
-%define version 5.0.1
+%define version 5.2.4
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 %global majorversion 5
 Name:          hibernate-validator
-Version:       5.0.1
-Release:       alt1_6jpp8
+Version:       5.2.4
+Release:       alt1_1jpp8
 Summary:       Bean Validation 1.1 (JSR 349) Reference Implementation
 License:       ASL 2.0
 URL:           http://www.hibernate.org/subprojects/validator.html
-Source0:       https://github.com/hibernate/hibernate-validator/archive/%{namedversion}.tar.gz
-# JAXB2 and JDK7 problems see https://hibernate.atlassian.net/browse/HV-528
-Patch0:        %{name}-5.0.1.Final-jaxb.patch
+Source0:       https://github.com/hibernate/hibernate-validator/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
+# JAXB2 and JDK7+ problems see https://hibernate.atlassian.net/browse/HV-528
+Patch0:        %{name}-5.2.4.Final-jaxb.patch
 
-BuildRequires: cdi-api
-BuildRequires: bean-validation-api
-BuildRequires: classmate
-BuildRequires: glassfish-annotation-api
-BuildRequires: glassfish-el
-BuildRequires: glassfish-el-api
-BuildRequires: glassfish-jaxb
-BuildRequires: glassfish-jaxb-api
-BuildRequires: hibernate-jpa-2.1-api
-BuildRequires: jboss-interceptors-1.2-api
-BuildRequires: jboss-logging >= 3.1.1
-# 1.7.1
-BuildRequires: jsoup
-BuildRequires: joda-time
-BuildRequires: junit
-
-BuildRequires: jaxb2-maven-plugin
-# 1.0.3.Final
-BuildRequires: jboss-logging-tools
 BuildRequires: maven-local
-#BuildRequires: maven-dependency-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-injection-plugin
-BuildRequires: maven-plugin-bundle
-BuildRequires: maven-processor-plugin
-%if 0
-BuildRequires: beanvalidation-tck
-BuildRequires: maven-failsafe-plugin
-%endif
+BuildRequires: mvn(com.fasterxml:classmate)
+BuildRequires: mvn(com.sun.xml.bind:jaxb-impl)
+BuildRequires: mvn(com.thoughtworks.paranamer:paranamer)
+BuildRequires: mvn(javax.annotation:javax.annotation-api)
+BuildRequires: mvn(javax.el:javax.el-api)
+BuildRequires: mvn(javax.enterprise:cdi-api)
+BuildRequires: mvn(javax.validation:validation-api)
+BuildRequires: mvn(javax.xml.bind:jaxb-api)
+BuildRequires: mvn(joda-time:joda-time)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(log4j:log4j:1.2.17)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.codehaus.mojo:jaxb2-maven-plugin)
+BuildRequires: mvn(org.glassfish.web:javax.el)
+BuildRequires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.1-api)
+BuildRequires: mvn(org.jboss.arquillian:arquillian-bom:pom:)
+BuildRequires: mvn(org.jboss.maven.plugins:maven-injection-plugin)
+BuildRequires: mvn(org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.2_spec)
+BuildRequires: mvn(org.jboss.logging:jboss-logging) >= 3.1.1
+BuildRequires: mvn(org.jboss.logging:jboss-logging-processor:1)
+BuildRequires: mvn(org.jboss.maven.plugins:maven-injection-plugin)
+BuildRequires: mvn(org.jboss.shrinkwrap:shrinkwrap-bom:pom:)
+BuildRequires: mvn(org.jboss.shrinkwrap.descriptors:shrinkwrap-descriptors-bom:pom:)
+BuildRequires: mvn(org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-bom:pom:)
+BuildRequires: mvn(org.jsoup:jsoup)
+BuildRequires: mvn(org.testng:testng)
 
 BuildArch:     noarch
 Source44: import.info
@@ -75,6 +74,13 @@ Summary:       Hibernate Validator Portable Extension
 %description cdi
 Hibernate Validator CDI Portable Extension.
 
+%package parent
+Group: Development/Java
+Summary:       Hibernate Validator Parent POM
+
+%description parent
+Aggregator of the Hibernate Validator modules.
+
 %package performance
 Group: Development/Java
 Summary:       Hibernate Validator Performance Tests
@@ -82,21 +88,12 @@ Summary:       Hibernate Validator Performance Tests
 %description performance
 Hibernate Validator performance tests.
 
-%if 0
-%package integration
+%package test-utils
 Group: Development/Java
-Summary:       Hibernate Validator AS Integration Tests
+Summary:       Hibernate Validator Test Utils
 
-%description integration
-Hibernate Validator integration tests.
-
-%package tck-runner
-Group: Development/Java
-Summary:       Hibernate Validator TCK Runner
-
-%description tck-runner
-Aggregates dependencies and runs the JSR-349 TCK.
-%endif
+%description test-utils
+Hibernate Validator Test Utils.
 
 %package javadoc
 Group: Development/Java
@@ -110,72 +107,60 @@ This package contains javadoc for %{name}.
 %setup -q -n %{name}-%{namedversion}
 find . -name "*.jar" -delete
 # tck-runner/src/as7config/modules/org/jboss/as/ee/main/jboss-as-ee-7.1.1.Final.jar
+
+%patch0 -p1
+
 %pom_disable_module distribution
 %pom_disable_module documentation
+%pom_disable_module engine-jdk8-tests
+%pom_disable_module integration
+%pom_disable_module osgi
+%pom_disable_module tck-runner
+
+# https://hibernate.atlassian.net/browse/HV-1069
+%pom_remove_dep :fest-assert test-utils
+rm -r test-utils/src/main/java/org/hibernate/validator/testutil/ConstraintViolationAssert.java \
+ test-utils/src/main/java/org/hibernate/validator/testutil/DescriptorAssert.java \
+ test-utils/src/main/java/org/hibernate/validator/testutil/MessageLoggedAssertionLogger.java
+
 # documentation plugins
 %pom_remove_plugin :maven-jdocbook-plugin
 %pom_remove_plugin org.zanata:zanata-maven-plugin
 # tck-runner and documentation plugins
-%pom_remove_plugin org.codehaus.gmaven:gmaven-plugin
-%pom_remove_plugin org.codehaus.gmaven:gmaven-plugin integration
-%pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin
-%pom_remove_plugin org.codehaus.mojo:clirr-maven-plugin
-%pom_remove_plugin org.apache.maven.plugins:maven-surefire-report-plugin
-%pom_remove_plugin org.codehaus.mojo:chronos-jmeter-maven-plugin
-
-%pom_remove_plugin org.apache.maven.plugins:maven-surefire-report-plugin engine
-%pom_remove_plugin org.codehaus.mojo:chronos-jmeter-maven-plugin performance
+%pom_remove_plugin -r org.codehaus.gmaven:gmaven-plugin
+%pom_remove_plugin -r org.codehaus.mojo:clirr-maven-plugin
+%pom_remove_plugin -r org.codehaus.mojo:chronos-jmeter-maven-plugin
 %pom_remove_plugin org.codehaus.mojo:chronos-report-maven-plugin performance
 
 %pom_xpath_remove "pom:build/pom:extensions"
-# groovy 2.1.0
-%pom_remove_dep org.codehaus.groovy:groovy-jsr223
-# 2.0.0.CR2
-%pom_remove_dep org.jboss.weld:weld-core
-%pom_remove_dep org.jboss.as:jboss-as-arquillian-container-managed
-%pom_remove_dep org.jboss.arquillian.container:arquillian-weld-se-embedded-1.1
-%pom_remove_dep org.jboss.arquillian:arquillian-bom
-%pom_remove_dep :fest-assert
-%pom_remove_dep :easymock
-%pom_remove_dep :log4j
-%pom_remove_dep :slf4j-log4j12
-%pom_remove_dep :testng
 
-%pom_remove_plugin :maven-dependency-plugin tck-runner
-%pom_remove_plugin :maven-surefire-report-plugin tck-runner
-%pom_remove_plugin :maven-dependency-plugin annotation-processor
+%pom_remove_plugin -r :maven-dependency-plugin
+%pom_remove_plugin -r :maven-surefire-report-plugin
+%pom_remove_plugin -r :animal-sniffer-maven-plugin
 
-%pom_xpath_remove "pom:dependencies/pom:dependency[pom:scope ='test']" annotation-processor
-%pom_xpath_remove "pom:dependencies/pom:dependency[pom:scope ='test']" cdi
-%pom_xpath_remove "pom:dependencies/pom:dependency[pom:scope ='test']" engine
-%pom_xpath_remove "pom:dependencies/pom:dependency[pom:scope ='test']" integration
-%pom_xpath_remove "pom:dependencies/pom:dependency[pom:scope ='test']" tck-runner
+%pom_xpath_inject "pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration" " <excludePackageNames>*.internal.*</excludePackageNames>"
 
-%patch0 -p1
+%pom_xpath_set "pom:maven.javadoc.skip" false
 
-%pom_disable_module integration
-%pom_disable_module tck-runner
+# https://bugs.openjdk.java.net/browse/JDK-8067747
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration" \
+ "<useIncrementalCompilation>false</useIncrementalCompilation>"
 
-%pom_xpath_inject "pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration" "
-<excludePackageNames>*.internal.*</excludePackageNames>"
+%pom_xpath_set "pom:properties/pom:jboss.logging.processor.version" 1
+%pom_change_dep :jboss-logging-processor ::'${jboss.logging.processor.version}' engine
 
-%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration" "
-<excludePackageNames>*.internal.*</excludePackageNames>" engine
+# Unavailable deps JavaFX
+rm engine/src/main/java/org/hibernate/validator/internal/engine/valuehandling/JavaFXPropertyValueUnwrapper.java
 
 %build
-%mvn_package ":%{name}-parent" %{name}
+
 # Running tests requires hibernate proper (and require weld-core >= 2.0.0 groovy >= 2.1.0), so skip for now:
 %mvn_build -f -s -- -Pdist
 
 %install
 %mvn_install
 
-install -m 644 engine/target/hibernate-validator-%{namedversion}-testing.jar \
-    %{buildroot}%{_javadir}/%{name}/%{name}-testing.jar
-
 %files -f .mfiles-%{name}
-%dir %{_javadir}/%{name}
-%{_javadir}/%{name}/%{name}-testing.jar
 %doc CONTRIBUTING.md README.md changelog.txt
 %doc copyright.txt license.txt
 
@@ -183,23 +168,22 @@ install -m 644 engine/target/hibernate-validator-%{namedversion}-testing.jar \
 %doc copyright.txt license.txt
 
 %files cdi -f .mfiles-%{name}-cdi
+%files parent -f .mfiles-%{name}-parent
 %doc copyright.txt license.txt
 
 %files performance -f .mfiles-%{name}-performance
 %doc copyright.txt license.txt
 
-%if 0
-%files integration -f .mfiles-%{name}-integrationtest-as
+%files test-utils -f .mfiles-%{name}-test-utils
 %doc copyright.txt license.txt
-
-%files tck-runner -f .mfiles-%{name}-tck-runner
-%doc copyright.txt license.txt
-%endif
 
 %files javadoc -f .mfiles-javadoc
 %doc copyright.txt license.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 5.2.4-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt1_6jpp8
 - new fc release
 
