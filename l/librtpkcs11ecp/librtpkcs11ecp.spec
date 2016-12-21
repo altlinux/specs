@@ -3,12 +3,12 @@
 %endif
 %brp_strip_none
 
-Summary: Rutoken PKCS11 library
+Summary: Rutoken PKCS#11 Library
 Name: librtpkcs11ecp
-Version: 0.1
-Release: alt3
+Version: 1.4.5.0
+Release: alt1
 License: Proprietary
-Url: http://www.rutoken.ru/hotline/download/nix/
+Url: https://www.rutoken.ru/support/download/pkcs/
 Group: System/Configuration/Hardware
 Source0: %name-%version.tar
 ExclusiveArch: %ix86 x86_64
@@ -20,7 +20,7 @@ Obsoletes: pcsc-lite-rtpkcs11ecp < %version-%release
 Conflicts: pcsc-lite-rtpkcs11ecp < %version-%release
 
 %description
-%summary
+Allow users to work with Rutoken ECP through PKCS#11 standard.
 
 %prep
 %setup
@@ -40,6 +40,10 @@ ln -s pkcs11/librtpkcs11ecp.so %buildroot%_libdir/
 %_libdir/pkcs11/*.so
 
 %changelog
+* Wed Dec 21 2016 Andrey Cherepanov <cas@altlinux.org> 1.4.5.0-alt1
+- New version (ALT #32921)
+- Fix homepage
+
 * Wed Apr 02 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1-alt3
 - Merge with pcsc-lite-rtpkcs11ecp.
 
