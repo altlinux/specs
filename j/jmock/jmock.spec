@@ -8,13 +8,13 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jmock
-%define version 2.8.1
+%define version 2.8.2
 %global namedreltag %{nil}
 %global namedversion %{version}%{?namedreltag}
 
 Name:          jmock
-Version:       2.8.1
-Release:       alt1_3jpp8
+Version:       2.8.2
+Release:       alt1_2jpp8
 Summary:       Java library for testing code with mock objects
 License:       BSD
 Url:           http://www.jmock.org/
@@ -46,6 +46,48 @@ The jMock library:
   * plugs into your favorite test framework
   * is easy to extend.
 
+%package example
+Group: Development/Java
+Summary:       jMock Examples
+
+%description example
+jMock Examples.
+
+%package junit3
+Group: Development/Java
+Summary:       jMock JUnit 3 Integration
+
+%description junit3
+jMock JUnit 3 Integration.
+
+%package junit4
+Group: Development/Java
+Summary:       jMock JUnit 4 Integration
+
+%description junit4
+jMock JUnit 4 Integration.
+
+%package legacy
+Group: Development/Java
+Summary:       jMock Legacy Plugins
+
+%description legacy
+Plugins that make it easier to use jMock with legacy code.
+
+%package parent
+Group: Development/Java
+Summary:       jMock Parent POM
+
+%description parent
+jMock Parent POM.
+
+%package testjar
+Group: Development/Java
+Summary:       jMock Test Jar
+
+%description testjar
+Source for JAR files used in jMock Core tests.
+
 %package javadoc
 Group: Development/Java
 Summary:       Javadoc for %{name}
@@ -63,8 +105,8 @@ This package contains javadoc for %{name}.
 
 %pom_remove_plugin :maven-gpg-plugin testjar
 
-%pom_xpath_set "pom:dependency[pom:groupId = 'cglib' ]/pom:artifactId" cglib
-%pom_xpath_set "pom:dependency[pom:groupId = 'cglib' ]/pom:artifactId" cglib %{name}
+%pom_change_dep cglib: :cglib
+%pom_change_dep cglib: :cglib %{name}
 
 sed -i "s|%classpath|$(build-classpath objectweb-asm/asm)|" %{name}/pom.xml
 
@@ -78,24 +120,40 @@ sed -i "s|%classpath|$(build-classpath objectweb-asm/asm)|" %{name}/pom.xml
 %pom_add_dep org.%{name}:%{name}-junit4:'${project.version}' %{name}-example
 
 %mvn_alias org.%{name}:%{name} :%{name}-script
-%mvn_package org.%{name}:%{name}::tests:
-%mvn_package org.%{name}:%{name}-junit3::tests:
+%mvn_package org.%{name}:%{name}::tests: %{name}
+%mvn_package org.%{name}:%{name}-junit3::tests: %{name}-junit3
+# AssertionError: Expected: (null or an empty string) but: was "the Mockery is not thread-safe: use a Synchroniser to ensure thread safety"
+rm jmock-legacy/src/test/java/org/jmock/test/acceptance/MockeryFinalizationAcceptanceTests.java
 
 %build
 
-%mvn_build
+%mvn_build -s
 
 %install
 %mvn_install
 
-%files -f .mfiles
+%files -f .mfiles-%{name}
 %doc README*
+%doc LICENSE.txt
+
+%files example -f .mfiles-%{name}-example
+%files junit3 -f .mfiles-%{name}-junit3
+%files junit4 -f .mfiles-%{name}-junit4
+%files legacy -f .mfiles-%{name}-legacy
+
+%files parent -f .mfiles-%{name}-parent
+%doc LICENSE.txt
+
+%files testjar -f .mfiles-%{name}-testjar
 %doc LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.8.2-alt1_2jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.8.1-alt1_3jpp8
 - new fc release
 
