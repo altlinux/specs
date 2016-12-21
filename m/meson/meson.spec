@@ -2,7 +2,7 @@
 %def_without tests
 
 Name: meson
-Version: 0.36.0
+Version: 0.37.1
 Release: alt1
 
 Summary: High productivity build system
@@ -62,6 +62,7 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_bindir/%name
 %_bindir/%{name}conf
 %_bindir/%{name}introspect
+%_bindir/%{name}test
 %_bindir/wraptool
 %python3_sitelibdir/%libname/
 %python3_sitelibdir/%name-%version-*.egg-info/
@@ -74,6 +75,9 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 
 
 %changelog
+* Wed Dec 21 2016 Yuri N. Sedunov <aris@altlinux.org> 0.37.1-alt1
+- 0.37.1
+
 * Wed Nov 16 2016 Yuri N. Sedunov <aris@altlinux.org> 0.36.0-alt1
 - 0.36.0
 
