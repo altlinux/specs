@@ -1,7 +1,7 @@
 %define module Source-Package
 
 Name: perl-%module
-Version: 0.10
+Version: 0.11
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -34,6 +34,9 @@ Conflicts: perl-Source-Repository < 0.12
 %perl_vendor_privlib/Source*
 
 %changelog
+* Wed Dec 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- python support
+
 * Wed Oct 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - bugfix release
 
