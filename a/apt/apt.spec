@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt55
+Release: alt56
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -36,6 +36,10 @@ BuildPreReq: setproctitle-devel
 
 %def_disable static
 %{?_enable_static:BuildPreReq: glibc-devel-static}
+
+# should be same version in rpm.spec
+# BuildPreReq: liblua5.3-devel
+# Unfortunately, liblua5-devel doesn't provide liblua5.3-devel.
 
 # Automatically added by buildreq on Sun Mar 30 2008
 BuildRequires: bzlib-devel cvs docbook-utils gcc-c++ liblua5-devel libreadline-devel librpm-devel setproctitle-devel zlib-devel
@@ -276,6 +280,10 @@ unset RPM_PYTHON
 # Probably %%doc with README.rsync?
 
 %changelog
+* Wed Dec 21 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt56
+- Added support of lua 5.3.
+- Rebuilt with liblua5.3.
+
 * Fri Dec 16 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt55
 - Optimized all rpmds operations.
 
