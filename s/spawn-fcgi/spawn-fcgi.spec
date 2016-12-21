@@ -3,17 +3,18 @@
 
 Name: spawn-fcgi
 Version: 1.6.4
-Release: alt1
+Release: alt2%ubt
 
 Summary: spawn FastCGI applications
 License: BSD
 Group: System/Servers
+BuildRequires(pre):rpm-build-ubt
 
 # git remote add upstream git://git.lighttpd.net/spawn-fcgi
 Url: http://redmine.lighttpd.net/projects/spawn-fcgi/wiki
 
 Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Patch0: %name-%version-alt.patch
 
 %description
   spawn-fcgi is used to spawn FastCGI applications
@@ -60,6 +61,9 @@ install -pDm644 altlinux/spawn-fcgi.sysconfig %buildroot%_sysconfdir/sysconfig/s
 %dir %attr(1770,root,%spawn_fcgi_group) %_var/run/spawn-fcgi
 
 %changelog
+* Wed Dec 21 2016 Anton Farygin <rider@altlinux.ru> 1.6.4-alt2%ubt
+- fixes fcgiwrap location in default config
+
 * Mon May 30 2016 Anton Farygin <rider@altlinux.ru> 1.6.4-alt1
 - updated to 1.6.4
 
