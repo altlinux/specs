@@ -3,7 +3,7 @@
 %define ver_major 2.6
 
 Name: lib%_name%ver_major
-Version: %ver_major.20
+Version: %ver_major.22
 Release: alt1
 
 Summary: MIME library
@@ -15,11 +15,11 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: rpm-build-mono rpm-build-gnome
-BuildPreReq: glib2-devel >= 2.18.0 libgio-devel
-BuildPreReq: libgpgme-devel
-BuildPreReq: zlib-devel
-BuildPreReq: libgtk-sharp2-devel >= 2.4.0 libgtk-sharp2-gapi
-BuildPreReq: gtk-doc >= 1.8 docbook-utils
+BuildRequires: glib2-devel >= 2.32.0 libgio-devel
+BuildRequires: libgpgme-devel
+BuildRequires: zlib-devel
+BuildRequires: libgtk-sharp2-devel >= 2.4.0 libgtk-sharp2-gapi
+BuildRequires: gtk-doc >= 1.8 docbook-utils
 BuildRequires: gcc-c++ mono-mcs mono-devel
 BuildRequires: gobject-introspection-devel >= 1.30.0
 BuildRequires: libvala-devel vala vala-tools
@@ -145,6 +145,9 @@ gtkdocize --copy
 %endif
 
 %changelog
+* Tue Dec 20 2016 Alexey Shabalin <shaba@altlinux.ru> 2.6.22-alt1
+- 2.6.22
+
 * Mon Feb 24 2014 Alexey Shabalin <shaba@altlinux.ru> 2.6.20-alt1
 - 2.6.20
 
