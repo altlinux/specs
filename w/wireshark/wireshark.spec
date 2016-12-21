@@ -5,8 +5,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.2.2
-Release: alt1
+Version: 2.2.3
+Release: alt1%ubt
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
@@ -17,13 +17,14 @@ Source: http://www.wireshark.org/download/src/%name-%version.tar
 Source2: %name.control
 Source3: %name.watch
 
-Patch: %name-%version-%release.patch
+Patch: %name-%version-alt.patch
 
 # Automatically added by buildreq on Sun Dec 23 2007
 BuildRequires: control doxygen flex gcc-c++ libadns-devel libcap-devel libcom_err-devel libgnutls-openssl-devel libgcrypt-devel zlib-devel
-BuildRequires: libkrb5-devel libpcap-devel libpcre-devel libportaudio2-devel libssl-devel python unzip xml-utils xsltproc liblua5-devel perl-Pod-Parser perl-devel
+BuildRequires: libkrb5-devel libpcap-devel libpcre-devel libportaudio2-devel libssl-devel python unzip xml-utils xsltproc liblua5-devel < 5.3 perl-Pod-Parser perl-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: qt5-base-devel qt5-tools
+BuildRequires(pre):rpm-build-ubt
 
 %package base
 Summary: Wireshark base package
@@ -277,6 +278,9 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Wed Dec 21 2016 Anton Farygin <rider@altlinux.ru> 2.2.3-alt1%ubt
+- new version
+
 * Mon Nov 21 2016 Anton Farygin <rider@altlinux.ru> 2.2.2-alt1
 - new version, in which following vulnerabilities have been fixed:
      * CVE-2016-9372 Profinet I/O long loop.
