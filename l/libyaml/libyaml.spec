@@ -1,7 +1,9 @@
 %define abiversion 2
+%def_with doc
+
 Name: libyaml
 Version: 0.1.7
-Release: alt1
+Release: alt1.1
 
 Summary: A C library for parsing and emitting YAML
 
@@ -15,7 +17,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Sat Oct 02 2010
+%if_with doc
 BuildRequires: doxygen
+%endif
 
 %description
 YAML 1.1 parser and emitter written in C.
@@ -43,7 +47,9 @@ Header files for the yaml library.
 %configure --disable-static
 %make_build
 
+%if_with doc
 top_srcdir=`pwd` top_builddir=`pwd` doxygen doc/doxygen.cfg
+%endif
 
 %install
 %makeinstall_std
@@ -53,12 +59,17 @@ top_srcdir=`pwd` top_builddir=`pwd` doxygen doc/doxygen.cfg
 %_libdir/lib*.so.*
 
 %files devel
+%if_with doc
 %doc doc/html
+%endif
 %_libdir/lib*.so
 %_includedir/*.h
 %_pkgconfigdir/*
 
 %changelog
+* Thu Dec 22 2016 Michael Shigorin <mike@altlinux.org> 0.1.7-alt1.1
+- BOOTSTRAP: added doc knob (doxygen)
+
 * Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 0.1.7-alt1
 - new version 0.1.7 (with rpmrb script)
 
