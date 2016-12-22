@@ -6,10 +6,11 @@
 %define api_ver 1.0
 
 %def_enable sysprof_plugin
+%def_enable idemm
 %def_enable gtk_doc
 
 Name: gnome-builder
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -33,6 +34,8 @@ Source: %name-%version.tar
 %define xml_ver 2.9.0
 %define vala_ver 0.30
 %define sysprof_ver 3.22.3
+%define vte_ver 0.46
+%define gtkmm_ver 3.20
 
 # use python3
 AutoReqProv: nopython
@@ -53,7 +56,7 @@ BuildRequires: clang-devel libgtk+3-devel >= %gtk_ver
 BuildRequires: libgtksourceview3-devel >= %gtksourceview_ver
 BuildRequires: libgit2-glib-devel >= %git2_ver libdevhelp-devel >= %devhelp_ver
 BuildRequires: libpcre-devel libgjs-devel >= %gjs_ver libwebkit2gtk-devel
-BuildRequires: libxml2-devel >= %xml_ver libpeas-devel libvte3-devel
+BuildRequires: libxml2-devel >= %xml_ver libpeas-devel libvte3-devel >= %vte_ver
 BuildRequires: libjson-glib-devel
 BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
@@ -61,6 +64,7 @@ BuildRequires: libgtksourceview3-gir-devel libgit2-glib-gir-devel libpeas-gir-de
 BuildRequires: libjson-glib-gir-devel
 BuildRequires: libvala-devel >= %vala_ver vala-tools
 %{?_enable_sysprof_plugin:BuildRequires: sysprof-devel >= %sysprof_ver}
+%{?_enable_idemm:BuildRequires: libgtkmm3-devel >= %gtkmm_ver}
 
 %description
 Builder attempts to be an IDE for writing software for GNOME. It does not
@@ -83,7 +87,8 @@ This package provides noarch data needed for Gnome Builder to work.
 #NOCONFIGURE=1 ./autogen.sh
 %configure --disable-static \
 	%{?_disable_sysprof_plugin:--disable-sysprof-plugin} \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
+	%{?_enable_gtk_doc:--enable-gtk-doc} \
+	%{subst_enable idemm}
 %make_build
 
 %install
@@ -99,6 +104,7 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libexecdir/%name/ide-list-counters
 %dir %_libdir/%name
 %_libdir/%name/libide-%api_ver.so
+%{?_enable_idemm:%_libdir/%name/libidemm-%api_ver.so.*}
 %_libdir/%name/libtemplate-glib-%api_ver.so.*
 %_libdir/%name/libegg-private.so.*
 %_libdir/%name/librg.so.*
@@ -112,6 +118,7 @@ This package provides noarch data needed for Gnome Builder to work.
 %exclude %_libdir/%name/librg.so
 %exclude %_libdir/%name/libsearch.so
 %exclude %_libdir/%name/libgstyle-private.so
+%{?_enable_idemm:%exclude %_libdir/%name/libidemm-%api_ver.so}
 
 %dir %_libdir/%name/girepository-1.0
 %_libdir/%name/girepository-1.0/Egg-%api_ver.typelib
@@ -166,9 +173,12 @@ This package provides noarch data needed for Gnome Builder to work.
 %exclude %_libdir/%name/plugins/*.la
 
 %_includedir/%name-%version/
+%{?_enable_idemm:%_includedir/idemm/}
 %_libdir/%name/libtemplate-glib-%api_ver.so
+%{?_enable_idemm:%_libdir/%name/idemm-%api_ver/}
 %dir %_libdir/%name/pkgconfig
 %_libdir/%name/pkgconfig/libide-%api_ver.pc
+#%{?_enable_idemm:%_libdir/%name/pkgconfig/libidemm-%api_ver.pc}
 %_libdir/%name/pkgconfig/template-glib-%api_ver.pc
 %python3_sitelibdir/gi/overrides/Ide.py
 %python3_sitelibdir/gi/overrides/__pycache__/
@@ -199,6 +209,9 @@ This package provides noarch data needed for Gnome Builder to work.
 
 
 %changelog
+* Thu Dec 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.4-alt1
+- 3.22.4
+
 * Tue Nov 29 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
 - 3.22.3
 
