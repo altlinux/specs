@@ -1,10 +1,10 @@
 Name:		slapi-nis
-Version:	0.53
+Version:	0.56.1
 Release:	alt1
 Summary:	NIS Server and Schema Compatibility plugins for Directory Server
 Group:		System/Base
 License:	GPLv2
-URL:		http://slapi-nis.fedorahosted.org/
+URL:		https://fedorahosted.org/slapi-nis/
 Source0:	%name-%version-%release.tar
 
 BuildRequires:	389-ds-devel, libldap-devel
@@ -13,6 +13,8 @@ BuildRequires:	libsss_nss_idmap-devel
 BuildRequires:	pam-devel
 BuildRequires:	libwrap-devel
 BuildRequires:	libtirpc-devel
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 This package provides two plugins for Red Hat and 389 Directory Server.
@@ -36,7 +38,10 @@ for attributes from multiple entries in the tree.
 		--with-tcp-wrappers \
 		--with-ldap=openldap \
 		--with-nsswitch \
+		--with-pam \
+		--with-pam-service=system-auth \
 		--with-sss-nss-idmap \
+		--with-idviews \
 		--enable-be-txns-by-default \
 		--with-server=dirsrv
 sed -i -e 's,%{_libdir}/dirsrv/plugins/,,g' -e 's,.so$,,g' doc/examples/*.ldif
@@ -44,7 +49,6 @@ sed -i -e 's,%{_libdir}/dirsrv/plugins/,,g' -e 's,.so$,,g' doc/examples/*.ldif
 
 %install
 %makeinstall_std
-rm %buildroot/%{_libdir}/dirsrv/plugins/*.la
 
 %if 0
 # ns-slapd doesn't want to start in koji, so no tests get run
@@ -53,13 +57,19 @@ rm %buildroot/%{_libdir}/dirsrv/plugins/*.la
 %endif
 
 %files
-%defattr(-,root,root,-)
 %doc COPYING NEWS README STATUS doc/*.txt doc/examples/*.ldif doc/ipa
 %{_mandir}/man1/*
 %{_libdir}/dirsrv/plugins/*.so
 %{_sbindir}/nisserver-plugin-defs
 
+%exclude %{_libdir}/dirsrv/plugins/*.la
+
 %changelog
+* Thu Dec 22 2016 Mikhail Efremov <sem@altlinux.org> 0.56.1-alt1
+- Updated spec.
+- Fixed url.
+- Updated to 0.56.1.
+
 * Mon May 19 2014 Timur Aitov <timonbl4@altlinux.org> 0.53-alt1
 - 0.53-alt1
 
