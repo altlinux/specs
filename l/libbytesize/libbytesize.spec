@@ -1,7 +1,7 @@
 %define _name bytesize
 
 Name: lib%_name
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: A library for working with sizes in bytes
@@ -10,7 +10,6 @@ License: LGPLv2+
 Url: https://github.com/rhinstaller/%name
 
 Source: %url/archive/%name-%version.tar.gz
-Patch: except_in_del.patch
 
 BuildRequires(pre): rpm-build-python rpm-build-python3
 
@@ -52,10 +51,10 @@ This package contains Python 3 bindings for %name making the use of
 the library from Python 3 easier and more convenient.
 
 %prep
-%setup -n %name-%version
-%patch -p1
+%setup -n %name-%name-%version
 
 %build
+%autoreconf
 export CFLAGS="$CFLAGS `pkg-config --cflags libpcre`"
 %configure
 %make_build
@@ -83,6 +82,9 @@ export CFLAGS="$CFLAGS `pkg-config --cflags libpcre`"
 
 
 %changelog
+* Thu Dec 22 2016 Yuri N. Sedunov <aris@altlinux.org> 0.8-alt1
+- 0.8
+
 * Mon Oct 03 2016 Yuri N. Sedunov <aris@altlinux.org> 0.7-alt1
 - first build for Sisyphus
 
