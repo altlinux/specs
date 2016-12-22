@@ -7,8 +7,8 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           maven-resources-plugin
-Version:        2.7
-Release:        alt1_4jpp8
+Version:        3.0.1
+Release:        alt1_1jpp8
 Summary:        Maven Resources Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-resources-plugin
@@ -60,6 +60,9 @@ API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_4jpp8
 - new fc release
 
