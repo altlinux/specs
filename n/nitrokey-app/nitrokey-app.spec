@@ -1,7 +1,7 @@
 %def_disable ubuntuicons
 
 Name: nitrokey-app
-Version: 0.5.1
+Version: 0.6.1
 Release: alt1
 License: %gpl3only
 Summary: Nitrokey's Application
@@ -10,6 +10,7 @@ Group: System/Configuration/Other
 
 # git clone https://github.com/Nitrokey/nitrokey-app.git
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses rpm-macros-cmake
 
@@ -26,16 +27,16 @@ configuration of device privileges in udev (due to USB communication).
 
 %prep
 %setup
+%patch -p1
 perl -p -i -e 's|\r\n|\n|g' OTP_full_specification.txt
 sed -e 's,\<plugdev\>,_cryptodev,g' -i_ data/40-nitrokey.rules
 diff -u data/40-nitrokey.rules{_,} ||:
 
 %build
 %cmake \
-	-DCMAKE_INSTALL_PREFIX=/ \
 	-DHAVE_LIBAPPINDICATOR:BOOL=FALSE \
 	#
-%cmake_build
+%cmake_build V=1 VERBOSE=1
 
 %install
 %cmakeinstall_std
@@ -76,5 +77,8 @@ groupadd -r _cryptodev ||:
 %doc OTP_full_specification.txt README.md
 
 %changelog
+* Thu Dec 22 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.1-alt1
+- Updated to 0.6.1.
+
 * Wed Oct 19 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.1-alt1
 - Initial build.
