@@ -1,39 +1,30 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# vim: set ts=4 sw=4 sts=4 et:
-Name:           ws-xmlschema
-Version:        2.0.2
-Release:        alt2_13jpp8
-Summary:        Apache XMLSchema
-Group:          Development/Other
-License:        ASL 2.0
-URL:            http://ws.apache.org/commons/xmlschema20/
+Name:          ws-xmlschema
+Version:       2.2.1
+Release:       alt1_1jpp8
+Summary:       Apache XMLSchema
+License:       ASL 2.0
+URL:           http://ws.apache.org/xmlschema/
+# wget -c http://www.apache.org/dist/ws/xmlschema/2.2.1/xmlschema-2.2.1-source-release.zip
+# unzip xmlschema-2.2.1-source-release.zip
+# rm -r xmlschema-2.2.1/w3c-testcases
+# tar cafJ ws-xmlschema-2.2.1.tar.xz xmlschema-2.2.1
+Source0:       %{name}-%{version}.tar.xz
 
-# wget -c http://apache.osuosl.org/ws/xmlschema/2.0.2/xmlschema-2.0.2-source-release.zip
-# unzip xmlschema-2.0.2-source-release.zip
-# rm -r xmlschema-2.0.2/w3c-testcases
-# tar cafJ ws-xmlschema-2.0.2.tar.xz xmlschema-2.0.2
-Source0:        %{name}-%{version}.tar.xz
+BuildRequires: maven-local
+BuildRequires: mvn(org.apache:apache:pom:)
+BuildRequires: mvn(org.apache:apache-jar-resource-bundle)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 
-BuildArch:      noarch
-
-BuildRequires: javapackages-tools rpm-build-java
-BuildRequires:  apache-resource-bundles
-BuildRequires:  maven-local
-BuildRequires:  maven-assembly-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-remote-resources-plugin
-BuildRequires:  maven-shade-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  xmlunit
-BuildRequires:  maven-shared
+BuildArch:     noarch
 Source44: import.info
 
 %description
@@ -41,14 +32,27 @@ Apache XMLSchema is a light weight schema object model that can be
 used to manipulate or generate XML schema. It has very few external
 dependencies and can be easily integrated into an existing project.
 
-
 %package javadoc
-Summary:        Javadocs for %{name}
-Group:          Development/Java
+Group: Development/Java
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
+
+%package parent
+Group: Development/Other
+Summary:       XMLSchema Parent POM
+
+%description parent
+XMLSchema Parent POM.
+
+%package walker
+Group: Development/Other
+Summary:       XMLSchema Walker
+
+%description walker
+Code to walk an XML Schema and confirm an XML Document conforms to it.
 
 %prep
 %setup -q -n xmlschema-%{version}
@@ -56,22 +60,36 @@ This package contains the API documentation for %{name}.
 %pom_disable_module xmlschema-bundle-test
 %pom_disable_module w3c-testcases
 
+# Convert from dos to unix line ending
+sed -i.orig 's|\r||g' RELEASE-NOTE.txt
+touch -r RELEASE-NOTE.txt.orig RELEASE-NOTE.txt
+rm RELEASE-NOTE.txt.orig
+
 %build
+
 # fastinstall profile avoids some build dependencies
 # tests require unavailable dependencies
-%mvn_build -f -- -Pfastinstall
+%mvn_build -sf -- -Pfastinstall
 
 %install
 %mvn_install
 
-%files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc LICENSE NOTICE README.txt RELEASE-NOTE.txt
+%files -f .mfiles-xmlschema-core
+%doc README.txt RELEASE-NOTE.txt
+%doc LICENSE NOTICE
+
+%files parent -f .mfiles-xmlschema
+%doc LICENSE NOTICE
+
+%files walker -f .mfiles-xmlschema-walker
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_1jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt2_13jpp8
 - new fc release
 
