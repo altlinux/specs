@@ -1,5 +1,5 @@
 Name: git-update-index-keeping-only
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: rm all but matching files from Git index. (Helps git-filter-branch.)
@@ -45,5 +45,11 @@ install -m0755 %SOURCE1 %SOURCE2 -t %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Thu Dec 22 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2-alt1
+- git-update-index-keeping-only:
+  correct work relative to the current (not toplevel) dir.
+- git-filter-only-files-modified-since:
+  made independent of the current workdir.
+
 * Tue Dec 20 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt1
 - initial build for ALT Linux Sisyphus.
