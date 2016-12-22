@@ -1,5 +1,5 @@
 Name: tvtime
-Version: 1.0.10
+Version: 1.0.11
 Release: alt1
 
 Summary: A high quality TV viewer
@@ -63,6 +63,9 @@ ln -sf ../fonts/ttf/liberation/LiberationSans-Bold.ttf \
 %_mandir/*/man?/*.*
 
 %changelog
+* Thu Dec 22 2016 Michael Shigorin <mike@altlinux.org> 1.0.11-alt1
+- new version (watch file uupdate)
+
 * Sat Mar 05 2016 Michael Shigorin <mike@altlinux.org> 1.0.10-alt1
 - new version (watch file uupdate)
   + dropped pixmap
