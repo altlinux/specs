@@ -1,6 +1,6 @@
 Name: R-base
-Version: 3.2.3
-Release: alt2
+Version: 3.3.2
+Release: alt1
 
 Summary: A language for data analysis and graphics
 License: GPL
@@ -12,7 +12,7 @@ Source: R-%version.tar
 Patch: R-%version-%release.patch
 
 # Automatically added by buildreq on Thu Mar 03 2011
-BuildRequires: bzlib-devel gcc-c++ gcc-fortran libXmu-devel libjpeg-devel liblzma-devel libpango-devel libpcre-devel libpng-devel libreadline-devel libtiff-devel texlive-fonts-recommended texlive-generic-recommended texlive-xetex tk-devel zlib-devel makeinfo texi2dvi
+BuildRequires: bzlib-devel gcc-c++ gcc-fortran libXmu-devel libjpeg-devel liblzma-devel libpango-devel libpcre-devel libpng-devel libreadline-devel libtiff-devel texlive-fonts-recommended texlive-generic-recommended texlive-xetex tk-devel zlib-devel makeinfo texi2dvi libcurl-devel libcairo-devel libtre-devel
 
 BuildPreReq: liblapack-devel libicu-devel
 
@@ -35,8 +35,6 @@ S is the statistician's Matlab and R is to S what Octave is to Matlab.
 %prep
 %setup -q -n R-%version
 %patch -p1
-rm src/extra/{zlib,bzip2,pcre}/*.[ch]
-rm src/extra/xz/*/*.[ch]
 rm src/extra/blas/*.f src/modules/lapack/*.f
 
 %build
@@ -52,11 +50,13 @@ export	lt_cv_prog_cc_static_works=no \
 %configure \
 	--enable-prebuilt-html \
 	--enable-R-shlib --with-x \
-	--with-system-{zlib,bzlib,pcre,xz} \
+    --disable-rpath \
+	--with-system-tre \
+    --with-gnu-ld \
 	--with-blas=openblas --with-lapack=lapack \
 	--with-tcl-config=%_libdir/tclConfig.sh --with-tk-config=%_libdir/tkConfig.sh \
 	--libdir='${prefix}/%_lib' rincludedir='${prefix}/include/R' \
-	rdocdir='${prefix}/share/doc/R-%verid'
+	rdocdir='${prefix}/share/doc/R-%verid' 
 
 %make_build
 %make_build pdf info
@@ -322,6 +322,12 @@ classification, clustering, ...).
 %_infodir/R-*.info*
 
 %changelog
+* Thu Dec 22 2016 Kirill Maslinsky <kirill@altlinux.org> 3.3.2-alt1
+- Version 3.3.2
+
+* Mon Jun 27 2016 Kirill Maslinsky <kirill@altlinux.org> 3.3.1-alt1
+- Version 3.3.1
+
 * Mon Feb 15 2016 Kirill Maslinsky <kirill@altlinux.org> 3.2.3-alt2
 - rebuilt with libicu 5.6
 
