@@ -5,8 +5,8 @@
 %def_enable vala
 
 Name: libgweather
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: A library for weather information
 Group: System/Libraries
@@ -102,8 +102,6 @@ This package provides Vala language bindings for the %name library.
 
 %prep
 %setup
-subst 's|Asia/Rangoon|Asia/Yangon|
-       s|>Rangoon<|>Yangon<|' data/Locations.xml.in
 
 %build
 # for tm.tm_gmtoff
@@ -156,6 +154,9 @@ subst 's|Asia/Rangoon|Asia/Yangon|
 
 
 %changelog
+* Thu Dec 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.4-alt1
+- 3.20.4
+
 * Sun Oct 02 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt2
 - changed Asia/Rangoon to Asia/Yangon according to tzdata-2016g
 
