@@ -1,14 +1,15 @@
+%define oname FileZilla
+
 Name: filezilla
-Version: 3.21.0
+Version: 3.23.0.2
 Release: alt1
 Summary: FileZilla is a fast and reliable FTP client
 
 Group: Networking/File transfer
 License: GPL
 Url: http://filezilla.sourceforge.net/
-Source: FileZilla_%{version}_src.tar
-
-Patch: filezilla-3.21.0-alt-fix-glibcxx-temporary-wstring-object.patch
+# Repacked http://download.filezilla-project.org/client/%{oname}_%{version}_src.tar.bz2
+Source: %oname-%version.tar
 
 # Automatically added by buildreq on Fri Sep 02 2016 (-ba)
 # optimized out: at-spi2-atk elfutils fontconfig glib2-devel gnu-config libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libp11-kit libpango-devel libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server perl pkg-config python-base python-modules xz
@@ -19,8 +20,7 @@ FileZilla is a fast and reliable FTP client and server with lots
 of useful features and an intuitive interface
 
 %prep
-%setup -n %name-%version
-%patch -p1
+%setup -n %oname-%version
 
 %build
 %configure --disable-autoupdatecheck
@@ -46,6 +46,9 @@ of useful features and an intuitive interface
 %_man5dir/*
 
 %changelog
+* Thu Dec 22 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.23.0.2-alt1
+- Updated to 3.23.0.2.
+
 * Thu Sep 01 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.21.0-alt1
 - Updated to 3.21.0.
 
