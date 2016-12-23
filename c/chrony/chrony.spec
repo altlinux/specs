@@ -2,7 +2,7 @@
 
 Name: chrony
 Version: 2.2
-Release: alt1.1
+Release: alt2
 
 Summary: Chrony clock synchronization program
 License: GPLv2 only
@@ -11,10 +11,13 @@ Group: System/Configuration/Other
 Url: http://chrony.tuxfamily.org
 Source0: http://download.tuxfamily.org/chrony/%name-%version.tar
 Source1: chronyd.init
+Source2: chrony
 
 BuildRequires: libcap-devel libncurses-devel libreadline-devel
 BuildRequires: libnss-devel
-BuildRequires: makeinfo
+BuildRequires: makeinfo control
+
+Provides: ntp-server
 
 Conflicts: ntpd openntpd
 
@@ -74,8 +77,10 @@ install -pD -m644 examples/chrony.logrotate %buildroot%_sysconfdir/logrotate.d/c
 install -pD -m644 chronyd.sysconfig %buildroot%_sysconfdir/sysconfig/chronyd
 install -pD -m644 examples/chronyd.service %buildroot%_unitdir/chronyd.service
 install -pD -m644 examples/chrony-wait.service %buildroot%_unitdir/chrony-wait.service
+install -pD -m755 %_sourcedir/chrony %buildroot%_sysconfdir/control.d/facilities/chrony
 
 install -d %buildroot/lib/systemd/ntp-units.d
+
 echo 'chronyd.service' > \
         %buildroot/lib/systemd/ntp-units.d/50-chronyd.list
 
@@ -108,6 +113,7 @@ gzip -9 -f -k chrony.txt
 %config(noreplace) %_sysconfdir/chrony.conf
 %config(noreplace) %verify(not md5 size mtime) %attr(640,root,_chrony) %_sysconfdir/chrony.keys
 %config(noreplace) %_sysconfdir/logrotate.d/chrony
+%config(noreplace) %_sysconfdir/control.d/facilities/chrony
 %_sysconfdir/NetworkManager/dispatcher.d/20-chrony
 %_bindir/*
 %_sbindir/*
@@ -120,6 +126,10 @@ gzip -9 -f -k chrony.txt
 %_man8dir/*
 
 %changelog
+* Fri Dec 23 2016 Denis Medvedev <nbr@altlinux.org> 2.2-alt2
+- Provides ntp-server, needed for alterator-datetime.
+Added chrony control.
+
 * Sat Dec 19 2015 Terechkov Evgenii <evg@altlinux.org> 2.2-alt1.1
 - change ownership/mode of logdir according to SPP (ALT #31640)
 
