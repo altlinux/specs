@@ -1,7 +1,7 @@
 %def_disable privsep
 
 Name: wpa_supplicant
-Version: 2.5
+Version: 2.6
 Release: alt1
 
 Summary: wpa_supplicant is an implementation of the WPA Supplicant component
@@ -122,6 +122,9 @@ tar c -C %name/wpa_gui-qt4/icons hicolor |tar x -C %buildroot%_iconsdir
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Fri Dec 23 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.6-alt1
+- 2.6-alt1 released
+
 * Thu Sep 01 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5-alt1
 - 2.5 released
 
