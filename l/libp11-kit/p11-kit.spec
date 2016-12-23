@@ -9,7 +9,7 @@
 #%%define trust_paths %_sysconfdir/pki/ca-trust/source:%_datadir/pki/ca-trust-source
 
 Name: lib%_name
-Version: 0.23.2
+Version: 0.23.3
 Release: alt1
 
 Summary: Library for loading and sharing PKCS#11 modules
@@ -18,9 +18,11 @@ License: BSD
 Url: http://p11-glue.freedesktop.org/p11-kit.html
 
 %if_enabled snapshot
+# VCS: https://github.com/p11-glue/p11-kit.git
 Source: %_name-%version.tar
 %else
-Source: http://p11-glue.freedesktop.org/releases/%_name-%version.tar.gz
+#Source: http://p11-glue.freedesktop.org/releases/%_name-%version.tar.gz
+Source: https://github.com/p11-glue/%_name/releases/download/%version/%_name-%version.tar.gz
 %endif
 
 Source1: p11-kit-extract-trust
@@ -97,7 +99,7 @@ This package contains development documentation for %_name library.
 %install
 %makeinstall_std
 mkdir -p %buildroot%_sysconfdir/pkcs11/modules
-install -p -m755 %SOURCE1 %buildroot/%_libdir/%_name/
+install -p -m755 %SOURCE1 %buildroot/%_libexecdir/%_name/
 
 # alternatives
 mkdir -p %buildroot%_altdir
@@ -113,8 +115,8 @@ EOF
 %_bindir/trust
 %_libdir/lib%_name.so.*
 %_libdir/%_name-proxy.so
-%dir %_libdir/%_name
-%_libdir/%_name/p11-kit-remote
+%dir %_libexecdir/%_name
+%_libexecdir/%_name/p11-kit-remote
 %dir %_datadir/%_name
 %dir %_datadir/%_name/modules
 %dir %_sysconfdir/pkcs11
@@ -127,8 +129,8 @@ EOF
 %files trust
 %_libdir/pkcs11/%_name-trust.so
 %_datadir/%_name/modules/%_name-trust.module
-%_libdir/%_name/p11-kit-extract-trust
-%_libdir/%_name/trust-extract-compat
+%_libexecdir/%_name/p11-kit-extract-trust
+%_libexecdir/%_name/trust-extract-compat
 #%_altdir/%name
 %exclude %_libdir/pkcs11/p11-kit-trust.la
 %endif
@@ -142,6 +144,9 @@ EOF
 %_datadir/gtk-doc/html/%_name
 
 %changelog
+* Fri Dec 23 2016 Yuri N. Sedunov <aris@altlinux.org> 0.23.3-alt1
+- 0.23.3
+
 * Sun Jan 17 2016 Yuri N. Sedunov <aris@altlinux.org> 0.23.2-alt1
 - 0.23.2
 
