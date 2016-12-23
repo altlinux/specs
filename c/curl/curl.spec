@@ -1,5 +1,5 @@
 Name: curl
-Version: 7.52.0
+Version: 7.52.1
 Release: alt1%ubt
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -144,6 +144,10 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Fri Dec 23 2016 Anton Farygin <rider@altlinux.ru> 7.52.1-alt1%ubt
+- new version with security fixes:
+  CVE-2016-9594: uninitialized random
+
 * Wed Dec 21 2016 Anton Farygin <rider@altlinux.ru> 7.52.0-alt1%ubt
 - new version with security fixes:
   CVE-2016-9586: printf floating point buffer overflow
