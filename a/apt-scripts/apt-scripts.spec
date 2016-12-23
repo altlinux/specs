@@ -1,6 +1,6 @@
 Name: apt-scripts
 Version: 0.1.2
-Release: alt1
+Release: alt2
 
 Summary: Lua scripts for APT
 License: GPL
@@ -46,6 +46,9 @@ ls *.conf |sed 's:^:^/etc/apt/apt.conf.d/:;s:[.]:[.]:g' >%buildroot/etc/buildreq
 %config /etc/buildreqs/files/ignore.d/%name
 
 %changelog 
+* Fri Dec 23 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.1.2-alt2
+- fixed list-extras and list-unreleased scripts (closes: #32938)
+
 * Wed Jan  2 2013 Terechkov Evgenii <evg@altlinux.org> 0.1.2-alt1
 - list-unreleased
  
