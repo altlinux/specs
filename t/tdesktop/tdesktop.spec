@@ -5,7 +5,7 @@
 
 Name: tdesktop
 Version: 0.10.19
-Release: alt3
+Release: alt4
 
 Summary: Telegram is a messaging app with a focus on speed and security
 License: %gpl3only
@@ -78,7 +78,8 @@ cd Telegram/gyp
 
 # Note! real build instructions are only in .travis/build.sh
 # TDESKTOP_DISABLE_CRASH_REPORTS disables BreakPad require
-gyp -Dtravis_defines=TDESKTOP_DISABLE_CRASH_REPORTS,TDESKTOP_DISABLE_AUTOUPDATE,TDESKTOP_DISABLE_UNITY_INTEGRATION \
+# TDESKTOP_DISABLE_DESKTOP_FILE_GENERATION - creates desktop and other files in a user dir
+gyp -Dtravis_defines=TDESKTOP_DISABLE_CRASH_REPORTS,TDESKTOP_DISABLE_AUTOUPDATE,TDESKTOP_DISABLE_UNITY_INTEGRATION,TDESKTOP_DISABLE_DESKTOP_FILE_GENERATION \
 	-Dlinux_lib_ssl=-lssl \
 	-Dlinux_lib_crypto=-lcrypto \
 	-Dlinux_path_qt=%_qt5_datadir \
@@ -158,6 +159,11 @@ ln -s %name %buildroot%_bindir/Telegram
 %doc README.md
 
 %changelog
+* Fri Dec 23 2016 Vitaly Lipatov <lav@altlinux.ru> 0.10.19-alt4
+- get language name and country name from QLocale
+- disable user desktop file generation
+- fix hack for restart via Updater, use direct /usr/bin path
+
 * Wed Dec 21 2016 Vitaly Lipatov <lav@altlinux.ru> 0.10.19-alt3
 - add Belarusian Russian Ukrainian French Turkish Czech languages
 
