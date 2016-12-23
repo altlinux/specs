@@ -1,5 +1,5 @@
 Name: rust
-Version: 1.13.0
+Version: 1.14.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -116,6 +116,9 @@ cp %SOURCE7 %SOURCE8 dl
 %_libdir/rustlib/etc/*
 
 %changelog
+* Fri Dec 23 2016 Vladimir Lettiev <crux@altlinux.ru> 1.14.0-alt1
+- 1.14.0
+
 * Tue Nov 15 2016 Vladimir Lettiev <crux@altlinux.ru> 1.13.0-alt1
 - 1.13.0
 - disabled bootstrap
