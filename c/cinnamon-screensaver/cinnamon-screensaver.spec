@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
-Version: %ver_major.9
+Version: %ver_major.12
 Release: alt1
 
 Summary: Cinnamon Screensaver
@@ -82,8 +82,6 @@ GObject introspection devel data for the %name library
 
 rm -f %buildroot/%_sysconfdir/pam.d/%name
 install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
-mkdir -p %buildroot%_libexecdir/
-mv %buildroot%_datadir/%name/pamhelper/%name-pam-helper %buildroot%_libexecdir/%name-pam-helper
 
 %filter_from_requires /python3[(]dbusdepot[)]/d
 %filter_from_requires /python3[(]util[)]/d
@@ -117,6 +115,12 @@ mv %buildroot%_datadir/%name/pamhelper/%name-pam-helper %buildroot%_libexecdir/%
 %_datadir/gir-1.0/*
 
 %changelog
+* Fri Dec 23 2016 Vladimir Didenko <cow@altlinux.org> 3.2.12-alt1
+- 3.2.12
+
+* Fri Dec 14 2016 Vladimir Didenko <cow@altlinux.org> 3.2.9-alt2
+- Better patch for pam-helper location
+
 * Tue Dec 13 2016 Vladimir Didenko <cow@altlinux.org> 3.2.9-alt1
 - 3.2.9
 
