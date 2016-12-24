@@ -5,7 +5,7 @@
 
 Name: htop
 Version: 2.0.2
-Release: alt1
+Release: alt2
 
 Summary: Interactive ncurses-based process viewer for Linux
 License: GPL
@@ -19,10 +19,11 @@ Patch: htop-0.8.3-alt-desktop.patch
 Packager: Ilya Evseev <evseev@altlinux.ru>
 
 BuildRequires: /proc
-BuildRequires: libncurses-devel ImageMagick-tools
+BuildRequires: libncurses-devel
 %if_enabled unicode
 BuildRequires: libncursesw-devel
 %endif
+%{?!_with_bootstrap:BuildRequires: ImageMagick-tools}
 
 %define rman1dir %_mandir/ru/man1
 
@@ -66,9 +67,12 @@ htop использует для работы с экраном библиоте
 install -pDm644 %SOURCE1 %buildroot%rman1dir/%name.1
 install -pDm644 %name.png %buildroot%_iconsdir/hicolor/128x128/apps/%name.png
 
+%if_with bootstrap
+%else
 mkdir -p %buildroot%_niconsdir
 convert %name.png -resize 32x32 %buildroot%_niconsdir/%name.png
 rm -r %buildroot%_pixmapsdir/
+%endif
 
 %files
 %_bindir/%name
@@ -76,10 +80,13 @@ rm -r %buildroot%_pixmapsdir/
 %rman1dir/%name.1*
 %doc AUTHORS README ChangeLog
 %_desktopdir/%name.*
-%_niconsdir/%name.*
+%{?!_with_bootstrap:%_niconsdir/%name.*}
 %_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Sat Dec 24 2016 Michael Shigorin <mike@altlinux.org> 2.0.2-alt2
+- BOOTSTRAP: minimal build can cope without IM indeed
+
 * Tue Jul 26 2016 Michael Shigorin <mike@altlinux.org> 2.0.2-alt1
 - new version (watch file uupdate)
 
