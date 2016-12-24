@@ -5,7 +5,7 @@
 # typelib(GtkGLExt)
 
 Name: xpra
-Version: 0.16.3
+Version: 0.17.6
 Release: alt1
 
 Summary: X Persistent Remote Applications
@@ -71,7 +71,13 @@ If connecting from a remote machine, you would use something like (or you can al
 %__subst "s|-Werror|-Wall|g" setup.py
 # fatal error: pygtk-2.0/pygtk/pygtk.h: No such file or directory
 %__subst "s|pygtk-2.0/||g" xpra/x11/gtk2/*.pyx xpra/gtk_common/gdk_atoms.pyx
-%patch -p1
+#patch -p1
+
+# dynamic patch against libav build
+%__subst "s|\(.*AV_PIX_FMT_0RGB.*\)|#\1|g" xpra/codecs/dec_avcodec2/decoder.pyx xpra/codecs/csc_swscale/colorspace_converter.pyx
+%__subst "s|\(.*AV_PIX_FMT_BGR0.*\)|#\1|g" xpra/codecs/dec_avcodec2/decoder.pyx xpra/codecs/csc_swscale/colorspace_converter.pyx
+%__subst "s|\(.*AV_CODEC_ID_H265.*\)|#\1|g" xpra/codecs/dec_avcodec2/decoder.pyx
+%__subst 's|\(.*"h265".*\)|#\1|g' xpra/codecs/dec_avcodec2/decoder.pyx
 
 # Fix error: implicit declaration of function 'avcodec_free_frame'
 #patch -p1 <patches/old-libav.patch
@@ -103,6 +109,9 @@ mv -f %buildroot/usr/lib/tmpfiles.d/xpra.conf %buildroot/%_tmpfilesdir/
 %_cupslibdir/backend/xpraforwarder
 
 %changelog
+* Sun Dec 25 2016 Vitaly Lipatov <lav@altlinux.ru> 0.17.6-alt1
+- new version 0.17.6 (with rpmrb script)
+
 * Fri Apr 22 2016 Vitaly Lipatov <lav@altlinux.ru> 0.16.3-alt1
 - new version (0.16.3) with rpmgs script
 
