@@ -1,5 +1,5 @@
 Name: tin
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 
 Summary: A basic Internet news reader
@@ -7,7 +7,7 @@ License: BSD
 Group: Networking/News
 
 URL: http://www.tin.org/
-Source0: ftp://ftp.tin.org/pub/news/clients/tin/stable/%{name}-%{version}.tar.xz
+Source0: ftp://ftp.tin.org/pub/news/clients/tin/stable/%name-%version.tar.xz
 Source1: tin.watch
 Source2: tin.attributes
 
@@ -70,6 +70,9 @@ install -pD -m644 %_sourcedir/tin.attributes %buildroot%_sysconfdir/tin/attribut
 %exclude %_man5dir/mmdf.*
 
 %changelog
+* Sat Dec 24 2016 Michael Shigorin <mike@altlinux.org> 2.4.1-alt1
+- new version (watch file uupdate)
+
 * Tue Aug 23 2016 Michael Shigorin <mike@altlinux.org> 2.4.0-alt1
 - 2.4.0
 
