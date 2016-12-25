@@ -1,5 +1,5 @@
 Name: sleuthkit
-Version: 4.2.0
+Version: 4.3.0
 Release: alt1
 
 Summary: The Sleuth Kit
@@ -10,7 +10,8 @@ Url: http://www.sleuthkit.org/sleuthkit/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sourceforge.net/sleuthkit/%name-%version.tar
+# Source-url: https://github.com/sleuthkit/sleuthkit/releases/download/sleuthkit-%version/sleuthkit-%version.tar.gz
+Source: %name-%version.tar
 Source1: mac-robber-1.02.tar.bz2
 Patch: sleuthkit-unbundle.diff
 
@@ -116,6 +117,7 @@ install -m755 mac-robber %buildroot%_bindir/
 %_man1dir/blkstat.1*
 %_man1dir/ffind.1*
 %_man1dir/fls.1*
+%_man1dir/fcat.1*
 %_man1dir/fsstat.1*
 %_man1dir/hfind.1*
 %_man1dir/icat.1*
@@ -143,6 +145,9 @@ install -m755 mac-robber %buildroot%_bindir/
 %_includedir/tsk/
 
 %changelog
+* Sun Dec 25 2016 Vitaly Lipatov <lav@altlinux.ru> 4.3.0-alt1
+- new version (4.3.0) with rpmgs script
+
 * Sun Jan 03 2016 Vitaly Lipatov <lav@altlinux.ru> 4.2.0-alt1
 - new version 4.2.0 (with rpmrb script)
 
