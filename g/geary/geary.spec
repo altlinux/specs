@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 0.11
 %def_enable contractor
 
 Name: geary
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: Email client
 License: LGPLv2.1+
@@ -39,12 +39,6 @@ BuildRequires: libat-spi2-core-devel at-spi2-atk-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libsoup-gir-devel libwebkitgtk3-gir-devel libcanberra-vala
 BuildRequires: gcr-libs-devel >= %gcr_ver gcr-libs-vala
-
-# TODO:
-# -- Unity indicate support: OFF
-# -- Unity messaging menu support: OFF
-# -- Unity launcher support: OFF
-# -- Reference tracking: OFF
 
 %description
 Geary is an email client built for the GNOME desktop environment.  It
@@ -85,6 +79,9 @@ Geary's development.
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Sun Dec 25 2016 Yuri N. Sedunov <aris@altlinux.org> 0.11.3-alt1
+- 0.11.3
+
 * Mon Dec 12 2016 Yuri N. Sedunov <aris@altlinux.org> 0.11.2-alt2
 - updated to geary-0.11.2-14-gd02629c
 
