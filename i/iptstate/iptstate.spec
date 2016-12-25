@@ -1,13 +1,13 @@
 Name: iptstate
-Version: 2.2.3
-Release: alt1.qa1
+Version: 2.2.6
+Release: alt1
 
 Summary: Display iptables state table information in a "top"-like interface
 License: zlib/libpng license
 Group: Monitoring
 
 URL: http://www.phildev.net/iptstate/
-Source: http://downloads.sourceforge.net/iptstate/iptstate-%version.tar.bz2
+Source: https://github.com/jaymzh/iptstate/releases/download/v%version/iptstate-%version.tar.bz2
 
 # Automatically added by buildreq on Mon Apr 04 2011
 BuildRequires: gcc-c++ libncurses-devel libnetfilter_conntrack-devel
@@ -27,11 +27,14 @@ make CXXFLAGS="%optflags %optflags_nocpp"
 make PREFIX="%buildroot/usr" install
 
 %files
-%doc BUGS CONTRIB Changelog LICENSE README WISHLIST
+%doc BUGS CONTRIB Changelog LICENSE README.md WISHLIST
 %_sbindir/*
 %_man8dir/*
 
 %changelog
+* Sun Dec 25 2016 Vitaly Lipatov <lav@altlinux.ru> 2.2.6-alt1
+- new version 2.2.6 (with rpmrb script)
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 2.2.3-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
