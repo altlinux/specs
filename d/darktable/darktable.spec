@@ -1,8 +1,8 @@
-%define ver_major 2.0
+%define ver_major 2.2
 %define beta %nil
 
 Name: darktable
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
@@ -14,26 +14,30 @@ Url: http://%name.org/
 #Source: %name-%version.tar
 Source: https://github.com/darktable-org/darktable/releases/download/release-%version/%name-%version.tar.xz
 
+%define glib_ver 2.40
+%define gtk_ver 3.14
+%define exiv2_ver 0.24
+
 BuildRequires: gcc-c++ libgomp-devel
 
 BuildPreReq:  rpm-build-gnome
 BuildRequires: /proc
-BuildRequires: libgio-devel >= 2.40 libgtk+3-devel >= 3.10
+BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: cmake intltool libSDL-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel
 BuildRequires: libXdamage-devel libXdmcp-devel libXinerama-devel libXpm-devel libXrandr-devel
 BuildRequires: libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel
-BuildRequires: libdbus-glib-devel libexiv2-devel libflickcurl-devel libsecret-devel
+BuildRequires: libdbus-glib-devel libexiv2-devel >= %exiv2_ver libflickcurl-devel libsecret-devel
 BuildRequires: libgphoto2-devel libjpeg-devel liblcms2-devel liblensfun-devel
 BuildRequires: libpng-devel librsvg-devel libsqlite3-devel libtiff-devel libxkbfile-devel lsb-release
 BuildRequires: openexr-devel perl-Pod-Parser
 BuildRequires: libjson-glib-devel libsoup-devel xsltproc libpixman-devel libexpat-devel
 BuildRequires: libcolord-gtk-devel libudev-devel
-BuildRequires: libGraphicsMagick-c++-devel libopenjpeg-devel
+BuildRequires: libGraphicsMagick-c++-devel libopenjpeg2.0-devel
 BuildRequires: libharfbuzz-devel libwebp-devel libxshmfence-devel
 # since 2.0
 BuildRequires: libpugixml-devel libcups-devel
 BuildRequires: libosm-gps-map1.0-devel
-
+BuildRequires: python-module-jsonschema
 # for build from git tree
 #BuildRequires: gnome-doc-utils fop saxon ...
 
@@ -73,6 +77,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/%name/
 
 %changelog
+* Sun Dec 25 2016 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Tue Oct 25 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.7-alt1
 - 2.0.7
 
