@@ -2,8 +2,8 @@
 
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
-Version: 1.1.15
-Release: alt3
+Version: 1.1.16
+Release: alt1
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
 # VCS:   https://github.com/ClusterLabs/pacemaker.git
@@ -215,7 +215,7 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %preun_service pacemaker_remote
 
 %files
-%doc COPYING AUTHORS ChangeLog
+%doc COPYING ChangeLog README.markdown
 %doc %_datadir/pacemaker/alerts
 %exclude %_libexecdir/pacemaker/lrmd_test
 %exclude %_sbindir/pacemaker_remoted
@@ -287,7 +287,6 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %dir %attr (750, %uname, %gname) %_var/lib/pacemaker/blackbox
 
 %files -n lib%name
-%doc COPYING.LIB AUTHORS
 %_libdir/libcib.so.*
 %_libdir/liblrmd.so.*
 %_libdir/libcrmservice.so.*
@@ -300,7 +299,6 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_libdir/libcrmcluster.so.*
 
 %files remote
-%doc COPYING.LIB AUTHORS
 %config(noreplace) %_sysconfdir/sysconfig/pacemaker_remote
 %_initdir/pacemaker_remote
 %_unitdir/pacemaker_remote.service
@@ -321,6 +319,9 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Sat Dec 24 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.16-alt1
+- New version
+
 * Fri Sep 23 2016 Alexey Shabalin <shaba@altlinux.ru> 1.1.15-alt3
 - do not package fence files
 - add_findreq_skiplist for resource files
