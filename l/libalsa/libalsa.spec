@@ -1,6 +1,9 @@
+%def_with doc
+%def_with python
+
 Name: libalsa
-Version: 1.1.2
-Release: alt1
+Version: 1.1.3
+Release: alt2
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -18,7 +21,12 @@ Obsoletes: libalsa2 < %version
 # for fourth-party software
 Provides: alsa-lib = %version
 
-BuildRequires: doxygen
+# Automatically added by buildreq on Mon Dec 26 2016
+# optimized out: perl python-base python-modules
+%{?_with_doc:BuildRequires: doxygen}
+
+# for smixer plugins, see commit a668a94238dc67b19ae187b52a161e027d79ee5d
+%{?_with_python:BuildRequires: python-dev}
 
 %define pkgdocdir %_docdir/%name-%version
 %define modutils_oss /etc/modutils.d/oss
@@ -55,6 +63,7 @@ contains many enhanced features.
 
 This is the development environment to compile ALSA applications.
 
+%if_with doc
 %package docs
 Summary: Documentation for Advanced Linux Sound Architecture (ALSA)
 Group: Development/Documentation
@@ -63,6 +72,7 @@ BuildArch: noarch
 %description docs
 Advanced Linux Sound Architecture (ALSA) Developer Documentation
 (C library reference)
+%endif
 
 %prep
 %setup
@@ -77,21 +87,21 @@ find include -type f -print0 |
 %autoreconf
 %configure \
 	--with-configdir=%_datadir/alsa \
-	--disable-python \
+	%{?!_with_python:--disable-python} \
 	--disable-static
 %make_build
-%make doc
+%{?_with_doc:%make doc}
 
 %install
 %makeinstall_std
 
-find %buildroot%_libdir/alsa-lib -name \*.la -delete
+find %buildroot%_libdir -name \*.la -delete
 
 install -pDm644 asound.conf.sonicvibes_2 %buildroot%_datadir/alsa/cards/SonicVibes.conf
 
 mkdir -p %buildroot%pkgdocdir
 install -pm644 NOTES MEMORY-LEAK TODO %buildroot%pkgdocdir/
-cp -a doc/doxygen/html %buildroot%pkgdocdir/
+%{?_with_doc:cp -a doc/doxygen/html %buildroot%pkgdocdir/}
 
 mkdir -p %buildroot%_sysconfdir/modprobe.d
 cat << __EOF__ >> %buildroot%modprobe_conf
@@ -139,8 +149,10 @@ done
 
 %files
 %_libdir/*.so.*
+%if_with python
 %dir %_libdir/alsa-lib
 %_libdir/alsa-lib/smixer
+%endif
 %config(noreplace) %modprobe_conf
 %_datadir/alsa
 %dir %_localstatedir/alsa
@@ -152,15 +164,25 @@ done
 %_pkgconfigdir/alsa.pc
 %_datadir/aclocal/*
 
+%if_with doc
 %files docs
 %dir %pkgdocdir
 %pkgdocdir/[D-Z]*
 %pkgdocdir/html
+%endif
 
 %files -n aserver
 %_bindir/aserver
 
 %changelog
+* Mon Dec 26 2016 Michael Shigorin <mike@altlinux.org> 1:1.1.3-alt2
+- 1.1.3
+- BOOTSTRAP: added doc, python knobs
+  + enabled python support by default too
+
+* Thu Dec 22 2016 Michael Shigorin <mike@altlinux.org> 1:1.1.3-alt1
+- 1.1.3
+
 * Thu Oct 06 2016 Michael Shigorin <mike@altlinux.org> 1:1.1.2-alt1
 - 1.1.2
 
