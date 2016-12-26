@@ -1,6 +1,6 @@
 
 Name: acpica
-Version: 20160729
+Version: 20161222
 Release: alt1
 Summary: ACPICA tools for the development and debug of ACPI tables
 
@@ -32,6 +32,9 @@ Patch6: int-format.patch
 Patch7: f23-harden.patch
 Patch8: asllookup-ppc64.patch
 Patch9: template.patch
+Patch11: big-endian-part1.patch
+Patch12: free.patch
+Patch13: big-endian-part2.patch
 
 BuildRequires: bison flex
 
@@ -91,6 +94,9 @@ This version of the tools is being released under GPLv2 license.
 %patch7 -p1 -b .f23-harden
 %patch8 -p1 -b .asllookup-ppc64
 %patch9 -p1 -b .template
+#%patch11 -p1 -b .big-endian-part1
+%patch12 -p1 -b .free
+#%patch13 -p1 -b .big-endian-part2
 
 cp -p %SOURCE3 iasl.1
 cp -p %SOURCE4 acpibin.1
@@ -147,6 +153,9 @@ cd ..
 %_man1dir/*
 
 %changelog
+* Mon Dec 26 2016 Alexey Shabalin <shaba@altlinux.ru> 20161222-alt1
+- 20161222
+
 * Tue Aug 23 2016 Alexey Shabalin <shaba@altlinux.ru> 20160729-alt1
 - 20160729
 
