@@ -1,6 +1,6 @@
 %define module_name             jool
 %define module_version          3.4.5
-%define module_release          alt1
+%define module_release          alt2
 
 %define flavour		std-def
 BuildRequires(pre): rpm-build-kernel
