@@ -1,5 +1,5 @@
 Name: btrfs-progs
-Version: 4.8.5
+Version: 4.9
 Release: alt1%ubt
 
 Summary: Utilities for managing the Btrfs filesystem
@@ -76,6 +76,9 @@ ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/libbtrfs.so
 %_includedir/btrfs
 
 %changelog
+* Mon Dec 26 2016 Anton Farygin <rider@altlinux.ru> 4.9-alt1%ubt
+- new version
+
 * Wed Dec 14 2016 Anton Farygin <rider@altlinux.ru> 4.8.5-alt1%ubt
 - new version
 
