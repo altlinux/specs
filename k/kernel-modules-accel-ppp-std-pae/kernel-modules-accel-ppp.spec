@@ -1,6 +1,6 @@
 %define module_name             accel-ppp
 %define module_version          1.11.1
-%define module_release          alt1
+%define module_release          alt2
 
 %define flavour		std-pae
 BuildRequires(pre): rpm-build-kernel
