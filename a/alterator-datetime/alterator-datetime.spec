@@ -3,12 +3,11 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-datetime
-Version: 2.6
+Version: 3.0
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
 
-Packager: Stanislav Ievlev <inger@altlinux.org>
 
 BuildArch:	noarch
 
@@ -58,6 +57,9 @@ alterator module for date/time setup
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Fri Dec 23 2016 Denis Medvedev <nbr@altlinux.org> 3.0-alt1
+- chrony support
+
 * Tue Apr 21 2015 Mikhail Efremov <sem@altlinux.org> 2.6-alt1
 - installer: Always set UTC/LOCAL in the /etc/adjtime.
 - postinstall: Copy /etc/adjtime from installer too.
