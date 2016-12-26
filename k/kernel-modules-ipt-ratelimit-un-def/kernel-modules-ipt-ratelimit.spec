@@ -1,6 +1,6 @@
 %define module_name             ipt-ratelimit
 %define module_version          0.2
-%define module_release 		alt1
+%define module_release 		alt2
 
 %define flavour		un-def
 BuildRequires(pre): rpm-build-kernel
