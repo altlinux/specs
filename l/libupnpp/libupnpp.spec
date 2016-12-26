@@ -1,5 +1,5 @@
 Name: libupnpp
-Version: 0.14.1
+Version: 0.15.1
 Release: alt1
 
 Summary: C++ wrapper for libupnp
@@ -44,8 +44,12 @@ This package contains development part of %name
 %files devel
 %_libdir/*.so
 %_includedir/libupnpp
+%_pkgconfigdir/libupnpp.pc
 
 %changelog
+* Mon Dec 26 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.15.1-alt1
+- 0.15.1 released
+
 * Mon Sep 05 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.14.1-alt1
 - 0.14.1 released
 
