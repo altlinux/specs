@@ -11,7 +11,7 @@
 
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
-Version: 4.7.1
+Version: 4.8.0
 Release: alt2
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
@@ -121,7 +121,7 @@ BuildRequires: libSDL-devel libXext-devel
 # xsm policy file needs needs checkpolicy and m4
 %{?_enable_xsmpolicy:BuildRequires: checkpolicy m4}
 # efi image needs an ld that has -mi386pep option
-%{?_with_efi:BuildRequires: mingw64-binutils}
+%{?_with_efi:BuildRequires: mingw64-binutils >= 2.26}
 %{?_enable_stubdom:BuildRequires: makeinfo}
 # with hypervisor
 BuildRequires: flex discount libfdt-devel libgcrypt-devel liblzo2-devel libvde-devel perl-HTML-Parser perl-devel
@@ -194,9 +194,25 @@ which manage Xen virtual machines.
 Summary: Core Xen runtime environment
 Group: Emulators
 Requires: %name = %version-%release
+Requires: %name-runtime-common = %version-%release
 Requires: lib%name = %version-%release
 
 %description runtime
+The Xen Project hypervisor is an open-source type-1 or baremetal
+hypervisor, which makes it possible to run many instances of an
+operating system or indeed different operating systems in parallel on a
+single machine (or host).
+
+This package contains the runtime programs which form the core Xen
+userspace environment.
+
+
+%package runtime-common
+Summary: Core Xen runtime environment
+Group: Emulators
+BuildArch: noarch
+
+%description runtime-common
 The Xen Project hypervisor is an open-source type-1 or baremetal
 hypervisor, which makes it possible to run many instances of an
 operating system or indeed different operating systems in parallel on a
@@ -542,6 +558,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_unitdir/xenconsoled.service
 %_unitdir/xendomains.service
 %_unitdir/xenstored.service
+%_unitdir/xendriverdomain.service
 
 %_tmpfilesdir/xen.conf
 
@@ -584,8 +601,6 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_sbindir/flask-set-bool
 %_sbindir/flask-setenforce
 %_sbindir/gdbsx
-%_sbindir/gtracestat
-%_sbindir/gtraceview
 %_sbindir/img2qcow
 %_sbindir/kdd
 %_sbindir/lock-util
@@ -666,11 +681,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 %files runtime
 %_bindir/pygrub
-%_sbindir/xen-bugtool
-
-%dir %_libexecdir/%name/bin
-%_libexecdir/%name/bin/convert-legacy-stream
-%_libexecdir/%name/bin/verify-stream-v2
+%_bindir/xencons
 
 %_initddir/%name-qemu-dom0
 
@@ -678,13 +689,11 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %dir %_unitdir
 %_unitdir/xen-qemu-dom0.service
 
-%_datadir/%name
-%_datadir/qemu-%name
-
 %dir %_libexecdir/%name
 %dir %_libexecdir/%name/bin
 %dir %_libexecdir/%name/boot
-%_libexecdir/%name/bin/pygrub
+%_libexecdir/%name/bin/ivshmem-client
+%_libexecdir/%name/bin/ivshmem-server
 %_libexecdir/%name/bin/qemu-dm
 %_libexecdir/%name/bin/qemu-img
 %_libexecdir/%name/bin/qemu-io
@@ -698,14 +707,24 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 %python_sitelibdir/%name
 %python_sitelibdir/xen-*.egg-info
-
-%python_sitelibdir/fsimage.so
 %python_sitelibdir/grub
 %python_sitelibdir/pygrub-*.egg-info
+%python_sitelibdir/fsimage.so
 
 %attr(0700,root,root) %_logdir/%name
 
-%exclude %_bindir/xencons
+
+%files runtime-common
+%_sbindir/xen-bugtool
+
+%dir %_libexecdir/%name/bin
+%_libexecdir/%name/bin/pygrub
+%_libexecdir/%name/bin/convert-legacy-stream
+%_libexecdir/%name/bin/verify-stream-v2
+
+%_datadir/%name
+%_datadir/qemu-%name
+
 %exclude %_datadir/qemu-xen/qemu/s390-ccw.img
 
 
@@ -767,6 +786,16 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Mon Dec 26 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.0-alt2
+- Upstream updates:
+ - x86/emul: Correct the handling of eflags with SYSCALL (XSA-204)
+ - x86: force EFLAGS.IF on when exiting to PV guests (XSA-202)
+ - x86/HVM: add missing NULL check before using VMFUNC hook (XSA-203)
+ - x86/emul: add likely()/unlikely() to test harness
+
+* Wed Dec 07 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.0-alt1
+- 4.8.0 release
+
 * Fri Nov 25 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.1-alt2
 - Upstream updates:
  - x86/hvm: Fix the handling of non-present segments.
