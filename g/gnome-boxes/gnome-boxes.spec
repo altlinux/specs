@@ -2,7 +2,7 @@
 %def_disable ovirt
 
 Name: gnome-boxes
-Version: 3.22.1
+Version: 3.22.3
 Release: alt1
 Summary: A simple GNOME 3 application to access remote or virtual systems
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
@@ -100,6 +100,9 @@ intltoolize -f
 %_datadir/appdata/*.xml
 
 %changelog
+* Mon Dec 26 2016 Alexey Shabalin <shaba@altlinux.ru> 3.22.3-alt1
+- 3.22.3
+
 * Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 3.22.1-alt1
 - 3.22.1
 
