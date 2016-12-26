@@ -2,8 +2,8 @@
 %def_with splash
 
 Name: propagator
-Version: 20161024
-Release: alt2
+Version: 20161226
+Release: alt1
 
 Summary: 'Early userspace' set of binaries
 License: GPL
@@ -37,6 +37,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Mon Dec 26 2016 Michael Shigorin <mike@altlinux.org> 20161226-alt1
+- probing.c: bump max disk number from 50 to 250 (closes: #32934)
+
 * Mon Oct 24 2016 Michael Shigorin <mike@altlinux.org> 20161024-alt2
 - disk.c: retry uuid/label based autodetection upon a pause
   if the first attempt has failed (e.g. flash not ready yet)
