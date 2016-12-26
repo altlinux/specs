@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.29.7
+Version: 0.30.0
 Release: alt1
 
 BuildArch: noarch
@@ -44,6 +44,9 @@ Requires: samba-winbind-clients
 Requires: samba-common-tools
 Requires: krb5-kinit
 Requires: pam_mount
+Requires: libnss-role
+Requires: fuse-gvfs gvfs-backend-smb gvfs-utils
+Requires: alterator-datetime
 
 %description -n task-auth-ad
 Metapackage to authenticate in Active Directory domain.
@@ -56,10 +59,14 @@ Metapackage to authenticate in Active Directory domain.
 
 %install
 %makeinstall
+install -Dpm644 etc/user-groups %buildroot%_sysconfdir/alterator/auth/user-groups
+install -Dpm644 etc/admin-groups %buildroot%_sysconfdir/alterator/auth/admin-groups
 install -Dpm755 sbin/system-auth %buildroot/%_sbindir/system-auth
 install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 
 %files
+%config(noreplace) %_sysconfdir/alterator/auth/user-groups
+%config(noreplace) %_sysconfdir/alterator/auth/admin-groups
 %_datadir/alterator/applications/*
 %_datadir/alterator/ui/*/
 %_sbindir/system-auth
@@ -69,6 +76,19 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-ad
 
 %changelog
+* Mon Dec 26 2016 Andrey Cherepanov <cas@altlinux.org> 0.30.0-alt1
+- Edit existing Kerberos configuration instead of use winbind to
+  retrieve Kerberos config (ALT #32342, #32937)
+- Set winbind enum users and groups to `no` to prevent lags in large
+  networks
+- Check task-auth-ad package installed instead of winbind service to
+  get complete list of requirements
+- Map domain groups to local Unix groups
+- Add gvfs stuff to task-auth-ad for shares mount
+- Set time sync from dc for client
+- Adapt LightDM for too many domain users: remove user list and language
+  chooser (such as Windows login screen)
+
 * Fri Nov 18 2016 Andrey Cherepanov <cas@altlinux.org> 0.29.7-alt1
 - Wait 10 seconds for winbind to create krb5.conf file (ALT #32759)
 
