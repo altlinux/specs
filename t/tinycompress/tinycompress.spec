@@ -1,5 +1,5 @@
 Name: tinycompress
-Version: 1.1.1
+Version: 1.1.3
 Release: alt1
 
 Summary: Userspace Interface to Kernel ALSA Compressed Audio APIs
@@ -60,6 +60,9 @@ ln -s %_includedir/sound include/
 %_libdir/lib%name.so
 
 %changelog
+* Thu Dec 22 2016 Michael Shigorin <mike@altlinux.org> 1.1.3-alt1
+- 1.1.3
+
 * Mon Jun 20 2016 Michael Shigorin <mike@altlinux.org> 1.1.1-alt1
 - 1.1.1
 
