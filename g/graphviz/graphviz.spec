@@ -8,7 +8,7 @@
 
 Name: graphviz
 Version: 2.38.0
-Release: alt2.1
+Release: alt3
 
 Summary: Graphs visualization tools
 License: Common Public License 1.0
@@ -20,6 +20,7 @@ Source0: %name-%version.tar
 Source1: graphviz-2.2-alt-libpath.patch
 Patch0:  graphviz-2.24.0-alt-perl-5.12.patch
 Patch1:  graphviz-2.28.0-alt-string_h_trhow.patch
+Patch2:  graphviz-2.38.0-gs-9.18-fix.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: lib%name = %version-%release
@@ -40,6 +41,7 @@ BuildRequires: flex gcc-c++ ghostscript-utils groff-base imake libXaw-devel libX
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %gvdatadir/demo/*.pl
 %add_findreq_skiplist %gvdatadir/demo/*.tcl
+%add_findreq_skiplist %_bindir/vimdot
 
 %description
 Graphviz is a set of graph drawing tools originally developed
@@ -152,6 +154,7 @@ This package makes %name functionality accessible from Tcl
 %setup
 %patch0 -p1
 %patch1
+%patch2 -p1
 
 %build
 %add_optflags -DNDEBUG %optflags_fastmath
@@ -316,6 +319,10 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 # - enable/fix/test language bindings
 
 %changelog
+* Tue Dec 27 2016 Michael Shigorin <mike@altlinux.org> 2.38.0-alt3
+- fix build against ghostscript-9.18+ (upstream #0002604)
+- drop xterm dependency (closes: #32948)
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.38.0-alt2.1
 - rebuild with new perl 5.22.0
 
