@@ -1,6 +1,6 @@
 Name: glibc
-Version: 2.23
-Release: alt3
+Version: 2.24
+Release: alt1
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -19,6 +19,7 @@ Url: http://www.gnu.org/software/glibc/
 %def_with optimization
 %def_enable langify
 %def_with locales
+%def_enable memusagestat
 
 %ifarch %ix86 x86_64
 %def_enable multiarch
@@ -69,7 +70,7 @@ BuildPreReq: glibc-kernheaders >= %enablekernel
 BuildPreReq: rpm-build >= 4.0.4-alt61
 
 # This is required for building auxiliary programs.
-BuildPreReq: libgd2-devel
+%{?!_disable_memusagestat:BuildPreReq: libgd2-devel}
 
 BuildPreReq: makeinfo
 
@@ -337,7 +338,6 @@ pushd %buildtarget
 	%{?_enable_multiarch:--enable-multi-arch} \
 	--enable-obsolete-rpc \
 	--enable-kernel=%enablekernel \
-	--localedir=%_prefix/lib/locale \
 	#
 
 make %PARALLELMFLAGS
@@ -657,7 +657,9 @@ fi
 %_bindir/*
 %exclude %_bindir/iconv*
 %exclude %_bindir/locale*
+%if_enabled memusagestat
 %exclude %_bindir/memusage*
+%endif
 %exclude %_bindir/pcprofiledump
 %exclude %_bindir/tzselect
 %exclude %_bindir/xtrace
@@ -675,7 +677,9 @@ fi
 %files devel-static -f devel-static.files
 
 %files debug
+%if_enabled memusagestat
 %_bindir/memusage*
+%endif
 %_bindir/pcprofiledump
 %_bindir/xtrace
 %_libdir/libmemusage.so
@@ -706,6 +710,9 @@ fi
 %_datadir/i18n
 
 %changelog
+* Tue Dec 27 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.24-alt1
+- Updated to 2.24 branch with backports from master and fedora.
+
 * Thu Jun 09 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.23-alt3
 - Backported upstream fixes for sw bugs: 19648 19703 19861 20005 20010
   20012 20111 20112 (including fix for CVE-2016-4429).
