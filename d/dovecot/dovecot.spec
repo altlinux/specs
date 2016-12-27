@@ -5,7 +5,7 @@
 %def_disable debug
 
 Name: dovecot
-Version: 2.2.21
+Version: 2.2.27
 Release: alt1
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
@@ -24,7 +24,7 @@ Source4: http://www.unicode.org/Public/UNIDATA/UnicodeData.txt
 
 Patch1: fix-mail_plugin_dir-default.patch
 Patch2: dovecot-2.0-defaultconfig.patch
-Patch3: dovecot-2.1-privatetmp.patch
+#Patch3: dovecot-2.1-privatetmp.patch
 Patch4: dovecot-2.1.4-postreleasefix.patch
 Patch5: dovecot-2.2-systemd_firsttime.patch
 
@@ -62,7 +62,7 @@ Libraries and headers for Dovecot
 
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+#patch3 -p1
 %patch4 -p1
 %patch5 -p1
 
@@ -71,6 +71,7 @@ sed -i 's@/usr/local@/usr@g' doc/example-config/conf.d/90-quota.conf
 
 %build
 export ACLOCAL='aclocal -I .'
+mkdir m4
 %autoreconf
 %configure \
 	    --localstatedir=%_var                   \
@@ -189,6 +190,9 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Tue Dec 27 2016 Fr. Br. George <george@altlinux.ru> 2.2.27-alt1
+- Autobuild version bump to 2.2.27 (closes: #32946)
+
 * Mon Jan 25 2016 Fr. Br. George <george@altlinux.ru> 2.2.21-alt1
 - Autobuild version bump to 2.2.21
 
