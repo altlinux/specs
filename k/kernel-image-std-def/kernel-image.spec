@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt1.1
 epoch:1 
 %define kernel_base_version	4.4
 %define kernel_sublevel .39
@@ -545,6 +545,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Fri Dec 23 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.39-alt1.1
+- memory sanitize patch added
+
 * Fri Dec 16 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.39-alt1
 - v4.4.39
 
