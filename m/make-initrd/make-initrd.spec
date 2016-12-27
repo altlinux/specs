@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 0.8.12
+Version: 0.8.13
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -168,6 +168,9 @@ fi
 %_datadir/%name/features/mdadm
 
 %changelog
+* Tue Dec 27 2016 Michael Shigorin <mike@altlinux.org> 0.8.13-alt1
+- dropped obsolete guess-kbd call (closes: #29688)
+
 * Mon Nov 07 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.8.12-alt1
 - multipath working again
 
