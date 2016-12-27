@@ -1,6 +1,6 @@
-#define udapl 1
+%define udapl 1
 #define static 1
-#define thread 1
+%define thread 1
 
 # Build examples package only once
 %ifndef udapl
@@ -36,12 +36,13 @@
 
 %define arguments %udaplarg %threadarg %staticarg
 
-Name: %{pkgname}1_4
+Name: openmpi-compat
+#pkgname
 
-Version: 1.4.5
-Release: alt4
+Version: 1.6.4
+Release: alt3
 
-%define mpi_prefix %_libexecdir/%{pkgname}
+%define mpi_prefix %_libdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
 
 Summary: A powerful implementaion of MPI
@@ -52,17 +53,13 @@ Url: http://www.open-mpi.org/
 
 Packager: Denis Pynkin <dans@altlinux.ru>
 Source:  openmpi-%version.tar
-Source1: MPI_Status_c2f.3
+#Source1: MPI_Status_c2f.3
 
 Patch0: openmpi-%version-%release.patch
-Patch1: openmpi-arm-%version.patch
+#Patch1: openmpi-arm-%version.patch
 
 BuildPreReq: rpm-macros-mpi-selector
 Requires(post,preun): mpi-selector
-
-Provides: %pkgname = %version
-
-Requires: %name-lib = %version-%release
 
 %ifdef static
 BuildPreReq: libibverbs-devel-static >= 1.1.2
@@ -85,9 +82,29 @@ BuildPreReq: /proc flex gcc-c++ gcc-fortran
 BuildPreReq: libibverbs-devel
 BuildPreReq: valgrind-devel libiberty-devel
 
-%package lib
-Summary: Libraries from %name
+%package -n openmpi-lib-compat
+Summary: Provides links to OpenMPI libraries v.1
 Group: Development/Other
+
+Requires: %name = %version-%release
+Obsoletes: openmpi < %version-%release
+Provides: openmpi = %version-%release
+Provides: %_libdir/openmpi/lib/libmpi_cxx.so.1
+Provides: %_libdir/openmpi/lib/libmpi_f77.so.1
+Provides: %_libdir/openmpi/lib/libmpi_f90.so.1
+Provides: %_libdir/openmpi/lib/libmpi.so.1
+
+%package -n openmpi-lib-compat-debuginfo
+Summary: Provides links to OpenMPI v.1 debuginfo
+Group: Development/Other
+
+Requires: %name-debuginfo = %version-%release
+Obsoletes: openmpi-debuginfo < %version-%release
+Provides: openmpi-debuginfo = %version-%release
+Provides: %_libexecdir/debug%{_libdir}/openmpi/lib/libmpi_cxx.so.1.debug
+Provides: %_libexecdir/debug%{_libdir}/openmpi/lib/libmpi_f77.so.1.debug
+Provides: %_libexecdir/debug%{_libdir}/openmpi/lib/libmpi_f90.so.1.debug
+Provides: %_libexecdir/debug%{_libdir}/openmpi/lib/libmpi.so.1.debug
 
 %package devel
 Summary: Development part of %name
@@ -96,6 +113,8 @@ Group: Development/Other
 Requires: %name = %version-%release
 Requires: gcc-c++ gcc-fortran
 Requires: libibverbs-devel libibumad-devel
+
+Obsoletes: openmpi-devel < %version-%release
 
 %ifdef udapl
 Requires: libdapl-devel
@@ -108,6 +127,8 @@ Group: Development/Other
 Requires: %name-devel = %version-%release
 Requires: gcc-c++ gcc-fortran
 Requires: libibverbs-devel libibumad-devel 
+
+Obsoletes: openmpi-vt < %version-%release
 
 %ifdef examples
 %package %name-examples
@@ -130,8 +151,13 @@ science researchers.
 This part is attended for computing nodes.
 #description -l ru_RU.KOI8-R
 
-%description lib
-Package with common OpenMPI libs
+%description -n openmpi-lib-compat
+Provides links to OpenMPI libraries v.1.
+Sonames has been changed in later versions of OpenMPI
+
+%description -n openmpi-lib-compat-debuginfo
+Provides links to OpenMPI v.1 debuginfo
+Sonames has been changed in later versions of OpenMPI
 
 %description devel
 Package for development with Open MPI 
@@ -141,9 +167,9 @@ Package for development with Open MPI and VampirTrace
 
 %prep
 %setup -q -n openmpi-%version
-%__cp -f %SOURCE1 ompi/mpi/man/man3/
+#__cp -f SOURCE1 ompi/mpi/man/man3/
 %patch0 -p1
-%patch1 -p1
+#patch1 -p1
 
 %build
 CFLAGS+=" %optflags -D_FORTIFY_SOURCE=2"
@@ -152,15 +178,14 @@ LDFLAGS+="-Wl,-R%mpi_prefix/lib/openmpi:%mpi_prefix/lib"
 echo="/bin/echo"
 export CFLAGS CXXFLAGS LDFLAGS echo
 
-%autoreconf
-#sh autogen.sh
+#autoreconf
+sh autogen.sh
 
 function buildIt() {
 	./configure $* \
 			--enable-mpi-f77 \
 			--enable-mpi-f90 \
 			--prefix=%mpi_prefix \
-			--enable-orterun-prefix-by-default \
 			--with-ft=cr \
 			--sysconfdir=%mpi_sysconfdir \
 			--bindir=%mpi_prefix/bin \
@@ -183,8 +208,15 @@ export echo
 
 %make_install DESTDIR=%buildroot install
 
-#ln -s ompi-restart %buildroot%_libexecdir/%name/bin/orte-restart
-#ln -s ompi-checkpoint %buildroot%_libexecdir/%name/bin/orte-checkpoint
+#ln -s ompi-restart %buildroot%_libdir/%name/bin/orte-restart
+#ln -s ompi-checkpoint %buildroot%_libdir/%name/bin/orte-checkpoint
+
+# Avoid fail during man pages compression
+rm -f %buildroot%_libdir/%name/man/man1/mpiCC.1
+rm -f %buildroot%_libdir/%name/man/man1/orteCC.1
+
+ln -s mpic++.1.gz %buildroot%_libdir/%name/man/man1/mpiCC.1.gz
+ln -s mpic++.1.gz %buildroot%_libdir/%name/man/man1/orteCC.1.gz
 
 %find_lang %name
 
@@ -233,6 +265,19 @@ else
 endif
 EOF
 
+mkdir -p %buildroot%_libdir/openmpi/lib
+ln -fs ../../%name/lib/libmpi_cxx.so.1 %buildroot%_libdir/openmpi/lib/libmpi_cxx.so.1
+ln -fs ../../%name/lib/libmpi_f77.so.1 %buildroot%_libdir/openmpi/lib/libmpi_f77.so.1
+ln -fs ../../%name/lib/libmpi_f90.so.1 %buildroot%_libdir/openmpi/lib/libmpi_f90.so.1
+ln -fs ../../%name/lib/libmpi.so.1 %buildroot%_libdir/openmpi/lib/libmpi.so.1
+
+mkdir -p %buildroot%_libexecdir/debug%_libdir/openmpi/lib
+ln -fs ../../%name/lib/libmpi_cxx.so.1 %buildroot%_libexecdir/debug%_libdir/openmpi/lib/libmpi_cxx.so.1
+ln -fs ../../%name/lib/libmpi_f77.so.1 %buildroot%_libexecdir/debug%_libdir/openmpi/lib/libmpi_f77.so.1
+ln -fs ../../%name/lib/libmpi_f90.so.1 %buildroot%_libexecdir/debug%_libdir/openmpi/lib/libmpi_f90.so.1
+ln -fs ../../%name/lib/libmpi.so.1 %buildroot%_libexecdir/debug%_libdir/openmpi/lib/libmpi.so.1
+
+
 %post
 %post_mpi_selector %name %mpi_prefix/bin
 
@@ -253,7 +298,6 @@ EOF
 %mpi_prefix/bin/orted
 %mpi_prefix/bin/orterun
 %mpi_prefix/bin/mpiexec
-%mpi_prefix/bin/opari
 
 %mpi_prefix/bin/ompi-*
 %mpi_prefix/bin/orte-*
@@ -263,6 +307,13 @@ EOF
 %dir %mpi_prefix/lib/openmpi
 %mpi_prefix/lib/openmpi/*.so
 
+%ifdef static
+%mpi_prefix/lib/lib*
+%exclude %mpi_prefix/lib/libvt*
+%else
+%mpi_prefix/lib/lib*.so.*
+%endif
+
 %dir %mpi_sysconfdir
 %config(noreplace) %mpi_sysconfdir/*
 
@@ -271,13 +322,17 @@ EOF
 %mpi_prefix/man/man7
 %mpi_prefix/data
 
-%files lib
-%ifdef static
-%mpi_prefix/lib/lib*
-%exclude %mpi_prefix/lib/libvt*
-%else
-%mpi_prefix/lib/lib*.so.*
-%endif
+%files -n openmpi-lib-compat
+%_libdir/openmpi/lib/libmpi_cxx.so.1
+%_libdir/openmpi/lib/libmpi_f77.so.1
+%_libdir/openmpi/lib/libmpi_f90.so.1
+%_libdir/openmpi/lib/libmpi.so.1
+
+%files -n openmpi-lib-compat-debuginfo
+%_libexecdir/debug%_libdir/openmpi/lib/libmpi_cxx.so.1.debug
+%_libexecdir/debug%_libdir/openmpi/lib/libmpi_f77.so.1.debug
+%_libexecdir/debug%_libdir/openmpi/lib/libmpi_f90.so.1.debug
+%_libexecdir/debug%_libdir/openmpi/lib/libmpi.so.1.debug
 
 %files devel
 %mpi_prefix/bin/mpic++
@@ -288,6 +343,11 @@ EOF
 %mpi_prefix/bin/mpif90
 %mpi_prefix/bin/otf*
 
+%mpi_prefix/bin/orte_wrapper_script
+%mpi_prefix/bin/orteCC
+%mpi_prefix/bin/ortec++
+%mpi_prefix/bin/ortecc
+
 %dir %mpi_prefix/include
 %mpi_prefix/include/*.h
 %dir %mpi_prefix/include/openmpi
@@ -297,10 +357,13 @@ EOF
 
 %mpi_prefix/lib/mpi.mod
 
+%mpi_prefix/lib/pkgconfig/*
+
 %ifdef static
 %mpi_prefix/lib/openmpi/*.a
 %mpi_prefix/lib/libotf.a
 %else
+%exclude %mpi_prefix/lib/libvt*.so
 %mpi_prefix/lib/lib*.so
 %mpi_prefix/lib/*.la
 %mpi_prefix/lib/openmpi/*.la
@@ -314,7 +377,7 @@ EOF
 %mpi_prefix/bin/mpif77-vt
 %mpi_prefix/bin/mpif90-vt
 %mpi_prefix/bin/vt*
-%mpi_prefix/lib/libvt*
+%mpi_prefix/lib/libvt*.so
 %dir %mpi_prefix/include/vampirtrace
 %mpi_prefix/include/vampirtrace/*
 
@@ -324,17 +387,31 @@ EOF
 %endif
 
 %changelog
-* Wed Feb 04 2015 Anton Farygin <rider@altlinux.ru> 1.4.5-alt4
-- rebuild with new libibverbs
+* Mon Dec 26 2016 Denis Pynkin <dans@altlinux.org> 1.6.4-alt3
+- Package renamed to openmpi-compat
+- added subpackage with simlinks to old libraries
 
-* Mon Jun 25 2012 Denis Pynkin <dans@altlinux.org> 1.4.5-alt3
-- libs moved to separate package
+* Wed Feb 04 2015 Anton Farygin <rider@altlinux.ru> 1.6.4-alt2
+- rebuild witch new libibverbs
 
-* Thu Jun 21 2012 Denis Pynkin <dans@altlinux.org> 1.4.5-alt2
-- fixed mpiprefix
+* Sun Mar 10 2013 Denis Pynkin <dans@altlinux.ru> 1.6.4-alt1
+- Version updated
 
-* Fri Jun 15 2012 Denis Pynkin <dans@altlinux.org> 1.4.5-alt1
-- new package for libmpi.so.0 providing
+* Mon Oct 01 2012 Denis Pynkin <dans@altlinux.org> 1.6.2-alt2
+- Rebuild with gcc 4.7
+
+* Thu Sep 27 2012 Denis Pynkin <dans@altlinux.org> 1.6.2-alt1
+- New version
+
+* Mon Jun 25 2012 Denis Pynkin <dans@altlinux.org> 1.6-alt2
+- Fixed overlapping with vt libraries
+
+* Thu May 31 2012 Denis Pynkin <dans@altlinux.org> 1.6-alt1
+- Version updated
+- removed arm support added by sbolshakov due upstream support
+- fixed default hostfile path
+- enabled udapl and threads
+- moved from %_libexecdir to %_libdir
 
 * Wed Mar 21 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.5-alt2
 - arm support addded
