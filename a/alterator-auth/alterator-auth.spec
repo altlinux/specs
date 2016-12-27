@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.30.0
+Version: 0.30.1
 Release: alt1
 
 BuildArch: noarch
@@ -76,6 +76,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-ad
 
 %changelog
+* Tue Dec 27 2016 Andrey Cherepanov <cas@altlinux.org> 0.30.1-alt1
+- Fix nss role behaviour (use domain names and place in nsswitch.conf)
+
 * Mon Dec 26 2016 Andrey Cherepanov <cas@altlinux.org> 0.30.0-alt1
 - Edit existing Kerberos configuration instead of use winbind to
   retrieve Kerberos config (ALT #32342, #32937)
