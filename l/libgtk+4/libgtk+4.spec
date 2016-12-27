@@ -17,11 +17,12 @@
 # broadway (HTML5) gdk backend
 %def_enable broadway
 %def_enable cloudprint
+%def_enable vulkan
 %def_enable installed_tests
 
 Name: libgtk+4
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -43,7 +44,7 @@ Patch: gtk+-2.16.5-alt-stop-spam.patch
 %define atspi_ver 2.8.1
 %define pixbuf_ver 2.30.0
 %define fontconfig_ver 2.2.1-alt2
-%define gtk_doc_ver 1.6
+%define gtk_doc_ver 1.20
 %define colord_ver 0.1.9
 %define cups_ver 1.6
 %define wayland_ver 1.10.0
@@ -83,6 +84,7 @@ BuildRequires: libXrender-devel libXt-devel
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel wayland-protocols >= %wayland_protocols_ver}
 %{?_enable_cloudprint:BuildRequires: librest-devel libjson-glib-devel}
+%{?_enable_vulkan:BuildRequires: vulkan-devel}
 # for examples
 BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel
 # for check
@@ -199,6 +201,7 @@ the functionality of the installed GTK+3 packages.
     %{?_enable_broadway:--enable-broadway-backend} \
     %{?_enable_installed_tests:--enable-installed-tests} \
     %{subst_enable cloudprint} \
+    %{subst_enable vulkan}
 
 %make_build
 
@@ -346,6 +349,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Wed Dec 28 2016 Yuri N. Sedunov <aris@altlinux.org> 3.89.2-alt1.1
+- rebuilt with vulkan support
+
 * Wed Dec 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.89.2-alt1
 - 3.89.2
 
