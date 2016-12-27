@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sslkey
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -39,6 +39,10 @@ and certificates
 %_altdata_dir/type/*
 
 %changelog
+* Tue Dec 27 2016 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt1
+- Show error message if key/request were not created.
+- Fix creating key (closes: #32944).
+
 * Mon Jan 17 2011 Mikhail Efremov <sem@altlinux.org> 0.2.3-alt1
 - desktop file: add uk translation (by Roman Savochenko).
 
