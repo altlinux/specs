@@ -1,26 +1,34 @@
+%def_disable snapshot
+
 %define ver_major 1.0
 %define _libexecdir %_prefix/libexec
 
 Name: genius
-Version: %ver_major.21
+Version: %ver_major.22
 Release: alt1
 
 Summary: Genius Calculator
 License: LGPLv3+
 Group: Sciences/Mathematics
+Url: http://www.jirka.org/genius.html
 
-URL: http://www.jirka.org/genius.html
-#Source: %name-%version.tar
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 Requires: scrollkeeper
 
 %define gtk_ver 2.18.0
 %define glib_ver 2.16.0
+%define vte_ver 0.26.0
+%define gtksourceview_ver 2.0.2
+%define mpfr_ver 2.3.0
 
 BuildPreReq: libgio-devel >= %glib_ver libgtk+2-devel >= %gtk_ver
-BuildRequires: libgtksourceview-devel >= 2.0.2 libvte-devel
-BuildRequires: libreadline-devel libncurses-devel libgmp-devel libmpfr-devel >= 2.3.0
+BuildRequires: libgtksourceview-devel >= %gtksourceview_ver libvte-devel >= %vte_ver
+BuildRequires: libreadline-devel libncurses-devel libgmp-devel libmpfr-devel >= %mpfr_ver
 BuildRequires: gnome-common gnome-doc-utils librarian intltool xsltproc bison flex
 # for non-UTF korean trnslation
 BuildRequires: perl-Encode-KR
@@ -45,6 +53,8 @@ This package provides headers needed to develop Genius plugins.
 
 %prep
 %setup
+# stuff from newer (2.4.6) libtool
+rm -f m4/*
 
 subst '/GTK_UPDATE_ICON_CACHE/d' pixmaps/Makefile.am
 
@@ -68,7 +78,6 @@ pushd src
 ./geniustest.pl
 popd
 
-
 %files -f %name.lang
 %_bindir/%name
 %_bindir/gnome-%name
@@ -91,6 +100,9 @@ popd
 %exclude %_datadir/mime-info/genius.mime
 
 %changelog
+* Tue Dec 27 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0.22-alt1
+- 1.0.22
+
 * Thu Jan 07 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0.21-alt1
 - 1.0.21
 
