@@ -1,9 +1,9 @@
 %def_with doc
-%def_with python
+%def_without python
 
 Name: libalsa
 Version: 1.1.3
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -175,6 +175,9 @@ done
 %_bindir/aserver
 
 %changelog
+* Tue Dec 27 2016 Michael Shigorin <mike@altlinux.org> 1:1.1.3-alt3
+- disabed python support by default (asked by glebfm@)
+
 * Mon Dec 26 2016 Michael Shigorin <mike@altlinux.org> 1:1.1.3-alt2
 - 1.1.3
 - BOOTSTRAP: added doc, python knobs
