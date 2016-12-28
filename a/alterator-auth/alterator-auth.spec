@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.30.1
+Version: 0.30.2
 Release: alt1
 
 BuildArch: noarch
@@ -45,8 +45,8 @@ Requires: samba-common-tools
 Requires: krb5-kinit
 Requires: pam_mount
 Requires: libnss-role
-Requires: fuse-gvfs gvfs-backend-smb gvfs-utils
 Requires: alterator-datetime
+Requires: gvfs-shares
 
 %description -n task-auth-ad
 Metapackage to authenticate in Active Directory domain.
@@ -76,6 +76,10 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-ad
 
 %changelog
+* Wed Dec 28 2016 Andrey Cherepanov <cas@altlinux.org> 0.30.2-alt1
+- Set local hostname and set krb5_ccache_type to KEYRING
+- Require gvfs-shares in task-auth-ad
+
 * Tue Dec 27 2016 Andrey Cherepanov <cas@altlinux.org> 0.30.1-alt1
 - Fix nss role behaviour (use domain names and place in nsswitch.conf)
 
