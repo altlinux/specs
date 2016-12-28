@@ -14,8 +14,8 @@
 %define sm_develdir     %sm_prefix-devel
 
 Name: 	 seamonkey
-Version: 2.40
-Release: alt2
+Version: 2.46
+Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
 License: MPL/NPL
@@ -394,6 +394,15 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Wed Dec 28 2016 Michael Shigorin <mike@altlinux.org> 1:2.46-alt1
+- 2.46 released
+
+* Mon Oct 10 2016 Michael Shigorin <mike@altlinux.org> 1:2.46-alt0.6
+- 2.46 (candidate build6 tarball)
+
+* Tue Oct 04 2016 Michael Shigorin <mike@altlinux.org> 1:2.46-alt0.5
+- 2.46 (candidate build5 tarball)
+
 * Sun Mar 20 2016 Michael Shigorin <mike@altlinux.org> 1:2.40-alt2
 - 2.40 released
 
