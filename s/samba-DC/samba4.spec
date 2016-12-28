@@ -46,7 +46,7 @@
 
 Name:    samba-DC
 Version: 4.5.3
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -1285,6 +1285,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Wed Dec 28 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.5.3-alt2%ubt
+- Do not delete an existing valid credential cache for KEYRING type
+- Set FQDN to lower at fill_mem_keytab_from_system_keytab()
+
 * Mon Dec 19 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.5.3-alt1%ubt
 - Update for release with security fixes:
   - CVE-2016-2123 (ndr_pull_dnsp_name contains an integer wrap problem)
