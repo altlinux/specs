@@ -1,6 +1,6 @@
 Name: apt-blacklist
-Version: 0.01
-Release: alt2.4
+Version: 0.01.1
+Release: alt1
 
 Summary: Forbids installation of packages based on some criteria
 License: GPLv3+
@@ -11,6 +11,7 @@ BuildArch: noarch
 Packager: Andrey Rahmatullin <wrar@altlinux.ru>
 
 Source0: %name-%version.tar
+Requires: python-module-rpm >= 4.13.0
 
 %description
 This small tool checks packages that apt wants to install and aborts the
@@ -40,6 +41,9 @@ install -pD -m644 apt.conf %buildroot/etc/apt/apt.conf.d/10-%name.conf
 %config(noreplace) %_sysconfdir/%name/watch
 
 %changelog
+* Wed Dec 28 2016 Terechkov Evgenii <evg@altlinux.org> 0.01.1-alt1
+- Fix for new rpm python module.
+
 * Sun Jun 29 2014 Terechkov Evgenii <evg@altlinux.org> 0.01-alt2.4
 - Compact all printed messages
 
