@@ -1,0 +1,413 @@
+%define php7_sapi cli
+%add_findreq_skiplist %_usrsrc/php7-devel/*
+
+Summary: The PHP7 scripting language
+Name:	 php7
+Version: 7.1.0
+Release: alt1%ubt
+
+%define php7_name      %name
+%define _php7_version  %version
+%define _php7_major  7.1
+%define php7_release   %release
+%define rpm_build_version %_php7_version
+
+License: PHP
+Group:	 Development/Other
+Url: http://www.php.net/
+#Git: http://git.php.net/repository/php-src.git
+
+Source0: php7-source.tar
+Source1: phpver.rpm.macros.standalone
+Source2: php-packaging.readme
+Source3: php.ini
+Source4: phpinfo.tar
+
+Patch1: php-version.patch
+Patch2: php-shared-1.patch
+Patch3: php-cli-build.patch
+Patch6: php-test-pcntl.patch
+Patch9: php-5.3.3-sapi-scandir.patch
+
+Patch12: php-devel-scripts-alternatives.patch
+Patch13: php-7.1.0-dlopen.patch
+
+Patch30: php-4.3.11-libtool.patch
+Patch32: php-5.2.1-umask.patch
+Patch33: php-5.2.5-norpath.patch
+Patch34: php-5.1.0b1-cxx.patch
+Patch38: php-no-static-program.patch
+Patch39: php-set-session-save-path.patch
+Patch40: php5-5.2.13-alt-lsattr_path.patch
+Patch41: php5-alt-checklibs.patch
+Patch51: php-5.3.5-alt-build-gcc-version.patch
+Patch61: php5-5.5.9-phar-phppath.patch
+Patch62: php-mysqlnd-socket.patch
+Patch63: php-7.1-alt-zend-signal-visibility.patch
+Patch64: php-7.1-alt-phar-manfile-suffix.patch
+Patch65: php7-7.1.0-phpize.patch
+
+PreReq:  php7-libs = %version-%release
+Provides: php-engine = %version-%release
+Provides: %name = %rpm_build_version-%release
+
+BuildRequires: chrpath libmm-devel libxml2-devel ssmtp termutils zlib-devel re2c bison
+
+BuildRequires(pre): rpm-build-php7
+BuildRequires(pre): rpm-build-ubt
+
+BuildRequires: libtool_1.5 chrpath
+%set_libtool_version 1.5
+
+%description
+PHP7 is a widely-used general-purpose scripting language that is
+especially suited for Web development and can be embedded into HTML.
+The most common use of PHP coding is probably as a replacement
+for CGI scripts.
+
+%package -n rpm-build-php7-version
+Summary:	RPM helper macros to rebuild PHP7 packages
+
+Group:		Development/Other
+License:	GPL
+BuildArch:	noarch
+
+%description -n rpm-build-php7-version
+These helper macros provide possibility to rebuild
+PHP7 packages by some Alt Linux Team Policy compatible way.
+
+%package mysqlnd
+Group: System/Servers
+Summary: Native PHP driver for MySQL
+Requires: php7 = %rpm_build_version-%php7_release
+Provides: %name-mysqlnd = %rpm_build_version-%php7_release
+
+%description mysqlnd
+Native PHP driver for MySQL
+
+%package devel
+Group: Development/C
+Summary: Development package for PHP7
+
+Requires: php7-libs = %version-%release
+Requires: rpm-build-php7
+Requires: rpm-build-php7-version = %version-%release
+# for phpize
+Requires: libtool, autoconf, automake
+
+Provides: php-devel
+Provides: %name-devel = %rpm_build_version-%release
+Provides: php-engine-devel = %version-%release
+
+%description devel
+The php7-devel package lets you compile dynamic extensions to PHP7.
+Instead of recompiling the whole php binary, install this package
+and use the new self-contained extensions support. For more information,
+read the file SELF-CONTAINED-EXTENSIONS.
+
+%package libs
+Group: Development/C
+Summary: Package with common data for various PHP7 packages
+Requires: php-base >= 2.5
+
+Provides: php7-bcmath = %php7_version-%php7_release
+Provides: php7-ctype = %php7_version-%php7_release
+Provides: php7-date = %php7_version-%php7_release
+Provides: php7-filter = %php7_version-%php7_release
+Provides: php7-ftp = %php7_version-%php7_release
+Provides: php7-gettext = %php7_version-%php7_release
+Provides: php7-hash = %php7_version-%php7_release
+Provides: php7-iconv = %php7_version-%php7_release
+Provides: php7-json = %php7_version-%php7_release
+Provides: php7-libxml = %php7_version-%php7_release
+Provides: php7-mhash = %php7_version-%php7_release
+Provides: php7-pcre = %php7_version-%php7_release
+Provides: php7-posix = %php7_version-%php7_release
+Provides: php7-reflection = %php7_version-%php7_release
+Provides: php7-session = %php7_version-%php7_release
+Provides: php7-shmop = %php7_version-%php7_release
+Provides: php7-simplexml = %php7_version-%php7_release
+Provides: php7-spl = %php7_version-%php7_release
+Provides: php7-standard = %php7_version-%php7_release
+Provides: php7-sysvmsg = %php7_version-%php7_release
+Provides: php7-sysvsem = %php7_version-%php7_release
+Provides: php7-sysvshm = %php7_version-%php7_release
+Provides: php7-tokenizer = %php7_version-%php7_release
+Provides: php7-wddx = %php7_version-%php7_release
+Provides: php7-xml = %php7_version-%php7_release
+Provides: php7-xmlwriter = %php7_version-%php7_release
+Provides: php7-zlib = %php7_version-%php7_release
+Provides: php7-libs = %php7_version-%release
+
+
+Obsoletes: php7-simplexml php7-mhash
+
+%description libs
+The php7-libs package contains parts of PHP7 distribution which are
+in use by other PHP7-related packages.
+
+%prep
+%setup -q -n php7-source
+%setup -q -n php7-source -T -D -a4
+%patch1 -p2
+%patch2 -p2
+%patch3 -p2
+%patch6 -p1
+%patch9 -p1 -b .scandir
+%patch12 -p2 -b .alternatives
+%patch13 -p0
+%patch30 -p0
+#patch32 -p1
+%patch33 -p2
+%patch34 -p2
+%patch38 -p2
+%patch39 -p2
+%patch40 -p1
+%patch41 -p2
+%patch51 -p2
+%patch61 -p1
+%patch62 -p1
+%patch63 -p1
+%patch64 -p1
+%patch65 -p1
+
+
+cp Zend/LICENSE Zend/ZEND_LICENSE
+cp Zend/ZEND_CHANGES Zend/ZEND_ChangeLog 
+mv README.SELF-CONTAINED-EXTENSIONS SELF-CONTAINED-EXTENSIONS
+
+cp -dpR %SOURCE2 .
+
+LIBS="$LIBS -lpthread"
+CFLAGS="%optflags -fPIC"
+export LIBS CFLAGS
+
+subst "s,./vcsclean,," build/buildcheck.sh
+subst "s,./stamp=$,," build/buildcheck.sh
+# symbols visibility fix
+sed -is 's,\(zend_module_entry \)\(.*= {\),zend_module_entry __attribute__ ((visibility("default"))) \2,;' ext/*/*.c
+
+%autoreconf -I build
+./buildconf --force
+
+%build
+%php7_env
+
+%configure \
+	--prefix=%_prefix \
+	--program-suffix=7 \
+	--localstatedir=%_var \
+	--enable-inline-optimization \
+	--with-config-file-path=%php7_sysconfdir/ \
+	--with-config-file-scan-dir=%php7_sysconfdir/%php7_sapi/php.d/ \
+	--with-pic \
+	\
+	--enable-cli \
+	--disable-cgi \
+	\
+	--disable-debug \
+	--enable-safe-mode \
+	--disable-magic-quotes \
+	--disable-rpath \
+	\
+	--enable-bcmath \
+	--enable-ctype \
+	--enable-ftp \
+	--enable-session \
+	--enable-shmop \
+	--enable-sysvsem \
+	--enable-sysvshm \
+	--enable-sysvmsg \
+	--enable-libxml \
+	--disable-dom \
+	--disable-opcache \
+	--enable-simplexml \
+	--disable-pdo \
+	--enable-hash \
+	--enable-xml \
+	--enable-wddx \
+	--disable-fileinfo \
+	--disable-xmlreader \
+	--enable-shared=yes \
+	--enable-static=no \
+	\
+	--with-layout=GNU \
+	--with-exec-dir=%_bindir \
+	--with-zlib=%_usr \
+	--with-gettext=%_usr \
+	--with-iconv \
+	--enable-mysqlnd=shared \
+	--without-mysql \
+	--without-openssl \
+	--with-mm=%_usr \
+	--without-sqlite \
+	--with-regex=php \
+	--without-pear \
+#
+export NPROCS=1
+%php7_make
+
+%install
+# XXX see https://bugzilla.altlinux.org/show_bug.cgi?id=14726
+%add_findreq_skiplist %php7_libdir/build/config.guess
+%php7_make_install
+
+# All things already installed, install differences only
+mkdir -p \
+	%buildroot/%php7_libdir/extensions \
+	%buildroot/%_bindir \
+	%buildroot/%php7_sysconfdir/%php7_sapi/php.d \
+	%buildroot/%php7_extconf \
+	%buildroot/%php7_servicedir/%php7_sapi \
+	%buildroot/%_datadir/php/%_php7_version/modules
+
+install -m 644 %SOURCE3                      %buildroot/%php7_sysconfdir/%php7_sapi/php.ini
+
+for f in \
+  %buildroot/%php7_sysconfdir/%php7_sapi/php.ini
+do
+  subst 's,@PHP_MAJOR@,%_php7_major,g' "$f"
+  subst 's,@PHP_VERSION@,%_php7_version,g' "$f"
+  subst 's,@PHP_LIBDIR@,%_libdir/php,g' "$f"
+  subst 's,@SAPI@,%php7_sapi,g' "$f"
+done
+
+[ -f "%buildroot/%_bindir/phpextdist" ] || 
+    cp -dpR scripts/dev/phpextdist %buildroot/%_bindir/
+
+chmod 755 %buildroot/%_bindir/*
+
+# This file is not needed by any program.
+rm -f %buildroot/%_libdir/libphp-%_php7_version.la
+
+# Remove RPATH
+/usr/bin/chrpath --delete %buildroot/%_bindir/php7-%_php7_version
+/usr/bin/chrpath --delete %buildroot/%_bindir/phpinfo7-%_php7_version
+
+# Make alternatives support.
+install -d %buildroot/%_altdir
+php_weight="$(printf %%s "%_php7_version" | sed 's,[^[:digit:]],,g')0"
+
+cat << EOF > %buildroot/%_altdir/php7
+%_bindir/phar		%_bindir/phar7.phar	$php_weight
+%_bindir/phpdbg		%_bindir/phpdbg7	$php_weight
+%_bindir/php	%_bindir/php7-%_php7_version	$php_weight
+%_bindir/php7	%_bindir/php7-%_php7_version	$php_weight
+%_man1dir/php7.1	%_man1dir/php-%_php7_version.1	$php_weight
+EOF
+
+cat << EOF > %buildroot/%_altdir/php7-devel
+%_bindir/phpize		%_bindir/phpize7	$php_weight
+%_bindir/php-config	%_bindir/php-config7	$php_weight
+EOF
+
+# Make backup some files to make devel package.
+%make clean
+
+mkdir -p %buildroot%_usrsrc/php7-devel/{ext,sapi,main,conf}
+cp -dpR php.ini* %buildroot%_usrsrc/php7-devel/conf
+cp -dpR ext/*    %buildroot%_usrsrc/php7-devel/ext
+cp -dpR sapi/*   %buildroot%_usrsrc/php7-devel/sapi
+
+# Add necessary files to build any sapi packages.
+mkdir -p %buildroot%_usrsrc/php7-devel/sapi/BUILD
+cp -dpR main/{internal_functions.c,fastcgi.c} %buildroot%_usrsrc/php7-devel/sapi/BUILD
+cp -dpR include                   %buildroot%_usrsrc/php7-devel/sapi/BUILD
+
+# install headers for PDO subpackages
+install -m644 -D ext/pdo/php_pdo.h %buildroot%_includedir/php/%_php7_version/ext/pdo/php_pdo.h
+install -m644 -D ext/pdo/php_pdo_driver.h %buildroot%_includedir/php/%_php7_version/ext/pdo/php_pdo_driver.h
+install -m644 -D ext/pdo/php_pdo_error.h %buildroot%_includedir/php/%_php7_version/ext/pdo/php_pdo_error.h
+
+# install headers for mysqlnd subpackages
+install -m644 -D ext/mysqlnd/mysqlnd.h %buildroot%_includedir/php/%_php7_version/ext/mysqlnd/mysqlnd.h
+install -m644 -D ext/mysqlnd/mysqlnd_portability.h %buildroot%_includedir/php/%_php7_version/ext/mysqlnd/mysqlnd_portability.h
+install -m644 -D ext/mysqlnd/mysqlnd_enum_n_def.h %buildroot%_includedir/php/%_php7_version/ext/mysqlnd/mysqlnd_enum_n_def.h
+install -m644 -D ext/mysqlnd/mysqlnd_structs.h %buildroot%_includedir/php/%_php7_version/ext/mysqlnd/mysqlnd_structs.h
+
+mkdir -p %buildroot/%php7_extconf/mysqlnd
+echo "file_ini=01_mysqlnd.ini" >%buildroot/%php7_extconf/mysqlnd/params
+echo "extension=mysqlnd.so" >%buildroot/%php7_extconf/mysqlnd/config
+
+# install correct phar
+mv %buildroot%_bindir/phar.phar %buildroot%_bindir/phar7.phar
+ln -sf phar7.phar %buildroot%_bindir/phar7
+sed -i -s 's,%buildroot,,' %buildroot%_bindir/phar7.phar
+
+# rpm macros 
+mkdir -p %buildroot/%_sysconfdir/rpm/macros.d
+cp %SOURCE1 %buildroot/%_sysconfdir/rpm/macros.d/%php7_name-ver
+
+
+
+subst 's,@php7_name@,%php7_name,'           %buildroot/%_sysconfdir/rpm/macros.d/%php7_name-ver
+subst 's,@_php7_version@,%_php7_version,'   %buildroot/%_sysconfdir/rpm/macros.d/%php7_name-ver
+subst 's,@php7_major@,%_php7_major,'   %buildroot/%_sysconfdir/rpm/macros.d/%php7_name-ver
+subst 's,@php7_release@,%php7_release,'     %buildroot/%_sysconfdir/rpm/macros.d/%php7_name-ver
+
+
+%post
+%php7_sapi_postin
+
+%preun
+%php7_sapi_preun
+
+%define		php7_extension	mysqlnd
+
+%post mysqlnd
+%php7_extension_postin
+
+%preun mysqlnd
+%php7_extension_preun
+
+%files
+%_altdir/php7
+%_bindir/phpdbg7
+%_bindir/php7-%_php7_version
+%_bindir/phar7*
+%_bindir/phpinfo7-%_php7_version
+%dir %php7_sysconfdir/%php7_sapi
+%dir %php7_sysconfdir/%php7_sapi/php.d
+%config(noreplace) %php7_sysconfdir/%php7_sapi/php.ini
+%_man1dir/php7-%_php7_version.1*
+%_man1dir/php7.1*
+%_man1dir/phpdbg7.1*
+%_man1dir/phar7*.1*
+%doc CODING_STANDARDS CREDITS INSTALL LICENSE
+%doc NEWS README.* Zend/ZEND_* php.ini-* EXTENSIONS
+%doc UPGRADING*
+
+%files -n rpm-build-php7-version
+%_sysconfdir/rpm/macros.d/%php7_name-ver
+
+%files libs
+%dir %php7_sysconfdir
+%php7_libdir
+%php7_datadir
+%exclude %php7_extdir/mysqlnd*
+%exclude %php7_extconf/mysqlnd
+%_libdir/libphp-%_php7_version.so*
+%exclude %php7_libdir/build
+%exclude %php7_servicedir/cli
+
+%files mysqlnd
+%php7_extdir/mysqlnd*
+%php7_extconf/mysqlnd/*
+
+%files devel
+%_bindir/php-config7
+%_bindir/phpize7
+%_bindir/phpextdist
+%_includedir/php
+%php7_libdir/build
+%_altdir/php7-devel
+%_libdir/libphp-%_php7_version.a
+%_usrsrc/php7-devel
+%_man1dir/php-config7.1*
+%_man1dir/phpize7.1*
+%doc SELF-CONTAINED-EXTENSIONS php-packaging.readme
+%doc tests run-tests.php 
+
+%changelog
+* Wed Dec 7 2016 Anton Farygin <rider@altlinux.ru> 7.1.0-alt1%ubt
+- build PHP-7.1 for ALT
