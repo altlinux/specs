@@ -2,7 +2,7 @@
 #
 %define appname smartcar
 Name: umki
-Version: 1.8
+Version: 1.10
 Release: alt1
 Summary: Frontend to UMKI - Radio Controlled Robotic Construction Set
 License: GPL
@@ -16,7 +16,7 @@ Source3: %{appname}-16x16.png
 Source4: %{appname}-32x32.png
 Source5: %{appname}-48x48.png
 
-BuildRequires: libqt4-devel libqwt-devel gcc-c++ desktop-file-utils
+BuildRequires: libqt4-devel libqwt-devel gcc-c++ desktop-file-utils qt4-serialport-devel
 
 %description
 UMKI in Russian stands for Radio Controlled Robotic Construction Set,
@@ -38,7 +38,7 @@ robots and learn to control them.
 
 %build
 cd smartcar_linux
-qmake-qt4
+qmake-qt4 smartcar.pro
 make clean
 make
 cd -
@@ -78,6 +78,9 @@ install -p -m644 %SOURCE5 %buildroot%_liconsdir/%{appname}.png
 %doc docum
 
 %changelog
+* Sat Dec 24 2016 Dmitry Derjavin <dd@altlinux.org> 1.10-alt1
+- 1.10.
+
 * Fri Jan 22 2016 Dmitry Derjavin <dd@altlinux.org> 1.8-alt1
 - kumir2 support review.
 
