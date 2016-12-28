@@ -1,6 +1,6 @@
 Name: vulkan
 Version: 1.0.37
-Release: alt0.2
+Release: alt0.3
 Summary: Vulkan loader and validation layers
 
 Group: System/Libraries
@@ -57,18 +57,18 @@ sed -i 's/inttypes.h/cinttypes/' layers/*.{cpp,h}
 # first, glslang and SPIRV-Tools
 for dir in glslang SPIRV-Tools; do
 pushd %_builddir/$dir
-%cmake ..
-pushd BUILD
-%make_build
-make install DESTDIR=$(pwd)/install
-cd install
+%cmake
+%cmake_build
+%cmakeinstall_std DESTDIR=$(pwd)/install
+pushd install
 ln -s usr/* .
 popd
 popd
 done
 
 # and finally, loader, layers, and demo clients
-%cmake .. \
+%cmake \
+	   -DCMAKE_INSTALL_SYSCONFDIR=%_datadir \
            -DEXTERNAL_SOURCE_ROOT=%_builddir \
 	   -DBUILD_TESTS=OFF \
 	   -DCUSTOM_GLSLANG_BIN_ROOT=ON \
@@ -77,26 +77,10 @@ done
 	   -DSPIRV_TOOLS_BINARY_ROOT=%_builddir/SPIRV-Tools/BUILD \
 	   -DBUILDTGT_DIR=BUILD \
 	   -DBUILD_WSI_MIR_SUPPORT=OFF
-pushd BUILD
-%make_build
-popd
+%cmake_build
 
 %install
-pushd BUILD
-# XXX upstream
-mkdir -p %buildroot{%_includedir,%_bindir,%_libdir}
-mkdir -p %buildroot%_datadir/vulkan/{explicit_layer,implicit_layer}.d
-install demos/vulkaninfo %buildroot%_bindir/vulkaninfo
-cp -a layers/*.so %buildroot%_libdir/
-cp -a loader/libvulkan* %buildroot%_libdir/
-popd
-cd include ; cp -rp vulkan %buildroot%_includedir ; cd ..
-for i in layers/linux/*.json ; do
-    sed 's@./@@' $i > %buildroot%_datadir/vulkan/explicit_layer.d/$(basename $i)
-done
-# bleh
-rm -f %buildroot/%_datadir/vulkan/explicit_layer.d/*implicit*
-
+%cmakeinstall_std
 mkdir -p %buildroot%_datadir/vulkan/icd.d
 
 %files
@@ -114,9 +98,11 @@ mkdir -p %buildroot%_datadir/vulkan/icd.d
 %dir %_datadir/vulkan
 %dir %_datadir/vulkan/icd.d
 %dir %_datadir/vulkan/explicit_layer.d
-%dir %_datadir/vulkan/implicit_layer.d
 
 %changelog
+* Wed Dec 28 2016 L.A. Kostis <lakostis@altlinux.ru> 1.0.37-alt0.3
+- .spec: use cmake macros instead of ugly hacks.
+
 * Mon Dec 26 2016 L.A. Kostis <lakostis@altlinux.ru> 1.0.37-alt0.2
 - Updated builreq: added wayland.
 
