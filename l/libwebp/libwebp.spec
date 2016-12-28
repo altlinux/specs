@@ -5,15 +5,14 @@
 %define soversion 6
 
 Name: libwebp
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: Library and tools for the WebP graphics format
 License: BSD
 Group: System/Libraries
-
-URL: http://webmproject.org/
-Source: http://downloads.webmproject.org/releases/webp/%name-%version.tar.gz
+Url: http://webmproject.org/
+Source: https://storage.googleapis.com/downloads.webmproject.org/releases/webp/%name-%version.tar.gz
 # init only
 Patch: %name-0.4.1-alt-lfs.patch
 
@@ -120,6 +119,9 @@ images more efficiently.
 %{?_enable_libwebpdemux:%_man1dir/vwebp.1.*}
 
 %changelog
+* Wed Dec 28 2016 Yuri N. Sedunov <aris@altlinux.org> 0.5.2-alt1
+- 0.5.2 (fixed CVE-2016-8888, CVE-2016-9085)
+
 * Thu Aug 18 2016 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
 - 0.5.1
 
