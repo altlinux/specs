@@ -1,15 +1,15 @@
 Name: elfutils
-Version: 0.167.0.13.507e7
+Version: 0.168
 Release: alt1
 
-Summary: A collection of utilities and DSOs to handle compiled objects
+Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
 License: GPLv3+ and (GPLv2+ or LGPLv3+)
 Group: Development/C
-URL: http://fedorahosted.org/elfutils/
+URL: https://sourceware.org/elfutils/
 # git://git.altlinux.org/gears/e/elfutils.git
 Source: %name-%version-%release.tar
 
-Requires: libelf = %version-%release
+Requires: libelf = %EVR
 
 %def_enable static
 %def_enable check
@@ -33,8 +33,8 @@ which implement DWARF, ELF, and machine-specific ELF handling.
 Summary: Development libraries to handle compiled objects
 License: GPLv2+ or LGPLv3+
 Group: Development/C
-Requires: %name = %version-%release
-Requires: libelf-devel = %version-%release
+Requires: %name = %EVR
+Requires: libelf-devel = %EVR
 
 %description devel
 This package contains the libraries to create applications for
@@ -46,8 +46,8 @@ libasm provides a programmable assembler interface.
 Summary: Static archives to handle compiled objects
 License: GPLv2+ or LGPLv3+
 Group: Development/C
-Requires: %name-devel = %version-%release
-Requires: libelf-devel-static = %version-%release
+Requires: %name-devel = %EVR
+Requires: libelf-devel-static = %EVR
 
 %description devel-static
 This package contains static archives with the code to handle compiled objects.
@@ -67,7 +67,7 @@ also to generate new ELF files.
 Summary: Development libelf library
 License: GPLv2+ or LGPLv3+
 Group: Development/C
-Requires: libelf = %version-%release
+Requires: libelf = %EVR
 
 %description -n libelf-devel
 This package contains the library to create applications for handling
@@ -78,7 +78,7 @@ object file format, so you can see the different sections of an ELF file.
 Summary: Static libelf library
 License: GPLv2+ or LGPLv3+
 Group: Development/C
-Requires: libelf-devel = %version-%release
+Requires: libelf-devel = %EVR
 
 %description -n libelf-devel-static
 This package contains static libelf library.
@@ -93,14 +93,16 @@ rm -rf %buildtarget
 mkdir %buildtarget
 cd %buildtarget
 %configure \
+	--disable-silent-rules \
 	--enable-dependency-tracking \
-	--enable-dwz \
-	--enable-maintainer-mode
+	--enable-maintainer-mode \
+	--program-prefix=eu-
 %make_build
 
 %install
 %makeinstall_std -C %buildtarget
 %find_lang %name
+%set_verify_elf_method strict,rpath=normal
 
 %check
 export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
@@ -160,6 +162,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Dec 28 2016 Dmitry V. Levin <ldv@altlinux.org> 0.168-alt1
+- 0.167-13-g507e7e2 -> 0.168.
+
 * Fri Nov 18 2016 Dmitry V. Levin <ldv@altlinux.org> 0.167.0.13.507e7-alt1
 - 0.165-3-g2d703bf -> 0.167-13-g507e7e2.
 - Enabled libstdc++ demangle support.
