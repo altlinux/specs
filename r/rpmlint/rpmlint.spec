@@ -1,13 +1,13 @@
 Name: rpmlint
 Version: 0.85
-Release: alt4
+Release: alt5
 
 Summary: RPM correctness checker
 License: GPL2
 Group: Development/Other
 URL: http://rpmlint.zarb.org/
 
-Source0: %name-%version.tar.bz2
+Source0: %name-%version.tar
 Source1: config.alt
 Source2: README.ALT
 BuildArch: noarch
@@ -25,7 +25,7 @@ Binary and source packages can be checked.
 
 %prep
 %setup -q
-%patch0 -p1
+# %%patch0 -p1
 %patch1 -p1
 
 cp %SOURCE1 config
@@ -51,6 +51,9 @@ install -m644 %name.bash-completion %buildroot%_sysconfdir/bash_completion.d/%na
 %_datadir/%name
 
 %changelog
+* Wed Dec 28 2016 Terechkov Evgenii <evg@altlinux.org> 0.85-alt5
+- Turn off patch0 to work with rpm-4.3
+
 * Thu Jul  3 2014 Terechkov Evgenii <evg@altlinux.org> 0.85-alt4
 - Patch0 updated to work with ALT >= rpm-4.0.4-alt100.78
 
