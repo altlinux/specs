@@ -2,7 +2,7 @@
 
 Name: xca
 Version: 1.3.2
-Release: alt1.git1584579
+Release: alt2.git1584579
 
 Summary: A GUI for handling X509 certificates, RSA keys, PKCS#10 Requests
 Group: Security/Networking
@@ -29,10 +29,9 @@ presented.
 
 %build
 ./bootstrap
-prefix="%_prefix" \
 CFLAGS="%optflags" \
 CXXFLAGS="%optflags" \
-./configure
+./configure --prefix="%_prefix"
 %make_build
 
 %install
@@ -52,6 +51,9 @@ mkdir -p %buildroot{%_bindir,%_datadir/xca,%_desktopdir,%_man1dir}
 %_pixmapsdir/xca*.xpm
 
 %changelog
+* Thu Dec 29 2016 Pavel Nakonechnyi <zorg@altlinux.ru> 1.3.2-alt2.git1584579
+- fix data lookup path
+
 * Sun Oct 09 2016 Pavel Nakonechnyi <zorg@altlinux.ru> 1.3.2-alt1.git1584579
 - updated to revision 1584579 from http://gitweb.hohnstaedt.de/?p=xca.git
 - closes: #32305
