@@ -1,13 +1,16 @@
 
 Name: phpipam
-Version: 1.2.1
-Release: alt2
+Version: 1.26.050
+Release: alt1
 Summary: PHP-based virtual machine control tool
 Group: Networking/WWW
 License: GPLv3
 Url: http://phpipam.net
 Source: %name-%version.tar
-Source2: %name-apache.conf
+Source2: php-saml.tar
+Source3: PHPMailer.tar
+Source11: %name-apache.conf
+
 # Patch: %name-%version-%release.patch
 
 BuildArch: noarch
@@ -53,6 +56,8 @@ Requires: apache2-httpd-prefork-like php-engine
 
 %prep
 %setup
+tar -xf %SOURCE2 -C functions/php-saml
+tar -xf %SOURCE3 -C functions/PHPMailer
 #%patch -p1
 
 %install
@@ -63,9 +68,22 @@ cp -r ../%name-%version %buildroot%webserver_webappsdir/%name
 rm -f %buildroot%webserver_webappsdir/%name/{INSTALL.txt,README,UPDATE}
 rm -f %buildroot%webserver_webappsdir/%name/.gitattributes
 rm -f %buildroot%webserver_webappsdir/%name/.gitignore
+rm -f %buildroot%webserver_webappsdir/%name/.gitmodules
 
-install -pDm644 %SOURCE2 %buildroot%apache2_extra_available/%name.conf
+install -pDm644 %SOURCE11 %buildroot%apache2_extra_available/%name.conf
 %__subst 's|--dir--|%webserver_webappsdir/%name|g' %buildroot%apache2_extra_available/%name.conf
+
+chmod 644 INSTALL.txt README UPDATE misc/CHANGELOG misc/Roadmap
+
+# Cleanup PHPMailer
+rm -f %buildroot%webserver_webappsdir/%name/functions/PHPMailer/.gitattributes
+rm -f %buildroot%webserver_webappsdir/%name/functions/PHPMailer/.gitignore
+rm -f %buildroot%webserver_webappsdir/%name/functions/PHPMailer/.scrutinizer.yml
+rm -f %buildroot%webserver_webappsdir/%name/functions/PHPMailer/.travis.yml
+rm -f %buildroot%webserver_webappsdir/%name/functions/PHPMailer/travis.phpunit.xml.dist
+rm -rf %buildroot%webserver_webappsdir/%name/functions/PHPMailer/docs
+rm -rf %buildroot%webserver_webappsdir/%name/functions/PHPMailer/examples
+rm -rf %buildroot%webserver_webappsdir/%name/functions/PHPMailer/test
 
 %files
 %doc INSTALL.txt README UPDATE misc/CHANGELOG misc/Roadmap
@@ -77,6 +95,10 @@ install -pDm644 %SOURCE2 %buildroot%apache2_extra_available/%name.conf
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Mon Dec 26 2016 Alexey Shabalin <shaba@altlinux.ru> 1.26.050-alt1
+- git snapshot of master branch b99412648829471f3a336036f5cd138b8f131721
+- install PHPMailer from upstream (fixed CVE-2015-8476,CVE-2016-10033,CVE-2016-10045)
+
 * Wed Apr 20 2016 Alexey Shabalin <shaba@altlinux.ru> 1.2.1-alt2
 - git snapshot of branch 1.2 - 7a5cb1a2ea065096d1d393ccc5b52a5bb7983c39
 
