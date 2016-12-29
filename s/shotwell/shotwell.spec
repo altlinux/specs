@@ -6,7 +6,7 @@
 
 Name: shotwell
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
@@ -80,6 +80,9 @@ find ./ -name "*.stamp" -delete
 %doc AUTHORS COPYING NEWS README THANKS
 
 %changelog
+* Thu Dec 29 2016 Yuri N. Sedunov <aris@altlinux.org> 0.25.2-alt3
+- rebuilt against libraw.so.16
+
 * Wed Dec 21 2016 Yuri N. Sedunov <aris@altlinux.org> 0.25.2-alt2
 - rebuilt from vala sources to avoid crash
 

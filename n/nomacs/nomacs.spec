@@ -1,6 +1,6 @@
 Name: nomacs
 Version: 2.4.6
-Release: alt2
+Release: alt3
 
 License: GPLv3
 Group: Graphics
@@ -47,6 +47,9 @@ or via LAN is possible. It allows to compare images and spot the differences
 %_pixmapsdir/%name.png
 
 %changelog
+* Thu Dec 29 2016 Yuri N. Sedunov <aris@altlinux.org> 2.4.6-alt3
+- rebuilt against libraw.so.16
+
 * Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 2.4.6-alt2
 - rebuilt against libwebp.so.6
 

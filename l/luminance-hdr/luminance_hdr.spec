@@ -1,7 +1,7 @@
 %define _name luminance
 Name: %_name-hdr
 Version: 2.4.0
-Release: alt4
+Release: alt5
 
 Summary: A graphical tool for creating and processing HDR images
 Group: Graphics
@@ -55,6 +55,9 @@ provide a workflow for HDR imaging.
 %doc AUTHORS Changelog README TODO BUGS
 
 %changelog
+* Thu Dec 29 2016 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt5
+- rebuilt against libraw.so.16
+
 * Tue Sep 15 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt4
 - rebuilt against libraw.so.15
 

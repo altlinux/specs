@@ -4,7 +4,7 @@
 %define rname libkdcraw
 Name: libkdcraw4
 Version: 15.08.0
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Decoding RAW pictures
@@ -66,6 +66,9 @@ Development files for %name
 
 
 %changelog
+* Thu Dec 29 2016 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2
+- rebuild with new libraw
+
 * Tue Sep 15 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
 - new version
 
