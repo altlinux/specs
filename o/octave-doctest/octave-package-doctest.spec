@@ -1,25 +1,30 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: makeinfo
+# END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 0.4.1
+%define octave_pkg_version 0.5.0
 %define octave_pkg_name doctest
 %define octave_descr_name doctest
 Name: octave-%octave_pkg_name
-Version: 0.4.1
+Version: 0.5.0
 Release: alt1
 Summary: Documentation tests
 
 Group: Sciences/Mathematics
-License: modified BSD
+License: BSD-3-Clause
 URL: https://github.com/catch22/octave-doctest
 
 Source0: http://downloads.sourceforge.net/octave/%{octave_pkg_name}-%{octave_pkg_version}.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
-BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
+BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
 %else
 BuildArch: noarch
 %endif
 Provides: octave(doctest) = %version
+# Depends: octave (>= 4.0.0)
+Requires: octave >= 4.0.0
 
 
 %description
@@ -47,6 +52,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Fri Dec 30 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1
+- regenerated from template by package builder
+
 * Tue Apr 12 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1
 - initial import by package builder
 
