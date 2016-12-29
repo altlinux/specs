@@ -1,4 +1,4 @@
-%define module Source-Repository
+%define module Source-Repository-Mass
 
 Name: perl-%module
 Version: 0.382
@@ -13,8 +13,10 @@ Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar
 Url: http://search.cpan.org/dist/%module
 
 # Automatically added by buildreq on Wed Nov 06 2002
-BuildRequires: perl-devel perl-RPM-Source-Editor perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-String-ShellQuote perl-Source-Package
+BuildRequires: perl-devel perl-RPM-Source-Editor perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-DistroMap perl-String-ShellQuote perl-RPM-Source-Convert perl-Source-Package perl-RPM-Source-BundleImport perl-Source-Repository
+Requires: perl-RPM-Source-Editor > 0.853
 Conflicts: perl-RPM-Source-Convert < 0.48
+Conflicts: perl-Source-Repository < 0.382
 
 %description
 %summary
@@ -31,11 +33,12 @@ Conflicts: perl-RPM-Source-Convert < 0.48
 %files
 %doc Changes
 #doc README
+%_bindir/*mass
 %perl_vendor_privlib/Source*
 
 %changelog
 * Thu Dec 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.382-alt1
-- split Mass away
+- split Mass
 
 * Wed Dec 28 2016 Igor Vlasenko <viy@altlinux.ru> 0.381-alt1
 - added tarball version trimmers
@@ -45,27 +48,3 @@ Conflicts: perl-RPM-Source-Convert < 0.48
 
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.379-alt1
 - stable release
-
-* Fri Nov 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.378-alt1
-- stable release
-
-* Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.377-alt1
-- new version
-
-* Tue Nov 01 2016 Igor Vlasenko <viy@altlinux.ru> 0.376-alt1
-- bugfix release
-
-* Wed Oct 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.375-alt1
-- fast girar-copymass
-
-* Tue Oct 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.374-alt1
-- added girar-copymass
-
-* Thu Oct 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.373-alt1
-- mirror finder for bundle import
-
-* Mon Oct 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.372-alt1
-- added susemass
-
-* Wed Oct 12 2016 Igor Vlasenko <viy@altlinux.ru> 0.371-alt1
-- local mirror finder
