@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.5.10
+Version: 0.5.11
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -48,6 +48,10 @@ __EOF__
 %attr(0755,root,root) %_datadir/install2/initinstall.d/85-start-multipath.sh
 
 %changelog
+* Wed Dec 28 2016 Michael Shigorin <mike@altlinux.org> 0.5.11-alt1
+- don't do "destination filesystem remount error"
+  when it's just mdadm putting new arrays into PENDING state
+
 * Mon Dec 05 2016 Michael Shigorin <mike@altlinux.org> 0.5.10-alt1
 - fixed multipath support when multipathd is there
   but there are no multipath-capable devices available
