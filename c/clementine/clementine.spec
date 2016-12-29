@@ -1,9 +1,8 @@
-%def_with vkontakte
 %define gst_api_ver 1.0
 
 Name: clementine
 Version: 1.3.1
-Release: alt1
+Release: alt2
 Summary: A music player and library organiser
 
 Group: Sound
@@ -12,8 +11,8 @@ Url: http://code.google.com/p/clementine-player
 Packager: Pavel Maleev <rolland@altlinux.org>
 
 Source0: %name-%version.tar.gz
-Patch1: %name-1.2.3-alt-vreen.patch
-Patch2: %name-1.3.0-alt-sqlite-fts3.patch
+Patch1: %name-1.3.0-alt-sqlite-fts3.patch
+Patch2: %name-1.3.1-alt-disable-vk.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: boost-devel-headers cmake gcc-c++ libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libgio-devel libglew-devel libgpod-devel liblastfm-devel libmtp-devel libqt4-opengl libqt4-sql libqt4-webkit libqt4-xmlpatterns libtag-devel libxkbfile-devel python-module-sip qt4-designer subversion
@@ -28,10 +27,6 @@ BuildRequires: libechonest-devel
 BuildRequires: kde-common-devel libqt4-sql-sqlite libqca2-devel protobuf-compiler
 # Enable Google Drive support
 BuildRequires: libgoogle-sparsehash
-%if_with vkontakte
-# Enable VK support
-BuildRequires: libvreen-devel
-%endif
 BuildPreReq: libfftw3-devel libavcodec-devel libavformat-devel libpcre-devel
 BuildPreReq: libprotobuf-devel qjson-devel libcdio-devel
 
@@ -47,8 +42,8 @@ advantage of Qt4.
 
 %prep
 %setup
-%patch1 -p2
-%patch2 -p1
+%patch1 -p1
+%patch2 -p2
 
 %build
 %K4build -DSTATIC_SQLITE=on -DBUILD_WERROR=off
@@ -69,6 +64,9 @@ advantage of Qt4.
 
 
 %changelog
+* Tue Dec 27 2016 Vladimir Didenko <cow@altlinux.org> 1.3.1-alt2
+- Disable vkontakte support (dropped by vk.com)
+
 * Sat Apr 23 2016 Vladimir Didenko <cow@altlinux.org> 1.3.1-alt1
 - Version 1.3.1
 - Enable FTS3 at runtime (closes: #31978)
