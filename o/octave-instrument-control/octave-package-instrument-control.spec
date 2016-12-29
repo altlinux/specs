@@ -2,11 +2,11 @@
 BuildRequires: /usr/bin/rpcgen libtirpc-devel makeinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 0.2.2
+%define octave_pkg_version 0.2.3
 %define octave_pkg_name instrument-control
 %define octave_descr_name instrument-control
 Name: octave-%octave_pkg_name
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 Summary: Instrument Control
 
@@ -52,6 +52,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Fri Dec 30 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt1
+- regenerated from template by package builder
+
 * Wed Apr 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1
 - regenerated from template by package builder
 
