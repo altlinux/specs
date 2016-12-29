@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 16.08.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -69,6 +69,12 @@ KF5 library
 %_K5lib/libKF5KDcraw.so.*
 
 %changelog
+* Thu Dec 29 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt2
+- rebuild with new libraw
+
+* Thu Nov 24 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt0.M80P.1
+- build for M80P
+
 * Wed Nov 23 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt1
 - new version
 

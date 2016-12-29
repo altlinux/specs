@@ -1,17 +1,16 @@
 %define _name LibRaw
 
 Name: libraw
-Version: 0.17.2
+Version: 0.18.0
 Release: alt1
 
 Summary: library for reading RAW files obtained from digital photo cameras
 Group: System/Libraries
-License: CDDL LGPL LibRaw, GPLv2 GPLv3 - demosaic packs
+License: LGPLv2.1 or CDDL-1.0; GPLv2, GPLv3 - demosaic packs
 
 Url: http://www.libraw.org
 
 Source: %url/data/%_name-%version.tar.gz
-#Source: %name-%version.tar
 Source1: %url/data/%_name-demosaic-pack-GPL2-%version.tar.gz
 Source2: %url/data/%_name-demosaic-pack-GPL3-%version.tar.gz
 
@@ -90,6 +89,9 @@ This package contains static library.
 %_libdir/libraw_r.a
 
 %changelog
+* Thu Dec 29 2016 Yuri N. Sedunov <aris@altlinux.org> 0.18.0-alt1
+- 0.18.0
+
 * Thu May 19 2016 Yuri N. Sedunov <aris@altlinux.org> 0.17.2-alt1
 - 0.17.2
 

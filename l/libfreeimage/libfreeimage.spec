@@ -1,6 +1,6 @@
 Name: libfreeimage
 Version: 3.17.0
-Release: alt1.1
+Release: alt2
 
 Summary: Multi-format image decoder library
 License: GPL and FIPL (see the license-fi.txt)
@@ -67,6 +67,9 @@ sh ./genfipsrclist.sh
 %_libdir/libfreeimage.so
 
 %changelog
+* Thu Dec 29 2016 Yuri N. Sedunov <aris@altlinux.org> 3.17.0-alt2
+- rebuilt against libraw.so.16
+
 * Mon Jun 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.17.0-alt1.1
 - small spec cleanup
 
