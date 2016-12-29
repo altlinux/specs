@@ -1,10 +1,9 @@
-
 Name: librevenge
-Version: 0.0.2
-Release: alt1.qa1
+Version: 0.0.4
+Release: alt1
+
 Summary: A base library for writing document import filters
 Group: System/Libraries
-
 # src/lib/RVNGOLEStream.{h,cpp} are BSD
 License: (LGPLv2+ or MPLv2.0) and BSD
 Url: http://sourceforge.net/p/libwpd/wiki/librevenge/
@@ -73,6 +72,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 %doc docs/doxygen/html
 
 %changelog
+* Thu Dec 29 2016 Yuri N. Sedunov <aris@altlinux.org> 0.0.4-alt1
+- 0.0.4
+
 * Wed Apr 13 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.0.2-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
