@@ -3,11 +3,11 @@
 
 Name: alterator-auth
 Version: 0.30.2
-Release: alt1
+Release: alt2
 
 BuildArch: noarch
 
-%filter_from_requires /^samba-common$/d
+%filter_from_requires /^samba-common$/d;/systemd-services/d
 
 Source:%name-%version.tar
 
@@ -76,6 +76,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-ad
 
 %changelog
+* Thu Dec 29 2016 Andrey Cherepanov <cas@altlinux.org> 0.30.2-alt2
+- Remove hostnamectl (systemd-services) from requirements
+
 * Wed Dec 28 2016 Andrey Cherepanov <cas@altlinux.org> 0.30.2-alt1
 - Set local hostname and set krb5_ccache_type to KEYRING
 - Require gvfs-shares in task-auth-ad
