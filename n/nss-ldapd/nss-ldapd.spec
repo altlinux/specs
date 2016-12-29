@@ -4,7 +4,7 @@
 
 Name: 	 nss-ldapd
 Version: 0.9.7
-Release: alt1
+Release: alt2
 
 Summary: An nsswitch module which uses directory servers
 License: LGPLv2+
@@ -74,7 +74,7 @@ install -pD -m755 %SOURCE1 %buildroot%_initdir/nslcd
 install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/nslcd
 install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/tmpfiles.d/nslcd.conf
 %if_enabled systemd
-install -pD -m755 %SOURCE4 %buildroot/lib/systemd/system/nslcd.service
+install -pD -m644 %SOURCE4 %buildroot/lib/systemd/system/nslcd.service
 %endif
 chmod 755 %buildroot/%_lib/*.so*
 
@@ -175,6 +175,9 @@ exit 0
 %endif
 
 %changelog
+* Thu Dec 29 2016 Andrey Cherepanov <cas@altlinux.org> 0.9.7-alt2
+- Remove executable flag from service file
+
 * Mon Sep 12 2016 Andrey Cherepanov <cas@altlinux.org> 0.9.7-alt1
 - new version 0.9.7
 
