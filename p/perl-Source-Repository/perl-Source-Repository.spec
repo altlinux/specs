@@ -1,7 +1,7 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.382
+Version: 0.383
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -34,6 +34,9 @@ Conflicts: perl-RPM-Source-Convert < 0.48
 %perl_vendor_privlib/Source*
 
 %changelog
+* Thu Dec 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.383-alt1
+- stable release
+
 * Thu Dec 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.382-alt1
 - split Mass away
 
