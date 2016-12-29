@@ -1,7 +1,7 @@
 %define major 9
 
 Name: owncloud%major
-Version: 9.1.2
+Version: 9.1.3
 Release: alt1
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
@@ -19,8 +19,11 @@ Requires(pre): webserver-common
 
 #https://doc.owncloud.org/server/9.1/admin_manual/installation/source_installation.html
 Requires: php5 >= 5.4 php5-libs php5-dom php5-gd2 php5-mbstring php5-xmlreader php5-zip php5-curl php5-fileinfo
-Requires: memcached php5-memcache php5-memcached apache2-mod_php5
-Requires: MySQL-server php5-pdo php5-pdo_mysql
+Requires: memcached php5-memcache php5-memcached 
+#For SQLite:
+Requires: php5-pdo
+#For MySQL:
+#Requires: MySQL-server php5-pdo_mysql
 
 Source0: %name-%version.tar
 
@@ -33,6 +36,15 @@ ownCloud gives you easy and universal access to all of your files.
 It also provides a platform to easily view, sync and share your contacts
 calendars, bookmarks and files across all your devices.
 
+%package apache2
+Summary: Apache 2.x web-server default configuration for %name
+Group: Networking/WWW
+Requires: %name = %version-%release apache2-mod_php5 apache2-mod_ssl
+
+%description apache2
+Apache 2.x web-server default configuration for %name.
+Include ssl, hsts, rewrite http->https
+
 %prep
 %setup
 
@@ -43,6 +55,7 @@ cp %name/.htaccess %buildroot%installdir/
 cp %name/.user.ini %buildroot%installdir/
 
 find %buildroot%installdir/ -name tests -type d | xargs rm -fr
+find %buildroot%installdir/ -name .gitignore -type f | xargs -L 1 rm
 rm -f %buildroot%installdir/l10n/l10n.pl
 
 mkdir -p %buildroot%_sysconfdir/%name
@@ -52,9 +65,24 @@ ln -s %_sysconfdir/%name/config %buildroot%installdir/config
 mkdir -p %buildroot%_localstatedir/%name
 ln -s %_localstatedir/%name %buildroot%installdir/data
 
+#install apache2
+install -pD -m0644 apache2/default.conf %buildroot%_sysconfdir/httpd2/conf/sites-available/%name.conf
+
 %post
 chmod -R 777 %installdir
+
+%post apache2
 chown -R apache2:apache2 %installdir
+a2ensite %name
+a2enmod ssl
+a2enport https
+a2enmod rewrite
+a2enmod env
+a2enmod headers
+%_initdir/httpd2 condreload
+
+%postun apache2
+%_initdir/httpd2 condreload
 
 %files
 %installdir/
@@ -62,7 +90,14 @@ chown -R apache2:apache2 %installdir
 %_sysconfdir/%name
 %dir %attr(0770,root,_webserver) %_localstatedir/%name
 
+%files apache2
+%config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
+
 %changelog
+* Thu Dec 29 2016 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.3-alt1
+- 9.1.3
+- Added package *-apache2 (default config)
+
 * Wed Nov 30 2016 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.2-alt1
 - 9.1.2
 
