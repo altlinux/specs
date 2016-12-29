@@ -2,8 +2,9 @@
 
 Name:		rpm-build-php7
 Version:	7.1
-Release:	alt0%ubt
-Summary:	RPM helper macros to rebuild PHP5 packages
+Release:	alt1%ubt
+Summary:	RPM helper macros to rebuild PHP packages
+Requires:	rpm-build-php7-version
 Group:		Development/Other
 License:	GPL
 BuildArch:	noarch
@@ -23,5 +24,8 @@ cp %SOURCE0 %buildroot/%_sysconfdir/rpm/macros.d/%php7_name
 %_sysconfdir/rpm/macros.d/%php7_name
 
 %changelog
+* Wed Dec 28 2016 Anton Farygin <rider@altlinux.ru> 7.1-alt1%ubt
+- added rpm-build-php7-version requires
+
 * Wed Dec 07 2016 Anton Farygin <rider@altlinux.ru> 7.1-alt0%ubt
 - first build for ALT, based on php5
