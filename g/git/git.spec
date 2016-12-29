@@ -1,5 +1,5 @@
 Name: git
-Version: 2.7.4
+Version: 2.10.2
 Release: alt1
 
 Summary: Git core and tools
@@ -481,6 +481,7 @@ popd
 %endif #gitweb
 
 %files -n libgit-devel
+%exclude %_libdir/common-main.o
 %_libdir/lib*
 %_includedir/*
 
@@ -498,6 +499,15 @@ popd
 %endif #emacs
 
 %changelog
+* Fri Oct 28 2016 Dmitry V. Levin <ldv@altlinux.org> 2.10.2-alt1
+- 2.9.3 -> 2.10.2.
+
+* Fri Aug 12 2016 Dmitry V. Levin <ldv@altlinux.org> 2.9.3-alt1
+- 2.8.4 -> 2.9.3.
+
+* Mon Jun 06 2016 Dmitry V. Levin <ldv@altlinux.org> 2.8.4-alt1
+- 2.7.4 -> 2.8.4.
+
 * Fri Mar 18 2016 Dmitry V. Levin <ldv@altlinux.org> 2.7.4-alt1
 - 2.6.6 -> 2.7.4
 
