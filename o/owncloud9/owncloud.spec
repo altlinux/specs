@@ -2,7 +2,7 @@
 
 Name: owncloud%major
 Version: 9.1.3
-Release: alt1
+Release: alt2
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 %define installdir %webserver_webappsdir/%name
@@ -43,7 +43,14 @@ Requires: %name = %version-%release apache2-mod_php5 apache2-mod_ssl
 
 %description apache2
 Apache 2.x web-server default configuration for %name.
-Include ssl, hsts, rewrite http->https
+
+%package nginx
+Summary: nginx web-server default configuration for %name
+Group: Networking/WWW
+Requires: %name = %version-%release nginx php5-cgi php5-fpm-fcgi php5-apcu
+
+%description nginx
+nginx web-server default configuration for %name.
 
 %prep
 %setup
@@ -67,6 +74,9 @@ ln -s %_localstatedir/%name %buildroot%installdir/data
 
 #install apache2
 install -pD -m0644 apache2/default.conf %buildroot%_sysconfdir/httpd2/conf/sites-available/%name.conf
+
+#install nginx
+install -pD -m0644 nginx/default.conf %buildroot%_sysconfdir/nginx/sites-available.d/%name.conf
 
 %post
 chmod -R 777 %installdir
@@ -93,7 +103,13 @@ a2enmod headers
 %files apache2
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
 
+%files nginx
+%config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf 
+
 %changelog
+* Fri Dec 30 2016 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.3-alt2
+- Added package *-nginx (default config)
+
 * Thu Dec 29 2016 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.3-alt1
 - 9.1.3
 - Added package *-apache2 (default config)
