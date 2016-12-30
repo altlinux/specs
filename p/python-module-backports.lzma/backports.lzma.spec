@@ -2,14 +2,14 @@
 %define oname %ocore.lzma
 
 Name: python-module-%oname
-Version: 0.0.3
+Version: 0.0.6
 Release: alt1
 Summary: Backport of Python 3.3's 'lzma' module for XZ/LZMA compressed files
 License: Python
 Group: Development/Python
 Url: https://pypi.python.org/pypi/%oname/
 
-Source: %oname-%version.tar
+Source: https://pypi.python.org/packages/c9/c0/b038c9abbda5e918fa534e91ef8226793a015f74439889eb5e27971ba15f/backports.lzma-%{version}.tar.gz
 
 %py_provides %oname
 %py_requires %ocore
@@ -44,6 +44,9 @@ for XZ Utils (aka LZMA Utils v2) by Igor Pavlov.
 %exclude %python_sitelibdir/%ocore/__init__.py*
 
 %changelog
+* Fri Dec 30 2016 Igor Vlasenko <viy@altlinux.ru> 0.0.6-alt1
+- automated PyPI update
+
 * Sun May 08 2016 Igor Vlasenko <viy@altlinux.ru> 0.0.3-alt1
 - Initial build for Sisyphus
 
