@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: makeinfo texinfo
 # END SourceDeps(oneline)
-%define octave_pkg_version 1.1.0
+%define octave_pkg_version 1.1.1
 %define octave_pkg_name bsltl
 %define octave_descr_name bsltl
 Name: octave-%octave_pkg_name
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 Summary: Biospeckle Laser Tool Library.
 
@@ -51,6 +51,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Fri Dec 30 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1
+- regenerated from template by package builder
+
 * Tue Sep 27 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1
 - initial import by package builder
 
