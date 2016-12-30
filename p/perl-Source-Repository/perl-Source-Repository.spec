@@ -1,7 +1,7 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.383
+Version: 0.384
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -13,7 +13,7 @@ Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar
 Url: http://search.cpan.org/dist/%module
 
 # Automatically added by buildreq on Wed Nov 06 2002
-BuildRequires: perl-devel perl-RPM-Source-Editor perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-String-ShellQuote perl-Source-Package
+BuildRequires: perl-devel perl-RPM-Source-Editor perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-String-ShellQuote perl-Source-Package perl(JSON/XS.pm)
 Conflicts: perl-RPM-Source-Convert < 0.48
 
 %description
@@ -34,6 +34,9 @@ Conflicts: perl-RPM-Source-Convert < 0.48
 %perl_vendor_privlib/Source*
 
 %changelog
+* Fri Dec 30 2016 Igor Vlasenko <viy@altlinux.ru> 0.384-alt1
+- PyPI metadata download support
+
 * Thu Dec 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.383-alt1
 - stable release
 
