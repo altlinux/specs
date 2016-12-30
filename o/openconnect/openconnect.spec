@@ -5,7 +5,7 @@
 %def_with gnutls
 
 Name: openconnect
-Version: 7.07
+Version: 7.08
 Release: alt1
 Summary: Open client for Cisco AnyConnect VPN
 
@@ -83,6 +83,9 @@ make DESTDIR=%buildroot install
 %_pkgconfigdir/*
 
 %changelog
+* Fri Dec 30 2016 Alexey Shabalin <shaba@altlinux.ru> 7.08-alt1
+- 7.08
+
 * Sat Nov 19 2016 Alexey Shabalin <shaba@altlinux.ru> 7.07-alt1
 - 7.07
 - switch to gnutls
