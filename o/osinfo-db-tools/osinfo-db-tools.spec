@@ -1,9 +1,9 @@
 
 Summary: Tools for managing the osinfo database
 Name: osinfo-db-tools
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
-License: LGPLv2+
+License: GPLv2+
 Group: Development/Tools
 Source: %name-%version.tar
 Url: http://libosinfo.org/
@@ -36,11 +36,15 @@ NOCONFIGURE=1 ./autogen.sh
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog COPYING.LIB NEWS README
+%doc AUTHORS ChangeLog NEWS README
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Fri Dec 30 2016 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt1
+- 1.1.0
+- fix License
+
 * Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt1
 - 1.0.0
 
