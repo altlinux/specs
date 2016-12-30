@@ -1,8 +1,8 @@
 %add_findreq_skiplist %python_sitelibdir/nova/cloudpipe/*.template
 
 Name: openstack-nova
-Version: 14.0.2
-Release: alt2
+Version: 14.0.3
+Release: alt1
 Epoch: 1
 Summary: OpenStack Compute (nova)
 
@@ -825,6 +825,9 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Dec 30 2016 Alexey Shabalin <shaba@altlinux.ru> 1:14.0.3-alt1
+- 14.0.3
+
 * Tue Nov 22 2016 Alexey Shabalin <shaba@altlinux.ru> 1:14.0.2-alt2
 - fix logrotate
 
