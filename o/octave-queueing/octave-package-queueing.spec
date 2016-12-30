@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: makeinfo texinfo
 # END SourceDeps(oneline)
-%define octave_pkg_version 1.2.4
+%define octave_pkg_version 1.2.5
 %define octave_pkg_name queueing
 %define octave_descr_name queueing
 Name: octave-%octave_pkg_name
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 Summary: Octave package for Queueing Networks and Markov chains analysis
 
@@ -51,6 +51,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Fri Dec 30 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.5-alt1
+- regenerated from template by package builder
+
 * Tue Nov 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt1
 - regenerated from template by package builder
 
