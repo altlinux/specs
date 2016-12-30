@@ -1,5 +1,5 @@
 Name:     bup
-Version:  0.27
+Version:  0.29
 Release:  alt1
 
 Summary:  Very efficient backup system based on the git packfile format
@@ -80,13 +80,10 @@ pushd config
        --libexecdir=%{_libexecdir} \
        --mandir=%{_mandir}
 popd
-%make_build
-pushd Documentation
-%make
-popd
+%make_build PREFIX=%_prefix
 
 %install
-%makeinstall_std
+%makeinstall_std PREFIX=%_prefix
 mkdir -p %buildroot%python_sitelibdir
 mv %buildroot%_libexecdir/bup/bup %buildroot%python_sitelibdir
 
@@ -119,6 +116,9 @@ install -Dm0644 %SOURCE1 %buildroot%_unitdir/bup-web.service
 %_man1dir/bup-web.1*
 
 %changelog
+* Fri Dec 30 2016 Andrey Cherepanov <cas@altlinux.org> 0.29-alt1
+- new version 0.29
+
 * Sun Dec 20 2015 Andrey Cherepanov <cas@altlinux.org> 0.27-alt1
 - New version
 - Fix project URL and License
