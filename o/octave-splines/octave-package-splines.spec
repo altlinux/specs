@@ -1,12 +1,12 @@
-%define octave_pkg_version 1.3.1
-%define octave_pkg_name splines
-%define octave_descr_name splines
 # BEGIN SourceDeps(oneline):
 BuildRequires: makeinfo
 # END SourceDeps(oneline)
+%define octave_pkg_version 1.3.2
+%define octave_pkg_name splines
+%define octave_descr_name splines
 Serial: 1
 Name: octave-%octave_pkg_name
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 Summary: Splines.
 
@@ -23,7 +23,6 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 BuildArch: noarch
 %endif
 Provides: octave(splines) = %version
-Provides: octave(splines) = %version
 # Depends: octave (>= 3.6.0)
 Requires: octave >= 3.6.0
 
@@ -36,7 +35,7 @@ Extension Description:
 Additional spline functions.
 
 %prep
-%setup -q -n %{octave_pkg_name}
+%setup -q -n %{octave_pkg_name}-%{octave_pkg_version}
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -53,6 +52,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Fri Dec 30 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.3.2-alt1
+- regenerated from template by package builder
+
 * Tue Sep 27 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.3.1-alt1
 - regenerated from template by package builder
 
