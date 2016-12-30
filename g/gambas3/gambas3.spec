@@ -1,11 +1,10 @@
 %define appdir  %_datadir/%name
 %def_enable     opengl
-# The MCJIT in llvm 3.6 is incompatible with gb.jit
-# http://permalink.gmane.org/gmane.comp.lang.gambas.user/32019
+# jit.h is only available prior to llvm 3.6 and gb.jit can only be compiled with those versions.
 %def_without   	jit
 
 Name:		gambas3
-Version:	3.9.1
+Version:	3.9.2
 Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
@@ -1563,6 +1562,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/control/gb.form.terminal/
 
 %changelog
+* Fri Dec 30 2016 Andrey Cherepanov <cas@altlinux.org> 3.9.2-alt1
+- New version (http://gambaswiki.org/wiki/doc/release/3.9.2)
+
 * Tue Sep 06 2016 Andrey Cherepanov <cas@altlinux.org> 3.9.1-alt1
 - New version (http://gambaswiki.org/wiki/doc/release/3.9.1)
 
