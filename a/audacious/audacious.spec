@@ -1,7 +1,7 @@
 #%define rel -beta4
 %define rel %nil
 Name: audacious
-Version: 3.8
+Version: 3.8.1
 Release: alt1
 
 Summary: Media player which uses a skinned interface
@@ -29,9 +29,9 @@ BuildPreReq: desktop-file-utils
 # manually removed: libgnustep-corebase-devel  python3 ruby ruby-stdlibs python-module-PyXML python-module-cmd2 python-module-google python-module-mwlib python-module-oslo.config python-module-oslo.serialization
 # Automatically added by buildreq on Wed May 06 2015
 # optimized out: fontconfig fontconfig-devel glib2-devel gnu-config gnustep-base-devel libatk-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel pkg-config python-base python-devel python-module-distribute python-module-oslo.i18n python-module-oslo.utils python-modules python-modules-xml python3-base termutils
-BuildRequires: gcc-c++ libdb4-devel libgtk+2-devel libguess1-devel
+BuildRequires: gcc-c++ libdb4-devel libgtk+2-devel
 
-BuildRequires: libguess1-devel >= 1.2
+BuildRequires: libguess-devel >= 1.2
 
 Requires: %name-plugins
 
@@ -113,6 +113,9 @@ Development files required to develop plugins for audacious.
 %_libdir/*.so
 
 %changelog
+* Sat Dec 31 2016 Vitaly Lipatov <lav@altlinux.ru> 3.8.1-alt1
+- new version 3.8.1 (with rpmrb script)
+
 * Sun Oct 02 2016 Vitaly Lipatov <lav@altlinux.ru> 3.8-alt1
 - new version 3.8 (with rpmrb script)
 
