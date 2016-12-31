@@ -1,12 +1,10 @@
-%define version 3.4.3
-%define release alt2
 %setup_python_module pysnmp
 Summary: Python SNMP Toolkit
 Name: %packagename
-Version: %version
-Release: %release.1
+Version: 4.3.2
+Release: alt1
 URL: http://sourceforge.net/projects/pysnmp/
-Source: %modulename-%version.tar.gz
+Source: https://pypi.python.org/packages/9e/77/795fcc9d9a01adcb6175a3bf6532132addb8904922afd7877a9930d89f2f/pysnmp-%{version}.tar.gz
 License: BSD
 Group: Development/Python
 Packager: Python Development Team <python at packages.altlinux.org>
@@ -36,10 +34,13 @@ env CFLAGS="%optflags" python setup.py build
 
 %files -f INSTALLED_FILES
 %defattr(-,root,root)
-%doc CHANGES COMPATIBILITY LICENSE README
+%doc CHANGES* LICENSE* README* TODO*
 %doc docs examples
 
 %changelog
+* Sat Dec 31 2016 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt1
+- automated PyPI update
+
 * Wed Oct 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.4.3-alt2.1
 - Rebuild with Python-2.7
 
