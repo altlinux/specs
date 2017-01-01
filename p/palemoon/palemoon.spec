@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 
 Name: palemoon
 Version: 27.1.0
-Release: alt0.git_8392
+Release: alt0.git_c2e6
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -437,6 +437,9 @@ done
 %exclude %_datadir/idl/*
 
 %changelog
+* Sun Jan 01 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.1.0-alt0.git_c2e6
+- Update from git
+
 * Sat Dec 24 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.1.0-alt0.git_8392
 - Update from git
 
