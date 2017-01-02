@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.9.0
-Release: alt1.hg20150430.1.1
+Release: alt1.hg20150430.1.2
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
 Group: Development/Python
@@ -15,10 +15,15 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel
+
+# for test suite
+%{?!_without_check:%{?!_disable_check:BuildRequires: python-module-setuptools-tests}}
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel
+%{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-setuptools-tests}}
 %endif
 
 %description
@@ -85,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 02 2017 Michael Shigorin <mike@altlinux.org> 1.9.0-alt1.hg20150430.1.2
+- BOOTSTRAP: avoid python-module-setuptools-tests if skipping %%check
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.9.0-alt1.hg20150430.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
