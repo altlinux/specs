@@ -1,10 +1,11 @@
 %define oname coverage
 
 %def_with python3
+%def_with doc
 
 Name: python-module-%oname
 Version: 4.0
-Release: alt1.a7.git20150730.1.2
+Release: alt1.a7.git20150730.1.3
 Summary: A tool for measuring code coverage of Python programs
 License: BSD
 Group: Development/Python
@@ -22,7 +23,13 @@ BuildRequires(pre): rpm-build-python
 
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: bzr elfutils python-base python-devel python-module-Paver python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-docutils python-module-enchant python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mimeparse python-module-pbr python-module-pyasn1 python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-sphinxcontrib python-module-twisted-core python-module-unittest2 python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base
-BuildRequires: libenchant python-module-alabaster python-module-html5lib python-module-sphinxcontrib-napoleon python-module-sphinxcontrib-spelling time
+BuildRequires: time
+
+%if_with doc
+BuildRequires: libenchant python-module-alabaster python-module-html5lib python-module-sphinxcontrib-napoleon python-module-sphinxcontrib-spelling
+%else
+BuildRequires: python-devel python-module-setuptools
+%endif
 
 %if_with python3
 BuildRequires: python3-devel python3-module-setuptools rpm-build-python3
@@ -38,6 +45,7 @@ Coverage measurement is typically used to gauge the effectiveness of
 tests. It can show which parts of your product code are being exercised
 by tests, and which are not.
 
+%if_with doc
 %package doc
 Summary: Documentation for Coverage python module
 Group: Development/Documentation
@@ -62,6 +70,7 @@ executed, then analyzes the source to identify code that could have been
 executed but was not.
 
 This package contains pickles for Coverage.py.
+%endif
 
 %if_with python3
 %package -n python3-module-%oname
@@ -93,8 +102,10 @@ cp -a . ../python3
 %python_build_debug
 
 export PYTHONPATH=$PWD
+%if_with doc
 %make_build dochtml
 %make_build pickle
+%endif
 
 %if_with python3
 pushd ../python3
@@ -115,23 +126,31 @@ mv %buildroot%_bindir/coverage %buildroot%_bindir/coverage3
 install -d %buildroot%python_sitelibdir/%oname/lab
 install -p -m644 lab/* %buildroot%python_sitelibdir/%oname/lab
 
+%if_with doc
 install -d %buildroot%_docdir/%name
 cp -fR doc/_build/html/* %buildroot%_docdir/%name/
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+%endif
 
 %files
 %doc CHANGES.txt README.txt TODO.txt
 %python_sitelibdir/*
+%if_with doc
 %exclude %python_sitelibdir/%oname/pickle
+%endif
 %_bindir/*
+%if_with python3
 %exclude %_bindir/coverage3
 %exclude %_bindir/coverage-%_python3_version
+%endif
 
+%if_with doc
 %files doc
 %_docdir/%name
 
 %files pickles
 %python_sitelibdir/%oname/pickle
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
@@ -142,6 +161,11 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Jan 02 2017 Michael Shigorin <mike@altlinux.org> 4.0-alt1.a7.git20150730.1.3
+- BOOTSTRAP:
+  + made python3 knob *really* work
+  + added doc knob (on by default) to avoid hairy sphinx BRs
+
 * Sun Jan 01 2017 Michael Shigorin <mike@altlinux.org> 4.0-alt1.a7.git20150730.1.2
 - BOOTSTRAP: made python3 knob actually work
 
