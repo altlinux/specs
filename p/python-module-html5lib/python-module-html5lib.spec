@@ -1,12 +1,12 @@
 %define module_name html5lib
 
 %def_with python3
-%def_without docs
+%def_without doc
 
 Name: python-module-%module_name
 Epoch: 1
 Version: 0.999999
-Release: alt1.1.1.1
+Release: alt1.1.1.2
 
 Summary: Library for working with HTML5 documents
 
@@ -17,7 +17,7 @@ Url: https://github.com/html5lib/html5lib-python
 
 Source: %module_name-%version.tar
 
-BuildRequires(pre): rpm-macros-sphinx
+%{?_with_doc:BuildRequires(pre): rpm-macros-sphinx}
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
 BuildRequires: python-devel python-tools-2to3 rpm-build-python3 time
@@ -102,7 +102,7 @@ rm -rf ../python3
 cp -a . ../python3
 %endif
 
-%if_with docs
+%if_with doc
 %prepare_sphinx .
 ln -s ../objects.inv doc/
 %endif
@@ -116,7 +116,7 @@ find -type f -name '*.py' -exec 2to3 -w '{}' +
 popd
 %endif
 
-%if_with docs
+%if_with doc
 %make -C doc pickle
 %make -C doc html
 %endif
@@ -129,21 +129,21 @@ pushd ../python3
 popd
 %endif
 
-%if_with docs
+%if_with doc
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%module_name/
 %endif
 
 %files -f INSTALLED_FILES
 %doc README.rst
 #exclude %python_sitelibdir/*/tests
-%if_with docs
+%if_with doc
 %exclude %python_sitelibdir/*/pickle
 %endif
 
 #files tests
 #python_sitelibdir/*/tests
 
-%if_with docs
+%if_with doc
 %files pickles
 %python_sitelibdir/*/pickle
 
@@ -161,6 +161,11 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%module_name/
 %endif
 
 %changelog
+* Mon Jan 02 2017 Michael Shigorin <mike@altlinux.org> 1:0.999999-alt1.1.1.2
+- BOOTSTRAP:
+  + renamed docs knob to doc for consistency; see http://altlinux.org/bootstrap
+  + made it avoid BR: rpm-macros-sphinx when disabled
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:0.999999-alt1.1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
