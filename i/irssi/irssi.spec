@@ -1,132 +1,116 @@
-%def_disable debmenu
-
 Name: irssi
-Version: 0.8.15
-Release: alt5.1.1
+Version: 0.8.20
+Release: alt1
 
-Summary: Irssi is an IRC client
-License: GPL
+Summary: Modular text mode IRC client with Perl scripting
+License: GPLv2+
 Group: Networking/IRC
+Url: https://irssi.org/
+# https://github.com/irssi/irssi.git
+# git://git.altlinux.org/gears/i/irssi.git
+Source: %name-%version-%release.tar
 
-Url: http://irssi.org/
-#http://irssi.org/irssi/files/irssi-%version.tar.bz2
-Source: %name-%version.tar
-
-# Automatically added by buildreq on Mon Oct 10 2011
-BuildRequires: glib2-devel libpopt-devel libssl-devel libtinfo-devel lynx perl-devel
+BuildRequires: elinks glib2-devel libssl-devel libtinfo-devel perl-devel
 
 %description
-Irssi is a textUI IRC client with IPv6 support written by
-Timo Sirainen <a@sicom.fi>.
-
-More information can be found at http://irssi.org
+Irssi is a modular textUI IRC client with Perl scripting.
 
 %package devel
+Summary: Header files for irssi plugins development
 Group: Development/C
-Summary: Header files and static libs for the development of irssi applications
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
-Header files and static libs for the development of irssi applications.
+This package contains header files for the development of irssi plugins.
 
 %package perl
 Group: Networking/IRC
 Summary: Perl scripts for irssi
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description perl
-Perl scripts for irssi.
+This package contains perl scripts for irssi.
 
 %prep
-%setup
+%setup -n %name-%version-%release
+
+# no use to run autoreconf twice.
+sed -i 's/^autoreconf.*/%autoreconf || exit/' autogen.sh
+
+# workaround the absence of irssi.git
+sed -i 's/^git log /: &/' autogen.sh
+# git log -1 --pretty=format:%%ai %version > date-%version
+echo '2016-09-14 13:55:20 +0200' > date-0.8.20
+sed -i 's/^DATE=.*/DATE="$(cat date-%version)"/' irssi-version.sh
 
 %build
-./autogen.sh
-%autoreconf
+NOCONFIGURE=1 ./autogen.sh
 
-sed -i 's@$PERL_LDFLAGS -L/usr/lib@$PERL_LDFLAGS -L/usr/%_lib@g' configure
-
+%add_optflags -fpie
+export LDFLAGS=-pie
 %configure \
-	--with-modules \
+	--disable-silent-rules \
+	--disable-static \
 	--enable-ipv6 \
-	--without-socks \
-	--with-terminfo \
 	--without-ncurses \
+	--without-socks \
+	--with-bot \
+	--with-modules \
 	--with-perl=module \
 	--with-perl-lib=vendor \
 	--with-proxy \
-	--with-bot \
-	--with-textui
+	--with-terminfo \
+	--with-textui \
+	#
 
 %make_build
 
 %install
-%make_install DESTDIR="%buildroot" install
+%makeinstall_std
 
-# Menu entries
-mkdir -p %buildroot%_iconsdir
+%define irssi_modules_dir %_libdir/irssi/modules
+rm %buildroot%irssi_modules_dir/lib*.la
 
-%if_enabled debmenu
-mkdir -p %buildroot%_menudir
+install -pm644 AUTHORS NEWS %buildroot%_docdir/irssi/
 
-cat << EOF >%buildroot%_menudir/%name
-?package(%name): \
-needs="text" \
-section="Networking/Chat" \
-title="Irssi" \
-icon="irssi.png" \
-longtitle="A Text-UI based Irc Client" \
-section="Networking/IRC" \
-command="irssi"
-EOF
-%else
-# freedesktop menu
-mkdir -p %buildroot%_datadir/applications
-install -m 644 irssi.desktop %buildroot%_datadir/applications/irssi.desktop
-%endif
-
-# mdk icons
-install -D -m 644 irssi-icons/%{name}48.png %buildroot%_liconsdir/%name.png
-install -D -m 644 irssi-icons/%{name}32.png %buildroot%_niconsdir/%name.png
-install -D -m 644 irssi-icons/%{name}16.png %buildroot%_miconsdir/%name.png
-
-mv %buildroot%_docdir/%name %buildroot%_docdir/%name-%version
-bzip2 ChangeLog
-mv AUTHORS ChangeLog.bz2 README TODO NEWS %buildroot%_docdir/%name-%version
+install -pDm644 irssi-icon.png %buildroot%_iconsdir/irssi.png
+install -pDm644 irssi.desktop %buildroot%_desktopdir/irssi.desktop
 
 %add_findreq_skiplist %_datadir/irssi/scripts/*
+export RPM_LD_PRELOAD_irssi=%buildroot%_bindir/irssi
+export RPM_FILES_TO_LD_PRELOAD_irssi='%irssi_modules_dir/lib*.so %perl_vendor_autolib/Irssi/*.so'
+export RPM_LD_PRELOAD_libperl_core='%buildroot%irssi_modules_dir/libperl_core.so'
+export RPM_FILES_TO_LD_PRELOAD_libperl_core='%irssi_modules_dir/libfe_perl.so %perl_vendor_autolib/Irssi/*.so'
+%set_verify_elf_method strict
 
 %files
-#%doc AUTHORS ChangeLog.bz2 README TODO NEWS
-%_docdir/%name-%version
-%attr(755,root,root) %_bindir/*
-%_datadir/irssi
-%exclude %_datadir/irssi/scripts
 %config(noreplace) %_sysconfdir/irssi.conf
-%_liconsdir/*.png
-%_miconsdir/*.png
-%_niconsdir/*.png
-%if_enabled debmenu
-%_menudir/irssi
-%else
-%_datadir/applications/irssi.desktop
-%endif
+%_bindir/*
+%_datadir/irssi/
+%exclude %_datadir/irssi/scripts/
+%_libdir/irssi/
+%exclude %irssi_modules_dir/*perl*.so
+%_iconsdir/*.png
+%_desktopdir/*.desktop
 %_mandir/man?/*
-%dir %_libdir/irssi
-%dir %_libdir/irssi/modules
-%_libdir/irssi/modules/*proxy*.so
+%_docdir/irssi/
 
 %files perl
+%dir %_datadir/irssi/
+%_datadir/irssi/scripts/
 %perl_vendor_archlib/Irssi*
 %perl_vendor_autolib/Irssi
-%_libdir/irssi/modules/*perl*.so
-%_datadir/irssi/scripts
+%dir %_libdir/irssi/
+%dir %irssi_modules_dir/
+%irssi_modules_dir/*perl*.so
 
 %files devel
-%_libdir/irssi/modules/*.a
-%_includedir/irssi
+%_includedir/irssi/
 
 %changelog
+* Tue Jan 03 2017 Dmitry V. Levin <ldv@altlinux.org> 0.8.20-alt1
+- 0.8.15 -> 0.8.20.
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.8.15-alt5.1.1
 - rebuild with new perl 5.22.0
 
@@ -368,7 +352,7 @@ mv AUTHORS ChangeLog.bz2 README TODO NEWS %buildroot%_docdir/%name-%version
 * Tue May 11 1999 Alexandre Dussart <adussart@mandrakesoft.com>
 - Make Mandrake compliant again
 
-* Fri Apr 30 1999 GaÃl Duval <gael@linux-mandrake.com>
+* Fri Apr 30 1999 Ga√ål Duval <gael@linux-mandrake.com>
 - lipstick
 
 * Fri Apr 16 1999 Alexandre Dussart <adussart@mandrakesoft.com>
@@ -411,4 +395,3 @@ mv AUTHORS ChangeLog.bz2 README TODO NEWS %buildroot%_docdir/%name-%version
 
 * Sun Jan 24 1999  JT Traub <jtraub@dragoncat.net>
 - First attempt at building this
-
