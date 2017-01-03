@@ -1,5 +1,5 @@
 Name: pgmodeler
-Version: 0.8.2
+Version: 0.9.0
 Release: alt1
 
 Summary: PostgreSQL Database Modeler
@@ -37,6 +37,9 @@ of entity-relationship diagrams and the features that PostgreSQL implements as e
 %_libexecdir/%name/
 
 %changelog
+* Tue Jan 03 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt1
+- new version 0.9.0 (with rpmrb script)
+
 * Tue Aug 16 2016 Vitaly Lipatov <lav@altlinux.ru> 0.8.2-alt1
 - build 0.8.2 release
 - PostgreSQL version agnostic build
