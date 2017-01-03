@@ -2,7 +2,7 @@
 
 Name: p7zip
 Version: 16.02
-Release: alt1.1
+Release: alt2
 
 Summary: 7zip unofficial port - a file-archiver with highest compression ratio
 License: Freely distributable
@@ -91,8 +91,7 @@ xargs -0 install -p -m644 -t %buildroot%includedir/
 %includedir
 
 %changelog
-* Tue Jan 03 2017 Aleksey Avdeev <solo@altlinux.org> 16.02-alt1.1
-- Test build
+* Tue Jan 03 2017 Aleksey Avdeev <solo@altlinux.org> 16.02-alt2
 - Add devel subpackage
 
 * Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 16.02-alt1
