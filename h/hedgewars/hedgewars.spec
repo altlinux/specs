@@ -1,8 +1,5 @@
-%define mver 0.9.21
-%define rver 1
-
 Name: hedgewars
-Version: %mver.%rver
+Version: 0.9.22
 Release: alt1
 
 Summary: Game with heavily armed fighting hedgehogs
@@ -19,7 +16,7 @@ Requires: %name-data = %version
 
 # Automatically added by buildreq on Fri Jul 19 2013
 # optimized out: cmake-modules fontconfig fpc-compiler fpc-units-base fpc-units-db fpc-units-fcl fpc-units-gfx fpc-units-misc fpc-units-net fpc-units-rtl ghc7.6.1 ghc7.6.1-common ghc7.6.1-mtl ghc7.6.1-network ghc7.6.1-parsec ghc7.6.1-primitive ghc7.6.1-text ghc7.6.1-transformers libSDL-devel libXi-devel libavcodec-devel libavutil-devel libffi-devel libgmp-devel libopencore-amrnb0 libopencore-amrwb0 libpng-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libstdc++-devel pkg-config zlib-devel
-BuildRequires: cmake fpc-units-fv fpc-units-gtk2 fpc-units-math fpc-units-multimedia gcc-c++ ghc7.6.1-dataenc ghc7.6.1-hslogger ghc7.6.1-random ghc7.6.1-utf8-string ghc7.6.1-vector libGLUT-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libavformat-devel liblua5-devel phonon-devel chrpath
+BuildRequires: cmake fpc-units-fv fpc-units-gtk2 fpc-units-math fpc-units-multimedia gcc-c++ ghc7.6.1-dataenc ghc7.6.1-hslogger ghc7.6.1-random ghc7.6.1-utf8-string ghc7.6.1-vector libGLUT-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libavformat-devel liblua5.1-devel phonon-devel chrpath
 BuildRequires: chrpath ghc7.6.1-sha ghc7.6.1-entropy ghc7.6.1-zlib
 
 %description
@@ -56,7 +53,7 @@ This package contains all the data files for %name.
 
 
 %prep
-%setup -q -n %name-src-%mver
+%setup -q -n %name-src-%version
 %patch0 -p1
 
 %build
@@ -112,6 +109,9 @@ install -p -D -m 644 man/%name.6 %buildroot%_mandir/man6/%name.6
 
 
 %changelog
+* Tue Jan 03 2017 Denis G. Samsonenko <ogion@altlinux.org> 0.9.22-alt1
+- new version
+
 * Sun May 24 2015 Denis G. Samsonenko <ogion@altlinux.org> 0.9.21.1-alt1
 - new version
 - %name-no-bytestring.patch updated
