@@ -1,6 +1,8 @@
+%define includedir %_includedir/%name
+
 Name: p7zip
 Version: 16.02
-Release: alt1
+Release: alt1.1
 
 Summary: 7zip unofficial port - a file-archiver with highest compression ratio
 License: Freely distributable
@@ -30,6 +32,17 @@ with a very high compression ratio.
 This package contains standalone version of p7zip.
 It handles less archive formats than plugin capable version.
 
+%package devel
+Summary: Development package of p7zip that includes the header files
+Group: Development/C
+License: Public domain
+BuildArch: noarch
+
+Requires: %name = %EVR
+
+%description devel
+The devel package contains the p7zip include files.
+
 %prep
 %setup -n p7zip_%version
 
@@ -55,6 +68,11 @@ mv -f %buildroot%_libdir/p7zip/{7z,7za} %buildroot%_bindir/
 # fixed in 9.20.1
 #cp -a bin/Codecs %buildroot%_libdir/p7zip/
 
+# Install C/*.h files
+mkdir -p %buildroot%includedir
+find C -maxdepth 1 -mindepth 1 -name '*.h' -a -not \( -name Threads.h -o -name LzFindMt.h -o -name MtCoder.h \) -print0 | \
+xargs -0 install -p -m644 -t %buildroot%includedir/
+
 %files
 %doc README ChangeLog DOC
 %_bindir/7z
@@ -69,7 +87,14 @@ mv -f %buildroot%_libdir/p7zip/{7z,7za} %buildroot%_bindir/
 %_bindir/7za
 %_man1dir/7za.*
 
+%files devel
+%includedir
+
 %changelog
+* Tue Jan 03 2017 Aleksey Avdeev <solo@altlinux.org> 16.02-alt1.1
+- Test build
+- Add devel subpackage
+
 * Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 16.02-alt1
 - Autobuild version bump to 16.02
 
