@@ -4,13 +4,13 @@ BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
 BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name:           autoarchive
-Version:        1.1.1
-Release:        alt1_6.1
+Version:        1.3.0
+Release:        alt1
 Summary:        A simple backup tool that uses tar
 
 License:        GPLv3
 URL:            http://autoarchive.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
+Source:        https://pypi.python.org/packages/71/4a/329d970bee2dc278ecd4523708c4cfd332e91cd2e14617a2057ed9974901/autoarchive-%{version}.tar.bz2
 Patch0:         %{name}-0.5.2-coding.patch
 BuildArch:      noarch
 
@@ -51,6 +51,9 @@ rm -rf %{buildroot}%{_defaultdocdir}/%{name}-%{version}/
 %{python3_sitelibdir_noarch}/%{name}*.egg-info
 
 %changelog
+* Tue Jan 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.1-alt1_6.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
