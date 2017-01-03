@@ -1,5 +1,5 @@
 Name: dar
-Version: 2.5.5
+Version: 2.5.8
 Release: alt1
 
 Summary: DAR - Disk ARchive tool
@@ -11,14 +11,13 @@ Url: http://dar.linux.free.fr/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://prdownloads.sf.net/%name/%name-%version.tar
-Patch: %name-2.5.2.patch
 
 Requires: lib%name = %version-%release
 
-# manually removed: glibc-devel-static
-# Automatically added by buildreq on Wed Sep 11 2013
-# optimized out: groff-base libgpg-error libgpg-error-devel libstdc++-devel python3-base xz
-BuildRequires: bzlib-devel doxygen gcc-c++ libattr-devel libe2fs-devel libgcrypt-devel liblzo2-devel zlib-devel liblzma-devel
+# manually removed: glibc-devel-static libgnustep-corebase-devel libgtk+3-devel libpolkit-devel libstdc++-devel-static man python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs selinux-policy zlib-devel-static
+# Automatically added by buildreq on Tue Jan 03 2017
+# optimized out: glib2-devel glibc-devel-static gnustep-base-devel groff-base libgpg-error libgpg-error-devel libstdc++-devel perl python-base python-modules python3 python3-base xz zlib-devel
+BuildRequires: bzlib-devel doxygen gcc-c++ libattr-devel libcap-devel libe2fs-devel libgcrypt-devel libgpgme-devel liblzma-devel liblzo2-devel zlib-devel
 
 BuildRequires: perl-devel groff-base man
 
@@ -51,13 +50,18 @@ This package contains documentation files for %name.
 
 %prep
 %setup
-%patch -p2
+%__subst "s@\(O_WRONLY|O_CREAT|O_TRUNC|O_BINARY\)@\1, 0666@" src/testing/test_generic_file.cpp
 # for autopoint
-#__subst "s|AM_GNU_GETTEXT_VERSION|AM_GNU_GETTEXT_VERSION(0.18.2)|g" configure.ac
+%__subst "s|AM_GNU_GETTEXT_VERSION|AM_GNU_GETTEXT_VERSION(0.18.2)|g" configure.ac
+%autoreconf
 
 %build
 #autoreconf #for disable rpath
-%configure --disable-static --disable-upx --enable-examples --disable-rpath
+%configure --disable-static --disable-upx \
+%ifarch x86_64
+           --enable-mode=64 \
+%endif
+           --disable-rpath
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
 
@@ -85,6 +89,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 #%_libdir/*.a
 
 %changelog
+* Tue Jan 03 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5.8-alt1
+- new version 2.5.8 (with rpmrb script)
+
 * Tue Jul 26 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.5-alt1
 - new version 2.5.5 (with rpmrb script)
 
