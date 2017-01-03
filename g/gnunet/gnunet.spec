@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/git /usr/bin/svnversion glib2-devel libICE-devel libSM-devel libglpk36-devel libgnutls-devel libidn-devel libltdl7-devel libmicrohttpd-devel libmysqlclient-devel libpq-devel libunistring-devel pkgconfig(libgtop-2.0) python-devel
+BuildRequires: %_bindir/git %_bindir/svnversion glib2-devel libICE-devel libSM-devel libglpk36-devel libgnutls-devel libidn-devel libltdl7-devel libmicrohttpd-devel libmysqlclient-devel libpq-devel libunistring-devel pkgconfig(libgtop-2.0) python-devel
 # END SourceDeps(oneline)
 Name: gnunet
-Version: 0.9.5a
-Release: alt1.qa3
+Version: 0.10.1
+Release: alt1
 
 Summary: Peer-to-peer framework
 
@@ -12,7 +12,7 @@ Group: Communications
 Url: http://gnunet.org/
 Packager: ALT QA Team <qa@packages.altlinux.org>
 
-Source: http://gnunet.org/download/%name-%version.tar
+Source: http://ftpmirror.gnu.org/gnunet/%name-%version.tar
 # (TODO: add pseudouser)
 Source1: %{name}d.init.altlinux
 # LSB init example
@@ -20,7 +20,8 @@ Source2: gnunetd.init.lsb
 
 # manually removed: libqt3-devel libqt4-devel  xorg-cf-files
 # Automatically added by buildreq on Mon Feb 01 2010
-BuildRequires: cvs gcc-c++ glibc-devel guile18-devel imake libMySQL-devel libcurl-devel libextractor-devel libgcrypt-devel libglade-devel libncursesw-devel libsqlite3-devel zlib-devel
+BuildRequires: gcc-c++ glibc-devel-static guile18-devel imake libMySQL-devel libcurl-devel libextractor-devel libgcrypt-devel libglade-devel libncursesw-devel libsqlite3-devel zlib-devel
+BuildRequires: libpulseaudio-devel libopus-devel libogg-devel
 
 %description
 GNUnet is a peer-to-peer framework with focus on providing security. All
@@ -55,19 +56,22 @@ applications which will use %name.
 
 %prep
 %setup
+# broken --disable-testing
+%__subst "s|ats-tests||" src/Makefile.*
 
 %build
 %autoreconf
-%configure --disable-rpath
+# disable testing due recursive linking bug
+%configure --disable-rpath --disable-testing
 %make_build V=1 || %make V=1
 
 %install
 %makeinstall_std
 %find_lang %name
-install -D -m0755 %{SOURCE1} %buildroot%_initdir/gnunetd
+install -D -m0755 %SOURCE1 %buildroot%_initdir/gnunetd
 
 # unpackaged files found
-rm -f %buildroot/usr/share/doc/gnunet/COPYING
+rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog NEWS README
@@ -81,7 +85,7 @@ rm -f %buildroot/usr/share/doc/gnunet/COPYING
 %_bindir/gnunet-directory
 %_bindir/gnunet-download
 %_bindir/gnunet-download-manager.scm
-%_bindir/gnunet-ecc
+#%_bindir/gnunet-ecc
 %_bindir/gnunet-fs
 %_bindir/gnunet-gns
 %_bindir/gnunet-gns-import.sh
@@ -90,20 +94,36 @@ rm -f %buildroot/usr/share/doc/gnunet/COPYING
 %_bindir/gnunet-namestore
 %_bindir/gnunet-nat-server
 %_bindir/gnunet-peerinfo
-%_bindir/gnunet-pseudonym
+#%_bindir/gnunet-pseudonym
 %_bindir/gnunet-publish
 %_bindir/gnunet-resolver
-%_bindir/gnunet-rsa
+#%_bindir/gnunet-rsa
 %_bindir/gnunet-search
 %_bindir/gnunet-statistics
 %_bindir/gnunet-template
-%_bindir/gnunet-testing
-%_bindir/gnunet-testing-run-service
+#%_bindir/gnunet-testing
+#%_bindir/gnunet-testing-run-service
 %_bindir/gnunet-transport
 %_bindir/gnunet-transport-certificate-creation
 %_bindir/gnunet-unindex
 %_bindir/gnunet-uri
 %_bindir/gnunet-vpn
+%_bindir/gnunet-bcd
+%_bindir/gnunet-conversation
+%_bindir/gnunet-conversation-test
+%_bindir/gnunet-datastore
+%_bindir/gnunet-identity
+%_bindir/gnunet-namecache
+%_bindir/gnunet-nse
+%_bindir/gnunet-qr
+%_bindir/gnunet-revocation
+%_bindir/gnunet-set-ibf-profiler
+%_bindir/gnunet-set-profiler
+
+%_libexecdir/gnunet/libexec/gnunet-helper-audio-playback
+%_libexecdir/gnunet/libexec/gnunet-helper-audio-record
+%_libexecdir/gnunet/libexec/gnunet-service-conversation
+
 %_datadir/gnunet/
 %_initdir/gnunetd
 
@@ -122,9 +142,9 @@ rm -f %buildroot/usr/share/doc/gnunet/COPYING
 %_libdir/libgnunetfragmentation.so.*
 %_libdir/libgnunetfs.so.*
 %_libdir/libgnunetgns.so.*
-%_libdir/libgnunetgns_common.so.*
+#%_libdir/libgnunetgns_common.so.*
 %_libdir/libgnunethello.so.*
-%_libdir/libgnunetlockmanager.so.*
+#%_libdir/libgnunetlockmanager.so.*
 %_libdir/libgnunetmesh.so.*
 %_libdir/libgnunetmysql.so.*
 %_libdir/libgnunetnamestore.so.*
@@ -134,14 +154,23 @@ rm -f %buildroot/usr/share/doc/gnunet/COPYING
 %_libdir/libgnunetregex.so.*
 %_libdir/libgnunetregexblock.so.*
 %_libdir/libgnunetstatistics.so.*
-%_libdir/libgnunetstream.so.*
-%_libdir/libgnunettestbed.so.*
-%_libdir/libgnunettesting.so.*
+#%_libdir/libgnunetstream.so.*
+#%_libdir/libgnunettestbed.so.*
+#%_libdir/libgnunettesting.so.*
 %_libdir/libgnunettransport.so.*
-%_libdir/libgnunettransporttesting.so.*
+#%_libdir/libgnunettransporttesting.so.*
 %_libdir/libgnunettun.so.*
 %_libdir/libgnunetutil.so.*
 %_libdir/libgnunetvpn.so.*
+%_libdir/libgnunetconversation.so.*
+%_libdir/libgnunetfriends.so.*
+%_libdir/libgnunetgnsrecord.so.*
+%_libdir/libgnunetidentity.so.*
+%_libdir/libgnunetmicrophone.so.*
+%_libdir/libgnunetnamecache.so.*
+%_libdir/libgnunetrevocation.so.*
+%_libdir/libgnunetset.so.*
+%_libdir/libgnunetspeaker.so.*
 
 %files -n lib%name-devel
 %_includedir/gnunet/
@@ -160,7 +189,7 @@ rm -f %buildroot/usr/share/doc/gnunet/COPYING
 %_pkgconfigdir/gnunetfs.pc
 %_pkgconfigdir/gnunetgns.pc
 %_pkgconfigdir/gnunethello.pc
-%_pkgconfigdir/gnunetlockmanager.pc
+#%_pkgconfigdir/gnunetlockmanager.pc
 %_pkgconfigdir/gnunetmesh.pc
 %_pkgconfigdir/gnunetmysql.pc
 %_pkgconfigdir/gnunetnamestore.pc
@@ -170,7 +199,7 @@ rm -f %buildroot/usr/share/doc/gnunet/COPYING
 %_pkgconfigdir/gnunetpostgres.pc
 %_pkgconfigdir/gnunetregex.pc
 %_pkgconfigdir/gnunetstatistics.pc
-%_pkgconfigdir/gnunetstream.pc
+#%_pkgconfigdir/gnunetstream.pc
 %_pkgconfigdir/gnunettestbed.pc
 %_pkgconfigdir/gnunettesting.pc
 %_pkgconfigdir/gnunettransport.pc
@@ -178,7 +207,24 @@ rm -f %buildroot/usr/share/doc/gnunet/COPYING
 %_pkgconfigdir/gnunetutil.pc
 %_pkgconfigdir/gnunetvpn.pc
 
+%_libdir/pkgconfig/gnunetconsensus.pc
+%_libdir/pkgconfig/gnunetconversation.pc
+%_libdir/pkgconfig/gnunetdnsstub.pc
+%_libdir/pkgconfig/gnunetenv.pc
+%_libdir/pkgconfig/gnunetidentity.pc
+%_libdir/pkgconfig/gnunetmicrophone.pc
+%_libdir/pkgconfig/gnunetmulticast.pc
+%_libdir/pkgconfig/gnunetpsyc.pc
+%_libdir/pkgconfig/gnunetpsycstore.pc
+%_libdir/pkgconfig/gnunetrevocation.pc
+%_libdir/pkgconfig/gnunetscalarproduct.pc
+%_libdir/pkgconfig/gnunetset.pc
+%_libdir/pkgconfig/gnunetspeaker.pc
+
 %changelog
+* Tue Jan 03 2017 Vitaly Lipatov <lav@altlinux.ru> 0.10.1-alt1
+- build new version
+
 * Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.5a-alt1.qa3
 - NMU: rebuilt with libunistring.so.2.
 
