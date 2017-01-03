@@ -1,6 +1,6 @@
 Name: far2l
 Version: 2.0
-Release: alt1.4198cd5
+Release: alt2.4d33a48
 
 Summary: Linux port of FAR v2
 
@@ -46,6 +46,9 @@ ln -s ../../%_libexecdir/%name/far2l %buildroot%_bindir/%name
 %_libexecdir/%name/
 
 %changelog
+* Wed Jan 04 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0-alt2.4d33a48
+- new git build 4d33a48
+
 * Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 2.0-alt1.4198cd5
 - new git build 4198cd5
 
