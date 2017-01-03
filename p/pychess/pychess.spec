@@ -1,26 +1,39 @@
 %define prever %nil
 
 Name: pychess
-Version: 0.10.1
+Version: 0.12.4
 Release: alt1
 
 Summary: Chess game for GNOME
 
 Group: Games/Boards
 License: GPLv2
-Url: http://pychess.googlepages.com/home
+Url: https://github.com/pychess/pychess/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pychess.googlecode.com/files/%name-%version%{?prever}.tar
-Patch0: pychess-0.8b1-sitelib.patch
-Patch1: pychess-0.8b1-gtksourceview.patch
+# Source-url: https://github.com/pychess/pychess/releases/download/%version/pychess-%version.tar.gz
+Source: %name-%version.tar
 
 # needed:
-Requires: gnome-icon-theme
+Requires: gnome-icon-theme librsvg-gir
+Requires: python-module-pygobject3
+%py_requires cairo
+#py_requires gobject3
+
 %py_requires libglade
 %py_requires pysqlite2
-%py_requires gtksourceview2
+#py_requires gtksourceview2
+
+#gobject-introspection
+#glib2
+#gtk3
+#pango
+#gdk-pixbuf2
+#gtksourceview3
+#gstreamer1
+#gstreamer1-plugins-base
+
 
 BuildArch: noarch
 
@@ -36,8 +49,6 @@ advanced players.
 
 %prep
 %setup -n %name-%version%{?prever}
-#%patch0 -p1 -b .sitelib
-#%patch1 -p1 -b .gtksourceview
 
 %build
 %python_build
@@ -50,22 +61,27 @@ advanced players.
 #change permissions
 chmod +x %buildroot%python_sitelibdir/%name/Utils/Move.py
 chmod +x %buildroot%python_sitelibdir/%name/Players/PyChess.py
+rm -rf %buildroot%_datadir/menu/
 
 %find_lang %name
 
 %files -f %name.lang
-%doc README LICENSE AUTHORS
+%doc README.md LICENSE AUTHORS
 %_bindir/%name
 %_datadir/%name/
 %python_sitelibdir/%name/
 %python_sitelibdir/*.egg-info
-%_datadir/gtksourceview-1.0/language-specs/pgn.lang
+%_datadir/gtksourceview-3.0/language-specs/pgn.lang
+%_datadir/appdata/pychess.appdata.xml
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
 %_pixmapsdir/*
 %_man1dir/*
 
 %changelog
+* Tue Jan 03 2017 Vitaly Lipatov <lav@altlinux.ru> 0.12.4-alt1
+- new version 0.12.4 (with rpmrb script)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.10.1-alt1
 - new version 0.10.1 (with rpmrb script)
 
