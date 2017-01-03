@@ -7,7 +7,7 @@
 
 Name: udev-android
 Version: 0.0.20161014
-Release: alt1.gita64df07.0.1
+Release: alt1.gita64df07.1
 
 Summary: Udev rules for adb and fastboot
 License: %gpl3only
@@ -45,6 +45,5 @@ ln -snf "`relative "%targetlicense" "%sourcelicense"`" %buildroot%targetlicense
 %pkgdocdir
 
 %changelog
-* Mon Dec 26 2016 Aleksey Avdeev <solo@altlinux.org> 0.0.20161014-alt1.gita64df07.0.1
-- Test build
+* Tue Jan 03 2017 Aleksey Avdeev <solo@altlinux.org> 0.0.20161014-alt1.gita64df07.1
 - Initial build for ALT Linux Sisyphus
