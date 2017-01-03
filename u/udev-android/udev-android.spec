@@ -6,8 +6,8 @@
 %define adbusersgroup adbusers
 
 Name: udev-android
-Version: 0.0.20161014
-Release: alt1.gita64df07.1
+Version: 0.0.20170103
+Release: alt1
 
 Summary: Udev rules for adb and fastboot
 License: %gpl3only
@@ -45,5 +45,8 @@ ln -snf "`relative "%targetlicense" "%sourcelicense"`" %buildroot%targetlicense
 %pkgdocdir
 
 %changelog
+* Tue Jan 03 2017 Aleksey Avdeev <solo@altlinux.org> 0.0.20170103-alt1
+- New version: 20170103
+
 * Tue Jan 03 2017 Aleksey Avdeev <solo@altlinux.org> 0.0.20161014-alt1.gita64df07.1
 - Initial build for ALT Linux Sisyphus
