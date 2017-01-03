@@ -3,15 +3,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.9.0
-Release: alt1.hg20150430.1.2
+Version: 1.10.0
+Release: alt1
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
 Group: Development/Python
 Url: http://pypi.python.org/pypi/six
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+# Url: https://github.com/benjaminp/six
+Packager: Python Development Team <python at packages.altlinux.org>
 
-# hg clone https://bitbucket.org/gutworth/six
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -90,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 03 2017 Anton Midyukov <antohami@altlinux.org> 1.10.0-alt1
+- New version 1.10.0
+
 * Mon Jan 02 2017 Michael Shigorin <mike@altlinux.org> 1.9.0-alt1.hg20150430.1.2
 - BOOTSTRAP: avoid python-module-setuptools-tests if skipping %%check
 

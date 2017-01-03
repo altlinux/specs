@@ -1,17 +1,21 @@
-%define oname python-xlib
-Name: python-module-xlib
-Version: 0.15
-Release: alt2.rc1.svn20131015
+%define oname xlib
+
+%def_with python3
+#%%def_with check
+
+Name: python-module-%oname
+Version: 0.18
+Release: alt1
 
 Summary: Python X Library
 
 Group: Development/Python
 License: LGPL
-Url: http://python-xlib.sourceforge.net/
+Url: https://github.com/python-xlib/python-xlib
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: %oname-%version.tar
+Source: %name-%version.tar
 Patch: python-xlib-perl.patch
 
 #%%setup_python_module Xlib
@@ -19,9 +23,32 @@ Patch: python-xlib-perl.patch
 
 # manually removed: eric
 # Automatically added by buildreq on Sun Dec 18 2005
-BuildRequires: python-devel python-modules-compiler python-modules-encodings
+BuildRequires: python-devel python-module-setuptools-tests python-module-setuptools_scm
+#python-modules-compiler python-modules-encodings
+
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools-tests python3-module-setuptools_scm
+#
+%endif
+
+%if_with check
+BuildRequires: python-module-six
+%if_with python3
+BuildRequires: python3-module-six
+%endif
+%endif
 
 %description
+The Python X Library is a complete X11R6 client-side implementation,
+written in pure Python. It can be used to write low-levelish X Windows
+client applications in Python.
+
+%package -n python3-module-%oname
+Summary: Python X Library
+Group: Development/Python3
+
+%description -n python3-module-%oname
 The Python X Library is a complete X11R6 client-side implementation,
 written in pure Python. It can be used to write low-levelish X Windows
 client applications in Python.
@@ -39,30 +66,67 @@ client applications in Python.
 This package contains documentation and examples for Python X Library.
 
 %prep
-%setup -n %oname-%version
+%setup
 %patch -p1
+
+%if_with python3
+cp -fR . ../python3-module-%oname
+%endif
 
 %build
 %python_build
+
+%if_with python3
+pushd ../python3-module-%oname
+%python3_build
+popd
+%endif
 
 pushd doc/html
 %make SRCS=$PWD/../src TOPSRC=$PWD/../src/python-xlib.texi
 popd
 
 %install
-CFLAGS="%optflags" python setup.py install --root %buildroot
+%python_install
+
+%if_with python3
+pushd ../python3-module-%oname
+%python3_install
+popd
+%endif
 
 # hack for x86_64 build
 test -d %buildroot%_libdir || mv %buildroot%prefix/lib %buildroot%_libdir || :
 
+%if_with check
+%check
+python setup.py test
+py.test -vv
+%if_with python3
+pushd ../python3
+python3 setup.py test
+py.test-%_python3_version -vv
+popd
+%endif
+%endif
+
 %files
-%doc NEWS README
+%doc NEWS README.rst LICENSE TODO *.txt
 %python_sitelibdir/*
+
+%if_with python3
+%files -n python3-module-%oname
+%doc NEWS README.rst LICENSE TODO *.txt
+%python3_sitelibdir/*
+%endif
 
 %files docs
 %doc examples doc/html/*.html
 
 %changelog
+* Tue Jan 03 2017 Anton Midyukov <antohami@altlinux.org> 0.18-alt1
+- New version 0.18
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2.rc1.svn20131015
 - added perl patch
 

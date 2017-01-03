@@ -1,15 +1,16 @@
 %define oname setproctitle
 
 %def_with python3
+#%%def_with check
 
 Name: python-module-%oname
-Version: 1.1.9
-Release: alt1.dev0.git20140903.1
+Version: 1.1.10
+Release: alt1
 Summary: A library to allow customization of the process title
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/setproctitle/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Python Development Team <python@packages.altlinux.org>
 
 # https://github.com/dvarrazzo/py-setproctitle.git
 Source: %name-%version.tar
@@ -19,6 +20,12 @@ BuildPreReq: python-devel python-module-setuptools-tests /proc
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python-tools-2to3
+%endif
+%if_with check
+BuildRequires: python-module-Cython-tests
+%if_with python3
+BuildRequires: python3-module-Cython-tests
+%endif
 %endif
 
 %py_provides %oname
@@ -62,10 +69,11 @@ pushd ../python3
 popd
 %endif
 
+%if_with check
 %check
 export PYTHONPATH=%buildroot%python_sitelibdir
 %make tests/pyrun2
-py.test
+%py.test
 %if_with python3
 pushd ../python3
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -73,6 +81,7 @@ export LC_ALL=en_US.UTF-8
 %make tests/pyrun3 PYCONFIG=python3-config PYTHON=python3
 py.test-%_python3_version
 popd
+%endif
 %endif
 
 %files
@@ -86,6 +95,10 @@ popd
 %endif
 
 %changelog
+* Tue Jan 03 2017 Anton Midyukov <antohami@altlinux.org> 1.1.10-alt1
+- New version 1.1.10
+- Disable check
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.9-alt1.dev0.git20140903.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
