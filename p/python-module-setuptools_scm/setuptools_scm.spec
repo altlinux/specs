@@ -3,32 +3,27 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.7.0
-Release: alt1.git20150812.1.1
+Version: 1.15.0
+Release: alt1
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/setuptools_scm/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Python Development Team <python at packages.altlinux.org>
 
 # https://github.com/pypa/setuptools_scm.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: git mercurial
-#BuildPreReq: python-devel python-module-setuptools-tests
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-%endif
-
 %py_provides %oname
 Requires: git mercurial
 %py_requires setuptools
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pluggy python-module-py python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pluggy python3-module-py python3-module-pytest python3-module-setuptools xz
-BuildRequires: git-core mercurial python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3 time
+BuildRequires: python-module-setuptools-tests git-core mercurial
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools-tests rpm-build-python3
+%endif
 
 %description
 setuptools_scm is a simple utility for the setup_requires feature of
@@ -62,8 +57,8 @@ It falls back to PKG-INFO/.hg_archival.txt when necessary.
 %prep
 %setup
 
-git config --global user.email "real at altlinux.org"
-git config --global user.name "REAL"
+git config --global user.email "python at packages.altlinux.org"
+git config --global user.name "Python Development Team"
 git init-db
 git add . -A
 git commit -a -m "%version"
@@ -116,6 +111,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 02 2017 Anton Midyukov <antohami@altlinux.org> 1.15.0-alt1
+- Version 1.15.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.7.0-alt1.git20150812.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

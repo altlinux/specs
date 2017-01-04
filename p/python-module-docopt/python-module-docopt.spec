@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.2
-Release: alt1.git20150601.1.1
+Release: alt2
 
 Summary: Pythonic argument parser, that will make you smile
 
@@ -15,7 +15,7 @@ Url: https://github.com/docopt/docopt
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # https://github.com/docopt/docopt.git
-Source: http://pypi.python.org/packages/source/d/docopt/docopt-%version.tar
+Source: %name-%version.tar
 
 BuildArch: noarch
 
@@ -51,20 +51,20 @@ This way you don't need to write thisstupid repeatable parser-code,
 and instead can write only the help message--*the way you want it*.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 # remove upstream egg-info
 rm -rf *.egg-info
 
 %if_with python3
-cp -fR . ../python3
+cp -fR . ../python3-module-%oname
 %endif
 
 %build
 %python_build
 
 %if_with python3
-pushd ../python3
+pushd ../python3-module-%oname
 %python3_build
 popd
 %endif
@@ -73,7 +73,7 @@ popd
 %python_install
 
 %if_with python3
-pushd ../python3
+pushd ../python3-module-%oname
 %python3_install
 popd
 %endif
@@ -81,7 +81,7 @@ popd
 %check
 python setup.py test -v
 %if_with python3
-pushd ../python3
+pushd ../python3-module-%oname
 python3 setup.py test -v
 popd
 %endif
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 03 2017 Anton Midyukov <antohami@altlinux.org> 0.6.2-alt2
+- Version 0.6.2 release
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.2-alt1.git20150601.1.1
 - (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
   (it is meaningless because arbitrary packages package that dir).

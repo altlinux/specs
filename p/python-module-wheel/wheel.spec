@@ -3,14 +3,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.24.0
-Release: alt2.1
+Version: 0.29.0
+Release: alt1
 Summary: A built-package format for Python
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/wheel/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Python Development Team <python@packages.altlinux.org>
 
+# Source-url: https://bitbucket.org/pypa/wheel/get/%version.tar.gz
 Source: %name-%version.tar
 BuildArch: noarch
 BuildRequires: python-module-jsonschema python-module-keyring python-module-pytest-cov python-module-pyxdg python-module-setuptools-tests
@@ -150,6 +151,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 02 2017 Anton Midyukov <antohami@altlinux.org> 0.29.0-alt1
+- New version 0.29.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.24.0-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
