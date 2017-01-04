@@ -1,7 +1,7 @@
 %define module Source-Repository-Mass
 
 Name: perl-%module
-Version: 0.382
+Version: 0.383
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -14,7 +14,7 @@ Url: http://search.cpan.org/dist/%module
 
 # Automatically added by buildreq on Wed Nov 06 2002
 BuildRequires: perl-devel perl-RPM-Source-Editor perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-DistroMap perl-String-ShellQuote perl-RPM-Source-Convert perl-Source-Package perl-RPM-Source-BundleImport perl-Source-Repository
-Requires: perl-RPM-Source-Editor > 0.853
+Requires: perl-RPM-Source-Editor > 0.892
 Conflicts: perl-RPM-Source-Convert < 0.48
 Conflicts: perl-Source-Repository < 0.382
 
@@ -37,6 +37,9 @@ Conflicts: perl-Source-Repository < 0.382
 %perl_vendor_privlib/Source*
 
 %changelog
+* Wed Jan 04 2017 Igor Vlasenko <viy@altlinux.ru> 0.383-alt1
+- new TransformContainer
+
 * Thu Dec 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.382-alt1
 - split Mass
 
