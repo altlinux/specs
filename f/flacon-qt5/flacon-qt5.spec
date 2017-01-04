@@ -1,7 +1,7 @@
 %define pkgname flacon
 
 Name: %pkgname-qt5
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: Audio File Encoder
@@ -63,6 +63,12 @@ popd
 %_man1dir/%pkgname.1.*
 
 %changelog
+* Wed Jan 04 2017 Nazarov Denis <nenderus@altlinux.org> 2.1.1-alt1
+- Version 2.1.1
+
+* Thu Oct 06 2016 Nazarov Denis <nenderus@altlinux.org> 2.1.0-alt0.M80P.1
+- Build for branch p8
+
 * Wed Oct 05 2016 Nazarov Denis <nenderus@altlinux.org> 2.1.0-alt1
 - Version 2.1.0
 
