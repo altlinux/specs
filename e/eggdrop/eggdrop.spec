@@ -3,8 +3,8 @@
 %define _home %_localstatedir/%name
 
 Name: eggdrop
-Version: 1.6.21
-Release: alt3
+Version: 1.8.0
+Release: alt1
 
 Summary: Eggdrop is an IRC bot, written in C
 License: GPL
@@ -16,7 +16,6 @@ Packager: Vladimir V Kamarzin <vvk@altlinux.ru>
 Source0: %name-%version.tar
 Source1: %name.README.ALT.UTF8
 Source2: %name.init
-Patch1:  %name-clang-ftbfs.patch
 Patch2:  %name-fix-config-interpreter.patch
 
 BuildRequires: tcl-devel zlib-devel autoconf_2.5
@@ -32,7 +31,6 @@ privileged users and let them gain ops, etc.
 
 %prep
 %setup
-%patch1 -p1
 %patch2 -p2
 
 %build
@@ -115,6 +113,9 @@ rm -rf %buildroot%_datadir/%name/doc
 %doc doc/* README*
 
 %changelog
+* Thu Jan 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.8.0-alt1
+- new version 1.8.0
+
 * Tue Oct 06 2015 Andrey Cherepanov <cas@altlinux.org> 1.6.21-alt3
 - New version
 
