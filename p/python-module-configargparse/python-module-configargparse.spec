@@ -1,8 +1,8 @@
 %global srcname ConfigArgParse
 
 Name: python-module-configargparse
-Version: 0.10.0
-Release: alt1.1.1
+Version: 0.11.0
+Release: alt1
 
 Summary: A Python module with support for argparse, config files, and env variables
 
@@ -12,7 +12,7 @@ Url: https://github.com/bw2/ConfigArgParse
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: https://pypi.python.org/packages/source/C/%srcname/%srcname-%version.tar.gz
+Source: https://pypi.io/packages/source/C/%srcname/%srcname-%version.tar.gz
 Buildarch: noarch
 
 BuildRequires: python-devel
@@ -70,6 +70,9 @@ argparse to add these features.
 %python3_sitelibdir/__pycache__/configargparse*
 
 %changelog
+* Thu Jan 05 2017 Vitaly Lipatov <lav@altlinux.ru> 0.11.0-alt1
+- new version 0.11.0 (with rpmrb script)
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.0-alt1.1.1
 - (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
   (it is meaningless because arbitrary packages package that dir).
