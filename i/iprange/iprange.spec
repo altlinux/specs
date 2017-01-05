@@ -1,5 +1,5 @@
 Name: iprange
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Url: http://firehol.org
@@ -23,7 +23,7 @@ iprange - manage IP ranges.
 
 %build
 %autoreconf
-%configure
+%configure --disable-man
 %make_build
 
 %install
@@ -33,5 +33,8 @@ iprange - manage IP ranges.
 %_bindir/%name
 
 %changelog
+* Thu Jan 05 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt1
+- new version 1.0.3 (with rpmrb script)
+
 * Fri Aug 05 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1
 - initial build for ALT Linux Sisyphus
