@@ -1,5 +1,5 @@
-%define		softver 43.0
-%define		buildver 2431.0
+%define		softver 44.0
+%define		buildver 2463.0
 
 Name:		opera-dev
 Version:	%softver.%buildver
@@ -72,6 +72,9 @@ chmod 4755 %_libdir/x86_64-linux-gnu/opera-developer/opera_sandbox
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Thu Jan 05 2017 Motsyo Gennadi <drool@altlinux.ru> 44.0.2463.0-alt1
+- packaged 44.0.2463.0 snapshot
+
 * Thu Dec 08 2016 Motsyo Gennadi <drool@altlinux.ru> 43.0.2431.0-alt1
 - packaged 43.0.2431.0 snapshot
 
