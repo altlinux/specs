@@ -1,6 +1,6 @@
 Name: hedgewars
 Version: 0.9.22
-Release: alt1
+Release: alt2
 
 Summary: Game with heavily armed fighting hedgehogs
 License: GPLv2
@@ -96,12 +96,13 @@ install -p -D -m 644 man/%name.6 %buildroot%_mandir/man6/%name.6
 %files
 %doc README ChangeLog.txt CREDITS
 %_bindir/*
-%_libdir/*.so*
+%_libdir/*.so.*
+%_libdir/libavwrapper.so
+%_libdir/libphyslayer.so
 %_mandir/man6/*
 %_datadir/applications/%name.desktop
 %_datadir/icons/hicolor/32x32/apps/%name.png
 %_datadir/icons/hicolor/512x512/apps/%name.png
-%_datadir/pixmaps/%name.xpm
 %_datadir/appdata/%name.appdata.xml
 
 %files data
@@ -109,6 +110,9 @@ install -p -D -m 644 man/%name.6 %buildroot%_mandir/man6/%name.6
 
 
 %changelog
+* Thu Jan 05 2017 Denis G. Samsonenko <ogion@altlinux.org> 0.9.22-alt2
+- fix some repocop warnings
+
 * Tue Jan 03 2017 Denis G. Samsonenko <ogion@altlinux.org> 0.9.22-alt1
 - new version
 
