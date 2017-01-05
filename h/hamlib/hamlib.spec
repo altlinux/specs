@@ -1,14 +1,13 @@
 
 Name:           hamlib
-Version:        3.0.1
+Version:        3.1
 Release:        alt1
 Summary:        Run-time library to control radio transceivers and receivers
 
 Group:          System/Libraries
 License:        GPLv2+ and LGPLv2+
 URL:            http://hamlib.sourceforge.net
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-Source1:	%name.watch
+Source0:        %name-%version.tar
 
 # Install python and perl bindings into proper dirs
 Patch0:         hamlib-3.0-bindings.patch
@@ -93,6 +92,7 @@ Hamlib TCL Language bindings to allow radio control from TCL scripts.
 
 %prep
 %setup -q
+%autoreconf
 %patch0 -p2
 
 %build
@@ -139,14 +139,13 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 
 %files
 %doc AUTHORS ChangeLog PLAN COPYING.LIB COPYING README THANKS TODO
+%doc README.developer
 %_bindir/*
 %_libdir/libhamlib.so.*
 %_man1dir/*
-%_man8dir/*
 %_infodir/*
 
 %files devel
-%doc README.developer
 %_libdir/libhamlib.so
 %_datadir/aclocal/hamlib.m4
 %dir %_includedir/hamlib
@@ -158,7 +157,6 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %_libdir/pkgconfig/hamlib.pc
 
 %files doc
-%doc COPYING.LIB
 
 %files c++
 %_libdir/libhamlib++.so.*
@@ -179,6 +177,9 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %_libdir/tcl/Hamlib/hamlibtcl*
 
 %changelog
+* Tue Jan 03 2017 Andrey Cherepanov <cas@altlinux.org> 3.1-alt1
+- new version 3.1
+
 * Tue Jan 12 2016 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt1
 - New version
 
