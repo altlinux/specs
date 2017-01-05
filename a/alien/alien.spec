@@ -1,19 +1,19 @@
 Name: alien
 Version: 8.95
-Release: alt1
+Release: alt2
 
 Summary: Install Debian and Slackware Packages with RPM
 
 Group: Archiving/Other
 License: GPL
-Url: https://github.com/mildred/alien
+Url: https://sourceforge.net/projects/alien-pkg-convert/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-#Source: http://kitenet.net/programs/alien/%{name}_%version.tar.bz2
-Source: http://ftp.debian.org/debian/pool/main/a/alien/%{name}_%version.tar.bz2
+# Source-url: http://ftp.debian.org/debian/pool/main/a/alien/%{name}_%version.tar.bz2
+Source: %name-%version.tar
 Patch: %name-Makefile.PL.patch
 
 # Automatically added by buildreq on Mon Feb 13 2006
@@ -27,22 +27,14 @@ Debian and Stampede packages.
 This is a tool only suitable for binary packages.
 
 %prep
-%setup -n %name
+%setup
 %patch -p2
 
 %build
-perl Makefile.PL INSTALLDIRS=vendor
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir INSTALLMAN3DIR=%_man3dir
 
 %install
-
-%make_install pure_install \
-	DESTDIR=%buildroot \
-	PREFIX=%prefix \
-	VARPREFIX=%buildroot \
-	INSTALLMAN1DIR=%_man1dir \
-	INSTALLMAN3DIR=%_man3dir
-rm -rf %buildroot%_datadir/%name/
+%perl_vendor_install VARPREFIX=%buildroot
 
 %files
 %_bindir/%name
@@ -51,6 +43,9 @@ rm -rf %buildroot%_datadir/%name/
 %_man3dir/*
 
 %changelog
+* Thu Jan 05 2017 Vitaly Lipatov <lav@altlinux.ru> 8.95-alt2
+- cleanup spec, fix project URL
+
 * Thu Dec 24 2015 Hihin Ruslan <ruslandh@altlinux.ru> 8.95-alt1
 - new version
 
