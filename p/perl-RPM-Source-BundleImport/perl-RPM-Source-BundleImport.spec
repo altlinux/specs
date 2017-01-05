@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-%module
-Version: 0.046
+Version: 0.047
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -14,8 +14,8 @@ Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
 Url: http://search.cpan.org/dist/%module
 
 BuildRequires: perl-devel perl-RPM-Source-Editor perl-Source-Package perl-RPM-Source-Dependency-Analyzer perl(Pod/PlainText.pm) perl(Source/Repository/Tarball.pm)
-Requires: perl-Source-Package > 0.04
-Requires: perl-RPM-Source-Editor > 0.890
+Requires: perl-Source-Package > 0.12
+Requires: perl-RPM-Source-Editor > 0.892
 
 %description
 %summary
@@ -55,6 +55,9 @@ RPM-Source-BundleImport plugin for Perl source code
 %perl_vendor_privlib/RPM/Source/BundleImport/Perl
 
 %changelog
+* Wed Jan 04 2017 Igor Vlasenko <viy@altlinux.ru> 0.047-alt1
+- development release
+
 * Sun Jan 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.046-alt1
 - development release
 
