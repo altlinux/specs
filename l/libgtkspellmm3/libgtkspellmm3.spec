@@ -1,6 +1,6 @@
 # Note: be in sync with gtkspell, see http://gtkspell.sourceforge.net/NEWS
 Name: libgtkspellmm3
-Version: 3.0.4
+Version: 3.0.5
 Release: alt1
 
 Summary: On-the-fly spell checking for GtkTextView widgets - C++ bindings
@@ -19,7 +19,7 @@ Source: http://prdownloads.sf.net/gtkspell/gtkspellmm/gtkspellmm-%version.tar
 BuildRequires: doxygen gcc-c++ glibc-devel graphviz libdb4-devel libgtkmm3-devel libgtkspell3-devel xsltproc
 
 # http://gtkspell.sourceforge.net/NEWS
-BuildRequires: libgtkspell3-devel >= 3.0.8
+BuildRequires: libgtkspell3-devel >= 3.0.9
 
 %description
 GtkSpell provides word-processor-style highlighting and replacement of
@@ -72,6 +72,9 @@ find %buildroot -name "*.la" -exec rm {} \;
 %_docdir/gtkspellmm-3.0
 
 %changelog
+* Thu Jan 05 2017 Vitaly Lipatov <lav@altlinux.ru> 3.0.5-alt1
+- new version 3.0.5 (with rpmrb script)
+
 * Tue Jul 26 2016 Vitaly Lipatov <lav@altlinux.ru> 3.0.4-alt1
 - new version 3.0.4 (with rpmrb script)
 

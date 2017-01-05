@@ -3,7 +3,7 @@
 %def_enable introspection
 
 Name: gtkspell3
-Version: 3.0.8
+Version: 3.0.9
 Release: alt1
 
 Summary: On-the-fly spell checking for GtkTextView widgets, GTK+3 version
@@ -11,6 +11,7 @@ License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: http://gtkspell.sourceforge.net/
 # http://download.sourceforge.net/%name/%name-%version.tar.gz
+# Source-git: git://git.code.sf.net/p/gtkspell/gtkspell
 Source: %name-%version.tar
 
 
@@ -21,7 +22,7 @@ BuildRequires: gir(GObject) = 2.0 gir(GLib) = 2.0 gir(Gtk) = 3.0
 BuildRequires: pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(enchant) pkgconfig(iso-codes)
 
 %description
-This is the GTK+3 version og the library.
+This is the GTK+3 version of the library.
 
 GtkSpell provides word-processor-style highlighting and replacement of
 misspelled words in a GtkTextView widget as you type.  Right-clicking a
@@ -32,7 +33,7 @@ Summary: On-the-fly spell checking for GtkTextView widgets, GTK+3 version
 Group: System/Libraries
 
 %description -n lib%name
-This is the GTK+3 version og the library.
+This is the GTK+3 version of the library.
 
 GtkSpell provides word-processor-style highlighting and replacement of
 misspelled words in a GtkTextView widget as you type.  Right-clicking a
@@ -56,13 +57,13 @@ Requires: lib%name-devel = %version-%release
 This package provides files for developing statically linked
 applications which use GtkSpell.
 
-%package lib%name-devel-doc
+%package -n lib%name-devel-doc
 Summary: Development package for %name
 Group: Development/Documentation
 BuildArch: noarch
 Conflicts: lib%name < %version
 
-%description lib%name-devel-doc
+%description -n lib%name-devel-doc
 Contains developer documentation for %name.
 
 %package -n lib%name-gir
@@ -116,7 +117,7 @@ sed -i 's,GTK_SPELL_CFLAGS,GTK_SPELL3_CFLAGS,' \
 %_libdir/*.a
 %endif
 
-%files lib%name-devel-doc
+%files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/*
 
 %if_enabled introspection
@@ -128,6 +129,10 @@ sed -i 's,GTK_SPELL_CFLAGS,GTK_SPELL3_CFLAGS,' \
 %endif
 
 %changelog
+* Thu Jan 05 2017 Vitaly Lipatov <lav@altlinux.ru> 3.0.9-alt1
+- 3.0.9 (ALT bug #32524)
+- fix doc subpackage name
+
 * Tue Jun 14 2016 Alexey Shabalin <shaba@altlinux.ru> 3.0.8-alt1
 - 3.0.8
 
