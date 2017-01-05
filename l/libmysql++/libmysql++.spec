@@ -1,7 +1,7 @@
 %define origname mysql++
 
 Name: lib%origname
-Version: 3.2.2
+Version: 3.2.3
 Release: alt1
 
 Summary: C++ API for MySQL
@@ -121,6 +121,9 @@ export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
 # TODO: have a closer look at fedora spec
 
 %changelog
+* Thu Jan 05 2017 Michael Shigorin <mike@altlinux.org> 3.2.3-alt1
+- new version (watch file uupdate)
+
 * Sun Mar 22 2015 Michael Shigorin <mike@altlinux.org> 3.2.2-alt1
 - new version (watch file uupdate)
 
