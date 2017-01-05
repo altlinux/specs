@@ -1,12 +1,12 @@
 Name: syncthing
-Version: 0.14.13
+Version: 0.14.18
 Release: alt1
 Summary: FOSS Continuous File Synchronisation
 Summary(ru_RU.UTF-8): Свободная программа непрерывной синхронизации файлов
 License: MPL-2.0
 Group: Networking/Other
-Url: https://syncthing.net/
-#https://github.com/syncthing/syncthing
+Url:https://github.com/syncthing/syncthing
+
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
@@ -64,6 +64,9 @@ install -Dm 0644 etc/linux-systemd/user/%name.service           \
 %_libexecdir/systemd/user/%name.service
 
 %changelog
+* Thu Jan 05 2017 Anton Midyukov <antohami@altlinux.org> 0.14.18-alt1
+- new version 0.14.18
+
 * Mon Dec 05 2016 Denis Smirnov <mithraen@altlinux.ru> 0.14.13-alt1
 - new version 0.14.13
 
