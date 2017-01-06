@@ -1,8 +1,9 @@
-%define ver_major 0.1
+%define ver_major 0.2
 %define gst_api_ver 1.0
 
 Name: audience
-Version: %ver_major.0.2
+%define xdg_name org.pantheon.%name
+Version: %ver_major.1.1
 Release: alt1
 
 Summary: A modern media player
@@ -10,9 +11,7 @@ License: GPLv3
 Group: Video
 Url: https://launchpad.net/audience
 
-Source: https://launchpad.net/%name/freya/%version/+download/%name-%version.tar.xz
-
-Packager: Igor Zubkov <icesik@altlinux.org>
+Source: https://launchpad.net/%name/0.4-loki/%version/+download/%name-%version.tar.xz
 
 Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-good%gst_api_ver
@@ -20,12 +19,13 @@ Requires: gst-plugins-bad%gst_api_ver
 Requires: gst-plugins-ugly%gst_api_ver
 Requires: gst-libav
 
-BuildRequires: cmake gcc-c++ libgranite-devel libclutter-gtk3-devel
+BuildRequires: cmake gcc-c++ intltool libgranite-devel libclutter-gtk3-devel
 BuildRequires: gst-plugins%gst_api_ver-devel libpixman-devel
 BuildRequires: libexpat-devel libXdmcp-devel libXxf86vm-devel libharfbuzz-devel
 BuildRequires: libpng-devel libXinerama-devel libXcursor-devel
 BuildRequires: at-spi2-atk-devel vala libgranite-vala
 BuildRequires: gobject-introspection-devel
+BuildRequires: libclutter-gst3.0-devel
 
 %description
 Audience is a simple, modern media player that makes greater use of
@@ -47,10 +47,14 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 
 %files -f %name.lang
 %_bindir/%name
-%_desktopdir/audience.desktop
-%_datadir/glib-2.0/schemas/org.pantheon.audience.gschema.xml
+%_desktopdir/%xdg_name.desktop
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/appdata/%xdg_name.appdata.xml
 
 %changelog
+* Fri Jan 06 2017 Yuri N. Sedunov <aris@altlinux.org> 0.2.1.1-alt1
+- 0.2.1.1
+
 * Wed Sep 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.1.0.2-alt1
 - 0.1.0.2
 
