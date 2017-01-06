@@ -1,7 +1,7 @@
 %define module Source-Repository-Mass
 
 Name: perl-%module
-Version: 0.383
+Version: 0.384
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -37,6 +37,9 @@ Conflicts: perl-Source-Repository < 0.382
 %perl_vendor_privlib/Source*
 
 %changelog
+* Sat Jan 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.384-alt1
+- new BundleImport
+
 * Wed Jan 04 2017 Igor Vlasenko <viy@altlinux.ru> 0.383-alt1
 - new TransformContainer
 
