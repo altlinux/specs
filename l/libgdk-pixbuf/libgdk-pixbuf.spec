@@ -13,7 +13,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -137,6 +137,7 @@ install -p -m644 %_sourcedir/%_name.lds %_name/compat.lds
 	%{subst_enable introspection} \
 	%{subst_with x11} \
 	%{subst_with libjasper} \
+	--with-included-loaders=png \
 	%{?_enable_installed_tests:--enable-installed-tests}
 
 %make_build LIBTOOL_EXPORT_OPTIONS=-Wl,--version-script=compat.map,compat.lds
@@ -181,7 +182,7 @@ echo : >>%_name/abicheck.sh
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-icns.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-ico.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-jpeg.so
-%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-png.so
+#%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-png.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-pnm.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-qtif.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-tga.so
@@ -233,6 +234,10 @@ echo : >>%_name/abicheck.sh
 
 
 %changelog
+* Fri Jan 06 2017 Yuri N. Sedunov <aris@altlinux.org> 2.36.3-alt1
+- 2.36.3
+- built with included png module
+
 * Tue Dec 20 2016 Yuri N. Sedunov <aris@altlinux.org> 2.36.2-alt1
 - 2.36.2
 
