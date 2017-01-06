@@ -1,7 +1,7 @@
 %define oname dirty-models
 Name: python3-module-%oname
-Version: 0.5.0
-Release: alt1.git20150420.1
+Version: 0.9.2
+Release: alt1
 Summary: Dirty models for python 3
 License: BSD
 Group: Development/Python3
@@ -9,7 +9,7 @@ Url: https://pypi.python.org/pypi/dirty-models/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/alfred82santa/dirty-models.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/38/e8/03bdc3d80b75f47956581229edd3f5b6380124107a6a151bda5986db9a6a/dirty-models-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -47,7 +47,7 @@ Features:
 * No database dependent.
 
 %prep
-%setup
+%setup -q -n dirty-models-%{version}
 
 %build
 %python3_build_debug
@@ -60,10 +60,13 @@ python3 setup.py test
 nosetests3 -v --with-coverage -d --cover-package=dirty_models
 
 %files
-%doc *.rst docs/*.rst performance
+%doc *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt1
+- automated PyPI update
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.0-alt1.git20150420.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
