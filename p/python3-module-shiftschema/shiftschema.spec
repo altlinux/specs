@@ -1,7 +1,7 @@
 %define oname shiftschema
 Name: python3-module-%oname
-Version: 0.0.9
-Release: alt1.git20150218.1
+Version: 0.0.10
+Release: alt1
 Summary: Python3 filtering and validation library
 License: MIT
 Group: Development/Python3
@@ -9,7 +9,7 @@ Url: https://pypi.python.org/pypi/shiftschema/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/projectshift/shift-schema.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/5e/0f/314203a0e909e8780f94c9b3d91465020031b082a890baf4c70abe2ffea6/shiftschema-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -29,7 +29,7 @@ cli. Model validation and filtering rules should be part of the model
 and your domain logic, not your views or forms logic.
 
 %prep
-%setup
+%setup -q -n shiftschema-%{version}
 
 %build
 %python3_build_debug
@@ -42,10 +42,12 @@ python3 setup.py test
 nosetests3 -v
 
 %files
-%doc *.md
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.10-alt1
+- automated PyPI update
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.9-alt1.git20150218.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
