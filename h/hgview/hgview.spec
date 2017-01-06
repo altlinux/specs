@@ -1,5 +1,5 @@
 Name: hgview
-Version: 1.8.2
+Version: 1.9.0
 Release: alt1
 
 Summary: Qt4 based Mercurial log navigator
@@ -10,7 +10,7 @@ BuildArch: noarch
 
 Url: http://www.logilab.org/project/hgview
 # hg clone http://hg.logilab.org/review/hgview
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/dd/42/a70bcd09b92c99bc38546b847d9517fd0adede2d0146099b6740f1cb2499/%{name}-%{version}.tar.gz
 
 %setup_python_module hgviewlib
 %py_requires mx.DateTime
@@ -26,13 +26,16 @@ navigation in mind, trying to be fast enough to be usable for big
 repositories.
 
 %prep
-%setup
+%setup -q 
 
 %build
 %python_build
 
+
 %install
 %python_install
+mv %buildroot/usr/man %buildroot/usr/share
+rm -rf %buildroot/usr/share/doc/%name
 
 %files
 %_bindir/*
@@ -43,6 +46,9 @@ repositories.
 %doc ChangeLog README
 
 %changelog
+* Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt1
+- automated PyPI update
+
 * Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.2-alt1
 - Version 1.8.2
 
