@@ -5,8 +5,8 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 0.4.1
-Release: alt1.git20150418.1.1
+Version: 0.13.0
+Release: alt1
 Summary: jinja2 template renderer for aiohttp.web
 License: ASLv2.0
 Group: Development/Python
@@ -14,7 +14,7 @@ Url: https://pypi.python.org/pypi/aiohttp_jinja2/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/aio-libs/aiohttp_jinja2.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/79/fc/925fc60d87d38f0d6dcb7b538b7064b15b508d688a2fa6cf8e400c192308/aiohttp-jinja2-%{version}.tar.gz
 BuildArch: noarch
 
 %if_with python2
@@ -51,7 +51,7 @@ Group: Development/Python3
 jinja2 template renderer for aiohttp.web.
 
 %prep
-%setup
+%setup -q -n aiohttp-jinja2-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -104,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.13.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:0.4.1-alt1.git20150418.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
