@@ -1,7 +1,7 @@
 %define ver_major 0.3
 
 Name: contractor
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: service for sharing data between apps
@@ -9,9 +9,7 @@ License: GPLv3+
 Group: Graphical desktop/Other
 Url: https://launchpad.net/contractor
 
-Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version.tar.gz
-
-Packager: Igor Zubkov <icesik@altlinux.org>
+Source: https://launchpad.net/%name/loki/%version/+download/%name-%version.tar.xz
 
 BuildRequires: cmake gcc-c++ vala libgee0.8-devel libgio-devel
 
@@ -36,6 +34,9 @@ have the destination apps hard coded into them.
 %doc INSTALL
 
 %changelog
+* Fri Jan 06 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
+- 0.3.2
+
 * Thu Sep 10 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
 - 0.3.1
 
