@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.1
-Release: alt1.git20141217.1.1
+Version: 0.8.2
+Release: alt1
 Summary: AMQP implementation using asyncio
 License: BSD
 Group: Development/Python
@@ -13,7 +13,7 @@ Url: https://pypi.python.org/pypi/aioamqp/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/Polyconseil/aioamqp.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/79/6b/255c936283f73151c6767b1b5ff5542c94019848c53083ea7522c99e8985/aioamqp-%{version}.tar.gz
 BuildArch: noarch
 
 %if_with python2
@@ -58,7 +58,7 @@ Built on top on Python's asynchronous I/O support introduced in PEP
 highly concurrent applications.
 
 %prep
-%setup
+%setup -q -n aioamqp-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -109,6 +109,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.2-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.1-alt1.git20141217.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
