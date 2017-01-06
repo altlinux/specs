@@ -1,5 +1,5 @@
 Name: iucode_tool
-Version: 1.6.1
+Version: 2.1
 Release: alt1
 Summary: Intel(r) 64 and IA-32 processor microcode tool 
 
@@ -28,6 +28,8 @@ make install DESTDIR=%buildroot INSTALL="install -p"
 %_sbindir/%name
 
 %changelog
+* Fri Jan 06 2017 L.A. Kostis <lakostis@altlinux.ru> 2.1-alt1
+- Updated to 2.1.
+
 * Wed Jun 08 2016 L.A. Kostis <lakostis@altlinux.ru> 1.6.1-alt1
 - first build for ALTinux.
-
