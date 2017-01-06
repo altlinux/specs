@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: %oname
-Version: 0.20
-Release: alt1.git20150808.1
+Version: 0.36
+Release: alt1
 Summary: Python REPL build on top of prompt_toolkit
 License: BSD
 Group: Development/Python
@@ -12,7 +12,7 @@ Url: https://pypi.python.org/pypi/ptpython
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/jonathanslenders/ptpython.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/00/bf/eca5caf726c8b773dbafeed5bda65e95214bd626b31bbbaae535a7752844/%{name}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests ipython
@@ -46,7 +46,7 @@ library.
 %endif
 
 %prep
-%setup
+%setup -q 
 
 %if_with python3
 cp -fR . ../python3
@@ -77,13 +77,9 @@ popd
 
 %check
 python setup.py test -v
-export PYTHONPATH=%buildroot%python_sitelibdir
-python tests/run_tests.py -v
 %if_with python3
 pushd ../python3
 python3 setup.py test -v
-export PYTHONPATH=%buildroot%python3_sitelibdir
-python3 tests/run_tests.py -v
 popd
 %endif
 
@@ -103,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.20-alt1.git20150808.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
