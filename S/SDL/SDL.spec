@@ -1,9 +1,11 @@
 Name: SDL
 Version: 1.2.14
-Release: alt6
+Release: alt7
+
 Summary: Simple DirectMedia Layer
 License: LGPL
 Group: System/Libraries
+
 Url: http://www.libsdl.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
@@ -46,7 +48,7 @@ This is the libraries, include files and other resources you can use
 to develop %name applications.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 cat acinclude/* > aclocal.m4
@@ -65,7 +67,7 @@ autoconf
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files -n lib%name
 %doc BUGS CREDITS README README-%name.txt TODO WhatsNew
@@ -81,6 +83,10 @@ autoconf
 %_mandir/man?/*
 
 %changelog
+* Fri Jan 06 2017 Michael Shigorin <mike@altlinux.org> 1.2.14-alt7
+- fixed FTBFS (upstream bug #1111 / hg rev 32f0f603a0c8)
+- minor spec cleanup
+
 * Wed Mar 09 2011 Valery Inozemtsev <shrek@altlinux.ru> 1.2.14-alt6
 - rebuilt for debuginfo
 
