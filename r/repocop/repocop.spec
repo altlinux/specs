@@ -1,6 +1,6 @@
 Name: repocop
-Version: 0.70
-Release: alt5
+Version: 0.71
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -39,7 +39,7 @@ Test results are cached, so tests are run only if necessary.
 
 Note that tests are separate packages: repocop is a platform,
 it itself contains no tests. This package contains only
-the test runner, repocop-run, internal utils and the set 
+the test runner, repocop-run, internal utils and the set
 of report generators.
 For example, to get html report of test results, run
 repocop-report-html with whe same arguments as repocop-run.
@@ -134,6 +134,9 @@ done
 %_datadir/repocop/html
 
 %changelog
+* Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.71-alt1
+- use new TransformContainer.
+
 * Wed Oct 05 2016 Igor Vlasenko <viy@altlinux.ru> 0.70-alt5
 - get rid of RPM::Constants
 
