@@ -1,7 +1,7 @@
 %define oname cnamedtuple
 Name: python3-module-%oname
-Version: 0.1.4
-Release: alt1.git20150119.1.1
+Version: 0.1.6
+Release: alt1
 Summary: collections.namedtuple implemented in c
 License: ASLv2.0
 Group: Development/Python3
@@ -9,7 +9,7 @@ Url: https://pypi.python.org/pypi/cnamedtuple/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/llllllllll/cnamedtuple.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/7e/2b/204e958c214a28cccaae73831469859731bd47a201c614142eb19378bca7/cnamedtuple-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-python3
 #BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -24,7 +24,7 @@ BuildRequires: python3-devel rpm-build-python3
 An implementation of namedtuple written in c for warp speed.
 
 %prep
-%setup
+%setup -q -n cnamedtuple-%{version}
 
 %build
 %python3_build_debug
@@ -33,10 +33,12 @@ An implementation of namedtuple written in c for warp speed.
 %python3_install
 
 %files
-%doc *.rst prof
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.6-alt1
+- automated PyPI update
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.4-alt1.git20150119.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
