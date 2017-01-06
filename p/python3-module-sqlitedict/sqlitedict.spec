@@ -1,7 +1,7 @@
 %define oname sqlitedict
 Name: python3-module-%oname
-Version: 1.2.0
-Release: alt1.git20140727.1.1
+Version: 1.4.2
+Release: alt1
 Summary: Persistent dict in Python, backed up by sqlite3 and pickle, multithread-safe
 License: Public domain
 Group: Development/Python3
@@ -9,7 +9,7 @@ Url: https://pypi.python.org/pypi/sqlitedict/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/piskvorky/sqlitedict.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/87/8b/e4aeac8b5341c8e691ada71c8005dbdd041897b049d41415b68ed0bc2a67/sqlitedict-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -28,7 +28,7 @@ A lightweight wrapper around Python's sqlite3 database, with a dict-like
 interface and multi-thread access support.
 
 %prep
-%setup
+%setup -q -n sqlitedict-%{version}
 
 %build
 %python3_build_debug
@@ -45,6 +45,9 @@ py.test-%_python3_version
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1
+- automated PyPI update
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.0-alt1.git20140727.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
