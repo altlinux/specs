@@ -1,14 +1,14 @@
 %define oname antlr4
 Name: python3-module-%oname
-Version: 4.5.2
-Release: alt1.1.1
+Version: 4.6
+Release: alt1
 Summary: ANTLR 4.5 runtime for Python 3
 License: BSD
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/antlr4-python3-runtime/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/9c/29/c9348449b76ab8009aefa05817d394f646399d80a8494243377226b4fe31/antlr4-python3-runtime-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -26,7 +26,7 @@ BuildRequires: rpm-build-python3
 This is the Python 3 runtime for AntLR.
 
 %prep
-%setup
+%setup -q -n antlr4-python3-runtime-%{version}
 
 %build
 %python3_build_debug
@@ -39,6 +39,9 @@ This is the Python 3 runtime for AntLR.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 4.6-alt1
+- automated PyPI update
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.5.2-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
