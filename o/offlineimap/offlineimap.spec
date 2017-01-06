@@ -1,5 +1,5 @@
 Name: offlineimap
-Version: 6.6.1
+Version: 7.0.12
 Release: alt1
 Summary: Powerful IMAP/Maildir synchronization and reader support
 
@@ -7,7 +7,7 @@ License: GPLv2+
 Group: Networking/Mail
 Url: http://offlineimap.org/
 # https://github.com/OfflineIMAP/offlineimap.git
-Source0: %{name}_%version.tar
+Source0: https://pypi.python.org/packages/04/f5/e768b9b650bc204afd72b0a6508d28bb0c030920eaa0b94d150c5e717664/%{name}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -26,7 +26,7 @@ reader that does not have IMAP support, has poor IMAP support, or does
 not provide disconnected operation.
 
 %prep
-%setup -n %name
+%setup -q 
 
 %prepare_sphinx docs
 ln -s ../objects.inv docs/doc-src/
@@ -52,6 +52,9 @@ install -p docs/%name.1 %buildroot/%_man1dir/
 %doc COPYING %name.conf* *.md docs/html
 
 %changelog
+* Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 7.0.12-alt1
+- automated PyPI update
+
 * Thu Feb 04 2016 Lenar Shakirov <snejok@altlinux.ru> 6.6.1-alt1
 - Version 6.6.1
 
