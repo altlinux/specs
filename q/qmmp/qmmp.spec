@@ -1,31 +1,31 @@
 %define branch 0.11
-%define svn svn6682
+%define svn svn6953
 
 %define rel alt1
 
 %if "%rel" == "alt0.M51"
-%define PLUG_DISABLE "UDISKS2_PLUGIN OPUS_PLUGIN WITH_NEW_JACK WITH_QSUI"
+%define PLUG_DISABLE "UDISKS2_PLUGIN OPUS_PLUGIN WITH_NEW_JACK WITH_QSUI ARCHIVE_PLUGIN"
 %define PLUG_ENABLE "FFMPEG_LEGACY UDISKS_PLUGIN JACK_PLUGIN"
 %endif
 
 %if "%rel" == "alt0.M60T"
-%define PLUG_DISABLE "UDISKS2_PLUGIN"
+%define PLUG_DISABLE "UDISKS2_PLUGIN ARCHIVE_PLUGIN"
 %define PLUG_ENABLE "UDISKS_PLUGIN WITH_NEW_JACK"
 %endif
 
 %if "%rel" == "alt0.M70T"
-%define PLUG_DISABLE "UDISKS_PLUGIN"
+%define PLUG_DISABLE "UDISKS_PLUGIN ARCHIVE_PLUGIN"
 %define PLUG_ENABLE "UDISKS2_PLUGIN WITH_NEW_JACK"
 %endif
 
 %if "%rel" == "alt0.M80P"
 %define PLUG_DISABLE "UDISKS_PLUGIN"
-%define PLUG_ENABLE "UDISKS2_PLUGIN WITH_NEW_JACK"
+%define PLUG_ENABLE "UDISKS2_PLUGIN WITH_NEW_JACK ARCHIVE_PLUGIN"
 %endif
 
 %if "%rel" == "alt1"
 %define PLUG_DISABLE "UDISKS_PLUGIN"
-%define PLUG_ENABLE "UDISKS2_PLUGIN WITH_NEW_JACK"
+%define PLUG_ENABLE "UDISKS2_PLUGIN WITH_NEW_JACK ARCHIVE_PLUGIN"
 %endif
 
 Version: %branch.0
@@ -52,17 +52,17 @@ BuildRequires: libsoxr-devel libtag-devel >= 1.6 libvorbis-devel
 BuildRequires: libwavpack-devel libalsa-devel libflac-devel libbs2b-devel >= 3.0
 BuildRequires: libprojectM-devel >= 2.0.1 jackit-devel xorg-xf86miscproto-devel
 BuildRequires: libenca-devel libcddb-devel libmms-devel >= 0.4 libwildmidi-devel >= 0.2.3.4
-BuildRequires: libgme-devel libGLU-devel libsidplayfp-devel >= 1.0.3
+BuildRequires: libgme-devel libGLU-devel libsidplayfp-devel >= 1.0.3 libshout2-devel
 
-# for libcdio-paranoia
-%define libcdio libcdio-devel
+# for ALT >= 8 only
+%define alt_over_8 libcdio-devel
 %if "%rel" == "alt1"
-%define libcdio libcdio-paranoia-devel
+%define alt_over_8 libcdio-paranoia-devel libarchive-devel
 %endif
 %if "%rel" == "alt0.M80P"
-%define libcdio libcdio-paranoia-devel
+%define alt_over_8 libcdio-paranoia-devel libarchive-devel
 %endif
-BuildRequires: %libcdio
+BuildRequires: %alt_over_8
 
 %if "%rel" != "alt0.M51"
 # disable for 5.1
@@ -293,6 +293,14 @@ Requires: qmmp = %version-%release
 %description -n %name-out-null
 Qmmp Null Output Plugin
 
+%package -n %name-out-icecast
+Summary: Qmmp Icecast Output Plugin
+Group: Sound
+Requires: qmmp = %version-%release
+
+%description -n %name-out-icecast
+Qmmp Icecast Output Plugin
+
 # Input plugins
 %package -n %name-in-ffmpeg
 Summary: Qmmp FFMPEG Audio Plugin
@@ -406,6 +414,14 @@ Requires: qmmp = %version-%release
 
 %description -n %name-in-sid
 This plugin plays Commodore 64 music files using libsidplayfp library
+
+%package -n %name-in-archive
+Summary: Qmmp Archive Reader Plugin
+Group: Sound
+Requires: qmmp = %version-%release
+
+%description -n %name-in-archive
+Qmmp Archive Reader Plugin
 
 # Visualization plugins
 %package -n %name-vis-analyzer
@@ -670,11 +686,16 @@ Requires: qmmp-out-jack qmmp-out-oss qmmp-out-null qmmp-http qmmp-mms
 Requires: qmmp-kdenotify qmmp-eff-ladspa qmmp-covermanager qmmp-rgscan
 Requires: qmmp-eff-crossfade qmmp-udisks qmmp-in-gme qmmp-in-sid
 Requires: qmmp-streambrowser qmmp-trackchange qmmp-copypaste qmmp-eff-extrastereo
-Requires: qmmp-out-qtmultimedia
+Requires: qmmp-out-qtmultimedia qmmp-out-icecast
 
 %if "%rel" != "alt0.M51"
 # disable for 5.1
 Requires: qmmp-in-opus qmmp-qsui
+%endif
+
+%if "%alt_over_8" != "libcdio-devel"
+# ALT >= 8 only
+Requires: qmmp-in-archive
 %endif
 
 %description -n %name-full
@@ -765,6 +786,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-out-null
 %_libdir/%name/Output/libnull*
 
+%files -n %name-out-icecast
+%_libdir/%name/Output/libshout*
+
 # Input plugins
 %files -n %name-in-ffmpeg
 %_libdir/%name/Input/libffmpeg*
@@ -804,6 +828,12 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 
 %files -n %name-in-sid
 %_libdir/%name/Input/libsid*
+
+%if "%alt_over_8" != "libcdio-devel"
+# ALT >= 8 only
+%files -n %name-in-archive
+%_libdir/%name/Input/libarchive*
+%endif
 
 %if "%rel" != "alt0.M51"
 # disable for 5.1
@@ -913,6 +943,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Sat Jan 07 2017 Motsyo Gennadi <drool@altlinux.ru> 1:0.11.0-alt1.svn6953
+- 0.11.0 svn6953 version
+
 * Fri Aug 19 2016 Motsyo Gennadi <drool@altlinux.ru> 1:0.11.0-alt1.svn6682
 - 0.11.0 svn6682 version
 
