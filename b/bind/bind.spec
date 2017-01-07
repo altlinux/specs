@@ -1,13 +1,13 @@
 Name: bind
-Version: 9.9.8
-Release: alt5
+Version: 9.9.9
+Release: alt1
 
 Summary: ISC BIND - DNS server
 License: BSD-style
 Group: System/Servers
 Url: http://www.isc.org/products/BIND/
 
-%define vsuffix -P4
+%define vsuffix -P5
 # NOTE: vsuffix removed from Source0
 # ftp://ftp.isc.org/isc/bind9/%version%vsuffix/bind-%version%vsuffix.tar.gz
 Source0: %name-%version.tar
@@ -37,18 +37,17 @@ Source44: bind.empty
 Source50: bind.service
 
 # NB: there must be at least one patch :)
-Patch0001: 0001-bind-9.9.7-owl-warnings.patch
-Patch0002: 0002-bind-9.8.3-openbsd-owl-pidfile.patch
-Patch0003: 0003-bind-9.9.1-openbsd-owl-chroot-defaults.patch
-Patch0004: 0004-bind-9.9.1-alt-owl-chroot.patch
-Patch0005: 0005-bind-9.8.3-owl-checkconf-chroot.patch
-Patch0006: 0006-bind-9.8.3-alt-man.patch
-Patch0007: 0007-bind-9.8.3-alt-owl-rndc-confgen.patch
-Patch0008: 0008-bind-9.8.3-alt-nofile.patch
-Patch0009: 0009-bind-9.9.1-alt-ads-remove.patch
-Patch0010: 0010-bind-9.9.3-fc-exportlib.patch
-Patch0011: 0011-Fix-CVE-2016-2776.patch
-Patch0012: 0012-CVE-2016-8864-It-was-possible-to-trigger-assertions-.patch
+Patch0001: 0001-owl-warnings.patch
+Patch0002: 0002-openbsd-owl-pidfile.patch
+Patch0003: 0003-openbsd-owl-chroot-defaults.patch
+Patch0004: 0004-alt-owl-chroot.patch
+Patch0005: 0005-owl-checkconf-chroot.patch
+Patch0006: 0006-alt-man.patch
+Patch0007: 0007-alt-owl-rndc-confgen.patch
+Patch0008: 0008-alt-nofile.patch
+Patch0009: 0009-alt-ads-remove.patch
+Patch0010: 0010-fc-exportlib.patch
+Patch0011: 0011-Minimize-linux-capabilities.patch
 
 # root directory for chrooted environment.
 %define _chrootdir %_localstatedir/bind
@@ -76,6 +75,9 @@ BuildPreReq: coreutils
 
 # due to broken configure script
 BuildPreReq: gcc-c++
+
+# for better --enable-linux-caps experience
+BuildPreReq: libcap-devel
 
 %{?_with_openssl:BuildPreReq: libssl-devel}
 
@@ -197,7 +199,6 @@ rather than the DNS protocol.
 %patch0009 -p2
 %patch0010 -p2
 %patch0011 -p2
-%patch0012 -p2
 
 install -D -pm644 %_sourcedir/rfc1912.txt doc/rfc/rfc1912.txt
 install -pm644 %_sourcedir/bind.README.bind-devel README.bind-devel
@@ -232,7 +233,7 @@ sed -i '/# Large File/iAC_SYS_LARGEFILE/' configure.in
 	--localstatedir=/var \
 	--with-randomdev=/dev/random \
 	--disable-threads \
-	--disable-linux-caps \
+	--enable-linux-caps \
 	 %{subst_with openssl} \
 	 %{subst_enable ipv6} \
 	 %{subst_enable static} \
@@ -456,6 +457,10 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Sat Jan 07 2017 Dmitry V. Levin <ldv@altlinux.org> 9.9.9-alt1
+- 9.9.8-P4 -> 9.9.9-P5.
+- Implemented early drop of linux capabilities.
+
 * Wed Nov 02 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.9.8-alt5
 - Applied upstream fix for CVE-2016-8864.
 

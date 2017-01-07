@@ -7,7 +7,7 @@
 
 Name: dhcp
 Version: 4.3.3
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -544,6 +544,9 @@ fi
 # }}}
 
 %changelog
+* Wed Jan 11 2017 Dmitry V. Levin <ldv@altlinux.org> 1:4.3.3-alt3
+- Rebuilt with bind-9.9.9.
+
 * Wed Jan 13 2016 Fr. Br. George <george@altlinux.ru> 1:4.3.3-alt2
 - Update to 4.3.3-P1
 
