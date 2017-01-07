@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: geoipupdate
-Version: 2.2.2
+Version: 2.3.1
 Release: alt1
 
 Summary: GeoIP Database Update program
 Group: Networking/Other
-License: GPL2+
+License: GPLv2+
 URL: https://github.com/maxmind/geoipupdate
 
 Source: %url/releases/download/v%version/%name-%version.tar.gz
@@ -28,14 +28,18 @@ binary databases.
 %makeinstall_std
 
 %files
-%_sysconfdir/GeoIP.conf
-%_sysconfdir/GeoIP.conf.default
+%config %_sysconfdir/GeoIP.conf
 %_man5dir/GeoIP.conf.5.*
 %_bindir/%name
 %_man1dir/%name.1.*
-%doc README.* ChangeLog.*
+%doc README.* ChangeLog.* conf/GeoIP.conf.default
+
+%exclude %_datadir/doc/%name/
 
 %changelog
+* Sat Jan 07 2017 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
+- 2.3.1
+
 * Tue Jan 26 2016 Yuri N. Sedunov <aris@altlinux.org> 2.2.2-alt1
 - 2.2.2
 
