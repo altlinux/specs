@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 Name: brisk-menu
-Version: 0.1.2
+Version: 0.2.0
 Release: alt1
 
 Summary: An efficient menu for the MATE Desktop
@@ -62,9 +62,13 @@ Features:
 %doc LICENSE* README.md
 %_datadir/dbus-1/services/*.service
 %_datadir/mate-panel/applets/*
+%_datadir/glib-2.0/schemas/*
 %_iconsdir/hicolor/scalable/actions/*
 %_libexecdir/%name
 
 %changelog
+* Sat Jan 07 2017 Anton Midyukov <antohami@altlinux.org> 0.2.0-alt1
+- new version 0.2.0
+
 * Sun Jan 01 2017 Anton Midyukov <antohami@altlinux.org> 0.1.2-alt1
 - Initial build for ALT Linux Sisyphus.
