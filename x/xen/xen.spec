@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.8.0
-Release: alt2
+Release: alt3
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -196,6 +196,7 @@ Group: Emulators
 Requires: %name = %version-%release
 Requires: %name-runtime-common = %version-%release
 Requires: lib%name = %version-%release
+Requires: seabios ipxe-roms-qemu
 
 %description runtime
 The Xen Project hypervisor is an open-source type-1 or baremetal
@@ -786,6 +787,13 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Sun Jan 08 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.0-alt3
+- Upstream updates:
+ - xsm: allow relevant permission during migrate and gpu-passthrough
+ - libxl: init_acpi_config should return rc in exit path, and set
+   to 0 on success
+- Added lost requires: seabios, ipxe-roms-qemu
+
 * Mon Dec 26 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.0-alt2
 - Upstream updates:
  - x86/emul: Correct the handling of eflags with SYSCALL (XSA-204)
