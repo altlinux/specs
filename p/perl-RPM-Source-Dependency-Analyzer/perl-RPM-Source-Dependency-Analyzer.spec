@@ -4,7 +4,7 @@
 #define _without_test 1
 
 Name: perl-%module
-Version: 0.051
+Version: 0.052
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -17,7 +17,7 @@ Url: http://search.cpan.org/dist/%module
 
 Conflicts: perl-RPM-Source-Editor < 0.855
 
-BuildRequires: perl-devel /usr/bin/pod2man perl-podlators perl-RPM-Source-Editor perl(Pod/Strip.pm)
+BuildRequires: perl-devel /usr/bin/pod2man perl-podlators perl-Source-Bundle perl-RPM-Source-Editor perl(Pod/Strip.pm)
 BuildRequires: perl-DistroMap perl-Marpa-R2
 
 %description
@@ -43,6 +43,9 @@ install -Dm644 stdheaders.txt %buildroot%_datadir/%module/headers-ignore/stdhead
 %_man1dir/buildreq-*
 
 %changelog
+* Sun Jan 08 2017 Igor Vlasenko <viy@altlinux.ru> 0.052-alt1
+- development release
+
 * Wed Jan 04 2017 Igor Vlasenko <viy@altlinux.ru> 0.051-alt1
 - new TransformContainer support
 
