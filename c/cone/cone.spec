@@ -3,8 +3,8 @@
 
 Summary: CONE mail reader
 Name: cone
-Version: 0.92
-Release: alt0.1
+Version: 0.94
+Release: alt0.2
 Url: http://www.courier-mta.org/cone
 Source0: %name-%version.tar.bz2
 License: GPL
@@ -12,6 +12,7 @@ Group: Networking/Mail
 
 Patch1: cone-alt-sendmail.patch
 Patch2: cone-alt-app-defaults.patch
+Patch3: cone-0.94-alt-m4.patch
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
@@ -47,20 +48,23 @@ application using LibMAIL - a high level, C++ OO library for mail clients.
 %setup -q
 %patch1 -p2
 %patch2 -p2
-pushd cone
-autoconf
+%patch3 -p2
+for d in curses libmail cone; do
+pushd "$d"
+ln -s ../{NEWS,README,AUTHORS,ChangeLog} . ||:
 popd
-pushd libmail
-autoconf
-popd
+done
+
+%autoreconf
 %configure -C \
+	    --libexecdir=%_prefix/libexec \
 	    --with-certdb=%_datadir/ca-certificates/ca-bundle.crt \
 	    %subst_with devel
 %build
 %make_build
 %install
-%__make install DESTDIR=%buildroot
-%__install sysconftool %buildroot%_datadir/cone/cone.sysconftool
+make install DESTDIR=%buildroot
+install sysconftool %buildroot%_datadir/cone/cone.sysconftool
 touch %buildroot%_sysconfdir/cone
 
 # Remove dupe copies of doc/html from the install tree.
@@ -73,7 +77,7 @@ ls cone/html | ( cd %buildroot%_datadir/cone && xargs -n10 rm -f )
 %attr(644,root,root) %_sysconfdir/cone.dist
 %ghost %verify(user group mode) %attr(644,root,root) %_sysconfdir/cone
 %_bindir/*
-%_libexecdir/cone
+%_prefix/libexec/cone
 %_datadir/cone
 %_man1dir/*
 %doc ChangeLog README NEWS AUTHORS COPYING COPYING.GPL
@@ -87,6 +91,12 @@ ls cone/html | ( cd %buildroot%_datadir/cone && xargs -n10 rm -f )
 %endif
 
 %changelog
+* Sun Jan 08 2017 L.A. Kostis <lakostis@altlinux.ru> 0.94-alt0.2
+- use correct libexec dir.
+
+* Fri Jan 06 2017 L.A. Kostis <lakostis@altlinux.ru> 0.94-alt0.1
+- 0.94.
+
 * Tue Jul 28 2015 L.A. Kostis <lakostis@altlinux.ru> 0.92-alt0.1
 - 0.92.
 

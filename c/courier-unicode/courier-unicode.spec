@@ -2,12 +2,12 @@
 
 Summary: Courier Unicode Library
 Name: courier-unicode
-Version: 1.3
+Version: 1.4
 Release: alt0.1
 License: GPLv3
 Group: System/Libraries
 Url: http://www.courier-mta.org/unicode/
-Source: http://download.sourceforge.net/courier/courier-unicode-1.3.tar.bz2
+Source: http://download.sourceforge.net/courier/%{name}-%{version}.tar.bz2
 
 Buildrequires: gcc-c++
 
@@ -63,6 +63,9 @@ linked against %name library.
 %endif # static
 
 %changelog
+* Wed Jan 04 2017 L.A. Kostis <lakostis@altlinux.ru> 1.4-alt0.1
+- Updated to 1.4.
+
 * Tue Jul 28 2015 L.A. Kostis <lakostis@altlinux.ru> 1.3-alt0.1
 - Rebuild for ALTLinux.
 
