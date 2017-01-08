@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
 %define		branch 0.11
-%define		svn svn6670
+%define		svn svn6953
 
 Version:	%branch.0
 Name:		qmmp-plugin-pack
@@ -109,6 +109,22 @@ SRC - модуль конвертера Sample Rate для Qmmp
 %description -l uk_UA.UTF8 -n %name-eff-src
 SRC - модуль конвертера Sample Rate для Qmmp
 
+%package -n %name-vis-goom
+Summary: Qmmp Goom Visual Plugin
+Summary(ru_RU.UTF8): Модуль визуализации Goom для Qmmp
+Summary(uk_UA.UTF8): Модуль візуалізації Goom для Qmmp
+Group: Sound
+Requires: qmmp >= %version-%release
+
+%description -n %name-vis-goom
+Qmmp Goom Visual Plugin
+
+%description -l ru_RU.UTF8 -n %name-vis-goom
+Модуль визуализации Goom для Qmmp
+
+%description -l uk_UA.UTF8 -n %name-vis-goom
+Модуль візуалізації Goom для Qmmp
+
 %prep
 %setup -q -n %name-svn
 
@@ -132,7 +148,13 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %
 %files -n %name-eff-src
 %_libdir/qmmp/Effect/libsrconverter.so
 
+%files -n %name-vis-goom
+%_libdir/qmmp/Visual/libgoom.so
+
 %changelog
+* Sun Jan 08 2017 Motsyo Gennadi <drool@altlinux.ru> 0.11.0-alt1.svn6953
+- build svn6953
+
 * Fri Aug 12 2016 Motsyo Gennadi <drool@altlinux.ru> 0.11.0-alt1.svn6670
 - build svn6670
 
