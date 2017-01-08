@@ -2,7 +2,7 @@
 %define xdg_name org.pantheon.terminal
 
 Name: pantheon-terminal
-Version: %ver_major
+Version: %ver_major.0.3
 Release: alt1
 
 Summary: Pantheon Terminal
@@ -23,6 +23,16 @@ lightweight, beautiful, and simple terminal.
 
 It's designed to be setup with sane defaults and little to no configuration.
 It's just a terminal, nothing more, nothing less.
+
+%package vala
+Summary: Vala language bindings for the %name
+Group: Development/Other
+BuildArch: noarch
+#Requires: %name-devel = %version-%release
+
+%description vala
+This package provides Vala language bindings for the %name.
+
 
 %prep
 %setup
@@ -47,7 +57,15 @@ It's just a terminal, nothing more, nothing less.
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/appdata/%name.appdata.xml
 
+%if 0
+%files vala
+%_vapidir/*
+%endif
+
 %changelog
+* Sun Jan 08 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.0.3-alt1
+- 0.4.0.3
+
 * Thu Sep 29 2016 Yuri N. Sedunov <aris@altlinux.org> 0.4-alt1
 - 0.4
 
