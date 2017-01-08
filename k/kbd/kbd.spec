@@ -1,6 +1,6 @@
 Name: kbd
 Serial: 0
-Version: 2.0.1
+Version: 2.0.4
 Release: alt1
 
 Group: Terminals
@@ -420,6 +420,9 @@ done
 %_man1dir/vlock.*
 
 %changelog
+* Sun Jan 08 2017 Alexey Gladkov <legion@altlinux.ru> 0:2.0.4-alt1
+- New release version (2.0.4).
+
 * Tue Dec 03 2013 Alexey Gladkov <legion@altlinux.ru> 0:2.0.1-alt1
 - New release version (2.0.1).
 
