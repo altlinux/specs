@@ -1,6 +1,6 @@
 Name: dictd
 Version: 1.12.1
-Release: alt2
+Release: alt3
 Serial: 1
 
 Url: http://www.dict.org/
@@ -25,7 +25,7 @@ Patch12: dictl-alt-params.path
 # -------  dictd package description ----- #
 
 Summary: dict server that serves dictionaries for clients
-Summary(ru_RU.KOI8-R): Сервер словарей, обслуживающий клиентов по протоколу dict
+Summary(ru_RU.UTF-8): п║п╣я─п╡п╣я─ я│п╩п╬п╡п╟я─п╣п╧, п╬п╠я│п╩я┐п╤п╦п╡п╟я▌я┴п╦п╧ п╨п╩п╦п╣п╫я┌п╬п╡ п©п╬ п©я─п╬я┌п╬п╨п╬п╩я┐ dict
 Group: System/Servers
 
 # Automatically added by buildreq on Thu Sep 22 2005
@@ -41,10 +41,10 @@ distributions:
 * kdict
 * gdict
 
-%description -l ru_RU.KOI8-R -n dictd
-Данный пакет содержит сервер словарей, поддерживающий DICT-клиентов
-(Dictionary Server Protocol -- протокол сервера словарей). Существует много
-консольных и графических DICT-клиентов. Вот некоторые из входящих в дистрибутивы
+%description -l ru_RU.UTF-8 -n dictd
+п■п╟п╫п╫я▀п╧ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ я│п╣я─п╡п╣я─ я│п╩п╬п╡п╟я─п╣п╧, п©п╬п╢п╢п╣я─п╤п╦п╡п╟я▌я┴п╦п╧ DICT-п╨п╩п╦п╣п╫я┌п╬п╡
+(Dictionary Server Protocol -- п©я─п╬я┌п╬п╨п╬п╩ я│п╣я─п╡п╣я─п╟ я│п╩п╬п╡п╟я─п╣п╧). п║я┐я┴п╣я│я┌п╡я┐п╣я┌ п╪п╫п╬пЁп╬
+п╨п╬п╫я│п╬п╩я▄п╫я▀я┘ п╦ пЁя─п╟я└п╦я┤п╣я│п╨п╦я┘ DICT-п╨п╩п╦п╣п╫я┌п╬п╡. п▓п╬я┌ п╫п╣п╨п╬я┌п╬я─я▀п╣ п╦п╥ п╡я┘п╬п╢я▐я┴п╦я┘ п╡ п╢п╦я│я┌я─п╦п╠я┐я┌п╦п╡я▀
 ALT Linux:
 * dict
 * kdict
@@ -55,7 +55,7 @@ ALT Linux:
 %package -n dict-tools
 # Name: dictd
 Summary: tools for making dictionary files for dictd server
-Summary(ru_RU.KOI8-R): Средства для создания словарных файлов для сервера dictd
+Summary(ru_RU.UTF-8): п║я─п╣п╢я│я┌п╡п╟ п╢п╩я▐ я│п╬п╥п╢п╟п╫п╦я▐ я│п╩п╬п╡п╟я─п╫я▀я┘ я└п╟п╧п╩п╬п╡ п╢п╩я▐ я│п╣я─п╡п╣я─п╟ dictd
 Group: Development/Other
 
 %description -n dict-tools
@@ -65,37 +65,37 @@ dictionaries in dictd server format:
   in the gzip format (see RFC 1952).
 * dictfmt is program for making binary dictionaries from plain format
 
-%description -n dict-tools -l ru_RU.KOI8-R
-Этот пакет содержит различные средства для создания словарей в формате
-dictd и работы с ними:
-* dictzip -- программа для сжатия словарей (см. RFC 1952).
-* dictfmt -- программа для создание словарей в формате DICT из текстовых файлов.
+%description -n dict-tools -l ru_RU.UTF-8
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ я─п╟п╥п╩п╦я┤п╫я▀п╣ я│я─п╣п╢я│я┌п╡п╟ п╢п╩я▐ я│п╬п╥п╢п╟п╫п╦я▐ я│п╩п╬п╡п╟я─п╣п╧ п╡ я└п╬я─п╪п╟я┌п╣
+dictd п╦ я─п╟п╠п╬я┌я▀ я│ п╫п╦п╪п╦:
+* dictzip -- п©я─п╬пЁя─п╟п╪п╪п╟ п╢п╩я▐ я│п╤п╟я┌п╦я▐ я│п╩п╬п╡п╟я─п╣п╧ (я│п╪. RFC 1952).
+* dictfmt -- п©я─п╬пЁя─п╟п╪п╪п╟ п╢п╩я▐ я│п╬п╥п╢п╟п╫п╦п╣ я│п╩п╬п╡п╟я─п╣п╧ п╡ я└п╬я─п╪п╟я┌п╣ DICT п╦п╥ я┌п╣п╨я│я┌п╬п╡я▀я┘ я└п╟п╧п╩п╬п╡.
 
 # -------- dict-devel description ------- #
 %package -n dict-devel
 Summary: Headers for dictd server plugins
-Summary(ru_RU.KOI8-R): Заголовочные файлы для сборки модулей к серверу dictd
+Summary(ru_RU.UTF-8): п≈п╟пЁп╬п╩п╬п╡п╬я┤п╫я▀п╣ я└п╟п╧п╩я▀ п╢п╩я▐ я│п╠п╬я─п╨п╦ п╪п╬п╢я┐п╩п╣п╧ п╨ я│п╣я─п╡п╣я─я┐ dictd
 Group: Development/Other
 
 %description -n dict-devel
 This package contains header files for dictd server plugins
 
-%description -n dict-devel -l ru_RU.KOI8-R
-Данный пакет содержит заголовочные файлы для сборки модулей к серверу dictd
+%description -n dict-devel -l ru_RU.UTF-8
+п■п╟п╫п╫я▀п╧ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ п╥п╟пЁп╬п╩п╬п╡п╬я┤п╫я▀п╣ я└п╟п╧п╩я▀ п╢п╩я▐ я│п╠п╬я─п╨п╦ п╪п╬п╢я┐п╩п╣п╧ п╨ я│п╣я─п╡п╣я─я┐ dictd
 # ------- dict description ------ #
 %package -n dict
 # Name: dictd
 Summary: dict client
-Summary(ru_RU.KOI8-R): Консольный клиент для dictd-сервера
+Summary(ru_RU.UTF-8): п п╬п╫я│п╬п╩я▄п╫я▀п╧ п╨п╩п╦п╣п╫я┌ п╢п╩я▐ dictd-я│п╣я─п╡п╣я─п╟
 Group: Text tools
 
 %description -n dict
 This package contains console client for DICT server. It is light and
 easy to use.
 
-%description -n dict -l ru_RU.KOI8-R
-Данный пакет содержит консольный клиент для DICT-сервера. Он лёгок и
-прост в работе.
+%description -n dict -l ru_RU.UTF-8
+п■п╟п╫п╫я▀п╧ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ п╨п╬п╫я│п╬п╩я▄п╫я▀п╧ п╨п╩п╦п╣п╫я┌ п╢п╩я▐ DICT-я│п╣я─п╡п╣я─п╟. п·п╫ п╩я▒пЁп╬п╨ п╦
+п©я─п╬я│я┌ п╡ я─п╟п╠п╬я┌п╣.
 # --------------- real part ----------------  #
 
 %prep
@@ -109,7 +109,9 @@ cp %SOURCE7 README.ALT
 %build
 %autoreconf
 %configure --without-local-zlib --with-natspec
-%make_build
+# FIXME: non-SMP-safe build as of 1.12.1
+#make_build
+make
 %make -C doc/ rfc.txt
 
 %install
@@ -194,8 +196,8 @@ fi
 %_man1dir/dictfmt.1*
 %_man1dir/dictunformat.1*
 %_man1dir/dictzip.1*
-%_man1dir/dictfmt_index2suffix.1.gz
-%_man1dir/dictfmt_index2word.1.gz
+%_man1dir/dictfmt_index2suffix.1*
+%_man1dir/dictfmt_index2word.1*
 
 %files -n dict-devel
 %_includedir/dictdplugin.h
@@ -212,6 +214,12 @@ fi
 %_man1dir/colorit.1*
 
 %changelog
+* Mon Jan 09 2017 Michael Shigorin <mike@altlinux.org> 1:1.12.1-alt3
+- NMU:
+  + fixed FTBFS by turning the rest of manpage paths to globs
+  + converted spec to UTF-8
+  + disabled parallel build to be safe
+
 * Wed Feb 04 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.12.1-alt2
 - add dictd.filetrigger
 
