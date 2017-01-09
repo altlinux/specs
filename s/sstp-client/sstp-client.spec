@@ -1,7 +1,7 @@
 %define ppp_version %((%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 
 Name: sstp-client
-Version: 1.0.10
+Version: 1.0.11
 Release: alt1
 Summary: Secure Socket Tunneling Protocol (SSTP) Client
 Group: System/Servers
@@ -86,6 +86,9 @@ install -Dpm 644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jan 09 2017 Alexey Shabalin <shaba@altlinux.ru> 1.0.11-alt1
+- 1.0.11
+
 * Tue Aug 25 2015 Alexey Shabalin <shaba@altlinux.ru> 1.0.10-alt1
 - 1.0.10
 
