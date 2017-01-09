@@ -6,7 +6,7 @@
 %define distro_name Regular
 
 Name: branding-%brand-%theme
-Version: 20161215
+Version: 20170109
 Release: alt1
 
 Url: http://en.altlinux.org
@@ -466,6 +466,10 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 
 
 %changelog
+* Mon Jan 09 2017 Michael Shigorin <mike@altlinux.org> 20170109-alt1
+- os-release: better PRETTY_NAME (thanks snejok@) and VERSION
+- notes: updated/fixed index pages
+
 * Thu Dec 15 2016 Michael Shigorin <mike@altlinux.org> 20161215-alt1
 - replaced license step icon
 - downscaled slideshow images for 6x less space
