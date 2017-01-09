@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.101
+Version: 1.1.102
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildArch: noarch
-BuildRequires: rsync asciidoc-a2x fop fonts-ttf-dejavu
+BuildRequires: rsync
 
 Requires: rsync git-core
 Requires: time schedutils sfdisk
@@ -30,6 +30,7 @@ Requires: mkimage-preinstall
 Summary: %name documentation
 Group: Development/Documentation
 %{?_with_doc:BuildRequires: java /proc}
+%{?_with_doc:BuildRequires: asciidoc-a2x fop fonts-ttf-dejavu}
 
 %description
 mkimage-profiles is a collection of bits and pieces useful for
@@ -90,6 +91,9 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Jan 09 2017 Michael Shigorin <mike@altlinux.org> 1.1.102-alt1
+- 2017
+
 * Mon Dec 12 2016 Michael Shigorin <mike@altlinux.org> 1.1.101-alt1
 - starterkits-20161212
 
