@@ -1,4 +1,4 @@
-%define courier_confdir	/etc/courier-imap
+%define courier_confdir	%_sysconfdir/courier-imap
 %define courier_datadir	%_datadir/courier-imap
 %define confldap maildrop-ldap.conf
 %define confmysql maildrop-mysql.conf
@@ -7,13 +7,13 @@
 %define origname maildrop
 
 Name: courier-maildrop
-Version: 2.5.5
-Release: alt0.1
+Version: 2.8.4
+Release: alt0.3
 
 Summary: maildrop mail filter/mail delivery agent
 License: GPL
 Group: Networking/Mail
-Url: http://www.flounder.net/~mrsam/maildrop
+Url: http://www.courier-mta.org/maildrop/
 
 Requires: courier-authlib
 Requires: courier-common-utils
@@ -23,12 +23,13 @@ Obsoletes: maildrop-common < %version-%release
 Source0: %url/%origname-%version.tar.bz2
 Source1: %origname.README-ALT
 
-Patch1: %origname-2.1.0-alt-makefile.patch
+Patch1: %origname-%version-alt-authlib.patch
 
-BuildPreReq: libcourier-authlib-devel = 0.63.0
+BuildPreReq: libcourier-authlib-devel = 0.66.4
 
 # Automatically added by buildreq on Sun Nov 27 2005
 BuildRequires: gcc-c++ libdb4-devel libfam-devel libpcre-devel libstdc++-devel
+BuildRequires: courier-unicode-devel
 
 %description
 Maildrop - mail delivery agent with filtering capabilities and
@@ -51,7 +52,7 @@ and courier-imap packages.
 %patch1 -p2
 
 %build
-%__autoconf
+%autoreconf
 %configure \
   --sysconfdir=%courier_confdir \
   --with-etcdir=%courier_confdir \
@@ -64,50 +65,41 @@ and courier-imap packages.
   --enable-use-flock=0 \
   --with-db=db \
   --disable-tempdir \
-  --enable-maildirquota
+  --enable-maildirquota \
+  --enable-dovecotauth
 
 %make_build
 
 %install
-%__make DESTDIR=%buildroot install
+%makeinstall
 
 # adjust documentation 
-%__mkdir_p %buildroot/%_docdir/%name-%version
-%__mv %buildroot/%_datadir/%origname/html %buildroot/%_docdir/%name-%version
-%__rm -rf %buildroot/%_datadir/%origname
+mkdir -p %buildroot%_docdir/%name-%version
+mv %buildroot%_docdir/%origname/html %buildroot%_docdir/%name-%version
 
 # src_root docs
-%__install -m 0644 %SOURCE1       %buildroot/%_docdir/%name-%version/
-%__install -m 0644 AUTHORS        %buildroot/%_docdir/%name-%version/
-%__install -m 0644 ChangeLog      %buildroot/%_docdir/%name-%version/
-%__install -m 0644 INSTALL        %buildroot/%_docdir/%name-%version/
-%__install -m 0644 NEWS           %buildroot/%_docdir/%name-%version/
-%__install -m 0644 README         %buildroot/%_docdir/%name-%version/
-%__install -m 0644 README.postfix %buildroot/%_docdir/%name-%version/
-%__install -m 0644 UPGRADE        %buildroot/%_docdir/%name-%version/
+install -m 0644 %SOURCE1       %buildroot%_docdir/%name-%version/
+install -m 0644 AUTHORS        %buildroot%_docdir/%name-%version/
+install -m 0644 ChangeLog      %buildroot%_docdir/%name-%version/
+install -m 0644 INSTALL        %buildroot%_docdir/%name-%version/
+install -m 0644 NEWS           %buildroot%_docdir/%name-%version/
+install -m 0644 README         %buildroot%_docdir/%name-%version/
+install -m 0644 README.postfix %buildroot%_docdir/%name-%version/
+install -m 0644 README.dovecotauth %buildroot%_docdir/%name-%version/
+install -m 0644 UPGRADE        %buildroot%_docdir/%name-%version/
 
-%__install -m 0644 INSTALL.html %buildroot/%_docdir/%name-%version/html/
-%__install -m 0644 README.html  %buildroot/%_docdir/%name-%version/html/
-%__install -m 0644 UPGRADE.html %buildroot/%_docdir/%name-%version/html/
+install -m 0644 INSTALL.html %buildroot%_docdir/%name-%version/html/
+install -m 0644 README.html  %buildroot%_docdir/%name-%version/html/
+install -m 0644 UPGRADE.html %buildroot%_docdir/%name-%version/html/
 
 #maildir docs
-%__install -m 0644 maildir/README.maildirquota.txt  %buildroot/%_docdir/%name-%version/
-%__install -m 0644 maildir/README.sharedfolders.txt %buildroot/%_docdir/%name-%version/
-
-%__install -m 0644 maildir/maildiracl.html   %buildroot/%_docdir/%name-%version/html/
-%__install -m 0644 maildir/maildirkw.html    %buildroot/%_docdir/%name-%version/html/
-%__install -m 0644 maildir/maildirmake.html  %buildroot/%_docdir/%name-%version/html/
-%__install -m 0644 maildir/maildirquota.html %buildroot/%_docdir/%name-%version/html/
-%__install -m 0644 maildir/README.imapkeywords.html  %buildroot/%_docdir/%name-%version/html/
-%__install -m 0644 maildir/README.maildirfilter.html %buildroot/%_docdir/%name-%version/html/
-%__install -m 0644 maildir/README.maildirquota.html  %buildroot/%_docdir/%name-%version/html/
-%__install -m 0644 maildir/README.sharedfolders.html %buildroot/%_docdir/%name-%version/html/
+install -m 0644 libs/maildir/README.maildirquota.txt  %buildroot%_docdir/%name-%version/
+install -m 0644 libs/maildir/README.sharedfolders.txt %buildroot%_docdir/%name-%version/
+install -m 0644 libs/maildir/README.*.html  %buildroot%_docdir/%name-%version/html/
 
 # maildrop docs
-%__install -m 0644 maildrop/README.html       %buildroot/%_docdir/%name-%version/html/README.maildrop.html
-%__install -m 0644 maildrop/maildroptips.html %buildroot/%_docdir/%name-%version/html/
-%__install -m 0644 maildrop/makedat.html      %buildroot/%_docdir/%name-%version/html/
-%__install -m 0644 maildrop/reformail.html    %buildroot/%_docdir/%name-%version/html/
+install -m 0644 libs/maildrop/README.html       %buildroot%_docdir/%name-%version/html/README.maildrop.html
+install -m 0644 libs/maildrop/maildroptips.html %buildroot%_docdir/%name-%version/html/
 
 %files
 %_bindir/lockmail
@@ -133,15 +125,32 @@ and courier-imap packages.
 %files utils
 %_bindir/maildirmake
 %_bindir/deliverquota
+%_bindir/makedat*
+%_man1dir/makedat*
 %_man1dir/maildirmake.1*
 %_man8dir/deliverquota.8*
 
 %changelog
+* Sun Jan 08 2017 L.A. Kostis <lakostis@altlinux.ru> 2.8.4-alt0.3
+- .spec cleanup.
+- disabled authlib-tempreject.
+
+* Fri Jan 06 2017 L.A. Kostis <lakostis@altlinux.ru> 2.8.4-alt0.2
+- Rewrite alt-makefile patch.
+- .spec cleanup.
+- Added makedat to -utils package.
+
+* Thu Jan 05 2017 L.A. Kostis <lakostis@altlinux.ru> 2.8.4-alt0.1
+- Bump to 2.8.4:
+  - enabled dovecotauth support.
+  - enabled courier-unicode support.
+  - enabled authlib-tempreject (WIP).
+
 * Mon Jan 16 2012 L.A. Kostis <lakostis@altlinux.ru> 2.5.5-alt0.1
 - NMU:
   + updated to 2.5.5.
   + bump courier-authlib requries.
-  
+
 * Mon Aug 31 2009 L.A. Kostis <lakostis@altlinux.ru> 2.2.0-alt0.1
 - NMU:
   + updated to 2.2.0.
