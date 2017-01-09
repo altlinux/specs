@@ -1,6 +1,6 @@
 Name: memtest86+
 Version: 5.01
-Release: alt1
+Release: alt2
 
 Summary: Memory test for x86 architecture
 License: GPL
@@ -22,6 +22,8 @@ Packager: Michael Shigorin <mike@altlinux.org>
 ExclusiveArch: %ix86 x86_64
 Requires(post,preun): bootloader-utils >= 0.3
 BuildRequires: dev86
+
+%set_gcc_version 4.9
 
 %description
 Memtest86 is thorough, standalone memory test for x86 systems. It is
@@ -96,6 +98,9 @@ ln -s `relative /sbin/installkernel %_sbindir/installmemtest86+` \
 %doc README* FAQ
 
 %changelog
+* Mon Jan 09 2017 Michael Shigorin <mike@altlinux.org> 5.01-alt2
+- "fixed" FTBFS (by downgrading to gcc4)
+
 * Wed May 28 2014 Michael Shigorin <mike@altlinux.org> 5.01-alt1
 - 5.01:
   + added support for:
