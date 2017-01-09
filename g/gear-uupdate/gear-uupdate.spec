@@ -1,6 +1,6 @@
 %define destname gear-uupdate
 Name: %destname
-Version: 0.20
+Version: 0.21
 Release: alt1
 
 Summary: Helper utility to be called by uscan for gear repository update
@@ -12,7 +12,7 @@ URL: http://www.altlinux.org/Gear/gear-uupdate
 
 BuildArch: noarch
 
-BuildRequires: perl-devel perl(Pod/Usage.pm) /usr/bin/pod2man perl-Gear-Rules perl-RPM-Source-Editor perl-String-ShellQuote
+BuildRequires: perl-devel perl(Pod/Usage.pm) /usr/bin/pod2man perl-Gear-Rules perl-Source-Bundle perl-RPM-Source-Editor perl-String-ShellQuote
 Requires: gear /usr/bin/srpmnmu perl-Gear-Rules perl-RPM-Source-Editor > 0.73
 
 %description
@@ -39,6 +39,9 @@ install -m 644 gear-*.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Mon Jan 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- new version
+
 * Fri Sep 23 2016 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - support for GEAR_UUPDATE_CHANGELOG
 
