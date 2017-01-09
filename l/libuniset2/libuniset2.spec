@@ -16,7 +16,7 @@
 
 Name: libuniset2
 Version: 2.6
-Release: alt4
+Release: alt10
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -316,7 +316,7 @@ SharedMemoryPlus extension ('all in one') for libuniset
 %build
 %autoreconf
 %configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt} %{subst_enable api}
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -507,6 +507,31 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 # history of current unpublished changes
 
 %changelog
+* Mon Jan 09 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt10
+- add tests for REST API (with RPC)
+- python: refactoring UInterface (add UInterfaceModbus and UInterfaceUniSet)
+- refactoring TCPCheck (use future)
+- minor refactoring and fixes
+
+* Fri Dec 16 2016 Pavel Vainerman <pv@altlinux.ru> 2.6-alt9
+- UObject: added attempts to activate the object
+
+* Wed Dec 14 2016 Pavel Vainerman <pv@altlinux.ru> 2.6-alt8
+- SM: terminate if read dump (configuration) failed
+
+* Tue Dec 13 2016 Pavel Vainerman <pv@altlinux.ru> 2.6-alt7
+- Modbus: refactoring code and test (for 64bit)
+- iobase: refactoring tests for 64bit
+- TCPCheck: fixed bug (for exit thread)
+- UNetUDP: minor fixes in tests
+
+* Mon Dec 12 2016 Pavel Vainerman <pv@altlinux.ru> 2.6-alt6
+- codegen: up timeout or activate
+- codegen: add logs for startup
+
+* Thu Dec 08 2016 Pavel Vainerman <pv@altlinux.ru> 2.6-alt5
+- fixed bug in uniset2-admin --oinfo
+
 * Wed Dec 07 2016 Pavel Vainerman <pv@altlinux.ru> 2.6-alt4
 - new version
 - getChangedTime --> getTimeChange
