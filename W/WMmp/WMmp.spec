@@ -1,38 +1,40 @@
-Name:		WMmp 
-Version:	0.10.0
-Release:	alt2.qa1
+Name: WMmp
+Version: 0.10.0
+Release: alt2.qa2
 
-Summary:	A (Window Maker) dock app for interfacing MPD.
-License: 	GPL
-Group: 		Sound
+Summary: A (Window Maker) dock app for interfacing MPD
+License: GPL
+Group: Sound
 
-Url:		http://musicpd.org/
-
-Source:		%name-%version.tar.gz
+Url: http://musicpd.org/
+Source: %name-%version.tar.gz
 
 BuildRequires: libXext-devel libXpm-devel
 
 %description
-
 A (Window Maker) dock app for interfacing MPD.
 
 %prep
-%setup -q
+%setup
 
 %build
-%configure 	--with-default-port=6600 \
-		--with-default-host=localhost
+%configure \
+	--with-default-port=6600 \
+	--with-default-host=localhost
 %make_build
 
 %install
 %makeinstall
 
 %files
-%doc AUTHORS ChangeLog COPYING INSTALL README 
+%doc AUTHORS ChangeLog COPYING INSTALL README
 %_bindir/%name
-%_man1dir/%name.1.gz
+%_man1dir/%name.1*
 
 %changelog
+* Mon Jan 09 2017 Michael Shigorin <mike@altlinux.org> 0.10.0-alt2.qa2
+- NMU: fixed FTBFS.
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.10.0-alt2.qa1
 - NMU: rebuilt for updated dependencies.
 
