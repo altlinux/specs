@@ -3,8 +3,8 @@
 
 %define rname kid3
 Name: kde5-%rname
-Version: 3.4.1
-Release: alt2
+Version: 3.4.4
+Release: alt1%ubt
 %K5init altplace
 
 Group: Sound
@@ -18,7 +18,7 @@ Patch1: kid3-3.0.2-alt-desktop_ru_uk.patch
 # Automatically added by buildreq on Fri Nov 13 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gtk-update-icon-cache id3lib kf5-kdoctools-devel libEGL-devel libGL-devel libavcodec-devel libavutil-devel libflac-devel libgpg-error libjson-c libogg-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl-parent pkg-config python-base python3 python3-base qt5-base-devel qt5-tools ruby ruby-stdlibs xml-common xml-utils zlib-devel
 #BuildRequires: extra-cmake-modules gcc-c++ id3lib-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libavdevice-devel libavformat-devel libavresample-devel libchromaprint-devel libflac++-devel libreadline-devel libswscale-devel libtag-devel libvorbis-devel python-module-google qt5-multimedia-devel qt5-tools-devel rpm-build-python3 rpm-build-ruby xsltproc
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: cmake extra-cmake-modules
 BuildRequires: gcc-c++ glib2-devel libreadline-devel /usr/bin/xsltproc
 BuildRequires: libavdevice-devel libavformat-devel libavresample-devel libswscale-devel
@@ -197,6 +197,9 @@ done
 #%_K5dbus_iface/*id3*
 
 %changelog
+* Mon Jan 09 2017 Sergey V Turchin <zerg@altlinux.org> 3.4.4-alt1%ubt
+- new version
+
 * Fri Jul 15 2016 Sergey V Turchin <zerg@altlinux.org> 3.4.1-alt2
 - fix load translations
 
