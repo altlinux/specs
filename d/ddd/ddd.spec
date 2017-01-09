@@ -1,6 +1,6 @@
 Name: ddd
 Version: 3.3.12
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: Graphical debugger front-end for GDB, DBX, Ladebug, JDB, Perl, Python
 License: GPL
@@ -12,12 +12,17 @@ Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
 Source3: http://www.cs.tu-bs.de/softech/ddd/ftp/doc/vse.ps.bz2
 
 Patch1: ddd-3.3.8-alt-texinfo.patch
+Patch2: ddd-texinfo-5.0.patch
+Patch3: ddd-buildcompare.patch
+Patch4: ddd-wrong-memcpy.patch
 
 Requires: gdb
 Obsoletes: ddd-static, ddd-semistatic, ddd-dynamic
 
 # Added by buildreq2 on Чтв Окт 05 2006
 BuildRequires: flex gcc4.3-c++ libX11-devel libXext-devel libXi-devel libXaw-devel libXp-devel libreadline-devel libtinfo-devel openmotif-devel
+
+BuildRequires: makeinfo
 
 %package doc-html
 Summary: HTML documentation for %name
@@ -55,11 +60,14 @@ structures are displayed as graphs.
 This packages contains PostScript documentation for DDD.
 
 %prep
-%setup -q
+%setup
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
-%__install -p -m644 %SOURCE3 doc/
-%__rm -f doc/html/%name.html ddd/*.info*
+install -pm644 %SOURCE3 doc/
+rm -f doc/html/%name.html ddd/*.info*
 touch ddd/ddd.info.txt
 find -type f -name \*.orig -print -delete
 
@@ -67,10 +75,6 @@ find -type f -name \*.orig -print -delete
 %set_automake_version 1.10
 #set_autoconf_version 2.5
 export CC=gcc-4.3 CXX=g++-4.3
-
-
-# Without this hack ddd won't build.
-#%__install -p -m755 %_datadir/libtool/config.* .
 
 # Fix build via precaching configure variables.
 export \
@@ -92,12 +96,12 @@ export \
 
 # Fix tinfo support.
 find -type f -name configure -print0 |
-	xargs -r0 %__subst -p 's/mytinfo/tinfo/g' configure*
+	xargs -r0 subst -p 's/mytinfo/tinfo/g' configure*
 
 %add_optflags -DWITH_READLINE
 %configure --with-readline
 
-%__rm -rf readline libiberty
+rm -rf readline libiberty
 
 # Fix packager information.
 cat >ddd/userinfo.C <<__EOF__
@@ -109,20 +113,24 @@ __EOF__
 bzip2 -9fk doc/*.ps
 
 %install
-%__mkdir_p $RPM_BUILD_ROOT%_libdir
+mkdir -p $RPM_BUILD_ROOT%_libdir
 %makeinstall
 
-%__rm -fv $RPM_BUILD_ROOT%_datadir/%name-%version/[A-Z]*
-%__mkdir_p $RPM_BUILD_ROOT%_sysconfdir/X11/app-defaults
-%__mv $RPM_BUILD_ROOT%_datadir/%name-%version/%name/Ddd $RPM_BUILD_ROOT%_sysconfdir/X11/app-defaults
+rm -fv $RPM_BUILD_ROOT%_datadir/%name-%version/[A-Z]*
+mkdir -p $RPM_BUILD_ROOT%_sysconfdir/X11/app-defaults
+mv $RPM_BUILD_ROOT%_datadir/%name-%version/%name/Ddd $RPM_BUILD_ROOT%_sysconfdir/X11/app-defaults
 rmdir $RPM_BUILD_ROOT%_datadir/%name-%version/%name
 
 %define docdir %_docdir/%name-%version
-%__rm -rf $RPM_BUILD_ROOT%docdir
-%__mkdir_p $RPM_BUILD_ROOT%docdir
-%__cp -a AUTHORS NEWS PROBLEMS TIPS TODO doc/*.ps.* doc/html \
+rm -rf $RPM_BUILD_ROOT%docdir
+mkdir -p $RPM_BUILD_ROOT%docdir
+cp -a AUTHORS NEWS PROBLEMS TIPS TODO doc/*.ps.* doc/html \
 	$RPM_BUILD_ROOT%docdir/
 
+# The manpage installed contains a reference to a logo .eps file in the
+# build directory which isn't even created; remove this reference to
+# eliminate man warnings.
+sed -i -e '/^\.PSPIC/d' %buildroot/%_man1dir/ddd.1
 
 %files
 %config %_sysconfdir/X11/app-defaults/*
@@ -142,6 +150,13 @@ rmdir $RPM_BUILD_ROOT%_datadir/%name-%version/%name
 %docdir/html
 
 %changelog
+* Mon Jan 09 2017 Michael Shigorin <mike@altlinux.org> 3.3.12-alt1.qa2
+- NMU:
+  + fixed FTBFS (BR: makeinfo and opensuse texinfo-5.0 patch)
+  + added two more opensuse patches (reproducible, memcpy)
+  + added debian fixup for ddd(1) manpage
+  + minor spec cleanup
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.3.12-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
