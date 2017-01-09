@@ -1,6 +1,6 @@
 Name: koules
 Version: 1.4
-Release: alt9.qa1
+Release: alt10
 
 Summary: Action game with multiplayer, network and sound support
 License: GPL
@@ -18,34 +18,37 @@ Patch5: koules-1.4-alt-makefile.patch
 Patch6: koules-schumacher.patch
 Patch7: koules-1.4-alt-tmpfile.patch
 Patch8: koules-1.4-alt-no-shm.patch
+Patch9: koules-1.4-slackbuilds-aoss.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Dec 13 2009
 BuildRequires: gccmakedep imake libX11-devel libXext-devel xorg-cf-files
 
-Summary(pl):	Gra pod X11 dla wielu graczy
-Summary(ru_RU.KOI8-R): интерактивная и юморная игра с сетью и звуком
-Summary(uk_UA.KOI8-U): ╕нтерактивна та гумористична гра ╕з мережею та звуком
+Requires: alsa-oss
+
+Summary(pl.UTF-8): Gra pod SVGAlib i X11 dla wielu graczy
+Summary(ru_RU.UTF-8): п╦п╫я┌п╣я─п╟п╨я┌п╦п╡п╫п╟я▐ п╦ я▌п╪п╬я─п╫п╟я▐ п╦пЁя─п╟ я│ я│п╣я┌я▄я▌ п╦ п╥п╡я┐п╨п╬п╪
+Summary(uk_UA.KOI8-U): я√п╫я┌п╣я─п╟п╨я┌п╦п╡п╫п╟ я┌п╟ пЁя┐п╪п╬я─п╦я│я┌п╦я┤п╫п╟ пЁя─п╟ я√п╥ п╪п╣я─п╣п╤п╣я▌ я┌п╟ п╥п╡я┐п╨п╬п╪
 
 Icon: koules.xpm
 
 %description
 Action game with multiplayer, network and sound support.
 
-%description -l pl
-Gra pod SVGAlib i X11 ze wsparciem dla wielu graczy, sieci i d╪wiЙku.
+%description -l pl.UTF-8
+Gra pod SVGAlib i X11 ze wsparciem dla wielu graczy, sieci i dе╨wiд≥ku.
 
-%description -l ru_RU.KOI8-R
-Koules ("шарики") - замечательная игрушка, которая при всей своей простоте
-подкупает оригинальными находками в области стратегии и пародии.
+%description -l ru_RU.UTF-8
+Koules ("я┬п╟я─п╦п╨п╦") - п╥п╟п╪п╣я┤п╟я┌п╣п╩я▄п╫п╟я▐ п╦пЁя─я┐я┬п╨п╟, п╨п╬я┌п╬я─п╟я▐ п©я─п╦ п╡я│п╣п╧ я│п╡п╬п╣п╧ п©я─п╬я│я┌п╬я┌п╣
+п©п╬п╢п╨я┐п©п╟п╣я┌ п╬я─п╦пЁп╦п╫п╟п╩я▄п╫я▀п╪п╦ п╫п╟я┘п╬п╢п╨п╟п╪п╦ п╡ п╬п╠п╩п╟я│я┌п╦ я│я┌я─п╟я┌п╣пЁп╦п╦ п╦ п©п╟я─п╬п╢п╦п╦.
 
-Она гарантирует вам немалое количество потраченного впустую времени. :-)
+п·п╫п╟ пЁп╟я─п╟п╫я┌п╦я─я┐п╣я┌ п╡п╟п╪ п╫п╣п╪п╟п╩п╬п╣ п╨п╬п╩п╦я┤п╣я│я┌п╡п╬ п©п╬я┌я─п╟я┤п╣п╫п╫п╬пЁп╬ п╡п©я┐я│я┌я┐я▌ п╡я─п╣п╪п╣п╫п╦. :-)
 
 %description -l uk_UA.KOI8-U
-Koules ("кульки") - файна цяцька, що попри вс╕╓╖ сво╓╖ простоти п╕дкупа╓
-ори╜╕нальними знах╕дками у област╕ стратег╕╖ та парод╕╖.
+Koules ("п╨я┐п╩я▄п╨п╦") - я└п╟п╧п╫п╟ я├я▐я├я▄п╨п╟, я┴п╬ п©п╬п©я─п╦ п╡я│я√я■я≈ я│п╡п╬я■я≈ п©я─п╬я│я┌п╬я┌п╦ п©я√п╢п╨я┐п©п╟я■
+п╬я─п╦р▒я√п╫п╟п╩я▄п╫п╦п╪п╦ п╥п╫п╟я┘я√п╢п╨п╟п╪п╦ я┐ п╬п╠п╩п╟я│я┌я√ я│я┌я─п╟я┌п╣пЁя√я≈ я┌п╟ п©п╟я─п╬п╢я√я≈.
 
-Вона ╜аранту╓ вам чималу к╕льк╕сть згаяного часу. :-)
+п▓п╬п╫п╟ р▒п╟я─п╟п╫я┌я┐я■ п╡п╟п╪ я┤п╦п╪п╟п╩я┐ п╨я√п╩я▄п╨я√я│я┌я▄ п╥пЁп╟я▐п╫п╬пЁп╬ я┤п╟я│я┐. :-)
 
 %prep
 %setup -n %name%version
@@ -61,10 +64,13 @@ Koules ("кульки") - файна цяцька, що попри вс╕╓╖ сво╓╖ простоти п╕дкупа╓
 %patch6
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 %build
+sed -i 's,SYSDEFS =,& -std=gnu89 -fgnu89-inline,' Iconfig */Makefile
 xmkmf -a
-%make_build
+#make_build
+make
 
 %install
 install -d %buildroot{%_mandir{,/pl}/man6,%_bindir,%_gamesbindir,%_gamesdatadir/koules,%_niconsdir}
@@ -93,6 +99,11 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 # - consider soundwrapper (right now DOESN'T work for me w/emu10k1)
 
 %changelog
+* Mon Jan 09 2017 Michael Shigorin <mike@altlinux.org> 1.4-alt10
+- fixed FTBFS
+- converted spec to UTF-8
+- added slackbuilds patch to use aoss
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt9.qa1
 - NMU: rebuilt for debuginfo.
 
