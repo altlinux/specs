@@ -1,13 +1,14 @@
+%def_with doc
+
 Name: kbd
-Serial: 0
+Epoch: 0
 Version: 2.0.4
-Release: alt1
+Release: alt2
 
 Group: Terminals
 Summary: Tools for managing the Linux console
 License: GPL
-Url: ftp://ftp.kernel.org/pub/linux/utils/kbd/
-# HOWTO at http://www.win.tue.nl/~aeb/linux/kbd/
+Url: http://kbd-project.org
 
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
@@ -16,9 +17,9 @@ ExcludeArch: s390 s390x
 
 Requires: libkeymap = %version-%release
 
-Provides: console-tools_or_kbd = %name%serial:%version-%release
-Conflicts: console-tools_or_kbd < %name%serial:%version-%release
-Conflicts: console-tools_or_kbd > %name%serial:%version-%release
+Provides: console-tools_or_kbd = %name%epoch:%version-%release
+Conflicts: console-tools_or_kbd < %name%epoch:%version-%release
+Conflicts: console-tools_or_kbd > %name%epoch:%version-%release
 
 # for compatibility:
 Requires: console-vt-tools
@@ -40,7 +41,9 @@ Patch23: man_pages.diff
 Patch100: kbd-1.12-alt-unicode_start_vs_setfont.patch
 
 # Automatically added by buildreq on Mon Jan 07 2008 (-bi)
-BuildRequires: doxygen flex libpam-devel libcheck-devel
+BuildRequires: flex libpam-devel libcheck-devel
+
+%{?_with_doc:BuildRequires: doxygen}
 
 %description
 This package contains tools for managing the Linux console
@@ -82,7 +85,7 @@ Documentation for kbd
 %package -n console-vt-tools
 Group: Terminals
 Summary: Tools to control VTs (virtual terminals) on the Linux console
-Serial: 0
+Epoch: 0
 
 # due to the same files before pkg split:
 Conflicts: kbd < 0:1.12-alt1
@@ -122,7 +125,7 @@ Summary: Reset the keyboard repeat rate and delay time
 
 # due to the parent package change (util-linux --> kbd)
 %define kbdrate_serial 1
-Serial: %kbdrate_serial
+Epoch: %kbdrate_serial
 
 # due to kbdrate
 Conflicts: util-linux < 2.11h-alt2
@@ -139,7 +142,7 @@ Summary: Usermode bindings for kbdrate
 BuildArch: noarch
 
 # due to the parent package change (util-linux --> kbd)
-Serial: %kbdrate_serial
+Epoch: %kbdrate_serial
 
 Requires: kbdrate = %kbdrate_serial:%version-%release
 Requires: consolehelper
@@ -375,8 +378,10 @@ done
 /lib/%name
 %ghost %_libdir/%name
 
+%if_with doc
 %files -n %name-docs
 %doc ChangeLog CREDITS README docs/doc/*.txt docs/doc/kbd.FAQ*.html docs/doc/font-formats/*.html docs/doc/utf
+%endif
 
 %files -n console-vt-tools
 /bin/chvt
@@ -420,6 +425,9 @@ done
 %_man1dir/vlock.*
 
 %changelog
+* Mon Jan 09 2017 Alexey Gladkov <legion@altlinux.ru> 0:2.0.4-alt2
+- Add flag to switch off the docs (thx Michael Shigorin).
+
 * Sun Jan 08 2017 Alexey Gladkov <legion@altlinux.ru> 0:2.0.4-alt1
 - New release version (2.0.4).
 
