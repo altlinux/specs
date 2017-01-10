@@ -1,8 +1,8 @@
 %def_with python3
 
 Name: ghp-import
-Version: 0.4.1
-Release: alt1.git20141001.1
+Version: 0.5.4
+Release: alt1
 Summary: Copy your docs directly to the gh-pages branch
 License: Tumbolia Public License
 Group: Development/Python
@@ -10,7 +10,7 @@ Url: https://pypi.python.org/pypi/ghp-import/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/davisp/ghp-import.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/f5/cd/c780b2248dd364fdc77837a020bad3e176933d7ce5643217d9475465e871/%{name}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -43,7 +43,7 @@ ended up wanting to try out github's hosting to make the whole interface
 a bit more robust.
 
 %prep
-%setup
+%setup -q 
 
 %if_with python3
 cp -fR . ../python3
@@ -59,9 +59,9 @@ pushd ../python3
 popd
 %endif
 
-pushd docs
-./build.py >index.html
-popd
+#pushd docs
+#./build.py >index.html
+#popd
 
 %install
 export LC_ALL=en_US.UTF-8
@@ -78,7 +78,7 @@ popd
 
 %python_install
 
-rm -f docs/*.py docs/*.html.tmpl
+#rm -f docs/*.py docs/*.html.tmpl
 
 %check
 export LC_ALL=en_US.UTF-8
@@ -90,7 +90,8 @@ popd
 %endif
 
 %files
-%doc *.md docs/*
+%doc *.md 
+#doc docs/*
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -99,12 +100,16 @@ popd
 
 %if_with python3
 %files -n %name.py3
-%doc *.md docs/*
+%doc *.md
+#doc docs/*
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.4-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.1-alt1.git20141001.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
