@@ -1,8 +1,8 @@
 %def_with python3
 
 Name: py
-Version: 1.4.30
-Release: alt1.hg20150709.1.1
+Version: 1.4.32
+Release: alt1
 Summary: Testing and distributed programming library
 License: MIT
 Group: Development/Tools
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 BuildArch: noarch
 
 # hg clone https://bitbucket.org/hpk42/py
-Source: %name-%version.tar.gz
+Source0: https://%{name}pi.python.org/packages/93/bd/8a90834a287e0c1682eab8e20ada672e4f4cf7d5b99f2833ddbf31ed1a6d/py-%{version}.tar.gz
 
 Requires: python-module-%name = %version-%release
 
@@ -81,7 +81,7 @@ and distributing code across machines.
 This package contains documentation for py lib.
 
 %prep
-%setup
+%setup -q 
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -137,7 +137,7 @@ popd
 #_bindir/*
 
 %files -n python-module-%name
-%doc AUTHORS CHANGELOG LICENSE *.txt
+%doc AUTHORS CHANGELOG LICENSE *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%name/testing
 %exclude %python_sitelibdir/%name/test.py*
@@ -152,7 +152,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%name
-%doc AUTHORS CHANGELOG LICENSE *.txt
+%doc AUTHORS CHANGELOG LICENSE *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%name/testing
 %exclude %python3_sitelibdir/%name/test.py*
@@ -163,6 +163,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.32-alt1
+- automated PyPI update
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.4.30-alt1.hg20150709.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
