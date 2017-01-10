@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name graphene
 %define ver_major 1.5
@@ -17,7 +17,7 @@
 %endif
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: Graphene is a library of data types commonly used to implement 2D-in-3D or full 3D canvases
@@ -32,8 +32,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 
+%define __python %nil
 BuildRequires: /proc
-BuildRequires: gobject-introspection-devel gtk-doc
+BuildRequires: python3 gobject-introspection-devel gtk-doc
 
 %description
 %summary
@@ -124,6 +125,9 @@ GObject introspection devel data for the Graphene library.
 %endif
 
 %changelog
+* Tue Jan 10 2017 Yuri N. Sedunov <aris@altlinux.org> 1.5.4-alt1
+- 1.5.4
+
 * Mon Nov 28 2016 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
 - updated to 1.5.2-7-g280d7b5
 
