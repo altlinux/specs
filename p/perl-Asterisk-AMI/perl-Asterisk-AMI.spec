@@ -14,7 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Asterisk-AMI
-Version: v0.2.8
+Epoch: 1
+Version: 0.2.8
 Release: alt1
 
 Summary: Perl module for interacting with the Asterisk Manager Interface
@@ -26,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: %m_distro-%version.tar
 
 # Automatically added by buildreq on Tue Feb 01 2011
 BuildRequires: perl-AnyEvent perl-devel perl-parent
@@ -49,6 +50,9 @@ scripting.
 %perl_vendor_privlib/Asterisk/*
 
 %changelog
+* Tue Jan 10 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.2.8-alt1
+- perl policy: ban on v-versions
+
 * Wed Jan 11 2012 Denis Smirnov <mithraen@altlinux.ru> v0.2.8-alt1
 - 0.2.8
 
