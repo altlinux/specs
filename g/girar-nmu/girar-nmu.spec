@@ -1,5 +1,5 @@
 Name: girar-nmu
-Version: 1.37
+Version: 1.38
 Release: alt1
 
 Summary: git.alt client utilities for NMU automation
@@ -50,6 +50,9 @@ install -m 644 girar-*.1 %buildroot%_man1dir/
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Tue Jan 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1
+- use new TransformContainer
+
 * Mon Jan 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.37-alt1
 - use new R::S::E interface
 
