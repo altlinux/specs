@@ -1,6 +1,6 @@
 Name: lame
 Version: 3.99.5
-Release: alt1
+Release: alt2
 Summary: LAME Ain't an Mp3 Encoder
 License: LGPL
 Group: Sound
@@ -40,12 +40,16 @@ This package contains header files required to develop
 %name-based software
 
 %prep
-%setup -q
+%setup
+%ifarch %ix86
+# http://www.linuxfromscratch.org/blfs/view/svn/multimedia/lame.html
+sed -i -e '/xmmintrin\.h/d' configure
+%endif
 
 %build
 %configure \
 	--disable-static \
-%ifarch %ix86
+%ifarch %ix86 x86_64
 	--enable-nasm
 %endif
 
@@ -54,7 +58,7 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %doc LICENSE USAGE doc/html/*.html
@@ -70,6 +74,9 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %_libdir/*.so
 
 %changelog
+* Tue Jan 10 2017 Michael Shigorin <mike@altlinux.org> 3.99.5-alt2
+- fixed FTBFS with BLFS configure "patch" (i586-only)
+
 * Thu Mar 01 2012 Valery Inozemtsev <shrek@altlinux.ru> 3.99.5-alt1
 - 3.99.5
 
