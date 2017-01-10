@@ -1,11 +1,12 @@
+BuildRequires: unzip
 %define oname aiocutter
 
 %def_without python2
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.3
-Release: alt1.git20150120.1.1
+Version: 0.0.4
+Release: alt1
 Summary: Scraping tool for asyncio
 License: MIT
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/aiocutter/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/icoxfog417/aiocutter.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/82/6b/efc4bf491b7c5ef8cd834563c3165aa56b05ed6b4015fcbc17c6a0b0e3e0/%{oname}-%{version}.zip
 BuildArch: noarch
 
 %if_with python2
@@ -46,7 +47,7 @@ Group: Development/Python3
 aiocutter is scraping tool for asyncio.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -76,17 +77,20 @@ popd
 
 %if_with python2
 %files
-%doc *.md
+#doc *.md
 %python_sitelibdir/*
 %endif
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md
+#doc *.md
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.4-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.3-alt1.git20150120.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
