@@ -1,6 +1,6 @@
 Name: rsh
 Version: 0.17
-Release: alt4
+Release: alt5
 Serial: 1
 
 Summary: Clients for remote access commands (rsh, rlogin, rcp)
@@ -18,6 +18,7 @@ Source7: rexec-xinetd
 Source8: rshd.control
 Source9: rsh.control
 
+Patch0: netkit-rsh-0.17-oe-union-wait.patch
 Patch1: netkit-rsh-0.17-sectty.patch
 # Make rexec installation process working
 Patch2: netkit-rsh-0.17-rexec.patch
@@ -133,6 +134,7 @@ control(8) facility is provided to regulate those.
 
 %prep
 %setup -n netkit-rsh-%version -a 4
+%patch0 -p1 -b .union-wait
 %patch1 -p1 -b .sectty
 %patch2 -p1 -b .rexec
 %patch3 -p1 -b .stdarg
@@ -250,6 +252,11 @@ install -pDm755 %SOURCE9 %buildroot%_controldir/rsh
 %_mandir/man8/*
 
 %changelog
+* Tue Jan 10 2017 Michael Shigorin <mike@altlinux.org> 1:0.17-alt5
+- fixed FTBFS against current glibc with openembedded patch:
+  https://patchwork.openembedded.org/patch/123269/
+  https://sourceware.org/ml/libc-alpha/2016-02/msg00342.html
+
 * Tue Jul 17 2012 Michael Shigorin <mike@altlinux.org> 1:0.17-alt4
 - added control(8) facilities for both server and client side;
   server binaries come disabled by default and clients are only
