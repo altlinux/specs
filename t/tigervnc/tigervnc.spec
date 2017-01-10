@@ -1,7 +1,8 @@
 %define _deffontdir catalogue:%_sysconfdir/X11/fontpath.d
+%define _xorgmoduledir %_libdir/X11/modules
 
 Name: tigervnc
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 Summary: A TigerVNC remote display system
 
@@ -9,6 +10,7 @@ Group: Networking/Remote access
 License: GPLv2+
 URL: http://www.tigervnc.com
 
+BuildRequires(pre): rpm-macros-cmake
 Requires: xauth xkeyboard-config fonts-bitmap-misc xorg-dri-swrast
 Provides: tightvnc = 1.7.6
 Obsoletes: tightvnc < 1.7.6
@@ -83,6 +85,7 @@ A TigerVNC and TightVNC compatible passwd utilities
 %package -n xorg-extension-vnc
 Summary: VNC extension for Xorg
 Group: Networking/Remote access
+Requires: %name-common = %version-%release
 
 %description -n xorg-extension-vnc
 TigerVNC extension for Xorg server
@@ -94,17 +97,17 @@ TigerVNC extension for Xorg server
 # 1,$s@xorg-server-1.17.1/@rebased/unix/xserver/@g
 
 ## FC apply patches
-%patch1 -p1 -b .cookie
+#%patch1 -p1 -b .cookie
 %patch2 -p1 -b .libvnc-os
 %patch3 -p1 -b .rh692048
 %patch4 -p1 -b .xserver116-rebased
-%patch5 -p1 -b .inetd-nowait
+#%patch5 -p1 -b .inetd-nowait
 %patch6 -p1 -b .manpages
 %patch7 -p1 -b .getmaster
 %patch8 -p1 -b .shebang
 %patch9 -p1 -b .xstartup
-%patch10 -p1 -b .xserver118
-%patch11 -p1 -b .xorg118-QueueKeyboardEvents
+#%patch10 -p1 -b .xserver118
+#%patch11 -p1 -b .xorg118-QueueKeyboardEvents
 
 ## Ubuntu apply patches
 
@@ -246,6 +249,9 @@ popd
 %_xorgmoduledir/extensions/*.so
 
 %changelog
+* Tue Jan 10 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.7.0-alt1
+- New version (ALT #32741, #32898)
+
 * Mon Apr 25 2016 Fr. Br. George <george@altlinux.ru> 1.6.0-alt1
 - Update FC patches, fix one
 - (cas@) New version (ALT #30662)
