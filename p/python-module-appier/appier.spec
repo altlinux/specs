@@ -3,15 +3,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.25
-Release: alt1.1
+Version: 1.8.11
+Release: alt1
 Summary: Appier Framework
 License: ASLv2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/appier/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/e9/df/4221ed99e5cd4aef519f752b77db97ea87e920d0fb4f343d9a8a35693050/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -59,7 +59,7 @@ developed by the Hive Solutions team.
 This package contains tests for Appier Framework.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -100,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.11-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.25-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
