@@ -1,8 +1,9 @@
-%define ver_major 0.3
+%define ver_major 0.4
 %define gst_api_ver 1.0
 
 Name: noise
-Version: %ver_major.1
+%define xdg_name org.pantheon.%name
+Version: %ver_major.0.2
 Release: alt1
 
 Summary: The official elementary music player
@@ -10,14 +11,18 @@ Group: Sound
 License: GPLv3
 Url: https://launchpad.net/noise
 
-Source: https://launchpad.net/%name/%{ver_major}.x/%version/+download/%name-%version.tgz
+Source: https://launchpad.net/%name/%{ver_major}.x/%version/+download/%name-%version.tar.xz
 
-Packager: Igor Zubkov <icesik@altlinux.org>
-
+Requires: elementary-icon-theme
+# gstreamer
 Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-good%gst_api_ver
 Requires: gst-plugins-bad%gst_api_ver
 
+# sync 0.4 uses sqlite via libgda
+Requires: libgda5-sqlite
+
+BuildRequires: intltool libappstream-glib-devel
 BuildRequires: cmake gcc-c++ vala-tools libsqlheavy-devel libsqlite3-devel libgee0.8-devel
 BuildRequires: libxml2-devel libgtk+3-devel libpeas-devel
 BuildRequires: libgranite-devel gst-plugins%gst_api_ver-devel
@@ -29,6 +34,10 @@ BuildRequires: libXcursor-devel libXcomposite-devel libxkbcommon-devel
 BuildRequires: libwayland-cursor-devel at-spi2-atk-devel
 BuildRequires: libzeitgeist2.0-devel libgpod-devel libusbmuxd-devel
 BuildRequires: gobject-introspection-devel
+# for MPRIS plugin
+#BuildRequires: libdbusmenu-devel libindicator-devel (pkgconfig(indicate-0.7))
+# sync 0.4
+BuildRequires: libgda5-devel
 
 %description
 Noise is an easy to use, stable, fast and good looking music library
@@ -87,11 +96,11 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %files -f %name.lang
 %_bindir/*
 %_libdir/%name/plugins
-%_desktopdir/%name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/%name/
-%_datadir/glib-2.0/schemas/org.pantheon.noise.gschema.xml
-%_datadir/glib-2.0/schemas/org.pantheon.noise.lastfm.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/icons/hicolor/*/apps/multimedia-audio-player.svg
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %files -n lib%name-core
 %_libdir/lib%name-core.so.*
@@ -106,6 +115,9 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 #    /usr/share/vala/vapi/%name-core.vapi
 
 %changelog
+* Tue Jan 10 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.0.2-alt1
+- 0.4.0.2
+
 * Wed Sep 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
 - 0.3.1
 
