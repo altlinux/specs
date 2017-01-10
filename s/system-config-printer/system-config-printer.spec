@@ -1,14 +1,14 @@
 Summary: A printer administration tool
 Name: system-config-printer
-Version: 1.3.13
-Release: alt2
+Version: 1.5.6
+Release: alt1
 License: GPLv2+
 Url: http://cyberelk.net/tim/software/system-config-printer/
 Group: System/Configuration/Printing
 
 Source: system-config-printer-%version.tar
 
-BuildRequires: python-devel
+BuildRequires: python3-devel
 BuildRequires: desktop-file-utils
 BuildRequires: gettext-devel
 BuildRequires: cups-devel
@@ -16,12 +16,15 @@ BuildRequires: glib2-devel
 BuildRequires: intltool
 BuildRequires: libusb-devel, libudev-devel
 BuildRequires: xmlto
+BuildRequires: python3-module-cups 
+BuildRequires(pre): rpm-build-python3
 
-%py_requires gtk.glade
-Requires: python-module-cupshelpers = %version-%release
-Requires: python-module-cups >= 1.9.61-alt1
+Requires: python3-module-cupshelpers = %version-%release
+Requires: python3-module-cups >= 1.9.61-alt1
 
 %filter_from_requires /PackageKit/d
+
+%add_python3_path /usr/share/system-config-printer
 
 %description
 system-config-printer is a graphical user interface that allows
@@ -37,12 +40,13 @@ The udev rules and helper programs for automatically configuring USB
 printers.
 
 
-%package -n python-module-cupshelpers
+%package -n python3-module-cupshelpers
 Summary: Python module to configure a CUPS print server
 Group: System/Configuration/Printing
 BuildArch: noarch
+Conflicts: python-module-cupshelpers
 
-%description -n python-module-cupshelpers
+%description -n python3-module-cupshelpers
 Python module to configure a CUPS print server
 
 %prep
@@ -81,12 +85,16 @@ exit 0
 %_sysconfdir/xdg/autostart/*.desktop
 %_man1dir/*
 
-%files -n python-module-cupshelpers
+%files -n python3-module-cupshelpers
 %config(noreplace) %_sysconfdir/cupshelpers/*.xml
-%python_sitelibdir_noarch/cupshelpers
-%python_sitelibdir_noarch/cupshelpers-*
+%python3_sitelibdir_noarch/cupshelpers
+%python3_sitelibdir_noarch/cupshelpers-*
 
 %changelog
+* Mon Jan 09 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.5.6-alt1
+- new version
+- migration to python3
+
 * Thu May 30 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.3.13-alt2
 - /var/lib/run/... changed to /var/run and tmpfiles.d file added
   (closes #28362)
