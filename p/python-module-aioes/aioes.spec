@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.1.0
-Release: alt1.git20141228.1.1
+Version: 0.6.1
+Release: alt1
 Summary: Elasticsearch integration with asyncio
 License: BSD
 Group: Development/Python
@@ -14,7 +14,7 @@ Url: https://pypi.python.org/pypi/aioes/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/aio-libs/aioes.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/4a/36/742ba7c8d7f52aa6a9cea2ab802054c33241f1389a2883630efbc02b9925/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 %if_with python2
@@ -51,7 +51,7 @@ Group: Development/Python3
 aioes is a asyncio compatible library for working with ElasticSearch.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -99,17 +99,20 @@ popd
 
 %if_with python2
 %files
-%doc *.txt *.rst cmp.py docs/*.rst
+%doc *.txt *.rst docs/*.rst
 %python_sitelibdir/*
 %endif
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt *.rst cmp.py docs/*.rst
+%doc *.txt *.rst docs/*.rst
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.0-alt1.git20141228.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
