@@ -2,7 +2,7 @@
 
 Name: owncloud%major
 Version: 9.1.3
-Release: alt2
+Release: alt3
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 %define installdir %webserver_webappsdir/%name
@@ -47,7 +47,8 @@ Apache 2.x web-server default configuration for %name.
 %package nginx
 Summary: nginx web-server default configuration for %name
 Group: Networking/WWW
-Requires: %name = %version-%release nginx php5-cgi php5-fpm-fcgi php5-apcu
+Requires: %name = %version-%release nginx
+#Requires: php5-cgi php5-fpm-fcgi php5-apcu
 
 %description nginx
 nginx web-server default configuration for %name.
@@ -107,6 +108,9 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf 
 
 %changelog
+* Tue Jan 10 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.3-alt3
+- Cleanup requires for *-nginx
+
 * Fri Dec 30 2016 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.3-alt2
 - Added package *-nginx (default config)
 
