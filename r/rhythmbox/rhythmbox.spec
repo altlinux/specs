@@ -7,7 +7,8 @@
 %def_without hal
 %def_with gudev
 %def_enable daap
-%def_enable visualizer
+# required obsolete clutter-gst2.0
+%def_disable visualizer
 %def_enable grilo
 %def_disable gtk_doc
 %def_enable zeitgeist
@@ -15,12 +16,12 @@
 
 Name: rhythmbox
 Version: %ver_major.1
-Release: alt1%rev
+Release: alt2%rev
 
 Summary: Music Management Application
 License: GPL
 Group: Sound
-Url: http://www.gnome.org/projects/rhythmbox/
+Url: https://wiki.gnome.org/Apps/Rhythmbox
 
 %define pkgdocdir %_docdir/%name-%version
 
@@ -100,7 +101,6 @@ BuildRequires: libdmapsharing-devel >= %dmapsharing_ver
 %{?_with_hal:BuildRequires: libhal-devel}
 %{?_with_gudev:BuildRequires: libgudev-devel}
 BuildRequires: libgtk+3-gir-devel libgstreamer%gst_api_ver-gir-devel gst-plugins%gst_api_ver-gir-devel
-
 
 %description
 Rhythmbox is an integrated music management application, supporting
@@ -505,6 +505,9 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Tue Jan 10 2017 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt2
+- temporarily disabled visualizer (depends on obsolete clutter-gst2.0)
+
 * Sat Sep 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 
