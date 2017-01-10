@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1
-Release: alt1.git20150304.1.1
+Version: 1.10
+Release: alt1
 Summary: A Cython implementation of the affine gap string distance
 License: MIT
 Group: Development/Python
@@ -12,7 +12,7 @@ Url: https://pypi.python.org/pypi/affinegap/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/datamade/affinegap.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/d7/f6/3e188daf864cffb526a786f81112bdb42dab94cd19513d8196389bf484f3/%{oname}-%{version}.tar.gz
 
 #BuildPreReq: python-devel python-module-setuptools-tests
 #BuildPreReq: python-module-Cython libnumpy-devel python-module-nose
@@ -44,19 +44,19 @@ A Cython implementation of the affine gap penalty string distance also
 known as the Smith-Waterman algorithm.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
 %endif
 
 %build
-cython affinegap/affinegap.pyx
+#cython affinegap/affinegap.pyx
 %python_build_debug
 
 %if_with python3
 pushd ../python3
-cython3 affinegap/affinegap.pyx
+#cython3 affinegap/affinegap.pyx
 %python3_build_debug
 popd
 %endif
@@ -81,16 +81,19 @@ popd
 %endif
 
 %files
-%doc *.md
+#doc *.md
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md
+#doc *.md
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
+- automated PyPI update
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1-alt1.git20150304.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
