@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 7
-Release: alt1.git20140918.1.1
+Version: 8
+Release: alt1
 Summary: Call asynchronous functions of asyncio infrastructure from synchronous code
 License: MIT
 Group: Development/Python
@@ -13,9 +13,8 @@ Url: https://pypi.python.org/pypi/aioawait/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://bitbucket.org/carlopires/aioawait.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/59/74/947%{version}068823434e5b2302a91e307f340d9fa7cfc79c76814506e9991301f7/%{oname}-8.tar.gz
 BuildArch: noarch
-Patch: aioawait-alt-py3.3.patch
 
 %if_with python2
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -51,12 +50,11 @@ asyncio infrastructure of Python 3. This two functions allow us to call
 asynchronous functions from synchronous code.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
 pushd ../python3
-%patch -p1
 popd
 %endif
 
@@ -107,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 10 2017 Igor Vlasenko <viy@altlinux.ru> 8-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 7-alt1.git20140918.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
