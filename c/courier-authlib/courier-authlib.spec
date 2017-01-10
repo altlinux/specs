@@ -5,11 +5,11 @@
 %define courier_user courier
 %define courier_group courier
 %define courier_home /var/lib/%c_dirname
-%define rev nil
+%define rev %nil
 
 Name: courier-authlib
-Version: 0.63.0
-Release: alt0.2.qa1
+Version: 0.66.4
+Release: alt0.3%rev
 Summary: Courier authentication library -- tool and utilities
 License: GPL
 Group: System/Libraries
@@ -22,14 +22,17 @@ Packager: L.A. Kostis <lakostis@altlinux.ru>
 Source0: %name-%version.tar.bz2
 Source1: courier-authdaemon.init
 Source2: courier-authlib.README-ALT.utf8
+Source3: courier-authdaemon.service
 
-Patch0: %name-0.63.0-alt-makefiles.patch
-Patch1: %name-0.62.2-alt-dat2db.patch
-Patch2: %name-0.61.0-alt-config.patch
+Patch0: %name-%version-alt-makefiles.patch
+Patch1: %name-%version-alt-dat2db.patch
+Patch2: %name-%version-alt-config.patch
 Patch3: %name-0.59.1-alt-addlock.patch
 
 # Automatically added by buildreq on Mon May 23 2005
-BuildRequires: gcc-c++ libMySQL-devel libssl-devel libdb4-devel libldap-devel libltdl-devel libpam-devel libpq-devel libstdc++-devel postgresql-devel zlib-devel expect
+BuildRequires: gcc-c++ libMySQL-devel libssl-devel libdb4-devel libldap-devel libltdl-devel
+BuildRequires: libpam-devel libpq-devel libstdc++-devel postgresql-devel zlib-devel expect
+BuildRequires: libsqlite3-devel courier-unicode-devel libidn-devel
 
 %add_findprov_lib_path %_libdir/%name
 
@@ -74,7 +77,7 @@ Install this package in order to be able to authenticate with userdb.
 Summary: LDAP support for the Courier authentication library.
 Group: System/Libraries
 Requires: courier-authlib = %version-%release
-# for automaticaly upgarde old maildrop-ldap install
+# this automagically upgrades old maildrop-ldap
 Provides: maildrop-ldap = 1.7.0-alt3
 Obsoletes: maildrop-ldap < 1.7.0-alt3
 
@@ -87,7 +90,7 @@ datasource.
 Summary: MySQL support for the Courier authentication library.
 Group: System/Libraries
 Requires: courier-authlib = %version-%release
-# for automaticaly upgarde old maildrop-mysql install
+# this automagically upgrades old maildrop-mysql
 Provides: maildrop-mysql = 1.7.0-alt3
 Obsoletes: maildrop-mysql < 1.7.0-alt3
 
@@ -108,27 +111,42 @@ This package installs PostgreSQL support for the Courier authentication
 library. Install this package in order to be able to authenticate using
 PostgreSQL as datasource.
 
+%package sqlite
+Summary: SQLite support for the Courier authentication library.
+Group: System/Libraries
+Requires: courier-authlib = %version-%release
+
+%description sqlite
+This package installs SQLite support for the Courier authentication
+library. Install this package in order to be able to authenticate using
+SQLite as datasource.
+
 %prep
 %setup -q -n %name-%version
 %patch0 -p2 -b .p0
 %patch1 -p2 -b .p1
-%patch2 -p1 -b .p2
+%patch2 -p2 -b .p2
 %patch3 -p1 -b .p3
 
-
 %build
+%autoreconf
 %configure \
  --sysconfdir=%_sysconfdir/%c_dirname \
-  --with-pkgconfdir=%_sysconfdir/%c_dirname \
-  --with-db=db \
-  --with-mailuser=%courier_user \
-  --with-mailgroup=%courier_user \
+ --libexecdir=%_prefix/libexec \
+ --includedir=%_includedir/%name \
+ --with-makedatprog=%_bindir/makedatprog \
+ --without-stdheaderdir \
+ --with-pkgconfdir=%_sysconfdir/%c_dirname \
+ --with-db=db \
+ --with-mailuser=%courier_user \
+ --with-mailgroup=%courier_user \
  --with-authdaemonrc=%_sysconfdir/%c_dirname/authdaemon.conf \
  --with-authdaemonvar=%_localstatedir/%c_dirname \
  --with-authchangepwdir=%_datadir/%c_dirname/authlib \
  --with-authldaprc=%_sysconfdir/%c_dirname/authdaemon-ldap.conf \
  --with-authpgsqlrc=%_sysconfdir/%c_dirname/authdaemon-pgsql.conf \
- --with-authmysqlrc=%_sysconfdir/%c_dirname/authdaemon-mysql.conf
+ --with-authmysqlrc=%_sysconfdir/%c_dirname/authdaemon-mysql.conf \
+ --with-authsqliterc=%_sysconfdir/%c_dirname/authdaemon-sqlite.conf
 
 %make_build
 
@@ -143,54 +161,56 @@ pushd %buildroot/%_sbindir
 popd
 
 # src root docs
-%__mkdir_p %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 %SOURCE2 %buildroot/%_docdir/%name-%version/README-ALT
-%__install -m 0644 authldap.schema %buildroot/%_docdir/%name-%version
-%__install -m 0644 AUTHORS %buildroot/%_docdir/%name-%version
-%__install -m 0644 ChangeLog %buildroot/%_docdir/%name-%version
-%__install -m 0644 courier-authlib.sysvinit %buildroot/%_docdir/%name-%version
-%__install -m 0644 INSTALL %buildroot/%_docdir/%name-%version
-%__install -m 0644 NEWS %buildroot/%_docdir/%name-%version
-%__install -m 0644 README %buildroot/%_docdir/%name-%version
-%__install -m 0644 README.authmysql.myownquery %buildroot/%_docdir/%name-%version
-%__install -m 0644 README.ldap %buildroot/%_docdir/%name-%version
-%__install -m 0644 auth_enumerate.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 auth_generic.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 auth_getoption.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 auth_getuserinfo.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 authlib.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 auth_login.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 auth_passwd.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 auth_sasl.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 INSTALL.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 NEWS.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 README.authdebug.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 README_authlib.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 README.authmysql.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 README.authpostgres.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 README.html %buildroot/%_docdir/%name-%version/html
+mkdir -p %buildroot/%_docdir/%name-%version/html
+install -m 0644 %SOURCE2 %buildroot/%_docdir/%name-%version/README-ALT
+install -m 0644 authldap.schema %buildroot/%_docdir/%name-%version
+install -m 0644 AUTHORS %buildroot/%_docdir/%name-%version
+install -m 0644 ChangeLog %buildroot/%_docdir/%name-%version
+install -m 0644 courier-authlib.sysvinit %buildroot/%_docdir/%name-%version
+install -m 0644 INSTALL %buildroot/%_docdir/%name-%version
+install -m 0644 NEWS %buildroot/%_docdir/%name-%version
+install -m 0644 README %buildroot/%_docdir/%name-%version
+install -m 0644 README.authmysql.myownquery %buildroot/%_docdir/%name-%version
+install -m 0644 README.ldap %buildroot/%_docdir/%name-%version
+install -m 0644 auth_enumerate.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 auth_generic.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 auth_getoption.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 auth_getuserinfo.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 authlib.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 auth_login.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 auth_passwd.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 auth_sasl.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 INSTALL.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 NEWS.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 README.authdebug.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 README_authlib.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 README.authmysql.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 README.authpostgres.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 README.authsqlite.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 README.html %buildroot/%_docdir/%name-%version/html
 
 # userdb docs
-%__install -m 0644 userdb/makeuserdb.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 userdb/userdb.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 userdb/userdbpw.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 userdb/makeuserdb.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 userdb/userdb.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 userdb/userdbpw.html %buildroot/%_docdir/%name-%version/html
 
 
 # tune configfiles
-for i in `ls %buildroot/%_sysconfdir/%name/*.dist | %__sed -e 's/\.dist//'`; do
-	%__mv $i.dist $i
+for i in `ls %buildroot/%_sysconfdir/%name/*.dist | sed -e 's/\.dist//'`; do
+	mv $i.dist $i
 done
 
 pushd %buildroot/%_libdir
-    %__ln_s -nf %name/libcourierauth.so.0.0.0 libcourierauth.so
-    %__ln_s -nf %name/libcourierauth.so.0.0.0 libcourierauth.so.0
-    %__ln_s -nf %name/libcourierauthcommon.so.0.0.0 libcourierauthcommon.so
-    %__ln_s -nf %name/libcourierauthcommon.so.0.0.0 libcourierauthcommon.so.0
-    %__ln_s -nf %name/libcourierauthsasl.so.0.0.0 libcourierauthsasl.so.0
+    ln -s -nf %name/libcourierauth.so.0.0.0 libcourierauth.so
+    ln -s -nf %name/libcourierauth.so.0.0.0 libcourierauth.so.0
+    ln -s -nf %name/libcourierauthcommon.so.0.0.0 libcourierauthcommon.so
+    ln -s -nf %name/libcourierauthcommon.so.0.0.0 libcourierauthcommon.so.0
+    ln -s -nf %name/libcourierauthsasl.so.0.0.0 libcourierauthsasl.so.0
 popd
 
-%__mkdir_p %buildroot/%_initdir
-%__install -m 0755 %SOURCE1 %buildroot/%_initdir/courier-authdaemon
+mkdir -p %buildroot/{%_initdir,%_unitdir}
+install -m 0755 %SOURCE1 %buildroot/%_initdir/courier-authdaemon
+install -m 0644 %SOURCE3 %buildroot/%_unitdir/
 
 touch %buildroot/%_localstatedir/%name/socket
 
@@ -200,7 +220,7 @@ touch %buildroot/%_localstatedir/%name/socket
 	-r %courier_user 2>/dev/null || :
 
 %post
-%__subst 's|authmodulelist="authuserdb authpam authpgsql authldap authmysql authcustom"|authmodulelist="authldap authmysql authuserdb authpam authpgsql"|g' %_sysconfdir/%name/authdaemon.conf
+subst 's|authmodulelist="authuserdb authpam authpgsql authldap authmysql authsqlite authcustom"|authmodulelist="authldap authmysql authuserdb authpam authpgsql authsqlite"|g' %_sysconfdir/%name/authdaemon.conf
 %post_service courier-authdaemon
 echo
 echo "By default this package only have a PAM backend support."
@@ -209,47 +229,51 @@ echo "  Berkeley DB -- courier-authlib-userdb"
 echo "  LDAP        -- courier-authlib-ldap"
 echo "  PostgreSQL  -- courier-authlib-pgsql"
 echo "  MySQL       -- courier-authlib-mysql"
+echo "  SQLite      -- courier-authlib-sqlite"
 echo
 
 %post userdb
-%_initdir/courier-authdaemon condrestart
+%post_service courier-authdaemon
 
 %post ldap
-#echo -n "Trying to update old authdaemon-ldap config: ... "
-#cp %_sysconfdir/%name/authdaemon-ldap.conf %_sysconfdir/%name/authdaemon-ldap.conf.orig
-#__subst 's|LDAP_PORT.*||g' %_sysconfdir/%name/authdaemon-ldap.conf
-#__subst 's|LDAP_SERVER\s*|LDAP_URI ldap://|g' %_sysconfdir/%name/authdaemon-ldap.conf
-#echo "done"
 chown courier:courier %_sysconfdir/%name/authdaemon-ldap.conf
-%_initdir/courier-authdaemon condrestart
+%post_service courier-authdaemon
 
 %post pgsql
 chown courier:courier %_sysconfdir/%name/authdaemon-pgsql.conf
-%_initdir/courier-authdaemon condrestart
+%post_service courier-authdaemon
 
 %post mysql
 chown courier:courier %_sysconfdir/%name/authdaemon-mysql.conf
-%_initdir/courier-authdaemon condrestart
+%post_service courier-authdaemon
+
+%post sqlite
+chown courier:courier %_sysconfdir/%name/authdaemon-sqlite.conf
+%post_service courier-authdaemon
 
 %preun
 %preun_service courier-authdaemon
 
 %postun userdb
 chown courier:courier %_sysconfdir/%name/userdb*
-%_initdir/courier-authdaemon condrestart
+%post_service courier-authdaemon
 
 %postun ldap
-%_initdir/courier-authdaemon condrestart
+%post_service courier-authdaemon
 
 %postun pgsql
-%_initdir/courier-authdaemon condrestart
+%post_service courier-authdaemon
 
 %postun mysql
-%_initdir/courier-authdaemon condrestart
+%post_service courier-authdaemon
+
+%postun sqlite
+%post_service courier-authdaemon
 
 %files
-%config(noreplace) %attr(0660,courier,courier) %_sysconfdir/%name/authdaemon.conf 
+%config(noreplace) %attr(0660,courier,courier) %_sysconfdir/%name/authdaemon.conf
 %_initdir/courier-authdaemon
+%_unitdir/courier-authdaemon.service
 %_sbindir/courier-authdaemon
 %_sbindir/courier-imapd
 %_sbindir/courier-imaps
@@ -261,8 +285,9 @@ chown courier:courier %_sysconfdir/%name/userdb*
 %_sbindir/userdb-test-cram-md5
 %_man1dir/authpasswd.1*
 %_man1dir/authtest.1*
-%_libexecdir/%name/authdaemond
-%_libexecdir/%name/authsystem.passwd
+%dir %_prefix/libexec/%name
+%_prefix/libexec/%name/authdaemond
+%_prefix/libexec/%name/authsystem.passwd
 %dir %attr(0711,courier,courier) %_localstatedir/%name
 %ghost %attr(0666,courier,courier) %_localstatedir/%name/socket
 %dir %_docdir/%name-%version
@@ -274,17 +299,16 @@ chown courier:courier %_sysconfdir/%name/userdb*
 
 %files -n lib%name
 %dir %attr(0755,courier,courier) %_sysconfdir/%name
-%_bindir/courierauthconfig
 %_sbindir/courierlogger
 %_man1dir/courierlogger.1.*
 %_libdir/*.so.*
 %dir %_libdir/%name
-%_libdir/%name/libauthcustom.so.0
-%_libdir/%name/libauthcustom.so.0.0.0
-%_libdir/%name/libauthpam.so.0
-%_libdir/%name/libauthpam.so.0.0.0
-%_libdir/%name/libauthpipe.so.0
-%_libdir/%name/libauthpipe.so.0.0.0
+%_libdir/%name/libauthcustom.so
+%_libdir/%name/libauthcustom.so.*
+%_libdir/%name/libauthpam.so
+%_libdir/%name/libauthpam.so.*
+%_libdir/%name/libauthpipe.so
+%_libdir/%name/libauthpipe.so.*
 %_libdir/%name/libcourierauthcommon.so.0
 %_libdir/%name/libcourierauthcommon.so.0.0.0
 %_libdir/%name/libcourierauthsaslclient.so.0
@@ -298,20 +322,17 @@ chown courier:courier %_sysconfdir/%name/userdb*
 %exclude %_libdir/%name/*.la
 
 %files -n lib%name-devel
+%_bindir/courierauthconfig
 %_libdir/*.so
-%_libdir/%name/*.so
-%exclude %_libdir/%name/libauthldap*.so
-%exclude %_libdir/%name/libauthpgsql*.so
-%exclude %_libdir/%name/libauthmysql*.so
-%exclude %_libdir/%name/libauthuserdb*.so
-%_includedir/courier-authlib/*.h
+%_libdir/%name/libcourierauth*.so
+%dir %_includedir/%name
+%_includedir/%name/*.h
 %_man3dir/*.3.*
 
 %files userdb
 %_sbindir/makeuserdb
 %_sbindir/userdb
 %_sbindir/userdbpw
-%_libexecdir/%name/makedatprog
 %_libdir/%name/libauthuserdb*.so
 %_libdir/%name/libauthuserdb*.so.*
 %_man8dir/makeuserdb.8.*
@@ -319,21 +340,43 @@ chown courier:courier %_sysconfdir/%name/userdb*
 %_man8dir/userdbpw.8.*
 
 %files ldap
-%config(noreplace) %attr(0660,courier,courier) %_sysconfdir/%name/authdaemon-ldap.conf 
+%config(noreplace) %attr(0660,courier,courier) %_sysconfdir/%name/authdaemon-ldap.conf
 %_libdir/%name/libauthldap*.so
 %_libdir/%name/libauthldap*.so.*
 
 %files pgsql
-%config(noreplace) %attr(0660,courier,courier) %_sysconfdir/%name/authdaemon-pgsql.conf 
+%config(noreplace) %attr(0660,courier,courier) %_sysconfdir/%name/authdaemon-pgsql.conf
 %_libdir/%name/libauthpgsql*.so
 %_libdir/%name/libauthpgsql*.so.*
 
 %files mysql
-%config(noreplace) %attr(0660,courier,courier) %_sysconfdir/%name/authdaemon-mysql.conf 
+%config(noreplace) %attr(0660,courier,courier) %_sysconfdir/%name/authdaemon-mysql.conf
 %_libdir/%name/libauthmysql*.so
 %_libdir/%name/libauthmysql*.so.*
 
+%files sqlite
+%config(noreplace) %attr(0660,courier,courier) %_sysconfdir/%name/authdaemon-sqlite.conf
+%_libdir/%name/libauthsqlite*.so
+%_libdir/%name/libauthsqlite*.so.*
+
 %changelog
+* Mon Jan 09 2017 L.A. Kostis <lakostis@altlinux.ru> 0.66.4-alt0.3
+- .spec: cleanups:
+  + fixed unowned dirs, added *config to -devel.
+  + fixed include dir location.
+  + fixed std plugins (leave *.so).
+
+* Thu Jan 05 2017 L.A. Kostis <lakostis@altlinux.ru> 0.66.4-alt0.2
+- Rebuild with libidn.
+- Added systemd service unit.
+- Updated README.ALT
+- Fixed -alt-makefiles patch.
+
+* Wed Jan 04 2017 L.A. Kostis <lakostis@altlinux.ru> 0.66.4-alt0.1
+- Updated to 0.66.4.
+- Re-diffed -alt patches.
+- Enabled sqlite support.
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.63.0-alt0.2.qa1
 - NMU: rebuilt with libmysqlclient.so.18.
 

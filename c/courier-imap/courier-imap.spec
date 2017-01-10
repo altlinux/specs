@@ -1,22 +1,24 @@
-
+%define courier_confdir	%_sysconfdir/%name
+%define courier_datadir	%_datadir/%name
+%define courier_localstatedir %_localstatedir/%name
 %define courier_piddir %_var/run
 %define _ssldir %_localstatedir/ssl
 %define _pemdir %_ssldir/private
 %define rev %nil
 
 Name: courier-imap
-Version: 4.10.0
-Release: alt0.2%rev
+Version: 4.17.2
+Release: alt0.3%rev
 
 Summary: IMAP/POP3 server with Maildir support
 License: GPL
 Group: System/Servers
-URL: http://www.courier-mta.org
+Url: http://www.courier-mta.org
 
 Requires(pre): cert-sh-functions >= 0.1-alt2 shadow-utils
 Requires(post,preun): service
-Requires: courier-imap-utils = %version
-Requires: libgamin-fam
+Requires: courier-common-utils
+Requires: gamin
 
 Source0: %name-%version%rev.tar.bz2
 Source1: courier-imapd.init
@@ -24,19 +26,25 @@ Source2: courier-imaps.init
 Source3: courier-pop3d.init
 Source4: courier-pop3s.init
 Source7: %name.README-ALT
+Source8: common-login.authpam
+Source9: ssl-sh-functions
 
-Patch0: %name-4.10.0-alt-pkgname.patch
-Patch1: %name-4.5.0-alt-pamconf.patch
-Patch2: %name-3.0.8-alt-quotawarn.patch
-Patch3: %name-4.10.0-alt-config.patch
-Patch4: %name-4.5.0-alt-shareddir.patch
-Patch5: %name-4.4.1-alt-makefile.patch
-Patch6: %name-4.4.1-alt-configure.patch
+Patch0: %name-%version-alt-makefile.patch
+Patch1: %name-%version-alt-rc.in.patch
+Patch2: %name-%version-alt-imapaccess.patch
+Patch3: %name-%version-alt-imap-ssl-configure.patch
+Patch4: %name-%version-alt-pamconf.patch
+Patch5: %name-%version-alt-quotawarn.patch
+Patch6: %name-%version-alt-shareddir.patch
+Patch7: %name-%version-alt-sysconftool.patch
+Patch8: %name-%version-alt-tls-enforce-config.patch
+Patch9: %name-%version-alt-config.patch
 
-BuildPreReq: libcourier-authlib-devel = 0.63.0
+BuildPreReq: libcourier-authlib-devel = 0.66.4
 
 # Automatically added by buildreq on Sun Apr 27 2008
 BuildRequires: gcc-c++ libdb4-devel libgamin-devel libkrb5-devel libpcre-devel libssl-devel openssl libpam-devel pam-config libidn-devel
+BuildRequires: courier-unicode-devel
 
 %description
 Courier-IMAP is an IMAP server for Maildir mailboxes.  This package contains
@@ -44,127 +52,117 @@ the standalone version of the IMAP server that's included in the Courier
 mail server package.  This package is a customized version for use with
 other mail servers.
 
-
-%package utils
-Summary: Maildir utilities
-Group: Networking/Mail
-Provides: courier-common-utils
-Requires: courier-authlib
-Conflicts: maildrop-utils
-Conflicts: courier-maildrop-utils
-
-%description utils
-Some common maildir utilities for courier-maildrop
-and courier-imap packages.
-
 %prep
-%setup -q -n %name-%version%rev
+%setup -n %name-%version%rev
 %patch0 -p2 -b .p0
-%patch1 -p1 -b .p1
-%patch2 -p1 -b .p2
+%patch1 -p2 -b .p1
+%patch2 -p2 -b .p2
 %patch3 -p2 -b .p3
 %patch4 -p2 -b .p4
-%patch5 -p1 -b .p5
-%patch6 -p1 -b .p6
+%patch5 -p2 -b .p5
+%patch6 -p2 -b .p6
+%patch7 -p2 -b .p7
+%patch8 -p2 -b .p8
+%patch9 -p2 -b .p9
+cp %SOURCE8 libs/imap/
 
 %build
-#libtoolize --force --install
+%autoreconf
 %configure \
+    --sysconfdir=%courier_confdir \
+    --localstatedir=%courier_localstatedir \
+    --datadir=%courier_datadir \
     --enable-unicode \
-    --with-userdb=%_sysconfdir/%name/userdb \
-    --with-makedatprog=%_datadir/%name/makedatprog \
+    --with-userdb=%courier_confdir/userdb \
+    --with-makedatprog=%_bindir/makedatprog \
     --with-db=db \
     --with-certsdir=%_localstatedir/ssl/private \
     --with-certdb=%_datadir/ca-certificates/ca-bundle.crt \
     --with-piddir=%courier_piddir \
-    --without-ipv6 \
+    --with-mailer=%_sbindir/sendmail \
     --with-redhat
 
 %make_build
 
 %install
-
 # adjust $RPM_BUILD for install
-%__mkdir_p %buildroot/%_sysconfdir/pam.d
-%__mkdir_p %buildroot/%_initdir
-%__mkdir_p %buildroot/%_localstatedir/%name
-touch %buildroot/%_localstatedir/%name/couriersslcache
+mkdir -p %buildroot%_sysconfdir/pam.d
+mkdir -p %buildroot%_initdir
+mkdir -p %buildroot%courier_localstatedir
+touch %buildroot%courier_localstatedir/couriersslcache
 
-%__make DESTDIR=%buildroot install
+make DESTDIR=%buildroot install
 
 # tune configfiles
-for i in `ls %buildroot/%_sysconfdir/%name/*.dist | %__sed -e 's/\.dist//'`; do
-	%__mv $i.dist $i
+for i in `ls %buildroot%courier_confdir/*.dist | sed -e 's/\.dist//'`; do
+	mv $i.dist $i
 done
+touch %buildroot%courier_confdir/{imap,pop3}d.custom.cnf
+install -m 0644 %SOURCE9 %buildroot%courier_confdir
 
-# install configs and inint scripts
-%__install -m 0755 %SOURCE1 %buildroot/%_initdir/courier-imapd
-%__install -m 0755 %SOURCE2 %buildroot/%_initdir/courier-imaps
-%__install -m 0755 %SOURCE3 %buildroot/%_initdir/courier-pop3d
-%__install -m 0755 %SOURCE4 %buildroot/%_initdir/courier-pop3s
+# install configs and init scripts
+install -m 0755 %SOURCE1 %buildroot%_initdir/courier-imapd
+install -m 0755 %SOURCE2 %buildroot%_initdir/courier-imaps
+install -m 0755 %SOURCE3 %buildroot%_initdir/courier-pop3d
+install -m 0755 %SOURCE4 %buildroot%_initdir/courier-pop3s
 
-%__mkdir_p -m 0755 %buildroot%_pemdir
+mkdir -p -m 0755 %buildroot%_pemdir
 touch %buildroot%_pemdir/imapd.pem
 touch %buildroot%_pemdir/pop3d.pem
 
-%__mv %buildroot/%_sysconfdir/%name/quotawarnmsg.example %buildroot/%_sysconfdir/%name/quotawarnmsg
+mv %buildroot%courier_confdir/quotawarnmsg.example %buildroot%courier_confdir/quotawarnmsg
 
 # root src documentation
-%__mkdir_p %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 %SOURCE7 %buildroot/%_docdir/%name-%version/README-ALT.koi8-r
-%__install -m 0644 AUTHORS %buildroot/%_docdir/%name-%version
-%__install -m 0644 INSTALL %buildroot/%_docdir/%name-%version
-%__install -m 0644 NEWS    %buildroot/%_docdir/%name-%version
-%__install -m 0644 README  %buildroot/%_docdir/%name-%version
-%__install -m 0644 INSTALL.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 NEWS.html    %buildroot/%_docdir/%name-%version/html
+mkdir -p %buildroot%_docdir/%name-%version/html
+install -m 0644 %SOURCE7 %buildroot%_docdir/%name-%version/README-ALT.utf8
+install -m 0644 AUTHORS %buildroot%_docdir/%name-%version
+install -m 0644 INSTALL %buildroot%_docdir/%name-%version
+install -m 0644 NEWS    %buildroot%_docdir/%name-%version
+install -m 0644 README  %buildroot%_docdir/%name-%version
+install -m 0644 INSTALL.html %buildroot%_docdir/%name-%version/html
+install -m 0644 NEWS.html    %buildroot%_docdir/%name-%version/html
 
 # imap documentation
-%__install -m 0644 imap/BUGS      %buildroot/%_docdir/%name-%version
-%__install -m 0644 imap/ChangeLog %buildroot/%_docdir/%name-%version
-%__install -m 0644 imap/README    %buildroot/%_docdir/%name-%version/README.imap
-%__install -m 0644 imap/README.proxy %buildroot/%_docdir/%name-%version
-%__install -m 0644 imap/BUGS.html    %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 imap/courierpop3d.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 imap/README.html       %buildroot/%_docdir/%name-%version/html/README.imap.html
-%__install -m 0644 imap/README.proxy.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 libs/imap/BUGS      %buildroot%_docdir/%name-%version
+install -m 0644 libs/imap/ChangeLog %buildroot%_docdir/%name-%version
+install -m 0644 libs/imap/README    %buildroot%_docdir/%name-%version/README.imap
+install -m 0644 libs/imap/README.proxy %buildroot%_docdir/%name-%version
+install -m 0644 libs/imap/BUGS.html    %buildroot%_docdir/%name-%version/html
+install -m 0644 libs/imap/courierpop3d.html %buildroot%_docdir/%name-%version/html
+install -m 0644 libs/imap/courierpop3d.8 %buildroot%_man8dir
+install -m 0644 libs/imap/README.html       %buildroot%_docdir/%name-%version/html/README.imap.html
+install -m 0644 libs/imap/README.proxy.html %buildroot%_docdir/%name-%version/html
 
 # maildir documentation
-%__install -m 0644 maildir/README.maildirquota.txt  %buildroot/%_docdir/%name-%version
-%__install -m 0644 maildir/README.sharedfolders.txt %buildroot/%_docdir/%name-%version
-%__install -m 0644 maildir/maildiracl.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 maildir/maildir.html    %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 maildir/maildirkw.html  %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 maildir/maildirmake.html  %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 maildir/maildirquota.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 maildir/README.imapkeywords.html  %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 maildir/README.maildirfilter.html %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 maildir/README.maildirquota.html  %buildroot/%_docdir/%name-%version/html
-%__install -m 0644 maildir/README.sharedfolders.html %buildroot/%_docdir/%name-%version/html
+install -m 0644 libs/maildir/README.maildirquota.txt  %buildroot%_docdir/%name-%version
+install -m 0644 libs/maildir/README.sharedfolders.txt %buildroot%_docdir/%name-%version
+install -m 0644 libs/maildir/maildiracl.html %buildroot%_docdir/%name-%version/html
+install -m 0644 libs/maildir/maildir.html    %buildroot%_docdir/%name-%version/html
+install -m 0644 libs/maildir/maildirkw.html  %buildroot%_docdir/%name-%version/html
+install -m 0644 libs/maildir/maildirmake.html  %buildroot%_docdir/%name-%version/html
+install -m 0644 libs/maildir/maildirquota.html %buildroot%_docdir/%name-%version/html
+install -m 0644 libs/maildir/README.imapkeywords.html  %buildroot%_docdir/%name-%version/html
+install -m 0644 libs/maildir/README.maildirfilter.html %buildroot%_docdir/%name-%version/html
+install -m 0644 libs/maildir/README.maildirquota.html  %buildroot%_docdir/%name-%version/html
+install -m 0644 libs/maildir/README.sharedfolders.html %buildroot%_docdir/%name-%version/html
 
-# tcpd documentation
-%__install -m 0644 tcpd/README.couriertls %buildroot/%_docdir/%name-%version
+# tcpd/tls documentation
+install -m 0644 libs/tcpd/README.couriertls %buildroot%_docdir/%name-%version
+install -m 0644 libs/tcpd/couriertls.html %buildroot%_docdir/%name-%version/html
+install -m 0644 libs/tcpd/couriertls.1 %buildroot%_man1dir
 
 %post
-# adjust config for generating SSL certs
-HOSTNAME=`hostname -f`
-for i in `ls %_sysconfdir/%name/*.cnf`; do
-   %__subst "s|^CN=.*$|CN=$HOSTNAME|g;s|^emailAddress=.*$|emailAddress=root@$HOSTNAME|g" $i
-done
-
-%__subst "s|__HOSTNAME__|$HOSTNAME|g" %_sysconfdir/%name/quotawarnmsg
-
 # try to update configs from .rpmsave
 for i in imapd pop3d; do
-	if [ -f %_sysconfdir/%name/$i.rpmsave ]; then
-		. %_sysconfdir/%name/$i.rpmsave
-		%__subst "s|^ADDRESS=127.0.0.1|ADDRESS=$ADDRESS|" %_sysconfdir/%name/$i
+	if [ -f %courier_confdir/$i.rpmsave ]; then
+		. %courier_confdir/$i.rpmsave
+		subst "s|^ADDRESS=127.0.0.1|ADDRESS=$ADDRESS|" %courier_confdir/$i
 	fi
 done
 for i in imapd-ssl pop3d-ssl; do
-	if [ -f %_sysconfdir/%name/$i.rpmsave ]; then
-		. %_sysconfdir/%name/$i.rpmsave
-		%__subst "s|^SSLADDRESS=127.0.0.1|SSLADDRESS=$SSLADDRESS|" %_sysconfdir/%name/$i
+	if [ -f %courier_confdir/$i.rpmsave ]; then
+		. %courier_confdir/$i.rpmsave
+		subst "s|^SSLADDRESS=127.0.0.1|SSLADDRESS=$SSLADDRESS|" %courier_confdir/$i
 	fi
 done
 
@@ -172,7 +170,7 @@ done
 %post_service courier-pop3d
 %post_service courier-imaps
 %post_service courier-pop3s
- 
+
 %preun
 %preun_service courier-imapd
 %preun_service courier-imaps
@@ -180,53 +178,65 @@ done
 %preun_service courier-pop3s
 
 %files
-%dir %_sysconfdir/%name
-%dir %_datadir/%name
 %_initdir/courier-imapd
 %_initdir/courier-imaps
 %_initdir/courier-pop3d
 %_initdir/courier-pop3s
-%config %_sysconfdir/%name/imapd
-%config %_sysconfdir/%name/pop3d
-%config %_sysconfdir/%name/imapd-ssl
-%config %_sysconfdir/%name/pop3d-ssl
+%dir %courier_confdir
+%courier_confdir/ssl-sh-functions
+%config %courier_confdir/imapd
+%config %courier_confdir/pop3d
+%config %courier_confdir/imapd-ssl
+%config %courier_confdir/pop3d-ssl
 %config(noreplace) %_sysconfdir/pam.d/imap
 %config(noreplace) %_sysconfdir/pam.d/pop3
-%config(noreplace) %_sysconfdir/%name/imapd.cnf
-%config(noreplace) %_sysconfdir/%name/pop3d.cnf
-%_sysconfdir/%name/quotawarnmsg
+%ghost %attr(0640,root,root) %config(noreplace,missingok) %courier_confdir/imapd.custom.cnf
+%ghost %attr(0640,root,root) %config(noreplace,missingok) %courier_confdir/pop3d.custom.cnf
+%courier_confdir/quotawarnmsg
 %_bindir/maildiracl
 %_bindir/maildirkw
-%_sbindir/couriertcpd
+%_bindir/makeimapaccess
 %_sbindir/couriertls
+%_sbindir/couriertcpd
 %_sbindir/imapd
 %_sbindir/imaplogin
-%_sbindir/makedatprog
 %_sbindir/pop3d
 %_sbindir/pop3login
 %_sbindir/sharedindexinstall
 %_sbindir/sharedindexsplit
-%_libexecdir/%name/*.rc
 %_man1dir/couriertcpd.1*
+%_man1dir/couriertls.1*
 %_man1dir/maildiracl.1*
 %_man1dir/maildirkw.1*
+%_man8dir/courierpop3d.8*
 %_man8dir/imapd.8*
+%_man8dir/makeimapaccess.8*
 %dir %_docdir/%name-%version
 %doc %_docdir/%name-%version/*
 %ghost %attr(0640,root,root) %config(noreplace,missingok) %_pemdir/imapd.pem
 %ghost %attr(0640,root,root) %config(noreplace,missingok) %_pemdir/pop3d.pem
-%dir %_localstatedir/%name
-%dir %_localstatedir/%name/shared
-%dir %_localstatedir/%name/shared.tmp
-%ghost %attr(0644,root,root) %_localstatedir/%name/couriersslcache
-
-%files utils
-%_bindir/deliverquota
-%_bindir/maildirmake
-%_man1dir/maildirmake.1.*
-%_man8dir/deliverquota.8.*
+%dir %attr(-,root,root) %courier_localstatedir
+%dir %attr(0750,root,root) %courier_localstatedir/imapaccess
+%ghost %attr(0600,root,root) %courier_localstatedir/couriersslcache
 
 %changelog
+* Tue Jan 10 2017 L.A. Kostis <lakostis@altlinux.ru> 4.17.2-alt0.3
+- ssl-sh-functions: fix a typo.
+
+* Tue Jan 10 2017 L.A. Kostis <lakostis@altlinux.ru> 4.17.2-alt0.2
+- Rewrite tls cert operations.
+- Added gamin to requires.
+  Strict TLS settings in -alt-tls-enforce-config.patch:
+  + TLS proto now 1.2+
+  + cipher suite changed to AES128+EECDH:AES128+EDH.
+
+* Sun Jan 08 2017 L.A. Kostis <lakostis@altlinux.ru> 4.17.2-alt0.1
+- Updated to 4.17.2.
+- Major .spec cleanup.
+- Rewrite all patches.
+- Fixed file intersections with courier-common-utils.
+- Build with courier-unicode and libidn.
+
 * Wed Jan 18 2012 L.A. Kostis <lakostis@altlinux.ru> 4.10.0-alt0.2
 - fix pam unmets.
 
