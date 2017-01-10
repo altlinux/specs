@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define _name libgda
 %define ver_major 5.2
 %define abi_ver 5.0
@@ -32,15 +34,18 @@
 
 Name: %{_name}5
 Version: %ver_major.4
-Release: alt3
+Release: alt4
 
 Summary: Library for writing gnome database programs
 Group: System/Libraries
 License: LGPL
 Url: http://www.gnome-db.org/
 
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%if_disabled snapshot
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
 Source: %_name-%version.tar
+%endif
 
 Obsoletes: libgda2 < %version
 Provides: libgda2 = %version-%release
@@ -49,7 +54,7 @@ Provides: libgda2 = %version-%release
 %define mdbtools_ver 0.7
 %define ldap_ver 2.2.27-alt1.1
 %define freetds_ver 0.63
-%define vala_ver 0.32
+%define vala_ver 0.34
 
 BuildPreReq: intltool >= 0.35.5
 BuildPreReq: gnome-common >= 2.8.0
@@ -626,6 +631,9 @@ export VALA_API_VERSION=%vala_ver
 %exclude %_datadir/%_name-%abi_ver/php
 
 %changelog
+* Tue Jan 10 2017 Yuri N. Sedunov <aris@altlinux.org> 5.2.4-alt4
+- updated to 5_2_4-37-gebe3b20
+
 * Sun May 08 2016 Yuri N. Sedunov <aris@altlinux.org> 5.2.4-alt3
 - updated to 5_2_4-32-g03de66c
 
