@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.1.2
-Release: alt1.git20150331.1.1
+Version: 0.6.3
+Release: alt1
 Summary: WSGI adapter for aiohttp
 License: BSD
 Group: Development/Python
@@ -14,7 +14,7 @@ Url: https://pypi.python.org/pypi/aiohttp-wsgi/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/etianen/aiohttp-wsgi.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/72/ff/21ac6cde48057c92cfc7076c1d9281560c0b586dfc90838bdce6e2bc4e08/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 %if_with python2
@@ -71,7 +71,7 @@ This package contains tests for %oname.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -125,15 +125,16 @@ popd
 %files -n python3-module-%oname
 %doc *.rst
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test*
-%exclude %python3_sitelibdir/*/*/test*
 
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/test*
-%python3_sitelibdir/*/*/test*
+#%files -n python3-module-%oname-tests
+#python3_sitelibdir/*/test*
+#python3_sitelibdir/*/*/test*
 %endif
 
 %changelog
+* Tue Jan 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.3-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.2-alt1.git20150331.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
