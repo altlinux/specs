@@ -1,6 +1,6 @@
 Name: makesurface
-Version: 0.2.9
-Release: alt1.git20150218
+Version: 0.2.14
+Release: alt1
 Summary: Create vector datasets from raster surfaces
 License: MIT
 Group: Development/Python
@@ -8,7 +8,7 @@ Url: https://pypi.python.org/pypi/makesurface/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mapbox/make-surface.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/7d/a8/d6b3561d36bc45eaa6aba7b05624b9fa351430be7ac4b05cbb5d1c0958af/%{name}-%{version}dev.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests
@@ -24,7 +24,7 @@ BuildPreReq: python-module-mercantile python-module-pyproj
 Raster -> vector surface creation tools in python.
 
 %prep
-%setup
+%setup -q -n %{name}-%{version}dev
 
 %build
 %python_build_debug
@@ -36,11 +36,14 @@ Raster -> vector surface creation tools in python.
 python setup.py test
 
 %files
-%doc *.md *.rst
+%doc *.rst
 %_bindir/*
 %python_sitelibdir/*
 
 %changelog
+* Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.14-alt1
+- automated PyPI update
+
 * Thu Feb 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.9-alt1.git20150218
 - Initial build for Sisyphus
 
