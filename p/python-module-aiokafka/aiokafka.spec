@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.1
-Release: alt1.git20150207.1.1
+Version: 0.2.0
+Release: alt1
 Summary: asyncio client for kafka
 License: ASLv2.0
 Group: Development/Python
@@ -13,7 +13,7 @@ Url: https://pypi.python.org/pypi/aiokafka/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/aio-libs/aiokafka.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/d4/ff/f440264776a1dc0d869d66197a0b74903206880c1c5d32c99ae5c9f9a337/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 %if_with python2
@@ -50,12 +50,12 @@ Group: Development/Python3
 Kafka integration with asyncio.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
-sed -i 's|flake8|python3-flake8|' ../python3/Makefile
-sed -i 's|nosetests|nosetests3|' ../python3/Makefile
+#sed -i 's|flake8|python3-flake8|' ../python3/Makefile
+#sed -i 's|nosetests|nosetests3|' ../python3/Makefile
 %endif
 
 %build
@@ -96,17 +96,20 @@ popd
 %files
 %doc *.rst
 %python_sitelibdir/*
-%exclude %python_sitelibdir/tests
+#exclude %python_sitelibdir/tests
 %endif
 
 %if_with python3
 %files -n python3-module-%oname
 %doc *.rst
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/tests
+#exclude %python3_sitelibdir/tests
 %endif
 
 %changelog
+* Tue Jan 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.1-alt1.git20150207.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
