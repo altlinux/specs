@@ -1,6 +1,6 @@
 Name: celestia
 Version: 1.6.1
-Release: alt4
+Release: alt4.qa1
 License: GPL
 Group: Education
 Summary: A real-time visual space simulation
@@ -13,6 +13,7 @@ Patch4: celestia-1.6.1-alt-libpng15.patch
 Patch5: celestia-1.6.1-alt-glibc-2.16.patch
 Patch6: celestia-1.6.1-alt-fix-build.patch
 Patch7: celestia-1.6.1-alt-fix-subdir-build.patch
+Patch8: celestia-1.6.1-alt-lua5.2.patch
 
 BuildRequires: fontconfig freetype2 gcc-c++ kdelibs-devel libtqt-devel
 BuildRequires: libjpeg-devel libpng-devel libqt3-devel
@@ -91,6 +92,7 @@ travelthroughout the solar system, to any of over
 %patch5 -p2
 %patch6 -p2
 %patch7 -p2
+%patch8 -p2
 
 %build
 %autoreconf
@@ -170,6 +172,9 @@ gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/celestia.sche
 /etc/alternatives/packages.d/%name-kde
 
 %changelog
+* Mon Jan 09 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.6.1-alt4.qa1
+- Fixed build with lua5.3.
+
 * Thu Nov 05 2015 Michael Shigorin <mike@altlinux.org> 1.6.1-alt4
 - Rebuilt against gcc5-built qt3.
 
