@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname futures
 Name: python-module-%oname
-Version: 3.0.3
+Version: 3.0.5
 Release: alt1
 Summary: Backport of the concurrent.futures package from Python 3.2
 License: BSD
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/futures
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/55/db/97c1ca37edab586a1ae03d6892b6633d8eaa23b23ac40c7e5bbc55423c78/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-distribute
@@ -17,7 +18,7 @@ BuildPreReq: python-devel python-module-distribute
 Backport of the concurrent.futures package from Python 3.2.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -30,6 +31,9 @@ Backport of the concurrent.futures package from Python 3.2.
 %python_sitelibdir/*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.5-alt1
+- automated PyPI update
+
 * Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3-alt1
 - Version 3.0.3
 
