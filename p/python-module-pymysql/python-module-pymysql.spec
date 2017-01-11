@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define modulename pymysql
 
 %def_with python3
 
 Name: python-module-%modulename
-Version: 0.6.6
-Release: alt1.git20150727.1.1
+Version: 0.7.9
+Release: alt1
 
 %setup_python_module %modulename
 
@@ -16,7 +17,7 @@ Url: http://code.google.com/p/pymysql/
 BuildArch: noarch
 
 # https://github.com/PyMySQL/PyMySQL.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/a4/c4/c15457f261fda9839637de044eca9b6da8f55503183fe887523801b85701/PyMySQL-%{version}.tar.gz
 
 #BuildPreReq: %py_dependencies setuptools
 %if_with python3
@@ -63,7 +64,7 @@ talking directly to the server via the binary client/server protocol.
 This package contains tests for %modulename.
 
 %prep
-%setup
+%setup -q -n PyMySQL-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -108,6 +109,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.9-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.6-alt1.git20150727.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
