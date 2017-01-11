@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1
+Release: alt1
 %define oname z3c.form
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.2.1
+Version: 3.4.0
 #Release: alt1.1
 Summary: An advanced form and widget framework for Zope 3
 License: ZPLv2.1
@@ -13,7 +14,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/z3c.form
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/1b/13/2bfa183aea8d009a5d76ba1cf23c6a15d938528fa7b9316948efeb96daf6/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -77,7 +78,7 @@ any data or steps.
 This package contains tests for z3c.form.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -138,6 +139,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.2.1-alt1.1.1
 - (AUTO) subst_x86_64.
 
