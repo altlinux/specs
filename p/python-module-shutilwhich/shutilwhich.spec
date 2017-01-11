@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname shutilwhich
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.1
-Release: alt2.git20130302.1
+Version: 1.1.0
+Release: alt1
 Summary: shutil.which for those not using Python 3.3 yet
 License: PSF
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/shutilwhich/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mbr/shutilwhich.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/66/be/783f181594bb8bcfde174d6cd1e41956b986d0d8d337d535eb2555b92f8d/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -35,7 +36,7 @@ Group: Development/Python3
 A copy & paste backport of Python 3.3's shutil.which function.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -70,6 +71,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.1-alt2.git20130302.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
