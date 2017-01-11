@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20150615.1.1.1
+Release: alt1
 %define oname haversine
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.2
+Version: 0.4.5
 #Release: alt1.git20150615.1.1
 Summary: Calculate the distance bewteen 2 points on Earth
 License: GPLv3
@@ -14,7 +15,7 @@ Url: https://pypi.python.org/pypi/haversine/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mapado/haversine.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/57/b4/3b1f5ca78876ad00cbb2a2bf7bcebfe4751c00ddabc47005b59f33835646/%{oname}-%{version}.tar.gz
 
 #BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
@@ -42,7 +43,7 @@ Calculate the distance (in km or in miles) bewteen two points on Earth,
 located by their latitude and longitude.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -94,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.5-alt1
+- automated PyPI update
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.2-alt1.git20150615.1.1.1
 - (AUTO) subst_x86_64.
 
