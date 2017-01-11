@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.18
+Version: 0.2.19
 Release: alt1
 
 Summary: Simple image creator
@@ -57,7 +57,7 @@ Remove %name-preinstall subpackage and run this to re-enable:
 %install
 %makeinstall_std
 mkdir -p %buildroot%sysctldir
-echo "fs.protected_hardlinks = 0" > %buildroot%sysctldir/%name.conf
+echo "fs.protected_hardlinks = 0" > %buildroot%sysctldir/49-%name.conf
 
 %post
 if grep -Fqsx 1 "%procfile"; then
@@ -76,13 +76,17 @@ fi
 %doc examples doc/README.ru
 
 %files preinstall
-%config(noreplace) %sysctldir/%name.conf
+%config(noreplace) %sysctldir/49-%name.conf
 
 # TODO:
 # - consider %%postun preinstall to restore the variable value
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Wed Jan 11 2017 Michael Shigorin <mike@altlinux.org> 0.2.19-alt1
+- preinstall: fixed sysctl file name, *thanks* snejok@ (closes: #30351)
+- mki-copy-efiboot: adjusted for dosfstools-3.0 either
+
 * Sat Jun 11 2016 Michael Shigorin <mike@altlinux.org> 0.2.18-alt1
 - mki-copy-efiboot: adjusted for dosfstools-4.0
 
