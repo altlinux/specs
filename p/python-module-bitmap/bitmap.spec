@@ -3,15 +3,15 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.0.5
-Release: alt2
+Version: 0.0.6
+Release: alt1
 Summary: BitMap for python
 License: Free
 Group: Development/Python
 Url: https://pypi.python.org/pypi/bitmap/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/da/10/bb92da21d7472d8a3befad8785c917f2bf099bdf326edebcba2abf57d09a/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -38,7 +38,7 @@ in compact format.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -85,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.6-alt1
+- automated PyPI update
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt2
 - Fixed build
 
