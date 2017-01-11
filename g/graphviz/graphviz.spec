@@ -5,10 +5,11 @@
 %def_disable php
 %def_enable python
 %def_disable ruby
+%def_disable tcl
 
 Name: graphviz
-Version: 2.38.0
-Release: alt3
+Version: 2.40.1
+Release: alt1
 
 Summary: Graphs visualization tools
 License: Common Public License 1.0
@@ -153,7 +154,7 @@ This package makes %name functionality accessible from Tcl
 %prep
 %setup
 %patch0 -p1
-%patch1
+#patch1
 %patch2 -p1
 
 %build
@@ -174,7 +175,7 @@ This package makes %name functionality accessible from Tcl
 	%{subst_enable php } \
 	%{subst_enable python } \
 	%{subst_enable ruby } \
-	--enable-tcl \
+	%{subst_enable tcl } \
 	--disable-java \
 	--disable-sharp
 
@@ -188,6 +189,7 @@ mkdir -p %buildroot%_defaultdocdir
 mv %buildroot%gvdatadir/doc %buildroot%_defaultdocdir/%name-%version
 cp -a AUTHORS COPYING cpl1.0.txt ChangeLog NEWS %buildroot%_defaultdocdir/%name-%version
 
+%if_with tcl
 mkdir -p %buildroot%_tcldatadir/{%name,gd,tkspline}
 cat <<EOF > %buildroot%_tcldatadir/gd/pkgIndex.tcl
 package ifneeded Gdtclft %version "load [file join \$dir .. .. .. lib tcl libgdtclft.so.0] Gdtclft"
@@ -207,6 +209,7 @@ if [ ! -d %buildroot%gvtcldir ]; then
 	mkdir -p "$(dirname %buildroot%gvtcldir)"
 	mv %buildroot{%_libdir/%name/tcl,%gvtcldir}
 fi
+%endif
 
 # created by %%_bindir/dot -c
 touch %buildroot%gvlibdir/config
@@ -292,6 +295,7 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 %gvlibdir/ruby/gv.so
 %endif
 
+%if_with tcl
 %files tcl
 %dir %gvtcldir/
 %gvtcldir/libgdtclft.so*
@@ -299,7 +303,7 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 %gvtcldir/libtcldot.so*
 %gvtcldir/libtcldot_builtin.so*
 %gvtcldir/libtclplan.so*
-%gvtcldir/libtkspline.so*
+#gvtcldir/libtkspline.so*
 %gvtcldir/pkgIndex.tcl
 %_libdir/tcl*/*
 %_tcldatadir/%name
@@ -310,15 +314,21 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 %gvdatadir/demo/gcat.tcl
 %gvdatadir/demo/modgraph.tcl
 %gvdatadir/demo/pathplan.tcl
-%gvdatadir/demo/spline.tcl
+#gvdatadir/demo/spline.tcl
 %gvdatadir/demo/pathplan_data
 %gvdatadir/demo/*.README
 %gvdatadir/demo/*.html
+%endif
 
 # TODO:
 # - enable/fix/test language bindings
 
 %changelog
+* Wed Jan 11 2017 Michael Shigorin <mike@altlinux.org> 2.40.1-alt1
+- 2.40.1
+  + disabled patch1
+  + introduced tcl knob (off by default: disruptive spline changes)
+
 * Tue Dec 27 2016 Michael Shigorin <mike@altlinux.org> 2.38.0-alt3
 - fix build against ghostscript-9.18+ (upstream #0002604)
 - drop xterm dependency (closes: #32948)
