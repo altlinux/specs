@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname nosexcover
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.10
-Release: alt1.git20140325.1
+Version: 1.0.11
+Release: alt1
 Summary: Extends nose.plugins.cover to add Cobertura-style XML reports
 License: BSD
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/nosexcover/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/cmheisel/nose-xcover.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/11/b3/2b9e812eb9cb7e60bbfff0a1f581bf411d5b55156e211a4e3580560c8902/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -45,7 +46,7 @@ It will honor all the options you pass to the Nose coverage plugin,
 especially --cover-package.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -90,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.10-alt1.git20140325.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
