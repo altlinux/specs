@@ -1,17 +1,19 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: unzip
 %define oname gmpy2
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0.5
-Release: alt1.1.1
+Version: 2.0.8
+Release: alt1
 Summary: GMP/MPIR, MPFR, and MPC interface
 License: LGPL
 Group: Development/Python
 Url: http://code.google.com/p/gmpy/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %oname-%version.tar
+Source0: https://pypi.python.org/packages/90/f4/9a2e384b325b69bc5827b9a6510a8fb4a51698c915c06a3f25a86458892a/%{oname}-%{version}.zip
 
 BuildRequires(pre): rpm-build-python
 #BuildPreReq: python-devel libgmp-devel libmpfr-devel libmpc-devel
@@ -70,7 +72,7 @@ and more.
 This package contains pickles for GMPY.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -133,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.8-alt1
+- automated PyPI update
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.5-alt1.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
