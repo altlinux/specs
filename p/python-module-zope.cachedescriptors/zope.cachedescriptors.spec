@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.git20150204.1.1
+Release: alt1
 %define oname zope.cachedescriptors
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.1
+Version: 4.2.0
 #Release: alt1.dev0.git20150204.1
 Summary: Method and property caching decorators
 License: ZPLv2.1
@@ -13,7 +14,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.cachedescriptors/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/06/14/a188b03efc12813178585840e71a2c8751d0fe12dd644764c7025f202181/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-zope.testrunner
@@ -81,7 +82,7 @@ persistent objects.
 This package contains tests for zope.cachedescriptors.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -146,6 +147,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1
+- automated PyPI update
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.1-alt1.dev0.git20150204.1.1
 - (AUTO) subst_x86_64.
 
