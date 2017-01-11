@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20150507.1.1.1
+Release: alt1
 %define oname rlr
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.5
+Version: 2.4
 #Release: alt1.git20150507.1.1
 Summary: Regularized Logistic Regression
 License: MIT
@@ -14,7 +15,7 @@ Url: https://pypi.python.org/pypi/rlr/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/datamade/rlr.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/f5/ba/17477a212565149877891eb05b8728f91e3a9cb34b61e0858dea8620728c/%{oname}-%{version}.tar.gz
 
 #BuildPreReq: python-devel python-module-setuptools-tests
 #BuildPreReq: python-module-Cython libnumpy-devel python-module-nose
@@ -46,7 +47,7 @@ Group: Development/Python3
 A Cython implementation of L2 regularized logistic regression.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -95,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1
+- automated PyPI update
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5-alt1.git20150507.1.1.1
 - (AUTO) subst_x86_64.
 
