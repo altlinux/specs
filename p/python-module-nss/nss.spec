@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname nss
 Name: python-module-%oname
-Version: 0.17.0
+Version: 1.0.0
 Release: alt1
 Summary: Python binding for NSS
 License: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -9,7 +10,7 @@ Url: http://www.mozilla.org/projects/security/pki/python-nss/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # hg clone https://hg.mozilla.org/projects/python-nss
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/44/cb/c67a613c26beffbfdf58cb4a6b6a5a35c27085c666227f384a7fb1375cb8/python-%{oname}-%{version}.tar.bz2
 
 BuildPreReq: python-devel gcc-c++ libnss-devel python-module-epydoc
 
@@ -21,7 +22,7 @@ to OpenSSL and used extensively by major software projects. NSS is
 FIPS-140 certified.
 
 %prep
-%setup
+%setup -q -n python-%{oname}-%{version}
 
 %build
 %python_build_debug
@@ -37,6 +38,9 @@ mv build/doc/html api
 %python_sitelibdir/*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1
+- automated PyPI update
+
 * Thu Feb 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.17.0-alt1
 - Version 0.17.0
 
