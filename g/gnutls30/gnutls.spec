@@ -1,9 +1,10 @@
+%def_with test
 %define libgnutls_soname 30
 %define libgnutlsxx28_soname 28
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.4.17
+Version: 3.5.8
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -16,7 +17,9 @@ Source: gnutls-%version.tar
 
 # Skip test-hash-large for overridden CPU flags
 Patch1: gnutls-patch-test-hash-large.patch
-
+# Fix test date: certificates end date is _after_ Oct 12 00:00:00 2038 UTC,
+# so set time explicitly
+Patch2: gnutls-test-pkcs7.patch
 %define libcxx libgnutlsxx%libgnutlsxx28_soname
 %define libssl libgnutls%{libgnutls_openssl_soname}-openssl
 %def_disable guile
@@ -24,15 +27,19 @@ Patch1: gnutls-patch-test-hash-large.patch
 
 # Automatically added by buildreq on Thu Dec 08 2011
 BuildRequires: gcc-c++ gtk-doc libgcrypt-devel libp11-kit-devel libreadline-devel libtasn1-devel makeinfo zlib-devel
-BuildRequires: libnettle-devel autogen libopts-devel libidn-devel
+BuildRequires: libnettle-devel autogen libopts-devel libidn-devel libunistring-devel
 %if_enabled guile
 BuildRequires: guile-devel
 %endif
 
 # For tests
+%if_with test
 BuildRequires: net-tools
 BuildRequires: /proc
-BuildRequires: datefudge-faketime
+BuildRequires: datefudge
+BuildRequires: softhsm
+BuildRequires: openssl
+%endif
 
 %description
 GnuTLS is a project that aims to develop a library which provides a
@@ -186,6 +193,7 @@ This package contains the GnuTLS API Reference Manual.
 %prep
 %setup -n gnutls-%version
 %patch1 -p2
+%patch2 -p1
 touch doc/*.texi
 rm doc/*.info*
 rm aclocal.m4 m4/{libtool,lt*}.m4
@@ -217,7 +225,7 @@ make MAKEINFOFLAGS=--no-split
 find %buildroot%_infodir/ -name '*.png' -delete -print
 %define docdir %_docdir/gnutls-%version
 mkdir -p %buildroot%docdir/{examples,reference}
-install -p -m644 AUTHORS NEWS README THANKS %buildroot%docdir/
+install -p -m644 AUTHORS NEWS README.md THANKS %buildroot%docdir/
 install -p -m644 doc/*.{cfg,css,html,png} %buildroot%docdir/
 install -pm644 doc/examples/*.[hc]* %buildroot%docdir/examples/
 install -pm644 doc/reference/html/* %buildroot%docdir/reference/
@@ -288,6 +296,14 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %endif
 
 %changelog
+* Wed Jan 11 2017 Mikhail Efremov <sem@altlinux.org> 3.5.8-alt1
+- Use with_test for tests dependencies.
+- BR: Replace datefudge-faketime with datefudge.
+- BR: Add openssl for tests.
+- BR: Add softhsm for tests.
+- Fix pkcs7 test.
+- Updated to 3.5.8.
+
 * Thu Dec 08 2016 Mikhail Efremov <sem@altlinux.org> 3.4.17-alt1
 - Updated to 3.4.17.
 
