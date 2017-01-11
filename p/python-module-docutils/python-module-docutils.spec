@@ -1,13 +1,14 @@
+%define _unpackaged_files_terminate_build 1
 %define oname docutils
 %def_with python3
 
 Summary: Docutils -- Python Documentation Utilities
-Version: 0.13
-Release: alt4.git20150716.1.1
+Version: 0.13.1
+Release: alt1
 %setup_python_module %oname
 Name: %packagename
 # git://repo.or.cz/docutils.git
-Source0: %modulename-%version.tar.gz
+Source0: https://pypi.python.org/packages/05/25/7b5484aca5d46915493f1fd4ecb63c38c333bd32aa9ad6e19da8d08895ae/%{oname}-%{version}.tar.gz
 License: public domain, Python, BSD, GPL (see COPYING.txt)
 Group: Development/Python
 BuildArch: noarch
@@ -53,7 +54,7 @@ This package contains tests for Docutils.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -121,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt1
+- automated PyPI update
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.13-alt4.git20150716.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
