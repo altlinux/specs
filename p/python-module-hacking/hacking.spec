@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname hacking
 
 %def_with python3
 #def_disable check
 
 Name: python-module-%oname
-Version: 0.10.2
-Release: alt3.git20150723.1.1
+Version: 0.13.0
+Release: alt1
 Summary: OpenStack Hacking Guideline Enforcement
 License: ASLv2.0
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/hacking/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/openstack-dev/hacking.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/b6/be/67678ca6d422e99ff39a054a62403dcb1f8b95666de392dd8354d828acfb/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: git
@@ -85,7 +86,7 @@ Style Guidlines.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 git init-db
 git config user.email "real at altlinux.org"
@@ -147,6 +148,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.13.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.2-alt3.git20150723.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
