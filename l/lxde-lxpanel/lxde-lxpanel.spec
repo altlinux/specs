@@ -3,14 +3,14 @@
 %define gtkver 2
 
 Name: lxde-%origname
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: LXPanel is a lightweight X11 desktop panel
 License: GPL
 Group: Graphical desktop/Other
 
-Url: http://lxde.org
+Url: https://git.lxde.org/gitweb/?p=lxde/lxpanel.git
 Source: %origname-%version.tar
 Packager: LXDE Development Team <lxde at packages.altlinux.org>
 
@@ -27,7 +27,7 @@ BuildPreReq: rpm-build-xdg libgtk+%gtkver-devel
 
 %description
 lxpanel is a program that provides a panel for desktop, usually LXDE.
-It is lightweight GTK+ 2.x based desktop panel.
+It is lightweight GTK+ %gtkver.x based desktop panel.
 
 %package devel
 Summary: development headers to build %name plugins
@@ -47,7 +47,10 @@ for %name
 %configure \
 	--enable-man \
 	--with-plugins=all \
-	--enable-cast-checks
+	--enable-cast-checks \
+%if %gtkver==3
+    --enable-gtk3
+%endif
 
 %make_build
 
@@ -68,6 +71,9 @@ for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jan 11 2017 Anton Midyukov <antohami@altlinux.org> 0.9.2-alt1
+- new version 0.9.2
+
 * Wed Nov 23 2016 Anton Midyukov <antohami@altlinux.org> 0.9.1-alt1
 - new version 0.9.1
 

@@ -7,15 +7,14 @@
 %define theme_fullname lxde-settings-%theme_name
 %define gtkver 2
 Name: lxde-common
-Version: 0.99.1
-Release: alt4
+Version: 0.99.2
+Release: alt1
 BuildArch: noarch
 
 Summary: Basic infrastructure for LXDE.
 License: %gpl2plus
 Group: Graphical desktop/Other
-Url: http://lxde.sf.net
-#Url: git://git.lxde.org/lxde/lxde-common.git
+Url: https://git.lxde.org/gitweb/?p=lxde/lxde-common.git
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -125,6 +124,9 @@ rm -fR %_sysconfdir/xdg/lxsession/LXDE/desktop.conf \
 #_iconsdir/nuoveXT2
 
 %changelog
+* Wed Jan 11 2017 Anton Midyukov <antohami@altlinux.org> 0.99.2-alt1
+- New version 0.99.2
+
 * Fri Nov 25 2016 Anton Midyukov <antohami@altlinux.org> 0.99.1-alt4
 - Added volume control on the panel.
 
