@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname mozlog
 Name: python-module-%oname
-Version: 2.10
+Version: 3.3
 Release: alt1
 Summary: Robust log handling specialized for logging in the Mozilla universe
 License: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/mozlog/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/ce/ce/85ce01843e2deea5b93d457a54f0246288256c2358fd30311eadef184bf7/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests python-modules-json
@@ -21,7 +22,7 @@ BuildPreReq: python-module-blessings python-module-mozfile
 Robust log handling specialized for logging in the Mozilla universe.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -38,6 +39,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.3-alt1
+- automated PyPI update
+
 * Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.10-alt1
 - Version 2.10
 
