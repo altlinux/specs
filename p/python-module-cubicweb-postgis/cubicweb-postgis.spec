@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname cubicweb-postgis
 Name: python-module-%oname
-Version: 0.3.0
+Version: 0.5.0
 Release: alt1
 Summary: Cube for GIS data support using PostGIS
 License: LGPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/cubicweb-postgis/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/7e/25/47e5cfd0af48541f0cd166361cd2417d055d81c33f51a2231ec4f912ac87/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests cubicweb
@@ -21,7 +22,7 @@ Requires: cubicweb
 Cube for GIS data support using PostGIS.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -38,6 +39,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1
+- automated PyPI update
+
 * Fri Jan 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1
 - Initial build for Sisyphus
 
