@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname flake8-print
 
 %def_without python3
 
 Name: python-module-%oname
-Version: 1.5.0
-Release: alt2.git20141104
+Version: 2.0.2
+Release: alt1
 Summary: Print statement checker plugin for flake8
 License: MIT
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/flake8-print/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/JBKahn/flake8-print.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/b8/ce/b253acf4da0ea69bedbeec0e62c066be7962057a27ab552638d757201ea7/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -44,7 +45,7 @@ This module provides a plugin for ``flake8``, the Python code checker.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -88,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt1
+- automated PyPI update
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt2.git20141104
 - Fixed build
 
