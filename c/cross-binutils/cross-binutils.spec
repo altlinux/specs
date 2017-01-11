@@ -1,62 +1,68 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr/bin/runtest gcc-c++
+BuildRequires: /usr/bin/expect /usr/bin/m4 /usr/bin/runtest gcc-c++ texinfo
 # END SourceDeps(oneline)
 %set_compress_method off
-%define fedora 21
+%define fedora 25
 
-%define cross cross
-%define rpmprefix %{nil}
+%global cross cross
+%global rpmprefix %{nil}
 
-%define build_all		1
-%define build_alpha		%{build_all}
-%define build_arm		%{build_all}
-%define build_aarch64		%{build_all}
-%define build_avr32		%{build_all}
-%define build_blackfin		%{build_all}
-%define build_c6x		%{build_all}
-%define build_cris		%{build_all}
-%define build_frv		%{build_all}
-%define build_h8300		%{build_all}
-%define build_hppa		%{build_all}
-%define build_hppa64		%{build_all}
-%define build_ia64		%{build_all}
-%define build_m32r		%{build_all}
-%define build_m68k		%{build_all}
-%define build_metag		%{build_all}
-%define build_microblaze	%{build_all}
-%define build_mips64		%{build_all}
-%define build_mn10300		%{build_all}
-%define build_nios2		%{build_all}
-%define build_openrisc		%{build_all}
-%define build_powerpc64		%{build_all}
-%define build_s390x		%{build_all}
-%define build_score		%{build_all}
-%define build_sh		%{build_all}
-%define build_sh64		%{build_all}
-%define build_sparc64		%{build_all}
-%define build_tile		%{build_all}
-%define build_x86_64		%{build_all}
-%define build_xtensa		%{build_all}
+%global build_all		1
+%global build_aarch64		%{build_all}
+%global build_alpha		%{build_all}
+%global build_arm		%{build_all}
+%global build_avr32		%{build_all}
+%global build_blackfin		%{build_all}
+%global build_c6x		%{build_all}
+%global build_cris		%{build_all}
+%global build_frv		%{build_all}
+%global build_h8300		%{build_all}
+%global build_hppa		%{build_all}
+%global build_hppa64		%{build_all}
+%global build_ia64		%{build_all}
+%global build_m32r		%{build_all}
+%global build_m68k		%{build_all}
+%global build_metag		%{build_all}
+%global build_microblaze	%{build_all}
+%global build_mips64		%{build_all}
+%global build_mn10300		%{build_all}
+%global build_nios2		%{build_all}
+%global build_openrisc		%{build_all}
+%global build_powerpc64		%{build_all}
+%global build_powerpc64le	%{build_all}
+%global build_s390x		%{build_all}
+%global build_score		%{build_all}
+%global build_sh		%{build_all}
+%global build_sparc64		%{build_all}
+%global build_tile		%{build_all}
+%global build_x86_64		%{build_all}
+%global build_xtensa		%{build_all}
 
 # 32-bit packages we don't build as we can use the 64-bit package instead
-%define build_i386		0
-%define build_mips		0
-%define build_powerpc		0
-%define build_s390		0
-%define build_sparc		0
-%define build_sh4		0
+%global build_i386		0
+%global build_mips		0
+%global build_powerpc		0
+%global build_s390		0
+%global build_sparc		0
+%global build_sh4		0
 
-# not available in binutils-2.24
-%define build_hexagon		0
-%define build_unicore32		0
+# Obsolete in binutils
+%global build_sh64		0
+
+# not available in binutils-2.27
+%global build_hexagon		0
+%global build_unicore32		0
 
 # BZ 1124342: Enable deterministic archives by default.
-%define enable_deterministic_archives 1
+# BZ 1195883: But do not do this by default.
+%global enable_deterministic_archives 0
+# Disable the default generation of compressed debug sections.
+%define default_compress_debug 0
 
 Summary: A GNU collection of cross-compilation binary utilities
 Name: %{cross}-binutils
-Version: 2.25.1
-Release: alt1_1
+Version: 2.27
+Release: alt1_5
 License: GPLv3+
 Group: Development/Tools
 URL: http://sources.redhat.com/binutils
@@ -73,41 +79,52 @@ Source2: binutils-2.19.50.0.1-output-format.sed
 
 Patch01: binutils-2.20.51.0.2-libtool-lib64.patch
 Patch02: binutils-2.20.51.0.10-ppc64-pie.patch
-Patch03: binutils-2.20.51.0.2-ia64-lib64.patch
+# Patch03: binutils-2.20.51.0.2-ia64-lib64.patch
 Patch04: binutils-2.25-version.patch
 Patch05: binutils-2.25-set-long-long.patch
-Patch06: binutils-2.20.51.0.10-copy-osabi.patch
-Patch07: binutils-2.20.51.0.10-sec-merge-emit.patch
+Patch06: binutils-2.20.51.0.10-sec-merge-emit.patch
 # Enable -zrelro by default: BZ #621983
-Patch08: binutils-2.22.52.0.1-relro-on-by-default.patch
+Patch07: binutils-2.22.52.0.1-relro-on-by-default.patch
 # Local patch - export demangle.h with the binutils-devel rpm.
-Patch09: binutils-2.22.52.0.1-export-demangle.h.patch
+Patch08: binutils-2.22.52.0.1-export-demangle.h.patch
 # Disable checks that config.h has been included before system headers.  BZ #845084
-Patch10: binutils-2.22.52.0.4-no-config-h-check.patch
+Patch09: binutils-2.22.52.0.4-no-config-h-check.patch
 # Fix addr2line to use the dynamic symbol table if it could not find any ordinary symbols.
-Patch11: binutils-2.23.52.0.1-addr2line-dynsymtab.patch
-# Patch12: binutils-2.23.2-kernel-ld-r.patch
-Patch12: binutils-2.25-kernel-ld-r.patch
-# Correct bug introduced by patch 12
-Patch13: binutils-2.23.2-aarch64-em.patch
+Patch10: binutils-2.23.52.0.1-addr2line-dynsymtab.patch
 # Fix detections little endian PPC shared libraries
-Patch14: binutils-2.24-ldforcele.patch
-# Fix parsing of corupt iHex binaries
-Patch15: binutils-2.25.1-ihex-parsing.patch
-# backport https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=e9c1bdad269c0c3352eebcc9481ed65144001b0b
-# Qt linked with gold crash on startup, BZ #1193044
-Patch16: binutils-2.25.1-dynamic_list.patch
+Patch11: binutils-2.24-ldforcele.patch
+Patch12: binutils-2.25.1-cleansweep.patch
+Patch13: binutils-2.26-fix-compile-warnings.patch
+# Import H.J.Lu's Kernel LTO patch.
+Patch14: binutils-2.26-lto.patch
+# Fix computation of sh_info field for .dynsym sections
+Patch15: binutils-2.27-local-dynsym-count.patch
+# Put sections in a monotonically increasing order of file offset.
+Patch16: binutils-2.27-monotonic-section-offsets.patch
+# Make ARM and AArch64 ports properly support relro on by default.
+Patch17: binutils-2.27-arm-aarch64-default-relro.patch
+# Skip PR14918 linker test for ARM native targets.
+Patch18: binutils-2.27-skip-rp14918-test-for-arm.patch
+# Fix GOLD for ARM/AARCh64.
+Patch19: binutils-2.28-gold.patch
+# Improve objdump's disassembly of dynamic executables.
+Patch20: binutils-2.27-objdump-improvements.patch
+# Improve objdump's speed when mixing disassembly with source code
+Patch21: binutils-2.27-dwarf-parse-speedup.patch
+# Import upstream xtensa bug fix causing cross-gcc FTBFS
+# https://sourceware.org/ml/binutils/2016-09/msg00179.html
+Patch22: binutils-2.27-fix-xtensa-bug.patch
 
-# Fix formatless sprintfs in Score-specific code.
+%if %{build_sh64}
 Patch100: cross-binutils-2.25-fixup-for-sh64.patch
-Patch101: cross-binutils-2.25-fixup-microblaze.patch
+%endif
 
-BuildRequires: texinfo >= 4.0 gettext flex bison zlib-devel
+BuildRequires: makeinfo >= 4.0 gettext gettext-tools, flex, bison, zlib-devel
 # BZ 920545: We need pod2man in order to build the manual pages.
 BuildRequires: /usr/bin/pod2man
 # Required for: ld-bootstrap/bootstrap.exp bootstrap with --static
 # It should not be required for: ld-elf/elf.exp static {preinit,init,fini} array
-Conflicts: gcc-c++ < 4.0.0
+Conflicts: gcc-c++-common < 4.0.0
 %ifarch ia64
 Obsoletes: gnupro <= 1117-1
 %endif
@@ -131,11 +148,14 @@ converting addresses to file and line).
 Summary: Cross-build binary utility documentation and translation files
 Group: Development/Tools
 BuildArch: noarch
+%if !%{build_sh64}
+Obsoletes: binutils-sh64-linux-gnu < 2.27-1
+%endif
 %description -n %{cross}-binutils-common
 Documentation, manual pages and translation files for cross-build binary image
 generation, manipulation and query tools.
 
-%define do_package() \
+%global do_package() \
 %if %2 \
 %package -n %{rpmprefix}binutils-%1 \
 Summary: Cross-build binary utilities for %1 \
@@ -145,7 +165,7 @@ Requires: %{cross}-binutils-common == %{version}-%{release} \
 Cross-build binary image generation, manipulation and query tools. \
 %endif
 
-%define do_symlink() \
+%global do_symlink() \
 %if %2 \
 %package -n %{rpmprefix}binutils-%1 \
 Summary: Cross-build binary utilities for %1 \
@@ -181,8 +201,10 @@ Cross-build binary image generation, manipulation and query tools. \
 %do_package openrisc-linux-gnu	%{build_openrisc}	or1k-linux-gnu
 %do_package powerpc-linux-gnu	%{build_powerpc}
 %do_package powerpc64-linux-gnu	%{build_powerpc64}
+%do_package powerpc64le-linux-gnu %{build_powerpc64le}
 %do_symlink ppc-linux-gnu	%{build_powerpc}	powerpc-linux-gnu
 %do_symlink ppc64-linux-gnu	%{build_powerpc64}	powerpc64-linux-gnu
+%do_symlink ppc64le-linux-gnu	%{build_powerpc64le}	powerpc64le-linux-gnu
 %do_package s390-linux-gnu	%{build_s390}
 %do_package s390x-linux-gnu	%{build_s390x}
 %do_package score-linux-gnu	%{build_score}
@@ -206,37 +228,44 @@ Cross-build binary image generation, manipulation and query tools. \
 ###############################################################################
 %prep
 
-%define srcdir binutils-%{version}
+%global srcdir binutils-%{version}
 %setup -q -n %{srcdir} -c
 cd %{srcdir}
-%if 1
 #%patch00 -p1 -b .latest-git~
 %patch01 -p1 -b .libtool-lib64~
 %patch02 -p1 -b .ppc64-pie~
-%ifarch ia64
-%if "%{_lib}" == "lib64"
-%patch03 -p1 -b .ia64-lib64~
-%endif
-%endif
+# % ifarch ia64
+# % if "%{_lib}" == "lib64"
+# % patch03 -p1 -b .ia64-lib64~
+# % endif
+# % endif
 %patch04 -p1 -b .version~
 %patch05 -p1 -b .set-long-long~
-%patch06 -p1 -b .copy-osabi~
-%patch07 -p1 -b .sec-merge-emit~
+%patch06 -p1 -b .sec-merge-emit~
 %if 0%{?fedora} >= 18 || 0%{?rhel} >= 7
-%patch08 -p1 -b .relro~
+%patch07 -p1 -b .relro~
 %endif
-%patch09 -p1 -b .export-demangle-h~
-%patch10 -p1 -b .no-config-h-check~
-%patch11 -p1 -b .addr2line~
-%patch12 -p1 -b .kernel-ld-r~
-%patch13 -p1 -b .aarch64~
-%patch14 -p1 -b .ldforcele~
-%patch15 -p1 -b .ihex~
-%patch16 -p1 -b .dynamic_list~
+%patch08 -p1 -b .export-demangle-h~
+%patch09 -p1 -b .no-config-h-check~
+%patch10 -p1 -b .addr2line~
+%ifarch ppc64le
+%patch11 -p1 -b .ldforcele~
 %endif
+%patch12 -p0
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p0
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
 
+%if %{build_sh64}
 %patch100 -p1 -b .sh64-fixup~
-%patch101 -p1 -b .microblaze-fixup~
+%endif
 
 # We cannot run autotools as there is an exact requirement of autoconf-2.59.
 
@@ -301,6 +330,7 @@ cd ..
     prep_target openrisc-linux-gnu	%{build_openrisc}
     prep_target powerpc-linux-gnu	%{build_powerpc}
     prep_target powerpc64-linux-gnu	%{build_powerpc64}
+    prep_target powerpc64le-linux-gnu	%{build_powerpc64le}
     prep_target s390-linux-gnu		%{build_s390}
     prep_target s390x-linux-gnu		%{build_s390x}
     prep_target score-linux-gnu		%{build_score}
@@ -360,11 +390,11 @@ function config_target () {
     esac
 
     echo $arch: target is $target
-    export CFLAGS="$RPM_OPT_FLAGS"
+    export CFLAGS="$RPM_OPT_FLAGS -Wno-unused-const-variable"
     CARGS=
 
     case $target in i?86*|sparc*|ppc*|powerpc*|s390*|sh*|arm*)
-	    CARGS="$CARGS --enable-64-bit-bfd"
+	    CARGS="$CARGS --enable-64-bit-bfd --enable-targets=x86_64-pep"
 	    ;;
     esac
 
@@ -379,7 +409,13 @@ function config_target () {
     esac
 
     case $target in sh-*)
-	    CARGS="$CARGS --enable-targets=sh4-linux,sh-elf,sh-linux"
+	    CARGS="$CARGS --enable-targets=sh-linux,sh4-linux"
+	    # sh-elf is dropped for now as it makes for ambiguity in format recognition
+	    ;;
+    esac
+
+    case $target in sh64-*)
+	    CARGS="$CARGS --enable-obsolete"
 	    ;;
     esac
 
@@ -413,6 +449,17 @@ function config_target () {
 	--disable-shared \
 	--disable-install_libbfd \
 	--with-sysroot=%{auxbin_prefix}/$arch/sys-root \
+%if %{enable_deterministic_archives}
+	--enable-deterministic-archives \
+%else    
+	--enable-deterministic-archives=no \
+%endif
+%if %{default_compress_debug}
+	--enable-compressed-debug-sections=all \
+%else
+	--enable-compressed-debug-sections=none \
+%endif
+	--enable-lto \
 	$CARGS \
 	--with-bugurl=http://bugzilla.altlinux.org/
     cd ..
@@ -615,7 +662,8 @@ cd -
     cat %{cross}-gprof.lang
 ) >files.cross
 # inside a symlink - not for rpm404
-sed -i -e /sys-root/d files.ppc64-linux-gnu
+# see %%do_symlink ppc*-linux-gnu
+sed -i -e /sys-root/d files.ppc64*-linux-gnu
 
 
 
@@ -629,7 +677,7 @@ sed -i -e /sys-root/d files.ppc64-linux-gnu
 %doc %{srcdir}/COPYING*
 %{_mandir}/man1/%{cross}-*
 
-%define do_files() \
+%global do_files() \
 %if %2 \
 %files -n %{rpmprefix}binutils-%1 -f files.%1 \
 %endif
@@ -659,8 +707,10 @@ sed -i -e /sys-root/d files.ppc64-linux-gnu
 %do_files openrisc-linux-gnu	%{build_openrisc}
 %do_files powerpc-linux-gnu	%{build_powerpc}
 %do_files powerpc64-linux-gnu	%{build_powerpc64}
+%do_files powerpc64le-linux-gnu	%{build_powerpc64le}
 %do_files ppc-linux-gnu		%{build_powerpc}
 %do_files ppc64-linux-gnu	%{build_powerpc64}
+%do_files ppc64le-linux-gnu	%{build_powerpc64le}
 %do_files s390-linux-gnu	%{build_s390}
 %do_files s390x-linux-gnu	%{build_s390x}
 %do_files score-linux-gnu	%{build_score}
@@ -675,6 +725,9 @@ sed -i -e /sys-root/d files.ppc64-linux-gnu
 %do_files xtensa-linux-gnu	%{build_xtensa}
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.27-alt1_5
+- new version
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.25.1-alt1_1
 - update to new release by fcimport
 
