@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define oname zope.interface
 
 %def_with python3
@@ -5,16 +6,16 @@
 
 Summary: Zope interfaces package
 Name: python-module-%oname
-Version: 4.1.3
+Version: 4.3.3
 #define subver c1
 Url: http://www.python.org/pypi/zope.interface
 %ifndef subver
-Release: alt1.dev0.git20150601.4
+Release: alt1
 %else
 Release: alt0.%subver
 %endif
 # git://github.com/zopefoundation/zope.interface.git
-Source0: %name-%version.tar
+Source0: https://pypi.python.org/packages/44/af/cea1e18bc0d3be0e0824762d3236f0e61088eeed75287e7b854d65ec9916/%{oname}-%{version}.tar.gz
 License: ZPL
 Group: Development/Python
 
@@ -105,7 +106,7 @@ Zope 3, along with the packages it depends on.
 This package contains documentation for zope.interface.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -179,6 +180,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.3.3-alt1
+- automated PyPI update
+
 * Tue Mar 22 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.3-alt1.dev0.git20150601.4
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
