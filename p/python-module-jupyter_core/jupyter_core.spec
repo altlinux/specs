@@ -1,18 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define oname jupyter_core
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 4.0.4
-Release: alt2.1.1
+Version: 4.2.1
+Release: alt1
 Summary: Jupyter core package
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/jupyter_core
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/bc/d0/8f57f733913fbd4ce1a01991b008bace8dcf05158080821c6de76b4c5d01/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
@@ -69,7 +70,7 @@ This package contains tests for %oname.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -138,6 +139,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt2.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
