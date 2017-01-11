@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname cubicweb-mailinglist
 Name: python-module-%oname
-Version: 1.7.2
+Version: 1.7.3
 Release: alt1
 Summary: Mailing-list component for the CubicWeb framework
 License: LGPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/cubicweb-mailinglist/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/6f/08/b49e521ec387f5c8d563aa88e141c0095317d262847704d7a6dbf180f019/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests cubicweb
@@ -24,7 +25,7 @@ can be used to archive mailing lists.
 This is not a mailing list manager!
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -41,6 +42,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt1
+- automated PyPI update
+
 * Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.2-alt1
 - Initial build for Sisyphus
 
