@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname sql
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5.1
-Release: alt1.git20140911.1
+Version: 0.8
+Release: alt1
 Summary: Library to write SQL queries
 License: BSD
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/python-sql/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/Tyba/python-sql.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/c5/4b/c8c15049bc683428c8248eb37a0f22e9ad20e7853f8215ca8deb023ed689/python-%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -55,7 +56,7 @@ python-sql is a library to write SQL queries in a pythonic way.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n python-%{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -106,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.1-alt1.git20140911.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
