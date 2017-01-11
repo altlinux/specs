@@ -3,15 +3,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0.2
-Release: alt1.1
+Version: 2.0.4
+Release: alt1
 Summary: Package provides Binary-, RedBlack- and AVL-Trees in Python and Cython
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/bintrees/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/7b/77/7e13390e242c72a460cdf4a4f878d3605d7490cea156e5991156458d2ffb/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-Cython
@@ -45,7 +45,7 @@ iterators/generators yielding data in sorted key order. Trees can be
 uses as drop in replacement for dicts in most cases.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 rm -f %oname/cython_trees.c
 
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.4-alt1
+- automated PyPI update
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.2-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
