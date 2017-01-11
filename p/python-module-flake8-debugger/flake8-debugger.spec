@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname flake8-debugger
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.3.2
-Release: alt1.git20141104.1
+Version: 1.4.0
+Release: alt1
 Summary: ipdb/pdb statement checker plugin for flake8
 License: MIT
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/flake8-debugger/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/JBKahn/flake8-debugger.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/d1/3f/0dd096c996c9c34acc5bc66c6b60895accc635e832e4e696446f12424348/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -41,7 +42,7 @@ Check for pdb;idbp imports and set traces.
 This module provides a plugin for ``flake8``, the Python code checker.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -84,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.2-alt1.git20141104.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
