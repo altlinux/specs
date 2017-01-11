@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname django-geckoboard
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2.7
-Release: alt1.git20131010.1
+Version: 2.0.0
+Release: alt1
 Summary: Geckoboard custom widgets for Django projects
 License: MIT
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/django-geckoboard/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/jcassee/django-geckoboard.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/ac/27/f65a549b7b795febc3173817550e58975c8230dc4b338e126527cc0b0fdd/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -77,7 +78,7 @@ widgets.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -125,6 +126,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.7-alt1.git20131010.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
