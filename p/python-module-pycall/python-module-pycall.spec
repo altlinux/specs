@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name pycall
 
 %def_with python3
 
 Name: python-module-%module_name
-Version: 2.1
-Release: alt1.git20121125.1.1
+Version: 2.3.0
+Release: alt1
 
 Summary: flexible python library for creating and using Asterisk call files
 License: Public Domain
@@ -12,7 +13,7 @@ Group: Development/Python
 Url: http://pycall.org/
 
 # https://github.com/rdegges/pycall.git
-Source: python-module-%module_name-%version.tar
+Source0: https://pypi.python.org/packages/f7/e6/2b3bd63b4b59cd6b3825950ffc80719fb6d5c90a697db73ac03053dd4336/%{module_name}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -41,7 +42,7 @@ Group: Development/Python3
 %summary
 
 %prep
-%setup
+%setup -q -n %{module_name}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -84,6 +85,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.1-alt1.git20121125.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
