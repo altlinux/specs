@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define oname clang
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.5
-Release: alt1.1.1
+Version: 3.8
+Release: alt1
 Summary: libclang python bindings
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/clang/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/5a/aa/22c42abe5bc0d6396f0fc7c24b4be793011c7bd6456ba78a4aca23e9cdb7/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests clang
@@ -49,7 +50,7 @@ https://github.com/llvm-mirror/clang/tree/master/bindings/python
 This is a fork. Mainly for Pypi packaging purposes.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -93,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.8-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
