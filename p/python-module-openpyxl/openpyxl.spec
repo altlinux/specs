@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define oname openpyxl
 %def_with python3
 
 Name:    python-module-%oname
-Version: 2.3.5
+Version: 2.4.1
 Release: alt1
 Summary: A Python library to read/write Excel 2007 xlsx/xlsm files
 License: MIT/Expat
@@ -10,7 +11,7 @@ Group:   Development/Python
 Url:     http://openpyxl.readthedocs.io
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source: %oname-%version.tar
+Source0: https://pypi.python.org/packages/dc/f2/c57f9f00f8ae5e1a73cb096dbf600433724f037ffcbd51c456f89da5efd9/%{oname}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -49,7 +50,7 @@ It was born from lack of existing library to read/write natively from
 Python the Office Open XML format.
 
 %prep
-%setup -q -n %oname-%version
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -92,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1
+- automated PyPI update
+
 * Wed Jun 08 2016 Andrey Cherepanov <cas@altlinux.org> 2.3.5-alt1
 - New version
 
