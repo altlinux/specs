@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %def_disable check
 
-%define version 2.6.2
+%define version 2.6.7
 %define release alt2.git20150620
 %define modulename markdown
 
@@ -9,8 +10,8 @@
 %setup_python_module %modulename
 
 Name: python-module-%modulename
-Version: %version
-Release: alt2.git20150620.1
+Version: 2.6.7
+Release: alt1
 
 Summary: Python implementation of Markdown text-to-HTML convertor.
 Group: Development/Python
@@ -19,7 +20,7 @@ Url: http://pypi.python.org/pypi/Markdown/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # git://github.com/waylan/Python-Markdown.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/d4/32/642bd580c577af37b00a1eb59b0eaa996f2d11dfe394f3dd0c7a8a2de81a/Markdown-%{version}.tar.gz
 
 BuildArch: noarch
 BuildPreReq: rpm-build-licenses
@@ -67,7 +68,7 @@ possible while being structured enough to allow conversion to other formats.
 This package contains documentation for Markdown.
 
 %prep
-%setup
+%setup -q -n Markdown-%{version}
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -120,6 +121,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.6.7-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.6.2-alt2.git20150620.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
