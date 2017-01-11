@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define shortname simplejson
 
 %def_with python3
 
 Name: python-module-simplejson
-Version: 3.8.0
-Release: alt1.1
+Version: 3.10.0
+Release: alt1
 
 Summary: Simplejson is a simple, fast, extensible JSON encoder/decoder for Python
 License: MIT/X Consortium
@@ -12,7 +13,7 @@ Group: Development/Python
 
 Url: http://undefined.org/python/#simplejson
 
-Source0: %shortname-%version.tar
+Source0: https://pypi.python.org/packages/40/ad/52c1f3a562df3b210e8f165e1aa243a178c454ead65476a39fa3ce1847b6/simplejson-%{version}.tar.gz
 Patch: simplejson-3.5.3-alt-python3.patch
 
 BuildRequires: python-module-setuptools python-module-sphinx
@@ -51,7 +52,7 @@ This package contains documentation for simplejson.
 
 
 %prep
-%setup -n %shortname-%version
+%setup -q -n simplejson-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -106,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt1
+- automated PyPI update
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.8.0-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
