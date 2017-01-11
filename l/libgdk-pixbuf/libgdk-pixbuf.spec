@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name gdk-pixbuf
 %define api_ver 2.0
@@ -14,7 +14,7 @@
 
 Name: lib%_name
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
@@ -166,7 +166,7 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 %check
 # due to version script
 echo : >>%_name/abicheck.sh
-#%make check
+%make check
 
 %files
 %_bindir/gdk-pixbuf-query-loaders
@@ -210,9 +210,11 @@ echo : >>%_name/abicheck.sh
 %_libdir/*.so
 %dir %_includedir/%_name-%api_ver
 %_includedir/%_name-%api_ver/%_name
+%_pkgconfigdir/%_name-%api_ver.pc
+%if_with x11
 %_includedir/%_name-%api_ver/%_name-xlib
-%_libdir/pkgconfig/%_name-%api_ver.pc
-%_libdir/pkgconfig/%_name-xlib-%api_ver.pc
+%_pkgconfigdir/%_name-xlib-%api_ver.pc
+%endif
 %_man1dir/gdk-pixbuf-csource*
 
 %files devel-doc
@@ -234,6 +236,11 @@ echo : >>%_name/abicheck.sh
 
 
 %changelog
+* Wed Jan 11 2017 Yuri N. Sedunov <aris@altlinux.org> 2.36.3-alt2
+- updated to 2.36.3-8-gbab37cd (fixed BGO ##442452, 768062, 776945)
+- enabled %%check again
+- fixed build without x11 support (ALT #32987)
+
 * Fri Jan 06 2017 Yuri N. Sedunov <aris@altlinux.org> 2.36.3-alt1
 - 2.36.3
 - built with included png module
