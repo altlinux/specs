@@ -1,18 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define oname trollius
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.0
-Release: alt2.1
+Version: 2.1
+Release: alt1
 Summary: Port of the Tulip project (asyncio module, PEP 3156) on Python 2
 License: ASLv2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/trollius/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/6e/72/5940cfb765488cfe1b62883a0d0e5438f4fc17cfefd4fb4654a5982be852/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests /dev/pts
@@ -99,7 +100,7 @@ primitives.
 This package contains documentation for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -169,6 +170,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
