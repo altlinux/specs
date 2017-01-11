@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname robotframework-lint
 
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.5
-Release: alt1.git20150205
+Version: 0.7
+Release: alt1
 Summary: Static analysis tool for robotframework plain text files
 License: ASLv2.0
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/robotframework-lint
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/boakley/robotframework-lint.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/27/bf/9caeefff91e49aab3ed8262172251b623fe529674424c86bf2a1345aa801/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -44,7 +45,7 @@ This is a static analysis tool for robot framework plain text files.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -98,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1
+- automated PyPI update
+
 * Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1.git20150205
 - Version 0.5
 
