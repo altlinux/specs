@@ -1,17 +1,19 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: unzip
 %define oname pytest-remove-stale-bytecode
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0
-Release: alt1.1
+Version: 2.1
+Release: alt1
 Summary: py.test plugin to remove stale byte code files
 License: ZPL
 Group: Development/Python
 Url: https://pypi.python.org/pypi/pytest-remove-stale-bytecode
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/3d/29/8389e329a55beb7b752d94fc28e9acaf6c3e6791f17cec86736a47853294/%{oname}-%{version}.zip
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -35,7 +37,7 @@ makes sure that removed python files are no longer visible for the test
 runner as their bytecode file (*.pyc, *.pyo) is removed as well.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -78,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
