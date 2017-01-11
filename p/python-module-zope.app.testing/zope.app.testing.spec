@@ -1,12 +1,13 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev.git20141223.1.1
+Release: alt1
 %define oname zope.app.testing
 
 %def_with python3
 
 Name: python-module-%oname
 Epoch: 1
-Version: 3.9.1
+Version: 3.10.0
 #Release: alt1.dev.git20141223.1
 Summary: Zope Application Testing Support
 License: ZPL
@@ -14,7 +15,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.app.testing/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/b7/72/f62c1c79d691260235f1ebe48f954d2fdffc253bcb14623550e242a366dd/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -87,7 +88,7 @@ write functional tests.
 This package contains core files for zope.app.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -148,6 +149,9 @@ touch %buildroot%python3_sitelibdir/zope/app/__init__.py
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.10.0-alt1
+- automated PyPI update
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:3.9.1-alt1.dev.git20141223.1.1
 - (AUTO) subst_x86_64.
 
