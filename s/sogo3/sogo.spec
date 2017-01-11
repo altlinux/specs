@@ -3,7 +3,7 @@
 
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo3
-Version:      3.2.4
+Version:      3.2.5
 Release:      alt1
 
 License:      GPL
@@ -398,6 +398,9 @@ fi
 %preun_service sogo
 
 %changelog
+* Wed Jan 11 2017 Andrey Cherepanov <cas@altlinux.org> 3.2.5-alt1
+- new version 3.2.5
+
 * Tue Dec 06 2016 Andrey Cherepanov <cas@altlinux.org> 3.2.4-alt1
 - new version 3.2.4
 
