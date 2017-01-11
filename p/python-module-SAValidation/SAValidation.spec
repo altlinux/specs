@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname SAValidation
 Name: python-module-%oname
-Version: 0.3.0
+Version: 0.4.1
 Release: alt1
 Summary: Active Record like validation on SQLAlchemy declarative model objects
 License: BSD
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/SAValidation/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/77/b9/b88e840e46266c99b3a35cfe77272302b6023ee2fa3d2d408ca873268b72/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests python-module-nose
@@ -35,7 +36,7 @@ declarative model objects.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -55,6 +56,9 @@ python setup.py test
 %python_sitelibdir/*/tests
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1
+- automated PyPI update
+
 * Sat Jan 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1
 - Initial build for Sisyphus
 
