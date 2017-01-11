@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define pkgname requests
 %def_with python3
 
 Name:           python-module-requests
-Version:        2.10.0
+Version:        2.12.4
 Release:        alt1
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python
@@ -10,7 +11,7 @@ Group:          Development/Python
 License:        ASL 2.0
 URL:            http://pypi.python.org/pypi/requests
 # https://github.com/kennethreitz/requests.git
-Source0:        %name-%version.tar
+Source0:        https://pypi.python.org/packages/5b/0b/34be574b1ec997247796e5d516f3a6b6509c4e064f2885a96ed885ce7579/requests-%{version}.tar.gz
 # Explicitly use the system certificates in ca-certificates.
 # https://bugzilla.redhat.com/show_bug.cgi?id=904614
 Patch0:         python-requests-system-cert-bundle.patch
@@ -63,7 +64,7 @@ designed to make HTTP requests easy for developers.
 %endif
 
 %prep
-%setup
+%setup -q -n requests-%{version}
 
 #patch0 -p1
 #patch1 -p1
@@ -126,6 +127,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.12.4-alt1
+- automated PyPI update
+
 * Fri May 6 2016 Vladimir Didenko <cow@altlinux.ru> 2.10.0-alt1
 - 2.10.0
 
