@@ -1,6 +1,6 @@
 %define oname BlazeUtils
 Name: python-module-%oname
-Version: 0.4.4
+Version: 0.5.2
 Release: alt1
 Summary: A collection of python utility functions and classes
 License: BSD
@@ -8,7 +8,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/BlazeUtils/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/ea/6b/d966ca26c756e3c7d5cc6bffe288c38bf0d6955e1f8c6580190b4c05b940/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests python-module-wrapt
@@ -43,7 +43,7 @@ family:
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -64,6 +64,9 @@ nosetests
 %python_sitelibdir/*/testing.*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt1
+- automated PyPI update
+
 * Sat Jan 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.4-alt1
 - Initial build for Sisyphus
 
