@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt3.1.1
+Release: alt1
 %define oname zope.catalog
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.0
+Version: 4.1.0
 #Release: alt3.1
 Summary: Cataloging and Indexing Framework for the Zope Toolkit
 License: ZPLv2.1
@@ -13,7 +14,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.catalog/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/ea/f4/87706b8d3e207589117ab9eee792ead2639388e80df149b3a48ca7479a00/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -65,7 +66,7 @@ basic search algorithm.
 This package contains tests for zope.catalog.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -122,6 +123,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.1.0-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.0-alt3.1.1
 - (AUTO) subst_x86_64.
 
