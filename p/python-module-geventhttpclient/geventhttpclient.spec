@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname geventhttpclient
 Name: python-module-%oname
-Version: 1.1.0
+Version: 1.3.1
 Release: alt1
 Summary: http client library for gevent
 License: MIT
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/geventhttpclient/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/35/41/33b552d780c1fef6427cbb314a69e8303a59e51b6aac25e07ded46aef6fa/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 
@@ -29,7 +30,7 @@ like Twitter's.
 Safe SSL support is provided by default.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -42,6 +43,9 @@ Safe SSL support is provided by default.
 %python_sitelibdir/*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1
+- automated PyPI update
+
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus
 
