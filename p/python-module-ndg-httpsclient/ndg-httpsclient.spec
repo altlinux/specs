@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.1.1.1
+Release: alt1
 %define oname ndg-httpsclient
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.0
+Version: 0.4.2
 #Release: alt2.1.1
 
 Summary: Provides enhanced HTTPS support for httplib and urllib2 using PyOpenSSL
@@ -14,7 +15,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/ndg-httpsclient/
 Packager: Python Development Team <python@packages.altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/a2/a7/ad1c1c48e35dc7545dab1a9c5513f49d5fa3b5015627200d2be27576c2a0/ndg_httpsclient-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-python
 #BuildPreReq: python-module-setuptools python-module-epydoc
@@ -102,7 +103,7 @@ Group: Development/Python
 This package contains core module of ndg.
 
 %prep
-%setup
+%setup -q -n ndg_httpsclient-%{version}
 
 %if_with python3
 rm -rf ../python3
@@ -192,6 +193,9 @@ rm -f documentation/Makefile
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1
+- automated PyPI update
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.0-alt2.1.1.1
 - (AUTO) subst_x86_64.
 
