@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define oname ply
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.8
+Version: 3.9
 Release: alt1
 
 Summary: lex and yacc python implementation
@@ -12,7 +13,7 @@ License: LGPL
 Group: Development/Python
 Url: http://www.dabeaz.com/ply/
 
-Source: http://www.dabeaz.com/ply/%oname-%version.tar.bz2
+Source0: https://pypi.python.org/packages/a8/4d/487e12d0478ee0cbb15d6fe9b8916e98fe4e2fce4cc65e4de309209c0b24/%{oname}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -42,7 +43,7 @@ and yacc.
 %endif
 
 %prep
-%setup -q -n %oname-%version
+%setup -q -n %{oname}-%{version}
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -79,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.9-alt1
+- automated PyPI update
+
 * Fri Apr 22 2016 Vitaly Lipatov <lav@altlinux.ru> 3.8-alt1
 - new version 3.8 (with rpmrb script)
 
