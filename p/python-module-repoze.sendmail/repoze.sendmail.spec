@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.git20140222.1.1.1
+Release: alt1
 %define oname repoze.sendmail
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.2
+Version: 4.3
 #Release: alt2.git20140222.1.1
 Summary: Send e-mails transactionally (originally cloned from zope.sendmail)
 License: Repoze Public License
@@ -14,7 +15,7 @@ Url: https://github.com/repoze/repoze.sendmail
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/repoze/repoze.sendmail.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/54/60/102fdd3a16f3d42f6b3e429116ac190a2c78c629d50a82cbc7d4193c7cdc/%{oname}-%{version}.tar.gz
 
 #BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-sphinx-devel
@@ -148,7 +149,7 @@ more generally useful to users of other frameworks.
 This package contains documentation for repoze.sendmail.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -229,6 +230,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.3-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.2-alt2.git20140222.1.1.1
 - (AUTO) subst_x86_64.
 
