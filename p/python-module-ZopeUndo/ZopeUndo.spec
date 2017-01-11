@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: unzip
 %define oname ZopeUndo
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.1
-Release: alt1.dev.git20130313.1
+Version: 4.1
+Release: alt1
 Summary: ZODB undo support for Zope2
 License: ZPLv2.1
 Group: Development/Python
@@ -12,7 +14,7 @@ Url: http://pypi.python.org/pypi/ZopeUndo/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/zopefoundation/ZopeUndo.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/ce/40/51bc73896bdc23e1e16db55530c54f293d40d0a2c41e5a79efd4ea66dc1c/%{oname}-%{version}.zip
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -68,7 +70,7 @@ management.
 This package contains tests for ZopeUndo.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -114,6 +116,9 @@ python setup.py test
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.1-alt1.dev.git20130313.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
