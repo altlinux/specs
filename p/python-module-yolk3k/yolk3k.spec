@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oldname yolk
 %define oname yolk3k
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.4
-Release: alt1.git20140628.1
+Version: 0.9
+Release: alt1
 Summary: Command-line tool for querying PyPI and Python packages installed on your system
 License: BSD
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/yolk3k/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/myint/yolk.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/b1/4d/8d00d5e7c07c7969f2134c5af082d338ebcc6027e2ea6c0d6a6bc149d0ec/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -50,7 +51,7 @@ You can see which packages are active, non-active or in development mode
 and show you which have newer versions available by querying PyPI.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -95,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.4-alt1.git20140628.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
