@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname cubicweb-tracker
 Name: python-module-%oname
-Version: 1.16.3
+Version: 1.18.0
 Release: alt1
 Summary: Basic tracker with project, version, ticket for the CubicWeb framework
 License: LGPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/cubicweb-tracker/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/67/1d/e75035177570a53ec38cd01293ef94c7ae17a898fd9c22ede0dbad3cd8c1/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests cubicweb
@@ -30,7 +31,7 @@ targeted as a base for more featurefull forges or configuration
 management systems, such as the forge cube.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -47,6 +48,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.18.0-alt1
+- automated PyPI update
+
 * Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.16.3-alt1
 - Version 1.16.3
 
