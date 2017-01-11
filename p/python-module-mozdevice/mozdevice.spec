@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname mozdevice
 Name: python-module-%oname
-Version: 0.44
+Version: 0.48
 Release: alt1
 Summary: Mozilla-authored device management
 License: MPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/mozdevice/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/d5/bf/5a305d6b80f2b7e49904c366e95a6e2a67141a5a6c4d1472d4bfdfb82bff/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests
@@ -21,7 +22,7 @@ BuildPreReq: python-module-moznetwork python-module-mozprocess
 Mozilla-authored device management.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -38,6 +39,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1
+- automated PyPI update
+
 * Tue Dec 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.44-alt1
 - Initial build for Sisyphus
 
