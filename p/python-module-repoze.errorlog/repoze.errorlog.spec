@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.git20150207.1.1
+Release: alt1
 %define oname repoze.errorlog
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.0
+Version: 1.1
 #Release: alt1.dev0.git20150207.1
 Summary: WSGI middleware: intercept / log / browse exceptions
 License: BSD
@@ -14,7 +15,7 @@ Url: https://github.com/repoze/repoze.errorlog
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/repoze/repoze.errorlog.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/f9/a0/cac87efb7ac8098d03760df3ffa6a71333db7d0e4bb26a15a9c1d2706957/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -69,7 +70,7 @@ allows the browsing of limited exception history via a browser UI.
 This package contains tests for repoze.errorlog.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -127,6 +128,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1
+- automated PyPI update
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.0-alt1.dev0.git20150207.1.1
 - (AUTO) subst_x86_64.
 
