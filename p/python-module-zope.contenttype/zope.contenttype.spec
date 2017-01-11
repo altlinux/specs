@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.git20150223.1.1
+Release: alt1
 %define oname zope.contenttype
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.1
+Version: 4.2.0
 #Release: alt1.dev0.git20150223.1
 Summary: Zope contenttype
 License: ZPL
@@ -14,7 +15,7 @@ Url: http://pypi.python.org/pypi/zope.contenttype/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/zopefoundation/zope.contenttype.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/e0/56/25c9ea14b6632a9e90f96ecc88e10caf743e66a6365b06d6ff881e16af06/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
@@ -59,7 +60,7 @@ A utility module for content-type handling.
 This package contains tests for zope.contenttype.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -122,6 +123,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1
+- automated PyPI update
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.1-alt1.dev0.git20150223.1.1
 - (AUTO) subst_x86_64.
 
