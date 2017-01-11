@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname process-tests
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.0
-Release: alt1.git20150618.1
+Version: 1.2.1
+Release: alt1
 Summary: Tools for testing processes
 License: BSD
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/process-tests/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/ionelmc/python-process-tests.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/fc/02/f74f38b10331e90ec7fd022f899c53d08e9802a35b97a57acd890bac5cce/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -35,7 +36,7 @@ Group: Development/Python3
 Testcase classes and assertions for testing processes.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -78,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.0-alt1.git20150618.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
