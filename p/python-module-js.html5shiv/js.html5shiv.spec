@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.hg20130504.1.1
+Release: alt1
 %define oname js.html5shiv
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.6.2.2
+Version: 3.7.3
 #Release: alt1.dev0.hg20130504.1
 Summary: Fanstatic packaging of html5shiv
 License: BSD
@@ -14,7 +15,7 @@ Url: https://pypi.python.org/pypi/js.html5shiv/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # hg clone https://bitbucket.org/fanstatic/js.html5shiv
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/de/dc/b051382290657f45a311681753b649e4d1670627596bc33a0e5d278cb31f/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -38,7 +39,7 @@ Group: Development/Python
 This library packages html5shiv for fanstatic.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -77,6 +78,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.7.3-alt1
+- automated PyPI update
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.6.2.2-alt1.dev0.hg20130504.1.1
 - (AUTO) subst_x86_64.
 
