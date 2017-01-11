@@ -9,9 +9,9 @@
 Name: adobe-flash-player-ppapi
 %define bin_name ppapi-plugin-adobe-flash
 %define ver_fake   24
-%define ver_ix86   24.0.0.186
-%define ver_x86_64 24.0.0.186
-Release: alt1
+%define ver_ix86   24.0.0.194
+%define ver_x86_64 24.0.0.194
+Release: alt2
 Epoch: 3
 
 %define ver_real %ver_fake
@@ -50,8 +50,8 @@ Version: %ver_real
 Group: Networking/WWW
 Summary: Adobe Flash Player
 Requires: libcurl /usr/bin/xdg-open
-#Provides: flash-plugin = %version-%release
-#Obsoletes: flash-plugin <= %version
+Provides: flash-player-ppapi = %version-%release
+Obsoletes: flash-player-ppapi <= %version
 %description -n %bin_name
 Adobe Flash Player %version (Macromedia Flash)
 Fully Supported: Mozilla 1.0+, Netscape 7.x, Firefox 0.8+
@@ -139,6 +139,14 @@ echo "At this moment no x86 version of %name"
 %endif
 
 %changelog
+* Wed Jan 11 2017 Sergey V Turchin <zerg@altlinux.org> 3:24-alt2
+- new version
+- security fixes:
+  CVE-2017-2925, CVE-2017-2926, CVE-2017-2927, CVE-2017-2928,
+  CVE-2017-2930, CVE-2017-2931, CVE-2017-2932, CVE-2017-2933,
+  CVE-2017-2934, CVE-2017-2935, CVE-2017-2936, CVE-2017-2937,
+  CVE-2017-2938
+
 * Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 3:24-alt1
 - new version
 - security fixes:
