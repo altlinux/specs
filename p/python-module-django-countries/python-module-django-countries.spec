@@ -1,18 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20141027.1.1
+Release: alt1
 %define module_name django-countries
 
 %def_with python3
 
 Name: python-module-%module_name
-Version: 3.0.1
+Version: 4.0
 #Release: alt1.git20141027.1
 Group: Development/Python
 License: BSD License
 Summary: Provides a country field for Django models.
 URL: https://pypi.python.org/pypi/django-countries
 # https://github.com/SmileyChris/django-countries.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/91/88/c99df63539deafc9306158e65965e1774eebf3a9f39c8bb2314369fb79a8/%{module_name}-%{version}.tar.gz
 
 BuildPreReq: python-module-setuptools
 %if_with python3
@@ -34,7 +35,7 @@ Group: Development/Python3
 Provides a country field for Django models.
 
 %prep
-%setup
+%setup -q -n %{module_name}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -73,6 +74,9 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0.1-alt1.git20141027.1.1
 - (AUTO) subst_x86_64.
 
