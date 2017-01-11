@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define oname PyAMF
 Name: python-module-%oname
-Version: 0.6.1
-Release: alt2
+Version: 0.8.0
+Release: alt1
 Summary: AMF support for Python
 License: MIT
 Group: Development/Python
 Url: http://pypi.python.org/pypi/PyAMF/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/a0/06/43976c0e3951b9bf7ba0d7d614a8e3e024eb5a1c6acecc9073b81c94fb52/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools-tests
 
@@ -62,7 +63,7 @@ and more.
 This package contains documentation for PyAMF.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -83,6 +84,9 @@ This package contains documentation for PyAMF.
 %doc doc/*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1
+- automated PyPI update
+
 * Wed Sep 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt2
 - Fixed build
 
