@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.1.1
+Release: alt1
 %define oname repoze.postoffice
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.24
+Version: 0.25
 #Release: alt2.1
 Summary: Provides central depot for incoming mail for use by applications
 License: BSD
@@ -13,7 +14,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/repoze.postoffice/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/17/fc/0d30131dd129dec51583aab7c20968823f3a7d5b73d67c9d4b22a82d06c5/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -96,7 +97,7 @@ context of a transaction, relatively simple.
 This package contains tests for repoze.postoffice.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -162,6 +163,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.24-alt2.1.1
 - (AUTO) subst_x86_64.
 
