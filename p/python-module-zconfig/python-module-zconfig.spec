@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define modulename zconfig
 
 %def_with python3
 
 Name: python-module-%modulename
-Version: 3.0.5
-Release: alt3.dev.git20140320.1
+Version: 3.1.0
+Release: alt1
 
 Summary: Python configuration module from Zope
 License: ZPL
@@ -14,7 +15,7 @@ Url: http://pypi.python.org/pypi/ZConfig/
 BuildArch: noarch
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/52/b3/a96d62711a26d8cfbe546519975dc9ed54d2eb50b3238d2e6de045764796/ZConfig-%{version}.tar.gz
 
 %setup_python_module %modulename
 BuildPreReq: python-module-setuptools-tests
@@ -102,7 +103,7 @@ library, and is more suitable to configuration-intensive applications.
 This package contains tests for ZConfig.
 
 %prep
-%setup
+%setup -q -n ZConfig-%{version}
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -161,6 +162,9 @@ python setup.py test
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0.5-alt3.dev.git20140320.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
