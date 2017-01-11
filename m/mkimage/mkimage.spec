@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.19
+Version: 0.2.19.1
 Release: alt1
 
 Summary: Simple image creator
@@ -26,7 +26,6 @@ files (called `templates').
 %package preinstall
 Summary: Security setup for mkimage to function properly
 Group: Development/Other
-Requires: sysfsutils
 
 %description preinstall
 This package contains settings allowing mkimage to operate
@@ -58,6 +57,7 @@ Remove %name-preinstall subpackage and run this to re-enable:
 %makeinstall_std
 mkdir -p %buildroot%sysctldir
 echo "fs.protected_hardlinks = 0" > %buildroot%sysctldir/49-%name.conf
+ln -s 49-%name.conf %buildroot%sysctldir/51-%name.conf	# *sigh*
 
 %post
 if grep -Fqsx 1 "%procfile"; then
@@ -76,13 +76,18 @@ fi
 %doc examples doc/README.ru
 
 %files preinstall
-%config(noreplace) %sysctldir/49-%name.conf
+%config(noreplace) %sysctldir/??-%name.conf
 
 # TODO:
 # - consider %%postun preinstall to restore the variable value
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Wed Jan 11 2017 Michael Shigorin <mike@altlinux.org> 0.2.19.1-alt1
+- preinstall:
+  + added 51- to 49- to encircle 50-default regardless of order
+  + dropped R: sysfsutils as irrelevant (thx snejok@)
+
 * Wed Jan 11 2017 Michael Shigorin <mike@altlinux.org> 0.2.19-alt1
 - preinstall: fixed sysctl file name, *thanks* snejok@ (closes: #30351)
 - mki-copy-efiboot: adjusted for dosfstools-3.0 either
