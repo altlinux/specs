@@ -6,8 +6,8 @@
 
 %define oname BeautifulSoup4
 Name: python-module-%oname
-Version: 4.4.0
-Release: alt1.1.1
+Version: 4.5.3
+Release: alt1
 
 Summary: HTML/XML parser for quick-turnaround applications like screen-scraping
 
@@ -19,7 +19,7 @@ BuildArch: noarch
 
 %setup_python_module %oname
 
-Source: BeautifulSoup-%version.tar.bz2
+Source0: https://pypi.python.org/packages/9b/a5/c6fa2d08e6c671103f9508816588e0fb9cec40444e8e72993f3d4c325936/beautifulsoup4-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-setuptools
@@ -73,7 +73,7 @@ This package contains tests for BeautifulSoup4.
 %endif
 
 %prep
-%setup -n BeautifulSoup-%version
+%setup -q -n beautifulsoup4-%{version}
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -128,6 +128,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.5.3-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.4.0-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
