@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define oname mockup
 Name: python-module-%oname
-Version: 2.0.6
-Release: alt1.git20150726
+Version: 2.1.6
+Release: alt1
 Summary: A collection of client side patterns for faster and easier web development
 License: BSD
 Group: Development/Python
@@ -9,7 +10,7 @@ Url: https://pypi.python.org/pypi/mockup/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/plone/mockup.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/23/64/3d078c318aa8f5979fbe09f1fa5dbf1d4c6710aa22b8e3a714199dcd0d5c/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests
@@ -41,7 +42,7 @@ story.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -61,6 +62,9 @@ python setup.py test
 %python_sitelibdir/*/tests
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.6-alt1
+- automated PyPI update
+
 * Mon Jul 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.6-alt1.git20150726
 - Version 2.0.6
 
