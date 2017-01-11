@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.1.1
+Release: alt1
 %define oname z3c.coverage
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0.2
+Version: 2.0.3
 #Release: alt2.1
 Summary: A script to visualize coverage reports via HTML
 License: ZPL
@@ -13,7 +14,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/z3c.coverage/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/91/52/79e1c14c7f3a75da57d66e439199dec31e4220863200e05d4d1a3a66f307/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -74,7 +75,7 @@ any regressions (increases in the number of untested lines).
 This package contains tests for z3c.coverage.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -141,6 +142,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.2-alt2.1.1
 - (AUTO) subst_x86_64.
 
