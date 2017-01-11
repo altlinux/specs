@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define oname ipaddress
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.16
+Version: 1.0.18
 Release: alt1
 Summary: IPv4/IPv6 manipulation library
 License: Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/ipaddress/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/phihag/ipaddress.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/4e/13/774faf38b445d0b3a844b65747175b2e0500164b7c28d78e34987a5bfe06/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -35,7 +36,7 @@ Group: Development/Python3
 Port of the 3.3+ ipaddress module to 2.6 and 2.7.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -80,6 +81,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.18-alt1
+- automated PyPI update
+
 * Fri May 6 2016 Vladimir Didenko <cow@altlinux.org> 1.0.16-alt1
 - New version
 
