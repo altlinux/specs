@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname grampg
 Name: python-module-%oname
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 Summary: Simple and flexible password generation library
 License: AGPLv3
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/grampg/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/84/6f/63cee4b51ee20b737606c3e682673f3d4c9697fae7147e9bc5beefa42e58/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests
@@ -54,7 +55,7 @@ declarative line.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -74,6 +75,9 @@ python setup.py test
 %python_sitelibdir/*/tests
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1
+- automated PyPI update
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1
 - Initial build for Sisyphus
 
