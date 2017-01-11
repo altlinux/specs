@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname lz4
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7.0
-Release: alt1.git20140728.1.1
+Version: 0.8.2
+Release: alt1
 Summary: LZ4 Bindings for Python
 License: BSD
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/lz4/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/steeve/python-lz4.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/b5/f0/e1de2bb7feb54011f3c4dcf35b7cca3536e19526764db051b50ea26b58e7/%{oname}-%{version}.tar.gz
 
 #BuildPreReq: liblz4-devel
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -43,7 +44,7 @@ This package provides bindings for the lz4 compression library by Yann
 Collet.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -86,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.2-alt1
+- automated PyPI update
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.0-alt1.git20140728.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
