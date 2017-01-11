@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pysndfile
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.10
-Release: alt1.1.1
+Version: 0.2.11
+Release: alt1
 Summary: Cython wrapper class for reading/writing soundfiles using libsndfile
 License: LGPLv3
 Group: Development/Python
 Url: https://pypi.python.org/pypi/pysndfile/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/88/63/a874ab001fa26dcf5dfbd382210f78ad0f99194fb09b06e23d91204207ec/%{oname}-%{version}.tar.gz
 
 #BuildPreReq: gcc-c++ clang-devel libsndfile-devel
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -54,7 +55,7 @@ Due to the use of libsndfile nearly all sound file formats, (besides mp3
 and derived formats) can be read and written with PySndfile.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 rm -f *.cpp
 
@@ -101,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.11-alt1
+- automated PyPI update
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.10-alt1.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
