@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname gevent-websocket
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.3
-Release: alt1.hg20140424.1.1
+Version: 0.9.5
+Release: alt1
 Summary: Websocket handler for the gevent pywsgi server, a Python network library
 License: BSD
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: http://pypi.python.org/pypi/gevent-websocket/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # hg clone https://bitbucket.org/Jeffrey/gevent-websocket
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/de/93/6bc86ddd65435a56a2f2ea7cc908d92fea894fc08e364156656e71cc1435/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-distribute
@@ -46,7 +47,7 @@ library.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -80,6 +81,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.5-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.3-alt1.hg20140424.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
