@@ -1,18 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define oname whois
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.4
-Release: alt1.1.1
+Version: 0.6.4
+Release: alt1
 Summary: Whois querying and parsing of domain registration information
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/python-whois
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/4e/7d/dafe428145b6e712d12442abef54167e530ba54bf7ae6cf9e654233eabfb/python-%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -59,7 +60,7 @@ Goal:
 %endif
 
 %prep
-%setup
+%setup -q -n python-%{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -102,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.4-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
