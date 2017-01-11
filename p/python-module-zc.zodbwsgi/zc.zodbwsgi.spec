@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1
+Release: alt1
 %define oname zc.zodbwsgi
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.0
+Version: 1.2.0
 #Release: alt1.1
 Summary: WSGI Middleware for Managing ZODB Database Conections
 License: ZPLv2.1
@@ -13,7 +14,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/zc.zodbwsgi/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/8b/1d/c4d29143e557dc51efc39660ed21708603c73d122c303ea18d9e9fba1a62/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -101,7 +102,7 @@ It is designed to work with paste deployment and provides a
 This package contains tests for zc.zodbwsgi.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -156,6 +157,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.0-alt1.1.1
 - (AUTO) subst_x86_64.
 
