@@ -1,18 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define oname dugong
 
 %def_without python2
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.4
-Release: alt1.1
+Version: 3.7
+Release: alt1
 Summary: Provides an API for communicating with HTTP 1.1 servers
 License: PSFLv2
 Group: Development/Python
 Url: https://pypi.python.org/pypi/dugong/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/96/fa/f51e468fd3229c296a742d2c7222bb66f0cb9226ce7f3282e9b1dede7dff/%{oname}-%{version}.tar.bz2
 BuildArch: noarch
 
 %if_with python2
@@ -46,7 +47,7 @@ servers. It is an alternative to the standard library's http.client
 (formerly httplib) module.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %prepare_sphinx .
 ln -s ../objects.inv rst/
@@ -102,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.7-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.4-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
