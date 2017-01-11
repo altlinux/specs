@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define oname urlparse3
 
 %def_without python3
 
 Name: python-module-%oname
-Version: 1.0.3
-Release: alt2
+Version: 1.1
+Release: alt1
 Summary: Simple and powerful url parsing tool
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/urlparse3/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/10/0e/7645258aada05f6145ff60ee4d117d06400afea1039d3d15a18b71a06176/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -58,7 +59,7 @@ This package contains tests for %oname.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -114,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1
+- automated PyPI update
+
 * Wed Mar 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt2
 - Fixed build
 
