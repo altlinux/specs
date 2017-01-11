@@ -1,6 +1,6 @@
 %define oname apycot
 Name: python-module-%oname
-Version: 3.2.1
+Version: 3.4.2
 Release: alt1
 Summary: Continuous testing / integration tool for the CubicWeb framework
 License: GPL
@@ -8,7 +8,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/apycot/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/06/24/88b5a17dc820c629dc061127ed9c82a7c2aa2c4aeadc25cf93e6f4e5676c/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests cubicweb
@@ -36,7 +36,7 @@ Apycot is an Automated Python Code Testing platform built on narval and
 cubicweb.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -54,6 +54,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.4.2-alt1
+- automated PyPI update
+
 * Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt1
 - Version 3.2.1
 
