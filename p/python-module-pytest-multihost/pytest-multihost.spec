@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pytest-multihost
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4
-Release: alt1.git20141209.1.1
+Version: 1.1
+Release: alt1
 Summary: Utility for writing multi-host tests for pytest
 License: GPLv3
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/pytest-multihost
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://git.fedorahosted.org/git/python-pytest-multihost.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/6b/ad/d71a4e8cbcd0d5dfcca90562e17dddb0d1a137d9f35baa048fa7f08d6208/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-modules-json
@@ -44,7 +45,7 @@ Group: Development/Python3
 A pytest plugin for multi-host testing.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -87,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4-alt1.git20141209.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
