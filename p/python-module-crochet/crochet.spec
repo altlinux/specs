@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname crochet
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.0
-Release: alt1.git20150505.1.1
+Version: 1.6.0
+Release: alt1
 Summary: Use Twisted anywhere!
 License: MIT
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/crochet
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/itamarst/crochet.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/d8/25/97bdfed382ce9087e0d8b4aa0f097774fd8c53c1a76e2310613808c9d8ba/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests git
@@ -128,7 +129,7 @@ from regular blocking code. Some use cases include:
 This package contains pickles for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 sed -i 's|@VERSION@|%version|' %oname/_version.py
 
 git config --global user.email "real at altlinux.org"
@@ -200,6 +201,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.4.0-alt1.git20150505.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
