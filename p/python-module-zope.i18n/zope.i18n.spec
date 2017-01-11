@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1.1
+Release: alt1
 %define oname zope.i18n
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.1
+Version: 4.1.0
 #Release: alt1.1.1
 Summary: Zope Internationalization Support
 License: ZPLv2.1
@@ -13,7 +14,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.i18n
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/52/16/846c445fe3009b9180618145b86aeebc1c851a3da1cb9893a51c8b45d567/%{oname}-%{version}.tar.gz
 
 #BuildPreReq: python-devel python-module-zope python-module-setuptools
 %if_with python3
@@ -84,7 +85,7 @@ localization.
 This package contains tests for zope.i18n.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -143,6 +144,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.1.0-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.1-alt1.1.1.1
 - (AUTO) subst_x86_64.
 
