@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.dev0.git20150225.1
+Release: alt1
 %define oname zodbbrowser
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.12.1
+Version: 0.13.0
 #Release: alt2.dev0.git20150225
 Summary: ZODB browser
 License: ZPLv2.1
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/zodbbrowser/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mgedmin/zodbbrowser.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/33/09/5dee00673388e7616e223423cbf5e9186310baceb67166ce3ed751411c11/%{oname}-%{version}.tar.gz
 
 BuildRequires: python-module-coverage python-module-pytest python-module-zope.app.server python-module-zope.app.session python-module-zope.app.testing python-module-zope.testrunner
 
@@ -83,7 +84,7 @@ ZODB, view their attributes and historical changes made to them.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -110,6 +111,9 @@ py.test -vv
 %python_sitelibdir/*/*test*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.13.0-alt1
+- automated PyPI update
+
 * Wed Jun 15 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.12.1-alt2.dev0.git20150225.1
 - (AUTO) subst_x86_64.
 
