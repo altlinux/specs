@@ -4,7 +4,7 @@
 
 Name: freerdp
 Version: 2.0.0
-Release: alt0.git20160411
+Release: alt0.git20170109
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -22,7 +22,7 @@ BuildRequires: cmake gcc-c++
 BuildRequires: docbook-style-xsl git-core xmlto libpcre-devel
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(libpcsclite)
-BuildRequires: pkgconfig(libsystemd-journal)
+BuildRequires: pkgconfig(libsystemd)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-scanner)
@@ -122,22 +122,6 @@ Requires: libwinpr = %EVR
 The libwinpr-devel package contains libraries and header files for
 developing applications that use libwinpr.
 
-%package -n librdtk
-Summary: Remote Desktop Toolkit library
-Group: System/Libraries
-
-%description -n librdtk
-Remote Desktop Toolkit library. Contains the librtk libraries.
-
-%package -n librdtk-devel
-Summary: Remote Desktop Toolkit librdtk development files
-Group: Development/C
-Requires: librdtk = %EVR
-
-%description -n librdtk-devel
-The librdtk-devel package contains libraries and header files for
-developing applications that use librdtk.
-
 %package -n libuwac
 Summary: Use wayland as a client
 Group: System/Libraries
@@ -194,7 +178,7 @@ the RDP protocol.
     -DCMAKE_SKIP_RPATH=ON \
     -DWITH_ALSA=ON \
     -DWITH_CUPS=ON \
-    -DWITH_CHANNELS=ON -DSTATIC_CHANNELS=OFF \
+    -DWITH_CHANNELS=ON -DBUILTIN_CHANNELS=OFF \
     -DWITH_CLIENT=ON \
     %{?_without_directfb:-DWITH_DIRECTFB=OFF} \
     %{?_without_ffmpeg:-DWITH_FFMPEG=OFF} \
@@ -246,6 +230,7 @@ ln -s freerdp2.pc %buildroot%_pkgconfigdir/freerdp.pc
 %files -n xfreerdp
 %_bindir/xfreerdp
 %_man1dir/xfreerdp*
+%_bindir/winpr-*
 
 %files -n wlfreerdp
 %_bindir/wlfreerdp
@@ -256,7 +241,6 @@ ln -s freerdp2.pc %buildroot%_pkgconfigdir/freerdp.pc
 %endif
 
 %files server
-%_bindir/winpr-*
 %_bindir/freerdp-shadow-cli
 
 %files -n lib%name
@@ -264,8 +248,8 @@ ln -s freerdp2.pc %buildroot%_pkgconfigdir/freerdp.pc
 %_libdir/lib%{name}.so.*
 %_libdir/lib%{name}-client.so.*
 %_libdir/lib%{name}-shadow.so.*
-%_libdir/libx%{name}-client.so.*
 %dir %_libdir/freerdp*
+%_man7dir/wlog*
 
 %files -n lib%name-server
 %_libdir/lib%{name}-server.so.*
@@ -276,21 +260,14 @@ ln -s freerdp2.pc %buildroot%_pkgconfigdir/freerdp.pc
 
 %files -n libwinpr
 %_libdir/libwinpr.so.*
+%_libdir/libwinpr-tools.so.*
 
 %files -n libwinpr-devel
 %_libdir/cmake/WinPR*
 %_includedir/winpr*
 %_libdir/libwinpr.so
+%_libdir/libwinpr-tools.so
 %_pkgconfigdir/winpr*.pc
-
-%files -n librdtk
-%_libdir/librdtk.so.*
-
-%files -n librdtk-devel
-%_libdir/cmake/RdTk*
-%_includedir/rdtk*
-%_libdir/librdtk.so
-%_pkgconfigdir/rdtk*.pc
 
 %files -n libuwac
 %_libdir/libuwac.so.*
@@ -305,10 +282,12 @@ ln -s freerdp2.pc %buildroot%_pkgconfigdir/freerdp.pc
 %_libdir/cmake/FreeRDP*
 %_includedir/%{name}*
 %_libdir/lib%{name}*.so
-%_libdir/libx%{name}*.so
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Tue Jan 10 2017 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt0.git20170109
+- upstream git snapshot 8fd926f08524bcdad8adbb5d908ebb1ad2ce6106
+
 * Tue Apr 12 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt0.git20160411
 - upstream git snapshot 11d113872fe254a2472e99a40f8be7237d5a82d3
 

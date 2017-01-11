@@ -2,7 +2,7 @@
 
 Name: remmina
 Version: 1.2.0
-Release: alt0.rc11.1
+Release: alt0.rc17
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -31,8 +31,8 @@ BuildRequires: pkgconfig(libvncserver)
 %{?_with_telepathy:BuildRequires: pkgconfig(telepathy-glib)}
 BuildRequires: pkgconfig(vte-2.91)
 BuildRequires: pkgconfig(xkbfile)
-BuildRequires: pkgconfig(webkit2gtk-4.0)
 BuildRequires: pkgconfig(harfbuzz)
+BuildRequires: pkgconfig(spice-client-gtk-3.0)
 
 %add_findreq_skiplist %_datadir/%name/external_tools/*
 
@@ -124,6 +124,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Tue Jan 10 2017 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt0.rc17
+- 1.2.0-rcgit.17
+
 * Tue Apr 12 2016 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt0.rc11.1
 - add skip requires for external tools
 
