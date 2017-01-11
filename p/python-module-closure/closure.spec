@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname closure
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 20140110
-Release: alt1.git240319.1.1
+Version: 20160517
+Release: alt1
 Summary: Closure compiler packaged for Python
 License: BSD
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/closure/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/miracle2k/python-closure.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/ca/2f/f10e203d2eab66ef298804ae977fcf9e990aef8258565987c9f95457a231/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: closure-compiler jre /proc
@@ -52,7 +53,7 @@ package, provides a simple way to install and use the the Closure
 compiler from Python, bundling the closure.jar with the Python package.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -105,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 20160517-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 20140110-alt1.git240319.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
