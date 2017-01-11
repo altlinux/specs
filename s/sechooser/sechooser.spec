@@ -1,0 +1,39 @@
+Name: sechooser
+Version: 0.0.1
+Release: alt1%ubt
+
+Summary: Selinux user range chooser
+License: GPL
+Group: System/Configuration/Other
+
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: qt5-base-devel qt5-tools libselinux-devel
+
+%description
+%summary.
+
+
+%prep
+%setup -q -n %name-%version
+%qmake_qt5
+
+%build
+%make
+lrelease-qt5 sechooser.pro
+
+%install
+%make INSTALL_ROOT=%buildroot install
+
+mkdir -p %buildroot/%_datadir/%name/translations/
+#install -m644 translations/sechooser_*.qm %buildroot/%_datadir/%name/translations/
+
+%files
+%_bindir/*
+#%_datadir/%name
+
+
+%changelog
+* Wed Jan 11 2017 Sergey V Turchin <zerg at altlinux dot org> 0.0.1-alt1%ubt
+- initial build
