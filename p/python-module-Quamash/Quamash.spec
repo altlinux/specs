@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: unzip
 %define oname Quamash
 
 %def_without python2
@@ -5,8 +7,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.5.1
-Release: alt1.git20150118.1.1
+Version: 0.5.5
+Release: alt1
 Summary: Implementation of the PEP 3156 event-loop (tulip) api using the Qt Event-Loop
 License: BSD
 Group: Development/Python
@@ -14,7 +16,7 @@ Url: https://pypi.python.org/pypi/Quamash/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/harvimt/quamash.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/51/a3/dbead5b502aebc840c3672fc5e8ec7ecb2ea443d3e8638d14996600cd1cd/%{oname}-%{version}.zip
 BuildArch: noarch
 
 #BuildPreReq: xvfb-run
@@ -54,7 +56,7 @@ Implementation of the PEP 3156 Event-Loop with Qt.
 Quamash requires Python 3.4 and either PyQt4, PyQt5 or PySide.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -107,6 +109,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.5-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.1-alt1.git20150118.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
