@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname cubicweb-narval
 Name: python-module-%oname
-Version: 4.1.2
+Version: 4.2.3
 Release: alt1
 Summary: CubicWeb based framework to run automated tests
 License: LGPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/cubicweb-narval/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/df/28/e54692679bc14962de6ab80e44e36b9e5752765559a67d6f9e1ae8e38bd6/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests cubicweb
@@ -37,7 +38,7 @@ The narval bot communicates with the web application by doing HTTP(S)
 requests.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -72,6 +73,9 @@ python setup.py test
 %dir %attr(0775,narval,narval) /var/log/narval
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.3-alt1
+- automated PyPI update
+
 * Thu Mar 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.2-alt1
 - Version 4.1.2
 
