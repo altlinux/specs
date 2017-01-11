@@ -1,18 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define oname hglib
 
 %def_without python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.5
-Release: alt3
+Version: 2.3
+Release: alt1
 Summary: Mercurial Python library
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/python-hglib/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/80/9c/1618281fc1ef0df4436b1435de6276452fefb46b111b3b00d3e20fcf5e17/python-%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: mercurial
@@ -45,7 +46,7 @@ Mercurial. It uses Mercurial's command server for communication with hg.
 %endif
 
 %prep
-%setup
+%setup -q -n python-%{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -89,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1
+- automated PyPI update
+
 * Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 1.5-alt3
 - Rebuild with "def_disable check"
 - Cleanup buildreq
