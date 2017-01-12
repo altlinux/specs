@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname manifestparser
 Name: python-module-%oname
-Version: 0.8
+Version: 1.1
 Release: alt1
 Summary: Library to create and manage test manifests
 License: MPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/manifestparser/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/53/4e/f621c25a2e0ef6e7a38987f291a88d06996e3f8bfe3ad6302b4abc45c9f8/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests python-modules-json
@@ -19,7 +20,7 @@ BuildPreReq: python-module-setuptools-tests python-modules-json
 Library to create and manage test manifests.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -36,6 +37,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1
+- automated PyPI update
+
 * Tue Dec 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1
 - Initial build for Sisyphus
 
