@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname json2xls
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.1.2
-Release: alt2.git20150116
+Version: 0.1.3c
+Release: alt1
 Summary: Generate excel by json
 License: BSD
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/json2xls/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/axiaoxin/json2xls.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/b5/15/d42f0e21acd8b6d14ae40be08ca50b32c2b3d97b1b7207575c2629a2e5db/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -48,7 +49,7 @@ Group: Development/Python3
 json2xls: Generate Excel by JSON data.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -105,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.3c-alt1
+- automated PyPI update
+
 * Sat May 28 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.2-alt2.git20150116
 - NMU: rebuild with xlwt
 
