@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define oname isodate
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5.0
-Release: alt1.1.1
+Version: 0.5.4
+Release: alt1
 Summary: An ISO 8601 date/time/duration parser and formater
 License: BSD
 Group: Development/Python
 Url: http://pypi.python.org/pypi/isodate
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/f4/5b/fe03d46ced80639b7be9285492dc8ce069b841c0cebe5baacdd9b090b164/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-distribute
@@ -99,7 +100,7 @@ allowed option.
 This package contains tests for isodate.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -140,6 +141,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.4-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.0-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
