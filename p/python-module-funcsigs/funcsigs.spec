@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname funcsigs
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4
-Release: alt1.git20131220.1
+Version: 1.0.2
+Release: alt1
 Summary: Python function signatures from PEP362 for Python 2.6, 2.7 and 3.2+
 License: ASLv2.0
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/funcsigs/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/aliles/funcsigs.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/94/4a/db842e7a0545de1cdb0439bb80e6e42dfe82aaeaadd4072f2263a4fbed23/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -43,7 +44,7 @@ Python 3.3's inspect module. The backport is compatible with Python 2.6,
 2.7 as well as 3.2 and up.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -88,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4-alt1.git20131220.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
