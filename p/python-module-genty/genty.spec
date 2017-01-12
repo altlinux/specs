@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname genty
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2.0
-Release: alt1.git20150223.1.1
+Version: 1.3.2
+Release: alt1
 Summary: Allows you to run a test with multiple data sets
 License: ASLv2.0
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/genty/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/box/genty.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/c9/bc/eee096fe9ecf1041944f1327cf6a2030fb2c59acd66580b692eb8b540233/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -51,7 +52,7 @@ generative testing, where a single test can execute over a variety of
 input.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -94,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.2-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.0-alt1.git20150223.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
