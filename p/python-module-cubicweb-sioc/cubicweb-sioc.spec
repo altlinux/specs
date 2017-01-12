@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname cubicweb-sioc
 Name: python-module-%oname
-Version: 0.1.0
+Version: 0.2.1
 Release: alt1
 Summary: Specific views for SIOC (Semantically-Interlinked Online Communities)
 License: LGPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/cubicweb-sioc/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/ec/86/5ebbc599acbcf37525a51308f9ee4e3436bd9280423961f8f9bb23991dc5/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests cubicweb
@@ -20,7 +21,7 @@ Requires: cubicweb
 Specific views for SIOC (Semantically-Interlinked Online Communities).
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -37,6 +38,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1
+- automated PyPI update
+
 * Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1
 - Initial build for Sisyphus
 
