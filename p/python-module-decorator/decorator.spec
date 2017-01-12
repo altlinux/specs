@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define oname decorator
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.2
-Release: alt1.1.1
+Version: 4.0.10
+Release: alt1
 Summary: Better living through Python with decorators
 License: BSD
 Group: Development/Python
 Url: http://pypi.python.org/pypi/decorator
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %oname-%version.tar.gz
+Source0: https://pypi.python.org/packages/13/8a/4eed41e338e8dcc13ca41c94b142d4d20c0de684ee5065523fee406ce76f/%{oname}-%{version}.tar.gz
 #Source1: https://raw.githubusercontent.com/micheles/decorator/24d5f1539f0d876e4871ecca4f671d0710ab35bf/docs/README.rst
 BuildArch: noarch
 
@@ -71,7 +72,7 @@ since:
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 #install -Dm644 %SOURCE1 docs/README.rst
 
@@ -107,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.10-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.2-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
