@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname mozprofile
 Name: python-module-%oname
-Version: 0.22
+Version: 0.28
 Release: alt1
 Summary: Library to create and modify Mozilla application profiles
 License: MPLv2.0
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/mozprofile/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/64/8d/6812c090cf072ec3689c0c5f78d75936eebfec7108783b23230844770d51/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests python-modules-sqlite3
@@ -22,7 +23,7 @@ BuildPreReq: python-module-mozlog python-module-mozhttpd
 Library to create and modify Mozilla application profiles.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -39,6 +40,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
+- automated PyPI update
+
 * Tue Dec 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.22-alt1
 - Initial build for Sisyphus
 
