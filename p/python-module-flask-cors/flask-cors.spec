@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname flask-cors
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.9.0
-Release: alt1.git20141028.1
+Version: 3.0.2
+Release: alt1
 Summary: Cross Origin Resource Sharing ( CORS ) support for Flask
 License: MIT
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/Flask-Cors/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/wcdolphin/flask-cors.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/1d/ea/86765a4ae667b4517dc16ef0fc8dd632ca3ea56ef419c4a6de31e715324e/Flask-Cors-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -41,7 +42,7 @@ A Flask extension for handling Cross Origin Resource Sharing (CORS),
 making cross-origin AJAX possible.
 
 %prep
-%setup
+%setup -q -n Flask-Cors-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -84,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.9.0-alt1.git20141028.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
