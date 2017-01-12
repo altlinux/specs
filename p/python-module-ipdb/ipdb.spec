@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname ipdb
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.1
-Release: alt1.dev0.git20130919.1
+Version: 0.10.1
+Release: alt1
 Summary: IPython-enabled pdb
 License: GPL
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/ipdb/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/gotcha/ipdb.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/eb/0a/0a37dc19572580336ad3813792c0d18c8d7117c2d66fc63c501f13a7a8f8/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests ipython
@@ -37,7 +38,7 @@ tab completion, syntax highlighting, better tracebacks, better
 introspection with the same interface as the pdb module.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -82,6 +83,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.10.1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.1-alt1.dev0.git20130919.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
