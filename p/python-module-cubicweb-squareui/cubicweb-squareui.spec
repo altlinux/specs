@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname cubicweb-squareui
 Name: python-module-%oname
-Version: 1.0.0
+Version: 1.0.3
 Release: alt1
 Summary: Data-centric user interface for cubicweb based on bootstrap
 License: LGPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/cubicweb-squareui/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/7d/ad/ec74ed6dc02775dd35247ccf111f15142cb5f04d73e8ef1c5ea75c3d4a44/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests cubicweb
@@ -20,7 +21,7 @@ Requires: cubicweb python-module-cubicweb-bootstrap
 Data-centric user interface for cubicweb based on bootstrap.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -37,6 +38,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1
+- automated PyPI update
+
 * Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
 - Version 1.0.0
 
