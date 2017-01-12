@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pandas-highcharts
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.3.0
-Release: alt2.git20150228
+Version: 0.5.2
+Release: alt1
 Summary: Easily build Highcharts plots with pandas.DataFrame objects
 License: MIT
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/pandas-highcharts/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/gtnx/pandas-highcharts.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/1a/70/fe7201bb6750e26dbf662d5b0f12fe6d41a4e3edf5e49314597913026bd1/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildRequires: python-devel python-module-setuptools-tests
@@ -73,7 +74,7 @@ Highcharts plots with pandas.DataFrame objects.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -129,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt1
+- automated PyPI update
+
 * Sat May 28 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt2.git20150228
 - NMU: rebuild with xlwt
 
