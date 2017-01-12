@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define oname django-oauth-plus
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.2.5
-Release: alt1.1.1
+Version: 2.2.9
+Release: alt1
 Summary: Support of OAuth 1.0a in Django using python-oauth2
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/django-oauth-plus/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/6c/26/eac704ebce0fa62ffe1eb07ddfe610add38dbf77dcfec5f9e704f21ae3ab/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -67,7 +68,7 @@ Support of OAuth 1.0a in Django using python-oauth2.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -123,6 +124,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.9-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.2.5-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
