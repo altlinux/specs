@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname jdcal
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0
-Release: alt2.git20111008.1
+Version: 1.3
+Release: alt1
 Summary: Julian dates from proleptic Gregorian and Julian calendars
 License: BSD
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/jdcal/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/phn/jdcal.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/9b/fa/40beb2aa43a13f740dd5be367a10a03270043787833409c61b79e69f1dfd/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires: python-devel python-module-setuptools-tests
@@ -37,7 +38,7 @@ This module contains functions for converting between Julian dates and
 calendar dates.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -72,6 +73,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0-alt2.git20111008.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
