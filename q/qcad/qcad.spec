@@ -1,6 +1,6 @@
 Name: 	 qcad
 Version: 3.16.4.0
-Release: alt1
+Release: alt1.1
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
 
@@ -22,7 +22,6 @@ BuildRequires: libGL-devel
 BuildRequires: libGLU-devel
 BuildRequires: libssl-devel
 BuildRequires: qt5-designer
-BuildRequires: qt5-imageformats
 BuildRequires: qt5-script-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-tools-devel
@@ -30,10 +29,9 @@ BuildRequires: qt5-tools-devel-static
 BuildRequires: qt5-webkit-devel
 BuildRequires: qt5-webengine-devel
 BuildRequires: qt5-xmlpatterns-devel
-BuildRequires: qtscriptgenerator
 BuildRequires: zlib-devel
 
-Requires: qt5-translations
+Requires: qt5-translations qt5-imageformats
 
 %description
 QCad is a professional CAD System. With QCad you can easily construct
@@ -53,11 +51,18 @@ QCad это профессиональная CAD система. С QCad вы м
 %qmake_qt5
 #lupdate-qt5 %name.pro
 
+if [ ! -e src/3rdparty/qt-labs-qtscriptgenerator-%_qt5_version ] ; then
+    pushd src/3rdparty
+    cp -ar qt-labs-qtscriptgenerator-5.7.0 qt-labs-qtscriptgenerator-%_qt5_version
+    mv qt-labs-qtscriptgenerator-%_qt5_version/qt-labs-qtscriptgenerator-5.7.0.pro qt-labs-qtscriptgenerator-%_qt5_version/qt-labs-qtscriptgenerator-%_qt5_version.pro
+    popd
+fi
+
 %build
 %make_build
 
 %install
-%install_qt5
+%installqt5
 # Main executable
 install -Dm755 release/qcad-bin %buildroot%_libdir/%name/qcad-bin
 
@@ -115,6 +120,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Thu Jan 19 2017 Sergey V Turchin <zerg@altlinux.org> 3.16.4.0-alt1.1
+- rebuild with new Qt
+
 * Tue Jan 17 2017 Andrey Cherepanov <cas@altlinux.org> 3.16.4.0-alt1
 - new version 3.16.4.0
 

@@ -3,8 +3,8 @@
 %def_disable bootstrap
 
 Name: qt5-location
-Version: 5.6.2
-Release: alt1
+Version: 5.7.1
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtLocation component
@@ -16,6 +16,7 @@ Source: %qt_module-opensource-src-%version.tar
 # Automatically added by buildreq on Fri Feb 28 2014 (-bi)
 # optimized out: elfutils glib2-devel libGL-devel libcloog-isl4 libdbus-devel libdbus-glib libdbus-glib-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-qml libqt5-quick libqt5-sql libqt5-widgets libqt5-xml libstdc++-devel libxml2-devel pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-tools ruby ruby-stdlibs
 #BuildRequires: gcc-c++ glibc-devel-static libGConf-devel libgeoclue-devel libgypsy-devel qt5-script-devel qt5-tools-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-ruby
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ glibc-devel qt5-declarative-devel qt5-xmlpatterns-devel
 BuildRequires: pkgconfig(geoclue) pkgconfig(gypsy) pkgconfig(gconf-2.0)
 %if_disabled bootstrap
@@ -125,6 +126,12 @@ syncqt.pl-qt5 -version %version -private
 %endif
 
 %changelog
+* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
+- new version
+
+* Sun Oct 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt0.M80P.1
+- build for M80P
+
 * Wed Oct 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1
 - new version
 

@@ -2,8 +2,8 @@
 %global qt_module qtsvg
 
 Name: qt5-svg
-Version: 5.6.2
-Release: alt1
+Version: 5.7.1
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - Support for rendering and displaying SVG
@@ -12,6 +12,7 @@ License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ glibc-devel qt5-base-devel > 5.5.0-alt3 pkgconfig(zlib) qt5-tools
 
 %description
@@ -95,6 +96,12 @@ syncqt.pl-qt5 -version %version -private
 %_qt5_docdir/qtsvg/
 
 %changelog
+* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
+- new version
+
+* Sun Oct 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt0.M80P.1
+- build for M80P
+
 * Wed Oct 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1
 - new version
 

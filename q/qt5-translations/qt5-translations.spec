@@ -2,8 +2,8 @@
 %global qt_module qttranslations
 
 Name: qt5-translations
-Version: 5.6.2
-Release: alt1
+Version: 5.7.1
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtTranslations module
@@ -17,6 +17,7 @@ Source: %qt_module-opensource-src-%version.tar
 # Automatically added by buildreq on Fri Mar 14 2014 (-bi)
 # optimized out: libqt5-core libqt5-xml python-base qt5-base-devel qt5-declarative-devel qt5-tools
 #BuildRequires: qt5-script-devel qt5-tools-devel qt5-webkit-devel qt5-xmlpatterns-devel ruby ruby-stdlibs
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: qt5-base-devel qt5-tools
 
 %description
@@ -44,6 +45,12 @@ done
 %files -f %name.lang
 
 %changelog
+* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
+- new version
+
+* Sun Oct 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt0.M80P.1
+- build for M80P
+
 * Wed Oct 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1
 - new version
 

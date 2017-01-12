@@ -2,8 +2,8 @@
 %global qt_module qtdoc
 
 Name: qt5-doc
-Version: 5.6.2
-Release: alt1
+Version: 5.7.1
+Release: alt1%ubt
 
 Group: Development/KDE and QT
 Summary: Main Qt5 Reference Documentation
@@ -14,6 +14,7 @@ BuildArch: noarch
 
 Source: %qt_module-opensource-src-%version.tar
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ qt5-base-devel qt5-tools
 BuildRequires: qt5-script-devel qt5-svg-devel qt5-xmlpatterns-devel qt5-declarative-devel
 BuildRequires: qt5-tools qt5-tools-devel
@@ -78,6 +79,12 @@ syncqt.pl-qt5 -version %version -private
 %_qt5_docdir/*
 
 %changelog
+* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
+- new version
+
+* Sun Oct 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt0.M80P.1
+- build for M80P
+
 * Wed Oct 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1
 - new version
 

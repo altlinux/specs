@@ -3,10 +3,11 @@
 %ifarch %ix86
 %set_verify_elf_method relaxed
 %endif
+%def_enable always_reducing_debuginfo
 
 Name: qt5-webengine
-Version: 5.6.2
-Release: alt1
+Version: 5.7.1
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -15,20 +16,24 @@ License: GPLv2 / GPLv3 / LGPLv3
 
 Source: %qt_module-opensource-src-%version.tar
 # FC
-Patch1: qtwebengine-opensource-src-5.6.0-beta-no-format.patch
-Patch2: qtwebengine-opensource-src-5.6.1-linux-pri.patch
+Patch2: qtwebengine-opensource-src-5.7.0-linux-pri.patch
 Patch3: qtwebengine-opensource-src-5.6.0-no-icudtl-dat.patch
 Patch4: qtwebengine-opensource-src-5.6.0-beta-fix-extractcflag.patch
-Patch5: qtwebengine-opensource-src-5.6.0-beta-no-neon.patch
-Patch6: qtwebengine-opensource-src-5.6.0-beta-system-nspr-prtime.patch
-Patch7: qtwebengine-opensource-src-5.6.0-beta-system-icu-utf.patch
-Patch8: qtwebengine-opensource-src-5.6.1-no-sse2.patch
+Patch5: qtwebengine-opensource-src-5.7.0-webrtc-neon.patch
+Patch6: qtwebengine-opensource-src-5.7.0-system-nspr-prtime.patch
+Patch7: qtwebengine-opensource-src-5.7.0-system-icu-utf.patch
+Patch8: qtwebengine-opensource-src-5.7.0-no-sse2.patch
+Patch9: qtwebengine-opensource-src-5.7.1-arm-fpu-fix.patch
+Patch10: qtwebengine-opensource-src-5.7.1-openmax-dl-neon.patch
+Patch11: qtwebengine-opensource-src-5.7.1-skia-neon.patch
+Patch12: qtwebengine-opensource-src-5.7.1-webrtc-neon-detect.patch
 # ATL
 Patch100: alt-pepflashplayer.patch
 
 # Automatically added by buildreq on Sun Apr 03 2016
 # optimized out: fontconfig fontconfig-devel gcc-c++ glib2-devel kf5-attica-devel kf5-kjs-devel libEGL-devel libGL-devel libX11-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXext-devel libXfixes-devel libXi-devel libXrandr-devel libXrender-devel libXtst-devel libfreetype-devel libgpg-error libharfbuzz-devel libharfbuzz-icu libicu-devel libnspr-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-positioning libqt5-qml libqt5-quick libqt5-sql libqt5-webchannel libqt5-widgets libstdc++-devel libxml2-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-multiprocessing python-modules-xml python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-phonon-devel qt5-tools qt5-webchannel-devel qt5-webkit-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: git-core gperf kde5-akonadi-calendar-devel kde5-gpgmepp-devel kde5-kalarmcal-devel kde5-kblog-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kholidays-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kldap-devel kde5-kmailtransport-devel kde5-kmbox-devel kde5-kmime-devel kde5-kontactinterface-devel kde5-kpimtextedit-devel kde5-ktnef-devel kde5-pimlibs-devel kde5-syndication-devel kf5-bluez-qt-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdesu-devel kf5-kdewebkit-devel kf5-kdnssd-devel kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-khtml-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kidletime-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjsembed-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kpeople-devel kf5-kplotting-devel kf5-kpty-devel kf5-kross-devel kf5-krunner-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-kxmlrpcclient-devel kf5-libkscreen-devel kf5-modemmanager-qt-devel kf5-networkmanager-qt-devel kf5-solid-devel kf5-sonnet-devel kf5-threadweaver-devel libalsa-devel libcap-devel libdbus-devel libevent-devel libexpat-devel libjpeg-devel libminizip-devel libnss-devel libopus-devel libpci-devel libpng-devel libprotobuf-devel libpulseaudio-devel libre2-devel libsnappy-devel libsrtp-devel libvpx-devel libwebp-devel libxslt-devel ninja-build protobuf-compiler python-module-google python-module-simplejson python-modules-json python3-dev qt5-connectivity-devel qt5-multimedia-devel qt5-script-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel qt5-webengine-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel ruby ruby-stdlibs yasm
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: /proc
 BuildRequires: git-core gperf libalsa-devel libcap-devel libdbus-devel libevent-devel libexpat-devel libjpeg-devel libminizip-devel libnss-devel
 BuildRequires: fontconfig-devel libdrm-devel yasm gyp libudev-devel libxml2-devel libXNVCtrl-devel jsoncpp-devel
@@ -102,7 +107,6 @@ Requires: qt5-quickcontrols
 %setup -n %qt_module-opensource-src-%version
 mv .gear/chromium src/3rdparty/
 ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -110,6 +114,10 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
 %patch100 -p1
 syncqt.pl-qt5 -version %version -private
 
@@ -120,11 +128,27 @@ sed -i -e 's!gpu//!gpu/!g' \
 sed -i -e 's!\./!!g' \
   src/3rdparty/chromium/third_party/angle/src/compiler/preprocessor/Tokenizer.cpp \
   src/3rdparty/chromium/third_party/angle/src/compiler/translator/glslang_lex.cpp
+# http://bugzilla.redhat.com/1337585
+# can't just delete, but we'll overwrite with system headers to be on the safe side
+cp -bv /usr/include/re2/*.h src/3rdparty/chromium/third_party/re2/src/re2/
 
+%if_enabled always_reducing_debuginfo
+sed -i -e 's/=-g$/=-g1/g' src/core/gyp_run.pro
+%endif
 %ifnarch x86_64
 # most arches run out of memory with full debuginfo, so use -g1 on non-x86_64
 sed -i -e 's/=-g$/=-g1/g' src/core/gyp_run.pro
 %endif
+
+# redefine _FORTIFY_SOURCE
+for f in \
+    src/3rdparty/chromium/build/common.gypi \
+    src/3rdparty/chromium/build/config/compiler/BUILD.gn \
+    src/3rdparty/chromium/third_party/minigbm/src/common.mk
+do
+    sed -i 's|_FORTIFY_SOURCE=[[:digit:]]|_FORTIFY_SOURCE=1|g' $f
+done
+
 
 %build
 %ifarch %ix86
@@ -138,6 +162,9 @@ export STRIP=strip
 export NINJAFLAGS="-v -j $NUM_PROCS"
 export NINJA_PATH=%_bindir/ninja-build
 OPTFLAGS="%optflags"
+%if_enabled always_reducing_debuginfo
+export OPTFLAGS=`echo "$OPTFLAGS" | sed -e 's/ -g / -g1 /g'`
+%endif
 %ifnarch x86_64
 # most arches run out of memory with full debuginfo, so use -g1 on non-x86_64
 export OPTFLAGS=`echo "$OPTFLAGS" | sed -e 's/ -g / -g1 /g'`
@@ -208,6 +235,12 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
+- new version
+
+* Sun Oct 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt0.M80P.1
+- build for M80P
+
 * Wed Oct 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1
 - new version
 
