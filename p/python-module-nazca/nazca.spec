@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname nazca
 Name: python-module-%oname
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 Summary: Python library for data alignment
 License: LGPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/nazca/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/f9/5a/92d007b82a5fb40a8b0697b2b89aad1a1cb506b0d736660b34406e7e54eb/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests python-module-lxml
@@ -32,7 +33,7 @@ Python library for data alignment.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -54,6 +55,9 @@ python setup.py test
 %python_sitelibdir/*/examples
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.2-alt1
+- automated PyPI update
+
 * Fri Jan 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt1
 - Initial build for Sisyphus
 
