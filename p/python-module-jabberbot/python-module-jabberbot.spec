@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define modulename jabberbot
 
 Name: python-module-%modulename
-Version: 0.8
-Release: alt3.1
+Version: 0.16
+Release: alt1
 
 %setup_python_module %modulename
 
@@ -13,7 +14,7 @@ Group: Development/Python
 Url: http://thpinfo.com/2007/python-jabberbot
 BuildArch: noarch
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/82/e7/36cc193d99498cc42ac8909e2b028202ac7ac6ec8c615f61d5331dbdbba4/jabberbot-%{version}.tar.gz
 
 BuildPreReq: %py_dependencies setuptools xmpp DNS
 Requires: python-module-xmpp
@@ -27,7 +28,7 @@ with your visitors or notify you about updates or changes you monitor
 with your Python scripts.
 
 %prep
-%setup
+%setup -q -n jabberbot-%{version}
 
 %build
 %python_build
@@ -41,6 +42,9 @@ with your Python scripts.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated PyPI update
+
 * Mon Nov 14 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8-alt3.1
 - Rebuild with Python-2.7
 
