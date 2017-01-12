@@ -1,5 +1,5 @@
 Name: puddletag
-Version: 1.0.1
+Version: 1.2.0
 Release: alt1
 
 Summary: Feature rich, easy to use tag editor
@@ -7,14 +7,17 @@ License: GPLv2 and GPLv3+
 Group: File tools
 
 URL: http://puddletag.sourceforge.net/
-Source: http://downloads.sourceforge.net/puddletag/puddletag-%version.tar.gz
+Source: https://github.com/keithgg/%name/releases/download/v%version/%name-%version.tar.gz
 
 Patch0: %name-1.0.1-translations_dir.diff
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Tue Mar 15 2011 (-bi)
-BuildRequires: python-devel python-modules-encodings subversion
+Requires: mutagen >= 1.20
+# optional
+#Requires: chromaprint >= 0.4
+
+BuildRequires: python-devel python-modules-encodings
 BuildRequires: desktop-file-utils libqt4-devel
 
 %description
@@ -58,8 +61,12 @@ cp -a ./translations/*.qm %buildroot%_datadir/%name/translations/
 %_pixmapsdir/*
 %_man1dir/*
 %_datadir/%name/translations
+%doc NEWS
 
 %changelog
+* Thu Jan 12 2017 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0 (ALT #32991)
+
 * Mon Jul 01 2013 Motsyo Gennadi <drool@altlinux.ru> 1.0.1-alt1
 - 1.0.1
 
