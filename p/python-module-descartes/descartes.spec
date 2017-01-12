@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define oname descartes
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.1
-Release: alt3.1.1
+Version: 1.0.2
+Release: alt1
 Summary: Use geometric objects as matplotlib paths and patches
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/descartes/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/52/65/6078084b6b84b8c87730f9ebf825fbcd7f1ba7bf383fbb6f0a8a6d2419af/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -66,7 +67,7 @@ patches.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -121,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.1-alt3.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
