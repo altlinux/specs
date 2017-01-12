@@ -1,6 +1,6 @@
 Name: libidn
 Version: 1.33
-Release: alt2
+Release: alt2.1
 
 Summary: Internationalized Domain Name support library
 Group: System/Libraries
@@ -150,7 +150,9 @@ rm -rf $RPM_BUILD_ROOT%{_javadir}/libidn*.jar
 
 %find_lang %name
 %set_verify_elf_method strict
+%if_with emacs
 %define _unpackaged_files_terminate_build 1
+%endif
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
@@ -190,6 +192,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif #java
 
 %changelog
+* Tue Jan 10 2017 Michael Shigorin <mike@altlinux.org> 1.33-alt2.1
+- BOOTSTRAP: make --without emacs really work.
+
 * Mon Aug 08 2016 Dmitry V. Levin <ldv@altlinux.org> 1.33-alt2
 - Relocated shared library from %%_libdir to /%%_lib (closes: #32362).
 
