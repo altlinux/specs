@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname cubicweb-tag
 Name: python-module-%oname
-Version: 1.8.1
+Version: 1.8.3
 Release: alt1
 Summary: tag component for the CubicWeb framework
 License: LGPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/cubicweb-tag/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/fc/d4/35e66e5f5c251e1f27b44044817d6cfa221e6bc76c9c169d474b13111a76/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests cubicweb
@@ -23,7 +24,7 @@ way to classify your content. Tags can be used to raffinate a for search
 using facets.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -40,6 +41,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.3-alt1
+- automated PyPI update
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.1-alt1
 - Initial build for Sisyphus
 
