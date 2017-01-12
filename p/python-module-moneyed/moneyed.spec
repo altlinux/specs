@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname moneyed
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5.0
-Release: alt1.git20150212.1
+Version: 0.6.0
+Release: alt1
 Summary: Provides Currency and Money classes for use in your Python code
 License: BSD
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/py-moneyed/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/limist/py-moneyed.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/24/cc/536f70bb83ea96d9a2affa857d43cf988dddc959ec42655bf59423ba3113/py-%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -77,7 +78,7 @@ stand-alone and easy to either use directly, or subclass further.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n py-%{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -132,6 +133,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.0-alt1.git20150212.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
