@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define oname extras
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.3
-Release: alt1.git20140919.1
+Version: 1.0.0
+Release: alt1
 Summary: Useful extra bits for Python - things that shold be in the standard library
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/extras
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/be/18/0b7283f0ebf6ad4bb6b9937538495eadf05ef097b102946b9445c4242636/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -62,7 +63,7 @@ This package contains tests for extras.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -106,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.3-alt1.git20140919.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
