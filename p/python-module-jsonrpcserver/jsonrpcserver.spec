@@ -1,18 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define oname jsonrpcserver
 
 %def_with python3
 %def_without python2
 
 Name: python-module-%oname
-Version: 1.0.11
-Release: alt1.1.1
+Version: 3.4.1
+Release: alt1
 Summary: JSON-RPC 2.0 server library
 License: LGPL
 Group: Development/Python
 Url: https://pypi.python.org/pypi/jsonrpcserver
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/88/0c/ce3e6ab71cb5c03dd2ed24dd790a6be995b8021c83798c8e6a0ce8a19c34/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 %if_with python2
@@ -65,7 +66,7 @@ A JSON-RPC 2.0 server library for Python 3.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -128,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.4.1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.11-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
