@@ -1,5 +1,5 @@
 Name: bind
-Version: 9.9.9
+Version: 9.10.4
 Release: alt1
 
 Summary: ISC BIND - DNS server
@@ -43,11 +43,12 @@ Patch0003: 0003-openbsd-owl-chroot-defaults.patch
 Patch0004: 0004-alt-owl-chroot.patch
 Patch0005: 0005-owl-checkconf-chroot.patch
 Patch0006: 0006-alt-man.patch
-Patch0007: 0007-alt-owl-rndc-confgen.patch
-Patch0008: 0008-alt-nofile.patch
-Patch0009: 0009-alt-ads-remove.patch
-Patch0010: 0010-fc-exportlib.patch
-Patch0011: 0011-Minimize-linux-capabilities.patch
+Patch0007: 0007-alt-nofile.patch
+Patch0008: 0008-alt-ads-remove.patch
+Patch0009: 0009-Minimize-linux-capabilities.patch
+Patch0010: 0010-Link-libirs-with-libdns-and-libisccfg.patch
+Patch0011: 0011-Move-named-rrchecker-from-sbindir-to-bindir.patch
+Patch0012: 0012-rh-dyndb.patch
 
 # root directory for chrooted environment.
 %define _chrootdir %_localstatedir/bind
@@ -67,8 +68,9 @@ Provides: bind-chroot(%_chrootdir)
 Obsoletes: bind-chroot, bind-debug, bind-slave, caching-nameserver
 # Because of /etc/syslog.d/ feature.
 Conflicts: syslogd < 1.4.1-alt11
-PreReq: bind-control chrooted syslogd-daemon
-PreReq: libbind = %version-%release
+PreReq: bind-control >= 1.2
+PreReq: chrooted syslogd-daemon
+PreReq: libbind = %EVR
 
 # due to %_chrootdir/dev/log
 BuildPreReq: coreutils
@@ -84,41 +86,30 @@ BuildPreReq: libcap-devel
 %package utils
 Summary: Utilities provided by ISC BIND
 Group: Networking/Other
-Requires: libbind = %version-%release
+Requires: libbind = %EVR
 
 %package -n libbind
 Summary: Shared library used by ISC BIND
 Group: System/Libraries
-Provides: libdns = %version-%release
-Provides: libisc = %version-%release
-Provides: libisccc = %version-%release
-Provides: libisccfg = %version-%release
-Provides: liblwres = %version-%release
+Provides: libdns = %EVR
+Provides: libisc = %EVR
+Provides: libisccc = %EVR
+Provides: libisccfg = %EVR
+Provides: liblwres = %EVR
 Obsoletes: libdns8, libdns9, libdns10, libdns11, libdns16
 Obsoletes: libisc4, libisc7, libisccc0, libisccfg0, liblwres1
 
 %package devel
 Summary: ISC BIND development libraries and headers
 Group: Development/C
-Requires: libbind = %version-%release
+Requires: libbind = %EVR
+Provides: libisc-export-devel = %EVR
+Obsoletes: libisc-export-devel < %version
 
 %package devel-static
 Summary: ISC BIND static development libraries
 Group: Development/C
-Requires: %name-devel = %version-%release
-
-%package -n libisc-export
-Summary: ISC BIND exportable libraries to build third party applications with
-Group: System/Libraries
-# RH compat
-Provides: %name-lite
-
-%package -n libisc-export-devel
-Summary: ISC BIND development anvironment for exportable libraries
-Group: Development/C
-Requires: libisc-export = %version-%release
-# RH compat
-Provides: %name-lite-devel
+Requires: %name-devel = %EVR
 
 %package doc
 Summary: Documentation for ISC BIND
@@ -130,7 +121,7 @@ Prefix: %prefix
 Summary: Lightweight resolver daemon
 Group: System/Servers
 PreReq: /var/resolv, chkconfig, shadow-utils
-Requires: libbind = %version-%release
+Requires: libbind = %EVR
 
 %description
 The Berkeley Internet Name Domain (BIND) implements an Internet domain
@@ -163,16 +154,6 @@ These are only needed if you want to compile statically linked packages
 that need more BIND %version%vsuffix nameserver API than the resolver
 code provided by glibc.
 
-%description -n libisc-export
-This package contains shared libraries used by third-party projects that
-require standard ISC BIND %version%vsuffix libaries without using
-nameserver API.
-
-%description -n libisc-export-devel
-This package contains develompent environment for third-party projects
-that require standard ISC BIND %version%vsuffix libaries without using
-nameserver API.
-
 %description doc
 This package provides various documents that are useful for maintaining
 a working BIND %version%vsuffix installation.
@@ -199,6 +180,7 @@ rather than the DNS protocol.
 %patch0009 -p2
 %patch0010 -p2
 %patch0011 -p2
+%patch0012 -p2
 
 install -D -pm644 %_sourcedir/rfc1912.txt doc/rfc/rfc1912.txt
 install -pm644 %_sourcedir/bind.README.bind-devel README.bind-devel
@@ -222,9 +204,6 @@ s,@DOCDIR@,%docdir,g;
 s,@SBINDIR@,%_sbindir,g;
 ' --
 
-# XXX oldish stuff introduced in 9.9.6
-sed -i 's/AC_DEFINE(\(.*\), 1)/AC_DEFINE(\1, 1, [\1])/' configure.in
-
 sed -i '/# Large File/iAC_SYS_LARGEFILE/' configure.in
 
 %build
@@ -232,16 +211,14 @@ sed -i '/# Large File/iAC_SYS_LARGEFILE/' configure.in
 %configure \
 	--localstatedir=/var \
 	--with-randomdev=/dev/random \
-	--disable-threads \
+	--enable-threads \
 	--enable-linux-caps \
+	--enable-fetchlimit \
+	--enable-fixed-rrset \
+	--disable-seccomp \
 	 %{subst_with openssl} \
 	 %{subst_enable ipv6} \
 	 %{subst_enable static} \
-	--enable-rrl \
-	--enable-fetchlimit \
-	--enable-exportlib \
-	--with-export-libdir=%{_libdir} \
-	--with-export-includedir=%{_includedir} \
 	--includedir=%{_includedir}/bind9 \
 	--disable-openssl-version-check \
 	--with-libtool \
@@ -257,15 +234,10 @@ pushd contrib/queryperf
 popd # contrib/queryperf
 
 %install
-rln()
-{
-	local target=$1 && shift
-	local source=$1 && shift
-	target=`relative "$target" "$source"`
-	ln -snf "$target" "%buildroot$source"
-}
-
 %makeinstall_std
+
+# Install additional headers.
+install -pm644 lib/isc/unix/errno2result.h %buildroot%_includedir/bind9/isc/
 
 # Install queryperf.
 install -pm755 contrib/queryperf/queryperf %buildroot%_sbindir/
@@ -295,8 +267,13 @@ for n in localhost localdomain 127.in-addr.arpa empty; do
 done
 
 install -pm640 addon/rndc.key bind.keys %buildroot%_chrootdir%_sysconfdir/
-ln -snfr %buildroot%_chrootdir%_sysconfdir/{named.conf,bind.keys} \
+ln -snfr %buildroot%_sysconfdir/bind/{named.conf,bind.keys} \
 	%buildroot%_sysconfdir/
+
+# Create symlinks for unchrooted bind.
+ln -snf . %buildroot%_chrootdir%_sysconfdir/bind
+ln -snf ../zone %buildroot%_chrootdir%_sysconfdir/zone
+ln -snfr %buildroot%_chrootdir%_sysconfdir %buildroot%_sysconfdir/bind
 
 # Make use of syslogd-1.4.1-alt11 /etc/syslog.d/ feature.
 /usr/bin/mksock %buildroot%_chrootdir/dev/log
@@ -321,11 +298,13 @@ install -pm644 contrib/queryperf/README %buildroot%docdir/README.queryperf
 bzip2 -9q %buildroot%docdir/{*/*.txt,FAQ,CHANGES}
 rm -fv %buildroot%docdir/*/{Makefile*,README-SGML,*.dsl*,*.sh*,*.xml}
 
+%define _unpackaged_files_terminate_build 1
+
 %pre
 /usr/sbin/groupadd -r -f named
 /usr/sbin/useradd -r -g named -d %_chrootdir -s /dev/null -n -c "Domain Name Server" named >/dev/null 2>&1 ||:
 [ -f %_initdir/named -a ! -L %_initdir/named ] && /sbin/chkconfig --del named ||:
-%pre_control bind-debug bind-slave
+%pre_control bind-chroot bind-debug bind-slave
 
 %preun
 %preun_service bind
@@ -341,6 +320,7 @@ if grep -qs '^SYSLOGD_OPTIONS=.*-a %_chrootdir/dev/log' "$SYSLOGD_CONFIG"; then
 	fi
 fi
 
+%post_control -s enabled bind-chroot
 %post_control -s disabled bind-debug bind-slave
 %post_service bind
 
@@ -354,8 +334,13 @@ fi
 %preun -n lwresd
 %preun_service lwresd
 
+%triggerun -- bind < 9.10.4
+F=/etc/sysconfig/bind
+if [ $2 -gt 0 -a -f $F ]; then
+	grep -q '^#\?CHROOT=' $F || echo '#CHROOT="-t /"' >> $F
+fi
+
 %files -n libbind
-%exclude  %_libdir/*export.*
 %_libdir/lib*.so.*
 %dir %docdir
 %docdir/COPYRIGHT
@@ -366,14 +351,12 @@ fi
 %_man8dir/lwresd.*
 %ghost %attr(644,root,root) /var/run/lwresd.pid
 
-%files -n libisc-export
-%_libdir/lib*-export.so.*
-
 %files devel
-%exclude  %_libdir/*export.*
 %_libdir/*.so
+%_bindir/bind9-config
 %_bindir/isc-config.sh
 %_includedir/bind9
+%_man1dir/bind9-config.1*
 %_man3dir/*
 %dir %docdir
 %docdir/README.bind-devel
@@ -383,27 +366,20 @@ fi
 %_libdir/*.a
 %endif
 
-%files -n libisc-export-devel
-%exclude %_includedir/bind9
-%_includedir/*
-%_libdir/lib*-export.so
-
 %files
+%_bindir/named-rrchecker
 %exclude %_sbindir/lwresd
 %exclude %_man8dir/lwresd*
 %_sbindir/*
- 
-# TODO
-#    /usr/bin/bind9-config
-#    /usr/share/man/man1/bind9-config.1.gz
-
-%_sysconfdir/named.conf
+%_sysconfdir/bind
 %_sysconfdir/bind.keys
+%_sysconfdir/named.conf
 %config %_initdir/bind
 %config %_sysconfdir/sysconfig/bind
 %config(noreplace) %_sysconfdir/rndc.conf
 %_unitdir/bind.service
 
+%_man1dir/named-rrchecker.1*
 %_man5dir/*
 %_man8dir/*
 %_man1dir/arpaname*
@@ -431,6 +407,8 @@ fi
 %config(noreplace) %_chrootdir%_sysconfdir/*.conf
 %config(noreplace) %verify(not md5 mtime size) %_chrootdir%_sysconfdir/rndc.key
 %_chrootdir%_sysconfdir/bind.keys
+%attr(-,root,root) %_chrootdir%_sysconfdir/bind
+%attr(-,root,root) %_chrootdir%_sysconfdir/zone
 %config %_chrootdir/zone/localhost
 %config %_chrootdir/zone/localdomain
 %config %_chrootdir/zone/127.in-addr.arpa
@@ -439,10 +417,12 @@ fi
 %ghost %attr(666,root,root) %_chrootdir/dev/*
 
 %files utils
+%_bindir/delv
 %_bindir/dig
 %_bindir/host
 %_bindir/nslookup
 %_bindir/nsupdate
+%_man1dir/delv.*
 %_man1dir/dig.*
 %_man1dir/host.*
 %_man1dir/nslookup.*
@@ -457,6 +437,19 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Thu Jan 12 2017 Dmitry V. Levin <ldv@altlinux.org> 9.10.4-alt1
+- 9.9.9-P5 -> 9.10.4-P5 (closes: #30124, #32590).
+- Enabled multiprocessing support.
+- bind: bind.service: fixed EnvironmentFile.
+- bind: options.conf: fixed typo in comment (closes: #31359).
+- bind: enabled "fixed" ordering support in rrset-order statement.
+- bind: packaged named-rrchecker.
+- bind: imported "dynamic-db" statement support from Fedora
+  (by Sergey Bolshakov).
+- bind: placed chrooted mode under control(1) (by Sergey Bolshakov).
+- bind-devel: packaged bind9-config.
+- bind-utils: packaged delv.
+
 * Sat Jan 07 2017 Dmitry V. Levin <ldv@altlinux.org> 9.9.9-alt1
 - 9.9.8-P4 -> 9.9.9-P5.
 - Implemented early drop of linux capabilities.

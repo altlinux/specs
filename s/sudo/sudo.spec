@@ -1,6 +1,6 @@
 Name: sudo
-Version: 1.6.8p12
-Release: alt12
+Version: 1.8.19p1
+Release: alt6%ubt
 Epoch: 1
 
 Summary: Allows command execution as another user
@@ -11,17 +11,20 @@ Url: http://www.courtesan.com/sudo/
 # ftp://ftp.courtesan.com/pub/sudo/sudo-%version.tar.gz
 Source: sudo-%version.tar
 
-Patch: sudo-%version-%release.patch
+Patch: sudo-%version-alt.patch
 
 PreReq: control
 Requires: vitmp
 Provides: %_sysconfdir/sudoers.d
 
+BuildRequires(pre):rpm-build-ubt
+
 # Automatically added by buildreq on Wed Apr 09 2003
 BuildRequires: flex libpam-devel perl-podlators
+# Due check of man pages type
+BuildRequires: /usr/bin/nroff
 
 %define _libexecdir %_prefix/libexec/sudo
-%define timedir /var/lib/sudo
 
 Summary(ru_RU.UTF-8): Запускает команды в контексте другого пользователя
 
@@ -38,23 +41,32 @@ Sudo - программа, разработанная в помощь систе
 как можно меньше прав, но ровно столько, сколько необходимо для
 решения поставленных задач.
 
+%package devel
+Summary: Development files for %name
+Group: Development/C
+Requires: %name = %epoch:%version-%release
+
+%description devel
+The %name-devel package contains header files developing sudo
+plugins that use %name.
+
+%description devel -l ru_RU.UTF-8
+Пакет %name-devel содержит заголовочные файлы для разработки расширений
+для програмы %name.
+
 %prep
 %setup
 %patch -p1
-bzip2 -9k CHANGES
-rm acsite.m4
-mv aclocal.m4 acinclude.m4
 
 %build
-%autoreconf
+./autogen.sh
 export ac_cv_prog_NROFFPROG=nroff
 configure_options='
 --with-logging=syslog
 --with-logfac=authpriv
 --enable-shell-sets-home
 --enable-log-host
---disable-log-wrap
---disable-saved-ids
+--disable-rpath
 --with-pam
 --with-ignore-dot
 --with-env-editor
@@ -62,54 +74,147 @@ configure_options='
 --with-sudoers-mode=0400
 --with-editor=/bin/vitmp
 --with-sendmail=/usr/sbin/sendmail
---with-timedir=%timedir
+--with-sssd
+--docdir=%_datadir/doc/%name-%version
+--with-plugindir=%_libdir/sudo
+--libexecdir=%_libdir
 --with-secure-path=/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin'
 
 %configure $configure_options --with-passprompt='[sudo] password for %%u:'
-rm sudoers.man.in sudo.man.in visudo.man.in
-%make_build sudoers.man.in sudo.man.in visudo.man.in
-
-%configure $configure_options --with-passprompt='[sudo] password for %%u:'
-rm lex.yy.c sudo.tab.h sudo.tab.c
 %make_build
 
 %install
-%makeinstall_std sudoers_uid=`id -un` sudoers_gid=`id -gn`
-install -pD -m600 sample.pam %buildroot%_sysconfdir/pam.d/sudo
+%makeinstall_std INSTALL_OWNER=
+install -pD -m600 examples/pam.conf %buildroot%_sysconfdir/pam.d/sudo
 mkdir -p %buildroot%_sysconfdir/sudoers.d
-mkdir -p %buildroot%timedir
 chmod u+rwx %buildroot%prefix/*bin/*
 install -pD -m755 sudo.control %buildroot/etc/control.d/facilities/sudo
 install -pD -m755 sudoers.control %buildroot/etc/control.d/facilities/sudoers
+install -pD -m755 sudoreplay.control %buildroot/etc/control.d/facilities/sudoreplay
+bzip2 -9 %buildroot%_datadir/doc/%name-%version/ChangeLog
 
-# sudoedit
-ln -snf sudo %buildroot%_bindir/sudoedit
-ln -snf sudo.8 %buildroot%_man8dir/sudoedit.8
-rm %buildroot%_libexecdir/*.la
+%find_lang sudo
+%find_lang sudoers
+
+cat sudo.lang sudoers.lang > sudo_all.lang
+rm sudo.lang sudoers.lang
+rm -f %buildroot%_libdir/sudo/*.la
 
 %pre
 %pre_control sudo
 %pre_control sudoers
+if [ -f "%_controldir/sudoreplay" ]; then
+    %pre_control sudoreplay
+fi
 
 %post
 %post_control -s wheelonly sudo
 %post_control -s strict sudoers
+if [ $1 -gt 1 -a ! -f "/var/run/control/sudoreplay" ]; then
+    echo wheelonly > "/var/run/control/sudoreplay"
+fi
+%post_control -s wheelonly sudoreplay
 
-%files
-%config /etc/control.d/facilities/sudo*
+%triggerpostun -- %name < 1:1.8.0
+cp -a %_sysconfdir/sudoers %_sysconfdir/sudoers.rpmsave
+if ! grep -q '^#includedir %_sysconfdir/sudoers.d$' %_sysconfdir/sudoers; then
+    if [ -d %_sysconfdir/sudoers.d ]; then
+        echo "WARNING: %_sysconfdir/sudoers.d directory no longer supported indirectly"
+        echo "Update %_sysconfdir/sudoers with next line:"
+        echo "#includedir %_sysconfdir/sudoers.d"
+        echo
+
+        echo >>%_sysconfdir/sudoers
+        echo "# Automatically updates by rpm:" >>%_sysconfdir/sudoers
+        echo "#includedir %_sysconfdir/sudoers.d" >>%_sysconfdir/sudoers
+    fi
+fi
+if ! grep -q '^#includedir %_sysconfdir/sudo.d$' %_sysconfdir/sudoers; then
+    if [ -d %_sysconfdir/sudo.d ]; then
+        echo "WARNING: %_sysconfdir/sudo.d compat directory no longer supported indirectly"
+
+        if [ "$(ls -A %_sysconfdir/sudo.d)" ]; then
+            echo "Update %_sysconfdir/sudoers with next line:"
+            echo "#includedir %_sysconfdir/sudo.d"
+
+            echo >>%_sysconfdir/sudoers
+            echo "# Automatically updates by rpm:" >>%_sysconfdir/sudoers
+            echo "#includedir %_sysconfdir/sudo.d" >>%_sysconfdir/sudoers
+        fi
+
+        echo
+    fi
+fi
+
+%files -f sudo_all.lang
+%config %_controldir/sudo*
 %attr(400,root,root) %config(noreplace) %_sysconfdir/sudoers
 %attr(600,root,root) %config(noreplace) %_sysconfdir/pam.d/sudo
 %_bindir/sudoedit
-%_libexecdir
+%dir %_libdir/sudo
+%_libdir/sudo/*.so*
 %attr(700,root,root) %_bindir/sudo
+%attr(700,root,root) %_bindir/sudoreplay
 %attr(755,root,root) %_sbindir/visudo
-%attr(700,root,root) %timedir
 %attr(700,root,root) %_sysconfdir/sudoers.d
 %_mandir/man?/*
-%doc BUGS CHANGES.bz2 HISTORY LICENSE PORTING README TODO
-%doc TROUBLESHOOTING UPGRADE sample.sudoers rpminst.sudoers
+%exclude %_man8dir/sudo_plugin.8*
+%_datadir/doc/%name-%version/
+
+%files devel
+%doc plugins/sample/sample_plugin.c
+%_includedir/sudo_plugin.h
+%_man8dir/sudo_plugin.8*
 
 %changelog
+* Tue Jan 10 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.19p1-alt6%ubt
+- Add compatibility trigger for /etc/sudoers.d and /etc/sudo.d
+- Avoid sudoreplay pre and post control warnings
+
+* Mon Jan 02 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.19p1-alt5%ubt
+- Add warning if /etc/sudo.d directory exixsts
+
+* Wed Dec 28 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.19p1-alt4%ubt
+- Disable sudo rule for root by default
+
+* Tue Dec 27 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.19p1-alt3%ubt
+- Fixed relaxed control rule for sudoers
+
+* Mon Dec 26 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.19p1-alt2%ubt
+- Build without *.la files in modules directory
+
+* Wed Dec 21 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.19p1-alt1%ubt
+- Updated to last stable release 1.8.19p1 with sssd features
+
+* Thu Aug 04 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.17p1-alt2
+- Fixed new sudoers template with sudoers.control settings
+
+* Thu Jul 28 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.17p1-alt1
+- Updated to last stable release 1.8.17p1
+
+* Tue Jun 30 2015 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.13-alt1
+- Updated to last stable release 1.8.13
+
+* Mon Jan 27 2014 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.9p4-alt1
+- Updated to last stable release 1.8.9p4
+
+* Mon Oct 07 2013 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.8-alt1
+- Updated to new relrease 1.8.8
+
+* Fri Oct 04 2013 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.6p8-alt1
+- Updated to 1.8.6p8
+
+* Tue Feb 12 2013 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.6p6-alt1
+- Updated to 1.8.6p6
+
+* Wed Jan 16 2013 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.6p4-alt1
+- Updated to 1.8.6p4
+
+* Wed Dec 19 2012 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.6p3-alt1
+- Updated to 1.8.6p3
+- Enabled /etc/sudoers.d by default (for new installations)
+- Added sudo-devel package for plugin development
+
 * Fri Jul 13 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1:1.6.8p12-alt12
 - Dropped /etc/sudo.d from package and Provides, handling left for
   compatibility.
