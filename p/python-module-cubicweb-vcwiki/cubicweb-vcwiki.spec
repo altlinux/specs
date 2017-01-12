@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname cubicweb-vcwiki
 Name: python-module-%oname
-Version: 0.3.0
+Version: 0.4.1
 Release: alt1
 Summary: Version controlled wiki component for the CubicWeb framework
 License: LGPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/cubicweb-vcwiki/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/b1/bd/0d7aa520965beff6650c7218805fe71b3a50fdb7a1184fc8ed2f607b5453/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests cubicweb
@@ -27,7 +28,7 @@ It uses Mercurial as a content storage and can be edited both with your
 favorite editor and the web GUI.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -44,6 +45,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1
+- automated PyPI update
+
 * Fri Jan 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1
 - Initial build for Sisyphus
 
