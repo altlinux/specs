@@ -21,8 +21,8 @@
 %endif
 
 Name: xorg-server
-Version: 1.19.0
-Release: alt2
+Version: 1.19.1
+Release: alt1
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -326,6 +326,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Thu Jan 12 2017 Valery Inozemtsev <shrek@altlinux.ru> 2:1.19.1-alt1
+- 1.19.1
+
 * Thu Dec 15 2016 Valery Inozemtsev <shrek@altlinux.ru> 2:1.19.0-alt2
 - git snapshot server-1.19-branch.d6da208
 
