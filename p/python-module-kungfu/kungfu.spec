@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define oname kungfu
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.6.0
-Release: alt2
+Version: 1.6.8
+Release: alt1
 Summary: A Pandas Enhancement
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/kungfu/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/86/63/426344b8ba6c6a7702f7a763f04ea87ec801419c72f9ac647293e3823541/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -49,7 +50,7 @@ An enhancement to pandas module. This is kungfu, with monkey-patched
 common methods to (Data)Frame and Series in pandas.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -86,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.6.8-alt1
+- automated PyPI update
+
 * Sat May 28 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt2
 - NMU: rebuild with xlwt
 
