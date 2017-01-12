@@ -1,12 +1,13 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.1.1
+Release: alt1
 %define gname google
 %define oname %gname-apputils
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.0
+Version: 0.4.2
 #Release: alt2.1
 Summary: Google Application Utilities for Python
 License: ASLv2.0
@@ -14,7 +15,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/google-apputils/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/69/66/a511c428fef8591c5adfa432a257a333e0d14184b6c5d03f1450827f7fe7/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
@@ -57,7 +58,7 @@ Group: Development/Python3
 Core files of %gname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -117,6 +118,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.0-alt2.1.1
 - (AUTO) subst_x86_64.
 
