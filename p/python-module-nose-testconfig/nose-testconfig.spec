@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname nose-testconfig
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9
-Release: alt1.git20130419.1
+Version: 0.10
+Release: alt1
 Summary: Test Configuration plugin for nosetests
 License: ASLv2.0
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/nose-testconfig/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/singingwolfboy/nose-testconfig.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/a0/1a/9bb934f1274715083cfe8139d7af6fa78ca5437707781a1dcc39a21697b4/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -42,7 +43,7 @@ faculty for passing test-specific (or test-run specific) configuration
 data to the tests being executed.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -87,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9-alt1.git20130419.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
