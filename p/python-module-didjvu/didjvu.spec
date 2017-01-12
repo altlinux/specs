@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define oname didjvu
 
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.6.1
+Version: 0.8.1
 Release: alt1
 Summary: DjVu encoder with foreground/background separation
 License: GPLv2
@@ -11,7 +12,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/didjvu
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/d1/4c/5ceedb3d8fcdd4a886e7e6344e6a0c31fb205d20e26413bd914d62187e95/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: xsltproc docbook-style-xsl djvu-utils exiv2
@@ -28,7 +29,7 @@ Requires: exiv2
 DjVu encoder with foreground/background separation.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -49,6 +50,9 @@ python setup.py test -v
 %_man1dir/*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1
+- automated PyPI update
+
 * Sun Aug 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1
 - Initial build for Sisyphus
 
