@@ -52,7 +52,7 @@
 
 Name: vim
 %define branch 8.0
-Version: %branch.118
+Version: %branch.170
 Release: alt1
 Epoch: 4
 
@@ -1064,6 +1064,10 @@ fi
 
 # {{{ changelog
 %changelog
+* Wed Jan 11 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.0.170-alt1
+- Updated to v8.0.0170.
+- Do not reset bg variable in default colorscheme.
+
 * Fri Dec 02 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.0.118-alt1
 - Updated to v8.0.0118.
 - vi, ex: Disabled reading of vimrc files (ALT#32833).
