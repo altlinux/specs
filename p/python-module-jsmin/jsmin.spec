@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define oname jsmin
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.1.2
-Release: alt1.1
+Version: 2.2.1
+Release: alt1
 Summary: JavaScript minifier
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/jsmin/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/87/8c/89cfe7ea967e0a4623b4e61008523ff40805c2bd4eabb1b07671643ea953/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -54,7 +55,7 @@ JavaScript minifier.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -107,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.1.2-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
