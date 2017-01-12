@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname django-preferences
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.6
-Release: alt1.git20120612.1
+Version: 0.1
+Release: alt1
 Summary: Django app allowing users to set app specific preferences through the admin interface
 License: BSD
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/django-preferences/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/praekelt/django-preferences.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/1f/a0/0063d210b980cff110c57562fc1c15ff97e74968123c1f1d139af1b387a2/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -60,7 +61,7 @@ preference intance per site is available for each Preferences class.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -103,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.6-alt1.git20120612.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
