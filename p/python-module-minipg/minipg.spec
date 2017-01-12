@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname minipg
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.4.3
-Release: alt1.git20150208.2.1
+Version: 0.5.6
+Release: alt1
 Summary: Yet another PostgreSQL database driver
 License: MIT
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/minipg/
 Packager: Python Development Team <python@packages.altlinux.org>
 
 # https://github.com/nakagami/minipg.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/08/5b/672bb919188d537ac67e3a201b9218208db2ebe156b31cd8b61407706739/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-Cython
 #BuildPreReq: python-module-setuptools-tests
@@ -61,7 +62,7 @@ Yet another Python PostgreSQL database driver.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 rm -rf ../python3
@@ -117,6 +118,9 @@ exit 1
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.6-alt1
+- automated PyPI update
+
 * Mon Mar 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.3-alt1.git20150208.2.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
