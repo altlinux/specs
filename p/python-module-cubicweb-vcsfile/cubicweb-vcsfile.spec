@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname cubicweb-vcsfile
 Name: python-module-%oname
-Version: 2.0.3
+Version: 2.4.1
 Release: alt1
 Summary: Component to integrate version control systems data into the CubicWeb framework
 License: LGPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/cubicweb-vcsfile/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/dc/f8/91e1abdd52bbfc9ce1b3f197f028a80b6a500f1265f32f64ff46c4a18edd/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests cubicweb subversion-python
@@ -34,7 +35,7 @@ stored as entities, and thus queryable via RQL, while actual files
 content is kept in the repository and fetched from there on demand.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -53,6 +54,9 @@ python setup.py test
 %_docdir/%oname
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1
+- automated PyPI update
+
 * Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt1
 - Version 2.0.3
 
