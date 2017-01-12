@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define oname BTrees
 
 %def_with python3
@@ -5,8 +6,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 4.1.5
-Release: alt2.dev0.git20150602.1.1
+Version: 4.3.2
+Release: alt1
 Summary: Scalable persistent object containers
 License: ZPL
 Group: Development/Python
@@ -14,7 +15,7 @@ Url: https://pypi.python.org/pypi/BTrees
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/zopefoundation/BTrees.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/f5/4d/206c8b5799e319c0138952b8d18cb4b2288d7dcc583598761f65ed8e416d/%{oname}-%{version}.tar.gz
 
 #BuildPreReq: python-devel python-module-setuptools-tests
 #BuildPreReq: python-module-zope.interface python-module-persistent
@@ -116,7 +117,7 @@ resolution of conflicts detected by that mechannism.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -180,6 +181,9 @@ exit 1
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt1
+- automated PyPI update
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.5-alt2.dev0.git20150602.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
