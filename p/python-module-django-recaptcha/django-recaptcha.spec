@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname django-recaptcha
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.2
-Release: alt1.git20140916.1
+Version: 1.2.0
+Release: alt1
 Summary: Django recaptcha form field/widget app
 License: BSD
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/django-recaptcha/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/praekelt/django-recaptcha.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/8f/ff/2ea54bb0c236e00ed1fa9edd4242738b74f163b3bc56319ba0d5b170a3b1/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -56,7 +57,7 @@ which is included in the package as client.py.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -101,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.2-alt1.git20140916.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
