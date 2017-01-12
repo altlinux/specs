@@ -4,7 +4,7 @@
 %define _name exempi
 
 Name: lib%_name
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: Library for easy parsing of XMP metadata
@@ -77,6 +77,9 @@ This package contains the static library needed for developing with
 
 
 %changelog
+* Thu Jan 12 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Sat Mar 26 2016 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
 - 2.3.0
 
