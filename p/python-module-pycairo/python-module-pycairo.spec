@@ -1,7 +1,9 @@
+%def_with doc
+
 %define oname pycairo
 Name: python-module-%oname
 Version: 1.10.1
-Release: alt2.git20120522
+Release: alt2.git20120522.1
 
 Summary: Pycairo is a set of Python bindings for the vector graphics library cairo
 
@@ -18,8 +20,8 @@ Source: pycairo-%version.tar.gz
 
 # Automatically added by buildreq on Wed Jul 01 2009
 BuildRequires: gcc-c++ libcairo-devel python-devel
-BuildPreReq: python-module-sphinx-devel python-module-Pygments
-BuildPreReq: texlive-latex-base
+%{?!_with_bootstrap:BuildRequires: python-module-Pygments}
+%{?_with_doc:BuildPreReq: python-module-sphinx-devel texlive-latex-base}
 
 BuildRequires: libcairo-devel >= 1.8.6
 
@@ -74,7 +76,7 @@ Pickles for pycairo.
 
 sed -i 's|@PYVER@|%_python_version|g' doc/Makefile.am
 
-%prepare_sphinx doc
+%{?_with_doc:%prepare_sphinx doc}
 
 %build
 #rm -r aclocal.m4 ltmain.sh
@@ -86,19 +88,21 @@ sed -i 's|@PYVER@|%_python_version|g' doc/Makefile.am
 #echo "import cairo" >test-cairo.py
 #%_bindir/env python test-cairo.py
 
+%if_with doc
 pushd doc
 %make_build html
 popd
+%endif
 
 %install
 %makeinstall_std
 
 # docs
-
 install -d %buildroot%_docdir/%name-%version
 install -p -m644 AUTHORS COPYING-* NEWS README \
 	%buildroot%_docdir/%name-%version
 
+%if_with doc
 cp -fR doc/.build/html %buildroot%_docdir/%name-%version/
 #cp -fR doc/.build/latex/*.pdf %buildroot%_docdir/%name-%version/pdf
 
@@ -117,6 +121,7 @@ done
 
 %pre pickles
 rm -fR %python_sitelibdir/%oname/pickle
+%endif # doc
 
 %files
 %doc %dir %_docdir/%name-%version
@@ -125,13 +130,16 @@ rm -fR %python_sitelibdir/%oname/pickle
 %doc %_docdir/%name-%version/NEWS
 %doc %_docdir/%name-%version/README
 %python_sitelibdir/%modulename
+%if_with doc
 %exclude %python_sitelibdir/%modulename/test
 %exclude %python_sitelibdir/%modulename/examples
+%endif
 
 %files devel
 %_includedir/%oname
 %_pkgconfigdir/%oname.pc
 
+%if_with doc
 %files docs
 %doc %dir %_docdir/%name-%version
 %doc %_docdir/%name-%version
@@ -149,8 +157,12 @@ rm -fR %python_sitelibdir/%oname/pickle
 %files pickles
 %dir %python_sitelibdir/%oname
 %python_sitelibdir/%oname/pickle
+%endif
 
 %changelog
+* Thu Jan 12 2017 Michael Shigorin <mike@altlinux.org> 1.10.1-alt2.git20120522.1
+- BOOTSTRAP: added doc knob (on by default)
+
 * Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.1-alt2.git20120522
 - New snapshot
 
