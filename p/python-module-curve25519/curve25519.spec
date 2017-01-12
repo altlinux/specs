@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname curve25519
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2.1
-Release: alt1.git20141020.1.1
+Version: 1.3
+Release: alt1
 Summary: Implementations of a fast Elliptic-curve Diffie-Hellman primitive
 License: BSD
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://code.google.com/p/curve25519-donna/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/agl/curve25519-donna.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/01/05/1ab1cc54c2b1e933721b8e65fedc01098e6b8ffdccedbc4a682d4e0db8c1/%{oname}-donna-%{version}.tar.gz
 
 #BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
@@ -70,7 +71,7 @@ source isn't available, only the x86 32-bit assembly output.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-donna-%{version}
 
 sed -i 's|@VERSION@|%version|' setup.py
 %ifarch x86_64
@@ -132,6 +133,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1
+- automated PyPI update
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.1-alt1.git20141020.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
