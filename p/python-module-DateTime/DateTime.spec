@@ -1,11 +1,13 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: unzip
 %define oname DateTime
 
 %def_with python3
 
 Name: python-module-%oname
 Epoch: 1
-Version: 4.0.2
-Release: alt1.dev.git20150614.1.1
+Version: 4.1.1
+Release: alt1
 Summary: Encapsulation of date/time values
 License: ZPLv2.1
 Group: Development/Python
@@ -13,7 +15,7 @@ Url: http://pypi.python.org/pypi/DateTime/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/zopefoundation/DateTime.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/80/67/37467b2725462859366d35bfe30e1e217e6f49ca391ecbe54ae2f09da191/%{oname}-%{version}.zip
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-distribute
@@ -68,7 +70,7 @@ using Python's built-in datetime module.
 This package contains tests for DateTime.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -110,6 +112,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.1.1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:4.0.2-alt1.dev.git20150614.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
