@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pint
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7
-Release: alt1.dev0.git20141107.1.1
+Version: 0.7.2
+Release: alt1
 Summary: Physical quantities module
 License: BSD
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/Pint/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/hgrecco/pint.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/c5/e5/1c317a30e51810d6ac1d744a6c232569c5a06d4478bdd20c2f0614d117e7/Pint-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -126,7 +127,7 @@ rewrite!) the complete list without changing the source code.
 This package contains documentation for %oname.
 
 %prep
-%setup
+%setup -q -n Pint-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -193,6 +194,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.2-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7-alt1.dev0.git20141107.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
