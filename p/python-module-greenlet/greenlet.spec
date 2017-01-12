@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname greenlet
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.9
-Release: alt1.git20150830.1.1
+Version: 0.4.11
+Release: alt1
 Summary: Lightweight in-process concurrent programming
 License: MIT
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: http://pypi.python.org/pypi/greenlet
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/python-greenlet/greenlet.git
-Source: %oname-%version.tar.gz
+Source0: https://pypi.python.org/packages/03/a6/8842d7215e1c54537eb5d0b8fd3e8562cc869b6d193317b11027ff7d8009/%{oname}-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-python
 #BuildPreReq: python-module-setuptools-tests gcc-c++
@@ -86,7 +87,7 @@ and are synchronized with data exchanges on "channels".
 This package contains tests for greenlet.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -136,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.11-alt1
+- automated PyPI update
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.9-alt1.git20150830.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
