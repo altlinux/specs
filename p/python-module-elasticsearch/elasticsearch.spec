@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname elasticsearch
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.3.0
+Version: 5.1.0
 Release: alt1
 Summary: Python client for Elasticsearch
 License: ASL
@@ -12,8 +13,8 @@ Group: Development/Python
 Url: https://github.com/elastic/elasticsearch-py
 
 # https://github.com/elasticsearch/elasticsearch-py.git
-Source: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Source0: https://pypi.python.org/packages/2a/0a/fca7faa8155a1b6fcd3ce86a351640a2593b1ac8ee461f908a190b06e284/%{oname}-%{version}.tar.gz
+Patch0: %name-2.3.0-alt1.patch
 
 BuildArch: noarch
 
@@ -104,7 +105,7 @@ this it tries to be opinion-free and very extendable.
 This package contains documentation for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -173,6 +174,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.0-alt1
+- automated PyPI update
+
 * Mon May  9 2016 Terechkov Evgenii <evg@altlinux.org> 2.3.0-alt1
 - 2.3.0
 
