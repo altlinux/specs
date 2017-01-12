@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname demjson
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.2.2
-Release: alt1.git20140625.1.1
+Version: 2.2.4
+Release: alt1
 Summary: encoder, decoder, and lint/validator for JSON compliant with RFC 7159
 License: LGPLv3.0
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/demjson/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/dmeranda/demjson.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/96/67/6db789e2533158963d4af689f961b644ddd9200615b8ce92d6cad695c65a/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -61,7 +62,7 @@ elsewhere. It is especially useful for error checking or for parsing
 JavaScript data which may not strictly be valid JSON data.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -117,6 +118,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.2.2-alt1.git20140625.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
