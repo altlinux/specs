@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define oname certifi
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 2015.04.28
-Release: alt1.1
+Version: 2016.9.26
+Release: alt1
 Summary: Python package for providing Mozilla's CA Bundle
 License: MPLv2
 Group: Development/Python
 Url: https://pypi.python.org/pypi/certifi/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/4f/75/e1bc6e363a2c76f8d7e754c27c437dbe4086414e1d6d2f6b2a3e7846f22b/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -41,7 +42,7 @@ This is the same CA Bundle which ships with the Requests codebase, and
 is derived from Mozilla Firefox's canonical set.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -76,6 +77,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2016.9.26-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2015.04.28-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
