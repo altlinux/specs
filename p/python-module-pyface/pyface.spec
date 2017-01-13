@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pyface
 Name: python-module-%oname
-Version: 4.6.0
-Release: alt1.git20150401
+Version: 5.1.0
+Release: alt1
 Summary: Traits-capable windowing framework
 
 Group: Development/Python
 License: BSD, EPL and LGPL
 URL: http://www.enthought.com/
 # https://github.com/enthought/pyface.git
-Source: %oname-%version.tar
+Source0: https://pypi.python.org/packages/00/ec/04b1d7f1981107cde01bbc4a53ae2a234493e694cfa880fc00817e6c2a42/%{oname}-%{version}.tar.bz2
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildPreReq: python-module-setuptools python-devel
@@ -63,7 +64,7 @@ back-end take care of the details of displaying them.
 This package contains tests for pyface.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %prepare_sphinx docs
 ln -s ../objects.inv docs/source/
@@ -100,6 +101,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/%oname/pickle
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.0-alt1
+- automated PyPI update
+
 * Sun May 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.6.0-alt1.git20150401
 - Version 4.6.0
 
