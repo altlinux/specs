@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname ptest
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.3.0
-Release: alt1.git20150813.1
+Version: 1.7.4
+Release: alt1
 Summary: Light testing framework for Python
 License: ASLv2.0
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/ptest
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/KarlGong/ptest.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/60/ba/c8b04e9bb9ca7fe92acf369c2004fa1cf20f3c0c5ece62b8a36abee431e4/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -41,7 +42,7 @@ generating clear report.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -94,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.4-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.0-alt1.git20150813.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
