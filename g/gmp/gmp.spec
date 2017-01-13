@@ -1,5 +1,5 @@
 Name: gmp
-Version: 6.1.0
+Version: 6.1.2
 Release: alt1
 
 Summary: GNU MP arbitrary precision arithmetic library
@@ -259,6 +259,9 @@ install -pm644 gmp-mparam.h rand/randmt.h %buildroot%_includedir/
 %endif #cxx
 
 %changelog
+* Thu Jan 12 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.1.2-alt1
+- Updated to 6.1.2.
+
 * Wed Dec 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.1.0-alt1
 - Updated to 6.1.0.
 

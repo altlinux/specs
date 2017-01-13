@@ -10,7 +10,7 @@
 # note: at sync with fedora rel.28
 
 Name: jdkgcj
-Version: 0.5.12
+Version: 0.5.13
 Release: alt1
 
 Summary: A free Java SDK
@@ -355,6 +355,9 @@ subst s,%_bindir/gcj-dbtool,%_bindir/%_target_platform-gcj-dbtool-%__gcc_version
 %_jvmjardir/jre-%{javaver}-%{origin}
 
 %changelog
+* Thu Dec 08 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.13-alt1
+- Rebuild with gcc-6.
+
 * Thu May 07 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.12-alt1
 - Rebuilt with gcc-5.
 

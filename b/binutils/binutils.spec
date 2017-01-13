@@ -1,5 +1,5 @@
 Name: binutils
-Version: 2.26.1
+Version: 2.27.0
 Release: alt1
 Epoch: 1
 
@@ -15,12 +15,12 @@ Source2: gcc.sh
 Source3: g++.sh
 Source4: output-format.sed
 
-Patch: binutils-2_26-branch.patch
+Patch: binutils-2_27-branch.patch
 
 Patch0001: 0001-Add-lto-and-none-lto-input-support-for-ld-r.patch
 Patch0002: 0002-Add-test-for-nm-on-mixed-LTO-non-LTO-object.patch
 Patch0003: 0003-Don-t-check-the-plugin-target-twice.patch
-Patch0004: 0004-PR19886-as-needed-regression.patch
+Patch0004: 0004-ld-testsuite-pr18808b.c-pass-Wno-return-type.patch
 Patch0005: 0005-gold-change-default-hash-style-to-gnu.patch
 Patch0006: 0006-bfd-export-demangle.h-and-hashtab.h.patch
 Patch0007: 0007-ld-add-no-warn-shared-textrel-option.patch
@@ -31,7 +31,7 @@ Patch0011: 0011-gold-enable-z-relro-by-default.patch
 Patch0012: 0012-ld-testsuite-restore-upstream-default-options.patch
 Patch0013: 0013-gold-testsuite-use-sysv-hash-style-for-two-tests.patch
 Patch0014: 0014-bfd-elflink.c-bfd_elf_final_link-check-all-objects-f.patch
-Patch0015: 0015-ld-testsuite-pr18808b.c-pass-Wno-return-type.patch
+Patch0015: 0015-ld-testsuite-pr19784c.c-pass-Wno-return-type.patch
 
 PreReq: alternatives >= 0:0.4
 Conflicts: libbfd
@@ -259,6 +259,9 @@ XFAIL_TESTS=
 %doc NEWS*
 
 %changelog
+* Thu Nov 10 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.27.0-alt1
+- Updated to 2.27.0 20161101.
+
 * Fri Jul 01 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.26.1-alt1
 - Updated to 2.26.1 20160701.
 
