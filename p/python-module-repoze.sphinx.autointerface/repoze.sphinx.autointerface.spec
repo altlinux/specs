@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.1.1.1
+Release: alt1
 %define oname repoze.sphinx.autointerface
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7.1
+Version: 0.8
 #Release: alt2.1.1
 Summary: Auto-generate Sphinx API docs from Zope interfaces
 License: BSD
@@ -14,7 +15,7 @@ Url: https://github.com/repoze/repoze.sphinx.autointerface
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/repoze/repoze.sphinx.autointerface.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/8f/65/ea18d09c6847b3a381e16c89f26de0ddcdf0bdb8d05f4581e4df9b7033fd/%{oname}-%{version}.tar.gz
 
 #BuildPreReq: python-devel python-module-distribute
 %if_with python3
@@ -67,7 +68,7 @@ Group: Development/Python
 Core package for repoze.sphinx.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -128,6 +129,9 @@ touch %buildroot%python3_sitelibdir/repoze/sphinx/__init__.py
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.1-alt2.1.1.1
 - (AUTO) subst_x86_64.
 
