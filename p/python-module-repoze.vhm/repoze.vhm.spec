@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.git20120324.1.1
+Release: alt1
 %define oname repoze.vhm
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.13
+Version: 0.14
 #Release: alt2.git20120324.1
 Summary: Commit / abort transactions via WSGI middleware
 License: BSD
@@ -14,7 +15,7 @@ Url: https://github.com/repoze/repoze.vhm
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/repoze/repoze.vhm.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/76/df/0175302b40198e77ad213562ce41f1d8a8ddcd537296c44ef2fa352bc9d8/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -73,7 +74,7 @@ virtual hosting.
 This package contains tests for repoze.vhm.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -129,6 +130,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.13-alt2.git20120324.1.1
 - (AUTO) subst_x86_64.
 
