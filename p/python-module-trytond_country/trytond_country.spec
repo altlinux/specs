@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname trytond_country
 Name: python-module-%oname
-Version: 3.4.0
+Version: 4.2.0
 Release: alt1
 Summary: Tryton module with countries
 License: GPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/trytond_country/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/05/b3/cbdccb60bd8a8c3c290f0b5fd75b36005275e44e109bc745f57aa479c0b3/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-module-setuptools-tests python-module-trytond-tests
 BuildArch: noarch
@@ -28,7 +29,7 @@ The country module of the Tryton application platform.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -46,6 +47,9 @@ This package contains tests for %oname.
 %python_sitelibdir/*/*/*/tests
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1
+- automated PyPI update
+
 * Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0-alt1
 - Initial build for Sisyphus
 
