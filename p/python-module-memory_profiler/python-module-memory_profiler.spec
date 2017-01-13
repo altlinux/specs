@@ -2,8 +2,8 @@
 %def_with python3
 
 Name:    python-module-%modulename
-Version: 0.41
-Release: alt2
+Version: 0.43
+Release: alt1
 
 Summary: Monitor Memory usage of Python code
 License: BSD
@@ -80,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 13 2017 Andrey Cherepanov <cas@altlinux.org> 0.43-alt1
+- new version 0.43
+
 * Fri Jul 15 2016 Andrey Cherepanov <cas@altlinux.org> 0.41-alt2
 - Do not package executable in module
 - Add documentation to python2 module
