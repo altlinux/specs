@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: unzip
 %define mname yieldfrom
 %define oname %mname.urllib3
 
@@ -5,8 +7,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.2
-Release: alt4.git20141229
+Version: 0.1.4
+Release: alt1
 Summary: Asyncio HTTP library with thread-safe connection pooling, file post, and more
 License: MIT
 Group: Development/Python
@@ -14,7 +16,7 @@ Url: https://pypi.python.org/pypi/yieldfrom.urllib3/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/rdbhost/yieldfromUrllib3.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/40/1c/3417ef77d7b045441e7105dd2e344102a73c025fae1f2ddd8c0926ab982c/%{oname}-%{version}.zip
 
 %if_with python2
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -80,7 +82,7 @@ Group: Development/Python3
 Core files of %mname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -161,6 +163,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.4-alt1
+- automated PyPI update
+
 * Thu Apr 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.2-alt4.git20141229
 - Rebuild with rpm-build-python3-0.1.10.4-alt1 to get the essential
   dep on setuptools (from an __import__ expr).
