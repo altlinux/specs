@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname tzlocal
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.3
-Release: alt2.dev0.git20141018.1
+Version: 1.3
+Release: alt1
 Summary: tzinfo object for the local timezone
 License: CC0 1.0 Universal
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/tzlocal/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/regebro/tzlocal.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/d3/64/e4b18738496213f82b88b31c431a0e4ece143801fb6771dddd1c2bf0101b/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -75,7 +76,7 @@ tzinfo objects.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -131,6 +132,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.3-alt2.dev0.git20141018.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
