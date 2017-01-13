@@ -1,11 +1,13 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: unzip
 %define oname sparql-client
 
 %def_without python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.7
-Release: alt2.dev.git20140915
+Version: 2.6
+Release: alt1
 Summary: Python API to query a SPARQL endpoint
 License: MPLv1.1
 Group: Development/Python
@@ -13,7 +15,7 @@ Url: https://pypi.python.org/pypi/sparql-client/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/eea/sparql-client.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/cc/ab/e6eeaeebc171492eafb458ac0f1b3605fbe373e782e5950a63dfaa109399/%{oname}-%{version}.zip
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -46,7 +48,7 @@ automatically convert literals to the coresponding Python types.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -101,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1
+- automated PyPI update
+
 * Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt2.dev.git20140915
 - Fixed build
 
