@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.git20130426.1.1.1
+Release: alt1
 %define oname repoze.catalog
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.2
+Version: 0.8.3
 #Release: alt2.git20130426.1.1
 Summary: Python indexing and searching framework, useful outside Zope ecosystem
 License: BSD
@@ -14,7 +15,7 @@ Url: https://github.com/repoze/repoze.catalog
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/repoze/repoze.catalog.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/cb/14/c0ba31d32f5c21dcc7bc807cd6690f668cb904550def2f734939658ba1b4/%{oname}-%{version}.tar.gz
 
 #BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-sphinx-devel python-module-zope.component
@@ -87,7 +88,7 @@ A Python indexing and searching system based on `zope.index`.
 This package contains documentation for repoze.catalog.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -168,6 +169,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.2-alt2.git20130426.1.1.1
 - (AUTO) subst_x86_64.
 
