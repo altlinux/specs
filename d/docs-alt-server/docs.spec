@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 8.0
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -43,5 +43,8 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Fri Jan 13 2017 Artem Zolochevskiy <azol@altlinux.org> 8.0-alt2
+- update doc
+
 * Fri Jan 13 2017 Artem Zolochevskiy <azol@altlinux.org> 8.0-alt1
 - initial build
