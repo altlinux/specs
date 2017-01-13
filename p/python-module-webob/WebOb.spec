@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname webob
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.5.0
-Release: alt1.a0.git20150731.1.1
+Version: 1.7.0
+Release: alt1
 Summary: WSGI request and response object
 License: MIT
 Group: Development/Python
@@ -13,7 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 BuildArch: noarch
 
 # https://github.com/Pylons/webob.git
-Source: WebOb-%version.tar.gz
+Source0: https://pypi.python.org/packages/96/6a/1fa3aaf61a2f60b60c54cdeda5303fef5ac53fc46669d883a6befd886518/WebOb-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
@@ -52,7 +53,7 @@ parsing and accessors for other standard parts of the environment.
 %endif
 
 %prep
-%setup
+%setup -q -n WebOb-%{version}
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -85,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5.0-alt1.a0.git20150731.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
