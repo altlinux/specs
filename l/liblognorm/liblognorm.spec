@@ -3,7 +3,7 @@
 %def_enable regexp
 
 Name: liblognorm
-Version: 1.1.2
+Version: 2.0.2
 Release: alt1
 
 Summary: liblognorm is a tool to normalize log data.
@@ -13,7 +13,7 @@ Url: http://www.liblognorm.com/
 
 Source: %name-%version.tar
 BuildRequires: pkgconfig(libestr)
-BuildRequires: pkgconfig(json-c)
+BuildRequires: pkgconfig(libfastjson)
 %{?_enable_regexp:BuildRequires: pkgconfig(libpcre)}
 %{?_enable_docs:BuildRequires: /usr/bin/sphinx-build}
 
@@ -67,6 +67,9 @@ Static libs for building statically linked software that uses %name
 %endif
 
 %changelog
+* Tue Jan 17 2017 Alexey Shabalin <shaba@altlinux.ru> 2.0.2-alt1
+- 2.0.2
+
 * Tue Nov 17 2015 Alexey Shabalin <shaba@altlinux.ru> 1.1.2-alt1
 - 1.1.2
 

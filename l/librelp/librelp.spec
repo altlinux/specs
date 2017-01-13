@@ -2,7 +2,7 @@
 %def_enable tls
 
 Name: librelp
-Version: 1.2.10
+Version: 1.2.12
 Release: alt1
 
 Summary: The RELP (reliable event logging protocol) core protocol library
@@ -64,6 +64,9 @@ Static libs for building statically linked software that uses %name
 %endif
 
 %changelog
+* Fri Jan 13 2017 Alexey Shabalin <shaba@altlinux.ru> 1.2.12-alt1
+- 1.2.12
+
 * Thu Apr 07 2016 Alexey Shabalin <shaba@altlinux.ru> 1.2.10-alt1
 - 1.2.10
 
