@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.1.1
+Release: alt1
 %define oname zc.datetimewidget
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7.0
+Version: 0.8.0
 #Release: alt2.1
 Summary: Javascript-based widgets for date and datetime fields
 License: ZPLv2.1
@@ -13,7 +14,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/zc.datetimewidget/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/a1/32/05acfd667c7670ded21287f4ad327d93c704d2d27b765e178c7c7e7794c0/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -70,7 +71,7 @@ and a datetime widget.
 This package contains tests for zc.datetimewidget.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -132,6 +133,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.0-alt2.1.1
 - (AUTO) subst_x86_64.
 
