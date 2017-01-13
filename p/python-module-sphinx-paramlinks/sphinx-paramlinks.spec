@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname sphinx-paramlinks
 Name: python-module-%oname
-Version: 0.2.2
+Version: 0.3.2
 Release: alt1
 Summary: Allows param links in Sphinx function/method descriptions to be linkable
 License: MIT
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/sphinx-paramlinks/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/68/66/35fd8994e7c380f0272af0fc4b729272fd61a5f209a5ca4b2ee38d92ca68/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-module-setuptools-tests
 BuildArch: noarch
@@ -23,7 +24,7 @@ This is an experimental, possibly-not-useful extension that's used by
 the SQLAlchemy project and related projects.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -39,6 +40,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1
+- automated PyPI update
+
 * Fri Feb 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.2-alt1
 - Initial build for Sisyphus
 
