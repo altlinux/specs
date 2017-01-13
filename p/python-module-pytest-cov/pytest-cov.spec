@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pytest-cov
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.1.0
-Release: alt1.git20150823.1.1
+Version: 2.4.0
+Release: alt1
 Summary: py.test plugin for coverage reporting with support for centralised and distributed testing
 License: MIT
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/pytest-cov/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/schlamar/pytest-cov.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/00/c0/2bfd1fcdb9d407b8ac8185b1cb5ff458105c6b207a9a7f0e13032de9828f/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -58,7 +59,7 @@ All features offered by the coverage package should be available, either
 through pytest-cov or through coverage's config file.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -106,6 +107,9 @@ exit 1
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.1.0-alt1.git20150823.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
