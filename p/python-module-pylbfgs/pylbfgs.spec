@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pylbfgs
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.0.2
-Release: alt1.1.1
+Version: 0.2.0.3
+Release: alt1
 Summary: LBFGS and OWL-QN optimization algorithms
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/PyLBFGS
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/ff/82/5bd1a652ee8d061593f07ba54eb62e72a6a04f60e9fc4273033f5a021d0c/PyLBFGS-%{version}.tar.gz
 
 #BuildPreReq: python-devel python-module-setuptools-tests
 #BuildPreReq: python-module-nose libnumpy-devel
@@ -55,7 +56,7 @@ algorithm to Python users.
 %endif
 
 %prep
-%setup
+%setup -q -n PyLBFGS-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -104,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.0.3-alt1
+- automated PyPI update
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.0.2-alt1.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
