@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define oname veusz
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.21
-Release: alt2.1
+Version: 1.25.1
+Release: alt1
 Summary: A Scientific Plotting Package
 License: GPLv2+
 Group: Development/Python
 Url: http://home.gna.org/veusz/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %oname-%version.tar
+Source0: https://pypi.python.org/packages/e3/20/3ddde71c3585f011fcb7ba4ce95294cf0f9c1536ccbae153247b5f805ca6/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel libnumpy-devel python-module-PyQt4-devel
 BuildPreReq: libqt4-devel python-module-sip-devel python-module-pyemf
@@ -120,7 +121,7 @@ examined from within the application.
 This package contains main scripts for Veusz.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -188,6 +189,9 @@ install -m644 Documents/*.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.25.1-alt1
+- automated PyPI update
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.21-alt2.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
