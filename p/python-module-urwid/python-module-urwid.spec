@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define rname urwid
 
 %def_with python3
 
 Name: python-module-urwid
-Version: 1.2.1
-Release: alt1.1.1
+Version: 1.3.1
+Release: alt1
 
 Summary: Urwid is a console user interface library for Python.
 License: LGPL
 Group: Development/Python
 Url: http://excess.org/urwid
 
-Source: %rname-%version.tar
+Source0: https://pypi.python.org/packages/85/5d/9317d75b7488c335b86bd9559ca03a2a023ed3413d0e8bfe18bea76f24be/urwid-%{version}.tar.gz
 
 #Buildrequires: python-modules-curses python-module-setuptools
 #BuildPreReq: python-module-sphinx-devel
@@ -166,7 +167,7 @@ useful for text console application developers:
 This package contains tests for %rname.
 
 %prep
-%setup -n %rname-%version
+%setup -q -n urwid-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -229,6 +230,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%rname/
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1
+- automated PyPI update
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.1-alt1.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
