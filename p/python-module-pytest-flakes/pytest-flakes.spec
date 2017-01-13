@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pytest-flakes
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2
-Release: alt1.git20140206.1
+Version: 1.0.1
+Release: alt1
 Summary: pytest plugin to check source code with pyflakes
 License: MIT
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/pytest-flakes/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/fschulze/pytest-flakes.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/73/2d/61b0b7159b477def3ebb95b05e2ec4240b070bbda9725efe88b3e040269a/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests pyflakes
@@ -36,7 +37,7 @@ Group: Development/Python3
 py.test plugin for efficiently checking python source with pyflakes.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -81,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2-alt1.git20140206.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
