@@ -1,16 +1,17 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pytz
 
 %def_with python3
 
 Name: python-module-%oname
 Epoch: 1
-Version: 2015.4
-Release: alt1.1.1
+Version: 2016.10
+Release: alt1
 
 %setup_python_module %oname
 
 Summary: World timezone definitions, modern and historical
-Source0: %modulename-%version.tar
+Source0: https://pypi.python.org/packages/d0/e1/aca6ef73a7bd322a7fc73fd99631ee3454d4fc67dc2bee463e2adf6bb3d3/%{oname}-%{version}.tar.bz2
 License: MIT
 Group: Development/Python
 BuildArch: noarch
@@ -77,7 +78,7 @@ Group: Development/Python
 Archive with zoneinfo.
 
 %prep
-%setup -n %modulename-%version
+%setup -q -n %{oname}-%{version}
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -135,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1:2016.10-alt1
+- automated PyPI update
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:2015.4-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
