@@ -1,19 +1,16 @@
 Name: tilda
-Version: 0.9.6
-Release: alt2
+Version: 1.3.3
+Release: alt1
 
 Summary: A Linux terminal taking after the likeness of many terminals from fps games
 License: GPLv2
 Group: Terminals
+Url: https://github.com/lanoxx/%name
 
-Url: http://tilda.sourceforge.net/
-Source: %name-%version.tar
-Patch0: %name-0.9.6-alt-glib2-2.32.0.patch
-Patch1: tilda-0.9.6-gdk_resources.patch
-Packager: Alexey Morsov <swi@altlinux.ru>
+Source: %url/archive/%name-%version.tar.gz
 
-BuildRequires: flex libglade-devel libXrandr-devel
-BuildRequires: libconfuse-devel libvte-devel
+BuildRequires: flex libgtk+3-devel >= 3.10.0
+BuildRequires: libconfuse-devel libvte3-devel
 BuildRequires: desktop-file-utils
 
 Summary(ru_RU.UTF-8): Терминал Linux, имитирующий многие терминалы из FPS-игр
@@ -25,17 +22,17 @@ terminals from first person shooter games, Quake, Doom and Half-Life
 the desktop until a key is pressed.
 
 %prep
-%setup
-%patch0 -p0
-%patch1 -p0
+%setup -n %name-%name-%version
 
 %build
+%autoreconf
 %configure
 %make_build
 
 %install
 %makeinstall_std
 %find_lang %name
+
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Utility \
 	--remove-category=Application \
@@ -44,14 +41,17 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	%buildroot%_desktopdir/tilda.desktop
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog NEWS README TODO
-%_bindir/*
-%_desktopdir/*
-%_pixmapsdir/*
-%_datadir/%name.glade
-%_datadir/locale/*/LC_MESSAGES/%{name}.mo
+%_bindir/%name
+%_desktopdir/%name.desktop
+%_pixmapsdir/%name.png
+%_datadir/appdata/%name.appdata.xml
+%doc AUTHORS ChangeLog README.md TODO.md
+
 
 %changelog
+* Fri Jan 13 2017 Yuri N. Sedunov <aris@altlinux.org> 1.3.3-alt1
+- 1.3.3
+
 * Mon Jun 25 2012 Michael Shigorin <mike@altlinux.org> 0.9.6-alt2
 - added gentoo patch to avoid crash on start (closes: #27497)
 - spec cleanup
