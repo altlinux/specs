@@ -1,18 +1,17 @@
 %define upstreamname lxterminal
 %define gtkver 2
 Name: lxde-lxterminal
-Version: 0.2.0
-Release: alt1.20160221.1
+Version: 0.3.0
+Release: alt1
 
 Summary: Desktop-independent VTE-based terminal emulator for LXDE
 License: GPLv2+
 Group: Graphical desktop/Other
-Url: http://lxde.sourceforge.net/
-#Url: git://git.lxde.org/lxde/lxterminal.git
+Url: https://git.lxde.org/gitweb/?p=lxde/lxterminal.git
 
 Packager: LXDE Development Team <lxde at packages.altlinux.org>
 
-Source: %upstreamname-%version.tar
+Source: %name-%version.tar
 Patch: lxterminal-0-1-11-f10-true.patch
 
 BuildPreReq: libgtk+%gtkver-devel docbook-dtds docbook-style-xsl xsltproc libvte-devel intltool desktop-file-utils pkgconfig(glib-2.0) pkgconfig(vte-2.90) pkgconfig(x11) ImageMagick-tools
@@ -22,15 +21,14 @@ BuildPreReq: libgtk+%gtkver-devel docbook-dtds docbook-style-xsl xsltproc libvte
 process to reduce memory usage)
 
 %prep
-%setup -n %upstreamname-%version
+%setup -n %name-%version
 %patch -p2
 
 %build
 %autoreconf
+    %configure --enable-man \ 
 %if %gtkver==3
-    %configure --enable-man --enable-gtk3
-%else
-    %configure --enable-man
+               --enable-gtk3
 %endif
 
 %make_build
@@ -50,7 +48,7 @@ for x in 16 32 48; do
 done
 
 %files -f %upstreamname.lang
-%doc ChangeLog INSTALL README
+%doc ChangeLog INSTALL README.md
 %_bindir/*
 %_desktopdir/*.desktop
 %_datadir/%upstreamname
@@ -58,6 +56,9 @@ done
 %_iconsdir/hicolor/*/apps/%upstreamname.png
 
 %changelog
+* Wed Jan 11 2017 Anton Midyukov <antohami@altlinux.org> 0.3.0-alt1
+- New version 0.3.0
+
 * Tue May 17 2016 Anton Midyukov <antohami@altlinux.org> 0.2.0-alt1.20160221.1
 - New snapshot.
 
