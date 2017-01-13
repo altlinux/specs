@@ -1,6 +1,6 @@
 Name: kstart
-Version: 4.1
-Release: alt2
+Version: 4.2
+Release: alt1
 
 Summary: Daemon version of kinit for Kerberos v5
 License: MIT
@@ -10,6 +10,7 @@ URL:     http://www.eyrie.org/~eagle/software/kstart/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires: libkrb5-devel
+BuildRequires: perl-podlators
 
 Source0: http://archives.eyrie.org/software/kerberos/kstart-%{version}.tar.gz
 
@@ -26,6 +27,7 @@ credentials and refresh those credentials until the command exits.
 
 %build
 %add_optflags -I%_includedir/krb5
+./autogen
 %configure --disable-k4start --enable-setpag --enable-reduced-depends \
            --with-krb5-include=%_includedir/krb5
 %make
@@ -41,6 +43,9 @@ credentials and refresh those credentials until the command exits.
 %_mandir/man1/krenew.1.*
 
 %changelog
+* Fri Jan 13 2017 Andrey Cherepanov <cas@altlinux.org> 4.2-alt1
+- New version
+
 * Mon Dec 21 2015 Andrey Cherepanov <cas@altlinux.org> 4.1-alt2
 - Do not use strict extension for man pages
 
