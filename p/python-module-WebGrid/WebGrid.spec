@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname WebGrid
 Name: python-module-%oname
-Version: 0.1.12
+Version: 0.1.31
 Release: alt1
 Summary: A library for rendering HTML tables and Excel files from SQLAlchemy models
 License: BSD
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/WebGrid/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/72/20/ab20cbb0ff098d5ea7854bc779fbd63d7b1521a7227c858011a745593ddc/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -54,7 +55,7 @@ It also will export the grid to Excel.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -77,6 +78,9 @@ python setup.py test
 %python_sitelibdir/*/tests
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.31-alt1
+- automated PyPI update
+
 * Mon Jan 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.12-alt1
 - Initial build for Sisyphus
 
