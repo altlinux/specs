@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pytest-variables
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1
-Release: alt1.git20150716.1
+Version: 1.4
+Release: alt1
 Summary: pytest plugin for providing variables to tests/fixtures
 License: MPLv2.0
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/pytest-variables/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/davehunt/pytest-variables.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/ef/44/2f8207347c0ae3e8216feb4306be4ca575e184fda220d057095db9513b2f/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -41,7 +42,7 @@ tests/fixtures as a dict via a JSON file specified on the command line.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -84,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1-alt1.git20150716.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
