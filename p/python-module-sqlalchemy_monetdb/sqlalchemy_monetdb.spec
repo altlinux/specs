@@ -1,18 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define oname sqlalchemy_monetdb
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.9
-Release: alt1.1.1
+Version: 0.9.3
+Release: alt1
 Summary: SQLAlchemy dialect for MonetDB
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/sqlalchemy_monetdb/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/b0/68/a5ab95d99b50895ea37dec364d41b85afbeeff97b455c48510aaa62608b2/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -47,7 +48,7 @@ Group: Development/Python3
 MonetDB dialect for SQLAlchemy.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -92,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
