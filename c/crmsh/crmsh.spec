@@ -6,7 +6,7 @@
 Name: crmsh
 Summary: Pacemaker command line interface
 Version: 2.3.1
-Release: alt1
+Release: alt2
 License: GPL-2.0+
 Url: http://crmsh.github.io
 Group: System/Configuration/Other
@@ -103,6 +103,9 @@ mv %buildroot%_bindir/crm %buildroot%_sbindir/crm
 %_sysconfdir/bash_completion.d/*
 
 %changelog
+* Fri Jan 13 2017 Anton Farygin <rider@altlinux.ru> 2.3.1-alt2
+- adapted for ALT
+
 * Fri Sep 16 2016 Alexey Shabalin <shaba@altlinux.ru> 2.3.1-alt1
 - 2.3.1
 - add packages crmsh-scripts, crmsh-test, bash-completion-crmsh
