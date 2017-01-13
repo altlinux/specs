@@ -1,18 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pytest-timeout
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.5
-Release: alt1.1.1
+Version: 1.2.0
+Release: alt1
 Summary: py.test plugin to abort hanging tests
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/pytest-timeout
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/cc/b7/b2a61365ea6b6d2e8881360ae7ed8dad0327ad2df89f2f0be4a02304deb2/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -63,7 +64,7 @@ nevertheless, which is the most important part at this stage.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -110,6 +111,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
