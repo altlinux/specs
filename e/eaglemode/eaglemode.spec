@@ -1,5 +1,5 @@
 Name: eaglemode
-Version: 0.91.0
+Version: 0.92.0
 Release: alt1
 Group: Graphical desktop/Other
 Summary: Futuristic desktop allowing user to visit almost everything by zooming in
@@ -18,7 +18,7 @@ Requires: arj p7zip lzop lha zip unzip unrar htmldoc
 BuildRequires: libpoppler-glib-devel
 
 # Automatically added by buildreq on Thu Jun 24 2010
-BuildRequires: gcc-c++ libgio-devel libgtk+2-common-devel libjpeg-devel librsvg-devel libtiff-devel libxine-devel perl-threads libpng-devel
+BuildRequires: gcc-c++ libgio-devel libgtk+2-common-devel libjpeg-devel librsvg-devel libtiff-devel libxine2-devel perl-threads libpng-devel
 
 %description
 Eagle Mode is an advanced solution for a futuristic style of man-machine communication, in which the user can visit almost everything simply by zooming in. It has a professional file manager, file viewers and players for most of the common file types, a chess game, a 3D mines game, a multi-function clock and some fractal fun, all integrated in a virtual cosmos. By featuring a separate popup-zoomed control view, help texts in the things they are describing, editable bookmarks, multiple input methods, fast anti-aliased graphics, a virtually unlimited depth of panel tree, and by its portable C++ API, Eagle Mode aims to be a cutting edge of zoomable user interfaces.
@@ -63,6 +63,9 @@ mv %buildroot%_libdir/%name/include %buildroot%_includedir/%name && ln -s %_incl
 %_includedir/%name/*
 
 %changelog
+* Fri Jan 13 2017 Denis Medvedev <nbr@altlinux.org> 0.92.0-alt1
+- Version up
+
 * Thu Jul 14 2016 Fr. Br. George <george@altlinux.ru> 0.91.0-alt1
 - Autobuild version bump to 0.91.0
 
