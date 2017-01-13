@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define oname telnetlib3
 
 %def_without python2
@@ -5,8 +6,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.2.3
-Release: alt1.git20140629.1.1
+Version: 0.5.0
+Release: alt1
 Summary: Telnet server and client Protocol library using asyncio
 License: ISC
 Group: Development/Python
@@ -14,7 +15,7 @@ Url: https://pypi.python.org/pypi/telnetlib3/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/jquast/telnetlib3.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/5c/30/da58a2152561a7a6b6d49beee1bb14f292e1a3f4aab78ac1466a31909d3e/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 %if_with python2
@@ -49,7 +50,7 @@ Group: Development/Python3
 telnetlib3 is a Telnet Client and Server Protocol library for python.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -112,6 +113,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.3-alt1.git20140629.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
