@@ -1,3 +1,6 @@
+%def_without bootstrap
+
+%if_without bootstrap
 # help is welcome to re-enable, fix packaging and test
 %def_enable  guile
 %def_disable lua
@@ -6,10 +9,11 @@
 %def_enable python
 %def_disable ruby
 %def_disable tcl
+%endif
 
 Name: graphviz
 Version: 2.40.1
-Release: alt1
+Release: alt1.1
 
 Summary: Graphs visualization tools
 License: Common Public License 1.0
@@ -30,8 +34,9 @@ Obsoletes: libdotneato < %version
 
 # Automatically added by buildreq on Wed Apr 23 2014 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel gnu-config guile18 libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXext-devel libXmu-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgmp-devel libgtk+2-devel libltdl7-devel libpango-devel libpangox-compat libpangox-compat-devel libpng-devel libqt4-core libqt4-devel libqt4-gui libstdc++-devel libwayland-client libwayland-server perl-devel pkg-config python-base rpm-build-tcl tcl tcl-devel tk xorg-renderproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: flex gcc-c++ ghostscript-utils groff-base imake libXaw-devel libXpm-devel libann-devel libexpat-devel libfreeglut-devel libgd2-devel libglade-devel libgs-devel libgtkglext-devel libgts-devel liblasi-devel librsvg-devel phonon-devel swig tk-devel xorg-cf-files
+BuildRequires: flex gcc-c++ groff-base imake libXaw-devel libXpm-devel libann-devel libexpat-devel libgd2-devel swig tk-devel xorg-cf-files
 
+%{?!_with_bootstrap:BuildRequires: ghostscript-utils libfreeglut-devel libglade-devel libgs-devel libgtkglext-devel libgts-devel liblasi-devel librsvg-devel phonon-devel}
 %{?_enable_lua:BuildRequires: liblua5-devel}
 %{?_enable_guile:BuildRequires: guile18-devel}
 
@@ -156,6 +161,10 @@ This package makes %name functionality accessible from Tcl
 %patch0 -p1
 #patch1
 %patch2 -p1
+%ifarch e2k
+sed -i 's,-Wmissing-include-dirs ,,' \
+	configure cmd/gvpr/lib/Makefile
+%endif
 
 %build
 %add_optflags -DNDEBUG %optflags_fastmath
@@ -223,10 +232,12 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 %files
 %_bindir/*
 %dir %gvdatadir/
-%gvdatadir/gvedit
 %gvdatadir/gvpr
 %gvdatadir/lefty
+%if_without bootstrap
+%gvdatadir/gvedit
 %gvdatadir/smyrna
+%endif
 %ghost %gvlibdir/config
 %_man1dir/*
 %_man7dir/*
@@ -256,7 +267,7 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 %exclude %_defaultdocdir/%name-%version/cpl1.0.txt
 %exclude %_defaultdocdir/%name-%version/ChangeLog
 %exclude %_defaultdocdir/%name-%version/NEWS
-%gvdatadir/examples
+%{?!_with_bootstrap:%gvdatadir/examples}
 
 %files graphs
 %gvdatadir/graphs
@@ -324,6 +335,10 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 # - enable/fix/test language bindings
 
 %changelog
+* Wed Jan 11 2017 Michael Shigorin <mike@altlinux.org> 2.40.1-alt1.1
+- BOOTSTRAP: add the knob to disable extra BRs
+- E2K: drop an option unsupported by lcc
+
 * Wed Jan 11 2017 Michael Shigorin <mike@altlinux.org> 2.40.1-alt1
 - 2.40.1
   + disabled patch1
