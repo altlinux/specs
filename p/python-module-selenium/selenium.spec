@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1
+Release: alt1
 %define oname selenium
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.47.0
+Version: 3.0.2
 #Release: alt1.1
 Summary: Python bindings for Selenium
 License: ASL
@@ -13,7 +14,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/selenium/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/0c/42/20c235e604bf736bc970c1275a78c4ea28c6453a0934002f95df9c49dad0/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
@@ -38,7 +39,7 @@ The selenium package is used automate web browser interaction from
 Python.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -85,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt1
+- automated PyPI update
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.47.0-alt1.1.1
 - (AUTO) subst_x86_64.
 
