@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pp
 
 %def_without python3
 
 Name: python-module-%oname
-Version: 1.6.4
+Version: 1.6.5
 Release: alt1
 Summary: Parallel and distributed programming for Python
 License: BSD
@@ -11,7 +12,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/pp/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/14/e9/f69030681985226849becd36b04e2c0cb99babff23c8342bc4e30ded06b2/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel
@@ -41,7 +42,7 @@ heterogeneous and multi-platform clusters (including clusters running
 other application with variable CPU loads).
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -83,6 +84,9 @@ mv %buildroot%_bindir/ppserver.py %buildroot%_bindir/ppserver.py3
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.6.5-alt1
+- automated PyPI update
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.4-alt1
 - Initial build for Sisyphus
 
