@@ -1,7 +1,7 @@
 %def_without build_docs
 
 Name:    synfigstudio
-Version: 1.1.10
+Version: 1.2.0
 Release: alt1
 
 Summary: Synfig studio - animation program
@@ -187,7 +187,6 @@ cat synfig.lang >> %name.lang
 %files -n lib%name
 %_bindir/synfig
 %_libdir/lib*.so.*
-%_libdir/synfig/glsl
 %_libdir/synfig/modules
 
 %files -n lib%name-devel
@@ -196,6 +195,9 @@ cat synfig.lang >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jan 13 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
+- new version 1.2.0
+
 * Sun Jul 03 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.10-alt1
 - New version
 - Build all libraries from one package
