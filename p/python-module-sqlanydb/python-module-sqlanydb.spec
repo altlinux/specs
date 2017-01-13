@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # -*- coding: utf-8 -*-
 %define oname sqlanydb
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.6
-Release: alt1.git20140626.1
+Version: 1.0.8
+Release: alt1
 Epoch: 1
 License: Apache
 BuildArch: noarch
@@ -15,7 +16,7 @@ Summary(ru_RU.UTF-8): Интерфейс к БД Sybase Anywhere для Python
 
 Url: http://code.google.com/p/sqlanydb/
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/45/62/e0c80101e551fb16ca919cc80b1938ff225e0f20c3afdabf35d6ca79e52f/%{oname}-%{version}.tar.gz
 
 Requires: python >= 2.4
 Requires: libfreetds >= 0.64
@@ -41,7 +42,7 @@ This a Google Code project providing a python interface to the
 SQL Anywhere Database. This interface conforms to PEP 249.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -76,6 +77,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0.8-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.0.6-alt1.git20140626.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
