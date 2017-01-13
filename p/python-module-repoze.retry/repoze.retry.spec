@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.git20131015.1.1
+Release: alt1
 %define oname repoze.retry
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.3
+Version: 1.4
 #Release: alt2.git20131015.1
 Summary: WSGI middleware: retries requests after optimistic concurrency conflict errors
 License: BSD
@@ -14,7 +15,7 @@ Url: https://github.com/repoze/repoze.retry
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/repoze/repoze.retry.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/93/58/0d6341bc44802de6776bdafe8a6d0891b1e25d9e49032553a5cd4d0096df/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -70,7 +71,7 @@ exception is reraised.
 This package contains tests for repoze.retry.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -127,6 +128,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3-alt2.git20131015.1.1
 - (AUTO) subst_x86_64.
 
