@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define oname relatorio
 
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.6.1
-Release: alt3
+Version: 0.6.4
+Release: alt1
 Summary: A templating library able to output odt and pdf files
 License: GPL
 Group: Development/Python
 Url: https://pypi.python.org/pypi/relatorio/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/18/de/18b3e8d004e43f86884c5c6148d4b15b86d07a267f45835c684deb2a4c06/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -84,7 +85,7 @@ This package contains tests for %oname.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -136,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.4-alt1
+- automated PyPI update
+
 * Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt3
 - Fixed build
 
