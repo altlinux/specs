@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: unzip
 %define oname tempstorage
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.13
-Release: alt1.dev0.git20140318.1.1
+Version: 3.0
+Release: alt1
 Summary: A RAM-based storage for ZODB
 License: ZPLv2.1
 Group: Development/Python
@@ -12,7 +14,7 @@ Url: http://pypi.python.org/pypi/tempstorage/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/zopefoundation/tempstorage.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/9b/6e/79cd4bae58329f6c0d15bb906300b474f9c3988bfa414a72f5a3dbdb02ae/%{oname}-%{version}.zip
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -74,7 +76,7 @@ is a ripoff of Jim's Packless bsddb3 storage.
 This package contains tests for tempstorage.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -126,6 +128,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.13-alt1.dev0.git20140318.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
