@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname rql
 Name: python-module-%oname
-Version: 0.33.0
+Version: 0.34.1
 Release: alt1
 Summary: Relationship query language (RQL) utilities
 License: LGPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/rql/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/2f/b9/72b37bb153c150521acfe49168b4e404cad93546feabd4e2c680f6dd6ad9/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-module-setuptools-tests python-module-yapps2
 BuildPreReq: python-module-logilab-common python-module-logilab-database
@@ -41,7 +42,7 @@ parser, a type inferencer.
 This package contains documentation for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %prepare_sphinx .
 ln -s ../objects.inv doc/
@@ -72,6 +73,9 @@ python setup.py test
 %doc doc/build/html/*
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.34.1-alt1
+- automated PyPI update
+
 * Wed Nov 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.33.0-alt1
 - Initial build for Sisyphus
 
