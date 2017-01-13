@@ -3,8 +3,8 @@
 %define rev 93
 
 Name: wingpanel
-Version: %ver_major.0
-Release: alt1.%rev
+Version: %ver_major.1
+Release: alt1
 
 Summary: A super sexy space-saving top panel
 Group: Graphical desktop/Other
@@ -12,10 +12,11 @@ License: GPLv3+
 Url: https://launchpad.net/wingpanel
 
 # rev 93
-Source: https://launchpad.net/%name/%{ver_major}.x/%version/+download/%name-%version.tar
-Patch: wingpanel-2.0.0-alt-gala_plugin_install.patch
+Source: https://launchpad.net/%name/2.x/%version/+download/%name-%version.tar.xz
 
 %define gtk_ver 3.14
+
+Requires: dconf
 
 BuildRequires: gcc-c++ cmake libgtk+3-devel >= %gtk_ver
 BuildRequires: libgranite-devel libnotify-devel libgala-devel
@@ -53,7 +54,6 @@ This package provides Vala language bindings for the Wingpanel library.
 
 %prep
 %setup
-%patch
 # fix pc-file
 subst 's@\(\/include\)\/@\1@' lib/%name.pc.cmake
 
@@ -85,6 +85,9 @@ subst 's@\(\/include\)\/@\1@' lib/%name.pc.cmake
 %_vapidir/%name-%api_ver.vapi
 
 %changelog
+* Fri Jan 13 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1 release
+
 * Sun Sep 13 2015 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1.93
 - 2.0.0_rev93
 
