@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.gi20140506.1.1
+Release: alt1
 %define oname repoze.filesafe
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.1
+Version: 2.2
 #Release: alt2.gi20140506.1
 Summary: Transaction-aware file creation
 License: BSD
@@ -14,7 +15,7 @@ Url: https://github.com/repoze/repoze.filesafe
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/repoze/repoze.filesafe.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/55/7a/de63694ea21de0f5e5f50d692e5cfaa6071a531af212b57bcb7de5080378/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -68,7 +69,7 @@ repoze.tm2) for use in WSGI environments.
 This package contains tests for repoze.filesafe.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -125,6 +126,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.1-alt2.gi20140506.1.1
 - (AUTO) subst_x86_64.
 
