@@ -1,20 +1,22 @@
-%define ver_major 2.0
+%define ver_major 2.2
 %define api_ver 2.0
 
 Name: switchboard
-Version: %ver_major.1
-Release: alt2
+%define xdg_name org.pantheon.%name
+Version: %ver_major.0
+Release: alt1
 
 Summary: Modular Desktop Settings Hub for elementary OS
 License: GPLv2.1+
 Group: Graphical desktop/Other
 Url: https://launchpad.net/%name
 
-Source: https://launchpad.net/%name/2.x/%version/+download/%name-%version.tgz
+Source: https://launchpad.net/%name/2.x/%version/+download/%name-%version.tar.xz
 
 Requires: lib%name = %version-%release
 
-BuildRequires: cmake gcc-c++ libgtk+3-devel >= 3.10
+BuildRequires: cmake gcc-c++ intltool libappstream-glib-devel
+BuildRequires: libgtk+3-devel >= 3.10
 BuildRequires: libgranite-devel libclutter-gtk3-devel
 BuildRequires: libgranite-vala vala-tools
 
@@ -55,8 +57,9 @@ subst 's@\(\/include\)\/@\1@' lib/%name.pc.cmake
 
 %files -f %name.lang
 %_bindir/%name
-%_desktopdir/%name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/org.pantheon.%name.gschema.xml
+%_datadir/appdata/%name.appdata.xml
 
 %files -n lib%name
 %_libdir/lib%name-%api_ver.so.*
@@ -69,6 +72,9 @@ subst 's@\(\/include\)\/@\1@' lib/%name.pc.cmake
 %_vapidir/%name-%api_ver.vapi
 
 %changelog
+* Fri Jan 13 2017 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Wed Mar 30 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt2
 - fixed pc-file
 
