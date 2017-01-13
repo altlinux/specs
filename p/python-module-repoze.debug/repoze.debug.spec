@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.git20131220.1.1.1
+Release: alt1
 %define oname repoze.debug
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.2
+Version: 1.1
 #Release: alt2.git20131220.1.1
 Summary: WSGI middleware: debugging utilities
 License: BSD
@@ -14,7 +15,7 @@ Url: https://github.com/repoze/repoze.debug
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/repoze/repoze.debug.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/94/41/12c9883799f8045b9f8b77363e0defc547324dbf1a04537f09fd722fd91d/%{oname}-%{version}.tar.gz
 
 #BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-sphinx-devel
@@ -82,7 +83,7 @@ Middleware which can help with in-production forensic debugging.
 This package contains documentation for repoze.debug.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -167,6 +168,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.2-alt2.git20131220.1.1.1
 - (AUTO) subst_x86_64.
 
