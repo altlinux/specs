@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname sed3
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.1.10
-Release: alt2.1
+Version: 1.1.34
+Release: alt1
 Summary: 3D viewer and editor of color seeds
 License: MIT
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/sed3
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mjirik/sed3.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/bc/b1/7c56e45f4aafd260e5472772a5ca0b4536faa84be1ae522b92ecd82c59aa/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires: python-module-coverage python-module-matplotlib python-module-nose python-module-pbr python-module-pygobject3 python-module-pytest python-module-pytz python-module-scipy python-module-unittest2 python-module-yaml
@@ -54,7 +55,7 @@ Group: Development/Python3
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -100,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.34-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.10-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
