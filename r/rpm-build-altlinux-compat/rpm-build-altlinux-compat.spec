@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 1.9.13
+Version: 1.9.15
 Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
@@ -111,6 +111,14 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Fri Jan 13 2017 Vitaly Lipatov <lav@altlinux.ru> 1.9.15-alt1
+- fix _target_python_libdir for Ubuntu/Debian
+
+* Fri Dec 23 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.14-alt1
+- move check_distr_vendor.sh to korinf/tools
+- distr_vendor: sync with eepm/distr_info
+- add liconsdir/niconsdir
+
 * Fri Dec 02 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.13-alt1
 - fix astra lib32dir and revert broken changes for Ubuntu (eterbug 4754#c109)
 
