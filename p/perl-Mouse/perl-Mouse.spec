@@ -2,15 +2,15 @@
 BuildRequires: perl(Module/Build.pm) perl(Test/LeakTrace.pm)
 %define dist Mouse
 Name: perl-%dist
-Version: 2.4.5
-Release: alt1.1
+Version: 2.4.7
+Release: alt1
 
 Summary: Moose minus the antlers
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SY/SYOHEX/Mouse-v%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SY/SYOHEX/%{dist}-v%{version}.tar.gz
 
 # XXX syntax check fails
 %define __spec_autodep_custom_pre export MOUSE_PUREPERL=1
@@ -27,7 +27,7 @@ some applications.  Mouse aims to alleviate this by providing a subset of
 Moose's functionality, faster.
 
 %prep
-%setup -n %dist-v%version
+%setup -q -n %{dist}-v%{version}
 
 %build
 export XSUBPP_NO_STATIC_XS=1
@@ -45,6 +45,9 @@ export XSUBPP_NO_STATIC_XS=1
 %perl_vendor_archlib/Test
 
 %changelog
+* Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.7-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.4.5-alt1.1
 - rebuild with new perl 5.22.0
 
