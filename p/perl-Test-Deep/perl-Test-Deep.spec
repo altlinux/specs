@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Test-Deep
-Version: 1.124
+Version: 1.126
 Release: alt1
 
 Summary: Test-Deep - Perl module
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Mikhail Pokidko <pma@altlinux.org>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Test-Deep-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Dec 08 2008
 BuildRequires: perl-Test-NoWarnings perl-Test-Tester
@@ -36,7 +36,7 @@ BuildRequires: perl-Test-NoWarnings perl-Test-Tester
 None.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -49,6 +49,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Test/*
 
 %changelog
+* Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.126-alt1
+- automated CPAN update
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.124-alt1
 - automated CPAN update
 
