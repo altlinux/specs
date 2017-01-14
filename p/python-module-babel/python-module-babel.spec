@@ -1,12 +1,12 @@
 %define oname babel
 
 %def_with python3
-%def_with docs
+%def_with doc
 #def_disable check
 
 Name:    python-module-%oname
 Version: 2.3.4
-Release: alt1
+Release: alt1.1
 Epoch:   1
 
 Summary: a collection of tools for internationalizing Python applications
@@ -27,10 +27,13 @@ BuildPreReq: python-module-pytest-cov
 %setup_python_module babel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-pytest-cov
 BuildPreReq: python3-module-pytz
+%if_with bootstrap
+%else
+BuildRequires(pre): rpm-macros-sphinx
+BuildPreReq: python3-module-pytest-cov
+%endif
 %endif
 %py_requires pytz
 
@@ -70,8 +73,10 @@ rm -rf ../python3
 cp -a . ../python3
 %endif
 
+%if_with doc
 %prepare_sphinx .
 ln -s ../objects.inv docs/
+%endif
 
 %build
 python scripts/import_cldr.py CLDR/common
@@ -93,7 +98,7 @@ mv %buildroot%_bindir/pybabel %buildroot%_bindir/pybabel3
 
 %python_install
 
-%if_with docs
+%if_with doc
 %make -C docs html
 %endif
 
@@ -109,14 +114,14 @@ popd
 %_bindir/pybabel
 %python_sitelibdir/*
 %doc AUTHORS CHANGES README.md
-%if_with docs
+%if_with doc
 %doc docs/_build/html
 %endif
 
 %if_with python3
 %files -n python3-module-%oname
 %doc AUTHORS CHANGES README.md
-%if_with docs
+%if_with doc
 %doc docs/_build/html
 %endif
 %_bindir/pybabel3
@@ -124,6 +129,11 @@ popd
 %endif
 
 %changelog
+* Sat Jan 14 2017 Michael Shigorin <mike@altlinux.org> 1:2.3.4-alt1.1
+- BOOTSTRAP:
+  + avoid even more extra BRs when requested to
+  + make doc knob more effective (and rename from docs)
+
 * Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 1:2.3.4-alt1
 - 2.3.4
 
