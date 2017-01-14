@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Config-IniFiles
-Version: 2.89
+Version: 2.94
 Release: alt1
 
 Summary: Config-IniFiles - A module for reading .ini-style configuration files
@@ -27,12 +27,12 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/S/SH/SHLOMIF/Config-IniFiles-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SH/SHLOMIF/%{module}-%{version}.tar.gz
 #Source: http://www.cpan.org/modules/by-module/Config/%m_distro-%version.tar.bz2
 
 
 # Automatically added by buildreq on Tue Jul 12 2005
-BuildRequires: perl-devel perl-Module-Build perl(List/MoreUtils.pm)
+BuildRequires: perl-devel perl-Module-Build perl(List/MoreUtils.pm) perl(IO/Scalar.pm)
 
 %description
 Config::IniFiles provides a way to have readable configuration files outside
@@ -40,7 +40,7 @@ your Perl script.  Configurations can be imported (inherited, stacked,...),
 sections can be grouped, and settings can be accessed from a tied hash.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -53,6 +53,9 @@ sections can be grouped, and settings can be accessed from a tied hash.
 %perl_vendor_privlib/Config/
 
 %changelog
+* Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.94-alt1
+- automated CPAN update
+
 * Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.89-alt1
 - automated CPAN update
 
