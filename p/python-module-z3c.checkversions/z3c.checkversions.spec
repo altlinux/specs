@@ -1,11 +1,13 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: unzip
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.1.1
+Release: alt1
 %define oname z3c.checkversions
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.2
+Version: 0.5
 #Release: alt2.1
 Summary: Find newer package versions on PyPI
 License: ZPLv2.1
@@ -13,7 +15,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/z3c.checkversions/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/7c/bd/405e9684d54fef8c7af709252e3bc1349509974161c6631e653b1eadd109/%{oname}-%{version}.zip
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -62,7 +64,7 @@ of packages in a buildout file.
 This package contains tests for z3c.checkversions.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -129,6 +131,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.2-alt2.1.1
 - (AUTO) subst_x86_64.
 
