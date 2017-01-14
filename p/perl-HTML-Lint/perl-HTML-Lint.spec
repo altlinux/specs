@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTML-Lint
 Name: perl-%dist
-Version: 2.24
+Version: 2.26
 Release: alt1
 
 Summary: Check for HTML errors in a string or file
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/P/PE/PETDANCE/HTML-Lint-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PETDANCE/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +21,7 @@ HTML::Lint checks a string or file for HTML errors. It comes with
 Test::More-style wrapper, Test::HTML::Lint.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 # https://rt.cpan.org/Ticket/Display.html?id=108007
 [ %version == 2.22 ] && rm t/12-html_fragment_ok.t
 
@@ -37,6 +37,9 @@ Test::More-style wrapper, Test::HTML::Lint.
 %perl_vendor_privlib/Test
 
 %changelog
+* Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.26-alt1
+- automated CPAN update
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 2.24-alt1
 - automated CPAN update
 
