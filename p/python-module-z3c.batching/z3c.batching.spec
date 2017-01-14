@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.1.1
+Release: alt1
 %define oname z3c.batching
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0.0
+Version: 2.1.0
 #Release: alt2.1
 Summary: This package provides simple sequence batching
 License: ZPLv2.1
@@ -13,7 +14,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/z3c.batching/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/a7/98/26875d5a32b153e39dd480fb2a204f0cd9f7746ed57905f7ed76d9b7bf21/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -59,7 +60,7 @@ split a large sequence into smaller batches.
 This package contains tests for z3c.batching.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -116,6 +117,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.0-alt2.1.1
 - (AUTO) subst_x86_64.
 
