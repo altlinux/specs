@@ -2,16 +2,16 @@
 %define oname raven
 
 Name: python-module-raven
-Version: 5.24.1
+Version: 5.32.0
 Release: alt1
 Summary: Python client for Sentry
 
 License: BSD
 Group: Development/Python
-Url: https://github.com/getsentry/raven-python
-Packager: Anton Midyukov <antohami@altlinux.org>
+Url: https://pypi.python.org/pypi/%oname
+Packager: Python Development Team <python at packages.altlinux.org>
 
-Source: %name-%version.tar
+Source: https://pypi.python.org/packages/5a/22/9e6485b46bf840166e8e79da40f74553dfeb044f4909ba9bbdedc9b24dff/%oname-%version.tar.gz
 BuildArch: noarch
 
 %if_with python3
@@ -31,7 +31,7 @@ application.
 %if_with python3
 %package -n python3-module-%oname
 Summary: Python 3 client for Sentry
-Group: Development/Python
+Group: Development/Python3
 %py3_provides %oname
 %add_findreq_skiplist %python3_sitelibdir/%oname/contrib/zope/*
 
@@ -45,7 +45,7 @@ Python 3 version.
 
 %package -n %oname
 Summary: Python client for Sentry
-Group: Development/Python
+Group: Development/Python3
 %if_with python3
 Requires: python3-module-%oname = %version-%release
 %else
@@ -59,17 +59,18 @@ Flask. Raven also includes drop-in support for any WSGI-compatible web
 application.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %if_with python3
-cp -fR . ../python3
+rm -fR ../python3-module-%oname
+cp -fR . ../python3-module-%oname
 %endif
 
 %build
 %python_build
 
 %if_with python3
-pushd ../python3
+pushd ../python3-module-%oname
 %python3_build
 popd
 %endif
@@ -78,21 +79,19 @@ popd
 %python_install
 
 %if_with python3
-pushd ../python3
+pushd ../python3-module-%oname
 %python3_install
 popd
 %endif
 
 %files
-%doc LICENSE
-%doc README.*
+%doc LICENSE *.rst
 %python_sitelibdir/%oname
 %python_sitelibdir/*.egg-info
 
 %if_with python3
 %files -n python3-module-%oname
-%doc LICENSE
-%doc README.*
+%doc LICENSE *.rst
 %python3_sitelibdir/%oname
 %python3_sitelibdir/*.egg-info
 %endif
@@ -101,5 +100,8 @@ popd
 %_bindir/%oname
 
 %changelog
+* Sun Jan 15 2017 Anton Midyukov <antohami@altlinux.org> 5.32.0-alt1
+- New version 5.32.0
+
 * Fri Aug 05 2016 Anton Midyukov <antohami@altlinux.org> 5.24.1-alt1
 - Initial build for ALT Linux Sisyphus.

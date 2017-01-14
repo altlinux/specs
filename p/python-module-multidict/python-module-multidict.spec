@@ -1,20 +1,19 @@
 %define oname multidict
 
 Name: python-module-%oname
-Version: 2.0.1
+Version: 2.1.4
 Release: alt1
 Summary: Multidicts are useful for working with HTTP headers, URL query args etc
 
 License: ASL 2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/multidict
-#Url: https://github.com/aio-libs/multidict
 Packager: Anton Midyukov <antohami@altlinux.org>
 
-Source: %name-%version.tar
+Source: https://pypi.python.org/packages/2a/df/eaea73e46a58fd780c35ecc304ca42364fa3c1f4cd03568ed33b9d2c7547/%oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: gcc python3-devel python3-module-setuptools-tests python3-module-Cython python3-module-pytest
+BuildPreReq: python3-devel python3-module-setuptools-tests python3-module-Cython python3-module-pytest
 
 %description
 HTTP Headers and URL query string require specific data structure: multidict.
@@ -31,9 +30,7 @@ It behaves mostly like a dict but it can have several values for the same key.
 Python 3 version.
 
 %prep
-%setup
-
-cp -fR . ../python3
+%setup -n %oname-%version
 
 %build
 %python3_build
@@ -41,14 +38,14 @@ cp -fR . ../python3
 %install
 %python3_install
 
-%check
-PYTHONPATH=%buildroot%python3_sitelibdir py.test-3.5 -v
-
 %files -n python3-module-%oname
-%doc LICENSE README.*
+%doc LICENSE *.rst
 %python3_sitelibdir/%oname
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sun Jan 15 2017 Anton Midyukov <antohami@altlinux.org> 2.1.4-alt1
+- New version 2.1.4
+
 * Fri Aug 05 2016 Anton Midyukov <antohami@altlinux.org> 2.0.1-alt1
 - Initial build for ALT Linux Sisyphus.

@@ -1,28 +1,29 @@
 %def_with python3
 
-%define oname keyutils
+%define oname fusepy
 
 Name: python-module-%oname
-Version: 0.4
+Version: 2.0.4
 Release: alt2
 
 Summary: %oname bindings for Python
-License: ASL 2.0
+License: ISC
 Group: Development/Python
-
-%setup_python_module %oname
 
 Url: https://pypi.python.org/pypi/%oname/
 Packager: Python Development Team <python at packages.altlinux.org>
 
-Source: https://pypi.python.org/packages/d9/76/0e4c11033c1ef297b38b2186097bc8d6433b457c16a34040ec6fc4a273ce/%oname-%version.tar.gz
+Source: https://pypi.python.org/packages/70/aa/959d781b7ac979af1a9fbea0faffe06677c390907b56b8ce024eb9320451/%oname-%version.tar.gz
+
+BuildArch: noarch
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 %endif
-BuildPreReq: python-devel python-module-setuptools libkeyutils-devel
+BuildPreReq: python-devel python-module-setuptools
 %py_provides %oname
+Conflicts: python3-module-fuse
 
 %description
 python-keyutils is a set of python bindings for keyutils, a key management suite
@@ -43,7 +44,6 @@ storing and retrieving sensitive infromation in your programs.
 
 %prep
 %setup -n %oname-%version
-
 %if_with python3
 rm -fR ../python3-module-%oname
 cp -fR . ../python3-module-%oname
@@ -68,21 +68,16 @@ popd
 %endif
 
 %files
-%python_sitelibdir/%oname/
-%python_sitelibdir/*.egg-info
+%python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*
 %endif
 
 %changelog
-* Sun Jan 15 2017 Anton Midyukov <antohami@altlinux.org> 0.4-alt2
+* Sun Jan 15 2017 Anton Midyukov <antohami@altlinux.org> 2.0.4-alt2
 - srpm build
 
-* Sun Dec 11 2016 Anton Midyukov <antohami@altlinux.org> 0.4-alt1
-- new version (0.4) with rpmgs script
-
-* Thu Apr 07 2016 Anton Midyukov <antohami@altlinux.org> 0.3.0-alt1
+* Fri Apr 15 2016 Anton Midyukov <antohami@altlinux.org> 2.0.4-alt1
 - Initial build for Alt Linux Sisyphus.

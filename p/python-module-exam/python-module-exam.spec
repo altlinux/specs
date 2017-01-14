@@ -3,15 +3,15 @@
 
 Name: python-module-exam
 Version: 0.10.6
-Release: alt1
+Release: alt2
 Summary: Helpers for better testing
 
 License: MIT
 Group: Development/Python
-Url: https://github.com/fluxx/exam
-Packager: Anton Midyukov <antohami@altlinux.org>
+Url: https://pypi.python.org/pypi/%oname
+Packager: Python Development Team <python at packages.altlinux.org>
 
-Source: %name-%version.tar
+Source: https://pypi.python.org/packages/c7/bd/c15ce029540bb1b551af83c0df502ba47e019ce7132a65db046ad16b8eda/%oname-%version.tar.gz
 BuildArch: noarch
 
 %if_with python3
@@ -29,7 +29,7 @@ conventions and adhering to the unit testing interface.
 %if_with python3
 %package -n python3-module-%oname
 Summary: Helpers for better testing
-Group: Development/Python
+Group: Development/Python3
 %py3_provides %oname
 
 %description -n python3-module-%oname
@@ -40,17 +40,18 @@ Python 3 version.
 %endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %if_with python3
-cp -fR . ../python3
+rm -fR ../python3-module-%oname
+cp -fR . ../python3-module-%oname
 %endif
 
 %build
 %python_build
 
 %if_with python3
-pushd ../python3
+pushd ../python3-module-%oname
 %python3_build
 popd
 %endif
@@ -59,29 +60,32 @@ popd
 %python_install
 
 %if_with python3
-pushd ../python3
+pushd ../python3-module-%oname
 %python3_install
 popd
 %endif
 
 %check
 python setup.py test
+%if_with python3
 python3 setup.py test
+%endif
 
 %files
-%doc LICENSE
-%doc README.*
+%doc *.rst
 %python_sitelibdir/%oname
 %python_sitelibdir/*.egg-info
 
 %if_with python3
 %files -n python3-module-%oname
-%doc LICENSE
-%doc README.*
+%doc *.rst
 %python3_sitelibdir/%oname
 %python3_sitelibdir/*.egg-info
 %endif
 
 %changelog
+* Sun Jan 15 2017 Anton Midyukov <antohami@altlinux.org> 0.10.6-alt2
+- srpm build
+
 * Fri Aug 05 2016 Anton Midyukov <antohami@altlinux.org> 0.10.6-alt1
 - Initial build for ALT Linux Sisyphus (Closes: 32334).
