@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Test/Pod.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-XXX
-Version:        0.30
-Release:        alt1_2
+Version:        0.31
+Release:        alt1
 Summary:        See Your Data in the Nude
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/XXX/
-Source0:        http://search.cpan.org/CPAN/authors/id/I/IN/INGY/XXX-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/I/IN/INGY/XXX-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
 BuildRequires:  rpm-build-perl
@@ -61,6 +61,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
+- automated CPAN update
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1_2
 - update to new release by fcimport
 
