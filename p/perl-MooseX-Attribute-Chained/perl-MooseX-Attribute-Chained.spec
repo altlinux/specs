@@ -4,13 +4,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Moose/Meta/Method/Accessor.pm) perl(Moose/Role.pm) perl(Moose/Util.pm) perl(Scalar/Util.pm) perl(base.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-MooseX-Attribute-Chained
-Version:        1.0.2
-Release:        alt1.1
+Version:        1.0.3
+Release:        alt1
 Summary:        Attribute that returns the instance to allow for chaining
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/MooseX-Attribute-Chained/
-Source:        http://www.cpan.org/authors/id/T/TO/TOMHUKINS/MooseX-Attribute-Chained-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/T/TO/TOMHUKINS/MooseX-Attribute-Chained-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(File/Find.pm)
 BuildRequires:  perl(File/Temp.pm)
@@ -61,6 +61,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1
+- automated CPAN update
+
 * Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1.1
 - rebuild to restore role requires
 
