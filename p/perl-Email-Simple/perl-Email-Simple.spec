@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Email-Simple
 Name: perl-%dist
-Version: 2.211
+Version: 2.213
 Release: alt1
 
 Summary: Simple parsing of RFC2822 message format and headers
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Simple-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{dist}-%{version}.tar.gz
 
 # see Makefile.PL
 Conflicts: perl-Email-MIME < 1.857
@@ -31,7 +31,7 @@ simple to use and to maintain, pared to the bone, fast, minimal
 in their external dependencies, and correct.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 # avoid build dependency on Email::MIME
 sed -i- '/^if .* require Email::MIME/,/^}/s/^/#/' Makefile.PL
@@ -47,6 +47,9 @@ sed -i- '/^if .* require Email::MIME/,/^}/s/^/#/' Makefile.PL
 %perl_vendor_privlib/Email
 
 %changelog
+* Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.213-alt1
+- automated CPAN update
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 2.211-alt1
 - automated CPAN update
 
