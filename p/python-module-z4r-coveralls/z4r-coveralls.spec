@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define mname coveralls
 %define oname z4r-%mname
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.4.4
-Release: alt1.git20141111.1.1
+Version: 2.9.0
+Release: alt1
 Summary: Python interface to coveralls.io API
 License: ASLv2.0
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/python-coveralls/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/z4r/python-coveralls.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/a7/75/c07d88092ad2eeab254abd86c526c5577365be22f8927e9215970973ed6e/python-coveralls-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -82,7 +83,7 @@ API.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n python-coveralls-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -145,6 +146,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.9.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.4.4-alt1.git20141111.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
