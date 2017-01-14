@@ -1,11 +1,12 @@
 %define oname jinja2
 
+%def_with doc
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
 Version: 2.9
-Release: alt1.dev.git20150726.1.1.1
+Release: alt1.dev.git20150726.1.1.1.1
 
 Summary: The new and improved version of a small but fast template engine
 License: BSD
@@ -115,8 +116,10 @@ pushd ../python3
 popd
 %endif
 
+%if_with doc
 %make_build -C docs html
 %make_build -C docs pickle
+%endif
 
 %install
 %python_install
@@ -130,7 +133,9 @@ popd
 rm -f %buildroot%python3_sitelibdir_noarch/jinja2/_ipysupport.py
 %endif
 
+%if_with doc
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir_noarch/jinja2/
+%endif
 
 %check
 make test
@@ -140,20 +145,24 @@ make test
 %python_sitelibdir_noarch/*.egg-info
 %exclude %python_sitelibdir_noarch/jinja2/tests.py*
 #exclude %python_sitelibdir_noarch/jinja2/testsuite
+%if_with doc
 %exclude %python_sitelibdir_noarch/jinja2/pickle
-%doc AUTHORS CHANGES
 %doc ext/
+%endif
+%doc AUTHORS CHANGES
 
 %files tests
 %python_sitelibdir_noarch/jinja2/tests.py*
 #python_sitelibdir_noarch/jinja2/testsuite
 
+%if_with doc
 %files doc
 %doc docs/_build/html/*
 
 %files pickles
 %dir %python_sitelibdir_noarch/jinja2
 %python_sitelibdir_noarch/jinja2/pickle
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
@@ -171,6 +180,9 @@ make test
 %endif
 
 %changelog
+* Sat Jan 14 2017 Michael Shigorin <mike@altlinux.org> 2.9-alt1.dev.git20150726.1.1.1.1
+- BOOTSTRAP: introduced doc knob (avoid sphinx)
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.9-alt1.dev.git20150726.1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
