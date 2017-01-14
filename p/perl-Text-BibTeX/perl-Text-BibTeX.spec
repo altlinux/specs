@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Text-BibTeX
 Name: perl-%dist
-Version: 0.77
+Version: 0.78
 Release: alt1
 
 Summary: Interface to read and parse BibTeX files
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/A/AM/AMBS/Text-BibTeX-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/A/AM/AMBS/%{dist}-%{version}.tar.gz
 Patch0: perl-Text-BibTeX-0.61-alt-rpath.patch
 Patch1:	perl-Text-BibTeX-0.61-alt-gcc47.patch
 
@@ -22,7 +22,7 @@ BibTeX files.  It is the Perl half of btOOL, a pair of libraries for
 dealing with BibTeX data.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch0 -p1 
 %patch1 -p1 
 # Sub::Util 
@@ -47,6 +47,9 @@ install -p -m644 blib/bindoc/*.1 %buildroot%_man1dir/
 %perl_vendor_archlib/Text
 
 %changelog
+* Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.78-alt1
+- automated CPAN update
+
 * Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.77-alt1
 - automated CPAN update
 
