@@ -1,6 +1,8 @@
+%def_with doc
+
 Name: python-module-polib
 Version: 1.0.4
-Release: alt1
+Release: alt1.1
 Summary: Manipulate, create, and modify gettext files
 Group: Development/Python
 License: BSD-like
@@ -14,7 +16,9 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Wed Dec 11 2013
 # optimized out: python-base python-devel python-module-BeautifulSoup python-module-Pygments python-module-docutils python-module-jinja2 python-module-markupsafe python-module-protobuf python-module-setuptools python-module-simplejson python-module-six python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest
-BuildRequires: ctags python-module-sphinx time
+BuildRequires: time
+
+%{?_with_doc:BuildRequires: ctags python-module-sphinx}
 
 BuildRequires: python-module-coverage
 
@@ -29,7 +33,7 @@ po files from scratch.
 
 %build
 %python_build
-make -C docs html
+%{?_with_doc:make -C docs html}
 
 %install
 %python_install
@@ -38,10 +42,13 @@ make -C docs html
 ./runtests.sh
 
 %files
-%doc docs/_build/html
+%{?_with_doc:%doc docs/_build/html}
 %python_sitelibdir_noarch/%{modulename}*
 
 %changelog
+* Sat Jan 14 2017 Michael Shigorin <mike@altlinux.org> 1.0.4-alt1.1
+- BOOTSTRAP: introduced doc knob (avoid sphinx)
+
 * Tue Apr 28 2015 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
 - Autobuild version bump to 1.0.4
 
