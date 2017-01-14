@@ -15,7 +15,7 @@
 %define _disable_test 1
 
 Name: perl-Test-WWW-Mechanize
-Version: 1.46
+Version: 1.48
 Release: alt1
 
 Summary: Test-WWW-Mechanize - Testing-specific WWW::Mechanize subclass
@@ -27,7 +27,7 @@ Url: %CPAN %m_distro
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/P/PE/PETDANCE/Test-WWW-Mechanize-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PETDANCE/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Jul 01 2008
 BuildRequires: libnss-mdns perl-Carp-Assert-More perl-HTML-Lint perl-HTTP-Server-Simple perl-Test-LongString perl-Test-Pod perl-Test-Pod-Coverage perl-WWW-Mechanize
@@ -52,7 +52,7 @@ This is equivalent to:
 but has nicer diagnostics if they fail.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -65,6 +65,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Test/*
 
 %changelog
+* Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.48-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.46-alt1
 - automated CPAN update
 
