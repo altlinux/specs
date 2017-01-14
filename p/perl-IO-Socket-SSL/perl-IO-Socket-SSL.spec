@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist IO-Socket-SSL
 Name: perl-%dist
-Version: 2.040
+Version: 2.043
 Release: alt1
 
 Summary: SSL socket interface class
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SU/SULLR/IO-Socket-SSL-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SU/SULLR/%{dist}-%{version}.tar.gz
 Patch: IO-Socket-SSL-2.020-alt-deps.patch
 
 BuildArch: noarch
@@ -23,7 +23,7 @@ IO::Socket::INET and provides a subset of the base class's
 interface methods.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 #%patch -p0
 # needs internet connection
 rm t/external/*.t
@@ -43,6 +43,9 @@ rm t/[d-z]*t
 %perl_vendor_privlib/IO
 
 %changelog
+* Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.043-alt1
+- automated CPAN update
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 2.040-alt1
 - automated CPAN update
 
