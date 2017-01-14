@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Compress-Raw-Zlib
 Name: perl-%dist
-Version: 2.070
+Version: 2.071
 Release: alt1
 
 Summary: Low-level interface to the zlib compression library
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/P/PM/PMQS/Compress-Raw-Zlib-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PM/PMQS/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Feb 20 2012
 BuildRequires: perl-Test-NoWarnings perl-Test-Pod zlib-devel
@@ -19,7 +19,7 @@ The Compress::Raw::Zlib module provides a Perl interface to the zlib
 compression library.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 rm -rv zlib-src/
 rm -rv t/Test/
 
@@ -46,6 +46,9 @@ EOF
 %perl_vendor_autolib/Compress
 
 %changelog
+* Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.071-alt1
+- automated CPAN update
+
 * Thu Dec 29 2016 Igor Vlasenko <viy@altlinux.ru> 2.070-alt1
 - automated CPAN update
 
