@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Try-Tiny
 Name: perl-Try-Tiny
-Version: 0.27
+Version: 0.28
 Release: alt1
 
 Summary: Minimal try/catch with proper localization of $@
@@ -9,7 +9,7 @@ License: Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/Try-Tiny-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +21,7 @@ This module provides bare bones "try"/"catch" statements that are designed
 to minimize common mistakes with eval blocks, and NOTHING else.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +35,9 @@ to minimize common mistakes with eval blocks, and NOTHING else.
 %perl_vendor_privlib/Try/Tiny.pm
 
 %changelog
+* Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
 - automated CPAN update
 
