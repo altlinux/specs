@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1
+Release: alt1
 %define oname zope.password
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.0
+Version: 4.2.0
 #Release: alt1.1
 Summary: Password encoding and checking utilities
 License: ZPL
@@ -13,7 +14,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.password/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/ce/4f/8e428a92fce1c7f7764ea66c4884fe3fd4295242dd6e46aa6cf67b6a1e67/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -61,7 +62,7 @@ an utility object that can encode and check encoded passwords.
 This package contains tests for zope.password.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -128,6 +129,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.0-alt1.1.1
 - (AUTO) subst_x86_64.
 
