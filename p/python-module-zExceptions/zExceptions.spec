@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.git20150331.1.1
+Release: alt1
 %define oname zExceptions
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.0
+Version: 3.4
 #Release: alt1.dev0.git20150331.1
 Summary: zExceptions contains common exceptions used in Zope2
 License: ZPLv2.1
@@ -14,7 +15,7 @@ Url: http://pypi.python.org/pypi/zExceptions/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/zopefoundation/zExceptions.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/b2/19/20c6898e8a36bd76aa32c67671ed2c5f1c5d465c4290e7005844240c6b83/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-zope.interface
@@ -67,7 +68,7 @@ exceptions as used in Zope 2.
 This package contains tests for zExceptions.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -129,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.4-alt1
+- automated PyPI update
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0-alt1.dev0.git20150331.1.1
 - (AUTO) subst_x86_64.
 
