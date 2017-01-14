@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Net-SSLeay
 Name: perl-%dist
-Version: 1.78
+Version: 1.80
 Release: alt1
 
 Summary: Perl extension for using OpenSSL
@@ -9,7 +9,7 @@ License: BSD-style
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MI/MIKEM/Net-SSLeay-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MI/MIKEM/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: libssl-devel openssl perl-Test-Exception perl-Test-NoWarnings perl-Test-Pod perl-Test-Warn perl-threads
@@ -21,7 +21,7 @@ clients, and finally access to the SSL api of SSLeay/OpenSSL package
 so you can write servers or clients for more complicated applications.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build LIBS='-lssl -lcrypto'
@@ -35,6 +35,9 @@ so you can write servers or clients for more complicated applications.
 %perl_vendor_autolib/Net
 
 %changelog
+* Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.80-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.78-alt1
 - automated CPAN update
 
