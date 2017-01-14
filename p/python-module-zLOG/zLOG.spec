@@ -1,7 +1,9 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: unzip
 %define oname zLOG
 Name: python-module-%oname
-Version: 2.12.0
-Release: alt1.git20141220
+Version: 3.0
+Release: alt1
 Summary: A general logging facility
 License: ZPLv2.1
 Group: Development/Python
@@ -9,7 +11,7 @@ Url: https://pypi.python.org/pypi/zLOG/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/zopefoundation/zLOG.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/ac/2a/36bf03a74327e6a158914c980403114c678a8d2ce1159a742d1ec94d5d92/%{oname}-%{version}.zip
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests python-module-zconfig-tests
@@ -36,7 +38,7 @@ better off using Python's logging module.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -57,6 +59,9 @@ python setup.py test
 %python_sitelibdir/*/tests
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1
+- automated PyPI update
+
 * Thu Aug 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.12.0-alt1.git20141220
 - New snapshot
 
