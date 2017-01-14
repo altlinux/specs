@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.1.1
+Release: alt1
 %define oname zope.app.locales
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.7.4
+Version: 3.7.5
 #Release: alt2.1
 Summary: Zope locale extraction and management utilities
 License: ZPLv2.1
@@ -13,7 +14,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.app.locales/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/42/07/718c965a36b97827d90c2a80b913ccdad4479e97ffe6433be64a2ac6ab50/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -74,7 +75,7 @@ three and write them to a standard gettext template (pot file).
 This package contains tests for zope.app.locales.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -142,6 +143,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.7.5-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.7.4-alt2.1.1
 - (AUTO) subst_x86_64.
 
