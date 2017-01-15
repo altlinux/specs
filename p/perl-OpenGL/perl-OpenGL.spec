@@ -1,6 +1,7 @@
 Name: perl-OpenGL
-Version: 0.6704
-Release: alt2.1
+Epoch: 1
+Version: 0.70
+Release: alt1
 
 Summary: Perl bindings to OpenGL API
 Group: Development/Perl
@@ -11,7 +12,7 @@ Url: %CPAN OpenGL
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: perl-devel libfreeglut-devel libXi-devel libXmu-devel libXext-devel
+BuildRequires: perl-devel libfreeglut-devel libXi-devel libXmu-devel libXext-devel libstdc++-devel gcc-c++
 
 %description
 %summary
@@ -33,6 +34,9 @@ rm test.pl
 %doc TODO CHANGES README COPYRIGHT KNOWN_PROBLEMS Release_Notes SUPPORTS
 
 %changelog
+* Sun Jan 15 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.70-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.6704-alt2.1
 - rebuild with new perl 5.22.0
 
