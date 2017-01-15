@@ -1,17 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators perl(Perl/OSType.pm) perl(Test/Exception.pm) perl(Test/Timer.pm)
+BuildRequires: perl-devel perl-podlators perl(Perl/OSType.pm) perl(Test/Exception.pm) perl(Test/Timer.pm) perl(File/Which.pm) perl(IO/Socket/IP.pm) perl(Net/EmptyPort.pm) perl(Ref/Util.pm) perl(Test/Differences.pm) perl(IO/Socket/SSL.pm) perl(List/MoreUtils.pm) perl(Proc/Guard.pm)
 # END SourceDeps(oneline)
 %add_findreq_skiplist %perl_vendor_privlib/Gearman/Task.pm
 Name:           perl-Gearman
-Version:        1.130.004
+Version:        2.002.004
 Release:        alt1
 Summary:        Distributed job system
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://danga.com/gearman/
-Source:        http://www.cpan.org/authors/id/P/PA/PALIK/Gearman-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/P/PA/PALIK/Gearman-%{version}.tar.gz
 BuildArch:      noarch
 
 
@@ -71,6 +71,9 @@ make test
 %{perl_vendor_privlib}/Gearman
 
 %changelog
+* Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.002.004-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.130.004-alt1
 - automated CPAN update
 
