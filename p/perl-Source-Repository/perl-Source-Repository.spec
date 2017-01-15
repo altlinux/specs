@@ -1,7 +1,7 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.385
+Version: 0.386
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -32,6 +32,9 @@ BuildRequires: perl-devel perl-RPM-Source-Editor perl(RPM/Header.pm) perl(RPM/Ve
 %perl_vendor_privlib/Source*
 
 %changelog
+* Sun Jan 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.386-alt1
+- perl fixes
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.385-alt1
 - PyPI development
 
