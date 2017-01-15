@@ -2,26 +2,25 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Config.pm) perl(Cwd.pm) perl(Digest.pm) perl(Digest/SHA.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Fcntl.pm) perl(File/Copy.pm) perl(File/Path.pm) perl(File/Spec/Functions.pm) perl(File/Spec/Unix.pm) perl(File/Temp.pm) perl(File/stat.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(List/Util.pm) perl(Test/More.pm) perl(autodie/exception.pm) perl(open.pm) perl(overload.pm)
 # END SourceDeps(oneline)
-%define module_version 0.098
 %define module_name Path-Tiny
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.098
+Version: 0.100
 Release: alt1
 Summary: File path utility
 Group: Development/Perl
 License: apache
 URL: https://github.com/dagolden/Path-Tiny
 
-Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/Path-Tiny-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/P*
 
 %changelog
+* Sun Jan 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.100-alt1
+- automated CPAN update
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.098-alt1
 - automated CPAN update
 
