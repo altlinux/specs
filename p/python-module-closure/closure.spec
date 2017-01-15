@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 20160517
+Version: 20161201
 Release: alt1
 Summary: Closure compiler packaged for Python
 License: BSD
@@ -13,7 +13,7 @@ Url: https://pypi.python.org/pypi/closure/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/miracle2k/python-closure.git
-Source0: https://pypi.python.org/packages/ca/2f/f10e203d2eab66ef298804ae977fcf9e990aef8258565987c9f95457a231/%{oname}-%{version}.tar.gz
+Source0: https://pypi.python.org/packages/0e/fb/877df05e79e4f719971e3cef9da6707b5f07ac29f223e80e6d5996c84b3b/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: closure-compiler jre /proc
@@ -106,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Sun Jan 15 2017 Igor Vlasenko <viy@altlinux.ru> 20161201-alt1
+- automated PyPI update
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 20160517-alt1
 - automated PyPI update
 
