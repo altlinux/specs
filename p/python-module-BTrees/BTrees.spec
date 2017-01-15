@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 4.3.2
+Version: 4.4.0
 Release: alt1
 Summary: Scalable persistent object containers
 License: ZPL
@@ -15,7 +15,7 @@ Url: https://pypi.python.org/pypi/BTrees
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/zopefoundation/BTrees.git
-Source0: https://pypi.python.org/packages/f5/4d/206c8b5799e319c0138952b8d18cb4b2288d7dcc583598761f65ed8e416d/%{oname}-%{version}.tar.gz
+Source0: https://pypi.python.org/packages/fb/31/d8b691e9b86235b124951af6906496b2080ef1b862097800ef97630cff5c/%{oname}-%{version}.tar.gz
 
 #BuildPreReq: python-devel python-module-setuptools-tests
 #BuildPreReq: python-module-zope.interface python-module-persistent
@@ -181,6 +181,9 @@ exit 1
 %endif
 
 %changelog
+* Sun Jan 15 2017 Igor Vlasenko <viy@altlinux.ru> 4.4.0-alt1
+- automated PyPI update
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt1
 - automated PyPI update
 
