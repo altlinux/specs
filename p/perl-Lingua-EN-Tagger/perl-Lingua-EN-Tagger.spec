@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Lingua-EN-Tagger
 Name: perl-%dist
-Version: 0.25
+Version: 0.28
 Release: alt1
 
 Summary: Part-of-speech tagger for English natural language processing
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/A/AC/ACOBURN/Lingua-EN-Tagger-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/A/AC/ACOBURN/%{dist}-%{version}.tar.gz
 
 Patch: perl-Lingua-EN-Tagger-0.23-alt-nstore.patch
 
@@ -29,7 +30,7 @@ word.  Unknown words are classified according to word morphology or can be set
 to be treated as nouns or other parts of speech.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch -p1
 
 %build
@@ -43,6 +44,9 @@ to be treated as nouns or other parts of speech.
 %perl_vendor_privlib/Lingua*
 
 %changelog
+* Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
+- automated CPAN update
+
 * Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
 - automated CPAN update
 
