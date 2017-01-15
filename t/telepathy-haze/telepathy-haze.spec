@@ -1,18 +1,23 @@
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 Name: telepathy-haze
 Version: 0.8.0.1
-Release: alt0.3
+Release: alt0.4
 
 Summary: a connection manager built around libpurple
-License: GPL v2 or later
+License: GPLv2+
 Group: Networking/Instant messaging
 Url: http://developer.pidgin.im/wiki/TelepathyHaze
 
+%if_disabled snapshot
+Source: http://telepathy.freedesktop.org/releases/%name/%name-%version.tar.gz
+%else
 # VCS: git://anongit.freedesktop.org/telepathy/telepathy-haze
 Source: %name-%version.tar
-#Source: http://telepathy.freedesktop.org/releases/%name/%name-%version.tar.gz
+%endif
 Patch: %name-0.8.0-alt-purple_2.0.12.patch
+Patch1: %name-0.8.0-alt-unused_const_variable.patch
 
 BuildPreReq: glib2-devel >= 2.22 libgio-devel libdbus-glib-devel >= 0.73
 BuildRequires: libpurple-devel >= 2.7.0 libtelepathy-glib-devel >= 0.13.9
@@ -32,6 +37,7 @@ work acceptably, and others will probably work too.
 %prep
 %setup
 %patch -b .purple
+%patch1 -b .gcc6
 
 %build
 %autoreconf
@@ -51,6 +57,10 @@ work acceptably, and others will probably work too.
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.ConnectionManager.haze.service
 
 %changelog
+* Sun Jan 15 2017 Yuri N. Sedunov <aris@altlinux.org> 0.8.0.1-alt0.4
+- updated to 0.8.0-2-g8358972
+- fixed unused static const variable error with gcc6
+
 * Mon Feb 22 2016 Yuri N. Sedunov <aris@altlinux.org> 0.8.0.1-alt0.3
 - updated buildreqs
 
