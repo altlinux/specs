@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Lingua-EN-Inflect
 Name: perl-%dist
-Version: 1.900
+Version: 1.901
 Release: alt1
 
 Summary: Convert singular to plural, select "a" or "an"
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DC/DCONWAY/Lingua-EN-Inflect-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DC/DCONWAY/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,8 +22,7 @@ inflections, "a"/"an" selection for English words, and manipulation
 of numbers as words.
 
 %prep
-%setup -q -n %dist-%version
-rm Build.PL
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +35,9 @@ rm Build.PL
 %perl_vendor_privlib/Lingua
 
 %changelog
+* Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.901-alt1
+- automated CPAN update
+
 * Fri Jul 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.900-alt1
 - automated CPAN update
 
