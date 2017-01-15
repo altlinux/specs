@@ -1,9 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Crypt-OpenSSH-ChachaPoly
 
-%define _unpackaged_files_terminate_build 1
 
 Name: perl-%dist
-Version: 0.02
+Version: 0.02_reupload1
 Release: alt1
 
 Summary: This module serves as a wrapper to the OpenSSH Chacha20 and Poly1305 functions
@@ -11,7 +11,7 @@ License: %perl_license
 Group: Development/Perl
 
 URL: http://github.com/lkinley/Crypt-OpenSSH-ChachaPoly
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SC/SCHWIGON/%{dist}-0.02-reupload1.tar.gz
 
 BuildRequires: rpm-build-licenses
 
@@ -22,7 +22,7 @@ BuildRequires: perl-Encode perl-devel
 This module serves as a wrapper to the OpenSSH Chacha20 and Poly1305 functions
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-0.02
 
 %build
 %perl_vendor_build
@@ -36,6 +36,9 @@ This module serves as a wrapper to the OpenSSH Chacha20 and Poly1305 functions
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Sun Jan 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.02_reupload1-alt1
+- automated CPAN update
+
 * Thu Apr 21 2016 Sergey Y. Afonin <asy@altlinux.ru> 0.02-alt1
 - new version
 
