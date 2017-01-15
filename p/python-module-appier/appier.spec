@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define oname appier
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 Summary: Appier Framework
 License: ASLv2.0
@@ -11,7 +12,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/appier/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: https://pypi.python.org/packages/22/3e/91444c50ddb41f369c134768182ffd0d76789ee760a0b5fc366a4a40736b/%{oname}-%{version}.tar.gz
+Source0: https://pypi.python.org/packages/0d/2c/cd91e03af3019235585f5144de9988c3fc089fe894169d4894f1ba5af2a3/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -100,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Sun Jan 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.1-alt1
+- automated PyPI update
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt1
 - automated PyPI update
 
