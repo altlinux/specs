@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.10
+Version: 4.0.11
 Release: alt1
 Summary: Better living through Python with decorators
 License: BSD
@@ -12,7 +12,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/decorator
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: https://pypi.python.org/packages/13/8a/4eed41e338e8dcc13ca41c94b142d4d20c0de684ee5065523fee406ce76f/%{oname}-%{version}.tar.gz
+Source0: https://pypi.python.org/packages/cc/ac/5a16f1fc0506ff72fcc8fd4e858e3a1c231f224ab79bb7c4c9b2094cc570/%{oname}-%{version}.tar.gz
 #Source1: https://raw.githubusercontent.com/micheles/decorator/24d5f1539f0d876e4871ecca4f671d0710ab35bf/docs/README.rst
 BuildArch: noarch
 
@@ -108,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Sun Jan 15 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.11-alt1
+- automated PyPI update
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.10-alt1
 - automated PyPI update
 
