@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name gdk-pixbuf
 %define api_ver 2.0
@@ -13,8 +13,8 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
@@ -236,6 +236,9 @@ echo : >>%_name/abicheck.sh
 
 
 %changelog
+* Mon Jan 16 2017 Yuri N. Sedunov <aris@altlinux.org> 2.36.4-alt1
+- 2.36.4
+
 * Wed Jan 11 2017 Yuri N. Sedunov <aris@altlinux.org> 2.36.3-alt2
 - updated to 2.36.3-8-gbab37cd (fixed BGO ##442452, 768062, 776945)
 - enabled %%check again
