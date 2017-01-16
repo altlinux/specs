@@ -1,20 +1,16 @@
-%define zmuid $(id -un)
-%define zmgid $(id -gn)
 %define zmuid_final apache
-%define zmgid_final apache
+%define zmgid_final _webserver
 
 Name: zoneminder
-Version: 1.27.0
-Release: alt4
+Version: 1.30.0
+Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPL
 Url: http://www.zoneminder.com
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-#Source1: cambozola-%version.tar.bz2
 Source2: zoneminder.conf
-Source3: redalert.wav
 Source4: README.alt
 Source5: README-nginx-ru.alt
 Source6: nginx-zoneminder.conf.sample
@@ -23,7 +19,7 @@ Source7: zm-fcgi.inc
 Conflicts: zm <= 1.22.3
 Requires: libgnutls libgnutls-openssl zlib perl-Class-Date perl-DateTime perl-Date-Manip perl-libwww ffmpeg perl-X10 perl-Sys-Mmap perl-DBD-mysql perl-Storable MySQL-client php5-mysql su perl-Sys-Mmap webserver
 AutoReq: noperl
-BuildRequires: bzlib-devel ffmpeg gcc-c++ libavdevice-devel libavformat-devel libgcrypt-devel libgnutls-openssl-devel libjpeg-devel libmysqlclient-devel libpcre-devel libswscale-devel netpbm perl-Archive-Tar perl-Archive-Zip perl-DBD-mysql perl-Date-Manip perl-MIME-Lite perl-MIME-tools perl-Module-Load perl-Sys-Mmap perl-X10 perl-devel perl-libwww zlib-devel
+BuildRequires: bzlib-devel ffmpeg gcc-c++ libavdevice-devel libavformat-devel libgcrypt-devel libgnutls-openssl-devel libjpeg-devel libmysqlclient-devel libpcre-devel libswscale-devel netpbm perl-Archive-Tar perl-Archive-Zip perl-DBD-mysql perl-Date-Manip perl-MIME-Lite perl-MIME-tools perl-Module-Load perl-Sys-Mmap perl-X10 perl-devel perl-libwww zlib-devel libpolkit-devel cmake libv4l-devel rpm-macros-cmake libvlc-devel libcurl-devel
 
 %description
 ZoneMinder is a set of applications which is intended to provide a complete
@@ -42,6 +38,17 @@ BuildArch: noarch
 %description apache
 Zoneminder configuration file and requires for apache
 
+%package api
+Summary: Zoneminder Web API
+Group: Networking/WWW
+Requires: zoneminder
+BuildArch: noarch
+
+%description api
+The API is built in CakePHP and lives under the /api directory. It provides a RESTful service 
+and supports CRUD (create, retrieve, update, delete) functions for Monitors, Events, Frames, 
+Zones and Config.
+
 %package nginx
 Summary: Zoneminder configuration file and requires for nginx
 Group: Networking/WWW
@@ -52,39 +59,34 @@ Zoneminder configuration file and requires for nginx
 
 %prep
 %setup
-%patch0 -p1
+#patch0 -p1
 cp %SOURCE4 README.alt
 cp %SOURCE5 README-nginx-ru.alt
 
 cat <<EOF >> db/zm_create.sql.in
-update Config set Value = '/cgi-bin/zm/nph-zms' where Name = 'ZM_PATH_ZMS';
 use mysql;
 grant select,insert,update,delete on zm.* to 'zmuser'@localhost identified by 'zmpass';
 EOF
 
-%build
-autoreconf -fisv
-OPTS=""
+./utils/zmeditconfigdata.sh ZM_PATH_ZMS /cgi-bin/zm/nph-zms
+./utils/zmeditconfigdata.sh ZM_OPT_CAMBOZOLA yes
+./utils/zmeditconfigdata.sh ZM_PATH_SWAP /dev/shm
+./utils/zmeditconfigdata.sh ZM_UPLOAD_FTP_LOC_DIR /var/spool/zoneminder-upload
+./utils/zmeditconfigdata.sh ZM_OPT_CONTROL yes
+./utils/zmeditconfigdata.sh ZM_CHECK_FOR_UPDATES no
+./utils/zmeditconfigdata.sh ZM_DYN_SHOW_DONATE_REMINDER no
+./utils/zmeditconfigdata.sh ZM_OPT_FAST_DELETE no
 
-%configure \
-	--with-libarch=%_lib \
-	--with-mysql=%prefix \
-	--with-webdir=%_datadir/%name/www \
-	--with-cgidir=%_libexecdir/%name/cgi-bin \
-	--with-webuser=%zmuid \
-	--with-webgroup=%zmgid \
-	--disable-debug \
-	--with-ffmpeg=%prefix \
-	--enable-mmap CPPFLAGS="-D__STDC_CONSTANT_MACROS" \
-	--disable-crashtrace \
-	$OPTS
-make %{?_smp_mflags}
+%build
+%cmake -DZM_TARGET_DISTRO="alt" -DPCRE_INCLUDE_DIR=/usr/include/pcre
+
+make %{?_smp_mflags} -C BUILD
 perl -pi -e 's/(ZM_WEB_USER=).*$/${1}%{zmuid_final}/;' \
     -e 's/(ZM_WEB_GROUP=).*$/${1}%{zmgid_final}/;' zm.conf
 
 %install
 install -d %buildroot%_var/run
-%make_install install DESTDIR=%buildroot \
+%make_install -C BUILD install DESTDIR=%buildroot \
 	     INSTALLDIRS=vendor
 rm -rf %buildroot%prefix/%_lib/perl5/vendor_perl/*.*/*-*
 rm -rf %buildroot%prefix/%_lib/perl5/*.*/*-*
@@ -93,15 +95,14 @@ install -m 755 -d %buildroot%_var/log/zoneminder
 for dir in events images temp
 do
 	install -m 755 -d %buildroot%_localstatedir/zoneminder/$dir
-	rmdir %buildroot%_datadir/%name/www/$dir
-	ln -sf ../../../..%_localstatedir/zoneminder/$dir %buildroot%_datadir/%name/www/$dir
 done
-install -D -m 755 scripts/zm %buildroot%_initdir/zoneminder
+install -D -m 755 BUILD/scripts/zm %buildroot%_initdir/zoneminder
 install -D -m 644 %SOURCE2 %buildroot%_sysconfdir/httpd/conf/addon-modules.d/zoneminder.conf
-install -D -m 644 zm.conf %buildroot%_sysconfdir/zm.conf
-install -D -m 755 %SOURCE3 %buildroot%_datadir/%name/www/sounds/redalert.wav
+install -D -m 644 BUILD/zm.conf %buildroot%_sysconfdir/zm.conf
 install -D -m 644 %SOURCE6 %buildroot%_sysconfdir/nginx/sites-enabled.d/nginx-zoneminder.conf.sample
 install -D -m 644 %SOURCE7 %buildroot%_sysconfdir/nginx/sites-enabled.d/zm-fcgi.inc
+
+cp -aR web/api %buildroot%_datadir/%name/www/api
 
 
 rm -f %buildroot%perl_vendor_archlib/perllocal.pod
@@ -110,7 +111,7 @@ cp db/*.sql %buildroot%_datadir/%name/db
 
 
 %post
-/sbin/chkconfig --add zoneminder
+%post_service zoneminder
 
 %post apache
 %post_service httpd
@@ -119,15 +120,7 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %preun_service httpd
 
 %preun
-if [ $1 -eq 0 ]; then
-	/sbin/service zoneminder stop > /dev/null 2>&1 || :
-	/sbin/chkconfig --del zoneminder
-fi
-
-%postun
-if [ $1 -ge 1 ]; then
-	/sbin/service zoneminder condrestart > /dev/null 2>&1 || :
-fi
+%preun_service zoneminder
 
 %files
 %doc AUTHORS COPYING README.md README.alt
@@ -135,14 +128,22 @@ fi
 %_initdir/zoneminder
 %_bindir/*
 %_datadir/%name
+%_man8dir/zoneminder*
 %perl_vendorlib/ZoneMinder*
+%perl_vendorlib/ONVIF*
+%perl_vendorlib/WSDiscovery*
+%perl_vendorlib/WSSecurity*
+%perl_vendorlib/WSNotification*
+
 %_libexecdir/%name
-%dir %perl_vendor_autolib/ZoneMinder
 %dir %attr(755,%zmuid_final,%zmgid_final) %_var/log/zoneminder
 %dir %attr(755,%zmuid_final,%zmgid_final) %_localstatedir/zoneminder
 %dir %attr(755,%zmuid_final,%zmgid_final) %_localstatedir/zoneminder/events
 %dir %attr(755,%zmuid_final,%zmgid_final) %_localstatedir/zoneminder/images
 %dir %attr(755,%zmuid_final,%zmgid_final) %_localstatedir/zoneminder/temp
+%_datadir/polkit-1/*/*
+%exclude %_datadir/%name/www/api
+
 
 %files apache
 %config(noreplace) %_sysconfdir/httpd/conf/addon-modules.d/zoneminder.conf
@@ -151,7 +152,13 @@ fi
 %doc README-nginx-ru.alt
 %config(noreplace) %_sysconfdir/nginx/sites-enabled.d/*
 
+%files api
+%_datadir/%name/www/api
+
 %changelog
+* Mon Jan 16 2017 Anton Farygin <rider@altlinux.ru> 1.30.0-alt1
+- new version
+
 * Fri Mar 11 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.27.0-alt4
 - rebuild with recent libav
 
