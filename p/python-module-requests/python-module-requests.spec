@@ -4,7 +4,7 @@
 
 Name:           python-module-requests
 Version:        2.12.4
-Release:        alt2
+Release:        alt3
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python
 
@@ -27,6 +27,7 @@ BuildArch:      noarch
 BuildRequires:  python-devel python-modules-json
 BuildRequires:  python-module-chardet
 BuildRequires:  python-module-urllib3 >= 1.13.1
+BuildRequires:  python-module-idna
 BuildRequires:  python-module-httpbin
 BuildRequires:  python-module-setuptools-tests
 
@@ -49,6 +50,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-devel
 BuildRequires:  python3-module-chardet
 BuildRequires:  python3-module-urllib3 >= 1.13.1
+BuildRequires:  python3-module-idna
 BuildRequires:  python3-module-httpbin
 BuildRequires:  python3-module-setuptools-tests
 Requires:       ca-certificates
@@ -127,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.12.4-alt3
+- removed bundled idna
+
 * Mon Jan 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.12.4-alt2
 - updated urllib3 patches
 
