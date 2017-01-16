@@ -3,7 +3,7 @@
 
 Name: lib%origname
 Version: 1.6.4
-Release: alt2.qa1
+Release: alt2.qa2
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -13,6 +13,9 @@ Group: System/Libraries
 
 Url: http://trac.bjourne.webfactional.com/
 Source0: gtkimageview-%version.tar.gz
+
+Patch1: libgtkimageview-1.6.4-gcc6.patch
+Patch2: libgtkimageview-1.6.4-resource.patch
 
 # Automatically added by buildreq on Mon Nov 03 2008
 BuildRequires: libgtk+2-devel
@@ -41,6 +44,8 @@ GtkImageView Reference Manual.
 
 %prep
 %setup -n %origname-%version
+%patch1
+%patch2
 
 %build
 %configure --disable-static
@@ -61,6 +66,11 @@ GtkImageView Reference Manual.
 %_gtk_docdir/*
 
 %changelog
+* Mon Jan 16 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.6.4-alt2.qa2
+- Fixed build with:
+ + gcc6;
+ + gdk.
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.4-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
