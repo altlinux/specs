@@ -1,6 +1,6 @@
 Name: 0ad-data
 Epoch: 1
-Version: 0.0.20
+Version: 0.0.21
 Release: alt1
 BuildArch: noarch
 
@@ -9,7 +9,7 @@ Summary: Data for 0ad: free, open-source realtime strategy game of ancient warfa
 License: Various (all distributable)
 Url: http://www.wildfiregames.com/0ad/
 Requires: 0ad = %epoch:%version
-Source: %name-%version.tar
+Source: 0ad-%version-alpha-unix-data.tar.xz
 
 %description
 0 A.D. (pronounced "zero ey-dee") is a free, open-source, cross-platform
@@ -27,9 +27,7 @@ are available under CC-BY-SA. In short, we consider 0 A.D. an an
 educational celebration of game development and ancient history.
 
 %prep
-%setup
-
-%build
+%setup -n 0ad-%version-alpha
 
 %install
 mkdir -p %buildroot/%_datadir/0ad
@@ -39,6 +37,9 @@ mv binaries/data/* %buildroot/%_datadir/0ad
 %_datadir/0ad
 
 %changelog
+* Mon Jan 16 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:0.0.21-alt1
+- Updated to 0.0.21.
+
 * Mon Apr 04 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:0.0.20-alt1
 - 0.0.20
 

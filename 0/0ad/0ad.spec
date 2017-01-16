@@ -1,6 +1,6 @@
 Name: 0ad
 Epoch: 1
-Version: 0.0.20
+Version: 0.0.21
 Release: alt1
 
 Group: Games/Strategy
@@ -40,9 +40,14 @@ mkdir -p libraries/source/fcollada/src/output/debug/FCollada
 export CFLAGS="%optflags"
 export CPPFLAGS="%optflags"
 export SHELL=/bin/sh
-build/workspaces/update-workspaces.sh --bindir=%_bindir --datadir=%_datadir/%name --libdir=%_libdir/%name
+[ -n "$NPROCS" ] || NPROCS=%__nprocs; build/workspaces/update-workspaces.sh \
+	--bindir=%_bindir \
+	--datadir=%_datadir/%name \
+	--libdir=%_libdir/%name \
+	-j$NPROCS \
+	#
 pushd build/workspaces/gcc
-make verbose=1
+%make_build verbose=1
 popd
 
 %install
@@ -72,6 +77,9 @@ cp -a binaries/data/* %buildroot/%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Mon Jan 16 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:0.0.21-alt1
+- Updated to 0.0.21.
+
 * Mon Apr 04 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:0.0.20-alt1
 - 0.0.20
 
