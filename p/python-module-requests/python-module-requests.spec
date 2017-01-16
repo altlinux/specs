@@ -4,7 +4,7 @@
 
 Name:           python-module-requests
 Version:        2.12.4
-Release:        alt1
+Release:        alt2
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python
 
@@ -66,9 +66,9 @@ designed to make HTTP requests easy for developers.
 %prep
 %setup -q -n requests-%{version}
 
-#patch0 -p1
-#patch1 -p1
-#patch2 -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 # Unbundle the certificate bundle from mozilla.
 rm -rf requests/cacert.pem
@@ -127,6 +127,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.12.4-alt2
+- updated urllib3 patches
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.12.4-alt1
 - automated PyPI update
 
