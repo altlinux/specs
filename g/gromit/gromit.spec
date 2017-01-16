@@ -1,6 +1,6 @@
 Name: gromit
 Version: 20041213
-Release: alt1.1
+Release: alt1.qa1
 
 Summary: Paint annotations on top of the X screen
 License: GPLv2
@@ -33,6 +33,9 @@ install -m 755 -D %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Mon Jan 16 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 20041213-alt1.qa1
+- Fixed DSO linking (libm.so).
+
 * Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20041213-alt1.1
 - Fixed build
 
