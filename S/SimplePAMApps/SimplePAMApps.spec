@@ -1,6 +1,6 @@
 Name: SimplePAMApps
 Version: 0.60
-Release: alt34
+Release: alt35
 
 %def_with login
 %def_with su
@@ -152,6 +152,9 @@ fi
 %endif #with su
 
 %changelog
+* Mon Jan 16 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.60-alt35
+- Fixed build with gcc 6 (dropped useless rcsid).
+
 * Mon Dec 14 2015 Dmitry V. Levin <ldv@altlinux.org> 0.60-alt34
 - Fixed build with fresh glibc.
 
