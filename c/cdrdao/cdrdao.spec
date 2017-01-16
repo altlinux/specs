@@ -7,7 +7,7 @@
 
 Name: cdrdao
 Version: 1.2.3
-%define release alt3.qa1%rc_ver
+%define release alt4%rc_ver
 
 %ifdef cvsdate
 #Release: %{release}cvs%cvsdate
@@ -33,6 +33,8 @@ Patch: %name-1.1.9-alt-locale.patch
 Patch2: cdrdao-1.2.2-desktop.patch
 Patch3: cdrdao-1.2.3-version.patch
 Patch4: cdrdao-1.2.3-stat.patch
+Patch5: cdrdao-1.2.3-narrowing.patch
+Patch6: cdrdao-1.2.3-format_security.patch
 
 PreReq: control
 
@@ -70,6 +72,8 @@ ISRC codes/CD-TEXT and non destructive cut of the audio data.
 %patch2 -p1 -b .desktop
 %patch3 -p1 -b .version
 %patch4 -p1 -b .stat
+%patch5 -p1 -b .narr
+%patch6 -p1 -b .format
 
 subst 's,<linux/../scsi/scsi.h>,<scsi/scsi.h>,' dao/sg_err.h
 
@@ -124,6 +128,10 @@ chmod 700 %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Mon Jan 16 2017 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt4
+- fc patches: cdrdao-1.2.3-narrowing.patch
+              cdrdao-1.2.3-format_security.patch
+
 * Wed Apr 13 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.2.3-alt3.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
