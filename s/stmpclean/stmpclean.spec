@@ -1,6 +1,6 @@
 Name: stmpclean
 Version: 0.3
-Release: alt4
+Release: alt5
 
 Summary: A safe temporary directory cleaner
 License: BSD-like
@@ -15,6 +15,7 @@ Patch1: stmpclean-0.3-owl-fixes.patch
 Patch2: stmpclean-0.3-alt-nonroot.patch
 Patch3: stmpclean-0.3-alt-warnings.patch
 Patch4: stmpclean-0.3-alt-ctime-mtime.patch
+Patch5: stmpclean-0.3-alt-gcc6.patch
 
 Provides: tmpwatch
 Obsoletes: tmpwatch
@@ -30,6 +31,7 @@ such as /tmp where old files tend to accumulate.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %make_build stmpclean
@@ -45,6 +47,9 @@ install -pD -m700 %SOURCE1 %buildroot%_sysconfdir/cron.daily/%name
 %doc README FAQ
 
 %changelog
+* Mon Jan 16 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3-alt5
+- Fixed build with gcc 6.
+
 * Tue Feb 04 2014 Dmitry V. Levin <ldv@altlinux.org> 0.3-alt4
 - cron: dropped /var/cache/man and /var/catman processing (closes: #29494).
 
