@@ -1,45 +1,33 @@
-%define svn svn6036
+%define svn git20161229
 
 Name: handbrake
-Version: 0.9.9.1
+Version: 1.0.1
 Release: alt1.%svn
 Summary: Multithreaded Video Transcoder
 Packager: Motsyo Gennadi <drool@altlinux.ru>
-# #Source: http://prdownloads.sourceforge.net/handbrake/HandBrake-%version.tar.bz2
-Source0: %name-%svn.tar.bz2
+Source: http://prdownloads.sourceforge.net/handbrake/HandBrake-%version.tar.bz2
+# #Source0: %name-%svn.tar.bz2
 
-Source101: http://download.handbrake.fr/handbrake/contrib/a52dec-0.7.4.tar.gz
-# #Source102: http://download.handbrake.fr/handbrake/contrib/faac-1.28.tar.gz
-Source102: http://download.handbrake.fr/handbrake/contrib/fdk-aac-v0.1.1-6-gbae4553.tar.bz2
-Source103: http://download.handbrake.fr/handbrake/contrib/faad2-2.7.tar.gz
-Source104: http://download.handbrake.fr/handbrake/contrib/libav-v10_alpha2.tar.bz2
-Source105: http://download.handbrake.fr/handbrake/contrib/fontconfig-2.8.0.tar.gz
-Source106: http://download.handbrake.fr/handbrake/contrib/freetype-2.4.7.tar.bz2
-Source107: http://download.handbrake.fr/handbrake/contrib/lame-3.98.tar.gz
-Source108: http://download.handbrake.fr/handbrake/contrib/libbluray-0.5.0.tar.bz2
-Source109: http://download.handbrake.fr/handbrake/contrib/libdvdnav-a5c1325.tar.bz2
-Source110: http://download.handbrake.fr/handbrake/contrib/libdvdread-a2f211a.tar.bz2
-Source111: http://download.handbrake.fr/handbrake/contrib/libmkv-0.6.5-0-g82075ae.tar.gz
-Source112: http://download.handbrake.fr/handbrake/contrib/libtool-2.4.2.tar.bz2
-Source113: http://download.handbrake.fr/handbrake/contrib/libxml2-2.7.7.tar.gz
-Source114: http://download.handbrake.fr/handbrake/contrib/m4-1.4.16.tar.bz2
-Source115: http://download.handbrake.fr/handbrake/contrib/mp4v2-trunk-r355.tar.bz2
-Source116: http://download.handbrake.fr/handbrake/contrib/mpeg2dec-0.5.1.tar.gz
-Source117: http://download.handbrake.fr/handbrake/contrib/x264-r2389-956c8d8.tar.gz
-Source118: http://download.handbrake.fr/handbrake/contrib/yasm-1.2.0.tar.gz
+Source101: http://downloads.webmproject.org/releases/webm/libvpx-1.5.0.tar.bz2
+Source102: http://download.handbrake.fr/handbrake/contrib/yasm-1.3.0.tar.gz
+Source103: https://download.handbrake.fr/handbrake/contrib/libav-12.tar.gz
+Source104: http://download.handbrake.fr/handbrake/contrib/libdvdread-5.0.0-6-gcb1ae87.tar.gz
+Source105: http://download.videolan.org/pub/videolan/libdvdnav/5.0.1/libdvdnav-5.0.1.tar.bz2
+Source106: https://download.videolan.org/pub/videolan/x265/x265_2.1.tar.gz
+Source107: https://cmake.org/files/v3.3/cmake-3.3.2.tar.gz
+Source108: http://download.videolan.org/pub/videolan/libbluray/0.9.3/libbluray-0.9.3.tar.bz2
 
 Source151: handbrake-ffmpeg_fix_missing_return_in_nonvoid_function.patch
 Source152: handbrake-svn5042-fix_libbluray_implicit_declaration_of_function_strdup.patch
 
 Patch200: handbrake-svn5891-fdk_aac-autoreconf.patch
-Patch250: handbrake-svn6036-category.patch
-Patch300: handbrake-svn6013-libnotify-gtk3.patch
+Patch250: handbrake-git20161018-category.patch
 
 Url: http://handbrake.fr/
 Group: Video
 License: GPLv2+
 
-BuildRequires: bzlib-devel gcc-c++ gst-plugins-devel intltool libalsa-devel libass-devel libdbus-glib-devel libfribidi-devel libgudev-devel libnotify-devel libsamplerate-devel libtheora-devel libvorbis-devel libwebkitgtk3-devel subversion wget zlib-devel
+BuildRequires: bzlib-devel doxygen gcc-c++ intltool libass-devel libdbus-glib-devel libfribidi-devel libglademm-devel libgtk+3-devel libharfbuzz-devel libjansson-devel liblame-devel libnotify-devel libopus-devel libsamplerate-devel libssl-devel libtheora-devel libvorbis-devel libx264-devel libxml2-devel python-modules-json
 
 %description
 HandBrake is an open-source, GPL-licensed, multiplatform, multithreaded video
@@ -67,32 +55,32 @@ transcoder.
 This package contains a GTK+ graphical user interface for Handbrake.
 
 %prep
-# #%setup -n HandBrake-%version
-%setup -n %name-svn
+%setup -n HandBrake-%version
+# #%setup -n %name-svn
 %patch200 -p1
 %patch250 -p1
-# #%patch300 -p1
 
 # Copy 3rd party dependencies into expected locations:
 %__mkdir download
 for f in \
 %{S:101} %{S:102} %{S:103} %{S:104} %{S:105} %{S:106} \
-%{S:107} %{S:108} %{S:109} %{S:110} %{S:111} %{S:112} \
-%{S:113} %{S:114} %{S:115} %{S:116} %{S:117} %{S:118} \
+%{S:107} %{S:108} \
 ; do
      %__ln_s "$f" download/
 done
+mv ./download/x265_2.1.tar.gz ./download/x265_2.1-1.tar.gz
 
 %build
 export CFLAGS="%optflags"
 export CXXFLAGS="%optflags"
 
 # #%__cp "%{S:151}" contrib/ffmpeg/A99-fix-missing-return-in-nonvoid-function.patch
-%__cp "%{S:152}" contrib/libbluray/A99-fix_libbluray_implicit_declaration_of_function_strdup.patch
+# #%__cp "%{S:152}" contrib/libbluray/A99-fix_libbluray_implicit_declaration_of_function_strdup.patch
 
-./configure --prefix="%buildroot%prefix" --force
+./configure --prefix="%buildroot%prefix" --force --disable-gtk-update-checks
 pushd build
-%make_build
+# #%make_build
+%__make build
 popd build
 
 %install
@@ -107,17 +95,22 @@ popd #build
 %find_lang --with-gnome ghb
 
 %files cli
-%doc AUTHORS COPYING CREDITS NEWS THANKS
+%doc AUTHORS.markdown COPYING LICENSE NEWS.markdown README.markdown THANKS.markdown
 %_bindir/HandBrakeCLI
 
 %files gtk -f ghb.lang
-%doc AUTHORS COPYING CREDITS NEWS THANKS
 %_bindir/HandBrakeGUI
 %_bindir/ghb
 %_desktopdir/ghb.desktop
-%_datadir/icons/*/*/apps/hb-icon.png
+%_datadir/icons/*/*/apps/hb-icon.svg
 
 %changelog
+* Mon Jan 16 2017 Motsyo Gennadi <drool@altlinux.ru> 1.0.1-alt1.git20161229
+- 1.0.1 (git 29.12.2016)
+
+* Tue Oct 18 2016 Motsyo Gennadi <drool@altlinux.ru> 0.10.5-alt1.git20161018
+- 0.10.5 (git 18.10.2016)
+
 * Sun Feb 16 2014 Motsyo Gennadi <drool@altlinux.ru> 0.9.9.1-alt1.svn6036
 - build svn6036
 
