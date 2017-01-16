@@ -1,9 +1,10 @@
 %define ver_major 0.7
 %def_enable introspection
+%def_enable check
 
 Name: libnotify
 Version: %ver_major.7
-Release: alt1
+Release: alt1.1
 
 Summary: Desktop notification library
 Group: System/Libraries
@@ -17,7 +18,8 @@ Patch: %name-%version-%release.patch
 Provides: %{name}4 = %version-%release
 Obsoletes: %{name}4
 
-BuildRequires: gtk-doc libgio-devel libgtk+3-devel xmlto
+BuildRequires: gtk-doc libgio-devel xmlto
+%{?_enable_check:BuildRequires: libgtk+3-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
 
 %description
@@ -88,7 +90,10 @@ the command line.
 %configure \
 	--enable-gtk-doc \
 	--disable-static \
-	%{subst_enable introspection}
+	%{subst_enable introspection} \
+	%{?!_enable_check:--disable-tests} \
+	#
+
 %make_build
 
 %check
@@ -121,6 +126,9 @@ the command line.
 %endif
 
 %changelog
+* Mon Jan 16 2017 Michael Shigorin <mike@altlinux.org> 0.7.7-alt1.1
+- moved BR: libgtk+3 under check knob
+
 * Fri Oct 14 2016 Yuri N. Sedunov <aris@altlinux.org> 0.7.7-alt1
 - 0.7.7
 
