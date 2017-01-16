@@ -7,7 +7,7 @@
 %def_enable introspection
 
 Name: libgtop
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: LibGTop library
@@ -160,6 +160,9 @@ rm -rf doc/*.info
 %endif
 
 %changelog
+* Mon Jan 16 2017 Yuri N. Sedunov <aris@altlinux.org> 2.34.2-alt1
+- 2.34.2
+
 * Sat Aug 20 2016 Yuri N. Sedunov <aris@altlinux.org> 2.34.1-alt1
 - 2.34.1
 
