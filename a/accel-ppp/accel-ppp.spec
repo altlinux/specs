@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.11.1
-Release: alt1
+Release: alt2
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -13,7 +13,7 @@ Patch0: %name-%version-%release.patch
 Requires: snmp-mibs-std
 AutoProv: yes
 
-BuildRequires: cmake libnet-snmp-devel libpcre-devel libnl-devel libssl-devel liblua5-devel glibc-kernheaders
+BuildRequires: cmake libnet-snmp-devel libpcre-devel libnl-devel libssl-devel liblua5.1-devel glibc-kernheaders
 BuildPreReq: rpm-build-kernel
 
 %description
@@ -103,6 +103,9 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Mon Jan 16 2017 Alexei Takaseev <taf@altlinux.org> 1.11.1-alt2
+- Build with lua 5.1
+
 * Tue Nov 29 2016 Alexei Takaseev <taf@altlinux.org> 1.11.1-alt1
 - 1.11.1
 
