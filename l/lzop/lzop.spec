@@ -1,6 +1,6 @@
 Name: lzop
 Version: 1.03
-Release: alt2
+Release: alt3
 
 Summary: LZO fast file compressor
 License: GPL
@@ -8,6 +8,7 @@ Group: Archiving/Compression
 
 URL: http://www.lzop.org
 Source: lzop-%version.tar.gz
+Patch0: lzop-1.03-gcc6.patch
 
 # Automatically added by buildreq on Wed Oct 05 2011
 BuildRequires: liblzo2-devel
@@ -19,6 +20,7 @@ of some compression ratio).
 
 %prep
 %setup -q -n lzop-%version
+%patch -p1
 
 %build
 %configure
@@ -33,6 +35,9 @@ of some compression ratio).
 %_man1dir/lzop.1*
 
 %changelog
+* Mon Jan 16 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.03-alt3
+- Fixed build with gcc 6.
+
 * Wed Oct 05 2011 Alexey Tourbin <at@altlinux.ru> 1.03-alt2
 - rebuilt as plain src.rpm
 
