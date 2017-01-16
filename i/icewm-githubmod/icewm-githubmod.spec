@@ -1,10 +1,10 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
 %define realname icewm
-%define gitrev .gitcbb3423
+%define gitrev .gitedf8c50
 
 Name: %realname-githubmod
 Version: 1.3.12.56
-Release: alt3%gitrev
+Release: alt4%gitrev
 
 Summary: X11 Window Manager
 Group: Graphical desktop/Icewm
@@ -53,8 +53,8 @@ Recommends: iftop, mutt
 
 %build
 %cmake	-DCFGDIR=%_sysconfdir/X11/%realname -DPREFIX=%_prefix \
-	-DLIBDIR=%_x11x11dir/%realname -DCONFIG_GUIEVENTS=on  \
-	-DICESOUND="ALSA,OSS,ESound"
+	-DLIBDIR=%_x11x11dir/%realname -DDOCDIR=%_datadir/doc/%name-%version \
+	-DCONFIG_GUIEVENTS=on  -DICESOUND="ALSA,OSS,ESound"
 pushd BUILD
 %make_build
 popd
@@ -87,7 +87,6 @@ rm -f %buildroot/%_bindir/%realname-set-gnomewm
 mv %buildroot/%_x11x11dir/%realname/themes/default ./Default
 rm -rf %buildroot/%_x11x11dir/%realname/themes/*
 mv ./Default %buildroot/%_x11x11dir/%realname/themes/
-rm -rf %buildroot/%_datadir/doc/%realname
 rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 
 %files -f %realname.lang
@@ -118,6 +117,11 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %doc AUTHORS NEWS README.ALT README.md BUILD/doc/*.html icewm-old-changelog.bz2
 
 %changelog
+* Mon Jan 16 2017 Dmitriy Khanzhin <jinn@altlinux.org> 1.3.12.56-alt4.gitedf8c50
+- git snapshot edf8c50
+- fixed documentation place
+- adapted logouticon patch, thx to YYY at altlinux forum
+
 * Tue Dec 13 2016 Dmitriy Khanzhin <jinn@altlinux.org> 1.3.12.56-alt3.gitcbb3423
 - packaged desktop file for xsession
 
