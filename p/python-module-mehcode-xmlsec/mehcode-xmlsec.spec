@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define mname xmlsec
 %define oname mehcode-%mname
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.0
-Release: alt1.git20141212.1
+Version: 0.6.1
+Release: alt1
 Summary: Python bindings for the XML Security Library
 License: MIT
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/xmlsec/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mehcode/python-xmlsec.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/e1/ec/0330f39bc5eb270b6b62a9dbb11194c6d4215b48ef8d04c78a30dc1d2d1d/xmlsec-%{version}.tar.gz
 
 BuildPreReq: libxml2-devel libxmlsec1-devel libxmlsec1-openssl-devel
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -50,7 +51,7 @@ Conflicts: python3-module-py%mname
 Python bindings for the XML Security Library.
 
 %prep
-%setup
+%setup -q -n xmlsec-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -86,16 +87,19 @@ popd
 %endif
 
 %files
-%doc *.md
+%doc PKG-INFO
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md
+%doc PKG-INFO
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.1-alt1
+- automated PyPI update
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.0-alt1.git20141212.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
