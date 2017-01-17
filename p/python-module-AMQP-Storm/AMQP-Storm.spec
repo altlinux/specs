@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname AMQP-Storm
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.7
-Release: alt1.git20150126.1
+Version: 1.4.0
+Release: alt1
 Summary: Thread-safe Python AMQP Client Library based on pamqp
 License: MIT
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/AMQP-Storm/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/eandersson/amqp-storm.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/18/9e/5fe49408f729f5d57f783b464a582a24b29f5edec8250e41c50d2317797c/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -39,7 +40,7 @@ Group: Development/Python3
 A fully thread-safe RabbitMQ library for Python based on pamqp.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -72,16 +73,19 @@ popd
 %endif
 
 %files
-%doc CHANGELOG *.rst examples
+%doc *.rst PKG-INFO
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc CHANGELOG *.rst examples
+%doc *.rst PKG-INFO
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.7-alt1.git20150126.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
