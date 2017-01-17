@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define oname trytond
 
 %def_without python3
 
 Name: python-module-%oname
-Version: 3.4.2
+Version: 4.2.1
 Release: alt1
 Summary: Tryton server
 License: GPL
@@ -11,7 +12,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/trytond/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/17/f7/c7981ea71084c8dc4adf61627bd9265716407bc7cedf13bc746dd51cde76/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -108,7 +109,7 @@ This package contains tests for %oname.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -146,7 +147,7 @@ popd
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %files
-%doc CHANGELOG README TODO
+%doc CHANGELOG README COPYRIGHT PKG-INFO doc
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -166,7 +167,7 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %if_with python3
 %files -n python3-module-%oname
-%doc CHANGELOG README TODO
+%doc CHANGELOG README COPYRIGHT PKG-INFO doc
 %_bindir/*.py3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test*
@@ -178,6 +179,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt1
+- automated PyPI update
+
 * Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.2-alt1
 - Version 3.4.2
 
