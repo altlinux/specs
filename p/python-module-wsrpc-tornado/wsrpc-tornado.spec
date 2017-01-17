@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname wsrpc-tornado
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.1
-Release: alt1.git20150119.1.1
+Version: 0.5.5
+Release: alt1
 Summary: WSRPC is WebSocket Remote procedure call for tornado and javascript
 License: LGPLv3
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/wsrpc-tornado/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mosquito/wsrpc.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/c1/f0/4d263a27570697c05a9b0a89256e5d63dec55a8ed24519a3c9ae5e600886/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -44,7 +45,7 @@ Group: Development/Python3
 Remote Procedure call through WebSocket between browser and tornado.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -72,16 +73,19 @@ popd
 %endif
 
 %files
-%doc *.rst auth.py example
+%doc *.rst PKG-INFO
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst auth.py example
+%doc *.rst PKG-INFO
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.5-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.1-alt1.git20150119.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
