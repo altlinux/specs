@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname cubicweb-forge
 Name: python-module-%oname
-Version: 1.11.0
+Version: 1.13.0
 Release: alt1
 Summary: Software forge component for the CubicWeb framework
 License: LGPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/cubicweb-forge/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/58/40/ce16de7de33e2cefb3330dfc458d43a3478248d7f66feb6ab52188c187cc/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests cubicweb
@@ -58,7 +59,7 @@ documentation page and so on.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -70,7 +71,7 @@ This package contains tests for %oname.
 python setup.py test
 
 %files
-%doc README
+%doc README PKG-INFO
 %python_sitelibdir/*
 %_datadir/cubicweb/*
 %exclude %python_sitelibdir/*/test*
@@ -79,6 +80,9 @@ python setup.py test
 %python_sitelibdir/*/test*
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.13.0-alt1
+- automated PyPI update
+
 * Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.0-alt1
 - Version 1.11.0
 
