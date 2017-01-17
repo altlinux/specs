@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname flask-babel
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.9
-Release: alt2.git20130729.1
+Version: 0.11.1
+Release: alt1
 Summary: Adds i18n/l10n support to Flask applications
 License: BSD
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/Flask-Babel/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mitsuhiko/flask-babel.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/47/96/6013d4091fb4238e27e918aec4929f082942fa8c9489ae3aad2f18de4b5b/Flask-Babel-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires: python-module-babel python-module-pytest
@@ -44,7 +45,7 @@ Adds i18n/l10n support to Flask applications with the help of the Babel
 library.
 
 %prep
-%setup
+%setup -q -n Flask-Babel-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -79,16 +80,19 @@ popd
 %endif
 
 %files
-%doc README docs/*.rst
+%doc docs/*.rst PKG-INFO
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README docs/*.rst
+%doc docs/*.rst PKG-INFO
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.11.1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9-alt2.git20130729.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
