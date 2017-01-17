@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: unzip
 %define oname argparse_tools
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.5
-Release: alt1.dev0.git20150126.1.1
+Version: 1.0.6
+Release: alt1
 Summary: Share a standardized set of argparse arguments within your codebase
 License: Free
 Group: Development/Python
@@ -12,7 +14,7 @@ Url: https://pypi.python.org/pypi/argparse_tools/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/adgaudio/argparse_tools.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/2a/e3/71c4febc0bcf2d37ead2da1fe584ebf0d9f33c889f3d8d8f06d8de16bb05/%{oname}-%{version}.zip
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -65,7 +67,7 @@ arguments across various scripts and applications that may use argparse.
 This package contains examples for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -99,7 +101,7 @@ popd
 %endif
 
 %files
-%doc *.md
+%doc PKG-INFO
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/examples
 
@@ -108,7 +110,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md
+%doc PKG-INFO
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/examples
 
@@ -117,6 +119,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.6-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.5-alt1.dev0.git20150126.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
