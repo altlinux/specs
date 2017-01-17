@@ -1,19 +1,24 @@
+%def_disable snapshot
+
 %define _name slingshot
-%define ver_major 0.8
+%define ver_major 2.0
 %define api_ver 0.8
 
 Name: %_name-launcher
-Version: %ver_major.2
-Release: alt0.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: The lightweight and stylish app launcher from elementary
 License: GPLv2.1+
 Group: Graphical desktop/Other
 Url: https://launchpad.net/%_name
 
-#Source: https://launchpad.net/%_name/freya/%version/+download/%name-%version.tar.xz
+%if_disabled snapshot
+Source: https://launchpad.net/%_name/loki/%version/+download/%name-%version.tar.xz
+%else
 # rev. 642
 Source: %name-%version.tar
+%endif
 
 Requires: zeitgeist
 
@@ -45,6 +50,9 @@ Slingshot is a lightweight and stylish app launcher from elementary OS.
 
 
 %changelog
+* Tue Jan 17 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Wed Mar 30 2016 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt0.1
 - update to rev642
 - built against libplank.so.1
