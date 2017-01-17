@@ -1,10 +1,12 @@
 Name: sechooser
-Version: 0.0.1
+Version: 0.1.0
 Release: alt1%ubt
 
 Summary: Selinux user range chooser
 License: GPL
 Group: System/Configuration/Other
+
+Requires: qt5-translations
 
 Source: %name-%version.tar
 
@@ -26,14 +28,18 @@ lrelease-qt5 sechooser.pro
 %install
 %make INSTALL_ROOT=%buildroot install
 
-mkdir -p %buildroot/%_datadir/%name/translations/
-#install -m644 translations/sechooser_*.qm %buildroot/%_datadir/%name/translations/
+mkdir -p %buildroot/%_qt5_translationdir/
+install -m644 translations/sechooser_??.qm %buildroot/%_qt5_translationdir/
 
-%files
+%find_lang --with-qt --all-name %name
+
+%files -f %name.lang
 %_bindir/*
-#%_datadir/%name
-
 
 %changelog
+* Tue Jan 17 2017 Sergey V Turchin <zerg at altlinux dot org> 0.1.0-alt1%ubt
+- add russian translation
+- ignore minimum range
+
 * Wed Jan 11 2017 Sergey V Turchin <zerg at altlinux dot org> 0.0.1-alt1%ubt
 - initial build
