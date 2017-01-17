@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname geocoder
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.1.2
-Release: alt1.git20150203.1.1
+Version: 1.19.0
+Release: alt1
 Summary: A complete Python Geocoding module made easy
 License: MIT
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/geocoder/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/DenisCarriere/geocoder.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/12/13/77cce9fc7ffcb7f105ef04bc5c75107b85b5574bb9a50dbb6de9ac126c32/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -50,7 +51,7 @@ A complete Python Geocoding module made easy.
 Every task is made easy with tons of ``help`` & ``debug`` commands!
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -91,7 +92,7 @@ popd
 %endif
 
 %files
-%doc *.md test_geocoder.py
+%doc AUTHORS.rst PKG-INFO README.rst LICENSE
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -100,12 +101,15 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md test_geocoder.py
+%doc AUTHORS.rst PKG-INFO README.rst LICENSE
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.19.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.2-alt1.git20150203.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
