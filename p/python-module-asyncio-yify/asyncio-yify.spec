@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define mname yify
 %define oname asyncio-%mname
 
@@ -5,8 +6,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.7
-Release: alt1.git20141222.1.1
+Version: 0.0.8
+Release: alt1
 Summary: Damned fast YIFY parser using Asyncio
 License: ASLv2.0
 Group: Development/Python
@@ -14,7 +15,7 @@ Url: https://pypi.python.org/pypi/asyncio-yify/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/davidyen1124/Asyncio-YIFY.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/1c/6d/aea3238e38f02b6e378f4107440162327f4bd05c016f1a0584b041fcecd8/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 %if_with python2
@@ -53,7 +54,7 @@ Provides: python3-module-%mname = %EVR
 Damned fast YIFY parser using Asyncio.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -83,17 +84,20 @@ popd
 
 %if_with python2
 %files
-%doc *.md
+%doc PKG-INFO
 %python_sitelibdir/*
 %endif
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md
+%doc PKG-INFO
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.7-alt1.git20141222.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
