@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname universalbus
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.6
-Release: alt1.git20141116.1.1
+Version: 0.0.10
+Release: alt1
 Summary: Universal Bus over rabbitmq
 License: Free
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/universalbus/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/KokocGroup/universal-bus.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/b4/5e/d7f498992f115136331f10f0051cf9bce43a1f4fcd9a5296b51a4400d8f8/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -41,7 +42,7 @@ Group: Development/Python3
 Universal Bus over rabbitmq.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -74,16 +75,19 @@ popd
 %endif
 
 %files
-%doc *.md
+%doc PKG-INFO
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md
+%doc PKG-INFO
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.10-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.6-alt1.git20141116.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
