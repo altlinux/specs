@@ -1,11 +1,13 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: unzip
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.1.1
+Release: alt1
 %define oname zc.zservertracelog
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.3.2
+Version: 1.4.0
 #Release: alt2.1
 Summary: Zope 3 tracelog implementation for zserver
 License: ZPLv2.1
@@ -13,7 +15,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/zc.zservertracelog/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/36/fd/a54f70a9db463f714b7f9d21f1c60178f2ebe9804914605d02732849b54a/%{oname}-%{version}.zip
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -74,7 +76,7 @@ This package contains tests for Zope 3 tracelog implementation for
 zserver.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -115,7 +117,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc README.rst CHANGES.rst PKG-INFO COPYRIGHT.rst LICENSE.rst
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -129,7 +131,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc README.rst CHANGES.rst PKG-INFO COPYRIGHT.rst LICENSE.rst
 %_bindir/*.py3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
@@ -142,6 +144,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.2-alt2.1.1
 - (AUTO) subst_x86_64.
 
