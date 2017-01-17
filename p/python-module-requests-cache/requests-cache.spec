@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname requests-cache
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.4.9
-Release: alt1.git20150117.1.1
+Version: 0.4.13
+Release: alt1
 Summary: Persistent cache for requests library
 License: BSD
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/requests-cache/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/reclosedev/requests-cache.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/1a/cf/12349c7113b252d9a0b26d497d3349baeb6c8f293b440e55a00e7fa6e4a4/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -73,7 +74,7 @@ Requests-cache is a transparent persistent cache for requests
 This package contains documentation for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -115,7 +116,7 @@ popd
 %endif
 
 %files
-%doc *.rst sandbox.py example.py
+%doc *.rst sandbox.py example.py PKG-INFO docs
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 
@@ -127,11 +128,14 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst sandbox.py example.py
+%doc *.rst sandbox.py example.py PKG-INFO docs
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.13-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.9-alt1.git20150117.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
