@@ -2,10 +2,11 @@
 %def_disable celt051
 %def_enable opus
 %def_enable lz4
-%def_disable opengl
+%def_disable gstreamer
+%def_disable manual
 
 Name: SPICE
-Version: 0.12.7
+Version: 0.13.3
 Release: alt1
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
@@ -21,15 +22,16 @@ ExclusiveArch: %ix86 x86_64 armh
 
 BuildRequires: gcc-c++
 BuildRequires: libjpeg-devel libpixman-devel >= 0.17.7 zlib-devel
-BuildRequires: libssl-devel libsasl2-devel python-module-pyparsing
+BuildRequires: libssl-devel libsasl2-devel python-module-pyparsing openssl
 BuildRequires: libcacard-devel >= 0.1.2
 BuildRequires: glib2-devel >= 2.22 libgio-devel >= 2.22
-BuildRequires: spice-protocol >= 0.12.11
+BuildRequires: spice-protocol >= 0.12.12
 BuildRequires: python-module-six
+%{?_enable_manual:BuildRequires: asciidoc asciidoc-a2x}
 %{?_enable_celt051:BuildRequires: libcelt051-devel >= 0.5.1.1}
 %{?_enable_opus:BuildRequires: libopus-devel >= 0.9.14}
 %{?_enable_lz4:BuildRequires: liblz4-devel}
-%{?_enable_opengl:BuildRequires: libGL-devel libGLU-devel}
+%{?_enable_gstreamer:BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel gst-plugins1.0-gir-devel}
 
 %description
 The Simple Protocol for Independent Computing Environments (SPICE) is
@@ -75,10 +77,7 @@ rm -f GITVERSION
 %configure			\
 	%{subst_enable celt051}	\
 	%{subst_enable lz4}	\
-	%{subst_enable opengl}	\
-	--enable-smartcard	\
-	--enable-static=no	\
-	--with-sasl
+	--enable-smartcard
 
 %make_build
 
@@ -97,6 +96,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Fri Dec 23 2016 Alexey Shabalin <shaba@altlinux.ru> 0.13.3-alt1
+- 0.13.3
+
 * Tue May 17 2016 Alexey Shabalin <shaba@altlinux.ru> 0.12.7-alt1
 - 0.12.7
 

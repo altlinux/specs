@@ -1,7 +1,7 @@
 %define debug_level 1
 
 Name: seabios
-Version: 1.9.3
+Version: 1.10.1
 Release: alt1
 Summary: Open-source legacy BIOS implementation
 
@@ -79,8 +79,6 @@ build_bios %SOURCE16 bios.bin.elf bios-coreboot.bin
 build_bios %SOURCE17 bios.bin bios.bin
 build_bios %SOURCE18 bios.bin bios-256k.bin
 
-cp out/src/fw/*dsdt*.aml binaries
-
 # seavgabios
 for config in %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE19; do
 	name=${config#*config.vga.}
@@ -93,7 +91,6 @@ install -m 0644 binaries/bios.bin %buildroot%_datadir/%name/bios.bin
 install -m 0644 binaries/bios-256k.bin %buildroot%_datadir/%name/bios-256k.bin
 install -m 0644 binaries/bios-csm.bin %buildroot%_datadir/%name/bios-csm.bin
 install -m 0644 binaries/bios-coreboot.bin %buildroot%_datadir/%name/bios-coreboot.bin
-install -m 0644 binaries/*.aml %buildroot%_datadir/%name/
 
 mkdir -p %buildroot%_datadir/seavgabios
 install -m 0644 binaries/vgabios*.bin %buildroot%_datadir/seavgabios
@@ -103,13 +100,15 @@ ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/s
 %doc COPYING COPYING.LESSER README
 %dir %_datadir/%name
 %_datadir/%name/bios*.bin
-%_datadir/%name/*.aml
 
 %files -n seavgabios
 %dir %_datadir/seavgabios
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Fri Dec 09 2016 Alexey Shabalin <shaba@altlinux.ru> 1.10.1-alt1
+- 1.10.1
+
 * Mon Oct 24 2016 Alexey Shabalin <shaba@altlinux.ru> 1.9.3-alt1
 - 1.9.3
 

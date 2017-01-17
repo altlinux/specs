@@ -1,10 +1,11 @@
 %define TOOL_CHAIN_TAG GCC49
-%define openssl_ver 1.0.2g
-%def_disable aarch64
+%define openssl_ver 1.0.2j
+%def_enable aarch64
+%def_disable arm
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
-Version: 20160518
+Version: 20161227
 Release: alt1
 Summary: EFI Development Kit II
 
@@ -12,14 +13,18 @@ Summary: EFI Development Kit II
 Source: %name-%version.tar
 
 Source2: https://www.openssl.org/source/openssl-%openssl_ver.tar.gz
+Source3: Logo.bmp
 
 Patch1: %name-%version-%release.patch
 
 License: BSD
 Group: Emulators
 Url: http://www.tianocore.org
+ExclusiveArch:  %{ix86} x86_64 %{arm} aarch64
+
 BuildRequires: gcc-c++-x86_64-linux-gnu gcc-c++
 %{?_enable_aarch64:BuildRequires: gcc-c++-aarch64-linux-gnu}
+%{?_enable_arm:BuildRequires: gcc-c++-arm-linux-gnu}
 BuildRequires: iasl nasm
 BuildRequires: python-devel python-modules-sqlite3
 BuildRequires: libuuid-devel
@@ -67,9 +72,30 @@ BuildArch: noarch
 EFI Development Kit II
 Open Virtual Machine Firmware
 
+%package aarch64
+Summary: AARCH64 Virtual Machine Firmware
+Group: Emulators
+BuildArch:      noarch
+
+%description aarch64
+EFI Development Kit II
+AARCH64 UEFI Firmware
+
+%package arm
+Summary: ARM Virtual Machine Firmware
+Group: Emulators
+BuildArch:      noarch
+
+%description arm
+EFI Development Kit II
+armv7 UEFI Firmware
+
+
 %prep
 %setup -q
 %patch1 -p1
+
+cp -f %SOURCE3 MdeModulePkg/Logo/
 
 # cleanup
 find . -name '*.efi' -print0 | xargs -0 rm -f
@@ -81,7 +107,10 @@ rm -rf BaseTools/Bin \
 	StdLib/LibC/Main/Ia32/ftol2.obj \
 	BeagleBoardPkg/Debugger_scripts/rvi_dummy.axf \
 	BaseTools/Source/Python/*/*.pyd \
-	BaseTools/Source/Python/UPT/Dll/sqlite3.dll
+	BaseTools/Source/Python/UPT/Dll/sqlite3.dll \
+	Vlv2TbltDevicePkg/GenBiosId \
+	Vlv2TbltDevicePkg/*.exe \
+	edk2-$(ver)/ArmPkg/Library/GccLto/liblto-*.a
 
 # add openssl
 tar -C CryptoPkg/Library/OpensslLib -xf %SOURCE2
@@ -103,15 +132,20 @@ sed -i \
 	 s|DEF(GCC48_X64_PREFIX)make|make|; \
 	 s|DEF(GCC48_IA32_PREFIX)make|make|; \
 	 s|DEF(GCC49_X64_PREFIX)make|make|; \
-	 s|DEF(GCC49_IA32_PREFIX)make|make|" \
+	 s|DEF(GCC49_IA32_PREFIX)make|make|; \
+	 s|DEF(GCC5_X64_PREFIX)make|make|; \
+	 s|DEF(GCC5_IA32_PREFIX)make|make|" \
 	 BaseTools/Conf/tools_def.template
 
 %build
-export GCC49_BIN=x86_64-linux-gnu-
+export %{TOOL_CHAIN_TAG}_BIN="x86_64-linux-gnu-"
+export X64_PETOOLS_PREFIX="x86_64-linux-gnu-"
+export IA32_PETOOLS_PREFIX="x86_64-linux-gnu-"
+
 source ./edksetup.sh
 
 # compiler
-CC_FLAGS="-t GCC49"
+CC_FLAGS="-t %TOOL_CHAIN_TAG"
 
 # common features
 #CC_FLAGS="${CC_FLAGS} -b DEBUG"
@@ -130,8 +164,11 @@ OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SMM_REQUIRE"
 OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D EXCLUDE_SHELL_FROM_FD"
 
 # arm firmware features
-ARM_FLAGS="-t GCC49 -b DEBUG --cmd-len=65536"
+#ARM_FLAGS="-t %TOOL_CHAIN_TAG -b DEBUG --cmd-len=65536"
+ARM_FLAGS="${CC_FLAGS}"
 ARM_FLAGS="${ARM_FLAGS} -D DEBUG_PRINT_ERROR_LEVEL=0x8040004F"
+
+unset MAKEFLAGS
 
 # prepare
 #cp /usr/share/seabios/bios-csm.bin OvmfPkg/Csm/Csm16/Csm16.bin
@@ -146,22 +183,48 @@ ARM_FLAGS="${ARM_FLAGS} -D DEBUG_PRINT_ERROR_LEVEL=0x8040004F"
 #source ./edksetup.sh
 
 # build ovmf
+export %{TOOL_CHAIN_TAG}_IA32_PREFIX="x86_64-linux-gnu-"
+export %{TOOL_CHAIN_TAG}_X64_PREFIX="x86_64-linux-gnu-"
+mkdir -p OVMF
 build ${OVMF_FLAGS} -a X64 -p OvmfPkg/OvmfPkgX64.dsc
 #build ${OVMF_FLAGS} -a IA32 -p OvmfPkg/OvmfPkgIa32.dsc
+cp Build/OvmfX64/*/FV/OVMF_*.fd OVMF
+rm -rf Build/OvmfX64
 
 # build ovmf with secure boot
 build ${OVMF_SB_FLAGS} -a IA32 -a X64 -p OvmfPkg/OvmfPkgIa32X64.dsc
+cp Build/Ovmf3264/*/FV/OVMF_CODE.fd OVMF/OVMF_CODE.secboot.fd
+
+unset %{TOOL_CHAIN_TAG}_IA32_PREFIX
+unset %{TOOL_CHAIN_TAG}_X64_PREFIX
+unset %{TOOL_CHAIN_TAG}_BIN
+
+PATH_TEMP="$PATH"
 
 %if_enabled aarch64
-# build arm/aarch64 firmware
-export GCC49_AARCH64_PREFIX="aarch64-linux-gnu-"
-mkdir -p aarch64
-build ${ARM_FLAGS} -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
-cp Build/ArmVirtQemu-AARCH64/*/FV/*.fd aarch64
-dd of="aarch64/QEMU_EFI-pflash.raw" if="/dev/zero" bs=1M count=64
-dd of="aarch64/QEMU_EFI-pflash.raw" if="aarch64/QEMU_EFI.fd" conv=notrunc
-dd of="aarch64/vars-template-pflash.raw" if="/dev/zero" bs=1M count=64
-unset GCC49_AARCH64_PREFIX
+# build aarch64 firmware
+export %{TOOL_CHAIN_TAG}_AARCH64_PREFIX="aarch64-linux-gnu-"
+export PATH="%_libexecdir/aarch64-linux-gnu/bin:$PATH_TEMP"
+mkdir -p AAVMF
+build $ARM_FLAGS -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
+cp Build/ArmVirtQemu-AARCH64/*/FV/*.fd AAVMF
+dd of="AAVMF/QEMU_EFI-pflash.raw" if="/dev/zero" bs=1M count=64
+dd of="AAVMF/QEMU_EFI-pflash.raw" if="AAVMF/QEMU_EFI.fd" conv=notrunc
+dd of="AAVMF/vars-template-pflash.raw" if="/dev/zero" bs=1M count=64
+unset %{TOOL_CHAIN_TAG}_AARCH64_PREFIX
+export PATH="$PATH_TEMP"
+%endif
+
+%if_enabled arm
+# build arm firmware
+export %{TOOL_CHAIN_TAG}_ARM_PREFIX="arm-linux-gnu-"
+mkdir -p AVMF
+build $ARM_FLAGS -a ARM -p ArmVirtPkg/ArmVirtQemu.dsc
+cp Build/ArmVirtQemu-ARM/DEBUG_*/FV/*.fd AVMF
+dd of="AVMF/QEMU_EFI-pflash.raw" if="/dev/zero" bs=1M count=64
+dd of="AVMF/QEMU_EFI-pflash.raw" if="AVMF/QEMU_EFI.fd" conv=notrunc
+dd of="AVMF/vars-template-pflash.raw" if="/dev/zero" bs=1M count=64
+unset %{TOOL_CHAIN_TAG}_ARM_PREFIX
 %endif
 
 %install
@@ -209,16 +272,16 @@ done
 popd
 
 #install OVMF
-mkdir -p %buildroot%_datadir/OVMF
-#install -D -m644 Build/OvmfIa32/*/FV/OVMF.fd %buildroot%_datadir/OVMF/ovmf-ia32/
-#install -D -m644 Build/OvmfIa32/*/FV/OVMF_CODE.fd %buildroot%_datadir/OVMF/ovmf-ia32/
-#install -D -m644 Build/OvmfIa32/*/FV/OVMF_VARS.fd %buildroot%_datadir/OVMF/ovmf-ia32/
-install -D -m644 Build/OvmfX64/*/FV/OVMF.fd %buildroot%_datadir/OVMF/
-install -D -m644 Build/OvmfX64/*/FV/OVMF_CODE.fd %buildroot%_datadir/OVMF/
-install -D -m644 Build/OvmfX64/*/FV/OVMF_VARS.fd %buildroot%_datadir/OVMF/
-install -D -m644 Build/Ovmf3264/*/FV/OVMF_CODE.fd %buildroot%_datadir/OVMF/OVMF_CODE.secboot.fd
+mkdir -p %buildroot%_datadir/%name
+cp -a OVMF %buildroot%_datadir/
+ln -r -s %buildroot%_datadir/OVMF %buildroot%_datadir/%name/ovmf
 %if_enabled aarch64
-install -D -m644 Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd %buildroot%_datadir/AAVMF/
+cp -a AAVMF %buildroot%_datadir/
+ln -r -s %buildroot%_datadir/AAVMF %buildroot%_datadir/%name/aarch64
+%endif
+%if_enabled arm
+cp -a AVMF %buildroot%_datadir/
+ln -r -s %buildroot%_datadir/AVMF %buildroot%_datadir/%name/arm
 %endif
 
 %files tools
@@ -263,11 +326,25 @@ install -D -m644 Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd %buildroot%_datadir/
 #%doc FatBinPkg/License.txt
 %doc OvmfPkg/License.txt
 %_datadir/OVMF
+%dir %_datadir/%name
+%_datadir/%name/ovmf
+
 %if_enabled aarch64
-%_datadir/AAVMF/
+%files aarch64
+%_datadir/AAVMF
+%_datadir/%name/aarch64
+%endif
+
+%if_enabled arm
+%files arm
+%_datadir/AVMF
+%_datadir/%name/arm
 %endif
 
 %changelog
+* Thu Jan 12 2017 Alexey Shabalin <shaba@altlinux.ru> 20161227-alt1
+- UDK2017 branch
+
 * Wed May 25 2016 Alexey Shabalin <shaba@altlinux.ru> 20160518-alt1
 - master snapshot 855743f7177459bea95798e59b6b18dab867710c
 

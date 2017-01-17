@@ -1,16 +1,18 @@
 %define formats rom
 # PCI IDs (vendor,product) of the ROMS we want for QEMU
 #
-# 1022:2000 -> pxe-pcnet.rom pcnet32
-# 10ec:8029 -> pxe-ne2k_pci.rom ne2k_pci
-# 8086:100e -> pxe-e1000.rom e1000
-# 10ec:8139 -> pxe-rtl8139.rom rtl8139
-# 1af4:1000 -> pxe-virtio.rom virtio-net
-# 8086:1209 -> pxe-eepro100.rom eepro100
+#    pcnet32: 0x1022 0x2000
+#   ne2k_pci: 0x10ec 0x8029
+#      e1000: 0x8086 0x100e
+#    rtl8139: 0x10ec 0x8139
+# virtio-net: 0x1af4 0x1000
+#   eepro100: 0x8086 0x1209
+#     e1000e: 0x8086 0x10d3
+#    vmxnet3: 0x15ad 0x07b0
 
-%define qemuroms 10222000 10ec8029 8086100e 10ec8139 1af41000 80861209
-%define date 20150821
-%define hash 4e03af8
+%define qemuroms 10222000 10ec8029 8086100e 10ec8139 1af41000 80861209 808610d3 15ad07b0
+%define date 20161208
+%define hash 26050fd
 
 Name: ipxe
 Version: %date
@@ -22,7 +24,7 @@ License: GPLv2 with additional permissions and BSD
 Group: Networking/Other
 Url: http://ipxe.org/
 #Vcs-Git: git://git.ipxe.org/ipxe.git
-BuildArch: noarch
+ExclusiveArch: %{ix86} x86_64
 Provides: gpxe
 Obsoletes: gpxe
 
@@ -31,7 +33,6 @@ Patch: %name-%version-%release.patch
 
 Requires: ipxe-bootimgs
 BuildRequires: mkisofs mtools syslinux binutils-devel edk2-tools
-BuildRequires: binutils-devel
 BuildRequires: binutils-x86_64-linux-gnu gcc-x86_64-linux-gnu
 BuildRequires: liblzma-devel
 
@@ -53,6 +54,7 @@ or you can chainload into iPXE to obtain the features of iPXE without the hassle
 %package bootimgs
 Summary: Network boot loader images in bootable USB, CD, floppy and GRUB formats
 Group: Development/Tools
+BuildArch: noarch
 Provides: gpxe-bootimgs
 Obsoletes: gpxe-bootimgs
 
@@ -67,6 +69,7 @@ UNDI formats.
 %package roms
 Summary: Network boot loader roms in .rom format
 Group: Development/Tools
+BuildArch: noarch
 Requires: %name-roms-qemu = %EVR
 Provides: gpxe-roms
 Obsoletes: gpxe-roms
@@ -81,6 +84,7 @@ This package contains the iPXE roms in .rom format.
 %package roms-qemu
 Summary: Network boot loader roms supported by QEMU, .rom format
 Group: Development/Tools
+BuildArch: noarch
 Provides: gpxe-roms-qemu
 Obsoletes: gpxe-roms-qemu
 
@@ -97,10 +101,12 @@ This package contains the iPXE ROMs for devices emulated by QEMU, in
 %patch -p1
 
 %build
-
-ISOLINUX_BIN=/usr/lib/syslinux/isolinux.bin
-
 cd src
+
+# ath9k drivers are too big for an Option ROM, and ipxe devs say it doesn't
+# make sense anyways
+# http://lists.ipxe.org/pipermail/ipxe-devel/2012-March/001290.html
+rm -rf drivers/net/ath/ath9k
 
 make_ipxe() {
     %make_build \
@@ -115,11 +121,8 @@ make_ipxe bin-i386-efi/ipxe.efi bin-x86_64-efi/ipxe.efi
 
 make_ipxe ISOLINUX_BIN=/usr/lib/syslinux/isolinux.bin \
 	bin/undionly.kpxe \
-	bin/ipxe.{dsk,iso,usb,lkrn}
-
-make_ipxe ISOLINUX_BIN=/usr/lib/syslinux/isolinux.bin \
-	allroms ||:
-
+	bin/ipxe.{dsk,iso,usb,lkrn} \
+	allroms
 
 # build roms with efi support for qemu
 mkdir bin-combined
@@ -183,9 +186,8 @@ pxe_link 10222000 pcnet
 pxe_link 10ec8139 rtl8139
 pxe_link 1af41000 virtio
 pxe_link 80861209 eepro100
-
-%files
-%doc README
+pxe_link 808610d3 e1000e
+pxe_link 15ad07b0 vmxnet3
 
 %files bootimgs
 %_datadir/%name/ipxe.iso
@@ -208,6 +210,10 @@ pxe_link 80861209 eepro100
 %_datadir/%name.efi/efi-*.rom
 
 %changelog
+* Wed Dec 28 2016 Alexey Shabalin <shaba@altlinux.ru> 1:20161208-alt1.git26050fd
+- update to latest upstream snapshot
+- build e1000e,vmxnet3 rom
+
 * Tue Jun 28 2016 Alexey Shabalin <shaba@altlinux.ru> 1:20150821-alt1.git4e03af8
 - rollback to 20150821
 
