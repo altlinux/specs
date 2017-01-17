@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname paginate
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.1
-Release: alt1.git20140824.1
+Version: 0.5.6
+Release: alt1
 Summary: Divides large result sets into pages for easier browsing
 License: MIT
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/paginate/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/Pylons/paginate.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/68/58/e670a947136fdcece8ac5376b3df1369d29e4f6659b0c9b358605b115e9e/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -43,7 +44,7 @@ It is especially useful when developing web interfaces and showing the
 users only a selection of information at a time.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -80,16 +81,19 @@ popd
 %endif
 
 %files
-%doc CHANGELOG README TODO
+%doc README.md CHANGELOG.txt PKG-INFO
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc CHANGELOG README TODO
+%doc README.md CHANGELOG.txt PKG-INFO
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.6-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.1-alt1.git20140824.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
