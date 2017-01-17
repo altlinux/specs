@@ -4,7 +4,7 @@
 %define libname lib%origname
 
 %define lp_branch 5.5
-%define lp_subver 2.0
+%define lp_subver 2.5
 
 Name: lp_solve
 Version: %lp_branch.%lp_subver
@@ -18,57 +18,41 @@ Url: http://sourceforge.net/projects/lpsolve
 Source: %{name}_%{version}_source.tar.gz
 Patch0: lp_solve-5.5.0.15-alt-shared.patch
 Patch1: lpsolve-5.5.0.11-fedora-cflags.patch
+Patch2: lpsolve-5.5.2.5-gcc6.patch
 Packager: Michael Shigorin <mike@altlinux.org>
-
-Summary(pl): Narz璠zie do rozwi您ywania problemu programowania liniowego
 
 %description
 Tool that solves linear programming problem using Simplex algorithm.
 
-%description -l pl
-Narz璠zie do rozwi您ywania problemu programowania liniowego przy
-
 %package -n %libname
 Summary: Library that solves linear programming problem
-Summary(pl): Biblioteka do rozwi您ywania problemu programowania liniowego
 Group: Sciences/Mathematics
 
 %description -n %libname
 Library that solves linear programming problem using Simplex algorithm.
 
-%description -n %libname -l pl
-Biblioteka do rozwi您ywania problemu programowania liniowego przy
-u篡ciu algorytmu Simplex.
-
 %package -n %libname-devel
 Summary: %libname header files
-Summary(pl): Pliki nag堯wkowe biblioteki %libname
 Group: Development/C
 Requires: %libname = %version-%release
 
 %description -n %libname-devel
 %libname header files.
 
-%description -n %libname-devel -l pl
-Pliki nag堯wkowe biblioteki %libname.
-
 %if_enabled static
 %package -n %libname-devel-static
 Summary: Static %libname library
-Summary(pl): Statyczna biblioteka liblpk
 Group: Development/C
 Requires: %libname-devel = %version-%release
 
 %description -n %libname-devel-static
 Static %libname library.
-
-%description -n %libname-devel-static -l pl
-Statyczna biblioteka %libname.
 %endif
 
 %prep
 %setup -n %{name}_%lp_branch
 %patch1 -p1
+%patch2 -p1
 
 %build
 cd lpsolve55
@@ -106,11 +90,10 @@ ln -s %name %buildroot%_includedir/%origname
 %_libdir/%name/lib*.la
 %endif
 
-# TODO:
-# - reintroduce dynamic libcolamd, see PLD shared patch,
-#   http://cvs.pld-linux.org/cgi-bin/cvsweb/SPECS/lp_solve.spec?rev=1.16
-
 %changelog
+* Tue Jan 17 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.5.2.5-alt1
+- Updated to 5.5.2.5.
+
 * Sat Sep 24 2011 Michael Shigorin <mike@altlinux.org> 5.5.2.0-alt1
 - 5.5.2.0
 - had to disable tests (no target as well as no makefile), alas
@@ -133,4 +116,3 @@ ln -s %name %buildroot%_includedir/%origname
 - Porting in PLD (lp_solve-3.2-1), see lp_solve.PLD.spec (original spec
   in docs)
 - Use aclocal, libtoolize and automake if automake version >= "1.9.6"
-
