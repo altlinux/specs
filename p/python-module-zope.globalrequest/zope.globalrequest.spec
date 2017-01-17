@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt3.1.1
+Release: alt1
 %define oname zope.globalrequest
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0
+Version: 1.3
 #Release: alt3.1
 Summary: Global way of retrieving the currently active request
 License: ZPL
@@ -13,7 +14,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.globalrequest/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/b4/20/672bf145ad76cad96cb237323f9bf25b4baebc61f283d2b34f3fb27a910a/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -65,7 +66,7 @@ request object in a zope-based web framework.
 This package contains tests for zope.globalrequest.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -100,7 +101,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc PKG-INFO README.rst CHANGES.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/*test*
@@ -110,7 +111,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc PKG-INFO README.rst CHANGES.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/*test*
@@ -122,6 +123,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0-alt3.1.1
 - (AUTO) subst_x86_64.
 
