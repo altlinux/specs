@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pytest-pythonpath
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3
-Release: alt1.git20140208.1
+Version: 0.7.1
+Release: alt1
 Summary: pytest plugin for adding to the PYTHONPATH from command line or configs
 License: MIT
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/pytest-pythonpath/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/bigsassy/pytest-pythonpath.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/ad/28/c0068d0bbdec562bacbe1de866138ae10241cc0b7eba7c4b8a2ac8d4474d/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -37,7 +38,7 @@ This is a py.test plugin for adding to the PYTHONPATH from the
 pytests.ini file before tests run.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -74,16 +75,19 @@ popd
 %endif
 
 %files
-%doc *.md
+%doc PKG-INFO
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md
+%doc PKG-INFO
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3-alt1.git20140208.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
