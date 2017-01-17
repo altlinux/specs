@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname http-checks
 
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.1.7
-Release: alt1.git20150106
+Version: 0.1.8
+Release: alt1
 Summary: Test a couple of hundred urls in seconds
 License: Free
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/http-checks/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/Hipo/http-checks.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/17/0b/b1fcad012963b5b275a7ca6b4675b4e76dfef3b6f6479b936c5418247cf3/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-modules-json
@@ -46,7 +47,7 @@ seconds.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -89,7 +90,7 @@ popd
 %endif
 
 %files
-%doc *.md *.yml
+%doc PKG-INFO
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -98,12 +99,15 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md *.yml
+%doc PKG-INFO
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.8-alt1
+- automated PyPI update
+
 * Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.7-alt1.git20150106
 - Version 0.1.7
 
