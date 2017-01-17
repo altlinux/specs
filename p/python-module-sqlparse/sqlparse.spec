@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname sqlparse
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.12
-Release: alt1.git20140920.1.1
+Version: 0.2.2
+Release: alt1
 Summary: Non-validating SQL parser
 License: BSD
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/sqlparse/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/andialbrecht/sqlparse.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/55/ce/3944e990b03f80f36f0050b407ad46cde192a210d473f0d705b554bddd1d/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools
@@ -61,7 +62,7 @@ parsing, splitting and formatting SQL statements.
 This package contains documentation for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -103,7 +104,7 @@ install -d %buildroot%_man1dir
 install -p -m644 docs/*.1 %buildroot%_man1dir/
 
 %files
-%doc AUTHORS CHANGES *.rst TODO
+%doc AUTHORS *.rst TODO CHANGELOG PKG-INFO docs
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -115,17 +116,20 @@ install -p -m644 docs/*.1 %buildroot%_man1dir/
 %python_sitelibdir/*/pickle
 
 %files docs
-%doc examples docs/build/html
+%doc docs/build/html
 %_man1dir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc AUTHORS CHANGES *.rst TODO
+%doc AUTHORS *.rst TODO CHANGELOG PKG-INFO docs
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.12-alt1.git20140920.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
