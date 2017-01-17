@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname cubicweb-addressbook
 Name: python-module-%oname
-Version: 1.8.0
+Version: 1.9.1
 Release: alt1
 Summary: Address book component for the CubicWeb framework
 License: LGPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/cubicweb-addressbook/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/c6/9f/1b6e0308854202cdb8100c1104491699f6c42b67d93a635596365ae9132d/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests cubicweb
@@ -21,7 +22,7 @@ The addressbook cube adds a phone number, postal address and instant
 messenger address (supports icq, msn and jabber) to the schema.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -33,11 +34,14 @@ messenger address (supports icq, msn and jabber) to the schema.
 python setup.py test
 
 %files
-%doc README
+%doc README PKG-INFO
 %python_sitelibdir/*
 %_datadir/cubicweb/*
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.1-alt1
+- automated PyPI update
+
 * Wed Mar 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1
 - Initial build for Sisyphus
 
