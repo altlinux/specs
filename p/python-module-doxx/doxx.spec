@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname doxx
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.0
-Release: alt1.git20150112.1.1
+Version: 0.9.4
+Release: alt1
 Summary: Simple, flexible text file templating engine
 License: MIT
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/doxx/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/chrissimpkins/doxx.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/79/67/8ced67baf183fd8c8beb03983aff4d17a757fc748cab69a907b41a0a66f8/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -45,7 +46,7 @@ Group: Development/Python3
 Simple, flexible text file templating engine.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -83,7 +84,7 @@ popd
 %endif
 
 %files
-%doc *.md docs/*
+%doc docs/* PKG-INFO
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -92,12 +93,15 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md docs/*
+%doc docs/* PKG-INFO
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.0-alt1.git20150112.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
