@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname cubicweb-file
 Name: python-module-%oname
-Version: 1.16.1
+Version: 1.18.0
 Release: alt1
 Summary: file component for the CubicWeb framework
 License: LGPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/cubicweb-file/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/2c/46/d4e37a7844574cab5b50d6dd23fa3aaa390507903f361d958ee4aa14af34/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests cubicweb
@@ -25,7 +26,7 @@ etc).
 They are stored in the database and fulltext-indexed when possible.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -37,11 +38,14 @@ They are stored in the database and fulltext-indexed when possible.
 python setup.py test
 
 %files
-%doc README
+%doc README PKG-INFO
 %python_sitelibdir/*
 %_datadir/cubicweb/*
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.18.0-alt1
+- automated PyPI update
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.16.1-alt1
 - Initial build for Sisyphus
 
