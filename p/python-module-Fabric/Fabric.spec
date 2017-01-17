@@ -1,16 +1,17 @@
+%define _unpackaged_files_terminate_build 1
 %define oname Fabric
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.11.1
+Version: 1.13.1
 Release: alt1
 Summary: A simple, Pythonic tool for remote execution and deployment
 License: BSD
 Group: Development/Python
 Url: https://github.com/fabric/fabric
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/de/cd/ad1ebe31ea8143b4f1458283971a7806f7a6062ca26b01c956c6c176597a/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-paramiko
@@ -73,7 +74,7 @@ for input, or aborting execution.
 This package contains documentationr for Fabric.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -111,7 +112,7 @@ mv %buildroot%_bindir/fab %buildroot%_bindir/fab.py3
 %python_install
 
 %files
-%doc AUTHORS README.rst
+%doc AUTHORS README.rst PKG-INFO
 %_bindir/*
 %exclude %_bindir/*.py3
 %python_sitelibdir/*
@@ -122,11 +123,15 @@ mv %buildroot%_bindir/fab %buildroot%_bindir/fab.py3
 
 %if_with python3
 %files -n python3-module-%oname
+%doc PKG-INFO LICENSE AUTHORS README.rst
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.13.1-alt1
+- automated PyPI update
+
 * Wed Apr 27 2016 Denis Medvedev <nbr@altlinux.org> 1.11.1-alt1
 - 1.11.1. Removed changelog.rst from www since new sphinx chokes on that
 file.
