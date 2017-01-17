@@ -2,7 +2,7 @@
 
 Name: lib%_name
 Version: 3.0.7
-Release: alt1
+Release: alt2
 
 Summary: A high-performance, full-featured text search engine written in C++
 Group: System/Libraries
@@ -53,6 +53,9 @@ search engine written in C++
 %_pkgconfigdir/%name-contrib.pc
 
 %changelog
+* Tue Jan 17 2017 Yuri N. Sedunov <aris@altlinux.org> 3.0.7-alt2
+- updated to 3.0.7-7-gcf9b9d9
+
 * Thu Aug 06 2015 Yuri N. Sedunov <aris@altlinux.org> 3.0.7-alt1
 - first build for Sisyphus
 
