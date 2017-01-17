@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname aioxmlrpc
 
 %def_without python2
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1
-Release: alt1.git20141112.1.1
+Version: 0.3
+Release: alt1
 Summary: XML-RPC for asyncio
 License: BSD
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/aioxmlrpc/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mardiros/aioxmlrpc.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/71/83/471ca57441a412193b7824ac55cebf8dd12421d9176e5d2ab60d128aed46/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 %if_with python2
@@ -78,7 +79,7 @@ coroutine is implemented.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -118,7 +119,7 @@ popd
 
 %if_with python2
 %files
-%doc *.rst examples
+%doc *.rst PKG-INFO
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
@@ -128,7 +129,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst examples
+%doc *.rst PKG-INFO
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -137,6 +138,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt1.git20141112.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
