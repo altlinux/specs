@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname requests-oauthlib
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.1
-Release: alt1.git20140606.1.1
+Version: 0.7.0
+Release: alt1
 Summary: OAuthlib authentication support for Requests
 License: BSD
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/requests-oauthlib
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/requests/requests-oauthlib.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/46/9b/c28061cc63298bc29ff7d668e18c5293bb522e946aaeb98e4c552d2c0f7b/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools
@@ -61,7 +62,7 @@ This project provides first-class OAuth library support for Requests.
 This package contains documentation for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -96,7 +97,7 @@ install -d %buildroot%python_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %files
-%doc *.rst
+%doc *.rst PKG-INFO docs
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 
@@ -108,11 +109,14 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst
+%doc *.rst PKG-INFO docs
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.1-alt1.git20140606.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
