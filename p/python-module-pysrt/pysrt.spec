@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pysrt
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.1
-Release: alt1.git20140527.1
+Version: 1.1.1
+Release: alt1
 Summary: SubRip (.srt) subtitle parser and writer
 License: GPLv3
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/pysrt/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/byroot/pysrt.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/f6/33/16ad65a8973cb8bcb494af09ee1b9ab5ffdd6ff300bce5d3ac7d3cb1f2cc/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -41,7 +42,7 @@ Group: Development/Python3
 pysrt is a Python library used to edit or create SubRip files.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -81,7 +82,7 @@ popd
 %endif
 
 %files
-%doc *.rst examples
+%doc *.rst PKG-INFO
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -90,12 +91,15 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst examples
+%doc *.rst PKG-INFO
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.1-alt1.git20140527.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
