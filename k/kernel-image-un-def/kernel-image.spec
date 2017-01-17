@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	4.8
-%define kernel_sublevel .17
+%define kernel_base_version	4.9
+%define kernel_sublevel .3
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -442,7 +442,7 @@ KbuildFiles="
 	scripts/gcc-x86_*-has-stack-protector.sh
 	scripts/module-common.lds
 	scripts/depmod.sh
-	scripts/gcc-plugins/cyc_complexity_plugin.so
+	scripts/gcc-plugins/*.so
 
 
 	.config
@@ -548,6 +548,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Thu Jan 12 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.3-alt1
+- v4.9.3
+
 * Tue Jan 10 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.17-alt1
 - v4.8.17
 
