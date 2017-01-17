@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 %define oname cmd2
 
 %def_with python3
 
-Version: 0.6.8
-Release: alt1.hg20141208.1.1
+Version: 0.6.9
+Release: alt1
 %setup_python_module %oname
 
 Name: python-module-%oname
 Summary: A toolkit for simple interactive command-line applications
 # hg clone https://bitbucket.org/catherinedevlin/cmd2
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/97/80/d5c6efd4a1467865fd25c203fbe3a107f241b09f30cc7f8d9a3e3bef8abd/%{oname}-%{version}.tar.gz
 License: MIT
 Group: Development/Python
 Url: https://bitbucket.org/catherinedevlin/cmd2
@@ -69,7 +70,7 @@ module.
 This package contains pickles for cmd2.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 rm -f docs/pycon2010/ui/pycon/pretty.css~
 %if_with python3
 rm -rf ../python3
@@ -107,7 +108,7 @@ for i in $(find %buildroot -name '*~'); do
 done
 
 %files
-%doc README.txt
+%doc LICENSE CHANGES.rst PKG-INFO README.rst INSTALL.txt docs example
 %python_sitelibdir/*
 %exclude %python_sitelibdir/site.py*
 %exclude %python_sitelibdir/%oname/pickle
@@ -121,11 +122,14 @@ done
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README.txt
+%doc LICENSE CHANGES.rst PKG-INFO README.rst INSTALL.txt docs example
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.9-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.8-alt1.hg20141208.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
