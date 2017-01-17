@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name django-admin-tools
 
 %def_with python3
 
 Name: python-module-%module_name
-Version: 0.5.2
-Release: alt1.1.1
+Version: 0.8.0
+Release: alt1
 
 Summary: A collection of tools for the django administration interface
 
@@ -12,7 +13,7 @@ License: MIT License
 Group: Development/Python
 Url: http://www.bitbucket.org/izi/django-admin-tools
 
-Source: %module_name-%version.tar.gz
+Source0: https://pypi.python.org/packages/af/1c/2f81a943c7a32c813b0bfc2a0029ca36a0fdc2c3ed60f8fd7288aa859d8e/%{module_name}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -50,7 +51,7 @@ django administration interface, it includes:
  * tools to make admin theming easier.
 
 %prep
-%setup -n %module_name-%version
+%setup -q -n %{module_name}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -81,18 +82,21 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C docs html
 
 %files
-%doc AUTHORS CHANGELOG LICENSE README docs/_build/html
+%doc AUTHORS CHANGELOG LICENSE docs/_build/html PKG-INFO README.rst docs
 %python_sitelibdir/django_admin_tools-*
 %python_sitelibdir/admin_tools
 
 %if_with python3
 %files -n python3-module-%module_name
-%doc AUTHORS CHANGELOG LICENSE README docs/_build/html
+%doc AUTHORS CHANGELOG LICENSE docs/_build/html PKG-INFO README.rst docs
 %python3_sitelibdir/django_admin_tools-*
 %python3_sitelibdir/admin_tools
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.2-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
