@@ -1,11 +1,11 @@
 %define policy_name altlinux
-%define date 20161201
+%define date 20170116
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
-Version: 0.0.27
+Version: 0.0.29
 Release: alt1
 License: %distributable
 Group: System/Base
@@ -262,6 +262,15 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/psql.pp
 
 %changelog
+* Tue Jan 17 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.29-alt1
+- systemd.te.in: systemd_t now mlstrustedsubject
+
+* Mon Jan 16 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.28-alt2
+- merge with previous policy.git
+
+* Wed Jan 11 2017 Sergey V Turchin <zerg@altlinux.org> 0.0.28-alt1
+- create alternate HOME for current level
+
 * Thu Dec 01 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.27-alt1
 - fixes from rider@
 
