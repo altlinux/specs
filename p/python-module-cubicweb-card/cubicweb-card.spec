@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname cubicweb-card
 Name: python-module-%oname
-Version: 0.5.4
+Version: 0.5.8
 Release: alt1
 Summary: card/wiki component for the CubicWeb framework
 License: LGPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/cubicweb-card/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/d7/b5/a5ba81caa1abf0ece3f6a36a4005f0b2e9a46b1bea807ee692ce2bf03200/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests cubicweb
@@ -25,7 +26,7 @@ Card entities have a title, an abstract and some textual content as
 text, rest or html.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -37,11 +38,14 @@ text, rest or html.
 python setup.py test
 
 %files
-%doc README
+%doc README PKG-INFO
 %python_sitelibdir/*
 %_datadir/cubicweb/*
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.8-alt1
+- automated PyPI update
+
 * Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.4-alt1
 - Initial build for Sisyphus
 
