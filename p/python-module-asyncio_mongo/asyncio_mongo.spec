@@ -1,11 +1,13 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: unzip
 %define oname asyncio_mongo
 
 %def_without python2
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.3
-Release: alt1.git20140401.1.1
+Version: 0.2.4
+Release: alt1
 Summary: Asynchronous Python 3.3+ driver for MongoDB
 License: ASLv2.0
 Group: Development/Python
@@ -13,7 +15,7 @@ Url: https://pypi.python.org/pypi/asyncio_mongo/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://bitbucket.org/mrdon/asyncio-mongo.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/55/d5/b49346cb293f03d26dfe4074e11d0b6cd59cf346b6ed6d4fe5dd7ee55be1/%{oname}-%{version}.zip
 
 %if_with python2
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -47,7 +49,7 @@ An asynchronous Python driver for the Mongo database, based on Python's
 asyncio. This project is based on TxMongo.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -87,17 +89,20 @@ popd
 
 %if_with python2
 %files
-%doc *.txt *.rst examples
+%doc PKG-INFO
 %python_sitelibdir/*
 %endif
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt *.rst examples
+%doc PKG-INFO
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.4-alt1
+- automated PyPI update
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.3-alt1.git20140401.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
