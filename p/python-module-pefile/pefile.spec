@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define svnrev 141
 
 %define oname pefile
 Name: python-module-%oname
-Version: 1.2.10
-Release: alt1.svn20140310
+Version: 2016.3.28
+Release: alt1
 Summary: Portable Executable reader module
 License: MIT
 Group: Development/Python
@@ -11,7 +12,7 @@ Url: http://code.google.com/p/pefile/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # http://pefile.googlecode.com/svn/trunk
-Source: %oname-%version.tar.gz
+Source0: https://pypi.python.org/packages/92/c0/8589ce9734ffdba258bd3e5acd4afb2e3586c121fe73402f686288b684b0/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 BuildArch: noarch
@@ -22,7 +23,7 @@ Executable (aka PE) files. Most of the information in the PE Header is
 accessible, as well as all the sections, section's information and data.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 sed -i 's|\$LastChangedRevision\$|%svnrev|' %oname.py
 
 %build
@@ -32,10 +33,13 @@ sed -i 's|\$LastChangedRevision\$|%svnrev|' %oname.py
 %python_install
 
 %files
-%doc COPYING CHANGES* README
+%doc README PKG-INFO
 %python_sitelibdir/*
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 2016.3.28-alt1
+- automated PyPI update
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.10-alt1.svn20140310
 - New snapshot
 
