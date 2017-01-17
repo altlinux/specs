@@ -1,5 +1,5 @@
 %set_verify_elf_method textrel=relaxed
-%define rev	5534
+%define rev	5541
 
 Name:           jitsi
 Version:        2.9.%rev
@@ -86,6 +86,9 @@ done
 %_desktopdir/jitsi.desktop
 
 %changelog
+* Tue Jan 17 2017 Andrey Cherepanov <cas@altlinux.org> 2.9.5541-alt1
+- New version
+
 * Wed Nov 02 2016 Andrey Cherepanov <cas@altlinux.org> 2.9.5534-alt1
 - New version
 
