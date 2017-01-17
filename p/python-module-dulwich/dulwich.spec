@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define oname dulwich
 Name: python-module-%oname
-Version: 0.10.1
-Release: alt1.a
+Version: 0.16.3
+Release: alt1
 Summary: Python Git Library
 License: GPLv2+
 Group: Development/Python
 Url: http://pypi.python.org/pypi/dulwich/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/9e/d7/8fb5b952ad14f27f7ab1bbe17db7860fe99c3c3e5d08de0bea3a161389a0/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-distribute
 
@@ -38,7 +39,7 @@ extensions are also available for better performance.
 This package contains tests for dulwich.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build
@@ -47,7 +48,7 @@ This package contains tests for dulwich.
 %python_install
 
 %files
-%doc AUTHORS COPYING HACKING NEWS README.md docs/*.txt docs/tutorial
+%doc AUTHORS COPYING NEWS README.md docs/*.txt docs/tutorial PKG-INFO examples
 %_bindir/*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
@@ -58,6 +59,9 @@ This package contains tests for dulwich.
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.16.3-alt1
+- automated PyPI update
+
 * Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.1-alt1.a
 - Version 0.10.1a
 
