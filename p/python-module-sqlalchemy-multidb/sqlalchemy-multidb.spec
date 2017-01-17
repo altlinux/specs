@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname sqlalchemy-multidb
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.2
-Release: alt1.git20150711.1.1
+Version: 1.0.0
+Release: alt1
 Summary: Provides methods to connect to multiple databases easily
 License: ASLv2.0
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/sqlalchemy-multidb/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/viniciuschiele/sqlalchemy-multidb.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/71/38/d32d8194d47d1317eeb7cc9b358db7fc9fc1d707d62e7f910fe7226c7f27/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -47,7 +48,7 @@ and access multiple databases easily.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -80,16 +81,19 @@ popd
 %endif
 
 %files
-%doc *.rst examples
+%doc *.rst PKG-INFO
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst examples
+%doc *.rst PKG-INFO
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.2-alt1.git20150711.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
