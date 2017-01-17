@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname ctypesgen
 
 %def_without python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.0.r151
-Release: alt1.git20130821
+Version: 0.r125
+Release: alt1
 Summary: Python wrapper generator for ctypes
 License: BSD
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/ctypesgen/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/davidjamesca/ctypesgen.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/b8/9d/13bcf53a190d2a5b3512d3c116920b4a2fadf007600722114b1a17602524/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -47,7 +48,7 @@ Lua, using the alien module (which binds libffi to Lua).
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -86,7 +87,7 @@ popd
 %endif
 
 %files
-%doc README *.txt demo
+%doc PKG-INFO
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -95,12 +96,15 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README *.txt demo
+%doc PKG-INFO
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.r125-alt1
+- automated PyPI update
+
 * Mon Mar 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.r151-alt1.git20130821
 - Initial build for Sisyphus
 
