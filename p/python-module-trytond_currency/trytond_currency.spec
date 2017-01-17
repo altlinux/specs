@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname trytond_currency
 Name: python-module-%oname
-Version: 3.4.0
+Version: 4.2.0
 Release: alt1
 Summary: Tryton module with currencies
 License: GPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: http://crd.lbl.gov/~dhbailey/mpdist/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/14/b2/b636a2644d3f3401e6ec8e1618e2f669f3239d55359dacea7802df8ffbd1/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests python-module-trytond
@@ -27,7 +28,7 @@ The currency module of the Tryton application platform.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -36,7 +37,7 @@ This package contains tests for %oname.
 %python_install
 
 %files
-%doc CHANGELOG README TODO doc/*
+%doc CHANGELOG README doc/* COPYRIGHT PKG-INFO
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/*/*/tests
 
@@ -44,6 +45,9 @@ This package contains tests for %oname.
 %python_sitelibdir/*/*/*/tests
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1
+- automated PyPI update
+
 * Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0-alt1
 - Initial build for Sisyphus
 
