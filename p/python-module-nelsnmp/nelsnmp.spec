@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname nelsnmp
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.4
-Release: alt1.git20150315.1
+Version: 0.2.5
+Release: alt1
 Summary: A wrapper module for pysnmp
 License: ASLv2.0
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/nelsnmp/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/networklore/nelsnmp.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/f9/3a/1e72673d73d7f89cd6948c47e1234a5fcfb7be5134ddd2fa7460a2212a66/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -42,7 +43,7 @@ A wrapper module for pysnmp.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -76,16 +77,19 @@ popd
 %endif
 
 %files
-%doc CREDITS *.md
+%doc README.rst HISTORY.rst PKG-INFO
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc CREDITS *.md
+%doc README.rst HISTORY.rst PKG-INFO
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.5-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.4-alt1.git20150315.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
