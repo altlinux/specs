@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.2.1
+Release: alt1
 %define oname zc.buildout
 
 %def_with python3
@@ -7,11 +8,11 @@ Release: alt1.2.1
 Summary: The Buildout project provides support for creating Python applications.
 Name: python-module-%oname
 URL: https://pypi.python.org/pypi/zc.buildout/
-Version: 2.3.1
+Version: 2.5.3
 #define subver b20
 %ifdef subver
 #Release: alt0.%subver
-Source0: zc.buildout-%version%subver.tar
+Source0: https://pypi.python.org/packages/e4/7b/63863f09bec5f5d7b9474209a6d4d3fc1e0bca02ecfb4c17f0cdd7b554b6/%{oname}-%{version}.tar.gz
 %else
 #Release: alt1.2
 Source0: zc.buildout-%version.tar
@@ -83,7 +84,7 @@ settings.
 This package contains tests for Buildout
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -124,7 +125,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt doc/*
+%doc *.txt doc/* CHANGES.rst PKG-INFO README.rst
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -138,7 +139,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt doc/*
+%doc *.txt doc/* CHANGES.rst PKG-INFO README.rst
 %_bindir/*.py3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
@@ -151,6 +152,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.3.1-alt1.2.1
 - (AUTO) subst_x86_64.
 
