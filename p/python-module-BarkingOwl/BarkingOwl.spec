@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname BarkingOwl
 
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.6.5
-Release: alt1.git20150209
+Version: 0.8.1
+Release: alt1
 Summary: Scalable web scraper framework for finding documents on websites
 License: GPLv3
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/BarkingOwl/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/thequbit/BarkingOwl.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/a2/6d/f3d53fbbc1f616835345dfce105f2a33e556dae0b6b6cf6e5ed8ebeca17b/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -75,7 +76,7 @@ This package contains tests for %oname.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -109,7 +110,7 @@ popd
 %endif
 
 %files
-%doc *.md plugins
+%doc PKG-INFO
 %python_sitelibdir/*
 #exclude %python_sitelibdir/*/*/tests.*
 
@@ -118,7 +119,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md plugins
+%doc PKG-INFO
 %python3_sitelibdir/*
 #exclude %python3_sitelibdir/*/*/tests.*
 #exclude %python3_sitelibdir/*/*/*/tests.*
@@ -129,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1
+- automated PyPI update
+
 * Sun Mar 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.5-alt1.git20150209
 - Version 0.6.5
 
