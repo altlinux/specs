@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pytest-spec
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.2.24
-Release: alt2.git20150202.1
+Version: 1.1.0
+Release: alt1
 Summary: pytest plugin to display test execution output like a SPECIFICATION
 License: GPLv2+
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/pytest-spec/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/pchomik/pytest-spec.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/96/d1/68ced04b24b93203db875e0123c288b5993732fda2be5f3859907e4a40a4/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 BuildRequires: python-module-pbr python-module-pytest python-module-unittest2
 
@@ -58,7 +59,7 @@ Available features:
 * Method under test may be highlighted (method) like in example.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -95,16 +96,19 @@ popd
 %endif
 
 %files
-%doc *.txt *.rst
+%doc *.rst PKG-INFO
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt *.rst
+%doc *.rst PKG-INFO
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.24-alt2.git20150202.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
