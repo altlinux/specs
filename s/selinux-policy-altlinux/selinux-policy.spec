@@ -1,11 +1,11 @@
 %define policy_name altlinux
-%define date 20170116
+%define date 20170117
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
-Version: 0.0.29
+Version: 0.0.30
 Release: alt1
 License: %distributable
 Group: System/Base
@@ -262,6 +262,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/psql.pp
 
 %changelog
+* Tue Jan 17 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.30-alt1
+- devpts is not secure now
+
 * Tue Jan 17 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.29-alt1
 - systemd.te.in: systemd_t now mlstrustedsubject
 
