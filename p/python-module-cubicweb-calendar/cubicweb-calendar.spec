@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname cubicweb-calendar
 Name: python-module-%oname
-Version: 0.7.0
+Version: 0.9.0
 Release: alt1
 Summary: calendar component for the CubicWeb framework
 License: LGPL
@@ -9,7 +10,7 @@ Url: https://pypi.python.org/pypi/cubicweb-calendar/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # hg clone http://hg.logilab.org/review/cubes/calendar
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/d6/9d/34dff27c1d4f634a486174aabe246f5b159eaba73a991ffd33d9d424cb15/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests cubicweb
@@ -24,7 +25,7 @@ non-working, vacation, sick, etc) and time periods (from simple "Aug
 31st 2009 to Sep 4th 2009" to repetitive ones like "July 14th").
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -36,11 +37,14 @@ non-working, vacation, sick, etc) and time periods (from simple "Aug
 python setup.py test
 
 %files
-%doc README
+%doc README PKG-INFO
 %python_sitelibdir/*
 %_datadir/cubicweb/*
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1
+- automated PyPI update
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt1
 - Initial build for Sisyphus
 
