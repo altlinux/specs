@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define real_name rope
 
 %def_without python3
 
 Summary: python refactoring library
 Name: python-module-%real_name
-Version: 0.10.2
-Release: alt1.git20150111
+Version: 0.10.3
+Release: alt1
 License: GPLv2
 Group: Development/Python
 Url: http://rope.sf.net
 BuildArch: noarch
 
-Source: %real_name-%version.tar
+Source0: https://pypi.python.org/packages/e1/5e/fe00383d52d0a1e0be42e6f1ee98d53902bfffb6b2835616c0fceca45597/rope-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
@@ -56,7 +57,7 @@ Requires: %name = %version-%release
 This package contains tests for rope.
 
 %prep
-%setup -n %real_name-%version
+%setup -q -n rope-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -93,7 +94,7 @@ popd
 %endif
 
 %files
-%doc CONTRIBUTORS COPYING README* docs
+%doc COPYING README* docs PKG-INFO
 %python_sitelibdir/*
 %exclude %python_sitelibdir/ropetest
 
@@ -102,7 +103,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%real_name
-%doc CONTRIBUTORS COPYING README* docs
+%doc COPYING README* docs PKG-INFO
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/ropetest
 
@@ -111,6 +112,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.10.3-alt1
+- automated PyPI update
+
 * Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.2-alt1.git20150111
 - New snapshot
 
