@@ -1,11 +1,13 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: unzip
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.1.1
+Release: alt1
 %define oname z3c.saconfig
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.13
+Version: 0.14
 #Release: alt2.1
 Summary: Minimal SQLAlchemy ORM session configuration for Zope
 License: ZPLv2.1
@@ -13,7 +15,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/z3c.saconfig/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/21/32/3438268db1f44fbedccc68d8e5d893f5db157b1b78605494ed2ff5713838/%{oname}-%{version}.zip
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -84,7 +86,7 @@ transaction integration between Zope and SQLAlchemy.
 This package contains tests for z3c.saconfig.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -120,7 +122,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc CREDITS.rst INSTALL.rst PKG-INFO README.rst COPYRIGHT.rst CHANGES.rst LICENSE.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests.*
@@ -130,7 +132,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc CREDITS.rst INSTALL.rst PKG-INFO README.rst COPYRIGHT.rst CHANGES.rst LICENSE.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
@@ -142,6 +144,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.13-alt2.1.1
 - (AUTO) subst_x86_64.
 
