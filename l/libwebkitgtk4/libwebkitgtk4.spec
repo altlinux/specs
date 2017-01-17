@@ -15,7 +15,7 @@
 %def_enable wayland
 
 Name: libwebkitgtk4
-Version: 2.14.2
+Version: 2.14.3
 Release: alt1
 
 Summary: Web browser engine
@@ -25,8 +25,6 @@ License: %bsd %lgpl2plus
 Url: http://www.webkitgtk.org/
 
 Source: %url/releases/%_name-%version.tar.xz
-# fc
-Patch12: webkitgtk-2.8.4-youtube.patch
 
 Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav
 Requires: hyphen-en hyphen-ru
@@ -194,7 +192,6 @@ GObject introspection devel data for the JavaScriptCore library
 
 %prep
 %setup -n %_name-%version
-#%%patch12 -p1
 # Remove bundled libraries
 rm -rf Source/ThirdParty/leveldb/
 rm -rf Source/ThirdParty/gtest/
@@ -292,6 +289,11 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Tue Jan 17 2017 Yuri N. Sedunov <aris@altlinux.org> 2.14.3-alt1
+- 2.14.3 (fixed CVE-2016-7656, CVE-2016-7635, CVE-2016-7654, CVE-2016-7639,
+  CVE-2016-7645, CVE-2016-7652, CVE-2016-7641, CVE-2016-7632, CVE-2016-7599,
+  CVE-2016-7592, CVE-2016-7589, CVE-2016-7623, CVE-2016-7586)
+
 * Thu Nov 03 2016 Yuri N. Sedunov <aris@altlinux.org> 2.14.2-alt1
 - 2.14.2
 - MiniBrowser moved to separate subpackage
