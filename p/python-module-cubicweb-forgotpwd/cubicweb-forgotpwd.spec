@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname cubicweb-forgotpwd
 Name: python-module-%oname
-Version: 0.6.2
+Version: 0.7.1
 Release: alt1
 Summary: Password recovery component for the CubicWeb framework
 License: LGPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/cubicweb-forgotpwd/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/33/4d/20de2827f8b094dfd7872ec5758753cbb6011037534852f3df473200fbf3/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests cubicweb
@@ -24,7 +25,7 @@ The forgotpwd cube provides an easy way to generate a new password for
 It is non-obstrusive and easy to plug.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -36,11 +37,14 @@ It is non-obstrusive and easy to plug.
 python setup.py test
 
 %files
-%doc README
+%doc README PKG-INFO
 %python_sitelibdir/*
 %_datadir/cubicweb/*
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1
+- automated PyPI update
+
 * Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1
 - Version 0.6.2
 
