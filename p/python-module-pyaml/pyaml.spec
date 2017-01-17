@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pyaml
 Name: python-module-%oname
-Version: 15.02.1
-Release: alt1.git20150216
+Version: 16.12.2
+Release: alt1
 Summary: pretty-yaml: Pretty YAML serialization
 License: WTFPL
 Group: Development/Python
@@ -9,7 +10,7 @@ Url: https://pypi.python.org/pypi/pyaml/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mk-fg/pretty-yaml.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/aa/bc/68c34bd6c5a7bd6d2ecf94ba7cd2337c9f9be58d670e2edef16fa1e0d6a2/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests python-module-yaml
@@ -31,7 +32,7 @@ PyYAML-based module to produce pretty and readable YAML-serialized data.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -45,7 +46,7 @@ export PYTHONPATH=$PWD
 python pyaml/tests/dump.py
 
 %files
-%doc COPYING *.md
+%doc COPYING PKG-INFO README README.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
@@ -53,6 +54,9 @@ python pyaml/tests/dump.py
 %python_sitelibdir/*/tests
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 16.12.2-alt1
+- automated PyPI update
+
 * Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 15.02.1-alt1.git20150216
 - Version 15.02.1
 
