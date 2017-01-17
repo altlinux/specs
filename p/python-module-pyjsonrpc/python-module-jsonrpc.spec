@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name pyjsonrpc
 
 %def_without python3
 
 Name: python-module-%module_name
-Version: 0.7.2
-Release: alt1.git20150320
+Version: 0.10.0
+Release: alt1
 
 Summary: json-rpc package which implements JSON-RPC over HTTP
 
@@ -13,7 +14,7 @@ Group: Development/Python
 Url: http://json-rpc.org/wiki/python-json-rpc
 
 # https://github.com/gerold-penz/python-jsonrpc.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/94/e7/24a062667e4e585529edacdac5fd05ae28d6a67491e737cca7fdfb7a6d17/python-jsonrpc-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -41,7 +42,7 @@ Simple Reference JSON-RPC Implementation for Django
 %endif
 
 %prep
-%setup
+%setup -q -n python-jsonrpc-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -75,16 +76,19 @@ popd
 %endif
 
 %files
-%doc *.rst examples development
+%doc *.rst examples PKG-INFO version.txt
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%module_name
-%doc *.rst examples development
+%doc *.rst examples PKG-INFO version.txt
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt1
+- automated PyPI update
+
 * Tue Mar 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt1.git20150320
 - Version 0.7.2
 - Renamed jsonrpc -> pyjsonrpc
