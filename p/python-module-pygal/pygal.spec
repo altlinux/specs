@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pygal
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.6.1
-Release: alt2.git20141121.1
+Version: 2.3.1
+Release: alt1
 Summary: A python svg graph plotting library
 License: LGPLv3
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/pygal/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/Kozea/pygal.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/02/bb/d1c9bd4d21b62cffda6ddeb768b8ce02d1741b2bb1f9ddcc9ece2958586f/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires: python-module-cairosvg python-module-html5lib python-module-pyquery python-module-setuptools-tests
@@ -70,7 +71,7 @@ documentation is on http://pygal.org
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -111,7 +112,7 @@ popd
 %endif
 
 %files
-%doc CHANGELOG README* perf.py
+%doc README* PKG-INFO
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -120,22 +121,23 @@ popd
 %exclude %python_sitelibdir/*/test
 
 %files tests
-%doc demo
 %python_sitelibdir/*/test
 
 %if_with python3
 %files -n python3-module-%oname
-%doc CHANGELOG README* perf.py
+%doc README* PKG-INFO
 %_bindir/*.py3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test
 
 %files -n python3-module-%oname-tests
-%doc demo
 %python3_sitelibdir/*/test
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.6.1-alt2.git20141121.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
