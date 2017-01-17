@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define oname cubicweb-dataio
 Name: python-module-%oname
-Version: 0.5.0
+Version: 0.7.0
 Release: alt1
 Summary: Cube for data input/output, import and export
 License: LGPL
@@ -8,7 +9,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/cubicweb-dataio/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/c7/4a/31f5b219df3c07dc89f64c240e8d5dd12a4cb1e367041ba5805fecf6135e/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests cubicweb
@@ -21,7 +22,7 @@ Requires: cubicweb
 Cube for data input/output, import and export.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python_build_debug
@@ -33,11 +34,14 @@ Cube for data input/output, import and export.
 python setup.py test
 
 %files
-%doc README
+%doc README PKG-INFO
 %python_sitelibdir/*
 %_datadir/cubicweb/*
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1
+- automated PyPI update
+
 * Fri Jan 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1
 - Initial build for Sisyphus
 
