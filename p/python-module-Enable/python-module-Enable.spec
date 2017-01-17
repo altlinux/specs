@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define oname Enable
 Name: python-module-%oname
-Version: 4.6.0
-Release: alt3.git20151207
+Version: 4.6.1
+Release: alt1
 Summary: Drawing and interaction packages
 
 Group: Development/Python
 License: BSD and GPLv2
 URL: http://code.enthought.com/projects/enable/
 # https://github.com/enthought/enable.git
-Source: %oname-%version.tar.gz
+Source0: https://pypi.python.org/packages/08/3d/d57626e77a6fdc16feab3b5df615507193ad5c1ec163d960f1f54e729e70/enable-%{version}.tar.bz2
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildRequires: python-devel, python-module-setuptools
@@ -78,7 +79,7 @@ systems, a variety of raster image formats, PDF, and Postscript.
 This package contains development documentation for Enable project.
 
 %prep
-%setup
+%setup -q -n enable-%{version}
 
 %prepare_sphinx .
 
@@ -102,7 +103,7 @@ install -d %buildroot%python_sitelibdir/enable
 cp -fR pickle %buildroot%python_sitelibdir/enable/
 
 %files
-%doc *.txt *.rst
+%doc *.rst PKG-INFO docs examples
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/test*
 %exclude %python_sitelibdir/*/example*
@@ -121,9 +122,12 @@ cp -fR pickle %buildroot%python_sitelibdir/enable/
 %python_sitelibdir/*/*/*/tests
 
 %files doc
-%doc docs/kiva examples html
+%doc docs/kiva examples
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 4.6.1-alt1
+- automated PyPI update
+
 * Tue Feb 09 2016 Sergey Alembekov <rt@altlinux.ru> 4.6.0-alt3.git20151207
 - skip hypothesys requirement for -tests subpackage
 
