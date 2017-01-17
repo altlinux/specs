@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname tornadopush
 
 %def_with python3
 #def_disable check
 
 Name: python-module-%oname
-Version: 0.7.2
-Release: alt1.git20150808.1.1
+Version: 0.8.1
+Release: alt1
 Summary: Push and presence server built with Tornado and Redis
 License: MIT
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/tornadopush/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/frascoweb/tornadopush.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/86/49/4309fb756777f4bcabd2797abcb5335a3ba80850f232be3c99e79463cdee/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -53,7 +54,7 @@ Group: Development/Python3
 Push and presence server built with Tornado and Redis.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -92,7 +93,7 @@ popd
 %endif
 
 %files
-%doc *.md
+%doc PKG-INFO
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -101,12 +102,15 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md
+%doc PKG-INFO
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.2-alt1.git20150808.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
