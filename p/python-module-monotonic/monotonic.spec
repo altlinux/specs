@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define oname monotonic
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0
+Version: 1.2
 Release: alt1
 Summary: An implementation of time.monotonic() for Python 2 & Python 3
 License: ASLv2.0
@@ -11,7 +12,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/monotonic/
 
 # https://github.com/atdt/monotonic.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/08/35/9e06c881c41962d7367e9466724beda2b1101439b149b7ff708d708890de/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -36,7 +37,7 @@ This module provides a monotonic() function which returns the value (in
 fractional seconds) of a clock which never goes backwards.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -61,16 +62,19 @@ popd
 %endif
 
 %files
-%doc *.md
+%doc LICENSE PKG-INFO
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md
+%doc LICENSE PKG-INFO
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1
+- automated PyPI update
+
 * Fri Apr 08 2016 Alexey Shabalin <shaba@altlinux.ru> 1.0-alt1
 - 1.0
 
