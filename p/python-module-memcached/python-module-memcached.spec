@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define modulename python-memcached
 
 %def_with python3
 
 Name: python-module-memcached
-Version: 1.57
+Version: 1.58
 Release: alt1
 
 Summary: A Python module for memcached daemon
@@ -13,7 +14,7 @@ Url: https://github.com/linsomniac/python-memcached
 
 %setup_python_module %modulename
 
-Source: %modulename-%version.tar.gz
+Source0: https://pypi.python.org/packages/f7/62/14b2448cfb04427366f24104c9da97cf8ea380d7258a3233f066a951a8d8/python-memcached-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -44,7 +45,7 @@ Group: Development/Python3
 distributed memory object caching system.
 
 %prep
-%setup
+%setup -q -n python-memcached-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -69,16 +70,21 @@ popd
 %endif
 
 %files
+%doc ChangeLog PKG-INFO test-requirements.txt README.md
 %python_sitelibdir/*
-%doc README* PKG-INFO ChangeLog *.html
+%doc README* PKG-INFO ChangeLog
 
 %if_with python3
 %files -n python3-module-memcached
+%doc ChangeLog PKG-INFO test-requirements.txt README.md
 %python3_sitelibdir/*
-%doc README* PKG-INFO ChangeLog *.html
+%doc README* PKG-INFO ChangeLog
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.58-alt1
+- automated PyPI update
+
 * Tue Apr 12 2016 Alexey Shabalin <shaba@altlinux.ru> 1.57-alt1
 - 1.57
 
