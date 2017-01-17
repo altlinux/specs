@@ -1,12 +1,13 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.dev0.git20150613.1.1.1
+Release: alt1
 %define oname zope.traversing
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 4.0.1
+Version: 4.1.0
 #Release: alt2.dev0.git20150613.1.1
 Summary: Resolving paths in the object hierarchy
 License: ZPLv2.1
@@ -15,7 +16,7 @@ Url: http://pypi.python.org/pypi/zope.traversing/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/zopefoundation/zope.traversing.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/5a/59/61da8ee69088c06fec5c2efc6163d56860856a7afb3c91903eb58aadc610/%{oname}-%{version}.tar.gz
 
 #BuildPreReq: python-devel python-module-setuptools-tests
 #BuildPreReq: python-module-%oname-tests
@@ -115,7 +116,7 @@ computing URLs via the @@absolute_url view.
 This package contains tests for zope.traversing.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -160,7 +161,7 @@ nosetests3 -vv %oname
 %endif
 
 %files
-%doc *.txt
+%doc *.txt CHANGES.rst PKG-INFO README.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/test*
@@ -170,7 +171,7 @@ nosetests3 -vv %oname
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt CHANGES.rst PKG-INFO README.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/test*
@@ -182,6 +183,9 @@ nosetests3 -vv %oname
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 4.1.0-alt1
+- automated PyPI update
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.1-alt2.dev0.git20150613.1.1.1
 - (AUTO) subst_x86_64.
 
