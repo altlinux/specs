@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define oname modernize
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2
-Release: alt1.1
+Version: 0.5
+Release: alt1
 Summary: A hack on top of 2to3 for modernizing code for hybrid codebases
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/modernize/0.2
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/d5/e7/92d89a6814f52add2c334be42108c4eac8763f8e147716595a55cabd921a/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -44,7 +45,7 @@ compatible codebase.  The code that it generates has a runtime
 dependency on `six`.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -72,7 +73,7 @@ mv %buildroot%_bindir/python-modernize \
 %python_install
 
 %files
-%doc README
+%doc PKG-INFO LICENSE README.rst CHANGELOG.rst
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -81,12 +82,15 @@ mv %buildroot%_bindir/python-modernize \
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README
+%doc PKG-INFO LICENSE README.rst CHANGELOG.rst
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
