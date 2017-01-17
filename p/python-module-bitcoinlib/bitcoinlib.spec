@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define pname bitcoin
 %define oname %{pname}lib
 
@@ -5,8 +6,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.3.1
-Release: alt1.git20150110.1.1
+Version: 0.7.0
+Release: alt1
 Summary: Provides an easy interface to the Bitcoin data structures and protocol
 License: LGPLv3+
 Group: Development/Python
@@ -14,7 +15,7 @@ Url: https://pypi.python.org/pypi/python-bitcoinlib/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/petertodd/python-bitcoinlib.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/de/70/50a47e47f31fd76dcbf37f2b89b53ed1fc89898f7f0d422e1dbdfa5425d7/python-%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: libssl-devel
@@ -79,7 +80,7 @@ works.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n python-%{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -112,7 +113,7 @@ popd
 %endif
 
 %files
-%doc README *.md examples
+%doc *.md PKG-INFO
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
@@ -121,7 +122,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README *.md examples
+%doc *.md PKG-INFO
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -130,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.1-alt1.git20150110.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
