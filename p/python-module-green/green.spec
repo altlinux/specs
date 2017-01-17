@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname green
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.7.1
-Release: alt1.git20141125.1.1
+Version: 2.5.3
+Release: alt1
 Summary: Clean, colorful test runner for Python unit tests
 License: MIT
 Group: Development/Python
@@ -13,7 +14,7 @@ Url: https://pypi.python.org/pypi/green/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/CleanCut/green.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/d2/a7/f4525dac4cf86c3e445bf4579da82f0e0a78ffab669d477e0144800681f5/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -63,7 +64,7 @@ unit tests. Compare it to trial or nose.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -96,7 +97,7 @@ popd
 %endif
 
 %files
-%doc CHANGELOG *.rst *.md *.txt example
+%doc *.rst *.md PKG-INFO
 %_bindir/%oname
 %_bindir/%{oname}2*
 %python_sitelibdir/*
@@ -107,7 +108,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc CHANGELOG *.rst *.md *.txt example
+%doc *.rst *.md PKG-INFO
 %_bindir/%{oname}3*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test
@@ -117,6 +118,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.7.1-alt1.git20141125.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
