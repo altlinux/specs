@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname snuggs
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.3.1
-Release: alt1.git20150403.1.1
+Version: 1.4.1
+Release: alt1
 Summary: Snuggs are s-expressions for Numpy
 License: MIT
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/snuggs
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mapbox/snuggs.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/5d/a7/2628b376d794628655d13004091801f7f867366f0b08a52a741fc5bcb5fc/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -47,7 +48,7 @@ Snuggs are s-expressions for Numpy.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -82,16 +83,19 @@ popd
 %endif
 
 %files
-%doc *.txt *.rst
+%doc *.rst PKG-INFO
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt *.rst
+%doc *.rst PKG-INFO
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.1-alt1.git20150403.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
