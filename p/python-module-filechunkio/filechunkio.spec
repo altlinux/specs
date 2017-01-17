@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define oname filechunkio
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.6
-Release: alt1.1.1
+Version: 1.8
+Release: alt1
 Summary: FileChunkIO represents a chunk of an OS-level file containing bytes data
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/filechunkio/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/10/4d/1789767002fa666fcf486889e8f6a2a90784290be9c0bc28d627efba401e/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -82,7 +83,7 @@ chunks as StringIO instances.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -115,7 +116,7 @@ popd
 %endif
 
 %files
-%doc README
+%doc PKG-INFO
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests.*
 
@@ -124,7 +125,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README
+%doc PKG-INFO
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests.*
 %exclude %python3_sitelibdir/*/*/tests.*
@@ -135,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.6-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
