@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20131115.1.1
+Release: alt1
 %define module_name django-picklefield
 
 %def_with python3
 
 Name: python-module-%module_name
-Version: 0.3.1
+Version: 0.3.2
 #Release: alt1.git20131115.1
 Group: Development/Python
 License: BSD License
 Summary: django-picklefield provides an implementation of a pickled object field
 URL: http://github.com/gintas/django-picklefield.git
-Source: %module_name-%version.tar.gz
+Source0: https://pypi.python.org/packages/9c/22/602e6d010248786d72b70c7ca16b0d19ec513897a39861a957a092a77b08/%{module_name}-%{version}.tar.gz
 
 BuildRequires: python-module-setuptools
 %if_with python3
@@ -32,7 +33,7 @@ django-picklefield provides an implementation of a pickled object field.
 Such fields can contain any picklable objects.
 
 %prep
-%setup -n %module_name-%version
+%setup -q -n %{module_name}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -61,18 +62,21 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %files
-%doc README
+%doc README.rst PKG-INFO
 %python_sitelibdir/django_picklefield*
 %python_sitelibdir/picklefield*
 
 %if_with python3
 %files -n python3-module-%module_name
-%doc README
+%doc README.rst PKG-INFO
 %python3_sitelibdir/django_picklefield*
 %python3_sitelibdir/picklefield*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.1-alt1.git20131115.1.1
 - (AUTO) subst_x86_64.
 
