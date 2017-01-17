@@ -1,5 +1,5 @@
 Name: irssi
-Version: 0.8.20
+Version: 0.8.21
 Release: alt1
 
 Summary: Modular text mode IRC client with Perl scripting
@@ -9,6 +9,9 @@ Url: https://irssi.org/
 # https://github.com/irssi/irssi.git
 # git://git.altlinux.org/gears/i/irssi.git
 Source: %name-%version-%release.tar
+Source1: %name.desktop
+Patch1: %name-0.8.21-alt-tls-sites.patch
+Patch2: %name-0.8.21-alt-strict-subs-syntax.patch
 
 BuildRequires: elinks glib2-devel libssl-devel libtinfo-devel perl-devel
 
@@ -33,6 +36,8 @@ This package contains perl scripts for irssi.
 
 %prep
 %setup -n %name-%version-%release
+%patch1 -p1
+%patch2 -p1
 
 # no use to run autoreconf twice.
 sed -i 's/^autoreconf.*/%autoreconf || exit/' autogen.sh
@@ -40,7 +45,7 @@ sed -i 's/^autoreconf.*/%autoreconf || exit/' autogen.sh
 # workaround the absence of irssi.git
 sed -i 's/^git log /: &/' autogen.sh
 # git log -1 --pretty=format:%%ai %version > date-%version
-echo '2016-09-14 13:55:20 +0200' > date-0.8.20
+echo '2017-01-03 14:24:55 +0100' > date-0.8.21
 sed -i 's/^DATE=.*/DATE="$(cat date-%version)"/' irssi-version.sh
 
 %build
@@ -74,7 +79,7 @@ rm %buildroot%irssi_modules_dir/lib*.la
 install -pm644 AUTHORS NEWS %buildroot%_docdir/irssi/
 
 install -pDm644 irssi-icon.png %buildroot%_iconsdir/irssi.png
-install -pDm644 irssi.desktop %buildroot%_desktopdir/irssi.desktop
+install -pDm644 %SOURCE1 %buildroot%_desktopdir/irssi.desktop
 
 %add_findreq_skiplist %_datadir/irssi/scripts/*
 export RPM_LD_PRELOAD_irssi=%buildroot%_bindir/irssi
@@ -108,6 +113,9 @@ export RPM_FILES_TO_LD_PRELOAD_libperl_core='%irssi_modules_dir/libfe_perl.so %p
 %_includedir/irssi/
 
 %changelog
+* Tue Jan 17 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.8.21-alt1
+- 0.8.21 (security release).
+
 * Tue Jan 03 2017 Dmitry V. Levin <ldv@altlinux.org> 0.8.20-alt1
 - 0.8.15 -> 0.8.20.
 
