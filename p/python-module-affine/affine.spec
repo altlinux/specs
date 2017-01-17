@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname affine
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2.0
-Release: alt1.git20150601.1
+Version: 2.0.0.post1
+Release: alt1
 Summary: Affine transformation matrices
 License: BSD
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/affine/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/sgillies/affine.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/b0/3c/e1a37f1e92f27f5e32371b572201819c59d5e917d600d46df80f780cab43/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -59,7 +60,7 @@ This package contains tests for %oname.
 %endif
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -96,7 +97,7 @@ popd
 %endif
 
 %files
-%doc *.txt *.rst
+%doc *.rst PKG-INFO
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
@@ -105,7 +106,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt *.rst
+%doc *.rst PKG-INFO
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -114,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.0.post1-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.0-alt1.git20150601.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
