@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1
+Release: alt2
 %define gname google
 %define oname %gname-apputils
 
@@ -59,6 +59,8 @@ Core files of %gname.
 
 %prep
 %setup -q -n %{oname}-%{version}
+find . -type f -exec chmod go+r {} \;
+find . -type d -exec chmod go+rx {} \;
 
 %if_with python3
 cp -fR . ../python3
@@ -118,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt2
+- fixed permissions (closes: #33008)
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1
 - automated PyPI update
 
