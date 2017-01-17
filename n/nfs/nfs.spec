@@ -1,5 +1,5 @@
 Name: nfs
-Version: 1.3.4
+Version: 2.1.1
 Release: alt1
 Epoch: 1
 
@@ -88,6 +88,9 @@ sed -i 's/#define[[:blank:]]\+START_STATD.\+$/#undef START_STATD/' support/inclu
 %make_install DESTDIR=%buildroot install
 
 cp -a altlinux/etc %buildroot
+cp -p systemd/README README.systemd
+
+install -pm0644 nfs.conf %buildroot%_sysconfdir/nfs.conf
 
 ln -s nfs-blkmap.service %buildroot%systemd_unitdir/blkmapd.service
 ln -s nfs-idmapd.service %buildroot%systemd_unitdir/idmapd.service
@@ -183,14 +186,13 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/svcgssd.*
 %_man8dir/rpc.svcgssd.*
 
-%config(noreplace) %_localstatedir/nfs/xtab
 %config(noreplace) %_localstatedir/nfs/etab
 %config(noreplace) %_localstatedir/nfs/rmtab
 %dir %_localstatedir/nfs/v4recovery
 
 #-------------------------------------------------------------------------------
 %files clients
-%doc README
+%doc README README.systemd
 %dir %_localstatedir/nfs
 %dir %_localstatedir/nfs/rpc_pipefs
 %dir %attr(700,rpcuser,rpcuser) %_localstatedir/nfs/statd
@@ -198,7 +200,7 @@ touch /var/lock/subsys/rpc.svcgssd
 %dir %attr(700,rpcuser,rpcuser) %_localstatedir/nfs/statd/sm.bak
 %ghost %attr(700,rpcuser,rpcuser) %_localstatedir/nfs/statd/state
 
-%config(noreplace) %_sysconfdir/sysconfig/nfs
+%config(noreplace) %_sysconfdir/nfs.conf
 
 %_initdir/blkmapd
 %_initdir/nfslock
@@ -209,7 +211,6 @@ touch /var/lock/subsys/rpc.svcgssd
 %systemd_unitdir/nfslock.service
 
 %systemd_unitdir/nfs-client.target
-%systemd_unitdir/nfs-config.service
 %systemd_unitdir/nfs-utils.service
 %systemd_unitdir/auth-rpcgss-module.service
 %systemd_unitdir/var-lib-nfs-rpc_pipefs.mount
@@ -218,12 +219,16 @@ touch /var/lock/subsys/rpc.svcgssd
 %systemd_unitdir/rpc-statd-notify.service
 %systemd_unitdir/rpc-gssd.service
 
+%systemd_unitdir-generators/nfs-server-generator
+
 /sbin/rpc.gssd
 /sbin/rpc.statd
 /sbin/sm-notify
 /sbin/blkmapd
 /sbin/nfsidmap
 
+%_man5dir/nfs.conf.*
+%_man7dir/nfs.systemd.*
 %_man8dir/gssd.*
 %_man8dir/rpc.gssd*
 %_man8dir/blkmapd.*
@@ -243,7 +248,7 @@ touch /var/lock/subsys/rpc.svcgssd
 %_bindir/showmount
 %_sbindir/rpcdebug
 
-%_man5dir/nfs.*
+%_man5dir/nfs.5*
 %_man5dir/nfsmount.conf.*
 %_man8dir/rpcdebug.*
 %_man8dir/showmount.*
@@ -257,6 +262,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Tue Jan 17 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.1.1-alt1
+- 2.1.1 released
+
 * Wed Aug 31 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.3.4-alt1
 - 1.3.4 released
 
