@@ -1,12 +1,18 @@
 %def_enable gssapi
 %def_enable liblogging_stdlog
+%def_enable rfc3195
 %def_disable mmcount
 # GuardTime KSI
 %def_disable gt_ksi
+%def_disable omamqp1
+%def_enable omhiredis
+%def_enable ommongodb
+%def_enable omhttpfs
+%def_enable elasticsearch
 
 Name: rsyslog
-Version: 8.16.0
-Release: alt3
+Version: 8.24.0
+Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: GPLv3+ ASL2.0
@@ -21,20 +27,23 @@ BuildRequires: libdbi-devel
 BuildRequires: libmysqlclient-devel
 BuildRequires: postgresql-devel
 BuildRequires: libkrb5-devel
-BuildRequires: librelp-devel >= 1.2.5
+BuildRequires: librelp-devel >= 1.2.12
 BuildRequires: libgnutls-devel libgcrypt-devel
 BuildRequires: libnet-snmp-devel
 BuildRequires: libnet-devel
 BuildRequires: libestr-devel >= 0.1.9
-%{?_enable_liblogging_stdlog:BuildRequires: liblogging-devel >= 1.0.3}
-%{?_enable_gt_ksi:BuildRequires: libksi-devel >= 3.4.0.2}
-BuildRequires: libjson-c-devel
-BuildRequires: liblognorm-devel >= 1.1.2
-BuildRequires: libmongo-client-devel >= 0.1.4
+BuildRequires: libfastjson-devel >= 0.99.3
 BuildRequires: libuuid-devel
-BuildRequires: libcurl-devel
-BuildRequires: libhiredis-devel >= 0.10.1
-BuildRequires: libsystemd-journal-devel >= 197
+%{?_enable_liblogging_stdlog:BuildRequires: liblogging-devel >= 1.0.3}
+%{?_enable_rfc3195:BuildRequires: liblogging-devel >= 1.0.1}
+%{?_enable_gt_ksi:BuildRequires: libksi-devel >= 3.4.0.2}
+%{?_enable_omamqp1:BuildRequires: libqpid-proton-devel >= 0.9}
+BuildRequires: liblognorm-devel >= 1.1.2
+%{?_enable_ommongodb:BuildRequires: libmongo-client-devel >= 0.1.4}
+%{?_enable_elasticsearch:BuildRequires: libcurl-devel}
+%{?_enable_omhttpfs:BuildRequires: libcurl-devel >= 7.0.0}
+%{?_enable_omhiredis:BuildRequires: libhiredis-devel >= 0.10.1}
+BuildRequires: libsystemd-devel >= 209
 BuildRequires: /usr/bin/rst2man
 BuildRequires: /usr/bin/lsb_release
 
@@ -325,7 +334,7 @@ export HIREDIS_LIBS=-lhiredis
 	--libdir=/%_lib \
 	--disable-static \
 	--disable-testbench \
-	--enable-elasticsearch \
+	%{subst_enable elasticsearch} \
 	%{subst_enable mmcount} \
 	--enable-gnutls \
 	%{?_enable_gssapi:--enable-gssapi-krb5} \
@@ -341,6 +350,7 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-libdbi \
 	%{?_enable_gt_ksi:--enable-gt-ksi} \
 	%{?_enable_liblogging_stdlog:--enable-liblogging-stdlog} \
+	%{subst_enable rfc3195} \
 	--enable-mail \
 	--enable-mmanon \
 	--enable-mmaudit \
@@ -348,9 +358,11 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-mmnormalize \
 	--enable-mmsnmptrapd \
 	--enable-mysql \
-	--enable-omhiredis \
+	%{subst_enable omhttpfs} \
+	%{subst_enable omamqp1} \
+	%{subst_enable omhiredis} \
 	--enable-omjournal \
-	--enable-ommongodb \
+	%{subst_enable ommongodb} \
 	--enable-omprog \
 	--enable-omruleset \
 	--enable-omstdout \
@@ -360,6 +372,7 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-pmaixforwardedfrom \
 	--enable-pmcisconames \
 	--enable-pmciscoios \
+	--enable-pmnull \
 	--enable-pmlastmsg \
 	--enable-pmsnare \
 	--enable-pmpanngfw \
@@ -417,6 +430,7 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/imkmsg.so
 %mod_dir/immark.so
 %mod_dir/imtcp.so
+%mod_dir/im3195.so
 %mod_dir/imudp.so
 %mod_dir/imuxsock.so
 %mod_dir/lmnet.so
@@ -520,6 +534,7 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/imdiag.so
 %mod_dir/imptcp.so
 %mod_dir/impstats.so
+%mod_dir/omhttpfs.so
 %mod_dir/omprog.so
 %mod_dir/omtesting.so
 %mod_dir/omstdout.so
@@ -527,6 +542,7 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/pmaixforwardedfrom.so
 %mod_dir/pmcisconames.so
 %mod_dir/pmciscoios.so
+%mod_dir/pmnull.so
 %mod_dir/pmlastmsg.so
 %mod_dir/pmsnare.so
 %mod_dir/pmpanngfw.so
@@ -534,6 +550,12 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/mmsnmptrapd.so
 
 %changelog
+* Fri Jan 13 2017 Alexey Shabalin <shaba@altlinux.ru> 8.24.0-alt1
+- 8.24.0
+
+* Wed Apr 20 2016 Alexey Shabalin <shaba@altlinux.ru> 8.18.0-alt1
+- 8.18.0
+
 * Thu Feb 25 2016 Alexey Shabalin <shaba@altlinux.ru> 8.16.0-alt3
 - add load imuxsock module to rsyslog-classic config
 - upadte altlinux-rsyslog-extrasockets script
