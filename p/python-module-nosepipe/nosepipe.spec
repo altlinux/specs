@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname nosepipe
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7
-Release: alt1.git20150720.1
+Version: 0.8
+Release: alt1
 Summary: Plugin for the nose testing framework for running tests in a subprocess
 License: BSD
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/nosepipe/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/dmccombs/nosepipe.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/57/61/95306f40c9b61cfc06cef1c83e983db039298056cc3da50fcfad4a9baf37/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -43,7 +44,7 @@ Use nosetests --with-process-isolation to enable the plugin. When
 enabled, each test is run in a separate process.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -76,16 +77,19 @@ popd
 %endif
 
 %files
-%doc *.txt *.md *.rst
+%doc PKG-INFO
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt *.md *.rst
+%doc PKG-INFO
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7-alt1.git20150720.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
