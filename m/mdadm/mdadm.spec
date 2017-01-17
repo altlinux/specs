@@ -1,7 +1,7 @@
 %def_disable cluster
 
 Name: mdadm
-Version: 3.4
+Version: 4.0
 Release: alt1
 
 Summary: A tool for managing Soft RAID under Linux
@@ -69,6 +69,9 @@ install -pD -m644 alt/mdadm.crond %buildroot%_sysconfdir/cron.d/mdadm
 %doc TODO ChangeLog.bz2 mdadm.conf-example ANNOUNCE-%version alt/README*
 
 %changelog
+* Tue Jan 17 2017 Alexey Shabalin <shaba@altlinux.ru> 4.0-alt1
+- 4.0
+
 * Thu Jun 16 2016 Alexey Shabalin <shaba@altlinux.ru> 3.4-alt1
 - 3.4
 
