@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname flexmock
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.7
-Release: alt1.git20140924.1.1
+Version: 0.10.2
+Release: alt1
 Summary: Mock/Stub/Spy library for Python
 License: BSD
 Group: Development/Python
@@ -12,7 +13,7 @@ Url: https://pypi.python.org/pypi/flexmock/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/has207/flexmock.git
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/4a/92/6ee358dfeeb1fb6d22e64c5afef525e510b60ec39d59cedfe1da195cf623/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -43,7 +44,7 @@ flexmock is a testing library for Python that makes it easy to create
 mocks, stubs and fakes.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -76,16 +77,19 @@ popd
 %endif
 
 %files
-%doc CHANGELOG *.md
+%doc CHANGELOG PKG-INFO README.rst docs
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc CHANGELOG *.md
+%doc CHANGELOG PKG-INFO README.rst docs
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.10.2-alt1
+- automated PyPI update
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.7-alt1.git20140924.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
