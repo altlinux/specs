@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1
+Release: alt1
 %define oname zc.zlibstorage
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.1
+Version: 1.1.0
 #Release: alt1.1
 Summary: ZODB storage wrapper for zlib compression of database records
 License: ZPLv2.1
@@ -13,7 +14,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/zc.zlibstorage/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/62/1e/408070cddde08403b1db59f070b0484e9d7a5b25839ff10577b13aedf64a/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -62,7 +63,7 @@ that provides compression of database records.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -98,7 +99,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc README.rst PKG-INFO CHANGES.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests.*
@@ -108,8 +109,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
-%doc *.txt
+%doc README.rst PKG-INFO CHANGES.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
@@ -121,6 +121,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1
+- automated PyPI update
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.1-alt1.1.1
 - (AUTO) subst_x86_64.
 
