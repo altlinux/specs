@@ -1,7 +1,7 @@
 Summary: The Jack Audio Connection Kit
 Name: jack-audio-connection-kit
 Version: 1.9.10
-Release: alt1
+Release: alt2
 Epoch: 1
 License: GPLv2 and GPLv2+ and LGPLv2+
 Group: Sound
@@ -16,6 +16,7 @@ Source3: %name-limits.conf
 Patch0: jack-realtime-compat.patch
 Patch1: jack-1.9.10-alt-doxygen-path.patch
 Patch2: jack-1.9.10-gcc5.patch
+Patch3: jack-1.9.10-gcc6.patch
 
 BuildRequires: doxygen gcc-c++ libalsa-devel libcelt-devel libdbus-devel libexpat-devel libffado-devel libfreebob-devel
 BuildRequires: libncurses-devel libreadline-devel libsamplerate-devel libsndfile-devel python-modules-compiler
@@ -66,6 +67,7 @@ Utilities that control and interact with the JACK server-jackd
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 ./waf configure --prefix=%_prefix --libdir=/%_libdir --doxygen --firewire --freebob --alsa --dbus --classic
@@ -78,6 +80,10 @@ install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/security/limits.d/99-%name.con
 
 mkdir -p %buildroot%_datadir/doc/%name
 mv %buildroot%_datadir/jack-audio-connection-kit/reference/html/* %buildroot%_datadir/doc/%name/
+
+export RPM_LD_PRELOAD_jack='%buildroot%_libdir/libjack.so %buildroot%_libdir/libjacknet.so %buildroot%_libdir/libjackserver.so'
+export RPM_FILES_TO_LD_PRELOAD_jack=%_libdir/jack/*.so
+%set_verify_elf_method unresolved=strict
 
 %files
 %_sysconfdir/pulse/%name.pa
@@ -131,6 +137,9 @@ mv %buildroot%_datadir/jack-audio-connection-kit/reference/html/* %buildroot%_da
 %_man1dir/jackrec.1*
 
 %changelog
+* Tue Jan 17 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.9.10-alt2
+- Fixed build with gcc6.
+
 * Thu Sep 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.9.10-alt1
 - Updated to 1.9.10.
 
