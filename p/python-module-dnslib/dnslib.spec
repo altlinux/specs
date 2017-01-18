@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.6
+Version: 0.9.7
 Release: alt1
 Summary: Simple library to encode/decode DNS wire-format packets
 License: BSD
@@ -12,7 +12,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/dnslib
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: https://pypi.python.org/packages/d2/49/d9430826e6678cab9675e343c795e3e0c3ca568b9dfcc145b5d5490c3b17/%{oname}-%{version}.tar.gz
+Source0: https://pypi.python.org/packages/3a/c0/ee8fe42363b7402c97ddbe468fe2d0a72d93e24d8a264dc72b8963cc5bc0/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -96,7 +96,7 @@ popd
 %endif
 
 %files
-%doc README*
+%doc README* PKG-INFO
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/test*
 
@@ -105,7 +105,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README*
+%doc README* PKG-INFO
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test*
 %exclude %python3_sitelibdir/*/*/test*
@@ -116,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.7-alt1
+- automated PyPI update
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.6-alt1
 - automated PyPI update
 
