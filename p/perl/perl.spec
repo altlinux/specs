@@ -1,6 +1,6 @@
 Name: perl
-Version: 5.22.2
-Release: alt2
+Version: 5.22.3
+Release: alt1
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -15,12 +15,12 @@ Patch01: perl-5.22.0-alt-644-at-ExtUtils-Install.patch
 Patch02: perl-5.22.0-alt-644-at-installperl.patch
 Patch03: perl-5.22.0-alt-644-viy-ExtUtils-Install-fix-test.patch
 Patch04: perl-5.22.0-alt-at-MM_Unix-link-xs-with-libperl.patch
-Patch05: perl-5.22.0-alt-at-MM_Unix-shabang.patch
-Patch06: perl-5.20.1-alt-at-Storable-no-early-dep-on-Log-Agent.patch
+Patch05: perl-5.22.3-alt-at-MM_Unix-shabang.patch
+Patch06: perl-5.22.3-alt-at-Storable-no-early-dep-on-Log-Agent.patch
 Patch07: perl-5.20.1-alt-at-debian-Errno_pm.patch
-Patch08: perl-5.22.0-alt-at-disable-Cpan-Meta-under-rpm.patch
+Patch08: perl-5.22.3-alt-at-disable-Cpan-Meta-under-rpm.patch
 Patch09: perl-5.20.1-alt-at-libperl-soname.patch
-Patch10: perl-5.22.0-alt-at-no-rpath-for-std-libs.patch
+Patch10: perl-5.22.3-alt-at-no-rpath-for-std-libs.patch
 Patch11: perl-5.20.1-alt-at-perl5db-findreq-cleanup.patch
 Patch12: perl-5.20.1-alt-at-perlbug-findreq-cleanup.patch
 Patch13: perl-5.20.1-alt-at-skip-deprecation-warning.patch
@@ -756,6 +756,9 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%privlib/Unicode/Normalize.pm
 
 %changelog
+* Wed Jan 18 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.22.3-alt1
+- 5.22.2 -> 5.22.3
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 1:5.22.2-alt2
 - cpan-update-Scalar-List-Utils-1.41-to-Scalar-List-Utils-1.41-1.46
 
