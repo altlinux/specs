@@ -1,7 +1,7 @@
 %define module_name	ipt_netflow
 %define module_version	2.2
 
-%define module_release alt1
+%define module_release alt2
 
 %define flavour		un-def
 BuildRequires(pre): rpm-build-kernel
@@ -45,6 +45,7 @@ tar xf %kernel_src/%module_name-%module_version.tar.*
 %setup -D -T -n %module_name-%module_version
 
 %build
+. %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
 ./configure --kdir=%_usrsrc/linux-%kversion-%flavour-%krelease
 make KDIR=%_usrsrc/linux-%kversion-%flavour-%krelease
 

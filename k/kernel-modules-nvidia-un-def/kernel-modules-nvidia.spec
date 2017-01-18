@@ -8,7 +8,7 @@
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
 %define module_version	375.26
-%define module_release	alt1
+%define module_release	alt2
 %define flavour		un-def
 
 %setup_kernel_module %flavour
@@ -139,6 +139,7 @@ done
 
 
 %build
+. %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
 for ver in %mod_ver_list
 do
     sffx=`echo "$ver"| sed -e "s|\.||g"`
@@ -250,6 +251,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Jan 17 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 375.26-alt2
+- use kernel gcc
 
 * Fri Dec 16 2016 Sergey V Turchin <zerg at altlinux dot org> 375.26-alt1..
 - new releases (375.26, 340.101, 304.134)
