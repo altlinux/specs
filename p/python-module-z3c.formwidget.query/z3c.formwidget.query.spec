@@ -6,7 +6,7 @@ Release: alt1
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.12
+Version: 0.13
 #Release: alt1.1
 Summary: A source query widget for z3c.form
 License: ZPLv2.1
@@ -14,7 +14,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/z3c.formwidget.query/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: https://pypi.python.org/packages/ab/38/7d93a07b58b50a773d7e360217d90839b061c1c8731f8a4aa20cb5b27e96/%{oname}-%{version}.tar.gz
+Source0: https://pypi.python.org/packages/8a/9a/d7c60f4045f2657d8591722f9665e43ef02abba4c48bae19c7dd80cabc0c/%{oname}-%{version}.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
@@ -115,7 +115,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.txt CHANGES.rst PKG-INFO README.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/*/tests.*
@@ -125,7 +125,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt CHANGES.rst PKG-INFO README.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/*/tests.*
@@ -137,6 +137,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Jan 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- automated PyPI update
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - automated PyPI update
 
