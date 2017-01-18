@@ -1,11 +1,11 @@
 Name:		bloboats
 Version:	1.0.2
-Release:	alt1
+Release:	alt2
 License:	GPLv2
 Summary:	Arcade-like boat racing game
 Group:		Games/Arcade
-Source:		http://mirror.kapsi.fi/bloboats.dy.fi/%name-%version.tar.gz
-URL:		http://bloboats.blobtrox.net/
+Source:		http://bloboats.dy.fi/mirror/bloboats-%version.tar.gz
+URL:		http://bloboats.dy.fi/about.php
 Requires:	%name-data
 
 # Automatically added by buildreq on Sun Mar 13 2011
@@ -33,6 +33,8 @@ Data files for %name (under CC Sampling+ license).
 
 %prep
 %setup
+# GCC6 fix
+sed -i 's/ghostfile=false/ghostfile=NULL/' src/menu.cpp
 
 cat > %name.desktop <<@@@
 [Desktop Entry]
@@ -64,6 +66,9 @@ install -D data/images/icon.png %buildroot%_niconsdir/%name.png
 %_datadir/%name/*
 
 %changelog
+* Wed Jan 18 2017 Fr. Br. George <george@altlinux.ru> 1.0.2-alt2
+- GCC6 fix
+
 * Sun Mar 13 2011 Fr. Br. George <george@altlinux.ru> 1.0.2-alt1
 - Initial build from scratch
 
