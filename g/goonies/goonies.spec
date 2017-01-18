@@ -1,8 +1,9 @@
 Name:		goonies
 Version:	1.4.1528
-Release:	alt1
+Release:	alt2
 Summary:	20th anniversary edition of The Goonies remake
 Group:		Games/Arcade
+URL:		http://goonies.jorito.net/
 License:	GPL
 # goonies.src_1.4.1528.tgz
 Source:		%name.src_%{version}.tgz
@@ -57,6 +58,9 @@ ln -s %_gamesbindir/%name.bin %buildroot%_gamesdatadir/%name/%name
 %exclude %_gamesdatadir/%name/%name
 
 %changelog
+* Wed Jan 18 2017 Fr. Br. George <george@altlinux.ru> 1.4.1528-alt2
+- GCC6 fix
+
 * Mon Mar 04 2013 Fr. Br. George <george@altlinux.ru> 1.4.1528-alt1
 - Initial build from scratch
 
