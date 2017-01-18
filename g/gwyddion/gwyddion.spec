@@ -1,10 +1,10 @@
-%define _gtkdocdir %_datadir/gtk-doc/html
 
 Name: gwyddion
-Version: 2.44
-Release: alt1
+Version: 2.47
+Release: alt2
 
 Summary: An SPM data visualization and analysis tool
+Summary(ru_RU.UTF-8):  Программа для визуализации и анализа данных АСМ
 
 Group: Sciences/Other
 License: GNU GPL
@@ -12,9 +12,9 @@ Url: http://gwyddion.net/
 
 # Source-url: http://sourceforge.net/projects/gwyddion/files/gwyddion/%version/gwyddion-%version.tar.xz/download
 Source: %name-%version.tar
-Patch0: fix-rpath-issue.patch
-Patch1: gwyddion-2.25-alt-glib2.patch
-Patch2: gwyddion-2.25-alt-libpng15.patch
+#Patch0: fix-rpath-issue.patch
+#Patch1: gwyddion-2.25-alt-glib2.patch
+#Patch2: gwyddion-2.25-alt-libpng15.patch
 
 BuildRequires(pre): rpm-build-intro libGConf-devel
 # Automatically added by buildreq on Sat Apr 23 2016
@@ -26,6 +26,7 @@ BuildRequires: libminizip-devel libxml2-devel perl-Pod-Usage python-module-distr
 BuildRequires: libgtk+2-devel pkg-config libgtkglext-devel libfftw3-devel chrpath kde4libs-devel libruby-devel
 BuildPreReq: perl-podlators libpng-devel
 
+%define _gtkdocdir %_datadir/gtk-doc/html
 %define pkglibdir %_libdir/%name
 %define pkglibexecdir %_libexecdir/%name
 %define pkgdatadir %_datadir/%name
@@ -33,6 +34,10 @@ BuildPreReq: perl-podlators libpng-devel
 %define libname lib%{name}2
 %add_python_req_skip %pkglibdir
 %add_python_req_skip %pkgdatadir
+
+# Stop auto picking wrong deps!
+%add_findreq_skiplist %pkglibexecdir/plugins/process/*
+
 
 %package -n %libname
 Summary: Libraries and tools for Gwyddion
@@ -67,6 +72,7 @@ Requires: kde4libs >= 4.0
 Summary: Python tools for Gwyddion module development
 Group: Development/Python
 Requires: %libname = %version-%release
+
 
 %description
 Gwyddion is a modular SPM (Scanning Probe Microsopy) data visualization and
@@ -265,6 +271,12 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %_datadir/gtksourceview-2.0/language-specs/*.lang
 
 %changelog
+* Wed Jan 18 2017 Alexei Mezin <alexvm@altlinux.org> 2.47-alt2
+- spec cleanups
+
+* Tue Jan 17 2017 Alexei Mezin <alexvm@altlinux.org> 2.47-alt1
+- new version
+
 * Sat Apr 23 2016 Vitaly Lipatov <lav@altlinux.ru> 2.44-alt1
 - new version 2.44 (with rpmrb script) (ALT bug #31603)
 
