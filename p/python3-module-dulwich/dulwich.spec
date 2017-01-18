@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define oname dulwich
 Name: python3-module-%oname
-Version: 0.8.2
-Release: alt1.git20120327.1
+Version: 0.16.3
+Release: alt1
 Summary: Python Git Library
 License: GPLv2+
 Group: Development/Python3
 Url: https://github.com/eberle1080/dulwich-py3k
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: https://pypi.python.org/packages/9e/d7/8fb5b952ad14f27f7ab1bbe17db7860fe99c3c3e5d08de0bea3a161389a0/%{oname}-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
@@ -39,7 +40,7 @@ extensions are also available for better performance.
 This package contains tests for dulwich.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
 %python3_build
@@ -54,7 +55,7 @@ done
 popd
 
 %files
-%doc AUTHORS COPYING HACKING NEWS README docs/*.txt docs/tutorial
+%doc AUTHORS COPYING NEWS docs/*.txt docs/tutorial PKG-INFO README.md examples
 %_bindir/*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
@@ -63,6 +64,9 @@ popd
 %python3_sitelibdir/*/tests
 
 %changelog
+* Wed Jan 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.16.3-alt1
+- automated PyPI update
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.2-alt1.git20120327.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
