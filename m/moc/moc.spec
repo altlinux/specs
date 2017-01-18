@@ -19,7 +19,7 @@
 
 Name: moc
 Version: 2.6.0
-Release: alt0.1
+Release: alt0.3
 
 Summary: Console player
 Group: Sound
@@ -35,7 +35,9 @@ Requires: %name-player %name-plugin-flac %name-plugin-mp3 %name-plugin-sndfile %
 # Automatically added by buildreq on Wed Jun 07 2006
 BuildRequires: gcc-c++ glibc-devel-static jackit-devel libalsa-devel libcurl-devel 
 BuildRequires: libncursesw-devel libsamplerate-devel pkg-config libltdl7-devel
-BuildRequires: libdb4.8-devel libmagic-devel
+BuildRequires: libdb4.8-devel
+BuildRequires: libmagic-devel
+BuildRequires: libpopt-devel
 
 %description
 MOC is a console audio player with simple ncurses interface in
@@ -240,9 +242,8 @@ Hybrid Lossless Wavefile Compressor support.
 %__mkdir_p %buildroot/%_desktopdir
 %__cat >%buildroot/%_desktopdir/%name.desktop <<EOF
 [Desktop Entry]
-Encoding=UTF-8
 Type=Application
-Categories=Audio;Player
+Categories=Audio;Player;
 Exec=%_bindir/%binary_name
 Icon=sound_section
 Name=Music On Console
@@ -324,6 +325,9 @@ EOF
 %endif
 
 %changelog
+* Wed Jan 18 2017 Alexey Gladkov <legion@altlinux.ru> 2.6.0-alt0.3
+- New version (2.6.0-alpha3)
+
 * Fri Sep 12 2014 Alexey Gladkov <legion@altlinux.ru> 2.6.0-alt0.1
 - New version (2.6.0-alpha1)
 
