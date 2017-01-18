@@ -3,7 +3,7 @@
 
 Name: tumbler
 Version: 0.1.31
-Release: alt1
+Release: alt2
 Summary: A thumbnail D-Bus service
 License: %gpl2plus, %lgpl2plus
 Group: Graphical desktop/XFce
@@ -22,6 +22,8 @@ BuildRequires: gtk-doc intltool libdbus-glib-devel libfreetype-devel libgio-deve
 BuildRequires: libpoppler-glib-devel libgsf-devel libopenraw-gnome-devel libcurl-devel
 %{?_enable_ffmpeg:BuildRequires: libffmpegthumbnailer-devel}
 %{?_enable_gstreamer:BuildRequires: gstreamer1.0-devel}
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Tumbler is a D-Bus service for applications to request
@@ -83,6 +85,9 @@ Development files and headers for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jan 19 2017 Mikhail Efremov <sem@altlinux.org> 0.1.31-alt2
+- Fix build with libopenraw-0.1.0.
+
 * Fri Mar 06 2015 Mikhail Efremov <sem@altlinux.org> 0.1.31-alt1
 - Updated to 0.1.31.
 

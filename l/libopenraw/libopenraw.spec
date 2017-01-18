@@ -1,18 +1,16 @@
 %define gdk_pixbuf_moduledir  %(pkg-config --variable gdk_pixbuf_moduledir gdk-pixbuf-2.0)
+%define api_ver 0.1
 
 Name: libopenraw
-Version: 0.0.9
-Release: alt1.qa1
-
-Packager: Victor Forsiuk <force@altlinux.org>
+Version: 0.1.0
+Release: alt1
 
 Summary: Decode camera RAW files
-License: LGPLv3+
 Group: System/Libraries
+License: LGPLv3+
+Url: http://libopenraw.freedesktop.org/wiki
 
-URL: http://libopenraw.freedesktop.org/wiki
 Source: http://libopenraw.freedesktop.org/download/libopenraw-%version.tar.bz2
-Patch1: libopenraw-0.0.8-fixtypo.patch
 
 BuildRequires: boost-devel gcc-c++ libcurl-devel libgio-devel libgdk-pixbuf-devel libjpeg-devel libxml2-devel
 
@@ -51,7 +49,6 @@ applications that use %name-gnome.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %configure --disable-static
@@ -64,26 +61,29 @@ applications that use %name-gnome.
 %make check
 
 %files
-%_libdir/libopenraw.so.*
+%_libdir/%name.so.*
 %gdk_pixbuf_moduledir/*.so
 %exclude %gdk_pixbuf_moduledir/*.la
 %doc AUTHORS NEWS README TODO
 
 %files devel
-%dir %_includedir/libopenraw-1.0
-%_includedir/libopenraw-1.0/libopenraw
-%_libdir/libopenraw.so
-%_pkgconfigdir/libopenraw-1.0.pc
+%dir %_includedir/%name-%api_ver
+%_includedir/%name-%api_ver/%name
+%_libdir/%name.so
+%_pkgconfigdir/%name-%api_ver.pc
 
 %files gnome
-%_libdir/libopenrawgnome.so.*
+%_libdir/%{name}gnome.so.*
 
 %files gnome-devel
-%_includedir/libopenraw-1.0/libopenraw-gnome
-%_libdir/libopenrawgnome.so
-%_pkgconfigdir/libopenraw-gnome-1.0.pc
+%_includedir/%name-%api_ver/%name-gnome/
+%_libdir/%{name}gnome.so
+%_pkgconfigdir/%name-gnome-%api_ver.pc
 
 %changelog
+* Wed Jan 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt1
+- 0.1.0
+
 * Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.0.9-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
