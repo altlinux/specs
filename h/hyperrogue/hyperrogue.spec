@@ -1,5 +1,5 @@
 Name: hyperrogue
-Version: 66
+Version: 83j
 Release: alt1
 Source: %name-%version.zip
 Url: http://www.roguetemple.com/z/hyper.php
@@ -13,7 +13,7 @@ Requires: fonts-ttf-dejavu
 
 # Automatically added by buildreq on Tue Oct 15 2013
 # optimized out: fontconfig libSDL-devel libstdc++-devel
-BuildRequires: ImageMagick-tools gcc-c++ libSDL_gfx-devel libSDL_mixer-devel libSDL_ttf-devel unzip
+BuildRequires: ImageMagick-tools gcc-c++ libSDL_gfx-devel libSDL_mixer-devel libSDL_ttf-devel libpng-devel unzip
 
 %description
 You are a lone outsider in a strange, non-Euclidean world. You can move
@@ -37,11 +37,11 @@ to teleport back to the Euclidean world to survive by pressing Escape
 
 %prep
 %setup
-sed -i 's@"DejaVuSans-Bold.ttf"@"%_ttffontsdir/dejavu/DejaVuSans-Bold.ttf"@g' graph.cpp
+sed -i 's@"DejaVuSans-Bold.ttf"@"%_ttffontsdir/dejavu/DejaVuSans-Bold.ttf"@g' src/graph.cpp
 
 %define sizes 16 24 32 48 64 96
 for s in %sizes; do
-	convert hr-icon.ico $s.png
+	convert src/hr-icon.ico $s.png
 done
 cat > %name.desktop <<@@@
 [Desktop Entry]
@@ -57,22 +57,24 @@ Comment[ru]=Roguelike-ÉÇÒÁ × ÎÅÅ×ËÌÉÄÏ×ÏÍ ÐÒÏÓÔÒÁÎÓÔ�
 @@@
 
 %build
-%make
+%make_build -C src
 
 %install
-install -D hyper %buildroot%_gamesbindir/%name
+install -D src/hyper %buildroot%_gamesbindir/%name
 for s in %sizes; do
 	install -D $s.png %buildroot%_iconsdir/hicolor/${s}x${s}/apps/%name.png
 done
 install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 
 %files
-%doc hyperrogue.html zeno.css
 %_gamesbindir/%name
 %_iconsdir/hicolor/*/apps/%name.png
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Jan 18 2017 Fr. Br. George <george@altlinux.ru> 83j-alt1
+- Autobuild version bump to 83j
+
 * Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 66-alt1
 - Autobuild version bump to 66
 
