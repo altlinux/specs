@@ -1,13 +1,14 @@
+%define _unpackaged_files_terminate_build 1
 %define modulename icalendar
 
 Name: python3-module-%modulename
-Version: 3.8.3
-Release: alt1.1.1
+Version: 3.11.2
+Release: alt1
 Summary: iCalendar parser/generator
 License: GPLv2.1
 Group: Development/Python3
 BuildArch: noarch
-Source: %modulename-%version.tar.gz
+Source0: https://pypi.python.org/packages/e7/e7/71810ac9d3d5a062d3d7d16090ce2ea3e7877c2124afe23f9f7b8e2ffedd/icalendar-%{version}.tar.gz
 Url: http://pypi.python.org/pypi/icalendar
 
 BuildRequires(pre): rpm-build-python3
@@ -34,7 +35,7 @@ iCalendar is a parser/generator of iCalendar files
 This package contains tests for %modulename.
 
 %prep
-%setup -n %modulename-%version
+%setup -q -n icalendar-%{version}
 
 %build
 %python3_build
@@ -43,7 +44,7 @@ This package contains tests for %modulename.
 %python3_install
 
 %files
-%doc *.rst
+%doc *.rst PKG-INFO docs
 %python3_sitelibdir/%modulename
 %exclude %python3_sitelibdir/%modulename/tests
 %python3_sitelibdir/%modulename-*
@@ -52,6 +53,9 @@ This package contains tests for %modulename.
 %python3_sitelibdir/%modulename/tests
 
 %changelog
+* Wed Jan 18 2017 Igor Vlasenko <viy@altlinux.ru> 3.11.2-alt1
+- automated PyPI update
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.8.3-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
