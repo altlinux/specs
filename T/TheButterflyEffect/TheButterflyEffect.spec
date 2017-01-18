@@ -1,7 +1,7 @@
 Name:		TheButterflyEffect
 # sed -n '/APPRELEASE/s/.*"\(.*\)".*/\1/p' src/tbe_global.h
 Version:	8.2
-Release:	alt1.qa1
+Release:	alt2
 License:	GPL
 Group:		Games/Puzzles
 Summary:	Combine mechanical elements to achieve a simple goal in the most complex way
@@ -18,6 +18,8 @@ A game that uses realistic physics simulations to combine lots of simple mechani
 %prep
 %setup -n %name-m%version
 %patch
+# gcc6 FIX 
+sed -i 's/static const float/static constexpr float/' src/model/PolyObject.h
 
 %build
 ./configure --datadir=%_gamesdatadir/%name
@@ -43,6 +45,9 @@ install -D -m755 %name %buildroot%_gamesbindir/%name
 %_gamesdatadir/%name
 
 %changelog
+* Wed Jan 18 2017 Fr. Br. George <george@altlinux.ru> 8.2-alt2
+- GCC6 fix
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 8.2-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
