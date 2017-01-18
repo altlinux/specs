@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.2
+Version: 1.1.0
 Release: alt1
 Summary: Use geometric objects as matplotlib paths and patches
 License: BSD
@@ -12,7 +12,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/descartes/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: https://pypi.python.org/packages/52/65/6078084b6b84b8c87730f9ebf825fbcd7f1ba7bf383fbb6f0a8a6d2419af/%{oname}-%{version}.tar.gz
+Source0: https://pypi.python.org/packages/1d/6f/81735a30432b74f41db6754dd13869021ccfed3088d1cf7a6cfc0af9ac49/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -102,7 +102,7 @@ popd
 %endif
 
 %files
-%doc *.txt
+%doc *.txt PKG-INFO
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests.*
 
@@ -111,7 +111,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt PKG-INFO
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests.*
 %exclude %python3_sitelibdir/*/*/tests.*
@@ -122,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1
+- automated PyPI update
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1
 - automated PyPI update
 
