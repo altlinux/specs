@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 Summary: WSGI request and response object
 License: MIT
@@ -14,7 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 BuildArch: noarch
 
 # https://github.com/Pylons/webob.git
-Source0: https://pypi.python.org/packages/96/6a/1fa3aaf61a2f60b60c54cdeda5303fef5ac53fc46669d883a6befd886518/WebOb-%{version}.tar.gz
+Source0: https://pypi.python.org/packages/c3/6f/fc168ab701ab8f3741ed0b1377edda676c3e7db61858cef1f72969413968/WebOb-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
@@ -76,16 +76,19 @@ popd
 %endif
 
 %files
-%doc docs/*
+%doc docs/* CHANGES.txt HISTORY.txt PKG-INFO README.rst contributing.md rtd.txt
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc docs/*
+%doc docs/* CHANGES.txt HISTORY.txt PKG-INFO README.rst contributing.md rtd.txt
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Wed Jan 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.1-alt1
+- automated PyPI update
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1
 - automated PyPI update
 
