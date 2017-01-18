@@ -1,6 +1,6 @@
 Name: chromium-bsu
 Version: 0.9.16.1
-Release: alt1
+Release: alt2
 Summary: Fast paced, arcade-style, top-scrolling space shooter
 License: Artistic
 Group: Games/Arcade
@@ -28,6 +28,8 @@ Level files for %name, %summary
 
 %prep
 %setup
+# GCC6 fix
+sed -i 's/ abs(/ fabs(/g' src/MainSDL_Event.cpp
 
 %build
 export FONTCONFIG_CFLAGS="`pkg-config --cflags freetype2`"
@@ -56,6 +58,9 @@ install -D data/png/icon32.png %buildroot%_iconsdir/hicolor/32x32/apps/%name.png
 %_datadir/%name/*
 
 %changelog
+* Wed Jan 18 2017 Fr. Br. George <george@altlinux.ru> 0.9.16.1-alt2
+- GCC6 fix
+
 * Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 0.9.16.1-alt1
 - Autobuild version bump to 0.9.16.1
 
