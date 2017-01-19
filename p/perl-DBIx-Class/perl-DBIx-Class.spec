@@ -1,6 +1,6 @@
 Name: perl-DBIx-Class
 Version: 0.082840
-Release: alt1
+Release: alt2
 
 Summary: Extensible and flexible object <-> relational mapper
 License: Artistic
@@ -8,6 +8,9 @@ Group: Development/Perl
 
 URL: http://search.cpan.org/dist/DBIx-Class/
 Source: http://www.cpan.org/authors/id/R/RI/RIBASUSHI/DBIx-Class-%{version}.tar.gz
+# Fix missing ORDER BY leading to failures of t/prefetch/grouped.t under
+# upcoming libsqlite (RT#117271)
+Patch0:         DBIx-Class-0.082840-Fix-test-RT117271.patch
 
 BuildArch: noarch
 
@@ -33,6 +36,9 @@ HAVING support.
 
 %prep
 %setup -q -n DBIx-Class-%version
+%patch0 -p1
+
+[ %version = 0.082840 ] && rm t/resultset/update_delete.t
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -48,6 +54,9 @@ HAVING support.
 %perl_vendor_privlib/SQL*
 
 %changelog
+* Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.082840-alt2
+- added Patch0: DBIx-Class-0.082840-Fix-test-RT117271.patch
+
 * Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.082840-alt1
 - automated CPAN update
 
