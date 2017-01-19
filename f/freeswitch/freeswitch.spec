@@ -1,6 +1,6 @@
 Name: freeswitch
-Version: 1.6.13
-Release: alt1
+Version: 1.6.14
+Release: alt1%ubt
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -9,13 +9,14 @@ Group: System/Servers
 Url: http://www.freeswitch.org/
 
 Source: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Patch0: %name-%version-alt.patch
 Source1: %name.init
 Source2: %name.tmpfiles
 Source3: %name.sysconfig
 Source4: modules.conf
 Source5: fs_cli.conf
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ gsmlib-devel libalsa-devel
 BuildRequires: libgnutls-devel libncurses-devel libssl-devel libunixODBC-devel
 BuildRequires: gdbm-devel db4-devel libldap-devel libcurl-devel libjpeg-devel
@@ -619,6 +620,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Thu Jan 19 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.14-alt1%ubt
+- new version
+
 * Wed Nov 30 2016 Anton Farygin <rider@altlinux.ru> 1:1.6.13-alt1
 - new version
 
