@@ -7,7 +7,7 @@
 
 Name: dhcp
 Version: 4.3.3
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -88,7 +88,7 @@ BuildPreReq: groff-base, libcap-devel
 
 # Automatically added by buildreq on Wed Sep 26 2012
 # optimized out: libisc-export
-BuildRequires: libcap-devel libisc-export-devel
+BuildRequires: libcap-devel bind-devel
 
 %package common
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -244,7 +244,7 @@ find server -type f -not -name Makefile\* -print0 |
 %build
 %add_optflags -fpie -fno-strict-aliasing -Wno-unused -Werror -Dlint
 %autoreconf
-%configure --with-libbind=%{_includedir} --with-libbind-libs=%{_libdir}
+%configure --with-libbind=%{_includedir}/bind9 --with-libbind-libs=%{_libdir}
 ## ./configure --copts "%optflags"
 %make_build DEBUG=
 ## CC=%__cc DEBUG=
@@ -544,6 +544,10 @@ fi
 # }}}
 
 %changelog
+* Thu Jan 12 2017 Mikhail Efremov <sem@altlinux.org> 1:4.3.3-alt4
+- Rebuilt with bind 9.10.4.
+- Patches tweaked for use with recent bind (by Sergey Bolshakov).
+
 * Wed Jan 11 2017 Dmitry V. Levin <ldv@altlinux.org> 1:4.3.3-alt3
 - Rebuilt with bind-9.9.9.
 

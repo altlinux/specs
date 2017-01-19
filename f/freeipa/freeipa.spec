@@ -8,7 +8,7 @@
 
 Name: freeipa
 Version: 4.3.2
-Release: alt3
+Release: alt5
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -86,7 +86,6 @@ Requires: %name-client = %version-%release
 Requires: %name-admintools = %version-%release
 Requires: krb5-kinit
 Requires: ntpd
-Requires: certmonger
 Requires: pki-server
 Requires: pki-ca
 Requires: java-1.8.0-openjdk
@@ -95,11 +94,10 @@ Requires: apache2-mod_auth_gssapi
 Requires: apache2-mod_wsgi
 Requires: krb5-kdc
 Requires: 389-ds-base
-Requires: sssd-krb5
-Requires: sssd-ipa
 Requires: memcached
 Requires: python-module-kdcproxy
 Requires: oddjob
+Requires: slapi-nis >= 0.55
 
 %description server
 IPA is an integrated solution to provide centrally managed Identity
@@ -133,6 +131,8 @@ BuildArch: noarch
 Requires: %name-client-common = %version-%release
 Requires: apache2-base webserver-common
 Requires: custodia
+Requires: fonts-ttf-fontawesome-web
+Requires: fonts-ttf-open-sans
 
 %description server-common
 IPA is an integrated solution to provide centrally managed Identity
@@ -144,20 +144,20 @@ infrastructures (Trusts).
 If you are installing an IPA server, you need to install this package.
 
 %package server-dns
-Summary: IPA integrated DNS server with support for automatic DNSSEC signing
+Summary: IPA integrated DNS server
 Group: System/Base
 BuildArch: noarch
 Requires: %name-server = %version-%release
-#Requires: bind-dyndb-ldap
-Requires: bind
+Requires: bind-dyndb-ldap
+Requires: bind >= 9.10.4
 Requires: bind-utils
 #Requires: bind-pkcs11
 #Requires: bind-pkcs11-utils
-Requires: opendnssec
+#Requires: opendnssec
 
 %description server-dns
-IPA integrated DNS server with support for automatic DNSSEC signing.
-Integrated DNS server is BIND 9. OpenDNSSEC provides key management.
+IPA integrated DNS server.
+Integrated DNS server is BIND 9.
 
 %package server-trust-ad
 Summary: Virtual package to install packages required for Active Directory trusts
@@ -176,6 +176,10 @@ Requires: %name-client-common = %version-%release
 Requires: python-module-%name = %version-%release
 Requires: python-module-ipaclient = %version-%release
 Requires: oddjob-mkhomedir
+Requires: sssd-krb5
+Requires: sssd-ipa
+Requires: certmonger
+Requires: ntpd
 
 %description client
 IPA is an integrated solution to provide centrally managed Identity
@@ -238,6 +242,7 @@ Requires: %name-common = %version-%release
 Requires: gnupg
 Requires: keyutils
 Requires: curl
+Requires: openssl
 # Drop %%python_sitelibdir_noarch from requires.
 # Otherwise it will be removed by the dependency optimizator
 # on i586, but not on x86_64 and noarch check will fail.
@@ -354,23 +359,23 @@ touch %buildroot%_datadir/ipa/html/preferences.html
 mkdir -p %buildroot%_initdir
 mkdir %buildroot%_sysconfdir/sysconfig/
 install -m 644 init/ipa_memcached.conf %buildroot%_sysconfdir/sysconfig/ipa_memcached
-install -m 644 init/ipa-dnskeysyncd.conf %buildroot%_sysconfdir/sysconfig/ipa-dnskeysyncd
-install -m 644 init/ipa-ods-exporter.conf %buildroot%_sysconfdir/sysconfig/ipa-ods-exporter
-install -m 644 daemons/dnssec/ipa-ods-exporter.socket %buildroot%_unitdir/ipa-ods-exporter.socket
-install -m 644 daemons/dnssec/ipa-ods-exporter.service %buildroot%_unitdir/ipa-ods-exporter.service
-install -m 644 daemons/dnssec/ipa-dnskeysyncd.service %buildroot%_unitdir/ipa-dnskeysyncd.service
+#install -m 644 init/ipa-dnskeysyncd.conf %buildroot%_sysconfdir/sysconfig/ipa-dnskeysyncd
+#install -m 644 init/ipa-ods-exporter.conf %buildroot%_sysconfdir/sysconfig/ipa-ods-exporter
+#install -m 644 daemons/dnssec/ipa-ods-exporter.socket %buildroot%_unitdir/ipa-ods-exporter.socket
+#install -m 644 daemons/dnssec/ipa-ods-exporter.service %buildroot%_unitdir/ipa-ods-exporter.service
+#install -m 644 daemons/dnssec/ipa-dnskeysyncd.service %buildroot%_unitdir/ipa-dnskeysyncd.service
 
 # dnssec daemons
 mkdir -p %buildroot/usr/libexec/ipa/
-install daemons/dnssec/ipa-dnskeysyncd %buildroot%_libexecdir/ipa/ipa-dnskeysyncd
-install daemons/dnssec/ipa-dnskeysync-replica %buildroot%_libexecdir/ipa/ipa-dnskeysync-replica
-install daemons/dnssec/ipa-ods-exporter %buildroot%_libexecdir/ipa/ipa-ods-exporter
+#install daemons/dnssec/ipa-dnskeysyncd %buildroot%_libexecdir/ipa/ipa-dnskeysyncd
+#install daemons/dnssec/ipa-dnskeysync-replica %buildroot%_libexecdir/ipa/ipa-dnskeysync-replica
+#install daemons/dnssec/ipa-ods-exporter %buildroot%_libexecdir/ipa/ipa-ods-exporter
 
 # Web UI plugin dir
 mkdir -p %buildroot%_datadir/ipa/ui/js/plugins
 
 # DNSSEC config
-mkdir -p %buildroot%_sysconfdir/ipa/dnssec
+#mkdir -p %buildroot%_sysconfdir/ipa/dnssec
 
 # KDC proxy config (Apache config sets KDCPROXY_CONFIG to load this file)
 mkdir -p %buildroot%_sysconfdir/ipa/kdcproxy/
@@ -440,9 +445,9 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 %_libexecdir/certmonger/ipa-server-guard
 %_libexecdir/ipa-otpd
 %dir %_libexecdir/ipa/
-%_libexecdir/ipa/ipa-dnskeysyncd
-%_libexecdir/ipa/ipa-dnskeysync-replica
-%_libexecdir/ipa/ipa-ods-exporter
+#%_libexecdir/ipa/ipa-dnskeysyncd
+#%_libexecdir/ipa/ipa-dnskeysync-replica
+#%_libexecdir/ipa/ipa-ods-exporter
 %_libexecdir/ipa/ipa-httpd-kdcproxy
 %dir %_libexecdir/ipa/oddjob/
 
@@ -454,9 +459,9 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 %attr(644,root,root) %_unitdir/ipa.service
 %attr(644,root,root) %_unitdir/ipa-otpd.socket
 %attr(644,root,root) %_unitdir/ipa-otpd@.service
-%attr(644,root,root) %_unitdir/ipa-dnskeysyncd.service
-%attr(644,root,root) %_unitdir/ipa-ods-exporter.socket
-%attr(644,root,root) %_unitdir/ipa-ods-exporter.service
+#%attr(644,root,root) %_unitdir/ipa-dnskeysyncd.service
+#%attr(644,root,root) %_unitdir/ipa-ods-exporter.socket
+#%attr(644,root,root) %_unitdir/ipa-ods-exporter.service
 # END
 
 %plugin_dir/*.so
@@ -493,8 +498,8 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 %ghost %verify(not user group) %dir %_sharedstatedir/kdcproxy
 %dir %attr(0755,root,root) %_sysconfdir/ipa/kdcproxy
 %config(noreplace) %_sysconfdir/sysconfig/ipa_memcached
-%config(noreplace) %_sysconfdir/sysconfig/ipa-dnskeysyncd
-%config(noreplace) %_sysconfdir/sysconfig/ipa-ods-exporter
+#%config(noreplace) %_sysconfdir/sysconfig/ipa-dnskeysyncd
+#%config(noreplace) %_sysconfdir/sysconfig/ipa-ods-exporter
 %config(noreplace) %_sysconfdir/ipa/kdcproxy/kdcproxy.conf
 %dir %attr(0770,root,%webserver_group) %_runtimedir/ipa_memcached
 %dir %attr(0700,root,root) %_runtimedir/ipa
@@ -525,7 +530,7 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 %ghost %attr(0644,root,%webserver_group) %config(noreplace) %_sysconfdir/httpd2/conf/ipa-pki-proxy.conf
 %ghost %attr(0644,root,%webserver_group) %config(noreplace) %_sysconfdir/httpd2/conf/ipa-kdc-proxy.conf
 %ghost %attr(0644,root,apache2) %config(noreplace) %_sysconfdir/ipa/kdcproxy/ipa-kdc-proxy.conf
-%dir %attr(0755,root,root) %_sysconfdir/ipa/dnssec
+#%dir %attr(0755,root,root) %_sysconfdir/ipa/dnssec
 %dir %_localstatedir/lib/ipa
 
 %attr(700,root,root) %dir %_localstatedir/lib/ipa/backup
@@ -533,8 +538,14 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 %attr(700,root,root) %dir %_localstatedir/lib/ipa/sysupgrade
 %attr(755,root,root) %dir %_localstatedir/lib/ipa/pki-ca
 %ghost %_localstatedir/lib/ipa/pki-ca/publish
-#%ghost %_localstatedir/named/dyndb-ldap/ipa
+#%ghost %_localstatedir/lib/bind/zone/dyndb-ldap/ipa
+#%ghost %_localstatedir/lib/bind/zone/dyndb-ldap/ipa/master
 %dir %attr(0700,root,root) %_sysconfdir/ipa/custodia
+
+# DNSSEC is disabled for now
+%exclude %_datadir/ipa/dnssec.ldif
+%exclude %_datadir/ipa/opendnssec_conf.template
+%exclude %_datadir/ipa/opendnssec_kasp.template
 
 %files server-dns
 %_sbindir/ipa-dns-install
@@ -609,6 +620,31 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 %_man1dir/ipa-test-task.1.*
 
 %changelog
+* Mon Jan 16 2017 Mikhail Efremov <sem@altlinux.org> 4.3.2-alt5
+- bindinstance: Drop 'generating rndc key' step.
+- bindinstance: Use resolvconf if needed.
+- tasks: Implement {set/restore}_control_state() functions.
+- Disable bind chroot and fix paths in configs.
+- altlinux/tasks.py: Implement check_selinux_status().
+- ipa-client-automount: Configure nsswitch.conf for sssd.
+- Configure nsswitch.conf for use sssd.
+- Require ntpd in the client subpackage.
+
+* Wed Dec 28 2016 Mikhail Efremov <sem@altlinux.org> 4.3.2-alt4
+- Move some requires to client subpackage (closes: #32952).
+- Require slapi-nis.
+- Require fonts for web ui.
+- web ui: Fix fonts.
+- Use bash as default login shell.
+- Update server-dns description.
+- Disable DNSSEC support for now.
+- Require openssl.
+- Fix opendnssec paths.
+- Update named.conf and paths.
+- Increase httpd.service start timeout.
+- Enable/disable apache2 modules/configs.
+- Enable dyndb-ldap.
+
 * Fri Nov 25 2016 Mikhail Efremov <sem@altlinux.org> 4.3.2-alt3
 - Require java-1.8.0-openjdk.
 - Require pki.

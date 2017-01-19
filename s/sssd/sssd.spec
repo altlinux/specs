@@ -2,7 +2,7 @@
 
 Name: sssd
 Version: 1.14.2
-Release: alt2
+Release: alt4%ubt
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -12,7 +12,7 @@ Source2: %name.init
 Source3: system-auth-sss.pam
 Source4: system-auth-use_first_pass-sss.pam
 
-Patch: %name-%version-%release.patch
+Patch: %name-%version-alt.patch
 
 # Determine the location of the LDB modules directory
 %define ldb_modulesdir %(pkg-config --variable=modulesdir ldb)
@@ -36,6 +36,8 @@ Patch: %name-%version-%release.patch
 Requires: %name-client = %version-%release
 Requires: libsss_idmap = %version-%release
 Requires: libldb = %ldb_version
+
+BuildRequires(pre):rpm-build-ubt
 
 ### Build Dependencies ###
 BuildRequires: /proc
@@ -704,7 +706,14 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 
 %files nfs-idmap
 /%_lib/libnfsidmap/sss.so
+
 %changelog
+* Thu Jan 12 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.2-alt4%ubt
+- Set selinux provider none only if selinux disabled
+
+* Sat Dec 31 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.2-alt3%ubt
+- Set default selinux provider to none
+
 * Mon Dec 05 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.2-alt2
 - Set sssd.conf owner to root:root
   due it hardcoded in sss_ini_config_access_check()
