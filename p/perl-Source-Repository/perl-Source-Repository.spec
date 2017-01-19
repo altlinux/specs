@@ -1,7 +1,7 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.386
+Version: 0.387
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -12,7 +12,7 @@ License: GPL or Artistic
 Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar
 Url: http://search.cpan.org/dist/%module
 
-BuildRequires: perl-devel perl-RPM-Source-Editor perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-String-ShellQuote perl-Source-Package perl(JSON/XS.pm)
+BuildRequires: perl-devel perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-String-ShellQuote perl-Source-Package perl(JSON/XS.pm)
 
 %description
 %summary
@@ -32,6 +32,9 @@ BuildRequires: perl-devel perl-RPM-Source-Editor perl(RPM/Header.pm) perl(RPM/Ve
 %perl_vendor_privlib/Source*
 
 %changelog
+* Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.387-alt1
+- moved Filter to Mass
+
 * Sun Jan 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.386-alt1
 - perl fixes
 
