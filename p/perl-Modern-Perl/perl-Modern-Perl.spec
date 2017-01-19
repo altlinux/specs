@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-Serial: 1
+Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Modern-Perl
-Version:        1.20161229
+Version:        1.20170117
 Release:        alt1
 Summary:        Enable all of the features of Modern Perl with one command
 License:        GPL+ or Artistic
@@ -57,6 +57,9 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 %{perl_vendor_privlib}/Modern/
 
 %changelog
+* Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.20170117-alt1
+- automated CPAN update
+
 * Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.20161229-alt1
 - automated CPAN update
 
