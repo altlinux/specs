@@ -15,7 +15,7 @@
 
 Name: perl-Catalyst-Plugin-HTML-Widget
 Version: 1.1
-Release: alt2.1
+Release: alt2.2
 
 Summary: HTML Widget Catalyst Plugin
 
@@ -29,7 +29,7 @@ BuildArch: noarch
 Source: http://search.cpan.org/CPAN/authors/id/S/SR/SRI/%m_distro-%version.tar.gz
 
 # Automatically added by buildreq on Mon Sep 08 2008 (-bi)
-BuildRequires: perl-Catalyst-Runtime perl-HTML-Widget perl-Log-Agent perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-Catalyst-Runtime perl-HTML-Widget perl-Log-Agent perl-Test-Pod perl-Test-Pod-Coverage perl(Cpanel/JSON/XS.pm)
 
 %description
 Catalyst::Plugin::HTML::Widget - HTML Widget And Validation Framework
@@ -46,6 +46,9 @@ Catalyst::Plugin::HTML::Widget - HTML Widget And Validation Framework
 %perl_vendor_privlib/Catalyst*
 
 %changelog
+* Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2.2
+- fixed build
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
