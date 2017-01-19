@@ -1,4 +1,4 @@
-%define ver_major 0.6
+%define ver_major 0.8
 %define xdg_name org.gnome.Recipes
 
 Name: recipes
@@ -19,6 +19,7 @@ Requires: %name-data = %EVR
 BuildRequires: autoconf-archive libappstream-glib-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver libjson-glib-devel
 BuildRequires: libgspell-devel libgnome-autoar-devel vala-tools
+BuildRequires: gobject-introspection-devel
 
 %description
 Recipes is an easy to use app that will help you to discover what to cook today,
@@ -70,6 +71,9 @@ rm -f %buildroot%_libdir/%name/*.{a,la}
 
 
 %changelog
+* Thu Jan 19 2017 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Mon Jan 09 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - first build for Sisyphus
 
