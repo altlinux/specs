@@ -1,6 +1,6 @@
 Name: cuneiform
 Version: 1.0
-Release: alt3.qa1
+Release: alt3.qa2
 
 Summary: Cuneiform is an OCR system originally developed and open sourced by Cognitive technologies.
 Summary(ru_RU.KOI8-R): Программа распознавания символов (OCR) Cuneiform, Linux-версия
@@ -12,6 +12,7 @@ Url: https://launchpad.net/cuneiform-linux
 Packager: Sergey Alembekov <rt@altlinux.ru>
 
 Source: http://launchpad.net/%name-linux/%version/%version/+download/%name-%version.tar.bz2
+Patch: cuneiform-1.0-minmax.patch
 
 Requires: %name-data
 BuildRequires: gcc-c++ libImageMagick-devel cmake
@@ -42,6 +43,7 @@ Language support and other data files required for Cuneiform OCR
 
 %prep
 %setup
+%patch -p1
 
 %build
 mkdir build
@@ -64,6 +66,9 @@ cmake -DCMAKE_INSTALL_PREFIX=%buildroot%prefix -P cmake_install.cmake
 %_datadir/%name/*
 
 %changelog
+* Thu Jan 19 2017 Fr. Br. George <george@altlinux.ru> 1.0-alt3.qa2
+- Rebuilt for gcc6
+
 * Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.0-alt3.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
