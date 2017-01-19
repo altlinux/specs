@@ -8,7 +8,7 @@
 
 Name: bacula
 Version: 5.2.13
-Release: alt9
+Release: alt10
 
 License: AGPLv3
 Summary: Network based backup program
@@ -460,7 +460,7 @@ use appropriate %_datadir/bacula/scripts/update_*_tables script"
 test $(grep -R '/etc/bacula/job/bacula.conf' /etc/bacula/bacula-dir.conf) || echo '@/etc/bacula/job/bacula.conf' >> /etc/bacula/bacula-dir.conf
 
 %triggerpostun common -- bacula-director-common < 5.2.13-alt6
-chown bacula:bacula %_localstatedir/bacula/*
+chown -f bacula:bacula %_localstatedir/bacula/* ||:
 
 %preun director-sqlite3
 %preun_service bacula-dir
@@ -656,6 +656,9 @@ chown bacula:bacula %_localstatedir/bacula/*
 %files
 
 %changelog
+* Wed Jan 18 2017 Denis Medvedev <nbr@altlinux.org> 5.2.13-alt10
+- fix trigger that makes errors on empty database uninstalls.  (ALT #33013)
+
 * Mon Oct 17 2016 Terechkov Evgenii <evg@altlinux.org> 5.2.13-alt9
 - Fix mode of %%_var/run/bacula
 
