@@ -1,25 +1,28 @@
-%define ver_major 9.5
+%define ver_major 9.7
+%define gst_api_ver 1.0
 %def_with recording
 
 Name: girl
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Internet Radio Locator
 License: LGPLv2+
 Group: Sound
+Url: https://wiki.gnome.org/Apps/Girl
 
-URL: http://people.gnome.org/~paobac/goobox/
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-Requires: totem
-%{?_with_recording:Requires: streamripper}
+Requires: gst-plugins-base%gst_api_ver
+Requires: gst-plugins-bad%gst_api_ver
+Requires: gst-plugins-ugly%gst_api_ver
 
-#%define gtk_ver 3.6.0
+%define gtk_ver 3.6.0
 
-#BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: gnome-common intltool yelp-tools gtk-doc
 BuildRequires: libgnomeui-devel libxml2-devel
+BuildRequires: gst-plugins%gst_api_ver-devel
 
 %description
 GIRL is a GNOME Internet Radio Locator program that allows the user
@@ -28,15 +31,13 @@ on the Internet.
 
 %prep
 %setup
-echo "girl_LDADD=\$(GIRL_LIBS)" >> src/Makefile.am
+#echo "girl_LDADD=\$(GIRL_LIBS)" >> src/Makefile.am
 
 %build
 %autoreconf
-export ac_cv_path_GIRL_HELPER_PLAYER=%_bindir/totem
-export ac_cv_path_GIRL_HELPER_RECORD=%_bindir/streamripper
 %configure \
 	%{subst_with recording}
-%make_build V=1
+%make_build
 
 %install
 %makeinstall_std
@@ -54,6 +55,9 @@ export ac_cv_path_GIRL_HELPER_RECORD=%_bindir/streamripper
 
 
 %changelog
+* Thu Jan 19 2017 Yuri N. Sedunov <aris@altlinux.org> 9.7.1-alt1
+- 9.7.1
+
 * Mon Sep 26 2016 Yuri N. Sedunov <aris@altlinux.org> 9.5.2-alt1
 - 9.5.2
 
