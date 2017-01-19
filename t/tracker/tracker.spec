@@ -49,7 +49,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -392,6 +392,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 %endif
 
 %changelog
+* Thu Jan 19 2017 Yuri N. Sedunov <aris@altlinux.org> 1.10.4-alt1
+- 1.10.4
+
 * Fri Dec 16 2016 Yuri N. Sedunov <aris@altlinux.org> 1.10.3-alt1
 - 1.10.3
 
