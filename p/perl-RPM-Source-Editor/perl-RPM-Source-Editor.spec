@@ -2,7 +2,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.899
+Version: 0.900
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -19,7 +19,7 @@ Url: http://search.cpan.org/dist/%module
 # Automatically added by buildreq on Wed Nov 06 2010
 BuildRequires: perl-devel /usr/bin/pod2man perl-podlators perl(RPM/Vercmp.pm) perl(RPM/Header.pm) perl(Clone.pm) perl(Tie/Hash.pm)
 # for RPM::Source::Tools
-BuildRequires: perl(RPM/uscan.pm) perl-DistroMap perl(Pod/Strip.pm)
+BuildRequires: perl(RPM/uscan.pm) perl(Pod/Strip.pm) perl-Source-Shared-Resource
 
 Obsoletes: hashertarbuild < 0.73
 Conflicts: hashertarbuild < 0.73
@@ -46,7 +46,8 @@ Use hashertarbuild <spec> to create source tarball ready for hasher.
 %setup -q -n %module-%version
 
 %build
-%perl_vendor_build INSTALLMAN1DIR=%_man1dir
+%perl_vendor_build 
+#INSTALLMAN1DIR=%_man1dir
 
 %install
 %perl_vendor_install
@@ -75,6 +76,9 @@ mkdir -p %buildroot%_datadir/srpmtools/hooks
 %_man1dir/hashertarbuild*
 
 %changelog
+* Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.900-alt1
+- development release
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.899-alt1
 - stable release
 
