@@ -1,17 +1,16 @@
 %define _unpackaged_files_terminate_build 1
-%define _unpackaged_files_terminate_build 1
 BuildRequires: perl(Module/Build/Tiny.pm)
 %define dist MooseX-Types-Common
 Name: perl-%dist
-Version: 0.001013
-Release: alt1.1
+Version: 0.001014
+Release: alt1
 
 Summary: A library of commonly used type constraints
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-Types-Common-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +21,7 @@ BuildRequires: perl-Class-C3-XS perl-Module-Install perl-MooseX-Types perl-Test-
 A set of commonly-used type constraints that do not ship with Moose by default.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +34,9 @@ A set of commonly-used type constraints that do not ship with Moose by default.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.001014-alt1
+- automated CPAN update
+
 * Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.001013-alt1.1
 - rebuild to restore role requires
 
