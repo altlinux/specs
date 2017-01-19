@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Net-Ping
 Name: perl-%dist
-Version: 2.55
+Version: 2.56
 Release: alt1
 
 Summary: Check a remote host for reachability
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RU/RURBAN/Net-Ping-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RU/RURBAN/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +21,7 @@ This module contains methods to test the reachability
 of remote hosts on a network.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %ifdef __BTE
 # skip network dependent test
@@ -35,10 +35,13 @@ grep -FZl '1..0 # Skip: network dependent test' t/*.t |xargs -r0 rm -v
 %perl_vendor_install
 
 %files
-%doc Changes README.md
+%doc Changes README.md README.md.PL
 %perl_vendor_privlib/Net
 
 %changelog
+* Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 2.56-alt1
+- automated CPAN update
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 2.55-alt1
 - automated CPAN update
 
