@@ -1,7 +1,7 @@
 %define module Source-Repository-Mass
 
 Name: perl-%module
-Version: 0.387
+Version: 0.390
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -13,7 +13,7 @@ Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar
 Url: http://search.cpan.org/dist/%module
 
 # Automatically added by buildreq on Wed Nov 06 2002
-BuildRequires: perl-devel perl-RPM-Source-Editor perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-DistroMap perl-String-ShellQuote perl-RPM-Source-Convert perl-Source-Package perl-RPM-Source-BundleImport perl-Source-Repository
+BuildRequires: perl-devel perl-RPM-Source-Editor perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-String-ShellQuote perl-RPM-Source-Convert perl-Source-Package perl-RPM-Source-BundleImport perl-Source-Repository perl-Source-Shared-Resource
 Requires: perl-RPM-Source-Editor > 0.898
 Conflicts: perl-RPM-Source-Convert < 0.48
 Conflicts: perl-Source-Repository < 0.382
@@ -37,6 +37,9 @@ Conflicts: perl-Source-Repository < 0.382
 %perl_vendor_privlib/Source*
 
 %changelog
+* Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.390-alt1
+- refactoring; use Source::Shared::*
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.387-alt1
 - python3 fixes in Matcher
 
