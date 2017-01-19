@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 8.1
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -43,6 +43,9 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Thu Jan 19 2017 Artem Zolochevskiy <azol@altlinux.ru> 8.1-alt2
+- updated to latest public distr
+
 * Fri Oct 28 2016 Artem Zolochevskiy <azol@altlinux.ru> 8.1-alt1
 - updated to 8.1
 - added 'guest session' description
