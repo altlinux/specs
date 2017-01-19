@@ -1,6 +1,6 @@
 Name: pulseaudio
-Version: 9.0
-Release: alt2
+Version: 10.0
+Release: alt1
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -17,7 +17,7 @@ BuildRequires: liblirc-devel libltdl7-devel libsoxr-devel
 BuildRequires: libsndfile-devel libspeex-devel libspeexdsp-devel
 BuildRequires: libssl-devel libwrap-devel
 BuildRequires: libSM-devel libX11-devel libXtst-devel libxcbutil-devel
-BuildRequires: libjson-c-devel libgtk+2-devel libGConf-devel
+BuildRequires: libgtk+2-devel libGConf-devel
 BuildRequires: libfftw3-devel libsbc-devel liborc-devel orc xmltoman
 BuildRequires: libsystemd-devel
 
@@ -84,7 +84,8 @@ PreReq: shadow-utils
 Requires: lib%name = %version-%release
 Requires: udev-extras >= 0.20090516-alt2
 Conflicts: %name-utils < 0.9.16-alt0.2
-
+Provides: pulseaudio-bluez = %version-%release
+Obsoletes: pulseaudio-bluez
 Provides: esound
 Obsoletes: esound
 Conflicts: esd
@@ -93,11 +94,6 @@ Conflicts: esd
 Summary: Pulseaudio system daemon
 Group: Sound
 Requires: pulseaudio-daemon = %version-%release
-
-%package bluez
-Summary: PulseAudio -- bluetooth-related part
-Group: Sound
-Requires: %name-daemon = %version-%release
 
 %package gconf
 Summary: PulseAudio -- gnome-related part
@@ -152,13 +148,6 @@ Sound Daemon (EsounD). PulseAudio is however much more advanced and has
 numerous features.
 
 This package contains PulseAudio equalizer interface.
-
-%description bluez
-PulseAudio is a networked sound server, similar in theory to the Enlightened
-Sound Daemon (EsounD). PulseAudio is however much more advanced and has
-numerous features.
-
-This package contains bluetooth-related part of PulseAudio.
 
 %description gconf
 PulseAudio is a networked sound server, similar in theory to the Enlightened
@@ -222,7 +211,7 @@ find %buildroot%_libdir -name \*.la -delete
 
 %find_lang %name
 
-%define pulselibdir %_libdir/pulse-9.0
+%define pulselibdir %_libdir/pulse-10.0
 %define pulsemoduledir %pulselibdir/modules
 
 %pre system
@@ -251,7 +240,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/zsh/site-functions/_pulseaudio
 %_datadir/bash-completion/completions/*
 
-%_libdir/pulseaudio/libpulsecore-9.0.so
+%_libdir/pulseaudio/libpulsecore-10.0.so
 
 %_libexecdir/systemd/user/pulseaudio.service
 %_libexecdir/systemd/user/pulseaudio.socket
@@ -260,12 +249,6 @@ find %buildroot%_libdir -name \*.la -delete
 %dir %pulsemoduledir
 
 %pulsemoduledir/*.so
-
-%exclude %pulsemoduledir/libbluez5-util.so
-%exclude %pulsemoduledir/module-bluez5-device.so
-%exclude %pulsemoduledir/module-bluez5-discover.so
-%exclude %pulsemoduledir/module-bluetooth-discover.so
-%exclude %pulsemoduledir/module-bluetooth-policy.so
 
 %exclude %pulsemoduledir/module-gconf.so
 
@@ -316,15 +299,6 @@ find %buildroot%_libdir -name \*.la -delete
 %files qpaeq
 %_bindir/qpaeq
 
-%files bluez
-%dir %pulselibdir
-%dir %pulsemoduledir
-%pulsemoduledir/libbluez5-util.so
-%pulsemoduledir/module-bluez5-device.so
-%pulsemoduledir/module-bluez5-discover.so
-%pulsemoduledir/module-bluetooth-discover.so
-%pulsemoduledir/module-bluetooth-policy.so
-
 %files gconf
 %dir %pulselibdir
 %dir %pulsemoduledir
@@ -348,7 +322,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/libpulse-mainloop-glib.so.*
 
 %dir %_libdir/pulseaudio
-%_libdir/pulseaudio/libpulsecommon-9.0.so
+%_libdir/pulseaudio/libpulsecommon-10.0.so
 %_man5dir/pulse-client.conf.5*
 
 %files -n lib%name-devel
@@ -362,6 +336,9 @@ find %buildroot%_libdir -name \*.la -delete
 %doc doxygen/html
 
 %changelog
+* Thu Jan 19 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 10.0-alt1
+- 10.0 released
+
 * Fri Jul 29 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 9.0-alt2
 - drop bluez4 support
 
