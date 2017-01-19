@@ -1,14 +1,14 @@
 Name: installer-feature-resolver-bind-stage3
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 Summary: Setup bind as a main local resolver
 License: GPL
 Group: System/Configuration/Other
 Url: http://www.altlinux.org/Installer/beans
-Packager: Stanislav Ievlev <inger@altlinux.org>
 BuildArch: noarch
-Requires: bind etcnet openresolv-bind
+Requires: bind >= 9.10.4
+Requires: openresolv-bind
 Source: %name-%version.tar
 
 %description
@@ -27,6 +27,10 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Jan 12 2017 Mikhail Efremov <sem@altlinux.org> 0.6-alt1
+- Drop etcnet from dependencies.
+- Change paths to openresolv configs.
+
 * Tue Jun 07 2016 Mikhail Efremov <sem@altlinux.org> 0.5-alt1
 - Use name_servers option in the resolvconf.conf again.
 
