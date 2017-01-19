@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name qjson
 
 Name: %_name-qt5
-Version: 0.8.1
+Version: 0.9.0
 Release: alt1
 
 Group: System/Libraries
@@ -11,7 +11,7 @@ Url: http://qjson.sourceforge.net
 License: GPLv2+
 
 %if_disabled snapshot
-Source: http://sourceforge.net/projects/qjson/files/%name/%version/%_name-%version.tar.bz2
+Source: http://sourceforge.net/projects/qjson/files/%name/%version/%_name-%version.tar.gz
 %else
 #VCS: https://github.com/flavio/qjson/
 Source: %_name-%version.tar
@@ -69,6 +69,9 @@ Development files for %name
 %_pkgconfigdir/QJson-qt5.pc
 
 %changelog
+* Thu Jan 19 2017 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Thu Jul 07 2016 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
 - first build for Sisyphus (0.8.1-118-g5e3b9b8)
 
