@@ -1,7 +1,8 @@
-%define ver_major 0.9
+%def_disable snapshot
+%define ver_major 1.0
 
 Name: terminology
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: EFL terminal emulator
@@ -9,9 +10,12 @@ License: BSD
 Group: Terminals
 Url: http://www.enlightenment.org/p.php?p=about/terminology
 
-#Source: %name-%version.tar
+%if_disabled snapshot
 Source: http://download.enlightenment.org/rel/apps/%name/%name-%version.tar.xz
-Patch: %name-0.2-alt-default_font.patch
+%else
+Source: %name-%version.tar
+%endif
+Patch: %name-1.0.0-alt-default_font.patch
 
 Requires: fonts-bitmap-terminus
 Provides: xvt
@@ -60,6 +64,12 @@ EOF
 %doc AUTHORS ChangeLog COPYING README
 
 %changelog
+* Thu Jan 19 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
+* Mon Dec 21 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt2
+- updated to v0.9.1-51-gf731ff6
+
 * Sat Sep 19 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
 - 0.9.1
 
