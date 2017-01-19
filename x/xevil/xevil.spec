@@ -2,7 +2,7 @@
 Summary: A fast-action violent game for the X Window System
 Name: xevil
 Version: 2.02r2
-Release: alt1
+Release: alt2
 License: GPL
 Group: Games/Arcade
 Source0: http://www.xevil.com/download/stable/%{name}src%version.zip
@@ -46,5 +46,8 @@ install %SOURCE2 $RPM_BUILD_ROOT%_pixmapsdir
 %_pixmapsdir/*.png
 
 %changelog
+* Thu Jan 19 2017 Fr. Br. George <george@altlinux.ru> 2.02r2-alt2
+- GCC6 fix
+
 * Sat Oct 05 2013 Fr. Br. George <george@altlinux.ru> 2.02r2-alt1
 - Initial (?) build from PLD
