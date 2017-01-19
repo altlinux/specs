@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Archive-Extract
 Name: perl-%dist
-Version: 0.78
+Version: 0.80
 Release: alt1
 
 Summary: A generic archive extracting mechanism
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Archive-Extract-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BI/BINGOS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -25,7 +25,7 @@ to worry how it does so, or use different interfaces for each type by using
 either perl modules, or commandline tools on your system.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -38,6 +38,9 @@ either perl modules, or commandline tools on your system.
 %perl_vendor_privlib/Archive
 
 %changelog
+* Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.80-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.78-alt1
 - automated CPAN update
 
