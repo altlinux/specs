@@ -10,8 +10,8 @@
 
 Name: kde5-%rname
 %define lname lib%name
-Version: 5.3.0
-Release: alt1
+Version: 5.4.0
+Release: alt1%ubt
 %K5init
 
 Summary: digiKam is an advanced digital photo management application for linux
@@ -30,12 +30,13 @@ Requires: qt5-sql-mysql
 # libs/dimg/filters/icc
 Requires: icc-profiles
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 # Automatically added by buildreq on Wed Jul 20 2016 (-bi)
 # optimized out: boost-devel-headers cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ glib2-devel glibc-devel-static gtk-update-icon-cache kde5-akonadi-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kguiaddons-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdb4-devel libdbusmenu-qt52 libdc1394-22 libgdk-pixbuf libgpg-error libgphoto2-6 libgphoto2_port-12 libgst-plugins1.0 libical-devel libjson-c libopencore-amrnb0 libopencore-amrwb0 libp11-kit libpangox-compat libpng-devel libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sensors libqt5-sql libqt5-svg libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libraw1394-11 libstdc++-devel libwayland-client libwayland-server libxcbutil-keysyms libxkbfile-devel perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-gir rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: doxygen eigen3 extra-cmake-modules flex git-core graphviz kde4-marble-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-libkipi-devel kde5-libksane-devel kde5-pimlibs-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-ki18n-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-knotifyconfig-devel kf5-sonnet-devel kf5-threadweaver-devel libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjasper-devel libjpeg-devel liblcms2-devel liblensfun-devel liblqr-devel libopencv-devel libtiff-devel libusb-devel python-module-google python3-dev qt4-dbus qt5-multimedia-devel qt5-webkit-devel qt5-x11extras-devel rpm-build-ruby sqlite3 zlib-devel-static
 BuildRequires: doxygen eigen3 extra-cmake-modules flex graphviz
 BuildRequires: qt5-multimedia-devel qt5-webkit-devel qt5-x11extras-devel
+BuildRequires: libqtav-devel
 BuildRequires: libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjasper-devel libjpeg-devel libpng-devel
 BuildRequires: liblcms2-devel liblensfun-devel liblqr-devel libopencv-devel libtiff-devel libusb-devel
 BuildRequires: libEGL-devel libGL-devel libGLU-devel
@@ -170,7 +171,7 @@ done
 
 %install
 %K5install
-%K5install_move data kconf_update showfoto solid locale digikam/utils
+%K5install_move data kconf_update showfoto solid locale
 
 rm -f %buildroot/%_K5i18n/*/*/kipiplugin*
 rm -f %buildroot/%_K5i18n/*/*/lib*
@@ -180,18 +181,17 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 
 %files common
 %dir %_K5data/%rname
+%dir %_datadir/%rname
 %dir %_K5data/showfoto
 
 %files
 %_K5bin/%rname
-%_K5data/%rname/utils/
+#_K5data/%rname/utils/
+%_datadir/%rname/utils/
 %_K5bin/showfoto
 %_K5bin/cleanup_digikamdb
 %_K5bin/digitaglinktree
-#%_K5plug/%{rname}imageplugin_*.so
 %_K5xdgapp/*.desktop
-#%_K5srv/%{rname}imageplugin_*.desktop
-#%_K5srvtyp/*.desktop
 %_K5xmlgui/%rname/
 %_K5xmlgui/showfoto/
 %_K5notif/%rname.notifyrc
@@ -200,7 +200,7 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %files data -f %rname.lang
 %doc AUTHORS ChangeLog HACKING NEWS README TODO
 %_K5data/%rname/*
-%exclude %_K5data/%rname/utils/
+#exclude %_K5data/%rname/utils/
 %_K5data/showfoto/*
 %_K5icon/hicolor/*/apps/%rname.*
 %_K5icon/hicolor/*/apps/showfoto.*
@@ -227,6 +227,12 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Wed Jan 18 2017 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1%ubt
+- new version
+
+* Mon Nov 28 2016 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt0.M80P.1
+- build for M80P
+
 * Fri Nov 25 2016 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
 - new version
 
