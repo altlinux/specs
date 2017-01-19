@@ -2,7 +2,7 @@
 %define dist MooseX-NonMoose
 Name: perl-%dist
 Version: 0.26
-Release: alt1.1
+Release: alt1.2
 
 Summary: Easy subclassing of non-Moose classes
 License: GPL or Artistic
@@ -14,7 +14,7 @@ Source: http://www.cpan.org/authors/id/D/DO/DOY/MooseX-NonMoose-%{version}.tar.g
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Nov 20 2011
-BuildRequires: perl-Moose perl-Test-Fatal perl-Test-Script
+BuildRequires: perl-Moose perl-Test-Fatal perl-Test-Script perl(List/MoreUtils.pm)
 
 %description
 MooseX::NonMoose allows for easily subclassing non-Moose classes with
@@ -44,6 +44,9 @@ anything at all.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1.2
+- fixed build
+
 * Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1.1
 - rebuild to restore role requires
 
