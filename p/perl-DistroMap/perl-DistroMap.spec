@@ -1,7 +1,7 @@
 %define module DistroMap
 
 Name: perl-%module
-Version: 0.30
+Version: 0.31
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -13,7 +13,7 @@ Source: http://www.cpan.org/modules/by-module/DistroMap/%module-%version.tar.gz
 Url: http://search.cpan.org/dist/%module
 
 # Automatically added by buildreq on Wed Nov 06 2002
-BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm)
+BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm) perl-Source-Shared-CLI
 
 %description
 %summary
@@ -36,6 +36,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm)
 %_man1dir/distro*
 
 %changelog
+* Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
+- use shared CLI
+
 * Wed Jan 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
 - back multimap fixes
 
