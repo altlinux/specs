@@ -6,8 +6,8 @@
 %define module Data-Array2ArrayMap-SDB
 
 Name: perl-%module
-Version: 0.14
-Release: alt1.1.1
+Version: 0.15
+Release: alt1
 
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -50,6 +50,9 @@ cp -a sdblib %buildroot%_includedir/mapsdb
 %_includedir/mapsdb
 
 %changelog
+* Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- new version
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1.1.1
 - rebuild with new perl 5.22.0
 
