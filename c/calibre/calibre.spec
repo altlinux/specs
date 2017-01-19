@@ -3,7 +3,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
 Version: 2.69.0
-Release: alt1
+Release: alt1.1
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -126,6 +126,9 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %_datadir/appdata/*.appdata.xml
 
 %changelog
+* Thu Jan 12 2017 Sergey V Turchin <zerg@altlinux.org> 2.69.0-alt1.1
+- build with new Qt
+
 * Tue Oct 11 2016 Vitaly Lipatov <lav@altlinux.ru> 2.69.0-alt1
 - new version 2.69.0 (with rpmrb script)
 

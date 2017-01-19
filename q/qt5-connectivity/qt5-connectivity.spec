@@ -2,8 +2,8 @@
 %global qt_module qtconnectivity
 
 Name: qt5-connectivity
-Version: 5.6.2
-Release: alt1
+Version: 5.7.1
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - Connectivity components
@@ -11,10 +11,12 @@ Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
+Patch1: alt-disable-btle.patch
 
 # Automatically added by buildreq on Thu Feb 27 2014 (-bi)
 # optimized out: elfutils libGL-devel libcloog-isl4 libqt5-clucene libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-help libqt5-network libqt5-qml libqt5-quick libqt5-sql libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-tools ruby ruby-stdlibs
 #BuildRequires: gcc-c++ glibc-devel-static libbluez-devel qt5-script-devel qt5-tools-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-ruby
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ glibc-devel libbluez-devel qt5-declarative-devel qt5-xmlpatterns-devel qt5-tools-devel
 
 %description
@@ -67,6 +69,7 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -n %qt_module-opensource-src-%version
+%patch1 -p1
 syncqt.pl-qt5 -version %version -private
 
 %build
@@ -106,6 +109,12 @@ syncqt.pl-qt5 -version %version -private
 %_qt5_docdir/*
 
 %changelog
+* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
+- new version
+
+* Sun Oct 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt0.M80P.1
+- build for M80P
+
 * Wed Oct 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1
 - new version
 

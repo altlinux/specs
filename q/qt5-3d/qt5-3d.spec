@@ -2,8 +2,8 @@
 %global qt_module qt3d
 
 Name: qt5-3d
-Version: 5.6.2
-Release: alt1
+Version: 5.7.1
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - Qt3D QML bindings and C++ APIs
@@ -14,6 +14,7 @@ Requires: qt5-imageformats
 
 Source: %qt_module-opensource-src-%version.tar
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: qt5-base-devel-static qt5-tools
 BuildRequires: pkgconfig(Qt5Quick) pkgconfig(Qt5XmlPatterns) pkgconfig(Qt5Qml) pkgconfig(Qt5Network) pkgconfig(Qt5Core) pkgconfig(Qt5OpenGL)
 BuildRequires: pkgconfig(assimp)
@@ -102,6 +103,20 @@ Requires: %name-common = %EVR
 %description -n libqt5-3drender
 %summary
 
+%package -n libqt5-3dextras
+Summary: Qt5 library
+Group: System/Libraries
+Requires: %name-common = %EVR
+%description -n libqt5-3dextras
+%summary
+
+%package -n libqt5-3dquickextras
+Summary: Qt5 library
+Group: System/Libraries
+Requires: %name-common = %EVR
+%description -n libqt5-3dquickextras
+%summary
+
 %prep
 %setup -n %qt_module-opensource-src-%version
 syncqt.pl-qt5 -version %version -private
@@ -139,6 +154,10 @@ syncqt.pl-qt5 -version %version -private
 %_qt5_libdir/libQt?3DQuickRender.so.*
 %files -n libqt5-3drender
 %_qt5_libdir/libQt?3DRender.so.*
+%files -n libqt5-3dextras
+%_qt5_libdir/libQt?3DExtras.so.*
+%files -n libqt5-3dquickextras
+%_qt5_libdir/libQt?3DQuickExtras.so.*
 
 
 %files devel
@@ -155,6 +174,12 @@ syncqt.pl-qt5 -version %version -private
 %_qt5_docdir/*
 
 %changelog
+* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
+- new version
+
+* Sun Oct 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt0.M80P.1
+- build for M80P
+
 * Wed Oct 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1
 - new version
 

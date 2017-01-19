@@ -4,8 +4,8 @@
 %def_disable bootstrap
 
 Name: qt5-declarative
-Version: 5.6.2
-Release: alt1
+Version: 5.7.1
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
@@ -17,6 +17,7 @@ Source: %qt_module-opensource-src-%version.tar
 Patch10: qtdeclarative-opensource-src-5.5.0-no_sse2.patch
 Patch11: qtdeclarative-QQuickShaderEffectSource_deadlock.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-xmlpatterns-devel
 %if_disabled bootstrap
 BuildRequires: qt5-tools
@@ -116,11 +117,11 @@ syncqt.pl-qt5 -version %version -private
 %files common
 %doc LGPL_EXCEPTION.txt
 %doc dist/changes*
-%dir %_qt5_archdatadir/qml/
-%dir %_qt5_archdatadir/qml/Qt/
-%dir %_qt5_archdatadir/qml/Qt/labs/
-%dir %_qt5_archdatadir/qml/QtQml/
-%dir %_qt5_archdatadir/qml/QtQuick/
+%dir %_qt5_qmldir/
+%dir %_qt5_qmldir/Qt/
+%dir %_qt5_qmldir/Qt/labs/
+%dir %_qt5_qmldir/QtQml/
+%dir %_qt5_qmldir/QtQuick/
 %dir %_qt5_plugindir/qmltooling/
 
 %files doc
@@ -130,28 +131,29 @@ syncqt.pl-qt5 -version %version -private
 
 %files -n libqt5-qml
 %_qt5_libdir/libQt5Qml.so.*
-%_qt5_archdatadir/qml/builtins.qmltypes
-%_qt5_archdatadir/qml/Qt/labs/folderlistmodel/
-%_qt5_archdatadir/qml/Qt/labs/settings/
-%_qt5_archdatadir/qml/QtQml/*
-%_qt5_archdatadir/qml/QtQuick/LocalStorage/
-%_qt5_archdatadir/qml/QtQuick/XmlListModel/
+%_qt5_qmldir/builtins.qmltypes
+%_qt5_qmldir/Qt/labs/folderlistmodel/
+%_qt5_qmldir/Qt/labs/settings/
+%_qt5_qmldir/QtQml/*
+%_qt5_qmldir/QtQuick/LocalStorage/
+%_qt5_qmldir/QtQuick/XmlListModel/
+%_qt5_qmldir/QtQuick/Layouts/
 
 %files -n libqt5-quick
 %_qt5_libdir/libQt5Quick.so.*
 #%_qt5_plugindir/accessible/libqtaccessiblequick.so
-%_qt5_archdatadir/qml/QtQuick.2/
-#%_qt5_archdatadir/qml/QtQuick/Dialogs/
-#%_qt5_archdatadir/qml/QtQuick/PrivateWidgets/
-%_qt5_archdatadir/qml/QtQuick/Window.2/
+%_qt5_qmldir/QtQuick.2/
+#%_qt5_qmldir/QtQuick/Dialogs/
+#%_qt5_qmldir/QtQuick/PrivateWidgets/
+%_qt5_qmldir/QtQuick/Window.2/
 
 %files -n libqt5-quickparticles
 %_qt5_libdir/libQt5QuickParticles.so.*
-%_qt5_archdatadir/qml/QtQuick/Particles.2/
+%_qt5_qmldir/QtQuick/Particles.2/
 
 %files -n libqt5-quicktest
 %_qt5_libdir/libQt5QuickTest.so.*
-%_qt5_archdatadir/qml/QtTest/
+%_qt5_qmldir/QtTest/
 
 %files -n libqt5-quickwidgets
 %_qt5_libdir/libQt5QuickWidgets.so.*
@@ -169,13 +171,23 @@ syncqt.pl-qt5 -version %version -private
 %_libdir/cmake/Qt*/
 %_pkgconfigdir/Qt?Qml.pc
 %_pkgconfigdir/Qt?Quick*.pc
+#%_pkgconfigdir/Qt?QmlDevTools.pc
 
 %files devel-static
 %_qt5_libdir/libQt?QmlDevTools.a
 %_qt5_libdatadir/libQt?QmlDevTools.a
-#%_pkgconfigdir/Qt?QmlDevTools.pc
+#%_qt5_libdir/libQt?PacketProtocol.a
+#%_qt5_libdatadir/libQt?PacketProtocol.a
+#%_qt5_libdir/libQt?QmlDebug.a
+#%_qt5_libdatadir/libQt?QmlDebug.a
 
 %changelog
+* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
+- new version
+
+* Sun Oct 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt0.M80P.1
+- build for M80P
+
 * Wed Oct 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1
 - new version
 

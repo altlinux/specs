@@ -5,8 +5,8 @@
 %def_enable fmt_jp2
 
 Name: qt5-imageformats
-Version: 5.6.2
-Release: alt2
+Version: 5.7.1
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtImageFormats component
@@ -20,6 +20,7 @@ Source: %qt_module-opensource-src-%version.tar
 # Automatically added by buildreq on Tue Jun 03 2014 (-bi)
 # optimized out: elfutils libGL-devel libcloog-isl4 libjpeg-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-sql libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-declarative-devel qt5-tools ruby ruby-stdlibs zlib-devel
 #BuildRequires: gcc-c++ glibc-devel-static libjasper-devel libmng-devel libtiff-devel libwebp-devel python-module-protobuf qt5-script-devel qt5-tools-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-ruby
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ glibc-devel libtiff-devel libwebp-devel qt5-base-devel
 BuildRequires: qt5-tools
 %{?_enable_fmt_jp2:BuildRequires: libjasper-devel}
@@ -79,6 +80,12 @@ rm -rf  config.tests/libmng
 %_qt5_docdir/*
 
 %changelog
+* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
+- new version
+
+* Thu Oct 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1.M80P.1
+- build for M80P
+
 * Thu Oct 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt2
 - build with mng and jasper
 

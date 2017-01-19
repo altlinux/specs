@@ -23,8 +23,8 @@
 %define minor  5
 %define bugfix 0
 Name: qt5-base
-Version: 5.6.2
-Release: alt1
+Version: 5.7.1
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -35,11 +35,13 @@ Source: %rname-opensource-src-%version.tar
 Source1: rpm-macros
 Source2: rpm-macros-addon
 # FC
-Patch1: moc-get-the-system-defines-from-the-compiler-itself.patch
-#
+Patch1: qtbase-opensource-src-5.7.1-moc_system_defines.patch
+Patch2: qtbase-opensource-src-5.7.1-QT_VERSION_CHECK.patch
 Patch3: qtbase-opensource-src-5.6.0-arm.patch
-Patch4: qtbase-opensource-src-5.6.0-moc_WORDSIZE.patch
+Patch4: qtbase-opensource-src-5.7.1-moc_macros.patch
+Patch5: qt5-qtbase-5.7.1-libpng.patch
 Patch11: QTBUG-35459.patch
+Patch12: QTBUG-55583.patch
 # upstream
 # SuSE
 Patch100: disable-rc4-ciphers-bnc865241.diff
@@ -58,8 +60,9 @@ Patch1004: alt-timezone.patch
 # Automatically added by buildreq on Fri Sep 20 2013 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static gstreamer-devel libEGL-devel libGL-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcom_err-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins libkrb5-devel libpango-devel libpng-devel libpq-devel libssl-devel libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxml2-devel pkg-config python-base python3 python3-base ruby ruby-stdlibs xorg-fixesproto-devel xorg-inputproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: firebird-devel gcc-c++ gst-plugins-devel libXi-devel libalsa-devel libcups-devel libdbus-devel libfreetds-devel libgtk+2-devel libicu-devel libjpeg-devel libmysqlclient-devel libpcre-devel libpulseaudio-devel libsqlite3-devel libudev-devel libunixODBC-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel postgresql-devel python-module-distribute rpm-build-python3 rpm-build-ruby zlib-devel-static
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libcups-devel libdbus-devel libicu-devel libjpeg-devel libpng-devel libharfbuzz-devel
-BuildRequires: libpcre-devel libudev-devel libEGL-devel libdrm-devel libgbm-devel zlib-devel libgtk+2-devel
+BuildRequires: libpcre-devel libudev-devel libEGL-devel libdrm-devel libgbm-devel zlib-devel libgtk+3-devel
 BuildRequires: libmtdev-devel libinput-devel libts-devel
 BuildRequires: pkgconfig(gl) pkgconfig(glesv2) pkgconfig(egl)
 BuildRequires: libX11-devel libXi-devel libxkbcommon-devel libxkbcommon-x11-devel
@@ -328,13 +331,22 @@ Requires: %name-common = %EVR
 %description -n lib%{gname}-xcbqpa
 EGL integration library for the Qt%major toolkit
 
+%package -n lib%{gname}-eglfskmssupport
+Summary: EGL integration library for the Qt%major toolkit
+Group: System/Libraries
+Requires: %name-common = %EVR
+%description -n lib%{gname}-eglfskmssupport
+EGL integration library for the Qt%major toolkit
+
 %prep
 %setup -n %rname-opensource-src-%version
 %patch1 -p1
-#
+%patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 %patch11 -p1 -b .QTBUG
+%patch12 -p1 -b .QTBUG
 %patch100 -p1
 %patch101 -p1
 %patch1000 -p1 -b .ibase
@@ -395,7 +407,7 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     -dbus-linked \
     -fontconfig \
     -glib \
-    -gtkstyle \
+    -gtk \
     -iconv \
     -icu \
     -openssl \
@@ -479,7 +491,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.6.2
+Version: 5.7.1
 __EOF__
 
 # rpm macros
@@ -730,8 +742,17 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 %files -n lib%{gname}-xcbqpa
 %_qt5_libdir/libQt%{major}XcbQpa.so.*
 
+%files -n lib%{gname}-eglfskmssupport
+%_qt5_libdir/libQt%{major}EglFsKmsSupport.so.*
+
 
 %changelog
+* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
+- new version
+
+* Sun Oct 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt0.M80P.1
+- build for M80P
+
 * Wed Oct 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1
 - new version
 

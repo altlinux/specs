@@ -3,8 +3,8 @@
 %def_disable bootstrap
 
 Name: qt5-multimedia
-Version: 5.6.2
-Release: alt1
+Version: 5.7.1
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - Multimedia support
@@ -13,6 +13,7 @@ License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-xmlpatterns-devel qt5-declarative-devel
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(gstreamer-1.0)
@@ -122,6 +123,12 @@ syncqt.pl-qt5 -version %version -private
 %endif
 
 %changelog
+* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
+- new version
+
+* Sun Oct 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt0.M80P.1
+- build for M80P
+
 * Wed Oct 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1
 - new version
 
