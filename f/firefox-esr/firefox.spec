@@ -15,7 +15,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
 Version:        45.6.0
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -38,6 +38,7 @@ Patch17:        firefox-mediasource-crash.patch
 
 # Upstream
 Patch200:       mozilla-bug-1205199.patch
+Patch201:       mozilla-bug-1245076.patch
 
 # Red Hat
 Patch300:       rhbz-1219542-s390-build.patch
@@ -112,13 +113,14 @@ Requires:	gst-plugins-ugly%gst_version
 Requires: libnss >= 3.12.11-alt3
 
 %description
-The Mozilla Firefox project is a redesign of Mozilla's browser component,
-written using the XUL user interface language and designed to be
-cross-platform.
+The Mozilla Firefox project is a redesign of Mozilla's browser
+component, written using the XUL user interface language and designed to
+be cross-platform.
 
 %description -l ru_RU.UTF8
-Интернет-браузер Mozilla Firefox - кроссплатформенная модификация браузера Mozilla,
-созданная с использованием языка XUL для описания интерфейса пользователя.
+Интернет-браузер Mozilla Firefox - кроссплатформенная модификация
+браузера Mozilla, созданная с использованием языка XUL для описания
+интерфейса пользователя.
 
 %prep
 %setup -q -n firefox-%version -c
@@ -134,6 +136,7 @@ tar -xf %SOURCE2
 %patch17 -p2
 
 %patch200 -p1
+%patch201 -p1
 
 %patch300 -p1
 %patch301 -p1
@@ -323,6 +326,9 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Fri Jan 20 2017 Andrey Cherepanov <cas@altlinux.org> 45.6.0-alt2
+- Fix build with GCC 6.1
+
 * Fri Dec 16 2016 Andrey Cherepanov <cas@altlinux.org> 45.6.0-alt1
 - New ESR version
 
