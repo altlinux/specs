@@ -1,5 +1,5 @@
 Name: sechooser
-Version: 0.1.0
+Version: 0.2.0
 Release: alt1%ubt
 
 Summary: Selinux user range chooser
@@ -37,6 +37,9 @@ install -m644 translations/sechooser_??.qm %buildroot/%_qt5_translationdir/
 %_bindir/*
 
 %changelog
+* Fri Jan 20 2017 Sergey V Turchin <zerg at altlinux dot org> 0.2.0-alt1%ubt
+- add level names translation
+
 * Tue Jan 17 2017 Sergey V Turchin <zerg at altlinux dot org> 0.1.0-alt1%ubt
 - add russian translation
 - ignore minimum range
