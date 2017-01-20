@@ -6,7 +6,7 @@
 
 Name: avogadro
 Version: 1.1.1
-Release: alt4
+Release: alt4.qa1
 
 Group: Sciences/Chemistry
 Summary: An advanced molecular editor for chemical purposes
@@ -29,6 +29,7 @@ Patch7: avogadro-cmake-3.2.patch
 # ALT
 Patch100: avogadro-1.1.0-alt-config.patch
 Patch101: avogadro-1.0.3-alt-desktopfile.patch
+Patch102: avogadro-1.1.1-alt-fix-gcc6-version.patch
 
 %setup_python_module Avogadro
 
@@ -78,6 +79,7 @@ Development Avogadro files.
 #
 %patch100 -p1
 %patch101 -p1
+%patch102 -p1
 
 rm -f cmake/modules/FindPythonLibs.cmake
 sed -i 's|\${PYTHON_LIB_PATH}|%python_sitelibdir|g' libavogadro/src/python/CMakeLists.txt
@@ -135,6 +137,9 @@ sed -i 's|\${PYTHON_LIB_PATH}|%python_sitelibdir|g' libavogadro/src/python/CMake
 %_datadir/qt4/mkspecs/features/%name.prf
 
 %changelog
+* Fri Jan 20 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1-alt4.qa1
+- Fixed gcc6 version detection.
+
 * Tue Oct 18 2016 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt4
 - rebuild with new openbabel
 
