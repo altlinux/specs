@@ -1,5 +1,5 @@
 Name:           kdesvn
-Version:        1.7.0
+Version:        2.0.0
 Release:        alt1
 Summary:        A subversion client for KDE4 with KIO integration
 
@@ -9,9 +9,26 @@ URL:            https://projects.kde.org/projects/extragear/sdk/kdesvn
 # git clone git://anongit.kde.org/kdesvn
 Source0:        %name-%{version}.tar
 
-BuildRequires(pre): kde4libs-devel
-BuildRequires:  gcc-c++
-BuildRequires:  subversion-devel
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: gcc-c++
+BuildRequires: subversion-devel
+BuildRequires: extra-cmake-modules
+BuildRequires: qt5-declarative-devel
+BuildRequires: kf5-kcoreaddons-devel
+BuildRequires: kf5-kbookmarks-devel
+BuildRequires: kf5-kdbusaddons-devel
+BuildRequires: kf5-kdoctools-devel
+BuildRequires: kf5-kiconthemes-devel
+BuildRequires: kf5-kio-devel
+BuildRequires: kf5-kitemviews-devel
+BuildRequires: kf5-kjobwidgets-devel
+BuildRequires: kf5-knotifications-devel
+BuildRequires: kf5-kparts-devel
+BuildRequires: kf5-kservice-devel
+BuildRequires: kf5-ktexteditor-devel
+BuildRequires: kf5-kwallet-devel
+BuildRequires: kf5-kdoctools-devel-static
+BuildRequires: kf5-ktextwidgets-devel
 
 %description
 KDESvn is a frontend to the subversion vcs. In difference to most other
@@ -27,33 +44,33 @@ plugins for konqueror and/or kate will made.
 %setup -q
 
 %build
-%K4build
- 
+%K5init no_altplace
+%K5build
+
 %install
-%K4install
-%K4find_lang --with-kde %name
+%K5install
+%find_lang --with-kde %name
 
-#Don't conflict with kdesdk
-rm %buildroot%_K4srv/svn*.protocol
-
-%files -f %{name}.lang
+%files -f %name.lang
 %doc AUTHORS ChangeLog COPYING GPL.txt TODO
-%_bindir/kdesvn*
-%_K4libdir/libsvnqt_private.so
-%_K4lib/*.so
-%_K4srv/*
-%_K4conf_update/*
-%_K4apps/kdesvn/*
-%_K4apps/kdesvnpart/*
-%_K4cfg/*.kcfg
-%_K4dbus_interfaces/*.xml
-%_iconsdir/hicolor/*/*/*.png
-%_iconsdir/hicolor/*/*/*.svgz
-%_datadir/svnqt
-%_desktopdir/kde4/*.desktop
-%doc %_man1dir/kdesvn*.1*
+%_K5bin/kdesvn*
+%_qt5_plugindir/*.so
+%_qt5_plugindir/kf5/kded/*.so
+%_K5srv/*
+%_datadir/kconf_update/*
+%_K5cfg/*.kcfg
+%_K5dbus_iface/*
+%_K5dbus_srv/*
+%_K5icon/hicolor/*/*/*.png
+%_K5icon/hicolor/*/*/*.svgz
+%_K5xdgapp/*.desktop
+%_K5xmlgui/%name
+%_datadir/%name
 
 %changelog
+* Fri Jan 20 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
+- New version for KF5
+
 * Tue Feb 09 2016 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt1
 - New version
 
