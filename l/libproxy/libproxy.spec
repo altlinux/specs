@@ -6,11 +6,12 @@
 %def_without webkit
 %def_with webkit3
 %def_without dotnet
-%def_with python
+%def_with python2
+%def_with python3
 %define _libexecdir %_prefix/libexec
 
 Name: libproxy
-Version: 0.4.13
+Version: 0.4.14
 Release: alt1
 Summary: A library handling all the details of proxy configuration
 
@@ -25,7 +26,8 @@ Patch: %name-%version-%release.patch
 BuildPreReq: rpm-build-licenses
 BuildPreReq: cmake ctest gcc-c++ zlib-devel
 
-%{?_with_python:BuildRequires: python-devel}
+%{?_with_python2:BuildRequires: python-devel}
+%{?_with_python3:BuildRequires: python3-devel}
 # gnome
 %{?_with_gnome:BuildRequires: pkgconfig(gconf-2.0) pkgconfig(gobject-2.0)}
 # gnome3
@@ -71,6 +73,15 @@ Requires: %name = %version-%release
 
 %description -n python-module-%name
 Allows for the usage of libproxy from python applications
+
+%package -n python3-module-%name
+Summary: Python3 bindings for %name
+Group: Development/Python3
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description -n python3-module-%name
+Allows for the usage of libproxy from python3 applications
 
 %package gnome
 Summary: Libproxy module for gnome configuration
@@ -130,7 +141,7 @@ Group: Development/Other
 Requires: %name = %version-%release
 
 %description sharp
-Allows for the usage of libproxy from python applications
+Allows for the usage of libproxy from mono applications
 
 %package sharp-devel
 Summary:  Mono bindings for %name
@@ -187,9 +198,14 @@ popd
 %files tools
 %_bindir/proxy
 
-%if_with python
+%if_with python2
 %files -n python-module-%name
 %python_sitelibdir_noarch/*
+%endif
+
+%if_with python3
+%files -n python3-module-%name
+%python3_sitelibdir_noarch/*
 %endif
 
 %if_with gnome
@@ -241,6 +257,10 @@ popd
 %_datadir/cmake/Modules/Findlibproxy.cmake
 
 %changelog
+* Fri Jan 20 2017 Alexey Shabalin <shaba@altlinux.ru> 0.4.14-alt1
+- 0.4.14
+- add python3 package
+
 * Tue Jun 14 2016 Alexey Shabalin <shaba@altlinux.ru> 0.4.13-alt1
 - 0.4.13
 
