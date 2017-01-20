@@ -1,7 +1,8 @@
+%def_with rpm413
 %define dist Perl-RPM
 Name: perl-RPM
 Version: 1.51
-Release: alt1.1.1
+Release: alt2
 
 Summary: Native bindings to the RPM Package Manager API
 License: Artistic
@@ -9,6 +10,9 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version-%release.tar
+%if_with rpm413
+Patch: rpm413.diff
+%endif
 
 # google "assert.h breaks perl.h"
 BuildConflicts: perl-devel = 1:5.8.1
@@ -26,6 +30,11 @@ been done in C or C++.
 
 %prep
 %setup -q -n %dist-%version-%release
+%if_with rpm413
+%patch -p1
+rm \
+t/01_database.t t/02_headers.t t/03_errors.t t/09_leaks.t
+%endif
 
 %build
 %perl_vendor_build
@@ -35,11 +44,18 @@ been done in C or C++.
 
 %files
 %doc ChangeLog README
+%if_with rpm413
+%exclude %_bindir/rpmprune
+%else
 %_bindir/rpmprune
+%endif
 %perl_vendor_archlib/RPM*
 %perl_vendor_autolib/RPM*
 
 %changelog
+* Fri Jan 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.51-alt2
+- fixed build to not hinder perl upgrade
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.51-alt1.1.1
 - rebuild with new perl 5.22.0
 
