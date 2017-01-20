@@ -1,14 +1,14 @@
 %define _name qtermwidget
 
 Name: %_name-qt5
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: unicode-enabled, embeddable QT5 terminal widget
 License: GPLv2+
 Group: Terminals
 
-Url: http://github.com/qterminal/%_name
+Url: http://github.com/lxde/%_name
 #VCS: https://github.com/lxde/qtermwidget.git
 Source: %_name-%version.tar.gz
 
@@ -92,6 +92,9 @@ This package contains the development headers for the library.
 %_datadir/cmake/*/
 
 %changelog
+* Fri Jan 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
+- 0.7.1
+
 * Sun Nov 13 2016 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - 0.7.0
 
