@@ -1,6 +1,8 @@
+%def_without offtherecord
+
 Name: qutim
 Version: 0.3.2
-Release: alt3.2
+Release: alt3.3
 Epoch: 7
 
 Summary: qutIM Instant Messenger
@@ -13,6 +15,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source: http://%name.org/dwnl/68/%name-%version.tar.xz
 Patch0: %name-%version-alt.patch
+Patch1: qutim-0.3.2-alt-fix-c++11.patch
 
 Requires: lib%name = %version-%release
 Requires: lib%name-adiumchat = %version-%release
@@ -41,7 +44,9 @@ BuildRequires: libhunspell-devel
 BuildRequires: libicu50
 BuildRequires: libjreen-devel
 # libotr5 is not supported yet
-BuildRequires: libotr2-devel
+%if_with offtherecord
+BuildRequires: libotr-devel
+%endif
 BuildRequires: libpurple-devel
 BuildRequires: libqca2-devel
 BuildRequires: libqt4-sql-mysql
@@ -712,12 +717,14 @@ Documentation for qutIM
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 sed -i 's|TelepathyQt4/|TelepathyQt/|' protocols/astral/src/*.{cpp,h}
 
 %build
-%define lib_suffix %nil
-%ifarch x86_64
+%if "%_lib" == "lib64"
 %define lib_suffix 64
+%else
+%define lib_suffix %nil
 %endif
 
 mkdir -p %_target_platform
@@ -998,8 +1005,10 @@ done
 %files -n %name-plugin-nowplaying
 %_libdir/%name/plugins/libnowplaying.so
 
+%if_with offtherecord
 %files -n %name-plugin-offtherecord
 %_libdir/%name/plugins/libofftherecord.so
+%endif
 
 %files -n %name-plugin-oldcontactdelegate
 %_libdir/%name/plugins/liboldcontactdelegate.so
@@ -1102,6 +1111,10 @@ done
 %doc AUTHORS COPYING README.* ChangeLog
 
 %changelog
+* Fri Jan 20 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 7:0.3.2-alt3.3
+- Disabled offtherecord plugin.
+- Fixed build with gcc6.
+
 * Tue Jan 13 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 7:0.3.2-alt3.2
 - Fixed build (libotr2-devel).
 
