@@ -4,7 +4,7 @@
 %define dist_name RadiusPerl
 
 Name: perl-Authen-Radius
-Version: 0.24
+Version: 0.26
 Release: alt1
 
 Summary: provide simple Radius client facilities
@@ -23,9 +23,11 @@ BuildArch: noarch
 Provides: perl-%dist_name
 
 AutoReqProv: perl, yes
-BuildPreReq: perl-devel rpm-build-licenses
+BuildRequires(pre): perl-devel rpm-build-licenses
 
-BuildRequires: perl-Data-HexDump
+# Automatically added by buildreq on Sat Jan 21 2017
+# optimized out: perl perl-Devel-StackTrace perl-Encode perl-Math-BigInt perl-devel python-base python-modules python3-base
+BuildRequires: perl-Data-HexDump perl-Net-IP perl-Test-NoWarnings
 
 %description
 Perl module Authen::Raduis allows you to communicate with a Radius
@@ -50,6 +52,9 @@ response.
 
 
 %changelog
+* Sat Jan 21 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.26-alt1
+- New version
+
 * Mon Mar 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
 - automated CPAN update
 
