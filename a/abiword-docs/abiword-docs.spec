@@ -3,8 +3,8 @@
 %define abi_ver 3.0
 
 Name: %_name-docs
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Documentation for AbiWord word processor
 Group: Office
@@ -59,6 +59,9 @@ This package provides user documentation for AbiWord.
 %_datadir/%_name-%abi_ver/help/
 
 %changelog
+* Sat Jan 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
 * Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt2
 - renamed to abiword-docs
 
