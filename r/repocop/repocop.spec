@@ -1,5 +1,5 @@
 Name: repocop
-Version: 0.72
+Version: 0.73
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -47,7 +47,7 @@ repocop-report-html with whe same arguments as repocop-run.
 %package tools
 Group: Development/Other
 Summary: repocop tools for auto repairing repocop packages
-Requires: perl-RPM-Source-Editor > 0.895
+Requires: perl-RPM-Source-Editor > 0.900
 Requires: %name = %version-%release
 
 %description tools
@@ -134,6 +134,9 @@ done
 %_datadir/repocop/html
 
 %changelog
+* Sat Jan 21 2017 Igor Vlasenko <viy@altlinux.ru> 0.73-alt1
+- new Shared::CLI
+
 * Tue Jan 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.72-alt1
 - new TransformContainer fixes
 
