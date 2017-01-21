@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.54
+Version: 0.55
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -79,6 +79,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Sun Jan 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1
+- new shared cli
+
 * Thu Oct 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.54-alt1
 - fast autoports build
 
