@@ -3,7 +3,7 @@
 %define real_name  Net-Twitter-Lite
 
 Name: perl-Net-Twitter-Lite
-Version: 0.12007
+Version: 0.12008
 Release: alt1
 
 Summary: a Perl interface to the Twitter API
@@ -20,9 +20,9 @@ BuildArch: noarch
 AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sun Sep 14 2014
-# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Class-Accessor perl-Class-Data-Inheritable perl-Digest-HMAC perl-Digest-SHA perl-Encode perl-Encode-Locale perl-HTML-Parser perl-HTTP-Date perl-HTTP-Message perl-IPC-Run3 perl-JSON-PP perl-JSON-XS perl-Module-Metadata perl-Net-HTTP perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Probe-Perl perl-Sub-Name perl-Types-Serialiser perl-URI perl-common-sense perl-devel perl-libnet perl-libwww perl-parent perl-podlators
-BuildRequires: perl-Crypt-SSLeay perl-JSON perl-Module-Build perl-Net-OAuth perl-Test-Fatal perl-Test-Script
+# Automatically added by buildreq on Sat Jan 21 2017
+# optimized out: perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Class-Accessor perl-Class-Data-Inheritable perl-Digest-HMAC perl-Digest-SHA perl-Encode perl-Encode-Locale perl-ExtUtils-Config perl-ExtUtils-Helpers perl-ExtUtils-InstallPaths perl-HTTP-Date perl-HTTP-Message perl-JSON-PP perl-JSON-XS perl-Parse-CPAN-Meta perl-Sub-Name perl-Term-ANSIColor perl-Types-Serialiser perl-URI perl-common-sense perl-devel perl-libwww perl-parent python-base python-modules python3-base
+BuildRequires: perl-JSON perl-Module-Build-Tiny perl-Net-OAuth perl-Crypt-SSLeay  perl-Test-Fatal perl-Test-Script
 
 %description
 This module provides a perl interface to the Twitter APIs. It uses the
@@ -54,6 +54,9 @@ error handling options.
 %perl_vendor_privlib/Net/Twitter/Lite*
 
 %changelog
+* Sat Jan 21 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.12008-alt1
+- New version
+
 * Sun Nov 27 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.12007-alt1
 - New version
 
