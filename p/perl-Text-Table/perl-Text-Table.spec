@@ -2,7 +2,7 @@
 ## Used in SVK
 
 Name: perl-Text-Table
-Version: 1.131
+Version: 1.132
 Release: alt1
 
 Summary: organize data in tables
@@ -21,9 +21,9 @@ Source: %real_name-%version.tar
 
 AutoReqProv: perl, yes
 
-# Automatically added by buildreq on Sun Aug 31 2014
-# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Class-XSAccessor perl-Devel-Symdump perl-Encode perl-File-Find-Object perl-File-Find-Object-Rule perl-JSON-PP perl-Module-Metadata perl-Number-Compare perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Term-ANSIColor perl-Text-Glob perl-Tie-RefHash perl-autodie perl-devel perl-parent perl-podlators
-BuildRequires: perl-CPAN-Changes perl-HTML-Parser perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-Test-TrailingSpace perl-Text-Aligner perl-unicore
+# Automatically added by buildreq on Sat Jan 21 2017
+# optimized out: perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Class-XSAccessor perl-Encode perl-File-Find-Object perl-File-Find-Object-Rule perl-JSON-PP perl-Module-Metadata perl-Number-Compare perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Term-ANSIColor perl-Text-Glob perl-Tie-RefHash perl-autodie perl-devel perl-parent perl-podlators python-base python-modules python3-base
+BuildRequires: perl-HTML-Parser perl-Module-Build perl-Test-TrailingSpace perl-Text-Aligner
 
 %description
 Organization  of data  in  table form is  a time-honored  and
@@ -63,6 +63,9 @@ Text::Table  позволяет  создавать  и  поддерживат�
 %perl_vendor_privlib/Text/Table*
 
 %changelog
+* Sat Jan 21 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.132-alt1
+- New version
+
 * Sat Jul 30 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.131-alt1
 - New version
 
