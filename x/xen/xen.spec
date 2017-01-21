@@ -12,11 +12,10 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.8.0
-Release: alt3
+Release: alt4
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
-Packager: Dmitriy D. Shadrinov <shadrinov@altlinux.ru>
 
 %define pre %nil
 %define qemu_ver %version%pre
@@ -787,6 +786,21 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Sat Jan 21 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.0-alt4
+- Upstream updates:
+ - x86emul: correct PUSHF/POPF
+ - xen: Fix determining when domain creation is complete
+ - x86emul: CMPXCHG{8,16}B ignore prefixes
+ - x86/hvm: don't unconditionally create a default ioreq server
+ - x86/VPMU: clear the overflow status of which counter happened to overflow
+ - x86emul: MOVNTI does not allow REP prefixes
+ - x86emul: ignore most segment bases for 64-bit mode in is_aligned()
+ - VT-d: correct dma_msi_set_affinity()
+ - x86emul: CMPXCHG16B requires an aligned operand
+ - x86/emul: Correct the return value handling of VMFUNC
+ - x86/cpu: Don't update this_cpu for get_cpu_vendor(, gcv_guest)
+ - libxl: fix libxl_set_memory_target
+
 * Sun Jan 08 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.0-alt3
 - Upstream updates:
  - xsm: allow relevant permission during migrate and gpu-passthrough
