@@ -3,7 +3,7 @@
 %define real_name Cassandra-Client
 
 Name: perl-Cassandra-Client
-Version: 0.08
+Version: 0.09
 Release: alt1
 
 Summary: Perl interface to Cassandra's native protocol
@@ -21,9 +21,9 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sun Sep 18 2016
-# optimized out: perl perl-AnyEvent perl-Data-OptList perl-Encode perl-Params-Util perl-Sub-Exporter perl-Sub-Install perl-devel python-base python-modules python3
-BuildRequires: perl-Clone perl-Compress-LZ4 perl-Compress-Snappy perl-Promises perl-Ref-Util
+# Automatically added by buildreq on Sun Jan 22 2017
+# optimized out: perl perl-AnyEvent perl-Data-OptList perl-EV perl-Encode perl-Math-BigInt perl-Params-Util perl-Sub-Exporter perl-Sub-Install perl-devel python-base python-modules python3-base
+BuildRequires: perl-Clone perl-Compress-LZ4 perl-Compress-Snappy perl-Promises perl-Ref-Util perl-Sub-Current
 
 %description
 Perl module Cassandra::Client is a library providing access to
@@ -46,6 +46,9 @@ rm -f t/03-types.t
 %perl_vendor_privlib/Cassandra/Client*
 
 %changelog
+* Sat Jan 21 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.09-alt1
+- New version
+
 * Sun Nov 06 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.08-alt1
 - New version
 
