@@ -1,7 +1,7 @@
 ## SPEC file for Perl module File::Find::Object
 
 Name: perl-File-Find-Object
-Version: 0.3.0
+Version: 0.3.2
 Serial: 1
 Release: alt1
 
@@ -23,9 +23,9 @@ AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel rpm-build-licenses
 
 
-# Automatically added by buildreq on Sat May 30 2015
-# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Class-XSAccessor perl-Devel-Symdump perl-Encode perl-File-Find-Object-Rule perl-JSON-PP perl-Module-Metadata perl-Number-Compare perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Text-Glob perl-Tie-RefHash perl-autodie perl-devel perl-parent perl-podlators
-BuildRequires: perl-CPAN-Changes perl-HTML-Parser perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-Test-TrailingSpace
+# Automatically added by buildreq on Sat Jan 21 2017
+# optimized out: perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-devel perl-parent perl-podlators python-base python-modules python3-base
+BuildRequires: perl-Class-XSAccessor perl-HTML-Parser perl-Module-Build
 
 %description
 Perl module File::Find::Object does the same job as File::Find
@@ -52,6 +52,9 @@ the next() function, but setting a callback is still possible.
 %perl_vendor_privlib/File/Find/Object*
 
 %changelog
+* Sat Jan 21 2017 Nikolay A. Fetisov <naf@altlinux.org> 1:0.3.2-alt1
+- New version
+
 * Sun Sep 18 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1:0.3.0-alt1
 - New version
 
