@@ -3,7 +3,7 @@
 %define real_name TAP-SimpleOutput
 
 Name: perl-TAP-SimpleOutput
-Version: 0.004
+Version: 0.008
 Release: alt1
 
 Summary: simple closure-driven TAP generator
@@ -21,9 +21,9 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Tue Sep 23 2014
-# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Check perl-CPAN-Meta-Requirements perl-Encode perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-devel
-BuildRequires: perl-Sub-Exporter-Progressive perl-Test-CheckDeps
+# Automatically added by buildreq on Sat Jan 21 2017
+# optimized out: perl perl-CPAN-Meta perl-CPAN-Meta-Check perl-CPAN-Meta-Requirements perl-Data-OptList perl-Encode perl-JSON-PP perl-Module-Implementation perl-Module-Metadata perl-Module-Runtime perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Parse-CPAN-Meta perl-Sub-Install perl-Try-Tiny perl-devel python-base python-modules python3-base
+BuildRequires: perl-Class-Load perl-Sub-Exporter-Progressive perl-Test-CheckDeps
 
 %description
 Perl module TAP::SimpleOutput provides one function, counters(),
@@ -45,6 +45,9 @@ output TAP easily and correctly, with a minimum of fuss.
 %perl_vendor_privlib/TAP*
 
 %changelog
+* Sat Jan 21 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.008-alt1
+- New version
+
 * Sun Nov 06 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.004-alt1
 - New version
 
