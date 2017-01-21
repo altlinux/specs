@@ -3,8 +3,8 @@
 %define real_name Net-IDN-Encode
 
 Name: perl-Net-IDN-Encode
-Version: 2.300
-Release: alt1.1
+Version: 2.400
+Release: alt1
 
 Summary: Encoding and decoding of Internationalized Domain Names
 
@@ -21,9 +21,9 @@ BuildRequires(pre): rpm-build-licenses
 
 Requires: perl-unicore
 
-# Automatically added by buildreq on Sun Sep 14 2014
-# optimized out: libcloog-isl4 perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Devel-StackTrace perl-Devel-Symdump perl-Encode perl-ExtUtils-CBuilder perl-IPC-Cmd perl-JSON-PP perl-Locale-Maketext-Simple perl-Module-Load perl-Module-Load-Conditional perl-Module-Metadata perl-Params-Check perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Unicode-Normalize perl-devel perl-podlators
-BuildRequires: perl-HTML-Parser perl-Module-Build perl-Test-NoWarnings perl-Test-Pod perl-Test-Pod-Coverage perl-unicore
+# Automatically added by buildreq on Sat Jan 21 2017
+# optimized out: perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Devel-StackTrace perl-Encode perl-ExtUtils-CBuilder perl-IPC-Cmd perl-JSON-PP perl-Locale-Maketext-Simple perl-Module-Load perl-Module-Load-Conditional perl-Module-Metadata perl-Params-Check perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-devel perl-parent perl-podlators perl-unicore python-base python-modules python3
+BuildRequires: perl-HTML-Parser perl-Module-Build perl-Test-NoWarnings perl-Unicode-Normalize perl-Test-Pod perl-Test-Pod-Coverage perl-unicore
 
 %description
 Perl module Net::IDN::Encode is a high-level interface for encoding
@@ -48,6 +48,9 @@ Net::IDN::Punycode - ASCII-compatible encoding of Unicode
 %perl_vendor_archlib/Net
 
 %changelog
+* Sat Jan 21 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.400-alt1
+- New version
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.300-alt1.1
 - rebuild with new perl 5.22.0
 
