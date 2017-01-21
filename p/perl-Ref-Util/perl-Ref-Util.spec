@@ -3,8 +3,8 @@
 %define real_name Ref-Util
 
 Name: perl-Ref-Util
-Version: 0.101
-Release: alt2
+Version: 0.113
+Release: alt1
 
 Summary: Perl utility functions for checking references
 
@@ -19,9 +19,9 @@ Source: %real_name-%version.tar
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sat Sep 17 2016
-# optimized out: perl python-base python-modules python3
-BuildRequires: perl-Encode perl-Readonly perl-devel
+# Automatically added by buildreq on Sat Jan 21 2017
+# optimized out: perl perl-CPAN-Meta-Requirements perl-Encode perl-Parse-CPAN-Meta python-base python-modules python3
+BuildRequires: perl-Encode perl-CPAN-Meta perl-Readonly perl-devel
 
 %description
 Perl module Ref::Util provides several functions to help identify
@@ -42,5 +42,8 @@ references in a faster and smarter way.
 %perl_vendor_autolib/Ref/Util*
 
 %changelog
+* Sat Jan 21 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.113-alt1
+- New version
+
 * Sat Sep 17 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.101-alt2
 - Initial build for ALT Linux Sisyphus
