@@ -7,7 +7,7 @@
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
 Version:	45.6.0
-Release:	alt1
+Release:	alt2
 License:	MPL/GPL
 Group:		Networking/Mail
 URL:		http://www.mozillamessaging.com
@@ -24,6 +24,7 @@ Source5:	thunderbird-default-prefs.js
 Patch6:		01_locale.patch
 Patch8:		thunderbird-timezoes.patch
 Patch9:		thunderbird-install-paths.patch
+Patch10:	thunderbird-fix-build-with-gcc6.1.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -178,6 +179,7 @@ tar -xf %SOURCE2
 %patch6 -p1
 #patch8 -p2
 %patch9 -p2
+%patch10 -p1
 
 #echo %version > mail/config/version.txt
 
@@ -433,6 +435,9 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Sat Jan 21 2017 Andrey Cherepanov <cas@altlinux.org> 45.6.0-alt2
+- Fix build with GCC 6.1
+
 * Thu Dec 29 2016 Andrey Cherepanov <cas@altlinux.org> 45.6.0-alt1
 - New version (45.6.0)
 
