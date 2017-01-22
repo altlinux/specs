@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Net::IMAP::Simple
 
 Name: perl-Net-IMAP-Simple
-Version: 1.2206
+Version: 1.2207
 Release: alt1
 
 Summary: Perl extension for simple IMAP account handling
@@ -20,9 +20,9 @@ Patch0: %real_name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sun Sep 14 2014
-# optimized out: perl-Text-Balanced
-BuildRequires: perl-File-Slurp perl-Parse-RecDescent perl-devel
+# Automatically added by buildreq on Sun Jan 22 2017
+# optimized out: perl perl-Text-Balanced python-base python-modules python3-base
+BuildRequires: perl-Encode perl-File-Slurp perl-Parse-RecDescent perl-devel
 
 
 %description
@@ -45,6 +45,9 @@ IMAP accounts.
 %perl_vendor_privlib/Net/IMAP/Simple*
 
 %changelog
+* Sun Jan 22 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.2207-alt1
+- New version
+
 * Sat Jun 06 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.2206-alt1
 - New version
 
