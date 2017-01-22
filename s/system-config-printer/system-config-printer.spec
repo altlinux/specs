@@ -1,6 +1,6 @@
 Summary: A printer administration tool
 Name: system-config-printer
-Version: 1.5.6
+Version: 1.5.9
 Release: alt1
 License: GPLv2+
 Url: http://cyberelk.net/tim/software/system-config-printer/
@@ -75,7 +75,7 @@ exit 0
 /etc/tmpfiles.d/*
 
 %files -f system-config-printer.lang
-%doc ChangeLog README
+%doc README.md
 /etc/dbus-1/system.d/*
 /usr/share/dbus-1/interfaces/*
 /usr/share/dbus-1/services/*
@@ -84,6 +84,7 @@ exit 0
 %_desktopdir/*.desktop
 %_sysconfdir/xdg/autostart/*.desktop
 %_man1dir/*
+%_datadir/appdata/%name.appdata.xml
 
 %files -n python3-module-cupshelpers
 %config(noreplace) %_sysconfdir/cupshelpers/*.xml
@@ -91,6 +92,11 @@ exit 0
 %python3_sitelibdir_noarch/cupshelpers-*
 
 %changelog
+* Sun Jan 22 2017 Andrey Cherepanov <cas@altlinux.org> 1.5.9-alt1
+- new version
+- complete Russian translations
+- package AppStream file
+
 * Mon Jan 09 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.5.6-alt1
 - new version
 - migration to python3
