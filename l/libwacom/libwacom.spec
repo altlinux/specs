@@ -1,4 +1,4 @@
-%define ver_major 0.22
+%define ver_major 0.23
 %def_disable static
 
 Name: libwacom
@@ -89,6 +89,9 @@ developing applications that use %name.
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Sun Jan 22 2017 Yuri N. Sedunov <aris@altlinux.org> 0.23-alt1
+- 0.23
+
 * Sun Jul 24 2016 Yuri N. Sedunov <aris@altlinux.org> 0.22-alt1
 - 0.22
 
