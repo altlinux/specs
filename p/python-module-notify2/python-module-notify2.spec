@@ -3,7 +3,7 @@
 
 Name: python-module-notify2
 Version: 0.3
-Release: alt1
+Release: alt2
 Summary: Python interface to DBus notifications
 
 License: BSD
@@ -11,7 +11,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/notify2
 Packager: Python Development Team <python at packages.altlinux.org>
 
-Source: %oname-%version.tar
+Source: https://pypi.python.org/packages/7f/be/f749b44ac10ca9e4b9e54a9549e37233b30451bd1c12ece640bec730c0e5/%oname-%version.tar.gz
 BuildArch: noarch
 
 %if_with python3
@@ -28,7 +28,7 @@ communicate with the notifications server directly. It's compatible with Python
 
 %package -n python3-module-%oname
 Summary: Python interface to DBus notifications
-Group: Development/Python
+Group: Development/Python3
 %py3_provides %oname
 BuildArch: noarch
 
@@ -42,14 +42,15 @@ Python 3 version.
 %setup -n %oname-%version
 
 %if_with python3
-cp -fR . ../python3
+rm -fR ../python3-module-%oname-%version
+cp -fR . ../python3-module-%oname-%version
 %endif
 
 %build
 %python_build
 
 %if_with python3
-pushd ../python3
+pushd ../python3-module-%oname-%version
 %python3_build
 popd
 %endif
@@ -58,7 +59,7 @@ popd
 %python_install
 
 %if_with python3
-pushd ../python3
+pushd ../python3-module-%oname-%version
 %python3_install
 popd
 %endif
@@ -72,5 +73,8 @@ popd
 %endif
 
 %changelog
+* Sun Jan 22 2017 Anton Midyukov <antohami@altlinux.org> 0.3-alt2
+- srpm build
+
 * Mon Sep 19 2016 Anton Midyukov <antohami@altlinux.org> 0.3-alt1
 - Initial build for Alt Linux Sisiphus.
