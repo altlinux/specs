@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Test::File
 
 Name: perl-Test-File
-Version: 1.44
+Version: 1.442
 Release: alt1
 
 Summary: Perl module to test file attributes
@@ -21,9 +21,9 @@ Patch1: %real_name-1.41-alt-fix_tests.patch
 
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Sun Sep 14 2014
-# optimized out: perl-Devel-Symdump perl-Encode perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel perl-unicore
-BuildRequires: perl-Test-Manifest perl-Test-Pod perl-Test-Pod-Coverage perl-Test-utf8
+# Automatically added by buildreq on Sun Jan 22 2017
+# optimized out: perl perl-Devel-Symdump perl-Encode perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel perl-parent perl-unicore python-base python-modules python3-base
+BuildRequires: libnss-mymachines perl-Test-Manifest perl-Test-Pod perl-Test-Pod-Coverage perl-Test-utf8
 
 ## REMOVE THESE:
 # We need Builder.pm >= 1.001.016. Wait for it.
@@ -53,6 +53,9 @@ rm -f -- t/win32.t t/normalize.t
 
 
 %changelog
+* Sun Jan 22 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.442-alt1
+- New version
+
 * Sun Oct 25 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.44-alt1
 - New version
 
