@@ -4,15 +4,15 @@
 
 Name: python-module-%oname
 Version: 0.1.4
-Release: alt1
+Release: alt2
 Summary: Sphinx extension for adding a simple Blog, News or Announcements
 
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/sphinxcontrib-newsfeed
-Packager: Anton Midyukov <antohami@altlinux.org>
+Packager: Python Development Team <python at packages.altlinux.org>
 
-Source: %oname-%version.tar
+Source: https://pypi.python.org/packages/2b/5e/8bc839b5c4ef030bf26eede24208a49f25d00033cbd4969b3895264f14db/%oname-%version.tar.gz
 BuildArch: noarch
 
 %if_with python3
@@ -90,13 +90,15 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc LICENSE
-%doc README
+%doc LICENSE README
 %python3_sitelibdir/%mname/*
 %python3_sitelibdir/*.egg-info
 %python3_sitelibdir/*.pth
 %endif
 
 %changelog
+* Sun Jan 22 2017 Anton Midyukov <antohami@altlinux.org> 0.1.4-alt2
+- srpm build
+
 * Fri Aug 05 2016 Anton Midyukov <antohami@altlinux.org> 0.1.4-alt1
 - Initial build for ALT Linux Sisyphus.
