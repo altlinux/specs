@@ -1,7 +1,7 @@
 Name:           kdesvn
 Version:        2.0.0
-Release:        alt1
-Summary:        A subversion client for KDE4 with KIO integration
+Release:        alt2
+Summary:        A subversion client for KF5 with KIO integration
 
 Group:          Development/Tools
 License:        GPLv2+
@@ -31,14 +31,16 @@ BuildRequires: kf5-kdoctools-devel-static
 BuildRequires: kf5-ktextwidgets-devel
 
 %description
-KDESvn is a frontend to the subversion vcs. In difference to most other
-tools it uses the subversion C-Api direct via a c++ wrapper made by
-Rapid SVN and doesn't parse the output of the subversion client. So it
-is a real client itself instead of a frontend to the command line tool.
+kdesvn is yet another client for subversion. But it uses native
+KDE API instead of a extra lib like GAMBAS and it is using the
+native subversion delevelopment API instead of just parsing the
+output of the commandline tool like most other clients do. It tries
+to setup a look and feel like the standard filemanager of KDE and is
+integrated into it via KPart.
 
-It is designed for the K-Desktop environment and uses all of the goodies
-it has. It is planned for future that based on the native client some
-plugins for konqueror and/or kate will made.
+The base C++ interface to subversion I took from the (real great) tool
+Rapidsvn (see http://rapidsvn.tigris.org/) with some modifcations andi
+fixes.
 
 %prep
 %setup -q
@@ -68,6 +70,9 @@ plugins for konqueror and/or kate will made.
 %_datadir/%name
 
 %changelog
+* Sun Jan 22 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt2
+- Fix summary and description
+
 * Fri Jan 20 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
 - New version for KF5
 
