@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Dist::Zilla
 
 Name: perl-Dist-Zilla
-Version: 6.007
+Version: 6.008
 Release: alt1
 
 Summary: scary tools for building CPAN distributions
@@ -24,9 +24,9 @@ BuildRequires(pre): rpm-build-licenses perl-devel
 
 Requires: perl-Config-MVP-Reader-INI perl-Devel-StackTrace
 
-# Automatically added by buildreq on Thu Jul 21 2016
-# optimized out: perl perl-App-Cmd perl-Archive-Tar perl-B-Hooks-EndOfScope perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Uploader perl-Capture-Tiny perl-Carp-Clan perl-Class-Inspector perl-Class-Load perl-Class-Method-Modifiers perl-Class-Singleton perl-Clone perl-Compress-Raw-Bzip2 perl-Compress-Raw-Zlib perl-Config-INI perl-Config-MVP perl-Config-MVP-Reader-INI perl-Data-OptList perl-Data-Section perl-DateTime perl-DateTime-Locale perl-DateTime-TimeZone perl-Devel-Caller perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Devel-StackTrace perl-Dist-CheckConflicts perl-Dist-Zilla perl-Encode perl-Eval-Closure perl-Exporter-Tiny perl-File-Copy-Recursive perl-File-Find-Rule perl-File-HomeDir perl-File-ShareDir perl-File-Which perl-File-pushd perl-Getopt-Long-Descriptive perl-HTTP-Date perl-HTTP-Message perl-IO-Compress perl-IO-String perl-IO-Zlib perl-IPC-Run perl-JSON-MaybeXS perl-JSON-PP perl-List-MoreUtils perl-Log-Dispatch perl-Log-Dispatch-Array perl-Log-Dispatchouli perl-Log-Log4perl perl-MRO-Compat perl-Mixin-Linewise perl-Module-CoreList perl-Module-Implementation perl-Module-Metadata perl-Module-Pluggable perl-Module-Runtime perl-Moo perl-Moose perl-MooseX-LazyRequire perl-MooseX-OneArgNew perl-MooseX-Role-Parameterized perl-MooseX-SetOnce perl-MooseX-Types perl-MooseX-Types-Path-Class perl-MooseX-Types-Perl perl-Number-Compare perl-PPI perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-PadWalker perl-Params-Util perl-Params-Validate perl-Parse-CPAN-Meta perl-Path-Class perl-Path-Tiny perl-Perl-PrereqScanner perl-Perl-Version perl-PerlIO-utf8_strict perl-Pod-Escapes perl-Pod-Eventual perl-Pod-Simple perl-Role-HasMessage perl-Role-Identifiable perl-Role-Tiny perl-Software-License perl-String-Flogger perl-String-Formatter perl-String-RewritePrefix perl-Sub-Exporter perl-Sub-Exporter-ForMethods perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Syntax-Keyword-Junction perl-Term-Encoding perl-Term-ReadLine-Gnu perl-Term-UI perl-TermReadKey perl-Test-Deep perl-Text-Glob perl-Text-Template perl-Throwable perl-Tie-IxHash perl-Tie-RefHash perl-Try-Tiny perl-Types-Serialiser perl-URI perl-Variable-Magic perl-YAML-Tiny perl-aliased perl-autodie perl-common-sense perl-devel perl-libwww perl-namespace-autoclean perl-namespace-clean perl-parent perl-podlators perl-unicore python-base python-modules python3 tzdata
-BuildRequires: perl-Archive-Tar-Wrapper perl-CPAN-Meta-Check perl-Class-XSAccessor perl-Dist-Zilla-Plugin-MakeMaker-Awesome perl-File-ShareDir-Install perl-JSON-XS perl-MooseX-Aliases perl-MooseX-Params-Validate perl-MooseX-SemiAffordanceAccessor perl-MooseX-StrictConstructor perl-PPI-XS perl-Test-FailWarnings perl-Test-Fatal perl-Test-File-ShareDir perl-Test-Moose-More
+# Automatically added by buildreq on Mon Jan 23 2017
+# optimized out: perl perl-App-Cmd perl-Archive-Tar perl-B-Hooks-EndOfScope perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Uploader perl-Capture-Tiny perl-Carp-Clan perl-Class-Data-Inheritable perl-Class-Inspector perl-Class-Load perl-Class-Singleton perl-Clone perl-Compress-Raw-Bzip2 perl-Compress-Raw-Zlib perl-Config-INI perl-Config-MVP perl-Config-MVP-Reader-INI perl-Data-OptList perl-Data-Section perl-DateTime perl-DateTime-Locale perl-DateTime-TimeZone perl-Devel-Caller perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Devel-StackTrace perl-Dist-CheckConflicts perl-Dist-Zilla perl-Encode perl-Eval-Closure perl-Exception-Class perl-Exporter-Tiny perl-File-Copy-Recursive perl-File-Find-Rule perl-File-HomeDir perl-File-ShareDir perl-File-Which perl-File-pushd perl-Getopt-Long-Descriptive perl-HTTP-Date perl-HTTP-Message perl-IO-Compress perl-IO-String perl-IO-Zlib perl-IPC-Run perl-JSON-MaybeXS perl-List-MoreUtils perl-Log-Dispatch perl-Log-Dispatch-Array perl-Log-Dispatchouli perl-Log-Log4perl perl-MRO-Compat perl-Mixin-Linewise perl-Module-CoreList perl-Module-Implementation perl-Module-Metadata perl-Module-Pluggable perl-Module-Runtime perl-Moo perl-Moose perl-MooseX-LazyRequire perl-MooseX-OneArgNew perl-MooseX-Role-Parameterized perl-MooseX-SetOnce perl-MooseX-Types perl-MooseX-Types-Perl perl-Number-Compare perl-PPI perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-PadWalker perl-Params-Util perl-Params-Validate perl-Params-ValidationCompiler perl-Parse-CPAN-Meta perl-Path-Tiny perl-Perl-PrereqScanner perl-PerlIO-utf8_strict perl-Pod-Elemental perl-Pod-Escapes perl-Pod-Eventual perl-Pod-Simple perl-Pod-Weaver perl-Role-HasMessage perl-Role-Identifiable perl-Role-Tiny perl-Scope-Guard perl-Software-License perl-Specio perl-String-Flogger perl-String-Formatter perl-String-RewritePrefix perl-String-Truncate perl-Sub-Exporter perl-Sub-Exporter-ForMethods perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Sub-Quote perl-Syntax-Keyword-Junction perl-Term-Encoding perl-Term-ReadLine-Gnu perl-Term-UI perl-TermReadKey perl-Test-Deep perl-Test-Fatal perl-Text-Glob perl-Text-Template perl-Throwable perl-Tie-IxHash perl-Tie-RefHash perl-Try-Tiny perl-Types-Serialiser perl-URI perl-Variable-Magic perl-YAML-Tiny perl-aliased perl-autobox perl-autodie perl-common-sense perl-devel perl-libwww perl-namespace-autoclean perl-namespace-clean perl-parent perl-podlators perl-unicore python-base python-modules python3-base tzdata
+BuildRequires: perl-Archive-Tar-Wrapper perl-CPAN-Meta-Check perl-Class-XSAccessor perl-Dist-Zilla-Plugin-CheckExtraTests perl-Dist-Zilla-Plugin-Git perl-Dist-Zilla-Plugin-MakeMaker-Awesome perl-Dist-Zilla-Plugin-PodWeaver perl-Dist-Zilla-Plugin-PromptIfStale perl-File-ShareDir-Install perl-JSON-XS perl-Moose-Autobox perl-MooseX-Aliases perl-MooseX-Params-Validate perl-MooseX-SemiAffordanceAccessor perl-MooseX-StrictConstructor perl-PPI-XS perl-Test-FailWarnings perl-Test-File-ShareDir perl-Test-Moose-More
 
 BuildRequires: perl-autobox perl-autodie perl-common-sense perl-CPAN-Uploader perl-App-Cmd perl-Archive-Tar perl-B-Hooks-EndOfScope perl-YAML-Tiny perl-Moose-Autobox perl-MooseX-LazyRequire
 BuildRequires: perl-MooseX-SetOnce perl-Data-Section perl-DateTime perl-JSON perl-Log-Dispatchouli perl-Software-License perl-Perl-PrereqScanner perl-PPI perl-Pod-Eventual
@@ -57,9 +57,8 @@ dozens of boring steps.
 export TZ=UTC
 
 # Lowing version of ExtUtils::Manifest ( 1.66->1.63)
-sed -e 's/1.66/1.63/' -i META.json META.yml Makefile.PL cpanfile t/00-report-prereqs.dd 
-rm -f -- t/plugins/manifest.t
-
+#sed -e 's/1.66/1.63/' -i META.json META.yml Makefile.PL cpanfile t/00-report-prereqs.dd 
+#rm -f -- t/plugins/manifest.t
 
 %perl_vendor_build
 
@@ -77,6 +76,9 @@ rm -f -- t/plugins/manifest.t
 
 
 %changelog
+* Sun Jan 22 2017 Nikolay A. Fetisov <naf@altlinux.org> 6.008-alt1
+- New version
+
 * Sun Aug 14 2016 Nikolay A. Fetisov <naf@altlinux.ru> 6.007-alt1
 - New version
 
