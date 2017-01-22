@@ -1,31 +1,29 @@
 %define oname pytest
 
 %def_with python3
+%def_with docs
 
 Name: python-module-%oname
-Version: 2.8.0
-Release: alt1.dev4.git20150807.2.workaround
+Version: 3.0.5
+Release: alt1
 Summary: Simple and popular testing tool for Python
 License: MIT
 Group: Development/Python
-Url: http://pytest.org
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://pypi.python.org/pypi/%oname
+Packager: Python Development Team <python@packages.altlinux.org>
 BuildArch: noarch
 
-# https://github.com/pytest-dev/pytest.git
-Source: %name-%version.tar.gz
+Source: https://pypi.python.org/packages/a8/87/b7ca49efe52d2b4169f2bfc49aa5e384173c4619ea8e635f123a0dac5b75/%oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python
-#BuildPreReq: python-devel python-module-setuptools
-#BuildPreReq: python-module-sphinx-devel python-module-py
+BuildRequires: python-module-setuptools python-module-hypothesis
 %if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools python3-module-hypothesis
+%endif
+%if_with docs
 BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-py python3-module-setuptools rpm-build-python3 time
-
-#BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-py
 %endif
 
 %py_requires py
@@ -39,12 +37,13 @@ script. As of version 1.2 you can also generate a
 no-dependency py.test-equivalent standalone script that you can
 distribute along with your application.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Simple and popular testing tool for Python 3
 Group: Development/Python3
 %py3_requires py
 %add_python3_req_skip compiler
+%add_python3_req_skip py.io
+%add_python3_req_skip py.builtin
 
 %description -n python3-module-%oname
 py.test is a command line tool to collect, run and report about
@@ -54,7 +53,6 @@ running 10 thousands of tests to a few inlined tests on a command line
 script. As of version 1.2 you can also generate a
 no-dependency py.test-equivalent standalone script that you can
 distribute along with your application.
-%endif
 
 %package docs
 Summary: Documentation for py.test
@@ -87,63 +85,91 @@ distribute along with your application.
 This package contains pickles for py.test.
 
 %prep
-%setup
+%setup -n %oname-%version
 %if_with python3
-rm -rf ../python3
-cp -a . ../python3
+rm -rf ../python3-module-%oname-%version
+cp -a . ../python3-module-%oname-%version
 %endif
 
+%if_with docs
 %prepare_sphinx doc
 ln -s ../objects.inv doc/en/
+%endif
 
 %build
 %python_build
 %if_with python3
-pushd ../python3
+pushd ../python3-module-%oname-%version
 %python3_build
 popd
 %endif
 
-%install
-%if_with python3
-pushd ../python3
-%python3_install
-popd
-rm -f %buildroot%_bindir/py.test
-%endif
-
-%python_install
-
+%if_with docs
 export PYTHONPATH=%buildroot%python_sitelibdir
 pushd doc/en
 %make html
 %make pickle
 popd
+%endif
 
+%install
+%if_with python3
+pushd ../python3-module-%oname-%version
+%python3_install
+mv %buildroot%_bindir/py.test %buildroot%_bindir/py.test-%_python3_version
+mv %buildroot%_bindir/pytest %buildroot%_bindir/pytest-%_python3_version
+popd
+%endif
+
+%python_install
+
+%if_with docs
 install -d %buildroot%python_sitelibdir/%oname
 cp -fR doc/en/_build/pickle %buildroot%python_sitelibdir/%oname/
+%endif
+
+%check
+python setup.py test
+%if_with python3
+pushd ../python3-module-%oname-%version
+#python3 setup.py test
+popd
+%endif
 
 %files
-%doc AUTHORS CHANGELOG LICENSE *.txt
+%doc AUTHORS LICENSE *.rst
 %_bindir/*
+%if_with python3
 %exclude %_bindir/py.test-%_python3_version
+%exclude %_bindir/pytest-%_python3_version
+%endif
 %python_sitelibdir/*
+%if_with docs
 %exclude %python_sitelibdir/%oname
+%endif
 
+%if_with docs
 %files pickles
 %dir %python_sitelibdir/%oname
 %python_sitelibdir/%oname/pickle
 
 %files docs
 %doc doc/en/_build/html/*
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
+%doc AUTHORS LICENSE *.rst
 %_bindir/py.test-%_python3_version
+%_bindir/pytest-%_python3_version
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Sat Jan 21 2017 Anton Midyukov <antohami@altlinux.org> 3.0.5-alt1
+- New version 3.0.5
+- srpm build
+
 * Sat Mar 19 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.8.0-alt1.dev4.git20150807.2.workaround
 - Rebuild with python3-3.5 to update the executable name (this is a
   workaround; this should be fixed not to depend on the minor version).
