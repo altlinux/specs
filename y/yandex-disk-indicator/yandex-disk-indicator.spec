@@ -1,5 +1,5 @@
 Name:		yandex-disk-indicator
-Version:	1.9.0
+Version:	1.9.6
 Release:	alt1
 Summary:	Panel indicator for YandexDisk CLI client for Linux
 Group:		Communications
@@ -10,6 +10,8 @@ BuildArch:	noarch
 
 Requires: typelib(AppIndicator3)
 Requires: python3-module-pyinotify
+Requires: python3-module-pygobject3
+Requires: libnotify-gir
 
 %description
 Panel indicator for YandexDisk CLI client for Linux
@@ -35,6 +37,10 @@ chmod 644 %buildroot%_desktopdir/*
 %_datadir/yd-tools
 
 %changelog
+* Mon Jan 23 2017 Andrey Cherepanov <cas@altlinux.org> 1.9.6-alt1
+- new version 1.9.6
+- require python3-module-pygobject3 and libnotify-gir (ALT #33023)
+
 * Mon Aug 01 2016 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt1
 - new version 1.9.0
 
