@@ -1,5 +1,5 @@
 Name: gperiodic
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 
 Summary: Program for browsing the periodic table
@@ -42,6 +42,9 @@ install -pDm644 %SOURCE1 %buildroot%_man1dir/
 %doc README AUTHORS ChangeLog gpl.txt
 
 %changelog
+* Mon Jan 23 2017 Michael Shigorin <mike@altlinux.org> 3.0.2-alt1
+- new version (watch file uupdate)
+
 * Fri Nov 13 2015 Michael Shigorin <mike@altlinux.org> 3.0.1-alt1
 - new version (watch file uupdate)
 
