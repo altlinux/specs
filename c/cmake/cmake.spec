@@ -2,7 +2,7 @@
 %def_without check
 Name: cmake
 Version: 3.6.3
-Release: alt0.1
+Release: alt0.2
 
 Summary: Cross-platform, open-source make system
 
@@ -255,6 +255,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Fri Jan 20 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.6.3-alt0.2
+- FindBoost.cmake: added support of boost 1.62 and 1.63.
+
 * Tue Dec 13 2016 L.A. Kostis <lakostis@altlinux.ru> 3.6.3-alt0.1
 - Updated to 3.6.3.
 - .spec cleanup for new rpm.
