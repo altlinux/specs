@@ -4,12 +4,12 @@
 
 Name: gitg
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: git repository viewer targeting gtk+/GNOME
 Group: Development/Other
 License: GPL
-URL: http://trac.novowork.com/gitg/
+Url: https://wiki.gnome.org/Apps/Gitg
 
 #Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -17,6 +17,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Patch: gitg-3.18.0-alt-makefile.patch
 
 PreReq: lib%name = %version-%release
+# gitg/gitg-plugins-engine.vala: repo.require("PeasGtk", "1.0", 0);
+Requires: typelib(PeasGtk)
 
 %define gitg_pluginsdir %_libdir/%name/plugins
 
@@ -159,6 +161,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Mon Jan 23 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt2
+- reqs: + typelib(PeasGtk)
+
 * Sun Sep 18 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
