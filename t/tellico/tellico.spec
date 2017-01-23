@@ -1,6 +1,6 @@
 Name: 	 tellico
-Version: 2.3.11
-Release: alt2
+Version: 3.0
+Release: alt1
 
 Summary: A collection manager for KDE
 License: GPLv2+
@@ -9,16 +9,42 @@ Url:     http://tellico-project.org/
 # VCS:	 git://anongit.kde.org/tellico
 
 Source:  %name-%version.tar
-Source1: %name.watch
 Source2: FindKSane.cmake
 
-BuildRequires(pre): kde4libs-devel
+BuildRequires(pre): rpm-build-kf5
 BuildRequires: gcc-c++
-BuildRequires: kde4multimedia-devel
-BuildRequires: kde4pimlibs-devel
+BuildRequires: subversion-devel
+BuildRequires: extra-cmake-modules
+BuildRequires: qt5-declarative-devel
+BuildRequires: kde5-libkcddb-devel
+BuildRequires: kde5-libksane-devel
+BuildRequires: kf5-karchive-devel
+BuildRequires: kf5-kcodecs-devel
+BuildRequires: kf5-kcoreaddons-devel
+BuildRequires: kf5-kcrash-devel
+BuildRequires: kf5-kdoctools-devel
+BuildRequires: kf5-kdoctools-devel-static
+BuildRequires: kf5-kfilemetadata-devel
+BuildRequires: kf5-kguiaddons-devel
+BuildRequires: kf5-khtml-devel
+BuildRequires: kf5-kiconthemes-devel
+BuildRequires: kf5-kio-devel
+BuildRequires: kf5-kitemmodels-devel
+BuildRequires: kf5-kjobwidgets-devel
+BuildRequires: kf5-kjs-devel
+BuildRequires: kf5-knewstuff-devel
+BuildRequires: kf5-kparts-devel
+BuildRequires: kf5-ktextwidgets-devel
+BuildRequires: kf5-kwallet-devel
+BuildRequires: kf5-kwidgetsaddons-devel
+BuildRequires: kf5-kwindowsystem-devel
+BuildRequires: kf5-kxmlgui-devel
+BuildRequires: kf5-solid-devel
+BuildRequires: libdiscid-devel
 BuildRequires: libexempi-devel
 BuildRequires: libksane4-devel
 BuildRequires: libpoppler-qt4-devel
+BuildRequires: libpoppler-qt5-devel
 BuildRequires: libqimageblitz-devel
 BuildRequires: libtag-devel
 BuildRequires: libxml2-devel
@@ -34,29 +60,33 @@ video games, coins, stamps, trading cards, comic books, and wines.
 %prep
 %setup -q
 # See https://bugzilla.altlinux.org/show_bug.cgi?id=30814
-cp %SOURCE2 cmake/modules/FindKSane.cmake
+#cp %SOURCE2 cmake/modules/FindKSane.cmake
 
 %build
-%K4build
+%K5init no_altplace
+%K5build
 
 %install
-%K4install
-%K4find_lang --with-kde %name
+%K5install
+%find_lang --with-kde %name
 
 %files -f %name.lang
 %doc AUTHORS README
-%_K4bindir/*
-%_datadir/appdata/%name.appdata.xml
-%_desktopdir/kde4/%name.desktop
-%_iconsdir/hicolor/*/apps/%name.png
-%_iconsdir/hicolor/*/mimetypes/application-x-%name.png
-%_K4conf_update/*
-%_K4apps/%name/*
-%_K4cfg/*.kcfg
-%_K4conf/*
-%_K4xdg_mime/%name.xml
+%_K5bin/*
+%_datadir/%name
+%_K5xdgapp/*.desktop
+%_K5icon/hicolor/*/apps/%name.png
+%_K5icon/hicolor/*/mimetypes/application-x-%name.png
+%_datadir/kconf_update/*
+%_K5cfg/*.kcfg
+%_K5xdgconf/%{name}*
+%_K5xdgmime/%name.xml
+%_K5xmlgui/%name
 
 %changelog
+* Sun Jan 22 2017 Andrey Cherepanov <cas@altlinux.org> 3.0-alt1
+- new version 3.0 for KF5
+
 * Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 2.3.11-alt2
 - Build without Nepomuk support
 
