@@ -3,7 +3,7 @@
 %define postgrey_home %_localstatedir/%name
 
 Name: postgrey
-Version: 1.36
+Version: 1.37
 Release: alt1
 
 Summary: Greylisting Policy Server for Postfix and Exim
@@ -96,6 +96,9 @@ install -pD -m0644 postgreyreport.1  %buildroot%_man1dir/postgreyreport.1
 %doc README* Changes
 
 %changelog
+* Mon Jan 23 2017 Andrey Cherepanov <cas@altlinux.org> 1.37-alt1
+- New version
+
 * Tue Nov 17 2015 Andrey Cherepanov <cas@altlinux.org> 1.36-alt1
 - New version
 
