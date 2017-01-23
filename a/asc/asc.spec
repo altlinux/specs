@@ -1,25 +1,33 @@
 Name: asc
-Version: 2.4.0.0
-Release: alt1.8.qa2
+Version: 2.6.1.0
+Release: alt1
 Group: Games/Strategy
 License: GPLv2+
-Source: asc-%{version}.tar.bz2
+
+# repacked 'https://heanet.dl.sourceforge.net/project/asc-hq/ASC Source/2.6.0/asc-%%version.tar.bz2'
+Source: asc-%{version}.tar
+
+Source1: frontiers.ogg
+Source2: machine_wars.ogg
+Source3: time_to_strike.ogg
 URL: http://www.asc-hq.org/
 Summary: ASC - a battle isle clone
-Packager: Ilya Mashkin <oddity@altlinux.ru>
-# Automatically added by buildreq on Wed Jan 16 2008
-BuildRequires: boost-regex-devel bzlib-devel gcc-c++ libexpat-devel libfreetype-devel libjpeg-devel libpng-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_sound-devel libsigc++1.2-devel libphysfs-devel zip
-BuildRequires: liblua5-devel wxGTK-devel
 
-BuildPreReq: libxvid-devel
+# Automatically added by buildreq on Fri Jan 20 2017 (-ba)
+# optimized out: boost-devel-headers elfutils libSDL-devel libgpg-error libstdc++-devel perl pkg-config python-base xz zlib-devel
+BuildRequires: boost-devel bzlib-devel gcc-c++ libSDL_image-devel libSDL_mixer-devel libSDL_sound-devel libexpat-devel libfreetype-devel liblua5-devel libphysfs-devel libpng-devel libsigc++2-devel libwxGTK-devel libxvid-devel zip
+
+BuildPreReq: libcurl-devel libogg-devel libxvid-devel
 
 %description
-ASC aims at providing a free clone of Bluebyte's Battle Isle(tm) series
+ASC aims at providing a free clone of Bluebyte's Battle Isle(tm) series.
 
 %prep
 %setup 
+cp %SOURCE1 %SOURCE2 %SOURCE3 data/music/
 
 %build
+%autoreconf
 %add_optflags -fpermissive
 %configure
 %make_build
@@ -34,6 +42,9 @@ ASC aims at providing a free clone of Bluebyte's Battle Isle(tm) series
 %doc AUTHORS COPYING ChangeLog README TODO doc
 
 %changelog
+* Fri Jan 20 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.1.0-alt1
+- Updated to 2.6.1.0.
+
 * Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.4.0.0-alt1.8.qa2
 - NMU: rebuilt with boost 1.57.0 -> 1.58.0.
 
