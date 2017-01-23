@@ -1,50 +1,45 @@
-Name:		TheButterflyEffect
-# sed -n '/APPRELEASE/s/.*"\(.*\)".*/\1/p' src/tbe_global.h
-Version:	8.2
-Release:	alt2
-License:	GPL
-Group:		Games/Puzzles
-Summary:	Combine mechanical elements to achieve a simple goal in the most complex way
-Source:		http://dl.sourceforge.net/project/tbe/Milestone%%20%version/%name-m%version.src.tgz
-Patch:		%name-qt4.patch
-URL:		http://sourceforge.net/apps/trac/tbe/wiki/WikiStart
+Name: TheButterflyEffect
+Version: 0.9.3.1
+Epoch: 1
+Release: alt1
+License: GPL
+Group: Games/Puzzles
+Summary: Combine mechanical elements to achieve a simple goal in the most complex way
+Source: v%version.tar.gz
+Url: https://github.com/the-butterfly-effect
 
-# Automatically added by buildreq on Fri Jul 02 2010
-BuildRequires: gcc-c++ libqt4-devel unzip
+# Automatically added by buildreq on Mon Jan 23 2017
+# optimized out: cmake-modules gcc-c++ libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-svg libqt5-widgets libqt5-xml libstdc++-devel python-base python-modules qt5-base-devel qt5-tools
+BuildRequires: cmake qt5-svg-devel qt5-tools-devel
 
 %description
-A game that uses realistic physics simulations to combine lots of simple mechanical elements to achieve a simple goal in the most complex way possible.
+A game that uses realistic physics simulations to combine lots of simple
+mechanical elements to achieve a simple goal in the most complex way
+possible.
 
 %prep
-%setup -n %name-m%version
-%patch
-# gcc6 FIX 
-sed -i 's/static const float/static constexpr float/' src/model/PolyObject.h
+%setup
 
 %build
-./configure --datadir=%_gamesdatadir/%name
-echo "QQQ"
-#( cd 3rdParty; #make_build )
-#qmake-qt4
-%make_build
-cat > %name <<@@@
-#!/bin/sh
-cd %_gamesdatadir/%name
-%_gamesbindir/tbe
-@@@
+%cmake
+
+%cmake_build
 
 %install
-mkdir -p %buildroot%_gamesdatadir/%name
-cp -a images i18n levels %buildroot%_gamesdatadir/%name
-install -D tbe %buildroot%_gamesbindir/tbe
-install -D -m755 %name %buildroot%_gamesbindir/%name
+%cmakeinstall_std
 
 %files
-%doc README
+%doc README*
 %_gamesbindir/*
-%_gamesdatadir/%name
+%_gamesdatadir/tbe
+%_desktopdir/*
+%_iconsdir/hicolor/*/apps/*.png
 
 %changelog
+* Mon Jan 23 2017 Fr. Br. George <george@altlinux.ru> 1:0.9.3.1-alt1
+- Upstream and versioning switched
+- Autobuild version bump to 0.9.3.1
+
 * Wed Jan 18 2017 Fr. Br. George <george@altlinux.ru> 8.2-alt2
 - GCC6 fix
 
