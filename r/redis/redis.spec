@@ -1,5 +1,5 @@
 Name: redis
-Version: 3.2.5
+Version: 3.2.6
 Release: alt1
 
 Summary: Redis is an advanced key-value store
@@ -135,6 +135,9 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.
 
 
 %changelog
+* Mon Jan 23 2017 Nikolay A. Fetisov <naf@altlinux.org> 3.2.6-alt1
+- New version
+
 * Sun Nov 06 2016 Nikolay A. Fetisov <naf@altlinux.ru> 3.2.5-alt1
 - New version
 
