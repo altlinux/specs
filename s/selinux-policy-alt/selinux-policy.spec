@@ -1,11 +1,11 @@
 %define policy_name alt
-%define date 20170119
+%define date 20170124
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-alt
-Version: 0.0.31
+Version: 0.0.32
 Release: alt1
 License: %distributable
 Group: System/Base
@@ -261,6 +261,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/psql.pp
 
 %changelog
+* Tue Jan 24 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.32-alt1
+- allow system-config-printer-applet to communicate with system dbus
+
 * Wed Jan 18 2017 Anton Farygin <rider@altlinux.ru> 0.0.31-alt1
 - new version
 - renamed to alt
