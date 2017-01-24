@@ -4,7 +4,7 @@
 %def_without freehep
 
 Name:     scilab
-Version:  5.5.1
+Version:  5.5.2
 Release:  alt1
 Summary:  A high-level language and system for numerical computations
 
@@ -13,15 +13,28 @@ Group:    Sciences/Mathematics
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Obsoletes:%name-doc
+Obsoletes: %name-doc
+Obsoletes: scirenderer
 
-Source0: %name-%version.tar.bz2
+Source0: %name-%version.tar
+# VCS:   git://git.scilab.org/scilab
 Source1: scilab-desktop-ru.tar
 
-Patch1:  scilab-5.4.0-find-jhall.patch
-Patch2:  scilab-5.4.0-find-jgoodies-looks.patch
-Patch3:  scilab-5.4.0-find-xml-apis-ext.patch
+Patch1:  scilab-find-jhall.patch
+Patch2:  scilab-find-jgoodies-looks.patch
+Patch3:  scilab-find-xml-apis-ext.patch
 Patch4:	 scilab-fix-make-doc-ja_JP.patch
+Patch5:  scilab-5.5.2-jogl-2.3.patch
+Patch6:  scilab-5.5.2-batik-1.8.patch
+Patch7:  scilab-5.5.2-fop-2.0.patch
+Patch8:  scilab-5.5.2-xmlgraphics-commons-2.0.patch
+Patch9:  scilab-5.5.2-disable-doclint.patch
+
+Patch10: scilab-0001-fix-asan-issues.patch
+Patch11: scilab-0002-disable-scirenderer-build.patch
+Patch12: scilab-0003-fix-javadocs-br.patch
+
+Patch13: scilab-find-jrosetta-API.patch
 
 URL: http://www.scilab.org
 AutoReq: yes, noshell
@@ -30,6 +43,7 @@ AutoReq: yes, noshell
 ExcludeArch:   %{arm}
 
 BuildRequires(pre): rpm-build-java
+BuildRequires: java-devel
 BuildRequires: gcc-fortran
 BuildRequires: gcc-c++
 BuildRequires: libxml2-devel
@@ -41,14 +55,12 @@ BuildRequires: libarpack-ng-devel
 
 # GUI/Console
 BuildRequires: jpackage-utils
-BuildRequires: java-1.7.0-openjdk-devel
 BuildRequires: /proc
 BuildRequires: ant
 
 BuildRequires: flexdock >= 1.0
 BuildRequires: gluegen2
-BuildRequires: jogl2
-BuildRequires: scirenderer
+BuildRequires: jogl2 >= 2.3
 BuildRequires: libGL-devel
 BuildRequires: jrosetta >= 1.0.4
 
@@ -66,6 +78,7 @@ BuildRequires: ecj
 BuildRequires: freehep-graphics2d
 BuildRequires: freehep-util
 %endif
+BuildRequires: objectweb-asm3
 
 # TCL/TK features
 BuildRequires: tcl-devel
@@ -100,7 +113,10 @@ BuildRequires: libcurl-devel
 # For generated documentation
 BuildRequires: fonts-ttf-liberation
 
-Requires: flexdock scirenderer jrosetta
+Requires: jogl2 >= 2.3
+Requires: ecj
+Requires: flexdock jrosetta
+Requires: saxon
 Requires: apache-commons-logging
 Requires: javahelp2
 Requires: jlatexmath >= 1.0.2
@@ -121,11 +137,11 @@ Requires: freehep-util
 #Requires: docbook-style-xsl saxon
 
 %description
-Scilab is the free software for numerical computation providing a powerful
-computing environment for engineering and scientific applications. It
-includes hundreds of mathematical functions. It has a high level programming
-language allowing access to advanced data structures, 2-D and 3-D graphical
-functions.
+Scilab is the free software for numerical computation providing a
+powerful computing environment for engineering and scientific
+applications. It includes hundreds of mathematical functions. It has a
+high level programming language allowing access to advanced data
+structures, 2-D and 3-D graphical functions.
 
 %prep
 %setup -q
@@ -134,6 +150,15 @@ tar xf %SOURCE1
 %patch2 -p2
 %patch3 -p2
 %patch4 -p1
+%patch5 -p2
+%patch6 -p2
+%patch7 -p2
+%patch8 -p2
+%patch9 -p2
+%patch10 -p1
+#patch11 -p1
+%patch12 -p2
+%patch13 -p2
 
 # Update saxon dependency
 # http://bugzilla.scilab.org/show_bug.cgi?id=8479
@@ -149,6 +174,7 @@ mv COPYING.utf8 COPYING
 
 %build
 #%%define _configure_target %{_arch}-pc-linux-gnu
+%undefine _configure_gettext
 export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
 aclocal
 %configure --enable-shared \
@@ -188,8 +214,17 @@ rm -f %buildroot%_xdgmimedir/packages/scilab.xml
 %_datadir/%name
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*.png
+%_datadir/appdata/scilab.appdata.xml
+%_datadir/mime/packages/scilab.xml
 
 %changelog
+* Tue Jan 24 2017 Andrey Cherepanov <cas@altlinux.org> 5.5.2-alt1
+- New version (ALT #31794)
+- Build from upstream git repository
+- Require version-independed JDK
+- Build with bundled scirenderer
+- Add jogl2 and ecj to requirements
+
 * Sun Nov 16 2014 Andrey Cherepanov <cas@altlinux.org> 5.5.1-alt1
 - New version
 
