@@ -1,5 +1,5 @@
 Name:     gvfs-shares
-Version:  1.0
+Version:  1.1
 Release:  alt1
 
 Summary:  Script for automount specified GIO locations
@@ -26,6 +26,9 @@ install -Dm644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/gvfs-automount.desk
 %_sysconfdir/xdg/autostart/gvfs-automount.desktop
 
 %changelog
+* Tue Jan 24 2017 Andrey Cherepanov <cas@altlinux.org> 1.1-alt1
+- Support --help and --version, correct process unknown command
+
 * Wed Dec 28 2016 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
 - Initial build in Sisyphus
 
