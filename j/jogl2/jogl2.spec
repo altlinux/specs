@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jogl2
 Version:        2.3.2
-Release:        alt1_2jpp8
+Release:        alt2_2jpp8
 %global src_name jogl-v%{version}
 Summary:        Java bindings for the OpenGL API
 
@@ -39,7 +39,6 @@ Requires:       jpackage-utils
 Requires:       gluegen2 = %{version}
 Source44: import.info
 Patch33: jogl2-disable-build-native-broadcom.patch
-BuildArch: noarch
 
 %description
 The JOGL project hosts the development version of the Java Binding for
@@ -122,6 +121,7 @@ mkdir -p %{buildroot}%{_javadir}/%{name} \
 
 install build/jar/jogl-all.jar %{buildroot}%{_javadir}/%{name}.jar
 ln -s ../../..%{_javadir}/%{name}.jar %{buildroot}%{_libdir}/%{name}/
+install -pm 644 build/lib/lib*.so %{buildroot}%{_libdir}/%{name}
 
 # Provide JPP pom
 mkdir -p %{buildroot}%{_mavenpomdir}
@@ -137,12 +137,16 @@ cp -t %{buildroot}%{_docdir}/%{name}/ README.txt LICENSE.txt CHANGELOG.txt
 %{_docdir}/%{name}/README.txt
 %{_docdir}/%{name}/LICENSE.txt
 %{_docdir}/%{name}/CHANGELOG.txt
+%{_libdir}/%{name}/*.so
 
 %files doc
 %{_docdir}/%{name}/LICENSE.txt
 %{_docdir}/%{name}
 
 %changelog
+* Mon Jan 23 2017 Andrey Cherepanov <cas@altlinux.org> 2.3.2-alt2_2jpp8
+- package libraries for scilab (ALT #33025)
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_2jpp8
 - new version
 
