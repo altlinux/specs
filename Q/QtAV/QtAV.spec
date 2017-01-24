@@ -1,7 +1,7 @@
 %define libname libqtav
 Name: QtAV
 Version: 1.11.0
-Release: alt1
+Release: alt2
 
 Summary: A cross-platform multimedia framework based on Qt and FFmpeg
 License: LGPL v2.1
@@ -38,6 +38,7 @@ Documentation files for %name.
 %package -n %libname
 Summary: A cross-platform multimedia framework based on Qt and FFmpeg
 Group: System/Libraries
+Conflicts: %libname-qml-devel < %EVR
 
 %description -n %libname
 A cross-platform multimedia framework based on Qt and FFmpeg.
@@ -80,13 +81,14 @@ Development files for %name qml.
 %make_build
 
 %install
-make install INSTALL_ROOT=%buildroot
+%installqt5
 # drop Player / QML Player
-rm -rf %buildroot/{%_desktopdir,%_docdir,%_iconsdir,%_qt5_prefix/bin}
+rm -rf %buildroot/{%_desktopdir,%_docdir,%_iconsdir,%_qt5_prefix/bin,%_bindir}
 
 %files -n %libname
 %doc README.md
 %_libdir/libQtAV.so.*
+%_qt5_qmldir/QtAV/
 
 %files -n %libname-widgets
 %_libdir/libQtAVWidgets.so.*
@@ -101,13 +103,13 @@ rm -rf %buildroot/{%_desktopdir,%_docdir,%_iconsdir,%_qt5_prefix/bin}
 %_libdir/libQtAV.so
 %_libdir/libQtAVWidgets.so
 
-%files -n %libname-qml-devel
-%_qt5_qmldir/QtAV/
-
 %files -n %libname-devel-doc
 %doc examples Changelog
 %doc doc/UseQtAVinYourProjects.md
 
 %changelog
+* Tue Jan 24 2017 Vitaly Lipatov <lav@altlinux.ru> 1.11.0-alt2
+- drop unneeded qml subpackage (ALT bug #33012), thanks, @zerg
+
 * Mon Dec 12 2016 Vitaly Lipatov <lav@altlinux.ru> 1.11.0-alt1
 - initial build for ALT Linux Sisyphus
