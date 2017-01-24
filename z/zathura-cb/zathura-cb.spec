@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: zathura-cb
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 Summary: Comic book support for zathura
@@ -40,6 +42,9 @@ export CFLAGS="%optflags"
 %_desktopdir/*.desktop
 
 %changelog
+* Tue Jan 24 2017 Mikhail Efremov <sem@altlinux.org> 0.1.6-alt1
+- Updated to 0.1.6.
+
 * Wed Dec 23 2015 Mikhail Efremov <sem@altlinux.org> 0.1.5-alt1
 - Updated to 0.1.5.
 
