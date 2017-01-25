@@ -1,6 +1,6 @@
 Name:		ditchers
 Version:	1.2
-Release:	alt5.1.1
+Release:	alt5.2
 Group:		Games/Arcade
 Summary:	Underground tanks dig tunnels in the soil and destroys opponents
 Source:		%name-%version.tar.gz
@@ -18,7 +18,7 @@ License:	BSD
 Requires:	%name-data
 
 # Automatically added by buildreq on Mon Jun 21 2010
-BuildRequires: boost-filesystem-devel gcc-c++ libSDL_gfx-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libguichan-devel liblua5-devel libpng-devel tinyxml-devel
+BuildRequires: boost-filesystem-devel gcc-c++ libSDL_gfx-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libguichan-devel liblua5.1-devel libpng-devel tinyxml-devel
 
 BuildRequires:	libguichan-devel > 0.8.0
 
@@ -113,6 +113,9 @@ done
 %_gamesdatadir/%name/*
 
 %changelog
+* Mon Jan 23 2017 Fr. Br. George <george@altlinux.ru> 1.2-alt5.2
+- Rebuilt with old lua
+
 * Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2-alt5.1.1
 - Rebuilt for gcc5 C++11 ABI.
 
