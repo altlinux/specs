@@ -52,11 +52,10 @@
 
 %set_verify_elf_method textrel=relaxed
 %add_findprov_lib_path %vboxdir
-
-%define gcc_version 5
+%define gcc_version 6
 
 Name: virtualbox
-Version: 5.1.10
+Version: 5.1.14
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -778,6 +777,12 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Fri Jan 20 2017 Denis Medvedev <nbr@altlinux.org> 5.1.14-alt1
+- new version 5.1.14
+
+* Thu Dec 22 2016 Denis Medvedev <nbr@altlinux.org> 5.1.12-alt1
+- new version 5.1.12
+
 * Tue Nov 22 2016 Denis Medvedev <nbr@altlinux.org> 5.1.10-alt1
 - new version 5.1.10
 
