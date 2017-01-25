@@ -1,5 +1,5 @@
 %define module_name	virtualbox
-%define module_version	5.1.10
+%define module_version	5.1.14
 
 %define module_release	alt1
 
@@ -97,6 +97,9 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Jan 25 2017 Denis Medvedev <nbr@altlinux.org> 5.1.14-alt1
+- Updated template for virtualbox 5.1.14
 
 * Tue Nov 22 2016 Denis Medvedev <nbr@altlinux.org> 5.1.10-alt1
 - Updated template for virtualbox 5.1.10
