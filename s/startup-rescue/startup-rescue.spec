@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.27
+Version: 0.28
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -54,6 +54,9 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_initdir/rescue-remote
 
 %changelog
+* Tue Jan 24 2017 Michael Shigorin <mike@altlinux.org> 0.28-alt1
+- stop plymouth
+
 * Thu Sep 08 2016 Michael Shigorin <mike@altlinux.org> 0.27-alt1
 - decouple LVM/MDRAID handling
 
