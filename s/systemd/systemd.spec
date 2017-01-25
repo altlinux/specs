@@ -54,9 +54,9 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 231
-Release: alt3
-Summary: A System and Session Manager
+Version: 232
+Release: alt1
+Summary: System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
 License: LGPLv2.1+
@@ -70,6 +70,7 @@ Source5: altlinux-openresolv.service
 Source6: altlinux-libresolv.path
 Source7: altlinux-libresolv.service
 Source8: altlinux-clock-setup.service
+Source14: systemd-user.pam
 Source15: systemd-logind-launch
 Source16: altlinux-kmsg-loglevel.service
 Source17: altlinux-save-dmesg.service
@@ -187,7 +188,6 @@ Requires: pam_%name = %EVR
 Requires: journalctl = %EVR
 
 Requires: libnss-myhostname = %EVR
-Requires: libnss-mymachines = %EVR
 
 # /*bin/journalctl is in a subpackage.
 # We want to be able to install a new journalctl and use the old (stable) systemd.
@@ -261,6 +261,28 @@ Obsoletes: systemd-devel < %EVR
 %description -n libsystemd-devel
 The libsystemd library provides a reference implementation of various
 APIs for new-style daemons, as implemented by the systemd init system.
+
+%package -n libnss-systemd
+Group: System/Libraries
+Summary: nss-systemd providing UNIX user and group name resolution for dynamic users and groups
+Requires(pre): chrooted >= 0.3.5-alt1 chrooted-resolv sed
+Requires(postun): chrooted >= 0.3.5-alt1 sed
+
+%description -n libnss-systemd
+nss-systemd is a plug-in module for the GNU Name Service Switch (NSS) functionality of the
+GNU C Library glibc, providing UNIX user and group name resolution for dynamic users and
+groups allocated through the DynamicUser= option in systemd unit files.
+
+This module also ensures that the root and nobody users and groups (i.e. the users/groups with the UIDs/GIDs
+0 and 65534) remain resolvable at all times, even if they aren't listed in /etc/passwd or
+/etc/group, or if these files are missing.
+
+To activate the NSS module, add systemd to the lines starting with
+passwd: and group: in /etc/nsswitch.conf.
+
+passwd: files systemd
+group: files systemd
+
 
 %package -n libnss-myhostname
 Group: System/Libraries
@@ -401,6 +423,18 @@ Provides: ntp-client
 %description timesyncd
 systemd-timesyncd is a system service that may be used
 to synchronize the local system clock with a Network Time Protocol Server.
+
+%package container
+Summary: Tools for containers and VMs
+Group: System/Configuration/Other
+Requires: %name = %EVR
+#Requires: libnss-mymachines = %EVR
+
+%description container
+Systemd tools to spawn and manage containers and virtual machines.
+
+This package contains systemd-nspawn, machinectl, systemd-machined,
+and systemd-importd.
 
 %package analyze
 Group: System/Configuration/Boot and Init
@@ -706,6 +740,11 @@ intltoolize --force --automake
 %install
 %makeinstall_std
 
+# remove .so file for the shared library, it's not supposed to be used
+rm -f %buildroot/lib/systemd/libsystemd-shared.so
+# remove systemd rpm macros
+rm -f %buildroot//usr/lib/rpm/macros.d/macros.systemd
+
 %find_lang %name
 
 # Make sure these directories are properly owned
@@ -820,7 +859,7 @@ mkdir -p %buildroot%_localstatedir/lib/systemd/catalog
 mkdir -p %buildroot%_localstatedir/lib/systemd/backlight
 mkdir -p %buildroot%_localstatedir/lib/systemd/rfkill
 mkdir -p %buildroot%_localstatedir/lib/systemd/journal-upload
-mkdir -p %buildroot%_localstatedir/log/journal
+mkdir -p %buildroot%_logdir/journal
 touch %buildroot%_localstatedir/lib/systemd/catalog/database
 touch %buildroot%_sysconfdir/udev/hwdb.bin
 touch %buildroot%_localstatedir/lib/systemd/random-seed
@@ -855,7 +894,7 @@ touch %buildroot%_sysconfdir/locale.conf
 touch %buildroot%_sysconfdir/machine-info
 
 # fix pam.d/systemd-user for ALTLinux
-%__subst 's,system-auth,common-login,g' %buildroot%_sysconfdir/pam.d/systemd-user
+install -m644 %SOURCE14 %buildroot%_sysconfdir/pam.d/systemd-user
 
 # Install ALTLinux default preset policy
 mkdir -p %buildroot/lib/systemd/system-preset
@@ -983,12 +1022,17 @@ install -p -m644 %SOURCE31 %buildroot%_sysconfdir/udev/rules.d/
 # rm symlinks for prefdm.service
 [ -L %_sysconfdir/systemd/system/graphical.target.wants/prefdm.service ] && rm -f %_sysconfdir/systemd/system/graphical.target.wants/prefdm.service  >/dev/null 2>&1 || :
 
+if [ $1 -eq 1 ] ; then
+     # create /var/log/journal only on initial installation
+     mkdir -p %_logdir/journal
+fi
+
 # Make sure new journal files will be owned by the "systemd-journal" group
-chgrp systemd-journal /run/log/journal/ /run/log/journal/`cat /etc/machine-id 2> /dev/null` %_localstatedir/log/journal/ %_localstatedir/log/journal/`cat /etc/machine-id 2> /dev/null` >/dev/null 2>&1 || :
-chmod g+s  /run/log/journal/ /run/log/journal/`cat /etc/machine-id 2> /dev/null` %_localstatedir/log/journal/ %_localstatedir/log/journal/`cat /etc/machine-id 2> /dev/null` >/dev/null 2>&1 || :
+chgrp systemd-journal /run/log/journal/ /run/log/journal/`cat /etc/machine-id 2> /dev/null` %_logdir/journal/ %_logdir/journal/`cat /etc/machine-id 2> /dev/null` >/dev/null 2>&1 || :
+chmod g+s  /run/log/journal/ /run/log/journal/`cat /etc/machine-id 2> /dev/null` %_logdir/journal/ %_logdir/journal/`cat /etc/machine-id 2> /dev/null` >/dev/null 2>&1 || :
 
 # Apply ACL to the journal directory
-/usr/bin/setfacl -Rnm g:wheel:rx,d:g:wheel:rx,g:adm:rx,d:g:adm:rx %_localstatedir/log/journal/ >/dev/null 2>&1 || :
+/usr/bin/setfacl -Rnm g:wheel:rx,d:g:wheel:rx,g:adm:rx,d:g:adm:rx %_logdir/journal/ >/dev/null 2>&1 || :
 
 # remove obsolete systemd-readahead file and services symlink
 rm -f /.readahead > /dev/null 2>&1 || :
@@ -1014,7 +1058,6 @@ if [ $1 -eq 0 ] ; then
                 getty@.service \
                 serial-getty@.service \
                 console-getty.service \
-                console-shell.service \
                 debug-shell.service \
                  >/dev/null 2>&1 || :
 
@@ -1083,8 +1126,29 @@ if [ $1 -eq 0 ] ; then
 fi
 %endif
 
+%post -n libnss-systemd
+if [ -f /etc/nsswitch.conf ] ; then
+            grep -E -q '^(passwd|group):.* systemd' /etc/nsswitch.conf ||
+            sed -i.rpmorig -r -e '
+                s/^(passwd|group):(.*)/\1: \2 systemd/
+                ' /etc/nsswitch.conf >/dev/null 2>&1 || :
+fi
+update_chrooted all
+
+%postun -n libnss-systemd
+if [ "$1" = "0" ]; then
+        if [ -f /etc/nsswitch.conf ] ; then
+                sed -i.rpmorig -e '
+                        /^(passwd|group):/ !b
+                        s/[[:blank:]]\+systemd\>//
+                        ' /etc/nsswitch.conf >/dev/null 2>&1 || :
+        fi
+fi
+update_chrooted all
+
 %post -n libnss-myhostname
 if [ -f /etc/nsswitch.conf ] ; then
+        grep -v -E -q '^hosts:.* myhostname' /etc/nsswitch.conf &&
         sed -i.rpmorig -e '
                 /^hosts:/ !b
                 /\<myhostname\>/ b
@@ -1151,16 +1215,16 @@ update_chrooted all
 %pre journal-gateway
 %_sbindir/groupadd -r -f systemd-journal-gateway ||:
 %_sbindir/useradd -g systemd-journal-gateway -c 'Journal Gateway' \
-    -d %_localstatedir/log/journal -s /dev/null -r -l systemd-journal-gateway >/dev/null 2>&1 ||:
+    -d %_logdir/journal -s /dev/null -r -l systemd-journal-gateway >/dev/null 2>&1 ||:
 
 %_sbindir/groupadd -r -f systemd-journal-remote ||:
 %_sbindir/useradd -g systemd-journal-gateway -c 'Journal Remote' \
-    -d %_localstatedir/log/journal/remote -s /dev/null -r -l systemd-journal-remote >/dev/null 2>&1 ||:
+    -d %_logdir/journal/remote -s /dev/null -r -l systemd-journal-remote >/dev/null 2>&1 ||:
 
 %if_enabled libcurl
 %_sbindir/groupadd -r -f systemd-journal-upload ||:
 %_sbindir/useradd -g systemd-journal-upload -G systemd-journal -c 'Journal Upload' \
-    -d %_localstatedir/log/journal/upload -s /dev/null -r -l systemd-journal-upload >/dev/null 2>&1 ||:
+    -d %_logdir/journal/upload -s /dev/null -r -l systemd-journal-upload >/dev/null 2>&1 ||:
 %endif
 
 %post journal-gateway
@@ -1212,10 +1276,9 @@ fi
 %_sysconfdir/profile.d/systemd.sh
 
 
-/lib/tmpfiles.d/systemd-nologin.conf
-/lib/tmpfiles.d/systemd.conf
-/lib/tmpfiles.d/systemd-nspawn.conf
-/lib/tmpfiles.d/journal-nocow.conf
+%_tmpfilesdir/systemd-nologin.conf
+%_tmpfilesdir/systemd.conf
+%_tmpfilesdir/journal-nocow.conf
 
 %_xdgconfigdir/%name
 %_x11sysconfdir/xinit.d/50-systemd-user.sh
@@ -1241,7 +1304,7 @@ fi
 %_bindir/systemd-cgtop
 %_bindir/systemd-delta
 %_bindir/systemd-detect-virt
-%_bindir/systemd-nspawn
+%_bindir/systemd-mount
 %_bindir/systemd-path
 %_bindir/systemd-run
 %_bindir/systemd-stdio-bridge
@@ -1295,6 +1358,19 @@ fi
 %exclude %_unitdir/*udev*
 %exclude %_unitdir/*/*udev*
 
+%exclude %_unitdir/*.machine1.*
+%exclude %_unitdir/*/*.machine1.*
+%exclude %_unitdir/*.import1.*
+%exclude %_unitdir/*/*.import1.*
+%exclude %_unitdir/systemd-machined.service
+%exclude %_unitdir/systemd-importd.service
+%exclude %_unitdir/machine.slice
+%exclude %_unitdir/machines.target
+%exclude %_unitdir/*/machines.target
+%exclude %_unitdir/var-lib-machines.mount
+%exclude %_unitdir/*/var-lib-machines.mount
+%exclude %_unitdir/systemd-nspawn@.service
+
 %_man1dir/bootctl.*
 %_man1dir/busctl.*
 %_man1dir/systemctl.*
@@ -1305,8 +1381,8 @@ fi
 %_man1dir/systemd-delta.*
 %_man1dir/systemd-detect-virt.*
 %_man1dir/systemd-inhibit.*
+%_man1dir/systemd-mount.*
 %_man1dir/systemd-notify.*
-%_man1dir/systemd-nspawn.*
 %_man1dir/systemd-path.*
 %_man1dir/systemd-run.*
 %_man1dir/systemd-socket-activate.*
@@ -1324,7 +1400,6 @@ fi
 %_man5dir/systemd.exec*
 %_man5dir/systemd.kill*
 %_man5dir/systemd.mount*
-%_man5dir/systemd.nspawn*
 %_man5dir/systemd.path*
 %_man5dir/systemd.preset*
 %_man5dir/systemd.resource-control*
@@ -1365,7 +1440,7 @@ fi
 
 %exclude %_mandir/*/*sysusers*
 %exclude %_datadir/factory
-%exclude /lib/tmpfiles.d/etc.conf
+%exclude %_tmpfilesdir/etc.conf
 
 /usr/lib/systemd
 /lib/systemd/system-generators
@@ -1397,7 +1472,7 @@ fi
 %_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
 %endif
 
-%dir %attr(2755,root,systemd-journal) %_localstatedir/log/journal
+%ghost %dir %_logdir/journal
 %dir %_localstatedir/lib/systemd
 %dir %_localstatedir/lib/systemd/catalog
 %ghost %_localstatedir/lib/systemd/catalog/database
@@ -1406,24 +1481,23 @@ fi
 
 # %%_docdir/systemd
 %doc DISTRO_PORTING LICENSE.LGPL2.1 README NEWS TODO
-%_localstatedir/log/README
+%_logdir/README
 # may be need adapt for ALTLinux?
 %exclude /usr/lib/kernel
 %exclude %_bindir/kernel-install
 %exclude %_man8dir/kernel-install.*
 
 %files -n libsystemd-shared
-/%_lib/libsystemd-shared.so.*
+/lib/systemd/libsystemd-shared-%version.so
 
 %files -n libsystemd
 /%_lib/*.so.*
 %exclude /%_lib/*udev*.so.*
 %exclude /%_lib/libnss*
-%exclude /%_lib/libsystemd-shared*
 
 %files -n libsystemd-devel
-%_libdir/*.so
-%exclude %_libdir/*udev*.so
+/%_lib/*.so
+%exclude /%_lib/*udev*.so
 %_pkgconfigdir/*.pc
 %exclude %_pkgconfigdir/*udev*.pc
 %_datadir/pkgconfig/systemd.pc
@@ -1432,6 +1506,10 @@ fi
 %_man3dir/*
 %exclude %_man3dir/udev*
 %exclude %_man3dir/libudev*
+
+%files -n libnss-systemd
+/%_lib/libnss_systemd.so.*
+%_man8dir/*nss?systemd.*
 
 %files -n libnss-myhostname
 /%_lib/libnss_myhostname.so.*
@@ -1476,11 +1554,11 @@ fi
 /sbin/systemd-tmpfiles
 %_mandir/*/*tmpfiles*
 %_rpmlibdir/systemd-tmpfiles.filetrigger
-/lib/tmpfiles.d/legacy.conf
-/lib/tmpfiles.d/x11.conf
-/lib/tmpfiles.d/tmp.conf
-/lib/tmpfiles.d/var.conf
-/lib/tmpfiles.d/home.conf
+%_tmpfilesdir/legacy.conf
+%_tmpfilesdir/x11.conf
+%_tmpfilesdir/tmp.conf
+%_tmpfilesdir/var.conf
+%_tmpfilesdir/home.conf
 
 /lib/systemd/systemd-binfmt
 /sbin/systemd-binfmt
@@ -1522,43 +1600,40 @@ fi
 %exclude %_sysconfdir/dbus-1/system.d/org.freedesktop.systemd1.conf
 %exclude %_sysconfdir/dbus-1/system.d/org.freedesktop.resolve1.conf
 %exclude %_sysconfdir/dbus-1/system.d/org.freedesktop.network1.conf
+%exclude %_sysconfdir/dbus-1/system.d/org.freedesktop.machine1.conf
+%exclude %_sysconfdir/dbus-1/system.d/org.freedesktop.import1.conf
 %_datadir/dbus-1/system-services/org.freedesktop.*.service
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.systemd1.service
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.network1.service
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.machine1.service
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.import1.service
 %if_enabled polkit
 %_datadir/polkit-1/actions/*.policy
 %exclude %_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
+%exclude %_datadir/polkit-1/actions/org.freedesktop.import1.policy
+%exclude %_datadir/polkit-1/actions/org.freedesktop.machine1.policy
 %endif
 
 
 /sbin/loginctl
 /lib/systemd/systemd-logind
 /lib/systemd/systemd-logind-launch
-/sbin/machinectl
-/lib/systemd/systemd-machined
 %_bindir/hostnamectl
 /lib/systemd/systemd-hostnamed
 %_bindir/localectl
 /lib/systemd/systemd-localed
 %_bindir/timedatectl
 /lib/systemd/systemd-timedated
-/lib/systemd/systemd-export
-/lib/systemd/systemd-import
-/lib/systemd/systemd-importd
-/lib/systemd/systemd-pull
-/lib/systemd/import-pubring.gpg
 
 %_mandir/*/*login*
 %exclude %_man3dir/*
-%_mandir/*/*machine*
 %_mandir/*/*hostname*
 %exclude %_man8dir/*myhostname*
 %exclude %_man8dir/*mymachines*
 %exclude %_man1dir/systemd-machine-id-*
 %_mandir/*/*locale*
 %_mandir/*/*timedate*
-%_man8dir/systemd-importd.*
 
 %if_enabled networkd
 %files networkd
@@ -1575,7 +1650,7 @@ fi
 /lib/systemd/systemd-resolved
 /lib/systemd/resolv.conf
 %_bindir/systemd-resolve
-/lib/tmpfiles.d/systemd-network.conf
+%_tmpfilesdir/systemd-network.conf
 %_unitdir/systemd-networkd.*
 %_unitdir/systemd-resolved.*
 %_unitdir/systemd-networkd-wait-online.*
@@ -1586,7 +1661,7 @@ fi
 %_unitdir/altlinux-simpleresolv*
 %_unitdir/*/*resolv*
 %_unitdir/*/*network1*
-/lib/systemd/network/*.network
+/lib/systemd/network/80-container-host0.network
 %_mandir/*/*network*
 %_mandir/*/*netdev*
 %_mandir/*/*resolved*
@@ -1595,6 +1670,45 @@ fi
 %_man5dir/systemd.negative.*
 %_man5dir/systemd.positive.*
 %endif
+
+%files container
+%config(noreplace) %_sysconfdir/dbus-1/system.d/org.freedesktop.machine1.conf
+%config(noreplace) %_sysconfdir/dbus-1/system.d/org.freedesktop.import1.conf
+/sbin/machinectl
+%_bindir/systemd-nspawn
+/lib/systemd/import-pubring.gpg
+%_tmpfilesdir/systemd-nspawn.conf
+%_unitdir/*.machine1.*
+%_unitdir/*/*.machine1.*
+%_unitdir/*.import1.*
+%_unitdir/*/*.import1.*
+%_unitdir/systemd-machined.service
+%_unitdir/systemd-importd.service
+%_unitdir/machine.slice
+%_unitdir/machines.target
+%_unitdir/*/machines.target
+%_unitdir/var-lib-machines.mount
+%_unitdir/*/var-lib-machines.mount
+%_unitdir/systemd-nspawn@.service
+/lib/systemd/systemd-machined
+/lib/systemd/systemd-export
+/lib/systemd/systemd-import
+/lib/systemd/systemd-importd
+/lib/systemd/systemd-pull
+/lib/systemd/network/80-container-ve.network
+/lib/systemd/network/80-container-vz.network
+%_datadir/dbus-1/system-services/org.freedesktop.machine1.service
+%_datadir/dbus-1/system-services/org.freedesktop.import1.service
+%if_enabled polkit
+%_datadir/polkit-1/actions/org.freedesktop.import1.policy
+%_datadir/polkit-1/actions/org.freedesktop.machine1.policy
+%endif
+%_mandir/*/*nspawn*
+%_mandir/*/*machine*
+%exclude %_man3dir/*machine*
+%_man8dir/systemd-importd.*
+%exclude %_man8dir/*mymachines.*
+%exclude %_man1dir/systemd-machine-id-*
 
 %if_enabled timesyncd
 %files timesyncd
@@ -1611,17 +1725,18 @@ fi
 
 %if_enabled microhttpd
 %files journal-gateway
-%dir %_localstatedir/log/journal/remote
+%dir %_logdir/journal/remote
 %config(noreplace) %_sysconfdir/systemd/journal-remote.conf
 %dir %attr(0755,systemd-journal-upload,systemd-journal-upload) %_localstatedir/lib/systemd/journal-upload
 /lib/systemd/systemd-journal-gatewayd
 /lib/systemd/systemd-journal-remote
 %_unitdir/systemd-journal-gatewayd.*
 %_datadir/systemd/gatewayd
-/lib/tmpfiles.d/systemd-remote.conf
+%_tmpfilesdir/systemd-remote.conf
 %_man8dir/systemd-journal-gatewayd.*
 %_man8dir/systemd-journal-remote.*
 %_man5dir/journal-remote.conf.*
+%_man5dir/journal-upload.conf.*
 
 %if_enabled sysusers
 /lib/sysusers.d/systemd-remote.conf
@@ -1659,7 +1774,7 @@ fi
 %_unitdir/sysinit.target.wants/systemd-sysusers.service
 /lib/sysusers.d/systemd.conf
 /lib/sysusers.d/basic.conf
-/lib/tmpfiles.d/etc.conf
+%_tmpfilesdir/etc.conf
 %_mandir/*/*sysusers*
 
 %if_enabled ldconfig
@@ -1701,7 +1816,7 @@ fi
 
 %files -n libudev-devel
 %_includedir/libudev.h
-%_libdir/libudev.so
+/%_lib/libudev.so
 %_pkgconfigdir/libudev.pc
 %_datadir/pkgconfig/udev.pc
 %_man3dir/udev*
@@ -1776,6 +1891,11 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Sun Nov 06 2016 Alexey Shabalin <shaba@altlinux.ru> 1:232-alt1
+- 232
+- split container support to systemd-container
+- add libnss-systemd package
+
 * Fri Sep 30 2016 Alexey Shabalin <shaba@altlinux.ru> 1:231-alt3
 - build with libidn support
 - backport upstream patches for networkd
