@@ -1,7 +1,7 @@
 %define oname compose
 
 Name: docker-%oname
-Version: 1.9.0
+Version: 1.10.0
 Release: alt1
 
 Summary: Run multi-container applications with Docker
@@ -46,6 +46,9 @@ everything that needs to be done to get it running.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Wed Jan 25 2017 Vladimir Didenko <cow@altlinux.ru> 1.10.0-alt1
+- 1.10.0
+
 * Fri Dec 16 2016 Vladimir Didenko <cow@altlinux.ru> 1.9.0-alt1
 - 1.9.0
 

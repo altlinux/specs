@@ -4,7 +4,7 @@
 
 %global provider_prefix %{provider}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          04f275d4601ca7e5ff9460cec7f65e8dd15443ec
+%global commit          c91b5bea4830a57eac7882d7455d59518cdf70ec
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -16,7 +16,7 @@
 
 Name:           runc
 Version:        1.0.0
-Release:        alt1.git%shortcommit
+Release:        alt2.git%shortcommit
 Summary:        CLI for running Open Containers
 Group:          Development/Other
 License:        Apache 2.0
@@ -56,6 +56,10 @@ EOF
 /lib/tmpfiles.d/runc.conf
 
 %changelog
+* Mon Jan 23 2017 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt2.gitc91b5be
+- New version.
+- Fixes CVE-2016-9962.
+
 * Tue Aug 2 2016 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt1.git04f275d
 - New version.
 
