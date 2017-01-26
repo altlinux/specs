@@ -1,6 +1,6 @@
 
 Name: phpipam
-Version: 1.27.002
+Version: 1.29.011
 Release: alt1
 Summary: PHP-based virtual machine control tool
 Group: Networking/WWW
@@ -95,6 +95,9 @@ rm -rf %buildroot%webserver_webappsdir/%name/functions/PHPMailer/test
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Thu Jan 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.29.011-alt1
+- git snapshot of master branch 84916b3c3add90b9cb1c39c9623cf04bb0f3bcd6
+
 * Tue Jan 10 2017 Alexey Shabalin <shaba@altlinux.ru> 1.27.002-alt1
 - git snapshot of master branch d55883ff28a3cf347f18e0cc717cf64b7556706a
 - update PHPMailer to 5.2.22 (fixed CVE-2017-5223)
