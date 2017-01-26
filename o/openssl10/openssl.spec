@@ -1,5 +1,5 @@
 Name: openssl10
-Version: 1.0.2j
+Version: 1.0.2k
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -461,6 +461,9 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Thu Jan 26 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2k-alt1
+- Updated to v1.0.2k (fixes CVE-2016-7055, CVE-2017-3731, CVE-2017-3732).
+
 * Mon Sep 26 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2j-alt1
 - Updated to v1.0.2j (fixes CVE-2016-6309).
 
