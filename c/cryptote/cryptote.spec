@@ -1,22 +1,23 @@
 # Spec file for CryptoTE editor
 
 Name: cryptote
-Version: 0.5.390
-Release: alt2
+Version: 0.6.0
+Release: alt1
 
 Summary: encrypting text editor
-#Summary(ru_RU.UTF-8): 
 
 License: %gpl2only
 Group: Editors
-URL: http://idlebox.net/2009/cryptote/
+URL: https://github.com/bingmann/cryptote
+#URL: http://idlebox.net/2009/cryptote/
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source0: %name-%version.tar
+Patch0:  %name-%version-%release.patch
+
 Source1: %name-16.png
 Source2: %name-32.png
-Patch0:  %name-0.5.390-alt-fix_headers.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -32,11 +33,10 @@ plain ASCII text and does not require you to fill in grids,
 key-value attributes, descriptions etc.
 Encryption is transparently performed using the Serpent cipher.
 
-#%%description -l ru_RU.UTF-8
-
 %prep
 %setup
-%patch0
+%patch0 -p1
+
 mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
@@ -74,6 +74,9 @@ mv -- %buildroot%_pixmapsdir/%{name}* %buildroot%_liconsdir/
 %_liconsdir/%{name}*
 
 %changelog
+* Thu Jan 26 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.6.0-alt1
+- New version
+
 * Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.5.390-alt2
 - Fix build with GCC 4.7
 
