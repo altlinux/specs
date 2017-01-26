@@ -4,19 +4,24 @@
 %define oname logilab-common
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt1.hg20150708.1.1
+Release: alt2.hg20150708
 
 Summary: Useful miscellaneous modules used by Logilab projects
 License: LGPLv2.1+
 Group: Development/Python
 
+Url: http://www.logilab.org/project/logilab-common
+Packager: Python Development Team <python@packages.altlinux.org>
+
+# Do not install /usr/bin/pytest from there
+# and use it instead of ours quietly;
+# an explicit "Requires: pytest" is needed.
+Conflicts: python-module-pytest = 3.0.5-alt1
+
 BuildArch: noarch
 
-Url: http://www.logilab.org/project/logilab-common
 # hg clone http://hg.logilab.org/review/logilab/common/
 Source: %name-%version.tar
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 %py_requires mx.DateTime
 %add_python_req_skip mercurial sphinx
@@ -54,7 +59,13 @@ designed to ease:
 %package -n python3-module-%oname
 Summary: Useful miscellaneous modules used by Logilab projects (Python 3)
 Group: Development/Python3
+# Do not install /usr/bin/pytest3 from there
+# and use it instead of ours quietly;
+# an explicit "Requires: pytest3" is needed.
+Conflicts: python-module-pytest = 3.0.5-alt1
 %add_python3_req_skip kerberos mercurial sphinx
+%add_python3_req_skip six.moves
+%py3_requires six
 
 %description -n python3-module-%oname
 logilab-common is a collection of low-level Python packages and modules,
@@ -75,17 +86,17 @@ designed to ease:
 %setup
 %if_with python3
 rm -rf ../python3
-cp -a . ../python3
+cp -a . -T ../python3
 %endif
 
 %build
 %python_build
 %if_with python3
 pushd ../python3
-cp setup.py setup.py.back
+cp setup.py -T setup.py.back
 find -type f -name '*.py' -exec sed -i 's|unittest2|unittest|g' -- '{}' +
 find -type f -name '*.py' -exec 2to3 -w -n '{}' +
-mv -f setup.py.back setup.py
+mv -f setup.py.back -T setup.py
 %python3_build
 popd
 %endif
@@ -95,48 +106,58 @@ popd
 pushd ../python3
 %python3_install
 install -p -m644 logilab/__init__.py \
-	%buildroot%python3_sitelibdir/logilab/
+	-t %buildroot%python3_sitelibdir/logilab/
+install -pD -m644 doc/pytest.1 -T %buildroot%_man1dir/pytest3_logilab-common.1
 popd
-rm -rf %buildroot%python3_sitelibdir/logilab/common/test
-mv %buildroot%_bindir/pytest %buildroot%_bindir/pytest3
+mv %buildroot%_bindir/pytest -T %buildroot%_bindir/pytest3_logilab-common
 %endif
 
 %python_install
 install -p -m644 logilab/__init__.py \
-	%buildroot%python_sitelibdir/logilab/
-install -pD -m644 doc/pytest.1 %buildroot%_man1dir/pytest.1
-rm -rf %buildroot%python_sitelibdir/logilab/common/test
+	-t %buildroot%python_sitelibdir/logilab/
+install -pD -m644 doc/pytest.1 -T %buildroot%_man1dir/pytest_logilab-common.1
+mv %buildroot%_bindir/pytest -T %buildroot%_bindir/pytest_logilab-common
 
 %check
 PYTHONPATH=%buildroot%python_sitelibdir \
-    %buildroot%_bindir/pytest \
+    %buildroot%_bindir/pytest_logilab-common \
     -t test \
     -s test_4
 %if_with python3
 pushd ../python3
 PYTHONPATH=%buildroot%python3_sitelibdir \
-    %buildroot%_bindir/pytest3 \
+    %buildroot%_bindir/pytest3_logilab-common \
     -t test \
     -s test_4
 popd
 %endif
 
+%global _unpackaged_files_terminate_build 1
 %files
-%_bindir/pytest
+%_bindir/pytest_logilab-common
 %python_sitelibdir/logilab/
 %python_sitelibdir/*.egg-info
-%_man1dir/*
+%python_sitelibdir/*.pth
+%_man1dir/pytest_*
 %doc ChangeLog README
 
 %if_with python3
 %files -n python3-module-%oname
-%doc ChangeLog README
-%_bindir/pytest3
+%_bindir/pytest3_logilab-common
 %python3_sitelibdir/logilab/
 %python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*.pth
+%_man1dir/pytest3_*
+%doc ChangeLog README
 %endif
 
 %changelog
+* Thu Jan 26 2017 Ivan Zakharyaschev <imz@altlinux.org> 1.0.2-alt2.hg20150708
+- Rename /usr/bin/pytest{,3} to avoid collision with pytest{,3}-3.0.5
+  (ALT#33028).
+- Package *.pth files for modifying the Python path for the
+  namespace pkg.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.2-alt1.hg20150708.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
