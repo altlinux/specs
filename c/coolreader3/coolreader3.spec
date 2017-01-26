@@ -5,7 +5,7 @@
 
 Name:     coolreader3
 Version:  3.0.56
-Release:  alt2
+Release:  alt3
 
 Summary: E-Book reader
 
@@ -24,6 +24,7 @@ Source3: %real_name-48.png
 
 Patch1: %name-3.0.54-alt-desktop.patch
 Patch2: %name-3.0.56-save_settings.patch
+Patch3: %name-3.0.56-alt-gcc6.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -45,6 +46,7 @@ CHM, PDB.
 
 %patch1
 %patch2 -p1
+%patch3
 
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
@@ -85,6 +87,9 @@ install -m0644 -- %SOURCE3 %buildroot%_liconsdir/%real_name.png
 %_liconsdir/%{real_name}*
 
 %changelog
+* Thu Jan 26 2017 Nikolay A. Fetisov <naf@altlinux.org> 3.0.56-alt3
+- Fix build with GCC 6.3
+
 * Wed Sep 10 2014 Nikolay A. Fetisov <naf@altlinux.ru> 3.0.56-alt2
 - Fix save settings bug (Closes: 29721)
 
