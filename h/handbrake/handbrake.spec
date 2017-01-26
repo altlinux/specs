@@ -1,7 +1,7 @@
-%define svn git20161229
+%define svn git20170122
 
 Name: handbrake
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1.%svn
 Summary: Multithreaded Video Transcoder
 Packager: Motsyo Gennadi <drool@altlinux.ru>
@@ -79,7 +79,6 @@ export CXXFLAGS="%optflags"
 
 ./configure --prefix="%buildroot%prefix" --force --disable-gtk-update-checks
 pushd build
-# #%make_build
 %__make build
 popd build
 
@@ -105,6 +104,9 @@ popd #build
 %_datadir/icons/*/*/apps/hb-icon.svg
 
 %changelog
+* Thu Jan 26 2017 Motsyo Gennadi <drool@altlinux.ru> 1.0.2-alt1.git20170122
+- 1.0.2 (git 22.01.2017)
+
 * Mon Jan 16 2017 Motsyo Gennadi <drool@altlinux.ru> 1.0.1-alt1.git20161229
 - 1.0.1 (git 29.12.2016)
 
