@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.0.5
-Release: alt2
+Release: alt3
 Summary: py.test, a simple and popular testing tool for Python
 License: MIT
 Group: Development/Python
@@ -176,7 +176,7 @@ cp -R doc/en/_build/pickle -t %buildroot%python_sitelibdir/%oname/
 python setup.py test
 %if_with python3
 pushd ../python3-module-%oname-%version
-#python3 setup.py test
+python3 setup.py test
 popd
 %endif
 
@@ -215,6 +215,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 26 2017 Ivan Zakharyaschev <imz@altlinux.org> 3.0.5-alt3
+- %%check: enabled Python3 tests.
+
 * Thu Jan 26 2017 Ivan Zakharyaschev <imz@altlinux.org> 3.0.5-alt2
 - Separate packages for the extra /usr/bin/pytest* to track their
   users (ALT#33028).
