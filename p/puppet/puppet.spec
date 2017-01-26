@@ -1,8 +1,8 @@
 %define confdir ext/redhat
 
 Name:    puppet
-Version: 4.7.0
-Release: alt2
+Version: 4.8.1
+Release: alt1
 
 Summary: A network tool for managing many disparate systems
 Group:   System/Servers
@@ -34,7 +34,7 @@ BuildRequires: ruby-safe_yaml
 Requires: shadow-change
 Conflicts: ruby-semantic
 
-%filter_from_requires /^ruby(.*\(win32\|windows\|wmi-lite\|semantic\|spec_helper\).*)/d
+%filter_from_requires /^ruby(.*\(win32\|windows\|wmi-lite\|semantic\|spec_helper\|#\).*)/d
 
 %description
 Puppet lets you centrally manage every important aspect of your
@@ -191,6 +191,10 @@ install -d %buildroot%_localstatedir/puppet/ssl/private_keys
 %config(noreplace) %_sysconfdir/sysconfig/puppetmaster
 
 %changelog
+* Wed Jan 18 2017 Andrey Cherepanov <cas@altlinux.org> 4.8.1-alt1
+- new version 4.8.1
+- aptrpm package provider is default for ALT operating system
+
 * Fri Oct 21 2016 Andrey Cherepanov <cas@altlinux.org> 4.7.0-alt2
 - Fix build without bundled libraries
 - Rebuild with fixed ruby autoreq (ALT #32601)

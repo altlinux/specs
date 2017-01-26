@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: Ruby library for retrieving facts from operating systems
 Group:   Development/Ruby
@@ -13,11 +13,14 @@ Url: 	 https://tickets.puppetlabs.com/browse/FACT
 BuildArch: noarch
 
 Source:  %pkgname-%version.tar
+Patch1:  %name-alt-support.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
 
-Requires: coreutils dmidecode net-tools pciutils
+Requires: coreutils dmidecode net-tools pciutils bind-utils
+
+%filter_from_requires /^ruby(.*\(win32\|windows\/\|cfpropertylist\|sys\/admin\|augeas\|puppet\).*/d
 
 %description
 A cross-platform Ruby library for retrieving facts from
@@ -41,9 +44,10 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
+%patch1 -p1
 # Remove unmets
-> lib/facter/util/windows_root.rb
-> lib/facter/util/macosx.rb
+#rm -f lib/facter/util/windows_root.rb \
+#      lib/facter/util/macosx.rb
 
 %update_setup_rb
 
@@ -52,6 +56,7 @@ Documentation files for %{name}.
 %ruby_build
 
 %install
+#./install.rb --destdir=%buildroot
 %ruby_install
 %rdoc lib/
 # Remove unnecessary files
@@ -61,7 +66,7 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_test_unit -Ilib:test test
 
 %files
-%doc COMMITTERS.md CONTRIBUTING.md README.md
+%doc *.md
 %_bindir/%pkgname
 %ruby_sitelibdir/*
 %doc %_man8dir/%{pkgname}.*
@@ -70,6 +75,10 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Jan 18 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt2
+- Add ALT Linux operating system support
+- Add bind-utils for IP address get
+
 * Mon Apr 28 2014 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
 - New version
 
