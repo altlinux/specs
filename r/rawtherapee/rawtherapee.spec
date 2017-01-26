@@ -1,45 +1,32 @@
-%def_disable hg
-
-# LAST_REVISION=`hg log -b default | head -1 | sed 's|\s||g'`
-# RT_CHANGESET=`hg parents --template 'Latest-tag:{latesttag},CSet:{rev}:{node|short}'`
-# RT_DIST=`hg parents --template '{latesttagdistance}'`
-%if_enabled hg
-%define rtlastrev changeset:1768:c0f0396030bf
-%define rtlasttag changeset:1768:c0f0396030bf
-%define rtdist 0
+%def_disable snapshot
+%if_enabled snapshot
+%define git_distance 1175
 %endif
 
 Name: rawtherapee
-Version: 4.2
-Release: alt1.1
+Version: 5.0%{?_enable_snapshot:.%git_distance}
+Release: alt1
 
 Summary: THe Experimental RAw Photo Editor
 License: GPLv3+
 Group: Graphics
 URL: http://www.rawtherapee.com/
 
-# Tarfile created from Mercurial repository
-# hg clone https://rawtherapee.googlecode.com/hg/ %name-%version
-# cd %name-%version
-# rm -rf .hg*
-# rm -rf doc/
-# rm -rf rawzor*
-# rm -rf tools/createicon.exe
-# tar -cjvf ~/%name-%version.tar.bz2 ../%name-%version
-%if_enabled hg
-Source: rawtherapee-%version.tar.bz2
+%if_enabled snapshot
+# use full archive not git-archive to avoid dancing around version
+Source: rawtherapee-%version.tar
 %else
-Source: http://rawtherapee.com/shared/source/%name-%version.tar.xz
+Source: http://rawtherapee.com/shared/source/%name-%version-gtk3.tar.xz
 %endif
 
 Requires: %name-data = %version-%release
 
-BuildRequires: bzlib-devel cmake gcc-c++ libgomp-devel libgtkmm2-devel libiptcdata-devel
+%{?_enable_snapshot:BuildRequires: git}
+BuildRequires: bzlib-devel cmake gcc-c++ libgomp-devel libgtkmm3-devel libiptcdata-devel
 BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libtiff-devel libfftw3-devel
-BuildRequires: libexpat-devel libpixman-devel libcanberra-gtk2-devel
+BuildRequires: libexpat-devel libpixman-devel libcanberra-gtk3-devel
 BuildRequires: libXdmcp-devel libXdamage-devel libXxf86vm-devel
 BuildRequires: libexiv2-devel libharfbuzz-devel
-%{?_enable_hg:BuildRequires: mercurial}
 
 %description
 Raw Therapee is a free RAW converter and digital photo processing software.
@@ -53,30 +40,14 @@ BuildArch: noarch
 This package provides noarch data needed for Raw Therapee to work.
 
 %prep
-%setup
+%setup -n %name-%version-gtk3
 # Do not install useless rtstart:
 subst "s|install (PROGRAMS rtstart|\#install (PROGRAMS rtstart|" CMakeLists.txt
 
-%if_enabled hg
-# Tell version
-cat > rtgui/version.h << EOF
-#ifndef _VERSION_
-#define _VERSION_
-
-#define VERSION "%{rtlastrev} %{rtlasttag}"
-#define TAGDISTANCE %{rtdist}
-#define CACHEFOLDERNAME "RawTherapee${CACHE_NAME_SUFFIX}"
-#endif
-EOF
-%endif
-
-cat > AboutThisBuild.txt << EOF
-See package informations
-EOF
-
 %build
-%cmake -DCMAKE_BUILD_TYPE=release \
--DCACHE_NAME_SUFFIX=""
+%cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
+	-DCMAKE_CXX_FLAGS="-std=c++11" \
+	-DCACHE_NAME_SUFFIX=""
 %cmake_build VERBOSE=1
 
 %install
@@ -96,6 +67,9 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Thu Jan 26 2017 Yuri N. Sedunov <aris@altlinux.org> 5.0-alt1
+- 5.0 (gtk3)
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
