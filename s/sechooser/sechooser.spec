@@ -1,6 +1,6 @@
 Name: sechooser
 Version: 0.2.1
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Selinux user range chooser
 License: GPL
@@ -37,6 +37,9 @@ install -m644 translations/sechooser_??.qm %buildroot/%_qt5_translationdir/
 %_bindir/*
 
 %changelog
+* Thu Jan 26 2017 Sergey V Turchin <zerg at altlinux dot org> 0.2.1-alt2%ubt
+- fix packaging
+
 * Thu Jan 26 2017 Sergey V Turchin <zerg at altlinux dot org> 0.2.1-alt1.S1
 - don't ignore minimal selected level
 
