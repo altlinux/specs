@@ -5,40 +5,66 @@
 
 Name: python-module-%oname
 Version: 3.0.5
-Release: alt1
-Summary: Simple and popular testing tool for Python
+Release: alt2
+Summary: py.test, a simple and popular testing tool for Python
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/%oname
 Packager: Python Development Team <python@packages.altlinux.org>
+
+%py_requires py
+
 BuildArch: noarch
 
 Source: https://pypi.python.org/packages/a8/87/b7ca49efe52d2b4169f2bfc49aa5e384173c4619ea8e635f123a0dac5b75/%oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python
-BuildRequires: python-module-setuptools python-module-hypothesis
+BuildPreReq: python-module-setuptools python-module-hypothesis
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools python3-module-hypothesis
+BuildPreReq: python3-module-setuptools python3-module-hypothesis
 %endif
 %if_with docs
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-py
+BuildPreReq: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-py
 %endif
 
-%py_requires py
-
-%description
-py.test is a command line tool to collect, run and report about
-automated tests. It runs well on Linux, Windows and OSX and on Python
-2.4 through to 3.1 versions. It is used in many projects, ranging from
-running 10 thousands of tests to a few inlined tests on a command line
-script. As of version 1.2 you can also generate a
-no-dependency py.test-equivalent standalone script that you can
+%global long_desc is a command line tool to collect, run and report about\
+automated tests. It runs well on Linux, Windows and OSX and on Python\
+2.4 through to 3.1 versions. It is used in many projects, ranging from\
+running 10 thousands of tests to a few inlined tests on a command line\
+script. As of version 1.2 you can also generate a\
+no-dependency py.test-equivalent standalone script that you can\
 distribute along with your application.
 
+%description
+py.test %long_desc
+
+Install pytest package if you need the extra /usr/bin/pytest executable
+in addition to the usual /usr/bin/py.test.
+
+%package -n pytest
+Summary: Additional executable for py.test
+Group: Development/Python
+Requires: python-module-%oname = %EVR
+# It simply has executables with the same filename:
+Conflicts: python-module-logilab-common < 1.0.2-alt2.hg20150708
+
+%description -n pytest
+py.test is a simple and popular testing tool for Python.
+It is packaged as python-module-%oname by ALT.
+
+This package contains the extra /usr/bin/pytest executable
+in addition to /usr/bin/py.test, which has always been packaged
+before.
+
+This separate package has been made to track the dependencies on this
+additional executable.
+
+%if_with python3
+
 %package -n python3-module-%oname
-Summary: Simple and popular testing tool for Python 3
+Summary: py.test3, the simple and popular testing tool for Python 3
 Group: Development/Python3
 %py3_requires py
 %add_python3_req_skip compiler
@@ -46,13 +72,31 @@ Group: Development/Python3
 %add_python3_req_skip py.builtin
 
 %description -n python3-module-%oname
-py.test is a command line tool to collect, run and report about
-automated tests. It runs well on Linux, Windows and OSX and on Python
-2.4 through to 3.1 versions. It is used in many projects, ranging from
-running 10 thousands of tests to a few inlined tests on a command line
-script. As of version 1.2 you can also generate a
-no-dependency py.test-equivalent standalone script that you can
-distribute along with your application.
+py.test3 %long_desc
+
+Install pytest3 package if you need the extra /usr/bin/pytest3 executable
+in addition to the usual /usr/bin/py.test3
+(which used to be /usr/bin/py.test-3.M).
+
+%package -n pytest3
+Summary: Additional executable for py.test3
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+# It simply has executables with the same filename:
+Conflicts: python3-module-logilab-common < 1.0.2-alt2.hg20150708
+
+%description -n pytest3
+py.test3 is a simple and popular testing tool, the Python3 variant.
+It is packaged as python3-module-%oname by ALT.
+
+This package contains the extra /usr/bin/pytest3 executable
+in addition to /usr/bin/py.test3, which has always been packaged
+before (as /usr/bin/py.test-3.N).
+
+This separate package has been made to track the dependencies on this
+additional executable.
+
+%endif
 
 %package docs
 Summary: Documentation for py.test
@@ -88,7 +132,7 @@ This package contains pickles for py.test.
 %setup -n %oname-%version
 %if_with python3
 rm -rf ../python3-module-%oname-%version
-cp -a . ../python3-module-%oname-%version
+cp -a . -T ../python3-module-%oname-%version
 %endif
 
 %if_with docs
@@ -116,8 +160,8 @@ popd
 %if_with python3
 pushd ../python3-module-%oname-%version
 %python3_install
-mv %buildroot%_bindir/py.test %buildroot%_bindir/py.test-%_python3_version
-mv %buildroot%_bindir/pytest %buildroot%_bindir/pytest-%_python3_version
+mv %buildroot%_bindir/py.test -T %buildroot%_bindir/py.test3
+mv %buildroot%_bindir/pytest -T %buildroot%_bindir/pytest3
 popd
 %endif
 
@@ -125,7 +169,7 @@ popd
 
 %if_with docs
 install -d %buildroot%python_sitelibdir/%oname
-cp -fR doc/en/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -R doc/en/_build/pickle -t %buildroot%python_sitelibdir/%oname/
 %endif
 
 %check
@@ -136,36 +180,54 @@ pushd ../python3-module-%oname-%version
 popd
 %endif
 
+%global _unpackaged_files_terminate_build 1
 %files
 %doc AUTHORS LICENSE *.rst
-%_bindir/*
-%if_with python3
-%exclude %_bindir/py.test-%_python3_version
-%exclude %_bindir/pytest-%_python3_version
-%endif
+%_bindir/py.test
 %python_sitelibdir/*
 %if_with docs
-%exclude %python_sitelibdir/%oname
+%exclude %python_sitelibdir/%oname/pickle
 %endif
 
+%files -n pytest
+%_bindir/pytest
+
 %if_with docs
+
 %files pickles
-%dir %python_sitelibdir/%oname
 %python_sitelibdir/%oname/pickle
 
 %files docs
 %doc doc/en/_build/html/*
+
 %endif
 
 %if_with python3
+
 %files -n python3-module-%oname
 %doc AUTHORS LICENSE *.rst
-%_bindir/py.test-%_python3_version
-%_bindir/pytest-%_python3_version
+%_bindir/py.test3
 %python3_sitelibdir/*
+
+%files -n pytest3
+%_bindir/pytest3
+
 %endif
 
 %changelog
+* Thu Jan 26 2017 Ivan Zakharyaschev <imz@altlinux.org> 3.0.5-alt2
+- Separate packages for the extra /usr/bin/pytest* to track their
+  users (ALT#33028).
+- /usr/bin/py.test3 - Avoid dep on minor version of python3 in the filename:
+  + no need to rebuild with the change of python3's minor version;
+  + no need for python3 to preprocess the .spec.
+- (.spec) BuildPreReq for manually written build deps.
+- (.spec) put Requires before any specs how to build (they are
+  externally visible).
+- (.spec) A bit safer scripting.
+- (.spec) more %%if_with python3 (to avoid unwanted calls to python3;
+  just in case).
+
 * Sat Jan 21 2017 Anton Midyukov <antohami@altlinux.org> 3.0.5-alt1
 - New version 3.0.5
 - srpm build
