@@ -1,6 +1,6 @@
 Name: teamviewer-preinstall
 Version: 11.0
-Release: alt1
+Release: alt2
 
 Summary: TeamViewer pre-installation scripts
 Group: Networking/WWW
@@ -25,7 +25,6 @@ Requires: expat >= 1.95
 %install
 mkdir -p %buildroot%_libdir/%name
 for lib in \
-    libexpat.so.1 \
     libSM.so.6 \
     libXdamage.so.1 \
     libXext.so.6 \
@@ -36,10 +35,12 @@ for lib in \
     libXtst.so.6 \
     libasound.so.2 \
     libdbus-1.so.3 \
+    libexpat.so.1 \
     libfontconfig.so.1 \
     libfreetype.so.6 \
     libgcc_s.so.1 \
     libjpeg.so.62 \
+    libnss_db.so.2 \
     libpng12.so.0 \
     libz.so.1
 do 
@@ -56,6 +57,9 @@ Check with teamviewer_11.0.57095.i686.rpm
 %_libdir/%name
 
 %changelog
+* Thu Jan 26 2017 Andrey Cherepanov <cas@altlinux.org> 11.0-alt2
+- Add glibc-nss to requirements
+
 * Mon Jul 11 2016 Andrey Cherepanov <cas@altlinux.org> 11.0-alt1
 - Adapt for new Arepo: package symlinks to 32-bit kibraries
 
