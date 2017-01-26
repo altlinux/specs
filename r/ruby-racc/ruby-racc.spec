@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.4.14
-Release: alt2
+Release: alt3
 # It has to be newer than old ruby-module-racc-runtime 1.8 to workaround apt bug
 Serial: 1
 
@@ -13,6 +13,9 @@ Group: Development/Ruby
 License: MIT/Ruby
 Url: https://rubygems.org/gems/racc
 
+# we do not target jruby:
+%filter_from_requires \,^ruby(racc/.*-jruby\.jar)$,d
+
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
 
@@ -20,9 +23,6 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-ruby
 # Automatically added by buildreq on Wed May 06 2009 (-bi)
 BuildRequires: libruby-devel ruby-test-unit ruby-tool-setup
-
-# By-pass buggy ruby.req.rb (from rpm-build-ruby) to get this tool into Sisyphus
-%set_ruby_req_method normal
 
 %description
 Racc is an LALR(1) parser generator.
@@ -92,6 +92,9 @@ rm -v %buildroot%ruby_sitelibdir/racc/parser.rb
 %ruby_ri_sitedir/Racc*
 
 %changelog
+* Thu Jan 26 2017 Ivan Zakharyaschev <imz@altlinux.org> 1:1.4.14-alt3
+- Build with rpm-build-ruby-0.2.2-alt2 for more deps.
+
 * Thu Oct 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.4.14-alt2
 - do not package ruby-racc-runtime.
   NOTE: Ruby 1.8.x comes with Racc runtime module.
