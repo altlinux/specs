@@ -1,17 +1,15 @@
 %define ver_major 0.2
 
 Name: cerbere
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: service to relaunch Pantheon apps
 Group: Graphical desktop/Other
 License: GPLv2+
 Url: https://launchpad.net/cerbere
-Packager: Igor Zubkov <icesik@altlinux.org>
 
-Source: https://launchpad.net/%name/0.x/%version/+download/%name-%version.tgz
-Patch0: cerbere-0.2-alt-fix-desktop-file.patch
+Source: https://launchpad.net/%name/0.x/%version/+download/%name-%version.tar.xz
 
 Requires: dconf
 
@@ -25,7 +23,6 @@ they crash or are killed by another process.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %cmake
@@ -41,6 +38,9 @@ they crash or are killed by another process.
 %_datadir/glib-2.0/schemas/org.pantheon.cerbere.gschema.xml
 
 %changelog
+* Thu Jan 26 2017 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
+- 0.2.2
+
 * Fri Sep 11 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
 - 0.2.1
 
