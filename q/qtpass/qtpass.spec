@@ -1,0 +1,104 @@
+# SPEC file for QtPass
+#
+
+%define real_name    QtPass
+
+Name:     qtpass
+Version:  1.1.6
+Release:  alt1
+
+Summary: a multi-platform GUI for pass, the standard unix password manager
+Summary(ru_RU.UTF-8): кросс-платформенный интерфейс к менеджеру паролей pass
+
+Group:    Text tools
+License:  %gpl3plus
+URL:      https://qtpass.org/
+# URL: https://github.com/IJHack/qtpass
+
+Packager: Nikolay Fetisov <naf@altlinux.org>
+
+Source0: %real_name-%version.tar
+Patch0:  %real_name-%version-%release.patch
+
+Patch1:  %name-1.1.6-alt-desktop.patch
+
+Source1: %name-16.png
+Source2: %name-32.png
+Source3: %name-48.png
+
+BuildRequires(pre): rpm-build-licenses desktop-file-utils
+
+
+# Automatically added by buildreq on Thu Jan 26 2017
+# optimized out: gcc-c++ libGL-devel libqt5-core libqt5-gui libqt5-network libqt5-widgets libqt5-xml libstdc++-devel python-base python-modules python3
+BuildRequires: qt5-base-devel qt5-tools
+
+Requires: gnupg gnupg2 git-core pwgen
+
+%description
+QtPass is a multi-platform GUI for pass, the standard unix
+password manager, with the following features:
+
+* Reading pass password stores
+* Displaying the password and related info
+* Editing and adding of passwords and information
+* Per-folder user selection for multi-user password stores
+* Updating to and from a git repository
+* Copying password to clipboard
+* Using pass or git and gpg2 directly
+* And other
+
+%description -l ru_RU.UTF-8
+QtPass -  кроссплатформенный графический интерфейс к менеджеру
+паролей pass, с поддержкой:
+
+* чтение хранилищ паролей pass,
+* отображение паролей и сопутствующей информации
+* редактирование и добавление паролей в хранилище
+* поддержка выбора пользоваталей для многопользовательских хранилищ
+* поддержка размещения хранилища паролей в репозитории git,
+* копирование паролей в буфер обмена,
+* работа с использованием pass или напрямую через git и gpg2
+* и прочее.
+
+
+%prep
+%setup  -n %real_name-%version
+%patch0
+
+%patch1
+
+mv -- LICENSE LICENSE.orig
+ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/LICENSE) LICENSE
+
+%build
+%qmake_qt5  PREFIX=%buildroot%prefix
+%make
+
+%install
+%makeinstall
+
+install -D -m0644 -- qtpass.desktop %buildroot%_desktopdir/%name.desktop
+
+install -D -m0644 -- artwork/icon.svg   %buildroot%_iconsdir/hicolor/scalable/apps/qtpass-icon.svg
+install -D -m0644 -- %SOURCE1 %buildroot%_miconsdir/%name.png
+install -D -m0644 -- %SOURCE2 %buildroot%_niconsdir/%name.png
+install -D -m0644 -- %SOURCE3 %buildroot%_liconsdir/%name.png
+
+install -D -m0644 -- qtpass.appdata.xml %buildroot%_datadir/appdata/%name.appdata.xml
+
+%files
+%doc README.md CHANGELOG.md FAQ.md
+%doc --no-dereference LICENSE
+
+%_bindir/%name
+
+%_desktopdir/%name.desktop
+%_iconsdir/hicolor/*/apps/*
+%_datadir/appdata/%name.appdata.xml
+
+
+%changelog
+* Thu Jan 26 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.1.6-alt1
+- Initial build for ALT Linux Sisyphus
+
