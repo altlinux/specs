@@ -1,6 +1,6 @@
 Name: kcollectd
 Version: 0.9
-Release: alt2.qa8
+Release: alt4
 
 Summary: collectd graphing frontend for KDE
 License: %gpl3plus
@@ -14,6 +14,7 @@ Patch0: %name-0.9-alt-boost_v3.patch
 Patch1: %name-0.9-alt-kde4_dtd.patch
 Patch2: %name-0.9-alt-desktop_fix.patch
 Patch3: %name-0.9-alt-license_fix.patch
+Patch4: %name-0.9-alt-isnan.patch
 
 BuildRequires(pre): rpm-build-licenses kde-common-devel
 
@@ -36,6 +37,7 @@ as a chart recorder.
 %patch1
 %patch2
 %patch3
+%patch4
 
 # Fix path to collecd files
 sed -e 's#/var/lib/collectd/rrd#/var/lib/collectd#' -i CMakeLists.txt
@@ -65,6 +67,9 @@ ln -rs -- %buildroot{%_kde4_bindir/%name,%_bindir/%name}
 %_K4xdg_mime/%name.*
 
 %changelog
+* Thu Jan 26 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.9-alt4
+- Rebuilt with GCC 6.3
+
 * Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9-alt2.qa8
 - NMU: rebuilt with boost 1.57.0 -> 1.58.0.
 
