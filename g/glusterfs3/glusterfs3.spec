@@ -1,7 +1,7 @@
 # For update, merge with new tag, update version in the spec and do gear-update-tag -a
 
 %define oname glusterfs
-%define major 3.8
+%define major 3.9
 %define _with_fusermount yes
 %define _without_ocf yes
 
@@ -25,10 +25,9 @@
 # rpmbuild -ta @PACKAGE_NAME@-@PACKAGE_VERSION@.tar.gz --without ocf
 %{?_without_ocf:%global _without_ocf --without-ocf}
 
-
 Name: glusterfs3
-Version: %major.4
-Release: alt1
+Version: %major.1
+Release: alt2
 
 Summary: Cluster File System
 
@@ -36,16 +35,21 @@ License: GPLv2/LGPLv3
 Group: System/Base
 Url: http://www.gluster.org/
 
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
 # Source-git: https://github.com/gluster/glusterfs.git
 Source0: %name-%version.tar
 Source1: glusterd.sysconfig
 Source2: %name.watch
 Source3: umount.glusterfs
+
+# FIXME: to remove:
 Source4: glusterfs-fuse.logrotate
 Source5: glusterd.logrotate
 Source6: glusterfsd.logrotate
 
 Source7: glusterd.init
+Source8: glustereventsd.init
 
 
 Patch0: %name-%version-%release.patch
@@ -55,16 +59,13 @@ Patch0: %name-%version-%release.patch
 %add_verify_elf_skiplist %_libdir/glusterfs/xlator/mount/fuse.so
 
 %define _init_install() install -D -p -m 0755 %1 %buildroot%_initdir/%2 ;
-%define _init_file1     %_initdir/glusterd
-#%define _init_file2     %_initdir/glusterfsd
 
 %define glusterlibdir %_libdir/glusterfs/%version
 
-
-# manually removed: -static i586-glibc-devel i586-libssl-devel python-module-google python-module-mwlib python-module-oslo.config python-module-oslo.serialization python3 ruby ruby-stdlibs 
+# manually removed: -static i586-glibc-devel i586-libssl-devel python-module-google python-module-mwlib python-module-oslo.config python-module-oslo.serialization python3 ruby ruby-stdlibs
 # Automatically added by buildreq on Sat Jun 13 2015
 # optimized out: gnu-config i586-glibc-core i586-glibc-pthread i586-libcrypto10 libcom_err-devel libdevmapper-devel libdevmapper-event libibverbs-devel libkrb5-devel libncurses-devel libssl-devel libtinfo-devel pkg-config python-base python-devel python-module-distribute python-module-oslo.i18n python-module-oslo.utils python-modules python-modules-ctypes python3-base userspace-rcu
-BuildRequires: flex glib2-devel glibc-devel libacl-devel libaio-devel libattr-devel libdb4-devel liblvm2-devel libreadline-devel libsqlite3-devel libuuid-devel libxml2-devel python-module-cmd2 zlib-devel
+BuildRequires: flex glib2-devel glibc-devel-static libacl-devel libaio-devel libattr-devel libdb4-devel liblvm2-devel libreadline-devel libsqlite3-devel libuuid-devel libxml2-devel python-module-cmd2 zlib-devel
 
 BuildPreReq: libssl-devel
 
@@ -130,12 +131,12 @@ is in user space and easily manageable.
 This package provides the configuration and related files for using
 NFS-Ganesha as the NFS server using GlusterFS.
 
-
 %if 0%{!?_without_georeplication:1}
 %package geo-replication
 Summary: GlusterFS Geo-replication
 Group: System/Base
-Requires: %name = %version-%release , python-modules-ctypes , rsync >= 3.0.0
+Requires: %name = %version-%release
+Requires: python-modules-ctypes, rsync >= 3.0.0
 
 %description geo-replication
 GlusterFS is a clustered file-system capable of scaling to several
@@ -174,7 +175,7 @@ This package provides support to FUSE based clients.
 Summary: GlusterFS api library
 Group: System/Libraries
 #Requires: %name = %version-%release
-#Requires:         %{name}-client-xlators = %{version}-%{release}
+#Requires:         %name-client-xlators = %version-%release
 
 %description -n lib%name-api
 GlusterFS is a distributed file-system capable of scaling to several
@@ -204,11 +205,11 @@ is in user space and easily manageable.
 
 This package provides the api include files.
 
-
 %package server
 Summary: Clustered file-system server
 Group: System/Servers
 Requires: %name = %version-%release
+Requires: %name-client = %version-%release
 
 %description server
 GlusterFS is a clustered file-system capable of scaling to several
@@ -220,6 +221,15 @@ called Translators from GNU Hurd kernel. Much of the code in GlusterFS
 is in user space and easily manageable.
 
 This package provides the glusterfs server daemon.
+
+%package events
+Summary: GlusterFS Events
+Group: System/Servers
+Requires: %name = %version-%release
+Requires: python-module-%name = %version-%release
+
+%description events
+GlusterFS Events
 
 %package vim
 Summary: Vim syntax file
@@ -297,7 +307,7 @@ echo "v%version-%release" >VERSION
 # need from build from git repo (but incorporated in tarballs)
 ./autogen.sh
 %configure  %{?_without_rdma} %{?_without_epoll} %{?_with_fusermount} %{?_without_georeplication} \
-            %{?_without_ocf} \
+%{?_without_ocf} \
             --with-systemddir=%_unitdir \
             --localstatedir=/var/ \
             --libexecdir=%_libexecdir \
@@ -305,8 +315,8 @@ echo "v%version-%release" >VERSION
             --enable-bd-xlator
 
 # Remove rpath
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+%__subst 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+%__subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
 %make_build
 
@@ -350,40 +360,48 @@ mv %buildroot%_datadir/glusterfs/scripts/gsync-sync-gfid %buildroot%_bindir/
 # Create working directory
 mkdir -p %buildroot%_sharedstatedir/glusterd
 
-
 # Update configuration file to /var/lib working directory
-sed -i 's|option working-directory %_sysconfdir/glusterd|option working-directory %_sharedstatedir/glusterd|g' \
-    %buildroot%_sysconfdir/glusterfs/glusterd.vol
+%__subst 's|option working-directory %_sysconfdir/glusterd|option working-directory %_sharedstatedir/glusterd|g' \
+%buildroot%_sysconfdir/glusterfs/glusterd.vol
 
-# FIXME: missed install in Makefile since 1.8.2
 install -D -m644 extras/systemd/glusterd.service %buildroot/%_unitdir/glusterd.service
+install -D -m644 extras/systemd/glustereventsd.service %buildroot/%_unitdir/glustereventsd.service
 
 # Install init script and sysconfig file
 %_init_install %SOURCE7 glusterd
+%_init_install %SOURCE8 glustereventsd
 install -D -p -m 0644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/glusterd
 # Install wrapper umount script
 install -D -p -m 0755 %SOURCE3 %buildroot/sbin/umount.glusterfs
+
+install -D -p -m 0644 extras/glusterfs-logrotate %buildroot%_sysconfdir/logrotate.d/glusterfs
+
 # Client logrotate entry
-install -D -p -m 0644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/glusterfs-fuse
+#install -D -p -m 0644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/glusterfs-fuse
 # Server logrotate entry
-install -D -p -m 0644 %SOURCE5 %buildroot%_sysconfdir/logrotate.d/glusterd
+#install -D -p -m 0644 %SOURCE5 %buildroot%_sysconfdir/logrotate.d/glusterd
 # Legacy server logrotate entry
-install -D -p -m 0644 %SOURCE6 %buildroot%_sysconfdir/logrotate.d/glusterfsd
+#install -D -p -m 0644 %SOURCE6 %buildroot%_sysconfdir/logrotate.d/glusterfsd
 # Install vim syntax plugin
 install -D -p -m 644 extras/glusterfs.vim \
-    %buildroot%_datadir/vim/vimfiles/syntax/glusterfs.vim
+%buildroot%_datadir/vim/vimfiles/syntax/glusterfs.vim
 
 %if 0%{?_without_ocf:1}
-rm -rf %buildroot/usr/lib/ocf/
+rm -rf %buildroot%_libexecdir/ocf/
 %endif
+
+rm -rf %buildroot%_sbindir/conf.py
+
 
 # TODO: move common part to -common?
 %files
 %doc ChangeLog INSTALL README.md THANKS COPYING-GPLV2 COPYING-LGPLV3
 %_bindir/glusterfind
-%_sbindir/glusterfs*
+
+# cli
 %_sbindir/gluster
-%_sbindir/glusterd
+%_man8dir/gluster.8*
+
 %dir %glusterlibdir/
 %dir %_datadir/glusterfs/
 %glusterlibdir/rpc-transport/
@@ -399,12 +417,10 @@ rm -rf %buildroot/usr/lib/ocf/
 %_sbindir/snap_scheduler.py
 %exclude %glusterlibdir/xlator/mount/fuse*
 %_logdir/glusterfs/
-%_man8dir/*gluster*.8*
 %exclude %_man8dir/mount.glusterfs.8*
 %if 0%{!?_without_rdma:1}
 %exclude %glusterlibdir/rpc-transport/rdma*
 %endif
-
 
 %if 0%{!?_without_rdma:1}
 %files rdma
@@ -427,6 +443,10 @@ rm -rf %buildroot/usr/lib/ocf/
 %_datadir/glusterfs/scripts/generate-gfid-file.sh
 %_datadir/glusterfs/scripts/schedule_georep.py
 %_bindir/gsync-sync-gfid
+%_libexecdir/glusterfs/peer_georep-sshkey.py
+%_libexecdir/glusterfs/peer_mountbroker.py
+%_sbindir/gluster-georep-sshkey
+%_sbindir/gluster-mountbroker
 %endif
 
 %files -n lib%name-api
@@ -440,7 +460,13 @@ rm -rf %buildroot/usr/lib/ocf/
 %_includedir/glusterfs/api/
 
 %files client
-%config(noreplace) %_sysconfdir/logrotate.d/glusterfs-fuse
+# CHECKME: glusterfs is a symlink to glusterfsd, -server depends on -client.
+%_sbindir/glusterfs
+%_sbindir/glusterfsd
+%_man8dir/glusterfs.8*
+%_man8dir/glusterfsd.8*
+#%config(noreplace) %_sysconfdir/logrotate.d/glusterfs-fuse
+%config(noreplace) %_sysconfdir/logrotate.d/glusterfs
 %glusterlibdir/xlator/mount/fuse*
 %_man8dir/mount.glusterfs.8*
 /sbin/mount.glusterfs
@@ -450,14 +476,19 @@ rm -rf %buildroot/usr/lib/ocf/
 %endif
 
 %files server
+%_sbindir/glusterd
+%_man8dir/glusterd.8*
+%_initdir/glusterd
 %_unitdir/glusterd.service
-%config(noreplace) %_sysconfdir/logrotate.d/glusterd
 %config(noreplace) %_sysconfdir/sysconfig/glusterd
-%config(noreplace) %_sysconfdir/glusterfs
+%config(noreplace) %_sysconfdir/glusterfs/
+%exclude %_sysconfdir/glusterfs/eventsconfig.json
+
 # Legacy configs
-%config(noreplace) %_sysconfdir/logrotate.d/glusterfsd
-%_sharedstatedir/glusterd
-%_init_file1
+#%config(noreplace) %_sysconfdir/logrotate.d/glusterfsd
+%_sharedstatedir/glusterd/
+%exclude %_sharedstatedir/glusterd/events/
+
 %_sbindir/glfsheal
 %_libdir/libgfdb.so.*
 
@@ -468,21 +499,33 @@ rm -rf %buildroot/usr/lib/ocf/
 %_datadir/glusterfs/scripts/stop-all-gluster-processes.sh
 
 %if 0%{!?_without_ocf:1}
-%dir /usr/lib/ocf/resource.d/
-/usr/lib/ocf/resource.d/glusterfs/
+%dir %_libexecdir/ocf/resource.d/
+%_libexecdir/ocf/resource.d/glusterfs/
 %endif
 
 %files ganesha
 %dir /etc/ganesha/
 %config(noreplace) /etc/ganesha/ganesha-ha.conf.sample
-/usr/lib/ganesha/create-export-ganesha.sh
-/usr/lib/ganesha/copy-export-ganesha.sh
-/usr/lib/ganesha/dbus-send.sh
-/usr/lib/ganesha/ganesha-ha.sh
-/usr/lib/ganesha/generate-epoch.py
+%_libexecdir/ganesha/create-export-ganesha.sh
+#%_libexecdir/ganesha/copy-export-ganesha.sh
+%_libexecdir/ganesha/dbus-send.sh
+%_libexecdir/ganesha/ganesha-ha.sh
+%_libexecdir/ganesha/generate-epoch.py
 %if 0%{!?_without_ocf:1}
-/usr/lib/ocf/resource.d/heartbeat/
+%_libexecdir/ocf/resource.d/heartbeat/
 %endif
+
+# Events
+%files events
+%config(noreplace) %_sysconfdir/glusterfs/eventsconfig.json
+%dir %attr(0755,-,-) %_sharedstatedir/glusterd/events/
+%_libexecdir/glusterfs/events/
+%_libexecdir/glusterfs/peer_eventsapi.py*
+%_sbindir/glustereventsd
+%_sbindir/gluster-eventsapi
+%_datadir/glusterfs/scripts/eventsdash.py*
+%_unitdir/glustereventsd.service
+%_initdir/glustereventsd
 
 %files vim
 %doc COPYING-GPLV2 COPYING-LGPLV3
@@ -515,8 +558,16 @@ rm -rf %buildroot/usr/lib/ocf/
 
 %preun server
 %preun_service glusterd
-
 %changelog
+* Thu Jan 26 2017 Vitaly Lipatov <lav@altlinux.ru> 3.9.1-alt2
+- fix hangs on 32 bit systems (eterbug #11620, RHbug# 1416684)
+
+* Mon Jan 23 2017 Vitaly Lipatov <lav@altlinux.ru> 3.9.1-alt1
+- new version 3.9.1 (with rpmrb script)
+
+* Wed Nov 23 2016 Vitaly Lipatov <lav@altlinux.ru> 3.9.0-alt1
+- build 3.9.0 version
+
 * Sun Oct 02 2016 Vitaly Lipatov <lav@altlinux.ru> 3.8.4-alt1
 - new bugfix release (3.8.4) with rpmgs script
 
