@@ -1,5 +1,5 @@
 %define ver_maj 1
-%define ver_min 63
+%define ver_min 58
 %define ver_rel 0
 
 %define namesuff %{ver_maj}_%{ver_min}_%ver_rel
@@ -7,7 +7,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with jam
 %def_with devel_static
@@ -32,9 +32,11 @@
 %define mpidir %_libdir/%mpiimpl
 %endif
 
-Name: boost
+%set_gcc_version 5
+
+Name: boost%namesuff
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt4.1
 Epoch: 1
 
 Summary: Boost libraries
@@ -51,7 +53,18 @@ Patch15: boost-1.36.0-alt-test-include-fix.patch
 Patch23: boost-1.45.0-alt-mpi-mt-only.patch
 Patch28: boost-1.50.0-fedora-polygon-fix-gcc47.patch
 Patch29: boost-1.53.0-alt-qt4-moc-fix.patch
-Patch30: boost-1.63.0-alt-python-paths.patch
+
+
+Patch30: boost-1.54.0-fedora-locale-unused_typedef.patch
+Patch31: boost-1.54.0-fedora-python-unused_typedef.patch
+Patch32: boost-1.54.0-fedora-spirit-unused_typedef-2.patch
+Patch33: boost-1.54.0-fedora-spirit-unused_typedef.patch
+Patch34: boost-1.57.0-python-cast-unused-typedef.patch
+Patch35: boost-1.58.0-Fix-exec_file-for-Python-3-3.4.patch
+Patch36: boost-1.58.0-Fix-a-regression-with-non-constexpr-types.patch
+Patch37: boost-1.58.0-numeric-ublas-storage-cxx11.patch
+Patch38: boost-1.58.0-alt-fix-build-gcc6-c++11.patch
+
 
 # we use %%requires_python_ABI, introduced in rpm-build-python-0.36.6-alt1
 BuildRequires(pre): rpm-build-python >= 0.36.6-alt1
@@ -68,7 +81,7 @@ BuildRequires: %mpiimpl-devel
 %endif
 
 #buildreq doesn't do anything sane on this package
-BuildRequires: gcc-c++ libstdc++-devel zlib-devel bzlib-devel libicu-devel python-devel
+BuildRequires: gcc5-c++ libstdc++-devel zlib-devel bzlib-devel libicu-devel python-devel
 #BuildRequires: libexpat-devel-static libexpat-devel
 
 %if_with devel
@@ -1209,31 +1222,6 @@ Requires: libboost_thread%version = %epoch:%version-%release
 %description -n libboost_wave%version
 The Boost Wave Library.
 
-%package -n libboost_fiber%version
-Summary: Boost.Fiber Library
-Group: Development/C++
-Provides: boost-fiber = %epoch:%version-%release
-
-%if_with strict_deps
-Requires: libboost_context%version = %epoch:%version-%release
-%endif
-
-%description -n libboost_fiber%version
-The Boost Fiber Library.
-
-%package -n libboost_type_erasure%version
-Summary: Boost.TypeErasure Library
-Group: Development/C++
-Provides: boost-type_erasure = %epoch:%version-%release
-
-%if_with strict_deps
-Requires: libboost_system%version = %epoch:%version-%release
-Requires: libboost_thread%version = %epoch:%version-%release
-%endif
-
-%description -n libboost_type_erasure%version
-The Boost TypeErasure Library.
-
 %if_with mpi
 %if_with devel
 %package -n python-module-boost-mpi
@@ -1263,8 +1251,16 @@ applications. This package contains python module.
 %patch23 -p2
 %patch28 -p3
 %patch29 -p2
-%patch30 -p1
 
+%patch30 -p1
+%patch31 -p1
+%patch32 -p1
+%patch33 -p1
+%patch34 -p2
+%patch35 -p1
+%patch36 -p1
+%patch37 -p0
+%patch38 -p1
 find ./ -type f -perm /111 -exec chmod a-x '{}' ';'
 
 
@@ -1275,13 +1271,18 @@ using gcc : : : <compileflags>"%optflags -fno-strict-aliasing" ;
 %if_with mpi
 using mpi ;
 %endif
+using python : %_python_version ;
+%if_with python3
+using python : %_python3_abi_version : %_prefix :  %__python3_includedir ;
+%endif
 EOF
 
 %build
 
-LINK_BOOST=shared
 %if_with devel_static
-LINK_BOOST=$LINK_BOOST,static
+LINK_BOOST=shared,static
+%else
+LINK_BOOST=shared
 %endif
 
 %if_with mpi
@@ -1299,45 +1300,21 @@ popd
 
 BJAM="${BJAM_DIR}/bjam"
 
-build_boost() {
-	[ -n "$NPROCS" ] || NPROCS=%__nprocs
-	$BJAM \
-		-q -j$NPROCS -d2 \
-		--layout=system \
-		--toolset=gcc \
-		variant=release \
-		threading=multi \
-		link=$LINK_BOOST \
-		optimization=off \
-		debug-symbols=off \
-		-sHAVE_ICU=1 \
-		--prefix=%{_prefix} \
-		--libdir=%{_libdir} \
-		"$@" \
-		#
-}
+[ -n "$NPROCS" ] || NPROCS=%__nprocs
+$BJAM -q -j$NPROCS -d2 --layout=system --toolset=gcc    \
+   variant=release threading=multi              \
+   link=$LINK_BOOST optimization=off               \
+   debug-symbols=off -sHAVE_ICU=1  \
+    --prefix=%{_prefix} --libdir=%{_libdir}
 
-build_boost --without-python
 
-cp ./tools/build/src/user-config.jam user-config-py2.jam
-cat >> user-config-py2.jam <<'@@@'
-using python : %_python_version ;
-@@@
-build_boost --build-dir=build-py2 --user-config=$PWD/user-config-py2.jam --with-python --with-mpi python=%_python_version
-
-%if_with python3
-cp ./tools/build/src/user-config.jam user-config-py3.jam
-cat >> user-config-py3.jam <<'@@@'
-using python : %_python3_version ;
-@@@
-build_boost --build-dir=build-py3 --user-config=$PWD/user-config-py3.jam --with-python --with-mpi python=%_python3_version
-%endif
 
 %install
 
-LINK_BOOST=shared
 %if_with devel_static
-LINK_BOOST=$LINK_BOOST,static
+LINK_BOOST=shared,static
+%else
+LINK_BOOST=shared
 %endif
 
 %if_with mpi
@@ -1349,30 +1326,13 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 BJAM="`pwd`/tools/build/src/engine/bjam"
 
 #libraries and headers are installed by bjam
-install_boost() {
-	[ -n "$NPROCS" ] || NPROCS=%__nprocs
-	$BJAM \
-	-q -j$NPROCS -d2 \
-	--layout=system \
-	--toolset=gcc \
-	variant=release \
-	threading=multi \
-	link=$LINK_BOOST \
-	optimization=off \
-	debug-symbols=off \
-	-sHAVE_ICU=1 \
-	--prefix=%{buildroot}%{_prefix} \
-	--libdir=%{buildroot}%{_libdir} \
-	"$@" \
-	install \
-	#
-}
+[ -n "$NPROCS" ] || NPROCS=%__nprocs
+$BJAM -q -j$NPROCS -d2 --layout=system --toolset=gcc    \
+   variant=release threading=multi              \
+   link=$LINK_BOOST optimization=off               \
+   debug-symbols=off -sHAVE_ICU=1  \
+   --prefix=%{buildroot}%{_prefix} --libdir=%{buildroot}%{_libdir} install
 
-install_boost --without-python
-install_boost --build-dir=build-py2 --user-config=$PWD/user-config-py2.jam --with-python --with-mpi python=%_python_version
-%if_with python3
-install_boost --build-dir=build-py3 --user-config=$PWD/user-config-py3.jam --with-python --with-mpi python=%_python3_version
-%endif
 
 # install mpi python module
 %if_with mpi
@@ -1738,12 +1698,6 @@ rm -f %buildroot%_libdir/*.a || :
 %files -n libboost_wave%version
 %_libdir/*_wave*.so.*
 
-%files -n libboost_fiber%version
-%_libdir/*_fiber*.so.*
-
-%files -n libboost_type_erasure%version
-%_libdir/*_type_erasure*.so.*
-
 %if_with mpi
 %if_with devel
 %files -n python-module-boost-mpi
@@ -1784,8 +1738,8 @@ done
 
 
 %changelog
-* Mon Jan 23 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.63.0-alt1
-- Updated to 1.63.0.
+* Mon Jan 23 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.58.0-alt4.1
+- Rebuilt as compat package without development files.
 
 * Thu May 12 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.58.0-alt4
 - NMU: added patch37 (closes: #32001)
