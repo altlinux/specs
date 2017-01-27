@@ -2,13 +2,13 @@
 %def_enable mpv
 
 %define rname smplayer
-%define svn 8242
+%define svn 8380
 %define xde kde5
 %define XDE KDE5
 %define xapp kf5
 Name: %xde-%rname
-Version: 16.11.0.%svn
-Release: alt1
+Version: 17.1.0.%svn
+Release: alt1%ubt
 
 %define qt_bin_dir %_qt5_bindir
 %define configure_qmake %qmake_qt5
@@ -33,6 +33,7 @@ Patch3: alt-ui-defaults.patch
 Patch4: alt-config-dir.patch
 Patch5: alt-youtube-browser.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ qt5-base-devel qt5-tools-devel qt5-script-devel
 BuildRequires: libXext-devel zlib-devel
 
@@ -163,6 +164,12 @@ done
 
 
 %changelog
+* Fri Jan 27 2017 Sergey V Turchin <zerg@altlinux.org> 17.1.0.8380-alt1%ubt
+- new version
+
+* Fri Nov 25 2016 Sergey V Turchin <zerg@altlinux.org> 16.11.0.8242-alt0.M80P.1
+- build for M80P
+
 * Fri Nov 25 2016 Sergey V Turchin <zerg@altlinux.org> 16.11.0.8242-alt1
 - new version
 
