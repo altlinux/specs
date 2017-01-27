@@ -1,7 +1,7 @@
 %define confdir ext/redhat
 
 Name:    puppet
-Version: 4.8.1
+Version: 4.8.2
 Release: alt1
 
 Summary: A network tool for managing many disparate systems
@@ -191,6 +191,9 @@ install -d %buildroot%_localstatedir/puppet/ssl/private_keys
 %config(noreplace) %_sysconfdir/sysconfig/puppetmaster
 
 %changelog
+* Fri Jan 27 2017 Andrey Cherepanov <cas@altlinux.org> 4.8.2-alt1
+- new version 4.8.2
+
 * Wed Jan 18 2017 Andrey Cherepanov <cas@altlinux.org> 4.8.1-alt1
 - new version 4.8.1
 - aptrpm package provider is default for ALT operating system
