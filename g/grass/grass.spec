@@ -1,5 +1,5 @@
 Name:    grass
-Version: 7.0.5
+Version: 7.2.0
 Release: alt1
 
 %def_with mysql
@@ -20,7 +20,7 @@ Patch0: %name-pkgconf.patch
 Patch1: %name-use-simplejson.patch
 Patch2: %name-soname.patch
 
-%define shortver 70
+%define shortver 72
 #define grassdir grass%shortver
 %define grassdir grass-%version
 %define grassdatadir /var/lib/grass%shortver/data
@@ -302,6 +302,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Fri Jan 27 2017 Andrey Cherepanov <cas@altlinux.org> 7.2.0-alt1
+- New version
+
 * Fri Oct 28 2016 Andrey Cherepanov <cas@altlinux.org> 7.0.5-alt1
 - New version
 

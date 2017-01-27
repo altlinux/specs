@@ -1,9 +1,9 @@
 # WARNING: Rebuild QGIS whenever a new version of GRASS is shipped! Even though the soname might stay the same, it won't work anymore.
 # http://hub.qgis.org/issues/5274
-%define grass_version 7.0.5
+%define grass_version 7.2.0
 
 Name:    qgis
-Version: 2.18.0
+Version: 2.18.4
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -75,6 +75,7 @@ BuildRequires: gzip
 
 Requires: libqt4-sql-sqlite
 Requires: gpsbabel
+Requires: qca2-ossl
 
 # We don't want to provide private Python extension libs
 %add_findprov_skiplist %%python_sitelibdir/%%name/*.so 
@@ -175,7 +176,7 @@ cmake \
 	-DQGIS_CGIBIN_SUBDIR:PATH=%_libexecdir/%name \
 	-DWITH_BINDINGS:BOOL=TRUE \
 	-DGRASS_PREFIX:PATH=%_libdir/grass \
-	-DGRASS_BASE:PATH=%_libdir/grass \
+	-DGRASS_PREFIX7:PATH=%_libdir/grass \
 	-DMAPSERVER_SKIP_ECW=TRUE \
 	-DWITH_MAPSERVER:BOOL=TRUE \
 	-DBINDINGS_GLOBAL_INSTALL:BOOL=TRUE \
@@ -204,7 +205,7 @@ cmake \
 	-DWITH_QTMOBILITY:BOOL=FALSE \
 	-DWITH_TOUCH:BOOL=TRUE \
 	.
-%make_build
+%make_build VERBOSE=1
 
 %install
 %makeinstall_std
@@ -329,6 +330,14 @@ echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
 %_libexecdir/%name
 
 %changelog
+* Tue Mar 07 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.4-alt1
+- New version
+- Fix GRASS default path
+- Add qca2-ossl to enable auth plugin for qgis
+
+* Fri Jan 27 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.3-alt1
+- new version 2.18.3
+
 * Fri Oct 28 2016 Andrey Cherepanov <cas@altlinux.org> 2.18.0-alt1
 - New version
 
