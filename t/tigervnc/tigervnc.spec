@@ -3,7 +3,7 @@
 
 Name: tigervnc
 Version: 1.7.0
-Release: alt1
+Release: alt2
 Summary: A TigerVNC remote display system
 
 Group: Networking/Remote access
@@ -180,6 +180,7 @@ install -pD -m644 %SOURCE2 %buildroot%_unitdir/vncserver@.service
 mkdir -p %buildroot%_sysconfdir/sysconfig
 cat << __EOF__ > %buildroot%_sysconfdir/sysconfig/vncservers
 # The VNCSERVERS variable is a list of display:user pairs.
+# The VNCSERVERARGS[N] variable is a list of display's (N) parameters.
 #
 # Uncomment the line below to start a VNC server on display :1
 # as my 'myusername' (adjust this to your own).  You will also
@@ -191,6 +192,7 @@ cat << __EOF__ > %buildroot%_sysconfdir/sysconfig/vncservers
 # <URL:http://www.uk.research.att.com/vnc/sshvnc.html>.
 
 # VNCSERVERS="1:myusername"
+# VNCSERVERARGS[1]="-geometry 800x600 -localhost"
 __EOF__
 
 mkdir -p %buildroot%_sysconfdir/X11/xorg.conf.d
@@ -249,6 +251,10 @@ popd
 %_xorgmoduledir/extensions/*.so
 
 %changelog
+* Fri Jan 27 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.7.0-alt2
+- vncserver.init: added ability to specify the display settings
+- default "xstartup": added exporting environment variable LANG
+
 * Tue Jan 10 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.7.0-alt1
 - New version (ALT #32741, #32898)
 
