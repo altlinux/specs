@@ -5,8 +5,8 @@
 
 %define rname qmmp
 Name: qmmp1
-Version: 1.1.4
-Release: alt1
+Version: 1.1.6
+Release: alt1%ubt
 
 Group: Sound
 Summary: Qmmp - Qt-based multimedia player
@@ -31,7 +31,7 @@ Patch5: alt-def-id3v1-encoding.patch
 # Automatically added by buildreq on Tue Apr 26 2016 (-bi)
 # optimized out: cmake-modules elfutils gcc-c++ glib2-devel libEGL-devel libGL-devel libX11-devel libavcodec-devel libavutil-devel libcdio-devel libcdio-paranoia libgpg-error libjson-c libogg-devel libopencore-amrnb0 libopencore-amrwb0 libopus-devel libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-widgets libqt5-x11extras libqt5-xml libsndfile-devel libstdc++-devel perl pkg-config python-base python-modules python3 python3-base qt5-base-devel qt5-tools rpm-build-python3 ruby ruby-stdlibs xorg-kbproto-devel xorg-xproto-devel
 #BuildRequires: cmake doxygen libalsa-devel libavformat-devel libbs2b-devel libcddb-devel libcdio-paranoia-devel libcurl-devel libenca-devel libfaad-devel libflac-devel libgme-devel libjack-devel libmad-devel libmms-devel libmodplug-devel libmpcdec-devel libopusfile-devel libprojectM-devel libpulseaudio-devel libsamplerate-devel libsidplayfp-devel libtag-devel libvorbis-devel libwavpack-devel libwildmidi-devel python-module-google python3-dev qt5-tools-devel qt5-x11extras-devel rpm-build-ruby
-BuildRequires(pre): kde-common-devel rpm-build-wlskins
+BuildRequires(pre): kde-common-devel rpm-build-ubt rpm-build-wlskins
 BuildRequires: cmake doxygen qt5-tools-devel qt5-x11extras-devel
 BuildRequires: libmms-devel libprojectM-devel libtag-devel
 BuildRequires: libalsa-devel libjack-devel libpulseaudio-devel
@@ -271,6 +271,9 @@ ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/
 %_libdir/lib*.so
 
 %changelog
+* Fri Jan 27 2017 Sergey V Turchin <zerg@altlinux.org> 1.1.6-alt1%ubt
+- new version
+
 * Tue Oct 04 2016 Sergey V Turchin <zerg@altlinux.org> 1.1.4-alt1
 - new version
 
