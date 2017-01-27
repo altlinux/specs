@@ -2,7 +2,7 @@
 %add_python_req_skip hp3parclient
 
 Name: openstack-cinder
-Version: 9.1.0
+Version: 9.1.1
 Release: alt1
 Epoch: 1
 Summary: OpenStack Volume service
@@ -313,6 +313,9 @@ crudini --set %cinder_conf keystone_authtoken identity_uri http://localhost:3535
 %doc doc/build/html
 
 %changelog
+* Fri Jan 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1:9.1.1-alt1
+- 9.1.1
+
 * Fri Nov 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1:9.1.0-alt1
 - 9.1.0
 - fix logrotate
