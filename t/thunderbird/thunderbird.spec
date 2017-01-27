@@ -7,7 +7,7 @@
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
 Version:	45.7.0
-Release:	alt1
+Release:	alt2
 License:	MPL/GPL
 Group:		Networking/Mail
 URL:		http://www.mozillamessaging.com
@@ -218,6 +218,9 @@ export MOZ_BUILD_APP=mail
 #
 MOZ_OPT_FLAGS=$(echo "%optflags -fpermissive" | \
                       sed -e 's/-Wall//' -e 's/-fexceptions/-fno-exceptions/g')
+# Disable null pointer gcc6 optimization - workaround for
+# https://bugzilla.mozilla.org/show_bug.cgi?id=1278795
+MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fno-delete-null-pointer-checks"
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
 
@@ -399,7 +402,7 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 )
 
 
-%files 
+%files
 %_bindir/*
 %tbird_prefix
 %mozilla_arch_extdir/%tbird_cid
@@ -435,6 +438,9 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Fri Jan 27 2017 Vladimir Didenko <cow@altlinux.org> 45.7.0-alt2
+- Disable null pointer gcc6 optimization (closes: #33048)
+
 * Thu Jan 26 2017 Andrey Cherepanov <cas@altlinux.org> 45.7.0-alt1
 - New version (45.7.0)
 
