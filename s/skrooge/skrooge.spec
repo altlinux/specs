@@ -1,5 +1,5 @@
 Name: 		skrooge
-Version: 	2.6.0
+Version: 	2.7.0
 Release: 	alt1
 License: 	%gpl2plus
 Summary: 	Personal finances manager for KF5
@@ -60,7 +60,7 @@ BuildRequires: kf5-sonnet-devel
 BuildRequires: libofx-devel
 BuildRequires: libqca-qt5-devel
 BuildRequires: libsqlite3-devel
-#BuildRequires: libsqlcipher-devel
+BuildRequires: libsqlcipher-devel
 BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-script-devel
 BuildRequires: qt5-svg-devel
@@ -106,6 +106,9 @@ and intuitive.
 %_datadir/%name
 
 %changelog
+* Fri Jan 27 2017 Andrey Cherepanov <cas@altlinux.org> 2.7.0-alt1
+- new version 2.7.0
+
 * Tue Jan 03 2017 Andrey Cherepanov <cas@altlinux.org> 2.6.0-alt1
 - new version 2.6.0
 
