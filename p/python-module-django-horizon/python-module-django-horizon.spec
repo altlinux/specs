@@ -4,7 +4,7 @@
 
 Name: python-module-django-horizon
 Version: 10.0.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Django application for talking to Openstack
 
@@ -352,6 +352,9 @@ sed -i "/^SECRET_KEY.*$/{N;s/^.*$/SECRET_KEY='`openssl rand -hex 10`'/}" /etc/op
 %doc html
 
 %changelog
+* Fri Jan 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.1-alt2
+- horizon-stable-newton 20161214
+
 * Wed Nov 09 2016 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.1-alt1
 - 10.0.1
 - delete drop-in config for systemd, use compressed files form rpm package
