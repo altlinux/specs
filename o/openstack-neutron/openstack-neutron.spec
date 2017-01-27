@@ -1,7 +1,7 @@
 
 Name: openstack-neutron
 Version: 9.1.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Provides: openstack-quantum = %EVR
 Obsoletes: openstack-quantum < 2013.2-0.4.b3
@@ -540,6 +540,9 @@ fi
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Fri Jan 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1:9.1.1-alt2
+- update to neutron-stable-newton 20160126
+
 * Tue Nov 22 2016 Alexey Shabalin <shaba@altlinux.ru> 1:9.1.1-alt1
 - 9.1.1
 - fix logrotate
