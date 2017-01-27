@@ -8,7 +8,7 @@ BuildRequires: makeinfo
 %def_with _octave_arch
 Name: octave-%octave_pkg_name
 Version: 1.2.1
-Release: alt1
+Release: alt1.1
 Summary: ZeroMQ Toolbox
 
 Group: Sciences/Mathematics
@@ -58,6 +58,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Fri Jan 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1.1
+- rebuild
+
 * Tue Sep 27 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1
 - regenerated from template by package builder
 

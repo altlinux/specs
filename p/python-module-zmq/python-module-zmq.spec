@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 16.0.2
-Release: alt1
+Release: alt2
 Summary: Software library for fast, message-based applications
 
 Group: Development/Python
@@ -178,6 +178,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 30 2017 Valentin Rosavitskiy <valintinr@altlinux.org> 16.0.2-alt2
+- Rebuild with new zeromq library
+
 * Wed Nov 30 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 16.0.2-alt1
 - New version
 
