@@ -5,7 +5,7 @@
 %define pkgname dirsrv
 
 Name: 389-admin-console
-Version: 1.1.11
+Version: 1.1.12
 Release: alt1
 Group:   Networking/Other
 Url:     http://port389.org
@@ -83,6 +83,9 @@ popd
 %doc %_datadir/%pkgname/manual/en/admin/help/*.html
 
 %changelog
+* Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.12-alt1
+- new version 1.1.12
+
 * Sun Jul 31 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.11-alt1
 - new version 1.1.11
 
