@@ -1,7 +1,7 @@
 %define dist Wx-Scintilla
 Name: perl-%dist
 Version: 0.39
-Release: alt3.1
+Release: alt4
 
 Summary: Wx::Scintilla - Scintilla source code editing component for wxWidgets
 Group: Development/Perl
@@ -9,7 +9,8 @@ License: Perl
 
 Url: %CPAN %dist
 Source: %dist-%version.tar.gz
-Patch: 0001-fixed-linking.patch
+Patch1: 0001-fixed-linking.patch
+Patch2: 0002-fix-compilation-with-gcc6.patch
 
 BuildRequires: perl-devel perl-Module-Build perl-Alien-wxWidgets perl-Wx-devel gcc-c++ perl-ExtUtils-XSpp libpng-devel libgtk+2-devel libpango-devel libfreetype-devel fontconfig-devel glib2-devel zlib-devel libwxGTK-devel xvfb-run
 
@@ -22,7 +23,8 @@ Requires: perl-Alien-wxWidgets
 
 %prep
 %setup -q -n %dist-%version
-%patch -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %def_without test
@@ -40,6 +42,9 @@ xvfb-run -a ./Build test
 %doc Changes README
 
 %changelog
+* Sat Jan 28 2017 Vladimir Lettiev <crux@altlinux.ru> 0.39-alt4
+- fixed build with gcc6
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.39-alt3.1
 - rebuild with new perl 5.22.0
 
