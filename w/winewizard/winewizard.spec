@@ -1,5 +1,5 @@
 Name:	 winewizard
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 Summary: Wine Wizard is a new GUI for Wine written in Qt
 
@@ -57,6 +57,9 @@ executing(disabled by default).
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt1
+- new version 3.0.2
+
 * Sun Oct 16 2016 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt1
 - new version 3.0.1
 
