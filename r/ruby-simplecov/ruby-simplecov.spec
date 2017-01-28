@@ -1,8 +1,8 @@
 %define  pkgname simplecov
  
 Name: 	 ruby-%pkgname
-Version: 0.12.0 
-Release: alt2
+Version: 0.13.0
+Release: alt1
  
 Summary: Code coverage for Ruby 1.9+ with a powerful configuration library and automatic merging of coverage across test suites
 License: MIT/Ruby
@@ -17,7 +17,7 @@ Source:  %pkgname-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
 
-%filter_from_requires /^ruby(jruby)/d
+%filter_from_requires \,^ruby(\(jruby\|simplecov/railties/tasks.rake\),d
 
 %description
 SimpleCov is a code coverage analysis tool for Ruby. It uses Ruby's
@@ -60,6 +60,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 0.13.0-alt1
+- new version 0.13.0
+
 * Tue Oct 25 2016 Andrey Cherepanov <cas@altlinux.org> 0.12.0-alt2
 - Rebuild with missing requirements
 
