@@ -1,9 +1,9 @@
-%define _name bsddb3
+%define modname bsddb3
 # sometime 1 test out of 501 fails only in girar
 %def_disable check
 
-Name: python-module-%_name
-Version: 6.2.1
+Name: python-module-%modname
+Version: 6.2.4
 Release: alt1
 
 Summary: Python bindings for BerkleyDB
@@ -11,7 +11,7 @@ Group: Development/Python
 License: BSD
 Url: https://pypi.python.org/pypi/bsddb3/
 
-Source: https://pypi.python.org/packages/source/b/%_name/%_name-%version.tar.gz
+Source: https://pypi.io/packages/source/b/%modname/%modname-%version.tar.gz
 
 BuildRequires: libdb4-devel
 BuildRequires: python-devel
@@ -22,18 +22,18 @@ BuildRequires: /proc python-test python3-test
 %description
 This package provides Python wrappers for Berkeley DB                                          .
 
-%package -n python3-module-%name
+%package -n python3-module-%modname
 Summary: Python3 bindings for BerkleyDB
 Group: Development/Python3
 License: BSD
 
-%description -n python3-module-%name
+%description -n python3-module-%modname
 This package provides Python3 wrappers for Berkeley DB.
 
 
 %prep
-%setup -n %_name-%version -a0
-mv %_name-%version py3build
+%setup -n %modname-%version -a0
+mv %modname-%version py3build
 
 %build
 %python_build
@@ -59,21 +59,24 @@ popd
 %endif
 
 %files
-%python_sitelibdir/%_name/
-%python_sitelibdir/%_name-%version-py*.egg-info
+%python_sitelibdir/%modname/
+%python_sitelibdir/%modname-%version-py*.egg-info
 %doc ChangeLog *.txt
 
-%exclude %python_sitelibdir/%_name/tests/
+%exclude %python_sitelibdir/%modname/tests/
 
-%files -n python3-module-%name
-%python3_sitelibdir/%_name/
-%python3_sitelibdir/%_name-%version-py*.egg-info
+%files -n python3-module-%modname
+%python3_sitelibdir/%modname/
+%python3_sitelibdir/%modname-%version-py*.egg-info
 
-%exclude %python3_sitelibdir/%_name/tests/
+%exclude %python3_sitelibdir/%modname/tests/
 
-%exclude %_includedir/python*/%_name/bsddb.h
+%exclude %_includedir/python*/%modname/bsddb.h
 
 %changelog
+* Sat Jan 28 2017 Yuri N. Sedunov <aris@altlinux.org> 6.2.4-alt1
+- 6.2.4
+
 * Wed Jun 01 2016 Yuri N. Sedunov <aris@altlinux.org> 6.2.1-alt1
 - 6.2.1
 
