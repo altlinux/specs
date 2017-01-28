@@ -4,23 +4,18 @@
 
 Name:    python-module-%oname
 Version: 0.9.1
-Release: alt1
+Release: alt2
 Summary: A Python module for creating Excel XLSX files
 License: BSD
 Group:   Development/Python
 Url:     https://github.com/jmcnamara/XlsxWriter
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Python Development Team <python@packages.altlinux.org>
+
+%py_provides %oname
 
 Source: %oname-%version.tar
 #VCS: https://github.com/jmcnamara/XlsxWriter
 BuildArch: noarch
-
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest
-%endif
-
-%py_provides %oname
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-alabaster
@@ -29,6 +24,12 @@ BuildRequires: python-module-html5lib
 BuildRequires: python-module-objects.inv
 BuildRequires: python-module-pytest
 BuildRequires: time
+
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+# Provides py.test3 for us without the minor version:
+BuildRequires: python3-module-pytest >= 3.0.5-alt2
+%endif
 
 %description
 XlsxWriter is a Python module for writing files in the Excel 2007+ XLSX
@@ -116,7 +117,7 @@ py.test -vv
 %if_with python3
 pushd ../python3
 python3 setup.py test
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
@@ -143,6 +144,10 @@ popd
 %endif
 
 %changelog
+* Sat Jan 28 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.9.1-alt2
+- (.spec) adapt build to python3-module-pytest-3.0.5-alt2:
+  py.test3 without minor version.
+
 * Wed Jun 08 2016 Andrey Cherepanov <cas@altlinux.org> 0.9.1-alt1
 - new version 0.9.1
 
