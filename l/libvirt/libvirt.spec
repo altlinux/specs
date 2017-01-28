@@ -101,10 +101,9 @@
 
 %def_without wireshark
 
-%define with_loader_nvram "%_datadir/OVMF/OVMF_CODE.fd:%_datadir/OVMF/OVMF_VARS.fd:%_datadir/AAVMF/AAVMF_CODE.fd:%_datadir/AAVMF/AAVMF_VARS.fd"
 
 Name: libvirt
-Version: 2.5.0
+Version: 3.0.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -164,6 +163,7 @@ BuildRequires: libgcrypt-devel libgnutls-devel >= 2.2.0 libp11-kit-devel
 BuildRequires: libreadline-devel
 BuildRequires: libtasn1-devel
 BuildRequires: libattr-devel attr
+BuildRequires: libacl-devel
 BuildRequires: perl-Pod-Parser perl-XML-XPath
 BuildRequires: libxml2-devel xml-utils xsltproc w3c-markup-validator-libs xhtml1-dtds
 BuildRequires: python python-devel
@@ -582,6 +582,11 @@ sed -i 's/virnetsockettest //' tests/Makefile.am
 sed -i 's/vircgrouptest //' tests/Makefile.am
 
 %build
+LOADERS_OLD="%_datadir/OVMF/OVMF_CODE.fd:%_datadir/OVMF/OVMF_VARS.fd"
+LOADERS_NEW="%_datadir/edk2/ovmf/OVMF_CODE.fd:%_datadir/edk2/ovmf/OVMF_VARS.fd:%_datadir/edk2/aarch64/QEMU_EFI-pflash.raw:%_datadir/edk2/aarch64/vars-template-pflash.raw"
+LOADERS="$LOADERS_OLD:$LOADERS_NEW"
+%define with_loader_nvram $LOADERS
+
 ./bootstrap --no-git --gnulib-srcdir=gnulib-%name-%version
 %configure \
 		--disable-static \
@@ -696,6 +701,8 @@ install -pD -m644 libvirtd.tmpfiles %buildroot/lib/tmpfiles.d/libvirtd.conf
 mkdir -p %buildroot/%_lib
 mv %buildroot%_libdir/libnss_libvirt.so.* %buildroot/%_lib/
 ln -sf ../../%_lib/libnss_libvirt.so.2 %buildroot%_libdir/libnss_libvirt.so
+mv %buildroot%_libdir/libnss_libvirt_guest.so.2 %buildroot/%_lib/
+ln -sf ../../%_lib/libnss_libvirt_guest.so.2 %buildroot%_libdir/libnss_libvirt_guest.so
 
 %find_lang %name
 
@@ -992,7 +999,7 @@ fi
 %files vbox
 %endif
 
-#if_with sanlock
+%if_with sanlock
 %files lock-sanlock
 %_libdir/libvirt/lock-driver/sanlock.so
 
@@ -1010,8 +1017,7 @@ fi
 %_sbindir/virt-sanlock-cleanup
 %_man8dir/virt-sanlock-cleanup.*
 %_libexecdir/libvirt_sanlock_helper
-#endif #if_with sanlock
-
+%endif #if_with sanlock
 %endif #if_with libvirtd
 
 %files admin
@@ -1020,6 +1026,7 @@ fi
 
 %files  -n nss-%name
 /%_lib/libnss_libvirt.so.*
+/%_lib/libnss_libvirt_guest.so.*
 
 %if_with wireshark
 %files -n wireshark-plugin-%name
@@ -1042,6 +1049,12 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Jan 27 2017 Alexey Shabalin <shaba@altlinux.ru> 3.0.0-alt1
+- 3.0.0
+
+* Thu Jan 12 2017 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt2
+- add new path to edk2 uefi nvram
+
 * Wed Dec 07 2016 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt1
 - 2.5.0
 
