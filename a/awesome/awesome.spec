@@ -1,10 +1,10 @@
 Name: awesome
 Version: 3.5.9
-Release: alt2
+Release: alt3
 Group: Graphical desktop/Other
 License: GPL2+
 
-Url: http://awesome.naquadah.org/
+Url: https://awesomewm.org/
 Packager: Evgenii Terechkov <evg@altlinux.org>
 Source: %name-%version.tar
 Source1: %name.wmsession
@@ -14,7 +14,7 @@ Patch0:%name-%version-alt.patch
 Summary: A window manager initialy based on a dwm code rewriting
 
 BuildRequires: ImageMagick-tools asciidoc cmake gcc-c++ gperf
-BuildRequires: imlib2-devel libdbus-devel libev-devel lua5.3-devel
+BuildRequires: imlib2-devel libdbus-devel libev-devel liblua5-devel
 BuildRequires: libncurses-devel libpango-devel libreadline-devel xmlto
 BuildRequires: libxdg-basedir-devel libstartup-notification-devel
 BuildRequires: libXdmcp-devel libgdk-pixbuf-devel lgi
@@ -90,6 +90,9 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc AUTHORS LICENSE README BUGS PATCHES STYLE
 
 %changelog
+* Sat Jan 28 2017 Terechkov Evgenii <evg@altlinux.org> 3.5.9-alt3
+- Fix build
+
 * Mon Oct 17 2016 Terechkov Evgenii <evg@altlinux.org> 3.5.9-alt2
 - Rebuild with lua5.3
 
