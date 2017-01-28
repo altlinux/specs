@@ -1,8 +1,8 @@
 %define pypi_name pelican
 
 Name: python-module-%pypi_name
-Version: 3.6.3
-Release: alt2
+Version: 3.7.1
+Release: alt1
 Summary: A tool to generate a static blog from reStructuredText or Markdown input files
 Group: Development/Python
 
@@ -13,7 +13,10 @@ Source: %pypi_name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-blinker python-module-dateutil python-module-sphinx python-module-pytz python-module-unidecode python-module-mock
+BuildRequires: python-devel python-module-blinker python-module-dateutil
+BuildRequires: python-module-sphinx python-module-pytz
+BuildRequires: python-module-unidecode python-module-mock
+BuildRequires: python-module-pelican
 
 # for django.utils.feedgenerator
 BuildPreReq: python-module-django
@@ -89,6 +92,9 @@ LC_ALL=en_US.UTF-8 python -m unittest discover ||:
 %files -n pelican
 
 %changelog
+* Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 3.7.1-alt1
+- new version 3.7.1
+
 * Thu Jul 14 2016 Andrey Cherepanov <cas@altlinux.org> 3.6.3-alt2
 - Add metapackage pelican with all requirements needed for generation
 
