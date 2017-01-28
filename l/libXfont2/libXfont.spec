@@ -1,6 +1,6 @@
 Name: libXfont2
 Version: 2.0.1
-Release: alt1
+Release: alt1.1
 Summary: X.Org libXfont runtime library
 License: MIT/X11
 Group: System/Libraries
@@ -10,8 +10,9 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: bzlib-devel libfontenc-devel libfreetype-devel xorg-fontsproto-devel xmlto fop
-BuildRequires: xorg-xproto-devel xorg-xtrans-devel xorg-util-macros zlib-devel xorg-sgml-doctools
+BuildRequires: bzlib-devel libfontenc-devel libfreetype-devel xorg-fontsproto-devel
+BuildRequires: xorg-xproto-devel xorg-xtrans-devel xorg-util-macros zlib-devel
+#BuildRequires: fop xorg-sgml-doctools xmlto
 
 %description
 libXfont provides the core of the legacy X11 font system, handling the
@@ -32,7 +33,7 @@ This package contains the libXfont development library and header files
 %def_enable ipv6
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
@@ -45,7 +46,7 @@ This package contains the libXfont development library and header files
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_libdir/*.so.*
@@ -56,6 +57,9 @@ This package contains the libXfont development library and header files
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jan 13 2017 Michael Shigorin <mike@altlinux.org> 2.0.1-alt1.1
+- BOOTSTRAP: dropped docs-related BRs (unused)
+
 * Wed Nov 30 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.0.1-alt1
 - 2.0.1
 
