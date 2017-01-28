@@ -1,6 +1,6 @@
 Name: 	  osync
-Version:  1.1
-Release:  alt2.rc1.1.git99d923f
+Version:  1.1.5
+Release:  alt1
 
 Summary:  A robust two way (bidirectional) file sync script based on rsync with fault tolerance
 License:  BSD
@@ -49,6 +49,9 @@ install -Dp -m 0644 sync.conf %buildroot%_sysconfdir/osync/sync.conf
 %_sysconfdir/systemd/user/*.service.user
 
 %changelog
+* Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.5-alt1
+- new version 1.1.5
+
 * Tue Jun 14 2016 Andrey Cherepanov <cas@altlinux.org> 1.1-alt2.rc1.1.git99d923f
 - New version from upstream Git
 - Package systemd services and tests
