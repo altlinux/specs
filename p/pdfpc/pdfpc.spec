@@ -1,12 +1,14 @@
+%define commit 0350b1a96472e52fdf64b106a9ead50e09c16f4b
+
 Name: pdfpc
-Version: 4.0.3
+Version: 4.0.5.0.18.g0350b1a
 Release: alt1
 Summary: A GTK based presentation viewer application for GNU/Linux
 
 Group: Other
 License: GPLv2+
 Url: https://github.com/pdfpc/pdfpc
-# Repacked %url/archive/%version/%name-%version.tar.gz
+# Repacked %url/archive/%commit.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
@@ -43,8 +45,12 @@ which can be created using nearly any of today's presentation software.
 %_bindir/%name
 %config(noreplace) %_sysconfdir/%{name}rc
 %_mandir/man1/%{name}*
+%_mandir/man5/%{name}*
 %_datadir/pixmaps/%name
 
 %changelog
+* Thu Jan 19 2017 Elvira Khabirova <lineprinter@altlinux.org> 4.0.5.0.18.g0350b1a-alt1
+- New version 4.0.5-18-g0350b1a.
+
 * Tue Oct 04 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.3-alt1
 - Initial build.
