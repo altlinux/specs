@@ -2,7 +2,7 @@
 %define minor_version 14
 
 Name:    idm-console-framework
-Version: 1.1.15
+Version: 1.1.17
 Release: alt1
 Group:   Networking/Other
 Url:     http://port389.org
@@ -46,6 +46,9 @@ install -m777 built/release/jars/idm-console-* %buildroot%_javadir
 %_javadir/idm-console-nmclf_en.jar
 
 %changelog
+* Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.17-alt1
+- new version 1.1.17
+
 * Mon Aug 01 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.15-alt1
 - new version 1.1.15
 
