@@ -1,6 +1,6 @@
 Name: libaio
 Version: 0.3.110
-Release: alt1
+Release: alt1.1
 
 Summary: Linux-native asynchronous I/O access library
 License: LGPLv2+
@@ -9,6 +9,7 @@ URL: http://pkgs.fedoraproject.org/gitweb/?p=libaio.git
 Packager: Victor Forsiuk <force@altlinux.org>
 Source: ftp://ftp.kernel.org/pub/linux/libs/aio/libaio-%version.tar.bz2
 Patch1: libaio-install-to-slash.patch
+Patch2: libaio-mcst-e2k.patch
 
 # 0.3.109 supports ARM architecture.
 #ExclusiveArch: %ix86 x86_64
@@ -32,6 +33,7 @@ for the Linux-native asynchronous I/O facility ("async I/O", or "aio").
 %prep
 %setup
 %patch1 -p1
+%patch2 -p2
 
 %build
 #subst 's/ -O./ %optflags/' Makefile
@@ -54,6 +56,9 @@ ln -snf ../../%_lib/${v##*/} %buildroot%_libdir/%name.so
 %_includedir/*
 
 %changelog
+* Sat Jan 28 2017 Michael Shigorin <mike@altlinux.org> 0.3.110-alt1.1
+- E2K: partially added mcst patch.
+
 * Tue Aug 19 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.110-alt1
 - New version.
 
