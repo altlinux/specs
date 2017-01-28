@@ -3,8 +3,8 @@
 %def_disable static
 
 Name: pcsc-lite
-Version: 1.8.18
-Release: alt2
+Version: 1.8.20
+Release: alt1
 
 Summary: PC/SC Lite smart card framework and applications
 License: %bsd
@@ -150,6 +150,9 @@ install -pDm644 %SOURCE3 %buildroot/lib/tmpfiles.d/pcsc-lite.conf
 %endif
 
 %changelog
+* Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 1.8.20-alt1
+- new version 1.8.20
+
 * Fri Dec 30 2016 Lenar Shakirov <snejok@altlinux.ru> 1.8.18-alt2
 - Requires: polkit added (closes: #32950)
 

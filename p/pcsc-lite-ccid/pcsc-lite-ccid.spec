@@ -1,7 +1,5 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-
 Name: pcsc-lite-ccid
-Version: 1.4.24
+Version: 1.4.26
 Release: alt1
 
 Summary: USB CCID IFD Handler
@@ -52,6 +50,9 @@ cp -a src/92_pcscd_ccid.rules %buildroot/lib/udev/rules.d/
 /lib/udev/rules.d/92_pcscd_ccid.rules
 
 %changelog
+* Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 1.4.26-alt1
+- new version 1.4.26
+
 * Thu Sep 15 2016 Andrey Cherepanov <cas@altlinux.org> 1.4.24-alt1
 - New version 1.4.24
 - Drop obsoleted patch
