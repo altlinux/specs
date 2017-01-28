@@ -1,5 +1,5 @@
 Name: asymptote
-Version: 2.38
+Version: 2.39
 Release: alt1
 
 Summary: Descriptive vector graphics language
@@ -76,6 +76,9 @@ rm -fv *.tar.gz
 %_infodir/%name/*.info*
 
 %changelog
+* Sat Jan 28 2017 Vitaly Lipatov <lav@altlinux.ru> 2.39-alt1
+- new version 2.39 (with rpmrb script)
+
 * Tue Jul 26 2016 Vitaly Lipatov <lav@altlinux.ru> 2.38-alt1
 - new version 2.38 (with rpmrb script)
 
