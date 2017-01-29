@@ -1,12 +1,13 @@
 Name: portaudio2
 Version: 19
-Release: alt5
+Release: alt6
 
 Summary: PortAudio is a free, cross platform, open-source, audio I/O library
 License: BSD
 Group: System/Libraries
 URL: http://www.portaudio.com/
-Source: pa_stable_v19_20110326.tgz
+
+Source: http://www.portaudio.com/archives/pa_stable_v190600_20161030.tgz
 
 # Automatically added by buildreq on Mon Sep 19 2011
 BuildRequires: gcc-c++ libalsa-devel libjack-devel
@@ -30,7 +31,7 @@ distortion on a guitar, list available audio devices, etc.
 Summary: PortAudio is a free, cross platform, open-source, audio I/O library
 Group: System/Libraries
 
-%description -n	lib%name
+%description -n lib%name
 PortAudio is a free, cross platform, open-source, audio I/O
 library. It lets you write simple audio programs in 'C' that will
 compile and run on many platforms including Windows, Macintosh
@@ -51,7 +52,7 @@ Group: Development/C
 Requires: lib%name = %version-%release
 Conflicts: libportaudio-devel
 
-%description -n	lib%name-devel
+%description -n lib%name-devel
 PortAudio is a free, cross platform, open-source, audio I/O
 library. It lets you write simple audio programs in 'C' that will
 compile and run on many platforms including Windows, Macintosh
@@ -80,7 +81,7 @@ sed -i '/^Libs:/s/ @/\nLibs.private: @/' portaudio-2.0.pc.in
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -92,6 +93,9 @@ sed -i '/^Libs:/s/ @/\nLibs.private: @/' portaudio-2.0.pc.in
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Jan 29 2017 Yuri N. Sedunov <aris@altlinux.org> 19-alt6
+- updated to pa_stable_v190600_20161030
+
 * Tue Feb 26 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 19-alt5
 - limit make jobs to 3
 
