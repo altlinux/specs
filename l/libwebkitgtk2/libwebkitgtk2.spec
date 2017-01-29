@@ -12,10 +12,13 @@
 %def_enable web_audio
 %def_disable media_stream
 %def_enable spellcheck
+%ifarch %ix86
+%def_disable git
+%endif
 
 Name: libwebkitgtk2
 Version: 2.4.11
-Release: alt1
+Release: alt2
 
 Summary: Web browser engine
 License: %bsd %lgpl2plus
@@ -25,6 +28,7 @@ Url: http://www.webkitgtk.org/
 Source: http://webkitgtk.org/releases/webkitgtk-%version.tar.xz
 Patch: webkitgtk-2.1.92-alt-gtk2_compatibility.patch
 Patch3: webkitgtk-2.4.0-alt-link.patch
+Patch4: webkitgtk-2.4.9-fc-abs.patch
 
 Requires: libjavascriptcoregtk2 = %version-%release
 %{?_enable_geolocation:Requires: geoclue2}
@@ -184,6 +188,7 @@ GObject introspection devel data for the JavaScriptCore library
 %setup -n webkitgtk-%version
 %patch
 %patch3
+%patch4 -p1
 
 # fix build translations
 %__subst 's|^all-local:|all-local: stamp-po|' GNUmakefile.am
@@ -211,7 +216,8 @@ gtkdocize --copy
 	%{?_enable_web_audio:--enable-web-audio} \
 	%{?_enable_media_stream:--enable-media-stream} \
 	--with-gtk=%gtk_ver \
-	--disable-webkit2
+	--disable-webkit2 \
+	%{subst_enable jit}
 
 mkdir -p DerivedSources/webkit
 mkdir -p DerivedSources/ANGLE
@@ -276,6 +282,10 @@ xvfb-run make check
 %endif
 
 %changelog
+* Sun Jan 29 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt2
+- fixed build with gcc6
+- disabled JIT compilation for %%ix586 (ALT #32732)
+
 * Sun Apr 10 2016 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt1
 - 2.4.11 (CVE-2015-1120, CVE-2015-1076, CVE-2015-1071, CVE-2015-1081, CVE-2015-1122,
  CVE-2015-1155, CVE-2014-1748, CVE-2015-3752, CVE-2015-5809, CVE-2015-5928, CVE-2015-3749,
