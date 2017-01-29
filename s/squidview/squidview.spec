@@ -1,7 +1,7 @@
 # SPEC file for squidview package
 
 Name:    squidview
-Version: 0.84
+Version: 0.85
 Release: alt1
 
 Summary: console program to monitor and display Squid logs
@@ -53,6 +53,9 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %_datadir/%name
 
 %changelog
+* Sun Jan 29 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.85-alt1
+- New version
+
 * Sat Jan 21 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.84-alt1
 - New version
 
