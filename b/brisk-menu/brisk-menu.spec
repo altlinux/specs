@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 Name: brisk-menu
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: An efficient menu for the MATE Desktop
@@ -14,7 +14,7 @@ Packager: Anton Midyukov <sample@altlinux.org>
 
 Source: %name-%version.tar
 
-BuildRequires: libgio-devel pkgconfig(gdk-x11-3.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-3.0) pkgconfig(x11) pkgconfig(libmate-menu) pkgconfig(libmatepanelapplet-4.0)
+BuildRequires: libgio-devel pkgconfig(gdk-x11-3.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-3.0) pkgconfig(x11) pkgconfig(libmate-menu) pkgconfig(libmatepanelapplet-4.0) intltool
 
 %description
 Modern, efficient menu for the MATE Desktop Environment.
@@ -67,6 +67,9 @@ Features:
 %_libexecdir/%name
 
 %changelog
+* Sun Jan 29 2017 Anton Midyukov <antohami@altlinux.org> 0.3.0-alt1
+- new version 0.3.0
+
 * Sat Jan 07 2017 Anton Midyukov <antohami@altlinux.org> 0.2.0-alt1
 - new version 0.2.0
 
