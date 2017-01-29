@@ -6,7 +6,7 @@
 %def_with crashtests
 
 Name: obnam
-Version: 1.19.1
+Version: 1.21
 Release: alt1
 
 Summary: An easy, secure backup program
@@ -103,6 +103,9 @@ exit 0
 %python_sitelibdir/*
 
 %changelog
+* Sun Jan 29 2017 Vitaly Lipatov <lav@altlinux.ru> 1.21-alt1
+- new version 1.21 (with rpmrb script)
+
 * Fri Aug 05 2016 Vitaly Lipatov <lav@altlinux.ru> 1.19.1-alt1
 - new version 1.19.1 (with rpmrb script)
 
