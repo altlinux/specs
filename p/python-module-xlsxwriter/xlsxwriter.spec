@@ -4,14 +4,12 @@
 
 Name:    python-module-%oname
 Version: 0.9.1
-Release: alt2
+Release: alt3
 Summary: A Python module for creating Excel XLSX files
 License: BSD
 Group:   Development/Python
 Url:     https://github.com/jmcnamara/XlsxWriter
 Packager: Python Development Team <python@packages.altlinux.org>
-
-%py_provides %oname
 
 Source: %oname-%version.tar
 #VCS: https://github.com/jmcnamara/XlsxWriter
@@ -42,7 +40,6 @@ many more.
 %package -n python3-module-%oname
 Summary: A Python module for creating Excel XLSX files
 Group: Development/Python3
-%py3_provides %oname
 
 %description -n python3-module-%oname
 XlsxWriter is a Python module for writing files in the Excel 2007+ XLSX
@@ -77,11 +74,11 @@ This package contains documentation for %oname.
 %setup -q -n %oname-%version
 
 %if_with python3
-cp -fR . ../python3
+cp -R . -T ../python3
 %endif
 
 %prepare_sphinx dev/docs
-ln -s ../objects.inv dev/docs/source/
+ln -s ../objects.inv -t dev/docs/source/
 
 %build
 %python_build_debug
@@ -98,8 +95,8 @@ pushd ../python3
 %python3_install
 popd
 pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i ${i}3
+for i in *; do
+	mv "$i" "${i}3"
 done
 popd
 %endif
@@ -109,7 +106,7 @@ popd
 %make -C dev/docs pickle
 %make -C dev/docs html
 
-cp -fR dev/docs/build/pickle %buildroot%python_sitelibdir/%oname/
+cp -R dev/docs/build/pickle -t %buildroot%python_sitelibdir/%oname/
 
 %check
 python setup.py test
@@ -144,6 +141,10 @@ popd
 %endif
 
 %changelog
+* Sun Jan 29 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.9.1-alt3
+- (.spec) simplify: drop %%py{3,}_provides which have no additional value
+  (to see clearly whether python.prov fails on a package).
+
 * Sat Jan 28 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.9.1-alt2
 - (.spec) adapt build to python3-module-pytest-3.0.5-alt2:
   py.test3 without minor version.
