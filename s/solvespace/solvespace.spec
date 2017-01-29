@@ -1,8 +1,8 @@
 %def_without gtk3
 
 Name: 	 solvespace
-Version: 2.1
-Release: alt2
+Version: 2.3
+Release: alt1
 Epoch:   1
 
 Summary: SolveSpace parametric 2d/3d CAD
@@ -104,6 +104,9 @@ tar xf %SOURCE1
 %_includedir/slvs.h
 
 %changelog
+* Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 1:2.3-alt1
+- New version
+
 * Wed Oct 05 2016 Andrey Cherepanov <cas@altlinux.org> 1:2.1-alt2
 - Use explicit commit hash
 
