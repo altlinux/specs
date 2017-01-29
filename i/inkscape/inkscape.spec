@@ -3,8 +3,8 @@
 
 %define pre %nil
 Name: inkscape
-Version: 0.91
-Release: alt5
+Version: 0.92
+Release: alt1
 
 Summary: A Vector Drawing Application
 
@@ -131,6 +131,9 @@ rm -rf %buildroot%_mandir/zh_TW/
 %_man1dir/inkview*
 
 %changelog
+* Sun Jan 29 2017 Vitaly Lipatov <lav@altlinux.ru> 0.92-alt1
+- new version 0.92 (with rpmrb script)
+
 * Mon Apr 11 2016 Denis Medvedev <nbr@altlinux.org> 0.91-alt5
 - Changed obsoleted ScopedPtr to make_unique_ptr_gfree
 hinted by https://mail.gnome.org/archives/commits-list/2016-January/msg04404.html
