@@ -1,9 +1,7 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-
 %define pkgname ffi
 
 Name: ruby-%pkgname
-Version: 1.9.14
+Version: 1.9.17
 Release: alt1
 
 Summary: Ruby foreign function interface
@@ -12,9 +10,11 @@ License: BSD
 Url: https://github.com/ffi/ffi
 
 Source: %pkgname-%version.tar
+Patch1: %name-alt-fix-requires.patch
 
-# Automatically added by buildreq on Sun Jun 28 2009 (-bi)
 BuildRequires: libffi-devel libruby-devel ruby-tool-setup
+
+%filter_from_requires \,^ruby(lib/ffi/.*generator),d
 
 %description
 A Ruby foreign function interface.
@@ -29,6 +29,7 @@ Documentation files for %name
 
 %prep
 %setup -n %pkgname-%version
+%patch1 -p1
 %update_setup_rb
 
 sed -i -r '/^[[:blank:]]*Data_Get_Struct\(/s/^(([[:blank:]]*).*)((field) = layout->fields\[i\])(\).*)$/\2\3;\n\1\4\5/' \
@@ -56,6 +57,10 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Sun Jan 29 2017 Andrey Cherepanov <cas@altlinux.org> 1.9.17-alt1
+- new version 1.9.17
+- fix module requires pathes
+
 * Sat Sep 10 2016 Andrey Cherepanov <cas@altlinux.org> 1.9.14-alt1
 - new version 1.9.14
 
