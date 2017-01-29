@@ -6,7 +6,7 @@
 
 Name: grilo-plugins
 Version: %ver_major.3
-Release: alt2
+Release: alt3
 
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -19,7 +19,10 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-BuildRequires: gnome-common intltool >= 0.40.0
+Requires: grilo-tools
+Requires: tracker
+
+BuildRequires: gnome-common intltool >= 0.40.0 gperf
 BuildRequires: gtk-doc yelp-tools
 BuildRequires: libgio-devel >= 2.36
 BuildRequires: libgrilo-devel >= %ver_major.2
@@ -43,10 +46,8 @@ BuildRequires: libavahi-gobject-devel libavahi-glib-devel libavahi-devel
 BuildRequires: libmediaart2.0-devel
 BuildRequires: librest-devel
 BuildRequires: libarchive-devel
-%{?_enable_lua_factory:BuildRequires: lua5.3-devel >= 5.3}
+%{?_enable_lua_factory:BuildRequires: liblua5-devel >= 5.3}
 
-Requires: grilo-tools
-Requires: tracker
 
 %description
 Grilo is a framework that provides access to different sources of
@@ -95,6 +96,10 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %endif
 
 %changelog
+* Sun Jan 29 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt3
+- updated to 0.3.3-20-g063064b
+- fixed buildreqs
+
 * Thu Oct 06 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt2
 - updated to 0.3.3-8-gcaf6541
 - enbabled lua support
