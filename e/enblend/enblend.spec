@@ -1,6 +1,6 @@
 Name: enblend
 Version: 4.2
-Release: alt1
+Release: alt2
 
 Summary: A tool for combine images (make a panoramas) using a multiresolution spline
 License: GPLv2+
@@ -16,7 +16,7 @@ Provides: enfuse
 BuildRequires: boost-devel gcc-c++ libstdc++-devel boost-filesystem-devel
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel libglew-devel liblcms2-devel libvigra-devel
 BuildRequires: libxmi-devel libXmu-devel libXi-devel
-BuildRequires: libGLU-devel libGLUT-devel openexr-devel libstlport-devel
+BuildRequires: libGLU-devel libGLUT-devel openexr-devel
 BuildRequires: gnuplot texinfo fonts-ttf-freefont ghostscript perl transfig tidy help2man
 BuildRequires: libgsl-devel
 # since 4.2
@@ -24,12 +24,11 @@ BuildRequires: perl-TimeDate perl-Readonly
 BuildRequires: tetex-latex tetex-dvips librsvg-utils /usr/bin/convert graphviz hevea
 
 %description
-enblend  overlays  multiple  TIFF  images using the Burt & Adelson mul-
-tiresolution spline.  This technique tries to make  the  seams  between
-the  input  images  invisible and very suitable to make panoramas.
+enblend overlays multiple TIFF images using the Burt & Adelson
+multiresolution spline. This technique tries to make the seams between
+the input images invisible and very suitable to make panoramas.
 
 %prep
-
 %setup
 
 %build
@@ -47,6 +46,10 @@ the  input  images  invisible and very suitable to make panoramas.
 
 
 %changelog
+* Sun Jan 29 2017 Yuri N. Sedunov <aris@altlinux.org> 4.2-alt2
+- rebuilt with gcc6/boost-1.63
+- fixed buildreqs
+
 * Mon Apr 18 2016 Yuri N. Sedunov <aris@altlinux.org> 4.2-alt1
 - 4.2
 
