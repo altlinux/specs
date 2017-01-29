@@ -1,5 +1,5 @@
 Name: bubblewrap
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 Summary: Unprivileged sandboxing tool
@@ -44,6 +44,9 @@ because it is trivial to turn such access into to a fully privileged root shell 
 %_datadir/bash-completion/completions/bwrap
 
 %changelog
+* Sun Jan 29 2017 Vitaly Lipatov <lav@altlinux.ru> 0.1.6-alt1
+- new version 0.1.6 (with rpmrb script)
+
 * Sat Dec 31 2016 Vitaly Lipatov <lav@altlinux.ru> 0.1.5-alt1
 - new version 0.1.5 (with rpmrb script)
 
