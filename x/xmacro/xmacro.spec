@@ -1,7 +1,7 @@
 Name: xmacro
 
 Version: 0.3
-Release: alt2.pre
+Release: alt3.pre
 
 Summary: Recording and replaying keyboard and mouse events
 Summary(ru_RU.UTF-8): Записывает и воспроизводит события клавиатуры и мыши
@@ -12,6 +12,7 @@ Url: http://xmacro.sourceforge.net/
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-pre0.3.tar.bz2
+Patch: gcc6-FTBFS.patch
 
 # Automatically added by buildreq on Mon Jul 13 2015
 # optimized out: libX11-devel libXi-devel libstdc++-devel xorg-inputproto-devel xorg-recordproto-devel xorg-xextproto-devel xorg-xproto-devel
@@ -35,6 +36,7 @@ Jan Ekholm (chakie at infa.abo.fi).
 
 %prep
 %setup -n %name-pre0.3
+%patch -p2
 
 %build
 subst 's|g++ -O2|g++ %optflags|g' ./Makefile
@@ -49,6 +51,9 @@ cp xmacrorec xmacrorec2 xmacroplay %buildroot/%_bindir
 %_bindir/xmacro*
 
 %changelog
+* Sun Jan 29 2017 Anton Midyukov <antohami@altlinux.org> 0.3-alt3.pre
+- Fix build with gcc6
+
 * Thu Aug 27 2015 Anton Midyukov <antohami@altlinux.org> 0.3-alt2.pre
 - Fix encoding in description
 
