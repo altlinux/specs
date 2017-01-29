@@ -3,14 +3,19 @@
 
 Name: audiofile
 Version: 0.3.6
-Release: alt1.qa1
+Release: alt2
 
 Summary: Library to handle various audio file formats
 License: LGPL
 Group: System/Libraries
 Url: http://www.68k.org/~michael/%name
 
-Source: %url/%name-%version.tar.xz
+# VCS https://github.com/mpruett/audiofile.git
+Source: %url/%name-%version.tar
+# newer pkg-config macros required
+Source1: pkg.m4
+Patch: %name-%version-%release.patch
+Patch1: %name-0.3.6-alt-configure.patch
 
 Requires: lib%name%sover = %version-%release
 
@@ -75,20 +80,23 @@ Static libraries you can use to develop
 
 %prep
 %setup
-
-sed -ri \
-	's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' \
-	ltmain.sh *.m4 configure
+%patch -p1
+[ ! -d m4 ] && mkdir m4 && cp %SOURCE1 m4/
+%patch1 -b .m4
 
 %build
 %autoreconf
 %configure \
 	--enable-largefile \
 	%{subst_enable static}
-%make_build
+# SMP-incompatible build (man pages)
+%make
 
 %install
-%makeinstall
+%makeinstall_std
+
+%check
+%make check
 
 %files
 %_bindir/sfconvert
@@ -111,6 +119,10 @@ sed -ri \
 %endif
 
 %changelog
+* Sun Jan 29 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt2
+- updated to 0.3.6-26-g6ac5a49
+- %%check section
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.3.6-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
