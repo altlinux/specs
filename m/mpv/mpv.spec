@@ -1,6 +1,6 @@
 Name: mpv
 Version: 0.22.0
-Release: alt1
+Release: alt2
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 Summary(ru_RU.UTF8): MPV - это медиапроигрыватель с открытыми исходниками, основанный на проектах MPlayer и mplayer2.
@@ -16,7 +16,7 @@ Packager: %packager
 # Automatically added by buildreq on Fri Feb 14 2014
 BuildRequires: libGL-devel libXext-devel libalsa-devel libass-devel libavformat-devel libavresample-devel libjpeg-devel libswscale-devel patool perl-Encode perl-Math-BigRat python-module-docutils time zlib-devel libva-devel
 
-BuildRequires: libpulseaudio-devel libenca-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel liblua5-devel libdvdnav-devel libbluray-devel libavfilter-devel libsmbclient-devel
+BuildRequires: libpulseaudio-devel libenca-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel liblua5-devel libluajit-devel libdvdnav-devel libbluray-devel libavfilter-devel libsmbclient-devel
 
 %description
 mpv is a movie player based on MPlayer and mplayer2.
@@ -105,6 +105,9 @@ chmod ugo+rx waf
 %_libdir/libmpv.so.*
 
 %changelog
+* Sun Jan 29 2017 Terechkov Evgenii <evg@altlinux.org> 0.22.0-alt2
+- Fix build
+
 * Tue Nov 22 2016 Terechkov Evgenii <evg@altlinux.org> 0.22.0-alt1
 - 0.22.0
 
