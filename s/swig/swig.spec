@@ -1,22 +1,15 @@
 # vim:set ft=spec:
 Name: swig
 Epoch: 1
-Version: 3.0.8
+Version: 3.0.12
 Release: alt1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
 License: Open Source
 Group: Development/C
 Url: http://www.swig.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: http://download.sourceforge.net/swig/%name-%version.tar.gz
-Patch1: %name-1.3.21-alt-configure.patch
-#Patch2: %name-1.3.22-runtime.patch
-Patch3: %name-1.3.22-no_ansi.patch
-Patch4: %name-1.3.25-runtime.patch
-#Patch5: %name-1.3.39-swig-user-ruby-1.9-fixes.patch
-Patch6: %name-1.3.39-alt-ruby-includes.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python-devel yodl chicken libracket-devel
@@ -24,7 +17,7 @@ BuildPreReq: racket R-devel libpcre-devel boost-devel
 BuildPreReq: python3-devel python-tools-2to3 zlib-devel
 # Automatically added by buildreq on Thu Sep 04 2008
 BuildRequires: findlib gcc-c++ guile18-devel imake java-devel
-BuildRequires: libXt-devel liblua5-devel libruby-devel lua5 mono-mcs
+BuildRequires: libXt-devel liblua5-devel libruby-devel lua5.3 mono-mcs
 BuildRequires: perl-devel php5-devel python-devel ruby ruby-module-etc
 BuildRequires: tcl-devel xorg-cf-files tidy htmldoc perl-devel
 
@@ -133,10 +126,6 @@ This package contains SWIG runtime tcl library.
 
 %prep
 %setup
-#patch1 -p1
-#patch4 -p1
-#patch5 -p2
-#patch6 -p2
 
 %build
 ./autogen.sh
@@ -223,6 +212,12 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Sun Jan 29 2017 Yuri N. Sedunov <aris@altlinux.org> 1:3.0.12-alt1
+- 3.0.12
+- removed obsolete patches
+- updated lua* build dependencies
+- built with boost-1.63
+
 * Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 1:3.0.8-alt1
 - Version 3.0.8
 
