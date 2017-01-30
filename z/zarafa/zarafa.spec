@@ -12,11 +12,10 @@
 
 Name: zarafa
 Version: 7.1.15
-Release: alt13%ubt
+Release: alt14%ubt
 License: AGPLv3
 Group: Networking/Mail
 Summary: Server program for the Zarafa Collaboration Platform
-Packager: Ablaev Alexandr <bassmaster@altlinux.org>
 Url: http://www.zarafa.com/
 
 Source: %name-%version.tar.gz
@@ -28,12 +27,14 @@ Patch3: zarafa-7.1.8-alt-fix-userscript-path.patch
 Patch4: zarafa-7.1.14-alt-configure.patch
 Patch5: zarafa-7.1.14-alt-boost.m4-update.patch
 Patch6: zarafa-7.1.14-wrong-assert.patch
+Patch7: zarafa-7.1.15-make_pair.patch
+Patch8: zarafa-7.1.15-gcc6.patch
 
 BuildRequires(pre): rpm-build-php5 rpm-build-ubt
 BuildRequires(pre): rpm-build-apache2
 # Automatically added by buildreq on Fri Apr 15 2011
 # optimized out: boost-devel boost-devel-headers libcom_err-devel libgpg-error libkrb5-devel libncurses-devel libstdc++-devel libtinfo-devel pkg-config python-base python-modules
-BuildRequires: boost-filesystem-devel flex-old gcc-c++ libclucene-devel libical-devel libicu-devel libldap-devel libmysqlclient-devel
+BuildRequires: boost-filesystem-devel flex-old gcc-c++ libclucene-core-devel libical-devel libicu-devel libldap-devel libmysqlclient-devel
 BuildRequires: libpam-devel libssl-devel libuuid-devel libvmime-devel libxml2-devel php5-devel rpm-build-python swig tzdata xmlto zlib-devel
 BuildRequires: perl-CGI libncurses-devel python-devel libkyotocabinet-devel
 
@@ -262,9 +263,11 @@ modern web browser.
 %patch4 -p2
 %patch5 -p2
 %patch6 -p2
+%patch7 -p2
+%patch8 -p2
 
 %build
-%add_optflags -fPIC -L%_libdir
+%add_optflags -fPIC -L%_libdir -Wno-narrowing
 
 BUILD_HAVE=`echo %php5_extension | tr '[:lower:]-' '[:upper:]_'`
 export LDFLAGS=-lphp-%_php5_version
@@ -690,6 +693,10 @@ export LDFLAGS=-lphp-%_php5_version
 # end noarch files
 
 %changelog
+* Mon Jan 30 2017 Anton Farygin <rider@altlinux.ru> 7.1.15-alt14%ubt
+- rebuild with php-5.6.30
+- fixed build with GCC 6.x
+
 * Wed Dec 14 2016 Anton Farygin <rider@altlinux.ru> 7.1.15-alt13%ubt
 - rebuild with php-5.6.28
 

@@ -2,7 +2,7 @@
 %define _cups_serverbin %_libexecdir/cups
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
-Version: 1.13.2
+Version: 1.13.3
 Release: alt1%ubt
 
 # For a breakdown of the licensing, see COPYING file
@@ -54,6 +54,7 @@ BuildRequires: liblcms2-devel
 BuildRequires: php5-devel
 BuildRequires: libgio-devel
 BuildRequires: libavahi-devel libavahi-glib-devel
+BuildRequires(pre): rpm-build-ubt
 
 # Make sure we get postscriptdriver tags.
 BuildRequires: python-module-cups
@@ -93,7 +94,7 @@ Summary: PHP5 module for the Common Unix Printing System
 License: GPL
 Group: System/Servers
 Requires: php5 = %php5_version
-BuildRequires(pre): rpm-build-php5 rpm-build-ubt
+BuildRequires(pre): rpm-build-php5
 
 %description -n php5-cups
 PHP5 module for the Common Unix Printing System
@@ -211,6 +212,9 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Mon Jan 30 2017 Anton Farygin <rider@altlinux.ru> 1.13.3-alt1%ubt
+- new version 1.13.3
+
 * Fri Dec 30 2016 Anton Farygin <rider@altlinux.ru> 1.13.2-alt1%ubt
 - new version 1.13.2
 
