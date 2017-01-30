@@ -4,7 +4,7 @@
 
 Name: iperf
 Version: 2.0.5
-Release: alt4
+Release: alt5
 
 Summary: Iperf was developed as a modern alternative for measuring TCP and UDP bandwidth performance
 License: BSD
@@ -29,7 +29,7 @@ Patch6: 010-fix-format-security-ftbfs.patch
 Patch7: 011-ipv6_mcast_check.patch
 
 
-BuildRequires: gcc-c++
+BuildRequires: gcc5-c++
 
 %description
 Iperf is a tool to measure maximum TCP bandwidth, allowing the tuning of various
@@ -88,6 +88,9 @@ rm -f doc/Makefile*
 %doc README doc/* ChangeLog AUTHORS
 
 %changelog
+* Mon Jan 30 2017 Terechkov Evgenii <evg@altlinux.org> 2.0.5-alt5
+- Fix build by hardcoding gcc5-c++ compiler
+
 * Fri Oct 10 2014 Terechkov Evgenii <evg@altlinux.org> 2.0.5-alt4
 - License fixed (ALT #30388)
 
