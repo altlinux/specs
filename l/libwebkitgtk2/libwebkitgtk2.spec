@@ -13,12 +13,12 @@
 %def_disable media_stream
 %def_enable spellcheck
 %ifarch %ix86
-%def_disable git
+%def_disable jit
 %endif
 
 Name: libwebkitgtk2
 Version: 2.4.11
-Release: alt2
+Release: alt2.1
 
 Summary: Web browser engine
 License: %bsd %lgpl2plus
@@ -282,6 +282,9 @@ xvfb-run make check
 %endif
 
 %changelog
+* Mon Jan 30 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt2.1
+- really disabled JIT compilation for %%ix586
+
 * Sun Jan 29 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt2
 - fixed build with gcc6
 - disabled JIT compilation for %%ix586 (ALT #32732)
