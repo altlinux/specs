@@ -2,8 +2,8 @@
 
 Name: rpm-build-ruby
 Epoch: 1
-Version: 0.2.2
-Release: alt2
+Version: 0.2.3
+Release: alt1
 Summary: RPM helper scripts to calculate Ruby dependencies
 License: GPLv2
 Group: Development/Ruby
@@ -16,7 +16,8 @@ Requires: ruby >= 1.9
 Requires: ruby-stdlibs >= 1.9
 Requires: %_bindir/rdoc
 Requires: %_bindir/rake
-Requires: ruby-test-unit
+Requires: rpm-macros-ruby = %epoch:%version-%release
+Requires: ruby-test-unit = %epoch:%version-%release
 
 %{!?_disable_check:BuildRequires: ruby >= 1.9 ruby-stdlibs >= 1.9}
 
@@ -24,6 +25,13 @@ Requires: ruby-test-unit
 These herlper scripts will look at ruby source files in your package, and will
 use this information to generate automatic Requires and Provides tags for the
 package.
+
+%package -n rpm-macros-ruby
+Summary: rpm macros for Ruby packages
+Group: Development/Ruby
+
+%description -n rpm-macros-ruby
+rpm macros for Ruby packages.
 
 %package -n ruby-test-unit
 Summary: Utility testrb for testing Ruby packages
@@ -50,12 +58,18 @@ install -D -m 0755 testrb %buildroot%_bindir/testrb
 %files
 %lang(ru) %doc README.ru
 %_rpmlibdir/ruby*
-%_rpmmacrosdir/*
+%_rpmmacrosdir/ruby.env
+
+%files -n rpm-macros-ruby
+%_rpmmacrosdir/ruby
 
 %files -n ruby-test-unit
 %_bindir/testrb
 
 %changelog
+* Mon Jan 30 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.2.3-alt1
+- NMU: added rpm-macros-ruby
+
 * Thu Jan 26 2017 Denis Medvedev <nbr@altlinux.org> 1:0.2.2-alt2
 - Skip include in dependencies search
 
