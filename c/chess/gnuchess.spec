@@ -1,5 +1,5 @@
 Name: chess
-Version: 6.2.3
+Version: 6.2.4
 Release: alt1
 
 %define real_name gnu%name
@@ -55,6 +55,9 @@ install -pm644 src/book.bin %buildroot%_datadir/%real_name/
 %_infodir/%real_name.info.*
 
 %changelog
+* Mon Jan 30 2017 Yuri N. Sedunov <aris@altlinux.org> 6.2.4-alt1
+- 6.2.4
+
 * Fri Oct 21 2016 Yuri N. Sedunov <aris@altlinux.org> 6.2.3-alt1
 - 6.2.3
 
