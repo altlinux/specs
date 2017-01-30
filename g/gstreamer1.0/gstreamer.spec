@@ -4,10 +4,10 @@
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
 
-%def_disable gtk-doc
+%def_disable gtk_doc
 
 Name: %_name%api_ver
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: GStreamer streaming media framework runtime
@@ -168,6 +168,9 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_datadir/doc/%_name-%api_ver
 
 %changelog
+* Mon Jan 30 2017 Yuri N. Sedunov <aris@altlinux.org> 1.10.3-alt1
+- 1.10.3
+
 * Tue Nov 29 2016 Yuri N. Sedunov <aris@altlinux.org> 1.10.2-alt1
 - 1.10.2
 
