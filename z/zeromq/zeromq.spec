@@ -1,16 +1,23 @@
-Name: zeromq
-Version: 4.0.5
-Release: alt1.qa1
-Summary: a software library that lets you quickly design and implement a fast message-based application
+%def_without pgm
 
+Name: zeromq
+Version: 4.2.0
+Release: alt1
+
+Summary: a software library that lets you quickly design and implement a fast message-based application
 Group: System/Libraries
-License: LGPL
+License: GPLv3, LGPLv3
 Url: http://www.zeromq.org
 
 Source: %name-%version.tar
+Source1: https://raw.githubusercontent.com/zeromq/cppzmq/master/zmq.hpp
+Source2: https://raw.githubusercontent.com/zeromq/cppzmq/master/LICENSE
+
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
-BuildRequires: gcc-c++ libuuid-devel glib2-devel
+BuildRequires: gcc-c++ libuuid-devel glib2-devel asciidoc xmlto
+%{?_with_pgm:BuildRequires: libopenpgm-devel}
+
 Requires: lib%name = %version-%release
 
 %description
@@ -49,33 +56,56 @@ message filtering (subscriptions), seamless access to multiple transport
 protocols and more.
 This package contains 0mq library headers
 
+%package -n lib%name-cpp-devel
+Summary: Development files for cppzmq
+Group: Development/C++
+License: MIT
+Requires: lib%name-devel = %version-%release
+
+%description -n lib%name-cpp-devel
+This package contains files for developing C++ %name applications.
+
 %prep
-%setup -q
+%setup
+cp -a %SOURCE2 .
 
 %build
 %autoreconf
-%configure --with-pgm --with-pic --with-gnu-ld --disable-static
+%configure --disable-static \
+	--with-pic \
+	--with-gnu-ld \
+	%{subst_with pgm}
+
 %make_build
 
 %install
 %makeinstall_std
+install -m644 -p %SOURCE1 %buildroot%_includedir/
 
 %check
-make check
+%make check
 
 %files -n lib%name
 %_libdir/libzmq.so.*
-%doc AUTHORS ChangeLog COPYING COPYING.LESSER NEWS README*
+%doc AUTHORS ChangeLog NEWS
 %_man7dir/zmq.7*
 
 %files -n lib%name-devel
-%_includedir/zmq*
+%_includedir/*.h
 %_libdir/libzmq.so
 %_pkgconfigdir/libzmq.pc
 %_man3dir/zmq_*3*
 %_man7dir/zmq_*7*
 
+%files -n lib%name-cpp-devel
+%_includedir/zmq.hpp
+%doc LICENSE
+
 %changelog
+* Fri Jan 27 2017 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
+- 4.2.0
+- new lib%%name-cpp-devel subpackage
+
 * Wed Apr 13 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 4.0.5-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
