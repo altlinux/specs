@@ -5,10 +5,10 @@
 %define _libexecdir %_prefix/libexec
 
 %def_enable 3g
-%def_enable gtk_doc
+%def_disable gtk_doc
 
 Name: %{_name}2
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: The Geoinformation Service
@@ -178,6 +178,9 @@ mkdir -p %buildroot%_localstatedir/%_name
 
 
 %changelog
+* Mon Jan 30 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4.5-alt1
+- 2.4.5
+
 * Sun Sep 11 2016 Yuri N. Sedunov <aris@altlinux.org> 2.4.4-alt1
 - 2.4.4
 
