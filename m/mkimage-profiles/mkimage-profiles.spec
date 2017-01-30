@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.102
+Version: 1.1.103
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -91,6 +91,9 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Jan 30 2017 Michael Shigorin <mike@altlinux.org> 1.1.103-alt1
+- rescue -= bootsplash
+
 * Mon Jan 09 2017 Michael Shigorin <mike@altlinux.org> 1.1.102-alt1
 - 2017
 
