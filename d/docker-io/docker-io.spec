@@ -10,7 +10,7 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       %{repo}-io
-Version:    1.12.5
+Version:    1.13.0
 Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
@@ -28,6 +28,7 @@ BuildRequires: /proc gcc golang >= 1.3 systemd-devel libdevmapper-devel-static l
 BuildRequires: python-module-sphinx-devel python-module-sphinxcontrib-httpdomain pandoc
 Requires: tar lxc xz
 Provides: lxc-docker
+Requires: /usr/bin/docker-proxy
 
 %define gopath %_datadir/gocode
 
@@ -84,9 +85,9 @@ cp contrib/syntax/vim/README.md README-vim-syntax.md
 # install binary
 install -d %{buildroot}%{_bindir}
 ls -la bundles/%{version}/
+ls -la bundles/%{version}/dynbinary-daemon
 install -p -m 755 bundles/%{version}/dynbinary-client/docker-%{version} %{buildroot}%{_bindir}/docker
 install -p -m 755 bundles/%{version}/dynbinary-daemon/dockerd-%{version} %{buildroot}%{_bindir}/dockerd
-install -p -m 755 bundles/%{version}/dynbinary-daemon/docker-proxy-%{version} %{buildroot}%{_bindir}/docker-proxy
 
 # create symlinks on runc/containerd
 ln -s %_bindir/runc %{buildroot}%{_bindir}/docker-runc
@@ -158,7 +159,6 @@ exit 0
 %{_mandir}/man5/Dockerfile.5.*
 %{_bindir}/docker
 %{_bindir}/dockerd
-%{_bindir}/docker-proxy
 %{_bindir}/docker-runc
 %{_bindir}/docker-containerd
 %{_bindir}/docker-containerd-shim
@@ -180,6 +180,9 @@ exit 0
 %{gopath}/src/%{import_path}/
 
 %changelog
+* Wed Jan 25 2017 Vladimir Didenko <cow@altlinux.org> 1.13.0-alt1
+- New version
+
 * Fri Dec 16 2016 Vladimir Didenko <cow@altlinux.org> 1.12.5-alt1
 - New version
 
