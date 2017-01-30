@@ -2,17 +2,15 @@ Summary: An open source software for the creation of electronic schematic diagra
 Summary(ru_RU.UTF-8): Программа с открытым исходным кодом для проектирования электронных схем
 Name: kicad
 Version: 4.0.5
-Release: alt1
+Release: alt2
 Epoch: 1
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-Patch1: kicad-4.0.2-freerouting.patch
-Patch2: kicad-4.0.2-nostrip.patch
+Patch: kicad-boost-1_61-boost-context-changes.patch
 License: GPLv2+
 Group: Sciences/Computer science
 Url: https://code.launchpad.net/kicad
-#Url: https://code.launchpad.net/~stambaughw/kicad/4.0
 #Url: https://github.com/KiCad/kicad-source-mirror.git
 
 BuildRequires(pre): cmake rpm-macros-cmake
@@ -82,6 +80,7 @@ gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом 
 
 %prep
 %setup -n %name-%version
+%patch -p1
 
 %build
 %cmake \
@@ -122,6 +121,9 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %_datadir/%name/
 
 %changelog
+* Mon Jan 30 2017 Anton Midyukov <antohami@altlinux.org> 1:4.0.5-alt2
+- Fix build with gcc6 and boost-1.61
+
 * Sat Dec 10 2016 Anton Midyukov <antohami@altlinux.org> 1:4.0.5-alt1
 - New version 4.0.5
 
