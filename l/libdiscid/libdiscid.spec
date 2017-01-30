@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: libdiscid
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: A Library for creating MusicBrainz DiscIDs
@@ -61,6 +61,9 @@ Static libs for building statically linked software that uses %name.
 
 
 %changelog
+* Mon Jan 30 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.2-alt1
+- 0.6.2
+
 * Thu Oct 23 2014 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
 - 0.6.1
 
