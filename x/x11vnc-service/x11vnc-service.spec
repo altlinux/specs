@@ -1,6 +1,6 @@
 Name: x11vnc-service
 Version: 0.1
-Release: alt2
+Release: alt3
 
 Summary: Service for x11vnc
 License: GPL
@@ -26,7 +26,7 @@ install -pDm644 %name.1 %buildroot%_mandir/man1/%name.1
 %post
 %post_service x11vnc
 
-%postun
+%preun
 %preun_service x11vnc
 
 %files
@@ -34,6 +34,9 @@ install -pDm644 %name.1 %buildroot%_mandir/man1/%name.1
 %_mandir/man1/%name.1.xz
 
 %changelog
+* Mon Jan 30 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 0.1-alt3
+- Replaced: postun -> preun
+
 * Tue Dec 20 2016 Evgeniy Korneechev <ekorneechev@altlinux.org> 0.1-alt2
 - Fixed spec for p8
 
