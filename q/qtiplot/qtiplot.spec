@@ -4,7 +4,7 @@
 
 Name: qtiplot
 Version: 0.9.8.9
-Release: alt3.svn20120124
+Release: alt4.svn20120124
 
 Summary: WYSIWYG tool to make two- and three-dimensional plots of scientific data
 Group: Sciences/Other
@@ -30,6 +30,9 @@ Patch5: %name-0.9.7.8-alt-boostincludes.patch
 Patch6: %name-0.9.7.8-alt-sip_kludge.patch
 # based on Debian sipFTBFS.patch
 Patch7: %name-0.9.8.9-alt-sipFTBFS.patch
+# based on Debian 11_ftbfs-gcc-6.cpp
+Patch8: %name-0.9.8.9-alt-gcc6.patch
+Patch9: %name-0.9.8.9-alt-gcc6_indents.patch
 
 BuildPreReq: texlive-latex-extra
 
@@ -105,6 +108,8 @@ Conflicts: %name-manual
 
 %patch3 -p1
 %patch7 -p1
+%patch8 -p1
+%patch9 -p1
 
 subst "s/lupdate/lupdate-qt4/;s/lrelease/lrelease-qt4/;\
 s/#system(lupdate/system(lupdate/;s/#system(lrelease/system(lrelease/" \
@@ -197,6 +202,9 @@ mv %buildroot%_libexecdir/%name/plugins/* \
 %pkgdocdir/manual/*.pdf
 
 %changelog
+* Mon Jan 30 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.8.9-alt4.svn20120124
+- Fixed build with gcc6
+
 * Mon Aug 01 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.8.9-alt3.svn20120124
 - Fix build
 
