@@ -2,8 +2,8 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.30.2
-Release: alt2
+Version: 0.30.3
+Release: alt1
 
 BuildArch: noarch
 
@@ -76,6 +76,12 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-ad
 
 %changelog
+* Tue Jan 31 2017 Andrey Cherepanov <cas@altlinux.org> 0.30.3-alt1
+- Workaround to fix https://bugs.altlinux.org/32139 for system with old
+  libshell 
+- [SUCCESS=merge] in nsswitch.conf is supported only in 
+  glibc-core >= 2.23. Remove this option for earlier version
+
 * Thu Dec 29 2016 Andrey Cherepanov <cas@altlinux.org> 0.30.2-alt2
 - Remove hostnamectl (systemd-services) from requirements
 
