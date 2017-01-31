@@ -1,6 +1,6 @@
 %define oname caffeine
 Name: %oname-ng
-Version: 3.3.8
+Version: 3.4.0
 Release: alt1
 Summary: Prevent screensaving and powersaving
 Group: Graphical desktop/Other
@@ -20,6 +20,7 @@ Requires: python3-module-ewmh >= 0.1.4
 Requires: python3-module-pyxdg >= 0.25
 Requires: python3-module-setproctitle >= 1.1.10
 Requires: python3-module-wheel >= 0.29.0
+%add_python3_req_skip gi.repository.Notify
 
 %description
 Caffeine is a little daemon that sits in you systray, and prevents the
@@ -73,7 +74,7 @@ git tag -m "%version" %version
 %find_lang %oname
 
 %files -f %oname.lang
-%doc README.md requirements.txt
+%doc *.rst
 %_sysconfdir/xdg/autostart/%oname.desktop
 %_bindir/*
 %_man1dir/*.1.*
@@ -86,5 +87,8 @@ git tag -m "%version" %version
 %_datadir/glib-2.0/schemas/*
 
 %changelog
+* Tue Jan 31 2017 Anton Midyukov <antohami@altlinux.org> 3.4.0-alt1
+- new version 3.4.0
+
 * Tue Jan 03 2017 Anton Midyukov <antohami@altlinux.org> 3.3.8-alt1
 - Initial build for ALT Linux Sisyphus.
