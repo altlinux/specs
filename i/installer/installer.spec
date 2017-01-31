@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.32
+Version: 1.8.33
 Release: alt1
 
 Summary: Installer common parts
@@ -110,6 +110,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Tue Jan 31 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.8.33-alt1
+- headfull mode in vnc installation fixed
+
 * Tue Jun 07 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.8.32-alt1
 - don't require alterator-wizardface in stage3. There is no need
   for it, but it requires qt4
