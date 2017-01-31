@@ -1,7 +1,7 @@
 %define svnrevision	603
 Name: libvmime
 Version: 0.9.2
-Release: alt6
+Release: alt7
 Summary: Powerful library for MIME messages and Internet messaging services
 Group: System/Libraries
 License: GPLv3+
@@ -13,6 +13,7 @@ Source: %name-%version.tar.bz2
 Patch0: vmime-0.8.1-header-value-on-next-line.diff
 Patch1: vmime-mixed-qp-in-parameter.diff
 Patch2: vmime-0.9.2-qp-in-buffers.diff
+Patch3: vmime-0.9.2-fix-FTBFS-with-GCC-6.diff
 
 # Path of the sendmail binary gets a C/C++ definement during build
 BuildRequires: sendmail
@@ -49,6 +50,7 @@ developing applications that use %name.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 export EXTRA_CFLAGS="-g -DVMIME_ALWAYS_GENERATE_7BIT_PARAMETER=1"
@@ -68,6 +70,9 @@ export EXTRA_CFLAGS="-g -DVMIME_ALWAYS_GENERATE_7BIT_PARAMETER=1"
 %_pkgconfigdir/vmime.pc
 
 %changelog
+* Tue Jan 31 2017 Anton Farygin <rider@altlinux.ru> 0.9.2-alt7
+- fixed build witch gcc-6
+
 * Tue Dec 22 2015 Anton Farygin <rider@altlinux.ru> 0.9.2-alt6
 - rebuild in new environment
 
