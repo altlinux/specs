@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.32
+Version: %ver_major.33
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -22,6 +22,8 @@ Url: http://www.gnumeric.org/
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch: gnumeric-desktop-alt.patch
 Patch1: gnumeric-1.12.1-alt-locale_dir.patch
+Patch2: gnumeric-1.12.33-docbook.patch
+Patch3: gnumeric-1.12.33-up-destdir.patch
 
 Obsoletes: %name-light
 Provides: %name-light = %version-%release
@@ -29,13 +31,12 @@ Provides: %name-light = %version-%release
 %define gsf_ver 1.14.40
 %define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.32
+%define goffice_ver 0.10.33
 %if_with python
 # Provided by python_loader.so
 Provides: python%__python_version(Gnumeric)
 %endif
 
-PreReq: scrollkeeper
 Requires(post,postun): desktop-file-utils >= %desktop_file_utils_ver
 Requires: libgnomeoffice%goffice_api_ver >= %goffice_ver
 Requires: libspreadsheet%{api_ver} = %version-%release
@@ -45,7 +46,7 @@ BuildRequires: rpm-build-gnome bison flex help2man gtk-doc
 BuildRequires: libgnomeoffice%goffice_api_ver-devel >= %goffice_ver
 BuildRequires: libgsf-devel >= %gsf_ver
 BuildRequires: libgtk+3-devel
-BuildRequires: intltool gnome-doc-utils zlib-devel librarian
+BuildRequires: intltool yelp-tools zlib-devel librarian
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgsf-gir-devel libgnomeoffice%goffice_api_ver-gir-devel}
 %{?_with_perl:BuildRequires: perl-devel}
 %{?_with_python:BuildRequires: python-module-pygobject3-devel}
@@ -116,11 +117,12 @@ GObject introspection devel data for the Gnumeric.
 %setup
 %patch -p1
 %patch1
+%patch2 -p1
+%patch3 -p1
 
 subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 
 %build
-gnome-doc-prepare --copy --force
 %autoreconf
 %configure \
 	--disable-schemas-compile \
@@ -129,7 +131,6 @@ gnome-doc-prepare --copy --force
 	%{subst_with python} \
 	%{subst_with perl} \
 	%{?_enable_introspection:--enable-introspection=yes}
-
 %make_build
 
 %install
@@ -180,6 +181,9 @@ gnome-doc-prepare --copy --force
 %_pkgconfigdir/*
 
 %changelog
+* Tue Jan 31 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.33-alt1
+- 1.12.33
+
 * Sun Aug 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.12.32-alt1
 - 1.12.32
 
