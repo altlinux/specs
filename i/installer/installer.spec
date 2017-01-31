@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.33
+Version: 1.8.34
 Release: alt1
 
 Summary: Installer common parts
@@ -110,6 +110,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Tue Jan 31 2017 Michael Shigorin <mike@altlinux.org> 1.8.34-alt1
+- *fixed* "headful" mode of installation over vnc
+
 * Tue Jan 31 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.8.33-alt1
 - headfull mode in vnc installation fixed
 
