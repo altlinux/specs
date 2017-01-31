@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.5.11
+Version: 0.5.12
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -48,6 +48,10 @@ __EOF__
 %attr(0755,root,root) %_datadir/install2/initinstall.d/85-start-multipath.sh
 
 %changelog
+* Tue Jan 31 2017 Michael Shigorin <mike@altlinux.org> 0.5.12-alt1
+- added /dev/md/* support to the existing /dev/md* one;
+  thanks Vadim Zelenin for pointing this out (closes: #31286)
+
 * Wed Dec 28 2016 Michael Shigorin <mike@altlinux.org> 0.5.11-alt1
 - don't do "destination filesystem remount error"
   when it's just mdadm putting new arrays into PENDING state
