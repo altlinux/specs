@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
-Version: %ver_major.12
+Version: %ver_major.13
 Release: alt1
 
 Summary: Cinnamon Screensaver
@@ -27,6 +27,7 @@ BuildRequires: libgtk+3-gir-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: libdbus-glib-devel
 BuildRequires: libpam0-devel
+Requires: typelib(CDesktopEnums)
 
 %description
 cinnamon-screensaver is a screen saver and locker that aims to have
@@ -87,6 +88,8 @@ install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
 %filter_from_requires /python3[(]util[)]/d
 %filter_from_requires /python3[(]widgets[)]/d
 %filter_from_requires /python3[(]pamhelper[)]/d
+%filter_from_requires /python3[(]pamhelper[)]/d
+%filter_from_requires /python3[(]gi.repository.CDesktopEnums[)]/d
 
 %files
 %_bindir/%name
@@ -115,6 +118,9 @@ install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
 %_datadir/gir-1.0/*
 
 %changelog
+* Tue Jan 31 2017 Vladimir Didenko <cow@altlinux.org> 3.2.13-alt1
+- 3.2.13-31-gd5d40bd
+
 * Fri Dec 23 2016 Vladimir Didenko <cow@altlinux.org> 3.2.12-alt1
 - 3.2.12
 
