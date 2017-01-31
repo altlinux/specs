@@ -6,7 +6,7 @@
 
 Name: wxGTK3.1-gtk2
 Version: 3.1.0
-Release: alt1.20160229
+Release: alt2.20160229
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -350,5 +350,8 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxrelease/wx/unix/
 %_libdir/*.so
 
 %changelog
+* Mon Jan 30 2017 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt2.20160229
+- Rebuilt with gcc6
+
 * Tue May 31 2016 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt1.20160229
 - Initial build for Alt Linux Sisyphus (Closes: 31762). Thanks Aleksey Borisenkov.
