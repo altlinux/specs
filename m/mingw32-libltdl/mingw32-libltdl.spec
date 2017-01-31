@@ -4,7 +4,7 @@
 
 Summary: Runtime libraries for GNU Libtool Dynamic Module Loader
 Name: mingw32-libltdl
-Version: 1.5.26
+Version: 2.4.6
 Release: alt1
 Group: System/Libraries
 # Even though the source package contains files under
@@ -21,6 +21,7 @@ Url: http://www.gnu.org/software/libtool/
 # into running a prepared binary in that directory:
 Patch2: libtool-1.5.24-relativepath.patch
 
+BuildRequires(pre): rpm-macros-mingw32
 BuildRequires: rpm-build-mingw32
 BuildRequires: mingw32-binutils
 BuildRequires: mingw32-gcc
@@ -43,7 +44,7 @@ the rest of the GNU Autotools (including GNU Autoconf and GNU Automake).
 
 %prep
 %setup -n libtool-%version -q
-%patch2 -p1
+#patch2 -p1
 
 %build
 export PATH=%_mingw32_bindir:$PATH
@@ -56,9 +57,9 @@ export F77=false
 export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 # dumb redhat-rpm-config replaces config.{sub,guess} with ancient ones in %%configure, use ./configure instead:
 # %%_mingw32_configure does not make that error :)
-%_mingw32_configure --enable-shared
+%_mingw32_configure --enable-shared --enable-ltdl-install
 # build not smp safe:
-make
+%make_build || make
 
 %check
 %if %run_tests
@@ -75,11 +76,15 @@ rm -f %buildroot%_mingw32_libdir/libltdl.a
 %doc AUTHORS NEWS THANKS TODO ChangeLog
 %doc libltdl/COPYING.LIB libltdl/README
 %_mingw32_libdir/libltdl.dll.a
-%_mingw32_bindir/libltdl-3.dll
+%_mingw32_bindir/libltdl-7.dll
 %_mingw32_libdir/libltdl.la
 %_mingw32_includedir/ltdl.h
+%_mingw32_includedir/libltdl/
 
 %changelog
+* Mon Jan 30 2017 Vitaly Lipatov <lav@altlinux.ru> 2.4.6-alt1
+- new version 2.4.6 (with rpmrb script)
+
 * Sat Sep 19 2009 Boris Savelev <boris@altlinux.org> 1.5.26-alt1
 - initial build for Sisyphus
 

@@ -1,6 +1,6 @@
 Name: mingw32-opensc
 Version: 0.11.8
-Release: alt1
+Release: alt2
 Summary: MingGW Windows OpenSC library
 
 Group: System/Libraries
@@ -106,6 +106,9 @@ rm -f %buildroot%_mingw32_bindir/cardos-info
 %_mingw32_sbindir/opensc-install.bat
 
 %changelog
+* Tue Jan 31 2017 Vitaly Lipatov <lav@altlinux.ru> 0.11.8-alt2
+- rebuild with libltdl7
+
 * Sat Sep 19 2009 Boris Savelev <boris@altlinux.org> 0.11.8-alt1
 - initial build for Sisyphus
 

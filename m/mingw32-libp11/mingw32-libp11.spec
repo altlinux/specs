@@ -4,7 +4,7 @@ BuildRequires: rpm-build-mingw32
 
 Name:           mingw32-libp11
 Version:        0.2.8
-Release:        alt1_1
+Release:        alt1_2
 Summary:        MingGW Windows libp11 library
 
 Group:          System/Libraries
@@ -63,6 +63,9 @@ rm -rf $RPM_BUILD_ROOT%{_mingw32_docdir}/libp11
 
 
 %changelog
+* Tue Jan 31 2017 Vitaly Lipatov <lav@altlinux.ru> 0.2.8-alt1_2
+- rebuild with libltdl7
+
 * Thu Aug 18 2011 Igor Vlasenko <viy@altlinux.ru> 0.2.8-alt1_1
 - initial release by fcimport
 
