@@ -3,13 +3,13 @@
 
 Summary: The PHP5 scripting language
 Name:	 php5
-Version: 5.6.29
+Version: 5.6.30
 Release: alt1%ubt
 
 %define php5_name      %name
 %define _php5_version  %version
 %define _php5_major  5.6
-%define _php5_snapshot 20161208
+%define _php5_snapshot 20170119
 %define php5_release   %release
 %define rpm_build_version %_php5_version%([ -z "%_php5_snapshot" ] || echo ".%_php5_snapshot")
 
@@ -49,6 +49,7 @@ Patch60: php-%version-bison-pregenerated.patch
 Patch61: php5-5.5.9-phar-phppath.patch
 Patch62: php-mysqlnd-socket.patch
 Patch63: php5-5.6-syms-visibility.patch
+Patch64: php-7.1-alt-phar-manfile-suffix.patch
 
 PreReq:  php5-libs = %version-%release
 Requires(post):  php5-suhosin
@@ -177,6 +178,7 @@ popd
 %patch61 -p1
 %patch62 -p1
 %patch63 -p1
+%patch64 -p1
 
 
 cp Zend/LICENSE Zend/ZEND_LICENSE
@@ -201,6 +203,7 @@ subst "s,./stamp=$,," build/buildcheck.sh
 
 %configure \
 	--prefix=%_prefix \
+	--program-suffix=5 \
 	--localstatedir=%_var \
 	--enable-inline-optimization \
 	--with-config-file-path=%php5_sysconfdir/ \
@@ -285,15 +288,24 @@ chmod 755 %buildroot/%_bindir/*
 rm -f %buildroot/%_libdir/libphp-%_php5_version.la
 
 # Remove RPATH
-/usr/bin/chrpath --delete %buildroot/%_bindir/php-%_php5_version
+/usr/bin/chrpath --delete %buildroot/%_bindir/php5-%_php5_version
 
 # Make alternatives support.
 install -d %buildroot/%_altdir
 php_weight="$(printf %%s "%_php5_version" | sed 's,[^[:digit:]],,g')"
 
 cat << EOF > %buildroot/%_altdir/php5
-%_bindir/php	%_bindir/php-%_php5_version	$php_weight
-%_man1dir/php.1	%_man1dir/php-%_php5_version.1	$php_weight
+%_bindir/phar           %_bindir/phar5.phar     $php_weight
+%_bindir/phpdbg         %_bindir/phpdbg5        $php_weight
+%_bindir/php5   %_bindir/php5-%_php5_version    $php_weight
+%_bindir/php	%_bindir/php5-%_php5_version	$php_weight
+%_man1dir/php.1	%_man1dir/php5-%_php5_version.1	$php_weight
+EOF
+
+cat << EOF > %buildroot/%_altdir/php5-devel
+%_bindir/phpize		%_bindir/phpize5	$php_weight
+%_bindir/php-config	%_bindir/php-config5	$php_weight
+%_man1dir/php-config.1	%_man1dir/php-config5.1	$php_weight
 EOF
 
 # Make backup some files to make devel package.
@@ -329,10 +341,12 @@ echo "file_ini=01_mysqlnd.ini" >%buildroot/%php5_extconf/mysqlnd/params
 echo "extension=mysqlnd.so" >%buildroot/%php5_extconf/mysqlnd/config
 
 # clean rpath in phpinfo
-chrpath -d %buildroot%_bindir/phpinfo-%_php5_version
+chrpath -d %buildroot%_bindir/phpinfo5-%_php5_version
 
 # install correct phar
-ln -sf phar.phar %buildroot%_bindir/phar
+mv %buildroot%_bindir/phar.phar %buildroot%_bindir/phar5.phar
+ln -sf phar5.phar %buildroot%_bindir/phar5
+sed -i -s 's,%buildroot,,' %buildroot%_bindir/phar5.phar
 
 # rpm macros 
 mkdir -p %buildroot/%_sysconfdir/rpm/macros.d
@@ -362,14 +376,14 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 
 %files
 %_altdir/php5
-%_bindir/php-%_php5_version
-%_bindir/phar*
-%_bindir/phpinfo-%_php5_version
-%php5_sysconfdir/%php5_sapi
+%_bindir/php5-%_php5_version
+%_bindir/phar5*
+%_bindir/phpinfo5-%_php5_version
+%dir %php5_sysconfdir/%php5_sapi
 %config(noreplace) %php5_sysconfdir/%php5_sapi/php.ini
-%_man1dir/php-%_php5_version.1*
-%_man1dir/php.1*
-%_man1dir/phar*.1*
+%_man1dir/php5-%_php5_version.1*
+%_man1dir/php5.1*
+%_man1dir/phar5*.1*
 %php5_servicedir/cli
 %doc CODING_STANDARDS CREDITS INSTALL LICENSE
 %doc NEWS README.* Zend/ZEND_* php.ini-* EXTENSIONS
@@ -393,19 +407,23 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %php5_extconf/mysqlnd/*
 
 %files devel
-%_bindir/php-config
-%_bindir/phpize
+%_altdir/php5-devel
+%_bindir/php-config5
+%_bindir/phpize5
 %_bindir/phpextdist
 %_includedir/php
 %php5_libdir/build
 %_libdir/libphp-%_php5_version.a
 %_usrsrc/php5-devel
-%_man1dir/php-config.1*
-%_man1dir/phpize.1*
+%_man1dir/php-config5.1*
+%_man1dir/phpize5.1*
 %doc SELF-CONTAINED-EXTENSIONS php-packaging.readme
 %doc tests run-tests.php 
 
 %changelog
+* Mon Jan 23 2017 Anton Farygin <rider@altlinux.ru> 5.6.30-alt1%ubt
+- new version
+
 * Wed Dec 14 2016 Anton Farygin <rider@altlinux.ru> 5.6.29-alt1%ubt
 - new version
 
