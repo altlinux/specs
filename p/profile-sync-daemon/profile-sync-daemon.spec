@@ -1,5 +1,5 @@
 Name: profile-sync-daemon
-Version: 6.28
+Version: 6.30
 Release: alt1
 Summary: Offload browser profiles to RAM for speed a wear reduction
 Summary(ru_RU.UTF-8): Выгружает профиль браузера в ОЗУ для ускорения его работы
@@ -12,8 +12,8 @@ Source: %name-%version.tar
 Source1: psd.service
 Source2: psd-resync.service
 Source3: psd-resync.timer
-Patch1: fix_distroname-alt.patch
 BuildArch: noarch
+%add_findreq_skiplist %_bindir/%name
 
 %description
 Profile-sync-daemon (psd) is a tiny pseudo-daemon designed to manage your
@@ -37,7 +37,6 @@ systemctl --user enable psd psd-resync.timer && systemctl --user start psd psd-r
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %make_build
@@ -64,6 +63,9 @@ echo 'systemctl --user enable psd psd-resync.timer && systemctl --user start psd
 %_libexecdir/systemd/user/psd*.*
 
 %changelog
+* Tue Jan 31 2017 Anton Midyukov <antohami@altlinux.org> 6.30-alt1
+- new version 6.30
+
 * Mon Oct 10 2016 Cronbuild Service <cronbuild@altlinux.org> 6.28-alt1
 - new version 6.28
 
