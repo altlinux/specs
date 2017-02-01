@@ -1,17 +1,20 @@
 %def_with tex_subpkg
 
 Name: xmlto
-Version: 0.0.26
+Version: 0.0.28
 Release: alt1
+
 Summary: A tool for converting XML files to various formats.
 Group: Publishing
 License: %gpl2plus
-URL: http://cyberelk.net/tim/%name/
-Source: %name-%version.tar
+Url: https://fedorahosted.org/%name/
+
+# VCS: http://svn.fedorahosted.org/svn/xmlto/
+Source: https://fedorahosted.org/releases/x/m/%name/%name-%version.tar.gz
+
 Requires: docbook-style-xsl >= 1.56
 %{!?_with_tex_subpkg:Requires: passivetex >= 20040310}
 Requires: docbook-dtds libpaper xml-utils xsltproc
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libpaper docbook-dtds docbook-style-xsl flex xsltproc
@@ -19,7 +22,6 @@ BuildRequires: libpaper docbook-dtds docbook-style-xsl flex xsltproc
 %description
 This is a package for converting XML files to various formats using XSL
 stylesheets.
-
 
 %if_with tex_subpkg
 %package tex
@@ -34,10 +36,8 @@ This subpackage contains %name backend scripts which do require
 PassiveTeX/TeX for functionality.
 %endif
 
-
 %prep
 %setup
-
 
 %build
 %autoreconf
@@ -45,10 +45,11 @@ PassiveTeX/TeX for functionality.
 %make_build
 bzip2 --keep --best --force ChangeLog
 
-
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
+%check
+%make check
 
 %files
 %doc AUTHORS ChangeLog.* FAQ NEWS THANKS
@@ -60,7 +61,6 @@ bzip2 --keep --best --force ChangeLog
 %exclude %_datadir/%name/format/fo/ps
 %exclude %_datadir/%name/format/fo/pdf
 
-
 %files tex
 %_datadir/%name/format/fo/dvi
 %_datadir/%name/format/fo/ps
@@ -69,6 +69,11 @@ bzip2 --keep --best --force ChangeLog
 
 
 %changelog
+* Wed Feb 01 2017 Yuri N. Sedunov <aris@altlinux.org> 0.0.28-alt1
+- 0.0.28
+- fixed urls
+- %%check section
+
 * Mon Jun 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.26-alt1
 - Version 0.0.26
 
@@ -105,16 +110,16 @@ bzip2 --keep --best --force ChangeLog
 * Mon Oct  06 2003 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.0.12-alt2
 - fixed buildreq
 
-* Mon Dec  16 2002 Anton V. Boyarshinov <boyarsh@altlunux.ru> 0.0.12-alt1
+* Mon Dec 16 2002 Anton V. Boyarshinov <boyarsh@altlunux.ru> 0.0.12-alt1
 - new version, not noarch now
 
-* Tue Oct  17 2002 Anton V. Boyarshinov <boyarsh@altlunux.ru> 0.0.11-alt1
+* Thu Oct 17 2002 Anton V. Boyarshinov <boyarsh@altlunux.ru> 0.0.11-alt1
 - new version
 
-* Tue Sep  10 2002 Anton V. Boyarshinov <boyarsh@altlunux.ru> 0.0.10-alt1
+* Tue Sep 10 2002 Anton V. Boyarshinov <boyarsh@altlunux.ru> 0.0.10-alt1
 - first build for altlinux
 
-* Tue Jul  9 2002 Tim Waugh <twaugh@redhat.com> 0.0.10-4
+* Tue Jul 9 2002 Tim Waugh <twaugh@redhat.com> 0.0.10-4
 - Ship xmlto.mak.
 
 * Thu Jun 27 2002 Tim Waugh <twaugh@redhat.com> 0.0.10-3
