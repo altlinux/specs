@@ -1,13 +1,15 @@
 Summary: Generator Tools for Coding SOAP/XML Web Services in C and C++
 Name: gsoap
-Version: 2.7.17
-Release: alt1
+Version: 2.8.42
+Release: alt1%ubt
 License: GPLv2+
 Group: Development/Tools
 URL: http://gsoap2.sourceforge.net
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 Source0: http://downloads.sourceforge.net/gsoap2/gsoap_%version.tar.gz
-Patch: %name-%version-%release.patch
+Patch: %name-%version-alt.patch
+
+BuildRequires(pre):rpm-build-ubt
 
 #packagereq: optimized out: glibc-devel-static glibc-pthread libcom_err-devel libkrb5-devel libstdc++-devel perl-threads
 BuildRequires: dos2unix flex gcc-c++ libssl-devel libstdc++-devel-static tzdata zlib-devel
@@ -55,8 +57,6 @@ and C/C++.
 %package -n lib%name-devel
 Summary: Devel libraries and headers for linking with gSOAP generated stubs
 Group: Development/C
-Requires: %name = %version-%release
-Requires: pkgconfig
 
 %description -n lib%name-devel
 gSOAP libraries, headers and generators for linking with and creating
@@ -66,15 +66,13 @@ gSOAP generated stubs
 %package -n lib%name-devel-static
 Summary: Static devel libraries and headers for linking with gSOAP generated stubs
 Group: Development/C
-Provides: %name-devel = %version-%release
-Requires: lib%name-devel = %version-%release
 
 %description -n lib%name-devel-static
 gSOAP static libraries
 
 
 %prep
-%setup -q -n gsoap-2.7
+%setup -q -n gsoap-2.8
 %patch -p1
 
 # a number of ~ files are distribute, but we do not want them
@@ -118,18 +116,12 @@ make check
 
 %files -n lib%name
 %doc README.txt NOTES.txt LICENSE.txt
-%_libdir/libgsoapck.so.0
-%_libdir/libgsoapck++.so.0
-%_libdir/libgsoapck.so.0.0.0
-%_libdir/libgsoapck++.so.0.0.0
-%_libdir/libgsoap.so.0
-%_libdir/libgsoap++.so.0
-%_libdir/libgsoap.so.0.0.0
-%_libdir/libgsoap++.so.0.0.0
-%_libdir/libgsoapssl.so.0
-%_libdir/libgsoapssl++.so.0
-%_libdir/libgsoapssl.so.0.0.0
-%_libdir/libgsoapssl++.so.0.0.0
+%_libdir/libgsoap.so.*
+%_libdir/libgsoap++.so.*
+%_libdir/libgsoapck.so.*
+%_libdir/libgsoapck++.so.*
+%_libdir/libgsoapssl.so.*
+%_libdir/libgsoapssl++.so.*
 
 
 %files -n lib%name-devel-static
@@ -145,6 +137,12 @@ make check
 %doc README.txt NOTES.txt LICENSE.txt
 %_bindir/soapcpp2
 %_bindir/wsdl2h
+%_libdir/pkgconfig/gsoapck.pc
+%_libdir/pkgconfig/gsoapck++.pc
+%_libdir/pkgconfig/gsoap.pc
+%_libdir/pkgconfig/gsoap++.pc
+%_libdir/pkgconfig/gsoapssl.pc
+%_libdir/pkgconfig/gsoapssl++.pc
 %_libdir/libgsoapck.so
 %_libdir/libgsoapck++.so
 %_libdir/libgsoap.so
@@ -174,7 +172,6 @@ make check
 %_datadir/gsoap/import/WS-Header.h
 %_datadir/gsoap/import/wsp.h
 %_datadir/gsoap/import/wsrp.h
-%_datadir/gsoap/import/wsse11.h
 %_datadir/gsoap/import/wsse2.h
 %_datadir/gsoap/import/wsse.h
 %_datadir/gsoap/import/wsu.h
@@ -186,8 +183,6 @@ make check
 %_datadir/gsoap/import/xmlmime5.h
 %_datadir/gsoap/import/xmlmime.h
 %_datadir/gsoap/import/xop.h
-%_datadir/gsoap/import/stdstring.h
-%_datadir/gsoap/import/xsd.h
 %dir %_datadir/gsoap/WS
 %_datadir/gsoap/WS/README.txt
 %_datadir/gsoap/WS/WS-Addressing.xsd
@@ -197,9 +192,7 @@ make check
 %_datadir/gsoap/WS/WS-Discovery.wsdl
 %_datadir/gsoap/WS/WS-Enumeration.wsdl
 %_datadir/gsoap/WS/WS-Policy.xsd
-%_datadir/gsoap/WS/WS-Policy12.xsd
 %_datadir/gsoap/WS/WS-Routing.xsd
-%_datadir/gsoap/WS/WS-SecurityPolicy.xsd
 %_datadir/gsoap/WS/WS-typemap.dat
 %_datadir/gsoap/WS/discovery.xsd
 %_datadir/gsoap/WS/ds.xsd
@@ -209,14 +202,24 @@ make check
 %_datadir/gsoap/WS/wsu.xsd
 %dir %_datadir/gsoap/custom
 %_datadir/gsoap/custom/README.txt
-%_datadir/gsoap/custom/duration.c
-%_datadir/gsoap/custom/duration.h
+%_datadir/gsoap/custom/chrono_duration.cpp
+%_datadir/gsoap/custom/chrono_duration.h
+%_datadir/gsoap/custom/chrono_time_point.cpp
+%_datadir/gsoap/custom/chrono_time_point.h
+%_datadir/gsoap/custom/float128.c
+%_datadir/gsoap/custom/float128.h
+%_datadir/gsoap/custom/int128.c
+%_datadir/gsoap/custom/int128.h
 %_datadir/gsoap/custom/long_double.c
 %_datadir/gsoap/custom/long_double.h
+%_datadir/gsoap/custom/long_time.c
+%_datadir/gsoap/custom/long_time.h
 %_datadir/gsoap/custom/struct_timeval.c
 %_datadir/gsoap/custom/struct_timeval.h
 %_datadir/gsoap/custom/struct_tm.c
 %_datadir/gsoap/custom/struct_tm.h
+%_datadir/gsoap/custom/struct_tm_date.c
+%_datadir/gsoap/custom/struct_tm_date.h
 %dir %_datadir/gsoap/extras
 %_datadir/gsoap/extras/README.txt
 %_datadir/gsoap/extras/ckdb.c
@@ -258,19 +261,10 @@ make check
 %_datadir/gsoap/plugin/threads.h
 %_datadir/gsoap/plugin/wsaapi.c
 %_datadir/gsoap/plugin/wsaapi.h
-%_datadir/gsoap/plugin/wsrmapi.c
-%_datadir/gsoap/plugin/wsrmapi.h
 %_datadir/gsoap/plugin/wsse2api.c
 %_datadir/gsoap/plugin/wsse2api.h
 %_datadir/gsoap/plugin/wsseapi.c
 %_datadir/gsoap/plugin/wsseapi.h
-%_datadir/gsoap/plugin/wsseapi.cpp
-%_libdir/pkgconfig/gsoapck.pc
-%_libdir/pkgconfig/gsoapck++.pc
-%_libdir/pkgconfig/gsoap.pc
-%_libdir/pkgconfig/gsoap++.pc
-%_libdir/pkgconfig/gsoapssl.pc
-%_libdir/pkgconfig/gsoapssl++.pc
 # Additions in 2.7.12-1
 %_datadir/gsoap/WS/WS-ReliableMessaging.wsdl
 %_datadir/gsoap/WS/WS-ReliableMessaging.xsd
@@ -280,12 +274,98 @@ make check
 %_datadir/gsoap/import/wsrm.h
 %_datadir/gsoap/import/wsrm4.h
 %_datadir/gsoap/import/wsrx.h
+# Additions in 2.7.13-1
+%_datadir/gsoap/import/stdstring.h
+%_datadir/gsoap/import/xsd.h
+%_datadir/gsoap/plugin/wsseapi.cpp
 # Additions in 2.7.15
 %_datadir/gsoap/plugin/httpposttest.h
 %_datadir/gsoap/plugin/httpposttest.c
-
+# Additions in 2.7.16-1
+%_datadir/gsoap/custom/duration.c
+%_datadir/gsoap/custom/duration.h
+%_datadir/gsoap/plugin/wsrmapi.c
+%_datadir/gsoap/plugin/wsrmapi.h
+# Additions in 2.7.17-1
+%_datadir/gsoap/WS/WS-Policy12.xsd
+%_datadir/gsoap/WS/WS-SecurityPolicy.xsd
+%_datadir/gsoap/import/wsse11.h
+# Additions in 2.8.3-1
+%_datadir/gsoap/WS/xenc.xsd
+%_datadir/gsoap/import/xenc.h
+%_datadir/gsoap/plugin/mecevp.c
+%_datadir/gsoap/plugin/mecevp.h
+# Additions in 2.8.4-1
+%_datadir/gsoap/import/wsdd.h
+%_datadir/gsoap/import/wsdx.h
+%_datadir/gsoap/plugin/wsddapi.c
+%_datadir/gsoap/plugin/wsddapi.h
+# Additions in 2.8.7-1
+%_datadir/gsoap/import/wsdd10.h
+# Additions in 2.8.12-1
+%_datadir/gsoap/WS/WS-SecureConversation.xsd
+%_datadir/gsoap/WS/WS-Trust.wsdl
+%_datadir/gsoap/WS/WS-Trust.xsd
+%_datadir/gsoap/import/ser.h
+%_datadir/gsoap/import/wsc.h
+%_datadir/gsoap/import/wsrm5.h
+%_datadir/gsoap/import/wsrx5.h
+%_datadir/gsoap/import/wst.h
+%_datadir/gsoap/import/wstx.h
+# Additions in 2.8.16-1
+%_datadir/gsoap/import/wsc2.h
+%_datadir/gsoap/plugin/calcrest.h
+# Additions in 2.8.17-1
+%_datadir/gsoap/plugin/mq.c
+%_datadir/gsoap/plugin/mq.h
+# Additions in 2.8.21-1
+%_datadir/gsoap/WS/LEGAL.txt
+%_datadir/gsoap/WS/ws-bpel_abstract_common_base.xsd
+%_datadir/gsoap/WS/ws-bpel_executable.xsd
+%_datadir/gsoap/WS/ws-bpel_plnktype.xsd
+%_datadir/gsoap/WS/ws-bpel_serviceref.xsd
+%_datadir/gsoap/WS/ws-bpel_varprop.xsd
+%_datadir/gsoap/import/plnk.h
+%_datadir/gsoap/import/vprop.h
+# Additions in 2.8.22-1
+%_datadir/gsoap/import/wsdd5.h
+%_datadir/gsoap/plugin/wsseapi-lite.c
+%_datadir/gsoap/plugin/wsseapi-lite.h
+# Additions in 2.8.23-1
+%_datadir/gsoap/WS/oasis-sstc-saml-schema-assertion-1.1.xsd
+%_datadir/gsoap/WS/saml-schema-assertion-2.0.xsd
+%_datadir/gsoap/import/saml1.h
+%_datadir/gsoap/import/saml2.h
+# Additions in 2.8.31
+%_datadir/gsoap/import/xenc2.h
+# Additions in 2.8.34
+%_datadir/gsoap/custom/qbytearray_base64.cpp
+%_datadir/gsoap/custom/qbytearray_base64.h
+%_datadir/gsoap/custom/qbytearray_hex.cpp
+%_datadir/gsoap/custom/qbytearray_hex.h
+%_datadir/gsoap/custom/qdate.cpp
+%_datadir/gsoap/custom/qdate.h
+%_datadir/gsoap/custom/qdatetime.cpp
+%_datadir/gsoap/custom/qdatetime.h
+%_datadir/gsoap/custom/qstring.cpp
+%_datadir/gsoap/custom/qstring.h
+%_datadir/gsoap/custom/qtime.cpp
+%_datadir/gsoap/custom/qtime.h
+%_datadir/gsoap/plugin/sessions.c
+%_datadir/gsoap/plugin/sessions.h
+# Additions in 2.8.35
+%_datadir/gsoap/import/wsp_appliesto.h
+%_datadir/gsoap/plugin/wstapi.c
+%_datadir/gsoap/plugin/wstapi.h
 
 %changelog
+* Wed Feb 01 2017 Evgeny Sinelnikov <sin@altlinux.ru> 2.8.42-alt1%ubt
+- Update to new release
+- Increment soversion for gsoap libraries
+
+* Sun Jan 10 2016 Evgeny Sinelnikov <sin@altlinux.ru> 2.8.27-alt1
+- Update to last stable release with 2.8.x branch
+
 * Thu Apr 18 2013 Evgeny Sinelnikov <sin@altlinux.ru> 2.7.17-alt1
 - Update to last stable release with 2.7.x branch
 - Fix SOAP_NEW with parenthesis for gcc compatibility
