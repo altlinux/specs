@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%pypi_name
-Version: 1.13.0
+Version: 1.13.1
 Release: alt1
 Summary: OpenStack library for privilege separation
 Group: Development/Python
@@ -123,5 +123,8 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Wed Feb 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1.13.1-alt1
+- 1.13.1
+
 * Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1.13.0-alt1
 - Initial package.
