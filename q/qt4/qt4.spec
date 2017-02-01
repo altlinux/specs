@@ -34,7 +34,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt8
+%define rlz alt9%ubt
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -99,6 +99,7 @@ Patch215: qt-everywhere-opensource-src-4.8.5-qt_plugin_path.patch
 Patch216: qt-everywhere-opensource-src-4.8.6-QTBUG-34614.patch
 Patch217: qt-everywhere-opensource-src-4.8.5-QTBUG-35459.patch
 Patch218: qt-everywhere-opensource-src-4.8.7-alsa-1.1.patch
+Patch219: qt-everywhere-opensource-src-4.8.7-gcc6.patch
 # MDV
 # ALT
 Patch501: qt-4.8.5-alt-honor-SUSv3-locales.patch
@@ -117,7 +118,6 @@ Patch513: qt-4.8.6-alt-fix-ssl-loading.patch
 Patch514: qt-4.8.5-alt-fix-resolv-loading.patch
 Patch515: qt-4.6.1-alt-xmlpatterns-fexceptions.patch
 Patch516: qt-4.7.1-alt-sql-ibase-firebird.patch
-Patch517: qt-4.8.7-alt-kde-colors.patch
 # SuSE
 Patch701: handle-tga-files-properly.diff
 Patch702: build-qvfb-tool.diff
@@ -142,6 +142,7 @@ Patch9106: 9107-qt-webkit-fix_graphicscontextqt.patch
 # Automatically added by buildreq on Thu Apr 07 2011 (-bi)
 # optimized out: alternatives elfutils fontconfig fontconfig-devel glib2-devel gstreamer-devel libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXcursor-devel libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXv-devel libatk-devel libcairo-devel libcom_err-devel libdbus-devel libfreetype-devel libgdk-pixbuf-devel libgio-devel libgst-plugins libkrb5-devel libpango-devel libpng-devel libpq-devel libqt4-devel libqt4-sql-sqlite libssl-devel libstdc++-devel libtiff-devel libunixODBC-devel libxml2-devel pkg-config python-base ruby xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: firebird-devel gcc-c++ glibc-devel-static gst-plugins-devel libalsa-devel libcups-devel libfreetds-devel libgtk+2-devel libjpeg-devel libmng-devel libmysqlclient-devel libpulseaudio-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libsqlite-devel libsqlite3-devel makedepend phonon-devel postgresql-devel rpm-build-ruby
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: libfreetype-devel pkg-config rpm-utils rpm-macros-alternatives browser-plugins-npapi-devel
 BuildRequires: libcups-devel libalsa-devel
 BuildRequires: gcc-c++ libstdc++-devel libcom_err-devel libicu-devel libffi-devel
@@ -708,6 +709,7 @@ Install this package if you want to create RPM packages that use %name
 %patch216 -p0
 %patch217 -p1
 %patch218 -p1
+%patch219 -p1
 # MDV
 # ALT
 %patch501 -p1
@@ -726,7 +728,6 @@ Install this package if you want to create RPM packages that use %name
 %patch514 -p1
 %patch515 -p1
 %patch516 -p1
-%patch517 -p1
 
 %patch701 -p0
 %patch702 -p0
@@ -756,6 +757,7 @@ sed -i "s|^CFG_DEBUG=.*|CFG_DEBUG=no|" ./configure
 
 
 %build
+%add_optflags -std=gnu++98 -Wno-deprecated
 # install %%optflags
 subst "s|^\s*QMAKE_CFLAGS\s*=.*$|QMAKE_CFLAGS = %optflags -DGLX_GLXEXT_LEGACY|" mkspecs/*/qmake.conf
 subst "s|^\s*QMAKE_CFLAGS\s*=.*$|QMAKE_CFLAGS = %optflags -DGLX_GLXEXT_LEGACY|" mkspecs/common/g++.conf
@@ -1450,6 +1452,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Wed Feb 01 2017 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt9%ubt
+- build with gcc6
+
 * Wed Apr 27 2016 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt8
 - support KDE5 colors
 
@@ -2462,9 +2467,6 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 * Tue Feb 20 2001 David BAUDENS <baudens@mandrakesoft.com> 2.2.4-2mdk
 - Rebuild with libmng-1.0.0
 
-* Thu Feb 06 2001 David BAUDENS <baudens@mandrakesoft.com> 2.2.4-1mdk
-- 2.2.4
-
 * Sat Jan 27 2001 David BAUDENS <baudens@mandrakesoft.com> 2.2.3-9mdk
 - Use sources from TrollTech
 - Remove patch #1
@@ -2497,8 +2499,6 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 - fix gcc internal error (drawback-> -O2 opt :(
 - merge with big dadou cleanups
 - lib policy
-
-* Tue Dec 11 2000 David BAUDENS <baudens@mandrakesoft.com> 2.2.3-1mdk
 - Enable libmng support
 - Enable threads
 - Rewrite spec to make it LMDK compliant
@@ -2591,8 +2591,6 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 * Sat Jul 15 2000 Christopher Molnar <molnarc@mandrakesoft.com> 2.1.1-4mdk
 - Updated some patches for KDE
-
-* Tue Jun 21 2000 Geoffrey Lee <snailtalk@linux-mandrake.com> 2.1.1-3mdk
 - be pedantic and add some symlinks to /usr/bin
 - fixed long standing unfixed typo
 - package is not relocatable (???)
@@ -2642,11 +2640,7 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 * Mon Sep 20 1999 Bernhard Rosenkraenzer <bero@linux-mandrake.com>
 - Add libqgl2.a and libqimgio2.a to make KDE 2.0 happy
-
-* Sat Aug  8 1999 Bernhard Rosenkraenzer <bero@linux-mandrake.com>
 - replace qstrlist.h with a version that works
-
-* Sat Aug  8 1999 Bernhard Rosenkraenzer <bero@linux-mandrake.com>
 - rename /usr/lib/libqt.a to /usr/lib/libqt2.a to avoid conflict with
   qt 1.44
 - Add libqt2.so link to libqt.so.2 so we can do -lqt2
