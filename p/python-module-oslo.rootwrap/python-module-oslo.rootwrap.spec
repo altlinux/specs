@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%pypi_name
-Version: 5.1.0
+Version: 5.1.1
 Release: alt1
 Summary: Oslo Rootwrap
 
@@ -133,6 +133,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Wed Feb 01 2017 Alexey Shabalin <shaba@altlinux.ru> 5.1.1-alt1
+- 5.1.1
+
 * Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 5.1.0-alt1
 - 5.1.0
 
