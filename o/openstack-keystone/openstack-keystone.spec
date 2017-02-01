@@ -1,7 +1,7 @@
 %def_without python3
 
 Name: openstack-keystone
-Version: 10.0.0
+Version: 10.0.1
 Release: alt1
 Epoch: 1
 Summary: OpenStack Identity Service
@@ -344,6 +344,9 @@ fi
 %doc LICENSE doc/build/html
 
 %changelog
+* Wed Feb 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.1-alt1
+- 10.0.1
+
 * Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.0-alt1
 - 10.0.0 Newton release
 
