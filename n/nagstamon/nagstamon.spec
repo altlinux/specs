@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install python-devel python3-devel
 %define _localstatedir %{_var}
 Name:           nagstamon
 Version:        2.0.1
-Release:        alt2
+Release:        alt3
 Summary:        Nagios status monitor for the desktop
 License:        GPLv2
 Group:          Monitoring
@@ -19,6 +19,7 @@ BuildRequires:  python3-module-sip
 Requires:       python3-module-BeautifulSoup4
 Requires:       python3-module-psutil
 Requires:	python3-module-sip
+Requires:	python3-module-requests
 BuildArch:      noarch
 Source44: import.info
 
@@ -65,6 +66,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Jan 31 2017 Denis Medvedev <nbr@altlinux.org> 2.0.1-alt3
+- Fixed version of requests
+
 * Tue Jan 31 2017 Denis Medvedev <nbr@altlinux.org> 2.0.1-alt2
 - fixed dependencies
 
