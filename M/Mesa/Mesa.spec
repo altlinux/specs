@@ -4,7 +4,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 13.0.3
+Version: 13.0.4
 Release: alt1
 Epoch: 4
 License: MIT
@@ -247,15 +247,19 @@ ln -sf ../../..%_libdir/X11/libGL.so.1.2 %buildroot%_sysconfdir/X11/%_lib/libGL.
 ln -sf ../..%_sysconfdir/X11/%_lib/libGL.so.1 %buildroot%_libdir/
 ln -sf X11/libGL.so.1.2 %buildroot%_libdir/libGL.so
 # moved libEGL
+%if_enabled egl
 mv %buildroot%_libdir/libEGL.so.1.0.0 %buildroot%_libdir/X11/libEGL.so.1.0.0
 ln -sf ../../..%_libdir/X11/libEGL.so.1.0.0 %buildroot%_sysconfdir/X11/%_lib/libEGL.so.1
 ln -sf ../..%_sysconfdir/X11/%_lib/libEGL.so.1 %buildroot%_libdir/
 ln -sf X11/libEGL.so.1.0.0 %buildroot%_libdir/libEGL.so
+%endif
 # moved libGLESv2
+%if_enabled gles2
 mv %buildroot%_libdir/libGLESv2.so.2.0.0 %buildroot%_libdir/X11/libGLESv2.so.2.0.0
 ln -sf ../../..%_libdir/X11/libGLESv2.so.2.0.0 %buildroot%_sysconfdir/X11/%_lib/libGLESv2.so.2
 ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %buildroot%_libdir/
 ln -sf X11/libGLESv2.so.2.0.0 %buildroot%_libdir/libGLESv2.so
+%endif
 #
 /sbin/ldconfig -Nn %buildroot%_libdir/X11/
 
@@ -264,15 +268,19 @@ ln -sf X11/libGLESv2.so.2.0.0 %buildroot%_libdir/libGLESv2.so
 	ln -sf ../../..%_libdir/X11/libGL.so.1.2 %_sysconfdir/X11/%_lib/libGL.so.1
 ln -sf ../..%_sysconfdir/X11/%_lib/libGL.so.1 %_libdir/
 
+%if_enabled egl
 %post -n libEGL
 [ -r %_sysconfdir/X11/%_lib/libEGL.so.1 ] || \
 	ln -sf ../../..%_libdir/X11/libEGL.so.1.0.0 %_sysconfdir/X11/%_lib/libEGL.so.1
 ln -sf ../..%_sysconfdir/X11/%_lib/libEGL.so.1 %_libdir/
+%endif
 
+%if_enabled gles2
 %post -n libGLES
 [ -r %_sysconfdir/X11/%_lib/libGLESv2.so.2 ] || \
 	ln -sf ../../..%_libdir/X11/libGLESv2.so.2.0.0 %_sysconfdir/X11/%_lib/libGLESv2.so.2
 ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
+%endif
 
 %files -n libGL
 %doc docs/relnotes/%version.html
@@ -385,6 +393,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Wed Feb 01 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:13.0.4-alt1
+- 13.0.4
+
 * Thu Jan 12 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:13.0.3-alt1
 - 13.0.3
 
