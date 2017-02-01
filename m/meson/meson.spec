@@ -2,7 +2,7 @@
 %def_without tests
 
 Name: meson
-Version: 0.37.1
+Version: 0.38.0
 Release: alt1
 
 Summary: High productivity build system
@@ -69,12 +69,16 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_man1dir/%name.1.*
 %_man1dir/%{name}conf.1.*
 %_man1dir/%{name}introspect.1.*
+%_man1dir/%{name}test.1.*
 %_man1dir/wraptool.1.*
 %_rpmmacrosdir/%name
 %doc COPYING README.*
 
 
 %changelog
+* Wed Feb 01 2017 Yuri N. Sedunov <aris@altlinux.org> 0.38.0-alt1
+- 0.38.0
+
 * Wed Dec 21 2016 Yuri N. Sedunov <aris@altlinux.org> 0.37.1-alt1
 - 0.37.1
 
