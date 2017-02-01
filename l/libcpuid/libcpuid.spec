@@ -1,5 +1,5 @@
 Name: libcpuid
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 Summary: Provides CPU identification for x86
 License: BSD-2-Clause
@@ -43,5 +43,8 @@ rm %buildroot%_libdir/*.a
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Tue Jan 31 2017 Anton Midyukov <antohami@altlinux.org> 0.4.0-alt1
+- new version 0.4.0
+
 * Mon Oct 24 2016 Anton Midyukov <antohami@altlinux.org> 0.3.0-alt1
 - Initial build for Alt Linux Sisyphus.

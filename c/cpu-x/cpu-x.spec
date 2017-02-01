@@ -1,5 +1,5 @@
 Name: cpu-x
-Version: 3.1.2
+Version: 3.1.3
 Release: alt1
 Summary: CPU-X is a Free software that gathers information on CPU, motherboard and more
 License: GPLv3+
@@ -37,5 +37,8 @@ NCurses. A dump mode is present from command line.
 %_datadir/polkit-1/actions/org.pkexec.cpu-x.policy
 
 %changelog
+* Tue Jan 31 2017 Anton Midyukov <antohami@altlinux.org> 3.1.3-alt1
+- new version 3.1.3
+
 * Mon Oct 24 2016 Anton Midyukov <antohami@altlinux.org> 3.1.2-alt1
 - Initial build for Alt Linux Sisyphus.
