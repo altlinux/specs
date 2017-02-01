@@ -1,11 +1,11 @@
 %def_disable snapshot
 
 %define _name slingshot
-%define ver_major 2.0
+%define ver_major 2.1
 %define api_ver 0.8
 
 Name: %_name-launcher
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The lightweight and stylish app launcher from elementary
@@ -50,6 +50,9 @@ Slingshot is a lightweight and stylish app launcher from elementary OS.
 
 
 %changelog
+* Wed Feb 01 2017 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Tue Jan 17 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - 2.0.1
 
