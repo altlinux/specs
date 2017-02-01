@@ -3,8 +3,8 @@
 %def_with compression
 
 Name: python-module-django-horizon
-Version: 10.0.1
-Release: alt2
+Version: 10.0.2
+Release: alt1
 Epoch: 1
 Summary: Django application for talking to Openstack
 
@@ -285,8 +285,8 @@ install -d -m 755 %buildroot%_sysconfdir/openstack-dashboard
 #mkdir -p %buildroot%_unitdir/httpd.service.d/
 #cp %SOURCE3 %buildroot%_unitdir/httpd.service.d/openstack-dashboard.conf
 
-#mkdir -p %buildroot%_sysconfdir/systemd/system/httpd2.service.d
-#cp %SOURCE3 %buildroot%_sysconfdir/systemd/system/httpd2.service.d/openstack-dashboard.conf
+mkdir -p %buildroot%_sysconfdir/systemd/system/httpd2.service.d
+cp %SOURCE3 %buildroot%_sysconfdir/systemd/system/httpd2.service.d/openstack-dashboard.conf
 
 
 # Copy everything to /usr/share
@@ -346,12 +346,16 @@ sed -i "/^SECRET_KEY.*$/{N;s/^.*$/SECRET_KEY='`openssl rand -hex 10`'/}" /etc/op
 %ghost %apache2_sites_enabled/*.conf
 %config(noreplace) %attr(0640, root, _webserver) %_sysconfdir/openstack-dashboard/local_settings
 %config(noreplace) %attr(0640, root, _webserver) %_sysconfdir/openstack-dashboard/*.json
-#%config(noreplace) %_sysconfdir/systemd/system/httpd2.service.d/openstack-dashboard.conf
+%config(noreplace) %_sysconfdir/systemd/system/httpd2.service.d/openstack-dashboard.conf
 
 %files doc
 %doc html
 
 %changelog
+* Wed Feb 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.2-alt1
+- 10.0.2
+- return drop-in config for systemd
+
 * Fri Jan 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.1-alt2
 - horizon-stable-newton 20161214
 
