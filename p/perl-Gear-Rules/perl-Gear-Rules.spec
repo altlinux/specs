@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.19
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -36,6 +36,9 @@ Requires: gear perl(Pod/Text.pm)
 %_man1dir/*
 
 %changelog
+* Wed Feb 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.19-alt2
+- added lnkvisitor@lnkvisitor.localdomain
+
 * Mon Jan 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - new version
 
