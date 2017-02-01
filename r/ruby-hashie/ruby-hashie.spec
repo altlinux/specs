@@ -1,6 +1,6 @@
 
 Name:    ruby-hashie
-Version: 3.4.6
+Version: 3.5.1
 Release: alt1
 
 Summary: Hashie is a simple collection of useful Hash extensions
@@ -54,6 +54,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Feb 01 2017 Andrey Cherepanov <cas@altlinux.org> 3.5.1-alt1
+- new version 3.5.1
+
 * Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 3.4.6-alt1
 - new version 3.4.6
 
