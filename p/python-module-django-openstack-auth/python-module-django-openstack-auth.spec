@@ -1,6 +1,6 @@
 
 Name:           python-module-django-openstack-auth
-Version:        2.4.1
+Version:        2.4.2
 Release:        alt1
 Summary:        Django authentication backend for OpenStack Keystone
 Group:          Development/Python
@@ -76,6 +76,9 @@ rm -rf %buildroot/%python_sitelibdir/openstack_auth/tests
 %python_sitelibdir/*
 
 %changelog
+* Wed Feb 01 2017 Alexey Shabalin <shaba@altlinux.ru> 2.4.2-alt1
+- 2.4.2
+
 * Mon Oct 24 2016 Alexey Shabalin <shaba@altlinux.ru> 2.4.1-alt1
 - 2.4.1
 
