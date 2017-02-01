@@ -5,9 +5,11 @@
 #define patchlevel %nil
 %define patchlevel -P1
 
+%define _unpackaged_files_terminate_build 1
+
 Name: dhcp
 Version: 4.3.3
-Release: alt4
+Release: alt5
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -86,9 +88,8 @@ BuildPreReq: groff-base, libcap-devel
 # Chrooted environments
 %define ROOT %_localstatedir/%name
 
-# Automatically added by buildreq on Wed Sep 26 2012
-# optimized out: libisc-export
-BuildRequires: libcap-devel bind-devel
+BuildRequires: libcap-devel
+BuildRequires: libisc-export-dhcp-devel
 
 %package common
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -544,6 +545,10 @@ fi
 # }}}
 
 %changelog
+* Wed Feb 01 2017 Mikhail Efremov <sem@altlinux.org> 1:4.3.3-alt5
+- Use _unpackaged_files_terminate_build.
+- Build with bind-9.9.9 libraries (closes: #33053).
+
 * Thu Jan 12 2017 Mikhail Efremov <sem@altlinux.org> 1:4.3.3-alt4
 - Rebuilt with bind 9.10.4.
 - Patches tweaked for use with recent bind (by Sergey Bolshakov).
