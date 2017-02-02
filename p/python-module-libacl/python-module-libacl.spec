@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5.2
-Release: alt1.1.1
+Version: 0.5.3
+Release: alt1
 
 Summary: POSIX.1e ACLs for python
 License: LGPLv2.1+
@@ -12,7 +12,8 @@ Group: Development/Python
 
 URL: http://pylibacl.sourceforge.net/
 
-# https://github.com/iustin/pylibacl.git
+#Source-url: https://pypi.io/packages/source/p/pylibacl/pylibacl-%version.tar.gz
+# Source-git: https://github.com/iustin/pylibacl.git
 Source: %name-%version.tar
 Patch: libacl-0.5.2-alt-doc.patch
 
@@ -72,7 +73,7 @@ pushd ../python3
 popd
 %endif
 
-export PYTHONPATH=%buildroot%python-sitelibdir
+export PYTHONPATH=%buildroot%python_sitelibdir
 %make doc
 
 %files
@@ -86,6 +87,9 @@ export PYTHONPATH=%buildroot%python-sitelibdir
 %endif
 
 %changelog
+* Thu Feb 02 2017 Vitaly Lipatov <lav@altlinux.ru> 0.5.3-alt1
+- new version 0.5.3 (with rpmrb script)
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.2-alt1.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
