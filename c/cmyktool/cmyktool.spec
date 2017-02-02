@@ -1,16 +1,27 @@
+%define prerel pre1
+%def_disable netpbm
+
 Name: cmyktool
-Version: 0.1.5
-Release: alt1.1
+Version: 0.1.6
+Release: alt1.%prerel
 
 Summary: CMYK separation utility
 License: GPLv3+
 Group: Graphics
+Url: http://www.blackfiveimaging.co.uk/index.php?article=02Software/05CMYKTool
 
-URL: http://www.blackfiveimaging.co.uk/index.php?article=02Software/05CMYKTool
-Source: http://www.blackfiveimaging.co.uk/cmyktool/cmyktool-%version.tar.gz
+Source: http://www.blackfiveimaging.co.uk/%name/%name-%version-%prerel.tar.gz
+# fc
+Patch10: cmyktool-1.16-fc-cxx11.patch
+# mga
+Patch21: cmyktool-0.1.6-pre1-fix-segfault.patch
+# suse
+Patch22: cmyktool-0.1.6-pre1-nonvoid-return-hackstream-h.patch
+Patch23: cmyktool-0.1.6-pre1-fix_wrong_printf_format_for_size_t.patch
 
 # Automatically added by buildreq on Wed Mar 03 2010
-BuildRequires: gcc-c++ libgtk+2-devel libjpeg-devel liblcms-devel libnetpbm-devel libtiff-devel
+BuildRequires: gcc-c++ libgtk+2-devel libjpeg-devel liblcms-devel libtiff-devel
+%{?_enable_netpbm:BuildRequires: libnetpbm-devel}
 
 # External program for devicelink: collink from argyllcms package
 Requires: argyllcms
@@ -19,10 +30,20 @@ Requires: argyllcms
 Requires: /usr/bin/gs
 
 %description
-CMYKTool is a new utility intended to build on the functionality of old CMYK separation plugin for the GIMP.
+CMYKTool is a graphical utility that converts images from ICC profile to
+another, converts images from RGB to CMYK with a number of configuration options
+for the conversion, provides an interface for inspecting image channels,
+provides a 'soft proof' mode to preview how an image would look if it was
+printed, saves images to JPEG or TIFF (8- or 16-bit) with embedded profiles if
+desired. This tool is extremely useful for designers who prepare artwork for
+professional printing.
 
 %prep
-%setup
+%setup -n %name-%version-%prerel
+%patch10 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
 
 %build
 %configure
@@ -39,6 +60,10 @@ CMYKTool is a new utility intended to build on the functionality of old CMYK sep
 %_desktopdir/*
 
 %changelog
+* Thu Feb 02 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.6-alt1.pre1
+- 0.1.6-pre1
+- disabled netpbm support
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.5-alt1.1
 - Rebuilt with libtiff5
 
