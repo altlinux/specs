@@ -1,7 +1,7 @@
 %define rname lxc
 
 Name: pve-%rname
-Version: 2.0.6
+Version: 2.0.7
 Release: alt1
 Summary: Linux containers usersapce tools
 Group: System/Configuration/Other
@@ -14,12 +14,13 @@ Requires: cgmanager lxcfs
 Conflicts: %rname %rname-libs
 
 Source: %rname.tgz
-Patch0: 0001-separate-the-limiting-from-the-namespaced-cgroup-roo.patch
-Patch1: 0002-start-initutils-make-cgroupns-separation-level-confi.patch
-Patch2: deny-rw-mounting-of-sys-and-proc.patch
-Patch3: fix-systemd-service-depends.patch
-Patch4: remove-systemd-delegate-flag.patch
-Patch5: run-lxcnetaddbr.patch
+Patch0: fix-systemd-service-depends.patch
+Patch1: remove-systemd-delegate-flag.patch
+Patch2: run-lxcnetaddbr.patch
+Patch3: deny-rw-mounting-of-sys-and-proc.patch
+Patch4: 0001-separate-the-limiting-from-the-namespaced-cgroup-roo.patch
+Patch5: 0002-start-initutils-make-cgroupns-separation-level-confi.patch
+Patch7: rename-cgns-subdir-to-ns.patch
 
 Patch20: lxc-alt.patch
 Patch21: lxc-altlinux-lxc.patch
@@ -44,6 +45,7 @@ an applications or a system.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch7 -p1
 
 %patch20 -p1
 %patch21 -p1
@@ -88,6 +90,12 @@ rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 %_man7dir/*.7*
 
 %changelog
+* Thu Feb 02 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.7-alt1
+- 2.0.7
+
+* Thu Nov 24 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.0.6-alt0.M80P.1
+- backport to p8 branch
+
 * Thu Nov 24 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.0.6-alt1
 - 2.0.6
 
