@@ -2,7 +2,7 @@
 
 Name: php5-%php5_extension
 Version: %php5_version
-Release: %php5_release.1
+Release: %php5_release
 
 Summary: LDAP module for PHP5
 Group: System/Servers
@@ -18,7 +18,7 @@ BuildRequires: php5-devel = %php5_version
 
 BuildRequires: libldap-devel libsasl2-devel
 
-Requires: php5-libs = %php5_version-%php5_release
+Requires: php5-libs = %php5_version
 
 %description
 The %name includes a dynamic shared object (DSO) that adds

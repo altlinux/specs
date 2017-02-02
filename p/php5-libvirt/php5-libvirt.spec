@@ -21,7 +21,7 @@ BuildRequires: libvirt-devel >= 1.2.13
 BuildRequires: libxml2-devel
 BuildRequires: xsltproc
 BuildRequires: xml-utils
-Requires: php5-libs = %php5_version-%php5_release
+Requires: php5-libs = %php5_version
 
 %description
 PHP language bindings for Libvirt API.
