@@ -4,7 +4,7 @@
 Summary: The PHP5 scripting language
 Name:	 php5
 Version: 5.6.30
-Release: alt1%ubt
+Release: alt2%ubt
 
 %define php5_name      %name
 %define _php5_version  %version
@@ -361,6 +361,7 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 
 
 %post
+%force_update_alternatives
 %php5_sapi_postin
 
 %preun
@@ -380,6 +381,7 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %_bindir/phar5*
 %_bindir/phpinfo5-%_php5_version
 %dir %php5_sysconfdir/%php5_sapi
+%php5_sysconfdir/%php5_sapi/*
 %config(noreplace) %php5_sysconfdir/%php5_sapi/php.ini
 %_man1dir/php5-%_php5_version.1*
 %_man1dir/php5.1*
@@ -421,6 +423,10 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %doc tests run-tests.php 
 
 %changelog
+* Wed Feb 01 2017 Anton Farygin <rider@altlinux.ru> 5.6.30-alt2%ubt
+- added %%sapi/php.d directory
+- added alternatives-update to postinstall script
+
 * Mon Jan 23 2017 Anton Farygin <rider@altlinux.ru> 5.6.30-alt1%ubt
 - new version
 
