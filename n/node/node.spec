@@ -28,8 +28,8 @@
 %define oversion %version
 
 Name: node
-Version: %major.2
-Release: alt2
+Version: %major.3
+Release: alt1
 
 Summary: Evented I/O for V8 Javascript
 
@@ -214,14 +214,14 @@ chmod 0755 %buildroot%_rpmlibdir/nodejs_native.req
 rm -rf %buildroot/usr/lib/dtrace/
 rm -rf %buildroot/usr/share/doc/node/gdbinit
 
-# skip gnuplot and convert reqs
-rm -rf %buildroot%_libexecdir/node_modules/npm/node_modules/request/node_modules/node-uuid/benchmark/
+# drop tapset file
+rm -rf %buildroot%_datadir/systemtap/tapset
 
 %files
 %doc AUTHORS CHANGELOG.md LICENSE README.md
 %_bindir/node
 %dir %nodejs_sitelib
-%_datadir/systemtap/tapset/node.stp
+#%_datadir/systemtap/tapset/node.stp
 %_man1dir/*
 %_sysconfdir/profile.d/*
 
@@ -257,6 +257,10 @@ rm -rf %buildroot%_libexecdir/node_modules/npm/node_modules/request/node_modules
 %endif
 
 %changelog
+* Thu Feb 02 2017 Vitaly Lipatov <lav@altlinux.ru> 6.9.3-alt1
+- new version 6.9.3 (with rpmrb script)
+- 2017-01-03, Version 6.9.3 'Boron' (LTS)
+
 * Sun Dec 18 2016 Vitaly Lipatov <lav@altlinux.ru> 6.9.2-alt2
 - build without npm subpackage
 
