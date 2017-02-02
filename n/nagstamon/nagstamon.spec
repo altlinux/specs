@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install python-devel python3-devel
 %define _localstatedir %{_var}
 Name:           nagstamon
 Version:        2.0.1
-Release:        alt3
+Release:        alt4
 Summary:        Nagios status monitor for the desktop
 License:        GPLv2
 Group:          Monitoring
@@ -43,6 +43,9 @@ python3 setup.py install \
 
 #chmod +x %{buildroot}/%{python_sitelibdir_noarch}/Nagstamon/Server/Multisite.py
 mv %{buildroot}/%{_bindir}/nagstamon.py %{buildroot}/%{_bindir}/nagstamon
+#i18n ru_RU
+install -D -m 644 Nagstamon/QUI/all.qm %{buildroot}/%{python3_sitelibdir_noarch}/Nagstamon/translate/ru_RU.qm
+
 
 # desktop stuff
 mkdir -p %{buildroot}%{_datadir}/{applications,pixmaps}
@@ -60,12 +63,16 @@ desktop-file-install \
 %{_datadir}/pixmaps/nagstamon.svg
 %{_datadir}/applications/nagstamon.desktop
 %{python3_sitelibdir_noarch}/Nagstamon
+%{python3_sitelibdir_noarch}/Nagstamon/translate/*.qm
 %{_bindir}/nagstamon
 %{_mandir}/man1/nagstamon.1*
 %{python3_sitelibdir_noarch}/%{name}-%{version}-py%{__python3_version}.egg-info
 
 
 %changelog
+* Thu Feb 02 2017 Denis Medvedev <nbr@altlinux.org> 2.0.1-alt4
+- rudimentary translation to Russian
+
 * Tue Jan 31 2017 Denis Medvedev <nbr@altlinux.org> 2.0.1-alt3
 - Fixed version of requests
 
