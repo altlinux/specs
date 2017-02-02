@@ -14,7 +14,7 @@ BuildRequires: libltdl7-devel
 
 Name:           libprelude
 Version:        3.1.0
-Release:        alt1_29
+Release:        alt2_29
 Summary:        Secure Connections between all Sensors and the Prelude Manager
 # Prelude is GPL-2.0+
 # libmissing is LGPL-2.1+
@@ -138,13 +138,13 @@ Requires:       %{name} = %{version}-%{release}
 Provides a convenient interface for sending alerts to Prelude
 Manager.
 
-%package -n python-module-libprelude
-Group: Development/Python
+%package -n python-module-prelude
+Group: System/Libraries
 Summary:        Python 2 bindings for prelude
 Requires:       %{name} = %{version}-%{release}
 %{?python_provide:%python_provide python2-prelude}
 
-%description -n python-module-libprelude
+%description -n python-module-prelude
 Provides python 2 bindings for prelude.
 
 %package -n python3-module-prelude
@@ -267,7 +267,7 @@ find %{buildroot} -name '.packlist' -delete
 %config(noreplace) %{_sysconfdir}/prelude/default/tls.conf
 %dir %{_var}/spool/prelude
 
-%files -n python-module-libprelude
+%files -n python-module-prelude
 %{python_sitelibdir}/_prelude.*so
 %{python_sitelibdir}/prelude-%{version}-py?.?.egg-info
 %{python_sitelibdir}/prelude.py*
@@ -296,6 +296,9 @@ find %{buildroot} -name '.packlist' -delete
 %doc AUTHORS ChangeLog README NEWS
 
 %changelog
+* Thu Feb 02 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt2_29
+- changed python names to be the same for python3 and 2
+
 * Wed Feb 01 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_29
 - converted for ALT Linux by srpmconvert tools
 
