@@ -1,7 +1,7 @@
 %define py_name youtube_dl
 
 Name: youtube-dl
-Version: 2017.01.25
+Version: 2017.02.01
 Release: alt1
 
 Summary: Download videos from YouTube
@@ -82,6 +82,9 @@ cd -
 %python3_sitelibdir/%py_name-*.egg-info
 
 %changelog
+* Thu Feb 02 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2017.02.01-alt1
+- Updated to 2017.02.01 (ALT#33073).
+
 * Fri Jan 27 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2017.01.25-alt1
 - Updated to 2017.01.25.
 
