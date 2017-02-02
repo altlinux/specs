@@ -1,6 +1,6 @@
 Name: audit
 Version: 2.6.7
-Release: alt1
+Release: alt1.1
 
 Packager: Anton Farygin <rider@altlinux.com>
 
@@ -174,6 +174,9 @@ install -pD -m644 rules/10-base-config.rules %buildroot%_sysconfdir/%name/rules.
 %python_sitelibdir/*
 
 %changelog
+* Wed Feb 01 2017 Igor Vlasenko <viy@altlinux.ru> 2.6.7-alt1.1
+- rebuild with libprelude
+
 * Thu Sep 15 2016 Anton Farygin <rider@altlinux.ru> 2.6.7-alt1
 - new version
 
