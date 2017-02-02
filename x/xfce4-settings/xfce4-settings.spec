@@ -1,6 +1,6 @@
 Name: xfce4-settings
 Version: 4.12.1
-Release: alt1
+Release: alt2
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
@@ -18,6 +18,7 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools > 4.5 libxfce4ui-devel libexo-devel >= 0.6.0 libxfconf-devel libgarcon-devel >= 0.1.10
 BuildRequires: intltool libICE-devel libXcursor-devel libXi-devel libXrandr-devel libglade-devel libnotify-devel libwnck-devel libxklavier-devel libupower-devel >= 0.99.4-alt2
+BuildRequires: xorg-drv-libinput-devel
 
 Requires: libgarcon-settings-manager-menu
 
@@ -46,6 +47,7 @@ for the Xfce desktop.
 	--enable-maintainer-mode \
 	--enable-libnotify \
 	--enable-xcursor \
+	--enable-xorg-libinput \
 	--enable-libxklavier \
 	--enable-sound-settings \
 	--enable-pluggable-dialogs
@@ -67,6 +69,9 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Thu Feb 02 2017 Mikhail Efremov <sem@altlinux.org> 4.12.1-alt2
+- Enable libinput support.
+
 * Thu Sep 15 2016 Mikhail Efremov <sem@altlinux.org> 4.12.1-alt1
 - Updated to 4.12.1.
 
