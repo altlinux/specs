@@ -1,24 +1,30 @@
+%def_enable snapshot
 %define _name luminance
 Name: %_name-hdr
 Version: 2.4.0
-Release: alt5
+Release: alt6
 
 Summary: A graphical tool for creating and processing HDR images
 Group: Graphics
 License: GPLv2+
 Url: http://qtpfsgui.sourceforge.net/
 
+%if_disabled snapshot
 Source: http://downloads.sourceforge.net/project/qtpfsgui/luminance/%version/%name-%version.tar.bz2
-Source1: luminance-hdr_lang_ru.qm
-
-Patch1: luminance-2.4.0-qt5-printsupport.patch
+%else
+Source: %name-%version.tar
+%endif
+#Source1: luminance-hdr_lang_ru.qm
 
 Obsoletes: qtpfsgui
 Provides: qtpfsgui = %version-%release
 
+Requires: hugin
+
 BuildRequires: cmake gcc-c++ libgomp-devel
 BuildRequires: boost-devel boost-program_options-devel
 BuildRequires: qt5-base-devel qt5-tools-devel qt5-webkit-devel qt5-declarative-devel qt5-quick1-devel
+BuildRequires: qt5-webengine-devel qt5-svg-devel
 BuildRequires: openexr-devel libexiv2-devel libfftw3-devel liblcms2-devel
 BuildRequires: libraw-devel-static libjpeg-devel libtiff-devel libpng-devel
 BuildRequires: libgsl-devel libgtest-devel zlib-devel
@@ -34,8 +40,6 @@ provide a workflow for HDR imaging.
 #cp %SOURCE1 i18n/lang_ru.qm
 #rm -f i18n/lang_ru.ts
 
-%patch1 -p1
-
 %build
 %cmake
 %cmake_build
@@ -50,11 +54,16 @@ provide a workflow for HDR imaging.
 %dir %_datadir/%name
 %dir %_datadir/%name/i18n
 %_datadir/%name/help/
-%_datadir/applications/*
+%_datadir/%name/hdrhtml/
+%_desktopdir/*
 %_datadir/icons/hicolor/*/*/*
-%doc AUTHORS Changelog README TODO BUGS
+%_datadir/appdata/%name.appdata.xml
+%doc AUTHORS Changelog README* TODO BUGS
 
 %changelog
+* Thu Feb 02 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt6
+- updated to 2.4.0-202-gd371d09
+
 * Thu Dec 29 2016 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt5
 - rebuilt against libraw.so.16
 
