@@ -1,6 +1,6 @@
 Name: npm
-Version: 3.10.9
-Release: alt3
+Version: 3.10.10
+Release: alt1
 
 Summary: A package manager for node
 
@@ -61,6 +61,9 @@ rm -rf %buildroot%nodejs_sitelib/%name/node_modules/request/node_modules/node-uu
 %nodejs_sitelib/%name/
 
 %changelog
+* Thu Feb 02 2017 Vitaly Lipatov <lav@altlinux.ru> 3.10.10-alt1
+- new version 3.10.10 (with rpmrb script)
+
 * Wed Dec 21 2016 Vitaly Lipatov <lav@altlinux.ru> 3.10.9-alt3
 - drop gnuplot and convert requires
 
