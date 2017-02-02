@@ -1,5 +1,5 @@
 Name: seappletsimple
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1%ubt
 
 Summary: Simple applet for SELinux
@@ -41,6 +41,9 @@ install -m644 %name.desktop %buildroot/%_xdgconfigdir/autostart/%name.desktop
 %_xdgconfigdir/autostart/%name.desktop
 
 %changelog
+* Thu Feb 02 2017 Sergey V Turchin <zerg at altlinux dot org> 0.1.2-alt1%ubt
+- improve tooltip
+
 * Wed Feb 01 2017 Sergey V Turchin <zerg at altlinux dot org> 0.1.1-alt1%ubt
 - fix autostart
 
