@@ -8,7 +8,7 @@
 
 Name: %_name%abiversion
 Version: 5.7.3
-Release: alt1.1
+Release: alt2
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -30,7 +30,9 @@ Patch: %name-%version-%release.patch
 Patch6: net-snmp-5.7.3-systemd.patch
 Patch7: net-snmp-5.7.3-snmptrapd-gid.patch
 
-%define persistentdir %_localstatedir/%_name
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%define persistentdir %_var/lib/%_name
 
 %def_enable static
 BuildPreReq: librpm-devel >= 4.0.4 libssl-devel
@@ -593,6 +595,10 @@ echo "===== start test ====="
 %doc python/README
 
 %changelog
+* Thu Feb 02 2017 Igor Vlasenko <viy@altlinux.ru> 5.7.3-alt2
+- NMU: updated upstream V5-7-patches branch to fix build
+- added gear remotes
+
 * Sun Jan 10 2016 Terechkov Evgenii <evg@altlinux.org> 5.7.3-alt1.1
 - fix typo in spec
 
