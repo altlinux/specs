@@ -55,7 +55,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 232
-Release: alt1
+Release: alt2.git.486b3d0
 Summary: System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -215,6 +215,9 @@ work as a drop-in replacement for sysvinit.
 %package -n libsystemd-shared
 Group: System/Libraries
 Summary: Private Systemd Shared Library
+Conflicts: systemd-services < 1:232-alt1
+Conflicts: systemd < 1:232-alt1
+Conflicts: journalctl < 1:232-alt1
 
 %description -n libsystemd-shared
 The libsystemd-shared private library for link as many binaries as possible with it,
@@ -1286,7 +1289,7 @@ fi
 %config(noreplace) %_sysconfdir/systemd/journald.conf
 %config(noreplace) %_sysconfdir/systemd/system.conf
 %config(noreplace) %_sysconfdir/systemd/user.conf
-%config(noreplace) %_sysconfdir/dbus-1/system.d/org.freedesktop.systemd1.conf
+%_datadir/dbus-1/system.d/org.freedesktop.systemd1.conf
 
 /sbin/systemctl
 /bin/systemctl
@@ -1311,7 +1314,14 @@ fi
 /lib/systemd/systemd
 /lib/systemd/systemd-ac-power
 /lib/systemd/systemd-cgroups-agent
+/lib/systemd/systemd-dissect
+%if_enabled libcryptsetup
 /lib/systemd/systemd-cryptsetup
+/lib/systemd/systemd-veritysetup
+%_man5dir/crypttab*
+%_mandir/*/*cryptsetup*
+%_man8dir/systemd-veritysetup*
+%endif
 /lib/systemd/systemd-fsck
 /lib/systemd/systemd-hibernate-resume
 /lib/systemd/systemd-initctl
@@ -1328,6 +1338,7 @@ fi
 /lib/systemd/systemd-update-utmp
 /lib/systemd/systemd-user-sessions
 /lib/systemd/systemd-vconsole-setup
+/lib/systemd/systemd-volatile-root
 /lib/systemd/altlinux-save-dmesg
 /lib/systemd/systemd-sysv-install
 
@@ -1388,8 +1399,6 @@ fi
 %_man1dir/systemd-socket-activate.*
 %_mandir/*/systemd-tty-ask-password*
 %_man1dir/systemd.*
-%_man5dir/crypttab*
-%_mandir/*/*cryptsetup*
 %_mandir/*/*journald*
 %_man5dir/localtime*
 %_man5dir/os-release*
@@ -1437,6 +1446,7 @@ fi
 %_man8dir/systemd-reboot*
 %_man8dir/systemd-shutdown*
 %_man8dir/systemd-poweroff*
+%_man8dir/systemd-volatile-root*
 
 %exclude %_mandir/*/*sysusers*
 %exclude %_datadir/factory
@@ -1596,12 +1606,12 @@ fi
 %files services
 %dir %_sysconfdir/systemd
 %config(noreplace) %_sysconfdir/systemd/logind.conf
-%config(noreplace) %_sysconfdir/dbus-1/system.d/org.freedesktop.*.conf
-%exclude %_sysconfdir/dbus-1/system.d/org.freedesktop.systemd1.conf
-%exclude %_sysconfdir/dbus-1/system.d/org.freedesktop.resolve1.conf
-%exclude %_sysconfdir/dbus-1/system.d/org.freedesktop.network1.conf
-%exclude %_sysconfdir/dbus-1/system.d/org.freedesktop.machine1.conf
-%exclude %_sysconfdir/dbus-1/system.d/org.freedesktop.import1.conf
+%_datadir/dbus-1/system.d/org.freedesktop.*.conf
+%exclude %_datadir/dbus-1/system.d/org.freedesktop.systemd1.conf
+%exclude %_datadir/dbus-1/system.d/org.freedesktop.resolve1.conf
+%exclude %_datadir/dbus-1/system.d/org.freedesktop.network1.conf
+%exclude %_datadir/dbus-1/system.d/org.freedesktop.machine1.conf
+%exclude %_datadir/dbus-1/system.d/org.freedesktop.import1.conf
 %_datadir/dbus-1/system-services/org.freedesktop.*.service
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.systemd1.service
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
@@ -1640,10 +1650,13 @@ fi
 /sbin/networkctl
 %dir %_sysconfdir/systemd/network
 %config(noreplace) %_sysconfdir/systemd/resolved.conf
-%config(noreplace) %_sysconfdir/dbus-1/system.d/org.freedesktop.resolve1.conf
-%config(noreplace) %_sysconfdir/dbus-1/system.d/org.freedesktop.network1.conf
+%_datadir/dbus-1/system.d/org.freedesktop.resolve1.conf
+%_datadir/dbus-1/system.d/org.freedesktop.network1.conf
 %_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
 %_datadir/dbus-1/system-services/org.freedesktop.network1.service
+%if_enabled polkit
+%_datadir/polkit-1/rules.d/systemd-networkd.rules
+%endif
 /lib/systemd/system-preset/85-networkd.preset
 /lib/systemd/systemd-networkd
 /lib/systemd/systemd-networkd-wait-online
@@ -1672,8 +1685,8 @@ fi
 %endif
 
 %files container
-%config(noreplace) %_sysconfdir/dbus-1/system.d/org.freedesktop.machine1.conf
-%config(noreplace) %_sysconfdir/dbus-1/system.d/org.freedesktop.import1.conf
+%_datadir/dbus-1/system.d/org.freedesktop.machine1.conf
+%_datadir/dbus-1/system.d/org.freedesktop.import1.conf
 /sbin/machinectl
 %_bindir/systemd-nspawn
 /lib/systemd/import-pubring.gpg
@@ -1891,6 +1904,9 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Thu Feb 02 2017 Alexey Shabalin <shaba@altlinux.ru> 1:232-alt2.git.486b3d0
+- upstream snapshot of master 486b3d08dbf6c6b0b20e2960990f864d5d95fd37
+
 * Sun Nov 06 2016 Alexey Shabalin <shaba@altlinux.ru> 1:232-alt1
 - 232
 - split container support to systemd-container
