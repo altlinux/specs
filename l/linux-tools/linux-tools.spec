@@ -1,4 +1,4 @@
-%define kernel_base_version 4.7
+%define kernel_base_version 4.9
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/traceevent_%kernel_base_version/plugins/*
 %add_findreq_skiplist %_datadir/perf_%kernel_base_version-core/tests/*.py
@@ -38,8 +38,8 @@ cd %kernel_source
 %build
 %install
 pushd %kernel_source/tools/perf
-sed -i 's|\(perfexecdir[[:blank:]]*=[[:blank:]]*\).*$|\1share/perf_%kernel_base_version-core|' config/Makefile
-sed -i 's|\(plugindir[[:blank:]]*=[[:blank:]]*\).*$|\1%_libexecdir/traceevent_%kernel_base_version/plugins|' config/Makefile
+sed -i 's|\(perfexecdir[[:blank:]]*=[[:blank:]]*\).*$|\1share/perf_%kernel_base_version-core|' Makefile.config
+sed -i 's|\(plugindir[[:blank:]]*=[[:blank:]]*\).*$|\1%_libexecdir/traceevent_%kernel_base_version/plugins|' Makefile.config
 make VERSION=%kernel_base_version \
      VF=1 \
      WERROR=0 \
@@ -80,6 +80,9 @@ popd
 %doc %_docdir/%name
 
 %changelog
+* Fri Feb  3 2017 Terechkov Evgenii <evg@altlinux.org> 4.9-alt1
+- Update for kernel-4.9
+
 * Wed Oct 19 2016 Terechkov Evgenii <evg@altlinux.org> 4.7-alt1
 - Clone package from linux-tools-4.4
 - TODO: build with python support
