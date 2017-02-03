@@ -1,9 +1,10 @@
+%def_without test
 BuildRequires: perl-podlators
 %define _unpackaged_files_terminate_build 1
 %define dist BerkeleyDB
 Name: perl-%dist
 Version: 0.55
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Perl bindings to Berkeley DB version 2.x and greater
 License: GPL or Artistic
@@ -49,6 +50,9 @@ rm %buildroot%perl_vendor_archlib/scan.pl
 	%perl_vendor_autolib/BerkeleyDB
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1.1.1
+- disabled test in preparation for new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1.1
 - rebuild with new perl 5.22.0
 
