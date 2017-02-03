@@ -1,3 +1,4 @@
+%def_without perl
 %set_automake_version 1.11
 %define _keep_libtool_files 1
 %define ruby 0
@@ -14,14 +15,16 @@
 
 Name: kdebindings
 Version: 3.5.13.2
-Release: alt3.1.1.1
+Release: alt4
 
 Summary: bindings to KDE libraries for various programming languages 
 Group: Graphical desktop/KDE
 URL: http://www.kde.org
 License: GPLv2 LGPL
 
+%if_with perl
 Requires: %name-perl-DCOP = %version-%release
+%endif
 %if %ruby
 Requires: %name-ruby-qt = %version-%release
 Requires: %name-ruby-korundum = %version-%release
@@ -73,6 +76,7 @@ Development files and headers for %name
 %description devel -l ru_RU.UTF-8
 Файлы для разработки приложений с %name
 
+%if_with perl
 %package perl-DCOP
 Summary: Perl module for DCOP
 Summary(ru_RU.UTF-8): Модуль Perl для DCOP
@@ -86,6 +90,7 @@ applications data and methods
 Модуль Perl, позволяющий создавать клиентские и серверные приложения
 DCOP. DCOP - это используемый в KDE протокол для программного доступа
 к данным и методам приложений
+%endif
 
 %package ruby-qt
 Summary: Qt bindings for Ruby
@@ -262,8 +267,10 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make
 
 %check
+%if_with perl
 cd dcopperl
 perl -Mblib -MDCOP -e1
+%endif
 
 %install
 %if %unstable
@@ -289,10 +296,12 @@ cp -pr korundum/rubylib/rbkconfig_compiler/{autoexample.rb,exampleprefs_base.kcf
 %files common
 %files devel
 
+%if_with perl
 %files perl-DCOP
 ##%perl_vendor_archlib/DCOP*
 ##%perl_vendor_autolib/DCOP
 %perl_vendor_archlib/*
+%endif
 
 %if %ruby
 %files ruby-qt
@@ -394,6 +403,9 @@ cp -pr korundum/rubylib/rbkconfig_compiler/{autoexample.rb,exampleprefs_base.kcf
 
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 3.5.13.2-alt4
+- disabed perl bindings (new perl 5.24)
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 3.5.13.2-alt3.1.1.1
 - rebuild with new perl 5.22.0
 
