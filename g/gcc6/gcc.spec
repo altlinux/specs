@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 6.3.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -24,7 +24,7 @@ Url: http://gcc.gnu.org/
 %endif
 
 %define priority 631
-%define snapshot 20161221
+%define snapshot 20170118
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -124,9 +124,7 @@ Url: http://gcc.gnu.org/
 %def_without objc
 %endif
 %def_disable objc_gc
-%ifnarch aarch64
 %def_with java
-%endif
 # If you don't have already a usable gcc-java and libgcj for your arch,
 # do on some arch which has it rpmbuild -bc --with java_tar gcc4.spec
 # which creates libjava-classes-%version-%release.tar
@@ -1330,6 +1328,10 @@ fi
 
 %if_with ada
 rm -rf ada_hacks
+%if "%version-%release" == "6.3.1-alt2"
+mkdir -p ada_hacks
+ln -s %_bindir/%_target_platform-gcc%psuffix ada_hacks/%_target_platform-gcc%psuffix%psuffix
+%endif
 for n in gnat %ada_binaries; do
 	if [ -f "%_bindir/$n" ]; then
 		continue
@@ -2175,6 +2177,7 @@ ln -s libgccjit.so.0 %buildroot%_libdir/libgccjit.so
 
 %ifarch %libmpx_arches
 %files -n libmpx%gcc_branch-devel-static
+%config %_sysconfdir/buildreqs/packages/substitute.d/libmpx%gcc_branch-devel-static
 %dir %gcc_target_libdir/
 %gcc_target_libdir/libmpx.a
 %gcc_target_libdir/libmpxwrappers.a
@@ -2512,8 +2515,15 @@ ln -s libgccjit.so.0 %buildroot%_libdir/libgccjit.so
 %endif # _cross_platform
 
 %changelog
+* Wed Feb 01 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.3.1-alt2
+- Updated to redhat/gcc-6-branch r244565.
+- Synced with Fedora gcc 6.3.1-2.
+- Fixed gnatmake's path to gcc (ALT#33003).
+- Packaged buildreq substitution config for libmpx6-devel-static.
+- Enabled java on aarch64.
+
 * Wed Dec 21 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.3.1-alt1
-- Updated to redhat/gcc-5-branch r243852.
+- Updated to redhat/gcc-6-branch r243852.
 - Synced with Fedora gcc 6.3.1-1 and Debian gcc-6 6.2.0-13.
 
 * Thu Nov 10 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.3.1-alt4
