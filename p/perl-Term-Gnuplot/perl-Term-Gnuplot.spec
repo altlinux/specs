@@ -3,7 +3,7 @@ BuildRequires: gcc4.9
 %define dist Term-Gnuplot
 Name: perl-%dist
 Version: 0.90380905
-Release: alt5.1
+Release: alt5.1.1
 
 Summary: Lowlevel graphics using gnuplot drawing routines
 License: GPL or Artistic
@@ -35,6 +35,9 @@ sed -i- 's/-lvga//g' Makefile.PL
 %perl_vendor_autolib/Term
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.90380905-alt5.1.1
+- rebuild with new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.90380905-alt5.1
 - rebuild with new perl 5.22.0
 

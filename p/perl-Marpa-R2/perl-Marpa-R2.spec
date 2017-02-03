@@ -11,7 +11,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 3.000000
-Release: alt2.1
+Release: alt2.1.1
 Summary: Release 2 of Marpa
 Group: Development/Perl
 License: open_source
@@ -44,6 +44,9 @@ cd engine/read_only
 %_bindir/*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 3.000000-alt2.1.1
+- rebuild with new perl 5.24.1
+
 * Thu Dec 22 2016 Michael Shigorin <mike@altlinux.org> 3.000000-alt2.1
 - BOOTSTRAP: autoreconf first
 

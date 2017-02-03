@@ -18,7 +18,7 @@
 
 Name: openldap
 Version: %_sover.42
-Release: alt4
+Release: alt4.1
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -705,6 +705,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.42-alt4.1
+- rebuild with new perl 5.24.1
+
 * Wed Aug 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.4.42-alt4
 - general libldap manpages moved out of %name-servers (ALT#32385).
 

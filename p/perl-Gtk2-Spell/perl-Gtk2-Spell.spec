@@ -1,7 +1,7 @@
 %define dist Gtk2-Spell
 Name: perl-%dist
 Version: 1.04
-Release: alt2.1.1
+Release: alt2.1.1.1
 
 Summary: Perl bindings for GtkSpell with Gtk2
 License: LGPL 2.1
@@ -38,6 +38,9 @@ sed -i- 's@1.00rc2@1.0@g' Makefile.PL
 	%perl_vendor_archlib/Gtk2/Spell/Install
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.04-alt2.1.1.1
+- rebuild with new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.04-alt2.1.1
 - rebuild with new perl 5.22.0
 

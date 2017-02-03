@@ -1,6 +1,6 @@
 Name: libstfl0
 Version: 0.24
-Release: alt2
+Release: alt2.1
 
 %define oname stfl
 
@@ -92,6 +92,9 @@ rm %buildroot%_libdir/*.a
 %python_sitelibdir/stfl.pyo
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.24-alt2.1
+- rebuild with new perl 5.24.1
+
 * Sat Mar 12 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.24-alt2
 - remove libstfl.a from -devel package.
 

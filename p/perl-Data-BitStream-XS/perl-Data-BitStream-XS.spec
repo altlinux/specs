@@ -9,7 +9,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.08
-Release: alt1.1.1
+Release: alt1.1.1.1
 Summary: A class implementing a stream of bits and coding methods
 Group: Development/Perl
 License: perl
@@ -58,6 +58,9 @@ and continue using the the Data::BitStream manpage class as usual.
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1.1.1.1
+- rebuild with new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1.1.1
 - rebuild with new perl 5.22.0
 

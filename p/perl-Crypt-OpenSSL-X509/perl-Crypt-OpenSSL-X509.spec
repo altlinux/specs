@@ -1,7 +1,7 @@
 %define bname Crypt-OpenSSL-X509
 Name: perl-%bname
 Version: 1.807
-Release: alt1
+Release: alt1.1
 Summary: Perl interface to OpenSSL for X509
 License: Perl
 Group: Development/Perl
@@ -37,6 +37,9 @@ Crypt::OpenSSL::X509 - Perl extension to OpenSSL's X509 API.
 
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.807-alt1.1
+- rebuild with new perl 5.24.1
+
 * Thu Sep 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.807-alt1
 - automated CPAN update
 

@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.04
-Release: alt3.1
+Release: alt3.1.1
 Summary: Perl interface to the Blue Midnight Wish digest algorithm
 Group: Development/Perl
 License: perl
@@ -39,6 +39,9 @@ This interface follows the conventions set forth by the `Digest' module.
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt3.1.1
+- rebuild with new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.04-alt3.1
 - rebuild with new perl 5.22.0
 

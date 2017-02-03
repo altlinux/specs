@@ -3,7 +3,7 @@ BuildRequires: perl(Module/Build.pm) perl(Test/LeakTrace.pm)
 %define dist Mouse
 Name: perl-%dist
 Version: 2.4.7
-Release: alt1
+Release: alt1.1
 
 Summary: Moose minus the antlers
 License: GPL or Artistic
@@ -45,6 +45,9 @@ export XSUBPP_NO_STATIC_XS=1
 %perl_vendor_archlib/Test
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.7-alt1.1
+- rebuild with new perl 5.24.1
+
 * Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.7-alt1
 - automated CPAN update
 

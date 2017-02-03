@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 3.0225
-Release: alt1
+Release: alt1.1
 Summary: JSON::XS for Cpanel, fast and correct serialising, also for 5.6.2
 Group: Development/Perl
 License: perl
@@ -59,6 +59,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 3.0225-alt1.1
+- rebuild with new perl 5.24.1
+
 * Wed Nov 30 2016 Igor Vlasenko <viy@altlinux.ru> 3.0225-alt1
 - automated CPAN update
 

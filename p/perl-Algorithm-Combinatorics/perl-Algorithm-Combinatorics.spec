@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.27
-Release: alt3
+Release: alt3.1
 Summary: Efficient generation of combinatorial sequences
 Group: Development/Perl
 License: perl
@@ -34,6 +34,9 @@ Source0: http://cpan.org.ua/authors/id/F/FX/FXN/%module_name-%module_version.tar
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.27-alt3.1
+- rebuild with new perl 5.24.1
+
 * Mon Mar 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.27-alt3
 - to Sisyphus
 

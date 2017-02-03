@@ -5,7 +5,7 @@ BuildRequires: perl-Module-Build perl-podlators
 BuildRequires: gcc-c++
 Name:           perl-Boost-Geometry-Utils
 Version:        0.15
-Release:        alt1_12
+Release:        alt1_12.1
 Summary:        Boost::Geometry::Utils Perl module
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -50,6 +50,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Boost*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_12.1
+- rebuild with new perl 5.24.1
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_12
 - update to new release by fcimport
 

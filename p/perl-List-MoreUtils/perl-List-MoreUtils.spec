@@ -2,7 +2,7 @@
 %define dist List-MoreUtils
 Name: perl-%dist
 Version: 0.415
-Release: alt1
+Release: alt1.1
 
 Summary: Provide the stuff missing in List::Util
 License: GPL or Artistic
@@ -33,6 +33,9 @@ on lists which is not going to go into List::Util.
 %perl_vendor_autolib/List
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.415-alt1.1
+- rebuild with new perl 5.24.1
+
 * Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.415-alt1
 - automated CPAN update
 

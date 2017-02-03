@@ -8,7 +8,7 @@
 
 Name: %_name%abiversion
 Version: 5.7.3
-Release: alt2
+Release: alt2.1
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -595,6 +595,9 @@ echo "===== start test ====="
 %doc python/README
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 5.7.3-alt2.1
+- rebuild with new perl 5.24.1
+
 * Thu Feb 02 2017 Igor Vlasenko <viy@altlinux.ru> 5.7.3-alt2
 - NMU: updated upstream V5-7-patches branch to fix build
 - added gear remotes

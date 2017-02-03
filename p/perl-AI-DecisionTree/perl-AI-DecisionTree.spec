@@ -1,7 +1,7 @@
 %define dist AI-DecisionTree
 Name: perl-%dist
 Version: 0.11
-Release: alt2.1.1
+Release: alt2.1.1.1
 
 Summary: Automatically Learns Decision Trees
 License: GPL or Artistic
@@ -36,6 +36,9 @@ categorizing new instances.
 %perl_vendor_autolib/AI
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt2.1.1.1
+- rebuild with new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.11-alt2.1.1
 - rebuild with new perl 5.22.0
 

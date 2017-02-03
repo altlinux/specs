@@ -1,7 +1,7 @@
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
 Version: 2.2.9
-Release: alt2
+Release: alt2.1
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
 Url: http://www.freeradius.org/
@@ -477,6 +477,9 @@ fi
 %_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.9-alt2.1
+- rebuild with new perl 5.24.1
+
 * Tue Jan 26 2016 Terechkov Evgenii <evg@altlinux.org> 2.2.9-alt2
 - Move /etc/raddb to common subpackage (radius clients needs /etc/raddb/dictionary)
 - Create user/group in common subpackage

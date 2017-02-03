@@ -63,7 +63,7 @@
 
 Name:     subversion
 Version:  1.9.2
-Release:  alt3
+Release:  alt3.1
 
 Summary:  A version control system
 Group:    Development/Other
@@ -760,6 +760,9 @@ fi
 %endif
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt3.1
+- rebuild with new perl 5.24.1
+
 * Tue Apr 05 2016 Andrey Cherepanov <cas@altlinux.org> 1.9.2-alt3
 - Rebuild with new apache2
 

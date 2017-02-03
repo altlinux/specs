@@ -30,7 +30,7 @@
 
 Name: collectd
 Version: 5.5.2
-Release: alt1
+Release: alt1.1
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -836,6 +836,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 5.5.2-alt1.1
+- rebuild with new perl 5.24.1
+
 * Fri Oct 14 2016 Anton Farygin <rider@altlinux.ru> 5.5.2-alt1
 - new version
 

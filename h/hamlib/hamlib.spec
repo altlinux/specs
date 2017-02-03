@@ -1,7 +1,7 @@
 
 Name:           hamlib
 Version:        3.1
-Release:        alt1
+Release:        alt1.1
 Summary:        Run-time library to control radio transceivers and receivers
 
 Group:          System/Libraries
@@ -177,6 +177,9 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %_libdir/tcl/Hamlib/hamlibtcl*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1.1
+- rebuild with new perl 5.24.1
+
 * Tue Jan 03 2017 Andrey Cherepanov <cas@altlinux.org> 3.1-alt1
 - new version 3.1
 

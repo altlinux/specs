@@ -2,8 +2,8 @@
 %define dist Math-Pari
 Name: perl-%dist
 Version: 2.01080900
-Release: alt1
-Serial: 1
+Release: alt1.1
+Epoch: 1
 
 Summary: Perl interface to PARI
 License: GPL or Artistic
@@ -39,6 +39,9 @@ Math::libPARI).
 %perl_vendor_autolib/Math
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.01080900-alt1.1
+- rebuild with new perl 5.24.1
+
 * Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.01080900-alt1
 - automated CPAN update
 

@@ -53,7 +53,7 @@
 Name: vim
 %define branch 8.0
 Version: %branch.170
-Release: alt1
+Release: alt1.1
 Epoch: 4
 
 Summary: VIsual editor iMproved
@@ -1064,6 +1064,9 @@ fi
 
 # {{{ changelog
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 4:8.0.170-alt1.1
+- rebuild with new perl 5.24.1
+
 * Wed Jan 11 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.0.170-alt1
 - Updated to v8.0.0170.
 - Do not reset bg variable in default colorscheme.

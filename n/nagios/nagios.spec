@@ -13,7 +13,7 @@
 
 Name: nagios
 Version: 3.0.6
-Release: alt3.1.1
+Release: alt3.1.1.1
 
 Summary: Services and network monitoring system
 License: GPL
@@ -392,6 +392,9 @@ subst 's|# Nagios(R) web-interface settings||' /etc/lighttpd/lighttpd.conf
 %files full
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.6-alt3.1.1.1
+- rebuild with new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 3.0.6-alt3.1.1
 - rebuild with new perl 5.22.0
 

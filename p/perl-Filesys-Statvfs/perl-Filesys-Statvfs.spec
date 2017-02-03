@@ -1,7 +1,7 @@
 %define dist Filesys-Statvfs
 Name: perl-%dist
 Version: 0.82
-Release: alt3.1.1
+Release: alt3.1.1.1
 
 Summary: Perl extension for statvfs() and fstatvfs()
 License: GPL or Artistic
@@ -31,6 +31,9 @@ Interface for statvfs() and fstatvfs()
 %perl_vendor_autolib/Filesys
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.82-alt3.1.1.1
+- rebuild with new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.82-alt3.1.1
 - rebuild with new perl 5.22.0
 

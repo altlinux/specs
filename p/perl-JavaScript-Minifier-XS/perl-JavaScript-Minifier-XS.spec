@@ -4,7 +4,7 @@ BuildRequires: perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-JavaScript-Minifier-XS
 Version:        0.11
-Release:        alt3_5
+Release:        alt3_5.1
 Summary:        XS based JavaScript minifier
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -55,6 +55,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/JavaScript*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt3_5.1
+- rebuild with new perl 5.24.1
+
 * Tue Jan 31 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt3_5
 - to Sisyphus
 

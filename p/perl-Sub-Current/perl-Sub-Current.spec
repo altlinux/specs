@@ -4,7 +4,7 @@
 
 Name: perl-Sub-Current
 Version: 0.02
-Release: alt3
+Release: alt3.1
 
 Summary: Perl module to get the current subroutine
 
@@ -43,5 +43,8 @@ executing subroutine.
 %perl_vendor_autolib/Sub/Current*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt3.1
+- rebuild with new perl 5.24.1
+
 * Sun Jan 22 2017 Nikolay A. Fetisov <naf@altlinux.ru> 0.02-alt3
 - Initial build for ALT Linux Sisyphus

@@ -1,6 +1,6 @@
 Name: rxvt-unicode
 Version: 9.22
-Release: alt1
+Release: alt1.1
 
 Summary:  rxvt-unicode is a clone of the well known terminal emulator rxvt
 License: GPL
@@ -61,6 +61,9 @@ Xft fonts.
 %_libdir/urxvt/
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 9.22-alt1.1
+- rebuild with new perl 5.24.1
+
 * Mon Jan 30 2017 Igor Vlasenko <viy@altlinux.ru> 9.22-alt1
 - NMU: new version
 

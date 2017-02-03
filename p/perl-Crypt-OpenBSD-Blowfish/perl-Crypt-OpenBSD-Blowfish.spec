@@ -2,7 +2,7 @@
 
 Name: perl-%dist
 Version: 0.01
-Release: alt1
+Release: alt1.1
 
 Summary: This module provides an interface to the OpenBSD Blowfish cipher implementation
 License: %perl_license
@@ -34,5 +34,8 @@ This module provides an interface to the OpenBSD Blowfish cipher implementation
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.01-alt1.1
+- rebuild with new perl 5.24.1
+
 * Sat Feb 20 2016 Sergey Y. Afonin <asy@altlinux.ru> 0.01-alt1
 - initial build

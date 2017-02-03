@@ -1,6 +1,6 @@
 Name: perl-B-C
 Version: 1.54
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Perl compiler's C backend
 License: Perl
@@ -42,6 +42,9 @@ done
 %perl_vendor_archlib/BcVersions.pod
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.54-alt1.1.1
+- rebuild with new perl 5.24.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.54-alt1.1
 - hack for perl 5.24.1 migration
 

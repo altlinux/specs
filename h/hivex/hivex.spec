@@ -6,7 +6,7 @@
 
 Name: hivex
 Version: 1.3.13
-Release: alt2
+Release: alt2.1
 Summary: Read and write Windows Registry binary hive files
 
 Group: Development/Other
@@ -228,6 +228,9 @@ rm -f %buildroot%python_sitelibdir/libhivexmod.la
 %endif
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.13-alt2.1
+- rebuild with new perl 5.24.1
+
 * Fri Jun 24 2016 Alexey Shabalin <shaba@altlinux.ru> 1.3.13-alt2
 - rebuild with ocaml4-4.03.0
 

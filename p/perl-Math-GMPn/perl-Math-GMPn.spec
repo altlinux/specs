@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.03
-Release: alt2.1.1
+Release: alt2.1.1.1
 Summary: Fixed length integer arithmetic.
 Group: Development/Perl
 License: perl
@@ -63,6 +63,9 @@ string. Overflows are silently discarded.
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2.1.1.1
+- rebuild with new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2.1.1
 - rebuild with new perl 5.22.0
 

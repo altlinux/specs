@@ -9,7 +9,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.60
-Release: alt1
+Release: alt1.1
 Summary: Utilities related to prime numbers, including fast sieves and factoring
 Group: Development/Perl
 License: perl
@@ -92,6 +92,9 @@ rm -f t/11-clusters.t
 %_bindir/*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1.1
+- rebuild with new perl 5.24.1
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1
 - automated CPAN update
 

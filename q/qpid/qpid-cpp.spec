@@ -4,7 +4,7 @@
 
 Name: qpid
 Version: 1.35.0
-Release: alt0.rc
+Release: alt0.rc.1
 Summary: Libraries for Qpid C++ client applications
 License: ASL 2.0
 Url: http://qpid.apache.org
@@ -362,6 +362,9 @@ mkdir -p %buildroot/%_localstatedir/qpidd
 %doc %_pkgdocdir
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.35.0-alt0.rc.1
+- rebuild with new perl 5.24.1
+
 * Tue Sep 06 2016 Alexey Shabalin <shaba@altlinux.ru> 1.35.0-alt0.rc
 - 1.35.0-rc
 

@@ -5,7 +5,7 @@ BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-URI-Escape-XS
 Version:        0.14
-Release:        alt1_1
+Release:        alt1_1.1
 Summary:        Drop-In replacement for URI::Escape
 License:        GPL+ or Artistic
 
@@ -51,6 +51,9 @@ make test
 %{perl_vendor_archlib}/URI*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_1.1
+- rebuild with new perl 5.24.1
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_1
 - update to new release by fcimport
 

@@ -4,7 +4,7 @@ BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Devel-LexAlias
 Version:        0.05
-Release:        alt2_11
+Release:        alt2_11.1
 Summary:        Alias lexical variables
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_archlib}/Devel/
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_11.1
+- rebuild with new perl 5.24.1
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_11
 - update to new release by fcimport
 
