@@ -5,7 +5,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: radvd
-Version: 2.15
+Version: 2.16
 Release: alt1
 
 Summary: A Router Advertisement daemon
@@ -87,6 +87,9 @@ install -Dm0644 %SOURCE3 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
 %_sbindir/radvdump
 
 %changelog
+* Fri Feb 03 2017 Mikhail Efremov <sem@altlinux.org> 2.16-alt1
+- Updated to 2.16.
+
 * Thu Nov 03 2016 Mikhail Efremov <sem@altlinux.org> 2.15-alt1
 - Use service file from upstream.
 - radvd.service: Use sysconfig file.
