@@ -14,11 +14,11 @@
 
 %define major 4
 %define minor 14
-%define bugfix 25
+%define bugfix 28
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt1%ubt
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -126,6 +126,7 @@ Patch3000: kdelibs-4.4.92-alt-alternate-kconf_update_bin-path.patch
 
 # security
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): kde-common-devel libqt4-devel libstrigi-devel attica-devel
 #BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano libsoprano-devel >= 2.1
 BuildRequires: bzlib-devel cmake libalsa-devel libselinux-devel
@@ -360,6 +361,12 @@ done
 %_K4includedir/*
 
 %changelog
+* Fri Feb 03 2017 Sergey V Turchin <zerg@altlinux.org> 4.14.28-alt1%ubt
+- new version
+
+* Wed Oct 26 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.25-alt0.M80P.1
+- build for M80P
+
 * Wed Oct 26 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.25-alt1
 - new version
 
