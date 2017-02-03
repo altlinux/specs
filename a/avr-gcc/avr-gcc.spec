@@ -5,24 +5,36 @@
 %define cross_arch avr
 %define build_dir gcc
 
+%set_gcc_version 4.7
+
 Summary: GNU Compiler for AVR (C language only).
 Name: %cross_arch-gcc
 Version: 4.9.2
-Release: alt3
+Release: alt4
 
-Copyright: GPL
+License: GPL
 Group: Development/Other
 URL: http://gcc.gnu.org
 
 Source0: avr-gcc-%version.tar.bz2
 Source1: fix-device-specs.sh
 
-BuildRequires: expect flex gcc-c++ glibc-devel-static libmpc-devel zlib-devel
+# Automatically added by buildreq on Fri Feb 03 2017
+# optimized out: avr-binutils avr-gcc avr-gcc-c++ glib2-devel libgmp-devel libmpfr-devel libstdc++-devel makeinfo perl perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-podlators perl-unicore python-base python-modules python3 python3-base zlib-devel
+BuildRequires: cuneiform expect flex glibc-devel-static libgtk+3-devel
+BuildRequires: libmpc-devel libpolkit-devel perl-Pod-Usage
+BuildRequires: python-module-distribute python-module-google python3-dev python3-module-yieldfrom
+BuildRequires: ruby ruby-stdlibs selinux-policy
+
+BuildRequires: expect flex glibc-devel-static libmpc-devel zlib-devel
 # perl-podlators ruby ruby-stdlibs
 
-BuildRequires: avr-binutils >= 2:2.25-alt2
+BuildRequires: avr-libc
+BuildRequires: avr-binutils >= 2.26-alt1
 BuildRequires: zlib-devel libmpc-devel libmpfr-devel libgmp-devel
-Requires: avr-binutils >= 2:2.23.1-alt1
+Requires: avr-binutils >= 2.26-alt1
+
+BuildRequires: gcc%_gcc_version-c++
 
 %define libavrdir /usr/lib/gcc/%cross_arch
 %define libavrexecdir /usr/libexec/gcc/%cross_arch
@@ -45,13 +57,21 @@ AVR target.
 WARNING - This is still fairly experimental and only supports c++ programming
 on the mega128 devices.
 
-
 %prep
 %setup -q -n %build_dir
 contrib/gcc_update --touch
 #cd %_builddir/gcc-%version/gcc
 
 %build
+export CC=%__cc-%_gcc_version \
+    CFLAGS="%optflags" \
+    CXXFLAGS="%optflags" \
+    FFLAGS="%optflags" \
+    GCJFLAGS="%optflags" \
+    TCFLAGS="%optflags" \
+    XCFLAGS="%optflags" \
+    #
+
 #pushd gcc/config/avr/
 #sh genopt.sh avr-mcus.def > avr-tables.opt
 #cat avr-mcus.def | awk -f genmultilib.awk FORMAT="Makefile" > t-multilib
@@ -65,18 +85,7 @@ echo "" > gcc/cp/g++.1
 %__mkdir obj-avr-%_target_platform
 cd obj-avr-%_target_platform
 
-#remove_optflags optflags_nocpp optflags_notraceback
-#CC=%__cc \
-#        CFLAGS="$RPM_OPT_FLAGS" \
-#        CXXFLAGS="$RPM_OPT_FLAGS" \
-#        GCJFLAGS="$RPM_OPT_FLAGS" \
-#        XCFLAGS="$RPM_OPT_FLAGS" \
-#        TCFLAGS="$RPM_OPT_FLAGS" \
-#
-
-# %optflags_default
-CC="%__cc $RPM_OPT_FLAGS" \
-	../configure \
+../configure \
 		--target=%cross_arch \
 		--enable-languages="c,c++" \
 		--disable-nls \
@@ -181,6 +190,9 @@ rename avr-avr avr %buildroot%_man1dir/*
 %_man1dir/avr-g++.1*
 
 %changelog
+* Fri Feb 03 2017 Grigory Milev <week@altlinux.ru> 4.9.2-alt4
+- Updated version from Atmel
+
 * Mon Jun 20 2016 Grigory Milev <week@altlinux.ru> 4.9.2-alt3
 - Buildreq cleanup
 
