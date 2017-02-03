@@ -6,8 +6,9 @@
 Summary: AVR libc
 Name: avr-libc
 Version: 2.0.0
-Release: alt4
-Serial: 1
+Release: alt5
+Epoch: 1
+
 License: GPL, LGPL, BSD, Public Domain
 Group: Development/Other
 URL: http://savannah.gnu.org/projects/avr-libc
@@ -20,11 +21,11 @@ BuildRequires: doxygen netpbm transfig
 # ruby-stdlibs transfig cups-filters
 BuildRequires: unzip
 
-BuildRequires: avr-binutils >= 2:2.25-alt2
+BuildRequires: avr-binutils >= 2.26-alt1
 BuildRequires: avr-gcc >= 4.9.2-alt2
 BuildRequires: avr-gcc-c++ >= 4.9.2-alt2
 
-Requires: avr-binutils >= 2:2.25-alt2
+Requires: avr-binutils >= 2.26-alt1
 Requires: avr-gcc >= 4.9.2-alt2
 Requires: avr-gcc-c++ >= 4.9.2-alt2
 
@@ -44,8 +45,7 @@ Documentation for avr-libc in html, postscript and pdf formats.
 
 
 %prep
-%setup -q
-# -n libc/avr-libc
+%setup -q -n libc/avr-libc
 # patch0 -p1
 unzip %SOURCE1
 for i in avr/io*.h; do
@@ -92,6 +92,9 @@ done
 %_datadir/doc/avr-libc/*
 
 %changelog
+* Fri Feb 03 2017 Grigory Milev <week@altlinux.ru> 1:2.0.0-alt5
+- Updated from Atmel
+
 * Mon Jun 20 2016 Grigory Milev <week@altlinux.ru> 1:2.0.0-alt4
 - Buildreq cleanup
 
