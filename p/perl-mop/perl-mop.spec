@@ -1,6 +1,7 @@
+%def_without test
 Name: perl-mop
 Version: 0.02
-Release: alt1.1.1
+Release: alt2
 
 Summary: A new object system for Perl 5
 Group: Development/Perl
@@ -30,6 +31,9 @@ BuildRequires: perl-devel perl(Devel/CallParser.pm) perl(parent.pm)
 %doc Changes README.md
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2
+- disabled tests to upgrade perl smoothly.
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1.1.1
 - rebuild with new perl 5.22.0
 
