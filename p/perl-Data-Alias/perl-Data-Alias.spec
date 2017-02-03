@@ -1,8 +1,9 @@
+%def_without test
 %define _unpackaged_files_terminate_build 1
 %define dist Data-Alias
 Name: perl-%dist
 Version: 1.20
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Comprehensive set of aliasing operations
 License: GPL or Artistic
@@ -35,6 +36,9 @@ when compared to using references.
 %perl_vendor_autolib/Data
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1.1.1
+- disabled tests til new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1.1
 - rebuild with new perl 5.22.0
 
