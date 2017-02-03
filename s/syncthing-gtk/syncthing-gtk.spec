@@ -3,7 +3,7 @@
 #%%def_enable nautilus-syncthing-gtk
 
 Name: syncthing-gtk
-Version: 0.9.2.3
+Version: 0.9.2.4
 Release: alt1
 Summary: Syncthing Gtk-based graphical interface
 Summary(ru_RU.UTF-8): Основанный на GTK графический интерфейс для Syncthing
@@ -194,6 +194,9 @@ done
 %endif
 
 %changelog
+* Fri Feb 03 2017 Anton Midyukov <antohami@altlinux.org> 0.9.2.4-alt1
+- new version 0.9.2.4
+
 * Wed Nov 23 2016 Anton Midyukov <antohami@altlinux.org> 0.9.2.3-alt1
 - new version 0.9.2.3
 
