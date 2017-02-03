@@ -14,7 +14,7 @@
 %define rname k3b
 Name: kde4-%rname
 Version: 2.0.3
-Release: alt5
+Release: alt6%ubt
 
 Group: Archiving/Cd burning
 Summary: The CD Kreator (Complete set)
@@ -28,6 +28,8 @@ Requires: %req_all
 Conflicts: k3b-mini < 1.0.5-alt7
 
 Source0: %rname-%version.tar
+# upstream
+Patch1: upstream_Fix-build-failure-when-compiling-with-GCC-5.patch
 # ALT
 Patch101: k3b-1.92-alt-check-cdrecord-ver.patch
 Patch102: k3b-2.0.2-alt-k3bsetup.patch
@@ -37,7 +39,7 @@ Patch104: alt-fix-build.patch
 # Automatically added by buildreq on Wed Nov 12 2014 (-bi)
 # optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs kde4libs-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libavcodec-devel libavutil-devel libcloog-isl4 libdbus-devel libdbusmenu-qt2 libflac-devel libfreetype-devel libgpg-error libogg-devel libopencore-amrnb0 libopencore-amrwb0 libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-qt3support libqt4-sql libqt4-svg libqt4-webkit libqt4-xml libsoprano-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base ruby ruby-stdlibs shared-mime-info xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: gcc-c++ glib2-devel kde4base-runtime-core libXxf86misc-devel libavdevice-devel libavformat-devel libdvdread-devel libflac++-devel libicu50 libkcddb4-devel liblame-devel libmad-devel libmpcdec-devel libmusicbrainz-devel libmusicbrainz3-devel libpostproc-devel libqt3-devel libsamplerate-devel libsndfile-devel libswscale-devel libtag-devel libvorbis-devel python-module-google qt4-designer rpm-build-ruby zlib-devel-static
-BuildRequires(pre): kde4libs-devel
+BuildRequires(pre): kde4libs-devel rpm-build-ubt
 BuildRequires: gcc-c++
 BuildRequires: libavdevice-devel libavformat-devel libpostproc-devel libswscale-devel
 BuildRequires: libdvdread-devel libflac++-devel libkcddb4-devel liblame-devel libmad-devel libmpcdec-devel
@@ -106,6 +108,7 @@ KDE 4 library.
 
 %prep
 %setup -q -n %rname-%version
+%patch1 -p1
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
@@ -155,6 +158,9 @@ KDE 4 library.
 %_K4includedir/*.h
 
 %changelog
+* Fri Feb 03 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt6%ubt
+- build with gcc6
+
 * Fri May 13 2016 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt5
 - provide k3b
 
