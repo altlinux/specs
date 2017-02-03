@@ -1,6 +1,6 @@
 Name: libisc-export-dhcp
 Version: 9.9.9
-Release: alt2
+Release: alt3
 
 Summary: ISC BIND 9.9.x exportable libraries to build ISC DHCP
 License: BSD-style
@@ -19,6 +19,8 @@ Patch0003: 0003-alt-nofile.patch
 Patch0004: 0004-fc-exportlib.patch
 Patch0005: 0005-Fix-failover-initialization-in-dhcpd.patch
 
+Obsoletes: libisc-export <= 9.9.9
+
 %def_disable static
 %def_enable ipv6
 %def_with openssl
@@ -32,6 +34,7 @@ BuildPreReq: gcc-c++
 Summary: ISC 9.9.x BIND development files for exportable libraries
 Group: Development/C
 Requires: %name = %version-%release
+Obsoletes: libisc-export-devel <= 9.9.9
 
 %description
 This package contains shared libraries used to build ISC DHCP
@@ -103,6 +106,9 @@ sed -i '/# Large File/iAC_SYS_LARGEFILE/' configure.in
 %_libdir/lib*-export.so
 
 %changelog
+* Fri Feb 03 2017 Mikhail Efremov <sem@altlinux.org> 9.9.9-alt3
+- Obsolete libisc-export.
+
 * Wed Feb 01 2017 Mikhail Efremov <sem@altlinux.org> 9.9.9-alt2
 - Fix failover initialization in dhcpd (closes: #31158).
 - Drop unneeded files.
