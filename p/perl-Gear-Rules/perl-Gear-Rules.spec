@@ -1,8 +1,8 @@
 %define module Gear-Rules
 
 Name: perl-%module
-Version: 0.19
-Release: alt2
+Version: 0.190
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -36,6 +36,9 @@ Requires: gear perl(Pod/Text.pm)
 %_man1dir/*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.190-alt1
+- new version
+
 * Wed Feb 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.19-alt2
 - added lnkvisitor@lnkvisitor.localdomain
 
