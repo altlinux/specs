@@ -11,7 +11,7 @@
 %define libqupzilla libqupzilla%sover
 
 Name: qupzilla
-Version: 2.0.2
+Version: 2.1.0
 Release: alt1
 
 Summary: A very fast open source browser based on WebKit core
@@ -118,6 +118,9 @@ __EOF__
 %_libdir/libQupZilla.so.%sover.*
 
 %changelog
+* Sat Feb 04 2017 Michael Shigorin <mike@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Tue Oct 25 2016 Michael Shigorin <mike@altlinux.org> 2.0.2-alt1
 - 2.0.2
 
