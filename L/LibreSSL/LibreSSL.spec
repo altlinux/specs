@@ -1,5 +1,5 @@
 Name: LibreSSL
-Version: 2.4.4
+Version: 2.4.5
 Release: alt1
 
 %define oname libressl
@@ -7,7 +7,8 @@ Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
 
-License: ISC
+# the code is distributed under ISC license except of original OpenSSL code
+License: ISC and BSD-style
 Group: Security/Networking
 Url: http://www.libressl.org/
 
@@ -32,7 +33,6 @@ applying best practice development processes.
 Summary: LibreSSL openssl utility, which provides tools for managing keys, certificates, etc
 Group: Security/Networking
 Obsoletes: LibreSSL-openssl
-Conflicts: openssl
 
 %description -n openssl-LibreSSL
 %common_descr
@@ -179,7 +179,14 @@ pushd %buildroot%_man1dir
 	done
 popd
 
+%define docdir %_docdir/%name-%version
+mkdir -p %buildroot%docdir
+install -pm 644 ChangeLog COPYING \
+	%buildroot%docdir
+gzip -9 %buildroot%docdir/ChangeLog
+
 %files -n openssl-LibreSSL
+%dir %docdir
 %_bindir/openssl-LibreSSL
 %_man1dir/openssl-LibreSSL.*
 
@@ -195,14 +202,20 @@ popd
 %exclude %_man3dir/tls_*
 
 %files -n libcrypto-LibreSSL
+%dir %docdir
+%doc %docdir/*
+
 %dir %_sysconfdir/%oname/
+%config(noreplace) %_sysconfdir/%oname/openssl.cnf
 %_sysconfdir/%oname/*
 %_libdir/libcrypto.so.*
 
 %files -n libssl-LibreSSL
+%dir %docdir
 %_libdir/libssl.so.*
 
 %files -n libtls
+%dir %docdir
 %_libdir/libtls.so.%libtls_abi
 %_libdir/libtls.so.%libtls_abi.*
 
@@ -221,6 +234,13 @@ popd
 %_man1dir/netcat.*
 
 %changelog
+* Sat Feb 04 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4.5-alt1
+- 2.4.5
+- packaged %%_sysconfdir/%%oname/openssl.cnf as noreplace config file.
+- packaged ChangeLog and COPYING files.
+- fixed license: added notice about original OpenSSL code license.
+- removed conflict to openssl in openssl-LibreSSL package.
+
 * Mon Nov 07 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4.4-alt1
 - 2.4.4
 - packaged ungziped source tarball
