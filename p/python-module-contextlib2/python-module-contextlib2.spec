@@ -4,7 +4,7 @@
 
 Name: python-module-contextlib2
 Version: 0.4.0
-Release: alt1.1.1.1.1
+Release: alt1.1.1.1.1.1
 
 Summary: Backports and enhancements for the contextlib module
 
@@ -22,8 +22,8 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: python-base python-devel python-modules python-modules-compiler python-modules-email python3 python3-base
-BuildRequires: python-module-mwlib rpm-build-python3
-
+BuildRequires: rpm-build-python3
+%{?!_with_bootstrap:BuildRequires: python-module-mwlib}
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 #BuildRequires: python3-devel python3-module-paste
@@ -84,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 03 2017 Michael Shigorin <mike@altlinux.org> 0.4.0-alt1.1.1.1.1.1
+- BOOTSTRAP: avoid python-module-mwlib -> gevent -> greenlet (!e2k)
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.0-alt1.1.1.1.1
 - (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
   (it is meaningless because arbitrary packages package that dir).
