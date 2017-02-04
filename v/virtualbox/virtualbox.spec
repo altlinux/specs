@@ -52,11 +52,16 @@
 
 %set_verify_elf_method textrel=relaxed
 %add_findprov_lib_path %vboxdir
+
+%if %ubt_id == "M80P"
+%define gcc_version 5
+%else
 %define gcc_version 6
+%endif
 
 Name: virtualbox
 Version: 5.1.14
-Release: alt1
+Release: alt2%ubt
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -87,7 +92,7 @@ Source23:	virtualbox.conf
 Source99:	%vboxdbg.in
 %endif
 
-Patch0:		%name-%version-%release.patch
+Patch0:		%name-%version-alt.patch
 
 BuildPreReq: dev86 iasl gcc%gcc_version-c++ libstdc++%gcc_version-devel-static
 BuildPreReq: libIDL-devel libSDL-devel libpng-devel
@@ -114,6 +119,7 @@ BuildRequires: qt5-sensors-devel
 BuildRequires: qt5-serialbus-devel
 BuildRequires: qt5-x11extras-devel
 
+BuildRequires: libssl-devel
 BuildRequires: libxml2-devel libxslt-devel
 BuildRequires: qt5-base-devel libalsa-devel
 BuildRequires: libcap-devel libcurl-devel
@@ -122,10 +128,10 @@ BuildRequires: libXinerama-devel libXrandr-devel
 BuildRequires: libXdamage-devel libXcomposite-devel libXcomposite
 BuildRequires: xorg-xf86driproto-devel xorg-glproto-devel
 BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
-BuildRequires(pre): xorg-sdk
+BuildRequires(pre): xorg-sdk rpm-build-ubt
 BuildPreReq: yasm kBuild >= 0.1.9998.r2689
 %if_with webservice
-BuildRequires: libgsoap-devel-static
+BuildRequires: libgsoap-devel libgsoap-devel-static > 2.8.0
 %endif
 %if_with python
 BuildRequires: python-dev
@@ -777,6 +783,9 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Thu Feb 02 2017 Evgeny Sinelnikov <sin@altlinux.ru> 5.1.14-alt2%ubt
+- Rebuild with gsoap-2.8.x and universal build tag
+
 * Fri Jan 20 2017 Denis Medvedev <nbr@altlinux.org> 5.1.14-alt1
 - new version 5.1.14
 
