@@ -3,7 +3,7 @@ Name: sendmail
 %define tarbolversion 8.15.2
 
 Version: %tarbolversion
-Release: alt2
+Release: alt3
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -500,6 +500,11 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Sat Feb 04 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.15.2-alt3
+- synced submit.mc with original 8.15.2/cf/cf/submit.mc
+- added FEATURE(`nocanonify') to submit.mc
+- set confDIRECT_SUBMISSION_MODIFIERS to 'C' in submit.mc
+
 * Thu May 26 2016 Sergey Y. Afonin <asy@altlinux.ru> 8.15.2-alt2
 - packaged cidrexpand from contrib directory
 - used cidrexpand in /etc/mail/Makefile
