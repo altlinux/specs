@@ -1,48 +1,52 @@
-%define major 0.41
+%def_disable snapshot
+%define ver_major 0.53
+%define gst_api_ver 1.0
+
 Name: subtitleeditor
-Version: %major.0
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
-Summary: Subtitle editor for GNOME
-
+Summary: Graphical subtitle editor with sound waves representation
 Group: Video
 License: GPLv3+
 URL: http://home.gna.org/subtitleeditor/
 
-Source: http://download.gna.org/%name/%major/%name-%version.tar
-Patch0: %name-0.37.1-alt-glib2-2.32.0.patch
+%if_disabled snapshot
+Source: http://download.gna.org/%name/%ver_major/%name-%version.tar.gz
+%else
+Source: %name-%version.tar
+%endif
+# rev.982
+Patch: subtitleeditor-0.53.0-up-gstreamermm-1.8.patch
 
-Requires: libglibmm >= 2.22.1 glib2 >= 2.22.1
-# for text overlay support
-Requires: gst-plugins-pango
+Requires: gstreamer%gst_api_ver
+Requires: gst-plugins-base%gst_api_ver
+Requires: gst-plugins-good%gst_api_ver
+Requires: gst-libav
+Requires: iso-codes
 
-# manually removed: gst-plugins-ugly gst-plugins-bad
-# Automatically added by buildreq on Wed Oct 07 2009
-BuildRequires: gcc-c++ glibc-devel gst-ffmpeg gst-plugins-good gst-plugins-base gst-plugins-gconf gstreamer-utils intltool libenchant-devel libgstreamermm-devel libgtkmm2-devel
+BuildRequires: gcc-c++ intltool
+BuildRequires: libgtkmm3-devel libxml++2-devel
+BuildRequires: gst-plugins%gst_api_ver-devel libgstreamermm%gst_api_ver-devel gst-plugins-good%gst_api_ver
+BuildRequires: iso-codes-devel libenchant-devel
 
 %description
-Subtitle Editor is a GTK+2 tool to edit subtitles for GNU/Linux/*BSD. It
-can be used for new subtitles or as a tool to transform, edit, correct
-and refine existing subtitle. This program also shows sound waves,
-which makes it easier to synchronise subtitles to voices.
-
-Subtitle Editor is free software released under the GNU General Public License (GPL3).
+Subtitle Editor is a GTK+2 tool to edit subtitles for GNU/Linux/*BSD.
+It can be used for new subtitles or as a tool to transform, edit,
+correct and refine existing subtitle. This program also shows sound
+waves, which makes it easier to synchronise subtitles to voices.
 
 %prep
 %setup
-#patch0 -p2
-
+%patch
 %build
-%configure
+%configure --disable-debug \
+           --disable-gl
 %make_build
 
 %install
 %makeinstall_std
 %find_lang %name
-
-rm -f %buildroot%_libdir/*.so
-rm -f %buildroot%_iconsdir/hicolor/22x22/apps/subtitleeditor.png
-rm -f %buildroot%_iconsdir/hicolor/24x24/apps/subtitleeditor.png
 
 %files -f %name.lang
 %_bindir/%name
@@ -52,11 +56,17 @@ rm -f %buildroot%_iconsdir/hicolor/24x24/apps/subtitleeditor.png
 %_man1dir/*
 %_pixmapsdir/*
 %_datadir/%name/
-%_iconsdir/hicolor/scalable/apps/subtitleeditor.svg
-%_miconsdir/*
-%_niconsdir/*
+%_iconsdir/hicolor/scalable/apps/%name.svg
+%_iconsdir/hicolor/*x*/apps/%name.png
+%_datadir/appdata/%name.appdata.xml
+%doc AUTHORS ChangeLog NEWS README TODO
+
+%exclude %_libdir/*.so
 
 %changelog
+* Sat Feb 04 2017 Yuri N. Sedunov <aris@altlinux.org> 0.53.0-alt1
+- 0.53.0
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.41.0-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
