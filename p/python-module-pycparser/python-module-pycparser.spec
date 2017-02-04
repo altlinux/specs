@@ -3,7 +3,7 @@
 
 Name: python-module-pycparser
 Version: 2.14
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: C parser in Python
 
@@ -21,7 +21,8 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Mon Apr 08 2013
 # optimized out: python-base python-devel python-module-distribute python-module-peak python-module-zope python-modules python-modules-compiler python-modules-email
-BuildRequires: python-module-mwlib python-module-paste
+BuildRequires: python-module-paste
+%{?!_with_bootstrap:BuildRequires: python-module-mwlib}
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 %endif
@@ -79,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 03 2017 Michael Shigorin <mike@altlinux.org> 2.14-alt1.1.1
+- BOOTSTRAP: avoid python-module-mwlib -> gevent -> greenlet (!e2k)
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.14-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
