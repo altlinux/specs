@@ -8,7 +8,7 @@ Name: mailfromd
 %if %snapshot
 %define snapshotdate 20160706
 Version: %baseversion
-Release: alt0.%snapshotdate.1
+Release: alt0.%snapshotdate.2
 %define srcdir %name-%baseversion-%snapshotdate
 %else
 Version: %baseversion
@@ -54,7 +54,7 @@ Source50: mailfromd-clamav_only.mf
 Patch1: mailfromd-savsrv.c-not_cache_mf_timeout.diff
 
 #Errata
-#Patch100:
+Patch100: mailfromd-mfd-dns.diff
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -136,7 +136,7 @@ National Language files for mailfromd (Polish and Ukrainian)
 %patch1 -p1
 
 #Errata
-#patch100 -p1
+%patch100 -p1
 
 gzip ChangeLog
 
@@ -300,6 +300,12 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Sun Feb 05 2017 Sergey Y. Afonin <asy@altlinux.ru> 7.99.94-alt0.20160706.2
+- fixed handling of last dot in domain-spec (patch from gray@gnu)
+- changes in mailfromd.mf:
+  - spamreject variable replaced by SpamScoreRejectLimit
+  - added Broken_SPF_Excludes variable
+
 * Sat Jul 09 2016 Sergey Y. Afonin <asy@altlinux.ru> 7.99.94-alt0.20160706.1
 - new snapshot
 - changes in mailfromd.mf:
