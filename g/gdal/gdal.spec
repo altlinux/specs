@@ -1,6 +1,7 @@
 # TODO: enable system libtiff when it will support BigTiff (from 4.0?)
 %def_without libtiff
 %def_without geotiff
+%def_without perl
 %def_with mysql
 %def_with pg
 %def_with sqlite
@@ -9,7 +10,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 2.0.2
-Release: alt2
+Release: alt3
 Group: Sciences/Geosciences
 
 License: MIT
@@ -100,6 +101,7 @@ Provides: python3-module-osgeo = %version
 Python module for %name.
 %endif
 
+%if_with perl
 %package -n perl-Geo-GDAL
 Summary: Perl bindings for the GDAL library
 Group: Development/Perl
@@ -108,6 +110,7 @@ Requires: %name
 
 %description -n perl-Geo-GDAL
 Perl modules for GDAL/OGR.
+%endif
 
 %prep
 %setup
@@ -153,7 +156,7 @@ cp -fR swig/python swig/python3
 	%{subst_with sqlite} \
 	--with-python \
 	--with-pythonlib=%python_libdir \
-	--with-perl \
+	%{subst_with perl} \
 	--without-php \
 	--without-ruby \
 	--with-xerces \
@@ -164,11 +167,13 @@ cp -fR swig/python swig/python3
 	--with-netcdf=%prefix
 #	--with-grass=%_libdir/grass62 \
 
+%if_with perl
 # Hack around the issue: https://trac.osgeo.org/gdal/ticket/3084
 pushd swig/perl
 %make_build veryclean
 %make_build generate
 popd
+%endif
 
 %make_build LD_RUN_PATH= lib-target
 %make_build LD_RUN_PATH=
@@ -190,8 +195,10 @@ make DESTDIR=%buildroot install-docs
 make DESTDIR=%buildroot install-man
 mv %buildroot/usr/man %buildroot/usr/share
 install -p -m644 NEWS %buildroot%_docdir/%name
+%if_with perl
 mkdir -p  %buildroot/%_libdir/perl5/
 mv %buildroot/usr/lib/perl5/*-linux-thread-multi/* %buildroot/%_libdir/perl5/
+%endif
 
 for i in %buildroot%_bindir/*
 do
@@ -241,13 +248,18 @@ sed -i 's|__bool__ = __nonzero__||' \
 %python3_sitelibdir/*
 %endif
 
+%if_with perl
 %files -n perl-Geo-GDAL
 %perl_vendor_archlib/Geo
 %perl_vendor_autolib/Geo
 # %exclude %perl_vendor_archlib/Geo/*.dox
 # %exclude %perl_vendor_archlib/Geo/GDAL/*.dox
+%endif
 
 %changelog
+* Sun Feb 05 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt3
+- NMU: disabled perl for perl5.24.1 upgrade
+
 * Sat May 28 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt2
 - NMU: rebuild with python3-module-xlwt
 
