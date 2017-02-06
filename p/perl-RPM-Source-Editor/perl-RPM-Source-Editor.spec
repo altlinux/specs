@@ -2,7 +2,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.906
+Version: 0.907
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -20,6 +20,8 @@ Url: http://search.cpan.org/dist/%module
 BuildRequires: perl-devel /usr/bin/pod2man perl-podlators perl(RPM/Vercmp.pm) perl(RPM/Header.pm) perl(Clone.pm) perl(Tie/Hash.pm)
 # for RPM::Source::Tools
 BuildRequires: perl(RPM/uscan.pm) perl(Pod/Strip.pm) perl-Source-Shared-Resource
+# for srpm-spec-inject-patches
+BuildRequires: perl(Gear/Rules.pm)
 
 Obsoletes: hashertarbuild < 0.73
 Conflicts: hashertarbuild < 0.73
@@ -70,12 +72,16 @@ mkdir -p %buildroot%_datadir/srpmtools/hooks
 #perl_vendor_man3dir/*
 %dir %_datadir/srpmtools
 %dir %_datadir/srpmtools/hooks
+%_man1dir/srpm-spec-inject-patches*
 
 #files -n hashertarbuild
 %_bindir/hashertarbuild
 %_man1dir/hashertarbuild*
 
 %changelog
+* Mon Feb 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.907-alt1
+- development release
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.906-alt1
 - development release
 
