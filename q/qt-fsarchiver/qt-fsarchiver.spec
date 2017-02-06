@@ -1,11 +1,11 @@
 %define subversion alt
-%define subver 03
+%define subver 0
 %define sname qt5-fsarchiver
 
 
 Summary: GUI for Filesystem Archiver for Linux
 Name: qt-fsarchiver
-Version: 0.8.0.%subver
+Version: 0.8.1.%subver
 Release: alt1
 Url: http://www.fsarchiver.org
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
@@ -159,6 +159,9 @@ install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%sname.desktop
 %_datadir/polkit-1/actions/org.project.pkexec.run-%sname.policy
 
 %changelog
+* Mon Feb 06 2017 Hihin Ruslan <ruslandh@altlinux.ru> 0.8.1.0-alt1
+- Version 0.8.1-0
+
 * Sun Oct 23 2016 Hihin Ruslan <ruslandh@altlinux.ru> 0.8.0.03-alt1
 - Version 0.8.0-3
 
