@@ -1,6 +1,6 @@
 %define nm_version 1.4.1-alt1.git20160914
-#define git_date .git20160914
-%define git_date %nil
+%define git_date .git20170205
+#define git_date %nil
 
 %define _unpackaged_files_terminate_build 1
 
@@ -8,7 +8,7 @@
 %def_without team
 
 Name: NetworkManager-applet-gtk
-Version: 1.4.2
+Version: 1.4.5
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -170,7 +170,6 @@ make check
 
 %files -f nm-applet.lang
 %_bindir/*
-%_datadir/nm-applet
 %_iconsdir/hicolor/*/apps/*
 %_sysconfdir/xdg/autostart/nm-applet.desktop
 %_datadir/GConf/gsettings/nm-applet.convert
@@ -183,7 +182,6 @@ make check
 
 %files -n libnm-gtk
 %_libdir/libnm-gtk.so.*
-%_datadir/libnm-gtk/
 
 %files -n libnm-gtk-devel
 %_includedir/libnm-gtk/
@@ -198,7 +196,6 @@ make check
 
 %files -n libnma
 %_libdir/libnma.so.*
-%_datadir/libnma/
 
 %files -n libnma-devel
 %_includedir/libnma/
@@ -212,6 +209,9 @@ make check
 %_datadir/gir-1.0/NMA-1.0.gir
 
 %changelog
+* Mon Feb 06 2017 Mikhail Efremov <sem@altlinux.org> 1.4.5-alt1.git20170205
+- Upstream git snapshot.
+
 * Mon Oct 03 2016 Mikhail Efremov <sem@altlinux.org> 1.4.2-alt1
 - Updated to 1.4.2.
 
