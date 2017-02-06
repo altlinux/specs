@@ -1,8 +1,8 @@
 %set_automake_version 1.11
 
 Name: flickcurl
-Version: 1.14
-Release: alt1.2
+Version: 1.26
+Release: alt1
 Summary: Flickcurl C library for the Flickr API
 License: LGPL 2.1 / ASL 2.0
 Group: Graphics
@@ -10,7 +10,6 @@ URL: http://librdf.org/flickcurl/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 BuildRequires: gtk-doc libcurl-devel libxml2-devel libraptor-devel
 
@@ -52,13 +51,11 @@ This package contains the developement files for the %name library.
 
 %prep
 %setup -q
-%patch -p1
 
 %build
 gtkdocize
-%autoreconf
+%autoreconf -fisv
 %configure \
-	--enable-gtk-doc \
 	--disable-static
 
 %make_build
@@ -81,10 +78,14 @@ gtkdocize
 %_bindir/%name-config
 %_libdir/lib%name.so
 %_pkgconfigdir/%name.pc
-%_datadir/gtk-doc/html/%name
 %_man1dir/%name-config.1*
 
 %changelog
+* Mon Feb 06 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.26-alt1
+- 1.26
+- use https endpoints
+- packaging scheme changed
+
 * Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.14-alt1.2
 - Fixed build
 
