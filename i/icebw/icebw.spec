@@ -9,7 +9,7 @@
 
 Name:    icebw
 Version: 12.6
-Release: alt1
+Release: alt2
 Summary: Free financial accounting system with GTK interface
 
 Group:   Office
@@ -48,6 +48,9 @@ make install install \
 %_datadir/locale/uk/LC_MESSAGES/%oname.mo
 
 %changelog
+* Mon Feb 06 2017 Andrey Cherepanov <cas@altlinux.org> 12.6-alt2
+- Prepare for cronbuild
+
 * Tue Jan 03 2017 Andrey Cherepanov <cas@altlinux.org> 12.6-alt1
 - new version 12.6
 
