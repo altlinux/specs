@@ -2,7 +2,7 @@
 %define dist Audio-MPD
 Name: perl-%dist
 Version: 2.004
-Release: alt2
+Release: alt3
 
 Summary: Class to talk to MPD (Music Player Daemon) servers
 License: GPL or Artistic
@@ -28,10 +28,13 @@ server is established as soon as a new Audio::MPD object is created.
 # launches mpd
 %def_without test
 
-%perl_vendor_build --install_path bindoc=%_man1dir
+%perl_vendor_build
+#--install_path bindoc=%_man1dir
 
 %install
 %perl_vendor_install
+
+sed -i -e '1,4s,perl[0-9a-z\.]*,perl,' %buildroot%_bindir/*
 
 %files
 %doc AUTHORS Changes README
@@ -40,6 +43,9 @@ server is established as soon as a new Audio::MPD object is created.
 %_man1dir/mpd-*
 
 %changelog
+* Mon Feb 06 2017 Igor Vlasenko <viy@altlinux.ru> 2.004-alt3
+- removed explicit perl version in bin
+
 * Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 2.004-alt2
 - fixed build
 
