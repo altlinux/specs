@@ -1,7 +1,7 @@
 %define  pkgname puppet-lint
  
 Name: 	 ruby-%pkgname
-Version: 1.1.0 
+Version: 3.0.0
 Release: alt1
  
 Summary: Check that your Puppet manifests conform to the style guide
@@ -58,5 +58,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Mon Feb 06 2017 Denis Medvedev <nbr@altlinux.org> 3.0.0-alt1
+- bump to version 3.0.0
+
 * Wed Dec 23 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - Initial build for ALT Linux
