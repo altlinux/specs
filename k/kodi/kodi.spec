@@ -1,5 +1,5 @@
 Name: kodi
-Version: 16.1
+Version: 17.0
 Release: alt1
 
 Summary: Kodi Media Center
@@ -17,28 +17,22 @@ Source0: %name-%version-%release.tar
 BuildRequires: cmake gcc-c++ doxygen swig gperf nasm unzip zip
 BuildRequires: boost-devel bzlib-devel libmysqlclient-devel libSDL_image-devel libSDL_mixer-devel
 BuildRequires: libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel
-BuildRequires: libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXmu-devel
+BuildRequires: libXdmcp-devel libXext-devel libXft-devel libXmu-devel
 BuildRequires: libXpm-devel libXrandr-devel libXt-devel libXtst-devel libSM-devel libxkbfile-devel
 BuildRequires: libX11-devel libXfixes-devel libXrender-devel xorg-xproto-devel
 BuildRequires: libalsa-devel libass-devel libavahi-devel libbluray-devel libcap-devel
-BuildRequires: libcec-devel >= 2.2.0 libcdio-devel libcurl-devel libdbus-devel libenca-devel
+BuildRequires: libcec-devel >= 4.0.0 libcdio-devel libcurl-devel libdbus-devel libenca-devel
 BuildRequires: libexpat-devel libfaad-devel libflac-devel libfreetype-devel libfribidi-devel
 BuildRequires: libgnutls-devel libjasper-devel libjpeg-devel liblzo2-devel libyajl-devel
-BuildRequires: libmicrohttpd-devel libmms-devel libmodplug-devel libmpeg2-devel
+BuildRequires: liblcms2-devel libmicrohttpd-devel libmms-devel libnfs-devel
 BuildRequires: libpcrecpp-devel libgif-devel libpng-devel libsmbclient-devel libdcadec-devel
-BuildRequires: libsqlite3-devel libtiff-devel libvorbis-devel libwavpack-devel
-BuildRequires: libplist-devel libpulseaudio-devel libssh-devel librtmp-devel python-devel
+BuildRequires: libsqlite3-devel libtiff-devel libwavpack-devel
+BuildRequires: libplist-devel libpulseaudio-devel libssh-devel python-devel
 BuildRequires: libbluez-devel libtag-devel tinyxml-devel libudev-devel libuuid-devel
 BuildRequires: fontconfig-devel libgcrypt-devel liblame-devel libxml2-devel libxslt-devel
 BuildRequires: libcrossguid-devel libdrm-devel zlib-devel
+BuildRequires: libva-devel libvdpau-devel libGL-devel libGLU-devel libGLEW-devel libEGL-devel
 BuildRequires: java-1.8.0-openjdk-devel /proc
-
-%ifarch %ix86 x86_64 aarch64
-BuildRequires: libva-devel libvdpau-devel libGL-devel libGLU-devel libGLEW-devel
-%endif
-%ifarch %arm
-BuildRequires: libEGL-devel libGLES-devel
-%endif
 
 %package data
 Summary: Kodi architecture-independent data
@@ -77,10 +71,6 @@ export ac_cv_type__Bool=yes
 	--enable-pulse \
 	--with-ffmpeg=force \
 	--with-lirc-device=/var/run/lirc/lircd \
-%ifarch %arm
-	--enable-gles \
-	--disable-projectm \
-%endif
 	#
 
 %make_build
@@ -149,6 +139,9 @@ E_O_F
 %_libdir/kodi/*.cmake
 
 %changelog
+* Mon Feb 06 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.0-alt1
+- 17.0 Krypton released
+
 * Fri Apr 29 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 16.1-alt1
 - 16.1 Jarvis released
 

@@ -1,5 +1,5 @@
 Name: kodi-addon-pvr-vdr-vnsi
-Version: 16.0
+Version: 17.0
 Release: alt1
 
 Summary: PVR VDR addon for Kodi
@@ -8,7 +8,7 @@ Group: Video
 
 Source: %name-%version.tar
 
-BuildRequires: cmake gcc-c++ kodi-devel libkodiplatform-devel
+BuildRequires: cmake gcc-c++ kodi-devel libkodiplatform-devel >= 17.0
 %ifarch %ix86 x86_64
 BuildRequires:libGL-devel
 %endif
@@ -34,6 +34,9 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_INSTALL_LIBDIR=%_libdir/kodi
 %_datadir/kodi/addons/pvr.vdr.vnsi
 
 %changelog
+* Mon Feb 06 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.0-alt1
+- updated for Krypton
+
 * Wed Feb 24 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 16.0-alt1
 - updated for Jarvis
 
