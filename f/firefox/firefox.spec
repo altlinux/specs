@@ -6,13 +6,13 @@
 
 %define gst_version 1.0
 %define nspr_version 4.13.1
-%define nss_version 3.27.1
+%define nss_version 3.28.1
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        50.1.0
+Version:        51.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -323,6 +323,34 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Mon Jan 30 2017 Alexey Gladkov <legion@altlinux.ru> 51.0.1-alt1
+- New release (51.0.1).
+- Fixed:
+  + CVE-2017-5375: Excessive JIT code allocation allows bypass of ASLR and DEP
+  + CVE-2017-5376: Use-after-free in XSL
+  + CVE-2017-5377: Memory corruption with transforms to create gradients in Skia
+  + CVE-2017-5378: Pointer and frame data leakage of Javascript objects
+  + CVE-2017-5379: Use-after-free in Web Animations
+  + CVE-2017-5380: Potential use-after-free during DOM manipulations
+  + CVE-2017-5390: Insecure communication methods in Developer Tools JSON viewer
+  + CVE-2017-5389: WebExtensions can install additional add-ons via modified host requests
+  + CVE-2017-5396: Use-after-free with Media Decoder
+  + CVE-2017-5381: Certificate Viewer exporting can be used to navigate and save to arbitrary filesystem locations
+  + CVE-2017-5382: Feed preview can expose privileged content errors and exceptions
+  + CVE-2017-5383: Location bar spoofing with unicode characters
+  + CVE-2017-5384: Information disclosure via Proxy Auto-Config (PAC)
+  + CVE-2017-5385: Data sent in multipart channels ignores referrer-policy response headers
+  + CVE-2017-5386: WebExtensions can use data: protocol to affect other extensions
+  + CVE-2017-5394: Android location bar spoofing using fullscreen and JavaScript events
+  + CVE-2017-5391: Content about: pages can load privileged about: pages
+  + CVE-2017-5392: Weak references using multiple threads on weak proxy objects lead to unsafe memory usage
+  + CVE-2017-5393: Remove addons.mozilla.org CDN from whitelist for mozAddonManager
+  + CVE-2017-5395: Android location bar spoofing during scrolling
+  + CVE-2017-5387: Disclosure of local file existence through TRACK tag error messages
+  + CVE-2017-5388: WebRTC can be used to generate a large amount of UDP traffic for DDOS attacks
+  + CVE-2017-5374: Memory safety bugs fixed in Firefox 51
+  + CVE-2017-5373: Memory safety bugs fixed in Firefox 51 and Firefox ESR 45.7
+
 * Thu Dec 15 2016 Alexey Gladkov <legion@altlinux.ru> 50.1.0-alt1
 - New release (50.1.0).
 - Fixed:
