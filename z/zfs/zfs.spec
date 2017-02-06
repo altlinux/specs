@@ -1,8 +1,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: zfs
-Version: 0.6.5.8
-Release: alt2
+Version: 0.6.5.9
+Release: alt1
 Summary: ZFS on Linux
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -11,7 +11,8 @@ Conflicts: fuse-zfs
 Requires: spl-utils
 
 Source0: %name-%version.tar.gz
-Patch: zfs-0.6.5.8-conf-alt.patch
+Patch0: zfs-0.6.5.8-conf-alt.patch
+Patch1: zfs-0.6.5.8-import-by-disk-id.patch
 
 BuildRequires: libblkid-devel libuuid-devel zlib-devel rpm-build-kernel
 
@@ -60,7 +61,8 @@ This package contains ZFS modules sources for Linux kernel.
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 sed -i 's|datarootdir|libdir|' lib/libzfs/Makefile.am
 
 tar -C .. \
@@ -103,7 +105,8 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 install -m0644 COPYRIGHT OPENSOLARIS.LICENSE %buildroot%_datadir/doc/%name-utils-%version/
 
 touch %buildroot%_sysconfdir/%name/zpool.cache
-mkdir -p %buildroot%_sysconfdir/modprobe.d
+mkdir -p %buildroot%_sysconfdir/{modprobe.d,dfs}
+touch %buildroot%_sysconfdir/dfs/sharetab
 cat << __EOF__ > %buildroot%_sysconfdir/modprobe.d/zfs.conf
 #options zfs zfs_autoimport_disable=0
 __EOF__
@@ -146,6 +149,8 @@ fi
 %_datadir/doc/%name-utils-%version
 %dir %_sysconfdir/%name
 %ghost %_sysconfdir/%name/zpool.cache
+%dir %_sysconfdir/dfs
+%ghost %_sysconfdir/dfs/sharetab
 %exclude %_unitdir/zfs-zed.service
 %config(noreplace) %_sysconfdir/modprobe.d/zfs.conf
 %_sysconfdir/modules-load.d/%name.conf
@@ -183,6 +188,12 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Mon Feb 06 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.6.5.9-alt1
+- 0.6.5.9
+
+* Thu Oct 13 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.6.5.8-alt1.M80P.1
+- backport to p8 branch
+
 * Thu Oct 13 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.6.5.8-alt2
 - moved libraries to /%_lib
 
