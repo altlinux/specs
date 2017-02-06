@@ -1,5 +1,5 @@
 Name: libcec
-Version: 3.0.1
+Version: 4.0.2
 Release: alt1
 
 Summary: CEC Adaptor communication shared library
@@ -41,7 +41,6 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix
 
 %install
 %makeinstall_std
-sed -i '/^Requires:/ s,platform ,,' %buildroot%_pkgconfigdir/libcec.pc
 
 %files
 %_libdir/lib*.so.*
@@ -56,6 +55,9 @@ sed -i '/^Requires:/ s,platform ,,' %buildroot%_pkgconfigdir/libcec.pc
 %_bindir/cecc-client*
 
 %changelog
+* Mon Feb 06 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.2-alt1
+- 4.0.2
+
 * Wed Jul 22 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.1-alt1
 - 3.0.1
 
