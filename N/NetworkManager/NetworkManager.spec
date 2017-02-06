@@ -1,5 +1,5 @@
-#define git_date .git20160914
-%define git_date %nil
+%define git_date .git20170206
+#define git_date %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
@@ -36,7 +36,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.4.4
+Version: 1.6.1
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -79,6 +79,8 @@ BuildRequires: libaudit-devel
 %{?_enable_systemd:BuildRequires: systemd-devel libsystemd-login-devel}
 %{?_enable_bluez5dun:BuildRequires: libbluez-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
+# For create-exports-NetworkManager.sh
+BuildRequires: /proc
 
 Requires: nm-dhcp-client
 Requires: dnsmasq
@@ -88,6 +90,7 @@ Requires: %name-bluetooth = %version-%release
 Requires: %name-wifi = %version-%release
 Requires: %name-wwan = %version-%release
 %{?_enable_wimax:Requires: %name-wimax = %version-%release}
+Requires: %name-ppp = %version-%release
 
 Provides: network-config-subsystem
 
@@ -107,7 +110,6 @@ Group: System/Configuration/Networking
 Summary: Network Link Manager and User Applications
 Requires: dbus >= %dbus_version
 Requires: iproute2 openssl
-Requires: ppp = %ppp_version
 Requires: nss >= 3.11.7
 Requires: openresolv >= %openresolv_version
 Requires: openresolv-dnsmasq >= %openresolv_version
@@ -140,6 +142,7 @@ Summary: ADSL device plugin for NetworkManager
 Group: System/Configuration/Networking
 Requires: ppp-pppoe
 Requires: %_name = %version-%release
+Requires: %name-ppp = %version-%release
 
 %description adsl
 This package contains NetworkManager support for ADSL devices.
@@ -181,6 +184,15 @@ Requires: %_name = %version-%release
 This package contains NetworkManager support for Intel WiMAX mobile
 broadband devices.
 %endif
+
+%package ppp
+Summary: PPP plugin for NetworkManager
+Group: System/Configuration/Networking
+Requires: %_name = %version-%release
+Requires: ppp = %ppp_version
+
+%description ppp
+This package contains NetworkManager support for PPP.
 
 %package tui
 License: %gpl2plus
@@ -377,11 +389,6 @@ GObject introspection devel data for the NetworkManager.
 %patch -p1
 
 %build
-# Disable remote settings client test.
-# It is required X session.
-#SUBDIRS=. tests
-sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
-
 %autoreconf
 %configure \
 	--libexecdir=%_libexecdir/NetworkManager \
@@ -397,6 +404,7 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 	--with-resolvconf=/sbin/resolvconf \
 	--enable-concheck \
 	--with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
+	--enable-ppp=yes \
 	--with-system-ca-path=/var/lib/ssl/certs \
 	%{subst_enable wimax} \
 	--enable-tests=yes \
@@ -435,6 +443,7 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 	%{subst_enable vala} \
 	--with-libaudit=yes-disabled-by-default \
 	--with-ofono=no \
+	--disable-json-validation \
 %if_enabled sanitizers
 	--enable-address-sanitizer \
 	--enable-undefined-sanitizer \
@@ -442,6 +451,7 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 	--disable-address-sanitizer \
 	--disable-undefined-sanitizer \
 %endif
+	--disable-silent-rules \
 	--enable-more-warnings=error
 
 %make_build
@@ -533,7 +543,6 @@ fi
 %doc COPYING NEWS AUTHORS README CONTRIBUTING TODO
 %_bindir/nm-online
 %_bindir/nmcli
-%_libdir/pppd/%ppp_version/nm-pppd-plugin.so
 %_datadir/dbus-1/system-services/*.service
 %doc %_man1dir/*.*
 %doc %_man5dir/*.*
@@ -543,7 +552,7 @@ fi
 %dir %_libexecdir/NetworkManager/
 %dir %_libexecdir/NetworkManager/VPN/
 %dir %_libdir/NetworkManager/
-%_libdir/NetworkManager/libnm-*.so
+%_libdir/NetworkManager/libnm-settings-plugin-*.so
 %_libexecdir/NetworkManager/nm-*
 %_sbindir/*
 %_sysconfdir/dbus-1/system.d/*.conf
@@ -568,8 +577,6 @@ fi
 %{?_enable_systemd:/lib/systemd/system/network-online.target.wants/NetworkManager-wait-online.service}
 
 %exclude %_man1dir/nmtui*
-%exclude %_libdir/%name/libnm-device-plugin-*.so
-%exclude %_libdir/%name/libnm-wwan.so
 
 %files adsl
 %_libdir/%name/libnm-device-plugin-adsl.so
@@ -594,6 +601,10 @@ fi
 %_bindir/nmtui*
 %_man1dir/nmtui*
 %endif
+
+%files ppp
+%_libdir/pppd/%ppp_version/nm-pppd-plugin.so
+%_libdir/%name/libnm-ppp-plugin.so
 
 %files devel
 %dir %_includedir/%name
@@ -624,6 +635,8 @@ fi
 %_includedir/libnm
 %_pkgconfigdir/libnm.pc
 %_libdir/libnm.so
+%{?_enable_vala:%_vapidir/libnm.*}
+%_datadir/dbus-1/interfaces/*.xml
 
 %files -n libnm-glib-devel
 %_includedir/libnm-glib
@@ -673,6 +686,23 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Feb 06 2017 Mikhail Efremov <sem@altlinux.org> 1.6.1-alt1.git20170206
+- Split PPP support into a separate subpackage.
+- Upstream git snapshot (nm-1-6 branch).
+
+* Wed Jan 25 2017 Mikhail Efremov <sem@altlinux.org> 1.5.3-alt1
+- Package libnm vala bindings and DBus API.
+- Add /proc to BR.
+- Disable silent rules.
+- Makefile: Fix etcnet-alt build.
+- dispatcher scripts: Don't use obsoleted variables.
+- etcnet-alt: Use glib test framework.
+- etcnet-alt: merge etcnet-alt/tests/Makefile.am" into toplevel
+  Makefile.
+- etcnet-alt: rename files to "nms-etcnet-alt-*".
+- dns-manager: Enable systemd-resolved plugin support.
+- Updated to 1.5.3 (1.6-rc1).
+
 * Fri Dec 16 2016 Mikhail Efremov <sem@altlinux.org> 1.4.4-alt1
 - Updated to 1.4.4.
 

@@ -11,7 +11,7 @@
 
 Name: NetworkManager-pptp
 Version: 1.2.4
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for pptp
@@ -35,6 +35,7 @@ BuildRequires: libsecret-devel
 BuildRequires: intltool gettext
 
 Requires: NetworkManager-daemon   >= %nm_version
+Requires: NetworkManager-ppp   >= %nm_version
 Requires: pptp-client
 Requires: ppp = %ppp_version
 
@@ -101,6 +102,9 @@ NetworkManager panel applet.
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Feb 06 2017 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt2
+- Require NetworkManager-ppp.
+
 * Mon Oct 03 2016 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt1
 - Updated to 1.2.4.
 

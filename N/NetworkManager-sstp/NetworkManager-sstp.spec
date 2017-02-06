@@ -9,7 +9,7 @@
 
 Name: NetworkManager-sstp
 Version: 1.2.2
-Release: alt1
+Release: alt2
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for SSTP
@@ -34,6 +34,7 @@ BuildRequires: libsecret-devel
 BuildRequires: intltool gettext
 
 Requires: NetworkManager-daemon >= %nm_version
+Requires: NetworkManager-ppp >= %nm_version
 Requires: sstp-client
 Requires: ppp = %ppp_version
 
@@ -100,6 +101,9 @@ rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Feb 06 2017 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt2
+- Require NetworkManager-ppp.
+
 * Fri Dec 30 2016 Alexey Shabalin <shaba@altlinux.ru> 1.2.2-alt1
 - 1.2.2
 

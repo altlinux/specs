@@ -1,8 +1,8 @@
 %define nm_version 1.1.90
 %define nm_applet_version 1.1.90
 %define nm_applet_name NetworkManager-applet-gtk
-#define git_date .git20150916
-%define git_date %nil
+%define git_date .git20170115
+#define git_date %nil
 %define ppp_version 2.4.7
 
 %def_with libnm_glib
@@ -11,20 +11,19 @@
 
 Name: NetworkManager-l2tp
 Version: 1.2.4
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for l2tp
 Url: http://www.gnome.org/projects/NetworkManager/
-# git://github.com/seriyps/NetworkManager-l2tp.git
+# git://github.com/nm-l2tp/NetworkManager-l2tp.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Requires: NetworkManager-daemon   >= %nm_version
+Requires: NetworkManager-daemon >= %nm_version
+Requires: NetworkManager-ppp >= %nm_version
 Requires: xl2tpd
 Requires: ppp = %ppp_version
-# NM-l2tp should support strongswan with patch
-# 948a6acaf52d "use strongswan instead of openswan and
-# add options for certificates, mru and mtu"
+
 Requires: strongswan
 
 BuildRequires: libgnome-keyring-devel
@@ -105,6 +104,10 @@ NetworkManager panel applet.
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Feb 06 2017 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt2.git20170115
+- Spec cleanup.
+- Require NetworkManager-ppp.
+
 * Mon Dec 05 2016 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt1
 - Don't treat warrnings as errors.
 - Updated to 1.2.4.
