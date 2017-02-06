@@ -1,6 +1,6 @@
 Name: kodi-addon-pvr-iptvsimple
-Version: 16.0
-Release: alt1
+Version: 17.0
+Release: alt1%ubt
 
 Summary: IPTVSimple addon for Kodi
 License: GPL
@@ -8,6 +8,7 @@ Group: Video
 
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake gcc-c++ kodi-devel libkodiplatform-devel zlib-devel
 %ifarch %ix86 x86_64
 BuildRequires:libGL-devel
@@ -34,7 +35,8 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_INSTALL_LIBDIR=%_libdir/kodi
 %_datadir/kodi/addons/pvr.iptvsimple
 
 %changelog
+* Mon Feb 06 2017 Anton Farygin <rider@altlinux.ru> 17.0-alt1%ubt
+- new version
+
 * Mon Nov 28 2016 Anton Farygin <rider@altlinux.ru> 16.0-alt1
 - initial build for ALT
-
-
