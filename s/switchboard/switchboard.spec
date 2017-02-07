@@ -3,7 +3,7 @@
 
 Name: switchboard
 %define xdg_name org.pantheon.%name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Modular Desktop Settings Hub for elementary OS
@@ -72,6 +72,9 @@ subst 's@\(\/include\)\/@\1@' lib/%name.pc.cmake
 %_vapidir/%name-%api_ver.vapi
 
 %changelog
+* Tue Feb 07 2017 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
+- 2.2.1
+
 * Fri Jan 13 2017 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
 - 2.2.0
 
