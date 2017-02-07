@@ -1,6 +1,6 @@
 Name:		crates
 Version:	0.7.1
-Release:	alt3.1
+Release:	alt3.1.1
 Summary:	Extensible 3D crate moving puzzle game
 Group:		Games/Puzzles
 License:	GPL
@@ -11,7 +11,7 @@ Patch1:   %name-0.7.1-alt-debuginfo.patch
 URL:		http://www.octaspire.com/crates/
 
 # Automatically added by buildreq on Sun Aug 29 2010
-BuildRequires: ctest libGL-devel libSDL_mixer-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel liblua5-devel libpng-devel libxkbfile-devel
+BuildRequires: ctest libGL-devel libSDL_mixer-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel lua-devel libpng-devel libxkbfile-devel
 
 %description
 Crates is a three dimensional puzzle game. It consists of missions
@@ -51,6 +51,9 @@ install -D man/man6/%name.6 %buildroot%_man6dir/%name.6
 %_man6dir/*
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt3.1.1
+- rebuild with new lua 5.3
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt3.1
 - Rebuilt with libpng15
 
