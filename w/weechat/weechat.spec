@@ -1,6 +1,6 @@
 Name: weechat
 Version: 1.4
-Release: alt1.2
+Release: alt1.2.1
 
 Summary: fast, light & extensible IRC client
 License: GPLv3
@@ -15,7 +15,7 @@ BuildRequires: asciidoc asciidoc-a2x
 BuildRequires: libaspell-devel
 BuildRequires: libgcrypt-devel
 BuildRequires: libgnutls-devel
-BuildRequires: liblua5-devel
+BuildRequires: lua-devel
 BuildRequires: libcurl-devel
 BuildRequires: zlib-devel
 BuildRequires: libncursesw-devel
@@ -147,6 +147,9 @@ find ./src/plugins -name "Makefile*" -print0 | xargs -r0 subst 's,\(\-module\),\
 %_libdir/%name/plugins/tcl.so
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1.2.1
+- rebuild with new lua 5.3
+
 * Fri Sep 23 2016 Andrey Cherepanov <cas@altlinux.org> 1.4-alt1.2
 - (NMU) rebuild with Ruby 2.3.1
 
