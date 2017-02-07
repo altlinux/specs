@@ -1,7 +1,7 @@
 %define module Gear-Remotes
 
 Name: perl-%module
-Version: 0.010
+Version: 0.011
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -55,6 +55,9 @@ Requires: gear-uupdate
 %_bindir/*
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1
+- new version
+
 * Thu Jul 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
 - bugfix release
 
