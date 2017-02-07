@@ -2,7 +2,7 @@
 
 Name: btanks
 Version: 0.9.8083
-Release: alt5
+Release: alt6
 
 Summary: Battle Tanks is a funny battle on your desk
 
@@ -13,13 +13,30 @@ License: GPL
 Url: http://btanks.sourceforge.net/
 Source: %name-%version.tar
 
-BuildRequires: hd2u libalut-devel gcc4.5-c++ ImageMagick  libSDL-devel libSDL_image-devel libsigc++2.0-devel libvorbis-devel pkgconfig scons zlib-devel libsmpeg-devel
-BuildRequires: liblua5-devel libexpat-devel libX11-devel libSM-devel libGL-devel libICE-devel
+BuildRequires:  gcc-c++ libsigc++2-devel
+BuildRequires: hd2u libalut-devel ImageMagick libSDL-devel libSDL_image-devel libvorbis-devel pkgconfig scons zlib-devel libsmpeg-devel
+BuildRequires: lua5.1-devel libexpat-devel libX11-devel libSM-devel libGL-devel libICE-devel
 BuildRequires: libopenal1-devel libXext-devel libXi-devel libXmu-devel
 BuildPreReq: chrpath
 #libmesa-devel
 Requires: libalut libSDL libSDL_image %name-data
 Requires: libopenal1
+
+# mageia patches
+# Remove RPath from binaries
+Patch0:		%{name}-remove-rpath.patch
+# Disable video previews of map levels (we don't distribute video anyway)
+Patch1:		%{name}-disable-smpeg.patch
+# Avoid problem with lib checks using c++ instead of c.
+Patch2:		%{name}-libcheck.patch
+# Don't override Fedora's options
+Patch3:		%{name}-excessopts.patch
+# gcc is now more picky about casting
+Patch4:		%{name}-gcc.patch
+# bted doesn't explicitly link to clunl
+Patch5:		%{name}-dso.patch
+Patch6:		%{name}-gcc4.7.patch
+
 
 %package data
 Summary: Data files for Battle Tanks
@@ -53,19 +70,29 @@ This package contains all data files for Battle Tanks
 %prep
 %setup -q -n %name-%version
 
-%set_gcc_version 4.5
-export CC=gcc-4.5 CXX=g++-4.5
-
+%patch0 -b .remove-rpath
+%patch1 -b .disable-smpeg
+%patch2 -b .libcheck
+%patch3 -b .excessopts
+%patch4 -b .gcc
+%patch5 -b .dso
+%patch6 -p1 -b .gcc47
 
 dos2unix     *.txt ChangeLog *.url LICENSE
 %__chmod 644 *.txt ChangeLog *.url LICENSE
 
 %build
+# flags need to be passed via environment or they get treated as a single
+# word rather than as multiple arguments. CXXFLAGS is only needed if
+# there are c++ only flags that need to get added.
+export CFLAGS="%{optflags}"; \
 scons %{?jobs:-j%jobs} \
 	prefix=%prefix \
+        lib_dir=%{_libdir} \
 	resources_dir=%_datadir/%name \
 	plugins_dir=%_libdir/%name \
-	mode=release
+	mode=release \
+        enable_lua=true
 
 %install
 %__install -dm 755 %buildroot%_bindir
@@ -149,6 +176,10 @@ done
 %_datadir/%name/data/*
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.8083-alt6
+- NMU: fixed build with new g++
+- rebuild with new lua 5.1
+
 * Tue Aug 07 2012 Ilya Mashkin <oddity@altlinux.ru> 0.9.8083-alt5
 - fix build
 
