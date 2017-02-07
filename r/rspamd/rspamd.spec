@@ -1,7 +1,7 @@
 # TODO: add .pc-file to libhiredis-devel (to build with one)
 Name: rspamd
 Version: 0.4.7
-Release: alt1
+Release: alt1.1
 
 Summary: Fast and modular antispam system written in C
 
@@ -27,8 +27,8 @@ Source1: %name.init
 
 # Automatically added by buildreq on Sat May 05 2012
 # optimized out: cmake cmake-modules glib2-devel libgio-devel libgpg-error pkg-config python-base python-module-distribute python-module-peak python-module-zope python-modules
-# BuildRequires: ccmake dpkg git-core glibc-devel-static libbsd-devel libdb4-devel libevent-devel libgmime-devel liblua5-devel libpcre-devel libsqlite3-devel mercurial python-module-mwlib python-module-paste
-BuildRequires: ccmake libbsd-devel libdb4-devel libevent-devel libgmime-devel liblua5-devel libpcre-devel libsqlite3-devel python-module-mwlib python-module-paste
+# BuildRequires: ccmake dpkg git-core glibc-devel-static libbsd-devel libdb4-devel libevent-devel libgmime-devel lua-devel libpcre-devel libsqlite3-devel mercurial python-module-mwlib python-module-paste
+BuildRequires: ccmake libbsd-devel libdb4-devel libevent-devel libgmime-devel liblua5.1-devel libpcre-devel libsqlite3-devel python-module-mwlib python-module-paste
 
 BuildPreReq: perl-XML-Parser perl-Term-Cap
 
@@ -90,6 +90,9 @@ install -m755 -D %SOURCE1 %buildroot%_initddir/%name
 %attr(0710,root,root) %dir %_runtimedir/%name/
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.7-alt1.1
+- NMU: rebuild with new lua 5.1
+
 * Sat May 05 2012 Vitaly Lipatov <lav@altlinux.ru> 0.4.7-alt1
 - new build 0.4.7
 - ALT specific init script
