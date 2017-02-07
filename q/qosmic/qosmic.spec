@@ -1,6 +1,6 @@
 Version:	1.5.0
 Name:		qosmic
-Release:	alt1
+Release:	alt1.1
 Summary:	Qosmic Fractal Flame Editor
 License: 	GPLv2
 Group: 		Graphics
@@ -12,7 +12,7 @@ Source2:	%name
 Patch0:		%name-1.4.8-alt_dirs.diff
 Requires:	flam3-palettes
 
-BuildRequires: /usr/bin/convert flam3-palettes flam3-devel-static >= 3.0.1 gcc-c++ libjpeg-devel liblua5-devel libqt4-devel libxml2-devel
+BuildRequires: /usr/bin/convert flam3-palettes flam3-devel-static >= 3.0.1 gcc-c++ libjpeg-devel liblua5.1-devel libqt4-devel libxml2-devel
 
 %description
 Qosmic is a nifty toy with which you can
@@ -49,6 +49,9 @@ convert -resize 48x48 icons/%name.xpm %buildroot%_liconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1.1
+- NMU: rebuild with new lua 5.1
+
 * Sat Oct 18 2014 Motsyo Gennadi <drool@altlinux.ru> 1.5.0-alt1
 - 1.5.0
 
