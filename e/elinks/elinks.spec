@@ -1,6 +1,6 @@
 Name: elinks
 Version: 0.12
-Release: alt0.12
+Release: alt0.12.1
 
 Summary: Lynx-like text WWW browser with many features
 License: GPLv2
@@ -21,7 +21,7 @@ Provides: %_bindir/links
 Obsoletes: links
 
 # Automatically added by buildreq on Wed Sep 30 2009
-BuildRequires: bzlib-devel docbook-utils libexpat-devel libgpm-devel liblua5-devel libssl-devel python-modules-encodings xmlto zlib-devel
+BuildRequires: bzlib-devel docbook-utils libexpat-devel libgpm-devel lua-devel libssl-devel python-modules-encodings xmlto zlib-devel
 
 %description
 ELinks is advanced text-mode web browser with wide scale of additional
@@ -82,6 +82,9 @@ install -pD -m644 elinks.conf %buildroot/etc/elinks/elinks.conf
 %doc doc/manual.html
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt0.12.1
+- rebuild with new lua 5.3
+
 * Tue May 24 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.12-alt0.12
 - Fixed build with bison-3.0.
 
