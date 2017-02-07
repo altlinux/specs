@@ -1,13 +1,17 @@
+%def_with quicktime
+
 Name: dvgrab
 Version: 3.5
-Release: alt1.qa2
+Release: alt2
 
 Summary: A program to copy Digital Video data from a DV camcorder
-License: GPL
 Group: Video
+License: GPL
 
 Url: http://www.kinodv.org
-Source: %name-%version.tar.gz
+# VCS: https://github.com/ddennedy/dvgrab.git
+# commit e46042e0c7b3523b6854ee547b0534e8310b7460
+Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildPreReq: libquicktime-devel >= 0.9.7-alt4
@@ -15,14 +19,14 @@ BuildPreReq: libquicktime-devel >= 0.9.7-alt4
 # Automatically added by buildreq on Fri Aug 15 2008
 BuildRequires: gcc-c++ libiec61883-devel libquicktime-devel
 
-Summary(ru_RU.KOI8-R): Программа для копирования видео с DV-камеры
+Summary(ru_RU.UTF-8): п÷я─п╬пЁя─п╟п╪п╪п╟ п╢п╩я▐ п╨п╬п©п╦я─п╬п╡п╟п╫п╦я▐ п╡п╦п╢п╣п╬ я│ DV-п╨п╟п╪п╣я─я▀
 
 %description
 dvgrab copies digital video data from a DV camcorder.
 
-%description -l ru_RU.KOI8-R 
-dvgrab копирует цифровое видео с DV-видеокамеры на жёсткий диск
-или другой носитель.
+%description -l ru_RU.UTF-8
+dvgrab п╨п╬п©п╦я─я┐п╣я┌ я├п╦я└я─п╬п╡п╬п╣ п╡п╦п╢п╣п╬ я│ DV-п╡п╦п╢п╣п╬п╨п╟п╪п╣я─я▀ п╫п╟ п╤я▒я│я┌п╨п╦п╧ п╢п╦я│п╨
+п╦п╩п╦ п╢я─я┐пЁп╬п╧ п╫п╬я│п╦я┌п╣п╩я▄.
 
 %prep
 %setup
@@ -36,11 +40,14 @@ dvgrab копирует цифровое видео с DV-видеокамеры на жёсткий диск
 %makeinstall
 
 %files
-%_bindir/*
+%_bindir/%name
 %_man1dir/*
-%doc AUTHORS ChangeLog NEWS README TODO 
+%doc AUTHORS ChangeLog NEWS README TODO
 
 %changelog
+* Tue Feb 07 2017 Yuri N. Sedunov <aris@altlinux.org> 3.5-alt2
+- updated from new source (https://github.com/ddennedy/dvgrab.git)
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 3.5-alt1.qa2
 - Rebuilt for gcc5 C++11 ABI.
 
