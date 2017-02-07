@@ -14,8 +14,8 @@
 
 Name: %{engine_prefix}s-default
 Version: %ver_major.2
-Release: alt2.qa2
-Serial: 1
+Release: alt2.qa2.1
+Epoch: 1
 
 Summary: Default GTK+2 theme engines
 License: %lgpl2plus
@@ -49,7 +49,7 @@ BuildPreReq: rpm-build-gnome rpm-build-licenses
 
 BuildPreReq: intltool >= 0.31.0
 BuildPreReq: libgtk+2-devel >= %gtk_ver
-BuildPreReq: liblua5-devel
+BuildPreReq: lua-devel
 
 %description
 These are the graphical engines for the various GTK+2 toolkit themes.
@@ -312,6 +312,9 @@ This package contains development files for %_name
 %exclude %engines_dir/*.la
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.20.2-alt2.qa2.1
+- rebuild with new lua 5.3
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.20.2-alt2.qa2
 - Fixed build
 
