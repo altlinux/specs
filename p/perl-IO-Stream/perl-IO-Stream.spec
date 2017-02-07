@@ -1,10 +1,10 @@
+%def_without examples
 ## SPEC file for Perl module IO::Stream
-
 %define real_name IO-Stream
 
 Name: perl-IO-Stream
 Version: 2.0.2
-Release: alt1
+Release: alt2
 
 Summary:  Perl module for non-blocking I/O streams based on EV
 
@@ -24,7 +24,10 @@ BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Sun Mar 20 2016
 # optimized out: perl-Algorithm-Diff perl-AnyEvent perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-ExtUtils-Config perl-ExtUtils-Helpers perl-ExtUtils-InstallPaths perl-Guard perl-IO-AIO perl-JSON-PP perl-Module-Load perl-Parse-CPAN-Meta perl-Sub-Uplevel perl-Term-ANSIColor perl-Text-Diff perl-common-sense perl-devel perl-parent python3 python3-base
-BuildRequires: perl-AnyEvent-AIO perl-Data-Alias perl-EV perl-Module-Build-Tiny perl-Test-Differences perl-Test-Exception
+BuildRequires: perl-AnyEvent-AIO perl-EV perl-Module-Build-Tiny perl-Test-Differences perl-Test-Exception
+%if_with examples
+BuildRequires: perl-Data-Alias
+%endif
 
 %description
 Perl module IO::Stream designed to give user ability to work
@@ -56,8 +59,14 @@ rm -f -- t/err-rw.t t/timeout-write-slowclient.t
 %files
 %doc README Changes
 %perl_vendor_privlib/IO/Stream*
+%if_without examples
+%exclude %perl_vendor_privlib/IO/Stream/Noop*.pm
+%endif
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt2
+- removed Noop* example plugins as Data::Alias is no more in 5.24
+
 * Sun Mar 20 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.2-alt1
 - New version
 
