@@ -1,6 +1,6 @@
 Name: powdertoy
 Version: 91.5.330
-Release: alt1
+Release: alt1.1
 Summary: Classic 'falling sand' physics sandbox game
 Group: Games/Educational
 Epoch: 1
@@ -12,7 +12,7 @@ Obsoletes: powder
 
 # Automatically added by buildreq on Wed Apr 03 2013
 # optimized out: fontconfig libX11-devel libstdc++-devel pkg-config python-base python-modules python-modules-compiler xorg-xproto-devel
-BuildRequires: ImageMagick-tools bzlib-devel flex gcc-c++ ghostscript-classic libSDL-devel libfftw3-devel liblua5-devel python-modules-email scons zlib-devel
+BuildRequires: ImageMagick-tools bzlib-devel flex gcc-c++ ghostscript-classic libSDL-devel libfftw3-devel lua5.1-devel python-modules-email scons zlib-devel
 
 %description
 The Powder Toy is a desktop version of the classic 'falling sand'
@@ -72,6 +72,9 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 1:91.5.330-alt1.1
+- NMU: rebuild with new lua 5.1
+
 * Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 1:91.5.330-alt1
 - Autobuild version bump to 91.5.330
 
