@@ -1,7 +1,7 @@
 
 Name:       ibus-pinyin
 Version:    1.5.0
-Release:    alt3
+Release:    alt3.1
 Summary:    The Chinese Pinyin and Bopomofo engines for IBus input platform
 
 License:    GPLv2+
@@ -21,7 +21,7 @@ BuildRequires:  libtool
 BuildRequires:  libsqlite3-devel
 BuildRequires:  libuuid-devel
 BuildRequires:  libibus-devel >= 1.5.4
-BuildRequires:  liblua5-devel >= 5.1
+BuildRequires:  lua-devel >= 5.1
 BuildRequires:  opencc-devel
 BuildRequires:  pyzy-devel
 
@@ -57,6 +57,9 @@ The Chinese Pinyin and Bopomofo input methods for IBus platform.
 %_desktopdir/*.desktop
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt3.1
+- rebuild with new lua 5.3
+
 * Thu Jul 16 2015 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt3
 - Rebuild with new version of gcc
 - Fix packager name
