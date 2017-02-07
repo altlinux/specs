@@ -12,7 +12,7 @@
 
 Name: perl-Data-Visitor
 Version: 0.30
-Release: alt1
+Release: alt2
 
 Summary: %m_name - Visitor style traversal of Perl data structures
 
@@ -20,13 +20,11 @@ License: Artistic
 Group: Development/Perl
 Url: http://search.cpan.org/dist/Data-Visitor/
 
-Packager: Michael Bochkaryov <misha@altlinux.ru>
-
 BuildArch: noarch
 Source: http://www.cpan.org/authors/id/D/DO/DOY/Data-Visitor-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Apr 21 2010 (-bi)
-BuildRequires: perl-Data-Alias perl-Moose perl-Task-Weaken perl-Test-use-ok perl-Tie-ToObject perl-namespace-clean
+BuildRequires: perl-Moose perl-Task-Weaken perl-Test-use-ok perl-Tie-ToObject perl-namespace-clean
 BuildRequires: perl-Tie-RefHash perl(Test/Requires.pm)
 
 %description
@@ -46,6 +44,9 @@ This module is a simple visitor implementation for Perl values.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.30-alt2
+- cleanup of BRs
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
 - automated CPAN update
 
