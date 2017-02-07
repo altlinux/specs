@@ -2,7 +2,7 @@
 
 Name: gnuplot
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: A program for plotting mathematical expressions and data
@@ -40,7 +40,7 @@ BuildRequires: libwxGTK-devel libcairo-devel libpango-devel libgtk+2-devel
 # for qt terminal
 BuildRequires: libqt4-devel >= 4.5
 # for lua/TikZ
-BuildRequires: liblua5-devel texmf-pgf
+BuildRequires: lua-devel texmf-pgf
 
 
 Requires(post,postun): desktop-file-utils
@@ -252,6 +252,9 @@ rm -f demo/html/Makefile*
 %doc demo
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.0.3-alt1.1
+- rebuild with new lua 5.3
+
 * Fri May 27 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1:5.0.3-alt1
 - 5.0.3
 - Update with latest relase
