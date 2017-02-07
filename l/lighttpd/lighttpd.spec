@@ -13,7 +13,7 @@
 
 Name: lighttpd
 Version: 1.4.43
-Release: alt1
+Release: alt1.1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -38,7 +38,7 @@ BuildRequires: bzlib-devel libfcgi-devel libpcre-devel zlib-devel
 %{?_with_ssl:BuildPreReq: libssl-devel}
 %{?_with_ldap:BuildPreReq: libldap-devel}
 %{?_with_memcached:BuildPreReq: libmemcached-devel}
-%{?_with_lua:BuildPreReq:liblua5-devel}
+%{?_with_lua:BuildPreReq:lua-devel}
 %{?_with_gamin:BuildPreReq: libgamin-devel}
 
 %description
@@ -201,6 +201,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.43-alt1.1
+- rebuild with new lua 5.3
+
 * Tue Nov 01 2016 Alexei Takaseev <taf@altlinux.org> 1.4.43-alt1
 - 1.4.43
 
