@@ -1,5 +1,5 @@
 Name: gitum
-Version: 0.8.5
+Version: 0.8.6
 Release: alt1
 
 Summary: Git Upstream Manager
@@ -49,6 +49,11 @@ and ready for a submission in the same time.
 %_bindir/%name
 
 %changelog
+* Tue Feb 07 2017 Konstantin Artyushkin <akv@altlinux.org> 0.8.6-alt1
+- fix dosformat files bug with --keep-cr
+- revert author wrong enocding utf-8
+- added a git diff check in a gitum status command
+
 * Fri Oct 07 2016 Konstantin Artyushkin <akv@altlinux.org> 0.8.5-alt1
 - added stdout_as_string=False to git.show()
 - log patch name when rebasing
