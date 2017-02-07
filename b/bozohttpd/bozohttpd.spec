@@ -1,6 +1,6 @@
 Name: bozohttpd
 Version: 20160415
-Release: alt2
+Release: alt2.1
 Group: System/Servers
 Summary: Tiny http 1.1 server
 License: BSD
@@ -20,7 +20,7 @@ Requires: webserver-common
 
 # Automatically added by buildreq on Wed Jan 15 2014
 # optimized out: libcom_err-devel libkrb5-devel pkgsrc-mk-files
-BuildRequires: bmake groff-base liblua5-devel libssl-devel unifdef
+BuildRequires: bmake groff-base lua-devel libssl-devel unifdef
 
 %description
 The bozotic HTTP server
@@ -140,6 +140,9 @@ cd testsuite
 %_libdir/*.a
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 20160415-alt2.1
+- rebuild with new lua 5.3
+
 * Thu Nov 03 2016 Fr. Br. George <george@altlinux.ru> 20160415-alt2
 - Systemd units provided
 
