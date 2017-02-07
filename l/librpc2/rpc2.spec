@@ -2,7 +2,7 @@
 %define oldname rpc2
 Name:           librpc2
 Version:        2.10
-Release:        alt1_14
+Release:        alt1_14.1
 Summary:        C library for remote procedure calls over UDP
 Group:          System/Libraries
 License:        LGPLv2
@@ -11,7 +11,7 @@ Source0:        ftp://ftp.coda.cs.cmu.edu/pub/rpc2/src/%{oldname}-%{version}.tar
 Source1:        ftp://ftp.coda.cs.cmu.edu/pub/rpc2/src/%{oldname}-%{version}.tar.gz.asc
 Patch0:		rpc2-2.10-lua-5.2-fix.patch
 Patch1:		rpc2-2.10-format-security-fix.patch
-BuildRequires:  liblwp-devel liblua5-devel flex bison
+BuildRequires:  liblwp-devel lua-devel flex bison
 Source44: import.info
 Provides: rpc2 = %{version}-%{release}
 
@@ -59,6 +59,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{oldname}.pc
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_14.1
+- rebuild with new lua 5.3
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_14
 - update to new release by fcimport
 
