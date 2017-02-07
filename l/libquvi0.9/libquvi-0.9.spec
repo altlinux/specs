@@ -3,7 +3,7 @@
 
 Name: %_name%ver_major
 Version: %ver_major.4
-Release: alt2
+Release: alt2.1
 
 Summary: Command line tool for parsing video download links
 Group: System/Libraries
@@ -15,7 +15,7 @@ Source: http://downloads.sourceforge.net/project/%_name/%ver_major/%_name-%versi
 Requires: libquvi-scripts%ver_major
 
 BuildRequires: %_name-scripts%ver_major-devel
-BuildRequires: libgio-devel libcurl-devel liblua5-devel libproxy-devel libgcrypt-devel
+BuildRequires: libgio-devel libcurl-devel lua-devel libproxy-devel libgcrypt-devel
 
 # for check
 #BuildRequires: perl-Test-Deep perl-JSON perl-Test-Pod
@@ -58,6 +58,9 @@ This package provides files needed for building applications against
 %_man7dir/quvi-object.7.*
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt2.1
+- rebuild with new lua 5.3
+
 * Tue Sep 08 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt2
 - reqs: libquvi-scripts0.9
 
