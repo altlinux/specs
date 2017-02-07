@@ -2,7 +2,7 @@
 
 Name: monotone
 Version: 1.2
-Release: alt3.dev.mtn20150211
+Release: alt3.dev.mtn20150211.1
 
 Summary: Distributed version control system
 License: GPL
@@ -15,7 +15,7 @@ Url: http://monotone.ca
 Source: %name-%version.tar
 
 BuildRequires: pcre-devel boost-devel libbotan-devel pkg-config
-BuildRequires: libidn-devel liblua5-devel libsqlite3-devel texinfo
+BuildRequires: libidn-devel lua-devel libsqlite3-devel texinfo
 BuildRequires: zlib-devel gcc-c++
 
 %description
@@ -56,6 +56,9 @@ DISABLE_NETWORK_TESTS=1 make check
 %doc AUTHORS NEWS README UPGRADE HACKING INSTALL ChangeLog notes/*
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3.dev.mtn20150211.1
+- rebuild with new lua 5.3
+
 * Mon Dec 28 2015 Andrey Cherepanov <cas@altlinux.org> 1.2-alt3.dev.mtn20150211
 - Rebuild with new libbotan
 
