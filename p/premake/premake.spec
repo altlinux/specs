@@ -1,6 +1,6 @@
 Name: premake
 Version: 4.3
-Release: alt1
+Release: alt1.1
 Summary: Cross-platform build configuration tool
 
 Group: Development/Tools
@@ -8,14 +8,16 @@ License: BSD
 Url: http://industriousone.com/premake
 Source0: http://downloads.sourceforge.net/%name/premake-%version-src.zip
 # This patch removes the bundeled Lua sources from the makefile to use the system Lua
-Patch0: premake-4.3-system-lua.patch
+Patch0: premake-4.3-system-lua-5.1.patch
 # Add the missing manpage
 Patch1: premake-4.3-manpage.patch
+# for future use with lua5.3
+Patch2: premake-4.3-system-lua.patch
 
 #BuildRequires: lua-devel readline-devel
 
 # Automatically added by buildreq on Sat Jun 11 2011
-BuildRequires: liblua5-devel libreadline-devel unzip
+BuildRequires: lua5.1-devel libreadline-devel unzip
 
 %description
 Premake is a build configuration tool that can generate project files for:
@@ -56,6 +58,9 @@ rm -rf %buildroot
 %doc LICENSE.txt README.txt CHANGES.txt
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 4.3-alt1.1
+- NMU: rebuild with new lua 5.1
+
 * Sat Jun 11 2011 Fr. Br. George <george@altlinux.ru> 4.3-alt1
 - Initial build from FC
 
