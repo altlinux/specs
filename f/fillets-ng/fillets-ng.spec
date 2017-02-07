@@ -1,6 +1,6 @@
 Name: fillets-ng
 Version: 1.0.1
-Release: alt1
+Release: alt1.1
 Summary: puzzle game about witty fish saving the world sokoban-style
 Group: Games/Puzzles
 License: GPLv2+
@@ -13,7 +13,7 @@ Source1: %name.png
 Requires: fillets-ng-data
 
 # Automatically added by buildreq on Wed Mar 25 2009
-BuildRequires: gcc-c++ libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libX11-devel libfribidi-devel liblua5-devel libsmpeg-devel
+BuildRequires: gcc-c++ libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libX11-devel libfribidi-devel lua5.1-devel libsmpeg-devel
 
 %description
 Fish Fillets is strictly a puzzle game. The goal in every of the seventy
@@ -57,6 +57,9 @@ EOF
 
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1.1
+- NMU: rebuild with new lua 5.1
+
 * Sat Oct 29 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.1-alt1
 - New version (bugfix release)
 
