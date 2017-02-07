@@ -1,7 +1,7 @@
 
 Name: instead
 Version: 2.4.1
-Release: alt1
+Release: alt1.1
 Group: Games/Adventure
 License: GPLv2
 Summary: STEAD text adventures/visual novels engine
@@ -12,7 +12,7 @@ Patch: %name-1.7.0-Rules.make.system.patch
 
 # Automatically added by buildreq on Mon Apr 14 2014
 # optimized out: cmake-modules fontconfig fontconfig-devel glib2-devel libSDL-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel libwayland-client libwayland-server zlib-devel
-BuildRequires: ImageMagick-tools cmake gcc-c++ libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libgtk+2-devel liblua5-devel
+BuildRequires: ImageMagick-tools cmake gcc-c++ libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libgtk+2-devel lua-devel
 
 %description
 INSTEAD was designed to interpret the games that are the mix of visual novels,
@@ -79,6 +79,9 @@ mkdir -p %buildroot%_localstatedir/%name/games
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1.1
+- rebuild with new lua 5.3
+
 * Thu Jul 14 2016 Fr. Br. George <george@altlinux.ru> 2.4.1-alt1
 - Autobuild version bump to 2.4.1
 
