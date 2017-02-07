@@ -1,14 +1,14 @@
 Name: dosfstools
-Version: 4.0
-Release: alt1
+Version: 4.1
+Release: alt1%ubt
 
 Summary: Utilities to create and check MS-DOS FAT filesystems
 License: GPL
 Group: File tools
-
+BuildRequires(pre):rpm-build-ubt
 Url: http://daniel-baumann.ch/software/dosfstools/
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version-alt.patch
 
 Obsoletes: mkdosfs-ygg
 
@@ -48,6 +48,9 @@ autoreconf -fisv
 %doc doc/*
 
 %changelog
+* Tue Feb 07 2017 Anton Farygin <rider@altlinux.ru> 4.1-alt1%ubt
+- new version
+
 * Thu Jun 09 2016 Anton Farygin <rider@altlinux.ru> 4.0-alt1
 - new version
 
