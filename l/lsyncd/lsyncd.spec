@@ -1,6 +1,6 @@
 Name: lsyncd
 Version: 2.1.4
-Release: alt1.git.3c9f8833
+Release: alt1.git.3c9f8833.1
 Summary: File change monitoring and synchronization daemon
 Group: File tools
 License: %gpl2plus
@@ -9,7 +9,7 @@ Source: %name-%version.tar
 
 Requires: rsync
 
-BuildRequires: liblua5-devel rpm-build-licenses lua5 asciidoc-a2x
+BuildRequires: lua-devel lua rpm-build-licenses asciidoc-a2x
 
 %def_without tests
 
@@ -65,6 +65,9 @@ install -D -m 0644 examples/lecho.lua %buildroot%_sysconfdir/%name/lsyncd.conf.l
 %doc ChangeLog examples COPYING
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.4-alt1.git.3c9f8833.1
+- NMU: rebuild with new lua 5.3
+
 * Wed Jun 05 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.1.4-alt1.git.3c9f8833
 - Update to last git version
 - Move to git
