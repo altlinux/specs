@@ -9,7 +9,7 @@ BuildRequires: gcc-c++
 Name: fcitx
 Summary: Free Chinese Input Toy for X (XIM)
 Version: 4.2.7
-Release: alt2.1
+Release: alt2.1.1
 License: GPLv2+
 Group: Graphical desktop/Other
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -25,7 +25,7 @@ BuildRequires: gobject-introspection-devel libxkbfile-devel
 BuildRequires: libenchant-devel iso-codes-devel libicu-devel
 BuildRequires: libX11-devel qt-x11 libdbus-glib-devel dbus-tools-gui
 BuildRequires: desktop-file-utils libxml2-devel
-BuildRequires: liblua5-devel
+BuildRequires: lua-devel
 Requires: %name-data = %version-%release
 Requires: imsettings
 Requires(post):		alternatives
@@ -283,6 +283,9 @@ EOF
 %_libdir/qt4/plugins/inputmethods/qtim-fcitx.so
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.7-alt2.1.1
+- rebuild with new lua 5.3
+
 * Mon Feb 29 2016 Andrey Cherepanov <cas@altlinux.org> 4.2.7-alt2.1
 - rebuild with new icu
 
