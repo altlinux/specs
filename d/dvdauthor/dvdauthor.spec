@@ -1,43 +1,54 @@
-Name: dvdauthor
-Version: 0.7.1
-Release: alt1.1
-Summary: set of tools to author a DVD
-License: GPL
-Group: Video
-Url: http://sourceforge.net/projects/dvdauthor/
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
-Source: %name-%version.tar.gz
+%define video_format pal
 
+Name: dvdauthor
+Version: 0.7.2
+Release: alt1
+
+Summary: set of tools to author a DVD
+Group: Video
+License: GPLv2
+Url: http://sourceforge.net/projects/dvdauthor/
+
+Source: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 Provides: /etc/%name.conf
 
-BuildRequires: libGraphicsMagick-devel libdvdread-devel libfreetype-devel libpng-devel libxml2-devel libfribidi-devel
+BuildRequires: libImageMagick-devel libdvdread-devel libfreetype-devel
+BuildRequires: fontconfig-devel libpng-devel libxml2-devel libfribidi-devel
 
 %description
 dvdauthor is a program that will generate a DVD movie from a valid
 mpeg2 stream that should play when you put it in a DVD player.
 
 %prep
-%setup -q -n %name
+%setup -n %name
 
 %build
 %autoreconf
-%configure
+%configure --enable-default-video-format=%video_format
 %make_build
 
 %install
 %makeinstall_std
 
-%__mkdir_p %buildroot%_sysconfdir
+mkdir -p %buildroot%_sysconfdir
 touch %buildroot%_sysconfdir/%name.conf
 
 %files
-%_bindir/*
+%_bindir/%name
+%_bindir/dvddirdel
+%_bindir/dvdunauthor
+%_bindir/mpeg2desc
+%_bindir/spumux
+%_bindir/spuunmux
 %_mandir/man?/*
-%doc COPYING README TODO ChangeLog
+%doc README TODO ChangeLog
 %config(noreplace) %_sysconfdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Tue Feb 07 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
+- 0.7.2
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt1.1
 - Rebuilt with libpng15
 
