@@ -16,7 +16,7 @@
 
 Name: branding-%brand-%theme
 Version: 7.0.5
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -282,7 +282,6 @@ Conflicts: branding-altlinux-backup-server-indexhtml
 
 Requires: xdg-utils 
 Requires: docs-school-master
-Requires: docs-linux_intro
 Requires(post): indexhtml-common
 
 %description indexhtml
@@ -412,7 +411,6 @@ install slideshow/slideshow.conf %buildroot/etc/alterator/
 #ln -s slides-en %buildroot/usr/share/install2/slideshow/slides
 
 #indexhtml
-%define _altdocsdir %_defaultdocdir/alt-docs
 %define _indexhtmldir %_defaultdocdir/indexhtml
 install components/indexhtml/*.html %buildroot%_defaultdocdir/indexhtml/
 mkdir -p %buildroot%_defaultdocdir/indexhtml/images
@@ -544,6 +542,9 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 #%config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Tue Feb 07 2017 Artem Zolochevskiy <azol@altlinux.org> 7.0.5-alt2
+- indexhtml: Drop reference to alt-docs/modules
+
 * Wed Jun 11 2014 Andrey Cherepanov <cas@altlinux.org> 7.0.5-alt1
 - New release
 
