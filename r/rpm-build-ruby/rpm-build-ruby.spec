@@ -3,7 +3,7 @@
 Name: rpm-build-ruby
 Epoch: 1
 Version: 0.2.3
-Release: alt1
+Release: alt2
 Summary: RPM helper scripts to calculate Ruby dependencies
 License: GPLv2
 Group: Development/Ruby
@@ -67,6 +67,9 @@ install -D -m 0755 testrb %buildroot%_bindir/testrb
 %_bindir/testrb
 
 %changelog
+* Tue Feb 07 2017 Denis Medvedev <nbr@altlinux.org> 1:0.2.3-alt2
+- filter hash from provides
+
 * Mon Jan 30 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.2.3-alt1
 - NMU: added rpm-macros-ruby
 
