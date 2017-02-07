@@ -1,5 +1,5 @@
 Name: seappletsimple
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1%ubt
 
 Summary: Simple applet for SELinux
@@ -41,6 +41,9 @@ install -m644 %name.desktop %buildroot/%_xdgconfigdir/autostart/%name.desktop
 %_xdgconfigdir/autostart/%name.desktop
 
 %changelog
+* Tue Feb 07 2017 Sergey V Turchin <zerg at altlinux dot org> 0.2.1-alt1%ubt
+- change color scheme
+
 * Mon Feb 06 2017 Sergey V Turchin <zerg at altlinux dot org> 0.2.0-alt1%ubt
 - using custom colors
 - cut range from tooltip level name
