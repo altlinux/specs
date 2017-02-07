@@ -3,14 +3,14 @@ Url: http://pushover.sourceforge.net/
 License: GPL
 Group: Games/Puzzles
 Version: 0.0.5
-Release: alt1
+Release: alt1.1
 Summary: Puzzle with ant pushing dominoes to fall
 Source: %name-%version.tar.gz
 Source1: %name.png
 Packager: Fr. Br. George <george@altlinux.ru>
 
 # Automatically added by buildreq on Sun Nov 16 2008
-BuildRequires: gcc-c++ libSDL-devel libSDL_mixer-devel libSDL_ttf-devel liblua5-devel libpng-devel
+BuildRequires: gcc-c++ libSDL-devel libSDL_mixer-devel libSDL_ttf-devel lua-devel libpng-devel
 
 Requires: %name-themes = %version
 
@@ -71,6 +71,9 @@ install -m 644 %SOURCE1 %buildroot%_datadir/pixmaps
 %_datadir/%name/themes/*
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.5-alt1.1
+- rebuild with new lua 5.3
+
 * Mon May 20 2013 Fr. Br. George <george@altlinux.ru> 0.0.5-alt1
 - Autobuild version bump to 0.0.5
 
