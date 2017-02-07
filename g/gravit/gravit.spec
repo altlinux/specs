@@ -1,6 +1,6 @@
 Name:		gravit
 Version:	0.5.0
-Release:	alt1
+Release:	alt1.1
 Group:		Games/Educational
 Summary:	Visually stunning gravity simulator
 URL:		http://gravit.slowchop.com
@@ -9,7 +9,7 @@ License:	GPLv2+
 
 # Automatically added by buildreq on Wed Sep 25 2013
 # optimized out: libGL-devel libGLU-devel libICE-devel libSDL-devel libX11-devel pkg-config xorg-xproto-devel
-BuildRequires: libSDL_image-devel libSDL_ttf-devel libSM-devel liblua5-devel libpng-devel
+BuildRequires: libSDL_image-devel libSDL_ttf-devel libSM-devel lua-devel libpng-devel
 
 BuildRequires:	autoconf-archive rpm-macros-fonts
 
@@ -43,6 +43,9 @@ ln -sf %_ttffontsdir/TrueType-vera/Vera.ttf %buildroot%_datadir/%name/data/Vera.
 %_datadir/%name
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1.1
+- rebuild with new lua 5.3
+
 * Mon Sep 23 2013 Fr. Br. George <george@altlinux.ru> 0.5.0-alt1
 - Initial build for ALT
 
