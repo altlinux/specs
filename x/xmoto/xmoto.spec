@@ -1,6 +1,6 @@
 Name: xmoto
 Version: 0.5.11
-Release: alt1.r3421
+Release: alt1.r3421.1
 
 Summary: A challenging 2D motocross platform game.
 License: GPL
@@ -11,7 +11,7 @@ Url: http://xmoto.tuxfamily.org
 Source: %name-%version-src.tar.gz
 
 BuildRequires: gcc-c++ libSDL-devel libSDL_mixer-devel libjpeg-devel
-BuildRequires: liblua5-devel libode-devel libpng-devel libstdc++-devel
+BuildRequires: lua-devel libode-devel libpng-devel libstdc++-devel
 BuildRequires: zlib-devel bzlib-devel libcurl-devel
 BuildRequires: libSDL_gfx-devel libsqlite3-devel libSDL_ttf-devel
 BuildRequires: libSDL_net-devel
@@ -70,6 +70,9 @@ ln -s %_ttffontsdir/dejavu/DejaVuSansMono.ttf %buildroot%_datadir/%name/Textures
 [ -L %_datadir/%name/Textures/Fonts/DejaVuSansMono.ttf ] || ln -s %_ttffontsdir/dejavu/DejaVuSansMono.ttf %_datadir/%name/Textures/Fonts/
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.11-alt1.r3421.1
+- rebuild with new lua 5.3
+
 * Wed Jul 20 2016 Denis Pynkin <dans@altlinux.org> 0.5.11-alt1.r3421
 - New version from SVN trunk (closes: #32260)
 - Removed unneeded patches
