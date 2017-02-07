@@ -2,7 +2,7 @@
 
 Name: termit
 Version: 2.5.0
-Release: alt3.qa1
+Release: alt3.qa2
 
 Summary: Minimalistic terminal emulator with tabs and encoding support
 Url: http://code.google.com/p/termit/
@@ -21,7 +21,7 @@ Patch1: %name.desktop.icon.patch
 Provides: xvt, %_bindir/xvt
 PreReq: alternatives >= 0:0.2.0-alt0.12
 BuildRequires: desktop-file-utils cmake libvte-devel gcc-c++ libtinfo-devel 
-BuildRequires: libpixman-devel liblua5-devel libXau-devel
+BuildRequires: libpixman-devel liblua5.1-devel libXau-devel
 
 %description
 Simple terminal emulator based on vte library. 
@@ -70,6 +70,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_sysconfdir/xdg/*
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt3.qa2
+- NMU: rebuild with new lua 5.1
+
 * Tue May 24 2011 Repocop Q. A. Robot <repocop@altlinux.org> 2.5.0-alt3.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
