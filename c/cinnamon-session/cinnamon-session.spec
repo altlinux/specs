@@ -5,7 +5,7 @@
 
 Name: %{_name}-session
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
 License: GPLv2+
@@ -41,7 +41,6 @@ Requires: cinnamon-settings-daemon
 Requires: nemo
 Requires: upower polkit-gnome gcr
 Requires: %name-translations
-Requires: ConsoleKit
 
 BuildPreReq: rpm-build-gnome >= 0.5
 BuildPreReq: gnome-common
@@ -127,6 +126,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Feb 7 2017 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt2
+- remove ConsoleKit from dependencies
+
 * Sat Nov 12 2016 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt1
 - 3.2.0
 
