@@ -1,6 +1,6 @@
 Name: lua5.1
 Version: 5.1.5
-Release: alt3
+Release: alt4
 
 Summary: Embeddable programming language
 License: MIT
@@ -8,7 +8,21 @@ Group: Development/Other
 
 URL: http://www.lua.org
 Source: lua-%version.tar
-Patch: %name-%version-%release.patch
+
+Patch00: lua5.1-5.1.5-alt-at-ABI-compat.patch
+Patch01: lua5.1-5.1.5-alt-at-ldo-abort.patch
+Patch02: lua5.1-5.1.5-alt-at-luaconf.patch
+Patch03: lua5.1-5.1.5-alt-at-luaconf-LUA_USE_LINUX.patch
+Patch04: lua5.1-5.1.5-alt-at-restore-lua_version.patch
+Patch05: lua5.1-5.1.5-alt-at-symbol-map.patch
+Patch06: lua5.1-5.1.5-alt-doc.patch
+Patch07: lua5.1-5.1.5-alt-pkgconfig.patch
+Patch08: lua5.1-5.1.5-alt-safe-stack.patch
+Patch09: lua5.1-5.1.5-lua.org-bugs-5.1.5-1.patch
+Patch10: lua5.1-5.1.5-lua.org-bugs-5.1.5-2.patch
+Patch11: lua5.1-5.1.5-alt-vseleznv-gcc6.patch
+Patch12: lua-5.1.4-idsize.patch
+Patch13: lua-5.1.4-lunatic.patch
 
 Requires: lib%{name} = %EVR
 Provides: lua = %version
@@ -84,7 +98,20 @@ stand-alone language through the simple command line interpreter provided.
 
 %prep
 %setup -n lua-%version
-%patch -p1
+%patch00 -p1
+%patch01 -p1
+%patch02 -p1
+%patch03 -p1
+%patch04 -p1
+%patch05 -p1
+%patch06 -p1
+%patch07 -p1
+%patch08 -p1
+%patch09 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
 
 %build
 %def_enable Werror
@@ -93,8 +120,6 @@ cd ./src
 # from Makefile
 core='lapi lcode ldebug ldo ldump lfunc lgc llex lmem lobject lopcodes lparser lstate lstring ltable ltm lundump lvm lzio'
 lib='lauxlib lbaselib ldblib liolib lmathlib loslib ltablib lstrlib loadlib linit'
-
-%add_optflags -D'LUA_ROOT="%prefix/"' -D'LUA_LDIR="%_datadir/lua/5.1/"' -D'LUA_CDIR="%_libdir/lua/5.1/"'
 
 for f in $core $lib; do gcc %optflags -c $f.c; done
 ar rcu liblua-5.1.a *.o
@@ -124,9 +149,7 @@ cp -p lua.h luaconf.h lualib.h lauxlib.h ../etc/lua.hpp %buildroot%_includedir/l
 install -pD -m644 ../etc/lua.pc %buildroot%_pkgconfigdir/lua-5.1.pc
 
 # Fix paths in lua-5.1.pc:
-sed -i 's|/usr/lib|%_libdir|g;s|/usr/share|%_datadir|g;s!-llua!-llua-5.1!;' %buildroot%_pkgconfigdir/lua-5.1.pc
-echo 'includedir=%_includedir' >> %buildroot%_pkgconfigdir/lua-5.1.pc
-echo 'Cflags: -I${includedir}/lua-5.1' >> %buildroot%_pkgconfigdir/lua-5.1.pc
+sed -i 's|/usr/lib|%_libdir|g;s|/usr/share|%_datadir|g;' %buildroot%_pkgconfigdir/lua-5.1.pc
 
 # REMOVE ME: compat symlinks that conflicts with other lua's -devels
 ln -s liblua-5.1.so %buildroot%_libdir/liblua.so
@@ -193,6 +216,13 @@ fi
 %pkgdocdir/test
 
 %changelog
+* Wed Feb 08 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt4
+- restored luaconf.h LUA_CDIR / LUA_LDIR defaults
+- split cummulative diff into separate patches
+- added lua-5.1.4-idsize.patch (fc)
+- added lua-5.1.4-lunatic.patch (fc)
+- returned LUA_CDIR and LUA_LDIR definitions to luaconf.h
+
 * Wed Feb 08 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.1.5-alt3
 - added lua-5.1.pc, liblua-5.1.so and related files (thx Igor Vlasenko).
 - removed liblua5-devel provides to avoid clash with liblua5.3-devel (thx Igor
