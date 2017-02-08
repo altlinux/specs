@@ -2,7 +2,7 @@
 %define gtkver 2
 Name: lxde-%upstreamname
 Version: 0.5.3
-Release: alt1
+Release: alt2
 
 Summary: LXSession is the default X11 session manager of LXDE
 License: GPL
@@ -26,7 +26,7 @@ Patch3: lxsession-edit-0.5.2-fix-invalid-memcpy.patch
 BuildPreReq: intltool libXau-devel libdbus-devel libgtk+%gtkver-devel xsltproc docbook-dtds docbook-style-xsl pkgconfig(dbus-glib-1) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(unique-1.0) pkgconfig(x11) pkgconfig(polkit-agent-1) vala pkgconfig(appindicator-0.1) pkgconfig(indicator-0.4) pkgconfig(libnotify)
 %add_findreq_skiplist %_bindir/lxlock
 
-Requires: lxde-lxpolkit = %version-%release
+#Requires: lxde-lxpolkit = %version-%release
 # required for suspend and hibernate
 Requires: upower
 
@@ -62,9 +62,7 @@ for lxsession lite.
 %patch2 -p1
 %patch3 -p1
 
-# Don't start in Xfce to avoid bugs like
-# https://bugzilla.redhat.com/show_bug.cgi?id=616730
-sed -i 's/^NotShowIn=GNOME;KDE;MATE;/NotShowIn=GNOME;KDE;MATE;XFCE;/g' data/lxpolkit.desktop.in.in
+sed -i 's/^NotShowIn=GNOME;KDE;MATE;/OnlyShowIn=LXDE;/g' data/lxpolkit.desktop.in.in
 
 %build
 %__subst '/m4/ d' Makefile.am
@@ -118,6 +116,9 @@ mkdir -p -m 755 %buildroot%_sysconfdir/xdg/%name
 %_datadir/%upstreamname/ui/lxpolkit.ui
 
 %changelog
+* Wed Feb 08 2017 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt2
+- Delete requires lxde-lxpolkit
+
 * Tue Jan 10 2017 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt1
 - New version 0.5.3
 - New subpackage lxde-lxpolkit

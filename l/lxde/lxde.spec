@@ -1,12 +1,13 @@
 Name: lxde
 Version: 1.0
-Release: alt11
+Release: alt12
 Summary: Virtual package for install all parts of LXDE
 Group: Graphical desktop/Other
 License: GPL
 BuildArch: noarch
 Requires: lxde-common lxde-lxpanel lxde-lxsession pcmanfm2 lxde-freedesktop-menu menu-cache lxde-lxappearance lxde-lxsession-edit
 Requires: lxde-lxrandr lxde-lxshortcut lxde-lxinput lxde-lxtask lxde-icon-theme gpicview leafpad
+Requires: lxde-lxpolkit
 Packager: LXDE Packaging Team <lxde@packages.altlinux.org>
 
 %description
@@ -25,6 +26,9 @@ Requires: lxde-common lxde-lxpanel lxde-lxsession pcmanfm2 lxde-freedesktop-menu
 %files lite
 
 %changelog
+* Wed Feb 08 2017 Anton Midyukov <antohami@altlinux.org> 1.0-alt12
+- Added requires lxde-lxpolkit
+
 * Sun May 22 2016 Anton Midyukov <antohami@altlinux.org> 1.0-alt11
 - Added requires lxde-session-edit
 
