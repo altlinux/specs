@@ -1,5 +1,5 @@
 Name: girar-nmu
-Version: 1.41
+Version: 1.42
 Release: alt1
 
 Summary: git.alt client utilities for NMU automation
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 #BuildRequires: help2man
 BuildRequires: perl-devel perl-podlators perl(RPM/Header.pm) perl-RPM-Source-Editor perl-RPM-Source-Convert perl(Pod/Usage.pm) perl(Date/Parse.pm) /usr/bin/pod2man perl-Gear-Rules
 Requires: gear
-Requires: perl-RPM-Source-Editor >= 0.902
+Requires: perl-RPM-Source-Editor >= 0.906
 
 %description
 This package contains client utilities for git.alt
@@ -50,6 +50,9 @@ install -m 644 girar-*.1 %buildroot%_man1dir/
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Wed Feb 08 2017 Igor Vlasenko <viy@altlinux.ru> 1.42-alt1
+- support for gitery path in girar-nmu-helper-git-push-build
+
 * Mon Jan 30 2017 Igor Vlasenko <viy@altlinux.ru> 1.41-alt1
 - new version
 
