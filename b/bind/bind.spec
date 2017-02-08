@@ -1,13 +1,13 @@
 Name: bind
 Version: 9.10.4
-Release: alt1
+Release: alt2
 
 Summary: ISC BIND - DNS server
 License: BSD-style
 Group: System/Servers
 Url: http://www.isc.org/products/BIND/
 
-%define vsuffix -P5
+%define vsuffix -P6
 # NOTE: vsuffix removed from Source0
 # ftp://ftp.isc.org/isc/bind9/%version%vsuffix/bind-%version%vsuffix.tar.gz
 Source0: %name-%version.tar
@@ -437,6 +437,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Wed Feb 08 2017 Dmitry V. Levin <ldv@altlinux.org> 9.10.4-alt2
+- 9.10.4-P5 -> 9.10.4-P6 (fixes CVE-2017-3135).
+
 * Thu Jan 12 2017 Dmitry V. Levin <ldv@altlinux.org> 9.10.4-alt1
 - 9.9.9-P5 -> 9.10.4-P5 (closes: #30124, #32590).
 - Enabled multiprocessing support.
