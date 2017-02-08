@@ -2,8 +2,8 @@
 
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 2.69.0
-Release: alt1.1
+Version: 2.78.0
+Release: alt1
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -14,6 +14,7 @@ Url: http://calibre-ebook.com/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# https://calibre-ebook.com/dist/src redirect to
 # Source-url: http://download.calibre-ebook.com/%version/calibre-%version.tar.xz
 Source: %name-%version.tar
 Source1: calibre-mount-helper
@@ -29,19 +30,17 @@ Requires: python-module-netifaces
 %add_python_req_skip win32serviceutil win32service win32event win32con win32com win32api win32gui winerror _winreg pywintypes pythoncom usbobserver
 
 BuildRequires: chrpath
-BuildRequires: xdg-utils >= 1.0.2
 BuildRequires: /proc
 
 BuildRequires: gcc-c++ libX11-devel libXext-devel libXrender-devel libpng-devel libjpeg-devel libusb-devel libsqlite3-devel
 
-# wait: have 2.7.8 only
-BuildRequires: python >= 2.7.8
-#BuildRequires: python >= 2.7.9
+BuildRequires: python >= 2.7.9
 BuildRequires: python-modules-json python-modules-compiler python-modules-curses python-modules-encodings
 BuildRequires: python-module-sip-devel
 
 # Note: checked with http://calibre-ebook.com/download_linux 23.08.2015
 BuildRequires: python-module-imaging >= 1.1.6
+BuildRequires: libImageMagick-devel >= 6.5.9
 
 # missed in the official list
 BuildRequires: glib2-devel fontconfig-devel libfreetype-devel libssl-devel libudev-devel
@@ -52,24 +51,27 @@ BuildRequires: qt5-base-devel-static >= 5.3.2
 BuildRequires: python-module-PyQt5-devel >= 5.3.1
 
 BuildRequires: python-module-mechanize >= 0.1.11
-BuildRequires: libImageMagick-devel >= 6.5.9
+BuildRequires: xdg-utils >= 1.0.2
 BuildRequires: python-module-lxml >= 3.2.1
 BuildRequires: python-module-dateutil >= 1.4.1
 BuildRequires: python-module-cssutils >= 0.9.9
-BuildRequires: python-module-BeautifulSoup >= 3.0.5
 BuildRequires: python-module-dns >= 1.6.0
 BuildRequires: libpoppler-qt5-devel >= 0.20.2
 BuildRequires: libpodofo-devel >= 0.8.2
 BuildRequires: libwmf-devel >= 0.2.8
+# chmlib
 BuildRequires: libchm-devel >= 0.4
 BuildRequires: libicu-devel >= 4.4
 BuildRequires: libmtp-devel >= 1.1.5
 BuildRequires: python-module-netifaces >= 0.8
 BuildRequires: python-module-psutil >= 0.6.1
-# need it really?
-BuildRequires: python-module-cssselect >= 0.7.1
-BuildRequires: python-module-dbus >= 1.2.0
 BuildRequires: python-module-apsw >= 3.7.17
+BuildRequires: python-module-dbus >= 1.2.0
+# pygments 2.0.1
+# optipng 0.7.5
+# need it really?
+BuildRequires: python-module-BeautifulSoup >= 3.0.5
+BuildRequires: python-module-cssselect >= 0.7.1
 
 BuildRequires: libmtdev-devel libts-devel libinput-devel libxkbcommon-devel
 
@@ -126,6 +128,9 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %_datadir/appdata/*.appdata.xml
 
 %changelog
+* Wed Feb 08 2017 Vitaly Lipatov <lav@altlinux.ru> 2.78.0-alt1
+- new version 2.78.0 (with rpmrb script)
+
 * Thu Jan 12 2017 Sergey V Turchin <zerg@altlinux.org> 2.69.0-alt1.1
 - build with new Qt
 
