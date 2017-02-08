@@ -1,4 +1,4 @@
-%set_verify_elf_method unresolved=strict
+%set_verify_elf_method relaxed
 
 %define firefox_cid     \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %define firefox_prefix  %_libdir/firefox
@@ -13,7 +13,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
 Version:        51.0.1
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -166,21 +166,27 @@ MOZ_EXTENSIONS_DEFAULT=' gio'
 MOZ_CHROME_FILE_FORMAT=jar
 EOF
 
+MOZ_OPT_FLAGS="$RPM_OPT_FLAGS"
+
+# PIE, full relro
+MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fPIC -Wl,-z,relro -Wl,-z,now"
+
+# add -fno-delete-null-pointer-checks and -fno-inline-small-functions for gcc6
+MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fno-delete-null-pointer-checks -fno-inline-small-functions"
+
 # Mozilla builds with -Wall with exception of a few warnings which show up
 # everywhere in the code; so, don't override that.
 #
 # Disable C++ exceptions since Mozilla code is not exception-safe
 #
-MOZ_OPT_FLAGS=$(echo $RPM_OPT_FLAGS -fPIC -Wl,-z,relro -Wl,-z,now | \
+MOZ_OPT_FLAGS=$(echo $MOZ_OPT_FLAGS | \
                 sed \
                     -e 's/-Wall//' \
                     -e 's/-fexceptions/-fno-exceptions/g'
 )
+
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
-# Add fake RPATH
-rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
-export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
 
 export PREFIX="%_prefix"
 export LIBDIR="%_libdir"
@@ -210,6 +216,7 @@ make -f client.mk \
 	-Wall -Wextra \
 	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
 	-DMOZ_PROGRAM=\"%firefox_prefix/firefox-bin\" \
+	-DMOZ_DIST_BIN=\"%firefox_prefix\"\
 	%SOURCE7 -o firefox
 
 
@@ -283,23 +290,6 @@ rm -rf -- \
 	./%_libdir/%name-devel \
 #
 
-# Add real RPATH
-rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
-find \
-     %buildroot/%firefox_prefix \
--type f |
-(set +x
-        while read -r f; do
-              t="$(readlink -ev -- "$f")"
-
-              file -- "$t" | fgrep -qs ELF || continue
-
-              if chrpath -l "$t" | fgrep -qs "PATH=$rpath"; then
-                 chrpath -r "%firefox_prefix" "$t"
-              fi
-        done
-)
-
 %pre
 for n in defaults browserconfig.properties; do
 	[ ! -L "%firefox_prefix/$n" ] || rm -f "%firefox_prefix/$n"
@@ -323,6 +313,9 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Wed Feb 08 2017 Alexey Gladkov <legion@altlinux.ru> 51.0.1-alt2
+- Remove RPATH but began to use LD_LIBRARY_PATH (ALT#33085).
+
 * Mon Jan 30 2017 Alexey Gladkov <legion@altlinux.ru> 51.0.1-alt1
 - New release (51.0.1).
 - Fixed:
