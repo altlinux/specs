@@ -1,6 +1,6 @@
-Name: lua5
+Name: lua5.1
 Version: 5.1.5
-Release: alt2
+Release: alt3
 
 Summary: Embeddable programming language
 License: MIT
@@ -10,31 +10,35 @@ URL: http://www.lua.org
 Source: lua-%version.tar
 Patch: %name-%version-%release.patch
 
-Requires: liblua5.1 = %version-%release
+Requires: lib%{name} = %EVR
 Provides: lua = %version
+Provides: lua5 = %version-%release
+Obsoletes: lua5 <= 5.1.5-alt2
 Conflicts: lua4
 
 # Automatically added by buildreq on Mon Sep 28 2009
 BuildRequires: libreadline-devel
 
-%package -n liblua5.1
+%package -n lib%{name}
 Summary: Embeddable programming language
 Group: System/Libraries
-Provides: %_libdir/lua5
-Provides: %_datadir/lua5
+Provides: %_libdir/lua/5.1
+Provides: %_datadir/lua/5.1
+Provides: lua5.1-alt-compat
+Obsoletes: lua5.1-alt-compat
+Conflicts: lua5.1-alt-compat
 
-%package -n liblua5.1-devel
+%package -n lib%{name}-devel
 Summary: Embeddable programming language
 Group: Development/Other
-Provides: liblua5-devel = %version-%release
-Requires: liblua5.1 = %version-%release
+Requires: lib%{name} = %EVR
 Conflicts: liblua4-devel
 
-%package -n liblua5.1-devel-static
+%package -n lib%{name}-devel-static
 Summary: Embeddable programming language
 Group: Development/Other
 Provides: liblua5-devel-static = %version-%release
-Requires: liblua5-devel = %version-%release
+Requires: lib%{name}-devel = %EVR
 Conflicts: liblua4-devel-static
 
 %package doc
@@ -50,21 +54,21 @@ API which allows the application to exchange data with Lua programs and also
 to extend Lua with C functions.  Lua is also used as a general-purpose,
 stand-alone language through the simple command line interpreter provided.
 
-%description -n liblua5.1
+%description -n lib%{name}
 Lua is a powerful, light-weight programming language designed for extending
 applications.  The language engine is accessible as a library, having a C
 API which allows the application to exchange data with Lua programs and also
 to extend Lua with C functions.  Lua is also used as a general-purpose,
 stand-alone language through the simple command line interpreter provided.
 
-%description -n liblua5.1-devel
+%description -n lib%{name}-devel
 Lua is a powerful, light-weight programming language designed for extending
 applications.  The language engine is accessible as a library, having a C
 API which allows the application to exchange data with Lua programs and also
 to extend Lua with C functions.  Lua is also used as a general-purpose,
 stand-alone language through the simple command line interpreter provided.
 
-%description -n liblua5.1-devel-static
+%description -n lib%{name}-devel-static
 Lua is a powerful, light-weight programming language designed for extending
 applications.  The language engine is accessible as a library, having a C
 API which allows the application to exchange data with Lua programs and also
@@ -90,9 +94,11 @@ cd ./src
 core='lapi lcode ldebug ldo ldump lfunc lgc llex lmem lobject lopcodes lparser lstate lstring ltable ltm lundump lvm lzio'
 lib='lauxlib lbaselib ldblib liolib lmathlib loslib ltablib lstrlib loadlib linit'
 
+%add_optflags -D'LUA_ROOT="%prefix/"' -D'LUA_LDIR="%_datadir/lua/5.1/"' -D'LUA_CDIR="%_libdir/lua/5.1/"'
+
 for f in $core $lib; do gcc %optflags -c $f.c; done
-ar rcu liblua.a *.o
-ranlib liblua.a
+ar rcu liblua-5.1.a *.o
+ranlib liblua-5.1.a
 
 %define soffix -5.1.so.0
 for f in $core $lib; do gcc %optflags %optflags_shared -c $f.c; done
@@ -105,53 +111,80 @@ LD_LIBRARY_PATH=$PWD ./lua ../test/hello.lua
 
 %install
 %define pkgdocdir %_docdir/lua-5.1
-mkdir -p %buildroot{%_libdir,%_bindir,%_includedir,%_man1dir,%pkgdocdir/html}
+mkdir -p %buildroot{%_libdir,%_bindir,%_includedir/lua-5.1,%_man1dir,%pkgdocdir/html}
 
 cd ./src
-cp -p liblua.a liblua%soffix %buildroot%_libdir/
-ln -s liblua%soffix %buildroot%_libdir/liblua.so
-cp -p lua %buildroot%_bindir/lua5.1
-cp -p luac %buildroot%_bindir/luac5.1
-ln -s lua5.1 %buildroot%_bindir/lua
-ln -s luac5.1 %buildroot%_bindir/luac
-cp -p lua.h luaconf.h lualib.h lauxlib.h ../etc/lua.hpp %buildroot%_includedir/
-install -pD -m644 ../etc/lua.pc %buildroot%_pkgconfigdir/lua.pc
+cp -p liblua-5.1.a liblua%soffix %buildroot%_libdir/
+ln -s liblua%soffix %buildroot%_libdir/liblua-5.1.so
+cp -p lua %buildroot%_bindir/lua-5.1
+cp -p luac %buildroot%_bindir/luac-5.1
+ln -s lua-5.1 %buildroot%_bindir/lua5.1
+ln -s luac-5.1 %buildroot%_bindir/luac5.1
+cp -p lua.h luaconf.h lualib.h lauxlib.h ../etc/lua.hpp %buildroot%_includedir/lua-5.1
+install -pD -m644 ../etc/lua.pc %buildroot%_pkgconfigdir/lua-5.1.pc
 
-# Fix paths in lua.pc:
-sed -i 's|/usr/lib|%_libdir|g;s|/usr/share|%_datadir|g' %buildroot%_pkgconfigdir/lua.pc
+# Fix paths in lua-5.1.pc:
+sed -i 's|/usr/lib|%_libdir|g;s|/usr/share|%_datadir|g;s!-llua!-llua-5.1!;' %buildroot%_pkgconfigdir/lua-5.1.pc
+echo 'includedir=%_includedir' >> %buildroot%_pkgconfigdir/lua-5.1.pc
+echo 'Cflags: -I${includedir}/lua-5.1' >> %buildroot%_pkgconfigdir/lua-5.1.pc
+
+# REMOVE ME: compat symlinks that conflicts with other lua's -devels
+ln -s liblua-5.1.so %buildroot%_libdir/liblua.so
+ln -s lua-5.1.pc %buildroot%_pkgconfigdir/lua.pc
+cp -p lua.h luaconf.h lualib.h lauxlib.h ../etc/lua.hpp %buildroot%_includedir/
 
 cd ..
 cp -av COPYRIGHT HISTORY README etc test %buildroot%pkgdocdir/
 cd ./doc
 cp -p lua.1 %buildroot%_man1dir/lua5.1.1
 cp -p luac.1 %buildroot%_man1dir/luac5.1.1
-ln -s lua5.1.1 %buildroot%_man1dir/lua.1
-ln -s luac5.1.1 %buildroot%_man1dir/luac.1
 cp -p *.html *.css *.gif *.png %buildroot%pkgdocdir/html/
 mv %buildroot%pkgdocdir/html/{readme,index}.html
 
-mkdir -p %buildroot{%_libdir,%_datadir}/lua5
+mkdir -p %buildroot{%_libdir,%_datadir}/lua/5.1
+
+%pre -n lib%{name}
+# ----------- begin update from old lua5 to lua5.1 ----
+if [ -L %_libdir/lua/5.1 ]; then
+    echo "remove lua5.1-alt-compat manually!"
+    exit 1
+fi
+if [ -d %_libdir/lua5 ] && [ ! -d %_libdir/lua/5.1 ]; then
+    mkdir -p %_libdir/lua
+    mv %_libdir/lua5 %_libdir/lua/5.1
+fi
+if [ -L %_datadir/lua/5.1 ]; then
+    echo "remove lua5.1-alt-compat manually!"
+    exit 1
+fi
+if [ -d %_datadir/lua5 ] && [ ! -d %_datadir/lua/5.1 ]; then
+    mkdir -p %_datadir/lua
+    mv %_datadir/lua5 %_datadir/lua/5.1
+fi
+# ----------- end update from old lua5 to lua5.1 ----
 
 %files
 %_bindir/lua*
 %_man1dir/lua*
 
-%files -n liblua5.1
+%files -n lib%{name}
 %_libdir/liblua%soffix
-%dir %_libdir/lua5
-%dir %_datadir/lua5
+%dir %_libdir/lua
+%dir %_datadir/lua
+%dir %_libdir/lua/5.1
+%dir %_datadir/lua/5.1
 %dir %pkgdocdir
 %pkgdocdir/COPYRIGHT
 %pkgdocdir/HISTORY
 %pkgdocdir/README
 
-%files -n liblua5.1-devel
-%_includedir/*.*
-%_libdir/liblua.so
-%_pkgconfigdir/lua.pc
+%files -n lib%{name}-devel
+%_includedir/*
+%_libdir/liblua*.so
+%_pkgconfigdir/lua*.pc
 
-%files -n liblua5.1-devel-static
-%_libdir/liblua.a
+%files -n lib%{name}-devel-static
+%_libdir/liblua-5.1.a
 
 %files doc
 %dir %pkgdocdir
@@ -160,6 +193,18 @@ mkdir -p %buildroot{%_libdir,%_datadir}/lua5
 %pkgdocdir/test
 
 %changelog
+* Wed Feb 08 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.1.5-alt3
+- added lua-5.1.pc, liblua-5.1.so and related files (thx Igor Vlasenko).
+- removed liblua5-devel provides to avoid clash with liblua5.3-devel (thx Igor
+  Vlasenko).
+- renamed lua5 package to lua5.1.
+- added %%pre for 5->5.1 upgrade (thx Igor Vlasenko).
+- added symlinks for fedora (thx Igor Vlasenko).
+- removed %%_bindir/lua %%_bindir/luac %%_man1dir/lua.1*
+  %%_man1dir/luac.1*.
+- reverted LUA_LDIR and LUA_CDIR in luaconf.h and paths in lua.pc.
+- fixed build with gcc6.
+
 * Tue Dec 20 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.1.5-alt2
 - renamed liblua5-devel package to liblua5.1-devel
 - renamed liblua5-devel-static package to liblua5.1-devel-static
