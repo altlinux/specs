@@ -3,7 +3,7 @@
 
 Name: lua5.3
 Version: %major_version.3
-Release: alt4
+Release: alt5
 Summary: Powerful light-weight programming language
 Group: Development/Other
 License: MIT
@@ -32,8 +32,6 @@ BuildRequires: automake-common autoconf-common libtool-common readline-devel lib
 Provides: lua(abi) = %major_version
 Requires: liblua = %version
 Source44: import.info
-Conflicts: lua5 < %version
-Obsoletes: lua5 < %version
 Provides: lua = %EVR
 Provides: lua5 = %EVR
 
@@ -60,45 +58,46 @@ BuildArch: noarch
 
 This package contains documantaion for %oname
 
-%package -n liblua5-devel
+%package -n lib%{name}-devel
 Summary: Development files for %oname
 Group: Development/C
 Requires: %name = %version
 Provides: lua-devel = %EVR
 Provides: liblua-devel = %EVR
 Provides: liblua5-devel = %EVR
-Provides: liblua5.3-devel = %EVR
-Conflicts: liblua5-devel < %version
+Obsoletes: liblua5-devel < %EVR
+Conflicts: liblua5-devel < %EVR
 Conflicts: liblua4-devel < %version
 Conflicts: liblua-devel < %version
 
-%description -n liblua5-devel
+%description -n lib%{name}-devel
 %common_descr
 
 This package contains development files for %oname.
 
-%package -n liblua5.3
+%package -n lib%{name}
 Group: Development/Other
 Summary: Libraries for %oname
 Provides: liblua = %EVR
 Provides: liblua5 = %EVR
 
-%description -n liblua5.3
+%description -n lib%{name}
 %common_descr
 
 This package contains the shared libraries for %oname.
 
-%package -n liblua5-devel-static
+%package -n lib%{name}-devel-static
 Summary: Static library for %oname
 Group: Development/C
 Requires: %name%{?_isa} = %version-%release
 Provides: lua-static = %EVR
+Provides: lua-devel-static = %EVR
 Provides: liblua5-devel-static = %EVR
-Provides: liblua5.3-devel-static = %EVR
-Conflicts: liblua5-devel-static < %version
+Obsoletes: liblua5-devel-static < %EVR
+Conflicts: liblua5-devel-static < %EVR
 Conflicts: liblua4-devel-static < %version
 
-%description -n liblua5-devel-static
+%description -n lib%{name}-devel-static
 %common_descr
 
 This package contains the static version of liblua for %oname.
@@ -141,8 +140,17 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %buildroot/%_bindir/lua -e"_U=true" all.lua
 %install
 make install DESTDIR=%buildroot
 rm %buildroot%_libdir/*.la
-mkdir -p %buildroot%_libdir/lua5
-mkdir -p %buildroot%_datadir/lua5
+mkdir -p %buildroot%_libdir/lua/%major_version
+mkdir -p %buildroot%_datadir/lua/%major_version
+
+mv %buildroot%_bindir/lua{,5.3}
+mv %buildroot%_bindir/luac{,5.3}
+ln -s lua5.3 %buildroot%_bindir/lua
+ln -s luac5.3 %buildroot%_bindir/luac
+mv %buildroot%_man1dir/lua{,5.3}.1
+mv %buildroot%_man1dir/luac{,5.3}.1
+ln -s lua5.3.1 %buildroot%_man1dir/lua.1
+ln -s luac5.3.1 %buildroot%_man1dir/luac.1
 
 # Rename luaconf.h to luaconf-<arch>.h to avoid file conflicts on
 # multilib systems and install luaconf.h wrapper
@@ -157,31 +165,44 @@ if ! [ -e %buildroot/%_includedir/luaconf-i386.h ]; then
 fi
 %endif
 
+mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
+echo lua-devel >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/lib%{name}-devel
+echo lua-devel-static >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/lib%{name}-devel-static
+
+
 %files
-%_bindir/lua
-%_bindir/luac
+%_bindir/lua*
+%_bindir/luac*
 %_mandir/man1/lua*.1*
 
 %files doc
 %doc doc/*.html doc/*.css doc/*.gif doc/*.png
 
-%files -n liblua5.3
+%files -n lib%{name}
 %doc COPYRIGHT
 %doc README
 %_libdir/liblua-%major_version.so
-%dir %_libdir/lua5
-%dir %_datadir/lua5
+%dir %_libdir/lua/%major_version
+%dir %_datadir/lua/%major_version
 
-%files -n liblua5-devel
+%files -n lib%{name}-devel
 %_includedir/l*.h
 %_includedir/l*.hpp
 %_libdir/liblua.so
 %_libdir/pkgconfig/*.pc
+%config %_sysconfdir/buildreqs/packages/substitute.d/lib%{name}-devel
 
-%files -n liblua5-devel-static
+%files -n lib%{name}-devel-static
 %_libdir/*.a
+%config %_sysconfdir/buildreqs/packages/substitute.d/lib%{name}-devel-static
 
 %changelog
+* Wed Feb 01 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.3.3-alt5
+- made symlinks to lua5.3 and luac5.3 binary and manpages.
+- removed conflicts and obsoletes to previous version of lua5.
+- removed needless provides in liblua5-devel.
+- reverted lua modules paths in liblua5.3 package.
+
 * Wed Dec 21 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.3.3-alt4
 - added extra provides to devel packages
 - fixed provides in liblua5-devel-static
