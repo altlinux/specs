@@ -1,6 +1,6 @@
 Name: audit
-Version: 2.6.7
-Release: alt1.1
+Version: 2.7.1
+Release: alt1%ubt
 
 Packager: Anton Farygin <rider@altlinux.com>
 
@@ -10,11 +10,11 @@ License: GPL
 Group: Monitoring
 URL: http://people.redhat.com/sgrubb/audit/
 Source: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Patch0: %name-%version-alt.patch
 
 Requires: lib%{name}1 = %version-%release
 Requires: service >= 0.5.26-alt1
-
+BuildRequires(pre):rpm-build-ubt
 # Automatically added by buildreq on Wed Mar 04 2009
 BuildRequires: glibc-devel-static libkrb5-devel libldap-devel perl-XML-Parser python-devel swig libprelude-devel intltool
 
@@ -174,6 +174,9 @@ install -pD -m644 rules/10-base-config.rules %buildroot%_sysconfdir/%name/rules.
 %python_sitelibdir/*
 
 %changelog
+* Wed Feb 08 2017 Anton Farygin <rider@altlinux.ru> 2.7.1-alt1%ubt
+- new version
+
 * Wed Feb 01 2017 Igor Vlasenko <viy@altlinux.ru> 2.6.7-alt1.1
 - rebuild with libprelude
 
