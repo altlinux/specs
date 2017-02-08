@@ -9,8 +9,8 @@
 
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
 
-%global gcc_version 4.8
-%set_gcc_version %gcc_version
+#global gcc_version 4.8
+#set_gcc_version %gcc_version
 
 %set_verify_elf_method rpath=relaxed textrel=relaxed lfs=relaxed lint=relaxed
 
@@ -25,7 +25,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        55.0.2883.75
+Version:        56.0.2924.87
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -49,14 +49,14 @@ Obsoletes:      chromium-browser < %version
 Obsoletes:      chromium-stable <= %version
 
 ### Start Patches
-Patch001: 0001-OPENSUSE-patches-in-system-zlib-library.patch
-Patch002: 0002-OPENSUSE-enables-reading-of-the-master-preference.patch
-Patch003: 0003-OPENSUSE-Compile-the-sandbox-with-fPIE-settings.patch
-Patch004: 0004-ALT-Fix-krb5-includes-path.patch
-Patch005: 0005-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
-Patch006: 0006-DEBIAN-manpage-updates-fixes.patch
-Patch007: 0007-DEBIAN-change-icon.patch
-Patch008: 0008-DEBIAN-fix-gcc4.7.patch
+Patch001: 0001-OPENSUSE-enables-reading-of-the-master-preference.patch
+Patch002: 0002-OPENSUSE-Compile-the-sandbox-with-fPIE-settings.patch
+Patch003: 0003-ALT-Fix-krb5-includes-path.patch
+Patch004: 0004-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
+Patch005: 0005-DEBIAN-manpage-updates-fixes.patch
+Patch006: 0006-DEBIAN-change-icon.patch
+Patch007: 0007-DEBIAN-fix-gcc4.7.patch
+Patch008: 0008-ALT-gcc6-fixes.patch
 Patch009: 0009-DEBIAN-disable-third-party-cookies-by-default.patch
 Patch010: 0010-DEBIAN-add-ps-printing-capability-gtk2.patch
 Patch011: 0011-ALT-fix-shrank-by-one-character.patch
@@ -81,7 +81,7 @@ BuildRequires:  bison
 BuildRequires:  bzlib-devel
 BuildRequires:  flex
 BuildRequires:  chrpath
-BuildRequires:  gcc%gcc_version-c++
+BuildRequires:  gcc-c++
 %if_enabled clang
 BuildRequires:  clang
 %endif
@@ -465,6 +465,32 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Wed Feb 08 2017 Alexey Gladkov <legion@altlinux.ru> 56.0.2924.87-alt1
+- New version (56.0.2924.87).
+- Security fixes:
+  - CVE-2017-5007: Universal XSS in Blink. Credit to Mariusz Mlynski
+  - CVE-2017-5006: Universal XSS in Blink. Credit to Mariusz Mlynski
+  - CVE-2017-5008: Universal XSS in Blink. Credit to Mariusz Mlynski
+  - CVE-2017-5010: Universal XSS in Blink. Credit to Mariusz Mlynski
+  - CVE-2017-5011: Unauthorised file access in Devtools. Credit to Khalil Zhani
+  - CVE-2017-5009: Out of bounds memory access in WebRTC. Credit to Sean Stanek and Chip Bradford
+  - CVE-2017-5012: Heap overflow in V8. Credit to Gergely Nagy (Tresorit)
+  - CVE-2017-5013: Address spoofing in Omnibox. Credit to Haosheng Wang (@gnehsoah)
+  - CVE-2017-5014: Heap overflow in Skia. Credit to sweetchip
+  - CVE-2017-5015: Address spoofing in Omnibox. Credit to Armin Razmdjou
+  - CVE-2017-5019: Use after free in Renderer. Credit to Wadih Matar
+  - CVE-2017-5016: UI spoofing in Blink. Credit to Haosheng Wang (@gnehsoah)
+  - CVE-2017-5017: Uninitialised memory access in webm video. Credit to Dan Berman
+  - CVE-2017-5018: Universal XSS in chrome://apps. Credit to Rob Wu
+  - CVE-2017-5020: Universal XSS in chrome://downloads. Credit to Rob Wu
+  - CVE-2017-5021: Use after free in Extensions. Credit to Rob Wu
+  - CVE-2017-5022: Bypass of Content Security Policy in Blink. Credit to  evi1m0#ly.com
+  - CVE-2017-5023: Type confusion in metrics. Credit to the UK's National Cyber Security Centre (NCSC)
+  - CVE-2017-5024: Heap overflow in FFmpeg. Credit to Paul Mehta
+  - CVE-2017-5025: Heap overflow in FFmpeg. Credit to Paul Mehta
+  - CVE-2017-5026: UI spoofing. Credit to Ronni Skansing
+  - CVE-2017-5027: Bypass of Content Security Policy in Blink.
+
 * Thu Dec 08 2016 Alexey Gladkov <legion@altlinux.ru> 55.0.2883.75-alt1
 - New version (55.0.2883.75).
 - Security fixes:
