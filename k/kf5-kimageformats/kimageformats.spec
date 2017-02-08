@@ -1,8 +1,8 @@
 %define rname kimageformats
 
 Name: kf5-%rname
-Version: 5.28.0
-Release: alt1
+Version: 5.30.0
+Release: alt1%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -16,8 +16,8 @@ Source: %rname-%version.tar
 
 # Automatically added by buildreq on Wed Feb 17 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ ilmbase-devel libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-printsupport libqt5-widgets libstdc++-devel pkg-config python-base python-modules python3 python3-base ruby ruby-stdlibs
-#BuildRequires: extra-cmake-modules kf5-karchive-devel openexr-devel python-module-google qt5-base-devel rpm-build-kf5 rpm-build-python3 rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5
+#BuildRequires: extra-cmake-modules kf5-karchive-devel openexr-devel python-module-google qt5-base-devel rpm-build-kf5 rpm-build-ubt rpm-build-python3 rpm-build-ruby
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules openexr-devel qt5-base-devel
 BuildRequires: kf5-karchive-devel
 
@@ -54,6 +54,15 @@ Requires: kf5-filesystem
 
 
 %changelog
+* Wed Feb 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.30.0-alt1%ubt
+- new version
+
+* Tue Dec 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.29.0-alt1%ubt
+- new version
+
+* Fri Nov 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt0.M80P.1
+- build for M80P
+
 * Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt1
 - new version
 

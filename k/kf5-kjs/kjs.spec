@@ -1,8 +1,8 @@
 %define rname kjs
 
 Name: kf5-%rname
-Version: 5.28.0
-Release: alt1
+Version: 5.30.0
+Release: alt1%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -15,7 +15,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Thu Mar 19 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libcloog-isl4 libgpg-error libqt5-core libqt5-test libstdc++-devel pkg-config python-base ruby ruby-stdlibs xml-common xml-utils
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static libpcre-devel python-module-google qt5-base-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: kf5-karchive-devel kf5-kdoctools kf5-kdoctools-devel-static
 #BuildRequires: kf5-kdelibs4support
@@ -88,6 +88,15 @@ KF5 library
 %_K5lib/libKF5JSApi.so.*
 
 %changelog
+* Wed Feb 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.30.0-alt1%ubt
+- new version
+
+* Tue Dec 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.29.0-alt1%ubt
+- new version
+
+* Fri Nov 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt0.M80P.1
+- build for M80P
+
 * Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt1
 - new version
 

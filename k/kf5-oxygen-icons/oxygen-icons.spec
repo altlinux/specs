@@ -1,8 +1,8 @@
 %define rname oxygen-icons5
 
 Name: kf5-oxygen-icons
-Version: 5.28.0
-Release: alt1
+Version: 5.30.0
+Release: alt1%ubt
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -18,7 +18,7 @@ Patch1: alt-icons-defaults.patch
 # Automatically added by buildreq on Fri Dec 11 2015 (-bi)
 # optimized out: cmake cmake-modules gtk-update-icon-cache libqt5-core libstdc++-devel perl-Encode perl-XML-LibXML perl-XML-SAX perl-XML-SAX-Base perl-XML-Simple perl-parent python-base python3 python3-base
 #BuildRequires: extra-cmake-modules gcc-c++ icon-naming-utils qt5-base-devel rpm-build-python3 ruby ruby-stdlibs
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: icon-naming-utils
 
@@ -74,6 +74,15 @@ done
 %_iconsdir/oxygen*/
 
 %changelog
+* Wed Feb 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.30.0-alt1%ubt
+- new version
+
+* Tue Dec 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.29.0-alt1%ubt
+- new version
+
+* Fri Nov 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt0.M80P.1
+- build for M80P
+
 * Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt1
 - new version
 

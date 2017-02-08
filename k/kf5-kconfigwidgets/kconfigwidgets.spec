@@ -1,8 +1,8 @@
 %define rname kconfigwidgets
 
 Name: kf5-%rname
-Version: 5.28.0
-Release: alt1
+Version: 5.30.0
+Release: alt1%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -16,7 +16,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Thu Feb 12 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel python-base ruby ruby-stdlibs xml-common xml-utils
 #BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kguiaddons-devel kf5-ki18n-devel kf5-kwidgetsaddons-devel python-module-google qt5-base-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kcoreaddons-devel kf5-kguiaddons-devel kf5-ki18n-devel
@@ -83,6 +83,15 @@ mkdir -p %buildroot/%_K5data/kconfigwidgets/
 %_K5lib/libKF5ConfigWidgets.so.*
 
 %changelog
+* Wed Feb 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.30.0-alt1%ubt
+- new version
+
+* Tue Dec 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.29.0-alt1%ubt
+- new version
+
+* Fri Nov 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt0.M80P.1
+- build for M80P
+
 * Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt1
 - new version
 

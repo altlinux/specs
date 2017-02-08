@@ -1,8 +1,8 @@
 %define rname ki18n
 
 Name: kf5-%rname
-Version: 5.28.0
-Release: alt1
+Version: 5.30.0
+Release: alt1%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -16,7 +16,7 @@ Patch1: alt-fallback.patch
 # Automatically added by buildreq on Tue Feb 10 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libcloog-isl4 libqt5-concurrent libqt5-core libqt5-script libqt5-test libstdc++-devel python-base python-modules qt5-base-devel ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ python-module-google python-modules-encodings qt5-script-devel rpm-build-gir rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-script-devel qt5-declarative-devel python-modules-encodings
 
 %description
@@ -79,6 +79,15 @@ KF5 library
 %_K5plug/kf5/ktranscript.so
 
 %changelog
+* Wed Feb 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.30.0-alt1%ubt
+- new version
+
+* Tue Dec 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.29.0-alt1%ubt
+- new version
+
+* Fri Nov 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt0.M80P.1
+- build for M80P
+
 * Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt1
 - new version
 

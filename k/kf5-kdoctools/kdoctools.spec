@@ -1,8 +1,8 @@
 %define rname kdoctools
 
 Name: kf5-%rname
-Version: 5.28.0
-Release: alt1
+Version: 5.30.0
+Release: alt1%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -16,7 +16,7 @@ Patch1: alt-find-docbookxml.patch
 # Automatically added by buildreq on Wed Feb 11 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds elfutils libcloog-isl4 libgpg-error libqt5-core libstdc++-devel libxml2-devel pkg-config python-base xml-common xml-utils
 #BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-ki18n-devel libxslt-devel python-module-google qt5-base-devel ruby ruby-stdlibs xsltproc
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-ki18n-devel libxslt-devel qt5-base-devel xsltproc
 BuildRequires: perl-URI
 
@@ -85,6 +85,15 @@ KF5 library
 %_K5lib/lib*.a
 
 %changelog
+* Wed Feb 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.30.0-alt1%ubt
+- new version
+
+* Tue Dec 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.29.0-alt1%ubt
+- new version
+
+* Fri Nov 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt0.M80P.1
+- build for M80P
+
 * Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt1
 - new version
 

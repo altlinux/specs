@@ -1,8 +1,8 @@
 %define rname sonnet
 
 Name: kf5-%rname
-Version: 5.28.0
-Release: alt1
+Version: 5.30.0
+Release: alt1%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -11,12 +11,11 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
-Patch1: alt-find-hunspell.patch
 
 # Automatically added by buildreq on Fri Dec 26 2014 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-gui libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ libhunspell-devel python-module-google qt5-tools-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-tools-devel libhunspell-devel
 
 %description
@@ -55,7 +54,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
+sed -i -E 's|^FIND_LIBRARY\(HUNSPELL_LIBRARIES[[:space:]]+NAMES[[:space:]]+hunspell-|FIND_LIBRARY(HUNSPELL_LIBRARIES NAMES hunspell hunspell-|' cmake/FindHUNSPELL.cmake
 
 %build
 %K5build
@@ -86,6 +85,15 @@ KF5 library
 %_K5lib/libKF5SonnetUi.so.*
 
 %changelog
+* Wed Feb 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.30.0-alt1%ubt
+- new version
+
+* Tue Dec 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.29.0-alt1%ubt
+- new version
+
+* Fri Nov 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt0.M80P.1
+- build for M80P
+
 * Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt1
 - new version
 

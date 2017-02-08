@@ -1,8 +1,8 @@
 %define rname kapidox
 
 Name: kf5-%rname
-Version: 5.28.0
-Release: alt1
+Version: 5.30.0
+Release: alt1%ubt
 %K5init altplace
 %setup_python_module %rname
 
@@ -18,7 +18,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Wed Feb 18 2015 (-bi)
 # optimized out: cmake-modules python-base python-modules python-modules-compiler python-modules-email
 #BuildRequires: cmake graphviz python-devel python-module-google rpm-build-gir ruby ruby-stdlibs
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: cmake graphviz python-devel
 
 %description
@@ -79,6 +79,15 @@ mv %buildroot/usr/lib/python* %buildroot/%_libdir/
 #%_K5archdata/mkspecs/modules/qt_kapidox.pri
 
 %changelog
+* Wed Feb 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.30.0-alt1%ubt
+- new version
+
+* Tue Dec 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.29.0-alt1%ubt
+- new version
+
+* Fri Nov 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt0.M80P.1
+- build for M80P
+
 * Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt1
 - new version
 
