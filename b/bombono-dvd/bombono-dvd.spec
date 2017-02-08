@@ -1,22 +1,34 @@
-Summary: DVD authoring program with nice and clean GUI
 Name: bombono-dvd
-Version: 1.2.2
-Release: alt2.1
-License: GPL
+Version: 1.2.4
+Release: alt1
+
+Summary: DVD authoring program with nice and clean GUI
 Group: Video
+License: GPL
 Url: http://www.bombono.org
-Source0: %name-%version.tar
-Patch: bombono-dvd-1.2.2-alt-libavcodec.patch
+
+Source: %name-%version.tar
+
+Patch: bombono-dvd-1.2.4-alt-libavcodec.patch
+# https://aur.archlinux.org/bombono-dvd.git
+Patch10: fix_ffmpeg_codecid.patch
+Patch11: fix_ptr2bool_cast.patch
+Patch12: fix_c++11_literal_warnings.patch
+Patch13: autoptr2uniqueptr.patch
+Patch14: fix_deprecated_boost_api.patch
+Patch15: fix_ffmpeg30.patch
 
 %py_provides ASettings
 
-BuildRequires: gcc-c++ scons libgtk+2-devel libgtkmm2-devel libmjpegtools-devel libdvdread-devel dvdauthor libxml++2-devel
+Requires: %name-data = %EVR
+Requires: twolame enca mjpegtools dvdauthor dvd+rw-tools cdrkit
+
+BuildRequires: gcc-c++ scons libgtkmm2-devel libmjpegtools-devel libdvdread-devel dvdauthor libxml++2-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libswscale-devel
 BuildRequires: boost-asio-devel boost-filesystem-devel boost-python-devel boost-signals-devel
 
-Requires: twolame enca
-
 %add_findreq_skiplist *menu_SConscript
+#%%add_findreq_skiplist scons_authoring/*.py
 
 %description
 Bombono DVD is easy to use program for making DVD-Video.
@@ -27,18 +39,32 @@ The main features of Bombono DVD are:
   * you can author to folder, make ISO-image or burn directly to DVD
   * reauthoring: you can import video from DVD discs.
 
+%package data
+Summary: Arch independent files for %name
+Group: Video
+BuildArch: noarch
+
+%description data
+This package provides noarch data needed for %name to work.
+
 %prep
 %setup
-
-%patch -p0
-
-sed -i "s|^\(release_flags\).*|\1 = ['-O2', '-g']|" SConstruct
+%patch -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
 
 %build
-scons -j %__nprocs PREFIX=/usr USE_EXT_BOOST=1
+scons -j %__nprocs \
+PREFIX=%_prefix \
+USE_EXT_BOOST=1 \
+CXXFLAGS="${RPM_OPT_FLAGS}"
 
 %install
-scons PREFIX=/usr DESTDIR=%buildroot install
+scons DESTDIR=%buildroot install
 
 #Fix #25334
 rm -f %buildroot%_datadir/bombono/resources/copy-n-paste/FreeSans.ttf
@@ -47,18 +73,24 @@ ln -s %_datadir/fonts/ttf/freefont/FreeSans.ttf %buildroot%_datadir/bombono/reso
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%_bindir/*
-%_datadir/bombono
-%_datadir/applications/*
-#%_iconsdir/*
+%_bindir/bombono-dvd
+%_bindir/mpeg2demux
+
+%files data
+%_desktopdir/*
+%_datadir/bombono/
 %_pixmapsdir/*
-%_liconsdir/*
-%_miconsdir/*
-%_niconsdir/*
+%_iconsdir/hicolor/*x*/apps/%name.png
 %_man1dir/*
 %_datadir/mime/packages/*
 
 %changelog
+* Wed Feb 08 2017 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
+- 1.2.4
+- updated patches
+- fixed reqs
+- new -data subpackage
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.2-alt2.1
 - Rebuilt for gcc5 C++11 ABI.
 
