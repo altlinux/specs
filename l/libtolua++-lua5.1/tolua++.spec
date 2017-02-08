@@ -1,20 +1,19 @@
-%define solib tolua++-5.3
+%define solib tolua++-5.1
 
-Name: tolua++
+Name: libtolua++-lua5.1
 Version: 1.0.93
 Release: alt2
 Summary: A tool to integrate C/C++ code with Lua
 Group: System/Libraries
 License: MIT
 Url: http://www.codenix.com/~tolua/
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
-Source: http://www.codenix.com/~tolua/%name-%version.tar.bz2
-Patch0: tolua++-1.0.93-no-buildin-bytecode.patch
-Patch1: tolua++-1.0.93-lua53.patch
+Source: http://www.codenix.com/~tolua/tolua++-%version.tar.bz2
+Patch0: tolua++-1.0.93-lua51.patch
+Patch1: tolua++-1.0.93-lua-include-path.patch
 
 BuildRequires: scons
-BuildRequires: lua-devel >= 5.3
+BuildRequires: liblua5.1-devel
 
 %description
 tolua++ is an extended version of tolua, a tool to integrate C/C++ code with
@@ -24,49 +23,56 @@ Lua. tolua++ includes new features oriented to C++
 Summary: Development files for tolua++
 Group: Development/C++
 Requires: tolua++ = %version-%release
-Requires: lua-devel >= 5.3
+Requires: liblua5.1-devel
+Conflicts: tolua++-devel
 
 %description devel
-Development files for tolua++
+Development files for tolua++ (for lua 5.1)
 
 %prep
-%setup -q
+%setup -q -n tolua++-%version
 %patch0 -p1
 %patch1 -p1
-sed -i 's/\r//' doc/%name.html
+sed -i 's/\r//' doc/tolua++.html
 
 %build
 scons %{?_smp_mflags} -Q CCFLAGS="%optflags  -I%_includedir" tolua_lib=%solib LINKFLAGS="-Wl,-soname,lib%solib.so" shared=1
-#Recompile the exe without the soname. An ugly hack.
-gcc -o bin/%name src/bin/tolua.o -Llib -l%solib -llua -ldl -lm
+# from fedora's compat-tolua-5.1
+# Relink the tolua++ binary, there are 2 reasons for this:
+# -Link it without the soname which we add to LINKFLAGS to build a shared lib
+# -On non x86_64 link it against the pre-generated toluabind rather then the
+#  bootstapped one as something goes wrong with the bootstrap on ARM, x86_32
+#  (rhbz#1094103) and ppc (rhbz#704372) causing a segfault for unknown reasons.
+%ifarch x86_64
+gcc -o bin/tolua++ src/bin/tolua.o src/bin/toluabind.o -Llib -l%{solib} -llua-5.1 -ldl -lm
+%else
+gcc -o bin/tolua++ src/bin/tolua.o src/bin/toluabind_default.o -Llib -l%{solib} -llua-5.1 -ldl -lm
+%endif
 
 %install
 
 mkdir -p %buildroot%_bindir
 mkdir %buildroot%_libdir
 mkdir %buildroot%_includedir
-install -m0755 bin/%name  %buildroot%_bindir
+install -m0755 bin/tolua++  %buildroot%_bindir
 install -m0755 lib/lib%solib.so %buildroot%_libdir
-ln -s lib%solib.so %buildroot%{_libdir}/libtolua++.so
-install -m0644 include/%name.h %buildroot%_includedir
-# For use with Patch2 (not working yet)
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
-install -p -m 644 src/bin/lua/*.lua $RPM_BUILD_ROOT%{_datadir}/%{name}
+install -m0644 include/tolua++.h %buildroot%_includedir
+cd %buildroot%_libdir
+ln -s lib%solib.so libtolua++.so
 
 %files
-%doc README
 %_libdir/lib%solib.so
-%{_datadir}/%{name}
+%doc README
 
 %files devel
 %doc doc/*
-%_bindir/%name
+%_bindir/tolua++
 %_libdir/libtolua++.so
-%_includedir/%name.h
+%_includedir/tolua++.h
 
 %changelog
 * Wed Feb 08 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.93-alt2
-- build with lua 5.3
+- build with compat lua 5.1
 
 * Mon Jul 04 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.93-alt1
 - 1.0.93 (ALT #25847)
