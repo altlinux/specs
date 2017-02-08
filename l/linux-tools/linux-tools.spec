@@ -6,7 +6,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt1.1
+Release: alt4
 
 Summary: Performance analysis tools for Linux
 License: GPLv2
@@ -16,11 +16,18 @@ URL: http://www.kernel.org/
 BuildRequires: libaudit-devel elfutils-devel libnuma-devel perl-devel libslang2-devel libunwind-devel bison flex binutils-devel asciidoc xmlto libssl-devel liblzma-devel
 BuildRequires: rpm-build-kernel
 BuildRequires: %kernel_source = 1.0.0
+BuildRequires: python-dev
 
 Patch1: linux-tools-alt.patch
+Patch2: python-linking.patch
 
 AutoReq: yes,noperl,nopython
 AutoProv: yes,noperl,nopython
+
+%package -n python-module-perf
+Summary: Python bindings for apps which will manipulate perf events
+Group: Development/Python
+Provides: python-perf
 
 %description
 Performance counters for Linux are a new kernel-based subsystem that provide
@@ -29,11 +36,17 @@ a framework for all things performance analysis. It covers hardware level
 (software counters, tracepoints) as well.
 This package contains performance analysis tools for Linux
 
+%description -n python-module-perf
+The python-perf package contains a module that permits applications
+written in the Python programming language to use the interface
+to manipulate perf events.
+
 %prep
 %setup -cT
 tar -xf %kernel_src/%kernel_source.tar*
 cd %kernel_source
 %patch1 -p1
+%patch2 -p1
 
 %build
 %install
@@ -44,10 +57,13 @@ make VERSION=%kernel_base_version \
      VF=1 \
      WERROR=0 \
      NO_GTK2=1 \
+     PYTHON=python2 \
+     PYTHON_CONFIG=python2-config \
      DESTDIR=%buildroot \
      prefix=%_prefix \
      install \
-     install-man
+     install-man \
+     install-python_ext
 
 install -d -m 0755 %buildroot%_docdir/%name
 install -m 0644 {CREDITS,design.txt,Documentation/examples.txt,Documentation/tips.txt} %buildroot%_docdir/%name/
@@ -79,7 +95,19 @@ popd
 %_datadir/perf_%kernel_base_version-core
 %doc %_docdir/%name
 
+%files -n python-module-perf
+%python_sitelibdir/perf*
+
 %changelog
+* Wed Feb  8 2017 Terechkov Evgenii <evg@altlinux.org> 4.9-alt4
+- Add python-module-perf subpackage
+
+* Wed Feb  8 2017 Terechkov Evgenii <evg@altlinux.org> 4.9-alt3
+- Add patch2 to linking python
+
+* Wed Feb  8 2017 Terechkov Evgenii <evg@altlinux.org> 4.9-alt2
+- Build with python support
+
 * Mon Feb 06 2017 Igor Vlasenko <viy@altlinux.ru> 4.9-alt1.1
 - rebuild with new perl 5.24.1
 
