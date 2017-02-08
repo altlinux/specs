@@ -1,4 +1,4 @@
-%define ver_major 0.8
+%define ver_major 0.10
 %define xdg_name org.gnome.Recipes
 
 Name: recipes
@@ -71,6 +71,9 @@ rm -f %buildroot%_libdir/%name/*.{a,la}
 
 
 %changelog
+* Wed Feb 08 2017 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Thu Jan 19 2017 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
