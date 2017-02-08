@@ -1,11 +1,16 @@
 Summary: Flat assembler
 Name: fasm
-Version: 1.71.57
+Version: 1.71.60
 Release: alt1
-License: distributable
+License: BSD-like
 Group: Development/Tools
 Source0: http://flatassembler.net/%name-%version.tgz
 Url: http://flatassembler.net/
+ExclusiveArch: %ix86
+
+# Automatically added by buildreq on Wed Feb 08 2017
+# optimized out: python-base
+BuildRequires: fasm prelink
 
 %description
 The flat assembler is a fast and efficient self-assembling 80x86
@@ -19,19 +24,32 @@ is included.
 
 %prep
 %setup -n %name
+sed -i 's/fopen/fopen64/g' source/libc/system.inc
+sed -i 's/fopen/fopen64/g' tools/libc/system.inc
 
 %build
-cd source/Linux
-../../%name %name.asm
+%define FTOOLS listing prepsrc symbols
+fasm source/Linux/fasm.asm fasm
+for n in %FTOOLS; do
+	./fasm tools/libc/$n.asm $n.o
+	cc $n.o -o $n
+	execstack -c $n
+done
 
 %install
-install -Dm755 source/Linux/%name %buildroot%_bindir/%name
+install -Dm755 %name %buildroot%_bindir/%name
+install %FTOOLS %buildroot%_bindir/
 
 %files
-%doc *.txt examples tools
+%doc *.txt examples
 %_bindir/*
 
 %changelog
+* Wed Feb 08 2017 Fr. Br. George <george@altlinux.ru> 1.71.60-alt1
+- Autobuild version bump to 1.71.60
+- Package made ix86-only
+- Assembler tools added
+
 * Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 1.71.57-alt1
 - Autobuild version bump to 1.71.57
 
