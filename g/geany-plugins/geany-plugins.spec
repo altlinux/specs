@@ -1,6 +1,6 @@
 Name: geany-plugins
 Version: 1.28
-Release: alt1
+Release: alt1.1
 %define geany_ver %version
 
 Summary: Plugins for Geany
@@ -17,7 +17,7 @@ Requires: geany-plugins-vc
 
 # Automatically added by buildreq on Tue Jul 05 2016
 # optimized out: fontconfig fontconfig-devel geany glib2-devel gnu-config libX11-devel libXext-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgpg-error-devel libgtk+2-devel libjavascriptcoregtk2-devel libpango-devel libsoup-devel perl-XML-Parser pkg-config python-base python-devel python-module-pygobject-devel python-modules vala xorg-xproto-devel zlib-devel
-BuildRequires: cppcheck geany-devel intltool libGConf-devel libcheck-devel libenchant-devel libgit2-devel libgpgme-devel libgtkspell-devel liblua5-devel libvte-devel libwebkitgtk2-devel libwnck-devel libxml2-devel
+BuildRequires: cppcheck geany-devel intltool libGConf-devel libcheck-devel libenchant-devel libgit2-devel libgpgme-devel libgtkspell-devel lua-devel libvte-devel libwebkitgtk2-devel libwnck-devel libxml2-devel
 # TODO python-module-pygtk-devel
 
 %description
@@ -54,14 +54,14 @@ Various VCS integration (Git, SVN, ...) for Geany
 %files
 %doc %_defaultdocdir/%name
 %_libdir/geany/*
-%_libdir/geany-plugins/*
+#%_libdir/geany-plugins/*
 %_datadir/geany-plugins/*
 #dir #_libexecdir/geany-plugins
 #_libexecdir/geany-plugins/*
 %_iconsdir/hicolor/*/apps/*
 %exclude %_libdir/geany/geanyvc*
 %exclude %_libdir/geany/*.la
-%exclude %_libdir/geany-plugins/*/*.la
+#exclude %_libdir/geany-plugins/*/*.la
 
 %files common -f %name.lang
 %files vc
@@ -69,6 +69,9 @@ Various VCS integration (Git, SVN, ...) for Geany
 %exclude %_libdir/geany/*.la
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1.1
+- NMU: rebuild with new lua
+
 * Thu Jul 14 2016 Fr. Br. George <george@altlinux.ru> 1.28-alt1
 - Autobuild version bump to 1.28
 
