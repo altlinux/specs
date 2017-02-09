@@ -1,6 +1,7 @@
+%def_with lua_compat
 Name: lua5.1
 Version: 5.1.5
-Release: alt5
+Release: alt6
 
 Summary: Embeddable programming language
 License: MIT
@@ -151,20 +152,28 @@ mkdir -p %buildroot{%_libdir,%_bindir,%_includedir/lua-5.1,%_man1dir,%pkgdocdir/
 cd ./src
 cp -p liblua-5.1.a liblua%soffix %buildroot%_libdir/
 ln -s liblua%soffix %buildroot%_libdir/liblua-5.1.so
+ln -s liblua%soffix %buildroot%_libdir/liblua5.1.so
 cp -p lua %buildroot%_bindir/lua-5.1
 cp -p luac %buildroot%_bindir/luac-5.1
 ln -s lua-5.1 %buildroot%_bindir/lua5.1
 ln -s luac-5.1 %buildroot%_bindir/luac5.1
 cp -p lua.h luaconf.h lualib.h lauxlib.h ../etc/lua.hpp %buildroot%_includedir/lua-5.1
 install -pD -m644 ../etc/lua.pc %buildroot%_pkgconfigdir/lua-5.1.pc
+ln -s lua-5.1.pc %buildroot%_pkgconfigdir/lua5.1.pc
 
 # Fix paths in lua-5.1.pc:
 sed -i 's|/usr/lib|%_libdir|g;s|/usr/share|%_datadir|g;' %buildroot%_pkgconfigdir/lua-5.1.pc
 
-# REMOVE ME: compat symlinks that conflicts with other lua's -devels
+%if_with lua_compat
+# compat symlinks that conflicts with other lua's -devels
 ln -s liblua-5.1.so %buildroot%_libdir/liblua.so
 ln -s lua-5.1.pc %buildroot%_pkgconfigdir/lua.pc
-cp -p lua.h luaconf.h lualib.h lauxlib.h ../etc/lua.hpp %buildroot%_includedir/
+pushd %buildroot%_includedir/lua-5.1
+for i in *.*; do
+    ln -s lua-5.1/$i %buildroot%_includedir/$i
+done
+popd
+%endif
 
 cd ..
 cp -av COPYRIGHT HISTORY README etc test %buildroot%pkgdocdir/
@@ -212,9 +221,15 @@ fi
 %pkgdocdir/README
 
 %files -n lib%{name}-devel
-%_includedir/*
-%_libdir/liblua*.so
-%_pkgconfigdir/lua*.pc
+%_includedir/lua-5.1
+%_libdir/liblua*5.1.so
+%_pkgconfigdir/lua*5.1.pc
+%if_with lua_compat
+%_libdir/liblua.so
+%_pkgconfigdir/lua.pc
+%_includedir/*.h
+%_includedir/*.hpp
+%endif
 
 %files -n lib%{name}-devel-static
 %_libdir/liblua-5.1.a
@@ -228,6 +243,10 @@ fi
 %pkgdocdir/test
 
 %changelog
+* Thu Feb 09 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt6
+- added lua5.1.pc and liblua5.1.so as packages expect them
+- added if_with lua_compat to group conflicting files
+
 * Thu Feb 09 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt5
 - added preinstall subpackage to help apt dist-upgrade.
 
