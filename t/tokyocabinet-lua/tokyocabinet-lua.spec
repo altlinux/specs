@@ -3,7 +3,7 @@
 %define bname tokyocabinet
 Name: %bname-lua
 Version: 1.8
-Release: alt2.qa1
+Release: alt2.qa2
 Summary: Lua binding to the Tokyo Cabinet
 License: %lgpl2plus
 Group: Development/Other
@@ -14,7 +14,7 @@ Requires: libtokyocabinet >= 1.4.21
 Packager: Led <led@altlinux.ru>
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: bzlib-devel liblua5-devel lua5 zlib-devel
+BuildRequires: bzlib-devel lua-devel lua zlib-devel
 BuildRequires: libtokyocabinet-devel >= 1.4.21
 
 %description
@@ -51,7 +51,7 @@ install -m 0644 doc/*.{css,html} %buildroot%_docdir/%name-%version/html/
 
 
 %files
-%_libdir/*/*.so
+%_libdir/*/*/*.so
 
 
 %files doc
@@ -59,6 +59,9 @@ install -m 0644 doc/*.{css,html} %buildroot%_docdir/%name-%version/html/
 
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 1.8-alt2.qa2
+- rebuild with new lua
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.8-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
