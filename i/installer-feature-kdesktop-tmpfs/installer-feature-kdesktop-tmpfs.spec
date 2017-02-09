@@ -1,6 +1,6 @@
 Name: installer-feature-kdesktop-tmpfs
-Version: 2.2
-Release: alt1
+Version: 2.3
+Release: alt1%ubt
 
 Summary: Setup services for start/not start on boot
 License: GPL
@@ -9,6 +9,8 @@ Url: http://www.altlinux.org/Installer/beans
 
 BuildArch: noarch
 Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-ubt
 
 %description
 Setup tmp filesystem:
@@ -30,6 +32,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Feb 09 2017 Sergey V Turchin <zerg@altlinux.org> 2.3-alt1%ubt
+- check for execution possibility (ALT#33094)
+
 * Tue Jul 26 2016 Sergey V Turchin <zerg@altlinux.org> 2.2-alt1
 - add nodev option for /tmp
 
