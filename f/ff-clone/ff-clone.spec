@@ -1,6 +1,6 @@
 Name: ff-clone
 Version: 1.1
-Release: alt2
+Release: alt2.1
 Summary: Get all (mostly two) fishes out
 License: Public domain
 Group: Games/Puzzles
@@ -11,7 +11,7 @@ Source1: %name-docs.tar.gz
 
 # Automatically added by buildreq on Fri Sep 02 2011
 # optimized out: fontconfig libX11-devel pkg-config xorg-xproto-devel
-BuildRequires: libcairo-devel liblua5-devel
+BuildRequires: libcairo-devel lua5.1-devel
 
 %description
 What is Fish Fillets Clone?
@@ -51,6 +51,9 @@ mkdir -p %buildroot%_gamesbindir %buildroot%_gamesdatadir/%name
 %_gamesbindir/%name
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2.1
+- NMU: rebuild with new lua 5.1
+
 * Thu May 24 2012 Fr. Br. George <george@altlinux.ru> 1.1-alt2
 - DSO list completion
 
