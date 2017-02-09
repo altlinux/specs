@@ -1,6 +1,6 @@
 Name: eiskaltdcpp
 Version: 2.2.8
-Release: alt1.qa2
+Release: alt1.qa3
 Summary: EiskaltDC++ - Direct Connect client
 License: GPLv3
 Group: Networking/File transfer
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 #Patch: eiskaltdcpp-2.2.5-alt-DSO.patch
 #Patch1: eiskaltdcpp-2.2.7-alt-boost-1.52.0.patch
 
-BuildRequires: cmake gcc-c++ libqt4-devel bzlib-devel libaspell-devel liblua5-devel
+BuildRequires: cmake gcc-c++ libqt4-devel bzlib-devel libaspell-devel lua5.1-devel
 BuildRequires: libgtk+2-devel libglade-devel glib2-devel libpango-devel libnotify-devel 
 BuildRequires: boost-devel boost-signals-devel boost-interprocess-devel
 BuildRequires: phonon-devel libssl-devel libidn-devel libpcrecpp-devel
@@ -176,6 +176,9 @@ popd
 %_datadir/%name/cli
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.8-alt1.qa3
+- NMU: rebuild with new lua 5.1
+
 * Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.8-alt1.qa2
 - NMU: rebuilt with boost 1.57.0 -> 1.58.0.
 
