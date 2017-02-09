@@ -1,4 +1,5 @@
-%define ver_major 0.6
+%define ver_major 0.7
+%define api_ver 1.0
 
 %def_disable static
 %def_with python
@@ -251,30 +252,32 @@ popd
 %exclude %_man1dir/*-3.*
 
 %files -n libgvnc
-%_libdir/libgvnc-1.0.so.*
-%_libdir/libgvncpulse-1.0.so.*
+%_libdir/libgvnc-%api_ver.so.*
+%_libdir/libgvncpulse-%api_ver.so.*
 
 %files -n libgvnc-devel
-%_libdir/libgvnc-1.0.so
-%_libdir/libgvncpulse-1.0.so
-%_includedir/gvnc-1.0/
-%_includedir/gvncpulse-1.0/
-%_pkgconfigdir/gvnc-1.0.pc
-%_pkgconfigdir/gvncpulse-1.0.pc
+%_libdir/libgvnc-%api_ver.so
+%_libdir/libgvncpulse-%api_ver.so
+%_includedir/gvnc-%api_ver/
+%_includedir/gvncpulse-%api_ver/
+%_pkgconfigdir/gvnc-%api_ver.pc
+%_pkgconfigdir/gvncpulse-%api_ver.pc
 
 %if_enabled vala
 %{?_enable_vapi:%files -n libgvnc-vala}
-%_vapidir/gvnc-1.0.vapi
-%_vapidir/gvncpulse-1.0.vapi
+%_vapidir/gvnc-%api_ver.vapi
+%_vapidir/gvnc-%api_ver.deps
+%_vapidir/gvncpulse-%api_ver.vapi
+%_vapidir/gvncpulse-%api_ver.deps
 %endif
 
 %files -n libgtkvnc
-%_libdir/libgtk-vnc-1.0.so.*
+%_libdir/libgtk-vnc-%api_ver.so.*
 
 %files -n libgtkvnc-devel
-%_libdir/libgtk-vnc-1.0.so
-%_includedir/gtk-vnc-1.0
-%_pkgconfigdir/gtk-vnc-1.0.pc
+%_libdir/libgtk-vnc-%api_ver.so
+%_includedir/gtk-vnc-%api_ver
+%_pkgconfigdir/gtk-vnc-%api_ver.pc
 
 %if_with gtk3
 %files -n libgtk3vnc
@@ -299,29 +302,32 @@ popd
 
 %if_enabled introspection
 %files -n libgvnc-gir
-%_libdir/girepository-1.0/GVnc-1.0.typelib
-%_libdir/girepository-1.0/GVncPulse-1.0.typelib
+%_typelibdir/GVnc-%api_ver.typelib
+%_typelibdir/GVncPulse-%api_ver.typelib
 
 %files -n libgvnc-gir-devel
-%_datadir/gir-1.0/GVnc-1.0.gir
-%_datadir/gir-1.0/GVncPulse-1.0.gir
+%_girdir/GVnc-%api_ver.gir
+%_girdir/GVncPulse-%api_ver.gir
 
 %files -n libgtkvnc-gir
-%_libdir/girepository-1.0/GtkVnc-1.0.typelib
+%_typelibdir/GtkVnc-%api_ver.typelib
 
 %files -n libgtkvnc-gir-devel
-%_datadir/gir-1.0/GtkVnc-1.0.gir
+%_girdir/GtkVnc-%api_ver.gir
 
 %if_with gtk3
 %files -n libgtk3vnc-gir
-%_libdir/girepository-1.0/GtkVnc-2.0.typelib
+%_typelibdir/GtkVnc-2.0.typelib
 
 %files -n libgtk3vnc-gir-devel
-%_datadir/gir-1.0/GtkVnc-2.0.gir
+%_girdir/GtkVnc-2.0.gir
 %endif
 %endif
 
 %changelog
+* Thu Feb 09 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
+- 0.7.0 (fixed CVE-2017-5884, CVE-2017-5885)
+
 * Thu Aug 18 2016 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 
