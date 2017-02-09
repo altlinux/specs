@@ -1,6 +1,6 @@
 Name: zsh
-Version: 5.2
-Release: alt3
+Version: 5.3.1
+Release: alt1
 Epoch: 1
 
 Summary: A shell with lots of features
@@ -108,6 +108,9 @@ make check
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Thu Feb 09 2017 Fr. Br. George <george@altlinux.ru> 1:5.3.1-alt1
+- Autobuild version bump to 5.3.1
+
 * Wed Jan 13 2016 Fr. Br. George <george@altlinux.ru> 1:5.2-alt3
 - Fix _rpm completion
 
