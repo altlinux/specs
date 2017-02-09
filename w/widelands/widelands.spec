@@ -1,57 +1,53 @@
-Serial: 1
+Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++ python-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/doxygen gcc-c++ libGL-devel libGLU-devel libminizip-devel python-devel rpm-build-python zlib-devel
 # END SourceDeps(oneline)
-%define fedora 19
-%global buildno 17
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global buildno 18
 %global buildid build%{buildno}
 %global build_id build-%{buildno}
 
 Name:           widelands
 Version:        0
-Release:        alt6_0.39.%{buildid}
+Release:        alt6_0.55.%{buildid}
 Summary:        Open source realtime-strategy game
 
-Group:          Games/Strategy
+Group:          Games/Other
 License:        GPLv2+
 URL:            http://www.widelands.org
 Source0:        http://launchpad.net/widelands/%{buildid}/%{build_id}/+download/widelands-%{buildid}-src.tar.bz2
-# Reported upstream: https://bugs.launchpad.net/widelands/+bug/1017497
-# https://bugzilla.redhat.com/show_bug.cgi?id=718130
-Patch0:         widelands-build17-src-crash-on-messagebox.patch
-# Build issue with gcc 4.7, already fixed upstream
-Patch1:         widelands-build17-src-includes.patch
 
 BuildRequires: libSDL-devel >= 1.2.11
 BuildRequires: libSDL_gfx-devel
 BuildRequires: libSDL_image-devel
 BuildRequires: libSDL_mixer-devel >= 1.2.6
 BuildRequires: libSDL_net-devel
-BuildRequires: SDL_sound-devel
+BuildRequires: libSDL_sound-devel
 BuildRequires: libSDL_ttf-devel >= 2.0.0
-BuildRequires: boost-devel >= 1.47.0
+BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
 BuildRequires: boost-devel-static >= 1.47.0
 BuildRequires: ctest cmake
 BuildRequires: ctags
 BuildRequires: desktop-file-utils
-BuildRequires: gettext
+BuildRequires: gettext gettext-tools
 BuildRequires: ggz-base-libs-devel
-BuildRequires: libglew-devel
+BuildRequires: libGLEW-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libpng-devel
-BuildRequires: libtiffxx-devel libtiff-devel
+BuildRequires: libtiff-devel libtiffxx-devel
 BuildRequires: optipng
 %if 0%{?fedora} >= 20
-BuildRequires: compat-lua-devel
+BuildRequires: liblua5.1-devel
 %else
-BuildRequires: liblua5-devel
+BuildRequires: lua-devel
 %endif
 Requires:      fonts-otf-drehatlas-widelands
 Requires:      fonts-ttf-gnu-freefont-serif
 Requires:      fonts-ttf-gnu-freefont-sans
 Requires:      icon-theme-hicolor
-Source44: import.info
 
 %description
 Widelands is an open source (GPLed), realtime-strategy game, using SDL and
@@ -62,8 +58,6 @@ perhaps will have a thought, what Widelands is all about.
 
 %prep
 %setup -q -n widelands-%{buildid}-src
-%patch0 -p1 -b .crash-on-messagebox
-%patch1 -p1 -b .includes
 
 
 %build
@@ -76,13 +70,13 @@ pushd build/compile
     -DWL_INSTALL_BINDIR=%{_bindir} \
     -DWL_INSTALL_DATADIR=share/%{name} \
     ../..
-make %{?_smp_mflags}
+%make_build
 popd
 
 
 %install
 pushd build/compile
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 popd
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
@@ -147,6 +141,9 @@ EOF
 
 
 %changelog
+* Thu Feb 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:0-alt6_0.55.build18
+- rebuild new lua
+
 * Thu Dec 04 2014 Igor Vlasenko <viy@altlinux.ru> 1:0-alt6_0.39.build17
 - rebuild with new SDL
 
