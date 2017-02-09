@@ -1,4 +1,4 @@
-# 5.2.3.1
+# 5.3.0.3
 %def_without forky
 %def_without python
 %def_with parallelism
@@ -6,27 +6,28 @@
 %def_without lto
 
 Name: LibreOffice
-Version: 5.2
-%define urelease 3.1
+%define hversion 5.3
+%define urelease 0.3
+Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt4
+Release: alt1
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
 URL: http://www.libreoffice.org
 
-Requires: %name-integrated = %version-%release
-Requires: %name-common = %version-%release
-Requires: %name-mimetypes = %version-%release
-Requires: %name-extensions = %version-%release
+Requires: %name-integrated = %EVR
+Requires: %name-common = %EVR
+Requires: %name-mimetypes = %EVR
+Requires: %name-extensions = %EVR
 
-Provides: %name-full = %version-%release
-Provides: libreoffice = %version-%release
+Provides: %name-full = %EVR
+Provides: libreoffice = %EVR
 Obsoletes: libreoffice < 3.99
-Obsoletes: %name-full < %version-%release
+Obsoletes: %name-full < %EVR
 Obsoletes: LibreOffice4
 
 %define with_lang ru be de fr uk pt-BR es kk tt
@@ -34,37 +35,29 @@ Obsoletes: LibreOffice4
 #Requires: gst-plugins-bad1.0 gst-plugins-good1.0 gst-plugins-nice1.0 gst-plugins-ugly1.0 gst-plugins-base1.0
 Requires: gst-libav
 
-Source:		libreoffice-%uversion.tar.xz
-Source1:	libreoffice-dictionaries-%uversion.tar.xz
-Source2:	libreoffice-help-%uversion.tar.xz
-Source3:	libreoffice-translations-%uversion.tar.xz
+Source:		libreoffice-%version.tar.xz
+Source1:	libreoffice-dictionaries-%version.tar.xz
+Source2:	libreoffice-help-%version.tar.xz
+Source3:	libreoffice-translations-%version.tar.xz
 
-Source10:	libreoffice-ext_sources.%uversion.tar
+Source10:	libreoffice-ext_sources.%version.tar
 Source100:	forky.c
+Source200:	key.gpg
 Source300:	libreoffice.unused
 
 ## FC patches
-Patch1: FC-openoffice.org-2.4.0.ooo86080.unopkg.bodge.patch
-Patch2: FC-openoffice.org-3.1.0.oooXXXXX.solenv.allowmissing.patch
-Patch3: FC-installfix.patch
-Patch4: FC-0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
-Patch5: FC-0001-never-run-autogen.sh.patch
-Patch6: FC-0001-add-X-TryExec-entries-to-desktop-files.patch
-Patch7: FC-0001-Resolves-rhbz-1326304-cannot-detect-loss-of-wayland-.patch
-Patch8: FC-0001-don-t-autocapitalize-words-that-follow-a-field-mark.patch
-Patch9: FC-0001-a11y-crash-on-deleting-certain-frame-in-certain-docu.patch
-Patch10: FC-0001-Resolves-rhbz-1351224-wayland-grab-related-crashes.patch
-Patch11: FC-0001-Resolves-rhbz-1352965-gtk3-infinite-clipboard-recurs.patch
-Patch12: FC-0001-Related-rhbz-1351369-gtk3-clipboards-have-to-live-to.patch
-Patch13: FC-0001-add-xdg-email-as-the-default-email-route.patch
-Patch14: FC-0001-Related-rhbz-1362451-avoid-recursive-ownerchanged-ha.patch
-Patch15: FC-0001-only-date-autofilter-menus-need-the-space-for-the-tr.patch
-Patch16: FC-0001-rhbz-1353069-don-t-record-undo-information-in-the-cl.patch
-Patch17: FC-0001-Switch-from-orcus-0.11-to-orcus-0.12.patch
-Patch18: FC-0001-Declare-font-border-protection-orcus-interface-metho.patch
-Patch19: FC-0001-Add-odf-strikeout-to-orcus-interface.patch
-Patch20: FC-0001-Reform-orcus-interface-to-set-border-width.patch
-Patch21: FC-0001-disable-libe-book-support.patch
+Patch1: FC-0001-installation-fix.patch
+Patch2: FC-0001-never-run-autogen.sh.patch
+Patch3: FC-0001-add-X-TryExec-entries-to-desktop-files.patch
+Patch4: FC-0001-don-t-suppress-crashes.patch
+Patch5: FC-0001-rhbz-1353069-don-t-record-undo-information-in-the-cl.patch
+Patch6: FC-0001-change-from-glew-to-epoxy.patch
+Patch7: FC-0001-gtk3-implement-opengl-support-for-slideshow.patch
+Patch8: FC-0001-lower-the-system-epoxy-requirement.patch
+Patch9: FC-0001-disable-libe-book-support.patch
+Patch10: FC-0001-fix-build-of-bundled-libzmf-with-boost-1.56.patch
+Patch11: FC-0001-allow-to-build-bundled-libzmf-on-aarch64.patch
+Patch12: FC-0001-impl.-missing-function.patch
 
 ## Long-term FC patches
 
@@ -89,6 +82,8 @@ BuildRequires: junit xsltproc java-1.8.0-openjdk-devel
 BuildRequires: libgtk+3-gir-devel
 # 5.2.0
 BuildRequires: libCoinMP-devel
+# 5.3.0
+BuildRequires: libzmf-devel libstaroffice-devel libepoxy-devel libmysqlcppconn-devel libmysqlclient-devel libtelepathy-devel
 
 %if_without python
 BuildRequires: python3-dev
@@ -112,26 +107,34 @@ Common part of %name that does not interfere with other packages
 %package integrated
 Summary: Binaries, icons and desktop files for %name
 Group: Office
-Provides: %uname = %version-%release
+Provides: %uname = %EVR
 Obsoletes: LibreOffice4-integrated
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 %description integrated
 Wrapper scripts, icons and desktop files for running %name
 
 %package gnome
 Summary: GNOME Extensions for %name
 Group:  Office
-Requires: %uname = %version-%release
-Requires: %name-common = %version-%release
+Requires: %uname = %EVR
+Requires: %name-common = %EVR
 Obsoletes: LibreOffice4-gnome
 %description gnome
 GNOME extensions for %name
 
+%package gtk3
+Summary: GTK3 Extensions for %name
+Group:  Office
+Requires: %uname = %EVR
+Requires: %name-common = %EVR
+%description gtk3
+GTK3 extensions for %name
+
 %package kde4
 Summary: KDE4 Extensions for %name
 Group:  Office
-Requires: %uname = %version-%release
-Requires: %name-common = %version-%release
+Requires: %uname = %EVR
+Requires: %name-common = %EVR
 Obsoletes: LibreOffice4-kde4
 %description kde4
 KDE4 extensions for %name
@@ -156,7 +159,7 @@ developing applications that use libreofficekit.
 %package extensions
 Summary: Additional extensions for %name
 Group:  Office
-Requires: %uname = %version-%release
+Requires: %uname = %EVR
 AutoReqProv: yes, noshell, nopython
 Obsoletes: LibreOffice4-extensions
 %description extensions
@@ -175,7 +178,7 @@ This package installs them.
 
 # TODO redefine %%lang adding corr langpack
 # define macro for quick langpack description
-%define langpack(l:n:) \
+%define langpack(l:n:mh) \
 %define lang %{-l:%{-l*}}%{!-l:%{error:Language code not defined}} \
 %define pkgname langpack-%{lang} \
 %define langname %{-n:%{-n*}}%{!-n:%{error:Language name not defined}} \
@@ -183,7 +186,9 @@ This package installs them.
 %package %{pkgname} \
 Summary: %{langname} language pack for %name \
 Group:  Office \
-Requires: %uname = %version-%release \
+Requires: %uname = %EVR \
+%{-m:Requires: mythes-%lang} \
+%{-h:Requires: hyphen-%lang} \
 Obsoletes: LibreOffice4-%{pkgname} \
 %description %{pkgname} \
 Provides additional %{langname} translations and resources for %name. \
@@ -197,7 +202,7 @@ echo Using forky
 %else
 echo Direct build
 %endif
-%setup -q -n libreoffice-%uversion -a10 -b1 -b2 -b3
+%setup -q -n libreoffice-%version -a10 -b1 -b2 -b3
 
 ## FC apply patches
 %patch1 -p1
@@ -208,19 +213,10 @@ echo Direct build
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
+#patch9 -p1
+#patch10 -p1
+#patch11 -p1
+#patch12 -p1
 
 ## Long-term FC patches applying
 
@@ -240,7 +236,7 @@ install -D %SOURCE100 forky.c
 for n in office writer impress calc base draw math qstart; do
 	oname=lo$n
 	case "$n" in 
-		office) opt=""; oname=libreoffice%version;;
+		office) opt=""; oname=libreoffice%hversion;;
 		qstart) opt="--quickstart --nologo --nodefault";;
 		*) opt="--$n";;
 	esac
@@ -285,19 +281,13 @@ export CXX=%_target_platform-g++
         --with-lang="en-US %with_lang" \
         --with-external-tar=`pwd`/ext_sources \
 	\
-	--enable-hardlink-deliver \
-	\
-	--enable-ext-diagram \
 	--enable-ext-google-docs \
 	--enable-ext-nlpsolver \
 	--enable-ext-numbertext \
-	--enable-ext-typo \
-	--enable-ext-validator \
-	--enable-ext-watch-window \
 	--enable-ext-wiki-publisher \
 	--enable-ext-ct2n \
-	--enable-ext-barcode \
 	--disable-ext-languagetool \
+	--enable-ext-mariadb-connector \
   \
 	--enable-release-build \
 	--with-help \
@@ -307,6 +297,7 @@ export CXX=%_target_platform-g++
 	--disable-gstreamer-0-10 \
   \
   	--enable-avahi \
+	--enable-telepathy \
 %if_with lto
   	--enable-lto \
 %endif
@@ -325,8 +316,7 @@ export CXX=%_target_platform-g++
 	--disable-fetch-external
 %endif
 
-#        --disable-gnome-vfs \
-# --without-system-npapi-headers \
+# TODO  --enable-vlc --enable-eot
 
 %if_with forky
 # Make forky
@@ -382,31 +372,33 @@ for l in %with_lang; do
 done
 
 # Create gnome plugin list
-find %buildroot%lodir -name "gnome*" -o -name "*gtk3*" | sed 's@^%buildroot@@' > files.gnome
+find %buildroot%lodir -name "gnome*" -o -name "*_gtk*" | sed 's@^%buildroot@@' > files.gnome
+
+# Create gtk3 plugin list
+find %buildroot%lodir -name -o -name "*gtk3*" | sed 's@^%buildroot@@' > files.gtk3
 
 # Create kde plugin list
 find %buildroot%lodir -name "*kde4*" | sed 's@^%buildroot@@' > files.kde4
 
 # Generate base filelist by removing files from  separated packages
-{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gnome files.kde4; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | grep -v '/share/extensions/.' > files.nolang
+{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gnome files.gtk3 files.kde4; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | grep -v '/share/extensions/.' > files.nolang
 
 unset RPM_PYTHON
 
 # Install wrappers
 for n in lo*.sh; do install -m755 -D $n %buildroot%_bindir/${n%%.sh}; done
-install -m755 -D libreoffice%version.sh %buildroot%_bindir/loffice
-install -m755 libreoffice%version.sh %buildroot%_bindir/libreoffice%version
+install -m755 -D libreoffice%hversion.sh %buildroot%_bindir/loffice
+install -m755 libreoffice%hversion.sh %buildroot%_bindir/libreoffice%hversion
 
 # install icons
 for f in `( cd sysui/desktop/icons; find hicolor -type f )`; do
 	d=`dirname "$f"`; n=`basename "$f"`
 	install -D sysui/desktop/icons/$f %buildroot%_iconsdir/$d/$n
-	ln -sr %buildroot%_iconsdir/$d/$n %buildroot%_iconsdir/$d/libreoffice%version-$n
+	ln -sr %buildroot%_iconsdir/$d/$n %buildroot%_iconsdir/$d/libreoffice%hversion-$n
 done
 
 # TODO icon-themes/
 
-# TODO check if qstart is needed
 mkdir -p %buildroot%_desktopdir
 for n in writer impress calc base draw math;  do
 	ln %buildroot%lodir/share/xdg/$n.desktop %buildroot%_desktopdir/$n.desktop
@@ -429,27 +421,30 @@ install -D libreoffice.config %buildroot%conffile
 install -D workdir/CustomTarget/sysui/share/output/girepository-1.0/LOKDocView-0.1.typelib %buildroot%_typelibdir/LOKDocView-0.1.typelib
 install -D workdir/CustomTarget/sysui/share/output/usr/share/gir-1.0/LOKDocView-0.1.gir %buildroot%_girdir/LOKDocView-0.1.gir
 mv %buildroot%lodir/program/liblibreofficekitgtk.so %buildroot%_libdir/
+mkdir -p %buildroot%_includedir/LibreOfficeKit
+install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 
 %files
 
 %files common -f files.nolang
 %exclude /gid_Module*
-%_bindir/libreoffice%version
+%_bindir/libreoffice%hversion
 %config %conffile
 %lodir/share/extensions/package.txt
 #lodir/share/extensions/presentation-minimizer
-%_iconsdir/*/*/apps/libreoffice%{version}-*.*g
+%_iconsdir/*/*/apps/libreoffice%{hversion}-*.*g
 
 %files integrated
 %_bindir/*
-%exclude %_bindir/libreoffice%version
+%exclude %_bindir/libreoffice%hversion
 %_desktopdir/*
 %_iconsdir/*/*/mimetypes/*
 %_iconsdir/*/*/apps/*
-%exclude %_iconsdir/*/*/apps/libreoffice%{version}-*.*g
+%exclude %_iconsdir/*/*/apps/libreoffice%{hversion}-*.*g
 
 %files gnome -f files.gnome
-%lodir/program/libvclplug_gtk3lo.so
+
+%files gtk3 -f files.gtk3
 
 %files kde4 -f files.kde4
 
@@ -462,15 +457,15 @@ mv %buildroot%lodir/program/liblibreofficekitgtk.so %buildroot%_libdir/
 %_datadir/mimelnk/application/*
 %_datadir/application-registry/*
 
-%langpack -l ru -n Russian
-%langpack -l be -n Belorussian
-%langpack -l de -n German
-%langpack -l fr -n French
-%langpack -l uk -n Ukrainian
+%langpack -m -h -l ru -n Russian
+%langpack -h -l be -n Belorussian
+%langpack -m -h -l de -n German
+%langpack -m -h -l fr -n French
+%langpack -m -h -l uk -n Ukrainian
 %langpack -l pt-BR -n Brazilian Portuguese
-%langpack -l es -n Espanian
+%langpack -h -m -l es -n Espanian
 %langpack -l kk -n Kazakh
-%langpack -l tt -n Tatar
+%langpack -h -l tt -n Tatar
 
 %files -n libreofficekit
 %_typelibdir/LOKDocView-*.typelib
@@ -478,8 +473,13 @@ mv %buildroot%lodir/program/liblibreofficekitgtk.so %buildroot%_libdir/
 
 %files -n libreofficekit-devel
 %_girdir/LOKDocView-*.gir
+%_includedir/LibreOfficeKit
 
 %changelog
+* Thu Feb 09 2017 Fr. Br. George <george@altlinux.ru> 5.3.0.3-alt1
+- Update to 5.3.0.3
+- Chenge versioning scheme
+
 * Mon Oct 17 2016 Fr. Br. George <george@altlinux.ru> 5.2-alt4
 - Update to 5.2.3.1
 
