@@ -1,6 +1,6 @@
 Name: lua5.1
 Version: 5.1.5
-Release: alt4
+Release: alt5
 
 Summary: Embeddable programming language
 License: MIT
@@ -36,15 +36,16 @@ BuildRequires: libreadline-devel
 %package -n lib%{name}
 Summary: Embeddable programming language
 Group: System/Libraries
+# for smooth upgrade against lua5.1-alt-compat
 Provides: %_libdir/lua/5.1
 Provides: %_datadir/lua/5.1
-Provides: lua5.1-alt-compat
-Obsoletes: lua5.1-alt-compat
-Conflicts: lua5.1-alt-compat
+Requires(pre): lib%{name}-preinstall = %EVR
+Conflicts: lua5.1-alt-compat = 1.0-alt1
 
 %package -n lib%{name}-devel
 Summary: Embeddable programming language
 Group: Development/Other
+Provides: %{name}-devel = %EVR
 Requires: lib%{name} = %EVR
 Conflicts: liblua4-devel
 
@@ -54,6 +55,12 @@ Group: Development/Other
 Provides: liblua5-devel-static = %version-%release
 Requires: lib%{name}-devel = %EVR
 Conflicts: liblua4-devel-static
+
+%package -n lib%{name}-preinstall
+Summary: preinstall package for lib%{name}
+Group: Development/Other
+Provides: lua5.1-alt-compat = %version
+Conflicts: lua5.1-alt-compat = 1.0-alt1
 
 %package doc
 Summary: Embeddable programming language
@@ -88,6 +95,9 @@ applications.  The language engine is accessible as a library, having a C
 API which allows the application to exchange data with Lua programs and also
 to extend Lua with C functions.  Lua is also used as a general-purpose,
 stand-alone language through the simple command line interpreter provided.
+
+%description -n lib%{name}-preinstall
+virtual preinstall package for lib%{name} to resolve installation conflicts.
 
 %description doc
 Lua is a powerful, light-weight programming language designed for extending
@@ -209,6 +219,8 @@ fi
 %files -n lib%{name}-devel-static
 %_libdir/liblua-5.1.a
 
+%files -n lib%{name}-preinstall
+
 %files doc
 %dir %pkgdocdir
 %pkgdocdir/html
@@ -216,6 +228,9 @@ fi
 %pkgdocdir/test
 
 %changelog
+* Thu Feb 09 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt5
+- added preinstall subpackage to help apt dist-upgrade.
+
 * Wed Feb 08 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt4
 - restored luaconf.h LUA_CDIR / LUA_LDIR defaults
 - split cummulative diff into separate patches
