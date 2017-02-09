@@ -2,7 +2,7 @@
 
 Name: libtolua++-lua5.1
 Version: 1.0.93
-Release: alt2
+Release: alt3
 Summary: A tool to integrate C/C++ code with Lua
 Group: System/Libraries
 License: MIT
@@ -15,6 +15,8 @@ Patch1: tolua++-1.0.93-lua-include-path.patch
 BuildRequires: scons
 BuildRequires: liblua5.1-devel
 
+Conflicts: tolua++ < 1.0.93-alt2
+
 %description
 tolua++ is an extended version of tolua, a tool to integrate C/C++ code with
 Lua. tolua++ includes new features oriented to C++
@@ -22,7 +24,7 @@ Lua. tolua++ includes new features oriented to C++
 %package devel
 Summary: Development files for tolua++
 Group: Development/C++
-Requires: tolua++ = %version-%release
+Requires: %name = %version-%release
 Requires: liblua5.1-devel
 Conflicts: tolua++-devel
 
@@ -71,6 +73,9 @@ ln -s lib%solib.so libtolua++.so
 %_includedir/tolua++.h
 
 %changelog
+* Thu Feb 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.93-alt3
+- added conflict on old tolua++ for smooth upgrade
+
 * Wed Feb 08 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.93-alt2
 - build with compat lua 5.1
 
