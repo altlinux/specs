@@ -1,6 +1,6 @@
 Name: luajit
 Version: 2.1
-Release: alt3
+Release: alt4
 
 Summary: a Just-In-Time Compiler for Lua
 License: MIT
@@ -57,8 +57,8 @@ It may be embedded or used as a general-purpose, stand-alone language.
 %install
 %makeinstall_std PREFIX=%_prefix \
 		 MULTILIB=%_lib \
-		 INSTALL_LMOD=%buildroot%_datadir/lua5 \
-		 INSTALL_CMOD=%buildroot%_libdir/lua5 \
+		 INSTALL_LMOD=%buildroot%_datadir/lua/5.1 \
+		 INSTALL_CMOD=%buildroot%_libdir/lua/5.1 \
 		 LDCONFIG=true \
 		 INSTALL_LIB=%buildroot%_libdir \
 		 Q=
@@ -84,6 +84,11 @@ mv %buildroot%_bindir/luajit-2.1.0-beta2 %buildroot%_bindir/luajit
 %_libdir/*.a
 
 %changelog
+* Thu Feb 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.1-alt4
+- NMU: new policy: set:
+  * INSTALL_LMOD=%buildroot%_datadir/lua/5.1
+  * INSTALL_CMOD=%buildroot%_libdir/lua/5.1
+
 * Fri Jul 29 2016 Vladimir Didenko <cow@altlinux.org> 2.1-alt3
 - git20160722
 
