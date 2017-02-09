@@ -2,7 +2,7 @@ Summary: iSCSI kernel module and utilities
 Name: iscsitarget
 %define module_name %name
 Version: 1.4.20.2
-Release: alt1
+Release: alt2
 License: %gpl2only
 Group: System/Configuration/Networking
 Source: %name-%version.tar
@@ -87,6 +87,9 @@ tar -c kernel-source-%module_name-%version | bzip2 -9c > \
 
 
 %changelog
+* Thu Feb 09 2017 Denis Medvedev <nbr@altlinux.org> 1.4.20.2-alt2
+- added initscript's condstop (ALT #33092).
+
 * Thu Apr 14 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.4.20.2-alt1
 - 1.4.20.2
 
