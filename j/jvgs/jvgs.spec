@@ -1,6 +1,6 @@
 Name:		jvgs
 Version:	0.5
-Release:	alt2
+Release:	alt2.1
 Summary:	Minimalistic platform game with xkc-like graphics
 Group:		Games/Arcade
 License:	GPL
@@ -9,7 +9,7 @@ Requires:	%name-data
 URL:		http://jvgs.sourceforge.net/
 
 # Automatically added by buildreq on Mon Mar 14 2011
-BuildRequires: ImageMagick-tools cmake gcc-c++ libSDL_mixer-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel liblua5-devel libxkbfile-devel swig zlib-devel
+BuildRequires: ImageMagick-tools cmake gcc-c++ libSDL_mixer-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel lua5.1-devel libxkbfile-devel swig zlib-devel
 
 %description
 JVGS is a free, minimalistic platform game that runs on windows, mac, linux and
@@ -94,6 +94,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_gamesdatadir/%name/resources/music/*
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.5-alt2.1
+- NMU: rebuild with new lua 5.1
+
 * Mon Mar 14 2011 Fr. Br. George <george@altlinux.ru> 0.5-alt2
 - Buildreq regenerated
 
