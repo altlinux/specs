@@ -2,14 +2,13 @@
 %define gst_api_ver 1.0
 
 Name: gnome-video-effects
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: A collection of GStreamer video effects
 License: GPLv2
 Group: Video
-Url: http://live.gnome.org/GnomeVideoEffects
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
+Url: https://wiki.gnome.org/Projects/GnomeVideoEffects
 
 BuildArch: noarch
 
@@ -54,6 +53,9 @@ This package provides .pc file needed to build apllications using %name
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Thu Feb 09 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
+- 0.4.3
+
 * Mon Mar 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
 - 0.4.1
 
