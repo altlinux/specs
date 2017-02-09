@@ -1,6 +1,6 @@
 Name: wxlua
 Version: 2.8.12.3
-Release: alt4.r246.2
+Release: alt4.r246.3
 Summary: Lua IDE with a GUI debugger and binding generator
 License: wxWidgets License
 Group: Development/Other
@@ -11,9 +11,10 @@ Packager: Ildar Mulyukov <ildar@altlinux.ru>
 Source: http://sourceforge.net/projects/wxlua/files/wxlua/%version/wxLua-%version-src.tar
 #.gz
 
+%define luaver 5.1
 # Automatically added by buildreq on Thu Oct 09 2014 (-bi)
 # optimized out: cmake-modules elfutils fontconfig libGL-devel libX11-devel libcloog-isl4 libgdk-pixbuf libgst-plugins libstdc++-devel libwayland-client libwayland-server libwxGTK-contrib-stc python-base xorg-xproto-devel
-BuildRequires: cmake desktop-file-utils gcc-c++ libGLU-devel liblua5-devel libwxGTK3.1-devel libwxstedit-devel lua5
+BuildRequires: cmake desktop-file-utils gcc-c++ libGLU-devel lua%luaver lua%luaver-devel libwxGTK3.1-devel libwxstedit-devel
 #BuildRequires: doxygen graphviz
 
 %description
@@ -84,7 +85,8 @@ echo "project( wxStEdit )" > modules/wxstedit/CMakeLists.txt
 
 pushd bindings
 	make clean all \
-		LUA=%_bindir/lua
+		LUA=%_bindir/lua-%luaver
+
 popd
 %make_build -C BUILD
 if [ -x /usr/bin/doxygen ]; then
@@ -96,10 +98,10 @@ fi
 
 mkdir -p \
 	%buildroot%_desktopdir/ \
-	%buildroot%_libdir/lua5/ \
+	%buildroot%_libdir/lua/%luaver \
 	%buildroot%_iconsdir/hicolor/scalable/apps/
 install -p art/wxlualogo.svg %buildroot%_iconsdir/hicolor/scalable/apps/
-mv %buildroot%_libdir/libwx.so %buildroot%_libdir/lua5/wx.so
+mv %buildroot%_libdir/libwx.so %buildroot%_libdir/lua/%luaver/wx.so
 install -p distrib/autopackage/%name.desktop %buildroot%_desktopdir/
 sed -r -i "s|wxluaedit|wxLuaEdit|" %buildroot%_desktopdir/%name.desktop
 desktop-file-install --dir %buildroot%_desktopdir \
@@ -116,7 +118,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 %files -n lib%name
 %_libdir/*.so
-%_libdir/lua5/*.so
+%_libdir/lua/%luaver/*.so
 
 %files -n lib%name-devel
 %_includedir/%name
@@ -128,6 +130,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.8.12.3-alt4.r246.3
+- NMU: rebuild with new lua
+
 * Sun Oct 04 2015 Anton Midyukov <antohami@altlinux.org> 2.8.12.3-alt4.r246.2
 - Rebuilt for new gcc5 C++11 ABI.
 
