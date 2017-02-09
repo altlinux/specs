@@ -1,6 +1,6 @@
 Name: polkit-sysvinit
-Version: 0.3.2
-Release: alt3
+Version: 0.3.3
+Release: alt1
 
 Summary: Allow media/network changes to xgrp users
 License: public domain
@@ -33,6 +33,9 @@ install -pm644 %SOURCE0 %SOURCE1 %SOURCE2 %SOURCE3 %buildroot%pkdir
 %pkdir/*
 
 %changelog
+* Mon Feb 06 2017 Anton Midyukov <antohami@altlinux.org> 0.3.3-alt1
+- Added rules for ConsoleKit2
+
 * Tue Dec 06 2016 Michael Shigorin <mike@altlinux.org> 0.3.2-alt3
 - R: polkit
 

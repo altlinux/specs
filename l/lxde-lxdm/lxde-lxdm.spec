@@ -5,13 +5,12 @@
 %define gtkver 2
 Name: lxde-%upstreamname
 Version: 0.5.3
-Release: alt1.20160321.1
+Release: alt2.20160321.1
 
 Summary: Lightweight X11 Display Manager
 License: GPL
 Group: Graphical desktop/Other
-Url: http://lxde.sf.net
-#Url: git://git.lxde.org/lxde/lxdm.git
+Url: https://git.lxde.org/gitweb/?p=lxde/lxdm.git
 
 Packager: LXDE Development Team <lxde@packages.altlinux.org>
 
@@ -26,7 +25,7 @@ Source1: alt.lxdm.pam
 Source2: alt.lxdm.conf
 Source3: alt.Xsession
 
-BuildPreReq: imake intltool libConsoleKit-devel libXmu-devel libgtk+%gtkver-devel libpam-devel xinitrc xorg-cf-files
+BuildPreReq: imake intltool libConsoleKit2-devel libXmu-devel libgtk+%gtkver-devel libpam-devel xinitrc xorg-cf-files pkgconfig(systemd)
 
 %add_findreq_skiplist %_sbindir/%upstreamname
 
@@ -90,6 +89,10 @@ install -m644 systemd/lxdm.service %buildroot%_unitdir
 %_unitdir/lxdm.service
 
 %changelog
+* Wed Feb 08 2017 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt2.20160321.1
+- Build with ConsoleKit2
+- Added support logind.
+
 * Sat May 21 2016 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt1.20160321.1
 - New snapshot 20160321.
 
