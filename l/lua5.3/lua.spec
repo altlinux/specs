@@ -1,9 +1,9 @@
 %define oname lua
 %global major_version 5.3
 
-Name: lua5.3
+Name: lua%major_version
 Version: %major_version.3
-Release: alt5
+Release: alt6
 Summary: Powerful light-weight programming language
 Group: Development/Other
 License: MIT
@@ -63,6 +63,7 @@ Summary: Development files for %oname
 Group: Development/C
 Requires: %name = %version
 Provides: lua-devel = %EVR
+Provides: lua%{major_version}-devel = %EVR
 Provides: liblua-devel = %EVR
 Provides: liblua5-devel = %EVR
 Obsoletes: liblua5-devel < %EVR
@@ -143,14 +144,18 @@ rm %buildroot%_libdir/*.la
 mkdir -p %buildroot%_libdir/lua/%major_version
 mkdir -p %buildroot%_datadir/lua/%major_version
 
-mv %buildroot%_bindir/lua{,5.3}
-mv %buildroot%_bindir/luac{,5.3}
-ln -s lua5.3 %buildroot%_bindir/lua
-ln -s luac5.3 %buildroot%_bindir/luac
-mv %buildroot%_man1dir/lua{,5.3}.1
-mv %buildroot%_man1dir/luac{,5.3}.1
-ln -s lua5.3.1 %buildroot%_man1dir/lua.1
-ln -s luac5.3.1 %buildroot%_man1dir/luac.1
+mv %buildroot%_bindir/lua{,-%major_version}
+mv %buildroot%_bindir/luac{,-%major_version}
+ln -s lua-%major_version %buildroot%_bindir/lua
+ln -s luac-%major_version %buildroot%_bindir/luac
+ln -s lua-%major_version %buildroot%_bindir/lua%major_version
+ln -s luac-%major_version %buildroot%_bindir/luac%major_version
+mv %buildroot%_man1dir/lua{,-%major_version}.1
+mv %buildroot%_man1dir/luac{,-%major_version}.1
+ln -s lua-%{major_version}.1 %buildroot%_man1dir/lua.1
+ln -s lua-%{major_version}.1 %buildroot%_man1dir/luac.1
+ln -s lua-%{major_version}.1 %buildroot%_man1dir/lua%{major_version}.1
+ln -s lua-%{major_version}.1 %buildroot%_man1dir/luac%{major_version}.1
 
 # Rename luaconf.h to luaconf-<arch>.h to avoid file conflicts on
 # multilib systems and install luaconf.h wrapper
@@ -197,6 +202,10 @@ echo lua-devel-static >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/li
 %config %_sysconfdir/buildreqs/packages/substitute.d/lib%{name}-devel-static
 
 %changelog
+* Thu Feb 09 2017 Igor Vlasenko <viy@altlinux.ru> 5.3.3-alt6
+- added Provides: lua5.3-devel
+- added bin,man for lua-5.3 luac-5.3
+
 * Wed Feb 01 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.3.3-alt5
 - made symlinks to lua5.3 and luac5.3 binary and manpages.
 - removed conflicts and obsoletes to previous version of lua5.
