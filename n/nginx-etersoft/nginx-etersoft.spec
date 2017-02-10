@@ -1,5 +1,5 @@
 Name: nginx-etersoft
-Version: 0.2.15
+Version: 0.2.16
 Release: alt1
 
 Summary: Additional Nginx templates and functions
@@ -63,6 +63,10 @@ install -m644 www/* %buildroot%webserver_htdocsdir/maintenance/
 %config(noreplace) %webserver_htdocsdir/maintenance/*
 
 %changelog
+* Fri Feb 10 2017 Vitaly Lipatov <lav@altlinux.ru> 0.2.16-alt1
+- set Accept-Encoding to empty (force disabling gzip on apache side)
+- add OCSP stapling (eterbug #11621)
+
 * Sat Sep 03 2016 Vitaly Lipatov <lav@altlinux.ru> 0.2.15-alt1
 - log.conf: add some logs formats
 - add nosslonly.conf script
