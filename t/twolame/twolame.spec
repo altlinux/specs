@@ -1,14 +1,11 @@
-#%define doc_dir %_defaultdocdir/%name-%version
-
 Name: twolame
-Version: 0.3.12
-Release: alt2.1
+Version: 0.3.13
+Release: alt1
 
 Summary: TwoLAME, an optimized MPEG Audio Layer 2 encoder
 License: LGPL
 Group: Sound
-Url: http://%name.sourceforge.net/
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
+Url: http://www.twolame.org/
 
 Source: http://prdownloads.sourceforge.net/twolame/%name-%version.tar.gz
 
@@ -58,20 +55,18 @@ This package contains static library required to develop
 %def_disable static
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
-%configure \
+%configure --docdir=%_defaultdocdir/%name-%version \
 	%{subst_enable static}
 
 %make_build
 
 %install
-%make_install DESTDIR="%buildroot" install
-
+%makeinstall_std
 install -pD -m644 AUTHORS README ChangeLog TODO %buildroot%_docdir/%name-%version/
-
 ln -sf /usr/share/license/LGPL-2.1 %buildroot%_docdir/%name-%version/COPYING
 
 %files
@@ -95,6 +90,9 @@ ln -sf /usr/share/license/LGPL-2.1 %buildroot%_docdir/%name-%version/COPYING
 %endif
 
 %changelog
+* Fri Feb 10 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.13-alt1
+- 0.3.13
+
 * Sat Nov 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.12-alt2.1
 - Rebuilt for debuginfo
 
