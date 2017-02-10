@@ -1,8 +1,9 @@
+%def_without test
 %define dist Gnome2-VFS
 
 Name: perl-%dist
 Version: 1.082
-Release: alt1.1.1
+Release: alt1.2
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -65,6 +66,9 @@ for developers (overview of internals and internal API reference).
 %doc	%perl_vendor_archlib/Gnome2/VFS/Resolve
 
 %changelog
+* Fri Feb 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.082-alt1.2
+- disabled test during 5.24.1 upgrade
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.082-alt1.1.1
 - rebuild with new perl 5.22.0
 
