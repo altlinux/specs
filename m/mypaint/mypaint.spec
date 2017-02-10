@@ -1,6 +1,6 @@
 Name: mypaint
-Version: 1.2.0
-Release: alt2
+Version: 1.2.1
+Release: alt1
 
 Summary: A simple paint program
 Group: Graphics
@@ -9,7 +9,6 @@ Url: http://mypaint.org/
 
 # VCS: https://github.com/mypaint/mypaint
 Source: https://github.com/%name/%name/releases/download/v%version/%name-%version.tar.xz
-Patch: mypaint-1.2.0-up-glib_2.48.patch
 
 Requires: %name-data = %version-%release
 Requires: python-module-pygobject3-pygtkcompat
@@ -18,7 +17,7 @@ Requires: python-module-pygobject3-pygtkcompat
 
 BuildRequires: gcc-c++ libgomp-devel scons swig libgtk+3-devel
 BuildRequires: libXi-devel python-devel libnumpy-devel
-BuildRequires: libpng-devel libjson-devel python-modules-json liblcms2-devel
+BuildRequires: libpng-devel libjson-c-devel python-modules-json liblcms2-devel
 BuildRequires: gobject-introspection-devel python-module-pygobject3-devel
 
 %description
@@ -57,7 +56,6 @@ with mypaint brush library.
 
 %prep
 %setup
-%patch -p1
 # fix libdir
 subst 's|lib\/mypaint|%_lib\/mypaint|' SConstruct SConscript mypaint.py
 subst "s|prefix, 'lib'|prefix, '%_lib'|" mypaint.py
@@ -93,6 +91,9 @@ scons prefix=%buildroot%_prefix install
 %endif
 
 %changelog
+* Fri Feb 10 2017 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
 * Sun Aug 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt2
 - fixed https://github.com/mypaint/mypaint/issues/634 (ALT #32415)
 
