@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 
 Name: palemoon
 Version: 27.1.0
-Release: alt2
+Release: alt3.0
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -60,26 +60,36 @@ Patch23: palemoon_version-27.0.3.patch
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
 
+%set_autoconf_version 2.13
+%set_gcc_version 4.9
+BuildRequires: gcc%_gcc_version-c++
+
+
+# Automatically added by buildreq on Fri Feb 10 2017
+# optimized out: alternatives ca-certificates fontconfig fontconfig-devel glib2-devel gstreamer1.0-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins1.0 libpango-devel libstdc++-devel perl pkg-config python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python3 xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: doxygen glibc-devel-static gst-plugins1.0-devel imake java-devel libGConf-devel libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpixman-devel 
+BuildRequires: libpulseaudio-devel libsocket libvpx-devel 
+BuildRequires: python-module-future python-module-yaml python-modules-json python-modules-wsgiref python3-base 
+BuildRequires: unzip wget xorg-cf-files xsltproc yasm zip
+
 
 # BEGIN SourceDeps(oneline):
-# BuildRequires: /usr/bin/autoconf /usr/bin/python /usr/bin/widl at-spi2-atk-devel bzlib-devel fontconfig-devel glib2-devel gobject-introspection-devel libSM-devel libX11-devel libXext-devel libcairo-devel libdbus-devel libdbus-glib-devel libevent-devel libfreetype-devel libgio-devel libgnomeui-devel libgraphite2-devel libgtk+3-devel libhunspell-devel libjpeg-devel libnspr libpango-devel libpixman-devel libpng-devel libproxy-devel libqt4-devel libreadline-devel libsqlite3-devel libssl-devel libstartup-notification-devel libunwind-devel libwebp-devel perl-Archive-Zip perl-CGI perl-XML-LibXML perl-XML-LibXSLT perl-devel perl-libwww qt4-mobility-devel qt5-base-devel qt5-declarative-devel qt5-location-devel swig texinfo wcslib-devel zlib-devel
+#  BuildRequires: /usr/bin/widl at-spi2-atk-devel bzlib-devel fontconfig-devel glib2-devel gobject-introspection-devel libSM-devel libX11-devel libXext-devel
+#  BuildRequires: libcairo-devel libdbus-devel libdbus-glib-devel libevent-devel libfreetype-devel libgio-devel libgnomeui-devel libgtk+3-devel libhunspell-devel 
+#  BuildRequires: libjpeg-devel libpango-devel libpixman-devel libpng-devel libproxy-devel libqt4-devel libsqlite3-devel libstartup-notification-devel libwebp-devel 
+#  BuildRequires: perl(Archive/Zip.pm) perl(CGI.pm) perl(Carp.pm) perl(English.pm) perl(Errno.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(FileHandle.pm) perl(FindBin.pm) 
+#  BuildRequires: perl(IO/File.pm) perl(IO/Handle.pm) perl(LWP/Simple.pm) perl(List/Util.pm) perl(Time/Local.pm) perl(Time/localtime.pm) perl(XML/LibXML.pm) 
+#  BuildRequires: perl(XML/LibXSLT.pm) perl(diagnostics.pm) perl(open.pm) perl(strict.pm) perl(subs.pm)
+#  BuildRequires: qt4-mobility-devel qt5-base-devel qt5-declarative-devel qt5-location-devel swig texinfo
 # END SourceDeps(oneline)
 
 
-# Automatically added by buildreq on Sun Dec 04 2016
-# optimized out: alternatives ca-certificates fontconfig fontconfig-devel glib2-devel gstreamer1.0-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins1.0 libpango-devel libstdc++-devel perl pkg-config python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python3 xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: doxygen gcc-c++ glibc-devel-static gst-plugins1.0-devel imake java-devel libGConf-devel libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpulseaudio-devel libsocket libvpx-devel
-BuildRequires: python-module-future python-module-yaml python-modules-json python-modules-wsgiref python3-base unzip wget xorg-cf-files xsltproc yasm zip
-
-
-
-BuildPreReq: python3-base unzip xorg-cf-files
+BuildPreReq: python3-base unzip xorg-cf-files libssl-devel
 
 BuildPreReq: chrpath
 
-BuildPreReq: autoconf_2.13
+BuildPreReq: autoconf_2.13  
 
-%set_autoconf_version 2.13
 
 BuildPreReq: gstreamer1.0-devel gst-plugins1.0-devel
 
@@ -210,6 +220,8 @@ echo "ac_add_options --disable-tracejit" >> .mozconfig
 echo "ac_add_options --disable-static" >> .mozconfig
 echo "ac_add_options --enable-media-plugins --disable-elf-hack --enable-media-plugins --enable-media-navigator" >> .mozconfig
 echo "ac_add_options --with-system-libvpx --enable-wave --enable-alsa --enable-pulseaudio" >> .mozconfig
+echo "ac_add_options --enable-system-cairo" >> .mozconfig
+# echo "ac_add_options --with-qtdir=%%_qt5_datadir"
 
 
 # Add  Ofiicial Options:
@@ -437,6 +449,12 @@ done
 %exclude %_datadir/idl/*
 
 %changelog
+* Fri Feb 10 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.1.0-alt3.0
+- Built on gcc-4.9
+
+* Thu Feb 09 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.1.0-alt3
+- Correct BuildRequires
+
 * Wed Feb 08 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.1.0-alt2
 - Version 27.1.0
 
