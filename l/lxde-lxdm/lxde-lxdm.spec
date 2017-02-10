@@ -1,11 +1,11 @@
-%set_automake_version 1.11
+#%%set_automake_version 1.11
 
 %define upstreamname lxdm
 %define theme_name Industrial
 %define gtkver 2
 Name: lxde-%upstreamname
 Version: 0.5.3
-Release: alt2.20160321.1
+Release: alt3.20160321.1
 
 Summary: Lightweight X11 Display Manager
 License: GPL
@@ -72,6 +72,9 @@ install -m755 %SOURCE3 %buildroot%_sysconfdir/%upstreamname/Xsession
 mkdir -p %buildroot%_unitdir
 install -m644 systemd/lxdm.service %buildroot%_unitdir
 
+#fix name backgrouds for default settings
+ln -s %_datadir/%upstreamname/themes/%theme_name/wave.svg %buildroot%_datadir/%upstreamname/themes/%theme_name/default.svg
+
 %files -f %upstreamname.lang
 %doc ChangeLog INSTALL README
 %_sysconfdir/%upstreamname
@@ -89,6 +92,9 @@ install -m644 systemd/lxdm.service %buildroot%_unitdir
 %_unitdir/lxdm.service
 
 %changelog
+* Fri Feb 10 2017 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt3.20160321.1
+- Fix default settings
+
 * Wed Feb 08 2017 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt2.20160321.1
 - Build with ConsoleKit2
 - Added support logind.
