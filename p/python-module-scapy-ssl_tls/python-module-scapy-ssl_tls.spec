@@ -1,7 +1,7 @@
 %define module_name scapy_ssl_tls
 
 Name: python-module-scapy-ssl_tls
-Version: 1.2.2
+Version: 1.2.3.1
 Release: alt1
 
 Summary: SSL/TLS layers for scapy the interactive packet manipulation tool
@@ -43,6 +43,9 @@ fuzzing and security scanning
 %python_sitelibdir/%module_name-*egg-info
 
 %changelog
+* Fri Feb 10 2017 Vitaly Lipatov <lav@altlinux.ru> 1.2.3.1-alt1
+- new version 1.2.3.1 (with rpmrb script)
+
 * Tue Mar 01 2016 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt1
 - initial build for ALT Sisyphus
 
