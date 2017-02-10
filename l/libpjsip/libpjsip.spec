@@ -1,7 +1,7 @@
 %define oname pjproject
 Name: libpjsip
-Version: 2.4.5
-Release: alt4.1
+Version: 2.5.5
+Release: alt1
 
 Summary: Libraries for building embedded/non-embedded VoIP applications
 
@@ -161,6 +161,9 @@ echo "" >> %buildroot%_includedir/pj/config_site.h
 %_pkgconfigdir/libpjproject.pc
 
 %changelog
+* Fri Feb 10 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5.5-alt1
+- new version 2.5.5 (with rpmrb script)
+
 * Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 2.4.5-alt4.1
 - NMU: added BR: libspeexdsp-devel
 
