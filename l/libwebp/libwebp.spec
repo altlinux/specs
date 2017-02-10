@@ -2,10 +2,10 @@
 %def_enable libwebpmux
 %def_enable libwebpdemux
 %def_enable libwebpdecoder
-%define soversion 6
+%define soversion 7
 
 Name: libwebp
-Version: 0.5.2
+Version: 0.6.0
 Release: alt1
 
 Summary: Library and tools for the WebP graphics format
@@ -111,6 +111,7 @@ images more efficiently.
 
 %if_enabled libwebpmux
 %_bindir/gif2webp
+%_bindir/img2webp
 %_bindir/webpmux
 %_man1dir/gif2webp.1.*
 %_man1dir/webpmux.1.*
@@ -119,6 +120,9 @@ images more efficiently.
 %{?_enable_libwebpdemux:%_man1dir/vwebp.1.*}
 
 %changelog
+* Wed Feb 08 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Wed Dec 28 2016 Yuri N. Sedunov <aris@altlinux.org> 0.5.2-alt1
 - 0.5.2 (fixed CVE-2016-8888, CVE-2016-9085)
 
