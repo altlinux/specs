@@ -1,5 +1,5 @@
 Name: iotop
-Version: 0.4.4
+Version: 0.6
 Release: alt1
 
 Summary: Top like utility for I/O
@@ -28,11 +28,14 @@ process is the I/O going on.
 %python_install
 
 %files
-%_bindir/iotop
+%_sbindir/iotop
 %python_sitelibdir/*
-%_man1dir/*
+%_man8dir/*
 
 %changelog
+* Fri Feb 10 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6-alt1
+- 0.6
+
 * Sat Nov 26 2011 Victor Forsiuk <force@altlinux.org> 0.4.4-alt1
 - 0.4.4
 
