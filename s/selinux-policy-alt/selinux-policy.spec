@@ -1,11 +1,11 @@
 %define policy_name alt
-%define date 20170208
+%define date 20170210
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-alt
-Version: 0.0.34
+Version: 0.0.35
 Release: alt1
 License: %distributable
 Group: System/Base
@@ -261,6 +261,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/psql.pp
 
 %changelog
+* Fri Feb 10 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.35-alt1
+- user-dirs improvements
+
 * Thu Feb 09 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.34-alt1
 - dbus improvements from sbolshakov
 
