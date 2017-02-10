@@ -4,8 +4,8 @@
 %define libkf5activitiesstats libkf5activitiesstats%sover
 
 Name: kf5-%rname
-Version: 5.28.0
-Release: alt1
+Version: 5.30.0
+Release: alt1%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -18,8 +18,8 @@ Patch1: alt-pkgconfig.patch
 
 # Automatically added by buildreq on Fri Apr 15 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ libgpg-error libqt5-core libqt5-dbus libqt5-sql libqt5-xml libstdc++-devel pkg-config python-base python-modules python3 python3-base rpm-build-python3 ruby ruby-stdlibs
-#BuildRequires: boost-devel-headers extra-cmake-modules kf5-kactivities-devel kf5-kconfig-devel python-module-google python3-dev qt5-base-devel rpm-build-kf5 rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5
+#BuildRequires: boost-devel-headers extra-cmake-modules kf5-kactivities-devel kf5-kconfig-devel python-module-google python3-dev qt5-base-devel rpm-build-kf5 rpm-build-ubt rpm-build-ruby
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: boost-devel extra-cmake-modules qt5-base-devel
 BuildRequires: kf5-kactivities-devel kf5-kconfig-devel
 
@@ -83,6 +83,15 @@ KF5 library
 %_K5lib/libKF5ActivitiesStats.so.*
 
 %changelog
+* Wed Feb 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.30.0-alt1%ubt
+- new version
+
+* Tue Dec 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.29.0-alt1%ubt
+- new version
+
+* Fri Nov 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt0.M80P.1
+- build for M80P
+
 * Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt1
 - new version
 

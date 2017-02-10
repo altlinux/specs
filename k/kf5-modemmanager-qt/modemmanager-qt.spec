@@ -1,8 +1,8 @@
 %define rname modemmanager-qt
 
 Name: kf5-%rname
-Version: 5.28.0
-Release: alt1
+Version: 5.30.0
+Release: alt1%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -15,7 +15,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Thu Feb 26 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libcloog-isl4 libqt5-core libqt5-dbus libqt5-xml libstdc++-devel pkg-config python-base ruby ruby-stdlibs
 #BuildRequires: ModemManager-devel extra-cmake-modules gcc-c++ python-module-google qt5-base-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: ModemManager-devel extra-cmake-modules gcc-c++ qt5-base-devel
 
 %description
@@ -70,6 +70,15 @@ KF5 library
 %_K5lib/libKF5ModemManagerQt.so.*
 
 %changelog
+* Wed Feb 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.30.0-alt1%ubt
+- new version
+
+* Tue Dec 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.29.0-alt1%ubt
+- new version
+
+* Fri Nov 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt0.M80P.1
+- build for M80P
+
 * Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt1
 - new version
 
