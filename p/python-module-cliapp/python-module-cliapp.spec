@@ -2,7 +2,7 @@
 %global pkgname cliapp
 
 Name: python-module-cliapp
-Version: 1.20160109
+Version: 1.20160724
 Release: alt1
 
 Summary: Python framework for Unix command line programs
@@ -68,6 +68,9 @@ python -m CoverageTestRunner --ignore-missing-from=without-tests
 %doc doc/_build/html/*
 
 %changelog
+* Fri Feb 10 2017 Vitaly Lipatov <lav@altlinux.ru> 1.20160724-alt1
+- new version 1.20160724 (with rpmrb script)
+
 * Fri Apr 22 2016 Vitaly Lipatov <lav@altlinux.ru> 1.20160109-alt1
 - new version 1.20160109 (with rpmrb script)
 
