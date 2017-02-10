@@ -15,7 +15,7 @@
 %def_enable wayland
 
 Name: libwebkitgtk4
-Version: 2.14.3
+Version: 2.14.4
 Release: alt1
 
 Summary: Web browser engine
@@ -289,6 +289,11 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Fri Feb 10 2017 Yuri N. Sedunov <aris@altlinux.org> 2.14.4-alt1
+- 2.14.4 (fixed CVE-2017-2365, CVE-2017-2366, CVE-2017-2373, CVE-2017-2363,
+  CVE-2017-2362, CVE-2017-2350, CVE-2017-2350, CVE-2017-2354, CVE-2017-2355,
+  CVE-2017-2356, CVE-2017-2371, CVE-2017-2364, CVE-2017-2369)
+
 * Tue Jan 17 2017 Yuri N. Sedunov <aris@altlinux.org> 2.14.3-alt1
 - 2.14.3 (fixed CVE-2016-7656, CVE-2016-7635, CVE-2016-7654, CVE-2016-7639,
   CVE-2016-7645, CVE-2016-7652, CVE-2016-7641, CVE-2016-7632, CVE-2016-7599,
