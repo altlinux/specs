@@ -1,7 +1,7 @@
 %def_with lua_compat
 Name: lua5.1
 Version: 5.1.5
-Release: alt6
+Release: alt7
 
 Summary: Embeddable programming language
 License: MIT
@@ -158,6 +158,7 @@ cp -p luac %buildroot%_bindir/luac-5.1
 ln -s lua-5.1 %buildroot%_bindir/lua5.1
 ln -s luac-5.1 %buildroot%_bindir/luac5.1
 cp -p lua.h luaconf.h lualib.h lauxlib.h ../etc/lua.hpp %buildroot%_includedir/lua-5.1
+ln -s lua-5.1 %buildroot%_includedir/lua5.1
 install -pD -m644 ../etc/lua.pc %buildroot%_pkgconfigdir/lua-5.1.pc
 ln -s lua-5.1.pc %buildroot%_pkgconfigdir/lua5.1.pc
 
@@ -222,6 +223,7 @@ fi
 
 %files -n lib%{name}-devel
 %_includedir/lua-5.1
+%_includedir/lua5.1
 %_libdir/liblua*5.1.so
 %_pkgconfigdir/lua*5.1.pc
 %if_with lua_compat
@@ -243,6 +245,9 @@ fi
 %pkgdocdir/test
 
 %changelog
+* Fri Feb 10 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt7
+- added %_includedir/lua5.1 (seen in boswars, for better compatibility)
+
 * Thu Feb 09 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt6
 - added lua5.1.pc and liblua5.1.so as packages expect them
 - added if_with lua_compat to group conflicting files
