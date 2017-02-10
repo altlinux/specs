@@ -1,7 +1,7 @@
 %define dist Wx-Scintilla
 Name: perl-%dist
 Version: 0.39
-Release: alt4
+Release: alt4.1
 
 Summary: Wx::Scintilla - Scintilla source code editing component for wxWidgets
 Group: Development/Perl
@@ -42,6 +42,9 @@ xvfb-run -a ./Build test
 %doc Changes README
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.39-alt4.1
+- rebuild with new perl 5.24.1
+
 * Sat Jan 28 2017 Vladimir Lettiev <crux@altlinux.ru> 0.39-alt4
 - fixed build with gcc6
 

@@ -1,7 +1,7 @@
 %define dist JSON-DWIW
 Name: perl-%dist
 Version: 0.47
-Release: alt4.1.1
+Release: alt4.1.1.1
 
 Summary: Flexible and fast JSON converter for Perl
 License: GPL or Artistic
@@ -43,6 +43,9 @@ set any options.
 %perl_vendor_autolib/JSON
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.47-alt4.1.1.1
+- rebuild with new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.47-alt4.1.1
 - rebuild with new perl 5.22.0
 

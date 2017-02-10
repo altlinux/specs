@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-GD
 Version: 2.56
-Release: alt1.1
+Release: alt1.1.1
 Epoch: 1
 
 Summary: Perl interface to the GD graphics library
@@ -52,6 +52,9 @@ rm %buildroot%_man1dir/bdf2gdfont.PLS.*
 #%perl_vendor_archlib/qd.pl
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.56-alt1.1.1
+- rebuild with new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1:2.56-alt1.1
 - rebuild with new perl 5.22.0
 

@@ -3,7 +3,7 @@
 
 Name: perl-%dist
 Version: 1.046
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Gnome2 Perl module
 License: LGPLv2.1+
@@ -67,6 +67,9 @@ for developers (overview of internals and internal API reference).
 %doc	%perl_vendor_archlib/Gnome2/Config
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.046-alt1.1.1
+- rebuild with new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.046-alt1.1
 - rebuild with new perl 5.22.0
 

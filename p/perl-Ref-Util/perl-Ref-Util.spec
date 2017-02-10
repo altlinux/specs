@@ -4,7 +4,7 @@
 
 Name: perl-Ref-Util
 Version: 0.113
-Release: alt1
+Release: alt1.1
 
 Summary: Perl utility functions for checking references
 
@@ -42,6 +42,9 @@ references in a faster and smarter way.
 %perl_vendor_autolib/Ref/Util*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.113-alt1.1
+- rebuild with new perl 5.24.1
+
 * Sat Jan 21 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.113-alt1
 - New version
 

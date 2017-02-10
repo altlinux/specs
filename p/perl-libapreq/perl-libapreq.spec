@@ -1,6 +1,6 @@
 Name: perl-libapreq
 Version: 1.34
-Release: alt3.1.1
+Release: alt3.1.1.1
 
 Summary: Apache Request C Library, primary for working with mod_perl
 License: Apache Software Licence v. 2.0
@@ -35,6 +35,9 @@ Apache::libapreq, with general interface to C library.
 %perl_vendor_autolib/libapreq
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.34-alt3.1.1.1
+- rebuild with new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.34-alt3.1.1
 - rebuild with new perl 5.22.0
 

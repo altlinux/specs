@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Lexical-Var
 Version:        0.009
-Release:        alt2_9
+Release:        alt2_9.1
 Summary:        Static variables without name space pollution
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -56,6 +56,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Lexical*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.009-alt2_9.1
+- rebuild with new perl 5.24.1
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.009-alt2_9
 - update to new release by fcimport
 

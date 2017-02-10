@@ -1,7 +1,7 @@
 %define dist String-Approx
 Name: perl-%dist
 Version: 3.27
-Release: alt1.1.1
+Release: alt1.1.1.1
 
 Summary: Perl extension for approximate matching (fuzzy matching)
 License: Perl
@@ -36,6 +36,9 @@ comparison, and it works for strings, not for text.
 %perl_vendor_autolib/String/Approx
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 3.27-alt1.1.1.1
+- rebuild with new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 3.27-alt1.1.1
 - rebuild with new perl 5.22.0
 

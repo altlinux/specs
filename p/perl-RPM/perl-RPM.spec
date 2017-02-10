@@ -2,7 +2,7 @@
 %define dist Perl-RPM
 Name: perl-RPM
 Version: 1.51
-Release: alt2
+Release: alt2.1
 
 Summary: Native bindings to the RPM Package Manager API
 License: Artistic
@@ -53,6 +53,9 @@ t/01_database.t t/02_headers.t t/03_errors.t t/09_leaks.t
 %perl_vendor_autolib/RPM*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.51-alt2.1
+- rebuild with new perl 5.24.1
+
 * Fri Jan 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.51-alt2
 - fixed build to not hinder perl upgrade
 

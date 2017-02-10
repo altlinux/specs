@@ -5,7 +5,7 @@ BuildRequires: perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-File-Map
 Version:        0.64
-Release:        alt1_3
+Release:        alt1_3.1
 Summary:        Memory mapping made simple and safe
 License:        GPL+ or Artistic
 
@@ -79,6 +79,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1_3.1
+- rebuild with new perl 5.24.1
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1_3
 - update to new release by fcimport
 

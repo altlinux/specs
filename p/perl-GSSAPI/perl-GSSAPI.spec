@@ -10,7 +10,7 @@ BuildRequires: perl-podlators
 
 Name:           perl-GSSAPI
 Version:        0.28
-Release:        alt5_17
+Release:        alt5_17.1
 Summary:        Perl extension providing access to the GSSAPIv2 library
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -59,6 +59,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_archlib}/GSSAPI*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt5_17.1
+- rebuild with new perl 5.24.1
+
 * Tue Jan 31 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt5_17
 - to Sisyphus
 

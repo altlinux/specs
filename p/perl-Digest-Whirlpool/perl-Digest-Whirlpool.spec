@@ -1,7 +1,7 @@
 %define dist Digest-Whirlpool
 Name: perl-%dist
 Version: 2.04
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: A 512-bit, collision-resistant, one-way hash function
 License: GPL or Artistic
@@ -36,6 +36,9 @@ adopted as ISO/IEC 10118-3.
 %perl_vendor_autolib/Digest
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1.1.1
+- rebuild with new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1.1
 - rebuild with new perl 5.22.0
 

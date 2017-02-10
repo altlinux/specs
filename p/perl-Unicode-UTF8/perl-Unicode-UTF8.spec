@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.60
-Release: alt3.1
+Release: alt3.1.1
 Summary: Encoding and decoding of UTF-8 encoding form
 Group: Development/Perl
 License: perl
@@ -34,6 +34,9 @@ Source0: http://cpan.org.ua/authors/id/C/CH/CHANSEN/%{module_name}-%{module_vers
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.60-alt3.1.1
+- rebuild with new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.60-alt3.1
 - rebuild with new perl 5.22.0
 

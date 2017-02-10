@@ -12,7 +12,7 @@
 
 Name: gnumeric
 Version: %ver_major.33
-Release: alt1
+Release: alt1.1
 
 Summary: A full-featured spreadsheet for GNOME
 License: GPLv2+ GPLv3+
@@ -181,6 +181,9 @@ subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 %_pkgconfigdir/*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.12.33-alt1.1
+- rebuild with new perl 5.24.1
+
 * Tue Jan 31 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.33-alt1
 - 1.12.33
 

@@ -1,6 +1,6 @@
 Name: rrd
 Version: 1.5.4
-Release: alt2
+Release: alt2.1
 
 %define native rrdtool
 %define abiversion 4
@@ -334,6 +334,9 @@ rm -rf %buildroot/usr/lib/perl
 %endif
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt2.1
+- rebuild with new perl 5.24.1
+
 * Sat May 28 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt2
 - NMU: python-module-rrd renamed to python-module-rrdtool
 

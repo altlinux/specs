@@ -2,7 +2,7 @@
 %define dist CDB_File
 Name: perl-%dist
 Version: 0.99
-Release: alt1
+Release: alt1.1
 
 Summary: Perl extension for access to cdb databases
 License: GPL or Artistic
@@ -35,6 +35,9 @@ rm -f %buildroot%perl_vendor_archlib/bun-x.pl
 %perl_vendor_autolib/CDB_File*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1.1
+- rebuild with new perl 5.24.1
+
 * Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1
 - automated CPAN update
 

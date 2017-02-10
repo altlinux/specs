@@ -4,7 +4,7 @@
 
 Name: perl-%dist
 Version: 1.03
-Release: alt2
+Release: alt2.1
 
 Summary: bare-bones Ed25519 public key signing/verification system
 License: %perl_license
@@ -50,6 +50,9 @@ http://ed25519.cr.yp.to/index.html.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2.1
+- rebuild with new perl 5.24.1
+
 * Thu Apr 07 2016 Sergey Y. Afonin <asy@altlinux.ru> 1.03-alt2
 - merged spec with package from autoimports
 

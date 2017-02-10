@@ -16,7 +16,7 @@ BuildRequires: perl-podlators
 Summary:	Checks if scalar is valid UTF-8
 Name:		perl-Unicode-CheckUTF8
 Version:	1.03
-Release:	alt4_16
+Release:	alt4_16.1
 License:	UCD and (GPL+ or Artistic)
 Group:		Development/Other
 Url:		http://search.cpan.org/dist/Unicode-String/
@@ -73,6 +73,9 @@ make test
 %{perl_vendor_archlib}/auto/Unicode/
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.03-alt4_16.1
+- rebuild with new perl 5.24.1
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.03-alt4_16
 - update to new release by fcimport
 

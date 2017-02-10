@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Wx
 Version: 0.9928
-Release: alt1
+Release: alt1.1
 
 Summary: wxPerl - Perl bindings for wxWindows
 License: GPL
@@ -68,6 +68,9 @@ xvfb-run -a make test
 %perl_vendor_archlib/Wx/typemap
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.9928-alt1.1
+- rebuild with new perl 5.24.1
+
 * Mon Dec 28 2015 Igor Vlasenko <viy@altlinux.ru> 0.9928-alt1
 - automated CPAN update
 

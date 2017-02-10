@@ -4,12 +4,12 @@ BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Math/BigFloat.
 # END SourceDeps(oneline)
 %define module_version 1.6
 %define module_name CBOR-XS
-Serial: 2
+Epoch: 2
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.6
-Release: alt1
+Release: alt1.1
 Summary: unknown
 Group: Development/Perl
 License: perl
@@ -64,6 +64,9 @@ vice versa.
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2:1.6-alt1.1
+- rebuild with new perl 5.24.1
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 2:1.6-alt1
 - automated CPAN update
 

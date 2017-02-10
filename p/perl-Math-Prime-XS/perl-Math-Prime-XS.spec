@@ -5,7 +5,7 @@ BuildRequires: perl(Devel/TimeThis.pm) perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Math-Prime-XS
 Version:        0.27
-Release:        alt1
+Release:        alt1.1
 Summary:        Detect and calculate prime numbers with deterministic tests
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -58,6 +58,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1.1
+- rebuild with new perl 5.24.1
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
 - automated CPAN update
 

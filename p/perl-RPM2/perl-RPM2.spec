@@ -1,6 +1,6 @@
 Name:           perl-RPM2
 Version:        1.3
-Release:        alt1
+Release:        alt1.1
 Summary:        Perl bindings for the RPM Package Manager API
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -32,6 +32,9 @@ bindings for the RPM Package Manager API.
 %perl_vendor_autolib/RPM*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1.1
+- rebuild with new perl 5.24.1
+
 * Tue Aug 30 2016 Alexey Gladkov <legion@altlinux.ru> 1.3-alt1
 - First build for ALTLinux.
 

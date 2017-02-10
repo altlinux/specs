@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.10
-Release: alt1
+Release: alt1.1
 Summary: Extremely fast HTML escape
 Group: Development/Perl
 License: perl
@@ -34,6 +34,9 @@ From summary: %summary
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1.1
+- rebuild with new perl 5.24.1
+
 * Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
 - automated CPAN update
 

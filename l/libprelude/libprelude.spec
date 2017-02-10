@@ -14,7 +14,7 @@ BuildRequires: libltdl7-devel
 
 Name:           libprelude
 Version:        3.1.0
-Release:        alt2_29
+Release:        alt2_29.1
 Summary:        Secure Connections between all Sensors and the Prelude Manager
 # Prelude is GPL-2.0+
 # libmissing is LGPL-2.1+
@@ -296,6 +296,9 @@ find %{buildroot} -name '.packlist' -delete
 %doc AUTHORS ChangeLog README NEWS
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt2_29.1
+- rebuild with new perl 5.24.1
+
 * Thu Feb 02 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt2_29
 - changed python names to be the same for python3 and 2
 

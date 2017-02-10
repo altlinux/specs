@@ -1,11 +1,11 @@
-Serial: 1
+Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Scalar/Util.pm) perl(XSLoader.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Devel-FindRef
 Version:        1.44
-Release:        alt3_3.1
+Release:        alt3_3.1.1
 Summary:        Where is that reference to my variable hiding?
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -59,6 +59,9 @@ make test
 %{perl_vendor_archlib}/Devel
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.44-alt3_3.1.1
+- rebuild with new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.44-alt3_3.1
 - rebuild with new perl 5.22.0
 

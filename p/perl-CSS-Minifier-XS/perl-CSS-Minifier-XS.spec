@@ -4,7 +4,7 @@ BuildRequires: perl(Benchmark.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(IO/
 # END SourceDeps(oneline)
 Name:       perl-CSS-Minifier-XS
 Version:    0.09
-Release:    alt4_8
+Release:    alt4_8.1
 # lib/CSS/Minifier/XS.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic
 Group:      Development/Perl
@@ -54,6 +54,9 @@ make test
 %exclude %dir %{perl_vendor_archlib}/auto
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt4_8.1
+- rebuild with new perl 5.24.1
+
 * Tue Jan 31 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt4_8
 - to Sisyphus
 

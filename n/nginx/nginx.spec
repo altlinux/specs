@@ -5,7 +5,7 @@
 Name: nginx
 Summary: Fast HTTP server
 Version: 1.10.1
-Release: alt1
+Release: alt1.1
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel
@@ -317,6 +317,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %_libdir/%name/ngx_http_xslt_filter_module.so
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.10.1-alt1.1
+- rebuild with new perl 5.24.1
+
 * Wed Jun 01 2016 Denis Smirnov <mithraen@altlinux.ru> 1.10.1-alt1
 - 1.10.1
 - CVE-2016-4450

@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%def_without bootstrap
+%def_with bootstrap
 %define dist DateTime
 Name: perl-%dist
 Version: 1.28
-Release: alt1
+Release: alt1.1
 
 Summary: DateTime base objects
 License: GPL or Artistic
@@ -46,6 +46,9 @@ http://datetime.perl.org/faq.html.
 %perl_vendor_autolib/DateTime*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1.1
+- rebuild with new perl 5.24.1
+
 * Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1
 - automated CPAN update
 

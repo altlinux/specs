@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.00
-Release: alt3
+Release: alt3.1
 Summary: Punycode conversion of UTF-8 string.
 Group: Development/Perl
 License: gpl
@@ -34,6 +34,9 @@ Source0: http://cpan.org.ua/authors/id/T/TW/TWINKLE/%module_name-%module_version
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3.1
+- rebuild with new perl 5.24.1
+
 * Sat Sep 24 2016 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3
 - to Sisyphus
 

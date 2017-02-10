@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.41
-Release: alt1
+Release: alt1.1
 Summary: Represents a date and time of day with an offset from UTC
 Group: Development/Perl
 License: perl
@@ -34,6 +34,9 @@ From summary: %summary
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1.1
+- rebuild with new perl 5.24.1
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1
 - automated CPAN update
 

@@ -2,7 +2,7 @@
 %define dist Time-Piece
 Name: perl-%dist
 Version: 1.31
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Object Oriented time objects
 License: GPL or Artistic
@@ -39,6 +39,9 @@ http://www.xray.mpe.mpg.de/mailing-lists/perl5-porters/2000-01/msg00241.html
 %perl_vendor_autolib/Time
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1.1.1
+- rebuild with new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1.1
 - rebuild with new perl 5.22.0
 

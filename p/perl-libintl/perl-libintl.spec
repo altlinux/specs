@@ -1,7 +1,7 @@
 %define dist libintl-perl
 Name: perl-libintl
 Version: 1.26
-Release: alt1
+Release: alt1.1
 
 Summary: High-Level Interface to Uniforum Message Translation
 License: LGPL or Artistic
@@ -44,6 +44,9 @@ sed -i- '/LIBS/d' gettext_xs/Makefile.PL
 	%perl_vendor_autolib/Locale
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1.1
+- rebuild with new perl 5.24.1
+
 * Mon Jun 13 2016 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1
 - automated CPAN update
 

@@ -9,7 +9,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 2.37
-Release: alt1
+Release: alt1.1
 Summary: unknown
 Group: Development/Perl
 License: perl
@@ -223,6 +223,9 @@ This call does nothing under Windows.
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.37-alt1.1
+- rebuild with new perl 5.24.1
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 2.37-alt1
 - automated CPAN update
 

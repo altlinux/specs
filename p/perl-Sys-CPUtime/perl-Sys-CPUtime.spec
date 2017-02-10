@@ -7,7 +7,7 @@
 
 Name: perl-%module
 Version: 0.10
-Release: alt4.1.1
+Release: alt4.1.1.1
 
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -44,6 +44,9 @@ to create persistent daemons on a hosting with CPU time limits.
 %perl_vendor_autolib/Sys
 
 %changelog
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt4.1.1.1
+- rebuild with new perl 5.24.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.10-alt4.1.1
 - rebuild with new perl 5.22.0
 
