@@ -1,12 +1,11 @@
 Name: speech-dispatcher
-Version: 0.8.3
-Release: alt2.1.1
+Version: 0.8.6
+Release: alt1
 
 Summary: A speech output processing service
 License: %gpl2plus
 Group: Sound
 URL: http://www.freebsoft.org/speechd
-Packager: Michael Pozhidaev <msp@altlinux.ru>
 
 Source: http://devel.freebsoft.org/pub/projects/speechd/%name-%version.tar
 # fc
@@ -17,7 +16,7 @@ Patch1: speech-dispatcher-0.8-alt-flite.patch
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libdotconf-devel >= 0.3
 BuildRequires: gcc-c++ glib2-devel glibc-devel-static intltool
-BuildRequires:  libXau-devel  libltdl7-devel
+BuildRequires: libXau-devel  libltdl7-devel
 BuildRequires: libalsa-devel libao-devel
 BuildRequires: flite-devel  libespeak-devel svox-pico
 BuildRequires(pre): rpm-build-python3
@@ -34,7 +33,7 @@ intended to allow blind and visually impaired people to work with
 computer and Internet based on free software.
 
 %package -n libspeechd
-Summary: Client library for speech-dispatcher 
+Summary: Client library for speech-dispatcher
 Group: System/Libraries
 
 %description -n libspeechd
@@ -130,7 +129,8 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%{name}d.service
 %find_lang %name
 
 %files -f %name.lang
-%doc ANNOUNCE AUTHORS BUGS ChangeLog doc FAQ NEWS README README.packagers README.style README.translators TODO
+%doc ANNOUNCE AUTHORS BUGS doc FAQ NEWS README
+%doc README.packagers README.style README.translators TODO
 %_bindir/*
 %config %_sysconfdir/%name
 %_unitdir/%{name}d.service
@@ -180,6 +180,9 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%{name}d.service
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Feb 10 2017 Yuri N. Sedunov <aris@altlinux.org> 0.8.6-alt1
+- 0.8.6
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.3-alt2.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
