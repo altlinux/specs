@@ -1,6 +1,6 @@
 Name:		love7
 Version:	0.7.2
-Release:	alt2
+Release:	alt2.1
 Summary:	Legendary Orthogonal Virtual Environment
 Group:		Games/Other
 License:	zlib
@@ -9,7 +9,7 @@ URL:		http://love2d.org/
 
 # Automatically added by buildreq on Fri Sep 02 2011
 # optimized out: libGL-devel libGLU-devel libogg-devel libstdc++-devel libX11-devel xorg-xproto-devel
-BuildRequires: gcc-c++ glibc-devel-static libdevil-devel libfreetype-devel liblua5-devel libmng-devel libmodplug-devel libmpg123-devel libopenal-devel libphysfs-devel libSDL-devel libtiff-devel libvorbis-devel
+BuildRequires: gcc-c++ glibc-devel-static libdevil-devel libfreetype-devel lua5.1-devel libmng-devel libmodplug-devel libmpg123-devel libopenal-devel libphysfs-devel libSDL-devel libtiff-devel libvorbis-devel
 
 %description
 As you probably know by now, LO:VE is a framework for making 2D games in
@@ -33,6 +33,9 @@ mv %buildroot/%_bindir/love %buildroot/%_bindir/love7
 %_bindir/*
 
 %changelog
+* Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.2-alt2.1
+- NMU: rebuild with new lua 5.1
+
 * Thu Apr 23 2015 Fr. Br. George <george@altlinux.ru> 0.7.2-alt2
 - Fork for old game compatibility
 
