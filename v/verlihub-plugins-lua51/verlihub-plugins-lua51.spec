@@ -7,7 +7,7 @@
 %define oname lua
 Name: verlihub-plugins-lua51
 Version: 1.8.1
-Release: alt1.qa1.1
+Release: alt1.qa2
 
 Summary: Lua 5.1 plugin for verlihub
 
@@ -23,7 +23,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Requires: verlihub
 
 # Automatically added by buildreq on Wed Jun 25 2008
-BuildRequires: gcc-c++ libGeoIP-devel libMySQL-devel liblua5-devel libpcre-devel libverlihub-devel zlib-devel
+BuildRequires: gcc-c++ libGeoIP-devel libMySQL-devel lua5.1-devel libpcre-devel libverlihub-devel zlib-devel
 
 %description
 Lua 5.1 plugin for verlihub
@@ -43,6 +43,9 @@ Lua 5.1 plugin for verlihub
 %_libdir/*.so*
 
 %changelog
+* Fri Feb 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1.qa2
+- NMU: build with new lua5.1
+
 * Wed Apr 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.8.1-alt1.qa1.1
 - (NMU) rebuild with gcc5-c++ (for new C++ ABI).
 
