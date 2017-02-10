@@ -7,8 +7,8 @@
 %def_enable libipset
 
 Name: keepalived
-Version: 1.2.24
-Release: alt3
+Version: 1.3.2
+Release: alt1%ubt
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
 License: GPL
@@ -19,6 +19,7 @@ Source1: %name.init
 
 Patch1: 0001-fix-dlopen-libipset.patch
 Patch2: 0002-update-systemd-unit-file.patch
+BuildRequires(pre):rpm-build-ubt
 
 # Automatically added by buildreq on Thu Aug 09 2007 (-ba)
 BuildRequires: libpopt-devel libssl-devel
@@ -69,7 +70,7 @@ install -pD -m644 doc/man/man5/keepalived.conf.5 %buildroot%_man5dir/keepalived.
 install -pD -m644 doc/man/man8/keepalived.8 %buildroot%_man8dir/keepalived.8
 install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
 install -pD -m644 keepalived/%name.service %buildroot%_unitdir/%name.service
-install -pD -m644 keepalived/etc/init.d/%name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
+install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfig/%name
 
 
 %preun
@@ -91,11 +92,14 @@ install -pD -m644 keepalived/etc/init.d/%name.sysconfig %buildroot%_sysconfdir/s
 
 %doc AUTHOR ChangeLog  README TODO
 %doc doc/keepalived.conf.SYNOPSIS
-%doc doc/*-MIB
+%doc doc/*-MIB*
 %doc doc/*.txt
 %doc doc/samples
 
 %changelog
+* Wed Jan 11 2017 Anton Farygin <rider@altlinux.ru> 1.3.2-alt1%ubt
+- new version
+
 * Mon Nov 07 2016 Anton Farygin <rider@altlinux.ru> 1.2.24-alt3
 - build with actual version of libipset-devel
 
