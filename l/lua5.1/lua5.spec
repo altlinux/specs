@@ -1,7 +1,7 @@
 %def_with lua_compat
 Name: lua5.1
 Version: 5.1.5
-Release: alt7
+Release: alt8
 
 Summary: Embeddable programming language
 License: MIT
@@ -40,6 +40,7 @@ Group: System/Libraries
 # for smooth upgrade against lua5.1-alt-compat
 Provides: %_libdir/lua/5.1
 Provides: %_datadir/lua/5.1
+Requires: lib%{name}-preinstall = %EVR
 Requires(pre): lib%{name}-preinstall = %EVR
 Conflicts: lua5.1-alt-compat = 1.0-alt1
 
@@ -189,20 +190,12 @@ mkdir -p %buildroot{%_libdir,%_datadir}/lua/5.1
 %pre -n lib%{name}
 # ----------- begin update from old lua5 to lua5.1 ----
 if [ -L %_libdir/lua/5.1 ]; then
-    echo "remove lua5.1-alt-compat manually!"
-    exit 1
-fi
-if [ -d %_libdir/lua5 ] && [ ! -d %_libdir/lua/5.1 ]; then
-    mkdir -p %_libdir/lua
-    mv %_libdir/lua5 %_libdir/lua/5.1
-fi
-if [ -L %_datadir/lua/5.1 ]; then
-    echo "remove lua5.1-alt-compat manually!"
-    exit 1
-fi
-if [ -d %_datadir/lua5 ] && [ ! -d %_datadir/lua/5.1 ]; then
-    mkdir -p %_datadir/lua
-    mv %_datadir/lua5 %_datadir/lua/5.1
+    echo "removing lua5.1-alt-compat symlink..."
+    rm -f %_libdir/lua/5.1
+    if [ -d %_libdir/lua5 ] && [ ! -e %_libdir/lua/5.1 ]; then
+	mkdir -p %_libdir/lua
+	mv %_libdir/lua5 %_libdir/lua/5.1
+    fi
 fi
 # ----------- end update from old lua5 to lua5.1 ----
 
@@ -245,6 +238,10 @@ fi
 %pkgdocdir/test
 
 %changelog
+* Sat Feb 11 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt8
+- added Requires: on preinstall subpackage
+- upgrade script made more forceful (should help #33104)
+					    
 * Fri Feb 10 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt7
 - added %_includedir/lua5.1 (seen in boswars, for better compatibility)
 
