@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.8.0
-Release: alt4
+Release: alt5
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -464,8 +464,9 @@ install -pD -m 0644 %SOURCE4 %buildroot%_logrotatedir/%name
 install -pD -m 0644 %SOURCE49 %buildroot%_tmpfilesdir/%name.conf
 
 ############ create dirs in /var ############
-install -d -m 0700 %buildroot%_localstatedir/%name/save
-install -d -m 0700 %buildroot%_logdir/%name/console
+#install -d -m 0700 %buildroot%_localstatedir/%name/save
+install -d -m 0700 %buildroot%_localstatedir/xenstored
+#install -d -m 0700 %buildroot%_logdir/%name/console
 
 ############ assemble license files ############
 # avoid licensedir to avoid recursion, also stubdom/ioemu and dist
@@ -652,6 +653,8 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_localstatedir/%name
 
 # Xen logfiles
+%dir %attr(0700,root,root) %_localstatedir/xen
+%dir %attr(0700,root,root) %_localstatedir/xenstored
 %dir %attr(0700,root,root) %_logdir/xen
 
 
@@ -786,6 +789,21 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Sat Feb 11 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.0-alt5
+- Fix packaging errors
+- Upstream updates:
+ - qemu-xen: cirrus: fix oob access issue (CVE-2017-2615)
+ - x86/xstate: Fix array overrun on hardware with LWP
+ - x86emul: VEX.B is ignored in compatibility mode
+ - x86emul: LOCK check adjustments
+ - x86: segment attribute handling adjustments
+ - x86emul: correct FPU stub asm() constraints
+ - x86/hvm: do not set msr_tsc_adjust on hvm_set_guest_tsc_fixed
+ - xen: credit2: use the correct scratch cpumask
+ - xen: credit2: never consider CPUs outside of our cpupool
+ - xen: credit2: fix shutdown/suspend when playing with cpupools
+ - x86/emulate: don't assume that addr_size == 32 implies protected mode
+
 * Sat Jan 21 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.0-alt4
 - Upstream updates:
  - x86emul: correct PUSHF/POPF
