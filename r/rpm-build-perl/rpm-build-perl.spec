@@ -1,8 +1,8 @@
-%def_with bootstrap
+%def_without bootstrap
 
 Name: rpm-build-perl
 Version: 0.84
-Release: alt11
+Release: alt11.1
 
 Summary: RPM helper scripts to calculate Perl dependencies
 License: GPL
@@ -75,6 +75,9 @@ install -pm644 macros.env %buildroot%_rpmmacrosdir/perl5.env
 %config %_rpmmacrosdir/perl5.env
 
 %changelog
+* Sun Feb 12 2017 Igor Vlasenko <viy@altlinux.ru> 0.84-alt11.1
+- unbootstrap after rebuild with new perl 5.24.1
+
 * Fri Jan 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.84-alt11
 - bootstrap for perl 5.24
 
