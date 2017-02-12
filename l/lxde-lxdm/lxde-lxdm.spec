@@ -5,7 +5,7 @@
 %define gtkver 2
 Name: lxde-%upstreamname
 Version: 0.5.3
-Release: alt3.20160321.1
+Release: alt4.20160321.1
 
 Summary: Lightweight X11 Display Manager
 License: GPL
@@ -26,7 +26,7 @@ Source2: alt.lxdm.conf
 Source3: alt.Xsession
 
 BuildPreReq: imake intltool libConsoleKit2-devel libXmu-devel libgtk+%gtkver-devel libpam-devel xinitrc xorg-cf-files pkgconfig(systemd)
-
+Requires: gtk3-theme-clearlooks-phenix
 %add_findreq_skiplist %_sbindir/%upstreamname
 
 %description
@@ -92,6 +92,9 @@ ln -s %_datadir/%upstreamname/themes/%theme_name/wave.svg %buildroot%_datadir/%u
 %_unitdir/lxdm.service
 
 %changelog
+* Sat Feb 11 2017 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt4.20160321.1
+- Change theme to clearlooks-phenix
+
 * Fri Feb 10 2017 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt3.20160321.1
 - Fix default settings
 
