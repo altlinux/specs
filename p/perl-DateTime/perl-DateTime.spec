@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%def_with bootstrap
+%def_without bootstrap
 %define dist DateTime
 Name: perl-%dist
 Version: 1.28
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: DateTime base objects
 License: GPL or Artistic
@@ -22,6 +22,8 @@ BuildRequires: perl-DateTime-Locale perl-Math-Round perl-Module-Build perl-Test-
 %add_findreq_skiplist %perl_vendor_archlib/DateTime*
 %else
 BuildRequires: perl-DateTime-TimeZone
+# test depandency
+BuildRequires: perl(Params/Validate.pm)
 %endif
 
 %description
@@ -46,6 +48,9 @@ http://datetime.perl.org/faq.html.
 %perl_vendor_autolib/DateTime*
 
 %changelog
+* Sun Feb 12 2017 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1.1.1
+- unbootstrap after rebuild with new perl 5.24.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1.1
 - rebuild with new perl 5.24.1
 
