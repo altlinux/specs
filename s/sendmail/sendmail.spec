@@ -3,7 +3,7 @@ Name: sendmail
 %define tarbolversion 8.15.2
 
 Version: %tarbolversion
-Release: alt3
+Release: alt4
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -500,6 +500,10 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Sun Feb 12 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.15.2-alt4
+- added to *.mc of ALT (except submit.mc) confMILTER_MACROS_ENVRCPT
+  definition for mailfromd
+
 * Sat Feb 04 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.15.2-alt3
 - synced submit.mc with original 8.15.2/cf/cf/submit.mc
 - added FEATURE(`nocanonify') to submit.mc
