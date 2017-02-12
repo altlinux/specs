@@ -3,7 +3,7 @@
 %define oname ConsoleKit
 Name: ConsoleKit2
 Version: 1.1.0
-Release: alt1
+Release: alt2
 Summary: System daemon for tracking users, sessions and seats
 License: GPL
 Group: System/Libraries
@@ -32,6 +32,7 @@ Summary: X11-requiring add-ons for ConsoleKit
 Group: System/X11
 Requires: %name = %version-%release
 Conflicts: ConsoleKit-x11
+Conflicts: ConsoleKit
 
 %description x11
 ConsoleKit contains some tools that require Xlib to be installed,
@@ -87,7 +88,7 @@ are not always useful.
 %install
 %makeinstall_std
 
-touch %buildroot%_var/run/%oname/database
+#touch %buildroot%_var/run/%oname/database
 mkdir -p %buildroot%_logdir/%oname
 touch %buildroot%_logdir/%oname/history
 for i in $(seq 1 5); do
@@ -118,8 +119,8 @@ done
 #%%_libexecdir/%oname/scripts
 %_datadir/dbus-1/system-services/*.service
 %_datadir/polkit-1/actions/*.policy
-%dir %_var/run/%oname
-%ghost %_var/run/%oname/database
+#%%dir %_var/run/%oname
+#%%ghost %_var/run/%oname/database
 %dir %_logdir/%oname
 %ghost %_logdir/%oname/history*
 
@@ -145,5 +146,9 @@ done
 %_man1dir/*.1*
 
 %changelog
+* Sun Feb 12 2017 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt2
+- Added conflict ConsoleKit2-x11 with ConsoleKit
+- Remove subdir in /var/run
+
 * Mon Feb 06 2017 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
 - Initial build for ALT Linux Sisyphus.
