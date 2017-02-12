@@ -1,7 +1,7 @@
 # TODO: enable system libtiff when it will support BigTiff (from 4.0?)
 %def_without libtiff
 %def_without geotiff
-%def_without perl
+%def_with perl
 %def_with mysql
 %def_with pg
 %def_with sqlite
@@ -10,7 +10,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 2.0.2
-Release: alt3
+Release: alt4
 Group: Sciences/Geosciences
 
 License: MIT
@@ -197,7 +197,7 @@ mv %buildroot/usr/man %buildroot/usr/share
 install -p -m644 NEWS %buildroot%_docdir/%name
 %if_with perl
 mkdir -p  %buildroot/%_libdir/perl5/
-mv %buildroot/usr/lib/perl5/*-linux-thread-multi/* %buildroot/%_libdir/perl5/
+mv %buildroot/usr/lib/perl5/*-linux-thread-multi*/* %buildroot/%_libdir/perl5/
 %endif
 
 for i in %buildroot%_bindir/*
@@ -257,6 +257,9 @@ sed -i 's|__bool__ = __nonzero__||' \
 %endif
 
 %changelog
+* Sun Feb 12 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt4
+- NMU: enabled perl after perl5.24.1 upgrade
+
 * Sun Feb 05 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt3
 - NMU: disabled perl for perl5.24.1 upgrade
 
