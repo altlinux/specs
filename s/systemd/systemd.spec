@@ -55,7 +55,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 232
-Release: alt2.git.486b3d0
+Release: alt3.git.486b3d0
 Summary: System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -215,9 +215,9 @@ work as a drop-in replacement for sysvinit.
 %package -n libsystemd-shared
 Group: System/Libraries
 Summary: Private Systemd Shared Library
-Conflicts: systemd-services < 1:232-alt1
-Conflicts: systemd < 1:232-alt1
-Conflicts: journalctl < 1:232-alt1
+Conflicts: systemd-services < %EVR
+Conflicts: systemd < %EVR
+Conflicts: journalctl < %EVR
 
 %description -n libsystemd-shared
 The libsystemd-shared private library for link as many binaries as possible with it,
@@ -373,7 +373,7 @@ Drop-in replacement for the System V init tools of systemd.
 %package utils
 Group: System/Configuration/Boot and Init
 Summary: systemd utils
-Requires: libsystemd-shared = %EVR
+PreReq: libsystemd-shared = %EVR
 Conflicts: %name < %EVR
 
 %description utils
@@ -460,7 +460,7 @@ Group: System/Configuration/Boot and Init
 Summary: Tool to query the journal from systemd.
 Provides: /bin/journalctl
 Provides: /sbin/journalctl
-Requires: libsystemd-shared = %EVR
+PreReq: libsystemd-shared = %EVR
 # File conflict with the releases before splitting out journalctl.
 # 0:208-alt3 was the first release when the pkg was split in Sisyphus.
 # The split pkgs for p7/t7 have lesser releases, so they couldn't coexist
@@ -1904,6 +1904,9 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Mon Feb 13 2017 Alexey Shabalin <shaba@altlinux.ru> 1:232-alt3.git.486b3d0
+- update conflicts
+
 * Thu Feb 02 2017 Alexey Shabalin <shaba@altlinux.ru> 1:232-alt2.git.486b3d0
 - upstream snapshot of master 486b3d08dbf6c6b0b20e2960990f864d5d95fd37
 
