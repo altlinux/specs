@@ -2,7 +2,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.908
+Version: 0.909
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -79,6 +79,9 @@ mkdir -p %buildroot%_datadir/srpmtools/hooks
 %_man1dir/hashertarbuild*
 
 %changelog
+* Mon Feb 13 2017 Igor Vlasenko <viy@altlinux.ru> 0.909-alt1
+- development release
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.908-alt1
 - added srpm-spec-inject-patches
 
