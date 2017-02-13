@@ -1,7 +1,7 @@
 
 Name: phpipam
 Version: 1.29.011
-Release: alt1
+Release: alt2
 Summary: PHP-based virtual machine control tool
 Group: Networking/WWW
 License: GPLv3
@@ -15,7 +15,6 @@ Source11: %name-apache.conf
 
 BuildArch: noarch
 Requires: webserver-common
-Requires: php5-gmp php5-pdo php5-pdo_mysql php5-ldap php5-pcntl pear-core
 
 BuildPreReq: rpm-macros-webserver-common rpm-macros-apache2
 
@@ -49,9 +48,32 @@ Group: Networking/WWW
 BuildArch: noarch
 Summary: apache2 configs for %name
 Requires: %name = %version-%release
+Requires: %name-php
 Requires: apache2-httpd-prefork-like php-engine
 
 %description apache2
+%summary
+
+%package php5
+Group: Networking/WWW
+BuildArch: noarch
+Summary: php5 virtual package for %name
+Provides: %name-php
+Requires: %name = %version-%release
+Requires: php5-gmp php5-ldap php5-sockets php5-openssl php5-pdo php5-pdo_mysql php5-pcntl php5-mbstring php5-mcrypt php5-snmp pear-core
+
+%description php5
+%summary
+
+%package php7
+Group: Networking/WWW
+BuildArch: noarch
+Summary: php7 virtual package  for %name
+Provides: %name-php
+Requires: %name = %version-%release
+Requires: php7-gmp php7-ldap php7-sockets php7-openssl php7-pdo php7-pdo_mysql php7-mbstring php7-mcrypt php7-snmp pear-core
+
+%description php7
 %summary
 
 %prep
@@ -94,7 +116,14 @@ rm -rf %buildroot%webserver_webappsdir/%name/functions/PHPMailer/test
 %files apache2
 %config(noreplace) %apache2_extra_available/%name.conf
 
+%files php5
+%files php7
+
 %changelog
+* Mon Feb 13 2017 Alexey Shabalin <shaba@altlinux.ru> 1.29.011-alt2
+- git snapshot of master branch 7edd5343ddd878de97eb41f3340fcce4fcd3a510
+- add php5 and php7 subpackages
+
 * Thu Jan 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.29.011-alt1
 - git snapshot of master branch 84916b3c3add90b9cb1c39c9623cf04bb0f3bcd6
 
