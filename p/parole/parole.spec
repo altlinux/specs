@@ -1,6 +1,6 @@
 Name: parole
-Version: 0.8.1
-Release: alt2
+Version: 0.9.0
+Release: alt1
 
 # '1' for gstreamer-1.0
 # '0' or undefined for gstreamer-0.10
@@ -11,6 +11,8 @@ Release: alt2
 %endif
 
 %def_enable clutter
+
+%define _unpackaged_files_terminate_build 1
 
 Summary: Media player for the Xfce desktop
 License: %gpl2plus
@@ -53,7 +55,7 @@ plugins.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: libgtk+2-devel
+Requires: libgtk+3-devel
 BuildArch: noarch
 
 %description devel
@@ -68,17 +70,17 @@ mkdir m4
 %build
 %xfce4reconf
 %configure \
-    --disable-static \
-    --enable-maintainer-mode \
-    --enable-taglib \
+	--disable-static \
+	--enable-maintainer-mode \
+	--enable-taglib \
 %if %{?gstreamer1}%{!?gstreamer1:0}
-    --with-gstreamer=1.0 \
+	--with-gstreamer=1.0 \
 %else
-    --with-gstreamer=0.10 \
+	--with-gstreamer=0.10 \
 %endif
 	%{subst_enable clutter} \
-    --enable-gtk-doc \
-    --enable-debug=no
+	--enable-gtk-doc \
+	--enable-debug=minimal
 %make_build
 
 %install
@@ -100,6 +102,11 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Feb 13 2017 Mikhail Efremov <sem@altlinux.org> 0.9.0-alt1
+- Enabled debug (minimal).
+- devel: Fixed requires.
+- Updated to 0.9.0.
+
 * Mon Feb 08 2016 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt2
 - Add more GStreamer media plugins to requires (closes: #31681).
 
