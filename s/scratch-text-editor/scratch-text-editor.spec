@@ -1,6 +1,6 @@
 %define _name scratch
 %define xdg_name org.pantheon.%_name
-%define ver_major 2.3
+%define ver_major 2.4
 
 Name: scratch-text-editor
 Version: %ver_major
@@ -27,6 +27,8 @@ BuildRequires: at-spi2-atk-devel libpeas-devel libgtksourceview3-devel
 BuildRequires: libgee0.8-devel libzeitgeist2.0-devel libgranite-devel libgail3-devel
 BuildRequires: libdbus-devel libgranite-vala libvala-devel libexpat-devel
 BuildRequires: libgtkspell3-devel
+# since 2.4
+BuildRequires: libwebkit2gtk-devel
 
 %description
 Scratch is the text editor that works for you. It auto-saves your files,
@@ -94,14 +96,14 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %_bindir/%name
 %_libdir/lib%{_name}core.so.*
 %_libdir/%_name/
-%_desktopdir/%name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name.plugins.folder-manager.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name.plugins.file-manager.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name.plugins.spell.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name.plugins.terminal.gschema.xml
 %_datadir/%_name/
-%_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/%xdg_name.appdata.xml
 
 %files devel
 %_libdir/*.so
@@ -113,6 +115,9 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %_vapidir/%{_name}core.vapi
 
 %changelog
+* Mon Feb 13 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4-alt1
+- 2.4
+
 * Sat Sep 24 2016 Yuri N. Sedunov <aris@altlinux.org> 2.3-alt1
 - 2.3
 
