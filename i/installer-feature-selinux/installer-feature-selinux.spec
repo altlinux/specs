@@ -1,6 +1,6 @@
 Name: installer-feature-selinux
-Version: 0.6
-Release: alt2
+Version: 0.7
+Release: alt1
 
 Summary: Installer selinux hooks
 License: GPL
@@ -27,6 +27,9 @@ install -pm755 postinstall.sh %buildroot%hookdir/postinstall.d/90-selinux.sh
 %hookdir/postinstall.d/*
 
 %changelog
+* Mon Feb 13 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.7-alt1
+- disable non-root logins in console
+
 * Fri Feb 06 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.6-alt2
 - typo fixed
 
