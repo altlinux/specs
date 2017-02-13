@@ -1,7 +1,7 @@
 %def_disable ubuntuicons
 
 Name: nitrokey-app
-Version: 0.6.1
+Version: 0.6.3
 Release: alt1
 License: %gpl3only
 Summary: Nitrokey's Application
@@ -77,6 +77,9 @@ groupadd -r _cryptodev ||:
 %doc OTP_full_specification.txt README.md
 
 %changelog
+* Mon Feb 06 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.3-alt1
+- Updated to 0.6.3.
+
 * Thu Dec 22 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.1-alt1
 - Updated to 0.6.1.
 
