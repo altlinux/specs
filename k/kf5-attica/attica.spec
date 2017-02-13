@@ -1,7 +1,7 @@
 %define rname attica
 
 Name: kf5-%rname
-Version: 5.30.0
+Version: 5.31.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -76,6 +76,9 @@ done
 %_K5lib/libKF5Attica.so.*
 
 %changelog
+* Mon Feb 13 2017 Sergey V Turchin <zerg@altlinux.org> 5.31.0-alt1%ubt
+- new version
+
 * Wed Feb 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.30.0-alt1%ubt
 - new version
 
