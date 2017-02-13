@@ -18,7 +18,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -48,7 +48,7 @@ Provides: camel
 %define glib_ver 2.40.0
 %define gtk_ver 3.10
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.22.4
+%define eds_ver 3.22.5
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define libsoup_ver 2.42.0
@@ -317,6 +317,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Mon Feb 13 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.5-alt1
+- 3.22.5
+
 * Mon Jan 16 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.4-alt1
 - 3.22.4
 
@@ -1101,16 +1104,17 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 - rebuild with new libgal/gtkhtml
 - oaf-slay added to %post
 
-* Tue Aug 23 2001 AEN <aen@logic.ru> 0.12-alt2
+* Thu Aug 23 2001 AEN <aen@logic.ru> 0.12-alt2
 - rebuild with new libtool/autoconf
 
 * Thu Aug 09 2001 AEN <aen@logic.ru> 0.12-alt1
 - new version
-* Wed Jul 24 2001 AEN <aen@logic.ru> 0.11-alt1
+
+* Tue Jul 24 2001 AEN <aen@logic.ru> 0.11-alt1
 - new version
 - w/o movemail
 
-* Wed Jul 17 2001 AEN <aen@logic.ru> 0.10.99-alt3
+* Tue Jul 17 2001 AEN <aen@logic.ru> 0.10.99-alt3
 - new snapshot with  gtkhtml-0.10.0
 
 * Thu Jul 12 2001 AEN <aen@logic.ru> 0.10.99-alt2

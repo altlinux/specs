@@ -20,7 +20,7 @@
 %endif
 
 Name: glib2
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -415,6 +415,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Mon Feb 13 2017 Yuri N. Sedunov <aris@altlinux.org> 2.50.3-alt1
+- 2.50.3
+
 * Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 2.50.2-alt1
 - 2.50.2
 
