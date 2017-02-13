@@ -1,7 +1,8 @@
 %define _name gudev
-%define ver_major 230
+%define ver_major 231
 %define api_ver 1.0
 
+%def_enable umockdev
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
@@ -17,13 +18,13 @@ License: LGPLv2
 Url: https://wiki.gnome.org/Projects/%name
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#ource: %name-%version.tar
 
 %define udev_ver 199
-%define glib_ver 2.22.0
+%define glib_ver 2.30
 
 BuildRequires: libudev-devel >= %udev_ver
 BuildRequires: libgio-devel >= %glib_ver
+%{?_enable_umockdev:BuildRequires: libumockdev-devel}
 BuildRequires: gtk-doc intltool
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 
@@ -34,7 +35,7 @@ independent, after being part of udev itself, and later systemd.
 %package devel
 Summary: Development files and libraries for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 %name is a library with GObject bindings to libudev, now made
@@ -46,7 +47,7 @@ This package provides files for development with %name.
 Summary: Development documentaion for %name
 Group: Development/C
 BuildArch: noarch
-Conflicts: %name < %version
+Conflicts: %name < %EVR
 
 %description devel-doc
 %name is a library with GObject bindings to libudev, now made
@@ -57,7 +58,7 @@ This package provides development documentations for %name.
 %package gir
 Summary: GObject introspection data for %name
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the %name library.
@@ -66,8 +67,8 @@ GObject introspection data for the %name library.
 Summary: GObject introspection devel data for %name
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for %name.
@@ -78,6 +79,7 @@ GObject introspection devel data for %name.
 %build
 %autoreconf
 %configure --disable-static \
+%{subst_enable umockdev} \
 %{?_enable_gtk_doc:--enable-gtk-doc} \
 %{subst_enable introspection}
 
@@ -113,6 +115,9 @@ GObject introspection devel data for %name.
 
 
 %changelog
+* Mon Feb 13 2017 Yuri N. Sedunov <aris@altlinux.org> 1:231-alt1
+- 231
+
 * Sun Jun 21 2015 Yuri N. Sedunov <aris@altlinux.org> 1:230-alt1
 - 230
 

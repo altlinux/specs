@@ -8,8 +8,8 @@
 %def_enable gtk_doc
 
 Name: gnome-bluetooth
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: The GNOME Bluetooth Subsystem
 License: GPLv2/LGPLv2
@@ -136,6 +136,9 @@ find %buildroot -name "*.la" -delete
 %endif
 
 %changelog
+* Mon Feb 13 2017 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
+- 3.20.1
+
 * Wed Jul 13 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt2
 - removed conflict with blueman provided by blueberry now
 
