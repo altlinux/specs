@@ -1,5 +1,5 @@
 Name: xfce4-taskmanager
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Taskmanager for Xfce Desktop
@@ -15,10 +15,12 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: glib2-devel intltool
+BuildRequires: glib2-devel intltool libXmu-devel
 BuildRequires: libgtk+2-devel libcairo-devel libwnck-devel libgksu-devel
 # For exo-csource (needed in the maintainer mode)
 BuildRequires: libexo-devel
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 %name is taskmanager application for Xfce desktop environment.
@@ -37,7 +39,7 @@ mkdir m4/
 	--enable-maintainer-mode \
 	--enable-wnck \
 	--enable-gksu \
-	--enable-debug=no
+	--enable-debug=minimal
 %make_build
 
 %install
@@ -48,8 +50,13 @@ mkdir m4/
 %doc README AUTHORS
 %_bindir/*
 %_desktopdir/xfce4-taskmanager.desktop
+%_iconsdir/hicolor/*/*/*.*
 
 %changelog
+* Mon Feb 13 2017 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
+- Enabled debug (minimal).
+- Updated to 1.2.0.
+
 * Mon Dec 29 2014 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1
 - Fix build: create m4/ directory.
 - Updated to 1.1.0.
