@@ -4,7 +4,7 @@
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.5.8
+Version: 3.5.9
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -17,9 +17,6 @@ Source: gnutls-%version.tar
 
 # Skip test-hash-large for overridden CPU flags
 Patch1: gnutls-patch-test-hash-large.patch
-# Fix test date: certificates end date is _after_ Oct 12 00:00:00 2038 UTC,
-# so set time explicitly
-Patch2: gnutls-test-pkcs7.patch
 %define libcxx libgnutlsxx%libgnutlsxx28_soname
 %define libssl libgnutls%{libgnutls_openssl_soname}-openssl
 %def_disable guile
@@ -193,7 +190,6 @@ This package contains the GnuTLS API Reference Manual.
 %prep
 %setup -n gnutls-%version
 %patch1 -p2
-%patch2 -p1
 touch doc/*.texi
 rm doc/*.info*
 rm aclocal.m4 m4/{libtool,lt*}.m4
@@ -296,6 +292,10 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %endif
 
 %changelog
+* Mon Feb 13 2017 Mikhail Efremov <sem@altlinux.org> 3.5.9-alt1
+- Drop obsoleted patch.
+- Updated to 3.5.9.
+
 * Wed Jan 11 2017 Mikhail Efremov <sem@altlinux.org> 3.5.8-alt1
 - Use with_test for tests dependencies.
 - BR: Replace datefudge-faketime with datefudge.
