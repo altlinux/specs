@@ -2,7 +2,8 @@
 
 Name: rpm-macros-mingw32
 Version: 62
-Release: alt1
+Release: alt2
+
 Summary: MinGW RPM helper macros
 
 Group: Development/Other
@@ -37,6 +38,9 @@ install -m 644 %SOURCE1 %buildroot%_rpmmacrosdir/mingw32
 %_rpmmacrosdir/mingw32
 
 %changelog
+* Wed Feb 08 2017 Vitaly Lipatov <lav@altlinux.ru> 62-alt2
+- drop _mingw32_c++ macro (RedHat bug #974773)
+
 * Thu Aug 18 2011 Igor Vlasenko <viy@altlinux.ru> 62-alt1
 - added %%_mingw32_pkg_name
 
@@ -179,38 +183,3 @@ install -m 644 %SOURCE1 %buildroot%_rpmmacrosdir/mingw32
 
 * Fri Sep  5 2008 Richard W.M. Jones <rjones@redhat.com> - 20-1
 - On 64 bit install in %_libdir/rpm always.
-
-* Thu Sep  4 2008 Richard W.M. Jones <rjones@redhat.com> - 19-1
-- 'user32.dll' is provided by Windows.
-- Allow '-' in DLL names.
-- More accurate detection of DLLs in requires/provides scripts.
-
-* Mon Sep  4 2008 Richard W.M. Jones <rjones@redhat.com> - 17-1
-- Automatically add mingw-filesystem and mingw-runtime requires.
-- Add --prefix to _mingw_configure macro.
-- Three backslashes required on each continuation line in RPM macros.
-
-* Mon Sep  4 2008 Richard W.M. Jones <rjones@redhat.com> - 14-1
-- Fix path to mingw-find-requires/provides scripts.
-
-* Mon Sep  4 2008 Richard W.M. Jones <rjones@redhat.com> - 12-1
-- Put CFLAGS on a single line to avoid problems in some configure scripts.
-
-* Mon Sep  4 2008 Richard W.M. Jones <rjones@redhat.com> - 10-1
-- Provides certain base Windows DLLs (not literally).
-
-* Mon Sep  4 2008 Richard W.M. Jones <rjones@redhat.com> - 9-1
-- Include RPM dependency generators and definitions.
-
-* Mon Sep  4 2008 Richard W.M. Jones <rjones@redhat.com> - 4-1
-- Add _mingw_cc/cflags/etc. and _mingw_configure macros.
-
-* Mon Sep  4 2008 Richard W.M. Jones <rjones@redhat.com> - 3-1
-- Add _mingw_host macro.
-
-* Mon Sep  4 2008 Richard W.M. Jones <rjones@redhat.com> - 2-1
-- Add _mingw_sysroot macro.
-- Add _mingw_target macro.
-
-* Mon Sep  4 2008 Richard W.M. Jones <rjones@redhat.com> - 1-1
-- Basic filesystem layout.
