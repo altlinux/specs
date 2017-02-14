@@ -3,7 +3,7 @@
 %define real_name Test-Moose-More
 
 Name: perl-Test-Moose-More
-Version: 0.038
+Version: 0.042
 Release: alt1
 
 Summary: more tools for testing Moose packages
@@ -13,7 +13,7 @@ Group: Development/Perl
 
 URL: http://search.cpan.org/dist/Test-Moose-More/
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source: %real_name-%version.tar
 
@@ -46,6 +46,9 @@ any tests that it has and we do not, yet.
 %perl_vendor_privlib/Test*
 
 %changelog
+* Tue Feb 14 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.042-alt1
+- New version
+
 * Mon Jun 27 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.038-alt1
 - New version
 
