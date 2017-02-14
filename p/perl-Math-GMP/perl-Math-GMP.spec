@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Math-GMP
 Name: perl-%dist
-Version: 2.13
-Release: alt1.1
+Version: 2.14
+Release: alt1
 
 Summary: High speed arbitrary size integer math
 License: GPLv2+
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SH/SHLOMIF/Math-GMP-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SH/SHLOMIF/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: libgmp-devel perl-devel perl(Devel/CheckLib.pm)
@@ -21,7 +21,7 @@ the GNU gmp library for all of its calculations, as opposed to straight
 Perl functions.  This can result in speed improvements.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,11 +30,14 @@ Perl functions.  This can result in speed improvements.
 %perl_vendor_install
 
 %files
-%doc Changes LICENSE README
+%doc Changes LICENSE README COPYING.LIB
 %perl_vendor_archlib/Math
 %perl_vendor_autolib/Math
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.14-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1.1
 - rebuild with new perl 5.24.1
 
