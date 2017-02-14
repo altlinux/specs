@@ -2,15 +2,15 @@
 %def_without bootstrap
 %define dist Moose
 Name: perl-%dist
-Version: 2.1807
-Release: alt1.1.1
+Version: 2.2004
+Release: alt1
 
 Summary: A postmodern object system for Perl 5
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/Moose-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 # avoid dependency on perl-devel
 %add_findreq_skiplist */Test/Moose*
@@ -45,7 +45,7 @@ easier, more consistent and less tedious. With Moose you can to think
 more about what you want to do and less about the mechanics of OOP.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -54,7 +54,7 @@ more about what you want to do and less about the mechanics of OOP.
 %perl_vendor_install
 
 %files
-%doc Changes README.md
+%doc Changes README.md Changes.Class-MOP doc
 %_bindir/moose-*
 %perl_vendor_archlib/Class
 %perl_vendor_archlib/Moose*
@@ -64,6 +64,9 @@ more about what you want to do and less about the mechanics of OOP.
 %perl_vendor_archlib/oose.pm
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.2004-alt1
+- automated CPAN update
+
 * Sun Feb 12 2017 Igor Vlasenko <viy@altlinux.ru> 2.1807-alt1.1.1
 - unbootstrap after rebuild with new perl 5.24.1
 
