@@ -2,7 +2,7 @@
 %define rev	5553
 
 Name:           jitsi
-Version:        2.9.%rev
+Version:        2.11.%rev
 Release:        alt1
 
 Summary:        Multiprotocol (SIP, XMPP/Jabber, ecc.) VoIP and instant messaging software
@@ -86,6 +86,9 @@ done
 %_desktopdir/jitsi.desktop
 
 %changelog
+* Tue Feb 14 2017 Andrey Cherepanov <cas@altlinux.org> 2.11.5553-alt1
+- Set correct minor version for commit 5553
+
 * Mon Feb 13 2017 Andrey Cherepanov <cas@altlinux.org> 2.9.5553-alt1
 - New version
 
