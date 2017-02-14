@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Hash/Util/FieldHash/Compat.pm) perl(Mouse.pm) perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Hash-FieldHash
-Version:        0.14
-Release:        alt2.1_5.1
+Version:        0.15
+Release:        alt1
 Summary:        Lightweight field hash implementation
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/Hash-FieldHash/
-Source0:        http://www.cpan.org/modules/by-module/Hash/Hash-FieldHash-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/G/GF/GFUJI/Hash-FieldHash-%{version}.tar.gz
 BuildRequires:  perl
 BuildRequires:  perl(constant.pm)
 BuildRequires:  perl(CPAN/Meta.pm)
@@ -58,6 +59,7 @@ find %{buildroot} -type f -name '*.bs' -a -size 0 -exec rm -f {} ';'
 ./Build test
 
 %files
+%doc LICENSE Changes README.md example
 %if 0%{?_licensedir:1}
 %doc LICENSE
 %else
@@ -68,6 +70,9 @@ find %{buildroot} -type f -name '*.bs' -a -size 0 -exec rm -f {} ';'
 %{perl_vendor_archlib}/Hash/
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2.1_5.1
 - rebuild with new perl 5.24.1
 
