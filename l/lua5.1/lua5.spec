@@ -1,7 +1,7 @@
 %def_with lua_compat
 Name: lua5.1
 Version: 5.1.5
-Release: alt8
+Release: alt9
 
 Summary: Embeddable programming language
 License: MIT
@@ -50,6 +50,13 @@ Group: Development/Other
 Provides: %{name}-devel = %EVR
 Requires: lib%{name} = %EVR
 Conflicts: liblua4-devel
+Conflicts: asterisk-build-hacks < 0.0.2
+Obsoletes: asterisk-build-hacks < 0.0.2
+Provides: asterisk-build-hacks = 0.0.2
+%if_with lua_compat
+Conflicts: liblua5-devel
+Conflicts: liblua5.3-devel
+%endif
 
 %package -n lib%{name}-devel-static
 Summary: Embeddable programming language
@@ -238,6 +245,9 @@ fi
 %pkgdocdir/test
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt9
+- added conflicts and provides for asterisk-build-hacks
+
 * Sat Feb 11 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt8
 - added Requires: on preinstall subpackage
 - upgrade script made more forceful (should help #33104)
