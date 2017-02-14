@@ -4,19 +4,18 @@ BuildRequires: libgmp-devel
 BuildRequires: perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Math/BigInt.pm) perl(overload.pm) perl(subs.pm)
 #BuildRequires: perl(Math/GMPf.pm) perl(Math/GMPq.pm) perl(Math/MPFR.pm)
 # END SourceDeps(oneline)
-%define module_version 0.44
 %define module_name Math-GMPz
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.44
-Release: alt1.1
+Version: 0.46
+Release: alt1
 Summary: perl interface to the GMP library's integer (mpz) functions..
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/S/SI/SISYPHUS/Math-GMPz-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SI/SISYPHUS/%{module_name}-%{version}.tar.gz
 
 %description
 A bignum module utilising the Gnu MP (GMP) library..
@@ -29,7 +28,7 @@ A bignum module utilising the Gnu MP (GMP) library..
 
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -43,6 +42,9 @@ A bignum module utilising the Gnu MP (GMP) library..
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.46-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1.1
 - rebuild with new perl 5.24.1
 
