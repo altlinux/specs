@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist IO-Socket-SSL
 Name: perl-%dist
-Version: 2.043
+Version: 2.045
 Release: alt1
 
 Summary: SSL socket interface class
@@ -39,10 +39,13 @@ rm t/[d-z]*t
 %perl_vendor_install
 
 %files
-%doc BUGS Changes README
+%doc BUGS Changes README README.Win32 docs example
 %perl_vendor_privlib/IO
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.045-alt1
+- automated CPAN update
+
 * Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.043-alt1
 - automated CPAN update
 
