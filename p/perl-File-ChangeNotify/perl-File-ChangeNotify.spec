@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-ChangeNotify
 Name: perl-%dist
-Version: 0.26
+Version: 0.27
 Release: alt1
 
 Summary: Watch for changes to files, cross-platform style
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/File-ChangeNotify-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DR/DROLSKY/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,7 +24,7 @@ This module provides an API for creating a File::ChangeNotify::Watcher
 subclass that will work on your platform.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,10 +33,13 @@ subclass that will work on your platform.
 %perl_vendor_install
 
 %files
-%doc Changes README*
+%doc Changes README* CONTRIBUTING.md
 %perl_vendor_privlib/File*
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
+- automated CPAN update
+
 * Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - automated CPAN update
 
