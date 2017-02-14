@@ -1,27 +1,26 @@
-%define module_version 1.2.0
+%define _unpackaged_files_terminate_build 1
 %define module_name BSON
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(B.pm) perl(Carp.pm) perl(Data/Dumper.pm) perl(DateTime.pm) perl(DateTime/Tiny.pm) perl(Digest/MD5.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(JSON/MaybeXS.pm) perl(MIME/Base64.pm) perl(Mango/BSON/Time.pm) perl(Math/BigInt.pm) perl(Module/Runtime.pm) perl(MongoDB.pm) perl(MongoDB/BSON.pm) perl(MongoDB/BSON/Binary.pm) perl(MongoDB/OID.pm) perl(Moo.pm) perl(Path/Tiny.pm) perl(Scalar/Util.pm) perl(Sys/Hostname.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Tie/IxHash.pm) perl(Time/HiRes.pm) perl(Time/Local.pm) perl(Time/Moment.pm) perl(base.pm) perl(boolean.pm) perl(constant.pm) perl(if.pm) perl(lib.pm) perl(namespace/clean.pm) perl(overload.pm) perl(re.pm) perl(strict.pm) perl(threads/shared.pm) perl(utf8.pm) perl(version.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.2.0
-Release: alt2
+Version: 1.2.2
+Release: alt1
 Summary: Pure Perl implementation of MongoDB's BSON serialization
 Group: Development/Perl
 License: apache
 URL: https://github.com/mongodb/mongo-perl-bson
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/M/MO/MONGODB/%{module_name}-v%{module_version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MO/MONGODB/%{module_name}-v%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -q -n %{module_name}-v%{module_version}
+%setup -q -n %{module_name}-v%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/B*
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1
+- automated CPAN update
+
 * Wed Nov 30 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2
 - to Sisyphus
 
