@@ -3,7 +3,7 @@
 %def_enable gtk_doc
 
 Name: grilo
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Content discovery framework
@@ -12,7 +12,6 @@ License: LGPLv2+
 Url: https://wiki.gnome.org/Projects/Grilo
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Patch: grilo-0.3.2-alt-format.patch
 
 BuildRequires: gnome-common intltool >= 0.40.0
 BuildRequires: libgio-devel >= 2.44
@@ -90,7 +89,6 @@ Tools for the %name library
 
 %prep
 %setup
-%patch
 
 %build
 %autoreconf
@@ -152,6 +150,9 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 %endif
 
 %changelog
+* Tue Feb 14 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
+- 0.3.3
+
 * Sat Sep 10 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
 - 0.3.2
 
