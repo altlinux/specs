@@ -1,20 +1,19 @@
-%define module_version 1.27
+%define _unpackaged_files_terminate_build 1
 %define module_name Mango
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Authen/SCRAM/Client.pm) perl(B.pm) perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Hash/Util/FieldHash.pm) perl(List/Util.pm) perl(Mojolicious.pm) perl(Scalar/Util.pm) perl(Sys/Hostname.pm) perl(Time/HiRes.pm) perl(overload.pm) perl(re.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.27
-Release: alt2
+Version: 1.29
+Release: alt1
 Summary: Pure-Perl non-blocking I/O MongoDB driver
 Group: Development/Perl
 License: artistic_2
 URL: http://mojolicio.us
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/O/OD/ODC/%{module_name}-%{module_version}.tar.gz
+Source0: http://www.cpan.org/authors/id/O/OD/ODC/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 Patch: Mango-1.27-no64-todo.patch
 
@@ -22,7 +21,7 @@ Patch: Mango-1.27-no64-todo.patch
 %summary
 
 %prep
-%setup -q -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 if [ %version == 1.27 ]; then
 %patch -p1
 %define _without_test 1
@@ -35,10 +34,13 @@ fi
 %perl_vendor_install
 
 %files
-%doc README.md Changes LICENSE
+%doc README.md Changes LICENSE CONTRIBUTING.md
 %perl_vendor_privlib/M*
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1
+- automated CPAN update
+
 * Wed Nov 30 2016 Igor Vlasenko <viy@altlinux.ru> 1.27-alt2
 - to Sisyphus
 
