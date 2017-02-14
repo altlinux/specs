@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Log-Report
 Name: perl-%dist
-Version: 1.18
+Version: 1.19
 Release: alt1
 
 Summary: Report a problem, pluggable handlers and language support
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MA/MARKOV/Log-Report-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MARKOV/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -39,7 +39,7 @@ Summary: %dist plugin for Dancer2
 %dist plugin for Dancer2
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -56,7 +56,7 @@ Summary: %dist plugin for Dancer2
 %add_findreq_skiplist */Dancer2/Plugin/LogReport*
 
 %files
-%doc ChangeLog README
+%doc ChangeLog README examples
 %perl_vendor_privlib/Log
 %perl_vendor_privlib/MojoX/Log
 
@@ -73,6 +73,9 @@ Summary: %dist plugin for Dancer2
 %perl_vendor_privlib/Dancer2/Plugin/LogReport/Message.pod
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1
+- automated CPAN update
+
 * Mon Oct 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
 - automated CPAN update
 
