@@ -1,4 +1,4 @@
-%define ver_major 3.20
+%define ver_major 3.24
 
 Name: gnome3
 Version: %ver_major.0
@@ -16,30 +16,38 @@ BuildPreReq: rpm-build-licenses
 # do not follow GNOME version numbers.
 ## Core components
 %define session_ver %ver_major.0
+%define keyring_ver 3.20.1
+
 ## Applications
-%define contacts_ver 3.19.91
+%define seahorse_ver 3.20
+%define utils_ver 3.20
+%define games_ver 3.22
+%define yelp_ver 3.22
+%define dconf_editor_ver 3.22
+%define contacts_ver 3.22.1
 %define roller_ver %ver_major
 %define eog_ver %ver_major
-%define network_manager_ver 1.0
+%define network_manager_ver 1.8
 %define terminal_ver %ver_major
 %define epiphany_ver %ver_major
 %define pidgin_ver 2.6.3
 %define evince_ver %ver_major
-%define applets_ver 3.18
-%define gedit_plugins_ver %ver_major
+%define applets_ver %ver_major
+%define gedit_ver 3.22
+%define gedit_plugins_ver 3.22
 %define gnome_nettool_ver 3.8
 %define gud_ver %ver_major
 %define gdm_ver %ver_major
 %define gdu_ver %ver_major
 %define evo_ver %ver_major
 %define emp_ver 3.12.11
-%define brasero_ver 3.12.1
-%define accerciser_ver 3.14
-%define recorder_ver 3.17
+%define brasero_ver 3.12.2
+%define accerciser_ver 3.22
+%define recorder_ver %ver_major
 ## Engines, themes
 %define engines_ver %ver_major
 %define icon_theme_ver %ver_major
-%define themes_ver %ver_major
+%define themes_ver 3.22
 %define gtk_theme_prefix gtk3-theme
 %define gnome_theme_prefix gnome-theme
 ## a11y
@@ -66,6 +74,7 @@ Requires: gnome-shell >= %ver_major
 Requires: gnome-shell-extensions >= %ver_major
 # user settings utility
 Requires: gnome-tweak-tool >= %ver_major
+Requires: dconf-editor >= %dconf_editor_ver
 
 # default font
 Requires: fonts-otf-abattis-cantarell
@@ -73,7 +82,7 @@ Requires: fonts-otf-abattis-cantarell
 Requires: gnome-backgrounds
 
 # Help browser
-Requires: yelp >= %ver_major
+Requires: yelp >= %yelp_ver
 #Requires: gnome-menus >= %ver_major
 
 # GNOME Utilities
@@ -93,13 +102,13 @@ Requires: gnome-terminal >= %terminal_ver
 ## Default archiving tool
 Requires: file-roller >= %roller_ver
 ## Default text editor
-Requires: gedit >= %ver_major
+Requires: gedit >= %gedit_ver
 
 # Look & Feel
 ## Default themes
 Requires: gnome-icon-theme >= 3.12
 Requires: gnome-icon-theme-symbolic >= 3.12
-Requires: gnome-themes-standard >= %ver_major
+Requires: gnome-themes-standard >= %themes_ver
 #Requires: libgtk3-engine-adwaita
 Requires: libgtk2-engine-adwaita
 
@@ -133,15 +142,15 @@ Requires: libcanberra-gtk3
 ## Color manager
 Requires: gnome-color-manager
 ## Password keeper
-Requires: gnome-keyring >= %ver_major
+Requires: gnome-keyring >= %keyring_ver
 # Encryption keys management
-Requires: seahorse >= %ver_major
+Requires: seahorse >= %seahorse_ver
 Requires: pinentry-gnome3
 ## All gvfs-backends
 Requires: gvfs-backends
 Requires: fuse-gvfs
 # see ALT #31129
-Requires: xdg-utils gvfs-utils
+Requires: xdg-utils
 Requires: gnome-disk-utility >= %gdu_ver
 ## Display manager (gdm or gdm2.20)
 Requires: gdm-gnome >= %ver_major
@@ -168,8 +177,7 @@ Requires: cheese
 Requires: bijiben
 
 # Utilities
-Requires: gnome-utils >= %ver_major
-Requires: dconf-editor >= 0.10
+Requires: gnome-utils >= %utils_ver
 
 ## Let's have nice notifications
 Requires: notification-daemon
@@ -190,8 +198,7 @@ Requires: totem
 # and plugins
 Requires: totem-plugins
 ## Stock GNOME games
-#Requires: gnome-games >= 3.4.0
-Requires: gnome-games >= %ver_major
+Requires: gnome-games >= %games_ver
 ## Default photo viewer
 Requires: gnome-photos >= %ver_major
 ## Default image viewer
@@ -411,6 +418,11 @@ some other useful GNOME and GTK applications.
 %files regular
 
 %changelog
+* Tue Feb 14 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+- dropped gvfs-utils deprecated by gvfs >= 1.31
+- moved dconf-editor to -minimal
+
 * Wed Mar 30 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 
