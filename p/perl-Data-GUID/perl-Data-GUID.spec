@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Data-GUID
-Version:        0.048
-Release:        alt2_8
+Version:        0.049
+Release:        alt1
 Summary:        Globally unique identifiers
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -48,6 +49,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.049-alt1
+- automated CPAN update
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.048-alt2_8
 - update to new release by fcimport
 
