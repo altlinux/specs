@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Devel-Symdump
 Name: perl-%dist
-Version: 2.17
+Version: 2.18
 Release: alt1
 
 Summary: Perl module for inspecting Perl's symbol table
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/A/AN/ANDK/Devel-Symdump-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/A/AN/ANDK/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +21,7 @@ The perl module Devel::Symdump provides a convenient way to inspect
 perl's symbol table and the class hierarchie within a running program.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +34,9 @@ perl's symbol table and the class hierarchie within a running program.
 %perl_vendor_privlib/Devel
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.18-alt1
+- automated CPAN update
+
 * Wed Apr 20 2016 Igor Vlasenko <viy@altlinux.ru> 2.17-alt1
 - automated CPAN update
 
