@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module Text-CSV
 
 Name: perl-%module
-Version: 1.33
+Version: 1.91
 Release: alt1
 
 Summary: Text::CSV - comma-separated values manipulation routines
@@ -9,12 +10,12 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/M/MA/MAKAMAKA/Text-CSV-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/I/IS/ISHIGAKI/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Fri Feb 11 2011
-BuildRequires: perl-Test-Pod perl-Text-CSV_XS
+BuildRequires: perl-Test-Pod perl-Text-CSV_XS perl(charnames.pm)
 
 %description
 Text::CSV provides facilities for the composition and decomposition of
@@ -22,7 +23,7 @@ comma-separated values. An instance of the Text::CSV class can combine
 fields into a CSV string and parse a CSV string into fields.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,9 +32,13 @@ fields into a CSV string and parse a CSV string into fields.
 %perl_vendor_install
 
 %files
+%doc Changes README.md
 %perl_vendor_privlib/Text
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.91-alt1
+- automated CPAN update
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1
 - automated CPAN update
 
