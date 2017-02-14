@@ -3,7 +3,7 @@ BuildRequires: perl(Module/Build.pm) perl(namespace/autoclean.pm) perl(Sub/Expor
 BuildRequires: perl(Module/Build/Tiny.pm)
 %define dist MooseX-Types
 Name: perl-%dist
-Version: 0.49
+Version: 0.50
 Release: alt1
 
 Summary: Organise your Moose types in libraries
@@ -11,7 +11,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-Types-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,7 +24,7 @@ you to organise and selectively import your own and the built-in types in
 libraries. As a nice side effect, it catches typos at compile-time too.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -37,6 +37,9 @@ libraries. As a nice side effect, it catches typos at compile-time too.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1
+- automated CPAN update
+
 * Thu Dec 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.49-alt1
 - automated CPAN update
 
