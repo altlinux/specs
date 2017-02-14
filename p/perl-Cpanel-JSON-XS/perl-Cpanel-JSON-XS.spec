@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 3.0225
 %define module_name Cpanel-JSON-XS
 # BEGIN SourceDeps(oneline):
 BuildRequires: libsowing-devel perl(Carp.pm) perl(Encode.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Pod/Text.pm) perl(Pod/Usage.pm) perl(Test.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(common/sense.pm) perl(overload.pm)
@@ -7,14 +6,14 @@ BuildRequires: libsowing-devel perl(Carp.pm) perl(Encode.pm) perl(Exporter.pm) p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 3.0225
-Release: alt1.1
+Version: 3.0227
+Release: alt1
 Summary: JSON::XS for Cpanel, fast and correct serialising, also for 5.6.2
 Group: Development/Perl
 License: perl
 URL: http://software.schmorp.de/pkg/JSON-XS.html
 
-Source: http://www.cpan.org/authors/id/R/RU/RURBAN/Cpanel-JSON-XS-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RU/RURBAN/%{module_name}-%{version}.tar.gz
 
 %description
 This module converts Perl data structures to JSON and vice versa. Its.primary goal is to be *correct* and its secondary goal is to be
@@ -41,7 +40,7 @@ scripts for %module_name
 
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -59,6 +58,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 3.0227-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 3.0225-alt1.1
 - rebuild with new perl 5.24.1
 
