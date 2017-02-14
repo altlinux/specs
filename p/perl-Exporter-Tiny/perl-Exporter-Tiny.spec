@@ -1,27 +1,26 @@
-%define module_version 0.042
+%define _unpackaged_files_terminate_build 1
 %define module_name Exporter-Tiny
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(B.pm) perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(base.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.042
+Version: 0.044
 Release: alt1
 Summary: an exporter with the features of Sub::Exporter but only core dependencies
 Group: Development/Perl
 License: perl
 URL: https://metacpan.org/release/Exporter-Tiny
 
-Source: http://www.cpan.org/authors/id/T/TO/TOBYINK/Exporter-Tiny-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TO/TOBYINK/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,10 +29,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc README Changes COPYRIGHT LICENSE examples
+%doc README Changes COPYRIGHT LICENSE examples CREDITS
 %perl_vendor_privlib/E*
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.044-alt1
+- automated CPAN update
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.042-alt1
 - automated CPAN update
 
