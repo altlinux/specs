@@ -1,12 +1,12 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 0.3
 
 %def_enable lua_factory
 
 Name: grilo-plugins
-Version: %ver_major.3
-Release: alt3
+Version: %ver_major.4
+Release: alt1
 
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -25,7 +25,7 @@ Requires: tracker
 BuildRequires: gnome-common intltool >= 0.40.0 gperf
 BuildRequires: gtk-doc yelp-tools
 BuildRequires: libgio-devel >= 2.36
-BuildRequires: libgrilo-devel >= %ver_major.2
+BuildRequires: libgrilo-devel >= %ver_major.3
 BuildRequires: libxml2-devel
 BuildRequires: libgupnp-devel >= 0.13
 BuildRequires: libgupnp-av-devel >= 0.5
@@ -96,6 +96,9 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %endif
 
 %changelog
+* Tue Feb 14 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
+- 0.3.4
+
 * Sun Jan 29 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt3
 - updated to 0.3.3-20-g063064b
 - fixed buildreqs
