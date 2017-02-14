@@ -1,7 +1,7 @@
 %def_with lua_compat
 Name: lua5.1
 Version: 5.1.5
-Release: alt9
+Release: alt10
 
 Summary: Embeddable programming language
 License: MIT
@@ -49,11 +49,21 @@ Summary: Embeddable programming language
 Group: Development/Other
 Provides: %{name}-devel = %EVR
 Requires: lib%{name} = %EVR
-Conflicts: liblua4-devel
 Conflicts: asterisk-build-hacks < 0.0.2
 Obsoletes: asterisk-build-hacks < 0.0.2
 Provides: asterisk-build-hacks = 0.0.2
 %if_with lua_compat
+Requires: lib%{name}-compat-devel = %EVR
+%endif
+
+%if_with lua_compat
+%package -n lib%{name}-compat-devel
+Summary: Embeddable programming language
+Group: Development/Other
+Provides: %{name}-compat-devel = %EVR
+Requires: lib%{name}-devel = %EVR
+Conflicts: liblua5.1-devel < 5.1.5-alt10
+Conflicts: liblua4-devel
 Conflicts: liblua5-devel
 Conflicts: liblua5.3-devel
 %endif
@@ -97,6 +107,12 @@ applications.  The language engine is accessible as a library, having a C
 API which allows the application to exchange data with Lua programs and also
 to extend Lua with C functions.  Lua is also used as a general-purpose,
 stand-alone language through the simple command line interpreter provided.
+
+%if_with lua_compat
+%description -n lib%{name}-compat-devel
+This package contains lua.pc and liblua.so to help build old programs
+unaware of lua5.1.
+%endif
 
 %description -n lib%{name}-devel-static
 Lua is a powerful, light-weight programming language designed for extending
@@ -199,7 +215,7 @@ mkdir -p %buildroot{%_libdir,%_datadir}/lua/5.1
 if [ -L %_libdir/lua/5.1 ]; then
     echo "removing lua5.1-alt-compat symlink..."
     rm -f %_libdir/lua/5.1
-    if [ -d %_libdir/lua5 ] && [ ! -e %_libdir/lua/5.1 ]; then
+    if [ -d %_libdir/lua5 ]; then
 	mkdir -p %_libdir/lua
 	mv %_libdir/lua5 %_libdir/lua/5.1
     fi
@@ -226,7 +242,9 @@ fi
 %_includedir/lua5.1
 %_libdir/liblua*5.1.so
 %_pkgconfigdir/lua*5.1.pc
+
 %if_with lua_compat
+%files -n lib%{name}-compat-devel
 %_libdir/liblua.so
 %_pkgconfigdir/lua.pc
 %_includedir/*.h
@@ -245,6 +263,9 @@ fi
 %pkgdocdir/test
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt10
+- compat devel stuff moved to liblua5.1-compat-devel (for future use)
+
 * Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt9
 - added conflicts and provides for asterisk-build-hacks
 
