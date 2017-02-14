@@ -4,7 +4,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 13.0.4
+Version: 17.0.0
 Release: alt1
 Epoch: 4
 License: MIT
@@ -22,7 +22,7 @@ BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel l
 BuildRequires: libdrm-devel libexpat-devel xorg-glproto-devel xorg-dri2proto-devel python-modules libselinux-devel libxcb-devel libSM-devel
 BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libwayland-client-devel libwayland-server-devel libffi-devel libelf-devel
 BuildRequires: libva-devel libvdpau-devel libXvMC-devel xorg-dri3proto-devel xorg-presentproto-devel libxshmfence-devel libnettle-devel
-BuildRequires: python-module-mako python-module-argparse
+BuildRequires: libelf-devel python-module-mako python-module-argparse
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -372,6 +372,7 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %files -n xorg-dri-nouveau
 %_libdir/X11/modules/dri/nouveau_*dri.so
 %ifarch %ix86 x86_64
+%_libdir/dri/nouveau_drv_video.so
 %_libdir/vdpau/libvdpau_nouveau.so*
 %_libdir/libXvMCnouveau.so.*
 %endif
@@ -381,6 +382,7 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_libdir/X11/modules/dri/r?00_dri.so
 %ifarch %ix86 x86_64
 %_libdir/vdpau/libvdpau_r*.so*
+%_libdir/dri/r*_drv_video.so
 %_libdir/libXvMCr*.so.*
 %_libdir/libXvMCgallium.so.*
 %endif
@@ -393,6 +395,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Tue Feb 14 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:17.0.0-alt1
+- 17.0.0
+
 * Wed Feb 01 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:13.0.4-alt1
 - 13.0.4
 
