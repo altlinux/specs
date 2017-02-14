@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Variable-Magic
 Name: perl-%dist
-Version: 0.60
-Release: alt1.1
+Version: 0.61
+Release: alt1
 
 Summary: Associate user-defined magic to variables from Perl
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/V/VP/VPIT/Variable-Magic-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/V/VP/VPIT/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Capture-Tiny perl-Test-Pod perl-threads
@@ -22,7 +22,7 @@ module, you can add your own magic to any variable without having to write
 a single line of XS.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -36,6 +36,9 @@ a single line of XS.
 %perl_vendor_autolib/Variable
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.61-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1.1
 - rebuild with new perl 5.24.1
 
