@@ -6,13 +6,13 @@ BuildRequires: perl(Math/NumSeq/Fibonacci.pm) perl(Math/NumSeq/FibonacciWord.pm)
 BuildRequires: perl(Wx/App.pm) perl(Wx/Event.pm) perl(base.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Math-PlanePath
-Version:        123
+Version:        124
 Release:        alt1
 Summary:        Mathematical paths through the 2-D plane
 License:        GPLv3+
 Group:          Development/Perl
 URL:            http://user42.tuxfamily.org/math-planepath/index.html
-Source:        http://www.cpan.org/authors/id/K/KR/KRYDE/Math-PlanePath-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/Math-PlanePath-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(constant.pm)
@@ -69,10 +69,13 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 make test
 
 %files
-%doc Changes COPYING debian/copyright
+%doc Changes COPYING debian/copyright examples
 %{perl_vendor_privlib}/Math*
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 124-alt1
+- automated CPAN update
+
 * Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 123-alt1
 - automated CPAN update
 
