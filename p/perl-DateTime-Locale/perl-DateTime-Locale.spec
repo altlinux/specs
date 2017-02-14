@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DateTime-Locale
 Name: perl-%dist
-Version: 1.11
+Version: 1.12
 Release: alt1
 
 Summary: Localization support for DateTime.pm
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-Locale-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DR/DROLSKY/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -26,7 +26,7 @@ subclasses.  It also provides some functions for getting information
 on available locales.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,10 +35,13 @@ on available locales.
 %perl_vendor_install
 
 %files
-%doc Changes README*
+%doc Changes README* CONTRIBUTING.md LICENSE.cldr
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1
 - automated CPAN update
 
