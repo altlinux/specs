@@ -2,7 +2,7 @@
 BuildRequires: perl(Module/Build/Tiny.pm) perl(Module/Build.pm)
 %define dist YAML-Tiny
 Name: perl-%dist
-Version: 1.69
+Version: 1.70
 Release: alt1
 
 Summary: Read/Write YAML files with as little code as possible
@@ -10,7 +10,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/YAML-Tiny-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -23,7 +23,7 @@ written with as little code as possible, reducing load time and
 memory overhead.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 # Test::More 0.99 - not in perl 5.18.2
 [ %version = 1.62 ] && rm t/*t
 
@@ -38,6 +38,9 @@ memory overhead.
 %perl_vendor_privlib/YAML*
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.70-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.69-alt1
 - automated CPAN update
 
