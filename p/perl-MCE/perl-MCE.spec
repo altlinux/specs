@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 1.810
 %define module_name MCE
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_privlib -MMCE::Util'
 %add_findreq_skiplist %perl_vendor_privlib/MCE/Core/Input*
@@ -12,14 +11,14 @@ BuildRequires: perl(Carp.pm) perl(DBD/SQLite.pm) perl(DBI.pm) perl(Exporter.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.810
+Version: 1.811
 Release: alt1
 Summary: Many-Core Engine for Perl. Provides parallel processing capabilities.
 Group: Development/Perl
 License: perl
 URL: http://code.google.com/p/many-core-engine-perl/
 
-Source: http://www.cpan.org/authors/id/M/MA/MARIOROY/MCE-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MARIOROY/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -34,7 +33,7 @@ Requires: %name = %{?epoch:%epoch:}%version-%release
 scripts for %module_name
 
 %prep
-%setup -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -43,13 +42,16 @@ scripts for %module_name
 %perl_vendor_install
 
 %files
-%doc README* Changes
+%doc README* Changes Copying
 %perl_vendor_privlib/M*
 
 #%files scripts
 #%_bindir/*
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.811-alt1
+- automated CPAN update
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 1.810-alt1
 - automated CPAN update
 
