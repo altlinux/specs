@@ -1,6 +1,6 @@
 Name: thunar
-Version: 1.6.10
-Release: alt3
+Version: 1.6.11
+Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Файловый менеджер Thunar
@@ -121,6 +121,10 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Tue Feb 14 2017 Mikhail Efremov <sem@altlinux.org> 1.6.11-alt1
+- Drop obsoleted patch.
+- Updated to 1.6.10.
+
 * Fri Jul 22 2016 Mikhail Efremov <sem@altlinux.org> 1.6.10-alt3
 - Patch from Xfce bugzilla (Xfce bug #12264, ALT bug #32271):
   + Take a reference to the ThunarFile before g_idle_add, release
