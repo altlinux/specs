@@ -1,9 +1,9 @@
-%define kernel_base_version 4.9
+%define kernel_base_version 4.10
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
 Version: %kernel_base_version
-Release: alt1
+Release: alt0.rc8
 
 Summary: Linux kernel C header files for use by glibc and other userspace software
 License: GPLv2
@@ -13,8 +13,10 @@ Url: http://www.kernel.org/
 # git://git.altlinux.org/gears/g/%name.git
 Patch: %name-%version-%release.patch
 
+Patch2: 0001-uapi-fix-linux-if_pppol2tp.h-userspace-compilation-e.patch
+
 BuildRequires: rpm-build-kernel
-BuildRequires: %kernel_source = 1.0.0
+BuildRequires: %kernel_source = 0.8.0
 
 Provides: kernel-headers = %version-%release
 Provides: linux-libc-headers = %version-%release
@@ -45,6 +47,7 @@ building most standard programs and are also needed to build glibc.
 tar -xf %kernel_src/%kernel_source.tar
 cd %kernel_source
 %patch -p1
+%patch2 -p1
 
 %install
 %define hdr_dir %_includedir/linux-default
@@ -81,6 +84,9 @@ done
 %hdr_dir
 
 %changelog
+* Tue Feb 14 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.10-alt0.rc8
+- v4.9 -> v4.10-rc8.
+
 * Sun Dec 11 2016 Dmitry V. Levin <ldv@altlinux.org> 4.9-alt1
 - v4.8 -> v4.9.
 
