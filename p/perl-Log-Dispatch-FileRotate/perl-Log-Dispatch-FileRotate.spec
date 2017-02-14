@@ -2,7 +2,7 @@
 %define dist Log-Dispatch-FileRotate
 
 Name: perl-%dist
-Version: 1.22
+Version: 1.23
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -12,12 +12,12 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MS/MSCHOUT/Log-Dispatch-FileRotate-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MS/MSCHOUT/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Dec 29 2008
-BuildRequires: perl-Date-Manip perl-Log-Log4perl perl-devel perl(Path/Tiny.pm)
+BuildRequires: perl-Date-Manip perl-Log-Log4perl perl-devel perl(Path/Tiny.pm) perl(Test/Warn.pm)
 
 %description
 This module provides a simple object for logging to files under the
@@ -25,7 +25,7 @@ Log::Dispatch::* system, and automatically rotating them according to
 different constraints.
 
 %prep
-%setup -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,9 +34,13 @@ different constraints.
 %perl_vendor_install
 
 %files
+%doc README LICENSE Changes
 %perl_vendor_privlib/Log/
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1
+- automated CPAN update
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
 - automated CPAN update
 
