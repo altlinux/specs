@@ -3,12 +3,12 @@
 %define real_name Module-Extract-Use
 
 Name: perl-Module-Extract-Use
-Version: 1.04
-Release: alt3
+Version: 1.043
+Release: alt1
 
 Summary: Perl module to pull out the modules a module explicitly uses
 
-License: %perl_license
+License: %artistic_license_v2
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/Module-Extract-Use/
@@ -37,6 +37,9 @@ entries in the data this module returns.
 %prep
 %setup -q -n %real_name-%version
 
+mv -f -- LICENSE LICENSE.orig
+ln -s -- $(relative %_licensedir/Artistic-2 %_docdir/%name/LICENSE) LICENSE
+
 %build
 %perl_vendor_build
 
@@ -44,9 +47,14 @@ entries in the data this module returns.
 %perl_vendor_install
 
 %files
-%doc README Changes
+%doc README.pod Changes
+%doc --no-dereference LICENSE
+
 %perl_vendor_privlib/Module/Extract/Use*
 
 %changelog
+* Tue Feb 14 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.043-alt1
+- New version
+
 * Sat Jan 21 2017 Nikolay A. Fetisov <naf@altlinux.ru> 1.04-alt3
 - Initial build for ALT Linux Sisyphus
