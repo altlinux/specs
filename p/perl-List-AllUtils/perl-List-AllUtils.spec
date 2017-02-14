@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-List-AllUtils
-Version: 0.12
+Version: 0.14
 Release: alt1
 
 Summary: List-AllUtils - Perl module
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Kirill Maslinsky <kirill@altlinux.org>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/List-AllUtils-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DR/DROLSKY/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Sep 14 2009
 BuildRequires: perl-List-MoreUtils perl-Module-Build perl(Test/Warnings.pm) perl(List/SomeUtils.pm) perl(List/UtilsBy.pm)
@@ -36,7 +36,7 @@ BuildRequires: perl-List-MoreUtils perl-Module-Build perl(Test/Warnings.pm) perl
 None.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 
 %build
@@ -46,9 +46,13 @@ None.
 %perl_vendor_install
 
 %files
+%doc CONTRIBUTING.md LICENSE README.md Changes
 %perl_vendor_privlib/List/*
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated CPAN update
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - automated CPAN update
 
