@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-selinux-users
-Version: 0.2.4
+Version: 0.2.5
 Release: alt1
 
 Packager: Andrey Kolotov <qwest@altlinux.org>
@@ -26,6 +26,7 @@ alterator module for administration users in SE Linux
 
 %install
 %makeinstall DESTDIR=%buildroot
+rm -f %buildroot/%_altdata_dir/applications/selinux-seusers.desktop
 
 %files
 %_altdata_dir/ui/*
@@ -34,6 +35,13 @@ alterator module for administration users in SE Linux
 %_bindir/*
 
 %changelog
+* Tue Feb 14 2017 Andrey Cherepanov <cas@altlinux.org> 0.2.5-alt1
+- Use common Makefile include module.mk to support localization
+- Fix case of labels, fix unlocalized label
+- Do not display selinux-seusers module
+- Do not display module in ahttpd (missing template)
+- Put module to Users section
+
 * Fri Feb 13 2015 Andriy Stepanov <stanv@altlinux.ru> 0.2.4-alt1
 - LC_MESSAGES=C for backends
 
