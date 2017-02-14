@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Compress-Raw-Bzip2
 Name: perl-%dist
-Version: 2.070
-Release: alt1.1
+Version: 2.072
+Release: alt1
 
 Summary: Low-level interface to the bzip2 compression library
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/P/PM/PMQS/Compress-Raw-Bzip2-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PM/PMQS/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Feb 20 2012
 BuildRequires: bzlib-devel perl-Test-NoWarnings perl-Test-Pod
@@ -19,7 +19,7 @@ The Compress::Raw::Bzip2 module provides Perl interface to the in-memory
 compression/uncompression functions from the bzip2 compression library.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 rm -rv bzip2-src/
 rm -rv t/Test/
 
@@ -39,6 +39,9 @@ export BUILD_BZIP2=0 BZIP2_INCLUDE=%_includedir BZIP2_LIB=%_libdir
 %perl_vendor_autolib/Compress
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.072-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.070-alt1.1
 - rebuild with new perl 5.24.1
 
