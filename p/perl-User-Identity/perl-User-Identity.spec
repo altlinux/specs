@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-User-Identity
-Version: 0.96
+Version: 0.97
 Release: alt1
 
 Summary: Define a user
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/M/MA/MARKOV/User-Identity-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MARKOV/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Feb 04 2006
 BuildRequires: perl-TimeDate perl-devel
@@ -44,7 +44,7 @@ decide to store the data with Data::Dumper, Storable, DBI, AddressBook
 or whatever. Extension to simplify this task are still to be developed.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -59,6 +59,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Mail/*
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.97-alt1
+- automated CPAN update
+
 * Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.96-alt1
 - automated CPAN update
 
