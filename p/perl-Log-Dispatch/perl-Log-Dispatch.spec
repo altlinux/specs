@@ -2,7 +2,7 @@
 %define dist Log-Dispatch
 
 Name: perl-%dist
-Version: 2.58
+Version: 2.62
 Release: alt1
 
 Summary: Dispatches messages to one or more outputs
@@ -10,12 +10,12 @@ License: Artistic 2.0
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/Log-Dispatch-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DR/DROLSKY/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Nov 16 2010
-BuildRequires: apache-mod_perl-base perl-MIME-Lite perl-Mail-Sender perl-Mail-Sendmail perl-Params-Validate perl(Class/Load.pm) perl(Test/Fatal.pm) perl(Test/Requires.pm) perl(Devel/GlobalDestruction.pm) perl(Test/Needs.pm)
+BuildRequires: apache-mod_perl-base perl-MIME-Lite perl-Mail-Sender perl-Mail-Sendmail perl-Params-Validate perl(Class/Load.pm) perl(Test/Fatal.pm) perl(Test/Requires.pm) perl(Devel/GlobalDestruction.pm) perl(Test/Needs.pm) perl(namespace/autoclean.pm) perl(Specio/Exporter.pm) perl(Params/ValidationCompiler.pm)
 
 %description
 Log::Dispatch is a suite of OO modules for logging messages to multiple
@@ -24,7 +24,7 @@ designed to be easily subclassed, both for creating a new dispatcher object
 and particularly for creating new outputs.
 
 %prep
-%setup -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -36,10 +36,13 @@ and particularly for creating new outputs.
 %add_findreq_skiplist %perl_vendor_privlib/Log/Dispatch/ApacheLog.pm
 
 %files
-%doc README.md Changes
+%doc README.md Changes CONTRIBUTING.md
 %perl_vendor_privlib/Log/
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.62-alt1
+- automated CPAN update
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 2.58-alt1
 - automated CPAN update
 
