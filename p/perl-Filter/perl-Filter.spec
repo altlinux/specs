@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Filter
 Name: perl-%dist
-Version: 1.55
-Release: alt1.1.1
+Version: 1.57
+Release: alt1
 
 Summary: Source Filters
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RU/RURBAN/Filter-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RU/RURBAN/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-devel
@@ -20,7 +20,7 @@ much as a C preprocessor alters the source text of a C program before
 the compiler sees it.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %ifdef __buildreqs
 mv t/pod.t t/pod.t.orig
@@ -33,11 +33,14 @@ mv t/pod.t t/pod.t.orig
 %perl_vendor_install
 
 %files
-%doc	Changes README
+%doc	Changes README examples
 %perl_vendor_archlib/Filter
 %perl_vendor_autolib/Filter
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.57-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.55-alt1.1.1
 - rebuild with new perl 5.24.1
 
