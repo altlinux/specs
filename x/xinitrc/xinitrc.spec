@@ -1,5 +1,5 @@
 Name: xinitrc
-Version: 2.4.46
+Version: 2.4.47
 Release: alt1
 
 Summary: The default startup scripts for the X Window System
@@ -72,6 +72,9 @@ fi
 %config(noreplace) %_sysconfdir/X11/xdm/*
 
 %changelog
+* Tue Feb 14 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.4.47-alt1
+- allow to choose selinux level (zerg@)
+
 * Thu Oct 20 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.4.46-alt1
 - fixkeyboard: drop old XKB layout options instead of just appending the new.
 
