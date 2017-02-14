@@ -1,5 +1,5 @@
 Name: installer-feature-selinux
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: Installer selinux hooks
@@ -27,6 +27,9 @@ install -pm755 postinstall.sh %buildroot%hookdir/postinstall.d/90-selinux.sh
 %hookdir/postinstall.d/*
 
 %changelog
+* Tue Feb 14 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.8-alt1
+- disable users listing in lightdm
+
 * Mon Feb 13 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.7-alt1
 - disable non-root logins in console
 
