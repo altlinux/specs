@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist IO-Compress
 Name: perl-%dist
-Version: 2.070
+Version: 2.072
 Release: alt1
 
 Summary: Read and write compressed data
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/P/PM/PMQS/IO-Compress-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PM/PMQS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -27,7 +27,7 @@ This distribution provides a Perl interface to allow reading and writing
 of compressed data created with the zlib and bzip2 libraries.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 export TEST_SKIP_VERSION_CHECK=1
@@ -44,6 +44,9 @@ export TEST_SKIP_VERSION_CHECK=1
 %perl_vendor_privlib/IO
 
 %changelog
+* Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.072-alt1
+- automated CPAN update
+
 * Thu Dec 29 2016 Igor Vlasenko <viy@altlinux.ru> 2.070-alt1
 - automated CPAN update
 
