@@ -4,11 +4,12 @@
 # see http://bugzilla.altlinux.org/31466
 %def_disable guile
 
-%define snapshot 1
+%define use_chrpath 0
+%define snapshot    0
 
 Name: mailutils
 
-%define baseversion 2.99.99
+%define baseversion 3.1.1
 
 %if %snapshot
 %define snapshotdate 20151110
@@ -56,6 +57,12 @@ BuildRequires: bzlib-devel emacs-git flex gcc-c++ glibc-devel libdb4-devel libgc
 BuildRequires: /dev/pts
 BuildRequires: emacs-X11
 BuildRequires: makeinfo
+
+BuildRequires: libltdl7-devel
+
+%if %use_chrpath
+BuildRequires: chrpath
+%endif
 
 %description
 GNU Mailutils contains a series of useful mail clients, servers, and
@@ -250,7 +257,13 @@ sed "s/^@hashchar{}/#/" -i doc/texinfo/programs.texi
 
 %build
 
-#autoreconf -f -i -s
+%if ! %snapshot
+%if ! %use_chrpath
+# fixed RPATH issue (3.1.1 tarball created with wrong libtool)
+%autoreconf
+cp -f po/Makefile.in.in~ po/Makefile.in.in
+%endif
+%endif
 
 %set_verify_elf_method unresolved=relaxed
 #undefine __libtoolize
@@ -297,6 +310,15 @@ popd
 
 rm -f $RPM_BUILD_ROOT%python_sitelibdir/mailutils/c_api.a
 rm -f $RPM_BUILD_ROOT%python_sitelibdir/mailutils/c_api.la
+
+%if %use_chrpath
+find $RPM_BUILD_ROOT -type f | while read f; do
+    COUNT=`file $f | grep ELF | wc -l`
+    if [ $[ $COUNT > 0 ] == 1 ]; then
+       chrpath -d $f
+    fi
+done
+%endif
 
 %find_lang %name
 
@@ -418,6 +440,9 @@ rm -f $RPM_BUILD_ROOT%python_sitelibdir/mailutils/c_api.la
 %endif
 
 %changelog
+* Wed Feb 15 2017 Sergey Y. Afonin <asy@altlinux.ru> 3.1.1-alt1
+- New version
+
 * Thu Apr 07 2016 Sergey Y. Afonin <asy@altlinux.ru> 2.99.99-alt0.20151110.3
 - moved libmu_argp.a from devel subpackage to devel-static
 
