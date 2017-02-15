@@ -1,9 +1,9 @@
 #%%define %_libexecdir %_sbindir
-%define snapshot 1
+%define snapshot 0
 
 Name: mailfromd
 
-%define baseversion 7.99.94
+%define baseversion 8.1
 
 %if %snapshot
 %define snapshotdate 20160706
@@ -40,6 +40,7 @@ Source20: mailfromd.mf
 Source21: mailfromd-localconf.mf
 Source22: mailfromd-userfunctions.mf
 Source23: mailfromd.conf
+Source24: mailfromd-localtests.mf
 
 Source30: mailfromd-whitelist.main
 Source31: mailfromd-sendmail.wl
@@ -184,6 +185,7 @@ cp -f %SOURCE20 $RPM_BUILD_ROOT%_sysconfdir/mailfromd/mailfromd.mf
 cp -f %SOURCE21 $RPM_BUILD_ROOT%_sysconfdir/mailfromd/localconf.mf
 cp -f %SOURCE22 $RPM_BUILD_ROOT%_sysconfdir/mailfromd/userfunctions.mf
 cp -f %SOURCE23 $RPM_BUILD_ROOT%_sysconfdir/mailfromd/mailfromd.conf
+cp -f %SOURCE24 $RPM_BUILD_ROOT%_sysconfdir/mailfromd/localtests.mf
 
 #rm $RPM_BUILD_ROOT%_libexecdir/mailfromd/postfix-macros.sed
 #cp etc/postfix-macros.sed $RPM_BUILD_ROOT%_datadir/mailfromd/postfix-macros.sed
@@ -247,6 +249,7 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %dir %_sysconfdir/mailfromd/config.d.shared
 
 %config(noreplace) %_sysconfdir/mailfromd/localconf.mf
+%config(noreplace) %_sysconfdir/mailfromd/localtests.mf
 %config(noreplace) %_sysconfdir/mailfromd/userfunctions.mf
 %config(noreplace) %_sysconfdir/mailfromd/Makefile
 %config(noreplace) %_sysconfdir/mailfromd/mailfromd.conf
@@ -300,6 +303,14 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Wed Feb 15 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.1-alt1
+- new version
+- removed "--remove" option from daemon's command line
+- changes in mailfromd.mf:
+  - handled TempError for SPF checking
+  - added #include </etc/mailfromd/localtests.mf> to prog envfrom
+  - improved messages in log and smtp reply
+
 * Sun Feb 05 2017 Sergey Y. Afonin <asy@altlinux.ru> 7.99.94-alt0.20160706.2
 - fixed handling of last dot in domain-spec (patch from gray@gnu)
 - changes in mailfromd.mf:
