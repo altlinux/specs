@@ -3,8 +3,8 @@
 %define real_name Sub-Current
 
 Name: perl-Sub-Current
-Version: 0.02
-Release: alt3.1
+Version: 0.03
+Release: alt1
 
 Summary: Perl module to get the current subroutine
 
@@ -13,7 +13,7 @@ Group: Development/Perl
 
 URL: http://search.cpan.org/dist/Sub-Current/
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source: %real_name-%version.tar
 
@@ -43,6 +43,9 @@ executing subroutine.
 %perl_vendor_autolib/Sub/Current*
 
 %changelog
+* Wed Feb 15 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.03-alt1
+- New version
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt3.1
 - rebuild with new perl 5.24.1
 
