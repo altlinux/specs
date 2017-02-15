@@ -51,7 +51,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             pki-core
 Version:          10.2.6
-Release:          alt4_19jpp8
+Release:          alt5_19jpp8
 Summary:          Certificate System - PKI Core Components
 URL:              http://pki.fedoraproject.org/
 License:          GPLv2
@@ -328,6 +328,8 @@ least one PKI Theme package:                                           \
 Source44: import.info
 Patch61: pki-core-alt-local-urllib3.patch
 Patch62: pki-core-alt-fix-paths.patch
+Patch63: pki-core-alt-change-port.patch
+Patch64: pki-core-alt-fix-gcc6-build.patch
 
 %description %{overview}
 
@@ -796,6 +798,8 @@ This package is a part of the PKI Core used by the Certificate System.
 %patch60 -p1
 %patch61 -p1
 %patch62 -p1
+%patch63 -p1
+%patch64 -p1
 # from sem@:
 # At least one script required bash4.
 # Just use sh4 for all scripts.
@@ -1139,6 +1143,11 @@ echo >> /var/log/pki/pki-server-upgrade-%{version}.log 2>&1
 %endif # %{with server}
 
 %changelog
+* Wed Feb 15 2017 Igor Vlasenko <viy@altlinux.ru> 10.2.6-alt5_19jpp8
+- thanks to sem@
+- fixed build
+- changed port to 8090
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 10.2.6-alt4_19jpp8
 - cleanup: removed rpm-build-java
 
