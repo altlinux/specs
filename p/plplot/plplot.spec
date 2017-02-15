@@ -1,10 +1,11 @@
+%filter_from_requires /^.usr.share.plplot.*.examples.tk.xtk01$/d
 %def_enable docs
 %def_without python3
 
 Name: plplot
 %define fmoddir %_libdir/fortran/modules/%name
-Version: 5.10.0
-Release: alt2.svn20140807
+Version: 5.11.1
+Release: alt1
 Summary: Scientific graphics plotting library, supporting multiple languages
 License: LGPL v2 or later
 Group: Graphics
@@ -14,6 +15,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://plplot.svn.sourceforge.net/svnroot/plplot/trunk
 Source: %name-%version.tar.gz
 Source1: CMakeCache.txt
+
+# cmake 3.4 support
+Patch0:         plplot-cmake34.patch
+# cmake 3.7 support
+Patch1:         plplot-cmake37.patch
+Patch2:         plplot-multiarch.patch
+# Don't use -custom with ocamlc
+Patch7:         plplot-ocaml.patch
 
 BuildPreReq: graphviz cmake swig gcc-fortran python-devel libgtk+3-devel
 BuildPreReq: gcc-c++ libltdl7-devel libfreetype-devel libqhull-devel
@@ -155,7 +164,6 @@ bindings.
 Summary: Functions for scientific plotting with Lua
 Group: Development/Other
 Requires: %name = %version-%release
-Requires: lua5.1-alt-compat
 
 %description lua
 PLplot is a cross-platform software package for creating scientific
@@ -308,15 +316,29 @@ This package contains development files of functions for scientific
 plotting with wxGTK.
 
 %prep
-%setup
+%setup -q
+%patch0 -p1 -b .cmake34
+%patch1 -p1 -b .cmake37
+%patch2 -p1 -b .multiarch
+%patch7 -p1 -b .ocaml
+
+# Installation directory has changed
+sed -i -e 's,qhull/qhull_a.h,libqhull/qhull_a.h,' \
+        lib/nn/delaunay.c \
+        src/plgridd.c \
+        cmake/modules/FindQHULL.cmake \
+        doc/doxygen/html/delaunay_8c_source.html \
+        doc/doxygen/html/plgridd_8c_source.html
+
+
 install -m644 %SOURCE1 .
 
-sed -i 's|@PKG_CONFIG_PATH@|%buildroot%_pkgconfigdir|' \
-	examples/tk/Makefile.examples.in
-sed -i 's|@INCDIR@|%buildroot%_includedir/plplot|' \
-	examples/tk/Makefile.examples.in
-sed -i 's|@LIBDIR@|%buildroot%_libdir|' \
-	examples/tk/Makefile.examples.in
+#sed -i 's|@PKG_CONFIG_PATH@|%buildroot%_pkgconfigdir|' \
+#	examples/tk/Makefile.examples.in
+#sed -i 's|@INCDIR@|%buildroot%_includedir/plplot|' \
+#	examples/tk/Makefile.examples.in
+#sed -i 's|@LIBDIR@|%buildroot%_libdir|' \
+#	examples/tk/Makefile.examples.in
 %ifarch x86_64
 sed -i 's|lib/|%_lib/|g' CMakeCache.txt
 %endif
@@ -327,6 +349,7 @@ cp -a . ../python3
 %endif
 
 %build
+%add_optflags -I../../bindings/tk
 %if_with python3
 pushd ../python3
 xvfb-run --server-args="-screen 0 1024x768x24" \
@@ -334,6 +357,7 @@ xvfb-run --server-args="-screen 0 1024x768x24" \
 %ifarch x86_64
 	-DLIB_SUFFIX=64 \
 %endif
+	-DCMAKE_INSTALL_LIBDIR:PATH=%{_libdir} \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DPYTHON_EXECUTABLE:FILEPATH=%_bindir/python3 \
 	-DPYTHON_INCLUDE_DIR:PATH=%{python3_includedir}mu \
@@ -383,12 +407,12 @@ mv %buildroot%_libdir/plplot%version %buildroot%_libexecdir/
 %endif
 
 # Examples
-pushd examples/tk
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%make -f Makefile.examples
-install -m755 xtk01 %buildroot%_bindir
-ln -s %_bindir/xtk01 %buildroot%_datadir/plplot%version/examples/tk
-popd
+#pushd examples/tk
+#export LD_LIBRARY_PATH=%buildroot%_libdir
+#%make -f Makefile.examples
+#install -m755 xtk01 %buildroot%_bindir
+#ln -s %_bindir/xtk01 %buildroot%_datadir/plplot%version/examples/tk
+#popd
 
 sed -i 's|%buildroot||g' \
 	%buildroot%_datadir/plplot%version/examples/tk/Makefile
@@ -407,13 +431,14 @@ cp -fR doc/doxygen/html doxygen
 %doc AUTHORS COPYING* ChangeLog* Copyright FAQ NEWS PROBLEMS
 %doc README* SERVICE ToDo
 %_bindir/pltek
-%_bindir/plrender
+#%_bindir/plrender
 %_bindir/plm2gif
 %_bindir/plpr
+%_bindir/wxPLViewer
 %_man1dir/pltek.1*
-%_man1dir/plrender.1*
-%_man1dir/plm2gif.1*
-%_man1dir/plpr.1*
+#%_man1dir/plrender.1*
+#%_man1dir/plm2gif.1*
+#%_man1dir/plpr.1*
 %_infodir/*
 
 %if_enabled docs
@@ -438,47 +463,47 @@ cp -fR doc/doxygen/html doxygen
 %dir %_datadir/plplot%version/examples
 %_libdir/libcsirocsa.so.*
 %_libdir/libcsironn.so.*
-%_libdir/libplplotcxxd.so.*
-%_libdir/libplplotd.so.*
-#_libdir/libplplotf77cd.so.*
-#_libdir/libplplotf77d.so.*
-%_libdir/libplplotf95cd.so.*
-%_libdir/libplplotf95d.so.*
+%_libdir/libplplotcxx.so.*
+%_libdir/libplplot.so.*
+#_libdir/libplplotf77c.so.*
+#_libdir/libplplotf77.so.*
+%_libdir/libplplotf95c.so.*
+%_libdir/libplplotf95.so.*
 %_libdir/libqsastime.so.*
 %dir %_libexecdir/plplot%version
-%dir %_libexecdir/plplot%version/driversd
-%_libexecdir/plplot%version/driversd/cairo.driver_info
-%_libexecdir/plplot%version/driversd/cairo.so
-%_libexecdir/plplot%version/driversd/mem.driver_info
-%_libexecdir/plplot%version/driversd/mem.so
+%dir %_libexecdir/plplot%version/drivers
+%_libexecdir/plplot%version/drivers/cairo.driver_info
+%_libexecdir/plplot%version/drivers/cairo.so
+%_libexecdir/plplot%version/drivers/mem.driver_info
+%_libexecdir/plplot%version/drivers/mem.so
 #_libdir/plplot%version/driversd/ntk.rc
 #_libdir/plplot%version/driversd/ntk.so
-%_libexecdir/plplot%version/driversd/null.driver_info
-%_libexecdir/plplot%version/driversd/null.so
-%_libexecdir/plplot%version/driversd/ps.driver_info
-%_libexecdir/plplot%version/driversd/ps.so
-%_libexecdir/plplot%version/driversd/pdf.driver_info
-%_libexecdir/plplot%version/driversd/pdf.so
-#_libdir/plplot%version/driversd/pstex.rc
-#_libdir/plplot%version/driversd/pstex.so
-%_libexecdir/plplot%version/driversd/psttf.driver_info
-%_libexecdir/plplot%version/driversd/psttf.so
-%_libexecdir/plplot%version/driversd/svg.driver_info
-%_libexecdir/plplot%version/driversd/svg.so
-%_libexecdir/plplot%version/driversd/xfig.driver_info
-%_libexecdir/plplot%version/driversd/xfig.so
-%_libexecdir/plplot%version/driversd/xwin.driver_info
-%_libexecdir/plplot%version/driversd/xwin.so
+%_libexecdir/plplot%version/drivers/null.driver_info
+%_libexecdir/plplot%version/drivers/null.so
+%_libexecdir/plplot%version/drivers/ps.driver_info
+%_libexecdir/plplot%version/drivers/ps.so
+%_libexecdir/plplot%version/drivers/pdf.driver_info
+%_libexecdir/plplot%version/drivers/pdf.so
+#_libdir/plplot%version/drivers/pstex.rc
+#_libdir/plplot%version/drivers/pstex.so
+%_libexecdir/plplot%version/drivers/psttf.driver_info
+%_libexecdir/plplot%version/drivers/psttf.so
+%_libexecdir/plplot%version/drivers/svg.driver_info
+%_libexecdir/plplot%version/drivers/svg.so
+%_libexecdir/plplot%version/drivers/xfig.driver_info
+%_libexecdir/plplot%version/drivers/xfig.so
+%_libexecdir/plplot%version/drivers/xwin.driver_info
+%_libexecdir/plplot%version/drivers/xwin.so
 
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/libcsirocsa.so
 %_libdir/libcsironn.so
-%_libdir/libplplotcxxd.so
-%_libdir/libplplotd.so
+%_libdir/libplplotcxx.so
+%_libdir/libplplot.so
 %_libdir/libqsastime.so
-%_pkgconfigdir/plplotd.pc
-%_pkgconfigdir/plplotd-c++.pc
+%_pkgconfigdir/plplot.pc
+%_pkgconfigdir/plplot-c++.pc
 %_datadir/plplot%version/examples/CMakeLists.txt
 %dir %_datadir/plplot%version/examples/cmake
 %dir %_datadir/plplot%version/examples/cmake/modules
@@ -505,45 +530,44 @@ cp -fR doc/doxygen/html doxygen
 %dir %_libdir/fortran
 %dir %_libdir/fortran/modules
 %dir %_libdir/fortran/modules/plplot
+%_libdir/fortran/modules/plplot/*.mod
 #dir %_libdir/fortran/include
 #_libdir/fortran/include/plplot
 %fmoddir/plplot.mod
-%fmoddir/plplot_flt.mod
+#%fmoddir/plplot_flt.mod
 %fmoddir/plplotp.mod
 %fmoddir/plf95demolib.mod
-#_libdir/libplplotf77cd.so
-#_libdir/libplplotf77d.so
-%_libdir/libplplotf95cd.so
-%_libdir/libplplotf95d.so
-#_pkgconfigdir/plplotd-f77.pc
-%_pkgconfigdir/plplotd-f95.pc
+#_libdir/libplplotf77c.so
+#_libdir/libplplotf77.so
+%_libdir/libplplotf95c.so
+%_libdir/libplplotf95.so
+#_pkgconfigdir/plplot-f77.pc
+%_pkgconfigdir/plplot-f95.pc
 #_datadir/plplot%version/examples/f77/
 %_datadir/plplot%version/examples/f95/
 #_datadir/plplot%version/examples/test_f77.sh
 %_datadir/plplot%version/examples/test_f95.sh
 
 %files lua
-#dir %_libdir/lua
-#dir %_libdir/lua/5.1
-%_libdir/lua/5.1/plplot/
+%_libdir/lua/5.3/plplot/
 %_datadir/plplot%version/examples/lua/
 %_datadir/plplot%version/examples/test_lua.sh
 
 %files -n lib%name-qt
-%_libdir/libplplotqtd.so.*
-%_libexecdir/plplot%version/driversd/qt.driver_info
-%_libexecdir/plplot%version/driversd/qt.so
+%_libdir/libplplotqt.so.*
+%_libexecdir/plplot%version/drivers/qt.driver_info
+%_libexecdir/plplot%version/drivers/qt.so
 
 %files -n lib%name-qt-devel
-%_libdir/libplplotqtd.so
-%_pkgconfigdir/plplotd-qt.pc
+%_libdir/libplplotqt.so
+%_pkgconfigdir/plplot-qt.pc
 
 %files tk
 %_bindir/plserver
 %_bindir/pltcl
-%_bindir/xtk01
-%_man1dir/plserver.1.gz
-%_man1dir/pltcl.1.gz
+#%_bindir/xtk01
+%_man1dir/plserver.1.*
+%_man1dir/pltcl.1.*
 %dir %_datadir/plplot%version
 %dir %_datadir/plplot%version/examples
 %_datadir/plplot%version/pkgIndex.tcl
@@ -562,15 +586,15 @@ cp -fR doc/doxygen/html doxygen
 
 
 %files -n lib%name-tk
-%_libdir/libplplottcltkd.so.*
-%_libdir/libtclmatrixd.so.*
-%_libdir/libplplottcltk_Maind.so.*
-%_libexecdir/plplot%version/driversd/tk.driver_info
-%_libexecdir/plplot%version/driversd/tk.so
-%_libexecdir/plplot%version/driversd/tkwin.driver_info
-%_libexecdir/plplot%version/driversd/tkwin.so
-%_libexecdir/plplot%version/driversd/ntk.so
-%_libexecdir/plplot%version/driversd/ntk.driver_info
+%_libdir/libplplottcltk.so.*
+%_libdir/libtclmatrix.so.*
+%_libdir/libplplottcltk_Main.so.*
+%_libexecdir/plplot%version/drivers/tk.driver_info
+%_libexecdir/plplot%version/drivers/tk.so
+%_libexecdir/plplot%version/drivers/tkwin.driver_info
+%_libexecdir/plplot%version/drivers/tkwin.so
+%_libexecdir/plplot%version/drivers/ntk.so
+%_libexecdir/plplot%version/drivers/ntk.driver_info
 
 %files -n python-module-%name-tk
 %python_sitelibdir/plplot_widgetmodule.so
@@ -581,22 +605,27 @@ cp -fR doc/doxygen/html doxygen
 %endif
 
 %files -n lib%name-tk-devel
-%_libdir/libplplottcltkd.so
-%_libdir/libtclmatrixd.so
-%_libdir/libplplottcltk_Maind.so
-%_pkgconfigdir/plplotd-tcl.pc
-%_pkgconfigdir/plplotd-tcl_Main.pc
+%_libdir/libplplottcltk.so
+%_libdir/libtclmatrix.so
+%_libdir/libplplottcltk_Main.so
+%_pkgconfigdir/plplot-tcl.pc
+%_pkgconfigdir/plplot-tcl_Main.pc
 
 %files -n lib%name-wxGTK
-%_libdir/libplplotwxwidgetsd.so.*
-%_libexecdir/plplot%version/driversd/wxwidgets.driver_info
-%_libexecdir/plplot%version/driversd/wxwidgets.so
+%_libdir/libplplotwxwidgets.so.*
+%_libexecdir/plplot%version/drivers/wxwidgets.driver_info
+%_libexecdir/plplot%version/drivers/wxwidgets.so
 
 %files -n lib%name-wxGTK-devel
-%_libdir/libplplotwxwidgetsd.so
-%_pkgconfigdir/plplotd-wxwidgets.pc
+%_libdir/libplplotwxwidgets.so
+%_pkgconfigdir/plplot-wxwidgets.pc
 
 %changelog
+* Wed Feb 15 2017 Igor Vlasenko <viy@altlinux.ru> 5.11.1-alt1
+- NMU: fixed build by updating to 5.11.1
+- note: it is not a proper build.
+  better to replace with import or find it proper maintainer
+
 * Wed Dec 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.10.0-alt2.svn20140807
 - New snapshot
 
