@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 4.2.1
-Release: alt1
+Release: alt2
 Summary: Jupyter core package
 License: BSD
 Group: Development/Python
@@ -34,6 +34,9 @@ BuildRequires(pre): rpm-build-python3
 
 %py_provides %oname
 #%py_requires traitlets
+
+Conflicts: python-module-jupyter <= 1.0.0-alt1
+Obsoletes: python-module-jupyter <= 1.0.0-alt1
 
 %description
 Jupyter core package. A base package on which Jupyter projects rely.
@@ -139,6 +142,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 15 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt2
+- added conflict on python-module-jupyter
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt1
 - automated PyPI update
 
