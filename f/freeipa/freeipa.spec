@@ -3,12 +3,13 @@
 %define _localstatedir %_var
 %define _libexecdir /usr/libexec
 %define etc_systemd_dir %_sysconfdir/systemd/system
+%define pki_core_version 10.2.6-alt5_19jpp8
 
 %define _unpackaged_files_terminate_build 1
 
 Name: freeipa
 Version: 4.3.2
-Release: alt5
+Release: alt7
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -85,9 +86,9 @@ Requires: python-module-%name = %version-%release
 Requires: %name-client = %version-%release
 Requires: %name-admintools = %version-%release
 Requires: krb5-kinit
-Requires: ntpd
-Requires: pki-server
-Requires: pki-ca
+Requires: openntpd
+Requires: pki-server >= %pki_core_version
+Requires: pki-ca >= %pki_core_version
 Requires: java-1.8.0-openjdk
 Requires: apache2-mod_nss
 Requires: apache2-mod_auth_gssapi
@@ -114,6 +115,9 @@ BuildArch: noarch
 Requires: %name-server-common = %version-%release
 Requires: %name-common = %version-%release
 Requires: python-module-ipaclient = %version-%release
+# Explicitly require python-module-samba
+# to avoid conflict with python-module-samba-DC
+Requires: python-module-samba
 
 %description -n python-module-ipaserver
 IPA is an integrated solution to provide centrally managed Identity
@@ -163,6 +167,7 @@ Integrated DNS server is BIND 9.
 Summary: Virtual package to install packages required for Active Directory trusts
 Group: System/Base
 Requires: %name-server = %version-%release
+Requires: samba samba-winbind
 
 %description server-trust-ad
 Cross-realm trusts with Active Directory in IPA require working Samba 4
@@ -178,8 +183,10 @@ Requires: python-module-ipaclient = %version-%release
 Requires: oddjob-mkhomedir
 Requires: sssd-krb5
 Requires: sssd-ipa
+Requires: libsss_sudo
 Requires: certmonger
-Requires: ntpd
+Requires: openntpd
+Requires: nss-utils
 
 %description client
 IPA is an integrated solution to provide centrally managed Identity
@@ -501,7 +508,7 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 #%config(noreplace) %_sysconfdir/sysconfig/ipa-dnskeysyncd
 #%config(noreplace) %_sysconfdir/sysconfig/ipa-ods-exporter
 %config(noreplace) %_sysconfdir/ipa/kdcproxy/kdcproxy.conf
-%dir %attr(0770,root,%webserver_group) %_runtimedir/ipa_memcached
+%dir %attr(0700,apache2,apache2) %_runtimedir/ipa_memcached
 %dir %attr(0700,root,root) %_runtimedir/ipa
 %attr(0700,apache2,apache2) %_runtimedir/httpd2/ipa/
 # NOTE: systemd specific section
@@ -620,6 +627,20 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 %_man1dir/ipa-test-task.1.*
 
 %changelog
+* Wed Feb 15 2017 Mikhail Efremov <sem@altlinux.org> 4.3.2-alt7
+- Explicitly require python-module-samba.
+- Fixed %%_runtimedir/ipa_memcached permissions.
+- server-trust-ad: Require samba and samba-winbind (closes: #33084).
+- openntpd support.
+- Change dogtag default insecure port to 8090.
+- client: Require libsss_sudo.
+
+* Mon Jan 23 2017 Mikhail Efremov <sem@altlinux.org> 4.3.2-alt6
+- client: Require nss-utils (closes: #33031).
+- Patches from upstream:
+  + Fixed CVE-2016-7030.
+  + Fixed CVE-2016-9575.
+
 * Mon Jan 16 2017 Mikhail Efremov <sem@altlinux.org> 4.3.2-alt5
 - bindinstance: Drop 'generating rndc key' step.
 - bindinstance: Use resolvconf if needed.
