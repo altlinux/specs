@@ -104,7 +104,7 @@
 
 Name: libvirt
 Version: 3.0.0
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -1049,6 +1049,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Feb 15 2017 Anton Farygin <rider@altlinux.ru> 3.0.0-alt2
+- added patches from upstream to fix work with lvm
+
 * Fri Jan 27 2017 Alexey Shabalin <shaba@altlinux.ru> 3.0.0-alt1
 - 3.0.0
 
