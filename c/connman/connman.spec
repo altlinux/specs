@@ -2,7 +2,7 @@
 %define _localstatedir %_var
 
 Name: connman
-Version: 1.32
+Version: 1.33
 Release: alt1
 
 Summary: ConnMan is a daemon for managing internet connections.
@@ -14,11 +14,16 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 
 Source: %name-%version.tar
 Source1: connmand.init
+Source4: connman-openresolv.path
+Source5: connman-openresolv.service
 
 Patch0: add-options-file.patch
 Patch1: connman-add-libs.patch
 Patch2: connman-main-conf.patch
 Patch3: connman.tmpfiles.patch
+
+#backported patches
+Patch100: config-Fix-indentation.patch
 
 BuildRequires: rpm-build-licenses gcc-c++ glib2-devel iptables iptables-devel libdbus-devel wpa_supplicant
 BuildRequires: gtk-doc libgnutls-devel libreadline-devel
@@ -64,6 +69,7 @@ This package contains include files required for development %name-based softwar
 %patch1 -p2
 %patch2 -p2
 %patch3 -p1
+%patch100 -p1
 
 %build
 %autoreconf
@@ -106,6 +112,11 @@ install -pm0644 -D src/main.conf     %buildroot%_sysconfdir/connman/main.conf
 ln -s connman.service %buildroot%_unitdir/connmand.service
 
 find %buildroot%_libdir/%name -name '*.la' -delete
+
+mkdir -p %buildroot%_unitdir/multi-user.target.wants
+install -m644 %SOURCE4 %buildroot%_unitdir/connman-openresolv.path
+install -m644 %SOURCE5 %buildroot%_unitdir/connman-openresolv.service
+ln -s ../connman-openresolv.path %buildroot%_unitdir/multi-user.target.wants
 
 %post
 %post_service connmand
@@ -153,6 +164,10 @@ find %buildroot%_libdir/%name -name '*.la' -delete
 %_includedir/*
 
 %changelog
+* Wed Feb 15 2017 Alexey Shabalin <shaba@altlinux.ru> 1.33-alt1
+- 1.33
+- add systemd unit for update resolv.conf with openresolv
+
 * Mon Apr 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1.32-alt1
 - 1.32
 
