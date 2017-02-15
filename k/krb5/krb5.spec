@@ -1,7 +1,7 @@
 
 Name: krb5
-Version: 1.14.2
-Release: alt2
+Version: 1.14.4
+Release: alt1%ubt
 
 %define _docdir %_defaultdocdir/%name-%version
 
@@ -53,6 +53,8 @@ BuildRequires: yasm
 BuildRequires: libverto-libev python-modules gcc-c++
 # dejagnu tests disabled
 # BuildRequires: dejagnu tcl-devel
+
+BuildRequires(pre): rpm-build-ubt
 
 %description
 Kerberos V5 is a trusted-third-party network authentication system,
@@ -427,6 +429,10 @@ touch %buildroot%_sysconfdir/krb5.keytab
 # {{{ changelog
 
 %changelog
+* Wed Feb 15 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.4-alt1%ubt
+- 1.14.4
+- fixed CVE-2016-3120
+
 * Thu Jun 09 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.14.2-alt2
 - krb5kdc.service: start after slapd
 
