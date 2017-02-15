@@ -1,6 +1,6 @@
 Name: nDPI
-Version: 1.7.0
-Release: alt6
+Version: 1.8.0
+Release: alt1
 Summary: Open source deep packet inspection
 Group: System/Libraries
 
@@ -100,6 +100,9 @@ rmdir %buildroot%_includedir/libndpi-%version
 %_bindir/ndpiReader
 
 %changelog
+* Wed Feb 15 2017 Alexei Takaseev <taf@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Fri Nov 11 2016 Alexei Takaseev <taf@altlinux.org> 1.7.0-alt6
 - Re-merge with 1.7-stable, drop i586 compatable patches
 
