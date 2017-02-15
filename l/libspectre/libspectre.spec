@@ -1,11 +1,10 @@
 Name: libspectre
-Version: 0.2.7
+Version: 0.2.8.0.1.f88d2c2
 Release: alt1
 Group: System/Libraries
 Summary: A PostScript rendering library
 License: GPLv2+
 Url: http://www.freedesktop.org/wiki/Software/libspectre
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -49,6 +48,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Feb 15 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.8.0.1.f88d2c2-alt1
+- Updated to 0.2.8-1-gf88d2c2.
+
 * Thu Aug 09 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.2.7-alt1
 - 0.2.7
 
