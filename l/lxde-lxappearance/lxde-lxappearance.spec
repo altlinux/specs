@@ -1,16 +1,16 @@
-%set_automake_version 1.11
+#%%set_automake_version 1.11
 
 %define upstreamname lxappearance
 %define gtkver 2
 Name: lxde-%upstreamname
-Version: 0.6.2
-Release: alt2
+Version: 0.6.3
+Release: alt1
 
 Summary: %name is desktop-independent theme swither for GTK+.
 License: GPL
 Group: Graphical desktop/Other
-Url: http://lxde.sf.net
-#Url: git://git.lxde.org/lxde/lxappearance.git
+Url: https://git.lxde.org/gitweb/?p=lxde/lxappearance.git
+Packager: LXDE Development Team <lxde at packages.altlinux.org>
 
 Source: %upstreamname-%version.tar
 Patch1: lxappearance-0.5.2-alt-fixbuild.patch
@@ -58,10 +58,14 @@ mkdir -p %buildroot%_libdir/%upstreamname/plugins
 %_man1dir/*
 
 %files devel
+%dir %_includedir/%upstreamname
 %_includedir/%upstreamname/*.h
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Feb 15 2017 Anton Midyukov <antohami@altlinux.org> 0.6.3-alt1
+- new version 0.6.3
+
 * Wed Jun 29 2016 Anton Midyukov <antohami@altlinux.org> 0.6.2-alt2
 - Enable dbus support.
 
