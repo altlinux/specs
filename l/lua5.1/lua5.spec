@@ -1,7 +1,7 @@
 %def_with lua_compat
 Name: lua5.1
 Version: 5.1.5
-Release: alt10
+Release: alt11
 
 Summary: Embeddable programming language
 License: MIT
@@ -42,7 +42,7 @@ Provides: %_libdir/lua/5.1
 Provides: %_datadir/lua/5.1
 Requires: lib%{name}-preinstall = %EVR
 Requires(pre): lib%{name}-preinstall = %EVR
-Conflicts: lua5.1-alt-compat = 1.0-alt1
+Conflicts: lua5.1-alt-compat < 1.0.1
 
 %package -n lib%{name}-devel
 Summary: Embeddable programming language
@@ -78,8 +78,7 @@ Conflicts: liblua4-devel-static
 %package -n lib%{name}-preinstall
 Summary: preinstall package for lib%{name}
 Group: Development/Other
-Provides: lua5.1-alt-compat = %version
-Conflicts: lua5.1-alt-compat = 1.0-alt1
+Conflicts: lua5.1-alt-compat < 1.0.1
 
 %package doc
 Summary: Embeddable programming language
@@ -263,6 +262,10 @@ fi
 %pkgdocdir/test
 
 %changelog
+* Wed Feb 15 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt11
+- no need for lua5.1-alt-compat provides now
+- stronger Conflicts: lua5.1-alt-compat < 1.0.1
+
 * Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt10
 - compat devel stuff moved to liblua5.1-compat-devel (for future use)
 
