@@ -12,7 +12,7 @@ Release: alt0.%snapshotdate.2
 %define srcdir %name-%baseversion-%snapshotdate
 %else
 Version: %baseversion
-Release: alt1
+Release: alt2
 %define srcdir %name-%version
 %endif
 
@@ -63,7 +63,7 @@ BuildRequires(pre): rpm-build-licenses
 # optimized out: emacs-X11 emacs-base emacs-cedet-speedbar emacs-common fontconfig libX11-locales libgdk-pixbuf libgpg-error libp11-kit libtinfo-devel mailutils pkg-config
 BuildRequires: emacs-X11 flex libdb4-devel libdspam-devel libgcrypt-devel libgdbm-devel libgnutls-devel libldap-devel libncurses-devel libpam-devel libreadline-devel libtokyocabinet-devel
 
-BuildRequires: libmailutils-devel >= 2.99.99
+BuildRequires: libmailutils-devel >= 3.1.1
 BuildRequires: mailutils
 BuildRequires: makeinfo
 
@@ -303,6 +303,13 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Thu Feb 16 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.1-alt2
+- BuildRequires: libmailutils-devel >= 3.1.1
+- changes in mailfromd.mf:
+  - fixed: global variables initialized with "precious" modificator
+  - variable's type is used for initializing variables
+  - implemented Broken_SPF_reject switch for selecting SPF error handling
+
 * Wed Feb 15 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.1-alt1
 - new version
 - removed "--remove" option from daemon's command line
