@@ -1,6 +1,6 @@
 Name: freeswitch
-Version: 1.6.14
-Release: alt1%ubt.1
+Version: 1.6.15
+Release: alt1%ubt
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -620,7 +620,10 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
-* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.6.14-alt1.S1.1
+* Wed Feb 15 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.15-alt1%ubt
+- new version
+
+* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.6.14-alt1%ubt.1
 - rebuild with new perl 5.24.1
 
 * Thu Jan 19 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.14-alt1%ubt
