@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.11.1
-Release: alt2
+Release: alt2.git20161210
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -103,6 +103,16 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Thu Feb 16 2017 Alexei Takaseev <taf@altlinux.org> 1.11.1-alt2.git20161210
+- update upstream to git:444385f2be198318d6092c049bbebf5cc981eeca
+    * ipoe: fixed typo (incorrect assignment)
+    * ipoe: add support for peer-to-peer client interfaces
+    * ipoe: assign point-to-point addresses to non-shared physical interface
+            (prevents route cleaning by interface renaming)
+    * fixed compilation
+    * shaper: fixed conditions to install limiter (may install only up or
+            only down limiter)
+
 * Mon Jan 16 2017 Alexei Takaseev <taf@altlinux.org> 1.11.1-alt2
 - Build with lua 5.1
 
