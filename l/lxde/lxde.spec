@@ -1,13 +1,14 @@
 Name: lxde
 Version: 1.0
-Release: alt12
+Release: alt13
 Summary: Virtual package for install all parts of LXDE
 Group: Graphical desktop/Other
 License: GPL
 BuildArch: noarch
 Requires: lxde-common lxde-lxpanel lxde-lxsession pcmanfm2 lxde-freedesktop-menu menu-cache lxde-lxappearance lxde-lxsession-edit
-Requires: lxde-lxrandr lxde-lxshortcut lxde-lxinput lxde-lxtask lxde-icon-theme gpicview leafpad
+Requires: lxde-lxrandr lxde-lxshortcut lxde-lxinput lxde-lxtask lxde-icon-theme gpicview leafpad lxde-lxhotkey
 Requires: lxde-lxpolkit
+Conflicts: lxde-sysvinit
 Packager: LXDE Packaging Team <lxde@packages.altlinux.org>
 
 %description
@@ -17,15 +18,34 @@ Packager: LXDE Packaging Team <lxde@packages.altlinux.org>
 Summary: Virtual package for install minumal set of LXDE packages
 Group: Graphical desktop/Other
 License: GPL
+BuildArch: noarch
 Requires: lxde-common lxde-lxpanel lxde-lxsession pcmanfm2 lxde-freedesktop-menu menu-cache lxde-lxappearance lxde-lxsession-edit
 
 %description lite
 %summary
 
+%package sysvinit
+Summary: Virtual package for install LXDE packages for SysVinit
+Group: Graphical desktop/Other
+License: GPL
+BuildArch: noarch
+Requires: lxde-common lxde-lxpanel lxde-lxsession pcmanfm2 lxde-freedesktop-menu menu-cache lxde-lxappearance lxde-lxsession-edit
+Requires: lxde-lxrandr lxde-lxshortcut lxde-lxinput lxde-lxtask lxde-icon-theme gpicview leafpad lxde-lxhotkey
+Requires: ConsoleKit2 polkit-sysvinit
+Conflicts: lxde lxde-lxpolkit
+
+%description sysvinit
+%summary
+
 %files
 %files lite
+%files sysvinit
 
 %changelog
+* Thu Feb 16 2017 Anton Midyukov <antohami@altlinux.org> 1.0-alt13
+- Added subpackage lxde-sysvinit
+- Added requires lxde-lxhotkey
+
 * Wed Feb 08 2017 Anton Midyukov <antohami@altlinux.org> 1.0-alt12
 - Added requires lxde-lxpolkit
 
