@@ -3,16 +3,16 @@
 %define gtkver 2
 
 Name: lxde-%origname
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
 Summary: LXPanel is a lightweight X11 desktop panel
 License: GPL
 Group: Graphical desktop/Other
+Packager: LXDE Development Team <lxde at packages.altlinux.org>
 
 Url: https://git.lxde.org/gitweb/?p=lxde/lxpanel.git
 Source: %origname-%version.tar
-Packager: LXDE Development Team <lxde at packages.altlinux.org>
 
 #Requires: lxde-freedesktop-menu
 Requires: altlinux-freedesktop-menu-lxde
@@ -71,6 +71,9 @@ for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Feb 15 2017 Anton Midyukov <antohami@altlinux.org> 0.9.3-alt1
+- new version 0.9.3
+
 * Wed Jan 11 2017 Anton Midyukov <antohami@altlinux.org> 0.9.2-alt1
 - new version 0.9.2
 
