@@ -1,10 +1,8 @@
 Name: pear-core
-Version: 1.9.4
-Release: alt2
+Version: 1.10.1
+Release: alt1
 
 Summary: PHP Extension and Application Repository
-Summary(ru_RU.UTF-8): Пакет с рaсширениями для PHP
-
 License: PHP
 Group: Development/Other
 Url: http://pear.php.net
@@ -13,7 +11,7 @@ Packager: Denis Klimov <zver@altlinux.ru>
 Source: %name-%version.tar
 
 BuildArch: noarch
-Requires: php5
+Requires: /usr/bin/php
 
 BuildPreReq: php5
 BuildRequires: rpm-build-pear >= 0.3
@@ -26,9 +24,11 @@ Obsoletes: pear < 1.3.4-alt1.1
 Provides: pear
 
 Provides: pear-PEAR = %version
-Provides: pear-Console_Getopt = 1.3.1
-Provides: pear-Structures_Graph = 1.0.4
-Provides: pear-Archive_Tar = 1.3.13
+Provides: pear-Console_Getopt = 1.4.1
+Provides: pear-Structures_Graph = 1.1.1
+Provides: pear-Archive_Tar = 1.4.2
+Provides: pear-XML_Util = 1.4.1
+
 
 %description
 PEAR is a code repository for PHP extensions and PHP library code
@@ -44,7 +44,7 @@ Console_Getopt, Structures_Graph, Archive_Tar modules.
 %install
 INCPATH="."
 XMLLIST=""
-for i in PEAR Archive_Tar Structures_Graph Console_Getopt ; do
+for i in PEAR Archive_Tar Structures_Graph Console_Getopt XML_Util ; do
     INCPATH="$INCPATH:$i"
     XMLLIST="$XMLLIST $i/package.xml"
 done
@@ -52,9 +52,12 @@ INCARG="-d include_path='$INCPATH'"
 
 php -C -q $INCARG -d output_buffering=1 -d variables_order=EGPCS -d open_basedir="" \
     -d safe_mode=0 -d register_argc_argv="On" -d auto_prepend_file="" -d auto_append_file="" \
-    PEAR/scripts/pearcmd.php install --offline --packagingroot=%buildroot $XMLLIST
+    PEAR/scripts/pearcmd.php install --force --offline --packagingroot=%buildroot $XMLLIST
 
-# FIXME: pear/pecl/peardev can be our scripts
+# Replace /usr/bin/* with simple scripts:
+install -m 755 scripts/pear.sh %buildroot%_bindir/pear
+install -m 755 scripts/pecl.sh %buildroot%_bindir/pecl
+install -m 755 scripts/peardev.sh %buildroot%_bindir/peardev
 
 %files
 %pear_dir/
@@ -63,6 +66,16 @@ php -C -q $INCARG -d output_buffering=1 -d variables_order=EGPCS -d open_basedir
 %_bindir/peardev
 
 %changelog
+* Thu Feb 16 2017 Alexey Shabalin <shaba@altlinux.ru> 1.10.1-alt1
+- New versions: 
+  + PEAR-1.10.1
+  + Console_Getopt-1.4.1
+  + Structures_Graph-1.1.1
+  + Archive_Tar-1.4.2
+  + XML_Util-1.4.1
+- drop requires php5, allow install with php7
+- replace /usr/bin/* with simple scripts
+
 * Wed Jan 07 2015 Pavel Isopenko <pauli@altlinux.org> 1.9.4-alt2
 - New version Archive_Tar 1.3.13
 
