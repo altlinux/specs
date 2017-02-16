@@ -7,7 +7,7 @@
 
 Summary:      SOPE is an extensive set of frameworks which form a complete Web application server environment
 Name:         sope
-Version:      3.2.5
+Version:      3.2.7
 Release:      alt1
 License:      GPL
 URL:          http://sogo.nu/
@@ -45,167 +45,54 @@ reusable classes: XML processing (SAX, DOM, XML-RPC), MIME/IMAP4
 processing, LDAP connectivity, RDBMS connectivity, and iCalendar
 parsing.
 
-%package xml
-Summary:      SOPE libraries for XML processing
-Group:        Development/Objective-C
+%package -n libsope
+Summary:   SOPE libraries
+Group:     Development/Objective-C
+Provides:  %name-appserver = %EVR
+Obsoletes: %name-appserver < %EVR
+Provides:  %name-core = %EVR
+Obsoletes: %name-core < %EVR
+Provides:  %name-gdl1 = %EVR
+Obsoletes: %name-gdl1 < %EVR
+Provides:  %name-ldap = %EVR
+Obsoletes: %name-ldap < %EVR
+Provides:  %name-mime = %EVR
+Obsoletes: %name-mime < %EVR
+Provides:  %name-sbjson = %EVR
+Obsoletes: %name-sbjson < %EVR
+Provides:  %name-xml = %EVR
+Obsoletes: %name-xml < %EVR
 
-%description xml
-The SOPE libraries for XML processing contain:
 
-  * a SAX2 Implementation for Objective-C
-  * an attempt to implement DOM on top of SaxObjC
-  * an XML-RPC implementation (without a transport layer)
+%description -n libsope
+SOPE is an extensive set of frameworks which form a complete Web
+application server environment. Besides the Apple WebObjects compatible
+appserver extended with Zope concepts, it contains a large set of
+reusable classes: XML processing (SAX, DOM, XML-RPC), MIME/IMAP4
+processing, LDAP connectivity, RDBMS connectivity, and iCalendar
+parsing.
 
-SOPE is a framework for developing web applications and services. The
-name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
+%package -n libsope-devel
+Summary:   Development files for the SOPE libraries
+Group:     Development/Objective-C
+Requires:  libsope = %EVR
+Provides:  %name-appserver-devel = %EVR
+Obsoletes: %name-appserver-devel < %EVR
+Provides:  %name-core-devel = %EVR
+Obsoletes: %name-core-devel < %EVR
+Provides:  %name-gdl1-devel = %EVR
+Obsoletes: %name-gdl1-devel < %EVR
+Provides:  %name-ldap-devel = %EVR
+Obsoletes: %name-ldap-devel < %EVR
+Provides:  %name-mime-devel = %EVR
+Obsoletes: %name-mime-devel < %EVR
+Provides:  %name-sbjson-devel = %EVR
+Obsoletes: %name-sbjson-devel < %EVR
+Provides:  %name-xml-devel = %EVR
+Obsoletes: %name-xml-devel < %EVR
 
-%package xml-devel
-Summary:      Development files for the SOPE XML libraries
-Group:        Development/Objective-C
-Requires:     sope-xml libxml2-devel
-
-%description xml-devel
-This package contains the development files of the SOPE XML libraries.
-
-SOPE is a framework for developing web applications and services. The
-name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
-
-%package sbjson
-Summary:      JSON framework
-Group:        Development/Objective-C
-
-%description sbjson
-The SBJson library is a high performance JSON library in Objective-C.
-
-Project homepage is: http://code.google.com/p/json-framework/
-
-%package sbjson-devel
-Summary:      JSON framework (devel)
-Group:        Development/Objective-C
-
-%description sbjson-devel
-The SBJson library is a high performance JSON library in Objective-C.
-
-Those are the files required for development.
-
-Project homepage is: http://code.google.com/p/json-framework/
-
-%package core
-Summary:      Core libraries of the SOPE application server
-Group:        Development/Objective-C
-Requires:     sope-xml
-
-%description core
-The SOPE core libraries contain:
-
-  * various Foundation extensions
-  * a java.io like stream and socket library
-
-SOPE is a framework for developing web applications and services. The
-name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
-
-%package core-devel
-Summary:      Development files for the SOPE core libraries
-Group:        Development/Objective-C
-Requires:     sope-core
-
-%description core-devel
-This package contains the header files for the SOPE core
-libraries,  which are part of the SOPE application server framework.
-
-SOPE is a framework for developing web applications and services. The
-name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
-
-%package mime
-Summary:      SOPE libraries for MIME processing
-Group:        Development/Objective-C
-Requires:     sope-core sope-xml
-
-%description mime
-The SOPE libraries for MIME processing contain:
-
-  * classes for processing MIME entities
-  * a full IMAP4 implementation
-  * prototypical POP3 and SMTP processor
-
-SOPE is a framework for developing web applications and services. The
-name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
-
-%package mime-devel
-Summary:      Development files for the SOPE MIME libraries
-Group:        Development/Objective-C
-Requires:     sope-mime
-
-%description mime-devel
-This package contains the development files of the SOPE
-MIME libraries.
-
-SOPE is a framework for developing web applications and services. The
-name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
-
-%package appserver
-Summary:      SOPE application server libraries
-Group:        Development/Objective-C
-Requires:     sope-xml sope-core sope-mime
-
-%description appserver
-The SOPE application server libraries provide:
-
-  * template rendering engine, lots of dynamic elements
-  * HTTP client/server
-  * XML-RPC client
-  * WebDAV server framework
-  * session management
-  * scripting extensions for Foundation, JavaScript bridge
-  * DOM tree rendering library
-
-SOPE is a framework for developing web applications and services. The
-name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
-
-%package appserver-devel
-Summary:      Development files for the SOPE application server libraries
-Group:        Development/Objective-C
-Requires:     sope-appserver
-
-%description appserver-devel
-This package contains the development files for the SOPE application
-server libraries.
-
-SOPE is a framework for developing web applications and services. The
-name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
-
-%package ldap
-Summary:      SOPE libraries for LDAP access
-Group:        Development/Objective-C
-Requires:     sope-core sope-xml
-
-%description ldap
-The SOPE libraries for LDAP access contain an Objective-C wrapper for
-LDAP directory services.
-
-SOPE is a framework for developing web applications and services. The
-name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
-
-%package ldap-devel
-Summary:      Development files for the SOPE LDAP libraries
-Group:        Development/Objective-C
-Requires:     sope-ldap
-
-%description ldap-devel
-This package contains the development files of the SOPE
-LDAP libraries.
-
-SOPE is a framework for developing web applications and services. The
-name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
-
-%package gdl1
-Summary:      GNUstep database libraries for SOPE
-Group:        Development/Objective-C
-Requires:     sope-core sope-xml
-
-%description gdl1
-This package contains a fork of the GNUstep database libraries used
-by the SOPE application server (excluding GDLContentStore).
+%description -n libsope-devel
+This package contains the development files of the SOPE libraries.
 
 SOPE is a framework for developing web applications and services. The
 name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
@@ -213,7 +100,7 @@ name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 %package gdl1-postgresql
 Summary:      PostgreSQL connector for SOPE's fork of the GNUstep database environment
 Group:        Development/Objective-C
-Requires:     sope-gdl1 
+Requires:     libsope 
 #Requires:    postgresql-libs
 
 %description gdl1-postgresql
@@ -227,7 +114,7 @@ name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 %package gdl1-oracle
 Summary:      Oracle connector for SOPE's fork of the GNUstep database environment
 Group:        Development/Objective-C
-Requires:     sope-gdl1
+Requires:     libsope
 #Requires:    oracle-instantclient-basic
 
 %description gdl1-oracle
@@ -238,7 +125,7 @@ GNUstep database libraries.
 %package gdl1-mysql
 Summary:      MySQL connector for SOPE's fork of the GNUstep database environment
 Group:        Development/Objective-C
-Requires:     sope-gdl1
+Requires:     libsope
 
 %description gdl1-mysql
 This package contains the MySQL connector for SOPE's fork of the
@@ -248,7 +135,7 @@ GNUstep database libraries.
 %package gdl1-sqlite3
 Summary:      SQLite3 connector for SOPE's fork of the GNUstep database environment
 Group:        Development/Objective-C
-Requires:     sope-gdl1
+Requires:     libsope
 
 %description gdl1-sqlite3
 This package contains the SQLite3 connector for SOPE's fork of the
@@ -258,21 +145,10 @@ SOPE is a framework for developing web applications and services. The
 name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 %endif
 
-%package gdl1-devel
-Summary:      Development files for the GNUstep database libraries
-Group:        Development/Objective-C
-Requires:     sope-gdl1
-
-%description gdl1-devel
-This package contains the header files for SOPE's fork of the GNUstep
-database libraries.
-
-SOPE is a framework for developing web applications and services. The
-name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
-
 %package -n apache2-mod_ngobjweb
 Summary:      mod_ngobjweb module for Apache2
 Group:        System/Servers
+Requires:     libsope
 
 %description -n apache2-mod_ngobjweb
 Enables apache2 to handle HTTP requests for the
@@ -304,7 +180,6 @@ make LDFLAGS="-L$ORACLELIB_PATH" %{sope_makeflags}
 popd
 %endif
 
-
 %install
 install -d %buildroot%apache2_libexecdir
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM %{sope_makeflags} apxs="%apache2_apxs -S LIBEXECDIR=%buildroot%apache2_libexecdir"
@@ -332,80 +207,17 @@ echo "LoadModule ngobjweb_module %apache2_libexecdir/mod_ngobjweb.so" > %buildro
 install -d %buildroot%apache2_mods_start
 echo "%module_name=yes" > %buildroot%apache2_mods_start/100-%module_name.conf
 
-%files xml
-%_libdir/libDOM*.so.%{sope_version}*
-%_libdir/libSaxObjC*.so.%{sope_version}*
-%_libdir/libXmlRpc*.so.%{sope_version}*
-%_libdir/GNUstep/SaxDrivers-%{sope_version}
+%files -n libsope
+%_libdir/lib*.so.*
+%_libdir/GNUstep/*
+%exclude %_libdir/GNUstep/GDLAdaptors-%{sope_version}/*.gdladaptor
+%_datadir/sope-%{sope_version}/ngobjweb/*.plist
 
-%files xml-devel
-%_includedir/DOM
-%_includedir/SaxObjC
-%_includedir/XmlRpc
-%_libdir/libDOM*.so
-%_libdir/libSaxObjC*.so
-%_libdir/libXmlRpc*.so
-
-%files sbjson
-%_libdir/libSBJson.so.%{sbjson_major_version}*
-
-%files sbjson-devel
-%_includedir/SBJson
-%_libdir/libSBJson.so
-
-%files core
-%_libdir/libEOControl*.so.%{sope_version}*
-%_libdir/libNGExtensions*.so.%{sope_version}*
-%_libdir/libNGStreams*.so.%{sope_version}*
-
-%files core-devel
-%_includedir/EOControl
-%_includedir/NGExtensions
-%_includedir/NGStreams
-%_libdir/libEOControl*.so
-%_libdir/libNGExtensions*.so
-%_libdir/libNGStreams*.so
-
-%files mime
-%_libdir/libNGMime*.so.%{sope_version}*
-
-%files mime-devel
-%_includedir/NGImap4
-%_includedir/NGMail
-%_includedir/NGMime
-%_libdir/libNGMime*.so
-
-%files appserver
-%_libdir/libNGObjWeb*.so.%{sope_version}*
-%_libdir/libWEExtensions*.so.%{sope_version}*
-%_libdir/libWOExtensions*.so.%{sope_version}*
-#_libdir/GNUstep/Resources/NGObjWeb/*
-%_datadir/%name-%{sope_version}/ngobjweb/*
-%_libdir/GNUstep/SoProducts-%{sope_version}
-%_libdir/GNUstep/WOxElemBuilders-%{sope_version}
-
-%files appserver-devel
-%_bindir/wod
-%_includedir/NGHttp
-%_includedir/NGObjWeb
-%_includedir/WEExtensions
-%_includedir/WOExtensions
-%_libdir/libNGObjWeb*.so
-%_libdir/libWEExtensions*.so
-%_libdir/libWOExtensions*.so
+%files -n libsope-devel
+%_bindir/*
+%_includedir/*
+%_libdir/lib*.so
 %_datadir/GNUstep/Makefiles
-
-%files ldap
-%_libdir/libNGLdap*.so.%{sope_version}*
-
-%files ldap-devel
-%_includedir/NGLdap
-%_libdir/libNGLdap*.so
-
-%files gdl1
-%_bindir/connect-EOAdaptor
-%_bindir/load-EOAdaptor
-%_libdir/libGDLAccess*.so.%{sope_version}*
 
 %files gdl1-postgresql
 %_libdir/GNUstep/GDLAdaptors-%{sope_version}/PostgreSQL.gdladaptor
@@ -423,16 +235,10 @@ echo "%module_name=yes" > %buildroot%apache2_mods_start/100-%module_name.conf
 %_libdir/GNUstep/GDLAdaptors-%{sope_version}/SQLite3.gdladaptor
 %endif
 
-%files gdl1-devel
-%_includedir/GDLAccess
-%_libdir/libGDLAccess*.so
-
 %files -n apache2-mod_ngobjweb
 %apache2_libexecdir/*.so
-#%config(noreplace) %apache2_mods_available/%module_name.conf
-%config            %apache2_mods_available/%module_name.load
-%config            %apache2_mods_start/100-%module_name.conf
-
+%config %apache2_mods_available/%module_name.load
+%config %apache2_mods_start/100-%module_name.conf
 
 %post -n apache2-mod_ngobjweb
 # Reconfigure Apache2:
@@ -475,8 +281,14 @@ if [ "$1" = "0" ] ; then # last uninstall
     fi
 fi
 
-
 %changelog
+* Wed Feb 15 2017 Andrey Cherepanov <cas@altlinux.org> 3.2.7-alt1
+- new version 3.2.7
+
+* Tue Jan 24 2017 Andrey Cherepanov <cas@altlinux.org> 3.2.6-alt1
+- new version 3.2.6
+- package all libraries to libsope and development files to libsope-devel
+
 * Wed Jan 11 2017 Andrey Cherepanov <cas@altlinux.org> 3.2.5-alt1
 - new version 3.2.5
 
