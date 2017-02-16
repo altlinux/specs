@@ -1,7 +1,7 @@
 %define _name cycle
 Name: cacti-plugin-%_name
-Version: 2.3
-Release: alt1
+Version: 4.0
+Release: alt0.1
 
 %define cactiplugindir %_datadir/cacti/plugins
 
@@ -11,9 +11,10 @@ License: GPLv2+
 Group: Monitoring
 
 URL: http://cactiusers.org
-Source0: %_name-v%version-1.tgz
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
-Requires: cacti
+Requires: cacti >= 1.0.0
 BuildArch: noarch
 
 %description
@@ -31,22 +32,25 @@ Features:
     It can use a custom graph list and only cycle through those.
 
 %prep
-%setup -q -n %_name
+%setup -q
+#%patch -p1
 
 %build
 
-%install -n %name-%version
+%install
 mkdir -p %buildroot%cactiplugindir/%_name
 
 cp -a * %buildroot%cactiplugindir/%_name/
-rm -rf %buildroot%cactiplugindir/%_name/{LICENSE,README}
-rm -f %buildroot%cactiplugindir/%_name/*.orig
+rm -rf %buildroot%cactiplugindir/%_name/{LICENSE,README.md}
 
 %files
-%doc LICENSE README
+%doc LICENSE README.md
 %cactiplugindir/*
 
 %changelog
+* Fri Feb 17 2017 Alexey Shabalin <shaba@altlinux.ru> 4.0-alt0.1
+- 4.0 for cacti-1.0.0
+
 * Fri Apr 06 2012 Alexey Shabalin <shaba@altlinux.ru> 2.3-alt1
 - 2.3
 
