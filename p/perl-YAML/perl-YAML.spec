@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist YAML
 Name: perl-%dist
-Version: 1.21
+Version: 1.22
 Release: alt1
 
 Summary: YAML Ain't Markup Language
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/I/IN/INGY/YAML-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/I/IN/INGY/%{dist}-%{version}.tar.gz
 Patch: YAML-1.15-alt-fixes.patch
 
 BuildArch: noarch
@@ -24,7 +24,7 @@ that is optimized for human readability.  It can be used to express the
 data structures of most modern programming languages (including Perl).
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch -p1
 
 %build
@@ -41,6 +41,9 @@ data structures of most modern programming languages (including Perl).
 %perl_vendor_privlib/YAML*
 
 %changelog
+* Fri Feb 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
+- automated CPAN update
+
 * Thu Dec 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1
 - automated CPAN update
 
