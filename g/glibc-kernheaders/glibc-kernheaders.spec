@@ -3,7 +3,7 @@
 
 Name: glibc-kernheaders
 Version: %kernel_base_version
-Release: alt0.rc8
+Release: alt0.rc8.42.g558e8e2
 
 Summary: Linux kernel C header files for use by glibc and other userspace software
 License: GPLv2
@@ -13,7 +13,15 @@ Url: http://www.kernel.org/
 # git://git.altlinux.org/gears/g/%name.git
 Patch: %name-%version-%release.patch
 
-Patch2: 0001-uapi-fix-linux-if_pppol2tp.h-userspace-compilation-e.patch
+Patch1: 0001-uapi-fix-linux-ipv6_route.h-userspace-compilation-er.patch
+Patch2: 0002-uapi-fix-linux-mroute6.h-userspace-compilation-error.patch
+Patch3: 0003-uapi-fix-linux-mroute.h-userspace-compilation-errors.patch
+Patch4: 0004-uapi-fix-linux-rds.h-userspace-compilation-errors.patch
+Patch5: 0005-uapi-fix-linux-rds.h-userspace-compilation-error.patch
+Patch6: 0006-btrfs-remove-btrfs_err_str-function-from-uapi-linux-.patch
+Patch7: 0007-uapi-fix-linux-dlm_netlink.h-userspace-compilation-e.patch
+Patch8: 0008-uapi-fix-linux-mqueue.h-userspace-compilation-errors.patch
+Patch9: 0009-uapi-fix-linux-target_core_user.h-userspace-compilat.patch
 
 BuildRequires: rpm-build-kernel
 BuildRequires: %kernel_source = 0.8.0
@@ -47,7 +55,15 @@ building most standard programs and are also needed to build glibc.
 tar -xf %kernel_src/%kernel_source.tar
 cd %kernel_source
 %patch -p1
+%patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
 
 %install
 %define hdr_dir %_includedir/linux-default
@@ -84,6 +100,10 @@ done
 %hdr_dir
 
 %changelog
+* Thu Feb 16 2017 Dmitry V. Levin <ldv@altlinux.org> 4.10-alt0.rc8.42.g558e8e2
+- v4.10-rc8 -> v4.10-rc8-42-g558e8e2.
+- Fixed compilation errors in 8 header files.
+
 * Tue Feb 14 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.10-alt0.rc8
 - v4.9 -> v4.10-rc8.
 
