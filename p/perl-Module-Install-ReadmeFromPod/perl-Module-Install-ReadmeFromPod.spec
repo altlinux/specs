@@ -1,5 +1,5 @@
 Name: perl-Module-Install-ReadmeFromPod
-Version: 0.26
+Version: 0.28
 Release: alt1
 
 Summary: Module::Install extension to automatically convert POD to a README
@@ -28,9 +28,12 @@ containing POD, whenever the author runs "Makefile.PL".
 
 %files
 %perl_vendor_privlib/Module/Install/ReadmeFromPod*
-%doc LICENSE Changes README 
+%doc LICENSE Changes README
 
 %changelog
+* Fri Feb 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
+- automated CPAN update
+
 * Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - automated CPAN update
 
