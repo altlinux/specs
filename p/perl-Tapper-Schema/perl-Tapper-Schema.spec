@@ -11,14 +11,14 @@ BuildRequires: perl(DBD/SQLite.pm) perl(Hash/Merge/Simple.pm)
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    5.0.8
+Version:    5.0.9
 Release:    alt1
 
 Summary:    Database schemas for Tapper
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Schema-%{version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/T/TA/TAPPER/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(Carp.pm)
 BuildRequires: perl(Class/C3.pm)
@@ -67,7 +67,7 @@ Source44: import.info
 Database schemas for Tapper.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -81,10 +81,13 @@ Database schemas for Tapper.
 %makeinstall_std
 
 %files
-%doc Changes LICENSE META.json META.yml  README
+%doc Changes LICENSE META.json META.yml README
 %perl_vendor_privlib/*
 
 %changelog
+* Fri Feb 17 2017 Igor Vlasenko <viy@altlinux.ru> 5.0.9-alt1
+- automated CPAN update
+
 * Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.8-alt1
 - automated CPAN update
 
