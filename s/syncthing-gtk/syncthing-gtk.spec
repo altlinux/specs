@@ -4,7 +4,7 @@
 
 Name: syncthing-gtk
 Version: 0.9.2.4
-Release: alt1
+Release: alt2
 Summary: Syncthing Gtk-based graphical interface
 Summary(ru_RU.UTF-8): Основанный на GTK графический интерфейс для Syncthing
 License: GPLv2+
@@ -194,6 +194,9 @@ done
 %endif
 
 %changelog
+* Fri Feb 17 2017 Anton Midyukov <antohami@altlinux.org> 0.9.2.4-alt2
+- Added cronbuild options
+
 * Fri Feb 03 2017 Anton Midyukov <antohami@altlinux.org> 0.9.2.4-alt1
 - new version 0.9.2.4
 
