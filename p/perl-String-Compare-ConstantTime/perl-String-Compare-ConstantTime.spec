@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 0.311
 %define module_name String-Compare-ConstantTime
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
@@ -7,20 +6,20 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.311
-Release: alt1.1.1
+Version: 0.312
+Release: alt1
 Summary: unknown
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/F/FR/FRACTAL/String-Compare-ConstantTime-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/F/FR/FRACTAL/%{module_name}-%{version}.tar.gz
 
 %description
 %summary
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +33,9 @@ Source: http://www.cpan.org/authors/id/F/FR/FRACTAL/String-Compare-ConstantTime-
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Feb 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.312-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.311-alt1.1.1
 - rebuild with new perl 5.24.1
 
