@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist CPAN
 Name: perl-%dist
-Version: 2.14
+Version: 2.16
 Release: alt1
 
 Summary: Download and build Perl modules from CPAN sites
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/A/AN/ANDK/CPAN-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/A/AN/ANDK/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -28,7 +28,7 @@ It includes some searching capabilities and knows how to fetch
 the raw data from the net.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 rm -rv inc/
 
 # XXX tests fail
@@ -41,7 +41,7 @@ rm t/30shell.t t/31sessions.t
 %perl_vendor_install
 
 %files
-%doc	Changes README
+%doc	Changes README Todo
 	%_bindir/cpan
 	%_bindir/cpan-mirrors
 	%_man1dir/cpan*
@@ -51,6 +51,9 @@ rm t/30shell.t t/31sessions.t
 	%perl_vendor_privlib/CPAN*
 
 %changelog
+* Fri Feb 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.16-alt1
+- automated CPAN update
+
 * Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 2.14-alt1
 - automated CPAN update
 
