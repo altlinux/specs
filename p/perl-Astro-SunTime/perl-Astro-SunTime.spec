@@ -1,12 +1,13 @@
+%define _unpackaged_files_terminate_build 1
 %define m_distro Astro-SunTime
 Name: perl-%m_distro
-Version: 0.01
-Release: alt1.1
+Version: 0.05
+Release: alt1
 Summary: Astro::SunTime provides a function interface to calculate sun rise/set times.
 Group: Development/Perl
 License: Artistic/GPL
 Url: http://search.cpan.org/dist/Astro-SunTime/
-Source: %m_distro-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RO/ROBF/Astro-SunTime-%{version}.tar.gz
 Packager: Alex Negulescu <alecs@altlinux.org>
 BuildRequires: perl-Time-modules perl-devel
 
@@ -14,7 +15,7 @@ BuildRequires: perl-Time-modules perl-devel
 Astro::SunTime provides a function interface to calculate sun rise/set times.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n Astro-SunTime-%{version}
 
 %build
 %perl_vendor_build
@@ -31,6 +32,9 @@ Astro::SunTime provides a function interface to calculate sun rise/set times.
 %doc Changes MANIFEST README
 
 %changelog
+* Fri Feb 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- automated CPAN update
+
 * Fri Apr 27 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.01-alt1.1
 - redundant buildreq dropped
 
