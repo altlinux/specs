@@ -8,8 +8,8 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 %define upstream_version 5.0.4
 
 Name:       perl-%{upstream_name}
-Version:    5.0.4
-Release:    alt2
+Version:    5.0.5
+Release:    alt1
 %if %release == alt3nt
 %define _without_test 1
 %endif
@@ -17,7 +17,7 @@ Summary:    Tapper-* command line tools
 License:    BSD
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-CLI-%{version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/T/TA/TAPPER/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(App/Cmd.pm)
 BuildRequires: perl(App/Cmd/Command.pm)
@@ -69,7 +69,7 @@ Source44: import.info
 Command line tools for Tapper.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -89,6 +89,9 @@ Command line tools for Tapper.
 %_man1dir/tapper*
 
 %changelog
+* Fri Feb 17 2017 Igor Vlasenko <viy@altlinux.ru> 5.0.5-alt1
+- automated CPAN update
+
 * Mon Apr 11 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.4-alt2
 - build w/o Tapper-Testplan
 
