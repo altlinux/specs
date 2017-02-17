@@ -1,6 +1,6 @@
 %define m_distro Test-Script
 Name: perl-Test-Script
-Version: 1.14
+Version: 1.15
 Release: alt1
 Summary: Test::Script - Basic cross-platform tests for scripts
 
@@ -27,10 +27,14 @@ BuildRequires: perl-devel perl-IPC-Run3 perl-Probe-Perl perl(Test/Tester.pm)
 %perl_vendor_install
 
 %files
+%doc author.yml LICENSE README Changes
 %perl_vendor_privlib/Test/Script*
-%doc Changes README 
+%doc Changes README
 
 %changelog
+* Fri Feb 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
+- automated CPAN update
+
 * Fri Nov 18 2016 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
 - automated CPAN update
 
