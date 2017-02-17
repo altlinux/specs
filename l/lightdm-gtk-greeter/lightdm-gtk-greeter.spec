@@ -3,7 +3,7 @@
 
 Name: lightdm-gtk-greeter
 Version: 2.0.1
-Release: alt2
+Release: alt3
 Summary: LightDM GTK+ Greeter
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -68,6 +68,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Fri Feb 17 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.0.1-alt3
+- memory leak fixed
+
 * Fri Feb 17 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.0.1-alt2
 - Show multiple PAM messages to user (closes: #33116)
 
