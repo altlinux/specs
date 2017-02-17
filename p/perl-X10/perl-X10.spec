@@ -1,21 +1,22 @@
+%define _unpackaged_files_terminate_build 1
 %define m_distro X10
 Name: perl-%m_distro
-Version: 0.03
-Release: alt1.1
+Version: 0.04
+Release: alt1
 Summary: X10 - Perl extension for X10 'ActiveHome' Controller
 Group: Development/Perl
 License: Artistic/GPL
 Url: http://search.cpan.org/dist/X10-0.03/
-Source: %m_distro-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RO/ROBF/X10-%{version}.tar.gz
 Packager: Alex Negulescu <alecs@altlinux.org>
-BuildRequires: perl-Astro-SunTime perl-Device-SerialPort perl-Storable perl-devel
+BuildRequires: perl-Astro-SunTime perl-Device-SerialPort perl-Storable perl-devel perl(Pod/Man.pm) perl(Time/ParseDate.pm)
 Requires: perl-Astro-SunTime
 
 %description
 X10 - Perl extension for X10 'ActiveHome' Controller
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n X10-%{version}
 
 %build
 %perl_vendor_build
@@ -30,10 +31,14 @@ X10 - Perl extension for X10 'ActiveHome' Controller
 %_bindir/*
 %_datadir/perl5/X10.pm
 %_datadir/perl5/X10/*
+%_man1dir/*
 %dir %perl_vendor_autolib/X10
-%doc Changes MANIFEST README TODO devices macros.config ports scheduler.config
+%doc Changes MANIFEST README TODO macros.config scheduler.config
 
 %changelog
+* Fri Feb 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- automated CPAN update
+
 * Fri Apr 27 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.03-alt1.1
 - redundant buildreq dropped
 
