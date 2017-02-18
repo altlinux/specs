@@ -1,9 +1,9 @@
-
+%define major 0.92
 %def_without gnome_vfs
 
 %define pre %nil
 Name: inkscape
-Version: 0.92
+Version: %major.1
 Release: alt1
 
 Summary: A Vector Drawing Application
@@ -15,7 +15,8 @@ Url: http://inkscape.sourceforge.net/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 #Source: http://prdownloads.sf.net/%name/%name-%version%pre.tar
-# Source-url: https://inkscape.org/en/gallery/item/3860/download/
+#Source-url: https://inkscape.org/en/gallery/item/3860/download/
+# Source-url: https://launchpad.net/inkscape/%major.x/%version/+download/inkscape-%version.tar.bz2
 Source: %name-%version.tar
 
 #Source1: %name-%version.ru.po
@@ -24,9 +25,9 @@ Source2: tutorial-%version.tar
 Patch: %name.patch
 
 #fedora patches
-Patch10:         inkscape-0.48.2-types.patch
-Patch114:        0001-update-to-new-libwpg.patch
-Patch20: 	 inkscape-alt-ScopedPtr.patch
+#Patch10:         inkscape-0.48.2-types.patch
+#Patch114:        0001-update-to-new-libwpg.patch
+#Patch20: 	 inkscape-alt-ScopedPtr.patch
 
 # Typical environment for GTK program
 Requires(post,postun): desktop-file-utils
@@ -41,8 +42,9 @@ BuildPreReq: desktop-file-utils
 BuildRequires: boost-devel-headers gcc-c++  intltool libImageMagick-devel libaspell-devel libgc-devel libgsl-devel libgtkmm2-devel libgtkspell-devel liblcms2-devel libpoppler-glib-devel libpopt-devel  libxslt-devel perl-devel python-module-mwlib python-module-paste zlib-devel
 %{?_with_gnome_vfs:BuildRequires: gnome-vfs-devel}
 BuildRequires: libwpg-devel librevenge-devel libcdr-devel libvisio-devel
-BuildRequires: libpng-devel
+BuildRequires: libpng-devel libexif-devel libjpeg-devel
 BuildRequires: libpoppler-devel
+BuildRequires: gcc-common libgomp6-devel
 
 Requires: icc-profiles
 
@@ -77,9 +79,9 @@ inkview is standalone viewer for Inkscape files (SVG)
 %patch
 
 # fedora patches
-%patch10 -p1 -b .types
+#patch10 -p1 -b .types
 #patch114 -p1 -b .libwpg
-%patch20 -p2
+#patch20 -p2
 #cat %%SOURCE1 >po/ru.po
 
 %build
@@ -106,6 +108,7 @@ tar xvf %SOURCE2 -C %buildroot%_datadir/inkscape/tutorials/
 
 # remove unneeded man
 rm -rf %buildroot%_mandir/fr/
+rm -rf %buildroot%_mandir/de/
 rm -rf %buildroot%_mandir/el/
 rm -rf %buildroot%_mandir/ja/
 rm -rf %buildroot%_mandir/sk/
@@ -119,18 +122,23 @@ rm -rf %buildroot%_mandir/zh_TW/
 #true
 
 %files -f %name.lang
-%doc AUTHORS COPYING COPYING.LIB ChangeLog NEWS README doc
+%doc AUTHORS COPYING ChangeLog NEWS README doc
 %_bindir/inkscape
 %_datadir/%name/
+%_datadir/appdata/inkscape*
 %_desktopdir/inkscape.desktop
 %_iconsdir/hicolor/*/apps/%name.png
-%_man1dir/inkscape*
+# TODO: someone remove it after build in hasher
+#_man1dir/inkscape*
 
 %files viewer
 %_bindir/inkview
 %_man1dir/inkview*
 
 %changelog
+* Sat Feb 18 2017 Vitaly Lipatov <lav@altlinux.ru> 0.92.1-alt1
+- new version 0.92.1 (with rpmrb script)
+
 * Sun Jan 29 2017 Vitaly Lipatov <lav@altlinux.ru> 0.92-alt1
 - new version 0.92 (with rpmrb script)
 
