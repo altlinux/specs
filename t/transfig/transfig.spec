@@ -1,24 +1,15 @@
 Name: transfig
-Version: 3.2.5d
-Release: alt2.1
-
-Packager: Victor Forsiuk <force@altlinux.org>
+Version: 3.2.6a
+Release: alt1
 
 Summary: A utility for converting FIG files (made by xfig) to other formats
-License: MIT
 Group: Graphics
+Url: https://sourceforge.net/projects/mcj/
+License: Freeware
 
-Url: http://www.xfig.org/
-Source0: http://download.sourceforge.net/mcj/transfig.%version.tar.gz
-Source1: transfig-ru_RU.KOI8-R.ps
-Source2: transfig-ru_RU.CP1251.ps
-Source3: transfig-uk_UA.KOI8-U.ps
-Patch0: transfig-3.2.5-makefile-fig2dev_libdir.patch
-Patch1: transfig-3.2.5-genps.patch
-Patch2: transfig-3.2.5d-alt-libpng15.patch
+Source: %name-%version.tar.gz
 
-# Automatically added by buildreq on Wed Sep 22 2010
-BuildRequires: imake libXpm-devel libpng-devel xorg-cf-files
+BuildRequires: libXpm-devel libpng-devel
 
 # fig2dev MAY calls gs and utilities from netpbm package for some outputs:
 Requires: /usr/bin/gs netpbm
@@ -32,42 +23,24 @@ PostScript).  Transfig is used to create TeX documents which are portable
 (i.e., they can be printed in a wide variety of environments).
 
 %prep
-%setup -n %name.%version
-%patch0 -p1
-%patch1 -p0
-%patch2 -p2
-chmod 644 CHANGES LATEX.AND.XFIG NOTES README
+%setup -q
 
 %build
-# This script contains "bashism":
-subst 's@/bin/sh@/bin/bash@' fig2dev/fig2ps2tex.sh.script
-
-xmkmf
-%make Makefiles
-%make_build CDEBUGFLAGS="%optflags"
+%autoreconf
+%configure --with-appdefaultdir=%_x11appconfdir
 
 %install
-%make_install DESTDIR=%buildroot install install.man
-
-pushd %buildroot%_bindir
-rm -f fig2ps2tex
-mv fig2ps2tex.sh fig2ps2tex
-popd
-
-chmod 644 %buildroot%_datadir/xfig/bitmaps/*
-
-install -p -m644 %SOURCE1 %buildroot%_datadir/fig2dev/ru_RU.KOI8-R.ps
-install -p -m644 %SOURCE2 %buildroot%_datadir/fig2dev/ru_RU.CP1251.ps
-install -p -m644 %SOURCE3 %buildroot%_datadir/fig2dev/uk_UA.KOI8-U.ps
+%make_install DESTDIR=%buildroot install
 
 %files
 %_bindir/*
 %_man1dir/*
 %_datadir/fig2dev
-%_datadir/xfig
-%doc CHANGES LATEX.AND.XFIG NOTES README
 
 %changelog
+* Sat Feb 18 2017 Vladislav Zavjalov <slazav@altlinux.org> 3.2.6a-alt1
+- 3.2.6a
+
 * Mon Oct 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.5d-alt2.1
 - Rebuilt with libpng15
 
