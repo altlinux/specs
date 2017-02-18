@@ -1,6 +1,6 @@
 Name: profile-sync-daemon
 Version: 6.30
-Release: alt1
+Release: alt2
 Summary: Offload browser profiles to RAM for speed a wear reduction
 Summary(ru_RU.UTF-8): Выгружает профиль браузера в ОЗУ для ускорения его работы
 License: MIT
@@ -9,9 +9,6 @@ Url: https://github.com/graysky2/profile-sync-daemon
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-Source1: psd.service
-Source2: psd-resync.service
-Source3: psd-resync.timer
 BuildArch: noarch
 %add_findreq_skiplist %_bindir/%name
 
@@ -38,14 +35,20 @@ systemctl --user enable psd psd-resync.timer && systemctl --user start psd psd-r
 %prep
 %setup
 
+sed -i '/Wants=psd-resync.service/d' init/psd.service
+sed -i '/\[Timer\]/a OnStartupSec=10s' init/psd-resync.timer
+
+cat>>init/psd-resync.timer<<END
+
+[Install]
+WantedBy=timers.target
+END
+
 %build
 %make_build
 
 %install
 %makeinstall_std
-cp -r %SOURCE1 %buildroot%_libexecdir/systemd/user/
-cp -r %SOURCE2 %buildroot%_libexecdir/systemd/user/
-cp -r %SOURCE3 %buildroot%_libexecdir/systemd/user/
 
 %post
 echo 'To automatically start psd, use the command:'
@@ -63,6 +66,9 @@ echo 'systemctl --user enable psd psd-resync.timer && systemctl --user start psd
 %_libexecdir/systemd/user/psd*.*
 
 %changelog
+* Sat Feb 18 2017 Anton Midyukov <antohami@altlinux.org> 6.30-alt2
+- fix unit file
+
 * Tue Jan 31 2017 Anton Midyukov <antohami@altlinux.org> 6.30-alt1
 - new version 6.30
 
