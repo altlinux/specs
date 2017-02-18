@@ -1,5 +1,5 @@
 Name:         xfig
-Version:      3.2.6
+Version:      3.2.6a
 Release:      alt1
 
 Summary:      An X Window System tool for drawing basic vector graphics.
@@ -9,7 +9,6 @@ License:      Freeware
 
 Packager:     Vladislav Zavjalov <slazav@altlinux.org>
 Source:       %name-%version.tar.gz
-Patch1:       %name-%version-alt.patch
 
 Requires:     transfig >= 3.2.5 fonts-type1-urw
 
@@ -44,7 +43,6 @@ XFig documentation
 
 %prep
 %setup -q
-%patch1 -p1
 
 %build
 %autoreconf
@@ -76,6 +74,9 @@ install -D -m 644 xfig.desktop %buildroot/%_desktopdir/xfig.desktop
 /usr/share/doc/xfig
 
 %changelog
+* Sat Feb 18 2017 Vladislav Zavjalov <slazav@altlinux.org> 3.2.6a-alt1
+- update 3.2.6-beta -> 3.2.6a
+
 * Sun May 15 2016 Vladislav Zavjalov <slazav@altlinux.org> 3.2.6-alt1
 - 3.2.6
 
