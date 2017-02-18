@@ -1,7 +1,7 @@
 %define pear_name HTML_Template_PHPLIB
 
 Name: pear-HTML_Template_PHPLIB
-Version: 1.5.2
+Version: 1.6.0
 Release: alt1
 
 Summary: preg_* based template system
@@ -49,6 +49,9 @@ well as some speed improvements.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sat Feb 18 2017 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
+- new version 1.6.0 (with rpmrb script)
+
 * Tue Aug 27 2013 Vitaly Lipatov <lav@altlinux.ru> 1.5.2-alt1
 - new version 1.5.2 (with rpmrb script)
 
