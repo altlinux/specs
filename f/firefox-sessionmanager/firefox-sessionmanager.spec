@@ -1,7 +1,7 @@
 # SPEC file for Session Manager extension
 
 %define rname	sessionmanager
-%define version 0.8.1.12
+%define version 0.8.1.13
 %define release alt1
 %define cid 	\{1280606b-2510-4fe0-97ef-9b5a22eafe30\}
 %define ciddir  %firefox_noarch_extensionsdir/%cid
@@ -59,6 +59,9 @@ fi
 %ciddir
 
 %changelog
+* Sun Feb 19 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.8.1.13-alt1
+- New version
+
 * Sun Mar 20 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.8.1.12-alt1
 - New version
 
