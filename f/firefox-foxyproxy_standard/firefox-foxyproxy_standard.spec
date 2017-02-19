@@ -1,7 +1,7 @@
 # SPEC file for FoxyProxy Firefox extension
 
 %define rname	foxyproxy_standard
-%define version	4.5.7
+%define version	4.6.5
 %define release alt1
 %define cid 	foxyproxy@eric.h.jung
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -62,6 +62,9 @@ fi
 
 
 %changelog
+* Sun Feb 19 2017 Nikolay A. Fetisov <naf@altlinux.org> 4.6.5-alt1
+- New version
+
 * Sun Sep 18 2016 Nikolay A. Fetisov <naf@altlinux.ru> 4.5.7-alt1
 - New version
 
