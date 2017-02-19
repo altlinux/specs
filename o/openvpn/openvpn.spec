@@ -14,7 +14,7 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.3.12
+Version: 2.4.0
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
@@ -251,8 +251,8 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 
 # PID directory for systemd units
 %if_with systemd
-  mkdir -p -- %buildroot%_sysconfdir/tmpfiles.d/
-  install -m 0644 -- %SOURCE10 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
+  mkdir -p -- %buildroot%_tmpfilesdir/
+  install -m 0644 -- %SOURCE10 %buildroot%_tmpfilesdir/%name.conf
 %endif
 
 %pre
@@ -270,7 +270,7 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 
 
 %files
-%doc AUTHORS ChangeLog NEWS PORTS README COPYING
+%doc AUTHORS CONTRIBUTING.rst ChangeLog PORTS README COPYING
 %doc README.IPv6 TODO.IPv6
 %doc --no-dereference COPYRIGHT.GPL
 %doc README.ALT.utf-8 server.conf client.conf
@@ -303,7 +303,7 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 
 %if_with systemd
 %_unitdir/%name-*.service
-%_sysconfdir/tmpfiles.d/%name.conf
+%_tmpfilesdir/%name.conf
 %endif
 
 %_sysconfdir/syslog.d/%name
@@ -320,7 +320,7 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %files docs
-%doc INSTALL-win32.txt INSTALL
+%doc INSTALL
 %doc sample/sample-config-files*
 %doc sample/sample-keys*
 %doc sample/sample-scripts*
@@ -329,9 +329,14 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %files devel
 
 %_includedir/openvpn-plugin.h
+%_includedir/openvpn-msg.h
 %endif
 
 %changelog
+* Sun Feb 19 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.4.0-alt1
+- New version
+- Adding /dev/urandom into chroot (Closes: 32840)
+
 * Fri Sep 09 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.3.12-alt1
 - New version
 - Creating PID directory for the systemd units (Closes: 31145)
@@ -398,7 +403,7 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 - Fix init.d script for run openvpn-startup/openvpn-shutdown scripts
 - Plugins packed to separate package openvpn-plugins.
 
-* Tue Apr 06 2006 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.6-alt1
+* Mon Apr 06 2006 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.6-alt1
 - New version 2.0.6
 -- Security fixes for CVE-2005-3393, CVE-2005-3409, CVE-2006-1629
 -- several minor bug fixes and improvements, see ChangeLog for details
