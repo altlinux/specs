@@ -2,7 +2,7 @@
 
 Name: vte
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 %def_enable pty_helper
 %def_disable static
@@ -11,19 +11,22 @@ Release: alt2
 %define vte_api_ver 0.0
 
 Summary: Terminal emulator widget for use with GTK+
-License: LGPL
+License: LGPLv2
 Group: Terminals
 
 Obsoletes: vte-utils
 
 Requires: lib%name = %version-%release
 
-Source: ftp://gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch: vte-0.28.2-alt-python.patch
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=663779
 # http://bugzilla-attachments.gnome.org/attachment.cgi?id=201649
 Patch1: vte-virtual_modifier_mapping.patch
+# https://bugzilla.gnome.org/show_bug.cgi?id=729533
+#https://bug729533.bugzilla-attachments.gnome.org/attachment.cgi?id=279320
+Patch2: vte-0.28.2-paste-fix.diff
 
 %define gtk_ver 2.21.6
 %define gtk3_ver 2.90.0
@@ -39,7 +42,7 @@ BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+2-devel >= %gtk_ver
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: python-devel >= 2.4
-%{?_enable_python:BuildRequires: python-module-pygtk-devel}
+%{?_enable_python:BuildRequires: python-module-pygobject-devel python-module-pygtk-devel}
 BuildRequires: gobject-introspection-devel
 
 %description
@@ -120,9 +123,10 @@ language.
 %define pkgdocdir %_docdir/%name-%version
 
 %prep
-%setup -q
+%setup
 %patch
 %patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -144,7 +148,7 @@ language.
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %__install -d -m755 %buildroot%pkgdocdir
 %__install -p -m644 AUTHORS ChangeLog MAINTAINERS NEWS README %buildroot%pkgdocdir/
@@ -207,6 +211,11 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Sun Feb 19 2017 Yuri N. Sedunov <aris@altlinux.org> 0.28.2-alt3
+- applied patch proposed in
+  https://bug729533.bugzilla-attachments.gnome.org/attachment.cgi?id=279320
+  (ALT #33142)
+
 * Wed Nov 23 2011 Yuri N. Sedunov <aris@altlinux.org> 0.28.2-alt2
 - applied patch proposed in
   http://bugzilla-attachments.gnome.org/attachment.cgi?id=201649
@@ -466,7 +475,7 @@ find %buildroot -type f -name '*.la' -delete
 * Sun Nov 17 2002 Yuri N. Sedunov <aris@altlinux.ru> 0.10.4-alt1
 - 0.10.4
 
-* Thu Nov 06 2002 Yuri N. Sedunov <aris@altlinux.ru> 0.10.2-alt1
+* Wed Nov 06 2002 Yuri N. Sedunov <aris@altlinux.ru> 0.10.2-alt1
 - 0.10.2
 
 * Sun Nov 03 2002 Yuri N. Sedunov <aris@altlinux.ru> 0.9.2-alt1
