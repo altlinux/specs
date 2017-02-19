@@ -6,9 +6,9 @@ Name: perl-PathTools
 ##### Parts of the module are included into perl-base ####
 ##### Module version MUST BE THE SAME as in perl-base ####
 #####         CHECK IT BEFORE UPGRADING!              ####
-Version: 3.56
+Version: 3.62
 #####  ATTENTION  ATTENTION  ATTENTION ATTENTION    ######
-Release: alt1
+Release: alt2
 
 Summary: Perl modules to work with file names
 
@@ -60,6 +60,7 @@ modules.
 rm -f -- %buildroot%perl_vendor_archlib/File/Spec.pm
 rm -f -- %buildroot%perl_vendor_archlib/File/Spec/Functions.pm
 rm -f -- %buildroot%perl_vendor_archlib/File/Spec/Unix.pm
+rm -f -- %buildroot%perl_vendor_archlib/File/Spec/AmigaOS.pm
 rm -f -- %buildroot%perl_vendor_archlib/Cwd.pm
 #rm -f -- %%buildroot%%perl_vendor_autolib/Cwd/Cwd.so
 rm -rf -- %buildroot%perl_vendor_autolib
@@ -70,5 +71,8 @@ rm -rf -- %buildroot%perl_vendor_autolib
 
 
 %changelog
+* Sun Feb 19 2017 Nikolay A. Fetisov <naf@altlinux.org> 3.62-alt2
+- New version
+
 * Sun Dec 20 2015 Nikolay A. Fetisov <naf@altlinux.ru> 3.56-alt1
 - Initial build for ALT Linux Sisyphus
