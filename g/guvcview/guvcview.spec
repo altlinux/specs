@@ -4,7 +4,7 @@
 %def_disable qt5
 
 Name: guvcview
-Version: %ver_major.0.4
+Version: %ver_major.0.5
 Release: alt1
 
 Summary: A GTK UVC video viewer
@@ -17,7 +17,7 @@ Source: http://download.sourceforge.net/%name/%name-src-%version.tar.gz
 Requires: lib%name = %version-%release
 
 BuildPreReq: libSDL2-devel >= 2.0.0
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ glibc-kernheaders
 BuildRequires: desktop-file-utils intltool libappstream-glib-devel
 BuildRequires: libavutil-devel libavcodec-devel
 BuildRequires: libgtk+3-devel libportaudio2-devel
@@ -106,6 +106,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/doc/%name
 
 %changelog
+* Sun Feb 19 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.5-alt1
+- 2.0.5
+
 * Thu Nov 17 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt1
 - 2.0.4
 
