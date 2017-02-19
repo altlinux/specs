@@ -1,7 +1,7 @@
 %def_enable static
 
 Name: pcre2
-Version: 10.22
+Version: 10.23
 Release: alt1
 
 Summary: Perl-compatible regular expression library
@@ -11,7 +11,7 @@ Url: http://www.pcre.org/
 
 Source: ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/%name-%version.tar.gz
 
-BuildRequires: libreadline-devel
+BuildRequires: libreadline-devel zlib-devel bzlib-devel
 
 %description
 PCRE2 is a re-working of the original PCRE (Perl-compatible regular
@@ -74,8 +74,8 @@ Utilities demonstrating PCRE2 capabilities like pcre2grep or pcre2test.
     --enable-pcre2-32 \
     --disable-pcre2test-libedit \
     --enable-pcre2test-libreadline \
-    --disable-pcre2grep-libbz2 \
-    --disable-pcre2grep-libz \
+    --enable-pcre2grep-libbz2 \
+    --enable-pcre2grep-libz \
     --disable-rebuild-chartables \
     --enable-shared \
     --enable-stack-for-recursion \
@@ -122,6 +122,9 @@ Utilities demonstrating PCRE2 capabilities like pcre2grep or pcre2test.
 %exclude %_docdir/%name
 
 %changelog
+* Sun Feb 19 2017 Yuri N. Sedunov <aris@altlinux.org> 10.23-alt1
+- 10.23
+
 * Mon Aug 01 2016 Yuri N. Sedunov <aris@altlinux.org> 10.22-alt1
 - 10.22
 
