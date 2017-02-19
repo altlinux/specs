@@ -3,7 +3,7 @@
 %define real_name Test-Moose-More
 
 Name: perl-Test-Moose-More
-Version: 0.042
+Version: 0.043
 Release: alt1
 
 Summary: more tools for testing Moose packages
@@ -46,6 +46,9 @@ any tests that it has and we do not, yet.
 %perl_vendor_privlib/Test*
 
 %changelog
+* Sun Feb 19 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.043-alt1
+- New version
+
 * Tue Feb 14 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.042-alt1
 - New version
 
