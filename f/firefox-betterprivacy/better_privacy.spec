@@ -1,7 +1,7 @@
 # SPEC file for the BetterPrivacy Firefox extension
 
 %define rname	betterprivacy
-%define version	1.74
+%define version	1.77
 %define release	alt1
 %define cid	\{d40f5e7b-d2cf-4856-b441-cc613eeffbe3\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -58,6 +58,9 @@ fi
 %ciddir
 
 %changelog
+* Sun Feb 19 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.77-alt1
+- New version
+
 * Sun Jun 12 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.74-alt1
 - New version
 
