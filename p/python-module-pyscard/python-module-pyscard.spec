@@ -1,7 +1,7 @@
 %define rname pyscard
 
 Name:           python-module-%rname
-Version:        1.9.4
+Version:        1.9.5
 Release:        alt1
 Summary:        A framework for building smart card aware applications in Python
 
@@ -14,8 +14,7 @@ Packager: 	Andrey Cherepanov <cas@altlinux.org>
 
 License:        LGPLv2+ and Python and CC-BY-SA
 URL:            https://sourceforge.net/projects/pyscard/
-Source0:        %rname-%version.tar.gz
-Source1:	%rname.watch
+Source0:        %rname-%version.tar
 
 BuildRequires(pre): rpm-build-python
 BuildRequires:  python-devel
@@ -53,6 +52,9 @@ chmod 755 %buildroot%python_sitelibdir/smartcard/scard/_scard.so
 %python_sitelibdir/*
 
 %changelog
+* Sun Feb 19 2017 Andrey Cherepanov <cas@altlinux.org> 1.9.5-alt1
+- new version 1.9.5
+
 * Thu Jun 09 2016 Andrey Cherepanov <cas@altlinux.org> 1.9.4-alt1
 - New version
 - Add watch file
