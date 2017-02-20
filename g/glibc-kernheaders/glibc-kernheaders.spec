@@ -3,7 +3,7 @@
 
 Name: glibc-kernheaders
 Version: %kernel_base_version
-Release: alt0.rc8.42.g558e8e2
+Release: alt1
 
 Summary: Linux kernel C header files for use by glibc and other userspace software
 License: GPLv2
@@ -19,12 +19,12 @@ Patch3: 0003-uapi-fix-linux-mroute.h-userspace-compilation-errors.patch
 Patch4: 0004-uapi-fix-linux-rds.h-userspace-compilation-errors.patch
 Patch5: 0005-uapi-fix-linux-rds.h-userspace-compilation-error.patch
 Patch6: 0006-btrfs-remove-btrfs_err_str-function-from-uapi-linux-.patch
-Patch7: 0007-uapi-fix-linux-dlm_netlink.h-userspace-compilation-e.patch
+Patch7: 0007-uapi-fix-linux-target_core_user.h-userspace-compilat.patch
 Patch8: 0008-uapi-fix-linux-mqueue.h-userspace-compilation-errors.patch
-Patch9: 0009-uapi-fix-linux-target_core_user.h-userspace-compilat.patch
+Patch9: 0009-uapi-fix-linux-dlm_netlink.h-userspace-compilation-e.patch
 
 BuildRequires: rpm-build-kernel
-BuildRequires: %kernel_source = 0.8.0
+BuildRequires: %kernel_source = 1.0.0
 
 Provides: kernel-headers = %version-%release
 Provides: linux-libc-headers = %version-%release
@@ -100,6 +100,9 @@ done
 %hdr_dir
 
 %changelog
+* Sun Feb 19 2017 Dmitry V. Levin <ldv@altlinux.org> 4.10-alt1
+- v4.10-rc8-42-g558e8e2 -> v4.10.
+
 * Thu Feb 16 2017 Dmitry V. Levin <ldv@altlinux.org> 4.10-alt0.rc8.42.g558e8e2
 - v4.10-rc8 -> v4.10-rc8-42-g558e8e2.
 - Fixed compilation errors in 8 header files.

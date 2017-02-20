@@ -1,6 +1,6 @@
-%define original_kernel_version 4.10
+%define original_kernel_version	4.10
 %define kernel_version		4.10
-%define patch_level		-rc8
+%define patch_level		%nil
 
 %define kernel_fullversion	%kernel_version%patch_level
 
@@ -8,7 +8,7 @@
 # 0.0.X -- preX
 # 0.X.0 -- rcX, testX
 # 1.0.0 -- release
-%define patch_level_numeric     0.8.0
+%define patch_level_numeric     1.0.0
 
 Name: kernel-source-%kernel_version
 Version: %patch_level_numeric
@@ -44,6 +44,9 @@ tar --owner=root --group=root --mode=u+w,go-w,go+rX -cf \
 %kernel_src/kernel-source-%kernel_version.tar
 
 %changelog
+* Sun Feb 19 2017 Dmitry V. Levin <ldv@altlinux.org> 1.0.0-alt1
+- v4.10-rc8 -> v4.10.
+
 * Mon Feb 13 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.0-alt1
 - Updated to 4.10-rc8.
 - Cleaned up specfile.
