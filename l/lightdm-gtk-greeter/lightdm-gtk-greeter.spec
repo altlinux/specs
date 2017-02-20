@@ -3,7 +3,7 @@
 
 Name: lightdm-gtk-greeter
 Version: 2.0.1
-Release: alt3
+Release: alt4
 Summary: LightDM GTK+ Greeter
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -68,6 +68,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Mon Feb 20 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.0.1-alt4
+- fixed showing message about failed login(closes: #33148)
+
 * Fri Feb 17 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.0.1-alt3
 - memory leak fixed
 
