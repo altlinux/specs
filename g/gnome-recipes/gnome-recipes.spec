@@ -1,8 +1,8 @@
-%define ver_major 0.10
+%define ver_major 0.14
 %define xdg_name org.gnome.Recipes
 
-Name: recipes
-Version: %ver_major.0
+Name: gnome-recipes
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME likes to cook
@@ -12,14 +12,18 @@ Url: https://wiki.gnome.org/Apps/Recipes
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
+Obsoletes: recipes < 0.14
+Provides: recipes = %EVR
+
 Requires: %name-data = %EVR
 
 %define gtk_ver 3.20
 
-BuildRequires: autoconf-archive libappstream-glib-devel
+BuildRequires: autoconf-archive libappstream-glib-devel rpm-build-xdg
 BuildRequires: libgtk+3-devel >= %gtk_ver libjson-glib-devel
-BuildRequires: libgspell-devel libgnome-autoar-devel vala-tools
-BuildRequires: gobject-introspection-devel
+BuildRequires: libgspell-devel libgnome-autoar-devel
+BuildRequires: libcanberra-gtk3-devel
+BuildRequires: vala-tools gobject-introspection-devel
 
 %description
 Recipes is an easy to use app that will help you to discover what to cook today,
@@ -29,6 +33,8 @@ tomorrow, the rest of the week and for your special occasions.
 Summary: Recipes data files
 Group: Office
 BuildArch: noarch
+Obsoletes: recipes-data < 0.14
+Provides: recipes-data = %EVR
 
 %description data
 Recipes is an easy to use app that will help you to discover what to cook today,
@@ -47,16 +53,16 @@ This package contains common noarch files needed for Recipes.
 
 %install
 %makeinstall_std
-rm -f %buildroot%_libdir/%name/*.{a,la}
-
 %find_lang --with-gnome %name
 
 %check
-%make check
+#url-not-found  : <screenshot> url not found [https://git.gnome.org/browse/recipes/plain/data/appdata/cook-later.png]
+#...
+#%%make check
 
 %files -f %name.lang
 %_bindir/%name
-%_libdir/%name/
+#%_libdir/%name/
 %doc NEWS
 
 %files data
@@ -67,10 +73,14 @@ rm -f %buildroot%_libdir/%name/*.{a,la}
 #%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/symbolic/apps/*.svg
+%_xdgmimedir/packages/org.gnome.Recipes-mime.xml
 %_datadir/appdata/%xdg_name.appdata.xml
 
 
 %changelog
+* Mon Feb 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.14.2-alt1
+- 0.14.2
+
 * Wed Feb 08 2017 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
 - 0.10.0
 
