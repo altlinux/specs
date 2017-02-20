@@ -1,7 +1,7 @@
 Name: librados2-perl
 Summary: Perl bindings for librados
 Version: 1.0.3
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -27,6 +27,9 @@ This package contains librados perl binding used by Proxmox VE
 %perl_vendor_autolib/PVE
 
 %changelog
+* Tue Feb 21 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.0.3-alt2
+- rebuild with perl 5.24.1
+
 * Wed Dec 09 2015 Valery Inozemtsev <shrek@altlinux.ru> 1.0.3-alt1
 - initial release
 

@@ -1,7 +1,7 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
 Version: 4.0.48
-Release: alt7
+Release: alt8
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -142,6 +142,9 @@ fi
 %_man1dir/pveum.1*
 
 %changelog
+* Tue Feb 21 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.0.48-alt8
+- rebuild with perl 5.24.1
+
 * Thu Dec 08 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.48-alt7
 - don't make vzdump symlink in cron.d
 
