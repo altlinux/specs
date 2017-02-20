@@ -16,7 +16,7 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.8.4
+Version: 5.9.2
 Release: alt1%ubt
 %K5init altplace
 
@@ -226,6 +226,7 @@ done
 %_bindir/*
 %_K5bin/*
 %_K5exec/*
+%_K5conf_bin/*
 %_K5lib/libkdeinit5_*.so
 %_K5plug/plasma/*/*.so
 %_K5plug/phonon_platform/*.so
@@ -256,6 +257,7 @@ done
 %_K5srv/*.protocol
 %_K5srvtyp/*.desktop
 %_K5dbus_srv/*.service
+%_K5conf_up/*.upd
 %_datadir/dbus-1/services/*.service
 %_datadir/xsessions/plasma.desktop
 #%_datadir/wayland-sessions/plasmawayland.desktop
@@ -293,6 +295,12 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Mon Feb 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
+* Mon Feb 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.1-alt1%ubt
+- new version
+
 * Fri Dec 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.4-alt1%ubt
 - new version
 

@@ -2,7 +2,7 @@
 %def_disable openswan
 
 Name: kf5-%rname
-Version: 5.8.4
+Version: 5.9.2
 Release: alt1%ubt
 %K5init altplace
 
@@ -23,7 +23,7 @@ Source10: 01-plasma-nm.js
 # optimized out: cmake cmake-modules elfutils glib2-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgio-devel libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base qt5-base-devel ruby ruby-stdlibs
 #BuildRequires: ModemManager-devel extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libmm-qt-devel kf5-networkmanager-qt-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel libnm-devel libopenconnect-devel python-module-google qt5-declarative-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules gcc-c++ qt5-declarative-devel
+BuildRequires: extra-cmake-modules gcc-c++ qt5-declarative-devel qt5-tools-devel-static
 BuildRequires: mobile-broadband-provider-info libqca-qt5-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
@@ -54,6 +54,7 @@ Requires: %name-connect-vpnc
 Requires: %name-connect-openconnect
 Requires: %name-connect-openswan
 Requires: %name-connect-strongswan
+Requires: %name-connect-iodine
 Requires: %name-connect-l2tp
 Requires: %name-connect-pptp
 Requires: %name-connect-sstp
@@ -92,6 +93,14 @@ Summary: OpenConnect support for %name
 Requires: %name
 Requires: NetworkManager-openconnect
 %description connect-openconnect
+%summary.
+
+%package connect-iodine
+Group: Graphical desktop/KDE
+Summary: Iodine DNS tunnel support for %name
+Requires: %name
+Requires: NetworkManager-iodine
+%description connect-iodine
 %summary.
 
 %package connect-openswan
@@ -153,6 +162,7 @@ Requires: NetworkManager-ssh
 
 %install
 %K5install
+%K5install_move data kcm_networkmanagement
 
 install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.js
 
@@ -162,20 +172,25 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %doc COPYING*
 %_K5bin/kde5-nm-connection-editor
 %_K5lib/libplasmanm_*.so
-#%_K5plug/kded_networkmanagement.so
 %_K5plug/kf5/kded/networkmanagement.so
+%_K5plug/kcm_networkmanagement.so
 %_K5qml/org/kde/plasma/networkmanagement/
 %_K5xdgapp/kde5-nm-connection-editor.desktop
+%_K5data/kcm_networkmanagement/
 %_K5data/plasma/plasmoids/org.kde.plasma.networkmanagement/
 %_K5data/plasma/updates/*
 %_K5notif/networkmanagement.notifyrc
-#%_K5srv/kded/networkmanagement.desktop
+%_K5srv/kcm_networkmanagement.desktop
 %_K5srv/plasma-applet-org.kde.plasma.networkmanagement.desktop
-%_K5srvtyp/*.desktop
+%_K5srvtyp/*networkmanagement*.desktop
 %_K5xmlgui/kde5-nm-connection-editor/
 
 %files maxi
 %files connect-mobile
+
+%files connect-iodine
+%_K5plug/libplasmanetworkmanagement_iodineui.so
+%_K5srv/plasmanetworkmanagement_iodineui.desktop
 
 %files connect-openvpn
 %_K5plug/libplasmanetworkmanagement_openvpnui.so
@@ -187,7 +202,7 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 
 %files connect-openconnect
 %_K5plug/libplasmanetworkmanagement_openconnectui.so
-%_K5srv/plasmanetworkmanagement_openconnectui.desktop
+%_K5srv/plasmanetworkmanagement_openconnect*.desktop
 
 %files connect-openswan
 %_K5plug/libplasmanetworkmanagement_openswanui.so
@@ -214,6 +229,12 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Mon Feb 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
+* Mon Feb 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.1-alt1%ubt
+- new version
+
 * Fri Dec 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.4-alt1%ubt
 - new version
 

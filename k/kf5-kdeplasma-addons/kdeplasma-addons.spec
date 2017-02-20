@@ -4,9 +4,11 @@
 %define libplasmacomicprovidercore libplasmacomicprovidercore%plasmacomicprovidercore_sover
 %define plasmaweather_sover 1
 %define libplasmaweather libplasmaweather%plasmaweather_sover
+%define plasmapotdprovidercore_sover 0
+%define libplasmapotdprovidercore libplasmapotdprovidercore%plasmapotdprovidercore_sover
 
 Name: kf5-%rname
-Version: 5.8.4
+Version: 5.9.2
 Release: alt1%ubt
 %K5init altplace
 
@@ -20,7 +22,7 @@ Requires: %name-common = %version-%release
 Requires: quota
 
 Source: %rname-%version.tar
-Patch1: alt-comic-sover.patch
+Patch1: alt-sover.patch
 
 # Automatically added by buildreq on Mon Mar 30 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils glib2-devel kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libdbusmenu-qt52 libgio-devel libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxcbutil-keysyms-devel libxkbfile-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs scim-libs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -72,6 +74,12 @@ Requires: %name-common = %version-%release
 %description -n %libplasmaweather
 KF5 library
 
+%package -n %libplasmapotdprovidercore
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n %libplasmapotdprovidercore
+KF5 library
 
 %prep
 %setup -n %rname-%version
@@ -97,6 +105,7 @@ KF5 library
 %_K5plug/plasma/dataengine/*.so
 %_K5plug/plasma/applets/*.so
 %_K5plug/kpackage/packagestructure/*.so
+%_K5plug/potd/
 %_K5qml/org/kde/plasma/private/*/
 #%_K5exec/*
 %_K5data/plasma/*
@@ -111,8 +120,17 @@ KF5 library
 %files -n %libplasmaweather
 %_K5lib/libplasmaweather.so.*
 %_K5lib/libplasmaweather.so.%plasmaweather_sover
+%files -n %libplasmapotdprovidercore
+%_K5lib/libplasmapotdprovidercore.so.*
+%_K5lib/libplasmapotdprovidercore.so.%plasmapotdprovidercore_sover
 
 %changelog
+* Mon Feb 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
+* Mon Feb 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.1-alt1%ubt
+- new version
+
 * Fri Dec 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.4-alt1%ubt
 - new version
 

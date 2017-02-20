@@ -1,7 +1,7 @@
 %define rname user-manager
 
 Name: kf5-%rname
-Version: 5.8.4
+Version: 5.9.2
 Release: alt1%ubt
 %K5init altplace
 
@@ -26,7 +26,7 @@ BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin
 BuildRequires: kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel
 BuildRequires: kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
-BuildRequires: kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kcmutils-devel
 
 %description
 Add, remove or edit system users.
@@ -47,6 +47,12 @@ Add, remove or edit system users.
 %_K5data/user-manager/
 
 %changelog
+* Mon Feb 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
+* Mon Feb 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.1-alt1%ubt
+- new version
+
 * Fri Dec 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.4-alt1%ubt
 - new version
 
