@@ -7,8 +7,8 @@
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
-%define module_version	375.26
-%define module_release	alt2
+%define module_version	375.39
+%define module_release	alt1
 %define flavour		un-def
 
 %setup_kernel_module %flavour
@@ -251,6 +251,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Feb 20 2017 Sergey V Turchin <zerg at altlinux dot org> 375.39-alt1
+- new release (375.39)
 
 * Tue Jan 17 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 375.26-alt2
 - use kernel gcc
