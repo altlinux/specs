@@ -6,7 +6,7 @@
 
 Name: gnome-session
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 License: GPLv2+
@@ -16,7 +16,7 @@ URL: ftp://ftp.gnome.org
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
 Source1: gnome.svg
-
+# https://bugzilla.gnome.org/show_bug.cgi?id=775463
 Patch: %name-2.91.6-alt-autosave_session.patch
 Patch1: %name-3.21.4-alt-lfs.patch
 
@@ -89,7 +89,6 @@ This package permits to log into GNOME using Wayland.
 
 %prep
 %setup
-%patch
 #%patch1 -p1 -b .lfs
 %patch11 -p1 -b .nv30
 
@@ -152,6 +151,9 @@ This package permits to log into GNOME using Wayland.
 
 
 %changelog
+* Tue Feb 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt2
+- removed autosave_session.patch (see BGO#775463, ALT#33126)
+
 * Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
 - 3.22.2
 
