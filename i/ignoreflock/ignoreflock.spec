@@ -1,6 +1,6 @@
 Name: ignoreflock
 Version: 1
-Release: alt1
+Release: alt2
 
 Summary: A small wrapper to disable flock function
 
@@ -21,7 +21,7 @@ have intersections with fcntl style locking.
 %setup
 
 %build
-%__subst "s|$(dirname $0)|%_libdir|g" %name
+%__subst 's|$(dirname $0)|%_libdir|g' %name
 %make
 
 %install
@@ -34,5 +34,8 @@ install -D -m0644 lib%name.so.0 %buildroot%_libdir/lib%name.so.0
 %_libdir/*.so*
 
 %changelog
+* Tue Feb 21 2017 Vitaly Lipatov <lav@altlinux.ru> 1-alt2
+- fix packing
+
 * Mon Feb 20 2017 Vitaly Lipatov <lav@altlinux.ru> 1-alt1
 - initial build for ALT Linux Sisyphus
