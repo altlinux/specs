@@ -1,5 +1,5 @@
 Name: poco
-Version: 1.7.6
+Version: 1.7.7
 Release: alt1
 Summary: POrtable COmponents C++ Libraries
 License: Boost Software License v1.0
@@ -209,9 +209,13 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 
 %files -n lib%name-data
 %_libdir/libPocoData*.so.*
+%exclude %_libdir/libPocoDataMySQL.so.*
+%exclude %_libdir/libPocoDataSQLite.so.*
+%exclude %_libdir/libPocoDataODBC.so.*
 
 %files -n lib%name-net
 %_libdir/libPocoNet*.so.*
+%exclude %_libdir/libPocoNetSSL.so.*
 
 %files -n lib%name-ssl
 %_libdir/libPocoNetSSL*.so.*
@@ -238,12 +242,16 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 %_libdir/libPocoZip*.so.*
 
 %files -n lib%name-devel
+%_bindir/*
 %_includedir/*
 %_libdir/*.so
 
 #files -n lib%name-devel-docs
 
 %changelog
+* Tue Feb 21 2017 Alexei Takaseev <taf@altlinux.org> 1.7.7-alt1
+- 1.7.7
+
 * Sat Oct 22 2016 Alexei Takaseev <taf@altlinux.org> 1.7.6-alt1
 - 1.7.6
 

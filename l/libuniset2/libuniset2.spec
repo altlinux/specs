@@ -16,7 +16,7 @@
 
 Name: libuniset2
 Version: 2.6
-Release: alt10
+Release: alt10.1
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -507,6 +507,9 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 # history of current unpublished changes
 
 %changelog
+* Tue Feb 21 2017 Alexei Takaseev <taf@altlinux.org> 2.6-alt10.1
+- Rebuild with poco 1.7.7
+
 * Mon Jan 09 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt10
 - add tests for REST API (with RPC)
 - python: refactoring UInterface (add UInterfaceModbus and UInterfaceUniSet)
