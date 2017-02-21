@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.8.0
-Release: alt5
+Release: alt6
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -789,6 +789,13 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Tue Feb 21 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.0-alt6
+- Upstream updates:
+ - IOMMU: always call teardown callback (XSA-207)
+ - x86/ept: allow write-combining on !mfn_valid() MMIO mappings again
+ - xen/p2m: Fix p2m_flush_table for non-nested cases
+ - VMX: fix VMCS race on context-switch paths
+
 * Sat Feb 11 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.0-alt5
 - Fix packaging errors
 - Upstream updates:
