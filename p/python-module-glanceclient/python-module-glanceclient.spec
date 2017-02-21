@@ -2,15 +2,18 @@
 
 Name: python-module-glanceclient
 Version: 2.5.0
-Release: alt1
+Release: alt2
 Summary: Python API and CLI for OpenStack Glance
 
 Group: Development/Python
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/python-glanceclient
 Source: %name-%version.tar
+Patch: workaround-requests.patch
 
 BuildArch: noarch
+
+Requires: python-module-requests >= 2.12.0
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
@@ -40,7 +43,7 @@ BuildRequires: python3-module-babel >= 2.3.4
 BuildRequires: python3-module-prettytable
 BuildRequires: python3-module-keystoneclient >= 2.0.0
 BuildRequires: python3-module-OpenSSL >= 0.11
-BuildRequires: python3-module-requests >= 2.8.1
+BuildRequires: python3-module-requests >= 2.10.0
 BuildRequires: python3-module-warlock >= 1.0.1
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-oslo.i18n >= 2.1.0
@@ -77,6 +80,7 @@ This package contains auto-generated documentation.
 
 %prep
 %setup
+%patch -p1
 
 # Remove bundled egg-info
 rm -rf python_glanceclient.egg-info
@@ -137,6 +141,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc doc/build/html
 
 %changelog
+* Tue Feb 21 2017 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt2
+- add patch for workaround requests >= 2.12
+
 * Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt1
 - 2.5.0
 
