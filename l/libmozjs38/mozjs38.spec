@@ -1,7 +1,7 @@
 Summary:	JavaScript interpreter and libraries
 Name:		libmozjs38
 Version:	38.2.1
-Release:	alt1
+Release:	alt2
 Group:		System/Libraries
 License:	MPL/GPL/LGPL
 Packager:	Alexey Gladkov <legion@altlinux.ru>
@@ -64,8 +64,6 @@ export CXXFLAGS="$CFLAGS -fpermissive"
 export SHELL=/bin/sh
 export PYTHON=/usr/bin/python
 
-%__autoconf
-
 %configure \
 	--with-system-nspr \
 	--enable-threadsafe \
@@ -77,7 +75,7 @@ export PYTHON=/usr/bin/python
 	--with-system-zlib \
 	--enable-system-ffi \
 	--with-system-icu \
-	--without-intl-api
+	--with-intl-api
 
 %make -j1
 
@@ -121,6 +119,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-38
 %_libdir/*.a
 
 %changelog
+* Wed Feb 22 2017 Alexey Gladkov <legion@altlinux.ru> 38.2.1-alt2
+- Rebuilt with Internationalization API.
+
 * Wed Feb 15 2017 Alexey Gladkov <legion@altlinux.ru> 38.2.1-alt1
 - First build for ALTLinux.
 
