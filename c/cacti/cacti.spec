@@ -1,5 +1,6 @@
+
 Name: cacti
-Version: 0.8.8h
+Version: 1.0.3
 Release: alt1
 
 %define cactidir %_datadir/%name
@@ -13,30 +14,32 @@ License: GPL
 Group: Monitoring
 
 URL: http://www.cacti.net/
-Source0: http://www.cacti.net/downloads/%name-%version.tar.gz
-Source1: %name.cfg.php
+Source: %name-%version.tar
 Source2: %name-readme.alt
 Source3: %name.logrotate
 Source5: %name-rrdpath.sql
 Source7: %name-apache.conf
 Source8: %name-lighttpd.conf
 
-# official patches
+Patch: %name-%version-%release.patch
 
-# unofficial patches
-Patch11: %name-alt-config.patch
-Patch12: %name-alt-system-adodb.patch
-Patch13: %name-ioerror.patch
-Patch14: %name-webroot.patch
-Patch15: %name-linux_memory.patch
-Patch16: %name-log-verbosity.patch
-Patch17: %name-ss_disk-array-indices.patch
-Patch19: %name-host_name-url.patch
-Patch20: %name-fix-php_scripts.patch
+#The following plugins have been merged into the core Cacti
+Provides: cacti-plugin-aggregate = %version-%release
+Conflicts: cacti-plugin-aggregate < %version-%release
+Provides: cacti-plugin-discovery = %version-%release
+Conflicts: cacti-plugin-discovery < %version-%release
+Provides: cacti-plugin-settings = %version-%release
+Conflicts: cacti-plugin-settings < %version-%release
+Provides: cacti-plugin-ssl = %version-%release
+Conflicts: cacti-plugin-ssl < %version-%release
+
 
 Requires: %name-config = %version-%release webserver webserver-common rrd-utils net-snmp net-snmp-utils
 BuildPreReq: rpm-macros-webserver-common
 BuildArch: noarch
+# build docs
+BuildRequires: lynx docbook-utils
+
 
 %description
 Cacti is a complete frontend to RRDTool. It stores all of the necessary 
@@ -53,24 +56,21 @@ Cacti - это полнофункциональная оболочка для RR
 графиками, источниками данных и архивами round robin Cacti также занимается
 сбором данных.
 
-%package config-php
+%package config-php7
 License: GPL
 Group: Monitoring
 Summary: Virtual package for php's depend.
-Requires: php-snmp php-sockets php-mysql
-Conflicts: %name-config-php5
+Requires: php7-snmp php7-sockets php7-pdo php7-pdo_mysql php7-mbstring php7-openssl php7-gd2 php7-gmp
 Provides: %name-config = %version-%release
 
-%description config-php
+%description config-php7
 Virtual package for php's depend.
 
 %package config-php5
 License: GPL
 Group: Monitoring
 Summary: Virtual package for php's depend.
-Requires: php5-snmp php5-sockets php5-mysql php5-gd2 php5-adodb
-
-Conflicts: %name-config-php
+Requires: php5-snmp php5-sockets php5-pdo php5-pdo_mysql php5-mbstring php5-openssl php5-gd2 php5-gmp
 Provides: %name-config = %version-%release
 
 %description config-php5
@@ -102,56 +102,29 @@ BuildArch: noarch
 Documentation for %name
 
 %prep
-%setup -q -n %name-%version
-
-# add official patches
-
-# sed -i /\$config\ =/a\$url_path\ \=\ \"\/cacti\/\"\; include/global.php
-
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-#%patch19 -p1
-%patch20 -p1
-
+%setup -q
+%patch -p1
 
 mkdir -p sql
-mv *.sql sql
 # you should run this sql if your database contains path to %{_datadir}...
 cp %SOURCE5 sql
 
 %build
-
-#Add sql to one script
-#cat cacti.sql cacti-plugin-arch/pa.sql > cacti_all.sql
-#mv -f cacti_all.sql cacti.sql
-
-rm -rf cacti-plugin-arch
-rm -rf lib/adodb
-rm -f log/.htaccess
-rm -f cli/.htaccess
-rm -f rra/.placeholder
-rm -f log/.placeholder
-
 chmod a+rx scripts/*
-
 chmod a+rx cli/*
 
-# make sure cacti runs out of the box
-sed -e "s,new_install,%version," -i sql/cacti.sql
+pushd docs
+./build.sh
+popd
 
 %install -n %name-%version
 mkdir -p %buildroot{%_sbindir,%_sysconfdir/cron.d,%cacticonfdir,%cactidir/plugins,%_localstatedir/%name/rra,%_logdir/%name}
 
-cp -a *.php README LICENSE %buildroot%cactidir
-cp -a cli images include install lib resource scripts sql plugins %buildroot%cactidir
+cp -a *.php README.md LICENSE %buildroot%cactidir
+cp -ar cli formats images include install lib locales mibs plugins resource scripts %buildroot%cactidir
 mv -f %buildroot{%cactidir/poller.php,%_sbindir/cacti-poller}
 chmod 755 %buildroot%_sbindir/cacti-poller
-cp %SOURCE1 %buildroot%cacticonfdir/config.php
+install -m 0640 include/config.php.dist %buildroot%cacticonfdir/config.php
 touch %buildroot%_logdir/%name/%name.log
 
 cp %SOURCE2 docs/README_ALT.txt
@@ -193,24 +166,23 @@ chmod -v 660 %_logdir/%name/* %_localstatedir/%name/*
 fi
 
 %files
-%doc docs/README_ALT.txt docs/CHANGELOG docs/README docs/CONTRIB docs/*.conf
+%doc docs/README_ALT.txt docs/CHANGELOG README.md
 %config(noreplace) %_sysconfdir/cron.d/cacti
 %_sbindir/cacti-poller
 %dir %attr(750,root,%webserver_group) %cacticonfdir
 %attr(640,root,%webserver_group) %config(noreplace) %cacticonfdir/config.php
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %dir %cactidir
-%cactidir/resource
-%cactidir/sql
-%cactidir/lib
-%cactidir/include
-%cactidir/images
-%cactidir/plugins
 %cactidir/*.php
-
-%dir %cactidir/cli
-%attr(755,root,root) %cactidir/cli/*
-
+%cactidir/cli
+%cactidir/formats
+%cactidir/images
+%cactidir/include
+%cactidir/lib
+%cactidir/locales
+%cactidir/mibs
+%cactidir/plugins
+%cactidir/resource
 %dir %cactidir/scripts
 %attr(755,root,root) %cactidir/scripts/*
 
@@ -219,13 +191,6 @@ fi
 %attr(730,root,%webserver_group) %dir %_logdir/%name
 %attr(660,root,%webserver_group) %ghost %_logdir/%name/cacti.log
 
-%exclude %cactidir/install
-%exclude %cactidir/docs
-
-##files config-php
-
-%files config-php5
-
 %files setup
 %cactidir/install
 
@@ -233,7 +198,14 @@ fi
 %doc docs/html docs/txt
 %cactidir/docs
 
+%files config-php5
+%files config-php7
+
 %changelog
+* Thu Feb 16 2017 Alexey Shabalin <shaba@altlinux.ru> 1.0.3-alt1
+- 1.0.3
+- add php7 subpackage
+
 * Tue May 10 2016 Alexey Shabalin <shaba@altlinux.ru> 0.8.8h-alt1
 - 0.8.8h
 - fixed CVE-2014-2326,CVE-2014-2327,CVE-2014-2328,CVE-2014-5025,
@@ -410,5 +382,3 @@ fi
 
 * Tue Mar 09 2004 Andrew Kornilov <andy@eva.dp.ua> 0.8.5-alt1
 - First alpha build for Sisyphus. All works, but...;-)
-
- 

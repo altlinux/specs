@@ -1,7 +1,7 @@
 %define _name mactrack
 Name: cacti-plugin-%_name
-Version: 2.9
-Release: alt1
+Version: 4.0
+Release: alt0.1
 
 %define cactiplugindir %_datadir/cacti/plugins
 
@@ -11,9 +11,10 @@ License: GPLv2+
 Group: Monitoring
 
 URL: http://cactiusers.org
-Source0: %_name-v%version-1.tgz
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
-Requires: cacti
+Requires: cacti >= 1.0.0
 BuildArch: noarch
 
 %description
@@ -29,11 +30,12 @@ Features:
     Tells You When Someone is Connected Who Shouldn't be
 
 %prep
-%setup -q -n %_name
+%setup -q
+#%patch -p1
 
 %build
 
-%install -n %name-%version
+%install
 mkdir -p %buildroot%cactiplugindir/%_name
 
 cp -a * %buildroot%cactiplugindir/%_name/
@@ -44,6 +46,9 @@ rm -rf %buildroot%cactiplugindir/%_name/docs
 %cactiplugindir/*
 
 %changelog
+* Fri Feb 17 2017 Alexey Shabalin <shaba@altlinux.ru> 4.0-alt0.1
+- 4.0 for cacti-1.0.0
+
 * Mon Sep 27 2010 Alexey Shabalin <shaba@altlinux.ru> 2.9-alt1
 - 2.9
 
