@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-audit
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 BuildArch: noarch
 
@@ -46,6 +46,9 @@ test -e %_sysconfdir/audit/audit.rules.old && mv %_sysconfdir/audit/audit.rules.
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Feb 21 2017 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt1
+- Fix aureport datetime options usage
+
 * Thu Feb 13 2014 Andrey Kolotov <qwest@altlinux.org> 0.3.0-alt1
 - Fix bugs in the interface of settings rules
 - Restored expert mode from rule interface
