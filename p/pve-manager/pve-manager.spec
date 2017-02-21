@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 4.4.1
-Release: alt4
+Release: alt5
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -359,6 +359,9 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Mon Feb 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt5
+- fixed node network status
+
 * Mon Dec 12 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt4
 - 4.4-1
 - pve-container 1.0-88
