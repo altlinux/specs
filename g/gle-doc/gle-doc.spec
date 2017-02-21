@@ -1,9 +1,9 @@
 %define truename gle
 Name: gle-doc
 Version: 4.2.4
-Release: alt1
+Release: alt2
 Summary: Documentation for the GLE - Graphics language that produces ps/eps/pdf/png/jpg ouput
-Summary(ru_RU.CP1251): GLE - язык создания изображений. Вывод в ps/eps/pdf/png/jpg
+Summary(ru_RU.UTF-8): GLE - СЏР·С‹Рє СЃРѕР·РґР°РЅРёСЏ РёР·РѕР±СЂР°Р¶РµРЅРёР№. Р’С‹РІРѕРґ РІ ps/eps/pdf/png/jpg
 License: GPL2+
 Packager: Igor Vlasenko <viy@altlinux.org>
 
@@ -36,6 +36,9 @@ mkdir $RPM_BUILD_ROOT
 %doc [gG][lL][eE]-*manual*.pdf GLEusersguide.pdf
 
 %changelog 
+* Tue Feb 21 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.4-alt2
+- UTF-8 in summary
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.4-alt1
 - new version of manual
 
