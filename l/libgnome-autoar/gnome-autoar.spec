@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define _name gnome-autoar
-%define ver_major 0.1
+%define ver_major 0.2
 %define api_ver_base 0
 %define api_ver %api_ver_base.1
 %def_disable static
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Automatic archives creating and extracting library
@@ -24,12 +24,13 @@ Source: %_name-%version.tar
 
 %define glib_ver 2.38
 %define gtk_ver 3.2
-%define archive_ver 3.1.0
+%define archive_ver 3.2.0
 
 BuildRequires: gnome-common intltool gtk-doc
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libarchive-devel >= %archive_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
+BuildRequires: vala-tools
 
 # for check
 BuildRequires: dbus-tools-gui
@@ -74,15 +75,6 @@ Requires: %name-gir = %version-%release
 %description gir-devel
 GObject introspection devel data for the %_name library
 
-%package vala
-Summary: vala language bindings for %_name library
-Group: Development/Other
-BuildArch: noarch
-Requires: %name = %version-%release
-
-%description vala
-This package provides vala language bindings for %_name library
-
 
 %prep
 %setup -n %_name-%version
@@ -97,17 +89,15 @@ This package provides vala language bindings for %_name library
 
 %install
 %makeinstall_std
+%find_lang %_name
 
 %check
 %make check
 
-%find_lang %_name
 
 %files -f %_name.lang
 %_libdir/lib%_name-%api_ver_base.so.*
 %_libdir/lib%_name-gtk-%api_ver_base.so.*
-%_datadir/glib-2.0/schemas/org.gnome.desktop.archives.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.desktop.archives.enums.xml
 #%doc AUTHORS README
 
 %files devel
@@ -116,6 +106,8 @@ This package provides vala language bindings for %_name library
 %_libdir/lib%_name-gtk-%api_ver_base.so
 %_pkgconfigdir/%_name-%api_ver_base.pc
 %_pkgconfigdir/%_name-gtk-%api_ver_base.pc
+%_vapidir/%_name-%api_ver_base.vapi
+%_vapidir/%_name-gtk-%api_ver_base.vapi
 
 %files devel-doc
 %_datadir/gtk-doc/html/*
@@ -132,6 +124,9 @@ This package provides vala language bindings for %_name library
 
 
 %changelog
+* Wed Feb 22 2017 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
+- 0.2.0
+
 * Fri Sep 02 2016 Yuri N. Sedunov <aris@altlinux.org> 0.1.1-alt1
 - 0.1.1
 
