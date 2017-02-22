@@ -1,6 +1,6 @@
 Name: pdksh
 Version: 5.2.14
-Release: alt4
+Release: alt5
 Epoch: 1
 
 Summary: A public domain clone of the Korn shell (ksh)
@@ -9,17 +9,13 @@ Group: Shells
 
 Url: http://www.cs.mun.ca/~michael/pdksh/
 Source: http://www.cs.mun.ca/~michael/pdksh/files/%name-%version.tar.bz2
-Patch0: pdksh-5.2.14-patches1.patch
-Patch1: pdksh-5.2.14-alignia64.patch
-Patch2: pdksh-5.2.14-patches2.patch
-Patch3: pdksh-5.2.14-coreutils-posix-fix.patch
-Patch4: pdksh-child_max.patch
-Patch5: pdksh-5.2.14-fix-str-fmt.patch
+Patch0: pdksh-5.2.14-manloc.patch
+Patch1: pdksh-5.2.14-debian.patch
+Patch2: pdksh-child_max.patch
+Patch3: pdksh-5.2.14-fix-str-fmt.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Provides: /bin/ksh
-
-%set_gcc_version 4.9
 
 %description
 The %name package contains PD-ksh, a clone of the Korn shell (ksh).
@@ -32,15 +28,16 @@ shell.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p0
+%patch0 -p1 -b .manloc
+%patch1 -p1 -b .debian
+%patch2 -p1 -b .jobs
+%patch3 -p0 -b .str
 
 %build
+CFLAGS="%optflags -D_FILE_OFFSET_BITS=64 -DDEBIAN " \
 %configure
+# Disable linemarkers to avoid confusing the script generating this
+%make siglist.out CPPFLAGS=-P
 %make_build
 
 %install
@@ -59,6 +56,10 @@ ln -s ksh %buildroot/bin/%name
 %doc BUG-REPORTS ChangeLog* CONTRIBUTORS LEGAL NEWS NOTES PROJECTS README
 
 %changelog
+* Wed Feb 22 2017 Michael Shigorin <mike@altlinux.org> 1:5.2.14-alt5
+- built with current gcc
+  + synced patches/build with mageia package
+
 * Fri Apr 22 2016 Michael Shigorin <mike@altlinux.org> 1:5.2.14-alt4
 - added /bin/pdksh symlink too
 
