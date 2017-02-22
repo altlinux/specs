@@ -1,6 +1,6 @@
 Name: fakechroot
-Version: 2.18
-Release: alt2
+Version: 2.19
+Release: alt1
 Summary: Gives a fake chroot environment
 Group: Development/Tools
 License: LGPLv2+
@@ -47,7 +47,7 @@ find %buildroot%_libdir -name '*.la' -delete -print
 
 %files
 %doc scripts/{relocatesymlinks,restoremode,savemode}.sh
-%doc NEWS.md README.md THANKS
+%doc NEWS.md README.md
 %doc COPYING LICENSE
 %_bindir/%name
 %_bindir/env.%name
@@ -61,5 +61,8 @@ find %buildroot%_libdir -name '*.la' -delete -print
 %_mandir/man1/%name.1*
 
 %changelog
+* Wed Feb 22 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.19-alt1
+- Updated to 2.19.
+
 * Wed Aug 31 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.18-alt2
 - Initial build.
