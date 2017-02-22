@@ -4,7 +4,7 @@
 
 Name: libringclient
 Version: 1.0.0
-Release: alt2
+Release: alt3%ubt
 
 Group: System/Libraries
 Summary: Ring voice, video and chat client library
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 # Automatically added by buildreq on Tue Mar 15 2016 (-bi)
 # optimized out: cmake-modules elfutils gcc-c++ libgpg-error libqt5-core libqt5-dbus libqt5-xml libstdc++-devel python-base python3 python3-base qt5-base-devel qt5-tools ring-daemon-devel rpm-build-python3 ruby ruby-stdlibs
 #BuildRequires: cmake python3.3-site-packages qt5-tools-devel ring-daemon-devel-static rpm-build-ruby
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake qt5-tools-devel ring-daemon-devel-static
 
 %description
@@ -82,6 +83,9 @@ mv %buildroot/usr/lib %buildroot/usr/lib64
 %_libdir/libringclient.so
 
 %changelog
+* Mon Feb 27 2017 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt3%ubt
+- update from master branch
+
 * Wed May 11 2016 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt2
 - split data to separate package
 
