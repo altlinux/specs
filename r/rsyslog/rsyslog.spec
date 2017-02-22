@@ -11,7 +11,7 @@
 %def_enable elasticsearch
 
 Name: rsyslog
-Version: 8.24.0
+Version: 8.25.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -73,6 +73,7 @@ while  at the same time being very easy to setup for the novice user.
 %package classic
 Summary: Classic configuration
 Group: System/Kernel and hardware
+BuildArch: noarch
 Requires: %name = %version-%release
 Provides: syslogd-daemon
 Provides: /etc/rsyslog.d
@@ -550,6 +551,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/mmsnmptrapd.so
 
 %changelog
+* Wed Feb 22 2017 Alexey Shabalin <shaba@altlinux.ru> 8.25.0-alt1
+- 8.25.0
+
 * Fri Jan 13 2017 Alexey Shabalin <shaba@altlinux.ru> 8.24.0-alt1
 - 8.24.0
 
