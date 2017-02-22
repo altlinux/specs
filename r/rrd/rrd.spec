@@ -1,6 +1,6 @@
 Name: rrd
 Version: 1.5.4
-Release: alt2.1
+Release: alt2.2
 
 %define native rrdtool
 %define abiversion 4
@@ -31,7 +31,7 @@ BuildRequires: rpm-build-licenses rpm-build-tcl
 BuildRequires: chrpath
 
 # Automatically added by buildreq on Wed Oct 12 2011
-BuildRequires: groff-base libdbi-devel libpango-devel libpng-devel libxml2-devel lua5 perl-Pod-Parser perl-devel python-devel ruby tcl-devel
+BuildRequires: groff-base libdbi-devel libpango-devel libpng-devel libxml2-devel lua5 perl-Pod-Parser perl-devel python-devel tcl-devel
 
 Summary(ru_RU.UTF-8): RRDtool - база данных с "циклическим обновлением"
 
@@ -333,7 +333,14 @@ rm -rf %buildroot/usr/lib/perl
 %_tcldatadir/tcl%name%version/
 %endif
 
+# TODO:
+# - make proper switches for language bindings
+#   (the tcl one looks broken too as of 1.5.4-alt2.1)
+
 %changelog
+* Wed Feb 22 2017 Michael Shigorin <mike@altlinux.org> 1.5.4-alt2.2
+- dropped BR: ruby as it's unconditionally disabled anyways
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt2.1
 - rebuild with new perl 5.24.1
 
