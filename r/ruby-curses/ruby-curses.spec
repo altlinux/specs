@@ -1,7 +1,7 @@
 %define  pkgname curses
  
 Name: 	 ruby-%pkgname
-Version: 1.1.3
+Version: 1.2.0
 Release: alt1
  
 Summary: Ruby binding for curses, ncurses, and PDCurses
@@ -47,6 +47,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_sitelibdir/*
  
 %changelog
+* Wed Feb 22 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
+- new version 1.2.0
+
 * Sat Feb 11 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.3-alt1
 - new version 1.1.3
 
