@@ -2,7 +2,7 @@
 %define Name GParted
 
 Name: gparted
-Version: 0.27.0
+Version: 0.28.1
 Release: alt1
 
 Summary: %Name Partition Editor
@@ -22,7 +22,7 @@ AutoReq: yes, noshell
 Requires: consolehelper
 Requires: hdparm
 # for raid support
-Requires: mdadm dmraid dmsetup lvm2
+Requires: mdadm dmraid dmsetup lvm2 cryptsetup
 #Requires: ntfs-3g btrfs-progs >= 4.1
 
 BuildRequires(pre): rpm-build-licenses
@@ -94,6 +94,9 @@ sed -i 's|%_sbindir|%_bindir|' %buildroot%_desktopdir/%name.desktop
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Wed Feb 22 2017 Yuri N. Sedunov <aris@altlinux.org> 0.28.1-alt1
+- 0.28.1
+
 * Thu Oct 27 2016 Yuri N. Sedunov <aris@altlinux.org> 0.27.0-alt1
 - 0.27.0
 
