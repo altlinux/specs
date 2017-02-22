@@ -1,8 +1,10 @@
 %def_enable cupstifffilter
 %def_enable sane_backend
-%def_enable python_code
 %def_enable autostart
 %def_enable PPDs
+%def_enable python_code
+%def_without python3
+%def_disable foomatic_rip
 %def_disable qt3
 %def_enable qt4
 %def_disable qt5
@@ -11,7 +13,7 @@
 # note: flag dropped upstream
 %def_enable udevacl
 %def_disable halacl
-%def_without python3
+%def_without ernie
 %if_with backport
 %define cups_filters foomatic-filters
 %else
@@ -26,11 +28,12 @@
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
 Name: hplip
 Epoch: 1
-Version: 3.16.7
+Version: 3.16.11
 Release: alt2
 License: GPL/MIT/BSD
 Group: Publishing
-URL: http://hplip.sourceforge.net
+#URL: http://hplip.sourceforge.net -- old
+URL: http://hplipopensource.com/
 Packager: Igor Vlasenko <viy@altlinux.org>
 
 %define hpijsname hpijs
@@ -73,8 +76,15 @@ BuildPreReq: libsane-devel
 BuildRequires: gcc-c++ libcups-devel libjpeg-devel libnet-snmp-devel libssl-devel libstdc++-devel libusb-devel libusb-compat-devel libdbus-devel
 
 %if_enabled python_code
-#BuildRequires: python-module-qt-devel
+%if_enabled qt3
+BuildRequires: python%{pysuffix}-module-qt-devel
+%endif
+%if_enabled qt4
 BuildRequires: python%{pysuffix}-module-PyQt4-devel
+%endif
+%if_enabled qt5
+BuildRequires: python%{pysuffix}-module-PyQt5-devel
+%endif
 #RemovedBuildRequires: python-base python-dev python-modules-compiler python-modules-encodings
 BuildRequires: python%{pysuffix}-devel
 %endif
@@ -99,8 +109,9 @@ Source9: upstream-signing-key.asc
 # fedora fdi acl policy
 Source100: hplip.fdi
 # cvs update: hplip.fdi is no longer in the repository (due to udev-acl)
-Source102: copy-deviceids.py
 Source101: hpcups-update-ppds.sh
+Source102: copy-deviceids-py2.py
+Source103: copy-deviceids.py
 
 # OpenSuSE based sources
 # deprecated; 2.7.7 shows 'can't connect to device'
@@ -121,31 +132,34 @@ Patch10: http://www.linuxprinting.org/download/printing/hpijs/hpijs-1.4.1-rss.1.
 Patch11: hpijs-1.4.1-rss-alt-for-2.7.7.patch
 
 # fedora patches
-Patch101: fedora-3.16.7-1-hplip-pstotiff-is-rubbish.patch
-Patch102: fedora-3.16.7-1-hplip-strstr-const.patch
-Patch103: fedora-3.16.7-1-hplip-ui-optional.patch
-Patch104: fedora-3.16.7-1-hplip-no-asm.patch
-Patch105: fedora-3.16.7-1-hplip-deviceIDs-drv.patch
-Patch106: fedora-3.16.7-1-hplip-udev-rules.patch
-Patch107: fedora-3.16.7-1-hplip-retry-open.patch
-Patch108: fedora-3.16.7-1-hplip-snmp-quirks.patch
-Patch109: fedora-3.16.7-1-hplip-hpijs-marker-supply.patch
-Patch110: fedora-3.16.7-1-hplip-clear-old-state-reasons.patch
-Patch111: fedora-3.16.7-1-hplip-hpcups-sigpipe.patch
-Patch112: fedora-3.16.7-1-hplip-logdir.patch
-Patch113: fedora-3.16.7-1-hplip-bad-low-ink-warning.patch
-Patch114: fedora-3.16.7-1-hplip-deviceIDs-ppd.patch
-Patch115: fedora-3.16.7-1-hplip-ppd-ImageableArea.patch
-Patch116: fedora-3.16.7-1-hplip-scan-tmp.patch
-Patch117: fedora-3.16.7-1-hplip-log-stderr.patch
-Patch118: fedora-3.16.7-1-hplip-avahi-parsing.patch
-Patch120: fedora-3.16.7-1-hplip-dj990c-margin.patch
-Patch121: fedora-3.16.7-1-hplip-strncpy.patch
-Patch122: fedora-3.16.7-1-hplip-no-write-bytecode.patch
-Patch123: fedora-3.16.7-1-hplip-silence-ioerror.patch
-Patch124: fedora-3.16.7-1-hplip-3165-sourceoption.patch
-Patch125: fedora-3.16.7-1-hplip-include-ppdh.patch
-
+Patch101: hplip-pstotiff-is-rubbish.patch
+Patch102: hplip-strstr-const.patch
+Patch103: hplip-ui-optional.patch
+Patch104: hplip-no-asm.patch
+Patch105: hplip-deviceIDs-drv.patch
+Patch106: hplip-udev-rules.patch
+Patch107: hplip-retry-open.patch
+Patch108: hplip-snmp-quirks.patch
+Patch109: hplip-hpijs-marker-supply.patch
+Patch110: hplip-clear-old-state-reasons.patch
+Patch111: hplip-hpcups-sigpipe.patch
+Patch112: hplip-logdir.patch
+Patch113: hplip-bad-low-ink-warning.patch
+Patch114: hplip-deviceIDs-ppd.patch
+Patch115: hplip-ppd-ImageableArea.patch
+Patch116: hplip-scan-tmp.patch
+Patch117: hplip-log-stderr.patch
+Patch118: hplip-avahi-parsing.patch
+Patch120: hplip-dj990c-margin.patch
+Patch121: hplip-strncpy.patch
+Patch122: hplip-no-write-bytecode.patch
+Patch123: hplip-silence-ioerror.patch
+Patch124: hplip-3165-sourceoption.patch
+Patch125: hplip-badwhitespace.patch
+%if_without ernie
+Patch126: hplip-noernie.patch
+%endif
+# end fedora patches
 
 %description
 This is the HP driver package to supply Linux support for most
@@ -191,7 +205,9 @@ Requires: python%{pysuffix}-module-PyQt5
 %endif
 
 # some utils do require dbus user session
-Requires: dbus-tools-gui
+Requires: dbus-tools-gui 
+# for python-notify
+# Requires: notification-daemon
 # for hp-scan -n
 Requires: python%{pysuffix}-module-imaging
 # from fedora 3.10.9-9 patch 33 (= 133)
@@ -200,9 +216,6 @@ Requires: python%{pysuffix}-module-imaging
 Requires: python%{pysuffix}-module-pygobject
 
 Requires: %name = %{?epoch:%epoch:}%version-%release
-%if_enabled PPDs
-Requires: %name-PPDs >= %{?epoch:%epoch:}%version-%release
-%endif
 
 %description gui
 HPLIP is an HP developed solution for printing, scanning, and faxing
@@ -242,10 +255,11 @@ for GNOME, KDE and other freedesktop compatible desktop environments.
 Summary: recommended packages for hplip
 License: GPL
 Group: Publishing
-Requires: cups-ddk
-Requires: foomatic-db >= 3.0.2-alt7
-Requires: %{cups_filters}
 Requires: %name = %{?epoch:%epoch:}%version-%release
+Requires: %name-hpcups = %{?epoch:%epoch:}%version-%release
+Requires: %name-sane = %{?epoch:%epoch:}%version-%release
+Requires: %name-gui = %{?epoch:%epoch:}%version-%release
+Requires: notification-daemon
 BuildArch: noarch
 
 %description recommends
@@ -283,14 +297,17 @@ flash memory cards.
 
 %if_enabled PPDs
 %package PPDs
-Summary: PPDs for Hewlett-Packard Co. Inkjet Printers and MFPs
+Summary: PPDs for Hewlett-Packard Co. Inkjet Printers and MFPs (Deprecated)
 License: MIT
 Group: Publishing
 Requires: %name-ps-PPDs = %{?epoch:%epoch:}%version-%release
 Requires: %name-hpcups-PPDs = %{?epoch:%epoch:}%version-%release
 Requires: %name-hpijs-PPDs = %{?epoch:%epoch:}%version-%release
-# due to foomatic-rip
-Requires:	%{cups_filters}
+# TODO: it seems it is not needed 
+#Requires: foomatic-db >= 3.0.2-alt7
+%if_enabled foomatic_rip
+Requires: %{cups_filters}
+%endif
 BuildArch: noarch
 
 %description PPDs
@@ -300,13 +317,16 @@ with HP inkjet and laser based printers in Linux.
 The HPLIP project provides printing support for nearly 1000 printer
 models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy),
 
+WARNING! foomatic static and dynamic ppd install is deprecated.
+Feature can be used as is. Fixes or updates will not be provided.
 
 %package ps-PPDs
 Summary: PPDs for Hewlett-Packard Co. Inkjet Printers and MFPs for postscript HP printers
 License: MIT
 Group: Publishing
-# due to foomatic-rip
-Requires:	%{cups_filters}
+%if_enabled foomatic_rip
+Requires: %{cups_filters}
+%endif
 Conflicts: %name-PPDs < %version
 BuildArch: noarch
 
@@ -320,11 +340,12 @@ models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy),
 This package contains postscript printer definition files (PPDs) for postscript HP printers.
 
 %package hpcups-PPDs
-Summary: PPDs for Hewlett-Packard Co. Inkjet Printers and MFPs for hpcups cups driver
+Summary: PPDs for HP Inkjet Printers and MFPs for hpcups cups driver (Deprecated)
 License: MIT
 Group: Publishing
-# due to foomatic-rip
-Requires:	%{cups_filters}
+%if_enabled foomatic_rip
+Requires: %{cups_filters}
+%endif
 Requires: %name-hpcups = %{?epoch:%epoch:}%version-%release
 Conflicts: %name-PPDs < %version
 BuildArch: noarch
@@ -339,11 +360,12 @@ models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy),
 This package contains postscript printer definition files (PPDs) for hpcups cups driver.
 
 %package hpijs-PPDs
-Summary: PPDs for Hewlett-Packard Co. Inkjet Printers and MFPs for hpijs cups driver
+Summary: PPDs for HP Inkjet Printers and MFPs for hpijs cups driver (Deprecated)
 License: MIT
 Group: Publishing
-# due to foomatic-rip
-Requires:	%{cups_filters}
+%if_enabled foomatic_rip
+Requires: %{cups_filters}
+%endif
 Requires: %name-hpijs = %{?epoch:%epoch:}%version-%release
 Conflicts: %name-PPDs < %version
 BuildArch: noarch
@@ -359,7 +381,7 @@ This package contains postscript printer definition files (PPDs) for hpijs cups 
 %endif
 
 %package hpijs
-Summary: Hewlett-Packard Co. Inkjet Driver Project
+Summary: Hewlett-Packard Co. Inkjet Driver Project (Deprecated)
 License: BSD
 Group: Publishing
 Obsoletes: hpijs < 2.7
@@ -377,6 +399,9 @@ The  Hewlett-Packard  Inkjet  Driver  Project  is  a add-on to the GNU
 Ghostscript  application. This driver is open source software based on
 the  Hewlett  Packard  Appliance  Printing Development Kit APDK for
 deskjet printers.
+
+WARNING! HPIJS is deprecated. Feature can be used as is.
+Fixes or updates will not be provided.
 
 %if_enabled sane_backend
 %package sane
@@ -424,9 +449,14 @@ SANE driver for scanners in HP's multi-function devices (from HPLIP)
 # Color LaserJet 2500 series (bug #659040)
 # LaserJet 4100 Series/2100 Series (bug #659039)
 %patch105 -p1 -b .deviceIDs-drv
-chmod +x %{SOURCE102}
+chmod +x %{SOURCE102} %{SOURCE103}
 mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
-%{SOURCE102} prnt/drv/hpcups.drv.in \
+%if_with python3
+%{SOURCE103} \
+%else
+%{SOURCE102} \
+%endif
+       prnt/drv/hpcups.drv.in \
        prnt/drv/hpijs.drv.in.deviceIDs-drv-hpijs \
        > prnt/drv/hpijs.drv.in
 
@@ -487,7 +517,14 @@ mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
 # [abrt] hplip: hp-scan:663:<module>:NameError: name 'source_option' is not defined (bug #1341304)
 %patch124 -p1 -b .sourceoption
 
-%patch125 -p1 -b .include-ppdh
+# Bad whitespaces (bug #1372343)
+%patch125 -p1 -b .badwhitespace
+
+%if_without ernie
+# hplip license problem (bug #1364711)
+%patch126 -p1 -b .no-ernie
+rm prnt/hpcups/ErnieFilter.{cpp,h} prnt/hpijs/ernieplatform.h
+%endif
 
 # from fedora 3.9.12-3/3.10.9-9
 sed -i.duplex-constraints \
@@ -537,27 +574,33 @@ cat > /dev/null <<EOF
   --disable-dependency-tracking  speeds up one-time build
   --enable-dependency-tracking   do not reject slow dependency extractors
   --enable-shared[=PKGS]  build shared libraries [default=yes]
+  --enable-fast-install[=PKGS]
+                          optimize for fast installation [default=yes]
+  --disable-libtool-lock  avoid locking (might break parallel builds)
   --enable-doc-build     enable documentation build (default=yes)
-  --enable-hpijs-only-build     enable hpijs only build (default=yes)
+  --enable-hpijs-only-build     enable hpijs only build (default=yes)(Deprecated)
   --enable-lite-build     enable lite build, print & scan only (default=no)
   --enable-hpcups-only-build     enable hpcups only build, print only (default=no)
-  --enable-hpijs-install     enable hpijs install (default=no)
+  --enable-hpijs-install     enable hpijs install (default=no)(Deprecated)
   --enable-hpcups-install     enable hpcups install (default=yes)
   --enable-new-hpcups     enable new hpcups install (default=no)
   --enable-network-build    enable network build (default=yes)
-  --enable-pp-build    enable parallel port build (default=no)
+  --enable-pp-build    enable parallel port build (default=no)(Deprecated)
   --enable-scan-build    enable scanner build (default=yes)
   --enable-gui-build    enable gui build (default=yes)
   --enable-fax-build    enable fax build (default=yes)
+  --enable-apparmor_build    enable apparmor build (default=no)
   --enable-dbus-build    enable dbus build (default=yes)
   --enable-cups11-build    enable cups 1.1.x build (default=no)
-  --enable-udev-acl-rules    enable udev acl rules (default=no)
+  --enable-udev_sysfs_rules    Use SYSFS attribute instead of ATTR/ATTRS attribute in udev rules(default=no)
   --enable-shadow-build    enable shadow build (default=no)
-  --enable-foomatic-ppd-install    enable foomatic static ppd install (default=no), uses hpppddir
-  --enable-foomatic-drv-install    enable foomatic dynamic ppd install (default=no), uses drvdir and hpppddir
+  --enable-libusb01_build    Use libusb-0.1 instead of libusb-1.0 (default=no. i.e. libusb-1.0)
+  --enable-foomatic-ppd-install    enable foomatic static ppd install (default=no)(Deprecated), uses hpppddir
+  --enable-foomatic-drv-install    enable foomatic dynamic ppd install (default=no)(Deprecated), uses drvdir and hpppddir
   --enable-cups-drv-install    enable cups dynamic ppd install (default=yes), uses drvdir and hpppddir
   --enable-cups-ppd-install    enable cups static ppd install (default=no), uses hpppddir
-  --enable-foomatic-rip-hplip-install    enable foomatic-rip-hplip install (default=no), uses cupsfilterdir
+  --enable-foomatic-rip-hplip-install    enable foomatic-rip-hplip install (default=no)(Deprecated), uses cupsfilterdir
+  --enable-qt5    enable qt5 (default=no)
   --enable-qt4    enable qt4 (default=yes)
   --enable-qt3    enable qt3 (default=no)
   --enable-policykit    enable PolicyKit (default=no)
@@ -999,6 +1042,18 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Wed Feb 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.16.11-alt2
+- Sisyphus release (closes: #33106)
+- PPD* subpackages are now optional as they are deprecated
+- cups/filter/foomatic-rip dependency disabled by default
+- foomatic-db moved out from requires
+
+* Thu Feb 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.16.11-alt1
+- new version
+
+* Wed Feb 08 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.16.10-alt2
+- 3.16.10 build
+
 * Thu Nov 10 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.16.7-alt2
 - reverted back to 3.16.7 due to problems in 3.16.10
 
