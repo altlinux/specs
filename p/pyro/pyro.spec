@@ -1,8 +1,8 @@
 Name: pyro
 Version: 1.5
-Release: alt6.qa1
+Release: alt7
 
-Summary: Pyrotechnics, an OpenGL-based firework simulator.
+Summary: Pyrotechnics, an OpenGL-based firework simulator
 License: GPL
 Group: Toys
 
@@ -12,8 +12,7 @@ Patch0: pyro-nomesa.patch.bz2
 Patch1: pyro-1.5-alt-makefile.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-Summary(ru_RU.KOI8-R): OpenGL-пиротехника
-Summary(uk_UA.KOI8-U): OpenGL-п╕ротехн╕ка
+Summary(ru_RU.UTF-8): OpenGL-п©п╦я─п╬я┌п╣я┘п╫п╦п╨п╟
 
 # Automatically added by buildreq on Mon Dec 01 2008
 BuildRequires: libGL-devel libXext-devel libXi-devel libXmu-devel libfreeglut-devel libjpeg-devel
@@ -28,6 +27,7 @@ to save screenshots.
 %setup
 %patch0 -p1
 %patch1 -p1
+sed -i 's,-O6,-O3,' Makefile
 
 %build
 %make_build
@@ -42,6 +42,9 @@ to save screenshots.
 %_datadir/pyro/water.jpg
 
 %changelog
+* Wed Feb 22 2017 Michael Shigorin <mike@altlinux.org> 1.5-alt7
+- don't ask for -O6
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5-alt6.qa1
 - NMU: rebuilt for debuginfo.
 
