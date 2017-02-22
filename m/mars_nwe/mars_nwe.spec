@@ -5,7 +5,7 @@
 
 Name: mars_nwe
 Version: 0.99
-Release: alt4
+Release: alt5
 
 Summary: NetWare file and print servers which run on Linux systems.
 License: GPL
@@ -44,7 +44,7 @@ clients, using NetWare's native IPX protocol suite.
 %patch3 -p1
 gzip -dc %SOURCE1 > mk.li
 gzip -dc %SOURCE1 \
-%ifarch x86_64
+%ifarch x86_64 e2k aarch64
     | sed -e 's|/lib/|/lib64/|g' \
 %endif
     > mk.li
@@ -55,7 +55,7 @@ gzip -dc %SOURCE2 \
 	  -e 's|@PATHNAME_BINDERY@|%binderydir|' > config.h
 
 %build
-%make_build CFLAGS="%optflags"
+%make_build CFLAGS="%optflags -DUSE_GDBM -Wp,-D_FORTIFY_SOURCE=0"
 
 %install
 install -d -m 0700 %buildroot{%_localstatedir/%name/sys/{login,mail,print,public,system},%binderydir}
@@ -94,6 +94,10 @@ install -m 0644 %SOURCE6 %buildroot%_sysconfdir/logrotate.d/%name.log
 %_initdir/*
 
 %changelog
+* Wed Feb 22 2017 Michael Shigorin <mike@altlinux.org> 0.99-alt5
+- fixed FTBFS at the price of disabling _FORTIFY_SOURCE (thanks, rosa)
+- ensure build against gdbm
+
 * Mon Sep 14 2009 Michael Shigorin <mike@altlinux.org> 0.99-alt4
 - rebuilt for Sisyphus
 
