@@ -1,7 +1,7 @@
 %def_with python3
 
 Name: python-module-ceilometerclient
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 Summary: Python API and CLI for OpenStack Ceilometer
 
@@ -133,6 +133,9 @@ rm -rf html/.doctrees html/.buildinfo
 %doc html
 
 %changelog
+* Wed Feb 01 2017 Alexey Shabalin <shaba@altlinux.ru> 2.6.2-alt1
+- 2.6.2
+
 * Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 2.6.1-alt1
 - 2.6.1
 
