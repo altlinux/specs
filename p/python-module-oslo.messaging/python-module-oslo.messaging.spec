@@ -4,8 +4,8 @@
 
 Name:       python-module-%sname
 Epoch:      1
-Version:    5.10.0
-Release:    alt2
+Version:    5.10.1
+Release:    alt1
 Summary:    OpenStack common messaging library
 
 Group:      Development/Python
@@ -180,6 +180,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html LICENSE
 
 %changelog
+* Wed Feb 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1:5.10.1-alt1
+- 5.10.1
+
 * Wed Oct 26 2016 Alexey Shabalin <shaba@altlinux.ru> 1:5.10.0-alt2
 - fix BR with epoch
 
