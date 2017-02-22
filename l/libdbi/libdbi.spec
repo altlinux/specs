@@ -1,17 +1,24 @@
+%def_disable docs
 %define develname libdbi-devel
-Summary: Database Independent Abstraction Layer for C
+
 Name: libdbi
 Version: 1.0
-Release: alt1.cvs20092729.2
+Release: alt1.cvs20092729.3
+
+Summary: Database Independent Abstraction Layer for C
 License: LGPL
 Group: System/Libraries
+
 Url: http://libdbi.sourceforge.net/
+Source: %name-%version.tar.gz
 Packager: Boris Savelev <boris@altlinux.org>
 
-Source: %name-%version.tar.gz
-
 # Automatically added by buildreq on Mon Feb 09 2009
-BuildRequires: docbook-style-dsssl gcc-c++ openjade w3c-markup-validator-libs
+BuildRequires: gcc-c++
+
+%if_enabled docs
+BuildRequires: docbook-style-dsssl openjade w3c-markup-validator-libs
+%endif
 
 %description
 libdbi implements a database-independent abstraction layer in C, similar to the
@@ -47,13 +54,16 @@ This package contains the static library.
 
 %prep
 %setup
-# touch doc/libdbi-versioning.sgml
+%if_enabled docs
+touch doc/libdbi-versioning.sgml
+%endif
+%ifarch e2k
+sed -i 's,-O20,-O2,g' configure*
+%endif
 
 %build
 %autoreconf
-%configure \
-	--disable-docs
-
+%configure %{subst_enable docs}
 %make_build
 
 %install
@@ -65,7 +75,9 @@ This package contains the static library.
 
 %files -n %develname
 %doc README TODO
-# doc/programmers-guide doc/driver-guide doc/*.pdf
+%if_enabled docs
+%doc doc/programmers-guide doc/driver-guide doc/*.pdf
+%endif
 %_includedir/dbi
 %_libdir/*.so
 %_pkgconfigdir/dbi.pc
@@ -74,6 +86,10 @@ This package contains the static library.
 %_libdir/*.a
 
 %changelog
+* Wed Feb 22 2017 Michael Shigorin <mike@altlinux.org> 1.0-alt1.cvs20092729.3
+- BOOTSTRAP: introduced docs knob (leave off by default)
+- E2K: "-O20" is a bit too much!
+
 * Sun Mar 13 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.cvs20092729.2
 - Rebuilt for debuginfo
 
