@@ -1,10 +1,11 @@
 %define oname six
+%def_without check
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 1.10.0
-Release: alt1
+Release: alt2
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
 Group: Development/Python
@@ -19,11 +20,13 @@ BuildPreReq: python-devel
 
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: python-module-setuptools-tests}}
-
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 %{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-setuptools-tests}}
+%py3_provides six.moves
+%py3_provides six.moves.urllib
+%py3_provides six.moves.urllib.parse
 %endif
 
 %description
@@ -90,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1.10.0-alt2
+- add python3 provides six.moves, six.moves.urllib, six.moves.urllib.parse
+
 * Tue Jan 03 2017 Anton Midyukov <antohami@altlinux.org> 1.10.0-alt1
 - New version 1.10.0
 
