@@ -8,13 +8,12 @@
 
 Name: %_name%abiversion
 Version: 5.7.3
-Release: alt2.1
+Release: alt3
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
 Group: System/Servers
 Url: http://net-snmp.sourceforge.net
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 Source0: %name-%version.tar
 #git clone git://net-snmp.git.sourceforge.net/gitroot/net-snmp/net-snmp
@@ -29,6 +28,7 @@ Source11: snmptrapd.service
 Patch: %name-%version-%release.patch
 Patch6: net-snmp-5.7.3-systemd.patch
 Patch7: net-snmp-5.7.3-snmptrapd-gid.patch
+Patch8: net-snmp-5.7.3-systemd-fix.patch
 
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -304,10 +304,11 @@ for run-time access to parsed MIB data.
 %patch -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
-%__subst "s|LIB_LD_LIBS)|LIB_LD_LIBS) \$\{ADD_HELPER\}|g" agent/Makefile.in
+sed -i "s|LIB_LD_LIBS)|LIB_LD_LIBS) \$\{ADD_HELPER\}|g" agent/Makefile.in
 #Fix for compile with lmsensors_v3
-%__subst "s|lmsensors_v2|lmsensors_v3|g" agent/mibgroup/hardware/sensors.h
+sed -i "s|lmsensors_v2|lmsensors_v3|g" agent/mibgroup/hardware/sensors.h
 #Fix flnk with mysql
 sed -i '/LLIBTRAPD_OBJS/s/USELIBS)/USELIBS) \$(MYSQL_LIBS)/' apps/Makefile.in
 #Fix install python
@@ -317,7 +318,6 @@ sed -i 's/PyInt_AsVoidPtr/PyLong_AsVoidPtr/' python/netsnmp/client_intf.c
 
 
 %build
-
 %autoreconf
 #export NETSNMP_DONT_CHECK_VERSION=1
 export LIBS='-lcrypto -lwrap'
@@ -348,13 +348,15 @@ export LIBS='-lcrypto -lwrap'
 	%{subst_with mysql} \
 	%{subst_with systemd}
 
-NPROCS=1
-%make_build
+# non-SMP-safe build
+make
 rm -f `find ./ -name 'libnetsnmpagent*'`
 %make ADD_HELPER="-L$PWD/agent/helpers/.libs -lnetsnmphelpers"
 
 
 %install
+# DO NOT replace with %%makeinstall_std: breaks build
+# (libnetsnmp.so.30 gets built but not installed)
 %make DESTDIR=%buildroot install
 
 mkdir -p %buildroot%_initdir
@@ -386,11 +388,11 @@ cat << EOF > %buildroot%_sysconfdir/sysconfig/snmptrapd
 
 EOF
 
-bzip2 ChangeLog
+xz ChangeLog
 
 #Fix net-snmp-create-v3-user
-%__subst "s|ps -acx|ps acx|g" %buildroot%_bindir/net-snmp-create-v3-user
-%__subst "s|/usr/share/snmp/snmpd.conf|%_sysconfdir/snmp/snmpd.conf|g" %buildroot%_bindir/net-snmp-create-v3-user
+sed -i "s|ps -acx|ps acx|g" %buildroot%_bindir/net-snmp-create-v3-user
+sed -i "s|/usr/share/snmp/snmpd.conf|%_sysconfdir/snmp/snmpd.conf|g" %buildroot%_bindir/net-snmp-create-v3-user
 
 
 find %buildroot%_datadir/snmp/mibs/ -name "*.txt" -type f | while read file; do mv "$file" "${file%%.txt}"; done
@@ -428,7 +430,7 @@ echo "===== start test ====="
 %files -n %_name
 
 %files -n %_name-common
-%doc AGENT.txt COPYING ChangeLog.* EXAMPLE.conf FAQ NEWS PORTING README* TODO
+%doc AGENT.txt COPYING ChangeLog* EXAMPLE.conf FAQ NEWS PORTING README* TODO
 %dir %_sysconfdir/snmp
 %dir %_datadir/snmp
 %attr(0770,snmp,root) %persistentdir
@@ -595,6 +597,14 @@ echo "===== start test ====="
 %doc python/README
 
 %changelog
+* Wed Feb 22 2017 Michael Shigorin <mike@altlinux.org> 5.7.3-alt3
+- fixed build without systemd, see also:
+  https://bugs.mageia.org/show_bug.cgi?id=13761
+  https://patchwork.openembedded.org/patch/51041/
+- compress ChangeLog with xz instead of bzip2
+- minor spec cleanup
+- dropped (non-)Packager
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 5.7.3-alt2.1
 - rebuild with new perl 5.24.1
 
