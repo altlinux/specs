@@ -1,8 +1,9 @@
 %def_disable static
+%def_enable check
 
 Name: libsamplerate
 Version: 0.1.9
-Release: alt1
+Release: alt2
 
 Summary: Sample Rate Converter audio library
 License: BSD
@@ -10,6 +11,7 @@ Group: System/Libraries
 Url: http://www.mega-nerd.com/SRC
 Source: %url/%name-%version.tar.gz
 
+%if_enabled check
 %define libsndfile_ver 1.0.6
 Requires: libsndfile >= %libsndfile_ver
 
@@ -17,6 +19,7 @@ BuildPreReq: libsndfile-devel >= %libsndfile_ver
 
 # Automatically added by buildreq on Mon Sep 13 2004
 BuildRequires: libfftw3-devel libsndfile-devel
+%endif
 
 %description
 libsamplerate is a Sample Rate Converter for audio. One example of where
@@ -90,8 +93,13 @@ rm -f doc/Makefile*
 
 %files utils
 %_bindir/*
+%{?_enable_check:%exclude %_bindir/sndfile-resample}
 
 %changelog
+* Wed Feb 22 2017 Michael Shigorin <mike@altlinux.org> 0.1.9-alt2
+- BOOTSTRAP: introduce check knob to avoid extra BRs
+  (needed for sndfile-resample and tests; on by default)
+
 * Mon Nov 14 2016 Yuri N. Sedunov <aris@altlinux.org> 0.1.9-alt1
 - 0.1.9
 
