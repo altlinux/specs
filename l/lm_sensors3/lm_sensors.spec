@@ -2,7 +2,7 @@
 
 Name: lm_sensors3
 Version: 3.4.0
-Release: alt1
+Release: alt2
 
 Summary: Hardware Health Monitoring Tools
 License: LGPLv2+ and GPLv3+ and GPLv2+ and Verbatim and Public Domain
@@ -206,14 +206,14 @@ fi
 %_unitdir/sensord.service
 %_sbindir/fancontrol
 %_unitdir/fancontrol.service
-%ifnarch %arm
+%ifnarch %arm e2k
 %_sbindir/isadump
 %_sbindir/isaset
 %endif
 %_sbindir/pwmconfig
 %_datadir/%name
 %_man8dir/fancontrol.*
-%ifnarch %arm
+%ifnarch %arm e2k
 %_man8dir/isadump.*
 %_man8dir/isaset.*
 %endif
@@ -240,6 +240,9 @@ fi
 %endif #static
 
 %changelog
+* Wed Feb 22 2017 Michael Shigorin <mike@altlinux.org> 3.4.0-alt2
+- E2K: don't expect isadump(8) and isaset(8), like on %%arm
+
 * Sat Jul 30 2016 Anton Midyukov <antohami@altlinux.org> 3.4.0-alt1
 - new version 3.4.0 (Closes: 30090)
 - update license
