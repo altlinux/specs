@@ -3,7 +3,7 @@
 %define ver_major 2.4
 
 Name: scratch-text-editor
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 
 Summary: The text editor that works
@@ -12,7 +12,7 @@ Group: Editors
 
 Url: https://launchpad.net/%_name
 
-Source: %url/2.x/%ver_major/+download/%name-%version.tar.xz
+Source: %url/2.x/%version/+download/%name-%version.tar.xz
 
 Requires: contractor
 
@@ -115,6 +115,9 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %_vapidir/%{_name}core.vapi
 
 %changelog
+* Wed Feb 22 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt1
+- 2.4.1
+
 * Mon Feb 13 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4-alt1
 - 2.4
 
