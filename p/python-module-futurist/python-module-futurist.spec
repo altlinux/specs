@@ -3,7 +3,7 @@
 %define pypi_name futurist
 
 Name: python-module-%pypi_name
-Version: 0.13.0
+Version: 0.18.0
 Release: alt1
 Summary: Useful additions to futures, from the future
 Group: Development/Python
@@ -114,6 +114,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Wed Feb 01 2017 Alexey Shabalin <shaba@altlinux.ru> 0.18.0-alt1
+- 0.18.0
+
 * Mon Apr 11 2016 Alexey Shabalin <shaba@altlinux.ru> 0.13.0-alt1
 - 0.13.0
 
