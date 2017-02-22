@@ -1,5 +1,5 @@
 Name: libnetfilter_conntrack
-Version: 1.0.4
+Version: 1.0.6
 Release: alt1
 Epoch: 1
 
@@ -47,6 +47,10 @@ interface (API) to the in-kernel connection tracking state table.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Feb 22 2017 Michael Shigorin <mike@altlinux.org> 1:1.0.6-alt1
+- Updated to 1.0.6 including clang/lcc-related pseudo-VLA fix:
+  http://www.spinics.net/lists/netfilter-devel/msg43542.html
+
 * Mon Nov 25 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.0.4-alt1
 - Updated to 1.0.4, required by iptables/libxt_connlabel.
 
