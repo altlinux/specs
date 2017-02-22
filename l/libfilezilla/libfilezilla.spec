@@ -1,5 +1,5 @@
 Name: libfilezilla
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 Summary: Small and modern C++ library
 License: GPLv2+
@@ -85,6 +85,9 @@ LC_ALL=en_US.UTF-8 make check
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Wed Feb 22 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.1-alt1
+- Updated to 0.9.1.
+
 * Thu Dec 22 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.0-alt1
 - Updated to 0.9.0.
 
