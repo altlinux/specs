@@ -2,8 +2,8 @@ Summary: The New Moon browser, an unofficial branding of the Pale Moon project b
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 27.1.0
-Release: alt3.0
+Version: 27.1.1
+Release: alt1.1
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -33,7 +33,7 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source: %sname-source-%version-%release.tar
 Source1: rpm-build.tar
-Source2: searchplugins.tar
+
 Source4: %sname-mozconfig
 Source6: %bname.desktop
 Source7: firefox.c
@@ -169,11 +169,6 @@ cd %sname
 # %%patch18 -p1
 
 tar -xf %SOURCE1
-
-pushd browser/locales/en-US/
- tar -xf %SOURCE2
-popd
-
 
 pushd browser/branding/unofficial
     tar --overwrite  -xf %SOURCE11
@@ -449,6 +444,12 @@ done
 %exclude %_datadir/idl/*
 
 %changelog
+* Wed Feb 22 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.1.1-alt1.1
+- Remove searchplugins.tar
+
+* Wed Feb 22 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.1.1-alt1.0
+- Version 27.1.1
+
 * Fri Feb 10 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.1.0-alt3.0
 - Built on gcc-4.9
 
@@ -669,3 +670,4 @@ done
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
+
