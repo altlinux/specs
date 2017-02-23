@@ -1,6 +1,6 @@
 Name: wmfire
 Version: 1.2.4
-Release: alt3
+Release: alt4
 
 Summary: WindowMaker dock-app showing CPU load as a flame
 License: GPL
@@ -60,7 +60,9 @@ wmfire - цікавий аплет для WindowMaker, який відображ
 export LDFLAGS="$LDFLAGS -lgdk-x11-2.0"
 export CFLAGS="$CFLAGS %optflags \
 	-funroll-loops \
+%ifnarch e2k
 	-fexpensive-optimizations \
+%endif
 	-fomit-frame-pointer \
 	-I%_includedir/libgtop-2.0"
 %autoreconf
@@ -84,6 +86,9 @@ install -pDm644 %SOURCE2  %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Thu Feb 23 2017 Michael Shigorin <mike@altlinux.org> 1.2.4-alt4
+- E2K: avoid -fexpensive-optimizations (lcc)
+
 * Tue Jun 10 2014 Michael Shigorin <mike@altlinux.org> 1.2.4-alt3
 - rebuilt against recent libgtop
 - spec converted to UTF-8
