@@ -3,7 +3,7 @@
 
 Name: %{oname}13
 Version: %major.3
-Release: alt1
+Release: alt2
 
 Summary: Multiplatform C++ GUI Fast Light ToolKit
 License: LGPL
@@ -23,7 +23,7 @@ BuildRequires: gcc-c++ groff-base libICE-devel libXext-devel
 BuildRequires: libXft-devel libalsa-devel libjpeg-devel libGL-devel
 BuildRequires: libpng-devel xprop libX11-devel fontconfig-devel
 BuildPreReq: libfreetype-devel libGLU-devel libcairo-devel
-BuildPreReq: libopensm-devel libXtst-devel libXcomposite-devel
+BuildPreReq: libXtst-devel libXcomposite-devel
 BuildPreReq: libXcursor-devel libXdamage-devel libXdmcp-devel
 BuildPreReq: libXfixes-devel libXi-devel libXinerama-devel
 BuildPreReq: libXpm-devel libXrandr-devel libXt-devel libXv-devel
@@ -120,6 +120,9 @@ cp -fR fltk-%version/documentation/html %buildroot%_docdir/fltk-%version/
 %exclude %_docdir/fltk-%version/README
 
 %changelog
+* Thu Feb 23 2017 Michael Shigorin <mike@altlinux.org> 1.3.3-alt2
+- Dropped BR: libopensm-devel (what was it doing here?!)
+
 * Tue Apr 26 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3.3-alt1
 - cas@:
  + New version
