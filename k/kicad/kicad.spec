@@ -1,12 +1,13 @@
 Summary: An open source software for the creation of electronic schematic diagrams
 Summary(ru_RU.UTF-8): Программа с открытым исходным кодом для проектирования электронных схем
 Name: kicad
-Version: 4.0.5
-Release: alt2
+Version: 4.0.6
+Release: alt1
 Epoch: 1
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+# Source-url: https://github.com/KiCad/kicad-source-mirror/archive/%version.tar.gz
 Patch: kicad-boost-1_61-boost-context-changes.patch
 License: GPLv2+
 Group: Sciences/Computer science
@@ -16,14 +17,15 @@ Url: https://code.launchpad.net/kicad
 BuildRequires(pre): cmake rpm-macros-cmake
 # Automatically added by buildreq on Mon Sep 28 2015
 # optimized out: at-spi2-atk boost-devel boost-devel-headers boost-polygon-devel cmake cmake-modules fontconfig libGL-devel libGLU-devel libX11-devel libat-spi2-core libcairo-gobject libcom_err-devel libgdk-pixbuf libkrb5-devel libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server pkg-config python-base python-devel python-modules swig-data xorg-xproto-devel xz
-BuildRequires: boost-asio-devel boost-asio-devel boost-context-devel boost-filesystem-devel boost-geometry-devel boost-interprocess-devel boost-locale-devel boost-program_options-devel ccmake doxygen gcc-c++ libGLEW-devel libcairo-devel libssl-devel swig libwxGTK3.1-gtk2-devel pkgconfig(gobject-2.0) libpcre-devel libpixman-devel pkgconfig(harfbuzz) pkgconfig(expat) pkgconfig(libdrm) pkgconfig(xdmcp) pkgconfig(xdamage) pkgconfig(xxf86vm) dos2unix
+BuildRequires: boost-devel boost-asio-devel boost-asio-devel boost-context-devel boost-filesystem-devel boost-geometry-devel boost-interprocess-devel boost-locale-devel boost-program_options-devel ccmake doxygen gcc-c++ libGLEW-devel libcairo-devel libssl-devel swig libwxGTK3.1-gtk2-devel pkgconfig(gobject-2.0) libpcre-devel libpixman-devel pkgconfig(harfbuzz) pkgconfig(expat) pkgconfig(libdrm) pkgconfig(xdmcp) pkgconfig(xdamage) pkgconfig(xxf86vm) dos2unix libcurl-devel
+BuildRequires: openmpi-devel 
 BuildRequires: ImageMagick-tools
 BuildRequires: desktop-file-utils
 Requires: %name-data = %version
-Requires: %name-library = %version
+Requires: %name-library
 Requires: %name-doc
 Requires: %name-i18n
-%add_findreq_skiplist %_docdir/%name
+%add_python_req_skip kicad
 
 %description
 Kicad is an open source (GPL) software for the creation of electronic
@@ -52,6 +54,7 @@ Summary(ru_RU.UTF-8): Программа с открытым исходным к
 Group: Sciences/Computer science
 BuildArch: noarch
 Requires: icon-theme-hicolor
+%add_python_req_skip kicad
 
 %description data
 Kicad is an open source (GPL) software for the creation of electronic
@@ -90,9 +93,7 @@ gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом 
 	-DKICAD_SCRIPTING=ON \
 	-DKICAD_SCRIPTING_MODULES=ON \
 	-DKICAD_SCRIPTING_WXPYTHON=OFF \
-	-DKICAD_SKIP_BOOST=ON \
-	-DKICAD_REPO_NAME=stable \
-	-DKICAD_BUILD_VERSION=%version
+	-DKICAD_SKIP_BOOST=ON
 
 %make_build -C BUILD
 
@@ -121,6 +122,9 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %_datadir/%name/
 
 %changelog
+* Wed Feb 22 2017 Anton Midyukov <antohami@altlinux.org> 1:4.0.6-alt1
+- New version 4.0.6
+
 * Mon Jan 30 2017 Anton Midyukov <antohami@altlinux.org> 1:4.0.5-alt2
 - Fix build with gcc6 and boost-1.61
 
