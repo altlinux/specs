@@ -1,8 +1,9 @@
 %define abiversion 2
+%def_with qt
 
 Name:    unixODBC
 Version: 2.3.4
-Release: alt1
+Release: alt2
 
 Summary: Unix ODBC driver manager and database drivers
 Summary(ru_RU.UTF-8): Система управления драйверами ODBC для unix 
@@ -29,7 +30,7 @@ Patch5: %name-remove-rpath-to-libdir.patch
 Patch11: keep-typedefs.patch
 Patch12: so-version-bump.patch
 
-BuildRequires(pre): qt4-devel
+%{?_with_qt:BuildRequires(pre): qt4-devel}
 BuildRequires: flex gcc-c++ libltdl7-devel libreadline-devel
 BuildRequires: chrpath
 
@@ -43,11 +44,11 @@ access a MySQL database, and/or the postgresql-odbc package for
 PostgreSQL.
 
 %description -l ru_RU.UTF-8
-UnixODBC - это свободное ODBC решение.
+UnixODBC - это свободное ODBC-решение.
 ODBC представляет из себя открытую спецификацию для разработки
 приложений с универсальным API для доступа к базам данных.
-Базы данных включает в себя сервера SQL и другие источники данных,
-поддерживаемые ODBC драйверами.
+Базы данных включает в себя серверы SQL и другие источники данных,
+поддерживаемые ODBC-драйверами.
 
 %package -n lib%name%abiversion
 Summary: Shared libraries for ODBC
@@ -62,7 +63,7 @@ platform.  This package contains the shared libraries.
 
 %description -n lib%name%abiversion -l ru_RU.UTF-8
 unixODBC представляет из себя полную спецификацию ODBC для Linux
-платформы.  Этот пакет содержит в себе раделяемые библиотеки.
+платформы.  Этот пакет содержит в себе разделяемые библиотеки.
 
 %package -n lib%name-devel-compat
 Summary: Compat libraries for Java build
@@ -131,11 +132,13 @@ export CFLAGS CXXFLAGS
 %configure \
 	--with-gnu-ld \
 	:	--enable-threads \
-	--enable-gui \
 	--enable-drivers \
 	--enable-driverc \
 	--enable-ltdllib \
+%if_with qt
+	--enable-gui \
 	--with-qt-libraries=%_qt4dir/lib \
+%endif
 	--disable-static
 %make_build
 
@@ -184,6 +187,9 @@ find doc -name Makefile\* -delete
 %exclude %_libdir/libodbcmyS.so
 
 %changelog
+* Thu Feb 23 2017 Michael Shigorin <mike@altlinux.org> 2.3.4-alt2
+- BOOTSTRAP: introduce qt knob (on by default)
+
 * Thu Aug 04 2016 Andrey Cherepanov <cas@altlinux.org> 2.3.4-alt1
 - New version (ALT #32355)
 - [patch] Remove rpath with default libdir
