@@ -1,6 +1,8 @@
+%def_without doc
+
 Name: icu
 Version: 5.6.1
-Release: alt1.1
+Release: alt1.1.1
 Epoch: 1
 
 Summary: International Components for Unicode
@@ -17,7 +19,8 @@ Patch4: gennorm2-man.patch
 Patch5: icuinfo-man.patch
 Patch6: armv7hl-disable-tests.patch
 
-BuildRequires: doxygen gcc-c++ libstdc++-devel
+BuildRequires: gcc-c++ libstdc++-devel
+%{?_with_doc:BuildRequires: doxygen}
 
 %define libicu libicu56
 
@@ -75,7 +78,7 @@ support. This package contains sample code for ICU
 %patch3 -p1 -b .icu7601.Indic-ccmp.patch
 %patch4 -p1 -b .gennorm2-man.patch
 %patch5 -p1 -b .icuinfo-man.patch
-%ifarch armv7hl
+%ifarch armv7hl e2k
 %patch6 -p1 -b .armv7hl-disable-tests.patch
 %endif
 
@@ -119,6 +122,9 @@ rm -f %buildroot%_bindir/icuinfo
 %_datadir/icu/samples
 
 %changelog
+* Thu Jan 12 2017 Michael Shigorin <mike@altlinux.org> 1:5.6.1-alt1.1.1
+- BOOTSTRAP: drop unused BR: doxygen
+
 * Tue Mar 15 2016 Yuri N. Sedunov <aris@altlinux.org> 1:5.6.1-alt1.1
 - fixed altbug #31778
 
