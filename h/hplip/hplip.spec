@@ -13,7 +13,7 @@
 # note: flag dropped upstream
 %def_enable udevacl
 %def_disable halacl
-%def_without ernie
+%def_with ernie
 %if_with backport
 %define cups_filters foomatic-filters
 %else
@@ -29,8 +29,12 @@ Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet
 Name: hplip
 Epoch: 1
 Version: 3.16.11
-Release: alt2
+Release: alt3
+%if_without ernie
 License: GPL/MIT/BSD
+%else
+License: GPL/MIT/BSD/hardware specific
+%endif
 Group: Publishing
 #URL: http://hplip.sourceforge.net -- old
 URL: http://hplipopensource.com/
@@ -61,6 +65,7 @@ Requires: gnupg
 %if_enabled python_code
 ###Requires: python
 %if_with python3
+BuildRequires(pre): rpm-build-python3
 %add_python3_lib_path %_datadir/%name
 %else
 %add_python_lib_path %_datadir/%name
@@ -126,6 +131,7 @@ Patch5: hplip-3.15.9-alt-link-libhpipp.patch
 Patch6: hplip-3.15.9-alt-systemd.patch
 Patch7: hplip-3.16.7-alt-link-python2.patch
 Patch8: hplip-3.16.7-alt-link-python3.patch
+Patch9: hplip-3.16.11-alt-auth.patch
 
 Patch10: http://www.linuxprinting.org/download/printing/hpijs/hpijs-1.4.1-rss.1.patch
 # it is patch 10 rediffed
@@ -431,6 +437,7 @@ SANE driver for scanners in HP's multi-function devices (from HPLIP)
 %else
 #patch7 -p2
 %endif
+%patch9 -p2
 
 
 # The pstotiff filter is rubbish so replace it (launchpad #528394).
@@ -1042,6 +1049,11 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Thu Feb 23 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.16.11-alt3
+- added hplip-3.16.11-alt-auth.patch
+- disabled noernie patch
+- added license for ErnieFilter code
+
 * Wed Feb 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.16.11-alt2
 - Sisyphus release (closes: #33106)
 - PPD* subpackages are now optional as they are deprecated
