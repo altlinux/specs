@@ -1,6 +1,6 @@
 Summary: Documentation and tutorials for kicad
 Name: kicad-doc
-Version: 4.0.4
+Version: 4.0.5
 Epoch: 1
 Release: alt1
 Group: Documentation
@@ -114,13 +114,13 @@ Polish translation.
 %setup
 
 %build
-%cmake  -DKICAD_STABLE_VERSION:BOOL=ON \
+%cmake_insource \
 		-DCMAKE_BUILD_TYPE=Release \
 		-DBUILD_FORMATS=html
-%make_build -C BUILD
+%make_build
 
 %install
-%makeinstall_std -C BUILD
+%makeinstall_std
 
 %files
 %dir %_datadir/doc/kicad/help
@@ -149,6 +149,9 @@ Polish translation.
 %_datadir/doc/kicad/help/pl
 
 %changelog
+* Thu Feb 23 2017 Anton Midyukov <antohami@altlinux.org> 1:4.0.5-alt1
+- new version 4.0.5
+
 * Wed Aug 31 2016 Anton Midyukov <antohami@altlinux.org> 1:4.0.4-alt1
 - New version 4.0.4
 
