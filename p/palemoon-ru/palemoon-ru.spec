@@ -4,26 +4,31 @@
 %define cid_dict       ru@dictionaries.addons.mozilla.org
 %define cid_dict_dir   %palemoon_noarch_extensionsdir/%cid_dict
 
-
 %define min_version	27.0.99
 %define max_version	27.*
 
+%define bname		newmoon
+%define sdir		searchplugins
+%define newmoon_dir 	%_datadir/%bname/browser/
+%define search_dir 	%newmoon_dir%sdir
 
 Name: palemoon-ru
 Version: 27.1.1
-Release: alt1.RC1
+Release: alt2.RC1
+
 Summary: Russian (RU) Language Pack for Pale Moon
-
-
 License: MPL/GPL/LGPL
+
 Group: Networking/WWW
 Url: http://www.palemoon.org/langpacks.shtml
 BuildArch: noarch
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
-Source: ru_palemoon_%version.xpi
+Source:  ru_palemoon_%version.xpi
 Source2: searchplugins.tar
+Patch:   %name-27.1.1-search.patch
+
 
 Requires: palemoon >= %version
 Requires: hunspell-ru
@@ -39,13 +44,10 @@ The Palemoon Russian translation and dictionary.
 
 %prep
 %setup -c -n %name-%version/%cid
+%patch -p2
 
-pwd
-ls
+tar -xf %SOURCE2
 
-pushd browser/
- tar -xf %SOURCE2
-popd
 
 
 %install
@@ -55,8 +57,16 @@ mkdir -p -- \
 	%buildroot/%cid_dir \
 	%buildroot/%cid_dict_dir/dictionaries
 
+install -d -m 755 %buildroot/%newmoon_dir/
+
 # Install translation
 cp -r -- %cid/* %buildroot/%cid_dir
+
+
+cd -
+
+cp -r -- %sdir  %buildroot/%search_dir/
+
 
 #sed -r -i \
 #    -e 's,<em:maxVersion>4.0</em:maxVersion>,<em:maxVersion>4.*</em:maxVersion>,g' \
@@ -88,11 +98,16 @@ EOF
 ln -s %_datadir/myspell/ru_RU.aff %buildroot/%cid_dict_dir/dictionaries/ru.aff
 ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 
+
 %files
 %cid_dir
 %cid_dict_dir
+%search_dir
 
 %changelog
+* Fri Feb 24 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.1.1-alt2.RC1
+- Fix searchplugins
+
 * Wed Feb 22 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.1.1-alt1.RC1
 - Add Russian searchplugins
 
@@ -137,4 +152,5 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 
 * Thu Jul 16 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.4-alt1
 - initial build for ALT Linux Sisyphus
+
 

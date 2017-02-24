@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 
 Name: palemoon
 Version: 27.1.1
-Release: alt1.2
+Release: alt2.0
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -25,8 +25,9 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 %define palemoon_cid                    \{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4\}
 
-%define palemoon_prefix                 %_libdir/%bname
-%define palemoon_datadir                %_datadir/%sname
+%define palemoon_prefix                 %_datadir/%bname
+%define palemoon_datadir                %_datadir/%bname
+%define palemoon_bindir                 %_libdir/%bname
 %define palemoon_arch_extensionsdir     %palemoon_prefix/extensions
 %define palemoon_noarch_extensionsdir   %palemoon_datadir/extensions
 
@@ -113,6 +114,7 @@ Conflicts: palemoon < %version-%release
 
 Requires: libgstreamer1.0 gst-libav
 Requires: gst-plugins-base1.0
+Requires: newmoon-data = %epoch:%version-%release
 
 # Protection against fraudulent DigiNotar certificates
 Requires: libnss
@@ -127,6 +129,25 @@ cross-platform.
 Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 Интернет-браузер %sname - кроссплатформенная модификация браузера Mozilla Firefox ,
 созданная с использованием языка XUL для описания интерфейса пользователя.
+
+
+%package -n newmoon-data
+Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
+Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
+Group: Networking/WWW
+BuildArch: noarch
+
+%description -n newmoon-data
+The New Moon browser, an unofficial branding of the Pale Moon project browser
+The %sname project is a redesign of Mozilla's  Firefox browser component,
+written using the XUL user interface language and designed to be
+cross-platform.
+
+%description -n newmoon-data -l ru_RU.UTF8
+Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
+Интернет-браузер %sname - кроссплатформенная модификация браузера Mozilla Firefox ,
+созданная с использованием языка XUL для описания интерфейса пользователя.
+
 
 %package -n rpm-build-palemoon
 Summary: RPM helper macros to rebuild %name packages
@@ -225,6 +246,8 @@ echo "ac_add_options --with-pthreads" >> .mozconfig
 echo "ac_add_options --enable-shared-js"  >> .mozconfig
 echo "ac_add_options --enable-jemalloc --enable-jemalloc-lib" >> .mozconfig
 echo "ac_add_options --x-libraries=/usr/lib/X11" >> .mozconfig
+# echo "ac_add_options --sharedstatedir=%_datadir" >> .mozconfig
+# echo "ac_add_options --datadir=%_datadir" >> .mozconfig
 
 # echo "ac_add_options --with-system-nss"  >> .mozconfig
 
@@ -276,7 +299,6 @@ export srcdir="$PWD"
 export SHELL=/bin/sh
 
 
-
 %__autoconf
 
 # On x86 architectures, Mozilla can build up to 4 jobs at once in parallel,
@@ -314,12 +336,12 @@ make -f client.mk \
 gcc %optflags \
 	-Wall -Wextra \
 	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
-	-DMOZ_PROGRAM=\"%palemoon_prefix/%sname-bin\" \
+	-DMOZ_PROGRAM=\"%palemoon_bindir/%sname-bin\" \
 	%SOURCE7 -o %sname
 
 
 %install
-%set_verify_elf_method unresolved=strict
+#set_verify_elf_method unresolved=strict
 
 cd %sname
 
@@ -329,9 +351,16 @@ mkdir -p \
 	#
 
 pushd objdir
-
 %makeinstall_std MOZ_APP_VERSION=
 popd
+
+# icons
+for s in 16 32 48; do
+	install -D -m 644 \
+		browser/branding/unofficial/content/default$s.png \
+		%buildroot/%_iconsdir/hicolor/${s}x${s}/apps/%bname.png
+done
+
 
 if [ -f %buildroot/%_bindir/%sname ];then
     rm  -f %buildroot/%_bindir/%sname
@@ -381,16 +410,40 @@ install -D -m 644 %SOURCE6 ./%_desktopdir/%bname.desktop
 mkdir -p ./%_altdir
 printf '%_bindir/xbrowser\t%_bindir/%bname\t100\n' >./%_altdir/%bname
 
+
+install -d  %buildroot%palemoon_bindir/components/
+install -d  %buildroot%palemoon_bindir/browser/components/
+
+install -m 644 %buildroot%palemoon_prefix/components/* %buildroot%palemoon_bindir/components/
+install -m 644 %buildroot%palemoon_prefix/browser/components/* %buildroot%palemoon_bindir/browser/components/
+
+rm -f %buildroot%palemoon_prefix/components/*
+rmdir  %buildroot%palemoon_prefix/components/
+
+rm -f %buildroot%palemoon_prefix/browser/components/*
+rmdir %buildroot%palemoon_prefix/browser/components/
+
+
+mv %buildroot/%palemoon_prefix/{palemoon,palemoon-bin,plugin-container,run-mozilla.sh} %buildroot%palemoon_bindir/
+mv %buildroot/%palemoon_prefix/*.so* %buildroot%palemoon_bindir/
+mv %buildroot/%palemoon_prefix/*.manifest %buildroot%palemoon_bindir/
+
+
+ln -s %palemoon_prefix/{chrome,defaults,dictionaries,hyphenation,modules,res} %buildroot/%palemoon_bindir/
+ln -s %palemoon_prefix/{dependentlibs.list,greprefs.js,libfreebl3.chk,libnssdbm3.chk,libsoftokn3.chk,platform.ini} %buildroot/%palemoon_bindir/
+ln -s %palemoon_prefix/browser/{application.ini,blocklist.xml,chrome,chrome.manifest,defaults,extensions,icons,modules,searchplugins} %buildroot/%palemoon_bindir/browser/
+
+
 rm -f -- \
 	./%palemoon_prefix/%bname \
 	./%palemoon_prefix/removed-files
 
 # Add real RPATH
 (set +x
-	rpath="/$(printf %%s '%palemoon_prefix' |tr '[:print:]' '_')"
+	rpath="/$(printf %%s '%palemoon_bindir' |tr '[:print:]' '_')"
 
 	find \
-		%buildroot/%palemoon_prefix \
+		%buildroot/%palemoon_bindir \
 	-type f |
 	while read f; do
 		t="$(readlink -ev "$f")"
@@ -398,20 +451,14 @@ rm -f -- \
 		file "$t" | fgrep -qs ELF || continue
 
 		if chrpath -l "$t" | fgrep -qs "PATH=$rpath"; then
-			chrpath -r "%palemoon_prefix" "$t"
+			chrpath -r "%palemoon_bindir" "$t"
 		fi
 	done
     )
 popd
 
-
-# icons
-for s in 16 32 48; do
-	install -D -m 644 \
-		browser/branding/unofficial/content/default$s.png \
-		%buildroot/%_iconsdir/hicolor/${s}x${s}/apps/%bname.png
-done
-
+install -d %buildroot%palemoon_prefix/browser/chrome/icons/default/
+install -m 644 browser/branding/unstable/content/icon48.png %buildroot%palemoon_prefix/browser/chrome/icons/default/PMaboutDialog48.png
 
 
 # Add Docdir
@@ -419,6 +466,7 @@ install -D -m 644 %SOURCE9 ../
 install -D -m 644 %SOURCE10 ../
 install -D -m 644 AUTHORS ../
 install -D -m 644 LICENSE ../
+
 
 %pre
 for n in defaults browserconfig.properties; do
@@ -429,14 +477,19 @@ done
 %doc AUTHORS LICENSE HISTORY_GIT Changelog
 %_altdir/%bname
 %_bindir/%sname
-%dir %palemoon_prefix
-%palemoon_prefix/*
+%dir %palemoon_bindir
+%palemoon_bindir/*
 %mozilla_arch_extdir/%palemoon_cid
 %mozilla_noarch_extdir/%palemoon_cid
+
+%files -n %bname-data
+%dir %palemoon_prefix
+%palemoon_prefix/*
 %_desktopdir/%bname.desktop
 %_miconsdir/%bname.png
 %_niconsdir/%bname.png
 %_liconsdir/%bname.png
+
 
 %files -n rpm-build-%sname
 %_rpmmacrosdir/%sname
@@ -444,6 +497,9 @@ done
 %exclude %_datadir/idl/*
 
 %changelog
+* Sat Feb 25 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.1.1-alt2.0
+- Add norch package newmoon-data
+
 * Fri Feb 24 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.1.1-alt1.2
 - Correct searchplugins.tar
 
@@ -673,4 +729,3 @@ done
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
-
