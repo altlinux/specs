@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 
 Name: palemoon
 Version: 27.1.1
-Release: alt1.1
+Release: alt1.2
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -444,6 +444,9 @@ done
 %exclude %_datadir/idl/*
 
 %changelog
+* Fri Feb 24 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.1.1-alt1.2
+- Correct searchplugins.tar
+
 * Wed Feb 22 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.1.1-alt1.1
 - Remove searchplugins.tar
 
