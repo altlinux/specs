@@ -8,7 +8,7 @@
 
 Name: bacula
 Version: 5.2.13
-Release: alt10
+Release: alt11
 
 License: AGPLv3
 Summary: Network based backup program
@@ -92,8 +92,9 @@ Group: Archiving/Backup
 %package bat
 Summary: Network based backup program (QT4 Bacula Administration Tool)
 Group: Archiving/Backup
-BuildRequires(pre): libqt4-devel
-Requires: libqt4-core >= %{get_version libqt4-core}
+BuildRequires: libqt4-devel
+# see bacula/ReleaseNotes
+Requires: libqt4-core >= 4.8.4
 %endif
 
 %package director-common
@@ -255,6 +256,11 @@ export MTX=%_sbindir/mtx
 autoheader -B autoconf autoconf/configure.in >autoconf/config.h.in
 autoconf -B autoconf autoconf/configure.in >configure
 
+%ifarch e2k
+# http://git.net/ml/bacula/2013-05/msg00074.html
+export ac_cv_func_chflags=no
+%endif
+
 %configure \
 	--with-openssl \
 	--with-python \
@@ -274,9 +280,15 @@ autoconf -B autoconf autoconf/configure.in >configure
 	--with-sd-group=bacula \
 	--with-postgresql \
 	--with-sqlite3 \
+%if_enabled tray
 	--enable-tray-monitor \
+%endif
+%if_enabled bat
 	--enable-bat=yes \
+%endif
+%if_enabled bwx
 	--enable-bwx-console \
+%endif
 	--with-mysql \
 	--with-logdir=%_logdir \
 	#
@@ -656,6 +668,11 @@ chown -f bacula:bacula %_localstatedir/bacula/* ||:
 %files
 
 %changelog
+* Fri Feb 24 2017 Michael Shigorin <mike@altlinux.org> 5.2.13-alt11
+- fixed bat, tray knobs to actually change configure args
+  + changed Qt version requirement to the documented one
+- E2K: there are no chflags apparently
+
 * Wed Jan 18 2017 Denis Medvedev <nbr@altlinux.org> 5.2.13-alt10
 - fix trigger that makes errors on empty database uninstalls.  (ALT #33013)
 
