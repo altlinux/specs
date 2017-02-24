@@ -3,8 +3,8 @@
 %define lname     libmosquitto
 
 Name: mosquitto
-Version: 1.4.10
-Release: alt1
+Version: 1.4.11
+Release: alt2
 
 Summary: Mosquitto is an open source implementation of a server for version 3.1 and 3.1.1 of the MQTT protocol
 
@@ -14,8 +14,11 @@ Url: http://mosquitto.org
 
 Packager: Pavel Vainerman <pv@altlinux.ru>
 
-# http://mosquitto.org/
+# Source-url: http://mosquitto.org/files/source/%name-%version.tar.gz
 Source: %name-%version.tar
+Source1: %name
+Source2: %name.sysconf
+Source3: %name.conf
 
 # Automatically added by buildreq on Mon Feb 01 2016
 # optimized out: libcom_err-devel libkrb5-devel libstdc++-devel
@@ -61,13 +64,13 @@ mv -f %buildroot/usr/lib/* %buildroot%_libdir/
 chmod a-x %buildroot%_includedir/*.h
 
 mkdir -p %buildroot/%_initdir
-mv .gear/%name %buildroot%_initdir/
+cp %SOURCE1 %buildroot%_initdir/
 
 mkdir -p %buildroot/%_sysconfdir/sysconfig
-mv .gear/%name.sysconf %buildroot%_sysconfdir/sysconfig/%name
+cp %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 
 mkdir -p %buildroot/%_sysconfdir/%name
-mv .gear/%name.conf %buildroot%_sysconfdir/%name
+cp %SOURCE3 %buildroot%_sysconfdir/%name
 
 %pre
 %_sbindir/groupadd -r -f %mosquitto_group 2>/dev/null ||:
@@ -100,6 +103,12 @@ mv .gear/%name.conf %buildroot%_sysconfdir/%name
 %_libdir/*.so
 
 %changelog
+* Sat Feb 25 2017 Pavel Vainerman <pv@altlinux.ru> 1.4.11-alt2
+- up build
+
+* Fri Feb 24 2017 Pavel Vainerman <pv@altlinux.ru> 1.4.11-alt1
+- new version (1.4.11) with rpmgs script
+
 * Fri Sep 30 2016 Pavel Vainerman <pv@altlinux.ru> 1.4.10-alt1
 - build new version
 
