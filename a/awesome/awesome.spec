@@ -1,6 +1,6 @@
 Name: awesome
-Version: 3.5.9
-Release: alt3
+Version: 4.0
+Release: alt1
 Group: Graphical desktop/Other
 License: GPL2+
 
@@ -14,17 +14,17 @@ Patch0:%name-%version-alt.patch
 Summary: A window manager initialy based on a dwm code rewriting
 
 BuildRequires: ImageMagick-tools asciidoc cmake gcc-c++ gperf
-BuildRequires: imlib2-devel libdbus-devel libev-devel liblua5-devel
+BuildRequires: imlib2-devel libdbus-devel libev-devel liblua5.3-devel
 BuildRequires: libncurses-devel libpango-devel libreadline-devel xmlto
 BuildRequires: libxdg-basedir-devel libstartup-notification-devel
 BuildRequires: libXdmcp-devel libgdk-pixbuf-devel lgi
 BuildRequires: lua5.3 libpango-gir
+BuildRequires: libpcre-devel libxkbcommon-devel libxkbcommon-x11-devel libxcbutil-xrm-devel
 
 BuildPreReq: libxcbutil-devel >= 0.3.8 libxcbutil-keysyms-devel >= 0.3.8
 BuildPreReq: libxcbutil-icccm-devel >= 0.3.8 libxcbutil-cursor-devel
 
 Requires: libstartup-notification >= 0.10-alt1
-Requires: design-graphics
 Requires: lgi >= 0.9.1
 Requires: libpango-gir
 Requires: libcairo-gobject
@@ -87,9 +87,12 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %_mandir/*/man5/aw*
 %_datadir/%name
 %_desktopdir/%name.desktop
-%doc AUTHORS LICENSE README BUGS PATCHES STYLE
+%doc LICENSE build/docs/*.md
 
 %changelog
+* Fri Feb 24 2017 Terechkov Evgenii <evg@altlinux.org> 4.0-alt1
+- 4.0 (Harder, Better, Faster, Stronger)
+
 * Sat Jan 28 2017 Terechkov Evgenii <evg@altlinux.org> 3.5.9-alt3
 - Fix build
 
