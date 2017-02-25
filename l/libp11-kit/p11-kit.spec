@@ -9,7 +9,7 @@
 #%%define trust_paths %_sysconfdir/pki/ca-trust/source:%_datadir/pki/ca-trust-source
 
 Name: lib%_name
-Version: 0.23.3
+Version: 0.23.4
 Release: alt1
 
 Summary: Library for loading and sharing PKCS#11 modules
@@ -121,18 +121,24 @@ EOF
 %dir %_datadir/%_name/modules
 %dir %_sysconfdir/pkcs11
 %dir %_sysconfdir/pkcs11/modules
+%_prefix/lib/systemd/user/%_name-remote.socket
+%_prefix/lib/systemd/user/%_name-remote@.service
+%_prefix/lib/systemd/user/sockets.target.wants/%_name-remote.socket
+%_libdir/pkcs11/%_name-client.so
+%_libexecdir/%_name/%_name-server
+%doc %_name/pkcs11.conf.example
 %doc AUTHORS COPYING NEWS README
-%doc p11-kit/pkcs11.conf.example
+
 %exclude %_sysconfdir/pkcs11/pkcs11.conf.example
+%exclude %_libdir/pkcs11/*.la
 
 %if_enabled trust_module
 %files trust
 %_libdir/pkcs11/%_name-trust.so
 %_datadir/%_name/modules/%_name-trust.module
-%_libexecdir/%_name/p11-kit-extract-trust
+%_libexecdir/%_name/%_name-extract-trust
 %_libexecdir/%_name/trust-extract-compat
 #%_altdir/%name
-%exclude %_libdir/pkcs11/p11-kit-trust.la
 %endif
 
 %files devel
@@ -144,6 +150,9 @@ EOF
 %_datadir/gtk-doc/html/%_name
 
 %changelog
+* Sat Feb 25 2017 Yuri N. Sedunov <aris@altlinux.org> 0.23.4-alt1
+- 0.23.4
+
 * Fri Dec 23 2016 Yuri N. Sedunov <aris@altlinux.org> 0.23.3-alt1
 - 0.23.3
 
