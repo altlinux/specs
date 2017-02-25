@@ -1,5 +1,5 @@
 Name:           rsibreak
-Version:        0.12.5
+Version:        0.12.6
 Release:        alt1
 Summary:        A small utility which bothers you at certain intervals
 Group:          Graphical desktop/KDE
@@ -55,6 +55,9 @@ This can help people to prevent Repetive Strain Injury.
 %_datadir/icons/hicolor/*/actions/*.png
 
 %changelog
+* Sat Feb 25 2017 Andrey Cherepanov <cas@altlinux.org> 0.12.6-alt1
+- new version 0.12.6
+
 * Tue Dec 20 2016 Andrey Cherepanov <cas@altlinux.org> 0.12.5-alt1
 - new version 0.12.5
 
