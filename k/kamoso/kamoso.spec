@@ -1,5 +1,5 @@
 Name:           kamoso
-Version:        3.2
+Version:        3.2.3
 Release:        alt1
 
 Group:          Video
@@ -8,7 +8,7 @@ URL:            http://projects.kde.org/kamoso/
 
 License:        GPLv2+
 
-Source0:        http://download.kde.org/stable/kamoso/3.1/src/%{name}-%{version}.tar.xz
+Source0:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++
@@ -69,6 +69,9 @@ install -Dm0644 org.kde.kamoso.appdata.xml %buildroot%_datadir/appdata/org.kde.k
 %doc %_K5doc/*/%name
 
 %changelog
+* Sat Feb 25 2017 Andrey Cherepanov <cas@altlinux.org> 3.2.3-alt1
+- new version 3.2.3
+
 * Wed Jun 15 2016 Andrey Cherepanov <cas@altlinux.org> 3.2-alt1
 - New version
 - New appdata.xml name
