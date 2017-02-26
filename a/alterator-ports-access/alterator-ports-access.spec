@@ -1,9 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-ports-access
-Version: 0.1
+Version: 0.2
 Release: alt1
-Packager: Packager: Andriy Stepanov <stanv@altlinux.ru>
 BuildArch: noarch
 Source:%name-%version.tar
 Summary: alterator module to control ports access
@@ -40,6 +39,9 @@ Alterator module to control serial/USB ports access
 /lib/udev/alterator-ports-access
 
 %changelog
+* Sun Feb 26 2017 Denis Medvedev <nbr@altlinux.org> 0.2-alt1
+- Emits alarm to system log via systemd.
+
 * Thu Dec 15 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.1-alt1
 - sub-device interfaces support added
 
