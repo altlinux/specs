@@ -5,7 +5,7 @@
 %define gtkver 2
 Name: lxde-%upstreamname
 Version: 0.5.3
-Release: alt4.20160321.1
+Release: alt5.20160321.1
 
 Summary: Lightweight X11 Display Manager
 License: GPL
@@ -25,7 +25,7 @@ Source1: alt.lxdm.pam
 Source2: alt.lxdm.conf
 Source3: alt.Xsession
 
-BuildPreReq: imake intltool libConsoleKit2-devel libXmu-devel libgtk+%gtkver-devel libpam-devel xinitrc xorg-cf-files pkgconfig(systemd)
+BuildPreReq: imake intltool libXmu-devel libgtk+%gtkver-devel libpam-devel xinitrc xorg-cf-files pkgconfig(systemd)
 Requires: gtk3-theme-clearlooks-phenix
 %add_findreq_skiplist %_sbindir/%upstreamname
 
@@ -44,12 +44,10 @@ KDM in LXDE distros. It's still in very early stage of development.
 
 %build
 %autoreconf
-%if %gtkver==3
-    %configure --enable-gtk3
-%else
-    %configure
-%endif
-#touch -r po/Makefile po/stamp-it
+%configure \
+        --enable-gtk%gtkver \
+        --disable-consolekit
+
 %make_build
 
 %install
@@ -86,12 +84,17 @@ ln -s %_datadir/%upstreamname/themes/%theme_name/wave.svg %buildroot%_datadir/%u
 %_libexecdir/lxdm-numlock
 %_libexecdir/lxdm-session
 %_sysconfdir/lxdm/Xsession
-%config %_sysconfdir/lxdm/lxdm.conf
+%config(noreplace) %_sysconfdir/lxdm/lxdm.conf
 %_bindir/*
 %_datadir/%upstreamname
 %_unitdir/lxdm.service
 
 %changelog
+* Sun Feb 26 2017 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt5.20160321.1
+- config(noreplace) lxdm.conf
+- disabled build with consolekt
+- set default session LXDE
+
 * Sat Feb 11 2017 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt4.20160321.1
 - Change theme to clearlooks-phenix
 
