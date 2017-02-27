@@ -1,6 +1,6 @@
 Name:		doublecmd
 Summary:	Twin-panel (commander-style) file manager (GTK2 and QT4)
-Version:	0.7.7
+Version:	0.7.8
 Release:	alt1
 Url:		http://doublecmd.sourceforge.net
 
@@ -11,7 +11,7 @@ Source1:	%name-qt.desktop
 License:	GPLv2
 Group:		File tools
 
-BuildRequires: fpc >= 2.6.2 fpc-src glib2-devel libgtk+2-devel lazarus >= 1.0.10 libQt4Pas5-devel >= 2.5
+BuildRequires: fpc >= 2.6.2 fpc-src glib2-devel libgtk+2-devel lazarus >= 1.0.10 libQt4Pas5-devel >= 2.5 /usr/bin/convert
 BuildRequires: libncurses-devel
 BuildRequires: libdbus-devel
 BuildRequires: bzlib-devel
@@ -69,6 +69,12 @@ install -m 0644 ./%name-qt.zdli %buildroot%_libdir/%name/%name-qt.zdli
 ln -s ../%_lib/%name/%name-qt %buildroot%_bindir/%name-qt
 install -m 0644 %SOURCE1 %buildroot%_desktopdir/%name-qt.desktop
 
+# icons
+%__mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
+convert -resize 48x48 pixmaps/mainicon/alt/256px-dcfinal.png %buildroot%_liconsdir/%name.png
+convert -resize 32x32 pixmaps/mainicon/alt/256px-dcfinal.png %buildroot%_niconsdir/%name.png
+convert -resize 16x16 pixmaps/mainicon/alt/256px-dcfinal.png %buildroot%_miconsdir/%name.png
+
 %files -n %name-gtk
 %_bindir/%name
 %_libdir/%name/%name
@@ -91,9 +97,15 @@ install -m 0644 %SOURCE1 %buildroot%_desktopdir/%name-qt.desktop
 %_libdir/%name
 %_datadir/%name
 %_man1dir/%name.*
+%_miconsdir/%name.png
+%_niconsdir/%name.png
+%_liconsdir/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Feb 27 2017 Motsyo Gennadi <drool@altlinux.ru> 0.7.8-alt1
+- 0.7.8
+
 * Mon Dec 26 2016 Motsyo Gennadi <drool@altlinux.ru> 0.7.7-alt1
 - 0.7.7
 
