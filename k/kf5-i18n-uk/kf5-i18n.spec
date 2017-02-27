@@ -3,8 +3,8 @@
 %define lngg Ukrainian
 
 Name: kf5-i18n-%lng
-Version: 5.8.3
-Release: alt1
+Version: 5.9.2
+Release: alt1%ubt
 
 Group: Graphical desktop/KDE
 Summary: %lngg language support for KDE Workspace
@@ -19,7 +19,7 @@ Source1: kf5-l10n-%lng-docs-%version.tar
 Source100: template-main
 Source101: template-messages
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: libdb4-devel qt5-tools-devel
 BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static kf5-ki18n-devel
@@ -90,6 +90,12 @@ done
 #%lang(%lng) %_K5data/autocorrect/%{lng}_*.xml
 
 %changelog
+* Mon Feb 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
+* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.4-alt1
+- new version
+
 * Tue Nov 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt1
 - new version
 
