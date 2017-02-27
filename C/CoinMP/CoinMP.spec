@@ -3,7 +3,7 @@
 
 Name: CoinMP
 Version: 1.7.6
-Release: alt1.svn20140107
+Release: alt1.svn20140107.1
 Summary: C-API library that supports most of the functionality of CLP, CBC, and CGL projects
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -13,11 +13,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://projects.coin-or.org/svn/CoinMP/trunk
 Source: %name-%version.tar.gz
 
-BuildPreReq: doxygen graphviz libglpk-devel CoinBuildTools gcc-c++
+BuildPreReq: doxygen graphviz libglpk-devel CoinBuildTools gcc4.9-c++
 BuildPreReq: libCoinUtils-devel libCoinClp-devel libCoinCbc-devel
 BuildPreReq: libCoinOsi-devel libCoinCgl-devel libCoinVol-devel
 BuildPreReq: libCoinDyLP-devel libCoinSYMPHONY-devel %mpiimpl-devel
-BuildPreReq: chrpath
+BuildPreReq: chrpath libnuma-devel
 
 %description
 CoinMP is a C-API interface library that supports most of the
@@ -63,6 +63,7 @@ This package contains examples for CoinMP.
 %setup
 
 %build
+%set_gcc_version 4.9
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
@@ -112,6 +113,9 @@ rm -fR %buildroot%_docdir/coin
 #_bindir/*
 
 %changelog
+* Mon Feb 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.7.6-alt1.svn20140107.1
+- build fixed
+
 * Thu May 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.6-alt1.svn20140107
 - Version 1.7.6
 
