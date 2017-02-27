@@ -4,7 +4,7 @@
 %define oname OS
 Name: Coin%oname
 Version: 2.8.3
-Release: alt1.svn20140416
+Release: alt1.svn20140416.1
 Summary: COIN-OR Optimization Services (OS)
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -14,13 +14,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://projects.coin-or.org/svn/OS/trunk
 Source: %oname-%version.tar.gz
 
-BuildPreReq: doxygen graphviz libglpk-devel CoinBuildTools gcc-c++
+BuildPreReq: doxygen graphviz libglpk-devel CoinBuildTools gcc4.9-c++
 BuildPreReq: libCoinUtils-devel libCoinClp-devel libCoinCbc-devel
 BuildPreReq: libCoinCgl-devel libCoinCppAD-devel libCoinDyLP-devel
 BuildPreReq: libipopt-devel libCoinOsi-devel libCoinSYMPHONY-devel
 BuildPreReq: libCoinVol-devel libCoinBcp-devel libCoinBonmin-devel
 BuildPreReq: libCoinCouenne-devel CoinSample-devel
-BuildPreReq: liblapack-devel libmumps-devel
+BuildPreReq: liblapack-devel libmumps-devel libnuma-devel
 BuildPreReq: %mpiimpl-devel boost-devel chrpath
 
 Requires: lib%name = %version-%release
@@ -90,6 +90,7 @@ This package contains examples for COIN-OR Optimization Services
 %setup
 
 %build
+%set_gcc_version 4.9
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
@@ -147,6 +148,9 @@ done
 %doc %oname/applications
 
 %changelog
+* Mon Feb 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.8.3-alt1.svn20140416.1
+- build fixed
+
 * Thu May 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.3-alt1.svn20140416
 - Version 2.8.3
 
