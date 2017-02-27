@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pkgname requests
 %def_with python3
+%def_disable check
 
 Name:           python-module-requests
 Version:        2.12.4
-Release:        alt3
+Release:        alt4
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python
 
@@ -28,7 +29,7 @@ BuildRequires:  python-devel python-modules-json
 BuildRequires:  python-module-chardet
 BuildRequires:  python-module-urllib3 >= 1.13.1
 BuildRequires:  python-module-idna
-BuildRequires:  python-module-httpbin
+%{?_enable_check:BuildRequires: python-module-httpbin}
 BuildRequires:  python-module-setuptools-tests
 
 Requires:       ca-certificates
@@ -51,7 +52,7 @@ BuildRequires:  python3-devel
 BuildRequires:  python3-module-chardet
 BuildRequires:  python3-module-urllib3 >= 1.13.1
 BuildRequires:  python3-module-idna
-BuildRequires:  python3-module-httpbin
+%{?_enable_check:BuildRequires: python3-module-httpbin}
 BuildRequires:  python3-module-setuptools-tests
 Requires:       ca-certificates
 Requires:       python3-module-chardet
@@ -66,7 +67,7 @@ designed to make HTTP requests easy for developers.
 %endif
 
 %prep
-%setup -q -n requests-%{version}
+%setup -n requests-%{version}
 
 %patch0 -p1
 %patch1 -p1
@@ -129,6 +130,10 @@ popd
 %endif
 
 %changelog
+* Mon Feb 27 2017 Michael Shigorin <mike@altlinux.org> 2.12.4-alt4
+- BOOTSTRAP: introduce check knob (*off* by default),
+  put (unused) BR: python-module-httpbin under it
+
 * Mon Jan 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.12.4-alt3
 - removed bundled idna
 
