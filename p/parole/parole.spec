@@ -1,5 +1,5 @@
 Name: parole
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 # '1' for gstreamer-1.0
@@ -102,6 +102,9 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Feb 27 2017 Mikhail Efremov <sem@altlinux.org> 0.9.1-alt1
+- Updated to 0.9.1.
+
 * Mon Feb 13 2017 Mikhail Efremov <sem@altlinux.org> 0.9.0-alt1
 - Enabled debug (minimal).
 - devel: Fixed requires.
