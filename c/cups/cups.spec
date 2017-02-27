@@ -1,5 +1,5 @@
 Name: cups
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: Common Unix Printing System - server package
@@ -8,7 +8,7 @@ Group: System/Servers
 
 Url: http://www.cups.org
 
-Source: http://www.cups.org/software/%version/cups-%version-source.tar.bz2
+Source: http://www.cups.org/software/%version/cups-%version-source.tar.gz
 
 # READMEs
 Source10: README.alt
@@ -60,8 +60,7 @@ Patch32: FC-avahi-no-threaded.patch
 Patch33: FC-ipp-multifile.patch
 Patch34: FC-web-devices-timeout.patch
 Patch35: FC-synconclose.patch
-Patch36: FC-iso88591.patch
-Patch37: FC-lspp.patch
+Patch36: FC-lspp.patch
 
 ## Ubuntu patches
 Patch101: Ubuntu-pwg-raster-attributes.patch
@@ -221,8 +220,7 @@ services using the main CUPS library "libcups".
 %patch33 -p1 -b .ipp-multifile
 %patch34 -p1 -b .web-devices-timeout
 %patch35 -p1 -b .synconclose
-%patch36 -p1 -b .iso88591
-%patch37 -p1 -b .lspp
+%patch36 -p1 -b .lspp
 
 ## Ubuntu apply patches
 #patch101 -p1
@@ -429,6 +427,9 @@ install -D %name.alternative %buildroot%_altdir/%name
 %_man1dir/ipptool.*
 
 %changelog
+* Mon Feb 27 2017 Fr. Br. George <george@altlinux.ru> 2.2.2-alt1
+- Version up
+
 * Wed Nov 23 2016 Fr. Br. George <george@altlinux.ru> 2.2.1-alt1
 - Version up
 - Update patches
