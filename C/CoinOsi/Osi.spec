@@ -4,7 +4,7 @@
 %define oname Osi
 Name: Coin%oname
 Version: 0.106.4
-Release: alt1.svn20140217
+Release: alt1.svn20140217.1
 Summary: Coin Open Solver Interface
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -14,8 +14,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://projects.coin-or.org/svn/Osi/trunk
 Source: %oname-%version.tar.gz
 
-BuildPreReq: libglpk-devel CoinBuildTools gcc-c++ %mpiimpl-devel
-BuildPreReq: libCoinUtils-devel liblapack-devel chrpath
+BuildPreReq: libglpk-devel CoinBuildTools gcc4.9-c++ %mpiimpl-devel
+BuildPreReq: libCoinUtils-devel liblapack-devel chrpath libnuma-devel
 BuildPreReq: doxygen graphviz CoinSample-devel CoinNetlib-devel
 
 %description
@@ -107,6 +107,7 @@ This package contains examples for COIN-OR Open Solver Interface.
 %setup
 
 %build
+%set_gcc_version 4.9
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
@@ -169,6 +170,9 @@ done
 #_bindir/*
 
 %changelog
+* Tue Feb 28 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.106.4-alt1.svn20140217.1
+- build fixed
+
 * Thu May 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.106.4-alt1.svn20140217
 - New snapshot
 
