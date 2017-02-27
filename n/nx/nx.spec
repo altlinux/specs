@@ -3,17 +3,17 @@
 
 Name: nx
 Version: 3.5.1
-Release: alt13
+Release: alt16
 
 Summary: Next Generation Remote Display
 
-Packager: Denis Baranov <baraka@altlinux.ru>
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Group: Networking/Remote access
 License: GPL, MIT/X11 for X11 bits
 Url: http://www.nomachine.com
 
-Source: ftp://updates.etersoft.ru/pub/Etersoft/RX@Etersoft/last/source/tarball/nxagent-%version-11.tar
+Source: /var/ftp/pvt/Etersoft/RX@Etersoft/last/source/tarball/nxagent-%version-11.tar
 Source1: nxauth-%version-3.tar
 Source3: nxcomp-%version-7.tar
 Source4: nxcompext-%version-1.tar
@@ -31,12 +31,13 @@ Source17: libjpeg-turbo-%tjpg_ver.tar
 %endif
 Source18: docs.tar
 Source19: nxfind-provides.sh
+Source21: rgb.txt
 Source50: nxagent.1
 Source51: nxagent.keyboard
 Source60: Makefile.alt
 
 # alt
-Patch: nx-X11-alt-SecurityPolicy-path.patch
+Patch1: nx-X11-alt-SecurityPolicy-path.patch
 Patch2: nxcomp-3.2.0-gcc43.patch
 Patch3: nxcompsh-3.2.0-gcc43.patch
 Patch4: nxcompshad-3.2.0-gcc43.patch
@@ -79,6 +80,9 @@ Patch110: nx-3.5.0-libpng15.patch
 Obsoletes: NX
 Provides: NX = %version
 
+Obsoletes: nxproxy
+Provides: nxproxy = %version
+
 Obsoletes: libXcomp
 Provides: libXcomp = %version
 
@@ -87,9 +91,6 @@ Provides: libXcompext = %version
 
 Obsoletes: libXcompshad
 Provides: libXcompshad = %version
-
-#define _use_internal_dependency_generator 0
-#define __find_provides %SOURCE19
 
 BuildRequires: docbook-utils gcc-c++ groff-base makedepend
 BuildRequires: libXdamage-devel libXrandr-devel libXt-devel libXtst-devel
@@ -120,7 +121,7 @@ core libraries for NX are provided by NoMachine under the GPL.
 %setup -c -a17
 %endif
 
-%patch0 -p0
+%patch1 -p0
 %patch2 -p0
 %patch3 -p0
 %patch4 -p0
@@ -190,7 +191,8 @@ cp %SOURCE60 nx-X11
 %build
 export CFLAGS="%optflags"
 export CXXFLAGS="%optflags"
-%__subst "s|CXXFLAGS=.-O.*|CXXFLAGS=\"$CXXFLAGS\"|" */configure.in
+# allow use rpm optflags
+%__subst "s|^C.*FLAGS=.*-O.*||" */configure*
 
 # prepare X11 includes
 pushd nx-X11
@@ -219,8 +221,9 @@ pushd $i
 popd
 done
 
-# build nxssh
+# build nxssh (links Xcomp)
 pushd nxssh
+%autoreconf
 %configure --without-zlib-version-check
 %make
 popd
@@ -336,6 +339,9 @@ ln -fs ../libX11-nx.so.6 %buildroot%_libdir/nxserver/libX11.so.6
 ln -fs ../libXext-nx.so.6 %buildroot%_libdir/nxserver/libXext.so.6
 ln -fs ../libXrender-nx.so.1 %buildroot%_libdir/nxserver/libXrender.so.1
 
+mkdir -p %buildroot%_datadir/nxserver/
+install -m644 %SOURCE21 %buildroot%_datadir/nxserver/rgb.txt
+
 %files
 %doc %_docdir/%name-%version
 %dir %_sysconfdir/nxagent
@@ -360,10 +366,25 @@ ln -fs ../libXrender-nx.so.1 %buildroot%_libdir/nxserver/libXrender.so.1
 %_libdir/nxserver/lib/X11/xkb
 %_libdir/nxserver/xserver/SecurityPolicy
 %_man1dir/*
+%dir %_datadir/nxserver/
+%_datadir/nxserver/rgb.txt
 
 %changelog
-* Thu Feb 11 2016 Michael Shigorin <mike@altlinux.org> 3.5.1-alt13
-- rebuilt against current openssl ("version mismatch" error) (closes: #31785)
+* Mon Feb 27 2017 Vitaly Lipatov <lav@altlinux.ru> 3.5.1-alt16
+- fix debug(line)
+
+* Thu Dec 29 2016 Vitaly Lipatov <lav@altlinux.ru> 3.5.1-alt15
+- fix fprintf format using
+- fix free buffer place
+
+* Fri Dec 23 2016 Vitaly Lipatov <lav@altlinux.ru> 3.5.1-alt14
+- build with nxssh ported to openssh 7.3p1
+
+* Sat Feb 13 2016 Vitaly Lipatov <lav@altlinux.ru> 3.5.1-alt13
+- fix using C*FLAGS with rpm optflags (need hardened linking)
+
+* Tue Jul 23 2013 Vitaly Lipatov <lav@altlinux.ru> 3.5.1-alt12
+- add /usr/share/nxserver/rgb.txt and load it first (eterbug #9445)
 
 * Mon Apr 22 2013 Michael Shigorin <mike@altlinux.org> 3.5.1-alt12
 - rebuilt against current openssl ("version mismatch" error)
@@ -553,7 +574,7 @@ ln -fs ../libXrender-nx.so.1 %buildroot%_libdir/nxserver/libXrender.so.1
     nx-X11
     nxcompshad
 
-* Wed Jan 19 2009 Boris Savelev <boris@altlinux.org> 3.3.0-alt6
+* Mon Jan 19 2009 Boris Savelev <boris@altlinux.org> 3.3.0-alt6
 - back devel *.so (for proprietary soft)
 - new verison:
     nxagent
