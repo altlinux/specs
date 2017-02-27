@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.10.0
-Release: alt2
+Release: alt3
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
 Group: Development/Python
@@ -20,10 +20,12 @@ BuildPreReq: python-devel
 
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: python-module-setuptools-tests}}
+BuildRequires: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 %{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-setuptools-tests}}
+BuildRequires: python3-module-setuptools
 %py3_provides six.moves
 %py3_provides six.moves.urllib
 %py3_provides six.moves.urllib.parse
@@ -93,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Mon Feb 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1.10.0-alt3
+- update BR:, fix upgrade package (ALT #33167)
+
 * Wed Feb 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1.10.0-alt2
 - add python3 provides six.moves, six.moves.urllib, six.moves.urllib.parse
 
