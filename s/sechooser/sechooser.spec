@@ -1,6 +1,9 @@
+
+%def_disable qt5
+
 Name: sechooser
 Version: 0.2.2
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Selinux user range chooser
 License: GPL
@@ -11,7 +14,12 @@ Requires: qt5-translations
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: qt5-base-devel qt5-tools libselinux-devel
+BuildRequires: libselinux-devel
+%if_enabled qt5
+BuildRequires: qt5-base-devel qt5-tools
+%else
+BuildRequires: gcc-c++ libqt4-devel
+%endif
 
 %description
 %summary.
@@ -19,17 +27,34 @@ BuildRequires: qt5-base-devel qt5-tools libselinux-devel
 
 %prep
 %setup -q -n %name-%version
+%if_enabled qt5
 %qmake_qt5
+%else
+%qmake_qt4
+%endif
 
 %build
 %make
+%if_enabled qt5
 lrelease-qt5 sechooser.pro
+%else
+lrelease-qt4 sechooser.pro
+%endif
 
 %install
-%make INSTALL_ROOT=%buildroot install
+%if_enabled qt5
+%installqt5
+%else
+%make install INSTALL_ROOT=%buildroot
+%endif
 
+%if_enabled qt5
 mkdir -p %buildroot/%_qt5_translationdir/
 install -m644 translations/sechooser_??.qm %buildroot/%_qt5_translationdir/
+%else
+mkdir -p %buildroot/%_datadir/qt4/translations/
+install -m644 translations/sechooser_??.qm %buildroot/%_datadir/qt4/translations/
+%endif
 
 %find_lang --with-qt --all-name %name
 
@@ -37,6 +62,9 @@ install -m644 translations/sechooser_??.qm %buildroot/%_qt5_translationdir/
 %_bindir/*
 
 %changelog
+* Mon Feb 27 2017 Sergey V Turchin <zerg at altlinux dot org> 0.2.2-alt2%ubt
+- build with Qt4
+
 * Thu Jan 26 2017 Sergey V Turchin <zerg at altlinux dot org> 0.2.2-alt1%ubt
 - ignore lowest level again
 
