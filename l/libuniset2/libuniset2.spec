@@ -16,7 +16,7 @@
 
 Name: libuniset2
 Version: 2.6
-Release: alt10.1
+Release: alt12
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -77,7 +77,7 @@ BuildRequires(pre): rpm-build-python
 %endif
 
 %if_enabled docs
-BuildRequires: doxygen
+BuildRequires: doxygen graphviz ImageMagick-tools
 %endif
 
 %if_enabled tests
@@ -315,22 +315,22 @@ SharedMemoryPlus extension ('all in one') for libuniset
 
 %build
 %autoreconf
-%configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt} %{subst_enable api}
+%configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt} %{subst_enable api} %{subst_enable netdata}
 %make_build
+
+# fix for ALTLinux build (noarch)
+%if_enabled docs
+cd docs/html
+PNGFILES=`find ./ -name '*.png' -type f`
+for F in ${PNGFILES}; do
+#   echo "$F"
+    convert ${F} -flatten +matte ${F}
+done
+%endif
 
 %install
 %makeinstall_std
 rm -f %buildroot%_libdir/*.la
-
-%if_enabled python
-mkdir -p %buildroot%python_sitelibdir/%oname
-mv -f %buildroot%python_sitelibdir/*.* %buildroot%python_sitelibdir/%oname/
-
-%ifarch x86_64
-mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
-%endif
-
-%endif
 
 %files utils
 %_bindir/%oname-admin
@@ -398,7 +398,8 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 
 %if_enabled python
 %files -n python-module-%oname
-%python_sitelibdir/%oname/
+%python_sitelibdir/*
+%python_sitelibdir_noarch/%oname/*
 %endif
 
 %if_enabled netdata
@@ -507,6 +508,9 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 # history of current unpublished changes
 
 %changelog
+* Mon Feb 27 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt12
+- up version
+
 * Tue Feb 21 2017 Alexei Takaseev <taf@altlinux.org> 2.6-alt10.1
 - Rebuild with poco 1.7.7
 
