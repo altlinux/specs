@@ -1,14 +1,15 @@
 Summary: A dynamic adaptive system tuning daemon
 Name: tuned
 Version: 2.7.1
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: System/Configuration/Hardware
 URL: https://fedorahosted.org/tuned/
 
 Requires: virt-what ethtool hdparm util-linux polkit
 
-Source: https://fedorahosted.org/releases/t/u/tuned/tuned-%version.tar.bz2
+Source0: https://fedorahosted.org/releases/t/u/tuned/tuned-%version.tar.bz2
+Source1: tuned.init
 Patch0: tuned-2.7.1-pkexec-fix.patch
 Patch1: tuned-2.7.1-profile_info-traceback-fix.patch
 Patch2: tuned-2.7.1-throughput-performance-summary.patch
@@ -46,7 +47,7 @@ debug your system and manage tuned profiles.
 %define _libexecdir %_prefix/libexec
 
 %prep
-%setup -q
+%setup
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -67,7 +68,11 @@ cat << __EOF__ > %buildroot%_sysconfdir/tuned/active_profile
 throughput-performance
 __EOF__
 
+mkdir -p %buildroot%_initdir
+install -pDm755 %SOURCE1 %buildroot%_initdir/%name
+
 %post
+%post_service %name
 if [ $1 -eq 1 ] ; then
         /sbin/systemctl enable \
 	tuned.service \
@@ -75,6 +80,7 @@ if [ $1 -eq 1 ] ; then
 fi
 
 %preun
+%preun_service %name
 if [ $1 -eq 0 ] ; then
 	/sbin/systemctl disable \
 	tuned.service \
@@ -117,6 +123,7 @@ fi
 %_sysconfdir/modprobe.d/tuned.conf
 %_tmpfilesdir/tuned.conf
 %_unitdir/tuned.service
+%_initdir/tuned
 %dir %_logdir/tuned
 %ghost %_logdir/tuned/tuned.log
 %_man5dir/tuned*
@@ -141,6 +148,9 @@ fi
 %_libexecdir/tuned/pmqos-static*
 
 %changelog
+* Mon Feb 27 2017 Michael Shigorin <mike@altlinux.org> 2.7.1-alt2
+- added sysv initscript
+
 * Thu Dec 29 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.7.1-alt1
 - initial release
 
