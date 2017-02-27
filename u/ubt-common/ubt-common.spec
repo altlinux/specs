@@ -5,7 +5,7 @@
 
 Name: ubt-common
 Version: 0.2
-Release: alt1
+Release: alt2
 
 Group: Development/Other
 Summary: Common Universal Branch Tag
@@ -40,6 +40,9 @@ __EOF__
 %_rpmmacrosdir/ubt
 
 %changelog
+* Mon Feb 27 2017 Sergey V Turchin <zerg@altlinux.org> 0.2-alt2
+- bump release
+
 * Fri Dec 02 2016 Sergey V Turchin <zerg@altlinux.org> 0.2-alt1
 - extend internal macros
 
