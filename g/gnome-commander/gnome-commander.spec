@@ -5,9 +5,10 @@
 %def_with poppler
 %def_with libgsf
 %def_with samba
+%def_with unique
 
 Name: gnome-commander
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A Gnome file manager similar to the Norton Commander (TM)
@@ -23,13 +24,13 @@ Requires: gnome-vfs gnome-vfs-module-sftp gnome-vfs-module-smb
 BuildRequires: flex gcc-c++
 BuildRequires: gnome-doc-utils gnome-doc-utils-xslt intltool libappstream-glib-devel
 BuildRequires: libgnomeui-devel libgnome-keyring-devel gnome-vfs-devel
-BuildRequires: libunique-devel python-devel
+BuildRequires: python-devel
 %{?_with_exiv2:BuildRequires: libexiv2-devel}
 %{?_with_libchm:BuildRequires: libchm-devel}
 %{?_with_taglib:BuildRequires: libtag-devel}
 %{?_with_poppler:BuildRequires: libpoppler-glib-devel}
 %{?_with_libgsf:BuildRequires: libgsf-devel}
-
+%{?_with_unique:BuildRequires: libunique-devel}
 
 %description
 Gnome Commander is a file manager that just like the classical Norton Commander (TM)
@@ -47,7 +48,8 @@ and some extra features like FTP support.
 	%{subst_with taglib} \
 	%{subst_with poppler} \
 	%{subst_with libgsf} \
-	%{subst_with samba}
+	%{subst_with samba} \
+	%{subst_with unique}
 %make_build
 
 %install
@@ -73,6 +75,9 @@ and some extra features like FTP support.
 
 
 %changelog
+* Mon Feb 27 2017 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt1
+- 1.6.3
+
 * Sun Nov 06 2016 Yuri N. Sedunov <aris@altlinux.org> 1.6.2-alt1
 - 1.6.2
 
