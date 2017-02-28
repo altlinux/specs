@@ -1,5 +1,5 @@
 Name: libwlc0
-Version: 0.0.7
+Version: 0.0.8
 Release: alt1
 
 %define oname wlc
@@ -9,8 +9,8 @@ Summary: wlc wayland compositor library
 License: MIT
 Group: System/Libraries
 Packager: Vladimir D. Seleznev <vseleznv@altlinux.org>
-Source0: %oname-%version.tar.gz
-Source1: chck.tar.gz
+Source0: %oname-%version.tar
+Source1: chck.tar
 Url: https://github.com/Cloudef/wlc
 
 BuildRequires(pre): rpm-macros-cmake
@@ -51,6 +51,9 @@ tar xvf %SOURCE1 -C lib
 %_libdir/pkgconfig/%oname.pc
 
 %changelog
+* Tue Feb 28 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.0.8-alt1
+- 0.0.8
+
 * Sat Oct 29 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.0.7-alt1
 - 0.0.7
 

@@ -1,5 +1,5 @@
 Name:		sway
-Version:	0.10
+Version:	0.11
 Release:	alt1
 
 Summary:	i3wm drop-in replacement for Wayland
@@ -15,9 +15,9 @@ Source1:	control
 Source2:	README.ALT
 
 BuildRequires(pre): rpm-macros-cmake
-# Automatically added by buildreq on Thu Jul 21 2016
-# optimized out: asciidoc cmake-modules docbook-dtds docbook-style-xsl fontconfig glib2-devel libcairo-devel libgdk-pixbuf libgio-devel libgpg-error libinput-devel libjson-c libudev-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-server libwayland-server-devel libxcbutil-icccm libxcbutil-image libxkbcommon-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml wayland-devel xml-common xsltproc
-BuildRequires: asciidoc-a2x cmake libgdk-pixbuf-devel libjson-c-devel libpam-devel libpango-devel libpcre-devel libwayland-cursor-devel libwlc0-devel time
+# Automatically added by buildreq on Tue Feb 28 2017
+# optimized out: asciidoc cmake-modules docbook-dtds docbook-style-xsl fontconfig glib2-devel libcairo-devel libgdk-pixbuf libgio-devel libgpg-error libinput-devel libjson-c libudev-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-server libwayland-server-devel libxcbutil-image libxkbcommon-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml wayland-devel xml-common xsltproc
+BuildRequires: asciidoc-a2x cmake libcap-devel libgdk-pixbuf-devel libjson-c-devel libpam-devel libpango-devel libpcre-devel libwayland-cursor-devel libwayland-egl-devel libwlc0-devel time
 Requires:	%name-data
 
 %package	data
@@ -62,11 +62,13 @@ rm -- %buildroot%_man1dir/swaylock.*
 %doc README.md
 %doc README.ALT
 %dir %_sysconfdir/%name
-%config %_sysconfdir/%name/config
+%config(noreplace) %_sysconfdir/%name/config
+%config(noreplace) %_sysconfdir/%name/security
 %config %_controldir/%name
 %_bindir/*
 %_man1dir/*
 %_man5dir/*
+%_man7dir/*
 %_datadir/wayland-sessions/sway.desktop
 
 %files data
@@ -74,6 +76,10 @@ rm -- %buildroot%_man1dir/swaylock.*
 %_datadir/%name/*
 
 %changelog
+* Tue Feb 28 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.11-alt1
+- 0.11
+- fixed: system configs are noreplace now
+
 * Sat Oct 29 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.10-alt1
 - 0.10
 
