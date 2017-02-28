@@ -2,7 +2,7 @@
 
 Name: sssd
 Version: 1.14.2
-Release: alt4%ubt
+Release: alt5%ubt
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -36,6 +36,8 @@ Patch: %name-%version-alt.patch
 Requires: %name-client = %version-%release
 Requires: libsss_idmap = %version-%release
 Requires: libldb = %ldb_version
+
+Requires: libkrb5 >= 1.14.4-alt2
 
 BuildRequires(pre):rpm-build-ubt
 
@@ -466,7 +468,7 @@ unset CK_TIMEOUT_MULTIPLIER
 
 %pre
 %_sbindir/groupadd -r -f %sssd_user 2> /dev/null ||:
-%_sbindir/useradd -r -n -g %sssd_user -d %sssdstatedir -s /dev/null -c "User for sssd" %sssd_user 2> /dev/null ||:
+%_sbindir/useradd -r -n -g %sssd_user -G _keytab -d %sssdstatedir -s /dev/null -c "User for sssd" %sssd_user 2> /dev/null ||:
 
 %post
 # Sinse 0.13.0 we are run sssd as non-root user. Migrate files owner.
@@ -481,6 +483,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %preun
 %preun_service %name
 %preun_service sssd-secrets
+
+%triggerpostun -- %name < 1.14.2-alt5
+%_bindir/gpasswd -a %sssd_user _keytab
 
 %files -f sssd.lang
 %doc COPYING
@@ -708,6 +713,10 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 /%_lib/libnfsidmap/sss.so
 
 %changelog
+* Tue Feb 28 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.2-alt5%ubt
+- Add _sssd user to _keytab group
+- Set right group privileges: use initgroups() instead of setgroups()
+
 * Thu Jan 12 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.2-alt4%ubt
 - Set selinux provider none only if selinux disabled
 
