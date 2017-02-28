@@ -1,6 +1,6 @@
 Name:		etcnet
-Version:	0.9.10
-Release:	alt19
+Version:	0.9.11
+Release:	alt1
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -9,7 +9,7 @@ Group:		System/Base
 Source:		%name-%version.tar
 
 PreReq:		setup >= 0:2.1.9-ipl18mdk, service, startup >= 0:0.9.3-alt1
-Requires:	grep, sed, iproute2, ifrename >= 28-alt5.pre10, chkconfig
+Requires:	grep, sed, iproute2 >= 4.4.0, ifrename >= 28-alt5.pre10, chkconfig
 Requires:	etcnet-defaults = %version-%release
 
 BuildArch:	noarch
@@ -139,6 +139,10 @@ fi
 %files full
 
 %changelog
+* Tue Feb 28 2017 Anton Farygin <rider@altlinux.ru> 0.9.11-alt1
+- version up
+- fixed using ifrename for renaming interfaces without MODULE in options
+
 * Fri Dec 02 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.10-alt19
 - use ip utility for bridge, bonding and tuntap interface types
 
