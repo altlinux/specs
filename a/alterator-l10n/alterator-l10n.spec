@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.33
+Version: 2.9.34
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -114,6 +114,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Tue Feb 28 2017 Andrey Cherepanov <cas@altlinux.org> 2.9.34-alt1
+- Update Russian translations and help for alterator-auth
+
 * Tue Feb 14 2017 Andrey Cherepanov <cas@altlinux.org> 2.9.33-alt1
 - Update Russian translations for alterator-auth
 - Add localization and help for alterator-selinux-users

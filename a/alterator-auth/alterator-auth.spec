@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.30.3
+Version: 0.32
 Release: alt1
 
 BuildArch: noarch
@@ -36,7 +36,7 @@ BuildPreReq: alterator >= 4.7-alt4
 Alterator module for system wide auth settings
 
 %package -n task-auth-ad
-Summary: Metapackage to authenticate in Active Directory domain
+Summary: Metapackage to authenticate in Active Directory domain by winbind
 Group: System/Configuration/Other
 Requires: alterator-auth
 Requires: samba-winbind
@@ -49,7 +49,36 @@ Requires: alterator-datetime
 Requires: gvfs-shares
 
 %description -n task-auth-ad
-Metapackage to authenticate in Active Directory domain.
+Metapackage to authenticate in Active Directory domain by Winbind.
+
+%package -n task-auth-ad-sssd
+Summary: Metapackage to authenticate in Active Directory domain by sssd
+Group: System/Configuration/Other
+Requires: alterator-auth
+Requires: sssd-ad
+Requires: samba-common-tools
+Requires: krb5-kinit
+Requires: pam_mount
+Requires: libnss-role
+Requires: alterator-datetime
+Requires: gvfs-shares
+
+%description -n task-auth-ad-sssd
+Metapackage to authenticate in Active Directory domain by SSSD.
+
+%package -n task-auth-freeipa
+Summary: Metapackage to authenticate in FreeIPA domain
+Group: System/Configuration/Other
+Requires: alterator-auth
+Requires: freeipa-client
+Requires: krb5-kinit
+Requires: pam_mount
+Requires: libnss-role
+Requires: alterator-datetime
+Requires: gvfs-shares
+
+%description -n task-auth-freeipa
+Metapackage to authenticate in FreeIPA domain.
 
 %prep
 %setup -q
@@ -75,7 +104,18 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 
 %files -n task-auth-ad
 
+%files -n task-auth-ad-sssd
+
+%files -n task-auth-freeipa
+
 %changelog
+* Tue Feb 28 2017 Andrey Cherepanov <cas@altlinux.org> 0.32-alt1
+- Support join to FreeIPA domain
+
+* Mon Feb 13 2017 Andrey Cherepanov <cas@altlinux.org> 0.31-alt1
+- Add new metapackage task-auth-ad-sssd for configure auth by SSSD
+- Support SSSD for auth in Active Directory
+
 * Tue Jan 31 2017 Andrey Cherepanov <cas@altlinux.org> 0.30.3-alt1
 - Workaround to fix https://bugs.altlinux.org/32139 for system with old
   libshell 
