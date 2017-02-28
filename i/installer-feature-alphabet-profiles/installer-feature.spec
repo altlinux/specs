@@ -1,6 +1,6 @@
 Name: installer-feature-alphabet-profiles
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: Setups package groups from selected vm-profile
 License: GPL
@@ -24,6 +24,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Feb 28 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.0-alt2
+- 'double-path' fixed
+
 * Tue Feb 28 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.0-alt1
 - alphabet based selection
 
