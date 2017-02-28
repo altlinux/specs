@@ -4,7 +4,7 @@
 %define oname Cbc
 Name: Coin%oname
 Version: 2.8.9
-Release: alt1.svn20140513
+Release: alt1.svn20140513.1
 Summary: COIN-OR Branch-and-Cut MIP Solver
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -14,11 +14,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://projects.coin-or.org/svn/Cbc/trunk
 Source: %oname-%version.tar.gz
 
-BuildPreReq: doxygen graphviz libglpk-devel CoinBuildTools gcc-c++
+BuildPreReq: doxygen graphviz libglpk-devel CoinBuildTools gcc4.9-c++
 BuildPreReq: libCoinUtils-devel liblapack-devel
 BuildPreReq: libCoinCgl-devel libCoinClp-devel libCoinOsi-devel
 BuildPreReq: libCoinVol-devel libCoinDyLP-devel %mpiimpl-devel
-BuildPreReq: CoinMiplib3-devel chrpath
+BuildPreReq: CoinMiplib3-devel chrpath libnuma-devel
 
 Requires: lib%name = %version-%release
 
@@ -84,6 +84,7 @@ This package contains examples for COIN-OR Branch-and-Cut MIP Solver.
 %setup
 
 %build
+%set_gcc_version 4.9
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
@@ -138,15 +139,16 @@ rm -fR %buildroot%_docdir/coin \
 %_includedir/*
 %_pkgconfigdir/*
 
-%files -n lib%name-devel-doc
-%doc %oname/doxydoc/doxydoc/html/*
-
 %files examples
 %doc %oname/examples/*.c* %oname/examples/*.hpp %oname/examples/*.mps
 %doc %oname/examples/*.csv %oname/examples/Makefile
 #_bindir/%oname-driver
 
 %changelog
+* Mon Feb 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.8.9-alt1.svn20140513.1
+- build fixed
+- gcc set to 4.9, docs not packaged
+
 * Thu May 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.9-alt1.svn20140513
 - Version 2.8.9
 
