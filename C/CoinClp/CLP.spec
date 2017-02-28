@@ -4,7 +4,7 @@
 %define oname Clp
 Name: Coin%oname
 Version: 1.15.5
-Release: alt1.svn20140507
+Release: alt1.svn20140507.1
 Summary: COIN-OR Linear Programming Solver
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -14,10 +14,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://projects.coin-or.org/svn/Clp/trunk/
 Source: %oname-%version.tar.gz
 
-BuildPreReq: doxygen graphviz CoinBuildTools gcc-c++ %mpiimpl-devel
+BuildPreReq: doxygen graphviz CoinBuildTools gcc4.9-c++ %mpiimpl-devel
 BuildPreReq: libCoinOsi-devel libCoinVol-devel chrpath libmumps-devel
 BuildPreReq: libreadline-devel libtinfo-devel libglpk-devel
-BuildPreReq: libsuitesparse-devel
+BuildPreReq: libsuitesparse-devel libnuma-devel
 
 Requires: lib%name = %version-%release
 
@@ -155,15 +155,16 @@ rm -fR %buildroot%_docdir/coin \
 %_includedir/*
 %_pkgconfigdir/*
 
-%files -n lib%name-devel-doc
-%doc %oname/doxydoc/doxydoc/html/*
-
 %files examples
 %doc %oname/examples/Makefile %oname/examples/*.c* %oname/examples/*.hpp
 %doc %oname/examples/*.tiny %oname/examples/input.*
 #_bindir/*driver
 
 %changelog
+* Tue Feb 28 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.15.5-alt1.svn20140507.1
+- build fixed
+- gcc set to 4.9, docs not packaged
+
 * Thu May 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.15.5-alt1.svn20140507
 - New snapshot
 
