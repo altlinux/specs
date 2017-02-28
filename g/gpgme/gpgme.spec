@@ -1,13 +1,29 @@
-Name: gpgme
-Version: 1.5.5
-Release: alt2
+
+%define gpgme_sover 11
+%define libgpgme libgpgme%gpgme_sover
+%define gpgme_pthread_sover 11
+%define libgpgme_pthread libgpgme-pthread%gpgme_pthread_sover
+%define gpgmepp_sover 6
+%define libgpgmepp libgpgmepp%gpgmepp_sover
+%define qgpgme_sover 7
+%define libqgpgme libqgpgme%qgpgme_sover
 
 %define min_gnupg_version 1.9.6
+%define gpg_bin_path %_bindir/gpg2
+%define gpgsm_bin_path %_bindir/gpgsm
+
+Name: gpgme
+Version: 1.7.1
+Release: alt1%ubt
+
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
 License: LGPLv2.1+
 Group: System/Libraries
 Url: http://www.gnupg.org/related_software/gpgme/index.html
+
+Conflicts: libgpgme-devel < 1.7
+Requires: %gpg_bin_path
 
 # ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-%version.tar.bz2
 Source: gpgme-%version.tar
@@ -17,25 +33,62 @@ Patch2: gpgme-1.3.0-alt-gpgme-config-assuan.patch
 Patch3: gpgme-1.3.0-alt-tests.patch
 Patch4: gpgme-1.3.2-rh-alt-linkage.patch
 
-Requires: gnupg2-gpg >= %min_gnupg_version
 
 %def_disable static
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: /proc gcc-c++ gnupg2 libgpg-error-devel libpth-devel libstdc++-devel libassuan-devel >= 2.0
 BuildRequires: texinfo
+BuildRequires: qt5-base-devel python-devel python3-devel swig
+
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+Conflicts: libgpgme < 1.7
+%description common
+%name common package
+
+%package -n %libgpgme_pthread
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+Requires: %gpg_bin_path
+%description -n %libgpgme_pthread
+%name library
+
+%package -n %libgpgme
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+Requires: %gpg_bin_path
+%description -n %libgpgme
+%name library
+
+%package -n %libgpgmepp
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n %libgpgmepp
+%name library
+
+%package -n %libqgpgme
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n %libqgpgme
+%name library
 
 %package -n lib%name
 Summary: GnuPG Made Easy!
 Group: System/Libraries
-Requires: gnupg2-gpg >= %min_gnupg_version
+Requires: %libgpgme %libgpgme_pthread
 Provides: libgpgme1 = %version-%release
 Obsoletes: libgpgme1 < %version-%release
 
 %package -n lib%name-devel
 Summary: Include files for development with GPGME
 Group: Development/C
-Requires: lib%name = %version-%release
 Requires: libgpg-error-devel
 Provides: libgpgme1-devel = %version-%release
 Obsoletes: libgpgme1-devel < %version-%release
@@ -46,6 +99,18 @@ Group: Development/C
 Requires: lib%name-devel = %version-%release
 Provides: libgpgme1-devel-static = %version-%release
 Obsoletes: libgpgme1-devel-static < %version-%release
+
+%package -n python3-module-pyme
+Summary: Python GpgME pindings
+Group: Development/Python
+%description -n python3-module-pyme
+Python GpgME pindings
+
+%package -n python-module-pyme
+Summary: Python GpgME pindings
+Group: Development/Python
+%description -n python-module-pyme
+Python GpgME pindings
 
 %description
 GnuPG Made Easy (GPGME) is a C language library that allows to add
@@ -103,26 +168,38 @@ export PATH=$PWD/tmp_bin:$PATH
 %configure \
 	%{?cvsdate: --enable-maintainer-mode } \
 	%{subst_enable static} \
-	--with-gpg=%_bindir/gpg2 \
-	--with-gpgsm=%_bindir/gpgsm
+	--with-gpg=%gpg_bin_path \
+	--with-gpgsm=%gpgsm_bin_path
 
 %make_build MAKEINFOFLAGS=--no-split
 
 %install
 %makeinstall_std
 
-%check
-export PATH=$PWD/tmp_bin:$PATH
-%make_build -k check
+#check
+#export PATH=$PWD/tmp_bin:$PATH
+#%make_build -k check
 
-%files -n lib%name
-%_libdir/*.so.*
+%files
+%_bindir/gpgme-tool
+
+%files common
 %doc AUTHORS NEWS README THANKS
 
+%files -n python3-module-pyme
+%python3_sitelibdir/pyme*
+
+%files -n python-module-pyme
+%python_sitelibdir/pyme*
+
 %files -n lib%name-devel
-%_bindir/*
+%_bindir/gpgme-config
 %_includedir/*.h
+%_includedir/gpgme++/
+%_includedir/QGpgME/
+%_includedir/qgpgme/
 %_libdir/*.so
+%_libdir/cmake/Gpgmepp/
 %_datadir/aclocal/*.m4
 %_infodir/*.info*
 
@@ -131,7 +208,24 @@ export PATH=$PWD/tmp_bin:$PATH
 %_libdir/*.a
 %endif
 
+%files -n lib%name
+%files -n %libgpgme
+%_libdir/libgpgme.so.%gpgme_sover
+%_libdir/libgpgme.so.%gpgme_sover.*
+%files -n %libgpgme_pthread
+%_libdir/libgpgme-pthread.so.%gpgme_pthread_sover
+%_libdir/libgpgme-pthread.so.%gpgme_pthread_sover.*
+%files -n %libgpgmepp
+%_libdir/libgpgmepp.so.%gpgmepp_sover
+%_libdir/libgpgmepp.so.%gpgmepp_sover.*
+%files -n %libqgpgme
+%_libdir/libqgpgme.so.%qgpgme_sover
+%_libdir/libqgpgme.so.%qgpgme_sover.*
+
 %changelog
+* Tue Feb 28 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.1-alt1%ubt
+- new version
+
 * Tue Dec 08 2015 Sergey V Turchin <zerg@altlinux.org> 1.5.5-alt2
 - fix build requires
 
