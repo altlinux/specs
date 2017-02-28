@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.3.8
+Version:  1.3.9
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -36,6 +36,9 @@ gzip %buildroot%_man8dir/%name.8
 %_man8dir/%name.8*
 
 %changelog
+* Tue Feb 28 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.9-alt1
+- Add braches c8 and altlinuxclub.p8
+
 * Tue Oct 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.8-alt1
 - apt-repo test: do not confuse "remote" package names with local dirs/files
 
