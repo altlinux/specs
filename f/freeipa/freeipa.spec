@@ -4,12 +4,14 @@
 %define _libexecdir /usr/libexec
 %define etc_systemd_dir %_sysconfdir/systemd/system
 %define pki_core_version 10.2.6-alt5_19jpp8
+%define krb5_version 1.14.4-alt2
+%define sssd_version 1.14.2-alt5
 
 %define _unpackaged_files_terminate_build 1
 
 Name: freeipa
 Version: 4.3.2
-Release: alt7
+Release: alt8
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -32,7 +34,7 @@ BuildRequires: libnspr-devel
 BuildRequires: libnss-devel
 BuildRequires: libssl-devel
 BuildRequires: libldap-devel
-BuildRequires: libkrb5-devel >= 1.11
+BuildRequires: libkrb5-devel >= %krb5_version
 BuildRequires: libuuid-devel
 BuildRequires: libcurl-devel >= 7.21.7-2
 BuildRequires: libxmlrpc-devel >= 1.27.4
@@ -51,7 +53,7 @@ BuildRequires: pylint
 BuildRequires: python-module-polib
 BuildRequires: python-module-ipa_hbac
 BuildRequires: python-module-memcached
-BuildRequires: sssd >= 1.9.2
+BuildRequires: sssd >= %sssd_version
 BuildRequires: python-module-lxml
 BuildRequires: python-module-pyasn1 >= 0.0.9a
 BuildRequires: python-module-dns
@@ -59,8 +61,8 @@ BuildRequires: python-module-lesscpy
 BuildRequires: python-module-cffi
 BuildRequires: python-module-six
 BuildRequires: python-module-gssapi
-BuildRequires: libsss_idmap-devel
-BuildRequires: libsss_nss_idmap-devel
+BuildRequires: libsss_idmap-devel >= %sssd_version
+BuildRequires: libsss_nss_idmap-devel >= %sssd_version
 BuildRequires: java-1.8.0-openjdk
 BuildRequires: libverto-devel
 BuildRequires: systemd
@@ -85,7 +87,7 @@ Requires: python-module-ipaserver = %version-%release
 Requires: python-module-%name = %version-%release
 Requires: %name-client = %version-%release
 Requires: %name-admintools = %version-%release
-Requires: krb5-kinit
+Requires: krb5-kinit >= %krb5_version
 Requires: openntpd
 Requires: pki-server >= %pki_core_version
 Requires: pki-ca >= %pki_core_version
@@ -93,7 +95,7 @@ Requires: java-1.8.0-openjdk
 Requires: apache2-mod_nss
 Requires: apache2-mod_auth_gssapi
 Requires: apache2-mod_wsgi
-Requires: krb5-kdc
+Requires: krb5-kdc >= %krb5_version
 Requires: 389-ds-base
 Requires: memcached
 Requires: python-module-kdcproxy
@@ -181,11 +183,12 @@ Requires: %name-client-common = %version-%release
 Requires: python-module-%name = %version-%release
 Requires: python-module-ipaclient = %version-%release
 Requires: oddjob-mkhomedir
-Requires: sssd-krb5
-Requires: sssd-ipa
-Requires: libsss_sudo
+Requires: sssd-krb5 >= %sssd_version
+Requires: sssd-ipa >= %sssd_version
+Requires: libsss_sudo >= %sssd_version
 Requires: certmonger
 Requires: openntpd
+Requires: ntpdate
 Requires: nss-utils
 
 %description client
@@ -627,6 +630,12 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 %_man1dir/ipa-test-task.1.*
 
 %changelog
+* Tue Feb 28 2017 Mikhail Efremov <sem@altlinux.org> 4.3.2-alt8
+- Use ALT-specific SELinux users.
+- Grant read access to krb5.keytab file for _keytab group.
+- ipaclient: Reduce ntpdate timeout.
+- client: Require ntpdate.
+
 * Wed Feb 15 2017 Mikhail Efremov <sem@altlinux.org> 4.3.2-alt7
 - Explicitly require python-module-samba.
 - Fixed %%_runtimedir/ipa_memcached permissions.

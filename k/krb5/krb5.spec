@@ -1,7 +1,7 @@
 
 Name: krb5
 Version: 1.14.4
-Release: alt1%ubt
+Release: alt2%ubt
 
 %define _docdir %_defaultdocdir/%name-%version
 
@@ -33,6 +33,9 @@ Patch153: krb5-1.14.1-fedora-log_file_permissions.patch
 # backported patches from master:
 Patch164: krb5-1.15-kdc_send_receive_hooks.patch
 Patch165: krb5-1.15-kdc_hooks_test.patch
+
+# alt patches:
+Patch200: krb5-1.14.4-alt-default_keytab_group.patch
 
 
 BuildRequires: /dev/pts /proc
@@ -177,6 +180,8 @@ MIT Kerberos.
 %patch164 -p1 -b .kdc_send_receive_hooks
 %patch165 -p1 -b .kdc_hooks_test
 
+%patch200 -p2 -b .default_keytab_group
+
 %build
 # Go ahead and supply tcl info, because configure doesn't know how to find it.
 # . %_libdir/tclConfig.sh
@@ -303,9 +308,18 @@ touch %buildroot%_sysconfdir/krb5.keytab
 %preun_service kadmin
 %preun_service kprop
 
+%pre -n lib%name
+/usr/sbin/groupadd -r -f _keytab
+
+%triggerpostun -n lib%name -- lib%name < 1.14.4-alt2
+if [ -f %_sysconfdir/krb5.keytab ]; then
+    chown :_keytab %_sysconfdir/krb5.keytab
+    chmod g+r %_sysconfdir/krb5.keytab
+fi
+
 %files -n lib%name -f mit-krb5.lang
 %config(noreplace) %_sysconfdir/krb5.conf
-%ghost %config(noreplace) %attr(600,root,root) %_sysconfdir/krb5.keytab
+%ghost %config(noreplace) %attr(640,root,_keytab) %_sysconfdir/krb5.keytab
 %dir %_sysconfdir/gss
 %dir %_sysconfdir/gss/mech.d
 %dir %_sysconfdir/krb5.conf.d
@@ -429,6 +443,9 @@ touch %buildroot%_sysconfdir/krb5.keytab
 # {{{ changelog
 
 %changelog
+* Tue Feb 28 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.4-alt2%ubt
+- Add _keytab group for default keytab /etc/krb5.keytab
+
 * Wed Feb 15 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.4-alt1%ubt
 - 1.14.4
 - fixed CVE-2016-3120
