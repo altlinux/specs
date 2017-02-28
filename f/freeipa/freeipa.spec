@@ -11,7 +11,7 @@
 
 Name: freeipa
 Version: 4.3.2
-Release: alt8
+Release: alt9
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -630,6 +630,9 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 %_man1dir/ipa-test-task.1.*
 
 %changelog
+* Tue Feb 28 2017 Mikhail Efremov <sem@altlinux.org> 4.3.2-alt9
+- Fix chown krb5.keytab.
+
 * Tue Feb 28 2017 Mikhail Efremov <sem@altlinux.org> 4.3.2-alt8
 - Use ALT-specific SELinux users.
 - Grant read access to krb5.keytab file for _keytab group.
