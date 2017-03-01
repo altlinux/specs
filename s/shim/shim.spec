@@ -1,6 +1,6 @@
 Name: shim
 Version: 0.4
-Release: alt1.2
+Release: alt1.3
 
 Summary: First-stage UEFI bootloader
 License: BSD
@@ -29,6 +29,8 @@ ExclusiveArch: x86_64
 
 # Figure out the right file path to use
 %global efidir altlinux
+
+%set_gcc_version 4.7
 
 %description
 Initial UEFI bootloader that handles chaining to a trusted
@@ -90,6 +92,9 @@ cd ..
 %_man1dir/mokutil.1*
 
 %changelog
+* Wed Mar 01 2017 Michael Shigorin <mike@altlinux.org> 0.4-alt1.3
+- FTBFS workaround: use gcc4.7
+
 * Tue Dec 17 2013 Michael Shigorin <mike@altlinux.org> 0.4-alt1.2
 - rebuilt for Sisyphus
 

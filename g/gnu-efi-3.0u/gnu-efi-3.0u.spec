@@ -3,7 +3,7 @@
 
 Name: %origname-%flavour
 Version: %flavour
-Release: alt3
+Release: alt4
 
 Summary: Building EFI applications using the GNU toolchain
 # Intel and HP's BSD-like license, except setjmp code coming from GRUB
@@ -20,6 +20,8 @@ Requires: gcc >= 4.1.1
 ExclusiveArch: %ix86 x86_64 ia64
 
 Summary(pl.UTF-8): Tworzenie aplikacji EFI przy użyciu narzędzi GNU
+
+%set_gcc_version 4.7
 
 %description
 GNU-EFI development environment allows to create EFI applications
@@ -56,6 +58,9 @@ mv -f %buildroot%prefix/{lib,%_lib}
 %_includedir/efi
 
 %changelog
+* Wed Mar 01 2017 Michael Shigorin <mike@altlinux.org> 3.0u-alt4
+- FTBFS workaround: use gcc4.7
+
 * Mon Nov 25 2013 Michael Shigorin <mike@altlinux.org> 3.0u-alt3
 - renamed to gnu-efi-3.0u to be packaged along with 3.0r
 

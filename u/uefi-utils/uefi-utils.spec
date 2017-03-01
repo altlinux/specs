@@ -1,6 +1,6 @@
 Name: uefi-utils
 Version: 0.1
-Release: alt1
+Release: alt2
 
 Summary: Various (U)EFI utilities
 License: GPLv2+
@@ -15,6 +15,8 @@ BuildRequires: pesign >= 0.109-alt4
 BuildRequires: gnu-efi
 
 ExclusiveArch: x86_64
+
+%set_gcc_version 4.7
 
 %description
 %summary
@@ -47,6 +49,9 @@ install -pDm644 listcerts/listcerts.efi %buildroot%_efi_bindir/listcerts.efi
 %doc listcerts/README
 
 %changelog
+* Wed Mar 01 2017 Michael Shigorin <mike@altlinux.org> 0.1-alt2
+- FTBFS workaround: use gcc4.7
+
 * Wed Jun 11 2014 Michael Shigorin <mike@altlinux.org> 0.1-alt1
 - initial release
   + listcerts only

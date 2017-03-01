@@ -1,6 +1,6 @@
 Name: refind
 Version: 0.6.12
-Release: alt3
+Release: alt4
 
 Summary: EFI boot manager software
 License: GPLv3
@@ -25,6 +25,8 @@ ExclusiveArch: x86_64
 
 %define refind_lib %_efi_bindir
 %define refind_data %_datadir/%name
+
+%set_gcc_version 4.7
 
 %description
 A graphical boot manager for EFI- and UEFI-based computers, such as all
@@ -78,6 +80,9 @@ install -pDm644 %SOURCE3 %buildroot%refind_data/icons/altlinux/rescue.icns
 %refind_data
 
 %changelog
+* Wed Mar 01 2017 Michael Shigorin <mike@altlinux.org> 0.6.12-alt4
+- FTBFS workaround: use gcc4.7
+
 * Tue Dec 17 2013 Michael Shigorin <mike@altlinux.org> 0.6.12-alt3
 - built with gnu-efi 3.0r to be sure
 - memtest86 support backported from 0.7.4

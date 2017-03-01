@@ -1,6 +1,6 @@
 Name: efibootmgr
 Version: 0.6.0
-Release: alt1
+Release: alt2
 
 Summary: EFI Boot Manager
 Group: System/Kernel and hardware
@@ -18,6 +18,8 @@ Packager: Igor Zubkov <icesik@altlinux.org>
 # Automatically added by buildreq on Tue Feb 05 2013
 BuildRequires: libpci-devel zlib-devel
 
+%set_gcc_version 4.7
+
 %description
 efibootmgr displays and allows the user to edit the Intel Extensible
 Firmware Interface (EFI) Boot Manager variables.  Additional
@@ -25,7 +27,7 @@ information about EFI can be found at
 http://developer.intel.com/technology/efi/efi.htm and http://uefi.org/.
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build EXTRA_CFLAGS="%optflags"
@@ -41,6 +43,9 @@ install -p -m644 src/man/man8/%name.8 %buildroot%_man8dir/
 %_man8dir/%name.*
 
 %changelog
+* Wed Mar 01 2017 Michael Shigorin <mike@altlinux.org> 0.6.0-alt2
+- FTBFS workaround: use gcc4.7
+
 * Tue Feb 05 2013 Igor Zubkov <icesik@altlinux.org> 0.6.0-alt1
 - 0.5.4 -> 0.6.0
 
