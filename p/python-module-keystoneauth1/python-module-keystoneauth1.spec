@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%pypi_name
-Version: 2.12.2
+Version: 2.12.3
 Release: alt1
 Summary: OpenStack authenticating tools
 Group: Development/Python
@@ -121,6 +121,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc doc/build/html
 
 %changelog
+* Wed Feb 01 2017 Alexey Shabalin <shaba@altlinux.ru> 2.12.3-alt1
+- 2.12.3
+
 * Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 2.12.2-alt1
 - 2.12.2
 
