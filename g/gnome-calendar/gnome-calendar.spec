@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-calendar
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Calendar application for GNOME
@@ -58,6 +58,9 @@ Calendar is a calendar application for GNOME.
 %doc NEWS README
 
 %changelog
+* Wed Mar 01 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
+- 3.22.3
+
 * Tue Dec 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
 - 3.22.2
 
