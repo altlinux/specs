@@ -6,10 +6,10 @@
 
 Summary: A GNU collection of binary utilities.
 Name: %cross_arch-binutils
-Version: 2.25
-Release: alt3
-Serial: 2
-Copyright: GPL
+Version: 2.26
+Release: alt1
+Epoch: 2
+License: GPL
 Group: Development/Other
 URL: http://ftp.gnu.org/gnu/binutils/
 Source: avr-binutils-%version.tar.gz
@@ -24,6 +24,8 @@ BuildRequires: makeinfo
 
 BuildRequires: expect flex gcc-c++ imake libelf-devel libexpat-devel zlib-devel-static
 BuildRequires: libncurses-devel
+
+Provides: avr-binutils = 2:2.23.1-alt1
 
 %description
 Avr-Binutils is a collection of binary utilities, including avr-ar (for
@@ -126,6 +128,9 @@ done
 %_man1dir/*
 
 %changelog
+* Fri Feb 03 2017 Grigory Milev <week@altlinux.ru> 2:2.26-alt1
+- New version released
+
 * Mon Jun 20 2016 Grigory Milev <week@altlinux.ru> 2:2.25-alt3
 - Cleanup build requires
 
