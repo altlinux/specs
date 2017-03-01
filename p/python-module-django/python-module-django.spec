@@ -1,5 +1,5 @@
 %define branch 1.8
-%define version %branch.15
+%define version %branch.17
 %define release alt1
 %define origname Django
 %define oname django
@@ -154,6 +154,9 @@ Summary: A high-level Python 3 Web framework that encourages rapid development a
 Group: Development/Python3
 BuildArch: noarch
 Provides: %py3_name%branch = %EVR
+%py3_provides django.utils.six.moves
+%py3_provides django.utils.six.moves.urllib.parse
+%py3_provides django.utils.six.moves.urllib.request
 Obsoletes: python3-module-django1.5 <= 1.5.0-alt3
 
 %description -n %py3_name
@@ -385,6 +388,10 @@ popd
 %endif
 
 %changelog
+* Thu Feb 02 2017 Alexey Shabalin <shaba@altlinux.ru> 1.8.17-alt1
+- 1.8.17
+- fixed CVE-2016-9013,CVE-2016-9014 
+
 * Mon Oct 24 2016 Alexey Shabalin <shaba@altlinux.ru> 1.8.15-alt1
 - 1.8.15
 - fixed CVE-2016-2512,CVE-2016-2513,CVE-2016-6186,CVE-2016-7401
