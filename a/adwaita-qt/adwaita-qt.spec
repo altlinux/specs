@@ -1,5 +1,5 @@
 Name: adwaita-qt
-Version: 0.5
+Version: 0.98
 Release: alt1
 Summary: Adwaita theme for Qt-based applications
 License: LGPLv2+
@@ -31,7 +31,7 @@ Common files (assets, etc.) for the Adwaita Qt theme
 Summary: Adwaita Qt4 theme
 Group: Graphical desktop/GNOME
 Requires: qt4
-Requires: adwaita-qt-common
+#Requires: adwaita-qt-common
 
 %description -n adwaita-qt4
 Adwaita theme variant for applications utilizing Qt4
@@ -40,7 +40,7 @@ Adwaita theme variant for applications utilizing Qt4
 Summary: Adwaita Qt5 theme
 Group: Graphical desktop/GNOME
 Requires: qt5-qtbase
-Requires: adwaita-qt-common
+#Requires: adwaita-qt-common
 
 %description -n adwaita-qt5
 Adwaita theme variant for applications utilizing Qt5
@@ -70,7 +70,6 @@ pushd "%_target_platform-qt5"
 popd
 
 %files common
-%_datadir/themes/Adwaita/qt
 
 %files -n adwaita-qt4
 %doc LICENSE.LGPL2 README.md
@@ -83,6 +82,9 @@ popd
 %files
 
 %changelog
+* Wed Mar 01 2017 Anton Midyukov <antohami@altlinux.org> 0.98-alt1
+- new version 0.98
+
 * Sun Sep 04 2016 Anton Midyukov <antohami@altlinux.org> 0.5-alt1
 - new version 0.5
 - remove qt-creator-menubar-fix.patch
