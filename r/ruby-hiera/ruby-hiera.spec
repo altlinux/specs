@@ -1,7 +1,7 @@
 %define  pkgname hiera
  
 Name: 	 ruby-%pkgname
-Version: 3.2.0
+Version: 3.3.0
 Release: alt1
  
 Summary: A simple pluggable Hierarchical Database
@@ -19,6 +19,8 @@ Source:  %pkgname-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
  
+%filter_from_requires \,^ruby(win32/dir),d
+
 %description
 A simple pluggable Hierarchical Database.
 
@@ -57,6 +59,13 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Mar 01 2017 Andrey Cherepanov <cas@altlinux.org> 3.3.0-alt1
+- New version
+- Remove autoreq on win32/dir
+
+* Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 3.2.2-alt1
+- new version 3.2.2
+
 * Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 3.2.0-alt1
 - New version
 
