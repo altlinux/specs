@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.10.0
-Release: alt3
+Release: alt4
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
 Group: Development/Python
@@ -26,9 +26,6 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 %{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-setuptools-tests}}
 BuildRequires: python3-module-setuptools
-%py3_provides six.moves
-%py3_provides six.moves.urllib
-%py3_provides six.moves.urllib.parse
 %endif
 
 %description
@@ -42,6 +39,9 @@ provided.
 %package -n python3-module-%oname
 Summary: Python 2 and 3 compatibility utilities
 Group: Development/Python3
+%py3_provides six.moves
+%py3_provides six.moves.urllib
+%py3_provides six.moves.urllib.parse
 
 %description -n python3-module-%oname
 Six is a Python 2 and 3 compatibility library. It provides utility
@@ -95,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1.10.0-alt4
+- fix python3 provides
+
 * Mon Feb 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1.10.0-alt3
 - update BR:, fix upgrade package (ALT #33167)
 
