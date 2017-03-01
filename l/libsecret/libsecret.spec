@@ -5,10 +5,11 @@
 %def_enable gtk_doc
 %def_enable introspection
 %def_enable vala
+%def_disable check
 
 Name: libsecret
 Version: %ver_major.5
-Release: alt1
+Release: alt1.1
 
 Summary: A client library for the Secret Service DBus API
 Group: System/Libraries
@@ -29,7 +30,7 @@ BuildRequires: gtk-doc intltool xsltproc
 %{?_enable_vala:BuildRequires: vala-tools >= %vala_ver}
 
 # for check
-BuildRequires: /proc xvfb-run dbus-tools-gui python-module-dbus python-module-pygobject libgjs
+%{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools-gui python-module-dbus python-module-pygobject libgjs}
 
 %description
 libsecrets is a client for the Secret Service DBus API. The Secret
@@ -128,6 +129,10 @@ GObject introspection devel data for %name.
 
 
 %changelog
+* Wed Mar 01 2017 Michael Shigorin <mike@altlinux.org> 0.18.5-alt1.1
+- BOOTSTRAP: introduce check knob (*off* by default
+  as %%check section is apparently disabled by now)
+
 * Fri Mar 25 2016 Yuri N. Sedunov <aris@altlinux.org> 0.18.5-alt1
 - 0.18.5
 
