@@ -8,12 +8,11 @@
 
 Name: python-module-%{_name}3
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for GObject
-
-License: LGPL
 Group: Development/Python
+License: LGPL
 Url: http://www.pygtk.org/
 
 %if_disabled snapshot
@@ -31,6 +30,7 @@ Source: %_name-%version.tar
 %add_findprov_lib_path %python3_sitelibdir/gtk-%gtk_api_ver
 
 %add_typelib_req_skiplist typelib(Foo)
+%filter_from_requires /Gst.*/d
 
 %define glib_ver 2.46.0
 %define gi_ver 1.46.0
@@ -204,6 +204,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 01 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt2
+- removed dependencies on old GStreamer (ALT #33183)
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
