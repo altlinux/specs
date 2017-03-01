@@ -9,7 +9,7 @@
 %def_enable libthai
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -182,6 +182,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Wed Mar 01 2017 Yuri N. Sedunov <aris@altlinux.org> 1.40.4-alt1
+- 1.40.4
+
 * Tue Sep 13 2016 Yuri N. Sedunov <aris@altlinux.org> 1.40.3-alt1
 - 1.40.3
 
@@ -553,7 +556,7 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 - (inger) made qt-viewer building optional (use --with viewer to build it)
 - (inger) update buildreqs
 
-* Tue Jun 24 2002 Igor Androsov <blake@altlinux.ru> 1.0.3-alt2
+* Mon Jun 24 2002 Igor Androsov <blake@altlinux.ru> 1.0.3-alt2
 - Removed "fixed-ltmains.sh"
 	+ SMP-compatible build
 	+ other small fixes and cleanups.
