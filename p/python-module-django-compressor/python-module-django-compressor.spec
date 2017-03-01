@@ -4,7 +4,7 @@
 %def_with python3
 
 Name:		python-module-%oname
-Version:	2.0
+Version:	2.1.1
 Release:	alt1
 
 Summary:	Compresses linked and inline JavaScript or CSS into single cached files
@@ -29,7 +29,7 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq:python3-devel python3-module-setuptools python3-module-django
 %endif
 
-Requires:	python-module-django-appconf >= 0.4
+Requires:	python-module-django-appconf >= 1.0
 Requires:	python-module-versiontools
 Requires:	python-module-rcssmin  >= 1.0.6
 Requires:	python-module-rjsmin >= 1.0.12
@@ -137,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 02 2017 Alexey Shabalin <shaba@altlinux.ru> 2.1.1-alt1
+- 2.1.1
+
 * Tue Apr 19 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0-alt1
 - 2.0
 
