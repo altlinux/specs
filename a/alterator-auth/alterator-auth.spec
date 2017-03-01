@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.32
+Version: 0.32.1
 Release: alt1
 
 BuildArch: noarch
@@ -109,6 +109,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Wed Mar 01 2017 Andrey Cherepanov <cas@altlinux.org> 0.32.1-alt1
+- Do not strict require ipa-client-install
+
 * Tue Feb 28 2017 Andrey Cherepanov <cas@altlinux.org> 0.32-alt1
 - Support join to FreeIPA domain
 
