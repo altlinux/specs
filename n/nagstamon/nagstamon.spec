@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install python-devel python3-devel
 %define _localstatedir %{_var}
 Name:           nagstamon
 Version:        2.0.1
-Release:        alt4
+Release:        alt5
 Summary:        Nagios status monitor for the desktop
 License:        GPLv2
 Group:          Monitoring
@@ -70,6 +70,9 @@ desktop-file-install \
 
 
 %changelog
+* Wed Mar 01 2017 Denis Medvedev <nbr@altlinux.org> 2.0.1-alt5
+- More strings translated
+
 * Thu Feb 02 2017 Denis Medvedev <nbr@altlinux.org> 2.0.1-alt4
 - rudimentary translation to Russian
 
