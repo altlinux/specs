@@ -1,13 +1,13 @@
 Name: udev-alsa
 Version: 0.3
-Release: alt1.2
+Release: alt2
 Summary: The system sound initialization
 License: GPL
 Group: System/Base
 Url: http://git.altlinux.org/people/shrek/packages/udev-alsa.git
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-PreReq: udev ConsoleKit >= 0.4.1
+PreReq: udev
 Obsoletes: rhsound sound-scripts
 Provides: sound-scripts = 20091231:3.0-alt1
 
@@ -53,6 +53,9 @@ done
 %ghost %_localstatedir/alsa/controlC*
 
 %changelog
+* Wed Mar 01 2017 Anton Midyukov <antohami@altlinux.org> 0.3-alt2
+- remove requires ConsoleKit (no needed)
+
 * Sun Dec 30 2012 L.A. Kostis <lakostis@altlinux.ru> 0.3-alt1.2
 - NMU:
   + sync with alsactl from 1.0.26.
