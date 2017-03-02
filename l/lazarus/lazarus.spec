@@ -1,8 +1,8 @@
 %define cfg %_builddir/%name-%version/
-%define rev 51665
+%define rev 54324
 
 Name:       lazarus
-Version:    1.6.2
+Version:    1.6.4
 Release:    alt1
 Epoch:      1
 
@@ -189,6 +189,10 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 %dir %_datadir/fpcsrc/packages/fcl-base
 
 %changelog
+* Thu Mar 02 2017 Andrey Cherepanov <cas@altlinux.org> 1:1.6.4-alt1
+- New version (http://wiki.lazarus.freepascal.org/Lazarus_1.6.0_release_notes)
+- Fix TCustomEdit behaviour in new upstream version (ALT #33189)
+
 * Mon Nov 28 2016 Andrey Cherepanov <cas@altlinux.org> 1:1.6.2-alt1
 - New version
 
