@@ -1,5 +1,5 @@
 Name: libortp
-Version: 0.27.0
+Version: 1.0.1
 Release: alt1
 
 Group: System/Libraries
@@ -52,7 +52,7 @@ develop programs using the oRTP library.
 %make install DESTDIR=%buildroot
 
 %files
-%doc AUTHORS COPYING ChangeLog NEWS README TODO
+%doc AUTHORS COPYING ChangeLog NEWS README.md
 %_libdir/*.so.*
 
 %files devel
@@ -63,6 +63,9 @@ develop programs using the oRTP library.
 %_includedir/*
 
 %changelog
+* Fri Mar 03 2017 Alexei Takaseev <taf@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Tue Aug 09 2016 Alexei Takaseev <taf@altlinux.org> 0.27.0-alt1
 - 0.27.0
 

@@ -1,5 +1,5 @@
 Name: libbelle-sip
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 Summary: Linphone sip stack
 
@@ -11,10 +11,9 @@ License: GPL
 Url: http://www.belle-sip.org
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: belle-sip-1.4.2-antlr34.patch
-# Automatically added by buildreq on Fri Jul 31 2015
-# optimized out: antlr3-C antlr3-java gnu-config java jpackage-utils libstdc++-devel pkg-config stringtemplate4 tzdata-java
-BuildRequires: antlr3-C-devel antlr3-tool gcc-c++ java-devel libmbedtls-devel libbctoolbox-devel
+# Automatically added by buildreq on Thu Mar 02 2017
+# optimized out: antlr3-C bcunit gnu-config java-1.8.0-openjdk-headless libstdc++-devel perl pkg-config python-base python3
+BuildRequires: antlr3-C-devel java-devel libmbedtls-devel libbctoolbox-devel gcc5-c++ zlib-devel
 
 BuildRequires: /proc rpm-build-java
 
@@ -32,7 +31,6 @@ Libraries and headers required to develop software with belle-sip
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 
 %build
 
@@ -43,7 +41,7 @@ Libraries and headers required to develop software with belle-sip
             --includedir=/usr/include --libdir=%_libdir \
             --libexecdir=/usr/lib --localstatedir=/var/lib \
             --sharedstatedir=/var/lib --mandir=/usr/share/man \
-            --infodir=/usr/share/info --disable-static
+            --infodir=/usr/share/info --disable-static --with-antlr=%_builddir/%name-%version
 
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
@@ -54,7 +52,7 @@ make
 %makeinstall
 
 %files
-%doc AUTHORS ChangeLog COPYING NEWS README
+%doc AUTHORS ChangeLog COPYING NEWS README.md
 %_libdir/*.so.*
 
 %files devel
@@ -63,6 +61,9 @@ make
 %_libdir/pkgconfig/belle-sip.pc
 
 %changelog
+* Thu Mar 02 2017 Alexei Takaseev <taf@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Tue Aug 09 2016 Alexei Takaseev <taf@altlinux.org> 1.5.0-alt1
 - 1.5.0
 - Use system libmbedtls
