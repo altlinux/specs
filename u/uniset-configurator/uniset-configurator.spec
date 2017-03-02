@@ -1,6 +1,6 @@
 Name: uniset-configurator
 Version: 1.0
-Release: alt6
+Release: alt14
 Summary: UniSet configurator
 Group: Development/Python
 License: GPL
@@ -11,9 +11,13 @@ Packager: Pavel Vainerman <pv@altlinux.ru>
 Source: %name-%version.tar
 BuildArch: noarch
 
-# Automatically added by buildreq on Sat Sep 25 2010 (-bi)
+# Automatically added by buildreq on Tue Mar 14 2017
+# optimized out: pkg-config python-base python-modules python3 python3-base
 BuildRequires: python-devel
+
 BuildRequires(pre): rpm-build-python
+
+Requires: python-module-pygtk-libglade
 
 %add_findreq_skiplist %_datadir/%name/*.sh
 %global _target_python_libdir %_target_libdir_noarch
@@ -61,6 +65,31 @@ ln -s %python_sitelibdir_noarch/%name/can_conf.py %buildroot/%_bindir/uniset-can
 %_bindir/*
 
 %changelog
+* Thu Mar 02 2017 Pavel Vainerman <pv@altlinux.ru> 1.0-alt14
+- modify LCAPS tests generator
+
+* Thu Jan 26 2017 Pavel Vainerman <pv@altlinux.ru> 1.0-alt13
+- add 'iopriority' to uniset-io-gentags.sh
+
+* Wed Nov 16 2016 Pavel Vainerman <pv@altlinux.ru> 1.0-alt12
+- added support settings parameters from command line and from file
+
+* Wed Nov 16 2016 Pavel Vainerman <pv@altlinux.ru> 1.0-alt11
+- added support 'filter_field filter_value' parameters 
+  for uniset-configurator-gentags.sh
+
+* Tue Nov 15 2016 Pavel Vainerman <pv@altlinux.ru> 1.0-alt10
+- add new utility:  uniset-configurator-gentags.sh
+
+* Tue Nov 15 2016 Pavel Vainerman <pv@altlinux.ru> 1.0-alt9
+- io: added other parameters for generate tagfile
+
+* Tue Nov 15 2016 Pavel Vainerman <pv@altlinux.ru> 1.0-alt8
+- rename 'uniset-io' --> 'uniset_io'
+
+* Tue Nov 15 2016 Pavel Vainerman <pv@altlinux.ru> 1.0-alt7
+- Add tagfile generator for uniset-io
+
 * Tue Mar 24 2015 Pavel Vainerman <pv@altlinux.ru> 1.0-alt6
 - Use 'xml.dom.minidom' replaced by the use 'lxml'
 
