@@ -2,7 +2,7 @@
 
 Name:			alterator-pve
 Version:		0.1
-Release:		alt1
+Release:		alt2
 
 ExclusiveArch:		x86_64
 
@@ -16,6 +16,7 @@ BuildRequires(pre): 	alterator
 Requires:		alterator
 Requires:		alterator-sh-functions
 Requires:		pve-cluster
+Requires:		pve-manager
 Requires:		libshell
 Requires:		/usr/bin/ssh-keygen
 
@@ -37,6 +38,9 @@ Requires:		/usr/bin/ssh-keygen
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Mar 02 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.1-alt2
+- fix: added missing runtime dependency.
+
 * Mon Nov 21 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.1-alt1
 - Initial release
 
