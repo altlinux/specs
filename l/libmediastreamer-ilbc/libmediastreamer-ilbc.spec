@@ -1,6 +1,6 @@
 Name: libmediastreamer-ilbc
 Version: 2.1.2
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: An iLBC codec mediastreamer plugin
@@ -37,6 +37,9 @@ export ILBC_CFLAGS=-I/usr
 %_libdir/mediastreamer/plugins/*
 
 %changelog
+* Fri Mar 03 2017 Alexei Takaseev <taf@altlinux.org> 2.1.2-alt3
+- Rebuild with new libmediastreamer 2.15.0
+
 * Tue Aug 09 2016 Alexei Takaseev <taf@altlinux.org> 2.1.2-alt2
 - Rebuild with new libmediastreamer 2.14.0
 

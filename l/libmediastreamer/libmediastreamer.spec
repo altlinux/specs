@@ -1,5 +1,5 @@
 Name: libmediastreamer
-Version: 2.14.0
+Version: 2.15.0
 Release: alt1
 
 Group: System/Libraries
@@ -70,7 +70,7 @@ mkdir -p %buildroot/%_libdir/mediastreamer/plugins
 %find_lang mediastreamer
 
 %files -f mediastreamer.lang
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS ChangeLog NEWS README.md
 %dir %_libdir/mediastreamer
 %dir %_libdir/mediastreamer/plugins
 %_libdir/*.so.*
@@ -86,6 +86,9 @@ mkdir -p %buildroot/%_libdir/mediastreamer/plugins
 %_includedir/*
 
 %changelog
+* Fri Mar 03 2017 Alexei Takaseev <taf@altlinux.org> 2.15.0-alt1
+- 2.15.0
+
 * Tue Aug 09 2016 Alexei Takaseev <taf@altlinux.org> 2.14.0-alt1
 - 2.14.0
 

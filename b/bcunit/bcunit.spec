@@ -1,5 +1,5 @@
-Name: libbctoolbox
-Version: 0.5.1
+Name: bcunit
+Version: 3.0
 Release: alt1
 Summary: Utilities library used by Belledonne Communications softwares
 
@@ -11,10 +11,6 @@ License: GPL
 Url: http://www.belle-sip.org
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
-
-# Automatically added by buildreq on Thu Mar 02 2017
-# optimized out: bcunit gnu-config libstdc++-devel perl pkg-config python-base
-BuildRequires: bcunit-devel gcc-c++ libmbedtls-devel
 
 %description
 Utilities library used by Belledonne Communications
@@ -45,19 +41,16 @@ Libraries and headers required to develop software with belle-sip, mediastreamer
 %makeinstall
 
 %files
-%doc AUTHORS ChangeLog COPYING NEWS README.md
+%doc AUTHORS ChangeLog COPYING NEWS README
 %_libdir/*.so.*
 
 %files devel
-%_includedir/bctoolbox
-%_libdir/libbctoolbox-tester.so
-%_libdir/libbctoolbox.so
-%_libdir/pkgconfig/bctoolbox-tester.pc
-%_libdir/pkgconfig/bctoolbox.pc
+%_includedir/BCUnit
+%_libdir/libbcunit.so
+%_libdir/pkgconfig/bcunit.pc
+%_mandir/man3/*
+%_datadir/BCUnit
 
 %changelog
-* Thu Mar 02 2017 Alexei Takaseev <taf@altlinux.org> 0.5.1-alt1
-- 0.5.1
-
-* Tue Aug 09 2016 Alexei Takaseev <taf@altlinux.org> 0.2.0-alt1
+* Thu Mar 02 2017 Alexei Takaseev <taf@altlinux.org> 3.0-alt1
 - Initial build for ALT Sisyphus
