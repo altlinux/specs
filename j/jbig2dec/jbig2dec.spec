@@ -1,6 +1,6 @@
 Name:           jbig2dec
 Version:        0.11
-Release:        alt0.2.1
+Release:        alt0.2.2
 Summary:        A decoder implementation of the JBIG2 image compression format 
 Summary(ru_RU.UTF-8): Декодер формата изображений JBIG2
 License:        GPLv2
@@ -69,7 +69,7 @@ rm -f %{buildroot}%{_libdir}/*.la
 %files
 %doc CHANGES COPYING LICENSE README
 %{_bindir}/jbig2dec
-%{_mandir}/man?/jbig2dec.1.gz
+%{_mandir}/man?/jbig2dec.1*
 
 %files -n lib%name-devel
 %doc CHANGES COPYING LICENSE README
@@ -81,7 +81,14 @@ rm -f %{buildroot}%{_libdir}/*.la
 %{_libdir}/libjbig2dec.so.0
 %{_libdir}/libjbig2dec.so.0.0.0
 
+# TODO:
+# - update to 0.13 (patch unneeded)
+# - consider debian patches
+
 %changelog
+* Thu Mar 02 2017 Michael Shigorin <mike@altlinux.org> 0.11-alt0.2.2
+- Fixed manpage name.
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt0.2.1
 - Rebuilt with libpng15
 
