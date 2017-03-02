@@ -2,22 +2,25 @@
 %define plugin weather
 
 Name: gkrellm-%plugin
-Version: 2.0.6
-Release: alt1.qa1
+Version: 2.0.8
+Release: alt2
 
 Summary: GKrellM weather plugin
-Summary(ru_RU.CP1251): Плагин GKrellM для отображения погоды
+Summary(ru_RU.UTF-8): РџР»Р°РіРёРЅ GKrellM РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РїРѕРіРѕРґС‹
 License: GPL
 Group: Monitoring
-Url: http://kmlinux.fjfi.cvut.cz/~makovick/gkrellm/index.html
-Source: http://kmlinux.fjfi.cvut.cz/~makovick/gkrellm/%sourcename-%version.tgz
+Url: https://sites.google.com/site/makovick/gkrellm-plugins
+Source0: %name-%version.tar.gz
 
-Patch0: %sourcename-2.0.6-alt-install.patch.gz
+Patch0: %sourcename-alt-install.patch
+Patch1: %sourcename-alt-fix_url.patch
+Patch2: %sourcename-alt-fix_path_GrabW-x32.patch
+Patch3: %sourcename-alt-fix_path_GrabW-x64.patch
 
 Provides: %sourcename = %version
 Obsoletes: %sourcename < %version
 
-Requires: gkrellm >= 2.0
+Requires: wget gkrellm >= 2.0
 
 # Automatically added by buildreq on Sun Mar 30 2003
 BuildRequires: gkrellm-devel glib2-devel libatk-devel libgtk+2-devel libpango-devel pkgconfig
@@ -25,13 +28,20 @@ BuildRequires: gkrellm-devel glib2-devel libatk-devel libgtk+2-devel libpango-de
 %description
 This GKrellM plugin grab weather for your location from server and display it.
 
-%description -l ru_RU.CP1251
-Этот GKrellM плагин скачивает информацию о погоде для указанного места.
-с сервера и отображает ее.
+%description -l ru_RU.UTF-8
+Р­С‚РѕС‚ GKrellM РїР»Р°РіРёРЅ СЃРєР°С‡РёРІР°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РїРѕРіРѕРґРµ РґР»СЏ СѓРєР°Р·Р°РЅРЅРѕРіРѕ РјРµСЃС‚Р°.
+СЃ СЃРµСЂРІРµСЂР° Рё РѕС‚РѕР±СЂР°Р¶Р°РµС‚ РµРµ.
 
 %prep
-%setup -q -n %sourcename-%version
+%setup
 %patch0 -p1
+%patch1 -p1
+%ifarch %{ix86}
+%patch2 -p1
+%endif
+%ifarch x86_64
+%patch3 -p1
+%endif
 
 %build
 %make_build enable_nls=1 LOCALEDIR=%_datadir/locale
@@ -49,6 +59,16 @@ install -D -m755 GrabWeather %buildroot%_libdir/gkrellm2/GrabWeather
 %_libdir/gkrellm2/GrabWeather
 
 %changelog
+* Wed Mar 01 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.0.8-alt2
+- fixed plugin initialization (ALT #33160)
+
+* Wed Mar 01 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.0.8-alt1
+- new version - 2.0.8
+
+* Wed Mar 01 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.0.6-alt2
+- spec cleanup
+- added patch to update the URL source of weather
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.6-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
