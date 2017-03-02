@@ -1,9 +1,9 @@
 %define origname gwenhywfar
-# Qt5 support is stiil failed to build
+# Qt5 support is still failed to build
 %def_without qt5
 
 Name:     libgwenhywfar
-Version:  4.15.3
+Version:  4.17.0
 Release:  alt1
 
 Summary:  A multi-platform helper library for other libraries
@@ -22,7 +22,7 @@ BuildRequires: gcc-c++ glibc-devel graphviz libcom_err-devel
 BuildRequires: libgnutls-devel libssl-devel tzdata
 BuildRequires: libqt4-devel libgtk+2-devel
 %if_with qt5
-BuildRequires: qt5-base-devel
+BuildRequires: qt5-base-devel qt5-tools
 %endif
 BuildRequires: zlib-devel libgcrypt-devel ncurses-devel
 BuildRequires: ca-certificates
@@ -83,6 +83,7 @@ compiling programs using Gwenhywfar.
 %patch1 -p2
 
 %build
+%undefine _configure_gettext
 %autoreconf
 %if_with qt5
 export PATH=$PATH:%_qt5_bindir
@@ -146,6 +147,9 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_libdir/cmake/*
 
 %changelog
+* Thu Mar 02 2017 Andrey Cherepanov <cas@altlinux.org> 4.17.0-alt1
+- New version
+
 * Tue Jun 21 2016 Andrey Cherepanov <cas@altlinux.org> 4.15.3-alt1
 - New version
 
