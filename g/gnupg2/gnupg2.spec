@@ -1,6 +1,6 @@
 Name: gnupg2
-Version: 2.0.29
-Release: alt1.1
+Version: 2.0.30
+Release: alt1%ubt
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -33,6 +33,7 @@ Obsoletes: %name-common < %version-%release
 # due to "enable -f /usr/lib/bash/lockf lockf"
 Requires: bash-builtin-lockf >= 0:0.2
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: libgcrypt-devel >= 1.4, libksba-devel >= 0.9.13
 
 # Automatically added by buildreq on Fri Apr 08 2011
@@ -99,10 +100,13 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %_datadir/gnupg/
 %_infodir/*.info*
 %_mandir/man?/*
-%exclude %_man1dir/gpg-zip.*
+#exclude %_man1dir/gpg-zip.*
 %docdir
 
 %changelog
+* Thu Mar 02 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.30-alt1%ubt
+- new version
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.29-alt1.1
 - NMU: added BR: texinfo
 
