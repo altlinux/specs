@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name graphene
-%define ver_major 1.5
+%define ver_major 1.6
 %define api_ver 1.0
 
 %def_disable static
@@ -17,7 +17,7 @@
 %endif
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Graphene is a library of data types commonly used to implement 2D-in-3D or full 3D canvases
@@ -125,6 +125,9 @@ GObject introspection devel data for the Graphene library.
 %endif
 
 %changelog
+* Thu Mar 02 2017 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Tue Jan 10 2017 Yuri N. Sedunov <aris@altlinux.org> 1.5.4-alt1
 - 1.5.4
 
