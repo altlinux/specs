@@ -6,7 +6,7 @@
 %def_enable gtk_doc
 
 Name: lib%_name%api_ver
-Version: %ver_major.12
+Version: %ver_major.14
 Release: alt1
 
 Summary: A graph based image processing framework
@@ -118,6 +118,9 @@ GObject introspection devel data for the GEGL library.
 %_girdir/Gegl-%api_ver.gir
 
 %changelog
+* Thu Mar 02 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.14-alt1
+- 0.3.14
+
 * Thu Feb 16 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.12-alt1
 - 0.3.12
 
