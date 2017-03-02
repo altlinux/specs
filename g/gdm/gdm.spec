@@ -20,9 +20,11 @@
 %def_without xevie
 %def_enable wayland
 %def_enable xsession
+#Enable running X server as user
+%def_disable user_display_server
 
 Name: gdm
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -200,7 +202,8 @@ subst 's|\$(libdir)/security|%_pam_modules_dir|' pam_gdm/Makefile.am
 	--with-dmconfdir=%_sysconfdir/X11/sessions \
 	--disable-dependency-tracking \
 	%{?_enable_wayland:--enable-wayland-support} \
-	%{?_enable_xsession:--enable-gdm-xsession}
+	%{?_enable_xsession:--enable-gdm-xsession} \
+	%{?_disable_user_display_server:--disable-user-display-server}
 %make_build
 
 %install
@@ -300,6 +303,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Thu Mar 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
+- 3.22.2
+
 * Wed Oct 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 
