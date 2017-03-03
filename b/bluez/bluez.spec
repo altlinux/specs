@@ -1,8 +1,11 @@
 %define _libexecdir %_prefix/libexec
 %def_enable obex
+# since 5.44 the following tools marked as deprecated:
+# hciattach hciconfig hcitool hcidump rfcomm sdptool ciptool gatttool
+%def_enable deprecated
 
 Name: bluez
-Version: 5.43
+Version: 5.44
 Release: alt1
 
 Summary: Bluetooth utilities
@@ -67,12 +70,13 @@ export CFLAGS="$CFLAGS -D_FILE_OFFSET_BITS=64"
 	%{subst_enable obex} \
 	--enable-cups \
 	--enable-tools \
-	--localstatedir=%_var
+	--localstatedir=%_var \
+	%{subst_enable deprecated}
 %make_build
 
 %install
 %makeinstall_std
-install -m755 attrib/gatttool %buildroot%_bindir/
+%{?_enable_deprecated:install -m755 attrib/gatttool %buildroot%_bindir/}
 install -pD -m755 scripts/bluetooth.alt.init %buildroot%_initdir/bluetoothd
 ln -s bluetooth.service %buildroot%_unitdir/bluetoothd.service
 mkdir -p %buildroot%_libdir/bluetooth/plugins %buildroot%_localstatedir/bluetooth
@@ -105,7 +109,28 @@ chkconfig bluetoothd on
 %_prefix/lib/systemd/user/obex.service
 /lib/udev/rules.d/*-hid2hci.rules
 /lib/udev/hid2hci
-%_bindir/*
+%_bindir/bccmd
+%_bindir/bluemoon
+%_bindir/bluetoothctl
+%_bindir/btattach
+%_bindir/btmon
+%_bindir/hex2hcd
+%_bindir/l2ping
+%_bindir/l2test
+%_bindir/mpris-proxy
+%_bindir/rctest
+
+%if_enabled deprecated
+%_bindir/ciptool
+%_bindir/gatttool
+%_bindir/hciattach
+%_bindir/hciconfig
+%_bindir/hcidump
+%_bindir/hcitool
+%_bindir/rfcomm
+%_bindir/sdptool
+%endif
+
 %_libdir/bluetooth/
 %_libexecdir/bluetooth/
 %_datadir/dbus-1/system-services/org.bluez.service
@@ -126,6 +151,9 @@ chkconfig bluetoothd on
 %_prefix/lib/cups/backend/bluetooth
 
 %changelog
+* Fri Mar 03 2017 Yuri N. Sedunov <aris@altlinux.org> 5.44-alt1
+- 5.44
+
 * Sun Oct 30 2016 Yuri N. Sedunov <aris@altlinux.org> 5.43-alt1
 - 5.43
 
