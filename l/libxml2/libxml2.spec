@@ -1,6 +1,6 @@
 Name: libxml2
-Version: 2.9.3.0.5.6511
-Release: alt1.1.1
+Version: 2.9.4.0.12.e905
+Release: alt1
 Epoch: 1
 
 Summary: The library for manipulating XML files
@@ -248,6 +248,13 @@ install -p -m644 doc/*.html %buildroot%pkgdocdir/
 %doc %_datadir/gtk-doc/html/libxml2/
 
 %changelog
+* Fri Mar 03 2017 Dmitry V. Levin <ldv@altlinux.org> 1:2.9.4.0.12.e905-alt1
+- v2.9.3-5-g65112cb -> v2.9.4-12-ge905f08
+  (fixes: CVE-2016-1833, CVE-2016-1834, CVE-2016-1835, CVE-2016-1836,
+  CVE-2016-1837, CVE-2016-1838, CVE-2016-1839, CVE-2016-1840,
+  CVE-2016-3627, CVE-2016-3705, CVE-2016-4449, CVE-2016-4483,
+  CVE-2016-4658, CVE-2016-5131).
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:2.9.3.0.5.6511-alt1.1.1
 - (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
   (it is meaningless because arbitrary packages package that dir).
