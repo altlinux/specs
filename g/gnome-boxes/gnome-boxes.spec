@@ -2,7 +2,7 @@
 %def_disable ovirt
 
 Name: gnome-boxes
-Version: 3.22.3
+Version: 3.22.4
 Release: alt1
 Summary: A simple GNOME 3 application to access remote or virtual systems
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
@@ -37,6 +37,7 @@ BuildRequires: vala-tools
 BuildRequires: glib2-devel >= %glib_ver libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libgtk+3-gir-devel
 BuildRequires: libgtk3vnc-devel >= %gtk_vnc_ver
+BuildRequires: libsecret-devel libsecret-gir-devel
 BuildRequires: libvirt-gobject-devel >= %libvirt_glib_ver
 BuildRequires: libvirt-gconfig-devel >= %libvirt_glib_ver
 BuildRequires: libxml2-devel >= %libxml2_ver
@@ -100,6 +101,9 @@ intltoolize -f
 %_datadir/appdata/*.xml
 
 %changelog
+* Fri Mar 03 2017 Alexey Shabalin <shaba@altlinux.ru> 3.22.4-alt1
+- 3.22.4
+
 * Mon Dec 26 2016 Alexey Shabalin <shaba@altlinux.ru> 3.22.3-alt1
 - 3.22.3
 
