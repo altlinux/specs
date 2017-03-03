@@ -1,6 +1,6 @@
 Name: netdata
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: Real-time performance monitoring, done right!
 
@@ -43,6 +43,14 @@ queries, API calls, web site visitors, etc.
 netdata tries to visualize the truth of now, in its greatest detail,
 so that you can get insights of what is happening now and what just
 happened, on your systems and applications.
+
+%package postgres
+Summary: PostgreSQL module for %name
+Group: Development/Python
+
+%description postgres
+PostgreSQL module for %name.
+
 
 %prep
 %setup
@@ -87,7 +95,7 @@ getent passwd netdata > /dev/null || useradd -r -g netdata -c netdata -s /sbin/n
 
 %files
 %attr(0700,netdata,netdata) %dir %_localstatedir/cache/%name/
-%attr(0700,root,netdata) %dir %_localstatedir/log/%name/
+%attr(0770,root,netdata) %dir %_localstatedir/log/%name/
 %attr(0700,netdata,netdata) %dir %_localstatedir/lib/%name/
 %dir %_sysconfdir/%name/
 #config(noreplace) %_sysconfdir/%name/netdata.conf
@@ -108,13 +116,21 @@ getent passwd netdata > /dev/null || useradd -r -g netdata -c netdata -s /sbin/n
 %_libexecdir/%name/node.d/
 %_libexecdir/%name/plugins.d/
 %_libexecdir/%name/python.d/
+%exclude %_libexecdir/%name/python.d/postgres.chart.py
 %dir %_datadir/%name
 
 # override defattr for web files (see netdata.conf for web access user/group)
 %defattr(644,root,netdata,755)
 %_datadir/%name/web/
 
+%files postgres
+%_libexecdir/%name/python.d/postgres.chart.py
+
 %changelog
+* Fri Mar 03 2017 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt2
+- split postgres module to a subpackage
+- fix log dir permission
+
 * Mon Feb 27 2017 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
 - new version 1.5.0 (with rpmrb script)
 - pack python modules (ALT bug 32662)
