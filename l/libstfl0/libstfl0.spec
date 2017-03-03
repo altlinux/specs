@@ -1,6 +1,6 @@
 Name: libstfl0
 Version: 0.24
-Release: alt2.1
+Release: alt3
 
 %define oname stfl
 
@@ -11,13 +11,17 @@ Group: Terminals
 Url: http://www.clifford.at/stfl/
 
 Packager: Vladimir D. Seleznev <vseleznv@altlinux.org>
-Source: %oname-%version.tar.gz
+# repackaged http://www.clifford.at/stfl/stfl-%version.tar.gz
+Source: %oname-%version.tar
+Source1: %name.watch
 
-Patch1: stfl-0.24-as-needed.patch
+Patch1: stfl-0.24-alt-as-needed.patch
+Patch2: stfl-0.24-alt-ruby-linkage-fix.patch
+Patch3: stfl-0.24-alt-warnings.patch
 
-# Automatically added by buildreq on Mon Jan 18 2016
-# optimized out: libncurses-devel libtinfo-devel perl-devel python-base python-modules swig-data
-BuildRequires: libncursesw-devel python-devel swig
+# Automatically added by buildreq on Fri Mar 03 2017
+# optimized out: libncurses-devel libtinfo-devel perl perl-devel python-base python-modules ruby ruby-stdlibs swig-data
+BuildRequires: libncursesw-devel libruby-devel perl-Encode python-devel swig
 
 %description
 STFL is a library which implements a curses-based widget set for text
@@ -51,20 +55,22 @@ Summary: Python binding to stfl
 %description -n python-module-%oname
 Python binding to stfl
 
-# broken with ruby 2.0+
-#%%package -n ruby-%%oname
-#Group: Terminals
-#Requires: swig ruby
-#Summary: Ruby binding to stfl
+%package -n ruby-%oname
+Group: Terminals
+Requires: swig ruby
+Summary: Ruby binding to stfl
 
-#%%description -n ruby-%%oname
-#Ruby binding to stfl
+%description -n ruby-%oname
+Ruby binding to stfl
 
 %prep
 %setup -n %oname-%version
 %patch1 -p2
+%patch2 -p2
+%patch3 -p2
 
 %build
+sed -i 's|$(prefix)/$(libdir)/ruby|%_ruby_lib_path/site_ruby|g' ruby/Makefile.snippet
 # SMP-incompatible build
 export CFLAGS="%optflags"
 make
@@ -91,7 +97,17 @@ rm %buildroot%_libdir/*.a
 %python_sitelibdir/stfl.pyc
 %python_sitelibdir/stfl.pyo
 
+%files -n ruby-%oname
+%ruby_sitearchdir/stfl.so
+
 %changelog
+* Fri Mar 03 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.24-alt3
+- added support for watchfile.
+- fixed compiler warnings.
+- built with ruby module.
+- added origin (alt) in patch filename.
+- clearly marked that source is repackaged.
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.24-alt2.1
 - rebuild with new perl 5.24.1
 
