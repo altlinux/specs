@@ -3,7 +3,7 @@
 
 Name: glibc-kernheaders
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 
 Summary: Linux kernel C header files for use by glibc and other userspace software
 License: GPLv2
@@ -13,15 +13,47 @@ Url: http://www.kernel.org/
 # git://git.altlinux.org/gears/g/%name.git
 Patch: %name-%version-%release.patch
 
-Patch1: 0001-uapi-fix-linux-ipv6_route.h-userspace-compilation-er.patch
-Patch2: 0002-uapi-fix-linux-mroute6.h-userspace-compilation-error.patch
-Patch3: 0003-uapi-fix-linux-mroute.h-userspace-compilation-errors.patch
-Patch4: 0004-uapi-fix-linux-rds.h-userspace-compilation-errors.patch
-Patch5: 0005-uapi-fix-linux-rds.h-userspace-compilation-error.patch
-Patch6: 0006-btrfs-remove-btrfs_err_str-function-from-uapi-linux-.patch
-Patch7: 0007-uapi-fix-linux-target_core_user.h-userspace-compilat.patch
-Patch8: 0008-uapi-fix-linux-mqueue.h-userspace-compilation-errors.patch
-Patch9: 0009-uapi-fix-linux-dlm_netlink.h-userspace-compilation-e.patch
+Patch1: 0001-drm-Kbuild-add-omap_drm.h-to-the-installed-headers.patch
+Patch2: 0002-ipv6-sr-add-missing-Kbuild-export-for-header-files.patch
+Patch3: 0003-uapi-install-batman_adv.h-header.patch
+Patch4: 0004-uapi-add-missing-install-of-dma-buf.h.patch
+Patch5: 0005-uapi-mqueue.h-add-missing-linux-types.h-include.patch
+Patch6: 0006-uapi-fix-linux-target_core_user.h-userspace-compilat.patch
+Patch7: 0007-uapi-fix-linux-ipv6_route.h-userspace-compilation-er.patch
+Patch8: 0008-uapi-fix-linux-mroute6.h-userspace-compilation-error.patch
+Patch9: 0009-uapi-fix-linux-mroute.h-userspace-compilation-errors.patch
+Patch10: 0010-uapi-fix-linux-rds.h-userspace-compilation-errors.patch
+Patch11: 0011-uapi-fix-linux-rds.h-userspace-compilation-error.patch
+Patch12: 0012-uapi-fix-linux-if.h-userspace-compilation-errors.patch
+Patch13: 0013-uapi-fix-linux-ip6_tunnel.h-userspace-compilation-er.patch
+Patch14: 0014-uapi-fix-linux-llc.h-userspace-compilation-error.patch
+Patch15: 0015-uapi-fix-linux-seg6.h-and-linux-seg6_iptunnel.h-user.patch
+Patch16: 0016-uapi-stop-including-linux-sysctl.h-in-uapi-linux-net.patch
+Patch17: 0017-uapi-fix-linux-netfilter-xt_hashlimit.h-userspace-co.patch
+Patch18: 0018-uapi-fix-drm-omap_drm.h-userspace-compilation-errors.patch
+Patch19: 0019-btrfs-remove-btrfs_err_str-function-from-uapi-linux-.patch
+Patch20: 0020-uapi-fix-linux-sysctl.h-userspace-compilation-errors.patch
+Patch21: 0021-uapi-move-struct-reiserfs_security_handle-out-from-l.patch
+Patch22: 0022-uapi-fix-linux-packet_diag.h-userspace-compilation-e.patch
+Patch23: 0023-uapi-fix-rdma-mlx5-abi.h-userspace-compilation-error.patch
+Patch24: 0024-uapi-fix-linux-dlm_netlink.h-userspace-compilation-e.patch
+Patch25: 0025-uapi-fix-linux-nfc.h-userspace-compilation-errors.patch
+Patch26: 0026-uapi-fix-linux-vm_sockets.h-userspace-compilation-er.patch
+Patch27: 0027-uapi-fix-linux-nfsd-cld.h-userspace-compilation-erro.patch
+Patch28: 0028-uapi-fix-scsi-scsi_netlink.h-userspace-compilation-e.patch
+Patch29: 0029-uapi-fix-scsi-scsi_netlink_fc.h-userspace-compilatio.patch
+Patch30: 0030-uapi-fix-scsi-scsi_bsg_fc.h-userspace-compilation-er.patch
+Patch31: 0031-uapi-fix-asm-ipcbuf.h-userspace-compilation-errors.patch
+Patch32: 0032-uapi-fix-asm-msgbuf.h-userspace-compilation-errors.patch
+Patch33: 0033-uapi-fix-asm-sembuf.h-userspace-compilation-errors.patch
+Patch34: 0034-uapi-fix-asm-shmbuf.h-userspace-compilation-errors.patch
+Patch35: 0035-uapi-fix-another-asm-shmbuf.h-userspace-compilation-.patch
+Patch36: 0036-uapi-fix-asm-signal.h-userspace-compilation-errors.patch
+Patch37: 0037-uapi-introduce-__kernel_uapi_size_t.patch
+Patch38: 0038-x86-uapi-fix-asm-signal.h-userspace-compilation-erro.patch
+Patch39: 0039-uapi-fix-linux-kexec.h-userspace-compilation-errors.patch
+Patch40: 0040-uapi-fix-linux-ncp_fs.h-userspace-compilation-errors.patch
+Patch41: 0041-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
 
 BuildRequires: rpm-build-kernel
 BuildRequires: %kernel_source = 1.0.0
@@ -55,6 +87,7 @@ building most standard programs and are also needed to build glibc.
 tar -xf %kernel_src/%kernel_source.tar
 cd %kernel_source
 %patch -p1
+
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -64,6 +97,38 @@ cd %kernel_source
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
+%patch25 -p1
+%patch26 -p1
+%patch27 -p1
+%patch28 -p1
+%patch29 -p1
+%patch30 -p1
+%patch31 -p1
+%patch32 -p1
+%patch33 -p1
+%patch34 -p1
+%patch35 -p1
+%patch36 -p1
+%patch37 -p1
+%patch38 -p1
+%patch39 -p1
+%patch40 -p1
+%patch41 -p1
 
 %install
 %define hdr_dir %_includedir/linux-default
@@ -79,10 +144,10 @@ ln -snf asm-%base_arch %buildroot%hdr_dir/include/asm
 set +x
 d="$PWD"
 cd %buildroot%hdr_dir/include
-for f in {linux,asm}/*.h; do
-	printf '#include <%%s>\n' "$f" |
-		%__cc %optflags -S -I"$PWD" -o/dev/null -xc - ||
-			echo "$f"
+find asm/ [^a]* -type f -name '*.h' |sort |while read f; do
+	%__cc -D_GNU_SOURCE %optflags \
+		-S -o/dev/null -xc /dev/null -I. -include "$f" ||
+		echo "$f"
 done > "$d"/fail.list
 if [ -s "$d"/fail.list ]; then
 	echo "Compilation check failed for $(grep -Fc .h -- "$d"/fail.list) files:"
@@ -100,6 +165,9 @@ done
 %hdr_dir
 
 %changelog
+* Fri Mar 03 2017 Dmitry V. Levin <ldv@altlinux.org> 4.10-alt2
+- Fixed compilation errors in 27 header files.
+
 * Sun Feb 19 2017 Dmitry V. Levin <ldv@altlinux.org> 4.10-alt1
 - v4.10-rc8-42-g558e8e2 -> v4.10.
 
