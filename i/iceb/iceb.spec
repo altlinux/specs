@@ -1,10 +1,8 @@
-
 %define oname iceB
-%define oversion 15_0
 
 Name:    iceb
 Version: 17.6
-Release: alt1
+Release: alt2
 
 Summary: Free financial accounting system (console)
 
@@ -14,16 +12,10 @@ Group:   Office
 License: GPL
 Url:     http://iceb.net.ua
 
-Source:  %url/download/%name-%oversion.tar.bz2
-Source1: %name
-Source3: %name.16.xpm
-Source4: %name.32.xpm
-Source5: %name.48.xpm
-Source6: %name.watch
+Source:  %name-%version.tar
+Source1: %name.watch
 
-#Patch:   iceb-fix-overflow-buffer.patch
-Patch1:	 %name-12.11-remove-missing-automake-target.patch
-
+BuildRequires(pre): cmake
 BuildRequires: gcc-c++ glib2-devel libMySQL-devel libncursesw-devel
 
 %description
@@ -31,49 +23,40 @@ Free financial accounting system.
 
 %prep
 %setup -q -c
-#%%patch -p2
-%patch1 -p2
 
 %build
-%autoreconf
-%configure \
-	--disable-static \
-	--with-lang-path=%_datadir/locale \
-	--with-lock-dir=/var/lock/serial \
-	--with-config-path=%_datadir/%oname \
-	--with-maxfkeys=10 \
-	--with-gnu-ld
-
-%make_build
+%cmake
+%cmake_build
 
 %install
-[ -z "$TMPDIR" ] && TMPDIR=/tmp
-FAKEDIR=$TMPDIR/%{name}_tmp_install
-mkdir -p $FAKEDIR
+install -d %buildroot%_bindir
+find BUILD/buhg -perm 0755 -a -type f -exec cp '{}' %buildroot%_bindir ';'
+#find BUILD/additionally/other -perm 0755 -a -type f -exec cp '{}' %buildroot%_bindir ';'
 
-%makeinstall \
-    CONFDIR=$FAKEDIR \
-    ICEB_LANG_PATH=%buildroot/%_datadir/locale/uk \
-    bindir=%buildroot/%_libdir/%name/bin \
-    libdir=%buildroot/%_libdir/%name
+install -d %buildroot%_datadir/%oname/%name
+cp buhg/alx/*.alx %buildroot%_datadir/%oname/%name
 
-rm -rf $FAKEDIR
+install -d %buildroot%_datadir/%oname/doc
+cp buhg/doc/*.txt %buildroot%_datadir/%oname/doc
 
-%makeinstall CONFDIR=%buildroot/%_datadir/%oname/iceb -C buhg/bx
-%makeinstall CONFDIR=%buildroot/%_datadir/%oname/doc -C buhg/doc
-
-mkdir -p %buildroot%_bindir
-install -m 755 %SOURCE1 %buildroot/%_bindir
-subst "s|/usr/lib|%_libdir|g" %buildroot/%_bindir/%name
-rm -rf %buildroot%_libdir/%name/*.{a,la}
+install -d %buildroot%_desktopdir
+cp desktop/applications/*.desktop %buildroot%_desktopdir
+install -d %buildroot%_pixmapsdir
+cp desktop/pixmaps/*.png %buildroot%_pixmapsdir
 
 %files
-%doc CHANGES LSM VERSION COPYING*
-%_bindir/%name
-%_libdir/%name/bin
+%doc CHANGES COPYING READMI.TXT
+%_bindir/*
 %_datadir/%oname
+%_desktopdir/*.desktop
+%_pixmapsdir/*.png
 
 %changelog
+* Sun Feb 19 2017 Andrey Cherepanov <cas@altlinux.org> 17.6-alt2
+- Prepare for cronbuild
+- Use cmake for build
+- Simplify spec and package rules
+
 * Tue Jan 03 2017 Andrey Cherepanov <cas@altlinux.org> 17.6-alt1
 - new version 17.6
 
