@@ -2,7 +2,7 @@
 %define ver_major 1.9
 
 Name: terminator
-Version: %{ver_major}0
+Version: %{ver_major}1
 Release: alt1
 
 Summary: Store and run multiple GNOME terminals in one window
@@ -10,10 +10,10 @@ Group: Terminals
 License: GPLv2
 Url: https://launchpad.net/%name
 
-Source: %url/gtk3/%ver_major/+download/%name-%version.tar.gz
+Source: %url/gtk3/%version/+download/%name-%version.tar.gz
 
 # fc patches
-Patch: terminator-0.97-fc-fix-desktop-file.patch
+Patch: terminator-1.91-fc-fix-desktop-file.patch
 
 BuildArch: noarch
 
@@ -43,6 +43,7 @@ sed -i '/#! \?\/usr.*/d' terminatorlib/*.py
 %_bindir/%name.wrapper
 %_bindir/remotinator
 %python_sitelibdir_noarch/terminatorlib/
+%_datadir/%name/
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/*/*.*
 %_iconsdir/HighContrast/*/*/*.*
@@ -52,9 +53,12 @@ sed -i '/#! \?\/usr.*/d' terminatorlib/*.py
 %_man5dir/%{name}_config.*
 %doc README ChangeLog
 
-%exclude %python_sitelibdir_noarch/Terminator-%version-py*.egg-info
+%exclude %python_sitelibdir_noarch/%name-%version-py*.egg-info
 
 %changelog
+* Fri Mar 03 2017 Yuri N. Sedunov <aris@altlinux.org> 1.91-alt1
+- 1.91
+
 * Mon Nov 28 2016 Yuri N. Sedunov <aris@altlinux.org> 1.90-alt1
 - 1.90
 
