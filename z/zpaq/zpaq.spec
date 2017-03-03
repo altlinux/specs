@@ -1,6 +1,6 @@
 Name: zpaq
 Version: 715
-Release: alt1
+Release: alt2
 
 Summary: A journaling archiver optimized for backup
 
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 
 # Automatically added by buildreq on Thu Mar 21 2013
 # optimized out: libstdc++-devel
-BuildRequires: gcc-c++ libgomp-devel perl-podlators
+BuildRequires: gcc-c++ perl-podlators
 
 %description
 zpaq is a journaling archiver optimized for user-level incremental
@@ -24,8 +24,6 @@ date has changed, and keeps both old and new versions. You can roll
 back the archive date to restore from old versions of the archive.
 The default compression level is faster than zip usually with better
 compression.
-
-zpaq is (C) 2012, Dell Inc., written by Matt Mahoney.
 
 %package -n lib%name
 Group: System/Libraries
@@ -44,13 +42,14 @@ development environment.
 %setup
 
 %build
-# XXX this is for funny libzpaq::error() callback
+# XXX this is for funny libzpaq::error() callback:
+# verify-elf: WARNING: ./usr/lib64/libzpaq.so.0: undefined symbol: _ZN7libzpaq5errorEPKc
 %set_verify_elf_method unresolved=relaxed
 
 %add_optflags -Wall
-g++ %optflags -Dunix -shared -fPIC libzpaq.cpp -Wl,-soname,%name.so.0 -o lib%name.so.0 -lm -lpthread
+g++ %optflags -Dunix -shared -fPIC libzpaq.cpp -Wl,-soname,lib%name.so.0 -o lib%name.so.0 -lm
 ln -s lib%name.so.0 lib%name.so
-g++ %optflags -Dunix -DNDEBUG zpaq.cpp -L.  -o zpaq -l%name -lm -lpthread
+g++ %optflags -Dunix -DNDEBUG zpaq.cpp -L. -o zpaq -l%name -lm -lpthread
 #g++ %optflags -Dunix zpaqd.cpp -L. -l%name -o zpaqd -L. -lzpaq -lm
 pod2man zpaq.pod > zpaq.1
 
@@ -64,17 +63,22 @@ install -m0644 -D zpaq.1 %buildroot%_man1dir/zpaq.1
 
 %files
 %doc readme.txt
-%_bindir/*
+%_bindir/zpaq
 %_man1dir/*
 
 %files -n lib%name
-%_libdir/*.so.*
+%_libdir/libzpaq.so.0
 
 %files -n lib%name-devel
-%_libdir/*.so
-%_includedir/*.h
+%_libdir/libzpaq.so
+%_includedir/libzpaq.h
 
 %changelog
+* Fri Mar 03 2017 Vitaly Lipatov <lav@altlinux.ru> 715-alt2
+- drop unused libgomp-devel require
+- remove obsoleted copyright line
+- fix linking
+
 * Sun Sep 25 2016 Vitaly Lipatov <lav@altlinux.ru> 715-alt1
 - new version 715 (with rpmrb script)
 
