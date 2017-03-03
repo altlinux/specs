@@ -6,15 +6,15 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	45.7.0
-Release:	alt3
+Version:	45.7.1
+Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
 URL:		http://www.mozillamessaging.com
 
 Packager:	Andrey Cherepanov <cas@altlinux.org>
 
-Source0:	thunderbird-source.tar
+Source0:	%name-%version.tar
 Source1:	enigmail-source.tar
 Source2:	rpm-build.tar
 Source3:	thunderbird.desktop
@@ -25,6 +25,7 @@ Patch6:		01_locale.patch
 Patch8:		thunderbird-timezoes.patch
 Patch9:		thunderbird-install-paths.patch
 Patch10:	thunderbird-fix-build-with-gcc6.1.patch
+Patch11:	thunderbird-alt-allow-send-in-windows-1251.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -167,8 +168,7 @@ These helper macros provide possibility to rebuild
 thunderbird packages by some Alt Linux Team Policy compatible way.
 
 %prep
-%setup -q -n %name-%version -c
-cd mozilla
+%setup -q
 
 %if_with enigmail
 tar -xf %SOURCE1
@@ -180,6 +180,7 @@ tar -xf %SOURCE2
 #patch8 -p2
 %patch9 -p2
 %patch10 -p1
+%patch11 -p2
 
 #echo %version > mail/config/version.txt
 
@@ -197,8 +198,6 @@ echo "ac_add_options --disable-tracejit"  >> .mozconfig
 sed -i -e '\,hyphenation/,d' mail/installer/removed-files.in
 
 %build
-cd mozilla
-
 %add_optflags %optflags_shared
 %add_findprov_lib_path %tbird_prefix
 
@@ -271,8 +270,6 @@ cd -
 %endif
 
 %install
-cd mozilla
-
 mkdir -p \
 	%buildroot/%_bindir \
 	%buildroot/%mozilla_arch_extdir/%tbird_cid \
@@ -438,6 +435,11 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Fri Mar 03 2017 Andrey Cherepanov <cas@altlinux.org> 45.7.1-alt1
+- New version (45.7.1)
+- Add windows-1251 to sendDefaultCharsetList
+- Fix subdirectory name from mozilla to thunderbird-<version>
+
 * Thu Feb 02 2017 Anton Farygin <rider@altlinux.ru> 45.7.0-alt3
 - prevent thunderbird segfault due overoptimisation of new gcc6 (closes: #33048)
 
