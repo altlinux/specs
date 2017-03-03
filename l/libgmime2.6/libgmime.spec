@@ -3,7 +3,7 @@
 %define ver_major 2.6
 
 Name: lib%_name%ver_major
-Version: %ver_major.22
+Version: %ver_major.23
 Release: alt1
 
 Summary: MIME library
@@ -145,6 +145,9 @@ gtkdocize --copy
 %endif
 
 %changelog
+* Fri Mar 03 2017 Alexey Shabalin <shaba@altlinux.ru> 2.6.23-alt1
+- 2.6.23
+
 * Tue Dec 20 2016 Alexey Shabalin <shaba@altlinux.ru> 2.6.22-alt1
 - 2.6.22
 
