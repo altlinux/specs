@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 
 Name: palemoon
 Version: 27.1.1
-Release: alt2.0
+Release: alt3.0
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -14,11 +14,6 @@ Epoch: 2
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
-# %%ifarch x86_64
-# %%def_enable gst1   // Enable gstreamer 1.0
-# %%else
-# %%def_disable gst1   // Disable gstreamer 1.0
-# %%endif
 
 %def_enable gst1   // Enable gstreamer 1.0
 
@@ -50,7 +45,7 @@ Patch6: firefox3-alt-disable-werror.patch
 #Patch14:	firefox-fix-install.patch
 Patch16: firefox-cross-desktop.patch
 #Patch17:	mozilla-disable-installer.patch
-#Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
+# Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
 Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
 Patch21: palemoon-build-el5-nss.patch
 Patch22: palemoon_rpath-27.0.2.patch
@@ -63,6 +58,7 @@ BuildRequires(pre): browser-plugins-npapi-devel
 
 %set_autoconf_version 2.13
 %set_gcc_version 4.9
+
 BuildRequires: gcc%_gcc_version-c++
 
 
@@ -103,14 +99,17 @@ cross-platform.
 Интернет-браузер %sname - кроссплатформенная модификация браузера Mozilla Firefox ,
 созданная с использованием языка XUL для описания интерфейса пользователя.
 
-%package -n newmoon
+%package -n newmoon-base
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 Group: Networking/WWW
 
 Obsoletes: palemoon  <= 26.2.2
 Provides: palemoon = %version-%release
-Conflicts: palemoon < %version-%release
+
+Conflicts: newmoon <= 27.1.1-alt0.M80P.2
+Obsoletes: newmoon <= 27.1.1-alt0.M80P.2
+Provides: newmoon = %version-%release
 
 Requires: libgstreamer1.0 gst-libav
 Requires: gst-plugins-base1.0
@@ -119,23 +118,27 @@ Requires: newmoon-data = %epoch:%version-%release
 # Protection against fraudulent DigiNotar certificates
 Requires: libnss
 
-%description -n newmoon
+%description -n newmoon-base
 The New Moon browser, an unofficial branding of the Pale Moon project browser
 The %sname project is a redesign of Mozilla's  Firefox browser component,
 written using the XUL user interface language and designed to be
 cross-platform.
 
-%description -n newmoon -l ru_RU.UTF8
+%description -n newmoon-base -l ru_RU.UTF8
 Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 Интернет-браузер %sname - кроссплатформенная модификация браузера Mozilla Firefox ,
 созданная с использованием языка XUL для описания интерфейса пользователя.
-
 
 %package -n newmoon-data
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 Group: Networking/WWW
 BuildArch: noarch
+Provides: newmoon = %version-%release
+Conflicts: newmoon <= 27.1.1-alt0.M80P.2
+Obsoletes: newmoon <= 27.1.1-alt0.M80P.2
+
+
 
 %description -n newmoon-data
 The New Moon browser, an unofficial branding of the Pale Moon project browser
@@ -147,6 +150,7 @@ cross-platform.
 Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 Интернет-браузер %sname - кроссплатформенная модификация браузера Mozilla Firefox ,
 созданная с использованием языка XUL для описания интерфейса пользователя.
+
 
 
 %package -n rpm-build-palemoon
@@ -184,10 +188,6 @@ export RPATH_PATH="$rpath"
 
 cd %sname
 
-#%%patch1  -p1
-# %%patch6  -p1
-# %%patch16 -p1
-# %%patch18 -p1
 
 tar -xf %SOURCE1
 
@@ -222,7 +222,6 @@ echo %version > browser/config/version.txt
 %__subst s~'"Pale Moon"'~'"Pale_Moon"'~g  ./build/application.ini
 
 cp -f %SOURCE4 .mozconfig
-
 
 echo "ac_add_options --enable-rpath"  >> .mozconfig
 
@@ -265,9 +264,9 @@ echo "ac_add_options --enable-gstreamer" >> .mozconfig
 %build
 cd %sname
 
+
 %add_optflags %optflags_shared
 %add_findprov_lib_path %palemoon_prefix
-
 export MOZ_BUILD_APP=browser
 
 # Mozilla builds with -Wall with exception of a few warnings which show up
@@ -292,6 +291,10 @@ export RPATH_PATH="$rpath"
 
 #make -f client.mk build STRIP="/bin/true" MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
 
+
+# for  palemoon_rpath-27.0.2.patch
+export RPATH_PATH="$rpath"     
+
 export PREFIX="%prefix"
 export LIBDIR="%_libdir"
 export LIBIDL_CONFIG=%_bindir/libIDL-config-2
@@ -300,7 +303,6 @@ export SHELL=/bin/sh
 
 
 %__autoconf
-
 # On x86 architectures, Mozilla can build up to 4 jobs at once in parallel,
 # however builds tend to fail on other arches when building in parallel.
 MOZ_SMP_FLAGS=-j1
@@ -309,19 +311,12 @@ MOZ_SMP_FLAGS=-j1
 [ "%__nprocs" -ge 4 ] && MOZ_SMP_FLAGS=-j4
 %endif
 
-#export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
-#export LD_LIBRARY_PATH="$rpath"
-
-
-
 make -f client.mk \
-  	MAKENSISU= \
-  	STRIP="/bin/true" \
-  	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
-  	mozappdir=%buildroot/%palemoon_prefix \
-  	clobber
-
-
+	MAKENSISU= \
+	STRIP="/bin/true" \
+	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
+	mozappdir=%buildroot/%palemoon_prefix \
+	clobber
 
 make -f client.mk \
 	MAKENSISU= \
@@ -330,7 +325,6 @@ make -f client.mk \
 	mozappdir=%buildroot/%palemoon_prefix \
 	build
 
-
 #	MOZ_APP_VERSION="" \
 
 gcc %optflags \
@@ -338,7 +332,6 @@ gcc %optflags \
 	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
 	-DMOZ_PROGRAM=\"%palemoon_bindir/%sname-bin\" \
 	%SOURCE7 -o %sname
-
 
 %install
 #set_verify_elf_method unresolved=strict
@@ -460,7 +453,6 @@ popd
 install -d %buildroot%palemoon_prefix/browser/chrome/icons/default/
 install -m 644 browser/branding/unstable/content/icon48.png %buildroot%palemoon_prefix/browser/chrome/icons/default/PMaboutDialog48.png
 
-
 # Add Docdir
 install -D -m 644 %SOURCE9 ../
 install -D -m 644 %SOURCE10 ../
@@ -473,7 +465,7 @@ for n in defaults browserconfig.properties; do
 	[ ! -L "%palemoon_prefix/$n" ] || rm -f "%palemoon_prefix/$n"
 done
 
-%files -n %bname
+%files -n %bname-base
 %doc AUTHORS LICENSE HISTORY_GIT Changelog
 %_altdir/%bname
 %_bindir/%sname
@@ -497,6 +489,9 @@ done
 %exclude %_datadir/idl/*
 
 %changelog
+* Thu Mar 02 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.1.1-alt3.0
+- Rename from newmoon to newmoon-base
+
 * Sat Feb 25 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.1.1-alt2.0
 - Add norch package newmoon-data
 
