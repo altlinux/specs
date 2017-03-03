@@ -8,7 +8,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Automatic archives creating and extracting library
@@ -124,6 +124,9 @@ GObject introspection devel data for the %_name library
 
 
 %changelog
+* Fri Mar 03 2017 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
+- 0.2.1
+
 * Wed Feb 22 2017 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - 0.2.0
 
