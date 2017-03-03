@@ -33,7 +33,7 @@
 %def_disable gromit
 
 Name: totem
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Movie player for GNOME 3
@@ -407,6 +407,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Fri Mar 03 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
+- 3.22.1
+
 * Sat Sep 17 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
