@@ -1,5 +1,5 @@
 Name: libbelle-sip
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 Summary: Linphone sip stack
 
@@ -61,6 +61,9 @@ make
 %_libdir/pkgconfig/belle-sip.pc
 
 %changelog
+* Fri Mar 03 2017 Alexei Takaseev <taf@altlinux.org> 1.6.1-alt1
+- 1.6.1
+
 * Thu Mar 02 2017 Alexei Takaseev <taf@altlinux.org> 1.6.0-alt1
 - 1.6.0
 
