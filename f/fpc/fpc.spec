@@ -1,6 +1,6 @@
 %def_disable boostrap
 %def_with    sources
-%def_with    doc
+%def_without doc
 %def_without win32
 %def_with    tests
 # Help index is generated too long, package ready index
@@ -8,7 +8,7 @@
 
 Name: 	  fpc
 Epoch:    2
-Version:  3.0.0
+Version:  3.0.2
 Release:  alt1
 
 Summary:  Free Pascal Compiler -- Meta Package
@@ -44,7 +44,6 @@ Patch6: fpc-fix-min-size.patch
 # Patches from Debian
 Patch12: fpc-fix-FPCDIR-in-fpcmake.patch
 Patch13: fpc-fix-encoding-of-localization-files-to-be-utf8.patch
-Patch14: fpc-fix-spell-errors.patch
 Patch15: fpc-add_arm64_manpage.patch
 Patch16: fpc-add-arm64-support.patch
 Patch17: fpc-change-path-of-localization-files-to-fit-Debian-standar.patch
@@ -52,7 +51,6 @@ Patch18: fpc-disable_building_gnome1_and_gtk1.patch
 Patch19: fpc-fix_FTBFS_on_linux_not_amd64.patch
 Patch20: fpc-fix-IDE-data-file-location.patch
 Patch21: fpc-fix_source_location_for_documentation.patch
-Patch22: fpc-fix_typo_in_ppc64.patch
 Patch23: fpc-honor_SOURCE_DATE_EPOCH_in_date.patch
 Patch24: fpc-prevent_date_in_fpcdocs.patch
 Patch25: fpc-prevent_date_in_fpcMakefiles.patch
@@ -138,20 +136,18 @@ pushd fpcsrc
 popd
 %patch12 -p1
 %patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
+#patch15 -p1 TODO see patch16
+#patch16 -p1 TODO neew adapt
 %patch17 -p1
 %patch18 -p1
-%patch19 -p1
+#patch19 -p1 TODO need adapt
 %patch20 -p1
-%patch21 -p1
-%patch22 -p1
+#patch21 -p1
 %patch23 -p1
 %patch24 -p1
 %patch25 -p1
 %patch26 -p1
-%patch27 -p1
+%patch27 -p2
 %patch28 -p1
 %patch30 -p2
 %patch31 -p0
@@ -939,6 +935,10 @@ Free Pascal runtime library units cross-compiled for win32.
 %endif
 
 %changelog
+* Thu Mar 02 2017 Andrey Cherepanov <cas@altlinux.org> 2:3.0.2-alt1
+- New version
+- Build without documentation
+
 * Mon Dec 14 2015 Andrey Cherepanov <cas@altlinux.org> 2:3.0.0-alt1
 - New version
 - Drop support of gtk1 and gnome1
