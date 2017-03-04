@@ -2,7 +2,7 @@
 %define xdg_name org.pantheon.files
 
 Name: pantheon-files
-Version: %ver_major.1.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The file manager of the Pantheon desktop
@@ -75,7 +75,7 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %_desktopdir/%xdg_name.desktop
 %_datadir/dbus-1/services/%name.service
 %_datadir/glib-2.0/schemas/org.pantheon.files.gschema.xml
-%_datadir/polkit-1/actions/net.launchpad.%name.policy
+%_datadir/polkit-1/actions/net.launchpad.%name.policy.xml
 %_datadir/%name/
 %dir %_datadir/pixmaps/%name
 %_datadir/pixmaps/%name/*.png
@@ -98,6 +98,9 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %endif
 
 %changelog
+* Sat Mar 04 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
+- 0.3.2
+
 * Mon Jan 30 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.1.1-alt1
 - 0.3.1.1
 
