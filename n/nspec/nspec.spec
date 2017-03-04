@@ -1,8 +1,8 @@
 %set_gcc_version 4.7
 
 Name: nspec
-Version: 14.5436
-Release: alt2
+Version: 14.5437
+Release: alt1
 Summary: Nspec Universal SPM & Spectroscopy Software - Nano Scan Technologies Ltd.
 Summary(ru_RU.UTF-8): Nspec - универсальная программа для СЗМ и спектроскопии для приборов фирмы НСТ
 License: BSD 4-clause: Nano Scan Technologies Ltd., 2008-2016
@@ -87,6 +87,9 @@ cp gwy_proxy/gcc_make/nst_proxy.so %buildroot/%_libdir/gwyddion/modules
 
 
 %changelog
+* Sat Mar 04 2017 Alexei Mezin <alexvm@altlinux.org> 14.5437-alt1
+- Update to new version
+
 * Thu Jan 05 2017 Alexei Mezin <alexvm@altlinux.org> 14.5436-alt2
 - Minor build fixes and spec cleanup
 
