@@ -1,6 +1,9 @@
+# Do not require optional packages needed by restart hooks:
+%add_findreq_skiplist %_sysconfdir/%name/restart.d/*
+
 Name: needrestart
-Version: 2.10
-Release: alt3
+Version: 2.11
+Release: alt1
 
 Summary: Restart daemons after library updates
 License: GPLv2
@@ -63,6 +66,12 @@ EOF
 %config(noreplace) %_sysconfdir/apt/apt.conf.d/%name.conf
 
 %changelog
+* Sat Mar  4 2017 Terechkov Evgenii <evg@altlinux.org> 2.11-alt1
+- v2.11-3-g9423e6e
+
+* Sun Nov 20 2016 Terechkov Evgenii <evg@altlinux.org> 2.10-alt4
+- v2.10-4-g3a5c39c
+
 * Fri Nov 11 2016 Terechkov Evgenii <evg@altlinux.org> 2.10-alt3
 - Fix kernel version detection/reporting
 
