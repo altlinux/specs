@@ -1,5 +1,5 @@
 Name: ktoblzcheck
-Version: 1.48
+Version: 1.49
 Release: alt1
 
 Summary: A library to check account numbers and bank codes of German banks
@@ -74,6 +74,9 @@ Python binding for KtoBLZCheck library.
 %python_sitelibdir/*
 
 %changelog
+* Sat Mar 04 2017 Andrey Cherepanov <cas@altlinux.org> 1.49-alt1
+- new version 1.49
+
 * Sat Apr 11 2015 Andrey Cherepanov <cas@altlinux.org> 1.48-alt1
 - new version 1.48
 
