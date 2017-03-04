@@ -5,7 +5,7 @@
 %def_disable static
 
 Name: %{_name}20
-Version: %api_ver.13
+Version: %api_ver.14
 Release: alt1
 
 Summary: A GNU implementation of Scheme (version 2.0)
@@ -37,6 +37,7 @@ This package provides interactive Guile shell.
 %package devel
 Summary: A GNU implementation of Scheme for application extensibility
 Group: Development/Scheme
+Conflicts: guile14-devel guile16-devel guile18-devel
 Requires: %name = %version-%release
 
 %description devel
@@ -115,7 +116,6 @@ mv %buildroot%_man1dir/%_name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1.*
 %_altdir/%name
 
-%if 0
 %files devel
 %_bindir/%_name-snarf
 %exclude %_bindir/%_name-config
@@ -123,7 +123,6 @@ mv %buildroot%_man1dir/%_name.1 %buildroot%_man1dir/%name.1
 %exclude %_bindir/guild
 %_datadir/aclocal/%_name.m4
 %_datadir/info/*.info*
-%endif
 
 %files -n lib%name
 %_libdir/lib%_name-%api_ver.so.*
@@ -151,6 +150,10 @@ mv %buildroot%_man1dir/%_name.1 %buildroot%_man1dir/%name.1
 #%dir %_datadir/%_name
 
 %changelog
+* Sat Mar 04 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.14-alt1
+- 2.0.14
+- new %%name-devel subpackage (ALT #32945)
+
 * Fri Oct 14 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.13-alt1
 - 2.0.13 (fixed CVE-2016-8606)
 
