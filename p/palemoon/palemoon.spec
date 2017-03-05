@@ -2,8 +2,8 @@ Summary: The New Moon browser, an unofficial branding of the Pale Moon project b
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 27.1.1
-Release: alt3.0
+Version: 27.1.2
+Release: alt1.0
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -107,9 +107,9 @@ Group: Networking/WWW
 Obsoletes: palemoon  <= 26.2.2
 Provides: palemoon = %version-%release
 
-Conflicts: newmoon <= 27.1.1-alt0.M80P.2
-Obsoletes: newmoon <= 27.1.1-alt0.M80P.2
-Provides: newmoon = %version-%release
+Conflicts: newmoon < %epoch:%version-%release
+Obsoletes: newmoon < %epoch:%version-%release
+Provides: newmoon = %epoch:%version-%release
 
 Requires: libgstreamer1.0 gst-libav
 Requires: gst-plugins-base1.0
@@ -134,9 +134,10 @@ Summary: The New Moon browser, an unofficial branding of the Pale Moon project b
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 Group: Networking/WWW
 BuildArch: noarch
-Provides: newmoon = %version-%release
-Conflicts: newmoon <= 27.1.1-alt0.M80P.2
-Obsoletes: newmoon <= 27.1.1-alt0.M80P.2
+
+#Provides: newmoon = %epoch:%version-%release
+Conflicts: newmoon < %epoch:%version-%release
+Obsoletes: newmoon <  %epoch:%version-%release
 
 
 
@@ -489,6 +490,12 @@ done
 %exclude %_datadir/idl/*
 
 %changelog
+* Sat Mar 04 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.1.2-alt1.0
+- Version 27.1.2
+
+* Thu Mar 02 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.1.1-alt3.1.git_869d77f
+- update from git
+
 * Thu Mar 02 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.1.1-alt3.0
 - Rename from newmoon to newmoon-base
 
