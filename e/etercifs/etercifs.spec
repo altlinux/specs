@@ -1,70 +1,15 @@
-# Etersoft (c) 2007, 2008, 2009, 2010, 2011, 2012
+# Etersoft (c) 2007-2017
 # Multiplatform spec for Korinf autobuild system (ALT Linux package spec policy)
 
-%define src_package_name kernel-source-etercifs
-
-%define src_legacy_version 1.50c
-%define src_centos52_version 1.50c
-%define src_centos53_version 1.54
-%define src_centos54_version 1.58
-%define src_centos55_version 1.60
-%define src_centos56_version 1.60
-%define src_centos_ovz_version 1.60
-%define src_centos60_version 1.63
-%define src_centos70_version 2.01
-%define src_2_6_16_version 1.50
-%define src_2_6_23_version 1.50
-%define src_2_6_24_version 1.52
-%define src_2_6_25_version 1.52
-%define src_2_6_26_version 1.53
-%define src_2_6_27_version 1.54
-%define src_2_6_28_version 1.55
-%define src_2_6_29_version 1.57
-%define src_2_6_30_version 1.58
-%define src_2_6_31_version 1.60
-%define src_2_6_32_version 1.61
-%define src_2_6_33_version 1.62
-%define src_2_6_34_version 1.62
-%define src_2_6_35_version 1.64
-%define src_2_6_36_version 1.65
-%define src_2_6_37_version 1.68
-%define src_2_6_38_version 1.71
-%define src_2_6_39_version 1.71
-%define src_3_0_version 1.74
-%define src_3_1_version 1.75
-%define src_3_2_version 1.76
-%define src_3_3_version 1.76
-%define src_3_4_version 1.78
-%define src_3_5_version 1.78
-%define src_3_6_version 1.78
-%define src_3_7_version 2.0
-%define src_3_8_version 2.0
-%define src_3_9_version 2.0
-%define src_3_10_version 2.0
-%define src_3_11_version 2.01
-%define src_3_12_version 2.02
-%define src_3_13_version 2.02
-%define src_3_14_version 2.02
-%define src_3_15_version 2.02
-%define src_3_16_version 2.03
-%define src_3_17_version 2.05
-%define src_3_18_version 2.05
-%define src_3_19_version 2.06
-%define src_4_0_version 2.06
-%define src_4_1_version 2.06
-%define src_4_2_version 2.06
-%define src_4_3_version 2.08
-%define src_4_4_version 2.08
-%define src_4_5_version 2.08
-%define src_4_6_version 2.08
+%define modname etercifs
 
 Name: etercifs
-Version: 5.4.15
+Version: 5.5.0
 Release: alt1
 
 Summary: Advanced Common Internet File System for Linux with Etersoft extension
 
-Packager: Pavel Shilovsky <piastry@altlinux.org>
+Packager: Vitaly Lipatov <lav@altlinux.org>
 
 License: GPLv2
 Group: System/Kernel and hardware
@@ -72,116 +17,10 @@ Url: http://wiki.etersoft.ru/etercifs
 
 BuildArch: noarch
 
-Source: ftp://updates.etersoft.ru/pub/Etersoft/CIFS@Etersoft/%version/sources/tarball/%name-%version.tar.bz2
-Source1: %src_package_name-legacy-%src_legacy_version.tar.bz2
-Source2: %src_package_name-centos52-%src_centos52_version.tar.bz2
-Source3: %src_package_name-centos53-%src_centos53_version.tar.bz2
-Source4: %src_package_name-centos54-%src_centos54_version.tar.bz2
-Source5: %src_package_name-centos55-%src_centos55_version.tar.bz2
-Source6: %src_package_name-centos56-%src_centos56_version.tar.bz2
-Source7: %src_package_name-centos-ovz-%src_centos_ovz_version.tar.bz2
-Source16: %src_package_name-2.6.16-%src_2_6_16_version.tar.bz2
-Source23: %src_package_name-2.6.23-%src_2_6_23_version.tar.bz2
-Source24: %src_package_name-2.6.24-%src_2_6_24_version.tar.bz2
-Source25: %src_package_name-2.6.25-%src_2_6_25_version.tar.bz2
-Source26: %src_package_name-2.6.26-%src_2_6_26_version.tar.bz2
-Source27: %src_package_name-2.6.27-%src_2_6_27_version.tar.bz2
-Source28: %src_package_name-2.6.28-%src_2_6_28_version.tar.bz2
-Source29: %src_package_name-2.6.29-%src_2_6_29_version.tar.bz2
-Source30: %src_package_name-2.6.30-%src_2_6_30_version.tar.bz2
-Source31: %src_package_name-2.6.31-%src_2_6_31_version.tar.bz2
-Source32: %src_package_name-2.6.32-%src_2_6_32_version.tar.bz2
-Source33: %src_package_name-2.6.33-%src_2_6_33_version.tar.bz2
-Source34: %src_package_name-2.6.34-%src_2_6_34_version.tar.bz2
-Source35: %src_package_name-2.6.35-%src_2_6_35_version.tar.bz2
-Source36: %src_package_name-2.6.36-%src_2_6_36_version.tar.bz2
-Source37: %src_package_name-2.6.37-%src_2_6_37_version.tar.bz2
-Source38: %src_package_name-2.6.38-%src_2_6_38_version.tar.bz2
-Source39: %src_package_name-2.6.39-%src_2_6_39_version.tar.bz2
-Source40: %src_package_name-3.0-%src_3_0_version.tar.bz2
-Source41: %src_package_name-3.1-%src_3_1_version.tar.bz2
-Source42: %src_package_name-3.2-%src_3_2_version.tar.bz2
-Source43: %src_package_name-3.3-%src_3_3_version.tar.bz2
-Source44: %src_package_name-3.4-%src_3_4_version.tar.bz2
-Source45: %src_package_name-3.5-%src_3_5_version.tar.bz2
-Source46: %src_package_name-3.6-%src_3_6_version.tar.bz2
-Source47: %src_package_name-3.7-%src_3_7_version.tar.bz2
-Source48: %src_package_name-3.8-%src_3_8_version.tar.bz2
-Source49: %src_package_name-3.9-%src_3_9_version.tar.bz2
-Source50: %src_package_name-3.10-%src_3_10_version.tar.bz2
-Source51: %src_package_name-3.11-%src_3_11_version.tar.bz2
-Source52: %src_package_name-3.12-%src_3_12_version.tar.bz2
-Source53: %src_package_name-3.13-%src_3_13_version.tar.bz2
-Source54: %src_package_name-3.14-%src_3_14_version.tar.bz2
-Source55: %src_package_name-3.15-%src_3_15_version.tar.bz2
-Source56: %src_package_name-3.16-%src_3_16_version.tar.bz2
-Source57: %src_package_name-3.17-%src_3_17_version.tar.bz2
-Source58: %src_package_name-3.18-%src_3_18_version.tar.bz2
-Source59: %src_package_name-3.19-%src_3_19_version.tar.bz2
-Source60: %src_package_name-centos60-%src_centos60_version.tar.bz2
-Source70: %src_package_name-centos70-%src_centos70_version.tar.bz2
-Source140: %src_package_name-4.0-%src_4_0_version.tar.bz2
-Source141: %src_package_name-4.1-%src_4_1_version.tar.bz2
-Source142: %src_package_name-4.2-%src_4_2_version.tar.bz2
-Source143: %src_package_name-4.3-%src_4_3_version.tar.bz2
-Source144: %src_package_name-4.4-%src_4_4_version.tar.bz2
-Source145: %src_package_name-4.5-%src_4_5_version.tar.bz2
-Source146: %src_package_name-4.6-%src_4_6_version.tar.bz2
+Source: ftp://updates.etersoft.ru/pub/Etersoft/CIFS@Etersoft/%version/sources/tarball/%name-%version.tar
+Source1: ftp://updates.etersoft.ru/pub/Etersoft/CIFS@Etersoft/%version/sources/tarball/etercifs-sources-%version.tar.xz
 
 Conflicts: linux-cifs
-
-Provides: %src_package_name-2.6.24 = %version-%release
-Provides: %src_package_name-2.6.25 = %version-%release
-Provides: %src_package_name-2.6.26 = %version-%release
-Provides: %src_package_name-2.6.27 = %version-%release
-Provides: %src_package_name-2.6.28 = %version-%release
-Provides: %src_package_name-2.6.29 = %version-%release
-Provides: %src_package_name-2.6.30 = %version-%release
-Provides: %src_package_name-2.6.31 = %version-%release
-Provides: %src_package_name-2.6.32 = %version-%release
-Provides: %src_package_name-2.6.33 = %version-%release
-Provides: %src_package_name-2.6.34 = %version-%release
-Provides: %src_package_name-2.6.35 = %version-%release
-Provides: %src_package_name-2.6.36 = %version-%release
-Provides: %src_package_name-2.6.37 = %version-%release
-Provides: %src_package_name-2.6.38 = %version-%release
-Provides: %src_package_name-2.6.39 = %version-%release
-Provides: %src_package_name-3.0 = %version-%release
-Provides: %src_package_name-3.1 = %version-%release
-Provides: %src_package_name-3.2 = %version-%release
-Provides: %src_package_name-3.3 = %version-%release
-Provides: %src_package_name-3.4 = %version-%release
-Provides: %src_package_name-3.5 = %version-%release
-Provides: %src_package_name-3.6 = %version-%release
-Provides: %src_package_name-3.7 = %version-%release
-Provides: %src_package_name-3.8 = %version-%release
-Provides: %src_package_name-3.9 = %version-%release
-Provides: %src_package_name-3.10 = %version-%release
-Provides: %src_package_name-3.11 = %version-%release
-Provides: %src_package_name-3.12 = %version-%release
-Provides: %src_package_name-3.13 = %version-%release
-Provides: %src_package_name-3.14 = %version-%release
-Provides: %src_package_name-3.15 = %version-%release
-Provides: %src_package_name-3.16 = %version-%release
-Provides: %src_package_name-3.17 = %version-%release
-Provides: %src_package_name-3.18 = %version-%release
-Provides: %src_package_name-3.19 = %version-%release
-Provides: %src_package_name-4.0 = %version-%release
-Provides: %src_package_name-4.1 = %version-%release
-Provides: %src_package_name-4.2 = %version-%release
-Provides: %src_package_name-4.3 = %version-%release
-Provides: %src_package_name-4.4 = %version-%release
-Provides: %src_package_name-4.5 = %version-%release
-Provides: %src_package_name-4.6 = %version-%release
-
-Obsoletes: %src_package_name-2.6.24
-Obsoletes: %src_package_name-2.6.25
-Obsoletes: %src_package_name-2.6.26
-Obsoletes: %src_package_name-2.6.27
-Obsoletes: %src_package_name-2.6.28
-Obsoletes: %src_package_name-2.6.29
-Obsoletes: %src_package_name-2.6.30
-Obsoletes: %src_package_name-2.6.31
 
 BuildRequires: rpm-build-intro
 
@@ -190,9 +29,13 @@ Requires: gcc make
 # We definitely needs mount.cifs command
 Requires: cifs-utils
 
+# TODO
+# We definitely have to use distr_vendor
+#Requires: eepm
+
 %description
-This package contains Etersoft modified CIFS kernel module,
-supports WINE@Etersoft sharing access support.
+This package contains Etersoft modified CIFS kernel module
+with WINE@Etersoft sharing access support.
 
 The CIFS VFS is a virtual file system for Linux to allow access to
 servers and storage appliances compliant with the SNIA CIFS
@@ -213,6 +56,26 @@ and/or a mount helper file are not required in order to enable the CIFS
 VFS). With the addition of upcoming improvements to the mount helper
 (mount.cifs) the CIFS VFS will be able to take advantage of the new CIFS
 URL specification though.
+
+%if %_vendor != "alt"
+%package -n dkms-etercifs
+Summary: DKMS-ready CIFS Linux kernel module with Etersoft extensions
+Group: System/Kernel and hardware
+Requires(preun): dkms
+Requires(post): dkms
+
+Requires: etercifs = %version-%release
+
+Buildarch: noarch
+
+%description -n dkms-etercifs
+The CIFS VFS is a virtual file system for Linux to allow access to
+servers and storage appliances compliant with the SNIA CIFS
+Specification version 1.0 or later.
+
+This package contains DKMS-ready CIFS Linux kernel module with Etersoft
+extensions.
+%endif
 
 %prep
 %setup
@@ -239,6 +102,7 @@ EOF
 %__subst "s|@INITDIR@|%_initdir|g" etercifs.service
 
 install -D -m644 buildmodule.sh %buildroot%_datadir/%name/buildmodule.sh
+install -D -m644 checkmodule.sh %buildroot%_datadir/%name/checkmodule.sh
 install -D -m644 functions.sh %buildroot%_datadir/%name/functions.sh
 install -D -m755 %name-build %buildroot%_sbindir/%name-build
 
@@ -263,185 +127,39 @@ install -D -m755 %name %buildroot%_initdir/%name
 install -D -m644 %name.service %buildroot%_unitdir/%name.service
 install -D -m755 %name.outformat %buildroot%_datadir/%name
 
-%define etercifs_src %_datadir/%name/sources
-
-mkdir -p %buildroot/%etercifs_src
-# Legacy support
-cp %SOURCE1 %buildroot/%etercifs_src/%src_package_name-legacy-%src_legacy_version.tar.bz2
-ln -s %src_package_name-legacy-%src_legacy_version.tar.bz2 %buildroot/%etercifs_src/%src_package_name-2.6.17-%src_legacy_version.tar.bz2
-ln -s %src_package_name-legacy-%src_legacy_version.tar.bz2 %buildroot/%etercifs_src/%src_package_name-2.6.22-%src_legacy_version.tar.bz2
-
-# CentOS 5.x
-cp %SOURCE2 %buildroot/%etercifs_src/
-cp %SOURCE3 %buildroot/%etercifs_src/
-cp %SOURCE4 %buildroot/%etercifs_src/
-cp %SOURCE5 %buildroot/%etercifs_src/
-cp %SOURCE6 %buildroot/%etercifs_src/
-cp %SOURCE7 %buildroot/%etercifs_src/
-
-# v2.6.x kernels
-cp %SOURCE16 %buildroot/%etercifs_src/
-cp %SOURCE23 %buildroot/%etercifs_src/
-cp %SOURCE24 %buildroot/%etercifs_src/
-cp %SOURCE25 %buildroot/%etercifs_src/
-cp %SOURCE26 %buildroot/%etercifs_src/
-cp %SOURCE27 %buildroot/%etercifs_src/
-cp %SOURCE28 %buildroot/%etercifs_src/
-cp %SOURCE29 %buildroot/%etercifs_src/
-cp %SOURCE30 %buildroot/%etercifs_src/
-cp %SOURCE31 %buildroot/%etercifs_src/
-cp %SOURCE32 %buildroot/%etercifs_src/
-cp %SOURCE33 %buildroot/%etercifs_src/
-cp %SOURCE34 %buildroot/%etercifs_src/
-cp %SOURCE35 %buildroot/%etercifs_src/
-cp %SOURCE36 %buildroot/%etercifs_src/
-cp %SOURCE37 %buildroot/%etercifs_src/
-cp %SOURCE38 %buildroot/%etercifs_src/
-cp %SOURCE39 %buildroot/%etercifs_src/
-
-# v3.x kernels
-cp %SOURCE40 %buildroot/%etercifs_src/
-cp %SOURCE41 %buildroot/%etercifs_src/
-cp %SOURCE42 %buildroot/%etercifs_src/
-cp %SOURCE43 %buildroot/%etercifs_src/
-cp %SOURCE44 %buildroot/%etercifs_src/
-cp %SOURCE45 %buildroot/%etercifs_src/
-cp %SOURCE46 %buildroot/%etercifs_src/
-cp %SOURCE47 %buildroot/%etercifs_src/
-cp %SOURCE48 %buildroot/%etercifs_src/
-cp %SOURCE49 %buildroot/%etercifs_src/
-cp %SOURCE50 %buildroot/%etercifs_src/
-cp %SOURCE51 %buildroot/%etercifs_src/
-cp %SOURCE52 %buildroot/%etercifs_src/
-cp %SOURCE53 %buildroot/%etercifs_src/
-cp %SOURCE54 %buildroot/%etercifs_src/
-cp %SOURCE55 %buildroot/%etercifs_src/
-cp %SOURCE56 %buildroot/%etercifs_src/
-cp %SOURCE57 %buildroot/%etercifs_src/
-cp %SOURCE58 %buildroot/%etercifs_src/
-cp %SOURCE59 %buildroot/%etercifs_src/
-
-# v4.x kernels
-cp %SOURCE140 %buildroot/%etercifs_src/
-cp %SOURCE141 %buildroot/%etercifs_src/
-cp %SOURCE142 %buildroot/%etercifs_src/
-cp %SOURCE143 %buildroot/%etercifs_src/
-cp %SOURCE144 %buildroot/%etercifs_src/
-cp %SOURCE145 %buildroot/%etercifs_src/
-cp %SOURCE146 %buildroot/%etercifs_src/
-
-# CentOS 6.x
-cp %SOURCE60 %buildroot/%etercifs_src/
-
-# CentOS 7.x
-cp %SOURCE70 %buildroot/%etercifs_src/
-
-# Special case for Fedora 15 v2.6.4x.* kernels
-ln -s %src_package_name-3.0-%src_3_0_version.tar.bz2 %buildroot/%etercifs_src/%src_package_name-2.6.40-%src_3_0_version.tar.bz2
-ln -s %src_package_name-3.1-%src_3_1_version.tar.bz2 %buildroot/%etercifs_src/%src_package_name-2.6.41-%src_3_1_version.tar.bz2
-ln -s %src_package_name-3.2-%src_3_2_version.tar.bz2 %buildroot/%etercifs_src/%src_package_name-2.6.42-%src_3_2_version.tar.bz2
-ln -s %src_package_name-3.3-%src_3_3_version.tar.bz2 %buildroot/%etercifs_src/%src_package_name-2.6.43-%src_3_3_version.tar.bz2
+cp %SOURCE1 %buildroot%_datadir/%name/
 
 mkdir -p %buildroot%_bindir
 install -m755 etermount %buildroot%_bindir/
 
-mkdir -p %buildroot%_usrsrc/kernel/sources/
-ln -s ../../../../%etercifs_src/%src_package_name-2.6.24-%src_2_6_24_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.24-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-2.6.25-%src_2_6_25_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.25-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-2.6.26-%src_2_6_26_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.26-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-2.6.27-%src_2_6_27_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.27-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-2.6.28-%src_2_6_28_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.28-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-2.6.29-%src_2_6_29_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.29-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-2.6.30-%src_2_6_30_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.30-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-2.6.31-%src_2_6_31_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.31-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-2.6.32-%src_2_6_32_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.32-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-2.6.33-%src_2_6_33_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.33-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-2.6.34-%src_2_6_34_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.34-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-2.6.35-%src_2_6_35_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.35-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-2.6.36-%src_2_6_36_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.36-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-2.6.37-%src_2_6_37_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.37-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-2.6.38-%src_2_6_38_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.38-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-2.6.39-%src_2_6_39_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.39-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.0-%src_3_0_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.0-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.1-%src_3_1_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.1-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.2-%src_3_2_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.2-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.3-%src_3_3_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.3-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.4-%src_3_4_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.4-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.5-%src_3_5_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.5-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.6-%src_3_6_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.6-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.7-%src_3_7_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.7-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.8-%src_3_8_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.8-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.9-%src_3_9_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.9-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.10-%src_3_10_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.10-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.11-%src_3_11_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.11-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.12-%src_3_12_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.12-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.13-%src_3_13_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.13-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.14-%src_3_14_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.14-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.15-%src_3_15_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.15-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.16-%src_3_16_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.16-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.17-%src_3_17_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.17-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.18-%src_3_18_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.18-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.19-%src_3_19_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.19-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-4.0-%src_4_0_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-4.0-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-4.1-%src_4_1_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-4.1-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-4.2-%src_4_2_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-4.2-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-4.3-%src_4_3_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-4.3-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-4.4-%src_4_4_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-4.4-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-4.5-%src_4_5_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-4.5-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-4.6-%src_4_6_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-4.6-%version.tar.bz2
+%if %_vendor != "alt"
+# dkms part
+mkdir -p %buildroot%_usrsrc/%modname-%version/
+cat > %buildroot%_usrsrc/%modname-%version/dkms.conf <<EOF
+# DKMS file for Linux CIFS with Etersoft's extensions
 
-# Special case for Fedora 15 v2.6.4x.* kernels
-ln -s ../../../../%etercifs_src/%src_package_name-3.0-%src_3_0_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.40-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.1-%src_3_1_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.41-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.2-%src_3_2_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.42-%version.tar.bz2
-ln -s ../../../../%etercifs_src/%src_package_name-3.3-%src_3_3_version.tar.bz2 \
-    %buildroot%_usrsrc/kernel/sources/%src_package_name-2.6.43-%version.tar.bz2
+PACKAGE_NAME="%modname"
+PACKAGE_VERSION="%version"
+
+BUILT_MODULE_NAME[0]="etercifs"
+DEST_MODULE_LOCATION[0]="/kernel/fs/cifs/"
+REMAKE_INITRD="no"
+AUTOINSTALL="YES"
+EOF
+
+%post -n dkms-etercifs
+if [ "$1" == 1 ]
+then
+  dkms add -m %modname -v %version --rpm_safe_upgrade
+fi
+%_initdir/%modname build
+
+%preun -n dkms-etercifs
+if [ "$1" == 0 ]
+then
+  dkms remove -m %modname -v %version --rpm_safe_upgrade --all
+fi
+%endif
 
 %post
 %post_service %name
@@ -452,15 +170,35 @@ ln -s ../../../../%etercifs_src/%src_package_name-3.3-%src_3_3_version.tar.bz2 \
 %files
 %doc README.ETER AUTHORS CHANGES README TODO
 %_bindir/etermount
+%_sbindir/%name-build
 %_initrddir/%name
 %_unitdir/%name.service
 %config %_sysconfdir/sysconfig/%name.conf
 %config %_sysconfdir/modprobe.d/etersoft.conf
 %_datadir/%name/
-%_usrsrc/kernel/sources/%src_package_name-*-%version.tar.bz2
-%_sbindir/%name-build
+
+%if %_vendor != "alt"
+%files -n dkms-etercifs
+%_usrsrc/%modname-%version/dkms.conf
+%endif
 
 %changelog
+* Sat Mar 04 2017 Vitaly Lipatov <lav@altlinux.ru> 5.5.0-alt1
+- aggregate all sources tarball to one tarball
+- major rewrite all scripts
+
+* Fri Mar 03 2017 Konstantin Artyushkin <akv@altlinux.org> 5.4.18-alt1
+- fix build for CentOS 7 with 3.10.0-514.* kernel
+
+* Thu Jan 26 2017 Konstantin Artyushkin <akv@altlinux.org> 5.4.17-alt1
+- Added SUSE 13.2 specific kernel 3.16.7.* support
+
+* Wed Sep 14 2016 Konstantin Artyushkin <akv@altlinux.org> 5.4.16-alt2
+- add ROSA/2014 support
+
+* Fri Aug 19 2016 Konstantin Artyushkin <akv@altlinux.org> 5.4.16-alt1
+- Added GosLinux 6.4 support 
+
 * Sun Jul 03 2016 Pavel Shilovsky <piastry@altlinux.org> 5.4.15-alt1
 - Add sources for 4.6 (v4.6.3)
 - Add sources for 4.5 (v4.5.7)
