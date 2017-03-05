@@ -5,7 +5,7 @@
 
 Name: etercifs
 Version: 5.5.0
-Release: alt1
+Release: alt2
 
 Summary: Advanced Common Internet File System for Linux with Etersoft extension
 
@@ -103,6 +103,8 @@ EOF
 
 install -D -m644 buildmodule.sh %buildroot%_datadir/%name/buildmodule.sh
 install -D -m644 checkmodule.sh %buildroot%_datadir/%name/checkmodule.sh
+install -D -m755 source.sh %buildroot%_datadir/%name/source.sh
+install -D -m644 source.table %buildroot%_datadir/%name/source.table
 install -D -m644 functions.sh %buildroot%_datadir/%name/functions.sh
 install -D -m755 %name-build %buildroot%_sbindir/%name-build
 
@@ -168,7 +170,7 @@ fi
 %preun_service %name
 
 %files
-%doc README.ETER AUTHORS CHANGES README TODO
+%doc README.ETER AUTHORS README TODO
 %_bindir/etermount
 %_sbindir/%name-build
 %_initrddir/%name
@@ -183,6 +185,9 @@ fi
 %endif
 
 %changelog
+* Sun Mar 05 2017 Vitaly Lipatov <lav@altlinux.ru> 5.5.0-alt2
+- switch kernel detection on data driven code with source.table
+
 * Sat Mar 04 2017 Vitaly Lipatov <lav@altlinux.ru> 5.5.0-alt1
 - aggregate all sources tarball to one tarball
 - major rewrite all scripts
