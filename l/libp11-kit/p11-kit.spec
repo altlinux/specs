@@ -7,9 +7,10 @@
 %define hash_impl freebl
 %define trust_paths %_datadir/ca-certificates/ca-bundle.crt
 #%%define trust_paths %_sysconfdir/pki/ca-trust/source:%_datadir/pki/ca-trust-source
+%def_disable systemd
 
 Name: lib%_name
-Version: 0.23.4
+Version: 0.23.5
 Release: alt1
 
 Summary: Library for loading and sharing PKCS#11 modules
@@ -35,6 +36,7 @@ BuildRequires: libtasn1-devel libffi-devel
 %if %hash_impl == freebl
 BuildRequires: libnss-devel
 %endif
+%{?_enable_systemd:BuildRequires: systemd-devel}
 
 %description
 %_name provides a way to load and enumerate PKCS#11 modules, as well
@@ -121,9 +123,13 @@ EOF
 %dir %_datadir/%_name/modules
 %dir %_sysconfdir/pkcs11
 %dir %_sysconfdir/pkcs11/modules
+
+%if_enabled systemd
 %_prefix/lib/systemd/user/%_name-remote.socket
 %_prefix/lib/systemd/user/%_name-remote@.service
 %_prefix/lib/systemd/user/sockets.target.wants/%_name-remote.socket
+%endif
+
 %_libdir/pkcs11/%_name-client.so
 %_libexecdir/%_name/%_name-server
 %doc %_name/pkcs11.conf.example
@@ -150,6 +156,9 @@ EOF
 %_datadir/gtk-doc/html/%_name
 
 %changelog
+* Mon Mar 06 2017 Yuri N. Sedunov <aris@altlinux.org> 0.23.5-alt1
+- 0.23.5
+
 * Sat Feb 25 2017 Yuri N. Sedunov <aris@altlinux.org> 0.23.4-alt1
 - 0.23.4
 
