@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name libmediaart
 %define ver_major 1.9
@@ -7,8 +7,8 @@
 %def_enable gtk_doc
 
 Name: %_name%api_ver
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Library for handling media art (2.0 API)
 Group: System/Libraries
@@ -16,7 +16,7 @@ License: LGPLv2+
 Url: https://wiki.gnome.org/Projects/Tracker
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/%name/%ver_major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %else
 Source: %_name-%version.tar
 %endif
@@ -118,6 +118,9 @@ This package contains development documentation for LibMediaArt library.
 %endif
 
 %changelog
+* Sun Mar 05 2017 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt1
+- 1.9.1
+
 * Sun Oct 09 2016 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt2
 - updated to 1.9.0-8-g52eb649
 - obsoletes/provides old libmediaart-1.0 (ALT #32594)
