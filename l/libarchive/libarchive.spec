@@ -2,8 +2,8 @@
 %define libarchive libarchive%sover
 
 Name: libarchive
-Version: 3.2.1
-Release: alt1
+Version: 3.3.1
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: A library for handling streaming archive formats
@@ -13,13 +13,13 @@ Url: http://www.libarchive.org/
 
 Source0: libarchive-%version.tar.gz
 # SuSE
-Patch11: libarchive-openssl.patch
 # ALT
 Patch100: alt-disable-lzma-mt.patch
 
 # Automatically added by buildreq on Mon Mar 11 2013 (-bi)
 # optimized out: elfutils pkg-config python-base ruby ruby-stdlibs
 #BuildRequires: bzlib-devel glibc-devel-static libacl-devel libattr-devel libe2fs-devel liblzma-devel liblzo2-devel libssl-devel libxml2-devel rpm-build-ruby zlib-devel
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: bzlib-devel glibc-devel libacl-devel libattr-devel libe2fs-devel liblzma-devel liblzo2-devel libssl-devel libxml2-devel zlib-devel
 BuildRequires: libnettle-devel
 
@@ -67,7 +67,6 @@ developing applications that use %name.
 
 %prep
 %setup -q
-%patch11 -p0
 %patch100 -p1
 %autoreconf
 
@@ -89,7 +88,7 @@ developing applications that use %name.
 
 
 %files -n %libarchive
-%doc README NEWS
+%doc README* NEWS
 %_libdir/*.so.%sover
 %_libdir/*.so.%sover.*
 
@@ -114,6 +113,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Mar 06 2017 Sergey V Turchin <zerg@altlinux.org> 3.3.1-alt1%ubt
+- new version
+
 * Tue Jun 28 2016 Sergey V Turchin <zerg@altlinux.org> 3.2.1-alt1
 - new version
 
