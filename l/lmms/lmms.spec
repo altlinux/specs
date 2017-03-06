@@ -1,8 +1,7 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.git20140910.1
+%define _libexecdir %_prefix/libexec
 Name: lmms
-Version: 1.0.95
-#Release: alt2.git20140910
+Version: 1.2.0
+Release: alt1.rc2.1
 
 Summary: Linux MultiMedia Studio
 License: GPL
@@ -14,10 +13,13 @@ Source: %name-%version.tar
 Source4: %name-16x16.png
 Source5: %name-32x32.png
 Source6: %name-48x48.png
+Patch1: %name-%version-no_werror.patch
+Patch2: %name-%version-vst-nowine.patch
 
 BuildPreReq: rpm-build-lmms libfltk-devel
 # Automatically added by buildreq on Sun Mar 27 2011
 BuildRequires: cmake gcc-c++ libSDL-devel libfluidsynth-devel libpulseaudio-devel libqt4-opengl libqt4-qt3support libqt4-script libqt4-svg libqt4-xml libsamplerate-devel libsndfile-devel libstk-devel libvorbis-devel phonon-devel libfftw3-devel libportaudio2-devel libXft-devel libjpeg-devel
+#BuildRequires: libwine-vanilla-devel
 
 %add_verify_elf_skiplist %_libdir/%name/*
 
@@ -37,6 +39,8 @@ Development files and headers for %name
 
 %prep
 %setup
+%patch1 -p1
+#%%patch2 -p1
 
 ##find ./plugins -type f -print0 | xargs -r0 %__subst "s|(LDFLAGS)|(LDFLAGS) \$(QT_LDADD) -lpthread |g"
 ##find ./plugins -type f -print0 | xargs -r0 %__subst "s|(LIBS)|(LIBS) \$(QT_LDADD) -lpthread |g"
@@ -44,17 +48,30 @@ Development files and headers for %name
 #__subst "s|/usr/lib|%{_libdir}|g" src/core/ladspa_manager.cpp
 
 %build
-%cmake -DWANT_FFTW3F:BOOL=OFF -DWANT_CMT:BOOL=OFF
+%cmake_insource \
+        -DWANT_FFTW3F:BOOL=OFF \
+        -DWANT_CMT:BOOL=OFF \
+%ifarch %ix86
+        -DWANT_VST:BOOL=ON \
+%else
+        -DWANT_VST:BOOL=OFF \
+%endif
+        -DCMAKE_INSTALL_LIBDIR=%_lib \
+        -Wno-dev \
+        -DWANT_VST_NOWINE:BOOL=ON \
+#%%ifarch x86_64
+#        -DWANT_VST_NOWINE:BOOL=ON \
+#%%endif
 #-DWANT_CAPS:BOOL=OFF  -DWANT_SWH:BOOL=OFF -DWANT_TAP:BOOL=OFF
-%make_build -C BUILD VERBOSE=1
+%make_build VERBOSE=1
 
 %install
-%makeinstall_std -C BUILD
+%makeinstall_std
 
-%if "%_libexecdir" != "%_libdir"
-install -d %buildroot%_libdir
-mv %buildroot%_libexecdir/%name %buildroot%_libdir/
-%endif
+#%%if "%_libexecdir" != "%_libdir"
+#install -d %buildroot%_libdir
+#mv %buildroot%_libexecdir/%name %buildroot%_libdir/
+#%%endif
 
 %find_lang %name
 
@@ -86,7 +103,7 @@ Categories=AudioVideo;Audio;Midi;Sequencer;Recorder;
 EOF
 
 %files -f %name.lang
-%doc AUTHORS README TODO
+%doc README.md LICENSE.txt
 %_bindir/*
 %_libdir/%name/
 %_datadir/%name/
@@ -102,6 +119,9 @@ EOF
 %_includedir/%name
 
 %changelog
+* Tue Feb 21 2017 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1.rc2.1
+- new snapshot 1.2.0-rc2
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.95-alt2.git20140910.1
 - (AUTO) subst_x86_64.
 
