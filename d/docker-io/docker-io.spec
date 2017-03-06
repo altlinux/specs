@@ -10,11 +10,14 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       %{repo}-io
-Version:    1.13.1
+Version:    17.03.0
 Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
+
+%global versuffix ce
+%global fullversion %{version}-%{versuffix}
 
 Url: http://www.docker.io
 # only x86_64 for now: https://github.com/docker/docker/issues/136
@@ -84,10 +87,9 @@ cp contrib/syntax/vim/README.md README-vim-syntax.md
 %install
 # install binary
 install -d %{buildroot}%{_bindir}
-ls -la bundles/%{version}/
-ls -la bundles/%{version}/dynbinary-daemon
-install -p -m 755 bundles/%{version}/dynbinary-client/docker-%{version} %{buildroot}%{_bindir}/docker
-install -p -m 755 bundles/%{version}/dynbinary-daemon/dockerd-%{version} %{buildroot}%{_bindir}/dockerd
+ls -la bundles/%{version}-%{versuffix}
+install -p -m 755 bundles/%{fullversion}/dynbinary-client/docker-%{fullversion} %{buildroot}%{_bindir}/docker
+install -p -m 755 bundles/%{fullversion}/dynbinary-daemon/dockerd-%{fullversion} %{buildroot}%{_bindir}/dockerd
 
 # create symlinks on runc/containerd
 ln -s %_bindir/runc %{buildroot}%{_bindir}/docker-runc
@@ -180,6 +182,9 @@ exit 0
 %{gopath}/src/%{import_path}/
 
 %changelog
+* Mon Mar 6 2017 Vladimir Didenko <cow@altlinux.org> 17.03.0-alt1
+- New version
+
 * Fri Feb 10 2017 Vladimir Didenko <cow@altlinux.org> 1.13.1-alt1
 - New version
 
