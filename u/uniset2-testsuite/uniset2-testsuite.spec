@@ -1,20 +1,22 @@
 %def_enable doc
 
 Name: uniset2-testsuite
-Version: 2.3
-Release: alt10
+Version: 2.5
+Release: alt7
 Summary: UniSet test suite
 Group: Development/Python
 License: LGPL
 Url: http://github.com/Etersoft/uniset2-testsuite
 Source: %name-%version.tar
-# Automatically added by buildreq on Thu Oct 02 2014
-# optimized out: pkg-config python-base python-devel python-modules
-BuildRequires: python-module-distribute
+# Automatically added by buildreq on Wed Jan 18 2017
+# optimized out: pkg-config python-base python-modules python3 python3-base
+BuildRequires: doxygen python-devel python-dev
+BuildRequires: python-module-uniset2 >= 2.6-alt10
 
-BuildRequires: python-module-uniset2 >= 2.5-alt6
-
-Requires: python-module-uniset2 >= 2.5-alt6
+Requires: python-module-uniset2 >= 2.6-alt10
+Provides: python2.7(UTestInterface)
+Provides: python2.7(TestSuiteGlobal)
+BuildArch: noarch
 
 %if_enabled doc
 BuildRequires: doxygen
@@ -36,64 +38,47 @@ GUI (gtk) interface of uniset2-testsuite
 Summary: docs for uniset2-testsuite
 Group: Development/Python
 BuildArch: noarch
-Requires: %name = %version-%release 
+# Requires: %name = %version-%release 
 %description doc
 Documentation for uniset2-testsuite
+
+%package snmp
+Summary: SNMP plugin for uniset2-testsuite
+Group: Development/Python
+Requires: %name = %version-%release 
+Requires: net-snmp-clients
+%description snmp
+SNMP Plugin for uniset2-testsuite
 
 %prep
 %setup
 
 %build
 %autoreconf
-%if_enabled doc
-%configure
-%else
-%configure --disable-docs
-%endif
-%configure
-#%make_build
+%configure %{subst_enable docs}
 %make
 
 %install
 %make_install install DESTDIR=%buildroot
 
-mkdir -p %buildroot%python_sitelibdir/%name
-mv -f %buildroot%python_sitelibdir/*.py %buildroot%python_sitelibdir/%name/
-
-mkdir -p %buildroot/%_bindir/
-ln -s %python_sitelibdir/%name/TestSuiteXMLPlayer.py %buildroot/%_bindir/uniset2-testsuite-xmlplayer
-ln -s %python_sitelibdir/%name/guiTestSuitePlayer-gtk.py %buildroot/%_bindir/uniset2-testsuite-gtkplayer
-ln -s %python_sitelibdir/%name/%name-conv.py %buildroot/%_bindir/uniset2-testsuite-conv
-
-#%if_enabled doc
-#  mkdir -p %buildroot/%_docdir/%name
-#  mv %buildroot/%_docdir/%name/html/* %buildroot/%_docdir/%name/
-#  rmdir %buildroot/%_docdir/%name/html
-#%endif
-
 %files
-%dir %python_sitelibdir/%name
-%python_sitelibdir/*
-%_bindir/uniset2-testsuite-xmlplayer
-%_bindir/uniset2-testsuite-conv
-%python_sitelibdir/%name/*
-%exclude %python_sitelibdir/%name/gui*Player*
-%exclude %python_sitelibdir/%name/Gtk*
-%exclude %python_sitelibdir/%name/ScenarioParamEditor*
-%exclude %python_sitelibdir/%name/dlg*
+%_datadir/%name/*.*
+%_bindir/%name-xmlplayer
+%_bindir/%name-conv
+%exclude %_datadir/%name/plugins.d/*SNMP.py
+
+%files snmp
+%_datadir/%name/plugins.d/*SNMP.py
 
 %files gui
-%python_sitelibdir/%name/guiTestSuitePlayer-gtk.py
-%python_sitelibdir/%name/GtkProcessMonitor.py
-%python_sitelibdir/%name/ScenarioParamEditor*
-%python_sitelibdir/%name/dlg*
-%_bindir/uniset2-testsuite-gtkplayer
-%dir %_datadir/%name/player/
-%dir %_datadir/%name/player/editors
-%_datadir/%name/player/*.ui
-%_datadir/%name/player/editors
-%dir %_datadir/%name/player/images
-%_datadir/%name/player/images/*
+%_datadir/%name/gtkplayer/guiTestSuitePlayer-gtk.py
+%_datadir/%name/gtkplayer/GtkProcessMonitor.py
+%_datadir/%name/gtkplayer/ScenarioParamEditor*
+%_datadir/%name/gtkplayer/dlg*.py
+%_bindir/%name-gtkplayer
+%_datadir/%name/gtkplayer/*.ui
+%_datadir/%name/gtkplayer/editors/*
+%_datadir/%name/gtkplayer/images/*
 
 %if_enabled doc
 %files doc
@@ -101,6 +86,70 @@ ln -s %python_sitelibdir/%name/%name-conv.py %buildroot/%_bindir/uniset2-testsui
 %endif
 
 %changelog
+* Tue Mar 07 2017 Pavel Vainerman <pv@altlinux.ru> 2.5-alt7
+- add bash wrapper for run
+- pack files to /usr/share/uniset2-testsuite
+
+* Mon Mar 06 2017 Pavel Vainerman <pv@altlinux.ru> 2.5-alt6.1
+- minor fixes in spec
+
+* Thu Mar 02 2017 Pavel Vainerman <pv@altlinux.ru> 2.5-alt6
+- (snmp): add ignoreCheckMIB parameter
+
+* Thu Mar 02 2017 Pavel Vainerman <pv@altlinux.ru> 2.5-alt5
+- fixed bug in replace..
+
+* Fri Jan 27 2017 Pavel Vainerman <pv@altlinux.ru> 2.5-alt4
+- update version
+
+* Fri Jan 27 2017 Pavel Vainerman <pv@altlinux.ru> 2.5-alt3.1
+- (snmp): use system utility and pipe
+
+* Thu Jan 26 2017 Pavel Vainerman <pv@altlinux.ru> 2.5-alt3
+- minor fixed (gitlab.set issue #5)
+
+* Wed Jan 25 2017 Pavel Vainerman <pv@altlinux.ru> 2.5-alt2.1
+- change snmp python interface: pysnmp --> netsnmp
+
+* Mon Jan 23 2017 Pavel Vainerman <pv@altlinux.ru> 2.5-alt2
+- add 'disable_tags' property for <test> (gitlab.set issue #5)
+
+* Wed Jan 18 2017 Pavel Vainerman <pv@altlinux.ru> 2.5-alt1
+- release new version (supported plugins, add snmp interface)
+
+* Wed Jan 18 2017 Pavel Vainerman <pv@altlinux.ru> 2.3-alt17.1
+- test plugins build
+
+* Sat Jan 14 2017 Pavel Vainerman <pv@altlinux.ru> 2.3-alt17
+- fixed bug 'double replace' (gitlab.set issue #7)
+
+* Fri Jan 13 2017 Pavel Vainerman <pv@altlinux.ru> 2.3-alt16
+- fixed bug in --play-tags (gitlab.set issue #5)
+
+* Mon Jan 09 2017 Pavel Vainerman <pv@altlinux.ru> 2.3-alt15
+- fixes for new uniset
+- fixed bug set gitlab issue #8 
+
+* Mon Dec 19 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt14
+- add '--show-test-tree' command (gitlab.set issue #5)
+- gitlab.set issue #1 (check scripts path in scenario-mode)
+- gitlab.set issue #4 (bug in holdtime)
+
+* Wed Dec 14 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt13
+- skip sleep for 'test scenario mode' (gitlab.set refs #2)
+
+* Tue Dec 13 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt12
+- doc: minor fixes
+- remove require for doc package
+
+* Wed Dec 07 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt11
+- new version
+
+* Mon Dec 05 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt10.1
+- add show 'extended information' for stacktrace
+- add supported 'tags' or test
+- add supported --check-scenario
+
 * Tue Oct 11 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt10
 - fixed bug 'change directory' for 'outlink'
 
