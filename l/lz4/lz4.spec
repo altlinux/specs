@@ -1,129 +1,122 @@
-%define sover 1
-%def_enable static
-
 Name: lz4
-Version: r131
+Epoch: 1
+Version: 1.7.5
 Release: alt1
-Summary: Extremely Fast Compression algorithm
-License: BSD
+Summary: Fast LZ compression algorithm library and tools
+License: GPLv2+ and BSD
 Group: Archiving/Compression
-Url: http://www.lz4.org
-
-# https://github.com/Cyan4973/lz4
-Source: %name-%version.tar
-
-BuildRequires(pre): rpm-macros-make
-
+Url: https://lz4.github.io/lz4/
+# https://github.com/lz4/lz4
+# git://git.altlinux.org/gears/l/lz4.git
+Source: %name-%version-%release.tar
 Requires: lib%name = %EVR
+%def_disable static
+%define BUILD_STATIC %{?_enable_static:yes}%{?_disable_static:no}
 
 %description
 LZ4 is a very fast lossless compression algorithm, providing compression
-speed at 400 MB/s per core, scalable with multi-cores CPU. It also
+speed at 400 MB/s per core, scalable with multi-cores CPU.  It also
 features an extremely fast decoder, with speed in multiple GB/s per
 core, typically reaching RAM speed limits on multi-core systems.
 
-A high compression derivative, called LZ4_HC, is also provided. It
-trades CPU time for compression ratio.
-
 %package -n lib%name
-Summary: Shared libraries of LZ4
+Summary: Fast LZ compression algorithm shared library
+License: BSD
 Group: System/Libraries
 
 %description -n lib%name
 LZ4 is a very fast lossless compression algorithm, providing compression
-speed at 400 MB/s per core, scalable with multi-cores CPU. It also
+speed at 400 MB/s per core, scalable with multi-cores CPU.  It also
 features an extremely fast decoder, with speed in multiple GB/s per
 core, typically reaching RAM speed limits on multi-core systems.
 
-A high compression derivative, called LZ4_HC, is also provided. It
-trades CPU time for compression ratio.
-
-This package contains shared libraries of LZ4.
+This package contains lib%name shared library.
 
 %package -n lib%name-devel
-Summary: Development files of LZ4
+Summary: Fast LZ compression algorithm development files
+License: BSD
 Group: Development/C
 Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 LZ4 is a very fast lossless compression algorithm, providing compression
-speed at 400 MB/s per core, scalable with multi-cores CPU. It also
+speed at 400 MB/s per core, scalable with multi-cores CPU.  It also
 features an extremely fast decoder, with speed in multiple GB/s per
 core, typically reaching RAM speed limits on multi-core systems.
 
-A high compression derivative, called LZ4_HC, is also provided. It
-trades CPU time for compression ratio.
-
-This package contains development files of LZ4.
+This package contains development files required to build applications
+using lib%name library.
 
 %package -n lib%name-devel-static
-Summary: Development files of LZ4
+Summary: Fast LZ compression algorithm static library
+License: BSD
 Group: Development/C
 Requires: lib%name-devel = %EVR
 
 %description -n lib%name-devel-static
 LZ4 is a very fast lossless compression algorithm, providing compression
-speed at 400 MB/s per core, scalable with multi-cores CPU. It also
+speed at 400 MB/s per core, scalable with multi-cores CPU.  It also
 features an extremely fast decoder, with speed in multiple GB/s per
 core, typically reaching RAM speed limits on multi-core systems.
 
-A high compression derivative, called LZ4_HC, is also provided. It
-trades CPU time for compression ratio.
-
-This package contains static library files of LZ4.
+This package contains lib%name static library required to build
+statically linked applications using lib%name library.
 
 %prep
-%setup
+%setup -n %name-%version-%release
+# reenable recipe echoing
+sed -i 's/^\([[:space:]]*\)@\$/\1\$/' */Makefile
+# ensure that lz4.1 is recognized by file as a troff input
+sed -i '1 i.\\"' programs/lz4.1
+# skip recompilation attempts during check
+sed -i '/ clean \$@ / s/^\([[:space:]]*\)\(.*\)/\1: SKIP: \2/' tests/Makefile
+# export deprecated symbols
+sed -i 's/^LZ4_DEPRECATED/LZ4LIB_API &/' lib/lz4.h lib/lz4hc.h
 
 %build
-%make_build_ext lib
-%make_build_ext
+export CFLAGS='%optflags -fvisibility=hidden'
+%make_build all -C lib BUILD_STATIC=%BUILD_STATIC
+%make_build all -C programs
+%make_build all -C tests
 
 %install
-%ifarch x86_64
-LIB_SUFFIX=64
-%endif
-%makeinstall_std LIBDIR=%_libdir PREFIX=%_prefix
+export CFLAGS=--EPERM # nothing should be compiled during install
+%makeinstall_std BUILD_STATIC=%BUILD_STATIC PREFIX=%prefix LIBDIR=%_libdir
 
-# Relocate shared libraries from %_libdir/ to /lib/.
+# Relocate shared libraries from %_libdir/ to /%_lib/ (ALT#30628).
 mkdir -p %buildroot/%_lib
 for f in %buildroot%_libdir/*.so; do
-	t=$(readlink "$f") || continue
+	t=$(readlink -v "$f")
 	ln -snf ../../%_lib/"$t" "$f"
 done
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
+
+%check
+export CFLAGS=--EPERM # nothing should be compiled during check
+make test -C tests # these tests don't run in parallel
+
 %files
-%doc NEWS README.md
 %_bindir/*
 %_man1dir/*
+%doc LICENSE NEWS README.md
 
 %files -n lib%name
 /%_lib/*.so.*
+%doc lib/LICENSE
 
 %files -n lib%name-devel
-%_includedir/*
+%_includedir/*.h
 %_libdir/*.so
-%_pkgconfigdir/*
+%_pkgconfigdir/*.pc
 
 %if_enabled static
 %files -n lib%name-devel-static
 %_libdir/*.a
-%else
-%exclude %_libdir/*.a
 %endif
 
 %changelog
-* Wed Nov 18 2015 Alexey Shabalin <shaba@altlinux.ru> r131-alt1
-- r131
-
-* Tue Jan 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r127-alt1.svn20141224
-- New snapshot
-- Moved libraries from %_libdir into /%_lib (ALT #30628)
-
-* Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r119-alt1.svn20140702
-- New snapshot
-
-* Wed Jun 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r117-alt1.svn20140422
-- Initial build for Sisyphus
-
+* Mon Mar 06 2017 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.5-alt1
+- Initial revision.
