@@ -3,7 +3,7 @@
 
 Name:       lazarus
 Version:    1.6.4
-Release:    alt1
+Release:    alt2
 Epoch:      1
 
 Summary:    Lazarus Component Library and IDE
@@ -27,6 +27,9 @@ Patch6:	    %name-set-user-TestBuildDirectory.patch
 # Patches from Debian
 Patch11: lazarus-default-config.patch
 Patch12: lazarus-lcl-with-multple-widget-sets.patch
+
+# Other patches
+Patch13: lazarus-customform-sigsegv-fix.patch
 
 BuildRequires: fpc >= 2.6.4 fpc-utils glibc-devel libgtk+2-devel libXi-devel desktop-file-utils 
 BuildRequires: libXext-devel libXtst-devel libGL-devel libGLU-devel libode-devel
@@ -67,6 +70,7 @@ subst 's|/usr/lib/|%{_libdir}/|' %PATCH4
 %patch6 -p2
 %patch11 -p1
 %patch12 -p1
+%patch13 -p2
 
 install -D -p -m 0644 %SOURCE3 tools/install/linux/environmentoptions.xml
 #sed -i -e 's,@version@,%version,g' tools/install/linux/helpoptions.xml docs/index.ru.html
@@ -189,6 +193,9 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 %dir %_datadir/fpcsrc/packages/fcl-base
 
 %changelog
+* Mon Mar 06 2017 Andrey Cherepanov <cas@altlinux.org> 1:1.6.4-alt2
+- Revert regression made in 1.6.4 in customform.inc (ALT #33204)
+
 * Thu Mar 02 2017 Andrey Cherepanov <cas@altlinux.org> 1:1.6.4-alt1
 - New version (http://wiki.lazarus.freepascal.org/Lazarus_1.6.0_release_notes)
 - Fix TCustomEdit behaviour in new upstream version (ALT #33189)
