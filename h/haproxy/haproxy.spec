@@ -7,7 +7,7 @@
 %def_enable lua
 
 Name: haproxy
-Version: 1.7.1
+Version: 1.7.3
 Release: alt1
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
@@ -56,9 +56,9 @@ pushd contrib/halog
 %make halog OPTIMIZE="%optflags"
 popd
 
-pushd contrib/iprange
-%make iprange OPTIMIZE="%optflags"
-popd
+#pushd contrib/iprange
+#%make iprange OPTIMIZE="%optflags"
+#popd
 
 pushd contrib/systemd
 %make haproxy.service PREFIX="%_prefix"
@@ -76,7 +76,7 @@ install -d -m 0755 %buildroot%haproxy_home
 install -d -m 0755 %buildroot%haproxy_datadir
 install -d -m 0755 %buildroot%_bindir
 install -p -m 0755 contrib/halog/halog %buildroot%_bindir/halog
-install -p -m 0755 contrib/iprange/iprange %buildroot%_bindir/iprange
+#install -p -m 0755 contrib/iprange/iprange %buildroot%_bindir/iprange
 cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 
 
@@ -106,6 +106,10 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Mon Mar 06 2017 Alexey Shabalin <shaba@altlinux.ru> 1.7.3-alt1
+- 1.7.3
+- do not build contrib/iprange
+
 * Thu Jan 12 2017 Alexey Shabalin <shaba@altlinux.ru> 1.7.1-alt1
 - 1.7.1
 - build with lua support
