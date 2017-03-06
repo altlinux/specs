@@ -12,10 +12,12 @@
 %define gpg_bin_path %_bindir/gpg2
 %define gpgsm_bin_path %_bindir/gpgsm
 
+%add_python3_req_skip _gpgme
+%add_python_req_skip _gpgme
+
 Name: gpgme
 Version: 1.7.1
-Release: alt1%ubt
-
+Release: alt2%ubt
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
 License: LGPLv2.1+
@@ -38,9 +40,10 @@ Patch4: gpgme-1.3.2-rh-alt-linkage.patch
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
 BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): python-devel python3-devel
 BuildRequires: /proc gcc-c++ gnupg2 libgpg-error-devel libpth-devel libstdc++-devel libassuan-devel >= 2.0
 BuildRequires: texinfo
-BuildRequires: qt5-base-devel python-devel python3-devel swig
+BuildRequires: qt5-base-devel swig
 
 %package common
 Summary: %name common package
@@ -223,6 +226,9 @@ export PATH=$PWD/tmp_bin:$PATH
 %_libdir/libqgpgme.so.%qgpgme_sover.*
 
 %changelog
+* Mon Mar 06 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.1-alt2%ubt
+- clean requires
+
 * Tue Feb 28 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.1-alt1%ubt
 - new version
 
