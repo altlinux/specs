@@ -1,5 +1,5 @@
 Name: liblogging
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 Summary: LibLogging stdlog library
 License: 2-clause BSD
@@ -7,7 +7,7 @@ Group: System/Libraries
 Url: http://www.liblogging.org
 Source: %name-%version.tar
 
-BuildRequires: pkgconfig(libsystemd-journal) >= 197
+BuildRequires: pkgconfig(libsystemd) >= 209
 BuildRequires: /usr/bin/rst2man
 
 %description
@@ -53,6 +53,9 @@ developing programs which use liblogging library.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Mar 06 2017 Alexey Shabalin <shaba@altlinux.ru> 1.0.6-alt1
+- 1.0.6
+
 * Wed Jan 14 2015 Alexey Shabalin <shaba@altlinux.ru> 1.0.5-alt1
 - 1.0.5
 
