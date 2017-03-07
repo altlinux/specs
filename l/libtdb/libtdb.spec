@@ -2,8 +2,8 @@
 %def_without python3
 
 Name: libtdb
-Version: 1.3.10
-Release: alt1
+Version: 1.3.12
+Release: alt1%ubt
 
 Summary: A trivial database system
 License: GPL
@@ -17,6 +17,8 @@ BuildRequires: rpm-build-python python-devel
 %if_with python3
 BuildRequires: rpm-build-python3 python3-devel
 %endif
+
+BuildRequires(pre):rpm-build-ubt
 
 %description
 This is a simple database API. It was inspired by the realisation that
@@ -135,6 +137,9 @@ make test
 %endif
 
 %changelog
+* Tue Mar 07 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.3.12-alt1%ubt
+- Update to release for samba-4.6.0
+
 * Fri Sep 09 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1.3.10-alt1
 - Update to release for samba-4.5.0
 

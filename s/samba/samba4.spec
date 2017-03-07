@@ -38,7 +38,7 @@
 %def_with libcephfs
 
 Name: samba
-Version: 4.5.5
+Version: 4.6.0
 Release: alt1%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -108,10 +108,10 @@ BuildRequires: libiniparser-devel
 BuildRequires: libkrb5-devel libssl-devel libcups-devel
 BuildRequires: gawk libgtk+2-devel libcap-devel libuuid-devel
 BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-xsl
-%{?_without_talloc:BuildRequires: libtalloc-devel >= 2.1.8 libpytalloc-devel}
-%{?_without_tevent:BuildRequires: libtevent-devel >= 0.9.29 python-module-tevent}
-%{?_without_tdb:BuildRequires: libtdb-devel >= 1.3.10  python-module-tdb}
-%{?_without_ldb:BuildRequires: libldb-devel >= 1.1.27 python-module-pyldb-devel}
+%{?_without_talloc:BuildRequires: libtalloc-devel >= 2.1.9 libpytalloc-devel}
+%{?_without_tevent:BuildRequires: libtevent-devel >= 0.9.31 python-module-tevent}
+%{?_without_tdb:BuildRequires: libtdb-devel >= 1.3.12  python-module-tdb}
+%{?_without_ldb:BuildRequires: libldb-devel >= 1.1.29 python-module-pyldb-devel}
 #{?_with_clustering_support:BuildRequires: ctdb-devel}
 %{?_with_testsuite:BuildRequires: ldb-tools}
 %{?_with_systemd:BuildRequires: libsystemd-devel}
@@ -935,7 +935,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/libsmbd-conn-samba4.so
 %_libdir/samba/libsmbd-shim-samba4.so
 %_libdir/samba/libsmbldaphelper-samba4.so
-%_libdir/samba/libsmbregistry-samba4.so
 %_libdir/samba/libsys-rw-samba4.so
 %_libdir/samba/libsocket-blocking-samba4.so
 %_libdir/samba/libtalloc-report-samba4.so
@@ -1004,12 +1003,14 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %files common-tools  -f net.lang
+%_bindir/mvxattr
 %_bindir/net
 %_bindir/pdbedit
 %_bindir/profiles
 %_bindir/smbcontrol
 %_bindir/smbpasswd
 %_bindir/testparm
+%_man1dir/mvxattr.1*
 %_man1dir/profiles.1*
 %_man1dir/smbcontrol.1*
 %_man1dir/testparm.1*
@@ -1308,13 +1309,15 @@ TDB_NO_FSYNC=1 %make_build test
 %_bindir/ltdbtool
 %_bindir/onnode
 %_bindir/ping_pong
-%_libexecdir/ctdb/ctdb_event_helper
+%_libexecdir/ctdb/ctdb_event
+%_libexecdir/ctdb/ctdb_eventd
 %_libexecdir/ctdb/ctdb_killtcp
 %_libexecdir/ctdb/ctdb_lock_helper
 %_libexecdir/ctdb/ctdb_lvs
 %_libexecdir/ctdb/ctdb_mutex_fcntl_helper
 %_libexecdir/ctdb/ctdb_natgw
 %_libexecdir/ctdb/ctdb_recovery_helper
+%_libexecdir/ctdb/ctdb_takeover_helper
 %_libexecdir/ctdb/smnotify
 
 %_man1dir/ctdb.1*
@@ -1338,6 +1341,9 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Tue Mar 07 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.0-alt1%ubt
+- Udpate to first spring release
+
 * Wed Feb 01 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.5.5-alt1%ubt
 - Update to winter release
 

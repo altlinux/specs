@@ -2,7 +2,7 @@
 
 Name: sssd
 Version: 1.14.2
-Release: alt5%ubt
+Release: alt6%ubt
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -16,7 +16,7 @@ Patch: %name-%version-alt.patch
 
 # Determine the location of the LDB modules directory
 %define ldb_modulesdir %(pkg-config --variable=modulesdir ldb)
-%define ldb_version 1.1.27
+%define ldb_version 1.1.29
 
 %define _localstatedir /var
 %define _libexecdir /usr/libexec
@@ -713,6 +713,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 /%_lib/libnfsidmap/sss.so
 
 %changelog
+* Wed Mar 08 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.2-alt6%ubt
+- Rebuild with libldb-1.1.29
+
 * Tue Feb 28 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.2-alt5%ubt
 - Add _sssd user to _keytab group
 - Set right group privileges: use initgroups() instead of setgroups()
