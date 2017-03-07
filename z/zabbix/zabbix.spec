@@ -11,11 +11,11 @@
 
 Name: zabbix
 Version: 3.2.4
-Release: alt1
+Release: alt2
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
-Serial: 1
+Epoch: 1
 
 Summary: A network monitor
 License: GPLv2
@@ -27,7 +27,7 @@ Url: http://www.zabbix.com
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildPreReq: /proc
+BuildPreReq: /proc rpm-build-java java-1.7.0-openjdk-devel
 BuildPreReq: libelf-devel
 BuildRequires(pre): rpm-build-webserver-common
 
@@ -85,6 +85,14 @@ Group: Monitoring
 Requires: %name-common >= 1:2.0.4-alt1
 Requires: %_sbindir/fping
 
+%package java-gateway
+Summary: %name java gateway
+Group: Monitoring
+Requires: %name-common >= 1:2.0.4-alt1
+BuildArch: noarch
+%filter_from_requires /^\/etc\/sysconfig\/network/d
+%filter_from_requires /^\/etc\/sysconfig\/zabbix-java-gateway/d
+
 %package phpfrontend-engine
 Summary: zabbix web frontend (php)
 Group: Monitoring
@@ -101,13 +109,13 @@ BuildArch: noarch
 %package phpfrontend-apache
 Summary: %name-phpfrontend's apache config files
 Group: Monitoring
-Requires: %name-phpfrontend-engine = %serial:%version-%release, apache-base
+Requires: %name-phpfrontend-engine = %epoch:%version-%release, apache-base
 BuildArch: noarch
 
 %package phpfrontend-apache2
 Summary: %name-phpfrontend's apache2 config files
 Group: Monitoring
-Requires: %name-phpfrontend-engine = %serial:%version-%release, apache2-base
+Requires: %name-phpfrontend-engine = %epoch:%version-%release, apache2-base
 BuildArch: noarch
 
 %package phpfrontend-apache2-mod_php5
@@ -171,6 +179,9 @@ ZABBIX supports both polling and trapping techniques to collect data from
 monitored hosts. A flexible notification mechanism allows easy and quickly
 configure different types of notifications for pre-defined events.
 
+%description java-gateway
+Zabbix java gateway
+
 %description agent
 zabbix network monitor agent.
 
@@ -213,7 +224,7 @@ zabbix web frontend, edition for php5
 
 %build
 # fix ZABBIX_REVISION
-sed -i -e "s,{ZABBIX_REVISION},%svnrev," include/version.h
+sed -i -e "s,{ZABBIX_REVISION},%svnrev," include/version.h src/zabbix_java/src/com/zabbix/gateway/GeneralInformation.java
 
 %autoreconf
 
@@ -261,11 +272,12 @@ mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_pgsql
 %configure --with-sqlite3 \
 	--enable-proxy \
 	--enable-ipv6 \
+	--enable-agent \
+	--enable-java \
 	--with-libcurl \
 	--with-libxml2 \
 	--with-net-snmp \
 	--with-ldap \
-	--enable-agent \
 	--with-jabber \
 	--with-openipmi \
 	--with-openssl \
@@ -288,7 +300,6 @@ find conf -type f -print0 | xargs -0 sed -i \
 	-e "s,Include=/usr/local/etc/zabbix_agentd.conf.d/,Include=%_sysconfdir/%name/zabbix_agentd.conf.d/,g" --
 
 %install
-
 # Generate *.mo files
 for pofile in `find frontends/php/locale -type f ! -wholename '*/.svn*' -name '*.po'`
 do
@@ -339,6 +350,8 @@ install -pDm0755 sources/%{name}_mysql.init %buildroot%_initdir/%{name}_mysql
 install -pDm0644 sources/%{name}_mysql.service %buildroot%_unitdir/%{name}_mysql.service
 install -pDm0755 sources/%{name}_proxy.init %buildroot%_initdir/%{name}_proxy
 install -pDm0644 sources/%{name}_proxy.service %buildroot%_unitdir/%{name}_proxy.service
+install -pDm0755 sources/%{name}_java_gateway.init %buildroot%_initdir/%{name}_java_gateway
+install -pDm0644 sources/%{name}_java_gateway.service %buildroot%_unitdir/%{name}_java_gateway.service
 
 # sudo entry
 install -pDm0400 sources/%name.sudo %buildroot%_sysconfdir/sudoers.d/%name
@@ -354,6 +367,23 @@ mv upgrades/dbpatches-final/dbpatches/2.0/postgresql upgrades-postgresql/2.0
 
 # include files
 cp include/* %buildroot%_includedir/%name
+
+# delete unnecessary files from java gateway
+rm %buildroot%_sbindir/zabbix_java/settings.sh
+rm %buildroot%_sbindir/zabbix_java/startup.sh
+rm %buildroot%_sbindir/zabbix_java/shutdown.sh
+
+mv %buildroot%_sbindir/zabbix_java/lib/logback.xml %buildroot%_sysconfdir/zabbix/zabbix_java_gateway_logback.xml
+rm %buildroot%_sbindir/zabbix_java/lib/logback-console.xml
+
+mkdir -p %buildroot%_javadir
+mv %buildroot%_sbindir/zabbix_java %buildroot%_javadir/zabbix-java-gateway
+install -m 0755 -p sources/zabbix_java_gateway-sysd %buildroot%_sbindir/zabbix_java_gateway
+
+cat src/zabbix_java/settings.sh | sed \
+        -e 's|^PID_FILE=.*|PID_FILE="/var/run/zabbix/zabbix_java.pid"|g' \
+        -e '/^# TIMEOUT=/a \\nTIMEOUT=3' \
+        > %buildroot%_sysconfdir/zabbix/zabbix_java_gateway.conf
 
 # ChangeLog
 bzip2 ChangeLog
@@ -381,6 +411,11 @@ bzip2 ChangeLog
 
 %preun proxy
 %preun_service zabbix_proxy
+%post java-gateway
+%post_service zabbix_java_gateway
+
+%preun java-gateway
+%preun_service zabbix_java_gateway
 %post agent
 %post_service zabbix_agentd
 if [ $1 -eq 1 ]; then
@@ -435,6 +470,14 @@ fi
 %config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/%name/%{name}_proxy.conf
 %_man8dir/%{name}_proxy.*
 
+%files java-gateway
+%_sbindir/%{name}_java_gateway
+%_initdir/%{name}_java_gateway
+%_unitdir/*java_gateway*
+%config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/%name/%{name}_java_gateway.conf
+%config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/%name/%{name}_java_gateway_logback.xml
+%_javadir/*
+
 %files agent
 %config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/%name/%{name}_agentd.conf
 %dir %attr(0750,root,%zabbix_group) %_sysconfdir/%name/zabbix_agentd.conf.d
@@ -470,6 +513,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Mon Mar 06 2017 Alexei Takaseev <taf@altlinux.org> 1:3.2.4-alt2
+- Enable Zabbix Java gateway
+
 * Tue Feb 28 2017 Alexei Takaseev <taf@altlinux.org> 1:3.2.4-alt1
 - 3.2.4
 
