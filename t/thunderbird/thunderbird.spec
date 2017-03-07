@@ -6,7 +6,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	45.7.1
+Version:	45.8.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -435,6 +435,9 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Tue Mar 07 2017 Andrey Cherepanov <cas@altlinux.org> 45.8.0-alt1
+- New versoin (45.8.0)
+
 * Fri Mar 03 2017 Andrey Cherepanov <cas@altlinux.org> 45.7.1-alt1
 - New version (45.7.1)
 - Add windows-1251 to sendDefaultCharsetList
