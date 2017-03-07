@@ -11,7 +11,7 @@
 %define altversion %major.%minor
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4%ubt
 BuildArch: noarch
 
 %define theme %name
@@ -26,7 +26,7 @@ BuildRequires: design-bootloader-source >= 5.0-alt2
 BuildRequires: cpio gfxboot >= 4
 %endif
 
-BuildRequires(pre): libqt4-core
+BuildRequires(pre): rpm-build-ubt libqt4-core
 BuildRequires: libalternatives-devel
 BuildRequires: libqt4-devel
 
@@ -117,6 +117,7 @@ Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "
 Obsoletes: %obsolete_list  branding-alt-%theme-release
 Conflicts: %conflicts_list
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-release ";done )
+Requires: pam-limits-desktop
 %description release
 %ProductName release file.
 
@@ -281,14 +282,6 @@ HOME_URL="%url"
 BUG_REPORT_URL="https://bugs.altlinux.org/"
 __EOF__
 
-# limits
-mkdir -p %buildroot%_sysconfdir/security/limits.d/
-cat <<__EOF__ >%buildroot%_sysconfdir/security/limits.d/77-%name.conf
-*		soft	nproc	3072
-root		soft	nproc	1024
-*		hard	nproc	4096
-__EOF__
-
 #notes
 pushd notes
 %makeinstall
@@ -425,7 +418,6 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %files release
 %_sysconfdir/*-*
 %_sysconfdir/buildreqs/packages/ignore.d/*
-%config(noreplace) %_sysconfdir/security/limits.d/77-%name.conf
 %dir %_datadir/%name/
 
 
@@ -466,6 +458,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Mar 07 2017 Sergey V Turchin <zerg at altlinux dot org> 8.1.0-alt4%ubt
+- require pam-limits-desktop; don't use own limits
+
 * Wed Nov 16 2016 Sergey V Turchin <zerg at altlinux dot org> 8.1.0-alt3
 - fix version
 - update backgrounds
