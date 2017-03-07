@@ -1,7 +1,7 @@
 %def_without smb
 
 Name: mc
-Version: 4.8.18
+Version: 4.8.19
 Release: alt1
 
 License: %gpl3plus
@@ -19,6 +19,8 @@ Source6: mc.zsh
 
 %add_findreq_skiplist */lib/mc/ext.d/*
 %add_findreq_skiplist */lib/mc/extfs.d/*
+
+Requires: rpm >= 4.13
 
 Patch0: %name-%version-%release.patch
 
@@ -176,6 +178,10 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Tue Mar 07 2017 Sergey Y. Afonin <asy@altlinux.ru> 4.8.19-alt1
+- 4.8.19 (updated to 20170306 git snapshot)
+- added "Requires: rpm >= 4.13"
+
 * Wed Nov 30 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.8.18-alt1
 - 4.8.18 (updated to 20161130 git snapshot)
 
