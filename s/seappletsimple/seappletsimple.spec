@@ -1,8 +1,8 @@
-%def_disable qt5
+%def_enable qt5
 
 Name: seappletsimple
 Version: 0.2.1
-Release: alt2%ubt
+Release: alt3%ubt
 
 Summary: Simple applet for SELinux
 License: GPL
@@ -65,6 +65,9 @@ install -m644 %name.desktop %buildroot/%_xdgconfigdir/autostart/%name.desktop
 %_xdgconfigdir/autostart/%name.desktop
 
 %changelog
+* Tue Mar 07 2017 Sergey V Turchin <zerg at altlinux dot org> 0.2.1-alt3%ubt
+- build with Qt5
+
 * Mon Feb 27 2017 Sergey V Turchin <zerg at altlinux dot org> 0.2.1-alt2%ubt
 - build with Qt4
 
