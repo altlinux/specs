@@ -1,5 +1,5 @@
 Name: filesystem
-Version: 2.3.13
+Version: 2.3.14
 Release: alt1
 
 Summary: The basic directory layout for a GNU/Linux system
@@ -18,6 +18,8 @@ Provides: /usr/share/wallpapers
 Provides: /usr/share/icons/hicolor
 # http://bugzilla.altlinux.org/12020
 Provides: /dev/pts
+
+Conflicts: shadow-utils < 4.4
 
 %description
 This package is one of the basic packages that is installed on a
@@ -57,6 +59,9 @@ done
 %files -f list
 
 %changelog
+* Tue Mar 07 2017 Mikhail Efremov <sem@altlinux.org> 2.3.14-alt1
+- Added /etc/default.
+
 * Wed Feb 10 2016 Andrey Cherepanov <cas@altlinux.org> 2.3.13-alt1
 - Added /usr/share/appdata directory.
 
