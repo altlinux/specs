@@ -5,7 +5,7 @@
 %define gegl_api_ver 0.3
 
 Name: gnome-photos
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Photos - access, organize and share your photos on GNOME
@@ -76,6 +76,9 @@ rm -rf %buildroot/%_datadir/doc/%name
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Tue Mar 07 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.5-alt1
+- 3.22.5
+
 * Thu Feb 16 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.4-alt1
 - 3.22.4
 
