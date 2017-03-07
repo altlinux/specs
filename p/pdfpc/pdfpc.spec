@@ -1,7 +1,7 @@
 %define commit 0350b1a96472e52fdf64b106a9ead50e09c16f4b
 
 Name: pdfpc
-Version: 4.0.5.0.18.g0350b1a
+Version: 4.0.6
 Release: alt1
 Summary: A GTK based presentation viewer application for GNU/Linux
 
@@ -49,6 +49,9 @@ which can be created using nearly any of today's presentation software.
 %_datadir/pixmaps/%name
 
 %changelog
+* Tue Mar 07 2017 Elvira Khabirova <lineprinter@altlinux.org> 4.0.6-alt1
+- New version 4.0.6.
+
 * Thu Jan 19 2017 Elvira Khabirova <lineprinter@altlinux.org> 4.0.5.0.18.g0350b1a-alt1
 - New version 4.0.5-18-g0350b1a.
 
