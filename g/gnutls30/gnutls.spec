@@ -4,7 +4,7 @@
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.5.9
+Version: 3.5.10
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -213,7 +213,8 @@ sed -i -r 's/^DOMAIN = [^[:blank:]#]+/&%libgnutls_soname/' po/Makevars
 	--disable-local-libopts \
 	--with-included-libtasn1=no \
 	--enable-openssl-compatibility \
-	--with-idn
+	--with-idn \
+	--docdir=%_docdir/gnutls-%version/
 make MAKEINFOFLAGS=--no-split
 
 %install
@@ -292,6 +293,9 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %endif
 
 %changelog
+* Tue Mar 07 2017 Mikhail Efremov <sem@altlinux.org> 3.5.10-alt1
+- Updated to 3.5.10.
+
 * Mon Feb 13 2017 Mikhail Efremov <sem@altlinux.org> 3.5.9-alt1
 - Drop obsoleted patch.
 - Updated to 3.5.9.
