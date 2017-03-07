@@ -8,13 +8,13 @@
 
 %define gst_version 1.0
 %define nspr_version 4.12.0
-%define nss_version 3.23.0
+%define nss_version 3.28.1
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        45.7.0
+Version:        45.8.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -109,8 +109,8 @@ Requires:	gst-plugins-ugly1.0
 # ALT#30732
 Requires:	gst-plugins-ugly%gst_version
 
-# Protection against fraudulent DigiNotar certificates
-Requires: libnss >= 3.12.11-alt3
+# Require fresh nss for correct https open
+Requires: libnss >= %nss_version
 
 %description
 The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -326,6 +326,10 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Tue Mar 07 2017 Andrey Cherepanov <cas@altlinux.org> 45.8.0-alt1
+- New ESR version
+- Require fresh libnss for correct https open
+
 * Wed Jan 25 2017 Andrey Cherepanov <cas@altlinux.org> 45.7.0-alt1
 - New ESR version
 
