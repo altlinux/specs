@@ -1,6 +1,9 @@
+# Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
+%define release_commit 3bd41a09fccccbc6b095805556d3009b9ebf6213
+
 Name: netdata
 Version: 1.5.0
-Release: alt2
+Release: alt3
 
 Summary: Real-time performance monitoring, done right!
 
@@ -56,11 +59,13 @@ PostgreSQL module for %name.
 %setup
 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=32663
+%if %_vendor == "alt"
 for i in plugins.d/*.sh ; do
 	test -s "$i" || continue
 	grep -q "BASH version 4" "$i" || continue
 	%__subst "s|^#!/usr/bin/env bash|#!/bin/bash4|g" "$i"
 done
+%endif
 
 %build
 %autoreconf
@@ -88,6 +93,9 @@ find %buildroot -name .keep | xargs rm
 
 install -d %buildroot%_unitdir/
 install -m 644 -p system/netdata.service %buildroot%_unitdir/netdata.service
+
+# fill with original commit id for %version release
+echo "%release_commit" > %buildroot%_datadir/%name/web/version.txt
 
 %pre
 getent group netdata > /dev/null || groupadd -r netdata
@@ -127,6 +135,10 @@ getent passwd netdata > /dev/null || useradd -r -g netdata -c netdata -s /sbin/n
 %_libexecdir/%name/python.d/postgres.chart.py
 
 %changelog
+* Tue Mar 07 2017 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt3
+- replace shell to /bin/bash4 only on ALT
+- fill version.txt with commit id for the release
+
 * Fri Mar 03 2017 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt2
 - split postgres module to a subpackage
 - fix log dir permission
