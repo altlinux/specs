@@ -1,6 +1,6 @@
 Name: keepass
 Version: 2.35
-Release: alt1
+Release: alt1%ubt
 
 Summary: Password manager
 
@@ -22,17 +22,18 @@ Patch1: keepass-2.35-fedora-config.patch
 Patch2: keepass-2.35-fedora-doc.patch
 
 BuildPreReq: /proc
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: ImageMagick
 BuildRequires: archmage
+BuildRequires: python-module-pychm
 BuildRequires: desktop-file-utils
-BuildRequires: libappstream-glib
 BuildRequires: libgdiplus-devel
 BuildRequires: mono4-devel
 BuildRequires: mono4-winforms
 BuildRequires: mono4-web
-BuildRequires: python-dev
+BuildRequires: python-devel
 BuildRequires: xorg-xvfb xvfb-run
-#Requires: xdotool xsel hicolor-icon-theme
+Requires: mono4(System.Windows.Forms) >= 4.0.0.0
 
 # The debuginfo package would be empty if created.
 %global debug_package %nil
@@ -93,10 +94,6 @@ sed 's/\r$//' Docs/History.txt > %buildroot/%_docdir/%name/History.txt
 sed 's/\r$//' Docs/License.txt > %buildroot/%_docdir/%name/License.txt
 cp -pr Docs/Chm %buildroot/%_docdir/%name/
 
-%check
-desktop-file-validate %buildroot%_datadir/applications/*.desktop
-appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/*.appdata.xml
-
 %files
 %dir %_docdir/%name
 %doc %_docdir/%name/History.txt
@@ -121,5 +118,8 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/*.appdata.xml
 %doc %_docdir/%name/Chm/
 
 %changelog
+* Tue Mar 07 2017 Oleg Solovyov <mcpain@altlinux.org> 2.35-alt1%ubt
+- added ubt tag for easy migrationing between branches
+
 * Tue Feb 28 2017 Oleg Solovyov <mcpain@altlinux.org> 2.35-alt1
 - ported from Fedora
