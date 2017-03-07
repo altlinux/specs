@@ -45,7 +45,7 @@
 %def_with libcephfs
 
 Name:    samba-DC
-Version: 4.5.5
+Version: 4.6.0
 Release: alt1%ubt
 
 Group:   System/Servers
@@ -118,11 +118,11 @@ BuildRequires: libiniparser-devel
 BuildRequires: libcups-devel
 BuildRequires: gawk libgtk+2-devel libcap-devel libuuid-devel
 BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-xsl
-%{?_without_talloc:BuildRequires: libtalloc-devel >= 2.1.8 libpytalloc-devel}
-%{?_without_tevent:BuildRequires: libtevent-devel >= 0.9.29 python-module-tevent}
-%{?_without_tdb:BuildRequires: libtdb-devel >= 1.3.10  python-module-tdb}
+%{?_without_talloc:BuildRequires: libtalloc-devel >= 2.1.9 libpytalloc-devel}
+%{?_without_tevent:BuildRequires: libtevent-devel >= 0.9.31 python-module-tevent}
+%{?_without_tdb:BuildRequires: libtdb-devel >= 1.3.12  python-module-tdb}
 %{?_without_ntdb:BuildRequires: libntdb-devel >= 0.9  python-module-ntdb}
-%{?_without_ldb:BuildRequires: libldb-devel >= 1.1.27 python-module-pyldb-devel}
+%{?_without_ldb:BuildRequires: libldb-devel >= 1.1.29 python-module-pyldb-devel}
 %{?_with_testsuite:BuildRequires: ldb-tools}
 %{?_with_systemd:BuildRequires: libsystemd-devel}
 %{?_enable_avahi:BuildRequires: libavahi-devel}
@@ -857,6 +857,7 @@ TDB_NO_FSYNC=1 %make_build test
 
 %files common -f net.lang
 %_tmpfilesdir/%rname.conf
+%_bindir/mvxattr
 %_bindir/net
 %_bindir/pdbedit
 %_bindir/profiles
@@ -873,6 +874,7 @@ TDB_NO_FSYNC=1 %make_build test
 %config(noreplace) %_sysconfdir/samba/smb.conf
 %config(noreplace) %_sysconfdir/samba/lmhosts
 %config(noreplace) %_sysconfdir/sysconfig/samba
+%_man1dir/mvxattr.1*
 %_man1dir/profiles.1*
 %_man1dir/smbcontrol.1*
 %_man1dir/testparm.1*
@@ -1027,7 +1029,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/libsmbd-shim-samba4.so
 %_samba_mod_libdir/libsmbldaphelper-samba4.so
 %_samba_mod_libdir/libsmbpasswdparser-samba4.so
-%_samba_mod_libdir/libsmbregistry-samba4.so
 %_samba_mod_libdir/libsys-rw-samba4.so
 %_samba_mod_libdir/libsocket-blocking-samba4.so
 %_samba_mod_libdir/libtalloc-report-samba4.so
@@ -1251,13 +1252,15 @@ TDB_NO_FSYNC=1 %make_build test
 %_bindir/ltdbtool
 %_bindir/onnode
 %_bindir/ping_pong
-%_libexecdir/ctdb/ctdb_event_helper
+%_libexecdir/ctdb/ctdb_event
+%_libexecdir/ctdb/ctdb_eventd
 %_libexecdir/ctdb/ctdb_killtcp
 %_libexecdir/ctdb/ctdb_lock_helper
 %_libexecdir/ctdb/ctdb_lvs
 %_libexecdir/ctdb/ctdb_mutex_fcntl_helper
 %_libexecdir/ctdb/ctdb_natgw
 %_libexecdir/ctdb/ctdb_recovery_helper
+%_libexecdir/ctdb/ctdb_takeover_helper
 %_libexecdir/ctdb/smnotify
 
 %_man1dir/ctdb.1*
@@ -1285,6 +1288,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Tue Mar 07 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.0-alt1%ubt
+- Udpate to first spring release
+- Revert removed unused DCERPC_FAULT_UNK_IF for openchange
+
 * Wed Feb 01 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.5.5-alt1%ubt
 - Update to winter release
 - Fix PAM winbind problem with access user to keytab

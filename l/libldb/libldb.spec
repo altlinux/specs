@@ -1,8 +1,8 @@
 %def_enable tests
 
 Name: libldb
-Version: 1.1.27
-Release: alt1
+Version: 1.1.29
+Release: alt1%ubt
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -13,6 +13,8 @@ Source1: ldb-modules.sh
 
 BuildRequires: python-devel python-module-tdb libpytalloc-devel python-module-tevent
 BuildRequires: libtalloc-devel libtdb-devel libtevent-devel libpopt-devel libldap-devel xsltproc docbook-style-xsl docbook-dtds
+
+BuildRequires(pre):rpm-build-ubt
 
 %description
 An extensible library that implements and LDAP like API to access remote LDAP
@@ -114,6 +116,9 @@ make test
 %_pkgconfigdir/pyldb-util.pc
 
 %changelog
+* Tue Mar 07 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.1.29-alt1%ubt
+- Update to new release for samba-4.6.0
+
 * Fri Sep 09 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1.1.27-alt1
 - Update to new release for samba-4.5.0
 

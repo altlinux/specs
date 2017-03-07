@@ -1,8 +1,8 @@
 %def_enable tests
 
 Name: libtalloc
-Version: 2.1.8
-Release: alt1
+Version: 2.1.9
+Release: alt1%ubt
 Epoch:   1
 
 Summary: The talloc library
@@ -15,6 +15,8 @@ Source: http://samba.org/ftp/talloc/talloc-%version.tar.gz
 Patch1: talloc-fix-tests.patch
 
 BuildRequires: docbook-dtds docbook-style-xsl libacl-devel libcap-devel python-devel xsltproc
+
+BuildRequires(pre):rpm-build-ubt
 
 %description
 A library that implements a hierarchical allocator with destructors.
@@ -89,6 +91,9 @@ make test
 
 
 %changelog
+* Tue Mar 07 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:2.1.9-alt1%ubt
+- Update to release for samba-4.6.0
+
 * Thu Sep 08 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1:2.1.8-alt1
 - 2.1.8
 
