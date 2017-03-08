@@ -1,5 +1,5 @@
 Name: mpg123
-Version: 1.23.8
+Version: 1.24.0
 Release: alt1
 
 Summary: MPEG audio player
@@ -26,7 +26,7 @@ Requires: libmpg123 = %version-%release
 
 BuildRequires: libalsa-devel libaudio-devel
 BuildRequires: libSDL_sound-devel libSDL-devel
-BuildRequires: libpulseaudio-devel libltdl-devel
+BuildRequires: libpulseaudio-devel
 
 %description
 Mpg123 is a fast, free and portable MPEG audio player for Unix.
@@ -85,8 +85,6 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 %_man1dir/out123.1.*
 %dir %_libdir/%name
 %_libdir/%name/*.so
-# required to load modules with lt_dlopen()
-%_libdir/%name/*.la
 
 %files -n libmpg123
 %_libdir/libmpg123.so.*
@@ -102,6 +100,9 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Wed Mar 08 2017 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1
+- 1.24.0
+
 * Wed Oct 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.23.8-alt1
 - 1.23.8 (fixed CVE-2016-1000247)
 
