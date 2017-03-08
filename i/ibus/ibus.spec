@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
@@ -8,7 +9,7 @@
 %def_disable emoji_dict
 
 Name: ibus
-Version: 1.5.14
+Version: 1.5.15
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -16,7 +17,11 @@ License: LGPLv2+
 Group: System/Libraries
 Url: https://github.com/ibus/ibus/wiki
 
+%if_disabled snapshot
 Source: https://github.com/%name/%name/releases/download/%version/%name-%version.tar.gz
+%else
+Source: %name-%version.tar
+%endif
 Source1: ibus-xinput
 
 #Patch: ibus-%version-up.patch
@@ -119,7 +124,6 @@ Summary: Developer documents for IBus
 Group: Development/Other
 BuildArch: noarch
 Requires: %name = %version-%release
-Requires: gtk-doc
 
 %description -n lib%name-devel-docs
 This package contains developer documentation for IBus.
@@ -145,6 +149,7 @@ override some functions in GObject-Introspection.
 %prep
 %setup
 #%%patch -p1
+%{?_enable_snapshot:touch ChangeLog}
 
 %build
 %autoreconf
@@ -153,7 +158,7 @@ override some functions in GObject-Introspection.
     --enable-gtk2 \
     --enable-gtk3 \
     --enable-xim \
-    --disable-gtk-doc \
+    %{?_enable_snapshot:--enable-gtk-doc} \
     %{?_enable_python:--enable-python-library} \
     %{subst_enable dconf} \
     %{?_enable_dconf:--disable-schemas-compile} \
@@ -258,6 +263,9 @@ fi
 %python_sitelibdir/gi/overrides/IBus.py*
 
 %changelog
+* Wed Mar 08 2017 Yuri N. Sedunov <aris@altlinux.org> 1.5.15-alt1
+- 1.5.15
+
 * Fri Aug 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.5.14-alt1
 - 1.5.14
 
