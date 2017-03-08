@@ -1,8 +1,8 @@
 %define _name ytnef
-%define rev -2
+%define rev %nil
 
 Name: lib%_name
-Version: 1.9.1
+Version: 1.9.2
 Release: alt1
 
 Summary: TNEF Stream Parser Library
@@ -62,14 +62,19 @@ popd
 %files devel
 %_includedir/%name/
 %_libdir/%name.so
+%_pkgconfigdir/%name.pc
 
 %files -n %_name
 %_bindir/ytnef
 %_bindir/ytnefprint
-%_bindir/ytnefprocess.pl
+%_bindir/ytnefprocess
 
 
 %changelog
+* Wed Mar 08 2017 Yuri N. Sedunov <aris@altlinux.org> 1.9.2-alt1
+- 1.9.2 (fixed CVE-2017-6306, CVE-2017-6305, CVE-2017-6304, CVE-2017-6303
+  CVE-2017-6302, CVE-2017-6301, CVE-2017-6300, CVE-2017-6299, CVE-2017-6298)
+
 * Sat Feb 25 2017 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt1
 - 1.9.1-2
 
