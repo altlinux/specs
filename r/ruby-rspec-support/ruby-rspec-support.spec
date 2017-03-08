@@ -1,7 +1,7 @@
 %define  pkgname rspec-support
  
 Name: 	 ruby-%pkgname
-Version: 3.4.1
+Version: 3.5.0
 Release: alt1
  
 Summary: Common code needed by the other RSpec gems
@@ -18,7 +18,9 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
  
 %description
-RSpec::Support provides common functionality to RSpec::Core, RSpec::Expectations and RSpec::Mocks. It is considered suitable for internal use only at this time.
+RSpec::Support provides common functionality to RSpec::Core,
+RSpec::Expectations and RSpec::Mocks. It is considered suitable for
+internal use only at this time.
 
 %package doc
 Summary: Documentation files for %name
@@ -54,6 +56,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Mar 08 2017 Andrey Cherepanov <cas@altlinux.org> 3.5.0-alt1
+- New version
+
 * Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt1
 - New version
 
