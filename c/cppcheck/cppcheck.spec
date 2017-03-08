@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 1.76.1
+Version: 1.77
 Release: alt1
 
 Summary: A tool for static C/C++ code analysis
@@ -95,9 +95,9 @@ for N in gui/*.qm; do install -D $N %buildroot%_datadir/%name/lang/`basename $N`
 # install -D gui/%name.desktop %buildroot%_desktopdir/%name.desktop
 install -D gui/%name-gui.desktop %buildroot%_desktopdir/%name.desktop
 for i in 64 48 32 24 16; do
-	install -D $i.png %buildroot%_iconsdir/hicolor/${i}x${i}/apps/%name.png
+	install -D $i.png %buildroot%_iconsdir/hicolor/${i}x${i}/apps/%name-gui.png
 done
-install -D gui/%name-gui.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
+install -D gui/%name-gui.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name-gui.svg
 
 %files
 %doc readme.txt man/*.html
@@ -117,6 +117,9 @@ install -D gui/%name-gui.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.sv
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Mar 08 2017 Hihin Ruslan <ruslandh@altlinux.ru> 1.77-alt1
+- Version 1.77
+
 * Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 1.76.1-alt1
 - Autobuild version bump to 1.76.1
 
