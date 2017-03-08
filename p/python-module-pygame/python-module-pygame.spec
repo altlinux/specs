@@ -1,11 +1,9 @@
 %define oname pygame
-
-# TODO: build with python3 (alt bug #31082)
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
-Version: 1.9.1
-Release: alt6
+Version: 1.9.2
+Release: alt1
 
 Summary: A Python module for interfacing with the SDL multimedia library
 Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой SDL
@@ -14,37 +12,30 @@ Group: Development/Python
 License: LGPL
 Url: http://www.pygame.org
 
-Source: http://pygame.seul.org/ftp/pygame-%{version}release.tar.bz2
+Source: https://bitbucket.org/pygame/pygame/downloads/pygame-%version.tar.gz
 #Patch: pygame-1.7.1.patch
 
 %setup_python_module pygame
 %define python_includedir %_includedir/python%_python_version
+%define python3_includedir %_includedir/python%{_python3_version}m
 
-Provides: python-pygame, %modulename
-Obsoletes: %modulename
+Provides: python-pygame, %oname
+Obsoletes: %oname
 
 Requires: libSDL >= 1.2.7
 
-# FIXME: buildreq is broken
-# manually removed: eric
 # Automatically added by buildreq on Sun Jul 22 2007
-BuildRequires: libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libsmpeg-devel libX11-devel python-devel python-modules-compiler libpng-devel libjpeg-devel
+BuildRequires: libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libsmpeg-devel libX11-devel python-devel python-modules-compiler libpng-devel libjpeg-devel libfreetype-devel libportmidi-devel
 
 BuildPreReq: libnumpy-devel libv4l-devel rpm-build-intro
 
-BuildPreReq: libportmidi-devel >= 217-alt3
-
 %if_with python3
-# TODO: _arraysurfarray was in our package for python2
-# TODO https://bugzilla.altlinux.org/show_bug.cgi?id=31226
-%add_python3_req_skip _arraysurfarray opencv
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel libnumpy-py3-devel
+BuildRequires: python3-devel libnumpy-py3-devel python3-module-sphinx
 BuildPreReq: python3-module-distribute python-tools-2to3
 %endif
 
-%add_python_req_skip AppKit Foundation py2app
+%add_python_req_skip AppKit Foundation py2app Numeric
 
 %description
 pygame is a Python wrapper module for the SDL multimedia library, written by
@@ -68,7 +59,7 @@ DirectMedia Layer), предоставляющей низкоуровневый 
 %package -n python3-module-%oname
 Summary: A Python 3 module for interfacing with the SDL multimedia library
 Group: Development/Python3
-%add_python3_req_skip AppKit Foundation py2app
+%add_python3_req_skip AppKit Foundation py2app Numeric opencv
 
 %description -n python3-module-%oname
 pygame is a Python wrapper module for the SDL multimedia library, written by
@@ -97,6 +88,15 @@ Mark Baker.
 
 Install python3-module-%oname-devel if you need the API documentation
 and example programs.
+
+%package -n python3-module-%oname-doc
+Summary: Pygame documentation and example programs (Python3 version)
+Group: Development/Python3
+Requires: %name = %version-%release
+BuildArch: noarch
+
+%description -n python3-module-%oname-doc
+Pygame documentation and example programs (Python3 version)
 %endif
 
 %package devel
@@ -138,68 +138,81 @@ Install %name-doc  if  you  need  the  API  documentation  and  example
 programs.
 
 %prep
-%setup -n %modulename-%{version}release
-%fix_permissions
-#%patch -p1
+%setup -n %oname-%{version}
 rm -f docs/LGPL
 # fix find SDL libs on x86_64
 subst "s|/lib|/%_lib|g" config_unix.py
+# XXX
+touch version.py.in
 
 # remove due unliked dependences on MacOS modules
 rm -f lib/macosx.py lib/mac_scrap.py
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
+cat > Makefile <<@@@
+all:	py2 py3
+
+py2:
+	%python_build_debug
+
+py3:
+	%python3_build_debug
+
+py2-docs:
+	python -m sphinx -j %__nprocs -b html -d build/.doctrees2 -D headers_dest=src/doc -D headers_mkdirs=0 docs/reST build/%{_python_version}
+
+py3-docs:
+	python3 -m sphinx -j %__nprocs -b html -d build/.doctrees3 -D headers_dest=src/doc -D headers_mkdirs=0 docs/reST build/%{_python3_version}
+
+@@@
 
 %build
 export LOCALBASE=%_prefix
 python config.py
-sed -i 's|-lporttime||g' Setup
-sed -i 's|\(lpthread\)|\1 -lm|g' Setup
+#sed -i 's|\(lpthread\)|\1 -lm|g' Setup
 %add_optflags -fno-strict-aliasing
-%python_build_debug
 
 %if_with python3
-pushd ../python3
-python3 config.py
-sed -i 's|-lporttime||g' Setup
-sed -i 's|\(lpthread\)|\1 -lm|g' Setup
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
-%python3_build_debug
-popd
+	%make_build
+	2to3 -w -n -j %__nprocs build/lib*%{_python3_version}
+	make py2-docs
+	make py3-docs
+%else
+	%make_build py2
+	make py2-docs
 %endif
 
 %install
 %python_install
 %if_with python3
-pushd ../python3
 %python3_install
-popd
 %endif
 
 %files
-%python_sitelibdir/%modulename/
+%python_sitelibdir/%oname/
 %python_sitelibdir/*.egg-info
 
 %files devel
-%python_includedir/%modulename/
+%python_includedir/%oname/
 
 %files doc
-%doc WHATSNEW install.html README.txt docs examples
+%doc WHATSNEW install.html readme* build/%{_python_version}/*
 
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
 
 %files -n python3-module-%oname-devel
-%{python3_includedir}m/*
+%python3_includedir/%oname
+
+%files -n python3-module-%oname-doc
+%doc WHATSNEW install.html readme* build/%{_python3_version}/*
 %endif
 
 %changelog
+* Wed Mar 08 2017 Fr. Br. George <george@altlinux.ru> 1.9.2-alt1
+- New upstream
+- Introduce Python3 module
+
 * Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 1.9.1-alt6
 - build with new fixed libportmidi
 
