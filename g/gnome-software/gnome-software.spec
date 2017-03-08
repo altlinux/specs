@@ -14,7 +14,7 @@
 %def_disable packagekit
 
 Name: gnome-software
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt0.1
 
 Summary: Software manager for GNOME
@@ -101,6 +101,9 @@ GNOME Software is for installing, removing and updating software.
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Wed Mar 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.6-alt0.1
+- 3.22.6
+
 * Mon Jan 16 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.5-alt0.1
 - 3.22.5
 
