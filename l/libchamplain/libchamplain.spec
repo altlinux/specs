@@ -9,7 +9,7 @@
 %def_disable memphis
 
 Name: lib%_name
-Version: %ver_major.14
+Version: %ver_major.15
 Release: alt1
 
 Summary: Map view library for Clutter
@@ -197,6 +197,9 @@ gtkdocize --copy
 %endif
 
 %changelog
+* Wed Mar 08 2017 Yuri N. Sedunov <aris@altlinux.org> 0.12.15-alt1
+- 0.12.15
+
 * Wed Sep 07 2016 Yuri N. Sedunov <aris@altlinux.org> 0.12.14-alt1
 - 0.12.14
 
