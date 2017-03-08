@@ -5,8 +5,8 @@
 %def_disable consolekit
 
 Name: gnome-session
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 License: GPLv2+
@@ -151,6 +151,9 @@ This package permits to log into GNOME using Wayland.
 
 
 %changelog
+* Wed Mar 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
+- 3.22.3
+
 * Tue Feb 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt2
 - removed autosave_session.patch (see BGO#775463, ALT#33126)
 
