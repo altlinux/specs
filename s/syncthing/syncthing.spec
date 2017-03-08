@@ -1,5 +1,5 @@
 Name: syncthing
-Version: 0.14.23
+Version: 0.14.24
 Release: alt1
 Summary: FOSS Continuous File Synchronisation
 Summary(ru_RU.UTF-8): Свободная программа непрерывной синхронизации файлов
@@ -64,6 +64,9 @@ install -Dm 0644 etc/linux-systemd/user/%name.service           \
 %_libexecdir/systemd/user/%name.service
 
 %changelog
+* Wed Mar 08 2017 Cronbuild Service <cronbuild@altlinux.org> 0.14.24-alt1
+- new version 0.14.24
+
 * Fri Feb 17 2017 Anton Midyukov <antohami@altlinux.org> 0.14.23-alt1
 - new version 0.14.23
 
