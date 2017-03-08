@@ -1,7 +1,7 @@
 %define  pkgname ohai
  
 Name: 	 %pkgname
-Version: 8.20.0
+Version: 13.0.0
 Release: alt1
  
 Summary: Ohai profiles your system and emits JSON
@@ -26,9 +26,12 @@ BuildRequires: ruby-mixlib-log
 BuildRequires: ruby-mixlib-shellout >= 2.0
 BuildRequires: ruby-net-dhcp
 BuildRequires: ruby-systemu >= 2.6.4
+BuildRequires: ruby-ipaddr_extensions
+BuildRequires: ruby-sigar
 BuildRequires: ruby-tool-setup
-# Windows-specific requirement ruby-wmi-lite is not required
- 
+
+%filter_from_requires \,^ruby(\(win32\|wmi\),d
+
 %description
 Ohai is a tool that is used to detect attributes on a node, and then
 provide these attributes to the chef-client at the start of every
@@ -70,6 +73,12 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Apr 07 2017 Andrey Cherepanov <cas@altlinux.org> 13.0.0-alt1
+- New version
+
+* Wed Mar 08 2017 Andrey Cherepanov <cas@altlinux.org> 8.23.0-alt1
+- new version 8.23.0
+
 * Wed Oct 05 2016 Andrey Cherepanov <cas@altlinux.org> 8.20.0-alt1
 - new version 8.20.0
 
