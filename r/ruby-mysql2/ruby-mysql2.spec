@@ -1,8 +1,8 @@
 %define  pkgname mysql2
  
 Name: 	 ruby-%pkgname
-Version: 0.4.4
-Release: alt2
+Version: 0.4.5
+Release: alt1
  
 Summary: A modern, simple and very fast Mysql library for Ruby - binding to libmysql
 License: MIT/Ruby
@@ -17,6 +17,8 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
 BuildRequires: libruby-devel ruby-test-unit ruby-tool-rdoc
 BuildRequires: libmysqlclient-devel
+
+%filter_from_requires \,^ruby(Win32API),d
 
 %description
 The Mysql2 gem is meant to serve the extremely common use-case of
@@ -63,6 +65,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Mar 08 2017 Andrey Cherepanov <cas@altlinux.org> 0.4.5-alt1
+- New version
+
 * Mon Sep 12 2016 Andrey Cherepanov <cas@altlinux.org> 0.4.4-alt2
 - Rebuild with Ruby 2.3.1
 
