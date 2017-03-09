@@ -1,7 +1,7 @@
 %def_with lua_compat
 Name: lua5.1
 Version: 5.1.5
-Release: alt12
+Release: alt13
 
 Summary: Embeddable programming language
 License: MIT
@@ -64,7 +64,7 @@ Provides: %{name}-compat-devel = %EVR
 Requires: lib%{name}-devel = %EVR
 Conflicts: liblua5.1-devel < 5.1.5-alt10
 Conflicts: liblua4-devel
-Conflicts: liblua5-devel
+Conflicts: liblua5-devel  < 5.1.5-alt10
 Conflicts: liblua5.3-devel
 # added by request of rider@,https://bugzilla.altlinux.org/33223
 Provides: liblua5-devel = %EVR
@@ -264,6 +264,9 @@ fi
 %pkgdocdir/test
 
 %changelog
+* Thu Mar 09 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt13
+- adjusted liblua5-devel conflicts (closes: #33223)
+
 * Thu Mar 09 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt12
 - added liblua5-devel provides (closes: #33223)
 
