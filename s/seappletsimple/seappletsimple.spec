@@ -1,7 +1,7 @@
 %def_enable qt5
 
 Name: seappletsimple
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1%ubt
 
 Summary: Simple applet for SELinux
@@ -65,6 +65,9 @@ install -m644 %name.desktop %buildroot/%_xdgconfigdir/autostart/%name.desktop
 %_xdgconfigdir/autostart/%name.desktop
 
 %changelog
+* Thu Mar 09 2017 Sergey V Turchin <zerg at altlinux dot org> 0.2.3-alt1%ubt
+- fix release build
+
 * Thu Mar 09 2017 Sergey V Turchin <zerg at altlinux dot org> 0.2.2-alt1%ubt
 - fix parse level
 
