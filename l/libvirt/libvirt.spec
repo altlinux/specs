@@ -48,12 +48,15 @@
 %def_with network
 %def_with storage_fs
 %def_with storage_lvm
+%def_with storage_scsi
 %def_with storage_iscsi
 %def_with storage_disk
 %def_with storage_rbd
 %def_with storage_mpath
 %def_with storage_gluster
 %def_with storage_zfs
+%def_without storage_sheepdog
+%def_without storage_vstorage
 %def_with numactl
 %def_with selinux
 
@@ -103,8 +106,8 @@
 
 
 Name: libvirt
-Version: 3.0.0
-Release: alt2
+Version: 3.1.0
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -147,6 +150,7 @@ Requires: %name-libs = %EVR
 %{?_with_storage_mpath:BuildRequires: libdevmapper-devel}
 %{?_with_storage_gluster:BuildRequires: glusterfs3-devel >= 3.4.1}
 %{?_with_storage_zfs:BuildRequires: zfs-utils}
+%{?_with_storage_vstorage:BuildRequires: /usr/sbin/vstorage}
 %{?_with_numactl:BuildRequires: libnuma-devel}
 %{?_with_capng:BuildRequires: libcap-ng-devel}
 %{?_with_phyp:BuildRequires: libssh2-devel}
@@ -290,20 +294,157 @@ The secret driver plugin for the libvirtd daemon, providing
 an implementation of the secret key APIs.
 
 %package daemon-driver-storage
-Summary: Storage driver plugin for the libvirtd daemon
+Summary: Storage driver plugin including all backends for the libvirtd daemon
 Group: System/Libraries
+BuildArch: noarch
+%if_with storage_fs
+Requires: libvirt-daemon-driver-storage-fs = %EVR
+%endif
+%if_with storage_disk
+Requires: libvirt-daemon-driver-storage-disk = %EVR
+%endif
+%if_with storage_lvm
+Requires: libvirt-daemon-driver-storage-logical = %EVR
+%endif
+%if_with storage_scsi
+Requires: libvirt-daemon-driver-storage-scsi = %EVR
+%endif
+%if_with storage_iscsi
+Requires: libvirt-daemon-driver-storage-iscsi = %EVR
+%endif
+%if_with storage_mpath
+Requires: libvirt-daemon-driver-storage-mpath = %EVR
+%endif
+%if_with storage_gluster
+Requires: libvirt-daemon-driver-storage-gluster = %EVR
+%endif
+%if_with storage_rbd
+Requires: libvirt-daemon-driver-storage-rbd = %EVR
+%endif
+%if_with storage_sheepdog
+Requires: libvirt-daemon-driver-storage-sheepdog = %EVR
+%endif
+%if_with storage_zfs
+Requires: libvirt-daemon-driver-storage-zfs = %EVR
+%endif
 
 %description daemon-driver-storage
 The storage driver plugin for the libvirtd daemon, providing
-an implementation of the storage APIs using LVM, iSCSI,
-parted and more.
+an implementation of the storage APIs using files, local disks, LVM, SCSI,
+iSCSI, and multipath storage.
+
+%package daemon-driver-storage-core
+Summary: Storage driver plugin including base backends for the libvirtd daemon
+Group: System/Libraries
+
+%description daemon-driver-storage-core
+The storage driver plugin for the libvirtd daemon, providing
+an implementation of the storage APIs.
+
+%package daemon-driver-storage-fs
+Summary: Storage driver plugin for fs
+Group: System/Libraries
+Requires: libvirt-daemon-driver-storage-core = %EVR
+
+%description daemon-driver-storage-fs
+The storage driver backend adding implementation of the storage APIs for block
+volumes using fs.
+
+%package daemon-driver-storage-logical
+Summary: Storage driver plugin for lvm volumes
+Group: System/Libraries
+Requires: libvirt-daemon-driver-storage-core = %EVR
+Requires: lvm2
+
+%description daemon-driver-storage-logical
+The storage driver backend adding implementation of the storage APIs for block
+volumes using lvm.
+
+%package daemon-driver-storage-disk
+Summary: Storage driver plugin for disk
+Group: System/Libraries
+Requires: libvirt-daemon-driver-storage-core = %EVR
+Requires: parted
+Requires: dmsetup
+
+%description daemon-driver-storage-disk
+The storage driver backend adding implementation of the storage APIs for block
+volumes using the host disks.
+
+%package daemon-driver-storage-scsi
+Summary: Storage driver plugin for local scsi devices
+Group: System/Libraries
+Requires: libvirt-daemon-driver-storage-core = %EVR
+
+%description daemon-driver-storage-scsi
+The storage driver backend adding implementation of the storage APIs for scsi
+host devices.
+
+%package daemon-driver-storage-iscsi
+Summary: Storage driver plugin for iscsi
+Group: System/Libraries
+Requires: libvirt-daemon-driver-storage-core = %EVR
+Requires: iscsi-initiator-utils
+
+%description daemon-driver-storage-iscsi
+The storage driver backend adding implementation of the storage APIs for iscsi
+volumes using the host iscsi stack.
+
+%package daemon-driver-storage-mpath
+Summary: Storage driver plugin for multipath volumes
+Group: System/Libraries
+Requires: libvirt-daemon-driver-storage-core = %EVR
+Requires: dmsetup
+Requires: multipath-tools
+
+%description daemon-driver-storage-mpath
+The storage driver backend adding implementation of the storage APIs for
+multipath storage using device mapper.
+
+%package daemon-driver-storage-gluster
+Summary: Storage driver plugin for gluster
+Group: System/Libraries
+Requires: libvirt-daemon-driver-storage-core = %EVR
+Requires: /usr/sbin/gluster
+
+%description daemon-driver-storage-gluster
+The storage driver backend adding implementation of the storage APIs for gluster
+volumes using libgfapi.
+
+%package daemon-driver-storage-rbd
+Summary: Storage driver plugin for rbd
+Group: System/Libraries
+Requires: libvirt-daemon-driver-storage-core = %EVR
+
+%description daemon-driver-storage-rbd
+The storage driver backend adding implementation of the storage APIs for rbd
+volumes using the ceph protocol.
+
+%package daemon-driver-storage-sheepdog
+Summary: Storage driver plugin for sheepdog
+Group: System/Libraries
+Requires: libvirt-daemon-driver-storage-core = %EVR
+Requires: sheepdog
+
+%description daemon-driver-storage-sheepdog
+The storage driver backend adding implementation of the storage APIs for
+sheepdog volumes using.
+
+%package daemon-driver-storage-zfs
+Summary: Storage driver plugin for zfs
+Group: System/Libraries
+Requires: libvirt-daemon-driver-storage-core = %EVR
+
+%description daemon-driver-storage-zfs
+The storage driver backend adding implementation of the storage APIs for
+zfs volumes using.
 
 %if_with qemu
 %package daemon-driver-qemu
 Summary: Qemu driver plugin for the libvirtd daemon
 Group: System/Libraries
 Requires: %name-daemon-driver-network = %EVR
-Requires: %name-daemon-driver-storage = %EVR
+Requires: %name-daemon-driver-storage-core = %EVR
 Requires: /usr/bin/qemu-img
 # For image compression
 Requires: gzip
@@ -616,11 +757,14 @@ LOADERS="$LOADERS_OLD:$LOADERS_NEW"
 		%{?_with_storage_fs:--with-storage-fs} \
 		%{?_with_storage_lvm:--with-storage-lvm} \
 		%{?_with_storage_iscsi:--with-storage-iscsi} \
+		%{?_with_storage_scsi:--with-storage-scsi} \
 		%{?_with_storage_disk:--with-storage-disk} \
 		%{?_with_storage_rbd:--with-storage-rbd} \
 		%{?_with_storage_mpath:--with-storage-mpath} \
 		%{?_with_storage_gluster:--with-storage-gluster} \
 		%{?_with_storage_zfs:--with-storage-zfs} \
+		%{?_with_storage_vstorage:--with-storage-vstorage} \
+		%{?_with_storage_sheepdog:--with-storage-sheepdog} \
 		%{subst_with numactl} \
 		%{subst_with selinux} \
 		%{subst_with netcf} \
@@ -847,9 +991,6 @@ fi
 %_datadir/augeas/lenses/tests/test_libvirt_lockd.aug
 %endif
 
-%if_with storage_disk
-%_libexecdir/libvirt_parthelper
-%endif
 
 %_libexecdir/libvirt_iohelper
 %_sbindir/libvirtd
@@ -910,7 +1051,63 @@ fi
 %_libdir/%name/connection-driver/libvirt_driver_secret.so
 
 %files daemon-driver-storage
+
+%files daemon-driver-storage-core
+%if_with storage_disk
+%_libexecdir/libvirt_parthelper
+%endif
 %_libdir/%name/connection-driver/libvirt_driver_storage.so
+%dir %_libdir/%name/storage-backend
+
+%if_with storage_fs
+%files daemon-driver-storage-fs
+%_libdir/%name/storage-backend/libvirt_storage_backend_fs.so
+%endif
+
+%if_with storage_disk
+%files daemon-driver-storage-disk
+%_libdir/%name/storage-backend/libvirt_storage_backend_disk.so
+%endif
+
+%if_with storage_lvm
+%files daemon-driver-storage-logical
+%_libdir/%name/storage-backend/libvirt_storage_backend_logical.so
+%endif
+
+%if_with storage_scsi
+%files daemon-driver-storage-scsi
+%_libdir/%name/storage-backend/libvirt_storage_backend_scsi.so
+%endif
+
+%if_with storage_iscsi
+%files daemon-driver-storage-iscsi
+%_libdir/%name/storage-backend/libvirt_storage_backend_iscsi.so
+%endif
+
+%if_with storage_mpath
+%files daemon-driver-storage-mpath
+%_libdir/%name/storage-backend/libvirt_storage_backend_mpath.so
+%endif
+
+%if_with storage_gluster
+%files daemon-driver-storage-gluster
+%_libdir/%name/storage-backend/libvirt_storage_backend_gluster.so
+%endif
+
+%if_with storage_rbd
+%files daemon-driver-storage-rbd
+%_libdir/%name/storage-backend/libvirt_storage_backend_rbd.so
+%endif
+
+%if_with storage_sheepdog
+%files daemon-driver-storage-sheepdog
+%_libdir/%name/storage-backend/libvirt_storage_backend_sheepdog.so
+%endif
+
+%if_with storage_zfs
+%files daemon-driver-storage-zfs
+%_libdir/%name/storage-backend/libvirt_storage_backend_zfs.so
+%endif
 
 %if_with qemu
 %files daemon-driver-qemu
@@ -1049,6 +1246,10 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Thu Mar 09 2017 Alexey Shabalin <shaba@altlinux.ru> 3.1.0-alt1
+- 3.1.0
+- split libvirt-daemon-driver-storage to subpackages
+
 * Wed Feb 15 2017 Anton Farygin <rider@altlinux.ru> 3.0.0-alt2
 - added patches from upstream to fix work with lvm
 

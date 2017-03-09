@@ -7,7 +7,7 @@
 %define askpass_package "openssh-askpass"
 
 Name: virt-manager
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 Summary: Virtual Machine Manager
 
@@ -21,6 +21,7 @@ Source: %name-%version.tar
 # Patch: %name-%version-%release.patch
 
 Requires: virt-manager-common = %version-%release
+Requires: libvirt-client
 Requires: virt-install = %version-%release
 Requires: python-module-pygobject3 >= 3.14
 Requires: python-module-libxml2
@@ -130,7 +131,7 @@ done
 %_datadir/GConf/gsettings/org.virt-manager.virt-manager.convert
 
 %_man1dir/%name.1*
-%doc README COPYING NEWS
+%doc README.md COPYING NEWS.md
 
 %files common -f %name.lang
 %dir %_datadir/%name
@@ -153,6 +154,9 @@ done
 %_man1dir/virt-xml.1*
 
 %changelog
+* Thu Mar 09 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.1-alt1
+- 1.4.1
+
 * Tue Jun 21 2016 Alexey Shabalin <shaba@altlinux.ru> 1.4.0-alt1
 - 1.4.0
 
