@@ -1,8 +1,8 @@
 %def_enable qt5
 
 Name: seappletsimple
-Version: 0.2.1
-Release: alt3%ubt
+Version: 0.2.2
+Release: alt1%ubt
 
 Summary: Simple applet for SELinux
 License: GPL
@@ -14,10 +14,10 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: libselinux-devel rpm-build-xdg
-%if_enabled qt5
-BuildRequires: qt5-base-devel qt5-tools
-%else
+%if_disabled qt5
 BuildRequires: gcc-c++ libqt4-devel
+%else
+BuildRequires: qt5-base-devel qt5-tools
 %endif
 
 %description
@@ -26,33 +26,33 @@ BuildRequires: gcc-c++ libqt4-devel
 
 %prep
 %setup -q -n %name-%version
-%if_enabled qt5
-%qmake_qt5
-%else
+%if_disabled qt5
 %qmake_qt4
+%else
+%qmake_qt5
 %endif
 
 %build
 %make
-%if_enabled qt5
-lrelease-qt5 seappletsimple.pro
-%else
+%if_disabled qt5
 lrelease-qt4 seappletsimple.pro
+%else
+lrelease-qt5 seappletsimple.pro
 %endif
 
 %install
-%if_enabled qt5
-%installqt5
-%else
+%if_disabled qt5
 %make install INSTALL_ROOT=%buildroot
+%else
+%installqt5
 %endif
 
-%if_enabled qt5
-mkdir -p %buildroot/%_qt5_translationdir/
-install -m644 translations/seappletsimple_??.qm %buildroot/%_qt5_translationdir/
-%else
+%if_disabled qt5
 mkdir -p %buildroot/%_datadir/qt4/translations/
 install -m644 translations/seappletsimple_??.qm %buildroot/%_datadir/qt4/translations/
+%else
+mkdir -p %buildroot/%_qt5_translationdir/
+install -m644 translations/seappletsimple_??.qm %buildroot/%_qt5_translationdir/
 %endif
 
 mkdir -p %buildroot/%_xdgconfigdir/autostart/
@@ -65,6 +65,9 @@ install -m644 %name.desktop %buildroot/%_xdgconfigdir/autostart/%name.desktop
 %_xdgconfigdir/autostart/%name.desktop
 
 %changelog
+* Thu Mar 09 2017 Sergey V Turchin <zerg at altlinux dot org> 0.2.2-alt1%ubt
+- fix parse level
+
 * Tue Mar 07 2017 Sergey V Turchin <zerg at altlinux dot org> 0.2.1-alt3%ubt
 - build with Qt5
 
