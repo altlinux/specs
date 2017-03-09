@@ -1,14 +1,14 @@
 #%%define %_libexecdir %_sbindir
-%define snapshot 0
+%define snapshot 1
 
 Name: mailfromd
 
 %define baseversion 8.1
 
 %if %snapshot
-%define snapshotdate 20160706
+%define snapshotdate 20170306
 Version: %baseversion
-Release: alt0.%snapshotdate.2
+Release: alt2.%snapshotdate.1
 %define srcdir %name-%baseversion-%snapshotdate
 %else
 Version: %baseversion
@@ -55,7 +55,6 @@ Source50: mailfromd-clamav_only.mf
 Patch1: mailfromd-savsrv.c-not_cache_mf_timeout.diff
 
 #Errata
-Patch100: mailfromd-mfd-dns.diff
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -63,7 +62,7 @@ BuildRequires(pre): rpm-build-licenses
 # optimized out: emacs-X11 emacs-base emacs-cedet-speedbar emacs-common fontconfig libX11-locales libgdk-pixbuf libgpg-error libp11-kit libtinfo-devel mailutils pkg-config
 BuildRequires: emacs-X11 flex libdb4-devel libdspam-devel libgcrypt-devel libgdbm-devel libgnutls-devel libldap-devel libncurses-devel libpam-devel libreadline-devel libtokyocabinet-devel
 
-BuildRequires: libmailutils-devel >= 3.1.1
+BuildRequires: libmailutils-devel >= 3.1.91-alt0.20170306.1
 BuildRequires: mailutils
 BuildRequires: makeinfo
 
@@ -137,7 +136,6 @@ National Language files for mailfromd (Polish and Ukrainian)
 %patch1 -p1
 
 #Errata
-%patch100 -p1
 
 gzip ChangeLog
 
@@ -303,6 +301,14 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Thu Mar 09 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.1-alt2.20170306.1
+- new snapshot
+- removed mailfromd-mfd-dns.diff (in upstream now)
+- updated userfunctions.mf:
+   added sa_format_report_header2 function
+- changes in mailfromd.mf:
+  - used sa_format_report_header2 instead of sa_format_report_header
+
 * Thu Feb 16 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.1-alt2
 - BuildRequires: libmailutils-devel >= 3.1.1
 - changes in mailfromd.mf:
