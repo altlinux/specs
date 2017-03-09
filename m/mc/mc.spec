@@ -2,7 +2,7 @@
 
 Name: mc
 Version: 4.8.19
-Release: alt1
+Release: alt2
 
 License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
@@ -20,13 +20,12 @@ Source6: mc.zsh
 %add_findreq_skiplist */lib/mc/ext.d/*
 %add_findreq_skiplist */lib/mc/extfs.d/*
 
-Requires: rpm >= 4.13
-
 Patch0: %name-%version-%release.patch
 
 Patch1: mc-4.8.16-alt-wrapper.patch
 Patch2: mc-4.7.5.1-alt-defaults.patch
 Patch3: mc-4.8.16-alt-menu.patch
+Patch4: mc-4.8.19-alt-rpm-select.patch
 
 # Misc
 
@@ -88,6 +87,7 @@ needed for working additional components (some vfs for example).
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 # Misc
 #patch101 -p1
@@ -100,7 +100,7 @@ cat <<EOF > version.h
 #endif
 EOF
 
-sed 's|@@VERSION@@|%version-%release-20161130|' -i version.h
+sed 's|@@VERSION@@|%version-%release-20170306|' -i version.h
 
 #%%autoreconf
 ./autogen.sh
@@ -178,6 +178,10 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Thu Mar 09 2017 Sergey Y. Afonin <asy@altlinux.ru> 4.8.19-alt2
+- added mc-4.8.19-alt-rpm-select.patch,
+  removed "Requires: rpm >= 4.13"
+
 * Tue Mar 07 2017 Sergey Y. Afonin <asy@altlinux.ru> 4.8.19-alt1
 - 4.8.19 (updated to 20170306 git snapshot)
 - added "Requires: rpm >= 4.13"
