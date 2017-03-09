@@ -1,6 +1,6 @@
 Name: keepass
 Version: 2.35
-Release: alt1%ubt
+Release: alt1%ubt.1
 
 Summary: Password manager
 
@@ -33,7 +33,8 @@ BuildRequires: mono4-winforms
 BuildRequires: mono4-web
 BuildRequires: python-devel
 BuildRequires: xorg-xvfb xvfb-run
-Requires: mono4(System.Windows.Forms) >= 4.0.0.0
+#Requires: mono4(System.Windows.Forms) >= 4.0.0.0
+Requires: mono4-winforms >= 4.0.0.0
 
 # The debuginfo package would be empty if created.
 %global debug_package %nil
@@ -118,6 +119,9 @@ cp -pr Docs/Chm %buildroot/%_docdir/%name/
 %doc %_docdir/%name/Chm/
 
 %changelog
+* Thu Mar 09 2017 Oleg Solovyov <mcpain@altlinux.org> 2.35-alt1%ubt.1
+- fixed requires
+
 * Tue Mar 07 2017 Oleg Solovyov <mcpain@altlinux.org> 2.35-alt1%ubt
 - added ubt tag for easy migrationing between branches
 
