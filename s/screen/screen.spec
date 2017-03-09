@@ -1,14 +1,15 @@
 Name: screen
-Version: 4.0.3
-Release: alt12
+Version: 4.5.1
+Release: alt1
 
 Summary: A screen manager that supports multiple sessions on one terminal
 License: GPLv2+
 Group: Terminals
 Url: http://www.gnu.org/software/screen/
 
-Source: screen-%version.tar
-Patch: screen-%version-%release.patch
+# git://git.savannah.gnu.org/screen.git
+# git://git.altlinux.org/gears/s/screen.git
+Source: screen-%version-%release.tar
 
 Requires(post): libutempter >= 1.0.6, pam_tcb >= 0.9.7.1, coreutils
 
@@ -36,11 +37,11 @@ Install the screen package if you may need to use virtual terminals
 managed by the screen utility.
 
 %prep
-%setup -q -n screen-%version
-%patch -p1
+%setup -q -n screen-%version-%release
 
 %build
-autoconf
+pushd src
+%autoreconf
 %add_optflags -D_GNU_SOURCE
 %if_enabled debug
 %add_optflags -DDEBUG
@@ -57,22 +58,24 @@ autoconf
 # Does it work at all?
 #__perl -pi -e 's|.*#undef HAVE_BRAILLE.*|#define HAVE_BRAILLE 1|' config.h
 
-%make_build CFLAGS="%optflags"
-%make_build -C doc screen.info
-xz -kf doc/*.ps
+popd
+
+%make_build -C src CFLAGS="%optflags"
+%make_build -C src/doc screen.info
+xz -kf src/doc/*.ps
 
 %install
-%makeinstall_std
+%makeinstall_std -C src
 
 pushd %buildroot%_bindir
 	rm -f screen.old screen
 	mv screen-%version screen
 popd
 
-install -pD -m644 screenrc %buildroot/etc/screenrc
-install -pD -m644 screencap %buildroot/etc/screencap
+install -pD -m644 alt/screenrc %buildroot/etc/screenrc
+install -pD -m644 alt/screencap %buildroot/etc/screencap
 
-install -pD -m644 screen.pamd %buildroot/etc/pam.d/screen
+install -pD -m644 alt/screen.pamd %buildroot/etc/pam.d/screen
 
 mkdir -p %buildroot{/var/run/screen,/etc/tmpfiles.d}
 echo 'd /var/run/screen 0775 root screen' > %buildroot/etc/tmpfiles.d/screen.conf
@@ -113,10 +116,13 @@ ln -f %_libexecdir/utempter/utempter %_libexecdir/screen/
 %config(noreplace) /etc/pam.d/screen
 /etc/tmpfiles.d/screen.conf
 
-%doc etc/*screenrc
-%doc NEWS README FAQ doc/README.DOTSCREEN doc/*.ps.*
+%doc src/etc/*screenrc
+%doc src/NEWS src/README src/FAQ src/doc/README.DOTSCREEN src/doc/*.ps.*
 
 %changelog
+* Thu Mar 09 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.5.1-alt1
+- Updated to v.4.5.1.
+
 * Mon Jan 25 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.3-alt12
 - Added BR: makeinfo.
 
