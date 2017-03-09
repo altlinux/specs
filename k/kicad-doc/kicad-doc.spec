@@ -1,6 +1,6 @@
 Summary: Documentation and tutorials for kicad
 Name: kicad-doc
-Version: 4.0.5
+Version: 4.0.6
 Epoch: 1
 Release: alt1
 Group: Documentation
@@ -57,6 +57,32 @@ and PCB layout.
 This is the documentation package for kicad. It contains documentation,
 tutorials and files localization.
 Spanish translation.
+
+%package fr
+Summary: Documentation and tutorials for kicad
+Group: Documentation
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description fr
+KiCad is a open source (GPL) integrated package for schematic circuit capture
+and PCB layout.
+This is the documentation package for kicad. It contains documentation,
+tutorials and files localization.
+French translation.
+
+%package id
+Summary: Documentation and tutorials for kicad
+Group: Documentation
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description id
+KiCad is a open source (GPL) integrated package for schematic circuit capture
+and PCB layout.
+This is the documentation package for kicad. It contains documentation,
+tutorials and files localization.
+Indonesian translation.
 
 %package it
 Summary: Documentation and tutorials for kicad
@@ -136,6 +162,12 @@ Polish translation.
 %files es
 %_datadir/doc/kicad/help/es
 
+%files fr
+%_datadir/doc/kicad/help/fr
+
+%files id
+%_datadir/doc/kicad/help/id
+
 %files it
 %_datadir/doc/kicad/help/it
 
@@ -149,6 +181,9 @@ Polish translation.
 %_datadir/doc/kicad/help/pl
 
 %changelog
+* Thu Mar 09 2017 Anton Midyukov <antohami@altlinux.org> 1:4.0.6-alt1
+- new version 4.0.6
+
 * Thu Feb 23 2017 Anton Midyukov <antohami@altlinux.org> 1:4.0.5-alt1
 - new version 4.0.5
 
