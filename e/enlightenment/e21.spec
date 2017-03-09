@@ -19,7 +19,7 @@
 %def_with pam_helper
 
 Name: enlightenment
-Version: %ver_major.5
+Version: %ver_major.7
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -208,6 +208,9 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Thu Mar 09 2017 Yuri N. Sedunov <aris@altlinux.org> 1:0.21.7-alt1
+- 0.21.7
+
 * Tue Dec 13 2016 Yuri N. Sedunov <aris@altlinux.org> 1:0.21.5-alt1
 - 0.21.5
 
