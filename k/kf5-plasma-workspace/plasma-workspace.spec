@@ -16,8 +16,8 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.9.2
-Release: alt2%ubt
+Version: 5.9.3
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -295,6 +295,9 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Thu Mar 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
+- new version
+
 * Tue Feb 28 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt2%ubt
 - fix login background
 
