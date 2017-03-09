@@ -1,15 +1,13 @@
-
 Summary: C# bindings for D-Bus glib main loop integration
-Name: dbus-sharp-glib
-Version: 0.5.0
+Name:    dbus-sharp-glib
+Version: 0.6
 Release: alt1
-Url: http://mono.github.com/dbus-sharp/
+Url:     https://github.com/mono/dbus-sharp-glib
 Packager: Mono Maintainers Team <mono@packages.altlinux.org>
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source:  %name-%version.tar
 License: MIT
-Group: Development/Other
+Group:   Development/Other
 
 BuildPreReq: /proc
 BuildRequires: mono-mcs mono-devel
@@ -28,24 +26,26 @@ Development files for D-Bus Sharp development.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
-%configure
+%configure --libdir=%_libexecdir
 %make
 
 %install
-%makeinstall_std
+%makeinstall_std pkgconfigdir=%_pkgconfigdir
 
 %files
 %doc COPYING README
-%_monodir/dbus-sharp-glib-1.0
+%_monodir/dbus-sharp-glib-2.0
 %_monogacdir/dbus-sharp-glib
 
 %files devel
-%_pkgconfigdir/dbus-sharp-glib-1.0.pc
+%_pkgconfigdir/dbus-sharp-glib-2.0.pc
 
 %changelog
+* Thu Jun 09 2016 Andrey Cherepanov <cas@altlinux.org> 0.6-alt1
+- New version
+
 * Mon Feb 20 2012 Alexey Shabalin <shaba@altlinux.ru> 0.5.0-alt1
 - initial build for ALT Linux Sisyphus
