@@ -1,6 +1,6 @@
 Name: ghostscript
 Version: 9.20
-Release: alt1
+Release: alt2
 
 %define ijsver	0.35
 %global origver %version
@@ -63,6 +63,9 @@ Obsoletes: %gnu_name, %esp_name
 # Automatically added by buildreq on Tue Aug 23 2016
 # optimized out: at-spi2-atk fontconfig fontconfig-devel glib2-devel gnu-config libICE-devel libSM-devel libX11-devel libXext-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libpango-devel libpng12-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server perl pkg-config python-base python-modules xorg-xproto-devel zlib-devel
 BuildRequires: glibc-devel-static imake libXt-devel libcups-devel libgtk+3-devel libjpeg-devel liblcms2-devel libopenjpeg2.0-devel libpaper-devel libtiff-devel xorg-cf-files
+
+# Eliminate libpng12-devel
+BuildRequires: libpng-devel
 
 %package module-X
 Summary: PostScript interpreter and renderer (additional support for X)
@@ -329,6 +332,9 @@ mv %buildroot/%_datadir/doc/ghostscript/examples %buildroot%_docdir/%name-%versi
 %_includedir/ijs
 
 %changelog
+* Thu Mar 09 2017 Fr. Br. George <george@altlinux.ru> 9.20-alt2
+- Rebuild with libpng15 (Closes: #33220)
+
 * Mon Nov 28 2016 Fr. Br. George <george@altlinux.ru> 9.20-alt1
 - Autobuild version bump to 9.20
 - Freshen third-party patches
