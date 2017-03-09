@@ -1,12 +1,12 @@
 Name:		cqrlog
-Version:	2.0.1
+Version:	2.0.4
 Release:	alt1
 Summary:	An amateur radio contact logging program
 
 Group:		Communications
 License:	GPLv2
 URL:		http://www.cqrlog.com/
-Source0:	http://www.cqrlog.com/files/%{name}_%{version}/%{name}-%{version}.tar.gz
+Source0:	%name-%version.tar
 # VCS:		https://github.com/ok2cqr/cqrlog
 
 Patch0:		cqrlog-install.patch
@@ -50,6 +50,11 @@ subst 's/\r//' %buildroot%_datadir/%name/ctyfiles/MASTER.SCP
 iconv -f iso8859-1 -t utf-8 %buildroot%_datadir/%name/ctyfiles/eqsl.txt > eqsl.txt.conv && /bin/mv -f eqsl.txt.conv %buildroot%_datadir/%name/ctyfiles/eqsl.txt
 
 rm -rf %buildroot%_datadir/%name/cqrlog-apparmor-fix
+# Move icons to appropriate places
+for i in 32 48 64 128 256; do
+	install -Dm 0644 %buildroot%_iconsdir/%name/${i}x${i}/%name.png %buildroot%_iconsdir/hicolor/${i}x${i}/apps/%name.png
+done
+rm -rf %buildroot%_iconsdir/%name
 
 %files
 %doc README.md src/AUTHORS src/CHANGELOG src/README src/COPYING
@@ -58,8 +63,15 @@ rm -rf %buildroot%_datadir/%name/cqrlog-apparmor-fix
 %_desktopdir/%name.desktop
 %_pixmapsdir/%name/
 %_man1dir/%name.1.*
+%_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Wed Mar 08 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.4-alt1
+- New version
+
+* Fri Sep 02 2016 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt1
+- New version
+
 * Tue May 10 2016 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
 - New version
 
