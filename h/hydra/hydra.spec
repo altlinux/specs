@@ -1,5 +1,5 @@
 Name: hydra
-Version: 8.2
+Version: 8.4
 Release: alt1
 
 Summary: A very fast network logon cracker which support many different services
@@ -13,6 +13,9 @@ Source: %name-%version.tar.gz
 Source1: x%name.desktop
 Source2: xhydra.png
 Patch0: hydra-5.4-open-fix.patch
+Patch1:         hydra-use-system-libpq-fe.patch
+Patch2:         hydra-fix-dpl4hydra-dir.patch
+
 Provides: hydra = %version-%release
 Requires: hydra-common hydra-gtk hydra-pwinspector 
 
@@ -67,8 +70,18 @@ Usage only allowed for legal purposes.
 PW-Inspector считывает пароли и отображает соответствующие требованиям
 
 %prep
-%setup -q
+
+%setup -qn thc-hydra-%{version}
+
 #patch0 -p1
+
+%patch1 -p0
+%patch2 -p0
+
+#fix permissions - already fixed upstream in 8.3-dev
+chmod -x *.csv hydra-gtk/src/*.c hydra-gtk/src/*.h
+
+
 
 %build
 #set_automake_version 1.10
@@ -131,6 +144,9 @@ install -pD -m644 pw-inspector.1.bz2 %buildroot%_man1dir/pw-inspector.1.bz2
 %_man1dir/pw-inspector*
 
 %changelog
+* Fri Mar 10 2017 Ilya Mashkin <oddity@altlinux.ru> 8.4-alt1
+- 8.4
+
 * Fri Jun 17 2016 Ilya Mashkin <oddity@altlinux.ru> 8.2-alt1
 - 8.2
 
