@@ -1,7 +1,7 @@
-%define major 1.12
+%define major 1.15
 
 Name: tomboy
-Version: %major.1
+Version: %major.5
 Release: alt1
 
 Summary: Tomboy is a desktop note-taking application
@@ -13,7 +13,9 @@ Url: http://www.gnome.org/projects/tomboy
 Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
 Source: http://ftp.gnome.org/pub/GNOME/sources/%name/%major/%name-%version.tar
-Patch: %name-%version-%release.patch
+#VCS:   https://github.com/GNOME/tomboy
+Patch1: alt-fixes.patch
+Patch2:	use_dbussharp_2.patch
 
 #add_findprov_lib_path %_libdir/%name
 
@@ -24,7 +26,7 @@ BuildPreReq: libGConf-devel
 BuildPreReq: desktop-file-utils
 
 BuildRequires: gcc-c++ intltool >= 0.35.0
-BuildRequires: pkgconfig(dbus-sharp-1.0) >= 0.4 pkgconfig(dbus-sharp-glib-1.0) >= 0.3
+BuildRequires: pkgconfig(dbus-sharp-2.0) >= 0.4 pkgconfig(dbus-sharp-glib-2.0) >= 0.3
 BuildRequires: pkgconfig(gdk-2.0) >= 2.6.0
 BuildRequires: pkgconfig(gtk+-2.0) >= 2.14.0
 BuildRequires: pkgconfig(atk) >= 1.2.4
@@ -48,30 +50,25 @@ between your ideas won't break, even when renaming and reorganizing them.
 
 %prep
 %setup -q
-%patch -p1
+%patch1 -p1
+%patch2 -p1
+ln -s /usr/share/gnome-doc-utils/gnome-doc-utils.make .
 
 %build
 NOCONFIGURE=1 ./autogen.sh
+mkdir bin
 %configure --disable-schemas-install --disable-scrollkeeper --disable-update-mimedb \
 	--enable-panel-applet=no
 
-%make
+%make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=TextTools \
 	%buildroot%_desktopdir/tomboy.desktop
 
 %find_lang %name --with-gnome
-
-%post
-%gconf2_install %name
-
-%preun
-if [ $1 = 0 ]; then
-%gconf2_uninstall %name
-fi
 
 %files -f %name.lang
 %doc AUTHORS MAINTAINERS README NEWS COPYING COPYING-DOCS
@@ -95,6 +92,9 @@ fi
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Wed Jun 15 2016 Andrey Cherepanov <cas@altlinux.org> 1.15.5-alt1
+- 1.15.5
+
 * Fri Oct 26 2012 Alexey Shabalin <shaba@altlinux.ru> 1.12.1-alt1
 - 1.12.1
 

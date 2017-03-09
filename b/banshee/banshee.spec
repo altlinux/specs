@@ -17,7 +17,7 @@
 
 Name: banshee
 Version: 2.6.0
-Release: alt1
+Release: alt2
 Summary: Easily import, manage, and play selections from your music collection
 Group: Sound
 License: MIT
@@ -252,6 +252,9 @@ desktop-file-install --vendor gnome --delete-original		\
 %endif
 
 %changelog
+* Wed Jun 15 2016 Andrey Cherepanov <cas@altlinux.org> 2.6.0-alt2
+- Rebuild with new dbus-sharp and dbus-sharp-glib
+
 * Mon Oct 15 2012 Alexey Shabalin <shaba@altlinux.ru> 2.6.0-alt1
 - 2.6.0
 

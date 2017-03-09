@@ -1,10 +1,10 @@
 %global         majorver 2.2
-%global         minorver 0
+%global         minorver 1.1
 %global         debug_package %nil
 
 Name:           docky
 Version:        %majorver.%minorver
-Release:        alt2
+Release:        alt1
 
 Summary:        Advanced dock application written in Mono
 Group:		Graphical desktop/GNOME
@@ -16,8 +16,6 @@ Source0:        https://launchpad.net/docky/%majorver/%version/+download/%{name}
 # to a potential violation of US Patent 7434177
 Patch0:         docky-nozoom.patch
 Patch1:         docky-startscript-path.patch
-# Logind support checked out from upstream bzr repository
-Patch3:         1841_1840.patch
 BuildRequires:  mono-web
 BuildRequires:  libgnome-sharp-devel libgtk-sharp2-devel libgnome-desktop-sharp-devel
 BuildRequires:  libgnome-keyring-sharp-devel libgtk-sharp2-gapi mono-addins-devel
@@ -28,12 +26,15 @@ BuildRequires:  libgio-sharp-devel dbus-sharp-devel dbus-sharp-glib-devel
 # native deps
 BuildRequires:  python-devel
 BuildRequires:  glib2-devel libgtk+2-devel
+BuildRequires:  libgkeyfile-sharp-devel
+BuildRequires:  libwnck-devel
 BuildRequires:  gettext-tools
 BuildRequires:  perl-XML-Parser
 BuildRequires:  intltool
 BuildRequires:  desktop-file-utils
 Requires:       libgio-sharp
 Requires:       icon-theme-hicolor
+Requires:       dbus-tools-gui
 
 %description
 Docky is an advanced shortcut bar that sits at the bottom, top, and/or
@@ -53,8 +54,7 @@ applications that use %name.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch3
+%patch1 -p2
 
 %build
 %configure --disable-schemas-install \
@@ -96,6 +96,10 @@ echo "X-GNOME-Autostart-enabled=false" >> \
 %_libdir/pkgconfig/docky.*.pc
 
 %changelog
+* Thu Mar 09 2017 Andrey Cherepanov <cas@altlinux.org> 2.2.1.1-alt1
+- New version
+- Use dbus-launch in startup script to run with DBus
+
 * Tue May 12 2015 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt2
 - Use system libgio-sharp library
 - Leave desktop files original
