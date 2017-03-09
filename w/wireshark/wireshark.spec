@@ -5,8 +5,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.2.4
-Release: alt2%ubt
+Version: 2.2.5
+Release: alt1%ubt
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
@@ -278,6 +278,9 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Tue Mar 07 2017 Anton Farygin <rider@altlinux.ru> 2.2.5-alt1%ubt
+- new version
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt2%ubt
 - NMU: new lua 5.1 BR:
 
