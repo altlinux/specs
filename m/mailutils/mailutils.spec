@@ -5,16 +5,16 @@
 %def_disable guile
 
 %define use_chrpath 0
-%define snapshot    0
+%define snapshot    1
 
 Name: mailutils
 
-%define baseversion 3.1.1
+%define baseversion 3.1.91
 
 %if %snapshot
-%define snapshotdate 20151110
+%define snapshotdate 20170306
 Version: %baseversion
-Release: alt0.%snapshotdate.3
+Release: alt0.%snapshotdate.1
 %define srcdir %name-%snapshotdate
 %else
 Version: %baseversion
@@ -440,6 +440,9 @@ done
 %endif
 
 %changelog
+* Thu Mar 09 2017 Sergey Y. Afonin <asy@altlinux.ru> 3.1.91-alt0.20170306.1
+- New version
+
 * Wed Feb 15 2017 Sergey Y. Afonin <asy@altlinux.ru> 3.1.1-alt1
 - New version
 
