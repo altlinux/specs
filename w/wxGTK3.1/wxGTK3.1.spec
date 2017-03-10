@@ -1,8 +1,9 @@
 %define wxbranch 3.1
+%set_gcc_version 5
 
 Name: wxGTK3.1
 Version: 3.1.0
-Release: alt7
+Release: alt8
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -15,7 +16,9 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source2: ld_shared_wrapper.pl
 Patch1: wxGTK3.0-disable-ABI-checking.patch
+Patch2: wxGTK3.1-gstreamer1.0.patch
 
+BuildPreReq: gcc5-c++
 # Automatically added by buildreq on Wed Dec 10 2008
 BuildRequires: gcc-c++ libGL-devel libSDL-devel libSM-devel
 BuildRequires: libXinerama-devel libesd-devel libexpat-devel
@@ -23,8 +26,8 @@ BuildRequires: libjpeg-devel libtiff-devel libgtk+3-devel
 
 BuildPreReq: xorg-xextproto-devel xorg-inputproto-devel libXtst-devel
 BuildPreReq: rpm-build-java libXxf86vm-devel libbfd-devel
-BuildPreReq: libstdc++-devel gstreamer-devel gst-plugins-devel
-BuildPreReq: libGConf-devel gst-plugins-devel libpng-devel
+BuildPreReq: libstdc++-devel gstreamer1.0-devel gst-plugins1.0-devel
+BuildPreReq: libGConf-devel gst-plugins1.0-devel libpng-devel
 BuildPreReq: libnotify-devel libwebkitgtk3-devel libmspack-devel
 
 %description
@@ -68,6 +71,7 @@ wxGTK example programs.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 %__subst "s,bakefile/presets,bakefile/presets-\$(WX_RELEASE),g" Makefile.in
 
 rm -fR src/{expat,jpeg,tiff,zlib,png}
@@ -76,7 +80,7 @@ rm -fR src/{expat,jpeg,tiff,zlib,png}
 CONF_FLAG="--enable-shared --without-debug_flag --without-debug_info"
 
 ./autogen.sh
-GST_CFLAGS="$(pkg-config --cflags gstreamer-0.10)"
+GST_CFLAGS="$(pkg-config --cflags gstreamer-1.0)"
 export LIBS="-lX11"
 DEFS="-DUNICODE=1 -DwxUSE_UNICODE=1 -DwxDEBUG_LEVEL=0"
 %add_optflags -fno-strict-aliasing $GST_CFLAGS $DEFS
@@ -343,6 +347,10 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Fri Mar 10 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.1.0-alt8
+- Built against GStreamer 1.0.
+- clearly mark to build with GCC/G++ 5.
+
 * Mon Feb 29 2016 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt7
 - New release
 - Rename wxGTK3.0.spec to wxGTK3.1.spec

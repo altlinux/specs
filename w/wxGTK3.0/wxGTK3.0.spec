@@ -2,7 +2,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.3
-Release: alt7.git20160409
+Release: alt8.git20160409
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 Source2: ld_shared_wrapper.pl
 
 Patch1: wxGTK3-3.0.2-abicheck.patch
-Patch2: wxGTK3.0-gst1.patch
+Patch2: wxGTK3-3.0.2-gstreamer1.0.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libGL-devel libGLU-devel libSDL-devel libSM-devel
@@ -30,8 +30,7 @@ BuildRequires: libgtk+3-devel libcairo-devel
 BuildRequires: libXxf86vm-devel libbfd-devel
 BuildRequires: libstdc++-devel
 BuildRequires: libGConf-devel
-#BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
-BuildRequires: gstreamer-devel gst-plugins-devel
+BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
 BuildRequires: libnotify-devel libwebkitgtk3-devel
 
 %description
@@ -113,7 +112,7 @@ wxGTK example programs.
 %prep
 %setup
 %patch1 -p1
-#%patch2 -p1
+%patch2 -p1
 
 # patch some installed files to avoid conflicts with 2.8.*
 #sed -i -e 's|aclocal)|aclocal/wxwin3.m4)|' Makefile.in
@@ -222,6 +221,10 @@ cat wxmsw3.lang >> wxstd3.lang
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Fri Mar 10 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.3-alt8.git20160409
+- Built against GStreamer 1.0.
+- removed old gst1.0 patch.
+
 * Wed Apr 20 2016 Alexey Shabalin <shaba@altlinux.ru> 3.0.3-alt7.git20160409
 - git snapshot 59078ab5456c8383257a226ae88a446b60800af9
 - revert aclocal/wxwin.m4 name
