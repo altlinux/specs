@@ -6,7 +6,7 @@
 
 Name: wireshark
 Version: 2.2.5
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
@@ -21,7 +21,8 @@ Patch: %name-%version-alt.patch
 
 # Automatically added by buildreq on Sun Dec 23 2007
 BuildRequires: control doxygen flex gcc-c++ libadns-devel libcap-devel libcom_err-devel libgnutls-openssl-devel libgcrypt-devel zlib-devel
-BuildRequires: libkrb5-devel libpcap-devel libpcre-devel libportaudio2-devel libssl-devel python unzip xml-utils xsltproc liblua5.1-devel perl-Pod-Parser perl-devel
+BuildRequires: libkrb5-devel libpcap-devel libpcre-devel libportaudio2-devel libssl-devel python unzip xml-utils xsltproc perl-Pod-Parser perl-devel
+BuildRequires: liblua5-devel < 5.3.0
 BuildRequires: libgtk+3-devel
 BuildRequires: qt5-base-devel qt5-tools
 BuildRequires(pre):rpm-build-ubt
@@ -278,6 +279,9 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Fri Mar 10 2017 Anton Farygin <rider@altlinux.ru> 2.2.5-alt2%ubt
+- fixed liblua devel requires
+
 * Tue Mar 07 2017 Anton Farygin <rider@altlinux.ru> 2.2.5-alt1%ubt
 - new version
 
