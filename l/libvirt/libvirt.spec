@@ -107,7 +107,7 @@
 
 Name: libvirt
 Version: 3.1.0
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -336,6 +336,7 @@ iSCSI, and multipath storage.
 %package daemon-driver-storage-core
 Summary: Storage driver plugin including base backends for the libvirtd daemon
 Group: System/Libraries
+Conflicts: %name-daemon < %EVR
 
 %description daemon-driver-storage-core
 The storage driver plugin for the libvirtd daemon, providing
@@ -444,7 +445,7 @@ zfs volumes using.
 Summary: Qemu driver plugin for the libvirtd daemon
 Group: System/Libraries
 Requires: %name-daemon-driver-network = %EVR
-Requires: %name-daemon-driver-storage-core = %EVR
+Requires: %name-daemon-driver-storage-fs = %EVR
 Requires: /usr/bin/qemu-img
 # For image compression
 Requires: gzip
@@ -526,7 +527,7 @@ Requires: %name-daemon-config-nwfilter = %EVR
 Requires: %name-daemon-driver-qemu = %EVR
 Requires: %name-daemon-driver-nodedev = %EVR
 Requires: %name-daemon-driver-secret = %EVR
-Requires: %name-daemon-driver-storage = %EVR
+Requires: %name-daemon-driver-storage-fs = %EVR
 %endif
 
 %description qemu-common
@@ -1246,6 +1247,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Mar 10 2017 Alexey Shabalin <shaba@altlinux.ru> 3.1.0-alt2
+- update R: for qemu-common
+
 * Thu Mar 09 2017 Alexey Shabalin <shaba@altlinux.ru> 3.1.0-alt1
 - 3.1.0
 - split libvirt-daemon-driver-storage to subpackages
