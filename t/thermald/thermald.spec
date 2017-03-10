@@ -1,5 +1,5 @@
 Name: thermald
-Version: 1.5.4
+Version: 1.6
 Release: alt1
 
 Summary: Thermal daemon for IA
@@ -15,6 +15,7 @@ Source: %name-%version.tar.gz
 Source1: thermald.init
 
 Buildrequires: gcc-c++ glib-devel libdbus-glib-devel libgio-devel libgomp-devel libxml2-devel
+Requires: dbus
 
 %description
 Thermal issues are important to handle proactively to reduce performance impact.
@@ -64,6 +65,9 @@ install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
 %_man8dir/*
 
 %changelog
+* Fri Mar 10 2017 Anton Midyukov <antohami@altlinux.org> 1.6-alt1
+- new version (1.6) with rpmgs script
+
 * Sat Dec 10 2016 Anton Midyukov <antohami@altlinux.org> 1.5.4-alt1
 - new version (1.5.4) with rpmgs script
 
