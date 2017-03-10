@@ -1,5 +1,6 @@
+%def_disable snapshot
 Name: mobile-broadband-provider-info
-Version: 20151214
+Version: 20170310
 Release: alt1
 
 Summary: Mobile Broadband Service Provider Database
@@ -7,7 +8,11 @@ Group: System/Configuration/Networking
 License: Creative Commons Public Domain
 Url: https://wiki.gnome.org/Projects/NetworkManager/MobileBroadband/ServiceProviders
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%version/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 BuildArch: noarch
 
@@ -21,7 +26,7 @@ associated network and plan information.
 %prep
 %setup
 # subst date as version for git snapshot
-#sed -i -e 's|, [0-9]*,|, %version,|' configure.ac
+%{?_enable_snapshot:sed -i -e 's|, [0-9]*,|, %version,|' configure.ac}
 
 %build
 %autoreconf
@@ -40,6 +45,9 @@ associated network and plan information.
 %doc ChangeLog COPYING NEWS README
 
 %changelog
+* Fri Mar 10 2017 Yuri N. Sedunov <aris@altlinux.org> 20170310-alt1
+- updated to 20170310 ftp release
+
 * Wed Dec 16 2015 Yuri N. Sedunov <aris@altlinux.org> 20151214-alt1
 - updated to 20151214 ftp release
 
