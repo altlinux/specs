@@ -8,7 +8,7 @@
 
 Name: wxGTK
 Version: %wxbranch.12
-Release: alt1.svn20131012.3
+Release: alt1.svn20131012.4
 Serial:	2
 
 Summary: The GTK+ port of the wxWidgets library
@@ -21,12 +21,14 @@ Source: %name-%version.tar.gz
 Source2: ld_shared_wrapper.pl
 
 Patch1: wxGTK-disable-ABI-checking.patch
+Patch2: wxGTK-ftbfs-gcc6.patch
+Patch3: wxGTK-gstreamer1.0.patch
 
 BuildPreReq: gcc-c++ libGL-devel libSDL-devel libSM-devel
 BuildPreReq: libXinerama-devel libesd-devel libexpat-devel
 BuildPreReq: libgtk+2-devel libjpeg-devel libtiff-devel
-BuildPreReq: rpm-build-java libXt-devel gstreamer-devel
-BuildPreReq: libGConf-devel gst-plugins-devel
+BuildPreReq: rpm-build-java libXt-devel gstreamer1.0-devel
+BuildPreReq: libGConf-devel gst-plugins1.0-devel
 
 BuildPreReq: libstdc++-devel libpng-devel bakefile
 BuildPreReq: libxml2-devel
@@ -155,6 +157,8 @@ Header files for wxWidgets object graphics library.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 subst "s,bakefile/presets,bakefile/presets-\$(WX_RELEASE),g" Makefile.in
 
@@ -323,6 +327,10 @@ cp -fR docs/* %buildroot%_docdir/%name-%version/
 %_datadir/wx/examples
 
 %changelog
+* Thu Mar 09 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2:2.8.12-alt1.svn20131012.4
+- Built against GStreamer 1.0 (ALT#33212).
+- Fixed build witn GCC 6.
+
 * Fri Mar 11 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.8.12-alt1.svn20131012.3
 - Disabled C++ ABI version checking (ALT#31120).
 
