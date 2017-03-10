@@ -4,7 +4,7 @@
 %define _xconfdir %_sysconfdir/X11/xorg.conf.d
 
 Name: xorg-drv-libinput
-Version: 0.24.0
+Version: 0.25.0
 Release: alt1
 
 Summary: Xorg libinput input driver
@@ -71,6 +71,9 @@ Xorg libinput input driver development files.
 %_includedir/xorg/libinput-properties.h
 
 %changelog
+* Fri Mar 10 2017 Yuri N. Sedunov <aris@altlinux.org> 0.25.0-alt1
+- 0.25.0
+
 * Sat Feb 11 2017 Yuri N. Sedunov <aris@altlinux.org> 0.24.0-alt1
 - 0.24.0
 
