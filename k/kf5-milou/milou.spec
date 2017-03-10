@@ -4,7 +4,7 @@
 %define libmilou libmilou%milou_sover
 
 Name: kf5-%rname
-Version: 5.9.2
+Version: 5.9.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -81,6 +81,9 @@ KF5 library
 %_K5lib/libmilou.so.%milou_sover
 
 %changelog
+* Thu Mar 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
+- new version
+
 * Mon Feb 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
 - new version
 

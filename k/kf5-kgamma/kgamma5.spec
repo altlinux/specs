@@ -1,7 +1,7 @@
 %define rname kgamma5
 
 Name: kf5-kgamma
-Version: 5.9.2
+Version: 5.9.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -51,6 +51,9 @@ BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-deve
 %_K5srv/kgamma.desktop
 
 %changelog
+* Thu Mar 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
+- new version
+
 * Mon Feb 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
 - new version
 
