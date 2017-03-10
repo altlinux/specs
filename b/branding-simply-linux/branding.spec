@@ -2,17 +2,20 @@
 %define Name Simply Linux
 %define codename Dory
 %define status %nil
-%define variants altlinux-backup-server altlinux-desktop altlinux-gnome-desktop altlinux-kdesktop altlinux-lite altlinux-lxdesktop altlinux-office-desktop altlinux-office-server altlinux-school-server altlinux-sisyphus altlinux-spt altlinux-tablet altlinux-workbench informika-schoolmaster ivk-chainmail lxde-desktop lxde-school-lite Platform6-server-light school-junior school-lite school-master school-server school-teacher school-terminal altlinux-centaurus sisyphus-server-light
+
 %define brand simply
+
+%define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
 Version: 7.95.0
-Release: alt5
+Release: alt6
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 BuildRequires: design-bootloader-source >= 5.0-alt2
 
+BuildRequires(pre): rpm-macros-branding
 BuildRequires(pre): libqt4-core 
 BuildRequires: libalternatives-devel
 BuildRequires: libqt4-devel
@@ -41,7 +44,7 @@ PreReq: coreutils
 Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
 
 Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-bootloader ";done )
+%branding_add_conflicts simply-linux bootloader
 
 %define grub_normal white/dark-gray
 %define grub_high black/white
@@ -63,7 +66,7 @@ Provides: plymouth-theme-%theme
 Requires: plymouth-plugin-script
 PreReq: plymouth
 
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-bootsplash ";done )
+%branding_add_conflicts simply-linux bootsplash
 
 %description bootsplash
 This package contains graphics for boot process for Simply Linux
@@ -85,7 +88,7 @@ Obsoletes:  branding-alt-%theme-browser-qt  branding-altlinux-%theme-browser-qt
 # lexicographically first of the village
 Conflicts: branding-sisyphus-server-light-alterator
 
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-alterator ";done )
+%branding_add_conflicts simply-linux alterator
 Obsoletes: design-alterator-server design-alterator-desktop design-altertor-browser-desktop  design-altertor-browser-server branding-altlinux-backup-server-alterator
 PreReq(post,preun): alternatives >= 0.2 alterator
 
@@ -107,7 +110,7 @@ Obsoletes:  branding-alt-%theme-graphics design-graphics-%theme
 Provides: design-graphics = 12.0.0
 
 PreReq(post,preun): alternatives >= 0.2
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-graphics ";done )
+%branding_add_conflicts simply-linux graphics
 
 %description graphics
 This package contains some graphics for Simply Linux design.
@@ -129,7 +132,7 @@ Group: System/Configuration/Other
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme  branding-alt-%theme-release
 Obsoletes: %obsolete_list  branding-alt-%theme-release
 Conflicts: %conflicts_list
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-release ";done )
+%branding_add_conflicts simply-linux release
 
 %description release
 Simply Linux %version release file.
@@ -146,7 +149,7 @@ Summary(ru_RU.UTF-8): Лицензия и дополнительные свед�
 License: Distributable
 Group: Documentation
 Conflicts: alt-notes-children alt-notes-hpc alt-notes-junior alt-notes-junior-sj alt-notes-junior-sm alt-notes-school-server alt-notes-server-lite alt-notes-skif alt-notes-terminal alt-notes-desktop
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-notes ";done )
+%branding_add_conflicts simply-linux notes
 
 %description notes
 Distribution license and release notes
@@ -162,12 +165,12 @@ License: Distributable
 Group: Graphical desktop/XFce
 Requires: PolicyKit-gnome
 Requires: etcskel
-#Requires: gtk3-theme-clearlooks-phenix
+Requires: gtk3-theme-clearlooks-phenix
 Requires: gnome-themes-standard
 Requires: gnome-icon-theme icon-theme-simple-sl
 Requires: branding-simply-linux-graphics
 Obsoletes: xfce-settings-lite xfce-settings-school-lite
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-xfce-settings ";done )
+%branding_add_conflicts simply-linux xfce-settings
 Conflicts: xfce-settings-simply-linux
 
 %description xfce-settings
@@ -178,7 +181,7 @@ Summary: Slideshow for Simply Linux %version installer.
 Summary(ru_RU.UTF-8): Изображения для организации "слайдшоу" в установщике дистрибутива "Просто Линукс"
 License: Distributable
 Group: System/Configuration/Other 
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-slideshow ";done )
+%branding_add_conflicts simply-linux slideshow
 
 %description slideshow
 Slideshow for Simply Linux %version installer.
@@ -246,6 +249,8 @@ make
 %makeinstall
 make x86 DESTDIR=%buildroot datadir=%buildroot%_datadir sysconfdir=%buildroot%_sysconfdir
 
+%define data_cur_dir %_datadir/branding-data-current
+mkdir -p %buildroot%data_cur_dir
 
 #graphics
 mkdir -p %buildroot/%_datadir/design/{%theme,backgrounds}
@@ -270,17 +275,23 @@ __EOF__
 
 #release
 install -pD -m644 /dev/null %buildroot%_sysconfdir/buildreqs/packages/ignore.d/%name-release
-echo "%Name %version %status (%codename)" >%buildroot%_sysconfdir/altlinux-release
+install -pD -m644 components/systemd/os-release %buildroot%data_cur_dir/release/os-release
+echo "%Name %version %status (%codename)" >%buildroot%data_cur_dir/release/altlinux-release
 for n in fedora redhat system; do
-	ln -s altlinux-release %buildroot%_sysconfdir/$n-release
+	ln -s altlinux-release %buildroot%data_cur_dir/release/$n-release
 done
-install -pD -m644 components/systemd/os-release %buildroot%_sysconfdir/os-release
+for r in %buildroot%data_cur_dir/release/*-release; do
+  touch %buildroot%_sysconfdir/"${r##*/}"
+done
 
 #notes
 pushd notes
 %makeinstall
 popd
-ln -s license.ru.html %buildroot%_datadir/alt-notes/license.uk.html
+ln -s license.ru.html %buildroot%data_cur_dir/alt-notes/license.uk.html
+for r in %buildroot%data_cur_dir/alt-notes/license.*.html; do
+  touch %buildroot%_datadir/alt-notes/"${r##*/}"
+done
 
 mkdir -p %buildroot/etc/skel/XDG-Templates.skel/
 
@@ -336,7 +347,7 @@ cp -a system-settings/polkit-rules/*.rules %buildroot/%_sysconfdir/polkit-1/rule
 [ -s /boot/splash/%theme ] && rm -fr  /boot/splash/%theme ||:
 
 %post bootloader
-%__ln_s -nf %theme/message /boot/splash/message
+ln -snf %theme/message /boot/splash/message
 . /etc/sysconfig/i18n
 lang=$(echo $LANG | cut -d. -f 1)
 cd boot/splash/%theme/
@@ -351,7 +362,7 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 %preun bootloader
 [ $1 = 0 ] || exit 0
 [ "`readlink /boot/splash/message`" != "%theme/message" ] ||
-    %__rm -f /boot/splash/message
+    rm -f /boot/splash/message
 
 %post indexhtml
 %_sbindir/indexhtml-update
@@ -367,6 +378,19 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 [ -f /etc/sysconfig/grub2 ] && \
       subst "s|GRUB_WALLPAPER=.*|GRUB_WALLPAPER=/usr/share/plymouth/themes/%theme/grub.jpg|" \
              /etc/sysconfig/grub2 ||:
+
+#release
+%post release
+if ! [ -e %_sysconfdir/altlinux-release ] && \
+   ! [ -e %_sysconfdir/os-release ]; then
+	cp -a %data_cur_dir/release/*-release %_sysconfdir/
+fi
+
+#notes
+%post notes
+if ! [ -e %_datadir/alt-notes/license.all.html ]; then
+	cp -a %data_cur_dir/alt-notes/license.*.html %_datadir/alt-notes/
+fi
 
 %files alterator
 %config %_altdir/*.rcc
@@ -384,11 +408,17 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %exclude %_datadir/plymouth/themes/%theme/*.in
 
 %files release
-%_sysconfdir/*-release
+%dir %data_cur_dir
+%data_cur_dir/release/
 %_sysconfdir/buildreqs/packages/ignore.d/*
+%ghost %config(noreplace) %_sysconfdir/*-release
 
 %files notes
-%_datadir/alt-notes/*
+%dir %data_cur_dir
+%data_cur_dir/alt-notes
+%_datadir/alt-notes/livecd-*
+%_datadir/alt-notes/release-notes.*
+%ghost %config(noreplace) %_datadir/alt-notes/license.*.html
 
 %files xfce-settings
 %_sysconfdir/X11/profile.d/zdg-move-templates.sh
@@ -408,10 +438,6 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %define indexhtmldir %_defaultdocdir/indexhtml
 
 %files indexhtml
-#%%ghost %%_indexhtmldir/index.html
-#%%_indexhtmldir/*
-#%%_desktopdir/*
-
 %ghost %indexhtmldir/index.html
 %indexhtmldir/index-*.html
 %indexhtmldir/index.css
@@ -427,6 +453,12 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %config %_sysconfdir/polkit-1/rules.d/*.rules
 
 %changelog
+* Fri Mar 10 2017 Mikhail Efremov <sem@altlinux.org> 7.95.0-alt6
+- Spec cleanup.
+- Don't change license and *-release files during update.
+- Use rpm-macros-branding.
+- Use Clearlooks-Phenix theme again.
+
 * Tue Feb 07 2017 Artem Zolochevskiy <azol@altlinux.org> 7.95.0-alt5
 - indexhtml: Drop reference to alt-docs/modules
 
