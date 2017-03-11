@@ -2,7 +2,7 @@
 
 Name: chrony
 Version: 2.2
-Release: alt2
+Release: alt2%ubt
 
 Summary: Chrony clock synchronization program
 License: GPLv2 only
@@ -12,6 +12,8 @@ Url: http://chrony.tuxfamily.org
 Source0: http://download.tuxfamily.org/chrony/%name-%version.tar
 Source1: chronyd.init
 Source2: chrony
+
+BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: libcap-devel libncurses-devel libreadline-devel
 BuildRequires: libnss-devel
@@ -126,6 +128,9 @@ gzip -9 -f -k chrony.txt
 %_man8dir/*
 
 %changelog
+* Sun Mar 12 2017 Evgeny Sinelnikov <sin@altlinux.ru> 2.2-alt2%ubt
+- Build with universal build tag
+
 * Fri Dec 23 2016 Denis Medvedev <nbr@altlinux.org> 2.2-alt2
 - Provides ntp-server, needed for alterator-datetime.
 Added chrony control.
