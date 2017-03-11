@@ -6,7 +6,7 @@
 
 Name: wxGTK3.1-gtk2
 Version: 3.1.0
-Release: alt2.20160229
+Release: alt3.20160229
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 Source2: ld_shared_wrapper.pl
 Patch1: wxGTK3.0-disable-ABI-checking.patch
 Patch2: wxGTK3.1-gtk2-fix-config.patch
+Patch3: wxGTK3.1-gstreamer1.0.patch
 
 # Automatically added by buildreq on Wed Dec 10 2008
 BuildRequires: gcc-c++ libGL-devel libSDL-devel libSM-devel
@@ -28,8 +29,8 @@ BuildRequires: libjpeg-devel libtiff-devel libgtk+2-devel
 
 BuildPreReq: xorg-xextproto-devel xorg-inputproto-devel libXtst-devel
 BuildPreReq: rpm-build-java libXxf86vm-devel libbfd-devel
-BuildPreReq: libstdc++-devel gstreamer-devel gst-plugins-devel
-BuildPreReq: libGConf-devel gst-plugins-devel libpng-devel
+BuildPreReq: libstdc++-devel gstreamer1.0-devel
+BuildPreReq: libGConf-devel gst-plugins1.0-devel libpng-devel
 BuildPreReq: libnotify-devel libwebkitgtk2-devel libmspack-devel
 
 %description
@@ -69,6 +70,7 @@ Header files for wxGTK, the GTK+ port of the wxWidgets library.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 %__subst "s,bakefile/presets,bakefile/presets-\$(WX_RELEASE),g" Makefile.in
 
 rm -fR src/{expat,jpeg,tiff,zlib,png}
@@ -80,7 +82,7 @@ CONF_FLAG="--enable-shared --without-debug_flag --without-debug_info"
 sed 's/WX_RELEASE=.*/WX_RELEASE=%wxrelease/' -i configure
 sed 's/WX_VERSION=.*/WX_VERSION=%wxversion/' -i configure
 sed "s/WX_VERSION_TAG=.*/WX_VERSION_TAG=`echo WX\${lib_unicode_suffix}\${WX_LIB_FLAVOUR}_%(echo %wxrelease |sed 's/-.*//') | tr '[[a-z]]' '[[A-Z]]'`/" -i configure
-GST_CFLAGS="$(pkg-config --cflags gstreamer-0.10)"
+GST_CFLAGS="$(pkg-config --cflags gstreamer-1.0)"
 export LIBS="-lX11"
 DEFS="-DUNICODE=1 -DwxUSE_UNICODE=1 -DwxDEBUG_LEVEL=0"
 %add_optflags -fno-strict-aliasing $GST_CFLAGS $DEFS
@@ -350,6 +352,9 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxrelease/wx/unix/
 %_libdir/*.so
 
 %changelog
+* Sat Mar 11 2017 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt3.20160229
+- Built against GStreamer 1.0.
+
 * Mon Jan 30 2017 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt2.20160229
 - Rebuilt with gcc6
 
