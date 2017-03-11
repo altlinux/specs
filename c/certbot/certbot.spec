@@ -1,5 +1,5 @@
 Name: certbot
-Version: 0.9.3
+Version: 0.12.0
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -24,7 +24,6 @@ Requires: python-module-zope.interface >= 4.1.0
 Requires: python-module-pyasn1 >= 0.1.8
 Requires: python-module-cffi >= 1.4.2
 Requires: python-module-setuptools >= 13
-Requires: dialog
 # Due Prior to Python 2.7.9 the stdlib SSL module did not allow a user to configure
 # See /usr/lib/python2.7/site-packages/acme/client.py
 Requires: python-base >= 2.7.9
@@ -44,7 +43,6 @@ Requires: python-base >= 2.7.9
 #BuildRequires: python-zope-interface
 #BuildRequires: python-zope-component
 #BuildRequires: python-requests
-#BuildRequires: python2-dialog >= 3.3.0
 #BuildRequires: python-psutil >= 2.1.0
 #BuildRequires: python-parsedatetime
 #BuildRequires: python-configobj
@@ -62,7 +60,6 @@ to lower the barriers to entry for encrypting all HTTP traffic on the internet.
 %package -n python-module-%name
 Group: Networking/Other
 Requires: python-module-configargparse >= 0.10.0
-Requires: python-module-dialog >= 3.3.0
 Requires: python-module-psutil >= 2.1.0
 Requires: python-module-acme >= %version
 #Recommends: letsencrypt-doc
@@ -146,6 +143,9 @@ ln -s %name %buildroot%_bindir/letsencrypt
 #%doc docs/_build/html
 
 %changelog
+* Fri Mar 10 2017 Terechkov Evgenii <evg@altlinux.org> 0.12.0-alt1
+- 0.12.0
+
 * Sun Dec 04 2016 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt1
 - new version 0.9.3 (with rpmrb script)
 
