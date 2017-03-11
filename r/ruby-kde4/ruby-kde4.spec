@@ -6,7 +6,7 @@
 %define bugfix 0
 Name: ruby-kde4
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 Group: Development/Ruby
 Summary: Korundum Ruby-KDE library
@@ -26,6 +26,8 @@ Patch1: alt-no-examples.patch
 BuildRequires: akonadi-devel gcc-c++ kde4-kate-devel kde4-okular-devel kde4-smoke-devel kde4pimlibs-devel
 BuildRequires: libruby-devel ruby-qt4-devel
 BuildRequires: kde-common-devel
+
+%filter_from_requires /^ruby(\(analog_clock_config\|calendar\|clockapplet\|digital_clock_config\|timezones_config\))/d
 
 %description
 Ruby bindings for libraries created by the KDE community.
@@ -65,6 +67,9 @@ chmod a+x %buildroot/%ruby_sitelibdir/khtml/khtml.rb
 %_K4apps/plasma_ruby_digital_clock/
 
 %changelog
+* Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 4.14.0-alt4
+- Rebuild with new %%ruby_sitearchdir location
+
 * Mon Oct 03 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt3
 - rebuild with new libruby
 

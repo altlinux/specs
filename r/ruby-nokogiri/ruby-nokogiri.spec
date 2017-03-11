@@ -1,20 +1,21 @@
 %define Name Nokogiri
 %define bname nokogiri
 Name: ruby-%bname
-Version: 1.6.8
+Version: 1.7.0.1
 Release: alt1
 Summary: Ruby libraries for %Name (HTML, XML, SAX, and Reader parser)
 Group: Development/Ruby
 License: MIT/Ruby
 URL: http://%bname.org
 Source: %bname-%version.tar
-Patch: fix-test.patch
 Patch1: ignore-gems.patch
 
 BuildPreReq: rpm-build-ruby
 BuildRequires: ruby ruby-stdlibs libruby-devel ruby-racc ruby-tool-setup %_bindir/rexical
 BuildRequires: libxml2-devel libxslt-devel java-devel ruby-pkg-config
 #BuildRequires: db2latex-xsl xhtml1-dtds
+
+%filter_from_requires /^ruby(.*\.jar)/d
 
 %description
 %Name parses and searches XML/HTML very quickly, and also has correctly
@@ -46,7 +47,6 @@ Documentation for %Name.
 
 %prep
 %setup -q -n %bname-%version
-#patch -p1
 %patch1 -p1
 
 DisableTest()
@@ -99,6 +99,10 @@ ls -d %buildroot%ruby_ri_sitedir/* | grep -v '/%Name$' | xargs rm -rf
 
 
 %changelog
+* Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 1.7.0.1-alt1
+- New version
+- Rebuild with new %%ruby_sitearchdir location
+
 * Mon Sep 12 2016 Andrey Cherepanov <cas@altlinux.org> 1.6.8-alt1
 - New version
 

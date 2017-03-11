@@ -2,7 +2,7 @@
 
 Name: %pkgname
 Version: 2.3.0
-Release: alt1
+Release: alt2
 
 Summary: POSIX Message Queues for Ruby.
 Group: Development/Ruby
@@ -37,8 +37,6 @@ Documentation files for %name.
 #ruby_test_unit -Ilib/:ext/posix_mq  test/test_posix_mq.rb
 #done
 
-
-
 %install
 %ruby_install
 %rdoc lib/
@@ -54,6 +52,9 @@ Documentation files for %name.
 %ruby_ri_sitedir/POSIX_MQ*
 
 %changelog
+* Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 2.3.0-alt2
+- Rebuild with new %%ruby_sitearchdir location
+
 * Fri Sep 23 2016 Andrey Cherepanov <cas@altlinux.org> 2.3.0-alt1
 - new version 2.3.0
 

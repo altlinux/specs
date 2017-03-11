@@ -1,7 +1,7 @@
 %def_enable shared
 %def_without valgrind
 %def_enable rubygems
-#define ruby_version %nil
+%define ruby_version 2.3.1
 %define libdir %_prefix/lib/%name
 %define includedir %_includedir
 %define ridir %_datadir/ri
@@ -9,9 +9,11 @@
 
 Name: ruby
 %define lname lib%name
-%define branch 2.3.1
-Version: %branch
-Release: alt1
+%define branch 2.3
+%define ver_teeny 1
+#define _pl
+Version: %branch.%ver_teeny
+Release: alt2
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -33,7 +35,7 @@ done)
 BuildRequires: doxygen groff-base libdb4-devel libffi-devel
 BuildRequires: libgdbm-devel libncursesw-devel libreadline-devel libssl-devel
 BuildRequires: tk-devel zlib-devel libyaml-devel
-BuildRequires: ruby ruby-stdlibs
+BuildRequires: ruby ruby-stdlibs gcc-c++
 BuildRequires: rpm-build-ruby >= 1:0.1.3
 %{?_with_valgrind:BuildRequires: valgrind-devel}
 
@@ -104,6 +106,7 @@ Provides: %{name}gems = 2.0.14
 %mobsolete erb etc fcntl fileutils gdbm iconv math misc net nkf open3 openssl
 %mobsolete optparse patterns pty readline rexml rss sdbm shell socket stringio
 %mobsolete strscan syslog thread tracer uri wait webrick xmlrpc yaml zlib
+Requires: libyaml2 libgdbm libssl10 libcrypto10
 
 %description -n %name-stdlibs
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -232,6 +235,7 @@ sed -i -e '/doc\/capi/s|"/capi|"/html/capi|' -e '/doc\/capi/s|doc/capi|&/html|' 
 
 
 %build
+%define ruby_arch %_target%([ -z "%_gnueabi" ] || echo "-eabi")
 %autoreconf
 %configure \
 	%{subst_enable shared} \
@@ -239,6 +243,8 @@ sed -i -e '/doc\/capi/s|"/capi|"/html/capi|' -e '/doc\/capi/s|doc/capi|&/html|' 
 	%{subst_enable rubygems} \
 	--with-rubylibprefix=%libdir \
 	--with-rubyhdrdir=%includedir \
+	--with-sitearchdir=%libdir/site_ruby/%version/%ruby_arch \
+	--with-vendorarchdir=%libdir/vendor_ruby/%version/%ruby_arch \
 	--with-ridir=%ridir \
 	--docdir=%_docdir/%name-%version \
 	%{?ruby_version:--with-ruby-version=%ruby_version} \
@@ -266,13 +272,12 @@ __EOF__
 chmod +x %buildroot%_rpmlibdir/%name-doc-ri.filetrigger
 
 %define ruby_libdir %libdir
-%define ruby_arch %_target%([ -z "%_gnueabi" ] || echo "-eabi")
-%define __ruby env LD_LIBRARY_PATH=%buildroot%_libdir RUBYLIB=%buildroot%libdir:%buildroot%libdir/%ruby_arch %buildroot%_bindir/%name
-export RUBYLIB=%buildroot%libdir:%buildroot%libdir/%ruby_arch
-export LD_LIBRARY_PATH=%buildroot%_libdir
+%define __ruby env LD_LIBRARY_PATH=%buildroot%_libdir RUBYLIB=%buildroot%libdir:%buildroot%libdir/site_ruby/%version/%ruby_arch %buildroot%_bindir/%name
+export RUBYLIB=%buildroot%libdir:%buildroot%libdir/site_ruby/%version/%ruby_arch
+export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/site_ruby/%version%ruby_arch
 
 %add_findreq_skiplist %libdir/gems/*/gems/*/bin/*
-
+%add_findreq_skiplist %libdir/*
 
 %check
 %make_build test
@@ -349,6 +354,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Mar 07 2017 Denis Medvedev <nbr@altlinux.org> 2.3.1-alt2
+- Fix ruby library path
+
 * Thu Sep 08 2016 Denis Medvedev <nbr@altlinux.org> 2.3.1-alt1
 - new version
 
