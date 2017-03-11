@@ -2,17 +2,17 @@
 
 %set_compress_method skip
 
-%define emacs_version 25.1
+%define emacs_version 25.1.91
 %define erc_version %emacs_version
 
 %define gnus_version 5.13
 %define shortname emacs
-%define tramp_version 2.2.13.25.1
+%define tramp_version 2.2.13.25.2
 %define speedbar_version 1.0
 %define nxml_version 0.2.20041004
 %define cedet_version 2.0
 
-%define cedet_release alt5
+%define cedet_release alt6
 
 # subpackages to build;
 %def_enable nox
@@ -22,8 +22,8 @@
 %def_enable motif
 
 Name: emacs25
-Version: 25.1
-Release: alt3
+Version: 25.1.91
+Release: alt4
 
 Group: Editors
 Summary: GNU Emacs text editor
@@ -1241,6 +1241,7 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 
 #
 %files common -f main.ls
+%_datadir/appdata/emacs.appdata.xml
 %doc BUGS README README.KOI8-U README.UK CHANGES.ukr INSTALL.ukr README.ALT-ru_RU.KOI8-R
 # The trick for symlinking etc/:
 %doc --no-dereference etc/etc
@@ -1412,6 +1413,7 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 %_iconsdir/hicolor/128x128/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/mimetypes/emacs-document.svg
+%_iconsdir/hicolor/scalable/mimetypes/emacs-document23.svg
 %exclude %_desktopdir/emacs.desktop
 # Substitute for buidreq
 %_sysconfdir/buildreqs/packages/substitute.d/%name-X11
@@ -1548,6 +1550,9 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 
 
 %changelog
+* Sat Mar 11 2017 Terechkov Evgenii <evg@altlinux.org> 25.1.91-alt4
+- 25.1.91
+
 * Thu Sep 22 2016 Terechkov Evgenii <evg@altlinux.org> 25.1-alt3
 - Fix updating alternatives
 
