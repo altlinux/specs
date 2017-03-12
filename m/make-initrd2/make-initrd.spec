@@ -1,8 +1,8 @@
 %global myname make-initrd
 
 Name: make-initrd2
-Version: 2.0.1
-Release: alt2
+Version: 2.0.2
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL3
@@ -193,6 +193,11 @@ fi
 %_datadir/%myname/features/ucode
 
 %changelog
+* Sun Mar 12 2017 Alexey Gladkov <legion@altlinux.ru> 2.0.2-alt1
+- Add feature to control access to shell inside initrd.
+- Replace put-file by standalone utility.
+- ueventd process incoming events more quickly.
+
 * Sun Jul 10 2016 Alexey Gladkov <legion@altlinux.ru> 2.0.1-alt2
 - Fix install.
 
