@@ -1,6 +1,6 @@
 Name: mate-tweak
 Version: 16.10.5
-Release: alt1
+Release: alt2
 
 Summary: Mate desktop configuration tool
 License: GPLv2+
@@ -15,6 +15,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-setuptools python3-module-distutils-extra intltool
+Requires: libnotify-gir
 
 %description
 Configures some aspects of the MATE desktop not exposed via the
@@ -56,6 +57,9 @@ Settings that can be handled via MATE Tweak:
 %exclude %_man1dir/metacity*
 
 %changelog
+* Sun Mar 12 2017 Anton Midyukov <antohami@altlinux.org> 16.10.5-alt2
+- Added missing requires libnotify-gir.
+
 * Sat Oct 15 2016 Anton Midyukov <antohami@altlinux.org> 16.10.5-alt1
 - new version 16.10.5
 
