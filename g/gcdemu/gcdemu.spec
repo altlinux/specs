@@ -2,7 +2,7 @@ Summary: GTK+ based GUI for controlling CDEmu daemon
 Summary(ru_RU.UTF-8): Основанная на GTK+ GUI для управления CDEmu
 Name: gcdemu
 Version: 3.0.2
-Release: alt1
+Release: alt2
 Group: Emulators
 License: GPLv2+
 Url: http://cdemu.sourceforge.net/
@@ -12,8 +12,8 @@ Patch1: autostart.patch
 Patch2: enabled_ru_translation.patch
 Patch3: fix_desktop.patch
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake intltool
-Requires: cdemu-daemon cdemu-client libnotify-gir libappindicator-gtk3-gir
+BuildRequires: cmake intltool rpm-build-gir
+Requires: cdemu-daemon cdemu-client
 BuildArch: noarch
 
 %description
@@ -63,6 +63,9 @@ mv %buildroot/%_desktopdir/%name.desktop %buildroot/%_sysconfdir/xdg/autostart/
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Sun Mar 12 2017 Anton Midyukov <antohami@altlinux.org> 3.0.2-alt2
+- Added buildrequires rpm-build-gir.
+
 * Fri Oct 14 2016 Anton Midyukov <antohami@altlinux.org> 3.0.2-alt1
 - New version.
 
