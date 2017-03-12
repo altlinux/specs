@@ -4,7 +4,7 @@
 
 Name: syncthing-gtk
 Version: 0.9.2.4
-Release: alt2
+Release: alt3
 Summary: Syncthing Gtk-based graphical interface
 Summary(ru_RU.UTF-8): Основанный на GTK графический интерфейс для Syncthing
 License: GPLv2+
@@ -13,9 +13,9 @@ Url: https://github.com/syncthing/syncthing-gtk
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+BuildRequires(pre): rpm-build-gir
 BuildPreReq: python-devel python-module-setuptools desktop-file-utils
 Requires: syncthing >= 0.14
-Requires: librsvg-gir
 Requires: icon-theme-hicolor
 BuildArch: noarch
 
@@ -171,6 +171,7 @@ done
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/*/*.png
 %_pixmapsdir/*.png
+%_man1dir/*
 
 %if_enabled mate-file-manager-syncthing-gtk
 %files -n mate-file-manager-syncthing-gtk
@@ -194,6 +195,9 @@ done
 %endif
 
 %changelog
+* Sun Mar 12 2017 Anton Midyukov <antohami@altlinux.org> 0.9.2.4-alt3
+- Added buildrequires rpm-build-gir.
+
 * Fri Feb 17 2017 Anton Midyukov <antohami@altlinux.org> 0.9.2.4-alt2
 - Added cronbuild options
 
