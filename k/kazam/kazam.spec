@@ -1,7 +1,7 @@
 Name: kazam
 Summary: A screen-casting program created with design in mind
 Version: 1.4.5
-Release: alt1
+Release: alt2
 Group: Video
 License: GPLv3
 Url: https://launchpad.net/kazam
@@ -11,18 +11,8 @@ Patch0:	kazam-1.4.5-force-gtk-csd.patch
 Patch1: kazam-1.4.5-configparser_api_changes.patch
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-gir
 BuildRequires: python3-devel python3-module-distutils-extra intltool
-Requires: libcanberra-gtk3
-Requires: python3-module-pycairo
-Requires: python3-module-dbus
-Requires: python3-module-pygobject3
-Requires: python3-module-pyxdg
-Requires: typelib(GObject)
-Requires: typelib(Gst) >= 1.0
-Requires: typelib(GstAudio) >= 1.0
-Requires: typelib(GstVideo) >= 1.0
-Requires: typelib(Gtk) >= 3.0
-Requires: typelib(Wnck) >= 3.0
 
 %description
 Kazam is a simple screen recording program that will capture
@@ -61,5 +51,8 @@ cp -r build/mo/* %buildroot/%_datadir/locale
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Sun Mar 12 2017 Anton Midyukov <antohami@altlinux.org> 1.4.5-alt2
+- Added buildrequires rpm-build-gir.
+
 * Wed Aug 24 2016 Anton Midyukov <antohami@altlinux.org> 1.4.5-alt1
 - Initial build for ALT Linux Sisyphus (Closes: 32413).
