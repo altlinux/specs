@@ -1,8 +1,8 @@
 
 %define rname kaffeine
 Name: kde5-%rname
-Version: 2.0.5
-Release: alt1
+Version: 2.0.9
+Release: alt1%ubt
 %K5init
 
 Group: Video
@@ -32,10 +32,10 @@ Requires: vlc-plugin-xml
 Requires: vlc-plugin-dbus
 Requires: vlc-plugin-taglib
 
-Source0: %rname-%version.tar
+Source0: %name-%version.tar
 Patch1: alt-find-libdvbv5.patch
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-x11extras-devel
 BuildRequires: libXres-devel
 BuildRequires: libv4l-devel libvlc-devel
@@ -48,8 +48,10 @@ Kaffeine provides fast access to the most important media sources.
 It also handles Video CDs, DVDs, and DVB cards.
 
 %prep
-%setup -q -n %rname-%version
+%setup -q
 %patch1 -p1
+
+mv .gear/po ./
 
 %build
 %K5build -DDATA_INSTALL_DIR=%_K5data
@@ -73,6 +75,12 @@ It also handles Video CDs, DVDs, and DVB cards.
 %_K5xdgapp/org.kde.kaffeine.desktop
 
 %changelog
+* Mon Mar 13 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.9-alt1%ubt
+- new version
+
+* Tue Oct 25 2016 Sergey V Turchin <zerg@altlinux.org> 2.0.5-alt0.M80P.1
+- build for M80P
+
 * Tue Oct 25 2016 Sergey V Turchin <zerg@altlinux.org> 2.0.5-alt1
 - new version
 
