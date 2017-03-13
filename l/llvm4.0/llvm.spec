@@ -1,6 +1,6 @@
-%global llvm_svnrel r290127
-%global clang_svnrel r290130
-%global rel alt0.5
+%global llvm_svnrel %nil
+%global clang_svnrel %nil
+%global rel alt0.9
 %global llvm_name llvm4.0
 %global clang_name clang4.0
 
@@ -8,14 +8,14 @@
 
 Name: %llvm_name
 Version: 4.0.0
-Release: %rel.%llvm_svnrel
+Release: %rel.rel
 Summary: The Low Level Virtual Machine
 
 Group: Development/C
 License: NCSA
 Url: http://llvm.org
-Source0: http://llvm.org/releases/%version/llvm-%llvm_svnrel.tar
-Source1: http://llvm.org/releases/%version/clang-%clang_svnrel.tar
+Source0: http://llvm.org/releases/%version/llvm-%version.tar
+Source1: http://llvm.org/releases/%version/clang-%version.tar
 Patch1: alt-triple.patch
 Patch2: alt-i586-fallback.patch
 Patch3: alt-llvm-no-proc-fix.patch
@@ -26,7 +26,7 @@ BuildRequires(pre): cmake >= 3.4.3
 BuildRequires: chrpath libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
 BuildRequires: python-modules-compiler python-modules-unittest python-modules-xml
 BuildRequires: python-modules-json zip zlib-devel gcc-c++
-BuildRequires: python-module-sphinx-devel
+BuildRequires: python-module-sphinx-devel binutils-devel
 
 Conflicts: llvm <= 3.8.0
 
@@ -76,7 +76,7 @@ Summary: A C language family frontend for LLVM
 License: NCSA
 Group: Development/C
 Requires: gcc
-Release: %rel.%clang_svnrel
+#Release: %%rel.%%clang_svnrel
 Conflicts: clang <= 3.8.0
 
 %description -n %clang_name
@@ -92,7 +92,7 @@ as libraries and designed to be loosely-coupled and extendable.
 %package -n %clang_name-devel
 Summary: Header files for clang
 Group: Development/C
-Release: %rel.%clang_svnrel
+#Release: %%rel.%%clang_svnrel
 Requires: %clang_name = %version-%release
 
 %description -n %clang_name-devel
@@ -101,7 +101,7 @@ This package contains header files for the Clang compiler.
 %package -n %clang_name-devel-static
 Summary: Static libraries for clang
 Group: Development/C
-Release: %rel.%clang_svnrel
+#Release: %%rel.%%clang_svnrel
 Requires: %clang_name = %version-%release
 
 %description -n %clang_name-devel-static
@@ -112,7 +112,7 @@ Summary: A source code analysis framework
 License: NCSA
 Group: Development/C
 BuildArch: noarch
-Release: %rel.%clang_svnrel
+#Release: %%rel.%%clang_svnrel
 Requires: %clang_name = %version-%release
 
 %description -n %clang_name-analyzer
@@ -125,15 +125,15 @@ intended to run in tandem with a build of a project or code base.
 Summary: Documentation for Clang
 Group: Documentation
 BuildArch: noarch
-Release: %rel.%clang_svnrel
+#Release: %%rel.%%clang_svnrel
 Requires: %clang_name = %version-%release
 
 %description -n %clang_name-doc
 Documentation for the Clang compiler front-end.
 
 %prep
-%setup -n llvm-%llvm_svnrel -a1
-mv clang-%clang_svnrel tools/clang
+%setup -n llvm-%version -a1
+mv clang-%version tools/clang
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -150,6 +150,7 @@ mv clang-%clang_svnrel tools/clang
 	-DLLVM_ENABLE_FFI:BOOL=ON \
 	-DLLVM_ENABLE_RTTI:BOOL=ON \
 	-DLLVM_OPTIMIZED_TABLEGEN:BOOL=ON \
+	-DLLVM_BINUTILS_INCDIR="%_includedir/bfd" \
 	\
 	%if "%_lib" == "lib64"
 	-DLLVM_LIBDIR_SUFFIX="64" \
@@ -230,6 +231,7 @@ make check-all -C BUILD || :
 %files libs
 %_libdir/libLLVM-*.so
 %_libdir/libLTO.so.*
+%_libdir/LLVMgold.so
 %exclude %_libdir/libclang.so.*
 
 %files devel
@@ -278,6 +280,12 @@ make check-all -C BUILD || :
 %doc %_docdir/clang
 
 %changelog
+* Mon Mar 13 2017 L.A. Kostis <lakostis@altlinux.ru> 4.0.0-alt0.9.rel
+- Updated 4.0.0 release.
+
+* Thu Dec 29 2016 L.A. Kostis <lakostis@altlinux.ru> 4.0.0-alt0.6.r290127
+- Enabled gold plugin.
+
 * Wed Dec 28 2016 L.A. Kostis <lakostis@altlinux.ru> 4.0.0-alt0.5.r290127
 - Renamed clang to clang4.0 (to coexist with 3.x clang).
 
