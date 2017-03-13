@@ -1,5 +1,5 @@
 Name: abi-compliance-checker
-Version: 1.99.25
+Version: 2.0
 Release: alt1
 
 Summary: ABI compliance checker
@@ -41,6 +41,9 @@ perl Makefile.pl -install --prefix=%prefix --destdir=%buildroot
 %_datadir/%name
 
 %changelog
+* Mon Mar 13 2017 Fr. Br. George <george@altlinux.ru> 2.0-alt1
+- Autobuild version bump to 2.0
+
 * Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 1.99.25-alt1
 - Autobuild version bump to 1.99.25
 
