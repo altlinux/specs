@@ -11,7 +11,7 @@
 %define lxduser lxd
 
 Name:		lxd
-Version:	2.6.2
+Version:	2.11
 Release:	alt1
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
@@ -38,7 +38,6 @@ BuildRequires(pre): rpm-build-golang
 
 Requires:	shadow-submap
 Requires:	lxc-libs
-Requires:	cgmanager
 Requires:	lxcfs
 Requires:	btrfs-progs
 Requires:	lvm2
@@ -173,6 +172,9 @@ cp -av scripts/lx* %buildroot/%_bindir/
 %go_path/src/*
 
 %changelog
+* Mon Mar 13 2017 Denis Pynkin <dans@altlinux.org> 2.11-alt1
+- new version
+
 * Sat Nov 26 2016 Denis Pynkin <dans@altlinux.org> 2.6.2-alt1
 - new version 2.6.2
 

@@ -26,8 +26,8 @@
 %define init_script systemd
 
 Name: lxc
-Version: 2.0.6
-Release: alt1
+Version: 2.0.7
+Release: alt2
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -46,7 +46,6 @@ Requires: iproute2 bridge-utils dnsmasq
 BuildRequires: libcap-devel docbook-utils glibc-kernheaders
 BuildRequires: docbook2X xsltproc
 BuildRequires: rpm-macros-alternatives
-BuildRequires: libcgmanager-devel
 BuildRequires: libnih-devel
 BuildRequires: libdbus-devel
 BuildRequires: libgnutls-devel
@@ -105,7 +104,7 @@ development of the linux containers.
 CFLAGS+=-I%_includedir/linux-default/include/
 %autoreconf
 %configure -disable-rpath \
-    --enable-cgmanager \
+    --disable-cgmanager \
     --localstatedir=%_var \
     --with-config-path=%_var/lib/lxc \
     --enable-python \
@@ -169,6 +168,12 @@ mkdir -p %buildroot%_cachedir/%name
 
 
 %changelog
+* Mon Mar 13 2017 Denis Pynkin <dans@altlinux.org> 2.0.7-alt2
+- Disable cgmanager support
+
+* Mon Mar 13 2017 Denis Pynkin <dans@altlinux.org> 2.0.7-alt1
+- Version updated
+
 * Fri Nov 25 2016 Denis Pynkin <dans@altlinux.org> 2.0.6-alt1
 - Version updated
 

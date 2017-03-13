@@ -1,12 +1,8 @@
 %global import_path github.com/mattn/go-colorable
 
-%global commit 6c903ff4aa50920ca86087a280590b36b3152b9c
-%global abbrev %(c=%{commit}; echo ${c:0:8})
-
-
 Name: golang-github-mattn-go-colorable
-Version: 0.0.6
-Release: alt2.git%abbrev
+Version: 0.0.7
+Release: alt1
 Summary: Colorable writer for windows.
 License: MIT
 Group: Development/Other
@@ -55,6 +51,9 @@ rm -rf -- %buildroot/%go_path/src/%import_path/_example
 %go_path/src/*
 
 %changelog
+* Mon Mar 13 2017 Denis Pynkin <dans@altlinux.org> 0.0.7-alt1
+- Update
+
 * Sun Oct 23 2016 Denis Pynkin <dans@altlinux.org> 0.0.6-alt2.git6c903ff4
 - Update
 

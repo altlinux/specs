@@ -1,5 +1,5 @@
 Name: crtools
-Version: 2.8
+Version: 2.12
 #define pre 
 %define ver %version%{?pre:%pre}
 Release: alt1
@@ -8,10 +8,11 @@ License: GPLv2
 Group: System/Configuration/Other
 URL: http://criu.org
 Source: %name-%ver.tar
-Patch: %name-%version-%release.patch
+#Patch: %name-%version-%release.patch
 Provides: criu = %version-%release
 ExclusiveArch: x86_64 %arm
 
+BuildRequires: libnet2-devel
 BuildRequires: libprotobuf-c-devel %_bindir/protoc-c
 BuildRequires: libprotobuf-devel protobuf-compiler
 BuildRequires: asciidoc xmlto %_bindir/a2x
@@ -58,7 +59,7 @@ Python library library of checkpoint/restore.
 
 %prep
 %setup -q -n %name-%ver
-%patch -p1
+#patch -p1
 
 
 %build
@@ -75,6 +76,7 @@ export CFLAGS="%optflags"
 %_sbindir/*
 %_sbindir/*
 %_libexecdir/criu/scripts/*
+%_man1dir/*
 %_man8dir/*
 
 
@@ -94,6 +96,9 @@ export CFLAGS="%optflags"
 
 
 %changelog
+* Mon Mar 13 2017 Denis Pynkin <dans@altlinux.org> 2.12-alt1
+- updated
+
 * Fri Nov 25 2016 Denis Pynkin <dans@altlinux.org> 2.8-alt1
 - updated
 
