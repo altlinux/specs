@@ -3,7 +3,7 @@
 
 Summary: pip installs packages.  Python packages.  An easy_install replacement
 Name: python-module-pip
-Version: 8.1.2
+Version: 9.0.1
 Release: alt1
 Source0: pip-%version.tar.gz
 Patch: pip-1.5.6-alt-python3.patch
@@ -22,7 +22,6 @@ BuildRequires: python-module-alabaster python-module-docutils python-module-html
 #BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-setuptools-tests
 %add_python3_req_skip  UserDict
 %endif
 
@@ -47,25 +46,18 @@ Group: Development/Documentation
 
 This package contains documentation for pip.
 
+%if_with python3
 %package -n python3-module-%modulename
 Summary: pip installs packages.  Python packages.  An easy_install replacement
 Group: Development/Python3
-%py3_provides %modulename
+%py3_provides %modulename pip._vendor.six.moves pip._vendor.six.moves.urllib
 
 %description -n python3-module-%modulename
 %summary
+%endif
 
 %prep
 %setup -n %modulename-%version
-
-%if_with python3
-cp -fR . ../python3
-%if 0
-pushd ../python3
-%patch -p2
-popd
-%endif
-%endif
 
 %prepare_sphinx .
 ln -s ../objects.inv docs/
@@ -73,19 +65,8 @@ ln -s ../objects.inv docs/
 %build
 %python_build
 
-%if_with python3
-pushd ../python3
-%python3_build
-popd
-%endif
-
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
-
 %python_install
 
 export PYTHONPATH=%buildroot%python_sitelibdir
@@ -117,6 +98,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%modulename/
 %endif
 
 %changelog
+* Mon Mar 13 2017 Fr. Br. George <george@altlinux.ru> 9.0.1-alt1
+- Autobuild version bump to 9.0.1
+
 * Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 8.1.2-alt1
 - Autobuild version bump to 8.1.2
 - Fix python3 version
