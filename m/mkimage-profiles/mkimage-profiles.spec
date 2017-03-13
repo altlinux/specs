@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.105
+Version: 1.1.106
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -91,6 +91,9 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Mar 13 2017 Michael Shigorin <mike@altlinux.org> 1.1.106-alt1
+- starterkits-20170312
+
 * Mon Feb 27 2017 Michael Shigorin <mike@altlinux.org> 1.1.105-alt1
 - disable git hooks (glebfm@)
 
