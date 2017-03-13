@@ -2,7 +2,7 @@
 
 Name: wdm
 Version: 1.28
-Release: alt17
+Release: alt18
 
 Summary: WINGs Display Manager
 License: GPL
@@ -124,6 +124,9 @@ install -pDm755 %SOURCE4 %buildroot%_sysconfdir/firsttime.d/wdm
 %doc AUTHORS ChangeLog INSTALL NEWS README README.pam TODO
 
 %changelog
+* Tue Mar 14 2017 Michael Shigorin <mike@altlinux.org> 1.28-alt18
+- rebuilt against 0.95.8 libraries
+
 * Tue Aug 18 2015 Michael Shigorin <mike@altlinux.org> 1.28-alt17
 - rebuilt against 0.95.7 libraries
 
