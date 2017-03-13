@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.7.1
+Version: 1.8.1
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers.
@@ -85,6 +85,8 @@ popd
 pushd ../python3
 %python3_install
 popd
+
+%filter_from_requires /python3[(]cryptography.hazmat.bindings._commoncrypto[)]/d
 %endif
 
 %files
@@ -99,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 13 2017 Vladimir Didenko <cow@altlinux.ru> 1.8.1-alt1
+- 1.8.1
+
 * Fri Dec 16 2016 Vladimir Didenko <cow@altlinux.ru> 1.7.1-alt1
 - 1.7.1
 
