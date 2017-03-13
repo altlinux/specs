@@ -1,6 +1,6 @@
 Name: bozohttpd
-Version: 20160415
-Release: alt2.1
+Version: 20170201
+Release: alt1
 Group: System/Servers
 Summary: Tiny http 1.1 server
 License: BSD
@@ -140,6 +140,9 @@ cd testsuite
 %_libdir/*.a
 
 %changelog
+* Mon Mar 13 2017 Fr. Br. George <george@altlinux.ru> 20170201-alt1
+- Autobuild version bump to 20170201
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 20160415-alt2.1
 - rebuild with new lua 5.3
 
