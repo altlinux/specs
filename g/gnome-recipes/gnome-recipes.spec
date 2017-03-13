@@ -1,4 +1,4 @@
-%define ver_major 0.20
+%define ver_major 0.22
 %define xdg_name org.gnome.Recipes
 
 Name: gnome-recipes
@@ -71,7 +71,7 @@ This package contains common noarch files needed for Recipes.
 %_desktopdir/%xdg_name.desktop
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/gnome-shell/search-providers/%xdg_name-search-provider.ini
-#%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/symbolic/apps/*.svg
 %_xdgmimedir/packages/org.gnome.Recipes-mime.xml
@@ -79,6 +79,9 @@ This package contains common noarch files needed for Recipes.
 
 
 %changelog
+* Mon Mar 13 2017 Yuri N. Sedunov <aris@altlinux.org> 0.22.0-alt1
+- 0.22.0
+
 * Sat Mar 04 2017 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
 - 0.20.0
 
