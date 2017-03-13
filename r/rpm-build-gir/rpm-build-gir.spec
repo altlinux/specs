@@ -1,6 +1,6 @@
 Name: rpm-build-gir
 Version: 0.7.2
-Release: alt2
+Release: alt3
 
 Summary: RPM helper macros and dependency utils to build GObject Introspection packages
 License: GPL
@@ -39,6 +39,9 @@ ln -s gir.prov.files %buildroot%_rpmlibdir/gir.req.files
 %_rpmlibdir/typelib*
 
 %changelog
+* Sun Mar 12 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt3
+- gir-python.req.files: fix for "python3 script text executable"
+
 * Sun Jan 26 2014 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt2
 - modified gir-js.req using TypeLibReq_Skip() too
 
