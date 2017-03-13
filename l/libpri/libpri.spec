@@ -4,13 +4,13 @@
 #============================================================================
 Name: libpri
 Summary: PRI library
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 License: %gpl2only
 Group: System/Servers
 BuildRequires: libtonezone-dahdi-devel
 BuildPreReq: rpm-build-licenses
-Epoch: 20080502
+Epoch: 20170313
 Url: ftp://ftp.asterisk.org/pub/%name/%name-%version.tar.gz
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Source: %name-%version.tar
@@ -67,6 +67,12 @@ find -type f -name '.depend' -print0 \
 %_libdir/libpri.a
 
 %changelog
+* Mon Mar 13 2017 Denis Smirnov <mithraen@altlinux.ru> 20170313:1.6.0-alt1
+- 1.6.0
+
+* Mon Mar 13 2017 Denis Smirnov <mithraen@altlinux.ru> 20170313:1.5.0-alt1
+- repocop cronbuild 20170313. At your service.
+
 * Mon Mar 28 2016 Denis Smirnov <mithraen@altlinux.ru> 20080502:1.5.0-alt1
 - new version 1.5.0
 
