@@ -1,12 +1,12 @@
 %global import_path golang.org/x/net
 
-%global commit 4971afdc2f162e82d185353533d3cf16188a9f4e
+%global commit a6577fac2d73be281a500b310739095313165611
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-golang-x-net
 Version: 0
-Release: alt1.git%abbrev
+Release: alt2.git%abbrev
 Summary: Go supplementary network libraries
 License: MIT
 Group: Development/Other
@@ -29,26 +29,6 @@ Summary: golang-golang-x-net
 Group: Development/Other
 Requires: golang
 Provides: golang(%import_path) = %version-%release
-Provides: golang(%import_path/bpf) = %version-%release
-Provides: golang(%import_path/context) = %version-%release
-Provides: golang(%import_path/dict) = %version-%release
-Provides: golang(%import_path/html) = %version-%release
-Provides: golang(%import_path/http2) = %version-%release
-Provides: golang(%import_path/icmp) = %version-%release
-Provides: golang(%import_path/idna) = %version-%release
-Provides: golang(%import_path/internal) = %version-%release
-Provides: golang(%import_path/ipv4) = %version-%release
-Provides: golang(%import_path/ipv6) = %version-%release
-Provides: golang(%import_path/lex) = %version-%release
-Provides: golang(%import_path/lif) = %version-%release
-Provides: golang(%import_path/netutil) = %version-%release
-Provides: golang(%import_path/proxy) = %version-%release
-Provides: golang(%import_path/publicsuffix) = %version-%release
-Provides: golang(%import_path/route) = %version-%release
-Provides: golang(%import_path/trace) = %version-%release
-Provides: golang(%import_path/webdav) = %version-%release
-Provides: golang(%import_path/websocket) = %version-%release
-Provides: golang(%import_path/xsrftoken) = %version-%release
 
 %description devel
 Go supplementary network libraries
@@ -73,6 +53,9 @@ export GOPATH="%go_path"
 %go_path/src/*
 
 %changelog
+* Mon Mar 13 2017 Denis Pynkin <dans@altlinux.org> 0-alt2.gita6577fac
+- Update
+
 * Fri Nov 25 2016 Denis Pynkin <dans@altlinux.org> 0-alt1.git4971afdc
 - Initial package
 
