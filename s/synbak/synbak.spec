@@ -1,5 +1,5 @@
 Name: synbak
-Version: 3.1
+Version: 3.5
 Release: alt1
 
 Summary: Synbak - Universal Backup System
@@ -66,6 +66,9 @@ new backup methods, reports, and translations.
 %_datadir/%name/
 
 %changelog
+* Mon Mar 13 2017 Vitaly Lipatov <lav@altlinux.ru> 3.5-alt1
+- new version 3.5 (with rpmrb script)
+
 * Mon Jul 27 2015 Vitaly Lipatov <lav@altlinux.ru> 3.1-alt1
 - new version 3.1 (with rpmrb script)
 
