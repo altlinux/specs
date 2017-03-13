@@ -1,5 +1,5 @@
 Name:		cqrlog
-Version:	2.0.4
+Version:	2.0.5
 Release:	alt1
 Summary:	An amateur radio contact logging program
 
@@ -66,6 +66,9 @@ rm -rf %buildroot%_iconsdir/%name
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Mon Mar 13 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.5-alt1
+- New version
+
 * Wed Mar 08 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.4-alt1
 - New version
 
