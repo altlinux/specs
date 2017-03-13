@@ -1,6 +1,6 @@
 
 Name: rofi
-Version: 1.2.0
+Version: 1.3.1
 Release: alt1
 Summary: A window switcher, run dialog and dmenu replacement
 License: MIT
@@ -29,6 +29,7 @@ BuildRequires: libxcbutil-icccm-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libxkbcommon-x11-devel
 BuildRequires: libstartup-notification-devel
+BuildRequires: glib2-devel libgio-devel
 Requires: xdg-utils
 
 %description
@@ -54,8 +55,12 @@ like a run-dialog, ssh-launcher and can act as a drop-in dmenu replacement, maki
 %_bindir/rofi-*
 %_man1dir/%name.*
 %_man1dir/%name-*
+%_datadir/%name/themes/*
 
 %changelog
+* Mon Mar 13 2017 Konstantin Artyushkin <akv@altlinux.org> 1.3.1-alt1
+- update
+
 * Tue Oct 18 2016 Konstantin Artyushkin <akv@altlinux.org> 1.2.0-alt1
 - new version
 
