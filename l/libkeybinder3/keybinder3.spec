@@ -2,8 +2,8 @@
 %define sname keybinder-3.0
 
 Name: libkeybinder3
-Version: 0.3.0
-Release: alt1.git20120617
+Version: 0.3.2
+Release: alt1
 
 Summary: keybinder is a library for registering global keyboard shortcuts
 License: GPLv2
@@ -101,5 +101,8 @@ Python binding to %name
 %_girdir/*
 
 %changelog
+* Mon Mar 13 2017 Vladimir Didenko <cow at altlinux.org> 0.3.2-alt1
+- new version
+
 * Thu Jun 4 2015 Vladimir Didenko <cow at altlinux.org> 0.3.0-alt1.git20120617
--  initial build for Sisyphus
+- initial build for Sisyphus
