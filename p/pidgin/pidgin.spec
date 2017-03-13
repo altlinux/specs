@@ -32,7 +32,7 @@
 %def_enable vv
 
 Name: pidgin
-Version: 2.11.0
+Version: 2.12.0
 Release: alt1
 
 Summary: A GTK+ based multiprotocol instant messaging client
@@ -98,7 +98,7 @@ BuildPreReq: ca-certificates
 
 %description
 Pidgin allows you to talk to anyone using a variety of messaging
-protocols including AIM, MSN, Yahoo!, Jabber, Bonjour, Gadu-Gadu,
+protocols including AIM, Jabber, Bonjour, Gadu-Gadu,
 ICQ, IRC, Novell Groupwise, QQ, Lotus Sametime, SILC, Simple and
 Zephyr.  These protocols are implemented using a modular, easy to
 use design.  To use a protocol, just add an account using the
@@ -108,7 +108,7 @@ Pidgin supports many common features of other clients, as well as many
 unique features, such as perl scripting, TCL scripting and C plugins.
 
 Pidgin is not affiliated with or endorsed by America Online, Inc.,
-Microsoft Corporation, Yahoo! Inc., or ICQ Inc.
+Microsoft Corporation, or ICQ Inc.
 
 %package devel
 Summary: Development headers, documentation, and libraries for Pidgin
@@ -134,8 +134,8 @@ Conflicts: libpurple-mini
 libpurple contains the core IM support for IM clients such as Pidgin
 and Finch.
 
-libpurple supports a variety of messaging protocols including AIM, MSN,
-Yahoo!, Jabber, Bonjour, Gadu-Gadu, ICQ, IRC, Novell Groupwise, QQ,
+libpurple supports a variety of messaging protocols including AIM,
+Jabber, Bonjour, Gadu-Gadu, ICQ, IRC, Novell Groupwise, QQ,
 Lotus Sametime, SILC, Simple and Zephyr.
 
 %package -n libpurple-devel
@@ -456,6 +456,9 @@ fi
 %endif
 
 %changelog
+* Mon Mar 13 2017 Alexey Shabalin <shaba@altlinux.ru> 2.12.0-alt1
+- 2.12.0
+
 * Thu Jul 07 2016 Alexey Shabalin <shaba@altlinux.ru> 2.11.0-alt1
 - 2.11.0
 
