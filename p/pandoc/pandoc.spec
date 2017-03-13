@@ -8,7 +8,7 @@
 
 Name: pandoc
 Version: 1.11.1
-Release: alt1.1
+Release: alt2
 Summary: Markup conversion tool for markdown
 
 Group: Publishing
@@ -22,7 +22,19 @@ Source100: pandoc.watch
 # optimized out: ghc7.6.1 ghc7.6.1-blaze-builder ghc7.6.1-blaze-html ghc7.6.1-blaze-markup ghc7.6.1-common ghc7.6.1-digest ghc7.6.1-extensible-exceptions ghc7.6.1-hexpat ghc7.6.1-hs-bibutils ghc7.6.1-http ghc7.6.1-json ghc7.6.1-list ghc7.6.1-mtl ghc7.6.1-network ghc7.6.1-pandoc-types ghc7.6.1-parsec ghc7.6.1-regex-base ghc7.6.1-regex-pcre-builtin ghc7.6.1-syb ghc7.6.1-text ghc7.6.1-transformers ghc7.6.1-utf8-string ghc7.6.1-xml ghc7.6.1-zlib libgmp-devel pkg-config
 BuildRequires: ghc7.6.1-alex ghc7.6.1-base64-bytestring ghc7.6.1-c2hs ghc7.6.1-citeproc-hs ghc7.6.1-cpphs ghc7.6.1-happy ghc7.6.1-highlighting-kate ghc7.6.1-hscolour ghc7.6.1-random ghc7.6.1-tagsoup ghc7.6.1-temporary ghc7.6.1-texmath ghc7.6.1-zip-archive zlib-devel ghc7.6.1-data-default
 
+%package -n ghc%ghc_version-pandoc
+Summary: Markup conversion tool for markdown
+Group: Publishing
+
 %description
+Pandoc is a Haskell library for converting from one markup format to
+another, and a command-line tool that uses this library. It can read
+markdown and (subsets of) reStructuredText, HTML, and LaTeX, and it can
+write markdown, reStructuredText, HTML, LaTeX, ConTeXt, Docbook,
+OpenDocument, ODT, RTF, MediaWiki, groff man pages, EPUB, and S5 and
+Slidy HTML slide shows.
+
+%description -n ghc%ghc_version-pandoc
 Pandoc is a Haskell library for converting from one markup format to
 another, and a command-line tool that uses this library. It can read
 markdown and (subsets of) reStructuredText, HTML, and LaTeX, and it can
@@ -40,12 +52,19 @@ Slidy HTML slide shows.
 %install
 %hs_install
 %hs_gen_filelist
+grep -v %_libdir %name-files.all > %name-files.bin
+grep %_libdir %name-files.all > %name-files.lib
 
-%files -f %name-files.all
+%files -n ghc%ghc_version-pandoc -f %name-files.lib
+
+%files -f %name-files.bin
 %_man1dir/*
 %_man5dir/*
 
 %changelog
+* Mon Mar 13 2017 Denis Smirnov <mithraen@altlinux.ru> 1.11.1-alt2
+- move pandoc haskell lib to separate subpackage (ALT 31654)
+
 * Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.11.1-alt1.1
 - NMU: updated watch file
 
