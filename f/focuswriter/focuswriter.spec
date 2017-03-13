@@ -1,5 +1,5 @@
 Name:		focuswriter
-Version:	1.6.1
+Version:	1.6.4
 Release:	alt1
 Summary:	FocusWriter is a fullscreen, distraction-free word processor
 License:	GPLv3
@@ -8,7 +8,7 @@ Group:		Text tools
 Url:		http://gottcode.org/focuswriter/
 Source0:	http://gottcode.org/focuswriter/%name-%version-src.tar.bz2
 
-BuildRequires: libhunspell-devel qt5-multimedia-devel zlib-devel gcc-c++
+BuildRequires: libhunspell-devel qt5-multimedia-devel qt5-tools zlib-devel gcc-c++
 
 %description
 FocusWriter is a fullscreen, distraction-free word processor
@@ -22,6 +22,7 @@ that only one thing matters: your writing.
 %setup
 
 %build
+subst 's|DATADIR/metainfo/|DATADIR/appdata/|g' ./%name.pro
 qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" PREFIX=%prefix
 %make_build
 
@@ -37,6 +38,9 @@ qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" PREFIX=%prefix
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Mar 13 2017 Motsyo Gennadi <drool@altlinux.ru> 1.6.4-alt1
+- 1.6.4
+
 * Wed Oct 05 2016 Motsyo Gennadi <drool@altlinux.ru> 1.6.1-alt1
 - 1.6.1
 
