@@ -6,7 +6,7 @@
 
 Name: radvd
 Version: 2.16
-Release: alt1
+Release: alt2
 
 Summary: A Router Advertisement daemon
 # The code includes the advertising clause, so it's GPL-incompatible
@@ -87,6 +87,10 @@ install -Dm0644 %SOURCE3 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
 %_sbindir/radvdump
 
 %changelog
+* Mon Mar 13 2017 Mikhail Efremov <sem@altlinux.org> 2.16-alt2
+- radvd.service.in: Add CAP_SETUID/CAP_SETGID (closes: #33228).
+- includes.h: Drop linux/if_arp.h.
+
 * Fri Feb 03 2017 Mikhail Efremov <sem@altlinux.org> 2.16-alt1
 - Updated to 2.16.
 
