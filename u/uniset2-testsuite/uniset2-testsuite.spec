@@ -2,7 +2,7 @@
 
 Name: uniset2-testsuite
 Version: 2.5
-Release: alt7.1
+Release: alt8
 Summary: UniSet test suite
 Group: Development/Python
 License: LGPL
@@ -86,6 +86,10 @@ SNMP Plugin for uniset2-testsuite
 %endif
 
 %changelog
+* Tue Mar 14 2017 Pavel Vainerman <pv@altlinux.ru> 2.5-alt8
+- reporter refactoring
+- fixed junit reporter
+
 * Tue Mar 07 2017 Pavel Vainerman <pv@altlinux.ru> 2.5-alt7.1
 - up build
 
