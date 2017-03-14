@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.5.6
+Version: 2.5.7
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,13 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue Mar 14 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5.7-alt1
+- rpmreqs: drop (VERSION) only for lib*
+- rpmpub: set permissions to hardlinked previous tree
+- rpmbs: support for group send from branch
+- rpmbsh: fix install in hasher for backported packages
+- rpmbph: skip merge and spec forming if
+
 * Mon Dec 12 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.6-alt1
 - add replacement rules for GosLinux
 - add ubuntu 16.10 rule
