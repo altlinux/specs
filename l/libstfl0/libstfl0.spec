@@ -1,6 +1,6 @@
 Name: libstfl0
 Version: 0.24
-Release: alt3
+Release: alt4
 
 %define oname stfl
 
@@ -101,6 +101,9 @@ rm %buildroot%_libdir/*.a
 %ruby_sitearchdir/stfl.so
 
 %changelog
+* Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 0.24-alt4
+- Rebuild with new %%ruby_sitearchdir location
+
 * Fri Mar 03 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.24-alt3
 - added support for watchfile.
 - fixed compiler warnings.

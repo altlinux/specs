@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 0.4.5
-Release: alt1
+Release: alt2
  
 Summary: A modern, simple and very fast Mysql library for Ruby - binding to libmysql
 License: MIT/Ruby
@@ -59,12 +59,16 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
  
 %files
 %doc README*
+%ruby_sitearchdir/*
 %ruby_sitelibdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 0.4.5-alt2
+- Rebuild with new %%ruby_sitearchdir location
+
 * Wed Mar 08 2017 Andrey Cherepanov <cas@altlinux.org> 0.4.5-alt1
 - New version
 

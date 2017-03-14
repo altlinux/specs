@@ -4,7 +4,7 @@
 
 Name: %pkgname
 Version: 2.9.0
-Release: alt1
+Release: alt2
 
 Summary: MySQL Ruby Connector
 Group: Development/Ruby
@@ -44,6 +44,9 @@ This is MySQL Ruby Connector (libmysqlclient wrapper).
 %ruby_sitelibdir/*
 
 %changelog
+* Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 2.9.0-alt2
+- Rebuild with new %%ruby_sitearchdir location
+
 * Tue Sep 13 2016 Andrey Cherepanov <cas@altlinux.org> 2.9.0-alt1
 - New version
 - Use ALT-specific Ruby module build rules

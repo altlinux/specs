@@ -2,7 +2,7 @@
 
 Name: ruby-%pkgname
 Version: 1.9.18
-Release: alt1
+Release: alt2
 
 Summary: Ruby foreign function interface
 Group: Development/Ruby
@@ -57,6 +57,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 1.9.18-alt2
+- Rebuild with new %%ruby_sitearchdir location
+
 * Sat Mar 04 2017 Andrey Cherepanov <cas@altlinux.org> 1.9.18-alt1
 - New version
 

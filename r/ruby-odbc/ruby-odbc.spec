@@ -1,5 +1,5 @@
 Name: ruby-odbc
-Version: 0.99997
+Version: 0.99998
 Release: alt1
 
 Summary: ODBC extension for Ruby
@@ -38,6 +38,10 @@ This is an ODBC binding for Ruby. So far it has been tested with
 %ruby_sitearchdir/*
 
 %changelog
+* Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 0.99998-alt1
+- New version
+- Rebuild with new %%ruby_sitearchdir location
+
 * Thu Sep 22 2016 Andrey Cherepanov <cas@altlinux.org> 0.99997-alt1
 - New version
 

@@ -8,8 +8,8 @@
 %def_without OpenVZ
 
 Name:    ruby-%pkgname
-Version: 1.2.0.1
-Release: alt2
+Version: 1.2.3
+Release: alt1
 
 Summary: Fast, simple event-processing library for Ruby programs
 Group:   Development/Ruby
@@ -23,6 +23,8 @@ Source:  %pkgname-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libruby-devel ruby-tool-setup ruby-tool-rdoc
 BuildRequires: gcc-c++ libssl-devel net-tools /proc
+
+%filter_from_requires \,^ruby(\(java\|jeventmachine\|win32/resolv\|em/spec\)),d
 
 %description
 EventMachine implements a fast, single-threaded engine for arbitrary network
@@ -73,6 +75,7 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %files
 %doc README.md docs examples
+%ruby_sitearchdir/*
 %ruby_sitelibdir/*
 
 %files doc
@@ -83,6 +86,12 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/TestConnection/*
 
 %changelog
+* Tue Mar 14 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.3-alt1
+- New version
+
+* Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.0.1-alt3
+- Rebuild with new %%ruby_sitearchdir location
+
 * Sat Sep 10 2016 Andrey Cherepanov <cas@altlinux.org> 1.2.0.1-alt2
 - Rebuild with Ruby 2.3.1
 

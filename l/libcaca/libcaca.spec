@@ -1,6 +1,6 @@
 Name: libcaca
 Version: 0.99
-Release: alt15.beta19.1
+Release: alt16.beta19.1
 
 Summary: Text mode graphics library
 Group: System/Libraries
@@ -131,6 +131,9 @@ mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
 %ruby_sitearchdir/caca.*
 
 %changelog
+* Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 0.99-alt16.beta19.1
+- Rebuild with new %%ruby_sitearchdir location
+
 * Fri Sep 09 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.99-alt15.beta19.1
 - Rebuilt with Ruby 2.3.1.
 

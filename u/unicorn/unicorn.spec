@@ -2,7 +2,7 @@
 
 Name: %pkgname
 Version: 5.2.0
-Release: alt1
+Release: alt2
 Summary: Unicorn: Rack HTTP server for fast clients and Unix
 License: GPL2
 Group: System/Servers
@@ -42,6 +42,8 @@ Documentation files for %pkgname
 %install
 %ruby_install
 %rdoc lib/
+# Remove unnecessary files
+rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %files
 %doc ISSUES README TUNING KNOWN_ISSUES FAQ DESIGN examples*
@@ -53,6 +55,9 @@ Documentation files for %pkgname
 %ruby_ri_sitedir/Unicorn*
 
 %changelog
+* Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt2
+- Rebuild with new %%ruby_sitearchdir location
+
 * Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt1
 - new version 5.2.0
 

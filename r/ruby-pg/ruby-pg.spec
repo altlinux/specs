@@ -2,7 +2,7 @@
 
 Name: ruby-pg
 Version: 0.19.0
-Release: alt1
+Release: alt2
 
 Summary: Ruby interface to PostgreSQL RDBMS
 Group: Development/Ruby
@@ -56,6 +56,9 @@ Documentation files for %name
 %ruby_ri_sitedir/PG*
 
 %changelog
+* Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 0.19.0-alt2
+- Rebuild with new %%ruby_sitearchdir location
+
 * Tue Sep 13 2016 Denis Medvedev <nbr@altlinux.org> 0.19.0-alt1
 - new version
 

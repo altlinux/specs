@@ -2,7 +2,7 @@
 
 Name: ruby-qt4
 Version: 4.14.0
-Release: alt3
+Release: alt4
 
 Group: Development/Ruby
 Summary: QtRuby kdebindings library
@@ -15,6 +15,8 @@ Source: %rname-%version.tar
 #BuildRequires: cmake gcc-c++ libqscintilla2-qt4-devel libqt3-devel libqwt-devel libruby-devel phonon-devel python-module-protobuf qt4-designer smokeqt-devel
 BuildRequires: cmake gcc-c++ libqscintilla2-qt4-devel libqwt-devel libruby-devel phonon-devel smokegen-devel smokeqt-devel
 BuildRequires: libsqlite3-devel libqt4-devel kde-common-devel
+
+%filter_from_requires /^ruby(qtruby)/d
 
 %description
 Ruby bindings for the Qt4 libraries from the kdebindings project.
@@ -75,6 +77,9 @@ chmod +x %buildroot/%ruby_sitelibdir/qtwebkit/qtwebkit.rb
 %_datadir/qtruby4/
 
 %changelog
+* Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 4.14.0-alt4
+- Rebuild with new %%ruby_sitearchdir location
+
 * Fri Sep 23 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt3
 - rebuild with new libruby
 
