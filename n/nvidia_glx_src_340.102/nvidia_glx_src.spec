@@ -14,7 +14,7 @@
 %define nv_version 340
 %define nv_release 102
 %define nv_minor %nil
-%define pkg_rel alt146
+%define pkg_rel alt147
 %def_enable egl
 %def_enable kernelsource
 
@@ -82,7 +82,7 @@ Source2: nvidia.xinf
 Source100: nvidia_create_xinf
 
 Patch1: buildfix_kernel_3.14.patch
-Patch2: buildfix_kernel_4.6.patch
+Patch2: buildfix_kernel_4.10.patch
 
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 BuildRequires: libXext-devel
@@ -159,7 +159,7 @@ cd %tbname-%tbver%dirsuffix
 
 pushd kernel/
 %patch1 -p1
-#%patch2 -p1
+%patch2 -p1
 rm -rf precompiled
 popd
 
@@ -302,6 +302,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 14 2017 Sergey V Turchin <zerg@altlinux.org> 340.102-alt147
+- add fix against 4.10 kernel
+
 * Tue Mar 14 2017 Sergey V Turchin <zerg@altlinux.org> 340.102-alt146
 - new version
 
