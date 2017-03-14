@@ -2,8 +2,8 @@
 %define exec_prefix /
 %define _prefix /
 Name: ipset
-Version: 6.30
-Release: alt1
+Version: 6.32
+Release: alt1%ubt
 
 Summary: Tools for managing sets of IP or ports with iptables
 License: GPLv2
@@ -11,8 +11,9 @@ Group: System/Kernel and hardware
 Url: http://ipset.netfilter.org/
 
 Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Patch0: %name-%version-alt.patch
 BuildRequires: libmnl-devel
+BuildRequires(pre): rpm-build-ubt
 
 %description
 IP sets are a framework inside the Linux kernel, which can be administered by 
@@ -97,6 +98,12 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Mon Mar 13 2017 Anton Farygin <rider@altlinux.ru> 6.32-alt1%ubt
+- new version
+
+* Mon Mar 13 2017 Anton Farygin <rider@altlinux.ru> 6.32-alt1
+- new version
+
 * Thu Nov 24 2016 Anton Farygin <rider@altlinux.ru> 6.30-alt1
 - new version
 
