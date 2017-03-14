@@ -4,14 +4,14 @@
 
 %define WINGs_SOVER 3
 %define WUtil_SOVER 5
-%define wraster_SOVER 5
+%define wraster_SOVER 6
 
 %def_disable debug
 
 %define frame_border   navy
 
 Name: WindowMaker
-Version: 0.95.7
+Version: 0.95.8
 Release: alt1
 Packager: %packager
 
@@ -257,6 +257,7 @@ rm -rf %buildroot%_mandir/cs
 %_bindir/WPrefs
 
 %_man1dir/*
+%_man8dir/*
 %_mandir/ru/man1/*
 %_menudir/*
 %_miconsdir/*.xpm
@@ -297,6 +298,7 @@ rm -rf %buildroot%_mandir/cs
 
 %files -n libWMaker
 %_libdir/libWMaker.so.*
+%_libdir/pkgconfig/wmlib.pc
 
 %files -n libWMaker-devel
 %_includedir/WMaker.h
@@ -306,6 +308,9 @@ rm -rf %buildroot%_mandir/cs
 %_bindir/wmsetbg
 
 %changelog
+* Sun Mar 12 2017 Andrey Bergman <vkni@altlinux.org> 0.95.8-alt1
+- Update to a new version. Corrected Makefile patch.
+
 * Tue Aug 18 2015 Michael Shigorin <mike@altlinux.org> 0.95.7-alt1
 - Built for Sisyphus.
 
