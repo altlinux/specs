@@ -1,5 +1,5 @@
 Name:           screenfetch
-Version:        3.7.0
+Version:        3.8.0
 Release:        alt1
 Summary:        A "Bash Screenshot Information Tool"
 
@@ -15,7 +15,7 @@ BuildArch:      noarch
 
 Requires:	scrot
 
-%filter_from_requires /^\/usr\/bin\/sw_vers$/d
+%filter_from_requires \,^\(/usr/bin/sw_vers\|/etc/portage/make.conf\)$,d
 
 %description
 This handy Bash script can be used to generate one of
@@ -44,6 +44,9 @@ install -Dm 0644 screenfetch.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Tue Mar 14 2017 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt1
+- New version
+
 * Wed Feb 03 2016 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt1
 - Initial build in Sisyphus
 
