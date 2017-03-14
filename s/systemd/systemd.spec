@@ -33,6 +33,7 @@
 %def_enable selinux
 %def_disable apparmor
 
+%define hierarchy hybrid
 
 %def_disable sysusers
 %def_disable ldconfig
@@ -54,10 +55,10 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 232
-Release: alt3.git.486b3d0
+Version: 233
+Release: alt1
 Summary: System and Session Manager
-Url: http://www.freedesktop.org/wiki/Software/systemd
+Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
 License: LGPLv2.1+
 
@@ -147,7 +148,7 @@ BuildRequires: libaudit-devel
 %{?_enable_xz:BuildRequires: pkgconfig(liblzma)}
 %{?_enable_zlib:BuildRequires: pkgconfig(zlib)}
 %{?_enable_bzip2:BuildRequires: bzlib-devel}
-%{?_enable_lz4:BuildRequires: pkgconfig(liblz4) >= 125}
+%{?_enable_lz4:BuildRequires: pkgconfig(liblz4)}
 BuildRequires: libkmod-devel >= 15 kmod
 BuildRequires: kexec-tools
 BuildRequires: quota
@@ -736,6 +737,7 @@ intltoolize --force --automake
 	%{subst_enable apparmor} \
 	%{subst_enable utmp} \
 	--without-kill-user-processes \
+	--with-default-hierarchy=%hierarchy \
 	--disable-static
 
 %make_build GCC_COLORS="" V=1
@@ -1308,6 +1310,7 @@ fi
 %_bindir/systemd-delta
 %_bindir/systemd-detect-virt
 %_bindir/systemd-mount
+%_bindir/systemd-umount
 %_bindir/systemd-path
 %_bindir/systemd-run
 %_bindir/systemd-stdio-bridge
@@ -1341,6 +1344,10 @@ fi
 /lib/systemd/systemd-volatile-root
 /lib/systemd/altlinux-save-dmesg
 /lib/systemd/systemd-sysv-install
+
+%dir /lib/environment.d
+/lib/environment.d/99-environment.conf
+%_mandir/man[578]/*environment*
 
 %dir %_unitdir
 %_unitdir/*
@@ -1393,6 +1400,7 @@ fi
 %_man1dir/systemd-detect-virt.*
 %_man1dir/systemd-inhibit.*
 %_man1dir/systemd-mount.*
+%_man1dir/systemd-umount.*
 %_man1dir/systemd-notify.*
 %_man1dir/systemd-path.*
 %_man1dir/systemd-run.*
@@ -1650,6 +1658,7 @@ fi
 /sbin/networkctl
 %dir %_sysconfdir/systemd/network
 %config(noreplace) %_sysconfdir/systemd/resolved.conf
+%_sysconfdir/systemd/system/dbus-org.freedesktop.resolve1.service
 %_datadir/dbus-1/system.d/org.freedesktop.resolve1.conf
 %_datadir/dbus-1/system.d/org.freedesktop.network1.conf
 %_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
@@ -1904,6 +1913,9 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Thu Mar 02 2017 Alexey Shabalin <shaba@altlinux.ru> 1:233-alt1
+- 233
+
 * Mon Feb 13 2017 Alexey Shabalin <shaba@altlinux.ru> 1:232-alt3.git.486b3d0
 - update conflicts
 
