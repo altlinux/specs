@@ -14,7 +14,7 @@
 %define nv_version 375
 %define nv_release 39
 %define nv_minor %nil
-%define pkg_rel alt166
+%define pkg_rel alt167
 %def_enable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -80,6 +80,7 @@ Source100: nvidia_create_xinf
 
 Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
+Patch3: buildfix_kernel_4.10.patch
 
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 BuildRequires: libXext-devel libEGL-devel
@@ -152,6 +153,7 @@ cd %tbname-%tbver%dirsuffix
 pushd kernel
 #%patch1 -p1
 %patch2 -p1
+%patch3 -p1
 rm -rf precompiled
 popd
 
@@ -308,6 +310,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 14 2017 Sergey V Turchin <zerg@altlinux.org> 375.39-alt167
+- add fix against 4.10 kernel
+
 * Fri Feb 17 2017 Sergey V Turchin <zerg@altlinux.org> 375.39-alt166
 - new version
 
