@@ -1,6 +1,6 @@
 Name: gajim
 Version: 0.16.7
-Release: alt1
+Release: alt2
 
 Summary: a Jabber client written in PyGTK
 License: GPLv3
@@ -22,10 +22,17 @@ Patch11: gajim-alt-sequential-dialogues.patch
 
 %add_python_compile_include %_datadir/%name/src
 
-%py_requires dbus sqlite3 libglade OpenSSL libasyncns
+%py_requires dbus sqlite3 libglade OpenSSL libasyncns pyasn crypto pycurl GnuPGInterface zeroconf
+
 
 # Automatically added by buildreq on Sat Apr 03 2010 (-bi)
 BuildRequires: imake intltool libgtk+2-devel python-module-pygtk-devel python-modules-encodings xorg-cf-files
+BuildRequires: libfarstream0.2-devel gst-plugins-bad1.0-devel libnice-devel libgupnp-igd-devel rpm-build-python
+
+BuildRequires: python-module-libgupnp-igd python-module-gst1.0
+# python-module-crypto python-module-dbus python-module-pycurl python-module-libasyncns
+
+
 
 BuildArch: noarch
 
@@ -68,6 +75,9 @@ rm %buildroot%_datadir/%name/scripts/dev -rf
 %_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Tue Mar 14 2017 Ilya Mashkin <oddity@altlinux.ru> 0.16.7-alt2
+- Much more requires added
+
 * Sat Feb 11 2017 Ilya Mashkin <oddity@altlinux.ru> 0.16.7-alt1
 - 0.16.7
 
