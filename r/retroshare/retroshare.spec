@@ -1,5 +1,5 @@
 Name: retroshare
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: Secure communication with friends
@@ -10,7 +10,7 @@ Url: http://retroshare.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/RetroShare/RetroShare/archive/%version.tar.gz
+# Source-url: https://github.com/RetroShare/RetroShare/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 # manually removed: ruby ruby-stdlibs selinux-policy i586-libxcb  python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope
@@ -102,6 +102,9 @@ ln -s RetroShare06-nogui %buildroot%_bindir/%name-cli
 %_libdir/retroshare/extensions6/libFeedReader.so*
 
 %changelog
+* Tue Mar 14 2017 Vitaly Lipatov <lav@altlinux.ru> 0.6.2-alt1
+- new version 0.6.2 (with rpmrb script)
+
 * Tue Jan 03 2017 Vitaly Lipatov <lav@altlinux.ru> 0.6.1-alt1
 - initial build for ALT Linux Sisyphus
 
