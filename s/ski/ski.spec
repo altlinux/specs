@@ -1,5 +1,5 @@
 Name: ski
-Version: 6.11
+Version: 6.12
 Release: alt1
 Url: http://www.catb.org/~esr/ski/
 Source0: %name-%version.tar.gz
@@ -40,6 +40,9 @@ install %name.6 %buildroot%_man6dir/
 %_gamesbindir/%name
 
 %changelog
+* Mon Mar 13 2017 Fr. Br. George <george@altlinux.ru> 6.12-alt1
+- Autobuild version bump to 6.12
+
 * Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 6.11-alt1
 - Autobuild version bump to 6.11
 
