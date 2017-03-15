@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 1.001002
 %define module_name Path-IsDev
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(Class/Tiny.pm) perl(Data/Dump.pm) perl(FindBin.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(Module/Build.pm) perl(Module/Runtime.pm) perl(Path/FindDev.pm) perl(Path/Tiny.pm) perl(Role/Tiny.pm) perl(Role/Tiny/With.pm) perl(Scalar/Util.pm) perl(Sub/Exporter.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(YAML/Dumper.pm) perl(YAML/Loader.pm) perl(File/HomeDir.pm)
@@ -7,21 +6,21 @@ BuildRequires: perl(Carp.pm) perl(Class/Tiny.pm) perl(Data/Dump.pm) perl(FindBin
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.001002
+Version: 1.001003
 Release: alt1
 Summary: Determine if a given Path resembles a development source tree
 Group: Development/Perl
 License: perl
 URL: https://github.com/kentfredric/Path-IsDev
 
-Source: http://www.cpan.org/authors/id/K/KE/KENTNL/Path-IsDev-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/K/KE/KENTNL/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/P*
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.001003-alt1
+- automated CPAN update
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.001002-alt1
 - automated CPAN update
 
