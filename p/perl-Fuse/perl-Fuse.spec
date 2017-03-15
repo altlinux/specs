@@ -1,13 +1,14 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-Fuse
-Version: 0.15
-Release: alt2.1.1.1
+Version: 0.16
+Release: alt1
 
 Summary: Write filesystems in Perl using FUSE
 License: GPLv2, LGPLv2.1
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/Fuse/
-Source: http://www.cpan.org/authors/id/D/DP/DPAVLIN/Fuse-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DP/DPATES/Fuse-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Oct 18 2011
 BuildRequires: libfuse-devel perl-Filesys-Statvfs perl-Lchown perl-Unix-Mknod perl-devel
@@ -18,7 +19,7 @@ enables you to write user-space filesystems. This module enables you to
 write filesystems using perl.
 
 %prep
-%setup -q -n Fuse-%version
+%setup -q -n Fuse-%{version}
 
 # XXX does it even work?
 %def_without test
@@ -30,11 +31,14 @@ write filesystems using perl.
 %perl_vendor_install
 
 %files
-%doc AUTHORS Changes README 
+%doc AUTHORS Changes README examples
 %perl_vendor_archlib/Fuse*
 %perl_vendor_autolib/Fuse
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2.1.1.1
 - rebuild with new perl 5.24.1
 
