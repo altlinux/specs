@@ -1,5 +1,5 @@
 Name: glm
-Version: 0.9.7.6
+Version: 0.9.8.4
 Release: alt1
 License: MIT
 Summary: GLM is a header only C++ mathematics library for graphics software based on the GLSL specification
@@ -89,6 +89,12 @@ cp -a copying.txt readme.md doc/*.pdf doc/api/ %buildroot%_docdir/lib%name-devel
 %_docdir/lib%name-devel/api/
 
 %changelog
+* Mon Mar 13 2017 Fr. Br. George <george@altlinux.ru> 0.9.8.4-alt1
+- Autobuild version bump to 0.9.8.4
+
+* Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 0.9.8.1-alt1
+- Autobuild version bump to 0.9.8.1
+
 * Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 0.9.7.6-alt1
 - Autobuild version bump to 0.9.7.6
 
