@@ -5,7 +5,7 @@
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_privlib -MNet::DNS'
 
 Name: perl-%module
-Version: 1.07
+Version: 1.08
 Release: alt1
 
 Packager: Vladimir Didenko <cow@altlinux.org>
@@ -17,7 +17,7 @@ BuildArch: noarch
 
 Url: %CPAN %module
 # another URL: http://www.net-dns.org/
-Source: http://www.cpan.org/authors/id/N/NL/NLNETLABS/Net-DNS-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/N/NL/NLNETLABS/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Digest-BubbleBabble perl-Digest-HMAC perl-IO-Socket-INET6 perl-Net-IP perl-Test-Pod
@@ -27,7 +27,7 @@ Net::DNS is a DNS resolver implemented in Perl. It allows the programmer to
 perform nearly any type of DNS query from a Perl script.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 # Fix test that will not succeed in Sisyphus build environment.
 #sed -i- 's/tests=>12/tests=>11/; s/use Net::DNS::Nameserver;/exit;/' t/11-inet6.t
@@ -50,6 +50,9 @@ perform nearly any type of DNS query from a Perl script.
 #exclude %perl_vendor_archlib/Net/DNS/Resolver/Win32.pm
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
+- automated CPAN update
+
 * Thu Dec 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
 - automated CPAN update
 
