@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module POE-Component-Pluggable
 
 Name: perl-%module
-Version: 1.26
-Release: alt2
+Version: 1.28
+Release: alt1
 
 Summary: A base class for creating plugin enabled POE Components
 
@@ -11,7 +12,7 @@ Group: Development/Perl
 Url: http://www.cpan.org
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/B/BI/BINGOS/%module-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BI/BINGOS/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 23 2009
 BuildRequires: perl-POE perl-Task-Weaken perl-Test-Pod perl-Test-Pod-Coverage
@@ -25,7 +26,7 @@ If your component dispatches events to registered POE sessions, then
 POE::Component::Pluggable may be a good fit for you.
 
 %prep
-%setup -q -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,9 +35,13 @@ POE::Component::Pluggable may be a good fit for you.
 %perl_vendor_install
 
 %files
+%doc LICENSE Changes README examples
 %perl_vendor_privlib/POE/Component/*
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1
+- automated CPAN update
+
 * Mon Nov 15 2010 Alexey Shabalin <shaba@altlinux.ru> 1.26-alt2
 - drop %%perl_vendor_man3dir
 
