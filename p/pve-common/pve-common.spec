@@ -1,7 +1,7 @@
 Name: pve-common
 Summary: PVE base library
 Version: 4.0.83
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -26,9 +26,9 @@ BuildRequires: perl(File/Basename.pm)
 BuildRequires: perl(Linux/Inotify2.pm)
 BuildRequires: perl(JSON.pm)
 # alt regressive tests
-BuildRequires: perl(TAP/Harness.pm)
-BuildRequires: perl(RPM/Source/Tools/SourceBundle.pm)
-BuildRequires: perl(RPM/Source/Dependency/Analyzer.pm)
+#BuildRequires: perl(TAP/Harness.pm)
+#BuildRequires: perl(RPM/Source/Tools/SourceBundle.pm)
+#BuildRequires: perl(RPM/Source/Dependency/Analyzer.pm)
 
 %description
 This package contains the base library used by other PVE components.
@@ -45,15 +45,18 @@ install -pD -m0755 pve-etcnet-to-network %buildroot%_sbindir/pve-etcnet-to-netwo
 
 %check
 # upstream tests
-make -C test check
+#make -C test check
 # etcnet tests
-./runtests.pl
+#./runtests.pl
 
 %files
 %_sbindir/pve-etcnet-to-network
 %perl_vendor_privlib/PVE
 
 %changelog
+* Wed Mar 15 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.0.83-alt2
+- ovs fixes for ovsport
+
 * Mon Nov 28 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.83-alt1
 - 4.0-83
 
