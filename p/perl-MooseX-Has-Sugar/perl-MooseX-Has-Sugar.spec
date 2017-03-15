@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist MooseX-Has-Sugar
 Name: perl-%dist
-Version: 1.000004
-Release: alt1.1
+Version: 1.000006
+Release: alt1
 
 Summary: Sugar Syntax for moose 'has' fields
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/K/KE/KENTNL/MooseX-Has-Sugar-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/K/KE/KENTNL/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +21,7 @@ Moose "has" syntax is generally fine, but sometimes one gets bothered
 with the constant typing of string quotes for things.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +34,9 @@ with the constant typing of string quotes for things.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.000006-alt1
+- automated CPAN update
+
 * Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.000004-alt1.1
 - rebuild to restore role requires
 
