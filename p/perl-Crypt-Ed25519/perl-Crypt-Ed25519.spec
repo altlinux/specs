@@ -1,17 +1,17 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Crypt-Ed25519
 
-%define _unpackaged_files_terminate_build 1
 
 Name: perl-%dist
-Version: 1.03
-Release: alt2.1
+Version: 1.04
+Release: alt1
 
 Summary: bare-bones Ed25519 public key signing/verification system
 License: %perl_license
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{dist}-%{version}.tar.gz
 
 BuildRequires: rpm-build-licenses
 
@@ -36,7 +36,7 @@ More detailed praise and other info can be found at
 http://ed25519.cr.yp.to/index.html.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -50,6 +50,9 @@ http://ed25519.cr.yp.to/index.html.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2.1
 - rebuild with new perl 5.24.1
 
