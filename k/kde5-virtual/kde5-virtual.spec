@@ -1,13 +1,14 @@
 
 Name: kde5-virtual
-Version: 5.4.0
-Release: alt2
+Version: 5.5.0
+Release: alt1%ubt
 
 Group: Graphical desktop/KDE
 Summary: Virtual packages for KDE 5
 License: Public Domain
 
 BuildArch: noarch
+BuildRequires(pre): rpm-build-ubt
 
 %description
 %summary
@@ -101,7 +102,7 @@ Requires: kde5-kmix
 
 %package -n kde5-volume-control-4-plasmapulse
 Group: Graphical desktop/KDE
-Summary: Plasma applet volume control
+Summary: Plasma PulseAudio volume control
 Provides: kde5-volume-control = %EVR
 Provides: kde5-volume-control-plasmapulse = %EVR
 Requires: kf5-filesystem
@@ -124,7 +125,8 @@ Summary: KMail email client
 Provides: kde5-email-client = %EVR
 Provides: kde5-email-client-kmail = %EVR
 Requires: kf5-filesystem
-Requires: kde5-pim-kmail kde5-pim-addons-kmail kde5-pim-addons-plugins bogofilter bogofilter-utils
+Requires: kde5-kmail kde5-pim-addons-kmail kde5-pim-addons-plugins bogofilter bogofilter-utils
+Requires: kde5-akonadi-import-wizard kde5-kmail-account-wizard kde5-mbox-importer kde5-pim-sieve-editor
 %description -n kde5-email-client-2-kmail
 %summary
 
@@ -178,6 +180,9 @@ Requires: qmmp1
 %files -n kde5-audio-player-4-qmmp
 
 %changelog
+* Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1%ubt
+- update kmail requires
+
 * Tue Jul 05 2016 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt2
 - fix requires
 

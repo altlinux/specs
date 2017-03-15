@@ -1,13 +1,14 @@
 
 Name: kde5-set
-Version: 5.6.0
-Release: alt1
+Version: 16.12.0
+Release: alt1%ubt
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
 License: Public Domain
 
 BuildArch: noarch
+BuildRequires(pre): rpm-build-ubt
 
 %description
 %summary
@@ -80,14 +81,14 @@ Requires: kde5-pim kde5-pim-addons kde5-baseapps kde5-kcron kde5-kruler kde5-ffm
 #Requires: kf5-plasma-mediacenter
 Requires: kde5-krfb kde5-kdf
 Requires: kid3-ui-kde5 ring-client-kde5
-#Requires: kde5-kipi-plugins-core
+Requires: kde5-kipi-plugins-core
 %description -n kde5-big
 %summary
 
 %package -n kde5-maxi
 Summary: %summary
 Group: Graphical desktop/KDE
-Requires: kde5-konqueror kde5-dragon kde5-pim-kmail
+Requires: kde5-konqueror kde5-dragon kde5-kmail
 Requires: kde5-big
 Requires: kde5-edu
 Requires: kde5-games
@@ -147,6 +148,15 @@ Requires: kde5-skanlite hplip-sane libsane-gphoto2 sane
 %description -n kde5-scanning
 KDE image scanning support applications.
 
+%package -n kde5-pim
+Summary: %summary
+Group: Graphical desktop/KDE
+Requires: kde5-akonadiconsole kde5-akonadi-calendar-tools kde5-akonadi-import-wizard kde5-kmail-account-wizard
+Requires: kde5-akregator kde5-blogilo kde5-kaddressbook kde5-kalarm kde5-kmail kde5-knotes kde5-kontact kde5-korganizer
+Requires: kde5-mbox-importer kde5-pim-data-exporter kde5-pim-sieve-editor kde5-pim-storage-service-manager kde5-grantlee-editor
+%description -n kde5-pim
+%summary
+
 %files -n kde5-runtime
 %files -n kde5-mini
 %files -n kde5-small
@@ -154,12 +164,17 @@ KDE image scanning support applications.
 %files -n kde5-big
 %files -n kde5-maxi
 %files -n kde5-somedevel
+#
 %files -n kde5-edu
 %files -n kde5-games
 %files -n kde5-printing
 %files -n kde5-scanning
+%files -n kde5-pim
 
 %changelog
+* Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.0-alt1%ubt
+- update PIM requires
+
 * Tue Nov 01 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
 - update requires
 
