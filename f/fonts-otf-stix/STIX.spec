@@ -1,5 +1,5 @@
 Name: fonts-otf-stix
-Version: 1.1.0
+Version: 2.0.0
 Release: alt1
 
 Summary: MathML STIX OpenType font family
@@ -27,13 +27,17 @@ software developers, scientists, students, and the general public.
 
 %build
 %install
-cd Fonts
+cd Fonts/OTF
 %otf_fonts_install stix
 
-%files -f Fonts/stix.files
-%doc Blocks Glyphs HTML License *.pdf
+%files -f Fonts/OTF/stix.files
+%doc docs
 
 %changelog
+* Wed Mar 15 2017 Fr. Br. George <george@altlinux.ru> 2.0.0-alt1
+- Autobuild version bump to 2.0.0
+- Major upstream changes, beware!
+
 * Mon Nov 19 2012 Fr. Br. George <george@altlinux.ru> 1.1.0-alt1
 - Autobuild version bump to 1.1.0
 - remove post macros in favour of file triggers
