@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Net-HTTP
 Name: perl-%dist
-Version: 6.12
+Version: 6.13
 Release: alt1
 
 Summary: Low-level HTTP connection (client)
@@ -47,7 +47,7 @@ supports HTTP/1.0 and HTTP/1.1.
 %perl_vendor_install
 
 %files
-%doc Changes LICENSE README.md
+%doc Changes LICENSE README.md CONTRIBUTORS
 %dir %perl_vendor_privlib/Net
 %perl_vendor_privlib/Net/HTTP*
 %exclude %perl_vendor_privlib/Net/HTTPS*
@@ -57,6 +57,9 @@ supports HTTP/1.0 and HTTP/1.1.
 %perl_vendor_privlib/Net/HTTPS*
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 6.13-alt1
+- automated CPAN update
+
 * Mon Jan 16 2017 Igor Vlasenko <viy@altlinux.ru> 6.12-alt1
 - automated CPAN update
 
