@@ -1,7 +1,7 @@
 %define  pkgname oj
  
 Name: 	 ruby-%pkgname
-Version: 2.18.2
+Version: 2.18.3
 Release: alt1
  
 Summary: A fast JSON parser and Object marshaller as a Ruby gem
@@ -58,6 +58,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Mar 15 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.3-alt1
+- New version
+
 * Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.2-alt1
 - New version
 - Remove ActiveSupportHelper
