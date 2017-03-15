@@ -1,6 +1,6 @@
 Name: tango-icon-theme
 Version: 0.8.90
-Release: alt2
+Release: alt3
 
 Summary: Tango Icon Library
 License: Creative Commons Attribution Share-Alike license 2.5
@@ -9,14 +9,13 @@ Url: http://tango.freedesktop.org/Tango_Desktop_Project
 
 Source0: http://tango-project.org/releases/%name-%version.tar
 Source1: Globe-with-clock.svg
-Patch1: tango-icon-theme-0.8.90-alt-fix-icons-convert.patch
+Patch: tango-icon-theme-0.8.90-alt-fix-icons-convert.patch
 
 BuildArch: noarch
 
 BuildPreReq: intltool >= 0.33
 BuildPreReq: icon-naming-utils >= 0.8.90
 BuildPreReq: ImageMagick libImageMagick-devel >= 5.5.7
-BuildPreReq: libGraphicsMagick-devel >= 1.1
 # For AM_GLIB_GNU_GETTEXT
 BuildPreReq: glib2-devel
 
@@ -26,8 +25,8 @@ BuildRequires: perl-XML-Parser
 This is an icon theme that follows the Tango visual guidelines.
 
 %prep
-%setup -q
-%patch1 -p1
+%setup
+%patch -p1
 
 %build
 %autoreconf
@@ -35,15 +34,18 @@ This is an icon theme that follows the Tango visual guidelines.
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
-install -m0644 %SOURCE1 %buildroot%_datadir/icons/Tango/scalable/apps/clock.svg
+%makeinstall_std
+install -pm0644 %SOURCE1 %buildroot%_iconsdir/Tango/scalable/apps/clock.svg
 
 %files
 %doc AUTHORS COPYING ChangeLog README
-%dir %_datadir/icons/Tango/
-%_datadir/icons/Tango/*
+%_iconsdir/Tango/
 
 %changelog
+* Wed Mar 15 2017 Michael Shigorin <mike@altlinux.org> 0.8.90-alt3
+- Dropped unneeded BR: libGraphicsMagick-devel (IM is used).
+- Minor spec cleanup.
+
 * Wed Jul 13 2011 Mikhail Efremov <sem@altlinux.org> 0.8.90-alt2
 - Fix icons convert type (closes: #25711).
 - Add Globe-with-clock.svg as clock.svg.
