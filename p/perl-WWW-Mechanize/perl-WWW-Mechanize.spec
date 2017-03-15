@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist WWW-Mechanize
 Name: perl-%dist
-Version: 1.83
+Version: 1.84
 Release: alt1
 
 Summary: Handy web browsing in a Perl object
@@ -9,7 +9,7 @@ License: Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/O/OA/OALDERS/WWW-Mechanize-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -26,7 +26,7 @@ be fetched.  Mech also stores a history of the URLs you've visited,
 which can be queried and revisited.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build --nolive
@@ -35,7 +35,7 @@ which can be queried and revisited.
 %perl_vendor_install
 
 %files
-%doc	Changes
+%doc	Changes CONTRIBUTORS README.md
 	%_bindir/mech-dump
 	%_man1dir/mech-dump*
 %dir	%perl_vendor_privlib/WWW
@@ -45,6 +45,9 @@ which can be queried and revisited.
 %doc	%perl_vendor_privlib/WWW/Mechanize/*.pod
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.84-alt1
+- automated CPAN update
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.83-alt1
 - automated CPAN update
 
