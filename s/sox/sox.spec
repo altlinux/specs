@@ -5,11 +5,11 @@
 Name: sox
 Summary: A general purpose sound file conversion tool
 Version: 14.4.2
-Release: alt1
+Release: alt1.1
 License: LGPL
 Group: Sound
-BuildRequires: glibc-devel-static libalsa-devel libao-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl7-devel libmad-devel libmagic-devel libopencore-amrnb-devel libopencore-amrwb-devel libopusfile-devel libpng-devel libpulseaudio-devel libsndfile-devel libvorbis-devel libwavpack-devel
-%set_automake_version 1.14
+BuildRequires: glibc-devel-static libalsa-devel libao-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl7-devel libmad-devel libmagic-devel libopencore-amrnb-devel libopencore-amrwb-devel libopusfile-devel libpng-devel libsndfile-devel libvorbis-devel libwavpack-devel
+%def_with pulse
 Packager: Denis Smirnov <mithraen@altlinux.org>
 Url: http://%name.sourceforge.net/
 Source: %name-%version.tar
@@ -30,7 +30,9 @@ Requires: libsox-fmt-mp3 = %version-%release
 Requires: libsox-fmt-oss = %version-%release
 Requires: libsox-fmt-opus = %version-%release
 Requires: libsox-fmt-paf = %version-%release
+%if_with pulse
 Requires: libsox-fmt-pulseaudio = %version-%release
+%endif
 Requires: libsox-fmt-pvf = %version-%release
 Requires: libsox-fmt-sd2 = %version-%release
 Requires: libsox-fmt-sndfile = %version-%release
@@ -40,6 +42,8 @@ Requires: libsox-fmt-wavpack = %version-%release
 Requires: libsox-fmt-xi = %version-%release
 Requires: libsox-fmt-caf = %version-%release
 Requires: libsox-fmt-fap = %version-%release
+%{?_with_pulse:BuildRequires: libpulseaudio-devel}
+%set_automake_version 1.14
 
 %package -n libsox-devel
 Summary: The SoX sound file format converter headers files and libraries
@@ -269,6 +273,9 @@ or manipulate some sounds.
 %setup
 %patch -p2
 sed -i 's,\-I/lib/modules/`uname -r`/build/include,,' configure*
+%ifarch e2k
+sed -i 's,-Wtraditional-conversion,,' configure*
+%endif
 
 %build
 %autoreconf
@@ -344,7 +351,7 @@ chmod 755 %buildroot%_bindir/%{name}play
 %_libdir/sox/libsox_fmt_paf.so
 
 %files -n libsox-fmt-pulseaudio
-%_libdir/sox/libsox_fmt_pulseaudio.so
+%{?_with_pulse:%_libdir/sox/libsox_fmt_pulseaudio.so}
 
 %files -n libsox-fmt-pvf
 %_libdir/sox/libsox_fmt_pvf.so
@@ -383,6 +390,9 @@ chmod 755 %buildroot%_bindir/%{name}play
 %files play
 
 %changelog
+* Wed Mar 15 2017 Michael Shigorin <mike@altlinux.org> 14.4.2-alt1.1
+- BOOTSTRAP: introduce pulse knob (on by default)
+
 * Thu Feb 26 2015 Denis Smirnov <mithraen@altlinux.ru> 14.4.2-alt1
 - 14.4.2
 
