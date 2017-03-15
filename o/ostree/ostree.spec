@@ -1,19 +1,8 @@
 Name: ostree
-Version: 2017.1
+Version: 2017.3
 Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
-
-# Source-url: https://github.com/ostreedev/ostree/archive/v%version.tar.gz
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: %name-%version.tar
-
-# Source1-url: https://git.gnome.org/browse/libglnx/snapshot/libglnx-master.tar.xz
-Source1: libglnx.tar
-
-# Source2-url: https://github.com/mendsley/bsdiff/archive/master.zip
-Source2: bsdiff.tar
 
 # The libostree.so (currently private) shared library, and almost all
 # of the utilities are licensed under the LGPLv2+.  Only at present
@@ -28,13 +17,25 @@ License: LGPLv2+ and GPLv2+ and BSD
 Group: Other
 Url: https://github.com/ostreedev/ostree
 
+# Source-url: https://github.com/ostreedev/ostree/archive/v%version.tar.gz
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
+Source: %name-%version.tar
+
+# Source1-url: https://git.gnome.org/browse/libglnx/snapshot/libglnx-master.tar.xz
+Source1: libglnx.tar
+
+# Source2-url: https://github.com/mendsley/bsdiff/archive/master.zip
+Source2: bsdiff.tar
+
+
 
 # manually removed: db2latex-xsl glibc-devel-static gobject-introspection-devel python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs 
 
 # We always run autogen.sh
-# Automatically added by buildreq on Sun Sep 25 2016
-# optimized out: dconf docbook-dtds docbook-style-xsl glib-networking glib2-devel gnu-config gobject-introspection libgio-devel libgpg-error libgpg-error-devel perl pkg-config python-base python-devel python-module-google python-modules python-modules-compiler python-modules-encodings python-modules-xml python3 python3-base xml-common xsltproc
-BuildRequires: gtk-doc gvfs libGConf libarchive-devel libe2fs-devel libfuse-devel libgpgme-devel liblzma-devel libsoup-devel time zlib-devel
+# Automatically added by buildreq on Wed Mar 15 2017
+# optimized out: dconf docbook-dtds docbook-style-xsl glib-networking glib2-devel gnu-config gobject-introspection libgio-devel libgpg-error libgpg-error-devel libgpgme-pthread11 perl pkg-config python-base python-devel python-module-google python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml python3 python3-base xml-common xsltproc
+BuildRequires: db2latex-xsl gobject-introspection-devel libarchive-devel libe2fs-devel libfuse-devel libgpgme-devel liblzma-devel libsoup-devel libsystemd-devel time zlib-devel
 
 BuildRequires: autoconf automake libtool
 # Too bad there isn't a pkg-config file =(
@@ -86,9 +87,7 @@ Development package containing library and header files of %name.
 NOCONFIGURE=1 sh -x ./autogen.sh
 
 %configure --disable-silent-rules \
-	   --enable-documentation \
-	   --disable-grub2-hook \
-	   --without-dracut --without-grub2 \
+	   --without-dracut \
 	   --without-grub2-mkconfig-path
 %make_build
 
@@ -97,18 +96,24 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 
 rm -rf %buildroot/etc/dracut.conf.d/ %buildroot/usr/lib/dracut/
 rm -rf %buildroot%_sysconfdir/grub.d/15_ostree
+
 %files
 %doc COPYING README.md
 #%_sysconfdir/grub.d/15_ostree
 %_bindir/ostree
 %_bindir/rofiles-fuse
+%_libexecdir/lib%name/
 %_libexecdir/%name/
-%exclude /usr/lib/ostree/grub2-15_ostree
+%exclude /usr/lib/libostree/grub2-15_ostree
 %_datadir/%name/
+%_unitdir/ostree-prepare-root.service
+%_unitdir/ostree-remount.service
 
 # due missed buildreqs
-#%_typelibdir/*.typelib
-#%_girdir/*.gir
+#    /usr/lib64/girepository-1.0/OSTree-1.0.typelib
+#    /usr/share/gir-1.0/OSTree-1.0.gir
+%_typelibdir/*.typelib
+%_girdir/*.gir
 
 %_man1dir/*
 %_man5dir/ostree*
@@ -122,6 +127,9 @@ rm -rf %buildroot%_sysconfdir/grub.d/15_ostree
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Mar 15 2017 Vitaly Lipatov <lav@altlinux.ru> 2017.3-alt1
+- new version 2017.3 (with rpmrb script)
+
 * Sun Jan 29 2017 Vitaly Lipatov <lav@altlinux.ru> 2017.1-alt1
 - new version 2017.1 (with rpmrb script)
 
