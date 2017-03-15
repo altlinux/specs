@@ -1,12 +1,13 @@
 %define flacdocs %_docdir/%name-%version
 %define soversion 8
 %define cppsoversion 6
+%def_with xmms
 
 %set_verify_elf_method textrel=relaxed
 
 Name: flac
 Version: 1.2.1
-Release: alt11.1
+Release: alt11.1.1
 
 Summary: Free Lossless Audio Codec
 License: GPLv2+
@@ -22,11 +23,12 @@ Requires: lib%name%soversion = %version-%release
 %{?_enable_static:BuildRequires: glibc-devel-static}
 
 %ifarch %ix86 x86_64
-BuildRequires: nasm
+#BuildRequires: nasm
 %endif
 
 # Automatically added by buildreq on Fri Mar 25 2011
-BuildRequires: docbook-utils doxygen gcc-c++ libogg-devel libxmms-devel
+BuildRequires: docbook-utils doxygen gcc-c++ libogg-devel
+%{?_with_xmms:BuildRequires: libxmms-devel}
 
 %description
 FLAC (%url) is an Open Source lossless audio codec.
@@ -113,12 +115,15 @@ Xmms plugin for playing FLAC files.
 
 %build
 # due to libtool mess
-%autoreconf
-%configure --enable-exhaustive-tests %{subst_enable static}
+#autoreconf
+%configure \
+	%{?!_with_bootstrap:--enable-exhaustive-tests} \
+	%{subst_enable static} \
+	%{?!_with_xmms:--disable-xmms-plugin}
 %make_build
 
 %install
-%makeinstall xmmsinputplugindir=%buildroot%xmms_inputdir
+%makeinstall %{?_with_xmms:xmmsinputplugindir=%buildroot%xmms_inputdir}
 install -pm644 COPYING.Xiph AUTHORS README %buildroot%flacdocs/
 
 %check
@@ -171,10 +176,19 @@ install -pm644 COPYING.Xiph AUTHORS README %buildroot%flacdocs/
 %_libdir/libFLAC++.a
 %endif
 
+%if_with xmms
 %files -n xmms-in-%name
 %_libdir/xmms/Input/*
+%endif
+
+# TODO: 1.3.2+
 
 %changelog
+* Wed Mar 15 2017 Michael Shigorin <mike@altlinux.org> 1.2.1-alt11.1.1
+- BOOTSTRAP: introduce xmms knob (on by default),
+  skip exhaustive tests when bootstrapping
+  + NB: this package needs a new maintainer, 1.3.x available
+
 * Thu Jun 11 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.1-alt11.1
 - Rebuilt for gcc5 C++11 ABI.
 
