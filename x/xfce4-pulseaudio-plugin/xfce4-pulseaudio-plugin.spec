@@ -1,6 +1,6 @@
 Name: xfce4-pulseaudio-plugin
 Version: 0.2.4
-Release: alt1
+Release: alt2
 
 Summary: A pulseaudio plugin for the Xfce panel
 License: %gpl2plus
@@ -19,6 +19,8 @@ BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
 BuildRequires: libpulseaudio-devel libnotify-devel
 
 Requires: xfce4-panel >= 4.11
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 A panel plugin for controlling PulseAudio mixer.
@@ -49,6 +51,11 @@ A panel plugin for controlling PulseAudio mixer.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Mar 15 2017 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt2
+- Fix menu translation.
+- Use _unpackaged_files_terminate_build.
+- Added translations from upstream git.
+
 * Tue Oct 27 2015 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt1
 - Updated to 0.2.4.
 
