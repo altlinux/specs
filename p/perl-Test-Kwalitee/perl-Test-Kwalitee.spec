@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN/Meta/Requirements.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-Kwalitee
-Version:	1.23
-Release:	alt1_1
+Version:	1.25
+Release:	alt1
 Summary:	Test the Kwalitee of a distribution before you release it
 License:	GPL+ or Artistic
 URL:		http://metacpan.org/module/Test::Kwalitee
-Source0:	http://cpan.metacpan.org/authors/id/E/ET/ETHER/Test-Kwalitee-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-Kwalitee-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	coreutils
@@ -66,6 +67,9 @@ make test
 %{_mandir}/man1/kwalitee-metrics.1*
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.25-alt1
+- automated CPAN update
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1_1
 - new version
 
