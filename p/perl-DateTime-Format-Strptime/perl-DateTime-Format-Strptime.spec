@@ -2,8 +2,8 @@
 %define module DateTime-Format-Strptime
 
 Name: perl-%module
-Serial: 1
-Version: 1.70
+Epoch: 1
+Version: 1.73
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -13,7 +13,7 @@ License: Artistic 2.0
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-Format-Strptime-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DR/DROLSKY/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -27,7 +27,7 @@ outputs it in a given format, Strptime takes a DateTime and a format and
 returns the DateTime object associated.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -36,9 +36,13 @@ returns the DateTime object associated.
 %perl_vendor_install
 
 %files
+%doc CONTRIBUTING.md README.md LICENSE Changes
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.73-alt1
+- automated CPAN update
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.70-alt1
 - automated CPAN update
 
