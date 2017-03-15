@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-XML-Compile
-Version: 1.54
+Version: 1.55
 Release: alt1
 
 Summary: Compilation based XML processing
@@ -27,7 +27,7 @@ Url: %CPAN %m_distro
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/M/MA/MARKOV/XML-Compile-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MARKOV/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Sep 06 2011
 # optimized out: perl-B-Utils perl-Data-Dump-Streamer perl-Encode perl-File-Slurp perl-Log-Report perl-Math-BigInt perl-Math-BigInt-FastCalc perl-Math-BigRat perl-Text-Balanced perl-XML-LibXML perl-XML-LibXML-Simple perl-devel xml-common
@@ -45,7 +45,7 @@ only handles a tree of nested HASHes and ARRAYs, and does not need to
 understand namespaces and other general XML and schema nastiness.
 
 %prep
-%setup -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -54,12 +54,17 @@ understand namespaces and other general XML and schema nastiness.
 %perl_vendor_install
 
 %files
+%doc README.todo ChangeLog README
 %_bindir/xml2yaml
+%_bindir/xml2json
 %_bindir/schema2example
 %_man1dir/*
 %perl_vendor_privlib/XML/*
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.55-alt1
+- automated CPAN update
+
 * Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.54-alt1
 - automated CPAN update
 
