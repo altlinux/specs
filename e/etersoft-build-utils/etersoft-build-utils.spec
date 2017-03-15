@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.5.7
+Version: 2.5.8
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,11 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Wed Mar 15 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5.8-alt1
+- rpmgs: strict # Source*
+- rpmgs: add support for build source from git repo with submodules
+- rpmgs: support hack version HEAD in args
+
 * Tue Mar 14 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5.7-alt1
 - rpmreqs: drop (VERSION) only for lib*
 - rpmpub: set permissions to hardlinked previous tree
