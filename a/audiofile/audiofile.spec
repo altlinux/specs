@@ -1,9 +1,10 @@
 %def_enable static
+%def_without doc
 %define sover 1
 
 Name: audiofile
 Version: 0.3.6
-Release: alt2
+Release: alt2.1
 
 Summary: Library to handle various audio file formats
 License: LGPL
@@ -20,7 +21,8 @@ Patch1: %name-0.3.6-alt-configure.patch
 Requires: lib%name%sover = %version-%release
 
 BuildRequires: gcc-c++ glibc-devel-static libalsa-devel
-BuildPreReq: libflac-devel asciidoc-a2x
+BuildPreReq: libflac-devel
+%{?_with_doc:BuildRequires: asciidoc-a2x}
 
 %package -n lib%name%sover
 Summary: Shared library for %name
@@ -83,11 +85,15 @@ Static libraries you can use to develop
 %patch -p1
 [ ! -d m4 ] && mkdir m4 && cp %SOURCE1 m4/
 %patch1 -b .m4
+%ifarch e2k
+sed -i 's,-Wno-multichar,,' */*/Makefile.am
+%endif
 
 %build
 %autoreconf
 %configure \
 	--enable-largefile \
+	%{?!_with_doc:--disable-docs} \
 	%{subst_enable static}
 # SMP-incompatible build (man pages)
 %make
@@ -105,13 +111,17 @@ Static libraries you can use to develop
 
 %files -n lib%name%sover
 %_libdir/*.so.*
+%if_with doc
 %_man1dir/*
+%endif
 
 %files -n lib%name-devel
 %_libdir/*.so
 %_pkgconfigdir/*
 %_includedir/*
+%if_with doc
 %_man3dir/*
+%endif
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -119,6 +129,10 @@ Static libraries you can use to develop
 %endif
 
 %changelog
+* Wed Mar 15 2017 Michael Shigorin <mike@altlinux.org> 0.3.6-alt2.1
+- BOOTSTRAP: introduce doc knob (on by default)
+- E2K: avoid lcc-unsupported option
+
 * Sun Jan 29 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt2
 - updated to 0.3.6-26-g6ac5a49
 - %%check section
