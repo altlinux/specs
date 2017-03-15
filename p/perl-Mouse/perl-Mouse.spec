@@ -2,7 +2,7 @@
 BuildRequires: perl(Module/Build.pm) perl(Test/LeakTrace.pm)
 %define dist Mouse
 Name: perl-%dist
-Version: 2.4.8
+Version: 2.4.9
 Release: alt1
 
 Summary: Moose minus the antlers
@@ -45,6 +45,9 @@ export XSUBPP_NO_STATIC_XS=1
 %perl_vendor_archlib/Test
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.9-alt1
+- automated CPAN update
+
 * Fri Feb 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.8-alt1
 - automated CPAN update
 
