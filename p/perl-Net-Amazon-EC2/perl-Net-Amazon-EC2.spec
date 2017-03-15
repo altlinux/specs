@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Net-Amazon-EC2
 Name: perl-%dist
-Version: 0.31
+Version: 0.32
 Release: alt1
 
 Summary: Perl interface to the Amazon Elastic Compute Cloud (EC2)
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MA/MALLEN/Net-Amazon-EC2-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MALLEN/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +21,7 @@ This module is a Perl interface to Amazon's Elastic Compute Cloud.
 It uses the Query API to communicate with Amazon's Web Services framework.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 rm -fv lib/Net/Amazon/._EC2.pm
 
 %build
@@ -31,10 +31,13 @@ rm -fv lib/Net/Amazon/._EC2.pm
 %perl_vendor_install
 
 %files
-%doc README
+%doc README Changelog
 %perl_vendor_privlib/Net
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
 - automated CPAN update
 
