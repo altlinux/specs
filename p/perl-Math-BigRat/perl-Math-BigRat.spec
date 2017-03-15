@@ -1,16 +1,16 @@
-Epoch: 1
 %define _unpackaged_files_terminate_build 1
+Epoch: 1
 %define dist Math-BigRat
 Name: perl-%dist
-Version: 0.2611
-Release: alt1.1
+Version: 0.2612
+Release: alt1
 
 Summary: Arbitrarily big rational numbers
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/P/PJ/PJACKLAM/Math-BigRat-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PJ/PJACKLAM/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ Math::BigRat complements Math::BigInt and Math::BigFloat
 by providing support for arbitrarily big rational numbers.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +35,9 @@ by providing support for arbitrarily big rational numbers.
 %perl_vendor_privlib/Math
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.2612-alt1
+- automated CPAN update
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.2611-alt1.1
 - incremented epoch
 
