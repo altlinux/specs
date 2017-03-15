@@ -1,6 +1,6 @@
 Name: stone_soup
-Version: 0.18.1
-Release: alt1.1
+Version: 0.19.5
+Release: alt1
 %define Sum Roguelike with tiled and ascii interfaces
 Summary: %Sum
 License: GPLv2
@@ -109,6 +109,9 @@ install ../crawl %buildroot/%_bindir/crawl
 %_bindir/crawl
 
 %changelog
+* Mon Mar 13 2017 Fr. Br. George <george@altlinux.ru> 0.19.5-alt1
+- Autobuild version bump to 0.19.5
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.18.1-alt1.1
 - NMU: rebuild with new lua
 
