@@ -2,26 +2,25 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Data/Dump.pm) perl(File/ShareDir.pm) perl(FindBin.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(Module/Build.pm) perl(Path/Class/Dir.pm) perl(Path/Class/File.pm) perl(Path/FindDev.pm) perl(Path/IsDev.pm) perl(Sub/Exporter.pm) perl(Test/More.pm) perl(YAML/Dumper.pm) perl(YAML/Loader.pm)
 # END SourceDeps(oneline)
-%define module_version 1.000008
 %define module_name File-ShareDir-ProjectDistDir
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.000008
+Version: 1.000009
 Release: alt1
 Summary: Simple set-and-forget using of a '/share' directory in your projects root
 Group: Development/Perl
 License: perl
 URL: https://github.com/kentfredric/File-ShareDir-ProjectDistDir
 
-Source: http://www.cpan.org/authors/id/K/KE/KENTNL/File-ShareDir-ProjectDistDir-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/K/KE/KENTNL/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/F*
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.000009-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.000008-alt1
 - automated CPAN update
 
