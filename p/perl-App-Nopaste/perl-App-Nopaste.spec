@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(parent.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-App-Nopaste
-Version:        1.007
-Release:        alt1_1
+Version:        1.008
+Release:        alt1
 Summary:        Easy access to any pastebin
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/App-Nopaste/
@@ -101,6 +102,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.008-alt1
+- automated CPAN update
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.007-alt1_1
 - update to new release by fcimport
 
