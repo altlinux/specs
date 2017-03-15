@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Capture-Tiny
 Name: perl-Capture-Tiny
-Version: 0.44
+Version: 0.46
 Release: alt1
 
 Summary: Capture::Tiny - Capture STDOUT and STDERR from Perl, XS or external programs
@@ -9,7 +9,7 @@ Group: Development/Perl
 License: Apache 2.0
 
 Url: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/Capture-Tiny-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 BuildRequires: perl-devel perl-Module-Build perl-Test-Differences
@@ -18,7 +18,7 @@ BuildRequires: perl-devel perl-Module-Build perl-Test-Differences
 %summary
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -27,10 +27,14 @@ BuildRequires: perl-devel perl-Module-Build perl-Test-Differences
 %perl_vendor_install
 
 %files
+%doc Changes LICENSE Todo README examples
 %perl_vendor_privlib/Capture/Tiny*
-%doc Changes Todo LICENSE README 
+%doc Changes Todo LICENSE README
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.46-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
 - automated CPAN update
 
