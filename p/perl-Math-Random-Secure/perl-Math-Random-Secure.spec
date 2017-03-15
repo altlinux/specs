@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Math-Random-Secure
-Version: 0.08
+Version: 0.080001
 Release: alt1
 
 Summary: Cryptographically-secure, cross-platform replacement for rand()
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Denis Baranov <baraka@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/F/FR/FREW/Math-Random-Secure-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/F/FR/FREW/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon May 02 2011 (-bi)
 # optimized out: perl-Any-Moose perl-B-Hooks-EndOfScope perl-Data-OptList perl-Module-Find perl-Package-Stash perl-Params-Util perl-Sub-Exporter perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Sub-Uplevel perl-Tree-DAG_Node perl-Variable-Magic perl-devel perl-namespace-clean
@@ -37,7 +37,7 @@ BuildRequires: perl-Crypt-Random-Source perl-List-MoreUtils perl-Math-Random-ISA
 None.
 
 %prep
-%setup -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -45,11 +45,15 @@ None.
 %perl_vendor_install
 
 %files
+%doc Changes README LICENSE
 %perl_vendor_privlib/Math/Random/Secure/*
 %perl_vendor_privlib/Math/Random/Secure.pm
 
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.080001-alt1
+- automated CPAN update
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 
