@@ -1,6 +1,6 @@
 Name:		sway
 Version:	0.12
-Release:	alt1
+Release:	alt2
 
 Summary:	i3wm drop-in replacement for Wayland
 
@@ -11,15 +11,16 @@ Group:		Graphical desktop/Other
 Packager:	Vladimir D. Seleznev <vseleznv@altlinux.org>
 
 Source:		%name-%version.tar.gz
-Source1:	control
-Source2:	README.ALT
+Source1:	README.ALT
+Source2:	pam
 
+PreReq:		/etc/tcb
 BuildRequires(pre): rpm-macros-cmake
 # Automatically added by buildreq on Tue Feb 28 2017
 # optimized out: asciidoc cmake-modules docbook-dtds docbook-style-xsl fontconfig glib2-devel libcairo-devel libgdk-pixbuf libgio-devel libgpg-error libinput-devel libjson-c libudev-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-server libwayland-server-devel libxcbutil-image libxkbcommon-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml wayland-devel xml-common xsltproc
 BuildRequires: asciidoc-a2x cmake libcap-devel libgdk-pixbuf-devel libjson-c-devel libpam-devel libpango-devel libpcre-devel libwayland-cursor-devel libwayland-egl-devel libwlc0-devel time
 Requires:	%name-data
-Requires(pre):	/sbin/setcap
+Requires(post):	/sbin/setcap
 
 %package	data
 Summary:	i3wm drop-in replacement for Wayland - data files
@@ -41,6 +42,7 @@ This package contains data files.
 
 %prep
 %setup
+cp %SOURCE1 .
 cp %SOURCE2 .
 
 %build
@@ -52,11 +54,7 @@ cp %SOURCE2 .
 
 %install
 %cmakeinstall_std
-install -D %SOURCE1 %buildroot%_controldir/%name
-# FIXME: swaylock
-rm -- %buildroot%_sysconfdir/pam.d/swaylock
-rm -- %buildroot%_bindir/swaylock
-rm -- %buildroot%_man1dir/swaylock.*
+install -pm2640 -D pam %buildroot%_sysconfdir/pam.d/swaylock
 
 %post
 /sbin/setcap cap_sys_ptrace=eip %_bindir/%name
@@ -67,10 +65,15 @@ rm -- %buildroot%_man1dir/swaylock.*
 %doc README.ALT
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/security.d
+%attr(0640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/swaylock
 %config(noreplace) %_sysconfdir/%name/config
 %config(noreplace) %_sysconfdir/%name/security.d/00-defaults
-%config %_controldir/%name
-%_bindir/*
+%_bindir/sway
+%attr(2711,root,chkpwd) %_bindir/swaylock
+%_bindir/swaybar
+%_bindir/swaybg
+%_bindir/swaygrab
+%_bindir/swaymsg
 %_man1dir/*
 %_man5dir/*
 %_man7dir/*
@@ -81,6 +84,11 @@ rm -- %buildroot%_man1dir/swaylock.*
 %_datadir/%name/*
 
 %changelog
+* Wed Mar 15 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.12-alt2
+- added swaylock.
+- fixed post requires type.
+- removed control file.
+
 * Sat Mar 11 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.12-alt1
 - 0.12
 - fixed: set CAP_SYS_PTRACE to sway binary
