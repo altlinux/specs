@@ -1,5 +1,5 @@
 Name: asymptote
-Version: 2.39
+Version: 2.40
 Release: alt1
 
 Summary: Descriptive vector graphics language
@@ -10,7 +10,9 @@ Url: http://asymptote.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sf.net/%name/%name-%version.src.tar
+# Source-url: https://github.com/vectorgraphics/asymptote/archive/%version.tar.gz
+Source: %name-%version.tar
+
 Patch: asymptote-1.91-alt-DSO.patch
 Patch1: asymptote-1.91-alt-glibc-2.16.patch
 Patch2: asymptote-2.28-alt-gsl1.16.patch
@@ -45,12 +47,12 @@ Documentation and examples for %name.
 #patch2 -p2
 # some incompatibilities?
 %__subst "s|@printindex cp||g" doc/%name.texi
-gzip ChangeLog
 
 # sure we do not using internal libgc
 rm -fv *.tar.gz
 
 %build
+%autoreconf
 %configure --with-docdir=%_docdir/%name-doc-%version \
 	--with-latex=%_texmfmain/tex/latex \
 	--with-context=%_texmfmain/tex/context/third \
@@ -62,7 +64,7 @@ rm -fv *.tar.gz
 %makeinstall_std
 
 %files
-%doc BUGS ChangeLog.gz LICENSE README ReleaseNotes TODO
+%doc BUGS LICENSE README TODO
 %_bindir/asy
 %_bindir/xasy
 %_datadir/%name/
@@ -76,6 +78,9 @@ rm -fv *.tar.gz
 %_infodir/%name/*.info*
 
 %changelog
+* Wed Mar 15 2017 Vitaly Lipatov <lav@altlinux.ru> 2.40-alt1
+- new version (2.40) with rpmgs script
+
 * Sat Jan 28 2017 Vitaly Lipatov <lav@altlinux.ru> 2.39-alt1
 - new version 2.39 (with rpmrb script)
 
