@@ -1,6 +1,6 @@
 Name: astyle
-Version: 2.05.1
-Release: alt2
+Version: 2.06
+Release: alt1
 
 Summary: A small, fast automatic indentation filter for C/C++/Java code
 License: GPL
@@ -66,8 +66,10 @@ install -D src/%name.h %buildroot%_includedir/%name.h
 %_libdir/lib%name.so
 %_includedir/%name.h
 
-
 %changelog
+* Mon Mar 13 2017 Fr. Br. George <george@altlinux.ru> 2.06-alt1
+- Autobuild version bump to 2.06
+
 * Wed Dec 14 2016 Fr. Br. George <george@altlinux.ru> 2.05.1-alt2
 - Build isolated shared library (closes: #32855)
 
