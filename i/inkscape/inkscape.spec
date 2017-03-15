@@ -4,7 +4,7 @@
 %define pre %nil
 Name: inkscape
 Version: %major.1
-Release: alt1
+Release: alt2
 
 Summary: A Vector Drawing Application
 
@@ -39,12 +39,13 @@ BuildPreReq: desktop-file-utils
 # manually removed: bzr
 # Automatically added by buildreq on Sat Aug 04 2012
 # optimized out: fontconfig fontconfig-devel glib2-devel gnome-vfs libGConf-devel libX11-devel libatk-devel libatkmm-devel libavahi-glib libcairo-devel libcairomm-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglibmm-devel libgpg-error libgtk+2-devel libp11-kit libpango-devel libpangomm-devel libpng-devel libpoppler-devel libpoppler8-glib libsigc++2-devel libstdc++-devel  libxml2-devel perl-Encode perl-XML-Parser pkg-config python-base python-devel python-module-distribute python-module-peak python-module-zope python-modules xorg-xproto-devel zlib-devel
-BuildRequires: boost-devel-headers gcc-c++  intltool libImageMagick-devel libaspell-devel libgc-devel libgsl-devel libgtkmm2-devel libgtkspell-devel liblcms2-devel libpoppler-glib-devel libpopt-devel  libxslt-devel perl-devel python-module-mwlib python-module-paste zlib-devel
+BuildRequires: boost-devel-headers gcc-c++  intltool libImageMagick-devel libaspell-devel libgc-devel libgsl-devel libgtkmm2-devel libgtkspell-devel liblcms2-devel libpoppler-glib-devel libpopt-devel  libxslt-devel perl-devel python-module-paste zlib-devel
 %{?_with_gnome_vfs:BuildRequires: gnome-vfs-devel}
 BuildRequires: libwpg-devel librevenge-devel libcdr-devel libvisio-devel
 BuildRequires: libpng-devel libexif-devel libjpeg-devel
-BuildRequires: libpoppler-devel
+BuildRequires: libpoppler-devel libpotrace-devel
 BuildRequires: gcc-common libgomp6-devel
+BuildRequires: perl-podlators
 
 Requires: icc-profiles
 
@@ -89,13 +90,11 @@ inkview is standalone viewer for Inkscape files (SVG)
 %autoreconf
 subst "s|.*\(checkPYTHON_LIBS\)=.*|\1=-lpython%_python_version|" ./configure
 %configure \
-        --with-python           \
-        --with-perl             \
-        --with-xft              \
         --enable-lcms           \
         --enable-cdr            \
         --enable-visio          \
-        --enable-poppler-cairo
+        --enable-poppler-cairo \
+        --enable-dbusapi
 %make_build
 
 %install
@@ -128,14 +127,17 @@ rm -rf %buildroot%_mandir/zh_TW/
 %_datadir/appdata/inkscape*
 %_desktopdir/inkscape.desktop
 %_iconsdir/hicolor/*/apps/%name.png
-# TODO: someone remove it after build in hasher
-#_man1dir/inkscape*
+%_man1dir/inkscape*
 
 %files viewer
 %_bindir/inkview
 %_man1dir/inkview*
 
 %changelog
+* Wed Mar 15 2017 Vitaly Lipatov <lav@altlinux.ru> 0.92.1-alt2
+- build with potrace (ALT bug #33147)
+- fix man build
+
 * Sat Feb 18 2017 Vitaly Lipatov <lav@altlinux.ru> 0.92.1-alt1
 - new version 0.92.1 (with rpmrb script)
 
