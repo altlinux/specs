@@ -6,7 +6,7 @@ BuildRequires: libsowing-devel perl(Carp.pm) perl(Encode.pm) perl(Exporter.pm) p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 3.0227
+Version: 3.0230
 Release: alt1
 Summary: JSON::XS for Cpanel, fast and correct serialising, also for 5.6.2
 Group: Development/Perl
@@ -58,6 +58,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 3.0230-alt1
+- automated CPAN update
+
 * Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 3.0227-alt1
 - automated CPAN update
 
