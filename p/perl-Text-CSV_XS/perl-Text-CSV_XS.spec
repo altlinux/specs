@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Text-CSV_XS
 Name: perl-%dist
-Version: 1.26
-Release: alt1.1
+Version: 1.27
+Release: alt1
 
 Summary: Comma-separated values manipulation routines
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/H/HM/HMBRAND/Text-CSV_XS-%{version}.tgz
+Source0: http://www.cpan.org/authors/id/H/HM/HMBRAND/%{dist}-%{version}.tgz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage perl(charnames.pm)
@@ -20,7 +20,7 @@ comma-separated values.  An instance of the Text::CSV_XS class can combine
 fields into a CSV string and parse a CSV string into fields.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -29,11 +29,14 @@ fields into a CSV string and parse a CSV string into fields.
 %perl_vendor_install
 
 %files
-%doc ChangeLog README
+%doc ChangeLog README CONTRIBUTING.md examples
 %perl_vendor_archlib/Text
 %perl_vendor_autolib/Text
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1.1
 - rebuild with new perl 5.24.1
 
