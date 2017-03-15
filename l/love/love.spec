@@ -1,5 +1,5 @@
 Name: love
-Version: 0.10.1
+Version: 0.10.2
 Release: alt1
 Summary: Legendary Orthogonal Virtual Environment
 Group: Games/Other
@@ -56,6 +56,9 @@ chrpath -d  %buildroot%_libdir/lib*.so*
 %_pixmapsdir/*
 
 %changelog
+* Mon Mar 13 2017 Fr. Br. George <george@altlinux.ru> 0.10.2-alt1
+- Autobuild version bump to 0.10.2
+
 * Mon Jul 11 2016 Fr. Br. George <george@altlinux.ru> 0.10.1-alt1
 - Autobuild version bump to 0.10.1
 
