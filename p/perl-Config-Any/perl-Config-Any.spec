@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Config-Any
 Name: perl-Config-Any
-Version: 0.27
+Version: 0.29
 Release: alt1
 
 Summary: Load configuration from different file formats, transparently
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/Config-Any/
-Source: http://www.cpan.org/authors/id/B/BR/BRICAS/Config-Any-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -23,7 +23,7 @@ file formats. It supports XML, YAML, JSON, Apache-style
 configuration, Windows INI files, and even Perl code.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -36,6 +36,9 @@ configuration, Windows INI files, and even Perl code.
 %perl_vendor_privlib/Config*
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- automated CPAN update
+
 * Thu Apr 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
 - automated CPAN update
 
