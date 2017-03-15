@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Tree-Simple
-Version: 1.29
+Version: 1.30
 Release: alt1
 
 Summary: Tree-Simple - A simple tree object
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RS/RSAVAGE/Tree-Simple-%{version}.tgz
+Source0: http://www.cpan.org/authors/id/R/RS/RSAVAGE/%{module}-%{version}.tgz
 
 # Automatically added by buildreq on Tue Jun 07 2005
 BuildRequires: perl-Pod-Escapes perl-Pod-Simple perl-Sub-Uplevel perl-Test-Exception perl-Test-Pod perl-devel perl-Module-Build perl(Test/Version.pm)
@@ -71,7 +71,7 @@ this module cannot keep up with your Tree needs, i suggest switching to
 one of the modules listed in the "OTHER TREE MODULES" section below.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -80,9 +80,13 @@ one of the modules listed in the "OTHER TREE MODULES" section below.
 rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
+%doc LICENSE Changes README Changelog.ini
 %perl_vendor_privlib/Tree/*
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.30-alt1
+- automated CPAN update
+
 * Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1
 - automated CPAN update
 
