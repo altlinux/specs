@@ -1,20 +1,22 @@
 Name: bakefile
-Version: 0.2.9
+Version: 0.2.10
 Release: alt1
 
 Summary: Native makefiles generator
 
 License: MIT
 Group: Development/Other
-Url: http://bakefile.sourceforge.net/
+Url: http://bakefile.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sourceforge.net/bakefile/%name-%version.tar
+# Source-url: https://github.com/vslavik/bakefile/archive/v%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-empy.patch
 
 # Automatically added by buildreq on Sat Mar 07 2009
-BuildRequires: gcc-c++ python-devel python-module-em
+BuildRequires: gcc-c++ swig python-devel python-module-em
+BuildRequires: xsltproc docbook-style-xsl
 
 %description
 Bakefile is cross-platform, cross-compiler native makefiles generator.
@@ -29,8 +31,9 @@ bcc makefile etc.).
 touch ChangeLog
 
 %build
-%autoreconf
-%configure
+#autoreconf
+./bootstrap
+%configure --enable-maintainer-mode
 
 %install
 %makeinstall_std
@@ -46,11 +49,15 @@ touch ChangeLog
 %dir %_libdir/%name/
 %_libdir/%name/*.py*
 %_libdir/%name/*.so
+%_libdir/%name/*.la
 %_libdir/%name/empy/
 %_libdir/%name/py25modules/
 %_man1dir/bakefil*.1*
 
 %changelog
+* Wed Mar 15 2017 Vitaly Lipatov <lav@altlinux.ru> 0.2.10-alt1
+- new version (0.2.10) with rpmgs script
+
 * Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 0.2.9-alt1
 - new version 0.2.9 (with rpmrb script)
 
