@@ -1,5 +1,5 @@
 Name: cherrytree
-Version: 0.37.5
+Version: 0.38.0
 Release: alt1
 
 Summary: Hierarchical note taking application
@@ -73,6 +73,9 @@ rm -rf %buildroot%python_sitelibdir_noarch/
 
 
 %changelog
+* Wed Mar 15 2017 Konstantin Artyushkin <akv@altlinux.org> 0.38.0-alt1
+- new version
+
 * Mon Oct 10 2016 Konstantin Artyushkin <akv@altlinux.org> 0.37.5-alt1
 - new version
 
