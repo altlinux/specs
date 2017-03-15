@@ -8,7 +8,7 @@
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
 %define module_version	375.39
-%define module_release	alt1
+%define module_release	alt2
 %define flavour		un-def
 
 %setup_kernel_module %flavour
@@ -36,13 +36,13 @@
 %endif
 %define legacy3_src %(echo %legacy3 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.20
-%define legacy4 304.134
+%define legacy4 304.135
 %else
 %define legacy4 %nil
 %endif
 %define legacy4_src %(echo %legacy4 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.20
-%define legacy5 340.101
+%define legacy5 340.102
 %else
 %define legacy5 %nil
 %endif
@@ -251,6 +251,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Mar 15 2017 Sergey V Turchin <zerg at altlinux dot org> 375.39-alt2
+- new releases (340.102, 304.135)
 
 * Mon Feb 20 2017 Sergey V Turchin <zerg at altlinux dot org> 375.39-alt1
 - new release (375.39)
