@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Event-Recurrence
-Version:        0.18
-Release:        alt1_3
+Version:        0.19
+Release:        alt1
 Summary:        DateTime::Set extension for create basic recurrence sets
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -62,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_3
 - update to new release by fcimport
 
