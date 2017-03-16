@@ -2,9 +2,11 @@
 BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools
 # END SourceDeps(oneline)
 BuildRequires: libkmahjongg4-common
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:        mj
 Version:     1.14
-Release:     alt1_9
+Release:     alt1_10
 Summary:     Mah-Jong program with network option
 Summary(sv): Mah-Jong-program med nätmöjlighet
 
@@ -33,7 +35,6 @@ BuildRequires: desktop-file-utils
 
 %global desktopdir %_datadir/applications
 %global icontop %_datadir/icons/hicolor
-Source44: import.info
 
 %description
 This is the game of Mah-Jong, not be confused with the solitaire
@@ -84,8 +85,8 @@ cp -p ../tiles-v1/tong* .
 
 
 %build
-make %{?_smp_mflags} FALLBACKTILES=./tiles-kdegames depend
-make %{?_smp_mflags} EXTRA_CFLAGS="%optflags" LDLIBS=-lm \
+%make_build FALLBACKTILES=./tiles-kdegames depend
+%make_build EXTRA_CFLAGS="%optflags" LDLIBS=-lm \
      FALLBACKTILES=./tiles-kdegames
 cat << EOF > %name.desktop
 [Desktop Entry]
@@ -167,6 +168,9 @@ fi
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_10
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_9
 - update to new release by fcimport
 
