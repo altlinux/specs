@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           atasm
 Version:        1.07d
-Release:        alt2_11
+Release:        alt2_12
 Summary:        6502 cross-assembler
 
 Group:          Development/Tools
@@ -13,7 +15,6 @@ Source0:        http://atari.miribilist.com/atasm/%{name}107d.zip
 #Source0:        http://downloads.sourceforge.net/%{name}/%{name}106.zip
 
 BuildRequires:  zlib-devel
-Source44: import.info
 
 
 %description
@@ -29,7 +30,7 @@ with lightning speed.
 
 %build
 pushd src
-make %{?_smp_mflags} CFLAGS="$RPM_OPT_FLAGS -DZLIB_CAPABLE -DUNIX"
+%make_build CFLAGS="$RPM_OPT_FLAGS -DZLIB_CAPABLE -DUNIX"
 sed -e 's|%%DOCDIR%%|%{?_pkgdocdir}%{!?_pkgdocdir:%{_docdir}/%{name}-%{version}}|g' %{name}.1.in > %{name}.1
 popd
 
@@ -57,6 +58,9 @@ popd
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.07d-alt2_12
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.07d-alt2_11
 - update to new release by fcimport
 
