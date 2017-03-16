@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install perl(Proc/Simple.pm) perl(Tk.pm)
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: alevt
 Version: 1.6.2
-Release: alt2_26
+Release: alt2_27
 Summary: Teletext decoder/browser
 Group: Video
 License: GPLv2
@@ -19,7 +21,6 @@ BuildRequires: libX11-devel
 BuildRequires: libpng-devel
 BuildRequires: desktop-file-utils
 BuildRequires: ImageMagick
-Source44: import.info
 
 %description
 AleVT is a teletext/videotext decoder and browser for the
@@ -41,7 +42,7 @@ one to capture teletext pages from scripts.
 # alevt does not have standard build system, so we populate OPT, 
 # which is internal build variable to accommodate Fedora opt flags
 # This will produce lot of garbage on output.
-make %{?_smp_mflags} -e OPT="%{optflags}"
+%make_build -e OPT="%{optflags}"
 
 
 %install
@@ -63,6 +64,9 @@ desktop-file-install \
 %doc README CHANGELOG COPYRIGHT
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt2_27
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt2_26
 - update to new release by fcimport
 
