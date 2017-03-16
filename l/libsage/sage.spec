@@ -1,21 +1,22 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libGL-devel libICE-devel libSM-devel libX11-devel
+BuildRequires: imake libGL-devel libX11-devel libXt-devel xorg-cf-files
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname sage
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libsage
 Version:        0.2.0
-Release:        alt2_14
+Release:        alt2_15
 Summary:        OpenGL extensions library using SDL
 
-Group:          Development/C++
+Group:          Development/Other
 License:        LGPLv2+
 URL:            http://worldforge.org/dev/eng/libraries/sage
 Source0:        http://downloads.sourceforge.net/worldforge/%{oldname}-%{version}.tar.gz
 Patch0:         sage-0.1.2-noopt.patch
 
 BuildRequires:  libSDL-devel
-Source44: import.info
 Provides: sage = %{version}-%{release}
 
 %description
@@ -25,8 +26,8 @@ checking for and loading OpenGL extensions in an application.
 
 %package devel
 Summary:        Development files for sage
-Group:   Development/C++
-Requires: pkgconfig %{oldname} = %{version}
+Group:   Development/Other
+Requires: pkg-config %{oldname} = %{version}-%{release}
 Provides: sage-devel = %{version}-%{release}
 
 
@@ -46,7 +47,7 @@ rm -f sage/wglext_sage.h
 
 %build
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -74,6 +75,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_15
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_14
 - update to new release by fcimport
 
