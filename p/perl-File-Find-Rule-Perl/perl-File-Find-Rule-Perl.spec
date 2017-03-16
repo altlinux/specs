@@ -2,17 +2,20 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-File-Find-Rule-Perl
 Version:        1.15
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Common rules for searching for Perl things
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/File-Find-Rule-Perl/
 Source0:        http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/File-Find-Rule-Perl-%{version}.tar.gz
 # Filter out the files rpm generates in sourcedir.
 Patch0:         File-Find-Rule-Perl-1.15-fedora.patch
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(constant.pm)
 BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(Carp.pm)
@@ -24,7 +27,6 @@ BuildRequires:  perl(File/Spec/Unix.pm)
 BuildRequires:  perl(Params/Util.pm)
 BuildRequires:  perl(Parse/CPAN/Meta.pm)
 BuildRequires:  perl(Test/More.pm)
-Source44: import.info
 
 %description
 Common rules for searching for Perl things.
@@ -35,7 +37,7 @@ Common rules for searching for Perl things.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -49,6 +51,9 @@ make test
 %{perl_vendor_privlib}/File
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1_7
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1_6
 - update to new release by fcimport
 
