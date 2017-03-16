@@ -2,17 +2,20 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		perl-Test-MinimumVersion
 Version:	0.101082
-Release:	alt1_4
+Release:	alt1_5
 Summary:	Check whether your code requires a newer perl
 License:	GPL+ or Artistic
-Group:		Development/Perl
+Group:		Development/Other
 URL:		http://search.cpan.org/dist/Test-MinimumVersion/
 Source0:	http://search.cpan.org/CPAN/authors/id/R/RJ/RJBS/Test-MinimumVersion-%{version}.tar.gz
 
 BuildArch:	noarch
 
+BuildRequires:	rpm-build-perl
 BuildRequires:	perl(base.pm)
 BuildRequires:  perl(CPAN/Meta.pm)
 BuildRequires:	perl(strict.pm)
@@ -27,7 +30,6 @@ BuildRequires:	perl(Test/Tester.pm)
 BuildRequires:	perl(YAML/Tiny.pm)
 BuildRequires:	perl(version.pm)
 BuildRequires:	perl(warnings.pm)
-Source44: import.info
 
 %description
 Check whether your code requires a newer perl than you think.
@@ -38,7 +40,7 @@ find -type f -exec chmod -x {} \;
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -53,6 +55,9 @@ make test
 %{perl_vendor_privlib}/Test
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.101082-alt1_5
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.101082-alt1_4
 - update to new release by fcimport
 
