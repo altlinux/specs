@@ -2,18 +2,19 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-el
 Summary: Greek hunspell dictionaries
 #Epoch: 1
 Version: 0.8
-Release: alt2_11
+Release: alt2_12
 Source: http://ispell.math.upatras.gr/files/ooffice/el_GR-%{version}.zip
 URL: http://ispell.math.upatras.gr/?section=oofficespell&subsection=howto
 License: GPLv2+ or LGPLv2+ or MPLv1.1
 BuildArch: noarch
 
 Requires: hunspell
-Source44: import.info
 
 %description
 Greek hunspell dictionaries.
@@ -41,6 +42,9 @@ done
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_12
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_11
 - update to new release by fcimport
 
