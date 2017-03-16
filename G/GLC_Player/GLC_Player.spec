@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           GLC_Player
 Version:        2.3.0
-Release:        alt2_13
+Release:        alt2_14
 Summary:        GLC_Player is an Open Source software used to view 3d models (OBJ Format)
 
 Group:          Graphics
@@ -16,7 +18,6 @@ Patch1:         GLC_Player_src_2.3.0-prefix.patch
 
 BuildRequires:  GLC_lib-devel >= 2.0.0
 BuildRequires:  desktop-file-utils
-Source44: import.info
 
 %description
 GLC_Player is an Open Source software used to view 3d models (OBJ Format).
@@ -33,7 +34,7 @@ cross-platform, Qt 4 and GLC_lib application.
 
 %build
 %{qmake_qt4} glc_player.pro
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -95,6 +96,9 @@ EOF
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt2_14
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt2_13
 - update to new release by fcimport
 
