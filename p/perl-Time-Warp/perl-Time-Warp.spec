@@ -3,15 +3,19 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:       perl-Time-Warp 
 Version:    0.52
-Release:    alt1_4.1
+Release:    alt1_5
 License:    GPL+ or Artistic 
 Summary:    Control over the flow of time
 Source:     http://search.cpan.org/CPAN/authors/id/S/SZ/SZABGAB/Time-Warp-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/Time-Warp
 BuildRequires:  findutils
 BuildRequires:  perl
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time:
 BuildRequires:  perl(DynaLoader.pm)
@@ -23,7 +27,6 @@ BuildRequires:  perl(Time/HiRes.pm)
 # Tests:
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(warnings.pm)
-Source44: import.info
 
 %description
 Our external experience unfolds in 3 1/2 dimensions (time has a
@@ -35,7 +38,7 @@ over the measurement of time.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -50,6 +53,9 @@ make test
 %{perl_vendor_archlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1_5
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1_4.1
 - rebuild with new perl 5.24.1
 
