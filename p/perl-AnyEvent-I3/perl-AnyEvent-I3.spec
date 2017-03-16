@@ -3,19 +3,21 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(AnyEvent.pm) perl(AnyEvent/Handle.pm) perl(AnyEvent/Socket.pm) perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(Encode.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(JSON/XS.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(base.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-AnyEvent-I3
 Version:        0.16
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Communicate with the i3 window manager
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/anyevent-i3/
 Source0:        http://search.cpan.org/CPAN/authors/id/M/MS/MSTPLBG/AnyEvent-I3-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Module/Install.pm)
 
 
-Source44: import.info
 
 %description
 This module connects to the i3 window manager using the UNIX socket based
@@ -27,7 +29,7 @@ then subscribe to events or send messages and receive their replies.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir NO_PACKLIST=1 INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -38,6 +40,9 @@ make pure_install DESTDIR=%{buildroot}
 %{perl_vendor_privlib}/AnyEvent/I3.pm
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_6
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_5
 - update to new release by fcimport
 
