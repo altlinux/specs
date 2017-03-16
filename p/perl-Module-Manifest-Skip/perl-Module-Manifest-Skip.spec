@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Test/Pod.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Module-Manifest-Skip
 Version:        0.23
-Release:        alt1_6
+Release:        alt1_7
 Summary:        MANIFEST.SKIP Manangement for Modules
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -12,6 +14,7 @@ URL:            http://search.cpan.org/dist/Module-Manifest-Skip/
 Source0:        http://www.cpan.org/authors/id/I/IN/INGY/Module-Manifest-Skip-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(File/ShareDir/Install.pm)
 BuildRequires:  perl(strict.pm)
@@ -30,11 +33,10 @@ Requires:       perl(File/ShareDir.pm)
 Requires:       perl(File/Spec.pm)
 Requires:       perl(Moo.pm) >= 0.091.013
 Requires:       perl(warnings.pm)
+%filter_from_requires /^perl\\(Moo.pm\\)$/d
 
 # Remove under-speficied dependencies
 
-Source44: import.info
-%filter_from_requires /^perl\\(Moo.pm\\)$/d
 
 %description
 CPAN module authors use a MANIFEST.SKIP file to exclude certain well known
@@ -52,7 +54,7 @@ possible.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
@@ -67,6 +69,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_7
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_6
 - update to new release by fcimport
 
