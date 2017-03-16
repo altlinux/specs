@@ -1,12 +1,13 @@
-%define _unpackaged_files_terminate_build 1
 Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Modern-Perl
 Version:        1.20170117
-Release:        alt1
+Release:        alt1_2
 Summary:        Enable all of the features of Modern Perl with one command
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -29,8 +30,7 @@ BuildRequires:  perl(warnings.pm)
 # Test Suite
 BuildRequires:  perl(Test/More.pm)
 # Runtime
-Requires:       perl(autodie.pm) >= 2.22
-Source44: import.info
+Requires:       perl(autodie.pm) >= 2.220
 Provides: perl(Modern/Perl.pm) = 2012.0
 
 %description
@@ -46,7 +46,7 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 
 %install
 ./Build install --destdir=%{buildroot} --create_packlist=0
-# %{_fixperms} %{buildroot}
+# %{_fixperms} -c %{buildroot}
 
 %check
 ./Build test
@@ -57,6 +57,9 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 %{perl_vendor_privlib}/Modern/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.20170117-alt1_2
+- update to new release by fcimport
+
 * Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.20170117-alt1
 - automated CPAN update
 
