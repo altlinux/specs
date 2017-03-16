@@ -1,4 +1,6 @@
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global		postver	-r2
 %global		postrpmver	%(echo "%postver" | sed -e 's|-|.|g' | sed -e 's|^\.||')
 
@@ -9,14 +11,13 @@
 
 Name:		libtcd
 Version:	%{mainver}
-Release:	alt1_%{rpmrel}.1
+Release:	alt1_%{rpmrel}.2
 Summary:	Tide Constituent Database Library
 
 Group:		System/Libraries
 License:	Public Domain
 URL:		http://www.flaterco.com/xtide/
 Source0:	ftp://ftp.flaterco.com/xtide/%{name}-%{version}%{?postver}.tar.bz2
-Source44: import.info
 
 
 %description
@@ -25,8 +26,8 @@ Constituent Database (TCD) files.
 
 %package	devel
 Summary:	Development files for %{name}
-Group:		Development/C
-Requires:	%{name} = %{version}
+Group:		Development/Other
+Requires:	%{name} = %{version}-%{release}
 
 %description	devel
 The %{name}-devel package contains libraries and header files for
@@ -38,7 +39,7 @@ developing applications that use %{name}.
 
 %build
 %configure
-make %{?_smp_mflags} -k
+%make_build -k
 
 %install
 make \
@@ -60,6 +61,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib*.{a,la}
 %{_libdir}/*.so
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt1_2.r2.2
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt1_2.r2.1
 - update to new release by fcimport
 
