@@ -3,9 +3,11 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Module/Build.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		perl-SUPER
 Version:	1.20141117
-Release:	alt2_6
+Release:	alt2_7
 Summary:	Sane superclass method dispatcher
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/SUPER/
@@ -28,9 +30,8 @@ BuildRequires:	perl(base.pm)
 BuildRequires:	perl(lib.pm)
 BuildRequires:	perl(Test/More.pm)
 # =============== Module Runtime ===============
-Requires:	perl(Scalar/Util.pm) >= 1.20
-Requires:	perl(Sub/Identify.pm) >= 0.03
-Source44: import.info
+Requires:	perl(Scalar/Util.pm) >= 1.200
+Requires:	perl(Sub/Identify.pm) >= 0.030
 
 %description
 When subclassing a class, you occasionally want to dispatch control to the
@@ -43,7 +44,7 @@ implementation.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -63,6 +64,9 @@ make test
 %{perl_vendor_privlib}/SUPER.pm
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.20141117-alt2_7
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.20141117-alt2_6
 - update to new release by fcimport
 
