@@ -4,9 +4,11 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(Moose.pm)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Config-GitLike
 Version:        1.16
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Git-compatible config file parsing
 License:        GPL+ or Artistic
 
@@ -15,6 +17,7 @@ Source0:        http://search.cpan.org/CPAN/authors/id/A/AL/ALEXMV/Config-GitLik
 
 BuildArch:      noarch
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Any/Moose.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Moo.pm)
@@ -23,7 +26,6 @@ BuildRequires:  perl(Test/Exception.pm)
 BuildRequires:  perl(Test/More.pm)
 
 
-Source44: import.info
 
 %description
 This module handles interaction with configuration files of the style used
@@ -35,7 +37,7 @@ files, as well as create entirely new ones.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
@@ -50,6 +52,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1_6
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1_5
 - update to new release by fcimport
 
