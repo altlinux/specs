@@ -1,26 +1,28 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-ExtUtils-Typemaps-Default
 Version:        1.05
-Release:        alt2_7
+Release:        alt2_8
 Summary:        Set of useful typemaps
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/ExtUtils-Typemaps-Default/
 Source0:        http://www.cpan.org/authors/id/S/SM/SMUELLER/ExtUtils-Typemaps-Default-%{version}.tar.gz
 BuildArch:      noarch
 # temporary fix until more recent version is available
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/Typemaps.pm)
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Test/More.pm)
-Requires:       perl(ExtUtils/Typemaps.pm) >= 3.18
+Requires:       perl(ExtUtils/Typemaps.pm) >= 3.180
+%filter_from_requires /^perl\\(ExtUtils.Typemaps.pm\\)$/d
 
 # Filtering unversioned requires
 
-Source44: import.info
-%filter_from_requires /^perl\\(ExtUtils.Typemaps.pm\\)$/d
 
 %description
 ExtUtils::Typemaps::Default is an ExtUtils::Typemaps subclass that provides
@@ -56,6 +58,9 @@ sed -i 's/3.18_03/3.18/' Build.PL
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_8
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_7
 - update to new release by fcimport
 
