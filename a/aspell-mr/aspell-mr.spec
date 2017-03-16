@@ -1,11 +1,13 @@
 Group: Text tools
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global debug_package %{nil}
 %global lang mr
 %global langrelease 0
 
 Name:           aspell-mr
 Version:        0.10
-Release:        alt2_16
+Release:        alt2_17
 Summary:        GNU Aspell Marathi Dictionary Package
 
 License:        GPLv2
@@ -15,7 +17,6 @@ Patch1:         marathi-specific-chars-426943.patch
 
 BuildRequires:  aspell >= 0.60
 Requires:       aspell >= 0.60
-Source44: import.info
 
 %description
 GNU Aspell Marathi Dictionary Package
@@ -41,7 +42,7 @@ mv u-deva.cmap u-deva-mr.cmap
 
 %build
 ./configure
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=%{buildroot}
@@ -53,6 +54,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/aspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt2_17
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt2_16
 - update to new release by fcimport
 
