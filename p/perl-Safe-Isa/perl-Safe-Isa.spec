@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Safe-Isa
 Version:        1.000006
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Call isa, can, does and DOES safely on things that may not be objects
 Group:          Development/Other
 License:        GPL+ or Artistic
@@ -24,7 +26,6 @@ BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
 # Test Suite
 BuildRequires:  perl(Test/More.pm)
-Source44: import.info
 # Dependencies
 
 %description
@@ -36,7 +37,7 @@ may not be objects, without the risk of crashing.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -51,6 +52,9 @@ make test
 %{perl_vendor_privlib}/Safe/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.000006-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.000006-alt1_1
 - update to new release by fcimport
 
