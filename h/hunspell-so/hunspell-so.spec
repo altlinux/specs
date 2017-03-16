@@ -2,16 +2,17 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-so
 Summary: Somali hunspell dictionaries
 Version: 1.0.2
-Release: alt2_9
+Release: alt2_10
 Source: http://extensions.services.openoffice.org/e-files/2727/2/dict-so.oxt
 URL: http://www.opensourcesomalia.org/index.php?page=hingaad-saxe
 License: GPLv2+
 BuildArch: noarch
 Requires: hunspell
-Source44: import.info
 
 %description
 Somali hunspell dictionaries.
@@ -40,6 +41,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_10
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_9
 - update to new release by fcimport
 
