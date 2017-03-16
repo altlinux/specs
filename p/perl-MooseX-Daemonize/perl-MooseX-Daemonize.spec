@@ -1,17 +1,20 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Cwd.pm) perl(Data/Dumper.pm) perl(File/Spec/Functions.pm) perl(POE.pm) perl(Sub/Exporter.pm) perl(YAML.pm) perl(namespace/autoclean.pm) perl-Module-Build perl-podlators
+BuildRequires: perl(Cwd.pm) perl(Data/Dumper.pm) perl(File/Spec/Functions.pm) perl(Module/Build.pm) perl(POE.pm) perl(Sub/Exporter.pm) perl(YAML.pm) perl(namespace/autoclean.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-MooseX-Daemonize
 Version:        0.21
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Role for daemonizing your Moose based application
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/MooseX-Daemonize/
 Source0:        http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/MooseX-Daemonize-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Devel/AssertOS.pm)
 BuildRequires:  perl(Module/Build/Tiny.pm)
 BuildRequires:  perl(Moose.pm)
@@ -25,7 +28,6 @@ BuildRequires:  perl(Test/Moose.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 
 
-Source44: import.info
 
 %description
 Often you want to write a persistent daemon that has a pid file, and
@@ -53,6 +55,9 @@ roles as an infrastructure to do that.
 %{perl_vendor_privlib}/Test*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_3
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_2
 - update to new release by fcimport
 
