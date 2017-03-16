@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.14.0
-Release: alt6
+Release: alt7
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -134,6 +134,12 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Tue Mar 14 2017 Oleg Solovyov <mcpain@altlinux.org> 0.14.0-alt7
+- added support for expired password changing
+
+* Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 0.14.0-alt5.M80P.1
+- build for M80P
+
 * Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 0.14.0-alt6
 - use user icons from AccountsService first
 
