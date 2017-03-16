@@ -1,15 +1,16 @@
 Group: Text tools
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-ko
 Summary: Korean hunspell dictionaries
-Version: 0.5.5
-Release: alt1_9
-Source: http://spellcheck-ko.googlecode.com/files/hunspell-dict-ko-%{version}.tar.gz
-URL: http://code.google.com/p/spellcheck-ko/
+Version: 0.5.6
+Release: alt1_1
+Source: https://github.com/changwoo/hunspell-dict-ko/archive/%{version}.tar.gz
+URL: https://github.com/changwoo/hunspell-dict-ko
 License: MPLv1.1 or GPLv2 or LGPLv2
 BuildArch: noarch
-BuildRequires: python-module-lxml, hunspell
+BuildRequires: python-module-lxml, hunspell, python, perl
 Requires: hunspell
-Source44: import.info
 
 %description
 Korean hunspell dictionaries.
@@ -25,15 +26,17 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p ko.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/ko_KR.aff
 cp -p ko.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/ko_KR.dic
 
-%check
-make test
-
+#%check
+#make test
 
 %files
 %doc README LICENSE LICENSE.GPL LICENSE.LGPL LICENSE.MPL
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.6-alt1_1
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.5-alt1_9
 - update to new release by fcimport
 
