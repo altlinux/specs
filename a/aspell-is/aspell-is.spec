@@ -1,3 +1,5 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define lang is
 %define langrelease 0
 %define aspellrelease 0.60
@@ -5,7 +7,7 @@ Summary: Icelandic dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 0.51.1
-Release: alt2_16
+Release: alt2_17
 License: GPLv2+
 Group: Text tools
 URL: http://aspell.net/
@@ -14,7 +16,6 @@ Buildrequires: aspell >= %{aspellrelease}
 Requires: aspell >= %{aspellrelease}
 
 %define debug_package %{nil}
-Source44: import.info
 
 %description
 Provides the word list/dictionaries for the following: Icelandic
@@ -38,6 +39,9 @@ mv $RPM_BUILD_ROOT/%{_libdir}/aspell/*slenska.alias $RPM_BUILD_ROOT/%{_libdir}/a
 %{_datadir}/aspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.51.1-alt2_17
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.51.1-alt2_16
 - update to new release by fcimport
 
