@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Pod/Simple/HTML.pm) perl(Smart/Comments.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Pod-MinimumVersion
 Version:        50
-Release:        alt3_16
+Release:        alt3_17
 Summary:        Perl version for POD directives used
 License:        GPLv3+
 Group:          Development/Other
@@ -14,6 +16,7 @@ BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(strict.pm)
@@ -33,10 +36,9 @@ BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(Exporter.pm)
 # Scalar::Util not used
 BuildRequires:  perl(Test.pm)
-Requires:       perl(IO/String.pm) >= 1.02
+Requires:       perl(IO/String.pm) >= 1.020
 # This module has been divided from perl-Perl-Critic-Pulp
 Conflicts:      perl-Perl-Critic-Pulp < 49
-Source44: import.info
 
 %description
 Pod::MinimumVersion parses the POD in a Perl script, module, or document,
@@ -48,7 +50,7 @@ it with pod2man etc.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
@@ -66,6 +68,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 50-alt3_17
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 50-alt3_16
 - update to new release by fcimport
 
