@@ -1,6 +1,6 @@
 Name: lame
 Version: 3.99.5
-Release: alt2
+Release: alt3
 Summary: LAME Ain't an Mp3 Encoder
 License: LGPL
 Group: Sound
@@ -11,6 +11,7 @@ Requires: lib%name = %version-%release
 Conflicts: %name-hydrogen
 
 Source: http://prdownloads.sourceforge.net/lame/%name-%version.tar.gz
+Patch: lame-3.99.5-mcst-e2k.patch
 
 BuildRequires: libsndfile-devel libtinfo-devel
 %ifarch %ix86 x86_64
@@ -41,6 +42,8 @@ This package contains header files required to develop
 
 %prep
 %setup
+%patch -p1
+
 %ifarch %ix86
 # http://www.linuxfromscratch.org/blfs/view/svn/multimedia/lame.html
 sed -i -e '/xmmintrin\.h/d' configure
@@ -74,6 +77,9 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %_libdir/*.so
 
 %changelog
+* Thu Mar 16 2017 Michael Shigorin <mike@altlinux.org> 3.99.5-alt3
+- E2K: applied mcst configure patch
+
 * Tue Jan 10 2017 Michael Shigorin <mike@altlinux.org> 3.99.5-alt2
 - fixed FTBFS with BLFS configure "patch" (i586-only)
 
