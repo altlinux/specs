@@ -1,37 +1,40 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Contextual-Return
 Version:        0.004010
-Release:        alt1
+Release:        alt1_2
 Summary:        Create context-sensitive return values
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Contextual-Return
-Source:        http://www.cpan.org/authors/id/D/DC/DCONWAY/Contextual-Return-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/D/DC/DCONWAY/Contextual-Return-%{version}.tar.gz
 BuildArch:      noarch
 # Build
+BuildRequires:  coreutils
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(strict.pm)
-BuildRequires:  perl(warnings.pm)
 # Runtime
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(overload.pm)
 BuildRequires:  perl(Scalar/Util.pm)
+BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Want.pm)
+BuildRequires:  perl(warnings.pm)
 # Tests only
 BuildRequires:  perl(Test/More.pm)
 # Optional tests only
 BuildRequires:  perl(Test/Pod.pm)
+# Dependencies
 Requires:       perl(Data/Dumper.pm)
-
-
-Source44: import.info
 %filter_from_provides /^perl\\(DB.pm\\)$/d
+
+
 
 %description
 This module allows you to define return values of a perl sub that are
@@ -41,21 +44,24 @@ appropriate given the calling context.
 %setup -q -n Contextual-Return-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1
+%make_build
 
 %install
-make pure_install DESTDIR=%{buildroot}
-# %{_fixperms} %{buildroot}
+make install DESTDIR=%{buildroot}
+# %{_fixperms} -c %{buildroot}
 
 %check
 make test
 
 %files
 %doc Changes README
-%{perl_vendor_privlib}/*
+%{perl_vendor_privlib}/Contextual/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.004010-alt1_2
+- update to new release by fcimport
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.004010-alt1
 - automated CPAN update
 
