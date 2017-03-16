@@ -1,17 +1,20 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Exporter-Declare
 Version:        0.114
-Release:        alt2_3
+Release:        alt2_4
 Summary:        Exporting done right
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Exporter-Declare/
 Source0:        http://www.cpan.org/authors/id/E/EX/EXODIST/Exporter-Declare-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(aliased.pm)
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Carp.pm)
@@ -28,11 +31,10 @@ BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Simple.pm)
 BuildRequires:  perl(warnings.pm)
 Requires:       perl(Meta/Builder.pm) >= 0.003
+%filter_from_requires /^perl\\(Meta.Builder.pm\\)\s*$/d
 
 # Remove underspecified dependencies
 
-Source44: import.info
-%filter_from_requires /^perl\\(Meta.Builder.pm\\)\s*$/d
 
 
 %description
@@ -61,6 +63,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.114-alt2_4
+- update to new release by fcimport
+
 * Mon Sep 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.114-alt2_3
 - to Sisyphus
 
