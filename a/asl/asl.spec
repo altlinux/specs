@@ -1,7 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/convert gcc-c++
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%define fedora 24
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # spec file for package asl
 # 
 # Copyright (c) 2006 SUSE LINUX Products GmbH, Nuernberg, Germany.
@@ -10,13 +12,13 @@ BuildRequires: /usr/bin/convert gcc-c++
 #
 # Spec file for Fedora modified by Eric Smith <brouhaha@fedoraproject.org>
 
-%global patchlevel bld110
+%global patchlevel bld115
 
 Name:           asl
 URL:            http://john.ccac.rwth-aachen.de:8000/as/index.html
 Version:        1.42
-Release:        alt2_0.27.%{patchlevel}
-Group:          Development/Tools
+Release:        alt2_0.31.%{patchlevel}
+Group:          Development/Other
 License:        GPLv2+
 Summary:        Macro Assembler AS
 Source:         http://john.ccac.rwth-aachen.de:8000/ftp/as/source/c_version/asl-current-142-%{patchlevel}.tar.bz2
@@ -24,11 +26,10 @@ Patch0:         asl-Makefile.def.patch
 Patch1:         asl-sysdefs.h.patch
 Patch2:         asl-install.sh.patch
 Patch3:         asl-Makefile-DESTDIR.patch
-BuildRequires: /usr/bin/latex texlive-latex-recommended
+BuildRequires:  /usr/bin/latex texlive-latex-recommended
 %if 0%{?fedora} > 18 || 0%{?rhel} > 6
 BuildRequires:  texlive-latex-recommended
 %endif
-Source44: import.info
 
 
 %description
@@ -91,6 +92,9 @@ done
 %lang(de) %doc doc/as-DE.html doc/as-DE.txt doc/as-DE.ps doc/as-DE.pdf doc/as-DE.dvi
 
 %changelog -n asl
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.31.bld115
+- update to new release by fcimport
+
 * Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.27.bld110
 - update to new release by fcimport
 
