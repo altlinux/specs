@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           worminator
 Version:        3.0R2.1
-Release:        alt2_23
+Release:        alt2_24
 Summary:        Sidescrolling platform and shoot'em up action-game
 Group:          Games/Other
 License:        GPLv2+
@@ -15,7 +17,6 @@ Patch0:         worminator-3.0R2.1-speed.patch
 Patch1:         worminator-3.0R2.1-format-security.patch
 BuildRequires:  liballegro-devel, desktop-file-utils
 Requires:       worminator-data >= 3.0R2.1, icon-theme-hicolor
-Source44: import.info
 
 %description
 You play as The Worminator and fight your way through many levels of madness
@@ -56,6 +57,9 @@ desktop-file-install                           \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 3.0R2.1-alt2_24
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 3.0R2.1-alt2_23
 - update to new release by fcimport
 
