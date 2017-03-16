@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Attribute/Handlers.pm) perl(B/Utils.pm) perl(Devel/FindRef.pm) perl(Glib.pm) perl(Package/Constants.pm) perl(Pod/Simple/HTML.pm) perl(Smart/Comments.pm) perl(Sub/Identify.pm) perl(constant/lexical.pm) perl(lib/abs.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-constant-defer
 Version:        6
-Release:        alt2_5
+Release:        alt2_6
 Summary:        Constant subs with deferred value calculation
 License:        GPLv3+
 Group:          Development/Other
@@ -12,6 +14,7 @@ URL:            http://search.cpan.org/dist/constant-defer/
 Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/constant-defer-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 # The inc/my_pod2html is not called
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
@@ -29,7 +32,6 @@ BuildRequires:  perl(Data/Dumper.pm)
 # Devel::StackTrace not used
 # Test::More not used
 Requires:       perl(Carp.pm)
-Source44: import.info
 
 %description
 constant::defer creates a subroutine which on the first call runs given
@@ -43,7 +45,7 @@ chmod -x examples/*
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
@@ -59,6 +61,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 6-alt2_6
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 6-alt2_5
 - update to new release by fcimport
 
