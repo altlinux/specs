@@ -2,18 +2,19 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-br
 Summary: Breton hunspell dictionaries
 #Epoch: 1
 Version: 0.8
-Release: alt1_9
+Release: alt1_10
 URL: http://www.drouizig.org/
 Source: http://extensions.services.openoffice.org/e-files/2207/6/dict-br_0.8.oxt
 License: LGPLv2+
 BuildArch: noarch
 
 Requires: hunspell
-Source44: import.info
 
 %description
 Breton hunspell dictionaries.
@@ -34,6 +35,9 @@ cp -p dictionaries/br_FR.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_10
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_9
 - update to new release by fcimport
 
