@@ -1,8 +1,10 @@
 Group: Text tools
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-wa
 Summary: Walloon hunspell dictionaries
 Version: 0.4.17
-Release: alt1_6
+Release: alt1_7
 Source0: http://chanae.walon.org/walon/aspell-wa-%{version}.tar.bz2
 URL: http://chanae.walon.org/walon/aspell.php
 License: LGPLv2+
@@ -10,7 +12,6 @@ BuildArch: noarch
 Patch0: hunspell-wa-0.4.15-buildfix.patch
 
 Requires: hunspell
-Source44: import.info
 
 %description
 Walloon hunspell dictionaries.
@@ -43,6 +44,9 @@ cp -p wa.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/wa_BE.aff
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.17-alt1_7
+- update to new release by fcimport
+
 * Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.17-alt1_6
 - update to new release by fcimport
 
