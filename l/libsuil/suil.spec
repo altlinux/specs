@@ -3,7 +3,9 @@ BuildRequires: gcc-c++ waf
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname suil
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name suil
 %define version 0.8.2
 %global maj 0
@@ -11,7 +13,7 @@ BuildRequires: gcc-c++ waf
 
 Name:       libsuil
 Version:    0.8.2
-Release:    alt1_4
+Release:    alt1_5
 Summary:    A lightweight C library for loading and wrapping LV2 plugin UIs
 
 Group:      System/Libraries
@@ -20,13 +22,13 @@ URL:        http://drobilla.net/software/suil/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
 
 BuildRequires:  doxygen
-BuildRequires:  graphviz
+BuildRequires:  graphviz libgraphviz
 BuildRequires:  python
 BuildRequires:  lv2-devel
 # we need to track changess to these toolkits manually due to the 
 # requires filtering below
-BuildRequires:  gtk2-devel
-BuildRequires:  qt4-devel
+BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:  libqt4-declarative libqt4-devel qt4-designer
 
 # lets not unecessarily pull in toolkits dependancies. They will be provided by 
 # the host and or the plugin
@@ -38,9 +40,8 @@ BuildRequires:  qt4-devel
 %filter_from_requires /.*libpango.*/d
 %filter_from_requires /.*libQt.*/d
 %filter_from_requires /.*libX*/d
-
-Source44: import.info
 Provides: suil = %{version}-%{release}
+
 
 %description
 %{oldname} makes it possible to load a UI of any toolkit in a host using any other 
@@ -51,8 +52,8 @@ loaded modules).
 
 %package devel
 Summary:    Development libraries and headers for %{oldname}
-Group:      Development/C
-Requires:   %{name} = %{version}
+Group:      Development/Other
+Requires:   %{name} = %{version}-%{release}
 Provides: suil-devel = %{version}-%{release}
 
 %description devel
@@ -96,6 +97,9 @@ install -pm 644 AUTHORS COPYING NEWS README %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/%{oldname}.3*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.2-alt1_5
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.2-alt1_4
 - update to new release by fcimport
 
