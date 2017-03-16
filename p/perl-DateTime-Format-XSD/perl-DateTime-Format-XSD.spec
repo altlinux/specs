@@ -2,15 +2,18 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(base.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-DateTime-Format-XSD
 Version:        0.2
-Release:        alt2_13
+Release:        alt2_14
 Summary:        Format DateTime according to xsd:dateTime
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/DateTime-Format-XSD/
 Source0:        http://www.cpan.org/modules/by-module/DateTime/DateTime-Format-XSD-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(DateTime/Format/ISO8601.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/More.pm)
@@ -18,7 +21,6 @@ Requires:       perl(DateTime/Format/ISO8601.pm)
 
 #Not autodetermined.
 Provides:       perl(DateTime/Format/XSD.pm) = %{version}
-Source44: import.info
 
 %description
 XML Schema defines a usage profile which is a subset of the ISO8601
@@ -32,7 +34,7 @@ all other options ISO provides.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 
@@ -51,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_14
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_13
 - update to new release by fcimport
 
