@@ -1,7 +1,7 @@
 %define modname translate
 
 Name: translate-toolkit
-Version: 1.13.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Tools and API for translation and localization engineering.
@@ -17,6 +17,8 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq: rpm-build-python
 BuildRequires: python-devel python-module-distribute
 BuildRequires: python-module-sphinx python-modules-wsgiref python-modules-sqlite3 python-module-BeautifulSoup4
+
+Requires: python-module-diff-match-patch
 
 %setup_python_module %modname
 
@@ -83,5 +85,8 @@ rm -fr %buildroot%python_sitelibdir/%modname/docs/
 %doc docs/_build/html
 
 %changelog
+* Thu Mar 16 2017 Vladimir Didenko <cow@altlinux.ru> 2.0.0-alt1
+- New version
+
 * Mon Dec 7 2015 Vladimir Didenko <cow@altlinux.ru> 1.13.0-alt1
 - Initial build
