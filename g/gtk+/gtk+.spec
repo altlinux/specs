@@ -1,6 +1,6 @@
 Name: gtk+
 Version: 1.2.10
-Release: alt23
+Release: alt24
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs for X
 License: LGPL
@@ -165,7 +165,7 @@ subst -p 's/az /az be /g' configure*
 
 %build
 %def_disable static
-%add_optflags -L/%_lib -lm
+%add_optflags -L/%_lib -lm -L%_libdir -lXi -lXext -lX11
 export ac_cv_prog_INDENT=indent
 libtoolize --copy --force
 automake --foreign --include-deps --add-missing --copy
@@ -224,6 +224,9 @@ cp -a docs/{*.txt,html,text} %buildroot%pkgdocdir/devel
 %endif
 
 %changelog
+* Thu Mar 16 2017 Michael Shigorin <mike@altlinux.org> 1.2.10-alt24
+- E2K: link against -lXi -lXext -lX11 explicitly
+
 * Thu Apr 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.10-alt23
 - (.spec) The suffix collision between a human and a programming
   language in /etc/gtk/gtkrc.pl badly affected find-requires with
