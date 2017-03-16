@@ -2,15 +2,18 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Module-Install-AuthorRequires
 Version:        0.02
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Declare author-only dependencies
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Module-Install-AuthorRequires/
 Source0:        http://www.cpan.org/authors/id/F/FL/FLORA/Module-Install-AuthorRequires-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(inc/Module/Install.pm)
 BuildRequires:  perl(Module/Install.pm)
 # Run-time:
@@ -18,7 +21,6 @@ BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Module/Install/Base.pm)
 # Tests:
 BuildRequires:  perl(Test/More.pm)
-Source44: import.info
 
 %description
 Modules often have optional requirements, for example dependencies that
@@ -36,7 +38,7 @@ sed -i -e '/^inc/ d' MANIFEST
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -52,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2_13
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2_12
 - update to new release by fcimport
 
