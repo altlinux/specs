@@ -3,7 +3,7 @@
 
 Name: libmikmod
 Version: 3.3.10
-Release: alt2
+Release: alt3
 
 Summary: A portable sound library for Unix
 License: GPLv2 and LGPLv2+
@@ -41,7 +41,7 @@ your own programs is encouraged!
 Summary: Header files and libraries for developing apps which will use %name
 Group: Development/C
 Requires: %name = %version-%release
-Requires: libpulseaudio-devel
+%{?_with_pulse:Requires: libpulseaudio-devel}
 
 %description devel
 Install the %name-devel package if you want to develop applications that
@@ -78,6 +78,9 @@ will use the %name library.
 # - consider --enable-simd (marked unstable as of 3.3.7)
 
 %changelog
+* Thu Mar 16 2017 Michael Shigorin <mike@altlinux.org> 3.3.10-alt3
+- amend devel subpackage deps accordingly
+
 * Thu Mar 16 2017 Michael Shigorin <mike@altlinux.org> 3.3.10-alt2
 - BOOTSTRAP: introduce esound, pulse knobs (on by default)
 - E2K: added mcst patch to fix up LCC name clash against Amiga
