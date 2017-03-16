@@ -1,22 +1,24 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Meta-Builder
 Version:        0.003
-Release:        alt2_9
+Release:        alt2_10
 Summary:        Tools for creating Meta objects to track custom metrics
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Meta-Builder/
 Source0:        http://www.cpan.org/authors/id/E/EX/EXODIST/Meta-Builder-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Fennec/Lite.pm)
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Test/Exception.pm)
 BuildRequires:  perl(Test/More.pm)
-Source44: import.info
 
 %description
 Meta programming is becoming more and more popular. The popularity of Meta
@@ -43,6 +45,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.003-alt2_10
+- update to new release by fcimport
+
 * Mon Sep 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.003-alt2_9
 - to Sisyphus
 
