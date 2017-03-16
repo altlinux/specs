@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/dot /usr/bin/doxygen gcc-c++
+BuildRequires: /usr/bin/dot gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libpgf
 Version:        6.14.12
-Release:        alt1_5
+Release:        alt1_6
 Summary:        PGF (Progressive Graphics File) library
 
 Group:          System/Libraries
@@ -19,8 +21,7 @@ Patch147: libpgf-r147.patch
 Patch148: libpgf-r148.patch
 
 BuildRequires:  doxygen
-BuildRequires:  libtool
-Source44: import.info
+BuildRequires:  libtool-common
 
 %description
 libPGF contains an implementation of the Progressive Graphics File (PGF)
@@ -31,7 +32,7 @@ for lossless and lossy compression.
 %package        devel
 Group: System/Libraries
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -59,7 +60,7 @@ export CFLAGS="%{optflags} -DLIBPGF_DISABLE_OPENMP"
 export CXXFLAGS="%{optflags} -DLIBPGF_DISABLE_OPENMP"
 
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -82,6 +83,9 @@ rm -fv %{buildroot}%{_libdir}/libpgf.la
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 6.14.12-alt1_6
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 6.14.12-alt1_5
 - update to new release by fcimport
 
