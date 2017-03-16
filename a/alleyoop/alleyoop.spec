@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/emacs /usr/bin/emacsclient /usr/bin/gconftool-2 /usr/bin/glib-gettextize /usr/bin/gvim /usr/bin/ldd /usr/bin/valgrind glib2-devel pkgconfig(gconf-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(libglade-2.0) pkgconfig(libgnomeui-2.0)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/emacs /usr/bin/emacsclient /usr/bin/gconftool-2 /usr/bin/gvim /usr/bin/ldd glib2-devel pkgconfig(gconf-2.0) pkgconfig(gtk+-2.0) pkgconfig(libglade-2.0)
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:       alleyoop
 Version:    0.9.8
-Release:    alt1_6
+Release:    alt1_7
 License:    GPLv2+
 Group:      Development/Tools
 Summary:    Graphical front-end to the Valgrind memory checker for x86
@@ -12,16 +14,15 @@ Source0:    http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Source1:    alleyoop.desktop
 
 BuildRequires: valgrind >= 3.1.0
-BuildRequires: libgnomeui-devel, gettext, intltool
+BuildRequires: libgnomeui-devel gettext gettext-tools, intltool
 BuildRequires: desktop-file-utils
 BuildRequires: binutils-devel
 
 Requires: valgrind >= 3.1.0
-Requires: GConf2, scrollkeeper
+Requires: GConf libGConf, librarian
 
 # valgrind available only on these
 ExclusiveArch: %{ix86} x86_64 ppc ppc64 ppc64le s390x %{arm} aarch64
-Source44: import.info
 
 %description
 Alleyoop is a graphical front-end to the increasingly popular Valgrind
@@ -40,7 +41,7 @@ editor.
 
 %build
 %configure --disable-install-schemas
-make %{?_smp_mflags}
+%make_build
 
 %install
 export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL="1"
@@ -66,6 +67,9 @@ gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/%{name}.schem
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.8-alt1_7
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.8-alt1_6
 - update to new release by fcimport
 
