@@ -2,11 +2,13 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: mythes-hu
 Summary: Hungarian thesaurus
 %global upstreamid 20101019
 Version: 0.%{upstreamid}
-Release: alt1_11
+Release: alt1_12
 Source: http://extensions.services.openoffice.org/e-files/1283/9/dict-hu.oxt
 URL: http://extensions.services.openoffice.org/project/hu_dicts
 #bundled but unused spell-checking stuff is under GPLv2+ or LGPLv2+ or MPLv1.1
@@ -15,7 +17,6 @@ URL: http://extensions.services.openoffice.org/project/hu_dicts
 License: GPLv2+ and (GPLv2+ or LGPLv2+ or MPLv1.1) and GPLv2 and (GPL+ or LGPLv2+ or MPLv1.1)
 BuildArch: noarch
 Requires: libmythes
-Source44: import.info
 
 %description
 Hungarian thesaurus.
@@ -35,6 +36,9 @@ cp -p th_hu_HU_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_datadir}/mythes/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20101019-alt1_12
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20101019-alt1_11
 - update to new release by fcimport
 
