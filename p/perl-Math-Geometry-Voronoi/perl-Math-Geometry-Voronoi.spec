@@ -2,17 +2,21 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CGI.pm) perl(HTML/Template.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Math-Geometry-Voronoi
 Version:        1.3
-Release:        alt3_17.1
+Release:        alt3_18
 Summary:        Compute Voronoi diagrams from sets of points
 License:        (GPL+ or Artistic) and MIT
 # Perl module is licensed as Perl, underlaying C code is MIT
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Math-Geometry-Voronoi/
 Source0:        http://www.cpan.org/authors/id/S/SA/SAMTREGAR/Math-Geometry-Voronoi-%{version}.tar.gz
 Source1:        Math-Geometry-Voronoi-license-mail1.txt
 Source2:        Math-Geometry-Voronoi-license-mail2.txt
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Class/Accessor/Fast.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -24,7 +28,6 @@ BuildRequires:  perl(XSLoader.pm)
 BuildRequires:  dos2unix
 
  # Filters (not)shared c libs
-Source44: import.info
 
 %description
 This module computes Voronoi diagrams from a set of input points.
@@ -38,7 +41,7 @@ chmod -x *.c *.h
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
-make %{?_smp_mflags}
+%make_build
 # Get the license from the e-mail
 tail -22 license-mail1.txt | head -20 | base64 -d | dos2unix > C-LICENSE
 
@@ -60,6 +63,9 @@ make test
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt3_18
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt3_17.1
 - rebuild with new perl 5.24.1
 
