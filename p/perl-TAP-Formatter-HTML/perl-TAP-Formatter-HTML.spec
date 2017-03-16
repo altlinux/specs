@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Alien/SeleniumRC.pm) perl(CPAN.pm) perl-Module-Build perl-podlators
+BuildRequires: perl(Alien/SeleniumRC.pm) perl(CPAN.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-TAP-Formatter-HTML
 Version:        0.11
-Release:        alt1_10
+Release:        alt1_11
 Summary:        TAP Test Harness output delegate for html output
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -12,17 +14,17 @@ URL:            http://search.cpan.org/dist/TAP-Formatter-HTML/
 Source0:        http://www.cpan.org/authors/id/S/SP/SPURKIS/TAP-Formatter-HTML-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(accessors.pm)
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(TAP/Parser.pm)
 BuildRequires:  perl(Template.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(URI.pm)
-Requires:       perl(accessors.pm) >= 0.02
-Requires:       perl(TAP/Parser.pm) >= 3.10
-Requires:       perl(Template.pm) >= 2.14
-Requires:       perl(URI.pm) >= 1.35
-Source44: import.info
+Requires:       perl(accessors.pm) >= 0.020
+Requires:       perl(TAP/Parser.pm) >= 3.100
+Requires:       perl(Template.pm) >= 2.140
+Requires:       perl(URI.pm) >= 1.350
 
 %description
 This module provides HTML output formatting for TAP::Harness (a replacement
@@ -52,6 +54,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_11
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_10
 - update to new release by fcimport
 
