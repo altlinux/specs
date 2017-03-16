@@ -1,29 +1,30 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++
+BuildRequires: /usr/bin/doxygen gcc-c++
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 
 %define qt5 1
 #define tests 1
 
 Name:		libechonest
 Version: 	2.3.0
-Release:	alt1_4
+Release:	alt1_5
 Summary:	C++ wrapper for the Echo Nest API
 
 License:	GPLv2+
 URL:		https://projects.kde.org/projects/playground/libs/libechonest
 Source0:	http://files.lfranchi.com/libechonest-%{version}.tar.bz2
 
-BuildRequires: ctest cmake
+BuildRequires:	ctest cmake
 BuildRequires:	pkgconfig(QJson)
 BuildRequires:	pkgconfig(QtNetwork)
 %if 0%{?qt5}
 BuildRequires:  pkgconfig(Qt5Network)
 %endif
-Source44: import.info
 
 
 %description
@@ -33,7 +34,7 @@ life easy when trying to use the APIs provided by The Echo Nest.
 %package	devel
 Group: Development/C
 Summary:	Development files for %{name}
-Requires:	%{name}%{?_isa} = %{version}
+Requires:	%{name} = %{version}-%{release}
 %description	devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
@@ -49,7 +50,7 @@ life easy when trying to use the APIs provided by The Echo Nest.
 %package -n libechonest-qt5-devel
 Group: System/Libraries
 Summary: Development files for libechonest-qt5
-Requires: libechonest-qt5%{?_isa} = %{version}
+Requires: libechonest-qt5 = %{version}-%{release}
 %description -n libechonest-qt5-devel
 %{summary}.
 %endif
@@ -66,7 +67,7 @@ pushd %{_target_platform}
   -DBUILD_WITH_QT4:BOOL=ON \
   -DECHONEST_BUILD_TESTS:BOOL=%{?tests:ON}%{!?tests:OFF}
 
-make %{?_smp_mflags}
+%make_build
 popd
 
 %if 0%{?qt5}
@@ -76,7 +77,7 @@ pushd %{_target_platform}-qt5
   -DBUILD_WITH_QT4:BOOL=OFF \
   -DECHONEST_BUILD_TESTS:BOOL=%{?tests:ON}%{!?tests:OFF} 
 
-make %{?_smp_mflags}
+%make_build
 popd
 %endif
 
@@ -122,6 +123,9 @@ time make test -C %{_target_platform} ARGS="--timeout 300 --output-on-failure" |
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_5
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_4
 - update to new release by fcimport
 
