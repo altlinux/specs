@@ -2,16 +2,17 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hyphen-sv
 Summary: Swedish hyphenation rules
 Version: 1.00.1
-Release: alt1_14
+Release: alt1_15
 Source: http://extensions.services.openoffice.org/files/1966/4/hyph_sv_SE.oxt
 URL: http://extensions.services.openoffice.org/node/1968
 License: LGPLv2+ or GPLv2+
 BuildArch: noarch
 Requires: libhyphen
-Source44: import.info
 
 %description
 Swedish hyphenation rules.
@@ -49,6 +50,9 @@ popd
 %{_datadir}/hyphen/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.00.1-alt1_15
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.00.1-alt1_14
 - update to new release by fcimport
 
