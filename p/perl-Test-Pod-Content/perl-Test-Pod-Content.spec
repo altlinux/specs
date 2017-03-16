@@ -1,16 +1,19 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Test-Pod-Content
 Version:        0.0.6
-Release:        alt2_13
+Release:        alt2_14
 Summary:        Test a Pod's content
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Test-Pod-Content/
 Source0:        http://www.cpan.org/authors/id/M/MK/MKUTTER/Test-Pod-Content-v%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Pod/Simple.pm)
 BuildRequires:  perl(Test/Kwalitee.pm)
@@ -21,7 +24,6 @@ BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(version.pm)
 
 
-Source44: import.info
 
 %description
 This is a very simple module for testing a Pod's content. It is mainly intended
@@ -50,6 +52,9 @@ RELEASE_TESTING=1 ./Build test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.6-alt2_14
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.0.6-alt2_13
 - update to new release by fcimport
 
