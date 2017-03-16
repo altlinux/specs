@@ -3,9 +3,11 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Spec/Functions.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(base.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Catalyst-View-Mason
 Version:        0.19
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Mason View Class
 License:        GPL+ or Artistic
 
@@ -16,6 +18,7 @@ Source0:        http://www.cpan.org/authors/id/F/FL/FLORA/Catalyst-View-Mason-%{
 Patch0:         Catalyst-View-Mason-0.19-Use-Capture-Tiny-IO-Capture.patch
 
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Catalyst.pm)
 BuildRequires:  perl(Catalyst/Helper.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -26,10 +29,9 @@ BuildRequires:  perl(parent.pm)
 BuildRequires:  perl(Test/Exception.pm)
 BuildRequires:  perl(Test/File.pm)
 BuildRequires:  perl(Test/More.pm)
-Requires:       perl(Catalyst.pm) >= 5.50
+Requires:       perl(Catalyst.pm) >= 5.500
 Requires:       perl(Catalyst/View.pm)
 Requires:       perl(parent.pm)
-Source44: import.info
 
 %description
 Want to use a Mason component in your Catalyst views? No problem!
@@ -41,7 +43,7 @@ Catalyst::View::Mason comes to the rescue.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -58,6 +60,9 @@ make test
 %{perl_vendor_privlib}/Catalyst*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_7
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_6
 - update to new release by fcimport
 
