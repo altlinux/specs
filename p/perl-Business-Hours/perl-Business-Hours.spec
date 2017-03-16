@@ -2,22 +2,25 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary: 	Calculate business hours in a time period
 Name: 		perl-Business-Hours
 Version: 	0.12
-Release: 	alt2_9
+Release: 	alt2_10
 License: 	GPL+ or Artistic
-Group: 		Development/Perl
+Group: 		Development/Other
 URL: 		http://search.cpan.org/dist/Business-Hours/
 
 Source0: http://search.cpan.org/CPAN/authors/id/R/RU/RUZ/Business-Hours-%{version}.tar.gz
 BuildArch: 	noarch
 
-Requires:  perl(Set/IntSpan.pm) >= 1.12
+Requires:  perl(Set/IntSpan.pm) >= 1.120
 
 BuildRequires:	coreutils
 BuildRequires:	findutils
 BuildRequires:	perl
+BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Run-time:
 BuildRequires:	perl(Set/IntSpan.pm)
@@ -29,11 +32,10 @@ BuildRequires:	perl(Test/More.pm)
 # Optional tests:
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
+%filter_from_requires /^perl\\(Set.IntSpan.pm\\)$/d
 
 # Filter under-specified dependencies
 
-Source44: import.info
-%filter_from_requires /^perl\\(Set.IntSpan.pm\\)$/d
 
 %description
 A simple tool for calculating business hours in a time period. Over time, 
@@ -45,7 +47,7 @@ number of business hours between arbitrary dates.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -61,6 +63,9 @@ make test
 %{perl_vendor_privlib}/Business
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2_10
+- update to new release by fcimport
+
 * Tue Jan 31 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2_9
 - to Sisyphus
 
