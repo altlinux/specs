@@ -2,17 +2,21 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Capture/Tiny.pm) perl(IO/All.pm) perl(JSON.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Pod/Markdown.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Starlet
 Version:        0.31
-Release:        alt1
+Release:        alt1_2
 Summary:        Simple, high-performance PSGI/Plack HTTP server
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Starlet/
-Source:        http://www.cpan.org/authors/id/K/KA/KAZUHO/Starlet-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/K/KA/KAZUHO/Starlet-%{version}.tar.gz
 BuildArch:      noarch
 
+BuildRequires:  %{__perl}
 BuildRequires:  /usr/bin/start_server
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 
 BuildRequires:  perl(base.pm)
@@ -47,7 +51,6 @@ BuildRequires:  perl(warnings.pm)
 # Eliminate inc/*
 BuildRequires:  perl(inc/Module/Install.pm)
 BuildRequires:  perl(Module/Install/ReadmeFromPod.pm)
-Source44: import.info
 
 
 %description
@@ -62,20 +65,23 @@ sed -i -e '/^inc\/.*$/d' MANIFEST
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%{__make} %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+%{__make} pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
-make test
+%{__make} test
 
 %files
 %doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1_2
+- update to new release by fcimport
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
 - automated CPAN update
 
