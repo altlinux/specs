@@ -1,6 +1,8 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install
+BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global           upstream_version 4.0
 
 Summary:          The card game Skat
@@ -8,7 +10,7 @@ Name:             xskat
 # Upstream License requires to alter the version number
 # for re-distribution
 Version:          %{upstream_version}.0
-Release:          alt2_15
+Release:          alt2_16
 # https://fedoraproject.org/wiki/Licensing/XSkat_License
 License:          XSkat
 Group:            Games/Other
@@ -17,11 +19,10 @@ Source1:          xskat.desktop
 URL:              http://www.xskat.de/xskat.html
 # xskat requires an 10x20 font
 Requires:         fonts-bitmap-misc
-BuildRequires: xorg-cf-files gccmakedep imake
+BuildRequires:    xorg-cf-files gccmakedep imake
 BuildRequires:    libX11-devel
 BuildRequires:    desktop-file-utils
 BuildRequires:    ImageMagick
-Source44: import.info
 
 
 %description
@@ -114,6 +115,9 @@ EOF
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt2_16
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt2_15
 - update to new release by fcimport
 
