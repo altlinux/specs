@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-DateTime-Format-IBeat
 Version:        0.161
-Release:        alt2_26
+Release:        alt2_27
 Summary:        Format times in .beat notation 
 Group:          Development/Other
 License:        GPL+ or Artistic 
@@ -15,6 +17,7 @@ BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Module
 BuildRequires:  perl(Carp.pm)
@@ -26,7 +29,6 @@ BuildRequires:  perl(warnings.pm)
 BuildRequires:  perl(Test/More.pm)
 # Optional Tests
 BuildRequires:  perl(Test/Pod.pm)
-Source44: import.info
 # Dependencies
 
 %description
@@ -42,7 +44,7 @@ seconds. That means that 12 noon in the old time system is the equivalent of
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -58,6 +60,9 @@ make test
 %{perl_vendor_privlib}/DateTime/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.161-alt2_27
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.161-alt2_26
 - update to new release by fcimport
 
