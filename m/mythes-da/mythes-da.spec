@@ -2,17 +2,18 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: mythes-da
 Summary: Danish thesaurus
 %global upstreamid 20100629.15.16
 Version: 0.%{upstreamid}
-Release: alt1_10
+Release: alt1_11
 Source: http://extensions.services.openoffice.org/e-files/1388/12/DanskeSynonymer.oxt
 URL: http://synonym.oooforum.dk
 License: GPLv2 or LGPLv2 or MPLv1.1
 BuildArch: noarch
 Requires: libmythes
-Source44: import.info
 
 %description
 Danish thesaurus.
@@ -38,6 +39,9 @@ cp -p th_da_DK.idx $RPM_BUILD_ROOT/%{_datadir}/mythes/th_da_DK_v2.idx
 %{_datadir}/mythes/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20100629.15.16-alt1_11
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20100629.15.16-alt1_10
 - update to new release by fcimport
 
