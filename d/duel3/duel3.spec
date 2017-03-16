@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global snapshot 20060225
 Name:           duel3
 Version:        0.1
-Release:        alt3_0.21.%{snapshot}
+Release:        alt3_0.22.%{snapshot}
 Summary:        One on one spaceship duel in a 2D arena
 Group:          Games/Other
 License:        BSD
@@ -21,7 +23,6 @@ Patch2:         Duel3_20060225-fix-buf-oflow.patch
 Patch3:         Duel3_20060225-extra-fix-buf-oflow.patch
 BuildRequires:  liballegro-devel dumb-devel libGLU-devel desktop-file-utils
 Requires:       icon-theme-hicolor opengl-games-utils
-Source44: import.info
 Patch33: Duel3_20060225-alt-as-needed.patch
 
 %description
@@ -61,7 +62,7 @@ mv temp music-credits.txt
 
 %build
 pushd Source
-make %{?_smp_mflags} PREFIX=%{_prefix} \
+%make_build PREFIX=%{_prefix} \
   CFLAGS="$RPM_OPT_FLAGS -fsigned-char -Wno-deprecated-declarations -Wno-non-virtual-dtor"
 popd
 
@@ -91,6 +92,9 @@ install -p -m 644 %{SOURCE3} \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_0.22.20060225
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_0.21.20060225
 - update to new release by fcimport
 
