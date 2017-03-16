@@ -1,12 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install libGL-devel libGLU-devel libSDL-devel
 # END SourceDeps(oneline)
-%define fedora 23
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define prever pre2
 
 Name:           atomorun
 Version:        1.1
-Release:        alt5_0.21.%{prever}
+Release:        alt5_0.22.%{prever}
 Summary:        Jump & Run game where you have to flee an exploding nuclear bomb
 Group:          Games/Other
 License:        GPL+
@@ -15,10 +17,9 @@ URL:            http://atomorun.whosme.de/index.php
 Source0:        %{name}-%{version}_%{prever}.tar.gz
 Source1:        atomorun.desktop
 Patch0:         atomorun-1.1-missing-protos.patch
-BuildRequires:  libSDL_mixer-devel libSDL_image-devel libtiffxx-devel libtiff-devel libvorbis-devel
+BuildRequires:  libSDL_mixer-devel libSDL_image-devel libtiff-devel libtiffxx-devel libvorbis-devel
 BuildRequires:  libalsa-devel desktop-file-utils
 Requires:       icon-theme-hicolor
-Source44: import.info
 
 %description
 Atomorun is a OpenGL Jump&Run game where you have to flee an exploding
@@ -32,7 +33,7 @@ nuclear bomb.
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -61,6 +62,9 @@ install -p -m 644 pixmaps/%{name}_icon.png \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_0.22.pre2
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_0.21.pre2
 - update to new release by fcimport
 
