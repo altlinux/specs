@@ -2,15 +2,18 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(threads.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		perl-Tie-RefHash-Weak
 Version:	0.09
-Release:	alt3_21
+Release:	alt3_22
 Summary:	Tie::RefHash subclass with weakened references in the keys
 License:	GPL+ or Artistic
-Group:		Development/Perl
+Group:		Development/Other
 URL:		http://search.cpan.org/dist/Tie-RefHash-Weak/
 Source0:	http://search.cpan.org/CPAN/authors/id/N/NU/NUFFIN/Tie-RefHash-Weak-%{version}.tar.gz
 BuildArch:	noarch
+BuildRequires:	rpm-build-perl
 BuildRequires:	perl(base.pm)
 BuildRequires:	perl(Exporter.pm)
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
@@ -19,7 +22,6 @@ BuildRequires:	perl(Task/Weaken.pm)
 BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Tie/RefHash.pm)
 BuildRequires:	perl(Variable/Magic.pm)
-Source44: import.info
 
 %description
 The Tie::RefHash module can be used to access hashes by reference. This is
@@ -30,7 +32,7 @@ useful when you index by object, for example.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -45,6 +47,9 @@ make test
 %{perl_vendor_privlib}/Tie/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt3_22
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.09-alt3_21
 - update to new release by fcimport
 
