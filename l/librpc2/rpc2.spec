@@ -1,8 +1,10 @@
 %add_optflags %optflags_shared
 %define oldname rpc2
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           librpc2
 Version:        2.10
-Release:        alt1_14.1
+Release:        alt1_15
 Summary:        C library for remote procedure calls over UDP
 Group:          System/Libraries
 License:        LGPLv2
@@ -12,7 +14,6 @@ Source1:        ftp://ftp.coda.cs.cmu.edu/pub/rpc2/src/%{oldname}-%{version}.tar
 Patch0:		rpc2-2.10-lua-5.2-fix.patch
 Patch1:		rpc2-2.10-format-security-fix.patch
 BuildRequires:  liblwp-devel lua-devel flex bison
-Source44: import.info
 Provides: rpc2 = %{version}-%{release}
 
 %description
@@ -20,10 +21,10 @@ The RPC2 library, a C library for remote procedure calls over UDP.
 
 %package        devel
 Summary:        Development files for %{oldname}
-Group:          Development/C
+Group:          Development/Other
 # headers are LGPLv2, rp2gen is GPLv2
 License:        LGPLv2 and GPLv2
-Requires:       librpc2 = %{version}
+Requires:       %{name} = %{version}-%{release}
 Provides: rpc2-devel = %{version}-%{release}
 
 %description    devel
@@ -41,7 +42,7 @@ export CC="gcc -fPIC"
 # Don't use rpath!
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
@@ -59,6 +60,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{oldname}.pc
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_15
+- update to new release by fcimport
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_14.1
 - rebuild with new lua 5.3
 
