@@ -3,9 +3,11 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-HTML-Entities-Interpolate
 Version:        1.10
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Call HTML::Entities::encode_entities via a hash within a string
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/HTML-Entities-Interpolate/
@@ -23,7 +25,6 @@ BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
 
 
-Source44: import.info
 
 %description
 This is a pure perl module which calls HTML::Entities::encode_entities 
@@ -34,7 +35,7 @@ via a hash within a string.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
@@ -48,6 +49,9 @@ make test
 %{perl_vendor_privlib}/HTML*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_1
 - update to new release by fcimport
 
