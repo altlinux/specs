@@ -3,13 +3,15 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Module/Build.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global pkgname DateTime-Format-Excel
 
 Summary:	Convert between DateTime and Excel dates
 Name:		perl-DateTime-Format-Excel
 Epoch:		1
 Version:	0.31
-Release:	alt2_18
+Release:	alt2_19
 # lib/DateTime/Format/Excel.pm -> GPL+ or Artistic
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/%{pkgname}/
@@ -17,6 +19,7 @@ Source:		http://search.cpan.org/CPAN/authors/id/A/AB/ABURS/%{pkgname}-%{version}
 Patch0:		perl-DateTime-Format-Excel-0.31-versioning.patch
 BuildRequires:	coreutils
 BuildRequires:	perl
+BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 BuildRequires:	sed
 # Run-time
@@ -29,7 +32,6 @@ BuildRequires:	perl(Test/More.pm)
 # Optional tests
 BuildRequires:	perl(Test/Pod.pm)
 BuildArch:	noarch
-Source44: import.info
 
 %description
 Excel uses a different system for its dates than most Unix programs.
@@ -43,7 +45,7 @@ the other DateTime::Format::* modules, or with DateTime's methods.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
@@ -63,6 +65,9 @@ make test
 %{perl_vendor_privlib}/DateTime/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.31-alt2_19
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.31-alt2_18
 - update to new release by fcimport
 
