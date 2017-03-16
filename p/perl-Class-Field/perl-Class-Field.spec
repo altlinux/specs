@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Class-Field
 Version:        0.23
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Class Field Accessor Generator
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -13,6 +15,7 @@ Source0:        http://www.cpan.org/authors/id/I/IN/INGY/Class-Field-%{version}.
 BuildArch:      noarch
 BuildRequires:  findutils
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(Encode.pm)
@@ -26,7 +29,6 @@ BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(utf8.pm)
 BuildRequires:  perl(warnings.pm)
-Source44: import.info
 
 %description
 Class::Field exports two subroutines, field and const. These functions are
@@ -38,7 +40,7 @@ used to declare fields and constants in your class.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
@@ -57,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_4
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_3
 - update to new release by fcimport
 
