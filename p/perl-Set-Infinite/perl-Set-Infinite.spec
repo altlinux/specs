@@ -3,9 +3,11 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Set-Infinite
 Version:        0.65
-Release:        alt2_18
+Release:        alt2_19
 Summary:        Sets of intervals
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Set-Infinite/
@@ -13,6 +15,7 @@ Source0:        http://www.cpan.org/authors/id/F/FG/FGLOCK/Set-Infinite-%{versio
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Runtime
 BuildRequires:  perl(base.pm)
@@ -28,7 +31,6 @@ BuildRequires:  perl(vars.pm)
 # Tests only
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(warnings.pm)
-Source44: import.info
 
 %description
 Set::Infinite is a Set Theory module for infinite sets.
@@ -38,7 +40,7 @@ Set::Infinite is a Set Theory module for infinite sets.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -53,6 +55,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.65-alt2_19
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.65-alt2_18
 - update to new release by fcimport
 
