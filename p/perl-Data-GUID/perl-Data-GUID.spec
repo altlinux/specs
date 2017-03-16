@@ -1,28 +1,32 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Data-GUID
 Version:        0.049
-Release:        alt1
+Release:        alt1_2
 Summary:        Globally unique identifiers
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Data-GUID/
 Source0:        http://www.cpan.org/authors/id/R/RJ/RJBS/Data-GUID-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Data/UUID.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(Sub/Exporter.pm)
 BuildRequires:  perl(Sub/Install.pm)
+BuildRequires:  perl(bytes.pm)
+BuildRequires:  perl(overload.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
 
 # tests
 BuildRequires:  perl(Test/More.pm)
-Source44: import.info
 
 
 %description
@@ -34,10 +38,10 @@ unique identifiers.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+make pure_install DESTDIR=$RPM_BUILD_ROOT
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -49,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.049-alt1_2
+- update to new release by fcimport
+
 * Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.049-alt1
 - automated CPAN update
 
