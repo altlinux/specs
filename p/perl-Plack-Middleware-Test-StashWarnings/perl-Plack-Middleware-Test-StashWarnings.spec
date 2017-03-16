@@ -2,16 +2,19 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(Storable.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(parent.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Plack-Middleware-Test-StashWarnings
 Version:        0.08
-Release:        alt2_8
+Release:        alt2_9
 Summary:        Test your application's warnings
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Plack-Middleware-Test-StashWarnings/
 Source0:        http://www.cpan.org/authors/id/A/AL/ALEXMV/Plack-Middleware-Test-StashWarnings-%{version}.tar.gz
 BuildArch:      noarch
 
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(HTTP/Request/Common.pm)
 BuildRequires:  perl(Plack.pm)
@@ -19,7 +22,6 @@ BuildRequires:  perl(Plack/Request.pm)
 BuildRequires:  perl(Plack/Test.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Synopsis.pm)
-Source44: import.info
 
 %description
 Plack::Middleware::Test::StashWarnings is a Plack middleware component to
@@ -31,7 +33,7 @@ make sure your application complains about the right things.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -45,6 +47,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt2_9
+- update to new release by fcimport
+
 * Tue Jan 31 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt2_8
 - to Sisyphus
 
