@@ -1,9 +1,11 @@
 Group: Text tools
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-sw
 Summary: Swahili hunspell dictionaries
 %global upstreamid 20050819
 Version: 0.%{upstreamid}
-Release: alt2_13
+Release: alt2_14
 Source: http://www.it46.se/downloads/openoffice/dictionary/dictionary_myspell_sw_TZ_1.1.tar.gz
 URL: http://www.it46.se
 License: LGPLv2+
@@ -11,7 +13,6 @@ BuildArch: noarch
 BuildRequires: libhunspell-devel hunspell-utils
 
 Requires: hunspell
-Source44: import.info
 
 %description
 Swahili hunspell dictionaries.
@@ -48,6 +49,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20050819-alt2_14
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20050819-alt2_13
 - update to new release by fcimport
 
