@@ -2,15 +2,18 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-HTML-Quoted
 Version:        0.04
-Release:        alt1_10
+Release:        alt1_11
 Summary:        Extract structure of quoted HTML mail message
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/HTML-Quoted/
 Source0:        http://www.cpan.org/authors/id/T/TS/TSIBLEY/HTML-Quoted-0.04.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(HTML/Parser.pm)
 BuildRequires:  perl(Test/More.pm)
@@ -21,7 +24,6 @@ BuildRequires:  perl(warnings.pm)
 
 BuildRequires:  perl(inc/Module/Install.pm)
 BuildRequires:  perl(Module/Install/ReadmeFromPod.pm)
-Source44: import.info
 
 
 %description
@@ -33,7 +35,7 @@ rm -r inc
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -49,6 +51,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1_11
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1_10
 - update to new release by fcimport
 
