@@ -1,5 +1,5 @@
 Name: xorg-drv-amdgpu
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 Summary: AMD GPU video driver for the Xorg X server
 License: MIT/X11
@@ -39,6 +39,9 @@ BuildRequires: xorg-fixesproto-devel xorg-damageproto-devel
 %_man4dir/*
 
 %changelog
+* Thu Mar 16 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.3.0-alt1
+- 1.3.0
+
 * Thu Dec 01 2016 Valery Inozemtsev <shrek@altlinux.ru> 1.2.0-alt1
 - 1.2.0
 
