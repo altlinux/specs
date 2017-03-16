@@ -3,6 +3,8 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Encode.pm) perl-podlators
 # END SourceDeps(oneline)
 %define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # We need to patch the test suite if we have an old version of Test::More and/or Test::Pod
 %global old_test_more %(perl -MTest::More -e 'print (($Test::More::VERSION < 0.96) ? 1 : 0);' 2>/dev/null || echo 0)
 %global old_test_pod %(perl -MTest::Pod -e 'print (($Test::Pod::VERSION < 1.41) ? 1 : 0);' 2>/dev/null || echo 0)
@@ -11,17 +13,16 @@ BuildRequires: perl(Encode.pm) perl-podlators
 %global debug_package %{nil}
 
 Name:		perl-Test-Mojibake
-Version:	1.1
-Release:	alt1_5
+Version:	1.3
+Release:	alt1_1
 Summary:	Check your source for encoding misbehavior
 Group:		Development/Other
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-Mojibake/
 Source0:	http://search.cpan.org/CPAN/authors/id/S/SY/SYP/Test-Mojibake-%{version}.tar.gz
-Patch0:		Test-Mojibake-1.1-synopsis.patch
-Patch1:		Test-Mojibake-1.1-old-Test::More.patch
-Patch2:		Test-Mojibake-1.0-old-Test::Pod.patch
-Patch3:		Test-Mojibake-1.1-no-Test::Version.patch
+Patch1:		Test-Mojibake-1.3-old-Test::More.patch
+Patch2:		Test-Mojibake-1.3-old-Test::Pod.patch
+Patch3:		Test-Mojibake-1.3-no-Test::Version.patch
 BuildArch:	noarch
 # ===================================================================
 # Module build requirements
@@ -29,6 +30,7 @@ BuildArch:	noarch
 BuildRequires:	coreutils
 BuildRequires:	findutils
 BuildRequires:	perl
+BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # ===================================================================
 # Module requirements
@@ -59,6 +61,7 @@ BuildRequires:	perl(Test/Script.pm)
 %if 0%{!?perl_bootstrap:1}
 BuildRequires:	perl(Pod/Coverage/TrustPod.pm)
 BuildRequires:	perl(Test/CPAN/Meta.pm)
+BuildRequires:	perl(Test/CPAN/Meta/JSON.pm)
 BuildRequires:	perl(Test/DistManifest.pm)
 BuildRequires:	perl(Test/EOL.pm)
 BuildRequires:	perl(Test/HasVersion.pm)
@@ -91,7 +94,6 @@ BuildRequires:	perl(Test/Pod/LinkCheck.pm)
 # Unicode::CheckUTF8 is an optional requirement that significantly speeds up
 # this module
 Requires:	perl(Unicode/CheckUTF8.pm)
-Source44: import.info
 
 %description
 Many modern text editors automatically save files using UTF-8 codification.
@@ -123,9 +125,6 @@ Enter the Test::Mojibake ;)
 %prep
 %setup -q -n Test-Mojibake-%{version}
 
-# Make SYNOPSIS compilable perl (#1309966)
-%patch0
- 
 # We need to patch the test suite if we have an old version of Test::More
 %if %{old_test_more}
 %patch1
@@ -143,12 +142,12 @@ Enter the Test::Mojibake ;)
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-# %{_fixperms} %{buildroot}
+find %{buildroot} -type f -name .packlist -delete
+# %{_fixperms} -c %{buildroot}
 
 %check
 make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1} \
@@ -168,6 +167,9 @@ make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1} \
 %{_mandir}/man1/scan_mojibake.1*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_1
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_5
 - update to new release by fcimport
 
