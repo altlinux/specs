@@ -1,13 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-DateTime-Format-Pg
 Version:        0.16012
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Parse and format PostgreSQL dates and times
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/DateTime-Format-Pg/
 Source0:        http://search.cpan.org/CPAN/authors/id/D/DM/DMAKI/DateTime-Format-Pg-%{version}.tar.gz
 # Support durations with fractional seconds again, bug #1377428,
@@ -36,7 +38,6 @@ BuildRequires:  perl(warnings.pm)
 # Optional tests only
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
-Source44: import.info
 
 %description
 This module understands the formats used by PostgreSQL for its DATE, TIME,
@@ -66,6 +67,9 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.16012-alt1_3
+- update to new release by fcimport
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.16012-alt1_2
 - new version
 
