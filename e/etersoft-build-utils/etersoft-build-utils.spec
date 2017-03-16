@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.5.8
+Version: 2.5.9
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,15 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Mar 17 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5.9-alt1
+- rpmbph: do git diff for spec more clear
+- rpmgs: assure we commit all tarball files, ever ignored
+- fix checkout to backport branch
+- branch: add support gremote (update branch from gear repo)
+- rpmbph: merge with master tag
+- rpmbph: fix -f (force) handling
+- rpmgs: implement support for .gear/gear-sources
+
 * Wed Mar 15 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5.8-alt1
 - rpmgs: strict # Source*
 - rpmgs: add support for build source from git repo with submodules
