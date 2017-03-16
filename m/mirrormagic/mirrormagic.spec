@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           mirrormagic
 Version:        2.0.2
-Release:        alt5_19
+Release:        alt5_20
 Summary:        Puzzle game where you steer a beam of light using mirrors
 Group:          Games/Other
 License:        GPL+
@@ -22,7 +24,6 @@ Patch6:         %{name}-%{version}-fix-inline-use.patch
 BuildRequires:  libSDL_image-devel libSDL_mixer-devel desktop-file-utils
 BuildRequires:  libappstream-glib
 Requires:       icon-theme-hicolor
-Source44: import.info
 
 %description
 MirrorMagic is a game where you shoot around obstacles to collect energy using
@@ -44,7 +45,7 @@ familiar from the games "Deflektor" and "Mindbender".
 
 
 %build
-make %{?_smp_mflags} RO_GAME_DIR=%{_datadir}/%{name} \
+%make_build RO_GAME_DIR=%{_datadir}/%{name} \
   OPTIONS="$RPM_OPT_FLAGS -DUSE_USERDATADIR_FOR_COMMONDATA" sdl
 
 
@@ -75,6 +76,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt5_20
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt5_19
 - update to new release by fcimport
 
