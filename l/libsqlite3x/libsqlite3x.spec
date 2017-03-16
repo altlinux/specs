@@ -2,13 +2,15 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global veryear 2007
 %global vermon  10
 %global verday  18
 %global namesq3 libsq3
 Name:           libsqlite3x
 Version:        %{veryear}%{vermon}%{verday}
-Release:        alt3_19
+Release:        alt3_20
 Summary:        A C++ Wrapper for the SQLite3 embeddable SQL database engine
 
 Group:          System/Libraries
@@ -20,8 +22,7 @@ Source1:        libsqlite3x-autotools.tar.gz
 Patch1:         libsqlite3x-prep.patch
 Patch2:         libsqlite3x-includes.patch
 
-BuildRequires:  libsqlite3-devel dos2unix automake libtool doxygen
-Source44: import.info
+BuildRequires:  libsqlite3-devel dos2unix automake-common libtool-common doxygen
 
 %description
 sqlite3 is a slick embedded SQL server written in C. It's easy to use,
@@ -31,9 +32,9 @@ with sqlite3 databases that uses exceptions.
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}
-Requires: pkgconfig
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
+Requires:       pkg-config
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -41,8 +42,8 @@ developing applications that use %{name}.
 
 %package -n     %{namesq3}
 Summary:        A C++ Wrapper for the SQLite3 embeddable SQL database engine
-Group:          Development/C
-Requires:       %{namesq3} = %{version}
+Group:          Development/Other
+Requires:       %{namesq3} = %{version}-%{release}
 
 %description -n %{namesq3}
 sqlite3 is a slick embedded SQL server written in C. It's easy to use,
@@ -51,9 +52,9 @@ with sqlite3 databases that does not use exceptions.
 
 %package -n     %{namesq3}-devel
 Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{namesq3} = %{version}
-Requires: pkgconfig
+Group:          Development/Other
+Requires:       %{namesq3} = %{version}-%{release}
+Requires:       pkg-config
 
 %description -n %{namesq3}-devel
 The %{namesq3}-devel package contains libraries and header files for
@@ -104,6 +105,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/libsq3.pc
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 20071018-alt3_20
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 20071018-alt3_19
 - update to new release by fcimport
 
