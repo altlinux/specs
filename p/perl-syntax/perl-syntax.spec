@@ -2,15 +2,18 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-syntax
 Version:        0.004
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Activate syntax extensions
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/syntax/
 Source0:        http://www.cpan.org/authors/id/P/PH/PHAYLON/syntax-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Data/OptList.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -19,7 +22,6 @@ BuildRequires:  perl(namespace/clean.pm)
 BuildRequires:  perl(FindBin.pm)
 BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(Test/More.pm)
-Source44: import.info
 
 %description
 This module activates community provided syntax extensions to Perl. You
@@ -31,7 +33,7 @@ dispatching system will load and install the extension in your package.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -47,6 +49,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.004-alt2_13
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.004-alt2_12
 - update to new release by fcimport
 
