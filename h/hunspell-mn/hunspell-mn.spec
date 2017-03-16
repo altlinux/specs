@@ -2,18 +2,19 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-mn
 Summary: Mongolian hunspell dictionaries
 %global upstreamid 20080709
 Version: 0.%{upstreamid}
-Release: alt2_12
+Release: alt2_13
 Source: http://extensions.services.openoffice.org/files/1408/0/dict-mn_0.06-5.oxt
 URL: http://mnspell.openmn.org
 License: GPLv2 and LGPLv2+
 BuildArch: noarch
 
 Requires: hunspell
-Source44: import.info
 
 %description
 Mongolian hunspell dictionaries.
@@ -33,6 +34,9 @@ cp -p mn_MN.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20080709-alt2_13
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20080709-alt2_12
 - update to new release by fcimport
 
