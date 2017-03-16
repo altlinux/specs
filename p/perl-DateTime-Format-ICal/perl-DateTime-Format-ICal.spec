@@ -1,11 +1,13 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl-Module-Build perl-podlators
+BuildRequires: perl(CPAN.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-DateTime-Format-ICal
 Version:        0.09
-Release:        alt2_22
+Release:        alt2_23
 Summary:        Parse and format iCal datetime and duration strings
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/DateTime-Format-ICal/
@@ -13,6 +15,7 @@ Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-Format-ICal
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Module/Build.pm)
 # Runtime
 BuildRequires:  perl(DateTime.pm)
@@ -25,19 +28,18 @@ BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(vars.pm)
 # Tests only
 BuildRequires:  perl(Test/More.pm)
-Requires:       perl(DateTime.pm) >= 0.17
-Requires:       perl(DateTime/Event/ICal.pm) >= 0.03
-Requires:       perl(DateTime/Set.pm) >= 0.1
-Requires:       perl(DateTime/TimeZone.pm) >= 0.22
-Requires:       perl(Params/Validate.pm) >= 0.59
-
-
-
-
-Source44: import.info
+Requires:       perl(DateTime.pm) >= 0.170
+Requires:       perl(DateTime/Event/ICal.pm) >= 0.030
+Requires:       perl(DateTime/Set.pm) >= 0.100
+Requires:       perl(DateTime/TimeZone.pm) >= 0.220
+Requires:       perl(Params/Validate.pm) >= 0.590
 %filter_from_requires /^perl\\(DateTime.pm\\)$/d
 %filter_from_requires /^perl\\(DateTime.Event.ICal.pm\\)$/d
 %filter_from_requires /^perl\\(Params.Validate.pm\\)$/d
+
+
+
+
 
 %description
 This module understands the ICal date/time and duration formats, as defined
@@ -64,6 +66,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt2_23
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.09-alt2_22
 - update to new release by fcimport
 
