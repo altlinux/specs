@@ -1,15 +1,16 @@
 %define oldname adime
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libadime
 Version:        2.2.1
-Release:        alt2_20
+Release:        alt2_21
 Summary:        Allegro Dialogs Made Easy
 Group:          System/Libraries
 License:        zlib
 URL:            http://adime.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{oldname}/%{oldname}-%{version}.tar.gz
 Patch0:         adime-2.2.1-so-fixes.patch
-BuildRequires:  liballegro-devel texinfo
-Source44: import.info
+BuildRequires:  liballegro-devel makeinfo
 
 %description
 Adime is a portable add-on library for Allegro with functions for generating
@@ -20,8 +21,8 @@ data.
 
 %package devel
 Summary: Development libraries and headers for adime
-Group: Development/C
-Requires: libadime = %{version}
+Group: Development/Other
+Requires: %{name} = %{version}-%{release}
 
 %description devel
 The developmental files that must be installed in order to compile
@@ -37,7 +38,7 @@ mkdir docs/html docs/rtf
 
 
 %build
-make %{?_smp_mflags} lib docs \
+%make_build lib docs \
   CFLAGS="-fPIC -DPIC $RPM_OPT_FLAGS" \
   CFLAGS_NO_OPTIMIZE="-fPIC -DPIC $RPM_OPT_FLAGS" \
   LFLAGS=-g
@@ -67,6 +68,9 @@ ln -s libadime.so.0 $RPM_BUILD_ROOT%{_libdir}/libadime.so
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt2_21
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt2_20
 - update to new release by fcimport
 
