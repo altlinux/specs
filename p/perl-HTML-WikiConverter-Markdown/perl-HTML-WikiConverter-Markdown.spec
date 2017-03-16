@@ -2,15 +2,18 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-HTML-WikiConverter-Markdown
 Version:        0.06
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Convert HTML to Markdown markup
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/HTML-WikiConverter-Markdown/
 Source0:        http://www.cpan.org/authors/id/J/JF/JFEARN/HTML-WikiConverter-Markdown-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(File/Spec.pm)
@@ -23,8 +26,7 @@ BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(URI.pm)
 BuildRequires:  perl(warnings.pm)
 # not automatically detected
-Requires:       perl(HTML/WikiConverter.pm) >= 0.67
-Source44: import.info
+Requires:       perl(HTML/WikiConverter.pm) >= 0.670
 
 %description
 This module contains rules for converting HTML into Markdown markup. You
@@ -37,7 +39,7 @@ for additional usage details.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -54,6 +56,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_6
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_5
 - update to new release by fcimport
 
