@@ -2,15 +2,18 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Module/Build.pm) perl(Test/CPAN/Changes.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Test-WWW-Mechanize-PSGI
 Version:        0.36
-Release:        alt2_1
+Release:        alt2_2
 Summary:        Test PSGI programs using WWW::Mechanize
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Test-WWW-Mechanize-PSGI/
 Source0:        http://www.cpan.org/authors/id/O/OA/OALDERS/Test-WWW-Mechanize-PSGI-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(CGI/Cookie.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -22,7 +25,6 @@ BuildRequires:  perl(Try/Tiny.pm)
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
-Source44: import.info
 
 
 %description
@@ -37,7 +39,7 @@ PSGI applications.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -54,6 +56,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.36-alt2_2
+- update to new release by fcimport
+
 * Tue Jan 31 2017 Igor Vlasenko <viy@altlinux.ru> 0.36-alt2_1
 - to Sisyphus
 
