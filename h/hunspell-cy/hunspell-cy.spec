@@ -2,18 +2,19 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-cy
 Summary: Welsh hunspell dictionaries
 %global upstreamid 20040425
 Version: 0.%{upstreamid}
-Release: alt2_14
+Release: alt2_15
 Source: http://www.e-gymraeg.co.uk/myspell/myspell.zip
 URL: http://www.e-gymraeg.co.uk/
 License: GPL+
 BuildArch: noarch
 
 Requires: hunspell
-Source44: import.info
 
 %description
 Welsh hunspell dictionaries.
@@ -46,6 +47,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20040425-alt2_15
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20040425-alt2_14
 - update to new release by fcimport
 
