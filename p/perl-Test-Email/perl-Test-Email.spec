@@ -2,22 +2,24 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(base.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Test-Email
 Version:        0.07
-Release:        alt2_8
+Release:        alt2_9
 Summary:        Test Email Contents
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Test-Email/
 Source0:        http://www.cpan.org/authors/id/J/JA/JAMES/Test-Email-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Mail/POP3Client.pm)
 BuildRequires:  perl(Mail/Sendmail.pm)
 BuildRequires:  perl(MIME/Entity.pm)
 BuildRequires:  perl(MIME/Parser.pm)
 BuildRequires:  perl(Test/Builder.pm)
-Source44: import.info
 
 %description
 Test::Email is a subclass of MIME::Entity, with the above methods.
@@ -31,7 +33,7 @@ find -type f -exec chmod -x {} \;
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -45,6 +47,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2_9
+- update to new release by fcimport
+
 * Tue Jan 31 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2_8
 - to Sisyphus
 
