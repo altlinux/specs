@@ -1,7 +1,9 @@
 %add_findreq_skiplist %_datadir/sgml/docbook/xsl-ns-stylesheets-*/slides/slidy/help/help.html.*
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: docbook5-style-xsl
-Version: 1.78.1
-Release: alt1_7
+Version: 1.79.2
+Release: alt1_3
 Group: Text tools
 
 Summary: Norman Walsh's XSL stylesheets for DocBook 5.X
@@ -9,19 +11,18 @@ Summary: Norman Walsh's XSL stylesheets for DocBook 5.X
 # Package is licensed as MIT/X (http://wiki.docbook.org/topic/DocBookLicense),
 # some .js files under ./slides/browser/ are licensed MPLv1.1
 License: MIT and MPLv1.1
-URL: http://wiki.docbook.org/DocBookXslStylesheets
+URL: https://github.com/docbook/xslt10-stylesheets
 
 Provides: docbook-xsl-ns = %{version}
 # xml-common was using /usr/share/xml until 0.6.3-8.
-Requires: xml-common >= 0.6.3-8
+Requires: xml-common >= 0.6.3
 # libxml2 required because of usage of /usr/bin/xmlcatalog
-Requires(post): libxml2 >= 2.4.8
-Requires(postun): libxml2 >= 2.4.8
+Requires(post): libxml2 xml-utils
+Requires(postun): libxml2 xml-utils
 Conflicts: passivetex < 1.21
 
 BuildArch: noarch
-Source0: http://downloads.sourceforge.net/docbook/docbook-xsl-ns-%{version}.tar.bz2
-Source44: import.info
+Source0: https://github.com/docbook/xslt10-stylesheets/releases/download/release%2F{%version}/docbook-xsl-%{version}.tar.bz2
 
 %description
 These XSL namespace aware stylesheets allow you to transform any
@@ -47,7 +48,7 @@ This package contains Java extensions for XSL namespace aware stylesheets.
 %endif
 
 %prep
-%setup -q -n docbook-xsl-ns-%{version}
+%setup -q -n docbook-xsl-%{version}
 #remove .gitignore files
 rm -rf $(find -name '.gitignore' -type f)
 #make ruby scripts executable
@@ -86,18 +87,24 @@ rm -rf $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets/install.sh
 %post
 CATALOG=%{_sysconfdir}/xml/catalog
 %{_bindir}/xmlcatalog --noout --add "rewriteSystem" \
- "http://docbook.sourceforge.net/release/xsl-ns/%{version}" \
+ "http://cdn.docbook.org/release/xsl/%{version}" \
  "file://%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}" $CATALOG
 %{_bindir}/xmlcatalog --noout --add "rewriteURI" \
- "http://docbook.sourceforge.net/release/xsl-ns/%{version}" \
+ "http://cdn.docbook.org/release/xsl/%{version}" \
  "file://%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}" $CATALOG
+%{_bindir}/xmlcatalog --noout --add "rewriteSystem" \
+ "http://cdn.docbook.org/release/xsl/current/" \
+ "file://%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}" $CATALOG
+%{_bindir}/xmlcatalog --noout --add "rewriteURI" \
+ "http://cdn.docbook.org/release/xsl/current/" \
+ "file://%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}" $CATALOG
+
 %{_bindir}/xmlcatalog --noout --add "rewriteSystem" \
  "http://docbook.sourceforge.net/release/xsl-ns/current" \
  "file://%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}" $CATALOG
 %{_bindir}/xmlcatalog --noout --add "rewriteURI" \
  "http://docbook.sourceforge.net/release/xsl-ns/current" \
  "file://%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}" $CATALOG
-
 
 %postun
 if [ "$1" = 0 ]; then
@@ -107,6 +114,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.79.2-alt1_3
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.78.1-alt1_7
 - update to new release by fcimport
 
