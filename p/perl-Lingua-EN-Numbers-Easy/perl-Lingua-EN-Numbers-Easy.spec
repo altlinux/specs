@@ -3,9 +3,11 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Lingua-EN-Numbers-Easy
 Version:        2014120401
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Hash access to Lingua::EN::Numbers objects
 License:        MIT
 URL:            http://search.cpan.org/dist/Lingua-EN-Numbers-Easy/
@@ -13,6 +15,7 @@ Source0:        http://www.cpan.org/authors/id/A/AB/ABIGAIL/Lingua-EN-Numbers-Ea
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -22,7 +25,6 @@ BuildRequires:  perl(Lingua/EN/Numbers.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
-Source44: import.info
 
 %description
 Lingua::EN::Numbers is a module that translates numbers to English words.
@@ -35,7 +37,7 @@ to words using a tied hash, which can be interpolated.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -49,6 +51,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2014120401-alt1_6
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 2014120401-alt1_5
 - update to new release by fcimport
 
