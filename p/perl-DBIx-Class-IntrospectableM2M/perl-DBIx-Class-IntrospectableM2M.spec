@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-DBIx-Class-IntrospectableM2M
 Version:        0.001002
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Introspect many-to-many shortcuts
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -13,6 +15,7 @@ Source0:        http://www.cpan.org/authors/id/I/IL/ILMARI/DBIx-Class-Introspect
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Config.pm)
 BuildRequires:  perl(Cwd.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -29,7 +32,6 @@ BuildRequires:  perl(DBIx/Class/Core.pm)
 BuildRequires:  perl(warnings.pm)
 # Tests only
 BuildRequires:  perl(Test/More.pm)
-Source44: import.info
 
 %description
 Because the many-to-many relationships are not real relationships, they can
@@ -44,7 +46,7 @@ and examined.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -58,6 +60,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.001002-alt1_5
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.001002-alt1_4
 - update to new release by fcimport
 
