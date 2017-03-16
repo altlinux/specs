@@ -3,11 +3,13 @@ BuildRequires: waf
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname serd
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global maj 0
 
 Name:           libserd
 Version:        0.22.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        A lightweight C library for RDF syntax
 
 Group:          System/Libraries
@@ -16,10 +18,9 @@ URL:            http://drobilla.net/software/serd/
 Source0:        http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
 
 BuildRequires:  doxygen
-BuildRequires: graphviz libgraphviz
-BuildRequires: glib2-devel libgio libgio-devel
-BuildRequires:  python-base
-Source44: import.info
+BuildRequires:  graphviz libgraphviz
+BuildRequires:  glib2-devel libgio libgio-devel
+BuildRequires:  python
 Provides: serd = %{version}-%{release}
 
 %description
@@ -35,8 +36,8 @@ LV2 plugins as simple as possible for applications.
 
 %package devel
 Summary:        Development libraries and headers for %{oldname}
-Group:          Development/C
-Requires:       libserd = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 Provides: serd-devel = %{version}-%{release}
 
 %description devel
@@ -79,6 +80,9 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-%{maj}.so.*
 %{_mandir}/man1/*.1*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.22.0-alt1_2
+- update to new release by fcimport
+
 * Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.22.0-alt1_1
 - update to new release by fcimport
 
