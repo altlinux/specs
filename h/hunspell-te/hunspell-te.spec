@@ -1,8 +1,10 @@
 Group: Text tools
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-te
 Summary: Telugu hunspell dictionaries
 Version: 1.0.0
-Release: alt1_5
+Release: alt1_6
 #Epoch:   1
 ##Upstream is unresponsive so unable to verify license version
 License:        GPL+
@@ -11,7 +13,6 @@ Source0:        http://anishpatil.fedorapeople.org/te_in.%{version}.tar.gz
 BuildArch:      noarch
 
 Requires:       hunspell
-Source44: import.info
 
 %description
 Telugu hunspell dictionaries.
@@ -31,6 +32,9 @@ cp -p te_IN/*.dic te_IN/*.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_6
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_5
 - update to new release by fcimport
 
