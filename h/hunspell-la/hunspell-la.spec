@@ -2,18 +2,19 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-la
 Summary: Latin hunspell dictionaries
 %global upstreamid 20130331
 Version: 0.%{upstreamid}
-Release: alt1_6
+Release: alt1_7
 Source: http://extensions.services.openoffice.org/e-files/ext/1141/3/dict-la_2013-03-31.oxt
 URL: http://extensions.services.openoffice.org/project/dict-la
 License: GPLv2+ and LGPLv2+
 BuildArch: noarch
 
 Requires: hunspell
-Source44: import.info
 
 %description
 Latin hunspell dictionaries.
@@ -44,6 +45,9 @@ cp -p la/la.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/la.aff
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20130331-alt1_7
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20130331-alt1_6
 - update to new release by fcimport
 
