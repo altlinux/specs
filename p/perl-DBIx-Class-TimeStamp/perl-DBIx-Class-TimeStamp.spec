@@ -3,9 +3,11 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-DBIx-Class-TimeStamp
 Version:        0.14
-Release:        alt2_16
+Release:        alt2_17
 Summary:        DBIx::Class extension to update and create date and time based fields
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/DBIx-Class-TimeStamp/
@@ -13,6 +15,7 @@ Source0:        http://search.cpan.org/CPAN/authors/id/R/RI/RIBASUSHI/DBIx-Class
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Config.pm)
 BuildRequires:  perl(CPAN.pm)
 BuildRequires:  perl(Cwd.pm)
@@ -50,16 +53,15 @@ BuildRequires:  perl(Time/Warp.pm)
 BuildRequires:  perl(DBD/SQLite.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
-Requires:       perl(DateTime.pm) >= 0.55
+Requires:       perl(DateTime.pm) >= 0.550
 Requires:       perl(DBIx/Class.pm) >= 0.080.090
-Requires:       perl(DBIx/Class/DynamicDefault.pm) >= 0.03
+Requires:       perl(DBIx/Class/DynamicDefault.pm) >= 0.030
 Requires:       perl(DBIx/Class/InflateColumn/DateTime.pm)
-
-
-
-Source44: import.info
 %filter_from_requires /^perl\\(DateTime.pm\\)$/d
 %filter_from_requires /^perl\\(DBIx.Class.pm\\)$/d
+
+
+
 
 %description
 Works in conjunction with InflateColumn::DateTime to automatically set
@@ -70,7 +72,7 @@ update and create date and time based fields in a table.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -84,6 +86,9 @@ TEST_POD=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_17
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_16
 - update to new release by fcimport
 
