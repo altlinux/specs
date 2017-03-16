@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Gearman-Server
 Version:        1.130.1
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Function call router and load balancer
 License:        GPL+ or Artistic
 Group:          System/Servers
@@ -42,10 +44,9 @@ BuildRequires:  perl(warnings.pm)
 # Tests:
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Script.pm)
-
-
-Source44: import.info
 %filter_from_requires /^perl\\(Danga.Socket.pm\\)$/d
+
+
 
 %description
 You run a Gearman server (or more likely, many of them for both high-
@@ -62,7 +63,7 @@ one of the Gearman servers.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -79,6 +80,9 @@ make test
 %{_mandir}/man1/gearmand.*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.130.1-alt1_3
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.130.1-alt1_2
 - update to new release by fcimport
 
