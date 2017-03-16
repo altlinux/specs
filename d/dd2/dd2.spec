@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install libSDL-devel
 # END SourceDeps(oneline)
-%define fedora 23
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           dd2
 Version:        0.2.2
-Release:        alt2_15
+Release:        alt2_16
 Summary:        Dodgin' Diamond 2 - Shoot'em up arcade game
 Group:          Games/Other
 License:        GPLv2+
@@ -16,7 +18,6 @@ Patch0:         dd2-0.2.1-glob-highscore.patch
 Patch1:         dd2-0.2.1-640x480-fullscreen.patch
 BuildRequires:  libSDL_mixer-devel desktop-file-utils
 Requires:       icon-theme-hicolor
-Source44: import.info
 
 %description
 This is a little shoot'em up arcade game for one or two players. It aims to
@@ -35,7 +36,7 @@ touch src/data/Makefile.in
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -72,6 +73,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt2_16
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt2_15
 - update to new release by fcimport
 
