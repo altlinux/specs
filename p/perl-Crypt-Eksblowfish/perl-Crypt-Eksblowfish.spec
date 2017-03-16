@@ -1,15 +1,19 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(Encode.pm) perl(Exporter.pm) perl(File/Spec.pm) perl(MIME/Base64.pm) perl(XSLoader.pm) perl-Module-Build perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(Encode.pm) perl(Exporter.pm) perl(File/Spec.pm) perl(MIME/Base64.pm) perl(XSLoader.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Crypt-Eksblowfish
 Version:        0.009
-Release:        alt5_15.1
+Release:        alt5_16
 Summary:        Eksblowfish block cipher
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Crypt-Eksblowfish/
 Source0:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Crypt-Eksblowfish-%{version}.tar.gz
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Class/Mix.pm)
 BuildRequires:  perl(ExtUtils/CBuilder.pm)
 BuildRequires:  perl(Module/Build.pm)
@@ -17,10 +21,9 @@ BuildRequires:  perl(parent.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
-
-
-Source44: import.info
 Patch33: Crypt-Eksblowfish-0.009-2y.patch
+
+
 
 %description
 An object of this type encapsulates a keyed instance of the Eksblowfish
@@ -50,6 +53,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_archlib}/Crypt*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.009-alt5_16
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.009-alt5_15.1
 - rebuild with new perl 5.24.1
 
