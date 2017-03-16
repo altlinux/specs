@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           glyph-keeper
 Version:        0.32
-Release:        alt3_19
+Release:        alt3_20
 Summary:        Library for text rendering
 Group:          System/Libraries
 License:        zlib
@@ -14,7 +16,6 @@ Patch0:         glyph-keeper-0.29.1-fixes.patch
 Patch1:         glyph-keeper-0.32-so-compat.patch
 BuildRequires:  libfreetype-devel >= 2.1.10
 BuildRequires:  libSDL_gfx-devel liballegro-devel
-Source44: import.info
 
 %description
 Glyph Keeper is a library for text rendering. It is written in C and can be
@@ -42,8 +43,8 @@ with Allegro apps.
 
 %package        allegro-devel
 Summary:        Development files for glyph-keeper-allegro
-Group:          Development/C
-Requires:       glyph-keeper-allegro = %{version}
+Group:          Development/Other
+Requires:       glyph-keeper-allegro = %{version}-%{release}
 Provides:       %{name}-devel = %{version}-%{release}
 Obsoletes:      %{name}-devel < 0.32-9
 
@@ -65,8 +66,8 @@ with SDL apps.
 
 %package        SDL-devel
 Summary:        Development files for glyph-keeper-SDL
-Group:          Development/C
-Requires:       glyph-keeper-SDL = %{version}
+Group:          Development/Other
+Requires:       glyph-keeper-SDL = %{version}-%{release}
 
 %description    SDL-devel
 The glyph-keeper-SDL-devel package contains libraries and header files for
@@ -81,12 +82,12 @@ sed -i 's/\r//' docs/*.html *.txt
 
 
 %build
-make %{?_smp_mflags} -f Makefile.GNU.all TARGET=ALLEGRO FT_LIB=-lfreetype \
+%make_build -f Makefile.GNU.all TARGET=ALLEGRO FT_LIB=-lfreetype \
   OFLAGS="$RPM_OPT_FLAGS -fpic -I/usr/include/freetype2" lib
 gcc -shared -o libglyph-alleg.so.0 -Wl,-soname,libglyph-alleg.so.0 \
   obj/glyph-alleg.o -lfreetype $(allegro-config --libs)
 
-make %{?_smp_mflags} -f Makefile.GNU.all TARGET=SDL FT_LIB=-lfreetype \
+%make_build -f Makefile.GNU.all TARGET=SDL FT_LIB=-lfreetype \
   OFLAGS="$RPM_OPT_FLAGS -fpic -I/usr/include/freetype2" lib
 gcc -shared -o libglyph-sdl.so.0 -Wl,-soname,libglyph-sdl.so.0 \
   obj/glyph-sdl.o -lfreetype -lSDL -lSDL_gfx
@@ -119,6 +120,9 @@ install -m 644 include/glyph.h $RPM_BUILD_ROOT%{_includedir}
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.32-alt3_20
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.32-alt3_19
 - update to new release by fcimport
 
