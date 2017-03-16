@@ -3,7 +3,9 @@ BuildRequires: gcc-c++ waf
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname sord
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sord
 %define version 0.12.2
 %global maj 0
@@ -11,7 +13,7 @@ BuildRequires: gcc-c++ waf
 
 Name:       libsord
 Version:    0.12.2
-Release:    alt1_8
+Release:    alt1_10
 Summary:    A lightweight Resource Description Framework (RDF) C library
 
 Group:      System/Libraries
@@ -19,13 +21,12 @@ License:    ISC
 URL:        http://drobilla.net/software/sord/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
 
-BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
 BuildRequires: doxygen
-BuildRequires: graphviz
-BuildRequires: glib2-devel
+BuildRequires: graphviz libgraphviz
+BuildRequires: glib2-devel libgio libgio-devel
 BuildRequires: python
-BuildRequires: serd-devel >= 0.14.0
-Source44: import.info
+BuildRequires: libserd-devel >= 0.14.0
 Provides: sord = %{version}-%{release}
 
 %description
@@ -36,8 +37,8 @@ applications.
 
 %package devel
 Summary:    Development libraries and headers for %{oldname}
-Group:      Development/C
-Requires:   %{name} = %{version}
+Group:      Development/Other
+Requires:   %{name} = %{version}-%{release}
 Provides: sord-devel = %{version}-%{release}
 
 %description devel
@@ -87,6 +88,9 @@ install -pm 644 AUTHORS NEWS README COPYING %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/%{oldname}*.3*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.12.2-alt1_10
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.12.2-alt1_8
 - update to new release by fcimport
 
