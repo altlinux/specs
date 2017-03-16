@@ -2,22 +2,25 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Math-Libm
 Version:        1.00
-Release:        alt3_16.1
+Release:        alt3_17
 Summary:        Perl extension for the C math library, libm
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Math-Libm/
 Source0:        http://www.cpan.org/authors/id/D/DS/DSLEWART/Math-Libm-%{version}.tar.gz
 Source1:        Math-Libm-license.txt
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(AutoLoader.pm)
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Exporter.pm)
 
  # Filters (not)shared c libs
-Source44: import.info
 
 %description
 This module is a translation of the C math.h file. It exports the following
@@ -34,7 +37,7 @@ cp -p %{SOURCE1} license.txt
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -53,6 +56,9 @@ make test
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_17
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_16.1
 - rebuild with new perl 5.24.1
 
