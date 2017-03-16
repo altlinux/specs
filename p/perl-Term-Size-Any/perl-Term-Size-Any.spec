@@ -2,15 +2,18 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Term-Size-Any
 Version:        0.002
-Release:        alt2_19
+Release:        alt2_20
 Summary:        Retrieve terminal size
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Term-Size-Any/
 Source0:        http://www.cpan.org/authors/id/F/FE/FERREIRA/Term-Size-Any-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Devel/Hide.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Module/Load/Conditional.pm)
@@ -21,7 +24,6 @@ BuildRequires:  perl(Test/Pod/Coverage.pm)
 Requires:       perl(Term/Size/Perl.pm)
 
 
-Source44: import.info
 
 %description
 This is a unified interface to retrieve terminal size. It loads one module
@@ -34,7 +36,7 @@ on behalf of Term::Size::Any.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
@@ -51,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.002-alt2_20
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.002-alt2_19
 - update to new release by fcimport
 
