@@ -2,23 +2,25 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Exporter.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:       perl-CSS-Minifier 
 Version:    0.01 
-Release:    alt2_21
+Release:    alt2_22
 # lib/CSS/Minifier.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
-Group:      Development/Perl
+Group:      Development/Other
 Summary:    Remove unnecessary whitespace from CSS files 
 Source:     http://search.cpan.org/CPAN/authors/id/P/PM/PMICHAUX/CSS-Minifier-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/CSS-Minifier
 BuildArch:  noarch
 
+BuildRequires: rpm-build-perl
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 # tests
 BuildRequires: perl(Test/More.pm)
 
 
-Source44: import.info
 
 %description
 This module removes unnecessary whitespace from CSS. The primary
@@ -39,7 +41,7 @@ repeatedly is wasteful.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=%{buildroot}
@@ -56,6 +58,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_22
+- update to new release by fcimport
+
 * Tue Jan 31 2017 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_21
 - to Sisyphus
 
