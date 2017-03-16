@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install
+BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools
 # END SourceDeps(oneline)
-%define fedora 23
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: pipepanic
 Version: 0.1.3
-Release: alt4_18
+Release: alt4_19
 Summary: A pipe connecting game
 
 Group: Games/Other
@@ -25,7 +27,6 @@ BuildRequires: libSDL-devel
 BuildRequires: desktop-file-utils
 BuildRequires: ImageMagick
 Requires: icon-theme-hicolor
-Source44: import.info
 
 
 %description
@@ -48,7 +49,7 @@ sed -i 's:/opt/QtPalmtop/share/pipepanic/:%{_datadir}/%{name}/:' main.h
 
 
 %build
-make %{?_smp_mflags} CFLAGS="$RPM_OPT_FLAGS"
+%make_build CFLAGS="$RPM_OPT_FLAGS"
 
 
 %install
@@ -100,6 +101,9 @@ desktop-file-install \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt4_19
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt4_18
 - update to new release by fcimport
 
