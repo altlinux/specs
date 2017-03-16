@@ -3,9 +3,11 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(ExtUtils/MakeMaker/CPANfile.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		perl-Archive-Any-Lite
 Version:	0.11
-Release:	alt1_2
+Release:	alt1_3
 Summary:	Simple CPAN package extractor 
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Archive-Any-Lite
@@ -16,6 +18,7 @@ BuildArch:	noarch
 BuildRequires:	coreutils
 BuildRequires:	findutils
 BuildRequires:	perl
+BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module
 BuildRequires:	perl(Archive/Tar.pm)
@@ -39,7 +42,6 @@ BuildRequires:	perl(Test/Pod/Coverage.pm)
 # Runtime
 Requires:	perl(IO/Uncompress/Bunzip2.pm)
 Requires:	perl(IO/Zlib.pm)
-Source44: import.info
 
 %description
 This is a fork of Archive::Any by Michael Schwern and Clint Moore. The main
@@ -56,7 +58,7 @@ check MIME types.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -72,6 +74,9 @@ make test TEST_POD=1
 %{perl_vendor_privlib}/Archive/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_3
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_2
 - update to new release by fcimport
 
