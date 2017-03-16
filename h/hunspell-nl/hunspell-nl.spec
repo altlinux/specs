@@ -2,10 +2,12 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-nl
 Summary: Dutch hunspell dictionaries
 Version: 2.10
-Release: alt1_9
+Release: alt1_10
 #http://www.opentaal.org/bestanden/doc_download/20-woordenlijst-v-210g-voor-openofficeorg-3
 #annoying click through makes direct link apparently impossible
 Source: OpenTaal-210G-LO.oxt
@@ -14,7 +16,6 @@ License: BSD or CC-BY
 BuildArch: noarch
 
 Requires: hunspell
-Source44: import.info
 
 %description
 Dutch hunspell dictionaries.
@@ -42,6 +43,9 @@ done
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_10
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_9
 - update to new release by fcimport
 
