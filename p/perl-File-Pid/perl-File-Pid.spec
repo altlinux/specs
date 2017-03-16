@@ -3,16 +3,20 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-File-Pid
 Version:        1.01
-Release:        alt3_20
+Release:        alt3_22
 Summary:        Pid File Manipulation
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/File-Pid/
 Source0:        http://www.cpan.org/authors/id/C/CW/CWEST/File-Pid-%{version}.tar.gz
+Patch0:         File-Pid-1.01-RT-18960-Fixed-using-of-uninitialized-value.patch
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Runtime
 BuildRequires:  perl(base.pm)
@@ -23,11 +27,10 @@ BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(vars.pm)
 # Tests only
 BuildRequires:  perl(Test/More.pm)
-Requires:       perl(Class/Accessor/Fast.pm) >= 0.19
-
-
-Source44: import.info
+Requires:       perl(Class/Accessor/Fast.pm) >= 0.190
 %filter_from_requires /^perl\\(Class.Accessor.Fast.pm\\)$/d
+
+
 
 %description
 This software manages a pid file for you. It will create a pid file,
@@ -36,10 +39,11 @@ the pid file.
 
 %prep
 %setup -q -n File-Pid-%{version}
+%patch0 -p1
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -53,6 +57,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_22
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_20
 - update to new release by fcimport
 
