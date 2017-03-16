@@ -1,6 +1,6 @@
 Name: make-initrd-busybox
 Version: 1.24.2
-Release: alt1
+Release: alt2
 
 Summary: Busybox for make-initrd
 License: GPL
@@ -34,6 +34,9 @@ ln -s ../usr/sbin/chroot  sbin/chroot
 /lib/initrd/*
 
 %changelog
+* Thu Mar 16 2017 Alexey Gladkov <legion@altlinux.ru> 1.24.2-alt2
+- Add setsid, timeout utilities.
+
 * Tue May 03 2016 Alexey Gladkov <legion@altlinux.ru> 1.24.2-alt1
 - New busybox version (1.24.2).
 
