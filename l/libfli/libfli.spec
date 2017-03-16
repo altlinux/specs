@@ -3,14 +3,16 @@ BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: libfli
 Version: 1.7
-Release: alt2_18
+Release: alt2_19
 Summary: Library for FLI CCD Camera & Filter Wheels
 
 %define majorver 1
 
-Group: Development/C
+Group: Development/Other
 # Code and LICENSE.LIB have different versions of the BSD license
 # https://sourceforge.net/tracker2/?func=detail&aid=2568511&group_id=90275&atid=593019
 License: BSD
@@ -20,7 +22,6 @@ Source0: http://downloads.sourceforge.net/indi/%{name}%{majorver}_%{version}.tar
 Patch0: libfli-suffix.patch
 
 BuildRequires: ctest cmake 
-Source44: import.info
 Patch33: libfli1_1.7-alt-link-libm.patch
 
 %description
@@ -29,8 +30,8 @@ line of CCDs and Filter wheels
 
 %package devel
 Summary: Libraries, includes, etc. used to develop an application with %{name}
-Group: Development/C
-Requires: %{name}%{?_isa} = %{version}
+Group: Development/Other
+Requires: %{name} = %{version}-%{release}
 %description devel
 These are the header files needed to develop a %{name} application
 
@@ -55,6 +56,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/*.so
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_19
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_18
 - update to new release by fcimport
 
