@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/swig gcc-c++ ilmbase-devel libGL-devel libGLU-devel python-devel rpm-build-python swig
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		aqsis
 Version:	1.8.2
-Release:	alt2_23
+Release:	alt2_25
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 Group:		Video
 
@@ -25,25 +27,24 @@ Patch3: aqsis-1.8.2-gcc6.patch
 BuildRequires:  desktop-file-utils
 
 BuildRequires:  bison >= 1.35.0
-BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
-BuildRequires: ctest cmake
+BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires:  ctest cmake
 BuildRequires:  doxygen
 BuildRequires:  flex >= 2.5.4
 BuildRequires:  libfltk-devel >= 1.1.0, libfltk-devel
 BuildRequires:  libjpeg-devel
-BuildRequires: libtiff-devel libtiffxx-devel
+BuildRequires:  libtiff-devel libtiffxx-devel
 BuildRequires:  libpng-devel
-BuildRequires: libxslt xsltproc
-BuildRequires: libqt4-declarative libqt4-devel qt4-designer
+BuildRequires:  libxslt xsltproc
+BuildRequires:  libqt4-declarative libqt4-devel qt4-designer
 #BuildRequires:  tinyxml-devel
 BuildRequires:  openexr-devel
 BuildRequires:  python-module-sphinx
 BuildRequires:  zlib-devel >= 1.1.4
 
 Requires: libqt4-core libqt4-dbus libqt4-network libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-test libqt4-xml libqt4-xmlpatterns
-Requires: aqsis-core = %{version}
-Requires: aqsis-data = %{version}
-Source44: import.info
+Requires: aqsis-core = %{version}-%{release}
+Requires: aqsis-data = %{version}-%{release}
 
 
 %description
@@ -55,7 +56,7 @@ This package contains graphical utilities and desktop integration.
 
 
 %package core
-Requires:	%{name}-libs = %{version}
+Requires:	%{name}-libs = %{version}-%{release}
 Summary:	Command-line tools for Aqsis Renderer
 Group:		Video
 
@@ -82,7 +83,7 @@ This package contains the shared libraries for Aqsis Renderer.
 
 
 %package data
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 Summary:	Example content for Aqsis Renderer
 Group:		Video
 BuildArch:      noarch
@@ -98,12 +99,12 @@ scenes, procedurals and shaders.
 
 
 %package devel
-Requires:	%{name} = %{version}
-Requires:	aqsis-core = %{version}
-Requires:	aqsis-libs = %{version}
-Requires:	aqsis-data = %{version}
+Requires:	%{name} = %{version}-%{release}
+Requires:	aqsis-core = %{version}-%{release}
+Requires:	aqsis-libs = %{version}-%{release}
+Requires:	aqsis-data = %{version}-%{release}
 Summary:	Development files for Aqsis Renderer
-Group:		Development/C
+Group:		Development/Other
 
 %description devel
 Aqsis is a cross-platform photo-realistic 3D rendering solution,
@@ -234,6 +235,9 @@ desktop-file-install --vendor "" --delete-original \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_25
+- update to new release by fcimport
+
 * Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_23
 - update to new release by fcimport
 
