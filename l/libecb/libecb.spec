@@ -1,10 +1,12 @@
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global snapshot 20161208
 # Do not create debuginfo sub-package because there is no binary executable
 %global debug_package %{nil}
 Name:       libecb
 Version:    0.%{snapshot}
-Release:    alt1_1
+Release:    alt1_2
 Summary:    Compiler built-ins
 Group:      Development/Other
 License:    BSD or GPLv2+
@@ -13,7 +15,6 @@ URL:        http://software.schmorp.de/pkg/libecb.html
 Source0:    %{name}-%{snapshot}.tar.xz
 BuildRequires:  coreutils
 BuildRequires:  perl-podlators
-Source44: import.info
 
 %description
 This project delivers you many GCC built-ins, attributes and a number of
@@ -59,6 +60,9 @@ install -m 0644 -t %{buildroot}%{_mandir}/man3 *.3
 %{_mandir}/man3/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20161208-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.20161208-alt1_1
 - update to new release by fcimport
 
