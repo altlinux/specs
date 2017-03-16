@@ -2,11 +2,13 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hyphen-fa
 Summary: Farsi hyphenation rules
 %global upstreamid 20130404
 Version: 0.%{upstreamid}
-Release: alt1_6
+Release: alt1_7
 Source: http://mirrors.ctan.org/language/hyphenation/fahyph.zip
 URL: http://www.ctan.org/tex-archive/language/hyphenation/fahyph
 License: LPPL
@@ -14,7 +16,6 @@ BuildArch: noarch
 BuildRequires: libhyphen-devel
 Requires: libhyphen
 Patch0: hyphen-fa-cleantex.patch
-Source44: import.info
 
 %description
 Farsi hyphenation rules.
@@ -37,6 +38,9 @@ cp -p hyph_fa_IR.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20130404-alt1_7
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20130404-alt1_6
 - update to new release by fcimport
 
