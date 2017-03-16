@@ -1,11 +1,13 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-File-Map
 Version:        0.64
-Release:        alt1_3.1
+Release:        alt1_4
 Summary:        Memory mapping made simple and safe
 License:        GPL+ or Artistic
 
@@ -14,6 +16,8 @@ Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/File-Map-%{version}.ta
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  perl
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -43,7 +47,6 @@ BuildRequires:  perl(Time/HiRes.pm)
 BuildRequires:  perl(utf8.pm)
 
 
-Source44: import.info
 
 %description
 File::Map maps files or anonymous memory into perl variables.
@@ -79,6 +82,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1_4
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1_3.1
 - rebuild with new perl 5.24.1
 
