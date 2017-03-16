@@ -1,15 +1,19 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-JavaScript-Minifier-XS
 Version:        0.11
-Release:        alt3_5.1
+Release:        alt3_6
 Summary:        XS based JavaScript minifier
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/JavaScript-Minifier-XS/
 Source0:        http://search.cpan.org/CPAN/authors/id/G/GT/GTERMARS/JavaScript-Minifier-XS-%{version}.tar.gz
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -27,7 +31,6 @@ BuildRequires:  perl(Test/LeakTrace.pm)
 BuildRequires:  perl(Test/More.pm)
 
 
-Source44: import.info
 
 %description
 JavaScript::Minifier::XS is a JavaScript "minifier"; it's designed
@@ -55,6 +58,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/JavaScript*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt3_6
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt3_5.1
 - rebuild with new perl 5.24.1
 
