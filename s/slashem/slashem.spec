@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate gcc-c++
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate ImageMagick-tools gcc-c++
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           slashem
 Version:        0.0.8
-Release:        alt2_0.20.E0F1
+Release:        alt2_0.21.E0F1
 Summary:        Super Lotsa Added Stuff Hack - Extended Magic
 
 Group:          Games/Other
@@ -20,14 +22,14 @@ Patch2:         slashem-format-security.patch
 
 BuildRequires:  /usr/bin/appstream-util
 BuildRequires:  /usr/bin/convert
-BuildRequires:  ncurses-devel
+BuildRequires:  libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 BuildRequires:  bison, flex, desktop-file-utils
-BuildRequires:  bdftopcf, libX11-devel, libXext-devel
-BuildRequires:  libXmu-devel, libXpm-devel, libXt-devel
+BuildRequires:  bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils, libX11-devel, libXext-devel
+BuildRequires:  libXmu-devel libXpm libXpm-devel, libXt-devel
 BuildRequires:  libSDL-devel  libGL-devel libpng-devel zlib-devel
 BuildRequires:  pkgconfig(xaw7)
 # to compress save files
-Requires:       bzip2
+Requires:       bzip2 gzip-utils less
 # For icon theme directories.
 Requires:       icon-theme-hicolor
 # for X11 core fonts
@@ -39,7 +41,6 @@ Requires:       icon-theme-hicolor
 %global fa_share    %{_datadir}/games/%{name}
 %global fa_unshare  %{_libdir}/games/%{name}
 %global fa_doc      %{_docdir}/%{name}
-Source44: import.info
 
 %description
 From the land before 3DFX, before VGA graphics and DOOM, before the IBM PC, way
@@ -164,6 +165,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/%{name}.ap
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2_0.21.E0F1
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2_0.20.E0F1
 - update to new release by fcimport
 
