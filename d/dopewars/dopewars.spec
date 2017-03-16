@@ -1,6 +1,8 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install glib2-devel libSDL-devel libesd-devel libgtk+2-devel libncurses-devel libsocket
+BuildRequires: /usr/bin/desktop-file-install glib2-devel libSDL-devel libesd-devel
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # State dir for savegames
 %global _localstatedir /var/lib/games
 # SVN release
@@ -9,7 +11,7 @@ BuildRequires: /usr/bin/desktop-file-install glib2-devel libSDL-devel libesd-dev
 Summary:	A drug dealing game
 Name:		dopewars
 Version:	1.5.12
-Release:	alt1_19.%{rel}svn
+Release:	alt1_20.%{rel}svn
 URL:		http://dopewars.sourceforge.net/
 License:	GPLv2+
 Group:		Games/Other
@@ -20,16 +22,15 @@ Group:		Games/Other
 Source0:	%{name}-%{version}-%{rel}svn.tar.bz2
 
 BuildRequires:	desktop-file-utils
-BuildRequires:	gtk2-devel
-BuildRequires:	ncurses-devel
+BuildRequires:	gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:	libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 BuildRequires:	libSDL_mixer-devel
 
 # SVN stuff
-BuildRequires:	automake
-BuildRequires:	autoconf
-BuildRequires:	libtool
-BuildRequires:	gettext
-Source44: import.info
+BuildRequires:	automake-common
+BuildRequires:	autoconf-common
+BuildRequires:	libtool-common
+BuildRequires:	gettext gettext-tools
 
 %description
 Based on John E. Dell's old Drug Wars game, dopewars is a simulation of an
@@ -47,7 +48,7 @@ switches (via dopewars -h) for further information.
 %package sdl
 Summary:	SDL sound support for dopewars
 Group:		Games/Other
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 %description sdl
 This package adds a plugin to dopewars to allow sound to be output via.
 the Simple DirectMedia Layer mixer (SDL_mixer).
@@ -69,7 +70,7 @@ NOCONFIGURE=1 autoreconf -vif
 	--enable-shared --disable-static \
 	--enable-gui-server --enable-curses-client \
 	--enable-gui-client --with-sdl --without-esd
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=%{buildroot}
@@ -87,12 +88,12 @@ rm -rf %{buildroot}%{_docdir}
 
 
 %post
-%{_bindir}/dopewars -C %{_var}/dopewars.sco
+%{_bindir}/dopewars -C %{_localstatedir}/dopewars.sco
 
 %files -f %{name}.lang
 %doc ChangeLog LICENCE NEWS README doc/*.html doc/example-cfg
 # Score file needs to be writable by games group
-%attr(0664,root,games) %{_var}/lib/games/dopewars.sco
+%attr(0664,root,games) %{_localstatedir}/dopewars.sco
 # Bin file needs to be able to write into score file
 %attr(2711,root,games) %{_bindir}/dopewars
 %{_mandir}/man6/*
@@ -106,6 +107,9 @@ rm -rf %{buildroot}%{_docdir}
 %{_libdir}/dopewars/libsound_sdl.so
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.12-alt1_20.1033svn
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.12-alt1_19.1033svn
 - update to new release by fcimport
 
