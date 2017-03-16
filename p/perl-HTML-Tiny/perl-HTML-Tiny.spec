@@ -3,9 +3,11 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-HTML-Tiny
 Version:        1.05
-Release:        alt2_22
+Release:        alt2_23
 Summary:        Lightweight, dependency free HTML/XML generation
 License:        GPL+ or Artistic
 
@@ -14,9 +16,9 @@ Source0:        http://www.cpan.org/authors/id/A/AN/ANDYA/HTML-Tiny-%{version}.t
 
 BuildArch:      noarch
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/More.pm)
-Source44: import.info
 
 
 %description
@@ -29,7 +31,7 @@ simple Perl notation.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -43,6 +45,9 @@ make test
 %{perl_vendor_privlib}/HTML*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_23
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_22
 - update to new release by fcimport
 
