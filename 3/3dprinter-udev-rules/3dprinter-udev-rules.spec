@@ -1,7 +1,9 @@
 Group: Engineering
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           3dprinter-udev-rules
-Version:        0.2
-Release:        alt1_1
+Version:        0.2.1
+Release:        alt1_2
 Summary:        Rules for udev to give regular users access to operate 3D printers
 License:        CC0
 URL:            https://github.com/hroncok/%{name}
@@ -9,13 +11,12 @@ Source0:        %{url}/archive/v%{version}.tar.gz
 BuildArch:      noarch
 
 # For the %%_udevrulesdir macro
-BuildRequires: journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-utils
+BuildRequires:  journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-utils
 
 # For the directory
-Requires: systemd udev
+Requires:       systemd udev
 
 %global file_name 66-3dprinter.rules
-Source44: import.info
 
 %description
 Normally, when you connect a RepRap like 3D printer to a Linux machine by an
@@ -46,6 +47,9 @@ install -D -p -m 644 %{file_name} %{buildroot}%_udevrulesdir/%{file_name}
 %_udevrulesdir/%{file_name}
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_2
+- update to new release by fcimport
+
 * Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.2-alt1_1
 - update to new release by fcimport
 
