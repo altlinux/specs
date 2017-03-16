@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Devel-LexAlias
 Version:        0.05
-Release:        alt2_11.1
+Release:        alt2_12
 Summary:        Alias lexical variables
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -16,6 +18,7 @@ BuildRequires:  findutils
 BuildRequires:  gcc-common
 BuildRequires:  perl
 BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
 # Module Runtime
@@ -26,7 +29,6 @@ BuildRequires:  perl(Test/More.pm)
 # Dependencies
 
 
-Source44: import.info
 
 %description
 Devel::LexAlias provides the ability to alias a lexical variable in a
@@ -37,7 +39,7 @@ subroutines scope to one of your choosing.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -54,6 +56,9 @@ make test
 %{perl_vendor_archlib}/Devel/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_12
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_11.1
 - rebuild with new perl 5.24.1
 
