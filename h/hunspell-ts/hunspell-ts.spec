@@ -2,18 +2,19 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-ts
 Summary: Tsonga hunspell dictionaries
 %global upstreamid 20091101
 Version: 0.%{upstreamid}
-Release: alt2_10
+Release: alt2_11
 Source: http://releases.mozilla.org/pub/mozilla.org/addons/46611/tsonga__south_africa__dictionary-%{upstreamid}-fx+tb.xpi
 URL: http://www.translate.org.za/
 License: LGPLv2+
 BuildArch: noarch
 
 Requires: hunspell
-Source44: import.info
 
 %description
 Tsonga hunspell dictionaries.
@@ -34,6 +35,9 @@ cp -p dictionaries/ts-ZA.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/ts_ZA.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20091101-alt2_11
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20091101-alt2_10
 - update to new release by fcimport
 
