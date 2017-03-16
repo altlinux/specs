@@ -3,9 +3,11 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Email-Sender
 Version:        1.300030
-Release:        alt1_1
+Release:        alt1_2
 Summary:        A library for sending email
 License:        GPL+ or Artistic
 
@@ -59,7 +61,6 @@ Requires:       perl(Net/SMTP/SSL.pm)
 Requires:       perl(Throwable/Error.pm) >= 0.200.003
 
 
-Source44: import.info
 
 %description
 Email::Sender replaces the old and sometimes problematic Email::Send library,
@@ -71,7 +72,7 @@ suitable for serious use, for a variety of reasons.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
@@ -86,6 +87,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/Email*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.300030-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.300030-alt1_1
 - update to new release by fcimport
 
