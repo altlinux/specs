@@ -3,9 +3,11 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Module/Build.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-DateTime-Format-Epoch
 Version:        0.16
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Convert DateTimes to/from epoch seconds
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/DateTime-Format-Epoch/
@@ -15,6 +17,7 @@ BuildArch:      noarch
 BuildRequires:  findutils
 BuildRequires:  sed
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Runtime
 BuildRequires:  perl(DateTime.pm)
@@ -28,14 +31,13 @@ BuildRequires:  perl(warnings.pm)
 BuildRequires:  perl(Test/More.pm)
 # Optional tests only
 BuildRequires:  perl(Test/Pod.pm)
-Requires:       perl(DateTime.pm) >= 0.31
-Requires:       perl(Math/BigInt.pm) >= 1.66
-
-
-
-Source44: import.info
+Requires:       perl(DateTime.pm) >= 0.310
+Requires:       perl(Math/BigInt.pm) >= 1.660
 %filter_from_requires /^perl\\(Math.BigInt.pm\\)$/d
 %filter_from_requires /^perl\\(DateTime.pm\\)/d
+
+
+
 
 %description
 This module can convert a DateTime object (or any object that can be
@@ -48,7 +50,7 @@ find -type f -print0 | xargs -0 sed -i 's/\r$//'
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=true
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -63,6 +65,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_5
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_4
 - update to new release by fcimport
 
