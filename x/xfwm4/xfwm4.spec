@@ -1,5 +1,5 @@
 Name: xfwm4
-Version: 4.12.3
+Version: 4.12.4
 Release: alt1
 
 Summary: Window manager for Xfce
@@ -25,6 +25,8 @@ BuildRequires: intltool libSM-devel libXcomposite-devel libXdamage-devel libXext
 BuildRequires: libstartup-notification-devel libwnck-devel xorg-cf-files
 
 Requires: xfce4-common
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 %name is a window manager compatable with GNOME, GNOME2, KDE2, KDE3 and
@@ -70,13 +72,13 @@ Xfce. Совместим с окружениями рабочего стола G
 %_libdir/xfce4/*
 
 %changelog
+* Thu Mar 16 2017 Mikhail Efremov <sem@altlinux.org> 4.12.4-alt1
+- Use _unpackaged_files_terminate_build.
+- Fix changelog entry.
+- Updated to 4.12.4.
+
 * Mon May 18 2015 Mikhail Efremov <sem@altlinux.org> 4.12.3-alt1
-- Update for release (by Olivier Fourdan).
-- events: do not monitor SubstructureNotifyMask (by Olivier Fourdan).
-- focus: Ignore zero timestamp from s/n (by Olivier Fourdan).
-- configure: check for exo-csource (by Olivier Fourdan).
-- Fix compiler warnings (by Youri Mouton).
-- Post release tag bump (by Olivier Fourdan).
+- Updated to 4.12.3.
 
 * Mon Mar 16 2015 Mikhail Efremov <sem@altlinux.org> 4.12.2-alt1
 - Updated to 4.12.2.
