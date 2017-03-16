@@ -1,6 +1,9 @@
+%def_with esound
+%def_with pulse
+
 Name: libmikmod
 Version: 3.3.10
-Release: alt1
+Release: alt2
 
 Summary: A portable sound library for Unix
 License: GPLv2 and LGPLv2+
@@ -11,10 +14,13 @@ Url: http://mikmod.raphnet.net
 Source: %name-%version.tar
 Patch0: 0014-playercode-mdreg-Register-the-NULL-driver-before-the.patch
 Patch1: use-gnu-install-directories.patch
+Patch2: libmikmod-3.3.7-mcst-e2k.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Thu Mar 03 2011
-BuildRequires: libalsa-devel libesd-devel libpulseaudio-devel
+BuildRequires: libalsa-devel
+%{?_with_esound:BuildRequires: libesd-devel}
+%{?_with_pulse:BuildRequires: libpulseaudio-devel}
 # explicitly added texinfo for info files
 BuildRequires: texinfo
 
@@ -45,6 +51,7 @@ will use the %name library.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -71,6 +78,10 @@ will use the %name library.
 # - consider --enable-simd (marked unstable as of 3.3.7)
 
 %changelog
+* Thu Mar 16 2017 Michael Shigorin <mike@altlinux.org> 3.3.10-alt2
+- BOOTSTRAP: introduce esound, pulse knobs (on by default)
+- E2K: added mcst patch to fix up LCC name clash against Amiga
+
 * Thu Sep 01 2016 Michael Shigorin <mike@altlinux.org> 3.3.10-alt1
 - 3.3.10
 
