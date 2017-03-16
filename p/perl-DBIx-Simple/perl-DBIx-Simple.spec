@@ -3,16 +3,19 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(DBIx/XHTML_Table.pm) perl(SQL/Abstract.pm) perl(Text/Table.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-DBIx-Simple
 Summary:        Easy-to-use OO interface to DBI
 Version:        1.35
-Release:        alt2_16
+Release:        alt2_17
 License:        Public Domain
 Source0:        http://search.cpan.org/CPAN/authors/id/J/JU/JUERD/DBIx-Simple-%{version}.tar.gz
 URL:            http://search.cpan.org/dist/DBIx-Simple/
 BuildArch:      noarch
 
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time
 BuildRequires:  perl(base.pm)
@@ -28,7 +31,7 @@ BuildRequires:  perl(strict.pm)
 # Tests
 BuildRequires:  perl(DBD/SQLite.pm)
 BuildRequires:  perl(Test/More.pm)
-Requires:       perl(DBI.pm) >= 1.21
+Requires:       perl(DBI.pm) >= 1.210
 Requires:       perl(DBIx/XHTML_Table.pm)
 Requires:       perl(SQL/Abstract.pm)
 Requires:       perl(SQL/Interp.pm)
@@ -36,7 +39,6 @@ Requires:       perl(Text/Table.pm)
 
 
 
-Source44: import.info
 
 %description
 DBIx::Simple provides a simplified interface to DBI, Perl's powerful
@@ -47,7 +49,7 @@ database module.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
@@ -61,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.35-alt2_17
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.35-alt2_16
 - update to new release by fcimport
 
