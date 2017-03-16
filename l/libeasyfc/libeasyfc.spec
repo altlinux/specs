@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(fontconfig) pkgconfig(freetype2) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(harfbuzz) pkgconfig(libxml-2.0)
+BuildRequires: /usr/bin/gtkdocize pkgconfig(freetype2)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		libeasyfc
 Version:	0.13.1
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Easy configuration generator interface for fontconfig
 
 Group:		System/Libraries
@@ -12,10 +14,9 @@ License:	LGPLv3+
 URL:		http://tagoh.bitbucket.org/libeasyfc/
 Source0:	https://bitbucket.org/tagoh/libeasyfc/downloads/%{name}-%{version}.tar.bz2
 
-BuildRequires:	glib2-devel gobject-introspection-devel libxml2-devel fontconfig-devel >= 2.10.92 libharfbuzz-devel
-BuildRequires:	gettext
+BuildRequires:	glib2-devel libgio libgio-devel gobject-introspection-devel libxml2-devel fontconfig-devel >= 2.10.92 libharfbuzz-devel libharfbuzz-utils
+BuildRequires:	gettext gettext-tools
 Requires:	fontconfig >= 2.10.92
-Source44: import.info
 
 %description
 libeasyfc aims to provide an easy interface to generate
@@ -24,7 +25,7 @@ fontconfig configuration on demand.
 %package	gobject
 Summary:	GObject interface for libeasyfc
 Group:		System/Libraries
-Requires:	%{name}%{?_isa} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description	gobject
 libeasyfc aims to provide an easy interface to generate
@@ -34,9 +35,10 @@ This package contains an interface for GObject.
 
 %package	devel
 Summary:	Development files for libeasyfc
-Group:		Development/C
-Requires:	%{name}%{?_isa} = %{version}
-Requires:	pkgconfig
+Group:		Development/Other
+Requires:	%{name} = %{version}-%{release}
+Requires:	pkg-config
+Requires:	libgio
 
 %description	devel
 libeasyfc aims to provide an easy interface to generate
@@ -47,10 +49,10 @@ applications with libeasyfc.
 
 %package	gobject-devel
 Summary:	Development files for libeasyfc-gobject
-Group:		Development/C
-Requires:	%{name}-gobject%{?_isa} = %{version}
-Requires:	%{name}-devel%{?_isa} = %{version}
-Requires:	pkgconfig
+Group:		Development/Other
+Requires:	%{name}-gobject = %{version}-%{release}
+Requires:	pkg-config
+Requires:	libgio
 
 %description	gobject-devel
 libeasyfc aims to provide an easy interface to generate
@@ -65,7 +67,7 @@ applications with libeasyfc-gobject.
 
 %build
 %configure --disable-static
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 
 %install
@@ -95,6 +97,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/gir-*/Easyfc-*.gir
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt1_2
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt1_1
 - update to new release by fcimport
 
