@@ -2,17 +2,18 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: mythes-nl
 Summary: Dutch thesaurus
 %global upstreamid 20130131
 Version: 0.%{upstreamid}
-Release: alt1_6
+Release: alt1_7
 Source: http://data.opentaal.org/opentaalbank/thesaurus/download/thes_nl.oxt
 URL: http://data.opentaal.org/opentaalbank/thesaurus
 License: BSD or CC-BY
 BuildArch: noarch
 Requires: libmythes
-Source44: import.info
 
 %description
 Dutch thesaurus.
@@ -50,6 +51,9 @@ done
 %{_datadir}/mythes/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20130131-alt1_7
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20130131-alt1_6
 - update to new release by fcimport
 
