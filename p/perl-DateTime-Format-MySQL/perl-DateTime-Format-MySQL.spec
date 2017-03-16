@@ -1,11 +1,13 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl-Module-Build perl-podlators
+BuildRequires: perl(CPAN.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-DateTime-Format-MySQL
 Version:        0.06
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Parse and format MySQL dates and times
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/DateTime-Format-MySQL
@@ -13,6 +15,7 @@ Source0:        http://search.cpan.org/CPAN/authors/id/X/XM/XMIKEW/DateTime-Form
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Module/Build.pm)
 # Runtime
 BuildRequires:  perl(DateTime.pm)
@@ -21,7 +24,6 @@ BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(vars.pm)
 # Tests only
 BuildRequires:  perl(Test/More.pm)
-Source44: import.info
 
 %description
 This module understands the formats used by MySQL for its DATE, DATETIME,
@@ -49,6 +51,9 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 %{perl_vendor_privlib}/DateTime/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_3
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_2
 - update to new release by fcimport
 
