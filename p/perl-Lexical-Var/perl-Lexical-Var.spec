@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl-Module-Build perl-podlators
+BuildRequires: perl(CPAN.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Lexical-Var
 Version:        0.009
-Release:        alt2_9.1
+Release:        alt2_10
 Summary:        Static variables without name space pollution
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -13,6 +15,8 @@ Source0:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Lexical-Var-%{version
 # Update code to work with Perl 5.21.x (CPAN RT#101058)
 Patch0:         Lexical-Var-0.009-Fix-RT-101058.patch
 BuildRequires:  perl
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -24,10 +28,9 @@ BuildRequires:  perl(XSLoader.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
-Conflicts:      perl(B/Hooks/OP/Check.pm) < 0.19
+Conflicts:      perl(B/Hooks/OP/Check.pm) < 0.190
 
 
-Source44: import.info
 
 %description
 This module implements lexical scoping of static variables and subroutines.
@@ -56,6 +59,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Lexical*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.009-alt2_10
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.009-alt2_9.1
 - rebuild with new perl 5.24.1
 
