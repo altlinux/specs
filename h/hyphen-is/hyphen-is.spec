@@ -2,11 +2,13 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hyphen-is
 Summary: Icelandic hyphenation rules
 %global upstreamid 20030920
 Version: 0.%{upstreamid}
-Release: alt1_15
+Release: alt1_16
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_is_IS.zip
 Patch0: hyphen-is-lppl-license-fix.patch
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
@@ -14,7 +16,6 @@ License: LGPLv2+ or SISSL
 BuildArch: noarch
 
 Requires: libhyphen
-Source44: import.info
 
 %description
 Icelandic hyphenation rules.
@@ -46,6 +47,9 @@ cp -p *.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20030920-alt1_16
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20030920-alt1_15
 - update to new release by fcimport
 
