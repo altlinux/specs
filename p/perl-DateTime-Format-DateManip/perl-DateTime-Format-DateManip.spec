@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl-Module-Build perl-podlators
+BuildRequires: perl(CPAN.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-DateTime-Format-DateManip
 Version:        0.04
-Release:        alt2_22
+Release:        alt2_23
 Summary:        Convert Date::Manip to DateTime and vice versa
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -16,6 +18,7 @@ Patch0:         DateTime-Format-DateManip-01conversion.patch
 Patch1:         DateTime-Format-DateManip-0.04-Set-system-time-zone-in-test.patch
 BuildArch:      noarch
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Module/Build.pm)
 # Run-time
 BuildRequires:  perl(bytes.pm)
@@ -27,7 +30,6 @@ BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(vars.pm)
 # Tests:
 BuildRequires:  perl(Test/More.pm)
-Source44: import.info
 
 %description
 DateTime::Format::DateManip is a class that knows how to convert between
@@ -56,6 +58,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_23
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_22
 - update to new release by fcimport
 
