@@ -1,17 +1,19 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Moose/Meta/Method/Accessor.pm) perl(Moose/Role.pm) perl(Moose/Util.pm) perl(Scalar/Util.pm) perl(base.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/CPAN/Changes.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(Test/Warnings.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-MooseX-Attribute-Chained
 Version:        1.0.3
-Release:        alt1
+Release:        alt1_2
 Summary:        Attribute that returns the instance to allow for chaining
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/MooseX-Attribute-Chained/
 Source0:        http://www.cpan.org/authors/id/T/TO/TOMHUKINS/MooseX-Attribute-Chained-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(File/Find.pm)
 BuildRequires:  perl(File/Temp.pm)
 BuildRequires:  perl(Module/Build.pm)
@@ -34,7 +36,6 @@ BuildRequires:  perl(Try/Tiny.pm)
 Obsoletes:      perl-MooseX-ChainedAccessors <= 0.02-3.fc17
 
 
-Source44: import.info
 
 %description
 MooseX::Attribute::Chained is a Moose Trait which allows for method
@@ -61,6 +62,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_2
+- update to new release by fcimport
+
 * Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1
 - automated CPAN update
 
