@@ -1,6 +1,8 @@
+%def_enable cddb
+
 Name: libcdio
 Version: 0.94
-Release: alt1
+Release: alt1.1
 
 Summary: CD-ROM/CD-image access library
 License: GPLv3+
@@ -13,7 +15,8 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ libcddb-devel libncurses-devel help2man makeinfo
+BuildRequires: gcc-c++ libncurses-devel help2man makeinfo
+%{?_enable_cddb:BuildRequires: libcddb-devel}
 
 %description
 This library is to encapsulate CD-ROM reading and control. Applications
@@ -61,6 +64,7 @@ info.
 %build
 %autoreconf
 %configure \
+	%{subst_enable cddb} \
 	--enable-maintainer-mode \
 	--disable-static
 %make_build
@@ -94,6 +98,10 @@ info.
 %_man1dir/*.1*
 
 %changelog
+* Thu Mar 16 2017 Michael Shigorin <mike@altlinux.org> 0.94-alt1.1
+- BOOTSTRAP: introduce cddb knob (on by default);
+  breaks libcdio <-> libcddb BR loop
+
 * Mon Nov 14 2016 Yuri N. Sedunov <aris@altlinux.org> 0.94-alt1
 - 0.94
 
