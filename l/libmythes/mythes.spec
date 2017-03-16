@@ -1,17 +1,18 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ pkgconfig(hunspell)
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %define oldname mythes
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:      libmythes
 Summary:   A thesaurus library
 Version:   1.2.4
-Release:   alt1_5
+Release:   alt1_6
 Source:    http://downloads.sourceforge.net/hunspell/%{oldname}-%{version}.tar.gz
 Group:     System/Libraries
 URL:       http://hunspell.sourceforge.net/
 License:   BSD and MIT
 BuildRequires: libhunspell-devel hunspell-utils
-Source44: import.info
 
 %description
 MyThes is a simple thesaurus that uses a structured text data file and an
@@ -19,9 +20,9 @@ index file with binary search to look up words and phrases and return
 information on part of speech, meanings, and synonyms.
 
 %package devel
-Requires: libmythes = %{version}, pkgconfig
+Requires: libmythes = %{version}-%{release}, pkg-config
 Summary: Files for developing with mythes
-Group: Development/C
+Group: Development/Other
 
 %description devel
 Includes and definitions for developing with mythes
@@ -31,7 +32,7 @@ Includes and definitions for developing with mythes
 
 %build
 %configure --disable-rpath --disable-static
-make %{?_smp_mflags}
+%make_build
 
 %check
 ./example th_en_US_new.idx th_en_US_new.dat checkme.lst
@@ -56,6 +57,9 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_bindir}/th_gen_idx.pl
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt1_6
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt1_5
 - update to new release by fcimport
 
