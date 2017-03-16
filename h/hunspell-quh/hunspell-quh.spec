@@ -2,18 +2,19 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-quh
 Summary: Quechua, South Bolivia hunspell dictionaries
 %global upstreamid 20110816
 Version: 0.%{upstreamid}
-Release: alt1_9
+Release: alt1_10
 Source: http://www.runasimipi.org/quh_BO-pack.zip
 URL: http://www.runasimipi.org/blanco-en.php?file=desarrollar-orto
 License: GPLv2+
 BuildArch: noarch
 
 Requires: hunspell
-Source44: import.info
 
 %description
 Quechua South Bolivia hunspell dictionaries.
@@ -34,6 +35,9 @@ cp -p quh_BO/quh_BO.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20110816-alt1_10
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20110816-alt1_9
 - update to new release by fcimport
 
