@@ -3,22 +3,23 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname vsqlite++
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:        libvsqlite++
 Version:    0.3.13
-Release:    alt1_14
+Release:    alt1_17
 Summary:    Well designed C++ sqlite 3.x wrapper library
 
-Group:      Development/C
+Group:      Development/Other
 License:    BSD
 URL:        http://vsqlite.virtuosic-bytes.com
 Source0:    http://evilissimo.fedorapeople.org/releases/vsqlite--/%{version}/%{oldname}-%{version}.tar.gz
 
-BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
 BuildRequires:  libsqlite3-devel
-BuildRequires:  libtool
+BuildRequires:  libtool-common
 BuildRequires:  doxygen
-BuildRequires:  graphviz
-Source44: import.info
+BuildRequires:  graphviz libgraphviz
 Provides: vsqlite++ = %{version}-%{release}
 
 %description
@@ -27,8 +28,8 @@ VSQLite++ is designed to be easy to use and focuses on simplicity.
 
 %package devel
 Summary:        Development files for %{oldname}
-Group:          Development/C
-Requires:       %{name} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 Provides: vsqlite++-devel = %{version}-%{release}
 
 %description devel
@@ -37,7 +38,7 @@ This package contains development files for %{oldname}.
 %package doc
 BuildArch:      noarch
 Summary:        Development documentation for %{oldname}
-Group:          Development/C
+Group:          Development/Other
 Provides: vsqlite++-doc = %{version}-%{release}
 
 %description doc
@@ -49,7 +50,7 @@ This package contains development documentation files for %{oldname}.
 %build
 %configure
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
-make %{?_smp_mflags}
+%make_build
 doxygen Doxyfile
 
 %install
@@ -80,6 +81,9 @@ make DESTDIR=%{buildroot} install
 %{_libdir}/libvsqlitepp.so.*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.13-alt1_17
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.13-alt1_14
 - update to new release by fcimport
 
