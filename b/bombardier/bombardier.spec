@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: bombardier
 Version:  0.8.3
-Release:  alt1_2
+Release:  alt1_3
 Summary: The GNU Bombing utility
 
 Group: Games/Other
@@ -16,9 +18,8 @@ Patch0: bombardier-height.patch
 Patch1: bombardier-rpm_opt_flags.patch
 #Patch2: bombardier-hof-open-mode.patch
 Patch3: bombardier-0.8.2-string-format.patch
-BuildRequires: ncurses-devel, desktop-file-utils
+BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel, desktop-file-utils
 Requires: icon-theme-hicolor
-Source44: import.info
 
 
 %description
@@ -63,6 +64,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt1_3
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt1_2
 - update to new release by fcimport
 
