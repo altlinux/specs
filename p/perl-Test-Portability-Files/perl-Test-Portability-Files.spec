@@ -2,12 +2,14 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/CPAN/Changes.pm) perl(Test/CPAN/Meta.pm) perl(Test/CPAN/Meta/JSON.pm) perl(Test/EOL.pm) perl(Test/Kwalitee.pm) perl(Test/Mojibake.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(Test/Synopsis.pm) perl(Test/Version.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # We need to patch the test suite if we have an old version of Test::More
 %global old_test_more %(perl -MTest::More -e 'print (($Test::More::VERSION < 0.88) ? 1 : 0);' 2>/dev/null || echo 0)
 
 Name:           perl-Test-Portability-Files
 Version:        0.07
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Check file names portability
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -36,7 +38,6 @@ BuildRequires:  perl(File/Temp.pm)
 BuildRequires:  perl(IO/Handle.pm)
 BuildRequires:  perl(IPC/Open3.pm)
 BuildRequires:  perl(Test/More.pm)
-Source44: import.info
 
 %description
 This module is used to check the portability across operating systems of
@@ -70,6 +71,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_1
 - update to new release by fcimport
 
