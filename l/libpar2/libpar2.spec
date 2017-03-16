@@ -1,9 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ pkgconfig(sigc++-2.0)
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libpar2
 Version:        0.2       
-Release:        alt2_23
+Release:        alt2_24
 Summary:        Library for performing comman tasks related to PAR recovery sets
      
 Group:          System/Libraries
@@ -13,9 +16,8 @@ Source0:        http://prdownloads.sourceforge.net/sourceforge/parchive/%{name}-
 Patch0:         libpar2-0.2-cancel.patch
 Patch1:         libpar2-0.2-bugfixes.patch
   
-BuildRequires:  libsigc++2-devel libtool
+BuildRequires:  libsigc++2-devel libtool-common
 BuildRequires:  sed
-Source44: import.info
 
 %description
 LibPar2 allows for the generation, modification, verification,
@@ -26,8 +28,8 @@ sets and is the basis for GUI applications such as GPar2.
 
 %package devel
 Summary: Development files for %{name}
-Group: Development/C
-Requires: %{name} = %{version}
+Group: Development/Other
+Requires: %{name} = %{version}-%{release}
 
 %description devel
 The %{name}-devel package contains libraries and header files for
@@ -51,13 +53,12 @@ sed -i 's/\r//' AUTHORS
 touch -r tmpfile AUTHORS
 
 %build
-%add_optflags -std=c++11
 #fix aarch64 build
 libtoolize
 autoreconf -i
 
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -76,6 +77,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/%{name}/include/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_24
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_23
 - fixed build
 
