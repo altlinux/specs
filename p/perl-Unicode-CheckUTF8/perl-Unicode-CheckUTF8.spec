@@ -2,6 +2,8 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # License information:
 #
 # This code is largely a Perl wrapper around data tables provided by the
@@ -16,7 +18,7 @@ BuildRequires: perl-podlators
 Summary:	Checks if scalar is valid UTF-8
 Name:		perl-Unicode-CheckUTF8
 Version:	1.03
-Release:	alt4_16.1
+Release:	alt4_17
 License:	UCD and (GPL+ or Artistic)
 Group:		Development/Other
 Url:		http://search.cpan.org/dist/Unicode-String/
@@ -27,6 +29,7 @@ BuildRequires:	findutils
 BuildRequires:	gcc-common
 BuildRequires:	perl
 BuildRequires:	perl-devel
+BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
 BuildRequires:	perl(base.pm)
@@ -38,7 +41,6 @@ BuildRequires:	perl(Test/More.pm)
 
 # Don't "provide" private Perl libs
 
-Source44: import.info
 
 %description
 This is an XS wrapper around some Unicode Consortium code to check if a string
@@ -56,7 +58,7 @@ sure it's valid UTF-8 before continuing.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -73,6 +75,9 @@ make test
 %{perl_vendor_archlib}/auto/Unicode/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.03-alt4_17
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.03-alt4_16.1
 - rebuild with new perl 5.24.1
 
