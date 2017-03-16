@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/scrollkeeper-config pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(librsvg-2.0)
+BuildRequires: /usr/bin/desktop-file-install pkgconfig(gthread-2.0)
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           quarry
 Version:        0.2.0
-Release:        alt5_19
+Release:        alt5_20
 Summary:        A multi-purpose board game GUI
 
 Group:          Games/Other
@@ -13,10 +15,9 @@ Source0:        http://download.gna.org/quarry/quarry-%{version}.tar.gz
 Patch0:         quarry-format-security.patch
 
 BuildRequires:  desktop-file-utils
-BuildRequires:  librsvg-devel
-BuildRequires:  gtk2-devel
-BuildRequires:  scrollkeeper
-Source44: import.info
+BuildRequires:  librsvg-devel librsvg-gir-devel
+BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:  librarian
 
 %description
 Quarry is a multi-purpose GUI for several board games, at present Go, Amazons
@@ -34,7 +35,7 @@ programs.
 %build
 export CFLAGS="%{optflags} -std=gnu89"
 %configure --disable-scrollkeeper-update
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -60,6 +61,9 @@ desktop-file-install \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt5_20
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt5_19
 - update to new release by fcimport
 
