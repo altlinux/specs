@@ -3,9 +3,11 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Group: Development/C
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libtpcmisc
 Version:        1.4.8
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Miscellaneous PET functions
 
 License:        LGPLv2+
@@ -13,8 +15,7 @@ URL:            http://www.turkupetcentre.net/software/libdoc/%{name}/index.html
 Source0:        http://www.turkupetcentre.net/software/libsrc/%{name}_1_4_8_src.zip
 Patch0:         %{name}-shared.patch
 
-BuildRequires:  doxygen dos2unix graphviz
-Source44: import.info
+BuildRequires:  doxygen dos2unix graphviz libgraphviz
 
 
 %description
@@ -27,7 +28,7 @@ data processing.
 %package        devel
 Group: Development/C
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -55,7 +56,7 @@ iconv -f ISO_8859-1 -t utf8 -o History.new History && mv -f History.new History
 # c99 standard since they use declarations in the for loops
 export CFLAGS="%{optflags} -std=c99 -fPIC -DPIC -D_POSIX_C_SOURCE=200112L"
 export CXXFLAGS="%{optflags} -fPIC -DPIC"
-make %{?_smp_mflags}
+%make_build
 
 # Build doxygen documentation
 mkdir doc
@@ -91,6 +92,9 @@ popd
 %{_libdir}/%{name}.a
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.8-alt2_13
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.8-alt2_12
 - update to new release by fcimport
 
