@@ -2,10 +2,12 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-ku
 Summary: Kurdish hunspell dictionaries
 Version: 0.21
-Release: alt2_15
+Release: alt2_16
 #http://hunspell-ku.googlecode.com/files/ku_TR-021_source.zip ?
 Source0: http://downloads.sourceforge.net/myspellkurdish/ku_TR-021.zip
 #http://code.google.com/p/hunspell-ku/ ?
@@ -14,7 +16,6 @@ License: GPLv3 or LGPLv3 or MPLv1.1
 BuildArch: noarch
 
 Requires: hunspell
-Source44: import.info
 
 %description
 Kurdish hunspell dictionaries.
@@ -51,6 +52,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt2_16
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.21-alt2_15
 - update to new release by fcimport
 
