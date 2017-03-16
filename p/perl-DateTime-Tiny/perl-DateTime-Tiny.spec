@@ -2,12 +2,14 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(DateTime.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-DateTime-Tiny
 Version:        1.06
-Release:        alt2_1
+Release:        alt2_2
 Summary:        Date object, with as little code as possible
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/DateTime-Tiny/
 Source0:        http://search.cpan.org/CPAN/authors/id/D/DA/DAGOLDEN/DateTime-Tiny-%{version}.tar.gz
 BuildArch:      noarch
@@ -16,7 +18,6 @@ BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/More.pm)
 Requires:       perl(DateTime.pm)
-Source44: import.info
 
 %description
 DateTime::Tiny implements an extremely lightweight object that represents a
@@ -27,7 +28,7 @@ datetime.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
@@ -45,6 +46,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.06-alt2_2
+- update to new release by fcimport
+
 * Wed Nov 30 2016 Igor Vlasenko <viy@altlinux.ru> 1.06-alt2_1
 - to Sisyphus
 
