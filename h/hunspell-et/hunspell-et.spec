@@ -1,9 +1,11 @@
 Group: Text tools
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-et
 Summary: Estonian hunspell dictionaries
 %global upstreamid 20030606
 Version: 0.%{upstreamid}
-Release: alt2_15
+Release: alt2_16
 Source: http://www.meso.ee/~jjpp/speller/ispell-et_%{upstreamid}.tar.gz
 URL: http://www.meso.ee/~jjpp/speller/
 License: LGPLv2+ and LPPL
@@ -12,7 +14,6 @@ BuildArch: noarch
 Requires: hunspell
 Provides: hunspell-ee = 0.20030606-4
 Obsoletes: hunspell-ee < 0.20030606-4
-Source44: import.info
 
 %description
 Estonian hunspell dictionaries.
@@ -47,6 +48,9 @@ cp -p hyph_et.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_et_EE.dic
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20030606-alt2_16
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20030606-alt2_15
 - update to new release by fcimport
 
