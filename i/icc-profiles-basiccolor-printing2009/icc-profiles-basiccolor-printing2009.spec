@@ -1,6 +1,8 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           icc-profiles-basiccolor-printing2009
 Version:        1.2.0
-Release:        alt2_7
+Release:        alt2_8
 Summary:        The OpenICC profiles from basICColor
 
 Group:          Graphical desktop/Other
@@ -10,11 +12,10 @@ Source0:        http://downloads.sourceforge.net/project/openicc/basICColor-Prof
 
 BuildArch:      noarch
 
-BuildRequires: color-filesystem rpm-macros-color
-Requires: color-filesystem rpm-macros-color
+BuildRequires:  color-filesystem rpm-macros-color
+Requires:       color-filesystem rpm-macros-color
 #Owns %%{_icccolordir}/basICColor
 Requires:       icc-profiles-openicc
-Source44: import.info
 
 
 
@@ -29,7 +30,7 @@ ICC profiles for ISO Printing conditions.
 
 %build
 %configure --enable-verbose
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -56,6 +57,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_8
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_7
 - update to new release by fcimport
 
