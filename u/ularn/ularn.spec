@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           ularn
 Version:        1.5p4
-Release:        alt2_24
+Release:        alt2_25
 Summary:        Simple roguelike game
 
 Group:          Games/Other
@@ -18,12 +20,11 @@ Patch1:         ularn-euid.patch
 Patch2:         ularn-datadir.patch
 Patch3:         ularn-drop-setgid.patch
 
-BuildRequires:  ncurses-devel
+BuildRequires:  libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 BuildRequires:  desktop-file-utils
 Requires:       ncompress
 Requires(post): coreutils
 Requires(postun): coreutils
-Source44: import.info
 
 %description
 A text-based roguelike game based on the original Larn.  Travel through
@@ -77,6 +78,9 @@ install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/32x32/app
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.5p4-alt2_25
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.5p4-alt2_24
 - update to new release by fcimport
 
