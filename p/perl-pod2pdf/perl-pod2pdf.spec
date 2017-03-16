@@ -2,15 +2,18 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-pod2pdf
 Version:        0.42
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Converts Pod to PDF format
 License:        Artistic 2.0
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/pod2pdf/
 Source0:        http://www.cpan.org/authors/id/J/JO/JONALLEN/pod2pdf-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(constant.pm)
@@ -29,8 +32,7 @@ BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 Requires:       perl(File/Type.pm)
 Requires:       perl(Image/Size.pm)
-Requires:       perl(Paper/Specs.pm) >= 0.10
-Source44: import.info
+Requires:       perl(Paper/Specs.pm) >= 0.100
 
 %description
 pod2pdf converts documents written in Perl's POD (Plain Old Documentation)
@@ -41,7 +43,7 @@ format to PDF files.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -62,6 +64,9 @@ make test
 %{_bindir}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.42-alt2_13
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.42-alt2_12
 - update to new release by fcimport
 
