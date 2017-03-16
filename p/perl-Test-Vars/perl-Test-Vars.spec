@@ -1,31 +1,29 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-devel perl-podlators perl(Module/Build/Tiny.pm)
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		perl-Test-Vars
 Version:	0.012
-Release:	alt1
+Release:	alt1_2
 Summary:	Detects unused variables
 License:	GPL+ or Artistic
-Group:		Development/Perl
+Group:		Development/Other
 URL:		http://search.cpan.org/dist/Test-Vars/
-Source:	http://www.cpan.org/authors/id/D/DR/DROLSKY/Test-Vars-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/D/DR/DROLSKY/Test-Vars-%{version}.tar.gz
 BuildArch:	noarch
 # ===================================================================
 # Build requirements
 # ===================================================================
 BuildRequires:	coreutils
-BuildRequires:	perl(Module/Build.pm)
-BuildRequires:	perl(File/Basename.pm)
-BuildRequires:	perl(File/Copy.pm)
-BuildRequires:	perl(File/Spec.pm)
-BuildRequires:	perl(utf8.pm)
+BuildRequires:	perl
+BuildRequires:	rpm-build-perl
+BuildRequires:	perl(Module/Build/Tiny.pm)
 BuildRequires:	sed
 # ===================================================================
 # Module requirements
 # ===================================================================
-BuildRequires:	perl
 BuildRequires:	perl(B.pm)
 BuildRequires:	perl(constant.pm)
 BuildRequires:	perl(ExtUtils/Manifest.pm)
@@ -39,6 +37,7 @@ BuildRequires:	perl(warnings.pm)
 # ===================================================================
 # Test suite requirements
 # ===================================================================
+BuildRequires:	perl(File/Spec/Functions.pm)
 BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Test/Tester.pm)
 # ===================================================================
@@ -53,7 +52,6 @@ BuildRequires:	perl(Moose/Role.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Synopsis.pm)
-Source44: import.info
 # ===================================================================
 # Runtime requirements
 # ===================================================================
@@ -73,11 +71,11 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 
 %install
 ./Build install --destdir=%{buildroot} --create_packlist=0
-# %{_fixperms} %{buildroot}
+# %{_fixperms} -c %{buildroot}
 
 %check
 ./Build test
-./Build test --test_files="xt/*.t"
+prove -Ilib $(echo $(find xt/ -name '*.t'))
 
 %files
 %if 0%{?_licensedir:1}
@@ -89,6 +87,9 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.012-alt1_2
+- update to new release by fcimport
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.012-alt1
 - automated CPAN update
 
