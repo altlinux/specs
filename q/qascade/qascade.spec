@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           qascade
 Version:        0.1
-Release:        alt2_22
+Release:        alt2_23
 Summary:        Classic puzzle game
 
 Group:          Games/Other
@@ -13,9 +15,8 @@ Source0:        http://www.bitsnpieces.org.uk/qascade/%{name}-%{version}.tar.bz2
 Source1:        %{name}.desktop
 Patch0:         %{name}-dblsep.patch
 
-BuildRequires:  qt3-devel
+BuildRequires:  libqt3-devel
 BuildRequires:  desktop-file-utils
-Source44: import.info
 
 %description
 Qascade is a port of the simple yet addictive and enjoyable puzzle
@@ -31,7 +32,7 @@ game that came with the Psion Revo PDA.
 [ -n "$QTDIR" ] || . /etc/profile.d/qt3dir.sh; export PATH=%_libdir/qt3/bin:$PATH
 qmake-qt3 INSTALL_ROOT=$RPM_BUILD_ROOT qascade.pro
 perl -pi -e 's|^(C(XX)?FLAGS\s*=.*)$|$1 \$(RPM_OPT_FLAGS)|g' Makefile
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -42,7 +43,7 @@ desktop-file-install \
   --mode 644 \
   %{SOURCE1}
 install -D -p -m 644 %{name}.hscr \
-  $RPM_BUILD_ROOT%{_var}/lib/games/%{name}.hscr
+  $RPM_BUILD_ROOT%{_localstatedir}/lib/games/%{name}.hscr
 install -D -p -m 644 blue.png \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/24x24/apps/qascade.png
 
@@ -52,10 +53,13 @@ install -D -p -m 644 blue.png \
 %attr(2711,root,games) %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/24x24/apps/qascade.png
-%attr(0664,games,games) %config(noreplace) %{_var}/lib/games/%{name}*
+%attr(0664,games,games) %config(noreplace) %{_localstatedir}/lib/games/%{name}*
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_23
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_22
 - update to new release by fcimport
 
