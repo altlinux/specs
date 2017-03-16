@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		gnujump
 Version:	1.0.8
-Release:	alt1_7
+Release:	alt1_8
 Summary:	A jumping game which is a clone of xjump
 
 Group:		Games/Other
@@ -15,7 +17,6 @@ Patch1:		%{name}-Makefile.in.patch
 
 BuildRequires:	libSDL-devel >= 1.2, libSDL_mixer-devel, libSDL_image-devel
 BuildRequires:	desktop-file-utils
-Source44: import.info
 
 %description
 GNUjump is a clone of the simple yet addictive game Xjump, adding new features
@@ -33,7 +34,7 @@ you'll realize how addictive this is.
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 %check
 make check
@@ -53,6 +54,9 @@ desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE1}
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_8
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_7
 - update to new release by fcimport
 
