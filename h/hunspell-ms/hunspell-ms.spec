@@ -2,18 +2,19 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-ms
 Summary: Malay hunspell dictionaries
 %global upstreamid 20050117
 Version: 0.%{upstreamid}
-Release: alt2_13
+Release: alt2_14
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/ms_MY.zip
 URL: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/
 License: GFDL and GPL+
 BuildArch: noarch
 
 Requires: hunspell
-Source44: import.info
 
 %description
 Malay hunspell dictionaries.
@@ -41,6 +42,9 @@ done
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20050117-alt2_14
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20050117-alt2_13
 - update to new release by fcimport
 
