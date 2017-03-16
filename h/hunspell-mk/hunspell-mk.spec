@@ -2,11 +2,13 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-mk
 Summary: Macedonian hunspell dictionaries
 %global upstreamid 20051126
 Version: 0.%{upstreamid}
-Release: alt2_12
+Release: alt2_13
 Source: http://mk.openoffice.org/files/documents/215/3053/mk_MK.zip
 URL: http://mk.openoffice.org
 License: GPL+
@@ -14,7 +16,6 @@ BuildArch: noarch
 Patch0: hunspell-mk-iconv.patch
 
 Requires: hunspell
-Source44: import.info
 
 %description
 Macedonian hunspell dictionaries.
@@ -36,6 +37,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20051126-alt2_13
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20051126-alt2_12
 - update to new release by fcimport
 
