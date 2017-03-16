@@ -3,9 +3,11 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-IO-Null
 Version:        1.01
-Release:        alt2_25
+Release:        alt2_26
 Summary:        Class for null filehandles
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/IO-Null/
@@ -13,6 +15,7 @@ Source0:        http://www.cpan.org/authors/id/S/SB/SBURKE/IO-Null-%{version}.ta
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
 # Runtime
@@ -20,7 +23,6 @@ BuildRequires:  perl(IO/Handle.pm)
 BuildRequires:  perl(vars.pm)
 # Tests only
 BuildRequires:  perl(Test.pm)
-Source44: import.info
 
 %description
 IO::Null is a class for null filehandles.  Calling a constructor of
@@ -34,7 +36,7 @@ and returns empty-string or empty-list, as appropriate.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -48,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2_26
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2_25
 - update to new release by fcimport
 
