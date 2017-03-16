@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Test-utf8
 Version:        1.01
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Handy utf8 tests
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -13,6 +15,7 @@ Source0:        http://www.cpan.org/authors/id/M/MA/MARKF/Test-utf8-%{version}.t
 BuildArch:      noarch
 # Module Build
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
 BuildRequires:  perl(base.pm)
@@ -28,7 +31,6 @@ BuildRequires:  perl(Test/More.pm)
 # Runtime
 
 
-Source44: import.info
 
 %description
 This module is a collection of tests that's useful when dealing with utf8
@@ -39,7 +41,7 @@ strings in Perl.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -54,6 +56,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_6
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_5
 - update to new release by fcimport
 
