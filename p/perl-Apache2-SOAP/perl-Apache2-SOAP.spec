@@ -2,20 +2,23 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(APR/Table.pm) perl(Apache.pm) perl(Apache/Constants.pm) perl(Apache2/Const.pm) perl(Apache2/RequestIO.pm) perl(Apache2/RequestRec.pm) perl(Apache2/RequestUtil.pm) perl(Exporter.pm) perl(FindBin.pm) perl(SOAP/Lite.pm) perl(SOAP/Transport/HTTP.pm) perl(base.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global perlname Apache2-SOAP
 
 Name:      perl-Apache2-SOAP
 Version:   0.73
-Release:   alt1_21
+Release:   alt1_22
 Summary:   A replacement for Apache::SOAP designed to work with mod_perl 2
 
-Group:     Development/Perl
+Group:     Development/Other
 License:   GPL+ or Artistic
 URL:       http://search.cpan.org/dist/Apache2-SOAP/
 Source:    http://search.cpan.org/CPAN/authors/id/R/RK/RKOBES/%{perlname}-%{version}.tar.gz
 
 BuildArch: noarch
 
+BuildRequires: rpm-build-perl
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: apache2-mod_perl-devel
 # perl(ModPerl::MM) is provided by mod_perl on EL5, by mod_perl-devel on Fedora
@@ -26,7 +29,6 @@ BuildRequires: apache2-mod_perl-devel
 
 
 
-Source44: import.info
 
 
 %description
@@ -44,7 +46,7 @@ from SOAP::Transport::HTTP2::Apache component of SOAP::Lite module.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -61,6 +63,9 @@ chmod -R u+rwX,go+rX,go-w %{buildroot}/*
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.73-alt1_22
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.73-alt1_21
 - update to new release by fcimport
 
