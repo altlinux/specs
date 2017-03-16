@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-validate /usr/bin/update-desktop-database
+BuildRequires: /usr/bin/desktop-file-validate
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           garden
 Version:        1.0.9
-Release:        alt1_1
+Release:        alt1_2
 Summary:        An innovative old-school 2D vertical shoot-em-up
 
 Group:          Games/Other
@@ -16,11 +18,10 @@ Patch2:         garden-1.0.8-inline.patch
 
 BuildRequires:  liballegro-devel
 BuildRequires:  desktop-file-utils
-BuildRequires:  automake
-BuildRequires:  autoconf
-BuildRequires:  libtool
+BuildRequires:  automake-common
+BuildRequires:  autoconf-common
+BuildRequires:  libtool-common
 Requires:       liballegro4.4
-Source44: import.info
 
 %description
 Garden of colored lights is an old school 2D vertical shoot-em-up with some
@@ -40,7 +41,7 @@ you are dealing with a true piece of art...
 %build
 autoreconf -if
 %configure 
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -98,6 +99,9 @@ desktop-file-validate \
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt1_2
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt1_1
 - update to new release by fcimport
 
