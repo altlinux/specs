@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Imager.pm) perl(Math/Complex.pm) perl-Module-Build perl-podlators
+BuildRequires: perl(Imager.pm) perl(Math/Complex.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Math-Symbolic
 Version:        0.612
-Release:        alt2_9
+Release:        alt2_10
 Summary:        Symbolic calculations
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -12,6 +14,7 @@ URL:            http://search.cpan.org/dist/Math-Symbolic/
 Source0:        http://www.cpan.org/authors/id/S/SM/SMUELLER/Math-Symbolic-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(constant.pm)
@@ -25,12 +28,11 @@ BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(vars.pm)
 BuildRequires:  perl(warnings.pm)
-Requires:       perl(Memoize.pm) >= 1.01
+Requires:       perl(Memoize.pm) >= 1.010
+%filter_from_requires /perl\\(Memoize.pm\\)$/d
 
 # RPM 4.9 style:
 
-Source44: import.info
-%filter_from_requires /perl\\(Memoize.pm\\)$/d
 
 %description
 Math::Symbolic is intended to offer symbolic calculation capabilities to
@@ -62,6 +64,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.612-alt2_10
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.612-alt2_9
 - update to new release by fcimport
 
