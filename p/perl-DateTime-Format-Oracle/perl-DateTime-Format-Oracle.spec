@@ -2,22 +2,24 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-DateTime-Format-Oracle
 Version:        0.06
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Parse and format Oracle dates and timestamps
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/DateTime-Format-Oracle/
 Source0:        http://www.cpan.org/authors/id/K/KO/KOLIBRIE/DateTime-Format-Oracle-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Convert/NLS_DATE_FORMAT.pm)
 BuildRequires:  perl(DateTime.pm)
 BuildRequires:  perl(DateTime/Format/Builder.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/More.pm)
-Source44: import.info
 
 %description
 This module may be used to convert Oracle date and timestamp values into
@@ -29,7 +31,7 @@ string matching the NLS_DATE_FORMAT.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=%{buildroot}
@@ -45,6 +47,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_13
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_12
 - update to new release by fcimport
 
