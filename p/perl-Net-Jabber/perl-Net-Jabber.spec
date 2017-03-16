@@ -2,17 +2,20 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(threads.pm) perl(threads/shared.pm) perl-pod perl-podlators perldoc
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Net-Jabber
 Version:        2.0
-Release:        alt3_29
+Release:        alt3_30
 Summary:        Net::Jabber - Jabber Perl Library
-Group:          Development/Perl
+Group:          Development/Other
 License:        (GPL+ or Artistic) or LGPLv2+
 URL:            http://search.cpan.org/dist/Net-Jabber/
 Source0: http://search.cpan.org/CPAN/authors/id/R/RE/REATMON/Net-Jabber-%{version}.tar.gz
 Source1:        LICENSING.correspondance
 Patch0:         Net-Jabber-2.0-timezone.patch
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -31,7 +34,6 @@ BuildRequires:  perl(Time/Timezone.pm)
 # file requires for prep
 BuildRequires:  %{_bindir}/perldoc
 Requires:  perl(Time/Timezone.pm)
-Source44: import.info
 
 %description
 Net::Jabber provides a Perl user with access to the Jabber Instant
@@ -53,7 +55,7 @@ chmod -x examples/*
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=%{buildroot}
@@ -76,6 +78,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_30
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_29
 - update to new release by fcimport
 
