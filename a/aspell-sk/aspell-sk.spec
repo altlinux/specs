@@ -1,3 +1,5 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define aspellversion 6
 %define lang sk
 %define langrelease 2
@@ -5,7 +7,7 @@
 
 Name:           aspell-%{lang}
 Version:        2.01
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Slovak dictionaries for Aspell
 
 Group:          Text tools
@@ -17,7 +19,6 @@ BuildRequires:  aspell >= 0.60
 Requires:       aspell >= 0.60
 
 %define debug_package %{nil}                                                    
-Source44: import.info
 
 %description
 Provides the word list/dictionaries for the following: Slovak
@@ -29,7 +30,7 @@ Provides the word list/dictionaries for the following: Slovak
 
 %build
 sh configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -43,6 +44,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.01-alt2_13
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.01-alt2_12
 - update to new release by fcimport
 
