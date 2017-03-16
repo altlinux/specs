@@ -3,9 +3,11 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Carp.pm) perl(Exporter.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(Pod/Coverage/TrustPod.pm) perl(Pod/Wordlist.pm) perl(Test/CPAN/Changes.pm) perl(Test/EOL.pm) perl(Test/Mojibake.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(Test/Spelling.pm) perl(Test/Synopsis.pm) perl(Test/Version.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          perl-URI-FromHash 
 Version:       0.05
-Release:       alt1_3
+Release:       alt1_4
 Summary:       Build a URI from a set of named parameters 
 # see lib/URI/FromHash.pm
 License:       GPL+ or Artistic
@@ -14,6 +16,7 @@ Url:           http://search.cpan.org/dist/URI-FromHash
 Source0:        http://search.cpan.org/CPAN/authors/id/D/DR/DROLSKY/URI-FromHash-%{version}.tar.gz
 
 BuildArch:     noarch
+BuildRequires: rpm-build-perl
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(Module/Build/Compat.pm)
 BuildRequires: perl(Params/Validate.pm)
@@ -22,7 +25,6 @@ BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(URI.pm)
 
 
-Source44: import.info
 
 %description
 This module provides a simple one-subroutine "named parameters" style
@@ -43,7 +45,7 @@ TT2.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -58,6 +60,9 @@ make test
 %{perl_vendor_privlib}/URI*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1_4
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1_3
 - update to new release by fcimport
 
