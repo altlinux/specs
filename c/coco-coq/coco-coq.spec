@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		coco-coq
 Version:	0.1
-Release:	alt4_13
+Release:	alt4_14
 Summary:	Coco Coq in Grostesteing's base, an AGI adventure game
 
 Group:		Games/Other
@@ -21,7 +23,6 @@ BuildArch:	noarch
 
 BuildRequires:	desktop-file-utils
 Requires:	nagi, icon-theme-hicolor
-Source44: import.info
 
 %description
 Grostesteing is back for troubles: he's kidnapped the Coco Coq's friends
@@ -68,6 +69,9 @@ install -p -m 0644 %{SOURCE3} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%
 %{_bindir}/coco-coq-wrapper.sh
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.1-alt4_14
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.1-alt4_13
 - update to new release by fcimport
 
