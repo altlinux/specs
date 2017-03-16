@@ -1,6 +1,6 @@
 Summary: Exploring Conway's Game of Life and other cellular automata
 Name: golly
-Version: 2.7
+Version: 2.8
 Release: alt1
 
 License: GPL
@@ -10,16 +10,17 @@ Source1: %name.sh
 Source2: %name.desktop
 Group: Education
 
-# TODO: split binary and data
 %add_python_req_skip glife golly
 
-Patch: %name-2.1-opensave-alt.patch
-Patch1: %name-2.5-perl_syntax-alt.patch
+Patch: golly-2.8-nolua.patch
 
-# Automatically added by buildreq on Tue Sep 28 2010
-BuildRequires: ImageMagick-tools gcc-c++ libwxGTK-devel perl-devel python-devel zlib-devel
+# Automatically added by buildreq on Thu Mar 16 2017
+# optimized out: fontconfig libGL-devel libX11-devel libgdk-pixbuf libstdc++-devel libwayland-client libwayland-server perl python-base python-modules xorg-xproto-devel
+BuildRequires: ImageMagick-tools gcc-c++ libGLU-devel libwxGTK-devel lua-devel python-devel zlib-devel
 
 BuildRequires: perl-Math-BigInt
+
+Requires: %name-data = %EVR
 
 %description
 Welcome to Golly, a sophisticated tool for exploring Conway's
@@ -46,10 +47,16 @@ Game of Life and other cellular automata.
 - Free, open source and cross-platform (Windows, Mac, Linux).
 - We also provide bgolly, a GUI-less version.
 
+%package data
+Summary: Data files for %name, cellular automata emulation software
+BuildArch: noarch
+Group: Education
+%description data
+%summary
+
 %prep
 %setup -n %name-%version-src
-#patch -p1
-%patch1 -p1
+%patch -p1
 sed -i 's/NEEDED +libperl\[/NEEDED +libperl[-/' gui-wx/configure/configure
 
 %build
@@ -58,8 +65,8 @@ sed -i '/#include <EXTERN.h>/a\
 #define PERL_GLOBAL_STRUCT
 ' wxperl.cpp
 cd configure
-%configure --with-perl-shlib=%_libdir/perl5/CORE/libperl.so
-
+%autoreconf
+%configure --with-perl-shlib=%_libdir/perl5/CORE/libperl.so 
 %make_build
 
 cd ..
@@ -79,13 +86,19 @@ install -D %SOURCE2 %buildroot%_desktopdir/%name.desktop
 %exclude %_datadir/doc/%name
 %doc docs/*
 %_bindir/*
-%_datadir/%name
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
 %_desktopdir/*
 
+%files data
+%_datadir/%name
+
 %changelog
+* Wed Mar 15 2017 Fr. Br. George <george@altlinux.ru> 2.8-alt1
+- Autobuild version bump to 2.8
+- Separate data package
+
 * Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 2.7-alt1
 - Autobuild version bump to 2.7
 
