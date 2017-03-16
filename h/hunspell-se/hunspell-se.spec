@@ -1,15 +1,16 @@
 Group: Text tools
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-se
 Summary: Northern Saami hunspell dictionaries
 Version: 1.0
-Release: alt2_0.11.beta7
+Release: alt2_0.12.beta7
 Source: http://divvun.no/static_files/hunspell-se.tar.gz
 URL: http://www.divvun.no/index.html
 License: GPLv3
 BuildArch: noarch
 
 Requires: hunspell
-Source44: import.info
 
 %description
 Northern Saami hunspell dictionaries.
@@ -37,6 +38,9 @@ done
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.12.beta7
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.11.beta7
 - update to new release by fcimport
 
