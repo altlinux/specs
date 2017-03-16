@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install unzip
+BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           crystal-stacker
 Version:        1.5
-Release:        alt2_21
+Release:        alt2_22
 Summary:        Falling blocks, match 3 or more of the same color crystals
 Group:          Games/Other
 License:        Crystal Stacker
@@ -13,7 +15,6 @@ Source1:        %{name}.desktop
 Source2:        %{name}-theme-editor.desktop
 Patch0:         crystal-stacker-1.5-ImplicitDSOLinking.patch
 BuildRequires:  liballegro-devel dumb-devel ImageMagick desktop-file-utils
-Source44: import.info
 
 %description
 If you've played Columns then you know what Crystal Stacker is all about. Match
@@ -38,12 +39,12 @@ Create new Themes for Crystal Stacker
 %build
 export CC="gcc -Wl,--no-as-needed"
 pushd cs/source
-make %{?_smp_mflags} -f Makefile.unix PREFIX=%{_prefix} \
+%make_build -f Makefile.unix PREFIX=%{_prefix} \
   CFLAGS="$RPM_OPT_FLAGS -fsigned-char"
 popd
 
 pushd ce/source
-make %{?_smp_mflags} -f Makefile.unix PREFIX=%{_prefix} \
+%make_build -f Makefile.unix PREFIX=%{_prefix} \
   CFLAGS="$RPM_OPT_FLAGS -fsigned-char -Wno-char-subscripts"
 popd
 
@@ -83,6 +84,9 @@ install -p -m 644 %{name}.png %{name}-theme-editor.png \
 %{_datadir}/icons/hicolor/32x32/apps/%{name}-theme-editor.png
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_22
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_21
 - update to new release by fcimport
 
