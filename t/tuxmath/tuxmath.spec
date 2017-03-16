@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/makensis gcc-c++ libxml2-devel pkgconfig(SDL_image) pkgconfig(SDL_mixer) pkgconfig(SDL_net) pkgconfig(cairo) pkgconfig(librsvg-2.0) pkgconfig(libxml-2.0) pkgconfig(sdl) pkgconfig(t4k_common)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/makensis gcc-c++ libxml2-devel pkgconfig(cairo)
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           tuxmath
 Version:        2.0.1
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Educational math tutor for children
 
 Group:          Games/Other
@@ -21,10 +23,9 @@ BuildRequires:  libSDL_image-devel
 BuildRequires:  libSDL_mixer-devel
 BuildRequires:  libSDL_pango-devel
 BuildRequires:  libSDL_net-devel
-BuildRequires:  librsvg-devel
+BuildRequires:  librsvg-devel librsvg-gir-devel
 BuildRequires:	t4k_common-devel
 Requires:       icon-theme-hicolor
-Source44: import.info
 
 %description
 TuxMath is an educational math tutor for children. It features several
@@ -42,7 +43,7 @@ rm -f data/fonts/*.ttf
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -79,6 +80,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_12
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_11
 - update to new release by fcimport
 
