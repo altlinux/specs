@@ -1,18 +1,22 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: gcc-c++
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Boost-Geometry-Utils
 Version:        0.15
-Release:        alt1_12.1
+Release:        alt1_13
 Summary:        Boost::Geometry::Utils Perl module
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Boost-Geometry-Utils/
 Source0:        http://www.cpan.org/authors/id/A/AA/AAR/Boost-Geometry-Utils-%{version}.tar.gz
 # Fix for RT#96145
 Patch0:         Boost-Geometry-Utils-0.15-multi_linestring2perl-only-extend-the-array-if-needed.patch
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(ExtUtils/Typemaps/Default.pm)
 BuildRequires:  perl(File/Temp.pm)
@@ -22,7 +26,6 @@ BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(XSLoader.pm)
 
  # Filters (not)shared c libs
-Source44: import.info
 
 %description
 Boost::Geometry::Utils Perl module
@@ -50,6 +53,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Boost*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_13
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_12.1
 - rebuild with new perl 5.24.1
 
