@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Test-YAML-Meta
 Version:        0.22
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Validation of the META.yml file in a distribution
 License:        Artistic 2.0
 Group:          Development/Other
@@ -14,6 +16,7 @@ Patch0:         Test-YAML-Meta-0.21-utf8.patch
 BuildArch:      noarch
 # Module Build
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
 BuildRequires:  perl(base.pm)
@@ -27,7 +30,6 @@ BuildRequires:  perl(Test/CPAN/Meta/JSON.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
-Source44: import.info
 # Runtime
 
 %description
@@ -44,7 +46,7 @@ ExtUtils::MakeMaker, Module::Build and Module::Install.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -64,6 +66,9 @@ make test AUTOMATED_TESTING=1
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1_6
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1_5
 - update to new release by fcimport
 
