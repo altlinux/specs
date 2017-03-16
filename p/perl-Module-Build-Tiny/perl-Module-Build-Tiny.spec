@@ -1,11 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary:	A tiny replacement for Module::Build
 Name:		perl-Module-Build-Tiny
 Version:	0.039
-Release:	alt1_5
+Release:	alt1_6
 License:	GPL+ or Artistic
 Group:		Development/Other
 URL:		https://github.com/Leont/module-build-tiny
@@ -13,6 +15,7 @@ Source0:	http://cpan.metacpan.org/authors/id/L/LE/LEONT/Module-Build-Tiny-%{vers
 BuildArch:	noarch
 # Module Build
 BuildRequires:	perl
+BuildRequires:	rpm-build-perl
 # Module
 BuildRequires:	perl(CPAN/Meta.pm)
 BuildRequires:	perl(DynaLoader.pm)
@@ -50,7 +53,6 @@ Requires:	perl(ExtUtils/CBuilder.pm)
 Requires:	perl(ExtUtils/ParseXS.pm)
 Requires:	perl(Pod/Man.pm)
 Requires:	perl(TAP/Harness/Env.pm)
-Source44: import.info
 
 %description
 Many Perl distributions use a Build.PL file instead of a Makefile.PL file to
@@ -81,6 +83,9 @@ AUTHOR_TESTING=1 RELEASE_TESTING=1 ./Build test
 %{perl_vendor_privlib}/Module/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.039-alt1_6
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.039-alt1_5
 - update to new release by fcimport
 
