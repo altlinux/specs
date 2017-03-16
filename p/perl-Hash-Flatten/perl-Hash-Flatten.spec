@@ -3,9 +3,11 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Hash-Flatten
 Version:        1.19
-Release:        alt3_17
+Release:        alt3_18
 Summary:        Flatten/unflatten complex data hashes
 License:        GPLv2
 URL:            http://search.cpan.org/dist/Hash-Flatten/
@@ -13,6 +15,7 @@ Source0:        http://www.cpan.org/authors/id/B/BB/BBC/Hash-Flatten-%{version}.
 BuildArch:      noarch
 # Build
 BuildRequires:  glibc-utils
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Runtime
 BuildRequires:  perl(Carp.pm)
@@ -30,7 +33,6 @@ BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 Requires:     perl(overload.pm)
-Source44: import.info
 
 %description
 Converts back and forth between a nested hash structure and a flat hash of
@@ -45,7 +47,7 @@ iconv -f latin1 -t utf8 Changes > Changes.utf && \
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -60,6 +62,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.19-alt3_18
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.19-alt3_17
 - update to new release by fcimport
 
