@@ -2,17 +2,18 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-lt
 Summary: Lithuanian hunspell dictionaries
 Version: 1.2.1
-Release: alt2_14
+Release: alt2_15
 Source: ftp://ftp.akl.lt/ispell-lt/lt_LT-%{version}.zip
 URL: ftp://ftp.akl.lt/ispell-lt/
 License: BSD
 BuildArch: noarch
 
 Requires: hunspell
-Source44: import.info
 
 %description
 Lithuanian hunspell dictionaries.
@@ -38,6 +39,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt2_15
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt2_14
 - update to new release by fcimport
 
