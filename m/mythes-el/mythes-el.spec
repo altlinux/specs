@@ -2,17 +2,18 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: mythes-el
 Summary: Greek thesaurus
 %global upstreamid 20070412
 Version: 0.%{upstreamid}
-Release: alt1_15
+Release: alt1_16
 Source: http://www.ellak.gr/pub/oo_extras/th_el.zip
 URL: http://www.openthesaurus.gr/
 License: GPLv2+
 BuildArch: noarch
 Requires: libmythes
-Source44: import.info
 
 %description
 Greek thesaurus.
@@ -49,6 +50,9 @@ done
 %{_datadir}/mythes/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20070412-alt1_16
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20070412-alt1_15
 - update to new release by fcimport
 
