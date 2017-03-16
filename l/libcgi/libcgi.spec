@@ -1,4 +1,6 @@
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 #
 # Rebuild option:
 #
@@ -14,7 +16,7 @@
 
 Name:           libcgi
 Version:        1.0
-Release:        alt3_20
+Release:        alt3_21
 Summary:        CGI easy as C
 
 Group:          System/Libraries
@@ -24,7 +26,6 @@ Source:         http://prdownloads.sourceforge.net/libcgi/libcgi-%{version}.tar.
 Patch0:         libcgi-1.0-Makefile.in.patch
 Patch1:         libcgi-1.0-cgi.c-hextable.patch
 Patch2:         libcgi-1.0-string.c-make_string.patch
-Source44: import.info
 
 %description
 LibCGI is a library written from scratch to easily make CGI applications in C.
@@ -32,8 +33,8 @@ LibCGI is a library written from scratch to easily make CGI applications in C.
 
 %package devel
 Summary:        Header files and libraries for LibCGI development
-Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 
 %description devel
 The libcgi-devel package contains the header files and libraries needed
@@ -43,8 +44,7 @@ to develop programs that use the LibCGI library.
 %if %{static}
 %package static
 Summary:        LibCGI static library
-Group:          Development/C
-Requires:       %{name}-devel%{?_isa} = %{version}
+Group:          Development/Other
 
 %description static
 The libcgi-static package contains the static library needed
@@ -124,6 +124,9 @@ fi
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_21
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_20
 - update to new release by fcimport
 
