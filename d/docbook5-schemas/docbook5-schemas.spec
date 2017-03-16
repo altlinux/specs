@@ -2,9 +2,11 @@
 BuildRequires: perl(English.pm)
 # END SourceDeps(oneline)
 BuildRequires: xml-utils
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: docbook5-schemas
 Version: 5.0
-Release: alt2_14
+Release: alt2_15
 Group: Text tools
 
 Summary: Norman Walsh's schemas (DTD, Relax NG, W3C schema) for Docbook 5.X
@@ -20,13 +22,13 @@ Provides: docbook5-xsd = %{version}-%{release}
 Requires(post): libxml2 xml-utils
 Requires(postun): libxml2 xml-utils
 Requires: xml-common >= 0.6.3
+BuildRequires: rpm-build-perl
 BuildRequires: unzip
 BuildRequires: libxml2 xml-utils
 
 BuildArch: noarch
 
 Source0:  http://www.docbook.org/xml/%{version}/docbook-%{version}.zip
-Source44: import.info
 
 %description
 Docbook 5.X is a complete rewrite of Docbook in RELAX NG and not compatible
@@ -302,6 +304,9 @@ fi
 %{_bindir}/db4-entities.pl
 
 %ChangeLog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 5.0-alt2_15
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 5.0-alt2_14
 - update to new release by fcimport
 
