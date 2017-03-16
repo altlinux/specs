@@ -3,10 +3,12 @@ BuildRequires: pkgconfig(fftw3f)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname speexdsp
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libspeexdsp
 Version:        1.2
 %global rc_ver  rc3
-Release:        alt2_0.9.%{rc_ver}
+Release:        alt2_0.10.%{rc_ver}
 Summary:        A voice compression format (DSP)
 
 Group:          System/Libraries
@@ -18,11 +20,10 @@ Source0:        http://downloads.xiph.org/releases/speex/%{oldname}-%{version}%{
 # upstream ML thread http://lists.xiph.org/pipermail/speex-dev/2014-May/008488.html
 Patch0:         speexdsp-fixbuilds-774c87d.patch
 
-BuildRequires: libtool autoconf automake
+BuildRequires: libtool-common autoconf-common automake-common
 # speexdsp was split from speex in 1.2rc2. As speexdsp does not depend on
 # speex, a versioned conflict is required.
-Conflicts: speex <= 1.2-0.21.rc1
-Source44: import.info
+Conflicts: libspeex <= 1.2-0.21.rc1
 Provides: speexdsp = %{version}-%{release}
 Conflicts: libspeex < 1.2-alt0.6
 
@@ -37,8 +38,8 @@ This is the DSP package, see the speex package for the codec part.
 
 %package devel
 Summary: 	Development package for %{oldname}
-Group: 		Development/C
-Requires: 	%{name}%{?_isa} = %{version}
+Group: 		Development/Other
+Requires: 	%{name} = %{version}-%{release}
 # speexdsp was split from speex in 1.2rc2. As speexdsp does not depend on
 # speex, a versioned conflict is required.
 Conflicts: libspeex-devel <= 1.2-0.21.rc1
@@ -64,7 +65,7 @@ autoreconf -vif
 %endif
 	--disable-static
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 %install
 make DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p" install
@@ -83,6 +84,9 @@ find %{buildroot} -type f -name "*.la" -delete
 %{_libdir}/libspeexdsp.so
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_0.10.rc3
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_0.9.rc3
 - update to new release by fcimport
 
