@@ -1,10 +1,12 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define lang bg
 %define langrelease 0
 Summary: Bulgarian dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 4.1
-Release: alt2_13
+Release: alt2_14
 License: GPLv2
 Group: Text tools
 URL: http://aspell.net/
@@ -13,7 +15,6 @@ Buildrequires: aspell >= 0.60
 Requires: aspell >= 0.60
 
 %define debug_package %{nil}
-Source44: import.info
 
 %description
 Provides the word list/dictionaries for the following: Bulgarian
@@ -24,7 +25,7 @@ Provides the word list/dictionaries for the following: Bulgarian
 
 %build
 ./configure 
-make %{?_smp_mflags}
+%make_build
 iconv -f windows-1251 -t utf-8 <bg_phonet.dat >bg_phonet.dat.tmp
 mv bg_phonet.dat.tmp bg_phonet.dat
 
@@ -37,6 +38,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 4.1-alt2_14
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 4.1-alt2_13
 - update to new release by fcimport
 
