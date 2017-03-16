@@ -1,20 +1,21 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen /usr/bin/valgrind gcc-c++
+BuildRequires: /usr/bin/valgrind gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:      libgta
 Version:   1.0.7
-Release:   alt1_3
+Release:   alt1_4
 Summary:   Library that implements the Generic Tagged Arrays file format
 Group:     System/Libraries
 License:   LGPLv2+
 URL:       http://gta.nongnu.org
 Source0:   http://download.savannah.nongnu.org/releases/gta/%{name}-%{version}.tar.xz
 BuildRequires: doxygen
-BuildRequires: bzip2-devel
+BuildRequires: bzlib-devel
 BuildRequires: zlib-devel
 BuildRequires: liblzma-devel
-Source44: import.info
 
 %description
 Libgta is a portable library that implements the GTA (Generic Tagged Arrays)
@@ -23,9 +24,9 @@ file format. It provides interfaces for C and C++.
 
 %package devel
 Summary:  Development Libraries for %{name}
-Group:    Development/C
-Requires: %{name}%{?_isa} = %{version}
-Requires: pkgconfig
+Group:    Development/Other
+Requires: %{name} = %{version}-%{release}
+Requires: pkg-config
 
 %description devel
 The %{name}-devel package contains libraries and header files for
@@ -35,7 +36,7 @@ developing applications that use %{name}.
 %package doc
 Summary:  API documentation for %{name}
 Group:    Documentation
-Requires: %{name} = %{version}
+Requires: %{name} = %{version}-%{release}
 BuildArch: noarch
 
 %description doc
@@ -53,7 +54,7 @@ sed -i 's/-m 644/-pm 644/' configure
 
 %build
 %configure --disable-static
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 %install
 make install DESTDIR=%{buildroot}
@@ -82,6 +83,9 @@ make check V=1
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt1_4
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt1_3
 - update to new release by fcimport
 
