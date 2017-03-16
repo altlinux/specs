@@ -1,16 +1,17 @@
 Group: Text tools
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: mythes-ga
 Summary: Irish thesaurus
 %global upstreamid 20071001
 Version: 0.%{upstreamid}
-Release: alt1_15
+Release: alt1_16
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/thes_ga_IE_v2.zip
 URL: http://borel.slu.edu/lsg/index-en.html
 BuildRequires: unzip
 License: GFDL
 BuildArch: noarch
 Requires: libmythes
-Source44: import.info
 
 %description
 Irish thesaurus.
@@ -40,6 +41,9 @@ cp -p th_ga_IE_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_datadir}/mythes/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20071001-alt1_16
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20071001-alt1_15
 - update to new release by fcimport
 
