@@ -1,8 +1,10 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define _default_patch_fuzz 2
 Summary: An interpreter for AGI games
 Name: nagi
 Version: 2.06
-Release: alt2_17
+Release: alt2_18
 Group: Games/Other
 License: MIT
 URL: http://www.agidev.com/projects/nagi/
@@ -12,7 +14,6 @@ Patch0: nagi-2.06-debian.patch
 Patch1: nagi-2.06-build_with_gcc-3.4.patch
 Patch2:nagi-2.06-build_with_gcc-4.0.patch
 BuildRequires: docbook-utils, libSDL-devel, libSDL-devel
-Source44: import.info
 %description
 NAGI is an interpreter for AGI games, such as the early Space Quest,
 Leisure Suit Larry and King's Quest games.
@@ -54,6 +55,9 @@ install -Dp -m644 src/nagi.1 %{buildroot}%{_mandir}/man1
 %{_mandir}/man1/nagi.1*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.06-alt2_18
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.06-alt2_17
 - update to new release by fcimport
 
