@@ -2,17 +2,20 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Perl-MinimumVersion
 Version:        1.38
-Release:        alt1_11
+Release:        alt1_12
 Summary:        Find a minimum required version of perl for Perl code
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Perl-MinimumVersion/
 Source0:        http://search.cpan.org/CPAN/authors/id/N/NE/NEILB/Perl-MinimumVersion-%{version}.tar.gz
 
 BuildArch:      noarch
 
+BuildRequires: rpm-build-perl
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 # Run-time and tests:
 BuildRequires: perl(Carp.pm)
@@ -35,15 +38,14 @@ BuildRequires: perl(Getopt/Long.pm)
 BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(Test/Script.pm)
 %endif
+%filter_from_requires /^perl\\(version.pm\\)$/d
+%filter_from_requires /^perl\\(Params.Util.pm\\)$/d
+%filter_from_requires /^perl >= 0:5.005$/d
 
 # Remove under-specified dependencies
 
 
 
-Source44: import.info
-%filter_from_requires /^perl\\(version.pm\\)$/d
-%filter_from_requires /^perl\\(Params.Util.pm\\)$/d
-%filter_from_requires /^perl >= 0:5.005$/d
 
 %description
 Find a minimum required version of perl for Perl code
@@ -53,7 +55,7 @@ Find a minimum required version of perl for Perl code
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -72,6 +74,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1_12
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1_11
 - update to new release by fcimport
 
