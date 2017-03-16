@@ -1,11 +1,13 @@
 Group: Text tools
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global debug_package %{nil}
 %global lang hi
 %global langrelease 0
 
 Name:           aspell-hi
 Version:        0.02
-Release:        alt2_14
+Release:        alt2_15
 Summary:        GNU Aspell Hindi Dictionary Package
 
 License:        GPLv2
@@ -14,7 +16,6 @@ Source0:        ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell6-%{lang}-%{vers
 
 BuildRequires:  aspell >= 0.60
 Requires:       aspell >= 0.60
-Source44: import.info
 
 %description
 GNU Aspell Hindi Dictionary Package
@@ -37,7 +38,7 @@ mv Copyright.utf8 Copyright
 
 %build
 ./configure
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=%{buildroot}
@@ -49,6 +50,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/aspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2_15
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2_14
 - update to new release by fcimport
 
