@@ -1,6 +1,8 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:      arc
 Version:   5.21p
-Release:   alt1_7
+Release:   alt1_8
 Summary:   Arc archiver
 Group:     Archiving/Other
 License:   GPL+
@@ -19,7 +21,6 @@ Patch3:    arc-5.21p-hdrv1-read-fix.patch
 Patch4:    arc-5.21p-fix-arcdie.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1179143
 Patch5:    arc-5.21p-directory-traversel.patch
-Source44: import.info
 
 %description
 Arc file archiver and compressor. Long since superseded by zip/unzip
@@ -38,7 +39,7 @@ sed -i -e 's,^OPT =.*$,OPT = ${RPM_OPT_FLAGS},' Makefile
 
 
 %build
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -54,6 +55,9 @@ install -m 0644 arc.1 marc.1 %{buildroot}%{_mandir}/man1/
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 5.21p-alt1_8
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 5.21p-alt1_7
 - update to new release by fcimport
 
