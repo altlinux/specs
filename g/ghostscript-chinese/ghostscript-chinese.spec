@@ -1,3 +1,5 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global common_desc \
 ghostscript font configuration files for Chinese fonts.
 
@@ -9,7 +11,7 @@ ghostscript font configuration files for Chinese fonts.
 
 Name:           ghostscript-chinese
 Version:        0.4.0
-Release:        alt1_7
+Release:        alt1_8
 Summary:        Ghostscript Chinese fonts configuration files
 Group:          System/Fonts/True type
 License:        GPLv2+
@@ -20,7 +22,6 @@ BuildArch:      noarch
 #BuildRequires:
 Provides:     cjkuni-fonts-ghostscript = %{version}
 Obsoletes:    cjkuni-fonts-ghostscript < 0.2.20080216.1-45
-Source44: import.info
 %description
 %common_desc
 
@@ -29,9 +30,9 @@ This package consists of files used by other %{name} packages.
 %package zh_CN
 Summary:      Ghostscript Simplified Chinese fonts configuration files
 Group:        System/Fonts/True type
-Requires: ghostscript-utils ghostscript
+Requires:     ghostscript-utils ghostscript
 Requires:     fonts-ttf-wqy-zenhei >= %{zenheiver}
-Requires:     %{name} = %{version}
+Requires:     %{name} = %{version}-%{release}
 
 %description zh_CN
 %common_desc
@@ -41,10 +42,10 @@ For Simplified Chinese.
 %package zh_TW
 Summary:      Ghostscript Traditional Chinese fonts configuration files
 Group:        System/Fonts/True type
-Requires: ghostscript-utils ghostscript
+Requires:     ghostscript-utils ghostscript
 Requires:     fonts-ttf-cjkuni-uming = %{umingver}
 Requires:     fonts-ttf-cjkuni-ukai = %{ukaiver}
-Requires:     %{name} = %{version}
+Requires:     %{name} = %{version}-%{release}
 
 %description zh_TW
 %common_desc
@@ -84,6 +85,9 @@ done
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_8
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_7
 - update to new release by fcimport
 
