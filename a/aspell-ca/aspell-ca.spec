@@ -1,10 +1,12 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define lang ca
 %define langrelease 1
 Summary: Catalan dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 51
 Version: 2.1.5
-Release: alt2_11
+Release: alt2_12
 License: GPLv2+
 Group: Text tools
 URL: http://aspell.net/
@@ -13,7 +15,6 @@ Buildrequires: aspell >= 0.60
 Requires: aspell >= 0.60
 
 %define debug_package %{nil}
-Source44: import.info
 
 %description
 Provides the word list/dictionaries for the following: Catalan
@@ -25,7 +26,7 @@ mv Copyright.aux Copyright
 
 %build
 ./configure 
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR="$RPM_BUILD_ROOT"
@@ -36,6 +37,9 @@ make install DESTDIR="$RPM_BUILD_ROOT"
 %{_datadir}/aspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.5-alt2_12
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.5-alt2_11
 - update to new release by fcimport
 
