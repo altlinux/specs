@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Module/Build/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-experimental
 Version:        0.016
-Release:        alt1_365
+Release:        alt1_366
 Summary:        Experimental features made easy
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -17,6 +19,7 @@ BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time:
 BuildRequires:  perl(Carp.pm)
@@ -26,7 +29,6 @@ BuildRequires:  perl(version.pm)
 BuildRequires:  perl(warnings.pm)
 # Tests:
 BuildRequires:  perl(Test/More.pm)
-Source44: import.info
 
 %description
 This pragma provides an easy and convenient way to enable or disable
@@ -38,7 +40,7 @@ cp %{SOURCE1} .
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
@@ -54,6 +56,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1_366
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1_365
 - update to new release by fcimport
 
