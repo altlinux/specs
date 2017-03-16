@@ -2,9 +2,11 @@
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 BuildRequires: gcc-c++
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           asylum
 Version:        0.3.2
-Release:        alt1_12
+Release:        alt1_13
 Summary:        Game involving shooting anything that moves & collecting others
 Group:          Games/Other
 # For detailed licensing, see the README
@@ -17,7 +19,6 @@ Patch0:         asylum-0.3.2-paths.patch
 BuildRequires:  desktop-file-utils
 BuildRequires:  libSDL_mixer-devel
 Requires:       icon-theme-hicolor
-Source44: import.info
 
 %description
 SDL Asylum is a C port of the computer game Asylum, which was written by Andy
@@ -40,7 +41,7 @@ iconv -f iso8859-1 README -t utf8 > README.conv \
 rm -f %{name}
 
 %build
-make %{?_smp_mflags} CFLAGS="%{optflags}" LDFLAGS="%{?__global_ldflags}"
+%make_build CFLAGS="%{optflags}" LDFLAGS="%{?__global_ldflags}"
 
 # Build desktop icon
 cat >%{name}.desktop <<EOF
@@ -130,6 +131,9 @@ done
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_13
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_12
 - update to new release by fcimport
 
