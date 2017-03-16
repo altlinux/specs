@@ -2,14 +2,16 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Test/Pod.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-XXX
 Version:        0.31
-Release:        alt1
+Release:        alt1_2
 Summary:        See Your Data in the Nude
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/XXX/
-Source0:        http://www.cpan.org/authors/id/I/IN/INGY/XXX-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/I/IN/INGY/XXX-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
 BuildRequires:  rpm-build-perl
@@ -25,7 +27,6 @@ BuildRequires:  perl(warnings.pm)
 BuildRequires:  perl(YAML.pm)
 Requires:       perl(Data/Dumper.pm)
 Requires:       perl(YAML.pm)
-Source44: import.info
 
 %description
 XXX.pm exports a function called XXX that you can put just about
@@ -46,7 +47,7 @@ To use Data::Dumper instead of YAML:
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=true
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -61,6 +62,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1_2
+- update to new release by fcimport
+
 * Sat Jan 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
 - automated CPAN update
 
