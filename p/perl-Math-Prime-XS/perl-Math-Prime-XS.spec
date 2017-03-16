@@ -1,34 +1,41 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Devel/TimeThis.pm) perl-Module-Build perl-podlators
+BuildRequires: perl(Devel/TimeThis.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Math-Prime-XS
 Version:        0.27
-Release:        alt1.1
+Release:        alt1.1_2
 Summary:        Detect and calculate prime numbers with deterministic tests
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Math-Prime-XS/
-Source:        http://www.cpan.org/authors/id/K/KR/KRYDE/Math-Prime-XS-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/Math-Prime-XS-%{version}.tar.gz
+BuildRequires:  findutils
+BuildRequires:  perl
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
+BuildRequires:  perl(base.pm)
 BuildRequires:  perl(boolean.pm)
-BuildRequires:  perl(Benchmark.pm)
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Config.pm)
 BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(ExtUtils/CBuilder.pm)
-BuildRequires:  perl(File/HomeDir.pm)
-BuildRequires:  perl(File/Spec.pm)
+# XXX BuildRequires:  perl(File::HomeDir)
+# XXX BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Params/Validate.pm)
 BuildRequires:  perl(POSIX.pm)
 BuildRequires:  perl(Scalar/Util.pm)
+BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 BuildRequires:  perl(Test/Pod.pm)
+BuildRequires:  perl(warnings.pm)
+BuildRequires:  perl(XSLoader.pm)
 
  # Filters (not)shared c libs
-Source44: import.info
 
 %description
 Math::Prime::XS detects and calculates prime numbers by either applying
@@ -44,7 +51,7 @@ calculation or Trial division.
 
 %install
 ./Build install destdir=%{buildroot} create_packlist=0
-find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
+find %{buildroot} -type f -name '*.bs' -size 0 -delete
 
 # %{_fixperms} %{buildroot}/*
 
@@ -58,6 +65,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1.1_2
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1.1
 - rebuild with new perl 5.24.1
 
