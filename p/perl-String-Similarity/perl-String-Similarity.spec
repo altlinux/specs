@@ -2,18 +2,21 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(DynaLoader.pm) perl(Encode.pm) perl(Exporter.pm) perl(utf8.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-String-Similarity
 Version:        1.04
-Release:        alt4_17.1
+Release:        alt4_18
 Summary:        Calculates the similarity of two strings
 License:        GPLv2+
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/String-Similarity/
 Source0:        http://www.cpan.org/authors/id/M/ML/MLEHMANN/String-Similarity-%{version}.tar.gz
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 
 
-Source44: import.info
 
 %description
 The similarity function calculates the similarity index of its two arguments. 
@@ -26,7 +29,7 @@ and describes the amount of similarity between the strings.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -46,6 +49,9 @@ make test
 %{perl_vendor_archlib}/String*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.04-alt4_18
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.04-alt4_17.1
 - rebuild with new perl 5.24.1
 
