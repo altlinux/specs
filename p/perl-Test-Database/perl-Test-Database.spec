@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(DBD/mysql.pm) perl(Pod/Coverage/TrustPod.pm) perl(SQL/Statement.pm) perl(Test/CPAN/Meta.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Test-Database
 Version:        1.113
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Database handles ready for testing
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -12,6 +14,7 @@ URL:            http://search.cpan.org/dist/Test-Database/
 Source0:        http://www.cpan.org/authors/id/B/BO/BOOK/Test-Database-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -38,13 +41,12 @@ BuildRequires:  perl(List/Util.pm)
 BuildRequires:  perl(Test/More.pm)
 # Test::Pod 1.41 not used
 # Test::Pod::Coverage 1.08 not used
-Requires:       perl(YAML/Tiny.pm) >= 1.62
+Requires:       perl(YAML/Tiny.pm) >= 1.620
+%filter_from_requires /^perl\\(YAML.Tiny.pm\\)$/d
 
 
 # Remove under-specified dependencies
 
-Source44: import.info
-%filter_from_requires /^perl\\(YAML.Tiny.pm\\)$/d
 
 %description
 Test::Database Perl module provides a simple way for test authors to request
@@ -57,7 +59,7 @@ rm -f t/pod.t
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -72,6 +74,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.113-alt1_6
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.113-alt1_5
 - update to new release by fcimport
 
