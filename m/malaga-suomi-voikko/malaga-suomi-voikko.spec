@@ -1,6 +1,8 @@
 BuildRequires: python-modules-encodings python-modules-xml
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           malaga-suomi-voikko
-Version:        1.17
+Version:        1.19
 Release:        alt1_2
 Summary:        A description of Finnish morphology written in Malaga (Voikko edition)
 
@@ -12,11 +14,10 @@ Source0:        http://www.puimula.org/voikko-sources/suomi-malaga/suomi-malaga-
 # The usual format of testing release source URLs
 #Source0:        http://www.puimula.org/htp/testing/suomi-malaga-%{version}rc3.tar.gz
 
-BuildRequires:  malaga >= 7.8
+BuildRequires:  malaga >= 7.8 python
 
 # debuginfo would be empty
 %define debug_package %{nil}
-Source44: import.info
 
 %description
 A description of Finnish morphology written in Malaga. This package is built
@@ -29,7 +30,7 @@ text indexer.
 
 %build
 # configure removed, not needed in this package
-make %{?_smp_mflags} voikko
+%make_build voikko
 
 
 %install
@@ -45,6 +46,9 @@ make voikko-install DESTDIR=$RPM_BUILD_ROOT%{_libdir}/voikko
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1_2
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_2
 - update to new release by fcimport
 
