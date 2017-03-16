@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Test/Perl/Critic.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Statistics-Basic
 Version:        1.6611
-Release:        alt1_5
+Release:        alt1_6
 Summary:        A collection of very basic statistics modules
 License:        LGPLv2+
 Group:          Development/Other
@@ -12,6 +14,7 @@ URL:            http://search.cpan.org/dist/Statistics-Basic/
 Source0:        http://www.cpan.org/authors/id/J/JE/JETTERO/Statistics-Basic-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -25,12 +28,11 @@ BuildRequires:  perl(Scalar/Util.pm)
 # Tests
 BuildRequires:  perl(Test.pm)
 BuildRequires:  perl(Test/More.pm)
-Requires:       perl(Number/Format.pm) >= 1.42
+Requires:       perl(Number/Format.pm) >= 1.420
+%filter_from_requires /perl\\(Number.Format.pm\\)$/d
 
 # Remove underspecified dependecies
 
-Source44: import.info
-%filter_from_requires /perl\\(Number.Format.pm\\)$/d
 
 %description
 use Statistics::Basic qw(:all);
@@ -49,7 +51,7 @@ my $correlation = correlation( [1 .. 3], [1 .. 3] );
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=perl NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -63,6 +65,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.6611-alt1_6
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.6611-alt1_5
 - update to new release by fcimport
 
