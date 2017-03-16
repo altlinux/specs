@@ -3,14 +3,18 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 %filter_from_requires /^perl.XML.SAX.ExpatXS.Preload.pm./d
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-XML-SAX-ExpatXS
 Version:        1.33
-Release:        alt3_14.1
+Release:        alt3_15
 Summary:        Perl SAX 2 XS extension to Expat parser
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/XML-SAX-ExpatXS/
 Source0:        http://www.cpan.org/authors/id/P/PC/PCIMPRICH/XML-SAX-ExpatXS-%{version}.tar.gz
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Config.pm)
 BuildRequires:  perl(DynaLoader.pm)
@@ -21,10 +25,9 @@ BuildRequires:  perl(vars.pm)
 BuildRequires:  perl(XML/SAX/Base.pm)
 BuildRequires:  perl(XML/SAX.pm)
 BuildRequires:  libexpat-devel
-Requires:       perl(XML/SAX.pm) >= 0.96
+Requires:       perl(XML/SAX.pm) >= 0.960
 
  # Filters (not)shared c libs
-Source44: import.info
 
 %description
 XML::SAX::ExpatXS is a direct XS extension to Expat XML parser. It
@@ -38,7 +41,7 @@ chmod -x ExpatXS.xs
 
 %build
 echo n | %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
@@ -68,6 +71,9 @@ fi
 %{perl_vendor_archlib}/XML*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.33-alt3_15
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.33-alt3_14.1
 - rebuild with new perl 5.24.1
 
