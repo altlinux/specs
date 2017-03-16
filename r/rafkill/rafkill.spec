@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           rafkill
 Version:        1.2.3
-Release:        alt4_19
+Release:        alt4_20
 Summary:        Top-down shooter with powerups
 Group:          Games/Other
 License:        GPLv2
@@ -18,7 +20,6 @@ Patch2:		rafkill-1.2.3-gcc470.patch
 Patch3:		rafkill-printf-format.patch
 BuildRequires:  liballegro-devel dumb-devel scons desktop-file-utils
 Requires:       icon-theme-hicolor
-Source44: import.info
 
 %description
 Rafkill is a vertical scrolling shoot-em up game. You can collect powerups
@@ -112,6 +113,9 @@ EOF
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt4_20
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt4_19
 - update to new release by fcimport
 
