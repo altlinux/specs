@@ -1,7 +1,9 @@
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libhbaapi
 Version:        2.2.9
-Release:        alt1_8
+Release:        alt1_9
 Summary:        SNIA HBAAPI library
 Group:          System/Libraries
 License:        SNIA
@@ -10,8 +12,7 @@ URL:            http://open-fcoe.org/
 Source:         %{name}-%{version}.tar.gz
 Patch0:         libhbaapi-2.2.9-dl-linking.patch
 Patch1:         libhbaapi-2.2.9-portspeed.patch
-BuildRequires:  automake libtool
-Source44: import.info
+BuildRequires:  automake-common libtool-common
 
 %description
 The SNIA HBA API library. C-level project to manage
@@ -19,9 +20,9 @@ Fibre Channel Host Bus Adapters.
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}
-Requires:       pkgconfig
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
+Requires:       pkg-config
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -35,7 +36,7 @@ developing applications that use %{name}.
 %build
 ./bootstrap.sh
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=%{buildroot}
@@ -52,6 +53,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.9-alt1_9
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.9-alt1_8
 - update to new release by fcimport
 
