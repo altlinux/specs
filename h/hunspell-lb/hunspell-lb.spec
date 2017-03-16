@@ -2,17 +2,18 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-lb
 Summary: Luxembourgish hunspell dictionaries
 %global upstreamid 20121128
 Version: 0.%{upstreamid}
-Release: alt1_6
+Release: alt1_7
 Source: http://downloads.spellchecker.lu/packages/OOo3/SpellcheckerLu.oxt
 URL: http://spellchecker.lu
 License: EUPL 1.1
 BuildArch: noarch
 Requires: hunspell
-Source44: import.info
 
 %description
 Luxembourgish hunspell dictionaries.
@@ -46,6 +47,9 @@ cp -p th_lb_LU_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_datadir}/mythes/th_lb_LU_v2.*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20121128-alt1_7
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20121128-alt1_6
 - update to new release by fcimport
 
