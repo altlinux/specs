@@ -1,11 +1,13 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libsocket perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(IO/Select.pm) perl(Test.pm) perl-devel perl-podlators
+BuildRequires: perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(IO/Select.pm) perl(Test.pm) perl-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary:        Blitzed open proxy monitor library
 Name:           libopm
 Version:        0.1
-Release:        alt3_18.20050731cvs
+Release:        alt3_19.20050731cvs
 License:        GPLv2+
 Group:          System/Libraries
 URL:            http://wiki.blitzed.org/BOPM
@@ -16,7 +18,6 @@ URL:            http://wiki.blitzed.org/BOPM
 Source:         %{name}-%{version}.tar.gz
 Patch:          libopm-0.1-multilib.patch
 BuildRequires:  doxygen
-Source44: import.info
 
 %description
 An open proxy detection library, developed by the blitzed
@@ -26,8 +27,8 @@ has evolved to become a generic open proxy detection library.
 
 %package devel
 Summary:        Headers and development libraries for libopm
-Group:          Development/C
-Requires:       %{name} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 
 %description devel
 The libopm-devel package contains the header files and libraries
@@ -39,7 +40,7 @@ necessary for developing applications which use libopm.
 
 %build
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 cd doc && doxygen && mv -f api html
 
 %install
@@ -58,6 +59,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/%{name}.so
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_19.20050731cvs
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_18.20050731cvs
 - update to new release by fcimport
 
