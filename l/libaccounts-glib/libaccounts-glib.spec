@@ -3,8 +3,9 @@ BuildRequires: /usr/bin/xmllint /usr/bin/xsltproc docbook-dtds pkgconfig(pygobje
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name libaccounts-glib
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.23
 
 %global commit0 8d14b10652b2fe6c25d8ad8334e2d5023d254313
@@ -14,7 +15,7 @@ Group: System/Libraries
 
 Name:		libaccounts-glib
 Version:	1.23
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Accounts framework for Linux and POSIX based platforms
 License:	LGPLv2
 URL:        https://gitlab.com/accounts-sso/libaccounts-glib
@@ -28,8 +29,7 @@ BuildRequires:	libcheck-devel
 BuildRequires:	gobject-introspection-devel
 # no needed for final release tarball
 BuildRequires:	libtool-common
-BuildRequires: gtk-doc gtk-doc-mkpdf
-Source44: import.info
+BuildRequires:	gtk-doc gtk-doc-mkpdf
 
 %description
 %{summary}.
@@ -37,7 +37,7 @@ Source44: import.info
 %package devel
 Group: Development/C
 Summary:	Development files for %{name}
-Requires:	%{name}%{?_isa} = %{version}
+Requires:	%{name} = %{version}-%{release}
 %description devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
@@ -64,7 +64,7 @@ NOCONFIGURE=1 \
   --disable-static \
   --enable-gtk-doc
 
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -123,6 +123,9 @@ make check || cat tests/test-suite.log ||:
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1_1
 - update to new release by fcimport
 
