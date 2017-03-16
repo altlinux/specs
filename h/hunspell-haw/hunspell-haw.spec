@@ -2,16 +2,17 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-haw
 Summary: Hawaiian hunspell dictionaries
 Version: 0.02
-Release: alt1_8
+Release: alt1_9
 Source: http://releases.mozilla.org/pub/mozilla.org/addons/204309/hawaiian_spell_checker-%{version}-tb+fx+sm.xpi
 URL: http://borel.slu.edu/crubadan/
 License: GPLv2+
 BuildArch: noarch
 Requires: hunspell
-Source44: import.info
 
 %description
 Hawaiian hunspell dictionaries.
@@ -32,6 +33,9 @@ cp -p dictionaries/haw-US.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/haw.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_9
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_8
 - update to new release by fcimport
 
