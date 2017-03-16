@@ -2,17 +2,18 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hyphen-nl
 Summary: Dutch hyphenation rules
 %global upstreamid 20050617
 Version: 0.%{upstreamid}
-Release: alt1_14
+Release: alt1_15
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_nl_NL.zip
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
 License: GPLv2
 BuildArch: noarch
 Requires: libhyphen
-Source44: import.info
 
 %description
 Dutch hyphenation rules.
@@ -43,6 +44,9 @@ done
 %{_datadir}/hyphen/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20050617-alt1_15
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20050617-alt1_14
 - update to new release by fcimport
 
