@@ -3,9 +3,11 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Pod-Coverage-TrustPod
 Version:        0.100003
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Allow a module's pod to contain Pod::Coverage hints
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Pod-Coverage-TrustPod/
@@ -13,6 +15,7 @@ Source0:        http://search.cpan.org/CPAN/authors/id/R/RJ/RJBS/Pod-Coverage-Tr
 BuildArch:      noarch
 # Build:
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time:
 BuildRequires:  perl(base.pm)
@@ -25,7 +28,6 @@ BuildRequires:  perl(warnings.pm)
 BuildRequires:  perl(Carp/Heavy.pm)
 BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(Test/More.pm)
-Source44: import.info
 # Explicit dependencies:
 
 %description
@@ -38,7 +40,7 @@ symbol names trusted.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -54,6 +56,9 @@ make test
 %{perl_vendor_privlib}/Pod/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.100003-alt1_6
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.100003-alt1_5
 - update to new release by fcimport
 
