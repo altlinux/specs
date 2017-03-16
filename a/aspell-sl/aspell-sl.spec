@@ -1,11 +1,13 @@
 Epoch: 50
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define lang sl
 %define langrelease 0
 Summary: Slovenian dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 0.50
-Release: alt2_14
+Release: alt2_15
 License: GPLv2
 Group: Text tools
 URL: http://aspell.net/
@@ -14,7 +16,6 @@ Buildrequires: aspell >= 0.60
 Requires: aspell >= 0.60
 
 %define debug_package %{nil}
-Source44: import.info
 
 %description
 Provides the word list/dictionaries for the following: Slovenian
@@ -35,6 +36,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 50:0.50-alt2_15
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 50:0.50-alt2_14
 - update to new release by fcimport
 
