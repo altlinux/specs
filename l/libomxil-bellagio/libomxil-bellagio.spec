@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen gcc-c++ libomxil-bellagio-devel
+BuildRequires: gcc-c++ libomxil-bellagio-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libomxil-bellagio
 Version:        0.9.3
-Release:        alt1_12
+Release:        alt1_13
 Summary:        OpenMAX Integration Layer
 
 Group:          System/Libraries
@@ -21,8 +23,7 @@ Patch4:         http://git.buildroot.net/buildroot/plain/package/multimedia/bell
 Patch5:         http://git.buildroot.net/buildroot/plain/package/multimedia/bellagio/bellagio-0.9.3-segfault-on-removeFromWaitResource.patch
 Patch6:         omxil_version.patch
 BuildRequires:  doxygen
-BuildRequires:  libtool
-Source44: import.info
+BuildRequires:  libtool-common
 
 
 %description
@@ -37,8 +38,8 @@ component, OMX mp3,aac,ogg decoder component and OMX volume control component.
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -46,8 +47,8 @@ developing applications that use %{name}.
 
 %package        test
 Summary:        Test cases for %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 
 %description    test
 The %{name}-test package contains binaries for testing %{name}.
@@ -72,7 +73,7 @@ sed -i.rpath 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' li
 sed -i.rpath 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
 #Race condition with the library creation
-make %{?_smp_mflags} || make %{?_smp_mflags}
+%make_build || make %{?_smp_mflags}
 
 #Build the tests files so they can be installed later
 ln -sf src bellagio
@@ -118,6 +119,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/%{name}
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_13
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_12
 - update to new release by fcimport
 
