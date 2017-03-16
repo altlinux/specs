@@ -2,17 +2,18 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-om
 Summary: Oromo hunspell dictionaries
 #Epoch: 1
 Version: 0.04
-Release: alt2_10
+Release: alt2_11
 Source: http://borel.slu.edu/obair/%{name}-%{version}.oxt
 URL: http://borel.slu.edu/crubadan/apps.html
 License: LGPLv3+
 BuildArch: noarch
 Requires: hunspell
-Source44: import.info
 
 %description
 Oromo hunspell dictionaries.
@@ -39,6 +40,9 @@ done
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_11
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_10
 - update to new release by fcimport
 
