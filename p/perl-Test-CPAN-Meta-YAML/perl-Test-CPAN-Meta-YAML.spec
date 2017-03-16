@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(YAML.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		perl-Test-CPAN-Meta-YAML
 Version:	0.25
-Release:	alt1_5
+Release:	alt1_6
 Summary:	Validate a META.yml file within a CPAN distribution
 Group:		Development/Other
 License:	Artistic 2.0
@@ -14,6 +16,7 @@ Patch0:		Test-CPAN-Meta-YAML-0.25-utf8.patch
 BuildArch:	noarch
 # Module Build
 BuildRequires:	perl
+BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
 BuildRequires:	perl(strict.pm)
@@ -33,7 +36,6 @@ BuildRequires:	perl(Test/Pod/Coverage.pm)
 # Runtime
 # Explicitly requests the YAML::Syck backend for Test::YAML::Valid
 Requires:	perl(YAML/Syck.pm)
-Source44: import.info
 
 %description
 This module was written to ensure that a META.yml file, provided with a
@@ -51,7 +53,7 @@ See CPAN::Meta for further details of the CPAN Meta Specification.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -71,6 +73,9 @@ make test AUTOMATED_TESTING=1
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_6
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_5
 - update to new release by fcimport
 
