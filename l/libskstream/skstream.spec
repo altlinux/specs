@@ -1,26 +1,27 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/zip gcc-c++ pkgconfig(cppunit)
+BuildRequires: /usr/bin/zip gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname skstream
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name skstream
 %define version 0.3.9
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 
 Name:           libskstream
 Version:        0.3.9
-Release:        alt1_9
+Release:        alt1_10
 Summary:        C++ I/O library for WorldForge clients/servers
 
-Group:          Development/C++
+Group:          Development/Other
 License:        GPLv2+
 URL:            http://worldforge.org/dev/eng/libraries/skstream
 Source0:        http://downloads.sourceforge.net/worldforge/%{oldname}-%{version}.tar.bz2
 Patch1:         skstream-0.3.6-gcc44.patch
 
 BuildRequires:  cppunit-devel doxygen
-Source44: import.info
 Provides: skstream = %{version}-%{release}
 
 %description
@@ -31,8 +32,8 @@ connections for both clients and servers.
 
 %package devel
 Summary:        Development files for skstream
-Group:   Development/C++
-Requires: pkgconfig %{oldname} = %{version}
+Group:   Development/Other
+Requires: pkg-config %{oldname} = %{version}-%{release}
 Provides: skstream-devel = %{version}-%{release}
 
 
@@ -47,7 +48,7 @@ Libraries and header files for developing applications that use skstream.
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 make docs
 
 
@@ -81,6 +82,9 @@ cp -pR AUTHORS ChangeLog COPYING README README.FreeSockets TODO doc/* $RPM_BUILD
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.9-alt1_10
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.9-alt1_9
 - update to new release by fcimport
 
