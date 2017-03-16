@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Test-HasVersion
 Version:        0.014
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Check Perl modules have version numbers
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -15,6 +17,7 @@ BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 # Module Runtime
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(File/Find.pm)
@@ -27,7 +30,6 @@ BuildRequires:  perl(Test/More.pm)
 # Optional Tests
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
-Source44: import.info
 # Runtime
 
 %description
@@ -45,7 +47,7 @@ you.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -62,6 +64,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1_4
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1_3
 - update to new release by fcimport
 
