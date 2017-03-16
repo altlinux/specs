@@ -1,6 +1,8 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           bcrypt
 Version:        1.1
-Release:        alt2_14
+Release:        alt2_16
 Summary:        File encryption utility
 
 Group:          File tools
@@ -9,8 +11,8 @@ URL:            http://%{name}.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Patch0:         bcrypt-fencepost.patch
 BuildRequires:  zlib-devel
-Source44: import.info
 
+BuildRequires:  %{__perl}
 
 %description
 Bcrypt is a cross platform file encryption utility. Encrypted files are
@@ -43,11 +45,15 @@ Bruce Schneier in 1993.
 
 
 %files
-%doc LICENSE README
+%doc README
+%doc LICENSE
 %doc %{_mandir}/man1/bcrypt.1*
 %{_bindir}/bcrypt
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_16
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_14
 - update to new release by fcimport
 
