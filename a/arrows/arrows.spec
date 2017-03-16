@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           arrows
 Version:        0.6
-Release:        alt3_18
+Release:        alt3_19
 Summary:        Neat little maze game
 Group:          Games/Other
 License:        GPLv2+
@@ -12,9 +14,8 @@ Source0:        http://noreason.ca/data/arrows-%{version}.tar.gz
 Source1:        arrows.desktop
 Source2:        arrows.png
 Patch0:         arrows-level-5.patch 
-BuildRequires:  gtk2-devel desktop-file-utils
+BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel desktop-file-utils
 Requires:       icon-theme-hicolor
-Source44: import.info
 
 %description
 It's a maze game of sorts. Guide the spinning blue thing through
@@ -27,7 +28,7 @@ to collect the green things.
 make clean
 
 %build
-make %{?_smp_mflags} CCOPTS="$RPM_OPT_FLAGS"
+%make_build CCOPTS="$RPM_OPT_FLAGS"
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
@@ -49,6 +50,9 @@ install -p -m 644 %{SOURCE2}\
 %{_datadir}/icons/hicolor/24x24/apps/%{name}.png
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_19
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_18
 - update to new release by fcimport
 
