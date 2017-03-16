@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-HTML-Form
 Version:        6.03
-Release:        alt1_13
+Release:        alt1_14
 Summary:        Class that represents an HTML form element
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -14,6 +16,7 @@ BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Encode.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -30,10 +33,9 @@ BuildRequires:  perl(vars.pm)
 BuildRequires:  perl(warnings.pm)
 Requires:       perl(HTML/TokeParser.pm)
 Requires:       perl(HTTP/Request.pm) >= 6
-Requires:       perl(HTTP/Request/Common.pm) >= 6.03
+Requires:       perl(HTTP/Request/Common.pm) >= 6.030
 
 
-Source44: import.info
 
 %description
 Objects of the HTML::Form class represents a single HTML <form> ... </form>
@@ -47,7 +49,7 @@ passed to the request() method of LWP::UserAgent.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -65,6 +67,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 6.03-alt1_14
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 6.03-alt1_13
 - update to new release by fcimport
 
