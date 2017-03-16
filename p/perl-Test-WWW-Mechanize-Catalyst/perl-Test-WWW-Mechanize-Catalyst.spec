@@ -3,16 +3,19 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Class/Load.pm) perl(Compress/Zlib.pm) perl(Config.pm) perl(Cwd.pm) perl(Encode.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(HTML/Entities.pm) perl(HTTP/Request/Common.pm) perl(IO/Socket/INET.pm) perl(JSON.pm) perl(MIME/Base64.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(POSIX.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(URI.pm) perl(YAML/Tiny.pm) perl(base.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Test-WWW-Mechanize-Catalyst
 Summary:        Test::WWW::Mechanize for Catalyst
 Version:        0.60
-Release:        alt1_7
+Release:        alt1_8
 License:        GPL+ or Artistic
 
 Source0:        http://search.cpan.org/CPAN/authors/id/I/IL/ILMARI/Test-WWW-Mechanize-Catalyst-%{version}.tar.gz
 URL:            http://search.cpan.org/dist/Test-WWW-Mechanize-Catalyst/
 BuildArch:      noarch
 
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Catalyst.pm)
 # Catalyst::Plugin::Session::State::Cookie and Test::WWW::Mechanize::Catalyst
 # use each other in their test suites
@@ -31,12 +34,12 @@ BuildRequires:  perl(Test/utf8.pm)
 BuildRequires:  perl(Test/WWW/Mechanize.pm)
 BuildRequires:  perl(WWW/Mechanize.pm)
 
-Requires:       perl(Catalyst.pm) >= 5.00
+Requires:       perl(Catalyst.pm) >= 5.0
 Requires:       perl(LWP.pm) >= 5.816
-Requires:       perl(Moose.pm) >= 0.67
-Requires:       perl(namespace/clean.pm) >= 0.09
-Requires:       perl(Test/WWW/Mechanize.pm) >= 1.14
-Requires:       perl(WWW/Mechanize.pm) >= 1.54
+Requires:       perl(Moose.pm) >= 0.670
+Requires:       perl(namespace/clean.pm) >= 0.090
+Requires:       perl(Test/WWW/Mechanize.pm) >= 1.140
+Requires:       perl(WWW/Mechanize.pm) >= 1.540
 
 # obsolete/provide old tests subpackage
 # can be removed during F19 development cycle
@@ -44,7 +47,6 @@ Obsoletes:      %{name}-tests < 0.56-3
 Provides:       %{name}-tests = %{version}-%{release}
 
 
-Source44: import.info
 
 %description
 Catalyst is an elegant MVC Web Application Framework. Test::WWW::Mechanize
@@ -61,7 +63,7 @@ sed -i '1s,#!.*perl,#!%{__perl},' t/*.t
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -79,6 +81,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1_8
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1_7
 - update to new release by fcimport
 
