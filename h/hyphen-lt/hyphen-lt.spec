@@ -1,9 +1,11 @@
 Group: Text tools
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hyphen-lt
 Summary: Lithuanian hyphenation rules
 %global upstreamid 20100531
 Version: 0.%{upstreamid}
-Release: alt1_10
+Release: alt1_11
 Source: http://tug.org/svn/texhyphen/trunk/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-lt.tex?view=co#/hyph-lt.tex
 URL: http://tug.org/tex-hyphen
 License: LPPL
@@ -11,7 +13,6 @@ BuildArch: noarch
 BuildRequires: libhyphen-devel
 Requires: libhyphen
 Patch0: hyphen-lt-cleantex.patch
-Source44: import.info
 
 %description
 Lithuanian hyphenation rules.
@@ -38,6 +39,9 @@ cp -p hyph_lt_LT.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20100531-alt1_11
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20100531-alt1_10
 - update to new release by fcimport
 
