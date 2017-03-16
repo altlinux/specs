@@ -1,6 +1,8 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           opengl-games-utils
 Version:        0.2
-Release:        alt2_8
+Release:        alt2_9
 Summary:        Utilities to check proper 3d support before launching 3d games
 Group:          Games/Other
 License:        Public Domain
@@ -10,7 +12,6 @@ Source1:        opengl-game-functions.sh
 Source2:        README
 BuildArch:      noarch
 Requires:       zenity xdriinfo glxinfo
-Source44: import.info
 
 %description
 This package contains various shell scripts which are intented for use by
@@ -42,6 +43,9 @@ install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_9
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_8
 - update to new release by fcimport
 
