@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-validate /usr/bin/gconftool-2 /usr/bin/glib-gettextize pkgconfig(gconf-2.0) pkgconfig(gmodule-2.0) pkgconfig(gnet-2.0) pkgconfig(gstreamer-0.10) pkgconfig(gtk+-2.0) pkgconfig(libglade-2.0) pkgconfig(libpcre) pkgconfig(vte) zlib-devel
+BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-gettextize pkgconfig(gmodule-2.0) zlib-devel
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		gnome-mud
 Version:	0.11.2
-Release:	alt2_17
+Release:	alt2_18
 Summary:	A MUD client for GNOME
 
 Group:		Games/Other
@@ -16,21 +18,20 @@ Patch0:		gnome-mud-desktop.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=629472
 Patch1:		gnome-mud-vte.patch
 
-BuildRequires: gettext
-BuildRequires: gtk2-devel
-BuildRequires: pcre-devel
-BuildRequires: gstreamer-devel
+BuildRequires: gettext gettext-tools
+BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires: libpcre-devel libpcrecpp-devel
+BuildRequires: gstreamer-devel gstreamer-gir-devel
 BuildRequires: libgnet-devel
-BuildRequires: libvte-devel
+BuildRequires: libvte-devel python-module-vte-devel vte
 BuildRequires: desktop-file-utils
 BuildRequires: intltool
-BuildRequires: libglade2-devel
-BuildRequires: libGConf-devel
+BuildRequires: libglade-devel
+BuildRequires: GConf libGConf-devel libGConf-gir-devel
 
-Requires(pre): GConf2
-Requires(post): GConf2
-Requires(preun): GConf2
-Source44: import.info
+Requires(pre): GConf libGConf
+Requires(post): GConf libGConf
+Requires(preun): GConf libGConf
 
 %description
 GNOME-MUD is a simple MUD client for GNOME. It supports scripting in
@@ -45,7 +46,7 @@ mv ./AUTHORS.utf8 ./AUTHORS
 
 %build
 %configure --enable-mccp --enable-gstreamer
-make %{?_smp_mflags}
+%make_build
 
 %install
 rm -fr $RPM_BUILD_ROOT
@@ -86,6 +87,9 @@ fi
 %{_mandir}/man6/%{name}.6*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_18
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_17
 - update to new release by fcimport
 
