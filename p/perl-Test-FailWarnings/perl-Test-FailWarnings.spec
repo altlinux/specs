@@ -3,9 +3,11 @@ Group: Other
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Test-FailWarnings
 Version:        0.008
-Release:        alt1_8
+Release:        alt1_9
 Summary:        Add test failures if warnings are caught
 License:        ASL 2.0 
 
@@ -14,6 +16,7 @@ Source0:        http://www.cpan.org/authors/id/D/DA/DAGOLDEN/Test-FailWarnings-%
 
 BuildArch:      noarch
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -33,7 +36,6 @@ BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(List/Util.pm)
 
 
-Source44: import.info
 
 %description
 This module hooks $SIG{__WARN__} and converts warnings to Test::More's
@@ -45,7 +47,7 @@ need to know the test count in advance.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
@@ -62,6 +64,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_9
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_8
 - update to new release by fcimport
 
