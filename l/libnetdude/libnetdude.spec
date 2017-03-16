@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gtkdoc-mkdb /usr/sbin/tcpdump gcc-c++ libmagic-devel libnetdude-devel
+BuildRequires: libmagic-devel libnetdude-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libnetdude
 Version:        0.11
-Release:        alt1_13
+Release:        alt1_14
 Summary:        Management framework for pcap packet traces
 
 Group:          System/Libraries
@@ -15,9 +17,8 @@ Source1:        libnetdude-lndtool-wrapper.sh
 # -Werror=format-security
 Patch0:         libnetdude-0.11-format-security.patch
 
-BuildRequires:  glib-devel, libpcapnav-devel, gtk-doc >= 0.6, tcpdump, /bin/sed
+BuildRequires:  glib-devel, libpcapnav-devel gtk-doc gtk-doc-mkpdf, tcpdump, /bin/sed
 BuildRequires:  libpcap-devel
-Source44: import.info
 
 %description
 libnetdude allows to implement trace file manipulations at a much higher level
@@ -27,8 +28,8 @@ mangling capabilities provided by the set of plugins you have installed.
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -48,9 +49,9 @@ sed -e 's,###loc###,%{name}/%{version},' %{SOURCE1} > libnetdude-lndtool-wrapper
         --disable-static \
         --datadir=%{_libdir} \
         --with-html-dir=%{_datadir}/gtk-doc/html/%{name}/
-make %{?_smp_mflags}
+%make_build
 pushd docs
-make %{?_smp_mflags} docs
+%make_build docs
 popd
 
 %install
@@ -80,6 +81,9 @@ rm -rf %{buildroot}%{_datadir}/gtk-doc/html/%{name}/%{name}/
 %{_datadir}/gtk-doc/html/%{name}/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_14
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_13
 - update to new release by fcimport
 
