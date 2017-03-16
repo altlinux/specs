@@ -2,16 +2,19 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Parallel-Prefork
 Version:        0.18
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Simple prefork server framework
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Parallel-Prefork/
 Source0:        http://www.cpan.org/authors/id/K/KA/KAZUHO/Parallel-Prefork-%{version}.tar.gz
 BuildArch:      noarch
 
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Class/Accessor/Lite.pm)
 BuildRequires:  perl(Fcntl.pm)
 BuildRequires:  perl(File/Temp.pm)
@@ -29,7 +32,6 @@ BuildRequires:  perl(warnings.pm)
 
 BuildRequires:  perl(inc/Module/Install.pm)
 BuildRequires:  perl(Module/Install/ReadmeFromPod.pm)
-Source44: import.info
 
 
 %description
@@ -43,7 +45,7 @@ sed -i -e '/^inc\/*$/d' MANIFEST
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -57,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_3
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_2
 - update to new release by fcimport
 
