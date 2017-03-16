@@ -2,20 +2,22 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Exporter.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Eval-LineNumbers
 Version:        0.34
-Release:        alt1_7
+Release:        alt1_8
 Summary:        Add line numbers to hereis blocks that contain perl source code
 License:        Artistic 2.0 or LGPLv2+
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Eval-LineNumbers/
 Source0:        http://www.cpan.org/authors/id/M/MU/MUIR/modules/Eval-LineNumbers-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/More.pm)
 
 
-Source44: import.info
 
 %description
 This module adds a line number to hereis text that is going to be
@@ -27,7 +29,7 @@ iconv --from=ISO-8859-1 --to=UTF-8 Changes > Changes.utf-8 && mv Changes.utf-8 C
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -45,6 +47,9 @@ make test
 %{perl_vendor_privlib}/Eval
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1_8
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1_7
 - update to new release by fcimport
 
