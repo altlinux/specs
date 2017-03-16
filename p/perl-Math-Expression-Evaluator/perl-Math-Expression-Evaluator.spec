@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Math-Expression-Evaluator
 Version:        0.3.2
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Parses, compiles and evaluates mathematics expressions
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -12,6 +14,7 @@ URL:            http://search.cpan.org/dist/Math-Expression-Evaluator/
 Source0:        http://www.cpan.org/authors/id/M/MO/MORITZ/Math-Expression-Evaluator-v%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Benchmark.pm)
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Data/Dumper.pm)
@@ -21,7 +24,6 @@ BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(POSIX.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
-Source44: import.info
 
 %description
 Math::Expression::Evaluator is a parser, compiler and interpreter for
@@ -50,6 +52,9 @@ find %{buildroot} -type f -name '*.pm' -exec chmod -x {} 2>/dev/null ';'
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt2_13
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt2_12
 - update to new release by fcimport
 
