@@ -1,10 +1,12 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define lang pt_BR
 %define langrelease 0
 Summary: Brazilian Portuguese dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 20090702
-Release: alt2_10
+Release: alt2_11
 License: LGPLv2+
 Group: Text tools
 URL: http://aspell.net/
@@ -14,7 +16,6 @@ Requires: aspell >= 0.60
 Obsoletes: aspell-pt <= 50:0.50
 
 %define debug_package %{nil}
-Source44: import.info
 
 %description
 Provides the word list/dictionaries for the following: Brazilian Portuguese
@@ -35,6 +36,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 20090702-alt2_11
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 20090702-alt2_10
 - update to new release by fcimport
 
