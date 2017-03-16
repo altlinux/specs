@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install libX11-devel
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           alltray
 Version:        0.71b
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Dock any application in the tray
 
 Group:          Accessibility
@@ -12,10 +14,9 @@ URL:            http://alltray.trausch.us/
 Source0:        https://launchpad.net/alltray/old-maintenance/%{version}/+download/%{name}-%{version}.tar.gz
 
 BuildRequires:  desktop-file-utils
-BuildRequires:  gtk2-devel
-BuildRequires:  libGConf-devel
-BuildRequires:  gdk-pixbuf-devel
-Source44: import.info
+BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:  GConf libGConf-devel libGConf-gir-devel
+BuildRequires:  libgdk-pixbuf-devel
 Patch33: alltray-0.65-message-fix.patch
 
 
@@ -30,7 +31,7 @@ system tray. It works well with GNOME, KDE, XFCE 4, Fluxbox, and WindowMaker.
 %build
 export CFLAGS="-fPIC $RPM_OPT_FLAGS"
 %configure
-make %{?_smp_mflags}
+%make_build
 
 %install
 %makeinstall_std
@@ -52,6 +53,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications \
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.71b-alt2_12
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.71b-alt2_11
 - update to new release by fcimport
 
