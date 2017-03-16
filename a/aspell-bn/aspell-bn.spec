@@ -1,11 +1,13 @@
 Group: Text tools
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global debug_package %{nil}
 %global lang bn
 %global langrelease 1
 
 Name:           aspell-bn
 Version:        0.01.1
-Release:        alt2_15
+Release:        alt2_16
 Summary:        GNU Aspell Bengali Dictionary Package
 
 License:        GPLv2+
@@ -14,7 +16,6 @@ Source0:        ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell6-%{lang}-%{vers
 
 BuildRequires:  aspell >= 0.60
 Requires:       aspell >= 0.60
-Source44: import.info
 
 %description
 GNU Aspell Bengali Dictionary Package
@@ -36,7 +37,7 @@ GNU Aspell Bengali Dictionary Package
 
 %build
 ./configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -50,6 +51,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.01.1-alt2_16
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.01.1-alt2_15
 - update to new release by fcimport
 
