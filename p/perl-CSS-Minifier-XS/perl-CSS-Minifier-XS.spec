@@ -2,16 +2,20 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Benchmark.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(IO/File.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:       perl-CSS-Minifier-XS
 Version:    0.09
-Release:    alt4_8.1
+Release:    alt4_9
 # lib/CSS/Minifier/XS.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic
-Group:      Development/Perl
+Group:      Development/Other
 Summary:    XS based CSS minifier
 Source:     http://search.cpan.org/CPAN/authors/id/G/GT/GTERMARS/CSS-Minifier-XS-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/CSS-Minifier-XS
 
+BuildRequires: perl-devel
+BuildRequires: rpm-build-perl
 BuildRequires: perl(CSS/Minifier.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(Module/Build/Compat.pm)
@@ -20,7 +24,6 @@ BuildRequires: perl(Test/Pod.pm)
 BuildRequires: perl(Test/Pod/Coverage.pm)
 
 
-Source44: import.info
 
 %description
 'CSS::Minifier::XS' is a CSS "minifier". It's designed to remove
@@ -35,7 +38,7 @@ in XS and not just pure Perl.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -54,6 +57,9 @@ make test
 %exclude %dir %{perl_vendor_archlib}/auto
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt4_9
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt4_8.1
 - rebuild with new perl 5.24.1
 
