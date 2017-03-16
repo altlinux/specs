@@ -3,9 +3,11 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Term-Size-Perl
 Version:        0.029
-Release:        alt3_22
+Release:        alt3_23
 Summary:        Perl extension for retrieving terminal size (Perl version)
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Term-Size-Perl/
@@ -13,6 +15,7 @@ Source0:        http://www.cpan.org/authors/id/F/FE/FERREIRA/Term-Size-Perl-%{ve
 # Build
 BuildRequires:  gcc-common
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/CBuilder.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Runtime
@@ -27,7 +30,6 @@ BuildRequires:  perl(Test/Pod/Coverage.pm)
 # although the resulting rpm appears to be noarch, the build is arch-dependent
 # and produces different code for ppc and x86
 %global  debug_package %nil
-Source44: import.info
 BuildArch: noarch
 
 %description
@@ -39,7 +41,7 @@ exception of a C probe run on build time.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -53,6 +55,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.029-alt3_23
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.029-alt3_22
 - update to new release by fcimport
 
