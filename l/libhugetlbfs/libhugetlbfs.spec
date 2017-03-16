@@ -1,9 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(base.pm) perl(sigtrap.pm)
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: libhugetlbfs
 Version: 2.20
-Release: alt1_2
+Release: alt1_3
 Summary: A library which provides easy access to huge pages of memory
 
 Group: System/Libraries
@@ -15,7 +18,6 @@ BuildRequires: glibc-devel
 BuildRequires: glibc-devel-static
 
 %define ldscriptdir %{_datadir}/%{name}/ldscripts
-Source44: import.info
 
 %description
 libhugetlbfs is a library which provides easy access to huge pages of memory.
@@ -26,15 +28,15 @@ modifications to load BSS or BSS, data, and text segments into large pages.
 
 %package devel
 Summary:	Header files for libhugetlbfs
-Group:		Development/C
-Requires:	%{name} = %{version}
+Group:		Development/Other
+Requires:	%{name} = %{version}-%{release}
 %description devel
 Contains header files for building with libhugetlbfs.
 
 %package utils
 Summary:	Userspace utilities for configuring the hugepage environment
-Group:		File tools
-Requires:	%{name} = %{version}
+Group:		System/Base
+Requires:	%{name} = %{version}-%{release}
 %description utils
 This packages contains a number of utilities that will help administrate the
 use of huge pages on your system.  hugeedit modifies binaries to set default
@@ -109,6 +111,9 @@ done
 %exclude %{_libdir}/perl5/TLBC
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.20-alt1_3
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.20-alt1_2
 - fixed build
 
