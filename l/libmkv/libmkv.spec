@@ -1,7 +1,9 @@
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:      libmkv
 Version:   0.6.5.1
-Release:   alt2_9
+Release:   alt2_10
 Summary:   An alternative to the official libmatroska library
 
 Group:     System/Libraries
@@ -14,8 +16,7 @@ Source0:   %{name}-%{version}.tar.gz
 Patch0:    A01-hbmv-pgs.patch
 
 
-BuildRequires: autoconf, automake, libtool
-Source44: import.info
+BuildRequires: autoconf-common, automake-common, libtool-common
 
 %description
 This library is meant to be an alternative to the official libmatroska library.
@@ -31,7 +32,7 @@ It is written in plain C, and is intended to be very portable.
 mkdir m4
 autoreconf --verbose --force --install
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -44,8 +45,8 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 %package devel
 Summary:   An alternative to the official libmatroska library - devel files
-Group:     Development/C
-Requires:  %{name} = %{version}
+Group:     Development/Other
+Requires:  %{name} = %{version}-%{release}
 
 %description devel
 This library is meant to be an alternative to the official libmatroska library.
@@ -57,6 +58,9 @@ development files.
 %{_libdir}/libmkv.so
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.5.1-alt2_10
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.5.1-alt2_9
 - update to new release by fcimport
 
