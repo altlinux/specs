@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		biniax
 Version:	1.2
-Release:	alt3_18
+Release:	alt3_19
 Summary:	A unique arcade logic game
 
 Group:		Games/Other
@@ -23,7 +25,6 @@ Patch4:		%{name}-%{version}-close.patch
 
 Requires:	icon-theme-hicolor
 BuildRequires:	libSDL-devel libSDL_mixer-devel desktop-file-utils
-Source44: import.info
 
 %description
 The gaming field is 5x7 pairs of elements. Every pair consists of two elements 
@@ -50,7 +51,7 @@ sed -i 's!@DATADIR@!%{_datadir}!' desktop/snd.c
 
 %build
 
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -81,6 +82,9 @@ install -p -m 0644 %{SOURCE2} \
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_19
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_18
 - update to new release by fcimport
 
