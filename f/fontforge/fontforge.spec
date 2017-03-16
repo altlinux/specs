@@ -1,38 +1,32 @@
-%def_enable python 
 %def_enable docs
-# %def_disable gtk
+%def_enable python
+
 
 Name: fontforge
-Version: 20150612
-Release: alt0.3
+Version: 20161012
+Release: alt1
 Summary: FontForge -- font editor
-Summary(ru_RU.KOI8-R): Редактор шрифтов FontForge
 
 License: BSD
 Group: Publishing
-Url: https://github.com/fontforge/fontforge
+Url: http://fontforge.sourceforge.net/
 
-Packager: Pavel Vainerman <pv at altlinux.org>
-
-Source: %name-%version.tar.gz
-Source2: %name.png
+# Source-url: https://github.com/fontforge/fontforge/archive/%version.tar.gz
+Source: %name-%version.tar
 
 # manually removed: glibc-devel-static packages-info-i18n-common
-# Automatically added by buildreq on Thu Jul 02 2015
-# optimized out: fontconfig fontconfig-devel glib2-devel gnu-config libICE-devel libX11-devel libXft-devel libXrender-devel libcairo-devel libcloog-isl4 libfreetype-devel libpango-devel libpng-devel libwayland-client libwayland-server pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email xorg-inputproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: glibc-devel-static libSM-devel libXi-devel libdb4-devel libxml2-devel 
-BuildRequires: git-core zlib-devel glib2-devel libgio-devel libpango-devel libcairo-devel
+# Automatically added by buildreq on Wed Nov 30 2016
+# optimized out: ca-certificates fontconfig fontconfig-devel glib2-devel gnu-config ipython libICE-devel libX11-devel libXft-devel libXrender-devel libcairo-devel libfreetype-devel libpng-devel libwayland-client libwayland-server pkg-config python-base python-devel python-module-decorator python-module-future python-module-google python-module-ipython_genutils python-module-path python-module-pexpect python-module-pickleshare python-module-ptyprocess python-module-simplegeneric python-module-traitlets python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-json python-modules-logging python-modules-sqlite3 python3 python3-base shared-mime-info tzdata xorg-inputproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: desktop-file-utils git-core imake indent libSM-devel libXi-devel libgif-devel libgio-devel libjpeg-devel libltdl7-devel libpango-devel libreadline-devel libspiro-devel libtiff-devel libuninameslist-devel libxml2-devel python-module-mwlib python3-dev unzip wget xorg-cf-files
 
-#%if_enabled gtk
-#libgtk+2-devel
-#%endif
+BuildRequires: libuthash-devel gnulib
 
 %if_enabled python
-BuildRequires: python-module-distribute python-module-google python-module-sphinxcontrib ipython
+# BuildRequires: python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope
+BuildRequires: python3-dev
 %endif
 
-Obsoletes: pfaedit
-Provides: pfaedit
+Requires: lib%name = %version-%release
 
 %description
 FontForge allows the user to create and modify 
@@ -40,27 +34,21 @@ Type 1 (postscript) and true type fonts.
 User can save fonts in different postscript 
 formats and generate bitmaps.
 
-%description -l ru_RU.KOI8-R
-FontForge позволяет пользователям создавать и изменять 
-шрифты форматов Type1 (postscipt) и True Type. 
-Возможно сохранять шрифты в различных
-форматах postscript и генерировать 
-растровые изображения шрифтов.
+%description -l ru_RU.UTF-8
+FontForge п©п╬п╥п╡п╬п╩я▐п╣я┌ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐п╪ я│п╬п╥п╢п╟п╡п╟я┌я▄ п╦ п╦п╥п╪п╣п╫я▐я┌я▄ 
+я┬я─п╦я└я┌я▀ я└п╬я─п╪п╟я┌п╬п╡ Type1 (postscipt) п╦ True Type. 
+п▓п╬п╥п╪п╬п╤п╫п╬ я│п╬я┘я─п╟п╫я▐я┌я▄ я┬я─п╦я└я┌я▀ п╡ я─п╟п╥п╩п╦я┤п╫я▀я┘
+я└п╬я─п╪п╟я┌п╟я┘ postscript п╦ пЁп╣п╫п╣я─п╦я─п╬п╡п╟я┌я▄ 
+я─п╟я│я┌я─п╬п╡я▀п╣ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦я▐ я┬я─п╦я└я┌п╬п╡.
 
 %package -n lib%name
 Summary: FontForge shared library
 Group: System/Libraries
 
-%description -n lib%name
-FontForge shared library
-
 %package -n lib%name-devel
 Summary: FontForge development files
 Group: Development/C
 Requires: lib%name = %version-%release
-
-%description -n lib%name-devel
-FontForge development files
 
 %if_enabled python
 %package -n python-module-%name
@@ -71,55 +59,41 @@ Requires: lib%name = %version-%release
 
 %description -n python-module-%name
 FontForge python module
-
-%def_enable python-extension
-%def_enable python-scripting
-%else
-%def_disable python-extension
-%def_disable python-scripting
 %endif
 
 %if_enabled docs
-%package -n doc
+%package docs
 Summary: FontForge documentations
-Group: Documentation
+Group: Publishing
 
-%description -n doc
-FontForge documetations
-
+%description docs
+FontForge documentations
 %endif
+
+%description -n lib%name
+FontForge shared library
+
+%description -n lib%name-devel
+FontForge development files
 
 %prep
 %setup -q -n %{name}-%version
-#tar -xf %name-%version.tar.gz --strip 1
+# hack to make an illision about local uthash and prevent download it
+mkdir -p uthash/src
 
 %build
-./bootstrap
-%autoreconf
-%add_optflags -fno-strict-aliasing -I../libltdl
-%configure 	--disable-static %{subst_enable python-extension} %{subst_enable python-scripting}
+./bootstrap --skip-git --skip-po --gnulib-srcdir=/usr/share/gnulib
+#autoreconf
+%configure --disable-rpath --disable-static
+#sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
-
+# disable rpath
+sed -ri 's/^(hardcode_libdir_flag_spec).*$/\1=/' libtool
+sed -ri 's/^(runpath_var).*$/\1=/' libtool
 %make_build
 
 %install
-install -D -m644 %SOURCE2 %buildroot%_niconsdir/%name.png
-
 %makeinstall_std
-
-mkdir -p %buildroot%_desktopdir
-cat <<EOF >%buildroot%_desktopdir/%name.desktop
-[Desktop Entry]
-Name=FontForge Font Editor
-Comment=Edit and convert fonts
-Exec=fontforge %U
-Icon=icon-accessories
-Terminal=false
-Type=Application
-Categories=Graphics;Publishing;
-MimeType=application/x-font;application/x-font-bdf;application/x-font-ttf;application/x-font-truetype;application/x-truetype-font;application/font-tdpfr;application/x-font-afm;application/x-font-type1;
-EOF
 
 %find_lang FontForge
 
@@ -129,16 +103,16 @@ EOF
 %_datadir/%name/
 %_man1dir/*
 %_desktopdir/%name.desktop
-%_iconsdir/hicolor/*/*/*
-# %_datadir/mime/packages/*
+%_iconsdir/*/*/*/*.*
+%_datadir/mime/packages/*
 
 %files -n lib%name
 %_libdir/libgunicode.so.*
 %_libdir/libgdraw.so.*
 %_libdir/libfontforge.so.*
-%_libdir/libfontforgeexe.so.*
 %_libdir/libgutils.so.*
 %_libdir/libgioftp.so.*
+%_libdir/libfontforgeexe.so.*
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -146,28 +120,45 @@ EOF
 %_pkgconfigdir/*.pc
 
 %if_enabled python
-%files -n python-module-%name 
+%files -n python-module-%name
 %python_sitelibdir/*.so
+%python_sitelibdir/*.la
 %endif
 
 %if_enabled docs
-%files -n doc
-%dir %_docdir/%name
-%_docdir/%name/*
+%files docs
+%_docdir/%name/*.*
+%_docdir/%name/flags/*.*
 %_docdir/%name/.htaccess
+%_docdir/%name/nonBMP/*
 %endif
 
+
 %changelog
-* Fri Jul 03 2015 Pavel Vainerman <pv@altlinux.ru> 20150612-alt0.3
-- test build
+* Wed Mar 15 2017 Vitaly Lipatov <lav@altlinux.ru> 20161012-alt1
+- new version 20161012 (with rpmrb script)
+- build with bootstrap script
 
-* Thu Jul 02 2015 Pavel Vainerman <pv@altlinux.ru> 20150612-alt0.1
+* Wed Nov 30 2016 Pavel Vainerman <pv@altlinux.ru> 20161005-alt0.4
+- update requires
+- off the need for a network to build the project
+
+* Wed Nov 30 2016 Pavel Vainerman <pv@altlinux.ru> 20161005-alt0.3
+- new version (20161005) with rpmgs script
+
+* Wed Nov 30 2016 Pavel Vainerman <pv@altlinux.ru> 20161005-alt0.2
+- minor fixes or syisyphus_check
+- cleanup spec
+
+* Tue Nov 29 2016 Pavel Vainerman <pv@altlinux.ru> 20161005-alt0.1
 - new version
-- update system build
 
-* Thu Jul 02 2015 Pavel Vainerman <pv@altlinux.ru> 20120731-alt3
-- move to git
-- update build requires
+* Tue Nov 29 2016 Pavel Vainerman <pv@altlinux.ru> 20161004-alt0.1
+- new version
+
+* Wed Oct 22 2014 Pavel Vainerman <pv@altlinux.ru> 20120731-alt3
+- update requires (altbug #30412)
+- update patch
 
 * Thu Jul 03 2014 Pavel Vainerman <pv@altlinux.ru> 20120731-alt2
 - added patch needed for the correct loading of libraries (python-module)
