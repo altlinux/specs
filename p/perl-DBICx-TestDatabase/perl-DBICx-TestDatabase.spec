@@ -2,10 +2,12 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-DBICx-TestDatabase 
 Summary:        Create a temporary database from a DBIx::Class::Schema 
 Version:        0.05
-Release:        alt1_5
+Release:        alt1_6
 License:        GPL+ or Artistic 
 Group:          Development/Other
 Source0:        http://search.cpan.org/CPAN/authors/id/J/JR/JROCKWAY/DBICx-TestDatabase-%{version}.tar.gz
@@ -13,6 +15,7 @@ URL:            http://search.cpan.org/dist/DBICx-TestDatabase
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Config.pm)
 BuildRequires:  perl(Cwd.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -36,11 +39,10 @@ BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(ok.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(utf8.pm)
-Requires:       perl(DBD/SQLite.pm) >= 1.29
+Requires:       perl(DBD/SQLite.pm) >= 1.290
 Requires:       perl(SQL/Translator.pm)
 
 
-Source44: import.info
 
 %description
 This module creates a temporary SQLite database, deploys your DBIC
@@ -55,7 +57,7 @@ failure, etc.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -69,6 +71,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1_6
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1_5
 - update to new release by fcimport
 
