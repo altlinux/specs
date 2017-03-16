@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           shippy
 Version:        1.3.3.7
-Release:        alt2_21
+Release:        alt2_22
 Summary:        Space invaders / Galaxians like game with powerups
 Group:          Games/Other
 License:        GPL+
@@ -19,7 +21,6 @@ BuildRequires:  dumb-devel libSDL_mixer-devel
 BuildRequires:  desktop-file-utils libappstream-glib
 Requires:       %{name}-common = %{version}
 Provides:       %{name}-engine = %{version}
-Source44: import.info
 
 %description
 Shippy1984 is a small, portable game designed to bring back nostalgia for the
@@ -62,12 +63,12 @@ rm data/scores.lst
 
 
 %build
-make %{?_smp_mflags} SDL=1 \
+%make_build SDL=1 \
  CFLAGS="$RPM_OPT_FLAGS -fsigned-char -DDATADIR=\\\"%{_datadir}/%{name}/\\\"" \
  LDFLAGS="-g `sdl-config --libs` -lSDL_mixer"
 mv %{name} %{name}-sdl
 
-make %{?_smp_mflags} ALLEGRO=1 \
+%make_build ALLEGRO=1 \
  CFLAGS="$RPM_OPT_FLAGS -fsigned-char -DDATADIR=\\\"%{_datadir}/%{name}/\\\"" \
  LDFLAGS="-g -laldmb -ldumb `allegro-config --libs`"
 mv %{name} %{name}-allegro
@@ -115,6 +116,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.3.7-alt2_22
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.3.7-alt2_21
 - update to new release by fcimport
 
