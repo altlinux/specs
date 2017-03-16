@@ -2,12 +2,14 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Filter/Util/Call.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Test/Deep.pm) perl(YAML.pm) perl(YAML/Tiny.pm) perl(threads/shared.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Only need manual requires for "use base XXX;" prior to rpm 4.9
 %global rpm49 0
 
 Name:           perl-Array-Diff
 Version:        0.07
-Release:        alt2_21
+Release:        alt2_22
 # Because 0.07 compares newer than 0.05002 in Perl world
 # but not in RPM world :-(
 Epoch:          1
@@ -53,7 +55,6 @@ BuildRequires:  perl(Text/Diff.pm)
 %if ! %{rpm49}
 Requires:       perl(Class/Accessor/Fast.pm)
 %endif
-Source44: import.info
 
 %description
 This module compares two arrays and returns the added or deleted elements in
@@ -66,7 +67,7 @@ If you need more complex array tools, check Array::Compare.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -87,6 +88,9 @@ make test
 %{perl_vendor_privlib}/Array/Diff.pm
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.07-alt2_22
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.07-alt2_21
 - update to new release by fcimport
 
