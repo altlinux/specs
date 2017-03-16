@@ -3,9 +3,11 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Data-Denter
 Version:        0.15
-Release:        alt2_20
+Release:        alt2_21
 License:        GPL+ or Artistic
 Summary:        An alternative to Data::Dumper and Storable
 Source:         http://search.cpan.org/CPAN/authors/id/I/IN/INGY/Data-Denter-%{version}.tar.gz
@@ -13,6 +15,7 @@ Url:            http://search.cpan.org/dist/Data-Denter
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Runtime
 BuildRequires:  perl(Carp.pm)
@@ -23,7 +26,6 @@ BuildRequires:  perl(vars.pm)
 BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(diagnostics.pm)
 BuildRequires:  perl(Test.pm)
-Source44: import.info
 
 %description
 The main problem with Data::Dumper (one of my all-time favorite modules)
@@ -44,7 +46,7 @@ readability/editability, safe deserialization, and (eventually) speed.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -58,6 +60,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_21
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_20
 - update to new release by fcimport
 
