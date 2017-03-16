@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CGI/Simple.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Captcha-reCAPTCHA
 Version:        0.98
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Perl implementation of the reCAPTCHA API
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -33,12 +35,11 @@ BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 Requires:       perl(HTML/Tiny.pm) >= 0.904
+%filter_from_requires /^perl\\(HTML.Tiny.pm\\)$/d
 
 
 # Filter under-specified dependencies
 
-Source44: import.info
-%filter_from_requires /^perl\\(HTML.Tiny.pm\\)$/d
 
 %description
 reCAPTCHA is a hybrid mechanical Turk and captcha that allows visitors who
@@ -52,7 +53,7 @@ find -name '.*' -delete
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
@@ -67,6 +68,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1_1
 - update to new release by fcimport
 
