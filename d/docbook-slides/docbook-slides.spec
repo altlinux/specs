@@ -1,8 +1,10 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define pkg docbook-slides
 Summary: DocBook Slides document type and stylesheets
 Name: docbook-slides
 Version: 3.4.0
-Release: alt3_17
+Release: alt3_18
 License: MIT
 Group: Text tools
 URL: http://sourceforge.net/projects/docbook
@@ -21,7 +23,6 @@ Requires: xml-common sgml-common
 Requires(post): sed
 Requires(post): libxml2 xml-utils
 Requires(postun): libxml2 xml-utils
-Source44: import.info
 
 
 %description
@@ -139,6 +140,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt3_18
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt3_17
 - update to new release by fcimport
 
