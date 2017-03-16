@@ -2,15 +2,18 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Exporter.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Spec/Functions.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(base.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Test-YAML-Valid
 Version:        0.04
-Release:        alt2_18
+Release:        alt2_19
 Summary:        Lets you test the validity of YAML files in unit tests
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Test-YAML-Valid/
 Source0:        http://www.cpan.org/authors/id/J/JR/JROCKWAY/Test-YAML-Valid-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(YAML.pm)
 BuildRequires:  perl(YAML/XS.pm)
@@ -24,7 +27,6 @@ BuildRequires:  perl(Test/Builder.pm)
 BuildRequires:  perl(Test/Builder/Tester.pm)
 Requires:       perl(YAML.pm)
 Requires:       perl(YAML/Syck.pm)
-Source44: import.info
 
 %description
 Lets you test the validity of YAML files inside your
@@ -35,7 +37,7 @@ Lets you test the validity of YAML files inside your
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 
@@ -56,6 +58,9 @@ make test
 %{perl_vendor_privlib}/Test/YAML/Valid.pm
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_19
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_18
 - update to new release by fcimport
 
