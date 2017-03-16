@@ -1,9 +1,11 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          clpbar
 Version:       1.10.9
-Release:       alt2_13
+Release:       alt2_14
 Summary:       Show information about a data transfer
 
-Group:         File tools
+Group:         System/Base
 License:       LGPLv2+
 URL:           http://clpbar.sourceforge.net/
 Source0:       http://downloads.sourceforge.net/%{name}/bar_%{version}.tar.gz
@@ -13,9 +15,8 @@ Patch1:        bar-1.10.9-Makefile.patch
 Patch2:        bar-1.10.9-Werror=format-security.patch
 
 
-BuildRequires: automake
-BuildRequires: autoconf
-Source44: import.info
+BuildRequires: automake-common
+BuildRequires: autoconf-common
 
 %description
 Bar is a simple tool to process a stream of data and print a display for the
@@ -36,7 +37,7 @@ cp %{SOURCE1} .
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 %check
 make check
@@ -50,6 +51,9 @@ make install DESTDIR=%{buildroot}
 %{_mandir}/man1/clpbar.1*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.10.9-alt2_14
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.10.9-alt2_13
 - update to new release by fcimport
 
