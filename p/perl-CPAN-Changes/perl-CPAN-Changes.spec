@@ -2,10 +2,12 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		perl-CPAN-Changes
 Summary:	Read and write Changes files
 Version:	0.400002
-Release:	alt1_3
+Release:	alt1_4
 License:	GPL+ or Artistic
 Group:		Development/Other
 URL:		http://search.cpan.org/dist/CPAN-Changes/
@@ -13,6 +15,7 @@ Source0:	http://search.cpan.org/CPAN/authors/id/H/HA/HAARG/CPAN-Changes-%{versio
 BuildArch:	noarch
 # Module Build
 BuildRequires:	perl
+BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
 BuildRequires:	perl(Encode.pm)
@@ -34,7 +37,6 @@ BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
 # Runtime
 Requires:	perl(version.pm) >= 0.99.06
-Source44: import.info
 
 %description
 It is standard practice to include a Changes file in your distribution. The
@@ -53,7 +55,7 @@ that conform to the specification.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -72,6 +74,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{_mandir}/man1/tidy_changelog.1*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.400002-alt1_4
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.400002-alt1_3
 - update to new release by fcimport
 
