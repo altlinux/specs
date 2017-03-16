@@ -9,9 +9,11 @@ BuildRequires: perl(Devel/Size.pm) perl(File/Find/Object.pm) perl(HTML/TokeParse
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Graph-Easy
 Version:        0.76
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Convert or render graphs as ASCII, HTML, SVG or via Graphviz
 License:        GPLv2+ and ASL 1.1
 Group:          Development/Other
@@ -49,15 +51,14 @@ Requires:       perl(Data/Dumper.pm)
 %bcond_without bootstrap
 %if %{without bootstrap}
 BuildRequires:  perl(Graph/Easy/As_svg.pm)
-Requires:       perl(Graph/Easy/As_svg.pm) >= 0.23
+Requires:       perl(Graph/Easy/As_svg.pm) >= 0.230
 %endif
+%filter_from_provides /perl\\(Graph.Easy.pm\\)$/d
+%filter_from_provides /perl\\(Graph.Easy.(Edge|Edge.Cell|Group|Node).pm\\)$/d
 
 # filter unversioned provides
 
 
-Source44: import.info
-%filter_from_provides /perl\\(Graph.Easy.pm\\)$/d
-%filter_from_provides /perl\\(Graph.Easy.(Edge|Edge.Cell|Group|Node).pm\\)$/d
 
 %description
 Graph::Easy lets you generate graphs consisting of various shaped nodes
@@ -74,7 +75,7 @@ chmod 0644 examples/*
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
@@ -91,6 +92,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.76-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.76-alt1_1
 - update to new release by fcimport
 
