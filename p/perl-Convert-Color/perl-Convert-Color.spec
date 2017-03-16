@@ -1,19 +1,22 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(List/Util.pm) perl(base.pm) perl-Module-Build perl-podlators
+BuildRequires: perl(List/Util.pm) perl(base.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Convert-Color
 Version:        0.11
-Release:        alt1_8
+Release:        alt1_9
 Summary:        Color space conversions and named lookups
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Convert-Color/
 Source0:        http://www.cpan.org/authors/id/P/PE/PEVANS/Convert-Color-%{version}.tar.gz
 # Workaround to a source-code trick, which break rpm's perl-module deptracking
 Patch0:         Convert-Color-0.09.patch
 BuildArch:      noarch
 
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(List/UtilsBy.pm)
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Module/Pluggable.pm)
@@ -22,7 +25,6 @@ BuildRequires:  perl(Test/Number/Delta.pm)
 # For improved testing
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  xorg-rgb
-Source44: import.info
 
 
 %description
@@ -53,6 +55,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_9
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_8
 - update to new release by fcimport
 
