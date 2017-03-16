@@ -2,12 +2,14 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Test suite needs patching if we have Test::More < 0.88
 %global old_test_more %(perl -MTest::More -e 'print (($Test::More::VERSION) < 0.88 ? 1 : 0);' 2>/dev/null || echo 0)
 
 Name:		perl-ExtUtils-Config
 Version:	0.008
-Release:	alt1_6
+Release:	alt1_7
 Summary:	A wrapper for perl's configuration
 Group:		Development/Other
 License:	GPL+ or Artistic
@@ -17,6 +19,7 @@ Patch1:		ExtUtils-Config-0.008-old-Test::More.patch
 BuildArch:	noarch
 # Build
 BuildRequires:	perl
+BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module
 BuildRequires:	perl(Config.pm)
@@ -25,7 +28,6 @@ BuildRequires:	perl(Data/Dumper.pm)
 BuildRequires:	perl(File/Find.pm)
 BuildRequires:	perl(File/Temp.pm)
 BuildRequires:	perl(Test/More.pm)
-Source44: import.info
 # Runtime
 
 %description
@@ -41,7 +43,7 @@ ExtUtils::Config is an abstraction around the %%Config hash.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -56,6 +58,9 @@ make test
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_7
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_6
 - update to new release by fcimport
 
