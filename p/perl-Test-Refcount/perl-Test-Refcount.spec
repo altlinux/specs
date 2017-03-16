@@ -2,17 +2,20 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(B.pm) perl(Module/Build.pm) perl(Scalar/Util.pm) perl(Symbol.pm) perl(base.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Test-Refcount
 Version:        0.08
-Release:        alt1_7
+Release:        alt1_8
 Summary:        Assert reference counts on objects
 
-Group:          Development/Perl
+Group:          Development/Other
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Test-Refcount/
 Source0:        http://search.cpan.org/CPAN/authors/id/P/PE/PEVANS/Test-Refcount-%{version}.tar.gz
 
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Devel/Refcount.pm)
 # Test suite fails with Perl 5.18 if Devel::FindRef is installed (CPAN RT#85998)
@@ -21,7 +24,6 @@ BuildRequires:  perl(Test/Builder.pm)
 BuildRequires:  perl(Test/Builder/Tester.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
-Source44: import.info
 
 %description
 The Perl garbage collector uses simple reference counting during the normal
@@ -38,7 +40,7 @@ properly DESTROYed when it drops all of its references to it.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -57,6 +59,9 @@ make test
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_8
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_7
 - update to new release by fcimport
 
