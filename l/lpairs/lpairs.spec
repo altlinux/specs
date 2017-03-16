@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		lpairs
 Summary:	Classical memory game with cards
 Version:	1.0.4
-Release:	alt3_17
+Release:	alt3_18
 License:	GPLv2+ and CC-BY-SA and Freely redistributable without restriction
 Group: 		Games/Other
 URL:		http://lgames.sourceforge.net/index.php?project=LPairs
@@ -19,8 +21,7 @@ Patch1:		lpairs-1.0.4-desktop.diff
 #Requires:	SDL >= 1.0
 BuildRequires:	desktop-file-utils
 BuildRequires: 	libSDL-devel
-BuildRequires:  gettext
-Source44: import.info
+BuildRequires:  gettext gettext-tools
 #bison?
 
 %description
@@ -40,7 +41,7 @@ will be counted but there is no highscore chart or limit to this.
 CFLAGS="${RPM_OPT_FLAGS} -std=gnu89"
 
 %configure inst_dir="%{_datadir}/%{name}"
-make %{?_smp_mflags}
+%make_build
 
 %install
 rm -fr %{buildroot}
@@ -64,6 +65,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications \
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt3_18
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt3_17
 - update to new release by fcimport
 
