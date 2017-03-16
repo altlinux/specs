@@ -1,4 +1,6 @@
 Group: Other
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Note to self: like is with the HTML 2.0 and 3.2 DTDs, HTML 4.0 and 4.01
 # have the same public id to their ENTITIES files.  They are not exactly the
 # same in 4.0 and 4.01, but the changes are in comments only, so no need
@@ -9,7 +11,7 @@ Group: Other
 
 Name:           html401-dtds
 Version:        4.01
-Release:        alt1_%{date}.12.7
+Release:        alt1_%{date}.12.8
 Summary:        HTML 4.01 document type definitions
 
 # W3C Software License for DTDs etc:
@@ -22,10 +24,9 @@ Source99:       %{name}-prepare-tarball.sh
 Patch0:         %{name}-catalog.patch
 
 BuildArch:      noarch
-Requires: xml-common sgml-common
+Requires:       xml-common sgml-common
 Requires(post): /usr/bin/install-catalog
 Requires(preun): /usr/bin/install-catalog
-Source44: import.info
 
 %description
 This package provides the three HTML 4.01 DTDs (strict, frameset, and
@@ -81,6 +82,9 @@ done
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 4.01-alt1_19991224.12.8
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 4.01-alt1_19991224.12.7
 - update to new release by fcimport
 
