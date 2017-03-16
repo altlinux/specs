@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           pengupop
 Version:        2.2.2
-Release:        alt4_15
+Release:        alt4_16
 Summary:        Networked Game in the vein of Move/Puzzle Bobble
 
 Group:          Games/Other
@@ -12,7 +14,6 @@ URL:            http://www.junoplay.com/pengupop
 Source0:        http://www.junoplay.com/files/%{name}-%{version}.tar.gz
 
 BuildRequires:  libSDL-devel, zlib-devel, desktop-file-utils
-Source44: import.info
 
 %description
 Finally a networked multiplayer game in the vein of the puzzle classic Bust a
@@ -28,7 +29,7 @@ remove all orbs. You lose if any orb attaches below the white line.
 
 %build
 %configure
-make %{?_smp_mflags} CFLAGS="$CFLAGS -D_FORTIFY_SOURCE=0" LIBS="-lm"
+%make_build CFLAGS="$CFLAGS -D_FORTIFY_SOURCE=0" LIBS="-lm"
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
@@ -50,6 +51,9 @@ desktop-file-install \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt4_16
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt4_15
 - update to new release by fcimport
 
