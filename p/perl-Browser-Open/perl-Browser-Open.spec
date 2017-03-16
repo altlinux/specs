@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Browser-Open
 Version:        0.04
-Release:        alt2_14
+Release:        alt2_15
 Summary:        Open a browser in a given URL
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -13,6 +15,7 @@ Source0:        http://search.cpan.org/CPAN/authors/id/C/CF/CFRANKS/Browser-Open
 BuildArch:      noarch
 BuildRequires:  findutils
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -25,7 +28,6 @@ BuildRequires:  perl(parent.pm)
 BuildRequires:  perl(Test/More.pm)
 
 
-Source44: import.info
 
 %description
 The functions optionally exported by this module allows you to open URLs in
@@ -36,7 +38,7 @@ the user browser.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
@@ -51,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_15
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_14
 - update to new release by fcimport
 
