@@ -1,24 +1,22 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(glib-2.0) pkgconfig(libevent) pkgconfig(tevent)
-# END SourceDeps(oneline)
 Group: Development/C
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libverto
 Version:        0.2.6
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Main loop abstraction library
 
 License:        MIT
 URL:            https://fedorahosted.org/libverto/
 Source0:        http://fedorahosted.org/releases/l/i/%{name}/%{name}-%{version}.tar.gz
 
-BuildRequires:  glib2-devel
+BuildRequires:  glib2-devel libgio libgio-devel
 BuildRequires:  libevent-devel
 BuildRequires:  libtevent-devel
 %if !0%{?rhel}
 BuildRequires:  libev-devel
 %endif
-Source44: import.info
 
 %description
 libverto provides a way for libraries to expose asynchronous interfaces
@@ -36,8 +34,8 @@ glib will support signal in the future.
 %package        devel
 Group: Development/C
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}
-Requires:       pkgconfig
+Requires:       %{name} = %{version}-%{release}
+Requires:       pkg-config
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -46,7 +44,7 @@ developing applications that use %{name}.
 %package        glib
 Group: Development/C
 Summary:        glib module for %{name}
-Requires:       %{name}%{?_isa} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description    glib
 Module for %{name} which provides integration with glib.
@@ -56,8 +54,7 @@ This package does NOT yet provide %{name}-module-base.
 %package        glib-devel
 Group: Development/C
 Summary:        Development files for %{name}-glib
-Requires:       %{name}-glib%{?_isa} = %{version}
-Requires:       %{name}-devel%{?_isa} = %{version}
+Requires:       %{name}-glib = %{version}-%{release}
 
 %description    glib-devel
 The %{name}-glib-devel package contains libraries and header files for
@@ -66,7 +63,7 @@ developing applications that use %{name}-glib.
 %package        libevent
 Group: Development/C
 Summary:        libevent module for %{name}
-Requires:       %{name}%{?_isa} = %{version}
+Requires:       %{name} = %{version}-%{release}
 Provides:       %{name}-module-base = %{version}-%{release}
 
 %description    libevent
@@ -75,8 +72,7 @@ Module for %{name} which provides integration with libevent.
 %package        libevent-devel
 Group: Development/C
 Summary:        Development files for %{name}-libevent
-Requires:       %{name}-libevent%{?_isa} = %{version}
-Requires:       %{name}-devel%{?_isa} = %{version}
+Requires:       %{name}-libevent = %{version}-%{release}
 
 %description    libevent-devel
 The %{name}-libevent-devel package contains libraries and header files for
@@ -85,7 +81,7 @@ developing applications that use %{name}-libevent.
 %package        tevent
 Group: Development/C
 Summary:        tevent module for %{name}
-Requires:       %{name}%{?_isa} = %{version}
+Requires:       %{name} = %{version}-%{release}
 Provides:       %{name}-module-base = %{version}-%{release}
 
 %description    tevent
@@ -97,8 +93,7 @@ and signal.
 %package        tevent-devel
 Group: Development/C
 Summary:        Development files for %{name}-tevent
-Requires:       %{name}-tevent%{?_isa} = %{version}
-Requires:       %{name}-devel%{?_isa} = %{version}
+Requires:       %{name}-tevent = %{version}-%{release}
 
 %description    tevent-devel
 The %{name}-tevent-devel package contains libraries and header files for
@@ -108,7 +103,7 @@ developing applications that use %{name}-tevent.
 %package        libev
 Group: Development/C
 Summary:        libev module for %{name}
-Requires:       %{name}%{?_isa} = %{version}
+Requires:       %{name} = %{version}-%{release}
 Provides:       %{name}-module-base = %{version}-%{release}
 
 %description    libev
@@ -120,8 +115,7 @@ and signal.
 %package        libev-devel
 Group: Development/C
 Summary:        Development files for %{name}-libev
-Requires:       %{name}-libev%{?_isa} = %{version}
-Requires:       %{name}-devel%{?_isa} = %{version}
+Requires:       %{name}-libev = %{version}-%{release}
 
 %description    libev-devel
 The %{name}-libev-devel package contains libraries and header files for
@@ -136,7 +130,7 @@ and signal.
 
 %build
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
@@ -189,6 +183,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %endif
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt1_7
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt1_6
 - update to new release by fcimport
 
