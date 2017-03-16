@@ -1,14 +1,16 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/allegro-config /usr/bin/sdl-config gcc-c++
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname compat-guichan05
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libguichan05
 Version:        0.5.0
-Release:        alt1_20
+Release:        alt1_21
 Summary:        Compatibility libraries for older guichan versions
 
-Group:          Development/C++
+Group:          Development/Other
 License:        BSD
 URL:            http://guichan.sourceforge.net
 Source0:        http://downloads.sourceforge.net/guichan/guichan-%{version}-src.tar.gz
@@ -16,7 +18,6 @@ Obsoletes:      guichan < 0.6.0
 
 BuildRequires:  liballegro-devel, libSDL-devel, libSDL_image-devel, libGL-devel
 BuildRequires:  libfreeglut-devel
-Source44: import.info
 Provides: guichan05 = %{version}-%{release}
 Patch33: guichan-0.5.0-alt-underlinkage.patch
 %set_verify_elf_method unresolved=relaxed
@@ -30,8 +31,8 @@ This package contains compatibility libraries for guichan 0.5
 
 %package devel
 Summary:        Header and libraries for guichan development
-Group:          Development/C++
-Requires:       libguichan05 = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 Provides: guichan05-devel = %{version}-%{release}
 
 %description devel
@@ -46,7 +47,7 @@ package is needed to build programs written using guichan.
 %build
 autoreconf -fisv
 %configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -88,6 +89,9 @@ done
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1_21
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1_20
 - update to new release by fcimport
 
