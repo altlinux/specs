@@ -3,16 +3,19 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Sub/Uplevel.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Scope-Upper
 Summary:        Act on upper scopes
 Version:        0.29
-Release:        alt2_1.1
+Release:        alt2_2
 License:        GPL+ or Artistic
 Source0:        http://search.cpan.org/CPAN/authors/id/V/VP/VPIT/Scope-Upper-%{version}.tar.gz
 URL:            http://search.cpan.org/dist/Scope-Upper
 # Build
 BuildRequires:  findutils
 BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Config.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -38,7 +41,6 @@ Requires:       perl(Exporter.pm)
 Requires:       perl(XSLoader.pm)
 
 
-Source44: import.info
 
 %description
 This module lets you defer actions that will take place when the control
@@ -54,7 +56,7 @@ sed -i -e '1s,^#!.*perl,%(perl -MConfig -e 'print $Config{startperl}'),' \
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -70,6 +72,9 @@ make test
 %exclude %dir %{perl_vendor_archlib}/auto
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.29-alt2_2
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.29-alt2_1.1
 - rebuild with new perl 5.24.1
 
