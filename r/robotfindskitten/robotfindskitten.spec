@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libncurses-devel
+BuildRequires: texinfo
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		robotfindskitten
 Version:	1.7320508.406
-Release:	alt2_12
+Release:	alt2_13
 Summary:	A game/zen simulation. You are robot. Your job is to find kitten.
 
 Group:		Games/Other
@@ -13,10 +15,9 @@ Source0:        http://robotfindskitten.org/download/POSIX/robotfindskitten-1.73
 # Submitted to upstream development list for consideration
 Patch0:		robotfindskitten-1.7320508.406-info-direntry.patch
 
-BuildRequires:	ncurses-devel glibc-devel texinfo
-Requires(post):	info
-Requires(preun): info
-Source44: import.info
+BuildRequires:	libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel glibc-devel makeinfo
+Requires(post):	info info-install
+Requires(preun):info info-install
 
 %description
 In this game, you are robot (#). Your job is to find kitten. This task
@@ -31,7 +32,7 @@ ends when robotfindskitten.
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 # rebuild the info page to include the patched-in direntry
 rm -f doc/robotfindskitten.info
 make -C doc robotfindskitten.info
@@ -53,6 +54,9 @@ rm -f $RPM_BUILD_ROOT/%{_infodir}/dir
 %{_datadir}/man/man6/robotfindskitten.6*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.7320508.406-alt2_13
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.7320508.406-alt2_12
 - update to new release by fcimport
 
