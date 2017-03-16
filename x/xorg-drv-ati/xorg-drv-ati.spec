@@ -1,5 +1,5 @@
 Name: xorg-drv-ati
-Version: 7.8.0
+Version: 7.9.0
 Release: alt1
 Epoch: 4
 Summary: ATI video driver
@@ -61,6 +61,9 @@ and the Xinerama extension.
 %_man4dir/radeon.4*
 
 %changelog
+* Thu Mar 16 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:7.9.0-alt1
+- 7.9.0
+
 * Thu Dec 01 2016 Valery Inozemtsev <shrek@altlinux.ru> 4:7.8.0-alt1
 - 7.8.0
 
