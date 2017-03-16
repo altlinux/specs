@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Path/Class.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Catalyst-Plugin-Session-Store-File
 Version:        0.18
-Release:        alt2_19
+Release:        alt2_20
 Summary:        File storage backend for session data
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -12,6 +14,7 @@ URL:            http://search.cpan.org/dist/Catalyst-Plugin-Session-Store-File/
 Source0:        http://search.cpan.org/CPAN/authors/id/F/FL/FLORA/Catalyst-Plugin-Session-Store-File-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Cache/Cache.pm)
 BuildRequires:  perl(Catalyst/Plugin/Session.pm)
 BuildRequires:  perl(Catalyst/Runtime.pm)
@@ -21,11 +24,10 @@ BuildRequires:  perl(MRO/Compat.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
-Requires:       perl(Cache/Cache.pm) >= 1.02
+Requires:       perl(Cache/Cache.pm) >= 1.020
 Requires:       perl(Catalyst/Plugin/Session.pm)
 Requires:       perl(Catalyst/Runtime.pm) >= 5.700.0
-Requires:       perl(Class/Data/Inheritable.pm) >= 0.04
-Source44: import.info
+Requires:       perl(Class/Data/Inheritable.pm) >= 0.040
 
 %description
 Catalyst::Plugin::Session::Store::File is an easy to use storage plugin for
@@ -37,7 +39,7 @@ cache. It is based on Cache::FileCache.
 
 %build
 PERL5_CPANPLUS_IS_RUNNING=1 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 
@@ -56,6 +58,9 @@ TEST_POD=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2_20
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2_19
 - update to new release by fcimport
 
