@@ -3,9 +3,11 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 %define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		perl-Test-EOL
 Version:	1.6
-Release:	alt1_3
+Release:	alt1_4
 Summary:	Check the correct line endings in your project
 Group:		Development/Other
 License:	GPL+ or Artistic
@@ -16,6 +18,7 @@ BuildArch:	noarch
 BuildRequires:	coreutils
 BuildRequires:	findutils
 BuildRequires:	perl
+BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
 BuildRequires:	perl(Cwd.pm)
@@ -40,7 +43,6 @@ BuildRequires:	perl(Test/NoTabs.pm)
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
 %endif
-Source44: import.info
 # Runtime
 
 %description
@@ -53,7 +55,7 @@ whitespace.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -77,6 +79,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_4
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_3
 - update to new release by fcimport
 
