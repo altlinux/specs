@@ -60,8 +60,8 @@
 %endif
 
 Name: virtualbox
-Version: 5.1.14
-Release: alt2%ubt
+Version: 5.1.16
+Release: alt1%ubt
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -783,6 +783,11 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Wed Mar 15 2017 Denis Medvedev <nbr@altlinux.org> 5.1.16-alt1%ubt
+- new version 5.1.16, git sources changed to have branch
+ upstream, 5.1.16-patched for alt patches and
+ sisyphus - for spec and local files.
+
 * Thu Feb 02 2017 Evgeny Sinelnikov <sin@altlinux.ru> 5.1.14-alt2%ubt
 - Rebuild with gsoap-2.8.x and universal build tag
 
