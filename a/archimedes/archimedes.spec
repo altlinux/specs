@@ -1,17 +1,18 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/dvipdf gcc-c++ texlive-base-bin texlive-latex-base
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary:	2D Quantum Monte Carlo simulator for semiconductor devices
 Name:		archimedes
 Version:	2.0.1
-Release:	alt1_5
+Release:	alt1_7
 License:	GPLv3+
 Group:		Engineering
 URL:		http://www.gnu.org/software/archimedes/
 Source0:	ftp://ftp.gnu.org/gnu/archimedes/%{name}-%{version}.tar.gz
 
 BuildRequires:	dos2unix
-Source44: import.info
 
 %description
 Archimedes is a package for the design and simulation of submicron
@@ -35,22 +36,28 @@ dos2unix COPYING doc/* doc/*/*
 # Fix spurious-executable-perm warning
 chmod 644 doc/*/*
 
+# gcc-7 compatibility (F26FTBFS)
+sed -i -e 's,inline,static inline,' src/random.h
+
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
-rm -rf ${buildroot}
 %makeinstall_std
 
 
 %files
 %{_bindir}/%{name}
-%doc AUTHORS ChangeLog COPYING doc examples NEWS README THANKS
+%doc COPYING
+%doc AUTHORS ChangeLog doc examples NEWS README THANKS
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_7
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_5
 - update to new release by fcimport
 
