@@ -1,22 +1,23 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ pkgconfig(atlascpp-0.6)
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname wfmath
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libwfmath
 Version:        1.0.2
-Release:        alt1_6
+Release:        alt1_7
 Summary:        WorldForge client math libraries
 
-Group:          Development/C++
+Group:          Development/Other
 License:        GPLv2+
 URL:            http://worldforge.org/dev/eng/libraries/wfmath
 Source0:        http://downloads.sourceforge.net/sourceforge/worldforge/%{oldname}-%{version}.tar.bz2
 
-BuildRequires: doxygen
+BuildRequires:  doxygen
 # Testing needs
-BuildRequires:  atlascpp-devel
-Source44: import.info
+BuildRequires:  libatlascpp-devel
 Provides: wfmath = %{version}-%{release}
 
 %description
@@ -29,8 +30,8 @@ system compenents to pass geometric information around in a common format.
 
 %package        devel
 Summary:        Development files for wfmath
-Group:          Development/C++
-Requires:       pkgconfig %{oldname} = %{version}
+Group:          Development/Other
+Requires:       pkg-config %{oldname} = %{version}-%{release}
 Provides: wfmath-devel = %{version}-%{release}
 
 
@@ -48,7 +49,7 @@ Libraries and header files for developing applications that use wfmath.
 CXXFLAGS="%{optflags} -O0" \
 %endif
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 make docs
 # Rename a messed-up man page
@@ -90,6 +91,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_7
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_6
 - update to new release by fcimport
 
