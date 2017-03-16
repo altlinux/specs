@@ -3,9 +3,11 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(IO/CaptureOutput.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Test-Assertions
 Version:        1.054
-Release:        alt2_21
+Release:        alt2_22
 Summary:        Simple set of building blocks for both unit and runtime testing
 License:        GPLv2
 URL:            http://search.cpan.org/dist/Test-Assertions/
@@ -13,6 +15,7 @@ Source0:        http://www.cpan.org/authors/id/B/BB/BBC/Test-Assertions-%{versio
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Runtime
 BuildRequires:  perl(Carp.pm)
@@ -37,7 +40,6 @@ Requires:       perl(File/Compare.pm)
 Requires:       perl(File/Spec.pm)
 Requires:       perl(IO/CaptureOutput.pm)
 Requires:       perl(Test/More.pm)
-Source44: import.info
 
 %description
 Test::Assertions provides a convenient set of tools for constructing tests,
@@ -53,7 +55,7 @@ unit tests, it generates output in the standard form for CPAN unit testing
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -68,6 +70,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.054-alt2_22
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.054-alt2_21
 - update to new release by fcimport
 
