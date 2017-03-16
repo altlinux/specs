@@ -3,9 +3,11 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Log-Trace
 Version:        1.070
-Release:        alt2_21
+Release:        alt2_22
 License:        GPLv2+
 Summary:        A unified approach to tracing
 Source:         http://search.cpan.org/CPAN/authors/id/B/BB/BBC/Log-Trace-%{version}.tar.gz
@@ -13,6 +15,7 @@ Url:            http://search.cpan.org/dist/Log-Trace
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Runtime
 BuildRequires:  perl(Carp.pm)
@@ -31,10 +34,9 @@ Requires:     perl(Data/Dumper.pm)
 Requires:     perl(Data/Serializer.pm)
 Requires:     perl(Sys/Syslog.pm)
 Requires:     perl(Time/HiRes.pm)
-
-
-Source44: import.info
 %filter_from_provides /^perl\\(DB.pm\\)$/d
+
+
 
 %description
 This module provides a unified approach to tracing. A script can 'use
@@ -48,7 +50,7 @@ option. See the "OPTIONS" manpage for more information.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -63,6 +65,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.070-alt2_22
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.070-alt2_21
 - update to new release by fcimport
 
