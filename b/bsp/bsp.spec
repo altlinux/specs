@@ -1,13 +1,14 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           bsp
 Version:        5.2
-Release:        alt2_14
+Release:        alt2_15
 Summary:        The most popular node builder for Doom
 
 Group:          Games/Other
 License:        GPLv2+
 URL:            http://games.moria.org.uk/doom/bsp/
 Source0:        http://games.moria.org.uk/doom/bsp/download/%{name}-%{version}.tar.bz2
-Source44: import.info
 
 %description
 Before you can play a level that you have created, you must use a node
@@ -49,6 +50,9 @@ install -D -p -m 644 bsp.6 $RPM_BUILD_ROOT/%{_mandir}/man6/bsp.6
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 5.2-alt2_15
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 5.2-alt2_14
 - update to new release by fcimport
 
