@@ -4,18 +4,19 @@ BuildRequires: libSDL-devel
 BuildRequires: chrpath
 BuildRequires: gcc-c++
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libmodelfile
 Version:        0.1.92
-Release:        alt3_16
+Release:        alt3_17
 Summary:        Library for accessing various model file formats
 
-Group:          Development/C
+Group:          Development/Other
 License:        zlib
 URL:            http://www.worldforge.org
 Source0:        http://downloads.sourceforge.net/worldforge/%{name}-%{version}.tar.gz
 
 BuildRequires:  libSDL_image-devel libGL-devel libGLU-devel
-Source44: import.info
 
 %description
 This library is a collection of small clean C libraries for loading 3D
@@ -24,8 +25,8 @@ models of various file formats. So far the range of model formats is limited.
 
 %package        devel
 Summary:        Development files for libmodelfile
-Group:          Development/C
-Requires:       pkgconfig %{name} = %{version}
+Group:          Development/Other
+Requires:       pkg-config %{name} = %{version}-%{release}
 
 %description    devel
 This package contains libraries and header files for developing applications
@@ -38,7 +39,7 @@ that use libmodelfile.
 
 %build
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -64,6 +65,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.92-alt3_17
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.92-alt3_16
 - update to new release by fcimport
 
