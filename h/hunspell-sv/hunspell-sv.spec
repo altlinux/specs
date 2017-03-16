@@ -2,17 +2,18 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-sv
 Summary: Swedish hunspell dictionaries
 Version: 2.28
-Release: alt1_5
+Release: alt1_6
 Source: http://extensions.libreoffice.org/extension-center/swedish-spelling-dictionary-den-stora-svenska-ordlistan/releases/2.28/ooo_swedish_dict_2-28.oxt
 URL: http://dsso.se/
 License: LGPLv3
 BuildArch: noarch
 
 Requires: hunspell
-Source44: import.info
 
 %description
 Swedish hunspell dictionaries.
@@ -35,6 +36,9 @@ cp -p dictionaries/*.dic dictionaries/*.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.28-alt1_6
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.28-alt1_5
 - update to new release by fcimport
 
