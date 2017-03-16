@@ -2,22 +2,24 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-DateTime-Format-DB2
 Version:        0.05
-Release:        alt2_21
+Release:        alt2_22
 Summary:        Parse and format DB2 dates and times
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/DateTime-Format-DB2/
 Source0:        http://www.cpan.org/authors/id/J/JR/JROBINSON/DateTime-Format-DB2-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(DateTime.pm)
 BuildRequires:  perl(DateTime/Format/Builder.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/More.pm)
 # not picked up automatically 
 Requires:       perl(DateTime/Format/Builder.pm)
-Source44: import.info
 
 %description
 This module understands the formats used by DB2 for its DATE, TIME, and
@@ -31,7 +33,7 @@ chmod -c -x t/*
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=%{buildroot}
@@ -47,6 +49,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_22
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_21
 - update to new release by fcimport
 
