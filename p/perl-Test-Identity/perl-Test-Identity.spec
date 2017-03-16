@@ -1,22 +1,24 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Test-Identity
 Version:        0.01
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Assert the referential identity of a reference
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Test-Identity/
 Source0:        http://www.cpan.org/authors/id/P/PE/PEVANS/Test-Identity-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(Test/Builder/Tester.pm)
 BuildRequires:  perl(Test/More.pm)
-Source44: import.info
 
 %description
 This module provides a single testing function, identical. It asserts that
@@ -46,6 +48,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_13
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_12
 - update to new release by fcimport
 
