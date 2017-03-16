@@ -1,6 +1,6 @@
 Name: wv
 Version: 1.2.9
-Release: alt1
+Release: alt2
 
 %def_disable static
 
@@ -10,7 +10,6 @@ Group: Office
 
 Url: http://wvware.sf.net/
 Source: http://prdownloads.sourceforge.net/wvware/%name-%version.tar.bz2
-Packager: Damir Shayhutdinov <damir@altlinux.ru>
 
 # Automatically added by buildreq on Fri Oct 14 2005
 BuildRequires: common-licenses glib2-devel libgsf-devel libpng-devel libxml2-devel pkg-config zlib-devel
@@ -78,7 +77,7 @@ This package contains the libwv.a static library.
 
 %prep
 %setup
-
+cp -at . /usr/share/gnu-config/config.guess
 rm -f COPYING
 ln -s %_licensedir/GPL-2 COPYING
 
@@ -146,6 +145,10 @@ sed -i 's@CPPFLAGS =@AM_CPPFLAGS =@' GNUmakefile.am
 %endif
 
 %changelog
+* Thu Mar 16 2017 Michael Shigorin <mike@altlinux.org> 1.2.9-alt2
+- use contemporary config.guess (for E2K)
+- drop Packager: as there seems to be none
+
 * Sat Oct 08 2011 Michael Shigorin <mike@altlinux.org> 1.2.9-alt1
 - NMU: 1.2.9
 - minor spec cleanup
