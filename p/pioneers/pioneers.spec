@@ -1,22 +1,23 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/convert /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/rsvg-convert /usr/bin/scrollkeeper-config pkgconfig(avahi-client) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-3.0) pkgconfig(libgnome-2.0) pkgconfig(libnotify)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/rsvg-convert ImageMagick-tools pkgconfig(avahi-client) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-3.0) pkgconfig(libnotify)
 # END SourceDeps(oneline)
-%define fedora 23
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           pioneers
 Version:        15.3
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Turnbased board strategy game (colonize an island)
 Group:          Games/Other
 License:        GPLv2+
 URL:            http://pio.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/pio/%{name}-%{version}.tar.gz
 Patch0:         pioneers-15.3-sanitize.patch
-BuildRequires:  libgnome-devel gtk2-devel gettext scrollkeeper intltool
+BuildRequires:  libgnome-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel gettext gettext-tools librarian intltool
 BuildRequires:  perl(XML/Parser.pm) desktop-file-utils
 Requires:       icon-theme-hicolor
-Requires(post): scrollkeeper
-Requires(postun): scrollkeeper
-Source44: import.info
+Requires(post): librarian
+Requires(postun): librarian
 
 %description
 Pioneers is a computerized version of a well known strategy board game. The
@@ -30,7 +31,7 @@ client as well as both a GUI and CLI version of the server for local games.
 %package editor
 Summary:        Pioneers Game Editor
 Group:          Games/Other
-Requires:       pioneers = %{version}
+Requires:       pioneers = %{version}-%{release}
 
 %description editor
 Pioneers is a computerized version of a well known strategy board game. The
@@ -50,7 +51,7 @@ edited graphically.
 # pioneers uses some GNU extensions
 export CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE"
 %configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -145,6 +146,9 @@ fi
 %{_datadir}/icons/hicolor/scalable/apps/%{name}-editor.svg
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 15.3-alt1_5
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 15.3-alt1_4
 - update to new release by fcimport
 
