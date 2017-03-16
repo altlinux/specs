@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-validate
 # END SourceDeps(oneline)
-%define fedora 23
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		fbg2
 Version:	0.4
-Release:	alt3_15
+Release:	alt3_16
 Summary:	A falling block stacking game
 Group:		Games/Other
 # Code is GPLv2+, music and graphics are CC-BY-SA
@@ -29,7 +31,6 @@ BuildRequires:	radius-engine-devel >= 0.7, desktop-file-utils, zip
 Obsoletes:	fbg < 0.9.1-13
 Provides:	fbg = 0.9.1-13
 %endif
-Source44: import.info
 
 %description
 Falling Block Game is a free, open source block stacking game. The object of 
@@ -48,7 +49,7 @@ chmod -x License.txt ChangeLog *.c
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=%{buildroot}
@@ -98,6 +99,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/fbg2.desktop
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_16
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_15
 - update to new release by fcimport
 
