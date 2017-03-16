@@ -1,17 +1,22 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Filter/Util/Call.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Sub/Uplevel.pm) perl(Test/Deep.pm) perl(Text/Diff.pm) perl(YAML.pm) perl(YAML/Tiny.pm) perl(parent.pm) perl(threads/shared.pm) perl-podlators
+BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Capture/Tiny.pm) perl(ExtUtils/CBuilder.pm) perl(IO/All.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Pod/Markdown.pm) perl(Sub/Uplevel.pm) perl(YAML/Tiny.pm) perl(parent.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Parallel-Scoreboard
 Version:        0.08
-Release:        alt1
+Release:        alt1_2
 Summary:        Scoreboard for monitoring status of many processes
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Parallel-Scoreboard/
-Source:        http://www.cpan.org/authors/id/K/KA/KAZUHO/Parallel-Scoreboard-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/K/KA/KAZUHO/Parallel-Scoreboard-%{version}.tar.gz
 BuildArch:      noarch
 
+BuildRequires:  %{__perl}
+
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(File/Temp.pm)
 BuildRequires:  perl(Test/Warn.pm)
@@ -30,9 +35,7 @@ BuildRequires: perl(strict.pm)
 BuildRequires: perl(warnings.pm)
 
 BuildRequires: perl(inc/Module/Install.pm)
-BuildRequires: perl(Module/Install/TestBase.pm)
 BuildRequires: perl(Module/Install/ReadmeFromPod.pm)
-Source44: import.info
 
 
 %description
@@ -48,21 +51,24 @@ sed -i -e '/^inc\/.*$/d' MANIFEST
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%{__make} %{?_smp_mflags}
 
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+%{__make} pure_install DESTDIR=$RPM_BUILD_ROOT
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
-make test
+%{__make} test
 
 %files
 %doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_2
+- update to new release by fcimport
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 
