@@ -1,8 +1,10 @@
 Group: Other
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libesedb
 Version:        20120102
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Library to access the Extensible Storage Engine (ESE) Database File (EDB) format
 
 License:        GPLv3+
@@ -15,7 +17,6 @@ Source0:        http://libesedb.googlecode.com/files/%{name}-alpha-%{version}.ta
 
 #Patch backpoerted from newer experimental versions on
 Patch0:         %{name}-inline.patch
-Source44: import.info
 
 
 %description
@@ -27,7 +28,7 @@ Windows Mail, Exchange, Active Directory, etc.
 %package        devel
 Group: Other
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -40,7 +41,7 @@ developing applications that use %{name}.
 
 %build
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -64,6 +65,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 20120102-alt2_11
+- update to new release by fcimport
+
 * Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 20120102-alt2_10
 - update to new release by fcimport
 
