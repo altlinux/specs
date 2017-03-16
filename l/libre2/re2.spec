@@ -3,18 +3,19 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname re2
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global longver 2016-04-01
 %global shortver %(echo %{longver}|sed 's|-||g')
 
 Name:           libre2
 Version:        %{shortver}
-Release:        alt1_2
+Release:        alt1_3
 Summary:        C++ fast alternative to backtracking RE engines
 Group:          System/Libraries
 License:        BSD
 URL:            http://github.com/google/%{oldname}/
 Source0:        https://github.com/google/re2/archive/%{longver}.tar.gz
-Source44: import.info
 Provides: re2 = %{version}-%{release}
 
 %description
@@ -32,8 +33,8 @@ missing features (e.g back references and generalized assertions).
 
 %package        devel
 Summary:        C++ header files and library symbolic links for %{oldname}
-Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 Provides: re2-devel = %{version}-%{release}
 
 %description    devel
@@ -51,7 +52,7 @@ you will need to install %{oldname}-devel.
 %{!?__global_ldflags: %global __global_ldflags -Wl,-z,relro}
 CXXFLAGS="${CXXFLAGS:-%optflags} -pthread -std=c++11"
 LDFLAGS="${LDFLAGS:-%__global_ldflags} -pthread"
-make %{?_smp_mflags} CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" includedir=%{_includedir} libdir=%{_libdir}
+%make_build CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" includedir=%{_includedir} libdir=%{_libdir}
 
 %install
 make install INSTALL="install -p" DESTDIR=$RPM_BUILD_ROOT includedir=%{_includedir} libdir=%{_libdir}
@@ -73,6 +74,9 @@ make %{?_smp_mflags} shared-test
 %{_libdir}/pkgconfig/%{oldname}.pc
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 20160401-alt1_3
+- update to new release by fcimport
+
 * Sun May 08 2016 Igor Vlasenko <viy@altlinux.ru> 20160401-alt1_2
 - update to new release by fcimport
 
