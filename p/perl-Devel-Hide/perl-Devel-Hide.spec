@@ -2,20 +2,22 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(File/Temp.pm) perl(Module/CoreList.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Devel-Hide
 Version:        0.0009
-Release:        alt1_9
+Release:        alt1_10
 Summary:        Forces the unavailability of specified Perl modules (for testing)
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Devel-Hide/
 Source0:        http://www.cpan.org/authors/id/F/FE/FERREIRA/Devel-Hide-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
-Source44: import.info
 
 %description
 Given a list of Perl modules/filenames, this module makes require and
@@ -27,7 +29,7 @@ installed or not).
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -44,6 +46,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.0009-alt1_10
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.0009-alt1_9
 - update to new release by fcimport
 
