@@ -2,15 +2,16 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name libvtemm
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 0.25.0
 %global api 1.2
 %define release_version %(echo %{version} | awk -F. '{print $1"."$2}')
 
 Name:           libvtemm
 Version:        0.25.0
-Release:        alt4_11
+Release:        alt4_12
 
 Summary:        C++ interface for VTE (a GTK2 terminal emulator widget)
 
@@ -23,17 +24,17 @@ Source0:        http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{release_version
 BuildRequires:  libglibmm-devel >= 2.22.0
 BuildRequires:  libpangomm-devel >= 2.24.0
 BuildRequires:  libgtkmm2-devel >= 2.19.2
-BuildRequires:  libvte-devel >= 0.26.0
-Source44: import.info
+BuildRequires:  libvte-devel python-module-vte-devel vte
 
 %description
 libvtemm provides a C++ interface to the VTE library.
 
 %package        devel
 Summary:        Headers for developing programs that will use %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}
-Requires:       pkgconfig
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
+Requires:       vte
+Requires:       pkg-config
 
 %description devel
 This package contains the static libraries and header files needed for
@@ -57,7 +58,7 @@ This package contains the full API documentation for %{name}.
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 %install
 make install DESTDIR=%{buildroot}
@@ -81,6 +82,9 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %doc %{_datadir}/devhelp/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.25.0-alt4_12
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.25.0-alt4_11
 - update to new release by fcimport
 
