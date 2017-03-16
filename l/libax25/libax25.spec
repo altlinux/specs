@@ -1,17 +1,18 @@
 Group: System/Libraries
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		libax25
 Version:        1.0.5
-Release:        alt1_2
+Release:        alt1_3
 Summary:	AX.25 library for hamradio applications
 
 License:	LGPLv2+
 URL:		http://www.linux-ax25.org/wiki/Libax25
 Source0:	http://www.linux-ax25.org/pub/libax25/%{name}-%{version}.tar.gz
 
-BuildRequires:  autoconf automake libtool
+BuildRequires:  autoconf-common automake-common libtool-common
 BuildRequires:  zlib-devel
-Source44: import.info
 
 
 %description
@@ -22,8 +23,8 @@ config file parsing, etc.
 
 %package	devel
 Summary:	Development files for %{name}
-Group:		Development/C
-Requires:	%{name}%{?_isa} = %{version}
+Group:		Development/Other
+Requires:	%{name} = %{version}-%{release}
 
 %description	devel
 The %{name}-devel package contains libraries and header files for
@@ -42,7 +43,7 @@ sed -i -e "s,libax25io_la_SOURCES,libax25io_la_LIBADD = -lz\nlibax25io_la_SOURCE
 autoreconf -fisv
 ./autogen.sh
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -69,6 +70,9 @@ rm -f %{buildroot}%{_includedir}/{netax25/ax25.h,netrom/netrom.h,netrose/rose.h}
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_3
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_2
 - update to new release by fcimport
 
