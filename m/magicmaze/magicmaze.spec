@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ perl(Archive/Tar.pm) perl(Archive/Zip.pm)
 # END SourceDeps(oneline)
-%define fedora 23
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           magicmaze
 Version:        1.0.2
-Release:        alt2_17
+Release:        alt2_18
 Summary:        Board game featuring a maze which the players change each turn
 Group:          Games/Other
 License:        zlib and Redistributable, no modification permitted
@@ -17,9 +19,8 @@ Patch2:         maze-1.0-fhs.patch
 Patch3:         magicmaze-1.0.2-license-clarification.patch
 Patch4:         magicmaze-1.0.2-trademarks.patch
 Patch5:         magicmaze-1.0.2-format-security.patch
-BuildRequires:  gstream-devel dumb-devel desktop-file-utils
+BuildRequires:  libgstream-devel dumb-devel desktop-file-utils
 Requires:       icon-theme-hicolor
-Source44: import.info
 
 %description
 The board of the game is a complicated maze. You see reddish squares, which are
@@ -47,7 +48,7 @@ chmod -x `find -type f`
 
 
 %build
-make %{?_smp_mflags} -f makefile.unx PREFIX=%{_prefix} \
+%make_build -f makefile.unx PREFIX=%{_prefix} \
   CFLAGS="$RPM_OPT_FLAGS -fsigned-char -Wno-deprecated-declarations -I/usr/include/gstream"
 
 
@@ -80,6 +81,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_18
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_17
 - update to new release by fcimport
 
