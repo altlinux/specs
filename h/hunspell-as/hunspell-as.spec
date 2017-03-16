@@ -2,17 +2,18 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-as
 Summary: Assamese hunspell dictionaries
 Version: 1.0.3
-Release: alt2_13
+Release: alt2_14
 Source: http://extensions.services.openoffice.org/files/2318/4/as_IN.oxt
 URL: http://extensions.services.openoffice.org/project/AssameseDict
 License: GPLv2+ or LGPLv2+ or MPLv1.1
 BuildArch: noarch
 
 Requires: hunspell
-Source44: import.info
 
 %description
 Assamese hunspell dictionaries.
@@ -32,6 +33,9 @@ cp -p as_IN.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_14
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_13
 - update to new release by fcimport
 
