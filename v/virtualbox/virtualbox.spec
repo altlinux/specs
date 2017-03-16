@@ -60,7 +60,7 @@
 %endif
 
 Name: virtualbox
-Version: 5.1.16
+Version: 5.1.18
 Release: alt1%ubt
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -783,6 +783,9 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Thu Mar 16 2017 Denis Medvedev <nbr@altlinux.org> 5.1.18-alt1%ubt
+- new version 5.1.18
+
 * Wed Mar 15 2017 Denis Medvedev <nbr@altlinux.org> 5.1.16-alt1%ubt
 - new version 5.1.16, git sources changed to have branch
  upstream, 5.1.16-patched for alt patches and
