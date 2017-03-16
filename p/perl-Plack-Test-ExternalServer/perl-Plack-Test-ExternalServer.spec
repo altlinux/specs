@@ -2,15 +2,18 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Plack-Test-ExternalServer
 Version:        0.02
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Run HTTP tests on external live servers
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Plack-Test-ExternalServer/
 Source0:        http://www.cpan.org/authors/id/F/FL/FLORA/Plack-Test-ExternalServer-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(HTTP/Request/Common.pm)
 BuildRequires:  perl(LWP/UserAgent.pm)
@@ -28,7 +31,6 @@ BuildRequires:  perl(Test/Pod/Coverage.pm)
 Requires:       perl(Plack/Test.pm)
 
 
-Source44: import.info
 
 %description
 This module allows you to run your Plack::Test tests against an external
@@ -40,7 +42,7 @@ HTTP or a locally spawned server.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -55,6 +57,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/Plack*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_5
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_4
 - update to new release by fcimport
 
