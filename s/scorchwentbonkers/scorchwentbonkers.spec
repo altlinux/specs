@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           scorchwentbonkers
 Version:        1.3
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Realtime remake of Scorched Earth
 Group:          Games/Other
 License:        zlib
@@ -16,10 +18,9 @@ Patch0:         %{name}-no-fmod.patch
 Patch1:         %{name}-support-16bpp.patch
 Patch2:         %{name}-unixify.patch
 Patch3:         %{name}-gcc6.patch
-BuildRequires:  liballegro-devel liballegro-devel dumb-devel AllegroOGG-devel 
+BuildRequires:  liballegro-devel liballegro-devel dumb-devel libAllegroOGG-devel 
 BuildRequires:  libGLU-devel desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor
-Source44: import.info
 
 %description
 As the name suggests, Scorch Went Bonkers is a remake of the old PC classic.
@@ -39,7 +40,7 @@ mv src/menu/Splashscreen.h src/menu/SplashScreen.h
 
 
 %build
-make %{?_smp_mflags} PREFIX=%{_prefix} OPTFLAGS="$RPM_OPT_FLAGS -fsigned-char"
+%make_build PREFIX=%{_prefix} OPTFLAGS="$RPM_OPT_FLAGS -fsigned-char"
 
 
 %install
@@ -67,6 +68,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_4
+- update to new release by fcimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_3
 - update to new release by fcimport
 
