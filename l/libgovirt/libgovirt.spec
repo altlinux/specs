@@ -1,8 +1,7 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: librest-gir-devel pkgconfig(gio-2.0)
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
-%define fedora 24
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # -*- rpm-spec -*-
 
 %global with_gir 0
@@ -14,21 +13,24 @@ BuildRequires: librest-gir-devel pkgconfig(gio-2.0)
 Summary: A GObject library for interacting with oVirt REST API
 Name: libgovirt
 Version: 0.3.4
-Release: alt1_1
+Release: alt1_2%{?extra_release}
 License: LGPLv2+
-Group: Development/C
-Source: http://ftp.gnome.org/pub/GNOME/sources/libgovirt/0.3/%{name}-%{version}.tar.xz
+Group: Development/Other
+Source0: http://ftp.gnome.org/pub/GNOME/sources/libgovirt/0.3/%{name}-%{version}.tar.xz
+Source1: http://ftp.gnome.org/pub/GNOME/sources/libgovirt/0.3/%{name}-%{version}.tar.xz.sign
+Source2: cfergeau-29AC6C82.keyring
 URL: http://people.freedesktop.org/~teuf/govirt/
-BuildRequires: glib2-devel
+BuildRequires: glib2-devel libgio libgio-devel
 BuildRequires: intltool
-BuildRequires: librest-devel >= 0.7.92
-#needed for make check
-BuildRequires: glib-networking
-BuildRequires: dconf
+BuildRequires: librest-devel librest-gir-devel
 %if %{with_gir}
 BuildRequires: gobject-introspection-devel
 %endif
-Source44: import.info
+#needed for make check
+BuildRequires: glib-networking
+BuildRequires: dconf libdconf
+#needed for GPG signature checek
+BuildRequires: dirmngr gnupg2
 
 %description
 libgovirt is a library that allows applications to use oVirt REST API
@@ -37,9 +39,10 @@ parameters needed to make a SPICE/VNC connection to them.
 
 %package devel
 Summary: Libraries, includes, etc. to compile with the libgovirt library
-Group: Development/C
-Requires: %{name}%{?_isa} = %{version}
-Requires: pkgconfig
+Group: Development/Other
+Requires: %{name} = %{version}-%{release}
+Requires: pkg-config
+Requires: libgio
 
 %description devel
 libgovirt is a library that allows applications to use oVirt REST API
@@ -49,6 +52,7 @@ parameters needed to make a SPICE/VNC connection to them.
 Libraries, includes, etc. to compile with the libgovirt library
 
 %prep
+gpgv2 --quiet --keyring %{SOURCE2} %{SOURCE1} %{SOURCE0}
 %setup -q
 
 %build
@@ -88,6 +92,9 @@ make check
 %endif
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.4-alt1_2
+- update to new release by fcimport
+
 * Sun May 08 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.4-alt1_1
 - update to new release by fcimport
 
