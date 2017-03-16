@@ -9,21 +9,25 @@ BuildRequires: gcc-c++ perl(Class/Accessor/Fast.pm) perl(ExtUtils/MY_Metafile.pm
 %add_findreq_skiplist %{perl_vendor_archlib}/Wx/*
 %add_findprov_skiplist %{perl_vendor_archlib}/Wx/*
 BuildRequires: libGL-devel libGLU-devel
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Wx-GLCanvas
 Version:        0.09
-Release:        alt1_11.1
+Release:        alt1_12
 Summary:        Interface to wxWidgets' OpenGL canvas
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Wx-GLCanvas/
 Source0:        http://www.cpan.org/authors/id/M/MB/MBARBON/Wx-GLCanvas-%{version}.tar.gz
 
 BuildRequires:  perl
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Alien/wxWidgets.pm)
 BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Wx/build/MakeMaker.pm)
-BuildRequires: libwxGTK-contrib-gizmos-devel libwxGTK-contrib-ogl-devel libwxGTK-contrib-stc-devel libwxGTK-devel
+BuildRequires:  libwxGTK-contrib-gizmos-devel libwxGTK-contrib-ogl-devel libwxGTK-contrib-stc-devel libwxGTK-devel
 
 %if 0%{?with_tests}
 BuildRequires:  perl(base.pm)
@@ -35,7 +39,6 @@ BuildRequires:  perl(Wx/ScrolledWindow.pm)
 
 
 
-Source44: import.info
 
 %description
 A wrapper for wxWidgets' wxGLCanvas, used to display OpenGL graphics.
@@ -48,7 +51,7 @@ chmod -x Changes README.txt
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags} -I/usr/include/wx-2.8"
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -69,6 +72,9 @@ DISPLAY=:0.0 make test
 %{perl_vendor_archlib}/Wx*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_12
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_11.1
 - rebuild with new perl 5.24.1
 
