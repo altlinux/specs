@@ -3,9 +3,11 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Test-CPAN-Meta
 Version:        0.25
-Release:        alt1_7
+Release:        alt1_8
 Summary:        Validation of the META.yml file in a CPAN distribution
 License:        Artistic 2.0
 URL:            http://search.cpan.org/dist/Test-CPAN-Meta/
@@ -14,6 +16,7 @@ Patch0:         Test-CPAN-Meta-0.25-utf8.patch
 BuildArch:      noarch
 # Module Build
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
 BuildRequires:  perl(Parse/CPAN/Meta.pm)
@@ -33,7 +36,6 @@ BuildRequires:  perl(Test/CPAN/Meta/JSON.pm)
 %endif
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
-Source44: import.info
 # Runtime
 
 %description
@@ -51,7 +53,7 @@ Module::Install.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -67,6 +69,9 @@ make test AUTOMATED_TESTING=1
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_8
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_7
 - update to new release by fcimport
 
