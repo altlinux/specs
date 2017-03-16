@@ -1,3 +1,5 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define lang en
 %define langrelease 0
 %define aspellversion 6
@@ -5,7 +7,7 @@ Summary: English dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 2015.04.24
-Release: alt1_2
+Release: alt1_3
 License: MIT and BSD
 Group: Text tools
 URL: http://aspell.net/
@@ -16,7 +18,6 @@ Obsoletes: aspell-en-gb <= 0.33.7.1
 Obsoletes: aspell-en-ca <= 0.33.7.1
 
 %define debug_package %{nil}
-Source44: import.info
 
 %description
 Provides the word list/dictionaries for the following: English, Canadian
@@ -38,6 +39,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2015.04.24-alt1_3
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2015.04.24-alt1_2
 - update to new release by fcimport
 
