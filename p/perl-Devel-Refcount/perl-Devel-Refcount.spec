@@ -1,22 +1,25 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(B.pm) perl(Exporter.pm) perl(Scalar/Util.pm) perl(Symbol.pm) perl(XSLoader.pm) perl-Module-Build perl-podlators
+BuildRequires: perl(B.pm) perl(Exporter.pm) perl(Scalar/Util.pm) perl(Symbol.pm) perl(XSLoader.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Devel-Refcount
 Version:        0.10
-Release:        alt3_10.1
+Release:        alt3_11
 Summary:        Obtain the REFCNT value of a referent
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Devel-Refcount/
 Source0:        http://www.cpan.org/authors/id/P/PE/PEVANS/Devel-Refcount-%{version}.tar.gz
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/CBuilder.pm)
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Test/Exception.pm)
 BuildRequires:  perl(Test/Fatal.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
-Source44: import.info
 
 %description
 This module provides a single function which obtains the reference count of
@@ -46,6 +49,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_archlib}/Devel*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_11
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_10.1
 - rebuild with new perl 5.24.1
 
