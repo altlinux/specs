@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-DateTime-Set
 Version:        0.3900
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Datetime sets and set math
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -29,7 +31,6 @@ BuildRequires:  perl(vars.pm)
 # Test Suite
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(warnings.pm)
-Source44: import.info
 
 %description
 DateTime::Set is a module for datetime sets. It can be used to handle two
@@ -65,6 +66,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.3900-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.3900-alt1_1
 - update to new release by fcimport
 
