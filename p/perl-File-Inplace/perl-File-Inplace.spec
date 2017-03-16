@@ -2,18 +2,20 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(IO/File.pm) perl(IO/Handle.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-File-Inplace
 Version:        0.20
-Release:        alt2_15
+Release:        alt2_16
 Summary:        Perl module for in-place editing of files
 License:        (GPL+ or Artistic)
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/File-Inplace/
 Source0:        http://www.cpan.org/modules/by-module/File/File-Inplace-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/More.pm)
-Source44: import.info
 
 %description
 File::Inplace is a perl module intended to ease the common task of editing
@@ -30,7 +32,7 @@ aborting edits partially through without affecting the original file.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 
@@ -49,6 +51,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20-alt2_16
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.20-alt2_15
 - update to new release by fcimport
 
