@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize pkgconfig(gtk+-2.0) pkgconfig(librsvg-2.0)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           gweled
 Version:        0.9.1
-Release:        alt2_14.20130730git819bed
+Release:        alt2_15.20130730git819bed
 
 Summary:        Swapping gem game
 
@@ -23,13 +25,12 @@ Source0:	gweled-sdl_mixer-819bed.tar.gz
 #Patch5:         %{name}-xdg_pref.diff
 
 BuildRequires:  libgnomeui-devel >= 2.0.0
-BuildRequires:  librsvg-devel >= 2.0.0
+BuildRequires:  librsvg-devel librsvg-gir-devel
 BuildRequires:  libcroco-devel >= 0.3.0
 BuildRequires:  desktop-file-utils
-BuildRequires:	intltool libtool
+BuildRequires:	intltool libtool-common
 BuildRequires:	libSDL_mixer-devel
 Requires:	icon-theme-hicolor
-Source44: import.info
 
 %description
 Gweled is a Gnome version of a popular PalmOS/Windows/Java game called
@@ -58,7 +59,7 @@ export LDFLAGS="${LDFLAGS} -lm -Wl,--export-dynamic "
 #echo "Encoding=UTF-8" >> data/gweled.desktop
 #mv gweled.desktop gweled.desktop.old
 #iconv --from-code=ISO-8859-1 --to-code=UTF-8 <gweled.desktop.old > gweled.desktop
-make %{?_smp_mflags}
+%make_build
 
 
 
@@ -69,10 +70,10 @@ desktop-file-install --delete-original \
   --add-category LogicGame                    \
   --remove-category Application                        \
   ${RPM_BUILD_ROOT}%{_datadir}/applications/%{name}.desktop
-#mkdir $RPM_BUILD_ROOT%{_var}/lib/
-#mv $RPM_BUILD_ROOT%{_var}/games/ $RPM_BUILD_ROOT%{_var}/lib/
+#mkdir $RPM_BUILD_ROOT%{_localstatedir}/lib/
+#mv $RPM_BUILD_ROOT%{_localstatedir}/games/ $RPM_BUILD_ROOT%{_localstatedir}/lib/
 # gweled.timed.scores not shipped in 0.7, but needed
-#cp -p $RPM_BUILD_ROOT%{_var}/lib/games/gweled.easy.scores $RPM_BUILD_ROOT%{_var}/lib/games/gweled.timed.scores
+#cp -p $RPM_BUILD_ROOT%{_localstatedir}/lib/games/gweled.easy.scores $RPM_BUILD_ROOT%{_localstatedir}/lib/games/gweled.timed.scores
 
 # Register as an application to be visible in the software center
 #
@@ -113,7 +114,7 @@ EOF
 %files -f %{name}.lang
 %doc AUTHORS COPYING NEWS
 %attr(2711,root,games) %{_bindir}/%{name}
-%config(noreplace) %attr(0664,games,games) %{_var}/lib/games/*
+%config(noreplace) %attr(0664,games,games) %{_localstatedir}/lib/games/*
 %{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/*
@@ -122,6 +123,9 @@ EOF
 %{_datadir}/sounds/%{name}/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_15.20130730git819bed
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_14.20130730git819bed
 - update to new release by fcimport
 
