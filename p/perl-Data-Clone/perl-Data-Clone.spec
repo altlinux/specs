@@ -2,14 +2,18 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Clone.pm) perl(JSON.pm) perl(Module/Build.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Data-Clone
 Version:        0.004
-Release:        alt1_7.1
+Release:        alt1_8
 Summary:        Polymorphic data cloning
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/Data-Clone/
 Source0:        http://www.cpan.org/authors/id/G/GF/GFUJI/Data-Clone-%{version}.tar.gz
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(constant.pm)
 BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(Devel/PPPort.pm)
@@ -29,7 +33,6 @@ BuildRequires:  perl(XSLoader.pm)
 Requires:       perl(Exporter.pm)
 
 
-Source44: import.info
 
 %description
 Data::Clone does data cloning, i.e. copies things recursively. This is
@@ -44,7 +47,7 @@ polymorphic data cloning.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -64,6 +67,9 @@ make test
 %{perl_vendor_archlib}/Data*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1_8
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1_7.1
 - rebuild with new perl 5.24.1
 
