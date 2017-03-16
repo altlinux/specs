@@ -1,9 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/pkg-config pkgconfig(bluez) pkgconfig(dbus-1) pkgconfig(imlib2) pkgconfig(x11) pkgconfig(xtst)
-# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           amora
 Version:        1.1
-Release:        alt2_16
+Release:        alt2_17
 Summary:        A mobile remote assistant
 
 Group:          Communications
@@ -18,7 +17,6 @@ BuildRequires:  imlib2-devel
 BuildRequires:  libX11-devel
 BuildRequires:  libXi-devel
 BuildRequires:  libXtst-devel
-Source44: import.info
 
 %description
 Amora is an application that enables you to control your PC desktop using a
@@ -41,7 +39,7 @@ http://code.google.com/p/amora/
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -55,6 +53,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="%{__install} -p"
 %{_mandir}/man8/amorad.8*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_17
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_16
 - update to new release by fcimport
 
