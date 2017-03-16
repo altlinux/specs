@@ -1,3 +1,5 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define lang nl
 %define langrelease 2
 Summary: Dutch dictionaries for Aspell
@@ -5,7 +7,7 @@ Name: aspell-%{lang}
 # Have to bump this to make it newer than the old, bad version.
 #Epoch: 51
 Version: 0.50
-Release: alt1_7
+Release: alt1_8
 License: GPLv2+
 Group: Text tools
 URL: http://aspell.net/
@@ -14,7 +16,6 @@ Buildrequires: aspell >= 0.60
 Requires: aspell >= 0.60
 
 %define debug_package %{nil} 
-Source44: import.info
 
 %description
 Provides the word list/dictionaries for the following: Dutch
@@ -35,6 +36,9 @@ make install DESTDIR=$RPM_BUILD_ROOT libdir=%{_libdir}
 %{_datadir}/aspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1_8
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1_7
 - update to new release by fcimport
 
