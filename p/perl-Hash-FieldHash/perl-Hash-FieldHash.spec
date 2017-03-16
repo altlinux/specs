@@ -1,43 +1,56 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Hash/Util/FieldHash/Compat.pm) perl(Mouse.pm) perl-Module-Build perl-podlators
+BuildRequires: perl(Hash/Util/FieldHash/Compat.pm) perl(Mouse.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Hash-FieldHash
 Version:        0.15
-Release:        alt1
+Release:        alt1_1
 Summary:        Lightweight field hash implementation
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/Hash-FieldHash/
-Source0:        http://www.cpan.org/authors/id/G/GF/GFUJI/Hash-FieldHash-%{version}.tar.gz
+Source0:        http://www.cpan.org/modules/by-module/Hash/Hash-FieldHash-%{version}.tar.gz
+# Module Build
+BuildRequires:  coreutils
+BuildRequires:  findutils
+BuildRequires:  gcc-common
 BuildRequires:  perl
-BuildRequires:  perl(constant.pm)
-BuildRequires:  perl(CPAN/Meta.pm)
-BuildRequires:  perl(CPAN/Meta/Prereqs.pm)
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Devel/PPPort.pm)
-BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(ExtUtils/ParseXS.pm)
 BuildRequires:  perl(File/Basename.pm)
 BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(Module/Build.pm)
+BuildRequires:  perl(utf8.pm)
+BuildRequires:  perl(warnings.pm)
+# Module Runtime
+BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(parent.pm)
-BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(XSLoader.pm)
+# Test Suite
+BuildRequires:  perl(Config.pm)
+BuildRequires:  perl(constant.pm)
+BuildRequires:  perl(Data/Dumper.pm)
+BuildRequires:  perl(if.pm)
+BuildRequires:  perl(overload.pm)
+BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(Symbol.pm)
-BuildRequires:  perl(Test/LeakTrace.pm)
 BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(threads.pm)
+# Optional Tests
+BuildRequires:  perl(Hash/Util/FieldHash.pm)
+BuildRequires:  perl(Test/LeakTrace.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 BuildRequires:  perl(Test/Synopsis.pm)
-BuildRequires:  perl(threads.pm)
-BuildRequires:  perl(utf8.pm)
-BuildRequires:  perl(warnings.pm)
-BuildRequires:  perl(XSLoader.pm)
+# Dependencies
 
 # Avoid provides from private shared objects
 
-Source44: import.info
 
 %description
 Hash::FieldHash provides the field hash mechanism, which supports the inside-
@@ -52,14 +65,13 @@ RELEASE_TESTING=1 perl Build.PL --install_path bindoc=%_man1dir --installdirs=ve
 
 %install
 ./Build install --destdir=%{buildroot} --create_packlist=0
-find %{buildroot} -type f -name '*.bs' -a -size 0 -exec rm -f {} ';'
-# %{_fixperms} %{buildroot}
+find %{buildroot} -type f -name '*.bs' -empty -delete
+# %{_fixperms} -c %{buildroot}
 
 %check
 ./Build test
 
 %files
-%doc LICENSE Changes README.md example
 %if 0%{?_licensedir:1}
 %doc LICENSE
 %else
@@ -70,6 +82,9 @@ find %{buildroot} -type f -name '*.bs' -a -size 0 -exec rm -f {} ';'
 %{perl_vendor_archlib}/Hash/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_1
+- update to new release by fcimport
+
 * Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 
