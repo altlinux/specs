@@ -1,19 +1,20 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ swig
+BuildRequires: swig
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary:       Library for converting unicode strings to numbers
 Name:          libuninum
 Version:       2.7
-Release:       alt3_17.1
+Release:       alt3_18.1
 # numconv is GPLv2, lib is LGPLv2
 License:       GPLv2 and LGPLv2
-Group:         Development/C
+Group:         Development/Other
 URL:           http://billposer.org/Software/libuninum.html
 Source0:       http://billposer.org/Software/Downloads/%{name}-%{version}.tar.bz2
 Patch0:        libuninum-2.7-64bit-clean.patch
-BuildRequires: libgmp-devel libgmp_cxx-devel
-Source44: import.info
+BuildRequires: libgmp-devel libgmpxx-devel
 
 %description
 libuninum is a library for converting Unicode strings to
@@ -30,8 +31,8 @@ Phoenician, Roman Numerals, Tamil, Telugu, Tengwar, Thai, and Tibetan.
 
 %package devel
 Summary:  Header files, libraries and development documentation for %{name}
-Group:    Development/C
-Requires: %{name} = %{version}
+Group:    Development/Other
+Requires: %{name} = %{version}-%{release}
 
 %description devel
 This package contains the header files, static libraries and
@@ -65,6 +66,9 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %{_libdir}/libuninum.so
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.7-alt3_18.1
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.7-alt3_17.1
 - update to new release by fcimport
 
