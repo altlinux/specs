@@ -3,11 +3,13 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global pkgname Tie-Function
 
 Name:           perl-Tie-Function
 Version:        0.02
-Release:        alt1_10
+Release:        alt1_11
 Summary:        Wrap functions in tied hash sugar
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Tie-Function/
@@ -16,6 +18,7 @@ BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time:
 BuildRequires:  perl(Carp.pm)
@@ -23,7 +26,6 @@ BuildRequires:  perl(warnings.pm)
 # Tests:
 BuildRequires:  perl(Test.pm)
 Requires:       perl(warnings.pm)
-Source44: import.info
 
 %description
 Tie::Function simplifies wrapping functions in tied hash syntax so they can
@@ -35,7 +37,7 @@ variables.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=%{buildroot}
@@ -50,6 +52,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_11
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_10
 - update to new release by fcimport
 
