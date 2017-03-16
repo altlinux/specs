@@ -1,44 +1,76 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: perl(Carp.pm) perl(Data/Dumper.pm) perl(File/Find.pm) perl(File/Temp.pm) perl(Module/Build/Tiny.pm) perl(Scalar/Util.pm) perl(Storable.pm) perl(Sub/Exporter/Progressive.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(strict.pm) perl(warnings.pm)
-# END SourceDeps(oneline)
-%define module_version 0.014
-%define module_name Const-Fast
-%define _unpackaged_files_terminate_build 1
-BuildRequires: rpm-build-perl perl-devel perl-podlators
-
-Name: perl-%module_name
-Version: 0.014
-Release: alt2
-Summary: Facility for creating read-only scalars, arrays, and hashes
 Group: Development/Perl
-License: perl
-Url: %CPAN %module_name
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl-podlators
+# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:           perl-Const-Fast
+Version:        0.014
+Release:        alt2_10
+Summary:        Facility for creating read-only scalars, arrays, and hashes
+License:        GPL+ or Artistic
 
-Source0: http://cpan.org.ua/authors/id/L/LE/LEONT/%module_name-%module_version.tar.gz
-BuildArch: noarch
+URL:            http://search.cpan.org/dist/Const-Fast/
+Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/Const-Fast-%{version}.tar.gz
+BuildArch:      noarch
+BuildRequires:  rpm-build-perl
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Run-time
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(Module/Build/Tiny.pm)
+BuildRequires:  perl(Scalar/Util.pm)
+BuildRequires:  perl(Storable.pm)
+BuildRequires:  perl(Sub/Exporter.pm)
+# Tests
+BuildRequires:  perl(Data/Dumper.pm)
+BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(Test/Exception.pm)
+BuildRequires:  perl(Test/Fatal.pm)
+BuildRequires:  perl(Sub/Exporter/Progressive.pm)
+# Optional tests
+BuildRequires:  perl(Test/Script.pm)
+
+
 
 %description
-use Const::Fast;
-
- const my $foo => 'a scalar value';
- const my @bar => qw/a list value/;
- const my %%buz => (a => 'hash', of => 'something');
+This the only function of this module and it is exported by default. It takes
+a scalar, array or hash left-value as first argument, and a list of one or
+more values depending on the type of the first argument as the value for the
+variable. It will set the variable to that value and subsequently make it
+read-only. Arrays and hashes will be made deeply read-only.
 
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n Const-Fast-%{version}
+
 
 %build
-%perl_vendor_build
+%{__perl} Build.PL --install_path bindoc=%_man1dir --installdirs vendor
+./Build
+
 
 %install
-%perl_vendor_install
+./Build install --destdir $RPM_BUILD_ROOT
+
+find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
+
+# %{_fixperms} $RPM_BUILD_ROOT/*
+
+
+%check
+./Build test
+
 
 %files
-%doc Changes README LICENSE
-%perl_vendor_privlib/C*
+%doc Changes LICENSE README
+%{perl_vendor_privlib}/*
+
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.014-alt2_10
+- update to new release by fcimport
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.014-alt2
 - to Sisyphus
 
