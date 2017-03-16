@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/doxygen gcc-c++
+BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
-%define fedora 23
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           amoebax
 Version:        0.2.1
-Release:        alt1_9
+Release:        alt1_10
 Summary:        Action-Puzzle Game
 Group:          Games/Other
 License:        GPLv2+ and Free Art
@@ -14,7 +16,6 @@ Patch0:         amoebax-0.2.0-gcc43.patch
 BuildRequires:  libSDL_mixer-devel libSDL_image-devel zlib-devel libpng-devel
 BuildRequires:  libvorbis-devel doxygen desktop-file-utils
 Requires:       icon-theme-hicolor
-Source44: import.info
 
 %description
 Amoebax is a cute and addictive action-puzzle game. Due an awful mutation,
@@ -41,7 +42,7 @@ in the family.
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -110,6 +111,9 @@ mv $RPM_BUILD_ROOT%{_datadir}/pixmaps/%{name}.svg \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_10
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_9
 - update to new release by fcimport
 
