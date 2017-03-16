@@ -1,19 +1,20 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ glib-devel libsocket
+BuildRequires: glib-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary:       Library for the Yahoo! Messenger Protocol
 Name:          libyahoo2  
 Version:       1.0.1
-Release:       alt3_10
+Release:       alt3_11
 Group:         System/Libraries
 License:       GPLv2
 Url:           http://libyahoo2.sourceforge.net/
 Source:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
-Requires:      pkgconfig openssl
-BuildRequires: glib2-devel
+Requires:      pkg-config openssl
+BuildRequires: glib2-devel libgio libgio-devel
 BuildRequires: libssl-devel
-Source44: import.info
 
 %description
 libyahoo2 is a C library interface to the new Yahoo! Messenger protocol. It
@@ -21,8 +22,8 @@ supports almost all current features of the protocol.
 
 %package devel
 Summary:    Headers and development files for libyahoo2
-Group:      Development/C
-Requires:   %{name} = %{version}
+Group:      Development/Other
+Requires:   %{name} = %{version}-%{release}
 
 %description devel
 The header files and some documentation that you'll need to develop with
@@ -56,6 +57,9 @@ sed -i -e 's,-@RELEASE@,,' %buildroot%_pkgconfigdir/%name.pc
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_11
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_10
 - update to new release by fcimport
 
