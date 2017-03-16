@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ libGL-devel libSDL-devel zlib-devel
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           CriticalMass
 Version:        1.5
-Release:        alt2_16
+Release:        alt2_17
 Summary:        SDL/OpenGL space shoot'em up game also known as critter
 Group:          Games/Other
 License:        GPLv2+
@@ -15,12 +17,11 @@ Patch1:         CriticalMass-1.5-libpng15.patch
 Patch2:         CriticalMass-1.5-gcc47.patch
 Patch3:         CriticalMass-1.5-cflags.patch
 Patch4:         CriticalMass-1.5-gcc6.patch
-BuildRequires:  libSDL_image-devel libSDL_mixer-devel libpng-devel curl-devel
-BuildRequires:  tinyxml-devel desktop-file-utils libtool
+BuildRequires:  libSDL_image-devel libSDL_mixer-devel libpng-devel libcurl-devel
+BuildRequires:  tinyxml-devel desktop-file-utils libtool-common
 Requires:       icon-theme-hicolor opengl-games-utils
 # Also known as critter, so make "yum install critter" work
 Provides:       critter = %{version}-%{release}
-Source44: import.info
 
 %description
 Critical Mass (aka Critter) is an SDL/OpenGL space shoot'em up game. Your
@@ -44,7 +45,7 @@ autoreconf -ivf
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -112,6 +113,9 @@ EOF
 %{_datadir}/icons/hicolor/256x256/apps/critter.png
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_17
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_16
 - update to new release by fcimport
 
