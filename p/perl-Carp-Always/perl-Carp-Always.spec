@@ -3,15 +3,18 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Carp-Always
 Version:        0.13
-Release:        alt2_8
+Release:        alt2_9
 Summary:        Warn and die in Perl noisily with stack backtraces
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/Carp-Always/
 Source0:        http://www.cpan.org//authors/id/F/FE/FERREIRA/Carp-Always-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time
 BuildRequires:  perl(Carp.pm)
@@ -23,7 +26,6 @@ BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 
 
-Source44: import.info
 
 %description
 This module is meant as a debugging aid. It can be used to make a script
@@ -36,7 +38,7 @@ complain loudly with stack backtraces when warn()ing or die()ing.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 # Recode
 iconv -f iso8859-1 -t utf8 README >README.utf8
@@ -59,6 +61,9 @@ make test
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2_9
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2_8
 - update to new release by fcimport
 
