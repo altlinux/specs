@@ -2,15 +2,18 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-MooseX-Aliases
 Version:        0.11
-Release:        alt1_7
+Release:        alt1_8
 Summary:        Easy aliasing of methods and attributes in Moose
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/MooseX-Aliases/
 Source0:        http://www.cpan.org/authors/id/D/DO/DOY/MooseX-Aliases-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(File/Find.pm)
 BuildRequires:  perl(File/Temp.pm)
@@ -31,10 +34,9 @@ BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 BuildRequires:  perl(Test/Script.pm)
 BuildRequires:  perl(warnings.pm)
-Requires:       perl(Moose.pm) >= 1.09
+Requires:       perl(Moose.pm) >= 1.090
 
 
-Source44: import.info
 
 %description
 The MooseX::Aliases module will allow you to quickly alias methods in
@@ -47,7 +49,7 @@ in the constructor via their aliased names.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
@@ -65,6 +67,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/MooseX/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_8
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_7
 - update to new release by fcimport
 
