@@ -4,9 +4,11 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Catalyst.pm) perl(Catalyst/Controller/HTML/FormFu.pm) perl(Catalyst/Engine/HTTP.pm) perl(Catalyst/Helper.pm) perl(Catalyst/Model/DBIC/Schema.pm) perl(Catalyst/Runtime.pm) perl(Catalyst/Test.pm) perl(Catalyst/View/TT.pm) perl(Catalyst/View/TT/Alloy.pm) perl(DBD/SQLite.pm) perl(DBIx/Class.pm) perl(DBIx/Class/Schema.pm) perl(Pod/Usage.pm) perl(Try/Tiny.pm) perl(inc/Module/Install.pm) perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(Encode/JP.pm)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-HTML-FormFu
 Version:        2.05
-Release:        alt1_1
+Release:        alt1_2
 Summary:        HTML Form Creation, Rendering and Validation Framework
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/HTML-FormFu/
@@ -72,27 +74,26 @@ BuildRequires:  perl(Test/Memory/Cycle.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(YAML/XS.pm)
 BuildRequires:  sed
-Requires:       perl(Captcha/reCAPTCHA.pm) >= 0.93
+Requires:       perl(Captcha/reCAPTCHA.pm) >= 0.930
 Requires:       perl(Class/Accessor/Chained/Fast.pm)
-Requires:       perl(Config/Any.pm) >= 0.18
+Requires:       perl(Config/Any.pm) >= 0.180
 Requires:       perl(Crypt/DES.pm)
-Requires:       perl(Data/Visitor.pm) >= 0.26
+Requires:       perl(Data/Visitor.pm) >= 0.260
 Requires:       perl(Date/Calc.pm)
-Requires:       perl(DateTime.pm) >= 0.38
-Requires:       perl(DateTime/Format/Builder.pm) >= 0.80
-Requires:       perl(HTML/TokeParser/Simple.pm) >= 3.14
-Requires:       perl(HTTP/Headers.pm) >= 1.64
+Requires:       perl(DateTime.pm) >= 0.380
+Requires:       perl(DateTime/Format/Builder.pm) >= 0.800
+Requires:       perl(HTML/TokeParser/Simple.pm) >= 3.140
+Requires:       perl(HTTP/Headers.pm) >= 1.640
 Requires:       perl(Locale/Maketext.pm)
 Requires:       perl(MooseX/Attribute/Chained.pm) >= 1.0.1
 Requires:       perl(Template.pm)
-Requires:       perl(YAML/XS.pm) >= 0.32
+Requires:       perl(YAML/XS.pm) >= 0.320
 
 %{echo 
 %filter_from_provides /perl(unicode/d
 %filter_from_requires /perl.Catalyst/d; /perl(default/d; /perl(model_config.pm./d;
 
 }
-Source44: import.info
 
 %description
 HTML::FormFu is a HTML form framework which aims to be as easy as possible
@@ -108,7 +109,7 @@ find examples -type f | xargs sed -i -e 's/\r//'
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -126,6 +127,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.05-alt1_2
+- update to new release by fcimport
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 2.05-alt1_1
 - new version
 
