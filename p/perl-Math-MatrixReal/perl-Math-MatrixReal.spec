@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Data/Dump.pm) perl(List/MoreUtils.pm) perl(OpenGL.pm) perl-Module-Build perl-podlators
+BuildRequires: perl(Data/Dump.pm) perl(List/MoreUtils.pm) perl(OpenGL.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Math-MatrixReal
 Version:        2.13
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Manipulate matrix of reals
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -34,7 +36,6 @@ BuildRequires:  perl(Math/Complex.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Most.pm)
 BuildRequires:  perl(Test/Simple.pm)
-Source44: import.info
 
 %description
 Implements the data type "matrix of reals" (and consequently also
@@ -70,6 +71,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1_1
 - update to new release by fcimport
 
