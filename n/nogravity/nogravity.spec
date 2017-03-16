@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           nogravity
 Version:        2.00
-Release:        alt2_25
+Release:        alt2_26
 Summary:        Space shooter in 3D
 Group:          Games/Other
 License:        GPLv2+
@@ -33,10 +35,9 @@ Patch12:        0002-rlx32-Stop-using-MaxExtentableObjet.patch
 Patch13:        nogravity-2.00-stdint_h.patch
 Patch14:        nogravity--gcc6.patch
 Requires:       %{name}-data = %{version}
-BuildRequires:  libSDL_mixer-devel libopenal-devel libpng-devel libvorbis-devel
-BuildRequires:  automake desktop-file-utils libappstream-glib
+BuildRequires:  libSDL_mixer-devel libopenal-devel libopenal1 libpng-devel libvorbis-devel
+BuildRequires:  automake-common desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor xdriinfo glxinfo
-Source44: import.info
 Patch33: nogravity-2.00-alt-libpng15.patch
 
 %description
@@ -77,13 +78,13 @@ popd
 pushd src/Linux
 
 %configure --enable-sound=sdl_mixer --disable-opengl
-make %{?_smp_mflags} LDADD=-lz
+%make_build LDADD=-lz
 mv %{name} %{name}-software
 
 make distclean
 
 %configure --enable-sound=openal --enable-opengl
-make %{?_smp_mflags} LDADD=-lz
+%make_build LDADD=-lz
 mv %{name} %{name}-opengl
 
 popd
@@ -114,6 +115,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_26
+- update to new release by fcimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_25
 - update to new release by fcimport
 
