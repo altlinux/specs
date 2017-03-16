@@ -1,3 +1,5 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global commit0 7993512ca6b259cf04e9011541205db403ea1846
 %global gittag0 2.5
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
@@ -5,15 +7,14 @@
 
 Name:		axel		
 Version:	2.5
-Release:	alt1_2
+Release:	alt1_3
 Summary:	Light command line download accelerator for Linux and Unix
 
 Group:		Networking/WWW
 License:	GPLv2+
 URL:		https://github.com/eribertomota/%{name}
 Source0:    https://github.com/eribertomota/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
-BuildRequires:	gettext
-Source44: import.info
+BuildRequires:	gettext gettext-tools
 
 
 
@@ -30,7 +31,7 @@ be useful as a wget clone on byte-critical systems.
 export CFLAGS=" %{optflags}"
 export CXXFLAGS=" %{optflags}"
 ./configure --prefix=%{_prefix} --strip=0
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -50,6 +51,9 @@ install -m 755 -p %{name} %{buildroot}%{_bindir}
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_3
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_2
 - update to new release by fcimport
 
