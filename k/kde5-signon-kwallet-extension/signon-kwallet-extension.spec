@@ -1,8 +1,8 @@
 %define rname signon-kwallet-extension
 
 Name: kde5-%rname
-Version: 16.08.3
-Release: alt1
+Version: 16.12.3
+Release: alt1%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -15,7 +15,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Tue Aug 04 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libqt5-core libqt5-dbus libqt5-gui libqt5-widgets libqt5-x11extras libsignon-extension1 libstdc++-devel libxcbutil-keysyms pkg-config python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kwallet-devel libdb4-devel python-module-google rpm-build-python3 rpm-build-ruby signon-devel
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: kf5-kwallet-devel signon-devel
 
@@ -36,6 +36,12 @@ BuildRequires: kf5-kwallet-devel signon-devel
 %_libdir/signon/extensions/*kwallet*.so*
 
 %changelog
+* Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+- new version
+
+* Thu Nov 24 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt0.M80P.1
+- build for M80P
+
 * Wed Nov 23 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt1
 - new version
 

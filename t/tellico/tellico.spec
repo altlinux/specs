@@ -1,6 +1,6 @@
 Name: 	 tellico
 Version: 3.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: A collection manager for KDE
 License: GPLv2+
@@ -13,7 +13,6 @@ Source2: FindKSane.cmake
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: gcc-c++
-BuildRequires: subversion-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-declarative-devel
 BuildRequires: kde5-libkcddb-devel
@@ -84,6 +83,10 @@ video games, coins, stamps, trading cards, comic books, and wines.
 %_K5xmlgui/%name
 
 %changelog
+* Thu Apr 06 2017 Sergey V Turchin <zerg@altlinux.org> 3.0.2-alt1.1
+- NMU: rebuild with new libkcddb
+- NMU: clean build requires
+
 * Tue Mar 28 2017 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt1
 - New version
 

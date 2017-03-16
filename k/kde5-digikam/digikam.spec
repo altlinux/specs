@@ -10,7 +10,7 @@
 
 Name: kde5-%rname
 %define lname lib%name
-Version: 5.4.0
+Version: 5.5.0
 Release: alt1%ubt
 %K5init
 
@@ -146,6 +146,8 @@ done
 
 #sed -i 's|add_subdirectory|ECM_OPTIONAL_ADD_SUBDIRECTORY|' doc-translated/CMakeLists.txt
 #rm -rf doc-translated/showfoto
+rm -rf doc-translated/sv/
+sed -i '/add_subdirectory.*sv.*/d' doc-translated/CMakeLists.txt
 
 cat >> CMakeLists.txt <<__EOF__
 find_package(KF5I18n CONFIG REQUIRED)
@@ -227,6 +229,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Thu Apr 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1%ubt
+- new version
+
 * Wed Jan 18 2017 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1%ubt
 - new version
 
