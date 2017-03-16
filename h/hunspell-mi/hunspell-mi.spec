@@ -1,16 +1,17 @@
 Group: Text tools
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-mi
 Summary: Maori hunspell dictionaries
 %global upstreamid 20080630
 Version: 0.%{upstreamid}
-Release: alt2_12
+Release: alt2_13
 Source: http://packages.papakupu.maori.nz/hunspell/hunspell-mi-0.1.%{upstreamid}-beta.tar.gz
 URL: http://papakupu.maori.nz/
 License: GPLv3+
 BuildArch: noarch
 
 Requires: hunspell
-Source44: import.info
 
 %description
 Maori hunspell dictionaries.
@@ -31,6 +32,9 @@ cp -p mi.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/mi_NZ.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20080630-alt2_13
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20080630-alt2_12
 - update to new release by fcimport
 
