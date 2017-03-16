@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Module/Build.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-DateTime-Format-DBI
 Version:        0.041
-Release:        alt1_7
+Release:        alt1_8
 Summary:        Find a parser class for a database connection
 License:        GPL+ or Artistic 
 Group:          Development/Other
@@ -13,6 +15,7 @@ Source0:        http://www.cpan.org/authors/id/C/CF/CFAERBER/DateTime-Format-DBI
 BuildArch:      noarch
 BuildRequires:  %{_bindir}/iconv
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(DateTime.pm)
 BuildRequires:  perl(DateTime/Format/SQLite.pm)
@@ -29,7 +32,6 @@ BuildRequires:  perl(warnings.pm)
 Requires:       perl(DateTime/Format/MySQL.pm)
 Requires:       perl(DateTime/Format/Pg.pm)
 Requires:       perl(DateTime/Format/DB2.pm)
-Source44: import.info
 
 %description
 This module finds a DateTime::Format::* class that is suitable for the use
@@ -47,7 +49,7 @@ mv -f LICENSE.utf LICENSE
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -62,6 +64,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.041-alt1_8
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.041-alt1_7
 - update to new release by fcimport
 
