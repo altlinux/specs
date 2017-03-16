@@ -1,7 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/perl
 # END SourceDeps(oneline)
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name ddccontrol-db
 %define version 20061014
 %global git_commit e8cc385a6321e7c99783150001193ec6e9e0c436
@@ -18,19 +20,18 @@ BuildRequires: /usr/bin/perl
 Name:             ddccontrol-db
 URL:              http://ddccontrol.sourceforge.net/
 Version:          20061014
-Release:          alt1_8.%{git_suffix}
+Release:          alt1_9.%{git_suffix}
 # Agreed by usptream to be GPLv2+
 # http://sourceforge.net/mailarchive/message.php?msg_id=29762202
 License:          GPLv2+
-Group:            File tools
+Group:            System/Base
 Summary:          DDC/CI control database for ddccontrol
 #Source0:          http://downloads.sourceforge.net/ddccontrol/%{name}-%{version}.tar.bz2
 Source0:          %{name}-%{version}-%{git_suffix}.tar.bz2
 # use autopoint instead of gettextize that is interactive tool
 Patch0:           %{name}-autopoint.patch
-BuildRequires: gettext gettext-tools gettext-tools-python gettext-tools libasprintf-devel, libtool-common, perl(XML/Parser.pm)
+BuildRequires:    gettext gettext-tools gettext-tools libasprintf-devel, libtool-common, perl(XML/Parser.pm)
 BuildArch:        noarch
-Source44: import.info
 Patch33: ddccontrol-db-0.4.2-russian.patch
 Conflicts: ddccontrol < 0.4.2-alt15
 
@@ -46,7 +47,7 @@ DDC/CU control database for DDCcontrol.
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=%{buildroot}
@@ -57,6 +58,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/%{name}
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 20061014-alt1_9.20120904gite8cc385a
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20061014-alt1_8.20120904gite8cc385a
 - update to new release by fcimport
 
