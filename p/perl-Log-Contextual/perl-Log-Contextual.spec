@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Test/PerlTidy.pm) perl(Test/Pod.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Log-Contextual
 Version:        0.007000
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Simple logging interface with a contextual log
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -39,13 +41,12 @@ BuildRequires:  perl(Test/More.pm)
 # Test::Pod 1.41 not used
 Requires:       perl(Exporter/Declare.pm) >= 0.111
 Requires:       perl(Moo.pm) >= 1.003.0
+%filter_from_requires /^perl\\(Exporter.Declare.pm\\)\\s*$/d
+%filter_from_requires /^perl\\(Moo.pm\\)\\s*$/d
 
 # Filter under-specified depenedencies
 
 
-Source44: import.info
-%filter_from_requires /^perl\\(Exporter.Declare.pm\\)\\s*$/d
-%filter_from_requires /^perl\\(Moo.pm\\)\\s*$/d
 
 %description
 This module is a simple interface to extensible logging. It is bundled with
@@ -58,7 +59,7 @@ not overly complicated, try Log::Dispatchouli.
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
@@ -74,6 +75,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.007000-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.007000-alt1_1
 - update to new release by fcimport
 
