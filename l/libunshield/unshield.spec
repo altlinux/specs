@@ -1,12 +1,14 @@
 %add_optflags %optflags_shared
 %define oldname unshield
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # github: https://fedoraproject.org/wiki/Packaging:SourceURL
 %global commit fe6338bd8ec0d9ff2148a134fabab5a0423a0b90
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:           libunshield
 Version:        1.0
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Install InstallShield applications on a Pocket PC
 
 Group:          Communications
@@ -15,10 +17,9 @@ URL:            https://github.com/twogood/unshield
 Source0:        https://github.com/twogood/unshield/archive/%{commit}/%{oldname}-%{version}-%{shortcommit}.tar.gz
 
 BuildRequires:  zlib-devel
-BuildRequires:  libtool
-BuildRequires:  autoconf
-BuildRequires:  automake
-Source44: import.info
+BuildRequires:  libtool-common
+BuildRequires:  autoconf-common
+BuildRequires:  automake-common
 Provides: unshield = %{version}-%{release}
 
 %description
@@ -29,10 +30,10 @@ devices, which were often contained in InstallShield installers, but these days
 that is rather less likely to be the primary use case.
 
 %package devel
-Group:          Development/C
+Group:          Development/Other
 Summary:        Files needed for software development with %{oldname}
-Requires:       %{name} = %{version}
-Requires:       pkgconfig
+Requires:       %{name} = %{version}-%{release}
+Requires:       pkg-config
 Provides: unshield-devel = %{version}-%{release}
 
 %description devel
@@ -63,6 +64,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/libunshield.{,l}a
 %{_libdir}/pkgconfig/libunshield.pc
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_6
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_5
 - update to new release by fcimport
 
