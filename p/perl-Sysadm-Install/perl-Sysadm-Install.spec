@@ -3,10 +3,12 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 %define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary:	Typical installation tasks for system administrators
 Name:		perl-Sysadm-Install
 Version:	0.48
-Release:	alt1_1
+Release:	alt1_2
 License:	GPL+ or Artistic
 Group:		Development/Other
 URL:		http://search.cpan.org/dist/Sysadm-Install/
@@ -51,7 +53,6 @@ Requires:	perl(Expect.pm)
 Requires:	perl(HTTP/Request.pm)
 Requires:	perl(HTTP/Status.pm)
 Requires:	perl(LWP/UserAgent.pm)
-Source44: import.info
 
 %description
 "Sysadm::Install" executes shell-like commands performing typical
@@ -74,7 +75,7 @@ perl -pi -e 's|/usr/local/bin/perl|/usr/bin/perl|;' eg/mkperl
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%make_build
 
 %check
 make test TEST_VERBOSE=1
@@ -92,6 +93,9 @@ find %{buildroot} -type f -name .packlist -delete
 %{perl_vendor_privlib}/Sysadm/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1_1
 - update to new release by fcimport
 
