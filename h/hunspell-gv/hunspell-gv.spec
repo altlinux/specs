@@ -2,11 +2,13 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-gv
 Summary: Manx hunspell dictionaries
 %global upstreamid 20040505
 Version: 0.%{upstreamid}
-Release: alt2_13
+Release: alt2_14
 Source: http://ftp.gnu.org/gnu/aspell/dict/gv/aspell-gv-0.50-0.tar.bz2
 URL: http://borel.slu.edu/crubadan/apps.html
 License: GPL+
@@ -14,7 +16,6 @@ BuildArch: noarch
 BuildRequires: aspell libhunspell-devel hunspell-utils
 
 Requires: hunspell
-Source44: import.info
 
 %description
 Manx hunspell dictionaries.
@@ -48,6 +49,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20040505-alt2_14
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20040505-alt2_13
 - update to new release by fcimport
 
