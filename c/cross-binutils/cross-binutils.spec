@@ -3,6 +3,8 @@ BuildRequires: /usr/bin/expect /usr/bin/m4 /usr/bin/runtest gcc-c++ texinfo
 # END SourceDeps(oneline)
 %set_compress_method off
 %define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 
 %global cross cross
 %global rpmprefix %{nil}
@@ -62,7 +64,7 @@ BuildRequires: /usr/bin/expect /usr/bin/m4 /usr/bin/runtest gcc-c++ texinfo
 Summary: A GNU collection of cross-compilation binary utilities
 Name: %{cross}-binutils
 Version: 2.27
-Release: alt1_5
+Release: alt1_6
 License: GPLv3+
 Group: Development/Tools
 URL: http://sources.redhat.com/binutils
@@ -129,7 +131,6 @@ Conflicts: gcc-c++-common < 4.0.0
 Obsoletes: gnupro <= 1117-1
 %endif
 Provides: bundled(libiberty)
-Source44: import.info
 
 %description
 Binutils is a collection of binary utilities, including ar (for
@@ -502,7 +503,7 @@ cd %{cross}-binutils
     --program-prefix=%{cross}- \
     --disable-shared \
     --with-bugurl=http://bugzilla.altlinux.org/
-make %{_smp_mflags} tooldir=%{_prefix} all
+%make_build tooldir=%{_prefix} all
 cd ..
 
 ###############################################################################
@@ -725,6 +726,9 @@ sed -i -e /sys-root/d files.ppc64*-linux-gnu
 %do_files xtensa-linux-gnu	%{build_xtensa}
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.27-alt1_6
+- update to new release by fcimport
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.27-alt1_5
 - new version
 
