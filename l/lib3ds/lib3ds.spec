@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           lib3ds
 Version:        1.3.0
-Release:        alt2_22
+Release:        alt2_23
 
 Summary:        3D Studio file format library
 
@@ -20,7 +22,6 @@ Patch1:         lib3ds-1.3.0-lib3ds-mesh.c.diff
 Patch2:         lib3ds-1.2.0-pkgconfig.diff
 
 Patch3:         lib3ds-1.3.0-config.patch
-Source44: import.info
 
 %description
 lib3ds is a free ANSI-C library for working with the popular "3ds" 3D model
@@ -49,9 +50,9 @@ Some tools to process 3ds files.
 
 %package        devel
 Summary:        %summary
-Group:          Development/C
-Requires:	pkgconfig
-Requires:	lib3ds = %{version}
+Group:          Development/Other
+Requires:	pkg-config
+Requires:	lib3ds = %{version}-%{release}
 
 %description    devel
 Development files for lib3ds
@@ -68,7 +69,7 @@ Development files for lib3ds
 %build
 %configure  --disable-static
 
-make %{?_smp_mflags}
+%make_build
 
 sed -e 's,@prefix@,%{_prefix},' \
   -e 's,@exec_prefix@,%{_exec_prefix},' \
@@ -101,6 +102,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/aclocal/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_23
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_22
 - update to new release by fcimport
 
