@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
-%define fedora 23
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           lacewing
 Version:        1.10
-Release:        alt2_26
+Release:        alt2_27
 Summary:        Arcade-style shoot-em-up
 Group:          Games/Other
 License:        GPLv2+
@@ -21,7 +23,6 @@ Patch4:         lacewing-format-security.patch
 Patch5:         lacewing-rhbz1045111.patch
 BuildRequires:  liballegro-devel desktop-file-utils
 Requires:       icon-theme-hicolor
-Source44: import.info
 Patch33: lacewing-1.10-alt-as-needed.patch
 
 %description
@@ -49,7 +50,7 @@ chmod 644 readme.txt licence.txt
 
 
 %build
-make %{?_smp_mflags} PREFIX=%{_prefix} \
+%make_build PREFIX=%{_prefix} \
   CFLAGS="$RPM_OPT_FLAGS -fsigned-char -Wno-deprecated-declarations"
 
 
@@ -82,6 +83,9 @@ install -p -m 644 %{SOURCE3} \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2_27
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2_26
 - update to new release by fcimport
 
