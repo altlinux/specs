@@ -1,11 +1,13 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/convert /usr/bin/desktop-file-install
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 %filter_from_requires /perl(www.pl/d
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define my_subversion b7
 Name:           html2ps
 Version:        1.0
-Release:        alt2_0.22.%{my_subversion}
+Release:        alt2_0.24.%{my_subversion}
 Summary:        HTML to PostScript converter
 
 Group:          Publishing
@@ -21,15 +23,23 @@ Patch1:         %{name}-1.0b5-xdg-open.patch
 Patch2:         %{name}-1.0b5-config.patch
 # Remove deprecated variable, bug #822117
 Patch3:         %{name}-1.0b7-Remove-deprecated-variable.patch
+# Fix Perl 5.22 warnings, bug #1404275
+Patch4:         html2ps-1.0b7-Fix-perl-5.22-warnings.patch
 
 BuildArch:      noarch
+BuildRequires:  coreutils
 BuildRequires:  desktop-file-utils
+BuildRequires:  glibc-utils
+BuildRequires:  rpm-build-perl
+BuildRequires:  sed
+Requires:       ghostscript-utils ghostscript
 # Depend on paperconf directly (instead of libpaper package) for rpmlint sake
-Requires: /usr/bin/tex texlive-generic-recommended /usr/bin/dvips texlive-generic-recommended ghostscript-utils ghostscript /usr/bin/paperconf
-# not autodetected since they are called by require not at the beginning of 
-# line
-Requires:       perl(LWP/UserAgent.pm) perl(HTTP/Cookies.pm) perl(HTTP/Request.pm)
-Source44: import.info
+Requires:       %{_bindir}/paperconf
+Requires:       perl(HTTP/Cookies.pm)
+Requires:       perl(HTTP/Request.pm)
+Requires:       perl(LWP/UserAgent.pm)
+Requires:       /usr/bin/dvips texlive-generic-recommended
+Requires:       /usr/bin/tex texlive-generic-recommended
 
 %description
 An HTML to PostScript converter written in Perl.
@@ -43,7 +53,7 @@ An HTML to PostScript converter written in Perl.
 %package -n xhtml2ps
 Summary:     GUI front-end for html2ps
 Group:       Publishing
-Requires:    html2ps = %{version}
+Requires:    html2ps = %{version}-%{release}
 Requires:    xdg-utils
 
 %description -n xhtml2ps
@@ -67,6 +77,8 @@ patch -p1 < debian/patches/01_manpages.dpatch
 # 03_html2ps.dpatch is against 1.0b5, adjust it to 1.0b6
 < debian/patches/03_html2ps.dpatch sed -e 's|/opt/misc/|/it/sw/share/www/|' | \
     patch -p1
+
+%patch4 -p1
 
 %build
 
@@ -105,6 +117,9 @@ desktop-file-install \
 %{_datadir}/applications/*xhtml2ps.desktop
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.24.b7
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.22.b7
 - update to new release by fcimport
 
