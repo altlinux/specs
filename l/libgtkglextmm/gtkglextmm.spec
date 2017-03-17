@@ -2,7 +2,10 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: chrpath
+%add_optflags %optflags_shared
 %define oldname gtkglextmm
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define gtkglext_major 1.0
 %define gtkglextmm_major 1.2
 %define gtkmm_major 2.4
@@ -10,7 +13,7 @@ BuildRequires: chrpath
 Summary: C++ wrapper for GtkGlExt
 Name: libgtkglextmm
 Version: 1.2.0
-Release: alt2_24
+Release: alt2_25
 License: LGPLv2+
 Group: System/Libraries
 URL: http://projects.gnome.org/gtkglext/
@@ -21,9 +24,9 @@ Patch1: fix_ftbfs_gtk_2_20.patch
 Patch2: fix_ftbfs_gtk_2_36.patch
 Patch3: fix_ftbfs_gtk_2_37.patch
 
-BuildRequires: gtkglext-devel >= %{gtkglext_major}
+BuildRequires: libgtkglext-devel >= %{gtkglext_major}
 BuildRequires: libgtkmm2-devel >= %{gtkmm_major}
-Source44: import.info
+Provides: gtkglextmm = %{version}-%{release}
 Patch33: gtkglextmm-1.2.0-fix-deprecated.patch
 
 
@@ -32,9 +35,10 @@ gtkglextmm is a C++ wrapper for GtkGlExt, an OpenGL extension to GTK+.
 
 %package devel
 Summary: Development tools for gtkglextmm
-Group: Development/C
+Group: Development/Other
 
 Requires: %{name} = %{version}
+Provides: gtkglextmm-devel = %{version}-%{release}
 
 %description devel
 The gtkglextmm-devel package contains the header files, static libraries,
@@ -56,14 +60,13 @@ echo '# Nothing' >> tools/m4/convert_gtkglext.m4
 %patch33 -p2
 
 %build
-%add_optflags -std=c++11
 %configure --disable-static --disable-dependency-tracking
 
 # remove rpath
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
-make %{?_smp_mflags}
+%make_build
 
 %install
 DESTDIR=$RPM_BUILD_ROOT make install
@@ -87,6 +90,9 @@ done
 %doc %{_datadir}/doc/%{oldname}-%{gtkglextmm_major}/html/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_25
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_24
 - fixed build
 
