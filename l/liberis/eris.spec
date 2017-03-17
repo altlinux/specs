@@ -1,27 +1,28 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ pkgconfig(atlascpp-0.6) pkgconfig(glib-2.0) pkgconfig(mercator-0.3) pkgconfig(sigc++-2.0) pkgconfig(skstream-0.3) pkgconfig(wfmath-1.0)
+BuildRequires: gcc-c++ pkgconfig(glib-2.0)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname eris
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           liberis
 Version:        1.3.23
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Client-side session layer for Atlas-C++
 
-Group:          Development/C++
+Group:          Development/Other
 # All files untagged except for Eris/Operations.{cpp,h} which is labeled
 # LGPL with no version.
 License:        LGPLv2+
 URL:            http://worldforge.org/dev/eng/libraries/eris
 Source0:        http://downloads.sourceforge.net/worldforge/%{oldname}-%{version}.tar.bz2
 
-BuildRequires: mercator-devel doxygen
-BuildRequires: atlascpp-devel >= 0.5.98
-BuildRequires: wfmath-devel >= 0.3.2
-BuildRequires: skstream-devel >= 0.3.5
+BuildRequires: libmercator-devel doxygen
+BuildRequires: libatlascpp-devel >= 0.5.98
+BuildRequires: libwfmath-devel >= 0.3.2
+BuildRequires: libskstream-devel >= 0.3.5
 
 BuildRequires:  libsigc++2-devel glib-devel
-Source44: import.info
 Provides: eris = %{version}-%{release}
 
 %description
@@ -33,8 +34,8 @@ quickly tie game objects to whatever output representation they are using.
 
 %package devel
 Summary:        Development files for Eris
-Group:          Development/C++
-Requires:       pkgconfig %{oldname} = %{version}
+Group:          Development/Other
+Requires:       pkg-config %{oldname} = %{version}-%{release}
 Provides: eris-devel = %{version}-%{release}
 
 
@@ -48,7 +49,7 @@ Libraries and header files for developing applications that use Eris.
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
@@ -68,6 +69,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib%{oldname}-1.3.la
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.23-alt1_7
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.23-alt1_6
 - update to new release by fcimport
 
