@@ -1,16 +1,17 @@
 Group: Other
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libserialport
 Version:        0.1.1
-Release:        alt1_0
+Release:        alt1_1
 Summary:        Library for accessing serial ports
 License:        LGPLv3+
 URL:            http://sigrok.org/wiki/%{name}
 Source0:        http://sigrok.org/download/source/%{name}/%{name}-%{version}.tar.gz
-BuildRequires:  doxygen graphviz
+BuildRequires:  doxygen graphviz libgraphviz
 
 Provides: bundled(jquery) = 1.7.1
-Source44: import.info
 
 %description
 libserialport is a minimal library written in C that is intended to take care
@@ -31,7 +32,7 @@ The operations that are supported are:
 %package        devel
 Group: Other
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -41,7 +42,7 @@ developing applications that use %{name}.
 Group:          Documentation
 Summary:        API documentation for %{name}
 BuildArch:      noarch
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description    doc
 The %{name}-doc package contains documentation for developing software
@@ -56,7 +57,7 @@ with %{name}.
 V=1 make %{?_smp_mflags}
 
 # This builds documentation for the -doc package
-make %{?_smp_mflags} doc
+%make_build doc
 
 
 %install
@@ -78,6 +79,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt1_0
 - update to new release by fcimport
 
