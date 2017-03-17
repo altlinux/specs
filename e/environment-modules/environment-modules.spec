@@ -1,11 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: imake libXt-devel xorg-cf-files
 # END SourceDeps(oneline)
-%define fedora 24
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 
 Name:           environment-modules
 Version:        3.2.10
-Release:        alt1_17
+Release:        alt1_20
 Summary:        Provides dynamic modification of a user's environment
 
 Group:          System/Base
@@ -39,14 +41,15 @@ Patch6:         environment-modules-py3-and-doc-fix.patch
 # Fix unload from loaded modulefile
 # https://bugzilla.redhat.com/show_bug.cgi?id=1117334
 Patch7:         environment-modules-3.2.10-unload-from-module.patch
+# Fix build with -Werror=implicit-function-declaration
+Patch8:         environment-modules-implicit.patch
 
 BuildRequires:  tcl-devel, tclx, libX11-devel
 BuildRequires:  dejagnu
-BuildRequires: man man-whatis
+BuildRequires:  man man-whatis
 #For ps in startup script
-Requires: procps sysvinit-utils
+Requires:       procps sysvinit-utils
 Provides:	environment(modules)
-Source44: import.info
 
 %description
 The Environment Modules package provides for the dynamic modification of
@@ -83,6 +86,7 @@ have access to the module alias.
 %patch5 -p1 -b .tcl86
 %patch6 -p1 -b .py3
 %patch7 -p1 -b .unload-from-module
+%patch8 -p1 -b .implicit
 
 
 %build
@@ -93,7 +97,7 @@ have access to the module alias.
            --with-man-path=$(manpath) \
            --with-module-path=%{_sysconfdir}/modulefiles:%{_datadir}/modulefiles
 #           --with-debug=42 --with-log-facility-debug=stderr
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -122,7 +126,8 @@ EOF
 
 %files
 %_altdir/modules.sh_environment-modules
-%doc LICENSE.GPL README TODO
+%doc LICENSE.GPL
+%doc README TODO
 %{_sysconfdir}/modulefiles
 %{_bindir}/modulecmd
 %dir %{_datadir}/Modules
@@ -138,6 +143,9 @@ EOF
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_20
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_17
 - update to new release by fcimport
 
