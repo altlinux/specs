@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           clonekeen
 Version:        0.8.4
-Release:        alt1_9
+Release:        alt1_10
 Summary:        "Commander Keen: Invasion of the Vorticons" clone
 Group:          Games/Other
 License:        GPLv3+
@@ -25,7 +27,6 @@ Source7:        %{name}.png
 Patch0:         %{name}-0.8.4-noSDLmain.patch
 BuildRequires:  libSDL_mixer-devel libdynamite-devel desktop-file-utils
 Requires:       icon-theme-hicolor autodownloader
-Source44: import.info
 
 %description
 CloneKeen is an almost complete clone of the old classic DOS game,
@@ -50,7 +51,7 @@ sed -i 's/\r//g' README src/changelog.txt
 
 
 %build
-make %{?_smp_mflags} -C src -f Makefile CFLAGS="$RPM_OPT_FLAGS"
+%make_build -C src -f Makefile CFLAGS="$RPM_OPT_FLAGS"
 gcc -o %{name}-extract $RPM_OPT_FLAGS extract.c -ldynamite
 gcc -o %{name}-extract-sounds $RPM_OPT_FLAGS %{name}-extract-sounds.c
 
@@ -90,6 +91,9 @@ sed -i s,/usr/libexec,%{_libexecdir},g %buildroot%{_libexecdir}/%{name}* %buildr
 %{_datadir}/icons/hicolor/24x24/apps/%{name}.png
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt1_10
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt1_9
 - update to new release by fcimport
 
