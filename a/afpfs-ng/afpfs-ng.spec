@@ -1,6 +1,8 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libncurses-devel libreadline-devel
+BuildRequires: libncurses-devel
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # No FUSE on RHEL5
 %if %{?el5:1}0
 %define _without_fuse 1
@@ -8,7 +10,7 @@ BuildRequires: gcc-c++ libncurses-devel libreadline-devel
 
 Name:           afpfs-ng
 Version:        0.8.1
-Release:        alt3_20
+Release:        alt3_21
 Summary:        Apple Filing Protocol client
 
 Group:          System/Base
@@ -21,8 +23,7 @@ Patch1:         afpfs-ng-0.8.1-pointer.patch
 Patch2:         afpfs-ng-0.8.1-formatsec.patch
 
 %{?!_without_fuse:BuildRequires: libfuse-devel}
-BuildRequires: libgcrypt-devel libgmp-devel libgmp_cxx-devel readline-devel
-Source44: import.info
+BuildRequires: gcrypt-utils libgcrypt-devel libgmp-devel libgmpxx-devel readline-devel
 
 %description
 A command line client to access files exported from Mac OS system via
@@ -44,7 +45,7 @@ The command line client for AFP is in fuse-afp package
 
 %package devel
 Summary:        Development files for afpfs-ng
-Group:          Development/C
+Group:          Development/Other
 Requires:       %{name} = %{version}
 
 %description devel
@@ -66,7 +67,7 @@ Library for dynamic linking and header files of afpfs-ng.
 touch --reference aclocal.m4 configure.ac Makefile.in
 
 %configure %{?_without_fuse:--disable-fuse} --disable-static
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -103,6 +104,9 @@ cp -p include/* %{buildroot}%{_includedir}/afpfs-ng
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_21
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_20
 - update to new release by fcimport
 
