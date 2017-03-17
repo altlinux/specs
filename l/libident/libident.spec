@@ -1,9 +1,11 @@
 BuildRequires: chrpath
 BuildRequires: gcc-c++
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libident
 Version:        0.32
-Release:        alt2_13
+Release:        alt2_14
 Summary:        New LibIdent C library
 Group:          System/Libraries
 License:        Public Domain
@@ -11,7 +13,6 @@ URL:            http://www.remlab.net/libident/
 Source0:        http://www.remlab.net/files/libident/libident-%{version}.tar.bz2
 Source1:        xinetd.identtest
 BuildRequires:  /usr/bin/iconv
-Source44: import.info
 
 
 %description
@@ -27,7 +28,7 @@ running on the system from which they are connected.
 %package        tools
 Summary:        A small daemon that can be used to test Ident servers
 Group:          System/Servers
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description    tools
 in.identtestd is a small daemon (to be started from inetd) that does an 
@@ -37,8 +38,8 @@ your Ident server is working correctly.
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 LibIdent is a small C library for interfacing with RFC 1413 
@@ -65,7 +66,7 @@ CFLAGS="-fPIC %{optflags} -D_GNU_SOURCE" %configure \
     --disable-static \
     --enable-testers
 
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -105,6 +106,9 @@ fi
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.32-alt2_14
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.32-alt2_13
 - update to new release by fcimport
 
