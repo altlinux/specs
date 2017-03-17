@@ -1,6 +1,8 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           fluid-soundfont
 Version:        3.1
-Release:        alt1_15
+Release:        alt1_16
 Summary:        Pro-quality GM/GS soundfont
 Group:          Sound
 License:        MIT
@@ -32,7 +34,6 @@ FluidR3 is the third release of Frank Wen's pro-quality GM/GS soundfont.\
 The soundfont has lots of excellent samples, including all the GM instruments\
 along side with the GS instruments that are recycled and reprogrammed versions\
 of the GM presets.
-Source44: import.info
 
 %description
 %common_description
@@ -49,7 +50,7 @@ This package contains common files shared among all FluidR3 soundfont packages.
 %package gm
 Summary:        Pro-quality General Midi soundfont
 Group:          Sound
-Requires:       %{name}-common = %{version}
+Requires:       %{name}-common = %{version}-%{release}
 Provides:       soundfont2
 Provides:       soundfont2-default
 # If timidity++ is installed it must understand the trysouce configfile keyword
@@ -64,8 +65,8 @@ format.
 %package gs
 Summary:        Pro-quality General Standard Extension soundfont
 Group:          Sound
-Requires:       %{name}-common = %{version}
-Requires:       %{name}-gm = %{version}
+Requires:       %{name}-common = %{version}-%{release}
+Requires:       %{name}-gm = %{version}-%{release}
 Provides:       soundfont2
 
 
@@ -78,7 +79,7 @@ This package contains instruments belonging to General Midi's General Standard
 %package lite-patches
 Summary:        Pro-quality General Midi soundfont in GUS patch format
 Group:          Sound
-Requires:       %{name}-common = %{version}
+Requires:       %{name}-common = %{version}-%{release}
 Provides:       timidity++-patches = 5
 Obsoletes:      timidity++-patches < 5
 Obsoletes:      PersonalCopy-Lite-patches < 5
@@ -156,6 +157,9 @@ install -p -m 644 FluidR3.cfg $RPM_BUILD_ROOT%{_sysconfdir}/timidity.cfg
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_16
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_15
 - update to new release by fcimport
 
