@@ -1,17 +1,21 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install perl(SOAP/Lite.pm)
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:         amtterm
 License:      GPLv2+
-Version:      1.4
-Release:      alt1_2
+Version:      1.6
+Release:      alt1_1
 Summary:      Serial-over-lan (sol) client for Intel AMT
 Group:        Networking/WWW
 URL:          http://www.kraxel.org/blog/linux/amtterm/
 Source:       http://www.kraxel.org/releases/%{name}/%{name}-%{version}.tar.gz
 Requires:     xdg-utils
-BuildRequires: gtk2-devel libvte-devel desktop-file-utils
-Source44: import.info
+
+BuildRequires: desktop-file-utils
+BuildRequires: pkgconfig(gtk+-x11-3.0)
+BuildRequires: pkgconfig(vte-2.91)
 
 %description
 Serial-over-lan (sol) client for Intel AMT.
@@ -43,6 +47,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications/ \
 %{_datadir}/applications/gamt.desktop
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_2
 - update to new release by fcimport
 
