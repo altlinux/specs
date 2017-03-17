@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: agistudio
 Version: 1.3.0
-Release: alt1_10
+Release: alt1_11
 Summary: AGI integrated development environment
 License: GPLv2+
 Group: Games/Other
@@ -11,10 +13,9 @@ Source0: http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Source1: %{name}.desktop
 URL: http://agistudio.sourceforge.net/
 
-BuildRequires: qt4-devel desktop-file-utils
+BuildRequires: libqt4-declarative libqt4-devel qt4-designer desktop-file-utils
 #Requiring nagi, needed at runtime, not picked up by rpm.
-Requires: icon-theme-hicolor, nagi, gtk2
-Source44: import.info
+Requires: icon-theme-hicolor, nagi libgail libgtk+2
 
 %description
 AGI (Adventure Game Interpreter) is the adventure game engine used by
@@ -58,6 +59,9 @@ desktop-file-install  \
 %{_datadir}/icons/hicolor/32x32/apps/agistudio.xpm
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_11
+- update to new release by fcimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_10
 - update to new release by fcimport
 
