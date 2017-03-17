@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.14.0
-Release: alt7
+Release: alt8%ubt
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -43,7 +43,7 @@ Patch108: alt-show-avatars.patch
 # Automatically added by buildreq on Thu Apr 02 2015 (-bi)
 # optimized out: cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-test libqt5-xml libstdc++-devel libxcb-devel pkg-config python-base python-module-BeautifulSoup python-module-PyStemmer python-module-Pygments python-module-google python-module-google-apputils python-module-matplotlib python-module-numpy python-module-pyExcelerator python-module-pyparsing python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-zope.interface python-modules python-modules-compiler python-modules-email python-modules-encodings qt5-base-devel qt5-tools
 #BuildRequires: cmake gcc-c++ glibc-devel-static libpam-devel libsystemd-devel nss-ldapd python-module-Reportlab python-module-cssselect python-module-docutils python-module-ecdsa python-module-ed25519 python-module-html5lib python-module-nss python-module-polib python-module-protobuf python-module-pycparser python-module-pycrypto python-module-pygobject3 python-module-pygraphviz python-module-xlwt qt5-declarative-devel qt5-tools-devel ruby ruby-stdlibs time xsetroot
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: cmake extra-cmake-modules glibc-devel
 BuildRequires: libpam-devel libsystemd-devel
 BuildRequires: libxcb-devel libXau-devel libXdmcp-devel
@@ -134,6 +134,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Fri Mar 17 2017 Sergey V Turchin <zerg@altlinux.org> 0.14.0-alt8%ubt
+- revert previous changes (ALT#33248)
+
 * Tue Mar 14 2017 Oleg Solovyov <mcpain@altlinux.org> 0.14.0-alt7
 - added support for expired password changing
 
