@@ -1,18 +1,16 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: libsocket
-# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global rel r9153
 
 Name:		agedu
 Version:	0
-Release:	alt2_10.%{rel}
+Release:	alt2_11.%{rel}
 Summary:	An utility for tracking down wasted disk space
-Group:		File tools
+Group:		System/Base
 License:	MIT
 URL:		http://www.chiark.greenend.org.uk/~sgtatham/agedu/
 # Upstream tarball is regenerated nightly, so md5sums will differ.
 Source0:	http://www.chiark.greenend.org.uk/~sgtatham/agedu/agedu-%{rel}.tar.gz
-Source44: import.info
 
 %description
 Agedu is a program that helps you to track down wasted disk space by creating
@@ -25,7 +23,7 @@ files and directories.
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -39,6 +37,9 @@ make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt2_11.r9153
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt2_10.r9153
 - update to new release by fcimport
 
