@@ -1,3 +1,5 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 %define debug_package %{nil}
 
@@ -5,7 +7,7 @@
 
 Name:           PySolFC-music
 Version:        4.40
-Release:        alt2_14
+Release:        alt2_15
 Summary:        Music for PySolFC
 
 Group:          Games/Other
@@ -13,11 +15,10 @@ License:        GPLv2+
 URL:            http://www.pysol.org/
 Source0:        ftp://ibiblio.org/pub/linux/games/solitaires/pysol-music-%{version}.tar.gz
 
-Requires:       python-module-PySolFC >= %{mainversion}
+Requires:       PySolFC python-module-PySolFC
 Requires:       python-module-pygame
 
 BuildArch: noarch
-Source44: import.info
 
 %description
 This package contains the background music for %{name}
@@ -38,6 +39,9 @@ cp -a data/music/* $RPM_BUILD_ROOT%{_datadir}/PySolFC/music
 %{_datadir}/PySolFC/music/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 4.40-alt2_15
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 4.40-alt2_14
 - update to new release by fcimport
 
