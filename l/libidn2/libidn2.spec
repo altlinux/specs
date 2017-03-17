@@ -2,27 +2,29 @@
 BuildRequires: /usr/bin/gtkdocize texinfo
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary:          Library to support IDNA2008 internationalized domain names
 Name:             libidn2
-Version:          0.11
-Release:          alt1_1
+Version:          0.16
+Release:          alt1_2
 License:          (GPLv2+ or LGPLv3+) and GPLv3+
 Group:            System/Libraries
-URL:              http://www.gnu.org/software/libidn/#libidn2
-Source:           http://alpha.gnu.org/gnu/libidn/%{name}-%{version}.tar.gz
-Patch0:           libidn2-0.3-rpath.patch
+URL:              https://www.gnu.org/software/libidn/#libidn2
+Source:           https://alpha.gnu.org/gnu/libidn/%{name}-%{version}.tar.gz
+Patch0:           libidn2-0.16-rpath.patch
+BuildRequires:    libunistring-devel
 Provides:         bundled(gnulib)
-Source44: import.info
 
 %description
 Libidn2 is an implementation of the IDNA2008 specifications in RFC
-5890, 5891, 5892 and 5893 for internationalized domain names (IDN).
-It is a standalone library, without any dependency on libidn.
+5890, 5891, 5892, 5893 and TR46 for internationalized domain names
+(IDN). It is a standalone library, without any dependency on libidn.
 
 %package devel
 Summary:          Development files for libidn2
 Group:            Development/Other
-Requires:         %{name}%{?_isa} = %{version}
+Requires:         %{name} = %{version}-%{release}
 
 %description devel
 The libidn2-devel package contains libraries and header files for
@@ -32,12 +34,11 @@ developing applications that use libidn2.
 %setup -q
 %patch0 -p1 -b .rpath
 touch -c -r configure.rpath configure
-touch -c -r src/configure.rpath src/configure
 touch -c -r m4/libtool.m4.rpath m4/libtool.m4
 
 %build
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 %install
 make DESTDIR=$RPM_BUILD_ROOT INSTALL='install -p' install
@@ -75,6 +76,9 @@ make %{?_smp_mflags} -C tests check
 %{_datadir}/gtk-doc/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_1
 - update to new release by fcimport
 
