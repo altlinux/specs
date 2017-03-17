@@ -1,12 +1,14 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gtkdocize gcc-c++ pkgconfig(gtk+-2.0) pkgconfig(libgnomecanvas-2.0)
+BuildRequires: /usr/bin/gtkdocize
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname phat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary: A collection of GTK+ widgets useful for audio applications
 Name:          libphat
 Version:       0.4.1
-Release:       alt1_15
+Release:       alt1_16
 License:       GPLv2+
 Group:         System/Libraries
 URL:           http://phat.berlios.de/
@@ -16,9 +18,8 @@ Patch0:        phat-unused-but-set-variable.patch
 Patch1:        phat-fix-fsf-address.patch
 Patch2:        phat-gdk-unref.patch
 
-BuildRequires: gtk2-devel 
+BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel 
 BuildRequires: libgnomecanvas-devel
-Source44: import.info
 Provides: phat = %{version}-%{release}
 
 %description
@@ -28,8 +29,8 @@ standardization (well, at least for GTK+ apps).
 
 %package devel
 Summary:       Header files for PHAT 
-Group:         Development/C
-Requires:      %{name}%{?_isa} = %{version}
+Group:         Development/Other
+Requires:      %{name} = %{version}-%{release}
 Provides: phat-devel = %{version}-%{release}
 
 %description devel
@@ -38,7 +39,7 @@ with the PHAT Audio Toolkit.
 
 %package docs
 Summary:       Documentation for PHAT 
-Group:         Development/C
+Group:         Development/Other
 Provides: phat-docs = %{version}-%{release}
 
 %description docs
@@ -52,7 +53,7 @@ Documentation for the PHAT Audio Toolkit.
 
 %build
 %configure --enable-debug --disable-static
-make %{?_smp_mflags} 
+%make_build 
 
 %install
 make DESTDIR=%{buildroot} install
@@ -74,6 +75,9 @@ rm %{buildroot}%{_libdir}/libphat.*a
 %{_datadir}/gtk-doc/html/%{oldname}
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1_16
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1_15
 - update to new release by fcimport
 
