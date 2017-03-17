@@ -3,6 +3,8 @@ BuildRequires: libXext-devel libfreetype-devel
 # END SourceDeps(oneline)
 BuildRequires: zlib-devel
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Arches on which the multilib {sysdefs,types}.h hack is needed:
 # (Update libast-wrapper.h when adding archs)
 
@@ -12,7 +14,7 @@ BuildRequires: zlib-devel
 Summary:        Library of Assorted Spiffy Things
 Name:           libast
 Version:        0.7.1
-Release:        alt5_0.18.%{cvs}cvs
+Release:        alt5_0.19.%{cvs}cvs
 Group:          System/Libraries
 License:        BSD
 URL:            http://www.eterm.org/
@@ -22,9 +24,8 @@ URL:            http://www.eterm.org/
 # $ tar czvf libast-20080502.tar.gz libast-20080502
 Source:        libast-%{cvs}.tar.gz
 Source1:       libast-wrapper.h
-BuildRequires: imlib2-devel pcre-devel libXt-devel
-BuildRequires: automake autoconf libtool
-Source44: import.info
+BuildRequires: imlib2-devel libpcre-devel libpcrecpp-devel libXt-devel
+BuildRequires: automake-common autoconf-common libtool-common
 
 %description
 LibAST is the Library of Assorted Spiffy Things.  It contains various
@@ -37,8 +38,8 @@ version number that begins with 0.
 
 %package devel
 Summary:  Header files, libraries and development documentation for %{name}
-Group:    Development/C
-Requires: %{name} = %{version}
+Group:    Development/Other
+Requires: %{name} = %{version}-%{release}
 
 %description devel
 This package contains the header files, static libraries and development
@@ -89,6 +90,9 @@ mv %buildroot%_includedir/libast/types-%{_arch}.h %buildroot%_includedir/libast/
 %exclude %{_libdir}/*.a
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt5_0.19.20080502cvs
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt5_0.18.20080502cvs
 - update to new release by fcimport
 
