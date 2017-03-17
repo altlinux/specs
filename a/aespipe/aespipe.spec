@@ -1,17 +1,15 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/md5sum
-# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary:        AES-based encryption tool for tar/cpio and loop-aes images
 Name:           aespipe
 Version:        2.4d
-Release:        alt1_3
+Release:        alt1_4
 License:        GPLv2+
-Group:          File tools
+Group:          System/Base
 URL:            http://loop-aes.sourceforge.net/
 Source:         http://loop-aes.sourceforge.net/aespipe/aespipe-v%{version}.tar.bz2
-BuildRequires:  gpg
-Requires:       gpg
-Source44: import.info
+BuildRequires:  gnupg
+Requires:       gnupg
 
 %description
 aespipe is an encryption tool that reads from standard input and
@@ -39,7 +37,7 @@ kernel module.
 %ifarch %{ix86}
 %global make_target x86
 %endif
-make %{?_smp_mflags} %{make_target}
+%make_build %{make_target}
 
 %check
 make tests
@@ -59,6 +57,9 @@ install -Dp -m0755 aespipe %{buildroot}%{_bindir}/aespipe
 %{_bindir}/aespipe
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.4d-alt1_4
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.4d-alt1_3
 - update to new release by fcimport
 
