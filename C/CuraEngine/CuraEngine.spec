@@ -2,16 +2,18 @@ Group: Engineering
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           CuraEngine
 Version:        15.04
-Release:        alt1_2
+Release:        alt1_5
 Summary:        Engine for processing 3D models into G-code instructions for 3D printers
 License:        AGPLv3
 URL:            https://github.com/Ultimaker/%{name}
 Source0:        %{url}/archive/%{version}.tar.gz
-BuildRequires:  polyclipping-devel >= 6.1.2
-Source44: import.info
+BuildRequires:  libpolyclipping-devel >= 6.1.2
 # For tests:
+BuildRequires:  python
 
 %description
 %{name} is a C++ console application for 3D printing G-code generation. It
@@ -48,6 +50,9 @@ make test
 %{_bindir}/%{name}
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 15.04-alt1_5
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 15.04-alt1_2
 - update to new release by fcimport
 
