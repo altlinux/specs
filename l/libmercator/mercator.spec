@@ -1,21 +1,22 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ pkgconfig(wfmath-1.0)
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname mercator
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libmercator
 Version:        0.3.3
-Release:        alt1_7
+Release:        alt1_8
 Summary:        Terrain library for WorldForge client/server
 
-Group:          Development/C++
+Group:          Development/Other
 License:        GPL+
 URL:            http://worldforge.org/dev/eng/libraries/mercator
 Source0:        http://downloads.sourceforge.net/worldforge/%{oldname}-%{version}.tar.bz2
 
-BuildRequires:  wfmath-devel >= 0.3.2
+BuildRequires:  libwfmath-devel >= 0.3.2
 BuildRequires:  doxygen
-Source44: import.info
 Provides: mercator = %{version}-%{release}
 
 %description
@@ -26,8 +27,8 @@ library on the client, while a subset of features are useful on the server.
 
 %package devel
 Summary: Development files for mercator library
-Group:   Development/C++
-Requires: %{name} = %{version} pkgconfig
+Group:   Development/Other
+Requires: %{name} = %{version}-%{release} pkg-config
 Provides: mercator-devel = %{version}-%{release}
 
 
@@ -41,7 +42,7 @@ Development libraries and headers for linking against the mercator library.
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 make docs
 
 # Remove timestamps from the generated documentation to avoid
@@ -74,6 +75,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt1_8
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt1_7
 - update to new release by fcimport
 
