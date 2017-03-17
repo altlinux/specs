@@ -2,16 +2,17 @@ Group: Emulators
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/col /usr/bin/groff /usr/bin/valgrind bzlib-devel gcc-c++
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           advancecomp
-Version:        1.20
-Release:        alt1_3
+Version:        1.23
+Release:        alt1_1
 Summary:        Recompression utilities for .PNG, .MNG and .ZIP files
 License:        GPLv3
 URL:            http://www.advancemame.it/
 Source0:        https://github.com/amadvance/advancecomp/releases/download/v%{version}/advancecomp-%{version}.tar.gz
 BuildRequires:  tofrodos
 BuildRequires:  zlib-devel
-Source44: import.info
 
 %description
 AdvanceCOMP is a set of recompression utilities for .PNG, .MNG and .ZIP files.
@@ -31,22 +32,22 @@ files
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=%{buildroot}
 
-%check
-make check
-
 %files
 %doc COPYING
 %doc AUTHORS HISTORY README
-%doc doc/{advdef*,authors,history,readme}.{txt,html}
+%doc doc/{adv*,authors,history,readme}.txt
 %{_bindir}/*
 %{_mandir}/man1/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1_1
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1_3
 - update to new release by fcimport
 
