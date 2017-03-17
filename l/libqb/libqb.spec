@@ -8,12 +8,14 @@ BuildRequires: /usr/bin/splint gcc-c++ pkgconfig(glib-2.0)
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %bcond_without check
 %bcond_without syslog_tests
 
 Name:           libqb
 Version:        1.0.1
-Release:        alt1_1
+Release:        alt1_2
 Summary:        An IPC library for high performance servers
 
 Group:          System/Libraries
@@ -24,7 +26,6 @@ Source0:        https://github.com/ClusterLabs/libqb/releases/download/v%{versio
 BuildRequires:  autoconf-common automake-common libtool-common doxygen procps sysvinit-utils libcheck-devel
 # https://fedoraproject.org/wiki/Packaging:C_and_C%2B%2B#BuildRequires_and_Requires
 BuildRequires:  gcc-common
-Source44: import.info
 
 %description
 libqb provides high-performance, reusable features for client-server
@@ -42,7 +43,7 @@ and polling.
 ./autogen.sh
 %configure --disable-static \
            %{?with_syslog_tests:--enable-syslog-tests}
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
@@ -58,7 +59,7 @@ rm -rf $RPM_BUILD_ROOT/%{_docdir}/*
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/Other
-Requires:       %{name} = %{version} pkg-config
+Requires:       %{name} = %{version}-%{release} pkg-config
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -73,6 +74,9 @@ developing applications that use %{name}.
 %{_mandir}/man3/qb*3*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_1
 - update to new release by fcimport
 
