@@ -1,8 +1,7 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen libncurses-devel
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name libnjb
 %define version 2.2.7
 # SPEC file for libnjb, primary target is the Fedora Extras
@@ -12,19 +11,18 @@ BuildRequires: /usr/bin/doxygen libncurses-devel
 
 Name:		libnjb
 Version:	2.2.7
-Release:	alt3_12
+Release:	alt3_13
 Summary:	A software library for talking to the Creative Nomad Jukeboxes and Dell DJs
 URL:		http://libnjb.sourceforge.net/
 
 Group:		System/Libraries
 Source0:	http://download.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 License:	BSD
-BuildRequires: libusb-compat-devel libusb-devel
+BuildRequires:	libusb-compat-devel
 BuildRequires:	zlib-devel
-BuildRequires:	ncurses-devel
+BuildRequires:	libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 BuildRequires:	doxygen
-BuildRequires:	systemd
-Source44: import.info
+BuildRequires:	journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-utils
 
 %description
 This package provides a software library for communicating with the
@@ -33,7 +31,7 @@ Creative Nomad Jukebox line of MP3 players.
 %package examples
 Summary:        Example programs for libnjb
 Group:          Sound
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description examples
 This package provides example programs for communicating with the
@@ -42,7 +40,7 @@ Creative Nomad Jukebox and Dell DJ line of MP3 players.
 %package devel
 Summary:        Development files for libnjb
 Group:          System/Libraries
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{version}-%{release}
 # doc subpackage removed in newer releases, and included
 # in the -devel package.
 Provides:	libnjb-doc
@@ -57,7 +55,7 @@ library for Creative Nomad/Zen/Jukebox and Dell DJ line of MP3 players.
 
 %build
 %configure --disable-static --program-prefix=njb-
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT pkgdocdir=%{_docdir}/%{name}
@@ -97,6 +95,9 @@ touch -r configure.ac \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt3_13
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt3_12
 - update to new release by fcimport
 
