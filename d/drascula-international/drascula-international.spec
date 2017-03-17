@@ -2,9 +2,11 @@ Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           drascula-international
 Version:        1.0
-Release:        alt4_12
+Release:        alt4_13
 Summary:        Subtitles for Drascula: The Vampire Strikes Back
 # For further discussion on distribution rights see:
 # http://www.redhat.com/archives/fedora-extras-list/2006-November/msg00030.html
@@ -17,7 +19,6 @@ Source3:        drascula-es.desktop
 Source4:        drascula-it.desktop
 Buildarch:      noarch
 BuildRequires:  desktop-file-utils
-Source44: import.info
 
 %description
 Spanish, German, French and Italian subtitles for Drascula: The Vampire
@@ -100,6 +101,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_13
+- update to new release by fcimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_12
 - update to new release by fcimport
 
