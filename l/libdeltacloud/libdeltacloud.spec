@@ -1,11 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(libcurl) pkgconfig(libxml-2.0)
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary: A library for accessing deltacloud
 Name: libdeltacloud
 Version: 0.9
-Release: alt2_14
+Release: alt2_15
 License: LGPLv2+
 Group: System/Libraries
 URL: https://git.fedorahosted.org/git/deltacloud/libdeltacloud.git
@@ -14,8 +13,7 @@ Patch0: libdeltacloud-configure-ac-update.patch
 Patch1: libdeltacloud-update-fsf-address.patch
 BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel
-BuildRequires: libtool
-Source44: import.info
+BuildRequires: libtool-common
 
 %description
 Libdeltacloud is a library for accessing deltacloud via a
@@ -24,8 +22,8 @@ convenient C API.
 %package devel
 Summary: Header files for libdeltacloud library
 License: LGPLv2+
-Group: Development/C
-Requires: %{name} = %{version}
+Group: Development/Other
+Requires: %{name} = %{version}-%{release}
 
 %description devel
 The libdeltacloud-devel package contains the files needed for developing
@@ -44,7 +42,7 @@ autoheader
 autoconf
 automake --add-missing
 %configure --libdir=/%{_lib}
-make %{?_smp_mflags}
+%make_build
 
 %install
 make DESTDIR="${RPM_BUILD_ROOT}" install
@@ -87,6 +85,9 @@ rm -f $RPM_BUILD_ROOT/%{_lib}/libdeltacloud.a
 %{_libdir}/pkgconfig/libdeltacloud.pc
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_15
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_14
 - update to new release by fcimport
 
