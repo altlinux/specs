@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/bbrun /usr/bin/firefox /usr/bin/gencat /usr/bin/gnome-terminal /usr/bin/gvim gcc-c++ imake libX11-devel xorg-cf-files
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary: The bastard son of Blackbox, a small and fast Window Manager
 Name: hackedbox
 Version: 0.8.5
-Release: alt1_17
+Release: alt1_18
 # Most of the sources are MIT-licensed from blackbox, but a (very) small
 # portion is GPLv2+, so that is the resulting license
 License: GPLv2+
@@ -17,12 +19,11 @@ Patch1: hackedbox-0.8.5-gcc43.patch
 BuildRequires: libXt-devel, libXext-devel
 # We heavily patch *.in files...
 BuildRequires: autoconf-common, automake-common, libtool-common
-Source44: import.info
-Source45: hackedbox.alternatives
-Source46: hackedbox.menu
-Source47: hackedbox.png
-Source48: hackedbox.menu-method
-Source49: hackedbox.wmsession
+Source44: hackedbox.alternatives
+Source45: hackedbox.menu
+Source46: hackedbox.png
+Source47: hackedbox.menu-method
+Source48: hackedbox.wmsession
 
 %description
 Hackedbox is a stripped down version of Blackbox - The X11 Window Manager.
@@ -71,11 +72,11 @@ EOF
 %{__install} -D -p -m 644 %{SOURCE1} \
     %{buildroot}%{_datadir}/xsessions/hackedbox.desktop
 # ALT specific
-install -pD -m755 %SOURCE48 %buildroot%_sysconfdir/menu-methods/%name
-install -pD -m644 %SOURCE46 %buildroot%_menudir/%name
-install -pD -m644 %SOURCE47 %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
-install -pD -m644 %SOURCE49 %buildroot%_sysconfdir/X11/wmsession.d/07%name
-install -pD -m644 %SOURCE45 %buildroot%_altdir/%name
+install -pD -m755 %SOURCE47 %buildroot%_sysconfdir/menu-methods/%name
+install -pD -m644 %SOURCE45 %buildroot%_menudir/%name
+install -pD -m644 %SOURCE46 %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
+install -pD -m644 %SOURCE48 %buildroot%_sysconfdir/X11/wmsession.d/07%name
+install -pD -m644 %SOURCE44 %buildroot%_altdir/%name
 
 install -pD -m644 /dev/null %buildroot%_sysconfdir/X11/%name/%name-menu
 
@@ -110,6 +111,9 @@ rm -f %buildroot/etc/X11/gdm/Sessions/Hackedbox
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.5-alt1_18
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.5-alt1_17
 - update to new release by fcimport
 
