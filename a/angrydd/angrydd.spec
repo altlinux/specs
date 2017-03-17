@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           angrydd
 Version:        1.0.1
-Release:        alt5_14
+Release:        alt5_15
 Summary:        Falling blocks game
 
 Group:          Games/Other
@@ -15,8 +17,7 @@ Source3:        %{name}.desktop
 BuildArch:      noarch
 
 BuildRequires:  desktop-file-utils
-Requires:       python-module-pygame icon-theme-hicolor gtk2
-Source44: import.info
+Requires:       python-module-pygame icon-theme-hicolor libgail libgtk+2
 
 %description
 In Angry, Drunken Dwarves (ADD), you are an angry, drunken dwarf. Why are you
@@ -61,6 +62,9 @@ desktop-file-install                    \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_15
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_14
 - update to new release by fcimport
 
