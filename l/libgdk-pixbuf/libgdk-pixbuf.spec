@@ -14,7 +14,7 @@
 
 Name: lib%_name
 Version: %ver_major.5
-Release: alt1
+Release: alt1.1
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
@@ -131,6 +131,10 @@ install -p -m644 %_sourcedir/%_name.map %_name/compat.map
 install -p -m644 %_sourcedir/%_name.lds %_name/compat.lds
 
 %build
+%ifarch e2k
+# till lcc ~1.23
+export LIBS=-lcxa
+%endif
 %autoreconf
 %configure \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
@@ -236,6 +240,9 @@ echo : >>%_name/abicheck.sh
 
 
 %changelog
+* Fri Mar 17 2017 Michael Shigorin <mike@altlinux.org> 2.36.5-alt1.1
+- E2K: force linking against -lcxa
+
 * Mon Feb 13 2017 Yuri N. Sedunov <aris@altlinux.org> 2.36.5-alt1
 - 2.36.5
 
