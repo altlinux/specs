@@ -2,9 +2,11 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		libgtextutils
 Version:	0.7
-Release:	alt1_16
+Release:	alt1_17
 Summary:	Assaf Gordon text utilities    
 
 Group:		System/Libraries
@@ -12,7 +14,6 @@ License:	AGPLv3+
 URL:		http://hannonlab.cshl.edu/fastx_toolkit/
 Source0:	https://github.com/agordon/%{name}/releases/download/%{version}/%{name}-%{version}.tar.gz
 Patch0:		libgtextutils-GCC6-iostream.patch
-Source44: import.info
 
 
 %description
@@ -21,7 +22,7 @@ Text utilities library used by the fastx_toolkit, from the Hannon Lab
 %package       devel
 Summary:       Development files for %{name}
 Group:	       Development/Other
-Requires:      %{name} = %{version}
+Requires:      %{name} = %{version}-%{release}
 Requires:      pkg-config
 
 %description   devel
@@ -39,7 +40,7 @@ developing applications that use %{name}.
 #fix for unused-direct-shlib-dependency
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 
-make %{?_smp_mflags} CFLAGS="%{optflags}" CXXFLAGS="%{optflags}"
+%make_build CFLAGS="%{optflags}" CXXFLAGS="%{optflags}"
 
 
 %install
@@ -58,6 +59,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/gtextutils.pc
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_17
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_16
 - update to new release by fcimport
 
