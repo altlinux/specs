@@ -1,7 +1,9 @@
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libst2205
 Version:        1.4.3
-Release:        alt3_11
+Release:        alt3_12
 Summary:        Library for accessing the display of hacked st2205 photo frames
 Group:          System/Libraries
 License:        GPLv3+
@@ -14,7 +16,6 @@ Source0:        http://www.neophob.com/files/st2205tool-1.4.3.tar.gz
 Patch0:         st2205tool-1.4.3-no-exit.patch
 Patch1:         st2205tool-1.4.3-width-height-swap.patch
 BuildRequires:  libgd2-devel
-Source44: import.info
 
 %description
 It is possible to flash digital photo frames with the st2205 chip-sets with
@@ -25,8 +26,8 @@ the display from the PC, for st2205 frames with the hacked firmware.
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -35,8 +36,8 @@ developing applications that use %{name}.
 
 %package tools
 Summary:        Tools for %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 
 %description tools
 This package contains the st2205 set picture utility which can be used to
@@ -50,8 +51,8 @@ display a (properly sized) PNG file on a supported picture frames display.
 
 
 %build
-make %{?_smp_mflags} CFLAGS="$RPM_OPT_FLAGS -fPIC" -C libst2205
-make %{?_smp_mflags} CFLAGS="$RPM_OPT_FLAGS -I../libst2205" -C setpic
+%make_build CFLAGS="$RPM_OPT_FLAGS -fPIC" -C libst2205
+%make_build CFLAGS="$RPM_OPT_FLAGS -I../libst2205" -C setpic
 
 
 %install
@@ -79,6 +80,9 @@ install -p -m 644 libst2205/st2205.h $RPM_BUILD_ROOT%{_includedir}
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt3_12
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt3_11
 - update to new release by fcimport
 
