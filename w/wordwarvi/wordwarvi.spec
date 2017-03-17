@@ -1,12 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global commit 6beed311c2ecb3f9662f35ecc06948bd89ed9455
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:           wordwarvi
 Version:        1.1
-Release:        alt1_2.git6beed31
+Release:        alt1_3.git%{shortcommit}
 Summary:        Side-scrolling shoot 'em up '80s style arcade game
 Group:          Games/Other
 License:        GPLv2+ and CC-BY and CC-BY-SA
@@ -16,10 +18,9 @@ Source0:        https://github.com/smcameron/wordwarvi/archive/%{commit}/%{name}
 Source1:        %{name}.desktop
 Source2:        %{name}.png
 Source3:        %{name}.appdata.xml
-BuildRequires:  gtk2-devel libportaudio2-devel libvorbis-devel
+BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel libportaudio2-devel libvorbis-devel
 BuildRequires:  desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor
-Source44: import.info
 
 %description
 Word War vi is your basic side-scrolling shoot 'em up '80s style arcade game.
@@ -38,7 +39,7 @@ vi, mmm-kay?
 
 
 %build
-make %{?_smp_mflags} PREFIX=%{_prefix} CFLAGS="$RPM_OPT_FLAGS"
+%make_build PREFIX=%{_prefix} CFLAGS="$RPM_OPT_FLAGS"
 
 
 %install
@@ -67,6 +68,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_3.git6beed31
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_2.git6beed31
 - update to new release by fcimport
 
