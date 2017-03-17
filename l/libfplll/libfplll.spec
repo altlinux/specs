@@ -3,11 +3,13 @@ BuildRequires: gcc-c++ libfplll-devel libgmp-devel libqd-devel
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global commit		b50fd91ba0aeea2067dc9d82e6c352dbe0210eb3
 %global shortcommit	%(c=%{commit}; echo ${c:0:7})
 Name:           libfplll
 Version:        4.0.5
-Release:        alt1_1
+Release:        alt1_2
 Summary:        LLL-reduces euclidean lattices
 License:        LGPLv2+
 URL:            https://github.com/dstehle/fplll
@@ -16,7 +18,6 @@ BuildRequires:	autoconf-common
 BuildRequires:	automake-common
 BuildRequires:	libtool-common
 BuildRequires:  libmpfr-devel
-Source44: import.info
 
 %description
 fplll contains several algorithms on lattices that rely on
@@ -34,7 +35,7 @@ reduction algorithm.
 %package        devel
 Group: Development/C
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -44,7 +45,7 @@ developing applications that use %{name}.
 %package        tools
 Group: Engineering
 Summary:        Command line tools that use %{name}
-Requires:       %{name}%{?_isa} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description    tools
 The %{name}-tools package contains command-line tools that expose
@@ -65,7 +66,7 @@ sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
     -e 's|-nostdlib|-Wl,--as-needed &|' \
     -i libtool
 
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -94,6 +95,9 @@ make check
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.5-alt1_2
+- update to new release by fcimport
+
 * Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.5-alt1_1
 - update to new release by fcimport
 
