@@ -1,13 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Ick!  This is only a temporary hack until I have more time
 # to rebase the affected patches (#4, and possibly more)
 
 Summary: Collection of text-based games
 Name: bsd-games
 Version: 2.17
-Release: alt2_49
+Release: alt2_51
 License: BSD and BSD with advertising
 Group: Games/Other
 URL: ftp://metalab.unc.edu/pub/Linux/games/
@@ -16,6 +18,7 @@ Source1: config.params
 # Updated acronym databases
 Source2: http://cvsweb.netbsd.org/cgi-bin/cvsweb.cgi/~checkout~/src/share/misc/acronyms
 Source3: http://cvsweb.netbsd.org/cgi-bin/cvsweb.cgi/~checkout~/src/share/misc/acronyms.comp
+Source4: http://cvsweb.netbsd.org/cgi-bin/cvsweb.cgi/~checkout~/src/share/misc/acronyms-o.real
 # A collection of patches from Debian.
 Patch0: bsd-games-2.17-debian.patch
 # Patches from Fedora Core 1
@@ -41,9 +44,10 @@ Patch17: bsd-games-2.17-adventurecrc.patch
 Patch18: bsd-games-2.17-wtfrpm.patch
 Patch19: bsd-games-2.17-adventureinit.patch
 Patch20: bsd-games-2.17-backgammonrecursion.patch
-BuildRequires: ncurses-devel words flex flex bison
-Requires(pre): shadow-utils
-Source44: import.info
+Patch21: bsd-games-2.17-huntversion.patch
+Patch22: bsd-games-2.17-getrandom.patch
+BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel words flex flex bison
+Requires(pre): shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
 
 %description
 Bsd-games includes adventure, arithmetic, atc, backgammon, battlestar,
@@ -76,6 +80,8 @@ install -p -m 755 %{SOURCE1} .
 %patch18 -p1 -b .wtfrpm
 %patch19 -p0 -b .adventureinit
 %patch20 -p1 -b .backgammonrecursion
+%patch21 -p1 -b .huntversion
+%patch22 -p1 -b .getrandom
 
 %build
 # We include a templatized configuration settings file to set
@@ -124,6 +130,7 @@ rm -f $RPM_BUILD_ROOT/%{_docdir}/trek.me
 # Updated acronym databases
 install -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/misc/
 install -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/misc/
+install -p -m 0644 %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/misc/
 
 %pre
 for group in gamehack gamesail gamephant; do
@@ -176,6 +183,7 @@ exit 0
 %{_bindir}/wump
 %{_datadir}/%{name}
 %{_datadir}/misc/acronyms
+%{_datadir}/misc/acronyms-o.real
 %{_datadir}/misc/acronyms.comp
 %{_mandir}/man6/*
 %{_sbindir}/huntd
@@ -196,6 +204,9 @@ exit 0
 %doc AUTHORS COPYING ChangeLog ChangeLog.0 THANKS YEAR2000 README.hunt trek/USD.doc/trek.me
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.17-alt2_51
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.17-alt2_49
 - update to new release by fcimport
 
