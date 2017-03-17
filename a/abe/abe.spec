@@ -2,9 +2,11 @@ Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ imake libXt-devel xorg-cf-files
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           abe
 Version:        1.1
-Release:        alt5_28
+Release:        alt5_29
 
 Summary:        Scrolling, platform-jumping, ancient pyramid exploring game
 License:        GPL+
@@ -37,7 +39,6 @@ BuildRequires:  libSDL_mixer-devel
 Requires:       icon-theme-hicolor
 
 %global icondir %{_datadir}/icons/hicolor
-Source44: import.info
 
 %description
 A scrolling, platform-jumping, key-collecting, ancient pyramid exploring game,
@@ -59,7 +60,7 @@ mv -f COPYING.new COPYING
 %build
 %configure --with-data-dir=%{_datadir}/%{name}
 sed -i "s|^CFLAGS =.*|CFLAGS = ${RPM_OPT_FLAGS} \$\(SDL_CFLAGS\)|" src/Makefile
-make %{?_smp_mflags}
+%make_build
 
 %install
 make DESTDIR=$RPM_BUILD_ROOT install
@@ -104,6 +105,9 @@ touch --no-create %{icondir} >&/dev/null ||:
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_29
+- update to new release by fcimport
+
 * Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_28
 - update to new release by fcimport
 
