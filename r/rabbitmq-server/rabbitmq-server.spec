@@ -12,7 +12,7 @@
 
 
 Name: rabbitmq-server
-Version: 3.6.5
+Version: 3.6.8
 Release: alt1
 License: MPLv1.1
 BuildArch: noarch
@@ -30,11 +30,8 @@ Patch1: rabbitmq-server-0001-Remove-excessive-sd_notify-code.patch
 Patch2: rabbitmq-server-0002-Add-systemd-notification-support.patch
 Patch3: rabbitmq-server-0003-Revert-Distinct-exit-codes-for-CLI-utilities.patch
 Patch4: rabbitmq-server-0004-Allow-guest-login-from-non-loopback-connections.patch
-Patch5: rabbitmq-server-0005-Avoid-RPC-roundtrips-in-list-commands.patch
-Patch6: rabbitmq-server-0006-rabbit_prelaunch-must-use-RABBITMQ_SERVER_ERL_ARGS.patch
-Patch101: rabbitmq-common-0001-Avoid-RPC-roundtrips-while-listing-items.patch
-Patch102: rabbitmq-common-0002-Use-proto_dist-from-command-line.patch
-
+Patch5: rabbitmq-server-0005-rabbit_prelaunch-must-use-RABBITMQ_SERVER_ERL_ARGS.patch
+Patch101: rabbitmq-common-0001-Use-proto_dist-from-command-line.patch
 
 URL: http://www.rabbitmq.com/
 Packager: Maxim Ivanov <redbaron@altlinux.org>
@@ -49,10 +46,17 @@ Requires: erlang
 Provides: erlang_app(rabbit_common) = %version
 Provides: erlang_app(ranch) = %version
 
+Provides: erlang_mod(ec_semver) = %version
+Provides: erlang_mod(rabbit_cert_info) = %version
+Provides: erlang_mod(rabbit_core_metrics) = %version
+Provides: erlang_mod(rabbit_data_coercion) = %version
+Provides: erlang_mod(rabbit_pbe) = %version
+
 # second workaround for not requires tsung
 Provides: erlang_mod(rabbit_binary_parser)  = %version
 Provides: erlang_mod(rabbit_command_assembler) = %version
 Provides: erlang_mod(rabbit_misc) = %version
+
 
 Summary: The RabbitMQ server
 
@@ -71,16 +75,16 @@ Erlang header files for %name
 
 %prep
 %setup -q
+cd deps/rabbit
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
+cd ../..
 
 cd deps/rabbit_common
 %patch101 -p1
-%patch102 -p1
 cd ../..
 
 # We have to remove it until common_test subpackage lands RHOS
@@ -99,6 +103,7 @@ export VERSION=%version
 
 %install
 %makeinstall_std \
+        VERSION="%version" \
         PREFIX=%_prefix \
         install-bin install-man
 
@@ -116,6 +121,7 @@ install -p -D -m 0755 %SOURCE2 %buildroot%_sbindir/%{oname}-server
 install -p -D -m 0755 %SOURCE2 %buildroot%_sbindir/%{oname}-plugins
 install -p -D -m 0644 %SOURCE3 %buildroot%_logrotatedir/%name
 install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/%oname/%{oname}-env.conf
+install -p -D -m 0644 deps/rabbit/docs/rabbitmq.config.example %buildroot%_sysconfdir/%oname/rabbitmq.config
 #install -p -D -m 0644 %SOURCE5 %buildroot%_datadir/%name/include.mk
 install -p -D -m 0644 %SOURCE6 %buildroot%_unitdir/%oname.service
 install -p -D -m 0644 %SOURCE7 %buildroot%_tmpfilesdir/%oname.conf
@@ -145,7 +151,7 @@ rm -f %buildroot%_erlanglibdir/rabbitmq_server-%version/{LICENSE,LICENSE-*,INSTA
 %preun_service %oname
 
 %files
-%doc LICENSE LICENSE-* docs/rabbitmq.config.example
+%doc LICENSE LICENSE-* deps/rabbit/docs/rabbitmq.config.example
 %_sbindir/*
 %_libexecdir/%oname
 %_erlanglibdir/rabbitmq_server-%version
@@ -169,6 +175,10 @@ rm -f %buildroot%_erlanglibdir/rabbitmq_server-%version/{LICENSE,LICENSE-*,INSTA
 #%_datadir/%name
 
 %changelog
+* Fri Mar 17 2017 Alexey Shabalin <shaba@altlinux.ru> 3.6.8-alt1
+- 3.6.8
+- fixed CVE-2016-9877
+
 * Wed Sep 28 2016 Alexey Shabalin <shaba@altlinux.ru> 3.6.5-alt1
 - 3.6.5
 
