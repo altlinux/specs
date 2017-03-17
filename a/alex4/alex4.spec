@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           alex4
 Version:        1.0
-Release:        alt2_19
+Release:        alt2_20
 Summary:        Alex the Allegator 4 - Platform game
 Group:          Games/Other
 License:        GPL+
@@ -17,7 +19,6 @@ Patch2:         alex4-dot-files-endian-clean.patch
 Patch3:         alex4-fsf-address.patch
 BuildRequires:  liballegro-devel dumb-devel desktop-file-utils ImageMagick
 Requires:       icon-theme-hicolor
-Source44: import.info
 
 %description
 In the latest installment of the series Alex travels through the jungle in
@@ -39,7 +40,7 @@ sed -i -e 's,$(CC) $(LDFLAGS) -o $@ $^,$(CC) -o $@ $^ $(LDFLAGS),' src/Makefile
 
 %build
 pushd src
-make %{?_smp_mflags} PREFIX=%{_prefix} \
+%make_build PREFIX=%{_prefix} \
   CFLAGS="$RPM_OPT_FLAGS -Wno-deprecated-declarations"
 popd
 
@@ -67,6 +68,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_20
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_19
 - update to new release by fcimport
 
