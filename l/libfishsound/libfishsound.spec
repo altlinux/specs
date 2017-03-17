@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/valgrind pkgconfig(flac) pkgconfig(oggz) pkgconfig(sndfile) pkgconfig(speex) pkgconfig(vorbis) pkgconfig(vorbisenc)
+BuildRequires: /usr/bin/valgrind
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libfishsound
 Version:        1.0.0
-Release:        alt3_11
+Release:        alt3_12
 Summary:        Simple programming interface for Xiph.Org codecs
 
 Group:          System/Libraries
@@ -13,10 +15,9 @@ URL:            http://www.xiph.org/fishsound/
 Source0:        http://downloads.xiph.org/releases/libfishsound/libfishsound-%{version}.tar.gz
 
 # also pulled in by speex-devel
-BuildRequires:  libflac-devel
+BuildRequires:  libflac++-devel libflac-devel
 BuildRequires:  libspeex-devel libvorbis-devel liboggz-devel libsndfile-devel
 BuildRequires:  doxygen
-Source44: import.info
 
 %description
 libfishsound provides a simple programming interface for decoding and
@@ -30,9 +31,9 @@ and Ogg Vorbis files.
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}
-Requires:       pkgconfig
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
+Requires:       pkg-config
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -42,7 +43,7 @@ developing applications that use %{name}.
 Summary:        Documentation for %{name}
 Group:          Documentation
 # note: intentionally not noarch; contains a target-specific Makefile
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description    doc
 The %{name}-doc package contains the documentation for %{name}.
@@ -50,7 +51,7 @@ The %{name}-doc package contains the documentation for %{name}.
 %package        tools
 Summary:        Sample programs bundled with %{name}
 Group:          Sound
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description    tools
 The %{name}-tools package contains sample programs that use %{name}.
@@ -69,7 +70,7 @@ sed -i '/^Requires:.*/d' fishsound.pc.in
 # Don't use rpath!
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -108,6 +109,9 @@ mv src/examples .
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_12
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_11
 - update to new release by fcimport
 
