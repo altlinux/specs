@@ -1,13 +1,16 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global minorver 1
+
 Name:		ftplib
 Version:	4.0
-Release:	alt1_2
+Release:	alt1_4
 Summary:	Library of FTP routines
 Group:		System/Libraries
 License:	LGPLv2+
-URL:		http://nbpfaus.net/~pfau/ftplib/
-Source0:	http://nbpfaus.net/~pfau/ftplib/%{name}-%{version}.tar.gz
+URL:		http://nbpfaus.net/~pfau/ftplib-4/
+Source0:	http://nbpfaus.net/~pfau/ftplib-4/%{name}-%{version}-%{minorver}.tar.gz
 Patch0:		ftplib-3.1-1-modernize.patch
-Source44: import.info
 
 %description
 ftplib is a set of routines that implement the FTP protocol. They allow 
@@ -16,8 +19,8 @@ instead of needing to fork and exec an interactive ftp client program.
 
 %package devel
 Summary:	Development files for ftplib
-Group:		Development/C
-Requires:	ftplib = %{version}
+Group:		Development/Other
+Requires:	ftplib = %{version}-%{release}
 
 %description devel
 Development libraries and headers for ftplib.
@@ -31,12 +34,12 @@ License:	GPLv2+
 Command line driven ftp file transfer program using ftplib.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n %{name}-%{version}-%{minorver}
 %patch0 -p1 -b .modern
 
 %build
 cd src/
-make %{?_smp_mflags} DEBUG="$RPM_OPT_FLAGS"
+%make_build DEBUG="$RPM_OPT_FLAGS"
 
 %install
 mkdir $RPM_BUILD_ROOT
@@ -76,6 +79,9 @@ done
 %{_bindir}/qftp
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_4
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_2
 - update to new release by fcimport
 
