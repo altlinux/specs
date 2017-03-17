@@ -1,10 +1,9 @@
 Group: System/Libraries
-# BEGIN SourceDeps(oneline):
-BuildRequires: swig
-# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           avl
-Version:        3.35
-Release:        alt1_5
+Version:        3.36
+Release:        alt1_1
 Summary:        Aerodynamic and flight-dynamic analysis of rigid aircrafts
 
 # Plotlib is LGPLv2+, the rest is GPLv2+
@@ -15,15 +14,10 @@ Source0:        http://web.mit.edu/drela/Public/web/avl/avl%{version}.tgz
 Source1:        LICENSE.GPL
 Source2:        LICENSE.LGPL
 # Makefile variables and flags
-Patch0:         avl3.35-makefile.patch
+Patch0:         avl3.36-makefile.patch
 
 BuildRequires:  gcc-fortran libX11-devel
 Requires:       fonts-bitmap-misc
-
-# There was a previous, now orphaned package called avl in the repos
-Conflicts: avl < 3.32-1
-Source44: import.info
-
 
 %description
 AVL is a program for the aerodynamic and flight-dynamic analysis of rigid aircraft
@@ -31,7 +25,7 @@ of arbitrary configuration. It employs an extended vortex lattice model for
 the lifting surfaces, together with a slender-body model for fuselages and nacelles.
 General nonlinear flight states can be specified. The flight dynamic analysis
 combines a full linearization of the aerodynamic model about any flight state,
-together with specified mass properties. 
+together with specified mass properties.
 
 
 %prep
@@ -45,9 +39,9 @@ cp %{SOURCE2} .
 export FFLAGS="%{optflags}"
 export CFLAGS="%{optflags}"
 
-make %{?_smp_mflags} -C plotlib
-make %{?_smp_mflags} -C eispack
-make %{?_smp_mflags} -C bin
+%make_build -C plotlib
+%make_build -C eispack
+%make_build -C bin
 
 
 %install
@@ -55,11 +49,15 @@ make %{?_smp_mflags} -C bin
 
 
 %files
-%doc LICENSE.GPL LICENSE.LGPL version_notes.txt avl_doc.txt session1.txt session2.txt
+%doc version_notes.txt avl_doc.txt session1.txt session2.txt
+%doc LICENSE.GPL LICENSE.LGPL
 %{_bindir}/avl
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 3.36-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 3.35-alt1_5
 - update to new release by fcimport
 
