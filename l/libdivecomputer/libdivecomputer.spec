@@ -1,8 +1,7 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(libusb-1.0)
-# END SourceDeps(oneline)
 Group: Other
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 #global        snapdate   20120717
 #global        snaphash   4bc477b
 #global        snapver    {snapdate}.git{snaphash}
@@ -10,7 +9,7 @@ Group: Other
 Name:           libdivecomputer
 Version:        0.4.2
 #Release:        2.{snapver}{?dist}
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Library for communication with dive computers
 
 License:        LGPLv2+
@@ -22,7 +21,6 @@ Source0:        http://libdivecomputer.org/releases/%{name}-%{version}.tar.gz
 #Source0:        libdivecomputer-0.1.0-20120717git4bc477b.tar.xz
 
 BuildRequires:  libusb-devel
-Source44: import.info
 #BuildRequires:  autoconf
 
 %description
@@ -73,7 +71,7 @@ source code.
 %package        devel
 Group: Other
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -88,7 +86,7 @@ developing applications that use %{name}.
 %package        static
 Group: Other
 Summary:        Static files for %{name}
-Requires:       %{name}%{?_isa} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description    static
 The %{name}-static package contains static files for
@@ -104,7 +102,7 @@ developing applications that use %{name}.
 %configure 
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -133,6 +131,9 @@ rm $RPM_BUILD_ROOT/%{_bindir}/{veo250,vtpro,vyper,vyper2}
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_6
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_5
 - update to new release by fcimport
 
