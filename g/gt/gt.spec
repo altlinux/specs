@@ -1,6 +1,8 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           gt
 Version:        0.4
-Release:        alt1_22
+Release:        alt1_23
 Summary:        Modified Timidity which supportes enhanced gus format patches
 Group:          Sound
 License:        GPLv2+
@@ -19,7 +21,6 @@ Patch5:         gt-0.4-unsf-bigendian-fix.patch
 Patch6:         gt-0.4-unsf-tremolo.patch
 BuildRequires:  libalsa-devel libvorbis-devel flex
 Requires:       timidity-instruments
-Source44: import.info
 
 %description
 Modified timidity midi player which supportes enhanced gus format patches and
@@ -50,7 +51,7 @@ cp -p src/README README.timidity
 %build
 export CFLAGS="$RPM_OPT_FLAGS -fsigned-char"
 %configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -77,6 +78,9 @@ touch -r utils/midifile.c $RPM_BUILD_ROOT%{_mandir}/man1/midi-disasm.1
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_23
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_22
 - update to new release by fcimport
 
