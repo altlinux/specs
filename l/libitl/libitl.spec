@@ -2,9 +2,11 @@
 BuildRequires: swig
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libitl
 Version:        0.7.0 
-Release:        alt3_11
+Release:        alt3_12
 Summary:        Libraries for The Islamic Tools and Libraries Project
 
 Group:          System/Libraries
@@ -13,7 +15,6 @@ URL:            http://www.arabeyes.org/project.php?proj=ITL
 Source0:        http://switch.dl.sourceforge.net/sourceforge/arabeyes/%{name}-%{version}.tar.gz
 
 Patch0: %{name}-makefile-ld.patch
-Source44: import.info
 #BuildRequires:  autoconf
 
 %description
@@ -27,8 +28,8 @@ This package contains the libraries for applications using ITL
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -41,7 +42,7 @@ developing applications that use %{name}.
 
 %build
 %configure --disable-static
-make  %{?_smp_mflags} -j1
+%make_build -j1
 
 
 %install
@@ -67,6 +68,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt3_12
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt3_11
 - update to new release by fcimport
 
