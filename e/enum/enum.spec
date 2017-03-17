@@ -1,13 +1,14 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: enum
 Version: 1.1
-Release: alt1_8
+Release: alt1_9
 Summary: Seq- and jot-like enumerator
 
-Group:   File tools
+Group:   System/Base
 License: BSD
 URL:     https://fedorahosted.org/enum
 Source0: https://fedorahosted.org/releases/e/n/enum/%{name}-%{version}.tar.bz2
-Source44: import.info
 
 %description
 Utility enum enumerates values (numbers) between two values, possibly
@@ -22,7 +23,7 @@ over input interpretation and output is possible.
 
 %build
 %configure --disable-doc-rebuild
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -38,6 +39,9 @@ make check
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_9
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_8
 - update to new release by fcimport
 
