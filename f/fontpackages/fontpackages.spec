@@ -1,10 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Font/TTF/Font.pm) perl(Unicode/UCD.pm)
 # END SourceDeps(oneline)
-%define fedora 24
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name fontpackages
-%define version 1.44
 %global spectemplatedir %{_sysconfdir}/rpmdevtools/
 %global ftcgtemplatedir %{_datadir}/fontconfig/templates/
 
@@ -13,7 +14,7 @@ BuildRequires: perl(Font/TTF/Font.pm) perl(Unicode/UCD.pm)
 
 Name:    fontpackages
 Version: 1.44
-Release: alt4_17
+Release: alt4_18
 Summary: Common directory and macro definitions used by font packages
 
 Group:     System/Configuration/Other
@@ -26,7 +27,7 @@ Patch0:    dnf.patch
 Patch1:    %{name}-drop-fccache.patch
 
 BuildArch: noarch
-Source44: import.info
+BuildRequires: rpm-build-perl
 
 
 %description
@@ -140,6 +141,9 @@ rm -rf %buildroot%{spectemplatedir}
 %{ftcgtemplatedir}/*txt
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.44-alt4_18
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.44-alt4_17
 - update to new release by fcimport
 
