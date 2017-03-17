@@ -2,9 +2,11 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libQGLViewer
 Version:        2.6.3
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Qt based OpenGL generic 3D viewer library
 
 Group:          System/Libraries
@@ -28,8 +30,7 @@ Patch1:         libQGLViewer-2.6.3-dbg.patch
 Patch2:        libQGLViewer-2.6.3-qreal.patch
 
 
-BuildRequires: libqt4-declarative libqt4-devel qt4-designer qt5-base-devel
-Source44: import.info
+BuildRequires:  libqt4-declarative libqt4-devel qt4-designer qt5-base-devel
 Patch33: libQGLViewer-alt-glu.patch
 
 %description
@@ -43,8 +44,8 @@ complex applications, being fully customizable and easy to extend.
 
 %package        qt5
 Summary:        Qt5 version of %{name}
-Group:          Development/C
-Requires: libqt5-concurrent libqt5-core libqt5-dbus libqt5-network libqt5-sql libqt5-test libqt5-xml
+Group:          Development/Other
+Requires:       libqt5-concurrent libqt5-core libqt5-dbus libqt5-network libqt5-sql libqt5-test libqt5-xml
 
 %description    qt5
 %{name} is a C++ library based on Qt that eases the creation of OpenGL
@@ -57,9 +58,9 @@ complex applications, being fully customizable and easy to extend.
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}
-Requires: libqt4-declarative qt4-designer
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
+Requires:       libqt4-declarative qt4-designer
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -67,8 +68,8 @@ developing applications that use %{name}.
 
 %package        qt5-devel
 Summary:        Development files for %{name} using Qt5
-Group:          Development/C
-Requires:       %{name}-qt5 = %{version}
+Group:          Development/Other
+Requires:       %{name}-qt5 = %{version}-%{release}
 
 %description    qt5-devel
 The %{name}-devel package contains libraries and header files for
@@ -78,7 +79,7 @@ developing applications that use %{name} and Qt5.
 %package doc
 Summary: API documentation, demos and example programs for %{name}
 Group: Documentation
-Requires: %{name} = %{version}
+Requires: %{name} = %{version}-%{release}
 BuildArch: noarch
 %description doc
 %{summary}.
@@ -134,11 +135,11 @@ cd QGLViewer
 # correct when the SONAME is customized: it create wrong symbolic links
 # that must be cleaned after the installation.
 
-make %{?_smp_mflags}
+%make_build
 
 cd ../designerPlugin
 %{qmake_qt4} LIB_DIR=../QGLViewer
-make %{?_smp_mflags}
+%make_build
 
 cd ../../%{name}-%{version}-qt5/QGLViewer
 %{qmake_qt5} \
@@ -150,7 +151,7 @@ cd ../../%{name}-%{version}-qt5/QGLViewer
 # correct when the SONAME is customized: it create wrong symbolic links
 # that must be cleaned after the installation.
 
-make %{?_smp_mflags}
+%make_build
 
 %install
 cd QGLViewer
@@ -195,6 +196,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/libQGLViewer-qt5.so.%{version}\\* || true
 %doc examples
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_2
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_1
 - update to new release by fcimport
 
