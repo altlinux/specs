@@ -2,9 +2,11 @@ Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           grhino
 Version:        0.16.1
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Reversi game for GNOME, supporting the Go/Game Text Protocol
 
 License:        GPLv2+
@@ -12,13 +14,12 @@ URL:            http://rhino.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/rhino/grhino-%{version}.tar.gz
 
 BuildRequires:  desktop-file-utils
-BuildRequires: gettext gettext-tools gettext-tools-python
+BuildRequires:  gettext gettext-tools
 BuildRequires:  libgnomeui-devel
 BuildRequires:  librarian
 #Requires:       
 Requires(post):         librarian
 Requires(postun):       librarian
-Source44: import.info
 
 %description
 GRhino, or Rhino its former name, is a Reversi game on Linux and other
@@ -41,7 +42,7 @@ an engine for a GTP-compliant controller like Quarry.
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -71,6 +72,9 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/pixmaps
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.16.1-alt1_2
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.16.1-alt1_1
 - update to new release by fcimport
 
