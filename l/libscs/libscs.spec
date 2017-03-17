@@ -2,10 +2,12 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-%define fedora 23
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libscs
 Version:        1.4.1
-Release:        alt3_12.2
+Release:        alt3_13.2
 Summary:        Software Carry-Save Multiple-Precision Library
 
 Group:          System/Libraries
@@ -14,11 +16,10 @@ URL:            http://www.ens-lyon.fr/LIP/Arenaire/Ware/SCSLib/
 Source0:        http://www.ens-lyon.fr/LIP/Arenaire/Ware/SCSLib/scslib-%{version}.tar.gz
 Patch0:         scslib-1.4.1-shared.patch
 
-BuildRequires:  autoconf, automake, libtool
+BuildRequires:  autoconf-common, automake-common, libtool-common
 %if 0%{?fedora} > 0 || 0%{?rhel} > 5
-BuildRequires:  libmpfr-devel libgmp-devel libgmp_cxx-devel
+BuildRequires:  libmpfr-devel libgmp-devel libgmpxx-devel
 %endif
-Source44: import.info
 
 %description
 The Software Carry-Save (SCS) Library is a fast and lightweight
@@ -53,8 +54,8 @@ operations on most architectures.
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 %if 0%{?fedora} > 0 || 0%{?rhel} > 5
 %endif
 
@@ -76,7 +77,7 @@ autoreconf --install --force
 	--enable-mpfr --enable-gmp
 %endif
 
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -96,6 +97,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt3_13.2
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt3_12.2
 - update to new release by fcimport
 
