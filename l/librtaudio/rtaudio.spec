@@ -3,10 +3,12 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname rtaudio
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary:        Real-time Audio I/O Library
 Name:           librtaudio
 Version:        4.0.11
-Release:        alt1_10
+Release:        alt1_11
 License:        MIT
 Group:          System/Libraries
 URL:            http://www.music.mcgill.ca/~gary/rtaudio/
@@ -20,7 +22,6 @@ Source0:        %{oldname}-%{version}-fe.tar.gz
 BuildRequires:  libalsa-devel
 BuildRequires:  libjack-devel
 BuildRequires:  libpulseaudio-devel
-Source44: import.info
 Provides: rtaudio = %{version}-%{release}
 
 
@@ -43,7 +44,7 @@ designed with the following objectives:
 %package devel
 Summary:        Real-time Audio I/O Library
 Group:          System/Libraries
-Requires:       %{name}%{?_isa} = %{version}
+Requires:       %{name} = %{version}-%{release}
 Provides: rtaudio-devel = %{version}-%{release}
 
 %description devel
@@ -103,6 +104,9 @@ ln -s %{_libdir}/lib%{oldname}.so.%{version} %{buildroot}%{_libdir}/lib%{oldname
 %{_libdir}/lib%{oldname}.so
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.11-alt1_11
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.11-alt1_10
 - update to new release by fcimport
 
