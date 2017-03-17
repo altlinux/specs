@@ -2,13 +2,15 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-%define fedora 24
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # The base of the version (just major and minor without point)
 %global base_version 1.10
 
 Name:           libcutl
 Version:        %{base_version}.0
-Release:        alt1_4
+Release:        alt1_6
 Summary:        C++ utility library from Code Synthesis
 
 Group:          System/Libraries
@@ -30,7 +32,6 @@ BuildRequires: boost141-devel
 %endif
 # Uses pkgconfig
 BuildRequires: libexpat-devel
-Source44: import.info
 
 
 %description
@@ -40,8 +41,8 @@ fairly independent components.
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -63,7 +64,7 @@ confopts="--disable-static --with-external-boost --with-external-expat"
 confopts="$confopts CPPFLAGS=-I%{_includedir}/boost141 LDFLAGS=-L%{_libdir}/boost141"
 %endif
 %configure $confopts
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -89,6 +90,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_6
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_4
 - update to new release by fcimport
 
