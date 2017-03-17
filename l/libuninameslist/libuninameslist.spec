@@ -1,7 +1,9 @@
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libuninameslist
 Version:        20160701
-Release:        alt1_1
+Release:        alt1_2
 
 Summary:        A library providing Unicode character names and annotations
 
@@ -12,7 +14,6 @@ Source0:        https://github.com/fontforge/libuninameslist/archive/20160701.ta
 BuildRequires:  autoconf-common
 BuildRequires:  automake-common
 BuildRequires:  libtool-common
-Source44: import.info
 
 %description
 libuninameslist provides applications with access to Unicode name and
@@ -20,8 +21,8 @@ annotation data from the official Unicode Character Database.
 
 %package        devel
 Summary:        Header files and static libraries for %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 This package contains header files and static libraries for %{name}.
@@ -34,7 +35,7 @@ This package contains header files and static libraries for %{name}.
 autoreconf -i
 automake --foreign -Wall
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -52,6 +53,9 @@ find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
 %{_libdir}/pkgconfig/libuninameslist.pc
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 20160701-alt1_2
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20160701-alt1_1
 - update to new release by fcimport
 
