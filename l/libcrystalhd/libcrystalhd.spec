@@ -3,6 +3,8 @@ BuildRequires: gcc-c++ libcrystalhd-devel
 # END SourceDeps(oneline)
 BuildRequires(pre): kernel-build-tools
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global majorminor 1.0
 %global date 20120405
 # Avoid to emit gstreamer provides - rhbz#1184975
@@ -11,7 +13,7 @@ BuildRequires(pre): kernel-build-tools
 Summary:       Broadcom Crystal HD device interface library
 Name:          libcrystalhd
 Version:       3.10.0
-Release:       alt3_13
+Release:       alt3_15
 License:       LGPLv2
 Group:         System/Libraries
 URL:           http://www.broadcom.com/support/crystal-hd/
@@ -36,7 +38,6 @@ BuildRequires: autoconf-common automake-common libtool-common
 BuildRequires: gstreamer1.0-devel libgstreamer1.0-gir-devel
 BuildRequires: gst-plugins1.0-devel gst-plugins1.0-gir-devel
 Requires:      firmware-crystalhd
-Source44: import.info
 Patch33: libcrystalhd-alt-from-zerg-bug30916.patch
 
 %description
@@ -48,8 +49,8 @@ bcm970015 hardware.
 
 %package devel
 Summary:       Development libs for libcrystalhd
-Group:         Development/C
-Requires:      %{name} = %{version}
+Group:         Development/Other
+Requires:      %{name} = %{version}-%{release}
 
 %description devel
 Development libraries needed to build applications against libcrystalhd.
@@ -59,7 +60,7 @@ Summary:       Firmware for the Broadcom Crystal HD video decoder
 License:       Redistributable, no modification permitted
 BuildArch:     noarch
 Group:         System/Kernel and hardware
-Requires:      %{name} = %{version}
+Requires:      %{name} = %{version}-%{release}
 
 %description -n firmware-crystalhd
 Firmwares for the Broadcom Crystal HD (bcm970012 and bcm970015)
@@ -68,7 +69,7 @@ video decoders.
 %package -n gstreamer-plugin-crystalhd
 Summary:       Gstreamer crystalhd decoder plugin
 Group:         Sound
-Requires:      %{name} = %{version}
+Requires:      %{name} = %{version}-%{release}
 Requires:      gst-plugins-base1.0
 
 %description -n gstreamer-plugin-crystalhd
@@ -95,18 +96,17 @@ sed -i -e 's|-msse2||' linux_lib/libcrystalhd/Makefile
 
 %build
 pushd linux_lib/libcrystalhd/ > /dev/null 2>&1
-# FIXME: this doesn't work just yet...
-#make CPPFLAGS="%{optflags}" %{?_smp_mflags}
-make %{?_smp_mflags}
+sed -i -e 's|-D__LINUX_USER__|-D__LINUX_USER__ %{optflags}|' Makefile
+%{make_build}
 popd > /dev/null 2>&1
 
 pushd filters/gst/gst-plugin/ > /dev/null 2>&1
 sh autogen.sh || :
 
 %configure
-make %{?_smp_mflags} \
-  CFLAGS="-I%{_builddir}/%{buildsubdir}/include -I%{_builddir}/%{buildsubdir}/linux_lib/libcrystalhd" \
-  BCMDEC_LDFLAGS="-L%{_builddir}/%{buildsubdir}/linux_lib/libcrystalhd -lcrystalhd"
+%make_build \
+  CFLAGS="%{optflags} -I%{_builddir}/%{buildsubdir}/include -I%{_builddir}/%{buildsubdir}/linux_lib/libcrystalhd" \
+  BCMDEC_LDFLAGS="%{?__global_ldflags} -L%{_builddir}/%{buildsubdir}/linux_lib/libcrystalhd -lcrystalhd"
 popd > /dev/null 2>&1
 
 %install
@@ -159,6 +159,9 @@ mv driver kernel-source-crystalhd-%version
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt3_15
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt3_13
 - update to new release by fcimport
 
