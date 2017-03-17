@@ -1,15 +1,16 @@
+Group: Development/Tools
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		auto-destdir
 Version:	1.11
-Release:	alt2_10
+Release:	alt2_11
 Summary:	Automate DESTDIR support for "make install"
 
-Group:		Development/Tools
 License:	MIT
 URL:		http://www.dwheeler.com/auto-destdir
 Source0:	http://www.dwheeler.com/auto-destdir/%{name}-%{version}.tgz
 
 BuildArch:	noarch
-Source44: import.info
 
 %description
 Auto-DESTDIR is a set of programs for POSIX/Unix/Linux systems that helps
@@ -45,6 +46,9 @@ chmod a-x %{buildroot}/%{_mandir}/man1/*
 %doc COPYING
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2_11
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2_10
 - update to new release by fcimport
 
