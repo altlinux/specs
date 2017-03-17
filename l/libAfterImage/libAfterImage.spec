@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/find /usr/bin/perl /usr/bin/pkg-config /usr/bin/xargs gcc-c++ libXpm-devel libgif-devel
+BuildRequires: /usr/bin/perl gcc-c++ imake libXpm-devel libXt-devel xorg-cf-files
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libAfterImage
 Version:        1.20
-Release:        alt1_14
+Release:        alt1_15
 Summary:        A generic image manipulation library
 
 Group:          System/Libraries
@@ -21,9 +23,9 @@ Patch100:       http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/media-li
 
 BuildRequires:  libfreetype-devel
 BuildRequires:  zlib-devel
-BuildRequires: libtiffxx-devel libtiff-devel
+BuildRequires:  libtiff-devel libtiffxx-devel
 BuildRequires:  libpng-devel
-BuildRequires:  libungif-devel
+BuildRequires:  libgif-devel
 BuildRequires:  libjpeg-devel
 BuildRequires:  libX11-devel
 BuildRequires:  libXext-devel
@@ -31,7 +33,6 @@ BuildRequires:  libICE-devel
 BuildRequires:  libSM-devel
 BuildRequires:  libGL-devel
 BuildRequires:  gawk
-Source44: import.info
 Patch33: libAfterImage-1.20-alt-fix-linkage.patch
 
 %description
@@ -51,8 +52,8 @@ from X window system.
 
 %package devel
 Summary:  Files needed for software development with %{name}
-Group:    Development/C
-Requires: %{name} = %{version}
+Group:    Development/Other
+Requires: %{name} = %{version}-%{release}
 
 %description devel
 The %{name}-devel package contains the files needed for development with
@@ -100,6 +101,9 @@ touch -r ChangeLog $RPM_BUILD_ROOT%{_bindir}/afterimage-{config,libs}
 %{_libdir}/*.so
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1_15
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1_14
 - update to new release by fcimport
 
