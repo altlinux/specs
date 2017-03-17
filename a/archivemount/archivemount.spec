@@ -1,9 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(fuse)
-# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          archivemount
 Version:       0.8.7
-Release:       alt1_2
+Release:       alt1_3
 Summary:       FUSE based filesystem for mounting compressed archives
 
 Group:         System/Libraries
@@ -15,7 +14,6 @@ Patch0:        fix-debuginfo.patch
 Requires:      fuse
 BuildRequires: libfuse-devel
 BuildRequires: libarchive-devel
-Source44: import.info
 
 %description
 Archivemount is a piece of glue code between libarchive and FUSE. It can be
@@ -28,7 +26,7 @@ and use it like an ordinary filesystem.
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 %install
 rm -f archivemount.1
@@ -40,6 +38,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_bindir}/archivemount
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.7-alt1_3
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.7-alt1_2
 - update to new release by fcimport
 
