@@ -1,29 +1,30 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/fox-config gcc-c++ libusb-compat-devel pkgconfig(fox17) pkgconfig(libudev) pkgconfig(libusb-1.0)
+BuildRequires: /usr/bin/fox-config gcc-c++ libusb-compat-devel pkgconfig(fox17)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname hidapi
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global commit d17db57b9d4354752e0af42f5f33007a42ef2906
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:           libhidapi
 Version:        0.8.0
-Release:        alt1_0.2.%{shortcommit}
+Release:        alt1_0.3.%{shortcommit}
 Summary:        Library for communicating with USB and Bluetooth HID devices
 
-Group:          Development/C
+Group:          Development/Other
 License:        GPLv3 or BSD
 URL:            http://www.signal11.us/oss/hidapi/
 
 Source0:        https://github.com/signal11/hidapi/archive/%{commit}/%{oldname}-%{version}-%{shortcommit}.tar.gz
 
-BuildRequires: autoconf
-BuildRequires: automake
-BuildRequires: libtool
-BuildRequires: libudev-devel
+BuildRequires: autoconf-common
+BuildRequires: automake-common
+BuildRequires: libtool-common
+BuildRequires: libsystemd-devel libudev-devel
 BuildRequires: libusb-devel
 BuildRequires: m4
-Source44: import.info
 Provides: hidapi = %{version}-%{release}
 
 %description
@@ -35,7 +36,7 @@ trade-offs and the functionality supported is slightly different.
 %package devel
 Group: Development/C
 Summary: Development files for hidapi
-Requires: %{name}%{?_isa} = %{version}
+Requires: %{name} = %{version}-%{release}
 Provides: hidapi-devel = %{version}-%{release}
 
 %description devel
@@ -48,7 +49,7 @@ USB and Bluetooth HID-class devices.
 %build
 autoreconf -vif
 %configure --disable-testgui --disable-static
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 %install
 make install DESTDIR=%{buildroot}
@@ -68,6 +69,9 @@ rm -rf %{buildroot}%{_defaultdocdir}/%{oldname}
 %{_libdir}/pkgconfig/hidapi-libusb.pc
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_0.3.d17db57
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_0.2.d17db57
 - update to new release by fcimport
 
