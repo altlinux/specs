@@ -1,6 +1,8 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: docbook-simple
 Version: 1.1
-Release: alt3_16
+Release: alt3_17
 Group: Text tools
 Summary: Simplified DocBook is a small subset of the DocBook XML DTD
 License: Freely redistributable without restriction
@@ -16,7 +18,6 @@ Requires(post): sed
 Requires(post): libxml2 xml-utils
 Requires(postun): libxml2 xml-utils
 Requires: docbook-dtds
-Source44: import.info
 
 %description
 Simplified DocBook is an attempt to provide a proper subset of DocBook
@@ -140,6 +141,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_17
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_16
 - update to new release by fcimport
 
