@@ -4,13 +4,15 @@ BuildRequires: gcc-c++
 BuildRequires: libblas-devel
 %add_optflags %optflags_shared
 %define oldname levmar
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # SOlib major and minor version
 %global major 2
 %global minor 2
 
 Name:		liblevmar
 Version:	2.5
-Release:	alt1_13
+Release:	alt1_14
 Summary:	Levenberg-Marquardt nonlinear least squares algorithm
 URL:		http://www.ics.forth.gr/~lourakis/levmar/
 
@@ -25,7 +27,6 @@ Group:		System/Libraries
 
 BuildRequires:	dos2unix
 BuildRequires:	liblapack-devel
-Source44: import.info
 Provides: levmar = %{version}-%{release}
 
 %description
@@ -43,8 +44,8 @@ becomes a Gauss-Newton method.
 
 %package devel
 Summary:	Development files for levmar library, and demo program
-Group:		Development/C
-Requires:	levmar = %{version}
+Group:		Development/Other
+Requires:	liblevmar = %{version}-%{release}
 Provides: levmar-devel = %{version}-%{release}
 
 %description devel
@@ -77,6 +78,9 @@ ln -s liblevmar.so.%{major}.%{minor} %{buildroot}%{_libdir}/liblevmar.so
 %{_bindir}/lmdemo
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_14
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_13
 - update to new release by fcimport
 
