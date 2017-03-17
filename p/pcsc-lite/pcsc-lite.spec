@@ -1,10 +1,12 @@
 #undefine XXX__libtoolize
 #define unstable 1
 %def_disable static
+%def_enable polkit
+%def_enable systemd
 
 Name: pcsc-lite
 Version: 1.8.20
-Release: alt1
+Release: alt2
 
 Summary: PC/SC Lite smart card framework and applications
 License: %bsd
@@ -20,13 +22,13 @@ Source2: pcsc-lite-pcscd.sysconfig
 Source3: pcsc-lite.tmpfiles
 
 Requires: libpcsclite = %version-%release
-Requires: polkit
+%{?_enable_polkit:Requires: polkit}
 
 BuildRequires: rpm-build-licenses perl-podlators
 BuildRequires: flex
-BuildRequires: pkgconfig(polkit-gobject-1) >= 0.111
 BuildRequires: pkgconfig(libudev)
-BuildRequires: pkgconfig(systemd)
+%{?_enable_polkit:BuildRequires: pkgconfig(polkit-gobject-1) >= 0.111}
+%{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
 
 %if_enabled static
 BuildRequires: glibc-devel-static
@@ -81,10 +83,10 @@ subst 's|AC_PREREQ(\[2.69\])|AC_PREREQ(\[2.68\])|' configure.ac
 %autoreconf
 %configure \
     %{subst_enable static} \
+    %{subst_enable polkit} \
     --enable-debugatr \
     --enable-ipcdir=/var/run/pcscd \
     --enable-usbdropdir=%_libdir/pcsc/drivers \
-    --enable-polkit \
     --with-systemdsystemunitdir=%_unitdir
 
 %make_build
@@ -119,8 +121,10 @@ install -pDm644 %SOURCE3 %buildroot/lib/tmpfiles.d/pcsc-lite.conf
 %dir %_sysconfdir/reader.conf.d
 %config(noreplace) %_sysconfdir/sysconfig/pcscd
 %_initdir/pcscd
+%if_enabled systemd
 %_unitdir/pcscd.*
 %_unitdir/sockets.target.wants/*
+%endif
 /lib/tmpfiles.d/pcsc-lite.conf
 %_sbindir/pcscd
 #_bindir/make_hash_link.sh
@@ -128,7 +132,7 @@ install -pDm644 %SOURCE3 %buildroot/lib/tmpfiles.d/pcsc-lite.conf
 %_man8dir/*
 %dir %_libdir/pcsc
 %dir %_libdir/pcsc/drivers
-%_datadir/polkit-1/actions/*.policy
+%{?_enable_polkit:%_datadir/polkit-1/actions/*.policy}
 %ghost %dir /var/run/pcscd
 
 # NB: .so belongs here, see ALT#25275
@@ -150,6 +154,9 @@ install -pDm644 %SOURCE3 %buildroot/lib/tmpfiles.d/pcsc-lite.conf
 %endif
 
 %changelog
+* Wed Feb 22 2017 Michael Shigorin <mike@altlinux.org> 1.8.20-alt2
+- BOOTSTRAP: introduce polkit, systemd knobs (on by default)
+
 * Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 1.8.20-alt1
 - new version 1.8.20
 
