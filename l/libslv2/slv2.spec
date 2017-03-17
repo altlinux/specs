@@ -3,7 +3,9 @@ BuildRequires: swig waf
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname slv2
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name slv2
 %define version 0.6.6
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
@@ -11,7 +13,7 @@ BuildRequires: swig waf
 Name:			libslv2
 Summary:		LV2 host library
 Version:		0.6.6
-Release:		alt4_19
+Release:		alt4_20
 License:		GPLv2+
 Group:			System/Libraries
 Source0:		http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
@@ -27,7 +29,6 @@ BuildRequires:		libjack-devel
 # To provide a clean upgrade path from PlanetCCRMA:
 Obsoletes:		%{oldname}-examples < 0.6
 Provides:		%{oldname}-examples = %{version}-%{release}
-Source44: import.info
 Provides: slv2 = %{version}-%{release}
 
 %description
@@ -40,9 +41,9 @@ libraries, avoiding the associated risks).
 
 %package devel
 Summary:	Development libraries and headers for %{oldname}
-Group:		Development/C
-Requires:	pkgconfig
-Requires:	%{name}%{?_isa} = %{version}
+Group:		Development/Other
+Requires:	pkg-config
+Requires:	%{name} = %{version}-%{release}
 Provides: slv2-devel = %{version}-%{release}
 
 %description devel
@@ -107,6 +108,9 @@ install -pm 644 AUTHORS ChangeLog COPYING README %{buildroot}%{_docdir}/%{oldnam
 %{_mandir}/man3/%{oldname}*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt4_20
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt4_19
 - update to new release by fcimport
 
