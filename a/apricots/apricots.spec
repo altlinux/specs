@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ perl(Shell.pm)
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define apricotsdir %{_datadir}/apricots
 Name: apricots
 Version:  0.2.6
-Release:  alt2_16
+Release:  alt2_17
 Summary: 2D air combat game
 
 Group: Games/Other
@@ -23,9 +25,8 @@ Patch3: apricots-0.2.6-path.patch
 BuildRequires: libSDL-devel
 BuildRequires: libalut-devel
 BuildRequires: desktop-file-utils
-BuildRequires: libopenal-devel
-BuildRequires: autoconf automake
-Source44: import.info
+BuildRequires: libopenal-devel libopenal1
+BuildRequires: autoconf-common automake-common
 
 %description
 It's a game where you fly a little plane around the screen and
@@ -85,6 +86,9 @@ install -p -m 644 %{SOURCE1} \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt2_17
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt2_16
 - update to new release by fcimport
 
