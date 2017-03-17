@@ -2,18 +2,19 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           liboglappth
 Summary:        An OpenGL wrapper library
 Version:        1.0.0
-Release:        alt1_1
+Release:        alt1_2
 License:        GPLv2+
 Group:          Engineering
 URL:            http://www.bioinformatics.org/ghemical/ghemical/index.html
 Source0:        http://www.bioinformatics.org/ghemical/download/current/%{name}-%{version}.tar.gz
-BuildRequires:  libtool
+BuildRequires:  libtool-common
 BuildRequires:  libGL-devel
 BuildRequires:  libGLU-devel
-Source44: import.info
 
 %description
 Library for creating portable OpenGL applications with easy-to-code
@@ -21,9 +22,9 @@ scene setup and selection operations.
 
 %package devel
 Summary:    Libraries and header files from %{name}
-Group:      Development/C
-Requires:   %{name} = %{version}
-Requires:   pkgconfig
+Group:      Development/Other
+Requires:   %{name} = %{version}-%{release}
+Requires:   pkg-config
 
 %description devel
 Libraries and header include files for developing programs
@@ -37,7 +38,7 @@ based on %{name}.
 %build
 autoreconf -v -f -i
 %configure --disable-static
-make %{?_smp_mflags} CCOPTIONS="%{optflags}" LIBS="-lGL -lGLU"
+%make_build CCOPTIONS="%{optflags}" LIBS="-lGL -lGLU"
 
 %install
 make DESTDIR="%{buildroot}" INSTALL="install -p" install
@@ -54,6 +55,9 @@ find %{buildroot}%{_libdir} -name *.la -exec rm -rf {} \;
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_2
+- update to new release by fcimport
+
 * Sun May 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_1
 - update to new release by fcimport
 
