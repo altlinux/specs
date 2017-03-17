@@ -1,6 +1,8 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           asc-music
 Version:        1.0
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Background music for the game asc
 Group:          Games/Other
 License:        GPLv2+
@@ -9,7 +11,6 @@ URL:            http://www.asc-hq.org/
 Source0:        %{name}-%{version}.tar.gz
 Buildarch:      noarch
 Requires:       asc
-Source44: import.info
 
 %description
 Music created by Michael Kievernagel for the game Advanced Strategic Command
@@ -38,6 +39,9 @@ install -p -m 644 *.ogg $RPM_BUILD_ROOT%{_datadir}/asc/music
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_13
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_12
 - update to new release by fcimport
 
