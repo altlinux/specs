@@ -3,9 +3,11 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-mkenums pkgconfig(gio-unix
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		libindicator
 Version:	12.10.1
-Release:	alt1_8
+Release:	alt1_9
 Summary:	Shared functions for Ayatana indicators
 
 Group:		System/Libraries
@@ -14,15 +16,14 @@ URL:		https://launchpad.net/libindicator
 Source0:	https://launchpad.net/libindicator/12.10/12.10.1/+download/%{name}-%{version}.tar.gz
 
 BuildRequires:	chrpath
-BuildRequires: gtk-doc gtk-doc-mkpdf
+BuildRequires:	gtk-doc gtk-doc-mkpdf
 BuildRequires:	libtool-common
 
 BuildRequires:	libdbus-glib-devel
-BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
-BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:	gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:	gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 
 BuildRequires:	gnome-common
-Source44: import.info
 Patch33: libindicator-fix-deprecated.patch
 
 %description
@@ -33,7 +34,7 @@ likely to use.
 %package devel
 Summary:	Development files for %{name}
 Group:		Development/Other
-Requires:	%{name}%{?_isa} = %{version}
+Requires:	%{name} = %{version}-%{release}
 Requires:	pkg-config
 
 %description devel
@@ -44,7 +45,7 @@ developing applications that use %{name}.
 %package tools
 Summary:	Shared functions for Ayatana indicators - Tools
 Group:		Development/Tools
-Requires:	%{name}%{?_isa} = %{version}
+Requires:	%{name} = %{version}-%{release}
 Requires:	pkg-config
 
 %description tools
@@ -66,7 +67,7 @@ by GTK+ 3 apps.
 Summary:	Development files for %{name}-gtk3
 Group:		Development/Other
 
-Requires:	%{name}-gtk3%{?_isa} = %{version}
+Requires:	%{name}-gtk3 = %{version}-%{release}
 Requires:	pkg-config
 
 %description gtk3-devel
@@ -78,7 +79,7 @@ developing applications that use %{name}-gtk3.
 Summary:	Shared functions for Ayatana indicators - GTK3 Tools
 Group:		Development/Tools
 
-Requires:	%{name}-gtk3%{?_isa} = %{version}
+Requires:	%{name}-gtk3 = %{version}-%{release}
 Requires:	pkg-config
 
 %description gtk3-tools
@@ -124,7 +125,7 @@ export CFLAGS="%{optflags} -Wno-error=deprecated-declarations"
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-make %{?_smp_mflags}
+%make_build
 popd
 
 pushd build-gtk3
@@ -133,7 +134,7 @@ export CFLAGS="%{optflags} -Wno-error=deprecated-declarations"
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-make %{?_smp_mflags}
+%make_build
 popd
 
 
@@ -223,6 +224,9 @@ done
 %{_libexecdir}/indicator-loader3
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 12.10.1-alt1_9
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 12.10.1-alt1_8
 - update to new release by fcimport
 
