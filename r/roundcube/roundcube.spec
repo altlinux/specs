@@ -1,6 +1,6 @@
 %define oname roundcubemail
 Name: roundcube
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
@@ -68,6 +68,9 @@ BuildArch: noarch
 %setup -n %oname-%version
 sed -i 's,php_,php5_,' .htaccess
 
+# disable Reply button
+%__subst 's|\(command="reply"\)|\1 style="display:none"|g' skins/larry/includes/mailtoolbar.html skins/classic/includes/messagetoolbar.html
+
 %install
 mkdir -p %buildroot%_datadir/%name/
 install -Dpm 0644 index.php %buildroot%_datadir/%name/index.php
@@ -129,6 +132,9 @@ service httpd2 condreload
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Fri Mar 17 2017 Vitaly Lipatov <lav@altlinux.ru> 1.2.4-alt1
+- new version 1.2.4 (with rpmrb script)
+
 * Tue Nov 29 2016 Vitaly Lipatov <lav@altlinux.ru> 1.2.3-alt1
 - new version 1.2.3 (with rpmrb script)
 
