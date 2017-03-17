@@ -2,10 +2,12 @@
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: /usr/bin/desktop-file-validate gcc-c++ libSDL2-devel
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 #global extra_version -2
 
 Name:           cdogs-sdl
-Version:        0.6.3
+Version:        0.6.4
 Release:        alt1_1
 Summary:        C-Dogs is an arcade shoot-em-up
 Group:          Games/Other
@@ -16,13 +18,12 @@ URL:            http://cxong.github.io/cdogs-sdl/
 Source0:        https://github.com/cxong/cdogs-sdl/archive/%{version}%{?extra_version}.tar.gz#/%{name}-%{version}%{?extra_version}.tar.gz
 Patch0:         cdogs-sdl-0.5.8-cmake.patch
 Patch1:         cdogs-sdl-0.6.2-system-enet.patch
-BuildRequires: ctest cmake libSDL2_mixer-devel libSDL2_image-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
+BuildRequires:  ctest cmake libSDL2_mixer-devel libSDL2_image-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 BuildRequires:  libphysfs-devel libenet-devel
 BuildRequires:  desktop-file-utils libicns-utils libappstream-glib
 Requires:       icon-theme-hicolor
 Obsoletes:      cdogs-data < 0.5
 Provides:       cdogs-data = %{version}-%{release}
-Source44: import.info
 
 %description
 C-Dogs SDL is a port of the old DOS arcade game C-Dogs to modern operating
@@ -48,7 +49,7 @@ chmod -x src/tinydir/tinydir.h
 
 %build
 %{fedora_cmake} -DCDOGS_DATA_DIR=/usr/share/cdogs-sdl/
-make %{?_smp_mflags}
+%make_build
 icns2png -x build/macosx/cdogs-icon.icns
 
 
@@ -77,6 +78,9 @@ install -m 644 cdogs-icon_128x128x32.png \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.4-alt1_1
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.3-alt1_1
 - update to new release by fcimport
 
