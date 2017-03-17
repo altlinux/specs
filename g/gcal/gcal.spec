@@ -1,11 +1,13 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/less /usr/bin/perl /usr/bin/pg /usr/sbin/zdump texinfo
+BuildRequires: /usr/bin/less /usr/bin/perl /usr/sbin/zdump texinfo
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global gcalmantag 4
 
 Name:		gcal
 Version:	4
-Release:	alt1_3
+Release:	alt1_4
 Summary:	GNU Gregorian calendar program
 
 Group:		Text tools
@@ -18,14 +20,13 @@ Source0:	ftp://ftp.gnu.org/gnu/gcal/%{name}-%{version}.tar.xz
 # $ git archive --format=tar v${gcalmantag} -- doc/en/man | \
 #     gzip -c > gcal-man-v${gcalmantag}.tar.gz
 Source1:	gcal-man-v%{gcalmantag}.tar.gz
-BuildRequires: gettext gettext-tools gettext-tools-python libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
+BuildRequires:	gettext gettext-tools libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 Requires(post): info info-install
 Requires(preun): info info-install
 
 # Gnulib is granted exception of "no bundled libraries" packaging guideline:
 # https://fedoraproject.org/wiki/Packaging:No_Bundled_Libraries#Packages_granted_exceptions
 Provides: bundled(gnulib)
-Source44: import.info
 
 %description
 Gcal is a program for calculating and printing calendars.  Gcal
@@ -41,7 +42,7 @@ tar xf %{SOURCE1}
 CFLAGS="%{optflags}"
 export CFLAGS
 %configure
-make %{?_smp_mflags}
+%make_build
 
 
 %check
@@ -68,6 +69,9 @@ rm -f %{buildroot}%{_infodir}/dir
 %{_mandir}/man1/*.1*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 4-alt1_4
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 4-alt1_3
 - update to new release by fcimport
 
