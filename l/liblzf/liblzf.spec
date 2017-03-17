@@ -1,7 +1,9 @@
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           liblzf
 Version:        3.6
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Small data compression library
 
 Group:          System/Libraries
@@ -12,10 +14,9 @@ Source0:        http://dist.schmorp.de/liblzf/liblzf-%{version}.tar.gz
 # 7th Feb 2011 - Mail sent upstream to author. Awaiting conclusion. 
 Patch0:         liblzf-%{version}-autoconf-20140314.patch
 
-BuildRequires:  autoconf
-BuildRequires:  automake
-BuildRequires:  libtool
-Source44: import.info
+BuildRequires:  autoconf-common
+BuildRequires:  automake-common
+BuildRequires:  libtool-common
 
 %description
 LibLZF is a very small data compression library. It consists 
@@ -25,11 +26,11 @@ is very, very fast, yet still written in portable C.
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 
 %if 0%{?el4}%{?el5}
-Requires:       pkgconfig
+Requires:       pkg-config
 %endif
 
 
@@ -44,7 +45,7 @@ developing applications that use liblzf.
 %build
 sh ./bootstrap.sh
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=%{buildroot}
@@ -74,6 +75,9 @@ rm -f %{buildroot}%{_libdir}/liblzf.la
 %{_libdir}/pkgconfig/liblzf.pc
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 3.6-alt2_12
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 3.6-alt2_11
 - update to new release by fcimport
 
