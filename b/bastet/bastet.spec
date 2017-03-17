@@ -1,22 +1,24 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 # END SourceDeps(oneline)
 BuildRequires: boost-program_options-devel
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		bastet
-Version:	0.43
-Release:	alt4_21.1.qa1
+Version:	0.43.1
+Release:	alt1_15
 Summary:	An evil falling bricks game
 
 Group:		Games/Other
 License:	GPLv3+
 URL:		http://fph.altervista.org/prog/bastet.html
-Source0:	http://fph.altervista.org/prog/files/%{name}-%{version}.tgz
+Source0:	https://github.com/fph/bastet/archive/%{version}.zip
 Source1:	%{name}.desktop
 # self-made icon
 Source2:	%{name}.png
+Patch0:		bastet-tr1.patch
 
-BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel ncurses-devel desktop-file-utils
-Source44: import.info
+BuildRequires:	boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel desktop-file-utils
 
 
 %description
@@ -29,6 +31,9 @@ frustrating experience!
 
 %prep
 %setup -q
+
+%patch0 -p1
+
 # remove reference to Tetris to match our guidelines
 sed -e 's/Tetris(R)/any falling bricks game/g' -e 's/Tetris/falling bricks game/g' \
 -e 's/tetris/falling bricks game/g' README > README.new
@@ -41,10 +46,14 @@ mv -f bastet.6.new bastet.6
 
 %build
 
-make %{?_smp_mflags} CXXFLAGS="%{optflags}"
+%make_build CXXFLAGS="%{optflags}"
 
 
 %install
+
+# install the AppData file
+%__mkdir_p %{buildroot}%{_datadir}/appdata
+cp bastet.appdata.xml %{buildroot}%{_datadir}/appdata/
 
 mkdir -p %{buildroot}%{_bindir}
 
@@ -70,11 +79,15 @@ mkdir -p %{buildroot}%{_mandir}/man6/
 %doc AUTHORS LICENSE NEWS README
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_mandir}/man6/*
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.43.1-alt1_15
+- update to new release by fcimport
+
 * Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.43-alt4_21.1.qa1
 - NMU: rebuilt with boost 1.57.0 -> 1.58.0.
 
