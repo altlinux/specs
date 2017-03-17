@@ -1,6 +1,8 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           vegastrike-music
 Version:        0.5.1
-Release:        alt2_8.r1
+Release:        alt2_9.r1
 Summary:        Music for Vega Strike
 Group:          Games/Other
 License:        GPL+
@@ -12,7 +14,6 @@ Source0:        http://downloads.sourceforge.net/vegastrike/vegastrike-music-0.5
 Source1:        http://downloads.sourceforge.net/vegastrike/vegastrike-speech-0.5.1.r1.tar
 BuildArch:      noarch
 Requires:       vegastrike-data >= %{version}
-Source44: import.info
 
 %description
 Music for Vega Strike, a GPL 3D OpenGL Action RPG space sim that allows
@@ -65,6 +66,9 @@ cp -r music communications sounds $RPM_BUILD_ROOT%{_datadir}/vegastrike
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_9.r1
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_8.r1
 - update to new release by fcimport
 
