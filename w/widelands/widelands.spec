@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/doxygen gcc-c++ libGL-deve
 
 Name:           widelands
 Version:        0
-Release:        alt6_0.55.%{buildid}
+Release:        alt6_0.56.%{buildid}
 Summary:        Open source realtime-strategy game
 
 Group:          Games/Other
@@ -141,6 +141,9 @@ EOF
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1:0-alt6_0.56.build18
+- update to new release by fcimport
+
 * Thu Feb 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:0-alt6_0.55.build18
 - rebuild new lua
 
