@@ -1,14 +1,15 @@
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libyubikey
 Version:        1.13
-Release:        alt1_2
+Release:        alt1_3
 Summary:        C library for decrypting and parsing Yubikey One-time passwords
 
-Group:          Development/C
+Group:          Development/Other
 License:        BSD
 URL:            http://opensource.yubico.com/yubico-c
 Source0:        http://opensource.yubico.com/yubico-c/releases/%{name}-%{version}.tar.gz
-Source44: import.info
 
 %description
 This package holds a low-level C software development kit for the Yubico
@@ -16,8 +17,8 @@ authentication device, the Yubikey.
 
 %package devel
 Summary:        Development files for libyubikey
-Group:          Development/C
-Requires:       %{name} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 
 %description devel
 This package contains the header file needed to develop applications that use
@@ -57,6 +58,9 @@ export LD_LIBRARY_PATH=${RPM_BUILD_DIR}/%{name}-%{version}/.libs
 %{_libdir}/libyubikey.so
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_3
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_2
 - update to new release by fcimport
 
