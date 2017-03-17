@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		drascula
 Version:	1.0
-Release:	alt2_14
+Release:	alt2_15
 Summary:	The Vampire Strikes Back
 Group:		Games/Other
 # For further discussion on distribution rights see:
@@ -17,7 +19,6 @@ Source3:	%{name}.desktop
 BuildRequires:	desktop-file-utils
 BuildArch:	noarch
 Requires:	scummvm >= 0.12.0
-Source44: import.info
 
 %description
 You play the role of John Hacker, a British estate agent, who travels to a
@@ -59,6 +60,9 @@ desktop-file-install \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_15
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_14
 - update to new release by fcimport
 
