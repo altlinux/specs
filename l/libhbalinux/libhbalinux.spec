@@ -1,11 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(HBAAPI) pkgconfig(pciaccess)
-# END SourceDeps(oneline)
 BuildRequires: pkgconfig(libudev)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:               libhbalinux
 Version:            1.0.17
-Release:            alt1_3
+Release:            alt1_4
 Summary:            FC-HBAAPI implementation using scsi_transport_fc interfaces
 Group:              System/Libraries
 License:            LGPLv2
@@ -14,20 +13,19 @@ Source0:            %{name}-%{version}.tar.gz
 Patch0:             libhbalinux-1.0.13-conf.patch
 Patch1:             libhbalinux-fix-non-pci-netdev.patch
 BuildRequires:      libhbaapi-devel >= 2.2.9
-BuildRequires:      libpciaccess-devel libtool automake systemd-devel
+BuildRequires:      libpciaccess-devel libtool-common automake-common libsystemd-devel libudev-devel
 Requires:           libhbaapi >= 2.2.9
 Requires(post):     grep
 Requires(postun):   grep
-Source44: import.info
 
 %description
 SNIA HBAAPI vendor library built on top of the scsi_transport_fc interfaces.
 
 %package devel
 Summary:            A file needed for libhbalinux application development
-Group:              Development/C
-Requires:           %{name}%{?_isa} = %{version}
-Requires:           pkgconfig
+Group:              Development/Other
+Requires:           %{name} = %{version}-%{release}
+Requires:           pkg-config
 
 %description devel
 The libhbalinux-devel package contains the library pkgconfig file.
@@ -40,7 +38,7 @@ The libhbalinux-devel package contains the library pkgconfig file.
 %build
 ./bootstrap.sh
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=%{buildroot}
@@ -75,6 +73,9 @@ fi
 %{_libdir}/%{name}.so
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.17-alt1_4
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.17-alt1_3
 - update to new release by fcimport
 
