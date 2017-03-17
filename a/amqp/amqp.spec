@@ -1,10 +1,12 @@
 Group: Development/Other
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global revision 1688630
 %global date     20150701
 
 Name:           amqp
 Version:        1.0
-Release:        alt1_5.%{date}svn%{revision}
+Release:        alt1_6.%{date}svn%{revision}
 # increase Epoch to 1 cause of modified Release logic
 Epoch:          1
 Summary:        The AMQP specification
@@ -19,8 +21,7 @@ Source0:        %{name}-%{version}-%{revision}.tar.gz
 # cd /tmp ; tar czf %{name}-%{version}-%{revision}.tar.gz /tmp/%{name}-%{version}
 
 BuildArch:      noarch
-BuildRequires: xsltproc libxslt
-Source44: import.info
+BuildRequires:  libxslt xsltproc
 
 %description
 The AMQP (advanced message queuing protocol) specification in XML format.
@@ -29,7 +30,7 @@ The AMQP (advanced message queuing protocol) specification in XML format.
 Group: Development/Other
 Summary: Development files for %{name}
 # be careful with epoch!
-Requires: %{name} = %{epoch}:%{version}
+Requires: %{name} = %{epoch}:%{version}-%{release}
 
 %description devel
 %{summary}.
@@ -57,6 +58,9 @@ install -p -m0644 *.xml *.dtd %{buildroot}%{_datadir}/%{name}
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_6.20150701svn1688630
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_5.20150701svn1688630
 - update to new release by fcimport
 
