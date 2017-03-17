@@ -3,11 +3,13 @@ BuildRequires(pre): rpm-build-python
 BuildRequires: gcc-c++ python-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 Name:           librapi
 Version:        0.15.2
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Library to connect to Pocket PC devices
 
 Group:          System/Libraries
@@ -19,13 +21,12 @@ Patch0:         librapi2-dso.patch
 BuildRequires:  libsynce-devel >= 0.15.1
 BuildRequires:  python-module-Pyrex
 BuildRequires:  libdbus-devel libdbus-glib-devel
-BuildRequires: libsystemd-devel libudev-devel
+BuildRequires:  libsystemd-devel libudev-devel
 BuildRequires:  libtool-common
 
 # Provide an upgrade path from the monilithic synce package
 Provides:       synce = %{version}-%{release}
 Obsoletes:      synce <= 0.9.1-10
-Source44: import.info
 
 %description
 The RAPI library is an open source implementation that works like RAPI.DLL,
@@ -36,8 +37,8 @@ running on the computer using librapi.
 
 %package devel
 Summary: Development libraries and header files for librapi
-Group: Development/C
-Requires: %{name} = %{version}
+Group: Development/Other
+Requires: %{name} = %{version}-%{release}
 Requires: pkg-config
 
 %description devel
@@ -45,8 +46,8 @@ This package contains the header files and link libraries for librapi
 
 %package -n python-module-rapi
 Summary: Python bindings to librapi (part of SynCE)
-Group: Development/Python
-Requires: %{name} = %{version}
+Group: Development/Other
+Requires: %{name} = %{version}-%{release}
 
 %description -n python-module-rapi
 This package contains the python bindings to librapi, a component
@@ -94,6 +95,9 @@ rm -f $RPM_BUILD_ROOT%{python_sitelibdir}/pyrapi2.{la,a}
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.15.2-alt2_12
+- update to new release by fcimport
+
 * Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.15.2-alt2_11
 - update to new release by fcimport
 
