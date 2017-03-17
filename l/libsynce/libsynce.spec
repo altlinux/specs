@@ -1,11 +1,13 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libsocket pkgconfig(dbus-1) pkgconfig(dbus-glib-1)
+BuildRequires: pkgconfig(dbus-1)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-%define fedora 23
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libsynce
 Version:        0.15.1
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Connection library for Pocket PC devices
 
 Group:          System/Libraries
@@ -14,7 +16,7 @@ URL:            http://www.synce.org
 Source0:        http://download.sf.net/synce/libsynce-%{version}.tar.gz
 
 BuildRequires:  libdbus-glib-devel
-BuildRequires:  libudev-devel
+BuildRequires:  libsystemd-devel libudev-devel
 %if 0%{?fedora} < 16
 BuildRequires:  hal-devel
 %endif
@@ -22,7 +24,6 @@ BuildRequires:  hal-devel
 # Provide an upgrade path from the monilithic synce package
 Provides:       synce = %{version}-%{release}
 Obsoletes:      synce <= 0.9.1-10
-Source44: import.info
 
 %description
 The purpose of the SynCE project is to provide a means of
@@ -31,9 +32,9 @@ FreeBSD or a similar operating system.
 
 %package devel
 Summary: Development libraries and header files for SynCE
-Group: Development/C
-Requires: %{name} = %{version}
-Requires: pkgconfig
+Group: Development/Other
+Requires: %{name} = %{version}-%{release}
+Requires: pkg-config
 
 %description devel
 This package contains the header files and link libraries for SynCE
@@ -54,7 +55,7 @@ homepage at http://www.synce.org
 %endif
 --enable-udev-support
 
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
@@ -73,6 +74,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.15.1-alt2_11
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.15.1-alt2_10
 - update to new release by fcimport
 
