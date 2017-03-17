@@ -4,23 +4,24 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libUnihan
 %global         libUnihan_ver_major 0
 %global         libUnihan_ver_minor 5
 Version:        %{libUnihan_ver_major}.%{libUnihan_ver_minor}.3
-Release:        alt4_16
+Release:        alt4_17
 License:        LGPLv2+
 Summary:        C library for Unihan character database in fifth normal form 
 Summary(zh_CN): 用于符合第五正规化之统汉字(Unihan)数据库的 C 库文件
 Summary(zh_TW): 用於符合第五正規化之統漢字(Unihan)資料庫的 C 函式庫
 
-BuildRequires: glib2-devel libgio libgio-devel  libsqlite3-devel ctest cmake
+BuildRequires:  glib2-devel libgio libgio-devel  libsqlite3-devel ctest cmake
 
 URL:            http://sourceforge.net/projects/libunihan
 Source0:        http://downloads.sourceforge.net/libunihan/%{name}-%{version}-Source.tar.gz
 
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
-Source44: import.info
 
 %description
 libUnihan provides a C library for Unihan character database in fifth
@@ -30,8 +31,8 @@ normal form (5NF).
 Group: Development/C
 Summary:    Development files of libUnihan
 License:        LGPLv2+
-Requires:       %{name} = %{version}
-Requires: libgio
+Requires:       %{name} = %{version}-%{release}
+Requires:       libgio
 
 %description devel
 Development files of libUnihan such as header files.
@@ -41,7 +42,7 @@ Group: Documentation
 Summary:    The libUnihan C API documents in Doxygen style
 License:        LGPLv2+
 BuildRequires:  doxygen
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description doc
 The libUnihan C API documents in Doxygen style.
@@ -86,6 +87,9 @@ make doxygen
 %doc %{_docdir}/%{name}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt4_17
+- update to new release by fcimport
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt4_16
 - update to new release by fcimport
 
