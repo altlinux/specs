@@ -4,9 +4,11 @@ BuildRequires: /usr/bin/curl /usr/bin/wget gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname ompl
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libompl
 Version:        1.0.0
-Release:        alt1_11
+Release:        alt1_13
 Summary:        The Open Motion Planning Library
 
 Group:          System/Libraries
@@ -15,15 +17,14 @@ URL:            http://ompl.kavrakilab.org/
 Source0:        https://bitbucket.org/%{oldname}/%{oldname}/downloads/%{oldname}-%{version}-Source.tar.gz
 # https://bitbucket.org/ompl/ompl/issues/206/cannot-compile-as-c-11
 Patch0:         ompl-1.0.0-cxx11.patch
-BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
-BuildRequires: ctest cmake
+BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires:  ctest cmake
 BuildRequires:  doxygen
 BuildRequires:  libflann-devel
-BuildRequires: graphviz libgraphviz
+BuildRequires:  graphviz libgraphviz
 BuildRequires:  libode-devel
-BuildRequires:  python-base
+BuildRequires:  python
 BuildRequires:  ruby-tools
-Source44: import.info
 Provides: ompl = %{version}-%{release}
 
 %description
@@ -35,9 +36,9 @@ collision checker or visualization front end.
 
 %package        devel
 Summary:        Development files for %{oldname}
-Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}
-Requires: boost-devel-headers boost-python-headers
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
+Requires:       boost-devel-headers boost-python-headers
 Provides: ompl-devel = %{version}-%{release}
 
 %description    devel
@@ -64,7 +65,7 @@ cd build
   -DOMPL_ODESOLVER=ON \
   -DOMPL_REGISTRATION=OFF ..
 
-make %{?_smp_mflags}
+%make_build
 make doc
 rm -f doc/html/installdox
 
@@ -95,6 +96,9 @@ make -C build test || exit 0
 %{_datadir}/cmake/Modules/FindOMPL.cmake
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_13
+- update to new release by fcimport
+
 * Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_11
 - update to new release by fcimport
 
