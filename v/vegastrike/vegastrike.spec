@@ -2,9 +2,11 @@
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ perl(English.pm) zlib-devel
 # END SourceDeps(oneline)
 BuildRequires: boost-python-devel
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           vegastrike
 Version:        0.5.1
-Release:        alt5_27.r1
+Release:        alt5_28.r1
 Summary:        3D OpenGL spaceflight simulator
 Group:          Games/Other
 License:        GPLv2+
@@ -31,13 +33,14 @@ Patch16:        vegastrike-0.5.1-gcc48.patch
 Patch17:        vegastrike-0.5.1-boost154.patch
 Patch18:        vegastrike-aarch64.patch
 Patch19:        vegastrike-0.5.1-gcc6.patch
-BuildRequires:  libGLU-devel libfreeglut-devel libXi-devel libXmu-devel gtk2-devel
-BuildRequires:  libjpeg-devel libpng-devel boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel expat-devel python-devel
-BuildRequires:  libSDL_mixer-devel libopenal-devel libalut-devel
-BuildRequires:  libvorbis-devel libogre-devel cegui-devel desktop-file-utils
+# https://sourceforge.net/p/vegastrike/patches/70/
+Patch20:        vegastrike-0.5.1-gcc7.patch
+BuildRequires:  libGLU-devel libfreeglut-devel libXi-devel libXmu-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:  libjpeg-devel libpng-devel boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel libexpat-devel python-devel
+BuildRequires:  libSDL_mixer-devel libopenal-devel libopenal1 libalut-devel
+BuildRequires:  libvorbis-devel libogre-devel cegui cegui-devel desktop-file-utils
 BuildRequires:  libappstream-glib
 Requires:       %{name}-data = %{version}, xdg-utils, opengl-games-utils
-Source44: import.info
 Patch33: vegastrike-0.5.1-alt-SharedPool.patch
 Patch34: vegastrike-0.5.1.r1-alt-perl522.patch
 
@@ -65,6 +68,7 @@ Yet danger lurks in the space beyond.
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
 iconv -f ISO-8859-1 -t UTF-8 README > README.tmp
 touch -r README README.tmp
 mv README.tmp README
@@ -81,7 +85,7 @@ export CXXFLAGS="$RPM_OPT_FLAGS -fsigned-char"
 %configure --with-data-dir=%{_datadir}/%{name} --with-boost=system \
   --enable-release --enable-flags="-DBOOST_PYTHON_NO_PY_SIGNATURES $RPM_OPT_FLAGS -fsigned-char" --disable-ffmpeg \
   --enable-stencil-buffer
-make %{?_smp_mflags} CXXLD="g++ -Wl,--no-as-needed"
+%make_build
 
 
 %install
@@ -122,6 +126,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt5_28.r1
+- update to new release by fcimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt5_27.r1
 - update to new release by fcimport
 
