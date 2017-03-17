@@ -12,7 +12,7 @@
 
 Name: WindowMaker
 Version: 0.95.8
-Release: alt1
+Release: alt2
 Packager: %packager
 
 Summary: A window manager for the X Window System
@@ -25,6 +25,10 @@ Source1: altlinux.tar
 
 Patch0: wmgenmenu.patch
 Patch1: WindowMaker-alt-Makefile.patch
+# 5561199c871293cca0b3dc2c6feff0d7783111c6
+Patch2: 0002-wmaker-allow-alt-tabbed-windows-over-fullscreen.patch
+# 6429847494fbcd84e2bab026c3fd9239c7cf8927
+Patch3: 0001-wmaker-fix-stacking-order-of-dock-and-fullscreen.patch
 
 Requires: xvt, wmsetbg = %version-%release, libWINGs = %version-%release, cpp
 Requires: xlockmore
@@ -162,6 +166,8 @@ Utility for root window image setting
 %setup -a 1 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1 -R
+%patch3 -p1 -R
 
 sed -i 's,/usr/lib/GNUstep,%gnustepdir,g' \
 	altlinux/etc/X11/WindowMaker/WMWindowAttributes
@@ -308,6 +314,10 @@ rm -rf %buildroot%_mandir/cs
 %_bindir/wmsetbg
 
 %changelog
+* Fri Mar 17 2017 Michael Shigorin <mike@altlinux.org> 0.95.8-alt2
+- Revert upstream commits changing fullscreen window handling
+  (use case that broke reported to bjorn@).
+
 * Sun Mar 12 2017 Andrey Bergman <vkni@altlinux.org> 0.95.8-alt1
 - Update to a new version. Corrected Makefile patch.
 
