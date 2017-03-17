@@ -3,7 +3,9 @@ BuildRequires: waf
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname sratom
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sratom
 %define version 0.4.6
 %global maj 0
@@ -11,7 +13,7 @@ BuildRequires: waf
 
 Name:       libsratom
 Version:    0.4.6
-Release:    alt1_4
+Release:    alt1_5
 Summary:    A C library for serializing LV2 plugins
 
 Group:      System/Libraries
@@ -20,13 +22,12 @@ URL:        http://drobilla.net/software/%{oldname}/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
 BuildRequires:  python
 BuildRequires:  doxygen
-BuildRequires:  graphviz
-BuildRequires:  sord-devel >= 0.12.0
+BuildRequires:  graphviz libgraphviz
+BuildRequires:  libsord-devel >= 0.12.0
 BuildRequires:  lv2-devel >= 1.0.0
-
-
-Source44: import.info
 Provides: sratom = %{version}-%{release}
+
+
 
 %description
 %{oldname} is a new C library for serializing LV2 atoms to/from Turtle. It is 
@@ -37,8 +38,8 @@ control with network transparency.
 
 %package devel
 Summary:    Development libraries and headers for %{oldname}
-Group:      Development/C
-Requires:   %{name} = %{version}
+Group:      Development/Other
+Requires:   %{name} = %{version}-%{release}
 Provides: sratom-devel = %{version}-%{release}
 
 %description devel
@@ -91,6 +92,9 @@ install -pm 644 COPYING NEWS README %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.6-alt1_5
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.6-alt1_4
 - update to new release by fcimport
 
