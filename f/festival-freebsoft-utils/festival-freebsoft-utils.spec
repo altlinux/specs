@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: texinfo
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          festival-freebsoft-utils
 Version:       0.10
-Release:       alt3_10
+Release:       alt3_11
 Summary:       A collection of utilities that enhance Festival with some useful features
 
 Group:         Sound
@@ -16,7 +18,6 @@ BuildRequires: festival
 
 Requires: festival
 Requires: libsox-fmt-alsa libsox-fmt-ao libsox-fmt-caf libsox-fmt-fap libsox-fmt-flac libsox-fmt-mat4 libsox-fmt-mat5 libsox-fmt-opus libsox-fmt-oss libsox-fmt-paf libsox-fmt-pulseaudio libsox-fmt-pvf libsox-fmt-sd2 libsox-fmt-sndfile libsox-fmt-vorbis libsox-fmt-w64 libsox-fmt-wavpack libsox-fmt-xi libsox3 sox-base
-Source44: import.info
 
 %description
 A collection of utilities that enhance Festival with some useful features. They 
@@ -53,6 +54,9 @@ cp -p *.scm %{buildroot}/%{_datadir}/festival/
 %{_datadir}/festival/*.scm
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_11
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_10
 - update to new release by fcimport
 
