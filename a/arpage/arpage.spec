@@ -1,14 +1,16 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize gcc-c++ pkgconfig(gthread-2.0) pkgconfig(gtkmm-2.4) pkgconfig(jack) pkgconfig(libxml++-2.6)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize gcc-c++ pkgconfig(gthread-2.0)
 # END SourceDeps(oneline)
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name arpage
 %define version 0.3.3
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
 Name:		arpage
 Version:	0.3.3
-Release:	alt3_20
+Release:	alt3_21
 Summary:	A JACK MIDI arpeggiator
 
 Group:		Sound
@@ -23,10 +25,9 @@ BuildRequires:	libjack-devel
 BuildRequires:	libgtkmm2-devel
 BuildRequires:	intltool libxml++2-devel
 BuildRequires:	desktop-file-utils
-BuildRequires:	libtool
-BuildRequires:	automake
-BuildRequires:	autoconf
-Source44: import.info
+BuildRequires:	libtool-common
+BuildRequires:	automake-common
+BuildRequires:	autoconf-common
 
 %description
 
@@ -53,7 +54,7 @@ chmod 644 %{_builddir}/%{name}-%{version}/src/main.cc
 autoreconf -i
 
 %configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -75,6 +76,9 @@ install -m 644 %{_builddir}/%{name}-%{version}/src/arpage.png %{buildroot}%{_dat
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt3_21
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt3_20
 - update to new release by fcimport
 
