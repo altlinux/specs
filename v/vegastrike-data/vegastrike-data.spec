@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: ImageMagick-tools
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %add_python_req_skip Base
 %filter_from_requires /^python2...Briefing.$/d
@@ -5,9 +8,11 @@
 %filter_from_requires /^python2...VS.$/d
 %add_python_compile_include %_datadir/vegastrike
 %add_python_lib_path %_datadir/vegastrike
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           vegastrike-data
 Version:        0.5.1
-Release:        alt2_10.r1
+Release:        alt2_11.r1
 Summary:        Data files for Vega Strike
 Group:          Games/Other
 License:        GPLv2+
@@ -19,7 +24,6 @@ Patch0:         vegastrike-data-0.5.0-playlists.patch
 BuildRequires:  python-devel ImageMagick
 BuildArch:      noarch
 Requires:       icon-theme-hicolor vegastrike >= %{version}
-Source44: import.info
 
 %description
 Data files for Vega Strike, a GPL 3D OpenGL Action RPG space sim that allows
@@ -29,7 +33,7 @@ a player to trade and bounty hunt.
 %package -n vegastrike-extra
 Summary:        Extra textures for Vega Strike
 Group:          Games/Other
-Requires:       vegastrike-data >= %{version}
+Requires:       vegastrike-data >= %{version}-%{release}
 
 %description -n vegastrike-extra
 Extra texture files for Vega Strike. These files are *not* essential to
@@ -117,6 +121,9 @@ cat data.pyo >> data.files
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_11.r1
+- update to new release by fcimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_10.r1
 - update to new release by fcimport
 
