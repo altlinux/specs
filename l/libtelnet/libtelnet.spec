@@ -1,9 +1,9 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen pkgconfig(zlib)
-# END SourceDeps(oneline)
+%add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		libtelnet
 Version:	0.21
-Release:	alt1_9
+Release:	alt1_10
 Summary:	TELNET protocol parsing framework
 
 Group:		System/Libraries
@@ -13,7 +13,6 @@ Source0:	http://cloud.github.com/downloads/seanmiddleditch/libtelnet/libtelnet-%
 
 BuildRequires: zlib-devel
 BuildRequires: doxygen
-Source44: import.info
 
 %description
 Small library for parsing the TELNET protocol, responding to TELNET
@@ -24,9 +23,9 @@ MSSP protocols used by MUD servers and clients.
 
 %package devel
 Summary: Header files for libtelnet
-Group: Development/C
-Requires: %{name} = %{version}
-Requires: pkgconfig
+Group: Development/Other
+Requires: %{name} = %{version}-%{release}
+Requires: pkg-config
 
 %description devel
 Header files for developing applications making use of libtelnet.
@@ -34,7 +33,7 @@ Header files for developing applications making use of libtelnet.
 %package utils
 Summary: TELNET utility programs from libtelnet
 Group: Networking/WWW
-Requires: %{name} = %{version}
+Requires: %{name} = %{version}-%{release}
 
 %description utils
 Provides three utilities based on the libtelnet library.
@@ -47,7 +46,7 @@ Provides three utilities based on the libtelnet library.
 
 %build
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 %install
 rm -rf "$RPM_BUILD_ROOT"
@@ -59,8 +58,8 @@ rm "$RPM_BUILD_ROOT%{_libdir}"/*.la
 %{_libdir}/*.so.*
 
 %files devel
-%doc %{_datadir}/man/man1/*.1*
-%doc %{_datadir}/man/man3/*.3*
+%doc %{_mandir}/man1/*.1*
+%doc %{_mandir}/man3/*.3*
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/%{name}.pc
 %{_includedir}/*
@@ -69,6 +68,9 @@ rm "$RPM_BUILD_ROOT%{_libdir}"/*.la
 %{_bindir}/*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_10
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_9
 - fixed build
 
