@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate gcc-c++ libhocr-devel python-devel
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ libhocr-devel
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 %add_optflags %optflags_shared
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name libhocr
 %define version 0.10.17
 # Override default upstream location [/usr/share/doc/libhocr]
@@ -16,7 +18,7 @@ BuildRequires: chrpath
 
 Name:		libhocr
 Version:	0.10.17
-Release:	alt2_23
+Release:	alt2_24
 Summary:	A Hebrew optical character recognition library
 
 Group:		System/Libraries
@@ -34,12 +36,11 @@ Patch2:		format-security.patch
 
 BuildRequires:	libfftw3-devel, libhspell-devel libtiff-devel libtiffxx-devel
 BuildRequires:	desktop-file-utils
-BuildRequires:	swig python-base python-dev gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel gettext gettext-tools gettext-tools-python
+BuildRequires:	swig, python-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel gettext gettext-tools
 # Fix #925761
 # Upstream use very old autoconf, breaks aarm64 builds
 # So we use autoreconf
 BuildRequires:	autoconf-common, automake-common, libtool-common
-Source44: import.info
 
 %description
 LibHocr is a GNU Hebrew optical character recognition library. It scans
@@ -50,9 +51,9 @@ text, ready for your blog, word processor or any other use.
 
 %package        devel
 Summary:	Development files for %{name}
-Group:		Development/C
-Requires:	%{name} = %{version}
-Requires: gtk-builder-convert gtk-demo
+Group:		Development/Other
+Requires:	%{name} = %{version}-%{release}
+Requires:	gtk-builder-convert gtk-demo
 # We ship *.pc files (requires the -devel of contained libs)
 Requires:	pkg-config
 
@@ -64,11 +65,11 @@ developing applications that use %{name}.
 %package        gtk
 Summary:	GTK+ application for %{name}
 Group:		Text tools
-Requires:	%{name} = %{version}
-Requires:	python(hocr) = %{version}
+Requires:	%{name} = %{version}-%{release}
+Requires:	python(hocr) = %{version}-%{release}
 # We use gtktextbuffer which uses gtkspell which have a runtime
 # check of the spellcheck backends... so here it is:
-Requires: hspell libhspell
+Requires:	hspell libhspell
 
 %description    gtk
 The %{name}-gtk package contains a GUI application that uses %{name}.
@@ -76,8 +77,8 @@ The %{name}-gtk package contains a GUI application that uses %{name}.
 %package        -n python-module-libhocr
 Summary:	Python bindings for %{name}
 Group:		System/Libraries
-Requires:	%{name} = %{version}
-Requires:	python-base > 2.5
+Requires:	%{name} = %{version}-%{release}
+Requires:	python > 2.5
 Provides:	python(hocr) = %{version}-%{release}
 
 %description    -n python-module-libhocr
@@ -177,6 +178,9 @@ done
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_24
+- update to new release by fcimport
+
 * Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_23
 - update to new release by fcimport
 
