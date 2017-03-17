@@ -1,5 +1,5 @@
 Name: libzio
-Version: 1.02
+Version: 1.04
 Release: alt1
 
 Summary: A library for accessing compressed text files
@@ -34,6 +34,7 @@ building libzio-aware applications.
 %patch -p1
 
 %build
+%def_enable Werror
 %make_build libdir=/%_lib noweak tests testt testw
 
 %install
@@ -47,6 +48,9 @@ for f in %buildroot/%_lib/*.so; do
 	ln -s ../../%_lib/"$t" "%buildroot%_libdir/${f##*/}"
 	rm "$f"
 done
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
 
 %check
 for s in gz bz2 lzma xz; do
@@ -91,6 +95,9 @@ done
 %_man3dir/*
 
 %changelog
+* Fri Mar 17 2017 Dmitry V. Levin <ldv@altlinux.org> 1.04-alt1
+- 1.02 -> 1.04.
+
 * Fri Nov 01 2013 Dmitry V. Levin <ldv@altlinux.org> 1.02-alt1
 - Updated to 1.02.
 
