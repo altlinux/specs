@@ -1,13 +1,14 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           ascii
 Version:        3.15
-Release:        alt1_1
+Release:        alt1_2
 URL:            http://www.catb.org/~esr/ascii/
 Source0:        http://www.catb.org/~esr/ascii/ascii-3.15.tar.gz
 
 License:        GPLv2
 Group:          Text tools
 Summary:        Interactive ascii name and synonym chart
-Source44: import.info
 
 %description
 The ascii utility provides easy conversion between various byte representations
@@ -21,7 +22,7 @@ with no arguments it displays a handy small ASCII chart.
 %setup -q
 
 %build
-make %{?_smp_mflags} ascii ascii.1 CFLAGS="${RPM_OPT_FLAGS}"
+%make_build ascii ascii.1 CFLAGS="${RPM_OPT_FLAGS}"
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
@@ -35,6 +36,9 @@ cp ascii.1 $RPM_BUILD_ROOT%{_mandir}/man1/
 %doc README COPYING
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 3.15-alt1_2
+- update to new release by fcimport
+
 * Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 3.15-alt1_1
 - update to new release by fcimport
 
