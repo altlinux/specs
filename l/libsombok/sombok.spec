@@ -1,12 +1,14 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen pkgconfig(libthai)
+BuildRequires: /usr/bin/doxygen
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname sombok
-%define fedora 23
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libsombok
 Version:        2.4.0
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Unicode Text Segmentation Package
 
 Group:          System/Libraries
@@ -19,10 +21,9 @@ Source0:        https://github.com/hatukanezumi/sombok/archive/%{oldname}-%{vers
 BuildRequires:  libthai-devel
 %endif
 
-BuildRequires:  autoconf
-BuildRequires:  automake
-BuildRequires:  libtool
-Source44: import.info
+BuildRequires:  autoconf-common
+BuildRequires:  automake-common
+BuildRequires:  libtool-common
 Provides: sombok = %{version}-%{release}
 
 
@@ -36,9 +37,9 @@ Annex #29 (UAX #29).
 
 %package        devel
 Summary:        Development files for %{oldname}
-Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}
-Requires:       pkgconfig
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
+Requires:       pkg-config
 Provides: sombok-devel = %{version}-%{release}
 
 %description    devel
@@ -53,7 +54,7 @@ developing applications that use %{oldname}.
 %build
 autoreconf -vif
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -75,6 +76,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_3
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_2
 - update to new release by fcimport
 
