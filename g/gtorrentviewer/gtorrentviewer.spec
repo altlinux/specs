@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
-%define fedora 24
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		gtorrentviewer
 Version:	0.2b
-Release:	alt4_33
+Release:	alt4_34
 Summary:	A GTK2-based viewer and editor for BitTorrent meta files
 Group:		Networking/WWW
 License:	GPL+
@@ -17,11 +19,10 @@ Patch3:		gtorrentviewer-0.2b-trackerdetails.patch
 Patch4:		GTorrentViewer-0.2b-curl-types.patch
 Patch5:		GTorrentViewer-0.2b-format.patch
 Patch6:		GTorrentViewer-0.2b-missing-tracker.patch
-BuildRequires:	libcurl-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel, desktop-file-utils gettext gettext-tools gettext-tools-python, intltool
+BuildRequires:	libcurl-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel, desktop-file-utils gettext gettext-tools, intltool
 
 Requires(post):	  desktop-file-utils
 Requires(postun): desktop-file-utils
-Source44: import.info
 
 %description
 GTorrentViewer gives you the ability to see and modify all the possible
@@ -60,7 +61,7 @@ sed -i 's,#include <curl/types.h>,,' src/main.c
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=%{buildroot} INSTALL="install -p"
@@ -100,6 +101,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %{_mandir}/man1/gtorrentviewer.1*
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2b-alt4_34
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.2b-alt4_33
 - update to new release by fcimport
 
