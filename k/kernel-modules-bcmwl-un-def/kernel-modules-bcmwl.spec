@@ -1,6 +1,6 @@
 %define module_name	bcmwl
 %define module_version	6.30.223.248
-%define module_release alt12
+%define module_release alt13
 
 %define flavour		un-def
 BuildRequires(pre): rpm-build-kernel
