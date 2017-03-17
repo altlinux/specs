@@ -1,10 +1,12 @@
 Group: System/Libraries
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 
 
 Summary: Base libraries for GGZ gaming zone
 Name:    ggz-base-libs
 Version: 0.99.5
-Release: alt3_19
+Release: alt3_20
 
 License: LGPLv2+ and GPLv2+
 URL: http://www.ggzgamingzone.org/
@@ -26,10 +28,9 @@ Source1: ggz.modules
 Source2: macros.ggz
 
 BuildRequires: libexpat-devel
-BuildRequires: gettext gettext-tools gettext-tools-python
+BuildRequires: gettext gettext-tools
 BuildRequires: gcrypt-utils libgcrypt-devel
 BuildRequires: libnss-devel libnss-devel-static
-Source44: import.info
 
 
 %description
@@ -44,7 +45,7 @@ Obsoletes: libggz-devel < 1:0.99.5
 Obsoletes: ggz-client-libs-devel < 1:0.99.5
 Provides: libggz-devel = 1:%{version}-%{release}
 Provides: ggz-client-libs-devel = 1:%{version}-%{release}
-Requires: %{name} = %{version}
+Requires: %{name} = %{version}-%{release}
 Requires: pkg-config
 # %{_sysconfdir}/rpm ownership
 %description devel
@@ -77,7 +78,7 @@ sed -i -e 's|"/lib /usr/lib|"/%{_lib} %{_libdir}|' configure
   --with-gcrypt \
   --with-tls=NSS
 
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -144,6 +145,9 @@ make check ||:
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.99.5-alt3_20
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.99.5-alt3_19
 - update to new release by fcimport
 
