@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/gconftool-2 /usr/bin/glib-gettextize ElectricFence gcc-c++ libreadline-devel libsocket perl(Text/Wrap.pm) pkgconfig(glib-2.0) pkgconfig(libgnomeui-2.0) pkgconfig(libxml-2.0) python-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/gconftool-2 ElectricFence gcc-c++ libreadline-devel perl(Text/Wrap.pm)
 # END SourceDeps(oneline)
-%define fedora 23
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           teg
 Version:        0.11.2
-Release:        alt2_36
+Release:        alt2_37
 Summary:        Turn based strategy game
 Group:          Games/Other
 License:        GPLv2
@@ -17,14 +19,13 @@ Patch0:         teg_libxml.patch
 Patch3:		teg_fixwording.patch
 Source2:         teg-fix-help.patch
 
-BuildRequires:  tidy glib2-devel libxml2-devel libgnomeui-devel
-BuildRequires:  gettext
+BuildRequires:  tidy glib2-devel libgio libgio-devel libxml2-devel libgnomeui-devel
+BuildRequires:  gettext gettext-tools
 BuildRequires:  perl(XML/Parser.pm)
 BuildRequires:  desktop-file-utils
-Requires(pre):  GConf2
-Requires(post): GConf2
-Requires(preun): GConf2
-Source44: import.info
+Requires(pre):  GConf libGConf
+Requires(post): GConf libGConf
+Requires(preun): GConf libGConf
 
 %description
 Tenes Empanadas Graciela is a clone of Plan TA.ctico y EstratA.gico de la 
@@ -42,7 +43,7 @@ done
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/gconf/gconf.xml.defaults
@@ -96,6 +97,9 @@ gconftool-2 --makefile-install-rule \
   %{_sysconfdir}/gconf/schemas/teg.schemas > /dev/null || :
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_37
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_36
 - update to new release by fcimport
 
