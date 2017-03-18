@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           overgod
 Version:        1.0
-Release:        alt2_24
+Release:        alt2_25
 Summary:        Another arcade-style shoot-em-up
 Group:          Games/Other
 License:        GPLv2+
@@ -18,7 +20,6 @@ Patch2:         overgod-1.0-shield_bmp_array_overrun.patch
 Patch3:         overgod-1.0-inline-use-fix.patch
 BuildRequires:  liballegro-devel desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor
-Source44: import.info
 
 %description
 For too long has humanity been ruled by cruel and disputatious gods!
@@ -44,7 +45,7 @@ sed -i -e 's,$(CC) $(LDFLAGS) -o $@ $^,$(CC) -o $@ $^ $(LDFLAGS),' Makefile
 
 
 %build
-make %{?_smp_mflags} \
+%make_build \
   CFLAGS="$RPM_OPT_FLAGS -Wno-unused-but-set-variable" PREFIX=%{_prefix}
 
 
@@ -73,6 +74,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_25
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_24
 - update to new release by fcimport
 
