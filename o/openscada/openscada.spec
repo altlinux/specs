@@ -1,15 +1,19 @@
+%define gver 5
+%set_gcc_version %gver
+
 #===== Generic Info ======
 Summary: Open SCADA system
 Summary(ru_RU.UTF8): Открытая SCADA система
 Summary(uk_UA.UTF8): Відкрита SCADA система
 Summary(de_DE.UTF8): Open SCADA-System
 Name: openscada
-Version: 0.8.13
+Version: 0.8.17
 Release: alt1
 Source: openscada-%version.tar
+Source1: openscada-res.tar.lzma
 License: GPLv2
 Group: Graphics
-Packager: Roman Savochenko <rom_as at altlinux.ru>
+Packager: Anton Midyukov <antohami@altlinux.org>
 URL: http://oscada.org
 
 %define srcname openscada-%version
@@ -17,13 +21,14 @@ URL: http://oscada.org
 #= Individual distributives seting =
 %if %_vendor == "alt"
 %set_verify_elf_method no
-BuildRequires: glibc-devel gcc-c++ libpcre-devel libgd2-devel
+BuildRequires: glibc-devel gcc%gver-c++ libpcre-devel libgd2-devel
 BuildRequires: libMySQL-devel libsqlite3-devel firebird-devel postgresql-devel
 BuildRequires: libsensors3-devel libnet-snmp-devel libportaudio2-devel libqt4-devel libfftw3-devel
 %else
 %define _initdir /etc/init.d
 %define _desktopdir %_datadir/applications
 %define _iconsdir /usr/share/icons
+%define _pkgconfigdir %_libdir/pkgconfig
 BuildRoot: %_tmppath/%name-%version-root
 %endif
 
@@ -1130,9 +1135,12 @@ Das Paket %{name}-Special.FLibSYS - bibliothek mit System-API für spezifische P
 
 %prep
 %setup -q -n %srcname
+%setup -T -D -a 1 -n %srcname
 
 %build
-%configure %{subst_enable DBF} %{subst_enable SQLite} %{subst_enable MySQL} %{subst_enable FireBird} %{subst_enable PostgreSQL} \
+%autoreconf
+%configure \
+    %{subst_enable DBF} %{subst_enable SQLite} %{subst_enable MySQL} %{subst_enable FireBird} %{subst_enable PostgreSQL} \
     %{subst_enable System} %{subst_enable BlockCalc} %{subst_enable JavaLikeCalc} %{subst_enable DiamondBoards} \
     %{subst_enable LogicLev} %{subst_enable SNMP} %{subst_enable Siemens} %{subst_enable ModBus} %{subst_enable DCON} \
     %{subst_enable DAQGate} %{subst_enable SoundCard} %{subst_enable ICP_DAS} %{subst_enable OPC_UA} %{subst_enable BFN} \
@@ -1142,10 +1150,10 @@ Das Paket %{name}-Special.FLibSYS - bibliothek mit System-API für spezifische P
     %{subst_enable VCAEngine} %{subst_enable Vision} %{subst_enable QTStarter} %{subst_enable QTCfg} \
     %{subst_enable WebCfg} %{subst_enable WebCfgD} %{subst_enable WebVision} %{subst_enable WebUser} \
     %{subst_enable SystemTests} %{subst_enable FLibComplex1} %{subst_enable FLibMath} %{subst_enable FLibSYS}
-%make
+%make_build
 
 %install
-%makeinstall
+%makeinstall_std
 rm -f %buildroot/%_libdir/openscada/*.la
 install -m 755 -d %buildroot/var/spool/openscada/{DATA,icons,LibsDB,AGLKS,Boiler}
 install -m 755 -d %buildroot/var/spool/openscada/ARCHIVES/{MESS,VAL}
@@ -1154,7 +1162,8 @@ install -m 644 -pD data/oscada_start.xml %buildroot/%_sysconfdir/oscada_start.xm
 install -m 755 -pD data/openscada_start %buildroot/%_bindir/openscada_start
 install -m 644 -pD data/openscada.desktop %buildroot/%_desktopdir/openscada.desktop
 install -m 644 -pD data/openscada.png %buildroot/%_iconsdir/openscada.png
-install -m 755 -pD data/oscada_ALT.init %buildroot/%_initdir/oscadad
+install -m 755 -pD debian/openscada-server.init %buildroot/%_initdir/oscadad
+sed -i '/. \/lib\/init\/vars.sh/d' %buildroot/%_initdir/oscadad
 echo "OpenSCADA data dir" > %buildroot/var/spool/openscada/DATA/.info
 install -m 644 data/icons/* %buildroot/var/spool/openscada/icons
 echo "OpenSCADA messages archive dir" > %buildroot/var/spool/openscada/ARCHIVES/MESS/.info
@@ -1181,9 +1190,6 @@ sed -i 's|/usr/lib|%_libdir|' %buildroot/%_sysconfdir/oscada*.xml
 
 %files
 
-%clean
-#rm -rf %buildroot %buildroot/%name-%version
-
 %post core
 %if %_vendor == "alt"
 %post_service oscadad
@@ -1207,16 +1213,21 @@ sed -i 's|/usr/lib|%_libdir|' %buildroot/%_sysconfdir/oscada*.xml
 %_bindir/openscada_start
 %doc README README_ru README_uk COPYING ChangeLog INSTALL TODO TODO_ru TODO_uk
 %_libdir/*.so.*
-#_libdir/openscada/*.so
-#exclude %_libdir/openscada/*.a
-#exclude %_libdir/openscada/*.la
+%dir %_libdir/openscada
 %_datadir/locale/*/LC_MESSAGES/openscada.mo
 /var/spool/openscada/DATA/.info
 /var/spool/openscada/icons/*
+%dir /var/spool/openscada
+%dir /var/spool/openscada/ARCHIVES
+%dir /var/spool/openscada/ARCHIVES/MESS
+%dir /var/spool/openscada/ARCHIVES/VAL
+%dir /var/spool/openscada/DATA
+%dir /var/spool/openscada/icons
 %exclude /var/spool/openscada/icons/AGLKS.png
 %exclude /var/spool/openscada/icons/Boiler.png
 /var/spool/openscada/ARCHIVES/MESS/.info
 /var/spool/openscada/ARCHIVES/VAL/.info
+%dir /var/spool/openscada/LibsDB
 
 %files docEN
 %defattr(-,root,root)
@@ -1233,8 +1244,8 @@ sed -i 's|/usr/lib|%_libdir|' %buildroot/%_sysconfdir/oscada*.xml
 %files devel
 %defattr(-,root,root)
 %_libdir/*.so
-%_libdir/*.*a
-%_includedir/openscada/*
+%exclude %_libdir/*.*a
+%_includedir/openscada
 %_pkgconfigdir/openscada.pc
 
 %files LibDB.Main
@@ -1253,6 +1264,7 @@ sed -i 's|/usr/lib|%_libdir|' %buildroot/%_sysconfdir/oscada*.xml
 %_desktopdir/openscada_AGLKS.desktop
 %_iconsdir/openscada_AGLKS.png
 /var/spool/openscada/icons/AGLKS.png
+%dir /var/spool/openscada/AGLKS
 /var/spool/openscada/AGLKS/*.db
 
 %files Model.Boiler
@@ -1262,6 +1274,7 @@ sed -i 's|/usr/lib|%_libdir|' %buildroot/%_sysconfdir/oscada*.xml
 %_desktopdir/openscada_Boiler.desktop
 %_iconsdir/openscada_Boiler.png
 /var/spool/openscada/icons/Boiler.png
+%dir /var/spool/openscada/Boiler
 /var/spool/openscada/Boiler/*.db 
 
 %files plc
@@ -1515,6 +1528,10 @@ sed -i 's|/usr/lib|%_libdir|' %buildroot/%_sysconfdir/oscada*.xml
 
 
 %changelog
+* Sat Mar 18 2017 Anton Midyukov <antohami@altlinux.org> 0.8.17-alt1
+- The build of 0.8.17 main update to the production release
+- Build with gcc5 (fix FTBFS).
+
 * Sun May 10 2015 Roman Savochenko <rom_as@altlinux.ru> 0.8.13-alt1
 - The build of 0.8.13 main update to the production release.
 
