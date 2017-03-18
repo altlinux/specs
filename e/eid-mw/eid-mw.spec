@@ -1,8 +1,7 @@
-%define mainline_ver 4.1.9
-%define git_ver d14efb36
+%define mainline_ver 4.2.4
 
 Name: eid-mw
-Version: %mainline_ver.git.%git_ver
+Version: %mainline_ver
 Release: alt1
 Summary: low-level support for Belgian Electronic Identity Card
 License: LGPLv3
@@ -117,8 +116,8 @@ for libeidviewer.
 %patch1 -p1
 
 echo "#\!/bin/sh" > scripts/build-aux/genver.sh
-echo "echo %mainline_ver-%git_ver" >> scripts/build-aux/genver.sh
-echo "echo %mainline_ver-%git_ver" > .version
+echo "echo %mainline_ver" >> scripts/build-aux/genver.sh
+echo "echo %mainline_ver" > .version
 
 %build
 %autoreconf
@@ -175,5 +174,8 @@ fi
 %_includedir/eid-util
 
 %changelog
+* Sun Mar 18 2017 Pavel Nakonechnyi <zorg@altlinux.org> 4.2.4-alt1
+- updated to version 4.2.4
+
 * Mon Jan 9 2017 Pavel Nakonechnyi <zorg@altlinux.org> 4.1.9.git.d14efb36-alt1
 - initial build from https://github.com/Fedict/eid-mw.git
