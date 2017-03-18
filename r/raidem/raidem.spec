@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip zlib-devel
+BuildRequires: /usr/bin/desktop-file-install unzip zlib-devel
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           raidem
 Version:        0.3.1
-Release:        alt2_28
+Release:        alt2_29
 Summary:        2d top-down shoot'em up
 Group:          Games/Other
 License:        zlib
@@ -19,10 +21,9 @@ Patch2:         raidem-libpng15.patch
 Patch3:         raidem-gcc4.7-stdio.patch
 Patch4:         raidem-new-api.patch
 BuildRequires:  gcc-objc glyph-keeper-allegro-devel libfreetype-devel libadime-devel
-BuildRequires:  zziplib-devel libpng-devel AllegroOGG-devel
-BuildRequires:  automake desktop-file-utils gnustep-base-devel
+BuildRequires:  zziplib-devel libpng-devel libAllegroOGG-devel
+BuildRequires:  automake-common desktop-file-utils gnustep-base-devel
 Requires:       icon-theme-hicolor
-Source44: import.info
 
 %description
 Raid'em is a 2d top-down shoot'em up. It began as a remake of Raid II
@@ -51,7 +52,7 @@ autoconf
 %build
 # override _datadir otherwise it expects its datafile directly under /use/share
 %configure --datadir=%{_datadir}/%{name} --disable-id3
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -81,6 +82,9 @@ install -p -m 644 %{SOURCE1} \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_29
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_28
 - update to new release by fcimport
 
