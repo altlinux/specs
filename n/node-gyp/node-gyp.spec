@@ -1,6 +1,6 @@
 Name: node-gyp
 Version: 3.4.0
-Release: alt1
+Release: alt2
 
 Summary: Node.js native addon build tool
 License: MIT
@@ -48,7 +48,7 @@ Requires: rpm-build-nodejs
 #we also need a C++ compiler to actually build stuff ;-)
 # TODO: what about toolchain?
 Requires: gcc-c++ make
-Patch33: addon-rpm.gypi.patch
+#Patch33: addon-rpm.gypi.patch
 
 %description
 node-gyp is a cross-platform command-line tool written in Node.js for compiling
@@ -57,8 +57,11 @@ various differences in build platforms.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+#patch1 -p1
+#patch2 -p1
+
+# use system gyp
+%__subst "s|\(var gyp_script =\).*|\1 '/usr/bin/gyp'|g" lib/configure.js
 
 #nodejs_fixdep request 2.x
 #nodejs_fixdep npmlog 3
@@ -66,13 +69,13 @@ various differences in build platforms.
 #nodejs_fixdep semver 2.1
 #patch33 -p0
 
-rm -rf gyp
+rm -rf gyp/
 
 %build
 #nothing to do
 
 %install
-mkdir -p %buildroot%nodejs_sitelib/node-gyp
+mkdir -p %buildroot%nodejs_sitelib/node-gyp/
 cp -pr addon*.gypi bin lib node_modules package.json %buildroot%nodejs_sitelib/node-gyp/
 cp -p %SOURCE1 %buildroot%nodejs_sitelib/node-gyp/addon-rpm.gypi
 
@@ -88,6 +91,9 @@ ln -sf ../lib/node_modules/node-gyp/bin/node-gyp.js %buildroot%_bindir/node-gyp
 %doc README.md LICENSE
 
 %changelog
+* Sat Mar 18 2017 Vitaly Lipatov <lav@altlinux.ru> 3.4.0-alt2
+- build fixes
+
 * Sun Dec 18 2016 Vitaly Lipatov <lav@altlinux.ru> 3.4.0-alt1
 - new version 3.4.0 (with rpmrb script)
 
