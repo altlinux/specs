@@ -1,4 +1,4 @@
-%define ver_major 0.22
+%define ver_major 1.0
 %define xdg_name org.gnome.Recipes
 
 Name: gnome-recipes
@@ -79,6 +79,9 @@ This package contains common noarch files needed for Recipes.
 
 
 %changelog
+* Sat Mar 18 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Mon Mar 13 2017 Yuri N. Sedunov <aris@altlinux.org> 0.22.0-alt1
 - 0.22.0
 
