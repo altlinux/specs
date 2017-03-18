@@ -1,23 +1,28 @@
 Name: tinc
-Version: 1.0.8
-Release: alt2.1.qa2.1
+Version: 1.0.31
+Release: alt1
 
 Summary: Virtual Private Network (VPN) daemon that uses tunnelling and encryption to create a secure private network between hosts on the Internet.
-Summary(ru_RU.KOI8-R): Небольшой демон для создания шифрованных туннелей и частных виртуальных сетей между хостами в сети Интернет
-Summary(uk_UA.KOI8-U): Невеликий демон для створення шифрованих тунел╕в та приватних в╕ртуальних мереж м╕ж хостами в мереж╕ ╤нтернет
+Summary(ru_RU.UTF-8): п²п╣п╠п╬п╩я▄я┬п╬п╧ п╢п╣п╪п╬п╫ п╢п╩я▐ я│п╬п╥п╢п╟п╫п╦я▐ я┬п╦я└я─п╬п╡п╟п╫п╫я▀я┘ я┌я┐п╫п╫п╣п╩п╣п╧ п╦ я┤п╟я│я┌п╫я▀я┘ п╡п╦я─я┌я┐п╟п╩я▄п╫я▀я┘ я│п╣я┌п╣п╧ п╪п╣п╤п╢я┐ я┘п╬я│я┌п╟п╪п╦ п╡ я│п╣я┌п╦ п≤п╫я┌п╣я─п╫п╣я┌
+Summary(uk_UA.UTF-8): п²п╣п╡п╣п╩п╦п╨п╦п╧ п╢п╣п╪п╬п╫ п╢п╩я▐ я│я┌п╡п╬я─п╣п╫п╫я▐ я┬п╦я└я─п╬п╡п╟п╫п╦я┘ я┌я┐п╫п╣п╩я√п╡ я┌п╟ п©я─п╦п╡п╟я┌п╫п╦я┘ п╡я√я─я┌я┐п╟п╩я▄п╫п╦я┘ п╪п╣я─п╣п╤ п╪я√п╤ я┘п╬я│я┌п╟п╪п╦ п╡ п╪п╣я─п╣п╤я√ п├п╫я┌п╣я─п╫п╣я┌
+
 Group: System/Servers
 License: GPL
 Url: http://www.tinc-vpn.org
 
-Source: %url/packages/%name-%version.tar.gz
+Source0: %name-%version.tar
+Patch0:  %name-%version-%release.patch
+
 Source1: %name.init
 Source2: %name.sysconfig
 Source3: %name.control
 
 PreReq(post,preun): chkconfig
 
-# Automatically added by buildreq on Fri Apr 04 2008
-BuildRequires: liblzo2-devel libssl-devel tetex-latex zlib-devel
+# Automatically added by buildreq on Wed Jul 13 2016
+# optimized out: makeinfo perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore pkg-config python-base python-modules python3 tetex-core tex-common texi2dvi
+BuildRequires: liblzo2-devel libpcap-devel libssl-devel libvde-devel tetex-latex zlib-devel
+
 # explicitly added texinfo for info files
 BuildRequires: texinfo
 
@@ -58,19 +63,26 @@ Runs on many operating systems and supports IPv6
     creating tunnels over existing IPv6 networks. 
 
 %prep
-%setup -q
+%setup -n %name-%version
+#%%patch0 -p1
 
 %build
+%autoreconf
 %configure --prefix=%_usr --sysconfdir=%_sysconfdir \
 	--localstatedir=%_var \
 	--infodir=%_infodir \
 	--mandir=%_mandir \
+	--with-systemdsystemunitdir=%_unitdir \
 	--disable-nls \
-	--disable-rpath
-#	--enable-jumbograms
+	--disable-rpath \
+	--enable-uml \
+	--enable-vde \
+	--enable-tunemu \
+	--enable-jumbograms
+
 %make_build
 pushd doc
-%make pdf
+%make pdf :||
 popd
 
 %install
@@ -93,18 +105,31 @@ popd
 %preun_service %name
 
 %files
+%doc AUTHORS COPYING COPYING.README INSTALL README NEWS THANKS doc/sample-config/ doc/tinc.pdf
+
 %_sbindir/*
+
 %_man5dir/*
 %_man8dir/*
 %_infodir/%name.info*
+
 %config %_controldir/%name
+
 %config(noreplace) %_initdir/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
+
 %attr(750,root,wheel) %dir %_sysconfdir/%name/hosts
 %attr(750,root,wheel) %dir %_sysconfdir/%name
-%doc AUTHORS ChangeLog COPYING COPYING.README INSTALL README NEWS THANKS doc/sample-config.tar.gz doc/tinc.pdf
+
+%_unitdir/%{name}*.service
 
 %changelog
+* Sat Mar 18 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.0.31-alt1
+- New version
+- Adding systemd unit files
+- Multiple channels support in the init script
+- Recoding spec file to UTF-8
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2.1.qa2.1
 - NMU: added BR: texinfo
 
