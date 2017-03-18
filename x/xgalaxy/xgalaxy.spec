@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install libICE-devel libSM-devel libX11-devel libXext-devel perl(find.pl)
+BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools imake libX11-devel libXext-devel perl(find.pl) xorg-cf-files
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           xgalaxy
 Version:        2.0.34
-Release:        alt2_23
+Release:        alt2_24
 Summary:        Arcade game: shoot down the space ships attacking the planet
 Group:          Games/Other
 License:        GPL+
@@ -18,12 +20,11 @@ Patch3:         %{name}-2.0.34-joy.patch
 Patch4:         %{name}-2.0.34-fullscreen-viewport.patch
 Patch5:         %{name}-2.0.34-alsa.patch
 Patch6:         %{name}-2.0.34-dga-compile-fix.patch
-BuildRequires:  libXt-devel libXpm-devel libXmu-devel libXxf86vm-devel
+BuildRequires:  libXt-devel libXpm libXpm-devel libXmu-devel libXxf86vm-devel
 BuildRequires:  libalsa-devel desktop-file-utils ImageMagick 
 Requires:       icon-theme-hicolor
 Obsoletes:      xgalaga <= %{version}
 Provides:       xgalaga = %{version}-%{release}
-Source44: import.info
 
 %description
 Arcade game for the X Window System where you have to shoot down the space
@@ -61,7 +62,7 @@ export X_LIBS=-lXxf86vm
 ./configure --libdir=%{_libdir} --exec-prefix=%{_bindir} \
   --prefix=%{_datadir}/%{name}
 sed -i s/xgal.sndsrv.oss/xgal.sndsrv.alsa/ Makefile
-make %{?_smp_mflags} SOUNDLIBS=-lasound
+%make_build SOUNDLIBS=-lasound
 convert images/player3.xpm %{name}.png
 
 
@@ -102,6 +103,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.34-alt2_24
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.34-alt2_23
 - update to new release by fcimport
 
