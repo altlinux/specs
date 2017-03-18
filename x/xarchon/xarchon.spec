@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ imake libXt-devel libesd-devel xorg-cf-files
+BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools gcc-c++ imake libXt-devel libesd-devel xorg-cf-files
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           xarchon
 Version:        0.50
-Release:        alt2_22
+Release:        alt2_23
 Summary:        Arcade board game
 Group:          Games/Other
 License:        GPL+
@@ -15,10 +17,9 @@ Patch0:         %{name}-fonts.patch
 Patch1:         %{name}-destdir.patch
 Patch2:         http://ftp.debian.org/debian/pool/main/x/%{name}/%{name}_0.50-10.1.diff.gz
 Patch3:         xarchon-0.50-gcc43.patch
-BuildRequires:  gtk+-devel libXpm-devel
+BuildRequires:  gtk+-devel libXpm libXpm-devel
 BuildRequires:  desktop-file-utils ImageMagick libappstream-glib
 Requires:       icon-theme-hicolor
-Source44: import.info
 Patch33: xarchon-0.50-alt-DSO.patch
 
 %description
@@ -36,7 +37,7 @@ XArchon is a chess with a twist board game.
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 convert -resize 64x64 data/icon.xpm %{name}.png
 
 
@@ -69,6 +70,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2_23
+- update to new release by fcimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2_22
 - update to new release by fcimport
 
