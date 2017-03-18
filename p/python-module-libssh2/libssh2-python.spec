@@ -1,16 +1,17 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel
 # END SourceDeps(oneline)
 %define oldname libssh2-python
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %{!?python_sitearch: %define python_sitearch %(python -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 Summary: Python binding for the libssh2 library
 Name: python-module-libssh2
 Version: 0.7.1
-Release: alt1_11
+Release: alt1_13
 License: LGPLv2+
-Group: Development/C
+Group: Development/Other
 URL: https://github.com/wallunit/ssh4py
 # The source for the package was pulled from upstream's vcs.  Use the
 # following commands to generate the tarball:
@@ -18,11 +19,10 @@ URL: https://github.com/wallunit/ssh4py
 #  cd ssh4py ; python setup.py sdist
 Source0: https://github.com/wallunit/ssh4py/zipball/0.7.1/%{oldname}-%{version}.tar.gz
 
-BuildRequires: python-dev
+BuildRequires: python-devel
 BuildRequires: libssh2-devel
 BuildRequires: libssl-devel
 BuildRequires: zlib-devel
-Source44: import.info
 
 %description
 libssh2-python is a python binding for the libssh2 library
@@ -46,6 +46,9 @@ python setup.py install -O1 --root=$RPM_BUILD_ROOT
 %{python_sitelibdir}/libssh2*-*.egg-info
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_13
+- update to new release by fcimport
+
 * Tue May 31 2016 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_11
 - converted for ALT Linux by srpmconvert tools
 
