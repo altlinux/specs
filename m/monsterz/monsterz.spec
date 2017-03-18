@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           monsterz
 Version:        0.7.1
-Release:        alt2_15
+Release:        alt2_16
 Summary:        Puzzle game, similar to Bejeweled or Zookeeper
 Group:          Games/Other
 License:        WTFPL
@@ -18,7 +20,6 @@ Requires:       python-module-pygame
 Requires:       icon-theme-hicolor
 Provides:       %{name}-data = %{version}-%{release}
 Obsoletes:      %{name}-data < 0.7.1
-Source44: import.info
 
 %description
 Monsterz is a little arcade puzzle game, similar to the famous Bejeweled or
@@ -39,7 +40,7 @@ board again. Chain reactions earn you even more points.
 
 
 %build
-make %{?_smp_mflags} prefix=%{_usr} datadir=%{_datadir} pkgdatadir=%{_datadir}/%{name} CFLAGS="%{optflags}"
+%make_build prefix=%{_usr} datadir=%{_datadir} pkgdatadir=%{_datadir}/%{name} CFLAGS="%{optflags}"
 
 # Build desktop icon
 cat >%{name}.desktop <<EOF
@@ -87,6 +88,9 @@ install -pm0644 graphics/icon.png %{buildroot}%{_datadir}/icons/hicolor/64x64/ap
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_16
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_15
 - update to new release by fcimport
 
