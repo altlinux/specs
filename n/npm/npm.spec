@@ -1,6 +1,6 @@
 Name: npm
 Version: 3.10.10
-Release: alt1
+Release: alt2
 
 Summary: A package manager for node
 
@@ -15,6 +15,7 @@ BuildRequires(pre): rpm-macros-nodejs
 
 #BuildRequires: node >= 6.9
 #Requires:	node >= 6.9
+Requires: npm(node-gyp) = 3.4.0
 
 BuildArch:	noarch
 
@@ -32,6 +33,7 @@ at https://registry.npmjs.org by default.
 
 %prep
 %setup
+rm -rf bin/node-gyp-bin node_modules/node-gyp/
 
 %build
 #make man
@@ -61,6 +63,9 @@ rm -rf %buildroot%nodejs_sitelib/%name/node_modules/request/node_modules/node-uu
 %nodejs_sitelib/%name/
 
 %changelog
+* Sat Mar 18 2017 Vitaly Lipatov <lav@altlinux.ru> 3.10.10-alt2
+- build with external node-gyp
+
 * Thu Feb 02 2017 Vitaly Lipatov <lav@altlinux.ru> 3.10.10-alt1
 - new version 3.10.10 (with rpmrb script)
 
