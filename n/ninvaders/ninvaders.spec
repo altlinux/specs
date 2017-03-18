@@ -1,6 +1,8 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           ninvaders
 Version:        0.1.1
-Release:        alt2_13
+Release:        alt2_14
 Summary:        Space Invaders clone written in ncurses for cli gaming
 
 Group:          Games/Other
@@ -10,8 +12,7 @@ Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.
 Patch0:         ninvaders-0.1.1-fedora.patch
 
 
-BuildRequires:  ncurses-devel
-Source44: import.info
+BuildRequires:  libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 
 %description
 Ever wanted to place space invaders when you can't find a GUI? Now you can!
@@ -25,7 +26,7 @@ iconv -f iso-8859-1 -t utf8 ChangeLog > ChangeLog.new && \
 touch -r ChangeLog ChangeLog.new && mv ChangeLog.new ChangeLog
 
 %build
-make %{?_smp_mflags}
+%make_build
 
 %install
 install -Dp -m0755 nInvaders %{buildroot}%{_bindir}/nInvaders
@@ -36,6 +37,9 @@ install -Dp -m0755 nInvaders %{buildroot}%{_bindir}/nInvaders
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_14
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_13
 - update to new release by fcimport
 
