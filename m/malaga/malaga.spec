@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: texinfo
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           malaga
 Version:        7.12 
-Release:        alt2_19
+Release:        alt2_21
 Summary:        A programming language for automatic language analysis
 
 Group:          Development/Other
@@ -20,9 +22,8 @@ Patch0:         malaga-rename-map_file.diff
 Patch1:         malaga-malshow-lm.patch
 Patch2:         malaga-aarch64.patch
 
-BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel readline-devel
-Requires: lib%{name} = %{version}
-Source44: import.info
+BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel readline-devel
+Requires: lib%{name} = %{version}-%{release}
 
 %description
 A software package for the development and application of
@@ -38,7 +39,7 @@ University of Erlangen, Germany.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/Other
-Requires:       lib%{name} = %{version}
+Requires:       lib%{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -46,7 +47,7 @@ developing applications that use %{name}.
 
 %package -n	lib%{name}
 Summary:        Library files for %{name}
-Group:          Development/C
+Group:          Development/Other
 
 %description -n	lib%{name}
 Library files for %{name}.
@@ -70,7 +71,7 @@ sed -i.silent -e 's|--silent||' Makefile.in
 # https://fedoraproject.org/wiki/Packaging/Guidelines#Removing_Rpath
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -99,6 +100,9 @@ chmod 0755 $RPM_BUILD_ROOT%{_libdir}/libmalaga.so*
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 7.12-alt2_21
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 7.12-alt2_19
 - update to new release by fcimport
 
