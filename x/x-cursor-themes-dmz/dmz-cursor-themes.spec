@@ -1,7 +1,9 @@
 %define oldname dmz-cursor-themes
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           x-cursor-themes-dmz
 Version:        0.4
-Release:        alt2_10
+Release:        alt2_12
 Summary:        X cursors themes
 
 Group:          Graphical desktop/Other
@@ -19,7 +21,6 @@ URL:            http://jimmac.musichall.cz/themes.php?skin=7
 Source0:        dmz-cursor-themes-%{checkout}.tar.bz2
 
 BuildArch:      noarch
-Source44: import.info
 
 %description
 An X cursors theme by Jakub Steiner used by OpenSUSE.
@@ -42,6 +43,9 @@ cp -pr dmz-aa/xcursors %{buildroot}/%{_datadir}/icons/dmz-aa/cursors
 %{_datadir}/icons/dmz-aa/
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt2_12
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.4-alt2_10
 - update to new release by fcimport
 
