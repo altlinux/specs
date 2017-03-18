@@ -10,14 +10,14 @@
 
 %define gst_version 1.0
 %define nspr_version 4.12.0
-%define nss_version 3.23.0
+%define nss_version 3.28.1
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser (with GOST support)
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (с поддержкой шифрования по ГОСТ)
 
 Name:           firefox-gost
-Version:        45.5.0
-Release:        alt2
+Version:        45.8.0
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -41,6 +41,7 @@ Patch17:        firefox-mediasource-crash.patch
 
 # Upstream
 Patch200:       mozilla-bug-1205199.patch
+Patch201:       mozilla-bug-1245076.patch
 
 # Red Hat
 Patch300:       rhbz-1219542-s390-build.patch
@@ -124,22 +125,23 @@ Obsoletes:	%name-ru < %version-%release
 # ALT#30732
 Requires:	gst-plugins-ugly%gst_version
 
-# Protection against fraudulent DigiNotar certificates
+# Require fresh nss for correct https open
 %if_with system_nss
-Requires: libnss >= 3.12.11-alt3
+Requires: libnss >= %nss_version
 %endif
 
 %description
-The Mozilla Firefox project is a redesign of Mozilla's browser component,
-written using the XUL user interface language and designed to be
-cross-platform.
+The Mozilla Firefox project is a redesign of Mozilla's browser
+component, written using the XUL user interface language and designed to
+be cross-platform.
 
 This package supports GOST encryption by CryptoPro.
 See https://www.cryptopro.ru/products/cpfox for details.
 
 %description -l ru_RU.UTF8
-Интернет-браузер Mozilla Firefox - кроссплатформенная модификация браузера Mozilla,
-созданная с использованием языка XUL для описания интерфейса пользователя.
+Интернет-браузер Mozilla Firefox - кроссплатформенная модификация
+браузера Mozilla, созданная с использованием языка XUL для описания
+интерфейса пользователя.
 
 Этот пакет поддерживает шифрование по ГОСТ с помощью КриптоПро.
 Подробости: https://www.cryptopro.ru/products/cpfox
@@ -159,6 +161,7 @@ tar -xf %SOURCE2
 %patch17 -p2
 
 %patch200 -p1
+%patch201 -p1
 
 %patch300 -p1
 %patch301 -p1
@@ -363,6 +366,9 @@ done
 %firefox_prefix/dictionaries/*
 
 %changelog
+* Sat Mar 18 2017 Andrey Cherepanov <cas@altlinux.org> 45.8.0-alt1
+- New ESR version with GOST encryption support
+
 * Tue Dec  6 2016 Ivan Zakharyaschev <imz@altlinux.org> 45.5.0-alt2
 - Strictly verify unresolved ELF symbols (incl. the bundled patched libnss); it
   will also save us from missing dependencies on libgtk symbols. (Thx legion@
