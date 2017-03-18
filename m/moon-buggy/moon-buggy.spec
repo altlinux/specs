@@ -1,13 +1,15 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install
+BuildRequires: /usr/bin/desktop-file-install texinfo
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Enable oldstyle to have a nearly nothing requiring package after rebuilding
 %global oldstyle 0
 
 Summary:         Drive and jump with some kind of car across the moon
 Name:            moon-buggy
 Version:         1.0.51
-Release:         alt2_17
+Release:         alt2_18
 License:         GPL+
 Group:           Games/Other
 URL:             http://seehuhn.de/pages/%{name}
@@ -17,11 +19,10 @@ Source2:         %{name}.desktop
 Source3:         %{name}-sound.desktop
 Patch0:          moon-buggy-1.0.51-pause.patch
 Patch1:          moon-buggy-1.0.51-sound.patch
-BuildRequires:   ncurses-devel, texinfo
+BuildRequires:   libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel, makeinfo
 %if !%{oldstyle}
-BuildRequires:   esound-devel, desktop-file-utils, autoconf, automake
+BuildRequires:   libesd-devel, desktop-file-utils, autoconf-common, automake-common
 %endif
-Source44: import.info
 
 %description
 Moon-buggy is a simple character graphics game where you drive some kind
@@ -43,14 +44,14 @@ autoreconf -f -i
 %endif
 
 %build
-%configure --sharedstatedir=%{_var}/games
-make %{?_smp_mflags}
+%configure --sharedstatedir=%{_localstatedir}/games
+%make_build
 
 %install
 make DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p" install
 
 # Create zero-sized highscore file
-touch $RPM_BUILD_ROOT%{_var}/games/%{name}/mbscore
+touch $RPM_BUILD_ROOT%{_localstatedir}/games/%{name}/mbscore
 
 # Install working *.desktop files and an icon
 %if !%{oldstyle}
@@ -86,10 +87,13 @@ mv -f TODO.utf8 TODO
 %attr(2711,root,games) %{_bindir}/%{name}
 %{_mandir}/man6/%{name}.6*
 %{_infodir}/%{name}.info.*
-%attr(0775,root,games) %{_var}/games/%{name}
-%verify(not md5 size mtime) %config(noreplace) %attr(664,root,games) %{_var}/games/%{name}/mbscore
+%attr(0775,root,games) %{_localstatedir}/games/%{name}
+%verify(not md5 size mtime) %config(noreplace) %attr(664,root,games) %{_localstatedir}/games/%{name}/mbscore
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.51-alt2_18
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.51-alt2_17
 - update to new release by fcimport
 
