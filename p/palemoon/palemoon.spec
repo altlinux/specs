@@ -2,7 +2,7 @@ Summary: The New Moon browser, an unofficial branding of the Pale Moon project b
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 27.1.2
+Version: 27.2.0
 Release: alt1.0
 License: MPL/GPL/LGPL
 Group: Networking/WWW
@@ -105,11 +105,11 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 Group: Networking/WWW
 
 Obsoletes: palemoon  <= 26.2.2
-Provides: palemoon = %version-%release
+Provides: palemoon = %EVR
 
-Conflicts: newmoon < %epoch:%version-%release
-Obsoletes: newmoon < %epoch:%version-%release
-Provides: newmoon = %epoch:%version-%release
+Conflicts: newmoon < 27.1.2
+Obsoletes: newmoon < 27.1.2
+Provides: newmoon = %EVR
 
 Requires: libgstreamer1.0 gst-libav
 Requires: gst-plugins-base1.0
@@ -130,14 +130,14 @@ cross-platform.
 созданная с использованием языка XUL для описания интерфейса пользователя.
 
 %package -n newmoon-data
-Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
-Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
+Summary: The New Moon browser (noarch) , an unofficial branding of the Pale Moon project browser
+Summary(ru_RU.UTF-8): Интернет-браузер New Moon (архитектуронезависимая часть)  - неофициальная сборка браузера Pale Moon
 Group: Networking/WWW
 BuildArch: noarch
 
-#Provides: newmoon = %epoch:%version-%release
-Conflicts: newmoon < %epoch:%version-%release
-Obsoletes: newmoon <  %epoch:%version-%release
+#Provides: newmoon = %EVR
+Conflicts: newmoon < %EVR
+Obsoletes: newmoon < %EVR
 
 
 
@@ -148,7 +148,7 @@ written using the XUL user interface language and designed to be
 cross-platform.
 
 %description -n newmoon-data -l ru_RU.UTF8
-Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
+Интернет-браузер New Moon - неофициальная сборка браузера (архитектуронезависимая часть)  Pale Moon
 Интернет-браузер %sname - кроссплатформенная модификация браузера Mozilla Firefox ,
 созданная с использованием языка XUL для описания интерфейса пользователя.
 
@@ -351,7 +351,7 @@ popd
 # icons
 for s in 16 32 48; do
 	install -D -m 644 \
-		browser/branding/unofficial/content/default$s.png \
+		browser/branding/unstable/default$s.png \
 		%buildroot/%_iconsdir/hicolor/${s}x${s}/apps/%bname.png
 done
 
@@ -424,7 +424,7 @@ mv %buildroot/%palemoon_prefix/*.manifest %buildroot%palemoon_bindir/
 
 
 ln -s %palemoon_prefix/{chrome,defaults,dictionaries,hyphenation,modules,res} %buildroot/%palemoon_bindir/
-ln -s %palemoon_prefix/{dependentlibs.list,greprefs.js,libfreebl3.chk,libnssdbm3.chk,libsoftokn3.chk,platform.ini} %buildroot/%palemoon_bindir/
+ln -s %palemoon_prefix/{dependentlibs.list,greprefs.js,platform.ini,libfreeblpriv3.chk,libnssdbm3.chk,libsoftokn3.chk} %buildroot/%palemoon_bindir/
 ln -s %palemoon_prefix/browser/{application.ini,blocklist.xml,chrome,chrome.manifest,defaults,extensions,icons,modules,searchplugins} %buildroot/%palemoon_bindir/browser/
 
 
@@ -466,6 +466,36 @@ for n in defaults browserconfig.properties; do
 	[ ! -L "%palemoon_prefix/$n" ] || rm -f "%palemoon_prefix/$n"
 done
 
+%files -n %bname-data
+%dir %palemoon_prefix
+%palemoon_prefix/
+%dir %palemoon_prefix/browser
+%palemoon_prefix/browser/*
+%dir %palemoon_prefix/chrome
+%palemoon_prefix/chrome/*
+%dir %palemoon_prefix/defaults
+%palemoon_prefix/defaults/*
+%dir %palemoon_prefix/dictionaries
+%palemoon_prefix/dictionaries/*
+%dir %palemoon_prefix/hyphenation
+%palemoon_prefix/hyphenation/*
+%dir %palemoon_prefix/modules
+%palemoon_prefix/modules/*
+%dir %palemoon_prefix/res
+%palemoon_prefix/res/*
+
+%palemoon_prefix/dependentlibs.list
+%palemoon_prefix/greprefs.js
+%palemoon_prefix/libfreeblpriv3.chk
+%palemoon_prefix/libnssdbm3.chk
+%palemoon_prefix/libsoftokn3.chk
+%palemoon_prefix/platform.ini
+
+%_desktopdir/%bname.desktop
+%_miconsdir/%bname.png
+%_niconsdir/%bname.png
+%_liconsdir/%bname.png
+
 %files -n %bname-base
 %doc AUTHORS LICENSE HISTORY_GIT Changelog
 %_altdir/%bname
@@ -475,21 +505,15 @@ done
 %mozilla_arch_extdir/%palemoon_cid
 %mozilla_noarch_extdir/%palemoon_cid
 
-%files -n %bname-data
-%dir %palemoon_prefix
-%palemoon_prefix/*
-%_desktopdir/%bname.desktop
-%_miconsdir/%bname.png
-%_niconsdir/%bname.png
-%_liconsdir/%bname.png
-
-
 %files -n rpm-build-%sname
 %_rpmmacrosdir/%sname
 %exclude %_includedir/*
 %exclude %_datadir/idl/*
 
 %changelog
+* Sat Mar 18 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.2.0-alt1.0
+- Version 27.2.0
+
 * Sat Mar 04 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.1.2-alt1.0
 - Version 27.1.2
 
