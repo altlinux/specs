@@ -2,7 +2,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20161226
+Version: 20170318
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -37,6 +37,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Sat Mar 18 2017 Michael Shigorin <mike@altlinux.org> 20170318-alt1
+- tools.c: why on Earth make *that* a nested function??
+
 * Mon Dec 26 2016 Michael Shigorin <mike@altlinux.org> 20161226-alt1
 - probing.c: bump max disk number from 50 to 250 (closes: #32934)
 
