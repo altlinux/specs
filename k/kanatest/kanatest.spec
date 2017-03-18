@@ -1,6 +1,8 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           kanatest
 Version:        0.4.8
-Release:        alt2_18
+Release:        alt2_19
 Summary:        Hiragana and Katakana drill tool
 
 Group:          Games/Other
@@ -18,12 +20,11 @@ Patch3:		kanatest-0.4.8-gtk_markup_func_usage_fix.patch
 
 
 BuildRequires:  desktop-file-utils >= 0.9
-BuildRequires:  gtk2-devel >= 2.0
+BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
 BuildRequires:  libxml2-devel
-BuildRequires:  gettext
+BuildRequires:  gettext gettext-tools
 Requires:       fontlang(ja)
 Requires:       icon-theme-hicolor
-Source44: import.info
 
 %description
 Kanatest is a simple, GTK 2-based kana drill tool. It offers three drill modes:
@@ -43,7 +44,7 @@ sed -i src/Makefile.in \
 %build
 export PLATFORM_CFLAGS="$RPM_OPT_FLAGS -Werror-implicit-function-declaration"
 %configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -65,6 +66,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt2_19
+- update to new release by fcimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt2_18
 - update to new release by fcimport
 
