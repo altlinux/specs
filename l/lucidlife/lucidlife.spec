@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           lucidlife
 Version:        0.9.2
-Release:        alt3_18
+Release:        alt3_19
 Summary:        A Conway's Life simulator
 
 Group:          Games/Other
@@ -13,12 +15,11 @@ Source0:        http://mirror.thecodergeek.com/src/lucidlife-0.9.2.tar.gz
 Patch1: 	%{name}-fix-FSF-address.patch
 Patch2: 	%{name}-printf-format-security.patch
 
-BuildRequires:  gtk2-devel >= 2.6.0
+BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
 BuildRequires:	gnome-vfs-devel
 BuildRequires:	desktop-file-utils
 BuildRequires:	perl(XML/Parser.pm)
-BuildRequires:	gettext	
-Source44: import.info
+BuildRequires:	gettext gettext-tools	
 Patch33: lucidlife-0.9.2-alt-DSO.patch
 
 %description
@@ -42,7 +43,7 @@ more modern user interface and other enhancements.
 %build
 %{__autoconf}
 %configure LDFLAGS='-lX11'
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -66,6 +67,9 @@ desktop-file-install \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt3_19
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt3_18
 - update to new release by fcimport
 
