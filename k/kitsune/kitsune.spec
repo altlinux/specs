@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
-%define fedora 23
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           kitsune
 Version:        2.0
-Release:        alt3_19
+Release:        alt3_20
 Summary:        Program to solve mathematical problems
 
 Group:          Games/Other
@@ -14,9 +16,8 @@ Source0:        http://%{name}.tuxfamily.org/%{name}/%{name}%{version}/%{name}%{
 Source1:        %{name}.desktop
 Source2:        http://%{name}.tuxfamily.org/download.php?url=icons/%{name}-icones.tar.gz
 
-BuildRequires:  qt4-devel
+BuildRequires:  libqt4-declarative libqt4-devel qt4-designer
 BuildRequires:  desktop-file-utils
-Source44: import.info
 
 %description
 Kitsune is a software aiming at solving digit problems 
@@ -34,7 +35,7 @@ done
 %build
 %{qmake_qt4}
 lrelease-qt4 kitsune.pro
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -70,6 +71,9 @@ desktop-file-install \
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_20
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_19
 - update to new release by fcimport
 
