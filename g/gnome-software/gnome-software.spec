@@ -8,14 +8,16 @@
 %def_enable gnome_desktop
 %def_enable polkit
 %def_disable firmware
-%def_disable flatpak
-%def_disable ostree
+%def_enable flatpak
+%def_enable ostree
 %def_disable limba
 %def_disable packagekit
+%def_enable webapps
+%def_enable odrs
 
 Name: gnome-software
-Version: %ver_major.6
-Release: alt0.1
+Version: %ver_major.7
+Release: alt0.2
 
 Summary: Software manager for GNOME
 License: GPLv2+
@@ -48,8 +50,8 @@ BuildRequires: librpm-devel
 %{?_enable_gnome_desktop:BuildRequires: libgnome-desktop3-devel >= %gnome_desktop_ver}
 %{?_enable_polkit:BuildRequires: libpolkit-devel}
 %{?_enable_firmware:BuildRequires: libfwupd-devel >= %fwupd_ver}
-%{?_enable_flatpak:BuildRequires: libflatpak-devel >= %flapak_ver}
-%{?_enable_ostree:BuildRequires: libostree-devel >= %flapak_ver}
+%{?_enable_flatpak:BuildRequires: libflatpak-devel >= %flatpak_ver}
+%{?_enable_ostree:BuildRequires: libostree-devel >= %flatpak_ver}
 %{?_enable_limba:BuildRequires: liblimba-devel >= %limba_ver}
 %{?_enable_packagekit:BuildRequires: libpackage-kit-devel >= %packagekit_ver}
 
@@ -101,6 +103,10 @@ GNOME Software is for installing, removing and updating software.
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Sat Mar 18 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.7-alt0.2
+- 3.22.7
+- enabled ostree/flatpak support
+
 * Wed Mar 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.6-alt0.1
 - 3.22.6
 
