@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Test::File::ShareDir
 
 Name: perl-Test-File-ShareDir
-Version: 1.001001
+Version: 1.001002
 Release: alt1
 
 Summary: Create a Fake ShareDir for your modules for testing
@@ -42,6 +42,9 @@ for your modules for testing.
 
 
 %changelog
+* Sat Mar 18 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.001002-alt1
+- New version
+
 * Sat Jun 06 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.001001-alt1
 - New version
 
