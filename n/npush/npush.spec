@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		npush
 Version:	0.7
-Release:	alt2_15
+Release:	alt2_16
 Summary:	A logic game similar to Sokoban
 
 Group:		Games/Other
@@ -13,8 +15,7 @@ Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tgz
 # patch npush.cpp to fix an issue with level path
 Patch0:		npush-0.7-level.patch
 
-BuildRequires:	ncurses-devel desktop-file-utils
-Source44: import.info
+BuildRequires:	libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel desktop-file-utils
 
 %description
 nPush is a logic game similar to Sokoban and Boulder Dash. 
@@ -37,7 +38,7 @@ sed -i -e 's,-lncurses -o $(PROGRAM) $(OBJECTS),-o $(PROGRAM) $(OBJECTS) -lncurs
 
 %build
 
-make %{?_smp_mflags} CFLAGS="${RPM_OPT_FLAGS}"
+%make_build CFLAGS="${RPM_OPT_FLAGS}"
 
 
 %install
@@ -70,6 +71,9 @@ install -p -m 0644 %{name}.png				\
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.7-alt2_16
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.7-alt2_15
 - update to new release by fcimport
 
