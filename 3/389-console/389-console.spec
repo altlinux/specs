@@ -1,19 +1,19 @@
 %define major_version 1.1
-%define minor_version 17
+%define minor_version 18
 
 Name:    389-console
-Version: %major_version.%minor_version
+Version: 1.1.18
 Release: alt1
 Summary: Fedora Management Console
 
 Group:   Networking/Other
 License: LGPL
 Url:     http://port389.org
-# VCS:	 https://git.fedorahosted.org/git/389/console.git
+# VCS:	 https://pagure.io/389-console.git
 BuildArch: noarch
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 Requires: idm-console-framework
 
 BuildRequires(Pre): rpm-build-java
@@ -61,6 +61,9 @@ popd
 %_man8dir/*
 
 %changelog
+* Sat Mar 18 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.18-alt1
+- New version
+
 * Sun Jul 31 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.17-alt1
 - New version
 - Fix path to man.dir because it become relative to build.dir
