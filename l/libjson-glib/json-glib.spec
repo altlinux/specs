@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.6
+Version: %ver_major.8
 Release: alt1
 
 Summary: GLib-based JSON manipulation library
@@ -96,6 +96,9 @@ GObject introspection devel data for the JSON-GLib library
 %endif
 
 %changelog
+* Sat Mar 18 2017 Yuri N. Sedunov <aris@altlinux.org> 1.2.8-alt1
+- 1.2.8
+
 * Mon Mar 13 2017 Yuri N. Sedunov <aris@altlinux.org> 1.2.6-alt1
 - 1.2.6
 
