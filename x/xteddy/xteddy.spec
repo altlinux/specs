@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libICE-devel libSM-devel libX11-devel pkgconfig(imlib2)
+BuildRequires: imake libX11-devel libXt-devel xorg-cf-files
 # END SourceDeps(oneline)
 BuildRequires: libXext-devel
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           xteddy
 Version:        2.2
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Tool to sit around silently, look cute, and make you smile
 
 Group:          Games/Other
@@ -17,7 +19,6 @@ Source1:        kacicka.png
 Patch0:         0001-Link-against-Xext.patch
 
 BuildRequires:  imlib2-devel libpng-devel
-Source44: import.info
 Patch33: xteddy-2.2-alt-link-X11.patch
 
 %description
@@ -35,7 +36,7 @@ sed -i -e s,/usr/games/xteddy,xteddy, xtoys
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -69,6 +70,9 @@ EOF
 
 
 %changelog
+* Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_6
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_5
 - update to new release by fcimport
 
