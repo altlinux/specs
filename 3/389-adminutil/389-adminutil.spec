@@ -1,9 +1,9 @@
 Name:    389-adminutil
-Version: 1.1.22
-Release: alt2
+Version: 1.1.23
+Release: alt1
 License: LGPLv2
 Url:     http://port389.org
-# VCS: 	 https://git.fedorahosted.org/git/389/adminutil.git
+# VCS: 	 https://pagure.io/389-adminutil.git
 Group:   System/Libraries
 Summary: Utility library for directory server administration
 
@@ -14,7 +14,7 @@ BuildRequires: libsvrcore-devel libsasl2-devel openldap-devel
 Provides: fedora-ds-adminutil = %version-%release
 Obsoletes: fedora-ds-adminutil < %version-%release
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 %description
 %name is libraries of functions used to administer directory
@@ -64,6 +64,9 @@ rm -f %buildroot%_libdir/lib*.la
 %_includedir/libadmsslutil
 
 %changelog
+* Sat Mar 18 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.23-alt1
+- New version
+
 * Fri Feb 26 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.22-alt2
 - Rebuild with new icu
 
