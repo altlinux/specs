@@ -1,6 +1,6 @@
 %global llvm_svnrel %nil
 %global clang_svnrel %nil
-%global rel alt0.9
+%global rel alt1
 %global llvm_name llvm4.0
 %global clang_name clang4.0
 
@@ -19,6 +19,7 @@ Source1: http://llvm.org/releases/%version/clang-%version.tar
 Patch1: alt-triple.patch
 Patch2: alt-i586-fallback.patch
 Patch3: alt-llvm-no-proc-fix.patch
+Patch4: alt-cmake-path.patch
 
 BuildPreReq: /proc
 
@@ -137,6 +138,7 @@ mv clang-%version tools/clang
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 # force off shared libs as cmake macros turns it on.
@@ -203,11 +205,6 @@ rm -f %buildroot%_libdir/*BugpointPasses.*
 
 file %buildroot%_bindir/* | awk -F: '$2~/ELF/{print $1}' | xargs -r chrpath -d
 file %buildroot%_libdir/*.so | awk -F: '$2~/ELF/{print $1}' | xargs -r chrpath -d
-
-# need for build cmake projects
-mkdir -p %buildroot%_datadir/CMake/Modules
-mv %buildroot%_libdir/cmake/llvm %buildroot%_datadir/CMake/Modules/
-mv %buildroot%_libdir/cmake/clang %buildroot%_datadir/CMake/Modules/
 
 %check
 %if_enabled tests
@@ -280,6 +277,9 @@ make check-all -C BUILD || :
 %doc %_docdir/clang
 
 %changelog
+* Sun Mar 19 2017 L.A. Kostis <lakostis@altlinux.ru> 4.0.0-alt1.rel
+- Define cmake modules dir correctly (closes #33250).
+
 * Mon Mar 13 2017 L.A. Kostis <lakostis@altlinux.ru> 4.0.0-alt0.9.rel
 - Updated 4.0.0 release.
 
