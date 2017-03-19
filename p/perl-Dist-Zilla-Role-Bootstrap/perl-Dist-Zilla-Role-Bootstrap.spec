@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Dist::Zilla::Role::Bootstrap
 
 Name: perl-Dist-Zilla-Role-Bootstrap
-Version: 1.001003
+Version: 1.001004
 Release: alt1
 
 Summary: Dist::Zilla module with shared logic for bootstrap things
@@ -42,6 +42,9 @@ methods with shared logic for bootstrap things.
 %perl_vendor_privlib/Dist/Zilla*
 
 %changelog
+* Sun Mar 19 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.001004-alt1
+- New version
+
 * Tue Jun 21 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.001003-alt1
 - New version
 
