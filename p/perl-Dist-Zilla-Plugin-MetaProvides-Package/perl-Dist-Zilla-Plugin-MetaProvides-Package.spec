@@ -3,7 +3,7 @@
 %define real_name Dist-Zilla-Plugin-MetaProvides-Package
 
 Name: perl-Dist-Zilla-Plugin-MetaProvides-Package
-Version: 2.004002
+Version: 2.004003
 Release: alt1
 
 Summary: Extract namespaces/version from traditional packages for provides
@@ -49,6 +49,9 @@ indexing it, which PAUSE in turn will take verbatim.
 %perl_vendor_privlib/Dist/Zilla/Plugin/MetaProvides/Package*
 
 %changelog
+* Sun Mar 19 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.004003-alt1
+- New version
+
 * Sun Aug 14 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.004002-alt1
 - New version
 
