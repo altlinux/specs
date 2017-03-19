@@ -1,5 +1,5 @@
 Name: awesome
-Version: 4.0
+Version: 4.1
 Release: alt1
 Group: Graphical desktop/Other
 License: GPL2+
@@ -90,6 +90,9 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc LICENSE build/docs/*.md
 
 %changelog
+* Mon Mar 20 2017 Terechkov Evgenii <evg@altlinux.org> 4.1-alt1
+- 4.1 (Technologic)
+
 * Fri Feb 24 2017 Terechkov Evgenii <evg@altlinux.org> 4.0-alt1
 - 4.0 (Harder, Better, Faster, Stronger)
 
