@@ -4,7 +4,7 @@
 
 Name: syncthing-gtk
 Version: 0.9.2.4
-Release: alt3
+Release: alt4
 Summary: Syncthing Gtk-based graphical interface
 Summary(ru_RU.UTF-8): Основанный на GTK графический интерфейс для Syncthing
 License: GPLv2+
@@ -17,7 +17,11 @@ BuildRequires(pre): rpm-build-gir
 BuildPreReq: python-devel python-module-setuptools desktop-file-utils
 Requires: syncthing >= 0.14
 Requires: icon-theme-hicolor
+%add_typelib_req_skiplist typelib(Caja)
+%add_typelib_req_skiplist typelib(Nautilus)
+%add_typelib_req_skiplist typelib(Nemo)
 BuildArch: noarch
+
 
 %description
 Graphical user interface with notification area icon for Syncthing
@@ -195,6 +199,9 @@ done
 %endif
 
 %changelog
+* Sun Mar 19 2017 Anton Midyukov <antohami@altlinux.org> 0.9.2.4-alt4
+- Exclude requires: typelib(Caja) typelib(Nautilus) typelib(Nemo).
+
 * Sun Mar 12 2017 Anton Midyukov <antohami@altlinux.org> 0.9.2.4-alt3
 - Added buildrequires rpm-build-gir.
 
