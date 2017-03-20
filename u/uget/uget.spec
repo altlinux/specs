@@ -1,5 +1,5 @@
 Name:		uget
-Version:	2.0.8
+Version:	2.0.9
 Release:	alt1
 Summary:	Download manager using GTK+ and libcurl
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -10,7 +10,7 @@ Source0:	http://downloads.sourceforge.net/urlget/%{name}-%{version}.tar.gz
 
 
 # Automatically added by buildreq on Wed Jun 09 2010
-BuildRequires: desktop-file-utils libgtk+3-devel gstreamer-devel intltool libcurl-devel libnotify-devel libssl-devel
+BuildRequires: desktop-file-utils libgtk+3-devel gstreamer-devel intltool libcurl-devel libnotify-devel libssl-devel rpm-build-gir
 
 %description
 uGet is a download manager with downloads queue, pause/resume, 
@@ -53,6 +53,9 @@ desktop-file-install \
 
 
 %changelog
+* Mon Mar 20 2017 Ilya Mashkin <oddity@altlinux.ru> 2.0.9-alt1
+- 2.0.9
+
 * Fri Jun 03 2016 Ilya Mashkin <oddity@altlinux.ru> 2.0.8-alt1
 - 2.0.8
 
