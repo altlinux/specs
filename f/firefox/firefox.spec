@@ -12,8 +12,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        51.0.1
-Release:        alt2
+Version:        52.0
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -28,7 +28,6 @@ Source6:        firefox.desktop
 Source7:        firefox.c
 Source8:        firefox-prefs.js
 
-Patch5:         firefox-duckduckgo.patch
 Patch6:         firefox-alt-disable-werror.patch
 #Patch7:         firefox-alt-disable-profiler.patch
 Patch14:        firefox-fix-install.patch
@@ -72,7 +71,7 @@ BuildRequires: libffi-devel
 BuildRequires: gstreamer%gst_version-devel gst-plugins%gst_version-devel
 BuildRequires: libopus-devel
 BuildRequires: libpulseaudio-devel
-BuildRequires: libicu-devel
+#BuildRequires: libicu-devel
 
 # Python requires
 BuildRequires: python-module-distribute
@@ -129,7 +128,6 @@ cd mozilla
 tar -xf %SOURCE1
 tar -xf %SOURCE2
 
-%patch5  -p1
 %patch6  -p1
 #patch7  -p1
 %patch14 -p1
@@ -313,6 +311,39 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Wed Mar 15 2017 Alexey Gladkov <legion@altlinux.ru> 52.0-alt1
+- New release (52.0).
+- Built with internal icu.
+- Fixed:
+  + CVE-2017-5400: asm.js JIT-spray bypass of ASLR and DEP
+  + CVE-2017-5401: Memory Corruption when handling ErrorResult
+  + CVE-2017-5402: Use-after-free working with events in FontFace objects
+  + CVE-2017-5403: Use-after-free using addRange to add range to an incorrect root object
+  + CVE-2017-5404: Use-after-free working with ranges in selections
+  + CVE-2017-5406: Segmentation fault in Skia with canvas operations
+  + CVE-2017-5407: Pixel and history stealing via floating-point timing side channel with SVG filters
+  + CVE-2017-5410: Memory corruption during JavaScript garbage collection incremental sweeping
+  + CVE-2017-5411: Use-after-free in Buffer Storage in libGLES
+  + CVE-2017-5409: File deletion via callback parameter in Mozilla Windows Updater and Maintenance Service
+  + CVE-2017-5408: Cross-origin reading of video captions in violation of CORS
+  + CVE-2017-5412: Buffer overflow read in SVG filters
+  + CVE-2017-5413: Segmentation fault during bidirectional operations
+  + CVE-2017-5414: File picker can choose incorrect default directory
+  + CVE-2017-5415: Addressbar spoofing through blob URL
+  + CVE-2017-5416: Null dereference crash in HttpChannel
+  + CVE-2017-5417: Addressbar spoofing by draging and dropping URLs
+  + CVE-2017-5425: Overly permissive Gecko Media Plugin sandbox regular expression access
+  + CVE-2017-5426: Gecko Media Plugin sandbox is not started if seccomp-bpf filter is running
+  + CVE-2017-5427: Non-existent chrome.manifest file loaded during startup
+  + CVE-2017-5418: Out of bounds read when parsing HTTP digest authorization responses
+  + CVE-2017-5419: Repeated authentication prompts lead to DOS attack
+  + CVE-2017-5420: Javascript: URLs can obfuscate addressbar location
+  + CVE-2017-5405: FTP response codes can cause use of uninitialized values for ports
+  + CVE-2017-5421: Print preview spoofing
+  + CVE-2017-5422: DOS attack by using view-source: protocol repeatedly in one hyperlink
+  + CVE-2017-5399: Memory safety bugs fixed in Firefox 52
+  + CVE-2017-5398: Memory safety bugs fixed in Firefox 52 and Firefox ESR 45.8
+
 * Wed Feb 08 2017 Alexey Gladkov <legion@altlinux.ru> 51.0.1-alt2
 - Remove RPATH but began to use LD_LIBRARY_PATH (ALT#33085).
 
