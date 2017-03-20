@@ -1,10 +1,10 @@
 
 Name: adobe-flash-player
 %define bin_name mozilla-plugin-adobe-flash
-%define ver_fake   24
-%define ver_ix86   24.0.0.0
-%define ver_x86_64 24.0.0.0
-Release: alt2
+%define ver_fake   25
+%define ver_ix86   25.0.0.0
+%define ver_x86_64 25.0.0.0
+Release: alt1%ubt
 Serial: 3
 
 %define ver_real %ver_fake
@@ -24,6 +24,7 @@ License: GPL
 ExclusiveArch: %ix86 x86_64
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-macros-browser-plugins
 
 Source: empty
@@ -58,6 +59,9 @@ fake
 %files -n %bin_name
 
 %changelog
+* Mon Mar 20 2017 Sergey V Turchin <zerg@altlinux.org> 3:25-alt1%ubt
+- bump version
+
 * Fri Dec 16 2016 Sergey V Turchin <zerg@altlinux.org> 3:24-alt2
 - bump version
 
