@@ -1,13 +1,13 @@
 %define _name org.gnome.FileRoller
-%define ver_major 3.22
+%define ver_major 3.24
 %def_disable packagekit
 %def_disable magic
 %def_enable libarchive
-
+%def_enable nautilus_actions
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: An archive manager for GNOME
@@ -43,6 +43,7 @@ BuildPreReq: desktop-file-utils >= %desktop_file_utils_ver
 BuildRequires: libjson-glib-devel libnotify-devel
 %{?_enable_libarchive:BuildRequires: libarchive-devel >= %libarchive_ver}
 %{?_enable_magic:BuildRequires: libmagic-devel}
+%{?_enable_nautilus_actions:BuildRequires: libnautilus-devel}
 
 %description
 File Roller is an archive manager for the GNOME environment.  This means that
@@ -100,7 +101,8 @@ rm -f data/%name.desktop{,.in}
     --disable-static \
     %{subst_enable magic} \
     %{subst_enable packagekit} \
-    %{subst_enable libarchive}
+    %{subst_enable libarchive} \
+    %{?_disable_nautilus_actions:--disable-nautilus-actions}
 %make_build
 
 %install
@@ -123,10 +125,19 @@ rm -f data/%name.desktop{,.in}
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/GConf/gsettings/%name.convert
 %_datadir/appdata/%_name.appdata.xml
+
+%if_enabled nautilus_actions
+%_libdir/nautilus/extensions-%nau_api_ver/*.so
+%exclude %_libdir/nautilus/extensions-%nau_api_ver/*.la
+%endif
+
 %doc AUTHORS NEWS README
 
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Thu Mar 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
 - 3.22.3
 

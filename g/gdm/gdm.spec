@@ -1,4 +1,4 @@
-%define ver_major 3.22
+%define ver_major 3.24
 %define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
@@ -24,7 +24,7 @@
 %def_disable user_display_server
 
 Name: gdm
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -58,7 +58,7 @@ Provides: gnome-dm
 %define gtk_ver 3.16.0
 %define shell_ver 3.19.4
 %define libcanberra_ver 0.4
-%define accountsservice_ver 0.6.12
+%define accountsservice_ver 0.6.35
 %define check_ver 0.9.4
 
 Provides: %name-user-switch-applet = %version-%release
@@ -177,9 +177,6 @@ This package contains user documentation for Gdm.
 # just copy our PAM config files to %default_pam_config directory
 cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%default_pam_config/
 
-# fix security dir
-subst 's|\$(libdir)/security|%_pam_modules_dir|' pam_gdm/Makefile.am
-
 %build
 [ ! -d m4 ] && mkdir m4
 %autoreconf
@@ -203,6 +200,7 @@ subst 's|\$(libdir)/security|%_pam_modules_dir|' pam_gdm/Makefile.am
 	--disable-dependency-tracking \
 	%{?_enable_wayland:--enable-wayland-support} \
 	%{?_enable_xsession:--enable-gdm-xsession} \
+	--with-pam-mod-dir=%_pam_modules_dir \
 	%{?_disable_user_display_server:--disable-user-display-server}
 %make_build
 
@@ -303,6 +301,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Mon Mar 06 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
 - 3.22.3
 
@@ -904,7 +905,7 @@ xvfb-run %make check
 - fix locale files
 - clear /etc/X11/gdm/Sessions directory
 
-* Fri Nov 24 2001 Sergey N. Yatskevich <syatskevich@mail.ru>
+* Sat Nov 24 2001 Sergey N. Yatskevich <syatskevich@mail.ru>
 - release 2.2.5.2
 
 * Fri Sep 07 2001 Sergey N. Yatskevich <syatskevich@mail.ru>
@@ -1031,5 +1032,5 @@ xvfb-run %make check
 	- SMP building
 	- bzip2 man/info (don't think it has any (yet))
 
-* Fri Sep 26 1999 Elliot Lee <sopwith@redhat.com>
+* Sun Sep 26 1999 Elliot Lee <sopwith@redhat.com>
 - Fixed pipewrite bug (found by mkj & ewt).

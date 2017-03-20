@@ -1,5 +1,6 @@
-%define ver_major 3.22
-%define _name org.gnome.Devhelp
+%define ver_major 3.24
+%define api_ver 3.0
+%define xdg_name org.gnome.Devhelp
 
 Name: devhelp
 Version: %ver_major.0
@@ -20,7 +21,7 @@ Requires: lib%name = %version-%release
 
 BuildPreReq: rpm-build-gnome >= 0.6 gnome-common
 BuildPreReq: rpm-build-licenses
-BuildPreReq: gtk-doc
+BuildPreReq: gtk-doc libappstream-glib-devel
 
 # From configure.ac
 BuildPreReq: intltool >= 0.40.0
@@ -31,6 +32,8 @@ BuildRequires: pkgconfig(gtk+-3.0) >= 3.19.3
 BuildRequires: pkgconfig(webkit2gtk-4.0) >= 2.6.0
 BuildRequires: pkgconfig(gio-2.0) >= 2.40
 BuildRequires: zlib-devel
+# since 3.23.x
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libwebkit2gtk-gir-devel
 
 %description
 A developers help program.
@@ -51,9 +54,39 @@ Requires: lib%name = %version-%release
 This package provides files required to develop programs that use
 Devhelp widgets.
 
+%package -n lib%name-gir
+Summary: GObject introspection data for the Devhelp library
+Group: System/Libraries
+Requires: lib%name = %version-%release
+
+%description -n lib%name-gir
+This package provides GObject introspection data for the Devhelp
+library.
+
+%package -n lib%name-gir-devel
+Summary: GObject introspection devel data for the Devhelp library
+Group: Development/Other
+BuildArch: noarch
+Requires: lib%name-gir = %version-%release
+Requires: lib%name-devel = %version-%release
+
+%description -n lib%name-gir-devel
+This package provides GObject introspection devel data for the Devhelp
+library.
+
+%package -n lib%name-devel-doc
+Summary: Development documentation for Devhelp library
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: lib%name-devel < %version
+
+%description -n lib%name-devel-doc
+This package provides development documentation for the Devhelp library.
+
 %package -n gedit-plugin-%name
 Summary: DevHelp integration into GEdit
 Group: Development/Other
+Requires: %name = %version-%release
 
 %description -n gedit-plugin-%name
 This plugin for GEdit enables using DevHelp from inside the editor.
@@ -82,14 +115,14 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %_bindir/*
 %dir %_devhelpdir
 %_devhelpdir/*
-%_desktopdir/%_name.desktop
+%_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/devhelp.*
 %_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
-%_datadir/dbus-1/services/%_name.service
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/GConf/gsettings/*.convert
 %_datadir/glib-2.0/schemas/org.gnome.devhelp.gschema.xml
 %_man1dir/%name.1.*
-%_datadir/appdata/%_name.appdata.xml
+%_datadir/appdata/%xdg_name.appdata.xml
 %doc AUTHORS NEWS README
 
 %files -n lib%name
@@ -100,10 +133,22 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %_libdir/*.so
 %_pkgconfigdir/lib%name-*.pc
 
+%files -n lib%name-gir
+%_typelibdir/Devhelp-%api_ver.typelib
+
+%files -n lib%name-gir-devel
+%_girdir/Devhelp-%api_ver.gir
+
+%files -n lib%name-devel-doc
+%_datadir/gtk-doc/html/%name-*/
+
 %files -n gedit-plugin-%name
 %gedit_pluginsdir/*
 
 %changelog
+* Sun Mar 19 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 

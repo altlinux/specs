@@ -2,16 +2,20 @@
 # since 3.13.6
 # see https://git.gnome.org/browse/evolution-data-server/commit/?id=a2790163af4d3f375a778055d0e2699207dfd050
 %set_verify_elf_method unresolved=relaxed
+%set_verify_elf_method rpath=relaxed
 
-%define ver_major 3.22
-%define ver_base 3.22
+%define _gtk_docdir %_datadir/gtk-doc/html
+%define _libexecdir %_prefix/libexec
+
+%define ver_major 3.24
+%define ver_base 3.24
 %define ver_lib 1.2
 
 %def_disable debug
 %def_disable static
-%def_with sys_db4
+%def_with libdb
 %def_with openldap
-%def_disable static_ldap
+%def_without static_ldap
 %def_with krb5
 %def_enable goa
 %def_enable google
@@ -24,7 +28,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -38,6 +42,8 @@ Source: %name-%version.tar
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %endif
 Patch1: %name-1.4.2.1-debug-lock.patch
+
+%add_findprov_lib_path %_libdir/%name
 
 # from configure.ac
 %define glib_ver 2.40.0
@@ -55,7 +61,7 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 
 Requires: dconf
 
-BuildRequires: gcc-c++ rpm-build-gnome rpm-build-licenses intltool
+BuildRequires: cmake gcc-c++ rpm-build-gnome rpm-build-licenses intltool
 BuildRequires: gtk-doc >= 1.0
 BuildRequires: gnome-common
 BuildRequires: glib2-devel >= %glib_ver
@@ -72,8 +78,8 @@ BuildRequires: gperf docbook-utils flex bison libcom_err-devel libnss-devel libn
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver liboauth-devel libgdata-devel >= %gdata_ver}
 %{?_enable_google:BuildRequires: libwebkit2gtk-devel >= %webkit_ver libjson-glib-devel}
 %{?_enable_uoa:BuildRequires: libaccounts-glib-devel}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libsoup-gir-devel}
-%{?_with_sys_db4:BuildRequires: libdb4-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libsoup-gir-devel libgtk+3-gir-devel}
+%{?_with_libdb:BuildRequires: libdb4-devel}
 %{?_with_krb5:BuildRequires: libkrb5-devel}
 %{?_enable_vala:BuildRequires: vala >= %vala_ver vala-tools >= %vala_ver}
 
@@ -82,7 +88,7 @@ BuildRequires: perl-devel
 
 %if_with openldap
 BuildRequires: libldap-devel
-%if_enabled static_ldap
+%if_with static_ldap
 BuildRequires: libldap-devel-static libssl-devel libsasl2-devel
 %endif
 %endif
@@ -147,77 +153,42 @@ This package provides tests programs that can be used to verify
 the functionality of the installed EDS libraries.
 
 
-%define _gtk_docdir %_datadir/gtk-doc/html
-%define _libexecdir %_prefix/libexec
-
-%add_findprov_lib_path %_libdir/%name
-
 %prep
 %setup
 %if_enabled debug
 %patch1 -p1
 %endif
 
-%if_with sys_db4
-rm -rf libdb
-%__subst '/libdb\/Makefile/d' configure.ac
-%__subst 's/^\(SUBDIRS.*\)\$(LIBDB)/\1/' Makefile.am
-%endif
-
 %build
-%if_with openldap 
-%if_enabled static_ldap
-%define ldap_flags --with-openldap=yes --with-static-ldap 
-# Set LIBS so that configure will be able to link with static LDAP libraries, 
-# which depend on Cyrus SASL and OpenSSL.  XXX Is the "else" clause necessary? 
-if pkg-config openssl ; then
-        export LIBS="-lsasl2 `pkg-config --libs openssl`"
-else
-        export LIBS="-lsasl2 -lssl -lcrypto"
-fi
-%else
-%define ldap_flags --with-openldap=yes
-%endif
-%else
-%define ldap_flags --without-openldap
-%endif
-
-%autoreconf
-export ac_cv_path_SENDMAIL=%_sbindir/sendmail
-export CAMEL_LOCK_HELPER_GROUP=mail
-%configure \
-%if_enabled debug
-    --with-e2k-debug \
-%endif
-%if_with sys_db4
-    --with-libdb=%_prefix \
-%endif
-    %{subst_enable static} \
-    --enable-file-locking=fcntl \
-    --enable-dot-locking=no \
-    %ldap_flags \
-    %{subst_enable goa} \
-    %{?_disable_google:--disable-google-auth} \
-    %{subst_enable uoa} \
-    --enable-smime \
-%if_with krb5
-    --with-krb5=%_prefix \
-    --with-krb5-libs=%_libdir \
-    --with-krb5-includes=%_includedir/krb5 \
-%endif
-    %{?_enable_gtk_doc:--enable-gtk-doc} \
-    --disable-schemas-compile \
-    %{?_enable_vala:--enable-vala-bindings} \
-    %{?_enable_installed_tests:--enable-installed-tests}
-
-# SMP-incompatible build
-%make
+# reenable INSTALL_RPATH to link against private libraries
+%cmake \
+	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+	-DCMAKE_SKIP_RPATH:BOOL=OFF \
+	-DCAMEL_LOCK_HELPER_GROUP:STRING=mail \
+	-DSENDMAIL_PATH:STRING=%_sbindir/sendmail \
+	-DENABLE_FILE_LOCKING:STRING=fcntl \
+	-DENABLE_DOT_LOCKING:BOOL=OFF \
+	-DENABLE_SCHEMAS_COMPILE:BOOL=OFF \
+	-DENABLE_SMIME:BOOL=ON \
+	%{?_with_libdb:-DWITH_LIBDB:BOOL=ON} \
+	%{?_with_openldap:-DWITH_OPENLDAP:BOOL=ON} \
+	%{?_with_static_ldap:-DWITH_STATIC_LDAP:BOOL=ON} \
+	%{?_with_krb5:-DWITH_KRB5:BOOL=ON} \
+	%{?_enable_goa:-DENABLE_GOA:BOOL=ON} \
+	%{?_disable_google:-DENABLE_GOOGLE_AUTH:BOOL=OFF} \
+	%{?_disable_uoa:-DENABLE_UOA:BOOL=OFF} \
+	%{?_enable_introspection:-DENABLE_INTROSPECTION:BOOL=ON} \
+	%{?_enable_gtk_doc:-DENABLE_GTK_DOC:BOOL=ON} \
+	%{?_enable_vala:-DENABLE_VALA_BINDINGS:BOOL=ON} \
+	%{?_enable_installed_tests:-DENABLE_INSTALLED_TESTS:BOOL=ON}
+%cmake_build
 
 %install
-%makeinstall_std
-
+%cmakeinstall_std
 # if unstable
 ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
+# temporarily symlink for %_libdir/%name/libedbus-private.so in %_libdir to link evolution-3.23.90
+#ln -s %name/libedbus-private.so %buildroot%_libdir/libedbus-private.so
 
 %find_lang --with-gnome --output=%name.lang %name-%ver_base
 
@@ -231,6 +202,8 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %_libdir/%name/*/*.urls
 %_libdir/*.so.*
 %_libdir/%name/libedbus-private.so
+# symlink to private library
+#%_libdir/libedbus-private.so
 %_datadir/%name/
 %_datadir/dbus-1/services/*
 %_prefix/lib/systemd/user/evolution-addressbook-factory.service
@@ -251,19 +224,22 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %files devel
 %_includedir/*
 %_libdir/*.so
+# symlink to private library
+#%exclude %_libdir/libedbus-private.so
 %_pkgconfigdir/*.pc
 
+%if_enabled gtk_doc
 %files devel-doc
 %_gtk_docdir/*
-
-%exclude %_libdir/%name/*/*.la
-%exclude %_libdir/%name/libedbus-private.la
+%endif
 
 %if_enabled introspection
 %files gir
 #%_typelibdir/ECalendar-%ver_lib.typelib
+%_typelibdir/Camel-%ver_lib.typelib
 %_typelibdir/EBookContacts-%ver_lib.typelib
 %_typelibdir/EDataServer-%ver_lib.typelib
+%_typelibdir/EDataServerUI-%ver_lib.typelib
 %_typelibdir/EBook-%ver_lib.typelib
 
 %files gir-devel
@@ -271,6 +247,7 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %_girdir/Camel-%ver_lib.gir
 %_girdir/EBookContacts-%ver_lib.gir
 %_girdir/EDataServer-%ver_lib.gir
+%_girdir/EDataServerUI-%ver_lib.gir
 %_girdir/EBook-%ver_lib.gir
 %endif
 
@@ -287,6 +264,9 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.7-alt1
 - 3.22.7
 

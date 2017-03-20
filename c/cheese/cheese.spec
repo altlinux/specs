@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.22
+%define ver_major 3.24
 %define api_ver 3.0
 %define xdg_name org.gnome.Cheese
 %define gst_api_ver 1.0
@@ -12,8 +12,8 @@
 %def_enable introspection
 
 Name: cheese
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
 License: GPL
@@ -170,6 +170,9 @@ GObject introspection devel data for the Cheese library.
 %endif
 
 %changelog
+* Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Sat Nov 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt2
 - added gst-libav to reqs
 

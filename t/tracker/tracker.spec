@@ -1,4 +1,4 @@
-%define ver_major 1.10
+%define ver_major 1.12
 %define ver_api 1.0
 
 # since 1.0.3 (see https://bugzilla.gnome.org/show_bug.cgi?id=733857)
@@ -49,7 +49,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -100,6 +100,7 @@ BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libicu-devel libunistring-devel
 BuildPreReq: libpango-devel >= %pango_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
+BuildRequires: libsoup-devel libjson-glib-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.9.5}
 %{?_enable_hal:BuildPreReq: libhal-devel >= %hal_ver}
 %{?_enable_upower:BuildPreReq: libupower-devel >= %upower_ver}
@@ -392,6 +393,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 %endif
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Thu Feb 23 2017 Yuri N. Sedunov <aris@altlinux.org> 1.10.5-alt1
 - 1.10.5
 

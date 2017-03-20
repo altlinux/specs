@@ -1,4 +1,4 @@
-%define ver_major 3.22
+%define ver_major 3.24
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
@@ -6,7 +6,7 @@
 %def_disable software_sources
 
 Name: gnome-initial-setup
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Bootstrapping your OS
@@ -41,6 +41,7 @@ BuildRequires: libcheese-devel
 BuildRequires: libsecret-devel >= %secret_ver
 BuildRequires: libgeoclue2-devel >= %geoclue_ver libgeocode-glib-devel
 BuildRequires: libwebkit2gtk-devel
+BuildRequires: libnm-devel libnma-devel
 %{?_enable_software_sources:BuildRequires: pkgconfig(packagekit-glib2) >= %packagekit_ver}
 
 %description
@@ -84,6 +85,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README NEWS
 
 %changelog
+* Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Mon Oct 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 

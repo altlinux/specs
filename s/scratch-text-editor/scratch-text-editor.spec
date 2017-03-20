@@ -4,7 +4,7 @@
 
 Name: scratch-text-editor
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: The text editor that works
 License: GPLv3
@@ -13,6 +13,7 @@ Group: Editors
 Url: https://launchpad.net/%_name
 
 Source: %url/2.x/%version/+download/%name-%version.tar.xz
+Patch: %name-2.4.1-up-vala_0.36.patch
 
 Requires: contractor
 
@@ -80,6 +81,7 @@ This package provides Vala language bindings for the scratch text editor.
 
 %prep
 %setup -n %name-%version
+%patch
 # fix libdir
 find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINATION}/|g' --
 
@@ -115,6 +117,9 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %_vapidir/%{_name}core.vapi
 
 %changelog
+* Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt2
+- rebuild with vala-0.36
+
 * Wed Feb 22 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt1
 - 2.4.1
 

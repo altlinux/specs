@@ -1,9 +1,8 @@
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 0.32
+%define ver_major 0.34
 %def_enable external_plugin
 %def_enable mpris_plugin
-%def_enable mediathek_plugin
 %def_enable tracker_plugin
 %def_enable lms_plugin
 %def_with ui
@@ -20,7 +19,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A UPnP v2 Media Server
@@ -93,6 +92,7 @@ BuildRequires: gir(GUPnP) = 1.0 gir(GUPnPAV) = 1.0 gir(GObject) = 2.0 gir(Gee) =
 %{?_with_ui:BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver}
 %{?_enable_lms_plugin:BuildRequires: liblightmediascanner-devel libsqlite3-devel}
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds
+BuildRequires: systemd-devel
 
 %description
 Rygel is an implementation of the UPnP MediaServer V 2.0 specification that is
@@ -172,7 +172,6 @@ gettextize -q -f
 	%{?_enable_external_plugin:--enable-external-plugin} \
 	%{?_enable_mpris_plugin:--enable-mpris-plugin} \
 	%{subst_enable playbin_plugin} \
-	%{?_enable_mediathek_plugin:--enable-mediathek-plugin} \
 	%{?_enable_gst_launch_plugin:--enable-gst-launch-plugin} \
 	%{?_enable_lms_plugin:--enable-lms-plugin}
 %make_build
@@ -201,6 +200,7 @@ gettextize -q -f
 %_datadir/%name
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
+%_prefix/lib/systemd/user/%name.service
 %_datadir/dbus-1/services/*.service
 %_man1dir/*
 %_man5dir/*
@@ -233,6 +233,9 @@ gettextize -q -f
 %_girdir/*.gir
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.34.0-alt1
+- 0.34.0
+
 * Mon Oct 10 2016 Yuri N. Sedunov <aris@altlinux.org> 0.32.1-alt1
 - 0.32.1
 

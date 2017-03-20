@@ -1,9 +1,10 @@
-%define ver_major 3.22
-%define _name org.gnome.DiskUtility
+%define ver_major 3.24
+%define xdg_name org.gnome.DiskUtility
 %define _libexecdir %_prefix/libexec
+%def_enable gsd_plugin
 
 Name: gnome-disk-utility
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Disk management application
@@ -22,17 +23,15 @@ Patch: %name-3.16.0-alt-lfs.patch
 %define gtk_ver 3.12.0
 %define secret_ver 0.7
 %define pwquality_ver 1.0.0
-%define gsd_ver 3.6
 %define dvdread_ver 4.2.0
 %define lzma_ver 5.0.5
 
-BuildRequires: autoconf-archive intltool xsltproc libappstream-glib-devel
+BuildRequires: autoconf-archive xsltproc libappstream-glib-devel
 BuildPreReq: libudisks2-devel >= %udisks_ver
 BuildPreReq: libgio-devel  >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libsecret-devel >= %secret_ver
 BuildPreReq: libpwquality-devel >= %pwquality_ver
-BuildPreReq: gnome-settings-daemon-devel >= %gsd_ver
 BuildPreReq: libdvdread-devel >= %dvdread_ver
 BuildPreReq: liblzma-devel >= %lzma_ver
 BuildRequires: libnotify-devel libcanberra-gtk3-devel
@@ -51,7 +50,8 @@ RAID, SMART monitoring, etc
 %build
 %autoreconf
 %configure \
-	--disable-static
+	--disable-static \
+	%{?_disable_gsd_plugin:--disable-gsd-plugin}
 %make_build
 
 %install
@@ -62,23 +62,26 @@ RAID, SMART monitoring, etc
 %files -f global.lang
 %_bindir/gnome-disk-image-mounter
 %_bindir/gnome-disks
+
+%if_enabled gsd_plugin
+%_libexecdir/gsd-disk-utility-notify
+%_sysconfdir/xdg/autostart/org.gnome.SettingsDaemon.DiskUtilityNotify.desktop
+%endif
+
 %_desktopdir/gnome-disk-image-mounter.desktop
 %_desktopdir/gnome-disk-image-writer.desktop
-%_desktopdir/%_name.desktop
-%_datadir/dbus-1/services/%_name.service
+%_desktopdir/%xdg_name.desktop
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/org.gnome.Disks.gschema.xml
 %_iconsdir/hicolor/*/apps/*
-%_datadir/appdata/%_name.appdata.xml
+%_datadir/appdata/%xdg_name.appdata.xml
 %_man1dir/*.1.*
-# gsd plugin
-%_libdir/gnome-settings-daemon-3.0/gdu-sd-plugin.gnome-settings-plugin
-%_libdir/gnome-settings-daemon-3.0/libgdu-sd.so
-%_datadir/glib-2.0/schemas/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml
-
-%exclude %_libdir/gnome-settings-daemon-3.0/libgdu-sd.la
 
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Tue Nov 08 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 

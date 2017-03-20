@@ -1,9 +1,9 @@
 %define xdg_name org.gnome.Weather
-%define ver_major 3.20
+%define ver_major 3.24
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-weather
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Access current weather conditions and forecasts
@@ -74,10 +74,13 @@ subst 's@\$(LN_S)@ln -s@' src/Makefile.am
 %_iconsdir/hicolor/*/apps/%xdg_name.png
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %_datadir/gnome-shell/search-providers/%xdg_name.Application.search-provider.ini
-%_datadir/appdata/%xdg_name.Application.appdata.xml
+%_datadir/appdata/%xdg_name.appdata.xml
 %doc NEWS
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Tue Aug 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
 - 3.20.2
 

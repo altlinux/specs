@@ -1,8 +1,8 @@
-%define ver_major 3.22
+%define ver_major 3.24
 %define xdg_name org.gnome.PowerStats
 
 Name: gnome-power-manager
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Power management tools
@@ -18,9 +18,8 @@ Requires: upower >= 0.9.7
 BuildPreReq: rpm-build-gnome >= 0.5
 BuildPreReq: rpm-build-licenses
 
-# From configure.in
-BuildPreReq: intltool >= 0.35.0
-BuildPreReq: glib2-devel >= 2.31.10
+# From configure.ac
+BuildPreReq: glib2-devel >= 2.46.0
 BuildPreReq: libgtk+3-devel >= 3.3.8
 BuildPreReq: libupower-devel >= 0.99.0
 BuildRequires: libappstream-glib-devel
@@ -72,6 +71,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
 - 3.22.2
 

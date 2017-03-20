@@ -1,18 +1,20 @@
 %def_disable snapshot
+%define _libexecdir %_prefix/libexec
 
-%define ver_major 3.22
+%define ver_major 3.24
 %define api_ver 3.0
+%define xdg_name org.gnome.SettingsDaemon
+
 %def_disable static
 %def_enable smartcard
 %def_enable systemd
 %def_enable wayland
 # tests require, as minimum, running colord
 %def_disable check
-
-%define _libexecdir %_prefix/libexec
+%def_disable tests
 
 Name: gnome-settings-daemon
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A program that manages general GNOME settings
@@ -27,21 +29,22 @@ Source: %name-%version.tar
 %endif
 
 # From configure.ac
-%define glib_ver 2.38
+%define glib_ver 2.44
 %define gtk_ver 3.16
 %define gnome_desktop_ver 3.11.1
 %define notify_ver 0.7.3
 %define pulse_ver 0.9.15
-%define gsds_ver 3.20.0
+%define gsds_ver 3.23.3
 %define colord_ver 0.1.9
 %define dconf_ver 0.8
 %define upower_ver 0.9.1
 %define systemd_ver 40
 %define wacom_ver 0.7
 %define geocode_ver 3.10.0
-%define geoclue_ver 2.1.2
+%define geoclue_ver 2.3.1
 %define gweather_ver 3.9.5
 %define nm_ver 1.0
+%define lcms_ver 2.2
 
 Requires: dconf >= %dconf_ver
 Requires: colord >= %colord_ver
@@ -70,7 +73,7 @@ BuildRequires: rpm-build-gnome intltool docbook-style-xsl xsltproc
 BuildRequires: gcc-c++ libcups-devel libgudev-devel libXi-devel libXext-devel libXfixes-devel
 BuildRequires: libXrandr-devel xorg-inputproto-devel libICE-devel libSM-devel
 BuildRequires: libupower-devel >= %upower_ver
-BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel librsvg-devel
+BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel >= %lcms_ver librsvg-devel
 BuildRequires: libwacom-devel >= %wacom_ver xorg-drv-wacom-devel libXtst-devel
 BuildRequires: libgweather-devel >= %gweather_ver libgeocode-glib-devel >= %geocode_ver libgeoclue2-devel >= %geoclue_ver
 BuildRequires: libnm-devel >= %nm_ver libnm-glib-devel libnm-util-devel
@@ -111,7 +114,6 @@ The %name-tests package provides programms for testing GSD plugins.
 	%{?_disable_smartcard:--disable-smartcard-support} \
 	--disable-schemas-compile \
 	%{subst_enable wayland}
-
 %make_build
 
 %install
@@ -123,73 +125,52 @@ The %name-tests package provides programms for testing GSD plugins.
 
 %files -f %name.lang
 %dir %_libdir/%name-%api_ver
-%_libdir/%name-%api_ver/a11y-keyboard.gnome-settings-plugin
-%_libdir/%name-%api_ver/a11y-settings.gnome-settings-plugin
-%_libdir/%name-%api_ver/clipboard.gnome-settings-plugin
-%_libdir/%name-%api_ver/color.gnome-settings-plugin
-%_libdir/%name-%api_ver/datetime.gnome-settings-plugin
-%_libdir/%name-%api_ver/housekeeping.gnome-settings-plugin
-%_libdir/%name-%api_ver/keyboard.gnome-settings-plugin
-%_libdir/%name-%api_ver/sharing.gnome-settings-plugin
-%_libdir/%name-%api_ver/liba11y-keyboard.so
-%_libdir/%name-%api_ver/liba11y-settings.so
-%_libdir/%name-%api_ver/libclipboard.so
-%_libdir/%name-%api_ver/libcolor.so
-%_libdir/%name-%api_ver/libdatetime.so
 %_libdir/%name-%api_ver/libgsd.so
-%_libdir/%name-%api_ver/libgsdwacom.so
-%_libdir/%name-%api_ver/libhousekeeping.so
-%_libdir/%name-%api_ver/libkeyboard.so
-%_libdir/%name-%api_ver/libmedia-keys.so
-%_libdir/%name-%api_ver/libmouse.so
-%_libdir/%name-%api_ver/liborientation.so
-%_libdir/%name-%api_ver/libpower.so
-%_libdir/%name-%api_ver/libprint-notifications.so
-%_libdir/%name-%api_ver/librfkill.so
-%_libdir/%name-%api_ver/libscreensaver-proxy.so
-%_libdir/%name-%api_ver/libsharing.so
-%_libdir/%name-%api_ver/libsmartcard.so
-%_libdir/%name-%api_ver/libsound.so
-%_libdir/%name-%api_ver/libxrandr.so
-%_libdir/%name-%api_ver/libxsettings.so
-%_libdir/%name-%api_ver/media-keys.gnome-settings-plugin
-%_libdir/%name-%api_ver/mouse.gnome-settings-plugin
-%_libdir/%name-%api_ver/orientation.gnome-settings-plugin
-%_libdir/%name-%api_ver/power.gnome-settings-plugin
-%_libdir/%name-%api_ver/print-notifications.gnome-settings-plugin
-%_libdir/%name-%api_ver/rfkill.gnome-settings-plugin
-%_libdir/%name-%api_ver/screensaver-proxy.gnome-settings-plugin
-%_libdir/%name-%api_ver/smartcard.gnome-settings-plugin
-%_libdir/%name-%api_ver/sound.gnome-settings-plugin
-%_libdir/%name-%api_ver/wacom.gnome-settings-plugin
-%_libdir/%name-%api_ver/xrandr.gnome-settings-plugin
-%_libdir/%name-%api_ver/xsettings.gnome-settings-plugin
-%_libexecdir/%name
-%_libexecdir/gnome-settings-daemon-localeexec
+%_libexecdir/gsd-a11y-keyboard
+%_libexecdir/gsd-a11y-settings
 %_libexecdir/gsd-backlight-helper
-%_libexecdir/gsd-list-wacom
+%_libexecdir/gsd-clipboard
+%_libexecdir/gsd-color
+%_libexecdir/gsd-datetime
+%_libexecdir/gsd-dummy
+%_libexecdir/gsd-housekeeping
+%_libexecdir/gsd-keyboard
 %_libexecdir/gsd-locate-pointer
+%_libexecdir/gsd-media-keys
+%_libexecdir/gsd-mouse
+%_libexecdir/gsd-orientation
+%_libexecdir/gsd-power
+%_libexecdir/gsd-print-notifications
 %_libexecdir/gsd-printer
+%_libexecdir/gsd-rfkill
+%_libexecdir/gsd-screensaver-proxy
+%_libexecdir/gsd-sharing
+%_libexecdir/gsd-smartcard
+%_libexecdir/gsd-sound
+%_libexecdir/gsd-test-input-helper
+%_libexecdir/gsd-wacom
 %_libexecdir/gsd-wacom-led-helper
 %_libexecdir/gsd-wacom-oled-helper
-%_datadir/%name
+%_libexecdir/gsd-xrandr
+%_libexecdir/gsd-xsettings
+%_datadir/%name/
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
-%_sysconfdir/xdg/autostart/%name.desktop
+%_sysconfdir/xdg/autostart/*.desktop
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/GConf/gsettings/%name.convert
-%_man1dir/%{name}*
-%doc AUTHORS NEWS
 %_datadir/polkit-1/actions/org.gnome.settings-daemon.plugins.power.policy
 %_datadir/polkit-1/actions/org.gnome.settings-daemon.plugins.wacom.policy
 %_udevrulesdir/61-gnome-settings-daemon-rfkill.rules
+%doc AUTHORS NEWS
 
 %exclude %_libdir/%name-%api_ver/*.la
 
 %files devel
-%_includedir/*
-%_pkgconfigdir/*
+%_includedir/%name-%api_ver/
+%_pkgconfigdir/%name.pc
 
+%if_enabled tests
 %files tests
 %_libexecdir/gsd-test-a11y-keyboard
 %_libexecdir/gsd-test-a11y-settings
@@ -209,9 +190,12 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libexecdir/gsd-test-wacom-osd
 %_libexecdir/gsd-test-xrandr
 %_libexecdir/gsd-test-xsettings
-
+%endif
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Wed Mar 15 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
 - 3.22.2
 

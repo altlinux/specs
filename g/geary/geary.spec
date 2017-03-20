@@ -1,11 +1,13 @@
-%def_disable snapshot
-
+%def_enable snapshot
+# hardcoded lib/geary path
+#%%define _libexecdir %_prefix/libexec
 %define ver_major 0.11
+%define xdg_name org.gnome.Geary
 %def_enable contractor
 
 Name: geary
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Email client
 License: LGPLv2.1+
@@ -29,7 +31,7 @@ BuildRequires: libsqlite3-devel >= %sqlite_ver
 BuildRequires: cmake intltool desktop-file-utils gnome-doc-utils
 BuildRequires: libnotify-devel libcanberra-devel libgee0.8-devel
 BuildRequires: libgmime-devel libgnome-keyring-devel libexpat-devel
-BuildRequires: libpixman-devel libharfbuzz-devel libwebkitgtk3-devel
+BuildRequires: libpixman-devel libharfbuzz-devel libwebkit2gtk-devel libenchant-devel
 BuildRequires: libpng-devel libsecret-devel at-spi2-atk-devel libxml2-devel
 BuildRequires: libXdmcp-devel libXdamage-devel libxshmfence-devel
 BuildRequires: libXxf86vm-devel libXinerama-devel libXrandr-devel libXi-devel
@@ -37,7 +39,7 @@ BuildRequires: libXcursor-devel libXcomposite-devel libxkbcommon-devel
 BuildRequires: libwayland-cursor-devel
 BuildRequires: libat-spi2-core-devel at-spi2-atk-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
-BuildRequires: libsoup-gir-devel libwebkitgtk3-gir-devel libcanberra-vala
+BuildRequires: libsoup-gir-devel libwebkit2gtk-gir-devel libcanberra-vala
 BuildRequires: gcr-libs-devel >= %gcr_ver gcr-libs-vala
 
 %description
@@ -68,17 +70,22 @@ Geary's development.
 %files -f %name.lang
 %_bindir/%name
 %{?_enable_contractor:%_bindir/%name-attach}
+%_libexecdir/%name/
 %_datadir/%name/
-%_desktopdir/%name.desktop
+%_desktopdir/%xdg_name.desktop
 %_desktopdir/%name-autostart.desktop
-%_datadir/glib-2.0/schemas/org.yorba.%name.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/*/*/apps/*
 %_iconsdir/hicolor/scalable/actions/*.svg
-%_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/%xdg_name.appdata.xml
 %{?_enable_contractor:%_datadir/contractor/geary-attach.contract}
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Wed Mar 08 2017 Yuri N. Sedunov <aris@altlinux.org> 0.11.3-alt2
+- updated to 0.11.0-761-g2f145ac from master branch
+- build against gnome-3.23.x libraries
+
 * Sun Dec 25 2016 Yuri N. Sedunov <aris@altlinux.org> 0.11.3-alt1
 - 0.11.3
 

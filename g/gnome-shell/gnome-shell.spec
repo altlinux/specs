@@ -2,12 +2,12 @@
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
-%define ver_major 3.22
+%define ver_major 3.24
 %define gst_api_ver 1.0
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -33,7 +33,7 @@ AutoReqProv: nopython
 %define session_ver 3.16
 %define clutter_ver 1.21.5
 %define gjs_ver 1.40.0
-%define mutter_ver 3.22.3
+%define mutter_ver 3.23.90
 %define gtk_ver 3.16.0
 %define gio_ver 2.46.0
 %define gstreamer_ver 1.0
@@ -95,8 +95,8 @@ Requires: typelib(NMGtk)
 Requires: typelib(Pango)
 Requires: typelib(Polkit)
 Requires: typelib(PolkitAgent)
+Requires: typelib(Rsvg)
 Requires: typelib(Shell)
-Requires: typelib(ShellJS)
 Requires: typelib(ShellMenu)
 Requires: typelib(Soup)
 Requires: typelib(St)
@@ -209,7 +209,7 @@ rm -f %buildroot%_libdir/%name/*.la
 %_libexecdir/%name-portal-helper
 %dir %_libdir/%name
 %_libdir/%name/libgnome-shell.so
-%_libdir/%name/libgnome-shell-js.so
+#%_libdir/%name/libgnome-shell-js.so
 %_libdir/%name/libgnome-shell-menu.so
 %_libdir/%name/*.typelib
 # browser plugin
@@ -224,6 +224,7 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/%name/
 %_datadir/dbus-1/services/%xdg_name.CalendarServer.service
 %_datadir/dbus-1/services/%xdg_name.HotplugSniffer.service
+%_datadir/dbus-1/interfaces/org.gnome.Shell.PadOsd.xml
 %_datadir/dbus-1/interfaces/org.gnome.ShellSearchProvider.xml
 %_datadir/dbus-1/interfaces/%xdg_name.Screenshot.xml
 %_datadir/dbus-1/interfaces/org.gnome.ShellSearchProvider2.xml
@@ -241,6 +242,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Fri Feb 17 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
 - 3.22.3
 

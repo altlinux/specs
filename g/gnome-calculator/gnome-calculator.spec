@@ -1,9 +1,10 @@
 %def_disable snapshot
-%define ver_major 3.22
+%define ver_major 3.24
+%define xdg_name org.gnome.Calculator
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-calculator
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GTK+3 based desktop calculator
@@ -26,7 +27,7 @@ BuildPreReq: intltool yelp-tools
 BuildPreReq: libgtk+3-devel >= 3.20.0
 BuildRequires: libgio-devel >= 2.48.0 libxml2-devel vala-tools >= 0.24
 BuildRequires: libmpfr-devel libgtksourceview3-devel >= 3.16
-BuildRequires: libsoup-devel >= 2.42
+BuildRequires: libsoup-devel >= 2.42 libmpc-devel
 
 %description
 This package provides gcalctool, the calculator application that was
@@ -57,17 +58,20 @@ A single graphics driver for GTK included with this package.
 %_libexecdir/%name-search-provider
 %_libdir/%name/libcalculator.so
 %_datadir/dbus-1/services/org.gnome.Calculator.SearchProvider.service
-%_datadir/gnome-shell/search-providers/gnome-calculator-search-provider.ini
-%_desktopdir/%name.desktop
+%_datadir/gnome-shell/search-providers/%xdg_name-search-provider.ini
+%_desktopdir/%xdg_name.desktop
 %_man1dir/%name.1.*
 %_man1dir/gcalccmd.1.*
 %config %_datadir/glib-2.0/schemas/org.gnome.calculator.gschema.xml
-%_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/%xdg_name.appdata.xml
 %doc NEWS
 
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Tue Feb 14 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
 - 3.22.3
 

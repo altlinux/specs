@@ -1,8 +1,8 @@
-%define ver_major 3.22
+%define ver_major 3.24
 %def_disable packagekit
 
 Name: simple-scan
-Version: %ver_major.0.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple scanning utility
@@ -11,6 +11,7 @@ Group: Graphics
 Url: http://launchpad.net/%name
 
 Source: %url/%ver_major/%version/+download/simple-scan-%version.tar.xz
+Patch: %name-3.24.0-alt-vala_0.36.patch
 
 Requires: sane xdg-utils gnome-icon-theme colord
 
@@ -25,6 +26,8 @@ scanner and quickly have the image/document in an appropriate format.
 
 %prep
 %setup
+%patch
+find ./ -name "*.stamp" -delete
 
 %build
 %autoreconf
@@ -46,6 +49,9 @@ scanner and quickly have the image/document in an appropriate format.
 %_man1dir/*
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Mon Sep 26 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0.1-alt1
 - 3.22.0.1
 

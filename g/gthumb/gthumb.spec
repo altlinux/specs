@@ -1,7 +1,7 @@
 %def_disable snapshot
 
-%define ver_base 3.4
-%define ver_major 3.4
+%define ver_base 3.5
+%define ver_major 3.5
 %define gst_api_ver 1.0
 %def_enable debug
 %def_enable exiv2
@@ -11,8 +11,8 @@
 %def_enable libraw
 
 Name: gthumb
-Version: %ver_major.4.1
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: An image file viewer and browser for GNOME
 Summary(ru_RU.UTF-8): Просмотрщик изображений и фотоальбом для GNOME
@@ -167,6 +167,9 @@ This package contains headers needed to build extensions for gThumb.
 %_libdir/pkgconfig/*
 
 %changelog
+* Thu Mar 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.5.1-alt1
+- 3.5.1
+
 * Thu Dec 29 2016 Yuri N. Sedunov <aris@altlinux.org> 3.4.4.1-alt2
 - rebuilt against libraw.so.16
 

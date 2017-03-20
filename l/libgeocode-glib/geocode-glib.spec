@@ -1,10 +1,12 @@
+%define _libexecdir %_prefix/libexec
 %define _name geocode-glib
-%define ver_major 3.20
+%define ver_major 3.23
 %define api_ver 1.0
 %def_enable introspection
+%def_enable installed_tests
 
 Name: lib%{_name}
-Version: %ver_major.1
+Version: %ver_major.90
 Release: alt1
 
 Summary: Convenience library for the Yahoo! Place Finder APIs
@@ -14,7 +16,7 @@ Url: http://www.gnome.org/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-%define glib_ver 2.34
+%define glib_ver 2.44
 %define soup_ver 2.42
 %define json_glib_ver 1.0
 
@@ -65,12 +67,23 @@ Requires: %name-devel = %version-%release
 %description gir-devel
 GObject introspection devel data for the %_name library
 
+%package tests
+Summary: Tests for the %_name
+Group: Development/Other
+Requires: %name = %version-%release
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed %_name library.
+
+
 %prep
 %setup -n %_name-%version
 
 %build
 %autoreconf
-%configure --enable-gtk-doc
+%configure --enable-gtk-doc \
+	%{?_enable_installed_tests:--enable-installed-tests}
 %make_build
 
 %install
@@ -102,7 +115,16 @@ GObject introspection devel data for the %_name library
 %_girdir/GeocodeGlib-%api_ver.gir
 %endif
 
+%if_enabled installed_tests
+%files tests
+%_libexecdir/installed-tests/%_name-%api_ver/
+%_datadir/installed-tests/%_name-%api_ver/
+%endif
+
 %changelog
+* Tue Feb 07 2017 Yuri N. Sedunov <aris@altlinux.org> 3.23.90-alt1
+- 3.23.90
+
 * Mon Apr 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 

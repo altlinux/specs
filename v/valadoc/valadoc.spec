@@ -1,8 +1,8 @@
-%def_enable snapshot
-%define ver_major 0.35
+%def_disable snapshot
+%define ver_major 0.36
 %define api_ver 1.0
 # current vala major version
-%define vala_ver 0.34
+%define vala_ver 0.36
 
 Name: valadoc
 Version: %ver_major.0
@@ -14,7 +14,8 @@ License: GPLv2+
 Url: https://wiki.gnome.org/Projects/Valadoc
 
 %if_disabled snapshot
-Source: https://git.gnome.org/browse/valadoc/snapshot/valadoc-valac-%version.tar.xz
+#Source: https://git.gnome.org/browse/valadoc/snapshot/valadoc-valac-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
 # e95f5493defcea96349df51de4f58cc3fdf88c14
 Source: %name-%version.tar
@@ -74,6 +75,9 @@ Development files for Valadoc.
 %_vapidir/%name-%api_ver.vapi
 
 %changelog
+* Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 0.36.0-alt1
+- 0.36.0
+
 * Fri Oct 28 2016 Yuri N. Sedunov <aris@altlinux.org> 0.35.0-alt1
 - first build for Sisyphus
 

@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.22
+%define ver_major 3.24
 %define api_ver 3
 %define so_ver 4
 
@@ -9,7 +9,7 @@
 %def_enable multimedia
 
 Name: evince
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document viewer
@@ -205,6 +205,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Wed Oct 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 

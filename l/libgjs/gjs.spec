@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
 
-%define ver_major 1.46
+%define ver_major 1.48
 %define _name gjs
 %define api_ver 1.0
 
@@ -25,13 +25,15 @@ Source: %_name-%version.tar
 %else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %endif
+Source1: pkg.m4
 
-%define glib_ver 2.42.0
-%define gi_ver 1.42.0
+%define glib_ver 2.50.0
+%define gi_ver 1.51.2
 
 Requires: gobject-introspection
 
-BuildRequires: gnome-common gcc-c++ libffi-devel libmozjs24-devel libcairo-devel
+BuildRequires: gnome-common gcc-c++ libffi-devel libmozjs38-devel libcairo-devel
+BuildRequires: libmozjs38-devel libmozjs38-tools
 BuildRequires: libgio-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libreadline-devel libcairo-gobject-devel
 BuildRequires: libgtk+3-devel libgtk+3-gir-devel
@@ -64,13 +66,15 @@ the functionality of the installed Gjs library package.
 
 %prep
 %setup -n %_name-%version
+[ ! -d m4 ] && mkdir m4
+cp %SOURCE1 m4/
 
 %build
+export ac_cv_path_JS_INTERP=%_bindir/js
 %autoreconf
 %configure \
     --disable-static \
     %{?_enable_installed_tests:--enable-installed-tests}
-
 %make_build
 
 %install
@@ -93,12 +97,13 @@ the functionality of the installed Gjs library package.
 %files devel
 %_includedir/%_name-%api_ver/
 %_libdir/%name.so
-%_libdir/pkgconfig/%_name-%api_ver.pc
-%_libdir/pkgconfig/%_name-internals-%api_ver.pc
+%_pkgconfigdir/%_name-%api_ver.pc
+#%_libdir/pkgconfig/%_name-internals-%api_ver.pc
 %doc examples/*
 
 %if_enabled installed_tests
 %add_typelib_req_skiplist typelib(GIMarshallingTests) typelib(Regress) typelib(WarnLib)
+
 %files tests
 %_libdir/%_name/libgimarshallingtests.so
 %_libdir/%_name/libregress.so
@@ -111,6 +116,9 @@ the functionality of the installed Gjs library package.
 
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 1.48.0-alt1
+- 1.48.0
+
 * Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 1.46.0-alt1
 - 1.46.0
 

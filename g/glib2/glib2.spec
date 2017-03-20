@@ -1,13 +1,13 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.50
+%define ver_major 2.52
 %define pcre_ver 8.13
 
 %set_verify_elf_method strict
 %add_verify_elf_skiplist %_libexecdir/installed-tests/glib/*
 
-%def_with sys_pcre
+%def_without sys_pcre
 %def_enable selinux
 %def_disable fam
 %def_disable systemtap
@@ -20,7 +20,7 @@
 %endif
 
 Name: glib2
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -50,6 +50,7 @@ Patch1: glib-2.36.1-alt-deprecated_paths-nowarning.patch
 Patch2: glib-2.39.3-alt-add-xvt.patch
 Patch3: glib-2.38.2-alt-lfs.patch
 Patch4: glib-2.50.1-alt-dbus_socket_path.patch
+Patch5: glib-2.51.3-alt-configure.patch
 
 %def_with locales
 %if_with locales
@@ -157,6 +158,7 @@ This package contains documentation for GLib.
 %package -n libgio
 Summary: GIO input/output framework
 Group: System/Libraries
+Provides: gvfs-utils = %version-%release %_bindir/gio
 Requires: %name = %version-%release
 Requires: gsettings-desktop-schemas
 Requires: shared-mime-info >= 0.80
@@ -217,6 +219,7 @@ the functionality of the installed glib2/libgio packages.
 %patch2
 %patch3 -p1
 %patch4
+%patch5
 
 %if_with sys_pcre
 rm glib/pcre/*.[ch]
@@ -381,6 +384,8 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %_man1dir/gio-querymodules.*
 %_datadir/bash-completion/completions/gapplication
 %_datadir/bash-completion/completions/gresource
+%_datadir/bash-completion/completions/gdbus
+%_datadir/bash-completion/completions/gsettings
 
 %files -n libgio-devel
 %_bindir/gdbus-codegen
@@ -398,11 +403,10 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %files -n libgio-doc
 %doc %_datadir/gtk-doc/html/gio
 
-%exclude %_datadir/bash-completion/completions/gdbus
-%exclude %_datadir/bash-completion/completions/gsettings
 %exclude %_datadir/gdb/auto-load/%_libdir/libglib-2.0.so.0.*-gdb.py
 %exclude %_datadir/gdb/auto-load/%_libdir/libgobject-2.0.so.0.*-gdb.py
 %exclude %_datadir/glib-2.0/gdb/
+%exclude %_datadir/glib-2.0/valgrind/
 
 %if_enabled installed_tests
 %files tests
@@ -415,6 +419,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Sun Mar 19 2017 Yuri N. Sedunov <aris@altlinux.org> 2.52.0-alt1
+- 2.52.0
+
 * Mon Feb 13 2017 Yuri N. Sedunov <aris@altlinux.org> 2.50.3-alt1
 - 2.50.3
 

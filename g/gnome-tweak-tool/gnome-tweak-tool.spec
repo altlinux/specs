@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.22
+%define ver_major 3.24
 
 Name: gnome-tweak-tool
 Version: %ver_major.0
@@ -70,6 +70,9 @@ Features:
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 

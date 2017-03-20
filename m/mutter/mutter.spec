@@ -3,13 +3,14 @@
 
 %def_disable snapshot
 
-%define ver_major 3.22
+%define ver_major 3.24
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
 %def_enable privatelib
+%define api_ver 0
 
 Name: mutter
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -27,7 +28,7 @@ Source: %name-%version.tar
 %set_typelibdir %_libdir/%name
 %set_girdir %_libdir/%name
 
-# since 3.22 mutter forks Cogl and Clutter libraries into libmutter
+# since 3.22 mutter forks Cogl and Clutter libraries into own private libraries
 #%%filter_from_provides /[typelib\|gir]([Cally\|Clutter\|Cogl].*/d
 #%%filter_from_requires /[typelib\|gir]([Cally\|Clutter\|Cogl].*/d
 
@@ -38,8 +39,6 @@ Requires: zenity
 
 %define gtk_ver 3.20.0
 %define gi_ver 0.9.5
-%define cogl_ver 1.17.1
-%define clutter_ver 1.25.6
 %define glib_ver 2.26
 %define pango_ver 1.2.0
 %define cairo_ver 1.10.0
@@ -57,10 +56,10 @@ BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: libcairo-devel >= %cairo_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
-BuildRequires: libXcomposite-devel libXfixes-devel libXrender-devel libXdamage-devel libXi-devel >= %Xi_ver
+BuildRequires: libXcomposite-devel libXfixes-devel libXrender-devel
+BuildRequires: libXdamage-devel libXtst-devel libXi-devel >= %Xi_ver
 BuildRequires: libXcursor-devel libX11-devel libXinerama-devel libXext-devel libXrandr-devel libSM-devel libICE-devel
 BuildRequires: libxcb-devel
-BuildRequires: libclutter-devel >= %clutter_ver libcogl-devel >= %cogl_ver
 BuildRequires: libwayland-server-devel >= %wayland_ver wayland-protocols >= %wayland_protocols_ver
 BuildRequires: libgdk-pixbuf-devel libgbm-devel
 BuildRequires: libstartup-notification-devel zenity libcanberra-gtk3-devel
@@ -70,7 +69,6 @@ BuildRequires: libxkbcommon-x11-devel libinput-devel >= %libinput_ver libxkbfile
 BuildRequires: libwacom-devel
 # for mutter native backend
 BuildRequires: libdrm-devel libsystemd-devel libgudev-devel
-
 
 %description
 mutter is a minimal X window manager aimed at nontechnical users and is
@@ -89,7 +87,7 @@ This package contains shared library needed to run Mutter.
 %package -n lib%name-devel
 Summary: Development files for lib%name
 Group: Development/C
-Requires: lib%name = %epoch:%version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 This package contains headers and development libraries for lib%name
@@ -97,7 +95,7 @@ This package contains headers and development libraries for lib%name
 %package -n lib%name-gir
 Summary: GObject introspection data for the Mutter library
 Group: System/Libraries
-Requires: lib%name = %epoch:%version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the Mutter library
@@ -105,7 +103,7 @@ GObject introspection data for the Mutter library
 %package -n lib%name-gir-devel
 Summary: GObject introspection devel data for the Mutter library
 Group: System/Libraries
-Requires: lib%name-devel = %epoch:%version-%release lib%name-gir = %epoch:%version-%release
+Requires: lib%name-devel = %EVR lib%name-gir = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Mutter library.
@@ -115,7 +113,7 @@ Summary: GNOME-specific parts of Mutter
 Group: Graphical desktop/GNOME
 BuildArch: noarch
 Provides: gnome-wm
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description gnome
 This package contains everything necessary to use Mutter in GNOME desktop
@@ -144,10 +142,10 @@ DATADIRNAME=share %configure \
 %_bindir/*
 %_libexecdir/%name-restart-helper
 %dir %_libdir/%name
-%_libdir/%name/lib%name-clutter-1.0.so
-%_libdir/%name/lib%name-cogl-pango.so
-%_libdir/%name/lib%name-cogl-path.so
-%_libdir/%name/lib%name-cogl.so
+%_libdir/%name/lib%name-clutter-%api_ver.so
+%_libdir/%name/lib%name-cogl-pango-%api_ver.so
+%_libdir/%name/lib%name-cogl-path-%api_ver.so
+%_libdir/%name/lib%name-cogl-%api_ver.so
 %exclude %_libdir/%name/*.la
 %dir %_libdir/%name/plugins
 %_libdir/%name/plugins/*.so
@@ -180,6 +178,9 @@ DATADIRNAME=share %configure \
 %_datadir/gnome-control-center/keybindings/*.xml
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 1:3.24.0-alt1
+- 3.24.0
+
 * Fri Feb 17 2017 Yuri N. Sedunov <aris@altlinux.org> 1:3.22.3-alt1
 - 3.22.3
 

@@ -1,5 +1,5 @@
 %define oldname libgtop2
-%define ver_major 2.34
+%define ver_major 2.36
 %define api_ver 2.0
 
 %def_disable static
@@ -7,7 +7,7 @@
 %def_enable introspection
 
 Name: libgtop
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: LibGTop library
@@ -160,6 +160,9 @@ rm -rf doc/*.info
 %endif
 
 %changelog
+* Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 2.36.0-alt1
+- 2.36.0
+
 * Mon Jan 16 2017 Yuri N. Sedunov <aris@altlinux.org> 2.34.2-alt1
 - 2.34.2
 

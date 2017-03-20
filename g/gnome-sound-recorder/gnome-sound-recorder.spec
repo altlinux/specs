@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.21
+%define ver_major 3.24
 %define xdg_name org.gnome.SoundRecorder
 %define gst_api_ver 1.0
 
 Name: gnome-sound-recorder
-Version: %ver_major.92
+Version: %ver_major.0
 Release: alt1
 
 Summary: Sound Recorder for GNOME
@@ -26,12 +26,13 @@ Provides:  gnome-media-grecord = %version-%release
 
 Requires: libgjs >= 1.41
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
+Requires: gstreamer%gst_api_ver-utils
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
+Requires: typelib(GLib)
+Requires: typelib(GObject)
 Requires: typelib(Gdk)
 Requires: typelib(GdkPixbuf)
 Requires: typelib(Gio)
-Requires: typelib(GLib)
-Requires: typelib(GObject)
 Requires: typelib(Gst)
 Requires: typelib(GstAudio)
 Requires: typelib(GstPbutils)
@@ -42,6 +43,9 @@ Requires: libgst-plugins%gst_api_ver-gir
 
 BuildRequires: gnome-common libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgjs-devel libgtk+3-gir-devel intltool yelp-tools
+BuildRequires: gst-plugins%gst_api_ver-devel
+BuildRequires: gstreamer%gst_api_ver-utils gst-plugins-base%gst_api_ver
+BuildRequires: gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
 
 %description
 The GNOME application for record and play sound files.
@@ -72,6 +76,9 @@ The GNOME application for record and play sound files.
 
 
 %changelog
+* Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Tue Sep 13 2016 Yuri N. Sedunov <aris@altlinux.org> 3.21.92-alt1
 - 3.21.92
 

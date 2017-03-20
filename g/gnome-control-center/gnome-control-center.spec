@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 3.22
+%define ver_major 3.24
 %define api_ver 2.0
 
 %def_disable debug
@@ -11,7 +11,7 @@
 %def_with bluetooth
 
 Name: gnome-control-center
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Control Center
@@ -30,13 +30,13 @@ Patch: %name-3.8.3-alt-lfs.patch
 # From configure.ac
 %define gtk_ver 3.22.0
 %define glib_ver 2.44.0
-%define desktop_ver 3.21.90
+%define desktop_ver 3.23.90
 %define fontconfig_ver 1.0.0
-%define gsds_ver 3.21.4
+%define gsds_ver 3.24.0
 %define nm_ver 1.2
 %define goa_ver 3.21.5
 %define acc_ver 0.6.33
-%define sett_daemon_ver 3.22.0
+%define sett_daemon_ver 3.24.0
 %define cheese_ver 3.9.5
 %define bt_ver 3.18.2
 %define systemd_ver 40
@@ -179,6 +179,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gettext/its/gnome-keybindings.loc
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Tue Mar 14 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
 - 3.22.2
 
