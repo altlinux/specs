@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define _name pygobject
-%define ver_major 3.22
+%define ver_major 3.24
 %define api_ver 3.0
 %define gtk_api_ver 2.0
 %def_disable devel_doc
 
 Name: python-module-%{_name}3
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Python bindings for GObject
 Group: Development/Python
@@ -204,6 +204,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Wed Mar 01 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt2
 - removed dependencies on old GStreamer (ALT #33183)
 
