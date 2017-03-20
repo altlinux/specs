@@ -2,7 +2,7 @@
 
 Name: wget
 Version: 1.19
-Release: alt1
+Release: alt2
 
 Summary: An utility for retrieving files using the HTTP, HTTPS or FTP protocols
 License: GPLv3
@@ -16,9 +16,9 @@ Patch3: %name-1.7-alt-locale.patch
 Patch10: wget-1.10.1-alt-ntlm-buffer.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-# Automatically added by buildreq on Sun Sep 25 2011
-# optimized out: libcom_err-devel libkrb5-devel perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators
-BuildRequires: libidn-devel libssl-devel perl-Pod-Parser zlib-devel
+# Automatically added by buildreq on Mon Mar 20 2017
+# optimized out: gnu-config libcom_err-devel libkrb5-devel perl perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-podlators pkg-config python-base tzdata
+BuildRequires: libidn2-devel libssl-devel libunistring-devel makeinfo perl-Pod-Usage zlib-devel
 
 Summary(zh_CN.UTF-8):	[通讯]功能强大的下载程序,支持断点续传
 Summary(es_ES.UTF-8): Cliente en línea de comando para bajar archivos WWW/FTP con recursión opcional
@@ -135,6 +135,9 @@ find doc -type f -print0 |
 %doc AUTHORS MAILING-LIST NEWS README*
 
 %changelog
+* Mon Mar 20 2017 Denis Smirnov <mithraen@altlinux.ru> 1.19-alt2
+- rebuild with IDN/IRI support
+
 * Fri Feb 03 2017 Michael Shigorin <mike@altlinux.org> 1.19-alt1
 - 1.19
 
