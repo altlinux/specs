@@ -1,10 +1,10 @@
 %define _name gexiv2
 %define ver_major 0.10
 %define api_ver 0.10
-%def_disable gtk_doc
+%def_enable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: GObject-based Exiv2 wrapper
@@ -123,6 +123,9 @@ subst 's/\(typelibdir[[:space:]]*=[[:space:]]*\).*/\1$(INTROSPECTION_TYPELIBDIR)
 %endif
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.10.5-alt1
+- 0.10.5
+
 * Tue Aug 16 2016 Yuri N. Sedunov <aris@altlinux.org> 0.10.4-alt1
 - 0.10.4
 
