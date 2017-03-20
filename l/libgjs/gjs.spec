@@ -9,7 +9,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Javascript Bindings for GNOME
 Group: System/Libraries
@@ -50,6 +50,7 @@ framework.
 Summary: Development package for %name
 Group: Development/C
 Requires: %name = %version-%release
+Requires: /proc
 
 %description devel
 Files for development with %name.
@@ -81,7 +82,6 @@ export ac_cv_path_JS_INTERP=%_bindir/js
 %makeinstall_std
 
 %check
-# check failed if installed-tests disabled
 #%%make check
 
 %files
@@ -116,6 +116,9 @@ export ac_cv_path_JS_INTERP=%_bindir/js
 
 
 %changelog
+* Sat Mar 25 2017 Yuri N. Sedunov <aris@altlinux.org> 1.48.0-alt2
+- libgjs-devel requires /proc
+
 * Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 1.48.0-alt1
 - 1.48.0
 
