@@ -1,23 +1,26 @@
 %set_automake_version 1.10
 %set_autoconf_version 2.60
 
+%def_without libs
+
 Name: fuse-encfs
 Summary: Encrypted pass-thru filesystem for Linux
-Version: 1.7.4
-Release: alt1.qa8
+Version: 1.9.1
+Release: alt1
 License: GPL
 Group: System/Kernel and hardware
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Source: %name.tar
-Url: http://pobox.com/~vgough/encfs
+Url: https://vgough.github.io/encfs/
 
 Patch1: encfs.link.patch
 Patch2: encfs.static.char.patch
 Patch3: 0001-boost-serialization-version-workaround.patch
 
-# Automatically added by buildreq on Sun Feb 03 2008
-BuildRequires: boost-devel gcc-c++ libattr-devel libfuse-devel libssl-devel librlog14-devel
+# Automatically added by buildreq on Mon Mar 20 2017
+# optimized out: cmake-modules libcom_err-devel libkrb5-devel libstdc++-devel perl perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators pkg-config python-base
+BuildRequires: cmake gcc-c++ libattr-devel libfuse-devel libssl-devel libtinyxml2-devel perl-Pod-Usage
 
 BuildRequires: cvs
 
@@ -46,30 +49,35 @@ it does not use NFS.
 #patch3 -p2
 
 %build
-CFLAGS="$CFLAGS -g -D_FILE_OFFSET_BITS=64"
-export CFLAGS
-%autoreconf
-%configure \
-    --enable-debug=no \
-    --with-boost-system=boost_system-mt \
-    --with-boost-filesystem=boost_filesystem-mt \
-    --with-boost-serialization=boost_serialization-mt
-%make_build SED=%_bindir/sed
+mkdir -p build
+cd build
+%if_with libs
+%cmake_insource -DINSTALL_LIBENCFS=ON -DBUILD_SHARED_LIBS=ON -DUSE_INTERNAL_TINYXML=OFF ..
+%else
+%cmake_insource -DINSTALL_LIBENCFS=OFF -DBUILD_SHARED_LIBS=OFF -DUSE_INTERNAL_TINYXML=OFF ..
+%endif
+%make_build
 
 # Testing for correct build
-encfs/test
+#encfs/test
 
 %install
+cd build
 %makeinstall_std
 %find_lang encfs
 
-%files -f encfs.lang
+%files -f build/encfs.lang
 %_bindir/*
 %_man1dir/*
+%if_with libs
 %_libdir/*.so.*
 %exclude %_libdir/*.so
+%endif
 
 %changelog
+* Mon Mar 20 2017 Denis Smirnov <mithraen@altlinux.ru> 1.9.1-alt1
+- 1.9.1
+
 * Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.7.4-alt1.qa8
 - NMU: rebuilt with boost 1.57.0 -> 1.58.0.
 
