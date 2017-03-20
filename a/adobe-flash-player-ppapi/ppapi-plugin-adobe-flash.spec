@@ -8,10 +8,10 @@
 
 Name: adobe-flash-player-ppapi
 %define bin_name ppapi-plugin-adobe-flash
-%define ver_fake   24
-%define ver_ix86   24.0.0.221
-%define ver_x86_64 24.0.0.221
-Release: alt3
+%define ver_fake   25
+%define ver_ix86   25.0.0.127
+%define ver_x86_64 25.0.0.127
+Release: alt1%ubt
 Epoch: 3
 
 %define ver_real %ver_fake
@@ -30,6 +30,7 @@ License: Adobe
 
 ExclusiveArch: %ix86 x86_64
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: libstdc++-devel glibc-devel desktop-file-utils
 
 Source: ppapi-plugin-adobe-flash.desktop
@@ -139,6 +140,12 @@ echo "At this moment no x86 version of %name"
 %endif
 
 %changelog
+* Mon Mar 20 2017 Sergey V Turchin <zerg@altlinux.org> 3:25-alt1%ubt
+- new version
+- security fixes:
+  CVE-2017-2997, CVE-2017-2998, CVE-2017-2999, CVE-2017-3000,
+  CVE-2017-3001, CVE-2017-3002, CVE-2017-3003
+
 * Fri Feb 17 2017 Sergey V Turchin <zerg@altlinux.org> 3:24-alt3
 - new version
 - security fixes:
