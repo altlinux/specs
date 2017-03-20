@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.21.1
+Version: 0.22.0
 Release: alt1
 
 Summary: Python ASN.1 parser
@@ -77,5 +77,8 @@ popd
 %endif
 
 %changelog
+* Mon Mar 20 2017 Vladimir Didenko <cow@altlinux.ru> 0.22.0-alt1
+- New version
+
 * Mon Mar 13 2017 Vladimir Didenko <cow@altlinux.ru> 0.21.1-alt1
 - Initial build for Sisyphus
