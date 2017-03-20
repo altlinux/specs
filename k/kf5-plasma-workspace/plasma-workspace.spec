@@ -17,7 +17,7 @@
 
 Name: kf5-%rname
 Version: 5.9.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -50,9 +50,8 @@ Patch109: alt-def-start-empty-session.patch
 #BuildRequires: extra-cmake-modules gcc-c++ iceauth kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdesu-devel kf5-kdewebkit-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kidletime-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjsembed-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kpackage-devel kf5-kparts-devel kf5-kpty-devel kf5-krunner-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel kf5-kwin-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libkscreen-devel kf5-libksysguard-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel libdbusmenu-qt5-devel libgps-devel libpam-devel libqalculate-devel libwayland-client-devel libwayland-server-devel libxapian-devel mkfontdir prison-devel python-module-google qt5-phonon-devel qt5-script-devel qt5-x11extras-devel rpm-build-ruby xmessage xprop xrdb xset xsetroot zlib-devel-static
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++
-BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: qt5-phonon-devel qt5-script-devel qt5-x11extras-devel
-BuildRequires: libdbusmenu-qt5-devel libgps-devel libpam0-devel zlib-devel
+BuildRequires: libgps-devel libpam0-devel zlib-devel
 %if_enabled qalculate
 libqalculate-devel
 %endif
@@ -70,7 +69,7 @@ BuildRequires: kf5-kjobwidgets-devel kf5-kjsembed-devel kf5-knewstuff-devel kf5-
 BuildRequires: kf5-kpackage-devel kf5-kparts-devel kf5-kpty-devel kf5-krunner-devel kf5-kservice-devel kf5-ktexteditor-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kwin-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libkscreen-devel kf5-libksysguard-devel kf5-plasma-framework-devel
-BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kxmlrpcclient-devel
+BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kxmlrpcclient-devel kf5-prison-devel
 BuildRequires: kf5-networkmanager-qt-devel kf5-kscreenlocker-devel kde5-kholidays-devel
 
 %description
@@ -295,6 +294,11 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Mon Mar 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt2%ubt
+- clean build requires
+- build with prison
+- update from 5.9 branch
+
 * Thu Mar 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
 - new version
 
