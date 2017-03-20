@@ -1,10 +1,10 @@
 %define vermajor 1
-%define verminor 5.9
+%define verminor 5.10
 %define version %vermajor.%verminor
 
 Name: keyutils
 Version: %version
-Release: alt2
+Release: alt1
 
 Summary: Linux Key Management Utilities
 License: GPL/LGPL
@@ -78,6 +78,9 @@ ln -snf ../../%_lib/lib%name.so.1 %buildroot%_libdir/lib%name.so
 %_man3dir/*
 
 %changelog
+* Mon Mar 20 2017 Alexey Shabalin <shaba@altlinux.ru> 1.5.10-alt1
+- 1.5.10
+
 * Fri May 27 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.9-alt2
 - cifs-related config entries dropped (closes #32146)
 
