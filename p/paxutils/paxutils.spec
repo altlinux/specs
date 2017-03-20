@@ -1,5 +1,5 @@
 Name: paxutils
-Version: 0.0.1.119.45af
+Version: 0.0.1.121.ec72
 Release: alt1
 
 Summary: GNU pax library
@@ -33,6 +33,9 @@ ln gnulib.modules %buildroot%_datadir/%name/
 %_datadir/%name/
 
 %changelog
+* Mon Mar 20 2017 Dmitry V. Levin <ldv@altlinux.org> 0.0.1.121.ec72-alt1
+- v0.0.1-119-g45af163 -> v0.0.1-121-gec72abd.
+
 * Fri Nov 07 2014 Dmitry V. Levin <ldv@altlinux.org> 0.0.1.119.45af-alt1
 - Updated to v0.0.1-119-g45af.
 
