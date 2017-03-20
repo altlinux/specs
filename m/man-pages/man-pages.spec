@@ -1,6 +1,6 @@
 Name: man-pages
 Version: 4.10
-Release: alt1
+Release: alt2
 
 Summary: Man (manual) pages from the Linux Documentation Project
 Summary(ru_RU.UTF8): Руководства пользователя Linux Documentation Project
@@ -34,6 +34,9 @@ Conflicts: libattr-devel < 2.4.47.0.35.dce9
 
 # due to fd.4
 Conflicts: fdutils < 5.5.20081027-alt2
+
+# due to keyrings.7 and *-keyring.7 (see #33254)
+Conflicts: keyutils < 1.5.10
 
 %description
 A large collection of man pages (reference material) from the Linux
@@ -113,6 +116,9 @@ find %buildroot%_mandir -type f -print0 |
 %_datadir/%name/
 
 %changelog
+* Mon Mar 20 2017 Dmitry V. Levin <ldv@altlinux.org> 4.10-alt2
+- Conflicts: keyutils < 1.5.10 (closes: #33254).
+
 * Tue Mar 14 2017 Dmitry V. Levin <ldv@altlinux.org> 4.10-alt1
 - 4.09 -> 4.10.
 
