@@ -2,7 +2,7 @@
 
 Name:    puppet3
 Version: 3.8.7
-Release: alt1
+Release: alt2
 
 Summary: A network tool for managing many disparate systems
 Group:   System/Servers
@@ -45,8 +45,6 @@ Requires: shadow-change
 Conflicts: ruby-semantic
 
 %filter_from_requires /^ruby(.*\(win32\|windows\|wmi-lite\|semantic\|spec_helper\).*)/d
-# workaround unmet reqs on Ruby Rails:
-%filter_from_requires /^ruby(active_\(record\|support\)\(\|\/.*\))/d
 
 %description
 Puppet lets you centrally manage every important aspect of your
@@ -209,6 +207,9 @@ install -d %buildroot%_localstatedir/puppet/ssl/private_keys
 %config(noreplace) %_sysconfdir/sysconfig/puppetmaster
 
 %changelog
+* Mon Mar 20 2017 Ivan Zakharyaschev <imz@altlinux.org> 3.8.7-alt2
+- Don't workaround unmet reqs on active_record and active_support
+
 * Fri Mar 17 2017 Ivan Zakharyaschev <imz@altlinux.org> 3.8.7-alt1
 - Latest Puppet3 built (3.8.7) for those who don't move to Puppet4
 - NetworkManager dispatcher script removed (by Puppet in 3.8.7 & 4.4.1
