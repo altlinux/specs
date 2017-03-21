@@ -1,6 +1,6 @@
 Name: gnulib
-Version: 0.1.585.2fda85
-Release: alt2
+Version: 0.1.1209.24b32
+Release: alt1
 
 Summary: GNU Portability Library
 License: Freely distributable
@@ -53,6 +53,9 @@ mv %buildroot%_datadir/%name/doc/*.info %buildroot%_infodir/
 %_datadir/%name/
 
 %changelog
+* Mon Mar 20 2017 Dmitry V. Levin <ldv@altlinux.org> 0.1.1209.24b32-alt1
+- v0.1-585-g2fda85e -> v0.1-1209-g24b3216.
+
 * Wed Oct 07 2015 Dmitry V. Levin <ldv@altlinux.org> 0.1.585.2fda85-alt2
 - Hacked forced mktime replacement out of mktime-internal module.
 
