@@ -1,5 +1,5 @@
 Name: gzip
-Version: 1.6.0.33.6bfb
+Version: 1.8.0.20.82c6
 Release: alt1
 
 Summary: The GNU data compression program
@@ -10,7 +10,7 @@ Url: http://www.gnu.org/software/gzip/
 %define srcname %name-%version-%release
 Source0: %srcname.tar
 
-BuildRequires: gnulib >= 0.1.585.2fda85, makeinfo
+BuildRequires: gnulib >= 0.1.1209.24b32, makeinfo
 
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: less}}
@@ -81,12 +81,12 @@ for i in gzip gunzip zcat; do
 done
 
 # Additional utilities.
-for c in b l x; do
-	ln -s zdiff %buildroot%_bindir/${c}zcmp
-	ln -s zdiff %buildroot%_bindir/${c}zdiff
-	ln -s zgrep %buildroot%_bindir/${c}zgrep
-	ln -s zgrep %buildroot%_bindir/${c}zegrep
-	ln -s zgrep %buildroot%_bindir/${c}zfgrep
+for c in bz lz lz4 lzi lzo xz zstd; do
+	ln -s zdiff %buildroot%_bindir/${c}cmp
+	ln -s zdiff %buildroot%_bindir/${c}diff
+	ln -s zgrep %buildroot%_bindir/${c}grep
+	ln -s zgrep %buildroot%_bindir/${c}egrep
+	ln -s zgrep %buildroot%_bindir/${c}fgrep
 done
 install -pm755 zme.sh %buildroot%_bindir/zme
 ln -s zme %buildroot%_bindir/bzme
@@ -94,12 +94,12 @@ ln -s zme %buildroot%_bindir/bzme
 # Additional manpages.
 echo '.so man1/zgrep.1' >%buildroot%_man1dir/zegrep.1
 echo '.so man1/zgrep.1' >%buildroot%_man1dir/zfgrep.1
-for c in b l x; do
-	echo '.so man1/zgrep.1' >%buildroot%_man1dir/${c}zgrep.1
-	echo '.so man1/zgrep.1' >%buildroot%_man1dir/${c}zegrep.1
-	echo '.so man1/zgrep.1' >%buildroot%_man1dir/${c}zfgrep.1
-	echo '.so man1/zdiff.1' >%buildroot%_man1dir/${c}zcmp.1
-	echo '.so man1/zdiff.1' >%buildroot%_man1dir/${c}zdiff.1
+for c in bz lz lz4 lzi lzo xz zstd; do
+	echo '.so man1/zdiff.1' >%buildroot%_man1dir/${c}cmp.1
+	echo '.so man1/zdiff.1' >%buildroot%_man1dir/${c}diff.1
+	echo '.so man1/zgrep.1' >%buildroot%_man1dir/${c}grep.1
+	echo '.so man1/zgrep.1' >%buildroot%_man1dir/${c}egrep.1
+	echo '.so man1/zgrep.1' >%buildroot%_man1dir/${c}fgrep.1
 done
 install -pm755 zme.1 %buildroot%_man1dir/
 ln -s zme.1 %buildroot%_man1dir/bzme.1
@@ -128,6 +128,11 @@ rm %buildroot{/bin/z{less,more},%_man1dir/z{less,more}.1}
 %exclude %_man1dir/zcat.*
 
 %changelog
+* Tue Mar 21 2017 Dmitry V. Levin <ldv@altlinux.org> 1.8.0.20.82c6-alt1
+- gzip: v1.6-33-g6bfbf81 -> v1.8-20-g82c62a3 (closes: #8184).
+- gzip-utils: added support for lz4, lzip, lzop, and zstd.
+- gnulib: v0.1-585-g2fda85e -> v0.1-1209-g24b3216.
+
 * Wed Dec 02 2015 Dmitry V. Levin <ldv@altlinux.org> 1.6.0.33.6bfb-alt1
 - Updated to v1.6-33-g6bfbf81.
 
