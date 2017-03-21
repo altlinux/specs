@@ -1,5 +1,5 @@
 Name: diffutils
-Version: 3.3.0.40.a3ea
+Version: 3.5.0.17.198c
 Release: alt1
 %define srcname %name-%version-%release
 
@@ -15,12 +15,9 @@ Source0: %srcname.tar
 # git://git.altlinux.org/people/ldv/packages/diffutils refs/heads/po-current
 Source1: po-%version-%release.tar
 
-# git://git.altlinux.org/people/ldv/packages/diffutils diffutils-current..diffutils-alt
-Patch: %name-%version-%release.patch
-
 Conflicts: man-pages <= 1.52-alt1
 
-BuildRequires: gnulib >= 0.1.585.2fda85
+BuildRequires: gnulib >= 0.1.1209.24b32
 BuildRequires: gperf help2man makeinfo
 
 %description
@@ -37,7 +34,6 @@ Diffutils includes four utilities: diff, cmp, diff3 and sdiff:
 
 %prep
 %setup -n %srcname -a1
-%patch -p1
 
 # Build scripts expect to find the diffutils version in this file.
 echo -n %version > .tarball-version
@@ -69,6 +65,10 @@ export PR_PROGRAM=%_bindir/pr
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Tue Mar 21 2017 Dmitry V. Levin <ldv@altlinux.org> 3.5.0.17.198c-alt1
+- diffutils: v3.3-40-ga3ea9cd -> v3.5-17-g198c55a.
+- gnulib: v0.1-585-g2fda85e -> v0.1-1209-g24b3216.
+
 * Thu Dec 10 2015 Dmitry V. Levin <ldv@altlinux.org> 3.3.0.40.a3ea-alt1
 - Updated to v3.3-40-ga3ea9cd.
 

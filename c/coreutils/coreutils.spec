@@ -1,5 +1,5 @@
 Name: coreutils
-Version: 8.24.0.40.c1dba
+Version: 8.27.0.6.04148
 Release: alt1
 %define srcname %name-%version-%release
 
@@ -50,7 +50,7 @@ Conflicts: rpm-utils < 0:0.7.6-alt1
 # due to hostname
 Conflicts: net-tools < 0:1.60-alt9
 
-BuildRequires: gnulib >= 0.1.585.2fda85
+BuildRequires: gnulib >= 0.1.1209.24b32
 BuildRequires: makeinfo
 
 # for ACL support in ls/dir/vdir, cp, mv and install utilities
@@ -111,6 +111,7 @@ bzip2 -9k NEWS THANKS
 # workarounds for bootstrap
 ln -s /bin/false build-aux/git-version-gen
 touch m4/cu-progs.m4
+sed -i '/makeinfo/ s/6\.1/6.0/' bootstrap.conf
 
 %build
 ./bootstrap --skip-po --gnulib-srcdir=%_datadir/gnulib
@@ -210,6 +211,10 @@ install -pm644 %_sourcedir/{runas,usleep}.1 %buildroot%_man1dir/
 %doc AUTHORS NEWS.bz2 README THANKS.bz2 TODO
 
 %changelog
+* Tue Mar 21 2017 Dmitry V. Levin <ldv@altlinux.org> 8.27.0.6.04148-alt1
+- coreutils: v8.24-40-gc1dba59 -> v8.27-6-g04148c9.
+- gnulib: v0.1-585-g2fda85e -> v0.1-1209-g24b3216.
+
 * Thu Oct 08 2015 Dmitry V. Levin <ldv@altlinux.org> 8.24.0.40.c1dba-alt1
 - Updated to v8.24-40-gc1dba59.
 - Updated translations from translationproject.org.
