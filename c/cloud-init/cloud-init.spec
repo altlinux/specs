@@ -1,6 +1,6 @@
 Name:    cloud-init
 Version: 0.7.9
-Release: alt1.5beecd
+Release: alt2.git.5beecd
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -115,6 +115,9 @@ make unittest noseopts=" -I test_cloudstack.py -I test_handler_apt_source_v3.py"
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Tue Mar 21 2017 Alexey Shabalin <shaba@altlinux.ru> 0.7.9-alt2.git.5beecd
+- update ALTLinux etcnet support
+
 * Mon Mar 20 2017 Alexey Shabalin <shaba@altlinux.ru> 0.7.9-alt1.5beecd
 - git snapshot 5beecdf88b630a397b3722ddb299e9a37ff02737
 
