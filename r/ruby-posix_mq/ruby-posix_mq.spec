@@ -1,8 +1,8 @@
 %define pkgname ruby-posix_mq
 
 Name: %pkgname
-Version: 2.3.0
-Release: alt2
+Version: 2.4.0
+Release: alt1
 
 Summary: POSIX Message Queues for Ruby.
 Group: Development/Ruby
@@ -52,6 +52,9 @@ Documentation files for %name.
 %ruby_ri_sitedir/POSIX_MQ*
 
 %changelog
+* Tue Mar 21 2017 Andrey Cherepanov <cas@altlinux.org> 2.4.0-alt1
+- New version
+
 * Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 2.3.0-alt2
 - Rebuild with new %%ruby_sitearchdir location
 
