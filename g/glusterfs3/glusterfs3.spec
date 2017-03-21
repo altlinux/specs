@@ -1,7 +1,7 @@
 # For update, merge with new tag, update version in the spec and do gear-update-tag -a
 
 %define oname glusterfs
-%define major 3.9
+%define major 3.10
 %define _with_fusermount yes
 %define _without_ocf yes
 
@@ -26,7 +26,7 @@
 %{?_without_ocf:%global _without_ocf --without-ocf}
 
 Name: glusterfs3
-Version: %major.1
+Version: %major.0
 Release: alt2
 
 Summary: Cluster File System
@@ -490,6 +490,7 @@ rm -rf %buildroot%_sbindir/conf.py
 %exclude %_sharedstatedir/glusterd/events/
 
 %_sbindir/glfsheal
+%_sbindir/gf_attach
 %_libdir/libgfdb.so.*
 
 %dir %_datadir/glusterfs/scripts/
@@ -559,6 +560,12 @@ rm -rf %buildroot%_sbindir/conf.py
 %preun server
 %preun_service glusterd
 %changelog
+* Tue Mar 21 2017 Vitaly Lipatov <lav@altlinux.ru> 3.10.0-alt2
+- add build fix from https://bugzilla.redhat.com/show_bug.cgi?id=1429696
+
+* Mon Mar 06 2017 Vitaly Lipatov <lav@altlinux.ru> 3.10.0-alt1
+- build LTE branch 3.10
+
 * Thu Jan 26 2017 Vitaly Lipatov <lav@altlinux.ru> 3.9.1-alt2
 - fix hangs on 32 bit systems (eterbug #11620, RHbug# 1416684)
 
