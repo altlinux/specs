@@ -2,12 +2,12 @@
 %def_enable mpv
 
 %define rname smplayer
-%define svn 8380
+%define svn 8467
 %define xde kde5
 %define XDE KDE5
 %define xapp kf5
 Name: %xde-%rname
-Version: 17.1.0.%svn
+Version: 17.3.0.%svn
 Release: alt1%ubt
 
 %define qt_bin_dir %_qt5_bindir
@@ -30,7 +30,7 @@ Source: %rname-%version.tar
 Patch1: alt-defines.patch
 Patch2: alt-defaults.patch
 Patch3: alt-ui-defaults.patch
-Patch4: alt-config-dir.patch
+Patch4: alt-paths.patch
 Patch5: alt-youtube-browser.patch
 
 BuildRequires(pre): rpm-build-ubt
@@ -100,6 +100,7 @@ MPlayer %name backend
 %patch5 -p1
 
 sed -i 's|@APP_PREFIX@|%xde|' src/paths.cpp
+sed -i 's|@APP_PREFIX@|%xde|' src/chromecast.cpp
 
 export PATH=%qt_bin_dir:$PATH
 
@@ -127,6 +128,7 @@ export QMAKE=%qt_qmake
 
 # renames
 mv %buildroot/%_bindir/smplayer %buildroot/%_bindir/%name
+mv %buildroot/%_bindir/simple_web_server %buildroot/%_bindir/%{xde}-simple_web_server
 mkdir -p %buildroot/%_desktopdir/%xapp/
 mv %buildroot/%_desktopdir/*.desktop %buildroot/%_desktopdir/%xapp/
 find %buildroot/%_desktopdir/ -type f -name \*.desktop | \
@@ -156,6 +158,7 @@ done
 
 %files
 %_bindir/%name
+%_bindir/%{xde}-simple_web_server
 %_desktopdir/%xapp/*.desktop
 %_docdir/%name-%version
 %_datadir/%name/*
@@ -164,6 +167,9 @@ done
 
 
 %changelog
+* Tue Mar 21 2017 Sergey V Turchin <zerg@altlinux.org> 17.3.0.8467-alt1%ubt
+- new version
+
 * Fri Jan 27 2017 Sergey V Turchin <zerg@altlinux.org> 17.1.0.8380-alt1%ubt
 - new version
 
