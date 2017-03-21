@@ -1,5 +1,5 @@
 Name: sed
-Version: 4.2.2.0.93.31c8
+Version: 4.4.0.10.0580
 Release: alt1
 Epoch: 1
 
@@ -19,7 +19,7 @@ Patch: %srcname.patch
 
 %def_enable selinux
 
-BuildRequires: makeinfo, gnulib >= 0.1.585.2fda85
+BuildRequires: makeinfo, gnulib >= 0.1.1209.24b32
 
 # for acl copying support.
 BuildRequires: libacl-devel
@@ -39,19 +39,21 @@ specified in a script file or from the command line.
 
 # Build scripts expect to find package version in this file.
 echo -n %version-%release > .tarball-version
+# Force configure.ac to define BUILD_MAN_PAGE.
+mkdir .git
 
 # Generate LINGUAS file.
 ls po/*.po 2>/dev/null |
 	sed 's|.*/||; s|\.po$||' > po/LINGUAS
 
 # Compress docs for packaging.
-bzip2 -9 doc/*.txt
-bzip2 -9k NEWS
+xz doc/*.txt
+xz -k NEWS
 
 %build
 %make_build -C subst CPPFLAGS="-D_GNU_SOURCE $(getconf LFS_CFLAGS)"
 ./subst/subst -p 's,@DOCDIR@,%_docdir/%name-%version,' \
-	doc/sed-in.texi doc/sed.x
+	doc/sed.texi doc/sed.x
 
 ./bootstrap --force --skip-po --gnulib-srcdir=%_datadir/gnulib
 %configure --bindir=/bin
@@ -63,7 +65,6 @@ bzip2 -9k NEWS
 %makeinstall_std -C subst
 
 %check
-%make_build -C testsuite -f Makefile.tests
 %make_build -k check
 
 %find_lang %name
@@ -73,9 +74,13 @@ bzip2 -9k NEWS
 %_bindir/*
 %_mandir/man?/*
 %_infodir/*.info*
-%doc BUGS NEWS.bz2 README doc/*.txt.bz2
+%doc BUGS NEWS.xz README doc/*.txt.xz
 
 %changelog
+* Tue Mar 21 2017 Dmitry V. Levin <ldv@altlinux.org> 1:4.4.0.10.0580-alt1
+- sed: v4.2.2-93-g31c84cb -> v4.4-10-g05800ee.
+- gnulib: v0.1-585-g2fda85e -> v0.1-1209-g24b3216.
+
 * Mon Aug 24 2015 Dmitry V. Levin <ldv@altlinux.org> 1:4.2.2.0.93.31c8-alt1
 - Updated to v4.2.2-93-g31c84cb.
 - Updated translations from translationproject.org.

@@ -1,5 +1,5 @@
 Name: tar
-Version: 1.28.0.39.d02c
+Version: 1.29.0.19.d061
 Release: alt1
 
 Summary: A GNU file archiving program
@@ -14,7 +14,7 @@ Source: %srcname.tar
 %def_enable selinux
 BuildRequires: libacl-devel libattr-devel makeinfo
 %{?_enable_selinux:BuildRequires: libselinux-devel}
-BuildRequires: gnulib >= 0.1.585.2fda85, paxutils >= 0.0.1.119.45af
+BuildRequires: gnulib >= 0.1.1209.24b32, paxutils >= 0.0.1.121.ec72
 
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts}}
@@ -64,11 +64,17 @@ install -pm644 doc/tar.1 %buildroot%_man1dir/
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Mon Mar 20 2017 Dmitry V. Levin <ldv@altlinux.org> 1.29.0.19.d061-alt1
+- tar: release_1_28-39-gd02c81d -> release_1_29-19-gd06126f
+  (fixes: CVE-2016-6321).
+- tar: added --lz4 and --zstd options.
+- gnulib: v0.1-585-g2fda85e -> v0.1-1209-g24b3216.
+
 * Tue Dec 01 2015 Dmitry V. Levin <ldv@altlinux.org> 1.28.0.39.d02c-alt1
 - Updated to release_1_28-39-gd02c81d.
 
 * Thu Sep 24 2015 Dmitry V. Levin <ldv@altlinux.org> 1.28.0.32.cdf41c-alt1
-- Updated to release_1_28-32-gcdf41c.
+- Updated to release_1_28-32-gcdf41c (closes: #26781).
 - Imported some patches by Pavel Raiskup from Fedora tar-1.28-6 package.
 - Built with gnulib v0.1-585-g2fda85e.
 
