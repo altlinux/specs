@@ -1,5 +1,5 @@
 Name: zstd
-Version: 1.1.3.0.322.ebf2
+Version: 1.1.4
 Release: alt1
 Summary: Zstd compression library and tools
 License: BSD
@@ -60,6 +60,15 @@ for dir in lib programs; do
 		INSTALL_SCRIPT=: PREFIX=%prefix LIBDIR=%_libdir %make_params
 done
 %{?!_disable_pzstd:%makeinstall_std PREFIX=%prefix -C contrib/pzstd}
+
+# Relocate shared library from %_libdir/ to /%_lib/
+mkdir -p %buildroot/%_lib
+for f in %buildroot%_libdir/*.so; do
+        t=$(readlink -v "$f")
+	ln -rsnf %buildroot/%_lib/"$t" "$f"
+done
+mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
+
 %set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
 
@@ -68,7 +77,7 @@ export CFLAGS="%optflags $(getconf LFS_CFLAGS)"
 export CXXFLAGS="$CFLAGS"
 %make_build -k -C tests test %make_params
 %{?!_disable_pzstd:%make_build -k -C contrib/pzstd tests GTEST_INC= GTEST_LIB=}
-%{?!_disable_pzstd:LD_LIBRARY_PATH=%buildroot%_libdir make -C contrib/pzstd check}
+%{?!_disable_pzstd:LD_LIBRARY_PATH=%buildroot/%_lib make -C contrib/pzstd check}
 
 %files
 %_bindir/*
@@ -76,7 +85,7 @@ export CXXFLAGS="$CFLAGS"
 %doc NEWS README.md
 
 %files -n lib%name
-%_libdir/lib*.so.*
+/%_lib/*.so.*
 %doc LICENSE PATENTS
 
 %files -n lib%name-devel
@@ -85,5 +94,9 @@ export CXXFLAGS="$CFLAGS"
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Mar 21 2017 Dmitry V. Levin <ldv@altlinux.org> 1.1.4-alt1
+- v1.1.3-322-gebf2 == v1.1.4.
+- Relocated shared library from %_libdir/ to /%_lib/.
+
 * Fri Mar 17 2017 Dmitry V. Levin <ldv@altlinux.org> 1.1.3.0.322.ebf2-alt1
 - v1.1.3-322-gebf2.
