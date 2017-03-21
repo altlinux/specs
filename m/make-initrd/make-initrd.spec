@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 0.8.13
+Version: 0.8.14
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -168,6 +168,10 @@ fi
 %_datadir/%name/features/mdadm
 
 %changelog
+* Tue Mar 21 2017 Sergey Novikov <sotor@altlinux.org> 0.8.14-alt1
+- fixed lvm discovery return code in case, when non-root LVM volumes
+  inaccessible from initramfs (closes: #33243)
+
 * Tue Dec 27 2016 Michael Shigorin <mike@altlinux.org> 0.8.13-alt1
 - dropped obsolete guess-kbd call (closes: #29688)
 
