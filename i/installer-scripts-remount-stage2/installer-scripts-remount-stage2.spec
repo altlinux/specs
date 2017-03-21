@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.5.12
+Version: 0.5.13
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -48,6 +48,11 @@ __EOF__
 %attr(0755,root,root) %_datadir/install2/initinstall.d/85-start-multipath.sh
 
 %changelog
+* Tue Mar 21 2017 Michael Shigorin <mike@altlinux.org> 0.5.13-alt1
+- ignore lvm exit code to hopefully avoid a few more unneeded
+  "destination filesystem remount error" cases (closes: #33246)
+- double-check before umounting /mnt/destination just in case
+
 * Tue Jan 31 2017 Michael Shigorin <mike@altlinux.org> 0.5.12-alt1
 - added /dev/md/* support to the existing /dev/md* one;
   thanks Vadim Zelenin for pointing this out (closes: #31286)
