@@ -4,7 +4,7 @@
 %define unicode_ver 9.0.0
 
 Name: gucharmap
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: gucharmap is a featureful Unicode character map
@@ -90,8 +90,8 @@ GObject introspection devel data for the GNOME Unicode character map library
 %_desktopdir/*
 %config %_datadir/glib-2.0/schemas/org.gnome.Charmap.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.Charmap.enums.xml
-%_datadir/appdata/%name.appdata.xml
-%doc AUTHORS NEWS README TODO COPYING.UNICODE
+%_datadir/metainfo/%name.appdata.xml
+%doc AUTHORS NEWS TODO COPYING.UNICODE
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -110,6 +110,9 @@ GObject introspection devel data for the GNOME Unicode character map library
 %endif
 
 %changelog
+* Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 9.0.3-alt1
+- 9.0.3
+
 * Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 9.0.2-alt1
 - 9.0.2
 
