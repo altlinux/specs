@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-build-php7
 BuildRequires: libsqlite3-devel
 BuildRequires: php7-devel = %php7_version
 
-Requires: php7-pdo = %php7_version-%release
+PreReq: php7-pdo = %php7_version-%release
 Provides: php7-pdo-driver
 
 %description

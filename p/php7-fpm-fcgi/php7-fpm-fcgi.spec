@@ -161,8 +161,8 @@ install -pD -m755 %SOURCE6 %buildroot/usr/libexec/service/legacy-actions/php7-fp
 %dir %_sysconfdir/fpm7/php-fpm.d
 %dir %_logdir/php7-fpm
 %dir  %attr(775,root,_php_fpm) %verify(not mode) %_runtimedir/php7-fpm
-%config(noreplace) %_sysconfdir/fpm7/php-fpm.conf
-%config(noreplace) %_sysconfdir/fpm7/php-fpm.d/www.conf
+%config(noreplace) %_sysconfdir/fpm7/php-fpm.conf.default
+%config(noreplace) %_sysconfdir/fpm7/php-fpm.d/www.conf.default
 %config(noreplace) %php7_sysconfdir/%php7_sapi/php.ini
 %config(noreplace) %php7_sysconfdir/%php7_sapi/browscap.ini
 %config(noreplace) %_sysconfdir/logrotate.d/php7-fpm

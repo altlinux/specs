@@ -22,7 +22,7 @@ BuildRequires: gcc-c++ libMySQL-devel
 BuildRequires: php7-devel = %php7_version
 Conflicts: php7-mysqlnd-%php7_extension
 
-Requires: php7-pdo = %php7_version-%release
+PreReq: php7-pdo = %php7_version-%release
 Provides: php7-pdo-driver
 
 

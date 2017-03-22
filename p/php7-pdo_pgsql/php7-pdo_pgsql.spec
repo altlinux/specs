@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-build-php7
 BuildRequires: gcc-c++ postgresql-devel
 BuildRequires: php7-devel = %php7_version
 
-Requires: php7-pdo = %php7_version
+PreReq: php7-pdo = %php7_version
 Provides: php7-pdo-driver
 
 %description
