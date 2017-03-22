@@ -21,7 +21,7 @@ BuildRequires(pre): rpm-build-php7
 BuildRequires: gcc-c++ libunixODBC-devel
 BuildRequires: php7-devel = %php7_version
 
-Requires: php7-pdo = %php7_version-%php7_release
+PreReq: php7-pdo = %php7_version-%php7_release
 Provides: php7-pdo-driver
 
 %description
