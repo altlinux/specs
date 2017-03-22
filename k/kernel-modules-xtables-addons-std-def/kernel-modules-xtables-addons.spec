@@ -1,5 +1,5 @@
 %define module_name	xtables-addons
-%define module_version	2.11
+%define module_version	2.12
 %define module_release	alt1
 
 %define flavour		std-def
