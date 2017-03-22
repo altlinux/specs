@@ -1,6 +1,6 @@
 Name: basesystem
 Version: sisyphus
-Release: alt21
+Release: alt22
 Epoch: 1
 
 Summary: The skeleton package which defines a basic %distribution chroot
@@ -10,27 +10,22 @@ BuildArch: noarch
 
 Requires: altlinux-release
 Requires: bash
-Requires: bzip2
 Requires: common-licenses
-Requires: coreutils >= 6.12
-Requires: diffutils
 Requires: etcskel
 Requires: filesystem
-Requires: findutils
 Requires: gawk
 Requires: getopt
-Requires: grep
 Requires: gzip
 Requires: perl-base
 Requires: rootfiles
 Requires: rpm
-Requires: sed
 Requires: setup
 Requires: shadow-utils
 Requires: tar
 Requires: util-linux
 Requires: vitmp
 Requires: xz
+Requires: zstd
 
 %package -n interactivesystem
 Summary: The skeleton package which defines an interactive %distribution system
@@ -41,15 +36,12 @@ Requires: console-common-scripts
 Requires: crontabs
 Requires: e2fsprogs
 Requires: info
-Requires: less
 Requires: losetup
 Requires: man
 Requires: mingetty
 Requires: network-config-subsystem
-Requires: termutils
 Requires: passwd
 Requires: sash
-Requires: service
 Requires: startup
 Requires: stmpclean
 Requires: syslogd-daemon
@@ -69,6 +61,14 @@ This package defines the components of an interactive %distribution system
 %files -n interactivesystem
 
 %changelog
+* Wed Mar 22 2017 Dmitry V. Levin <ldv@altlinux.org> 1:sisyphus-alt22
+- Cleaned up dependencies:
+  * basesystem:
+    - removed: bzip2, coreutils, diffutils, findutils, grep, sed.
+    + added: zstd.
+  * interactivesystem:
+    - removed: less, termutils, service.
+
 * Wed Apr 06 2011 Dmitry V. Levin <ldv@altlinux.org> 1:sisyphus-alt21
 - Merged /bin/hostname, mktemp and stat into versioned coreutils.
 - Moved from basesystem to interactivesystem:
