@@ -1,7 +1,7 @@
 %define oname roundcubemail
 Name: roundcube
 Version: 1.2.4
-Release: alt1
+Release: alt2
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
 
@@ -13,6 +13,7 @@ Url: http://roundcube.net/
 Source0: https://github.com/roundcube/roundcubemail/releases/download/%version/roundcubemail-%version.tar
 Source1: %name.apache.conf
 Source2: composer.json-dist
+Patch0: roundcube-1.2.4-sso-alt.patch
 BuildArch: noarch
 
 BuildPreReq: rpm-build-apache2
@@ -66,6 +67,7 @@ BuildArch: noarch
 
 %prep
 %setup -n %oname-%version
+%patch0 -p2
 sed -i 's,php_,php5_,' .htaccess
 
 # disable Reply button
@@ -132,6 +134,9 @@ service httpd2 condreload
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Wed Mar 22 2017 Sergey Novikov <sotor@altlinux.org> 1.2.4-alt2
+- added kerberos authentication for ldap address book
+
 * Fri Mar 17 2017 Vitaly Lipatov <lav@altlinux.ru> 1.2.4-alt1
 - new version 1.2.4 (with rpmrb script)
 
