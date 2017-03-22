@@ -1,5 +1,5 @@
 Name: xtables-addons
-Version: 2.11
+Version: 2.12
 Release: alt1
 Summary: IP tables addons
 Group: System/Kernel and hardware
@@ -74,6 +74,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %kernel_src/*
 
 %changelog
+* Wed Mar 22 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.12-alt1
+- new version
+
 * Wed Jun 22 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.11-alt1
 - new version
 
