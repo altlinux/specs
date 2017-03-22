@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20170113
+Version: 20170314
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -60,6 +60,9 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 %exclude /lib/firmware/carl9170fw
 
 %changelog
+* Wed Mar 22 2017 Michael Shigorin <mike@altlinux.org> 20170314-alt1
+- updated from git
+
 * Mon Jan 23 2017 Michael Shigorin <mike@altlinux.org> 20170113-alt1
 - updated from git (closes: #33022)
 
