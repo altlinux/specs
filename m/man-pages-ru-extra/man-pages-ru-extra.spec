@@ -1,55 +1,56 @@
-Name: man-pages-ru
-Version: 4.08
-Release: alt2
+Name: man-pages-ru-extra
+Version: 0.1
+Release: alt1
 
-# man-pages-ru_4.08-2329-2272-20170321.tar.bz2
-%define lversion %version-2329-2272-20170321
-
-Summary: Russian translations of OS GNU/*/Linux manpages
-Summary(ru_RU.UTF-8): Русские переводы страниц руководства по ОС GNU/*/Linux
+Summary: Extra collection of Russian translations of OS GNU/*/Linux manpages
+Summary(ru_RU.UTF-8): Дополнительный набор русских переводов страниц руководства по ОС GNU/*/Linux
 License: distributable
 Group: Documentation
-Url: https://sourceforge.net/projects/man-pages-ru/
+Url: http://www.linuxshare.ru/projects/trans
 BuildArch: noarch
 
 Icon: books-ru.xpm
 
-Source: man-pages-ru_%lversion.tar.bz2
-Source1: man-pages-ru-4.08-alt-Makefile
+Source0: man-pages-ru-extra.tar.bz2
+Source1: manpages-ALT.tar.bz2
+Source2: tcb-0.9.8.7-man-ru.tar.bz2
+Source3: man-gzip-ru.tar.bz2
+Source4: manpages-ru-0.98.tar.bz2
+Source5: bash.tar.bz2
+Source6: man-ssh.tar.bz2
+Source7: manpages-angel.tar.bz2
+Source8: manpages-boojuman.tar.bz2
+Source9: manpages-ASP.tar.bz2
+Source10: man-pages-ru-autofs.tar.bz2
+Source11: man-pages-security-ru-1.0.tar.bz2
+
+Source100: man-pages-ru-0.94-alt-Makefile
 
 Patch0: man-pages-ru-0.98-alt-combo.patch.bz2
-Patch1: mat-functions-alt.patch.gz
+Patch1: install.1.patch.gz
+Patch2: ln.1.patch.gz
 
-Obsoletes: man-ru, manpages-ru, man-pages-ru-KOI8-R, man-pages-ru-CP1251
+Obsoletes: man-pages-security-ru
 PreReq: man >= 1.6e-alt1
+Conflicts: man-pages-ru < 4.08-alt1
 
 %description
-A collection of man pages (documentation) from the Linux Documentation
-Project (LDP) translated to russian.  The man pages are organized into the
-following sections: Section 1, user commands; Section 2, system
-calls; Section 3, libc calls; Section 4, devices (e.g., hd, sd); Section 5,
-file formats and protocols (e.g., wtmp, /etc/passwd, nfs); Section 6, games
-(intro only); Section 7, conventions, macro packages, etc. (e.g., nroff,
-ascii); and Section 8, system administration.
+Extra collection of Russian translations of OS GNU/*/Linux manpages
+Addons for man-pages-ru.
 
 %description -l ru_RU.UTF-8
-Коллекция страниц руководства из Проекта Документации на Линукс, на
-русском языке.  Страницы руководства организованы следующим образом:
-секция 1, команды пользователя; секция 2, системные вызовы; секция 3,
-функции библиотеки языка C; секция 4, устройства (например, hd, sd);
-секция 5, форматы файлов и протоколы (например, wtmp, /etc/passwd, nfs);
-секция 6, игры (только введение); секция 7, соглашения, макро-пакеты,
-и т. п. (например, nroff, ascii); и секция 8, утилиты администратора.
+Дополнительный набор русских переводов страниц руководства по ОС GNU/*/Linux,
+дополнение к пакету man-pages-ru.
 
 %prep
-%setup -q -n man-pages-ru_%lversion
-#patch0 -p1
-#patch1 -p0
-cp %SOURCE1 %_builddir/man-pages-ru_%lversion/Makefile
-
-#set_compress_method skip
+%setup -q -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -n %name
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+cp %SOURCE100 %_builddir/%name/Makefile
 
 %install
+mkdir -p %buildroot%_docdir/security-ru
 mkdir -p %buildroot%_mandir/ru/man{1,2,3,4,5,6,7,8,9,n}
 mkdir -p %buildroot%_cachedir/man/ru/cat{1,2,3,4,5,6,7,8,9,n}
 
@@ -59,64 +60,30 @@ make install \
 	LANG_SUBDIR=ru \
 	COMPRESS=none \
 	#
-
+	
+cd man-pages-security-ru-1.0
+make install \
+        INSTALL="install -p -m644" \
+        INSTALLMAN=%buildroot%_mandir \
+        INSTALLDOC=%buildroot%_docdir/security-ru \
+        LANG_SUBDIR=ru \
+        COMPRESS=none \
+        #
 
 #echo KOI8-R >%buildroot%_mandir/ru/.charset
 echo >%buildroot%_cachedir/man/ru/whatis
 
-pushd %buildroot%_mandir/ru/man3/
- for F in \
- wmempcpy.3 \
- swapcontext.3 \
- realloc.3 \
- rawmemchr.3 \
- muntrace.3 \
- mq_timedsend.3 \
- mq_timedreceive.3 \
- mq_setattr.3 \
- mprobe.3 \
- modfl.3 \
- modff.3 \
- mmap64.3 \
- mkstemps.3 \
- mkostemps.3 \
- mkostemp.3 \
- mkfifoat.3 \
- memrchr.3 \
- mcheck_pedantic.3 \
- mcheck_check_all.3 \
- malloc_set_state.3 \
- minor.3 \
- major.3 \
- gnu_dev_minor.3 \
- gnu_dev_major.3 \
- gnu_dev_makedev.3 \
- free.3 \
- calloc.3 \
- ; do
-    rm -f $F
- done
+# a part of manpages-ru >= 4.08-alt1
+pushd %buildroot%_mandir/ru
+ rm -f man1/iconv.1
+ rm -f man3/iconv.3
+ rm -f man3/psignal.3
+ rm -f man3/strcasestr.3
+ rm -f man3/strsignal.3
 popd
 
-pushd %buildroot%_mandir/ru/man2/
- for F in \
- munmap.2 \
- mknodat.2 \
- mlock2.2 \
- mlockall.2 \
- munlock.2 \
- munlockall.2 \
- mq_notify.2 \
- mq_open.2 \
- mq_timedreceive.2 \
- mq_timedsend.2 \
- mq_unlink.2 \
- msgrcv.2 \
- msgsnd.2 \
- ; do
-    rm -f $F
- done
-popd
+# a part of manpages-ru >= 4.08-alt2
+rm -f %buildroot%_mandir/ru/man3/malloc.3
 
 %postun
 if [ "$1" = 0 -a ! -d %_mandir/ru ]; then
@@ -124,7 +91,7 @@ if [ "$1" = 0 -a ! -d %_mandir/ru ]; then
 fi
 
 %files
-%doc License README
+%_docdir/security-ru/
 %_mandir/*
 
 %attr(3775,root,man) %dir %_cachedir/man/ru
@@ -134,15 +101,12 @@ fi
 %_cachedir/man/ru/cat*
 
 %changelog
-* Wed Mar 22 2017 Sergey Y. Afonin <asy@altlinux.ru> 4.08-alt2
-- 4.08-2329-2272-20170321 (added malloc.3,math_error.7,mdoc.7)
-
-* Wed Mar 08 2017 Sergey Y. Afonin <asy@altlinux.ru> 4.08-alt1
-- 4.08-2329-2269-20170309 (Closes: #33166)
-- removed all man pages except man-pages-ru
-  removed pages will be packed separately (man-pages-ru-extra)
-- disabled patches for man-pages-ru (old, needs revision)
-- converted spec to UTF-8
+* Wed Mar 08 2017 Sergey Y. Afonin <asy@altlinux.ru> 0.1-alt1
+- renamed to man-pages-ru-extra, removed most man pages
+  from manpages-ru 0.98 (kept missed in 4.08 only)
+- removed patches for man pages from  man-pages-ru 4.08
+- added "Conflicts: man-pages-ru < 4.08-alt1"
+- converted spec to UTF8
 
 * Sun May 08 2011 Slava Semushin <php-coder@altlinux.ru> 0.98-alt23
 - NMU
