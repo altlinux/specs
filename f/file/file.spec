@@ -1,6 +1,6 @@
 Name: file
 Version: 4.26
-Release: alt12
+Release: alt13
 
 Summary: A utility for determining file types
 License: BSD-style
@@ -123,6 +123,11 @@ make -k check
 %python_sitelibdir/*
 
 %changelog
+* Wed Mar 22 2017 Dmitry V. Levin <ldv@altlinux.org> 4.26-alt13
+- Backported readelf fix (by sem@; fixes: CVE-2014-9653).
+- Backported magic for lrzip, lz4, zstd, and snappy.
+- Backported -z support for lrzip, lz4, and zstd.
+
 * Tue Dec 08 2015 Dmitry V. Levin <ldv@altlinux.org> 4.26-alt12
 - Added magic for GNU M4 frozen state files.
 
