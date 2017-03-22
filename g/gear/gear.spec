@@ -1,5 +1,5 @@
 Name: gear
-Version: 2.0.7
+Version: 2.1.0
 Release: alt1
 
 Summary: Get Every Archive from git package Repository
@@ -19,11 +19,14 @@ Requires: git-core >= 0:1.5.3
 # due to quote_shell_args()
 Requires: libshell >= 0:0.1.0
 
+# due to default output tarball compressor
+Requires: tar >= 1.29.0.19.d061, zstd
+
 # hasher>=1.0.30 supports tar packages made by gear utility.
 Conflicts: hasher < 0:1.0.30
 
 BuildPreReq: asciidoc, git-core >= 1.8.0, help2man, libshell >= 0:0.0.3-alt1
-%{?!_without_check:%{?!_disable_check:BuildRequires: faketime, xz, zip, unzip}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: bzip2, gzip, faketime, unzip, xz, zip, zstd}}
 
 %description
 This package contains utilities for building RPM packages from GEAR
@@ -56,6 +59,12 @@ ln -s gear-store-tags.1 %buildroot%_man1dir/gear-update-tag.1
 %doc QUICKSTART* ABOUT*
 
 %changelog
+* Wed Mar 22 2017 Dmitry V. Levin <ldv@altlinux.org> 2.1.0-alt1
+- Added zstd(1) support in .gear-rules and import tools.
+- gear: added support for lz4(1), lzop(1), xz(1), and zstd(1)
+  in output tarball compression, changed default from gzip to zstd.
+- tests: fixed for git >= 2.10.
+
 * Fri May 06 2016 Dmitry V. Levin <ldv@altlinux.org> 2.0.7-alt1
 - gear-changelog, gear-edit-spec: look for specfile using the same
   algorithm as gear-commit (by Alexey Gladkov and me; closes: #18140).
