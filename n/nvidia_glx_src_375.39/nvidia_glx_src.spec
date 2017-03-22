@@ -14,8 +14,9 @@
 %define nv_version 375
 %define nv_release 39
 %define nv_minor %nil
-%define pkg_rel alt167
+%define pkg_rel alt168
 %def_enable kernelsource
+%def_disable glvnd
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -217,11 +218,14 @@ fi
 
 %__install -m 0644 libGLdispatch.so.0  %buildroot/%nv_lib_dir/libGLdispatch.so
 #
+%if_enabled glvnd
 %__install -m 0644 libGL.so.1.0.0  %buildroot/%nv_lib_dir/libGL.so
-#__install -m 0644 libGL.so.%tbver  %buildroot/%nv_lib_dir/libGL.so
-#
 %__install -m 0644 libEGL.so.1  %buildroot/%nv_lib_dir/libEGL.so
-#__install -m 0644 libEGL.so.%tbver  %buildroot/%nv_lib_dir/libEGL.so
+%else
+%__install -m 0644 libGL.so.%tbver  %buildroot/%nv_lib_dir/libGL.so
+%__install -m 0644 libEGL.so.%tbver  %buildroot/%nv_lib_dir/libEGL.so
+%endif
+#
 %__install -m 0644 libEGL_nvidia.so.%tbver    %buildroot/%nv_lib_dir/libEGL_nvidia.so
 %__install -m 0644 libGLESv2.so.2  %buildroot/%nv_lib_dir/libGLESv2.so
 %__install -m 0644 libGLESv2_nvidia.so.%tbver %buildroot/%nv_lib_dir/libGLESv2_nvidia.so
@@ -310,6 +314,9 @@ fi
 %endif
 
 %changelog
+* Wed Mar 22 2017 Sergey V Turchin <zerg@altlinux.org> 375.39-alt168
+- using non-GLVND libs
+
 * Tue Mar 14 2017 Sergey V Turchin <zerg@altlinux.org> 375.39-alt167
 - add fix against 4.10 kernel
 
