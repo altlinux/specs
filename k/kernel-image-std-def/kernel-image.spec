@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	4.4
-%define kernel_sublevel .55
+%define kernel_base_version	4.9
+%define kernel_sublevel .16
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -20,7 +20,7 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define nprocs 12
 # Build options
 # You can change compiler version by editing this line:
-%define kgcc_version	4.7
+%define kgcc_version	5
 
 # Enable/disable SGML docs formatting
 %if "%sub_flavour" == "def"
@@ -64,7 +64,8 @@ ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: dev86 flex
 BuildRequires: libdb4-devel
-BuildRequires: gcc%kgcc_version
+BuildRequires: gcc%kgcc_version gcc%kgcc_version-c++
+BuildRequires: gcc%kgcc_version-plugin-devel libgmp-devel libmpc-devel
 BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeric
 BuildRequires: module-init-tools >= 3.16
 BuildRequires: lzma-utils
@@ -287,6 +288,7 @@ If possible, try to use glibc-kernheaders instead of this package.
 Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel 
 Requires: gcc%kgcc_version
+Requires: libelf-devel
 
 %description -n kernel-headers-modules-%flavour
 This package contains header files, Makefiles and other parts of the
@@ -440,6 +442,7 @@ KbuildFiles="
 	scripts/gcc-x86_*-has-stack-protector.sh
 	scripts/module-common.lds
 	scripts/depmod.sh
+	scripts/gcc-plugins/*.so
 
 
 	.config
@@ -545,153 +548,155 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Tue Mar 21 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.16-alt1
+- build 4.9.16 as std-def
+
 * Sun Mar 19 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.55-alt1
 - v4.4.55
 
-* Wed Mar 15 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.54-alt1
-- v4.4.54
+* Sun Mar 12 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.14-alt1
+- v4.9.14
 
-* Sun Mar 12 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.53-alt1
-- v4.4.53
+* Mon Feb 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.13-alt1
+- v4.9.13
 
-* Mon Feb 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.52-alt1
-- v4.4.52
+* Fri Feb 24 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.12-alt1
+- v4.9.12
 
-* Fri Feb 24 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.51-alt1
-- v4.4.51
+* Mon Feb 20 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.11-alt1
+- v4.9.11
 
-* Mon Feb 20 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.50-alt1
-- v4.4.50
+* Wed Feb 15 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.10-alt1
+- v4.9.10
 
-* Wed Feb 15 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.49-alt1
-- v4.4.49
+* Thu Feb 09 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.9-alt1
+- v4.9.9
 
-* Thu Feb 09 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.48-alt1
-- v4.4.48
+* Sun Feb 05 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.8-alt1
+- v4.9.8
 
-* Sun Feb 05 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.47-alt1.1
-- v4.4.47
+* Wed Feb 01 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.7-alt1
+- v4.9.7
 
-* Wed Feb 01 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.46-alt1.1
-- v4.4.46
+* Thu Jan 26 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.6-alt1
+- v4.9.6
 
-* Thu Jan 26 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.45-alt1.1
-- v4.4.45
+* Fri Jan 20 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.5-alt1
+- v4.9.5
 
-* Fri Jan 20 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.44-alt1.1
-- v4.4.44
+* Wed Jan 18 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.4-alt1
+- v4.9.4
 
-* Mon Jan 16 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.43-alt1.1
-- v4.4.43
+* Thu Jan 12 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.9.3-alt1
+- v4.9.3
 
-* Thu Jan 12 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.42-alt1.1
-- v4.4.42
+* Tue Jan 10 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.17-alt1
+- v4.8.17
 
-* Tue Jan 10 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.41-alt1.1
-- v4.4.41
+* Sat Jan 07 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.16-alt1
+- v4.8.16
 
-* Sat Jan 07 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.40-alt1.1
-- v4.4.40
+* Fri Dec 16 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.15-alt1
+- v4.8.15
 
-* Fri Dec 23 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.39-alt1.1
-- memory sanitize patch added
+* Sun Dec 11 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.14-alt1
+- v4.8.14
 
-* Fri Dec 16 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.39-alt1
-- v4.4.39
+* Fri Dec 09 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.13-alt1
+- v4.8.13
 
-* Sun Dec 11 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.38-alt1
-- v4.4.38
+* Fri Dec 02 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.12-alt1
+- v4.8.12
 
-* Fri Dec 09 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.37-alt1
-- v4.4.37
+* Sat Nov 26 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.11-alt1
+- v4.8.11
 
-* Fri Dec 02 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.36-alt1
-- v4.4.36
+* Mon Nov 21 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.10-alt1
+- v4.8.10
 
-* Sat Nov 26 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.35-alt1
-- v4.4.35
+* Sun Nov 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.9-alt1
+- v4.8.9
 
-* Mon Nov 21 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.34-alt1
-- v4.4.34
+* Tue Nov 15 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.8-alt1
+- v4.8.8
 
-* Sun Nov 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.33-alt1
-- v4.4.33
+* Thu Nov 10 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.7-alt1
+- v4.8.7
 
-* Tue Nov 15 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.32-alt1
-- v4.4.32
+* Tue Nov 01 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.6-alt1
+- v4.8.6
 
-* Thu Nov 10 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.31-alt1
-- v4.4.31
+* Fri Oct 28 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.5-alt1
+- v4.8.5
+- secured /proc/interrupts
 
-* Tue Nov 01 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.30-alt1
-- v4.4.30
+* Tue Oct 25 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.4-alt1
+- v4.8.4
 
-* Fri Oct 28 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.28-alt1
-- v4.4.28
+* Sat Oct 22 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.10-alt1
+- v4.7.10
 
-* Sat Oct 22 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.27-alt1
-- v4.4.27
+* Mon Oct 10 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.1-alt1
+- v4.8.1
 
-* Thu Oct 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.26-alt1
-- v4.4.26
+* Thu Oct 06 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.8.0-alt1
+- v4.8
+- gcc5 as kgcc
+- gcc plugin activated (uses gcc-c++, libgmp-devel, mpc-devel)
 
-* Mon Oct 17 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.25-alt1
-- v4.4.25
+* Fri Sep 30 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.6-alt1
+- v4.7.6
 
-* Sun Oct 09 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.24-alt1
-- v4.4.24
+* Sat Sep 24 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.5-alt1
+- v4.7.5
 
-* Fri Sep 30 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.23-alt1
-- v4.4.23
+* Thu Sep 15 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.4-alt1
+- v4.7.4
 
-* Sat Sep 24 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.22-alt1
-- v4.4.22
+* Wed Sep 07 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.3-alt1
+- v4.7.3
 
-* Thu Sep 15 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.21-alt1
-- v4.4.21
+* Sat Aug 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.2-alt1
+- v4.7.2
 
-* Wed Sep 07 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.20-alt1
-- v4.4.20
+* Thu Aug 18 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.1-alt1
+- v4.7.1
 
-* Sat Aug 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.19-alt1
-- v4.4.19
+* Wed Aug 17 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.6.7-alt1
+- v4.6.7
 
-* Wed Aug 17 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.18-alt1
-- v4.4.18
+* Mon Jul 25 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.0-alt1
+- v4.7
 
-* Mon Aug 15 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.17-alt1
-- v4.4.17
+* Mon Jul 11 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.6.4-alt1
+- v4.6.4
 
-* Thu Jul 28 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.16-alt1
-- v4.4.16
+* Sat Jun 25 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.6.3-alt1
+- v4.6.3
 
-* Mon Jul 11 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.15-alt1
-- v4.4.15
+* Fri Jun 10 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.6.2-alt1
+- 4.6.2
 
-* Sat Jun 25 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.14-alt1
-- v4.4.14
+* Wed Jun 08 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.5.7-alt1
+- v4.5.7
 
-* Wed Jun 08 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.13-alt1
-- v4.4.13
+* Thu May 19 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.6.0-alt1
+- 4.6.0
 
-* Thu Jun 02 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.12-alt1
-- v4.4.12
+* Thu May 12 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.5.4-alt1
+- 4.5.4
 
-* Mon May 23 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.11-alt1
-- v4.4.11
+* Fri May 06 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.5.3-alt1
+- 4.5.3
 
-* Thu May 12 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.10-alt1
-- 4.4.10
+* Wed Apr 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.5.2-alt1
+- 4.5.2
 
-* Wed May 11 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.9-alt1
-- 4.4.9
+* Wed Apr 13 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.5.1-alt1
+- 4.5.1
 
-* Wed Apr 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.8-alt1
-- 4.4.8
-- 4.4 as std-def
-
-* Wed Apr 13 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.1.21-alt1
-- 4.1.21
+* Tue Mar 15 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.5.0-alt1
+- 4.5
 
 * Thu Mar 10 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.5-alt1
 - 4.4.5
