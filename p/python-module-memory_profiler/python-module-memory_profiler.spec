@@ -2,7 +2,7 @@
 %def_with python3
 
 Name:    python-module-%modulename
-Version: 0.43
+Version: 0.44
 Release: alt1
 
 Summary: Monitor Memory usage of Python code
@@ -80,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 22 2017 Andrey Cherepanov <cas@altlinux.org> 0.44-alt1
+- New version
+
 * Fri Jan 13 2017 Andrey Cherepanov <cas@altlinux.org> 0.43-alt1
 - new version 0.43
 
