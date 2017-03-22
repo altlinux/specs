@@ -5,9 +5,10 @@
 %def_enable routes
 %def_enable libiptc
 %def_enable libipset
+%def_enable libnl
 
 Name: keepalived
-Version: 1.3.2
+Version: 1.3.5
 Release: alt1%ubt
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
@@ -25,7 +26,7 @@ BuildRequires(pre):rpm-build-ubt
 BuildRequires: libpopt-devel libssl-devel
 %{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
 %{?_enable_libipset:BuildRequires: libipset-devel}
-BuildRequires: pkgconfig(libnl-genl-3.0) pkgconfig(libnl-route-3.0)
+%{?_enable_libnl:BuildRequires: pkgconfig(libnl-genl-3.0) pkgconfig(libnl-route-3.0)}
 BuildRequires: libnfnetlink-devel
 %{?_enable_snmp:BuildRequires: libnet-snmp-devel}
 
@@ -42,7 +43,7 @@ userspace daemon for LVS cluster nodes healthchecks and LVS directors failover.
 
 %prep
 %setup -q
-%patch1 -p1
+#%patch1 -p1
 %patch2 -p1
 
 %build
@@ -55,7 +56,9 @@ userspace daemon for LVS cluster nodes healthchecks and LVS directors failover.
         %{subst_enable routes} \
         %{subst_enable libiptc} \
         %{subst_enable libipset} \
-        %{?_enable_snmp:--enable-snmp --enable-snmp-rfc}
+        %{subst_enable libnl} \
+        %{?_enable_snmp:--enable-snmp --enable-snmp-rfc} \
+        --with-init=systemd
 
 %make_build
 
@@ -97,6 +100,9 @@ install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfi
 %doc doc/samples
 
 %changelog
+* Wed Mar 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt1%ubt
+- 1.3.5
+
 * Wed Jan 11 2017 Anton Farygin <rider@altlinux.ru> 1.3.2-alt1%ubt
 - new version
 
