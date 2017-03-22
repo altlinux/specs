@@ -2,8 +2,8 @@
 %define module_version	2.12
 %define module_release	alt1
 
-%define flavour		std-pae
-BuildRequires(pre): kernel-headers-modules-std-pae
+%define flavour		un-def
+BuildRequires(pre): kernel-headers-modules-un-def
 BuildRequires(pre): rpm-build-kernel
 %setup_kernel_module %flavour
 
