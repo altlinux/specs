@@ -8,9 +8,10 @@ Summary(uk_UA.UTF8): Відкрита SCADA система
 Summary(de_DE.UTF8): Open SCADA-System
 Name: openscada
 Version: 0.8.17
-Release: alt1
+Release: alt2
 Source: openscada-%version.tar
 Source1: openscada-res.tar.lzma
+Source2: oscada_ALT.init
 License: GPLv2
 Group: Graphics
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -1162,8 +1163,7 @@ install -m 644 -pD data/oscada_start.xml %buildroot/%_sysconfdir/oscada_start.xm
 install -m 755 -pD data/openscada_start %buildroot/%_bindir/openscada_start
 install -m 644 -pD data/openscada.desktop %buildroot/%_desktopdir/openscada.desktop
 install -m 644 -pD data/openscada.png %buildroot/%_iconsdir/openscada.png
-install -m 755 -pD debian/openscada-server.init %buildroot/%_initdir/oscadad
-sed -i '/. \/lib\/init\/vars.sh/d' %buildroot/%_initdir/oscadad
+install -m 755 -pD %SOURCE2 %buildroot/%_initdir/oscadad
 echo "OpenSCADA data dir" > %buildroot/var/spool/openscada/DATA/.info
 install -m 644 data/icons/* %buildroot/var/spool/openscada/icons
 echo "OpenSCADA messages archive dir" > %buildroot/var/spool/openscada/ARCHIVES/MESS/.info
@@ -1528,6 +1528,9 @@ sed -i 's|/usr/lib|%_libdir|' %buildroot/%_sysconfdir/oscada*.xml
 
 
 %changelog
+* Thu Mar 23 2017 Anton Midyukov <antohami@altlinux.org> 0.8.17-alt2
+- Fix daemon oscadad.
+
 * Sat Mar 18 2017 Anton Midyukov <antohami@altlinux.org> 0.8.17-alt1
 - The build of 0.8.17 main update to the production release
 - Build with gcc5 (fix FTBFS).
