@@ -1,8 +1,8 @@
 %define pkgname raindrops
 
 Name: ruby-%pkgname 
-Version: 0.17.0
-Release: alt2
+Version: 0.18.0
+Release: alt1
 
 Summary: real-time stats for preforking Rack servers
 Group: Development/Ruby 
@@ -57,6 +57,9 @@ Documentation files for %name.
 %ruby_ri_sitedir/Raindrops*
 
 %changelog
+* Thu Mar 23 2017 Andrey Cherepanov <cas@altlinux.org> 0.18.0-alt1
+- New version
+
 * Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 0.17.0-alt2
 - Rebuild with new %%ruby_sitearchdir location
 
