@@ -5,7 +5,7 @@
 %define ver 6.2
 Name: %oname%ver
 Version: %ver.0
-Release: alt1
+Release: alt2
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -29,8 +29,8 @@ BuildPreReq: libxml2-devel libexpat-devel libftgl220-devel libpng-devel
 BuildPreReq: libtiff-devel zlib-devel libhdf5-devel libsqlite3-devel
 BuildPreReq: doxygen graphviz qt4-devel libgsl-devel
 BuildPreReq: libbfd-devel libnumpy-devel chrpath libopenmotif-devel
-BuildPreReq: libavcodec53 libgl2ps-devel
-BuildPreReq: python-devel libXxf86misc-devel libimlxx-devel libstlport-devel
+BuildPreReq: libavcodec56 libgl2ps-devel
+BuildPreReq: python-devel libXxf86misc-devel libimlxx-devel
 BuildPreReq: libdc1394-devel ffmpeg2theora libtheora-devel
 BuildPreReq: libgsm-devel libvorbis-devel libtag-devel
 BuildPreReq: libslurm-devel slurm-utils gnuplot
@@ -505,6 +505,9 @@ install -p -m644 Common/Core/vtkArrayIteratorIncludes.h \
 %python_sitelibdir/*/test
 
 %changelog
+* Thu Mar 23 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.2.0-alt2
+- NMU: fixed build
+
 * Fri Mar 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.2.0-alt1
 - Version 6.2.0
 
