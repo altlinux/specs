@@ -1,6 +1,6 @@
 Name: tinc
 Version: 1.0.31
-Release: alt1
+Release: alt2
 
 Summary: Virtual Private Network (VPN) daemon that uses tunnelling and encryption to create a secure private network between hosts on the Internet.
 Summary(ru_RU.UTF-8): Небольшой демон для создания шифрованных туннелей и частных виртуальных сетей между хостами в сети Интернет
@@ -19,12 +19,12 @@ Source3: %name.control
 
 PreReq(post,preun): chkconfig
 
-# Automatically added by buildreq on Wed Jul 13 2016
-# optimized out: makeinfo perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore pkg-config python-base python-modules python3 tetex-core tex-common texi2dvi
-BuildRequires: liblzo2-devel libpcap-devel libssl-devel libvde-devel tetex-latex zlib-devel
+# Automatically added by buildreq on Thu Mar 23 2017
+# optimized out: perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl pkg-config python-base python-modules python3 tex-common texlive-base texlive-common texlive-latex-base
+BuildRequires: liblzo2-devel libpcap-devel libssl-devel libvde-devel perl-unicore zlib-devel
 
-# explicitly added texinfo for info files
-BuildRequires: texinfo
+# For PDF docs generation
+BuildRequires: makeinfo texi2dvi texlive-base-bin
 
 %description
 %name is a Virtual Private Network (VPN) daemon that uses tunnelling
@@ -64,7 +64,7 @@ Runs on many operating systems and supports IPv6
 
 %prep
 %setup -n %name-%version
-#%%patch0 -p1
+%patch0 -p1
 
 %build
 %autoreconf
@@ -82,17 +82,16 @@ Runs on many operating systems and supports IPv6
 
 %make_build
 pushd doc
-%make pdf :||
+%make pdf
 popd
 
 %install
-%__mkdir_p %buildroot%_sysconfdir/%name/hosts
-%__mkdir_p %buildroot%_initdir
-%__mkdir_p %buildroot%_sysconfdir/sysconfig
 %make_install DESTDIR=%buildroot install
-%__install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
-%__install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
-%__install -pD -m755 %SOURCE3 %buildroot%_controldir/%name
+
+mkdir -p -- %buildroot%_sysconfdir/%name/hosts
+install -pD -m755 -- %SOURCE1 %buildroot%_initdir/%name
+install -pD -m644 -- %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
+install -pD -m755 -- %SOURCE3 %buildroot%_controldir/%name
 
 %pre
 %pre_control %name
@@ -124,6 +123,10 @@ popd
 %_unitdir/%{name}*.service
 
 %changelog
+* Thu Mar 23 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.0.31-alt2
+- Fix BuildRequires according to TeX policy
+- Cleanup spec file
+
 * Sat Mar 18 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.0.31-alt1
 - New version
 - Adding systemd unit files
