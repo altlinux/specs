@@ -1,5 +1,5 @@
 Name:           onboard
-Version:        1.3.0
+Version:        1.4.1
 Release:        alt1
 
 Summary:        Simple on-screen Keyboard
@@ -23,8 +23,11 @@ BuildRequires:  libhunspell-devel
 BuildRequires:  libxkbfile-devel
 BuildRequires:  python3-module-distutils-extra >= 2.12
 BuildRequires:  libappindicator-gtk3-gir-devel
+BuildRequires:  libudev-devel
 
 Requires:  python3-module-dbus
+
+%filter_from_requires /^python3(pypredict.lm)/d
 
 %description
 An on-screen keyboard useful on tablet PCs or for mobility impaired
@@ -71,7 +74,7 @@ rm -rf %buildroot%_iconsdir/ubuntu-mono-*
 %_bindir/%name-settings
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/*.gschema.xml
-%_xdgconfigdir/autostart/%name-autostart.desktop
+#_xdgconfigdir/autostart/%name-autostart.desktop
 %_desktopdir/%name.desktop
 %_desktopdir/%name-settings.desktop
 %_man1dir/%{name}*.1*
@@ -87,6 +90,9 @@ rm -rf %buildroot%_iconsdir/ubuntu-mono-*
 %_datadir/gnome-shell/extensions/Onboard_Indicator@onboard.org
 
 %changelog
+* Thu Mar 23 2017 Andrey Cherepanov <cas@altlinux.org> 1.4.1-alt1
+- New version
+
 * Sun Sep 18 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.0-alt1
 - New version
 
