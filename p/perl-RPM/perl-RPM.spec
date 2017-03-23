@@ -1,8 +1,8 @@
-%def_with rpm413
+%def_without rpmdatabase
 %define dist Perl-RPM
 Name: perl-RPM
 Version: 1.51
-Release: alt2.1
+Release: alt3
 
 Summary: Native bindings to the RPM Package Manager API
 License: Artistic
@@ -10,8 +10,8 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version-%release.tar
-%if_with rpm413
-Patch: rpm413.diff
+%if_without rpmdatabase
+Patch: 03-db.patch
 %endif
 
 # google "assert.h breaks perl.h"
@@ -30,10 +30,10 @@ been done in C or C++.
 
 %prep
 %setup -q -n %dist-%version-%release
-%if_with rpm413
+%if_without rpmdatabase
 %patch -p1
 rm \
-t/01_database.t t/02_headers.t t/03_errors.t t/09_leaks.t
+t/01_database.t t/02_headers_db.t t/03_errors.t t/09_leaks.t
 %endif
 
 %build
@@ -44,7 +44,7 @@ t/01_database.t t/02_headers.t t/03_errors.t t/09_leaks.t
 
 %files
 %doc ChangeLog README
-%if_with rpm413
+%if_without rpmdatabase
 %exclude %_bindir/rpmprune
 %else
 %_bindir/rpmprune
@@ -53,6 +53,9 @@ t/01_database.t t/02_headers.t t/03_errors.t t/09_leaks.t
 %perl_vendor_autolib/RPM*
 
 %changelog
+* Thu Mar 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.51-alt3
+- rpm413 base support (constants and headers)
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.51-alt2.1
 - rebuild with new perl 5.24.1
 
