@@ -1,5 +1,5 @@
 Name: help2man
-Version: 1.47.3
+Version: 1.47.4
 Release: alt1
 
 Summary: help2man creates simple man pages from the output of programs
@@ -12,7 +12,7 @@ Url: http://www.gnu.org/software/help2man/
 # NLS support makes whole package arch-specific.
 %{?!_enable_nls:BuildArch: noarch}
 
-# ftp://ftp.gnu.org/gnu/help2man/%name-%version.tar.gz
+# ftp://ftp.gnu.org/gnu/help2man/%name-%version.tar.xz
 Source: help2man-%version.tar
 Patch: help2man-1.40.4-alt-runas.patch
 
@@ -62,6 +62,9 @@ sed -i '1i .\\" -*- mode: troff; coding: utf8 -*-' help2man.*.1
 %doc ChangeLog NEWS README* THANKS help2man.h2m
 
 %changelog
+* Thu Mar 23 2017 Dmitry V. Levin <ldv@altlinux.org> 1.47.4-alt1
+- 1.47.3 -> 1.47.4.
+
 * Wed Dec 02 2015 Dmitry V. Levin <ldv@altlinux.org> 1.47.3-alt1
 - Updated to 1.47.3.
 
