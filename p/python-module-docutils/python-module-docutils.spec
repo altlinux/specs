@@ -4,7 +4,7 @@
 
 Summary: Docutils -- Python Documentation Utilities
 Version: 0.13.1
-Release: alt1
+Release: alt2
 %setup_python_module %oname
 Name: %packagename
 # git://repo.or.cz/docutils.git
@@ -15,6 +15,8 @@ BuildArch: noarch
 URL: http://docutils.sourceforge.net/
 Packager: Python Development Team <python@packages.altlinux.org>
 Conflicts: Zope-docutils
+Patch: docutils-ALT-disable_assert.patch
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python-tools-2to3
@@ -55,6 +57,8 @@ This package contains tests for Docutils.
 
 %prep
 %setup -q -n %{oname}-%{version}
+%patch -p2
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -122,6 +126,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 23 2017 Fr. Br. George <george@altlinux.ru> 0.13.1-alt2
+- Comment out buggy assertion again
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt1
 - automated PyPI update
 
