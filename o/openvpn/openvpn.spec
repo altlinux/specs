@@ -14,7 +14,7 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
@@ -138,9 +138,12 @@ cp -- %SOURCE9 client.conf
 %build
 %autoreconf
 
-# Systemd password request utility:
+# Systemd password request utility and systemd directories:
 %if_with systemd
 export SYSTEMD_ASK_PASSWORD=/sbin/systemd-ask-password
+export TMPFILES_DIR=%_tmpfilesdir
+export SYSTEMD_UNIT_DIR=%_unitdir
+cp -f -- %SOURCE10 distro/systemd/tmpfiles-openvpn.conf
 %endif
 
 %configure \
@@ -193,6 +196,9 @@ popd
 # Removing automatically installed docs
 rm -rf -- %buildroot%_datadir/doc/%name
 
+# Gzip ChangeLog
+gzip ChangeLog
+
 # Configuration
 install -m 0750 -d -- %buildroot%_sysconfdir/%name
 install -m 0750 -d -- %buildroot%_sysconfdir/%name/keys
@@ -215,11 +221,6 @@ mkdir -p -- %buildroot/%_sysconfdir/sysconfig
 install -m 0755 -- %SOURCE1 %buildroot%_initdir/%name
 install -m 0750 -- %SOURCE2 %buildroot%_sysconfdir/%name
 install -m 0640 -- %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
-%if_with systemd
-mkdir -p -- %buildroot%_unitdir
-install -m 0644 -- distro/systemd/%name-client\@.service %buildroot%_unitdir/%name-client\@.service
-install -m 0644 -- distro/systemd/%name-server\@.service %buildroot%_unitdir/%name-server\@.service
-%endif
 
 # update_chrooted files
 install -p -m 0750 -D -- %SOURCE4 %buildroot%_sysconfdir/chroot.d/%name.lib
@@ -249,12 +250,6 @@ mkdir -p -- %buildroot%openvpn_root/dev
 mkdir -p -m700 -- %buildroot%_sysconfdir/syslog.d
 ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 
-# PID directory for systemd units
-%if_with systemd
-  mkdir -p -- %buildroot%_tmpfilesdir/
-  install -m 0644 -- %SOURCE10 %buildroot%_tmpfilesdir/%name.conf
-%endif
-
 %pre
 # Add the "openvpn" user
 %_sbindir/groupadd -r -f %ovpn_group 2>/dev/null ||:
@@ -270,7 +265,7 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 
 
 %files
-%doc AUTHORS CONTRIBUTING.rst ChangeLog PORTS README COPYING
+%doc AUTHORS CONTRIBUTING.rst ChangeLog.gz PORTS README COPYING
 %doc README.IPv6 TODO.IPv6
 %doc --no-dereference COPYRIGHT.GPL
 %doc README.ALT.utf-8 server.conf client.conf
@@ -333,6 +328,9 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %changelog
+* Thu Mar 23 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.4.1-alt1
+- New version
+
 * Sun Feb 19 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.4.0-alt1
 - New version
 - Adding /dev/urandom into chroot (Closes: 32840)
