@@ -1,7 +1,7 @@
 %define oname userspace-rcu
 Name: libuserspace-rcu
 Version: 0.9.3
-Release: alt1
+Release: alt2
 
 Summary: RCU (read-copy-update) implementation in user space
 
@@ -61,6 +61,15 @@ developing applications that use %name.
 %install
 %makeinstall_std
 
+# Relocate shared libraries from %_libdir/ to /%_lib/.
+mkdir -p %buildroot/%_lib
+for f in %buildroot%_libdir/*.so; do
+t=$(readlink -v "$f")
+ln -snf ../../%_lib/"$t" "$f"
+done
+mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
+
+
 rm -vf %buildroot/%_libdir/*.la
 rm -rf %buildroot/%_docdir/%oname/
 
@@ -71,7 +80,7 @@ cd doc/examples && make clean
 #make check
 
 %files
-%_libdir/liburcu*.so.*
+/%_lib/liburcu*.so.*
 
 %files devel
 %doc README.md doc/*.md doc/examples/
@@ -81,6 +90,9 @@ cd doc/examples && make clean
 %_pkgconfigdir/liburcu*.pc
 
 %changelog
+* Thu Mar 23 2017 Alexey Shabalin <shaba@altlinux.ru> 0.9.3-alt2
+- Relocate shared libraries from %_libdir/ to /%_lib/.
+
 * Mon Jan 02 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt1
 - new version 0.9.3 (with rpmrb script)
 
