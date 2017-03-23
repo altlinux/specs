@@ -6,7 +6,7 @@
 %add_findreq_skiplist %_K4apps/%rname/scripts/*.py
 
 Name: kde5-%rname
-Version: 1.0.4
+Version: 1.1.1
 Release: alt1%ubt
 %K5init
 
@@ -40,13 +40,17 @@ in the application launcher (which will open Dolphin with the `gdrive:/` URL) or
 
 %install
 %K5install
+%K5install_move data remoteview
 %find_lang --with-kde --all-name %rname
 
 %files -f %rname.lang
-%_K5xdgapp/org.kde.kio-gdrive.desktop
-%_K5plug/kf5/kio/gdrive.so
+%_K5data/remoteview/*gdrive*.desktop
+%_K5plug/kf5/kio/*gdrive*.so
 
 %changelog
+* Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt1%ubt
+- new version
+
 * Mon Jan 09 2017 Sergey V Turchin <zerg@altlinux.org> 1.0.4-alt1%ubt
 - new version
 
