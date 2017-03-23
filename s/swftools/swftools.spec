@@ -1,6 +1,6 @@
 Name: swftools
 Version: 0.9.2
-Release: alt2
+Release: alt3
 
 Summary: A collection of SWF manipulation and generation utilities
 License: GPL
@@ -23,6 +23,12 @@ Summary(ru_RU.UTF-8): набор программ для работы с фай�
 SWF Tools is a collection of SWF manipulation and generation utilities
 
 Included are:
+
+ PDF2SWF A PDF to SWF Converter. Generates one frame per page. Enables
+ you to have fully formatted text, including tables, formulas etc.
+ inside your Flash Movie. Uses the xpdf PDF parser from Derek B.
+ Noonburg and the tt2pt1 font converter developed by the TTF2PT1 Project
+ and its contributors.
 
  SWFCombine A tool for inserting SWFs into Wrapper SWFs. (Templates)
  E.g. for including the pdf2swf SWFs in some sort of Browsing-SWF.
@@ -55,6 +61,11 @@ SWF Tools -- это набор программ для работы с файл�
 
 В пакет включены:
 
+PDF2SWF --- преобразователь PDF в SWF. Работает по принципу
+1 страница = 1 кадр. Позволяет вставлять в файл SWF
+отформатированный текст, таблицы, формулы и т.д. Используется
+парсер PDF из xpdf и преобразователь шрифтов tt2pt1.
+
 SWFCombine --- это инструмент для вставки файлов SWF в Wrapper SWFs.
 Например, можно создавать "интерактивные" SWF через pdf2swf.
 
@@ -85,7 +96,7 @@ FreeBSD и MacOS X.
 
 %prep
 %setup
-%patch0 -p1
+#%patch0 -p1
 %patch1 -p1
 
 %build
@@ -107,6 +118,9 @@ cd %buildroot%_datadir/%name/swfs
 %doc AUTHORS ChangeLog doc/*
 
 %changelog
+* Thu Mar 23 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 0.9.2-alt3
+- build with pdf2swf
+
 * Thu Feb 11 2016 Michael Shigorin <mike@altlinux.org> 0.9.2-alt2
 - dropped pdf2swf from package description (ALT#31773)
 
