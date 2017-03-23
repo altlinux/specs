@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.3.28
+Version: 1.3.29
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -30,6 +30,8 @@ Requires: hasher-priv >= 0:1.3.3
 Requires: mktemp >= 1:1.3.1
 # first libshell version with fixed shell-quote
 Requires: libshell >= 0:0.0.2-alt4
+# due to def_cache_compress
+Requires: lz4
 
 Obsoletes: pkg-build-utils, libbte
 
@@ -56,6 +58,11 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Wed Mar 22 2017 Dmitry V. Levin <ldv@altlinux.org> 1.3.29-alt1
+- hsh-sh-cache-chroot-functions: parametrized cache compressor,
+  changed default cache compressor from lzop to lz4.
+- hsh, hsh-initroot: added --cache-compress option.
+
 * Wed Feb 17 2016 Dmitry V. Levin <ldv@altlinux.org> 1.3.28-alt1
 - hsh-initroot: prepare /sys/fs/cgroup mountpoint.
 - hsh-rebuild --query-repackage: install BuildRequires(pre)
