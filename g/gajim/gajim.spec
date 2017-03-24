@@ -1,6 +1,6 @@
 Name: gajim
 Version: 0.16.7
-Release: alt2
+Release: alt3
 
 Summary: a Jabber client written in PyGTK
 License: GPLv3
@@ -12,27 +12,11 @@ AutoReqProv: yes, noshell
 
 Source: %url/downloads/%name-%version.tar.bz2
 
-Patch1: gajim-alt-dont_install_docdata.patch
-Patch2: gajim-alt-package-names.patch
-Patch3: gajim-alt-ru-po.patch
-Patch5: gajim-alt-tmpfile.patch
+Requires: libgtk+2-gir-devel
 
-Patch10: gajim-alt-PassphraseDialog-cancel.patch
-Patch11: gajim-alt-sequential-dialogues.patch
-
-%add_python_compile_include %_datadir/%name/src
-
-%py_requires dbus sqlite3 libglade OpenSSL libasyncns pyasn crypto pycurl GnuPGInterface zeroconf
-
-
-# Automatically added by buildreq on Sat Apr 03 2010 (-bi)
-BuildRequires: imake intltool libgtk+2-devel python-module-pygtk-devel python-modules-encodings xorg-cf-files
-BuildRequires: libfarstream0.2-devel gst-plugins-bad1.0-devel libnice-devel libgupnp-igd-devel rpm-build-python
-
-BuildRequires: python-module-libgupnp-igd python-module-gst1.0
-# python-module-crypto python-module-dbus python-module-pycurl python-module-libasyncns
-
-
+BuildRequires: rpm-build-gir
+BuildRequires: intltool libgtk+2-devel python-module-pygtk-devel python-modules-encodings xorg-cf-files
+BuildRequires: libfarstream0.2-devel gst-plugins-bad1.0-devel libnice-devel libgupnp-igd-devel
 
 BuildArch: noarch
 
@@ -43,23 +27,14 @@ users. Gajim does not require GNOME to run, eventhough it exists with
 it nicely.
 
 %prep
-%setup -q -n %name-%version
-#patch1 -p2
-#patch2 -p2
-#patch3 -p2
-#patch5 -p2
-
-#patch10 -p2
-#patch11 -p2
+%setup -n %name-%version
 
 %build
 %configure --enable-remote
 
 %install
-%make PREFIX=%prefix LIBDIR=/%_lib DESTDIR=%buildroot install
+%makeinstall_std
 %find_lang %name
-
-rm %buildroot%_datadir/%name/scripts/dev -rf
 
 
 %files -f %name.lang
@@ -70,11 +45,15 @@ rm %buildroot%_datadir/%name/scripts/dev -rf
 %_man1dir/*
 %_datadir/%name
 %_desktopdir/%name.desktop
+%_desktopdir/%name-remote.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/64x64/apps/%name.png
 %_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Fri Mar 24 2017 Ilya Mashkin <oddity@altlinux.ru> 0.16.7-alt3
+- spec cleanup, updated buildreqs (thanks to Yuri Sedunov)
+
 * Tue Mar 14 2017 Ilya Mashkin <oddity@altlinux.ru> 0.16.7-alt2
 - Much more requires added
 
@@ -99,7 +78,7 @@ rm %buildroot%_datadir/%name/scripts/dev -rf
 * Fri Jul 04 2014 Ilya Mashkin <oddity@altlinux.ru> 0.16-alt0.2
 - 0.16 rc2
 
-* Tue Apr 17 2014 Ilya Mashkin <oddity@altlinux.ru> 0.16-alt0.1
+* Thu Apr 17 2014 Ilya Mashkin <oddity@altlinux.ru> 0.16-alt0.1
 - 0.16 rc1
 - drop patches
 
