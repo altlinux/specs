@@ -5,7 +5,7 @@
 Name: plplot
 %define fmoddir %_libdir/fortran/modules/%name
 Version: 5.11.1
-Release: alt1
+Release: alt1.qa1
 Summary: Scientific graphics plotting library, supporting multiple languages
 License: LGPL v2 or later
 Group: Graphics
@@ -621,6 +621,9 @@ cp -fR doc/doxygen/html doxygen
 %_pkgconfigdir/plplot-wxwidgets.pc
 
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.11.1-alt1.qa1
+- NMU: rebuilt against Tcl/Tk 8.6
+
 * Wed Feb 15 2017 Igor Vlasenko <viy@altlinux.ru> 5.11.1-alt1
 - NMU: fixed build by updating to 5.11.1
 - note: it is not a proper build.

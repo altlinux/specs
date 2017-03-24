@@ -1,10 +1,10 @@
-%define major 8.5
+%define major 8.6
 
 %add_tcl_req_skip ttk::theme::default
 
 Name: tk
-Version: 8.5.9
-Release: alt3
+Version: 8.6.6
+Release: alt1
 
 Summary: A Tk toolkit fot Tcl scripting language
 License: BSD
@@ -111,6 +111,7 @@ install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 %files devel
 %docdir/ChangeLog.*
 %_includedir/*
+%_pkgconfigdir/%name.pc
 %_libdir/lib%name.so
 %_libdir/lib%{name}stub%{major}.a
 %_libdir/%{name}Config.sh
@@ -121,6 +122,9 @@ install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 %_tcldatadir/%name%major/demos
 
 %changelog
+* Mon Mar 20 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.6-alt1
+- 8.6.6 released
+
 * Tue Jun 14 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.5.9-alt3
 - drop handmade reqs found in devel subpackage, we have cpp.req for that
 

@@ -1,6 +1,6 @@
 Name: uudeview
 Version: 0.5.20
-Release: alt8
+Release: alt8.qa1
 
 Summary: smart uuenc/xxenc/base64 encoder/decoder
 License: GPL
@@ -103,6 +103,9 @@ mkdir -p %buildroot%_datadir/doc/%name-%version
 %doc doc/library.ps doc/library.dvi doc/library.ltx doc/library.pdf
 
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.5.20-alt8.qa1
+- NMU: rebuild against Tcl/Tk 8.6
+
 * Sat Mar 08 2014 Michael Shigorin <mike@altlinux.org> 0.5.20-alt8
 - tweaked libuu summary line (closes: #27441)
 

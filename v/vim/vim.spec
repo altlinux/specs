@@ -53,7 +53,7 @@
 Name: vim
 %define branch 8.0
 Version: %branch.381
-Release: alt1
+Release: alt1.qa1
 Epoch: 4
 
 Summary: VIsual editor iMproved
@@ -1064,6 +1064,9 @@ fi
 
 # {{{ changelog
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 4:8.0.381-alt1.qa1
+- NMU: rebuild against Tcl/Tk 8.6
+
 * Mon Feb 27 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.0.381-alt1
 - Updated to v8.0.0381.
 

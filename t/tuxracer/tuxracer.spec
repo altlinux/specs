@@ -1,6 +1,6 @@
 Name: tuxracer
 Version: 0.61
-Release: alt13.qa1
+Release: alt13.qa2
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -92,6 +92,9 @@ install -pD -m644 %SOURCE5 %buildroot%_desktopdir/tuxracer.desktop
 %_gamesdatadir/tuxracer/
 
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.61-alt13.qa2
+- NMU: rebuilt against Tcl/Tk 8.6.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.61-alt13.qa1
 - NMU: rebuilt for debuginfo.
 

@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt5.git20150829
+Release: alt6.git20150829
 
 Summary: Matlab(TM) style python plotting package
 
@@ -85,6 +85,9 @@ Requires: python3-module-%oname-gtk3 = %version-%release
 %add_python3_req_skip AppKit Foundation PyObjCTools numarray paint _Py
 %add_python3_req_skip _winreg builtins distutils
 %py3_provides backend_agg backend_cairo
+%py3_provides matplotlib.externals.six.moves
+%py3_provides matplotlib.externals.six.moves.urllib.parse
+%py3_provides matplotlib.externals.six.moves.urllib.request
 
 %description -n python3-module-%oname
 matplotlib is a pure python 2D plotting library with a Matlab(TM)
@@ -164,6 +167,7 @@ ex backend for %oname.
 Summary: tk backend for %oname (Python 3)
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
+%py3_provides matplotlib.backends.windowing
 
 %description -n python3-module-%oname-tk
 tk backend for %oname.
@@ -368,7 +372,7 @@ pushd ../python3
 #do
 #	sed -i 's|\(include.*numpy\)/|\1-py3/|' $i
 #done
-sed -i 's|^\(gtkagg\).*|\1 = False|' setup.cfg
+#sed -i 's|^\(gtkagg\).*|\1 = False|' setup.cfg
 sed -i 's|^\(gtk3agg\).*|\1 = False|' setup.cfg
 sed -i 's|^\(tkagg\).*|\1 = False|' setup.cfg
 sed -i 's|^\(wxagg\).*|\1 = False|' setup.cfg
@@ -377,6 +381,8 @@ export CC=g++
 popd
 %endif
 
+sed -i 's|^\(gtk3agg\).*|\1 = False|' setup.cfg
+sed -i 's|^\(wxagg\).*|\1 = False|' setup.cfg
 %python_build_debug
 
 %install
@@ -716,6 +722,11 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Mon Mar 27 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.5.0-alt6.git20150829
+- Rebuilt against Tcl/Tk 8.6
+- Added missing provides
+- Fixed build
+
 * Sat May 28 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt5.git20150829
 - NMU: rebuild with python-module-xlwt
 

@@ -3,7 +3,7 @@
 
 Name: sK1
 Version: 0.9.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: Vector graphics editor
 
@@ -71,6 +71,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %_pixmapsdir/*
 
 %changelog
+* Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.3-alt1.qa1
+- Rebuilt against Tcl/Tk 8.6
+
 * Sat Mar 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt1
 - Version 0.9.3 (ALT #15513)
 

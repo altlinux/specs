@@ -2,7 +2,7 @@
 
 Name: ocaml4-%_name
 Version: 8.06.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: Tcl/Tk interface for OCaml
 Group: Development/ML
@@ -82,6 +82,9 @@ make install \
 %_bindir/ocamlbrowser
 
 %changelog
+* Thu Mar 23 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.06.1-alt1.qa1
+- NMU: rebuilt against Tcl/Tk 8.6.
+
 * Sun Jun 19 2016 Andrey Bergman <vkni@altlinux.org> 8.06.1-alt1
 - Version update.
 

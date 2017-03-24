@@ -17,7 +17,7 @@
 
 Name: %prog_name%postgresql_major.%postgresql_minor
 Version: %postgresql_major.%postgresql_minor.%postgresql_subminor
-Release: alt%postgresql_altrel
+Release: alt%postgresql_altrel.qa1
 
 %define PGSQL pgsql
 %define ROOT %_localstatedir/%PGSQL-root
@@ -783,6 +783,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 9.6.2-alt1.qa1
+- NMU: rebuild against Tcl/Tk 8.6
+
 * Sun Feb 12 2017 Alexei Takaseev <taf@altlinux.org> 9.6.2-alt1
 - 9.6.2
 

@@ -1,6 +1,6 @@
 Name: barnyard2
 Version: 2.1.13
-Release: alt4
+Release: alt4.qa1
 
 Summary: Snort Log Backend
 License: GPLv2
@@ -83,6 +83,9 @@ install -Dpm 644 schemas/create_mysql %buildroot%_datadir/%name/schemas/create_m
 %_datadir/%name/schemas/create_mysql
 
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.1.13-alt4.qa1
+- Rebuilt against Tcl/Tk 8.6
+
 * Fri Jan 23 2015 Andriy Stepanov <stanv@altlinux.ru> 2.1.13-alt4
 - Upstream commit ce3c0228, fixed: incorrect padding in sguild for
 events without packets

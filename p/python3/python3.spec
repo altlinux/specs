@@ -75,7 +75,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %{pybasever}.1
-Release: alt7
+Release: alt7.qa1
 License: Python
 Group: Development/Python3
 
@@ -1178,6 +1178,9 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %tool_dir/scripts/run_tests.py
 
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.5.1-alt7.qa1
+- NMU: rebuilt against Tcl/Tk 8.6.
+
 * Thu May  5 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.1-alt7
 - python3-modules-tkinter: Requires: tk (ALT#29206)
 

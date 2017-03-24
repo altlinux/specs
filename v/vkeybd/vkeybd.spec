@@ -2,7 +2,7 @@
 
 Name: vkeybd
 Version: 0.1.18c
-Release: alt1.qa1
+Release: alt1.qa2
 Epoch: 1
 
 Summary: Virtual keyboard for MIDI and ALSA drivers
@@ -72,6 +72,9 @@ Vkeybd — это виртуальная клавиатура для MIDI- и AL
 %doc README
 
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:0.1.18c-alt1.qa2
+- NMU: rebuilt against Tcl/Tk 8.6.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:0.1.18c-alt1.qa1
 - NMU: rebuilt for debuginfo.
 

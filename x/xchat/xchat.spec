@@ -2,7 +2,7 @@
 
 Name: xchat
 Version: %ver_major.6
-Release: alt4.1.1.1
+Release: alt4.2
 
 Summary: Graphical IRC client
 Summary(ru_RU.UTF-8): Графический IRC клиент
@@ -115,6 +115,9 @@ cp -a %SOURCE9 ./README.ALT.utf-8
 %xchatpluginsdir/*.so
 
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.8.6-alt4.2
+- rebuilt against Tcl/Tk 8.6
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.8.6-alt4.1.1.1
 - rebuild with new perl 5.24.1
 

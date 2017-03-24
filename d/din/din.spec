@@ -1,10 +1,11 @@
 Name: din
 Version: 5.2.1
-Release: alt1.1
+Release: alt2
 License: GPLv2
 Summary: Edit waveforms in a GUI, and watch the sound change before your ears
 Group: Sound
 Source: %name-%version.tar.gz
+Patch1: din-5.2.1-alt-ftbfs.patch
 Url: http://dinisnoise.org/
 
 # Automatically added by buildreq on Sun Sep 09 2012
@@ -32,7 +33,10 @@ Collaboration? MIDI. OSC. IRC.
 
 %prep
 %setup
+%patch1 -p2
 sed -i 's@\[tcl8\.5/tcl\.h\]@@' configure.ac
+sed -i 's@tcl8\.5@tcl8.6@g' src/Makefile.in
+sed -i 's@tcl8\.5@tcl8.6@g' src/Makefile.am
 sed -i 's@/usr/local@/usr@g' data/checkdotdin
 
 %build
@@ -57,6 +61,10 @@ done
 %_pixmapsdir/*
 
 %changelog
+* Sat Mar 25 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.2.1-alt2
+- Rebuilt against Tcl/Tk 8.6
+- Fixed FTBFS
+
 * Thu Jun 20 2013 Andrey Cherepanov <cas@altlinux.org> 5.2.1-alt1.1
 - Rebuild with new version liblo
 

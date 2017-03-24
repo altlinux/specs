@@ -1,13 +1,11 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev.git20150323.qa1.1
 %set_automake_version 1.11
 
-%define mpiimpl openmpi
+%define mpiimpl openmpi-compat
 %define mpidir %_libdir/%mpiimpl
 
 Name: ngsolve
 Version: 6.1
-#Release: alt1.dev.git20150323.qa1
+Release: alt1.dev.git20150323.qa1.2
 Summary: NGSolve Finite Element Library
 License: GPL or LGPL
 Group: Sciences/Mathematics
@@ -22,6 +20,7 @@ BuildPreReq: libmumps-devel liblapack-devel libsuperlu-devel chrpath
 BuildPreReq: libscotch-devel libparmetis-devel python-devel
 BuildPreReq: libgomp-devel boost-python-devel
 BuildPreReq: doxygen texlive-latex-recommended
+BuildPreReq: libnuma-devel
 
 %description
 NGSolve is a general purpose Finite Element Library on top of Netgen.
@@ -182,6 +181,12 @@ ln -s %_libdir/ngslib.so %buildroot%python_sitelibdir/
 %python_sitelibdir/*
 
 %changelog
+* Sat Mar 25 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.1-alt1.dev.git20150323.qa1.2
+- Rebuilt against Tcl/Tk 8.6
+- Fixed build:
+  + BR: openmpi-devel -> openmpi-compat-devel
+  + BR: + libnuma-devel
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 6.1-alt1.dev.git20150323.qa1.1
 - (AUTO) subst_x86_64.
 

@@ -1,6 +1,6 @@
 Name: opencascade
 Version: 6.8.0
-Release: alt1
+Release: alt1.qa1
 Summary: Development platform for 3D modeling and numerical simulation
 License: BSD-like
 Group: Development/Tools
@@ -174,6 +174,9 @@ mv %buildroot%prefix/*.sh %buildroot%_bindir/
 %_datadir/%name/src
 
 %changelog
+* Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.8.0-alt1.qa1
+- Rebuilt against Tcl/Tk 8.6
+
 * Fri Mar 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.8.0-alt1
 - Version 6.8.0
 

@@ -1,7 +1,7 @@
 %define _name findlib
 Name: ocaml4-%_name
 Version: 1.6.2
-Release: alt1
+Release: alt2
 
 Summary: A module packaging tool for OCaml
 License: Distributable
@@ -9,7 +9,7 @@ Group: Development/ML
 Url: http://www.ocaml-programming.de/packages/documentation/findlib/
 
 Source: %_name-%version.tar
-Patch1: findlib-1.1.2pl1-alt-native.patch
+Patch1: findlib-1.6.2-alt-native.patch
 Patch2: findlib-1.1.2pl1-alt-wizard.patch
 Patch3: findlib-1.6.2-alt-install-doc.patch
 
@@ -98,6 +98,10 @@ rm -f %buildroot%_libdir/ocaml/site-lib/findlib/*.cmxs
 %doc doc/* LICENSE
 
 %changelog
+* Thu Mar 23 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.6.2-alt2
+- NMU: rebuilt against Tcl/Tk 8.6
+- fixed patch to build against Tcl/Tk 8.6
+
 * Sat Jun 18 2016 Andrey Bergman <vkni@altlinux.org> 1.6.2-alt1
 - 1.6.2
 

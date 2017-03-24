@@ -6,7 +6,7 @@
 
 Name: setools
 Version: %setools_maj_ver.%setools_min_ver
-Release: alt6
+Release: alt6.qa1
 License: %gpl2plus
 URL: http://oss.tresys.com/projects/setools
 Source: %name-%version.tar
@@ -343,6 +343,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/applications/*
 
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.3.8-alt6.qa1
+- NMU: rebuild against Tcl/Tk 8.6
+
 * Sat Oct 29 2016 Anton Farygin <rider@altlinux.ru> 3.3.8-alt6
 - rebuild with new libsepol 2.5
 

@@ -13,7 +13,7 @@ Name: ruby
 %define ver_teeny 1
 #define _pl
 Version: %branch.%ver_teeny
-Release: alt2
+Release: alt2.qa1
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -354,6 +354,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/site_ruby/%version%
 
 
 %changelog
+* Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3.1-alt2.qa1
+- Rebuilt against Tcl/Tk 8.6
+
 * Tue Mar 07 2017 Denis Medvedev <nbr@altlinux.org> 2.3.1-alt2
 - Fix ruby library path
 

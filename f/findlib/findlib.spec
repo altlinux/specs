@@ -1,6 +1,6 @@
 Name: findlib
 Version: 1.2.7
-Release: alt1
+Release: alt2
 Packager: Alex V. Myltsev <avm@altlinux.ru>
 
 Summary: A module packaging tool for OCaml
@@ -11,6 +11,7 @@ Url: http://www.ocaml-programming.de/packages/documentation/findlib/
 Source: http://www.ocaml-programming.de/packages/%name-%version.tar.gz
 Patch1: findlib-1.1.2pl1-alt-native.patch
 Patch2: findlib-1.1.2pl1-alt-wizard.patch
+Patch3: findlib-1.2.7-alt-tcltk8.6.patch
 
 # Automatically added by buildreq on Tue Apr 08 2008 (-bi)
 BuildRequires: camlp4 labltk libtinfo-devel ocamldoc
@@ -55,6 +56,7 @@ findlib-enabled Makefiles.
 %setup -q
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 
 sed -i -e 's,@LIBDIR@,%_libdir,g' src/findlib-toolbox/make_wizard.ml
 
@@ -92,6 +94,9 @@ install -m755 src/findlib-toolbox/make_wizard.opt %buildroot%_bindir/findlib-mak
 %doc doc/* LICENSE
 
 %changelog
+* Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.2.7-alt2
+- added patch to rebuilt against Tcl/Tk 8.6
+
 * Tue Dec 20 2011 Alexey Shabalin <shaba@altlinux.ru> 1.2.7-alt1
 - 1.2.7
 

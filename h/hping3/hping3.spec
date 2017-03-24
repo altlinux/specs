@@ -2,7 +2,7 @@
 
 Name: hping3
 Version: 0.0.%snap
-Release: alt5.qa1
+Release: alt5.qa2
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -53,6 +53,9 @@ install -pD -m644 docs/hping3.8 %buildroot%_man8dir/hping3.8
 %doc docs/A* docs/HPING2-HOWTO.txt docs/[M-Z]* docs/hping2rc.example
 
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.0.20051105-alt5.qa2
+- NMU: rebuild against Tcl/Tk 8.6
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.20051105-alt5.qa1
 - NMU: rebuilt for debuginfo.
 

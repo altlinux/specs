@@ -9,7 +9,7 @@
 
 Name: ocaml
 Version: 3.12.1
-Release: alt3
+Release: alt4
 
 Summary: The Objective Caml compiler and programming environment
 License: QPL & LGPL
@@ -34,6 +34,7 @@ Patch6: ocaml-3.12.1-alt-mk-odoc_info-toplevellib_cmxa.patch
 Patch7: ocaml-3.12.0-rpath.patch
 Patch8: ocaml-3.12.1-deb-ocamlopt-arm-add-.type-directive-for-code-symbols.patch
 Patch9: ocaml-3.12.1-alt-arm.patch
+Patch10: ocaml-3.12.1-alt-tcltk8.6.patch
 
 Requires: rpm-build-ocaml >= 1.1
 BuildPreReq: rpm-build-ocaml >= 1.1
@@ -206,6 +207,7 @@ with Objective Caml" O'Reilly book translation.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 # grrr ...
 #%__cat <<EOF |ed - emacs/Makefile
@@ -218,6 +220,7 @@ cp %SOURCE4 ./
 cp %SOURCE2   ./ocaml-refman.pdf
 
 %build
+%add_optflags -DUSE_INTERP_RESULT
 
 sed -i 's@/usr/X11R6/lib\>@%_x11libdir@g' configure
 
@@ -357,6 +360,9 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %doc htmlman/* ocamldoc/stdlib.pdf ocaml-refman.pdf ocaml-ora-book.pdf
 
 %changelog
+* Thu Mar 23 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.12.1-alt4
+- NMU: adopted and rebuilt against Tcl/Tk 8.6
+
 * Wed Feb 12 2014 Led <led@altlinux.ru> 3.12.1-alt3
 - fixed build native libs for arm arches
 

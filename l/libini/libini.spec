@@ -1,7 +1,7 @@
 
 Name:           libini
 Version:        1.1.10
-Release:        alt1
+Release:        alt1.qa1
 
 Summary:        INI file parser library
 License:        GPL
@@ -56,6 +56,9 @@ chrpath -d %buildroot%_libdir/libtclini.so.1.0.10
 %_libdir/*.so
 
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.10-alt1.qa1
+- NMU: rebuild against Tcl/Tk 8.6
+
 * Mon Oct 07 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.10-alt1
 - Initial build in Sisyphus
 
