@@ -3,9 +3,12 @@
 
 %def_without python3
 
+%define gcc_ver 4.9
+%set_gcc_version %gcc_ver
+
 Name: Xdmf
 Version: 20140607
-Release: alt2
+Release: alt3
 Summary: eXtensible Data Model and Format
 License: Free
 Group: Sciences/Other
@@ -18,6 +21,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source1: CMakeCache.txt
 
+BuildPreReq: gcc%gcc_ver-c++
 BuildPreReq: libexpat-devel libvtk-devel python-devel %mpiimpl-devel
 BuildPreReq: libhdf5-mpi-devel zlib-devel bzlib-devel cmake
 BuildPreReq: libX11-devel libICE-devel libXtst-devel libXau-devel
@@ -29,7 +33,7 @@ BuildPreReq: libXxf86misc-devel flex libxml2-devel libmetis0-devel
 BuildPreReq: libmysqlclient-devel libvtk-python-devel libvtk-tcl-devel
 BuildPreReq: libpq-devel libjpeg-devel libtiff-devel libqt4-devel
 BuildPreReq: vtk-python tcl-devel tk-devel libmpe2-devel libsz2-devel
-BuildPreReq: libgomp-devel libexodusii-devel libnetcdf-mpi-devel
+BuildPreReq: libgomp%gcc_ver-devel libexodusii-devel libnetcdf-mpi-devel
 BuildPreReq: libXScrnSaver-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -128,7 +132,7 @@ This package contains data files for XDMF.
 %package examples
 Summary: Examples for XDMF
 Group: Development/Documentation
-BuildArch: noarch
+#BuildArch: noarch
 
 %description examples
 The need for a standardized method to exchange scientific data between
@@ -241,6 +245,10 @@ rm -f $(find Examples -name '*.o')
 %doc Examples/*
 
 %changelog
+* Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 20140607-alt3
+- Fixed build
+- Xdmf-examples is noarch no longer
+
 * Thu Mar 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140607-alt2
 - Rebuilt with new exodusii
 
