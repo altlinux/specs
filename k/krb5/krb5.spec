@@ -1,7 +1,7 @@
 
 Name: krb5
-Version: 1.14.4
-Release: alt2%ubt
+Version: 1.14.5
+Release: alt1%ubt
 
 %define _docdir %_defaultdocdir/%name-%version
 
@@ -443,6 +443,9 @@ fi
 # {{{ changelog
 
 %changelog
+* Fri Mar 24 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.5-alt1%ubt
+- Update to first spring release 1.14.5
+
 * Tue Feb 28 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.4-alt2%ubt
 - Add _keytab group for default keytab /etc/krb5.keytab
 
