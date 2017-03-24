@@ -1,3 +1,5 @@
+%define _localstatedir %_var
+
 %def_enable lvs
 %def_enable vrrp
 %def_enable snmp
@@ -9,7 +11,7 @@
 
 Name: keepalived
 Version: 1.3.5
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
 License: GPL
@@ -100,6 +102,9 @@ install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfi
 %doc doc/samples
 
 %changelog
+* Fri Mar 24 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt2.S1
+- fix pid file path
+
 * Wed Mar 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt1%ubt
 - 1.3.5
 
