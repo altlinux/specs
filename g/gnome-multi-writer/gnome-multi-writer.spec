@@ -1,11 +1,11 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.22
+%define ver_major 3.24
 %define _name org.gnome.MultiWriter
 
 Name: gnome-multi-writer
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Write an ISO file to multiple USB devices at once
@@ -62,6 +62,9 @@ USB devices simultaneously.
 
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Wed Oct 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 

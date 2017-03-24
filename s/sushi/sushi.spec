@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.21
+%define ver_major 3.23
 %define api_ver 1.0
 %define gst_api_ver 1.0
 %def_enable introspection
@@ -96,6 +96,9 @@ GObject introspection devel data for the Sushi library.
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Thu Mar 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.23.91-alt1
+- 3.23.91
+
 * Wed Aug 31 2016 Yuri N. Sedunov <aris@altlinux.org> 3.21.91-alt1
 - 3.21.91
 

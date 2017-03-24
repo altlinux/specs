@@ -17,7 +17,7 @@
 
 Name: empathy
 Version: %ver_major.1
-Release: alt0.1
+Release: alt0.2
 
 Summary: Instant Messaging Client for GNOME
 License: GPL/LGPL
@@ -49,7 +49,7 @@ Obsoletes: libempathy libempathy-gtk python-module-empathy
 %define iso_codes_ver 0.35
 %define notify_ver 0.7.3
 %define canberra_ver 0.26
-%define webkit_ver 1.3.13
+%define webkit_ver 2.4
 %define geoclue2_ver 1.99.3
 %define gcr_ver 3.3.90
 %define champlain_ver 0.12.0
@@ -191,6 +191,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.21.1-alt0.2
+- rebuilt for gnome-3.24
+
 * Thu Sep 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.21.1-alt0.1
 - updated to EMPATHY_3_12_12-34-gca6b43b
 

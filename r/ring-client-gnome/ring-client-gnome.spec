@@ -1,6 +1,6 @@
 Name: ring-client-gnome
 Version: 1.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: Ring client written in GTK+3
 
@@ -55,5 +55,8 @@ rm -f %buildroot%{_bindir}/ring
 %{_datadir}/appdata/gnome-ring.appdata.xml
 
 %changelog
+* Fri Mar 24 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1.1
+- rebuilt against libebook-1.2.so.19
+
 * Fri Feb 17 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - initial build for ALT Linux Sisyphus

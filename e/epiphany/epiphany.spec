@@ -1,11 +1,15 @@
 %def_disable snapshot
-%define ver_major 3.22
+%define ver_major 3.24
 %define api_ver 3.10
-%define ua_ver %ver_major
+%define ua_ver 3.24
+%define xdg_name org.gnome.Epiphany
+
 %define _libexecdir %_prefix/libexec
 
+%def_without libhttpseverywhere
+
 Name: epiphany
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
@@ -24,8 +28,8 @@ Patch: %name-3.17.2-alt-lfs.patch
 Provides: webclient
 Obsoletes: %name-extensions
 
-%define webkit_ver 2.13.4
-%define gtk_ver 3.20.0
+%define webkit_ver 2.15.91
+%define gtk_ver 3.22.0
 %define libxml2_ver 2.6.12
 %define xslt_ver 1.1.7
 %define soup_ver 2.48.0
@@ -50,6 +54,9 @@ BuildPreReq: iso-codes-devel >= 0.35
 BuildRequires: gcc-c++ gsettings-desktop-schemas-devel
 # Zeroconf support
 BuildPreReq: libavahi-devel libavahi-gobject-devel
+# since 3.23.x
+%{?_with_libhttpseverywhere:BuildPreReq: libhttpseverywhere-devel >= 0.2.2}
+BuildRequires: libicu-devel libjson-glib-devel
 
 %description
 Epiphany is a GNOME web browser based on the Webkit rendering engine.
@@ -78,40 +85,44 @@ rm -rf build-aux aclocal.m4 /m4/libtool.m4 m4/lt*.m4
 %configure \
 	--disable-schemas-compile \
 	--disable-dependency-tracking \
-	--with-distributor-name="ALTLinux"
-
+	--with-distributor-name="ALTLinux" \
+	%{subst_with libhttpseverywhere}
 %make_build
 
 %install
 %makeinstall_std
 
-%__mkdir_p %buildroot{%_libdir/epiphany/%ua_ver/extensions,%_datadir/epiphany-extensions}
-
 %find_lang --with-gnome --output=%name.lang %name %name-2.0
 
 %files
 %_bindir/%name
-%_bindir/ephy-profile-migrator
+%dir %_libexecdir/%name
+%_libexecdir/%name/ephy-profile-migrator
 %_libexecdir/%name-search-provider
-#%dir %_libdir/%name/%ua_ver/extensions
-%dir %_libdir/%name/%ua_ver/web-extensions
-%_libdir/%name/%ua_ver/web-extensions/libephywebextension.so
-%exclude %_libdir/%name/%ua_ver/web-extensions/libephywebextension.la
+%dir %_libdir/%name
+%_libdir/%name/*.so
+%dir %_libdir/%name/web-extensions
+%_libdir/%name/web-extensions/libephywebextension.so
+%exclude %_libdir/%name/*.la
+%exclude %_libdir/%name/web-extensions/libephywebextension.la
 %doc AUTHORS NEWS README TODO
 
 %files data -f %name.lang
-%_datadir/applications/*
+%_desktopdir/%xdg_name.desktop
 %_datadir/%name
 %_datadir/dbus-1/services/*
 %config %_datadir/glib-2.0/schemas/org.gnome.epiphany.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.epiphany.host.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.Epiphany.enums.xml
-%_datadir/GConf/gsettings/epiphany.convert
 %_man1dir/*
 %_datadir/gnome-shell/search-providers/epiphany-search-provider.ini
-%_datadir/appdata/epiphany.appdata.xml
+%_iconsdir/hicolor/*x*/apps/%xdg_name.png
+%_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
+%_datadir/appdata/%xdg_name.appdata.xml
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.7-alt1
 - 3.22.7
 

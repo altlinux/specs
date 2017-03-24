@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.Photos
-%define ver_major 3.22
+%define ver_major 3.24
 %define _libexecdir %_prefix/libexec
 %define gegl_api_ver 0.3
 
 Name: gnome-photos
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Photos - access, organize and share your photos on GNOME
@@ -19,7 +19,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define gtk_ver 3.20.0
 %define tracker_ver 0.18
 %define gdata_ver 0.15.2
-%define gegl_ver 0.3.12
+%define gegl_ver 0.3.14
 %define grilo_ver 0.3
 %define png_ver 1.5
 
@@ -38,7 +38,9 @@ BuildPreReq: libpng-devel >= %png_ver
 BuildRequires: libgexiv2-devel libexempi-devel liblcms2-devel librsvg-devel
 BuildRequires: libjpeg-devel libgfbgraph-devel
 BuildRequires: libgnome-desktop3-devel libgnome-online-accounts-devel zlib-devel
+BuildRequires: libgeocode-glib-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+
 
 %description
 Photos, like Documents, Music and Videos, is one of the core GNOME
@@ -66,6 +68,7 @@ rm -rf %buildroot/%_datadir/doc/%name
 
 %files -f %name.lang
 %_bindir/%name
+%_libexecdir/gnome-photos-thumbnailer
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/%xdg_name.*
 %_iconsdir/hicolor/scalable/apps/%xdg_name-symbolic.svg
@@ -76,6 +79,9 @@ rm -rf %buildroot/%_datadir/doc/%name
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Tue Mar 07 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.5-alt1
 - 3.22.5
 

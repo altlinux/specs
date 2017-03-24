@@ -1,4 +1,4 @@
-%define ver_major 2.22
+%define ver_major 2.24
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
@@ -15,7 +15,7 @@ Url: http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define glib_ver 2.32
-%define core_ver 2.21.4
+%define core_ver 2.24.0
 %define atk_ver 2.18.0
 
 Requires: at-spi2-core >= %core_ver
@@ -76,6 +76,9 @@ This package provides development files for atk-bridge library.
 %_pkgconfigdir/atk-bridge-%api_ver.pc
 
 %changelog
+* Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 2.24.0-alt1
+- 2.24.0
+
 * Mon Sep 26 2016 Yuri N. Sedunov <aris@altlinux.org> 2.22.0-alt1
 - 2.22.0
 

@@ -1,10 +1,9 @@
 %def_disable snapshot
 
-%define ver_major 1.30
+%define ver_major 1.32
 
 %def_disable gdu
 %def_disable gtk_doc
-%def_disable hal
 # obexftp support removed since 3.15.91
 %def_disable obexftp
 %def_enable afc
@@ -30,7 +29,7 @@
 %def_enable admin
 
 Name: gvfs
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -55,12 +54,15 @@ Patch6: gvfs-1.19.90-alt-1-logind-state.patch
 %{?_enable_gdu:Obsoletes: gnome-mount <= 0.8}
 %{?_enable_gdu:Obsoletes: gnome-mount-nautilus-properties <= 0.8}
 
+# obsolete by %_bindir/gio from libgio
+Obsoletes: %name-utils < 1.31
+Obsoletes: bash-completion-gvfs < 1.31
+
 # From configure.ac
-%define glib_ver 2.49.3
+%define glib_ver 2.51.0
 %define libsoup_ver 2.42
 %define avahi_ver 0.6
 %define libcdio_paranoia_ver 10.2
-%define hal_ver 0.5.10
 %define bluez_ver 4.0
 %define gdu_ver 3.3.91
 %define udisks_ver 1.99
@@ -72,7 +74,6 @@ Patch6: gvfs-1.19.90-alt-1-logind-state.patch
 %define gdata_ver 0.17.3
 
 Requires: dconf
-%{?_enable_hal:Requires: gnome-mount}
 %{?_enable_gdu:Requires: gnome-disk-utility >= %gdu_ver}
 %{?_enable_udisks2:Requires: udisks2}
 
@@ -99,7 +100,6 @@ BuildRequires: libgcrypt-devel
 %{?_enable_goa:BuildPreReq: libgnome-online-accounts-devel >= %goa_ver}
 %{?_enable_gphoto2:BuildPreReq: libgphoto2-devel}
 %{?_enable_gtk:BuildPreReq: libgtk+3-devel}
-%{?_enable_hal:BuildPreReq: libhal-devel >= %hal_ver}
 %{?_enable_http:BuildPreReq: libsoup-devel >= %libsoup_ver libxml2-devel}
 %{?_enable_keyring:BuildPreReq: libsecret-devel}
 %{?_enable_libmtp:BuildPreReq: libmtp-devel >= %mtp_ver}
@@ -212,18 +212,6 @@ Requires: gvfs gvfs-backend-smb gvfs-backend-dnssd
 %{?_enable_google:Requires: gvfs-backend-google}
 %{?_enable_admin:Requires: gvfs-backend-admin}
 
-%package utils
-Summary: Command line applications for gvfs.
-Group: Development/GNOME and GTK+
-Requires(post): libcap-utils
-Requires: %name = %version-%release
-
-%package -n bash-completion-gvfs
-Summary: Bash completion for gvfs utils
-Group: Development/Other
-BuildArch: noarch
-Requires: bash-completion
-Requires: gvfs-utils
 
 %description
 gvfs is a userspace virtual filesystem where mount runs as a separate
@@ -289,12 +277,6 @@ This package provides admin backend for gvfs based on polkit.
 %description backends
 This virtual package contains the all backends for gvfs.
 
-%description utils
-This package contains command line tools for gvfs.
-
-%description -n bash-completion-gvfs
-Bash completion for gvfs.
-
 %package tests
 Summary: GVFS test programms
 Group: Development/GNOME and GTK+
@@ -324,7 +306,6 @@ export ac_cv_path_SSH_PROGRAM=%_bindir/ssh
         %{subst_enable avahi} \
         %{subst_enable cdda} \
         %{subst_enable fuse} \
-        %{subst_enable hal} \
         %{subst_enable gphoto2} \
         %{subst_enable keyring} \
         %{subst_enable samba} \
@@ -354,10 +335,6 @@ export ac_cv_path_SSH_PROGRAM=%_bindir/ssh
 %post
 killall -USR1 gvfsd >&/dev/null || :
 
-%post utils
-# for mount secure NFS shares
-setcap 'cap_net_bind_service=+ep' %_bindir/%name-mount 2>/dev/null ||:
-
 
 %files -f %name.lang
 %doc AUTHORS NEWS README monitor/udisks2/what-is-shown.txt
@@ -373,7 +350,6 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name-mount 2>/dev/null ||:
 # monitors
 %_libexecdir/gvfs-gphoto2-volume-monitor
 %_prefix/lib/systemd/user/gvfs-gphoto2-volume-monitor.service
-%{?_enable_hal:%_libexecdir/gvfs-hal-volume-monitor}
 %{?_enable_gdu:%_libexecdir/gvfs-gdu-volume-monitor}
 %{?_enable_udisks2:%_libexecdir/gvfs-udisks2-volume-monitor}
 %{?_enable_udisks2:%_prefix/lib/systemd/user/gvfs-udisks2-volume-monitor.service}
@@ -388,12 +364,14 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name-mount 2>/dev/null ||:
 %dir %_datadir/%name
 %dir %_datadir/%name/remote-volume-monitors
 %_datadir/%name/remote-volume-monitors/gphoto2.monitor
-%{?_enable_hal:%_datadir/%name/remote-volume-monitors/hal.monitor}
 %{?_enable_gdu:%_datadir/%name/remote-volume-monitors/gdu.monitor}
 %{?_enable_udisks2:%_datadir/%name/remote-volume-monitors/udisks2.monitor}
 
 %_datadir/%name/mounts
-#%_datadir/applications/mount-archive.desktop
+%_man1dir/gvfsd-fuse.1.*
+%_man1dir/gvfsd-metadata.1.*
+%_man1dir/gvfsd.1.*
+%_man7dir/gvfs.7.*
 
 # in another packages
 %if_enabled samba
@@ -547,14 +525,6 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name-mount 2>/dev/null ||:
 
 %files backends
 
-%files utils
-%_bindir/*
-%_man1dir/*.1.*
-%_man7dir/gvfs.7.*
-
-%files -n bash-completion-gvfs
-%_datadir/bash-completion/completions/%name-*
-
 %if_enabled installed_tests
 %files tests
 %_libexecdir/installed-tests/
@@ -565,6 +535,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name-mount 2>/dev/null ||:
 
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 1.32.0-alt1
+- 1.32.0
+
 * Fri Dec 16 2016 Yuri N. Sedunov <aris@altlinux.org> 1.30.3-alt1
 - 1.30.3
 

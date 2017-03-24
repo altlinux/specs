@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define api_ver 2.4
-%define ver_major 2.56
+%define ver_major 2.57
 %def_disable static
 %def_enable gtk_doc
 %def_with gnome
@@ -10,7 +10,7 @@
 %def_with gssapi
 
 Name: libsoup
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -30,7 +30,8 @@ Source3: %name-gnome-compat.map
 Source4: %name-gnome-compat.lds
 Patch1: %name-2.53.2-alt-compat-map.patch
 
-Requires: glib-networking >= 2.47.90
+Requires: glib-networking >= 2.50.0
+#Requires: glib-openssl >= 2.50.0
 
 Provides: soup = %version libsoup%api_ver = %version
 Obsoletes: soup < %version libsoup%api_ver < %version
@@ -225,6 +226,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Wed Feb 15 2017 Yuri N. Sedunov <aris@altlinux.org> 2.57.1-alt1
+- 2.57.1
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 2.56.0-alt1
 - 2.56.0
 
@@ -492,7 +496,7 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 * Fri Nov 30 2007 Ilya Mashkin <oddity@altlinux.ru> 2.2.104-alt1
 - updated to 2.2.104
 
-* Tue Nov 22 2007 Ilya Mashkin <oddity@altlinux.ru> 2.2.103-alt1
+* Thu Nov 22 2007 Ilya Mashkin <oddity@altlinux.ru> 2.2.103-alt1
 - updated to 2.2.103  (fix #13486)
 - add libsoup-2.2.103-client-ssl.patch (fix #13485)
 

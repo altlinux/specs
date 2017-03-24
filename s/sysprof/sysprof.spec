@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.22
+%define ver_major 3.24
 %define api_ver 2
 %define xdg_name org.gnome.Sysprof2
 %define _libexecdir %_prefix/libexec
@@ -9,7 +9,7 @@
 %def_with sysprofd
 
 Name: sysprof
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Sysprof kernel based performance profiler for Linux
@@ -27,8 +27,9 @@ Source: %name-%version.tar
 %define gtk_ver 3.21.3
 %define systemd_ver 222
 
-BuildRequires: gcc-c++ glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: yelp-tools gobject-introspection-devel
+BuildRequires: gcc-c++ libappstream-glib-devel yelp-tools 
+BuildRequires: glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires: gobject-introspection-devel
 %{?_with_sysprofd:BuildRequires: systemd-devel libpolkit-devel}
 
 %description
@@ -78,15 +79,18 @@ developing applications that use GtkGHex library.
 %_datadir/polkit-1/actions/org.gnome.sysprof2.policy
 %endif
 %_datadir/mime/packages/%name-mime.xml
+%_datadir/appdata/%xdg_name.appdata.xml
 %doc AUTHORS NEWS README TODO
 
 %files devel
 %_includedir/%{name}-%api_ver/
-#%_libdir/*.so
 %_pkgconfigdir/%name-%api_ver.pc
 %_pkgconfigdir/%name-ui-%api_ver.pc
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Tue Nov 29 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
 - 3.22.3
 

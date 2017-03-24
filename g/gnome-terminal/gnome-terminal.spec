@@ -1,11 +1,11 @@
-%define ver_major 3.22
+%define ver_major 3.24
 %define xdg_name org.gnome.Terminal
 %define _libexecdir %_prefix/libexec
 
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Terminal
@@ -17,7 +17,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %define glib_ver 2.40
 %define gtk_ver 3.12.0
-%define vte_ver 0.46.1
+%define vte_ver 0.48.0
 
 Provides: xvt
 
@@ -25,7 +25,8 @@ PreReq: libvte3 >= %vte_ver
 Requires: common-licenses
 Requires: dconf gnome-icon-theme
 
-BuildRequires: rpm-build-gnome gnome-common intltool yelp-tools desktop-file-utils appdata-tools
+BuildRequires: rpm-build-gnome gnome-common intltool
+BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libvte3-devel >= %vte_ver
@@ -87,7 +88,7 @@ EOF
 %_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/gnome-shell/search-providers/%name-search-provider.ini
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %_altdir/%name
 %doc --no-dereference COPYING
 %doc AUTHORS NEWS
@@ -95,11 +96,14 @@ EOF
 %if_with nautilus
 %files nautilus
 %nautilus_extdir/libterminal-nautilus.so
-%_datadir/appdata/%xdg_name.Nautilus.metainfo.xml
+%_datadir/metainfo/%xdg_name.Nautilus.metainfo.xml
 %exclude %nautilus_extdir/libterminal-nautilus.la
 %endif
 
 %changelog
+* Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
 - 3.22.2
 

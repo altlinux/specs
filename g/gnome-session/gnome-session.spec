@@ -1,21 +1,22 @@
-%define ver_major 3.22
+%define ver_major 3.24
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 %def_enable session_selector
 %def_disable consolekit
 
 Name: gnome-session
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 License: GPLv2+
 Group: Graphical desktop/GNOME
-URL: ftp://ftp.gnome.org
+URL: htpp://www.gnome.org
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
 Source1: gnome.svg
+
 # https://bugzilla.gnome.org/show_bug.cgi?id=775463
 Patch: %name-2.91.6-alt-autosave_session.patch
 Patch1: %name-3.21.4-alt-lfs.patch
@@ -35,7 +36,7 @@ PreReq: xinitrc libcanberra-gnome libcanberra-gtk3
 Requires: altlinux-freedesktop-menu-gnome3
 Requires: dbus-tools-gui
 Requires: gnome-filesystem
-Requires: gnome-settings-daemon >= 3.18.0
+Requires: gnome-settings-daemon >= 3.23.90
 Requires: upower gcr
 Requires: xdg-user-dirs
 
@@ -151,6 +152,9 @@ This package permits to log into GNOME using Wayland.
 
 
 %changelog
+* Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Wed Mar 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
 - 3.22.3
 
@@ -499,7 +503,7 @@ This package permits to log into GNOME using Wayland.
 * Tue Apr 11 2006 Alexey Rusakov <ktirf@altlinux.ru> 2.14.1-alt1
 - new version 2.14.1 (with rpmrb script)
 
-* Sun Feb 11 2006 Alexey Rusakov <ktirf@altlinux.ru> 2.13.90-alt1
+* Sat Feb 11 2006 Alexey Rusakov <ktirf@altlinux.ru> 2.13.90-alt1
 - new version
 - Fixed Bug #8442.
 - don't flip the cursor in startgnome2 script.
@@ -665,5 +669,5 @@ This package permits to log into GNOME using Wayland.
 - Final cleanups
 - make .spec.in
 
-* Sun Feb 15 2002 Chris Chabot <chabotc@reviewboard.com>
+* Fri Feb 15 2002 Chris Chabot <chabotc@reviewboard.com>
 - initial spec file for gnome-session

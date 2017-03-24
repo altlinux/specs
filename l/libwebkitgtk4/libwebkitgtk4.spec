@@ -15,13 +15,12 @@
 %def_enable wayland
 
 Name: libwebkitgtk4
-Version: 2.14.5
+Version: 2.16.0
 Release: alt1
 
 Summary: Web browser engine
 Group: System/Libraries
 License: %bsd %lgpl2plus
-
 Url: http://www.webkitgtk.org/
 
 Source: %url/releases/%_name-%version.tar.xz
@@ -30,7 +29,7 @@ Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav
 Requires: hyphen-en hyphen-ru
 
 BuildPreReq: rpm-build-licenses
-BuildRequires: gcc-c++ cmake ccache libicu-devel >= 5.6.1 bison perl-Switch zlib-devel
+BuildRequires: gcc-c++ cmake ccache libicu-devel >= 5.6.1 bison perl-Switch perl-JSON-PP zlib-devel
 %ifarch x86_64
 BuildRequires: llvm-devel >= 3.7
 %endif
@@ -56,7 +55,7 @@ BuildRequires: python-modules-json
 BuildRequires: ruby ruby-stdlibs
 BuildRequires: libGL-devel libXcomposite-devel libXdamage-devel
 BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel libsoup-gir-devel
-BuildRequires: geoclue2-devel
+BuildRequires: geoclue2-devel libgeoclue2-devel
 BuildRequires: libenchant-devel libhyphen-devel
 BuildRequires: libat-spi2-core-devel at-spi2-atk-devel
 BuildRequires: libgtk+2-devel libpixman-devel libexpat-devel
@@ -165,6 +164,7 @@ Summary: GObject introspection devel data for the Webkit2GTK library
 Group: Development/Other
 BuildArch: noarch
 Requires: libwebkit2gtk-gir = %version-%release
+Requires: libwebkit2gtk-devel = %version-%release
 Requires: libjavascriptcoregtk4-gir = %version-%release
 Requires: libjavascriptcoregtk4-devel = %version-%release
 Requires: libjavascriptcoregtk4-gir-devel = %version-%release
@@ -289,6 +289,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 2.16.0-alt1
+- 2.16.0
+
 * Thu Feb 16 2017 Yuri N. Sedunov <aris@altlinux.org> 2.14.5-alt1
 - 2.14.5
 

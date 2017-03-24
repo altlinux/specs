@@ -1,4 +1,4 @@
-%define ver_major 3.20
+%define ver_major 3.24
 %define _name org.gnome.Dictionary
 %define api_ver 1.0
 
@@ -16,7 +16,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Requires: libgdict = %version-%release
 
 %define glib_ver 2.40.0
-%define gtk_ver 3.19.7
+%define gtk_ver 3.22.7
 
 BuildPreReq: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: rpm-build-gnome intltool gtk-doc yelp-tools
@@ -119,6 +119,9 @@ Dictionary Library.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 

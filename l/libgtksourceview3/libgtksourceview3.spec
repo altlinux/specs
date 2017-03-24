@@ -1,6 +1,6 @@
 %define _name gtksourceview
 %define api_ver 3.0
-%define ver_major 3.22
+%define ver_major 3.24
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
@@ -8,7 +8,7 @@
 %def_enable gspell
 
 Name: lib%{_name}3
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -128,6 +128,9 @@ GObject introspection devel data for the GtkSourceView library
 %endif
 
 %changelog
+* Sun Mar 19 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Sun Nov 27 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
 - 3.22.2
 

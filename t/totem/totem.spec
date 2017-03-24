@@ -1,7 +1,9 @@
-%define xdg_name org.gnome.Totem
 %def_disable snapshot
+%define _libexecdir %_prefix/libexec
+%define ver_major 3.24
+%define xdg_name org.gnome.Totem
+%define nautilus_extdir %_libdir/nautilus/extensions-3.0
 
-%define ver_major 3.22
 %define parser_ver 3.10.1
 %define gst_api_ver 1.0
 %define gst_ver 1.4.2
@@ -14,8 +16,6 @@
 %define clutter_gst_ver 2.99.2
 %define peas_ver 1.1.0
 
-%define _libexecdir %_prefix/libexec
-%define nautilus_extdir %_libdir/nautilus/extensions-3.0
 
 %def_disable static
 %def_enable vala
@@ -33,7 +33,7 @@
 %def_disable gromit
 
 Name: totem
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Movie player for GNOME 3
@@ -407,6 +407,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Fri Mar 03 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 

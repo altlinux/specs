@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 %define oldname eog2
-%define ver_major 3.20
+%define ver_major 3.24
 %define xdg_name org.gnome.eog
 %define api_ver 3.0
 %def_enable color_management
@@ -9,7 +9,7 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Eye Of Gnome
@@ -165,6 +165,9 @@ the functionality of the EOG GUI.
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Tue Oct 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.5-alt1
 - 3.20.5
 

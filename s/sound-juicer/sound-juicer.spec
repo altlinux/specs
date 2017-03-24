@@ -1,9 +1,11 @@
-%define _name org.gnome.sound-juicer
-%define ver_major 3.22
+%define _unpackaged_files_terminate_build 1
+
+%define ver_major 3.24
 %define gst_api_ver 1.0
+%define xdg_name org.gnome.SoundJuicer
 
 Name: sound-juicer
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Clean and lean CD ripper
@@ -20,7 +22,7 @@ BuildPreReq: gcc-c++ gnome-common
 BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel
 BuildRequires: libgio-devel >= 2.32
 BuildRequires: libbrasero-devel >= 3.0.0
-BuildRequires: libgtk+3-devel >= 3.21.3
+BuildRequires: libgtk+3-devel >= 3.22.0
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libcanberra-devel libcanberra-gtk3-devel
 BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
@@ -47,20 +49,24 @@ supported by GStreamer.
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=DiscBurning \
 	--add-category=GTK \
-	%buildroot%_desktopdir/sound-juicer.desktop
+	%buildroot%_desktopdir/%xdg_name.desktop
 
 %files -f %name.lang
 %_bindir/%name
 %_datadir/%name/
-%_datadir/applications/%name.desktop
+%_datadir/applications/%xdg_name.desktop
 %_datadir/icons/*/*/*/*
 %_datadir/GConf/gsettings/%name.convert
-%_datadir/glib-2.0/schemas/%_name.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
+%_datadir/dbus-1/services/%xdg_name.service
 %_man1dir/%name.1.*
-%_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/%xdg_name.appdata.xml
 %doc AUTHORS README NEWS
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Mon Oct 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 

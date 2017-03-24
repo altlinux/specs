@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.22
+%define ver_major 3.24
 %define api_ver 3.0
 %define xdg_name org.gnome.Nautilus
 
@@ -11,7 +11,7 @@
 %def_enable selinux
 
 Name: nautilus
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -33,7 +33,7 @@ Source: %name-%version.tar
 %define glib_ver 2.49.1
 %define desktop_ver 3.3.3
 %define pango_ver 1.28.3
-%define gtk_ver 3.21.6
+%define gtk_ver 3.22.0
 %define libxml2_ver 2.4.7
 %define exif_ver 0.5.12
 %define exempi_ver 2.1.0
@@ -49,7 +49,7 @@ Requires: shared-mime-info
 Requires: common-licenses
 Requires: gvfs >= 1.26.1.1
 
-BuildRequires: pkgconfig >= %pkgconfig_ver
+BuildRequires: autoconf-archive pkgconfig >= %pkgconfig_ver
 BuildRequires: desktop-file-utils >= %desktop_file_utils_ver
 BuildRequires: rpm-build-gnome rpm-build-licenses
 # for %%check
@@ -205,6 +205,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Wed Mar 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
 - 3.22.3
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.22
+%define ver_major 3.24
 %define api_ver 3.0
 %define applet_api_ver 5.0
 %def_disable static
@@ -50,7 +50,7 @@ Requires: tzdata
 BuildPreReq: rpm-build-gnome >= 0.4
 
 # From configure.ac
-BuildRequires: intltool yelp-tools gtk-doc
+BuildRequires: yelp-tools gtk-doc
 %{?_enable_gtk_doc:BuildPreReq: gtk-doc >= %gtk_doc_ver}
 BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -132,9 +132,9 @@ Requires: lib%name-gir = %version-%release
 GObject introspection devel data for the GNOME Panel shared library.
 
 
-%define gnome_appletsdir %_libdir/%name
+%define gnome_appletsdir %_libdir/%name/modules
 %define _gtk_docdir %_datadir/gtk-doc/html
-%define _libexecdir %gnome_appletsdir
+#%%define _libexecdir %gnome_appletsdir
 
 %prep
 %setup
@@ -151,17 +151,17 @@ GObject introspection devel data for the GNOME Panel shared library.
 %install
 %makeinstall_std
 
-%find_lang --with-gnome --output=%name.lang %name-%api_ver clock fish
+%find_lang --with-gnome --output=%name.lang %name clock fish
 
 %files -f %name.lang
 %_bindir/gnome-desktop-item-edit
 %_bindir/gnome-panel
-%_bindir/panel-test-applets
 %dir %gnome_appletsdir
-%gnome_appletsdir/libclock-applet.so
-%gnome_appletsdir/libfish-applet.so
-%gnome_appletsdir/libnotification-area-applet.so
-%gnome_appletsdir/libwnck-applet.so
+%gnome_appletsdir/clock.so
+%gnome_appletsdir/fish.so
+%gnome_appletsdir/notification-area.so
+%gnome_appletsdir/status-notifier.so
+%gnome_appletsdir/wncklet.so
 %dir %_datadir/gnome-panel
 %_datadir/gnome-panel/*
 %_desktopdir/%name.desktop
@@ -198,6 +198,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Sat Oct 08 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 

@@ -1,16 +1,16 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Builder
-%define ver_major 3.22
+%define ver_major 3.24
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
 
 %def_enable sysprof_plugin
-%def_enable idemm
-%def_enable gtk_doc
+%def_disable idemm
+%def_disable gtk_doc
 
 Name: gnome-builder
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -28,7 +28,7 @@ Source: %name-%version.tar
 
 %define gtk_ver 3.20.0
 %define gtksourceview_ver 3.20.0
-%define git2_ver 0.24.0
+%define git2_ver 0.25.0
 %define devhelp_ver 3.20.0
 %define gjs_ver 1.42
 %define xml_ver 2.9.0
@@ -36,6 +36,7 @@ Source: %name-%version.tar
 %define sysprof_ver 3.22.3
 %define vte_ver 0.46
 %define gtkmm_ver 3.20
+%define gspell_ver 1.2.0
 
 # use python3
 AutoReqProv: nopython
@@ -49,6 +50,7 @@ Requires: automake autoconf libtool
 Requires: devhelp uncrustify ctags
 Requires: libpeas-python3-loader
 Requires: git
+Requires: indent xmllint
 
 BuildRequires: /proc gcc-c++ flex mm-common yelp-tools gtk-doc
 BuildRequires: libappstream-glib-devel desktop-file-utils
@@ -63,6 +65,7 @@ BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libgtksourceview3-gir-devel libgit2-glib-gir-devel libpeas-gir-devel
 BuildRequires: libjson-glib-gir-devel
 BuildRequires: libvala-devel >= %vala_ver vala-tools
+BuildRequires: libgspell-devel >= %gspell_ver libenchant-devel
 %{?_enable_sysprof_plugin:BuildRequires: sysprof-devel >= %sysprof_ver}
 %{?_enable_idemm:BuildRequires: libgtkmm3-devel >= %gtkmm_ver}
 
@@ -111,6 +114,9 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libdir/%name/libpanel-gtk.so.*
 %_libdir/%name/libsearch.so.*
 %_libdir/%name/libgstyle-private.so.*
+%_libdir/%name/libxml-private.so.*
+%_libdir/%name/libgd-private.so.*
+%_libdir/%name/libjsonrpc-glib.so.*
 
 %exclude %_libdir/%name/*.la
 %exclude %_libdir/%name/libegg-private.so
@@ -118,6 +124,10 @@ This package provides noarch data needed for Gnome Builder to work.
 %exclude %_libdir/%name/librg.so
 %exclude %_libdir/%name/libsearch.so
 %exclude %_libdir/%name/libgstyle-private.so
+%exclude %_libdir/%name/libxml-private.so
+%exclude %_libdir/%name/libgd-private.so
+%exclude %_libdir/%name/libjsonrpc-glib.so
+
 %{?_enable_idemm:%exclude %_libdir/%name/libidemm-%api_ver.so}
 
 %dir %_libdir/%name/girepository-1.0
@@ -132,13 +142,12 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libdir/%name/plugins/*.plugin
 %_libdir/%name/plugins/__pycache__/
 %_libdir/%name/plugins/autotools_templates/
-%_libdir/%name/plugins/contributing_plugin/
+%_libdir/%name/plugins/cmake_plugin/
 %_libdir/%name/plugins/fpaste_plugin/
 %_libdir/%name/plugins/html_preview_plugin/
 %_libdir/%name/plugins/jedi_plugin.py
 %_libdir/%name/plugins/jhbuild_plugin.py
 %_libdir/%name/plugins/libautotools-plugin.so
-%_libdir/%name/plugins/libbuild-tools-plugin.so
 %_libdir/%name/plugins/libc-pack-plugin.so
 %_libdir/%name/plugins/libclang-plugin.so
 %_libdir/%name/plugins/libcolor-picker-plugin.so
@@ -147,6 +156,7 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libdir/%name/plugins/libcreate-project-plugin.so
 %_libdir/%name/plugins/libctags-plugin.so
 %_libdir/%name/plugins/libdevhelp-plugin.so
+%_libdir/%name/plugins/libbeautifier_plugin.so
 %_libdir/%name/plugins/libfile-search.so
 %_libdir/%name/plugins/libgcc-plugin.so
 %_libdir/%name/plugins/libgettext-plugin.so
@@ -166,7 +176,13 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libdir/%name/plugins/libxml-pack-plugin.so
 %_libdir/%name/plugins/python_gi_imports_completion.py
 %_libdir/%name/plugins/meson_plugin/
+%_libdir/%name/plugins/mono_plugin*
+%_libdir/%name/plugins/make_plugin/
+%_libdir/%name/plugins/eslint_plugin/
+%_libdir/%name/plugins/phpize_plugin.py
 %_libdir/%name/plugins/todo_plugin/
+%_libdir/%name/plugins/rustup_plugin/
+%_libdir/%name/plugins/valgrind_plugin/
 %_libdir/%name/plugins/cargo_plugin.py*
 %_libdir/%name/plugins/rust_langserv_plugin.py*
 
@@ -190,6 +206,7 @@ This package provides noarch data needed for Gnome Builder to work.
 %_datadir/glib-2.0/schemas/org.gnome.builder.build.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.code-insight.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.plugins.color_picker_plugin.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.builder.plugins.eslint.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.editor.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.editor.language.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.extension-type.gschema.xml
@@ -204,11 +221,19 @@ This package provides noarch data needed for Gnome Builder to work.
 %_iconsdir/hicolor/*x*/apps/%xdg_name.png
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %_datadir/appdata/%xdg_name.appdata.xml
+
 #%files -n libide-devel-doc
 %{?_enable_gtk_doc:%_datadir/gtk-doc/html/libide/}
+%doc %_defaultdocdir/%name/html/
 
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
+* Tue Mar 14 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.22.4-alt1.1
+- Rebuilt with llvm 4.0.
+
 * Thu Dec 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.4-alt1
 - 3.22.4
 

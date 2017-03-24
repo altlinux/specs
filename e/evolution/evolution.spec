@@ -1,24 +1,25 @@
 %def_disable snapshot
+# Some plugins/extensions link with others, resulting in multiple rpath entries
+%set_verify_elf_method rpath=relaxed
 
-%define ver_major 3.22
-%define ver_base 3.22
+%define _libexecdir %_prefix/libexec
+%define ver_major 3.24
+%define ver_base 3.24
 %define gst_api_ver 1.0
 
-%def_disable static
 %def_enable gtk_doc
 %def_with openldap
 %def_disable static_ldap
-%def_with krb5
 %def_enable map
 %def_enable autoar
-%def_enable tnef
+%def_enable ytnef
 %def_enable installed_tests
 
 # %define plugins experimental
 %define plugins all
 
 Name: evolution
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -31,16 +32,10 @@ Source: %name-%version.tar
 %else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
-Patch: %name-3.13.90-alt-link.patch
-
-### Patches ###
-# hack to properly link against ldap libs
-Patch10: evolution-3.0.3-ldap_libs.patch
-# RH bug #176400
-Patch27: evolution-2.9.1-im-context-reset.patch
 
 %define evo_plugin_dir %_libdir/evolution/plugins
 %define evo_module_dir %_libdir/evolution/modules
+%add_findprov_lib_path %_libdir/%name/%ver_base
 
 Provides: camel
 
@@ -48,7 +43,7 @@ Provides: camel
 %define glib_ver 2.40.0
 %define gtk_ver 3.10
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.22.5
+%define eds_ver 3.24.0
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define libsoup_ver 2.42.0
@@ -69,7 +64,7 @@ Requires: gnome-icon-theme
 Requires: gnome-settings-daemon
 Requires: highlight
 
-BuildRequires: gnome-common
+BuildRequires: cmake gcc-c++ flex  gnome-common
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgail3-devel >= %gtk_ver
@@ -85,28 +80,16 @@ BuildRequires: libpst-devel >= %pst_ver
 BuildRequires: libwebkit2gtk-devel >= %webkit_ver
 BuildRequires: libclutter-gtk3-devel >= %clutter_gtk_ver
 BuildRequires: gcr-libs-devel >= %gcr_ver libcryptui-devel
-%{?_enable_map:BuildRequires: libchamplain-gtk3-devel >= %champlain_ver libgeoclue-devel libgeocode-glib-devel >= %geocode_ver}
-%{?_enable_tnef:BuildRequires: libytnef-devel}
+BuildRequires: libkrb5-devel
+%{?_enable_map:BuildRequires: libchamplain-gtk3-devel >= %champlain_ver libgeocode-glib-devel >= %geocode_ver}
+%{?_enable_ytnef:BuildRequires: libytnef-devel}
 %{?_enable_autoar:BuildRequires: libgnome-autoar-devel >= %autoar_ver}
+%{?_with_openldap:BuildRequires: libldap-devel %{?_enable_static_ldap:libldap-devel-static libssl-devel libsasl2-devel}}
 
 BuildRequires: docbook-utils intltool yelp-tools itstool gtk-doc
-BuildRequires: gcc-c++ flex libSM-devel libcom_err-devel gstreamer%gst_api_ver-devel
+BuildRequires: libSM-devel libcom_err-devel gstreamer%gst_api_ver-devel
 BuildRequires: python-modules-compiler python-modules-encodings libnspr-devel libnss-devel libX11-devel libcanberra-gtk3-devel
 BuildRequires: zlib-devel libxml2-devel libgtkspell3-devel
-
-# Some plugins/extensions link with others, resulting in multiple rpath entries
-%set_verify_elf_method rpath=relaxed
-
-%if_with krb5
-BuildRequires: libkrb5-devel
-%endif
-
-%if_with openldap
-BuildRequires: libldap-devel
-%if_enabled static_ldap
-BuildRequires: libldap-devel-static libssl-devel libsasl2-devel.
-%endif
-%endif
 
 %description
 Evolution is the GNOME mailer, calendar, contact manager and
@@ -183,67 +166,33 @@ Requires: %name = %version-%release
 This package provides tests programs that can be used to verify
 the functionality of the installed Evolution.
 
-%add_findprov_lib_path %_libdir/%name/%ver_base
-
-%define _libexecdir %_prefix/libexec
 
 %prep
 %setup
-%patch -b .link
-%patch10 -b .ldaphack
-%patch27 -p1 -b .im-context-reset
-
 subst 's,(Unstable),,' data/evolution.desktop*
-
-# Remove the welcome email from Novell
-for inbox in mail/default/*/Inbox; do
-  echo -n "" > $inbox
-done
 
 # remove pregenerated .desktop files
 rm -f data/*.desktop{,.in}
 
 %build
-%if_with openldap
-%if_enabled static_ldap
-%define ldap_flags --with-openldap=yes --with-static-ldap
-# Set LIBS so that configure will be able to link with static LDAP libraries,
-# which depend on Cyrus SASL and OpenSSL.  XXX Is the "else" clause necessary?
-if pkg-config openssl ; then
-    export LIBS="-lsasl2 `pkg-config --libs openssl`"
-else
-export LIBS="-lsasl2 -lssl -lcrypto"
-fi
-%else
-%define ldap_flags --with-openldap=yes
-%endif
-%else
-%define ldap_flags --without-openldap
-%endif
-
-%autoreconf
-export ac_cv_path_BOGOFILTER=%_bindir/bogofilter
-export ac_cv_path_SENDMAIL=%_sbindir/sendmail
-export ac_cv_path_SPAMASSASSIN=%_bindir/spamassassin
-export ac_cv_path_SA_LEARN=%_bindir/sa-learn
-export ac_cv_path_HIGHLIGHT=%_bindir/highlight
-export KILL_PROCESS_CMD=%_bindir/killall
-%configure \
-    %{subst_enable static} \
-    %{?_enable_gtk_doc:--enable-gtk-doc} \
-    %ldap_flags \
-    --with-sub-version=" (%version-%release)" \
-    --enable-plugins=%plugins \
-    --enable-nss \
-    --enable-smime \
-    --disable-schemas-compile \
-    %{?_enable_map:--enable-contact-maps} \
-    %{subst_enable autoar} \
-    %{?_enable_installed_tests:--enable-installed-tests}
-%make_build
+# reenable INSTALL_RPATH to link against private libraries
+%cmake \
+	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+	-DVERSION_SUBSTRING:STRING=%version-%release \
+	-DKILL_PROCESS_COMMAND:STRING=%_bindir/killall \
+	-DENABLE_SCHEMAS_COMPILE:BOOL=OFF \
+	-DENABLE_SMIME:BOOL=ON \
+	%{?_enable_autoar:-DENABLE_AUTOAR:BOOL=ON} \
+	%{?_enable_ytnef:-DENABLE_YTNEF:BOOL=ON} \
+	%{?_enable_map:-DENABLE_CONTACT_MAPS:BOOL=ON} \
+	%{?_with_openldap:-DWITH_OPENLDAP:BOOL=ON} \
+	%{?_with_static_ldap:-DWITH_STATIC_LDAP:BOOL=ON} \
+	%{?_enable_gtk_doc:-DENABLE_GTK_DOC:BOOL=ON} \
+	%{?_enable_installed_tests:-DENABLE_INSTALLED_TESTS:BOOL=ON}
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 # evolution command name
 mv %buildroot%_bindir/evolution %buildroot%_bindir/evolution-%ver_major
@@ -317,6 +266,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Mon Mar 13 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.6-alt1
 - 3.22.6
 

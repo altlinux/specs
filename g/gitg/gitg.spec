@@ -1,18 +1,22 @@
-%define ver_major 3.22
+%def_disable snapshot
+%define ver_major 3.23
 %define api_ver 1.0
 %def_enable python
 
 Name: gitg
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.90
+Release: alt1
 
 Summary: git repository viewer targeting gtk+/GNOME
 Group: Development/Other
 License: GPL
 Url: https://wiki.gnome.org/Apps/Gitg
 
-#Source: %name-%version.tar
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 # hack to avoid break of non-SMP build
 Patch: gitg-3.18.0-alt-makefile.patch
 
@@ -31,7 +35,7 @@ AutoReqProv: nopython
 %define glib_ver 2.38
 %define gtk_ver 3.20
 %define gtksourceview_ver 3.10
-%define git2_ver 0.24.3
+%define git2_ver 0.25.0
 %define webkit_ver 2.6.0
 %define gtkspell_ver 3.0.3
 %define peas_ver 1.5.0
@@ -161,6 +165,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Thu Feb 16 2017 Yuri N. Sedunov <aris@altlinux.org> 3.23.90-alt1
+- 3.23.90
+
 * Mon Jan 23 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt2
 - reqs: + typelib(PeasGtk)
 

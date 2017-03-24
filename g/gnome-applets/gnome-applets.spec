@@ -13,7 +13,7 @@
 
 Name: gnome-applets
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Small applications for the GNOME panel
 License: GPLv2+
@@ -533,6 +533,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %gnome_appletsdir/*.la
 
 %changelog
+* Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt2
+- rebuilt against libpanel-applet.so.3
+
 * Sat Oct 08 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 

@@ -1,7 +1,8 @@
-%define ver_major 3.22
+%set_verify_elf_method rpath=relaxed
+%define ver_major 3.24
 
 Name: evolution-ews
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Group: Networking/Mail
@@ -11,12 +12,12 @@ Url: https://wiki.gnome.org/Apps/Evolution
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define ver_base 3.22
+%define ver_base 3.24
 %define evo_ver_base %ver_base
 
-%define evolution_ver 3.22.5
+%define evolution_ver 3.24.0
 # from configure.ac
-%define eds_ver 3.22.5
+%define eds_ver 3.24.0
 %define glib_ver 2.40
 %define libmspack_ver 0.4
 %define soup_ver 2.42
@@ -25,17 +26,16 @@ Requires: evolution >= %evolution_ver
 Requires: evolution-data-server >= %eds_ver
 Requires: libmspack >= %libmspack_ver
 
+BuildRequires: cmake gcc-c++ intltool
 BuildRequires: gnome-common rpm-build-gnome gtk-doc
 BuildRequires: evolution-data-server-devel >= %eds_ver
 BuildRequires: evolution-devel >= %evolution_ver
 BuildRequires: libmspack-devel >= %libmspack_ver
-
-BuildRequires: intltool
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= 3.0
 BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: libsqlite3-devel libical-devel
-BuildRequires: gcc-c++
+
 # following unusual reqs needed to link against evolution >= 3.13.6 libraries
 BuildRequires: libchamplain-gtk3-devel libgail3-devel gcr-libs-devel libp11-kit-devel
 BuildRequires: libgnome-desktop3-devel libdbus-devel libdbus-glib-devel libgeocode-glib-devel
@@ -50,14 +50,13 @@ versions 2007 and later, through its Exchange Web Services (EWS) interface.
 %setup
 
 %build
-#NOCONFIGURE=1 ./autogen.sh
-%autoreconf
-%configure --disable-static
-
-%make_build
+# reenable INSTALL_RPATH to link against private libraries
+%cmake \
+	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 # Remove files we don't want packaged (no devel subpackage).
 rm -rf %buildroot%_includedir/evolution-data-server
@@ -68,7 +67,7 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 
 %files -f %name.lang
 %doc COPYING NEWS README
-%_libdir/evolution-data-server/*.so.*
+%_libdir/%name/*.so
 %_libdir/evolution-data-server/camel-providers/*
 %_libdir/evolution-data-server/addressbook-backends/*.so
 %_libdir/evolution-data-server/calendar-backends/*.so
@@ -79,6 +78,9 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_datadir/appdata/evolution-ews.metainfo.xml
 
 %changelog
+* Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Mon Mar 13 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.6-alt1
 - 3.22.6
 

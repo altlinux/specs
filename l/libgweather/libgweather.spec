@@ -1,11 +1,11 @@
-%define ver_major 3.20
+%define ver_major 3.24
 %define api_ver 3.0
 %def_disable static
 %def_enable introspection
 %def_enable vala
 
 Name: libgweather
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library for weather information
@@ -34,6 +34,7 @@ BuildPreReq: rpm-build-gnome gtk-doc
 BuildRequires: libgeocode-glib-devel libxml2-devel perl-XML-Parser xml-utils gzip
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 %{?_enable_vala:BuildPreReq: vala-tools >= %vala_ver}
+BuildRequires: libgladeui2.0-devel
 
 %description
 libgweather is a library to access weather information from online
@@ -135,6 +136,7 @@ This package provides Vala language bindings for the %name library.
 %_includedir/%name-%api_ver
 %_libdir/*.so
 %_pkgconfigdir/*
+%_datadir/glade/catalogs/%name.xml
 
 %files devel-doc
 %_datadir/gtk-doc/html/*
@@ -154,6 +156,9 @@ This package provides Vala language bindings for the %name library.
 
 
 %changelog
+* Sun Mar 19 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Thu Dec 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.4-alt1
 - 3.20.4
 
