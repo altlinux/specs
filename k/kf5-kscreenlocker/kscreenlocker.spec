@@ -5,7 +5,7 @@
 
 Name: kf5-%rname
 Version: 5.9.3
-Release: alt2%ubt
+Release: alt3%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -111,8 +111,11 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Fri Mar 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt3%ubt
+- fix changelog
+
 * Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt2.S1
-- udpate from 5.9 branch
+- update from 5.9 branch
 
 * Thu Mar 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
 - new version
