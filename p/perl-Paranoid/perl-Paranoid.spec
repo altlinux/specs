@@ -4,7 +4,7 @@
 %define m_name Paranoid
 
 Name: perl-%module
-Version: 2.04
+Version: 2.05
 Release: alt1
 
 Summary: More secure programming in Perl
@@ -14,7 +14,7 @@ BuildArch: noarch
 Url: %CPAN %module
 Packager: Sergei Epiphanov <serpiph@altlinux.ru>
 
-Source: http://www.cpan.org/authors/id/C/CO/CORLISS/Paranoid/Paranoid-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/C/CO/CORLISS/%{module}/Paranoid-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Oct 06 2003
 BuildRequires: perl-devel perl(BerkeleyDB.pm) perl(Net/SMTP.pm) perl(Unix/Syslog.pm) perl(CGI.pm)
@@ -25,7 +25,7 @@ providing functions that perform more sanity checks as well as enforcing taint
 mode.
 
 %prep
-%setup -q -n %intmodule-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,10 +34,13 @@ mode.
 %perl_vendor_install
 
 %files
-%doc README
+%doc README CHANGELOG CREDITS
 %perl_vendor_privlib/Paranoid*
 
 %changelog
+* Sat Mar 25 2017 Igor Vlasenko <viy@altlinux.ru> 2.05-alt1
+- automated CPAN update
+
 * Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1
 - automated CPAN update
 
