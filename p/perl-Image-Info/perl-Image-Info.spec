@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Image-Info
 Name: perl-%dist
-Version: 1.39
+Version: 1.40
 Release: alt1
 
 Summary: Extract meta information from image files
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SR/SREZIC/Image-Info-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SR/SREZIC/%{dist}-%{version}.tar.gz
 
 Patch0: Image-Info-1.38-alt-req-perlio.patch
 Patch1: Image-Info-1.31-alt-req-zlib.patch
@@ -33,7 +33,7 @@ formats are supported:
    BMP/DIB/RLE
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch0 -p1
 %patch1 -p1
 
@@ -49,6 +49,9 @@ formats are supported:
 %exclude %perl_vendor_privlib/Bundle/Image
 
 %changelog
+* Sat Mar 25 2017 Igor Vlasenko <viy@altlinux.ru> 1.40-alt1
+- automated CPAN update
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.39-alt1
 - automated CPAN update
 
