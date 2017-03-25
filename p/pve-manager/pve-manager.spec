@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 4.4.1
-Release: alt5
+Release: alt6
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -33,6 +33,8 @@ Patch8: pve-manager-alt-gzip.patch
 Patch9: pve-manager-alt-pve.patch
 Patch10: pve-manager-help.patch
 Patch11: pve-manager-install_vzdump_cron_config.patch
+Patch12: qemu-server-megasas-gen2.patch
+Patch13: pve-manager-megasas-gen2.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -96,6 +98,8 @@ This package contains the Qemu Server tools used by PVE
 %patch9 -p0 -b .alt
 %patch10 -p0 -b .alt
 %patch11 -p0 -b .vzdump
+%patch12 -p0 -b .megasas-gen2
+%patch13 -p0 -b .megasas-gen2
 
 %build
 for d in pve-manager pve-firewall/src pve-ha-manager/src qemu-server; do
@@ -359,6 +363,9 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Sat Mar 25 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt6
+- added LSI MegaRAID SAS 2108 support
+
 * Mon Feb 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt5
 - fixed node network status
 
