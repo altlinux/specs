@@ -4,7 +4,7 @@
 %define m_name Parse::PlainConfig
 
 Name: perl-%module
-Version: 3.03
+Version: 3.05
 Release: alt1
 
 Summary: Plain Config parser
@@ -14,7 +14,7 @@ BuildArch: noarch
 Url: %CPAN %module
 Packager: Sergei Epiphanov <serpiph@altlinux.ru>
 
-Source: http://www.cpan.org/authors/id/C/CO/CORLISS/Parse-PlainConfig/Parse-PlainConfig-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/C/CO/CORLISS/%{module}/Parse-PlainConfig-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Oct 06 2003
 BuildRequires: perl-devel perl(Paranoid.pm) perl(Text/ParseWords.pm) perl(Text/Tabs.pm) perl(Class/EHierarchy.pm)
@@ -23,7 +23,7 @@ BuildRequires: perl-devel perl(Paranoid.pm) perl(Text/ParseWords.pm) perl(Text/T
 Parse::PlainConfig provides OO objects which can parse and generate human-readable configuration files.
 
 %prep
-%setup -q -n %intmodule-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -32,10 +32,13 @@ Parse::PlainConfig provides OO objects which can parse and generate human-readab
 %perl_vendor_install
 
 %files
-%doc README
+%doc README CHANGELOG
 %perl_vendor_privlib/Parse*
 
 %changelog
+* Sat Mar 25 2017 Igor Vlasenko <viy@altlinux.ru> 3.05-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 3.03-alt1
 - automated CPAN update
 
