@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 4.4.1
-Release: alt6
+Release: alt7
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -363,6 +363,9 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Sat Mar 25 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt7
+- corrected the names of MegaRAID SAS controllers
+
 * Sat Mar 25 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt6
 - added LSI MegaRAID SAS 2108 support
 
