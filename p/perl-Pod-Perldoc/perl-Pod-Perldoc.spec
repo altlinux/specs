@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Pod-Perldoc
 Name: perl-%dist
-Version: 3.27
+Version: 3.28
 Release: alt1
 
 Summary: perldoc is program for reading Pod documentation
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MA/MALLEN/Pod-Perldoc-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MALLEN/%{dist}-%{version}.tar.gz
 
 # Pod::Perldoc frontends require additional modules
 %add_findreq_skiplist */Pod/Perldoc/ToTk.pm
@@ -32,7 +32,7 @@ Old Documentation format) is a simple-to-use markup language used
 for writing documentation for Perl, Perl programs, and Perl modules.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 # disable build dependency on Tk::Pod
 %ifdef __buildreqs
@@ -55,6 +55,9 @@ sed -i- 's/require Tk;/die;/' t/load.t
 %exclude %perl_vendor_privlib/perldoc.pod
 
 %changelog
+* Sat Mar 25 2017 Igor Vlasenko <viy@altlinux.ru> 3.28-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 3.27-alt1
 - automated CPAN update
 
