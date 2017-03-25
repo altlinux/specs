@@ -2,7 +2,7 @@ Summary: The New Moon browser, an unofficial branding of the Pale Moon project b
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 27.2.0
+Version: 27.2.1
 Release: alt1.0
 License: MPL/GPL/LGPL
 Group: Networking/WWW
@@ -29,6 +29,7 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source: %sname-source-%version-%release.tar
 Source1: rpm-build.tar
+Source2: defaults-newmoon.tar
 
 Source4: %sname-mozconfig
 Source6: %bname.desktop
@@ -178,6 +179,8 @@ export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
 export RPATH_PATH="$rpath"     
 
 %setup -n %sname-%version -c
+%setup -T -D -a 2
+%setup -T -D -a 11
 
 %patch20 -p1
 %patch24 -p1
@@ -192,9 +195,9 @@ cd %sname
 
 tar -xf %SOURCE1
 
-pushd browser/branding/unofficial
-    tar --overwrite  -xf %SOURCE11
-popd
+#pushd browser/branding/unofficial
+#    tar --overwrite  -xf %SOURCE11
+#popd
 
 #patch5  -p1
 #patch14 -p1
@@ -204,6 +207,14 @@ popd
 %patch16 -p1
 
 #patch18 -p1
+
+
+# icons
+for s in 16 22 24 32 48 256; do
+	install -D -m 644 \
+		../defaults-newmoon/default$s.png \
+		browser/branding/unofficial/
+done
 
 
 cat >> browser/confvars.sh <<EOF
@@ -348,10 +359,13 @@ pushd objdir
 %makeinstall_std MOZ_APP_VERSION=
 popd
 
+pwd
+ls 
+
 # icons
 for s in 16 32 48; do
 	install -D -m 644 \
-		browser/branding/unstable/default$s.png \
+		../defaults-newmoon/default$s.png \
 		%buildroot/%_iconsdir/hicolor/${s}x${s}/apps/%bname.png
 done
 
@@ -452,7 +466,7 @@ rm -f -- \
 popd
 
 install -d %buildroot%palemoon_prefix/browser/chrome/icons/default/
-install -m 644 browser/branding/unstable/content/icon48.png %buildroot%palemoon_prefix/browser/chrome/icons/default/PMaboutDialog48.png
+install -m 644 ../defaults-newmoon/default48.png %buildroot%palemoon_prefix/browser/chrome/icons/default/PMaboutDialog48.png
 
 # Add Docdir
 install -D -m 644 %SOURCE9 ../
@@ -511,6 +525,9 @@ done
 %exclude %_datadir/idl/*
 
 %changelog
+* Sat Mar 25 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.2.1-alt1.0
+- Version 27.2.1
+
 * Sat Mar 18 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.2.0-alt1.0
 - Version 27.2.0
 
