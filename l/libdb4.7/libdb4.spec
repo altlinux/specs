@@ -1,7 +1,7 @@
 %define _sover 4.7
 Name: libdb%_sover
 Version: %_sover.25
-Release: alt8
+Release: alt9
 %define srcname db-%version
 
 Summary: Berkeley database library
@@ -40,14 +40,14 @@ Conflicts: glibc <= 6:2.1.3
 %{?_enable_debug:%def_enable diagnostic}
 %{!?_enable_debug:%def_disable diagnostic}
 %def_disable dump185
-%ifarch %ix86 x86_64
-%def_enable java
-%else
+#ifarch %ix86 x86_64
+#def_enable java
+#else
 %def_disable java
-%endif
+#endif
 %def_disable posixmutexes
 %def_enable rpc
-%def_enable tcl
+%def_disable tcl
 %def_disable test
 %def_disable uimutexes
 %def_disable umrw
@@ -499,6 +499,9 @@ done
 %_libdir/libdb-[0-9]*.a
 
 %changelog
+* Sat Mar 25 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.7.25-alt9
+- Rebuilt without Java and Tcl support.
+
 * Thu Jul 12 2012 Dmitry V. Levin <ldv@altlinux.org> 4.7.25-alt8
 - Fixed build with new gcc.
 
