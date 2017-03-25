@@ -3,8 +3,8 @@
 %define real_name Compress-LZ4
 
 Name: perl-Compress-LZ4
-Version: 0.23
-Release: alt1.1
+Version: 0.24
+Release: alt1
 
 Summary: Perl interface to the LZ4 (de)compressor
 
@@ -42,6 +42,9 @@ to the LZ4 (de)compressor.
 %perl_vendor_autolib/Compress/LZ4*
 
 %changelog
+* Sat Mar 25 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.24-alt1
+- New version
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1.1
 - rebuild with new perl 5.24.1
 
