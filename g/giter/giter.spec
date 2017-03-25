@@ -1,5 +1,5 @@
 Name: giter
-Version: 1.12
+Version: 1.13
 Release: alt1
 
 Summary: Etersoft wrapper for git commands
@@ -41,6 +41,10 @@ RECOMMENDED packages: git-core gitum
 %_bindir/*
 
 %changelog
+* Sat Mar 25 2017 Vitaly Lipatov <lav@altlinux.ru> 1.13-alt1
+- gpush: use -a to push all branches and -r to push to all remotes
+- gpull: add -A to pull all remove branches
+
 * Wed Nov 30 2016 Vitaly Lipatov <lav@altlinux.ru> 1.12-alt1
 - gpush: use origin by default if alone
 
