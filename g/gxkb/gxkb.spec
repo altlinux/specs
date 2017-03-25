@@ -1,5 +1,5 @@
 Name: gxkb
-Version: 0.7.8
+Version: 0.7.9
 Release: alt1
 
 Summary: Keyboard indicator and switcher
@@ -34,6 +34,9 @@ switch to another one. It's written in C and uses the GTK library.
 %doc doc/AUTHORS doc/NEWS
 
 %changelog
+* Sat Mar 25 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.9-alt1
+- 0.7.9
+
 * Fri Dec 16 2016 Yuri N. Sedunov <aris@altlinux.org> 0.7.8-alt1
 - 0.7.8
 
