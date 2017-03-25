@@ -5,13 +5,13 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-Test-Vars
-Version:	0.012
-Release:	alt1_2
+Version:	0.013
+Release:	alt1
 Summary:	Detects unused variables
 License:	GPL+ or Artistic
 Group:		Development/Other
 URL:		http://search.cpan.org/dist/Test-Vars/
-Source0:	http://search.cpan.org/CPAN/authors/id/D/DR/DROLSKY/Test-Vars-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/D/DR/DROLSKY/Test-Vars-%{version}.tar.gz
 BuildArch:	noarch
 # ===================================================================
 # Build requirements
@@ -78,6 +78,7 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 prove -Ilib $(echo $(find xt/ -name '*.t'))
 
 %files
+%doc LICENSE README.md Changes example
 %if 0%{?_licensedir:1}
 %doc LICENSE
 %else
@@ -87,6 +88,9 @@ prove -Ilib $(echo $(find xt/ -name '*.t'))
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sat Mar 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1
+- automated CPAN update
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.012-alt1_2
 - update to new release by fcimport
 
