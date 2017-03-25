@@ -1,10 +1,10 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
 %define realname icewm
-%define gitrev .gitf199d1b
+%define gitrev .git3cd87d6
 
 Name: %realname-githubmod
 Version: 1.3.12.195
-Release: alt1%gitrev
+Release: alt2%gitrev
 
 Summary: X11 Window Manager
 Group: Graphical desktop/Icewm
@@ -117,6 +117,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %doc AUTHORS NEWS README.ALT README.md BUILD/doc/*.html icewm-old-changelog.bz2
 
 %changelog
+* Sat Mar 25 2017 Dmitriy Khanzhin <jinn@altlinux.org> 1.3.12.195-alt2.git3cd87d6
+- git snapshot 3cd87d6
+
 * Thu Mar 09 2017 Dmitriy Khanzhin <jinn@altlinux.org> 1.3.12.195-alt1.gitf199d1b
 - git snapshot f199d1b
 
