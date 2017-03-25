@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist SQL-Abstract
 Name: perl-%dist
-Version: 1.81
+Version: 1.82
 Release: alt1
 
 Summary: Generate SQL from Perl data structures
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/SQL-Abstract/
-Source: http://www.cpan.org/authors/id/R/RI/RIBASUSHI/SQL-Abstract-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/I/IL/ILMARI/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,7 +24,7 @@ statement handles and use the DBI interface. So, I set out to
 create an abstract SQL generation module.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,11 +33,14 @@ create an abstract SQL generation module.
 %perl_vendor_install
 
 %files
-%doc Changes
+%doc Changes examples
 %perl_vendor_privlib/DBIx*
 %perl_vendor_privlib/SQL*
 
 %changelog
+* Sat Mar 25 2017 Igor Vlasenko <viy@altlinux.ru> 1.82-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.81-alt1
 - automated CPAN update
 
