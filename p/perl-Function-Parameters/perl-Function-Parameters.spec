@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 1.0705
 %define module_name Function-Parameters
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(Dir/Self.pm) perl(ExtUtils/MakeMaker.pm) perl(Moo.pm) perl(Moose.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/Types.pm) perl(MooseX/Types/Moose.pm) perl(Test/Deep.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(aliased.pm) perl(attributes.pm) perl(constant.pm) perl(overload.pm) perl(strict.pm) perl(utf8.pm) perl(warnings.pm)
@@ -7,14 +6,14 @@ BuildRequires: perl(Carp.pm) perl(Dir/Self.pm) perl(ExtUtils/MakeMaker.pm) perl(
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.0705
-Release: alt1.1
+Version: 1.0706
+Release: alt1
 Summary: subroutine definitions with parameter lists
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/M/MA/MAUKE/Function-Parameters-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MAUKE/%{module_name}-%{version}.tar.gz
 
 %description
 This module extends Perl with keywords that let you define functions with
@@ -23,7 +22,7 @@ API, so it works reliably and doesn't require a source filter.
 
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 sed -i -e "s,^'ok'$,1;," lib/Function/Parameters.pm lib/Function/Parameters/*.pm
 
 # TODO
@@ -41,6 +40,9 @@ rm t/unicode*.t
 %perl_vendor_autolib/*
 
 %changelog
+* Sat Mar 25 2017 Igor Vlasenko <viy@altlinux.ru> 1.0706-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.0705-alt1.1
 - rebuild with new perl 5.24.1
 
