@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:       perl-DateTime-Format-Flexible
-Version:    0.27
+Version:    0.28
 Release:    alt1
 License:    GPL+ or Artistic
 Group:      Development/Other
@@ -62,6 +62,9 @@ TEST_POD=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Mar 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
+- automated CPAN update
+
 * Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
 - automated CPAN update
 
