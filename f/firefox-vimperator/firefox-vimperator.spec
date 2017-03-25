@@ -4,9 +4,9 @@
 %define mcid muttator@mozdev.org
 %define vciddir 	%firefox_noarch_extensionsdir/%vcid
 %define mciddir 	%tbird_noarch_extensionsdir/%mcid
-%define ver 3.8.4
-%define mver 1.3
-%define ft_release alt2.git20150201
+%define ver 3.16.0
+%define mver 1.3.1
+%define ft_release alt1
 %define workdir %firefox_name-%vname-%ver
 %define mworkdir %tbird_name-%mname-%mver
 
@@ -18,8 +18,10 @@ Group: Networking/WWW
 License: MPL 1.1/GPL 2.0/LGPL 2.1
 URL: http://%vname.org/
 # https://github.com/vimperator/vimperator-labs/
-Source: %firefox_name-%vname-%version.tar.bz2
-Source1: asciidoc.tar.bz2
+Source: %vname-%version.tar
+Source1: asciidoc.tar
+Source2: vim-plugin-%version.tar
+
 Requires: %firefox_name >= 3.0
 Requires: vim
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -28,7 +30,7 @@ BuildRequires(pre): rpm-build-firefox rpm-build-thunderbird rpm-build-vim
 BuildRequires(pre): java-devel-default /proc
 BuildPreReq: zip python-modules
 
-%description 
+%description
 Vimperator is a free browser add-on for Firefox, which makes it look and behave
 like the Vim text editor. It has similar key bindings and you could call it a
 modal web browser, as key bindings differ according to which mode you are in.
@@ -66,9 +68,11 @@ If you like it, but can't remember the shortcuts, press F1 or :help to get this
 help window back.
 
 %prep
-%setup
-tar -xjf %SOURCE1
+%setup -n %vname-%ver
+tar -xf %SOURCE1
 subst 's/maxVersion>24\.0/maxVersion>24.*/g' muttator/install.rdf
+
+tar -xf %SOURCE2
 
 %build
 ln -s asciidoc.py asciidoc/asciidoc
@@ -93,12 +97,13 @@ install -d %buildroot%vim_syntax_dir
 install -d %buildroot%vim_ftdetect_dir
 cp -fR _%vname/* %buildroot%vciddir/
 cp -fR _%mname/* %buildroot%mciddir/
-install -m644 %vname/contrib/vim/syntax/%vname.vim \
+install -m644 vim-plugin-%ver/syntax/%vname.vim \
 	%buildroot%vim_syntax_dir/
+install -m644 vim-plugin-%ver/ftdetect/%vname.vim \
+	%buildroot%vim_ftdetect_dir/
+
 install -m644 %mname/contrib/vim/syntax/%mname.vim \
 	%buildroot%vim_syntax_dir/
-install -m644 %vname/contrib/vim/ftdetect/%vname.vim \
-	%buildroot%vim_ftdetect_dir/
 install -m644 %mname/contrib/vim/ftdetect/%mname.vim\
 	%buildroot%vim_ftdetect_dir/
 
@@ -113,6 +118,9 @@ install -m644 %mname/contrib/vim/ftdetect/%mname.vim\
 %vim_ftdetect_dir/%mname.vim
 
 %changelog
+* Sat Mar 25 2017 Nikolay A. Fetisov <naf@altlinux.org> 3.16.0-alt1
+- New version
+
 * Mon Feb 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.8.4-alt2.git20150201
 - Vimperator 3.8.4
 
