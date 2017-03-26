@@ -5,12 +5,12 @@ Summary: udisks based removable device mounter
 Name: mount-tray
 License: GPLv2
 Version: 1.2.5
-Release: alt3
+Release: alt4
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
 Packager: Evgenii Terechkov <evg@altlinux.org>
 Group: System/Kernel and hardware
-Url: https://gitorious.org/h4tr3d-utils/pages/MountTray
+Url: https://github.com/h4tr3d/mount-tray
 
 BuildRequires: gcc-c++ libudev-devel
 %if_enabled qt5
@@ -52,6 +52,9 @@ install -pDm 644 %name.desktop %buildroot%_desktopdir/%name.desktop
 %doc COPY
 
 %changelog
+* Sun Mar 26 2017 Terechkov Evgenii <evg@altlinux.org> 1.2.5-alt4
+- Change Url: (ALT#33264)
+
 * Tue Nov 17 2015 Terechkov Evgenii <evg@altlinux.org> 1.2.5-alt3
 - Add requires to libqt[45]-svg (ALT#31502)
 
