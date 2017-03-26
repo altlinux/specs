@@ -1,5 +1,5 @@
 Name: grep
-Version: 3.0.0.11.dff6
+Version: 3.0.0.12.e2b7
 Release: alt1
 
 Summary: The GNU versions of grep pattern matching utilities
@@ -22,7 +22,7 @@ Requires: libpcre3 >= 0:6.4-alt2
 Provides: pcre-grep, pgrep
 Obsoletes: pcre-grep, pgrep
 
-BuildRequires: makeinfo, gnulib >= 0.1.1209.24b32
+BuildRequires: makeinfo, gnulib >= 0.1.1213.683b6
 # due to build from git
 BuildRequires: gperf
 # due to --perl-regexp
@@ -89,6 +89,10 @@ ulimit -s 32768
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Sun Mar 26 2017 Dmitry V. Levin <ldv@altlinux.org> 3.0.0.12.e2b7-alt1
+- grep: v3.0-11-gdff64f9 -> v3.0-12-ge2b7253.
+- gnulib: v0.1-1209-g24b3216 -> v0.1-1213-g683b607.
+
 * Tue Mar 21 2017 Dmitry V. Levin <ldv@altlinux.org> 3.0.0.11.dff6-alt1
 - grep: v2.22 -> v3.0-11-gdff64f9.
 - gnulib: v0.1-585-g2fda85e -> v0.1-1209-g24b3216.

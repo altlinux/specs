@@ -1,5 +1,5 @@
 Name: gnulib
-Version: 0.1.1209.24b32
+Version: 0.1.1213.683b6
 Release: alt1
 
 Summary: GNU Portability Library
@@ -53,6 +53,9 @@ mv %buildroot%_datadir/%name/doc/*.info %buildroot%_infodir/
 %_datadir/%name/
 
 %changelog
+* Sun Mar 26 2017 Dmitry V. Levin <ldv@altlinux.org> 0.1.1213.683b6-alt1
+- v0.1-1209-g24b3216 -> v0.1-1213-g683b607.
+
 * Mon Mar 20 2017 Dmitry V. Levin <ldv@altlinux.org> 0.1.1209.24b32-alt1
 - v0.1-585-g2fda85e -> v0.1-1209-g24b3216.
 
