@@ -1,6 +1,8 @@
+%global myname make-initrd
+
 Name: make-initrd
-Version: 0.8.14
-Release: alt1
+Version: 2.0.3
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL3
@@ -8,11 +10,22 @@ Group: System/Base
 
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
-BuildRequires: help2man libkmod-devel makeinfo
+BuildRequires: help2man
+BuildRequires: libkmod-devel
+BuildRequires: zlib-devel
+BuildRequires: bzlib-devel
+BuildRequires: liblzma-devel
 
 Provides: mkinitrd = 2:%version-%release
+Provides: make-initrd2 = %version-%release
 
-Requires: ash libshell make sed module-init-tools coreutils findutils grep glibc-utils
+Obsoletes: make-initrd2
+
+Requires: sh libshell make sed module-init-tools coreutils findutils grep glibc-utils
+Requires: chrooted-resolv service util-linux
+
+# setsid, timeout
+Requires: make-initrd-busybox >= 1.24.2-alt2
 
 # depinfo
 Requires: libkmod >= 8-alt1
@@ -31,6 +44,9 @@ Requires: bootloader-utils >= 0.4.10-alt1
 
 # blkid
 Requires: util-linux >= 2.17.2-alt1
+
+# /sbin/init.initrd
+Requires: sysvinit-initramfs
 
 # This avoids getting a dependency on sh from "#!/bin/sh".
 #AutoReq: yes, nopam, noperl, nopython, noshell, notcl
@@ -86,7 +102,7 @@ Summary: multipath module for %name
 Group: System/Base
 Requires: %name = %version-%release
 Requires: %name-devmapper = %version-%release
-Requires: multipath-tools > 0.6.1-alt1
+Requires: multipath-tools
 AutoReq: noshell, noshebang
 
 %description multipath
@@ -112,6 +128,16 @@ AutoReq: noshell, noshebang
 %description mdadm
 Mdadm module for %name
 
+%package ucode
+Summary: CPU microcode module for %name
+Group: System/Base
+Requires: %name = %version-%release
+Requires: iucode_tool, firmware-intel-ucode, linux-firmware
+AutoReq: noshell, noshebang
+
+%description ucode
+CPU microcode autoloading module for %name
+
 %prep
 %setup -q
 
@@ -134,69 +160,70 @@ fi
 %config(noreplace) %_sysconfdir/initrd.mk
 %_bindir/*
 %_sbindir/*
-%_datadir/%name
+%_datadir/%myname
 %_man1dir/*
-%_infodir/*
-%exclude %_datadir/%name/features/devmapper
-%exclude %_datadir/%name/features/lvm
-%exclude %_datadir/%name/features/luks
-%exclude %_datadir/%name/features/nfsroot
-%exclude %_datadir/%name/features/multipath
-%exclude %_datadir/%name/features/plymouth
-%exclude %_datadir/%name/features/mdadm
-%doc README.ru
+%exclude %_datadir/%myname/features/devmapper
+%exclude %_datadir/%myname/features/lvm
+%exclude %_datadir/%myname/features/luks
+%exclude %_datadir/%myname/features/nfsroot
+%exclude %_datadir/%myname/features/multipath
+%exclude %_datadir/%myname/features/plymouth
+%exclude %_datadir/%myname/features/mdadm
+%exclude %_datadir/%myname/features/ucode
+%doc docs/*.md
 
 %files devmapper
-%_datadir/%name/features/devmapper
+%_datadir/%myname/features/devmapper
 
 %files lvm
-%_datadir/%name/features/lvm
+%_datadir/%myname/features/lvm
 
 %files luks
-%_datadir/%name/features/luks
+%_datadir/%myname/features/luks
 
 %files nfs
-%_datadir/%name/features/nfsroot
+%_datadir/%myname/features/nfsroot
 
 %files multipath
-%_datadir/%name/features/multipath
+%_datadir/%myname/features/multipath
 
 %files plymouth
-%_datadir/%name/features/plymouth
+%_datadir/%myname/features/plymouth
 
 %files mdadm
-%_datadir/%name/features/mdadm
+%_datadir/%myname/features/mdadm
+
+%files ucode
+%_datadir/%myname/features/ucode
 
 %changelog
-* Tue Mar 21 2017 Sergey Novikov <sotor@altlinux.org> 0.8.14-alt1
-- fixed lvm discovery return code in case, when non-root LVM volumes
-  inaccessible from initramfs (closes: #33243)
+* Sun Mar 26 2017 Alexey Gladkov <legion@altlinux.ru> 2.0.3-alt2
+- Rewrite ueventd.
 
-* Tue Dec 27 2016 Michael Shigorin <mike@altlinux.org> 0.8.13-alt1
-- dropped obsolete guess-kbd call (closes: #29688)
+* Tue Mar 21 2017 Alexey Gladkov <legion@altlinux.ru> 2.0.3-alt1
+- Backport patches from make-initrd-0.8.14.
+- Rename back to original name.
 
-* Mon Nov 07 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.8.12-alt1
-- multipath working again
+* Sun Mar 12 2017 Alexey Gladkov <legion@altlinux.ru> 2.0.2-alt1
+- Add feature to control access to shell inside initrd.
+- Replace put-file by standalone utility.
+- ueventd process incoming events more quickly.
 
-* Wed Oct 26 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.8.11-alt2
-- updated multipath feature to current multipath-tools
+* Sun Jul 10 2016 Alexey Gladkov <legion@altlinux.ru> 2.0.1-alt2
+- Fix install.
 
-* Mon Jul 25 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.8.11-alt1
-- fixed udev rules names for multipath
+* Mon Jun 27 2016 Alexey Gladkov <legion@altlinux.ru> 2.0.1-alt1
+- Add initrd-ls.
+- Add ucode feature for early loading microcode.
+- Add libnss_* only for target arch (closes: #32180).
+- Add documentation (closes: #28967).
+- Remove obsolete guess-kbd (closes: #29688).
+- Fix compress detection for complex images.
 
-* Mon Mar 28 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.8.10-alt1
-- fix plymouth by explicitly set tty
-- build fixed
-
-* Fri Nov 13 2015 Anton Farygin <rider@altlinux.ru> 0.8.9-alt1
-- added mmc feature with mmc_block detection logic (closes: #30240)
-
-* Mon Nov 09 2015 Michael Shigorin <mike@altlinux.org> 0.8.8-alt5
-- add-modules: fixed harmless typo (closes: #29907)
-- 975-cleanup: silence ipconfig
-
-* Tue Nov 03 2015 Michael Shigorin <mike@altlinux.org> 0.8.8-alt4
-- functions: silence logger (closes: #31070)
+* Mon May 02 2016 Alexey Gladkov <legion@altlinux.ru> 2.0.0-alt1
+- New major release (2.0.0).
+- Use sysv init in the initramfs.
+- Use busybox by default.
 
 * Fri Feb 06 2015 Anton Farygin <rider@altlinux.ru> 0.8.8-alt3
 - fixed plymouth rules requires (closes: #30704)
