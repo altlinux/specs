@@ -1,7 +1,7 @@
 %define soversion 2.4
 
 Name: SFML
-Version: 2.4.0
+Version: 2.4.2
 Release: alt1
 
 Summary: Simple and Fast Multimedia Library
@@ -99,6 +99,9 @@ popd
 %_libdir/libsfml-*.so
 
 %changelog
+* Sun Mar 26 2017 Nazarov Denis <nenderus@altlinux.org> 2.4.2-alt1
+- Version 2.4.2
+
 * Tue Nov 01 2016 Nazarov Denis <nenderus@altlinux.org> 2.4.0-alt1
 - Version 2.4.0
 
