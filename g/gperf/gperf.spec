@@ -1,5 +1,5 @@
 Name: gperf
-Version: 3.0.4.0.33.1a05
+Version: 3.1
 Release: alt1
 
 Summary: A perfect hash function generator
@@ -9,7 +9,7 @@ Url: http://www.gnu.org/software/gperf/
 %define srcname %name-%version-%release
 # http://git.savannah.gnu.org/cgit/gperf.git
 Source: %srcname.tar
-BuildRequires: gnulib >= 0.1.585.2fda85
+BuildRequires: gnulib >= 0.1.1213.683b6
 BuildRequires: gcc-c++ help2man makeinfo
 
 %description
@@ -46,6 +46,10 @@ install -pm644 AUTHORS NEWS README %buildroot%docdir/
 %docdir/
 
 %changelog
+* Sun Mar 26 2017 Dmitry V. Levin <ldv@altlinux.org> 3.1-alt1
+- gperf: v3.0.4-33-g1a05152 -> v3.1.
+- gnulib: v0.1-585-g2fda85e -> v0.1-1213-g683b607.
+
 * Thu Dec 10 2015 Dmitry V. Levin <ldv@altlinux.org> 3.0.4.0.33.1a05-alt1
 - Updated to v3.0.4-33-g1a05152.
 
