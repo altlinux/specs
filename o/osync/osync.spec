@@ -1,5 +1,5 @@
 Name: 	  osync
-Version:  1.1.5
+Version:  1.2
 Release:  alt1
 
 Summary:  A robust two way (bidirectional) file sync script based on rsync with fault tolerance
@@ -11,10 +11,10 @@ Url: 	  http://www.netpower.fr/osync
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   %name-%version.tar
-Patch:    %name-%version-%release.patch
+Patch:    %name-services.patch
 
 BuildArch: noarch
-%filter_from_requires /^\/usr\/local\/bin\/mail.php$/d
+%filter_from_requires /^\/usr\/bin\/mail.php$/d
 
 %description
 A two way filesync script with fault tolerance, resuming, deletion
@@ -26,12 +26,17 @@ and can be run manually, by cron, or triggered via inotifytools
 %prep
 %setup
 %patch -p1
+# Replace all /usr/local/bin by /usr/bin
+subst 's,/usr/local/bin,%_bindir,g' *.lyx *.sh osync-srv* *.md
 
 %install
-export DESTDIR=%buildroot
-mkdir -p $DESTDIR
+export FAKEROOT=%buildroot
+mkdir -p $FAKEROOT
+mkdir -p %buildroot%_initdir
 ./install.sh --no-stats
-install -Dp -m 0644 sync.conf %buildroot%_sysconfdir/osync/sync.conf
+install -Dp -m 0644 sync.conf.example %buildroot%_sysconfdir/osync/sync.conf
+# Fix command interpreter for executables
+subst '1,1 s,^.*,#!/bin/bash,' %buildroot%_bindir/*.sh
 
 %post
 %post_service osync-srv
@@ -40,15 +45,19 @@ install -Dp -m 0644 sync.conf %buildroot%_sysconfdir/osync/sync.conf
 %preun_service osync-srv
 
 %files
-%doc *.md *.lyx tests
+%doc *.md *.lyx
 %_bindir/*
 %dir %_sysconfdir/osync/
 %config(noreplace) %_sysconfdir/osync/sync.conf
+%_sysconfdir/osync/*.example
 %_initdir/osync-srv
 %_unitdir/*.service
-%_sysconfdir/systemd/user/*.service.user
+#_sysconfdir/systemd/user/*.service.user
 
 %changelog
+* Sun Mar 26 2017 Andrey Cherepanov <cas@altlinux.org> 1.2-alt1
+- New version
+
 * Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.5-alt1
 - new version 1.1.5
 
