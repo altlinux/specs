@@ -1,5 +1,5 @@
 Name: mcabber
-Version: 1.0.3
+Version: 1.0.5
 Release: alt1
 
 Summary: console Jabber client
@@ -53,6 +53,9 @@ for more information.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Mar 27 2017 Denis Smirnov <mithraen@altlinux.ru> 1.0.5-alt1
+- new version 1.0.5
+
 * Wed Sep 21 2016 Denis Smirnov <mithraen@altlinux.ru> 1.0.3-alt1
 - new version 1.0.3
 
