@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 4.4.1
-Release: alt7
+Release: alt8
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -33,8 +33,8 @@ Patch8: pve-manager-alt-gzip.patch
 Patch9: pve-manager-alt-pve.patch
 Patch10: pve-manager-help.patch
 Patch11: pve-manager-install_vzdump_cron_config.patch
-Patch12: qemu-server-megasas-gen2.patch
-Patch13: pve-manager-megasas-gen2.patch
+Patch12: qemu-server-lsi.patch
+Patch13: pve-manager-lsi.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -363,6 +363,9 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Mon Mar 27 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt8
+- added LSI Logic SAS 1068 support
+
 * Sat Mar 25 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt7
 - corrected the names of MegaRAID SAS controllers
 
