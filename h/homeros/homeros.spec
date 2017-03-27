@@ -1,6 +1,8 @@
+%def_disable emacspeak
+
 Name: homeros
 Version: 20130412
-Release: alt1
+Release: alt2
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 BuildArch: noarch
 License: GPL
@@ -14,6 +16,7 @@ License: GPL
 Summary: Installs default speech output engines
 Requires: voiceman voiceman-server voiceman-tools espeak RHVoice
 
+%if_enabled emacspeak
 %package emacspeak
 Group: Accessibility
 License: GPL
@@ -21,6 +24,7 @@ Summary: Installs emacspeak accessible environment for blind users
 Requires: speech-default yasr
 Requires: homeros-core homeros-emacs
 Requires: emacs-nox emacspeak emacs24-gnus w3m emacs-w3m
+%endif
 
 %package orca
 Group: Accessibility
@@ -42,19 +46,26 @@ synthesizer he wants to use (list of all available synthesizers can be
 obtained with voiceman-available command). After that the server should be launched 
 with "service voiceman start" command.
 
+%if_enabled emacsspeak
 %description emacspeak
 This package installs accessible environment for blind people based on emacspeak audio desktop.
 It also prepares general speech output.
+%endif
 
 %description orca
 This package installs accessible environment for blind people based on GNOME and Orca.
 (currently unmaintained)
 
 %files -n speech-default
+%if_enabled emacspeak
 %files emacspeak
+%endif
 %files orca
 
 %changelog
+* Mon Mar 27 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 20130412-alt2
+- Rebuilt without emacspeak
+
 * Fri Apr 12 2013 Michael Pozhidaev <msp@altlinux.ru> 20130412-alt1
 - The sets of required packages are updated to reflect changes in homeros-core package
 
