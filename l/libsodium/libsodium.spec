@@ -4,7 +4,7 @@
 #============================================================================
 Name: libsodium
 Summary: %name
-Version: 1.0.5
+Version: 1.0.12
 Release: alt1
 License: ISC license
 Group: System/Libraries
@@ -28,11 +28,11 @@ Requires: %name-devel
 %description devel-static
 %summary
 
-%package -n libsodium13
+%package -n libsodium18
 Summary: %summary
 Group: System/Libraries
 
-%description -n libsodium13
+%description -n libsodium18
 %summary
 
 %description
@@ -59,10 +59,13 @@ Group: System/Libraries
 %files devel-static
 %_libdir/libsodium.a
 
-%files -n libsodium13
-%_libdir/libsodium.so.13*
+%files -n libsodium18
+%_libdir/libsodium.so.18*
 
 %changelog
+* Mon Mar 27 2017 Denis Smirnov <mithraen@altlinux.ru> 1.0.12-alt1
+- new version 1.0.12
+
 * Tue Oct 27 2015 Denis Smirnov <mithraen@altlinux.ru> 1.0.5-alt1
 - new version 1.0.5
 

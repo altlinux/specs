@@ -1,7 +1,7 @@
 # TODO: build with ffmpeg
 Name: qtox
 Version: 1.4.1.1
-Release: alt1
+Release: alt2
 
 Summary: Powerful Tox client that follows the Tox design guidelines
 
@@ -59,6 +59,9 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Mar 27 2017 Denis Smirnov <mithraen@altlinux.ru> 1.4.1.1-alt2
+- rebuild with new toxcore and libsodium
+
 * Mon Jul 25 2016 Vitaly Lipatov <lav@altlinux.ru> 1.4.1.1-alt1
 - build new version with toxcore 0.0.1-alt1.20160725
 _ still incompatible with libav (a fork of ffmpeg) (see alt bug #32310)
