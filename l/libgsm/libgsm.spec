@@ -1,6 +1,6 @@
 Name: libgsm
-Version: 1.0.13
-Release: alt8
+Version: 1.0.16
+Release: alt1
 
 Summary: GSM audio encoding/decoding library
 License: Free/Copyright Technische Universitaet Berlin
@@ -76,6 +76,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir make tst addtst SLIB=%_lib
 %_man3dir/*
 
 %changelog
+* Mon Mar 27 2017 Denis Smirnov <mithraen@altlinux.ru> 1.0.16-alt1
+- 1.0.16
+
 * Sun Apr 14 2013 Dmitry V. Levin <ldv@altlinux.org> 1.0.13-alt8
 - Fixed build.
 - Fixed debuginfo.
