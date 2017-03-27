@@ -1,7 +1,7 @@
 #!!! Create new vendor cache for new composer version by get_vendor_cache.sh !!!
 
 Name: composer
-Version: 1.1.3
+Version: 1.4.1
 Release: alt1
 
 Summary: Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere.
@@ -10,6 +10,7 @@ License: MIT
 Group: System/Configuration/Packaging
 Url: https://github.com/composer/composer
 
+# Source-git: https://github.com/composer/composer
 Source: %name-%version.tar
 
 Packager: Danil Mikhailov <danil@altlinux.org>
@@ -60,6 +61,9 @@ EOF
 %attr(755,root,root) %_datadir/%name.phar
 
 %changelog
+* Mon Mar 27 2017 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
+- build new version
+
 * Sat Jul 16 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.3-alt1
 - build new version 1.1.3
 - set memory_limit 256M
