@@ -25,7 +25,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        56.0.2924.87
+Version:        57.0.2987.110
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -61,18 +61,16 @@ Patch009: 0009-DEBIAN-disable-third-party-cookies-by-default.patch
 Patch010: 0010-DEBIAN-add-ps-printing-capability-gtk2.patch
 Patch011: 0011-ALT-fix-shrank-by-one-character.patch
 Patch012: 0012-DEBIAN-10-seconds-may-not-be-enough-so-do-not-kill-t.patch
-Patch013: 0013-DEBIAN-better-integration-with-gtk3-themes.patch
-Patch014: 0014-FEDORA-path-max.patch
-Patch015: 0015-FEDORA-Ignore-broken-nacl-open-fd-counter.patch
-Patch016: 0016-FEDORA-Use-libusb_interrupt_event_handler-from-curre.patch
-Patch017: 0017-FEDORA-Enable-ARM-CPU-detection-for-webrtc-from-arch.patch
-Patch018: 0018-FEDORA-Disable-MADV_FREE-if-set-by-glibc.patch
-Patch019: 0019-FEDORA-Fix-last-commit-position-issue.patch
-Patch020: 0020-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
-Patch021: 0021-ALT-gzip-does-not-support-the-rsyncable-option.patch
-Patch022: 0022-UBUNTU-Enable-VA-API-on-linux.patch
-Patch023: 0023-UBUNTU-Specify-max-resolution.patch
-Patch024: 0024-ALT-Use-rpath-link-and-absolute-rpath.patch
+Patch013: 0013-FEDORA-path-max.patch
+Patch014: 0014-FEDORA-Ignore-broken-nacl-open-fd-counter.patch
+Patch015: 0015-FEDORA-Use-libusb_interrupt_event_handler-from-curre.patch
+Patch016: 0016-FEDORA-Enable-ARM-CPU-detection-for-webrtc-from-arch.patch
+Patch017: 0017-FEDORA-Fix-last-commit-position-issue.patch
+Patch018: 0018-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
+Patch019: 0019-ALT-gzip-does-not-support-the-rsyncable-option.patch
+Patch020: 0020-GENTOO-Enable-VA-API-on-linux.patch
+Patch021: 0021-UBUNTU-Specify-max-resolution.patch
+Patch022: 0022-ALT-Use-rpath-link-and-absolute-rpath.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -247,8 +245,6 @@ cp -a libchromiumcontent/chromiumcontent .
 %patch020 -p1
 %patch021 -p1
 %patch022 -p1
-%patch023 -p1
-%patch024 -p1
 ### Finish apply patches
 
 # Enable support for the Widevine CDM plugin
@@ -343,6 +339,7 @@ tools/gn/bootstrap/bootstrap.py -v \
 
 ninja \
 	-v \
+	-j 2 \
 	-C %target \
 	chrome \
 	chrome_sandbox \
@@ -465,6 +462,28 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Mon Mar 27 2017 Alexey Gladkov <legion@altlinux.ru> 57.0.2987.110-alt1
+- New version (57.0.2987.110).
+- Security fixes:
+  - CVE-2017-5030: Memory corruption in V8. Credit to Brendon Tiszka
+  - CVE-2017-5031: Use after free in ANGLE. Credit to Looben Yang
+  - CVE-2017-5032: Out of bounds write in PDFium. Credit to Ashfaq Ansari - Project Srishti
+  - CVE-2017-5029: Integer overflow in libxslt. Credit to Holger Fuhrmannek
+  - CVE-2017-5034: Use after free in PDFium. Credit to Ke Liu of Tencent's Xuanwu LAB
+  - CVE-2017-5035: Incorrect security UI in Omnibox. Credit to Enzo Aguado
+  - CVE-2017-5036: Use after free in PDFium. Credit to Anonymous
+  - CVE-2017-5037: Multiple out of bounds writes in ChunkDemuxer. Credit to Yongke Wang of Tencent's Xuanwu Lab (xlab.tencent.com)
+  - CVE-2017-5039: Use after free in PDFium. Credit to jinmo123
+  - CVE-2017-5040: Information disclosure in V8. Credit to Choongwoo Han
+  - CVE-2017-5041: Address spoofing in Omnibox. Credit to Jordi Chancel
+  - CVE-2017-5033: Bypass of Content Security Policy in Blink. Credit to Nicolai Grodum
+  - CVE-2017-5042: Incorrect handling of cookies in Cast. Credit to Mike Ruddy
+  - CVE-2017-5038: Use after free in GuestView. Credit to Anonymous
+  - CVE-2017-5043: Use after free in GuestView. Credit to Anonymous
+  - CVE-2017-5044: Heap overflow in Skia. Credit to Kushal Arvind Shah of Fortinet's FortiGuard Labs
+  - CVE-2017-5045: Information disclosure in XSS Auditor. Credit to Dhaval Kapil (vampire)
+  - CVE-2017-5046: Information disclosure in Blink. Credit to Masato Kinugawa
+
 * Wed Feb 08 2017 Alexey Gladkov <legion@altlinux.ru> 56.0.2924.87-alt1
 - New version (56.0.2924.87).
 - Security fixes:
