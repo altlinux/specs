@@ -3,17 +3,21 @@
 %def_disable 	debug
 
 %def_disable 	appdata
+%def_enable 	svg
 
-%def_disable	bsfilter
-%def_enable 	tnef
-%def_enable 	gdata
+# pligins
 %def_enable 	archive
+%def_disable	bsfilter
+%def_disable 	dillo
+%def_enable 	fancy
+%def_enable 	gdata
+%def_enable 	tnef
 
 %define _unpackaged_files_terminate_build 1
 
 Name:   	claws-mail
-Version:	3.14.1
-Release: 	alt1.1
+Version:	3.15.0
+Release: 	alt1
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
@@ -37,6 +41,7 @@ BuildRequires: libgtk+3-devel
 %else
 BuildRequires: libgtk+2-devel
 %endif
+%{?_enable_svg:BuildRequires: librsvg-devel}
 
 # For plugin-archive:
 %if_enabled archive
@@ -47,12 +52,14 @@ BuildRequires: libarchive-devel
 BuildRequires: libcurl-devel
 
 # For plugin-fancy
+%if_enabled fancy
 %if_enabled gtk3
 BuildRequires: libwebkitgtk3-devel
 %else
 BuildRequires: libwebkitgtk2-devel
 %endif
 BuildRequires: libsoup-gnome-devel
+%endif
 
 # For plugin-gdata
 %if_enabled gdata
@@ -87,6 +94,9 @@ BuildRequires: libcanberra-gtk2-devel
 %if_enabled tnef
 BuildRequires: libytnef-devel
 %endif
+
+# For vcalendar
+BuildRequires: libical-devel
 
 # For tools
 BuildRequires:  python
@@ -137,12 +147,6 @@ Summary:	Install all plugins for %name
 Group:		Networking/Mail
 BuildArch:	noarch
 Requires:	%name = %version-%release
-Requires:	%name-plugin-spamassassin = %version-%release
-Requires:	%name-plugin-bogofilter = %version-%release
-Requires:	%name-plugin-pgpcore = %version-%release
-Requires:	%name-plugin-pgpmime = %version-%release
-Requires:	%name-plugin-pgpinline = %version-%release
-Requires:	%name-plugin-smime = %version-%release
 Requires:	%name-plugin-acpinotifier = %version-%release
 Requires:	%name-plugin-addresskeeper = %version-%release
 %if_enabled archive
@@ -150,11 +154,17 @@ Requires:	%name-plugin-archive = %version-%release
 %endif
 Requires:	%name-plugin-attachwarner = %version-%release
 Requires:	%name-plugin-attremover = %version-%release
+Requires:	%name-plugin-bogofilter = %version-%release
 %if_enabled bsfilter
 Requires:	%name-plugin-bsfilter = %version-%release
 %endif
 Requires:	%name-plugin-clamd = %version-%release
+%if_enabled dillo
+Requires:	%name-plugin-dillo = %version-%release
+%endif
+%if_enabled fancy
 Requires:	%name-plugin-fancy = %version-%release
+%endif
 Requires:	%name-plugin-fetchinfo = %version-%release
 %if_enabled gdata
 Requires:	%name-plugin-gdata = %version-%release
@@ -166,8 +176,13 @@ Requires:	%name-plugin-newmail = %version-%release
 Requires:	%name-plugin-notification = %version-%release
 Requires:	%name-plugin-pdfviewer = %version-%release
 Requires:	%name-plugin-perl = %version-%release
+Requires:	%name-plugin-pgpcore = %version-%release
+Requires:	%name-plugin-pgpinline = %version-%release
+Requires:	%name-plugin-pgpmime = %version-%release
 Requires:	%name-plugin-python = %version-%release
 Requires:	%name-plugin-rssyl = %version-%release
+Requires:	%name-plugin-smime = %version-%release
+Requires:	%name-plugin-spamassassin = %version-%release
 Requires:	%name-plugin-spamreport = %version-%release
 %if_enabled tnef
 Requires:	%name-plugin-tnef = %version-%release
@@ -176,77 +191,6 @@ Requires:	%name-plugin-vcalendar = %version-%release
 
 %description	plugins
 This virtual package installs all plugins for %name.
-
-%package	plugin-spamassassin
-Summary:	SpamAssassin plugin for %name
-Group:		Networking/Mail
-Requires:	%name = %version-%release
-Requires:	spamassassin
-Obsoletes:	%_oldname-plugin-spamassassin < %version
-Provides:	%_oldname-plugin-spamassassin
-
-%description	plugin-spamassassin
-This plugin for %name provides integration with SpamAssassin.
-
-%package	plugin-bogofilter
-Summary:	Bogofilter plugin for %name
-Group:		Networking/Mail
-Requires:	%name = %version-%release
-Requires:	bogofilter bogofilter-utils
-Obsoletes:	%_oldname-plugin-bogofilter < %version
-Provides:	%_oldname-plugin-bogofilter
-
-%description	plugin-bogofilter
-This plugin for %name provides integration with Bogofilter spam checking
-tool.
-
-%package	plugin-pgpcore
-Summary:	Core PGP plugin for %name
-Group:		Networking/Mail
-Requires:	%name = %version-%release
-Obsoletes:	%_oldname-plugin-pgpcore < %version
-Provides:	%_oldname-plugin-pgpcore
-
-%description	plugin-pgpcore
-This plugin for %name provides core PGP functionality. It is used by
-other encryption/signing plugins.
-
-%package	plugin-pgpmime
-Summary:	PGP/MIME plugin for %name
-Group:		Networking/Mail
-Requires:	%name = %version-%release
-Requires:	%name-plugin-pgpcore = %version-%release
-Obsoletes:	%_oldname-plugin-pgpmime < %version
-Provides:	%_oldname-plugin-pgpmime
-
-%description	plugin-pgpmime
-This plugin for %name lets you create and see messages encrypted/signed
-with PGP/MIME.
-
-%package	plugin-pgpinline
-Summary:	PGP/Inline plugin for %name
-Group:		Networking/Mail
-Requires:	%name = %version-%release
-Requires:	%name-plugin-pgpcore = %version-%release
-Obsoletes:	%_oldname-plugin-pgpinline < %version
-Provides:	%_oldname-plugin-pgpinline
-
-%description	plugin-pgpinline
-This plugin for %name lets you create and see messages encrypted/signed
-with PGP/Inline.
-
-%package	plugin-smime
-Summary:	S/MIME plugin for %name
-Group:		Networking/Mail
-Requires:	%name = %version-%release
-Requires:	%name-plugin-pgpcore = %version-%release
-Requires:   dirmngr gnupg2-common
-Obsoletes:	%_oldname-plugin-smime < %version
-Provides:	%_oldname-plugin-smime
-
-%description	plugin-smime
-This plugin for %name lets you create and see messages encrypted/signed
-with S/MIME.
 
 %package	plugin-acpinotifier
 Summary:	Mail notification via LEDs on some laptops (Acer, ASUS, Fujitsu, IBM).
@@ -302,6 +246,18 @@ Requires:	%name = %version-%release
 %description	plugin-attremover
 This plugin lets you remove attachments from emails.
 
+%package	plugin-bogofilter
+Summary:	Bogofilter plugin for %name
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+Requires:	bogofilter bogofilter-utils
+Obsoletes:	%_oldname-plugin-bogofilter < %version
+Provides:	%_oldname-plugin-bogofilter
+
+%description	plugin-bogofilter
+This plugin for %name provides integration with Bogofilter spam checking
+tool.
+
 %package	plugin-bsfilter
 Summary:	Check messages for spam using Bsfilter
 Group:		Networking/Mail
@@ -321,6 +277,23 @@ Requires:	clamav
 %description	plugin-clamd
 This plugin scans all messages that are received from an IMAP, LOCAL or
 POP account using clamd (Clam AV).
+
+%package       plugin-dillo
+Summary:       Dillo browser plugin for %name
+Group:         Networking/Mail
+Requires:      %name = %version
+Requires:      dillo >= 0.7.2
+Obsoletes:     %_oldname-plugin-dillo < %version
+Provides:      %_oldname-plugin-dillo
+
+%description   plugin-dillo
+This plugin uses the Dillo (http://www.dillo.org) browser to
+view text/html MIME parts inside Claws Mail.
+See README file for more information.
+
+This plugin only provides very basic HTML
+support; if you want something more, consider installing
+%name-plugin-fancy package.
 
 %package	plugin-fancy
 Summary:	Renders HTML e-mail using the WebKit library
@@ -452,6 +425,41 @@ This plugin is intended to extend the filtering possibilities of Claws
 Mail. It provides a Perl interface to Claws Mail' filtering mechanism,
 allowing the use of full Perl power in email filters.
 
+%package	plugin-pgpcore
+Summary:	Core PGP plugin for %name
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+Obsoletes:	%_oldname-plugin-pgpcore < %version
+Provides:	%_oldname-plugin-pgpcore
+
+%description	plugin-pgpcore
+This plugin for %name provides core PGP functionality. It is used by
+other encryption/signing plugins.
+
+%package	plugin-pgpinline
+Summary:	PGP/Inline plugin for %name
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+Requires:	%name-plugin-pgpcore = %version-%release
+Obsoletes:	%_oldname-plugin-pgpinline < %version
+Provides:	%_oldname-plugin-pgpinline
+
+%description	plugin-pgpinline
+This plugin for %name lets you create and see messages encrypted/signed
+with PGP/Inline.
+
+%package	plugin-pgpmime
+Summary:	PGP/MIME plugin for %name
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+Requires:	%name-plugin-pgpcore = %version-%release
+Obsoletes:	%_oldname-plugin-pgpmime < %version
+Provides:	%_oldname-plugin-pgpmime
+
+%description	plugin-pgpmime
+This plugin for %name lets you create and see messages encrypted/signed
+with PGP/MIME.
+
 %package	plugin-python
 Summary:	This plugin provides Python integration features
 Group:		Networking/Mail
@@ -483,6 +491,30 @@ Mail's shortcuts are hardwired into your fingers.
 Also, the RSSyl plugin unleashes its full potential when used with an
 HTML viewer plugin like Dillo or Gtkhtml2Viewer, as this allows fetching
 a post's images and font styles.
+
+%package	plugin-smime
+Summary:	S/MIME plugin for %name
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+Requires:	%name-plugin-pgpcore = %version-%release
+Requires:   dirmngr gnupg2-common
+Obsoletes:	%_oldname-plugin-smime < %version
+Provides:	%_oldname-plugin-smime
+
+%description	plugin-smime
+This plugin for %name lets you create and see messages encrypted/signed
+with S/MIME.
+
+%package	plugin-spamassassin
+Summary:	SpamAssassin plugin for %name
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+Requires:	spamassassin
+Obsoletes:	%_oldname-plugin-spamassassin < %version
+Provides:	%_oldname-plugin-spamassassin
+
+%description	plugin-spamassassin
+This plugin for %name provides integration with SpamAssassin.
 
 %package	plugin-spamreport
 Summary:	This plugin reports spam to various places
@@ -555,17 +587,24 @@ echo 'echo "%version"' >./version
 		--disable-manual \
 		%{subst_enable appdata} \
 		%{subst_enable gtk3} \
-		%if_disabled gdata
-		--disable-gdata-plugin \
+		%{subst_enable svg} \
+		%if_disabled archive
+		--disable-archive-plugin \
 		%endif
 		%if_disabled bsfilter
 		--disable-bsfilter-plugin \
 		%endif
+		%if_disabled dillo
+		--disable-dillo-plugin \
+		%endif
+		%if_disabled fancy
+		--disable-fancy-plugin \
+		%endif
+		%if_disabled gdata
+		--disable-gdata-plugin \
+		%endif
 		%if_disabled tnef
 		--disable-tnef_parse-plugin \
-		%endif
-		%if_disabled archive
-		--disable-archive-plugin \
 		%endif
 		%if_enabled debug
 		--enable-crash-dialog
@@ -691,10 +730,6 @@ install -p -m644 %name.png %buildroot%_pixmapsdir/
 %if_enabled appdata
 %_datadir/appdata/claws-mail-bsfilter.metainfo.xml
 %endif
-%else
-%if_enabled appdata
-%exclude %_datadir/appdata/claws-mail-bsfilter.metainfo.xml
-%endif
 %endif
 
 %files plugin-clamd
@@ -703,10 +738,20 @@ install -p -m644 %name.png %buildroot%_pixmapsdir/
 %_datadir/appdata/claws-mail-clamd.metainfo.xml
 %endif
 
+%if_enabled dillo
+%files plugin-dillo
+%_claws_plugins_path/dillo.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-dillo.metainfo.xml
+%endif
+%endif
+
+%if_enabled fancy
 %files plugin-fancy
 %_claws_plugins_path/fancy.so
 %if_enabled appdata
 %_datadir/appdata/claws-mail-fancy.metainfo.xml
+%endif
 %endif
 
 %files plugin-fetchinfo
@@ -790,10 +835,6 @@ install -p -m644 %name.png %buildroot%_pixmapsdir/
 %if_enabled appdata
 %_datadir/appdata/claws-mail-tnef_parse.metainfo.xml
 %endif
-%else
-%if_enabled appdata
-%exclude %_datadir/appdata/claws-mail-tnef_parse.metainfo.xml
-%endif
 %endif
 
 %files plugin-vcalendar
@@ -812,6 +853,13 @@ install -p -m644 %name.png %buildroot%_pixmapsdir/
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Mon Mar 27 2017 Mikhail Efremov <sem@altlinux.org> 3.15.0-alt1
+- Add build switch for fancy plugin.
+- Spec cleanup.
+- Add Dillo pligin support, but disable it for now.
+- Enable librsvg support.
+- Updated to 3.15.0.
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 3.14.1-alt1.1
 - rebuild with new perl 5.24.1
 
