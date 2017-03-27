@@ -1,6 +1,6 @@
 Name: mithraen-build-utils
 Summary: Simple utilites that simplify development to me
-Version: 0.1.28
+Version: 0.1.29
 Release: alt1
 License: GPL
 Group: Development/Other
@@ -35,6 +35,11 @@ install -m644 share/* %buildroot%_datadir/%name
 %_bindir/*
 %_datadir/%name
 %changelog
+* Tue Mar 28 2017 Denis Smirnov <mithraen@altlinux.org> 0.1.29-alt1
+- gear-rel: add support for .gear/specfile
+- update Co and Status
+- fix so-graph
+
 * Fri Nov 13 2015 Denis Smirnov <mithraen@altlinux.ru> 0.1.28-alt1
 - gear-clone: fix origin remote config (ALT #31479)
 
