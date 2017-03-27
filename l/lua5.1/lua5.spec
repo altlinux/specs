@@ -1,7 +1,7 @@
 %def_with lua_compat
 Name: lua5.1
 Version: 5.1.5
-Release: alt13
+Release: alt14
 
 Summary: Embeddable programming language
 License: MIT
@@ -12,7 +12,6 @@ Source: lua-%version.tar
 
 Patch00: lua5.1-5.1.5-alt-at-ABI-compat.patch
 Patch01: lua5.1-5.1.5-alt-at-ldo-abort.patch
-Patch02: lua5.1-5.1.5-alt-at-luaconf.patch
 Patch03: lua5.1-5.1.5-alt-at-luaconf-LUA_USE_LINUX.patch
 Patch04: lua5.1-5.1.5-alt-at-restore-lua_version.patch
 Patch05: lua5.1-5.1.5-alt-at-symbol-map.patch
@@ -136,7 +135,6 @@ stand-alone language through the simple command line interpreter provided.
 %setup -n lua-%version
 %patch00 -p1
 %patch01 -p1
-%patch02 -p1
 %patch03 -p1
 %patch04 -p1
 %patch05 -p1
@@ -153,6 +151,10 @@ stand-alone language through the simple command line interpreter provided.
 %def_enable Werror
 
 cd ./src
+sed -i '/#define LUA_ROOT/s|/usr/local|%_prefix|' luaconf.h
+sed -i '/#define LUA_CDIR/s|lib/|%_lib/|' luaconf.h
+sed -i '/#define LUA_MAXINPUT/s|512|BUFSIZ|' luaconf.h
+
 # from Makefile
 core='lapi lcode ldebug ldo ldump lfunc lgc llex lmem lobject lopcodes lparser lstate lstring ltable ltm lundump lvm lzio'
 lib='lauxlib lbaselib ldblib liolib lmathlib loslib ltablib lstrlib loadlib linit'
@@ -264,6 +266,9 @@ fi
 %pkgdocdir/test
 
 %changelog
+* Sun Mar 26 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.1.5-alt14
+- removed lua5.1-5.1.5-alt-at-luaconf.patch in favor to general approach
+
 * Thu Mar 09 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt13
 - adjusted liblua5-devel conflicts (closes: #33223)
 
@@ -283,7 +288,7 @@ fi
 * Sat Feb 11 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt8
 - added Requires: on preinstall subpackage
 - upgrade script made more forceful (should help #33104)
-					    
+
 * Fri Feb 10 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt7
 - added %_includedir/lua5.1 (seen in boswars, for better compatibility)
 
