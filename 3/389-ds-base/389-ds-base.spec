@@ -4,7 +4,7 @@
 
 Summary: 389 Directory Server (base)
 Name: 	 389-ds-base
-Version: 1.3.6.1
+Version: 1.3.6.3
 Release: alt1
 License: GPLv3+ with exceptions
 Url: 	 http://port389.org
@@ -12,10 +12,11 @@ Group: 	 System/Servers
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:  %name-%version.tar
-# VCS:   https://git.fedorahosted.org/git/389/ds.git
+# VCS:   https://git@pagure.io/389-ds-base.git
 Patch1:  alt-fix-initscripts.patch
 Patch2:  alt-bash3-support.patch
 Patch3:  alt-fix-sasl2.patch
+Patch4:  alt-fix-const-declatations.patch
 
 BuildRequires: 389-adminutil-devel gcc-c++ libdb4-devel libicu-devel 
 BuildRequires: libldap-devel libnet-snmp-devel libnl-devel libpam-devel 
@@ -27,6 +28,8 @@ BuildRequires: perl-NetAddr-IP
 BuildRequires: perl-Archive-Tar
 BuildRequires: perl-Socket6
 BuildRequires: libsystemd-devel
+BuildRequires: libevent-devel
+BuildRequires: doxygen
 
 Provides:  fedora-ds = %version-%release
 Obsoletes: fedora-ds < %version-%release
@@ -89,10 +92,15 @@ and without the main package.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %autoreconf
 # Install SysVInit scripts anyway
 subst 's/@\(INITDDIR_TRUE\|SYSTEMD_FALSE\)@//g' Makefile.in
+
+# For starnge cleanup before documentation build
+mkdir -p man/man3
+touch man/man3/_file
 
 %build
 %configure  \
@@ -137,6 +145,10 @@ subst 's|File::Spec->tmpdir|"/tmp"|' %buildroot%_libdir/%pkgname/perl/DSCreate.p
 # move main libraries to common directory
 mv %buildroot%_libdir/%pkgname/*.so* %buildroot%_libdir/
 
+# Copy in our docs from doxygen
+mkdir -p %buildroot%_man3dir
+cp man/man3/* %buildroot%_man3dir
+
 %files
 %doc LICENSE LICENSE.GPLv3+ LICENSE.openssl README 
 %dir %_sysconfdir/%pkgname
@@ -170,12 +182,16 @@ mv %buildroot%_libdir/%pkgname/*.so* %buildroot%_libdir/
 %files devel
 %_includedir/%pkgname
 %_libdir/*.so
+%exclude %_libdir/libns-dshttpd-*.so
 %_pkgconfigdir/*.pc
+%_man3dir/*
 
 %files libs
 %dir %_libdir/%pkgname
+%_libdir/libns-dshttpd-*.so
+%_libdir/libnunc-stans.so.*
+%_libdir/libsds.so.*
 %_libdir/libslapd.so.*
-%_libdir/libns-dshttpd.so.*
 
 %triggerpostun -- 389-ds < 1.2.10.0-alt1
 echo "Upgrading 389-ds < 1.2.10.0, manual Offline upgrade is required!
@@ -190,6 +206,13 @@ Turn 389-ds off and make 'setup-ds -u' then"
 %preun_service %pkgname-snmp
 
 %changelog
+* Mon Mar 27 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.6.3-alt1
+- New version
+- Fix type conflict for snmptrap_oid and snmptrap_oid_len (ALT #33282)
+
+* Sat Mar 18 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.6.2-alt1
+- New version
+
 * Wed Nov 02 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.6.1-alt1
 - new version 1.3.6.1
 
