@@ -1,11 +1,11 @@
 Name: ioping
-Version: 0.9
-Release: alt2
+Version: 1.0
+Release: alt1
 Summary: simple disk I/O latency monitoring tool
 
 Group: File tools
 License: GPLv3+
-Url: http://code.google.com/p/ioping
+Url: https://github.com/koct9i/ioping
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Source: ioping-%version.tar
@@ -30,6 +30,9 @@ CFLAGS="$RPM_OPT_FLAGS" make
 %attr(644,root,root) %_man1dir/ioping.1.*
 
 %changelog
+* Mon Mar 27 2017 Denis Smirnov <mithraen@altlinux.ru> 1.0-alt1
+- 1.0
+
 * Mon Sep 14 2015 Denis Smirnov <mithraen@altlinux.ru> 0.9-alt2
 - fix .gear/tags/list
 
