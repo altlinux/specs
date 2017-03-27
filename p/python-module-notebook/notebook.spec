@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 4.0.4
-Release: alt2.1
+Release: alt3
 Summary: Jupyter Interactive Notebook
 License: BSD
 Group: Development/Python
@@ -16,6 +16,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
+BuildPreReq: python-module-pathlib python-module-sphinx_rtd_theme
 BuildPreReq: python-devel python-module-setuptools-tests pandoc
 BuildPreReq: python-module-zmq python-module-jinja2
 BuildPreReq: python-module-tornado python-module-ipython_genutils-tests
@@ -183,6 +184,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 27 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.4-alt3
+- (NMU) Fixed build
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
