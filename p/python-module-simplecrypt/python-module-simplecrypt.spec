@@ -2,14 +2,13 @@
 
 Name:    python-module-%modulename
 Version: 4.1.7
-Release: alt1
+Release: alt2
 
 Summary: Simple, secure encryption and decryption for Python
 License: Public Domain
 Group:   Development/Python
 URL:     https://pypi.python.org/pypi/simple-crypt
 
-Packager: Denis Medvedev <nbr@altlinux.org>
 
 BuildRequires: rpm-build-python
 BuildRequires: python-devel
@@ -37,9 +36,12 @@ cd simple-crypt
 %files
 %python_sitelibdir/%modulename/
 %python_sitelibdir/*.egg-info
-
+%doc simple-crypt/README.*
 
 
 %changelog
+* Mon Mar 27 2017 Denis Medvedev <nbr@altlinux.org> 4.1.7-alt2
+- README packed
+
 * Mon Mar 27 2017 Denis Medvedev <nbr@altlinux.org> 4.1.7-alt1
 Initial release
