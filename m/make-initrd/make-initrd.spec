@@ -2,7 +2,7 @@
 
 Name: make-initrd
 Version: 2.0.3
-Release: alt2
+Release: alt3
 
 Summary: Creates an initramfs image
 License: GPL3
@@ -162,6 +162,7 @@ fi
 %_sbindir/*
 %_datadir/%myname
 %_man1dir/*
+/lib/initrd
 %exclude %_datadir/%myname/features/devmapper
 %exclude %_datadir/%myname/features/lvm
 %exclude %_datadir/%myname/features/luks
@@ -197,6 +198,9 @@ fi
 %_datadir/%myname/features/ucode
 
 %changelog
+* Tue Mar 28 2017 Alexey Gladkov <legion@altlinux.ru> 2.0.3-alt3
+- Change placement of initramfs helpers.
+
 * Sun Mar 26 2017 Alexey Gladkov <legion@altlinux.ru> 2.0.3-alt2
 - Rewrite ueventd.
 
