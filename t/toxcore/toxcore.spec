@@ -5,7 +5,7 @@
 Name: toxcore
 Summary: All-in-one secure communication platform
 Version: 0.0.1
-Release: alt2.20160725
+Release: alt2.20170327
 License: ISC license
 Group: System/Libraries
 BuildRequires: libopus-devel libsodium-devel libvpx-devel libcheck-devel
@@ -132,6 +132,9 @@ install -D -m644 other/bootstrap_daemon/tox-bootstrapd.service %buildroot%_unitd
 %_libdir/libtoxencryptsave.a
 
 %changelog
+* Mon Mar 27 2017 Denis Smirnov <mithraen@altlinux.ru> 0.0.1-alt2.20170327
+- update from upstream git
+
 * Mon Jul 25 2016 Vitaly Lipatov <lav@altlinux.ru> 0.0.1-alt2.20160725
 - build tox-bootstrapd subpackage
 
