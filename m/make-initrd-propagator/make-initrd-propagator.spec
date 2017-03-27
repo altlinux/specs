@@ -1,6 +1,6 @@
 Name: make-initrd-propagator
 Version: 0.31
-Release: alt1
+Release: alt2
 
 Summary: Put propagator into make-initrd generated image
 License: GPL
@@ -16,7 +16,7 @@ Requires: e2fsprogs time
 Requires: udev-rules udev-extras
 
 # For new put-file utility
-Requires: make-initrd >= 0.7.6-alt1
+Requires: make-initrd >= 2.0.3-alt1
 
 BuildArch: noarch
 AutoReq: noshell, noshebang
@@ -37,6 +37,9 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Tue Mar 21 2017 Alexey Gladkov <legion@altlinux.ru> 0.31-alt2
+- Port to make-initrd >= 2.0.3
+
 * Mon Oct 17 2016 Michael Shigorin <mike@altlinux.org> 0.31-alt1
 - improve RW slice operation (closes: #32476, #32562):
   only create/use it when there's enough space (1Gb or more), and
