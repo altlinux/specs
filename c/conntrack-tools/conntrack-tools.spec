@@ -1,15 +1,15 @@
 Name:           conntrack-tools
-Version:        1.4.1
-Release: 	alt1
+Version:        1.4.4
+Release: 	alt1%ubt
 Summary:        Tool to manipulate netfilter connection tracking table
 
 Group:          System/Kernel and hardware
 License:        GPL
 URL:            http://netfilter.org
 Source0:        http://netfilter.org/projects/conntrack-tools/files/%name-%version.tar
+BuildRequires(pre): rpm-build-ubt
 
-# Automatically added by buildreq on Sat Oct 30 2010
-BuildRequires: flex libnetfilter_conntrack-devel libmnl-devel libnetfilter_cttimeout-devel libnetfilter_cthelper-devel libnetfilter_queue-devel
+BuildRequires: flex libnetfilter_conntrack-devel libmnl-devel libnetfilter_cttimeout-devel libnetfilter_cthelper-devel libnetfilter_queue-devel libsystemd-devel
 
 %description
 %name  is  used to search, list, inspect and maintain the netfilter
@@ -25,7 +25,7 @@ show an event message (one line) per newly established connection.
 
 %build
 %autoreconf -fisv
-%configure
+%configure --enable-systemd
 %make_build
 
 %install
@@ -38,8 +38,12 @@ make install DESTDIR=%buildroot
 %_sbindir/conntrackd
 %_libdir/%name/*.so
 %_man8dir/*
+%_man5dir/*
 
 %changelog
+* Mon Mar 27 2017 Anton Farygin <rider@altlinux.ru> 1.4.4-alt1%ubt
+- new version
+
 * Mon Jun 24 2013 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1
 - new version
 
