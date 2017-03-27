@@ -1,5 +1,5 @@
 Name:    jthread
-Version: 1.3.1
+Version: 1.3.3
 Release: alt1
 
 Summary: JThread provides classes to make use of threads easy on different platforms
@@ -43,7 +43,7 @@ popd
 rm -f %buildroot%_libdir/libjthread.a
 
 %files
-%doc ChangeLog LICENSE.MIT README.TXT TODO
+%doc README.md
 %_libdir/libjthread.so.*
 
 %files devel
@@ -54,6 +54,9 @@ rm -f %buildroot%_libdir/libjthread.a
 %_pkgconfigdir/jthread.pc
 
 %changelog
+* Mon Mar 27 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.3-alt1
+- New version
+
 * Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt1
 - New version
 - Build by cmake
