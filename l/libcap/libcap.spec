@@ -1,5 +1,5 @@
 Name: libcap
-Version: 2.24
+Version: 2.25
 Release: alt1
 Epoch: 1
 
@@ -14,7 +14,7 @@ Source: %name-%version-%release.tar
 %{expand:%%define lib_suffix %(test %_lib != lib64 && echo %%nil || echo '()(64bit)')}
 Provides: %name.so.1%lib_suffix
 
-BuildRequires: gperf, libattr-devel
+BuildRequires: gperf
 BuildRequires(pre): libpam-devel
 
 %set_pam_name pam_cap
@@ -68,10 +68,10 @@ install -pDm600 pam_cap/capability.conf %buildroot/etc/security/capability.conf
 symlink="%buildroot/%_lib/libcap.so"
 soname=$(readlink "$symlink")
 rm "$symlink"
-ln -s ../../%_lib/"$soname" "%buildroot%_libdir/libcap.so"
+ln -rsnf %buildroot/%_lib/"$soname" "%buildroot%_libdir/libcap.so"
 
 # For backwards compatibility.
-ln -s ../../%_lib/"$soname" "%buildroot%_libdir/libcap.so.1"
+ln -rsnf %buildroot/%_lib/"$soname" "%buildroot%_libdir/libcap.so.1"
 
 %files
 /%_lib/*.so.*
@@ -94,6 +94,9 @@ ln -s ../../%_lib/"$soname" "%buildroot%_libdir/libcap.so.1"
 %_pam_modules_dir/*
 
 %changelog
+* Sun Mar 26 2017 Dmitry V. Levin <ldv@altlinux.org> 1:2.25-alt1
+- Updated to libcap-2.25-1-g1f52c8a.
+
 * Wed Apr 30 2014 Dmitry V. Levin <ldv@altlinux.org> 1:2.24-alt1
 - Updated to libcap-2.24-2-g3c22870 (closes: #29286).
 
