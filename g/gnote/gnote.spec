@@ -1,9 +1,9 @@
-%define ver_major 3.22
+%define ver_major 3.24
 %define _libexecdir /usr/libexec
 %def_without x11_support
 
 Name: gnote
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Note-taking application
@@ -18,9 +18,8 @@ Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.t
 %define glibmm_ver 2.32
 %define gtkspell_ver 3.0.0
 %define libsecret_ver 0.8
-%define boost_ver 1.34
 
-BuildRequires: gcc-c++ boost-devel
+BuildRequires: gcc-c++
 BuildRequires: yelp-tools intltool
 BuildRequires: pkgconfig(glibmm-2.4)  >= %glibmm_ver
 BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver
@@ -32,6 +31,8 @@ BuildRequires: pkgconfig(gtkspell3-3.0) >= %gtkspell_ver
 BuildRequires: pkgconfig(libsecret-1) >= %libsecret_ver
 BuildRequires: pkgconfig(uuid)
 BuildRequires: desktop-file-utils
+# for check
+BuildRequires: libunittest-cpp-devel
 
 %description
 Gnote is a desktop note-taking application which is simple and easy to use.
@@ -80,6 +81,9 @@ desktop-file-install \
 %doc README TODO NEWS AUTHORS
 
 %changelog
+* Mon Mar 27 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Sun Mar 19 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
 - 3.22.2
 
