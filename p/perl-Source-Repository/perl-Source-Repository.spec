@@ -1,7 +1,7 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.387
+Version: 0.388
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -32,6 +32,9 @@ BuildRequires: perl-devel perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-String-Sh
 %perl_vendor_privlib/Source*
 
 %changelog
+* Mon Mar 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.388-alt1
+- updated CPAN lists
+
 * Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.387-alt1
 - moved Filter to Mass
 
