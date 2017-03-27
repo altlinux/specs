@@ -3,7 +3,7 @@
 %define _home %_localstatedir/%name
 
 Name: eggdrop
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: Eggdrop is an IRC bot, written in C
@@ -113,6 +113,9 @@ rm -rf %buildroot%_datadir/%name/doc
 %doc doc/* README*
 
 %changelog
+* Mon Mar 27 2017 Andrey Cherepanov <cas@altlinux.org> 1.8.1-alt1
+- New version
+
 * Thu Jan 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.8.0-alt1
 - new version 1.8.0
 
