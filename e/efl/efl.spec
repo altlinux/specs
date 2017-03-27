@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
@@ -26,7 +26,7 @@
 
 Name: efl
 Version: %ver_major.4
-Release: alt2
+Release: alt3
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
@@ -421,6 +421,9 @@ find %buildroot%_libdir -name "*.la" -delete
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Mon Mar 27 2017 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt3
+- updated to v1.18.4-16-ga189bd5
+
 * Thu Dec 29 2016 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt2
 - rebuilt against libraw.so.16
 
