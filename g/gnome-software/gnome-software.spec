@@ -1,4 +1,4 @@
-%define ver_major 3.22
+%define ver_major 3.24
 %define plugins_ver 11
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Software
@@ -14,9 +14,10 @@
 %def_disable packagekit
 %def_enable webapps
 %def_enable odrs
+%def_disable tests
 
 Name: gnome-software
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt0.2
 
 Summary: Software manager for GNOME
@@ -42,9 +43,9 @@ BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libappstream-glib-devel >= %appstream_glib_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver
 BuildRequires: libsoup-devel >= %soup_ver
-BuildRequires: gnome-common rpm-build-xdg intltool yelp-tools xsltproc docbook-style-xsl
+BuildRequires: gnome-common rpm-build-xdg intltool yelp-tools gtk-doc xsltproc docbook-style-xsl
 BuildRequires: libsqlite3-devel libsecret-devel gsettings-desktop-schemas-devel
-BuildRequires: librpm-devel
+BuildRequires: librpm-devel valgrind-tool-devel
 %{?_enable_gudev:BuildRequires: libgudev-devel}
 %{?_enable_gtkspell:BuildRequires: libgtkspell3-devel}
 %{?_enable_gnome_desktop:BuildRequires: libgnome-desktop3-devel >= %gnome_desktop_ver}
@@ -73,7 +74,8 @@ GNOME Software is for installing, removing and updating software.
 	%{subst_enable flatpak} \
 	%{subst_enable ostree} \
 	%{subst_enable limba} \
-	%{subst_enable packagekit}
+	%{subst_enable packagekit} \
+	%{subst_enable tests}
 %make_build
 
 %install
@@ -84,6 +86,8 @@ GNOME Software is for installing, removing and updating software.
 %files -f %name.lang
 %_xdgconfigdir/autostart/%name-service.desktop
 %_bindir/%name
+%_libexecdir/gnome-software-cmd
+%_libexecdir/gnome-software-restarter
 %_libdir/gs-plugins-%plugins_ver/
 %_desktopdir/%name-local-file.desktop
 %_desktopdir/%xdg_name.desktop
@@ -92,8 +96,13 @@ GNOME Software is for installing, removing and updating software.
 %_datadir/gnome-shell/search-providers/%xdg_name-search-provider.ini
 %_iconsdir/hicolor/*x*/*/%xdg_name.png
 %_iconsdir/hicolor/scalable/apps/%xdg_name-symbolic.svg
+%_iconsdir/hicolor/scalable/apps/software-installed-symbolic.svg
 %_datadir/glib-2.0/schemas/org.gnome.software.gschema.xml
 %_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/appdata/%xdg_name.Plugin.Epiphany.metainfo.xml
+%_datadir/appdata/%xdg_name.Plugin.Flatpak.metainfo.xml
+%_datadir/appdata/%xdg_name.Plugin.Odrs.metainfo.xml
+%_datadir/appdata/%xdg_name.Plugin.Steam.metainfo.xml
 %_man1dir/%name.1.*
 %doc AUTHORS README NEWS
 
@@ -103,6 +112,9 @@ GNOME Software is for installing, removing and updating software.
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Sun Mar 26 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt0.2
+- 3.24.0
+
 * Sat Mar 18 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.7-alt0.2
 - 3.22.7
 - enabled ostree/flatpak support
