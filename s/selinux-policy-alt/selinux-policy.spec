@@ -1,11 +1,11 @@
 %define policy_name alt
-%define date 20170320
+%define date 20170327
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-alt
-Version: 0.0.40
+Version: 0.0.41
 Release: alt1
 License: %distributable
 Group: System/Base
@@ -181,6 +181,7 @@ fi
 exit 0 # End of %%preun section
 
 %files
+%_sysconfdir/selinux/config
 %dir %policy_conf
 %dir %policy_conf/contexts
 %dir %policy_conf/contexts/users
@@ -261,6 +262,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/psql.pp
 
 %changelog
+* Mon Mar 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.41-alt1
+- break dep on selinux-policy
+
 * Mon Mar 20 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.40-alt1
 - make nscd trusted_t
 
