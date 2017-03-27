@@ -1,7 +1,7 @@
 %set_automake_version 1.11
 
 Name:		libev4
-Version:	4.22
+Version:	4.24
 Release:	alt1
 Summary:	libev - an event notification library
 License:	BSD or GPL v2+
@@ -74,6 +74,9 @@ popd
 %_libdir/libev.a
 
 %changelog
+* Mon Mar 27 2017 Denis Smirnov <mithraen@altlinux.ru> 4.24-alt1
+- new version 4.24
+
 * Wed Dec 23 2015 Denis Smirnov <mithraen@altlinux.ru> 4.22-alt1
 - new version 4.22
 
