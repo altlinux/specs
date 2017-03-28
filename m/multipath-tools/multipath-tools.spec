@@ -2,9 +2,17 @@
 %define _libdir /%_lib
 %define _libmpathdir %_libdir/multipath
 
+#verify-elf: ERROR: ./lib64/libmpathpersist.so.0: undefined symbol: put_multipath_config
+#verify-elf: ERROR: ./lib64/libmpathpersist.so.0: undefined symbol: get_multipath_config
+%add_verify_elf_skiplist %_libdir/libmpathpersist.so.*
+#verify-elf: ERROR: ./lib64/libmultipath.so.0: undefined symbol: udev
+#verify-elf: ERROR: ./lib64/libmultipath.so.0: undefined symbol: put_multipath_config
+#verify-elf: ERROR: ./lib64/libmultipath.so.0: undefined symbol: get_multipath_config
+%add_verify_elf_skiplist %_libdir/libmultipath.so.*
+
 Name: multipath-tools
-Version: 0.6.1
-Release: alt2
+Version: 0.6.4
+Release: alt1
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPLv2+
@@ -27,7 +35,7 @@ Requires: kpartx = %version-%release
 Requires: dmsetup
 
 BuildRequires: libaio-devel libdevmapper-devel libreadline-devel libudev-devel libsystemd-devel
-
+BuildRequires: libuserspace-rcu-devel ceph-devel
 %description
 This package provides the tools to manage multipath devices by
 instructing the device-mapper multipath module what to do.
@@ -62,13 +70,14 @@ kpartx manages partition creation and removal for device-mapper devices.
 
 %build
 unset RPM_OPT_FLAGS
-%make_build LIB=%_lib RUN=run SYSTEMDPATH=lib
+%make_build LIB=%_lib RUN=run SYSTEMDPATH=lib ENABLE_RADOS=0
 
 %install
 mkdir -p %buildroot{%_sbindir,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrulesdir,%_modulesloaddir,%_sysconfdir/multipath}
 %makeinstall_std \
 	DESTDIR=%buildroot \
 	SYSTEMDPATH=lib \
+	ENABLE_RADOS=0 \
 	LIB=%_lib \
 	RUN=run \
 	bindir=%_sbindir \
@@ -80,7 +89,7 @@ mkdir -p %buildroot{%_sbindir,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrules
 
 #install -pm644 %SOURCE2 %buildroot%_udevrulesdir/56-multipath.rules
 install -pm755 %SOURCE3 %buildroot%_initdir/multipathd
-#install -pm644 %SOURCE4 %buildroot%_modulesloaddir/multipath.conf
+install -pm644 %SOURCE4 %buildroot%_modulesloaddir/multipath.conf
 install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 
 %post
@@ -90,14 +99,14 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %preun_service multipathd
 
 %files
-%doc AUTHOR README FAQ ChangeLog
+%doc README
 %_sbindir/multipath
 %_sbindir/multipathd
 #%_sbindir/mpathconf
 %_sbindir/mpathpersist
 %_udevrulesdir/*
 %exclude %_udevrulesdir/*kpartx.rules
-#%_modulesloaddir/*
+%_modulesloaddir/*
 %dir %_sysconfdir/multipath
 %config(noreplace) %attr(644,root,root) %_sysconfdir/multipath.conf
 %_initdir/*
@@ -120,6 +129,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_man8dir/kpartx.8.*
 
 %changelog
+* Thu Mar 23 2017 Alexey Shabalin <shaba@altlinux.ru> 0.6.4-alt1
+- 0.6.4
+
 * Tue Nov 08 2016 Alexey Shabalin <shaba@altlinux.ru> 0.6.1-alt2
 - fix work inside initrd (shrek@)
 
