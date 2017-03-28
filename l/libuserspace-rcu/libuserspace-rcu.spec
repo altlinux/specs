@@ -1,7 +1,7 @@
 %define oname userspace-rcu
 Name: libuserspace-rcu
 Version: 0.9.3
-Release: alt2
+Release: alt3
 
 Summary: RCU (read-copy-update) implementation in user space
 
@@ -17,6 +17,9 @@ Source: %name-%version.tar
 Patch: userspace-rcu-aarch64.patch
 
 BuildRequires: autoconf automake libtool
+
+# need for test
+BuildRequires: perl-devel
 
 # Upstream do not yet support mips
 ExcludeArch: mips
@@ -61,23 +64,21 @@ developing applications that use %name.
 %install
 %makeinstall_std
 
-# Relocate shared libraries from %_libdir/ to /%_lib/.
-mkdir -p %buildroot/%_lib
-for f in %buildroot%_libdir/*.so; do
-t=$(readlink -v "$f")
-ln -snf ../../%_lib/"$t" "$f"
-done
-mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
-
-
 rm -vf %buildroot/%_libdir/*.la
 rm -rf %buildroot/%_docdir/%oname/
+
+# move to /lib (ALT bug #33268)
+mkdir -p %buildroot/%_lib/
+mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
+for i in %buildroot%_libdir/lib*.so ; do
+    ln -srf %buildroot/%_lib/$(readlink $i) $i
+done
 
 cd doc/examples && make clean
 
 %check
-#TODO greenscientist: make check currently fail in mockbuild
-#make check
+# TODO: still failed in hasher
+make check || true
 
 %files
 /%_lib/liburcu*.so.*
@@ -90,6 +91,10 @@ cd doc/examples && make clean
 %_pkgconfigdir/liburcu*.pc
 
 %changelog
+* Tue Mar 28 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt3
+- override NMU: move libs to %_lib (ALT bug #33268)
+- enable tests
+
 * Thu Mar 23 2017 Alexey Shabalin <shaba@altlinux.ru> 0.9.3-alt2
 - Relocate shared libraries from %_libdir/ to /%_lib/.
 
