@@ -1,7 +1,7 @@
 %def_with avahi
 
 Name: phodav
-Version: 2.1
+Version: 2.2
 Release: alt1
 Summary: A WebDAV server using libsoup
 
@@ -109,6 +109,9 @@ install -pD -m644 %SOURCE3 %buildroot/etc/sysconfig/spice-webdavd
 %config(noreplace) /etc/sysconfig/spice-webdavd
 
 %changelog
+* Tue Mar 28 2017 Alexey Shabalin <shaba@altlinux.ru> 2.2-alt1
+- 2.2
+
 * Fri Dec 30 2016 Alexey Shabalin <shaba@altlinux.ru> 2.1-alt1
 - 2.1
 
