@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.22
+%define ver_major 3.24
 %define panel_api_ver 5.0
 %define xdg_name org.gnome.gnome-applets
 
@@ -13,7 +13,7 @@
 
 Name: gnome-applets
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Small applications for the GNOME panel
 License: GPLv2+
@@ -55,6 +55,8 @@ Requires: %name-netspeed = %version-%release
 Requires: %name-brightness = %version-%release
 Requires: %name-inhibit = %version-%release
 Requires: %name-tracker-search-bar = %version-%release
+Requires: %name-window-buttons = %version-%release
+Requires: %name-window-title = %version-%release
 %{?_enable_frequency_selector:Requires: %name-cpufreq = %version-%release}
 %{?_enable_mini_commander:Requires: %name-mini-commander = %version-%release}
 %{?_enable_modemlights:Requires: %name-modemlights = %version-%release}
@@ -338,6 +340,24 @@ PreReq: %name-common = %version-%release
 This package provides timer-applet for gnome-panel that allows user
 to start a timer and receive a notification when it is finished.
 
+%package window-buttons
+Summary: Window Buttons applet
+Group: Graphical desktop/GNOME
+PreReq: %name-common = %version-%release
+
+%description window-buttons
+This package provides window-buttons-applet for gnome-panel.
+
+%package window-title
+Summary: Window Title applet
+Group: Graphical desktop/GNOME
+PreReq: %name-common = %version-%release
+
+%description window-title
+This package provides window-title-applet for gnome-panel that display
+window title.
+
+
 %define gnome_appletsdir %_libdir/%name
 %define _libexecdir %gnome_appletsdir
 
@@ -360,7 +380,7 @@ to start a timer and receive a notification when it is finished.
 
 install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
 
-%define applets accessx-status battstat char-palette cpufreq-applet command-line drivemount gweather geyes stickynotes_applet multiload trashapplet netspeed_applet windowpicker brightness inhibit tracker-search-bar
+%define applets accessx-status battstat char-palette cpufreq-applet command-line drivemount gweather geyes stickynotes_applet multiload trashapplet netspeed_applet windowpicker brightness inhibit tracker-search-bar window-buttons window-title
 %find_lang --with-gnome %name-3.0 %applets
 
 %files
@@ -519,6 +539,21 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %_datadir/glib-2.0/schemas/%xdg_name.timer.gschema.xml
 %endif
 
+%files window-buttons
+%gnome_appletsdir/libwindow-buttons-applet.so
+%_datadir/%name/window-buttons-applet/
+%_datadir/gnome-panel/applets/org.gnome.panel.WindowButtonsApplet.panel-applet
+%_datadir/%name/builder/windowbuttons.ui
+%_datadir/glib-2.0/schemas/org.gnome.gnome-applets.window-buttons.gschema.xml
+%_pixmapsdir/windowbuttons-applet.png
+
+%files window-title
+%gnome_appletsdir/libwindow-title-applet.so
+%_datadir/gnome-panel/applets/org.gnome.panel.WindowTitleApplet.panel-applet
+%_datadir/%name/builder/windowtitle.ui
+%_datadir/glib-2.0/schemas/org.gnome.gnome-applets.window-title.gschema.xml
+%_pixmapsdir/windowtitle-applet.png
+
 #exclude invest-applet files
 %exclude %gnome_appletsdir/libinvest-applet.so
 %exclude %_datadir/%name/invest-applet/
@@ -533,6 +568,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %gnome_appletsdir/*.la
 
 %changelog
+* Tue Mar 28 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt2
 - rebuilt against libpanel-applet.so.3
 
