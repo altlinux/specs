@@ -13,7 +13,7 @@
 
 Name: rabbitmq-server
 Version: 3.6.8
-Release: alt1
+Release: alt2
 License: MPLv1.1
 BuildArch: noarch
 Group: System/Servers
@@ -175,6 +175,9 @@ rm -f %buildroot%_erlanglibdir/rabbitmq_server-%version/{LICENSE,LICENSE-*,INSTA
 #%_datadir/%name
 
 %changelog
+* Tue Mar 28 2017 Alexey Shabalin <shaba@altlinux.ru> 3.6.8-alt2
+- fix logrotate config
+
 * Fri Mar 17 2017 Alexey Shabalin <shaba@altlinux.ru> 3.6.8-alt1
 - 3.6.8
 - fixed CVE-2016-9877
