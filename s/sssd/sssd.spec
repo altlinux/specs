@@ -1,8 +1,8 @@
 %define libwbc_alternatives_version 0.13.0
 
 Name: sssd
-Version: 1.14.2
-Release: alt6%ubt
+Version: 1.15.2
+Release: alt1%ubt
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -495,9 +495,17 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_unitdir/%name.service
 %_unitdir/sssd-secrets.socket
 %_unitdir/sssd-secrets.service
+%_unitdir/sssd-nss.service
+%_unitdir/sssd-nss.socket
+%_unitdir/sssd-pam-priv.socket
+%_unitdir/sssd-pam.service
+%_unitdir/sssd-pam.socket
+%_unitdir/sssd-ssh.service
+%_unitdir/sssd-ssh.socket
 
 %dir %_libexecdir/%name
 %_libexecdir/%name/sssd_be
+%_libexecdir/%name/sssd_check_socket_activated_responders
 %_libexecdir/%name/sssd_nss
 %_libexecdir/%name/sssd_pam
 %_libexecdir/%name/sssd_autofs
@@ -515,6 +523,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_libdir/%name/libsss_crypt.so
 %_libdir/%name/libsss_cert.so
 %_libdir/%name/libsss_debug.so
+%_libdir/%name/libsss_files.so
 %_libdir/%name/libsss_krb5_common.so
 %_libdir/%name/libsss_ldap_common.so
 %_libdir/%name/libsss_util.so
@@ -561,6 +570,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_datadir/%name/sssd.api.d/sssd-simple.conf
 %_man1dir/sss_ssh_*
 %_man5dir/sssd.conf.5*
+%_man5dir/sssd-files.5*
 %_man5dir/sssd-simple.5*
 %_man5dir/sssd-sudo.5*
 %_man5dir/sssd-secrets.5*
@@ -591,6 +601,8 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 
 %files pac
 %_libexecdir/%name/sssd_pac
+%_unitdir/sssd-pac.service
+%_unitdir/sssd-pac.socket
 
 %files ipa
 %attr(700,%sssd_user,%sssd_user) %dir %keytabdir
@@ -624,9 +636,13 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 
 %files -n libsss_sudo
 %_libdir/libsss_sudo.so*
+%_unitdir/sssd-sudo.service
+%_unitdir/sssd-sudo.socket
 
 %files -n libsss_autofs
 %_libdir/%name/modules/libsss_autofs.so
+%_unitdir/sssd-autofs.service
+%_unitdir/sssd-autofs.socket
 
 %files tools
 %_sbindir/sss_*
@@ -678,7 +694,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 # InfoPipe DBus plumbing
 %_sysconfdir/dbus-1/system.d/org.freedesktop.sssd.infopipe.conf
 %_datadir/dbus-1/system-services/org.freedesktop.sssd.infopipe.service
-%_libdir/%name/libsss_config.so
+%_unitdir/sssd-ifp.service
 
 %files -n libsss_simpleifp
 %_libdir/libsss_simpleifp.so.*
@@ -713,6 +729,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 /%_lib/libnfsidmap/sss.so
 
 %changelog
+* Thu Mar 23 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.2-alt1%ubt
+- Updated to last spring release
+
 * Wed Mar 08 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.2-alt6%ubt
 - Rebuild with libldb-1.1.29
 
