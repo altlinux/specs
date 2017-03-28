@@ -1,11 +1,11 @@
 %def_disable snapshot
 
-%define ver_major 3.22
+%define ver_major 3.24
 %define _libexecdir %_prefix/libexec
 %def_with compiz
 
 Name: gnome-flashback
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Flashback session
@@ -20,7 +20,7 @@ Source: %name-%version.tar
 %endif
 
 %define glib_ver 2.44.0
-%define gtk_ver 3.20.0
+%define gtk_ver 3.22.0
 %define desktop_ver 3.12.0
 %define dbus_glib_ver 0.76
 %define gsds_ver 3.12.0
@@ -116,6 +116,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 %_datadir/gnome-session/sessions/%name-compiz.session
 %_datadir/gnome-session/sessions/%name-metacity.session
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.%name.desktop-background.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.%name.input-sources.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.%name.workarounds.gschema.xml
 %_xdgmenusdir/%name-applications.menu
 %_datadir/xsessions/%name-metacity.desktop
 %_xdgconfigdir/autostart/%name-nm-applet.desktop
@@ -129,6 +132,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Tue Mar 28 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Tue Mar 14 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 
