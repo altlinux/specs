@@ -1,15 +1,14 @@
 %define _name python-distutils-extra
-%define ver_major 2.38
+%define ver_major 2.39
 
 Name: python-module-distutils-extra
 Version: %ver_major
-Release: alt1.1.1
+Release: alt1
 
 Summary: Integrate more support into Python's distutils
 Group: Development/Python
 License: GPLv2+
 Url: https://launchpad.net/%_name
-Packager: Paul Wolneykien <manowar@altlinux.ru>
 
 Source: http://launchpad.net/%_name/trunk/%ver_major/+download/%_name-%version.tar.gz
 
@@ -66,6 +65,9 @@ chmod a+x %buildroot{%python_sitelibdir,%python3_sitelibdir}/DistUtilsExtra/comm
 
 
 %changelog
+* Tue Mar 28 2017 Yuri N. Sedunov <aris@altlinux.org> 2.39-alt1
+- 2.39
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.38-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
