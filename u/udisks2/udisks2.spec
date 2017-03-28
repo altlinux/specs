@@ -14,7 +14,7 @@
 
 Name: %{_name}2
 Version: 2.6.4
-Release: alt1
+Release: alt2
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
@@ -27,6 +27,8 @@ Source: https://github.com/storaged-project/%_name/releases/download/%_name-%ver
 Source: %_name-%version.tar
 %endif
 Source1: %name.control
+# https://bugzilla.altlinux.org/show_bug.cgi?id=33180
+Patch: udisks-2.6.4-alt-rules.patch
 
 Obsoletes: %_name
 
@@ -108,6 +110,7 @@ This package contains development documentation for lib%name.
 
 %prep
 %setup -n %_name-%version
+%patch -b .isohibryd
 subst 's/mkfs.vfat/mkfs.fat/' src/udiskslinuxfsinfo.c
 
 %build
@@ -188,6 +191,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 28 2017 Yuri N. Sedunov <aris@altlinux.org> 2.6.4-alt2
+- 80-udisks2.rules: fixed ALT #33180
+
 * Tue Mar 28 2017 Yuri N. Sedunov <aris@altlinux.org> 2.6.4-alt1
 - updated to 2.6.4-14-ga556a64
 
