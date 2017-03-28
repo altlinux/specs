@@ -1,6 +1,6 @@
 
 Version: 0.8.3
-Release: alt3.2
+Release: alt3.3
 
 %define tname Tartarus
 
@@ -161,7 +161,7 @@ Requires: python%__python_version(sqlite)
 Requires: python-module-%tname = %version-%release
 Requires: python-module-%tname-db = %version-%release
 Requires: %tname = %version-%release
-Requires: pdns-backend-sqlite3
+Requires: pdns-backend-sqlite
 Requires: %tname-DNS-client = %version-%release
 
 %description -n %tname-DNS
@@ -516,6 +516,9 @@ fi
 # {{{1 changelog
 
 %changelog
+* Tue Mar 28 2017 Lenar Shakirov <snejok@altlinux.ru> 0.8.3-alt3.3
+- Requires: pdns-backend-sqlite3 -> pdns-backend-sqlite
+
 * Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt3.2
 - Fixed build with gcc 4.7
 
