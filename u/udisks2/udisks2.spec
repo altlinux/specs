@@ -13,16 +13,16 @@
 %def_disable fhs_media
 
 Name: %{_name}2
-Version: 2.1.9
-Release: alt0.1
+Version: 2.6.4
+Release: alt1
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
 Group: System/Libraries
-Url: http://www.freedesktop.org/wiki/Software/%_name
+Url: https://github.com/storaged-project/udisks
 
 %if_disabled snapshot
-Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
+Source: https://github.com/storaged-project/%_name/releases/download/%_name-%version/%_name-%version.tar.bz2
 %else
 Source: %_name-%version.tar
 %endif
@@ -112,8 +112,6 @@ subst 's/mkfs.vfat/mkfs.fat/' src/udiskslinuxfsinfo.c
 
 %build
 %autoreconf
-# needed for O_CLOEXEC from bits/fcntl.h
-#%%add_optflags -D_GNU_SOURCE
 %configure --disable-static \
 	--enable-gtk-doc \
 	%{subst_enable acl} \
@@ -152,21 +150,23 @@ fi
 %_sbindir/umount.%name
 %_bindir/udisksctl
 /lib/udev/rules.d/80-%name.rules
+%config(noreplace) %_sysconfdir/%name/%name.conf
 %_sysconfdir/udev/rules.d/99-alt-%name-media-mount-point.rules
 %dir %_libexecdir/%name
 %_libexecdir/%name/udisksd
-%_datadir/polkit-1/actions/org.freedesktop.%name.policy
+%_datadir/polkit-1/actions/org.freedesktop.UDisks2.policy
 %_datadir/dbus-1/system-services/org.freedesktop.UDisks2.service
 %_sysconfdir/dbus-1/system.d/org.freedesktop.UDisks2.conf
 %_datadir/bash-completion/completions/udisksctl
 %_mandir/man1/*
+%_man5dir/%name.conf.5.*
 %_mandir/man8/*
 %attr(0700,root,root) %dir %_localstatedir/lib/%name
 %ghost %_localstatedir/lib/%name/mtab
 %attr(0700,root,root) %dir %_localstatedir/run/%name
 %config %systemd_unitdir/udisks2.service
 %config %_controldir/%name
-%doc README AUTHORS NEWS HACKING
+%doc README.md AUTHORS NEWS HACKING
 
 %files -n libudisks2
 %_libdir/libudisks2.so.*
@@ -188,6 +188,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 28 2017 Yuri N. Sedunov <aris@altlinux.org> 2.6.4-alt1
+- updated to 2.6.4-14-ga556a64
+
 * Sun Dec 11 2016 Yuri N. Sedunov <aris@altlinux.org> 2.1.9-alt0.1
 - updated to 2.1.8-3-g054d9c4
 
