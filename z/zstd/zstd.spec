@@ -1,6 +1,6 @@
 Name: zstd
 Version: 1.1.4
-Release: alt1
+Release: alt2
 Summary: Zstd compression library and tools
 License: BSD
 Group: Archiving/Compression
@@ -16,6 +16,26 @@ Requires: lib%name = %EVR
 %description
 Zstd, short for Zstandard, is a fast lossless compression algorithm,
 targeting real-time compression scenarios at zlib-level compression ratio.
+
+%package -n pzstd
+Summary: Parallel Zstandard tool
+Group: %group
+Requires: %name = %EVR
+
+%description -n pzstd
+Parallel Zstandard is a Pigz-like tool for Zstandard.
+
+It provides Zstandard format compatible compression and decompression
+that is able to utilize multiple cores.  It breaks the input up into
+equal sized chunks and compresses each chunk independently into a
+Zstandard frame.  It then concatenates the frames together to produce
+the final compressed output.  Pzstandard will write a 12 byte header for
+each frame that is a skippable frame in the Zstandard format, which
+tells PZstandard the size of the next compressed frame.
+
+PZstandard supports parallel decompression of files compressed with
+PZstandard.  When decompressing files compressed with Zstandard,
+PZstandard does IO in one thread, and decompression in another.
 
 %package -n lib%name
 Summary: Zstd compression shared library
@@ -81,8 +101,12 @@ export CXXFLAGS="$CFLAGS"
 
 %files
 %_bindir/*
+%exclude %_bindir/pzstd
 %_man1dir/*
 %doc NEWS README.md
+
+%files -n pzstd
+%_bindir/pzstd
 
 %files -n lib%name
 /%_lib/*.so.*
@@ -94,6 +118,9 @@ export CXXFLAGS="$CFLAGS"
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Mar 28 2017 Dmitry V. Levin <ldv@altlinux.org> 1.1.4-alt2
+- Moved pzstd to separate subpackage.
+
 * Tue Mar 21 2017 Dmitry V. Levin <ldv@altlinux.org> 1.1.4-alt1
 - v1.1.3-322-gebf2 == v1.1.4.
 - Relocated shared library from %_libdir/ to /%_lib/.
