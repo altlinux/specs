@@ -1,5 +1,9 @@
-%define kernel_base_version 4.8
+%define kernel_base_version 4.10
 %define kernel_source kernel-source-%kernel_base_version
+
+# from hv_kvp_daemon.c
+%define kvp_config_loc /var/lib/hyperv
+%define kvp_scripts_path /usr/libexec/hypervkvpd
 
 Name: hyperv-daemons
 Version: %kernel_base_version
@@ -86,8 +90,8 @@ cd %kernel_source
 # %patch2 -p1
 
 %build
-%add_optflags -I../../include/uapi -I../../include
-export CFLAGS="%optflags"
+#%add_optflags -I../../include/uapi -I../../include
+#export CFLAGS="%optflags"
 make -C %kernel_source/tools hv
 
 %install
@@ -101,10 +105,12 @@ install -p -m 0755 hv_fcopy_daemon %buildroot%_sbindir/hypervfcopyd
 
 popd
 
+mkdir -p %buildroot%kvp_scripts_path
+mkdir -p %buildroot%kvp_config_loc
 # Shell scripts for the KVP daemon
-install -p -m 0755 %SOURCE5 %buildroot%_sbindir/hv_get_dhcp_info
-install -p -m 0755 %SOURCE6 %buildroot%_sbindir/hv_get_dns_info
-install -p -m 0755 %SOURCE7 %buildroot%_sbindir/hv_set_ifconfig
+install -p -m 0755 %SOURCE5 %buildroot%kvp_scripts_path/hv_get_dhcp_info
+install -p -m 0755 %SOURCE6 %buildroot%kvp_scripts_path/hv_get_dns_info
+install -p -m 0755 %SOURCE7 %buildroot%kvp_scripts_path/hv_set_ifconfig
 
 # SysV init scripts
 mkdir -p %buildroot%_initdir
@@ -173,7 +179,9 @@ fi
 
 %files -n hypervkvpd
 %_sbindir/hypervkvpd
-%_sbindir/hv_*
+%dir %kvp_config_loc
+%dir %kvp_scripts_path
+%kvp_scripts_path/*
 %_initdir/hypervkvpd
 %_unitdir/hypervkvpd.service
 %_udevrulesdir/hypervkvpd.rules
@@ -192,6 +200,9 @@ fi
 %_udevrulesdir/hypervfcopyd.rules
 
 %changelog
+* Tue Mar 28 2017 Alexey Shabalin <shaba@altlinux.ru> 4.10-alt1
+- build from kernel-source-4.10
+
 * Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 4.8-alt1
 - build from kernel-source-4.8
 
