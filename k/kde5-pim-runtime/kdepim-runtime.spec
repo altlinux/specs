@@ -8,8 +8,8 @@
 %define libakonadi_singlefileresource libakonadi-singlefileresource%pim_sover
 
 Name: kde5-pim-runtime
-Version: 16.08.3
-Release: alt1
+Version: 16.12.3
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -26,7 +26,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Thu Sep 10 2015 (-bi)
 # optimized out: boost-devel-headers cmake cmake-modules elfutils kde5-akonadi-devel kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libgst-plugins1.0 libical-devel libjson-c libkolabxml-devel libqt5-core libqt5-dbus libqt5-declarative libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-texttospeech libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libqt5-xmlpatterns libsasl2-3 libstdc++-devel libxcbutil-keysyms pkg-config python-base python3 python3-base qt5-base-devel qt5-script-devel ruby ruby-stdlibs shared-mime-info
 #BuildRequires: extra-cmake-modules gcc-c++ kde5-akonadi-calendar-devel kde5-kalarmcal-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kholidays-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmailtransport-devel kde5-kmbox-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-pimlibs-devel kde5-syndication-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kross-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libkgapi-devel kf5-solid-devel kf5-sonnet-devel libkolab-devel libsasl2-devel python-module-google qt5-quick1-devel qt5-speech-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-python3 rpm-build-ruby xsltproc
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-quick1-devel qt5-webengine-devel qt5-xmlpatterns-devel
 #BuildRequires: qt5-speech-devel
 BuildRequires: xsltproc libsasl2-devel boost-devel
@@ -113,7 +113,7 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 
 %files common -f %name.lang
 %doc COPYING*
-%config(noreplace) %_K5xdgconf/kdepim-runtime.categories
+%config(noreplace) %_K5xdgconf/kdepim-runtime.*categories
 %_K5xdgmime/kdepim5-mime.xml
 %_K5icon/*/*/apps/ox.*
 
@@ -155,6 +155,15 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %_K5lib/libakonadi-singlefileresource.so.*
 
 %changelog
+* Wed Mar 15 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+- new version
+
+* Thu Mar 09 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.2-alt1%ubt
+- new version
+
+* Mon Nov 28 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt0.M80P.1
+- build for M80P
+
 * Fri Nov 25 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt1
 - new version
 

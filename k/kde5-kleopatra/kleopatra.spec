@@ -6,8 +6,8 @@
 %define libkleopatraclientgui libkleopatraclientgui%kleopatraclientgui_sover
 
 Name: kde5-%rname
-Version: 16.08.3
-Release: alt1
+Version: 16.12.3
+Release: alt1%ubt
 %K5init
 
 Group: Graphical desktop/KDE
@@ -24,13 +24,13 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Fri Apr 29 2016 (-bi)
 # optimized out: boost-devel-headers cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ glibc-devel-static gtk-update-icon-cache kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libgpg-error-devel libjson-c libkf5gpgmepp-pthread libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils
 #BuildRequires: extra-cmake-modules kde5-gpgmepp-devel kde5-kmime-devel kde5-libkleo-devel kf5-kauth-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools-devel-static kf5-ki18n-devel kf5-kiconthemes-devel kf5-knotifications-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-sonnet-devel libassuan-devel libgpgme-devel python-module-google python3-dev rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires: extra-cmake-modules boost-devel
 BuildRequires: libassuan-devel libgpgme-devel
-BuildRequires: kde5-gpgmepp-devel kde5-kmime-devel kde5-libkleo-devel kf5-kauth-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kconfig-devel
+BuildRequires: kde5-kmime-devel kde5-libkleo-devel kf5-kauth-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools-devel-static
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-knotifications-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-sonnet-devel
+BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-sonnet-devel kf5-kitemmodels-devel
 
 %description
 %summary
@@ -77,10 +77,9 @@ KF5 library
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-#%doc COPYING*
+%config(noreplace) %_K5xdgconf/*kleopatra*.*
 
 %files
-%config(noreplace) %_K5xdgconf/kleopatra.categories
 %_K5bin/kleopatra
 %_K5xdgapp/org.kde.kleopatra.desktop
 %_K5xdgapp/kleopatra_import.desktop
@@ -101,6 +100,15 @@ KF5 library
 %_K5lib/libkleopatraclientgui.so.*
 
 %changelog
+* Wed Mar 15 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+- new version
+
+* Thu Mar 09 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.2-alt1%ubt
+- new version
+
+* Mon Nov 28 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt0.M80P.1
+- build for M80P
+
 * Fri Nov 25 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt1
 - new version
 

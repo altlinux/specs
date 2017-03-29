@@ -4,8 +4,8 @@
 %define libkf5libkleo libkf5libkleo%sover
 
 Name: kde5-%rname
-Version: 16.08.3
-Release: alt1
+Version: 16.12.3
+Release: alt1%ubt
 %K5init
 
 Group: Graphical desktop/KDE
@@ -18,12 +18,12 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Thu Apr 28 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ libEGL-devel libGL-devel libgpg-error libgpg-error-devel libkf5gpgmepp-pthread libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs
 #BuildRequires: boost-devel-headers extra-cmake-modules kde5-gpgmepp-devel kde5-kpimtextedit-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-sonnet-devel libgpgme-devel python-module-google python3-dev rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: boost-devel extra-cmake-modules
-BuildRequires: libgpgme-devel
-BuildRequires: kde5-gpgmepp-devel kde5-kpimtextedit-devel
+BuildRequires: libgpgme-devel libassuan-devel
+BuildRequires: kde5-kpimtextedit-devel
 BuildRequires: kf5-kcompletion-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kwindowsystem-devel kf5-sonnet-devel
+BuildRequires: kf5-kwindowsystem-devel kf5-sonnet-devel kf5-kcodecs-devel kf5-kitemmodels-devel
 
 %description
 %summary.
@@ -65,7 +65,7 @@ KF5 library
 %files common -f %name.lang
 #%doc COPYING*
 %config(noreplace) %_K5xdgconf/*rc
-%config(noreplace) %_K5xdgconf/*.categories
+%config(noreplace) %_K5xdgconf/*.*categories
 %_K5data/libkleopatra/
 
 %files devel
@@ -81,6 +81,15 @@ KF5 library
 %_K5lib/libKF5Libkleo.so.*
 
 %changelog
+* Wed Mar 15 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+- new version
+
+* Thu Mar 09 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.2-alt1%ubt
+- new version
+
+* Mon Nov 28 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt0.M80P.1
+- build for M80P
+
 * Fri Nov 25 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt1
 - new version
 

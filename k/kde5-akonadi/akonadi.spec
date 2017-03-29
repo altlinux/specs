@@ -1,8 +1,10 @@
 %define rname akonadi
 
+%def_enable tools
+
 Name: kde5-%rname
-Version: 16.08.3
-Release: alt2%ubt
+Version: 16.12.3
+Release: alt1%ubt
 %K5init altplace
 
 Group: Databases
@@ -32,6 +34,7 @@ BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompl
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdesignerplugin-devel kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel
+BuildRequires: kf5-kcrash-devel
 
 %description
 An extensible cross-desktop storage service for PIM data and meta data providing
@@ -151,6 +154,7 @@ KF5 library
 %K5build \
     -DMYSQLD_EXECUTABLE:FILEPATH=%_sbindir/mysqld \
     -DBUILD_TESTING=OFF \
+    -DBUILD_TOOLS=%{?_enable_tools:ON}%{!?_enable_tools:OFF} \
     #
 
 %install
@@ -180,10 +184,14 @@ done
 %_K5bin/akonadictl
 %_K5bin/akonadiserver
 %_K5bin/akonadiselftest
+%if_enabled tools
+%_K5bin/akonadi2xml
 %_K5bin/akonaditest
-%_K5bin/akonadi_*_resource
-%_datadir/akonadi5/agents/*
-%_K5data/akonadi_*_resource/
+%_K5bin/akonadi_knut_resource
+%_K5plug/akonadi/akonadi_test_searchplugin.so
+%_datadir/akonadi5/agents/knutresource.desktop
+%_K5data/akonadi_knut_resource/
+%endif
 
 %files -n qt5-sql-sqlite3
 %_qt5_plugindir/sqldrivers/libqsqlite3.so
@@ -207,13 +215,12 @@ done
 %dir %_datadir/akonadi5/agents/
 %dir %_datadir/akonadi5/contact/
 %dir %_datadir/akonadi5/plugins/
-%config(noreplace) %_K5xdgconf/akonadi.categories
+%config(noreplace) %_K5xdgconf/akonadi.*categories
 %_K5cfg/resourcebase.kcfg
 %_K5xdgmime/akonadi5-mime.xml
 
 %files devel
 %_K5bin/asapcat
-%_K5bin/akonadi2xml
 %_K5plug/designer/akonadi5widgets.so
 %_K5inc/akonadi_version.h
 %_K5inc/Akonadi*/
@@ -237,11 +244,20 @@ done
 %files -n libkf5akonadiwidgets
 %_K5lib/libKF5AkonadiWidgets.so.5
 %_K5lib/libKF5AkonadiWidgets.so.*
+
+%if_enabled tools
 %files -n libkf5akonadixml
 %_K5lib/libKF5AkonadiXml.so.5
 %_K5lib/libKF5AkonadiXml.so.*
+%endif
 
 %changelog
+* Wed Mar 15 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+- new version
+
+* Thu Mar 09 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.2-alt1%ubt
+- new version
+
 * Thu Jan 12 2017 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt2%ubt
 - rebuild with new Qt
 

@@ -1,8 +1,8 @@
 %define rname kmime
 
 Name: kde5-%rname
-Version: 16.08.3
-Release: alt1
+Version: 16.12.3
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -15,7 +15,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Mon Aug 10 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libqt5-core libstdc++-devel python-base python3 python3-base ruby ruby-stdlibs
 #BuildRequires: boost-devel-headers extra-cmake-modules gcc-c++ kf5-kcodecs-devel kf5-ki18n-devel libdb4-devel python-module-google qt5-base-devel rpm-build-python3 rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: boost-devel-headers
 BuildRequires: kf5-kcodecs-devel kf5-ki18n-devel
@@ -70,6 +70,15 @@ KF5 library
 %_K5lib/libKF5Mime.so.*
 
 %changelog
+* Wed Mar 15 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+- new version
+
+* Thu Mar 09 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.2-alt1%ubt
+- new version
+
+* Mon Nov 28 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt0.M80P.1
+- build for M80P
+
 * Fri Nov 25 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt1
 - new version
 

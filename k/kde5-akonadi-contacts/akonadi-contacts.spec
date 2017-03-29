@@ -1,8 +1,8 @@
 %define rname akonadi-contacts
 
 Name: kde5-%rname
-Version: 16.08.3
-Release: alt2%ubt
+Version: 16.12.3
+Release: alt1%ubt
 %K5init
 
 Group: System/Libraries
@@ -82,6 +82,12 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Wed Mar 15 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+- new version
+
+* Thu Mar 09 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.2-alt1%ubt
+- new version
+
 * Wed Dec 07 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt2%ubt
 - build without QWebEngine
 
