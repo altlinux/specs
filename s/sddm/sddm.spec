@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.14.0
-Release: alt8%ubt
+Release: alt9%ubt
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -134,6 +134,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Fri Mar 24 2017 Oleg Solovyov <mcpain@altlinux.org> 0.14.0-alt9%ubt
+- revert previous revert (ALT#33248 - not sddm bug)
+
 * Fri Mar 17 2017 Sergey V Turchin <zerg@altlinux.org> 0.14.0-alt8%ubt
 - revert previous changes (ALT#33248)
 
