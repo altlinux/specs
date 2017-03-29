@@ -1,6 +1,6 @@
 Name: distribute
 Version: 0.4.1
-Release: alt9
+Release: alt10
 
 Summary: Distribute a collection of packages on multiple CDs (especially good for future use with APT)
 Summary(ru_RU.UTF8): Программа для подготовки набора пакетов к распространению на компакт-дисках (и использования с APT)
@@ -97,6 +97,10 @@ cp -a etc/ usr/ %buildroot/
 %config(noreplace) %_sysconfdir/%name/tasks/Sisyphus
 
 %changelog
+* Wed Mar 29 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.4.1-alt10
+- when no obligatory 2nd arg, show usage, too
+  (this was a regression in the previous 0.4.1-alt9).
+
 * Wed Mar 29 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.4.1-alt9
 - when no cmdline args, show usage.
 - (docs, help message):
