@@ -6,7 +6,7 @@
 Summary: SELinux %policy_name policy
 Name: selinux-policy-alt
 Version: 0.0.41
-Release: alt1
+Release: alt2
 License: %distributable
 Group: System/Base
 Source: %name-%date.tar
@@ -26,6 +26,7 @@ Requires: m4
 Requires: netlabel_tools
 Requires: setools-console
 Conflicts: selinux-policy-altlinux
+Conflicts: selinux-policy
 Obsoletes: selinux-policy-altlinux
 Provides: selinux-policy-altlinux
 
@@ -262,6 +263,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/psql.pp
 
 %changelog
+* Wed Mar 29 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.41-alt2
+- confict with selinux-policy added
+
 * Mon Mar 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.41-alt1
 - break dep on selinux-policy
 
