@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.35
+Version: 2.9.36
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -114,6 +114,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Wed Mar 29 2017 Andrey Cherepanov <cas@altlinux.org> 2.9.36-alt1
+- Wrap long line warning
+
 * Wed Mar 29 2017 Andrey Cherepanov <cas@altlinux.org> 2.9.35-alt1
 - Update Russian translations for alterator-auth
 

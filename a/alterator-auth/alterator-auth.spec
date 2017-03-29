@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.33
+Version: 0.33.1
 Release: alt1
 
 BuildArch: noarch
@@ -109,6 +109,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Wed Mar 29 2017 Andrey Cherepanov <cas@altlinux.org> 0.33.1-alt1
+- Wrap long line in warning
+
 * Wed Mar 29 2017 Andrey Cherepanov <cas@altlinux.org> 0.33-alt1
 - Package task-auth-ad is not enough to auth with Active Directory
   because it uses non-recommended winbind
