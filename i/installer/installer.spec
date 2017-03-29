@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.35
+Version: 1.8.36
 Release: alt1
 
 Summary: Installer common parts
@@ -110,8 +110,11 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
-* Thu Mar 23 2017 Mikhail Efremov <sem@altlinux.org> 1.8.35-alt1
+* Wed Mar 29 2017 Michael Shigorin <mike@altlinux.org> 1.8.36-alt1
 - 40-autohostname.sh: Don't setup /etc/HOSTNAME.
+
+* Mon Mar 20 2017 Michael Shigorin <mike@altlinux.org> 1.8.35-alt1
+- vnc related improvements
 
 * Tue Jan 31 2017 Michael Shigorin <mike@altlinux.org> 1.8.34-alt1
 - *fixed* "headful" mode of installation over vnc
