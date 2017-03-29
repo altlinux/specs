@@ -1,15 +1,13 @@
 Name: distribute
 Version: 0.4.1
-Release: alt8
+Release: alt9
 
 Summary: Distribute a collection of packages on multiple CDs (especially good for future use with APT)
-Summary(ru_RU.KOI8-R): Программа для подготовки набора пакетов к распространению на компакт-дисках (и использования с APT)
+Summary(ru_RU.UTF8): п÷я─п╬пЁя─п╟п╪п╪п╟ п╢п╩я▐ п©п╬п╢пЁп╬я┌п╬п╡п╨п╦ п╫п╟п╠п╬я─п╟ п©п╟п╨п╣я┌п╬п╡ п╨ я─п╟я│п©я─п╬я│я┌я─п╟п╫п╣п╫п╦я▌ п╫п╟ п╨п╬п╪п©п╟п╨я┌-п╢п╦я│п╨п╟я┘ (п╦ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦я▐ я│ APT)
 
 Group: Development/Other
-Url: http://people.altlinux.ru/imz/devel/distribute
+Url: http://git.altlinux.org/people/imz/packages/distribute
 License: GPL
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
 Source1: %name-disk-description.template
@@ -40,7 +38,7 @@ to/upgrade the system there), or if you want to give them to a friend,
 or if you would like to distribute the collection of packages for some
 other purpose.
 
-Particularly, if you have an ALTLinux Sisyphus based system at home,
+Particularly, if you have an ALT-Sisyphus-based system at home,
 and if you want to upgrade it to the current state of Sisyphus, you can
 download them to another machine, use `%name' utility there to create a
 CD set, come home and use APT to upgrade.
@@ -50,31 +48,31 @@ can extract the contents to your home directory and use it (by setting
 apropriate P_ROOT). For distributing Sisyphus, have a look at
 %_sysconfdir/%name/tasks/Sisyphus.
 
-%description -l ru_RU.KOI8-R
-Программа `%name' предназначена для упрощения создания компакт-дисков,
-содержащих репозиторий пакетов, и позволяет следующее: разделение
-пакетов на части по размеру компакт-дисков, создание индексов пакетов
-для программы управления пакетами APT, создание образов компакт-дисков
-и запись компакт-дисков.
+%description -l ru_RU.UTF8
+п÷я─п╬пЁя─п╟п╪п╪п╟ `%name' п©я─п╣п╢п╫п╟п╥п╫п╟я┤п╣п╫п╟ п╢п╩я▐ я┐п©я─п╬я┴п╣п╫п╦я▐ я│п╬п╥п╢п╟п╫п╦я▐ п╨п╬п╪п©п╟п╨я┌-п╢п╦я│п╨п╬п╡,
+я│п╬п╢п╣я─п╤п╟я┴п╦я┘ я─п╣п©п╬п╥п╦я┌п╬я─п╦п╧ п©п╟п╨п╣я┌п╬п╡, п╦ п©п╬п╥п╡п╬п╩я▐п╣я┌ я│п╩п╣п╢я┐я▌я┴п╣п╣: я─п╟п╥п╢п╣п╩п╣п╫п╦п╣
+п©п╟п╨п╣я┌п╬п╡ п╫п╟ я┤п╟я│я┌п╦ п©п╬ я─п╟п╥п╪п╣я─я┐ п╨п╬п╪п©п╟п╨я┌-п╢п╦я│п╨п╬п╡, я│п╬п╥п╢п╟п╫п╦п╣ п╦п╫п╢п╣п╨я│п╬п╡ п©п╟п╨п╣я┌п╬п╡
+п╢п╩я▐ п©я─п╬пЁя─п╟п╪п╪я▀ я┐п©я─п╟п╡п╩п╣п╫п╦я▐ п©п╟п╨п╣я┌п╟п╪п╦ APT, я│п╬п╥п╢п╟п╫п╦п╣ п╬п╠я─п╟п╥п╬п╡ п╨п╬п╪п©п╟п╨я┌-п╢п╦я│п╨п╬п╡
+п╦ п╥п╟п©п╦я│я▄ п╨п╬п╪п©п╟п╨я┌-п╢п╦я│п╨п╬п╡.
 
-Также с помощью `%name' можно создавать диски, содержащие только обновления
-к первоначально сформированному набору пакетов.
+п╒п╟п╨п╤п╣ я│ п©п╬п╪п╬я┴я▄я▌ `%name' п╪п╬п╤п╫п╬ я│п╬п╥п╢п╟п╡п╟я┌я▄ п╢п╦я│п╨п╦, я│п╬п╢п╣я─п╤п╟я┴п╦п╣ я┌п╬п╩я▄п╨п╬ п╬п╠п╫п╬п╡п╩п╣п╫п╦я▐
+п╨ п©п╣я─п╡п╬п╫п╟я┤п╟п╩я▄п╫п╬ я│я└п╬я─п╪п╦я─п╬п╡п╟п╫п╫п╬п╪я┐ п╫п╟п╠п╬я─я┐ п©п╟п╨п╣я┌п╬п╡.
 
-Эта программа может быть полезна вам, если вы имеете набор пакетов на
-одном компьютере и хотите перенести его на другой компьютер (и установить
-их или обновить там систему), или если вы хотите их кому-то передать,
-или собираетесь распространять набор пакетов с какими-то другими целями.
+п╜я┌п╟ п©я─п╬пЁя─п╟п╪п╪п╟ п╪п╬п╤п╣я┌ п╠я▀я┌я▄ п©п╬п╩п╣п╥п╫п╟ п╡п╟п╪, п╣я│п╩п╦ п╡я▀ п╦п╪п╣п╣я┌п╣ п╫п╟п╠п╬я─ п©п╟п╨п╣я┌п╬п╡ п╫п╟
+п╬п╢п╫п╬п╪ п╨п╬п╪п©я▄я▌я┌п╣я─п╣ п╦ я┘п╬я┌п╦я┌п╣ п©п╣я─п╣п╫п╣я│я┌п╦ п╣пЁп╬ п╫п╟ п╢я─я┐пЁп╬п╧ п╨п╬п╪п©я▄я▌я┌п╣я─ (п╦ я┐я│я┌п╟п╫п╬п╡п╦я┌я▄
+п╦я┘ п╦п╩п╦ п╬п╠п╫п╬п╡п╦я┌я▄ я┌п╟п╪ я│п╦я│я┌п╣п╪я┐), п╦п╩п╦ п╣я│п╩п╦ п╡я▀ я┘п╬я┌п╦я┌п╣ п╦я┘ п╨п╬п╪я┐-я┌п╬ п©п╣я─п╣п╢п╟я┌я▄,
+п╦п╩п╦ я│п╬п╠п╦я─п╟п╣я┌п╣я│я▄ я─п╟я│п©я─п╬я│я┌я─п╟п╫я▐я┌я▄ п╫п╟п╠п╬я─ п©п╟п╨п╣я┌п╬п╡ я│ п╨п╟п╨п╦п╪п╦-я┌п╬ п╢я─я┐пЁп╦п╪п╦ я├п╣п╩я▐п╪п╦.
 
-В частности, если у вас дома установлена система, периодически обновляемая
-из ALTLinux Sisyphus, и вы хотите обновить её до текущего состояния
-Сизифа, вы можете скачать пакеты на одном компьютере, затем использовать
-программу `%name' для создания набора дисков, прийти домой и обновить
-систему с помощью APT.
+п▓ я┤п╟я│я┌п╫п╬я│я┌п╦, п╣я│п╩п╦ я┐ п╡п╟я│ п╢п╬п╪п╟ я┐я│я┌п╟п╫п╬п╡п╩п╣п╫п╟ я│п╦я│я┌п╣п╪п╟, п©п╣я─п╦п╬п╢п╦я┤п╣я│п╨п╦ п╬п╠п╫п╬п╡п╩я▐п╣п╪п╟я▐
+п╦п╥ ALTLinux Sisyphus, п╦ п╡я▀ я┘п╬я┌п╦я┌п╣ п╬п╠п╫п╬п╡п╦я┌я▄ п╣я▒ п╢п╬ я┌п╣п╨я┐я┴п╣пЁп╬ я│п╬я│я┌п╬я▐п╫п╦я▐
+п║п╦п╥п╦я└п╟, п╡я▀ п╪п╬п╤п╣я┌п╣ я│п╨п╟я┤п╟я┌я▄ п©п╟п╨п╣я┌я▀ п╫п╟ п╬п╢п╫п╬п╪ п╨п╬п╪п©я▄я▌я┌п╣я─п╣, п╥п╟я┌п╣п╪ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄
+п©я─п╬пЁя─п╟п╪п╪я┐ `%name' п╢п╩я▐ я│п╬п╥п╢п╟п╫п╦я▐ п╫п╟п╠п╬я─п╟ п╢п╦я│п╨п╬п╡, п©я─п╦п╧я┌п╦ п╢п╬п╪п╬п╧ п╦ п╬п╠п╫п╬п╡п╦я┌я▄
+я│п╦я│я┌п╣п╪я┐ я│ п©п╬п╪п╬я┴я▄я▌ APT.
 
-Вам не требуется быть системным администратором для использования
-'%name': вы можете распаковать содержимое пакета в ваш домашний каталог и
-использовать программу (установив переменную P_ROOT). Для распространения
-Сизифа смотрите в файл %_sysconfdir/%name/tasks/Sisyphus.
+п▓п╟п╪ п╫п╣ я┌я─п╣п╠я┐п╣я┌я│я▐ п╠я▀я┌я▄ я│п╦я│я┌п╣п╪п╫я▀п╪ п╟п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─п╬п╪ п╢п╩я▐ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦я▐
+'%name': п╡я▀ п╪п╬п╤п╣я┌п╣ я─п╟я│п©п╟п╨п╬п╡п╟я┌я▄ я│п╬п╢п╣я─п╤п╦п╪п╬п╣ п©п╟п╨п╣я┌п╟ п╡ п╡п╟я┬ п╢п╬п╪п╟я┬п╫п╦п╧ п╨п╟я┌п╟п╩п╬пЁ п╦
+п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ п©я─п╬пЁя─п╟п╪п╪я┐ (я┐я│я┌п╟п╫п╬п╡п╦п╡ п©п╣я─п╣п╪п╣п╫п╫я┐я▌ P_ROOT). п■п╩я▐ я─п╟я│п©я─п╬я│я┌я─п╟п╫п╣п╫п╦я▐
+п║п╦п╥п╦я└п╟ я│п╪п╬я┌я─п╦я┌п╣ п╡ я└п╟п╧п╩ %_sysconfdir/%name/tasks/Sisyphus.
 
 %prep
 %setup
@@ -99,6 +97,16 @@ cp -a etc/ usr/ %buildroot/
 %config(noreplace) %_sysconfdir/%name/tasks/Sisyphus
 
 %changelog
+* Wed Mar 29 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.4.1-alt9
+- when no cmdline args, show usage.
+- (docs, help message):
+  + make clear that --usage and --help show different things.
+  + updated version to 0.4.1-alt9 (in the source).
+  + updated the URLs and names for ALT.
+  + spell-checked slightly.
+  + Russian docs recoded to UTF-8.
+- (.spec) don't have a fixed Packager.
+
 * Mon Nov 24 2008 Vitaly Lipatov <lav@altlinux.ru> 0.4.1-alt8
 - use subst instead php for template filling
 
@@ -182,7 +190,7 @@ cp -a etc/ usr/ %buildroot/
 
 * Fri Feb 15 2002 Ivan Zakharyaschev <imz@altlinux.ru> 0.3.4-alt1
 - write full lists of rpm-files in a base-state to every CD (.disk/; both for
-  full sets and diffs; suggested by Andrew Borodin in sysiphus@altlinux.ru);
+  full sets and diffs; suggested by Andrew Borodin in sisyphus@altlinux.ru);
   add a command to generate such lists;
 - changed date format used for the title of a fixed base-state;
 - add more information about the author and the license;
