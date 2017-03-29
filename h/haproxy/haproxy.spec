@@ -8,7 +8,7 @@
 
 Name: haproxy
 Version: 1.7.4
-Release: alt1
+Release: alt2
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 License: GPLv2+
@@ -50,7 +50,7 @@ regparm_opts="USE_REGPARM=1"
 %endif
 
 %make_build CPU="generic" TARGET="linux2628" USE_OPENSSL=1 USE_PCRE=1 USE_ZLIB=1 USE_NS=1 %{?_enable_lua:USE_LUA=1} \
-	"${regparm_opts}" PREFIX="%_prefix" ADDINC="$(pcre-config --cflags)" CFLAGS="%optflags"
+	${regparm_opts} PREFIX="%_prefix" ADDINC="$(pcre-config --cflags)" CFLAGS="%optflags"
 
 pushd contrib/halog
 %make halog OPTIMIZE="%optflags"
@@ -106,6 +106,9 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Wed Mar 29 2017 Alexey Shabalin <shaba@altlinux.ru> 1.7.4-alt2
+- fix build options
+
 * Tue Mar 28 2017 Alexey Shabalin <shaba@altlinux.ru> 1.7.4-alt1
 - 1.7.4
 
