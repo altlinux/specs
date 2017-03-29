@@ -1,23 +1,21 @@
 Name: guile-evms
-Version: 0.4
-Release: alt17
+Version: 0.5
+Release: alt1
 
 Summary: Guile bindings for EVMS
 License: GPL
 Group: Development/Scheme
 
-Buildrequires: guile18-devel libblkid-devel libe2fs-devel libevms-devel swig
-# SIMPLE_MAPs for (unsigned) long long were defined in typemaps.i since 1.3.29;
-# an up-to-date SIMPLE_MAP for boolean is also present there.
-BuildPreReq: swig >= 1.3.29
-# scm_car, scm_cdr, scm_is_null needed to be defined additionally before 1.7:
-BuildPreReq: guile18-devel >= 1.7
+BuildRequires: guile22-devel libblkid-devel libe2fs-devel libevms-devel swig
 
 Source: %name-%version-%release.tar
 
 %description
 Guile bindings for EVMS, volume management library
 http://evms.sourceforge.net
+
+%define guile_sodir %(guile-config info extensiondir)
+%define guile_godir %(guile-config info siteccachedir)
 
 %prep
 %setup
@@ -28,11 +26,18 @@ make
 %install
 make install DESTDIR=%buildroot
 
+%brp_strip_none %guile_godir/evms.go
+%add_verify_elf_skiplist %guile_godir/evms.go
+%add_findreq_skiplist %guile_godir/evms.go
+
 %files
-%_libdir/libguile-evms.so*
-%_datadir/guile/site/evms.scm
+%guile_sodir/libguile-evms.so
+%guile_godir/evms.go
 
 %changelog
+* Wed Mar 29 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5-alt1
+- rebuilt with guile-2.2
+
 * Tue Dec 13 2016 Michael Shigorin <mike@altlinux.org> 0.4-alt17
 - added /tmp to well-known mountpoints (to avoid default "noexec"
   which breaks 50-initrd trying to run make-initrd there)
