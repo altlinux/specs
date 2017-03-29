@@ -1,7 +1,7 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 2.0.2.0
-Release: alt2
+Version: 2.2.2.0
+Release: alt1
 
 Group: System/Libraries
 License: GPLv3
@@ -62,9 +62,12 @@ cp -va library/* %buildroot%python_sitelibdir/%name/modules
 %_man1dir/%{name}*
 %python_sitelibdir/%{name}*
 %doc examples/playbooks examples/scripts examples/hosts
-%doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt CODING_GUIDELINES.md ISSUE_TEMPLATE.md
+%doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt CODING_GUIDELINES.md .github/ISSUE_TEMPLATE.md
 
 %changelog
+* Wed Mar 29 2017 Terechkov Evgenii <evg@altlinux.org> 2.2.2.0-alt1
+- 2.2.2.0-1 (ALT#32709)
+
 * Tue May 31 2016 Terechkov Evgenii <evg@altlinux.org> 2.0.2.0-alt2
 - Add requires to be out-of-box usable
 
