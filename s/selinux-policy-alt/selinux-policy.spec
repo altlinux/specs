@@ -1,12 +1,12 @@
 %define policy_name alt
-%define date 20170327
+%define date 20170329
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-alt
-Version: 0.0.41
-Release: alt3
+Version: 0.0.42
+Release: alt1
 License: %distributable
 Group: System/Base
 Source: %name-%date.tar
@@ -263,6 +263,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/psql.pp
 
 %changelog
+* Wed Mar 29 2017 Anton Farygin <rider@altlinux.ru> 0.0.42-alt1
+- fixed policy name in /etc/selinux/config
+
 * Wed Mar 29 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.41-alt3
 - make /etc/selinux/config noreplace
 
