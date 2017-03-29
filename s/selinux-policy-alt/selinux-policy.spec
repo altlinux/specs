@@ -6,7 +6,7 @@
 Summary: SELinux %policy_name policy
 Name: selinux-policy-alt
 Version: 0.0.41
-Release: alt2
+Release: alt3
 License: %distributable
 Group: System/Base
 Source: %name-%date.tar
@@ -182,7 +182,7 @@ fi
 exit 0 # End of %%preun section
 
 %files
-%_sysconfdir/selinux/config
+%config(noreplace) %_sysconfdir/selinux/config
 %dir %policy_conf
 %dir %policy_conf/contexts
 %dir %policy_conf/contexts/users
@@ -263,6 +263,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/psql.pp
 
 %changelog
+* Wed Mar 29 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.41-alt3
+- make /etc/selinux/config noreplace
+
 * Wed Mar 29 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.41-alt2
 - confict with selinux-policy added
 
