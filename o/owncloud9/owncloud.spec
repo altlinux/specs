@@ -1,8 +1,8 @@
 %define major 9
 
 Name: owncloud%major
-Version: 9.1.3
-Release: alt3
+Version: 9.1.4
+Release: alt2
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 %define installdir %webserver_webappsdir/%name
@@ -63,7 +63,6 @@ cp %name/.htaccess %buildroot%installdir/
 cp %name/.user.ini %buildroot%installdir/
 
 find %buildroot%installdir/ -name tests -type d | xargs rm -fr
-find %buildroot%installdir/ -name .gitignore -type f | xargs -L 1 rm
 rm -f %buildroot%installdir/l10n/l10n.pl
 
 mkdir -p %buildroot%_sysconfdir/%name
@@ -108,6 +107,12 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf 
 
 %changelog
+* Wed Mar 29 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.4-alt2
+- Removed '.gitignore' from source
+
+* Wed Mar 29 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.4-alt1
+- 9.1.4
+
 * Tue Jan 10 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.3-alt3
 - Cleanup requires for *-nginx
 
