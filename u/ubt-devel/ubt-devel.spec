@@ -1,6 +1,6 @@
 
 Name: ubt-devel
-Version: 0.3
+Version: 0.3.1
 Release: alt1
 
 Group: Development/Other
@@ -14,7 +14,7 @@ Source1: macros
 Source2: ubt-stampspec
 Source3: ubt-addchangelog
 
-BuildRequires: rpm-utils libshell gear
+BuildRequires: rpm-utils libshell /usr/bin/gear-sh-functions
 
 %description
 Set of RPM macroses and utilities for building one tag for all binary package branches.
@@ -24,6 +24,7 @@ Summary: Universal Branch Tag macros and utils
 Group: Development/Other
 Requires: rpm-macros-ubt >= 0.2
 Requires: /usr/bin/add_changelog
+Requires: /usr/bin/gear-sh-functions
 %description -n rpm-build-ubt
 Set of RPM macroses and utilities for building one tag for all binary package branches.
 
@@ -45,6 +46,9 @@ install -m 0755 %SOURCE3 %buildroot/%_bindir/
 %_bindir/ubt-*
 
 %changelog
+* Wed Mar 29 2017 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt1
+- update requires
+
 * Wed Dec 07 2016 Sergey V Turchin <zerg@altlinux.org> 0.3-alt1
 - fix to current packager in changelog entry
 
