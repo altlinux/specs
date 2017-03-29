@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.32.1
+Version: 0.33
 Release: alt1
 
 BuildArch: noarch
@@ -109,6 +109,12 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Wed Mar 29 2017 Andrey Cherepanov <cas@altlinux.org> 0.33-alt1
+- Package task-auth-ad is not enough to auth with Active Directory
+  because it uses non-recommended winbind
+- [Active Directory] Fix DNS and Kerberos configuration
+- Supress grep output in ipa_domain check
+
 * Wed Mar 01 2017 Andrey Cherepanov <cas@altlinux.org> 0.32.1-alt1
 - Do not strict require ipa-client-install
 
