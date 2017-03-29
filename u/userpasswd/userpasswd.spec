@@ -1,6 +1,6 @@
 Name: userpasswd
-Version: 0.2.10
-Release: alt3.qa1
+Version: 0.3.1
+Release: alt1%ubt
 
 Group: System/Configuration/Other
 Summary: The graphical tool for changing password
@@ -11,6 +11,8 @@ Source: %name-%version.tar
 
 Conflicts: usermode
 BuildRequires: libgtk+2-devel
+
+BuildRequires(pre):rpm-build-ubt
 
 %description
 Install this package if you would like to provide users with
@@ -34,6 +36,12 @@ graphical tool for changing password.
 %_datadir/pixmaps/*
 
 %changelog
+* Wed Mar 29 2017 Evgeny Sinelnikov <sin@altlinux.ru> 0.3.1-alt1%ubt
+- Support sssd password with pam_sss
+
+* Thu Feb 23 2017 Evgeny Sinelnikov <sin@altlinux.ru> 0.3.0-alt1%ubt
+- Support Kerberos password with pam_krb5
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.10-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
