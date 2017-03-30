@@ -1,6 +1,6 @@
 Name: quilt
-Version: 0.60
-Release: alt4
+Version: 0.65.0.3.1cde1
+Release: alt1
 
 Summary: Scripts for working with series of patches
 License: GPLv2+
@@ -31,12 +31,12 @@ found at http://userweb.kernel.org/~akpm/stuff/patch-scripts.tar.gz.
 rm doc/*.pdf
 
 %build
-%define docdir %_docdir/%name-%version
+%define docdir %_docdir/%name
 %configure \
 	--with-awk=gawk \
 	--with-diffstat=diffstat \
 	--with-sendmail=%_sbindir/sendmail \
-	--docdir=%_docdir/%name-%version
+	--docdir=%docdir
 %make_build COMPAT_SYMLINKS=sendmail RELEASE=%release
 %make_build -C doc
 # rerun to get right cross-references
@@ -45,7 +45,7 @@ rm doc/*.pdf
 
 %install
 %makeinstall_std COMPAT_SYMLINKS=sendmail BUILD_ROOT=%buildroot
-install -pm644 AUTHORS TODO quilt.changes doc/README.EMACS doc/*.pdf \
+install -pm644 AUTHORS NEWS TODO doc/README.EMACS doc/*.pdf \
 	%buildroot%docdir/
 %find_lang %name
 
@@ -62,6 +62,9 @@ install -pm644 AUTHORS TODO quilt.changes doc/README.EMACS doc/*.pdf \
 %docdir/
 
 %changelog
+* Thu Mar 30 2017 Dmitry V. Levin <ldv@altlinux.org> 0.65.0.3.1cde1-alt1
+- v0.60-54-g0bdc116 -> v0.65-3-g1cde193.
+
 * Mon May 27 2013 Dmitry V. Levin <ldv@altlinux.org> 0.60-alt4
 - Updated to v0.60-54-g0bdc116.
 
