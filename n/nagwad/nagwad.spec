@@ -1,6 +1,6 @@
 Name: 	  nagwad
 Version:  0.7
-Release:  alt1
+Release:  alt2%ubt
 
 Summary:  Nagios watch daemon
 License:  MIT
@@ -11,6 +11,7 @@ Url: 	  http://git.altlinux.org/people/nbr/packages/nagwad.git
 Source:   %name-%version.tar
 
 BuildArch: noarch
+BuildRequires(pre): rpm-build-ubt
 
 Requires:  systemd
 Requires:  osec
@@ -98,6 +99,9 @@ install -Dm 0755 osec/* %buildroot/etc/osec/
 
 
 %changelog
+* Thu Mar 30 2017 Denis Medvedev <nbr@altlinux.org> 0.7-alt2%ubt
+- added universal build tag
+
 * Thu Mar 30 2017 Denis Medvedev <nbr@altlinux.org> 0.7-alt1
 - added osec timer and service for starting osec without cron.
 Instructions for start is in signal.odt
