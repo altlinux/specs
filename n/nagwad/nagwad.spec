@@ -1,9 +1,9 @@
 Name: 	  nagwad
 Version:  0.7
-Release:  alt2%ubt
+Release:  alt3%ubt
 
 Summary:  Nagios watch daemon
-License:  MIT
+License:  GPLv3
 Group:    System/Servers
 Url: 	  http://git.altlinux.org/people/nbr/packages/nagwad.git
 
@@ -14,8 +14,9 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-ubt
 
 Requires:  systemd
-Requires:  osec
+Requires:  osec osec-mailreport
 Conflicts: osec-cronjob
+Provides: osec-cronjob
 
 %description
 Daemon that listens to journald and generates alerts based on journal messages
@@ -99,6 +100,9 @@ install -Dm 0755 osec/* %buildroot/etc/osec/
 
 
 %changelog
+* Thu Mar 30 2017 Denis Medvedev <nbr@altlinux.org> 0.7-alt3%ubt
+- Change license to GPLv3,  dependencies added
+
 * Thu Mar 30 2017 Denis Medvedev <nbr@altlinux.org> 0.7-alt2%ubt
 - added universal build tag
 
