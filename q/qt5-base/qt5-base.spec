@@ -24,7 +24,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.7.1
-Release: alt2%ubt
+Release: alt3%ubt
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -46,12 +46,15 @@ Patch12: QTBUG-55583.patch
 # SuSE
 Patch100: disable-rc4-ciphers-bnc865241.diff
 Patch101: libqt5-do-not-use-shm-if-display-name-doesnt-look-local.patch
+Patch102: Fix-some-QtDBus-crashes-during-application-destruction.patch
+Patch103: Stop-unloading-plugins-in-QPluginLoader-and-QFactoryLoader.patch
 # ALT
 Patch1000: alt-sql-ibase-firebird.patch
 Patch1001: alt-enable-ft-lcdfilter.patch
 Patch1002: alt-dont-require-plugin-file.patch
 Patch1003: alt-ca-certificates-path.patch
 Patch1004: alt-timezone.patch
+Patch1005: alt-no-debug.patch
 
 # macros
 %define _qt5 %gname
@@ -349,11 +352,14 @@ EGL integration library for the Qt%major toolkit
 %patch12 -p1 -b .QTBUG
 %patch100 -p1
 %patch101 -p1
+%patch102 -p1
+%patch103 -p1
 %patch1000 -p1 -b .ibase
 #%patch1001 -p1 -b .lcd
 %patch1002 -p1 -b .plugin-file
 %patch1003 -p1 -b .ca-bundle
 %patch1004 -p1 -b .timezone
+%patch1005 -p1 -b .no-debug
 bin/syncqt.pl -version %version -private
 [ -e include/QtCore/QtCoreDepends ] || >include/QtCore/QtCoreDepends
 
@@ -747,6 +753,10 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Wed Mar 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt3%ubt
+- disable debug output by default
+- update SuSE patches
+
 * Wed Mar 22 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt2%ubt
 - rebuild
 
