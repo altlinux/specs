@@ -7,7 +7,7 @@
 
 Name: SPICE
 Version: 0.13.3
-Release: alt1
+Release: alt2
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
 License: LGPLv2+
@@ -16,6 +16,7 @@ Url: http://www.spice-space.org/
 Source: http://www.spice-space.org/download/releases/%name-%version.tar
 Source2: spice-common.tar
 #Patch1: fix-alt.patch
+Patch1: 0001-spice-deps-Make-LZ4-check-depending-on-function.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=613529
 ExclusiveArch: %ix86 x86_64 armh
@@ -67,6 +68,7 @@ using spice-server, you will need to install spice-server-devel.
 %prep
 %setup
 tar -xf %SOURCE2
+%patch1 -p1 -d spice-common
 #%patch1 -p1
 # version in .tarball-version file
 echo "%version" > .tarball-version
@@ -96,6 +98,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Thu Mar 30 2017 Andrey Cherepanov <cas@altlinux.org> 0.13.3-alt2
+- Fix detect new version of lz4
+
 * Fri Dec 23 2016 Alexey Shabalin <shaba@altlinux.ru> 0.13.3-alt1
 - 0.13.3
 
