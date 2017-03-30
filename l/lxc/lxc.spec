@@ -27,7 +27,7 @@
 
 Name: lxc
 Version: 2.0.7
-Release: alt2
+Release: alt3
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -168,6 +168,9 @@ mkdir -p %buildroot%_cachedir/%name
 
 
 %changelog
+* Thu Mar 30 2017 Denis Pynkin <dans@altlinux.org> 2.0.7-alt3
+- Fixes #33302
+
 * Mon Mar 13 2017 Denis Pynkin <dans@altlinux.org> 2.0.7-alt2
 - Disable cgmanager support
 
