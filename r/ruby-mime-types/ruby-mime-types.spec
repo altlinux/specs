@@ -3,7 +3,7 @@
 %define pkgname mime-types
 
 Name:    ruby-%pkgname
-Version: 2.6.2
+Version: 3.1
 Release: alt1
 
 Summary: Manages a MIME Content-Type database that will return the Content-Type for a given filename
@@ -13,16 +13,15 @@ Url:     https://github.com/mime-types/ruby-mime-types
 
 BuildArch: noarch
 
-Source0: %pkgname-%version.tar.gz
+Source0: %pkgname-%version.tar
 
-# Automatically added by buildreq on Wed Apr 18 2012 (-bi)
 BuildRequires: rpm-build-ruby ruby-tool-rdoc ruby-tool-setup
 
 %description
-MIME::Types for Ruby originally based on and synchronized with MIME::Types for
-Perl by Mark Overmeer, copy right 2001 - 2009. As of version 1.15, the data
-format for the MIME::Type list has changed and the synchronization will no
-longer happen.
+MIME::Types for Ruby originally based on and synchronized with
+MIME::Types for Perl by Mark Overmeer, copy right 2001 - 2009. As of
+version 1.15, the data format for the MIME::Type list has changed and
+the synchronization will no longer happen.
 
 %package doc
 Summary: Documentation files for %name
@@ -39,22 +38,26 @@ Documentation files for %name.
 %ruby_config
 %ruby_build
 
+%check
+%ruby_test_unit -Ilib:test tests
+
 %install
 %ruby_install
 %rdoc lib/
-
-rm -f %buildroot%ruby_ri_sitedir/cache.ri
-rm -f %buildroot%ruby_ri_sitedir/created.rid
+# Remove unnecessary files
+rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %files
 %doc *.rdoc
 %ruby_sitelibdir/*
 
 %files doc
-%ruby_ri_sitedir/MIME
-%ruby_ri_sitedir/lib/mime
+%ruby_ri_sitedir/*
 
 %changelog
+* Thu Mar 30 2017 Andrey Cherepanov <cas@altlinux.org> 3.1-alt1
+- New version
+
 * Mon Oct 19 2015 Andrey Cherepanov <cas@altlinux.org> 2.6.2-alt1
 - New version
 - Update homepage to https://github.com/mime-types/ruby-mime-types
