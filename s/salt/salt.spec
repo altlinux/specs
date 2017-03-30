@@ -1,19 +1,30 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 2016.3.4
+Version: 2016.11.3
 Release: alt1
 Url: http://saltstack.org
-Source0: %name-%version.tar
+#VCS: https://github.com/saltstack/salt
 License: apache-2.0
 Group: System/Configuration/Other
 
-Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-BuildRequires: python-module-setuptools perl-podlators python-module-nose libzeromq-devel python-module-zmq-devel python-module-Crypto python-module-msgpack python-module-yaml
-Requires: python-module-singledispatch python-module-backports_abc
+Source0: %name-%version.tar
+Source1: master.logrotate
+Source2: minion.logrotate
+Source3: salt-api.init
+Source4: salt-master.init
+Source5: salt-minion.init
+Source6: salt-syndic.init
+
+BuildRequires: python-module-setuptools perl-podlators
+BuildRequires: python-module-nose libzeromq-devel
+BuildRequires: python-module-zmq-devel python-module-Crypto
+BuildRequires: python-module-msgpack python-module-yaml
+
 BuildArch: noarch
 
-%add_python_req_skip win32api win32event win32service win32serviceutil winerror pythoncom
+%add_python_req_skip win32api win32event win32service win32serviceutil winerror pythoncom distutils
 
 # For more detailed autoreqs (under jnpr.*), which can be satisfied;
 # this fixes the general UNMET python2.X(jnpr), which used to appear.
@@ -22,27 +33,30 @@ BuildArch: noarch
 %global to_filter_moves %py_dependencies salt\.ext\.six\.moves.*
 # {0} is to strip a space at the end:
 %filter_from_requires s:%to_filter_moves\{0\}::g
+%filter_from_requires \,\(/sbin/chkconfig\|/usr/bin/pip\|apt\|curl\|erlang\|ftp\|gawk\|git-core\|grep\|initctl\|local/s*bin\|lxc\|make\|perl-Package\|python-base\|python-module-setuptools\|python-module-virtualenv\|rpm\|salt-minion\|service\|sudo\|systemctl\|systemd\|wget\|yum-config-manager\),d
 
 %description
-Salt is a distributed remote execution system used to execute commands and
-query data. It was developed in order to bring the best solutions found in the
-world of remote execution together and make them better, faster and more
-malleable. Salt accomplishes this via its ability to handle larger loads of
-information, and not just dozens, but hundreds, or even thousands of individual
-servers. It handles them quickly and through a simple yet manageable interface.
+Salt is a distributed remote execution system used to execute commands
+and query data. It was developed in order to bring the best solutions
+found in the world of remote execution together and make them better,
+faster and more malleable. Salt accomplishes this via its ability to
+handle larger loads of information, and not just dozens, but hundreds,
+or even thousands of individual servers. It handles them quickly and
+through a simple yet manageable interface.
 
 %package -n python-module-salt
 Summary: Management component for salt, a parallel remote execution system
 Group: Development/Python
-Requires: python-module-yaml python-module-msgpack python-module-json lxc /usr/bin/lxc-destroy
+Requires: python-module-yaml python-module-msgpack python-module-json
 
 %description  -n python-module-salt
-Salt is a distributed remote execution system used to execute commands and
-query data. It was developed in order to bring the best solutions found in the
-world of remote execution together and make them better, faster and more
-malleable. Salt accomplishes this via its ability to handle larger loads of
-information, and not just dozens, but hundreds, or even thousands of individual
-servers. It handles them quickly and through a simple yet manageable interface.
+Salt is a distributed remote execution system used to execute commands
+and query data. It was developed in order to bring the best solutions
+found in the world of remote execution together and make them better,
+faster and more malleable. Salt accomplishes this via its ability to
+handle larger loads of information, and not just dozens, but hundreds,
+or even thousands of individual servers. It handles them quickly and
+through a simple yet manageable interface.
 
 %package -n python-module-salt-tests
 Summary: Test files for management component for salt, a parallel remote execution system
@@ -50,12 +64,13 @@ Group: Development/Python
 Requires: python-module-yaml python-module-msgpack python-module-json
 
 %description  -n python-module-salt-tests
-Salt is a distributed remote execution system used to execute commands and
-query data. It was developed in order to bring the best solutions found in the
-world of remote execution together and make them better, faster and more
-malleable. Salt accomplishes this via its ability to handle larger loads of
-information, and not just dozens, but hundreds, or even thousands of individual
-servers. It handles them quickly and through a simple yet manageable interface.
+Salt is a distributed remote execution system used to execute commands
+and query data. It was developed in order to bring the best solutions
+found in the world of remote execution together and make them better,
+faster and more malleable. Salt accomplishes this via its ability to
+handle larger loads of information, and not just dozens, but hundreds,
+or even thousands of individual servers. It handles them quickly and
+through a simple yet manageable interface.
 
 %package master
 Summary: Management component for salt, a parallel remote execution system
@@ -93,10 +108,28 @@ with XMLRPC or even a Websocket API.
 %install
 %python_build_install --prefix=/usr
 
-install -D -m 755 pkg/altlinux/salt-master.init %buildroot%_initdir/salt-master
-install -D -m 755 pkg/altlinux/salt-syndic.init %buildroot%_initdir/salt-syndic
-install -D -m 755 pkg/altlinux/salt-minion.init %buildroot%_initdir/salt-minion
-install -D -m 755 pkg/altlinux/salt-api.init %buildroot%_initdir/salt-api
+# Add some directories
+install -d -m 0755 %buildroot%_var/log/salt
+touch %buildroot%_var/log/salt/minion
+touch %buildroot%_var/log/salt/master
+install -d -m 0755 %buildroot%_var/cache/salt
+install -d -m 0755 %buildroot%_sysconfdir/salt
+install -d -m 0755 %buildroot%_sysconfdir/salt/master.d
+install -d -m 0755 %buildroot%_sysconfdir/salt/minion.d
+install -d -m 0755 %buildroot%_sysconfdir/salt/pki
+install -d -m 0755 %buildroot%_sysconfdir/salt/pki/master
+install -d -m 0755 %buildroot%_sysconfdir/salt/pki/minion
+install -d -m 0755 %buildroot%_sysconfdir/salt/cloud.conf.d
+install -d -m 0755 %buildroot%_sysconfdir/salt/cloud.deploy.d
+install -d -m 0755 %buildroot%_sysconfdir/salt/cloud.maps.d
+install -d -m 0755 %buildroot%_sysconfdir/salt/cloud.profiles.d
+install -d -m 0755 %buildroot%_sysconfdir/salt/cloud.providers.d
+install -d -m 0755 %buildroot%_sysconfdir/salt/proxy.d
+
+install -D -m 755 %SOURCE4 %buildroot%_initdir/salt-master
+install -D -m 755 %SOURCE6 %buildroot%_initdir/salt-syndic
+install -D -m 755 %SOURCE5 %buildroot%_initdir/salt-minion
+install -D -m 755 %SOURCE3 %buildroot%_initdir/salt-api
 
 mkdir -p %buildroot%_unitdir
 install -p -m 0644 pkg/salt-master.service %buildroot%_unitdir/
@@ -107,24 +140,28 @@ install -p -m 0644 pkg/salt-api.service %buildroot%_unitdir/
 mkdir -p %buildroot%_sysconfdir/salt/
 install -p -m 0640 conf/minion %buildroot%_sysconfdir/salt/minion
 install -p -m 0640 conf/master %buildroot%_sysconfdir/salt/master
+install -p -m 0640 conf/cloud  %buildroot%_sysconfdir/salt/cloud
+install -p -m 0640 conf/roster %buildroot%_sysconfdir/salt/roster
+install -p -m 0640 conf/proxy  %buildroot%_sysconfdir/salt/proxy
 
 mkdir -p %buildroot%_sysconfdir/sysconfig
 echo "ARG=''" >  %buildroot%_sysconfdir/sysconfig/salt-master
 echo "ARG=''" >  %buildroot%_sysconfdir/sysconfig/salt-syndic
 echo "ARG=''" >  %buildroot%_sysconfdir/sysconfig/salt-minion
+echo "ARG=''" >  %buildroot%_sysconfdir/sysconfig/salt-api
 
 install -D -m 0644 pkg/salt.bash %buildroot%_sysconfdir/bash_completion.d/salt
 
-install -D -m 0644 pkg/altlinux/master.logrotate %buildroot%_sysconfdir/logrotate.d/salt-master
-install -D -m 0644 pkg/altlinux/minion.logrotate %buildroot%_sysconfdir/logrotate.d/salt-minion
+install -D -m 0644 %SOURCE1 %buildroot%_sysconfdir/logrotate.d/salt-master
+install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 
 #TODO: temp fix
-rm -rf %python_sitelibdir/salt/cloud/deploy
-rm -rf %buildroot%python_sitelibdir/salt/cloud/deploy
+#rm -rf %python_sitelibdir/salt/cloud/deploy
+#rm -rf %buildroot%python_sitelibdir/salt/cloud/deploy
 
 #create symlink for opennode
-cd %buildroot%python_sitelibdir/salt/modules
-ln -s ../../opennode/cli/actions onode
+#cd %buildroot%python_sitelibdir/salt/modules
+#ln -s ../../opennode/cli/actions onode
 
 #check
 #__python setup.py test --runtests-opts=-u
@@ -143,9 +180,10 @@ ln -s ../../opennode/cli/actions onode
 %preun minion
 %preun_service salt-minion
 
-
 %files -n python-module-salt
 %doc AUTHORS README* LICENSE HACKING.rst
+%config(noreplace) %dir %_sysconfdir/salt
+%config(noreplace) %dir %_sysconfdir/salt/pki
 %exclude %python_sitelibdir/salt/daemons/test
 %python_sitelibdir/*
 %_man7dir/salt.7.*
@@ -154,16 +192,24 @@ ln -s ../../opennode/cli/actions onode
 %dir %python_sitelibdir/salt/daemons/test
 %python_sitelibdir/salt/daemons/test/*
 
-
 %files master
-%config(noreplace) %dir %_sysconfdir/salt
 %config(noreplace) %_sysconfdir/salt/master
+%config(noreplace) %_sysconfdir/salt/master.d
+%config(noreplace) %_sysconfdir/salt/roster
 %config %_sysconfdir/bash_completion.d/*
 %config(noreplace) %dir %_sysconfdir/bash_completion.d
 %config(noreplace) %_sysconfdir/logrotate.d/salt-master
-
+%config(noreplace) %_sysconfdir/salt/pki/master
 %config(noreplace) %_sysconfdir/sysconfig/salt-master
 %config(noreplace) %_sysconfdir/sysconfig/salt-syndic
+%_sysconfdir/salt/cloud.conf.d
+%_sysconfdir/salt/cloud.deploy.d
+%_sysconfdir/salt/cloud.maps.d
+%_sysconfdir/salt/cloud.profiles.d
+%_sysconfdir/salt/cloud.providers.d
+%config(noreplace) %_sysconfdir/salt/cloud
+%ghost %_logdir/salt/master
+%_var/cache/salt
 
 %_initdir/salt-master
 %_initdir/salt-syndic
@@ -174,49 +220,62 @@ ln -s ../../opennode/cli/actions onode
 %_bindir/salt
 %_bindir/salt-master
 %_bindir/salt-syndic
+%_bindir/salt-cloud
 %_bindir/salt-cp
 %_bindir/salt-key
 %_bindir/salt-run
 %_bindir/salt-ssh
-%_bindir/salt-cloud
-%_bindir/salt-unity
-%_bindir/salt-proxy
 %_bindir/spm
+%_bindir/salt-unity
 
+%_man1dir/salt.1.*
 %_man1dir/salt-master.1.*
 %_man1dir/salt-cp.1.*
+%_man1dir/salt-cloud.1.*
 %_man1dir/salt-key.1.*
 %_man1dir/salt-run.1.*
 %_man1dir/salt-syndic.1.*
 %_man1dir/salt-ssh.1.*
-%_man1dir/salt-cloud.1.*
-%_man1dir/salt-unity.1.*
-%_man1dir/salt-proxy.1.*
 %_man1dir/spm.1.*
+%_man1dir/salt-unity.1.*
 
 %files api
+%config(noreplace) %_sysconfdir/sysconfig/salt-api
 %_bindir/salt-api
 %_initdir/salt-api
 %_unitdir/salt-api.service
 %_man1dir/salt-api.1.*
 
 %files minion
-%config(noreplace) %dir %_sysconfdir/salt
 %config(noreplace) %_sysconfdir/salt/minion
+%config(noreplace) %_sysconfdir/salt/minion.d
+%config(noreplace) %_sysconfdir/salt/proxy
 %config(noreplace) %_sysconfdir/logrotate.d/salt-minion
-
 %config(noreplace) %_sysconfdir/sysconfig/salt-minion
+%config(noreplace) %_sysconfdir/salt/pki/minion
+%ghost %_logdir/salt/minion
 
 %_initdir/salt-minion
 %_unitdir/salt-minion.service
 
-%_bindir/salt-minion
 %_bindir/salt-call
+%_bindir/salt-minion
+%_bindir/salt-proxy
 
 %_man1dir/salt-call.1.*
 %_man1dir/salt-minion.1.*
+%_man1dir/salt-proxy.1.*
 
 %changelog
+* Thu Mar 30 2017 Andrey Cherepanov <cas@altlinux.org> 2016.11.3-alt1
+- New version
+- Remove optional external executables from autoreq
+
+* Mon Feb 27 2017 Andrey Cherepanov <cas@altlinux.org> 2016.11.1-alt1
+- New version 2016.11.1
+- Package new files and directories
+- Restore init and logrotate files
+
 * Fri Nov 18 2016 Lenar Shakirov <snejok@altlinux.ru> 2016.3.4-alt1
 - 2016.3.4
 
