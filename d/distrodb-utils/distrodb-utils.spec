@@ -1,5 +1,5 @@
 Name: distrodb-utils
-Version: 0.10
+Version: 0.11
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -9,6 +9,10 @@ Group: Development/Other
 License: GPL or Artistic
 Source: %name-%version.tar
 Url: http://altlinux.org/
+
+# The new API appears to be incompatible with the old one
+# -- https://bugzilla.altlinux.org/show_bug.cgi?id=32900 :
+Requires: python-module-rpm >= 4.13
 
 BuildRequires: rpm-build-perl perl(DistroMap.pm)
 
@@ -38,6 +42,11 @@ install -m 644 D*.pm %buildroot%perl_vendor_privlib/
 %perl_vendor_privlib/D*
 
 %changelog
+* Thu Mar 30 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.11-alt1
+- Adapted to the new RPM (>= 4.13) Python API (ALT#32900),
+  introduced in commit 5211039a20762b4a50c006ccf79666bff34967c2
+  Author: jbj Date: Mon Aug 5 21:46:50 2002 +0000
+
 * Thu Oct 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - new version
 
