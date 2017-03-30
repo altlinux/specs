@@ -2,7 +2,7 @@
 
 Name: icon-theme-simple-sl
 Version: 2.7
-Release: alt2
+Release: alt3
 
 Summary: Additonal sets of icons Simple for Simply Linux
 Summary(ru_RU.UTF-8): Набор пиктограмм Simple для Simply Linux
@@ -12,6 +12,8 @@ URL: http://www.gnome-look.org/content/show.php/Simple?content=99470
 Group: Graphical desktop/XFce
 Source: %icons_name-%version.tar
 BuildArch: noarch
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Sets of icons for Simply Linux based on original icons - Simple.
@@ -30,6 +32,10 @@ rm -rf %buildroot%_iconsdir/%icons_name/scalable
 %_iconsdir/%icons_name
 
 %changelog
+* Wed Mar 29 2017 Mikhail Efremov <sem@altlinux.org> 2.7-alt3
+- Use _unpackaged_files_terminate_build.
+- Add slinux.png icon.
+
 * Mon May 23 2016 Andrey Cherepanov <cas@altlinux.org> 2.7-alt2
 - Resize icons from scalable to fixed size (ALT #30292)
 - Copy original small icons from source themes
