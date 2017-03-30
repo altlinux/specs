@@ -3,7 +3,7 @@
 
 Name:    1c-preinstall
 Version: 8.3
-Release: alt10
+Release: alt11
 
 Summary: Set correct environment for 1C:Enterprise client
 License: GPL
@@ -36,6 +36,8 @@ Requires: libstdc++6
 Requires: libwebkitgtk2
 Requires: libX11
 Requires: zlib
+
+Requires: libgsf
 
 Source1:  xdg-current-desktop.sh 
 
@@ -88,6 +90,9 @@ mkdir -p %buildroot
 %endif
 
 %changelog
+* Thu Mar 30 2017 Andrey Cherepanov <cas@altlinux.org> 8.3-alt11
+- Return libgsf requirement for support save to XLS (ALT #33298)
+
 * Wed May 04 2016 Andrey Cherepanov <cas@altlinux.org> 8.3-alt10
 - Remove all hacks
 - Add all required external packages for 8.3.7.1949
