@@ -1,6 +1,8 @@
+%def_disable bootstrap
+
 Name: xfce4
 Version: 4.12
-Release: alt5
+Release: alt6
 Summary: Set of Xfce4 Desktop installers.
 License: %gpl2plus
 Group: Graphical desktop/XFce
@@ -62,8 +64,6 @@ Requires: rodent-icon-theme
 Requires: gnome-icon-theme
 # for trash and network in Thunar
 Requires: gvfs gvfs-backends
-# Screensaver
-Requires: screen-saver-engine
 
 %description default
 %name-default is a virtual package to provide default installation
@@ -158,12 +158,18 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %dir %_libdir/xfce4
 %dir %_sysconfdir/xdg/xfce4
 
+%if_disabled bootstrap
 %files minimal
 %files default
 %files full
 %files regular
+%endif
 
 %changelog
+* Fri Mar 31 2017 Mikhail Efremov <sem@altlinux.org> 4.12-alt6
+- Add bootstrap switch.
+- default: Drop screen-saver-engine.
+
 * Mon Nov 07 2016 Michael Shigorin <mike@altlinux.org> 4.12-alt5
 - NMU: rework full/regular metapackages so that -regular one
   is suitable for sysvinit-based systems again (xfce-polkit
