@@ -45,7 +45,7 @@
 %def_with libcephfs
 
 Name:    samba-DC
-Version: 4.6.1
+Version: 4.6.2
 Release: alt1%ubt
 
 Group:   System/Servers
@@ -1322,6 +1322,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri Mar 31 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.2-alt1%ubt
+- Update with regression fix of spring security release
+- Revert winbind problem fixes with access user to keytab due troubles in 4.6.x
+
 * Thu Mar 23 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.1-alt1%ubt
 - Update to spring security release
 - Fixed build --without docs (closes: 33118)

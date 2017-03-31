@@ -38,7 +38,7 @@
 %def_with libcephfs
 
 Name: samba
-Version: 4.6.1
+Version: 4.6.2
 Release: alt1%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1387,6 +1387,10 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Fri Mar 31 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.2-alt1%ubt
+- Update with regression fix of spring security release
+- Revert winbind problem fixes with access user to keytab due troubles in 4.6.x
+
 * Thu Mar 23 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.1-alt1%ubt
 - Update to spring security release
 - Fixed build --without docs (closes: 33118)
