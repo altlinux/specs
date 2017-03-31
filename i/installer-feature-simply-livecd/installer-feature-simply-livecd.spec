@@ -1,5 +1,5 @@
 Name: installer-feature-simply-livecd
-Version: 0.8.8
+Version: 0.8.9
 Release: alt1
 
 Summary: LiveCD install hooks for Simply Linux.
@@ -23,7 +23,7 @@ Requires: livecd-installer-features
 # Installer fearures for Simply Linux.
 Requires: installer-feature-samba-usershares-stage2
 Requires: installer-feature-desktop-other-fs-stage2
-Requires: installer-feature-sudo-enable-by-default-stage2
+Requires: installer-feature-sudo-enable-by-default-stage3
 Requires: installer-feature-nfs-client-stage3
 Requires: installer-feature-online-repo
 Requires: installer-feature-bell-off-stage3
@@ -55,6 +55,10 @@ cp -ar alterator-menu/ %buildroot%_datadir/livecd-install
 %_datadir/livecd-install/
 
 %changelog
+* Fri Mar 31 2017 Mikhail Efremov <sem@altlinux.org> 0.8.9-alt1
+- i-f-sudo-enable-by-default moved stage2 -> stage3.
+- lightdm: Setup indicators.
+
 * Tue Apr 14 2015 Mikhail Efremov <sem@altlinux.org> 0.8.8-alt1
 - Set Xfce4 as default session to start.
 - lightdm: Disable language selector.

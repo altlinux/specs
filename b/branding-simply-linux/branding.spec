@@ -1,6 +1,6 @@
 %define theme slinux
 %define Name Simply Linux
-%define codename Dory
+%define codename Cleo
 %define status %nil
 
 %define brand simply
@@ -8,8 +8,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 7.95.0
-Release: alt6
+Version: 7.96.0
+Release: alt1
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
@@ -167,7 +167,7 @@ Requires: PolicyKit-gnome
 Requires: etcskel
 Requires: gtk3-theme-clearlooks-phenix
 Requires: gnome-themes-standard
-Requires: gnome-icon-theme icon-theme-simple-sl
+Requires: gnome-icon-theme icon-theme-simple-sl >= 2.7-alt3
 Requires: branding-simply-linux-graphics
 Obsoletes: xfce-settings-lite xfce-settings-school-lite
 %branding_add_conflicts simply-linux xfce-settings
@@ -298,7 +298,6 @@ mkdir -p %buildroot/etc/skel/XDG-Templates.skel/
 cp -r xfce-settings/etcskel/* %buildroot/etc/skel/
 cp -r xfce-settings/etcskel/.config %buildroot/etc/skel/
 cp -r xfce-settings/etcskel/.local %buildroot/etc/skel/
-cp -r xfce-settings/etcskel/.gconf %buildroot/etc/skel/
 cp -r xfce-settings/etcskel/.vimrc %buildroot/etc/skel/
 cp -r xfce-settings/etcskel/.gtkrc-2.0 %buildroot/etc/skel/
 
@@ -426,7 +425,6 @@ fi
 /etc/skel/.wm-select
 /etc/skel/.config
 /etc/skel/.local
-/etc/skel/.gconf
 /etc/skel/.vimrc
 /etc/skel/.gtkrc-2.0
 /usr/share/backgrounds/xfce/*
@@ -453,6 +451,25 @@ fi
 %config %_sysconfdir/polkit-1/rules.d/*.rules
 
 %changelog
+* Fri Mar 31 2017 Mikhail Efremov <sem@altlinux.org> 7.96.0-alt1
+- indexhtml: Add Telegram button.
+- indexhtml.desktop: Use slinux icon.
+- indexhtml: Drop twitter button.
+- indexhtml: Fix and update links.
+- xfce-settings: Use Oxygen icon theme in LibreOffice.
+- menu: Drop alt-alt_linux.desktop.
+- indexhtml: Update logo and links.
+- Drop graphics/kde.
+- Prepare SL 8: Set codename.
+- vimrc: Disable bell.
+- Change license text.
+- xfce-settings: Drop icons.screen0.rc.
+- xfce-settings: Use dm-tool to switch users.
+- menu: Update/drop *.desktop files.
+- xfce-settings: Move terminalrc to new place.
+- xfce-settings: Update for xfce-4.12.
+- xfce-settings: Drop gconf settings from etcskel.
+
 * Fri Mar 10 2017 Mikhail Efremov <sem@altlinux.org> 7.95.0-alt6
 - Spec cleanup.
 - Don't change license and *-release files during update.

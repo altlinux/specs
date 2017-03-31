@@ -1,6 +1,6 @@
 Name: installer-distro-simply-linux
-Version: 7.0
-Release: alt12
+Version: 8.0
+Release: alt1
 
 Summary: Installer common files
 Summary(ru_RU.UTF-8): Общие пакеты для установки дистрибутива "Simply linux"
@@ -27,6 +27,8 @@ License: GPL
 Group: System/Configuration/Other
 Requires: %name = %version-%release
 Requires: installer-stage2
+#fonts
+Requires: fonts-ttf-google-droid-sans
 #modules
 Requires: alterator-sysconfig
 Requires: alterator-license
@@ -45,9 +47,9 @@ Requires: installer-feature-desktop-suspend-stage2
 Requires: installer-feature-desktop-disable-remote-stage2
 Requires: installer-feature-hwtweaks-stage2
 Requires: installer-feature-set-tz
-Requires: installer-feature-sudo-enable-by-default-stage2
 Requires: installer-feature-runlevel5-stage2
 Requires: installer-feature-xdg-user-dirs
+Requires: installer-feature-slideshow
 
 Provides: installer-lite-stage2
 Provides: installer-simply-linux-stage2
@@ -81,6 +83,7 @@ Requires: installer-feature-repo-add
 Requires: installer-feature-bell-off-stage3
 Requires: installer-feature-symlinks-from-sbin
 Requires: installer-feature-efi-stage3
+Requires: installer-feature-sudo-enable-by-default-stage3
 
 Provides: installer-lite-stage3
 Provides: installer-simply-linux-stage3
@@ -116,6 +119,14 @@ Installer stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Fri Mar 31 2017 Mikhail Efremov <sem@altlinux.org> 8.0-alt1
+- Replace prefdm.service with lightdm.service.
+- i-f-sudo-enable-by-default moved stage2 -> stage3.
+- Enable NetworkManager-wait-online.service.
+- stage2: Add fonts-ttf-google-droid-sans.
+- stage2: Add installer-feature-slideshow.
+- lightdm: Setup indicators.
+
 * Tue Apr 14 2015 Mikhail Efremov <sem@altlinux.org> 7.0-alt12
 - Set Xfce4 as default session to start.
 - lightdm: Disable language selector.

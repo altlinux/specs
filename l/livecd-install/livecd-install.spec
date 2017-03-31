@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.9.7
+Version: 0.9.8
 Release: alt1
 
 Summary: Permanently install Live system
@@ -61,6 +61,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Fri Mar 31 2017 Mikhail Efremov <sem@altlinux.org> 0.9.8-alt1
+- 40-autohostname.sh: Don't setup /etc/HOSTNAME.
+
 * Thu Dec 15 2016 Michael Shigorin <mike@altlinux.org> 0.9.7-alt1
 - Update for rpm 4.13 (harden against missing packages to be removed).
 
