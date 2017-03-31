@@ -3,8 +3,8 @@
 
 Name: asterisk-core-sounds-en_AU-sln16
 Summary: sounds for Asterisk
-Version: 1.4.27
-Release: alt1
+Version: alt1.1
+Release: alt1.1
 License: GPL
 Group: System/Servers
 BuildArch: noarch
@@ -16,6 +16,8 @@ Url: http://downloads.asterisk.org/pub/telephony/sounds/releases/%name-%version.
 
 Source: %name-%version.tar
 
+BuildRequires: asterisk-build-sounds
+
 %description
 %summary
 
@@ -23,32 +25,13 @@ Source: %name-%version.tar
 %setup
 
 %install
-mkdir -p %buildroot%sound_dir/%sound_lang
-cp -a ./ %buildroot%sound_dir/%sound_lang/
-find -type f \
-    | grep -v sounds.list \
-    | grep -vP '^.\/(CREDITS|LICENSE|CHANGES)' \
-	| grep -vP '\.txt$' \
-    | sed 's!\.\/\(.*\)!%sound_dir%sound_lang/\1!' \
-    > sounds.list
-
-find -mindepth 1 -type d \
-    | sed 's!\.\/\(.*\)!%%dir %sound_dir%sound_lang/\1!' \
-	>> sounds.list
-
-find -type f \
-    | grep -P '^.\/(CREDITS|LICENSE|CHANGES)' \
-    | sed 's!\.\/\(.*\)!%%doc \1\n%%exclude %sound_dir%sound_lang/\1!' \
-	>> sounds.list
-
-find -type f \
-    | grep -P '\.txt$' \
-    | sed 's!\.\/\(.*\)!%%doc \1\n%%exclude %sound_dir%sound_lang/\1!' \
-	>> sounds.list
-
+ast-install-core-sounds en_AU sln16 %buildroot
 %files -f sounds.list
 
 %changelog
+* Fri Mar 31 2017 Denis Smirnov <mithraen@altlinux.ru> alt1.1-alt1.1
+- update build scripts for prevent core/extra sounds conflicts
+
 * Sun May 10 2015 Cronbuild Service <cronbuild@altlinux.org> 1.4.27-alt1
 - new version 1.4.27
 
