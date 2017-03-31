@@ -1,4 +1,4 @@
-%define major 0.9
+%define major 1.0
 %define api_ver 2.0
 %define _noarchpkgconfigdir %_datadir/pkgconfig
 %define _libexecdir %_prefix/libexec
@@ -6,8 +6,8 @@
 %def_enable fts
 
 Name: zeitgeist
-Version: %major.16
-Release: alt1.1
+Version: %major
+Release: alt1
 
 Summary: Framework providing Desktop activity awareness
 
@@ -38,6 +38,7 @@ BuildRequires: gobject-introspection-devel
 BuildRequires: vala-tools >= %vala_ver libtelepathy-glib-vala
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-rdflib
+BuildRequires: systemd-devel
 # for autoreconf
 BuildRequires: gettext-tools
 
@@ -174,14 +175,17 @@ rm -rf %buildroot%_prefix/doc/
 %_bindir/%name-daemon
 %_bindir/%name-datahub
 %_datadir/%name/
-%_datadir/dbus-1/services/org.gnome.%name.service
+%_datadir/dbus-1/services/org.gnome.%name.Engine.service
+%_datadir/dbus-1/services/org.gnome.%name.SimpleIndexer.service
+%_prefix/lib/systemd/user/%name.service
 %_man1dir/%name-*.*
-%_sysconfdir/xdg/autostart/zeitgeist-datahub.desktop
+%_sysconfdir/xdg/autostart/%name-datahub.desktop
 %_datadir/bash-completion/completions/%name-daemon
 
 %if_enabled fts
-%_libexecdir/%name-fts
-%_datadir/dbus-1/services/org.gnome.zeitgeist.fts.service
+%dir %_libexecdir/%name
+%_libexecdir/%name/%name-fts
+%_prefix/lib/systemd/user/%name-fts.service
 %endif
 
 %files -n python-module-%name%api_ver
@@ -213,6 +217,9 @@ rm -rf %buildroot%_prefix/doc/
 %endif
 
 %changelog
+* Fri Mar 31 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
+- updated to v1.0-1-g1bcc858
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.16-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
