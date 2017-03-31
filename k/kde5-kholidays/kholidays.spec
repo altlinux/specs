@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 16.12.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -11,7 +11,6 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
-Patch1: alt-fix-compile.patch
 
 # Automatically added by buildreq on Tue Aug 11 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs
@@ -56,7 +55,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K5build
@@ -83,6 +81,9 @@ KF5 library
 %_K5qml/org/kde/kholidays/
 
 %changelog
+* Fri Mar 31 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt2%ubt
+- fix compile flags
+
 * Wed Mar 15 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 
