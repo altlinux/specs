@@ -1,5 +1,5 @@
 Name: sqlmap
-Version: 1.0
+Version: 1.1.3
 Release: alt1
 
 Summary: Automatic SQL injection and database takeover tool
@@ -21,7 +21,6 @@ BuildPreReq: rpm-build-intro
 %add_findreq_skiplist %_datadir/%name/udf/postgresql/linux/*/*/*.so
 %add_verify_elf_skiplist %_datadir/%name/udf/postgresql/linux/*/*/*.so
 %add_verify_elf_skiplist %_datadir/%name/udf/mysql/linux/*/*.so
-%add_verify_elf_skiplist %_datadir/%name/lib/contrib/upx/linux/upx
 
 # Automatically added by buildreq on Sat Jan 21 2012 (-bi)
 # optimized out: python-base python-module-peak python-modules-compiler
@@ -41,15 +40,11 @@ out-of-band connections.
 %remove_repo_info
 # Drop shebang from non-executable python files
 find . -type f -and -name '*.py' -and ! -executable -exec  sed -i "sa#!%_bindir/env pythonaa" {} \;
-# Dro non-Linux stuff
-rm -rf lib/contrib/upx/macosx
-rm -rf lib/contrib/upx/windows
-rm -rf udf/mysql/windows
-rm -rf udf/postgresql/windows
 
 %install
 install -d -m 755 %buildroot%_datadir/%name
 install -m 755 sqlmap.py %buildroot%_datadir/%name
+install -m 755 sqlmapapi.py %buildroot%_datadir/%name
 cp -pr extra %buildroot%_datadir/%name/
 cp -pr lib %buildroot%_datadir/%name/
 cp -pr plugins %buildroot%_datadir/%name/
@@ -63,12 +58,14 @@ cp -pr waf %buildroot%_datadir/%name/
 cp -pr xml %buildroot%_datadir/%name/
 
 install -d -m 755 %buildroot%_bindir
-cat > %buildroot%_bindir/sqlmap <<EOF
+for app in sqlmap sqlmapapi; do
+cat > %buildroot%_bindir/$app <<EOF
 #!/bin/sh
 cd %_datadir/%name
-exec ./sqlmap.py \$@
+exec ./$app.py \$@
 EOF
-chmod +x %buildroot%_bindir/sqlmap
+chmod +x %buildroot%_bindir/$app
+done
 
 install -d -m 755 %buildroot%_sysconfdir
 install -m 644 sqlmap.conf %buildroot%_sysconfdir
@@ -80,9 +77,15 @@ popd
 %doc doc/*
 %_datadir/%name
 %_bindir/%name
+%_bindir/%{name}api
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Sat Apr 01 2017 Pavel Nakonechnyi <zorg@altlinux.org> 1.1.3-alt1
+- new version 1.1.3
+- return "non-Linux stuff" as it is executed on target system
+- include sqlmapapi
+
 * Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - new version 1.0 (with rpmrb script)
 
