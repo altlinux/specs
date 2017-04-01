@@ -1,6 +1,6 @@
 Name: shim-signed
 Version: 0.4
-Release: alt3
+Release: alt4
 
 Summary: UEFI RestrictedBoot shim signed by Microsoft
 License: BSD
@@ -36,6 +36,9 @@ install -p *.efi %buildroot%_efi_bindir/
 %attr(0644,root,root) %_efi_bindir/*.efi
 
 %changelog
+* Sat Apr 01 2017 Michael Shigorin <mike@altlinux.org> 0.4-alt4
+- removed ALT signature (closes: #33314)
+
 * Tue Dec 10 2013 Michael Shigorin <mike@altlinux.org> 0.4-alt3
 - added ALT signature
 
