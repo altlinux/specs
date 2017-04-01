@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: xfsprogs
-Version: 3.1.11
+Version: 4.10.0
 Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
@@ -10,6 +10,7 @@ Group: System/Kernel and hardware
 
 Url: http://xfs.org
 Source: %name-%version-%release.tar
+Patch: %name-%version-alt.patch
 
 Requires: libxfs = %version-%release
 Conflicts: xfsdump < 3.0.0-alt1
@@ -22,7 +23,7 @@ BuildPreReq: rpm-build >= 4.0.4-alt96.11
 BuildConflicts: libxfs-devel
 
 # Automatically added by buildreq on Wed May 27 2009 (-bi)
-BuildRequires: libuuid-devel
+BuildRequires: libuuid-devel libblkid-devel
 
 %description
 XFS is a high performance journaling filesystem which originated
@@ -60,18 +61,6 @@ You should install libxfs-devel if you want to develop XFS
 filesystem-specific programs, If you install libxfs-devel, you'll
 also want to install xfsprogs.
 
-%package -n libxfs-qa-devel
-Summary: XFS QA filesystem-specific headers
-Group: Development/C
-Requires: libxfs-devel = %version-%release
-
-%description -n libxfs-qa-devel
-libxfs-qa-devel contains headers needed to build the xfstests
-QA suite.
-
-You should install xfsprogs-qa-devel only if you are interested
-in building or running the xfstests QA suite.
-
 %if_enabled static
 %package -n libxfs-devel-static
 Summary: XFS filesystem-specific static libraries
@@ -103,7 +92,7 @@ autoconf
 make DEBUG=-DNDEBUG LIBTOOL="`pwd`/libtool"
 
 %install
-make DIST_ROOT=%buildroot install install-dev install-qa
+make DIST_ROOT=%buildroot install install-dev
 mkdir -p %buildroot%_libdir
 
 for f in %buildroot/%_lib/*.so; do
@@ -133,65 +122,15 @@ rm -rf %buildroot%_datadir/doc/%name
 %_includedir/xfs/handle.h
 %_includedir/xfs/jdm.h
 %_includedir/xfs/linux.h
-%_includedir/xfs/platform_defs.h
 %_includedir/xfs/xfs.h
 %_includedir/xfs/xfs_fs.h
+%_includedir/xfs/xfs_arch.h
+%_includedir/xfs/xfs_da_format.h
+%_includedir/xfs/xfs_format.h
+%_includedir/xfs/xfs_log_format.h
+%_includedir/xfs/xfs_types.h
 %_includedir/xfs/xqm.h
 %_man3dir/*
-
-%files -n libxfs-qa-devel
-%_includedir/xfs/atomic.h
-%_includedir/xfs/bitops.h
-%_includedir/xfs/cache.h
-%_includedir/xfs/hlist.h
-%_includedir/xfs/kmem.h
-%_includedir/xfs/libxfs.h
-%_includedir/xfs/libxlog.h
-%_includedir/xfs/list.h
-%_includedir/xfs/parent.h
-%_includedir/xfs/radix-tree.h
-%_includedir/xfs/swab.h
-%_includedir/xfs/xfs_ag.h
-%_includedir/xfs/xfs_alloc.h
-%_includedir/xfs/xfs_alloc_btree.h
-%_includedir/xfs/xfs_arch.h
-%_includedir/xfs/xfs_attr_leaf.h
-%_includedir/xfs/xfs_attr_sf.h
-%_includedir/xfs/xfs_bit.h
-%_includedir/xfs/xfs_bmap.h
-%_includedir/xfs/xfs_bmap_btree.h
-%_includedir/xfs/xfs_btree.h
-%_includedir/xfs/xfs_btree_trace.h
-%_includedir/xfs/xfs_buf_item.h
-%_includedir/xfs/xfs_da_btree.h
-%_includedir/xfs/xfs_dfrag.h
-%_includedir/xfs/xfs_dinode.h
-%_includedir/xfs/xfs_dir2.h
-%_includedir/xfs/xfs_dir2_block.h
-%_includedir/xfs/xfs_dir2_data.h
-%_includedir/xfs/xfs_dir2_leaf.h
-%_includedir/xfs/xfs_dir2_node.h
-%_includedir/xfs/xfs_dir2_sf.h
-%_includedir/xfs/xfs_dir_leaf.h
-%_includedir/xfs/xfs_dir_sf.h
-%_includedir/xfs/xfs_extfree_item.h
-%_includedir/xfs/xfs_ialloc.h
-%_includedir/xfs/xfs_ialloc_btree.h
-%_includedir/xfs/xfs_inode.h
-%_includedir/xfs/xfs_inode_item.h
-%_includedir/xfs/xfs_inum.h
-%_includedir/xfs/xfs_log.h
-%_includedir/xfs/xfs_log_priv.h
-%_includedir/xfs/xfs_log_recover.h
-%_includedir/xfs/xfs_metadump.h
-%_includedir/xfs/xfs_mount.h
-%_includedir/xfs/xfs_quota.h
-%_includedir/xfs/xfs_rtalloc.h
-%_includedir/xfs/xfs_sb.h
-%_includedir/xfs/xfs_trace.h
-%_includedir/xfs/xfs_trans.h
-%_includedir/xfs/xfs_trans_space.h
-%_includedir/xfs/xfs_types.h
 
 %if_enabled static
 %files -n libxfs-devel-static
@@ -199,6 +138,10 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Sat Apr  1 2017 Terechkov Evgenii <evg@altlinux.org> 4.10.0-alt1
+- 4.10.0 (ALT#33290)
+- Drop libxfs-qa-devel subpackage (all header now in libxfs-devel)
+
 * Thu Nov 26 2015 Michael Shigorin <mike@altlinux.org> 3.1.11-alt1
 - 3.1.11
   + reset to pristine source, effectively reverting all patches
