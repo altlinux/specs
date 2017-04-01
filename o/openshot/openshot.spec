@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 2.2
+%define ver_major 2.3
 
 Name: openshot
 Version: %ver_major.0
@@ -19,7 +19,7 @@ Source: %name-%version.tar.gz
 
 BuildArch: noarch
 
-Requires: python3-module-%name >= 0.1.3
+Requires: python3-module-%name >= 0.1.4
 Requires: blender inkscape
 
 # should be self-satisfied
@@ -58,6 +58,9 @@ Xbox, and many more common formats.
 %doc AUTHORS README
 
 %changelog
+* Sat Apr 01 2017 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
+- 2.3.0
+
 * Thu Jan 26 2017 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
 - 2.2.0 (qt5)
 
