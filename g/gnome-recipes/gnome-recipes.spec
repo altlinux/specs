@@ -2,7 +2,7 @@
 %define xdg_name org.gnome.Recipes
 
 Name: gnome-recipes
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME likes to cook
@@ -19,7 +19,7 @@ Requires: %name-data = %EVR
 
 %define gtk_ver 3.20
 
-BuildRequires: autoconf-archive libappstream-glib-devel rpm-build-xdg
+BuildRequires: autoconf-archive libappstream-glib-devel rpm-build-xdg yelp-tools
 BuildRequires: libgtk+3-devel >= %gtk_ver libjson-glib-devel
 BuildRequires: libgspell-devel libgnome-autoar-devel
 BuildRequires: libcanberra-gtk3-devel
@@ -53,20 +53,19 @@ This package contains common noarch files needed for Recipes.
 
 %install
 %makeinstall_std
-%find_lang --with-gnome %name
-%find_lang --with-gnome --output=%name-data.lang %name-data
+%find_lang %name
+%find_lang --with-gnome --output=%name.lang %name %name-data %xdg_name
 
 %check
 #url-not-found  : <screenshot> url not found [https://git.gnome.org/browse/recipes/plain/data/appdata/cook-later.png]
 #...
 #%%make check
 
-%files -f %name.lang
+%files
 %_bindir/%name
-#%_libdir/%name/
 %doc NEWS
 
-%files data -f %name-data.lang
+%files data -f %name.lang
 %_datadir/%name/
 %_desktopdir/%xdg_name.desktop
 %_datadir/dbus-1/services/%xdg_name.service
@@ -79,6 +78,9 @@ This package contains common noarch files needed for Recipes.
 
 
 %changelog
+* Sat Apr 01 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Sat Mar 18 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
 
