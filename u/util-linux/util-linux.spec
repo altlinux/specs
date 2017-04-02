@@ -3,7 +3,7 @@
 ### Header
 Summary: A collection of basic system utilities
 Name: util-linux
-Version: 2.29.0
+Version: 2.29.2
 Release: alt1
 License: GPLv2 and GPLv2+ and BSD with advertising and Public Domain
 Group: System/Base
@@ -25,6 +25,7 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 %def_with selinux
 %def_with audit
 %def_with udev
+%def_without systemd
 %def_enable line
 %def_disable mountpoint
 %def_disable eject
@@ -40,6 +41,7 @@ BuildRequires: libcap-ng-devel
 %{?_with_selinux:BuildRequires: libselinux-devel}
 %{?_with_audit:BuildRequires: libaudit-devel}
 %{?_with_udev:BuildRequires: libudev-devel}
+%{?_with_systemd:BuildRequires: libsystemd-devel}
 %{?_enable_login:BuildRequires: libpam-devel}
 
 ### Sources
@@ -95,6 +97,11 @@ Patch54: util-linux-2.11f-rh-rawman.patch
 Patch58: util-linux-2.12r-alt-mount-MS_SILENT.patch
 Patch59: util-linux-tests.patch
 Patch60: util-linux-2.20-alt-agetty-release.patch
+
+# 33152 - logger without systemd support
+Patch70: util-linux-2.29.2-alt-logger_man.patch
+
+Patch71: util-linux-2.29.2-alt-blkid-exit-code.patch
 
 %description
 The util-linux package contains a large variety of low-level system
@@ -451,6 +458,13 @@ cp -r -- %SOURCE8 %SOURCE9 %SOURCE10 %SOURCE11 %SOURCE12 .
 %patch59 -p2
 %patch60 -p1
 
+%if_without systemd
+%patch70 -p1
+%endif
+
+%patch71 -p2
+
+
 echo %version > .tarball-version
 
 mkdir -p rpm
@@ -516,6 +530,7 @@ mv blkid.static rpm/blkid.initramfs
 	%{subst_with udev} \
 	%{subst_with selinux} \
 	%{subst_with audit} \
+	%{subst_with systemd} \
 	%{subst_enable line} \
 	%{subst_enable mountpoint} \
 	%{subst_enable eject} \
@@ -632,6 +647,11 @@ for I in raw; do
 		mv -- %buildroot/sbin/$I %buildroot/bin/$I
 done
 
+%if_without systemd
+install -pD -m644 sys-utils/fstrim.timer   %buildroot/%_unitdir/fstrim.timer
+sed 's,@sbindir@,/sbin,' < sys-utils/fstrim.service.in > %buildroot/%_unitdir/fstrim.service
+%endif
+
 LINKS="linux32 linux64"
 %ifarch s390 s390x
 	LINKS="$LINKS s390 s390x"
@@ -665,6 +685,26 @@ for i in $LINKS; do
 %endif #with setarch
 done > setarch.files
 
+%if_enabled uuidd
+	:> uuidd.files
+
+	ls -1 %buildroot/%_sbindir |
+		egrep '^uuidd$' |
+		sed -e 's|^\(.*\)$|%%_sbindir/\1|g' \
+		>> uuidd.files
+
+	ls -1 %buildroot%_man8dir |
+		egrep '^uuidd\.' |
+		sed -e 's|^\(.*\)$|%%_man8dir/\1*|g' \
+		>> uuidd.files
+
+	ls -1 %buildroot%_unitdir |
+		egrep '^uuidd\.*' |
+		sed -e 's|^\(.*\)$|%%_unitdir/\1|g' \
+		>> uuidd.files
+
+%endif #enabled uuidd
+
 {
 	# bindir
 	ls -1 %buildroot/%_bindir |
@@ -692,6 +732,11 @@ done > setarch.files
 		egrep -v "^($exclude_archs)\.8*\$" |
 		egrep -v '(mount|^swapo|losetup|lsblk|clock|getty|fdisk|part|uuidd)' |
 		sed -e 's|^\(.*\)$|%%_man8dir/\1*|g'
+
+	# unitdir
+	ls -1 %buildroot%_unitdir |
+		egrep -e '^(fstrim\.*)' |
+		sed -e 's|^\(.*\)$|%%_unitdir/\1|g'
 
 	# /bin
 	ls -1 %buildroot/bin |
@@ -862,10 +907,8 @@ fi
 %_libdir/libuuid.a
 
 %if_enabled uuidd
-%files -n uuidd
-%_sbindir/uuidd
-%_man8dir/uuidd.*
-%endif #enabled uuidd
+%files -n uuidd -f uuidd.files
+%endif #with uuidd
 
 %files -n libmount
 /%_lib/libmount.so.*
@@ -912,6 +955,12 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Sun Apr 02 2017 Alexey Gladkov <legion@altlinux.ru> 2.29.2-alt1
+- New version (2.29.2).
+- Fix `blkid -v` exit code (ALT#29544).
+- Add fstrim service/timer (ALT#32687).
+- Cleanup logger man-page (ALT#33152).
+
 * Thu Nov 17 2016 Alexey Gladkov <legion@altlinux.ru> 2.29.0-alt1
 - New version (2.29).
 
