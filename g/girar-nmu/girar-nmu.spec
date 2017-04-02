@@ -1,5 +1,5 @@
 Name: girar-nmu
-Version: 1.42
+Version: 1.43
 Release: alt1
 
 Summary: git.alt client utilities for NMU automation
@@ -50,6 +50,9 @@ install -m 644 girar-*.1 %buildroot%_man1dir/
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Sun Apr 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.43-alt1
+- new version
+
 * Wed Feb 08 2017 Igor Vlasenko <viy@altlinux.ru> 1.42-alt1
 - support for gitery path in girar-nmu-helper-git-push-build
 
