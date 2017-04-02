@@ -1,18 +1,24 @@
+# change to %nil for release
+%define beta -WIP
 Name: testdisk
-Version: 7.0
-Release: alt2
+Version: 7.1
+Release: alt1
 
 Summary: Tool to check and undelete partition
+
 License: GPLv2+
 Group: System/Configuration/Hardware
-
 Url: http://www.cgsecurity.org/wiki/TestDisk
-Source: http://www.cgsecurity.org/%name-%version.tar.bz2
+
+# Source-url: http://www.cgsecurity.org/%name-%version%beta.tar.bz2
+Source: %name-%version.tar
 
 # manually removed: python3 ruby ruby-stdlibs
-# Automatically added by buildreq on Wed May 06 2015
-# optimized out: fontconfig gnu-config libcloog-isl4 libcom_err-devel libncurses-devel libntfs-3g libqt4-core libqt4-gui libstdc++-devel libtinfo-devel pkg-config python3-base zlib-devel
-BuildRequires: gcc-c++ glibc-devel libdb4-devel libe2fs-devel libewf-devel libjpeg-devel libncursesw-devel libntfs-3g-devel libossp-uuid-devel libprogsreiserfs-devel libqt4-devel libuuid-devel
+# Automatically added by buildreq on Sun Apr 02 2017
+# optimized out: gcc-c++ glibc-devel-static gnu-config libcom_err-devel libncurses-devel libntfs-3g libqt5-core libqt5-gui libqt5-widgets libqt5-xml libstdc++-devel libtinfo-devel pkg-config python-base python-modules python3 python3-base zlib-devel
+BuildRequires: libe2fs-devel libewf-devel libjpeg-devel libncursesw-devel libntfs-3g-devel libossp-uuid-devel libprogsreiserfs-devel libuuid-devel
+
+BuildRequires: qt5-base-devel qt5-tools zlib-devel
 
 Provides: testdisk-doc = %name-%version
 Obsoletes: testdisk-doc < 6.14
@@ -69,6 +75,7 @@ http://www.cgsecurity.org/wiki/PhotoRec
 
 %prep
 %setup
+%add_optflags -std=c++11
 
 %build
 %configure
@@ -98,6 +105,9 @@ rm -rf %buildroot%_mandir/zh_CN/
 %_man8dir/qphotorec*
 
 %changelog
+* Sun Apr 02 2017 Vitaly Lipatov <lav@altlinux.ru> 7.1-alt1
+- new version 7.1-WIP (with rpmrb script)
+
 * Sun Apr 24 2016 Denis Medvedev <nbr@altlinux.org> 7.0-alt2
 - Rebuild for sisyphus.
 
