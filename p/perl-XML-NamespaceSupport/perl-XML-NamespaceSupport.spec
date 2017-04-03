@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist XML-NamespaceSupport
 Name: perl-%dist
-Version: 1.11
-Release: alt3
+Version: 1.12
+Release: alt1
 
 Summary: A simple generic namespace support class
 License: GPL Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PERIGRIN/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +22,7 @@ from within any application that may need them. It also helps maintain
 a prefix to namespace URI map, and provides a number of basic checks.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +35,9 @@ a prefix to namespace URI map, and provides a number of basic checks.
 %perl_vendor_privlib/XML
 
 %changelog
+* Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 1.11-alt3
 - disabled build dependency on perl-Module-Install
 
