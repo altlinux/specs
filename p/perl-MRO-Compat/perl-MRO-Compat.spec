@@ -1,13 +1,14 @@
+%define _unpackaged_files_terminate_build 1
 %define module	MRO-Compat
 %define name	perl-%{module}
 %define version 0.12
 
 Name:		%{name}
-Version:	0.12
+Version:	0.13
 Release:	alt1
 Summary:	mro::* interface compatibility for Perls < 5.9.5
 URL:		http://search.cpan.org/dist/%{module}
-Source:		http://www.cpan.org/authors/id/B/BO/BOBTFISH/MRO-Compat-%{version}.tar.gz
+Source0:		http://www.cpan.org/authors/id/H/HA/HAARG/%{module}-%{version}.tar.gz
 License:	GPL
 Group:		Development/Perl
 # Automatically added by buildreq on Fri Nov 13 2009 (-bi)
@@ -67,11 +68,15 @@ docs, and contain a lot of other
 
 
 %files
+%doc Changes README
 %perl_vendor_privlib/*
 %exclude %perl_vendor_archlib
 
 
 %changelog
+* Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- automated CPAN update
+
 * Mon Oct 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - automated CPAN update
 
