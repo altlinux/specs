@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTTP-Server-Simple
 Name: perl-%dist
-Version: 0.51
+Version: 0.52
 Release: alt1
 
 Summary: Lightweight HTTP server
@@ -9,7 +9,7 @@ License: Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BP/BPS/HTTP-Server-Simple-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BP/BPS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ module dependencies. It's ideal for building a standalone http-based UI to
 your existing tools.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +35,9 @@ your existing tools.
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.51-alt1
 - automated CPAN update
 
