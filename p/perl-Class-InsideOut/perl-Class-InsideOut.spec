@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module Class-InsideOut
 
 Name: perl-%module
-Version: 1.13
+Version: 1.14
 Release: alt1
 
 Summary: Class::InsideOut - safe, simple inside-out object construction kit
@@ -13,7 +14,7 @@ Url: %CPAN %module
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/Class-InsideOut-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Jan 14 2009 (-bi)
 BuildRequires: perl-Module-Build perl-Storable perl-threads
@@ -37,7 +38,7 @@ It provides the minimal support necessary for creating safe inside-out objects
 and generating flexible accessors.
 
 %prep
-%setup -q -n %module-%version
+%setup -q -n %{module}-%{version}
 
 # TODO: fails
 rm -f  t/15_no_weaken_fallback.t
@@ -49,10 +50,14 @@ rm -f  t/15_no_weaken_fallback.t
 %perl_vendor_install
 
 %files
+%doc README LICENSE Todo Changes examples
 %perl_vendor_privlib/Class*
-%doc README LICENSE Changes Todo 
+%doc README LICENSE Changes Todo
 
 %changelog
+* Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
+- automated CPAN update
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
 - automated CPAN update
 
