@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist libwww-perl
 Name: perl-libwww
-Version: 6.18
+Version: 6.24
 Release: alt1
 
 Summary: WWW client/server library for Perl (aka LWP)
@@ -10,7 +10,6 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{dist}-%{version}.tar.gz
-Patch: libwww-perl-6.03-alt-ftp-req.patch
 
 BuildArch: noarch
 
@@ -27,7 +26,7 @@ Obsoletes: %name-perl < %version
 
 # Automatically added by buildreq on Thu Jan 31 2013
 # optimized out: perl-Encode perl-HTTP-Date perl-HTTP-Message perl-LWP-MediaTypes perl-Pod-Escapes perl-Pod-Simple perl-URI perl-libnet perl-podlators
-BuildRequires: perl-Encode-Locale perl-File-Listing perl-HTML-Parser perl-HTTP-Cookies perl-HTTP-Daemon perl-HTTP-Negotiate perl-Net-HTTP perl-WWW-RobotRules perl-devel perl-podlators perl(Test/Fatal.pm) perl(Try/Tiny.pm)
+BuildRequires: perl-Encode-Locale perl-File-Listing perl-HTML-Parser perl-HTTP-Cookies perl-HTTP-Daemon perl-HTTP-Negotiate perl-Net-HTTP perl-WWW-RobotRules perl-devel perl-podlators perl(Test/Fatal.pm) perl(Try/Tiny.pm) perl(Test/RequiresInternet.pm) perl(Data/Dump.pm)
 
 %description
 The libwww-perl collection is a set of Perl modules which provides a
@@ -39,7 +38,6 @@ help you implement simple HTTP servers.
 
 %prep
 %setup -q -n %{dist}-%{version}
-%patch -p1
 bzip2 -k Changes
 
 %build
@@ -57,7 +55,7 @@ ln -snf lwp-request.1 %buildroot%_man1dir/HEAD.1
 ln -snf lwp-request.1 %buildroot%_man1dir/POST.1
 
 %files
-%doc	README README.SSL AUTHORS Changes
+%doc	README.SSL Changes CONTRIBUTING.md
 	%_bindir/lwp-*
 	%_bindir/GET
 	%_bindir/HEAD
@@ -69,9 +67,12 @@ ln -snf lwp-request.1 %buildroot%_man1dir/POST.1
 %dir	%perl_vendor_privlib/LWP
 	%perl_vendor_privlib/LWP.pm
 	%perl_vendor_privlib/LWP/*
-%doc	%perl_vendor_privlib/lwp*.pod
+%doc	%perl_vendor_privlib/libwww/lwp*.pod
 
 %changelog
+* Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 6.24-alt1
+- automated CPAN update
+
 * Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 6.18-alt1
 - automated CPAN update
 
