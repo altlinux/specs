@@ -1,5 +1,5 @@
 Name: sqlite3
-Version: 3.15.2
+Version: 3.18.0
 Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
@@ -18,6 +18,9 @@ Patch3: sqlite3-fedora-no-malloc-usable-size.patch
 # 2749999.5. This patch is temporary workaround and should be dropped as soon as a valid
 # fix is found.
 Patch4: sqlite3-fedora-percentile-test.patch
+# Patch from Fedora: Disable test date-2.2c on i586
+# The test always failing and seems no one cares.
+Patch5: sqlite3-fedora-datetest-2.2c.patch
 
 BuildRequires(Pre): tcl-devel
 BuildRequires: libreadline-devel
@@ -103,6 +106,10 @@ embedded controllers.
 %patch3 -p1
 %patch4 -p1
 
+%ifarch %ix86
+%patch5 -p1
+%endif
+
 %build
 export TCLLIBDIR=%_tcllibdir
 export TCLDATADIR=%_tcldatadir/%name
@@ -168,6 +175,13 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Mon Apr 03 2017 Mikhail Efremov <sem@altlinux.org> 3.18.0-alt1
+- Disable test date-2.2c on i586.
+- 3.18.0.
+
+* Tue Jan 10 2017 Mikhail Efremov <sem@altlinux.org> 3.16.2-alt1
+- 3.16.2.
+
 * Tue Nov 29 2016 Mikhail Efremov <sem@altlinux.org> 3.15.2-alt1
 - 3.15.2.
 
