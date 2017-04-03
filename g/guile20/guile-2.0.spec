@@ -6,7 +6,7 @@
 
 Name: %{_name}20
 Version: %api_ver.14
-Release: alt1
+Release: alt2
 
 Summary: A GNU implementation of Scheme (version 2.0)
 License: GPL
@@ -128,6 +128,8 @@ mv %buildroot%_man1dir/%_name.1 %buildroot%_man1dir/%name.1
 %_libdir/lib%_name-%api_ver.so.*
 %exclude %_libdir/lib%_name-%api_ver.so.*-gdb.scm
 %_libdir/libguilereadline-v-%gl_ver.so.*
+# guile uses lt_dlopen() to load this library/module
+%_libdir/libguilereadline-v-%gl_ver.so
 %_libdir/%_name/%api_ver/
 %_datadir/%_name/%api_ver/
 
@@ -135,7 +137,6 @@ mv %buildroot%_man1dir/%_name.1 %buildroot%_man1dir/%name.1
 %_includedir/%_name/%api_ver/
 %_libdir/lib%_name-%api_ver.so
 #%_libdir/lib%_name-%api_ver.so.*-gdb.scm
-%_libdir/libguilereadline-v-%gl_ver.so
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %if_enabled static
@@ -150,6 +151,9 @@ mv %buildroot%_man1dir/%_name.1 %buildroot%_man1dir/%name.1
 #%dir %_datadir/%_name
 
 %changelog
+* Mon Apr 03 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.14-alt2
+- moved %%_libdir/libguilereadline-v-%%gl_ver.so to libguile20 subpackage (ALT #33324)
+
 * Sat Mar 04 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.14-alt1
 - 2.0.14
 - new %%name-devel subpackage (ALT #32945)
