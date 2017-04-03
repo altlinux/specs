@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-Build
 Name: perl-%dist
-Version: 0.4220
+Version: 0.4222
 Release: alt1
 
 Summary: Build and install Perl modules
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/L/LE/LEONT/Module-Build-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/L/LE/LEONT/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -27,7 +27,7 @@ Module::Build is a Perl module to build and install Perl modules.
 It is meant to be a replacement for ExtUtils::MakeMaker.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 bzip2 -k Changes
 
 %build
@@ -37,7 +37,7 @@ bzip2 -k Changes
 %perl_vendor_install
 
 %files
-%doc	Changes.bz2 README
+%doc	README Changes
 	%_bindir/config_data
 	%_man1dir/config_data*
 %dir	%perl_vendor_privlib/Module
@@ -59,6 +59,9 @@ bzip2 -k Changes
 %exclude %perl_vendor_privlib/Module/Build/Platform/os2.pm
 
 %changelog
+* Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.4222-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.4220-alt1
 - automated CPAN update
 
