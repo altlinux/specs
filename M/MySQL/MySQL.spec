@@ -1,6 +1,6 @@
 Name: MySQL
-Version: 5.5.53
-Release: alt2
+Version: 5.5.54
+Release: alt1
 
 %def_without debug
 %def_without libs
@@ -648,6 +648,9 @@ fi
 %_datadir/sql-bench
 
 %changelog
+* Mon Apr 03 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.5.54-alt1
+- 5.5.54 (Fixes: CVE-2017-3318, CVE-2017-3317, CVE-2017-3313, CVE-2017-3312, CVE-2017-3291, CVE-2017-3265, CVE-2017-3258, CVE-2017-3244, CVE-2017-3243, CVE-2017-3238)
+
 * Thu Nov 17 2016 Anton Farygin <rider@altlinux.ru> 5.5.53-alt2
 - disabled secure_file_priv in default cofiguration because still used 
   chrooted environment (/var/lib/mysql) (closes: #32758)
