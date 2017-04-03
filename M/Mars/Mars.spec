@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           Mars
 Version:        4.5
-Release:        alt1_3jpp8
+Release:        alt2
 Summary:        An interactive development environment for programming in MIPS assembly language
 
 Group:          Development/Java
@@ -58,6 +58,9 @@ desktop-file-install                                \
 %doc MARSlicense.txt
 
 %changelog
+* Mon Apr 03 2017 Fr. Br. George <george@altlinux.ru> 4.5-alt2
+- Add .xml descriptions (Closes: #33076)
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 4.5-alt1_3jpp8
 - new fc release
 
