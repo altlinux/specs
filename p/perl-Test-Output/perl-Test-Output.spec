@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module Test-Output
 
 Name: perl-%module
-Version: 1.03
+Version: 1.031
 Release: alt1
 
 Summary: Utilities to test STDOUT and STDERR messages
@@ -9,7 +10,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/B/BD/BDFOY/Test-Output-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BD/BDFOY/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +23,7 @@ STDERR. A number of different utilities are included to try and be as flexible
 as possible to the tester.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,9 +32,13 @@ as possible to the tester.
 %perl_vendor_install
 
 %files
+%doc LICENSE Changes README.pod
 %perl_vendor_privlib/Test/
 
 %changelog
+* Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.031-alt1
+- automated CPAN update
+
 * Mon Jan 06 2014 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
 - automated CPAN update
 
