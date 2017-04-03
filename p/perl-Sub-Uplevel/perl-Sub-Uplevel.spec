@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Sub-Uplevel
 Name: perl-%dist
-Version: 0.2600
+Version: 0.2800
 Release: alt1
 Epoch: 1
 
@@ -10,7 +10,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: http://www.cpan.org
-Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/Sub-Uplevel-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -23,7 +23,7 @@ is just to fool caller().  All the really naughty bits of Tcl's uplevel()
 are avoided.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -32,11 +32,14 @@ are avoided.
 %perl_vendor_install
 
 %files
-%doc	Changes README
+%doc	Changes README examples
 %dir	%perl_vendor_privlib/Sub
 	%perl_vendor_privlib/Sub/Uplevel.pm
 
 %changelog
+* Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.2800-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.2600-alt1
 - automated CPAN update
 
