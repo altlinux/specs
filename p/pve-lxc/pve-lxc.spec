@@ -2,7 +2,7 @@
 
 Name: pve-%rname
 Version: 2.0.7
-Release: alt1
+Release: alt4
 Summary: Linux containers usersapce tools
 Group: System/Configuration/Other
 License: LGPL
@@ -14,14 +14,17 @@ Requires: cgmanager lxcfs
 Conflicts: %rname %rname-libs
 
 Source: %rname.tgz
-Patch0: fix-systemd-service-depends.patch
-Patch1: remove-systemd-delegate-flag.patch
-Patch2: run-lxcnetaddbr.patch
-Patch3: deny-rw-mounting-of-sys-and-proc.patch
-Patch4: 0001-separate-the-limiting-from-the-namespaced-cgroup-roo.patch
-Patch5: 0002-start-initutils-make-cgroupns-separation-level-confi.patch
-Patch7: rename-cgns-subdir-to-ns.patch
 
+Patch1: 0002-jessie-systemd-remove-Delegate-flag-to-silence-warni.patch
+Patch2: 0003-pve-run-lxcnetaddbr-when-instantiating-veths.patch
+Patch3: 0004-deny-rw-mounting-of-sys-and-proc.patch
+Patch4: 0005-separate-the-limiting-from-the-namespaced-cgroup-roo.patch
+Patch5: 0006-start-initutils-make-cgroupns-separation-level-confi.patch
+Patch6: 0007-rename-cgroup-namespace-directory-to-ns.patch
+Patch7: 0008-possibility-to-run-lxc-monitord-as-a-regular-daemon.patch
+Patch8: 0009-CVE-2017-5985-Ensure-target-netns-is-caller-owned.patch
+
+Patch10: lxc-io.patch
 Patch20: lxc-alt.patch
 Patch21: lxc-altlinux-lxc.patch
 
@@ -39,14 +42,15 @@ an applications or a system.
 
 %prep
 %setup -q -n %rname
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch7 -p1
+%patch8 -p1
 
+%patch10 -p1
 %patch20 -p1
 %patch21 -p1
 
@@ -90,6 +94,12 @@ rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 %_man7dir/*.7*
 
 %changelog
+* Mon Apr 03 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.7-alt4
+- 2.0.7-4
+
+* Thu Feb 02 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.7-alt0.M80P.1
+- backport to p8 branch
+
 * Thu Feb 02 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.7-alt1
 - 2.0.7
 
