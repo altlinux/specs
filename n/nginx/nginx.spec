@@ -5,7 +5,7 @@
 Name: nginx
 Summary: Fast HTTP server
 Version: 1.10.3
-Release: alt1
+Release: alt2%ubt
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel
@@ -42,6 +42,7 @@ Source12: nginx.filetrigger
 Source100: %name.watch
 Patch1: nginx-0.8-syslog.patch
 Packager: Denis Smirnov <mithraen@altlinux.ru>
+BuildRequires(pre): rpm-build-ubt
 %if_with debug
 %endif
 Requires(pre): shadow-utils
@@ -317,6 +318,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %_libdir/%name/ngx_http_xslt_filter_module.so
 
 %changelog
+* Mon Apr 03 2017 Denis Smirnov <mithraen@altlinux.ru> 1.10.3-alt2%ubt
+- add %%ubt
+
 * Tue Mar 28 2017 Denis Smirnov <mithraen@altlinux.ru> 1.10.3-alt1
 - 1.10.3
 
