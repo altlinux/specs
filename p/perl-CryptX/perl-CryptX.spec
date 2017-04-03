@@ -2,15 +2,15 @@
 %define dist CryptX
 
 Name: perl-%dist
-Version: 0.044
-Release: alt1.1
+Version: 0.045
+Release: alt1
 
 Summary: Crypto toolkit with multiple ciphers, hash functions and other
 License: %perl_license
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MI/MIK/CryptX-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MI/MIK/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Feb 22 2016
 # optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-ExtUtils-CBuilder perl-IPC-Cmd perl-JSON-PP perl-Locale-Maketext-Simple perl-Module-Load perl-Module-Load-Conditional perl-Module-Metadata perl-Params-Check perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Types-Serialiser perl-common-sense perl-devel perl-parent perl-podlators
@@ -77,7 +77,7 @@ Cryptography in CryptX is based on https://github.com/libtom/libtomcrypt
         Crypt::KeyDerivation
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -93,6 +93,9 @@ Cryptography in CryptX is based on https://github.com/libtom/libtomcrypt
 %perl_vendor_archlib/Math
 
 %changelog
+* Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.045-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.044-alt1.1
 - rebuild with new perl 5.24.1
 
