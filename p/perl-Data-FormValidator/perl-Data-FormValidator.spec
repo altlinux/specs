@@ -12,7 +12,7 @@
 %def_enable test
 
 Name: perl-Data-FormValidator
-Version: 4.85
+Version: 4.86
 Release: alt1
 
 Summary: %m_name - Validates user input (usually from an HTML form) based on input profile
@@ -47,6 +47,9 @@ expressible in a simple format.
 %perl_vendor_privlib/Data*
 
 %changelog
+* Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 4.86-alt1
+- automated CPAN update
+
 * Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 4.85-alt1
 - automated CPAN update
 
