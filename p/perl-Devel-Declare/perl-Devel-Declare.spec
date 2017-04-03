@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Devel-Declare
 Name: perl-%dist
-Version: 0.006018
-Release: alt1.1.1
+Version: 0.006019
+Release: alt1
 
 Summary: Adding keywords to perl, in perl
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/Devel-Declare-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Nov 20 2011
 BuildRequires: perl-B-Hooks-EndOfScope perl-B-Hooks-OP-Check perl-ExtUtils-Depends perl-Pod-Escapes perl-Sub-Name perl-Test-Warn perl(Test/Requires.pm)
@@ -18,7 +19,7 @@ Devel::Declare can install subroutines called declarators which locally
 take over Perl's parser, allowing the creation of new syntax.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -32,6 +33,9 @@ take over Perl's parser, allowing the creation of new syntax.
 %perl_vendor_autolib/Devel
 
 %changelog
+* Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.006019-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.006018-alt1.1.1
 - rebuild with new perl 5.24.1
 
