@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Net-SSLeay
 Name: perl-%dist
-Version: 1.80
-Release: alt1.1
+Version: 1.81
+Release: alt1
 
 Summary: Perl extension for using OpenSSL
 License: BSD-style
@@ -30,11 +30,14 @@ so you can write servers or clients for more complicated applications.
 %perl_vendor_install
 
 %files
-%doc Changes Credits README examples QuickRef
+%doc Changes Credits README examples QuickRef README.OSX README.VMS README.Win32
 %perl_vendor_archlib/Net
 %perl_vendor_autolib/Net
 
 %changelog
+* Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.81-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.80-alt1.1
 - rebuild with new perl 5.24.1
 
