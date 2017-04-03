@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Config-Any
 Name: perl-Config-Any
-Version: 0.29
+Version: 0.30
 Release: alt1
 
 Summary: Load configuration from different file formats, transparently
@@ -36,6 +36,9 @@ configuration, Windows INI files, and even Perl code.
 %perl_vendor_privlib/Config*
 
 %changelog
+* Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
+- automated CPAN update
+
 * Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
 - automated CPAN update
 
