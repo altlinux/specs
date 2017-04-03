@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Config-AutoConf
-Version: 0.313
+Version: 0.314
 Release: alt1
 
 Summary: A module to implement some of AutoConf macros in pure perl
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Kirill Maslinsky <kirill@altlinux.org>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RE/REHSACK/Config-AutoConf-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RE/REHSACK/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Mar 12 2010
 BuildRequires: perl-ExtUtils-CBuilder perl-Test-Pod-Coverage perl(Capture/Tiny.pm)
@@ -51,7 +51,7 @@ use Config::AutoConf;
     Config::AutoConf->check_file("/etc/passwd"); # -f && -r
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -60,9 +60,13 @@ use Config::AutoConf;
 rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
+%doc LICENSE README.md GPL-1 Changes
 %perl_vendor_privlib/Config/*
 
 %changelog
+* Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.314-alt1
+- automated CPAN update
+
 * Wed Apr 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.313-alt1
 - automated CPAN update
 
