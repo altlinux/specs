@@ -1,6 +1,6 @@
 Name: squidmill
-Version: 2.4
-Release: alt5
+Version: 2.5
+Release: alt1
 
 Source: %name-%version.tar
 
@@ -14,7 +14,7 @@ BuildRequires: gambit
 BuildRequires: gambit-sqlite3-devel >= 1.2-alt7
 BuildRequires: gambit-signal-devel >= 1.1-alt1
 BuildRequires: gambit-dsock-devel >= 1.1-alt1
-BuildRequires: rpm-macros-fillup sqlite3 /usr/bin/dc
+BuildRequires: rpm-macros-fillup sqlite3 /usr/bin/dc gawk
 
 Requires: gambit-sqlite3 >= 1.2-alt7
 Requires: gambit-signal >= 1.1-alt1
@@ -49,6 +49,11 @@ mkdir -p %buildroot%_var/run/squidmill
 %attr(0755, squid, squid) %dir %_var/run/squidmill
 
 %changelog
+* Mon Apr 03 2017 Paul Wolneykien <manowar@altlinux.org> 2.5-alt1
+- Rebuild with a new version of Gambit.
+- New -a reporting option: output all access_log entries.
+- Fixed 15-insert-follow test.
+
 * Tue Sep 23 2014 Paul Wolneykien <manowar@altlinux.org> 2.4-alt5
 - Rebuild with a new version of Gambit
 
