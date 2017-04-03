@@ -1,8 +1,8 @@
 %define rname ktexteditor
 
 Name: kf5-%rname
-Version: 5.31.0
-Release: alt2%ubt
+Version: 5.32.0
+Release: alt1%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -86,6 +86,9 @@ KF5 library
 #%_K5xmlgui/katepart/
 
 %changelog
+* Wed Mar 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.32.0-alt1%ubt
+- new version
+
 * Fri Mar 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.31.0-alt2%ubt
 - rebuild with new libgit
 

@@ -1,7 +1,7 @@
 %define rname kdoctools
 
 Name: kf5-%rname
-Version: 5.31.0
+Version: 5.32.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -78,13 +78,20 @@ KF5 library
 %_K5data/kdoctools/
 
 %files devel
-%_K5inc/XsltKde/
+%_K5inc/KDocTools/
+%_K5link/lib*.so
 %_K5lib/cmake/KF5DocTools
 
 %files devel-static
-%_K5lib/lib*.a
+#%_K5lib/lib*.a
+
+%files -n libkf5doctools
+%_K5lib/libKF5DocTools.so.*
 
 %changelog
+* Wed Mar 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.32.0-alt1%ubt
+- new version
+
 * Mon Feb 13 2017 Sergey V Turchin <zerg@altlinux.org> 5.31.0-alt1%ubt
 - new version
 

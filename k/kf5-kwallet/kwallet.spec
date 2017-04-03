@@ -1,7 +1,7 @@
 %define rname kwallet
 
 Name: kf5-%rname
-Version: 5.31.0
+Version: 5.32.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -19,13 +19,13 @@ Patch2: alt-def-blowfish.patch
 #BuildRequires: extra-cmake-modules gcc-c++ glibc-devel-static kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-knotifications-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel libgcrypt-devel libgpgme-devel python-module-google qt5-base-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ glibc-devel qt5-base-devel
+BuildRequires: libgcrypt-devel libgpgme-devel libassuan-devel
+BuildRequires: boost-devel
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kitemviews-devel kf5-knotifications-devel
 BuildRequires: kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
-BuildRequires: libgcrypt-devel libgpgme-devel
 BuildRequires: kf5-kdoctools-devel-static kf5-kdoctools
-BuildRequires: kde5-gpgmepp-devel boost-devel-headers
 
 %description
 This framework contains two main components:
@@ -101,6 +101,9 @@ KF5 library
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Wed Mar 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.32.0-alt1%ubt
+- new version
+
 * Mon Feb 13 2017 Sergey V Turchin <zerg@altlinux.org> 5.31.0-alt1%ubt
 - new version
 
