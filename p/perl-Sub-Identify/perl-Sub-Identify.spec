@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Sub-Identify
 Name: perl-%dist
-Version: 0.12
-Release: alt1.1.1
+Version: 0.13
+Release: alt1
 
 Summary: Retrieve names of code references
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RG/RGARCIA/Sub-Identify-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RG/RGARCIA/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Test-Pod
@@ -19,7 +19,7 @@ Sub::Identify allows you to retrieve the real name of code references.
 For this, it uses perl's introspection mechanism, provided by the B module.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -28,11 +28,14 @@ For this, it uses perl's introspection mechanism, provided by the B module.
 %perl_vendor_install
 
 %files
-%doc Changes
+%doc Changes README.mdown TODO.mdown
 %perl_vendor_archlib/Sub
 %perl_vendor_autolib/Sub
 
 %changelog
+* Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1.1.1
 - rebuild with new perl 5.24.1
 
