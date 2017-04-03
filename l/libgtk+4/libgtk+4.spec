@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name gtk+
-%define ver_major 3.89
+%define ver_major 3.90
 %define api_ver 4.0
 %define binary_ver 4.0.0
 %define _libexecdir %_prefix/libexec
@@ -21,7 +21,7 @@
 %def_enable installed_tests
 
 Name: libgtk+4
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -273,9 +273,12 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %_man1dir/gtk4-launch.*
 %_man1dir/gtk4-encode-symbolic-svg.1.*
 %_man1dir/gtk4-update-icon-cache.1.*
-%config %_datadir/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gtk.Settings.ColorChooser.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gtk.Settings.Debug.gschema.xml
+
+# conflicts with GTK+-3
+%exclude %config %_datadir/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
+%exclude %config %_datadir/glib-2.0/schemas/org.gtk.Settings.ColorChooser.gschema.xml
+%exclude %config %_datadir/glib-2.0/schemas/org.gtk.Settings.Debug.gschema.xml
+
 %_rpmlibdir/gtk-%api_ver-immodules-cache.filetrigger
 %doc --no-dereference COPYING
 %doc AUTHORS NEWS.bz2 README
@@ -349,6 +352,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Fri Mar 31 2017 Yuri N. Sedunov <aris@altlinux.org> 3.90.0-alt1
+- 3.90.0
+
 * Tue Jan 24 2017 Yuri N. Sedunov <aris@altlinux.org> 3.89.3-alt1
 - 3.89.3
 
