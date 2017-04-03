@@ -17,7 +17,7 @@
 
 Name: kf5-%rname
 Version: 5.9.3
-Release: alt4%ubt
+Release: alt5%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -149,7 +149,9 @@ KF5 library
 %patch107 -p1
 %patch108 -p1
 %patch109 -p1
+pushd sddm-theme
 %patch110 -p1
+popd
 
 %build
 %K5build \
@@ -296,6 +298,9 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Mon Apr 03 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt5%ubt
+- fix password renew with breeze sddm theme
+
 * Fri Mar 31 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt4%ubt
 - fix start sddm with breeze theme
 
