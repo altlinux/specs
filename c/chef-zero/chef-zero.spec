@@ -1,5 +1,5 @@
 Name: 	 chef-zero
-Version: 5.3.2
+Version: 13.0.0
 Release: alt1
  
 Summary: Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes
@@ -20,6 +20,8 @@ BuildRequires: ruby-hashie
 BuildRequires: ruby-uuidtools
 BuildRequires: ruby-ffi-yajl
  
+Requires: ruby-rack-handler-webrick
+
 %description
 rubyzip is a ruby module for reading and writing zip files.
 
@@ -58,6 +60,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Tue Apr 04 2017 Andrey Cherepanov <cas@altlinux.org> 13.0.0-alt1
+- New version
+
 * Wed Mar 29 2017 Andrey Cherepanov <cas@altlinux.org> 5.3.2-alt1
 - New version
 
