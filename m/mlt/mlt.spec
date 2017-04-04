@@ -15,8 +15,8 @@
 %define libmltxx libmlt++%mltxx_sover
 
 Name: mlt
-Version: 6.2.0
-Release: alt4
+Version: 6.4.1
+Release: alt1%ubt
 
 Summary: Multimedia framework designed for television broadcasting
 License: GPLv3
@@ -39,15 +39,16 @@ Patch100: alt-freetype-include.patch
 # Automatically added by buildreq on Wed Apr 27 2016 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel gcc-c++ glib2-devel libGL-devel libSDL-devel libX11-devel libatk-devel libavcodec-devel libavutil-devel libcairo-devel libcdio-paranoia libdc1394-22 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgst-plugins libgtk+2-devel libjson-c liboil-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libpango-devel libqt5-core libqt5-gui libqt5-opengl libqt5-svg libqt5-widgets libqt5-xml libraw1394-11 libstdc++-devel libvdpau-devel libwayland-client libwayland-server perl pkg-config python-base python-devel python-modules python3 python3-base qt5-base-devel rpm-build-gir rpm-build-python3 ruby ruby-stdlibs swig-data xorg-xproto-devel
 #BuildRequires: frei0r-devel ladspa_sdk libSDL_image-devel libalsa-devel libavdevice-devel libavformat-devel libexif-devel libfftw3-devel libjack-devel libpulseaudio-devel libsamplerate-devel libsox-devel libswfdec-devel libswscale-devel libxml2-devel python-module-google python3-dev qt5-svg-devel rpm-build-ruby swig
-BuildRequires: rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: qt5-svg-devel
 BuildRequires: frei0r-devel libSDL_image-devel libalsa-devel libexif-devel
 BuildRequires: libavfilter-devel libswscale-devel libavdevice-devel libavformat-devel
-BuildRequires: libfftw3-devel libjack-devel libpulseaudio-devel libsamplerate-devel libsox-devel libswfdec-devel
+BuildRequires: libfftw3-devel libjack-devel libpulseaudio-devel libsamplerate-devel libsox-devel
 BuildRequires: libxml2-devel swig python-devel ladspa_sdk
 %if_enabled vdpau
 BuildRequires: libvdpau-devel
 %endif
+#BuildRequires: libswfdec-devel
 
 %description
 %Name is a multimedia framework designed for television broadcasting.
@@ -180,6 +181,10 @@ install -pm 0755 src/swig/python/_%name.so %buildroot%python_sitelibdir/
 %_pkgconfigdir/mlt++.pc
 
 %changelog
+* Tue Apr 04 2017 Sergey V Turchin <zerg@altlinux.org> 6.4.1-alt1%ubt
+- new version
+- build without libswfdec (ALT#33326)
+
 * Thu Apr 28 2016 Sergey V Turchin <zerg@altlinux.org> 6.2.0-alt4
 - fix obsoletes
 
