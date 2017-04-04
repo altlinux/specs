@@ -1,7 +1,7 @@
 
 Name:    gcompris
 Version: 15.10
-Release: alt1
+Release: alt2
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
 
@@ -16,15 +16,18 @@ Source5: %name-32x32.png
 Source6: %name-48x48.png
 Source10: voices-%version.tar
 
+Patch1:  01_gstreamer-1.0.patch
+
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Obsoletes: %name-devel %name-gst-plugin
 
 #BuildPreReq: /proc
-BuildRequires: chess gnome-common gstreamer-devel intltool libgnet-devel
+BuildRequires: chess gnome-common gstreamer1.0-devel intltool libgnet-devel
 BuildRequires: libgnomecanvas-devel librsvg-devel libsqlite3-devel
 BuildRequires: python-module-pycairo-devel python-module-pygtk-devel
 BuildRequires: python-module-pysqlite2 python-modules-encodings tetex-core
+BuildRequires: libxml2-devel
 
 Requires: chess sqlite3
 # needed for sound support
@@ -373,6 +376,7 @@ All voices in Slovak for GCompris
 
 %prep
 %setup -q
+%patch1 -p1
 
 #Fix build on x86_64
 sed -i "s|br_cv_valid_prefixes=no|br_cv_valid_prefixes=yes|g" acinclude.m4
@@ -595,6 +599,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gcompris/boards/voices/sk
 
 %changelog
+* Mon Apr 03 2017 Andrey Cherepanov <cas@altlinux.org> 15.10-alt2
+- Rebuild with gstreamer1.0 (ALT #33327)
+
 * Mon Oct 26 2015 Andrey Cherepanov <cas@altlinux.org> 15.10-alt1
 - New version
 
