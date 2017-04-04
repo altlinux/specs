@@ -1,14 +1,13 @@
 Name: libmediainfo
-Version: 0.7.76
+Version: 0.7.94
 Release: alt1
 
 Group: System/Libraries
 Summary: %name - Shared library for mediainfo
 License: LGPL
 Url: http://mediainfo.sourceforge.net
-Packager: Sergei Epiphanov <serpiph@altlinux.ru>
 
-Source0: %{name}_%{version}.tar.bz2
+Source: https://mediaarea.net/download/source/%name/%version/%{name}_%{version}.tar.xz
 
 # Automatically added by buildreq on Sat Dec 03 2005
 BuildRequires: gcc-c++ automake autoconf libtool
@@ -21,10 +20,10 @@ BuildRequires: pkg-config
 BuildRequires: libflac-devel
 BuildRequires: libmatroska-devel
 BuildRequires: libfaad-devel
-BuildRequires: libzen-devel >= 0.4.29
+BuildRequires: libzen-devel >= 0.4.35
 BuildRequires: libcurl-devel
-#Can't compile using g++ because of "this" vars in definitions
-#BuildRequires: libmms-devel
+BuildRequires: libmms-devel
+BuildRequires: libtinyxml2-devel
 
 %package devel
 Group: System/Libraries
@@ -55,55 +54,42 @@ This package includes the development support files of the libmediainfo
 
 %prep
 %setup -q -T -b 0 -n MediaInfoLib
+dos2unix ReadMe.txt Project/GNU/Library/%name.pc.in
 
 %build
-#dos2unix      *.txt Source/Doc/*.txt
-#chmod 644    *.txt Source/Doc/*.txt
 pushd Source/Doc
 doxygen Doxyfile
 popd
-#cp Source/Doc/*.txt ./
 pushd Project/GNU/Library
 %autoreconf
-%configure --enable-shared=yes --enable-static=no --with-libcurl=system --with-libmms=system
-%make
+%configure --enable-shared=yes \
+    --enable-static=no \
+    --disable-staticlibs \
+    --with-libcurl=system \
+    --with-libmms=system \
+    --with-libtinyxml2=system
+%make_build
 popd
 
 %install
 pushd Project/GNU/Library
-%makeinstall
+%makeinstall_std
 popd
-# Add here commands to install the package
-install -dm 755 %buildroot%_includedir/MediaInfo/{Duplicate,Multiple,Tag}/
-install -m 644 Source/MediaInfo/*.h %buildroot%_includedir/MediaInfo
-install -m 644 Source/MediaInfo/Duplicate/*.h %buildroot%_includedir/MediaInfo/Duplicate
-install -m 644 Source/MediaInfo/Multiple/*.h %buildroot%_includedir/MediaInfo/Multiple
-install -m 644 Source/MediaInfo/Tag/*.h %buildroot%_includedir/MediaInfo/Tag
-install -m 644 Source/ThirdParty/tinyxml2/tinyxml2.h %buildroot%_includedir/MediaInfo/
-install -m 644 Source/ThirdParty/aes-gladman/*.h %buildroot%_includedir/MediaInfo/
-install -m 644 Source/ThirdParty/md5/*.h %buildroot%_includedir/MediaInfo/
-
-install -dm 755 %buildroot%_includedir/MediaInfoDLL
-install -m 644 Source/MediaInfoDLL/*.h %buildroot%_includedir/MediaInfoDLL
-install -m 644 Source/MediaInfoDLL/MediaInfoDLL.cs %buildroot%_includedir/MediaInfoDLL
-install -m 644 Source/MediaInfoDLL/MediaInfoDLL.*.java %buildroot%_includedir/MediaInfoDLL
-install -m 644 Source/MediaInfoDLL/MediaInfoDLL*.py %buildroot%_includedir/MediaInfoDLL
-
-sed -i -e 's|Version: |Version: %{version}|g' Project/GNU/Library/libmediainfo.pc
-install -dm 755 %buildroot%_pkgconfigdir
-install -m 644 Project/GNU/Library/libmediainfo.pc %buildroot%_pkgconfigdir
 
 %files
 %doc ReadMe.txt
-%_libdir/*.so.*
+%_libdir/%name.so.*
 
 %files devel
-%_includedir/MediaInfo
-%_includedir/MediaInfoDLL
-%_pkgconfigdir/libmediainfo.pc
-%_libdir/*.so
+%_includedir/MediaInfo/
+%_includedir/MediaInfoDLL/
+%_pkgconfigdir/%name.pc
+%_libdir/%name.so
 
 %changelog
+* Tue Apr 04 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.94-alt1
+- 0.7.94
+
 * Tue Aug 25 2015 Motsyo Gennadi <drool@altlinux.ru> 0.7.76-alt1
 - 0.7.76
 
