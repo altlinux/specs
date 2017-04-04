@@ -1,8 +1,8 @@
 %define rname ktp-desktop-applets
 
 Name: kde5-%rname
-Version: 16.08.1
-Release: alt1
+Version: 16.12.3
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -17,7 +17,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Wed Jun 17 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-network libqt5-qml libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kpackage-devel kf5-kservice-devel kf5-kwindowsystem-devel kf5-plasma-framework-devel libdb4-devel python-module-google qt5-declarative-devel rpm-build-python3 rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-declarative-devel
 BuildRequires: kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kpackage-devel kf5-kservice-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-plasma-framework-devel
@@ -76,6 +76,9 @@ KF5 library
 #%_K5lib/libktp-desktop-applets.so.*
 
 %changelog
+* Tue Apr 04 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+- new version
+
 * Wed Sep 21 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
 - new version
 
