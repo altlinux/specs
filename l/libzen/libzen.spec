@@ -1,24 +1,20 @@
 Name: libzen
-Version: 0.4.31
+Version: 0.4.35
 Release: alt1
 
 Group: System/Libraries
 Summary: %name - Shared library for libmediainfo and medianfo-related programs
 License: LGPL
 Url: http://mediainfo.sourceforge.net
-Packager: Sergei Epiphanov <serpiph@altlinux.ru>
 
-Source0: %{name}_%{version}.tar.bz2
+Source: https://mediaarea.net/download/source/%name/%version/%{name}_%{version}.tar.xz
 
 BuildRequires: gcc-c++
-#BuildRequires: dos2unix
-#BuildRequires: doxygen
-BuildRequires: libwxGTK-devel
 
 %package devel
 Group: System/Libraries
 Summary: Devel package for %name
-Requires: %name = %version
+Requires: %name = %version-%release
 Provides: %name.so
 
 %description
@@ -31,39 +27,16 @@ This package contains files for development with libzen.
 %setup -q -T -b 0 -n ZenLib
 
 %build
-#dos2unix      *.txt Source/Doc/*.txt
-#chmod 644    *.txt Source/Doc/*.txt
-#pushd Source/Doc
-#doxygen Doxyfile
-#popd
-#cp Source/Doc/*.txt ./
 pushd Project/GNU/Library
 %autoreconf
-%configure --enable-shared --enable-static=no --with-wxwidgets=system
+%configure --enable-shared --enable-static=no
 %make
 popd
 
 %install
 pushd Project/GNU/Library
-%makeinstall
+%makeinstall_std
 popd
-# Add here commands to install the package
-install -dm 755 %buildroot%_includedir/ZenLib
-install -m 644 Source/ZenLib/*.h %buildroot%_includedir/ZenLib
-#install -dm 755 %buildroot%_includedir/ZenLib/Base64
-#install -m 644 Source/ZenLib/Base64/*.h %buildroot%_includedir/ZenLib/Base64
-install -dm 755 %buildroot%_includedir/ZenLib/HTTP_Client
-install -m 644 Source/ZenLib/HTTP_Client/*.h %buildroot%_includedir/ZenLib/HTTP_Client
-install -dm 755 %buildroot%_includedir/ZenLib/Format/Html
-install -m 644 Source/ZenLib/Format/Html/*.h %buildroot%_includedir/ZenLib/Format/Html
-install -dm 755 %buildroot%_includedir/ZenLib/Format/Http
-install -m 644 Source/ZenLib/Format/Http/*.h %buildroot%_includedir/ZenLib/Format/Http
-#install -dm 755 %buildroot%_includedir/ZenLib/TinyXml
-#install -m 644 Source/ZenLib/TinyXml/*.h %buildroot%_includedir/ZenLib/TinyXml
-
-sed -i -e 's|Version: |Version: %{version}|g' Project/GNU/Library/libzen.pc
-install -dm 755 %buildroot%_libdir/pkgconfig
-install -m 644 Project/GNU/Library/libzen.pc %buildroot%_pkgconfigdir
 
 %files
 %doc ReadMe.txt
@@ -75,6 +48,9 @@ install -m 644 Project/GNU/Library/libzen.pc %buildroot%_pkgconfigdir
 %_libdir/*.so
 
 %changelog
+* Tue Apr 04 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.35-alt1
+- 0.4.35
+
 * Tue Aug 25 2015 Motsyo Gennadi <drool@altlinux.ru> 0.4.31-alt1
 - 0.4.31
 

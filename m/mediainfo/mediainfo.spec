@@ -1,23 +1,22 @@
 Name: mediainfo
-Version: 0.7.76
+Version: 0.7.94
 Release: alt1
 
 Group: File tools
 Summary: MediaInfo supplies information about a video or audio file
 License: LGPL
 Url: http://mediainfo.sourceforge.net
-Packager: Sergei Epiphanov <serpiph@altlinux.ru>
 
-Source0: %{name}_%{version}.tar.bz2
+Source: https://mediaarea.net/download/source/%name/%version/%{name}_%{version}.tar.xz
+
 BuildRequires(pre): rpm-macros-kde-common-devel
 
-BuildRequires: gcc-c++ automake autoconf libtool
+BuildRequires: gcc-c++
 BuildRequires: dos2unix
-BuildRequires: pkg-config
 BuildRequires: zlib-devel
 BuildRequires: libpango-devel
-BuildRequires: libzen-devel >= 0.4.29
-BuildRequires: libmediainfo-devel >= 0.7.70
+BuildRequires: libzen-devel >= 0.4.35
+BuildRequires: libmediainfo-devel >= 0.7.94
 BuildRequires: libwxGTK-devel
 BuildRequires: sgml-common
 
@@ -29,14 +28,14 @@ Summary: MediaInfo supplies information about a video or audio file
 Group: File tools
 Summary: KDE3 related MediaInfo files
 BuildArch: noarch
-Requires: %name-gui
+Requires: %name-gui = %version-%release
 Requires: kdebase-konqueror < 4.0
 
 %package gui-KDE4
 Group: File tools
 Summary: KDE4 related MediaInfo files
 BuildArch: noarch
-Requires: %name-gui
+Requires: %name-gui = %version-%release
 Requires: kde4libs
 
 %description
@@ -89,64 +88,62 @@ This package contains KDE4 related MediaInfo files for konqueror
 %setup -q -T -b 0 -n MediaInfo
 
 %build
-#dos2unix      *.txt Source/Doc/*.txt
-#chmod 644    *.txt Source/Doc/*.txt
 pushd Project/GNU/CLI
 %autoreconf
-%configure
+%configure --disable-staticlibs --with-dll
 %make
 popd
-#cp Source/Doc/*.txt ./
 pushd Project/GNU/GUI
 %autoreconf
-%configure
+%configure --disable-staticlibs --with-dll
 %make
 popd
 
 %install
 pushd Project/GNU/CLI
-%makeinstall
+%makeinstall_std
 popd
 pushd Project/GNU/GUI
-%makeinstall
+%makeinstall_std
 popd
 # Add here commands to install the package
 cp Release/ReadMe_CLI_Linux.txt .
 cp Release/ReadMe_GUI_Linux.txt .
 
-install -dm 755 %buildroot%_pixmapsdir
 install -m 644 Source/Resource/Image/MediaInfo.png %buildroot%_pixmapsdir/mediainfo.png
 install -dm 755 %buildroot%_liconsdir
 install -m 644 Source/Resource/Image/MediaInfo.png %buildroot%_liconsdir/mediainfo.png
 
-install -dm 755 %buildroot%_desktopdir
-grep -v '^Encoding=' Project/GNU/GUI/mediainfo-gui.desktop >%buildroot%_desktopdir/mediainfo-gui.desktop
-#install -m 644 Project/GNU/GUI/mediainfo-gui.desktop %%buildroot%%_desktopdir
 install -dm 755 %buildroot%_K3apps/konqueror/servicemenus/
 grep -v '^Encoding=' Project/GNU/GUI/mediainfo-gui.kde3.desktop >%buildroot%_K3apps/konqueror/servicemenus/mediainfo-gui.desktop
-#install -m 644 Project/GNU/GUI/mediainfo-gui.kde3.desktop %%buildroot%%_datadir/apps/konqueror/servicemenus/mediainfo-gui.desktop
 install -dm 755 %buildroot%_K4srv/ServiceMenus/
 grep -v '^Encoding=' Project/GNU/GUI/mediainfo-gui.kde4.desktop >%buildroot%_K4srv/ServiceMenus/mediainfo-gui.desktop
-#install -m 644 Project/GNU/GUI/mediainfo-gui.kde4.desktop %%buildroot%%_datadir/kde4/services/ServiceMenus/mediainfo-gui.desktop
 
 %files
 %doc ReadMe_CLI_Linux.txt
-%_bindir/mediainfo
+%_bindir/%name
 
 %files gui
 %doc ReadMe_GUI_Linux.txt
-%_bindir/mediainfo-gui
-%_desktopdir/mediainfo-gui.desktop
-%_pixmapsdir/mediainfo.png
-%_liconsdir/mediainfo.png
+%_bindir/%name-gui
+%_desktopdir/%name-gui.desktop
+%_datadir/appdata/%name-gui.appdata.xml
+%_datadir/apps/konqueror/servicemenus/%name-gui.desktop
+%_iconsdir/hicolor/*x*/apps/%name.png
+%_iconsdir/hicolor/scalable/apps/%name.svg
+%_pixmapsdir/%name.xpm
+%_pixmapsdir/%name.png
 
 %files gui-KDE3
-%_K3apps/konqueror/servicemenus/mediainfo-gui.desktop
+%_K3apps/konqueror/servicemenus/%name-gui.desktop
 
 %files gui-KDE4
-%_K4srv/ServiceMenus/mediainfo-gui.desktop
+%_K4srv/ServiceMenus/%name-gui.desktop
 
 %changelog
+* Tue Apr 04 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.94-alt1
+- 0.7.94
+
 * Tue Aug 25 2015 Motsyo Gennadi <drool@altlinux.ru> 0.7.76-alt1
 - 0.7.76
 
