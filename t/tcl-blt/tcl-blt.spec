@@ -3,12 +3,11 @@
 
 Name: tcl-%teaname
 Version: 2.5
-Release: alt2
+Release: alt3
 
 Summary: A Tk toolkit extension, including widgets, geometry managers etc.
-Copyright: MIT
+License: MIT
 Group: System/Libraries
-#Url: http://blt.sourceforge.net/
 Url: http://pdqi.com/w/pw/pdqi/Wize/Blt
 
 Source: %name-%version.tar
@@ -98,6 +97,9 @@ rm -f %buildroot%_mandir/mann/{bitmap,graph,tabset,watch}.n*
 %_tcldatadir/%teaname%major/demos
 
 %changelog
+* Tue Apr 04 2017 Vladislav Zavjalov <slazav@altlinux.org> 2.5-alt3
+- devel package: install bltOldConfig.h which is used in blt.h
+
 * Mon Oct 10 2016 Vladislav Zavjalov <slazav@altlinux.org> 2.5-alt2
 - fix legend entry dimensions
 
