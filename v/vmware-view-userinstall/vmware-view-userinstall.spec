@@ -3,7 +3,7 @@
 
 Name: vmware-view-userinstall
 Version: 3.4.0
-Release: alt2
+Release: alt4
 
 Summary: VMware Horizon Client pre-installation scripts
 License: public domain
@@ -11,7 +11,7 @@ Group: System/Configuration/Other
 
 Url: http://altlinux.org/vmware-view
 Source: %name-%version.tar
-BuildArch: noarch
+ExclusiveArch: %ix86
 
 Requires: vmware-view-preinstall >= 3.4.0-alt3
 Requires: userinstall-helper >= 0.2
@@ -44,6 +44,10 @@ cp -a checksums %buildroot%uinstdir/goodsums
 %uinstdir/goodsums/*
 
 %changelog
+* Tue Apr 04 2017 Michael Shigorin <mike@altlinux.org> 3.4.0-alt4
+- sync ExclusiveArch: to vmware-view-preinstall 3.4.0-alt4
+  to avoid an unmet dependency
+
 * Wed Oct 28 2015 Michael Shigorin <mike@altlinux.org> 3.4.0-alt2
 - rewrote to use userinstall-sh-functions too
 
