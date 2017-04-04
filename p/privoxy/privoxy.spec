@@ -1,5 +1,5 @@
 Name: privoxy
-Version: 3.0.24
+Version: 3.0.26
 Release: alt1
 
 Summary: Privoxy - privacy enhancing proxy
@@ -142,6 +142,9 @@ fi
 %_unitdir/%name.service
 
 %changelog
+* Tue Apr 04 2017 Denis Smirnov <mithraen@altlinux.ru> 3.0.26-alt1
+- 3.0.26
+
 * Sat Apr 30 2016 Denis Smirnov <mithraen@altlinux.ru> 3.0.24-alt1
 - 3.0.24 (ALT #29857)
 - CVE-2016-1982
