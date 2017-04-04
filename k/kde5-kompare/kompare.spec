@@ -5,12 +5,12 @@
 %define libkompareinterface libkompareinterface%sover
 
 Name: kde5-%rname
-Version: 16.08.3
+Version: 16.12.3
 Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
-Summary: Files differences viewer.
+Summary: Graphical File Differences Tool
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
@@ -29,7 +29,9 @@ BuildRequires: kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel k
 BuildRequires: kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
 
 %description
-Kompare is a program to view the differences between files.
+Kompare is a GUI front-end program that enables differences between source files to be viewed and merged.
+Kompare can be used to compare differences on files or the contents of folders. Kompare supports a variety
+of diff formats and provide many options to customize the information level displayed.
 
 %package common
 Summary: %name common package
@@ -100,6 +102,9 @@ KF5 library
 %_K5lib/libkomparedialogpages.so.*
 
 %changelog
+* Tue Apr 04 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+- new version
+
 * Mon Dec 05 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt1%ubt
 - new version
 
