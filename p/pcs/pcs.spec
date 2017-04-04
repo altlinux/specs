@@ -1,6 +1,6 @@
 Name: 	  pcs
 Version:  0.99.156
-Release:  alt1
+Release:  alt2
 
 Summary:  Pacemaker/Corosync configuration system
 License:  GPLv2
@@ -13,6 +13,7 @@ Source:   %name-%version.tar
 BuildArch: noarch
 
 BuildRequires: rpm-build-python rpm-build-ruby ruby python-devel corosync python-module-setuptools
+Requires: pacemaker
 
 %description
 Pacemaker/Corosync configuration system with remote access
@@ -37,5 +38,8 @@ cd pcs
 %doc  pcs/CHANGELOG.md pcs/COPYING pcs/README.md
 
 %changelog
+* Tue Apr 04 2017 Denis Medvedev <nbr@altlinux.org> 0.99.156-alt2
+- added dependency to pacemaker
+
 * Wed Mar 29 2017 Denis Medvedev <nbr@altlinux.org> 0.99.156-alt1
 - Initial release
