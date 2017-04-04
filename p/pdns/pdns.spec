@@ -1,399 +1,323 @@
-Name:		pdns
-Version:	2.9.22
-Release:	alt1.2
+%global backends %{nil}
+%define _pkgdocdir %_docdir/%name
 
-%def_with	ssl
-%def_with	mysql
-%def_with	pgsql
-%def_with	sqlite
-%def_with	ldap
-%def_without	tdb
-%def_with	sqlite3
+Name: pdns
+Version: 4.0.3
+Release: alt2
+Summary: A modern, advanced and high performance authoritative-only nameserver
+Group: System/Servers
+License: GPLv2
+URL: http://powerdns.com
+Source0: %{name}-%{version}.tar
+Source1: pdns.service
+Patch0: pdns-disable-secpoll.patch
+Patch1: fix-unit-tests-32bit.patch
+Patch2: fix-negative-ipv6-32bit.patch
 
-Summary:	PowerDNS is a Versatile Database Driven Nameserver
-License:	GPL
-Group:		System/Servers
-URL:		http://www.powerdns.com/
-Source0:	http://downloads.powerdns.com/releases/pdns-%version.tar.gz
-Patch0:		pdns-2.9.7-init.patch
-Patch1:		pdns-2.9.20-alt-rcstuff.patch
-Patch2:		pdns-2.9.21.2-init.patch
-Patch3:		pdns-2.9.21.2-gcc4.4.patch
+Requires(pre): shadow-utils
+Requires(post): systemd-units
 
-Packager:	Pavel Shilovsky <piastry@altlinux.org>
-Provides:	nameserver powerdns PowerDNS
-Obsoletes:	nameserver powerdns PowerDNS
-
-Summary(ru_RU.UTF8): DNS-сервер с хранением данных в LDAP, SQL или файлах BIND
-
-#--------   Override standard directories   -------------#
-
-%define            statedir  %_localstatedir/powerdns
-%define            socketdir       %_var/run/powerdns
-%{expand:%%global  sysconfdir0  %_sysconfdir}
-%{expand:%%global _sysconfdir   %_sysconfdir/powerdns}
-%{expand:%%global    libdir0        %_libdir}
-%{expand:%%global  mylibdir         %_libdir/powerdns}
-%{expand:%%global   _libdir         %mylibdir}
-
-#--------   BuildPreReq and Dynamic modules   -----------#
-
-%define		dynmodules pipe
-
-BuildPreReq:	bison, flex, gdbm-devel, gcc-c++, libstdc++-devel, zlib-devel, boost-devel >= 1.33
-
-%if_with ssl
-BuildPreReq:	openssl-devel
-%endif
-
-%if_with mysql
-BuildPreReq:	libmysqlclient-devel
-%{expand:%%global dynmodules %dynmodules gmysql}
-%endif
-
-%if_with pgsql
-BuildRequires:	postgresql-devel libpq-devel-static
-%{expand:%%global dynmodules %dynmodules gpgsql}
-%endif
-
-%if_with sqlite
-BuildPreReq:	sqlite-devel
-%{expand:%%global dynmodules %dynmodules gsqlite}
-%endif
-
-%if_with sqlite3
-BuildPreReq:    libsqlite3-devel
-%{expand:%%global dynmodules %dynmodules gsqlite3}
-%endif
-
-%if_with tdb
-BuildPreReq:	libtdb-devel
-%{expand:%%global dynmodules %dynmodules xdb}
-%endif
-
-%if_with ldap
-BuildPreReq:	openldap-devel
-%{expand:%%global dynmodules %dynmodules ldap}
-%endif
-
-%if_with geo
-%{expand:%%global dynmodules %dynmodules geo}
-%endif
+BuildRequires: gcc-c++ boost-program_options-devel curl libsqlite3-devel
+BuildRequires: systemd-devel
+BuildRequires: boost-devel
+BuildRequires: liblua5-devel
+BuildRequires: bison
+BuildRequires: libzeromq-devel
+BuildRequires: openssl-devel
+BuildRequires: libprotobuf-devel
+BuildRequires: protobuf-compiler
+Provides: powerdns = %{version}-%{release}
+%global backends %{backends} bind
 
 %description
-PowerDNS is a versatile nameserver which supports a large number
-of different backends ranging from simple zonefiles to relational
-databases and load balancing/failover algorithms.
+The PowerDNS Nameserver is a modern, advanced and high performance
+authoritative-only nameserver. It is written from scratch and conforms
+to all relevant DNS standards documents.
+Furthermore, PowerDNS interfaces with almost any database.
 
-This RPM is statically compiled and should work on all Linux distributions.
-It comes with support for MySQL, PostgreSQL, Bind zonefiles and the 'pipe
-backend' availible as external packages.
+%package tools
+Summary: Extra tools for %{name}
+Group: System/Servers
 
-%description -l ru_RU.UTF8
-PowerDNS является популярным сервером DNS, выпускаемым под лицензией GNU GPL.
-По сравнению с BIND, PowerDNS быстрее, надёжнее и компактнее.
-По сравнению с dnsmasq PowerDNS поддерживает больше функций,
-в частности, Zone transfer.
+%description tools
+This package contains the extra tools for %{name}
 
-Отличительной особенностью PowerDNS является поддержка большого количества
-модулей хранения данных (т.н. backends): в файлах DNS-сервера BIND,
-в базах LDAP, MySQL, PostgreSQL, TDB (Trivial Database, используемая в Samba)
-и т.н. pipes - модуля, обменивающегося данными с внешним обработчиком
-через стандартный ввод-вывод.
+%package backend-mysql
+Summary: MySQL backend for %{name}
+Group: System/Servers
+Requires: %{name}%{?_isa} = %{version}-%{release}
+BuildRequires: libmysqlclient-devel
+%global backends %{backends} gmysql
 
-%package	backend-pipe
-Summary:	Pipe/coprocess backend for %name
-Group:		System/Servers
-Requires:	%name = %version
+%description backend-mysql
+This package contains the gmysql backend for %{name}
 
-%description	backend-pipe
-This package contains the pipe backend for the PowerDNS nameserver.
-This allows PowerDNS to retrieve domain info from a process
-that accepts questions on stdin and returns answers on stdout. 
+%package backend-postgresql
+Summary: PostgreSQL backend for %{name}
+Group: System/Servers
+Requires: %{name}%{?_isa} = %{version}-%{release}
+BuildRequires: postgresql-devel
+%global backends %{backends} gpgsql
 
-%if_with mysql
+%description backend-postgresql
+This package contains the gpgsql backend for %{name}
 
-%package	backend-mysql
-Summary:	MySQL backend for %name
-Group:		System/Servers
-Requires:	%name = %version
+%package backend-pipe
+Summary: Pipe backend for %{name}
+Group: System/Servers
+Requires: %{name}%{?_isa} = %{version}-%{release}
+%global backends %{backends} pipe
 
-%description	backend-mysql
-This package contains a MySQL backend for the PowerDNS nameserver.
+%description backend-pipe
+This package contains the pipe backend for %{name}
 
-%endif
+%package backend-remote
+Summary: Remote backend for %{name}
+Group: System/Servers
+Requires: %{name}%{?_isa} = %{version}-%{release}
+%global backends %{backends} remote
 
-%if_with pgsql
+%description backend-remote
+This package contains the remote backend for %{name}
 
-%package	backend-pgsql
-Summary:	Generic PostgreSQL backend for %name
-Group:		System/Servers
-Requires:	%name = %version
+%package backend-ldap
+Summary: LDAP backend for %{name}
+Group: System/Servers
+Requires: %{name}%{?_isa} = %{version}-%{release}
+BuildRequires: openldap-devel
+%global backends %{backends} ldap
 
-%description	backend-pgsql
-This package contains a generic PostgreSQL backend
-for the PowerDNS nameserver. It has configurable SQL statements.
+%description backend-ldap
+This package contains the ldap backend for %{name}
 
-%endif
+%package backend-lua
+Summary: LUA backend for %{name}
+Group: System/Servers
+Requires: %{name}%{?_isa} = %{version}-%{release}
+%global backends %{backends} lua
 
-%if_with tdb
+%description backend-lua
+This package contains the lua backend for %{name}
 
-%package	backend-tdb
-Summary:	XDB/tdb/gdb backend for %name
-Group:		System/Servers
-Requires:	%name = %version
+%package backend-sqlite
+Summary: SQLite backend for %{name}
+Group: System/Servers
+Requires: %{name}%{?_isa} = %{version}-%{release}
+BuildRequires: sqlite-devel
+%global backends %{backends} gsqlite3
 
-%description	backend-tdb
-This package contains a table backend for PowerDNS. Currently includes TDB,
-the Trivial Database or Tridgell Database.
+%description backend-sqlite
+This package contains the SQLite backend for %{name}
 
-%endif
+%package backend-opendbx
+Summary: OpenDBX backend for %{name}
+Group: System/Servers
+Requires: %{name}%{?_isa} = %{version}-%{release}
+BuildRequires: opendbx-devel
+%global backends %{backends} opendbx
 
-%if_with ldap
+%description backend-opendbx
+This package contains the opendbx backend for %{name}
 
-%package	backend-ldap
-Summary:	LDAP backend for %name
-Group:		System/Servers
-Requires:	%name = %version
+%package backend-geoip
+Summary: GeoIP backend for %{name}
+Group: System/Servers
+Requires: %{name}%{?_isa} = %{version}-%{release}
+BuildRequires: libGeoIP-devel
+BuildRequires: libyaml-cpp-devel
+%global backends %{backends} geoip
 
-%description	backend-ldap
-This package contains a LDAP backend for the PowerDNS nameserver.
+%description backend-geoip
+This package contains the GeoIP backend for %{name}
 
-%endif
+%package backend-mydns
+Summary: MyDNS backend for %{name}
+Group: System/Servers
+Requires: %{name}%{?_isa} = %{version}-%{release}
+%global backends %{backends} mydns
 
-%if_with sqlite
+%description backend-mydns
+This package contains the MyDNS backend for %{name}
 
-%package	backend-sqlite
-Summary:	SQLite backend for %name
-Group:		System/Servers
-Requires:	%name = %version
+%package backend-tinydns
+Summary: TinyDNS backend for %{name}
+Group: System/Servers
+Requires: %{name}%{?_isa} = %{version}-%{release}
+BuildRequires: tinycdb-devel
+%global backends %{backends} tinydns
 
-%description	backend-sqlite
-This package contains a SQLite backend for the PowerDNS nameserver.
-
-%endif
-
-%if_with sqlite3
-
-%package       backend-sqlite3
-Summary:       SQLite3 backend for %name
-Group:         System/Servers
-Requires:      %name = %version
-
-%description   backend-sqlite3
-This package contains a SQLite3 backend for the PowerDNS nameserver.
-
-%endif
-
-%if_with geo
-
-%package	backend-geo
-Summary:	GEO backend for %name
-Group:		System/Servers
-Requires:	%name = %version
-
-%description	backend-geo
-This package contains a geo backend for the PowerDNS nameserver.
-
-%endif
-
-%package	devel
-Summary:	Development headers and libraries for %name
-Group:		System/Servers
-Requires:	%name = %version
-Requires:	%name-backend-pipe   = %version
-%if_with mysql
-Requires:	%name-backend-mysql  = %version
-%endif
-%if_with pgsql
-Requires:	%name-backend-pgsql  = %version
-%endif
-%if_with tdb
-Requires:	%name-backend-tdb    = %version
-%endif
-%if_with ldap
-Requires:	%name-backend-ldap   = %version
-%endif
-%if_with sqlite
-Requires:	%name-backend-sqlite = %version
-%endif
-%if_with sqlite3
-Requires:	%name-backend-sqlite3 = %version
-%endif
-
-%description	devel
-Development headers and libraries for %name
+%description backend-tinydns
+This package contains the TinyDNS backend for %{name}
 
 %prep
 %setup -q
-%patch0 -p0
-%patch1
-%patch2 -p1
-%patch3 -p1
-
-# lib64 fix
-%if "%_lib" != "/lib"
-find -type f -name "configure.in" | xargs %__subst "s|/lib/|/%_lib/|g"
-find -type f -name "configure.in" | xargs %__subst "s|/lib\ |/%_lib\ |g"
-find -type f -name "configure.in" | xargs %__subst "s|/lib\"|/%_lib\"|g"
-%endif
+%patch0 -p1 -b .disable-secpoll
+%patch1 -p1 -b .fix-unit-tests-32bit
+%patch2 -p1 -b .fix-negative-ipv6-32bit
 
 %build
-touch NEWS AUTHORS
-libtoolize --copy --force
-aclocal
-autoconf
-automake --copy --add-missing
-
-export   CFLAGS="%optflags -DLDAP_DEPRECATED"
-export CXXFLAGS="%optflags -DLDAP_DEPRECATED"
+export CPPFLAGS="-DLDAP_DEPRECATED"
 
 %configure \
-    --with-socketdir=%socketdir \
-    --with-dynmodules="%dynmodules" \
-    --with-modules="" \
-    --with-mysql=%_prefix \
-    --with-pgsql=%_prefix \
-    --with-sqlite=%_prefix \
-    --with-sqlite-includes=%_includedir \
-    --with-sqlite3=%_prefix \
-    --with-sqlite3-includes=%_includedir
+	--sysconfdir=%{_sysconfdir}/%{name} \
+	--disable-static \
+	--disable-dependency-tracking \
+	--disable-silent-rules \
+	--with-modules='' \
+	--with-lua \
+	--with-dynmodules='%{backends}' \
+	--enable-tools \
+	--enable-remotebackend-zeromq \
+	--enable-unit-tests \
+	--enable-reproducible
 
-# why is this nessesary all of a sudden?
-#find . -type f -name "Makefile" | xargs %__subst "s|-pthread|-lpthread|g"
-
-# parallell build's broken now?
-%make_build
-
-# this might work someday..., meanwhile use S1
-#pushd pdns/docs
-#    make
-#popd
+make %{?_smp_mflags}
 
 %install
-# don't fiddle with the initscript!
-export DONT_GPRINTIFY=1
+make install DESTDIR=%{buildroot}
 
-%makeinstall
+%{__rm} -f %{buildroot}%{_libdir}/%{name}/*.la
+%{__mv} %{buildroot}%{_sysconfdir}/%{name}/pdns.conf{-dist,}
 
-%__install -d %buildroot{%socketdir,%statedir}
+chmod 600 %{buildroot}%{_sysconfdir}/%{name}/pdns.conf
 
-# fix the config
-%__rm %buildroot%_sysconfdir/pdns.conf-dist
+# rename zone2ldap to pdns-zone2ldap (#1193116)
+%{__mv} %{buildroot}/%{_bindir}/zone2ldap %{buildroot}/%{_bindir}/pdns_zone2ldap
+%{__mv} %{buildroot}/%{_mandir}/man1/zone2ldap.1 %{buildroot}/%{_mandir}/man1/pdns_zone2ldap.1
 
-cat >> %buildroot%_sysconfdir/pdns.conf << __EOF__
-#
-#   /etc/powerdns/pdns.conf
-#
-#   Settings for PowerDNS server under ALTLinux
-#
+# Copy systemd service file
+install -p -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/pdns.service
 
-chroot=%statedir
+# change user/group to pdns
+# change default backend to bind
+sed -i \
+    -e 's/# setuid=/setuid=pdns/' \
+    -e 's/# setgid=/setgid=pdns/' \
+    -e 's/# launch=/launch=bind/' \
+    %{buildroot}%{_sysconfdir}/%{name}/pdns.conf
 
-module-dir=%mylibdir
-socket-dir=%socketdir
+%{__rm} %{buildroot}/%{_bindir}/stubquery
 
-setuid=powerdns
-setgid=powerdns
-
-launch=bind
-#Note: bind-config path is relative to chroot
-#bind-config=/namedb/named.conf
-
-#recursor=127.0.0.1:5300
-
-## EOF ##
-__EOF__
-
-# **** Restore back original values of builtin macros! ****
-%{expand:%%global _sysconfdir %sysconfdir0}
-%{expand:%%global     _libdir     %libdir0}
-
-# Install sysv scripts..
-%__install -d %buildroot%_initrddir
-%__install -m755 pdns/pdns %buildroot%_initrddir/powerdns
-
-%add_verify_elf_skiplist %mylibdir/*
+%check
+make %{?_smp_mflags} -C pdns check || cat pdns/test-suite.log
 
 %pre
-if test -z "$(%__id -u powerdns 2>/dev/null)"; then
-    useradd -r \
-	-c 'Pseudo-user for running PowerDNS service' \
-	-d %statedir \
-	-s /bin/false \
-	powerdns
-else :
-fi
+getent group pdns >/dev/null || groupadd -r pdns
+getent passwd pdns >/dev/null || \
+	useradd -r -g pdns -d / -s /sbin/nologin \
+	-c "PowerDNS user" pdns
+exit 0
 
 %post
-%post_service powerdns
+%post_service pdns
 
 %preun
-%preun_service powerdns
-
+%preun_service pdns
 
 %files
-%doc ChangeLog HACKING INSTALL README TODO pdns/pdns.conf-dist
-%config(noreplace) %attr(0600,root,root) %_sysconfdir/powerdns/pdns.conf
-%_initrddir/powerdns
-%dir %_sysconfdir/powerdns
-%dir %mylibdir/
-%dir %attr(0755,powerdns,powerdns) %socketdir
-%dir %attr(0750,root,powerdns) %statedir
-%_bindir/pdns_control
-%_bindir/zone2sql
-%_bindir/zone2ldap
-%_sbindir/pdns_server
-%_man8dir/pdns_control.8*
-%_man8dir/pdns_server.8*
-%_man8dir/zone2sql.8*
+%doc COPYING README
+%{_bindir}/pdns_control
+%{_bindir}/pdnsutil
+%{_bindir}/pdns_zone2ldap
+%{_bindir}/zone2sql
+%{_bindir}/zone2json
+%{_sbindir}/pdns_server
+%{_mandir}/man1/pdns_control.1.*
+%{_mandir}/man1/pdns_server.1.*
+%{_mandir}/man1/zone2sql.1.*
+%{_mandir}/man1/zone2json.1.*
+%{_mandir}/man1/pdns_zone2ldap.1.*
+%{_mandir}/man1/pdnsutil.1.*
+%{_unitdir}/pdns.service
+%{_libdir}/%{name}/libbindbackend.so
+%dir %{_libdir}/%{name}/
+%dir %{_sysconfdir}/%{name}/
+%config(noreplace) %{_sysconfdir}/%{name}/pdns.conf
+
+%files tools
+%{_bindir}/calidns
+%{_bindir}/dnsbulktest
+%{_bindir}/dnsgram
+%{_bindir}/dnspcap2protobuf
+%{_bindir}/dnsreplay
+%{_bindir}/dnsscan
+%{_bindir}/dnsscope
+%{_bindir}/dnstcpbench
+%{_bindir}/dnswasher
+%{_bindir}/dumresp
+%{_bindir}/ixplore
+%{_bindir}/pdns_notify
+%{_bindir}/nproxy
+%{_bindir}/nsec3dig
+%{_bindir}/saxfr
+%{_bindir}/sdig
+%{_mandir}/man1/calidns.1.*
+%{_mandir}/man1/dnsbulktest.1.*
+%{_mandir}/man1/dnsgram.1.*
+%{_mandir}/man1/dnspcap2protobuf.1.*
+%{_mandir}/man1/dnsreplay.1.*
+%{_mandir}/man1/dnsscan.1.*
+%{_mandir}/man1/dnsscope.1.*
+%{_mandir}/man1/dnstcpbench.1.*
+%{_mandir}/man1/dnswasher.1.*
+%{_mandir}/man1/dumresp.1.*
+%{_mandir}/man1/ixplore.1.*
+%{_mandir}/man1/pdns_notify.1.*
+%{_mandir}/man1/nproxy.1.*
+%{_mandir}/man1/nsec3dig.1.*
+%{_mandir}/man1/saxfr.1.*
+%{_mandir}/man1/sdig.1.*
+
+%files backend-mysql
+%{_pkgdocdir}/schema.mysql.sql
+%{_pkgdocdir}/dnssec-3.x_to_3.4.0_schema.mysql.sql
+%{_pkgdocdir}/nodnssec-3.x_to_3.4.0_schema.mysql.sql
+%{_libdir}/%{name}/libgmysqlbackend.so
+
+%files backend-postgresql
+%{_pkgdocdir}/schema.pgsql.sql
+%{_pkgdocdir}/dnssec-3.x_to_3.4.0_schema.pgsql.sql
+%{_pkgdocdir}/nodnssec-3.x_to_3.4.0_schema.pgsql.sql
+%{_libdir}/%{name}/libgpgsqlbackend.so
 
 %files backend-pipe
-%mylibdir/libpipebackend.so
+%{_libdir}/%{name}/libpipebackend.so
 
-%if_with mysql
-%files backend-mysql
-%mylibdir/libgmysqlbackend.so
-%endif
+%files backend-remote
+%{_libdir}/%{name}/libremotebackend.so
 
-%if_with pgsql
-%files backend-pgsql
-%mylibdir/libgpgsqlbackend.so
-%endif
-
-%if_with tdb
-%files backend-tdb
-%_bindir/xdb-fill
-%mylibdir/libxdbbackend.so
-%endif
-
-%if_with ldap
 %files backend-ldap
-%mylibdir/libldapbackend.so
-%endif
+%{_libdir}/%{name}/libldapbackend.so
 
-%if_with sqlite
+%files backend-lua
+%{_libdir}/%{name}/libluabackend.so
+
 %files backend-sqlite
-%mylibdir/libgsqlitebackend.so
-%endif
+%{_pkgdocdir}/schema.sqlite3.sql
+%{_pkgdocdir}/dnssec-3.x_to_3.4.0_schema.sqlite3.sql
+%{_pkgdocdir}/nodnssec-3.x_to_3.4.0_schema.sqlite3.sql
+%{_libdir}/%{name}/libgsqlite3backend.so
 
-%if_with sqlite3
-%files backend-sqlite3
-%mylibdir/libgsqlite3backend.so*
-%endif
+%files backend-opendbx
+%{_libdir}/%{name}/libopendbxbackend.so
 
-%if_with geo
-%files backend-geo
-%doc modules/geobackend/README
-%mylibdir/libgeobackend.so
-%endif
+%files backend-geoip
+%{_libdir}/%{name}/libgeoipbackend.so
 
-%files devel
-#mylibdir/*.so
-%exclude %mylibdir/*.la
-%mylibdir/*.a
+%files backend-mydns
+%{_pkgdocdir}/schema.mydns.sql
+%{_libdir}/%{name}/libmydnsbackend.so
+
+%files backend-tinydns
+%{_libdir}/%{name}/libtinydnsbackend.so
 
 %changelog
+* Tue Mar 28 2017 Lenar Shakirov <snejok@altlinux.ru> 4.0.3-alt2
+- Fake release up for make test
+
+* Wed Feb 15 2017 Lenar Shakirov <snejok@altlinux.ru> 4.0.3-alt1
+- New version (based on 4.0.3-3.fc26.src)
+
 * Mon Apr 01 2013 Michael Shigorin <mike@altlinux.org> 2.9.22-alt1.2
 - NMU: fixed MySQL client library dependencies
 
@@ -454,3 +378,4 @@ fi
 - initial build for ALTLinux, based on 2.9.20-2mdk
 
 ## EOF ##
+
