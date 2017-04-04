@@ -1,11 +1,12 @@
 # SPEC file for cryptsetup utility: setup crypto disks using
 # /dev/mapper interface in 2.6.x kernels
 
+%def_enable selinux
 %define _root_sbindir /sbin
 
 Name: cryptsetup
 Version: 1.7.3
-Release: alt1
+Release: alt1.1
 
 Summary: utility to setup a encrypted disks with LUKS support
 Summary(ru_RU.UTF-8): утилита управления зашифрованными дисковыми разделами с поддержкой LUKS
@@ -25,9 +26,10 @@ Requires: lib%name = %version-%release
 BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Sun Nov 15 2009
 BuildRequires: libdevmapper-devel libpopt-devel libuuid-devel
-BuildRequires: libudev-devel libselinux-devel
+BuildRequires: libudev-devel
 BuildRequires: python-devel
 BuildRequires: libpasswdqc-devel
+%{?_enable_selinux:BuildRequires: libselinux-devel}
 
 # Need support for fixed gcrypt PBKDF2 and fixed Whirlpool hash.
 BuildRequires: libgcrypt-devel  >= 1.6.1
@@ -222,6 +224,9 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 %exclude %python_sitelibdir/*.la
 
 %changelog
+* Mon Apr 03 2017 Michael Shigorin <mike@altlinux.org> 1.7.3-alt1.1
+- BOOTSTRAP: introduce selinux knob (on by default).
+
 * Fri Dec 30 2016 Alexey Shabalin <shaba@altlinux.ru> 1.7.3-alt1
 - Updated to 1.7.3.
 
