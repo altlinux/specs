@@ -1,7 +1,7 @@
 %define  pkgname hocon
  
 Name: 	 ruby-%pkgname
-Version: 1.2.4 
+Version: 1.2.5
 Release: alt1
  
 Summary: This is a port of the Typesafe Config library to Ruby
@@ -55,5 +55,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Apr 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.5-alt1
+- New version
+
 * Tue Feb 28 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.4-alt1
 - Initial build in Sisyphus
