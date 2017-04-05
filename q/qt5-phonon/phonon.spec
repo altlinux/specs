@@ -1,8 +1,8 @@
 %def_disable zeitgeist
 
 Name: qt5-phonon
-Version: 4.9.0
-Release: alt1
+Version: 4.9.1
+Release: alt1%ubt
 
 Group: Graphical desktop/KDE
 Summary: KDE5 Multimedia Framework
@@ -18,7 +18,7 @@ Patch100: alt-no-rpath.patch
 Patch101: alt-fix-install.patch
 Patch102: alt-fix-qt-visibility-test.patch
 
-BuildRequires(pre): qt5-base-devel
+BuildRequires(pre): qt5-base-devel rpm-build-ubt
 BuildRequires: qt5-tools-devel qt5-quick1-devel
 BuildRequires: libEGL-devel libGL-devel
 BuildRequires: automoc cmake extra-cmake-modules
@@ -98,6 +98,12 @@ mkdir -p %buildroot/%_qt5_plugindir/phonon4qt5_backend
 %_datadir/dbus-1/interfaces/org.kde.Phonon4Qt5.AudioOutput.xml
 
 %changelog
+* Wed Apr 05 2017 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1%ubt
+- new version
+
+* Mon Nov 28 2016 Sergey V Turchin <zerg@altlinux.org> 4.9.0-alt0.M80P.1
+- build for M80P
+
 * Mon Nov 14 2016 Sergey V Turchin <zerg@altlinux.org> 4.9.0-alt1
 - new version
 
