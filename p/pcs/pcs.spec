@@ -1,6 +1,6 @@
 Name: 	  pcs
 Version:  0.99.156
-Release:  alt2
+Release:  alt3
 
 Summary:  Pacemaker/Corosync configuration system
 License:  GPLv2
@@ -38,6 +38,9 @@ cd pcs
 %doc  pcs/CHANGELOG.md pcs/COPYING pcs/README.md
 
 %changelog
+* Wed Apr 05 2017 Denis Medvedev <nbr@altlinux.org> 0.99.156-alt3
+- changed default placement of pacemaker files
+
 * Tue Apr 04 2017 Denis Medvedev <nbr@altlinux.org> 0.99.156-alt2
 - added dependency to pacemaker
 
