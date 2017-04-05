@@ -3,8 +3,8 @@
 %define lngg Ukrainian
 
 Name: kde5-i18n-%lng
-Version: 16.08.3
-Release: alt1
+Version: 16.12.3
+Release: alt1%ubt
 
 Group: Graphical desktop/KDE
 Summary: %lngg language support for KDE Applications
@@ -17,7 +17,7 @@ BuildArch: noarch
 
 Source: kde-l10n-%lng-%version.tar
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: libdb4-devel qt5-tools-devel
 BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static kf5-ki18n-devel
@@ -78,6 +78,9 @@ done
 #%lang(%lng) %_K5data/autocorrect/%{lng}_*.xml
 
 %changelog
+* Wed Apr 05 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+- new version
+
 * Wed Nov 23 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt1
 - new version
 
