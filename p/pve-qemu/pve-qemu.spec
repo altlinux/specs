@@ -171,7 +171,7 @@
 
 Name: pve-%rname
 Version: 2.7.1
-Release: alt2
+Release: alt4
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -289,6 +289,9 @@ Patch99: CVE-2016-10028-display-virtio-gpu-3d-check-virgl-capabilities-max_s.pat
 Patch100: CVE-2016-10155-watchdog-6300esb-add-exit-function.patch
 Patch101: 0003-sd-sdhci-check-transfer-mode-register-in-multi-block.patch
 Patch102: 0004-sd-sdhci-block-count-enable-not-relevant-in-single-b.patch
+Patch103: 0001-cirrus-fix-patterncopy-checks.patch
+Patch104: 0002-Revert-cirrus-allow-zero-source-pitch-in-pattern-fil.patch
+Patch105: CVE-2017-2620_cirrus_add_blit_is_unsafe_call_to_cirrus_bitblt_cputovideo.patch
 
 %set_verify_elf_method fhs=relaxed
 
@@ -560,7 +563,9 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch100 -p1
 %patch101 -p1
 %patch102 -p1
-
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -666,24 +671,12 @@ install -D -p -m 0644 qemu.sasl %buildroot%_sysconfdir/sasl2/%rname.conf
 %find_lang %rname
 
 rm -f %buildroot%_datadir/%rname/slof.bin
-#rm -f %buildroot%_datadir/*/openbios*
-rm -f %buildroot%_datadir/%rname/pxe*rom
-rm -f %buildroot%_datadir/%rname/efi*rom
+rm -f %buildroot%_datadir/%rname/pxe-{e1000,ne2k_pci,pcnet,rtl8139,virtio}.rom
+rm -f %buildroot%_datadir/%rname/efi-{e1000,ne2k_pci,pcnet,rtl8139,virtio}.rom
 rm -f %buildroot%_datadir/%rname/vgabios*bin
 rm -f %buildroot%_datadir/%rname/bios.bin
 rm -f %buildroot%_datadir/%rname/bios-256k.bin
-#rm -f %buildroot%_datadir/%rname/acpi-dsdt.aml
-#rm -f %buildroot%_datadir/%rname/q35-acpi-dsdt.aml
-#rm -f %buildroot%_datadir/%name/sgabios.bin
-#rm -f %buildroot%_datadir/%name/petalogix-s3adsp1800.dtb
-#rm -f %buildroot%_datadir/%name/video.x
-#rm -f %buildroot%_datadir/%name/bamboo.dtb
-#rm -f %buildroot%_datadir/%name/ppc_rom.bin
 rm -f %buildroot%_datadir/%rname/s390-ccw.img
-
-# the pxe ipxe images will be symlinks to the images on
-# /usr/share/ipxe, as QEMU doesn't know how to look
-# for other paths, yet.
 
 for rom in e1000 ne2k_pci pcnet rtl8139 virtio ; do
   ln -r -s %buildroot%_datadir/ipxe/pxe-${rom}.rom %buildroot%_datadir/%rname/pxe-${rom}.rom
@@ -695,7 +688,6 @@ for bios in vgabios vgabios-cirrus vgabios-qxl vgabios-stdvga vgabios-vmware vga
 done
 
 ln -r -s %buildroot%_datadir/seabios/{bios,bios-256k}.bin %buildroot%_datadir/%rname/
-#ln -r -s %buildroot%_datadir/seabios/{acpi-dsdt,q35-acpi-dsdt}.aml %buildroot%_datadir/%rname/
 
 install -Dp -m 0644 %SOURCE11 %buildroot%_datadir/kvm/OVMF_CODE-pure-efi.fd
 install -m 0644 %SOURCE12 %buildroot%_datadir/kvm/OVMF_VARS-pure-efi.fd
@@ -805,21 +797,22 @@ fi
 %_unitdir/%rname-guest-agent.service
 %_initdir/%rname-guest-agent
 
-#files doc
-#docdir/
-#exclude %docdir/LICENSE
-
 %files aux
 %dir %docdir/
 %docdir/LICENSE
 
-#files -n ivshmem-tools
-#_bindir/ivshmem-client
-#_bindir/ivshmem-server
-
 %changelog
+* Wed Apr 05 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.7.1-alt4
+- 2.7.1-4
+
+* Thu Feb 02 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.7.1-alt1.M80P.1
+- backport to p8 branch
+
 * Thu Feb 02 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.7.1-alt2
 - various fixes
+
+* Mon Jan 16 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.7.1-alt0.M80P.1
+- backport to p8 branch
 
 * Mon Jan 16 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.7.1-alt1
 - 2.7.1
