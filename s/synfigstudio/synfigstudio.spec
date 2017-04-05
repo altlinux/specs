@@ -1,7 +1,7 @@
 %def_without build_docs
 
 Name:    synfigstudio
-Version: 1.2.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Synfig studio - animation program
@@ -195,6 +195,9 @@ cat synfig.lang >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Apr 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt1
+- New version
+
 * Fri Jan 13 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
 - new version 1.2.0
 
