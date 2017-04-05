@@ -1,6 +1,6 @@
 Name: SDL2_mixer
 Version: 2.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: Simple DirectMedia Layer - Sample Mixer Library
 License: zlib
@@ -14,10 +14,10 @@ Source0: http://www.libsdl.org/projects/SDL_mixer/release/%name-%version.tar.gz
 BuildRequires: chrpath
 BuildRequires: libSDL2-devel >= 2.0.1
 BuildRequires: libflac-devel
-BuildRequires: libfluidsynth-devel
 BuildRequires: libmodplug-devel
 BuildRequires: libsmpeg2-devel
 BuildRequires: libvorbis-devel
+%{?!_with_bootstrap:BuildRequires: libfluidsynth-devel}
 
 %description
 Due to popular demand, here is a simple multi-channel audio mixer.
@@ -65,7 +65,7 @@ libraries.
 
 %install
 %makeinstall_std
-%__rm -rf %buildroot%_libdir/lib%name.la
+rm -f %buildroot%_libdir/lib%name.la
 chrpath -d %buildroot%_libdir/lib%name-2.0.so.*
 
 %files -n lib%name
@@ -79,6 +79,9 @@ chrpath -d %buildroot%_libdir/lib%name-2.0.so.*
 %_libdir/lib%name.so
 
 %changelog
+* Wed Apr 05 2017 Michael Shigorin <mike@altlinux.org> 2.0.1-alt1.1
+- avoid libfluidsynth when bootstrapping (hairy BRs)
+
 * Fri Jan 22 2016 Nazarov Denis <nenderus@altlinux.org> 2.0.1-alt1
 - Version 2.0.1
 
