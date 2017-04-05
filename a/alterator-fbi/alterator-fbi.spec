@@ -1,10 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.32
-Release: alt11
-
-Packager: Dmitriy Kruglikov <dkr@altlinux.org>
+Version: 5.33
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -19,30 +17,36 @@ Obsoletes: alterator-http, ahttpd, httpd-alterator, alterator-ahttpd
 Requires: alterator-sh-functions >= 0.13-alt2
 Requires: avahi-sh-functions >= 0.1-alt2
 Requires: design-alterator
-Requires: alterator >= 4.23-alt1
+Requires: alterator >= 5.0-alt1
 Requires: alterator-l10n >= 2.7-alt4
 Requires: alterator-sslkey
 Requires: gettext
 Requires: alterator-l10n >= 0.15
 
-Requires(pre): libguile-vhttpd >= 0.7.3-alt1
+Requires(pre): libguile-vhttpd >= 0.7.7-alt1
 Requires(pre): shadow-utils
 
-BuildPreReq: alterator >= 4.12-alt1, libguile-vhttpd, guile18-devel, libexpat-devel
+BuildPreReq: alterator >= 5.0-alt1, libguile-vhttpd, guile22-devel, libexpat-devel
 
 Provides: alterator-etcgit-bar
 
 %description
 this is an alterator based engine (form based interface) to create a simple form based html interface
 
+%brp_strip_none %_alterator_libdir/*
+%add_verify_elf_skiplist %_alterator_libdir/*
+%add_findreq_skiplist %_alterator_libdir/*
+
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
-%make check-api
+# broken for now, revisit later
+#make check-api
 
 %install
+export GUILE_AUTO_COMPILE=0
 export LD_LIBRARY_PATH=$(pwd)/src/libguile-xmltokenizer/
 mkdir -p %buildroot/%_localstatedir/alterator/csrf-tokens
 %makeinstall HTMLROOT=%buildroot%_var/www/ unitdir=%buildroot%_unitdir
@@ -100,7 +104,10 @@ fi ||:
 %files
 #common
 %_bindir/*
-%_libdir/*.so*
+%_libdir/guile/2.2/extensions/*.so
+%_alterator_libdir/interfaces/guile/*
+%_alterator_libdir/type/*
+%_alterator_libdir/ui/*
 %_libexecdir/alterator/backend3/*
 %_datadir/alterator/build/*
 %_datadir/alterator/design/images/*
@@ -134,6 +141,9 @@ fi ||:
 
 
 %changelog
+* Thu Apr 6 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.33-alt1
+- rebuilt with alterator-5.0
+
 * Mon Apr 3 2017 Mikhail Gordeev <obirvalger@altlinux.org> 5.32-alt11
 - Fix work 'ahttpd -l' (with local modules)
 

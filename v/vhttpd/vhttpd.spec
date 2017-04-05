@@ -1,22 +1,21 @@
 Name: vhttpd
-Version: 0.7.6
+Version: 0.7.7
 Release: alt1
-
-Source:%name-%version.tar
 
 Summary: simple embedded web server
 License: LGPL
 Group: System/Servers
 
-Packager: Stanislav Ievlev <inger@altlinux.org>
+Source:%name-%version.tar
 
-BuildPreReq: glib2-devel libssl-devel libgnutls-devel guile18-devel cgreen
+BuildRequires: guile22-devel >= 2.2.0-alt2
+BuildPreReq: glib2-devel libssl-devel libgnutls-devel cgreen
 
 Conflicts: alterator < 4.17-alt1
 Conflicts: alterator-fbi < 5.26-alt1
 
 %description
-voins httpd - port of the first alterator's web server.
+voins httpd - port of the first alterators web server.
 
 %package -n lib%name
 Summary: simple embedded web server (shared library)
@@ -47,13 +46,11 @@ Requires: lib%name = %version-%release
 utils for library:
     certvalidate - server side certificate validation
 
-
 %package -n libguile-%name
 Summary: guile bindings for %name
 License: LGPL
-Group: System/Libraries
+Group: Development/Scheme
 Requires(pre): lib%name = %version-%release
-Requires: guile18
 
 %description -n libguile-%name
 guile bindings for %name
@@ -70,23 +67,28 @@ guile bindings for %name
 %install
 %makeinstall
 
+%brp_strip_none %guile_ccachedir/vhttpd.go
+%add_verify_elf_skiplist %guile_ccachedir/vhttpd.go
+%add_findreq_skiplist %guile_ccachedir/vhttpd.go
+
 %files -n lib%name
 %_libdir/*.so.*
-%exclude %_libdir/libguile-*.so.*
 
 %files -n lib%name-devel
 %_libdir/*.so
-%exclude %_libdir/libguile-*.so
 %_includedir/*
 
 %files utils
 %_bindir/*
 
 %files -n libguile-%name
-%_datadir/guile/1.8/*
-%_libdir/libguile-*
+%guile_extensiondir/libguile-vhttpd.so
+%guile_ccachedir/vhttpd.go
 
 %changelog
+* Fri Mar 31 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.7-alt1
+- rebuilt with guile2
+
 * Tue Sep 15 2015 Mikhail Efremov <sem@altlinux.org> 0.7.6-alt1
 - Declare request_server() in the http_client.h.
 - Add missing include.

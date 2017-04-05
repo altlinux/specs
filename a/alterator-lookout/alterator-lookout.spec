@@ -1,42 +1,50 @@
-%define _altdata_dir %_datadir/alterator
-
 Name: alterator-lookout
-Version: 2.4
+Version: 2.5
 Release: alt1
-
-Packager: Stanislav Ievlev <inger@altlinux.org>
 
 Source:%name-%version.tar
 
 Summary: dialog based interface for alterator
 License: GPL
 Group: System/Configuration/Other
-Requires: alterator >= 4.10-alt5
+Requires: alterator >= 5.0-alt1
 Requires: alterator-l10n >= 1.5-alt1
 Conflicts: alterator-browser-qt < 2.17.0-alt1
 Conflicts: alterator-wizardface < 1.1-alt3
 
-BuildPreReq: alterator >= 4.10-alt5
+BuildPreReq: alterator >= 5.0-alt1 guile22-devel
 
 %description
 dialog based interface for alterator
 
+%brp_strip_none %_alterator_libdir/*
+%add_verify_elf_skiplist %_alterator_libdir/*
+%add_findreq_skiplist %_alterator_libdir/*
+
 %prep
-%setup -q
+%setup
 
 %build
 %make_build libdir=%_libdir
 
 %install
-%makeinstall DESTDIR=%buildroot
+export GUILE_AUTO_COMPILE=0
+export GUILE_LOAD_PATH="lookout"
+%makeinstall
 
 %files
 %_bindir/*
-%_altdata_dir/interfaces
-%_altdata_dir/lookout
-%_altdata_dir/ui/*
+%_alterator_libdir/interfaces/guile/*
+%_alterator_libdir/lookout
+%_alterator_libdir/ui/*
+%_alterator_datadir/interfaces/guile/*
+%_alterator_datadir/lookout
+%_alterator_datadir/ui/*
 
 %changelog
+* Wed Apr 05 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5-alt1
+- rebuilt with alterator 5.0
+
 * Wed Jul 13 2011 Mikhail Efremov <sem@altlinux.org> 2.4-alt1
 - Added widget 'slideshow'.
 
