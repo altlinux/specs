@@ -2,7 +2,7 @@
 %define ver_major 2.3
 
 Name: openshot
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Non Linear Video Editor using Python and MLT
@@ -58,6 +58,9 @@ Xbox, and many more common formats.
 %doc AUTHORS README
 
 %changelog
+* Wed Apr 05 2017 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
+- 2.3.1
+
 * Sat Apr 01 2017 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
 - 2.3.0
 
