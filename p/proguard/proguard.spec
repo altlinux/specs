@@ -1,6 +1,6 @@
 Name: proguard
 Summary: Java class file shrinker, optimizer, obfuscator, and preverifier
-Version: 5.3.2
+Version: 5.3.3
 Release: alt1
 License: GPL
 Group: Development/Java
@@ -95,6 +95,9 @@ cp -p %{SOURCE104} %buildroot%_liconsdir/%{name}.png
 %_liconsdir/%{name}.png
 
 %changelog
+* Wed Apr 05 2017 Cronbuild Service <cronbuild@altlinux.org> 5.3.3-alt1
+- new version 5.3.3
+
 * Tue Dec 06 2016 Cronbuild Service <cronbuild@altlinux.org> 5.3.2-alt1
 - new version 5.3.2
 
