@@ -4,9 +4,9 @@
 
 %define rname smb4k
 Name: kde5-%rname
-Version: 1.9.90
+Version: 2.0.0
 Release: alt1%ubt
-%K5init alt_place
+%K5init altplace
 
 Group: Networking/Other
 Summary: A KDE SMB/CIFS share browser
@@ -48,6 +48,8 @@ Developemnt files for %name
 %prep
 %setup -q
 
+rm -rf po/*/docs
+
 %build
 %K5build
 
@@ -76,5 +78,8 @@ Developemnt files for %name
 %_K5lib/libsmb4kcore.so.%sover.*
 
 %changelog
+* Wed Apr 05 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt1%ubt
+- 2.0.0 release
+
 * Fri Mar 10 2017 Sergey V Turchin <zerg@altlinux.org> 1.9.90-alt1%ubt
 - inittial build
