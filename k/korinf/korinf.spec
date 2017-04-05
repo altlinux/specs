@@ -1,5 +1,5 @@
 Name: korinf
-Version: 2.1.5
+Version: 2.1.6
 Release: alt1
 
 Summary: Korinf multidistro single source build system
@@ -47,6 +47,15 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Wed Apr 05 2017 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt1
+- add bin-rx scripts, fix path to RX@Etersoft
+- add source filename checking
+- copying: fix debug subpackages moving to extra
+- add build script for PG9.6
+- funcs/build: refactoring and any package checking
+- add eepm to WINE@Etersoft downloading
+- fix build on latest ArchLinux
+
 * Wed Dec 21 2016 Vitaly Lipatov <lav@altlinux.ru> 2.1.5-alt1
 - add check_distr_vendor.sh (moved from rpm-build-altlinux-compat)
 - last_rpm: use correct rpmquery command
