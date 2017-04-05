@@ -1,5 +1,5 @@
 Name: glibc
-Version: 2.24
+Version: 2.25
 Release: alt1
 Epoch: 6
 
@@ -338,6 +338,8 @@ pushd %buildtarget
 	%{?_enable_multiarch:--enable-multi-arch} \
 	--enable-obsolete-rpc \
 	--enable-kernel=%enablekernel \
+	--enable-tunables \
+	--enable-stack-protector=strong \
 	#
 
 make %PARALLELMFLAGS
@@ -491,33 +493,23 @@ cat /proc/self/maps >/dev/null
 export TIMEOUTFACTOR=10
 
 cat > %buildtarget/xfail.mk <<@@@
+export test-xfail-tst-bug18665-tcp=yes
+export test-xfail-tst-res_use_inet6=yes
+export test-xfail-tst-resolv-basic=yes
+export test-xfail-tst-resolv-search=yes
 %ifarch x86_64
-export test-xfail-ISO/assert.h/linknamespace=yes
-export test-xfail-ISO/ctype.h/linknamespace=yes
-export test-xfail-ISO/errno.h/linknamespace=yes
-export test-xfail-ISO/locale.h/linknamespace=yes
-export test-xfail-ISO/math.h/linknamespace=yes
-export test-xfail-ISO/setjmp.h/linknamespace=yes
-export test-xfail-ISO/signal.h/linknamespace=yes
-export test-xfail-ISO/stdio.h/linknamespace=yes
+export test-xfail-test-ildouble=yes
 export test-xfail-tst-malloc-thread-exit=yes
 %endif
 %ifarch %ix86
-export test-xfail-ISO/assert.h/linknamespace=yes
-export test-xfail-ISO/ctype.h/linknamespace=yes
-export test-xfail-ISO/errno.h/linknamespace=yes
-export test-xfail-ISO/locale.h/linknamespace=yes
-export test-xfail-ISO/math.h/linknamespace=yes
-export test-xfail-ISO/setjmp.h/linknamespace=yes
-export test-xfail-ISO/signal.h/linknamespace=yes
-export test-xfail-ISO/stdio.h/linknamespace=yes
+export test-xfail-test-double-finite=yes
 export test-xfail-test-double=yes
 export test-xfail-test-idouble=yes
-export test-xfail-tst-cleanupx4=yes
-export test-xfail-test-double-finite=yes
-export test-xfail-test-ildoubl=yes
-export test-xfail-test-ldouble=yes
+export test-xfail-test-ildouble=yes
 export test-xfail-test-ldouble-finite=yes
+export test-xfail-test-ldouble=yes
+export test-xfail-tst-cleanupx4=yes
+export test-xfail-tst-robust8=yes
 %endif
 
 include Makefile
@@ -710,6 +702,9 @@ fi
 %_datadir/i18n
 
 %changelog
+* Wed Apr 05 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.25-alt1
+- Updated to 2.25 branch.
+
 * Tue Dec 27 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.24-alt1
 - Updated to 2.24 branch with backports from master and fedora.
 
