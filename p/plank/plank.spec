@@ -3,7 +3,7 @@
 %def_disable apport
 
 Name: plank
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Elegant, simple, clean dock
@@ -19,7 +19,7 @@ Requires: bamfdaemon dconf
 %define glib_ver 2.40
 %define bamf_ver 0.2.92
 
-BuildRequires: intltool xmllint
+BuildRequires: intltool xmllint help2man
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libbamf3-devel >= %bamf_ver libgee0.8-devel
 BuildRequires: libwnck3-devel libXi-devel libXfixes-devel
@@ -137,6 +137,9 @@ This package provides Vala language bindings for plank library.
 %_datadir/vala/vapi/plank.vapi
 
 %changelog
+* Wed Apr 05 2017 Yuri N. Sedunov <aris@altlinux.org> 0.11.4-alt1
+- 0.11.4
+
 * Sun Dec 11 2016 Yuri N. Sedunov <aris@altlinux.org> 0.11.3-alt1
 - 0.11.3
 
