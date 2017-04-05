@@ -2,7 +2,7 @@
 # viewers) into united project named "fbida". But we really not interested in
 # packaging ugly motif apps, so we will name our main package just "fbi".
 Name: fbi
-Version: 2.12
+Version: 2.13
 Release: alt1
 
 Summary: Image viewer for Linux framebuffer console
@@ -49,6 +49,9 @@ export CFLAGS="%optflags"
 %_man1dir/exiftran*
 
 %changelog
+* Wed Apr 05 2017 Yuri N. Sedunov <aris@altlinux.org> 2.13-alt1
+- 2.13
+
 * Mon Jun 06 2016 Yuri N. Sedunov <aris@altlinux.org> 2.12-alt1
 - 2.12
 - updated buildreqs
