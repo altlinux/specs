@@ -1,6 +1,6 @@
 Name:    kmymoney
-Version: 4.7.2
-Release: alt4
+Version: 4.8.0
+Release: alt1
 
 Summary: A Personal Finance Manager for KDE4
 Summary(ru_RU.UTF-8): Учёт финансов под KDE4
@@ -13,6 +13,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source0: %name-%version.tar.xz
 Source2: %name.watch
 Patch0:  %name-fix-undeclared-geteuid.patch
+Patch1:  %name-fix-link-with-QTest.patch
 
 AutoReq: yes, noperl
 
@@ -39,8 +40,10 @@ BuildRequires: libofx-devel >= 0.9.4
 BuildRequires: libspeex-devel
 BuildRequires: libxml++2-devel 
 BuildRequires: libxml2-devel
+BuildRequires: kde4-kactivities-devel
 
 Requires: kde4libs >= %{get_version kde4libs}
+Requires: %name-i18n
 
 Obsoletes: kde4-kmymoney
 
@@ -73,7 +76,8 @@ Requires: aqbanking libgwenhywfar
 Obsoletes: kde4-kmymoney-kbanking
 
 %description kbanking
-Online Banking plugin for KMyMoney.
+KBanking is the glue code needed to get the online banking features
+provided by AqBanking into KMyMoney.
 
 %package ofximport
 Summary: OFX importing plugin for KMyMoney
@@ -92,7 +96,10 @@ Requires: %name = %version-%release
 Obsoletes: kde4-kmymoney-icalexport
 
 %description icalexport
-Exports schedules to iCalendar files for KMyMoney.
+KMyMoney iCalendar allows you to export information about scheduled
+transactions to an iCalendar formatted file which can be read by most
+calendar applications. This way, you can see your due payments in your
+calendar application.
 
 %package printcheck
 Summary: Print cheques plugin for KMyMoney
@@ -101,7 +108,8 @@ Requires: %name = %version-%release
 Obsoletes: kde4-kmymoney-printcheck
 
 %description printcheck
-Provides the capability to print cheques with KMyMoney.
+This plugin gives you the ability to print transaction data onto a
+preformatted paper check.
 
 %package reconciliationreport
 Summary: Reconciliation report plugin for KMyMoney
@@ -110,8 +118,9 @@ Requires: %name = %version-%release
 Obsoletes: kde4-kmymoney-reconciliationreport
 
 %description reconciliationreport
-Creates a report after each reconciliation containing data about the
-reconciliation process for KMyMoney.
+The reconciliation report plugin gives you a detailed report about the
+status of a reconciliation. Once present, it will be automatically
+invoked by KMyMoney after each reconciliation.
 
 %package csvimport
 Summary: CSV importing plugin for KMyMoney
@@ -129,22 +138,50 @@ Requires: %name = %version-%release
 %description csvexport
 CSV exporting plugin for KMyMoney.
 
+%package payeeidentifier
+Summary: Payee identifier plugin for KMyMoney
+Group:   Office
+Requires: %name = %version-%release
+
+%description payeeidentifier
+Payee identifier plugin for KMyMoney.
+
+%package onlinetasks
+Summary: National orders plugin for online banking in KMyMoney
+Group:   Office
+Requires: %name = %version-%release
+
+%description onlinetasks
+Plugin with national orders for online banking in KMyMoney.
+
+%package weboob
+Summary: Weboob plugin for KMyMoney
+Group:   Office
+Requires: %name = %version-%release
+
+%description weboob
+Plugin for import transactions from Weboob to KMyMoney.
+
 %package plugins
 Summary: All KMyMoney plugins
 Group:   Office
 Requires: %name = %version-%release
+Requires: %name-csvexport
+Requires: %name-csvimport
+Requires: %name-icalexport 
 Requires: %name-kbanking 
 Requires: %name-ofximport 
-Requires: %name-icalexport 
+Requires: %name-onlinetasks
+Requires: %name-payeeidentifier
 Requires: %name-printcheck
 Requires: %name-reconciliationreport
-Requires: %name-csvimport
-Requires: %name-csvexport
+Requires: %name-weboob
 Obsoletes: kde4-kmymoney-plugins
 
 %description plugins
 All KmyMoney plugins: kbanking, ofximport, icalexport, printcheck,
-reconciliationreport, csvimport and csvexport.
+reconciliationreport, csvimport, csvexport, onlinetasks, payeeidentifier
+and weboob.
 
 %package i18n
 Summary: Internationalization and documentation for KMyMoney
@@ -159,12 +196,19 @@ Internationalization and documentation for KMyMoney
 %prep
 %setup -q -n %name-%version
 %patch0 -p2
+%ifarch %ix86
+%patch1 -p1
+%endif
 
 %build
+# Need to build in one thread, see https://bugs.kde.org/show_bug.cgi?id=364387 for details
+export NPROCS=1
 %K4build -DCMAKE_SKIP_RPATH=1 -DUSE_HTML_HANDBOOK=1
 
 %install
 %K4install
+mkdir -p %buildroot%_datadir/appdata
+mv %buildroot%_K4apps/appdata/kmymoney.appdata.xml %buildroot%_datadir/appdata
 %K4find_lang --with-kde %name
 
 %files
@@ -186,6 +230,7 @@ Internationalization and documentation for KMyMoney
 %_K4iconsdir/hicolor/*/mimetypes/application-x-kmymoney.png
 %_datadir/appdata/%name.appdata.xml
 %_K4conf_update/%name.upd
+%_man1dir/%name.1*
 
 %files devel
 %dir %_K4includedir/%name
@@ -196,6 +241,7 @@ Internationalization and documentation for KMyMoney
 %_K4lib/kmm_kbanking.so
 %dir %_K4apps/kmm_kbanking
 %_K4apps/kmm_kbanking/kmm_kbanking.rc
+%_K4apps/kmm_kbanking/qml
 %_K4srv/kmm_kbanking.desktop
 
 %files ofximport
@@ -236,15 +282,39 @@ Internationalization and documentation for KMyMoney
 %_K4srv/kmm_csvexport.desktop
 %_K4apps/kmm_csvexport/kmm_csvexport.rc
 
+%files payeeidentifier
+%_libdir/libkmm_payeeidentifier.so
+%_K4lib/payeeidentifier_*
+%_K4lib/devel/libpayeeidentifier_*.so
+%_libdir/libpayeeidentifier_*
+%_K4srv/ibanbicdata
+%_K4srv/kmymoney-ibanbic-*.desktop
+%_K4srv/kmymoney-nationalaccount-*.desktop
+
+%files onlinetasks
+%_K4lib/konlinetasks_*.so
+%_K4srv/kmymoney-nationalorders*.desktop
+%_K4srv/kmymoney-nationalstorageplugin.desktop
+%_K4srv/kmymoney-sepa*.desktop
+
+%files weboob
+%_K4lib/kmm_weboob.so
+%_K4srv/kmm_weboob.desktop
+%_K4apps/kmm_weboob
+
 %files plugins
 
 %files i18n -f %name.lang
 %_K4apps/%name/templates/*
-%_K4doc/pt_BR/%name/*
 %exclude %_K4doc/en
 
 
 %changelog
+* Wed Jun 29 2016 Andrey Cherepanov <cas@altlinux.org> 4.8.0-alt1
+- new version 4.8.0
+- New plugins: payeeidentifier, onlinetasks, weboob
+- i18n package is required for main package
+
 * Mon May 02 2016 Andrey Cherepanov <cas@altlinux.org> 4.7.2-alt4
 - Rebuild with new aqbanking
 - Build without Nepomuk support
