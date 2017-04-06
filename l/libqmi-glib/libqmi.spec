@@ -1,7 +1,7 @@
 %define _name libqmi
 
 Name: %_name-glib
-Version: 1.16.2
+Version: 1.18.0
 Release: alt1
 
 Summary: QMI modem protocol helper library
@@ -17,6 +17,7 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: glib2-devel libgio-devel
 BuildRequires: libmbim-glib-devel
+BuildRequires: libgudev-devel
 BuildRequires: python-modules-json
 BuildRequires: gtk-doc help2man
 
@@ -64,11 +65,14 @@ touch README ChangeLog
 %configure \
 	--disable-static \
 	--enable-mbim-qmux \
+	--enable-firmware-update \
+	--with-udev \
 	--enable-gtk-doc
 %make_build
 
-# Fix qmicli name in the man page
+# Fix names in the man pages
 sed -i 's;lt\\-qmicli;qmicli;' docs/man/qmicli.1
+sed -i -r 's;lt\\-(qmi\\-firmware\\-update);\1;' docs/man/qmi-firmware-update.1
 
 %install
 %makeinstall_std
@@ -82,8 +86,7 @@ make check
 
 %files utils
 %_bindir/*
-%_man1dir/qmicli.1*
-%_man1dir/qmi-network.1*
+%_man1dir/qmi*.1*
 %_datadir/bash-completion/completions/*
 
 %files devel
@@ -96,6 +99,10 @@ make check
 
 
 %changelog
+* Thu Apr 06 2017 Mikhail Efremov <sem@altlinux.org> 1.18.0-alt1
+- Fix qmi-firmware-update manpage.
+- Updated to 1.18.0.
+
 * Thu Nov 10 2016 Mikhail Efremov <sem@altlinux.org> 1.16.2-alt1
 - Updated to 1.16.2.
 
