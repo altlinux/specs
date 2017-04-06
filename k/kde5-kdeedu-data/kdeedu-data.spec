@@ -1,8 +1,8 @@
 %define rname kdeedu-data
 
 Name: kde5-%rname
-Version: 16.08.1
-Release: alt1
+Version: 16.12.3
+Release: alt1%ubt
 %K5init
 
 Group: Graphical desktop/KDE
@@ -16,7 +16,7 @@ BuildArch: noarch
 
 Source: %rname-%version.tar
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 
 # Automatically added by buildreq on Fri Mar 18 2016 (-bi)
 # optimized out: cmake cmake-modules gcc-c++ gtk-update-icon-cache libqt5-core libstdc++-devel python-base python3 python3-base rpm-build-python3
@@ -41,6 +41,9 @@ BuildRequires: extra-cmake-modules qt5-base-devel
 %_K5icon/*/*/actions/*.*
 
 %changelog
+* Thu Apr 06 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+- new version
+
 * Thu Sep 22 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
 - new version
 

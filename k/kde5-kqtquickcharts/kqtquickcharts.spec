@@ -1,0 +1,65 @@
+%define rname kqtquickcharts
+
+Name: kde5-%rname
+Version: 16.12.3
+Release: alt1%ubt
+%K5init
+
+Group: Graphical desktop/KDE
+Summary: Beautiful and interactive charts for Qt Quick
+Url: http://www.kde.org
+License: GPLv2+ / LGPLv2+
+
+Requires: %name-common = %version-%release
+
+Source: %rname-%version.tar
+
+# Automatically added by buildreq on Tue Apr 04 2017 (-bi)
+# optimized out: cmake cmake-modules elfutils gcc-c++ libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-network libqt5-qml libqt5-quick libstdc++-devel perl python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs
+#BuildRequires: extra-cmake-modules python-module-google python3-dev qt5-declarative-devel rpm-build-ruby
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires: extra-cmake-modules qt5-base-devel qt5-declarative-devel
+
+%description
+Beautiful and interactive charts for Qt Quick.
+
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
+%name common package
+
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+Requires: %name-common = %version-%release
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
+%prep
+%setup -n %rname-%version
+
+%build
+%K5build
+
+%install
+%K5install
+%find_lang %name --with-kde --all-name
+
+%files common -f %name.lang
+%doc COPYING*
+
+%files
+%_K5qml/org/kde/charts/
+
+%files devel
+%_K5inc/kqtquickcharts_version.h
+%_libdir/cmake/KQtQuickCharts/
+
+
+%changelog
+* Thu Mar 16 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+- initial build
