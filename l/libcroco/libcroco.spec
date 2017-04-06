@@ -1,8 +1,8 @@
 %define ver_major 0.6
 
 Name: libcroco
-Version: %ver_major.11
-Release: alt2
+Version: %ver_major.12
+Release: alt1
 
 Summary: A CSS2 parsing library
 License: LGPL
@@ -70,7 +70,7 @@ for detecting errors both in CSS code and in the CSS parser itself.
 %{?_with_apidocs:%make_build apidoc}
 
 %install
-%makeinstall
+%makeinstall_std
 
 %check
 %make check
@@ -97,6 +97,9 @@ for detecting errors both in CSS code and in the CSS parser itself.
 %_bindir/csslint-%ver_major
 
 %changelog
+* Thu Apr 06 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.12-alt1
+- 0.6.12
+
 * Mon Jan 18 2016 Yuri N. Sedunov <aris@altlinux.org> 0.6.11-alt2
 - mike: conditional apidocs build via the added switch (for bootstrap)
 
