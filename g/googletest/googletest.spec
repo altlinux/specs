@@ -1,6 +1,8 @@
+%define sover 0
+
 Name: googletest
 Version: 1.8.0
-Release: alt1
+Release: alt2
 
 Summary: Google's framework for writing C++ tests
 License: BSD
@@ -10,9 +12,10 @@ Url: https://github.com/%name/googletest
 
 # https://github.com/google/%name/archive/release-%version.tar.gz
 Source: %name-release-%version.tar.gz
-Patch: %name-lib64-alt.patch
+Patch0: %name-soname-alt.patch
+Patch1: %name-lib64-alt.patch
 
-# Automatically added by buildreq on Wed Apr 05 2017 (-bi)
+# Automatically added by buildreq on Thu Apr 06 2017 (-bi)
 # optimized out: cmake-modules elfutils libstdc++-devel perl python-base
 BuildRequires: cmake gcc-c++
 
@@ -24,11 +27,13 @@ assertions, user-defined assertions, death tests, fatal and non-fatal
 failures, value- and type-parameterized tests, various options for
 running the tests, and XML test report generation.
 
-%package -n libgtest
+%package -n libgtest%sover
 Summary: Google's framework for writing C++ tests
 Group: Development/C++
+Provides: libgtest = %EVR
+Obsoletes: libgtest
 
-%description -n libgtest
+%description -n libgtest%sover
 Google's framework for writing C++ tests on a variety of platforms
 (Linux, Mac OS X, Windows, Cygwin, Windows CE, and Symbian). Based on
 the xUnit architecture. Supports automatic test discovery, a rich set of
@@ -37,42 +42,49 @@ failures, value- and type-parameterized tests, various options for
 running the tests, and XML test report generation.
 
 %package -n libgtest-devel
-Summary: Development environment for %name
+Summary: Development environment for gtest
 Group: Development/C++
-Requires: libgtest = %EVR
 
 %description -n libgtest-devel
-Development environment for %name
+Development environment for gtest
 
-%package -n libgmock
-Summary: Google's framework for writing C++ tests
+%package -n libgmock%sover
+Summary: Google C++ Mocking Framework
 Group: Development/C++
-Requires: libgtest = %EVR
+Requires: libgtest%sover = %EVR
+Provides: libgmock = %EVR
+Obsoletes: libgmock
 
-%description -n libgmock
-Google's framework for writing C++ tests on a variety of platforms
-(Linux, Mac OS X, Windows, Cygwin, Windows CE, and Symbian). Based on
-the xUnit architecture. Supports automatic test discovery, a rich set of
-assertions, user-defined assertions, death tests, fatal and non-fatal
-failures, value- and type-parameterized tests, various options for
-running the tests, and XML test report generation.
+%description -n libgmock%sover
+Google's framework for writing and using C++ mock classes on a variety
+of platforms (Linux, Mac OS X, Windows, Windows CE, Symbian, etc).
+Inspired by jMock, EasyMock, and Hamcrest, and designed with C++'s
+specifics in mind, it can help you derive better designs of your
+system and write better tests.
 
 %package -n libgmock-devel
-Summary: Development environment for %name
+Summary: Development environment for gmock
 Group: Development/C++
-Requires: libgmock = %EVR
 Requires: libgtest-devel = %EVR
 
 %description -n libgmock-devel
-Development environment for %name
+Development environment for gmock
 
 %prep
 %setup -n %name-release-%version
-%ifarch x86_64
 %patch0 -p1
+%ifarch x86_64
+%patch1 -p1
 %endif
 
 %build
+
+# Generate gtest-config
+pushd googletest
+%autoreconf
+%configure
+popd
+
 %__mkdir_p %_target_platform
 pushd %_target_platform
 
@@ -90,25 +102,35 @@ popd
 %install
 %makeinstall_std -C %_target_platform
 %__install -Dp -m0644 googletest/m4/gtest.m4 %buildroot%_aclocaldir/gtest.m4
+%__install -Dp -m0755 googletest/scripts/gtest-config %buildroot%_bindir/gtest-config
 
-%files -n libgtest
+%files -n libgtest%sover
 %doc googletest/CHANGES googletest/CONTRIBUTORS googletest/LICENSE
-%_libdir/libgtest.so
-%_libdir/libgtest_main.so
+%_libdir/libgtest.so.*
+%_libdir/libgtest_main.so.*
 
 %files -n libgtest-devel
+%_bindir/gtest-config
+%_libdir/libgtest.so
+%_libdir/libgtest_main.so
 %_includedir/gtest
 %_aclocaldir/gtest.m4
 
-%files -n libgmock
+%files -n libgmock%sover
 %doc googlemock/CHANGES googlemock/CONTRIBUTORS googlemock/LICENSE
-%_libdir/libgmock.so
-%_libdir/libgmock_main.so
+%_libdir/libgmock.so.*
+%_libdir/libgmock_main.so.*
 
 %files -n libgmock-devel
+%_libdir/libgmock.so
+%_libdir/libgmock_main.so
 %_includedir/gmock
 
 %changelog
+* Thu Apr 06 2017 Nazarov Denis <nenderus@altlinux.org> 1.8.0-alt2
+- Add soname
+- Add gtest-config
+
 * Wed Apr 05 2017 Nazarov Denis <nenderus@altlinux.org> 1.8.0-alt1
 - Version 1.8.0
 
