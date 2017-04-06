@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define _name httpseverywhere
-%define ver_major 0.2
-%define api_ver 0.2
+%define ver_major 0.4
+%define api_ver 0.4
 
 %def_enable introspection
 %def_disable doc
 
 Name: lib%_name
-Version: %ver_major.10
+Version: %ver_major.1
 Release: alt1
 
 Summary: Library to use HTTPSEverywhere in desktop applications
@@ -113,6 +113,12 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Thu Apr 06 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
+- 0.4.1
+
+* Sun Mar 19 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Wed Dec 21 2016 Yuri N. Sedunov <aris@altlinux.org> 0.2.10-alt1
 - first build for Sisyphus
 
