@@ -1,6 +1,6 @@
 Name: facile
-Version: 1.1
-Release: alt5
+Version: 1.1.3
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Constraint programming library
@@ -9,7 +9,8 @@ URL: http://www.recherche.enac.fr/log/facile/
 
 Source0: http://www.recherche.enac.fr/log/facile/distrib/%name-%version.tar.gz
 Patch1: facile-1.1-install.patch
-Patch2: facile-1.1-alt-ocaml4-adoption.patch
+
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-ocaml4 ocaml4
 
 %description
@@ -19,7 +20,6 @@ domains written in OCaml.
 %prep
 %setup -q 
 %patch1 -p1
-%patch2 -p1
 
 %build
 ./configure
@@ -32,6 +32,9 @@ make DESTDIR=%buildroot install
 %_libdir/ocaml/facile
 
 %changelog
+* Thu Apr 06 2017 Sergey V Turchin <zerg@altlinux.org> 1.1.3-alt1%ubt
+- new version
+
 * Sun Jun 19 2016 Andrey Bergman <vkni@altlinux.org> 1.1-alt5
 - Rebuild with ocaml4 4.03.0.
 
