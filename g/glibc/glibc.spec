@@ -1,6 +1,6 @@
 Name: glibc
 Version: 2.25
-Release: alt1
+Release: alt2
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -449,7 +449,7 @@ find %buildroot%docdir/ -type f -size +8k -print0 |
 for f in `ls %buildroot%_libdir/lib*.a |
 	  grep -v '_p.a$' |
 	  sed -e "s|%buildroot||g"`; do
-	if [ -e "%buildroot${f%%.a}.so" ]; then
+	if [ -e "%buildroot${f%%.a}.so" ] || [ -e "%buildroot${f%%-%version.a}.so" ]; then
 		echo "$f" >>devel-static.files
 	else
 		echo "$f" >>devel.files
@@ -497,6 +497,7 @@ export test-xfail-tst-bug18665-tcp=yes
 export test-xfail-tst-res_use_inet6=yes
 export test-xfail-tst-resolv-basic=yes
 export test-xfail-tst-resolv-search=yes
+export test-xfail-tst-getrandom=yes
 %ifarch x86_64
 export test-xfail-test-ildouble=yes
 export test-xfail-tst-malloc-thread-exit=yes
@@ -702,6 +703,10 @@ fi
 %_datadir/i18n
 
 %changelog
+* Thu Apr 06 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.25-alt2
+- x86_64: moved libm-2.25.a to glibc-devel-static subpackage.
+- check: xfailed tst-getrandom test.
+
 * Wed Apr 05 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.25-alt1
 - Updated to 2.25 branch.
 
