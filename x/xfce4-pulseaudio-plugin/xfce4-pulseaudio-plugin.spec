@@ -1,6 +1,6 @@
 Name: xfce4-pulseaudio-plugin
 Version: 0.2.4
-Release: alt2
+Release: alt3
 
 Summary: A pulseaudio plugin for the Xfce panel
 License: %gpl2plus
@@ -17,6 +17,7 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
 BuildRequires: libpulseaudio-devel libnotify-devel
+BuildRequires: libkeybinder3-devel
 
 Requires: xfce4-panel >= 4.11
 
@@ -35,6 +36,7 @@ A panel plugin for controlling PulseAudio mixer.
 %xfce4reconf
 %configure \
 	--enable-maintainer-mode \
+	--enable-keybinder \
 	--enable-debug=no
 %make_build
 
@@ -51,6 +53,9 @@ A panel plugin for controlling PulseAudio mixer.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Apr 06 2017 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt3
+- Enable keybinder support.
+
 * Wed Mar 15 2017 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt2
 - Fix menu translation.
 - Use _unpackaged_files_terminate_build.
