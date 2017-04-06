@@ -6,7 +6,7 @@
 Summary: Rutoken PKCS#11 Library
 Name: librtpkcs11ecp
 Version: 1.5.3.0
-Release: alt2
+Release: alt3
 License: Proprietary
 Url: https://www.rutoken.ru/support/download/pkcs/
 Group: System/Configuration/Hardware
@@ -40,6 +40,9 @@ ln -s pkcs11/librtpkcs11ecp.so %buildroot%_libdir/
 %_libdir/pkcs11/*.so
 
 %changelog
+* Thu Apr 06 2017 Andrey Cherepanov <cas@altlinux.org> 1.5.3.0-alt3
+- Correct sources (separate .so files as vendor recommends)
+
 * Tue Apr 04 2017 Andrey Cherepanov <cas@altlinux.org> 1.5.3.0-alt2
 - Update license
 
