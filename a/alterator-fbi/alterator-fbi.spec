@@ -2,7 +2,7 @@
 
 Name: alterator-fbi
 Version: 5.32
-Release: alt10
+Release: alt11
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
@@ -134,6 +134,9 @@ fi ||:
 
 
 %changelog
+* Mon Apr 3 2017 Mikhail Gordeev <obirvalger@altlinux.org> 5.32-alt11
+- Fix work 'ahttpd -l' (with local modules)
+
 * Thu Oct 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.32-alt10
 - some debug prints removed
 
