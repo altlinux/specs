@@ -34,7 +34,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt9%ubt
+%define rlz alt10%ubt
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -1452,6 +1452,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Thu Apr 06 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.8.7-alt10%ubt
+- moc: fixed work with glibc >= 2.25.
+
 * Wed Feb 01 2017 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt9%ubt
 - build with gcc6
 
