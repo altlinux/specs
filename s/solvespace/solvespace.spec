@@ -2,7 +2,7 @@
 
 Name: 	 solvespace
 Version: 2.3
-Release: alt1
+Release: alt1.qa1
 Epoch:   1
 
 Summary: SolveSpace parametric 2d/3d CAD
@@ -15,6 +15,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source0:  %name-%version.tar
 Source1:  libdxfrw.tar
 Patch1:   use-explicit-git-hash.patch
+Patch2:   0001-Rename-TextWindow-CHAR_WIDTH-to-CHAR_WIDTH_.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -80,6 +81,7 @@ This package includes development files for libslvs.
 %setup -q
 tar xf %SOURCE1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %cmake
@@ -104,6 +106,9 @@ tar xf %SOURCE1
 %_includedir/slvs.h
 
 %changelog
+* Fri Apr 07 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.3-alt1.qa1
+- Fixed build with glibc >= 2.25.
+
 * Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 1:2.3-alt1
 - New version
 
