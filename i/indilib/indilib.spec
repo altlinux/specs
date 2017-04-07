@@ -2,8 +2,8 @@
 
 
 Name: indilib
-Version: 1.2.0
-Release: alt1
+Version: 1.3.1
+Release: alt1%ubt
 
 %add_verify_elf_skiplist %_libdir/libindidriver.so.%version
 %add_verify_elf_skiplist %_libdir/libindimain.so.%version
@@ -23,6 +23,7 @@ Source: http://nchc.dl.sourceforge.net/sourceforge/indi/lib%{shortname}_%version
 # Automatically added by buildreq on Wed Oct 05 2011 (-bi)
 # optimized out: cmake-modules elfutils libstdc++-devel pkg-config zlib-devel
 #BuildRequires: boost-devel-headers cmake gcc-c++ libcfitsio-devel libnova-devel libusb-compat-devel zlib-devel-static
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: boost-devel cmake gcc-c++ libcfitsio-devel libnova-devel libusb-compat-devel zlib-devel
 BuildRequires: libusb-devel libjpeg-devel libgsl-devel libcurl-devel
 BuildRequires: kde-common-devel
@@ -102,6 +103,9 @@ chmod -x drivers/telescope/lx200fs2.{h,cpp}
 %_pkgconfigdir/libindi.pc
 
 %changelog
+* Fri Apr 07 2017 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt1%ubt
+- new version
+
 * Tue Mar 22 2016 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt1
 - new version
 
