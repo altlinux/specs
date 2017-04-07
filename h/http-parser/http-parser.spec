@@ -1,13 +1,15 @@
 
 Name: http-parser
 Version: 2.7.0
-Release: alt1
+Release: alt1%ubt
 Summary: HTTP request/response parser for C
 
 Group: System/Libraries
 License: MIT
 Url: http://github.com/joyent/http-parser
 Source: %name-%version.tar
+
+BuildRequires(pre):rpm-build-ubt
 
 %description
 This is a parser for HTTP messages written in C. It parses both requests and
@@ -61,6 +63,9 @@ ln -sf libhttp_parser.so.2.7.0 libhttp_parser.so
 %_libdir/*.so
 
 %changelog
+* Fri Apr 07 2017 Evgeny Sinelnikov <sin@altlinux.ru> 2.7.0-alt1%ubt
+- Enable unified build tag aka ubt macros
+
 * Fri Jul 08 2016 Alexey Shabalin <shaba@altlinux.ru> 2.7.0-alt1
 - Initial packaging
 
