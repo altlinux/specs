@@ -1,6 +1,6 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 2016.11.3
+Version: 2017.5
 Release: alt1
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
@@ -267,6 +267,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Fri Apr 07 2017 Andrey Cherepanov <cas@altlinux.org> 2017.5-alt1
+- New version
+
 * Thu Mar 30 2017 Andrey Cherepanov <cas@altlinux.org> 2016.11.3-alt1
 - New version
 - Remove optional external executables from autoreq
