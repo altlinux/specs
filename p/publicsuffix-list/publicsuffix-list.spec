@@ -1,53 +1,80 @@
-Group: Networking/Other
-%global revdate 20160713
+%def_enable dafsa
 
-Name:           publicsuffix-list
-Version:        %{revdate}
-Release:        alt1_1
-Summary:        Cross-vendor public domain suffix database
+Name: publicsuffix-list
+Version: 20170404
+Release: alt2
+Summary: Cross-vendor public domain suffix database
+License: MPL-2.0
+Group: Networking/DNS
+Url: https://publicsuffix.org/
+# https://github.com/publicsuffix/list.git
+Source0: public_suffix_list.dat
+Source1: LICENSE
+Source2: test_psl.txt
+BuildArch: noarch
 
-License:        MPLv2.0
-URL:            https://publicsuffix.org/
-Source0:        https://publicsuffix.org/list/public_suffix_list.dat
-Source1:        https://www.mozilla.org/MPL/2.0/index.txt
-Source2:        https://github.com/publicsuffix/list/raw/master/tests/test_psl.txt
-
-BuildArch:      noarch
-Source44: import.info
-
+%{?_enable_dafsa:BuildRequires: psl-make-dafsa}
 
 %description
-The Public Suffix List is a cross-vendor initiative to provide
-an accurate list of domain name suffixes, maintained by the hard work 
-of Mozilla volunteers and by submissions from registries.
-Software using the Public Suffix List will be able to determine where 
-cookies may and may not be set, protecting the user from being 
-tracked across sites.
+A "public suffix" is one under which Internet users can (or historically could)
+directly register names. Some examples of public suffixes are .com, .co.uk and
+pvt.k12.ma.us. The Public Suffix List is a list of all known public suffixes.
 
+%package dafsa
+Group: Networking/DNS
+Summary: Cross-vendor public domain suffix database in DAFSA form
+
+%description dafsa
+A "public suffix" is one under which Internet users can (or historically could)
+directly register names. Some examples of public suffixes are .com, .co.uk and
+pvt.k12.ma.us. The Public Suffix List is a list of all known public suffixes.
+
+This package includes a DAFSA representation of the Public Suffix List
+for runtime loading.
 
 %prep
 %setup -c -T
-cp -av %{SOURCE1} COPYING
-
+cp -a %SOURCE1 COPYING
+%if_enabled dafsa
+cp -a %SOURCE0 .
 
 %build
-
+#FIXME: Should be C.UTF-8 when it will be available
+LC_CTYPE=en_US.UTF-8 \
+	psl-make-dafsa --output-format=binary \
+	  %SOURCE0 public_suffix_list.dafsa
+%endif
 
 %install
-install -m 644 -p -D %{SOURCE0} $RPM_BUILD_ROOT/%{_datadir}/publicsuffix/public_suffix_list.dat
-install -m 644 -p -D %{SOURCE2} $RPM_BUILD_ROOT/%{_datadir}/publicsuffix/test_psl.txt
-ln -s public_suffix_list.dat $RPM_BUILD_ROOT/%{_datadir}/publicsuffix/effective_tld_names.dat
-
+install -pDm644  %SOURCE0 %buildroot%_datadir/publicsuffix/public_suffix_list.dat
+install -pDm644  %SOURCE2 %buildroot%_datadir/publicsuffix/test_psl.txt
+ln -s public_suffix_list.dat %buildroot%_datadir/publicsuffix/effective_tld_names.dat
+%if_enabled dafsa
+install -pDm644 public_suffix_list.dafsa %buildroot%_datadir/publicsuffix/public_suffix_list.dafsa
+%endif
 
 %files
 %doc COPYING
-%{_datadir}/publicsuffix
+%dir %_datadir/publicsuffix/
+%_datadir/publicsuffix/*
+%if_enabled dafsa
+%exclude %_datadir/publicsuffix/public_suffix_list.dafsa
 
+%files dafsa
+%doc COPYING
+%dir %_datadir/publicsuffix/
+%_datadir/publicsuffix/public_suffix_list.dafsa
+%endif
 
 %changelog
+* Sun Apr 09 2017 Mikhail Efremov <sem@altlinux.org> 20170404-alt2
+- Add changlog from old fcimport spec.
+
+* Fri Apr 07 2017 Mikhail Efremov <sem@altlinux.org> 20170404-alt1
+- Initial build.
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20160713-alt1_1
 - update to new release by fcimport
 
 * Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 20151208-alt1_1
 - to Sisyphus
-
