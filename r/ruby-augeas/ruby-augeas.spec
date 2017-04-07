@@ -1,28 +1,31 @@
 %define  pkgname augeas
  
 Name: 	 ruby-%pkgname
-Version: 0.6.4 
-Release: alt1
+Version: 0.5.0
+Release: alt2
+Epoch:   1
  
-Summary: Ruby bindings for Augeas
+Summary: Provides bindings for augeas
 License: LGPL 2.1
 Group:   Development/Ruby
-Url:     https://github.com/dotdoom/augeas
+Url:     http://augeas.net
  
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
  
-Source:  %pkgname-%version.tar
+Source:  %name-%version.tar
  
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
 BuildRequires: libruby-devel
 BuildRequires: libaugeas-devel
- 
+
+Conflicts: ruby-augeas-new
+
 %description
-The class Augeas provides bindings to augeas [augeas.net] library.
+Provides bindings for augeas.
 
 %prep
-%setup -n %pkgname-%version
+%setup
 %update_setup_rb
  
 %build
@@ -39,10 +42,13 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_test_unit -Ilib:test test
  
 %files
-%doc README*
+%doc AUTHORS README*
 %ruby_sitearchdir/*
 %ruby_sitelibdir/*.rb
  
 %changelog
-* Thu Apr 06 2017 Andrey Cherepanov <cas@altlinux.org> 0.6.4-alt1
+* Fri Apr 07 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.5.0-alt2
+- Use original gem in Sisyphus (ALT #33345)
+
+* Fri Apr 07 2017 Andrey Cherepanov <cas@altlinux.org> 0.6.4-alt1
 - Initial build in Sisyphus
