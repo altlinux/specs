@@ -4,7 +4,7 @@
 %define libkolourpaint libkolourpaint_lgpl%sover
 
 Name: kde5-%rname
-Version: 16.08.3
+Version: 16.12.3
 Release: alt1%ubt
 %K5init
 
@@ -21,6 +21,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: kde5-libksane-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel
+BuildRequires: kde5-libkexiv2-devel
 
 %description
 An easy-to-use paint program designed for everyday tasks like drawing
@@ -82,6 +83,9 @@ KF5 library
 %_K5lib/libkolourpaint_lgpl.so.*
 
 %changelog
+* Tue Apr 04 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+- new version
+
 * Mon Dec 05 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt1%ubt
 - new version
 

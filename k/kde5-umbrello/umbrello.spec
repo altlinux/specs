@@ -1,7 +1,7 @@
 %define rname umbrello
 
 Name: kde5-%rname
-Version: 16.08.3
+Version: 16.12.3
 Release: alt1%ubt
 %K5init
 
@@ -16,7 +16,8 @@ Source: %rname-%version.tar
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms libxml2-devel pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-gir ruby ruby-stdlibs xml-common xml-utils
 #BuildRequires: extra-cmake-modules kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libxslt-devel python-module-google qt5-svg-devel rpm-build-python3 rpm-build-ruby xsltproc
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules qt5-base-devel qt5-svg-devel
+BuildRequires: extra-cmake-modules qt5-base-devel qt5-svg-devel qt5-webkit-devel
+BuildRequires: llvm-devel
 BuildRequires: libxslt-devel xsltproc
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
@@ -52,10 +53,13 @@ standard language.
 %_K5icon/hicolor/*/apps/umbrello.*
 %_K5icon/hicolor/*/mimetypes/application-x-uml.*
 %_K5xdgapp/org.kde.umbrello.desktop
-%_K5xmlgui/umbrello/
+#%_K5xmlgui/umbrello/
 
 
 %changelog
+* Tue Apr 04 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+- new version
+
 * Mon Dec 05 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt1%ubt
 - new version
 

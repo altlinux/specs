@@ -4,7 +4,7 @@
 %define libkdfprivate libkdfprivate%kdfprivate_sover
 
 Name: kde5-%rname
-Version: 16.08.3
+Version: 16.12.3
 Release: alt1%ubt
 %K5init
 
@@ -82,6 +82,9 @@ KF5 library
 %_K5lib/libkdfprivate.so.*
 
 %changelog
+* Tue Apr 04 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+- new version
+
 * Mon Dec 05 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt1%ubt
 - new version
 

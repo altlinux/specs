@@ -1,7 +1,7 @@
 %define rname poxml
 
 Name: kde5-%rname
-Version: 16.08.3
+Version: 16.12.3
 Release: alt1%ubt
 %K5init
 
@@ -37,6 +37,9 @@ BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
 %_K5bin/*
 
 %changelog
+* Tue Apr 04 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+- new version
+
 * Mon Dec 05 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt1%ubt
 - new version
 
