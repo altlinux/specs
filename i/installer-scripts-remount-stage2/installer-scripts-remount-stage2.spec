@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.5.13
+Version: 0.5.14
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -48,6 +48,10 @@ __EOF__
 %attr(0755,root,root) %_datadir/install2/initinstall.d/85-start-multipath.sh
 
 %changelog
+* Fri Apr 07 2017 Michael Shigorin <mike@altlinux.org> 0.5.14-alt1
+- ignore blkid cache as the script's goal is changing
+  block device situation
+
 * Tue Mar 21 2017 Michael Shigorin <mike@altlinux.org> 0.5.13-alt1
 - ignore lvm exit code to hopefully avoid a few more unneeded
   "destination filesystem remount error" cases (closes: #33246)
