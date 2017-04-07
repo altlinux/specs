@@ -6,11 +6,11 @@
 %global repo            %{project}
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      8eab29edd820017901796eb60d4bea28d760f16f
+%global commit      4845c567eb35d68f35b0b1713a09b0c8d47fe67e
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       %{repo}-io
-Version:    17.03.0
+Version:    17.04.0
 Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
@@ -32,6 +32,9 @@ BuildRequires: python-module-sphinx-devel python-module-sphinxcontrib-httpdomain
 Requires: tar lxc xz
 Provides: lxc-docker
 Requires: /usr/bin/docker-proxy
+Requires: docker-containerd
+Requires: docker-runc
+Requires: docker-init
 
 %define gopath %_datadir/gocode
 
@@ -87,15 +90,8 @@ cp contrib/syntax/vim/README.md README-vim-syntax.md
 %install
 # install binary
 install -d %{buildroot}%{_bindir}
-ls -la bundles/%{version}-%{versuffix}
 install -p -m 755 bundles/%{fullversion}/dynbinary-client/docker-%{fullversion} %{buildroot}%{_bindir}/docker
 install -p -m 755 bundles/%{fullversion}/dynbinary-daemon/dockerd-%{fullversion} %{buildroot}%{_bindir}/dockerd
-
-# create symlinks on runc/containerd
-ln -s %_bindir/runc %{buildroot}%{_bindir}/docker-runc
-ln -s %_sbindir/containerd %{buildroot}%{_bindir}/docker-containerd
-ln -s %_sbindir/containerd-shim %{buildroot}%{_bindir}/docker-containerd-shim
-ln -s %_sbindir/ctr %{buildroot}%{_bindir}/docker-containerd-ctr
 
 install -d %{buildroot}%{_libexecdir}/docker
 
@@ -126,7 +122,6 @@ install -d %{buildroot}%{_sharedstatedir}/%{repo}
 # install systemd/init scripts
 install -d %{buildroot}%{_unitdir}
 install -p -m 644 altlinux/%{repo}.service %{buildroot}%{_unitdir}
-install -p -m 644 altlinux/%{repo}-containerd.service %{buildroot}%{_unitdir}
 install -p -D -m 755 altlinux/%{repo}.init %{buildroot}%{_initddir}/%{repo}
 
 # sources
@@ -161,13 +156,8 @@ exit 0
 %{_mandir}/man5/Dockerfile.5.*
 %{_bindir}/docker
 %{_bindir}/dockerd
-%{_bindir}/docker-runc
-%{_bindir}/docker-containerd
-%{_bindir}/docker-containerd-shim
-%{_bindir}/docker-containerd-ctr
 %dir %{_libexecdir}/docker
 %{_unitdir}/docker.service
-%{_unitdir}/docker-containerd.service
 %_initdir/docker
 %{_datadir}/bash-completion/completions/docker
 %dir %{_sharedstatedir}/docker
@@ -182,6 +172,9 @@ exit 0
 %{gopath}/src/%{import_path}/
 
 %changelog
+* Fri Apr 7 2017 Vladimir Didenko <cow@altlinux.org> 17.04.0-alt1
+- New version
+
 * Mon Mar 6 2017 Vladimir Didenko <cow@altlinux.org> 17.03.0-alt1
 - New version
 
