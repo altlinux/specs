@@ -5,13 +5,13 @@
 %define gtk3_api_ver 3.0
 
 %def_disable static
-%def_enable gtk-doc
+%def_enable gtk_doc
 %def_enable pixbuf_loader
 %def_enable introspection
 %def_enable vala
 
 Name: %bname
-Version: %ver_major.16
+Version: %ver_major.17
 Release: alt1
 Epoch: 1
 
@@ -146,6 +146,7 @@ GObject introspection devel data for the %name library
 %files
 %_libdir/*.so.*
 %{?_enable_pixbuf_loader:%_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.so}
+%_datadir/thumbnailers/librsvg.thumbnailer
 %doc AUTHORS NEWS README TODO
 
 %files devel
@@ -164,8 +165,7 @@ GObject introspection devel data for the %name library
 %endif
 
 %files utils
-%_bindir/*
-%exclude %_bindir/rsvg-view-3
+%_bindir/rsvg-convert
 %_man1dir/*
 
 %files utils-gtk3
@@ -182,6 +182,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Fri Apr 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.17-alt1
+- 2.40.17
+
 * Thu Jun 09 2016 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.16-alt1
 - 2.40.16
 
@@ -486,7 +489,7 @@ GObject introspection devel data for the %name library
 * Mon Jul 09 2001 Havoc Pennington <hp@redhat.com>
 - put .la file back in package
 
-* Fri Jul  6 2001 Trond Eivind Glomsrød <teg@redhat.com>
+* Fri Jul  6 2001 Trond Eivind GlomsrÃ¸d <teg@redhat.com>
 - Put changelog at the end
 - Move .so files to devel subpackage
 - Don't mess with ld.so.conf
