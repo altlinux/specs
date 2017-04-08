@@ -1,5 +1,5 @@
 %global import_path golang.org/x/tools
-%global commit 789265387ff52550e7d48b4e6f4c6bce831c1248
+%global commit 24acc66eabead631b4e856255a9ad925549cee80
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 %global __find_debuginfo_files %nil
@@ -11,7 +11,7 @@
 
 Name:		golang-tools
 Version:	0
-Release:	alt5.git%abbrev
+Release:	alt6.git%abbrev
 Summary:	Supplementary tools and packages for Go
 
 Group:		Development/Other
@@ -79,6 +79,19 @@ done
 rm -f -- %buildroot/%_bindir/oracle
 ln -s -- guru %buildroot/%_bindir/oracle
 
+# remove testdata, tests, and non-go files
+find \
+	%buildroot/%go_path/src \
+	\( \
+		\( -type d -name 'testdata'   \) -o \
+		\( -type f -name 'Makefile'   \) -o \
+		\( -type f -name '*_test.go'  \) -o \
+		\( -type f -name 'test_*'     \) -o \
+		\( -type f -name '*test.bash' \) -o \
+		\( -type f -name 'test.'      \) \
+	\) \
+		-print0 |
+	xargs -0 rm -rfv --
 
 %files
 %_bindir/*
@@ -88,6 +101,9 @@ ln -s -- guru %buildroot/%_bindir/oracle
 %go_path/src/*
 
 %changelog
+* Sat Apr 08 2017 Alexey Gladkov <legion@altlinux.ru> 0-alt6.git24acc66e
+- New snapshot.
+
 * Fri Feb 12 2016 Alexey Gladkov <legion@altlinux.ru> 0-alt5.git78926538
 - New snapshot.
 

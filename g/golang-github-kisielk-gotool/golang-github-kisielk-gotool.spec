@@ -1,12 +1,12 @@
 %global import_path github.com/kisielk/gotool
-%global commit 58a7a198f2ec6ea7af221fd216e7f559d663ce02
+%global commit 0de1eaf82fa3f583ce21fde859f1e7e0c5e9b220
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 %global _unpackaged_files_terminate_build 1
 
 Name:		golang-github-kisielk-gotool
 Version:	0
-Release:	alt1.git%abbrev
+Release:	alt2.git%abbrev
 Summary:	A library of some of the utility functions provided by (but not exported) by cmd/go
 Group:		Development/Other
 License:	MIT
@@ -51,5 +51,8 @@ rm -f -- %buildroot/%go_path/src/%import_path/{LEGAL,LICENSE,README.md}
 %files devel -f devel.file-list
 
 %changelog
+* Sat Apr 08 2017 Alexey Gladkov <legion@altlinux.ru> 0-alt2.git0de1eaf8
+- New snapshot.
+
 * Thu Nov 19 2015 Alexey Gladkov <legion@altlinux.ru> 0-alt1.git58a7a198
 - First build for ALTLinux.

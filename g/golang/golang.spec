@@ -25,7 +25,7 @@
 %def_disable check
 
 Name:    golang
-Version: 1.7
+Version: 1.8.1
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -279,6 +279,9 @@ mkdir -p -- \
 
 
 %changelog
+* Fri Apr 07 2017 Alexey Gladkov <legion@altlinux.ru> 1.8.1-alt1
+- New version (1.8.1).
+
 * Tue Aug 16 2016 Alexey Gladkov <legion@altlinux.ru> 1.7-alt1
 - New version (1.7).
 
