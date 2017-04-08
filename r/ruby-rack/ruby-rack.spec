@@ -3,8 +3,8 @@
 %define pkgname rack
 
 Name: ruby-%pkgname
-Version: 1.2.2
-Release: alt1.1
+Version: 2.0.1
+Release: alt1
 
 Summary: Modular Ruby webserver interface
 Group: Development/Ruby
@@ -46,7 +46,7 @@ PreReq: %name = %version-%release \
 
 %ruby_rack_subpackage cgi CGI cgi
 %ruby_rack_subpackage fastcgi FastCGI fastcgi
-%ruby_rack_subpackage mongrel Mongrel mongrel
+#ruby_rack_subpackage mongrel Mongrel mongrel
 %ruby_rack_subpackage webrick WEBrick webrick
 
 %package doc
@@ -70,7 +70,7 @@ Documentation files for %name
 %rdoc lib/
 
 %files
-%doc README KNOWN-ISSUES
+%doc README.rdoc NEWS *.md
 %_bindir/rackup
 %ruby_sitelibdir/*
 %exclude %ruby_sitelibdir/rack/handler/*
@@ -80,6 +80,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Rack*
 
 %changelog
+* Sat Apr 08 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
+- new version 2.0.1
+
 * Sat Dec 01 2012 Led <led@altlinux.ru> 1.2.2-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 
