@@ -1,4 +1,4 @@
-%define mainline_ver 4.2.4
+%define mainline_ver 4.2.5
 
 Name: eid-mw
 Version: %mainline_ver
@@ -174,6 +174,9 @@ fi
 %_includedir/eid-util
 
 %changelog
+* Sun Apr 08 2017 Pavel Nakonechnyi <zorg@altlinux.org> 4.2.5-alt1
+- updated to version 4.2.5
+
 * Sun Mar 18 2017 Pavel Nakonechnyi <zorg@altlinux.org> 4.2.4-alt1
 - updated to version 4.2.4
 
