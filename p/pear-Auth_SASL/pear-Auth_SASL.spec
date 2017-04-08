@@ -1,6 +1,6 @@
 %define pear_name Auth_SASL
 Name: pear-Auth_SASL
-Version: 1.0.6
+Version: 1.1.0
 Release: alt1
 
 Summary: Abstraction of various SASL mechanism responses
@@ -46,6 +46,9 @@ o Login (Pseudo mechanism)
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sat Apr 08 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
+- new version 1.1.0 (with rpmrb script)
+
 * Fri Feb 12 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.6-alt1
 - new version 1.0.6 (with rpmrb script)
 
