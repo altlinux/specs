@@ -1,5 +1,5 @@
 %global import_path github.com/golang/lint
-%global commit 32a87160691b3c96046c0c678fe57c5bef761456
+%global commit cb00e5669539f047b2f4c53a421a01b0c8e172c6
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 %global __find_debuginfo_files %nil
@@ -11,7 +11,7 @@
 
 Name:		golang-lint
 Version:	0
-Release:	alt2.git%abbrev
+Release:	alt3.git%abbrev
 Summary:	Linter for Go source code
 
 Group:		Development/Other
@@ -28,8 +28,7 @@ AutoReq:	nocpp
 BuildRequires(pre): rpm-build-golang
 
 BuildRequires:	golang
-BuildRequires:	golang(golang.org/x/tools/go/gcimporter)
-BuildRequires:	golang(golang.org/x/tools/go/types)
+BuildRequires:	golang-tools-devel
 
 %description
 %{summary}
@@ -57,6 +56,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Sat Apr 08 2017 Alexey Gladkov <legion@altlinux.ru> 0-alt3.gitcb00e566
+- New snapshot.
+
 * Fri Jan 22 2016 Alexey Gladkov <legion@altlinux.ru> 0-alt2.git32a87160
 - New snapshot.
 - Use rpm-build-golang.

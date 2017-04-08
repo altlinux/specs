@@ -1,5 +1,5 @@
 %global import_path github.com/kisielk/errcheck
-%global commit 1cd10f9f7824cdbedd5175a6cea0da9763bbeece
+%global commit 23699b7e2cbfdb89481023524954ba2aeff6be90
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 %global __find_debuginfo_files %nil
@@ -11,7 +11,7 @@
 
 Name:		errcheck
 Version:	0
-Release:	alt2.git%abbrev
+Release:	alt3.git%abbrev
 Summary:	Error checker for Go programs
 
 Group:		Development/Other
@@ -57,6 +57,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Sat Apr 08 2017 Alexey Gladkov <legion@altlinux.ru> 0-alt3.git23699b7e
+- New shapshot.
+
 * Fri Jan 22 2016 Alexey Gladkov <legion@altlinux.ru> 0-alt2.git1cd10f9f
 - New shapshot.
 
