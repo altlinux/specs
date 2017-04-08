@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-acme
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 
 Summary: Python library for the ACME protocol
@@ -14,11 +14,10 @@ Url: https://pypi.python.org/pypi/acme
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-## Source-url: https://pypi.python.org/packages/source/a/%modulename/%modulename-%version.tar.gz
-# Source-url: https://pypi.python.org/packages/3a/3e/63df00eeb3d06e2e08fd5c6308ff2d6d6e4730e4d5721ca978f079cdcd79/acme-0.12.0.tar.gz
+# Source-url: https://pypi.io/packages/source/a/%modulename/%modulename-%version.tar.gz
 Source: %modulename-%version.tar
 
-BuildRequires: python-devel
+BuildRequires: python-devel python-module-setuptools
 #BuildRequires: python-sphinx
 #BuildRequires: python-sphinxcontrib-programoutput
 #BuildRequires: python-sphinx_rtd_theme
@@ -134,6 +133,11 @@ Documentation for the ACME python libraries
 
 %python_install
 
+#  it is better to not to require argparse on python >= 2.7.
+%__subst "s|^argparse$||" \
+    %buildroot%python_sitelibdir/%modulename-%{version}*.egg-info/requires.txt \
+    %buildroot%python3_sitelibdir/%modulename-%{version}*.egg-info/requires.txt
+
 %check
 #__python setup.py test
 #if_with python3
@@ -161,6 +165,9 @@ grep -q python %buildroot%_bindir/jws
 #%doc docs/_build/html
 
 %changelog
+* Sat Apr 08 2017 Vitaly Lipatov <lav@altlinux.ru> 0.13.0-alt1
+- new version 0.13.0 (with rpmrb script)
+
 * Fri Mar 10 2017 Terechkov Evgenii <evg@altlinux.org> 0.12.0-alt1
 - 0.12.0
 
