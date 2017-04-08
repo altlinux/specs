@@ -20,7 +20,7 @@
 %def_enable installed_tests
 
 Name: libgtk+3
-Version: %ver_major.11
+Version: %ver_major.12
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -56,6 +56,7 @@ Patch1: gtk+-3.18.3-bgo740554.patch
 Provides: libgtk3-engine-adwaita = %version-%release
 Obsoletes: libgtk3-engine-adwaita < 3.13.0
 
+Requires: %name-schemas = %version-%release
 Requires: gtk-update-icon-cache
 Requires: icon-theme-adwaita
 # ALT #32028
@@ -97,9 +98,18 @@ ranging from small one-off projects to complete application suites.
 This package contains X11 part of GTK+. It is required for GNOME 3 desktop
 and programs.
 
+%package schemas
+Summary: GSettings schemas used by GTK+3/4
+Group: System/Libraries
+BuildArch: noarch
+
+%description schemas
+This package provides a set of GSettings schemas for settings shared by
+GTK+3 and GTK+4.
+
 %package devel
 Summary: Development files and tools for GTK+ applications
-Group: Development/GNOME and GTK+
+Group: Development/C
 Requires: %name = %version-%release
 Requires: gtk-builder-convert
 
@@ -320,12 +330,14 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %_man1dir/gtk-query-settings.1.*
 %_man1dir/gtk-launch.*
 %_man1dir/gtk-encode-symbolic-svg.1.*
-%config %_datadir/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gtk.Settings.ColorChooser.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gtk.Settings.Debug.gschema.xml
 %_rpmlibdir/gtk-%api_ver-immodules-cache.filetrigger
 %doc --no-dereference COPYING
 %doc AUTHORS NEWS.bz2 README
+
+%files schemas
+%config %_datadir/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
+%config %_datadir/glib-2.0/schemas/org.gtk.Settings.ColorChooser.gschema.xml
+%config %_datadir/glib-2.0/schemas/org.gtk.Settings.Debug.gschema.xml
 
 %files devel
 %_bindir/gtk-builder-tool
@@ -415,6 +427,10 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Sat Apr 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.12-alt1
+- 3.22.12
+- moved *.gschema to separate subpackage to share it with libgtk+4
+
 * Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.11-alt1
 - 3.22.11
 
