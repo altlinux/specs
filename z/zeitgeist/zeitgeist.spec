@@ -7,7 +7,7 @@
 
 Name: zeitgeist
 Version: %major
-Release: alt1
+Release: alt1.1
 
 Summary: Framework providing Desktop activity awareness
 
@@ -139,6 +139,7 @@ This package contains development documentation for the Zeitgeist library.
 %prep
 %setup
 %setup -D -c
+subst 's/_have/have/' {*/,}data/completions/%name-daemon
 mv %name-%version py3build
 pushd py3build
 %patch1
@@ -217,6 +218,9 @@ rm -rf %buildroot%_prefix/doc/
 %endif
 
 %changelog
+* Sat Apr 08 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1.1
+- fixed data/completions/%name-daemon
+
 * Fri Mar 31 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
 - updated to v1.0-1-g1bcc858
 
