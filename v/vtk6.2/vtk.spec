@@ -5,7 +5,7 @@
 %define ver 6.2
 Name: %oname%ver
 Version: %ver.0
-Release: alt2
+Release: alt2.qa1
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -505,6 +505,9 @@ install -p -m644 Common/Core/vtkArrayIteratorIncludes.h \
 %python_sitelibdir/*/test
 
 %changelog
+* Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.2.0-alt2.qa1
+- NMU: rebuilt against Tcl/Tk 8.6
+
 * Thu Mar 23 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.2.0-alt2
 - NMU: fixed build
 

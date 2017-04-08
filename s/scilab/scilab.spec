@@ -5,7 +5,7 @@
 
 Name:     scilab
 Version:  5.5.2
-Release:  alt1
+Release:  alt1.qa1
 Summary:  A high-level language and system for numerical computations
 
 License:  CeCILL
@@ -218,6 +218,9 @@ rm -f %buildroot%_xdgmimedir/packages/scilab.xml
 %_datadir/mime/packages/scilab.xml
 
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.5.2-alt1.qa1
+- NMU: rebuild against Tcl/Tk 8.6
+
 * Tue Jan 24 2017 Andrey Cherepanov <cas@altlinux.org> 5.5.2-alt1
 - New version (ALT #31794)
 - Build from upstream git repository

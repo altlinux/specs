@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.dev0.git20150806.1
+Release: alt2.dev0.git20150806.1.qa1
 %define oname Pillow
 
 %def_with python3
@@ -192,6 +192,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.0-alt2.dev0.git20150806.1.qa1
+- NMU: rebuilt against Tcl/Tk 8.6.
+
 * Mon May 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0.0-alt2.dev0.git20150806.1
 - BR: sphinx_rtd_theme (the theme is optional since sphinx-1.4.1).
 

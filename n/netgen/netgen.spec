@@ -1,4 +1,4 @@
-%define mpiimpl openmpi
+%define mpiimpl openmpi-compat
 %define mpidir %_libdir/%mpiimpl
 
 %set_automake_version 1.11
@@ -8,7 +8,7 @@
 %define oname netgen
 Name: %oname
 Version: 6.1
-Release: alt1.dev.git20150306.qa1
+Release: alt1.dev.git20150306.qa2
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPL
 Group: Graphics
@@ -220,6 +220,7 @@ sed -i 's|@PYVER@|%_python_version|' configure.ac
 #tar -xf %SOURCE2
 
 %build
+%add_optflags $(pkg-config --cflags parmetis)
 mpi-selector --set %mpiimpl
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 source %mpidir/bin/mpivars.sh
@@ -440,6 +441,9 @@ done
 %endif
 
 %changelog
+* Thu Mar 23 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.1-alt1.dev.git20150306.qa2
+- NMU: fixed build and rebuilt against Tcl/Tk 8.6.
+
 * Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6.1-alt1.dev.git20150306.qa1
 - NMU: rebuilt with boost 1.57.0 -> 1.58.0.
 

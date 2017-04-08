@@ -4,7 +4,7 @@
 
 Name: eggdrop
 Version: 1.8.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: Eggdrop is an IRC bot, written in C
 License: GPL
@@ -113,6 +113,9 @@ rm -rf %buildroot%_datadir/%name/doc
 %doc doc/* README*
 
 %changelog
+* Wed Mar 27 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.1-alt1.qa1
+- NMU: rebuild against Tcl/Tk 8.6
+
 * Mon Mar 27 2017 Andrey Cherepanov <cas@altlinux.org> 1.8.1-alt1
 - New version
 

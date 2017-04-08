@@ -1,6 +1,6 @@
 Name: yosys
 Version: 0.7
-Release: alt1
+Release: alt1.qa1
 
 Summary: Yosys Open SYnthesis Suite
 License: ISC
@@ -67,5 +67,8 @@ mv %buildroot%_datadir/%name/include/ %buildroot%_includedir/%name
 %_man1dir/%name-config.1*
 
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7-alt1.qa1
+- NMU: rebuild against Tcl/Tk 8.6
+
 * Mon Jan 23 2017 Elvira Khabirova <lineprinter@altlinux.org> 0.7-alt1
 - Initial build

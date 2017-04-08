@@ -2,7 +2,7 @@
 
 Name: ppracer
 Version: 0.3.1
-Release: alt4.qa1
+Release: alt4.qa2
 
 Summary: PlanetPenguin Racer
 License: GPLv2
@@ -81,6 +81,9 @@ rm -rf %buildroot%_datadir/fonts/
 %_liconsdir/%name.png
 
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.3.1-alt4.qa2
+- Rebuilt against Tcl/Tk 8.6.
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.3.1-alt4.qa1
 - Rebuilt for gcc5 C++11 ABI.
 

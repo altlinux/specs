@@ -1,6 +1,6 @@
 Name: expect
 Version: 5.45
-Release: alt4
+Release: alt4.qa1
 Serial: 1
 
 Summary: A tcl extension for simplifying program-script interaction
@@ -97,6 +97,9 @@ EOF
 %exclude %_man1dir/autoexpect.*
 
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:5.45-alt4.qa1
+- NMU: rebuild against Tcl/Tk 8.6
+
 * Tue Aug 14 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:5.45-alt4
 - fixed build on armh
 

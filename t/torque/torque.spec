@@ -2,7 +2,7 @@ Summary: Tera-scale Open-source Resource and QUEue manager
 
 Name: torque
 Version: 4.2.1
-Release: alt1
+Release: alt1.qa1
 
 License: OpenPBS (Portable Batch System) v2.3 Software License (Redistribution in any form is only permitted for non-commercial, non-profit purposes)
 Group: Sciences/Computer science
@@ -119,6 +119,8 @@ A simple PAM module to authorize users on PBS MOM nodes with a running job.
 %patch -p1
 
 %build
+%add_optflags -DUSE_INTERP_RESULT
+%add_optflags -DUSE_INTERP_ERRORLINE
 #CFLAGS="%optflags -std=gnu99"
 
 %configure \
@@ -261,6 +263,9 @@ echo "localhost" > %buildroot/%torquehomedir/server_name
 %_man3dir/*
 
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.2.1-alt1.qa1
+- NMU: rebuild against Tcl/Tk 8.6
+
 * Sat Mar 09 2013 Denis Pynkin <dans@altlinux.org> 4.2.1-alt1
 - New version
 

@@ -14,7 +14,7 @@
 
 Name: xcrysden
 Version: 1.5.21
-Release: alt4
+Release: alt5
 
 Summary: X-window CRYstalline Structure and DENsities
 License: GPLv2+
@@ -28,6 +28,7 @@ Patch3: xcrysden-1.5.21-opensuse-readlink.patch
 Patch4: xcrysden-1.5.21-opensuse-bwidget.patch
 Patch5: xcrysden-1.5.21-opensuse-gdb.patch
 Patch6: xcrysden-1.5.21-alt-autoreq.patch
+Patch7: xcrysden-1.5.21-alt-tcltk8.6.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: bwidget gawk ImageMagick netpbm
@@ -61,6 +62,7 @@ This package contains various %name example data files.
 %patch4
 %patch5
 %patch6 -p1
+%patch7
 
 %build
 cp system/Make.linux Make.sys
@@ -99,6 +101,10 @@ ln -s %_datadir/%name/examples %buildroot%_libdir/%name/examples
 %_datadir/%name/examples
 
 %changelog
+* Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.5.21-alt5
+- Rebuild against Tcl/Tk 8.6
+- Added patch to build against Tcl/Tk 8.6
+
 * Sat Jun 25 2011 Michael Shigorin <mike@altlinux.org> 1.5.21-alt4
 - BR += libXext-devel
 

@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.11
-Release: alt3
+Release: alt3.qa1
 
 %define package_name		%real_name
 %define weight			1001
@@ -1095,6 +1095,9 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.11-alt3.qa1
+- NMU: rebuilt against Tcl/Tk 8.6
+
 * Fri Apr 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.11-alt3
 - NMU: made some buildreqs/substitute.d optional (closes: #31979)
 

@@ -3,7 +3,7 @@
 
 Name: TiMidity++
 Version: 2.14.0
-Release: alt7%prerel
+Release: alt7%prerel.qa1
 
 Summary: Great-sounding CPU-hungry MIDI soundfile player
 License: GPLv2
@@ -72,6 +72,7 @@ timidity-eaw-patches.
 cp -a INSTALL INSTALL.orig
 
 %build
+%add_optflags -DUSE_INTERP_RESULT
 %define _optlevel 3
 export EXTRACFLAGS="-DUSE_NON_CONST %optflags %optflags_fastmath %optflags_notraceback"
 %configure \
@@ -123,6 +124,9 @@ install -pDm644 interface/%_name.el %buildroot%_emacslispdir/%_name.el
 %doc doc/C/{README*,FAQ}
 
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.14.0-alt7.qa1
+- NMU: rebuild against Tcl/Tk 8.6
+
 * Thu Apr 24 2014 Michael Shigorin <mike@altlinux.org> 2.14.0-alt7
 - added LSB header to initscript to help the cause :) (thanks debian)
 

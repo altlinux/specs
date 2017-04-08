@@ -1,6 +1,6 @@
 Name: liboop
 Version: 1.0
-Release: alt3.qa2
+Release: alt3.qa3
 
 Summary: Libraries for low-level event loop management
 
@@ -103,7 +103,7 @@ programs that use liboop w3c-libwww binding library.
 #%patch0 -p1
 #%patch1 -p1
 %patch2
-%__subst "s|8\.3 |8.5 |g" configure.ac
+%__subst "s|8\.3 |8.6 |g" configure.ac
 
 %build
 %autoreconf
@@ -152,6 +152,9 @@ programs that use liboop w3c-libwww binding library.
 %_includedir/oop-www.h
 
 %changelog
+* Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.0-alt3.qa3
+- Rebuild against Tcl/Tk 8.6
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt3.qa2
 - Fixed build
 

@@ -1,6 +1,6 @@
 Name: wordnet
 Version: 3.0
-Release: alt7
+Release: alt8
 
 Summary: WordNet English lexical reference system
 License: MIT
@@ -104,6 +104,7 @@ rm -rf include/tk
 %patch13 -p1
 
 %build
+%add_optflags -DUSE_INTERP_RESULT
 %autoreconf
 %configure %{subst_enable static}
 # SMP-incompatible
@@ -170,6 +171,9 @@ EOF
 %_man3dir/*
 
 %changelog
+* Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0-alt8
+- NMU: rebuilt against Tcl/Tk 8.6.
+
 * Fri Jun 03 2011 Dmitry V. Levin <ldv@altlinux.org> 3.0-alt7
 - Rebuilt for debuginfo.
 

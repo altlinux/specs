@@ -4,7 +4,7 @@
 
 Name: tcl-httpd
 Version: 3.5.1
-Release: alt1.qa1
+Release: alt1.qa2
 
 %define docdir %_defaultdocdir/%name-%version/
 %define htdocs %docdir/htdocs
@@ -15,7 +15,8 @@ Group: Development/Tcl
 Url: http://%teaname.sourceforge.net/
 
 Source0: %name-%version-%release.tar
- 
+Patch1: tcl-httpd-3.5.1-alt-tcltk8.6.patch
+
 Requires: tcl >= 8.4.0-alt1
 BuildRequires: tcl-devel >= 8.4.0-alt1 rpm-build >= 4.0.4-alt41
 
@@ -122,6 +123,7 @@ Alltough, these packages can be used independenty too.
 %prep
 %setup
 sed -i 's/@lib@/%_lib/' *_pkgIndex.tcl.in
+%patch1 -p1
 
 %build
 %__autoconf
@@ -195,6 +197,10 @@ EOF
 %_tcldatadir/limit1.0
 
 %changelog
+* Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.5.1-alt1.qa2
+- Rebuilt against Tcl/Tk 8.6
+- Added patch to build against Tcl/Tk 8.6
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.5.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 

@@ -4,7 +4,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.7.8
-Release: alt1
+Release: alt1.qa1
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -240,6 +240,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.8-alt1.qa1
+- Rebuilt against Tcl/Tk 8.6
+
 * Sat Feb 04 2017 Anton Midyukov <antohami@altlinux.org> 2.7.8-alt1
 - New version 2.7.8
 - Fix build with libmodbus3.1.4

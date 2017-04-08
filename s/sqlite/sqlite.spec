@@ -1,6 +1,6 @@
 Name: sqlite
 Version: 2.8.17
-Release: alt2.2
+Release: alt2.3
 
 Summary: An Embeddable SQL Database Engine, version 2
 License: Public Domain
@@ -139,6 +139,9 @@ install -p -m644 doc/*.* %buildroot%pkgdocdir/
 %pkgdocdir/*.*
 
 %changelog
+* Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.8.17-alt2.3
+- rebuilt against Tcl/Tk 8.6
+
 * Mon Feb 14 2011 Alexey Tourbin <at@altlinux.ru> 2.8.17-alt2.2
 - rebuilt for debuginfo
 - made sqlite-doc noarch

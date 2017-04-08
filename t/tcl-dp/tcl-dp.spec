@@ -6,7 +6,7 @@
 
 Name: tcl-dp
 Version: 4.0b2
-Release: alt2
+Release: alt3
 
 Summary: The package provides UDP, TCP, IP-multicast, and RPC for Tcl
 Summary(ru_RU.UTF-8): Пакет, добавляет возможности UDP, TCP, IP-multicast и RPC к языку Tcl
@@ -24,6 +24,7 @@ Patch4: tcl-dp-4.0b2-alt1-fix-syntax.patch
 Patch5: tcl-dp-4.0b2-alt1-remove-bad-tests.patch
 Patch6: tcl-dp-4.0b2-alt1-fix-serial-module.patch
 Patch7: tcl-dp-4.0b2-alt1-pkgindex.patch
+Patch8: tcl-dp-4.0b2-alt-tcltk8.6.patch
 
 BuildRequires(pre): rpm-build-tcl >= 0.4-alt1
 BuildRequires: tcl-devel
@@ -52,6 +53,7 @@ primitives is also provided.
 %patch4 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 %teapatch
 sed 's,@lib@,%_lib,' -i tekilib/pkgIndex.tcl
 
@@ -86,6 +88,10 @@ install tekilib/pkgIndex.tcl %pkg_dir/
 %_tcllibdir/lib%teaname%teaversion.so
 
 %changelog
+* Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0b2-alt3
+- Rebuilt against Tcl/Tk 8.6
+- Added patch to build against Tcl/Tk 8.6
+
 * Wed Jan 02 2013 Malo Skryleve <malo@altlinux.org> 4.0b2-alt2
 - Removed 5th patch to allow the package building, and replaced
 BuildPreReq to BuildRequires(pre) define

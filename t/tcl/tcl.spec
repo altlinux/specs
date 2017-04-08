@@ -1,15 +1,16 @@
 %def_without test
-%define major 8.5
+%define major 8.6
 
 Name: tcl
-Version: 8.5.9
-Release: alt2
+Version: 8.6.6
+Release: alt1
 
-Summary: A Tool Command Language (TCL) 
+Summary: A Tool Command Language (TCL)
 License: BSD
 Group: Development/Tcl
 Url: http://www.tcl.tk/
 
+# http://git.altlinux.org/gears/t/tcl.git
 Source: %name-%version-%release.tar
 
 BuildRequires(pre): rpm-build-tcl >= 0.4-alt1
@@ -65,7 +66,7 @@ This package includes header files and C programming manuals for Tcl.
 
 %build
 cd unix
-autoconf
+%autoreconf
 %configure --disable-rpath --enable-threads
 make all %{?_with_test:test}
 
@@ -112,14 +113,19 @@ install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 %files devel
 %docdir/ChangeLog.*
 %_includedir/*
+%_pkgconfigdir/%name.pc
 %_libdir/lib%name.so
 %_libdir/lib%{name}stub%{major}.a
 %_libdir/%{name}Config.sh
+%_libdir/%{name}ooConfig.sh
 %_tcldatadir/%name%major/%{name}AppInit.c
 %_datadir/aclocal/*.m4
 %_man3dir/*
 
 %changelog
+* Mon Mar 20 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.6-alt1
+- 8.6.6 released (closes: #31581)
+
 * Fri Nov 02 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.5.9-alt2
 - fixed stackspace miscalculation on mixed 64/32 environment
 

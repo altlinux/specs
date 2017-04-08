@@ -7,7 +7,7 @@ BuildRequires: imake libXt-devel xorg-cf-files
 
 Name:           environment-modules
 Version:        3.2.10
-Release:        alt1_20
+Release:        alt1_20.qa1
 Summary:        Provides dynamic modification of a user's environment
 
 Group:          System/Base
@@ -143,6 +143,9 @@ EOF
 
 
 %changelog
+* Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.2.10-alt1_20.qa1
+- NMU: rebuilt against Tcl/Tk 8.6
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_20
 - update to new release by fcimport
 

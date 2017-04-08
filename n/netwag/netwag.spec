@@ -1,6 +1,6 @@
 Name: netwag
 Version: 5.39.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: GUI for netwox
 License: GPL
@@ -65,6 +65,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc html/*
 
 %changelog
+* Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.39.0-alt1.qa1
+- Rebuilt against Tcl/Tk 8.6
+
 * Thu Sep 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.39.0-alt1
 - Version 5.39.0
 

@@ -1,6 +1,6 @@
 Name: gtkwave
 Version: 3.3.80
-Release: alt1
+Release: alt1.qa1
 Summary: %name
 License: GPL
 Group: Development/Other
@@ -43,6 +43,9 @@ BuildRequires: bzlib-devel desktop-file-utils flex gcc-c++ gperf libgtk+2-devel 
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Wed Mar 31 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.3.80-alt1.qa1
+- NMU: rebuild against Tcl/Tk 8.6
+
 * Fri Mar 31 2017 Cronbuild Service <cronbuild@altlinux.org> 3.3.80-alt1
 - new version 3.3.80
 

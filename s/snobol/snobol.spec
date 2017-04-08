@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 
 Name: snobol
 Version: 4.%snobrel
-Release: alt2
+Release: alt2.qa1
 Summary: The SNOBOL programming language
 
 Group: Development/Other
@@ -61,6 +61,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %_mandir/man*/*
 
 %changelog
+* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.1.5-alt2.qa1
+- NMU: rebuild against Tcl/Tk 8.6
+
 * Tue Apr 17 2014 Ilya Mashkin <oddity@altlinux.ru> 4.1.5-alt2
 - Build for Sisyphus
 
