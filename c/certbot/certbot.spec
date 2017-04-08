@@ -1,5 +1,5 @@
 Name: certbot
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -34,20 +34,6 @@ Requires: python-base >= 2.7.9
 #BuildRequires: python-repoze-sphinx-autointerface
 #BuildRequires: python-sphinxcontrib-programoutput
 
-#Require for testing
-#BuildRequires: python-nose-xcover
-#BuildRequires: python-pep8
-#BuildRequires: python-tox
-#BuildRequires: python-mock
-#BuildRequires: python-configargparse >= 0.10.0
-#BuildRequires: python-zope-interface
-#BuildRequires: python-zope-component
-#BuildRequires: python-requests
-#BuildRequires: python-psutil >= 2.1.0
-#BuildRequires: python-parsedatetime
-#BuildRequires: python-configobj
-#BuildRequires: python2-configargparse >= 0.10.0
-
 BuildRequires: python-module-acme >= %version
 
 Provides: letsencrypt = %version
@@ -60,6 +46,8 @@ to lower the barriers to entry for encrypting all HTTP traffic on the internet.
 %package -n python-module-%name
 Group: Networking/Other
 Requires: python-module-configargparse >= 0.10.0
+# already in core python
+#Requires: python-module-argparse
 Requires: python-module-psutil >= 2.1.0
 Requires: python-module-acme >= %version
 #Recommends: letsencrypt-doc
@@ -72,38 +60,14 @@ Obsoletes: python-module-letsencrypt
 %description -n python-module-%name
 The python2 libraries to interface with letsencrypt.
 
-#%package doc
-#Provides: bundled(jquery)
-#Provides: bundled(underscore)
-#Provides: bundled(inconsolata-fonts)
-#Provides: bundled(lato-fonts)
-#Provides: bundled(robotoslab-fonts)
-#Requires: fontawesome-fonts fontawesome-fonts-web
-#Summary:  Documentation for the reference letsencrypt client
-
-#%description doc
-#Documentation for the reference letsencrypt client and libraries
-
 %prep
 %setup
 
 %build
-# We are using letsencrypt and not supporting letsencrypt-auto
-#__subst 's/letsencrypt-auto/letsencrypt/g' letsencrypt/cli.py
 %python_build
-
-# build documentation
-#%__python setup.py install --user
-#make -C docs html man PATH=${HOME}/.local/bin:$PATH
-
-# Clean up stuff we don't need fof docs
-#rm -rf docs/_build/html/{.buildinfo,_sources}
 
 %install
 %python_install
-
-# Put the man pages in place
-#install -pD -t %buildroot%_man1dir docs/_build/man/*1*
 
 # TODO: remove compat dirs
 mkdir -p %buildroot%_sysconfdir/letsencrypt
@@ -114,6 +78,9 @@ mkdir -p %buildroot%_logdir/letsencrypt
 ln -s letsencrypt %buildroot%_logdir/%name
 
 ln -s %name %buildroot%_bindir/letsencrypt
+
+#  it is better to not to require argparse on python >= 2.7.
+%__subst "s|^argparse$||" %buildroot%python_sitelibdir/%name-%{version}*.egg-info/requires.txt
 
 %check
 #python_test
@@ -138,11 +105,10 @@ ln -s %name %buildroot%_bindir/letsencrypt
 %python_sitelibdir/%name/
 %python_sitelibdir/%name-%{version}*.egg-info
 
-#%files doc
-#%license LICENSE.txt
-#%doc docs/_build/html
-
 %changelog
+* Sat Apr 08 2017 Vitaly Lipatov <lav@altlinux.ru> 0.13.0-alt1
+- new version 0.13.0 (with rpmrb script)
+
 * Fri Mar 10 2017 Terechkov Evgenii <evg@altlinux.org> 0.12.0-alt1
 - 0.12.0
 
