@@ -1,6 +1,6 @@
 Name:		sway
-Version:	0.12
-Release:	alt2
+Version:	0.12.2
+Release:	alt1
 
 Summary:	i3wm drop-in replacement for Wayland
 
@@ -58,6 +58,7 @@ install -pm2640 -D pam %buildroot%_sysconfdir/pam.d/swaylock
 
 %post
 /sbin/setcap cap_sys_ptrace=eip %_bindir/%name
+/sbin/setcap cap_sys_tty_config=eip %_bindir/%name
 
 %files
 %doc LICENSE
@@ -84,6 +85,10 @@ install -pm2640 -D pam %buildroot%_sysconfdir/pam.d/swaylock
 %_datadir/%name/*
 
 %changelog
+* Sat Apr 08 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.12.2-alt1
+- 0.12.2
+- set CAP_SYS_TTY_CONFIG to sway binary
+
 * Wed Mar 15 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.12-alt2
 - added swaylock.
 - fixed post requires type.
