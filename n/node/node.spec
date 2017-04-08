@@ -3,7 +3,7 @@
 %def_without npm
 # note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 6.9
+%define major 6.10
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -28,7 +28,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.3
+Version: %major.2
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -40,7 +40,6 @@ Url: http://nodejs.org/
 # Source-git: https://github.com/nodejs/node.git
 Source: %name-%version.tar
 Source7: nodejs_native.req.files
-Patch: addon.gypi-alt-linkage-fixes.patch
 
 BuildRequires(pre): rpm-macros-nodejs
 
@@ -139,7 +138,6 @@ node programs. It manages dependencies and does other cool stuff.
 
 %prep
 %setup
-%patch -p1
 %if_with systemv8
 # hack against https://bugzilla.altlinux.org/show_bug.cgi?id=32573#c3
 cp -a deps/v8/include/libplatform src
@@ -257,6 +255,14 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Sat Apr 08 2017 Vitaly Lipatov <lav@altlinux.ru> 6.10.2-alt1
+- new version 6.10.2 (with rpmrb script)
+- 2017-04-04, Version 6.10.2 'Boron' (LTS), @MylesBorins
+
+* Sat Mar 11 2017 Vitaly Lipatov <lav@altlinux.ru> 6.10.0-alt1
+- new version 6.10.0 (with rpmrb script)
+- 2017-02-21 Node.js v6.10.0 'Boron' (LTS) Release
+
 * Thu Feb 02 2017 Vitaly Lipatov <lav@altlinux.ru> 6.9.3-alt1
 - new version 6.9.3 (with rpmrb script)
 - 2017-01-03, Version 6.9.3 'Boron' (LTS)
