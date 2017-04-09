@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,13 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Mon Apr 10 2017 Vitaly Lipatov <lav@altlinux.ru> 2.6.2-alt1
+- rpmbs: make commit for updated .gear/tags if needed
+- run gear with LANG=C for correct date in changelog
+- rpmgs: use real list of Source* tags
+- rpmgs: skip redownloading if tarballs already exists
+- rpmgs major refactoring
+
 * Wed Apr 05 2017 Vitaly Lipatov <lav@altlinux.ru> 2.6.1-alt1
 - use only gnutls30 on ALT p8
 - alt: fix c? <-> M?0?
