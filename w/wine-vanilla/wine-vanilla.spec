@@ -1,9 +1,9 @@
 %define gecko_version 2.47
-%define mono_version 4.6.3
+%define mono_version 4.7.0
 
 Name: wine-vanilla
 Version: 2.5
-Release: alt1
+Release: alt2
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -18,6 +18,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: ftp://updates.etersoft.ru/pub/Etersoft/Wine-vanilla/%version/sources/tarball/%name-%version.tar
 Source1: etersoft/winetricks
 Source2: %name-%version-desktop.tar
+Source3: %name-%version-icons.tar
 
 AutoReq: yes, noperl
 
@@ -239,6 +240,10 @@ cd %buildroot%_desktopdir/
 tar xvf %SOURCE2
 mkdir -p %buildroot%_datadir/desktop-directories/
 mv *.directory %buildroot%_datadir/desktop-directories/
+# unpack icons files
+mkdir -p %buildroot%_iconsdir/
+cd %buildroot%_iconsdir/
+tar xvf %SOURCE3
 
 # Do not pack non english man pages yet
 rm -rf %buildroot%_mandir/*.UTF-8
@@ -283,6 +288,8 @@ rm -f %buildroot%_desktopdir/wine.desktop
 
 #%_initdir/wine
 #%_initdir/wine.outformat
+
+%_iconsdir/*
 
 %_desktopdir/wine-mime-msi.desktop
 %_desktopdir/wine-regedit.desktop
@@ -410,6 +417,10 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Sun Apr 09 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5-alt2
+- update winetricks to 20170327
+- add default icons (ALT bug 25237)
+
 * Sat Apr 01 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5-alt1
 - new version 2.5
 
