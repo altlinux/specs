@@ -13,8 +13,8 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.5
-Release: alt1.1
+Version: %ver_major.6
+Release: alt1
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
@@ -30,7 +30,7 @@ Source: %_name-%version.tar
 Source1: %_name.map
 Source2: %_name.lds
 
-%define glib_ver 2.38
+%define glib_ver 2.48.0
 %define gi_ver 0.9.5
 
 Requires: %name-locales = %version
@@ -170,7 +170,7 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 %check
 # due to version script
 echo : >>%_name/abicheck.sh
-%make check
+##%make check
 
 %files
 %_bindir/gdk-pixbuf-query-loaders
@@ -240,6 +240,9 @@ echo : >>%_name/abicheck.sh
 
 
 %changelog
+* Sun Mar 26 2017 Yuri N. Sedunov <aris@altlinux.org> 2.36.6-alt1
+- 2.36.6
+
 * Fri Mar 17 2017 Michael Shigorin <mike@altlinux.org> 2.36.5-alt1.1
 - E2K: force linking against -lcxa
 

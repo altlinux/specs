@@ -1,13 +1,15 @@
 %def_disable snapshot
 
-%define ver_major 3.22
+%define ver_major 3.24
 %define api_ver 1.0
 %define _name GPaste
 %define xdg_name org.gnome.GPaste
 %define _libexecdir %_prefix/libexec
 
+%def_disable applet
+
 Name: gpaste
-Version: %ver_major.3
+Version: %ver_major.1
 Release: alt1
 
 Summary: GPaste is a clipboard management system
@@ -28,9 +30,11 @@ Requires: lib%name = %version-%release
 %define gtk_ver 3.22.0
 %define gi_ver 1.50.0
 %define vala_ver 0.32
+%define mutter_ver 3.24
 
 BuildRequires: libappstream-glib-devel desktop-file-utils
-BuildRequires: libdbus-devel libgtk+3-devel >= %gtk_ver libmutter-devel
+BuildRequires: libdbus-devel libgtk+3-devel >= %gtk_ver
+BuildRequires: libgjs-devel libmutter-devel >= %mutter_ver
 BuildRequires: gnome-control-center-devel
 BuildRequires: gobject-introspection-devel >= %gi_ver libgtk+3-gir-devel
 BuildRequires: vala-tools >= %vala_ver libvala-devel
@@ -107,21 +111,17 @@ cp %SOURCE1 m4/
 %autoreconf
 %configure \
   --disable-schemas-compile \
-  --disable-unity \
-  --enable-applet \
   --enable-vala
-#  --disable-silent-rules
-%make
+%make_build
 
 %install
 %makeinstall_std
 %find_lang %_name
 
 %files -f %_name.lang
-#%_bindir/%name
 %_bindir/%name-client
 %_libexecdir/%name/
-%exclude %_libexecdir/%name/%name-applet
+%{?_enable_applet:%exclude %_libexecdir/%name/%name-applet}
 %_desktopdir/%xdg_name.Ui.desktop
 %_datadir/appdata/%xdg_name.Ui.appdata.xml
 %_prefix/lib/systemd/user/%xdg_name.Ui.service
@@ -141,7 +141,7 @@ cp %SOURCE1 m4/
 %files -n lib%name-devel
 %_includedir/%name/
 %_libdir/*.so
-%_libdir/pkgconfig/*.pc
+%_pkgconfigdir/*.pc
 %_vapidir/*
 
 %files -n lib%name-gir
@@ -150,12 +150,14 @@ cp %SOURCE1 m4/
 %files -n lib%name-gir-devel
 %_girdir/%_name-%api_ver.gir
 
+%if_enabled applet
 %files applet
 %_libexecdir/%name/%name-applet
 %_datadir/appdata/%xdg_name.Applet.appdata.xml
 %_datadir/applications/%xdg_name.Applet.desktop
 %_prefix/lib/systemd/user/%xdg_name.Applet.service
 %_sysconfdir/xdg/autostart/%xdg_name.Applet.desktop
+%endif
 
 %files -n gnome-shell-extension-%name
 %_datadir/gnome-shell/extensions/GPaste@gnome-shell-extensions.gnome.org/
@@ -163,6 +165,9 @@ cp %SOURCE1 m4/
 
 
 %changelog
+* Sun Apr 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
+- 3.24.1
+
 * Wed Mar 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
 - 3.22.3
 
