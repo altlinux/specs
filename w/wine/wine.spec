@@ -1,0 +1,479 @@
+%def_enable static
+%define gecko_version 2.47
+%define mono_version 4.7.0
+%define major 2.4
+
+Name: wine
+Version: %major.1
+Release: alt2
+Epoch: 1
+
+Summary: WINE Is Not An Emulator - environment for running MS Windows 16/32/64 bit applications
+
+License: LGPLv2+
+Group: Emulators
+Url: https://www.altlinux.org/Wine
+
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
+# TODO: major in gear
+
+# Source-url: https://dl.winehq.org/wine/source/2.x/wine-%major.tar.xz
+Source: %name-%version.tar
+# Source1-url: https://github.com/wine-compholio/wine-staging/archive/v%major.tar.gz
+Source1: %name-staging-%version.tar
+
+Source2: winetricks
+Source3: %name-%version-desktop.tar
+
+Patch1:   0001-enable-linking-with-freetype-and-fontconfig-see-altb.patch
+Patch100: 0001-include-Add-PERF_DATA_BLOCK-struct-definition.patch
+Patch101: 0002-add-fast-hack-for-RegQueryValueEx-HKEY_PERFORMANCE_D.patch
+Patch200: t001-oleaut32-Make-OleLoadPicture-load-DIBs-using-WIC-decoder.patch
+
+AutoReq: yes, noperl
+
+# try build wine64 only on ALT
+%if %_vendor == "alt"
+%ifarch x86_64
+	%def_with build64
+%else
+    %def_without build64
+%endif
+%else
+   %def_without build64
+%endif
+
+# for wine-staging gitapply.sh script
+BuildPreReq: /proc
+
+# General dependencies
+BuildRequires: rpm-build-intro >= 1.0
+BuildRequires: gcc util-linux flex bison
+BuildRequires: fontconfig-devel libfreetype-devel
+BuildRequires: libncurses-devel libncursesw-devel libtinfo-devel
+BuildRequires: zlib-devel libldap-devel libgnutls-devel
+BuildRequires: libxslt-devel libxml2-devel
+BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libtiff-devel
+BuildRequires: libgphoto2-devel libsane-devel libcups-devel
+BuildRequires: libalsa-devel jackit-devel libgsm-devel libmpg123-devel libpulseaudio-devel
+BuildRequires: libopenal-devel libGLU-devel libva-devel
+BuildRequires: libusb-devel libieee1284-devel libpcap-devel
+BuildRequires: libv4l-devel
+BuildRequires: libunixODBC-devel
+# GTK3 theme support: staging only
+BuildRequires: libgtk+3-devel
+#BuildRequires: gstreamer-devel gst-plugins-devel
+# TODO: opencl-headers (autoimports now), osmesa
+
+# udev needed for udev version detect
+BuildRequires: libudev-devel udev libdbus-devel
+
+BuildRequires: libICE-devel libSM-devel libxcb-devel
+BuildRequires: libX11-devel libXau-devel libXaw-devel libXrandr-devel
+BuildRequires: libXext-devel libXfixes-devel libXfont-devel libXft-devel libXi-devel
+BuildRequires: libXmu-devel libXpm-devel libXrender-devel
+BuildRequires: libXres-devel libXScrnSaver-devel libXinerama-devel libXt-devel
+BuildRequires: libXxf86dga-devel libXxf86misc-devel libXcomposite-devel
+BuildRequires: libXxf86vm-devel libfontenc-devel libXdamage-devel
+BuildRequires: libXvMC-devel libXcursor-devel libXevie-devel libXv-devel
+
+BuildRequires: perl-XML-Simple
+
+# with prelink not found, base address of core dlls won't be set correctly
+BuildRequires: prelink
+
+# Actually for x86_32
+Requires: glibc-pthread glibc-nss
+
+# Enable with can build on x86_64
+# GCC v4.4 is needed for build wine64
+#ExclusiveArch:  %{ix86}
+Requires: webclient
+
+Requires: wine-gecko = %gecko_version
+
+BuildRequires: desktop-file-utils
+# Use it instead proprietary MS Core Fonts
+# Requires: fonts-ttf-liberation
+
+# not linked directly
+Requires: libncurses
+
+# For menu/MIME subsystem
+Requires: desktop-file-utils
+
+Requires: lib%name = %version-%release
+
+Conflicts: wine-vanilla wine-etersoft
+
+Provides: winetricks
+Requires: cabextract
+
+# Provides/Obsoletes Fedora packages
+%define common_provobs wine-core wine-filesystem wine-common wine-desktop wine-systemd wine-sysvinit
+%define base_provobs wine-alsa wine-capi wine-cms wine-ldap wine-openal wine-pulseaudio wine-wow wine-alsa wine-capi wine-cms wine-ldap wine-openal wine-opencl wine-pulseaudio wine-twain
+%define fonts_provobs wine-fonts wine-arial-fonts wine-courier-fonts wine-fixedsys-fonts wine-marlett-fonts wine-ms-sans-serif-fonts wine-small-fonts wine-symbol-fonts wine-system-fonts wine-tahoma-fonts wine-times-new-roman-fonts wine-wingdings-fonts
+#Provides: %common_provobs %base_provobs %fonts_provobs
+Obsoletes: %common_provobs %base_provobs %fonts_provobs
+
+
+#=========================================================================
+
+%description
+Wine is a program which allows running Microsoft Windows programs
+(including DOS, Windows 3.x and Win32 executables) on Unix. It
+consists of a program loader which loads and executes a Microsoft
+Windows binary, and a library (called Winelib) that implements Windows
+API calls using their Unix or X11 equivalents.  The library may also
+be used for porting Win32 code into native Unix executables.
+
+This build based on wine source with wine-staging project patches
+and ALT in progress patches.
+
+%package test
+Summary: WinAPI test for Wine
+Summary(ru_RU.UTF-8): Тест WinAPI для Wine
+Group: Emulators
+Requires: %name = %version-%release
+Conflicts: wine-vanilla-test
+
+%description test
+WinAPI test for Wine (unneeded for usual work).
+Warning: it may kill your X server suddenly.
+
+%package full
+Summary: Wine meta package
+Summary(ru_RU.UTF-8): Мета пакет Wine
+Group: Emulators
+BuildArch: noarch
+Requires: %name = %version-%release
+Requires: %name-programs = %version-%release
+Requires: lib%name-gl = %version-%release
+
+Requires: wine-mono >= %mono_version
+Requires: wine-gecko = %gecko_version
+
+Conflicts: wine-vanilla-full
+
+
+%description full
+Wine meta package. Use it for install all wine subpackages.
+
+%package programs
+Summary: Wine programs
+Group: Emulators
+Requires: %name = %version-%release
+
+Conflicts: wine-vanilla-programs
+
+%description programs
+Wine GUI programs:
+ * winefile
+ * notepad
+ * winemine
+
+%package -n lib%name
+Summary: Main library for Wine
+Group: System/Libraries
+Conflicts: libwine-vanilla
+
+# Actually for x86_32
+Requires: glibc-pthread glibc-nss
+
+# Runtime linked
+Requires: libcups libncurses
+Requires: libXrender libXi libXext libX11 libICE
+Requires: libssl libgnutls30
+# Linked:
+#Requires: fontconfig libfreetype
+
+%description -n lib%name
+This package contains the library needed to run programs dynamically
+linked with Wine.
+
+%description -n lib%name -l ru_RU.UTF-8
+Этот пакет состоит из библиотек, которые реализуют Windows API.
+
+
+%package -n lib%name-gl
+Summary: DirectX/OpenGL support libraries for Wine
+Group: System/Libraries
+Requires: lib%name = %version-%release
+Conflicts: libwine-vanilla-gl
+
+Requires: libGL
+
+%description -n lib%name-gl
+This package contains the libraries for DirectX/OpenGL support in Wine.
+
+%package -n lib%name-twain
+Summary: Twain support library for Wine
+Group: System/Libraries
+Requires: lib%name = %version-%release
+Conflicts: libwine-vanilla-twain
+
+%description -n lib%name-twain
+This package contains the library for Twain support.
+
+
+%package -n lib%name-devel
+Summary: Headers for lib%name-devel
+Group: Development/C
+Requires: lib%name = %version-%release
+Obsoletes: wine-devel
+Provides: wine-devel
+Conflicts: libwine-vanilla-devel
+
+%description -n lib%name-devel
+lib%name-devel contains the header files and some utilities needed to
+develop programs using lib%name.
+
+%description -n lib%name-devel -l ru_RU.UTF-8
+lib%name-devel содержит файлы для разработки программ, использующих Wine:
+заголовочные файлы и утилиты, предназначенные
+для компилирования программ с lib%name.
+
+%package -n lib%name-devel-static
+Summary: Static libraries for lib%name
+Group: Development/C
+Requires: lib%name = %version-%release
+Conflicts: libwine-vanilla-devel-static
+
+%description -n lib%name-devel-static
+lib%name-devel-static contains the static libraries needed to
+develop programs which make use of Wine.
+
+
+%prep
+%setup -a 1
+# Apply wine-staging patches
+wine-staging-%version/patches/patchinstall.sh DESTDIR=$(pwd) --all --backend=patch
+
+# disable rpath using for executable
+%__subst "s|^\(LDRPATH_INSTALL =\).*|\1|" Makefile.in
+
+%patch1 -p2
+%patch100 -p1
+%patch101 -p1
+%patch200 -p1
+
+%build
+# Workaround for https://bugzilla.altlinux.org/show_bug.cgi?id=31834
+%if_with build64
+%remove_optflags -fomit-frame-pointer
+%add_optflags -fno-omit-frame-pointer
+%endif
+
+%configure --with-x \
+%if_with build64
+	--enable-win64 \
+%endif
+	--disable-tests \
+	--without-gstreamer \
+	--without-oss \
+	--without-capi \
+	--without-hal \
+	--with-xattr \
+	--with-xcb
+
+%__make depend
+%make_build
+
+
+%install
+%makeinstall_std
+install -m755 %SOURCE2 %buildroot%_bindir/winetricks
+# unpack desktop files
+cd %buildroot%_desktopdir/
+tar xvf %SOURCE3
+mkdir -p %buildroot%_datadir/desktop-directories/
+mv *.directory %buildroot%_datadir/desktop-directories/
+
+# Do not pack non english man pages yet
+rm -rf %buildroot%_mandir/*.UTF-8
+
+# Do not pack dangerous association for run windows executables
+rm -f %buildroot%_desktopdir/wine.desktop
+
+%files
+%doc ANNOUNCE AUTHORS LICENSE README
+%lang(de) %doc documentation/README.de
+%lang(es) %doc documentation/README.es
+%lang(fr) %doc documentation/README.fr
+%lang(hu) %doc documentation/README.hu
+%lang(it) %doc documentation/README.it
+%lang(ko) %doc documentation/README.ko
+%lang(nb) %doc documentation/README.no
+%lang(pt) %doc documentation/README.pt
+%lang(pt_BR) %doc documentation/README.pt_br
+%lang(tr) %doc documentation/README.tr
+
+%if_without build64
+%_bindir/wine
+%_bindir/wine-preloader
+%else
+%_bindir/wine64
+%_bindir/wine64-preloader
+%endif
+
+%_bindir/regsvr32
+%_bindir/winecfg
+%_bindir/regedit
+%_bindir/msiexec
+
+%_bindir/winetricks
+%_bindir/wineconsole
+%_bindir/wineserver
+
+%_bindir/winedbg
+%_bindir/wineboot
+%_bindir/winepath
+%_libdir/wine/*.exe.so
+
+#%_initdir/wine
+#%_initdir/wine.outformat
+
+%_desktopdir/wine-mime-msi.desktop
+%_desktopdir/wine-regedit.desktop
+#_desktopdir/wine-serverkill.desktop
+%_desktopdir/wine-uninstaller.desktop
+%_desktopdir/wine-winecfg.desktop
+%_desktopdir/wine-wineconsole.desktop
+#_desktopdir/wine-winehelp.desktop
+
+# danger
+#_desktopdir/wine.desktop
+
+%_datadir/desktop-directories/*.directory
+
+%if_without build64
+%_man1dir/wine.*
+%endif
+%_man1dir/msiexec.*
+%_man1dir/regedit.*
+%_man1dir/regsvr32.*
+%_man1dir/wineboot.*
+%_man1dir/winecfg.*
+%_man1dir/wineconsole.*
+%_man1dir/winepath.*
+%_man1dir/wineserver.*
+%_man1dir/winedbg.*
+
+%files -n lib%name
+%doc LICENSE AUTHORS COPYING.LIB
+%_libdir/libwine*.so.*
+%dir %_libdir/wine/
+%_libdir/wine/fakedlls/
+
+%if_without build64
+%_libdir/wine/*.dll16.so
+%_libdir/wine/*.drv16.so
+%_libdir/wine/*.exe16.so
+%_libdir/wine/winoldap.mod16.so
+%_libdir/wine/*.vxd.so
+%endif
+
+%_libdir/wine/*.cpl.so
+%_libdir/wine/*.drv.so
+%_libdir/wine/*.dll.so
+%_libdir/wine/*.acm.so
+%_libdir/wine/*.ocx.so
+%_libdir/wine/*.tlb.so
+%_libdir/wine/*.sys.so
+
+%dir %_datadir/wine/
+%_datadir/wine/wine.inf
+%_datadir/wine/l_intl.nls
+%_datadir/wine/fonts/
+
+# move to separate packages
+%exclude %_libdir/wine/twain*
+%exclude %_libdir/wine/d3d10.dll.so
+%exclude %_libdir/wine/d3d8.dll.so
+%exclude %_libdir/wine/d3d9.dll.so
+%exclude %_libdir/wine/d3dxof.dll.so
+%exclude %_libdir/wine/opengl32.dll.so
+%exclude %_libdir/wine/glu32.dll.so
+%exclude %_libdir/wine/wined3d.dll.so
+
+%files full
+
+%files programs
+%_bindir/notepad
+%_bindir/winefile
+%_bindir/winemine
+%_man1dir/notepad.*
+%_man1dir/winefile.*
+%_man1dir/winemine.*
+%_desktopdir/wine-notepad.desktop
+%_desktopdir/wine-winefile.desktop
+%_desktopdir/wine-winemine.desktop
+
+
+%files -n lib%name-twain
+%_libdir/wine/twain*
+%_libdir/wine/gphoto2.ds.so
+%_libdir/wine/sane.ds.so
+
+%files -n lib%name-gl
+%_libdir/wine/d3d10.dll.so
+%_libdir/wine/d3d8.dll.so
+%_libdir/wine/d3d9.dll.so
+%_libdir/wine/d3dxof.dll.so
+%_libdir/wine/opengl32.dll.so
+%_libdir/wine/glu32.dll.so
+%_libdir/wine/wined3d.dll.so
+
+%files -n lib%name-devel
+%doc LICENSE LICENSE.OLD
+%_bindir/function_grep.pl
+%_bindir/winebuild
+%_bindir/wmc
+%_bindir/wrc
+%_bindir/widl
+%_bindir/wineg++
+%_bindir/winegcc
+%_bindir/winecpp
+%_bindir/winedump
+%_bindir/winemaker
+%_bindir/msidb
+
+%_includedir/wine/
+%_libdir/lib*.so
+%_libdir/wine/lib*.def
+%_libdir/wine/libwinecrt0.a
+#%_aclocaldir/wine.m4
+
+%_man1dir/wmc.*
+%_man1dir/wrc.*
+%_man1dir/widl.*
+%_man1dir/winebuild.*
+%_man1dir/winedump.*
+%_man1dir/wineg++.*
+%_man1dir/winegcc.*
+%_man1dir/winecpp.*
+%_man1dir/winemaker.*
+
+%if_enabled static
+%files -n lib%name-devel-static
+%_libdir/wine/lib*.a
+%exclude %_libdir/wine/libwinecrt0.a
+%endif
+
+%changelog
+* Sun Apr 09 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.4.1-alt2
+- set Epoche:1 for compatibility
+- fix build requires
+- add if_enabled static
+- add Obsoletes for Fedora packages, fix conflicts with wine-vanilla
+
+* Sat Apr 08 2017 Vitaly Lipatov <lav@altlinux.ru> 2.4.1-alt1
+- patches moving:
+ + enable linking with freetype and fontconfig
+ + add PERF_DATA_BLOCK struct definition
+ + add fast hack for RegQueryValueEx-HKEY_PERFORMANCE_DATA_BLOCK
+ + make OleLoadPicture load DIBs using WIC decoder
+
+* Sat Apr 08 2017 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt1
+- initial build wine-staging for ALT Sisyphus
