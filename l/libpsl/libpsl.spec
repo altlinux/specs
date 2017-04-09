@@ -1,8 +1,8 @@
-%def_enable bootstrap
+%def_disable bootstrap
 
 Name: libpsl
 Version: 0.17.0
-Release: alt1
+Release: alt2
 
 Summary: C library for the Public Suffix List
 License: %mit
@@ -110,8 +110,9 @@ from a plain text Public Suffix List.
 
 %install
 %makeinstall_std
-%else # bootstrap
+# the script is noinst but the manpage is installed
 install -Dm0755 src/psl-make-dafsa %buildroot%_bindir/psl-make-dafsa
+%else # bootstrap
 install -Dm0644 src/psl-make-dafsa.1 %buildroot%_man1dir/psl-make-dafsa.1
 %endif # bootstrap
 
@@ -144,5 +145,10 @@ make check
 %_man1dir/psl-make-dafsa.1*
 
 %changelog
+* Fri Apr 07 2017 Mikhail Efremov <sem@altlinux.org> 0.17.0-alt2
+- Initail build.
+- Patch from upstream:
+  + Fix order of files in psl_latest().
+
 * Fri Apr 07 2017 Mikhail Efremov <sem@altlinux.org> 0.17.0-alt1
 - Bootstrap build (psl-make-dafsa only).
