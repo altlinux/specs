@@ -1,6 +1,6 @@
 Name: zsh
 Version: 5.3.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A shell with lots of features
@@ -46,6 +46,9 @@ export YODL=yodl PDFETEX=pdfetex TEXI2PDF=texi2pdf
 
 # Avoid autoconf thinking it should strip when linking.
 export LDFLAGS=
+
+# Use getcwd(3).
+export zsh_cv_use_getcwd=yes
 
 %configure \
 	--enable-etcdir=%_sysconfdir \
@@ -108,6 +111,9 @@ make check
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Wed Apr 05 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:5.3.1-alt2
+- Switched builtin pwd -P to use getcwd(3).
+
 * Thu Feb 09 2017 Fr. Br. George <george@altlinux.ru> 1:5.3.1-alt1
 - Autobuild version bump to 5.3.1
 
