@@ -1,5 +1,5 @@
 Name: mongo
-Version: 3.4.2
+Version: 3.4.3
 Release: alt1
 Summary: mongo client shell and tools
 License: AGPL 3.0
@@ -23,8 +23,7 @@ It features dynamic profileable queries, full indexing, replication
 and fail-over support, efficient storage of large binary data objects,
 and auto-sharding.
 
-This package provides the mongo shell, import/export tools, and other
-client utilities.
+This package provides the mongo shell.
 
 %package server-mongod
 Summary: mongo server, sharding server,  and support scripts
@@ -181,6 +180,9 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Mon Apr 10 2017 Vladimir Didenko <cow@altlinux.org> 3.4.3-alt1
+- 3.4.3
+
 * Fri Feb 3 2017 Vladimir Didenko <cow@altlinux.org> 3.4.2-alt1
 - 3.4.2
 
