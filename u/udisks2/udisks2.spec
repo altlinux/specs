@@ -14,7 +14,7 @@
 
 Name: %{_name}2
 Version: 2.6.4
-Release: alt2
+Release: alt3
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
@@ -112,6 +112,7 @@ This package contains development documentation for lib%name.
 %setup -n %_name-%version
 %patch -b .isohibryd
 subst 's/mkfs.vfat/mkfs.fat/' src/udiskslinuxfsinfo.c
+subst 's|udisksprivdir|udisksdprivdir|' data/Makefile.*
 
 %build
 %autoreconf
@@ -161,9 +162,9 @@ fi
 %_datadir/dbus-1/system-services/org.freedesktop.UDisks2.service
 %_sysconfdir/dbus-1/system.d/org.freedesktop.UDisks2.conf
 %_datadir/bash-completion/completions/udisksctl
-%_mandir/man1/*
+%_man1dir/*
 %_man5dir/%name.conf.5.*
-%_mandir/man8/*
+%_man8dir/*
 %attr(0700,root,root) %dir %_localstatedir/lib/%name
 %ghost %_localstatedir/lib/%name/mtab
 %attr(0700,root,root) %dir %_localstatedir/run/%name
@@ -191,6 +192,9 @@ fi
 %endif
 
 %changelog
+* Mon Apr 10 2017 Yuri N. Sedunov <aris@altlinux.org> 2.6.4-alt3
+- data/Makefile.am fixed bad substitution (ALT #33346)
+
 * Tue Mar 28 2017 Yuri N. Sedunov <aris@altlinux.org> 2.6.4-alt2
 - 80-udisks2.rules: fixed ALT #33180
 
