@@ -3,7 +3,7 @@
 %def_enable doctool
 
 Name: gobject-introspection
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Introspection system for GObject-based libraries
@@ -123,6 +123,9 @@ gobject-introspection.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Apr 10 2017 Yuri N. Sedunov <aris@altlinux.org> 1.52.1-alt1
+- 1.52.1
+
 * Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 1.52.0-alt1
 - 1.52.0
 
