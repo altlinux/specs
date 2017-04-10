@@ -1,6 +1,6 @@
 Name:		yandex-disk-indicator
-Version:	1.9.8
-Release:	alt2
+Version:	1.9.9
+Release:	alt1
 Summary:	Panel indicator for YandexDisk CLI client for Linux
 Group:		Communications
 License:	Creative Commons Attribution-ShareAlike
@@ -40,6 +40,9 @@ chmod 644 %buildroot%_desktopdir/*
 %_datadir/yd-tools
 
 %changelog
+* Mon Apr 10 2017 Andrey Cherepanov <cas@altlinux.org> 1.9.9-alt1
+- New version
+
 * Wed Mar 15 2017 Andrey Cherepanov <cas@altlinux.org> 1.9.8-alt2
 - Added missing buildrequires: rpm-build-python3 rpm-build-gir (thanks antohami@)
 
