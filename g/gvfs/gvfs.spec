@@ -29,7 +29,7 @@
 %def_enable admin
 
 Name: gvfs
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -535,6 +535,9 @@ killall -USR1 gvfsd >&/dev/null || :
 
 
 %changelog
+* Mon Apr 10 2017 Yuri N. Sedunov <aris@altlinux.org> 1.32.1-alt1
+- 1.32.1
+
 * Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 1.32.0-alt1
 - 1.32.0
 
