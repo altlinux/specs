@@ -6,7 +6,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	45.8.0
+Version:	52.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -22,9 +22,8 @@ Source4:	thunderbird-mozconfig
 Source5:	thunderbird-default-prefs.js
 
 Patch6:		01_locale.patch
-Patch8:		thunderbird-timezoes.patch
+Patch8:		thunderbird-timezones.patch
 Patch9:		thunderbird-install-paths.patch
-Patch10:	thunderbird-fix-build-with-gcc6.1.patch
 Patch11:	thunderbird-alt-allow-send-in-windows-1251.patch
 
 BuildRequires(pre): mozilla-common-devel
@@ -179,7 +178,6 @@ tar -xf %SOURCE2
 %patch6 -p1
 #patch8 -p2
 %patch9 -p2
-%patch10 -p1
 %patch11 -p2
 
 #echo %version > mail/config/version.txt
@@ -270,6 +268,7 @@ cd -
 %endif
 
 %install
+export SHELL=/bin/sh
 mkdir -p \
 	%buildroot/%_bindir \
 	%buildroot/%mozilla_arch_extdir/%tbird_cid \
@@ -435,6 +434,9 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Wed Apr 05 2017 Andrey Cherepanov <cas@altlinux.org> 52.0-alt1
+- New version (52.0)
+
 * Tue Mar 07 2017 Andrey Cherepanov <cas@altlinux.org> 45.8.0-alt1
 - New versoin (45.8.0)
 
