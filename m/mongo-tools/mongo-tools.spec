@@ -20,7 +20,7 @@
 %global import_path     %{provider_prefix}
 
 Name: mongo-tools
-Version: 3.4.0
+Version: 3.4.3
 Release: alt1
 Summary: mongo client shell and tools
 License: ASL 2.0
@@ -120,6 +120,9 @@ sort -u -o devel.file-list devel.file-list
 %{gopath}/src/%{import_path}
 
 %changelog
+* Mon Apr 10 2017 Vladimir Didenko <cow@altlinux.org> 3.4.3-alt1
+- 3.4.3
+
 * Thu Dec 8 2016 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt1
 - 3.4.0
 
