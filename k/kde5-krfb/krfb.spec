@@ -4,8 +4,8 @@
 %define libkrfbprivate libkrfbprivate%sover
 
 Name: kde5-%rname
-Version: 16.08.3
-Release: alt2%ubt
+Version: 16.12.3
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -87,6 +87,9 @@ KF5 library
 %_K5lib/libkrfbprivate.so.*
 
 %changelog
+* Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+- new version
+
 * Thu Feb 09 2017 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt2%ubt
 - fix compile with gcc6
 

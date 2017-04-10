@@ -4,8 +4,8 @@
 %define libkonsoleprivate libkonsoleprivate%sover
 
 Name: kde5-%rname
-Version: 16.08.3
-Release: alt2%ubt
+Version: 16.12.3
+Release: alt1%ubt
 %K5init
 
 Group: Terminals
@@ -116,6 +116,9 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+- new version
+
 * Thu Jan 12 2017 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt2%ubt
 - update code from upstream
 

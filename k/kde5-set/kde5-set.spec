@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 16.12.0
+Version: 16.12.1
 Release: alt1%ubt
 
 Group: Graphical desktop/KDE
@@ -26,7 +26,7 @@ Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5-runtime
 Requires: qt5-dbus kf5-kde-cli-tools kf5-kwin kf5-plasma-desktop kf5-kinit kf5-kdeclarative
-Requires: kde5-dolphin
+Requires: kde5-dolphin kde5-kdialog
 %description -n kde5-mini
 %summary
 
@@ -38,9 +38,9 @@ Requires: kde5-mini
 Requires: kde5-volume-control
 Requires: webclient
 Requires: kf5-sddm-kcm kf5-polkit-kde-agent kf5-kio-extras kf5-breeze kf5-oxygen kf5-powerdevil kf5-ksysguard
-Requires: kf5-kwallet kf5-kconfig kf5-kglobalaccel kf5-kimageformats
+Requires: kf5-kwallet kf5-kconfig kf5-kglobalaccel kf5-kimageformats kde5-svgpart
 Requires: kde5-ark kde5-konsole kde5-gwenview kde5-okular kde5-kwrite kde5-kwalletmanager
-Requires: kde5-kdepasswd kde5-kcalc kde5-kdebugsettings kde5-kross-python
+Requires: kde5-kcalc kde5-kdebugsettings kde5-kross-python
 Requires: kf5-milou kf5-systemsettings kf5-plasma-integration
 %description -n kde5-small
 %summary
@@ -58,9 +58,9 @@ Requires: kde5-video-player
 Requires: kde5-audio-player
 Requires: kde5-network-manager
 Requires: kde5-plasma-applet-places-widget
-Requires: kf5-kde-gtk-config kf5-baloo kf5-bluedevil kf5-kscreen kf5-ksshaskpass
+Requires: kf5-kde-gtk-config kf5-baloo kf5-bluedevil kf5-kscreen kf5-ksshaskpass kde5-krdc kde5-kgpg
 Requires: kf5-khotkeys kf5-kinfocenter kf5-kdeplasma-addons
-Requires: kde5-khelpcenter kde5-kolourpaint
+Requires: kde5-khelpcenter kde5-kolourpaint kde5-kio-audiocd
 Requires: kf5-kmenuedit kf5-solid kf5-kdbusaddons kf5-kgamma
 Requires: kde5-kfind kde5-filelight kde5-kcharselect kde5-kteatime kde5-ktimer kde5-spectacle
 Requires: kde5-kamera kde5-network-filesharing kde5-ktorrent
@@ -75,11 +75,12 @@ Requires: kde5-email-client
 #Requires: kde5-telepathy
 Requires: kf5-plasma-workspace-wallpapers
 Requires: kf5-kwrited
-Requires: kf5-user-manager
+Requires: kf5-user-manager kde5-ksystemlog
 Requires: kde5-konversation kde5-kate
-Requires: kde5-pim kde5-pim-addons kde5-baseapps kde5-kcron kde5-kruler kde5-ffmpegthumbs
+Requires: kde5-pim kde5-pim-addons kde5-kcron kde5-kruler kde5-ffmpegthumbs
 #Requires: kf5-plasma-mediacenter
-Requires: kde5-krfb kde5-kdf
+Requires: kde5-krfb
+Requires: kde5-kdf kde5-kfloppy
 Requires: kid3-ui-kde5 ring-client-kde5
 Requires: kde5-kipi-plugins-core
 %description -n kde5-big
@@ -88,15 +89,17 @@ Requires: kde5-kipi-plugins-core
 %package -n kde5-maxi
 Summary: %summary
 Group: Graphical desktop/KDE
-Requires: kde5-konqueror kde5-dragon kde5-kmail
+# webclient
+Requires: kde5-konqueror kde5-keditbookmarks
+Requires: kde5-dragon kde5-kmail
 Requires: kde5-big
 Requires: kde5-edu
 Requires: kde5-games
 Requires: kde5-printing
 Requires: kde5-scanning
 Requires: kdenlive kde5-connect
-Requires: kde5-k3b
-#Requires: kde5-digikam kde5-kipi-plugins
+Requires: kde5-k3b kde5-kwave
+Requires: kde5-digikam kde5-kipi-plugins
 %description -n kde5-maxi
 %summary
 
@@ -157,6 +160,10 @@ Requires: kde5-mbox-importer kde5-pim-data-exporter kde5-pim-sieve-editor kde5-p
 %description -n kde5-pim
 %summary
 
+#kde5-ktp-call-ui
+#kde5-kqtquickcharts kde5-ktouch kde5-kalzium
+#kde5-kmahjongg
+
 %files -n kde5-runtime
 %files -n kde5-mini
 %files -n kde5-small
@@ -172,6 +179,9 @@ Requires: kde5-mbox-importer kde5-pim-data-exporter kde5-pim-sieve-editor kde5-p
 %files -n kde5-pim
 
 %changelog
+* Tue Apr 04 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.1-alt1%ubt
+- update requires
+
 * Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.0-alt1%ubt
 - update PIM requires
 
