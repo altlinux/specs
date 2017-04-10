@@ -1,6 +1,6 @@
 Name:    kmymoney
 Version: 4.8.0
-Release: alt1
+Release: alt2
 
 Summary: A Personal Finance Manager for KDE4
 Summary(ru_RU.UTF-8): Учёт финансов под KDE4
@@ -10,10 +10,11 @@ URL:     http://kmymoney2.sourceforge.net
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source0: %name-%version.tar.xz
+Source0: %name-%version.tar
 Source2: %name.watch
 Patch0:  %name-fix-undeclared-geteuid.patch
 Patch1:  %name-fix-link-with-QTest.patch
+Patch2:  %name-%version-%release.patch
 
 AutoReq: yes, noperl
 
@@ -199,6 +200,7 @@ Internationalization and documentation for KMyMoney
 %ifarch %ix86
 %patch1 -p1
 %endif
+%patch2 -p1
 
 %build
 # Need to build in one thread, see https://bugs.kde.org/show_bug.cgi?id=364387 for details
@@ -230,7 +232,7 @@ mv %buildroot%_K4apps/appdata/kmymoney.appdata.xml %buildroot%_datadir/appdata
 %_K4iconsdir/hicolor/*/mimetypes/application-x-kmymoney.png
 %_datadir/appdata/%name.appdata.xml
 %_K4conf_update/%name.upd
-%_man1dir/%name.1*
+#_man1dir/%name.1*
 
 %files devel
 %dir %_K4includedir/%name
@@ -308,8 +310,10 @@ mv %buildroot%_K4apps/appdata/kmymoney.appdata.xml %buildroot%_datadir/appdata
 %_K4apps/%name/templates/*
 %exclude %_K4doc/en
 
-
 %changelog
+* Mon Apr 10 2017 Andrey Cherepanov <cas@altlinux.org> 4.8.0-alt2
+- Use documentation and localization from released tarball
+
 * Wed Jun 29 2016 Andrey Cherepanov <cas@altlinux.org> 4.8.0-alt1
 - new version 4.8.0
 - New plugins: payeeidentifier, onlinetasks, weboob
