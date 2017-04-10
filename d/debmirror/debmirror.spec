@@ -1,5 +1,5 @@
 Name: debmirror
-Version: 2.16
+Version: 2.26
 Release: alt1
 
 Summary: Debian partial mirror script, with ftp and package pool support
@@ -12,7 +12,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://ftp.de.debian.org/debian/pool/main/d/debmirror/debmirror_%version.tar
 
-Serial: 1
+Epoch: 1
 
 BuildArch: noarch
 
@@ -31,23 +31,24 @@ supported. It also does locking and updates trace files.
 # fix some typo in version 2.4.6
 #subst 's|// ""||g' debmirror
 
+dist=xenial
 echo <<EOF > README.ALT
-Download example for Jaunty distro:
-#!/bin/bash -x
+Download example for $dist distro:
+#!/bin/sh -x
 debmirror --nosource -m --passive --host=mirror.yandex.ru \
        --root=ubuntu --method=http --progress \
-       --dist=jaunty,jaunty-security,jaunty-updates,jaunty-backports,jaunty-proposed \
+       --dist=$dist,$dist-security,$dist-updates,$dist-backports,$dist-proposed \
        --ignore-release-gpg --section=main,restricted,multiverse,universe \
-       --arch=i386 ./download-dir
+       --arch=i386,amd64 ./download-dir
 
 Also you can set this params in /etc/debmirror.conf (see %_sysconfdir/debmirror.conf.example)
-
+See details here: https://help.ubuntu.com/community/Debmirror
 EOF
 
 %install
 install -D -m 0755 debmirror %buildroot%_bindir/debmirror
 mkdir -p %buildroot%_man1dir/
-pod2man debmirror | gzip -9 -c > %buildroot%_man1dir/debmirror.1.gz
+pod2man debmirror > %buildroot%_man1dir/debmirror.1
 install -D -m 0644 examples/debmirror.conf %buildroot%_sysconfdir/debmirror.conf.example
 
 %files
@@ -57,6 +58,9 @@ install -D -m 0644 examples/debmirror.conf %buildroot%_sysconfdir/debmirror.conf
 %_man1dir/*
 
 %changelog
+* Mon Apr 10 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.26-alt1
+- new version 2.26 (with rpmrb script)
+
 * Mon Feb 17 2014 Vitaly Lipatov <lav@altlinux.ru> 1:2.16-alt1
 - new version 2.16 (with rpmrb script)
 
