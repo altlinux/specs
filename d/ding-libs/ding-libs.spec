@@ -1,6 +1,6 @@
 Name: ding-libs
 Version: 0.6.0
-Release: alt4
+Release: alt4%ubt
 
 Summary: "Ding is not GLib" assorted utility libraries
 License: LGPLv3+
@@ -18,6 +18,8 @@ Source: %name-%version.tar
 
 BuildRequires: pkgconfig(check) >= 0.9.5
 BuildRequires: doxygen
+
+BuildRequires(pre):rpm-build-ubt
 
 %package -n libpath_utils
 Summary: Filesystem Path Utilities
@@ -208,6 +210,9 @@ structure
 %_pkgconfigdir/ini_config.pc
 
 %changelog
+* Mon Apr 10 2017 Evgeny Sinelnikov <sin@altlinux.ru> 0.6.0-alt4%ubt
+- Build package with unified build tag aka ubt macros
+
 * Thu Jul 07 2016 Alexey Shabalin <shaba@altlinux.ru> 0.6.0-alt4
 - 0.6.0
 
