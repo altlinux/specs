@@ -1,7 +1,7 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
-Version: 4.0.48
-Release: alt8
+Version: 4.0.49
+Release: alt9
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -142,6 +142,9 @@ fi
 %_man1dir/pveum.1*
 
 %changelog
+* Fri Apr 07 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.0.49-alt9
+- 4.0-49
+
 * Tue Feb 21 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.0.48-alt8
 - rebuild with perl 5.24.1
 
