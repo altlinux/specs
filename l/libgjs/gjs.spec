@@ -8,8 +8,8 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Javascript Bindings for GNOME
 Group: System/Libraries
@@ -116,6 +116,9 @@ export ac_cv_path_JS_INTERP=%_bindir/js
 
 
 %changelog
+* Mon Apr 10 2017 Yuri N. Sedunov <aris@altlinux.org> 1.48.1-alt1
+- 1.48.1
+
 * Sat Mar 25 2017 Yuri N. Sedunov <aris@altlinux.org> 1.48.0-alt2
 - libgjs-devel requires /proc
 
