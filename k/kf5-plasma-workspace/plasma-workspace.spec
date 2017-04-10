@@ -16,8 +16,8 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.9.3
-Release: alt5%ubt
+Version: 5.9.4
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -60,6 +60,7 @@ BuildRequires: libwayland-client-devel libwayland-server-devel
 BuildRequires: libxapian-devel prison-devel libnm-devel
 BuildRequires: libxcbutil-image-devel libxcbutil-devel
 BuildRequires: iceauth xmessage xprop xrdb xset xsetroot
+BuildRequires: kde5-kholidays-devel
 BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
 BuildRequires: kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdelibs4support-devel
@@ -71,7 +72,7 @@ BuildRequires: kf5-kpackage-devel kf5-kparts-devel kf5-kpty-devel kf5-krunner-de
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kwin-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libkscreen-devel kf5-libksysguard-devel kf5-plasma-framework-devel
 BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kxmlrpcclient-devel kf5-prison-devel
-BuildRequires: kf5-networkmanager-qt-devel kf5-kscreenlocker-devel kde5-kholidays-devel
+BuildRequires: kf5-networkmanager-qt-devel kf5-kscreenlocker-devel
 
 %description
 KDE Plasma Workspace
@@ -298,6 +299,9 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Mon Apr 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
+- new version
+
 * Mon Apr 03 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt5%ubt
 - fix password renew with breeze sddm theme
 
