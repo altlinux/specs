@@ -1,6 +1,6 @@
 Name: cifs-utils
-Version: 6.5
-Release: alt1
+Version: 6.7
+Release: alt1%ubt
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
 Group: System/Kernel and hardware
@@ -8,6 +8,8 @@ License: GPLv3+
 Url: https://wiki.samba.org/index.php/LinuxCIFS_utils
 
 Source: %name-%version.tar
+
+BuildRequires(pre):rpm-build-ubt
 
 Requires: keyutils
 
@@ -96,6 +98,10 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %_man8dir/pam_cifscreds.*
 
 %changelog
+* Mon Apr 10 2017 Evgeny Sinelnikov <sin@altlinux.ru> 6.7-alt1%ubt
+- 6.7
+- Build package with unified build tag aka ubt macros
+
 * Tue Jun 14 2016 Alexey Shabalin <shaba@altlinux.ru> 6.5-alt1
 - 6.5
 
