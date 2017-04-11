@@ -1,33 +1,32 @@
-%define _altdata_dir %_datadir/alterator
-
 Name: alterator-standalone
-Version: 7.1.2
+Version: 7.2
 Release: alt1
-
-Packager: Stanislav Ievlev <inger@altlinux.org>
-
-Source:%name-%version.tar
 
 Summary: System Management center
 License: GPL
 Group: System/Configuration/Other
-BuildArch: noarch
-Requires: alterator >= 4.7-alt4
-Requires: alterator-l10n
-Requires: alterator-lookout >= 2.1-alt3
-Requires: alterator-browser-qt >= 2.11.6-alt1
 
+Requires: alterator >= 5.0
+Requires: alterator-l10n
+Requires: alterator-lookout >= 2.5
+Requires: alterator-browser-qt >= 2.11.6-alt1
 Requires: consolehelper
 
 #backward compatibility
 Provides: acc = %version, alterator-profile = %version, %name-usermode = %version
 Obsoletes: acc, alterator-profile, %name-usermode
 
-BuildPreReq: alterator >= 4.7-alt4
+Source: %name-%version.tar
+
+BuildPreReq: alterator >= 5.0 guile22-devel
 
 %description
 ALTLinux Control Center
 Contains engine for system management
+
+%brp_strip_none %_alterator_libdir/*
+%add_verify_elf_skiplist %_alterator_libdir/*
+%add_findreq_skiplist %_alterator_libdir/*
 
 %prep
 %setup
@@ -67,7 +66,8 @@ install -Dpm644 acc.desktop %buildroot/%_desktopdir/acc.desktop
 
 %files
 %_sbindir/*
-%_altdata_dir/ui/*/
+%_alterator_libdir/ui/*
+%_alterator_datadir/ui/*
 %_desktopdir/*
 %_man8dir/*
 %config(noreplace) %_sysconfdir/pam.d/*
@@ -75,6 +75,9 @@ install -Dpm644 acc.desktop %buildroot/%_desktopdir/acc.desktop
 %_bindir/*
 
 %changelog
+* Tue Apr 11 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.2-alt1
+- rebuilt with guile22
+
 * Thu Jul 21 2016 Sergey V Turchin <zerg@altlinux.org> 7.1.2-alt1
 - change desktp-file icon
 - update bugzilla url
