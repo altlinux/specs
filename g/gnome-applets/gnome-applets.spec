@@ -12,7 +12,7 @@
 %def_enable timer
 
 Name: gnome-applets
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Small applications for the GNOME panel
@@ -568,6 +568,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %gnome_appletsdir/*.la
 
 %changelog
+* Tue Apr 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
+- 3.24.1
+
 * Tue Mar 28 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 
