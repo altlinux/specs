@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.11
-Release: alt3.qa1
+Release: alt4
 
 %define package_name		%real_name
 %define weight			1001
@@ -68,6 +68,7 @@ Patch21: python-2.6-ctypes-noexecmem.patch
 Patch22: python-2.6.6-alt-bdist_altrpm.patch
 Patch23: python-2.7.4-alt-linux2-platform.patch
 Patch24: python-2.7.10-python-config-ldflags-alt.patch
+Patch25: python-2.7.11-glibc-2.25-getentropy.patch
 
 # XXX ignore pydoc dependencies for now
 %add_findreq_skiplist %_bindir/pydoc*
@@ -663,6 +664,7 @@ rm -r Modules/expat
 %patch22 -p2
 %patch23 -p1
 %patch24 -p2
+%patch25 -p1
 
 # XXX temporary Issue20445 fix
 sed -i 's/val1 == nice(2)/val1 == nice(2)+2/' configure.ac
@@ -1095,6 +1097,9 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Tue Apr 11 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7.11-alt4
+- Fixed 'random' module regression caused by glibc >= 2.25 (closes: #33355).
+
 * Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.11-alt3.qa1
 - NMU: rebuilt against Tcl/Tk 8.6
 
