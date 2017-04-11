@@ -1,14 +1,16 @@
 %define nm_version 1.4.1-alt1.git20160914
-%define git_date .git20170205
+%define git_date .git20170410
 #define git_date %nil
 
 %define _unpackaged_files_terminate_build 1
 
 %def_without appindicator
 %def_without team
+%def_without selinux
+%def_with gcr
 
 Name: NetworkManager-applet-gtk
-Version: 1.4.5
+Version: 1.7.1
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -37,8 +39,11 @@ BuildRequires: libgudev-devel
 BuildRequires: libmm-glib-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libsecret-devel
+BuildRequires: gtk-doc
 %{?_with_appindicator:BuildRequires: libappindicator-gtk3-devel}
 %{?_with_team:BuildRequires: libjansson-devel}
+%{?_with_selinux:BuildRequires: libselinux-devel}
+%{?_with_gcr:BuildRequires: gcr-libs-devel}
 
 Requires: NetworkManager-daemon >= %nm_version
 Requires: dbus-tools-gui
@@ -141,6 +146,14 @@ Requires: libnma-devel = %version-%release
 %description -n libnma-gir-devel
 GObject introspection devel data for the libnma.
 
+%package -n libnma-devel-doc
+Summary: Development documentation for libnma-devel-doc
+Group: Development/Documentation
+BuildArch: noarch
+
+%description -n libnma-devel-doc
+This package contains development documentation for libnma-devel-doc.
+
 %prep
 %setup -n nm-applet-%version
 %patch -p1
@@ -151,9 +164,14 @@ GObject introspection devel data for the libnma.
 	--disable-static \
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
+	%{subst_with selinux} \
+	%{subst_with gcr} \
 	--with-wwan \
 	%{subst_with appindicator} \
 	%{subst_with team} \
+	--enable-introspection \
+	--with-libnm-gtk \
+	--enable-gtk-doc \
 	--enable-more-warnings=error
 
 %make_build
@@ -208,7 +226,13 @@ make check
 %files -n libnma-gir-devel
 %_datadir/gir-1.0/NMA-1.0.gir
 
+%files -n libnma-devel-doc
+%doc %_datadir/gtk-doc/html/libnma
+
 %changelog
+* Tue Apr 11 2017 Mikhail Efremov <sem@altlinux.org> 1.7.1-alt1.git20170410
+- Upstream git snapshot.
+
 * Mon Feb 06 2017 Mikhail Efremov <sem@altlinux.org> 1.4.5-alt1.git20170205
 - Upstream git snapshot.
 
