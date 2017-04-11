@@ -2,7 +2,7 @@
 
 Name: aptitude
 Version: 0.4.5
-Release: alt7.qa1
+Release: alt8
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
@@ -85,6 +85,10 @@ rm -f %buildroot%_datadir/%name/function_*
 %doc doc/en/output-html/*
 
 %changelog
+* Tue Apr 11 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.5-alt8
+- Fixed build with gcc6.
+- Fixed crash in internal minesweeper game.
+
 * Wed Nov 23 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.5-alt7.qa1
 - Rebuilt with libapt-pkg-libc6.9-6.so.6.
 - Fixed build with sigc++.
