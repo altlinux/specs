@@ -9,12 +9,12 @@
 
 %define bname		newmoon
 %define sdir		searchplugins
-%define newmoon_dir 	%_datadir/%bname/browser/
+%define newmoon_dir 	%_datadir/%bname-data/browser/
 %define search_dir 	%newmoon_dir%sdir
 
 Name: palemoon-ru
 Version: 27.2.0
-Release: alt1
+Release: alt2
 
 Summary: Russian (RU) Language Pack for Pale Moon
 License: MPL/GPL/LGPL
@@ -36,12 +36,25 @@ Requires: hunspell-ru
 Obsoletes: palemoon-ru_yo-dictionary palemoon-ru_ie-dictionary
 Provides: palemoon-ru_yo-dictionary palemoon-ru_ie-dictionary
 
-BuildRequires(pre):	rpm-build-palemoon
+BuildRequires(pre):	rpm-build-palemoon 
 # Automatically added by buildreq on Mon Jul 13 2015
 BuildRequires: libdb4-devel unzip
 
 %description
 The Palemoon Russian translation and dictionary.
+
+%package -n palemoon-searchplugins
+Summary: The Palemoon Russian translation and dictionary.
+Group:   Networking/WWW
+BuildArch: noarch
+Conflicts:  palemoon-ru < %EVR
+
+%description -n palemoon-searchplugins
+The set of search plugins for Palemoon
+
+%description -n palemoon-searchplugins -l ru_RU.UTF8
+Набор Поисковых плагинов для Palemoon
+
 
 %prep
 %setup -c -n %name-%version/%cid
@@ -105,9 +118,14 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %files
 %cid_dir
 %cid_dict_dir
+
+%files -n palemoon-searchplugins
 %search_dir
 
 %changelog
+* Mon Apr 10 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.2.0-alt2
+- Add the set of search plugins for Palemoon
+
 * Sat Mar 18 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.2.0-alt1
 - Version 27.2.0-RC1
 

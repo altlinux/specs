@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 
 Name: palemoon
 Version: 27.2.1
-Release: alt1.0
+Release: alt2.0
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -20,12 +20,11 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 %define palemoon_cid                    \{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4\}
 
-%define palemoon_prefix                 %_datadir/%bname
-%define palemoon_datadir                %_datadir/%bname
-%define palemoon_bindir                 %_libdir/%bname
-%define palemoon_arch_extensionsdir     %palemoon_prefix/extensions
+%define palemoon_prefix                 %_datadir/%bname-data
+%define palemoon_datadir                %_datadir/%bname-data
+%define palemoon_bindir                 %_libdir/%bname-base
+%define palemoon_arch_extensionsdir     %palemoon_bindir/extensions
 %define palemoon_noarch_extensionsdir   %palemoon_datadir/extensions
-
 
 Source: %sname-source-%version-%release.tar
 Source1: rpm-build.tar
@@ -39,8 +38,11 @@ Source9: HISTORY_GIT
 Source10: Changelog
 Source11: content.tar
 
-#Patch1: palemoon_google_add-26.4.0.patch
+Source12: xulstore.json
+Source13: kde.js
 
+
+#Patch1: palemoon_google_add-26.4.0.patch
 Patch5: firefox-duckduckgo.patch
 Patch6: firefox3-alt-disable-werror.patch
 #Patch14:	firefox-fix-install.patch
@@ -54,42 +56,47 @@ Patch22: palemoon_rpath-27.0.2.patch
 Patch24: palemoon-27.0.2-ui_picker_false.patch
 Patch23: palemoon_version-27.0.3.patch
 
-BuildRequires(pre): mozilla-common-devel
-BuildRequires(pre): browser-plugins-npapi-devel
+
+# Patch from Rosa
+
+Patch101: firefox-6.0-lang.patch
+Patch103: firefox-22.0-disable-check-default-browser.patch
+Patch105: firefox-3.5.3-default-mail-handler.patch
+Patch106: palemoon-27.0.2-enable-addons.patch
+Patch107: palemoon-27.2.0-user-agent-overrides.patch
+
+# Patches for KDE integration of New Moon
+Patch111: palemoon-27.0.2-firefox-kde.patch
+Patch112: palemoon-27.0.2-mozilla-kde.patch
+Patch113: mozilla-kde-background.patch
+
+
 
 %set_autoconf_version 2.13
 %set_gcc_version 4.9
 
-BuildRequires: gcc%_gcc_version-c++
-
-
-# Automatically added by buildreq on Fri Feb 10 2017
-# optimized out: alternatives ca-certificates fontconfig fontconfig-devel glib2-devel gstreamer1.0-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins1.0 libpango-devel libstdc++-devel perl pkg-config python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python3 xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: doxygen glibc-devel-static gst-plugins1.0-devel imake java-devel libGConf-devel libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpixman-devel 
-BuildRequires: libpulseaudio-devel libsocket libvpx-devel 
-BuildRequires: python-module-future python-module-yaml python-modules-json python-modules-wsgiref python3-base 
+# Automatically added by buildreq on Sat Apr 08 2017
+# optimized out: alternatives ca-certificates fontconfig fontconfig-devel glib2-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libcloog-isl4
+# libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstartup-notification libstdc++-devel libxcb-devel perl pkg-config
+# python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing
+# python-modules-xml python3 xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: doxygen glibc-devel-static imake java-devel libGConf-devel libXScrnSaver-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel libjpeg-devel libnspr-devel libpixman-devel libproxy-devel 
+BuildRequires: libpulseaudio-devel libsocket libsqlite3-devel libstartup-notification-devel libvpx-devel
+BuildRequires: python-module-future python-module-yaml python-modules-json python-modules-wsgiref python3-base
 BuildRequires: unzip wget xorg-cf-files xsltproc yasm zip
 
-
-# BEGIN SourceDeps(oneline):
-#  BuildRequires: /usr/bin/widl at-spi2-atk-devel bzlib-devel fontconfig-devel glib2-devel gobject-introspection-devel libSM-devel libX11-devel libXext-devel
-#  BuildRequires: libcairo-devel libdbus-devel libdbus-glib-devel libevent-devel libfreetype-devel libgio-devel libgnomeui-devel libgtk+3-devel libhunspell-devel 
-#  BuildRequires: libjpeg-devel libpango-devel libpixman-devel libpng-devel libproxy-devel libqt4-devel libsqlite3-devel libstartup-notification-devel libwebp-devel 
-#  BuildRequires: perl(Archive/Zip.pm) perl(CGI.pm) perl(Carp.pm) perl(English.pm) perl(Errno.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(FileHandle.pm) perl(FindBin.pm) 
-#  BuildRequires: perl(IO/File.pm) perl(IO/Handle.pm) perl(LWP/Simple.pm) perl(List/Util.pm) perl(Time/Local.pm) perl(Time/localtime.pm) perl(XML/LibXML.pm) 
-#  BuildRequires: perl(XML/LibXSLT.pm) perl(diagnostics.pm) perl(open.pm) perl(strict.pm) perl(subs.pm)
-#  BuildRequires: qt4-mobility-devel qt5-base-devel qt5-declarative-devel qt5-location-devel swig texinfo
-# END SourceDeps(oneline)
+BuildRequires(pre): mozilla-common-devel
+BuildRequires(pre): browser-plugins-npapi-devel
 
 
-BuildPreReq: python3-base unzip xorg-cf-files libssl-devel
+BuildRequires: gcc%_gcc_version-c++
 
 BuildPreReq: chrpath
-
-BuildPreReq: autoconf_2.13  
+BuildPreReq: autoconf_%_autoconf_version
 
 
 BuildPreReq: gstreamer1.0-devel gst-plugins1.0-devel
+
 
 %description
 The %sname project is a redesign of Mozilla's  Firefox browser component,
@@ -114,7 +121,7 @@ Provides: newmoon = %EVR
 
 Requires: libgstreamer1.0 gst-libav
 Requires: gst-plugins-base1.0
-Requires: newmoon-data = %epoch:%version-%release
+Requires: newmoon-data = %EVR
 
 # Protection against fraudulent DigiNotar certificates
 Requires: libnss
@@ -139,8 +146,6 @@ BuildArch: noarch
 #Provides: newmoon = %EVR
 Conflicts: newmoon < %EVR
 Obsoletes: newmoon < %EVR
-
-
 
 %description -n newmoon-data
 The New Moon browser, an unofficial branding of the Pale Moon project browser
@@ -208,6 +213,20 @@ tar -xf %SOURCE1
 
 #patch18 -p1
 
+#Pach from Rosa
+%patch101 -p1 -b .lang
+%patch103 -p1 -b .disable-software-update
+%patch105 -p1 -b .default-mail-handler
+%patch106 -p1 -b .addons
+%patch107 -p1 -b .ua
+
+# KDE integration
+%patch111 -p1 -b .kdepatch
+%patch112 -p1 -b .kdemoz
+%patch113 -p1 -b .kdebackground
+
+
+
 
 # icons
 for s in 16 22 24 32 48 256; do
@@ -248,7 +267,6 @@ echo "ac_add_options --disable-static" >> .mozconfig
 echo "ac_add_options --enable-media-plugins --disable-elf-hack --enable-media-plugins --enable-media-navigator" >> .mozconfig
 echo "ac_add_options --with-system-libvpx --enable-wave --enable-alsa --enable-pulseaudio" >> .mozconfig
 echo "ac_add_options --enable-system-cairo" >> .mozconfig
-# echo "ac_add_options --with-qtdir=%%_qt5_datadir"
 
 
 # Add  Ofiicial Options:
@@ -273,6 +291,7 @@ echo 'ac_add_options --enable-optimize="-O2 -msse2 -mfpmath=sse" ' >> .mozconfig
 
 echo "ac_add_options --enable-gstreamer" >> .mozconfig
 
+
 %build
 cd %sname
 
@@ -290,7 +309,7 @@ MOZ_OPT_FLAGS=$(echo $RPM_OPT_FLAGS | \
                 sed -e 's/-Wall//' -e 's/-fexceptions/-fno-exceptions/g')
 
 export CFLAGS="$MOZ_OPT_FLAGS"
-export CXXFLAGS="$MOZ_OPT_FLAGS -D_GNUC_"
+export CXXFLAGS="$MOZ_OPT_FLAGS -Wmaybe-uninitialized -Wreorder -D_GNUC_"
 
 # Add fake RPATH
 #export LDFLAGS="-Wl,-rpath,%palemoon_prefix"
@@ -345,8 +364,12 @@ gcc %optflags \
 	-DMOZ_PROGRAM=\"%palemoon_bindir/%sname-bin\" \
 	%SOURCE7 -o %sname
 
+
+
+
 %install
 #set_verify_elf_method unresolved=strict
+
 
 cd %sname
 
@@ -356,11 +379,12 @@ mkdir -p \
 	#
 
 pushd objdir
+install -m644 %SOURCE13 dist/bin/defaults/pref/
+install -m644 %SOURCE12 dist/bin/browser/defaults/profile/xulstore.json
 %makeinstall_std MOZ_APP_VERSION=
 popd
 
-pwd
-ls 
+
 
 # icons
 for s in 16 32 48; do
@@ -368,6 +392,7 @@ for s in 16 32 48; do
 		../defaults-newmoon/default$s.png \
 		%buildroot/%_iconsdir/hicolor/${s}x${s}/apps/%bname.png
 done
+
 
 
 if [ -f %buildroot/%_bindir/%sname ];then
@@ -411,6 +436,28 @@ pref("intl.locale.matchOS",		true);
 pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
 EOF
 
+#install -D -m644 browser/app/profile/prefs.js %buildroot%palemoon_datadir/browser/defaults/profile/prefs.js
+
+cat << EOF >> %buildroot%palemoon_datadir/browser/defaults/profile/prefs.js
+user_pref("browser.EULA.override", true);
+user_pref("browser.ctrlTab.previews", true);
+user_pref("browser.tabs.insertRelatedAfterCurrent", false);
+user_pref("browser.tabs.onTop", true);
+user_pref("browser.startup.homepage", "file://%_docdir/HTML/index.html");
+user_pref("browser.backspace_action", 2);
+user_pref("browser.display.use_system_colors", true);
+user_pref("browser.download.folderList", 1);
+user_pref("browser.link.open_external", 3);
+user_pref("app.update.auto", false);
+user_pref("app.update.enabled", false);
+user_pref("app.update.autoInstallEnabled", false);
+user_pref("dom.ipc.plugins.enabled.nswrapper*", false);
+user_pref("extensions.autoDisableScopes", 0);
+user_pref("extensions.shownSelectionUI", true);
+user_pref("network.manage-offline-status", true);
+EOF
+
+
 # install menu file
 install -D -m 644 %SOURCE6 ./%_desktopdir/%bname.desktop
 
@@ -425,21 +472,43 @@ install -d  %buildroot%palemoon_bindir/browser/components/
 install -m 644 %buildroot%palemoon_prefix/components/* %buildroot%palemoon_bindir/components/
 install -m 644 %buildroot%palemoon_prefix/browser/components/* %buildroot%palemoon_bindir/browser/components/
 
+#install -d  %buildroot%palemoon_bindir/modules
+# mv  %buildroot%palemoon_prefix/modules/* -t %buildroot%palemoon_bindir/modules/
+
+
 rm -f %buildroot%palemoon_prefix/components/*
 rmdir  %buildroot%palemoon_prefix/components/
 
 rm -f %buildroot%palemoon_prefix/browser/components/*
 rmdir %buildroot%palemoon_prefix/browser/components/
 
-
 mv %buildroot/%palemoon_prefix/{palemoon,palemoon-bin,plugin-container,run-mozilla.sh} %buildroot%palemoon_bindir/
 mv %buildroot/%palemoon_prefix/*.so* %buildroot%palemoon_bindir/
 mv %buildroot/%palemoon_prefix/*.manifest %buildroot%palemoon_bindir/
 
+# /usr/share/newmoon/browser/chrome/browser.jar 
+# /usr/share/newmoon/chrome/toolkit.jar
+# /usr/share/newmoon/libfreeblpriv3.chk
+# /usr/share/newmoon/libnssdbm3.chk 
+# /usr/share/newmoon/libsoftokn3.chk 
 
-ln -s %palemoon_prefix/{chrome,defaults,dictionaries,hyphenation,modules,res} %buildroot/%palemoon_bindir/
-ln -s %palemoon_prefix/{dependentlibs.list,greprefs.js,platform.ini,libfreeblpriv3.chk,libnssdbm3.chk,libsoftokn3.chk} %buildroot/%palemoon_bindir/
-ln -s %palemoon_prefix/browser/{application.ini,blocklist.xml,chrome,chrome.manifest,defaults,extensions,icons,modules,searchplugins} %buildroot/%palemoon_bindir/browser/
+install -d %buildroot%palemoon_bindir/
+mv %buildroot/%palemoon_prefix/chrome/ %buildroot%palemoon_bindir/
+install -d %buildroot%palemoon_prefix/chrome/
+
+install -d %buildroot%palemoon_bindir/browser
+mv %buildroot/%palemoon_prefix/browser/chrome/ %buildroot%palemoon_bindir/browser
+
+install -d %buildroot%palemoon_prefix/browser/chrome/
+
+mv %buildroot/%palemoon_prefix/*.chk %buildroot%palemoon_bindir/
+
+
+
+ln -s %palemoon_prefix/{defaults,dictionaries,hyphenation,modules,res} %buildroot/%palemoon_bindir/
+ln -s %palemoon_prefix/{dependentlibs.list,greprefs.js,platform.ini} %buildroot/%palemoon_bindir/
+ln -s %palemoon_prefix/browser/{application.ini,blocklist.xml,chrome.manifest,defaults,extensions,icons,modules,searchplugins} %buildroot/%palemoon_bindir/browser/
+
 
 
 rm -f -- \
@@ -465,8 +534,8 @@ rm -f -- \
     )
 popd
 
-install -d %buildroot%palemoon_prefix/browser/chrome/icons/default/
-install -m 644 ../defaults-newmoon/default48.png %buildroot%palemoon_prefix/browser/chrome/icons/default/PMaboutDialog48.png
+#install -d %buildroot%palemoon_prefix/browser/chrome/icons/default/
+install -m 644 ../defaults-newmoon/default48.png %buildroot%palemoon_bindir/browser/chrome/icons/default/PMaboutDialog48.png
 
 # Add Docdir
 install -D -m 644 %SOURCE9 ../
@@ -475,10 +544,33 @@ install -D -m 644 AUTHORS ../
 install -D -m 644 LICENSE ../
 
 
-%pre
-for n in defaults browserconfig.properties; do
-	[ ! -L "%palemoon_prefix/$n" ] || rm -f "%palemoon_prefix/$n"
-done
+%post -n %bname-base
+ for n in libfreeblpriv3.chk libnssdbm3.chk libsoftokn3.chk; do
+  	[  -e "%palemoon_datadir/$n" ] || ln -fs  %palemoon_bindir/$n %palemoon_datadir/$n
+ done
+ 
+ for n in browser.jar chrome.manifest en-US.jar; do
+  	[  -e "%palemoon_datadir/browser/chrome/$n" ] || ln -fs  %palemoon_bindir/browser/chrome/$n %palemoon_datadir/browser/chrome/$n
+ done
+ 
+ for n in chrome.manifest en-US.jar marionette.jar pippki.jar recording.jar toolkit.jar; do
+  	[  -e "%palemoon_datadir/chrome/$n" ] || ln -fs  %palemoon_bindir/chrome/$n %palemoon_datadir/chrome/$n
+ done
+
+
+%postun -n %bname-base
+ for n in libfreeblpriv3.chk libnssdbm3.chk libsoftokn3.chk; do
+ 	[ !  -L "%palemoon_datadir/$n" ] || rm -f  %palemoon_datadir/$n
+ done
+
+ for n in browser.jar chrome.manifest en-US.jar; do
+ 	[ ! -L "%palemoon_datadir/browser/chrome/$n" ] || rm -f %palemoon_datadir/browser/chrome/$n
+ done
+
+ for n in chrome.manifest en-US.jar marionette.jar pippki.jar recording.jar toolkit.jar; do
+ 	[ ! -L "%palemoon_datadir/chrome/$n" ] || rm -f %palemoon_datadir/chrome/$n
+ done
+
 
 %files -n %bname-data
 %dir %palemoon_prefix
@@ -486,7 +578,6 @@ done
 %dir %palemoon_prefix/browser
 %palemoon_prefix/browser/*
 %dir %palemoon_prefix/chrome
-%palemoon_prefix/chrome/*
 %dir %palemoon_prefix/defaults
 %palemoon_prefix/defaults/*
 %dir %palemoon_prefix/dictionaries
@@ -500,9 +591,6 @@ done
 
 %palemoon_prefix/dependentlibs.list
 %palemoon_prefix/greprefs.js
-%palemoon_prefix/libfreeblpriv3.chk
-%palemoon_prefix/libnssdbm3.chk
-%palemoon_prefix/libsoftokn3.chk
 %palemoon_prefix/platform.ini
 
 %_desktopdir/%bname.desktop
@@ -514,10 +602,16 @@ done
 %doc AUTHORS LICENSE HISTORY_GIT Changelog
 %_altdir/%bname
 %_bindir/%sname
+
 %dir %palemoon_bindir
 %palemoon_bindir/*
+
 %mozilla_arch_extdir/%palemoon_cid
 %mozilla_noarch_extdir/%palemoon_cid
+
+#%%palemoon_bindir/libfreeblpriv3.chk
+#%%palemoon_bindir/libnssdbm3.chk
+#%%palemoon_bindir/libsoftokn3.chk
 
 %files -n rpm-build-%sname
 %_rpmmacrosdir/%sname
@@ -525,6 +619,12 @@ done
 %exclude %_datadir/idl/*
 
 %changelog
+* Mon Apr 10 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.2.1-alt2.0
+- Change %%palemoon_prefix, %%palemoon_bindir
+
+* Sat Apr 08 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.2.1-alt1.1
+- Add Rosa patch`s
+
 * Sat Mar 25 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.2.1-alt1.0
 - Version 27.2.1
 

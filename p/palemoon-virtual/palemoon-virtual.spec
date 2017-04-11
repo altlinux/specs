@@ -1,6 +1,6 @@
 Name: palemoon-virtual
-Version: 25.6.0
-Release: alt3
+Version: 27.2.0
+Release: alt1
 
 %define smr palemoon/newmoon (dependencies package)
 
@@ -42,7 +42,7 @@ Requires: palemoon-ru
 #Requires: palemoon-kk
 Requires: palemoon-uBlock
 Requires: palemoon-html5
-
+Requires: palemoon-searchplugins
 
 %package -n palemoon-full
 Summary: %smr
@@ -56,6 +56,7 @@ Requires: palemoon-tabgroups
 Requires: palemoon-uBlock
 Requires: palemoon-zing_locale_switcher
 Requires: palemoon-html5
+Requires: palemoon-searchplugins
 
 
 %description -n palemoon-suggested
@@ -83,6 +84,9 @@ Full set natives plugins to  newmoon
 %files -n palemoon-html5
 
 %changelog
+* Tue Apr 11 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.2.0-alt1
+- Add Requires to palemoon-searchplugins
+
 * Sat Aug 13 2016 Hihin Ruslan <ruslandh@altlinux.ru> 25.6.0-alt3
 - Fix palemoon-html5
 
