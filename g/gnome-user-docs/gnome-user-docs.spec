@@ -1,4 +1,4 @@
-%define ver_major 3.22
+%define ver_major 3.24
 
 Name: gnome-user-docs
 Version: %ver_major.0
@@ -43,6 +43,9 @@ directly associated with any particular GNOME application or package.
 %doc AUTHORS README NEWS
 
 %changelog
+* Tue Apr 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
