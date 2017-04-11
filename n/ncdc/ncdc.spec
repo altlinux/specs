@@ -1,6 +1,6 @@
 Name: ncdc
-Version: 1.19.1
-Release: alt2.qa1
+Version: 1.20
+Release: alt2
 Summary: A modern and lightweight direct connect client
 License: MIT
 Group: Networking/File transfer
@@ -37,6 +37,9 @@ friendly ncurses interface.
 %_man1dir/%name.1*
 
 %changelog
+* Tue Apr 11 2017 Konstantin Artyushkin <akv@altlinux.org> 1.20-alt2
+- new version
+
 * Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.19.1-alt2.qa1
 - NMU: rebuilt with libgnutls.so.28 -> libgnutls.so.30.
 
