@@ -10,7 +10,7 @@
 %define api_ver 0
 
 Name: mutter
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 Epoch: 1
 
@@ -178,6 +178,9 @@ DATADIRNAME=share %configure \
 %_datadir/gnome-control-center/keybindings/*.xml
 
 %changelog
+* Tue Apr 11 2017 Yuri N. Sedunov <aris@altlinux.org> 1:3.24.1-alt1
+- 3.24.1
+
 * Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 1:3.24.0-alt1
 - 3.24.0
 
