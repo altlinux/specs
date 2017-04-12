@@ -2,7 +2,7 @@
 
 Name: %_name-glib
 Version: 1.18.0
-Release: alt1
+Release: alt2
 
 Summary: QMI modem protocol helper library
 License: %lgpl2plus
@@ -99,6 +99,9 @@ make check
 
 
 %changelog
+* Wed Apr 12 2017 Mikhail Efremov <sem@altlinux.org> 1.18.0-alt2
+- utils: drop useless g_file_test() call.
+
 * Thu Apr 06 2017 Mikhail Efremov <sem@altlinux.org> 1.18.0-alt1
 - Fix qmi-firmware-update manpage.
 - Updated to 1.18.0.
