@@ -1,7 +1,7 @@
 %global pypi_name aodh
 
 Name: openstack-aodh
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 Summary: OpenStack Telemetry Alarming
 Group: System/Servers
@@ -331,5 +331,8 @@ rm -fr %buildroot/usr/etc
 %_initdir/%name-expirer
 
 %changelog
+* Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 3.0.2-alt1
+- 3.0.2
+
 * Wed Nov 23 2016 Alexey Shabalin <shaba@altlinux.ru> 3.0.1-alt1
 - initial build
