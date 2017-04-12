@@ -1,8 +1,8 @@
 %define sname neutron-lbaas
 
 Name: openstack-%sname
-Version: 9.1.0
-Release: alt2
+Version: 9.2.0
+Release: alt1
 Epoch: 1
 Summary: OpenStack Networking LBaaS
 
@@ -121,6 +121,9 @@ install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/neutron-lbaasv2-agent.service
 
 
 %changelog
+* Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 1:9.2.0-alt1
+- 9.2.0
+
 * Thu Nov 10 2016 Alexey Shabalin <shaba@altlinux.ru> 1:9.1.0-alt2
 - add read config /etc/sysconfig/neutron for start daemon
 - add pre,post service
