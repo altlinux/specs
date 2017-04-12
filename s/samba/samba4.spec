@@ -39,7 +39,7 @@
 
 Name: samba
 Version: 4.6.2
-Release: alt1%ubt
+Release: alt2%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -114,7 +114,11 @@ BuildRequires: gawk libgtk+2-devel libcap-devel libuuid-devel
 %{?_without_ldb:BuildRequires: libldb-devel >= 1.1.29 python-module-pyldb-devel}
 #{?_with_clustering_support:BuildRequires: ctdb-devel}
 %{?_with_testsuite:BuildRequires: ldb-tools}
+%if %ubt_id <= "M70P"
+%{?_with_systemd:BuildRequires: systemd-devel}
+%else
 %{?_with_systemd:BuildRequires: libsystemd-devel}
+%endif
 %{?_enable_avahi:BuildRequires: libavahi-devel}
 %{?_enable_glusterfs:BuildRequires: glusterfs3-devel >= 3.4.0.16}
 %{?_with_libcephfs:BuildRequires: ceph-devel}
@@ -1243,8 +1247,10 @@ TDB_NO_FSYNC=1 %make_build test
 %files pidl
 %attr(755,root,root) %_bindir/pidl
 %if_with doc
+%if %ubt_id > "M70P"
 %_man1dir/pidl.1.*
 %_man3dir/Parse::Pidl::*
+%endif
 %endif
 %perl_vendor_privlib/*
 
@@ -1387,6 +1393,9 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Wed Apr 12 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.2-alt2%ubt
+- Fix problem with failed to create kerberos keytab during join to domain
+
 * Fri Mar 31 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.2-alt1%ubt
 - Update with regression fix of spring security release
 - Revert winbind problem fixes with access user to keytab due troubles in 4.6.x
