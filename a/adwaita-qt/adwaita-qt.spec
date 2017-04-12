@@ -1,5 +1,5 @@
 Name: adwaita-qt
-Version: 0.98
+Version: 0.99
 Release: alt1
 Summary: Adwaita theme for Qt-based applications
 License: LGPLv2+
@@ -21,8 +21,8 @@ Theme to let Qt applications fit nicely into Fedora Workstation
 Summary: Adwaita Qt theme shared files
 Group: Graphical desktop/GNOME
 BuildArch: noarch
-Requires: icon-theme-oxygen
-Requires: gnome-themes-standard-data
+#Requires: icon-theme-oxygen
+#Requires: gnome-themes-standard-data
 
 %description common
 Common files (assets, etc.) for the Adwaita Qt theme
@@ -69,7 +69,7 @@ pushd "%_target_platform-qt5"
 %makeinstall_std -C BUILD
 popd
 
-%files common
+#files common
 
 %files -n adwaita-qt4
 %doc LICENSE.LGPL2 README.md
@@ -82,6 +82,9 @@ popd
 %files
 
 %changelog
+* Wed Apr 12 2017 Anton Midyukov <antohami@altlinux.org> 0.99-alt1
+- new version 0.99
+
 * Wed Mar 01 2017 Anton Midyukov <antohami@altlinux.org> 0.98-alt1
 - new version 0.98
 
