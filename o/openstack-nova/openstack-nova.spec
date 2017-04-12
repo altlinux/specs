@@ -1,7 +1,7 @@
 %add_findreq_skiplist %python_sitelibdir/nova/cloudpipe/*.template
 
 Name: openstack-nova
-Version: 14.0.3
+Version: 14.0.5
 Release: alt1
 Epoch: 1
 Summary: OpenStack Compute (nova)
@@ -825,6 +825,9 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %doc LICENSE doc/build/html
 
 %changelog
+* Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 1:14.0.5-alt1
+- 14.0.5
+
 * Fri Dec 30 2016 Alexey Shabalin <shaba@altlinux.ru> 1:14.0.3-alt1
 - 14.0.3
 
