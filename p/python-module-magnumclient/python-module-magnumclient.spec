@@ -1,7 +1,7 @@
 %def_with python3
 
 Name:       python-module-magnumclient
-Version:    2.3.0
+Version:    2.3.1
 Release:    alt1
 Summary:    Client Library for OpenStack Magnum Container Management API
 License:    ASL 2.0
@@ -134,6 +134,9 @@ rm -fr html/.doctrees html/.buildinfo
 %doc LICENSE html
 
 %changelog
+* Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 2.3.1-alt1
+- 2.3.1
+
 * Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 2.3.0-alt1
 - 2.3.0
 
