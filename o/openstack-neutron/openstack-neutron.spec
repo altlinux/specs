@@ -1,6 +1,6 @@
 
 Name: openstack-neutron
-Version: 9.2.0
+Version: 9.3.0
 Release: alt1
 Epoch: 1
 Provides: openstack-quantum = %EVR
@@ -540,6 +540,9 @@ fi
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 1:9.3.0-alt1
+- 9.3.0
+
 * Wed Feb 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1:9.2.0-alt1
 - 9.2.0
 
