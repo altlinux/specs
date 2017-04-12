@@ -17,7 +17,6 @@
 %define openresolv_version 3.5.4-alt3
 
 %def_enable systemd
-%def_disable wimax
 %def_enable introspection
 %def_disable teamdctl
 %def_enable nmtui
@@ -36,7 +35,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.6.2
+Version: 1.7.91
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -65,16 +64,16 @@ BuildPreReq: intltool libgcrypt-devel libtool
 BuildRequires: glibc-devel-static iproute2 libnl-devel libwireless-devel ppp-devel
 BuildRequires: libdbus-glib-devel >= %libdbus_glib_version
 BuildRequires: libpolkit1-devel libnss-devel libgio-devel libuuid-devel gtk-doc perl-YAML
-BuildRequires: libgudev-devel
+BuildRequires: libudev-devel
 BuildRequires: libgnome-bluetooth-devel
-BuildRequires: iptables libsoup-devel
+BuildRequires: iptables
 BuildRequires: libmm-glib-devel
 BuildRequires: libndp-devel
 BuildRequires: libreadline-devel
 BuildRequires: libaudit-devel
+BuildRequires: libcurl-devel libpsl-devel
 %{?_enable_teamdctl:BuildRequires: libteam-devel libjansson-devel}
 %{?_enable_nmtui:BuildRequires: libnewt-devel}
-%{?_enable_wimax:BuildRequires: libiWmxSdk-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgudev-gir-devel}
 %{?_enable_systemd:BuildRequires: systemd-devel libsystemd-login-devel}
 %{?_enable_bluez5dun:BuildRequires: libbluez-devel}
@@ -89,7 +88,6 @@ Requires: %name-adsl = %version-%release
 Requires: %name-bluetooth = %version-%release
 Requires: %name-wifi = %version-%release
 Requires: %name-wwan = %version-%release
-%{?_enable_wimax:Requires: %name-wimax = %version-%release}
 Requires: %name-ppp = %version-%release
 
 Provides: network-config-subsystem
@@ -173,17 +171,6 @@ Requires: %_name = %version-%release
 
 %description wwan
 This package contains NetworkManager support for mobile broadband (WWAN) devices.
-
-%if_enabled wimax
-%package wimax
-Summary: Intel WiMAX device support for NetworkManager
-Group: System/Configuration/Networking
-Requires: %_name = %version-%release
-
-%description wimax
-This package contains NetworkManager support for Intel WiMAX mobile
-broadband devices.
-%endif
 
 %package ppp
 Summary: PPP plugin for NetworkManager
@@ -406,7 +393,6 @@ GObject introspection devel data for the NetworkManager.
 	--with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
 	--enable-ppp=yes \
 	--with-system-ca-path=/var/lib/ssl/certs \
-	%{subst_enable wimax} \
 	--enable-tests=yes \
 	%{?_enable_systemd:--with-systemdsystemunitdir=/lib/systemd/system} \
 %if_enabled systemd
@@ -425,7 +411,7 @@ GObject introspection devel data for the NetworkManager.
 	--disable-ifcfg-suse \
 	--disable-ifupdown \
 	--disable-ifnet \
-	--with-setting-plugins-default='etcnet-alt,ibft' \
+	--with-config-plugins-default='etcnet-alt,ibft' \
 	--with-modem-manager-1 \
 	%{subst_enable teamdctl} \
 %if_enabled nmtui
@@ -444,6 +430,7 @@ GObject introspection devel data for the NetworkManager.
 	--with-libaudit=yes-disabled-by-default \
 	--with-ofono=no \
 	--disable-json-validation \
+	--with-libpsl=yes \
 %if_enabled sanitizers
 	--enable-address-sanitizer \
 	--enable-undefined-sanitizer \
@@ -591,11 +578,6 @@ fi
 %_libdir/%name/libnm-device-plugin-wwan.so
 %_libdir/%name/libnm-wwan.so
 
-%if_enabled wimax
-%files wimax
-%_libdir/%name/libnm-device-plugin-wimax.so
-%endif
-
 %if_enabled nmtui
 %files tui
 %_bindir/nmtui*
@@ -686,6 +668,17 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Apr 11 2017 Mikhail Efremov <sem@altlinux.org> 1.7.91-alt1
+- NetworkManager.conf: Add note about Wi-Fi MAC rondomization.
+- etcnet-alt: Don't print error if ipv4address doesn't exist.
+- Drop wimax support.
+- Fix wrong configure option.
+- etcnet-alt: Don't return a value from read_device_config().
+- etcnet-alt: Use libudev instead of libgudev.
+- Update 'not set to disconndcted' patch.
+- Drop 'build LTO' patch.
+- Updated to 1.7.91 (1.8-rc2).
+
 * Fri Feb 17 2017 Mikhail Efremov <sem@altlinux.org> 1.6.2-alt1
 - etcnet-alt: Fix tests build.
 - Build fixes from upstream.
