@@ -1,7 +1,7 @@
 %define sname neutron-fwaas
 
 Name: openstack-%sname
-Version: 9.0.0
+Version: 9.0.1
 Release: alt1
 Epoch: 1
 Summary: OpenStack Networking FWaaS
@@ -85,6 +85,9 @@ install -p -D -m 644 etc/fwaas_driver.ini.sample %buildroot%_sysconfdir/neutron/
 
 
 %changelog
+* Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 1:9.0.1-alt1
+- 9.0.1
+
 * Mon Oct 24 2016 Alexey Shabalin <shaba@altlinux.ru> 1:9.0.0-alt1
 - 9.0.0
 
