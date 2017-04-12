@@ -1,6 +1,6 @@
 Name: guile22
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Summary: A GNU implementation of Scheme
 License: GPL
@@ -37,6 +37,9 @@ This package provides Guile development tools, headers and libraries.
 
 %prep
 %setup
+echo %version > .tarball-version
+
+%build
 %autoreconf
 %configure --disable-static
 %make_build
@@ -46,6 +49,7 @@ This package provides Guile development tools, headers and libraries.
 mv %buildroot%_bindir/guile %buildroot%_bindir/guile22
 mv %buildroot%_man1dir/guile.1 %buildroot%_man1dir/guile22.1
 install -pm0644 -D guile.alternatives %buildroot%_altdir/%name
+install -pm0644 -D guile.macros %buildroot%_rpmmacrosdir/guile
 
 %brp_strip_none %_libdir/guile/2.2/ccache/*
 %add_verify_elf_skiplist %_libdir/guile/2.2/ccache/*
@@ -69,8 +73,12 @@ install -pm0644 -D guile.alternatives %buildroot%_altdir/%name
 %_libdir/libguile-2.2.so
 %_datadir/aclocal/guile.m4
 %_pkgconfigdir/guile-2.2.pc
+%_rpmmacrosdir/guile
 %_infodir/*.info*
 
 %changelog
+* Wed Apr 12 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt2
+- fix regex module
+
 * Fri Mar 17 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt1
 - initial
