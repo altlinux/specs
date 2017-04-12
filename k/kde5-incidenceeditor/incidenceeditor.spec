@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 16.12.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: System/Libraries
@@ -21,7 +21,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: kde5-akonadi-calendar-devel kde5-calendarsupport-devel kde5-eventviews-devel kde5-kcalcore-devel kde5-kcalutils-devel
-BuildRequires: kde5-kcontacts-devel kde5-kdgantt2-devel kde5-kidentitymanagement-devel kde5-kldap-devel kde5-kmailtransport-devel
+BuildRequires: kde5-kcontacts-devel kde5-kidentitymanagement-devel kde5-kldap-devel kde5-kmailtransport-devel
 BuildRequires: kde5-kmime-devel kde5-kpimtextedit-devel kde5-libkdepim-devel kde5-pim-apps-libs-devel
 BuildRequires: boost-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel
 BuildRequires: kf5-kdiagram-devel
@@ -84,6 +84,9 @@ KF5 library
 %_K5lib/libKF5IncidenceEditor.so.*
 
 %changelog
+* Wed Apr 12 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt2%ubt
+- fix build requires
+
 * Wed Mar 15 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 
