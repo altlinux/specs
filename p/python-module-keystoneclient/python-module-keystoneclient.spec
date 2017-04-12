@@ -1,7 +1,7 @@
 %def_with python3
 
 Name:       python-module-keystoneclient
-Version:    3.5.0
+Version:    3.5.1
 Release:    alt1
 Summary:    Client library for OpenStack Identity API
 License:    ASL 2.0
@@ -118,6 +118,9 @@ rm -fr %buildroot%python3_sitelibdir/keystoneclient/tests
 %doc LICENSE doc/build/html
 
 %changelog
+* Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 3.5.1-alt1
+- 3.5.1
+
 * Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 3.5.0-alt1
 - 3.5.0
 - The `keystone` CLI has been removed, using the `openstack` CLI is recommended
