@@ -1,5 +1,5 @@
 %define branch 1.8
-%define version %branch.17
+%define version %branch.18
 %define release alt1
 %define origname Django
 %define oname django
@@ -388,6 +388,10 @@ popd
 %endif
 
 %changelog
+* Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 1.8.18-alt1
+- 1.8.18
+- fixed CVE-2017-7233,CVE-2017-7234
+
 * Thu Feb 02 2017 Alexey Shabalin <shaba@altlinux.ru> 1.8.17-alt1
 - 1.8.17
 - fixed CVE-2016-9013,CVE-2016-9014 
@@ -566,7 +570,7 @@ popd
 * Sat Dec 08 2007 Andrew Kornilov <hiddenman@altlinux.ru> 0.97-alt0.2.svn6898
 - Latest svn trunk sources
 
-* Sun Sep 24 2007 Andrew Kornilov <hiddenman@altlinux.ru> 0.97-alt0.1.svn6410
+* Mon Sep 24 2007 Andrew Kornilov <hiddenman@altlinux.ru> 0.97-alt0.1.svn6410
 - Latest svn trunk sources
 - Temporarily removed cx_Oracle requirement
 - ChangeLog added to the docs
