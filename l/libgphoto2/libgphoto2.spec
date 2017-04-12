@@ -6,7 +6,7 @@
 %define _libexecdir /usr/libexec
 
 Name: libgphoto2
-Version: 2.5.11
+Version: 2.5.13
 Release: alt1
 
 Group: System/Libraries
@@ -27,7 +27,7 @@ BuildRequires: libhal-devel
 
 # Url for source code downloads now http://sourceforge.net/project/showfiles.php?group_id=8874
 Source0: %name-%version.tar
-Patch0:  %name-2.5.2-alt-fix-underlinked_libraries.patch
+Patch0:  %name-2.5.13-alt-fix-underlinked_libraries.patch
 
 %description
 This library contains all the functionality to access to modern digital
@@ -245,6 +245,10 @@ export utilsdir=%_libexecdir/%name
 %endif
 
 %changelog
+* Wed Apr 12 2017 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.13-alt1
+- 2.5.13
+- updated patch
+
 * Sat Dec 17 2016 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.11-alt1
 - 2.5.11
 
