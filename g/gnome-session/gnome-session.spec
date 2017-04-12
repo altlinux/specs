@@ -5,7 +5,7 @@
 %def_disable consolekit
 
 Name: gnome-session
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -152,6 +152,9 @@ This package permits to log into GNOME using Wayland.
 
 
 %changelog
+* Wed Apr 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
+- 3.24.1
+
 * Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 
