@@ -3,7 +3,7 @@
 
 Name: openstack-heat
 Summary: OpenStack Orchestration (heat)
-Version: 7.0.1
+Version: 7.0.2
 Release: alt1
 Epoch: 1
 License: ASL 2.0
@@ -364,13 +364,16 @@ install -p -m 644 etc/heat/templates/*.yaml %buildroot%_sysconfdir/heat/template
 %_prefix/lib/heat/docker
 
 %changelog
+* Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.2-alt1
+- 7.0.2
+
 * Tue Nov 22 2016 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.1-alt1
 - 7.0.1
 - fix dir permitions
 - fix logrotate
 - drop dist config in datadir again
 
-* Thu Nov 11 2016 Lenar Shakirov <snejok@altlinux.ru> 1:6.1.0-alt1
+* Fri Nov 11 2016 Lenar Shakirov <snejok@altlinux.ru> 1:6.1.0-alt1
 - 6.1.0 Mitaka Release
 
 * Mon Mar 28 2016 Alexey Shabalin <shaba@altlinux.ru> 1:5.0.1-alt1
