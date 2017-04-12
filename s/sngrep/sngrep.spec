@@ -1,6 +1,6 @@
 Name: sngrep
 Version: 1.4.2
-Release: alt1
+Release: alt1%ubt
 
 Summary: sngrep is a tool for displaying SIP calls message flows from terminal
 
@@ -14,16 +14,17 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires: libncurses-devel libpcap libgnutls-devel libpcap-devel libpcre-devel libgcrypt-devel
 
+BuildRequires(pre): rpm-build-ubt
+
 %description
 sngrep is a tool for displaying SIP calls message flows from terminal.
 It supports live capture to display realtime SIP packets and can also be used
 as PCAP viewer.
 
-
-
 %prep
 %setup
 %patch0 -p1
+
 %build
 %autoreconf
 %configure \
@@ -42,7 +43,9 @@ as PCAP viewer.
 %_bindir/sngrep
 %_man8dir/sngrep.8*
 
-
 %changelog
+* Wed Apr 12 2017 Evgeny Bolshedvorsky <jenya@altlinux.org> 1.4.2-alt1%ubt
+- added ubt
+
 * Mon Apr 10 2017 Evgeny Bolshedvorsky <jenya@altlinux.org> 1.4.2-alt1
 - initial build
