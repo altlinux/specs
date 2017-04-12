@@ -2,7 +2,7 @@
 %define sname mistralclient
 
 Name:       python-module-%sname
-Version:    2.1.1
+Version:    2.1.2
 Release:    alt1
 Summary:    Client Library for OpenStack Mistral Workflow Service API
 License:    ASL 2.0
@@ -131,6 +131,9 @@ rm -fr html/.doctrees html/.buildinfo
 %doc LICENSE html
 
 %changelog
+* Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 2.1.2-alt1
+- 2.1.2
+
 * Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 2.1.1-alt1
 - 2.1.1
 
