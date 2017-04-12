@@ -1,6 +1,6 @@
 Name: fontconfig
 Version: 2.12.1
-Release: alt1
+Release: alt2%ubt
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -13,6 +13,8 @@ Source1: fontconfig-firsttime
 Source2: fontconfig.filetrigger
 # FC
 Patch1: fontconfig-sleep-less.patch
+Patch2: fontconfig-glibc-limits.patch
+Patch3: fontconfig-gperf-3.1.patch
 # ALT
 Patch11: alt-symbols-map.patch
 Patch12: alt-config.patch
@@ -21,6 +23,7 @@ Patch14: alt-disable-postscript-aliases.patch
 
 Provides: lib%name = %version
 Obsoletes: lib%name < %version
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: docbook-utils elinks gperf libexpat-devel libfreetype-devel
 BuildRequires: python2.7(urllib2) python2.7(lxml) python2.7(six) python2.7(distutils)
 
@@ -42,6 +45,8 @@ documentation required for development of fontconfig-based software.
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
@@ -141,6 +146,9 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Wed Apr 12 2017 Sergey V Turchin <zerg@altlinux.org> 2.12.1-alt2%ubt
+- add fixes for new glibc and gperf
+
 * Fri Aug 12 2016 Sergey V Turchin <zerg@altlinux.org> 2.12.1-alt1
 - new version
 
