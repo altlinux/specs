@@ -3,7 +3,7 @@
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
 Version: 1.1.16
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
 # VCS:   https://github.com/ClusterLabs/pacemaker.git
@@ -22,11 +22,9 @@ BuildRequires: glib2-devel libxml2-devel libxslt-devel libuuid-devel systemd-dev
 BuildRequires: python-devel gcc-c++ bzlib-devel libpam-devel
 BuildRequires: libqb-devel > 0.11.0 libgnutls-devel libltdl-devel libgio-devel
 BuildRequires: libncurses-devel libssl-devel libselinux-devel docbook-style-xsl
-BuildRequires: bison flex help2man
-BuildRequires: libesmtp-devel libsensors3-devel libnet-snmp-devel
-#libopenipmi-devel libservicelog-devel
-BuildRequires: libcorosync-devel
-#libcluster-glue-devel
+BuildRequires: bison flex help2man xsltproc
+BuildRequires: libesmtp-devel libsensors3-devel libnet-snmp-devel libopenipmi-devel libservicelog-devel
+BuildRequires: libcorosync-devel libcluster-glue-devel
 BuildRequires: publican inkscape asciidoc
 
 %define gname haclient
@@ -136,8 +134,8 @@ manager for Linux-HA (Heartbeat) and/or Corosync.
 
 %build
 %autoreconf
-
 %configure \
+	--disable-fatal-warnings \
         --disable-static	\
         --with-profiling	\
         --with-gcov		\
@@ -145,6 +143,7 @@ manager for Linux-HA (Heartbeat) and/or Corosync.
         --with-ais		\
         --with-corosync		\
         --with-cs-quorum	\
+	--with-stonithd		\
         --enable-thread-safe	\
         --with-initdir=%_initdir	\
         --enable-systemd	\
@@ -183,11 +182,11 @@ find %buildroot -name '*.la' -type f -print0 | xargs -0 rm -f
 
 # Do not package these either
 rm -rf %buildroot%_libdir/service_crm.so %buildroot%_datadir/pacemaker/tests/cts
-rm -f %buildroot%_sbindir/fence_legacy
-rm -f %buildroot%_mandir/man8/fence_legacy.*
-find %buildroot -name 'o2cb*' -type f -print0 | xargs -0 rm -f
+#rm -f %buildroot%_sbindir/fence_legacy
+#rm -f %buildroot%_mandir/man8/fence_legacy.*
+#find %buildroot -name 'o2cb*' -type f -print0 | xargs -0 rm -f
 # Don't ship fence_pcmk where it has no use
-rm -f %buildroot%_sbindir/fence_pcmk
+#rm -f %buildroot%_sbindir/fence_pcmk
 
 GCOV_BASE=%buildroot/%_var/lib/pacemaker/gcov
 mkdir -p $GCOV_BASE
@@ -230,15 +229,18 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_sbindir/crm_node
 %_sbindir/crm_verify
 %_sbindir/attrd_updater
-#%_sbindir/fence_legacy
-#%_sbindir/fence_pcmk
+%_sbindir/fence_legacy
+%_sbindir/fence_pcmk
 %_sbindir/crm_resource
 %_sbindir/stonith_admin
+%_sbindir/notifyServicelogEvent
+%_sbindir/ipmiservicelogd
+%_man7dir/*.7*
 %_man8dir/attrd_updater.*
 %_man8dir/crm_attribute.*
 %_man8dir/crm_node.*
 %_man8dir/crm_master.*
-#%_man8dir/fence_pcmk.*
+%_man8dir/fence_pcmk.*
 %_man8dir/pacemakerd.*
 %_man8dir/stonith_admin.*
 %dir %attr (750, %uname, %gname) %_var/lib/pacemaker/cib
@@ -261,12 +263,12 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_sbindir/crm_simulate
 %_sbindir/crm_report
 %_sbindir/crm_ticket
-%doc %_man8dir/*
+%_man8dir/*.8*
 %exclude %_man8dir/attrd_updater.*
 %exclude %_man8dir/crm_attribute.*
 %exclude %_man8dir/crm_node.*
 %exclude %_man8dir/crm_master.*
-#%exclude %_man8dir/fence_pcmk.*
+%exclude %_man8dir/fence_pcmk.*
 %exclude %_man8dir/pacemakerd.*
 %exclude %_man8dir/pacemaker_remoted.*
 %exclude %_man8dir/stonith_admin.*
@@ -319,6 +321,9 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Apr 12 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.1.16-alt2
+- enabled stonithd
+
 * Sat Dec 24 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.16-alt1
 - New version
 
