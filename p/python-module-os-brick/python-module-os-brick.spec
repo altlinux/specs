@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%pypi_name
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 Summary: OpenStack Cinder brick library for managing local volume attaches
 Group: Development/Python
@@ -132,6 +132,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 1.6.2-alt1
+- 1.6.2
+
 * Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1.6.1-alt1
 - 1.6.1
 
