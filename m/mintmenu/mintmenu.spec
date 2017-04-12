@@ -4,7 +4,7 @@
 
 Name:           mintmenu
 Version:        5.7.6
-Release:        alt1
+Release:        alt2
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
 Summary:        Advanced Menu for the MATE Desktop
@@ -17,7 +17,7 @@ Source33:	mintmenu_test.sh
 Source34:	list-mintmenu.conf
 Source35:	list-mintmenu.lua
 Source36:	list-mintmenu.ignore
-Source37:	mintmenu-altlinux.png
+Source37:	mintmenu-basealt.png
 
 Source50:	mintmenu.watch
 
@@ -125,8 +125,8 @@ sh -v %SOURCE33
 # Use alternative for menu button icon
 mkdir -p %buildroot%_altdir
 rm -f %{buildroot}usr/lib/linuxmint/mintMenu/mintMenu.png
-install -Dm644 %SOURCE37 %buildroot%_pixmapsdir/mintmenu-altlinux.png
-printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-altlinux.png\t20\n" > %buildroot%_altdir/mintmenu-icon-alt
+install -Dm644 %SOURCE37 %buildroot%_pixmapsdir/mintmenu-basealt.png
+printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-basealt.png\t20\n" > %buildroot%_altdir/mintmenu-icon-alt
 
 %files -f %{name}.lang
 %_bindir/mintmenu
@@ -135,7 +135,7 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-altlin
 %_datadir/dbus-1/services/*.service
 %_datadir/glib-2.0/schemas/*.xml
 %_man1dir/%name.1.*
-%_pixmapsdir/mintmenu-altlinux.png
+%_pixmapsdir/mintmenu-basealt.png
 %_pixmapsdir/mintmenu.svg
 %_altdir/mintmenu-icon-alt
 
@@ -145,6 +145,9 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-altlin
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Wed Apr 12 2017 Andrey Cherepanov <cas@altlinux.org> 5.7.6-alt2
+- Change menu icon to Basealt logo (ALT #33358)
+
 * Fri Dec 09 2016 Andrey Cherepanov <cas@altlinux.org> 5.7.6-alt1
 - new version 5.7.6
 
