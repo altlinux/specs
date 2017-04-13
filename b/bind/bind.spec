@@ -1,15 +1,14 @@
 Name: bind
-Version: 9.10.4
-Release: alt2
+Version: 9.10.4.P8
+%define src_version 9.10.4-P8
+Release: alt1
 
 Summary: ISC BIND - DNS server
 License: BSD-style
 Group: System/Servers
 Url: http://www.isc.org/products/BIND/
 
-%define vsuffix -P6
-# NOTE: vsuffix removed from Source0
-# ftp://ftp.isc.org/isc/bind9/%version%vsuffix/bind-%version%vsuffix.tar.gz
+# ftp://ftp.isc.org/isc/bind9/%src_version/bind-%src_version.tar.gz
 Source0: %name-%version.tar
 Source2: rfc1912.txt
 Source3: bind.README.bind-devel
@@ -128,39 +127,39 @@ The Berkeley Internet Name Domain (BIND) implements an Internet domain
 name server.  BIND is the most widely-used name server software on the
 Internet, and is supported by the Internet Software Consortium (ISC).
 
-This package provides the %version%vsuffix server and related
+This package provides the %src_version server and related
 configuration files.
 
 %description utils
 This package contains various utilities related to DNS that are derived
-from the BIND %version%vsuffix source tree, including dig, host,
+from the BIND %src_version source tree, including dig, host,
 nslookup and nsupdate.
 
 %description -n libbind
-This package contains shared libraries used by BIND's %version%vsuffix
+This package contains shared libraries used by BIND's %src_version
 daemons and clients.
 
 %description devel
 This package contains development libraries, header files, and API man
 pages for libdns, libisc, libisccc, libisccfg and liblwres. These are
 only needed if you want to compile packages that need more BIND
-%version%vsuffix nameserver API than the resolver code provided by
+%src_version nameserver API than the resolver code provided by
 glibc.
 
 %description devel-static
 This package contains development static libraries, header files, and
 API man pages for libdns, libisc, libisccc, libisccfg and liblwres.
 These are only needed if you want to compile statically linked packages
-that need more BIND %version%vsuffix nameserver API than the resolver
+that need more BIND %src_version nameserver API than the resolver
 code provided by glibc.
 
 %description doc
 This package provides various documents that are useful for maintaining
-a working BIND %version%vsuffix installation.
+a working BIND %src_version installation.
 
 %description -n lwresd
 This package contains lwresd, the daemon providing name lookup services
-to clients that use the BIND %version%vsuffix lightweight resolver
+to clients that use the BIND %src_version lightweight resolver
 library. It is essentially a stripped-down, caching-only name server
 that answers queries using the BIND 9 lightweight resolver protocol
 rather than the DNS protocol.
@@ -295,7 +294,7 @@ cp -a CHANGES COPYRIGHT FAQ README* \
 	%buildroot%docdir/
 install -pm644 contrib/queryperf/README %buildroot%docdir/README.queryperf
 
-bzip2 -9q %buildroot%docdir/{*/*.txt,FAQ,CHANGES}
+xz -9 %buildroot%docdir/{*/*.txt,FAQ,CHANGES}
 rm -fv %buildroot%docdir/*/{Makefile*,README-SGML,*.dsl*,*.sh*,*.xml}
 
 %define _unpackaged_files_terminate_build 1
@@ -432,11 +431,16 @@ fi
 %files doc
 %docdir
 %exclude %docdir/README*
-%exclude %docdir/FAQ.bz2
+%exclude %docdir/FAQ.xz
 %exclude %docdir/misc
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Wed Apr 12 2017 Dmitry V. Levin <ldv@altlinux.org> 9.10.4.P8-alt1
+- 9.10.4-P6 -> 9.10.4-P8 (fixes: CVE-2017-3136, CVE-2017-3137, CVE-2017-3138).
+- bind.service: pass $CHROOT to named-checkconf (closes: #33239).
+- bind.init: check named configuration on startup.
+
 * Wed Feb 08 2017 Dmitry V. Levin <ldv@altlinux.org> 9.10.4-alt2
 - 9.10.4-P5 -> 9.10.4-P6 (fixes CVE-2017-3135).
 
