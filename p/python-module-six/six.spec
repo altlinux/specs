@@ -1,11 +1,11 @@
 %define oname six
-%def_without check
+%def_with check
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 1.10.0
-Release: alt4
+Release: alt5
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
 Group: Development/Python
@@ -42,6 +42,10 @@ Group: Development/Python3
 %py3_provides six.moves
 %py3_provides six.moves.urllib
 %py3_provides six.moves.urllib.parse
+%py3_provides six.moves.urllib.request
+%py3_provides six.moves.urllib.response
+%py3_provides six.moves.urllib.error
+%py3_provides six.moves.urllib.robotparser
 
 %description -n python3-module-%oname
 Six is a Python 2 and 3 compatibility library. It provides utility
@@ -76,11 +80,11 @@ popd
 
 %check
 python setup.py test
-py.test -vv
+#py.test -vv
 %if_with python3
 pushd ../python3
 python3 setup.py test
-py.test-%_python3_version -vv
+#py.test-%_python3_version -vv
 popd
 %endif
 
@@ -95,6 +99,10 @@ popd
 %endif
 
 %changelog
+* Thu Apr 13 2017 Anton Midyukov <antohami@altlinux.org> 1.10.0-alt5
+- enable check
+- add python3 provides six.moves.urllib.response, six.moves.urllib.error, six.moves.urllib.robotparser
+
 * Wed Mar 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1.10.0-alt4
 - fix python3 provides
 

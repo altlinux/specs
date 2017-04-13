@@ -1,20 +1,20 @@
 %define oname numpy
-%define svnver cfa095a
-%define majver 2
+%define majver 1.12
 %def_without latex
 %def_with doc
 %def_with addons
-%def_with tests
+%def_without tests
 %def_with python3
 
 %define somver 0
-%define sover %somver.5.%svnver
+%define sover %somver.5
 %define py3somver 1
-%define py3sover %somver.7.%svnver
+%define py3sover %somver.7
 
 Name: python-module-%oname
-Version: %majver.0.0
-Release: alt15.git20150829.2.1
+Version: %majver.1
+Release: alt1
+Epoch: 1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
@@ -178,7 +178,7 @@ Summary: Development files of NumPy (Python 3)
 Group: Development/Python3
 Requires: lib%oname-py3 = %version-%release
 Requires: python3-module-%oname = %version-%release
-Requires: python3-module-%oname-addons = %version-%release
+#Requires: python3-module-%oname-addons = %version-%release
 Requires: python3-devel
 # numpydoc
 %add_python3_req_skip numscons
@@ -364,8 +364,8 @@ This package contains documentation for NumPy in PDF format.
 %prep
 %setup
 
-git config --global user.email "real at altlinux.org"
-git config --global user.name "REAL"
+git config --global user.email "python@packages.altlinux.org"
+git config --global user.name "Python Development Team>"
 git init-db
 
 install -m644 %SOURCE1 %SOURCE2 .
@@ -373,11 +373,6 @@ tar xf %SOURCE3
 sed -i 's|@LIBDIR@|%_libdir|g' site.cfg
 sed -i 's|@PYVER@|%_python_version|g' site.cfg doc/Makefile
 sed -i 's|@PYSUFF@||' site.cfg
-
-cat <<EOF >%oname/__svn_version__.py
-version='%version'
-svn_version='%svnver'
-EOF
 
 # headers
 
@@ -399,12 +394,7 @@ sed -i 's|@LIBDIR@|%_libdir|g' site.cfg
 sed -i 's|@PYVER@|%_python3_version|g' site.cfg doc/Makefile
 sed -i 's|@PYSUFF@|3|' site.cfg
 sed -i 's|pyrexc|pyrexc3|' numpy/distutils/command/build_src.py
-find doc/ -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
-cat <<EOF >%oname/__svn_version__.py
-version='%version'
-svn_version='%svnver'
-EOF
+#find doc/ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 # headers
 
@@ -598,8 +588,8 @@ cp -fR doc/build/plot_directive/reference/generated/*.pdf \
 # tests
 
 %if_with tests
-cp %oname/distutils/tests/swig_ext/src/example.i \
-	%buildroot%python_sitelibdir/%oname/distutils/tests/swig_ext/src/
+#cp %oname/distutils/tests/swig_ext/src/example.i \
+#	%buildroot%python_sitelibdir/%oname/distutils/tests/swig_ext/src/
 #cp %oname/numarray/_capi.c \
 #	%buildroot%python_sitelibdir/%oname/numarray/
 cp %oname/fft/*.c %oname/fft/*.h \
@@ -613,7 +603,7 @@ cp -fR %oname/core/src \
 cp -fR %oname/random/mtrand \
 	%buildroot%python_sitelibdir/%oname/random/
 
-rm -fR %oname/distutils/tests/f2py_f90_ext
+#rm -fR %oname/distutils/tests/f2py_f90_ext
 for i in $(find numpy/ -name setup.py |egrep tests |sed 's|/setup.py||')
 do
 	pushd $i
@@ -624,8 +614,8 @@ done
 
 %if_with python3
 pushd ../python3
-cp %oname/distutils/tests/swig_ext/src/example.i \
-	%buildroot%python3_sitelibdir/%oname/distutils/tests/swig_ext/src/
+#cp %oname/distutils/tests/swig_ext/src/example.i \
+#	%buildroot%python3_sitelibdir/%oname/distutils/tests/swig_ext/src/
 #cp %oname/numarray/_capi.c \
 #	%buildroot%python3_sitelibdir/%oname/numarray/
 cp %oname/fft/*.c %oname/fft/*.h \
@@ -640,17 +630,17 @@ cp -fR %oname/random/mtrand \
 	%buildroot%python3_sitelibdir/%oname/random/
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
-rm -fR %oname/distutils/tests/f2py_f90_ext
-sed -i 's|.*pyrex_ext.*||' %oname/distutils/tests/setup.py
-for i in $(find numpy/ -name setup.py |egrep tests |sed 's|/setup.py||')
-do
-	if [ "$i" != "numpy/distutils/tests/pyrex_ext" ]; then
-		pushd $i
-		%python3_build_debug
-		%python3_install
-		popd
-	fi
-done
+#rm -fR %oname/distutils/tests/f2py_f90_ext
+#sed -i 's|.*pyrex_ext.*||' %oname/distutils/tests/setup.py
+#for i in $(find numpy/ -name setup.py |egrep tests |sed 's|/setup.py||')
+#do
+#	if [ "$i" != "numpy/distutils/tests/pyrex_ext" ]; then
+#		pushd $i
+#		%python3_build_debug
+#		%python3_install
+#		popd
+#	fi
+#done
 export PYTHONPATH=%buildroot%python_sitelibdir
 popd
 %endif
@@ -691,8 +681,8 @@ popd
 
 cp -fR numpy/core/code_generators \
 	%buildroot%python_sitelibdir/
-install -m644 %oname/__svn_version__.py \
-	%buildroot%python_sitelibdir/%oname
+#install -m644 %oname/__svn_version__.py \
+#	%buildroot%python_sitelibdir/%oname
 install -p -m644 %oname/core/code_generators/numpy_api.py \
 	%buildroot%python_sitelibdir/%oname
 install -p -m644 %oname/core/code_generators/genapi.py \
@@ -716,15 +706,15 @@ ln -s f2py%_python_version %buildroot%_bindir/f2py
 
 cp -fR numpy/core/code_generators \
 	%buildroot%python3_sitelibdir/
-install -m644 %oname/__svn_version__.py \
-	%buildroot%python3_sitelibdir/%oname
+#install -m644 %oname/__svn_version__.py \
+#	%buildroot%python3_sitelibdir/%oname
 install -p -m644 %oname/core/code_generators/numpy_api.py \
 	%buildroot%python3_sitelibdir/%oname
 install -p -m644 %oname/core/code_generators/genapi.py \
 	%buildroot%python3_sitelibdir/%oname
 install -p -m644 %oname/core/src/private/npy_config.h \
 	%buildroot%_includedir/%oname-py3
-touch %buildroot%python_sitelibdir/floatint/__init__.py
+#touch %buildroot%python3_sitelibdir/floatint/__init__.py
 
 # delete unnecessary files
 
@@ -761,7 +751,7 @@ if [ -d %python_sitelibdir/%oname/core/include ]; then
 fi
 
 %files -f %name.lang
-%doc COMPATIBILITY LICENSE.txt README.txt THANKS.txt
+%doc LICENSE.txt README.md THANKS.txt
 %_bindir/*
 #exclude %_bindir/py3_autosummary_generate
 %if_with python3
@@ -784,12 +774,14 @@ fi
 #exclude %python_sitelibdir/%oname/numarray/convolve.py*
 #exclude %python_sitelibdir/%oname/numarray/nd_image.py*
 #exclude %python_sitelibdir/%oname/numarray/include
-%exclude %python_sitelibdir/%oname/distutils
+#exclude %python_sitelibdir/%oname/distutils/*
+%exclude %python_sitelibdir/%oname/distutils/mingw
 %exclude %python_sitelibdir/%oname/f2py/src
 #exclude %python_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
 %if_with doc
 %exclude %python_sitelibdir/%oname/pickle
 %endif
+%if_with tests
 %exclude %python_sitelibdir/%oname/random/mtrand/*.h
 %exclude %python_sitelibdir/%oname/random/mtrand/*.c
 %exclude %python_sitelibdir/%oname/random/mtrand/*.pxi
@@ -806,13 +798,15 @@ fi
 #exclude %python_sitelibdir/%oname/lib/src
 %exclude %python_sitelibdir/%oname/linalg/*.c
 #exclude %python_sitelibdir/%oname/linalg/*.h
-%python_sitelibdir/%oname-*.egg-info
 #python_sitelibdir/numpyx*
+%endif #if_with tests
 %python_sitelibdir/floatint*
+%python_sitelibdir/%oname-*.egg-info
+%python_sitelibdir/code_generators
 
 %if_with python3
 %files -n python3-module-%oname -f %name.lang
-%doc COMPATIBILITY LICENSE.txt README.txt THANKS.txt
+%doc LICENSE.txt README.md THANKS.txt
 #_bindir/py3_*
 %_bindir/f2py3
 %python3_sitelibdir/%oname
@@ -832,10 +826,11 @@ fi
 #exclude %python3_sitelibdir/%oname/numarray/convolve.py*
 #exclude %python3_sitelibdir/%oname/numarray/nd_image.py*
 #exclude %python3_sitelibdir/%oname/numarray/include
-%exclude %python3_sitelibdir/%oname/distutils
+#exclude %python3_sitelibdir/%oname/distutils/*
+%exclude %python3_sitelibdir/%oname/distutils/mingw
 %exclude %python3_sitelibdir/%oname/f2py/src
 #exclude %python3_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
-#if_with doc
+%if_with tests
 %exclude %python3_sitelibdir/%oname/random/mtrand/*.h
 %exclude %python3_sitelibdir/%oname/random/mtrand/*.c
 %exclude %python3_sitelibdir/%oname/random/mtrand/*.pxi
@@ -853,11 +848,12 @@ fi
 #exclude %python3_sitelibdir/%oname/lib/src
 %exclude %python3_sitelibdir/%oname/linalg/*.c
 #exclude %python3_sitelibdir/%oname/linalg/*.h
-#endif
-%python3_sitelibdir/%oname-*.egg-info
 #python3_sitelibdir/numpyx*
+%endif #if_with tests
 #python3_sitelibdir/floatint*
-%endif
+%python3_sitelibdir/%oname-*.egg-info
+%python3_sitelibdir/code_generators
+%endif #if_with python3
 
 %if_with addons
 #files addons
@@ -934,7 +930,7 @@ fi
 %endif
 %python_sitelibdir/%oname/core/lib/libnpymath.so
 %_includedir/%oname
-#if_with docs
+%if_with tests
 %python_sitelibdir/%oname/random/mtrand/*.h
 %python_sitelibdir/%oname/random/mtrand/*.c
 %python_sitelibdir/%oname/random/mtrand/*.pxi
@@ -951,15 +947,15 @@ fi
 #python_sitelibdir/%oname/lib/src
 %python_sitelibdir/%oname/linalg/*.c
 #python_sitelibdir/%oname/linalg/*.h
-#endif
+%endif
 %python_sitelibdir/%oname/core/include
 #python_sitelibdir/%oname/numarray/include
-%python_sitelibdir/%oname/distutils
+%python_sitelibdir/%oname/distutils/mingw
 %exclude %python_sitelibdir/%oname/distutils/tests
 %python_sitelibdir/%oname/f2py/src
 %python_sitelibdir/%oname/random/randomkit.h
 %python_sitelibdir/%oname/core/lib/npy-pkg-config
-%python_sitelibdir/code_generators
+#python_sitelibdir/code_generators
 
 %if_with python3
 %files -n lib%oname-py3-devel
@@ -967,7 +963,7 @@ fi
 %python3_sitelibdir/%oname/core/lib/libnpymath3.so
 %_pkgconfigdir/%oname-py3.pc
 %_includedir/%oname-py3
-#if_with docs
+%if_with tests
 %python3_sitelibdir/%oname/random/mtrand/*.h
 %python3_sitelibdir/%oname/random/mtrand/*.c
 %python3_sitelibdir/%oname/random/mtrand/*.pxi
@@ -984,15 +980,15 @@ fi
 #python3_sitelibdir/%oname/lib/src
 %python3_sitelibdir/%oname/linalg/*.c
 #python3_sitelibdir/%oname/linalg/*.h
-#endif
+%endif
 %python3_sitelibdir/%oname/core/include
 #python3_sitelibdir/%oname/numarray/include
-%python3_sitelibdir/%oname/distutils
+%python3_sitelibdir/%oname/distutils/mingw
 %exclude %python3_sitelibdir/%oname/distutils/tests
 %python3_sitelibdir/%oname/f2py/src
 %python3_sitelibdir/%oname/random/randomkit.h
 %python3_sitelibdir/%oname/core/lib/npy-pkg-config
-%python3_sitelibdir/code_generators
+#python3_sitelibdir/code_generators
 %endif
 
 %if_with doc
@@ -1021,6 +1017,12 @@ fi
 %endif
 
 %changelog
+* Mon Apr 17 2017 Anton Midyukov <antohami@altlinux.org> 1:1.12.1-alt1
+- New version 1.12.1
+- Remove __svn_version__.py
+- Disable tests
+- Disable convert python 2 to python3 script
+
 * Thu Mar 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.0-alt15.git20150829.2.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
