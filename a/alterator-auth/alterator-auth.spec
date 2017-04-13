@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.33.1
+Version: 0.34
 Release: alt1
 
 BuildArch: noarch
@@ -35,7 +35,7 @@ BuildPreReq: alterator >= 4.7-alt4
 %description
 Alterator module for system wide auth settings
 
-%package -n task-auth-ad
+%package -n task-auth-ad-winbind
 Summary: Metapackage to authenticate in Active Directory domain by winbind
 Group: System/Configuration/Other
 Requires: alterator-auth
@@ -48,7 +48,7 @@ Requires: libnss-role
 Requires: alterator-datetime
 Requires: gvfs-shares
 
-%description -n task-auth-ad
+%description -n task-auth-ad-winbind
 Metapackage to authenticate in Active Directory domain by Winbind.
 
 %package -n task-auth-ad-sssd
@@ -62,6 +62,9 @@ Requires: pam_mount
 Requires: libnss-role
 Requires: alterator-datetime
 Requires: gvfs-shares
+
+Provides:  task-auth-ad = %EVR
+Obsoletes: task-auth-ad < %EVR
 
 %description -n task-auth-ad-sssd
 Metapackage to authenticate in Active Directory domain by SSSD.
@@ -102,13 +105,18 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %_hooksdir/90-auth
 %_alterator_backend3dir/*
 
-%files -n task-auth-ad
+%files -n task-auth-ad-winbind
 
 %files -n task-auth-ad-sssd
 
 %files -n task-auth-freeipa
 
 %changelog
+* Thu Apr 06 2017 Andrey Cherepanov <cas@altlinux.org> 0.34-alt1
+- task-auth-ad now is provided by task-auth-ad-sssd
+- Samba config cleanup, disable wins support
+- Disable service nscd for sssd
+
 * Wed Mar 29 2017 Andrey Cherepanov <cas@altlinux.org> 0.33.1-alt1
 - Wrap long line in warning
 
