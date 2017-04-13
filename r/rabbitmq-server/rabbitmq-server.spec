@@ -13,7 +13,7 @@
 
 Name: rabbitmq-server
 Version: 3.6.8
-Release: alt2
+Release: alt3
 License: MPLv1.1
 BuildArch: noarch
 Group: System/Servers
@@ -34,7 +34,6 @@ Patch5: rabbitmq-server-0005-rabbit_prelaunch-must-use-RABBITMQ_SERVER_ERL_ARGS.
 Patch101: rabbitmq-common-0001-Use-proto_dist-from-command-line.patch
 
 URL: http://www.rabbitmq.com/
-Packager: Maxim Ivanov <redbaron@altlinux.org>
 
 BuildRequires(pre): rpm-build-erlang
 BuildRequires: erlang-devel erlang-otp-devel
@@ -175,6 +174,12 @@ rm -f %buildroot%_erlanglibdir/rabbitmq_server-%version/{LICENSE,LICENSE-*,INSTA
 #%_datadir/%name
 
 %changelog
+* Thu Apr 13 2017 Ivan Zakharyaschev <imz@altlinux.org> 3.6.8-alt3
+- rabbitmq-script-wrapper: robust quoting of args when su is used
+  (under root). The old approach (putting quotes around the args)
+  could not be extended correctly to the case when there were both
+  kinds of quotation marks (' and ") in one of the original args.
+
 * Tue Mar 28 2017 Alexey Shabalin <shaba@altlinux.ru> 3.6.8-alt2
 - fix logrotate config
 
