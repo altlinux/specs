@@ -10,7 +10,7 @@
 
 Name: pitivi
 Version: %ver_major
-Release: alt1
+Release: alt1.1
 
 Summary: PiTiVi allows users to easily edit audio/video projects
 License: LGPLv2.1+
@@ -31,6 +31,9 @@ Provides: gst-transcoder
 AutoReqProv: nopython
 %define __python %nil
 %add_python3_path %_libdir/%name/python
+
+# should be provided by python3-module-gst1.0
+%add_python3_req_skip gi.repository.GstPbutils
 
 Requires: python3-module-gst%gst_api_ver >= %gst_ver
 Requires: gstreamer-editing-services
@@ -85,14 +88,18 @@ newbies and professionals alike.
 %_libdir/libgsttranscoder-%api_ver.so.0
 %_typelibdir/GstTranscoder-%api_ver.typelib
 %_libdir/gstreamer-%api_ver/libgsttranscoderplugin.so
-# devel
-%_libdir/libgsttranscoder-%api_ver.so
-%_pkgconfigdir/gst-transcoder-%api_ver.pc
-%_includedir/gstreamer-%api_ver/gst/transcoder/
-%_girdir/GstTranscoder-%api_ver.gir
 %doc AUTHORS NEWS RELEASE
 
+# devel
+%exclude %_libdir/libgsttranscoder-%api_ver.so
+%exclude %_pkgconfigdir/gst-transcoder-%api_ver.pc
+%exclude %_includedir/gstreamer-%api_ver/gst/transcoder/
+%exclude %_girdir/GstTranscoder-%api_ver.gir
+
 %changelog
+* Thu Apr 13 2017 Yuri N. Sedunov <aris@altlinux.org> 0.98-alt1.1
+- exclude gst-transcoder development files (ALT #33373)
+
 * Thu Dec 08 2016 Yuri N. Sedunov <aris@altlinux.org> 0.98-alt1
 - 0.98
 
