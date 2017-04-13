@@ -5,8 +5,8 @@
 %define libname_openqube libavogadro-openqube%sover_oq
 
 Name: avogadro
-Version: 1.1.1
-Release: alt4.qa1
+Version: 1.2.0
+Release: alt1%ubt
 
 Group: Sciences/Chemistry
 Summary: An advanced molecular editor for chemical purposes
@@ -18,14 +18,13 @@ Requires: %libname = %version-%release
 
 Source: %name-%version.tar
 # FC
-Patch0: 0029-Fix-compilation-on-ARM-where-qreal-can-be-defined-as.patch
 Patch1: avogadro-1.0.3-mkspecs-dir.patch
 Patch2: avogadro-1.0.3-no-strip.patch
 Patch3: avogadro-1.1.1-pkgconfig_eigen.patch
-Patch4: avogadro-1.1.1-eigen3.patch
+Patch4: avogadro-1.1.1-qt.patch
 Patch5: avogadro-1.1.1-python_openbabel.patch
 Patch6: avogadro-1.1.1-Q_MOC_RUN.patch
-Patch7: avogadro-cmake-3.2.patch
+Patch7: avogadro-1.2.0-libmsymfloat.patch
 # ALT
 Patch100: avogadro-1.1.0-alt-config.patch
 Patch101: avogadro-1.0.3-alt-desktopfile.patch
@@ -35,7 +34,8 @@ Patch102: avogadro-1.1.1-alt-fix-gcc6-version.patch
 
 # Automatically added by buildreq on Tue Feb 08 2011 (-bi)
 #BuildRequires: boost-devel-headers boost-python-devel cmake docbook-utils eigen2 gcc-c++ libXScrnSaver-devel libXau-devel libXcomposite-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libglew-devel libnumpy-devel libopenbabel-devel libqt3-devel libxkbfile-devel openbabel python-module-numpy-testing python-module-sip-devel python-modules-ctypes qt4-designer rpm-build-ruby zlib-devel-static
-BuildRequires: boost-devel-headers boost-python-devel cmake docbook-utils docbook-utils-print eigen3 gcc-c++
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: boost-devel-headers boost-python-devel cmake docbook-utils docbook-utils-print eigen2 gcc-c++
 BuildRequires: libGLEW-devel libnumpy-devel libopenbabel-devel libqt4-devel
 BuildRequires: openbabel libopenbabel-devel python-module-numpy-testing python-module-sip-devel python-modules-ctypes zlib-devel
 BuildRequires: kde-common-devel
@@ -68,7 +68,6 @@ Development Avogadro files.
 
 %prep
 %setup -q
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -98,6 +97,7 @@ sed -i 's|\${PYTHON_LIB_PATH}|%python_sitelibdir|g' libavogadro/src/python/CMake
     -DPython_ADDITIONAL_VERSIONS=2.7 \
     -DENABLE_PYTHON:BOOL=ON \
     -DENABLE_VERSIONED_PLUGIN_DIR:BOOL=OFF \
+    -DINSTALL_CMAKE_DIR:PATH=%_libdir/libmsym/cmake \
     #
 %Kmake
 
@@ -105,8 +105,9 @@ sed -i 's|\${PYTHON_LIB_PATH}|%python_sitelibdir|g' libavogadro/src/python/CMake
 %Kinstall
 
 %files
-%doc AUTHORS ChangeLog
+%doc AUTHORS
 %_bindir/%name
+%_bindir/qube
 %_bindir/avopkg
 %dir %_libdir/%name
 %_libdir/%name/colors
@@ -130,13 +131,18 @@ sed -i 's|\${PYTHON_LIB_PATH}|%python_sitelibdir|g' libavogadro/src/python/CMake
 
 %files devel
 %_includedir/%name
+%_includedir/libmsym/
 %_pkgconfigdir/avogadro.pc
 %_libdir/lib*.so
 %_libdir/%name/*.cmake
 %_libdir/%name/cmake
+%_libdir/libmsym/cmake/
 %_datadir/qt4/mkspecs/features/%name.prf
 
 %changelog
+* Wed Apr 12 2017 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt1%ubt
+- new version
+
 * Fri Jan 20 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1-alt4.qa1
 - Fixed gcc6 version detection.
 
