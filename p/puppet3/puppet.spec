@@ -2,7 +2,7 @@
 
 Name:    puppet3
 Version: 3.8.7
-Release: alt2
+Release: alt3
 
 Summary: A network tool for managing many disparate systems
 Group:   System/Servers
@@ -15,7 +15,7 @@ Source:  %name-%version.tar
 Patch:  %name-%version-%release.patch
 Patch1: %name-%version-%release-ext-alt.diff
 Patch2: puppet-3.8.7-ext-puppetlisten-rotten.patch
-Patch5: puppet-3.8.7-aptrpm-defaultfor-alt.patch
+Patch5: puppet-3.8.7-defaultfor-alt.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-em-http-request
@@ -42,6 +42,8 @@ BuildRequires(pre): rpm-macros-kde-common-devel
 Provides: puppet = %EVR
 Conflicts: puppet
 Requires: shadow-change
+# provider/service/systemd.rb is hardcoded as defaultfor ALT
+Requires: /bin/systemctl
 Conflicts: ruby-semantic
 
 %filter_from_requires /^ruby(.*\(win32\|windows\|wmi-lite\|semantic\|spec_helper\).*)/d
@@ -207,6 +209,10 @@ install -d %buildroot%_localstatedir/puppet/ssl/private_keys
 %config(noreplace) %_sysconfdir/sysconfig/puppetmaster
 
 %changelog
+* Thu Apr 13 2017 Ivan Zakharyaschev <imz@altlinux.org> 3.8.7-alt3
+- provider/service/systemd.rb hardcoded as defaultfor ALT.
+  (This might be not quite correct, but covers most practical uses.)
+
 * Mon Mar 20 2017 Ivan Zakharyaschev <imz@altlinux.org> 3.8.7-alt2
 - Don't workaround unmet reqs on active_record and active_support
 
