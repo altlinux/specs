@@ -1,7 +1,7 @@
 
 Name:    gcompris
 Version: 15.10
-Release: alt2
+Release: alt3
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
 
@@ -31,7 +31,7 @@ BuildRequires: libxml2-devel
 
 Requires: chess sqlite3
 # needed for sound support
-Requires: gst-plugins-base >= 0.10.14-alt3 gst-plugins-base-audio-filters gst-plugins-vorbis gst-plugins-ogg gst-plugins-alsa
+Requires: gst-plugins-base1.0
 
 Provides: python%__python_version(_gcompris) python%__python_version(_gcompris_anim) python%__python_version(_gcompris_bonus)
 Provides: python%__python_version(_gcompris_score) python%__python_version(_gcompris_skin) python%__python_version(_gcompris_sound)
@@ -599,6 +599,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gcompris/boards/voices/sk
 
 %changelog
+* Thu Apr 13 2017 Andrey Cherepanov <cas@altlinux.org> 15.10-alt3
+- Use gst-plugins-base1.0 from gstreamer1.0
+
 * Mon Apr 03 2017 Andrey Cherepanov <cas@altlinux.org> 15.10-alt2
 - Rebuild with gstreamer1.0 (ALT #33327)
 
