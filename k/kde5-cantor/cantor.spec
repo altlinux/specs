@@ -12,7 +12,7 @@
 
 Name: kde5-%rname
 Version: 16.12.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Education
@@ -90,7 +90,8 @@ KF5 library
 
 pushd src/backends/lua
 for f in *.{h,cpp} ; do
-    sed -i 's|luajit-2.0/lua.hpp|luajit-%{get_version libluajit-devel}/lua.hpp|' $f
+    LUA_BASE_VER=`echo "%{get_version libluajit-devel}" | sed -E 's|^([[:digit:]]+\.[[:digit:]]).*|\1|'`
+    sed -i "s|luajit-2.0/lua.hpp|luajit-${LUA_BASE_VER}/lua.hpp|" $f
 done
 popd
 
@@ -137,6 +138,9 @@ popd
 %_K5lib/libcantor_config.so.*
 
 %changelog
+* Thu Apr 13 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt2%ubt
+- fix to build with luajit-2.0
+
 * Thu Apr 06 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 
