@@ -14,7 +14,7 @@
 
 Name: palemoon-ru
 Version: 27.2.0
-Release: alt2
+Release: alt3
 
 Summary: Russian (RU) Language Pack for Pale Moon
 License: MPL/GPL/LGPL
@@ -123,6 +123,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %search_dir
 
 %changelog
+* Thu Apr 13 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.2.0-alt3
+- Add search plugins alt-linux-wiki-ru and  search_altlinux
+
 * Mon Apr 10 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.2.0-alt2
 - Add the set of search plugins for Palemoon
 
@@ -179,3 +182,4 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 
 
 
+alt-linux-wiki-ru.xml search_altlinux.xml
