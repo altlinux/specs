@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 16.12.1
+Version: 16.12.2
 Release: alt1%ubt
 
 Group: Graphical desktop/KDE
@@ -119,7 +119,7 @@ Group: Graphical desktop/KDE
 Requires: kde5-runtime
 Requires: kde5-kanagram kde5-khangman kde5-parley kde5-kwordquiz kde5-kturtle kde5-marble
 Requires: kde5-step kde5-kstars kde5-kig kde5-kmplot kde5-kalgebra kde5-cantor kde5-rocs
-Requires: kde5-kbruch kde5-kgeography
+Requires: kde5-kbruch kde5-kgeography kde5-ktouch kde5-kalzium
 #Requires: kde5-minuet
 %description -n kde5-edu
 Educational software based on the KDE technologies
@@ -129,7 +129,7 @@ Summary: Set of KDE-based games
 Group: Graphical desktop/KDE
 Requires: kde5-runtime
 Requires: kde5-lskat kde5-kmines kde5-kshisen kde5-ktuberling kde5-bovo kde5-knetwalk
-Requires: kde5-katomic kde5-knavalbattle kde5-kpat
+Requires: kde5-katomic kde5-knavalbattle kde5-kpat kde5-kmahjongg
 %description -n kde5-games
 High quality gaming and entertainment software.
 
@@ -160,9 +160,6 @@ Requires: kde5-mbox-importer kde5-pim-data-exporter kde5-pim-sieve-editor kde5-p
 %description -n kde5-pim
 %summary
 
-#kde5-ktp-call-ui
-#kde5-kqtquickcharts kde5-ktouch kde5-kalzium
-#kde5-kmahjongg
 
 %files -n kde5-runtime
 %files -n kde5-mini
@@ -179,6 +176,9 @@ Requires: kde5-mbox-importer kde5-pim-data-exporter kde5-pim-sieve-editor kde5-p
 %files -n kde5-pim
 
 %changelog
+* Thu Apr 13 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.2-alt1%ubt
+- update requires
+
 * Tue Apr 04 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.1-alt1%ubt
 - update requires
 
