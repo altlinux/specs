@@ -5,7 +5,7 @@
 
 Name: grantlee5
 Version: 5.1.0
-Release: alt1
+Release: alt2%ubt
 
 Group: System/Libraries
 Summary: Qt string template engine based on the Django template system
@@ -14,10 +14,12 @@ Url: https://github.com/steveire/grantlee
 License: LGPLv2+
 
 Source: %name-%version.tar
+Patch1: grantlee-5.1.0-install_headers_into_versioned_directory.patch
 
 # Automatically added by buildreq on Mon Aug 10 2015 (-bi)
 # optimized out: cmake-modules elfutils fontconfig fonts-bitmap-misc libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-script libstdc++-devel libwayland-client libwayland-server python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs
 #BuildRequires: cmake doxygen fonts-bitmap-terminus fonts-otf-stix fonts-ttf-dejavu fonts-ttf-google-droid-kufi fonts-ttf-google-droid-sans fonts-ttf-google-droid-serif fonts-type1-urw fonts-type1-xorg gcc-c++ graphviz libdb4-devel python-module-google qt5-script-devel rpm-build-python3 rpm-build-ruby
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake doxygen gcc-c++ graphviz
 BuildRequires: qt5-base-devel qt5-script-devel kde-common-devel
 
@@ -64,7 +66,6 @@ Requires: %name-common = %EVR
 %package devel
 Summary: Development files for %name
 Group: Development/KDE and QT
-Conflicts: grantlee-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -72,7 +73,7 @@ developing applications that use %name.
 %package doc
 Group: Development/Documentation
 Summary: Grantlee API documentation
-Requires: kde-common
+Requires: %name-common
 BuildArch: noarch
 %description doc
 This package includes the Grantlee API documentation in HTML
@@ -80,6 +81,7 @@ format for easy browsing.
 
 %prep
 %setup -q
+%patch1 -p1
 
 %build
 %Kbuild \
@@ -111,8 +113,8 @@ cp -prf BUILD*/apidox/* %buildroot%_docdir/HTML/en/grantlee5-apidocs
 %_libdir/libGrantlee_Templates.so.*
 
 %files devel
-%_includedir/grantlee/
-%_includedir/grantlee_*.h
+%_includedir/Grantlee5/
+#%_includedir/grantlee_*.h
 %_libdir/libGrantlee_*.so
 %_libdir/cmake/Grantlee5/
 
@@ -120,6 +122,9 @@ cp -prf BUILD*/apidox/* %buildroot%_docdir/HTML/en/grantlee5-apidocs
 %doc %_docdir/HTML/en/grantlee5-apidocs/
 
 %changelog
+* Thu Apr 13 2017 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt2%ubt
+- install headers into versioned directory
+
 * Fri Aug 19 2016 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt1
 - new version
 
