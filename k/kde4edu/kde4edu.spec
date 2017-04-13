@@ -1,4 +1,5 @@
 
+%def_disable avogadro
 %def_disable kpercentage
 %def_disable qalculate
 %def_enable openbabel
@@ -13,7 +14,7 @@ Name: kde4edu
 %define minor 12
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt5%ubt
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -21,12 +22,6 @@ Group: Graphical desktop/KDE
 Summary: Free Educational Software based on the KDE technologies
 License: GPL
 Url: http://edu.kde.org
-
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu = %version-%release
-#Obsoletes: kdeedu < %version-%release
-%endif
 
 %if_enabled artikulate
 Requires: %name-artikulate = %version-%release
@@ -60,10 +55,11 @@ Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 Patch1: alt-kstars-fix-compile.patch
 Patch2: alt-kturtle-default-language.patch
 Patch3: alt-find-luajit.patch
+Patch4: alt-rocs-fix-compile.patch
 
 # Automatically added by buildreq on Thu Oct 16 2008 (-bi)
 #BuildRequires: boost-python-devel eigen facile gcc-c++ getfemxx indilib-devel kde4base-runtime-devel kde4base-workspace-devel libXScrnSaver-devel libXcomposite-devel libXft-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libbfd-devel libcfitsio-devel libcln-devel libgmp-devel libgsl-devel libjpeg-devel libncurses-devel libnova-devel libopenbabel-devel libpth-devel libqalculate-devel libreadline-devel libusb-devel libxkbfile-devel libxslt-devel nvidia_glx_177.80 openbabel python-modules-encodings rpm-build-ruby subversion xorg-xf86vidmodeproto-devel xsltproc
-BuildRequires(pre): kde4base-workspace-devel
+BuildRequires(pre): kde4base-workspace-devel rpm-build-ubt
 BuildRequires: python-modules-encodings python-devel boost-devel boost-python-devel eigen2 eigen3 gcc-c++ libindi-devel
 BuildRequires: libbfd-devel libcfitsio-devel wcslib-devel libcln-devel libgmp-devel libgsl-devel libjpeg-devel libncurses-devel libnova-devel
 BuildRequires: libpth-devel libreadline-devel libusb-devel
@@ -78,7 +74,10 @@ BuildRequires: ocaml4 facile
 BuildRequires: xplanet attica-devel libspectre-devel libgps-devel qt4-mobility-devel
 BuildRequires: libxslt-devel xsltproc libglew-devel
 %if_enabled openbabel
-BuildRequires: libopenbabel-devel >= 2.2 openbabel avogadro-devel
+BuildRequires: libopenbabel-devel >= 2.2 openbabel
+%if_enabled avogadro
+BuildRequires: avogadro-devel
+%endif
 %endif
 BuildRequires: libkdeedu4-devel kde4-analitza-devel pkgconfig(chemical-mime-data) shared-mime-info
 BuildRequires: libshape-devel qextserialport-devel libquazip-devel grantlee-devel
@@ -108,11 +107,6 @@ Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kde-common >= %major.%minor
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-common = %version-%release
-#Obsoletes: kdeedu-common < %version-%release
-%endif
 %description common
 Common package for %name
 
@@ -120,11 +114,6 @@ Common package for %name
 Summary: %name core files
 Group: Graphical desktop/KDE
 Requires: %name-common = %version-%release
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-core = %version-%release
-#Obsoletes: kdeedu-core < %version-%release
-%endif
 %description core
 Core files for %name
 
@@ -150,11 +139,6 @@ Summary: Simon Says Game
 Url: http://edu.kde.org/blinken
 Group: Games/Educational
 Requires: %name-common = %version-%release
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-blinken = %version-%release
-#Obsoletes: kdeedu-blinken < %version-%release
-%endif
 %description blinken
 Blinken is the KDE version of the well-known game Simon Says.
 Follow the pattern of sounds and lights as long as you can! Press the
@@ -166,11 +150,6 @@ Summary: Graph - Editor and a Programming Enviroment
 Group: Graphical desktop/KDE
 Requires: %name-common = %version-%release
 Requires: kde4-kwrite
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-rocs = %version-%release
-#Obsoletes: kdeedu-rocs < %version-%release
-%endif
 %description rocs
 rocs aims to provide a full featured Graph - Editor and a Programming
 Enviroment that's connected to the Graph by doing it so, it can be
@@ -181,11 +160,6 @@ Summary: KDE Interface for doing Mathematics and Scientific Computing
 Group: Graphical desktop/KDE
 Requires: %name-common = %version-%release
 Requires: kde4base-runtime-core
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-cantor = %version-%release
-#Obsoletes: kdeedu-cantor < %version-%release
-%endif
 %description cantor
 Cantor is a KDE Application aimed to provide a nice Interface 
 for doing Mathematics and Scientific Computing. It doesn't implement 
@@ -198,11 +172,6 @@ Url: http://edu.kde.org/kalgebra
 Group: Education
 Requires: %name-common = %version-%release
 Requires: kde4-calgebra
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-kalgebra = %version-%release
-#Obsoletes: kdeedu-kalgebra < %version-%release
-%endif
 %description kalgebra
 KAlgebra is a mathematical calculator based content markup MathML
 language. Nowadays it is capable to make simple MathML operations
@@ -214,12 +183,10 @@ Summary: Shows the periodic system of the elements
 Url: http://edu.kde.org/kalzium
 Group: Education
 Requires: %name-common = %version-%release
-Requires: avogadro chemical-mime-data
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-kalzium = %version-%release
-#Obsoletes: kdeedu-kalzium < %version-%release
+%if_enabled avogadro
+Requires: avogadro
 %endif
+Requires: chemical-mime-data
 %description kalzium
 Kalzium is an application which will show you some information about the
 periodic system of the elements. Therefore you could use it as an
@@ -244,11 +211,6 @@ Summary: Word learning program
 Url: http://edu.kde.org/kanagram
 Group: Games/Educational
 Requires: %name-common = %version-%release
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-kanagram = %version-%release
-#Obsoletes: kdeedu-kanagram < %version-%release
-%endif
 %description kanagram
 Kanagram is a replacement for KMessedWords. Kanagram mixes up the letters
 of a word (creating an anagram), and you have to guess what the mixed up
@@ -262,11 +224,6 @@ Summary: Practice calculating with fractions
 Url: http://edu.kde.org/kbruch
 Group: Education
 Requires: %name-common = %version-%release
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-kbruch = %version-%release
-#Obsoletes: kdeedu-kbruch < %version-%release
-%endif
 %description kbruch
 KBruch is a small program to practice calculating with fractions.
 
@@ -275,11 +232,6 @@ Summary: A geography learning program
 Url: http://edu.kde.org/kgeography
 Group: Education
 Requires: %name-common = %version-%release
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-kgeography = %version-%release
-#Obsoletes: kdeedu-kgeography < %version-%release
-%endif
 %description kgeography
 KGeography is a geography learning program.
 
@@ -288,11 +240,6 @@ Summary: Classical hangman game
 Url: http://edu.kde.org/khangman
 Group: Games/Educational
 Requires: %name-common = %version-%release
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-khangman = %version-%release
-#Obsoletes: kdeedu-khangman < %version-%release
-%endif
 %description khangman
 KHangman is the classical hangman game. The child should guess a word
 letter by letter. At each miss, the picture of a hangman appears. After
@@ -304,11 +251,6 @@ Summary: A program for exploring geometric constructions
 Url: http://edu.kde.org/kig
 Group: Education
 Requires: %name-common = %version-%release
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-kig = %version-%release
-#Obsoletes: kdeedu-kig < %version-%release
-%endif
 %description kig
 Kig is a program for exploring geometric constructions.
 
@@ -316,11 +258,6 @@ Kig is a program for exploring geometric constructions.
 Summary: A Japanese reference/learning tool
 Url: http://edu.kde.org/kiten/
 Group: Games/Educational
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-kiten = %version-%release
-#Obsoletes: kdeedu-kiten < %version-%release
-%endif
 %description kiten
 Kiten is a Japanese reference/learning tool.
 
@@ -353,11 +290,6 @@ Summary: Language learning program
 Url: http://edu.kde.org/klettres/
 Group: Games/Educational
 Requires: %name-common = %version-%release
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-klettres = %version-%release
-#Obsoletes: kdeedu-klettres < %version-%release
-%endif
 %description klettres
 KLettres aims to help to learn the alphabet and then to read some syllables
 in different languages. It is meant to help learning the very first sounds
@@ -368,11 +300,6 @@ Summary: A mathematical function plotter
 Url: http://edu.kde.org/kmplot
 Group: Education
 Requires: %name-common = %version-%release
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-kmplot = %version-%release
-#Obsoletes: kdeedu-kmplot < %version-%release
-%endif
 %description kmplot
 KmPlot is a mathematical function plotter for the KDE-Desktop.
 
@@ -387,11 +314,6 @@ Summary: Percentages training program
 Url: http://edu.kde.org/kpercentage/
 Group: Education
 Requires: %name-common = %version-%release
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-kpercentage = %version-%release
-#Obsoletes: kdeedu-kpercentage < %version-%release
-%endif
 %description kpercentage
 KPercentage is a small math application that will help pupils to improve
 their skills in calculating percentages.
@@ -402,11 +324,6 @@ Url: http://edu.kde.org/kstars
 Group: Education
 Requires: %name-common = %version-%release
 Requires: indi
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-kstars = %version-%release
-#Obsoletes: kdeedu-kstars < %version-%release
-%endif
 %description kstars
 KStars is a Desktop Planetarium for KDE. It provides an accurate graphical
 simulation of the night sky, from any location on Earth, at any date and
@@ -447,11 +364,6 @@ Url: http://edu.kde.org/ktouch
 Group: Education
 Requires: %name-common = %version-%release
 Requires: libqt4-sql-sqlite
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-ktouch = %version-%release
-#Obsoletes: kdeedu-ktouch < %version-%release
-%endif
 %description ktouch
 KTouch is a program for learning touch typing. KTouch is a way to learn
 to type on a keyboard quickly and correctly. Every finger has its place
@@ -465,11 +377,6 @@ Summary: An educational programming environment
 Url: http://edu.kde.org/kturtle
 Group: Education
 Requires: %name-common = %version-%release
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-kturtle = %version-%release
-#Obsoletes: kdeedu-kturtle < %version-%release
-%endif
 %description kturtle
 KTurtle is an educational programming environment for the KDE Desktop.
 KTurtle aims to make programming as easy and touchable as possible, and
@@ -482,11 +389,6 @@ Url: http://edu.kde.org/parley
 Group: Education
 Requires: %name-common = %version-%release
 Requires: python-module-kde4
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-parley = %version-%release
-#Obsoletes: kdeedu-parley < %version-%release
-%endif
 %description parley
 Parley is a program to help you memorize things.
 
@@ -499,11 +401,6 @@ Summary: A general purpose flash card program
 Url: http://edu.kde.org/kwordquiz
 Group: Education
 Requires: %name-common = %version-%release
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-kwordquiz = %version-%release
-#Obsoletes: kdeedu-kwordquiz < %version-%release
-%endif
 %description kwordquiz
 KWordQuiz is a general purpose flash card program. It can be used for
 vocabulary learning and many other subjects. If you need more advanced
@@ -514,11 +411,6 @@ Summary: Interactive physical simulator
 Url: http://edu.kde.org/step
 Group: Education
 Requires: %name-common = %version-%release
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-step = %version-%release
-#Obsoletes: kdeedu-step < %version-%release
-%endif
 %description step
 Step is an interactive physical simulator. It works like this:
 you place some bodies on the scene, add some forces such as gravity
@@ -604,11 +496,6 @@ Url: http://edu.kde.org/marble
 Group: Education
 Requires: %name-common = %version-%release
 Requires: xplanet
-%ifdef _kde_alternate_placement
-%else
-#Provides: kdeedu-marble = %version-%release
-#Obsoletes: kdeedu-marble < %version-%release
-%endif
 %description marble
 Marble is a Virtual Globe and World Atlas that you can use to learn more
 about Earth: You can pan and zoom around and you can look up places and
@@ -657,10 +544,12 @@ KDE 4 library
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 pushd cantor/src/backends/lua
+LUA_BASE_VER=`echo "%{get_version libluajit-devel}" | sed -E 's|^([[:digit:]]+\.[[:digit:]]).*|\1|'`
 for f in *.{h,cpp} ; do
-    sed -i 's|luajit-2.0/lua.hpp|luajit-%{get_version libluajit-devel}/lua.hpp|' $f
+    sed -i "s|luajit-2.0/lua.hpp|luajit-${LUA_BASE_VER}/lua.hpp|" $f
 done
 popd
 
@@ -705,26 +594,19 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %files
 %files common
 #%doc README
-%ifdef _kde_alternate_placement
-%_kde4_iconsdir/hicolor/*/mimetypes/application-x-k*.*
-%else
 %_K4iconsdir/hicolor/*/mimetypes/application-x-k*.*
-%endif
 
 %if_enabled openbabel
+%if_enabled avogadro
 %files -n libcompoundviewer4
 %_K4libdir/libcompoundviewer.so.*
+%endif
 %endif
 
 %if_enabled artikulate
 %files artikulate
-%ifdef _kde_alternate_placement
-%_kde4_bindir/artikulate
-%_kde4_xdg_apps/artikulate.desktop
-%else
 %_K4bindir/artikulate
 %_K4xdg_apps/artikulate.desktop
-%endif
 %_K4apps/artikulate/
 %_K4apps/artikulateui.rc
 %_K4conf/artikulate.knsrc
@@ -743,13 +625,8 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4lib/imports/org/kde/charts/
 
 %files blinken
-%ifdef _kde_alternate_placement
-%_kde4_bindir/blinken
-%_kde4_xdg_apps/blinken.desktop
-%else
 %_K4bindir/blinken
 %_K4xdg_apps/blinken.desktop
-%endif
 %_K4iconsdir/hicolor/*/apps/blinken.*
 %_K4apps/blinken
 %_K4cfg/blinken.kcfg
@@ -762,13 +639,8 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4libdir/libcantorlibs.so.*
 
 %files cantor
-%ifdef _kde_alternate_placement
-%_kde4_bindir/cantor
-%_kde4_xdg_apps/cantor.desktop
-%else
 %_K4bindir/cantor
 %_K4xdg_apps/cantor.desktop
-%endif
 %_K4iconsdir/hicolor/*/apps/cantor.*
 %_K4iconsdir/hicolor/*/apps/maximabackend.*
 %_K4iconsdir/hicolor/*/apps/octavebackend.*
@@ -805,17 +677,10 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4doc/*/cantor
 
 %files kalgebra
-%ifdef _kde_alternate_placement
-%_kde4_bindir/kalgebra
-%_kde4_bindir/kalgebramobile
-%_kde4_xdg_apps/kalgebra.desktop
-%_kde4_xdg_apps/kalgebramobile.desktop
-%else
 %_K4bindir/kalgebra
 %_K4bindir/kalgebramobile
 %_K4xdg_apps/kalgebra.desktop
 %_K4xdg_apps/kalgebramobile.desktop
-%endif
 %_K4lib/imports/org/kde/analitza/
 %_K4apps/plasma/plasmoids/org.kde.graphsplasmoid/
 %_K4iconsdir/hicolor/*/apps/kalgebra.*
@@ -831,13 +696,8 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4doc/*/kalgebra
 
 %files kalzium
-%ifdef _kde_alternate_placement
-%_kde4_bindir/kalzium
-%_kde4_xdg_apps/kalzium*.desktop
-%else
 %_K4bindir/kalzium
 %_K4xdg_apps/kalzium*.desktop
-%endif
 %_K4iconsdir/hicolor/*/apps/kalzium.*
 %_K4lib/plasma_engine_kalzium.so
 %_K4lib/plasma_applet_didyouknow.so
@@ -853,13 +713,8 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_man1dir/kalzium.*
 
 %files kanagram
-%ifdef _kde_alternate_placement
-%_kde4_bindir/kanagram
-%_kde4_xdg_apps/kanagram.desktop
-%else
 %_K4bindir/kanagram
 %_K4xdg_apps/kanagram.desktop
-%endif
 %_K4iconsdir/hicolor/*/apps/kanagram*.*
 %_K4apps/kanagram
 %_K4cfg/kanagram.kcfg
@@ -867,13 +722,8 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4doc/*/kanagram
 
 %files kbruch
-%ifdef _kde_alternate_placement
-%_kde4_bindir/kbruch
-%_kde4_xdg_apps/kbruch.desktop
-%else
 %_K4bindir/kbruch
 %_K4xdg_apps/kbruch.desktop
-%endif
 %_K4iconsdir/hicolor/*/apps/kbruch.*
 %_K4apps/kbruch
 %_K4cfg/kbruch.kcfg
@@ -881,26 +731,16 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_man1dir/kbruch.*
 
 %files kgeography
-%ifdef _kde_alternate_placement
-%_kde4_bindir/kgeography
-%_kde4_xdg_apps/kgeography.desktop
-%else
 %_K4bindir/kgeography
 %_K4xdg_apps/kgeography.desktop
-%endif
 %_K4iconsdir/hicolor/*/apps/kgeography.*
 %_K4apps/kgeography
 %_K4cfg/kgeography.kcfg
 %_K4doc/*/kgeography
 
 %files khangman
-%ifdef _kde_alternate_placement
-%_kde4_bindir/khangman
-%_kde4_xdg_apps/khangman.desktop
-%else
 %_K4bindir/khangman
 %_K4xdg_apps/khangman.desktop
-%endif
 %_K4iconsdir/hicolor/*/apps/khangman*.*
 %_K4apps/khangman
 %_K4apps/plasma/packages/org.kde.kanagram/
@@ -910,17 +750,10 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_man6dir/khangman.*
 
 %files kig
-%ifdef _kde_alternate_placement
-%_kde4_bindir/kig
-%_kde4_bindir/pykig.py
-%_kde4_xdg_apps/kig.desktop
-%_kde4_iconsdir/hicolor/*/apps/kig.*
-%else
 %_K4bindir/kig
 %_K4bindir/pykig.py
 %_K4xdg_apps/kig.desktop
 %_K4iconsdir/hicolor/*/apps/kig.*
-%endif
 %_K4lib/kigpart.so
 %_K4apps/kig
 %_K4srv/kig_part.desktop
@@ -929,17 +762,10 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_man1dir/kig.*
 
 %files kiten
-%ifdef _kde_alternate_placement
-%_kde4_bindir/kiten*
-%_kde4_xdg_apps/kiten.desktop
-%_kde4_xdg_apps/kitenkanjibrowser.desktop
-%_kde4_xdg_apps/kitenradselect.desktop
-%else
 %_K4bindir/kiten*
 %_K4xdg_apps/kiten.desktop
 %_K4xdg_apps/kitenkanjibrowser.desktop
 %_K4xdg_apps/kitenradselect.desktop
-%endif
 %_K4iconsdir/hicolor/*/apps/kiten.*
 %_K4apps/kiten
 %_K4apps/kitenradselect
@@ -951,13 +777,8 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4libdir/libkiten.so.*
 
 %files klettres
-%ifdef _kde_alternate_placement
-%_kde4_bindir/klettres
-%_kde4_xdg_apps/klettres.desktop
-%else
 %_K4bindir/klettres
 %_K4xdg_apps/klettres.desktop
-%endif
 %_K4iconsdir/hicolor/*/apps/klettres.*
 %_K4apps/klettres
 %_K4cfg/klettres.kcfg
@@ -965,13 +786,8 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4doc/*/klettres
 
 %files kmplot
-%ifdef _kde_alternate_placement
-%_kde4_bindir/kmplot
-%_kde4_xdg_apps/kmplot.desktop
-%else
 %_K4bindir/kmplot
 %_K4xdg_apps/kmplot.desktop
-%endif
 %_K4iconsdir/hicolor/*/apps/kmplot.*
 %_K4apps/kmplot
 %_K4lib/libkmplotpart.so
@@ -982,25 +798,15 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 
 %if_enabled kpercentage
 %files kpercentage
-%ifdef _kde_alternate_placement
-%_kde4_bindir/kpercentage
-%_kde4_xdg_apps/kpercentage.desktop
-%else
 %_K4bindir/kpercentage
 %_K4xdg_apps/kpercentage.desktop
-%endif
 %_K4apps/kpercentage
 %_K4doc/*/kpercentage
 %endif
 
 %files kstars
-%ifdef _kde_alternate_placement
-%_kde4_bindir/kstars
-%_kde4_xdg_apps/kstars.desktop
-%else
 %_K4bindir/kstars
 %_K4xdg_apps/kstars.desktop
-%endif
 %_K4iconsdir/hicolor/*/apps/kstars.*
 %_K4apps/kstars
 %_K4libdir/libhtmesh.a
@@ -1009,14 +815,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4doc/*/kstars
 
 %files ktouch
-%ifdef _kde_alternate_placement
-%_kde4_bindir/ktouch
-%_kde4_xdg_apps/ktouch.desktop
-%else
 %_K4bindir/ktouch
 #%_K4lib/imports/org/kde/ktouch/
 %_K4xdg_apps/ktouch.desktop
-%endif
 %_K4iconsdir/hicolor/*/apps/ktouch.*
 %_K4apps/ktouch
 %_K4cfg/ktouch.kcfg
@@ -1024,26 +825,16 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_man1dir/ktouch.*
 
 %files kturtle
-%ifdef _kde_alternate_placement
-%_kde4_bindir/kturtle
-%_kde4_xdg_apps/kturtle.desktop
-%else
 %_K4bindir/kturtle
 %_K4xdg_apps/kturtle.desktop
-%endif
 %_K4iconsdir/hicolor/*/apps/kturtle.*
 %_K4apps/kturtle
 %_K4conf/kturtle.knsrc
 %_K4doc/*/kturtle
 
 %files parley
-%ifdef _kde_alternate_placement
-%_kde4_bindir/parley
-%_kde4_xdg_apps/parley.desktop
-%else
 %_K4bindir/parley
 %_K4xdg_apps/parley.desktop
-%endif
 %_K4iconsdir/hicolor/*/apps/parley*.*
 %_K4apps/parley
 %_K4srv/plasma-dataengine-parley.desktop
@@ -1059,13 +850,8 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4doc/*/parley
 
 %files kwordquiz
-%ifdef _kde_alternate_placement
-%_kde4_bindir/kwordquiz
-%_kde4_xdg_apps/kwordquiz.desktop
-%else
 %_K4bindir/kwordquiz
 %_K4xdg_apps/kwordquiz.desktop
-%endif
 %_K4iconsdir/hicolor/*/apps/kwordquiz.*
 %_K4apps/kwordquiz
 %_K4cfg/kwordquiz.kcfg
@@ -1073,13 +859,8 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4doc/*/kwordquiz
 
 %files step
-%ifdef _kde_alternate_placement
-%_kde4_bindir/step
-%_kde4_xdg_apps/step.desktop
-%else
 %_K4bindir/step
 %_K4xdg_apps/step.desktop
-%endif
 %_K4iconsdir/hicolor/*/apps/step.*
 %_K4apps/step
 %_K4cfg/step.kcfg
@@ -1091,13 +872,8 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4libdir/libscience.so.*
 
 %files rocs
-%ifdef _kde_alternate_placement
-%_kde4_bindir/rocs
-%_kde4_xdg_apps/rocs.desktop
-%else
 %_K4bindir/rocs
 %_K4xdg_apps/rocs.desktop
-%endif
 %_K4lib/rocs_*.so
 %_K4apps/rocs/
 %_K4apps/rocs_rootedtree/
@@ -1122,6 +898,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Apr 13 2017 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt5%ubt
+- build without avogadro
+
 * Tue Oct 18 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt4
 - rebuild with new openbabel
 
