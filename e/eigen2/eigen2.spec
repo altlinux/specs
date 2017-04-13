@@ -1,7 +1,7 @@
 
 Name: eigen2
 Version: 2.0.17
-Release: alt1
+Release: alt2%ubt
 
 Group: Development/C++
 Summary: Lightweight C++ template library for vector and matrix math, a.k.a. linear algebra
@@ -12,10 +12,13 @@ BuildArch: noarch
 Provides: %name-devel = %version-%release
 
 Source: eigen-%version.tar
+Patch1: eigen_ftbfs.patch
 
-# Automatically added by buildreq on Tue Feb 17 2009 (-bi)
-#BuildRequires: cmake doxygen gcc-c++ subversion tetex-dvips tetex-latex
-BuildRequires: cmake >= 2.4.6 doxygen gcc-c++ subversion tetex-dvips tetex-latex
+# Automatically added by buildreq on Thu Apr 13 2017 (-bi)
+# optimized out: cmake-modules fontconfig ghostscript-classic libgpg-error libstdc++-devel pkg-config python-base python-modules python3 python3-base rpm-build-python3 ruby tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base
+#BuildRequires: cmake doxygen gcc-c++ ghostscript-common python-module-google python3-dev ruby-stdlibs
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: cmake doxygen gcc-c++ ghostscript-common
 
 %description
 Eigen is a lightweight C++ template library for vector and matrix math, a.k.a.
@@ -23,6 +26,7 @@ linear algebra.
 
 %prep
 %setup -q -n eigen-%version
+%patch1 -p1
 
 %build
 %add_optflags -DNDEBUG
@@ -52,6 +56,12 @@ popd
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Thu Apr 13 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.17-alt2%ubt
+- fix to build
+
+* Fri Mar 30 2012 Sergey V Turchin <zerg@altlinux.org> 2.0.17-alt0.M60P.1
+- built for M60P
+
 * Fri Mar 30 2012 Sergey V Turchin <zerg@altlinux.org> 2.0.17-alt1
 - new version
 
