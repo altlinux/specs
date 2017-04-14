@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 2.90.1
+Version: 2.90.2
 Release: alt1%ubt
 
 Source:%name-%version.tar
@@ -77,6 +77,9 @@ __EOF__
 
 
 %changelog
+* Fri Apr 14 2017 Sergey V Turchin <zerg at altlinux dot org> 2.90.2-alt1%ubt
+- fix color scheme
+
 * Fri Apr 14 2017 Sergey V Turchin <zerg at altlinux dot org> 2.90.1-alt1%ubt
 - fix detect window manager
 
