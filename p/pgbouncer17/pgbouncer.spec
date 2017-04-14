@@ -1,7 +1,7 @@
 %define         pgb_runtimedir   /var/run/%name
 Name:		pgbouncer17 
 Version:	1.7.2
-Release:        alt1 
+Release:        alt2 
 Summary:	Lightweight connection pooler for PostgreSQL	
 License: 	BSD
 Group: 		Databases
@@ -13,6 +13,7 @@ Source3:	users.txt
 
 BuildRequires:	libevent-devel libssl-devel
 Provides: pgbouncer
+Conflicts: pgbouncer < 1.7
 
 
 %prep
@@ -48,6 +49,9 @@ Transaction pooling - Server connection is assigned to client only during a tran
 Statement pooling - Most aggressive method. This is transaction pooling with a twist - multi-statement transactions are disallowed. This is meant to enforce "autocommit" mode on client, mostly targeted for PL/Proxy. 
 
 %changelog
+* Fri Apr 14 2017 Denis Medvedev <nbr@altlinux.org> 1.7.2-alt2
+- conflicts with open's pgbouncer
+
 * Thu Apr 13 2017 Denis Medvedev <nbr@altlinux.org> 1.7.2-alt1
 - bumped to 1.7.2
 
