@@ -2,8 +2,8 @@
 
 
 Name: glpi
-Version: 0.90.5
-Release: alt2
+Version: 9.1.2
+Release: alt1
 
 
 Summary: IT and asset management software
@@ -21,7 +21,7 @@ Source2: apache2.conf
 Source3: README.ALT
 Patch: patch0.patch
 
-Requires: webserver-common php-engine curl lynx
+Requires: webserver-common php-engine composer curl lynx
 BuildRequires(pre): rpm-macros-webserver-common
 
 %description
@@ -60,7 +60,6 @@ PHP5 dependencies for %name
 
 %prep
 %setup
-
 %patch -p0
 
 
@@ -86,21 +85,31 @@ find %buildroot%installdir -name remove.txt -delete
 find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
 
 
+%post
+cd %installdir
+composer install --no-dev
+
 
 %post apache
 %_initdir/httpd condreload
+
 
 %postun apache
 %_initdir/httpd condreload
 
 
 %post apache2
-a2ensite %name
-%_initdir/httpd2 condreload
+if [ "$1" = "1" ]; then
+  a2ensite %name
+  %_initdir/httpd2 condreload
+fi
+
 
 %postun apache2
-a2dissite %name
-%_initdir/httpd2 condreload
+if [ "$1" = "1" ]; then
+  a2dissite %name
+  %_initdir/httpd2 condreload
+fi
 
 
 %files
@@ -125,10 +134,10 @@ a2dissite %name
 %installdir/scripts
 %installdir/*.php
 %installdir/*.js
+%installdir/*.json
 %installdir/COPYING.txt
 %doc AUTHORS.txt
 %doc CHANGELOG.txt
-%doc README.txt
 %doc README.ALT
 
 
@@ -144,6 +153,12 @@ a2dissite %name
 
 
 %changelog
+* Fri Apr 14 2017 Pavel Zilke <zidex at altlinux dot org> 9.1.2-alt1
+- New version 9.1.2
+
+* Wed Sep 28 2016 Pavel Zilke <zidex at altlinux dot org> 9.1-alt1
+- New version 9.1
+
 * Thu Aug 25 2016 Pavel Zilke <zidex at altlinux dot org> 0.90.5-alt2
 - Conf for Apache2 moved to sites-available
 
