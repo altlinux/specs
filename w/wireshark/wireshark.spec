@@ -5,8 +5,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.2.5
-Release: alt2%ubt
+Version: 2.2.6
+Release: alt1%ubt
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
@@ -279,6 +279,15 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Fri Apr 14 2017 Anton Farygin <rider@altlinux.ru> 2.2.6-alt1%ubt
+- new version with these security fixes:
+     * wnpa-sec-2017-12 IMAP dissector crash CVE-2017-7703
+     * wnpa-sec-2017-13 WBMXL dissector infinite loop CVE-2017-7702
+     * wnpa-sec-2017-14 NetScaler file parser infinite loop CVE-2017-7700
+     * wnpa-sec-2017-15 RPCoRDMA dissector infinite loop CVE-2017-7705
+     * wnpa-sec-2017-16 BGP dissector infinite loop CVE-2017-7701
+     * wnpa-sec-2017-17 DOF dissector infinite loop CVE-2017-7704
+
 * Fri Mar 10 2017 Anton Farygin <rider@altlinux.ru> 2.2.5-alt2%ubt
 - fixed liblua devel requires
 
