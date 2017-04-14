@@ -106,8 +106,8 @@
 
 
 Name: libvirt
-Version: 3.1.0
-Release: alt2
+Version: 3.2.0
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -1247,6 +1247,10 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Thu Apr 13 2017 Alexey Shabalin <shaba@altlinux.ru> 3.2.0-alt1
+- 3.2.0
+- check running messagebus service before run libvirtd(ALT#32479)
+
 * Fri Mar 10 2017 Alexey Shabalin <shaba@altlinux.ru> 3.1.0-alt2
 - update R: for qemu-common
 
