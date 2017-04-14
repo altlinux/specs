@@ -1,5 +1,5 @@
 Name: volumes-profile-cliff-server
-Version: 0.12
+Version: 0.13
 Release: alt1
 
 Summary: Volumes description for Centaurus distribution
@@ -28,6 +28,9 @@ install -pm755 20-*.sh %buildroot%hook2dir/
 %hook2dir/*
 
 %changelog
+* Fri Apr 14 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.13-alt1
+- use only one profile
+
 * Tue Feb 14 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.12-alt1
 - use server profile only
 
