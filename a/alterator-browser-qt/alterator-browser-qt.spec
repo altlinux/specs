@@ -8,7 +8,7 @@
 
 Name: alterator-browser-qt
 Version: 2.19.4
-Release: alt2%ubt
+Release: alt3%ubt
 
 Source:%name-%version.tar
 
@@ -29,6 +29,7 @@ Group: System/Configuration/Other
 Summary: X11 Qt interface driver for alterator
 PreReq(post,preun): alternatives >= 0.2 /usr/bin/xdg-open
 Requires: alterator-common >= 2.9-alt0.14
+Requires: alterator-browser-gui-common
 Requires: alterator-icons
 Provides: alterator-browser
 Provides: alterator-browser-x11
@@ -69,25 +70,21 @@ __EOF__
 
 #mkdir -p %buildroot/%alterator_cfg
 #ln -s /dev/null %buildroot/%alterator_cfg/design-browser-qt
-mkdir -p %buildroot/%_datadir/%name/design
+#mkdir -p %buildroot/%_datadir/%name/design
 #ln -s %alterator_cfg/design-browser-qt %buildroot/%_datadir/%name/design/current
-
-%if 0
-%post
-%post_register_alternatives %name
-%preun
-%preun_unregister_alternatives %name
-%endif
 
 %files -n alterator-browser-qt4
 %config %_altdir/alterator-browser-qt4
 #%ghost %config %alterator_cfg/design-browser-qt
 %_bindir/alterator-browser-qt4
-%_datadir/%name/
+#%_datadir/%name/
 %_datadir/qt4/translations/*.qm
 
 
 %changelog
+* Fri Apr 14 2017 Sergey V Turchin <zerg at altlinux dot org> 2.19.4-alt3%ubt
+- split common files
+
 * Thu Apr 13 2017 Sergey V Turchin <zerg at altlinux dot org> 2.19.4-alt2%ubt
 - rename package
 
