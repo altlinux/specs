@@ -8,7 +8,7 @@
 
 Name: alterator-browser-qt
 Version: 2.19.4
-Release: alt1
+Release: alt2%ubt
 
 Source:%name-%version.tar
 
@@ -17,23 +17,27 @@ License: GPL
 Group: System/Configuration/Other
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
-Requires: alterator-common >= 2.9-alt0.14
-Requires: alterator-icons
-PreReq(post,preun): alternatives >= 0.2 /usr/bin/xdg-open
-
-Provides: alterator-browser
-Provides: alterator-browser-x11
-Provides: alterator-browser-qt-light = 2.8-alt1
-Obsoletes: alterator-browser-qt-light < 2.8-alt1
-Requires: libqt4-core >= %{get_version libqt4-core}
-
-Obsoletes: alterator-look-qt
-
-BuildRequires(pre): libqt4-core > 4.3
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: libalternatives-devel
 BuildRequires: fontconfig freetype2 gcc-c++ libqt4-devel libstdc++-devel
 
 %description
+X11 Qt interface driver for alterator
+
+%package -n alterator-browser-qt4
+Group: System/Configuration/Other
+Summary: X11 Qt interface driver for alterator
+PreReq(post,preun): alternatives >= 0.2 /usr/bin/xdg-open
+Requires: alterator-common >= 2.9-alt0.14
+Requires: alterator-icons
+Provides: alterator-browser
+Provides: alterator-browser-x11
+Provides: alterator-browser-qt-light = 2.8-alt1
+Obsoletes: alterator-browser-qt-light < 2.8-alt1
+Provides: alterator-browser-qt = %version-%release
+Obsoletes: alterator-browser-qt < %version-%release
+Obsoletes: alterator-look-qt
+%description -n alterator-browser-qt4
 X11 Qt interface driver for alterator
 
 
@@ -50,21 +54,23 @@ lrelease-qt4 %name.pro
 
 %install
 %make INSTALL_ROOT=%buildroot install
-ln -s %name %buildroot/%_bindir/qtbrowser
+mv  %buildroot/%_bindir/alterator-browser-qt %buildroot/%_bindir/alterator-browser-qt4
 
 # translations
 mkdir -p %buildroot/%_datadir/qt4/translations/
 install -m 0644 translations/*.qm %buildroot/%_datadir/qt4/translations/
 
 mkdir -p %buildroot/%_altdir
-cat >%buildroot/%_altdir/%name <<__EOF__
-%_bindir/alterator-browser-x11	%_bindir/%name 99
+cat >%buildroot/%_altdir/alterator-browser-qt4 <<__EOF__
+%_bindir/alterator-browser-x11	%_bindir/alterator-browser-qt4 99
+%_bindir/alterator-browser-qt	%_bindir/alterator-browser-qt4 99
+%_bindir/qtbrowser	%_bindir/alterator-browser-qt4 99
 __EOF__
 
-mkdir -p %buildroot/%alterator_cfg
-ln -s /dev/null %buildroot/%alterator_cfg/design-browser-qt
+#mkdir -p %buildroot/%alterator_cfg
+#ln -s /dev/null %buildroot/%alterator_cfg/design-browser-qt
 mkdir -p %buildroot/%_datadir/%name/design
-ln -s %alterator_cfg/design-browser-qt %buildroot/%_datadir/%name/design/current
+#ln -s %alterator_cfg/design-browser-qt %buildroot/%_datadir/%name/design/current
 
 %if 0
 %post
@@ -73,15 +79,18 @@ ln -s %alterator_cfg/design-browser-qt %buildroot/%_datadir/%name/design/current
 %preun_unregister_alternatives %name
 %endif
 
-%files
-%config %_altdir/%name
-%ghost %config %alterator_cfg/design-browser-qt
-%_bindir/*
+%files -n alterator-browser-qt4
+%config %_altdir/alterator-browser-qt4
+#%ghost %config %alterator_cfg/design-browser-qt
+%_bindir/alterator-browser-qt4
 %_datadir/%name/
 %_datadir/qt4/translations/*.qm
 
 
 %changelog
+* Thu Apr 13 2017 Sergey V Turchin <zerg at altlinux dot org> 2.19.4-alt2%ubt
+- rename package
+
 * Tue Feb 18 2014 Sergey V Turchin <zerg at altlinux dot org> 2.19.4-alt1
 - using QT_USE_FAST_CONCATENATION and QT_USE_FAST_OPERATOR_PLUS compile flags
 
