@@ -1,5 +1,5 @@
 Name: strace
-Version: 4.16.0.63.722c
+Version: 4.16.0.121.8760
 Release: alt1
 
 Summary: Tracks and displays system calls associated with a running process
@@ -82,6 +82,9 @@ echo 'END OF TEST SUITE INFORMATION'
 %_bindir/strace-graph
 
 %changelog
+* Fri Apr 14 2017 Dmitry V. Levin <ldv@altlinux.org> 4.16.0.121.8760-alt1
+- v4.16-63-g722c73a -> v4.16-121-g87607b9.
+
 * Sun Mar 19 2017 Dmitry V. Levin <ldv@altlinux.org> 4.16.0.63.722c-alt1
 - v4.16 -> v4.16-63-g722c73a.
 
