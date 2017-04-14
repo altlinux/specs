@@ -1,6 +1,6 @@
 Name: 	  nagwad
-Version:  0.7
-Release:  alt4%ubt
+Version:  0.8
+Release:  alt1%ubt
 
 Summary:  Nagios watch daemon
 License:  GPLv3
@@ -14,13 +14,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-ubt
 
 Requires:  systemd
-Requires:  osec osec-mailreport
-Conflicts: osec-cronjob
-%if %ubt_id == "M80C"
-Provides: osec-cronjob = 1.2.7-alt3.M80C.1
-%else
-Provides: osec-cronjob
-%endif
+Requires:  osec-timerunit
 
 %description
 Daemon that listens to journald and generates alerts based on journal messages
@@ -29,6 +23,24 @@ alerts when unauthorized USB devices are inserted.
 
 %prep
 %setup
+
+
+%package -n osec-timerunit
+
+Summary: Osec job started from systemd unit
+Group: System/Servers
+
+%description -n osec-timerunit
+A set of systemd units that allow periodical start of osec job without using cron
+Requires: systemd
+Requires: osec-mailreport
+Conflicts: osec-cronjob
+%if %ubt_id == "M80C"
+Provides: osec-cronjob = 1.2.7-alt3.M80C.1
+%else
+Provides: osec-cronjob
+%endif
+
 
 %package server
 
@@ -87,23 +99,27 @@ install -Dm 0755 osec/* %buildroot/etc/osec/
 %_sbindir/*
 %_libexecdir/nagwad/*
 %_unitdir/nagwad.service
-%_unitdir/osec.service
-%_unitdir/osec.timer
 %_libexecdir/nagios/plugins/*
 /var/lib/nagwad/
 %_docdir/README.md
 %_docdir/examples/nrpe/*
-%_datadir/osec/*
-/etc/osec/*
-%dir /var/lib/osec/
 
 
 %files server
 %_docdir/examples/nagios/*
 %_docdir/signal.odt
 
+%files -n osec-timerunit
+/etc/osec/*
+%dir /var/lib/osec/
+%_datadir/osec/*
+%_unitdir/osec.service
+%_unitdir/osec.timer
 
 %changelog
+* Fri Apr 14 2017 Denis Medvedev <nbr@altlinux.org> 0.8-alt1%ubt
+- extracted osec-timerunit package
+
 * Fri Mar 31 2017 Denis Medvedev <nbr@altlinux.org> 0.7-alt4%ubt
 - fix for dependences
 
