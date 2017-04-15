@@ -1,5 +1,3 @@
-%define _libexecdir /usr/libexec
-
 %def_enable daemon
 %def_disable appliance
 %def_enable fuse
@@ -17,8 +15,8 @@
 
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.33.38
-Release: alt1.1
+Version: 1.36.3
+Release: alt2
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -48,13 +46,14 @@ BuildRequires: netpbm
 BuildRequires: libyajl-devel >= 2.0.4
 BuildRequires: libsystemd-journal-devel >= 196
 BuildRequires: liblzma-devel
+BuildRequires: libdbus-devel
 # BuildRequires: supermin >= 5.1.0
 %if_enabled fuse
 BuildRequires: libfuse-devel
 %endif
 %if_enabled ocaml
-BuildPreReq: rpm-build-ocaml4
-BuildRequires: ocaml4 ocaml4-findlib ocaml4-ocamldoc ocaml4-ocamlbuild
+BuildPreReq: rpm-build-ocaml
+BuildRequires: ocaml ocaml-findlib ocaml-ocamldoc ocaml-ocamlbuild
 #BuildRequires: ocaml-gettext
 %endif
 %if_enabled python
@@ -174,28 +173,28 @@ Requires: %_bindir/getopt
 This package contains miscellaneous system administrator command line
 tools for virtual machines.
 
-%package -n ocaml4-%name
+%package -n ocaml-%name
 Summary: OCaml bindings for %name
 Group: Development/Other
 Requires: %name = %version-%release
-Provides: ocaml-%name = %version-%release
-Obsoletes: ocaml-%name < %version-%release
+Provides: ocaml4-%name = %version-%release
+Obsoletes: ocaml4-%name < %version-%release
 
-%description -n ocaml4-%name
-ocaml4-%name contains OCaml bindings for %name.
+%description -n ocaml-%name
+ocaml-%name contains OCaml bindings for %name.
 
 This is for toplevel and scripting access only.  To compile OCaml
 programs which use %name you will also need ocaml-%name-devel.
 
-%package -n ocaml4-%name-devel
+%package -n ocaml-%name-devel
 Summary: OCaml bindings for %name
 Group: Development/Other
-Requires: ocaml4-%name = %version-%release
-Provides: ocaml-%name-devel = %version-%release
-Obsoletes: ocaml-%name-devel < %version-%release
+Requires: ocaml-%name = %version-%release
+Provides: ocaml4-%name-devel = %version-%release
+Obsoletes: ocaml4-%name-devel < %version-%release
 
-%description -n ocaml4-%name-devel
-ocaml4-%name-devel contains development libraries
+%description -n ocaml-%name-devel
+ocaml-%name-devel contains development libraries
 required to use the OCaml bindings for %name.
 
 %package -n perl-Sys-Guestfs
@@ -296,8 +295,6 @@ Requires: gzip
 Requires: unzip
 Requires: curl
 Requires: /usr/bin/virsh
-# 'strip' binary is required by virt-p2v-make-kickstart.
-Requires: binutils
 
 # For rhsrvany.exe, used to install firstboot scripts in Windows guests.
 # Requires: mingw32-srvany >= 1.0-13
@@ -305,6 +302,27 @@ Requires: binutils
 %description -n virt-v2v
 Virt-v2v and virt-p2v are tools that convert virtual machines from
 non-KVM hypervisors, or physical machines, to run under KVM.
+
+%package -n virt-p2v-maker
+Summary: Convert a physical machine to run on KVM
+Group: Development/Other
+License: GPLv2+
+Requires: guestfs-tools = %version-%release
+Requires: gawk
+Requires: gzip
+# 'strip' binary is required by virt-p2v-make-kickstart.
+Requires: binutils
+
+%description -n virt-p2v-maker
+Virt-p2v converts (virtualizes) physical machines so they can be run
+as virtual machines under KVM.
+
+This package contains the tools needed to make a virt-p2v boot CD or
+USB key which is booted on the physical machine to perform the
+conversion.  You also need virt-v2v installed somewhere else to
+complete the conversion.
+
+To convert virtual machines from other hypervisors, see virt-v2v.
 
 %package -n bash-completion-libguestfs
 Summary: bash-completion for libguestfs tools
@@ -406,6 +424,7 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_libdir/libguestfs.so
 #%_sbindir/libguestfs-make-fixed-appliance
 #%_man1dir/libguestfs-make-fixed-appliance.1*
+%_man1dir/guestfs-building.1*
 %_man1dir/guestfs-recipes.1*
 %_man3dir/guestfs.3*
 %_man3dir/guestfs-examples.3*
@@ -445,6 +464,8 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %dir %_sysconfdir/xdg/virt-builder/repos.d
 %config %_sysconfdir/xdg/virt-builder/repos.d/libguestfs.conf
 %config %_sysconfdir/xdg/virt-builder/repos.d/libguestfs.gpg
+%config %_sysconfdir/xdg/virt-builder/repos.d/opensuse.conf
+%config %_sysconfdir/xdg/virt-builder/repos.d/opensuse.gpg
 %_bindir/guestfish
 %_man1dir/guestfish.1*
 %_bindir/guestmount
@@ -491,6 +512,8 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_man1dir/virt-sparsify.1*
 %_bindir/virt-tar-in
 %_man1dir/virt-tar-in.1*
+%_bindir/virt-tail
+%_man1dir/virt-tail.1*
 %_bindir/virt-tar-out
 %_man1dir/virt-tar-out.1*
 %_bindir/virt-list-filesystems
@@ -518,18 +541,16 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 
 %files -n virt-v2v
 %doc COPYING README v2v/TODO
-%_libexecdir/virt-p2v
+%_bindir/virt-v2v*
+%_man1dir/virt-v2v*
+#%_datadir/virt-tools
+
+%files -n virt-p2v-maker
 %_bindir/virt-p2v-make-disk
 %_bindir/virt-p2v-make-kickstart
-%_bindir/virt-v2v
-%_bindir/virt-v2v-copy-to-local
-%_man1dir/virt-p2v.1*
-%_man1dir/virt-p2v-make-disk.1*
-%_man1dir/virt-p2v-make-kickstart.1*
-%_man1dir/virt-v2v.1*
-%_man1dir/virt-v2v-copy-to-local.1*
+%_man1dir/virt-p2v*
+%_libdir/virt-p2v
 %_datadir/virt-p2v
-#%_datadir/virt-tools
 
 #%files live-service
 #%doc COPYING README
@@ -539,7 +560,7 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 #/lib/udev/rules.d/99-guestfsd.rules
 
 %if_enabled ocaml
-%files -n ocaml4-%name
+%files -n ocaml-%name
 %_libdir/ocaml/guestfs
 %exclude %_libdir/ocaml/guestfs/*.a
 %exclude %_libdir/ocaml/guestfs/*.cmxa
@@ -548,7 +569,7 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_libdir/ocaml/stublibs/*.so
 %_libdir/ocaml/stublibs/*.so.owner
 
-%files -n ocaml4-%name-devel
+%files -n ocaml-%name-devel
 %doc ocaml/examples/*.ml
 %_libdir/ocaml/guestfs/*.a
 %_libdir/ocaml/guestfs/*.cmxa
@@ -617,6 +638,13 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %endif
 
 %changelog
+* Mon Apr 03 2017 Anton Farygin <rider@altlinux.ru> 1.36.3-alt2
+- rebuild with ocaml-4
+- ocaml modules renamed back to ocaml-*
+
+* Tue Mar 28 2017 Alexey Shabalin <shaba@altlinux.ru> 1.36.3-alt1
+- 1.36.3
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.33.38-alt1.1
 - rebuild with new perl 5.24.1
 

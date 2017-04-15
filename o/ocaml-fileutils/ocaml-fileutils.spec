@@ -2,7 +2,7 @@
 
 Name: ocaml-fileutils
 Version: 0.5.1
-Release: alt1
+Release: alt2
 Summary: OCaml library for common file and filename operations
 Group: Development/ML
 
@@ -13,9 +13,9 @@ Packager: Lenar Shakirov <snejok@altlinux.ru>
 Source: %name-%version.tar
 
 BuildRequires: ocaml
-BuildRequires: findlib
-BuildRequires: ocamldoc
-BuildRequires: ocamlbuild
+BuildRequires: ocaml-findlib
+BuildRequires: ocaml-ocamldoc
+BuildRequires: ocaml-ocamlbuild
 
 %description
 This library is intended to provide a basic interface to the most
@@ -73,6 +73,9 @@ make test
 %_libdir/ocaml/site-lib/fileutils/*.mli
 
 %changelog
+* Sat Apr 08 2017 Anton Farygin <rider@altlinux.ru> 0.5.1-alt2
+- rebuild with ocaml-4.04
+
 * Wed Nov 30 2016 Lenar Shakirov <snejok@altlinux.ru> 0.5.1-alt1
 - Initial build for ALT (based on 0.5.1-2.fc26.src)
 

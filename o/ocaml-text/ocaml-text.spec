@@ -1,16 +1,20 @@
+# on i586: ./usr/lib/ocaml/text/text.cmxs: TEXTREL entry found: 0x00000000
+%set_verify_elf_method textrel=relaxed
+
 Name: ocaml-text
 License: BSD
 Group: Development/ML
 Summary: Development files for %name-runtime
-Version: 0.5
-Release: alt1
-Url: http://forge.ocamlcore.org/projects/ocaml-text/
-Source: http://forge.ocamlcore.org/frs/download.php/641/ocaml-text-0.5.tar.gz
-Patch: ocaml-text-alt-fix-rpath.patch
+Version: 0.8
+Release: alt1%ubt
+Url: https://github.com/vbmithr/ocaml-text
+Source: %name-%version.tar
+Patch0: ocaml-text-alt-fix-rpath.patch
 Requires: %name-runtime = %version-%release
 
-BuildRequires: ocaml ocamldoc ocamlbuild findlib camlp4
-BuildRequires: glibc-devel pcre-ocaml libncurses-devel
+BuildRequires: ocaml ocaml-ocamldoc ocaml-ocamlbuild ocaml-findlib ocaml-camlp4
+BuildRequires: ocaml-pcre libncurses-devel
+BuildRequires(pre): rpm-build-ubt
 
 %description
 OCaml-Text is a library for dealing with ``text'', i.e. sequence of
@@ -49,35 +53,35 @@ OCaml-Text choose to use only regular strings for dealing with text.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
 
 %build
 ocaml setup.ml -configure --prefix %_prefix --destdir '%buildroot' --enable-pcre 
 make
-# make doc
 
 %install
 mkdir -p %buildroot%_libdir/ocaml/stublibs
-mkdir -p %buildroot%_libdir/ocaml/site-lib/%name
 %makeinstall_std OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
 
 %files runtime
-%doc LICENSE
 %_libdir/ocaml/text
 %_libdir/ocaml/stublibs/*.so*
 %exclude %_libdir/ocaml/text/*.a
 %exclude %_libdir/ocaml/text/*.cmxa
-#%exclude %{_libdir}/ocaml/text/*.cmx
 %exclude %_libdir/ocaml/text/*.mli
 
 %files
-%doc LICENSE CHANGES CHANGES.darcs README
+%doc LICENSE CHANGES  README
 %_libdir/ocaml/text/*.a
 %_libdir/ocaml/text/*.cmxa
-#%_libdir/ocaml/text/*.cmx
 %_libdir/ocaml/text/*.mli
 
-
 %changelog
+* Wed Apr 12 2017 Anton Farygin <rider@altlinux.ru> 0.8-alt1%ubt
+- updated to 0.8
+
+* Tue Apr 11 2017 Anton Farygin <rider@altlinux.ru> 0.6-alt1
+- updated to 0.6
+
 * Tue Dec 27 2011 Alexey Shabalin <shaba@altlinux.ru> 0.5-alt1
 - initial build

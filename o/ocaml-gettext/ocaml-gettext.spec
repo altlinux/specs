@@ -1,5 +1,5 @@
 Name: ocaml-gettext
-Version: 0.3.5
+Version: 0.3.7
 Release: alt1
 Summary: OCaml library for i18n
 Group: Development/ML
@@ -16,9 +16,9 @@ Patch1: ocaml-gettext-0.3.4-use-ocamlopt-g.patch
 Patch2: ocaml-gettext-0.3.5-disable-warning-31.patch
 
 BuildRequires: ocaml
-BuildRequires: findlib
-BuildRequires: ocamldoc
-BuildRequires: camlp4
+BuildRequires: ocaml-findlib
+BuildRequires: ocaml-ocamldoc
+BuildRequires: ocaml-camlp4
 BuildRequires: ocaml-fileutils-devel >= 0.4.4
 BuildRequires: docbook-style-xsl
 BuildRequires: xsltproc
@@ -58,6 +58,7 @@ developing applications that use %name.
 %build
 # Parallel builds don't work.
 unset MAKEFLAGS
+autoreconf -fisv
 CFLAGS="$RPM_OPT_FLAGS" \
 ./configure \
   --libdir=%_libdir \
@@ -115,6 +116,9 @@ chrpath --delete $OCAMLFIND_DESTDIR/stublibs/dll*.so
 %_bindir/ocaml-xgettext
 
 %changelog
+* Sun Apr 09 2017 Anton Farygin <rider@altlinux.ru> 0.3.7-alt1
+- new version
+
 * Wed Nov 30 2016 Lenar Shakirov <snejok@altlinux.ru> 0.3.5-alt1
 - Initial build for ALT (based on Fedora 0.3.5-9.fc26.src)
 

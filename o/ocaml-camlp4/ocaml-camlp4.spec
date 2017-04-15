@@ -1,25 +1,27 @@
-Name: ocaml4-camlp4
-Version: 4.03.1
-Release: alt1
+Name: ocaml-camlp4
+Version: 4.04.1
+Release: alt1%ubt
 
-Summary: Preprocessor for OCaml 4.02
+Summary: Preprocessor for OCaml
 License: QPL & LGPL
 Group: Development/ML
 
-Requires: ocaml4
+Requires: ocaml
 
 Url: https://github.com/ocaml/camlp4
 Packager: %packager
 
 Source0: %name-%version.tar
 
-Requires: rpm-build-ocaml4 >= 1.1
-BuildPreReq: rpm-build-ocaml4 >= 1.1
+Requires: rpm-build-ocaml >= 1.1.1
+BuildRequires(pre): rpm-build-ocaml >= 1.1.1
+BuildRequires(pre): rpm-build-ubt
 
 # Automatically added by buildreq on Sun Oct 19 2014
-BuildRequires: ocaml4-ocamlbuild
-Requires: ocaml4-runtime ocaml4
-
+BuildRequires: ocaml-runtime ocaml >= 4.04 ocaml-ocamlbuild
+Requires: ocaml-runtime ocaml
+Provides: ocaml4-campl4
+Obsoletes: ocaml4-campl4
 Conflicts: camlp4
 
 %description
@@ -35,8 +37,6 @@ syntax of the language (quotations, syntax extensions).
 
 %build
 
-#sed -i 's@/usr/X11R6/lib\>@%_x11libdir@g' configure
-
 %add_optflags -DUSE_NON_CONST -D_FILE_OFFSET_BITS=64
 ./configure --bindir=%_bindir --libdir=%_libdir/ocaml
 
@@ -44,7 +44,6 @@ syntax of the language (quotations, syntax extensions).
 
 %install
 
-#install -pD -m644 camlp4/man/camlp4.1.tpl %buildroot%_man1dir/camlp4.1
 make install BINDIR=%buildroot%_bindir LIBDIR=%buildroot%_libdir/ocaml MANDIR=%buildroot%_mandir
 
 %files
@@ -54,6 +53,9 @@ make install BINDIR=%buildroot%_bindir LIBDIR=%buildroot%_libdir/ocaml MANDIR=%b
 %_libdir/ocaml/camlp4/
 
 %changelog
+* Thu Feb 16 2017 Anton Farygin <rider@altlinux.ru> 4.04.1-alt1%ubt
+- new version
+
 * Sun Jun 19 2016 Andrey Bergman <vkni@altlinux.org> 4.03.1-alt1
 - Version update (switch to ocaml 4.03).
 

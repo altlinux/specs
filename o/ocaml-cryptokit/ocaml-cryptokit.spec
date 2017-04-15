@@ -1,68 +1,86 @@
-%define oname cryptokit
-Name: ocaml-%oname
-License: GPL
-Group: Development/Other
-Summary: Development files for %name-runtime
-Version: 1.5
-Release: alt1
-Url: http://forge.ocamlcore.org/projects/cryptokit/
-Source: http://forge.ocamlcore.org/frs/download.php/639/cryptokit-1.5.tar.gz
-Patch0: %oname-install.patch
-Packager: Boris Savelev <boris@altlinux.org>
-Requires: %name-runtime = %version-%release
+# on i586: /usr/lib/ocaml/site-lib/cryptokit/cryptokit.cmxs
+%set_verify_elf_method textrel=relaxed
 
-BuildRequires: ocaml zlib-devel ocamldoc ocamlbuild findlib
-BuildRequires: libtinfo-devel
+%global pkgname cryptokit
+%define ocamlsitelib %_libdir/ocaml
+%define pkgsitelib %ocamlsitelib/%pkgname
+%define ocamlstublib %_libdir/ocaml/stublibs/
+
+Name: ocaml-%pkgname
+Version: 1.11
+Release: alt1%ubt
+Group: Development/ML
+Summary: OCaml library of cryptographic and hash functions
+License: LGPLv2 with exceptions
+Url: http://forge.ocamlcore.org/projects/cryptokit/
+Source0: %name-%version.tar
+BuildRequires: ocaml ocaml-ocamldoc ocaml-ocamlbuild ocaml-zarith-devel ocaml-findlib zlib-devel chrpath
+BuildRequires(pre): rpm-build-ubt
+Provides: ocaml-cryptokit-runtime = %version-%release
+Obsoletes: ocaml-cryptokit-runtime
 
 %description
-This package contains the development files needed to build applications
-using %name.
+The Cryptokit library for Objective Caml provides a variety of
+cryptographic primitives that can be used to implement cryptographic
+protocols in security-sensitive applications. The primitives provided
+include:
 
-%package runtime
-Summary: Cryptographic primitives for OCaml
-Group: System/Libraries
-Obsoletes: libcryptokit-ocaml
-Provides: libcryptokit-ocaml = %version
+* Symmetric-key cryptography: AES, DES, Triple-DES, ARCfour, in ECB,
+  CBC, CFB and OFB modes.
+* Public-key cryptography: RSA encryption and signature; Diffie-Hellman
+  key agreement.
+* Hash functions and MACs: SHA-1, SHA-256, RIPEMD-160, MD5, and MACs
+  based on AES and DES.
+* Random number generation.
+* Encodings and compression: base 64, hexadecimal, Zlib compression.
 
-%description runtime
-The Cryptokit library for Objective Caml provides a
-variety of cryptographic primitives that can be used
-to implement cryptographic protocols in security-sensitive applications.
+Additional ciphers and hashes can easily be used in conjunction with
+the library. In particular, basic mechanisms such as chaining modes,
+output buffering, and padding are provided by generic classes that can
+easily be composed with user-provided ciphers. More generally, the
+library promotes a "Lego"-like style of constructing and composing
+transformations over character streams.
+
+%package devel
+Summary: Development files for %name
+Requires: %name = %version-%release
+Group: Development/ML
+
+%description devel
+The %name-devel package contains libraries and signature files for
+developing applications that use %name.
 
 %prep
-%setup -q -n %oname-%version
-#%patch0 -p0
-#sed -i -e 's:/usr/lib:%_libdir:g' Makefile
+%setup
 
 %build
 ./configure --destdir %buildroot
-%make
+# Some sort of circular dependency, so sometimes the first make fails.
+# Just run make twice.
+make ||:
+make
+
+chrpath --delete _build/src/dllcryptokit_stubs.so
 
 %install
-mkdir -p %buildroot%_libdir/ocaml/stublibs
-%makeinstall_std OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
-mkdir -p %buildroot%_libdir/ocaml/site-lib
-cd %buildroot%_libdir/ocaml/site-lib
-ln -s ../cryptokit cryptokit
-
-%files runtime
-%doc LICENSE.txt
-%_libdir/ocaml/site-lib/cryptokit
-%_libdir/ocaml/cryptokit
-%_libdir/ocaml/stublibs/*.so*
-%exclude %_libdir/ocaml/cryptokit/*.a
-%exclude %_libdir/ocaml/cryptokit/*.cmxa
-#%exclude %{_libdir}/ocaml/cryptokit/*.cmx
-%exclude %_libdir/ocaml/cryptokit/*.mli
+mkdir -p %buildroot%ocamlstublib
+export OCAMLFIND_DESTDIR=%buildroot%ocamlsitelib
+make install
 
 %files
-%doc README.txt LICENSE.txt Changes
-%_libdir/ocaml/cryptokit/*.a
-%_libdir/ocaml/cryptokit/*.cmxa
-#%_libdir/ocaml/cryptokit/*.cmx
-%_libdir/ocaml/cryptokit/*.mli
+%doc LICENSE.txt
+%pkgsitelib
+%exclude %pkgsitelib/*.mli
+%ocamlstublib/*.so*
+
+%files devel
+%doc README.txt Changes
+%pkgsitelib/*.mli
 
 %changelog
+* Tue Feb 14 2017 Anton Farygin <rider@altlinux.ru> 1.11-alt1%ubt
+- updated to new version
+
 * Wed Jan 11 2012 Alexey Shabalin <shaba@altlinux.ru> 1.5-alt1
 - 1.5
 

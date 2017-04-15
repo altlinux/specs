@@ -1,6 +1,6 @@
 Name: ocaml-curses
 Version: 1.0.3
-Release: alt1
+Release: alt2
 Summary: OCaml bindings for ncurses
 
 Group: System/Libraries
@@ -11,7 +11,7 @@ Packager: Lenar Shakirov <snejok@altlinux.ru>
 Source: http://download.savannah.gnu.org/releases/ocaml-tmk/%name-%version.tar
 
 BuildRequires: ocaml
-BuildRequires: findlib
+BuildRequires: ocaml-findlib
 BuildRequires: libncurses-devel
 BuildRequires: gawk
 
@@ -63,6 +63,9 @@ ocamlfind install curses META *.cmi *.cmx *.cma *.cmxa *.a *.so *.mli
 %_libdir/ocaml/site-lib/curses/*.mli
 
 %changelog
+* Sat Apr 08 2017 Anton Farygin <rider@altlinux.ru> 1.0.3-alt2
+- rebuild with new ocaml
+
 * Tue Nov 22 2016 Lenar Shakirov <snejok@altlinux.ru> 1.0.3-alt1
 - Initial build for ALT (based on 1.0.3-33.fc26.src)
 

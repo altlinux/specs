@@ -1,6 +1,6 @@
 Name: facile
 Version: 1.1.3
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Libraries
 Summary: Constraint programming library
@@ -11,7 +11,7 @@ Source0: http://www.recherche.enac.fr/log/facile/distrib/%name-%version.tar.gz
 Patch1: facile-1.1-install.patch
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: rpm-build-ocaml4 ocaml4
+BuildRequires: rpm-build-ocaml ocaml
 
 %description
 FaCiLe is a constraint programming library on integer and integer set finite
@@ -32,6 +32,9 @@ make DESTDIR=%buildroot install
 %_libdir/ocaml/facile
 
 %changelog
+* Thu Apr 06 2017 Anton Farygin <rider@altlinux.ru> 1.1.3-alt2%ubt
+- rebuild with new ocaml environment
+
 * Thu Apr 06 2017 Sergey V Turchin <zerg@altlinux.org> 1.1.3-alt1%ubt
 - new version
 

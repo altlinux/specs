@@ -1,20 +1,19 @@
+%set_verify_elf_method textrel=relaxed
 Name: ocaml-extlib
-Version: 1.5.2
-Release: alt1
+Version: 1.7.2
+Release: alt1%ubt
 
 Summary: extended standard library for OCaml
 License: LGPL v2, with exceptions
 Group: Development/ML
 URL: http://code.google.com/p/ocaml-extlib/
-Packager: Alexander Myltsev <avm@altlinux.ru>
-
+# https://github.com/ygrek/ocaml-extlib
 Source: %name-%version.tar
-Patch: ocaml-extlib-1.5.2-alt-fix-install.patch
+Patch0: %name-%version-alt.patch
 
 Requires: ocaml-runtime
-BuildRequires: rpm-build-ocaml ocamldoc
-# for install
-BuildRequires: /usr/bin/ocamlfind-mini
+BuildRequires: rpm-build-ocaml ocaml-ocamldoc ocaml-findlib ocaml-cppo
+BuildRequires(pre): rpm-build-ubt
 
 %description
 ExtLib is a project aiming at providing a complete - yet small - standard
@@ -34,26 +33,28 @@ hashtables, strings, lists and option types.
 
 %prep
 %setup
-%patch -p1
+pushd src
+%patch0 -p1
+popd
 
 %build
-%make all
-%make opt
+%make
 %make doc
 
 %install
 mkdir -p mkdir -p %buildroot%_libdir/ocaml/site-lib
-%makeinstall OCAMLFIND=ocamlfind-mini \
-	OCAMLFIND_INSTFLAGS="-destdir %buildroot%_libdir/ocaml/site-lib/"
+%makeinstall OCAMLFIND_INSTFLAGS="-destdir %buildroot%_libdir/ocaml/site-lib/"
 
 %files
 %extlibdir/META
 %extlibdir/*.cm*
 %extlibdir/*.ml*
 %extlibdir/*.a
-%doc doc/*
 
 %changelog
+* Sat Apr 08 2017 Anton Farygin <rider@altlinux.ru> 1.7.2-alt1%ubt
+- new version
+
 * Thu Dec 22 2011 Alexey Shabalin <shaba@altlinux.ru> 1.5.2-alt1
 - 1.5.2
 

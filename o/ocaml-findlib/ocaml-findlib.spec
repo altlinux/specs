@@ -1,7 +1,7 @@
 %define _name findlib
-Name: ocaml4-%_name
-Version: 1.6.2
-Release: alt2
+Name: ocaml-%_name
+Version: 1.7.1
+Release: alt1%ubt
 
 Summary: A module packaging tool for OCaml
 License: Distributable
@@ -13,11 +13,13 @@ Patch1: findlib-1.6.2-alt-native.patch
 Patch2: findlib-1.1.2pl1-alt-wizard.patch
 Patch3: findlib-1.6.2-alt-install-doc.patch
 
-# Automatically added by buildreq on Tue Apr 08 2008 (-bi)
-BuildRequires: rpm-build-ocaml4 ocaml4-camlp4 ocaml4-labltk libtinfo-devel ocaml4-ocamldoc
-BuildRequires: ocaml4-ocamlbuild libX11-devel tcl-devel tk-devel
+BuildRequires(pre): rpm-build-ubt
 
-%package -n ocaml4-ocamlfind-mini
+# Automatically added by buildreq on Tue Apr 08 2008 (-bi)
+BuildRequires: rpm-build-ocaml ocaml-camlp4 ocaml-labltk >= 8.06.2 libtinfo-devel ocaml-ocamldoc
+BuildRequires: ocaml-ocamlbuild libX11-devel tcl-devel tk-devel
+
+%package -n ocaml-ocamlfind-mini
 Summary: Minimal findlib script to be distributed with user libraries
 Group: Development/ML
 BuildArch: noarch
@@ -39,7 +41,7 @@ the user to enter queries on the command-line. In order to simplify
 compilation and linkage, there are new frontends of the various OCaml
 compilers that can directly deal with packages.
 
-%description -n ocaml4-ocamlfind-mini
+%description -n ocaml-ocamlfind-mini
 ocamlfind-mini is an O'Caml script that implements a subset of the
 full functionality of ocamlfind. It consists only of one file, so it
 is easy to distribute it with any software.
@@ -56,12 +58,17 @@ findlib-enabled Makefiles.
 %setup -q -n %_name-%version
 %patch1 -p2
 %patch2 -p2
-%patch3 -p2
 
 sed -i -e 's,@LIBDIR@,%_libdir,g' src/findlib-toolbox/make_wizard.ml
+sed -i -e '/path/s,@SITELIB@,\0:%_libdir/ocaml/site-lib,' findlib.conf.in
 
 %build
-./configure -mandir %_mandir -config %_libdir/ocaml/etc/findlib.conf -with-toolbox
+./configure \
+    -mandir %_mandir \
+    -config %_libdir/ocaml/etc/findlib.conf \
+    -with-toolbox \
+    -sitelib `ocamlc -where` \
+    #
 make
 make opt
 
@@ -71,14 +78,14 @@ make opt
 install -pD -m755 mini/ocamlfind-mini %buildroot%_bindir/ocamlfind-mini
 
 # remove default byte-coded wizard and install native one
-rm -f %buildroot%_libdir/ocaml/site-lib/findlib/make_wizard
+rm -f %buildroot%_libdir/ocaml/findlib/make_wizard
 install -m755 src/findlib-toolbox/make_wizard.opt %buildroot%_bindir/findlib-make-wizard
 
 # remove native dynlink plugin
-rm -f %buildroot%_libdir/ocaml/site-lib/findlib/findlib.cmxs
-rm -f %buildroot%_libdir/ocaml/site-lib/findlib/*.cmxs
+rm -f %buildroot%_libdir/ocaml/findlib/findlib.cmxs
+rm -f %buildroot%_libdir/ocaml/findlib/*.cmxs
 
-%files -n ocaml4-ocamlfind-mini
+%files -n ocaml-ocamlfind-mini
 %doc mini/README
 %_bindir/ocamlfind-mini
 
@@ -92,12 +99,17 @@ rm -f %buildroot%_libdir/ocaml/site-lib/findlib/*.cmxs
 %exclude %_bindir/safe_camlp4
 %_libdir/ocaml/etc/*
 %_libdir/ocaml/topfind
-%_libdir/ocaml/site-lib/*
+%_libdir/ocaml/*
 %_man1dir/ocamlfind.1*
 %_man5dir/*
 %doc doc/* LICENSE
 
 %changelog
+* Sun Apr 09 2017 Anton Farygin <rider@altlinux.ru> 1.7.1-alt1%ubt
+- renamed back to ocaml-findlib
+- added %%ubt tag
+- 1.7.1
+
 * Thu Mar 23 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.6.2-alt2
 - NMU: rebuilt against Tcl/Tk 8.6
 - fixed patch to build against Tcl/Tk 8.6
