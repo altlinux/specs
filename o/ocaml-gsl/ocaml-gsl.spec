@@ -1,67 +1,120 @@
-%define srcName ocamlgsl
+%set_verify_elf_method textrel=relaxed
 
 Name:           ocaml-gsl
-Version:        0.6.0
-Release:        alt1.1
+Version:        1.19.3
+Release:        alt1%ubt
 Summary:        Interface to GSL (GNU scientific library) for OCaml
 Summary(ru_RU.UTF-8): Интерфейс библиотеки GSL для OCaml
 License:        GPLv2
 Group:          Development/ML
-Url:            http://oandrieu.nerim.net/ocaml/gsl/
-Packager:	%packager
+Url:            http://mmottl.github.io/gsl-ocaml/
 
-Source:         ocamlgsl-%{version}.tar.bz2
+Provides:	ocaml4-gsl
+Obsoletes:	ocaml4-gsl
 
-# Automatically added by buildreq on Sat Dec 18 2010
-BuildRequires: libgsl90-devel ocaml
+Source: %name-%version.tar
+Patch0: ocaml4-gsl-1.18.4-alt-compilation_fix.patch 
+
+# Automatically added by buildreq on Wed Jun 24 2015
+BuildRequires: libgsl-devel ocaml-camlp4 ocaml-findlib ocaml-ocamlbuild ocaml-ocamldoc
+BuildRequires(pre): rpm-build-ubt
+
+%package devel
+Summary: Development files for programs which will use the OcamlGSL library
+Summary(ru_RU.UTF-8): Заголовочные файлы для программ, использующих библиотеку OcamlGSL
+Group: Development/ML
+Requires: %name = %version-%release
+Provides:	ocaml-gsl-devel
+Obsoletes:	ocaml-gsl-devel
+Conflicts:	ocaml-gsl-devel
 
 %description
 This is an interface to GSL (GNU scientific library), for the
 Objective Caml language.
 
+%description devel
+This package includes development files necessary for developing 
+programs which use interface to GSL (GNU scientific library)
+
 %prep
-%setup -q -n %srcName-%version
+%setup -q
+%patch0 -p1
 
 # Поскольку в дистрибутиве ALT есть только ocamlfind-mini, используем его.
 sed -i s/ocamlfind/ocamlfind-mini/g Makefile
-sed -i s/"DESTDIR ="/"DESTDIR = \$(OCAMLDIR)\/site-lib\/gsl"/g Makefile
 
 %build
 %make
-strip dllmlgsl.so
+
+strip _build/src/dllgsl_stubs.so
 
 %install
 %define ocamlsitelib %_libdir/ocaml/site-lib
+%define ocamlstublib %_libdir/ocaml/stublibs/
 %define docdir %_docdir/%name-%version
-mkdir -p %buildroot/%ocamlsitelib/gsl
+export OCAMLFIND_DESTDIR=%buildroot%ocamlsitelib/
+export DESTDIR=%buildroot
+mkdir -p $OCAMLFIND_DESTDIR $OCAMLFIND_DESTDIR/stublibs
+
+%makeinstall
+
+rm -f %buildroot%ocamlsitelib/gsl/*.annot
+rm -f %buildroot%ocamlsitelib/gsl/*.cmx
+rm -f %buildroot%ocamlsitelib/gsl/*.cmt
+rm -f %buildroot%ocamlsitelib/gsl/*.cmti
+rm -f %buildroot%ocamlsitelib/gsl/*.ml
+rm -f %buildroot%ocamlsitelib/gsl/*.mli
+
+mkdir -p %buildroot%ocamlstublib/
+mv $OCAMLFIND_DESTDIR/stublibs/* %buildroot%ocamlstublib/
+
 mkdir -p %buildroot/%docdir
 
-install -pm644 gsl.*  %buildroot/%ocamlsitelib/gsl
-install -pm644 *.a  %buildroot/%ocamlsitelib/gsl
-install -pm644 *.cmxa  %buildroot/%ocamlsitelib/gsl
-install -pm644 *.cmi  %buildroot/%ocamlsitelib/gsl
-install -pm644 *.cmo  %buildroot/%ocamlsitelib/gsl
-install -pm644 dllmlgsl.so %buildroot/%ocamlsitelib/gsl
-
 %files
-%doc COPYING
+%doc COPYING.txt
+%ocamlstublib/*.so
+%ocamlstublib/*.so.owner
 %dir %ocamlsitelib/gsl/
-%ocamlsitelib/gsl/*.so
-%ocamlsitelib/gsl/*.a
+%ocamlsitelib/gsl/gsl.cma
+%ocamlsitelib/gsl/gsl.cmxs
+%ocamlsitelib/gsl/libgsl_stubs.a
+
+%files devel
+%ocamlsitelib/gsl/gsl.a
 %ocamlsitelib/gsl/*.cmxa
 %ocamlsitelib/gsl/*.cmi
-%ocamlsitelib/gsl/*.cmo
-%ocamlsitelib/gsl/*.cma
-#%%ocamlsitelib/gsl/*.mli
-#%%ocamlsitelib/gsl/*.ml
+%ocamlsitelib/gsl/META
 
 %changelog
+* Tue Mar 28 2017 Anton Farygin <rider@altlinux.ru> 1.19.3-alt1%ubt
+- renamed back to ocaml-gsl
+
+* Mon Jun 20 2016 Andrey Bergman <vkni@altlinux.org> 1.19.1-alt2
+- Rebuild with ocaml4 4.03.0.
+
+* Fri Nov 27 2015 Andrey Bergman <vkni@altlinux.org> 1.19.1-alt1
+- Version update.
+
+* Thu Aug 27 2015 Andrey Bergman <vkni@altlinux.org> 1.18.5-alt1
+- Version update. Corrected packaging of *.a files.
+
+* Wed Jun 24 2015 Andrey Bergman <vkni@altlinux.org> 1.18.4-alt1
+- Version update. Built with ocaml4.
+
+* Tue Jul 15 2014 Andrey Bergman <vkni@altlinux.org> 1.15.4-alt2
+- Added patch for new GSL library support.
+
+* Mon Jul 14 2014 Andrey Bergman <vkni@altlinux.org> 1.15.4-alt1
+- Version update.
+
 * Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.1
 - Rebuilt with gsl90 instead of gsl
+
+* Tue Oct 15 2013 Andrey Bergman <vkni@altlinux.org> 1.13.0-alt1
+- Version update.
 
 * Fri Dec 23 2011 Alexey Shabalin <shaba@altlinux.ru> 0.6.0-alt1
 - rebuild with new ocaml
 
 * Fri Dec 17 2010 Andrey Bergman <vkni@altlinux.org> 0.6.0-alt0.1
 - Initial release for Sisyphus.
-

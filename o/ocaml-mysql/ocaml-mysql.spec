@@ -1,21 +1,19 @@
 Name: ocaml-mysql
-Version: 1.0.4
-Release: alt5.qa1
+Version: 1.2.1
+Release: alt1%ubt
 
 Summary: MySQL bindings for OCaml
 License: LGPL
 Group: Development/ML
 
-URL: http://raevnos.pennmush.org/code/ocaml-mysql/
-Packager: Alexey Morsov <swi@altlinux.ru>
-
-Source: ocaml-mysql-%version.tar.gz
-Patch: ocaml-mysql-1.0.4-CVE-2009-2942-missing-escape.patch
+URL: http://ygrek.org.ua/p/ocaml-mysql/
+# https://github.com/ygrek/ocaml-mysql
+Source: ocaml-mysql-%version.tar
 
 Requires: %name-runtime = %version-%release
+BuildRequires(pre):rpm-build-ubt
 
-# Automatically added by buildreq on Tue Apr 08 2008
-BuildRequires: camlp4 findlib libMySQL-devel zlib-devel
+BuildRequires: ocaml-camlp4 ocaml-findlib libMySQL-devel zlib-devel chrpath
 
 %package runtime
 Summary: MySQL bindings for OCaml
@@ -34,28 +32,37 @@ a module Mysql intended for application development.
 
 %prep
 %setup -q
-%patch -p1
 
 %build
 %configure
 make all opt
 
 %install
-mkdir -p %buildroot%_libdir/ocaml/stublibs
-install -p -m755 dll*.so %buildroot%_libdir/ocaml/stublibs/
+export OCAMLFIND_LDCONF=ignore
+export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml/site-lib
+mkdir -p $OCAMLFIND_DESTDIR
+%makeinstall_std
 
-mkdir -p %buildroot%_libdir/ocaml/site-lib/mysql
-install -p -m644 *.{mli,cmi,cma,cmxa,a} META %buildroot%_libdir/ocaml/site-lib/mysql/
+#remove rpath
+chrpath -d %buildroot%_libdir/ocaml/site-lib/mysql/dllmysql_stubs.so
+
+# move runtime to stublibs
+mkdir -p %buildroot%_libdir/ocaml/stublibs
+mv %buildroot%_libdir/ocaml/site-lib/mysql/dllmysql_stubs.so %buildroot%_libdir/ocaml/stublibs
 
 %files
 %dir %_libdir/ocaml/site-lib/mysql
 %_libdir/ocaml/site-lib/mysql/*
-%doc CHANGES README doc/html
+%doc CHANGES README
 
 %files runtime
 %_libdir/ocaml/stublibs/dll*.so
 
 %changelog
+* Mon Apr 10 2017 Anton Farygin <rider@altlinux.ru> 1.2.1-alt1%ubt
+- new version from new upstream git
+- build with ocaml-4.04
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.4-alt5.qa1
 - NMU: rebuilt with libmysqlclient.so.18.
 

@@ -1,6 +1,6 @@
-Name: ocaml4-menhir
-Version: 20160518
-Release: alt1
+Name: ocaml-menhir
+Version: 20170101
+Release: alt1%ubt
 Summary: LR(1) parser generator for the OCaml programming language.
 
 Group: Development/ML
@@ -8,13 +8,15 @@ License: QPL
 Url: http://gallium.inria.fr/~fpottier/menhir/
 Packager: %packager
 
-Source: menhir-%version.tar.gz
+Source: menhir-%version.tar
 
-BuildRequires(pre): ocaml4
+BuildRequires(pre): ocaml rpm-build-ubt
+Provides: ocaml4-menhir
+Obsoletes: ocaml4-menhir
 
 # Automatically added by buildreq on Mon Jun 27 2016
 # optimized out: ocaml4 ocaml4-runtime python-base python-modules python3
-BuildRequires: ocaml4-camlp4 ocaml4-findlib ocaml4-ocamlbuild python-module-google python3-base
+BuildRequires: ocaml-camlp4 ocaml-findlib ocaml-ocamlbuild python-module-google python3-base
 
 %description
 Menhir is a LR(1) parser generator for the OCaml programming language.
@@ -67,6 +69,9 @@ bzip2 -z9 %buildroot%_man1dir/menhir.1
 %_libdir/ocaml/menhirLib/*
 
 %changelog
+* Thu Mar 30 2017 Anton Farygin <rider@altlinux.ru> 20170101-alt1%ubt
+- renamed to ocaml-menhir
+- new version
+
 * Mon Jun 27 2016 Andrey Bergman <vkni@altlinux.org> 20160518-alt1
 - Initial release for Sisyphus.
-

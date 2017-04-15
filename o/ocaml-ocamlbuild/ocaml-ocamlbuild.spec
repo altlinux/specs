@@ -1,18 +1,20 @@
-%define _name ocamlbuild
-Name: ocaml4-%_name
-Version: 4.03.0_0.9.2
-Release: alt1
+%define pkgname ocamlbuild
+Name: ocaml-%pkgname
+Version: 0.10.1
+Release: alt1%ubt
+Epoch: 1
 
 Summary: The Objective Caml project compilation tool
 License: Distributable
 Group: Development/ML
 Url: https://github.com/ocaml/ocamlbuild
 
-Source: %_name-%version.tar
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Sun Jun 19 2016
-# optimized out: ocaml4-runtime python-base python-modules python3
-BuildRequires: ocaml4 python-module-google python3-base
+# optimized out: ocaml-runtime python-base python-modules python3
+BuildRequires: ocaml python-module-google python3-base
+BuildRequires(pre):rpm-build-ubt
 
 %description
 Objective Caml is a high-level, strongly-typed, functional and
@@ -22,11 +24,7 @@ This package provides ocamlbuild, a tool automating the compilation
 of OCaml projects.
 
 %prep
-%setup -q -n %_name-%version
-
-# Руководство по ocamlbuild переехало в каталог ocamlbuild/man, но
-# ocamlbuild/Makefile об этом не знает.
-bzip2 -z9 man/ocamlbuild.1
+%setup -q
 
 %build
 
@@ -37,11 +35,10 @@ make
 
 %install
 
-make install BINDIR=%buildroot%_bindir LIBDIR=%buildroot%_libdir/ocaml
+make install DESTDIR=%buildroot BINDIR=%_bindir LIBDIR=%_libdir/ocaml
 
-mkdir -p %buildroot%_man1dir/
-# Вручную устанавливаем руководство по ocamlbuild
-install -p -m644 man/ocamlbuild.1.bz2 %buildroot%_man1dir/
+# Remove the META file.  It will be replaced by ocaml-ocamlfind (findlib).
+rm %buildroot%_libdir/ocaml/ocamlbuild/META
 
 %files
 %_bindir/*
@@ -50,5 +47,8 @@ install -p -m644 man/ocamlbuild.1.bz2 %buildroot%_man1dir/
 %_man1dir/ocamlbuild*
 
 %changelog
+* Thu Feb 16 2017 Anton Farygin <rider@altlinux.ru> 1:0.10.1-alt1%ubt
+- updated to 0.10.1
+
 * Sun Jun 19 2016 Andrey Bergman <vkni@altlinux.org> 4.03.0_0.9.2-alt1
 - Initial release for Sisyphus.

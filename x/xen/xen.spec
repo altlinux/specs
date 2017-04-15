@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.8.0
-Release: alt6
+Release: alt7
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -56,7 +56,9 @@ Patch21: %name.64.bit.hyp.on.ix86.patch
 
 # ALT
 Patch50: %name-4.0.0-libfsimage-soname-alt.patch
+Patch51: xen.alt.build.patch
 Patch55: qemu-traditional-lost-parenthesis.patch
+
 
 ExclusiveArch: %ix86 %x86_64 armh aarch64
 
@@ -111,7 +113,7 @@ BuildRequires: bzlib-devel liblzma-devel
 BuildRequires: libe2fs-devel
 # tools now require yajl
 BuildRequires: libyajl-devel
-%{?_enable_ocamltools:BuildRequires: ocaml ocamlbuild ocamldoc findlib}
+%{?_enable_ocamltools:BuildRequires: ocaml ocaml-ocamlbuild ocaml-ocamldoc ocaml-findlib}
 %{?_enable_xenapi:BuildRequires: libxml2-devel}
 BuildRequires: %_includedir/gnu/stubs-32.h
 # for the VMX "bios"
@@ -345,6 +347,7 @@ ln -s ../mini-os-%version extras/mini-os
 %patch19 -p1
 %{?_with_hypervisor:%patch21 -p1}
 %patch50 -p2
+%patch51 -p1
 
 cd tools/qemu-xen-traditional
 %patch55 -p1
@@ -755,9 +758,10 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 %if_enabled ocamltools
 %files ocaml
-%_libdir/ocaml/site-lib/%{name}*
-%exclude %_libdir/ocaml/site-lib/%{name}*/*.cmxa
-%exclude %_libdir/ocaml/site-lib/%{name}*/*.cmx
+%_libdir/ocaml/%{name}*
+%_libdir/ocaml/stublibs/*
+%exclude %_libdir/ocaml/%{name}*/*.cmxa
+%exclude %_libdir/ocaml/%{name}*/*.cmx
 
 %_sbindir/oxenstored
 
@@ -766,8 +770,8 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %files ocaml-devel
-%_libdir/ocaml/site-lib/%{name}*/*.cmxa
-%_libdir/ocaml/site-lib/%{name}*/*.cmx
+%_libdir/ocaml/%{name}*/*.cmxa
+%_libdir/ocaml/%{name}*/*.cmx
 %endif
 
 
@@ -789,6 +793,9 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Fri Apr 07 2017 Anton Farygin <rider@altlinux.ru> 4.8.0-alt7
+- rebuild with new ocaml-4.04
+
 * Tue Feb 21 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.0-alt6
 - Upstream updates:
  - IOMMU: always call teardown callback (XSA-207)

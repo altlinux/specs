@@ -1,6 +1,6 @@
 Name: ocaml-libvirt
 Version: 0.6.1.4
-Release: alt1
+Release: alt2
 Summary: OCaml binding for libvirt
 Group: System/Libraries
 
@@ -24,8 +24,8 @@ Patch4: 0002-Don-t-bother-checking-return-from-virInitialize.patch
 Patch5: 0001-Remove-unused-not_supported-function.patch
 
 BuildRequires: ocaml >= 3.10.0
-BuildRequires: ocamldoc
-BuildRequires: findlib
+BuildRequires: ocaml-ocamldoc
+BuildRequires: ocaml-findlib
 
 BuildRequires: libvirt-devel >= 0.2.1
 BuildRequires: perl-devel
@@ -81,6 +81,9 @@ make install-opt
 %_libdir/ocaml/site-lib/libvirt/*.mli
 
 %changelog
+* Sun Apr 09 2017 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt2
+- rebuild with ocaml-4.04
+
 * Tue Nov 22 2016 Lenar Shakirov <snejok@altlinux.ru> 0.6.1.4-alt1
 - Initial build for ALT (based on 0.6.1.4-13.fc26.src)
 

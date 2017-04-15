@@ -1,21 +1,23 @@
-Name: pcre-ocaml
-Version: 6.2.4
-Release: alt1
-Packager: Grigory Batalov <bga@altlinux.ru>
+# on i586: ERROR: ./usr/lib/ocaml/pcre/pcre.cmxs: TEXTREL entry found: 0x00000000
+%set_verify_elf_method textrel=relaxed
+
+Name: ocaml-pcre
+Version: 7.2.3
+Release: alt1%ubt
 
 Summary: Perl compatibility regular expressions (PCRE) for OCaml
 License: LGPL
 Group: Development/ML
-Url: http://www.ocaml.info/home/ocaml_sources.html#toc13
-Source: http://www.ocaml.info/ocaml_sources/pcre-ocaml-%version.tar.bz2
+Url: http://mmottl.github.io/pcre-ocaml/
+
+# https://github.com/mmottl/pcre-ocaml
+Source: %name-%version.tar
+Provides: pcre-ocaml = %name-%version
+Obsoletes: pcre-ocaml
 
 Requires: %name-runtime = %version-%release
-
-# Automatically added by buildreq on Thu Apr 10 2008
-BuildRequires: libpcre-devel ocaml
-
-# for install
-BuildRequires: /usr/bin/ocamlfind-mini
+BuildRequires: libpcre-devel ocaml ocaml-findlib ocaml-ocamlbuild ocaml-ocamldoc
+BuildRequires(pre): rpm-build-ubt
 
 %package runtime
 Summary: Perl compatibility regular expressions (PCRE) for OCaml
@@ -32,29 +34,27 @@ expressions) library which is written in C. it can be used for matching
 regular expressions which are written in "PERL"-style.
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build NO_CUSTOM=1 INCDIRS=%_includedir/pcre
 
 %install
-mkdir -p %buildroot%_libdir/ocaml/{site-lib,stublibs}
-%makeinstall OCAMLFIND=ocamlfind-mini \
-	OCAMLFIND_INSTFLAGS="-destdir %buildroot%_libdir/ocaml/site-lib/"
-mv %buildroot%_libdir/ocaml/site-lib/pcre/dll*.so %buildroot%_libdir/ocaml/stublibs/
+mkdir -p %buildroot%_libdir/ocaml/stublibs
+export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
+make install
 
 %files
-%doc README.txt Changelog LICENSE examples
-%dir %_libdir/ocaml/site-lib/pcre
-%_libdir/ocaml/site-lib/pcre/META
-%_libdir/ocaml/site-lib/pcre/*.cm*
-%_libdir/ocaml/site-lib/pcre/*.ml*
-%_libdir/ocaml/site-lib/pcre/*.a
+%doc INSTALL.txt CHANGES.txt COPYING.txt examples
+%_libdir/ocaml/pcre
 
 %files runtime
 %_libdir/ocaml/stublibs/dll*.so
 
 %changelog
+* Tue Apr 11 2017 Anton Farygin <rider@altlinux.ru> 7.2.3-alt1%ubt
+- new version
+
 * Thu Dec 22 2011 Alexey Shabalin <shaba@altlinux.ru> 6.2.4-alt1
 - 6.2.4
 

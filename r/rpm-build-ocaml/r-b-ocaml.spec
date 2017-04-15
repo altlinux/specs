@@ -1,20 +1,21 @@
 Name: rpm-build-ocaml
 Version: 1.1.1
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 Summary: RPM helpers to rebuild OCaml packages
 License: Public domain
 Group: Development/ML
-Packager: Alex V. Myltsev <avm@altlinux.ru>
 
 Source: scripts-%version.tar
 
 # for proper dependencies
 BuildPreReq: rpm-build >= 4.0.4-alt81
 
+Conflicts: ocaml4-runtime
 Requires: %_bindir/ocamlrun
 Requires: %_rpmlibdir/ocaml-reqprov
+Obsoletes: rpm-build-ocaml4
 
 %description
 RPM macros and reqprov helpers to be used in OCaml packages.
@@ -30,6 +31,9 @@ install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions %buildroot%_rpmlibdir
 %_rpmlibdir/ocaml*
 
 %changelog
+* Thu Feb 16 2017 Anton Farygin <rider@altlinux.ru> 1.1.1-alt2
+- added temporaty conflict with ocaml4-runtime
+
 * Tue Apr 08 2008 Alexey Tourbin <at@altlinux.ru> 1.1.1-alt1
 - ocaml.req: check "ccopt" libaray paths when resolving "cclib" dependencies
 

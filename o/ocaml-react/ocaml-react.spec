@@ -1,17 +1,21 @@
+# on i586: verify-elf: ERROR: ./usr/lib/ocaml/react/react.cmxs: TEXTREL entry found: 0x00000000
+%set_verify_elf_method textrel=relaxed
+
 Name: ocaml-react
-Version: 0.9.2
-Release: alt1
+Version: 1.2.0
+Release: alt1%ubt
 Summary: Development files for %name
 License: BSD
 Group: Development/ML
 Url: http://erratique.ch/software/react
-
-Source: http://erratique.ch/software/react/releases/react-%version.tbz
+# http://erratique.ch/repos/react.git
+Source: %name-%version.tar
 Requires: %name-runtime = %version-%release
-Requires: rpm-build-ocaml >= 1.1
+Requires: rpm-build-ocaml >= 1.1.1
 
-BuildPreReq: rpm-build-ocaml >= 1.1
-BuildRequires: ocaml ocamlbuild
+BuildPreReq: rpm-build-ocaml >= 1.1.1
+BuildRequires: ocaml ocaml-ocamlbuild ocaml-findlib
+BuildRequires(pre): rpm-build-ubt
 
 %description
 React is an OCaml module for functional reactive programming (FRP).
@@ -42,34 +46,35 @@ Given an absolute notion of time Rtime helps you to manage a timeline
 and provides time stamp events, delayed events and delayed signals.
 
 %prep
-%setup -n react-%version
+%setup 
 
 %build
-chmod u+x build
-./build
-
-%check
-./build test.native
-./test.native
+ocaml pkg/build.ml \
+  native=true \
+  native-dynlink=true
 
 %install
+mkdir -p %buildroot%_libdir/ocaml/react
+for f in \
+  pkg/META \
+  src/*.{a,cma,cmi,cmx,mli,cmxa,cmxs}
+do
+  cp -p _build/$f %buildroot%_libdir/ocaml/react/
+done
 
-INSTALLDIR=%buildroot/%_libdir/ocaml/react ./build install
 
 %files runtime
-%doc README
-%dir %_libdir/ocaml/react
-%_libdir/ocaml/react/META
-%_libdir/ocaml/react/react.cmi
-%_libdir/ocaml/react/react.cmo
+%_libdir/ocaml/react
+%exclude %{_libdir}/ocaml/react/*.cmx
+%exclude %{_libdir}/ocaml/react/*.mli
 
 %files
-%doc doc
-%_libdir/ocaml/react/react.cmx
-%_libdir/ocaml/react/react.o
-%_libdir/ocaml/react/react.mli
-%_libdir/ocaml/react/react.ml
+%_libdir/ocaml/react/*.cmx
+%_libdir/ocaml/react/*.mli
 
 %changelog
+* Tue Apr 11 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1%ubt
+- new version
+
 * Tue Dec 27 2011 Alexey Shabalin <shaba@altlinux.ru> 0.9.2-alt1
 - initial build for ALT Linux Sisyphus

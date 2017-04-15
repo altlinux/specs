@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml-csv
-Version: 1.3.1
+Version: 1.3.3
 Release: alt1
 Summary: OCaml library for reading and writing CSV files
 License: LGPLv2+
@@ -13,9 +13,9 @@ Packager: Lenar Shakirov <snejok@altlinux.ru>
 Source: %name-%version.tar
 
 BuildRequires: ocaml
-BuildRequires: ocamlbuild
-BuildRequires: ocamldoc
-BuildRequires: findlib
+BuildRequires: ocaml-ocamlbuild
+BuildRequires: ocaml-ocamldoc
+BuildRequires: ocaml-findlib
 BuildRequires: ocaml-extlib
 
 %description
@@ -72,6 +72,9 @@ make test
 %_libdir/ocaml/site-lib/csv/*.mli
 
 %changelog
+* Sat Apr 08 2017 Anton Farygin <rider@altlinux.ru> 1.3.3-alt1
+- new version
+
 * Wed Nov 30 2016 Lenar Shakirov <snejok@altlinux.ru> 1.3.1-alt1
 - Initial build for ALT (2.3-0.19.svn234.fc26.src)
 

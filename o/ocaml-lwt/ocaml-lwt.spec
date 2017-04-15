@@ -1,18 +1,18 @@
+# on i586: verify-elf: ERROR: ./usr/lib/ocaml/site-lib/lwt/lwt.cmxs: TEXTREL entry found: 0x00000000
+%set_verify_elf_method textrel=relaxed
 Name: ocaml-lwt
-Version: 1.1.0
-Release: alt3
+Version: 2.5.2
+Release: alt1%ubt
 Summary: OCaml lightweight thread library
 
 Group: Development/ML
 License: LGPLv2+ with exceptions
-Url: http://ocsigen.org/install/lwt
-Packager: Veaceslav Grecea <slavutich@altlinux.org>
+Url: http://ocsigen.org/lwt/
+# https://github.com/ocsigen/lwt
+Source: %name-%version.tar
 
-Source: http://ocsigen.org/download/lwt-%version.tar.gz
-
-# Automatically added by buildreq on Mon Sep 08 2008
-BuildRequires: findlib ocamlbuild ocamldoc termutils ocaml-ssl
-
+BuildRequires: ocaml-findlib ocaml-ocamlbuild ocaml-ocamldoc termutils ocaml-ssl ocaml-camlp4 ocaml-react glib2-devel libev-devel chrpath
+BuildRequires(pre): rpm-build-ubt
 Requires: rpm-build-ocaml >= 1.1
 BuildPreReq: rpm-build-ocaml >= 1.1
 
@@ -20,38 +20,39 @@ BuildPreReq: rpm-build-ocaml >= 1.1
 Lwt is a lightweight thread library for Objective Caml.  This library
 is part of the Ocsigen project.
 
-%package doc
-
-Summary:        Documetation files for %name
-Group:          Development/ML
-Requires:       %name = %version-%release
-
-
-%description    doc
-The %{name}-doc package contains documentation files for %name.
-
 %prep
-%setup -q -n lwt-%version
-
-mv README README.old
-iconv -f iso-8859-1 -t utf-8 < README.old > README
+%setup
 
 %build
+./configure \
+    --enable-ssl \
+    --enable-glib \
+    --enable-react \
+    --enable-camlp4 \
+    --prefix=%_prefix
+
 make
+pushd _build
+# hack for passing the ALT elf checker
+/usr/bin/ocamlfind ocamlopt  -linkpkg -package threads -thread -shared src/preemptive/lwt-preemptive.cmxa src/preemptive/lwt_preemptive.cmx -o src/preemptive/lwt-preemptive.cmxs
+/usr/bin/ocamlfind ocamlopt -linkpkg -shared -package compiler-libs.optcomp,dynlink src/simple_top/lwt-simple-top.cmxa src/simple_top/lwt_simple_top.cmx -o src/simple_top/lwt-simple-top.cmxs
+popd
 
 %install
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml/site-lib
-mkdir -p %buildroot%_libdir/ocaml/site-lib/lwt
+export OCAMLFIND_LDCONF=ignore
+export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
+mkdir -p %buildroot%_libdir/ocaml/lwt
 make install
+chrpath -d %buildroot%_libdir/ocaml/lwt/dlllwt-unix_stubs.so
 
 %files
-%doc LICENSE COPYING CHANGES README VERSION
-%_libdir/ocaml/site-lib/lwt/*
-
-%files doc
-%doc _build/lwt.docdir/*
+%doc CHANGES README.md
+%_libdir/ocaml/lwt
 
 %changelog
+* Mon Apr 10 2017 Anton Farygin <rider@altlinux.ru> 2.5.2-alt1%ubt
+- new version from upstream git
+
 * Wed Dec 28 2011 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt3
 - rebuild with new ocaml
 

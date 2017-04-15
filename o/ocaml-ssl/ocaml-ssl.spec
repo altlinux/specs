@@ -1,20 +1,16 @@
 Name: ocaml-ssl
-Version: 0.4.6
-Release: alt1
-
+Version: 0.5.3
+Release: alt1%ubt
 Summary: OCaml bindings for the OpenSSL library
 License: LGPLv2.1 with exemptions
 Group: Development/ML
-Url: http://savonet.sourceforge.net/wiki/OCamlLibs
-Packager: Alex V. Myltsev <avm@altlinux.ru>
-
-Source: %name-%version.tar.gz
-
+Url: https://github.com/savonet/ocaml-ssl
+Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 # Automatically added by buildreq on Sun Jan 06 2008
-BuildRequires: findlib libssl-devel
+BuildRequires: ocaml-findlib libssl-devel
 
-BuildRequires(pre): ocaml
-Requires: ocaml = %{get_version ocaml}
+BuildRequires(pre): ocaml rpm-build-ubt
 
 # .so file always needed to link stuff with %name
 Requires: libssl-devel
@@ -27,8 +23,9 @@ SSL-enabled applications in OCaml.
 
 %prep
 %setup
-
+%patch0 -p1
 %build
+autoreconf -fisv
 %configure --disable-ldconf
 %make
 
@@ -41,6 +38,9 @@ mkdir -p %buildroot/%ocamlsitelib
 %ocamlsitelib/ssl
 
 %changelog
+* Mon Apr 10 2017 Anton Farygin <rider@altlinux.ru> 0.5.3-alt1%ubt
+- 0.5.3
+
 * Fri Dec 23 2011 Alexey Shabalin <shaba@altlinux.ru> 0.4.6-alt1
 - 0.4.6
 

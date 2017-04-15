@@ -4,12 +4,11 @@
 #/usr/lib/ocaml/nums.cmxs
 #/usr/lib/ocaml/bigarray.cmxs
 #/usr/lib/ocaml/graphics.cmxs
-#/usr/lib/ocaml/dbm.cmxs
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml
-Version: 3.12.1
-Release: alt4
+Version: 4.04.0
+Release: alt1%ubt
 
 Summary: The Objective Caml compiler and programming environment
 License: QPL & LGPL
@@ -19,28 +18,22 @@ Url: http://caml.inria.fr/
 Packager: %packager
 
 Source0: %name-%version.tar
-Source1: ocaml-refman.html.tar
-Source2: ocaml-3.12-refman.pdf
-Source3: %name.desktop
-Source4: http://caml.inria.fr/oreilly-book/ocaml-ora-book.pdf
-Source5: ocaml-reqprov.ml
+Source1: %name.desktop
+Source2: ocaml-reqprov.ml
 
 Patch1: ocaml-3.12.1-alt-stdlib-pdf.patch
-Patch2: ocaml-3.09.1-tinfo.patch
-Patch3: ocaml-3.12.1-alt-tcltk8.5.patch
-Patch4: ocaml-3.12.1-alt-mk-reqprov.patch
-Patch5: ocaml-3.10.0-pld-db4.patch
-Patch6: ocaml-3.12.1-alt-mk-odoc_info-toplevellib_cmxa.patch
-Patch7: ocaml-3.12.0-rpath.patch
-Patch8: ocaml-3.12.1-deb-ocamlopt-arm-add-.type-directive-for-code-symbols.patch
-Patch9: ocaml-3.12.1-alt-arm.patch
-Patch10: ocaml-3.12.1-alt-tcltk8.6.patch
+Patch2: ocaml-4.01-alt-mk-reqprov.patch
 
 Requires: rpm-build-ocaml >= 1.1
-BuildPreReq: rpm-build-ocaml >= 1.1
+BuildRequires(pre): rpm-build-ocaml >= 1.1.1
+BuildRequires(pre): rpm-build-ubt
 
-# Automatically added by buildreq on Sat Jun 15 2013
-BuildRequires: libdb4-devel libtinfo-devel tk-devel texlive-latex-base texlive-latex-recommended
+Conflicts: ocaml4
+Obsoletes: ocaml4
+Provides: ocaml4
+
+# Automatically added by buildreq on Mon Sep 23 2013
+BuildRequires: texlive-latex-base texlive-latex-recommended
 
 # Better keep those deps explicit, just in case
 BuildRequires: libX11-devel
@@ -50,64 +43,33 @@ Requires: %name-runtime = %version-%release
 %package runtime
 Summary: Runtime part of the OCaml system
 Group: Development/ML
-Provides: %name-runtime = %(v=%version; IFS=.; set $v; echo "$1.$2")
+Provides: %name-runtime = %(v=%version; IFS=.; set $v; echo "$1.$2") 
 # For some reason, this is Requires, not Provides.
 Requires: %_rpmlibdir/ocaml-reqprov
-
-%package -n camlp4
-Summary: Preprocessor for OCaml
-Group: Development/ML
-Requires: %name = %version-%release
-
-%package dbm
-Summary: Interface to DBM databases
-Group: Development/ML
-Requires: %name = %version-%release
-
-%package -n labltk
-Summary: Tk toolkit bindings for OCaml
-Group: Development/ML
-Requires: %name = %version-%release
-Requires: labltk-runtime = %version-%release
-Provides: ocamltk = %version, camltk = %version
-Obsoletes: ocamltk < %version , camltk < %version
-
-%package -n labltk-runtime
-Summary: Tk toolkit bindings for OCaml
-Group: Development/ML
-Requires: %name-runtime = %version-%release
-
-%package -n ocamlbrowser
-Summary: OCaml interface browser
-Group: Development/ML
-Requires: %name = %version-%release
+Obsoletes: ocaml4-runtime
 
 %package graphics
 Summary: Graphics primitives
 Group: Development/ML
 Requires: %name = %version-%release
 Requires: %name-graphics-runtime = %version-%release
+Provides: ocaml4-graphics
+Obsoletes: ocaml4-graphics
 
 %package graphics-runtime
 Summary: Graphics primitives
 Group: Development/ML
 Requires: %name-runtime = %version-%release
+Provides: ocaml4-graphics-runtime
+Obsoletes: ocaml4-graphics-runtime
 
-%package -n ocamldoc
+
+%package ocamldoc
 Summary: The Objective Caml documentation generator
 Group: Development/ML
 Requires: %name = %version-%release
-
-%package -n ocamlbuild
-Summary: The Objective Caml project compilation tool
-Group: Development/ML
-Requires: %name = %version-%release
-
-%package doc
-Summary: Documentation for OCaml
-Group: Development/ML
-BuildArch: noarch
-Conflicts: %name < %version, %name > %version
+Provides: ocaml4-ocamldoc
+Obsoletes: ocaml4-ocamldoc
 
 %description
 Objective Caml is a high-level, strongly-typed, functional and
@@ -124,41 +86,6 @@ object-oriented programming language from the ML family of languages.
 This package contains the runtime environment needed to run Objective
 Caml bytecode.
 
-%description -n camlp4
-Objective Caml is a high-level, strongly-typed, functional and
-object-oriented programming language from the ML family of languages.
-
-Camlp4 is a Pre-Processor-Pretty-Printer for Objective Caml. It offers
-tools for syntax (grammars) and the ability to modify the concrete
-syntax of the language (quotations, syntax extensions).
-
-%description dbm
-Objective Caml is a high-level, strongly-typed, functional and
-object-oriented programming language from the ML family of languages.
-
-The dbm library provides access to DBM-like databases (Berkeley DB).
-
-%description -n labltk
-Objective Caml is a high-level, strongly-typed, functional and
-object-oriented programming language from the ML family of languages.
-
-LablTk gives OCaml program access to Tcl/Tk GUI widgets. This package
-contains files needed to develop OCaml programs using LablTk.
-
-%description -n labltk-runtime
-Objective Caml is a high-level, strongly-typed, functional and
-object-oriented programming language from the ML family of languages.
-
-LablTk gives OCaml program access to Tcl/Tk GUI widgets. This package
-contains files needed to run bytecode OCaml programs using LablTk.
-
-%description -n ocamlbrowser
-Objective Caml is a high-level, strongly-typed, functional and
-object-oriented programming language from the ML family of languages.
-
-This package provides OCamlBrowser, a source and compiled interface
-browser, written using LablTk.
-
 %description graphics
 Objective Caml is a high-level, strongly-typed, functional and
 object-oriented programming language from the ML family of languages.
@@ -173,70 +100,35 @@ object-oriented programming language from the ML family of languages.
 This package provides machine-independent graphics primitives
 and additional graphics primitives for the X Windows system.
 
-%description -n ocamldoc
+%description ocamldoc
 Objective Caml is a high-level, strongly-typed, functional and
 object-oriented programming language from the ML family of languages.
 
 This package provides OCamldoc, a tool that generates documentation
 from special comments embedded in source files.
 
-%description -n ocamlbuild
-Objective Caml is a high-level, strongly-typed, functional and
-object-oriented programming language from the ML family of languages.
-
-This package provides ocamlbuild, a tool automating the compilation
-of OCaml projects.
-
-%description doc
-Objective Caml is a high-level, strongly-typed, functional and
-object-oriented programming language from the ML family of languages.
-
-This package contains Ocaml documentation and "Developing applications
-with Objective Caml" O'Reilly book translation.
-
 %prep
-%setup -q -T -b 0 
-%setup -q -T -D -a 1
+%setup -q -T -b 0
 
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-
-# grrr ...
-#%__cat <<EOF |ed - emacs/Makefile
-#%%s|\(--batch \)|\1--no-site-file |
-#wq
-#EOF
-
-cp %SOURCE4 ./
-
-cp %SOURCE2   ./ocaml-refman.pdf
 
 %build
-%add_optflags -DUSE_INTERP_RESULT
 
 sed -i 's@/usr/X11R6/lib\>@%_x11libdir@g' configure
 
 %add_optflags -DUSE_NON_CONST -D_FILE_OFFSET_BITS=64
-./configure -with-pthread -bindir %_bindir -libdir %_libdir/ocaml -mandir %_mandir
+./configure -with-pthread -fPIC -bindir %_bindir -libdir %_libdir/ocaml -mandir %_mandir
 make BYTECCCOMPOPTS="%optflags" NATIVECCCOMPOPTS="%optflags" world.opt
-make -C ocamldoc stdlib.pdf
+make BYTECCCOMPOPTS="%optflags" NATIVECCCOMPOPTS="%optflags" ocamlopt
+make BYTECCCOMPOPTS="%optflags" NATIVECCCOMPOPTS="%optflags" opt opt.opt
 
-install -pD -m644 %SOURCE5 tools/reqprov.ml
+install -pD -m644 %SOURCE2 tools/reqprov.ml
 make -C tools reqprov
 
 %install
 make install BINDIR=%buildroot%_bindir LIBDIR=%buildroot%_libdir/ocaml MANDIR=%buildroot%_mandir
 mkdir -p %buildroot%_libdir/ocaml/site-lib/
-
-# (cd emacs; make install install-ocamltags BINDIR=%buildroot%_bindir EMACSDIR=%buildroot%_datadir/emacs/site-lisp)
 
 perl -pi -e "s|%buildroot||" %buildroot%_libdir/ocaml/ld.conf
 
@@ -246,63 +138,51 @@ install -p -m644 bytecomp/cmo_format.{mli,cmi} %buildroot%_libdir/ocaml/
 install -p -m644 typing/annot.{mli,cmi} %buildroot%_libdir/ocaml/
 install -p -m644 asmcomp/clambda.{mli,cmi,cmo,cmx,o} %buildroot%_libdir/ocaml/
 install -p -m644 asmcomp/cmx_format.{mli,cmi} %buildroot%_libdir/ocaml/
-install -p -m644 asmcomp/debuginfo.{mli,cmi,cmx} %buildroot%_libdir/ocaml/
+# install -p -m644 asmcomp/debuginfo.{mli,cmi,cmx} %buildroot%_libdir/ocaml/
 
-install -p -m644 toplevel/toplevellib.{cmxa,a} %buildroot%_libdir/ocaml/
-install -p -m644 tools/depend.{mli,cmi,cmo,cmx,o} %buildroot%_libdir/ocaml/
+# install -p -m644 tools/depend.{mli,cmi,cmo,cmx,o} %buildroot%_libdir/ocaml/
 
 ln -snf ocamlc.opt %buildroot%_bindir/ocamlc
 ln -snf ocamlopt.opt %buildroot%_bindir/ocamlopt
 ln -snf ocamldep.opt %buildroot%_bindir/ocamldep
 ln -snf ocamllex.opt %buildroot%_bindir/ocamllex
-rm %buildroot%_bindir/ocamlbuild.{byte,native}
+
 # Option -g not available in native code version.
 #ln -snf ocamldoc.opt %buildroot%_bindir/ocamldoc
 
-install -pD -m755 tools/objinfo %buildroot%_bindir/ocamlobjinfo
+install -pD -m755 tools/ocamlobjinfo.opt %buildroot%_bindir/ocamlobjinfo
 install -pD -m755 tools/reqprov %buildroot%_rpmlibdir/ocaml-reqprov
 
-install -pD -m644 camlp4/man/camlp4.1.tpl %buildroot%_man1dir/camlp4.1
-
-find %buildroot%_libdir/ocaml -type f -name '*.cmx' |
-while read f; do [ -f "${f%%.cmx}.o" ] || rm "$f"; done
-
-#install -d %buildroot%_sysconfdir/emacs/site-start.d
-#cat <<EOF >%buildroot%_sysconfdir/emacs/site-start.d/%name.el
-#(require 'caml-font)
-#(autoload 'caml-mode "caml" "Caml editing mode" t)
-#(add-to-list 'auto-mode-alist '("\\\\.mli?$" . caml-mode))
-#EOF
+# Removal of .cmx files prevents global optimization and triggers
+# annoying warning 58 introduced in Ocaml 4.03. This is the
+# reason for commenting out the following lines.
+# find %buildroot%_libdir/ocaml -type f -name '*.cmx' |
+# while read f; do [ -f "${f%%.cmx}.o" ] || rm "$f"; done
 
 install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 %files
-%doc Changes LICENSE README 
+%doc Changes LICENSE README.adoc
 %_bindir/ocaml*
 %exclude %_bindir/ocamlrun
-%exclude %_bindir/ocamlbrowser
-%exclude %_bindir/ocamlbuild
 %exclude %_bindir/ocamldoc*
 %_man1dir/ocaml*
-%exclude %_man1dir/ocamlbuild*
 %exclude %_man1dir/ocamldoc*
 %_man3dir/*.3o*
 %_libdir/ocaml/camlheader
 %_libdir/ocaml/camlheader_ur
 %_libdir/ocaml/expunge
 %_libdir/ocaml/extract_crc
+%_libdir/ocaml/VERSION
 %_libdir/ocaml/*.*
 %_libdir/ocaml/objinfo_helper
 %exclude %_libdir/ocaml/ld.conf
 %exclude %_libdir/ocaml/*graphics*
-%exclude %_libdir/ocaml/*dbm*
 %_libdir/ocaml/caml/
-%exclude %_libdir/ocaml/ocamlbuild/
+%_libdir/ocaml/compiler-libs/
 %exclude %_libdir/ocaml/ocamldoc/
 %_libdir/ocaml/threads/
 %_libdir/ocaml/vmthreads/
-# %_datadir/emacs/site-lisp/*
-# %config(noreplace) %_sysconfdir/emacs/site-start.d/*
 %_desktopdir/%name.desktop
 
 %files runtime
@@ -311,7 +191,6 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %config %_libdir/ocaml/ld.conf
 %dir %_libdir/ocaml/stublibs
 %_libdir/ocaml/stublibs/dllbigarray.so
-%_libdir/ocaml/stublibs/dllmldbm.so
 %_libdir/ocaml/stublibs/dllnums.so
 %_libdir/ocaml/stublibs/dllcamlstr.so
 %_libdir/ocaml/stublibs/dllthreads.so
@@ -320,51 +199,76 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %dir %_libdir/ocaml/site-lib
 %_rpmlibdir/ocaml-reqprov
 
-%files -n camlp4
-%_bindir/camlp4*
-%_bindir/mkcamlp4
-%_man1dir/camlp4.1*
-%_libdir/ocaml/camlp4/
-
-%files dbm
-%_libdir/ocaml/*dbm*
-
-%files -n labltk
-%doc otherlibs/labltk/README otherlibs/labltk/examples_labltk otherlibs/labltk/examples_camltk
-%_bindir/labltk
-%_libdir/ocaml/labltk/
-
-%files -n labltk-runtime
-%_libdir/ocaml/stublibs/dlllabltk.so
-
-%files -n ocamlbrowser
-%_bindir/ocamlbrowser
-
 %files graphics
 %_libdir/ocaml/*graphics*
 
 %files graphics-runtime
 %_libdir/ocaml/stublibs/dllgraphics.so
 
-%files -n ocamldoc
+%files ocamldoc
 %_bindir/ocamldoc*
 %_man1dir/ocamldoc*
 %_libdir/ocaml/ocamldoc/
 
-%files -n ocamlbuild
-%_bindir/ocamlbuild
-%_man1dir/ocamlbuild*
-%_libdir/ocaml/ocamlbuild/
-
-%files doc
-%doc htmlman/* ocamldoc/stdlib.pdf ocaml-refman.pdf ocaml-ora-book.pdf
-
 %changelog
+
+* Sat Apr 15 2017 Anton Farygin <rider@altlinux.ru> 4.04.0-alt1%ubt
+- build from upstream git
+- added %%ubt tag
+- renamed back to ocaml
+
 * Thu Mar 23 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.12.1-alt4
 - NMU: adopted and rebuilt against Tcl/Tk 8.6
 
-* Wed Feb 12 2014 Led <led@altlinux.ru> 3.12.1-alt3
-- fixed build native libs for arm arches
+* Sat Dec 17 2016 Andrey Bergman <vkni@altlinux.org> 4.04.0-alt1
+- Update to version 4.04.0
+
+* Sat Jun 25 2016 Andrey Bergman <vkni@altlinux.org> 4.03.0-alt2
+- Added stdlib cmx files to disable warning 58.
+
+* Sat Jun 18 2016 Andrey Bergman <vkni@altlinux.org> 4.03.0-alt1
+- Update to version 4.03.0. Splitted out ocamlbuild.
+
+* Fri Aug 07 2015 Andrey Bergman <vkni@altlinux.org> 4.02.3-alt1
+- Update to version 4.02.3
+
+* Wed Jul 01 2015 Andrey Bergman <vkni@altlinux.org> 4.02.2-alt3
+- Rebuild with new rpm-build-ocaml4.
+
+* Tue Jun 23 2015 Andrey Bergman <vkni@altlinux.org> 4.02.2-alt2
+- Corrected ocaml-reprov program to print zeroes if md5 sum is missing.
+
+* Fri Jun 19 2015 Andrey Bergman <vkni@altlinux.org> 4.02.2-alt1
+- Update to version 4.02.2
+
+* Tue Mar 31 2015 Andrey Bergman <vkni@altlinux.org> 4.02.1-alt2
+- Added conflicts (with ocaml 3.x).
+
+* Sat Jan 31 2015 Andrey Bergman <vkni@altlinux.org> 4.02.1-alt1
+- Added rpm-build-ocaml4 to build pre requires.
+
+* Sat Oct 18 2014 Andrey Bergman <vkni@altlinux.org> 4.02.1-alt0.1
+- Update to version 4.02.1
+
+* Thu Oct 16 2014 Andrey Bergman <vkni@altlinux.org> 4.02.0-alt0.3
+- Removed rpm-build-ocaml from build pre requires.
+
+* Wed Oct 08 2014 Andrey Bergman <vkni@altlinux.org> 4.02.0-alt0.2
+- Removed wrong Requires.
+
+* Tue Oct 07 2014 Andrey Bergman <vkni@altlinux.org> 4.02.0-alt0.1
+- Update to version 4.02.
+- Removed camlp4, labltk from base package (upstream).
+- Also removed external documentation (refman and ocaml-ora-book).
+
+* Thu Sep 26 2013 Andrey Bergman <vkni@altlinux.org> 4.01.0-alt0.3
+- Corrected Provides and libs.
+
+* Mon Sep 23 2013 Andrey Bergman <vkni@altlinux.org> 4.01.0-alt0.2
+- Corrected BuildReq.
+
+* Sun Aug 18 2013 Andrey Bergman <vkni@altlinux.org> 4.01.0-alt0.1
+- Update to version 4.01.0.
 
 * Fri Jun 14 2013 Andrey Bergman <vkni@altlinux.org> 3.12.1-alt2
 - Removed deprecated patches.

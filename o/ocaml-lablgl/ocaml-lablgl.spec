@@ -1,22 +1,23 @@
-Name: lablGL
+Name: ocaml-lablgl
 Version: 1.04
-Release: alt1
-Packager: Veaceslav Grecea <slavutich@altlinux.org>
-
+Release: alt2
 Summary: OpenGL library for OCaml
 License: BSD-style
 Group: Development/ML
-Url: http://wwwfun.kurims.kyoto-u.ac.jp/soft/olabl/lablgl.html
-
-Source: http://wwwfun.kurims.kyoto-u.ac.jp/soft/olabl/dist/lablgl-%version.tar.gz
+Url:  https://forge.ocamlcore.org/projects/lablgl/
+# git https://forge.ocamlcore.org/anonscm/git/lablgl/lablgl.git
+Source: %name-%version.tar
 Patch1: lablgl-1.03-alt-togl.patch
 
 Requires: %name-runtime = %version-%release
+Provides: lablGL = %version-%release
+Obsoletes: lablGL
 
 # Automatically added by buildreq on Thu Jul 07 2011
 # optimized out: fontconfig labltk-runtime libGL-devel libGLU-devel libX11-devel ocaml ocaml-runtime tcl-devel tcl-togl tk-devel xorg-xproto-devel
-BuildRequires: camlp4 labltk libXext-devel libXmu-devel libfreeglut-devel tcl-togl-devel
+BuildRequires: ocaml-camlp4 ocaml-labltk libXext-devel libXmu-devel libfreeglut-devel tcl-togl-devel
 BuildRequires: libXxf86vm-devel
+BuildRequires(pre): rpm-build-tcl
 
 %package runtime
 Summary: runtime part of LablGL library
@@ -33,7 +34,7 @@ interfaces: the Togl widget, for comfortable use with LablTk, and
 LablGlut for standalone applications not using Tcl/Tk.
 
 %prep
-%setup -n lablgl-%version
+%setup
 rm -r Togl/src/Togl/
 %patch1 -p1
 cat > Makefile.config <<EOF
@@ -104,6 +105,11 @@ install -p -m644 META %buildroot%_libdir/ocaml/site-lib/lablGL/META
 %_libdir/ocaml/stublibs/dll*.so
 
 %changelog
+* Thu Apr 06 2017 Anton Farygin <rider@altlinux.ru> 1.04-alt2
+- renamed to ocaml-lablgl
+- build from upstream git
+- rebuild with ocaml-4.04
+
 * Mon Dec 26 2011 Alexey Shabalin <shaba@altlinux.ru> 1.04-alt1
 - 1.04
 

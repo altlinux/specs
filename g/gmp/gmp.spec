@@ -1,6 +1,6 @@
 Name: gmp
 Version: 6.1.2
-Release: alt1
+Release: alt2
 
 Summary: GNU MP arbitrary precision arithmetic library
 License: LGPLv3+
@@ -154,6 +154,7 @@ __gmpn_dcpi1_bdiv_qr
 __gmpn_dcpi1_div_q
 __gmpn_dcpi1_div_qr
 __gmpn_dcpi1_divappr_q
+__gmpn_divexact
 __gmpn_div_q
 __gmpn_dump
 __gmpn_get_d
@@ -259,6 +260,9 @@ install -pm644 gmp-mparam.h rand/randmt.h %buildroot%_includedir/
 %endif #cxx
 
 %changelog
+* Thu Apr 13 2017 Anton Farygin <rider@altlinux.ru> 6.1.2-alt2
+- Enabled visibility for __gmpn_divexact, which is used in ocaml-zarith.
+
 * Thu Jan 12 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.1.2-alt1
 - Updated to 6.1.2.
 

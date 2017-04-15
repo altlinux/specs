@@ -1,18 +1,16 @@
 Name: ocaml-xml-light
-Version: 2.2
-Release: alt1.1
+Version: 2.4
+Release: alt1%ubt
 Summary: Minimal XML parser and printer for OCaml
 
 Group: Development/ML
 License: LGPLv2+
-Url: http://tech.motion-twin.com/xmllight.html
+Url: https://opam.ocaml.org/packages/xml-light/
 Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
 
-# Automatically added by buildreq on Thu Nov 12 2009
-BuildRequires: ocamldoc
+BuildRequires: ocaml-ocamldoc ocaml-findlib
+BuildRequires(pre):rpm-build-ubt
 
-BuildRequires: findlib
 %description
 Xml-Light is a minimal XML parser & printer for OCaml. It provides
 functions to parse an XML document into an OCaml data structure, work
@@ -31,7 +29,6 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 make all doc
@@ -39,28 +36,31 @@ make opt
 sed -e 's/@VERSION@/%version/' < META.in > META
 
 %install
-export DESTDIR=%buildroot
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml/site-lib
-mkdir -p $OCAMLFIND_DESTDIR $OCAMLFIND_DESTDIR/stublibs
+export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
+mkdir -p $OCAMLFIND_DESTDIR/stublibs
 rm -f test.*
 ocamlfind install xml-light META *.mli *.cmi *.cma *.a *.cmxa *.cmx
 
 %files
 %doc README
-%_libdir/ocaml/site-lib/xml-light
-%exclude %_libdir/ocaml/site-lib/xml-light/*.a
-%exclude %_libdir/ocaml/site-lib/xml-light/*.cmxa
-%exclude %_libdir/ocaml/site-lib/xml-light/*.cmx
-%exclude %_libdir/ocaml/site-lib/xml-light/*.mli
+%_libdir/ocaml/xml-light
+%exclude %_libdir/ocaml/xml-light/*.a
+%exclude %_libdir/ocaml/xml-light/*.cmxa
+%exclude %_libdir/ocaml/xml-light/*.cmx
+%exclude %_libdir/ocaml/xml-light/*.mli
 
 %files devel
 %doc README doc/*
-%_libdir/ocaml/site-lib/xml-light/*.a
-%_libdir/ocaml/site-lib/xml-light/*.cmxa
-%_libdir/ocaml/site-lib/xml-light/*.cmx
-%_libdir/ocaml/site-lib/xml-light/*.mli
+%_libdir/ocaml/xml-light/*.a
+%_libdir/ocaml/xml-light/*.cmxa
+%_libdir/ocaml/xml-light/*.cmx
+%_libdir/ocaml/xml-light/*.mli
 
 %changelog
+* Wed Apr 12 2017 Anton Farygin <rider@altlinux.ru> 2.4-alt1%ubt
+- new version
+- build for ocaml-4.04
+
 * Tue Dec 27 2011 Alexey Shabalin <shaba@altlinux.ru> 2.2-alt1.1
 - rebuild with new ocaml
 
