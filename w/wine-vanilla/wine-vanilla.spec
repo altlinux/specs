@@ -2,8 +2,8 @@
 %define mono_version 4.7.0
 
 Name: wine-vanilla
-Version: 2.5
-Release: alt2
+Version: 2.6
+Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -131,6 +131,7 @@ Wine meta package. Use it for install all wine subpackages.
 %package programs
 Summary: Wine programs
 Group: Emulators
+BuildArch: noarch
 Requires: %name = %version-%release
 
 %description programs
@@ -417,6 +418,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Sat Apr 15 2017 Vitaly Lipatov <lav@altlinux.ru> 2.6-alt1
+- new version 2.6
+
 * Sun Apr 09 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5-alt2
 - update winetricks to 20170327
 - add default icons (ALT bug 25237)
