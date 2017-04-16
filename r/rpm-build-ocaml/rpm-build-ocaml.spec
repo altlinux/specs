@@ -1,6 +1,6 @@
 Name: rpm-build-ocaml
-Version: 1.1.1
-Release: alt2
+Version: 1.2
+Release: alt1
 BuildArch: noarch
 
 Summary: RPM helpers to rebuild OCaml packages
@@ -31,6 +31,10 @@ install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions %buildroot%_rpmlibdir
 %_rpmlibdir/ocaml*
 
 %changelog
+* Tue Apr 18 2017 Anton Farygin <rider@altlinux.ru> 1.2-alt1
+- added stublibs path to search shared libraries in cmxi archives
+- resolve .so path for avoid requires to devel packages in runtime ocaml libraries
+
 * Thu Feb 16 2017 Anton Farygin <rider@altlinux.ru> 1.1.1-alt2
 - added temporaty conflict with ocaml4-runtime
 
