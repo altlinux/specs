@@ -1,6 +1,6 @@
 Name: runawfe4-server
-Version: 4.2.0
-Release: alt19
+Version: 4.3.0
+Release: alt20
 
 Summary: Runawfe server
 
@@ -30,8 +30,10 @@ Requires: jboss-as-vanilla >= 7.1.1-alt9
 #BuildPreReq:
 # Automatically added by buildreq on Fri Sep 06 2013
 # optimized out: apache-commons-cli atinject google-guice guava java java-devel jpackage-utils maven maven-wagon nekohtml plexus-cipher plexus-classworlds plexus-containers-component-annotations plexus-interpolation plexus-sec-dispatcher plexus-utils python3-base sisu tzdata tzdata-java xbean xerces-j2 xml-commons-jaxp-1.4-apis
-BuildRequires: aether rpm-build-compat
-BuildRequires: maven jboss-as-vanilla
+BuildRequires: aether rpm-build-compat guava
+BuildRequires: xmvn maven maven-local maven-clean-plugin maven-install-plugin maven-deploy-plugin maven-site-plugin maven-antrun-plugin maven-assembly-plugin maven-dependency-plugin maven-release-plugin
+BuildRequires: mvn(com.google.guava:guava)
+BuildRequires: jboss-as-vanilla
 BuildArch: noarch
 
 %define jbossuser jboss-as
@@ -50,6 +52,7 @@ web interface with tasklist, form player, graphical process designer, bots and m
 
 %build
 export MAVEN_OPTS="-Dmaven.repo.local=$(pwd)/.m2/repository/"
+#export MAVEN_OPTS="-Dmaven2.offline.mode -Dmaven2.ignore.versions -Dmaven2.usejppjars"
 
 cd wfe-app/repository/
 ./add_dependencies.sh
@@ -58,8 +61,8 @@ cd ..
 %if %distrname == "Ubuntu" ||  %distrname == "Debian"
 mvn clean package -Dappserver=jboss7
 %else
-#mvn clean package -Dappserver=jboss7
-mvn -o package -Dappserver=jboss7 #for offline build in git.alt
+%mvn_build -f -- -X -Dappserver=jboss7
+#exit 1
 %endif
 
 %install
@@ -191,6 +194,9 @@ useradd -d %runadir -r -s %_sbindir/%name %runauser >/dev/null 2>&1 || :
 %attr(644,root,root) /lib/systemd/system/%name.service
 
 %changelog
+* Tue Feb 07 2017 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt20
+- Updated to 4.3.0 code 
+
 * Thu Jul 02 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt19
 - Update to trunk code@6444
 
