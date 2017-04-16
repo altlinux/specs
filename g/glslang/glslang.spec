@@ -1,6 +1,8 @@
+%define commit d1141843c0b2401900fd311550c77512f37a67e1
+
 Name: glslang
 Version: 3.0
-Release: alt1
+Release: alt2
 
 Summary: OpenGL and OpenGL ES shader front end and validator
 Group: Development/C++
@@ -9,7 +11,7 @@ License: BSD
 Url: https://www.khronos.org/opengles/sdk/tools/Reference-Compiler/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source: https://github.com/KhronosGroup/%name/archive/%version/%name-%version.tar.gz
+Source: https://github.com/KhronosGroup/%name/archive/%commit/%name-%commit.tar.gz
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -38,7 +40,7 @@ better when multiple modules are compressed together, since
 compressor's dictionary can find better cross module commonality.
 
 %prep
-%setup
+%setup -n %name-%commit
 
 %build
 %__mkdir_p %_target_platform
@@ -55,21 +57,10 @@ popd
 %make_build -C %_target_platform
 
 %install
-
-%__make install -C %_target_platform
-
-%__mkdir_p %buildroot{%_bindir,%_libdir,%_includedir/%name/{SPIRV,StandAlone,%name/{Include,MachineIndependent/preprocessor,OSDependent,Public}}}
-
-%__cp -a %_target_platform/install/bin/* %buildroot%_bindir
-%__cp -a %_target_platform/install/lib/* %buildroot%_libdir
-
-%__cp -a SPIRV/{*.h,*.hpp} %buildroot%_includedir/%name/SPIRV
-%__cp -a StandAlone/*.h %buildroot%_includedir/%name/StandAlone
-%__cp -a %name/Include/*.h %buildroot%_includedir/%name/%name/Include
-%__cp -a %name/MachineIndependent/*.h %buildroot%_includedir/%name/%name/MachineIndependent
-%__cp -a %name/MachineIndependent/preprocessor/*.h %buildroot%_includedir/%name/%name/MachineIndependent/preprocessor
-%__cp -a %name/OSDependent/Linux/*.h %buildroot%_includedir/%name/%name/OSDependent
-%__cp -a %name/Public/*.h %buildroot%_includedir/%name/%name/Public
+%makeinstall_std -C %_target_platform
+%ifarch x86_64
+%__mv %buildroot%_prefix/lib %buildroot%_libdir
+%endif
 
 %files
 %doc README-spirv-remap.txt
@@ -79,7 +70,11 @@ popd
 %doc README.md
 %_libdir/lib*.a
 %_includedir/%name
+%_includedir/SPIRV
 
 %changelog
+* Sun Apr 16 2017 Nazarov Denis <nenderus@altlinux.org> 3.0-alt2
+- Update to latest from git
+
 * Sun Apr 16 2017 Nazarov Denis <nenderus@altlinux.org> 3.0-alt1
 - Initial build for ALT Linux
