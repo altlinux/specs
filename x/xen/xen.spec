@@ -11,8 +11,8 @@
 
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
-Version: 4.8.0
-Release: alt7
+Version: 4.8.1
+Release: alt1
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -56,7 +56,6 @@ Patch21: %name.64.bit.hyp.on.ix86.patch
 
 # ALT
 Patch50: %name-4.0.0-libfsimage-soname-alt.patch
-Patch51: xen.alt.build.patch
 Patch55: qemu-traditional-lost-parenthesis.patch
 
 
@@ -347,7 +346,6 @@ ln -s ../mini-os-%version extras/mini-os
 %patch19 -p1
 %{?_with_hypervisor:%patch21 -p1}
 %patch50 -p2
-%patch51 -p1
 
 cd tools/qemu-xen-traditional
 %patch55 -p1
@@ -793,80 +791,100 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Sun Apr 16 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt1
+- Upstream updates:
+ + x86/vmx: Don't leak host syscall MSR state into HVM guests
+ + x86/layout: Correct Xen's idea of its own memory layout
+ + xen: credit2: always mark a tickled pCPU as... tickled
+ + xen: credit2: don't miss accounting while doing a credit reset
+ + x86emul: correct decoding of vzero{all,upper}
+ + x86/emul: Correct the decoding of mov to/from cr/dr
+ + Don't clear HCR_VM bit when updating VTTBR
+ + x86: drop unneeded __packed attributes
+ + build/clang: fix XSM dummy policy when using clang 4.0
+ + x86/EFI: avoid overrunning mb_modules[]
+ + x86/EFI: avoid IOMMU faults on [_end,__2M_rwdata_end)
+ + x86/EFI: avoid Xen image when looking for module/kexec position
+ + xen: sched: don't call hooks of the wrong scheduler via VCPU2OP
+ + memory: properly check guest memory ranges in XENMEM_exchange handling
+   (CVE-2017-7228 / XSA-212)
+ + x86: use 64 bit mask when masking away mfn bits
+
+
 * Fri Apr 07 2017 Anton Farygin <rider@altlinux.ru> 4.8.0-alt7
 - rebuild with new ocaml-4.04
 
 * Tue Feb 21 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.0-alt6
 - Upstream updates:
- - IOMMU: always call teardown callback (XSA-207)
- - x86/ept: allow write-combining on !mfn_valid() MMIO mappings again
- - xen/p2m: Fix p2m_flush_table for non-nested cases
- - VMX: fix VMCS race on context-switch paths
+ + IOMMU: always call teardown callback (XSA-207)
+ + x86/ept: allow write-combining on !mfn_valid() MMIO mappings again
+ + xen/p2m: Fix p2m_flush_table for non-nested cases
+ + VMX: fix VMCS race on context-switch paths
 
 * Sat Feb 11 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.0-alt5
 - Fix packaging errors
 - Upstream updates:
- - qemu-xen: cirrus: fix oob access issue (CVE-2017-2615)
- - x86/xstate: Fix array overrun on hardware with LWP
- - x86emul: VEX.B is ignored in compatibility mode
- - x86emul: LOCK check adjustments
- - x86: segment attribute handling adjustments
- - x86emul: correct FPU stub asm() constraints
- - x86/hvm: do not set msr_tsc_adjust on hvm_set_guest_tsc_fixed
- - xen: credit2: use the correct scratch cpumask
- - xen: credit2: never consider CPUs outside of our cpupool
- - xen: credit2: fix shutdown/suspend when playing with cpupools
- - x86/emulate: don't assume that addr_size == 32 implies protected mode
+ + qemu-xen: cirrus: fix oob access issue (CVE-2017-2615)
+ + x86/xstate: Fix array overrun on hardware with LWP
+ + x86emul: VEX.B is ignored in compatibility mode
+ + x86emul: LOCK check adjustments
+ + x86: segment attribute handling adjustments
+ + x86emul: correct FPU stub asm() constraints
+ + x86/hvm: do not set msr_tsc_adjust on hvm_set_guest_tsc_fixed
+ + xen: credit2: use the correct scratch cpumask
+ + xen: credit2: never consider CPUs outside of our cpupool
+ + xen: credit2: fix shutdown/suspend when playing with cpupools
+ + x86/emulate: don't assume that addr_size == 32 implies protected mode
 
 * Sat Jan 21 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.0-alt4
 - Upstream updates:
- - x86emul: correct PUSHF/POPF
- - xen: Fix determining when domain creation is complete
- - x86emul: CMPXCHG{8,16}B ignore prefixes
- - x86/hvm: don't unconditionally create a default ioreq server
- - x86/VPMU: clear the overflow status of which counter happened to overflow
- - x86emul: MOVNTI does not allow REP prefixes
- - x86emul: ignore most segment bases for 64-bit mode in is_aligned()
- - VT-d: correct dma_msi_set_affinity()
- - x86emul: CMPXCHG16B requires an aligned operand
- - x86/emul: Correct the return value handling of VMFUNC
- - x86/cpu: Don't update this_cpu for get_cpu_vendor(, gcv_guest)
- - libxl: fix libxl_set_memory_target
+ + x86emul: correct PUSHF/POPF
+ + xen: Fix determining when domain creation is complete
+ + x86emul: CMPXCHG{8,16}B ignore prefixes
+ + x86/hvm: don't unconditionally create a default ioreq server
+ + x86/VPMU: clear the overflow status of which counter happened to overflow
+ + x86emul: MOVNTI does not allow REP prefixes
+ + x86emul: ignore most segment bases for 64-bit mode in is_aligned()
+ + VT-d: correct dma_msi_set_affinity()
+ + x86emul: CMPXCHG16B requires an aligned operand
+ + x86/emul: Correct the return value handling of VMFUNC
+ + x86/cpu: Don't update this_cpu for get_cpu_vendor(, gcv_guest)
+ + libxl: fix libxl_set_memory_target
 
 * Sun Jan 08 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.0-alt3
 - Upstream updates:
- - xsm: allow relevant permission during migrate and gpu-passthrough
- - libxl: init_acpi_config should return rc in exit path, and set
+ + xsm: allow relevant permission during migrate and gpu-passthrough
+ + libxl: init_acpi_config should return rc in exit path, and set
    to 0 on success
 - Added lost requires: seabios, ipxe-roms-qemu
 
 * Mon Dec 26 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.0-alt2
 - Upstream updates:
- - x86/emul: Correct the handling of eflags with SYSCALL (XSA-204)
- - x86: force EFLAGS.IF on when exiting to PV guests (XSA-202)
- - x86/HVM: add missing NULL check before using VMFUNC hook (XSA-203)
- - x86/emul: add likely()/unlikely() to test harness
+ + x86/emul: Correct the handling of eflags with SYSCALL (XSA-204)
+ + x86: force EFLAGS.IF on when exiting to PV guests (XSA-202)
+ + x86/HVM: add missing NULL check before using VMFUNC hook (XSA-203)
+ + x86/emul: add likely()/unlikely() to test harness
 
 * Wed Dec 07 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.0-alt1
 - 4.8.0 release
 
 * Fri Nov 25 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.1-alt2
 - Upstream updates:
- - x86/hvm: Fix the handling of non-present segments.
+ + x86/hvm: Fix the handling of non-present segments.
    This is CVE-2016-9386 / XSA-191.
- - x86/HVM: don't load LDTR with VM86 mode attrs during task switch.
+ + x86/HVM: don't load LDTR with VM86 mode attrs during task switch.
    This is CVE-2016-9382 / XSA-192.
- - x86/PV: writes of %%fs and %%gs base MSRs require canonical addresses
+ + x86/PV: writes of %%fs and %%gs base MSRs require canonical addresses
    This is CVE-2016-9385 / XSA-193.
- - libelf: fix stack memory leak when loading 32 bit symbol tables.
+ + libelf: fix stack memory leak when loading 32 bit symbol tables.
    This is CVE-2016-9384 / XSA-164.
- - x86emul: fix huge bit offset handling.
+ + x86emul: fix huge bit offset handling.
    This is CVE-2016-9383 / XSA-195.
- - x86/emul: correct the IDT entry calculation in inject_swint().
+ + x86/emul: correct the IDT entry calculation in inject_swint().
    This is CVE-2016-9377 / part of XSA-196.
- - x86/svm: fix injection of software interrupts.
+ + x86/svm: fix injection of software interrupts.
    This is CVE-2016-9378 / part of XSA-196.
- - pygrub: Properly quote results, when returning them to the caller.
+ + pygrub: Properly quote results, when returning them to the caller.
    This is CVE-2016-9379 and CVE-2016-9380 / XSA-198.
 
 * Wed Nov 09 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.1-alt1
@@ -881,16 +899,16 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 * Fri Oct 28 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.0-alt6
 - Upstream updates:
- - Merge branch 'upstream/4.7' into alt/4.7
- - x86: MISALIGNSSE feature depends on SSE
- - vscsiif.h: replace PAGE_SIZE with VSCSIIF_PAGE_SIZE
- - usbif.h: replace PAGE_SIZE with USBIF_RING_SIZE
- - x86/Viridian: don't depend on undefined register state
- - x86emul: fix pushing of selector registers
- - x86/hvm: Clobber %%cs.L when LME becomes set
- - xen/trace: Fix trace metadata page count calculation (revert fbf96e6)
- - x86: defer not-present segment checks
- - xen: credit1: return the 'time remaining to the limit' as next
+ + Merge branch 'upstream/4.7' into alt/4.7
+ + x86: MISALIGNSSE feature depends on SSE
+ + vscsiif.h: replace PAGE_SIZE with VSCSIIF_PAGE_SIZE
+ + usbif.h: replace PAGE_SIZE with USBIF_RING_SIZE
+ + x86/Viridian: don't depend on undefined register state
+ + x86emul: fix pushing of selector registers
+ + x86/hvm: Clobber %%cs.L when LME becomes set
+ + xen/trace: Fix trace metadata page count calculation (revert fbf96e6)
+ + x86: defer not-present segment checks
+ + xen: credit1: return the 'time remaining to the limit' as next
    timeslice.
 
 * Fri Oct 28 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.0-alt5
@@ -906,21 +924,21 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 * Fri Oct 07 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.0-alt2
 - Upstream updates
- - x86emul: honor guest CR0.TS and CR0.EM
+ + x86emul: honor guest CR0.TS and CR0.EM
 
 * Mon Sep 26 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.0-alt1
 - 4.7.0 release
 - Upstream updates:
- - x86/AMD: apply erratum 665 workaround
- - x86emul: don't allow null selector for LTR
- - x86emul: correct loading of %%ss
- - x86/Intel: hide CPUID faulting capability from guests
- - xen: credit2: properly schedule migration of a running vcpu.
- - xen: credit1: fix mask to be used for tickling in Credit1
- - x86/domctl: Fix migration of guests which are not using xsave
- - x86/domctl: Fix TOCTOU race with the use of XEN_DOMCTL_getvcpuextstate
- - minios: fix build issue with xen_*mb defines
- - minios: make mini-os_app.o depend on included xen libraries
+ + x86/AMD: apply erratum 665 workaround
+ + x86emul: don't allow null selector for LTR
+ + x86emul: correct loading of %%ss
+ + x86/Intel: hide CPUID faulting capability from guests
+ + xen: credit2: properly schedule migration of a running vcpu.
+ + xen: credit1: fix mask to be used for tickling in Credit1
+ + x86/domctl: Fix migration of guests which are not using xsave
+ + x86/domctl: Fix TOCTOU race with the use of XEN_DOMCTL_getvcpuextstate
+ + minios: fix build issue with xen_*mb defines
+ + minios: make mini-os_app.o depend on included xen libraries
 
 * Tue Sep 02 2014 Led <led@altlinux.ru> 4.4.1-alt1
 - 4.4.1 release
