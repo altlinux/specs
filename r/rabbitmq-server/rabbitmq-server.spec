@@ -13,7 +13,7 @@
 
 Name: rabbitmq-server
 Version: 3.6.8
-Release: alt3
+Release: alt4
 License: MPLv1.1
 BuildArch: noarch
 Group: System/Servers
@@ -174,6 +174,10 @@ rm -f %buildroot%_erlanglibdir/rabbitmq_server-%version/{LICENSE,LICENSE-*,INSTA
 #%_datadir/%name
 
 %changelog
+* Sun Apr 16 2017 Ivan Zakharyaschev <imz@altlinux.org> 3.6.8-alt4
+- rabbitmq-script-wrapper: optimized and made the Bash-scipting safer
+  (tolerant to spaces in values).
+
 * Thu Apr 13 2017 Ivan Zakharyaschev <imz@altlinux.org> 3.6.8-alt3
 - rabbitmq-script-wrapper: robust quoting of args when su is used
   (under root). The old approach (putting quotes around the args)
