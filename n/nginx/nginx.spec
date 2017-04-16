@@ -4,7 +4,7 @@
 #============================================================================
 Name: nginx
 Summary: Fast HTTP server
-Version: 1.10.3
+Version: 1.12
 Release: alt2%ubt
 License: BSD
 Group: System/Servers
@@ -318,6 +318,12 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %_libdir/%name/ngx_http_xslt_filter_module.so
 
 %changelog
+* Sun Apr 16 2017 Denis Smirnov <mithraen@altlinux.ru> 1.12-alt2%ubt
+- update rtmp module
+
+* Sat Apr 15 2017 Denis Smirnov <mithraen@altlinux.ru> 1.12-alt1%ubt
+- 1.12
+
 * Mon Apr 03 2017 Denis Smirnov <mithraen@altlinux.ru> 1.10.3-alt2%ubt
 - add %%ubt
 
