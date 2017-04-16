@@ -1,6 +1,6 @@
-Name:           ocaml4-omake
+Name:           ocaml-omake
 Version:        0.9.8.6
-Release:        alt0.1
+Release:        alt1%ubt
 Summary:        Build system with automated dependency analysis
 License:        LGPLv2+ with exceptions and GPLv2+ and BSD
 Group:          Development/ML
@@ -12,7 +12,10 @@ Patch0:         omake-debian-disable-ocaml-warnings.patch
 Patch1:         omake-0.9.8.6-fix-and-or-operators.patch
 Patch2:         omake-0.9.8.6-kill-warn-error.patch
 
-BuildRequires: rpm-build-ocaml4 ocaml4
+BuildRequires: rpm-build-ocaml ocaml
+BuildRequires(pre):rpm-build-ubt
+Provides: ocaml4-omake = %version-%release
+Obsoletes: ocaml4-omake
 
 %description
 OMake is a build system designed for scalability and portability. It
@@ -63,6 +66,10 @@ chmod 0755 $RPM_BUILD_ROOT%{_bindir}/*
 %_bindir/cvs_realclean
 
 %changelog
+* Sun Apr 16 2017 Anton Farygin <rider@altlinux.ru> 0.9.8.6-alt1%ubt
+- renamed to ocaml-omake
+- built with new ocaml-4.04
+
 * Tue Jun 23 2015 Andrey Bergman <vkni@altlinux.org> 0.9.8.6-alt0.1
 - Initial release for Sisyphus.
 
