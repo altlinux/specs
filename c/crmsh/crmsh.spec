@@ -5,8 +5,8 @@
 
 Name: crmsh
 Summary: Pacemaker command line interface
-Version: 2.3.1
-Release: alt2
+Version: 2.3.2
+Release: alt1%ubt
 License: GPL-2.0+
 Url: http://crmsh.github.io
 Group: System/Configuration/Other
@@ -19,6 +19,8 @@ Requires: %name-scripts = %version-%release
 BuildRequires: asciidoc-a2x libpacemaker-devel time
 #libcluster-glue-devel
 BuildPreReq: python-devel python-module-setuptools
+
+BuildRequires(pre): rpm-build-ubt
 
 %description
 The crm shell is a command-line interface for High-Availability
@@ -103,6 +105,10 @@ mv %buildroot%_bindir/crm %buildroot%_sbindir/crm
 %_sysconfdir/bash_completion.d/*
 
 %changelog
+* Mon Apr 17 2017 Anton Farygin <rider@altlinux.ru> 2.3.2-alt1%ubt
+- new version
+- fixed hostname resolution in crm init 
+
 * Fri Jan 13 2017 Anton Farygin <rider@altlinux.ru> 2.3.1-alt2
 - adapted for ALT
 
