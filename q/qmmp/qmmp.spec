@@ -1,5 +1,5 @@
 %define branch 0.11
-%define svn svn6953
+%define svn svn7121
 
 %define rel alt1
 
@@ -483,6 +483,14 @@ Requires: qmmp = %version-%release
 %description -n %name-eff-extrastereo
 Qmmp Extra Stereo Plugin
 
+%package -n %name-eff-filewriter
+Summary: File Writer Plugin for Qmmp
+Group: Sound
+Requires: qmmp = %version-%release
+
+%description -n %name-eff-filewriter
+File Writer Plugin for Qmmp
+
 # Transports plugins
 %package -n %name-http
 Summary: Qmmp HTTP Plugin
@@ -686,7 +694,7 @@ Requires: qmmp-out-jack qmmp-out-oss qmmp-out-null qmmp-http qmmp-mms
 Requires: qmmp-kdenotify qmmp-eff-ladspa qmmp-covermanager qmmp-rgscan
 Requires: qmmp-eff-crossfade qmmp-udisks qmmp-in-gme qmmp-in-sid
 Requires: qmmp-streambrowser qmmp-trackchange qmmp-copypaste qmmp-eff-extrastereo
-Requires: qmmp-out-qtmultimedia qmmp-out-icecast
+Requires: qmmp-out-qtmultimedia qmmp-out-icecast qmmp-eff-filewriter
 
 %if "%rel" != "alt0.M51"
 # disable for 5.1
@@ -864,6 +872,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-eff-extrastereo
 %_libdir/%name/Effect/libstereo*
 
+%files -n %name-eff-filewriter
+%_libdir/%name/Effect/libfilewriter*
+
 # Transports plugins
 %files -n %name-http
 %_libdir/%name/Transports/libhttp*
@@ -943,6 +954,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Mon Apr 17 2017 Motsyo Gennadi <drool@altlinux.ru> 1:0.11.0-alt1.svn7121
+- 0.11.0 svn7121 version
+
 * Sat Jan 07 2017 Motsyo Gennadi <drool@altlinux.ru> 1:0.11.0-alt1.svn6953
 - 0.11.0 svn6953 version
 

@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
 %define		branch 0.11
-%define		svn svn6953
+%define		svn svn7121
 
 Version:	%branch.0
 Name:		qmmp-plugin-pack
@@ -152,6 +152,9 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %
 %_libdir/qmmp/Visual/libgoom.so
 
 %changelog
+* Mon Apr 17 2017 Motsyo Gennadi <drool@altlinux.ru> 0.11.0-alt1.svn7121
+- build svn7121
+
 * Sun Jan 08 2017 Motsyo Gennadi <drool@altlinux.ru> 0.11.0-alt1.svn6953
 - build svn6953
 
