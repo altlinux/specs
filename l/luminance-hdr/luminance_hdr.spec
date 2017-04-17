@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name luminance
 Name: %_name-hdr
-Version: 2.4.0
-Release: alt6
+Version: 2.5.0
+Release: alt1
 
 Summary: A graphical tool for creating and processing HDR images
 Group: Graphics
@@ -10,8 +10,10 @@ License: GPLv2+
 Url: http://qtpfsgui.sourceforge.net/
 
 %if_disabled snapshot
-Source: http://downloads.sourceforge.net/project/qtpfsgui/luminance/%version/%name-%version.tar.bz2
+Source: LuminanceHDR-v.%version.tar.gz
+#Source: http://downloads.sourceforge.net/project/qtpfsgui/luminance/%version/%name-%version.tar.bz2
 %else
+#VCS:  https://github.com/LuminanceHDR/LuminanceHDR.git
 Source: %name-%version.tar
 %endif
 #Source1: luminance-hdr_lang_ru.qm
@@ -35,7 +37,7 @@ Luminance HDR is a graphical user interface application that aims to
 provide a workflow for HDR imaging.
 
 %prep
-%setup -n %name-%version
+%setup -n LuminanceHDR-v.%version
 # new russian translation
 #cp %SOURCE1 i18n/lang_ru.qm
 #rm -f i18n/lang_ru.ts
@@ -61,6 +63,9 @@ provide a workflow for HDR imaging.
 %doc AUTHORS Changelog README* TODO BUGS
 
 %changelog
+* Mon Apr 17 2017 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
+- 2.5.0
+
 * Thu Feb 02 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt6
 - updated to 2.4.0-202-gd371d09
 
