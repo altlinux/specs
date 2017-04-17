@@ -1,12 +1,11 @@
 Name: alterator
-Version: 4.24
-Release: alt4
+Version: 5.0
+Release: alt1
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
 Group: System/Configuration/Other
 Url: http://wiki.sisyphus.ru/Alterator
-Packager: Stanislav Ievlev <inger@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -16,9 +15,9 @@ Obsoletes: %name-common, %name-menu, %name-help, %name-sdk, %name-autoinstall
 
 Requires: rpm-macros-%name = %version-%release
 Requires: alterator-l10n >= 2.0-alt2
-Requires: guile18 >= 1.6.8-alt4
+Requires: guile22
 
-Requires(pre): libguile-vhttpd >= 0.7.3-alt1
+Requires(pre): libguile-vhttpd >= 0.7.7-alt1
 Requires(pre): shadow-utils
 
 #incompatibility
@@ -28,10 +27,9 @@ Conflicts: alterator-xkb < 2.0-alt3
 Conflicts: alterator-vm <= 0.3-alt31
 Conflicts: installer-stage2 <= 0.8-alt1
 
-# Automatically added by buildreq on Fri Dec 29 2006
-BuildRequires: guile18-devel libexpat-devel pam_userpass-devel
-
-%define guile_version 1.8
+BuildRequires: /proc
+BuildRequires: guile22-devel >= 2.2.0-alt2 libexpat-devel pam_userpass-devel
+BuildRequires: alterator-fbi alterator-lookout
 
 %define _alterator_datadir %_datadir/%name
 %define _alterator_libdir %_libexecdir/%name
@@ -39,6 +37,10 @@ BuildRequires: guile18-devel libexpat-devel pam_userpass-devel
 %add_findreq_skiplist %_alterator_datadir/build/profiles/*
 %add_findreq_skiplist %_alterator_datadir/build/xgettext/*
 %add_findreq_skiplist %_alterator_datadir/build/msgfmt/*
+
+%brp_strip_none %_alterator_libdir/*
+%add_verify_elf_skiplist %_alterator_libdir/*
+%add_findreq_skiplist %_alterator_libdir/*
 
 %description
 ALT Linux configurator engine
@@ -70,7 +72,10 @@ Install this package if you want to create RPM packages that use %name.
 %make check-api
 
 %install
+ln -s %_datadir/%name/interfaces/guile build/alterator #bs0
 %makeinstall GUILE_VERSION=%guile_version unitdir=%buildroot%_unitdir
+rm %buildroot%_datadir/alterator/build/alterator #bs1
+ln -s ../interfaces/guile %buildroot%_datadir/alterator/build/alterator #bs2
 ln -s ../bin/alterator-cmdline %buildroot%_sbindir/
 
 #create special directories
@@ -110,6 +115,10 @@ EOF
 %dir %_alterator_libdir
 %_alterator_libdir/backend3
 %attr(700,root,root) %dir %_alterator_libdir/hooks
+%_alterator_libdir/interfaces
+%_alterator_libdir/lookout
+%_alterator_libdir/type
+%_alterator_libdir/ui
 
 %_alterator_datadir
 
@@ -119,9 +128,9 @@ EOF
 %attr(700,root,root) %dir %_localstatedir/%name
 %_sysconfdir/tmpfiles.d/%name.conf
 
-%_datadir/guile/%guile_version/alterator
-%_libdir/*.so.*
-%_libdir/libguile*.so
+%_datadir/guile/site/%guile_version/alterator
+%guile_ccachedir/alterator
+%guile_extensiondir/*.so
 
 %_sbindir/*
 %_initdir/*
@@ -140,6 +149,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Mar 31 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0-alt1
+- rebased on guile 2.2
+
 * Thu Nov  3 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.24-alt4
 - /usr/sbin/alteratord: Do no delay logging (force line-by-line).
   (Note: stderr goes to our custom log,
