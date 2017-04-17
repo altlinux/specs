@@ -3,7 +3,7 @@
 
 Name: %pkgname-sdk
 Version: 1.0.46.0
-Release: alt1
+Release: alt2
 
 Summary: Vulkan SDK
 Group: System/Libraries
@@ -92,15 +92,20 @@ popd
 
 %install
 %makeinstall_std -C %_target_platform
+%__mkdir_p %buildroot%_datadir/%pkgname/icd.d
 
 %files
 
 %files -n lib%pkgname%sover
 %doc COPYRIGHT.txt LICENSE.txt
 %_libdir/lib%pkgname.so.*
+%dir %_datadir/%pkgname
+%dir %_datadir/%pkgname/explicit_layer.d
+%dir %_datadir/%pkgname/icd.d
 
 %files -n lib%pkgname-devel
 %_libdir/lib%pkgname.so
+%dir %_includedir/%pkgname
 %_includedir/%pkgname/*
 %_pkgconfigdir/%pkgname.pc
 
@@ -112,6 +117,10 @@ popd
 %_datadir/%pkgname/explicit_layer.d/VkLayer_*.json
 
 %changelog
+* Mon Apr 17 2017 Nazarov Denis <nenderus@altlinux.org> 1.0.46.0-alt2
+- Fix post-install unowned files
+- Add ICD directory for additional layers
+
 * Sun Apr 16 2017 Nazarov Denis <nenderus@altlinux.org> 1.0.46.0-alt1
 - Version 1.0.46.0
 - Separated packages
