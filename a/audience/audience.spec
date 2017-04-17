@@ -3,7 +3,7 @@
 
 Name: audience
 %define xdg_name org.pantheon.%name
-Version: %ver_major.1.2
+Version: %ver_major.2
 Release: alt1
 
 Summary: A modern media player
@@ -52,6 +52,9 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %_datadir/appdata/%xdg_name.appdata.xml
 
 %changelog
+* Mon Apr 17 2017 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
+- 0.2.2
+
 * Wed Jan 25 2017 Yuri N. Sedunov <aris@altlinux.org> 0.2.1.2-alt1
 - 0.2.1.2
 
