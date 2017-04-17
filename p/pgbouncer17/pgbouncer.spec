@@ -1,7 +1,7 @@
 %define         pgb_runtimedir   /var/run/%name
 Name:		pgbouncer17 
 Version:	1.7.2
-Release:        alt3 
+Release:        alt4 
 Summary:	Lightweight connection pooler for PostgreSQL	
 License: 	BSD
 Group: 		Databases
@@ -52,6 +52,9 @@ Transaction pooling - Server connection is assigned to client only during a tran
 Statement pooling - Most aggressive method. This is transaction pooling with a twist - multi-statement transactions are disallowed. This is meant to enforce "autocommit" mode on client, mostly targeted for PL/Proxy. 
 
 %changelog
+* Mon Apr 17 2017 Denis Medvedev <nbr@altlinux.org> 1.7.2-alt4
+- fix typo
+
 * Mon Apr 17 2017 Denis Medvedev <nbr@altlinux.org> 1.7.2-alt3
 - fix tmpfiles place
 
