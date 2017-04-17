@@ -2,8 +2,8 @@
 %def_enable qt5
 
 Name: pinentry
-Version: 0.9.7
-Release: alt2
+Version: 1.0.0
+Release: alt1%ubt
 
 Group: File tools
 Summary: Simple PIN or passphrase entry dialog
@@ -22,6 +22,7 @@ Source1: pinentry-wrapper
 Patch10: alt-mask-xprop.patch
 
 
+BuildRequires(pre): rpm-build-ubt
 # due to qt macros
 %if_enabled qt5
 BuildRequires(pre): qt5-base-devel
@@ -207,6 +208,9 @@ install -p -m0755 -D pinentry-wrapper %buildroot/%_bindir/pinentry
 %_infodir/*.info*
 
 %changelog
+* Mon Apr 17 2017 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt1%ubt
+- new version
+
 * Fri Apr 29 2016 Sergey V Turchin <zerg@altlinux.org> 0.9.7-alt2
 - build pinentry-qt5
 
