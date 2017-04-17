@@ -1,8 +1,8 @@
 %def_enable static
 
 Name: libgpg-error
-Version: 1.20
-Release: alt1.1
+Version: 1.27
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Error library for GnuPG and related projects
@@ -13,6 +13,7 @@ Packager: Sergey V Turchin <zerg@altlinux.org>
 
 Source: %name-%version.tar.bz2
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: glibc-devel
 %if_enabled static
 BuildRequires: glibc-devel-static
@@ -66,6 +67,7 @@ ln -sf ../../%_lib/libgpg-error.so.0 %buildroot%_libdir/libgpg-error.so
 %files -f %name.lang
 /%_lib/lib*.so.*
 %_bindir/gpg-error
+%_datadir/libgpg-error/
 %doc AUTHORS ChangeLog NEWS README
 
 %files devel
@@ -82,6 +84,9 @@ ln -sf ../../%_lib/libgpg-error.so.0 %buildroot%_libdir/libgpg-error.so
 %endif
 
 %changelog
+* Mon Apr 17 2017 Sergey V Turchin <zerg@altlinux.org> 1.27-alt1%ubt
+- new version
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1.1
 - NMU: added BR: texinfo
 
