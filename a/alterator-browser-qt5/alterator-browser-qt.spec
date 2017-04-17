@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 2.90.3
+Version: 2.90.4
 Release: alt1%ubt
 
 Source:%name-%version.tar
@@ -78,6 +78,9 @@ __EOF__
 
 
 %changelog
+* Mon Apr 17 2017 Sergey V Turchin <zerg at altlinux dot org> 2.90.4-alt1%ubt
+- simplify timer usage
+
 * Mon Apr 17 2017 Sergey V Turchin <zerg at altlinux dot org> 2.90.3-alt1%ubt
 - fix i18n
 
