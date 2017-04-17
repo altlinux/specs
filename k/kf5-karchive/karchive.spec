@@ -1,7 +1,7 @@
 %define rname karchive
 
 Name: kf5-%rname
-Version: 5.32.0
+Version: 5.33.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -72,6 +72,9 @@ KF5 library
 %_K5lib/libKF5Archive.so.*
 
 %changelog
+* Mon Apr 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.33.0-alt1%ubt
+- new version
+
 * Wed Mar 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.32.0-alt1%ubt
 - new version
 
