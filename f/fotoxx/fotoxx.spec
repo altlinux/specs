@@ -1,5 +1,5 @@
 Name: fotoxx
-Version: 17.04
+Version: 17.04.1
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
@@ -83,6 +83,9 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %doc doc/README* doc/changelog doc/copyright
 
 %changelog
+* Mon Apr 17 2017 Yuri N. Sedunov <aris@altlinux.org> 17.04.1-alt1
+- 17.04.1
+
 * Thu Apr 06 2017 Yuri N. Sedunov <aris@altlinux.org> 17.04-alt1
 - 17.04
 
