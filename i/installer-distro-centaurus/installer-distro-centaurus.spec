@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
-Version: 8.0
-Release: alt2
+Version: 8.1
+Release: alt1
 
 Summary: Installer files for Centaurus distro 
 License: GPL
@@ -41,6 +41,7 @@ Requires: alterator-users
 Requires: alterator-root
 Requires: alterator-net-eth dhcpcd
 Requires: alterator-net-general
+Requires: alterator-net-bond alterator-net-bridge
 Requires: installer-feature-nfs-server-stage3
 Requires: installer-feature-powerbutton-stage3
 Requires: alterator-grub
@@ -67,6 +68,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Mon Apr 17 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.1-alt1
+- net-bond and net-bridge into stage3
+
 * Wed Jun 08 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.0-alt2
 - xinetd enabled in systemd installations
 
