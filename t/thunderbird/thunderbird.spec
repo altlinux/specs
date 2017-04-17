@@ -6,7 +6,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	52.0
+Version:	52.0.1
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -434,6 +434,9 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Mon Apr 17 2017 Andrey Cherepanov <cas@altlinux.org> 52.0.1-alt1
+- New version (52.0.1)
+
 * Wed Apr 05 2017 Andrey Cherepanov <cas@altlinux.org> 52.0-alt1
 - New version (52.0)
 
