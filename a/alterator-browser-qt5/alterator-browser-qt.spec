@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 2.90.2
+Version: 2.90.3
 Release: alt1%ubt
 
 Source:%name-%version.tar
@@ -21,6 +21,7 @@ Group: System/Configuration/Other
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 PreReq(post,preun): alternatives >= 0.2
+Requires: qt5-translations
 Requires: /usr/bin/xdg-open
 Requires: alterator-browser-gui-common
 Requires: alterator-common >= 2.9-alt0.14
@@ -77,6 +78,9 @@ __EOF__
 
 
 %changelog
+* Mon Apr 17 2017 Sergey V Turchin <zerg at altlinux dot org> 2.90.3-alt1%ubt
+- fix i18n
+
 * Fri Apr 14 2017 Sergey V Turchin <zerg at altlinux dot org> 2.90.2-alt1%ubt
 - fix color scheme
 
