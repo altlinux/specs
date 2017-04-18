@@ -8,7 +8,7 @@
 %define dictdir %_datadir/myspell
 
 Name: link-grammar
-Version: 5.3.14
+Version: 5.3.15
 Release: alt1
 
 Summary: The link grammar parsing system for Unix
@@ -74,7 +74,7 @@ Perl bindings for %name library.
 %files
 %_bindir/link-parser
 %_man1dir/link-parser.1*
-%doc LICENSE README ChangeLog
+%doc LICENSE README* ChangeLog
 
 %files -n lib%name
 %dir %_datadir/%name/
@@ -94,6 +94,9 @@ Perl bindings for %name library.
 %endif
 
 %changelog
+* Tue Apr 18 2017 Yuri N. Sedunov <aris@altlinux.org> 5.3.15-alt1
+- 5.3.15
+
 * Sun Jan 22 2017 Yuri N. Sedunov <aris@altlinux.org> 5.3.14-alt1
 - 5.3.14
 
