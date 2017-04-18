@@ -4,7 +4,7 @@
 
 Summary: Tiny and flexible webcam program
 Name: fswebcam
-Version: 20160111 
+Version: 20170115
 Release: alt1
 License: GPL
 Group: Video
@@ -41,6 +41,9 @@ device, and overlaying a caption or image.
 %_mandir/man1/fswebcam.1.*
 
 %changelog
+* Tue Apr 18 2017 Hihin Ruslan <ruslandh@altlinux.ru> 20170115-alt1
+- New version
+
 * Sun Jan 24 2016 Hihin Ruslan <ruslandh@altlinux.ru> 20160111-alt1
 - New version
 
