@@ -1,5 +1,5 @@
 Name: connector
-Version: 1.3.24
+Version: 1.4.0
 Release: alt3
 
 Summary: Remote desktop chooser
@@ -11,8 +11,9 @@ Source0: %name-%version.tar.gz
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 BuildArch: noarch
-Requires: python3 python3-module-pygobject3 xfreerdp
-Requires: libgtk+3 libgtk+3-gir remmina remmina-plugins tigervnc
+Requires: python3 python3-module-pygobject3 libgtk+3 libgtk+3-gir
+Requires: remmina remmina-plugins tigervnc xfreerdp
+Requires: control
 
 %define basedir %_datadir/%name
 
@@ -30,14 +31,36 @@ install -pDm644 %name.desktop %buildroot%_desktopdir/%name.desktop
 mkdir -p %buildroot%basedir/data/
 install -p *.png *.glade %buildroot%basedir/data/
 install -p *.py %buildroot%basedir/
+install -pDm644 %name.man %buildroot%_man1dir/%name.1
+%find_lang --with-man %name
 
-%files
+%files -f %name.lang
 %_bindir/%name
 %_desktopdir/%name.desktop
 %basedir/data
 %basedir/*.py
+%_man1dir/*
 
 %changelog
+* Tue Apr 18 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.4.0-alt3
+- Fixed build - remove vmware-view-userinstall from requires
+- Added checking the installation of the VMware Horizon Client (or vmware-view-userinstall)
+
+* Fri Apr 07 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.4.0-alt2
+- Fixed creating LOGFOLDER
+
+* Fri Apr 07 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.4.0-alt1
+- Added logging
+- Added checking 'control udisks2'
+- Update requires - added vmware-view-userinstall
+- Added manual
+- Added key /span for FreeRDP
+- Default vncviewer -> TigerVNC
+- Added checking the installation of the ICAClient
+- Changed the fast connect from console: uses the connection unique name
+  instead of the file name
+- Fixed import CITRIX & WEB
+
 * Mon Oct 17 2016 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.3.24-alt3
 - Update categories in .desktop
 
