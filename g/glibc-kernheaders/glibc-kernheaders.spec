@@ -1,9 +1,9 @@
-%define kernel_base_version 4.10
+%define kernel_base_version 4.11
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
 Version: %kernel_base_version
-Release: alt2
+Release: alt0.rc7
 
 Summary: Linux kernel C header files for use by glibc and other userspace software
 License: GPLv2
@@ -11,70 +11,37 @@ Group: Development/Kernel
 Url: http://www.kernel.org/
 
 # git://git.altlinux.org/gears/g/%name.git
-Patch: %name-%version-%release.patch
+#Patch: %name-%version-%release.patch
 
-Patch1: 0001-drm-Kbuild-add-omap_drm.h-to-the-installed-headers.patch
-Patch2: 0002-ipv6-sr-add-missing-Kbuild-export-for-header-files.patch
-Patch3: 0003-uapi-install-batman_adv.h-header.patch
-Patch4: 0004-uapi-add-missing-install-of-dma-buf.h.patch
-Patch5: 0005-uapi-mqueue.h-add-missing-linux-types.h-include.patch
-Patch6: 0006-uapi-fix-linux-target_core_user.h-userspace-compilat.patch
-Patch7: 0007-uapi-fix-linux-ipv6_route.h-userspace-compilation-er.patch
-Patch8: 0008-uapi-fix-linux-mroute6.h-userspace-compilation-error.patch
-Patch9: 0009-uapi-fix-linux-mroute.h-userspace-compilation-errors.patch
-Patch10: 0010-uapi-fix-linux-rds.h-userspace-compilation-errors.patch
-Patch11: 0011-uapi-fix-linux-rds.h-userspace-compilation-error.patch
-Patch12: 0012-uapi-fix-linux-if.h-userspace-compilation-errors.patch
-Patch13: 0013-uapi-fix-linux-ip6_tunnel.h-userspace-compilation-er.patch
-Patch14: 0014-uapi-fix-linux-llc.h-userspace-compilation-error.patch
-Patch15: 0015-uapi-fix-linux-seg6.h-and-linux-seg6_iptunnel.h-user.patch
-Patch16: 0016-uapi-stop-including-linux-sysctl.h-in-uapi-linux-net.patch
-Patch17: 0017-uapi-fix-linux-netfilter-xt_hashlimit.h-userspace-co.patch
-Patch18: 0018-uapi-fix-drm-omap_drm.h-userspace-compilation-errors.patch
-Patch19: 0019-btrfs-remove-btrfs_err_str-function-from-uapi-linux-.patch
-Patch20: 0020-uapi-fix-linux-sysctl.h-userspace-compilation-errors.patch
-Patch21: 0021-uapi-move-struct-reiserfs_security_handle-out-from-l.patch
-Patch22: 0022-uapi-fix-linux-packet_diag.h-userspace-compilation-e.patch
-Patch23: 0023-uapi-fix-rdma-mlx5-abi.h-userspace-compilation-error.patch
-Patch24: 0024-uapi-fix-linux-dlm_netlink.h-userspace-compilation-e.patch
-Patch25: 0025-uapi-fix-linux-nfc.h-userspace-compilation-errors.patch
-Patch26: 0026-uapi-fix-linux-vm_sockets.h-userspace-compilation-er.patch
-Patch27: 0027-uapi-fix-linux-nfsd-cld.h-userspace-compilation-erro.patch
-Patch28: 0028-uapi-fix-scsi-scsi_netlink.h-userspace-compilation-e.patch
-Patch29: 0029-uapi-fix-scsi-scsi_netlink_fc.h-userspace-compilatio.patch
-Patch30: 0030-uapi-fix-scsi-scsi_bsg_fc.h-userspace-compilation-er.patch
-Patch31: 0031-uapi-fix-asm-ipcbuf.h-userspace-compilation-errors.patch
-Patch32: 0032-uapi-fix-asm-msgbuf.h-userspace-compilation-errors.patch
-Patch33: 0033-uapi-fix-asm-sembuf.h-userspace-compilation-errors.patch
-Patch34: 0034-uapi-fix-asm-shmbuf.h-userspace-compilation-errors.patch
-Patch35: 0035-uapi-fix-another-asm-shmbuf.h-userspace-compilation-.patch
-Patch36: 0036-uapi-fix-asm-signal.h-userspace-compilation-errors.patch
-Patch37: 0037-uapi-introduce-__kernel_uapi_size_t.patch
-Patch38: 0038-x86-uapi-fix-asm-signal.h-userspace-compilation-erro.patch
-Patch39: 0039-uapi-fix-linux-kexec.h-userspace-compilation-errors.patch
-Patch40: 0040-uapi-fix-linux-ncp_fs.h-userspace-compilation-errors.patch
-Patch41: 0041-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
+Patch1: 0001-uapi-fix-linux-sysctl.h-userspace-compilation-errors.patch
+Patch2: 0002-uapi-fix-linux-nfsd-cld.h-userspace-compilation-erro.patch
+Patch3: 0003-uapi-move-struct-reiserfs_security_handle-out-from-l.patch
+Patch4: 0004-uapi-fix-linux-dlm_netlink.h-userspace-compilation-e.patch
+Patch5: 0005-uapi-fix-linux-nfc.h-userspace-compilation-errors.patch
+Patch6: 0006-uapi-fix-linux-vm_sockets.h-userspace-compilation-er.patch
+Patch7: 0007-uapi-fix-linux-sctp.h-userspace-compilation-errors.patch
+Patch8: 0008-uapi-fix-scsi-scsi_netlink.h-userspace-compilation-e.patch
+Patch9: 0009-uapi-fix-scsi-scsi_netlink_fc.h-userspace-compilatio.patch
+Patch10: 0010-uapi-fix-scsi-scsi_bsg_fc.h-userspace-compilation-er.patch
+Patch11: 0011-uapi-fix-asm-ipcbuf.h-userspace-compilation-errors.patch
+Patch12: 0012-uapi-fix-asm-msgbuf.h-userspace-compilation-errors.patch
+Patch13: 0013-uapi-fix-asm-sembuf.h-userspace-compilation-errors.patch
+Patch14: 0014-uapi-fix-asm-shmbuf.h-userspace-compilation-errors.patch
+Patch15: 0015-uapi-fix-another-asm-shmbuf.h-userspace-compilation-.patch
+Patch16: 0016-uapi-fix-asm-signal.h-userspace-compilation-errors.patch
+Patch17: 0017-uapi-introduce-__kernel_uapi_size_t.patch
+Patch18: 0018-x86-uapi-fix-asm-signal.h-userspace-compilation-erro.patch
+Patch19: 0019-uapi-fix-linux-kexec.h-userspace-compilation-errors.patch
+Patch20: 0020-uapi-fix-linux-ncp_fs.h-userspace-compilation-errors.patch
+Patch21: 0021-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
 
+BuildArch: noarch
 BuildRequires: rpm-build-kernel
-BuildRequires: %kernel_source = 1.0.0
+BuildRequires: %kernel_source = 0.7.0
 
 Provides: kernel-headers = %version-%release
 Provides: linux-libc-headers = %version-%release
 Obsoletes: linux-libc-headers < %version
-
-%define base_arch %_target_cpu
-%ifarch %ix86 x86_32 x86_64
-%define base_arch x86
-%endif
-%ifarch %arm
-%define base_arch arm
-%endif
-%ifarch aarch64
-%define base_arch arm64
-%endif
-%ifarch ppc ppc64
-%define base_arch powerpc
-%endif
 
 %description
 This package includes the C header files that specify the interface
@@ -86,7 +53,7 @@ building most standard programs and are also needed to build glibc.
 %setup -cT
 tar -xf %kernel_src/%kernel_source.tar
 cd %kernel_source
-%patch -p1
+#%%patch -p1
 
 %patch1 -p1
 %patch2 -p1
@@ -109,36 +76,19 @@ cd %kernel_source
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
-%patch26 -p1
-%patch27 -p1
-%patch28 -p1
-%patch29 -p1
-%patch30 -p1
-%patch31 -p1
-%patch32 -p1
-%patch33 -p1
-%patch34 -p1
-%patch35 -p1
-%patch36 -p1
-%patch37 -p1
-%patch38 -p1
-%patch39 -p1
-%patch40 -p1
-%patch41 -p1
+
+sed -i 's/^headers_install:.*/&\n\t@echo hdr-arch=$(hdr-arch)/' Makefile
 
 %install
 %define hdr_dir %_includedir/linux-default
-make -C %kernel_source headers_install_all \
-	INSTALL_HDR_PATH=%buildroot%hdr_dir \
-	HDR_ARCH_LIST="%base_arch"
+make -C %kernel_source headers_install \
+	INSTALL_HDR_PATH=%buildroot%hdr_dir > out && rc= || rc=$?
+cat out
+[ -z "$rc" ] || exit $rc
+hdr_arch="$(sed '/^hdr-arch=/!d;s///;q' out)"
+mv %buildroot%hdr_dir/include/asm{,-$hdr_arch}
+ln -s asm-$hdr_arch %buildroot%hdr_dir/include/asm
 find %buildroot%_includedir -name "*.install*" -delete
-ln -snf asm-%base_arch %buildroot%hdr_dir/include/asm
-[ "%base_arch" = "%_target_cpu" ] ||
-	ln -snf asm-%base_arch %buildroot%hdr_dir/include/asm-%_target_cpu
 
 %check
 set +x
@@ -155,16 +105,15 @@ if [ -s "$d"/fail.list ]; then
 fi
 cd - > /dev/null
 
-%pre
-for d in %hdr_dir/include/asm-%_target_cpu; do
-	[ -d "$d" -a ! -L "$d" ] || continue
-	rmdir "$d" 2> /dev/null ||:
-done
-
 %files
 %hdr_dir
 
 %changelog
+* Sun Apr 16 2017 Dmitry V. Levin <ldv@altlinux.org> 4.11-alt0.rc7
+- v4.10 -> v4.11-rc7.
+- Dropped %hdr_dir/include/asm-%_target_cpu symlink.
+- BuildArch: noarch.
+
 * Fri Mar 03 2017 Dmitry V. Levin <ldv@altlinux.org> 4.10-alt2
 - Fixed compilation errors in 27 header files.
 
