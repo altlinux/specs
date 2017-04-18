@@ -1,5 +1,5 @@
 Name: lziprecover
-Version: 1.18
+Version: 1.19
 Release: alt1
 
 Summary: LZMA compressed file recovery
@@ -39,6 +39,9 @@ make all info
 %_infodir/%name.info*
 
 %changelog
+* Tue Apr 18 2017 Michael Shigorin <mike@altlinux.org> 1.19-alt1
+- new version (watch file uupdate)
+
 * Fri May 20 2016 Michael Shigorin <mike@altlinux.org> 1.18-alt1
 - new version (watch file uupdate)
 
