@@ -1,6 +1,6 @@
 Name: ocaml-gettext
 Version: 0.3.7
-Release: alt1
+Release: alt1%ubt
 Summary: OCaml library for i18n
 Group: Development/ML
 
@@ -25,6 +25,7 @@ BuildRequires: xsltproc
 BuildRequires: libxml2
 BuildRequires: chrpath
 BuildRequires: autoconf
+BuildRequires(pre):rpm-build-ubt
 
 %description
 Ocaml-gettext provides support for internationalization of Ocaml
@@ -70,8 +71,8 @@ make all
 # make install in the package is screwed up completely.  Install
 # by hand instead.
 export DESTDIR=%buildroot
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml/site-lib
-mkdir -p $OCAMLFIND_DESTDIR $OCAMLFIND_DESTDIR/stublibs
+export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
+mkdir -p $OCAMLFIND_DESTDIR/stublibs
 mkdir -p %buildroot%_bindir
 
 # Remove *.o files - these shouldn't be distributed.
@@ -86,36 +87,40 @@ chrpath --delete $OCAMLFIND_DESTDIR/stublibs/dll*.so
 
 %files
 %doc COPYING
-%_libdir/ocaml/site-lib/gettext
-%_libdir/ocaml/site-lib/gettext-stub
-%exclude %_libdir/ocaml/site-lib/gettext/*.a
-%exclude %_libdir/ocaml/site-lib/gettext/*.cmxa
-%exclude %_libdir/ocaml/site-lib/gettext/*.cmx
-%exclude %_libdir/ocaml/site-lib/gettext-stub/*.a
-%exclude %_libdir/ocaml/site-lib/gettext-stub/*.cmxa
-%exclude %_libdir/ocaml/site-lib/gettext-stub/*.cmx
-%exclude %_libdir/ocaml/site-lib/gettext/*.ml
-%exclude %_libdir/ocaml/site-lib/gettext/*.mli
-%exclude %_libdir/ocaml/site-lib/gettext-stub/*.ml
-%_libdir/ocaml/site-lib/stublibs/*.so
-%_libdir/ocaml/site-lib/stublibs/*.so.owner
+%_libdir/ocaml/gettext
+%_libdir/ocaml/gettext-stub
+%exclude %_libdir/ocaml/gettext/*.a
+%exclude %_libdir/ocaml/gettext/*.cmxa
+%exclude %_libdir/ocaml/gettext/*.cmx
+%exclude %_libdir/ocaml/gettext-stub/*.a
+%exclude %_libdir/ocaml/gettext-stub/*.cmxa
+%exclude %_libdir/ocaml/gettext-stub/*.cmx
+%exclude %_libdir/ocaml/gettext/*.ml
+%exclude %_libdir/ocaml/gettext/*.mli
+%exclude %_libdir/ocaml/gettext-stub/*.ml
+%_libdir/ocaml/stublibs/*.so
+%_libdir/ocaml/stublibs/*.so.owner
 
 %files devel
 %doc README CHANGELOG TODO
 # %doc build/share/doc/html/*
-%_libdir/ocaml/site-lib/gettext/*.a
-%_libdir/ocaml/site-lib/gettext/*.cmxa
-%_libdir/ocaml/site-lib/gettext/*.cmx
-%_libdir/ocaml/site-lib/gettext-stub/*.a
-%_libdir/ocaml/site-lib/gettext-stub/*.cmxa
-%_libdir/ocaml/site-lib/gettext-stub/*.cmx
-%_libdir/ocaml/site-lib/gettext/*.ml
-%_libdir/ocaml/site-lib/gettext/*.mli
-%_libdir/ocaml/site-lib/gettext-stub/*.ml
+%_libdir/ocaml/gettext/*.a
+%_libdir/ocaml/gettext/*.cmxa
+%_libdir/ocaml/gettext/*.cmx
+%_libdir/ocaml/gettext-stub/*.a
+%_libdir/ocaml/gettext-stub/*.cmxa
+%_libdir/ocaml/gettext-stub/*.cmx
+%_libdir/ocaml/gettext/*.ml
+%_libdir/ocaml/gettext/*.mli
+%_libdir/ocaml/gettext-stub/*.ml
 %_bindir/ocaml-gettext
 %_bindir/ocaml-xgettext
 
 %changelog
+* Tue Apr 18 2017 Anton Farygin <rider@altlinux.ru> 0.3.7-alt1%ubt
+- rebuild with new rpm-build-ocaml
+- moved outsite from site-lib dir
+
 * Sun Apr 09 2017 Anton Farygin <rider@altlinux.ru> 0.3.7-alt1
 - new version
 
