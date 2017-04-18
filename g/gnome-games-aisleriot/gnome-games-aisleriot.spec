@@ -1,19 +1,24 @@
 %define _unpackaged_files_terminate_build 1
+%def_enable snapshot
 
 %define _name aisleriot
 %define ver_major 3.22
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.2
+Release: alt0.1
 
 Summary: A collection of card games
 Group: Games/Cards
 License: GPLv3+ and LGPLv3+ and GFDL
-Url: http://live.gnome.org/Aisleriot
+Url: https://wiki.gnome.org/Apps/Aisleriot
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
 
 Obsoletes: gnome-games-sol
 Provides:  gnome-games-sol = %version-%release
@@ -25,9 +30,9 @@ Requires: pysol-cardsets
 %define glib_ver 2.32.0
 %define gtk_ver 3.0.0
 
-BuildRequires: intltool desktop-file-utils yelp-tools libappstream-glib-devel  libgio-devel >= %glib_ver
+BuildRequires: intltool desktop-file-utils yelp-tools libappstream-glib-devel libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libGConf-devel librsvg-devel libcanberra-gtk3-devel
-BuildRequires: libICE-devel libSM-devel guile20 libguile20-devel
+BuildRequires: libICE-devel libSM-devel guile22 guile22-devel
 BuildRequires: /proc
 
 %description
@@ -38,12 +43,13 @@ which are easy to play with the aid of a mouse.
 %setup -n %_name-%version
 
 %build
+%autoreconf
 %configure \
     --with-pysol-card-theme-path=%_datadir/games/pysol
 %make
 
 %install
-make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome %_name
 
@@ -72,6 +78,10 @@ fi
 %exclude %_libdir/valgrind/aisleriot.supp
 
 %changelog
+* Tue Apr 18 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt0.1
+- updated to 3.22.1-9-gb30db7a
+- build with guile22
+
 * Mon Nov 07 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 
