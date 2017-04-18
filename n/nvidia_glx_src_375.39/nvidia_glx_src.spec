@@ -14,7 +14,7 @@
 %define nv_version 375
 %define nv_release 39
 %define nv_minor %nil
-%define pkg_rel alt168
+%define pkg_rel alt169
 %def_enable kernelsource
 %def_disable glvnd
 
@@ -244,7 +244,9 @@ fi
     %buildroot/%_datadir/nvidia/nvidia-application-profiles-%version-key-documentation
 
 mkdir -p %buildroot/%_datadir/glvnd/egl_vendor.d/
-install 10_nvidia.json %buildroot/%_datadir/glvnd/egl_vendor.d/%{version}_nvidia.json
+install -m 0644 10_nvidia.json %buildroot/%_datadir/glvnd/egl_vendor.d/%{version}_nvidia.json
+mkdir -p %buildroot/%_datadir/vulkan/icd.d/
+install -m 0644 nvidia_icd.json %buildroot/%_datadir/vulkan/icd.d/%{version}_nvidia_icd.json
 
 # kernel-source install
 %__rm -rf kernel-source-%module_name-%module_version/
@@ -307,6 +309,7 @@ fi
 %_datadir/nvidia/nvidia-application-profiles-%version-rc
 %_datadir/nvidia/nvidia-application-profiles-%version-key-documentation
 %_datadir/glvnd/egl_vendor.d/%{version}_nvidia.json
+%_datadir/vulkan/icd.d/%{version}_nvidia_icd.json
 
 %if_enabled kernelsource
 %files -n kernel-source-%module_name-%module_version
@@ -314,6 +317,9 @@ fi
 %endif
 
 %changelog
+* Tue Apr 18 2017 Sergey V Turchin <zerg@altlinux.org> 375.39-alt169
+- package nvidia_icd.json (ALT#33387)
+
 * Wed Mar 22 2017 Sergey V Turchin <zerg@altlinux.org> 375.39-alt168
 - using non-GLVND libs
 
