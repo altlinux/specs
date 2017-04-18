@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.14.0
-Release: alt10%ubt
+Release: alt11%ubt
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -40,7 +40,7 @@ Patch106: alt-flicker-free-plymouth.patch
 Patch107: alt-def-breeze.patch
 Patch108: alt-show-avatars.patch
 Patch109: alt-expired-password-handling.patch
-Patch110: alt-fix-unable-handle-request.patch
+Patch200: alt-fix-unable-handle-request.patch
 
 # Automatically added by buildreq on Thu Apr 02 2015 (-bi)
 # optimized out: cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-test libqt5-xml libstdc++-devel libxcb-devel pkg-config python-base python-module-BeautifulSoup python-module-PyStemmer python-module-Pygments python-module-google python-module-google-apputils python-module-matplotlib python-module-numpy python-module-pyExcelerator python-module-pyparsing python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-zope.interface python-modules python-modules-compiler python-modules-email python-modules-encodings qt5-base-devel qt5-tools
@@ -71,7 +71,8 @@ ability to create smooth, animated user interfaces.
 %patch107 -p1
 %patch108 -p1
 %patch109 -p1
-%patch110 -p1
+
+%patch200 -p1
 
 %build
 %K5build \
@@ -138,6 +139,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Mon Apr 17 2017 Oleg Solovyov <mcpain@altlinux.org> 0.14.0-alt11%ubt
+- Added i18n support for PAM submodules (ru only)
+
 * Mon Apr 03 2017 Oleg Solovyov <mcpain@altlinux.org> 0.14.0-alt10%ubt
 - Fixed "Unable to handle Auth request" (ALT#33248)
 
