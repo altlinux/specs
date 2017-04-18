@@ -3,7 +3,7 @@
 
 Name: kf5-%rname
 Version: 5.9.4
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -18,6 +18,7 @@ Requires: qca-qt5-ossl
 
 Source: %rname-%version.tar
 Source10: 01-plasma-nm.js
+Patch1: alt-old-openconnectauth.patch
 
 # Automatically added by buildreq on Tue Mar 03 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils glib2-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgio-devel libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base qt5-base-devel ruby ruby-stdlibs
@@ -156,6 +157,7 @@ Requires: NetworkManager-ssh
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -229,6 +231,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Tue Apr 18 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt2%ubt
+- fix compile with old openconnect
+
 * Mon Apr 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
 - new version
 
