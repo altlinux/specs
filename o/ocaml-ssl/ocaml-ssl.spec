@@ -1,6 +1,6 @@
 Name: ocaml-ssl
 Version: 0.5.3
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: OCaml bindings for the OpenSSL library
 License: LGPLv2.1 with exemptions
 Group: Development/ML
@@ -12,14 +12,21 @@ BuildRequires: ocaml-findlib libssl-devel
 
 BuildRequires(pre): ocaml rpm-build-ubt
 
-# .so file always needed to link stuff with %name
-Requires: libssl-devel
-
 %description
 This package contains OCaml bindings for libssl.
 
 Install it if you intend to develop
 SSL-enabled applications in OCaml.
+
+%package devel
+Summary: Development files for %name
+Requires: %name = %version-%release
+Requires: libssl-devel
+Group: Development/ML
+
+%description devel
+The %name-devel package contains libraries and signature files for
+developing applications that use %name.
 
 %prep
 %setup
@@ -30,14 +37,30 @@ autoreconf -fisv
 %make
 
 %install
-%define ocamlsitelib %_libdir/ocaml/site-lib
-mkdir -p %buildroot/%ocamlsitelib
-%make_install OCAMLFIND_INSTFLAGS="-destdir %buildroot/%ocamlsitelib" install
+%define ocamlsitelib %_libdir/ocaml
+export DESTDIR=%buildroot
+export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
+mkdir -p %buildroot%ocamlsitelib/stublibs
+make install
 
 %files
-%ocamlsitelib/ssl
+%_libdir/ocaml/ssl
+%exclude %_libdir/ocaml/ssl/*.a
+%exclude %_libdir/ocaml/ssl/*.cmxa
+%exclude %_libdir/ocaml/ssl/*.mli
+%_libdir/ocaml/stublibs/*.so
+%_libdir/ocaml/stublibs/*.so.owner
+
+%files devel
+%_libdir/ocaml/ssl/*.a
+%_libdir/ocaml/ssl/*.cmxa
+%_libdir/ocaml/ssl/*.mli
 
 %changelog
+* Tue Apr 18 2017 Anton Farygin <rider@altlinux.ru> 0.5.3-alt2%ubt
+- move module outside site-lib dir
+- split to runtime and devel packages
+
 * Mon Apr 10 2017 Anton Farygin <rider@altlinux.ru> 0.5.3-alt1%ubt
 - 0.5.3
 
