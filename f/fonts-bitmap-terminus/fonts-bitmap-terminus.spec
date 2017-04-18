@@ -7,7 +7,7 @@
 
 Name: fonts-bitmap-%cname
 Version: 4.40
-Release: alt1
+Release: alt2
 Summary: Terminus Font - a clean fixed width font
 Summary(ru_RU.UTF-8): Шрифт Terminus - растровый моноширинный шрифт
 License: OFL
@@ -100,6 +100,7 @@ patch < alt/dv1.diff
 patch < alt/gq2.diff
 patch < alt/ll2.diff
 patch < alt/td1.diff
+patch < alt/ij1.diff
 chmod +x configure
 ./configure --prefix=%_prefix \
     --psfdir=%cfontsdir \
@@ -129,6 +130,9 @@ fi
 %cfontsdir/*.psf.gz
 
 %changelog
+* Tue Apr 18 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.40-alt2
+- applied missing ij1 patch.
+
 * Sat Apr 9 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.40-alt1
 - 4.40
 - Build with next character patches:
