@@ -5,7 +5,7 @@
 %undefine cvs
 
 Name: bzflag
-Version: 2.4.8
+Version: 2.4.10
 Release: alt1
 
 Summary: A multiplayer 3D tank battle game
@@ -206,6 +206,9 @@ mkdir -p %buildroot/var/run/%name
 %_initdir/bzfs
 
 %changelog
+* Tue Apr 18 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2.4.10-alt1
+- Version 2.4.10 (Release)
+
 * Tue Oct 11 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2.4.8-alt1
 - Version 2.4.8 (Release)
 
