@@ -3,7 +3,7 @@
 %def_with recording
 
 Name: girl
-Version: %ver_major.1
+Version: %ver_major.6
 Release: alt1
 
 Summary: GNOME Internet Radio Locator
@@ -19,10 +19,10 @@ Requires: gst-plugins-ugly%gst_api_ver
 
 %define gtk_ver 3.6.0
 
-BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: gnome-common intltool yelp-tools gtk-doc
 BuildRequires: libgnomeui-devel libxml2-devel
-BuildRequires: gst-plugins%gst_api_ver-devel
+BuildRequires: libgtk+3-devel >= %gtk_ver libchamplain-gtk3-devel
+BuildRequires: gst-plugins%gst_api_ver-devel gst-plugins-bad1.0-devel
 
 %description
 GIRL is a GNOME Internet Radio Locator program that allows the user
@@ -46,6 +46,7 @@ on the Internet.
 
 %files -f %name.lang
 %_bindir/%name
+%_bindir/gnome-internet-radio-locator
 %_datadir/applications/%name.desktop
 %_datadir/%name/
 %_iconsdir/hicolor/*x*/apps/%name.png
@@ -55,6 +56,9 @@ on the Internet.
 
 
 %changelog
+* Tue Apr 18 2017 Yuri N. Sedunov <aris@altlinux.org> 9.9.6-alt1
+- 9.9.6
+
 * Sat Mar 18 2017 Yuri N. Sedunov <aris@altlinux.org> 9.9.1-alt1
 - 9.9.1
 
