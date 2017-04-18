@@ -1,6 +1,6 @@
 Name: vhttpd
 Version: 0.7.7
-Release: alt1
+Release: alt2
 
 Summary: simple embedded web server
 License: LGPL
@@ -86,6 +86,9 @@ guile bindings for %name
 %guile_ccachedir/vhttpd.go
 
 %changelog
+* Tue Apr 18 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.7-alt2
+- cleanup fallout from guile2 transition
+
 * Fri Mar 31 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.7-alt1
 - rebuilt with guile2
 
