@@ -1,6 +1,6 @@
 Name: man-pages-ru-extra
 Version: 0.1
-Release: alt1
+Release: alt2
 
 Summary: Extra collection of Russian translations of OS GNU/*/Linux manpages
 Summary(ru_RU.UTF-8): Дополнительный набор русских переводов страниц руководства по ОС GNU/*/Linux
@@ -101,6 +101,9 @@ fi
 %_cachedir/man/ru/cat*
 
 %changelog
+* Tue Apr 18 2017 Artem Zolochevskiy <azol@altlinux.org> 0.1-alt2
+- update sources.list (Closes: 33368)
+
 * Wed Mar 08 2017 Sergey Y. Afonin <asy@altlinux.ru> 0.1-alt1
 - renamed to man-pages-ru-extra, removed most man pages
   from manpages-ru 0.98 (kept missed in 4.08 only)
