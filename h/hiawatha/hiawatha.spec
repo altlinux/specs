@@ -1,5 +1,5 @@
 Name: hiawatha
-Version: 10.5
+Version: 10.6
 Release: alt1
 
 Summary: A secure and advanced webserver
@@ -17,6 +17,7 @@ BuildRequires(pre): cmake
 # Automatically added by buildreq on Tue Feb 17 2015
 # optimized out: cmake-modules libcloog-isl4 libxml2-devel pkg-config
 BuildRequires: cmake libxslt-devel zlib-devel
+BuildRequires: gcc-c++
 
 %description
 Hiawatha is an advanced and secure Web server for Unix.
@@ -85,6 +86,9 @@ install -pDm644 %_sourcedir/hiawatha.logrotate \
 %_logdir/%name
 
 %changelog
+* Tue Apr 18 2017 Michael Shigorin <mike@altlinux.org> 10.6-alt1
+- 10.6
+
 * Fri Jan 27 2017 Michael Shigorin <mike@altlinux.org> 10.5-alt1
 - 10.5
 
