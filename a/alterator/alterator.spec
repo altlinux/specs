@@ -1,6 +1,6 @@
 Name: alterator
 Version: 5.0
-Release: alt1
+Release: alt2
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -149,11 +149,15 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Tue Apr 18 2017 Ivan Zakharyaschev <imz@altlinux.org> 5.0-alt2
+- _IOLBF is deprecated; adapted the buffering mode specification
+  for guile > 2
+
 * Fri Mar 31 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0-alt1
 - rebased on guile 2.2
 
 * Thu Nov  3 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.24-alt4
-- /usr/sbin/alteratord: Do no delay logging (force line-by-line).
+- /usr/sbin/alteratord: Do not delay logging (force line-by-line).
   (Note: stderr goes to our custom log,
   stdout is captured by the system log if run as a service.)
 
