@@ -1,24 +1,20 @@
 # -*- mode: RPM-SPEC; tab-width: 8; fill-column: 70; -*- 
 # $Id: alterator-control.spec,v 1.15 2006/04/28 10:48:26 inger Exp $ 
 
-%define _altdata_dir %_datadir/alterator
-
 Name: alterator-wizardface
-Version: 2.0.1
-Release: alt1
+Version: 2.1
+Release: alt2
 
+Url: http://altlinux.org/alterator
+Source: %name-%version.tar
 Packager: Stanislav Ievlev <inger@altlinux.org>
-
-BuildArch: noarch
-
-Source:%name-%version.tar
 
 #replace previous version in branch
 Provides: alterator-wizard = %version
 Obsoletes: alterator-wizard
 
-Requires: alterator >= 4.7-alt1 alterator-sh-functions
-Requires: alterator-lookout >= 2.1-alt4
+Requires: alterator >= 5.0-alt1 alterator-sh-functions
+Requires: alterator-lookout >= 2.5
 Requires: alterator-l10n >= 2.5-alt8
 Requires: alterator-browser-qt
 
@@ -29,7 +25,7 @@ Summary: alterator's wizard like module aggregator
 License: GPL
 Group: System/Configuration/Other
 
-BuildPreReq: alterator >= 4.7-alt1
+BuildPreReq: alterator >= 5.0 guile22-devel
 
 # Automatically added by buildreq on Mon Jul 11 2005 (-bi)
 BuildRequires: alterator
@@ -47,8 +43,12 @@ Requires: consolehelper
 %description usermode
 Usermode bindings for %name
 
+%brp_strip_none %_alterator_libdir/*
+%add_verify_elf_skiplist %_alterator_libdir/*
+%add_findreq_skiplist %_alterator_libdir/*
+
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
@@ -59,9 +59,9 @@ Usermode bindings for %name
 #install consolehelper
 obj=alterator-wizard
 
-%__install -d %buildroot/%_bindir
-%__ln_s %_libexecdir/consolehelper/helper %buildroot%_bindir/$obj
-%__install -d %buildroot%_sysconfdir/pam.d/
+install -d %buildroot/%_bindir
+ln -s %_libexecdir/consolehelper/helper %buildroot%_bindir/$obj
+install -d %buildroot%_sysconfdir/pam.d/
 
 cat>%buildroot%_sysconfdir/pam.d/$obj<<EOF
 #%PAM-1.0
@@ -72,7 +72,7 @@ password	required	pam_deny.so
 session	optional	pam_xauth.so
 EOF
 
-%__install -d %buildroot%_sysconfdir/security/console.apps/
+install -d %buildroot%_sysconfdir/security/console.apps/
 cat>%buildroot%_sysconfdir/security/console.apps/$obj<<EOF
 USER=root
 PROGRAM=%_sbindir/$obj
@@ -82,7 +82,8 @@ EOF
 
 %files
 %_sbindir/*
-%_altdata_dir/ui/wizard/*
+%_alterator_libdir/ui/*
+%_alterator_datadir/ui/*
 %_alterator_backend3dir/*
 %_datadir/install2/initinstall.d/*
 %_datadir/install2/postinstall.d/*
@@ -93,6 +94,14 @@ EOF
 %_bindir/*
 
 %changelog
+* Tue Apr 18 2017 Michael Shigorin <mike@altlinux.org> 2.1-alt2
+- no more noarch
+
+* Tue Apr 18 2017 Michael Shigorin <mike@altlinux.org> 2.1-alt1
+- rebuilt with guile22
+- added an Url:
+- minor spec cleanup
+
 * Wed Sep 25 2013 Michael Shigorin <mike@altlinux.org> 2.0.1-alt1
 - hide extra line output by initscript (errorlevel is enough)
 
