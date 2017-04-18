@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 4.4.1
-Release: alt8
+Release: alt9
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -35,6 +35,7 @@ Patch10: pve-manager-help.patch
 Patch11: pve-manager-install_vzdump_cron_config.patch
 Patch12: qemu-server-lsi.patch
 Patch13: pve-manager-lsi.patch
+Patch14: pve-container-lxc.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -100,6 +101,7 @@ This package contains the Qemu Server tools used by PVE
 %patch11 -p0 -b .vzdump
 %patch12 -p0 -b .megasas-gen2
 %patch13 -p0 -b .megasas-gen2
+%patch14 -p0 -b .lxc
 
 %build
 for d in pve-manager pve-firewall/src pve-ha-manager/src qemu-server; do
@@ -363,6 +365,9 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Tue Apr 18 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt9
+- fixed creation of containers by the user
+
 * Mon Mar 27 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt8
 - added LSI Logic SAS 1068 support
 
