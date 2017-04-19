@@ -1,13 +1,18 @@
+%add_python_req_skip XenAPI
+%add_python_req_skip fencing
+%add_python_req_skip fencing_snmp
 Name: fence-agents
 Summary: Fence Agents
 Version: 4.0.24
-Release: alt1
+Release: alt2%ubt
 License: GPLv2+ and LGPLv2+
 Group: System/Base
 URL: http://sourceware.org/cluster/wiki/
 
 Source0: %name-%version.tar.xz
+Patch0: fence-agents-pve-4.0.24-alt.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: autoconf-archive python-module-pexpect python-module-pycurl python-module-requests python-module-suds sudo xml-utils xsltproc
 
 %description
@@ -16,13 +21,14 @@ power management for several devices.
 
 %prep
 %setup -q
+%patch0 -p2
 
 sed -i '/^.*pywsman.*/d' configure.ac
 rm -fr fence/agents/{amt_ws,sbd}
 
 %build
 %autoreconf
-export PYTHON="python"
+export PYTHON="/usr/bin/python"
 %configure
 %make_build
 
@@ -745,6 +751,9 @@ The fence-agents-zvm package contains a fence agent for IBM z/VM over IP.
 %_man8dir/fence_zvmip.8*
 
 %changelog
+* Wed Apr 19 2017 Sergey Novikov <sotor@altlinux.org> 4.0.24-alt2%ubt
+- fix fence-pve
+
 * Thu Apr 13 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.0.24-alt1
 - initial release
 
