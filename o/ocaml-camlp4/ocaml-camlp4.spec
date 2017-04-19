@@ -1,25 +1,15 @@
 Name: ocaml-camlp4
 Version: 4.04.1
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Preprocessor for OCaml
 License: QPL & LGPL
 Group: Development/ML
-
-Requires: ocaml
-
 Url: https://github.com/ocaml/camlp4
-Packager: %packager
-
 Source0: %name-%version.tar
-
-Requires: rpm-build-ocaml >= 1.1.1
-BuildRequires(pre): rpm-build-ocaml >= 1.1.1
+BuildRequires: rpm-build-ocaml >= 1.2
 BuildRequires(pre): rpm-build-ubt
-
-# Automatically added by buildreq on Sun Oct 19 2014
-BuildRequires: ocaml-runtime ocaml >= 4.04 ocaml-ocamlbuild
-Requires: ocaml-runtime ocaml
+BuildRequires: ocaml >= 4.04 ocaml-ocamlbuild
 Provides: ocaml4-campl4
 Obsoletes: ocaml4-campl4
 Conflicts: camlp4
@@ -32,27 +22,69 @@ Camlp4 is a Pre-Processor-Pretty-Printer for Objective Caml. It offers
 tools for syntax (grammars) and the ability to modify the concrete
 syntax of the language (quotations, syntax extensions).
 
+%package devel
+Summary: Pre-Processor-Pretty-Printer for OCaml
+Requires: %name = %version-%release
+Group: Development/ML
+
+%description devel
+Camlp4 is a Pre-Processor-Pretty-Printer for OCaml, parsing a source
+file and printing some result on standard output.
+
+This package contains the development files.
+
 %prep
-%setup -q -T -b 0
+%setup
 
 %build
-
 %add_optflags -DUSE_NON_CONST -D_FILE_OFFSET_BITS=64
 ./configure --bindir=%_bindir --libdir=%_libdir/ocaml
 
 %make all
 
 %install
-
 make install BINDIR=%buildroot%_bindir LIBDIR=%buildroot%_libdir/ocaml MANDIR=%buildroot%_mandir
 
 %files
+%dir %_libdir/ocaml/camlp4
+%_libdir/ocaml/camlp4/*.cmi
+%_libdir/ocaml/camlp4/*.cma
+%_libdir/ocaml/camlp4/*.cmo
+%dir %_libdir/ocaml/camlp4/Camlp4Filters
+%_libdir/ocaml/camlp4/Camlp4Filters/*.cmi
+%_libdir/ocaml/camlp4/Camlp4Filters/*.cmo
+%dir %_libdir/ocaml/camlp4/Camlp4Parsers
+%_libdir/ocaml/camlp4/Camlp4Parsers/*.cmo
+%_libdir/ocaml/camlp4/Camlp4Parsers/*.cmi
+%dir %_libdir/ocaml/camlp4/Camlp4Printers
+%_libdir/ocaml/camlp4/Camlp4Printers/*.cmi
+%_libdir/ocaml/camlp4/Camlp4Printers/*.cmo
+%dir %_libdir/ocaml/camlp4/Camlp4Top
+%_libdir/ocaml/camlp4/Camlp4Top/*.cmi
+%_libdir/ocaml/camlp4/Camlp4Top/*.cmo
+
+%files devel
+%doc LICENSE
 %_bindir/camlp4*
 %_bindir/mkcamlp4
-#%%_man1dir/camlp4.1*
-%_libdir/ocaml/camlp4/
+%_libdir/ocaml/camlp4/*.a
+%_libdir/ocaml/camlp4/*.cmxa
+%_libdir/ocaml/camlp4/*.cmx
+%_libdir/ocaml/camlp4/*.o
+%_libdir/ocaml/camlp4/Camlp4Filters/*.cmx
+%_libdir/ocaml/camlp4/Camlp4Filters/*.o
+%_libdir/ocaml/camlp4/Camlp4Parsers/*.cmx
+%_libdir/ocaml/camlp4/Camlp4Parsers/*.o
+%_libdir/ocaml/camlp4/Camlp4Printers/*.cmx
+%_libdir/ocaml/camlp4/Camlp4Printers/*.o
+%_libdir/ocaml/camlp4/Camlp4Top/*.cmx
+%_libdir/ocaml/camlp4/Camlp4Top/*.o
 
 %changelog
+* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 4.04.1-alt2%ubt
+- split to devel and runtime packages
+- specfile cleanup
+
 * Thu Feb 16 2017 Anton Farygin <rider@altlinux.ru> 4.04.1-alt1%ubt
 - new version
 
