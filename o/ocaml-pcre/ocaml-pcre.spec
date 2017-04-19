@@ -3,7 +3,7 @@
 
 Name: ocaml-pcre
 Version: 7.2.3
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Perl compatibility regular expressions (PCRE) for OCaml
 License: LGPL
@@ -12,26 +12,28 @@ Url: http://mmottl.github.io/pcre-ocaml/
 
 # https://github.com/mmottl/pcre-ocaml
 Source: %name-%version.tar
-Provides: pcre-ocaml = %name-%version
+Provides: pcre-ocaml = %version-%release
 Obsoletes: pcre-ocaml
+Provides: ocaml-pcre-runtime = %version-%release
+Obsoletes: ocaml-pcre-runtime < %version-%release
 
-Requires: %name-runtime = %version-%release
 BuildRequires: libpcre-devel ocaml ocaml-findlib ocaml-ocamlbuild ocaml-ocamldoc
 BuildRequires(pre): rpm-build-ubt
-
-%package runtime
-Summary: Perl compatibility regular expressions (PCRE) for OCaml
-Group: Development/ML
 
 %description
 This OCaml-library interfaces the PCRE (Perl-compatibility regular
 expressions) library which is written in C. it can be used for matching
 regular expressions which are written in "PERL"-style.
 
-%description runtime
-This OCaml-library interfaces the PCRE (Perl-compatibility regular
-expressions) library which is written in C. it can be used for matching
-regular expressions which are written in "PERL"-style.
+%package devel
+Summary: Development files for %name
+Group: Development/ML
+Requires: %name = %version-%release
+Requires: libpcre-devel
+
+%description devel
+The %name-devel package contains libraries and signature files for
+developing applications that use %name.
 
 %prep
 %setup
@@ -45,13 +47,26 @@ export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
 make install
 
 %files
-%doc INSTALL.txt CHANGES.txt COPYING.txt examples
+%doc COPYING.txt
 %_libdir/ocaml/pcre
+%exclude %_libdir/ocaml/pcre/*.a
+%exclude %_libdir/ocaml/pcre/*.cmxa
+%exclude %_libdir/ocaml/pcre/*.cmx
+%exclude %_libdir/ocaml/pcre/*.mli
+%_libdir/ocaml/stublibs/*.so
+%_libdir/ocaml/stublibs/*.so.owner
 
-%files runtime
-%_libdir/ocaml/stublibs/dll*.so
+%files devel
+%doc COPYING.txt README.md
+%_libdir/ocaml/pcre/*.a
+%_libdir/ocaml/pcre/*.cmxa
+%_libdir/ocaml/pcre/*.cmx
+%_libdir/ocaml/pcre/*.mli
 
 %changelog
+* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 7.2.3-alt2%ubt
+- split to devel and main package
+
 * Tue Apr 11 2017 Anton Farygin <rider@altlinux.ru> 7.2.3-alt1%ubt
 - new version
 
