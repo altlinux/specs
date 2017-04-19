@@ -1,7 +1,7 @@
 %define _name findlib
 Name: ocaml-%_name
 Version: 1.7.1
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: A module packaging tool for OCaml
 License: Distributable
@@ -15,8 +15,7 @@ Patch3: findlib-1.6.2-alt-install-doc.patch
 
 BuildRequires(pre): rpm-build-ubt
 
-# Automatically added by buildreq on Tue Apr 08 2008 (-bi)
-BuildRequires: rpm-build-ocaml ocaml-camlp4 ocaml-labltk >= 8.06.2 libtinfo-devel ocaml-ocamldoc
+BuildRequires: rpm-build-ocaml >= 1.2 ocaml-camlp4-devel ocaml-labltk >= 8.06.2 libtinfo-devel ocaml-ocamldoc
 BuildRequires: ocaml-ocamlbuild libX11-devel tcl-devel tk-devel
 
 %package -n ocaml-ocamlfind-mini
@@ -54,8 +53,17 @@ into an executable.
 The graphical 'findlib-make-wizard' tool to aid in creating
 findlib-enabled Makefiles.
 
+%package devel
+Summary: Development files for %name
+Requires: %name = %version-%release
+Group: Development/ML
+
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 %patch1 -p2
 %patch2 -p2
 
@@ -102,9 +110,24 @@ rm -f %buildroot%_libdir/ocaml/findlib/*.cmxs
 %_libdir/ocaml/*
 %_man1dir/ocamlfind.1*
 %_man5dir/*
-%doc doc/* LICENSE
+%exclude %_libdir/ocaml/findlib/*.a
+%exclude %_libdir/ocaml/findlib/*.cmxa
+%exclude %_libdir/ocaml/findlib/*.mli
+%exclude %_libdir/ocaml/findlib/Makefile.config
+%doc LICENSE
+
+%files devel
+%doc LICENSE doc/README doc/guide-html
+%_libdir/ocaml/findlib/*.a
+%_libdir/ocaml/findlib/*.cmxa
+%_libdir/ocaml/findlib/*.mli
+%_libdir/ocaml/findlib/Makefile.config
+
 
 %changelog
+* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 1.7.1-alt2%ubt
+- split to devel and runtime packages
+
 * Sun Apr 09 2017 Anton Farygin <rider@altlinux.ru> 1.7.1-alt1%ubt
 - renamed back to ocaml-findlib
 - added %%ubt tag
