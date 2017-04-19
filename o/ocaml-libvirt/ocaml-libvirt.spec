@@ -1,6 +1,6 @@
 Name: ocaml-libvirt
 Version: 0.6.1.4
-Release: alt2
+Release: alt2%ubt
 Summary: OCaml binding for libvirt
 Group: System/Libraries
 
@@ -26,6 +26,7 @@ Patch5: 0001-Remove-unused-not_supported-function.patch
 BuildRequires: ocaml >= 3.10.0
 BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-findlib
+BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: libvirt-devel >= 0.2.1
 BuildRequires: perl-devel
@@ -59,28 +60,32 @@ make opt
 %install
 # These rules work if the library uses 'ocamlfind install' to install itself.
 export DESTDIR=%buildroot
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml/site-lib
-mkdir -p $OCAMLFIND_DESTDIR $OCAMLFIND_DESTDIR/stublibs
+export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
+mkdir -p $OCAMLFIND_DESTDIR/stublibs
 make install-opt
 
 %files
 %doc COPYING.LIB README ChangeLog
-%_libdir/ocaml/site-lib/libvirt
-%exclude %_libdir/ocaml/site-lib/libvirt/*.a
-%exclude %_libdir/ocaml/site-lib/libvirt/*.cmxa
-%exclude %_libdir/ocaml/site-lib/libvirt/*.cmx
-%exclude %_libdir/ocaml/site-lib/libvirt/*.mli
-%_libdir/ocaml/site-lib/stublibs/*.so
-%_libdir/ocaml/site-lib/stublibs/*.so.owner
+%_libdir/ocaml/libvirt
+%exclude %_libdir/ocaml/libvirt/*.a
+%exclude %_libdir/ocaml/libvirt/*.cmxa
+%exclude %_libdir/ocaml/libvirt/*.cmx
+%exclude %_libdir/ocaml/libvirt/*.mli
+%_libdir/ocaml/stublibs/*.so
+%_libdir/ocaml/stublibs/*.so.owner
 
 %files devel
 %doc COPYING.LIB README TODO.libvirt ChangeLog html/*
-%_libdir/ocaml/site-lib/libvirt/*.a
-%_libdir/ocaml/site-lib/libvirt/*.cmxa
-%_libdir/ocaml/site-lib/libvirt/*.cmx
-%_libdir/ocaml/site-lib/libvirt/*.mli
+%_libdir/ocaml/libvirt/*.a
+%_libdir/ocaml/libvirt/*.cmxa
+%_libdir/ocaml/libvirt/*.cmx
+%_libdir/ocaml/libvirt/*.mli
 
 %changelog
+* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt2%ubt
+- rebuild with new rpm-build-ocaml
+- moved outsite from site-lib dir
+
 * Sun Apr 09 2017 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt2
 - rebuild with ocaml-4.04
 
