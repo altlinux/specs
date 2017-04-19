@@ -1,21 +1,20 @@
-Name: ocaml-zip
+%define pkgname zip
+Name: ocaml-%pkgname
 Version: 1.07
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: OCaml library for reading and writing zip, jar and gzip files
 
 Group: Development/ML
 License: LGPLv2.1+ with exceptions
 Url: https://github.com/xavierleroy/camlzip
 
-Provides:	ocaml4-zip
-Obsoletes:	ocaml4-zip
+Provides: ocaml4-zip
+Obsoletes: ocaml4-zip
 
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Wed Jul 16 2008
-BuildRequires: ocaml zlib-devel
-
-BuildRequires(pre): ocaml rpm-build-ubt
+BuildRequires: ocaml zlib-devel ocaml-findlib
+BuildRequires(pre): rpm-build-ubt
 
 %description
 This Objective Caml library provides easy access to compressed files
@@ -23,8 +22,17 @@ in ZIP and GZIP format, as well as to Java JAR files. It provides
 functions for reading from and writing to compressed files in these
 formats.
 
+%package devel
+Summary: Development files for %name
+Group: Development/ML
+Requires: %name = %version-%release
+
+%description devel
+The %name-devel package contains libraries and signature files for
+developing applications that use %name.
+
 %prep
-%setup -q
+%setup
 
 %build
 %make_build all
@@ -35,24 +43,41 @@ name = "%name"
 version = "%version"
 requires = "unix"
 description = "%description"
-requires = ""
 archive(byte) = "zip.cma"
 archive(native) = "zip.cmxa"
 EOF
 
 %install
-%define ocamlsitelib %_libdir/ocaml/site-lib
+mkdir -p %buildroot%_libdir/ocaml/%pkgname
+mkdir -p %buildroot%_libdir/ocaml/stublibs
 
-mkdir -p %buildroot%ocamlsitelib/zip
+export DESTDIR=%buildroot
+export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
 
-cp *.{mli,cmi,a,cma,so} %buildroot%_libdir/ocaml/site-lib/zip
-cp META %buildroot%_libdir/ocaml/site-lib/zip
+ocamlfind install %pkgname *.cma *.cmxa *.a *.cmx *.cmi *.mli dll*.so META
 
 %files
-%doc LICENSE
-%ocamlsitelib/zip
+%_libdir/ocaml/%pkgname
+%_libdir/ocaml/stublibs/*.so
+%_libdir/ocaml/stublibs/*.so.owner
+%exclude %_libdir/ocaml/%pkgname/*.a
+%exclude %_libdir/ocaml/%pkgname/*.cmxa
+%exclude %_libdir/ocaml/%pkgname/*.cmx
+%exclude %_libdir/ocaml/%pkgname/*.mli
+
+%files devel
+%_libdir/ocaml/%pkgname/*.a
+%_libdir/ocaml/%pkgname/*.cmxa
+%_libdir/ocaml/%pkgname/*.cmx
+%_libdir/ocaml/%pkgname/*.mli
 
 %changelog
+* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 1.07-alt2%ubt
+- rebuild with new rpm-build-ocaml
+- moved outsite from site-lib dir
+- split to runtime and devel packages
+- fixed double requires in META
+
 * Tue Mar 28 2017 Anton Farygin <rider@altlinux.ru> 1.07-alt1%ubt
 - new version
 
