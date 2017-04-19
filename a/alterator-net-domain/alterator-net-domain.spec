@@ -1,27 +1,25 @@
-%define _altdata_dir %_datadir/alterator
-
 Name:    alterator-net-domain
-Version: 0.6.3
+Version: 0.7.0
 Release: alt1
 Source:  %name-%version.tar
 
 Summary: Alterator module to provision system network domain
 License: GPL
 Group:   System/Configuration/Other
-Requires: alterator >= 4.7-alt5
+Requires: alterator >= 5.0
 Requires: alterator-l10n >= 2.0-alt2
 
 Conflicts: ldap-user-tools < 0.8.1
 Conflicts: alterator-lookout < 1.6-alt6
 Conflicts: alterator-fbi < 5.9-alt2
 
-BuildPreReq: alterator >= 4.7-alt5
-
-BuildArch: noarch
+BuildRequires: guile22-devel rpm-build >= 4.0.4-alt103
+BuildRequires: alterator >= 5.0 alterator-fbi >= 5.33-alt1
 
 %description
 Alterator module to provision system network domain.
-Supported domain type: BIND, ALT-domain and Active Directory.
+Supported domain type: BIND, ALT-domain, Active Directory
+and FreeIPA domain.
 
 %prep
 %setup -q
@@ -33,12 +31,17 @@ Supported domain type: BIND, ALT-domain and Active Directory.
 %makeinstall
 
 %files
-%_altdata_dir/applications/*
-%_altdata_dir/ui/*/
+%_alterator_datadir/applications/*
+%_alterator_datadir/ui/*/
+%_alterator_libdir/ui/*/
 %_alterator_backend3dir/*
 %dir %_libexecdir/alterator/hooks/net-domain.d
+%_bindir/*-sh-functions
 
 %changelog
+* Wed Apr 19 2017 Paul Wolneykien <manowar@altlinux.org> 0.7.0-alt1
+- Setup and configure a FreeIPA domain.
+
 * Thu Oct 13 2016 Andrey Cherepanov <cas@altlinux.org> 0.6.3-alt1
 - Set Active Directory domain in resolvconf and run hooks for it
 - [Active Directory] Set dns forwarders and password of Administrator
