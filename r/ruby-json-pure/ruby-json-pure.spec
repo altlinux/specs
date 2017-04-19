@@ -1,7 +1,7 @@
 %define  pkgname json-pure
  
 Name: 	 ruby-%pkgname
-Version: 2.0.4
+Version: 2.1.0
 Release: alt1
  
 Summary: This is a JSON implementation in pure Ruby
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Wed Apr 19 2017 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1
+- New version
+
 * Wed Apr 12 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.4-alt1
 - New version
 
