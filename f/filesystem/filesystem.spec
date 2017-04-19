@@ -1,5 +1,5 @@
 Name: filesystem
-Version: 2.3.14
+Version: 2.3.15
 Release: alt1
 
 Summary: The basic directory layout for a GNU/Linux system
@@ -18,6 +18,7 @@ Provides: /usr/share/wallpapers
 Provides: /usr/share/icons/hicolor
 # http://bugzilla.altlinux.org/12020
 Provides: /dev/pts
+Provides: /dev/shm
 
 Conflicts: shadow-utils < 4.4
 
@@ -59,6 +60,9 @@ done
 %files -f list
 
 %changelog
+* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 2.3.15-alt1
+- Added provides for /dev/shm.
+
 * Tue Mar 07 2017 Mikhail Efremov <sem@altlinux.org> 2.3.14-alt1
 - Added /etc/default.
 
