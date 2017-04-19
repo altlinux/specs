@@ -39,7 +39,7 @@
 
 Name: samba
 Version: 4.6.2
-Release: alt2%ubt
+Release: alt3%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -381,7 +381,10 @@ Requires: %name-libs = %version-%release
 Provides: samba4-winbind = %version-%release
 Obsoletes: samba4-winbind < %version-%release
 %if_with libwbclient
-Conflicts: libwbclient-sssd
+# There are working configurations exists where samba-winbind could be
+# using with sssd. Also it could be already installed from installation DVD.
+## Conflicts: libwbclient-sssd
+Requires: libwbclient
 %endif
 
 %description winbind
@@ -1393,6 +1396,9 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Wed Apr 19 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.2-alt3%ubt
+- Remove conflict winbind with libwbclient-sssd due upgrade problems
+
 * Wed Apr 12 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.2-alt2%ubt
 - Fix problem with failed to create kerberos keytab during join to domain
 
