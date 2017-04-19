@@ -1,6 +1,6 @@
 Name:    alterator-net-domain
 Version: 0.7.0
-Release: alt1
+Release: alt2
 Source:  %name-%version.tar
 
 Summary: Alterator module to provision system network domain
@@ -39,6 +39,9 @@ and FreeIPA domain.
 %_bindir/*-sh-functions
 
 %changelog
+* Wed Apr 19 2017 Paul Wolneykien <manowar@altlinux.org> 0.7.0-alt2
+- Do not explicitly depend on 'freeipa-server'.
+
 * Wed Apr 19 2017 Paul Wolneykien <manowar@altlinux.org> 0.7.0-alt1
 - Setup and configure a FreeIPA domain.
 
