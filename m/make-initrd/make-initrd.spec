@@ -1,8 +1,8 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.0.3
-Release: alt3
+Version: 2.0.4
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL3
@@ -198,6 +198,15 @@ fi
 %_datadir/%myname/features/ucode
 
 %changelog
+* Wed Apr 19 2017 Alexey Gladkov <legion@altlinux.ru> 2.0.4-alt1
+- initrd-cp:
+  + Remove existing destination file before copy
+- luks:
+  + Add access to console
+  + Add gpg encryption for keyfile
+- initrd:
+  + Do not mount /dev/pts (ALT#32068)
+
 * Tue Mar 28 2017 Alexey Gladkov <legion@altlinux.ru> 2.0.3-alt3
 - Change placement of initramfs helpers.
 
