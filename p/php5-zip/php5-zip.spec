@@ -2,7 +2,7 @@
 
 Name:	 	php5-%php5_extension
 Version:	%php5_version
-Release:	%php5_release
+Release:	%php5_release.1
 Summary:	ZIP functions
 Group:		System/Servers
 License:	PHP Licence
@@ -14,8 +14,7 @@ Prereq:		php5-libs >= %php5_version-%php5_release
 
 BuildRequires(pre): rpm-build-php5
 
-# Automatically added by buildreq on Mon Jun 26 2006
-BuildRequires: zziplib-devel
+BuildRequires: libzip-devel
 BuildRequires: php5-devel = %php5_version
 
 %description
@@ -24,20 +23,26 @@ This module enables you to transparently read ZIP compressed archives and the fi
 %prep
 %setup -T -c
 cp -pr %php5_extsrcdir/%php5_extension/* .
+# drop internal zip
+rm -rf lib
 
 %build
 phpize
 
 BUILD_HAVE=`echo %php5_extension | tr '[:lower:]-' '[:upper:]_'`
+export PHP_RPATH=no
 export LDFLAGS="-lphp-%_php5_version" ### Stupid PHP not understand LDLIBS
 %add_optflags -fPIC -L%_libdir
-%configure --with-%php5_extension
+%configure --with-%php5_extension --with-libzip=%_prefix
 %php5_make
 
 %install
 %php5_make_install
 install -D -m 644 %SOURCE1 %buildroot/%php5_extconf/%php5_extension/config
 install -D -m 644 %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
+
+%check
+echo n | make test
 
 %files
 %php5_extconf/%php5_extension
