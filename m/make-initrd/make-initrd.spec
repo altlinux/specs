@@ -2,7 +2,7 @@
 
 Name: make-initrd
 Version: 2.0.4
-Release: alt1
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL3
@@ -198,6 +198,9 @@ fi
 %_datadir/%myname/features/ucode
 
 %changelog
+* Wed Apr 19 2017 Alexey Gladkov <legion@altlinux.ru> 2.0.4-alt2
+- Fix permissions for /lib/uevent/filters/debug (ALT#33395)
+
 * Wed Apr 19 2017 Alexey Gladkov <legion@altlinux.ru> 2.0.4-alt1
 - initrd-cp:
   + Remove existing destination file before copy
