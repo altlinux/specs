@@ -1,6 +1,6 @@
 Name: make-initrd-propagator
 Version: 0.31
-Release: alt2
+Release: alt3
 
 Summary: Put propagator into make-initrd generated image
 License: GPL
@@ -37,6 +37,9 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Sun Apr 02 2017 Alexey Gladkov <legion@altlinux.ru> 0.31-alt3
+- Enforce use system sed.
+
 * Tue Mar 21 2017 Alexey Gladkov <legion@altlinux.ru> 0.31-alt2
 - Port to make-initrd >= 2.0.3
 
