@@ -1,6 +1,6 @@
 %define pkgname ocamlbuild
 Name: ocaml-%pkgname
-Version: 0.10.1
+Version: 0.11.0
 Release: alt1%ubt
 Epoch: 1
 
@@ -11,9 +11,7 @@ Url: https://github.com/ocaml/ocamlbuild
 
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Sun Jun 19 2016
-# optimized out: ocaml-runtime python-base python-modules python3
-BuildRequires: ocaml python-module-google python3-base
+BuildRequires: ocaml >= 4.04
 BuildRequires(pre):rpm-build-ubt
 
 %description
@@ -23,30 +21,55 @@ object-oriented programming language from the ML family of languages.
 This package provides ocamlbuild, a tool automating the compilation
 of OCaml projects.
 
+%package devel
+Summary: Development files for %name
+Requires: %name = %version-%release
+Group: Development/ML
+
+%description devel
+This package contains development files for %name.
+
 %prep
-%setup -q
+%setup
 
 %build
-
 %add_optflags -DUSE_NON_CONST -D_FILE_OFFSET_BITS=64
 
 env OCAML_NATIVE=true make configure
-make 
+make
 
 %install
-
 make install DESTDIR=%buildroot BINDIR=%_bindir LIBDIR=%_libdir/ocaml
 
 # Remove the META file.  It will be replaced by ocaml-ocamlfind (findlib).
-rm %buildroot%_libdir/ocaml/ocamlbuild/META
+rm %buildroot%_libdir/ocaml/%pkgname/META
 
 %files
-%_bindir/*
-%dir %_libdir/ocaml/ocamlbuild
-%_libdir/ocaml/ocamlbuild/*
-%_man1dir/ocamlbuild*
+%doc Changes Readme.md LICENSE
+%_bindir/ocamlbuild
+%_bindir/ocamlbuild.byte
+%_bindir/ocamlbuild.native
+%_mandir/man1/ocamlbuild.1*
+%_libdir/ocaml/ocamlbuild
+%exclude %_libdir/ocaml/ocamlbuild/*.a
+%exclude %_libdir/ocaml/ocamlbuild/*.o
+%exclude %_libdir/ocaml/ocamlbuild/*.cmx
+%exclude %_libdir/ocaml/ocamlbuild/*.cmxa
+%exclude %_libdir/ocaml/ocamlbuild/*.mli
+
+%files devel
+%doc LICENSE
+%_libdir/ocaml/ocamlbuild/*.a
+%_libdir/ocaml/ocamlbuild/*.o
+%_libdir/ocaml/ocamlbuild/*.cmx
+%_libdir/ocaml/ocamlbuild/*.cmxa
+%_libdir/ocaml/ocamlbuild/*.mli
 
 %changelog
+* Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 1:0.11.0-alt1%ubt
+- updated to 0.11.0
+- split to runtime and devel packages
+
 * Thu Feb 16 2017 Anton Farygin <rider@altlinux.ru> 1:0.10.1-alt1%ubt
 - updated to 0.10.1
 
