@@ -1,15 +1,16 @@
 %def_enable printing
 %def_enable backup
+%define ver_micro -1
 
 Name: osmo
 Version: 0.4.0
-Release: alt1
+Release: alt2
 
 Summary: Personal organizer
 License: GPLv2+
 Group: Office
 Url: http://clayo.org/osmo/
-Source: http://downloads.sourceforge.net/%name-pim/%name-%version.tar.gz
+Source: http://downloads.sourceforge.net/%name-pim/%name-%version%ver_micro.tar.gz
 
 %define gtk_ver 3.10
 
@@ -26,7 +27,7 @@ all operations using keyboard. Also, a lot of parameters are configurable to
 meet user preferences.
 
 %prep
-%setup
+%setup -n %name-%version%ver_micro
 
 %build
 %autoreconf
@@ -51,6 +52,9 @@ meet user preferences.
 %doc AUTHORS ChangeLog README TRANSLATORS
 
 %changelog
+* Thu Apr 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt2
+- updated to 0.4.0-1
+
 * Sun Apr 16 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
