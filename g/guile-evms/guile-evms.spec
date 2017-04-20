@@ -1,6 +1,6 @@
 Name: guile-evms
 Version: 0.5
-Release: alt1
+Release: alt2
 
 Summary: Guile bindings for EVMS
 License: GPL
@@ -26,15 +26,14 @@ make
 %install
 make install DESTDIR=%buildroot
 
-%brp_strip_none %guile_godir/evms.go
-%add_verify_elf_skiplist %guile_godir/evms.go
-%add_findreq_skiplist %guile_godir/evms.go
-
 %files
 %guile_sodir/libguile-evms.so
 %guile_godir/evms.go
 
 %changelog
+* Thu Apr 20 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5-alt2
+- fix empty option value typemap
+
 * Wed Mar 29 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5-alt1
 - rebuilt with guile-2.2
 
