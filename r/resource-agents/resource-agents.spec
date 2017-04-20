@@ -4,7 +4,7 @@
 Name: resource-agents
 Summary: Open Source HA Reusable Cluster Resource Scripts
 Version: 3.9.7
-Release: alt2
+Release: alt3%ubt
 License: GPLv2+ and LGPLv2+
 Url: https://github.com/ClusterLabs/resource-agents
 Group: System/Base
@@ -15,6 +15,7 @@ Obsoletes: heartbeat < 2.1.4
 Conflicts: heartbeat < 2.1.4
 
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: python-devel xsltproc libxslt-devel glib2-devel which docbook-style-xsl docbook-dtds libnet2-devel 
 %{?_with_cluster_glue:BuildRequires: libcluster-glue-devel}
 BuildRequires: perl-podlators perl-Socket6 perl-libwww perl-IO-Socket-INET6 perl-Net-Ping perl-MailTools
@@ -357,6 +358,9 @@ mkdir -p %buildroot%_var/run/resource-agents
 %_mandir/man8/ldirectord.8*
 
 %changelog
+* Thu Apr 20 2017 Sergey Novikov <sotor@altlinux.org> 3.9.7-alt3%ubt
+- fix CTDB start function, add ubt tag (closes: #33353)
+
 * Fri Sep 23 2016 Alexey Shabalin <shaba@altlinux.ru> 3.9.7-alt2
 - update add_findreq_skiplist
 
