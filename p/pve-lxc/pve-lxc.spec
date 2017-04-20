@@ -2,7 +2,7 @@
 
 Name: pve-%rname
 Version: 2.0.7
-Release: alt4
+Release: alt4.1
 Summary: Linux containers usersapce tools
 Group: System/Configuration/Other
 License: LGPL
@@ -70,6 +70,8 @@ an applications or a system.
     --enable-seccomp \
     --localstatedir=%_var
 
+echo "#define MAJOR_IN_SYSMACROS 1" >> src/config.h
+
 %make_build
 
 %install
@@ -77,10 +79,15 @@ an applications or a system.
 
 rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 
+cat << __EOF__ > %buildroot%_sysconfdir/%rname/%rname.conf
+lxc.cgroup.use = @all
+__EOF__
+
 %files
 %config(noreplace) %_sysconfdir/sysconfig/%rname
 %dir %_sysconfdir/%rname
 %config(noreplace) %_sysconfdir/%rname/default.conf
+%config(noreplace) %_sysconfdir/%rname/%rname.conf
 #_sysconfdir/bash_completion.d/%rname
 %systemd_unitdir/*.service
 %_bindir/%rname-*
@@ -94,6 +101,12 @@ rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 %_man7dir/*.7*
 
 %changelog
+* Thu Apr 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.7-alt4.1
+- fixed starting unprivileged container
+
+* Mon Apr 03 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.7-alt0.M80P.4
+- backport to p8 branch
+
 * Mon Apr 03 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.7-alt4
 - 2.0.7-4
 
