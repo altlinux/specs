@@ -9,7 +9,7 @@
 %def_enable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: Library for the GData protocol
@@ -23,12 +23,13 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
+%define glib_ver 2.38
 %define soup_ver 2.42
 %define goa_ver 3.8
 %define uhttpmock_ver 0.5.0
 
 BuildRequires: autoconf-archive gtk-doc intltool
-BuildRequires: libgdk-pixbuf-devel libgtk+3-devel liboauth-devel
+BuildRequires: glib2-devel >= %glib_ver libgdk-pixbuf-devel libgtk+3-devel liboauth-devel
 BuildRequires: libjson-glib-devel libuhttpmock-devel >= %uhttpmock_ver
 BuildRequires: gobject-introspection-devel libjson-glib-gir-devel libuhttpmock-gir-devel
 %{?_enable_vala:BuildRequires: vala-tools}
@@ -123,6 +124,9 @@ GObject introspection devel data for the GData library.
 %_girdir/GData-%api_ver.gir
 
 %changelog
+* Thu Apr 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.17.8-alt1
+- 0.17.8
+
 * Mon Mar 06 2017 Yuri N. Sedunov <aris@altlinux.org> 0.17.7-alt1
 - 0.17.7
 
