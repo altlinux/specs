@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 2.90.4
+Version: 2.91.0
 Release: alt1%ubt
 
 Source:%name-%version.tar
@@ -35,6 +35,7 @@ Obsoletes: alterator-look-qt
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: libalternatives-devel
+BuildRequires: libudev-devel
 BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools
 
 %description
@@ -78,6 +79,9 @@ __EOF__
 
 
 %changelog
+* Thu Apr 20 2017 Sergey V Turchin <zerg at altlinux dot org> 2.91.0-alt1%ubt
+- add virtual keyboard support
+
 * Mon Apr 17 2017 Sergey V Turchin <zerg at altlinux dot org> 2.90.4-alt1%ubt
 - simplify timer usage
 
