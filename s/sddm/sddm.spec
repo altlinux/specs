@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.14.0
-Release: alt11%ubt
+Release: alt12%ubt
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -40,6 +40,8 @@ Patch106: alt-flicker-free-plymouth.patch
 Patch107: alt-def-breeze.patch
 Patch108: alt-show-avatars.patch
 Patch109: alt-expired-password-handling.patch
+Patch110: alt-sddm-etc.locale.conf.patch
+Patch111: alt-sddm-ignore-locales.patch
 Patch200: alt-fix-unable-handle-request.patch
 
 # Automatically added by buildreq on Thu Apr 02 2015 (-bi)
@@ -71,6 +73,8 @@ ability to create smooth, animated user interfaces.
 %patch107 -p1
 %patch108 -p1
 %patch109 -p1
+%patch110 -p1
+%patch111 -p1
 
 %patch200 -p1
 
@@ -139,6 +143,10 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Thu Apr 20 2017 Oleg Solovyov <mcpain@altlinux.org> 0.14.0-alt12%ubt
+- /etc/sysconfig/i18n is now used instead /etc/locale.conf if latter is missing
+- ru and en locales are supported locales only, others are being ignored
+
 * Mon Apr 17 2017 Oleg Solovyov <mcpain@altlinux.org> 0.14.0-alt11%ubt
 - Added i18n support for PAM submodules (ru only)
 
