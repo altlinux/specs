@@ -1,6 +1,6 @@
 Name: guile-evms
 Version: 0.5
-Release: alt2
+Release: alt3
 
 Summary: Guile bindings for EVMS
 License: GPL
@@ -31,6 +31,9 @@ make install DESTDIR=%buildroot
 %guile_godir/evms.go
 
 %changelog
+* Thu Apr 20 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5-alt3
+- sporadic fix for random crashes, hopefully (closes: #33401)
+
 * Thu Apr 20 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5-alt2
 - fix empty option value typemap
 
