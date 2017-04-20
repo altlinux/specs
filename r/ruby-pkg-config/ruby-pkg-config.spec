@@ -1,7 +1,7 @@
 %define  pkgname pkg-config
  
 Name: 	 ruby-%pkgname
-Version: 1.1.7 
+Version: 1.1.8
 Release: alt1
  
 Summary: pkg-config implemented by pure Ruby
@@ -17,6 +17,8 @@ Source:  %pkgname-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
  
+%filter_from_requires \,^ruby(dl/import),d
+
 %description
 A pkg-config implementation by Ruby.
 
@@ -54,6 +56,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Thu Apr 20 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.8-alt1
+- New version
+
 * Mon Sep 26 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.7-alt1
 - New version
 
