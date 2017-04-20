@@ -16,7 +16,7 @@
 
 Name: libuniset2
 Version: 2.6
-Release: alt12.1
+Release: alt14
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -508,6 +508,10 @@ rm -f %buildroot%_libdir/*.la
 # history of current unpublished changes
 
 %changelog
+* Thu Apr 20 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt14
+- IOBase: added support 'precision < 0'
+- LogicProcessor: add "A2D" element (analog to discrete)
+
 * Thu Apr 20 2017 Alexei Takaseev <taf@altlinux.org> 2.6-alt12.1
 - Rebuild with poco 1.7.8p2
 
