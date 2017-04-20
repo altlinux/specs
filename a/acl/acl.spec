@@ -1,5 +1,5 @@
 Name: acl
-Version: 2.2.52.0.50.ea3c
+Version: 2.2.52.0.52.33f0
 Release: alt1
 
 Summary: ACL manipulation utilities
@@ -76,11 +76,7 @@ mv %buildroot%_bindir/chacl %buildroot/bin/
 %find_lang %name
 
 %check
-if ./tools/setfacl -m u:`id -u`:rwx .; then
-	make tests
-else
-	echo 'ACLs are probably not supported by the file system'
-fi
+%make_build -k check
 
 %files -f %name.lang
 /bin/*
@@ -104,6 +100,10 @@ fi
 %endif
 
 %changelog
+* Thu Apr 20 2017 Dmitry V. Levin <ldv@altlinux.org> 2.2.52.0.52.33f0-alt1
+- v2.2.52-50-gea3c6bb -> v2.2.52-52-g33f01b5.
+- Fixed acl_from_text returning NULL on all input (closes: #32603).
+
 * Mon Jul 04 2016 Dmitry V. Levin <ldv@altlinux.org> 2.2.52.0.50.ea3c-alt1
 - v2.2.52-29-g519e393 -> v2.2.52-50-gea3c6bb.
 
