@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 4.4.1
-Release: alt9
+Release: alt10
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -49,6 +49,7 @@ This package contains the PVE management tools
 Summary: PVE Container management tool
 Version: 1.0.88
 Group: Development/Perl
+PreReq: shadow-submap
 Requires: pve-lxc dtach perl-Crypt-Eksblowfish >= 0.009-alt5_15
 
 %description -n pve-container
@@ -146,6 +147,10 @@ __EOF__
 %preun_service pveproxy
 %preun_service pvestatd
 %preun_service spiceproxy
+
+%post -n pve-container
+%_sbindir/usermod --add-subgids 100000-165535 root ||:
+%_sbindir/usermod --add-subuids 100000-165535 root ||:
 
 %post -n pve-firewall
 %post_service pve-firewall
@@ -365,6 +370,9 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Thu Apr 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt10
+- fixed create/start unprivileged container
+
 * Tue Apr 18 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt9
 - fixed creation of containers by the user
 
