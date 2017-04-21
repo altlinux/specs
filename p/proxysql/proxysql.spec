@@ -2,7 +2,7 @@
 
 Summary: A high-performance MySQL proxy
 Name: proxysql
-Version: 1.3.4
+Version: 1.3.5
 Release: alt1
 License: GPLv3+
 Group: Databases
@@ -84,5 +84,8 @@ install -m 0775 %SOURCE14 %buildroot%_bindir/proxysql_node_monitor
 #%attr(3770,root,%user) %dir %_logdir/%name
 
 %changelog
+* Fri Apr 21 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt1
+- 1.3.5
+
 * Thu Mar 02 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.4-alt1
 - Initial build
