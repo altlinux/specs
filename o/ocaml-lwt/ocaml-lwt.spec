@@ -2,7 +2,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-lwt
 Version: 2.5.2
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: OCaml lightweight thread library
 
 Group: Development/ML
@@ -11,7 +11,7 @@ Url: http://ocsigen.org/lwt/
 # https://github.com/ocsigen/lwt
 Source: %name-%version.tar
 
-BuildRequires: ocaml-findlib ocaml-ocamlbuild ocaml-ocamldoc termutils ocaml-ssl ocaml-camlp4 ocaml-react glib2-devel libev-devel chrpath
+BuildRequires: ocaml-findlib ocaml-ocamlbuild ocaml-ocamldoc termutils ocaml-ssl ocaml-camlp4-devel ocaml-react glib2-devel libev-devel chrpath
 BuildRequires(pre): rpm-build-ubt
 Requires: rpm-build-ocaml >= 1.1
 BuildPreReq: rpm-build-ocaml >= 1.1
@@ -50,6 +50,9 @@ chrpath -d %buildroot%_libdir/ocaml/lwt/dlllwt-unix_stubs.so
 %_libdir/ocaml/lwt
 
 %changelog
+* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 2.5.2-alt2%ubt
+- rebuild in new environment
+
 * Mon Apr 10 2017 Anton Farygin <rider@altlinux.ru> 2.5.2-alt1%ubt
 - new version from upstream git
 
