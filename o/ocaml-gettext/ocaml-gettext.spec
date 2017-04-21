@@ -1,6 +1,6 @@
 Name: ocaml-gettext
 Version: 0.3.7
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: OCaml library for i18n
 Group: Development/ML
 
@@ -18,7 +18,7 @@ Patch2: ocaml-gettext-0.3.5-disable-warning-31.patch
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamldoc
-BuildRequires: ocaml-camlp4
+BuildRequires: ocaml-camlp4-devel
 BuildRequires: ocaml-fileutils-devel >= 0.4.4
 BuildRequires: docbook-style-xsl
 BuildRequires: xsltproc
@@ -117,6 +117,9 @@ chrpath --delete $OCAMLFIND_DESTDIR/stublibs/dll*.so
 %_bindir/ocaml-xgettext
 
 %changelog
+* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 0.3.7-alt2%ubt
+- fixed build in new environment
+
 * Tue Apr 18 2017 Anton Farygin <rider@altlinux.ru> 0.3.7-alt1%ubt
 - rebuild with new rpm-build-ocaml
 - moved outsite from site-lib dir
