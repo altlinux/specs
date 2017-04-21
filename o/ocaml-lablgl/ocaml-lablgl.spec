@@ -1,37 +1,39 @@
 Name: ocaml-lablgl
-Version: 1.04
-Release: alt2
+Version: 1.05
+Release: alt1%ubt
 Summary: OpenGL library for OCaml
 License: BSD-style
 Group: Development/ML
-Url:  https://forge.ocamlcore.org/projects/lablgl/
+Url: https://forge.ocamlcore.org/projects/lablgl/
 # git https://forge.ocamlcore.org/anonscm/git/lablgl/lablgl.git
 Source: %name-%version.tar
 Patch1: lablgl-1.03-alt-togl.patch
 
-Requires: %name-runtime = %version-%release
+Provides: %name-runtime = %version-%release
+Obsoletes: %name-runtime < %version-%release
 Provides: lablGL = %version-%release
+BuildRequires(pre):rpm-build-ubt
 Obsoletes: lablGL
 
-# Automatically added by buildreq on Thu Jul 07 2011
-# optimized out: fontconfig labltk-runtime libGL-devel libGLU-devel libX11-devel ocaml ocaml-runtime tcl-devel tcl-togl tk-devel xorg-xproto-devel
-BuildRequires: ocaml-camlp4 ocaml-labltk libXext-devel libXmu-devel libfreeglut-devel tcl-togl-devel
+BuildRequires: ocaml-camlp4-devel ocaml-labltk libXext-devel libXmu-devel libfreeglut-devel tcl-togl-devel
 BuildRequires: libXxf86vm-devel
 BuildRequires(pre): rpm-build-tcl
-
-%package runtime
-Summary: runtime part of LablGL library
-Group: Development/ML
 
 %description
 LablGL is an OpenGL interface for Objective Caml.  It includes two
 interfaces: the Togl widget, for comfortable use with LablTk, and
 LablGlut for standalone applications not using Tcl/Tk.
 
-%description runtime
-LablGL is an OpenGL interface for Objective Caml.  It includes two
-interfaces: the Togl widget, for comfortable use with LablTk, and
-LablGlut for standalone applications not using Tcl/Tk.
+
+%package devel
+Summary: Development files for %name
+Requires: %name = %version-%release
+Requires: ocaml-labltk
+Group: Development/ML
+
+%description devel
+The %name-devel package contains libraries and signature files for
+developing applications that use %name.
 
 %prep
 %setup
@@ -40,36 +42,36 @@ rm -r Togl/src/Togl/
 cat > Makefile.config <<EOF
 CAMLC = ocamlc.opt
 CAMLOPT = ocamlopt.opt
-BINDIR = %{_bindir}
+BINDIR = %_bindir
 XINCLUDES =
 XLIBS = -lXext -lXmu -lX11
-TKINCLUDES = -I%{_includedir}
+TKINCLUDES = -I%_includedir
 GLINCLUDES =
 GLLIBS = -lGL -lGLU
 GLUTLIBS = -lglut -lXxf86vm
 RANLIB = :
-LIBDIR = %{_libdir}/ocaml
-DLLDIR = %{_libdir}/ocaml/stublibs
-INSTALLDIR = %{_libdir}/ocaml/site-lib/lablGL
+LIBDIR = %_libdir/ocaml
+DLLDIR = %_libdir/ocaml/stublibs
+INSTALLDIR = %_libdir/ocaml/lablGL
 TOGLDIR=Togl
 COPTS = $RPM_OPT_FLAGS
 EOF
 
 %build
-make all opt INSTALLDIR=%_libdir/ocaml/site-lib/lablGL \
+make all opt INSTALLDIR=%_libdir/ocaml/lablGL \
 	TCLLIBDIR=%_tcllibdir TOGLVERSION=%{get_version tcl-togl}
 
 %install
 mkdir -p %buildroot%_libdir/ocaml/stublibs
 mkdir -p %buildroot%_bindir
 %make_install install \
-	INSTALLDIR=%buildroot%_libdir/ocaml/site-lib/lablGL \
+	INSTALLDIR=%buildroot%_libdir/ocaml/lablGL \
 	DLLDIR=%buildroot%_libdir/ocaml/stublibs \
 	BINDIR=%buildroot%_bindir
 
 # Make and install a META file.
 cat <<EOM >META
-version="%{version}"
+version="%version"
 directory="+lablgl"
 archive(byte) = "lablgl.cma"
 archive(native) = "lablgl.cmxa"
@@ -86,25 +88,31 @@ package "glut" (
   archive(native) = "lablglut.cmxa"
 )
 EOM
-install -p -m644 META %buildroot%_libdir/ocaml/site-lib/lablGL/META
+install -p -m644 META %buildroot%_libdir/ocaml/lablGL/META
 
 %files
 %doc CHANGES COPYRIGHT README Togl/examples/ LablGlut/examples/
-%dir %_libdir/ocaml/site-lib/lablGL
-%_libdir/ocaml/site-lib/lablGL/META
-%_libdir/ocaml/site-lib/lablGL/*.mli
-%_libdir/ocaml/site-lib/lablGL/*.cmi
-%_libdir/ocaml/site-lib/lablGL/*.cma
-%_libdir/ocaml/site-lib/lablGL/*.cmxa
-%_libdir/ocaml/site-lib/lablGL/*.a
-%exclude %_libdir/ocaml/site-lib/lablGL/*.ml
-%exclude %_libdir/ocaml/site-lib/lablGL/*.cmx
-%_bindir/lablgl*
+%dir %_libdir/ocaml/lablGL
+%_libdir/ocaml/lablGL/*.cma
+%_libdir/ocaml/lablGL/*.cmi
+%_libdir/ocaml/stublibs/*.so
+%_bindir/lablgl
+%_bindir/lablglut
 
-%files runtime
-%_libdir/ocaml/stublibs/dll*.so
+%files devel
+%doc CHANGES COPYRIGHT README LablGlut/examples Togl/examples
+%_libdir/ocaml/lablGL/META
+%_libdir/ocaml/lablGL/*.mli
+%_libdir/ocaml/lablGL/*.cmxa
+%_libdir/ocaml/lablGL/*.cmx
+%_libdir/ocaml/lablGL/*.a
+%_libdir/ocaml/lablGL/build.ml
 
 %changelog
+* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 1.05-alt1%ubt
+- new version
+- split to devel and main packages
+
 * Thu Apr 06 2017 Anton Farygin <rider@altlinux.ru> 1.04-alt2
 - renamed to ocaml-lablgl
 - build from upstream git
@@ -159,17 +167,14 @@ install -p -m644 META %buildroot%_libdir/ocaml/site-lib/lablGL/META
 * Wed Mar 17 2004 Vitaly Lugovsky <vsl@altlinux.ru> 1.00-alt5
 - rebuild
 
-
 * Wed Feb 18 2004 Vitaly Lugovsky <vsl@altlinux.ru> 1.00-alt4
 - rebuild
-
 
 * Tue Jan 27 2004 Vitaly Lugovsky <vsl@altlinux.ru> 1.00-alt3
 rebuild
 
 * Wed Nov 12 2003 Vitaly Lugovsky <vsl@altlinux.ru> 1.00-alt2
 relaxed elf verifying
-
 
 * Fri Oct 10 2003 Vitaly Lugovsky <vsl@altlinux.ru> 1.00-alt1
 - a new version.
@@ -201,7 +206,6 @@ relaxed elf verifying
 
 *Tue May 14 2002 Vitaly Lugovsky <vsl@altlinux.ru> 4.97-alt8
 - Rebuild with 3.04_10, no more post and preun scripts
-
 
 *Tue Apr 16 2002 Vitaly Lugovsky <vsl@altlinux.ru> 0.97-alt7
 - Rebuild with ocaml-3.04+9
