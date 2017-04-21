@@ -1,7 +1,5 @@
-%define _altdata_dir %_datadir/alterator
-
 Name: alterator-vm
-Version: 0.4.4
+Version: 0.4.5
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -10,12 +8,11 @@ Group: System/Configuration/Other
 
 Source0: %name.tar
 
-BuildArch: noarch
-BuildRequires: alterator >= 4.10-alt6
+BuildRequires: alterator >= 5.0 guile22-devel guile-evms >= 0.5
 
 Requires: alterator >= 4.10-alt6
 Requires: alterator-l10n >= 2.2-alt1
-Requires: guile-evms >= 0.3-alt10
+Requires: guile-evms >= 0.5-alt1
 Conflicts: alterator-lookout < 1.5-alt1
 
 %description
@@ -32,16 +29,18 @@ make
 install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 
 %files
-%_altdata_dir/applications/vm.desktop
-%_altdata_dir/steps/vm.desktop
-%_altdata_dir/images/vm
-%_altdata_dir/ui/vm
-%_altdata_dir/interfaces/guile/vm
-%_altdata_dir/interfaces/guile/backend/*
-%exclude %_altdata_dir/ui/vm/dummystr.scm
+%_alterator_datadir/applications/vm.desktop
+%_alterator_datadir/steps/vm.desktop
+%_alterator_datadir/images/vm
+%_alterator_datadir/ui/vm
+%_alterator_libdir/interfaces/guile/vm
+%_alterator_libdir/interfaces/guile/backend/*
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Wed Apr 19 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.5-alt1
+- rebuilt with alterator 5.0
+
 * Thu Nov 28 2013 Michael Shigorin <mike@altlinux.org> 0.4.4-alt1
 - drop vista horror messages (but not expand and shrink!)
 
