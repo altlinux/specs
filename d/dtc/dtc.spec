@@ -1,7 +1,7 @@
 %def_without docs
 
 Name: dtc
-Version: 1.4.1
+Version: 1.4.4
 Release: alt1
 
 Summary: Device Tree Compiler for Flat Device Trees
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Fri Apr 21 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.4-alt1
+- 1.4.4
+
 * Fri Feb 06 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.1-alt1
 - 1.4.1 released
 
