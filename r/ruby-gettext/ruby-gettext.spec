@@ -1,13 +1,11 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-
-Name: ruby-gettext
-Version: 2.1.0
-Release: alt2.qa1.2
+Name:    ruby-gettext
+Version: 3.2.2
+Release: alt1
 
 Summary: Native Language Support Library for Ruby
-Group: Development/Ruby
-License: LGPL
-Url: http://rubyforge.org/projects/gettext/
+Group:   Development/Ruby
+License: Ruby or LGPLv3+
+Url: http://ruby-gettext.github.io/
 
 BuildArch: noarch
 
@@ -16,12 +14,13 @@ Obsoletes: %name-erb
 Provides: %name-cgi = %version-%release
 Provides: %name-erb = %version-%release
 
-# Automatically added by buildreq on Wed May 06 2009 (-bi)
 BuildRequires: rpm-build-ruby ruby-locale ruby-racc-runtime ruby-rake ruby-tool-rdoc ruby-tool-setup
 BuildRequires: ruby-test-unit
 
-Source: %name-package-%version.tar
-Patch: %name-%version-%release.patch
+Requires: ruby-text
+
+Source: gettext-%version.tar
+Patch1: alt-gemspec.patch
 
 %description
 Ruby GetText Package is Native Language Support Library and Tools
@@ -47,20 +46,20 @@ Group: Documentation
 %description doc
 Documentation files for %name
 
-
 %prep
-%setup -n %name-package-%version
-%patch -p1 
+%setup
+%patch1 -p1
 %update_setup_rb
-
 
 %build
 %ruby_config
 %ruby_build
 
-
 %install
 %ruby_install
+# Install gemspec
+export rbVersion=`ruby -e "puts RbConfig::CONFIG[\"ruby_version\"]"`
+install -Dm 0644 gettext.gemspec %buildroot%ruby_libdir/gems/$rbVersion/specifications/gettext.gemspec
 %rdoc lib/
 
 %find_lang rgettext
@@ -71,6 +70,12 @@ find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -d
 # failsafe cleanup if the file is declared as %%doc
 find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 
+# Remove unnecessary files
+rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,Object/identify_comment-i.ri,cache.ri,created.rid}
+
+# Install additional documentation
+install -d %buildroot%_defaultdocdir/%name-doc-%version
+cp -a samples ChangeLog* %buildroot%_defaultdocdir/%name-doc-%version
 
 %check
 %if %(rpmvercmp %version 2.0) < 0
@@ -79,32 +84,28 @@ cd test
 find . -name 'test_*.rb' -print0 | xargs -r0 -n 1 %ruby_test_unit -I../lib -I./
 %endif
 
-
 %files
+%doc README.md
 %ruby_sitelibdir/*
-%exclude %ruby_sitelibdir/gettext/parser
 %exclude %ruby_sitelibdir/gettext/tools
 %exclude %ruby_sitelibdir/gettext/tools.rb
-%exclude %ruby_sitelibdir/gettext/utils.rb
-%doc README.rdoc
-
+%ruby_libdir/gems/*/specifications/*.gemspec
 
 %files -f rgettext.lang utils
-%_bindir/rgettext
-%_bindir/rmsgfmt
-%_bindir/rmsgmerge
-%ruby_sitelibdir/gettext/parser
+%_bindir/*
 %ruby_sitelibdir/gettext/tools
 %ruby_sitelibdir/gettext/tools.rb
-%ruby_sitelibdir/gettext/utils.rb
-
 
 %files doc
 %doc samples ChangeLog*
 %ruby_ri_sitedir/GetText*
 
-
 %changelog
+* Fri May 19 2017 Andrey Cherepanov <cas@altlinux.org> 3.2.2-alt1
+- New version
+- Fix project homepage, license and cleanup spec
+- Package as gem
+
 * Fri Mar 14 2014 Led <led@altlinux.ru> 2.1.0-alt2.qa1.2
 - fixed build without system iconv module
 - remove using deprecated 'all_load_paths'

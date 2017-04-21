@@ -1,7 +1,7 @@
 %define confdir ext/redhat
 
 Name:    puppet
-Version: 4.8.2
+Version: 4.10.1
 Release: alt1
 
 Summary: A network tool for managing many disparate systems
@@ -64,6 +64,7 @@ subst 's/require /#require /' \
 
 rm -rf \
        ext/windows \
+       ext/puppet-test \
        lib/puppet/feature/cfacter.rb \
        lib/puppet/util/rdoc \
        lib/puppet/util/windows \
@@ -82,6 +83,7 @@ rm -r lib/puppet/vendor/*{pathspec,rgen,deep_merge}*
 	     --destdir=%buildroot \
 	     --configdir=/etc/puppet \
 	     --codedir=/etc/puppet/code \
+	     --localedir=%_datadir/puppet/locale \
 	     --vardir=%_localstatedir/puppet \
 	     --rundir=%_runtimedir/puppet \
 	     --logdir=%_logdir/puppet \
@@ -191,6 +193,15 @@ install -d %buildroot%_localstatedir/puppet/ssl/private_keys
 %config(noreplace) %_sysconfdir/sysconfig/puppetmaster
 
 %changelog
+* Sun May 21 2017 Andrey Cherepanov <cas@altlinux.org> 4.10.1-alt1
+- New version
+
+* Mon Apr 10 2017 Andrey Cherepanov <cas@altlinux.org> 4.10.0-alt1
+- New version
+
+* Wed Feb 01 2017 Andrey Cherepanov <cas@altlinux.org> 4.9.0-alt1
+- new version 4.9.0
+
 * Fri Jan 27 2017 Andrey Cherepanov <cas@altlinux.org> 4.8.2-alt1
 - new version 4.8.2
 
