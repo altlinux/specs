@@ -6,13 +6,13 @@ License: BSD
 Group: Development/ML
 Summary: Development files for %name-runtime
 Version: 0.8
-Release: alt1%ubt
+Release: alt2%ubt
 Url: https://github.com/vbmithr/ocaml-text
 Source: %name-%version.tar
 Patch0: ocaml-text-alt-fix-rpath.patch
 Requires: %name-runtime = %version-%release
 
-BuildRequires: ocaml ocaml-ocamldoc ocaml-ocamlbuild ocaml-findlib ocaml-camlp4
+BuildRequires: ocaml ocaml-ocamldoc ocaml-ocamlbuild ocaml-findlib ocaml-camlp4-devel
 BuildRequires: ocaml-pcre libncurses-devel
 BuildRequires(pre): rpm-build-ubt
 
@@ -77,6 +77,9 @@ mkdir -p %buildroot%_libdir/ocaml/stublibs
 %_libdir/ocaml/text/*.mli
 
 %changelog
+* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 0.8-alt2%ubt
+- rebuild in new environment
+
 * Wed Apr 12 2017 Anton Farygin <rider@altlinux.ru> 0.8-alt1%ubt
 - updated to 0.8
 
