@@ -1,6 +1,6 @@
 Name: xfsdump
-Version: 3.1.0
-Release: alt1
+Version: 3.1.6
+Release: alt2
 
 Summary: Administrative utilities for the XFS filesystem
 License: GPL
@@ -36,6 +36,8 @@ subtrees may be restored from full or partial backups.
 %setup
 
 %build
+# http://bugs.debian.org/837581
+%add_optflags -D_FILE_OFFSET_BITS=64
 %make configure
 %configure
 %make_build
@@ -52,6 +54,15 @@ rm -rf %buildroot%_datadir/doc/%name
 %_mandir/*/*
 
 %changelog
+* Fri Apr 21 2017 Michael Shigorin <mike@altlinux.org> 3.1.6-alt2
+- fixed i586 FTBFS, see also debbug#837581
+
+* Fri Apr 21 2017 Michael Shigorin <mike@altlinux.org> 3.1.6-alt1
+- 3.1.6
+
+* Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 3.1.4-alt1
+- 3.1.4
+
 * Sun Apr 22 2012 Michael Shigorin <mike@altlinux.org> 3.1.0-alt1
 - 3.1.0
 
