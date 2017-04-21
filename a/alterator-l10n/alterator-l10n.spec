@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.36
+Version: 2.9.37
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -114,6 +114,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Fri Apr 21 2017 Andrey Cherepanov <cas@altlinux.org> 2.9.37-alt1
+- Update alterator-net-domain translations after add FreeIPA support
+
 * Wed Mar 29 2017 Andrey Cherepanov <cas@altlinux.org> 2.9.36-alt1
 - Wrap long line warning
 
