@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev 65975
+%define svnrev 67445
 
 %def_with pgsql
 
@@ -10,8 +10,8 @@
 %endif
 
 Name: zabbix
-Version: 3.2.4
-Release: alt2
+Version: 3.2.5
+Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -27,7 +27,7 @@ Url: http://www.zabbix.com
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildPreReq: /proc rpm-build-java java-1.7.0-openjdk-devel
+BuildPreReq: java-devel-default
 BuildPreReq: libelf-devel
 BuildRequires(pre): rpm-build-webserver-common
 
@@ -89,6 +89,7 @@ Requires: %_sbindir/fping
 Summary: %name java gateway
 Group: Monitoring
 Requires: %name-common >= 1:2.0.4-alt1
+Requires: jre-openjdk >= 1.7.0
 BuildArch: noarch
 %filter_from_requires /^\/etc\/sysconfig\/network/d
 %filter_from_requires /^\/etc\/sysconfig\/zabbix-java-gateway/d
@@ -513,6 +514,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Fri Apr 21 2017 Alexei Takaseev <taf@altlinux.org> 1:3.2.5-alt1
+- 3.2.5
+
 * Mon Mar 06 2017 Alexei Takaseev <taf@altlinux.org> 1:3.2.4-alt2
 - Enable Zabbix Java gateway
 
