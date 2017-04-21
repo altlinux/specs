@@ -1,9 +1,9 @@
 Name: LibreSSL
-Version: 2.4.5
+Version: 2.5.3
 Release: alt1
 
 %define oname libressl
-%define libtls_abi 11
+%define libtls_abi 15
 
 Summary: OpenBSD fork of OpenSSL library
 
@@ -15,11 +15,16 @@ Url: http://www.libressl.org/
 Packager: Vladimir D. Seleznev <vseleznv@altlinux.org>
 # repacked http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/%oname-%version.tar.gz
 Source: %oname-%version.tar
-Source1: %name.watch
+# https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-%version-relnotes.txt
+Source1: %oname-%version-relnotes.txt
+Source2: %name.watch
 Patch4: netcat-1.159-alt-usage.patch
 Patch8: netcat-1.159-alt-execcmd.patch
 Patch9: netcat-1.159-alt-proxy_pass.patch
-Patch10: LibreSSL-2.4.2-alt-openssl-manpage.patch
+Patch10: LibreSSL-2.5.3-alt-openssl-manpage.patch
+Patch20: LibreSSL-2.5.3-alt-ocspcheck-truncate.patch
+Patch21: LibreSSL-2.5.3-alt-ssl-warnings.patch
+Patch22: LibreSSL-2.5.3-alt-tests-warnings.patch
 
 %define common_descr \
 LibreSSL is a version of the TLS/crypto stack forked from OpenSSL in \
@@ -49,13 +54,14 @@ Conflicts: libcrypto-devel libssl-devel
 
 Headers for building software that uses %name
 
-%package doc
+%package devel-doc
+Obsoletes: %name-doc
 Summary: Documantation pages for %name
 Group: Documentation
 BuildArch: noarch
 Conflicts: openssl-doc
 
-%description doc
+%description devel-doc
 %common_descr
 
 This package contains documantation pages for %name
@@ -102,12 +108,13 @@ applications.
 
 Headers for building software that uses libtls
 
-%package -n libtls-doc
+%package -n libtls-devel-doc
+Obsoletes: libtls-doc
 Summary: Manpages for libtls
 Group: Documentation
 BuildArch: noarch
 
-%description -n libtls-doc
+%description -n libtls-devel-doc
 
 %common_descr
 
@@ -115,6 +122,14 @@ A new TLS library, designed to make it easier to write foolproof
 applications.
 
 Thins package contains manual pages for libtls
+
+%package -n ocspcheck
+Summary: utility to validate a certificate
+Group: Security/Networking
+
+%description -n ocspcheck
+utility to validate a certificate against its OCSP responder and save the reply
+for stapling
 
 %package -n netcat-tls
 Summary: Reads and writes data across network connections using TCP or UDP
@@ -147,15 +162,18 @@ Common uses include:
 %patch9 -p2
 %patch4 -p2
 %patch10 -p2
+%patch20 -p2
+%patch21 -p2
+%patch22 -p2
+cp %SOURCE1 RELNOTES
 
 %build
 %autoreconf
 %configure \
-	--disable-static \
+	--enable-static \
 	--enable-nc \
 	--with-openssldir='%_sysconfdir/%oname/' \
 	#
-%make check
 
 %install
 %makeinstall_std
@@ -181,9 +199,13 @@ popd
 
 %define docdir %_docdir/%name-%version
 mkdir -p %buildroot%docdir
-install -pm 644 ChangeLog COPYING \
+install -pm 644 ChangeLog COPYING RELNOTES \
 	%buildroot%docdir
 gzip -9 %buildroot%docdir/ChangeLog
+gzip -9 %buildroot%docdir/RELNOTES
+
+%check
+%make check
 
 %files -n openssl-LibreSSL
 %dir %docdir
@@ -197,7 +219,7 @@ gzip -9 %buildroot%docdir/ChangeLog
 %exclude %_libdir/libtls.so
 %exclude %_pkgconfigdir/libtls.pc
 
-%files doc
+%files devel-doc
 %_man3dir/*
 %exclude %_man3dir/tls_*
 
@@ -214,6 +236,9 @@ gzip -9 %buildroot%docdir/ChangeLog
 %dir %docdir
 %_libdir/libssl.so.*
 
+%files -n ocspcheck
+%_bindir/ocspcheck
+
 %files -n libtls
 %dir %docdir
 %_libdir/libtls.so.%libtls_abi
@@ -224,7 +249,7 @@ gzip -9 %buildroot%docdir/ChangeLog
 %_libdir/libtls.so
 %_pkgconfigdir/libtls.pc
 
-%files -n libtls-doc
+%files -n libtls-devel-doc
 %_man3dir/tls_*
 
 %files -n netcat-tls
@@ -234,6 +259,14 @@ gzip -9 %buildroot%docdir/ChangeLog
 %_man1dir/netcat.*
 
 %changelog
+* Fri Apr 21 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.5.3-alt1
+- 2.5.3
+- added ocspcheck package.
+- renamed -doc packages to -devel-doc.
+- added RELNOTES.
+- placed `%%make check' to proper location in spec.
+
+
 * Sat Feb 04 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4.5-alt1
 - 2.4.5
 - packaged %%_sysconfdir/%%oname/openssl.cnf as noreplace config file.
