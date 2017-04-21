@@ -1,8 +1,7 @@
-%define qtdir %_qt4dir
 
 Name: kcheckers
 Version: 0.8.1
-Release: alt3.qa1
+Release: alt4%ubt
 
 Group: Games/Boards
 Summary: Classic boardgame - checkers
@@ -13,8 +12,6 @@ Url: http://qcheckers.sf.net/
 #http://kcheckers.wibix.de
 #http://kcheckers.osdn.org.ua
 
-Requires: libqt4-core >= %{get_version libqt4-core}
-
 Source: %name-%version.tar
 Source1: %name.desktop
 Source2: %name-16.png
@@ -23,9 +20,10 @@ Source4: %name-48.png
 
 Patch1: kcheckers-0.8.1-alt-prefix.patch
 Patch2: kcheckers-0.8.1-alt-qt-translator.patch
+Patch3: kcheckers-0.8.1-qt5.patch
 
-BuildRequires(pre): libqt4-devel
-BuildRequires: gcc-c++
+BuildRequires(pre): qt5-base-devel rpm-build-ubt
+BuildRequires: qt5-tools
 
 %description
 Tish is classic boardgame "checkers".
@@ -35,16 +33,18 @@ This game is also known as "draughts".
 %setup -q
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
-export QTDIR=%qtdir PATH=%qtdir/bin:$PATH
-qmake
+export PATH=%_qt5_bindir/bin:$PATH
+%qmake_qt5
 %make clean
 
 %build
-export QTDIR=%qtdir PATH=%qtdir/bin:$PATH
-%add_optflags -D_REENTRANT -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB
-%make_build CFLAGS="%optflags" CXXFLAGS="%optflags"
-lrelease i18n/*.ts
+export PATH=%_qt5_bindir/bin:$PATH
+#%add_optflags -D_REENTRANT -DQT_NO_DEBUG
+#make_build CFLAGS="%optflags" CXXFLAGS="%optflags"
+%make_build
+lrelease-qt5 i18n/*.ts
 
 %install
 mkdir -p %buildroot/%_gamesbindir
@@ -67,6 +67,9 @@ install -Dm 0644 %SOURCE4 %buildroot/%_iconsdir/hicolor/48x48/apps/%name.png
 %doc ChangeLog AUTHORS
 
 %changelog
+* Fri Apr 21 2017 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt4%ubt
+- port to Qt5
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8.1-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
