@@ -1,7 +1,7 @@
 %define debug_level 1
 
 Name: seabios
-Version: 1.10.1
+Version: 1.10.2
 Release: alt1
 Summary: Open-source legacy BIOS implementation
 
@@ -106,6 +106,10 @@ ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/s
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Fri Apr 21 2017 Alexey Shabalin <shaba@altlinux.ru> 1.10.2-alt1
+- 1.10.2
+- Don't attempt to use generic reboot mechanisms on QEMU
+
 * Fri Dec 09 2016 Alexey Shabalin <shaba@altlinux.ru> 1.10.1-alt1
 - 1.10.1
 
