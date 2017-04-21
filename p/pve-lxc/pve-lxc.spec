@@ -2,7 +2,7 @@
 
 Name: pve-%rname
 Version: 2.0.7
-Release: alt4.1
+Release: alt4.2
 Summary: Linux containers usersapce tools
 Group: System/Configuration/Other
 License: LGPL
@@ -10,7 +10,7 @@ URL: https://linuxcontainers.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64
-Requires: cgmanager lxcfs
+Requires: lxcfs
 Conflicts: %rname %rname-libs
 
 Source: %rname.tgz
@@ -28,7 +28,7 @@ Patch10: lxc-io.patch
 Patch20: lxc-alt.patch
 Patch21: lxc-altlinux-lxc.patch
 
-BuildRequires: docbook2X libcap-devel libcgmanager-devel libdbus-devel libgnutls-devel libseccomp-devel libselinux-devel
+BuildRequires: docbook2X libcap-devel libdbus-devel libgnutls-devel libseccomp-devel libselinux-devel
 
 %description
 Containers provides resource management through control groups and
@@ -63,7 +63,7 @@ an applications or a system.
     --disable-apparmor \
     --enable-selinux \
     --enable-bash \
-    --enable-cgmanager \
+    --disable-cgmanager \
     --disable-python \
     --disable-lua \
     --disable-examples \
@@ -79,15 +79,10 @@ echo "#define MAJOR_IN_SYSMACROS 1" >> src/config.h
 
 rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 
-cat << __EOF__ > %buildroot%_sysconfdir/%rname/%rname.conf
-lxc.cgroup.use = @all
-__EOF__
-
 %files
 %config(noreplace) %_sysconfdir/sysconfig/%rname
 %dir %_sysconfdir/%rname
 %config(noreplace) %_sysconfdir/%rname/default.conf
-%config(noreplace) %_sysconfdir/%rname/%rname.conf
 #_sysconfdir/bash_completion.d/%rname
 %systemd_unitdir/*.service
 %_bindir/%rname-*
@@ -101,6 +96,12 @@ __EOF__
 %_man7dir/*.7*
 
 %changelog
+* Fri Apr 21 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.7-alt4.2
+- disable cgmanager
+
+* Thu Apr 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.7-alt1.M80P.4
+- backport to p8 branch
+
 * Thu Apr 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.7-alt4.1
 - fixed starting unprivileged container
 
