@@ -2,7 +2,7 @@
 
 Name: ocaml-lablgtk
 Version: 2.18.5
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Objective Caml interface to gtk+
 
@@ -16,7 +16,6 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: libncurses-devel
 BuildRequires: libgtk+2-devel
-#BuildRequires:  gtkglarea2-devel
 BuildRequires: libgtkspell-devel
 BuildRequires: libXmu-devel
 BuildRequires: libglade-devel
@@ -24,9 +23,9 @@ BuildRequires: libgnomecanvas-devel
 BuildRequires: libgnomeui-devel
 BuildRequires: librsvg-devel
 BuildRequires: ocaml
-BuildRequires: ocaml-camlp4
+BuildRequires: ocaml-camlp4-devel
 BuildRequires: ocaml-findlib
-BuildRequires: ocaml-lablgl
+BuildRequires: ocaml-lablgl-devel
 BuildRequires: ocaml-ocamldoc
 BuildRequires: zlib-devel
 BuildRequires: libgtksourceview-devel
@@ -136,5 +135,8 @@ find examples -name .cvsignore -exec rm {} \;
 %doc examples doc/html
 
 %changelog
+* Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 2.18.5-alt2%ubt
+- rebuilt in new environment
+
 * Sun Apr 16 2017 Anton Farygin <rider@altlinux.ru> 2.18.5-alt1%ubt
 - first build for ALT, based on RH spec
