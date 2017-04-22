@@ -1,41 +1,61 @@
 %def_with doc
 
-%define oname pycairo
+%define modname cairo
+%define oname py%modname
+%define ver_major 1.12
+
 Name: python-module-%oname
-Version: 1.10.1
-Release: alt2.git20120522.1
+Version: %ver_major.0
+Release: alt1
 
-Summary: Pycairo is a set of Python bindings for the vector graphics library cairo
-
-License: GPL
+Summary: Pycairo is a set of Python bindings for the cairo vector graphics library
 Group: Development/Python
-Url: http://www.cairographics.org/pycairo
+License: LGPLv2.1/MPLv1.1
+Url: https://github.com/pygobject/pycairo
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+# VCS: https://github.com/pygobject/pycairo.git
+Source: %url/releases/download/v%version/%oname-%version.tar.gz
 
-# git://git.cairographics.org/git/py2cairo
-Source: pycairo-%version.tar.gz
+%setup_python_module %modname
 
-%setup_python_module cairo
-
-# Automatically added by buildreq on Wed Jul 01 2009
-BuildRequires: gcc-c++ libcairo-devel python-devel
+BuildRequires: libcairo-devel >= 1.12.0
+BuildRequires: python-devel rpm-build-python3 python3-devel
 %{?!_with_bootstrap:BuildRequires: python-module-Pygments}
-%{?_with_doc:BuildPreReq: python-module-sphinx-devel texlive-latex-base}
-
-BuildRequires: libcairo-devel >= 1.8.6
+%{?_with_doc:BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme texlive-latex-base}
 
 %description
-James Henstridge has created cairo bindings for Python.
-Cairo is a library for drawing vector graphics.
-Vector graphics are interesting because when they appear on screen,
-they don't lose clarity when resized or transformed.
+The Pycairo bindings are designed to match the cairo C API as closely as
+possible, and to deviate only in cases which are clearly better implemented in
+a more 'Pythonic' way.
+
+%package -n python3-module-%oname
+Summary: Python3 bindings for Cairo
+Group: Development/Python3
+
+%description -n python3-module-%oname
+This package provides Python3 wrappers for Cairo library
+
+%package -n python3-module-%oname-devel
+Summary: Development files for pycairo
+Group: Development/Python
+Requires: python3-module-%oname = %version-%release
+Requires: %name-common-devel = %version-%release
+
+%description -n python3-module-%oname-devel
+Development files for pycairo.
+
+%package common-devel
+Summary: Common development files for %oname
+Group: Development/Python
+
+%description common-devel
+Common development files for %oname used for both python2 and python3.
 
 %package devel
 Summary: Development files for pycairo
 Group: Development/Python
 Requires: %name = %version-%release
-#Requires: %name-pickles = %version-%release
+Requires: %name-common-devel = %version-%release
 
 %description devel
 Development files for pycairo.
@@ -72,48 +92,42 @@ Group: Development/Python
 Pickles for pycairo.
 
 %prep
-%setup
+%setup -n %oname-%version -a0
+mv %oname-%version py3build
+# fix pc-file install
+subst 's|\"lib\"|"%_lib"|' {,py3build/}setup.py
 
-sed -i 's|@PYVER@|%_python_version|g' doc/Makefile.am
-
-%{?_with_doc:%prepare_sphinx doc}
+%{?_with_doc:%prepare_sphinx docs}
 
 %build
-#rm -r aclocal.m4 ltmain.sh
-#autoreconf
-./autogen.sh
-%configure
-%make_build
-# FIXME: run with built pycairo
-#echo "import cairo" >test-cairo.py
-#%_bindir/env python test-cairo.py
+%python_build
+%{?_with_doc:%make -C docs}
 
-%if_with doc
-pushd doc
-%make_build html
+pushd py3build
+%python3_build
 popd
-%endif
 
 %install
-%makeinstall_std
+pushd py3build
+%python3_install
+popd
+
+%python_install
 
 # docs
 install -d %buildroot%_docdir/%name-%version
-install -p -m644 AUTHORS COPYING-* NEWS README \
+install -p -m644 NEWS README* \
 	%buildroot%_docdir/%name-%version
 
 %if_with doc
-cp -fR doc/.build/html %buildroot%_docdir/%name-%version/
-#cp -fR doc/.build/latex/*.pdf %buildroot%_docdir/%name-%version/pdf
+cp -fR docs/_build/reference %buildroot%_docdir/%name-%version/
 
 # pickles
-
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+install -d %buildroot%python_sitelibdir/%oname/pickle
+cp -fR docs/_build/.doctrees/* %buildroot%python_sitelibdir/%oname/pickle/
 
 # tests and examples
-
-cp -fR examples test %buildroot%python_sitelibdir/%modulename/
+cp -fR examples tests %buildroot%python_sitelibdir/%modulename/
 for i in $(find %buildroot%python_sitelibdir/%modulename/examples -type d)
 do
 	touch $i/__init__.py
@@ -125,41 +139,52 @@ rm -fR %python_sitelibdir/%oname/pickle
 
 %files
 %doc %dir %_docdir/%name-%version
-%doc %_docdir/%name-%version/AUTHORS
-%doc %_docdir/%name-%version/COPYING-*
 %doc %_docdir/%name-%version/NEWS
-%doc %_docdir/%name-%version/README
+%doc %_docdir/%name-%version/README*
 %python_sitelibdir/%modulename
+
 %if_with doc
-%exclude %python_sitelibdir/%modulename/test
+%exclude %python_sitelibdir/%modulename/tests
 %exclude %python_sitelibdir/%modulename/examples
 %endif
 
+%files -n python3-module-%oname
+%python3_sitelibdir/%modname/
+
+%files common-devel
+%_includedir/%oname/
+
 %files devel
-%_includedir/%oname
 %_pkgconfigdir/%oname.pc
+
+%files -n python3-module-%oname-devel
+%_pkgconfigdir/py3cairo.pc
 
 %if_with doc
 %files docs
 %doc %dir %_docdir/%name-%version
 %doc %_docdir/%name-%version
-%exclude %_docdir/%name-%version/AUTHORS
-%exclude %_docdir/%name-%version/COPYING-*
 %exclude %_docdir/%name-%version/NEWS
-%exclude %_docdir/%name-%version/README
+%exclude %_docdir/%name-%version/README*
 
 %files tests
-%python_sitelibdir/%modulename/test
+%python_sitelibdir/%modulename/tests
 
 %files examples
 %python_sitelibdir/%modulename/examples
 
 %files pickles
 %dir %python_sitelibdir/%oname
-%python_sitelibdir/%oname/pickle
+%python_sitelibdir/%oname/pickle/
 %endif
 
 %changelog
+* Sat Apr 22 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
+* Sat Apr 22 2017 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
+- 1.11.0 (new upstream), built 2 & 3 modules from one source
+
 * Thu Jan 12 2017 Michael Shigorin <mike@altlinux.org> 1.10.1-alt2.git20120522.1
 - BOOTSTRAP: added doc knob (on by default)
 
