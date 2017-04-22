@@ -1,6 +1,7 @@
 Name: libqtelegram
-Version: 10.0.0
+Version: 1.0.0
 Release: alt1
+Epoch: 1
 
 Summary: This is a Qt asynchronous library to be used as Telegram client
 
@@ -8,6 +9,7 @@ Summary: This is a Qt asynchronous library to be used as Telegram client
 %define sname qtelegram
 
 License: GPLv3
+
 
 Group: System/Configuration/Other
 Url: https://launchpad.net/libqtelegram
@@ -45,8 +47,23 @@ Development files for %name.
 %qmake_qt5 CONFIG+=typeobjects
 %make_build
 
+cat << EOF > qtelegram.pc 
+prefix=%prefix
+exec_prefix=%prefix
+libdir=%_libdir
+includedir=%_includedir/qt5/libqtelegram-ae
+
+Name: libqtelegram
+Description: Telegram library written in Qt 
+Version: 1.0.0
+Libs: -L${libdir} -lqtelegram-ae
+Cflags: -I${includedir}
+EOF
+
 %install
 INSTALL_ROOT=%buildroot %makeinstall_std
+install -d %buildroot%_pkgconfigdir/
+install -m 644 qtelegram.pc %buildroot%_pkgconfigdir/qtelegram.pc 
 
 %files
 %doc README README.md
@@ -54,10 +71,16 @@ INSTALL_ROOT=%buildroot %makeinstall_std
 
 %files -n %libname-devel
 %_includedir/*
-##%%_pkgconfigdir/*
+%_pkgconfigdir/*
 
 %_libdir/lib*.so
 
 %changelog
+* Mon Apr 24 2017 Hihin Ruslan <ruslandh@altlinux.ru> 1:1.0.0-alt1
+- Add pkgconfigdir/*
+
 * Thu Apr 20 2017 Hihin Ruslan <ruslandh@altlinux.ru> 10.0.0-alt1
 -  initial build for ALT Linux Sisyphus
+
+
+
