@@ -3,8 +3,8 @@
 %define real_name Dist-Zilla-Plugin-Test-CheckBreaks
 
 Name: perl-Dist-Zilla-Plugin-Test-CheckBreaks
-Version: 0.017
-Release: alt2
+Version: 0.018
+Release: alt1
 
 Summary: Generate a test that shows what modules you are breaking
 
@@ -45,5 +45,8 @@ modules, as indicated by x_breaks in your distribution metadata.
 %perl_vendor_privlib/Dist/Zilla/Plugin/Test/CheckBreaks*
 
 %changelog
+* Sun Apr 23 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.018-alt1
+- New version
+
 * Sun Jan 22 2017 Nikolay A. Fetisov <naf@altlinux.ru> 0.017-alt2
 - Initial build for ALT Linux Sisyphus
