@@ -1,9 +1,9 @@
 %define _libexecdir %_prefix/libexec
-%define beta -beta3
+%define beta %nil
 
 Name: ephoto
 Version: 1.0
-Release: alt0.2
+Release: alt1
 
 Summary: The Enlightenment Photo Viewer
 Group: Graphical desktop/Enlightenment
@@ -42,6 +42,9 @@ Photo Viewer for Enlightenment desktop.
 %doc AUTHORS ChangeLog NEWS README TODO
 
 %changelog
+* Tue Apr 18 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
+- 1.0 release
+
 * Thu Mar 30 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt0.2
 - 1.0-beta3
 
