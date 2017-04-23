@@ -1,55 +1,54 @@
 %define _name swh-plugins
+%def_disable system_ladspa
+%ifarch %ix86 x86_64
+%def_enable sse
+%endif
 
 Name: ladspa-%_name
-Version: 0.4.11
-Release: alt3.qa1
+Version: 0.4.17
+Release: alt1
 
 Summary: A set of audio plugins for LADSPA
-Summary(ru_RU.KOI8-R): Набор модулей LADSPA от Стива Хэрриса и сотоварищей
-License: GPL
+Summary(ru_RU.UTF-8): п²п╟п╠п╬я─ п╪п╬п╢я┐п╩п╣п╧ LADSPA п╬я┌ п║я┌п╦п╡п╟ п╔я█я─я─п╦я│п╟ п╦ я│п╬я┌п╬п╡п╟я─п╦я┴п╣п╧
 Group: Sound
+License: GPL
 Url: http://plugin.org.uk
-Packager: Yuri N. Sedunov <aris@altlinux.ru>
 
-Source: %url/releases/%version/%_name-%version.tar.gz
+# VCS: https://github.com/swh/ladspa.git
+Source: ladspa-%version.tar.gz
+#Source: %url/releases/%version/%_name-%version.tar.gz
 Source1: %url/ladspa-swh/docs/ladspa-swh.html
 
-Patch0: ladspa-swh-0.4.11-fix-build.patch
-Patch1: ladspa-swh-0.4.11-gcc4.patch
-
-%define ladspa_ver 1.12-alt2
+%define ladspa_ver 1.13
 
 PreReq: ladspa_sdk >= %ladspa_ver
 
-BuildPreReq: ladspa_sdk >= %ladspa_ver  
+BuildPreReq: ladspa_sdk >= %ladspa_ver
 
-# Automatically added by buildreq on Sun Jul 18 2004
-BuildRequires: gcc-c++ glib2 ladspa_sdk libfftw3-devel libstdc++-devel perl-XML-Parser pkgconfig xml-utils
+BuildRequires: ladspa_sdk libfftw3-devel perl-XML-Parser
 
 %description
 A set of Steve Harris' audio plugins for LADSPA (Linux
 Audio Developer's Simple Plugin Architecture).
 
 %prep
-%setup -n %_name-%version
-# use system ladspa.h
-%__rm -f ladspa.h
-find . -type f -print0|xargs -r0 %__subst 's,"ladspa.h",<ladspa.h>,' --
-%patch0 -p1
-%patch1 -p1
+%setup -n ladspa-%version
+%if_enabled system_ladspa
+rm -f ladspa.h
+find . -type f -print0|xargs -r0 subst 's,"ladspa.h",<ladspa.h>,' --
+%endif
 
 %build
-autoreconf -ifsv
 %add_optflags %optflags_shared
-
-%configure
+%autoreconf
+%configure %{subst_enable sse}
 %make_build plugindir=%_ladspa_path
 
 %install
-%make_install DESTDIR=%buildroot mkinstalldirs="%__mkdir_p" plugindir=%_ladspa_path install
+%makeinstall_std
 
-%__cp gsm/README README.gsm
-%__cp %SOURCE1 .
+cp gsm/README README.gsm
+cp %SOURCE1 .
 
 %find_lang %_name
 
@@ -59,6 +58,9 @@ autoreconf -ifsv
 %doc AUTHORS README ChangeLog README.gsm ladspa-swh.html
 
 %changelog
+* Sun Apr 23 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.17-alt1
+- 0.4.17
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.11-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
