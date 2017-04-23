@@ -2,7 +2,7 @@
 
 %set_compress_method skip
 
-%define emacs_version 25.1.91
+%define emacs_version 25.2
 %define erc_version %emacs_version
 
 %define gnus_version 5.13
@@ -12,7 +12,7 @@
 %define nxml_version 0.2.20041004
 %define cedet_version 2.0
 
-%define cedet_release alt6
+%define cedet_release alt7
 
 # subpackages to build;
 %def_enable nox
@@ -22,8 +22,8 @@
 %def_enable motif
 
 Name: emacs25
-Version: 25.1.91
-Release: alt4
+Version: 25.2
+Release: alt5
 
 Group: Editors
 Summary: GNU Emacs text editor
@@ -1550,6 +1550,9 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 
 
 %changelog
+* Sun Apr 23 2017 Terechkov Evgenii <evg@altlinux.org> 25.2-alt5
+- 25.2
+
 * Sat Mar 11 2017 Terechkov Evgenii <evg@altlinux.org> 25.1.91-alt4
 - 25.1.91
 
