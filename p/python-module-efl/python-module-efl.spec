@@ -1,8 +1,8 @@
 %define _name python-efl
-%define efl_ver 1.18.0
+%define efl_ver 1.19.0
 
 Name: python-module-efl
-Version: 1.18.0
+Version: 1.19.0
 Release: alt1
 
 Summary: Python bindings for EFL libraries
@@ -94,6 +94,9 @@ popd
 %exclude %python3_sitelibdir/efl/utils/setup.py*
 
 %changelog
+* Sun Apr 23 2017 Yuri N. Sedunov <aris@altlinux.org> 1.19.0-alt1
+- 1.19.0
+
 * Mon Aug 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
 - 1.18.0
 

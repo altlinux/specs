@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
-%define ver_major 1.18
+%define ver_major 1.19
 %define beta %nil
 %define gst_api_ver 1.0
 %define wayland_ver 1.11.0
@@ -11,7 +11,6 @@
 %def_enable fb
 # fb requires tslib?
 %def_disable tslib
-%def_disable xcb
 %def_enable drm
 %def_enable ibus
 %def_enable gstreamer1
@@ -25,8 +24,8 @@
 %def_disable gl_drm
 
 Name: efl
-Version: %ver_major.4
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
@@ -52,18 +51,13 @@ BuildRequires: libpulseaudio-devel libsndfile-devel libbullet-devel zlib-devel l
 BuildRequires: libluajit-devel libssl-devel libcurl-devel libdbus-devel
 BuildRequires: libmount-devel libblkid-devel
 BuildRequires: libudev-devel systemd-devel libsystemd-journal-devel libsystemd-daemon-devel
-%if_enabled xcb
-BuildRequires: libxcb-devel libxcbutil-devel libxcbutil-image-devel libxcb-render-util-devel
-BuildRequires: libxcbutil-icccm-devel libxcbutil-keysyms-devel libpixman-devel
-%else
 BuildRequires: libX11-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXext-devel
 BuildRequires: libXfixes-devel libXinerama-devel libXrandr-devel libXrender-devel libXScrnSaver-devel
 BuildRequires: libXtst-devel libXcursor-devel libXp-devel libXi-devel
-%endif
 BuildRequires: libGL-devel
 %{?_enable_ibus:BuildRequires: libibus-devel}
 %{?_enable_tslib:BuildRequires: libts-devel}
-%{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-server-devel libwayland-cursor-devel libxkbcommon-devel >= 0.6.0 libuuid-devel}
+%{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-server-devel libwayland-cursor-devel wayland-protocols libxkbcommon-devel >= 0.6.0 libuuid-devel}
 %{?_enable_wayland_egl:BuildRequires: libwayland-egl-devel}
 %{?_enable_egl:BuildRequires: libEGL-devel libwayland-egl-devel}
 %{?_enable_gstreamer1:BuildRequires: gst-plugins%gst_api_ver-devel}
@@ -212,8 +206,6 @@ developing applications that use Elementary libraries.
 %patch -p1
 # fix path to soffice.bin
 subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.libreoffice
-#subst 's/xcb-xprint//
-#	/ECORE_XCB_XPRINT/d' configure.ac
 
 %build
 %autoreconf
@@ -234,8 +226,7 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 	%{subst_enable drm} \
 	%{?_enable_gl_drm:--enable-gl-drm} \
 	%{subst_enable ibus} \
-	%{subst_enable gstreamer1} \
-	%{?_enable_xcb:--with-x11=xcb}
+	%{subst_enable gstreamer1}
 
 %make_build
 #%make doc
@@ -261,9 +252,11 @@ find %buildroot%_libdir -name "*.la" -delete
 %_bindir/eeze_disk_ls
 %_bindir/eeze_mount
 %_bindir/eeze_scanner
+%_bindir/eeze_scanner_monitor
 %_bindir/eeze_umount
 %_bindir/efreetd
 %_bindir/eina-bench-cmp
+%_bindir/eina_modinfo
 %_bindir/elua
 %_bindir/ethumb
 %_bindir/ethumbd
@@ -274,9 +267,9 @@ find %buildroot%_libdir -name "*.la" -delete
 %_libdir/*.so.*
 %exclude %_libdir/libelementary.so.*
 %_libdir/ecore/
+%_libdir/ecore_con/
 %_libdir/ecore_evas/
 %_libdir/ecore_imf/
-%_libdir/ecore_x/
 %_libdir/edje/
 %_libdir/eeze/
 %_libdir/efreet/
@@ -284,7 +277,6 @@ find %buildroot%_libdir -name "*.la" -delete
 %_libdir/ethumb/
 %_libdir/ethumb_client/
 %_libdir/evas/
-#%_datadir/dbus-1/services/org.enlightenment.Efreet.service
 %_datadir/dbus-1/services/org.enlightenment.Ethumb.service
 %_datadir/ecore/
 %_datadir/ecore_imf/
@@ -302,7 +294,6 @@ find %buildroot%_libdir -name "*.la" -delete
 %_datadir/evas/
 %_datadir/elua/
 %_datadir/mime/packages/edje.xml
-#%_prefix/lib/systemd/user/efreet.service
 %_prefix/lib/systemd/user/ethumb.service
 %doc AUTHORS README NEWS COMPLIANCE
 
@@ -318,6 +309,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_bindir/efl_debug
 %_bindir/efl_debugd
 %_bindir/eina_btlog
+%_bindir/eo_debug
 %_includedir/*
 %exclude %_includedir/elementary*/
 %_libdir/cmake/*
@@ -398,7 +390,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_libdir/elementary/modules/test_entry/*/*.so
 %_libdir/elementary/modules/access_output/*/*.so
 %_libdir/elementary/modules/test_map/*/*.so
-%_libdir/elementary/modules/datetime_input_ctxpopup/*/*.so
+%_libdir/elementary/modules/clock_input_ctxpopup/*/*.so
 %_libdir/elementary/modules/prefs/*/*.edj
 %_libdir/elementary/modules/prefs/*/*.so
 %_libdir/elementary/modules/web/*/*/module.so
@@ -421,6 +413,9 @@ find %buildroot%_libdir -name "*.la" -delete
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Thu Apr 13 2017 Yuri N. Sedunov <aris@altlinux.org> 1.19.0-alt1
+- 1.19.0
+
 * Mon Mar 27 2017 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt3
 - updated to v1.18.4-16-ga189bd5
 
