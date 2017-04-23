@@ -3,8 +3,8 @@
 %define real_name MooseX-Types-Path-Tiny
 
 Name: perl-MooseX-Types-Path-Tiny
-Version: 0.011
-Release: alt2
+Version: 0.012
+Release: alt1
 
 Summary: Path::Tiny types and coercions for Moose
 
@@ -48,5 +48,8 @@ It also can check to ensure that files or directories exist.
 %perl_vendor_privlib/MooseX/Types/Path/Tiny*
 
 %changelog
+* Sun Apr 23 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.012-alt1
+- New version
+
 * Sun Jan 22 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.011-alt2
 - Initial build for ALT Linux Sisyphus
