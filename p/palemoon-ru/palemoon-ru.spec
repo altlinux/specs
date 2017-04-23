@@ -4,7 +4,7 @@
 %define cid_dict       ru@dictionaries.addons.mozilla.org
 %define cid_dict_dir   %palemoon_noarch_extensionsdir/%cid_dict
 
-%define min_version	27.1.99
+%define min_version	27.2.99
 %define max_version	27.*
 
 %define bname		newmoon
@@ -13,8 +13,8 @@
 %define search_dir 	%newmoon_dir%sdir
 
 Name: palemoon-ru
-Version: 27.2.0
-Release: alt3
+Version: 27.3.0
+Release: alt1
 
 Summary: Russian (RU) Language Pack for Pale Moon
 License: MPL/GPL/LGPL
@@ -27,9 +27,10 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source:  ru_palemoon_%version.xpi
 Source2: searchplugins.tar
+
 Patch:   %name-27.1.1-search.patch
-Patch1:	 %name-27.2.0-version.patch
-Patch2:	 %name-27.2.0-advanced.patch
+Patch1:	 %name-27.3.0-update.patch
+Patch2:	 %name-27.3.0-advanced.patch
 
 Requires: palemoon >= %version
 Requires: hunspell-ru
@@ -58,8 +59,10 @@ The set of search plugins for Palemoon
 
 %prep
 %setup -c -n %name-%version/%cid
+
 %patch -p2
 %patch1 -p2
+
 %patch2 -p2
 
 tar -xf %SOURCE2
@@ -123,6 +126,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %search_dir
 
 %changelog
+* Sun Apr 23 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.3.0-alt1
+- Version 27.3.0-RC1
+
 * Thu Apr 13 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.2.0-alt3
 - Add search plugins alt-linux-wiki-ru and  search_altlinux
 
@@ -182,4 +188,3 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 
 
 
-alt-linux-wiki-ru.xml search_altlinux.xml
