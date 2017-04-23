@@ -1,5 +1,5 @@
 Name: coreutils
-Version: 8.27.0.6.04148
+Version: 8.27.0.23.f4570
 Release: alt1
 %define srcname %name-%version-%release
 
@@ -211,6 +211,10 @@ install -pm644 %_sourcedir/{runas,usleep}.1 %buildroot%_man1dir/
 %doc AUTHORS NEWS.bz2 README THANKS.bz2 TODO
 
 %changelog
+* Sun Apr 23 2017 Dmitry V. Levin <ldv@altlinux.org> 8.27.0.23.f4570-alt1
+- coreutils: v8.27-6-g04148c9 -> v8.27-23-gf4570a9.
+- Changed *domainname aliases to accept hostname(1) options (closes: #33385).
+
 * Tue Mar 21 2017 Dmitry V. Levin <ldv@altlinux.org> 8.27.0.6.04148-alt1
 - coreutils: v8.24-40-gc1dba59 -> v8.27-6-g04148c9.
 - gnulib: v0.1-585-g2fda85e -> v0.1-1209-g24b3216.
