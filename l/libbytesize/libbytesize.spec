@@ -1,7 +1,7 @@
 %define _name bytesize
 
 Name: lib%_name
-Version: 0.9
+Version: 0.10
 Release: alt1
 
 Summary: A library for working with sizes in bytes
@@ -82,6 +82,9 @@ export CFLAGS="$CFLAGS `pkg-config --cflags libpcre`"
 
 
 %changelog
+* Sun Apr 23 2017 Yuri N. Sedunov <aris@altlinux.org> 0.10-alt1
+- 0.10
+
 * Tue Jan 17 2017 Yuri N. Sedunov <aris@altlinux.org> 0.9-alt1
 - 0.9
 
