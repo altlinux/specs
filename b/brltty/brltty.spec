@@ -1,8 +1,9 @@
 %define qIF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
 %define _localstatedir %_var
 
-%define pkg_version 5.4
-%define api_ver 0.6.5
+%define pkg_version 5.5
+%define xdg_name org.a11y.brlapi
+%define api_ver 0.6.6
 %define _exec_prefix %nil
 %define _jnidir %_libdir/java
 
@@ -43,6 +44,7 @@ Patch2: fix-speechd-includes.patch
 %define cython_ver 0.18
 
 BuildRequires: rpm-build-java rpm-build-python
+BuildRequires: libappstream-glib-devel
 BuildRequires: gcc-c++ libbluez-devel libalsa-devel libgpm-devel
 BuildRequires: byacc glibc-kernheaders
 BuildRequires: /proc java-devel
@@ -259,11 +261,12 @@ while read file; do
 done
 
 %install
-%make JAVA_JNI_DIR=%_jnidir install
+%define install_opts JAVA_JNI_DIR=%_jnidir INSTALL_X11_AUTOSTART_DIRECTORY=%buildroot%_x11sysconfdir/xsession.user.d
+%make %install_opts install
 
 %if_with python3
 pushd py3build
-%make JAVA_JNI_DIR=%_jnidir install
+%make %install_opts install
 popd
 %endif
 
@@ -278,7 +281,7 @@ echo ".so man1/brltty.1" > %buildroot%_man5dir/brltty.conf.5
 %endif
 
 # clean up the manuals:
-#rm Documents/Manual-*/*/{*.mk,*.made,Makefile*}
+rm -rf Documents/BrlAPIref/BrlAPIref/html
 mv -f Documents/BrlAPIref/{html,BrlAPIref}
 
 # Don't want static lib
@@ -296,15 +299,12 @@ d /run/%name 0755 root root -
 _EOF_
 
 # udev rules
-install -D -p -m644 Autostart/Udev/udev.rules %buildroot%_udevrulesdir/95-%name.rules
-
-# polkit rules
-install -D -p -m644 Authorization/Polkit/org.%name.policy %buildroot%_datadir/polkit-1/rules.d/org.%name.policy
+install -D -p -m644 Autostart/Udev/rules %buildroot%_udevrulesdir/95-%name.rules
 
 # systemd unit
-#install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%name.service
-#install -D -p -m644  Autostart/Systemd/%name.service %buildroot%_unitdir/%name.service
-%make -C Autostart/Systemd SYSTEMD_UNIT_DIRECTORY=%buildroot%_unitdir install
+%make -C Autostart/Systemd SYSTEMD_UNITS_DIRECTORY=%buildroot%_unitdir install
+mkdir -p %buildroot%_unitdir
+install -m 644 Autostart/Systemd/*.{service,target} %buildroot%_unitdir/
 
 %find_lang %name
 
@@ -313,10 +313,11 @@ install -D -p -m644 Authorization/Polkit/org.%name.policy %buildroot%_datadir/po
 %_sysconfdir/brltty/
 %_udevrulesdir/95-%name.rules
 %_tmpfilesdir/%name.conf
-%_unitdir/brltty.service
 %_unitdir/brltty@.service
+%_unitdir/*.target
+# bash script
 %_sbindir/brltty-systemd-wrapper
-%_datadir/polkit-1/rules.d/org.brltty.policy
+%_datadir/polkit-1/actions/%xdg_name.policy
 %_bindir/brltty
 %_bindir/brltty-*
 %_bindir/eutp
@@ -335,6 +336,7 @@ install -D -p -m644 Authorization/Polkit/org.%name.policy %buildroot%_datadir/po
 %_man1dir/brltty.*
 %_man1dir/eutp.1.*
 %_man5dir/brltty.*
+%_datadir/metainfo/org.a11y.brltty.metainfo.xml
 %doc LICENSE-GPL LICENSE-LGPL
 %doc Documents/ChangeLog Documents/TODO
 %doc Documents/Manual-BRLTTY/
@@ -348,6 +350,7 @@ install -D -p -m644 Authorization/Polkit/org.%name.policy %buildroot%_datadir/po
 
 %files xw
 %doc Drivers/Braille/XWindow/README
+%_x11sysconfdir/xsession.user.d/60xbrlapi
 /%_lib/brltty/libbrlttybxw.so
 
 %if_with at_spi1
@@ -406,6 +409,9 @@ install -D -p -m644 Authorization/Polkit/org.%name.policy %buildroot%_datadir/po
 %endif
 
 %changelog
+* Mon Apr 24 2017 Yuri N. Sedunov <aris@altlinux.org> 5.5-alt1
+- 5.5
+
 * Mon Nov 14 2016 Yuri N. Sedunov <aris@altlinux.org> 5.4-alt1
 - 5.4
 
