@@ -1,9 +1,9 @@
 Name: man-pages-ru
 Version: 4.08
-Release: alt2
+Release: alt3
 
-# man-pages-ru_4.08-2329-2272-20170321.tar.bz2
-%define lversion %version-2329-2272-20170321
+# man-pages-ru_4.08-2329-2329-20170422.tar.bz2
+%define lversion %version-2329-2329-20170422
 
 Summary: Russian translations of OS GNU/*/Linux manpages
 Summary(ru_RU.UTF-8): Русские переводы страниц руководства по ОС GNU/*/Linux
@@ -19,6 +19,8 @@ Source1: man-pages-ru-4.08-alt-Makefile
 
 Patch0: man-pages-ru-0.98-alt-combo.patch.bz2
 Patch1: mat-functions-alt.patch.gz
+
+Conflicts: man-pages-ru-extra < 0.1-alt3
 
 Obsoletes: man-ru, manpages-ru, man-pages-ru-KOI8-R, man-pages-ru-CP1251
 PreReq: man >= 1.6e-alt1
@@ -64,59 +66,15 @@ make install \
 #echo KOI8-R >%buildroot%_mandir/ru/.charset
 echo >%buildroot%_cachedir/man/ru/whatis
 
-pushd %buildroot%_mandir/ru/man3/
- for F in \
- wmempcpy.3 \
- swapcontext.3 \
- realloc.3 \
- rawmemchr.3 \
- muntrace.3 \
- mq_timedsend.3 \
- mq_timedreceive.3 \
- mq_setattr.3 \
- mprobe.3 \
- modfl.3 \
- modff.3 \
- mmap64.3 \
- mkstemps.3 \
- mkostemps.3 \
- mkostemp.3 \
- mkfifoat.3 \
- memrchr.3 \
- mcheck_pedantic.3 \
- mcheck_check_all.3 \
- malloc_set_state.3 \
- minor.3 \
- major.3 \
- gnu_dev_minor.3 \
- gnu_dev_major.3 \
- gnu_dev_makedev.3 \
- free.3 \
- calloc.3 \
- ; do
-    rm -f $F
- done
-popd
-
-pushd %buildroot%_mandir/ru/man2/
- for F in \
- munmap.2 \
- mknodat.2 \
- mlock2.2 \
- mlockall.2 \
- munlock.2 \
- munlockall.2 \
- mq_notify.2 \
- mq_open.2 \
- mq_timedreceive.2 \
- mq_timedsend.2 \
- mq_unlink.2 \
- msgrcv.2 \
- msgsnd.2 \
- ; do
-    rm -f $F
- done
-popd
+# pushd %buildroot%_mandir/ru/man2/
+#  for F in \
+#  munmap.2 \
+#  mknodat.2 \
+#  mlock2.2 \
+#  ; do
+#     rm -f $F
+#  done
+# popd
 
 %postun
 if [ "$1" = 0 -a ! -d %_mandir/ru ]; then
@@ -134,6 +92,10 @@ fi
 %_cachedir/man/ru/cat*
 
 %changelog
+* Mon Apr 24 2017 Sergey Y. Afonin <asy@altlinux.ru> 4.08-alt3
+- 4.08-2329-2329-20170422 (all translated)
+- added "Conflicts: man-pages-ru-extra < 0.1-alt3"
+
 * Wed Mar 22 2017 Sergey Y. Afonin <asy@altlinux.ru> 4.08-alt2
 - 4.08-2329-2272-20170321 (added malloc.3,math_error.7,mdoc.7)
 
