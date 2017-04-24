@@ -8,7 +8,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 7.96.0
+Version: 7.97.0
 Release: alt1
 BuildArch: noarch
 
@@ -451,6 +451,10 @@ fi
 %config %_sysconfdir/polkit-1/rules.d/*.rules
 
 %changelog
+* Mon Apr 24 2017 Mikhail Efremov <sem@altlinux.org> 7.97.0-alt1
+- xfce-settings: Use chromium instead of firefox.
+- menu: Don't expose cheese if not installed.
+
 * Fri Mar 31 2017 Mikhail Efremov <sem@altlinux.org> 7.96.0-alt1
 - indexhtml: Add Telegram button.
 - indexhtml.desktop: Use slinux icon.
