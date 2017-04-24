@@ -9,7 +9,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -30,15 +30,18 @@ BuildRequires: libmpcdec-devel libneon-devel liboil-devel libsoundtouch-devel li
 BuildRequires: libtimidity-devel libxvid-devel python-module-PyXML python-modules-email python-modules-encodings
 BuildRequires: timidity-instruments libcelt-devel libdc1394-devel libkate-devel libtiger-devel
 BuildRequires: libvpx-devel librtmp-devel liborc-devel orc libofa-devel libmusicbrainz-devel libass-devel
-BuildRequires: libzbar-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel libEGL-devel
-BuildRequires: libwebp-devel libopenjpeg2.0-devel libbluez-devel
+BuildRequires: libzbar-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel wayland-protocols
+BuildRequires: libEGL-devel libwebp-devel libopenjpeg2.0-devel libbluez-devel
 BuildRequires: libfluidsynth-devel libdbus-devel libxml2-devel libgnutls-devel libvdpau-devel
-BuildRequires: libsbc-devel libschroedinger-devel libusb-devel libgudev-devel libopus-devel libcurl-devel
+BuildRequires: libsbc-devel libschroedinger-devel libusb-devel libgudev-devel libopus-devel
+BuildRequires: libcurl-devel libssh2-devel
 BuildRequires: libvo-amrwbenc-devel librsvg-devel libvo-aacenc-devel libgcrypt-devel
 BuildRequires: gobject-introspection-devel libgstreamer1.0-gir-devel
 BuildRequires: libvisual0.4-devel openexr-devel libx265-devel
 BuildRequires: libgtk+3-devel libclutter-devel
 BuildRequires: libopencv-devel
+BuildRequires: ladspa_sdk liblrdf-devel
+BuildRequires: libvulkan-devel
 
 %description
 GStreamer Bad Plug-ins is a set of plug-ins that aren't up to par
@@ -127,6 +130,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Mon Apr 24 2017 Yuri N. Sedunov <aris@altlinux.org> 1.10.4-alt2
+- updated buildreqs for build ladspa, wayland and vulkan plugins
+
 * Thu Feb 23 2017 Yuri N. Sedunov <aris@altlinux.org> 1.10.4-alt1
 - 1.10.4
 
