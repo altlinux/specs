@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: liblrdf
-Version: 0.5.0
-Release: alt1.git20111004
+Version: 0.6.1
+Release: alt1
 
 Summary: Library for handling RDF descriptions of audio plugins
 License: GPLv2+
@@ -50,7 +50,7 @@ rm -f m4/*
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
 %files
 %_libdir/*.so.*
@@ -63,6 +63,9 @@ rm -f m4/*
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Mon Apr 24 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
+- 0.6.1
+
 * Thu Sep 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1.git20111004
 - Version 0.5.0
 
