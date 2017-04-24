@@ -3,7 +3,7 @@
 
 Name: noise
 %define xdg_name org.pantheon.%name
-Version: %ver_major.0.2
+Version: %ver_major.0.3
 Release: alt1
 
 Summary: The official elementary music player
@@ -115,6 +115,9 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 #    /usr/share/vala/vapi/%name-core.vapi
 
 %changelog
+* Mon Apr 24 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.0.3-alt1
+- 0.4.0.3
+
 * Tue Jan 10 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.0.2-alt1
 - 0.4.0.2
 
