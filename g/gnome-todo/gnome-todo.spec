@@ -1,12 +1,12 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.22
+%define ver_major 3.24
 %define api_ver 1.0
 %define xdg_name org.gnome.Todo
 
 Name: gnome-todo
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Todo manager for GNOME
@@ -30,7 +30,7 @@ AutoReqProv: nopython
 BuildPreReq: rpm-build-python3 python3-devel
 Requires: libpeas-python3-loader
 
-BuildRequires: intltool yelp-tools libappstream-glib-devel gtk-doc
+BuildRequires: yelp-tools libappstream-glib-devel gtk-doc
 BuildRequires: libgtk+3-devel >= %gtk_ver evolution-data-server-devel >= %eds_ver
 BuildRequires: libgnome-online-accounts-devel libical-devel libpeas-devel
 BuildRequires: libgtk+3-gir-devel
@@ -83,9 +83,12 @@ GObject introspection devel data for the GNOME Todo.
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
 %_libdir/%name/plugins/*
+%dir %_datadir/%name
+%_datadir/%name/%xdg_name.Autostart.desktop
 %_desktopdir/%xdg_name.desktop
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/org.gnome.todo.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.todo.background.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.todo.enums.xml
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
@@ -104,6 +107,9 @@ GObject introspection devel data for the GNOME Todo.
 %_girdir/Gtd-%api_ver.gir
 
 %changelog
+* Mon Apr 24 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Tue Dec 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 
