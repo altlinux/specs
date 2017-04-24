@@ -2,7 +2,7 @@
 
 Name: %base_name-source
 Version: 7.2
-Release: alt1
+Release: alt2
 
 Group: Graphics
 Summary: Graphical boot logo sources
@@ -34,6 +34,9 @@ cp -a * %buildroot/usr/src/%base_name-source
 /usr/src/%base_name-source
 
 %changelog
+* Mon Apr 24 2017 Oleg Solovyov <mcpain@altlinux.org> 7.2-alt2
+- Fixed exiting message translation
+
 * Wed Dec 02 2015 Aleksey Avdeev <solo@altlinux.org> 7.2-alt1
 - Fix use 'defined(%hash)' (for perl 5.22)
 
