@@ -1,6 +1,6 @@
 Name: man-pages-ru-extra
 Version: 0.1
-Release: alt2
+Release: alt3
 
 Summary: Extra collection of Russian translations of OS GNU/*/Linux manpages
 Summary(ru_RU.UTF-8): Дополнительный набор русских переводов страниц руководства по ОС GNU/*/Linux
@@ -101,6 +101,12 @@ fi
 %_cachedir/man/ru/cat*
 
 %changelog
+* Mon Apr 24 2017 Sergey Y. Afonin <asy@altlinux.ru> 0.1-alt3
+- removed man page manpages-ru-0.98/man2/obsolete.2 (was label "Linux 2.0");
+- removed man pages which available in 4.08-alt3 (2329-2329-20170422):
+- converted all to UTF-8
+- added coding UTF-8 to all man pages (Closes: #33265)
+
 * Tue Apr 18 2017 Artem Zolochevskiy <azol@altlinux.org> 0.1-alt2
 - update sources.list (Closes: 33368)
 
