@@ -1,5 +1,5 @@
 Name: libmodplug
-Version: 0.8.8.5
+Version: 0.8.9.0
 Release: alt1
 
 Summary: Modplug mod music file format library
@@ -7,16 +7,12 @@ License: Public Domain
 Group: Sound
 
 Url: http://modplug-xmms.sourceforge.net/
-# http://download.sourceforge.net/modplug-xmms/%name-%version.tar.gz
+# https://download.sourceforge.net/modplug-xmms/%name-%version.tar.gz
 Source: %name-%version.tar
-Patch0: libmodplug-0.8.8.1-rh-timidity.patch
-Patch1: libmodplug-0.8.8.5-alt-no-overflow.patch
+Patch0: libmodplug-rh-timidity.patch
+Patch1: libmodplug-0001-Do-not-overwrite-const-file-data-provided-by-the-use.patch
 
 BuildRequires: gcc-c++
-
-# backwards compatibility
-%{expand:%%define lib_suffix %(test %_lib != lib64 && echo %%nil || echo '()(64bit)')}
-Provides: libmodplug.so.0%lib_suffix
 
 %description
 This is a library based on the mod rendering code from ModPlug.
@@ -36,25 +32,29 @@ for the software development using libmodplug library.
 %patch1 -p1
 
 %build
-#add_optflags -fpermissive
+%add_optflags %(getconf LFS_CFLAGS)
 %configure
 %make_build
 
 %install
 %makeinstall_std
-# backwards compatibility
-ln -s libmodplug.so.1.0.0 %buildroot%_libdir/libmodplug.so.0
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
 
 %files
 %_libdir/*.so.*
 %doc AUTHORS ChangeLog COPYING README
 
 %files devel
-%_libdir/*.so
-%_includedir/*
-%_pkgconfigdir/*
+%_libdir/%name.so
+%_includedir/%name/
+%_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Apr 24 2017 Dmitry V. Levin <ldv@altlinux.org> 0.8.9.0-alt1
+- 0.8.8.5 -> 0.8.9.0.
+
 * Wed Sep 10 2014 Michael Shigorin <mike@altlinux.org> 0.8.8.5-alt1
 - 0.8.8.5
   + CVE-2013-4233, CVE-2013-4234 fixes
