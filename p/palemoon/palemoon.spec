@@ -2,10 +2,12 @@ Summary: The New Moon browser, an unofficial branding of the Pale Moon project b
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 27.2.1
-Release: alt2.0
+Version: 27.3.0
+Release: alt0.git_f269589
 License: MPL/GPL/LGPL
 Group: Networking/WWW
+
+# git commit f2695891c96250bfde630acdf2f5babe31c750f5
 Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
@@ -542,7 +544,7 @@ install -D -m 644 %SOURCE9 ../
 install -D -m 644 %SOURCE10 ../
 install -D -m 644 AUTHORS ../
 install -D -m 644 LICENSE ../
-
+install -D -m 644 README.md ../
 
 %post -n %bname-base
  for n in libfreeblpriv3.chk libnssdbm3.chk libsoftokn3.chk; do
@@ -599,7 +601,7 @@ install -D -m 644 LICENSE ../
 %_liconsdir/%bname.png
 
 %files -n %bname-base
-%doc AUTHORS LICENSE HISTORY_GIT Changelog
+%doc AUTHORS LICENSE HISTORY_GIT Changelog README.md
 %_altdir/%bname
 %_bindir/%sname
 
@@ -619,6 +621,9 @@ install -D -m 644 LICENSE ../
 %exclude %_datadir/idl/*
 
 %changelog
+* Sun Apr 23 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.3.0-alt0.git_f269589
+- Update from github branch b27.3 commit f2695891c96250bfde630acdf2f5babe31c750f5
+
 * Mon Apr 10 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.2.1-alt2.0
 - Change %%palemoon_prefix, %%palemoon_bindir
 
