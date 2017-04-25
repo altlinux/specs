@@ -169,7 +169,7 @@
 # }}}
 
 Name: qemu
-Version: 2.8.0
+Version: 2.9.0
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -196,7 +196,7 @@ BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static
 BuildRequires: texinfo perl-podlators libattr-devel libcap-devel libcap-ng-devel
 BuildRequires: libxfs-devel
 BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
-BuildRequires: ipxe-roms-qemu >= 1:20161208-alt1.git26050fd seavgabios seabios >= 1.7.4-alt2 libfdt-devel >= 1.4.0
+BuildRequires: ipxe-roms-qemu >= 1:20161208-alt1.git26050fd seavgabios seabios >= 1.7.4-alt2 libfdt-devel >= 1.4.2
 BuildRequires: libpixman-devel >= 0.21.8
 BuildRequires: iasl
 BuildRequires: libpcre-devel-static
@@ -662,6 +662,8 @@ fi
 %if_enabled vnc_sasl
 %config(noreplace) %_sysconfdir/sasl2/%name.conf
 %endif
+%_man7dir/qemu-ga-ref.*
+%_man7dir/qemu-qmp-ref.*
 
 %files system -f %name.lang
 %_bindir/qemu
@@ -714,6 +716,9 @@ fi
 %_bindir/ivshmem-server
 
 %changelog
+* Fri Apr 21 2017 Alexey Shabalin <shaba@altlinux.ru> 2.9.0-alt1
+- 2.9.0
+
 * Wed Dec 21 2016 Alexey Shabalin <shaba@altlinux.ru> 2.8.0-alt1
 - 2.8.0
 - enable xen support
