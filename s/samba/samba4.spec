@@ -38,8 +38,8 @@
 %def_with libcephfs
 
 Name: samba
-Version: 4.6.2
-Release: alt3%ubt
+Version: 4.6.3
+Release: alt1%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -1396,6 +1396,9 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Tue Apr 25 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.3-alt1%ubt
+- Udpate to second spring release
+
 * Wed Apr 19 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.2-alt3%ubt
 - Remove conflict winbind with libwbclient-sssd due upgrade problems
 

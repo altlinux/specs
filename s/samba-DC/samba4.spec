@@ -45,8 +45,8 @@
 %def_with libcephfs
 
 Name:    samba-DC
-Version: 4.6.2
-Release: alt2%ubt
+Version: 4.6.3
+Release: alt1%ubt
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -296,7 +296,10 @@ Requires: %name-common = %version-%release
 Requires: %name-libs = %version-%release
 Conflicts: %rname-winbind
 %if_with libwbclient
-Conflicts: libwbclient-sssd
+# There are working configurations exists where samba-winbind could be
+# using with sssd. Also it could be already installed from installation DVD.
+## Conflicts: libwbclient-sssd
+Requires: libwbclient-DC
 %endif
 
 %description winbind
@@ -1328,6 +1331,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Tue Apr 25 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.3-alt1%ubt
+- Udpate to second spring release
+- Remove conflict winbind with libwbclient-sssd due upgrade problems
+
 * Wed Apr 12 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.2-alt2%ubt
 - Fix problem with failed to create kerberos keytab during join to domain
 
