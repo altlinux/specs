@@ -1,5 +1,5 @@
 Name: libbrotli
-Version: 0.5.2
+Version: 0.6.0
 Release: alt1
 
 Summary: Library implementing the Brotli compression algorithm
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 
-BuildRequires: rpm-macros-cmake cmake
+BuildRequires: rpm-macros-cmake cmake ctest
 
 %description
 Brotli is a generic-purpose lossless compression algorithm that
@@ -34,10 +34,22 @@ compresses data using a combination of a modern variant of the LZ77
 algorithm, Huffman coding and 2nd order context modeling. It is
 similar in speed with "DEFLATE" but offers more dense compression.
 
+%package -n libbrotlicommon0
+Summary: Library implementing the Brotli common functions
+License: Apache-2.0
+Group: System/Libraries
+
+%description -n libbrotlicommon0
+Brotli is a generic-purpose lossless compression algorithm that
+compresses data using a combination of a modern variant of the LZ77
+algorithm, Huffman coding and 2nd order context modeling. It is
+similar in speed with "DEFLATE" but offers more dense compression.
+
 %package -n libbrotlidec0
 Summary: Library implementing the Brotli decompressor
 License: Apache-2.0
 Group: System/Libraries
+Requires: libbrotlicommon0 = %version-%release
 
 %description -n libbrotlidec0
 Brotli is a generic-purpose lossless compression algorithm that
@@ -49,6 +61,7 @@ similar in speed with "DEFLATE" but offers more dense compression.
 Summary: Library implementing the Brotli compressor
 License: Apache-2.0
 Group: System/Libraries
+Requires: libbrotlicommon0 = %version-%release
 
 %description -n libbrotlienc0
 Brotli is a generic-purpose lossless compression algorithm that
@@ -60,8 +73,9 @@ similar in speed with "DEFLATE" but offers more dense compression.
 Summary: Library implementing the Brotli compression algorithm
 License: Apache-2.0
 Group: Development/C++
-Requires: libbrotlidec0 = %version
-Requires: libbrotlienc0 = %version
+Requires: libbrotlidec0 = %version-%release
+Requires: libbrotlienc0 = %version-%release
+Requires: libbrotlicommon0 = %version-%release
 
 %description devel
 Brotli is a generic-purpose lossless compression algorithm that
@@ -74,8 +88,6 @@ applications that want to make use of libcerror.
 
 %prep
 %setup
-%__subst "s|brotli_enc STATIC|brotli_enc SHARED|g" CMakeLists.txt
-%__subst "s|brotli_dec STATIC|brotli_dec SHARED|g" CMakeLists.txt
 
 %build
 %cmake_insource
@@ -83,33 +95,32 @@ applications that want to make use of libcerror.
 
 %install
 %makeinstall_std
-mkdir -p %buildroot/%_libdir/
-cp -a libbrotli*.so* %buildroot/%_libdir/
-mkdir -p %buildroot%_includedir/brotli/{common,dec,enc}/
-cp -a common/*.h %buildroot%_includedir/brotli/common/
-cp -a dec/decode.h %buildroot%_includedir/brotli/dec/
-cp -a enc/encode.h %buildroot%_includedir/brotli/enc/
 
 %check
-# TODO: wait for correct linking
-#make test
+LD_LIBRARY_PATH=$(pwd) make test
 
 %files -n brotli
 %_bindir/bro
 
+%files -n libbrotlicommon0
+%_libdir/libbrotlicommon.so.%version
+
 %files -n libbrotlidec0
-%_libdir/libbrotli_dec.so.0*
+%_libdir/libbrotlidec.so.%version
 
 %files -n libbrotlienc0
-%_libdir/libbrotli_enc.so.0*
+%_libdir/libbrotlienc.so.%version
 
 %files devel
 %_includedir/brotli/
-%_libdir/libbrotli_*.so
-#%_pkgconfigdir/*.pc
+%_libdir/libbrotli*.so
+%_pkgconfigdir/*.pc
 %doc README.md LICENSE CONTRIBUTING.md
 
 %changelog
+* Tue Apr 25 2017 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt1
+- new version 0.6.0 (with rpmrb script)
+
 * Thu Mar 16 2017 Vitaly Lipatov <lav@altlinux.ru> 0.5.2-alt1
 - initial build for ALT Linux Sisyphus
 
