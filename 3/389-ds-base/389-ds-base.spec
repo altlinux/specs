@@ -4,7 +4,7 @@
 
 Summary: 389 Directory Server (base)
 Name: 	 389-ds-base
-Version: 1.3.6.3
+Version: 1.3.6.4
 Release: alt1
 License: GPLv3+ with exceptions
 Url: 	 http://port389.org
@@ -17,6 +17,7 @@ Patch1:  alt-fix-initscripts.patch
 Patch2:  alt-bash3-support.patch
 Patch3:  alt-fix-sasl2.patch
 Patch4:  alt-fix-const-declatations.patch
+Patch5:  alt-link-libsds-with-pthread.patch
 
 BuildRequires: 389-adminutil-devel gcc-c++ libdb4-devel libicu-devel 
 BuildRequires: libldap-devel libnet-snmp-devel libnl-devel libpam-devel 
@@ -93,6 +94,7 @@ and without the main package.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %autoreconf
 # Install SysVInit scripts anyway
@@ -148,6 +150,10 @@ mv %buildroot%_libdir/%pkgname/*.so* %buildroot%_libdir/
 # Copy in our docs from doxygen
 mkdir -p %buildroot%_man3dir
 cp man/man3/* %buildroot%_man3dir
+
+# Fix path to systemctl in scripts
+subst 's,%_bindir/systemctl,/bin/systemctl,' %buildroot%_sbindir/*-dirsrv
+
 
 %files
 %doc LICENSE LICENSE.GPLv3+ LICENSE.openssl README 
@@ -206,6 +212,10 @@ Turn 389-ds off and make 'setup-ds -u' then"
 %preun_service %pkgname-snmp
 
 %changelog
+* Mon Apr 24 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.6.4-alt1
+- New version
+- Fix path to systemctl in scripts (ALT #33392)
+
 * Mon Mar 27 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.6.3-alt1
 - New version
 - Fix type conflict for snmptrap_oid and snmptrap_oid_len (ALT #33282)
