@@ -1,5 +1,5 @@
 Name: freeswitch
-Version: 1.6.15
+Version: 1.6.17
 Release: alt1%ubt
 Epoch: 1
 
@@ -23,7 +23,7 @@ BuildRequires: gdbm-devel db4-devel libldap-devel libcurl-devel libjpeg-devel
 BuildRequires: libspeex-devel libspeexdsp-devel libsqlite3-devel libX11-devel libmp4v2-devel
 BuildRequires: libxmlrpc-devel libyaml-devel libiksemel-devel libedit-devel
 BuildRequires: libsndfile-devel libpcre-devel liblua5-devel
-BuildRequires: libilbc1-devel >= 0.0.2-alt3 libjs-devel libjson-devel flite-devel
+BuildRequires: libilbc1-devel >= 0.0.2-alt3 libjs-devel flite-devel
 BuildRequires: libtiff-devel libldap-devel libsoundtouch-devel libldns-devel
 BuildRequires: libpcap-devel perl-devel python-devel
 BuildRequires: libcelt-devel libmpg123-devel liblame-devel libshout2-devel
@@ -620,6 +620,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Tue Apr 25 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.17-alt1%ubt
+- new version
+
 * Wed Feb 15 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.15-alt1%ubt
 - new version
 
