@@ -1,11 +1,8 @@
 %global origname Cutegram
 
-%global commit bfdceb350b593bc26133e6f4e29ce84bf89952fb
-%global shortcommit %(c=%commit; echo ${c:0:7})
-
 Name: cutegram
 Version: 2.99
-Release: alt1.git_0_bfdceb
+Release: alt1.git_1_e489812
 Summary: Cutegram is a telegram client by Aseman Land
 
 # Bundled JS stuff:
@@ -18,17 +15,23 @@ Url: https://github.com/Aseman-Land/%origname
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source: %name-%version.tar
+
+Patch: cutegram-2.99-dialog_fix.patch
+
 # https://github.com/Aseman-Land/Cutegram/pull/233
-Patch1: 0001-Install-cutegram-binary-when-BinaryMode-is-enabled.patch
-Patch2: 0002-desktop-Exec-cutegram-when-binaryMode-is-enabled.patch
-Patch3: 0003-don-t-install-qmlFiles-when-binaryMode-is-enabled.patch
+#  Patch1: 0001-Install-cutegram-binary-when-BinaryMode-is-enabled.patch
+#  Patch2: 0002-desktop-Exec-cutegram-when-binaryMode-is-enabled.patch
+#  Patch3: 0003-don-t-install-qmlFiles-when-binaryMode-is-enabled.patch
+
+
 
 BuildRequires(pre): rpm-macros-qt5
 
-# Automatically added by buildreq on Fri Apr 21 2017
+# Automatically added by buildreq on Sat Apr 22 2017
 # optimized out: gcc-c++ libGL-devel libqt5-core libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-widgets libstdc++-devel python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-script-devel qt5-webchannel-devel qt5-xmlpatterns-devel
-BuildRequires: python3-module-zope qt5-3d-devel qt5-connectivity-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-quickcontrols2-devel qt5-sensors-devel
-BuildRequires: qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel
+BuildRequires: python3-module-zope qt5-3d-devel qt5-connectivity-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-quickcontrols2-devel qt5-sensors-devel 
+BuildRequires:qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel
+
 
 Requires: aseman-qt-tools
 Requires: telegramqml
@@ -40,9 +43,11 @@ license.
 
 %prep
 %setup -n %name-%version 
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%patch -p1
+
+#patch1 -p1
+#patch2 -p1
+#patch3 -p1
 
 
 %build
@@ -62,6 +67,9 @@ INSTALL_ROOT=%buildroot %makeinstall_std
 %_desktopdir/%origname.desktop
 
 %changelog
+* Sat Apr 22 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2.99-alt1.git_1_e489812
+- New version from git e489812
+
 * Fri Apr 21 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2.99-alt1.git_0_bfdceb
 - initial build for ALT Linux Sisyphus
 

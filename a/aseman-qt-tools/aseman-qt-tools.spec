@@ -1,6 +1,6 @@
 Name: aseman-qt-tools
 Version: 1.0.0
-Release: alt1
+Release: alt1.0.git_fb538c7
 Summary: Shared tools and functions, used in the aseman's projects
 
 License: GPLv3+
@@ -53,6 +53,9 @@ INSTALL_ROOT=%buildroot %makeinstall_std
 %_qt5_qmldir/AsemanTools/
 
 %changelog
+* Sat Apr 22 2017 Hihin Ruslan <ruslandh@altlinux.ru> 1.0.0-alt1.0.git_fb538c7
+- Update ftom git
+
 * Fri Apr 21 2017 Hihin Ruslan <ruslandh@altlinux.ru> 1.0.0-alt1
 - initial build for ALT Linux Sisyphus
 
