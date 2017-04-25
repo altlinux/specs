@@ -2,8 +2,8 @@
 ## Used in Dist::Zilla
 
 Name: perl-PPI-XS
-Version: 0.902
-Release: alt1.1.1
+Version: 0.904
+Release: alt1
 
 Summary: Perl module with XS acceleration for PPI
 
@@ -43,6 +43,9 @@ faster C versions.
 %perl_vendor_autolib/PPI/XS*
 
 %changelog
+* Tue Apr 25 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.904-alt1
+- New version
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.902-alt1.1.1
 - rebuild with new perl 5.24.1
 
