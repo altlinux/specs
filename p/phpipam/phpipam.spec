@@ -1,7 +1,7 @@
 
 Name: phpipam
 Version: 1.30.000
-Release: alt0.3
+Release: alt0.4
 Summary: PHP-based virtual machine control tool
 Group: Networking/WWW
 License: GPLv3
@@ -120,6 +120,9 @@ rm -rf %buildroot%webserver_webappsdir/%name/functions/PHPMailer/test
 %files php7
 
 %changelog
+* Tue Apr 25 2017 Alexey Shabalin <shaba@altlinux.ru> 1.30.000-alt0.4
+- git snapshot of master branch 377139d7489376ac3622d936dbce16b1823358a1
+
 * Thu Mar 16 2017 Alexey Shabalin <shaba@altlinux.ru> 1.30.000-alt0.3
 - git snapshot of master branch 80c3f0614ed9d9d694592f7d0cb38e0b731892e7
 
