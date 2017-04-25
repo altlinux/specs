@@ -107,7 +107,7 @@
 
 Name: libvirt
 Version: 3.2.0
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -1247,6 +1247,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Apr 25 2017 Alexey Shabalin <shaba@altlinux.ru> 3.2.0-alt2
+- backport fixes from upstream master (ALT#33413)
+
 * Thu Apr 13 2017 Alexey Shabalin <shaba@altlinux.ru> 3.2.0-alt1
 - 3.2.0
 - check running messagebus service before run libvirtd(ALT#32479)
