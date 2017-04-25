@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define xdg_name org.gnome.FontManager
@@ -8,15 +9,20 @@
 
 Name: font-manager
 Version: 0.7.3
-Release: alt1
+Release: alt2
 
 Summary: A font management application for the GNOME desktop
 License: GPLv3
 Group: Graphical desktop/GNOME
 Url: http://fontmanager.github.io/
 
-# VCS: https://github.com/FontManager/master.git
+%if_disabled snapshot
 Source: https://github.com/FontManager/master/releases/download/%version/%name-%version.tar.bz2
+%else
+# VCS: https://github.com/FontManager/master.git
+Source: %name-%version.tar
+%endif
+Patch: %name-0.7.3-alt-vala_0.36.patch
 
 %{?_with_file_roller:Requires: file-roller}
 
@@ -43,6 +49,7 @@ Enlightenment, and even KDE.
 
 %prep
 %setup
+%patch
 
 %build
 %autoreconf
@@ -76,6 +83,9 @@ Enlightenment, and even KDE.
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Tue Apr 25 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.3-alt2
+- updated to 0.7.3-11-gb4ee339
+
 * Fri Oct 28 2016 Yuri N. Sedunov <aris@altlinux.org> 0.7.3-alt1
 - 0.7.3
 
