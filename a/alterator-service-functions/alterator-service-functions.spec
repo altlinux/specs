@@ -1,6 +1,6 @@
 Name: alterator-service-functions
 Version: 2.0.3
-Release: alt1
+Release: alt2
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
@@ -25,6 +25,9 @@ Helpers for common service management
 %_bindir/*
 
 %changelog
+* Tue Apr 25 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.3-alt2
+- Fix: Do not call SysV by accident when 'systemctl' fails.
+
 * Fri Jul 11 2014 Mikhail Efremov <sem@altlinux.org> 2.0.3-alt1
 - sd_service_control: Fix condreload.
 
