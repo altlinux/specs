@@ -1,6 +1,6 @@
 Name: guile22
-Version: 2.2.0
-Release: alt2
+Version: 2.2.1
+Release: alt1
 
 Summary: A GNU implementation of Scheme
 License: GPL
@@ -51,9 +51,7 @@ mv %buildroot%_man1dir/guile.1 %buildroot%_man1dir/guile22.1
 install -pm0644 -D guile.alternatives %buildroot%_altdir/%name
 install -pm0644 -D guile.macros %buildroot%_rpmmacrosdir/guile
 
-%brp_strip_none %_libdir/guile/2.2/ccache/*
-%add_verify_elf_skiplist %_libdir/guile/2.2/ccache/*
-%add_findreq_skiplist %_bindir/guile-config %_libdir/guile/2.2/ccache/*
+%add_findreq_skiplist %_bindir/guile-config
 
 %files
 %_altdir/%name
@@ -77,6 +75,9 @@ install -pm0644 -D guile.macros %buildroot%_rpmmacrosdir/guile
 %_infodir/*.info*
 
 %changelog
+* Thu Apr 20 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.1-alt1
+- 2.2.1 released
+
 * Wed Apr 12 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt2
 - fix regex module
 
