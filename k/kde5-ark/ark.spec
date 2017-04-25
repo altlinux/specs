@@ -1,11 +1,11 @@
 %define rname ark
 
-%define sover 16
+%define sover 17
 %define libkerfuffle libkerfuffle%sover
 
 Name: kde5-%rname
-Version: 16.12.3
-Release: alt1%ubt
+Version: 17.04.0
+Release: alt0.1%ubt
 %K5init altplace
 
 Group: Archiving/Compression
@@ -16,6 +16,7 @@ License: GPLv2+ / LGPLv2+
 Requires: unrar p7zip unzip zip
 
 Source: %rname-%version.tar
+Patch1: alt-clizip-priority.patch
 
 # Automatically added by buildreq on Wed Aug 05 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base ruby ruby-stdlibs xml-common xml-utils zlib-devel
@@ -24,7 +25,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: bzlib-devel libarchive-devel liblzma-devel zlib-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
-BuildRequires: kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
+BuildRequires: kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kitemmodels-devel
 BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
 BuildRequires: kf5-kglobalaccel-devel kf5-khtml-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
 BuildRequires: kf5-kjs-devel kf5-knotifications-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwallet-devel
@@ -58,6 +59,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -100,6 +102,10 @@ mv %buildroot/%_K5xdgmime/kerfuffle{,5}.xml
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Tue Apr 25 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt0.1%ubt
+- new version
+- fix zip filenames encoding (ALT#33230)
+
 * Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 
