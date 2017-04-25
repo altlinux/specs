@@ -1,6 +1,6 @@
 Name: 	  nagwad
 Version:  0.8
-Release:  alt1%ubt
+Release:  alt2%ubt
 
 Summary:  Nagios watch daemon
 License:  GPLv3
@@ -29,9 +29,6 @@ alerts when unauthorized USB devices are inserted.
 
 Summary: Osec job started from systemd unit
 Group: System/Servers
-
-%description -n osec-timerunit
-A set of systemd units that allow periodical start of osec job without using cron
 Requires: systemd
 Requires: osec-mailreport
 Conflicts: osec-cronjob
@@ -41,6 +38,9 @@ Provides: osec-cronjob = 1.2.7-alt3.M80C.1
 Provides: osec-cronjob
 %endif
 
+
+%description -n osec-timerunit
+A set of systemd units that allow periodical start of osec job without using cron
 
 %package server
 
@@ -117,6 +117,9 @@ install -Dm 0755 osec/* %buildroot/etc/osec/
 %_unitdir/osec.timer
 
 %changelog
+* Mon Apr 24 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.8-alt2%ubt
+- move provides/conflicts for osec-timerunit from description
+
 * Fri Apr 14 2017 Denis Medvedev <nbr@altlinux.org> 0.8-alt1%ubt
 - extracted osec-timerunit package
 
