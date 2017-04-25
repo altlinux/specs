@@ -1,6 +1,6 @@
 Name:    alterator-net-domain
 Version: 0.7.0
-Release: alt2
+Release: alt3
 Source:  %name-%version.tar
 
 Summary: Alterator module to provision system network domain
@@ -39,6 +39,12 @@ and FreeIPA domain.
 %_bindir/*-sh-functions
 
 %changelog
+* Tue Apr 25 2017 Paul Wolneykien <manowar@altlinux.org> 0.7.0-alt3
+- Do not explicitly depend on '389-ds-base'.
+- Make use of 'alterator-service-functions' to control the system servies.
+- Cleanup the Kerberos configuration before Samba AD setup (closes: 33409).
+- Improved IPA installed/uninstalled status detection.
+
 * Wed Apr 19 2017 Paul Wolneykien <manowar@altlinux.org> 0.7.0-alt2
 - Do not explicitly depend on 'freeipa-server'.
 
