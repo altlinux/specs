@@ -4,7 +4,7 @@
 
 Summary: 389 Directory Server (base)
 Name: 	 389-ds-base
-Version: 1.3.6.4
+Version: 1.3.7.0
 Release: alt1
 License: GPLv3+ with exceptions
 Url: 	 http://port389.org
@@ -212,6 +212,9 @@ Turn 389-ds off and make 'setup-ds -u' then"
 %preun_service %pkgname-snmp
 
 %changelog
+* Wed Apr 26 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.7.0-alt1
+- New version
+
 * Mon Apr 24 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.6.4-alt1
 - New version
 - Fix path to systemctl in scripts (ALT #33392)
