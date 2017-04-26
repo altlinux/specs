@@ -1,4 +1,4 @@
-# 5.3.0.3
+# 5.3.2.2
 %def_without forky
 %def_without python
 %def_with parallelism
@@ -7,7 +7,7 @@
 
 Name: LibreOffice
 %define hversion 5.3
-%define urelease 0.3
+%define urelease 2.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -50,14 +50,20 @@ Patch1: FC-0001-installation-fix.patch
 Patch2: FC-0001-never-run-autogen.sh.patch
 Patch3: FC-0001-add-X-TryExec-entries-to-desktop-files.patch
 Patch4: FC-0001-don-t-suppress-crashes.patch
-Patch5: FC-0001-rhbz-1353069-don-t-record-undo-information-in-the-cl.patch
-Patch6: FC-0001-change-from-glew-to-epoxy.patch
-Patch7: FC-0001-gtk3-implement-opengl-support-for-slideshow.patch
-Patch8: FC-0001-lower-the-system-epoxy-requirement.patch
-Patch9: FC-0001-disable-libe-book-support.patch
-Patch10: FC-0001-fix-build-of-bundled-libzmf-with-boost-1.56.patch
-Patch11: FC-0001-allow-to-build-bundled-libzmf-on-aarch64.patch
-Patch12: FC-0001-impl.-missing-function.patch
+Patch5: FC-0001-change-from-glew-to-epoxy.patch
+Patch6: FC-0001-gtk3-implement-opengl-support-for-slideshow.patch
+Patch7: FC-0001-lower-the-system-epoxy-requirement.patch
+Patch8: FC-0001-Resolves-tdf-105998-distort-hairline-borders-to-fall.patch
+Patch9: FC-0001-Related-rhbz-1422353-make-writer-behave-like-calc-an.patch
+Patch10: FC-0001-right-click-to-insert-image.patch
+Patch11: FC-0001-Related-tdf-106100-recover-mangled-svg-in-presentati.patch
+Patch12: FC-0001-Resolves-tdf-106645-gtk3-scrollbar-is-too-wide.patch
+Patch13: FC-0001-Related-rhbz-1334915-tdf-100158-hack-using-startcent.patch
+Patch14: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
+Patch15: FC-0001-disable-libe-book-support.patch
+Patch16: FC-0001-fix-build-of-bundled-libzmf-with-boost-1.56.patch
+Patch17: FC-0001-allow-to-build-bundled-libzmf-on-aarch64.patch
+Patch18: FC-0001-impl.-missing-function.patch
 
 ## Long-term FC patches
 
@@ -213,10 +219,16 @@ echo Direct build
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-#patch9 -p1
-#patch10 -p1
-#patch11 -p1
-#patch12 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+#patch15 -p1
+#patch16 -p1
+#patch17 -p1
+#patch18 -p1
 
 ## Long-term FC patches applying
 
@@ -476,9 +488,12 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Apr 12 2017 Fr. Br. George <george@altlinux.ru> 5.3.2.2-alt1
+- Update to 5.3.2.2
+
 * Thu Feb 09 2017 Fr. Br. George <george@altlinux.ru> 5.3.0.3-alt1
 - Update to 5.3.0.3
-- Chenge versioning scheme
+- Change versioning scheme
 
 * Mon Oct 17 2016 Fr. Br. George <george@altlinux.ru> 5.2-alt4
 - Update to 5.2.3.1
