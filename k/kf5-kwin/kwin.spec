@@ -12,7 +12,7 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: kf5-%rname
-Version: 5.9.4
+Version: 5.9.5
 Release: alt1%ubt
 %K5init altplace
 
@@ -123,7 +123,7 @@ KF5 library
 
 %files
 %config(noreplace) %_K5xdgconf/*.knsrc
-%config(noreplace) %_K5xdgconf/*.categories
+%config(noreplace) %_K5xdgconf/*.*categories
 %_K5bin/kwin*
 %_K5exec/*kwin*
 %_K5lib/libkdeinit5_*.so
@@ -174,6 +174,9 @@ KF5 library
 
 
 %changelog
+* Wed Apr 26 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
+- new version
+
 * Mon Apr 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
 - new version
 

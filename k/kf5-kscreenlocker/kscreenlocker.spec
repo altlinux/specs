@@ -4,7 +4,7 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: kf5-%rname
-Version: 5.9.4
+Version: 5.9.5
 Release: alt1%ubt
 %K5init altplace
 
@@ -111,6 +111,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Wed Apr 26 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
+- new version
+
 * Mon Apr 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
 - new version
 

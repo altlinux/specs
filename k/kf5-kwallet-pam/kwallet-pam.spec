@@ -1,7 +1,7 @@
 %define rname kwallet-pam
 
 Name: kf5-%rname
-Version: 5.9.4
+Version: 5.9.5
 Release: alt1%ubt
 %K5init altplace
 
@@ -104,6 +104,9 @@ sed -i '/^Exec=/s|/pam_kwallet_init|/pam_kwallet5_init|' \
 %_K5start/pam_kwallet5_init.desktop
 
 %changelog
+* Wed Apr 26 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
+- new version
+
 * Mon Apr 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
 - new version
 
