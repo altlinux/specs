@@ -5,7 +5,7 @@
 
 Name: %{_name}-session
 Version: %ver_major.0
-Release: alt3
+Release: alt4
 
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
 License: GPLv2+
@@ -127,6 +127,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Apr 26 2017 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt4
+- add g-s-d stuff to autostart blacklist
+
 * Tue Apr 11 2017 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt3
 - add cinnamon-screensaver to requires (closes: #33332)
 
