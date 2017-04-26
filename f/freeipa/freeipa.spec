@@ -10,8 +10,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: freeipa
-Version: 4.3.2
-Release: alt9
+Version: 4.3.3
+Release: alt2
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -186,10 +186,12 @@ Requires: oddjob-mkhomedir
 Requires: sssd-krb5 >= %sssd_version
 Requires: sssd-ipa >= %sssd_version
 Requires: libsss_sudo >= %sssd_version
+Requires: krb5-kinit >= %krb5_version
 Requires: certmonger
 Requires: openntpd
 Requires: ntpdate
 Requires: nss-utils
+Requires: bind-utils
 
 %description client
 IPA is an integrated solution to provide centrally managed Identity
@@ -312,6 +314,11 @@ popd
 #cd daemons; ../autogen.sh --prefix=%_usr --sysconfdir=%_sysconfdir --localstatedir=%_localstatedir --libdir=%_libdir --mandir=%_mandir --with-openldap; cd ..
 pushd daemons
 	%autoreconf
+	# Workaround for 389-ds-devel-1.3.6.4-alt1:
+	# there config.h included in the public header and
+	# check the headers existence is not possible.
+	export ac_cv_header_dirsrv_slapi_plugin_h=yes
+	export ac_cv_header_dirsrv_repl_session_plugin_h=yes
 	%configure --with-openldap
 popd
 #cd install; ../autogen.sh --prefix=%_usr --sysconfdir=%_sysconfdir --localstatedir=%_localstatedir --libdir=%_libdir --mandir=%_mandir; cd ..
@@ -630,6 +637,14 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 %_man1dir/ipa-test-task.1.*
 
 %changelog
+* Wed Apr 26 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt2
+- Fix build with 389-ds-1.3.6.4.
+
+* Fri Apr 21 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt1
+- client: Require bind-utils.
+- client: Require krb5-kinit.
+- Updated to 4.3.3.
+
 * Tue Feb 28 2017 Mikhail Efremov <sem@altlinux.org> 4.3.2-alt9
 - Fix chown krb5.keytab.
 
