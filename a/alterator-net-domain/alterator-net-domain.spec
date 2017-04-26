@@ -1,6 +1,6 @@
 Name:    alterator-net-domain
 Version: 0.7.0
-Release: alt3
+Release: alt4
 Source:  %name-%version.tar
 
 Summary: Alterator module to provision system network domain
@@ -39,6 +39,10 @@ and FreeIPA domain.
 %_bindir/*-sh-functions
 
 %changelog
+* Wed Apr 26 2017 Paul Wolneykien <manowar@altlinux.org> 0.7.0-alt4
+- Fix: Cleanup BIND (named) configuration before enabling the service.
+- Report the IPA parameters only when the current domain type is 'ipa'.
+
 * Tue Apr 25 2017 Paul Wolneykien <manowar@altlinux.org> 0.7.0-alt3
 - Do not explicitly depend on '389-ds-base'.
 - Make use of 'alterator-service-functions' to control the system servies.
