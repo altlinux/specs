@@ -11,7 +11,7 @@
 
 Name: zabbix
 Version: 3.2.5
-Release: alt1
+Release: alt2
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -514,6 +514,10 @@ fi
 %_includedir/%name
 
 %changelog
+* Wed Apr 26 2017 Alexei Takaseev <taf@altlinux.org> 1:3.2.5-alt2
+- Change default LOAD_MODULE_PATH from %%_libdir/modules to
+  %%_libdir/zabbix/modules (ALT#33418)
+
 * Fri Apr 21 2017 Alexei Takaseev <taf@altlinux.org> 1:3.2.5-alt1
 - 3.2.5
 
