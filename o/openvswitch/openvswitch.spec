@@ -3,9 +3,11 @@
 %def_without ksrc
 %def_without xenserver
 %def_with debugtools
+%def_with dpdk
+%def_with python3
 
 Name: openvswitch
-Version: 2.5.1
+Version: 2.7.0
 Release: alt1
 
 Summary: An open source, production quality, multilayer virtual switch
@@ -36,8 +38,16 @@ Obsoletes: %name-ovsdbmonitor <= %name-%version
 BuildRequires: graphviz libssl-devel openssl groff
 BuildRequires: libcap-ng-devel
 BuildRequires: glibc-kernheaders
-BuildRequires: python-modules python-modules-logging python-modules-xml
+BuildRequires: python-modules python-modules-logging python-modules-xml python-module-flake8 python-module-six python-module-sphinx python-devel python-modules-json
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-six
+%endif
+
 BuildRequires: checkpolicy selinux-policy-devel
+%{?_with_dpdk:BuildRequires: dpdk-devel >= 6.11.1 libpcap-devel libnuma-devel}
 
 %define ksrcdir %_usrsrc/kernel/sources
 
@@ -68,7 +78,7 @@ Group: Networking/Other
 License: ASL 2.0
 Summary: Open vSwitch bug reporting tool
 BuildArch: noarch
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 
 %description debugtools
 This package contains ovs-bugtool to generate a debug bundle
@@ -90,7 +100,7 @@ and openvswitch-controller.
 Group: Networking/Other
 License: ASL 2.0
 Summary: Open vSwitch VTEP emulator
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description vtep
 A VTEP emulator that uses Open vSwitch for forwarding.
@@ -99,19 +109,86 @@ A VTEP emulator that uses Open vSwitch for forwarding.
 Summary: Open vSwitch Devel Libraries
 License: ASL 2.0
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Devel files for Open vSwitch.
 
+%package ovn-central
+Summary: Open vSwitch - Open Virtual Network support
+License: ASL 2.0
+Group: Networking/Other
+Requires: %name = %EVR
+Requires: %name-ovn-common = %EVR
+
+%description ovn-central
+OVN, the Open Virtual Network, is a system to support virtual network
+abstraction.  OVN complements the existing capabilities of OVS to add
+native support for virtual network abstractions, such as virtual L2 and L3
+overlays and security groups.
+
+%package ovn-host
+Summary: Open vSwitch - Open Virtual Network support
+License: ASL 2.0
+Group: Networking/Other
+Requires: %name = %EVR
+Requires: %name-ovn-common = %EVR
+
+%description ovn-host
+OVN, the Open Virtual Network, is a system to support virtual network
+abstraction.  OVN complements the existing capabilities of OVS to add
+native support for virtual network abstractions, such as virtual L2 and L3
+overlays and security groups.
+
+%package ovn-vtep
+Summary: Open vSwitch - Open Virtual Network support
+License: ASL 2.0
+Group: Networking/Other
+Requires: %name = %EVR
+Requires: %name-ovn-common = %EVR
+
+%description ovn-vtep
+OVN vtep controller
+
+%package ovn-common
+Summary: Open vSwitch - Open Virtual Network support
+License: ASL 2.0
+Group: Networking/Other
+Requires: %name = %EVR
+
+%description ovn-common
+Utilities that are use to diagnose and manage the OVN components.
+
+%package ovn-docker
+Summary: Open vSwitch - Open Virtual Network support
+License: ASL 2.0
+Group: Networking/Other
+Requires: %name = %EVR
+Requires: %name-ovn-common = %EVR
+Requires: python-module-%name = %EVR
+ 
+%description ovn-docker
+Docker network plugins for OVN.
+
 %package -n python-module-%name
 Summary: Open vSwitch python bindings
-Group: Networking/Other
+Group: Development/Python
 License: Python-2.0
 BuildArch: noarch
+%add_python_req_skip pywintypes win32con win32file msvcrt
 
 %description -n python-module-%name
 Python bindings for the Open vSwitch database
+
+%package -n python3-module-%name
+Summary: Open vSwitch python3 bindings
+Group: Development/Python3
+License: Python-2.0
+BuildArch: noarch
+%add_python3_req_skip pywintypes win32con win32file msvcrt
+
+%description -n python3-module-%name
+Python3 bindings for the Open vSwitch database
 
 %package -n bash-completion-%name
 Summary: Bash completion for systemd utils
@@ -157,6 +234,9 @@ popd
 	--disable-static \
 	--enable-shared \
 	--enable-ssl \
+%if_with dpdk
+	--with-dpdk=$(dirname %_libdir/dpdk/*/.config) \
+%endif
 	--with-rundir=%_runtimedir/%name \
 	--with-logdir=%_logdir/%name \
 	--with-dbdir=%_localstatedir/%name \
@@ -190,8 +270,8 @@ install -pDm0644 rhel/etc_logrotate.d_openvswitch \
 install -pDm0644 rhel/usr_share_openvswitch_scripts_sysconfig.template \
          %buildroot/%_sysconfdir/sysconfig/%name
 
-# without ovn services ovn-controller ovn-controller-vtep ovn-northd
-for service in openvswitch ovsdb-server ovs-vswitchd ; do
+for service in openvswitch ovsdb-server ovs-vswitchd \
+                ovn-controller ovn-controller-vtep ovn-northd; do
     install -pDm0644 \
             rhel/usr_lib_systemd_system_${service}.service \
             %buildroot%_unitdir/${service}.service
@@ -233,7 +313,10 @@ install -pDm644 \
 %endif
 
 install -d -m 0755 %buildroot%python_sitelibdir_noarch
-mv %buildroot%_datadir/%name/python/* %buildroot%python_sitelibdir_noarch
+cp -a %buildroot%_datadir/%name/python/* %buildroot%python_sitelibdir_noarch
+install -d -m 0755 %buildroot%python3_sitelibdir_noarch
+cp -a %buildroot%_datadir/%name/python/ovs %buildroot%python3_sitelibdir_noarch
+rm -rf %buildroot%_datadir/%name/python
 
 touch %buildroot%_sysconfdir/%name/conf.db
 touch %buildroot%_sysconfdir/%name/system-id.conf
@@ -244,18 +327,11 @@ install -p -m 644 -D selinux/openvswitch-custom.pp \
 # remove unpackaged files
 rm -f %buildroot%_bindir/ovs-benchmark \
     %buildroot%_bindir/ovs-parse-backtrace \
-    %buildroot%_bindir/ovs-pcap \
-    %buildroot%_bindir/ovs-tcpundump \
     %buildroot%_sbindir/ovs-vlan-bug-workaround \
     %buildroot%_man1dir/ovs-benchmark.1* \
     %buildroot%_man8dir/ovs-parse-backtrace.8* \
-    %buildroot%_man1dir/ovs-pcap.1* \
-    %buildroot%_man1dir/ovs-tcpundump.1* \
     %buildroot%_man8dir/ovs-vlan-bug-workaround.8* \
     %buildroot%_datadir/openvswitch/scripts/ovs-save
-
-# OVN disabled for now by upstream request
-find $RPM_BUILD_ROOT -name "ovn-*" | xargs rm -f
 
 %post
 %post_service %name
@@ -272,10 +348,7 @@ if [ $1 -eq 0 ] ; then
 fi
 
 %files
-%doc AUTHORS DESIGN.md INSTALL.* NOTICE
-%doc REPORTING-BUGS.md NEWS PORTING.md
-%doc CodingStyle.md README.md README-lisp.md FAQ.md
-%doc WHY-OVS.md COPYING
+%doc AUTHORS.rst COPYING NEWS NOTICE README.rst
 %_bindir/ovs-dpctl
 %_bindir/ovs-dpctl-top
 %_bindir/ovs-testcontroller
@@ -292,6 +365,7 @@ fi
 %_man1dir/ovsdb-server.1*
 %_man1dir/ovsdb-tool.1*
 %_man5dir/ovs-vswitchd.conf.db.5*
+%_man7dir/ovs-fields.7*
 %_man8dir/ovs-ctl.8*
 %_man8dir/ovs-dpctl.8*
 %_man8dir/ovs-dpctl-top.8*
@@ -316,11 +390,17 @@ fi
 %_bindir/ovs-test
 %_bindir/ovs-vlan-test
 %_bindir/ovs-l3ping
+%_bindir/ovs-pcap
+%_bindir/ovs-tcpdump
+%_bindir/ovs-tcpundump
 %_sbindir/ovs-bugtool
 %_man8dir/ovs-bugtool.8*
 %_man8dir/ovs-l3ping.8*
 %_man8dir/ovs-test.8*
 %_man8dir/ovs-vlan-test.8*
+%_man1dir/ovs-pcap.1*
+%_man8dir/ovs-tcpdump.8*
+%_man1dir/ovs-tcpundump.1*
 %_datadir/%name/bugtool-plugins/
 %_datadir/%name/scripts/ovs-bugtool*
 %python_sitelibdir_noarch/ovstest
@@ -361,7 +441,6 @@ fi
 #endif
 
 %files vtep
-%doc vtep/README.ovs-vtep.md
 %_bindir/vtep-ctl
 %_man5dir/vtep.5.*
 %_man8dir/vtep-ctl.8.*
@@ -373,9 +452,52 @@ fi
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
+
+%files ovn-docker
+%_bindir/ovn-docker-overlay-driver
+%_bindir/ovn-docker-underlay-driver
+
+%files ovn-common
+%_bindir/ovn-nbctl
+%_bindir/ovn-sbctl
+%_bindir/ovn-trace
+%_datadir/openvswitch/scripts/ovn-ctl
+%_datadir/openvswitch/scripts/ovndb-servers.ocf
+%_datadir/openvswitch/scripts/ovn-bugtool-nbctl-show
+%_datadir/openvswitch/scripts/ovn-bugtool-sbctl-lflow-list
+%_datadir/openvswitch/scripts/ovn-bugtool-sbctl-show
+%_man8dir/ovn-ctl.8*
+%_man8dir/ovn-nbctl.8*
+%_man8dir/ovn-trace.8*
+%_man7dir/ovn-architecture.7*
+%_man8dir/ovn-sbctl.8*
+%_man5dir/ovn-nb.5*
+%_man5dir/ovn-sb.5*
+
+%files ovn-central
+%_bindir/ovn-northd
+%_mandir/man8/ovn-northd.8*
+%_datadir/openvswitch/ovn-nb.ovsschema
+%_datadir/openvswitch/ovn-sb.ovsschema
+%_unitdir/ovn-northd.service
+
+%files ovn-host
+%_bindir/ovn-controller
+%_man8dir/ovn-controller.8*
+%_unitdir/ovn-controller.service
+
+%files ovn-vtep
+%_bindir/ovn-controller-vtep
+%_man8dir/ovn-controller-vtep.8*
+%_unitdir/ovn-controller-vtep.service
+
 %files -n python-module-openvswitch
 %python_sitelibdir_noarch/ovs
-#python_sitelibdir_noarch/uuid.py
+
+%if_with python3
+%files -n python3-module-openvswitch
+%python3_sitelibdir_noarch/ovs
+%endif
 
 %files selinux-policy
 %_datadir/selinux/packages/%name/openvswitch-custom.pp
@@ -389,6 +511,11 @@ fi
 %endif
 
 %changelog
+* Tue Apr 25 2017 Alexey Shabalin <shaba@altlinux.ru> 2.7.0-alt1
+- 2.7.0
+- build python3 package
+- add ovn packages
+
 * Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 2.5.1-alt1
 - 2.5.1
 
