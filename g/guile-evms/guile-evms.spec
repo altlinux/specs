@@ -1,12 +1,12 @@
 Name: guile-evms
 Version: 0.5
-Release: alt3
+Release: alt4
 
 Summary: Guile bindings for EVMS
 License: GPL
 Group: Development/Scheme
 
-BuildRequires: guile22-devel libblkid-devel libe2fs-devel libevms-devel swig
+BuildRequires: guile22-devel libblkid-devel libe2fs-devel libevms-devel swig >= 3.0.12-alt2
 
 Source: %name-%version-%release.tar
 
@@ -31,6 +31,9 @@ make install DESTDIR=%buildroot
 %guile_godir/evms.go
 
 %changelog
+* Wed Apr 26 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5-alt4
+- reswig with fixed exception wrapper
+
 * Thu Apr 20 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5-alt3
 - sporadic fix for random crashes, hopefully (closes: #33401)
 
