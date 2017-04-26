@@ -27,7 +27,7 @@
 
 Name: lxc
 Version: 2.0.7
-Release: alt3
+Release: alt4
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -168,6 +168,9 @@ mkdir -p %buildroot%_cachedir/%name
 
 
 %changelog
+* Wed Apr 26 2017 Denis Pynkin <dans@altlinux.org> 2.0.7-alt4
+- Fixes #33399
+
 * Thu Mar 30 2017 Denis Pynkin <dans@altlinux.org> 2.0.7-alt3
 - Fixes #33302
 
