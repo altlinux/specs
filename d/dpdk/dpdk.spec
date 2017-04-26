@@ -9,19 +9,26 @@
 
 %def_without doc
 
+%define sdkdir  %_libdir/%name
+%define docdir  %_docdir/%name
+%define incdir %_includedir/%name
+%define pmddir %_libdir/%name-pmds
+
+
 Name: dpdk
-Version: 16.11
-Release: alt1
+Version: 16.11.1
+Release: alt1%ubt
 Url: http://dpdk.org
 Packager: Lenar Shakirov <snejok@altlinux.ru>
 
 Source: %name-%version.tar
 
-Patch0: %name-%version-move-to-libdir.patch
+Patch0: %name-16.11-move-to-libdir.patch
 
 Summary: Set of libraries and drivers for fast packet processing
 Group: System/Libraries
 
+Provides: lib%{name} = %EVR
 #
 # Note that, while this is dual licensed, all code that is included with this
 # Pakcage are BSD licensed. The only files that aren't licensed via BSD is the
@@ -31,30 +38,39 @@ License: BSD and LGPLv2 and GPLv2
 
 #
 # The DPDK is designed to optimize througput of network traffic using, among
-# other techniques, carefully crafted x86 assembly instructions.  As such it
-# currently (and likely never will) run on non-x86 platforms
+# other techniques, carefully crafted assembly instructions.  As such it
+# needs extensive work to port it to other architectures.
 #
-ExclusiveArch: x86_64 i586
+ExclusiveArch: x86_64 %{ix86} aarch64 ppc64le
 
 # machine_arch maps between rpm and dpdk arch name, often same as _target_cpu
-%ifarch x86_64
-%define machine_arch %_target_cpu
-%else
-%define machine_arch i686
-%endif
 # machine_tmpl is the config template machine name, often "native"
-%define machine_tmpl native
 # machine is the actual machine name used in the dpdk make system
 %ifarch x86_64
+%define machine_arch x86_64
+%define machine_tmpl native
 %define machine default
 %endif
-%ifarch i586
+%ifarch %{ix86}
+%define machine_arch i686
+%define machine_tmpl native
 %define machine atm
+%endif
+%ifarch aarch64
+%define machine_arch arm64
+%define machine_tmpl armv8a
+%define machine armv8a
+%endif
+%ifarch ppc64le
+%define machine_arch ppc_64
+%define machine_tmpl power8
+%define machine power8
 %endif
 
 %define target %machine_arch-%machine_tmpl-linuxapp-gcc
 
-BuildRequires: kernel-headers, libpcap-devel, doxygen, python-module-sphinx, zlib-devel
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: glibc-kernheaders libpcap-devel doxygen python-module-sphinx zlib-devel
 BuildRequires: libnuma-devel
 %if_with pdfdoc
 BuildRequires: texlive-dejavu inkscape texlive-latex-bin-bin
@@ -73,9 +89,10 @@ fast packet processing in the user space.
 %package devel
 Summary: Data Plane Development Kit development files
 Group: System/Libraries
-Requires: %name%{?_isa} = %version-%release
+Requires: %name = %EVR
+Provides: lib%{name}-devel = %EVR
 %if_without shared
-Provides: %name-static = %version-%release
+Provides: %name-static = %EVR
 %endif
 
 %description devel
@@ -96,7 +113,7 @@ API programming documentation for the Data Plane Development Kit.
 %package tools
 Summary: Tools for setting up Data Plane Development Kit environment
 Group: Development/Documentation
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: kmod pciutils findutils iproute
 
 %description tools
@@ -114,10 +131,6 @@ Example applications utilizing the Data Plane Development Kit, such
 as L2 and L3 forwarding.
 %endif
 
-%define sdkdir  %_libdir/%name
-%define docdir  %_docdir/%name
-%define incdir %_includedir/%name
-%define pmddir %_libdir/%name-pmds
 
 %prep
 %setup
@@ -277,6 +290,9 @@ EOF
 %endif
 
 %changelog
+* Wed Apr 26 2017 Alexey Shabalin <shaba@altlinux.ru> 16.11.1-alt1%ubt
+- 16.11.1
+
 * Thu Dec 08 2016 Lenar Shakirov <snejok@altlinux.ru> 16.11-alt1
 - Initial build for ALT (based on 16.11-1.fc26.src)
 
