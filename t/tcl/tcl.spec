@@ -3,7 +3,7 @@
 
 Name: tcl
 Version: 8.6.6
-Release: alt1
+Release: alt2
 
 Summary: A Tool Command Language (TCL)
 License: BSD
@@ -123,6 +123,9 @@ install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 %_man3dir/*
 
 %changelog
+* Wed Apr 26 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.6-alt2
+- added more extra headers
+
 * Mon Mar 20 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.6-alt1
 - 8.6.6 released (closes: #31581)
 
