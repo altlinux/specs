@@ -2,7 +2,7 @@
 Name: swig
 Epoch: 1
 Version: 3.0.12
-Release: alt1
+Release: alt2
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
 License: Open Source
@@ -16,7 +16,7 @@ BuildPreReq: python-devel yodl chicken libracket-devel
 BuildPreReq: racket R-devel libpcre-devel boost-devel
 BuildPreReq: python3-devel python-tools-2to3 zlib-devel
 # Automatically added by buildreq on Thu Sep 04 2008
-BuildRequires: findlib gcc-c++ guile18-devel imake java-devel
+BuildRequires: ocaml-findlib gcc-c++ guile22-devel imake java-devel
 BuildRequires: libXt-devel liblua5-devel libruby-devel lua5.3 mono-mcs
 BuildRequires: perl-devel php5-devel python-devel ruby ruby-module-etc
 BuildRequires: tcl-devel xorg-cf-files tidy htmldoc perl-devel
@@ -212,6 +212,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Wed Apr 26 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:3.0.12-alt2
+- rebuilt with guile22
+
 * Sun Jan 29 2017 Yuri N. Sedunov <aris@altlinux.org> 1:3.0.12-alt1
 - 3.0.12
 - removed obsolete patches
