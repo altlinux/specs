@@ -16,7 +16,7 @@
 
 Name: ipxe
 Version: %date
-Release: alt1.git%{hash}
+Release: alt1.git%{hash}%ubt
 Epoch: 1
 
 Summary: PXE boot firmware
@@ -29,9 +29,10 @@ Provides: gpxe
 Obsoletes: gpxe
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version.patch
 
 Requires: ipxe-bootimgs
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: mkisofs mtools syslinux binutils-devel edk2-tools
 BuildRequires: binutils-x86_64-linux-gnu gcc-x86_64-linux-gnu
 BuildRequires: liblzma-devel
@@ -210,6 +211,9 @@ pxe_link 15ad07b0 vmxnet3
 %_datadir/%name.efi/efi-*.rom
 
 %changelog
+* Thu Apr 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1:20161208-alt1.git26050fd%ubt
+- rebuild with ubt macros
+
 * Wed Dec 28 2016 Alexey Shabalin <shaba@altlinux.ru> 1:20161208-alt1.git26050fd
 - update to latest upstream snapshot
 - build e1000e,vmxnet3 rom
