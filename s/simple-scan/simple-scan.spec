@@ -2,7 +2,7 @@
 %def_disable packagekit
 
 Name: simple-scan
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Simple scanning utility
@@ -10,8 +10,8 @@ License: GPLv3+
 Group: Graphics
 Url: http://launchpad.net/%name
 
-Source: %url/%ver_major/%version/+download/simple-scan-%version.tar.xz
-Patch: %name-3.24.0-alt-vala_0.36.patch
+#Source: %url/%ver_major/%version/+download/simple-scan-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 Requires: sane xdg-utils gnome-icon-theme colord
 
@@ -26,7 +26,6 @@ scanner and quickly have the image/document in an appropriate format.
 
 %prep
 %setup
-%patch
 find ./ -name "*.stamp" -delete
 
 %build
@@ -49,6 +48,9 @@ find ./ -name "*.stamp" -delete
 %_man1dir/*
 
 %changelog
+* Thu Apr 27 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
+- 3.24.1
+
 * Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 
