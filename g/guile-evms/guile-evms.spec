@@ -1,6 +1,6 @@
 Name: guile-evms
 Version: 0.5
-Release: alt4
+Release: alt5
 
 Summary: Guile bindings for EVMS
 License: GPL
@@ -31,6 +31,9 @@ make install DESTDIR=%buildroot
 %guile_godir/evms.go
 
 %changelog
+* Thu Apr 27 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5-alt5
+- fixed crash in alterator-vm (closes: #33401)
+
 * Wed Apr 26 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5-alt4
 - reswig with fixed exception wrapper
 
