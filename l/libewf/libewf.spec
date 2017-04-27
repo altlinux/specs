@@ -1,6 +1,6 @@
 Name: libewf
 Version: 20140608
-Release: alt1
+Release: alt1.qa1
 
 Summary: Library and tools to support the Expert Witness Compression Format
 
@@ -60,6 +60,8 @@ This package contains python bindings for libewf.
 %install
 %makeinstall_std
 
+find %buildroot -name '*.la' -delete
+
 %files
 %doc AUTHORS COPYING NEWS README
 %_bindir/*
@@ -78,6 +80,9 @@ This package contains python bindings for libewf.
 %python_sitelibdir/*.so
 
 %changelog
+* Thu Apr 27 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 20140608-alt1.qa1
+- Fixed build with gcc >= 5.
+
 * Tue Sep 02 2014 Vitaly Lipatov <lav@altlinux.ru> 20140608-alt1
 - new version 20140608 (with rpmrb script)
 
