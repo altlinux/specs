@@ -2,7 +2,7 @@
 
 Name: seabios
 Version: 1.10.2
-Release: alt1
+Release: alt1%ubt
 Summary: Open-source legacy BIOS implementation
 
 Group: Emulators
@@ -12,7 +12,7 @@ Url: http://www.seabios.org
 
 # git://git.seabios.org/seabios.git
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version-snapshot.patch
 
 Source10: config.vga.cirrus
 Source11: config.vga.isavga
@@ -25,6 +25,7 @@ Source17: config.seabios-128k
 Source18: config.seabios-256k
 Source19: config.vga.virtio
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: python-base python-modules python-modules-logging
 BuildRequires: acpica
 BuildRequires: binutils-x86_64-linux-gnu gcc-x86_64-linux-gnu
@@ -106,6 +107,9 @@ ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/s
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Thu Apr 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1.10.2-alt1%ubt
+- rebuild with ubt macros
+
 * Fri Apr 21 2017 Alexey Shabalin <shaba@altlinux.ru> 1.10.2-alt1
 - 1.10.2
 - Don't attempt to use generic reboot mechanisms on QEMU
