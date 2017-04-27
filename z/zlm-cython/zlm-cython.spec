@@ -1,12 +1,12 @@
 # this is where zabbix agent look for loadable modules:
-%define moddir %_libdir/modules
+%define moddir %_libdir/zabbix/modules
 
 %define z_dir %_sysconfdir/zabbix
 %define zlm_dir %z_dir/zlm-cython
 
 Name: zlm-cython
 Version: 0.1
-Release: alt3
+Release: alt4
 Summary: Zabbix Loadable Module which embedding Python interpreter in Zabbix server proxy or an agent
 
 Group: Development/Python
@@ -18,7 +18,7 @@ Patch0: %name-alt.patch
 BuildRequires: python-devel python-module-Cython zabbix-source libxml2-devel libelf-devel libcurl-devel libnet-snmp-devel
 
 # we need /etc/zabbix:
-Requires: zabbix-common
+Requires: zabbix-common >= 3.2.5-alt2
 
 %description
 ZLM-python is a Zabbix Loadable Module which embedding Python
@@ -42,9 +42,9 @@ cd src
 install -pm 644 zlm_python.so %buildroot%moddir/zlm_python.so
 touch %buildroot%zlm_dir/zlm_python.ini
 install -pm 644 python.cfg %buildroot%moddir/python.cfg
-ln -sf "../../..%zlm_dir/pymodules" %buildroot%moddir/pymodules
-ln -sf "../../..%zlm_dir/pydaemons" %buildroot%moddir/pydaemons
-ln -sf "../../..%zlm_dir/zlm_python.ini" %buildroot%moddir/zlm_python.ini
+ln -sf "../../../..%zlm_dir/pymodules" %buildroot%moddir/pymodules
+ln -sf "../../../..%zlm_dir/pydaemons" %buildroot%moddir/pydaemons
+ln -sf "../../../..%zlm_dir/zlm_python.ini" %buildroot%moddir/zlm_python.ini
 cp -var pydaemons %buildroot%zlm_dir
 cp -var pymodules %buildroot%zlm_dir
 
@@ -64,6 +64,9 @@ echo "LoadModule=zlm_python.so" > %buildroot%z_dir/zabbix_agentd.conf.d/%name.co
 %doc ROADMAP.md README.md doc/*.pdf
 
 %changelog
+* Thu Apr 27 2017 Terechkov Evgenii <evg@altlinux.org> 0.1-alt4
+- Update modules path (see ALT#33418)
+
 * Sun Oct 16 2016 Terechkov Evgenii <evg@altlinux.org> 0.1-alt3
 - Rebuild with zabbix-3.2
 
