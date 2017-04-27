@@ -1,10 +1,6 @@
 
-%define gpgme_sover 11
-%define libgpgme libgpgme%gpgme_sover
-%define gpgmepp_sover 6
-%define libgpgmepp libgpgmepp%gpgmepp_sover
-%define qgpgme_sover 7
-%define libqgpgme libqgpgme%qgpgme_sover
+%define rname gpgme
+
 %define gpgme_pthread_sover 11
 %define libgpgme_pthread libgpgme-pthread%gpgme_pthread_sover
 
@@ -15,9 +11,9 @@
 %add_python3_req_skip _gpgme
 %add_python_req_skip _gpgme
 
-Name: gpgme
-Version: 1.9.0
-Release: alt1%ubt
+Name: gpgme17
+Version: 1.7.1
+Release: alt3%ubt
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
 License: LGPLv2.1+
@@ -28,15 +24,12 @@ Conflicts: libgpgme-devel < 1.7
 Requires: %gpg_bin_path
 
 # ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-%version.tar.bz2
-Source: gpgme-%version.tar
-# FC
-Patch1: 0001-fix-stupid-ax_python_devel.patch
-Patch2: 0001-qt-pass-fmt-to-gpgrt_asprintf.patch
-# ALT
-Patch11: gpgme-1.4.3-alt-version-script.patch
-Patch12: gpgme-1.3.0-alt-gpgme-config-assuan.patch
-Patch13: gpgme-1.3.0-alt-tests.patch
-Patch14: gpgme-1.3.2-rh-alt-linkage.patch
+Source: %rname-%version.tar
+
+Patch1: gpgme-1.4.3-alt-version-script.patch
+Patch2: gpgme-1.3.0-alt-gpgme-config-assuan.patch
+Patch3: gpgme-1.3.0-alt-tests.patch
+Patch4: gpgme-1.3.2-rh-alt-linkage.patch
 
 
 %def_disable static
@@ -47,67 +40,32 @@ BuildRequires(pre): python-devel python3-devel
 BuildRequires: /proc gcc-c++ gnupg2 libgpg-error-devel libpth-devel libstdc++-devel libassuan-devel >= 2.0
 BuildRequires: texinfo
 BuildRequires: qt5-base-devel swig
+BuildRequires: libgpgme-devel
 
 %package common
 Summary: %name common package
 Group: System/Configuration/Other
-Conflicts: libgpgme < 1.7
 %description common
 %name common package
 
-%package -n %libgpgme
+%package -n %libgpgme_pthread
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common >= %EVR
 Requires: %gpg_bin_path
-%description -n %libgpgme
+%description -n %libgpgme_pthread
 %name library
 
-%package -n %libgpgmepp
-Group: System/Libraries
-Summary: %name library
-Requires: %name-common >= %EVR
-%description -n %libgpgmepp
-%name library
-
-%package -n %libqgpgme
-Group: System/Libraries
-Summary: %name library
-Requires: %name-common >= %EVR
-%description -n %libqgpgme
-%name library
-
-%package -n lib%name
-Summary: GnuPG Made Easy!
-Group: System/Libraries
-Requires: %libgpgme %libgpgme_pthread
-Provides: libgpgme1 = %version-%release
-Obsoletes: libgpgme1 < %version-%release
-
-%package -n lib%name-devel
-Summary: Include files for development with GPGME
-Group: Development/C
-Requires: libgpg-error-devel
-Provides: libgpgme1-devel = %version-%release
-Obsoletes: libgpgme1-devel < %version-%release
-
-%package -n lib%name-devel-static
-Summary: Static libraries for development with GPGME
-Group: Development/C
-Requires: lib%name-devel = %version-%release
-Provides: libgpgme1-devel-static = %version-%release
-Obsoletes: libgpgme1-devel-static < %version-%release
-
-%package -n python3-module-gpg
+%package -n python3-module-pyme
 Summary: Python GpgME pindings
 Group: Development/Python
-%description -n python3-module-gpg
+%description -n python3-module-pyme
 Python GpgME pindings
 
-%package -n python-module-gpg
+%package -n python-module-pyme
 Summary: Python GpgME pindings
 Group: Development/Python
-%description -n python-module-gpg
+%description -n python-module-pyme
 Python GpgME pindings
 
 %description
@@ -117,41 +75,12 @@ to public key crypto engines like GnuPG or GpgSM easier for
 applications.  GPGME provides a high-level crypto API for encryption,
 decryption, signing, signature verification and key management.
 
-%description -n lib%name
-GnuPG Made Easy (GPGME) is a C language library that allows to add
-support for cryptography to a program.  It is designed to make access
-to public key crypto engines like GnuPG or GpgSM easier for
-applications.  GPGME provides a high-level crypto API for encryption,
-decryption, signing, signature verification and key management.
-
-%description -n lib%name-devel
-GnuPG Made Easy (GPGME) is a C language library that allows to add
-support for cryptography to a program.  It is designed to make access
-to public key crypto engines like GnuPG or GpgSM easier for
-applications.  GPGME provides a high-level crypto API for encryption,
-decryption, signing, signature verification and key management.
-
-This package contains include files required for development of
-GPGME-based applications.
-
-%description -n lib%name-devel-static
-GnuPG Made Easy (GPGME) is a C language library that allows to add
-support for cryptography to a program.  It is designed to make access
-to public key crypto engines like GnuPG or GpgSM easier for
-applications.  GPGME provides a high-level crypto API for encryption,
-decryption, signing, signature verification and key management.
-
-This package contains static libraries required for development of
-GPGME-based statically linked applications.
-
 %prep
-%setup
+%setup -qn %rname-%version
 %patch1 -p1
 %patch2 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-#%patch14 -p1
+%patch3 -p1
+#%patch4 -p1
 
 rm doc/*.info* m4/{libtool,lt}*.m4
 
@@ -166,66 +95,44 @@ export PATH=$PWD/tmp_bin:$PATH
 # --enable-maintainer-mode is required to generate the info file
 # when building from CVS snapshot
 %configure \
-	--disable-silent-rules \
 	%{?cvsdate: --enable-maintainer-mode } \
 	%{subst_enable static} \
-	--disable-fd-passing \
 	--with-gpg=%gpg_bin_path \
-	--with-gpgsm=%gpgsm_bin_path \
-	#
+	--with-gpgsm=%gpgsm_bin_path
 
 %make_build MAKEINFOFLAGS=--no-split
 
 %install
 %makeinstall_std
 
+# remove unsuitable files
+rm -rf %buildroot/%_includedir
+rm -rf %buildroot/%_datadir
+rm -rf %buildroot/%_bindir
+rm -rf %buildroot/%_libdir/cmake
+rm -rf %buildroot/%_libdir/lib*.so
+rm -rf %buildroot/%_libdir/lib{q,}gpgme{pp,}.so.*
+
 #check
 #export PATH=$PWD/tmp_bin:$PATH
 #%make_build -k check
 
-%files
-%_bindir/gpgme-tool
-
 %files common
 %doc AUTHORS NEWS README THANKS
 
-%files -n python3-module-gpg
-%python3_sitelibdir/gpg*
+%files -n python3-module-pyme
+%python3_sitelibdir/pyme*
 
-%files -n python-module-gpg
-%python_sitelibdir/gpg*
+%files -n python-module-pyme
+%python_sitelibdir/pyme*
 
-%files -n lib%name-devel
-%_bindir/gpgme-config
-%_includedir/*.h
-%_includedir/gpgme++/
-%_includedir/QGpgME/
-%_includedir/qgpgme/
-%_libdir/*.so
-%_libdir/cmake/Gpgmepp/
-%_libdir/cmake/QGpgme/
-%_datadir/aclocal/*.m4
-%_infodir/*.info*
-
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/*.a
-%endif
-
-%files -n lib%name
-%files -n %libgpgme
-%_libdir/libgpgme.so.%gpgme_sover
-%_libdir/libgpgme.so.%gpgme_sover.*
-%files -n %libgpgmepp
-%_libdir/libgpgmepp.so.%gpgmepp_sover
-%_libdir/libgpgmepp.so.%gpgmepp_sover.*
-%files -n %libqgpgme
-%_libdir/libqgpgme.so.%qgpgme_sover
-%_libdir/libqgpgme.so.%qgpgme_sover.*
+%files -n %libgpgme_pthread
+%_libdir/libgpgme-pthread.so.%gpgme_pthread_sover
+%_libdir/libgpgme-pthread.so.%gpgme_pthread_sover.*
 
 %changelog
-* Wed Apr 26 2017 Sergey V Turchin <zerg@altlinux.org> 1.9.0-alt1%ubt
-- new version
+* Thu Apr 27 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.1-alt3%ubt
+- package only libgpgme-pthread and pyme
 
 * Mon Mar 06 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.1-alt2%ubt
 - clean requires
