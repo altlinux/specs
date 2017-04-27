@@ -1,6 +1,6 @@
 Name: lirc
 Version: 0.9.3a
-Release: alt1.2
+Release: alt1.3
 
 Summary: The Linux Infrared Remote Control package
 License: GPL
@@ -18,7 +18,7 @@ Patch3: lirc-0.9.2a-linking.patch
 
 Obsoletes: %name-remotes
 
-BuildRequires: libX11-devel libalsa-devel libftdi-devel python3 rpm-build-python3 xsltproc gcc-c++
+BuildRequires: libX11-devel libalsa-devel libftdi1-devel python3 rpm-build-python3 xsltproc gcc-c++
 
 Requires: liblirc = %version-%release
 
@@ -154,6 +154,9 @@ fi
 %exclude %_datadir/lirc/configs/audio.conf
 
 %changelog
+* Thu Apr 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.9.3a-alt1.3
+- build with libftdi1
+
 * Wed May 11 2016 Michael Shigorin <mike@altlinux.org> 0.9.3a-alt1.2
 - NMU: lirc(4) manpage dropped due to conflict with man-pages-4.06-alt1
 
