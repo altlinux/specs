@@ -1,6 +1,6 @@
 Name: alterator
 Version: 5.0
-Release: alt2
+Release: alt3
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -29,7 +29,7 @@ Conflicts: installer-stage2 <= 0.8-alt1
 
 BuildRequires: /proc
 BuildRequires: guile22-devel >= 2.2.0-alt2 libexpat-devel pam_userpass-devel
-BuildRequires: alterator-fbi alterator-lookout
+BuildRequires: alterator-lookout
 
 %define _alterator_datadir %_datadir/%name
 %define _alterator_libdir %_libexecdir/%name
@@ -37,10 +37,6 @@ BuildRequires: alterator-fbi alterator-lookout
 %add_findreq_skiplist %_alterator_datadir/build/profiles/*
 %add_findreq_skiplist %_alterator_datadir/build/xgettext/*
 %add_findreq_skiplist %_alterator_datadir/build/msgfmt/*
-
-%brp_strip_none %_alterator_libdir/*
-%add_verify_elf_skiplist %_alterator_libdir/*
-%add_findreq_skiplist %_alterator_libdir/*
 
 %description
 ALT Linux configurator engine
@@ -72,10 +68,8 @@ Install this package if you want to create RPM packages that use %name.
 %make check-api
 
 %install
-ln -s %_datadir/%name/interfaces/guile build/alterator #bs0
-%makeinstall GUILE_VERSION=%guile_version unitdir=%buildroot%_unitdir
-rm %buildroot%_datadir/alterator/build/alterator #bs1
-ln -s ../interfaces/guile %buildroot%_datadir/alterator/build/alterator #bs2
+%makeinstall GUILE_VERSION=%guile_version unitdir=%buildroot%_unitdir \
+	     GUILE_LOAD_PATH=%_alterator_datadir/lookout
 ln -s ../bin/alterator-cmdline %buildroot%_sbindir/
 
 #create special directories
@@ -149,6 +143,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Apr 27 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0-alt3
+- do not recompile ui index files
+
 * Tue Apr 18 2017 Ivan Zakharyaschev <imz@altlinux.org> 5.0-alt2
 - _IOLBF is deprecated; adapted the buffering mode specification
   for guile > 2
