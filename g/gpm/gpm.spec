@@ -1,6 +1,6 @@
 Name: gpm
 Version: 1.20.1
-Release: alt14
+Release: alt15
 
 Summary: A mouse server for the Linux console
 License: GPLv2+
@@ -34,8 +34,7 @@ Patch20: gpm-1.20.1-alt-mice.patch
 
 Requires: lib%name = %version-%release
 
-# Automatically added by buildreq on Sat Mar 10 2007
-BuildRequires: libncurses-devel
+BuildRequires: libncurses-devel makeinfo
 
 %package -n lib%name
 Summary: Shared library for running mouse driven programs
@@ -172,6 +171,9 @@ bzip2 -9 Changelog ||:
 %_man1dir/gpm-root.1*
 
 %changelog
+* Thu Apr 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.20.1-alt15
+- build fixed
+
 * Tue Sep 09 2014 Alexey Shabalin <shaba@altlinux.ru> 1.20.1-alt14
 - NMU: add systemd support
 
