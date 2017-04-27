@@ -3,7 +3,7 @@
 
 Name: ceph
 Version: 0.94.9
-Release: alt2
+Release: alt3
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -318,6 +318,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Wed Apr 26 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.94.9-alt3
+- Fixed build with gcc >= 6.
+
 * Mon Sep 26 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.94.9-alt2
 - fixed ceph --version
 - packed udev rules
