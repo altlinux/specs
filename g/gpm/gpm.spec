@@ -1,6 +1,6 @@
 Name: gpm
 Version: 1.20.1
-Release: alt15
+Release: alt17
 
 Summary: A mouse server for the Linux console
 License: GPLv2+
@@ -31,10 +31,14 @@ Patch17: gpm-1.20.1-alt-gpm_open-shutup.patch
 Patch18: gpm-1.20.1-alt-libm.patch
 Patch19: gpm-1.20.1-alt-AC_GNU_SOURCE.patch
 Patch20: gpm-1.20.1-alt-mice.patch
+Patch21: 0001-Un-nest-wacom-helpers-in-src-mice.c-for-Clang-compat.patch
+Patch22: 0002-Un-nest-summa-helpers-in-src-mice.c-for-Clang-compat.patch
 
 Requires: lib%name = %version-%release
 
-BuildRequires: libncurses-devel makeinfo
+# Automatically added by buildreq on Sat Mar 10 2007
+BuildRequires: libncurses-devel
+BuildRequires: makeinfo
 
 %package -n lib%name
 Summary: Shared library for running mouse driven programs
@@ -102,6 +106,8 @@ at the click of a mouse button.
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
+%patch21 -p1
+%patch22 -p1
 
 find -type f -name \*.orig -delete
 
@@ -171,8 +177,16 @@ bzip2 -9 Changelog ||:
 %_man1dir/gpm-root.1*
 
 %changelog
-* Thu Apr 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.20.1-alt15
-- build fixed
+* Thu Apr 27 2017 Dmitry V. Levin <ldv@altlinux.org> 1.20.1-alt17
+- Replaced the patch introduced in 1.20.1-alt15 with upstream patches.
+- Fixed a bug uncovered by gcc -Wmisleading-indentation.
+
+* Sat Feb 06 2016 Michael Shigorin <mike@altlinux.org> 1.20.1-alt16
+- Fixed FTBFS (BR: makeinfo).
+
+* Tue Jan 19 2016 Michael Shigorin <mike@altlinux.org> 1.20.1-alt15
+- E2K: added clang support patch by Alexander Kolesen:
+  http://lists.linux.it/pipermail/gpm/2011-April/001122.html
 
 * Tue Sep 09 2014 Alexey Shabalin <shaba@altlinux.ru> 1.20.1-alt14
 - NMU: add systemd support
