@@ -56,7 +56,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 233
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -433,6 +433,7 @@ Summary: Tools for containers and VMs
 Group: System/Configuration/Other
 Requires: %name = %EVR
 #Requires: libnss-mymachines = %EVR
+Provides: /lib/systemd/systemd-machined
 
 %description container
 Systemd tools to spawn and manage containers and virtual machines.
@@ -1913,6 +1914,9 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Thu Apr 27 2017 Anton Farygin <rider@altlinux.ru> 1:233-alt2
+- added /lib/systemd/systemd-machined provides to systemd-container
+
 * Thu Mar 02 2017 Alexey Shabalin <shaba@altlinux.ru> 1:233-alt1
 - 233
 
