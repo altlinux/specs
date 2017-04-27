@@ -16,7 +16,7 @@
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
 Version: 1.36.3
-Release: alt2
+Release: alt2%ubt
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -47,6 +47,7 @@ BuildRequires: libyajl-devel >= 2.0.4
 BuildRequires: libsystemd-journal-devel >= 196
 BuildRequires: liblzma-devel
 BuildRequires: libdbus-devel
+BuildRequires(pre): rpm-build-ubt
 # BuildRequires: supermin >= 5.1.0
 %if_enabled fuse
 BuildRequires: libfuse-devel
@@ -168,6 +169,8 @@ Requires: libvirt-daemon-driver-qemu >= 0.10.2
 # for virt-sysprep:
 Requires: %_bindir/fusermount
 Requires: %_bindir/getopt
+# for virt-df and other tools, who is working via libvirtd
+Requires: /lib/systemd/systemd-machined
 
 %description -n guestfs-tools
 This package contains miscellaneous system administrator command line
@@ -638,6 +641,11 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %endif
 
 %changelog
+* Thu Apr 27 2017 Anton Farygin <rider@altlinux.ru> 1.36.3-alt2%ubt
+- using /var/tmp for tmppath in virt-* tools instead of TMPDIR
+- added ubt tag
+- added /lib/systemd/systemd-machined  requires to guestfs-tools 
+
 * Mon Apr 03 2017 Anton Farygin <rider@altlinux.ru> 1.36.3-alt2
 - rebuild with ocaml-4
 - ocaml modules renamed back to ocaml-*
