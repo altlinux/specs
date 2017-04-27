@@ -2,8 +2,8 @@
 %def_disable openswan
 
 Name: kf5-%rname
-Version: 5.9.4
-Release: alt2%ubt
+Version: 5.9.5
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -231,6 +231,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Wed Apr 26 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
+- new version
+
 * Tue Apr 18 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt2%ubt
 - fix compile with old openconnect
 

@@ -7,8 +7,8 @@
 
 
 Name: kf5-%rname
-Version: 5.9.4
-Release: alt2%ubt
+Version: 5.9.5
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -202,6 +202,9 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Wed Apr 26 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
+- new version
+
 * Thu Apr 13 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt2%ubt
 - fix taskmanager for Qt 5.6
 
