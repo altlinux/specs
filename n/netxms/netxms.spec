@@ -1,5 +1,5 @@
 Name: netxms
-Version: 1.2.14
+Version: 2.0.8
 Release: alt1
 
 Summary: Open source network monitoring system
@@ -14,8 +14,6 @@ Source2: nxagentd.init
 
 BuildRequires: flex gcc-c++ zlib-devel libexpat-devel libssl-devel libgd2-devel libreadline-devel libsqlite3-devel libMySQL-devel postgresql-devel libunixODBC-devel
 
-%set_verify_elf_method unresolved=relaxed
-
 %description
 NetXMS is an enterprise grade multi-platform open source network management and monitoring system.
 
@@ -27,7 +25,7 @@ Group: System/Libraries
 
 %package server
 Summary: NetXMS server
-Group: System/Libraries
+Group: System/Servers
 %description server
 %summary
 
@@ -40,6 +38,7 @@ Group: Networking/Remote access
 %package agent
 Summary: NetXMS agent
 Group: Networking/Remote access
+Requires: %name-sqlite = %version-%release
 %description agent
 %summary
 
@@ -71,12 +70,10 @@ Group: System/Servers
 %setup
 
 %build
-subst 's|$(DESTDIR)$(bindir)/nxmibc|LD_LIBRARY_PATH=%buildroot/%_libdir $(DESTDIR)$(bindir)/nxmibc|g' Makefile.am
-subst 's|/var/opt/netxms|/var/lib/netxms|g' src/agent/core/nxagentd.h
 ./reconf
-export CC=gcc
-export CXX=g++
-%configure      \
+%configure              \
+  --localstatedir=/var  \
+  --sharedstatedir=/var \
   --with-server \
   --with-snmp   \
   --with-mysql  \
@@ -85,7 +82,7 @@ export CXX=g++
   --with-odbc   \
   --with-client \
   --with-agent
-%make
+make
 
 %install
 %make DESTDIR=%buildroot install
@@ -100,24 +97,13 @@ subst 's|/var/nxagentd|/var/lib/netxms|g' %buildroot/%_sysconfdir/nxagentd.conf
 mkdir -p %buildroot/%_localstatedir/%name/agent
 
 %files common
-%_libdir/libnetxms.so
-%_libdir/libnetxms.so.1
-%_libdir/libnetxms.so.1.0.0
-%_libdir/libnxdb.so
-%_libdir/libnxdb.so.1
-%_libdir/libnxdb.so.1.0.0
-%_libdir/libnxlp.so
-%_libdir/libnxlp.so.1
-%_libdir/libnxlp.so.1.0.0
-%_libdir/libnxmap.so
-%_libdir/libnxmap.so.1
-%_libdir/libnxmap.so.1.0.0
-%_libdir/libnxsqlite.so
-%_libdir/libnxsqlite.so.1
-%_libdir/libnxsqlite.so.1.0.0
-%_libdir/libnxtre.so
-%_libdir/libnxtre.so.5
-%_libdir/libnxtre.so.5.0.0
+%_libdir/libnetxms.so*
+%_libdir/libnxdb.so*
+%_libdir/libnxlp.so*
+%_libdir/libnxmap.so*
+%_libdir/libnxtre.so*
+%_libdir/libnxsnmp.so*
+%dir %_libdir/%name
 
 %files server
 %_bindir/netxmsd
@@ -133,51 +119,38 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_bindir/nxsnmpset
 %_bindir/nxsnmpwalk
 %_bindir/nxupload
+%_bindir/nxdevcfg
+%_bindir/nxgenguid
+%_bindir/nxappget
 %_libdir/libavaya-ers.so
 %_libdir/libcisco.so
-%_libdir/libnxcore.so
-%_libdir/libnxcore.so.1
-%_libdir/libnxcore.so.1.0.0
-%_libdir/libnxsl.so
-%_libdir/libnxsl.so.1
-%_libdir/libnxsl.so.1.0.0
-%_libdir/libnxsms_dummy.so
-%_libdir/libnxsms_dummy.so.1
-%_libdir/libnxsms_dummy.so.1.0.0
-%_libdir/libnxsms_generic.so
-%_libdir/libnxsms_generic.so.1
-%_libdir/libnxsms_generic.so.1.0.0
-%_libdir/libnxsms_nxagent.so
-%_libdir/libnxsms_nxagent.so.1
-%_libdir/libnxsms_nxagent.so.1.0.0
-%_libdir/libnxsms_portech.so
-%_libdir/libnxsms_portech.so.1
-%_libdir/libnxsms_portech.so.1.0.0
-%_libdir/libnxsnmp.so
-%_libdir/libnxsnmp.so.1
-%_libdir/libnxsnmp.so.1.0.0
-%_libdir/libnxsrv.so
-%_libdir/libnxsrv.so.1
-%_libdir/libnxsrv.so.1.0.0
-%_libdir/libnxjansson.so
-%_libdir/libnxjansson.so.4
-%_libdir/libnxjansson.so.4.6.0
-%_libdir/libnxsd.so
-%_libdir/libnxsd.so.1
-%_libdir/libnxsd.so.1.0.0
-%_libdir/libstrophe.so
-%_libdir/libstrophe.so.1
-%_libdir/libstrophe.so.1.0.0
-%dir %_libdir/%name
+%_libdir/libnxcore.so*
+%_libdir/libnxsl.so*
+%_libdir/libnxsms_dummy.so*
+%_libdir/libnxsms_generic.so*
+%_libdir/libnxsms_nxagent.so*
+%_libdir/libnxsms_portech.so*
+%_libdir/libnxsrv.so*
+%_libdir/libnxjansson.so*
+%_libdir/libnxsd.so*
+%_libdir/libstrophe.so*
+%_libdir/libnxcc.so*
 %dir %_libdir/%name/dbdrv
 %dir %_libdir/%name/ndd
 %_libdir/%name/ndd/*.ndd
+%dir %_libdir/%name/smsdrv
+%_libdir/%name/smsdrv/*
 %dir %_datadir/%name
 %_datadir/%name/mibs
 %dir %_datadir/%name/sql
-%dir %_datadir/%name/images
-%_datadir/%name/images/*
+%dir %_datadir/%name/templates
+%_datadir/%name/templates/*
 %dir %_localstatedir/%name
+%_localstatedir/%name/%name.mib
+%dir %_localstatedir/%name/files
+%_localstatedir/%name/files/*
+%dir %_localstatedir/%name/images
+%_localstatedir/%name/images/*
 %_initdir/netxmsd
 %config(noreplace) %_sysconfdir/netxmsd.conf
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README THANKS TODO doc/manuals/*.odt doc/manuals/*.doc
@@ -187,17 +160,15 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_bindir/nxevent
 %_bindir/nxpush
 %_bindir/nxsms
-%_libdir/libnxcl.so
-%_libdir/libnxcl.so.1
-%_libdir/libnxcl.so.1.0.0
+%_libdir/libnxclient.so*
 
 %files agent
+%_bindir/nxapush
 %_bindir/nxagentd
 %_initdir/nxagentd
-%_libdir/libappagent.so
-%_libdir/libappagent.so.1
-%_libdir/libappagent.so.1.0.0
-%_libdir/libnsm_ecs.so
+%_libdir/libnxagent.so*
+%_libdir/libappagent.so*
+%_libdir/libnsm_ecs.so*
 %_libdir/libnsm_linux.so
 %_libdir/libnsm_logwatch.so
 %_libdir/libnsm_ping.so
@@ -206,6 +177,9 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_libdir/libnsm_ups.so
 %_libdir/libnsm_dbquery.so
 %_libdir/libnsm_devemu.so
+%_libdir/libnsm_ds18x20.so
+%_libdir/libnsm_filemgr.so
+%_libdir/libnsm_gps.so
 %_libdir/%name/ecs.nsm
 %_libdir/%name/linux.nsm
 %_libdir/%name/logwatch.nsm
@@ -215,7 +189,9 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_libdir/%name/portcheck.nsm
 %_libdir/%name/sms.nsm
 %_libdir/%name/ups.nsm
-%dir %_localstatedir/%name/agent
+%_libdir/%name/ds18x20.nsm
+%_libdir/%name/filemgr.nsm
+%_libdir/%name/gps.nsm
 %config(noreplace) %_sysconfdir/nxagentd.conf
 
 %files mysql
@@ -238,22 +214,31 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_libdir/%name/dbdrv/odbc.ddr
 
 %changelog
-* Mon Jun 09 2014 Eugene Prokopiev <enp@altlinux.ru> 1.2.14-alt1
+* Fri Apr 28 2017 Eugene Prokopiev <enp@altlinux.ru> 2.0.8-alt1
 - new version
 
-* Wed Dec 18 2013 Eugene Prokopiev <enp@altlinux.ru> 1.2.10-alt1
+* Tue Sep 06 2016 Eugene Prokopiev <enp@altlinux.ru> 2.0.6-alt1
 - new version
 
-* Tue Oct 15 2013 Eugene Prokopiev <enp@altlinux.ru> 1.2.9-alt1
+* Tue Mar 24 2015 Eugene Prokopiev <enp@altlinux.ru> 1.2.17-alt@release@1
 - new version
 
-* Tue Aug 13 2013 Eugene Prokopiev <enp@altlinux.ru> 1.2.8-alt1
+* Mon Jun 09 2014 Eugene Prokopiev <enp@altlinux.ru> 1.2.14-alt@release@1
 - new version
 
-* Fri Jun 14 2013 Eugene Prokopiev <enp@altlinux.ru> 1.2.7-alt1
+* Wed Dec 18 2013 Eugene Prokopiev <enp@altlinux.ru> 1.2.10-alt@release@1
 - new version
 
-* Fri Jan 11 2013 Eugene Prokopiev <enp@altlinux.ru> 1.2.5-
+* Tue Oct 15 2013 Eugene Prokopiev <enp@altlinux.ru> 1.2.9-alt@release@1
+- new version
+
+* Tue Aug 13 2013 Eugene Prokopiev <enp@altlinux.ru> 1.2.8-alt@release@1
+- new version
+
+* Fri Jun 14 2013 Eugene Prokopiev <enp@altlinux.ru> 1.2.7-alt@release@1
+- new version
+
+* Fri Jan 11 2013 Eugene Prokopiev <enp@altlinux.ru> 1.2.5-@release@
 - new version
 
 * Wed Dec 05 2012 Eugene Prokopiev <enp@altlinux.ru> 1.2.4-alt1
