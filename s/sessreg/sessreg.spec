@@ -1,6 +1,6 @@
 Name: sessreg
 Version: 1.0.7
-Release: alt1
+Release: alt2
 Summary: manage utmp/wtmp entries for non-init clients
 License: MIT/X11
 Group: System/X11
@@ -33,6 +33,9 @@ Sessreg is a simple program for managing utmp/wtmp entries for xdm sessions
 %_man1dir/*
 
 %changelog
+* Fri Apr 28 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.0.7-alt2
+- build fixed
+
 * Fri Mar 23 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.0.7-alt1
 - 1.0.7
 
