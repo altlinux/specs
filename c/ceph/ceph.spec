@@ -1,9 +1,9 @@
 %define _libexecdir /usr/libexec
-%define git_version fe6d859066244b97b24f09d46552afc2071e6f90
+%define git_version b1e0532418e4631af01acbc0cedd426f1905f4af
 
 Name: ceph
-Version: 0.94.9
-Release: alt3
+Version: 0.94.10
+Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -318,6 +318,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Fri Apr 28 2017 Alexei Takaseev <taf@altlinux.org> 0.94.10-alt1
+- 0.94.10
+
 * Wed Apr 26 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.94.9-alt3
 - Fixed build with gcc >= 6.
 
