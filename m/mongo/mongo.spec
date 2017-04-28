@@ -1,5 +1,5 @@
 Name: mongo
-Version: 3.4.3
+Version: 3.4.4
 Release: alt1
 Summary: mongo client shell and tools
 License: AGPL 3.0
@@ -180,6 +180,9 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Fri Apr 28 2017 Vladimir Didenko <cow@altlinux.org> 3.4.4-alt1
+- 3.4.4
+
 * Mon Apr 10 2017 Vladimir Didenko <cow@altlinux.org> 3.4.3-alt1
 - 3.4.3
 
