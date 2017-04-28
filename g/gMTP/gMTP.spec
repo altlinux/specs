@@ -1,5 +1,5 @@
 Name: gMTP
-Version: 1.3.3
+Version: 1.3.10
 Release: alt1
 
 Summary: A basic media player client
@@ -26,18 +26,11 @@ upload/download of files.
 %setup
 
 %build
-%make_build gtk3
+%configure
+%make_build
 
 %install
-%make_install \
-		DESTDIR=%buildroot \
-                PREFIX=%_usr \
-        install-gtk3
-
-%make_install \
-		DESTDIR=%buildroot \
-                PREFIX=%_usr \
-	register-gsettings-schemas
+%makeinstall_std
 
 %find_lang gmtp
 
@@ -49,5 +42,8 @@ upload/download of files.
 %_datadir/glib-2.0/schemas/*
 
 %changelog
+* Fri Apr 28 2017 Dmitriy Khanzhin <jinn@altlinux.org> 1.3.10-alt1
+- 1.3.10
+
 * Thu Jul 12 2012 Paul Wolneykien <manowar@altlinux.ru> 1.3.3-alt1
 - Initial release for ALT Linux.
