@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.23
+%define ver_major 3.24
 %define _name org.gnome.font-viewer
 
 Name: gnome-font-viewer
-Version: %ver_major.91
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME Font Viewer
@@ -47,6 +47,9 @@ GNOME Font Viewer is a simple application to preview fonts.
 %doc NEWS
 
 %changelog
+* Sat Apr 29 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Thu Mar 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.23.91-alt1
 - 3.23.91
 
