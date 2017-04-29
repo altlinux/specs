@@ -1,6 +1,6 @@
 Name: kinit-utils
 Version: 1.5.25
-Release: alt4
+Release: alt5
 
 Summary: Small utilities built with klibc
 License: BSD/GPL
@@ -11,11 +11,11 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 Source0: %name-%version.tar
 Patch0:  klibc.patch
 Patch1:  md_run.patch
-Patch2:  replace.patch
-Patch3:  showenv.patch
+#Patch2:  replace.patch
+#Patch3:  showenv.patch
 Patch4:  ifconfig-readonly-fs.patch
 Patch5:  ifconfig-quiet.patch
-Patch6:  halt.patch
+#Patch6:  halt.patch
 Patch7:  run-init-env.patch
 Patch8:  ifconfig-ifdown.patch
 Patch9:  run-init-close-all.patch
@@ -35,11 +35,11 @@ embedded systems.
 %setup -q
 %patch0 -p0 -b .fix0
 %patch1 -p0 -b .fix1
-%patch2 -p0 -b .fix2
-%patch3 -p0 -b .fix3
+#patch2 -p0 -b .fix2
+#patch3 -p0 -b .fix3
 %patch4 -p0 -b .fix4
 %patch5 -p0 -b .fix5
-%patch6 -p0 -b .fix6
+#patch6 -p0 -b .fix6
 %patch7 -p0 -b .fix7
 %patch8 -p0 -b .fix8
 %patch9 -p0 -b .fix9
@@ -52,8 +52,8 @@ embedded systems.
 %make_install \
 	bindir=%buildroot/lib/initrd/bin \
 	install
-ln -s halt %buildroot/lib/initrd/bin/reboot
-ln -s halt %buildroot/lib/initrd/bin/poweroff
+#ln -s halt %buildroot/lib/initrd/bin/reboot
+#ln -s halt %buildroot/lib/initrd/bin/poweroff
 
 rm -f %buildroot/lib/initrd/bin/fstype
 
@@ -61,6 +61,9 @@ rm -f %buildroot/lib/initrd/bin/fstype
 /lib/initrd
 
 %changelog
+* Sat Apr 29 2017 Alexey Gladkov <legion@altlinux.ru> 1.5.25-alt5
+- Remove halt, replace and showenv.
+
 * Sat Aug 23 2014 Alexey Gladkov <legion@altlinux.ru> 1.5.25-alt4
 - run-init: Reset all signals.
 
