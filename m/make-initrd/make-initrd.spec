@@ -2,7 +2,7 @@
 
 Name: make-initrd
 Version: 2.0.4
-Release: alt2
+Release: alt3
 
 Summary: Creates an initramfs image
 License: GPL3
@@ -198,6 +198,12 @@ fi
 %_datadir/%myname/features/ucode
 
 %changelog
+* Sat Apr 29 2017 Alexey Gladkov <legion@altlinux.ru> 2.0.4-alt3
+- Move halt, replace and showenv from kinit-utils.
+- luks:
+  + Revert gpg support
+  + Fix keyfile support
+
 * Wed Apr 19 2017 Alexey Gladkov <legion@altlinux.ru> 2.0.4-alt2
 - Fix permissions for /lib/uevent/filters/debug (ALT#33395)
 
