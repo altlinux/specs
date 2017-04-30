@@ -1,10 +1,10 @@
 %define gst_api_ver 1.0
 
 Name: pulseeffects
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 
-Summary: Limiter, compressor, reverberation, stereo equalizer and auto volume effects for Pulseaudio applications
+Summary: Audio effects for Pulseaudio applications
 License: GPLv3
 Group: Sound
 Url: https://github.com/wwmm/pulseeffects
@@ -49,6 +49,9 @@ cp -r share %buildroot%_prefix
 %doc README*
 
 %changelog
+* Sun Apr 30 2017 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt1
+- 1.2.5
+
 * Sun Apr 23 2017 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
 - first build for Sisyphus
 
