@@ -1,10 +1,10 @@
 %def_disable snapshot
-%define ver_major 3.23
+%define ver_major 3.24
 %define api_ver 1.0
 %def_enable python
 
 Name: gitg
-Version: %ver_major.90
+Version: %ver_major.0
 Release: alt1
 
 Summary: git repository viewer targeting gtk+/GNOME
@@ -165,6 +165,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Sun Apr 30 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Thu Feb 16 2017 Yuri N. Sedunov <aris@altlinux.org> 3.23.90-alt1
 - 3.23.90
 
