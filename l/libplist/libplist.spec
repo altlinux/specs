@@ -1,6 +1,8 @@
+%def_disable python3
+
 Name: libplist
-Version: 1.12
-Release: alt2
+Version: 2.0.0
+Release: alt1
 
 Summary: Library for manipulating Apple Binary and XML Property Lists
 Group: System/Libraries
@@ -9,9 +11,9 @@ Url: http://www.libimobiledevice.org/
 
 Source: %url/downloads/%name-%version.tar.bz2
 
-BuildRequires: gcc-c++ cmake libxml2-devel xml-utils
-BuildRequires: python-devel python-module-Cython >= 0.18
-#BuildRequires: python3-devel rpm-build-python3 python3-module-Cython >= 0.18
+BuildRequires: gcc-c++ cmake xml-utils
+BuildRequires: python-devel python-module-Cython
+%{?_enable_python3:BuildRequires: python3-devel rpm-build-python3 python3-module-Cython}
 
 %description
 libplist is a library for manipulating Apple Binary and XML Property Lists
@@ -51,16 +53,44 @@ Requires: %{name}mm = %version-%release
 %description -n python-module-%name
 Python libraries and bindings for %name
 
+%package -n python3-module-%name
+Summary: Python3 package for libplist
+Group: Development/Python3
+Requires: %name = %version-%release
+Requires: %{name}mm = %version-%release
+
+%description -n python3-module-%name
+Python3 libraries and bindings for %name
+
+
 %prep
-%setup
+%setup -a0
+# for python2 only
+subst 's/\(PYTHON-config --ldflags\)/\1 -lpython%__python_version/' m4/ac_python_devel.m4
+mv %name-%version py3build
 
 %build
 %autoreconf
 %configure --disable-static
 %make_build
 
+%if_enabled python3
+pushd py3build
+%add_optflags %optflags_shared
+%autoreconf
+%configure --disable-static PYTHON=%__python3
+%make_build
+popd
+%endif
+
 %install
 %makeinstall_std
+
+%if_enabled python3
+pushd py3build
+%makeinstall_std
+popd
+%endif
 
 %files
 %_bindir/plistutil
@@ -85,7 +115,18 @@ Python libraries and bindings for %name
 %python_sitelibdir/plist.so
 %exclude %python_sitelibdir/plist.la
 
+%if_enabled python3
+%files -n python3-module-%name
+%python3_sitelibdir/plist.so
+%exclude %python3_sitelibdir/plist.la
+%endif
+
 %changelog
+* Sun Apr 30 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0 (fixed CVE-2017-6440, CVE-2017-6439, CVE-2017-6438, CVE-2017-6437,
+  CVE-2017-6436, CVE-2017-6435, CVE-2017-5836, CVE-2017-5835, CVE-2017-5834,
+  CVE-2017-5545, CVE-2017-5209)
+
 * Fri Apr 08 2016 Yuri N. Sedunov <aris@altlinux.org> 1.12-alt2
 - rebuilt for new gcc, python, cython etc.
 
