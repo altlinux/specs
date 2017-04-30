@@ -2,7 +2,7 @@
 %def_enable glx
 
 Name: libepoxy
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Direct Rendering Manager runtime library
@@ -55,6 +55,9 @@ developing applications that use %name
 %doc ChangeLog
 
 %changelog
+* Sun Apr 30 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
+- 1.4.2
+
 * Thu Mar 02 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
 - 1.4.1
 
