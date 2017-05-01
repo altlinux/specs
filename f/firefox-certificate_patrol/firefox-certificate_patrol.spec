@@ -1,7 +1,7 @@
 # SPEC file for Gmail Manager extension
 
 %define rname	certificate_patrol
-%define version 2.0.14.1
+%define version 2.0.16
 %define release alt1
 %define cid 	CertPatrol@PSYC.EU
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -77,6 +77,9 @@ fi
 %ciddir
 
 %changelog
+* Mon May 01 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.0.16-alt1
+- New version
+
 * Thu Jan 07 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.14.1-alt1
 - Signed version to work with Firefox >= 43.x
 
