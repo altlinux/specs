@@ -1,13 +1,22 @@
+%define git_commit e110eb1
+
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 27.3.0
-Release: alt1
+Version: 27.4.0
+
+# %%ifndef git_commit
+# Release: alt2
+# %%else
+Release: alt0.git_1_%git_commit
+# %%endif
+
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 
-# git commit f2695891c96250bfde630acdf2f5babe31c750f5
+
+# git commit  e110eb1756e5f417c036e3d25d3ffdbfb39951b7
 Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
@@ -17,7 +26,7 @@ Epoch: 2
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 
-%def_enable gst1   // Enable gstreamer 1.0
+# %%%def_enable gst1   // Enable gstreamer 1.0
 
 
 %define palemoon_cid                    \{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4\}
@@ -28,7 +37,13 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 %define palemoon_arch_extensionsdir     %palemoon_bindir/extensions
 %define palemoon_noarch_extensionsdir   %palemoon_datadir/extensions
 
+
+%ifdef git_commit
 Source: %sname-source-%version-%release.tar
+%else
+Source: %sname-source-%version.tar
+%endif
+
 Source1: rpm-build.tar
 Source2: defaults-newmoon.tar
 
@@ -77,15 +92,17 @@ Patch113: mozilla-kde-background.patch
 %set_autoconf_version 2.13
 %set_gcc_version 4.9
 
-# Automatically added by buildreq on Sat Apr 08 2017
-# optimized out: alternatives ca-certificates fontconfig fontconfig-devel glib2-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libcloog-isl4
-# libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstartup-notification libstdc++-devel libxcb-devel perl pkg-config
-# python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing
-# python-modules-xml python3 xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: doxygen glibc-devel-static imake java-devel libGConf-devel libXScrnSaver-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel libjpeg-devel libnspr-devel libpixman-devel libproxy-devel 
-BuildRequires: libpulseaudio-devel libsocket libsqlite3-devel libstartup-notification-devel libvpx-devel
+# Automatically added by buildreq on Mon May 01 2017
+# optimized out: alternatives ca-certificates fontconfig fontconfig-devel glib2-devel libICE-devel libSM-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcloog-isl4 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstartup-notification libstdc++-devel libxcb-devel perl pkg-config python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python3 xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: doxygen gcc-c++ glibc-devel-static imake java-devel libGConf-devel libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel libjpeg-devel libnspr-devel 
+BuildRequires: libpixman-devel libproxy-devel libpulseaudio-devel libsocket libsqlite3-devel libstartup-notification-devel libvpx-devel
 BuildRequires: python-module-future python-module-yaml python-modules-json python-modules-wsgiref python3-base
 BuildRequires: unzip wget xorg-cf-files xsltproc yasm zip
+
+
+# BuildRequires: libhunspell-devel
+
+
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
@@ -202,9 +219,6 @@ cd %sname
 
 tar -xf %SOURCE1
 
-#pushd browser/branding/unofficial
-#    tar --overwrite  -xf %SOURCE11
-#popd
 
 #patch5  -p1
 #patch14 -p1
@@ -269,6 +283,9 @@ echo "ac_add_options --disable-static" >> .mozconfig
 echo "ac_add_options --enable-media-plugins --disable-elf-hack --enable-media-plugins --enable-media-navigator" >> .mozconfig
 echo "ac_add_options --with-system-libvpx --enable-wave --enable-alsa --enable-pulseaudio" >> .mozconfig
 echo "ac_add_options --enable-system-cairo" >> .mozconfig
+echo "ac_add_options --with-x" >> .mozconfig
+
+# echo "ac_add_options --enable-system-hunspell" >> .mozconfig
 
 
 # Add  Ofiicial Options:
@@ -536,7 +553,6 @@ rm -f -- \
     )
 popd
 
-#install -d %buildroot%palemoon_prefix/browser/chrome/icons/default/
 install -m 644 ../defaults-newmoon/default48.png %buildroot%palemoon_bindir/browser/chrome/icons/default/PMaboutDialog48.png
 
 # Add Docdir
@@ -611,9 +627,6 @@ install -D -m 644 README.md ../
 %mozilla_arch_extdir/%palemoon_cid
 %mozilla_noarch_extdir/%palemoon_cid
 
-#%%palemoon_bindir/libfreeblpriv3.chk
-#%%palemoon_bindir/libnssdbm3.chk
-#%%palemoon_bindir/libsoftokn3.chk
 
 %files -n rpm-build-%sname
 %_rpmmacrosdir/%sname
@@ -621,6 +634,12 @@ install -D -m 644 README.md ../
 %exclude %_datadir/idl/*
 
 %changelog
+* Mon May 01 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.4.0-alt0.git_1_e110eb1
+- Update from github commit e110eb1756e5f417c036e3d25d3ffdbfb39951b7
+
+* Sun Apr 30 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.3.0-alt2
+- new Buildreq
+
 * Sat Apr 29 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.3.0-alt1
 - Version 27.3.0
 
