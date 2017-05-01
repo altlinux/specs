@@ -1,13 +1,16 @@
 Name: tcl-iwidgets
 Version: 4.0.2
-Release: alt3
+Release: alt4
 
 Summary: [incr Widgets] is an object-oriented mega-widget set based on [incr Tk]
 License: BSD
 Group: Development/Tcl
 Url: http://incrtcl.sourceforge.net/
 
+# git://git.altlinux.org/gears/t/tcl-iwidgets.git
 Source: %name-%version-%release.tar
+
+Conflicts: tcl-incrtk < 4.0.2
 
 Provides: iwidgets
 Obsoletes: iwidgets
@@ -41,7 +44,7 @@ the features of the widget set, based on [incr Widgets].
 
 %prep
 %setup
-%__autoreconf
+%autoreconf
 %configure
 
 %install
@@ -61,6 +64,10 @@ the features of the widget set, based on [incr Widgets].
 %_tcldatadir/iwidgets%version/demos
 
 %changelog
+* Sun Apr 30 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.2-alt4
+- adopted to tcl-incrtk4
+- applied iwidgets4.0.2-itk4.patch from Fedora project
+
 * Thu Dec 27 2007 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.2-alt3
 - CVS snapshot @20070611
 
