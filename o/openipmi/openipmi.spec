@@ -2,17 +2,18 @@
 
 Name: openipmi
 Summary: %name - Library interface to IPMI
-Version: 2.0.21
-Release: alt1.1.1.1.qa1
+Version: 2.0.22
+Release: alt1%ubt
 License: LGPL
 Url: http://openipmi.sourceforge.net
 Group: System/Configuration/Hardware
-Source: %name-%version-%release.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires: libpopt-devel python-devel libnet-snmp-devel
 BuildRequires: libncurses-devel libssl-devel tkinter swig
 BuildRequires: glib2-devel tcl-devel
+BuildRequires(pre): rpm-build-ubt
 
 %description
 This package contains basic tools used with OpenIPMI.
@@ -79,7 +80,7 @@ This package contains a network IPMI listener.
 %build
 %autoreconf
 export CFLAGS="-fPIC $RPM_OPT_FLAGS"
-%configure --disable-static
+%configure --disable-static --with-tcl=yes --with-tk=yes
 %make
 
 %install
@@ -125,7 +126,6 @@ rm -f %buildroot%_libdir/libOpenIPMIglib12.*
 %_includedir/OpenIPMI
 %_libdir/*.so
 %_libdir/pkgconfig/*
-%doc doc/IPMI.pdf
 
 %files ui
 %_bindir/ipmi_ui
@@ -133,9 +133,11 @@ rm -f %buildroot%_libdir/libOpenIPMIglib12.*
 %_bindir/openipmicmd
 %_bindir/ipmish
 %_bindir/openipmish
+%_bindir/openipmi_eventd
 %_bindir/solterm
 %_bindir/rmcp_ping
 %_man1dir/ipmi_ui.1*
+%_man1dir/openipmi_eventd.1*
 %_man1dir/openipmicmd.1*
 %_man1dir/openipmish.1*
 %_man1dir/openipmigui.1*
@@ -159,6 +161,9 @@ rm -f %buildroot%_libdir/libOpenIPMIglib12.*
 
 
 %changelog
+* Tue May 02 2017 Anton Farygin <rider@altlinux.ru> 2.0.22-alt1%ubt
+- new version
+
 * Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.0.21-alt1.1.1.1.qa1
 - NMU: rebuild against Tcl/Tk 8.6
 
