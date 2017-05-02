@@ -3,8 +3,8 @@
 %define docdir %_defaultdocdir/%name-%version
 
 Name: freeipmi
-Version: 1.5.4
-Release: alt1
+Version: 1.5.5
+Release: alt1%ubt
 
 Summary: GNU FreeIPMI - Intelligent Platform Management System
 Group: Monitoring
@@ -15,9 +15,10 @@ PreReq: lib%name = %version-%release
 
 Source: %name-%version.tar
 Source1: %name.watch
-Patch: %name-%version-%release.patch
+Patch: %name-%version-alt.patch
 
 BuildRequires: libgcrypt-devel texinfo
+BuildRequires(pre): rpm-build-ubt
 
 %description
 This project provides "Remote-Console" (out-of-band) and
@@ -176,6 +177,9 @@ touch %_localstatedir/%name/ipckey
 %_infodir/%name-faq.info*
 
 %changelog
+* Tue May 02 2017 Anton Farygin <rider@altlinux.ru> 1.5.5-alt1%ubt
+- new version 1.5.5
+
 * Sun Oct 02 2016 Anton Farygin <rider@altlinux.ru> 1.5.4-alt1
 - new version 1.5.4
 
