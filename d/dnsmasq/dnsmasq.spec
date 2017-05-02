@@ -1,7 +1,7 @@
 Name: dnsmasq
 Version: 2.76
 
-Release: alt2
+Release: alt3
 Summary: A lightweight caching nameserver
 License: %gpl2plus
 Group: System/Servers
@@ -136,6 +136,13 @@ fi
 %_man1dir/dhcp_*
 
 %changelog
+* Tue May 02 2017 Mikhail Efremov <sem@altlinux.org> 2.76-alt3
+- dnsmasq.{init,service}: Don't use dnsmasq-helper prestart.
+- dnsmasq-helper: Don't rely on AUTO_LOCAL_RESOLVER in
+  stop_resolvconf().
+- dnsmasq-helper: First call stop_relovconf() at poststop.
+- dnsmasq-helper: Move start_resolvconf() to poststart.
+
 * Thu Dec 15 2016 Mikhail Efremov <sem@altlinux.org> 2.76-alt2
 - Rebuilt with libnettle-3.3 due to ABI breakage.
 - Handle binding upstream servers to an interface.
