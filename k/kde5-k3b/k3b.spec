@@ -11,7 +11,7 @@
 %define req_permhelper %nil
 %endif
 
-%define req_std_burning cdrkit cdrdao dvd+rw-tools
+%define req_std_burning cdrkit cdrdao dvd+rw-tools cdrskin
 %define req_std_common kf5-filesystem %req_permhelper
 %define req_multimedia sox-play libsox-fmt-pulseaudio transcode vcdimager normalize lame flac mpc
 %define req_mini %req_std_burning %req_std_common
@@ -19,7 +19,7 @@
 
 %define rname k3b
 Name: kde5-%rname
-Version: 17.03.80
+Version: 17.04.0
 Release: alt1%ubt
 %K5init
 
@@ -119,13 +119,6 @@ KDE 4 library.
 #%patch1 -p1
 #%patch2 -p1
 
-mv .gear/po .
-
-cat >>CMakeLists.txt <<__EOF__
-find_package(KF5I18n CONFIG REQUIRED)
-ki18n_install(po)
-__EOF__
-
 %build
 %K5build \
     -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
@@ -138,7 +131,7 @@ __EOF__
 %K5install_move data k3b solid konqsidebartng
 
 mv %buildroot/%_K5xdgmime/x-k3b.xml \
-    %buildroot/%_K5xdgmime/kf5-x-k3b.xml
+    %buildroot/%_K5xdgmime/kde5-x-k3b.xml
 
 
 %find_lang --with-kde --all-name %name
@@ -180,6 +173,9 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Wed Apr 05 2017 Sergey V Turchin <zerg@altlinux.org> 17.03.80-alt1%ubt
 - new beta
 
