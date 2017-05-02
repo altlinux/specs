@@ -12,7 +12,7 @@
 
 Name: syslog-ng
 Version: 3.8.1
-Release: alt1
+Release: alt1.1
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
@@ -389,6 +389,9 @@ fi
 %_libdir/pkgconfig/%name-test.pc
 
 %changelog
+* Tue May 02 2017 Andrey Cherepanov <cas@altlinux.org> 3.8.1-alt1.1
+- Rebuild with new version of libjson
+
 * Wed Aug 24 2016 Sergey Y. Afonin <asy@altlinux.ru> 3.8.1-alt1
 - 3.8.1
 

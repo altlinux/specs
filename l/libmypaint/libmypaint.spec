@@ -6,7 +6,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: The brush library used by MyPaint
 Group: System/Libraries
@@ -92,6 +92,9 @@ This package provides GObject introspection devel data for %name.
 %{?_enable_gegl:%_girdir/MyPaintGegl-%api_ver.gir}
 
 %changelog
+* Tue May 02 2017 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt2
+- rebuilt against libjson-c.so.2
+
 * Fri Jan 13 2017 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - first build for Sisyphus
 

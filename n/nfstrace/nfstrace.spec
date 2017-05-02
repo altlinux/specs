@@ -4,7 +4,7 @@ Group:          Monitoring
 Summary:        `nfstrace` is an NFS tracing/monitoring/capturing/analyzing tool.
 
 Version:        0.4.0
-Release:        alt2
+Release:        alt2.1
 
 Packager:	Denis Pynkin <dans@altlinux.org>
 
@@ -46,6 +46,7 @@ The %{name}-devel package contains development part of %{name}.
 %setup -q
 
 %build
+%add_optflags -Wno-error=misleading-indentation
 %cmake
 %cmake_build
 
@@ -73,6 +74,9 @@ The %{name}-devel package contains development part of %{name}.
 %{_includedir}/%name/api/*.h
 
 %changelog
+* Tue May 02 2017 Andrey Cherepanov <cas@altlinux.org> 0.4.0-alt2.1
+- Rebuild with new version of libjson
+
 * Thu Apr 16 2015 Denis Pynkin <dans@altlinux.org> 0.4.0-alt2
 - Fixed architecture for devel package.
 
