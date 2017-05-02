@@ -6,7 +6,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	52.0.1
+Version:	52.1.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -434,6 +434,40 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Tue May 02 2017 Andrey Cherepanov <cas@altlinux.org> 52.1.0-alt1
+- New version (52.0.1)
+- Security fixes:
+  + CVE-2017-5429: Memory safety bugs fixed in Firefox 53, Firefox ESR
+  + CVE-2017-5430: Memory safety bugs fixed in Firefox 53, Firefox ESR
+  + CVE-2017-5432: Use-after-free in text input selection
+  + CVE-2017-5433: Use-after-free in SMIL animation functions
+  + CVE-2017-5434: Use-after-free during focus handling
+  + CVE-2017-5435: Use-after-free during transaction processing in the
+  + CVE-2017-5436: Out-of-bounds write with malicious font in Graphite 2
+  + CVE-2017-5438: Use-after-free in nsAutoPtr during XSLT processing
+  + CVE-2017-5439: Use-after-free in nsTArray Length() during XSLT
+  + CVE-2017-5440: Use-after-free in txExecutionState destructor during
+  + CVE-2017-5441: Use-after-free with selection during scroll events
+  + CVE-2017-5442: Use-after-free during style changes
+  + CVE-2017-5443: Out-of-bounds write during BinHex decoding
+  + CVE-2017-5444: Buffer overflow while parsing
+  + CVE-2017-5445: Uninitialized values used while parsing
+  + CVE-2017-5446: Out-of-bounds read when HTTP/2 DATA frames are sent
+  + CVE-2017-5447: Out-of-bounds read during glyph processing
+  + CVE-2017-5449: Crash during bidirectional unicode manipulation with
+  + CVE-2017-5451: Addressbar spoofing with onblur event
+  + CVE-2017-5454: Sandbox escape allowing file system read access through
+  + CVE-2017-5459: Buffer overflow in WebGL
+  + CVE-2017-5460: Use-after-free in frame selection
+  + CVE-2017-5461: Out-of-bounds write in Base64 encoding in NSS
+  + CVE-2017-5462: DRBG flaw in NSS
+  + CVE-2017-5464: Memory corruption with accessibility and DOM
+  + CVE-2017-5465: Out-of-bounds read in ConvolvePixel
+  + CVE-2017-5466: Origin confusion when reloading isolated data:text/html
+  + CVE-2017-5467: Memory corruption when drawing Skia content
+  + CVE-2017-5469: Potential Buffer overflow in flex-generated code
+  + CVE-2016-10196: Vulnerabilities in Libevent library
+
 * Mon Apr 17 2017 Andrey Cherepanov <cas@altlinux.org> 52.0.1-alt1
 - New version (52.0.1)
 
