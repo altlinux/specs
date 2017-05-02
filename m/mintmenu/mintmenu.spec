@@ -3,8 +3,8 @@
 # see /usr/share/linuxmint/mintMenu/plugins/applications.py
 
 Name:           mintmenu
-Version:        5.7.6
-Release:        alt2
+Version:        5.7.7
+Release:        alt1
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
 Summary:        Advanced Menu for the MATE Desktop
@@ -24,8 +24,6 @@ Source50:	mintmenu.watch
 # SUSE patches from http://download.opensuse.org/repositories/home:/unamanic/Fedora_14/src/
 # PATCH-FIX-OPENSUSE mintmenu-suse_branding.patch william@witt-famiylnet: Suse branding
 Patch2:         mintmenu-alt_branding.patch
-# PATCH-FIX-OPENSUSE mintmenu-run_as_superuser.patch william@witt-famiylnet: fix run as superuser
-Patch4:         mintmenu-run_as_superuser.patch
 # PATCH-FIX-OPENSUSE mintmenu-mintmenu_executables.patch william@witt-famiylnet: update paths for executable and bonobo server
 Patch9:         mintmenu-change_locale_directory.patch
 
@@ -72,7 +70,6 @@ added to your gnome-panel or launched in its own window.
 %setup -q -n mintmenu
 %patch2 -p1
 #patch3 -p1
-%patch4 -p0
 %patch9 -p1
 %patch34 -p1
 %if_with apthack
@@ -145,6 +142,9 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-baseal
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Tue May 02 2017 Andrey Cherepanov <cas@altlinux.org> 5.7.7-alt1
+- New version
+
 * Wed Apr 12 2017 Andrey Cherepanov <cas@altlinux.org> 5.7.6-alt2
 - Change menu icon to Basealt logo (ALT #33358)
 
