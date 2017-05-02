@@ -1,5 +1,5 @@
 Name:     genspec
-Version:  1.0.1
+Version:  1.0.2
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
@@ -28,6 +28,9 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_datadir/spectemplates
 
 %changelog
+* Thu May 2 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.0.2-alt1
+- Upgrade to python3
+
 * Mon Apr 24 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.0.1-alt1
 - Add interactive mode
 
