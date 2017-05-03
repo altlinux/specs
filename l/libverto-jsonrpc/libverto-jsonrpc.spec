@@ -2,12 +2,13 @@ Group: Other
 %add_optflags %optflags_shared
 Name:           libverto-jsonrpc
 Version:        0.1.0
-Release:        alt1_9
+Release:        alt2_9
 Summary:        JSON-RPC support for libverto
 
 License:        MIT
 URL:            https://fedorahosted.org/libverto
 Source0:        https://fedorahosted.org/releases/l/i/%{name}/%{name}-%{version}.tar.gz
+Patch1:		libjson-0.12-support.patch
 
 BuildRequires:  libverto-devel >= 0.2.4
 BuildRequires:  libjson-devel
@@ -28,13 +29,15 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
+%patch1 -p2
 
 %build
+%autoreconf
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 %files
@@ -47,6 +50,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Tue May 02 2017 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt2_9
+- Rebuild with new version of libjson
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt1_9
 - update to new release by fcimport
 
