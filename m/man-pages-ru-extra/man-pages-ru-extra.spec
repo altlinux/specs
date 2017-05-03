@@ -1,6 +1,6 @@
 Name: man-pages-ru-extra
 Version: 0.1
-Release: alt4
+Release: alt5
 
 Summary: Extra collection of Russian translations of OS GNU/*/Linux manpages
 Summary(ru_RU.UTF-8): Дополнительный набор русских переводов страниц руководства по ОС GNU/*/Linux
@@ -101,6 +101,9 @@ fi
 %_cachedir/man/ru/cat*
 
 %changelog
+* Wed May 03 2017 Sergey Y. Afonin <asy@altlinux.ru> 0.1-alt5
+- prepared for change man to man_db in repository (removed man/*)
+
 * Tue May 02 2017 Artem Zolochevskiy <azol@altlinux.org> 0.1-alt4
 - update sources.list (Closes: #33420)
 
@@ -194,7 +197,7 @@ fi
 - bug #15178
 
 * Wed Feb 06 2008 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 0.98-alt12
-- Removed %_mandir/ru/.charset. Bug #9364.
+- Removed %%_mandir/ru/.charset. Bug #9364.
 
 * Thu Sep 27 2007 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 0.98-alt11
 - Package merged with man-pages-security-ru
@@ -270,7 +273,7 @@ fi
   added: clone.2, mmap2.2, personality.2, pread.2, pwrite.2, syscall.2, 
   sysinfo.2, umask.2
 - updated: pipe.2, sync.2
-  
+
 * Wed Jul 07 2004 Aleksandr Blokhin (Sass) <sass@altlinux.ru> 0.96-alt2
 - Updated gpg.1, gpgv.1
 
@@ -281,7 +284,7 @@ fi
 - updated mknod.2, unlink.2, write.2
 - man-pages-ru-ALT: 
   added rsyncd.conf.5
-  
+
 * Thu May 27 2004 Aleksandr Blokhin (Sass) <sass@altlinux.ru> 0.95-alt2
 - Added faq.6 and fstype.8
 
@@ -324,10 +327,10 @@ fi
 - Updated man-pages-ru-1.41.patch.gz
 
 * Sun Apr 20 2003 Dmitry V. Levin <ldv@altlinux.org> 0.7-alt24
-- Packaged %_cachedir/man/ru/whatis file.
-- Changed %_cachedir/man/ru permissions
-  from %attr(755,root,root) to %attr(3775,root,man).
-- Changed %_cachedir/man/ru/cat* permissions
+- Packaged %%_cachedir/man/ru/whatis file.
+- Changed %%_cachedir/man/ru permissions
+  from %%attr(755,root,root) to %%attr(3775,root,man).
+- Changed %%_cachedir/man/ru/cat* permissions
   from %%attr(775,root,man) to %%attr(2775,root,man).
 
 * Fri Dec 20 2002 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 0.7-alt23
@@ -394,7 +397,7 @@ fi
 
 * Tue Nov 27 2001 Dmitry V. Levin <ldv@alt-linux.org> 0.7-alt6
 - Updated package requires.
-- Updated %post scripts.
+- Updated %%post scripts.
 
 * Mon Nov 26 2001 Sass <sass@altlinux.ru> 0.7-alt5
 - Fixed access rights in man5
@@ -455,7 +458,7 @@ fi
 
 * Fri Jul 23 1999 Pablo Saratxaga <pablo@mandrakesoft.com>
 - adapted the rpm package to the Mandrake format (added icon, makewhatis
-  scripts, %post script, improved %files etc)
+  scripts, %%post script, improved %%files etc)
 
 * Tue May 20 1999 Alexei Mikhalev <leha@linuxfan.com>
 - Initial version.
