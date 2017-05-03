@@ -2,7 +2,7 @@
 
 Name: ocaml-calendar
 Version: 2.04
-Release: alt2
+Release: alt3
 Summary: Objective Caml library for managing dates and times
 License: LGPLv2
 Group: Development/ML
@@ -60,6 +60,9 @@ make install
 %_libdir/ocaml/site-lib/calendar/*.mli
 
 %changelog
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 2.04-alt3
+- rebuild with ocaml 4.04.1
+
 * Sat Apr 08 2017 Anton Farygin <rider@altlinux.ru> 2.04-alt2
 - rebuild with new ocaml
 

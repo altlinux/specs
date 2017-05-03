@@ -1,6 +1,6 @@
 Name: ocaml-libvirt
 Version: 0.6.1.4
-Release: alt2%ubt
+Release: alt3%ubt
 Summary: OCaml binding for libvirt
 Group: System/Libraries
 
@@ -82,6 +82,9 @@ make install-opt
 %_libdir/ocaml/libvirt/*.mli
 
 %changelog
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt3%ubt
+- rebuild with ocaml 4.04.1
+
 * Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt2%ubt
 - rebuild with new rpm-build-ocaml
 - moved outsite from site-lib dir

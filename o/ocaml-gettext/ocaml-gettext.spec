@@ -1,6 +1,6 @@
 Name: ocaml-gettext
 Version: 0.3.7
-Release: alt2%ubt
+Release: alt3%ubt
 Summary: OCaml library for i18n
 Group: Development/ML
 
@@ -117,6 +117,9 @@ chrpath --delete $OCAMLFIND_DESTDIR/stublibs/dll*.so
 %_bindir/ocaml-xgettext
 
 %changelog
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 0.3.7-alt3%ubt
+- rebuild with ocaml 4.04.1
+
 * Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 0.3.7-alt2%ubt
 - fixed build in new environment
 

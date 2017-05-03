@@ -3,7 +3,7 @@
 Name: ocaml-yojson
 %define libname %(sed -e 's/^ocaml-//' <<< %name)
 Version: 1.3.3
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: An optimized parsing and printing library for the JSON format
 Group: Development/ML
 License: BSD
@@ -67,5 +67,8 @@ make install BINDIR=%buildroot%_bindir
 %_libdir/ocaml/*/*.mli
 
 %changelog
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.3.3-alt2%ubt
+- rebuild with ocaml 4.04.1
+
 * Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 1.3.3-alt1%ubt
 - first build for ALT, based on RH spec

@@ -1,6 +1,6 @@
 Name: ocaml-cppo
 Version: 1.4.1
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Equivalent of the C preprocessor for OCaml programs
 License: BSD
 Group: Development/ML
@@ -39,6 +39,9 @@ install -p cppo %buildroot%_bindir/cppo
 %_bindir/cppo
 
 %changelog
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.4.1-alt2%ubt
+- rebuild with ocaml 4.04.1
+
 * Sat Apr 08 2017 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1%ubt
 - first build for ALT
 

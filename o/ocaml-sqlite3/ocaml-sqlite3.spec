@@ -2,7 +2,7 @@
 %define module sqlite3
 Name: ocaml-%module
 Version: 4.1.2
-Release: alt2%ubt
+Release: alt3%ubt
 
 Summary: OCaml library for accessing SQLite3 databases
 License: GPL
@@ -64,6 +64,9 @@ mv $OCAMLFIND_DESTDIR/stublibs/* %buildroot%ocamlstublib/
 %ocamlstublib/*.so.owner
 
 %changelog
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 4.1.2-alt3%ubt
+- rebuild with ocaml 4.04.1
+
 * Wed Mar 29 2017 Anton Farygin <rider@altlinux.ru> 4.1.2-alt2%ubt
 - updated to new version
 

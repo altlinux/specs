@@ -2,7 +2,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-lwt
 Version: 2.5.2
-Release: alt2%ubt
+Release: alt3%ubt
 Summary: OCaml lightweight thread library
 
 Group: Development/ML
@@ -50,6 +50,9 @@ chrpath -d %buildroot%_libdir/ocaml/lwt/dlllwt-unix_stubs.so
 %_libdir/ocaml/lwt
 
 %changelog
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 2.5.2-alt3%ubt
+- rebuild with ocaml 4.04.1
+
 * Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 2.5.2-alt2%ubt
 - rebuild in new environment
 

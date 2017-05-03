@@ -5,7 +5,7 @@
 
 Name: ocaml-%pkgname
 Version: 0.7.9
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: OCaml Curl library (ocurl)
 License: MIT
 Group: Development/ML
@@ -65,5 +65,8 @@ make -C examples clean
 %pkgsitelib/*.mli
 
 %changelog
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 0.7.9-alt2%ubt
+- rebuild with ocaml 4.04.1
+
 * Sun Apr 16 2017 Anton Farygin <rider@altlinux.ru> 0.7.9-alt1%ubt
 - first build for ALT

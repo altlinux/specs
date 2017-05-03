@@ -1,6 +1,6 @@
 Name: ocaml-ocamlnet
 Version: 4.1.2
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Network protocols for OCaml
 License: BSD
 Group: Development/ML
@@ -191,5 +191,8 @@ echo -e '-b /usr/bin/netplex-admin\n-b /usr/bin/ocamlrpcgen' \
 %_libdir/ocaml/nethttpd/*.mli
 
 %changelog
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 4.1.2-alt2%ubt
+- rebuild with ocaml 4.04.1
+
 * Wed Apr 19 2017 Anton Farygin <rider@altlinux.ru> 4.1.2-alt1%ubt
 - first build for ALT, based on RH spec
