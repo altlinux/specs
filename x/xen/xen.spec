@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.8.1
-Release: alt1
+Release: alt2
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -152,7 +152,7 @@ production today.
 This package contains the command line tools, needed to manage virtual
 machines running under the Xen hypervisor.
 
-%filter_from_requires /^\s*\(open-iscsi\|nbd-client\|\/sbin\/drbdsetup\)\s*$/d
+%filter_from_requires /^\s*\(open-iscsi\|nbd-client\|drbd-utils\)\s*$/d
 
 
 %package -n lib%name
@@ -791,6 +791,10 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Wed May 03 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt2
+- Rebuild with new ocaml-4.04
+- Dependencies cleanup
+
 * Sun Apr 16 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt1
 - Upstream updates:
  + x86/vmx: Don't leak host syscall MSR state into HVM guests
@@ -809,7 +813,6 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
  + memory: properly check guest memory ranges in XENMEM_exchange handling
    (CVE-2017-7228 / XSA-212)
  + x86: use 64 bit mask when masking away mfn bits
-
 
 * Fri Apr 07 2017 Anton Farygin <rider@altlinux.ru> 4.8.0-alt7
 - rebuild with new ocaml-4.04
