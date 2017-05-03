@@ -8,7 +8,7 @@
 %define xapp kf5
 Name: %xde-%rname
 Version: 17.4.2.%svn
-Release: alt1%ubt
+Release: alt2%ubt
 
 %define qt_bin_dir %_qt5_bindir
 %define configure_qmake %qmake_qt5
@@ -32,6 +32,7 @@ Patch2: alt-defaults.patch
 Patch3: alt-ui-defaults.patch
 Patch4: alt-paths.patch
 Patch5: alt-youtube-browser.patch
+Patch6: alt-fix-drop-url.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ qt5-base-devel qt5-tools-devel qt5-script-devel
@@ -98,6 +99,7 @@ MPlayer %name backend
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 sed -i 's|@APP_PREFIX@|%xde|' src/paths.cpp
 sed -i 's|@APP_PREFIX@|%xde|' src/chromecast.cpp
@@ -167,6 +169,9 @@ done
 
 
 %changelog
+* Wed May 03 2017 Sergey V Turchin <zerg@altlinux.org> 17.4.2.8540-alt2%ubt
+- fix drop url to player window
+
 * Wed May 03 2017 Sergey V Turchin <zerg@altlinux.org> 17.4.2.8540-alt1%ubt
 - new version
 
