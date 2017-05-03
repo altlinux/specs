@@ -7,7 +7,7 @@
 
 Name: ocaml-%pkgname
 Version: 1.4.1
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: OCaml interface to GMP
 Group: Development/ML
 # The license has a static linking exception
@@ -93,5 +93,8 @@ make install INSTALLDIR=%buildroot%_libdir/ocaml
 %ocamlsitelib/%pkgname/*.h
 
 %changelog
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.4.1-alt2%ubt
+- rebuild with ocaml 4.04.1
+
 * Tue Apr 11 2017 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1%ubt
 - fist build for ALT, based on RH spec

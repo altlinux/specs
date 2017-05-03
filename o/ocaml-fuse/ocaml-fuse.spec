@@ -2,7 +2,7 @@
 %define ocamlstublib %_libdir/ocaml/stublibs/
 Name: ocaml-fuse
 Version: 2.7.1
-Release: alt2%ubt
+Release: alt3%ubt
 Summary: Ocaml FUSE binding
 Group: Development/ML
 License: GPL-2.0
@@ -63,6 +63,9 @@ make OCAMLLIB=%buildroot/%_libdir/ocaml\
 %_libdir/ocaml/Fuse/*.mli
 
 %changelog
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 2.7.1-alt3%ubt
+- rebuild with ocaml 4.04.1
+
 * Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 2.7.1-alt2%ubt
 - split to devel and runtime
 

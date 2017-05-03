@@ -2,7 +2,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-ounit
 Version: 2.0.0
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Unit test framework for OCaml
 Group: Development/ML
 License: MIT
@@ -60,5 +60,8 @@ make install
 %_libdir/ocaml/oUnit/*.mli
 
 %changelog
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 2.0.0-alt2%ubt
+- rebuild with ocaml 4.04.1
+
 * Thu Apr 20 2017 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1%ubt
 - first build for ALT, based on RH spec

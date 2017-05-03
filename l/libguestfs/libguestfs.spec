@@ -16,7 +16,7 @@
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
 Version: 1.36.3
-Release: alt2%ubt
+Release: alt3%ubt
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -641,6 +641,9 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %endif
 
 %changelog
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.36.3-alt3%ubt
+- rebuild with ocaml 4.04.1
+
 * Thu Apr 27 2017 Anton Farygin <rider@altlinux.ru> 1.36.3-alt2%ubt
 - using /var/tmp for tmppath in virt-* tools instead of TMPDIR
 - added ubt tag

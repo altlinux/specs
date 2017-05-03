@@ -5,9 +5,11 @@
 #/usr/lib/ocaml/bigarray.cmxs
 #/usr/lib/ocaml/graphics.cmxs
 %set_verify_elf_method textrel=relaxed
+# fix for build on armv7
+%remove_optflags -fomit-frame-pointer
 
 Name: ocaml
-Version: 4.04.0
+Version: 4.04.1
 Release: alt1%ubt
 
 Summary: The Objective Caml compiler and programming environment
@@ -128,7 +130,7 @@ make -C tools reqprov
 
 %install
 make install BINDIR=%buildroot%_bindir LIBDIR=%buildroot%_libdir/ocaml MANDIR=%buildroot%_mandir
-mkdir -p %buildroot%_libdir/ocaml/site-lib/
+mkdir -p %buildroot%_libdir/ocaml/stublibs
 
 perl -pi -e "s|%buildroot||" %buildroot%_libdir/ocaml/ld.conf
 
@@ -196,7 +198,7 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_libdir/ocaml/stublibs/dllthreads.so
 %_libdir/ocaml/stublibs/dllunix.so
 %_libdir/ocaml/stublibs/dllvmthreads.so
-%dir %_libdir/ocaml/site-lib
+%dir %_libdir/ocaml/stublibs
 %_rpmlibdir/ocaml-reqprov
 
 %files graphics
@@ -211,6 +213,8 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_libdir/ocaml/ocamldoc/
 
 %changelog
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 4.04.1-alt1%ubt
+- new version
 
 * Sat Apr 15 2017 Anton Farygin <rider@altlinux.ru> 4.04.0-alt1%ubt
 - build from upstream git

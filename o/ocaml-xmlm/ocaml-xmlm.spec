@@ -3,7 +3,7 @@ Name: ocaml-xmlm
 %global libname %(sed -e 's/^ocaml-//' <<< %name)
 Group: Development/ML
 Version: 1.2.0
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: A streaming XML codec
 License: BSD
 Url: http://erratique.ch/software/xmlm
@@ -67,5 +67,8 @@ install -m 644 -p _build/pkg/META _build/src/xmlm.{cm?,mli} $OCAMLFIND_DESTDIR/%
 %_libdir/ocaml/*/*.mli
 
 %changelog
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt2%ubt
+- rebuild with ocaml 4.04.1
+
 * Fri Apr 21 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1%ubt
 - first build for ALT, based on RH spec
