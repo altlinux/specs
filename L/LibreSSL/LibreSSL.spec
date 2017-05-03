@@ -1,5 +1,5 @@
 Name: LibreSSL
-Version: 2.5.3
+Version: 2.5.4
 Release: alt1
 
 %define oname libressl
@@ -259,6 +259,11 @@ gzip -9 %buildroot%docdir/RELNOTES
 %_man1dir/netcat.*
 
 %changelog
+* Wed May 03 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.5.4-alt1
+- 2.5.4
+- Fixes:
+  + CVE-2017-8301
+
 * Fri Apr 21 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.5.3-alt1
 - 2.5.3
 - added ocspcheck package.
