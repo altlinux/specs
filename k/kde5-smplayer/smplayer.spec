@@ -2,12 +2,12 @@
 %def_enable mpv
 
 %define rname smplayer
-%define svn 8467
+%define svn 8540
 %define xde kde5
 %define XDE KDE5
 %define xapp kf5
 Name: %xde-%rname
-Version: 17.3.0.%svn
+Version: 17.4.2.%svn
 Release: alt1%ubt
 
 %define qt_bin_dir %_qt5_bindir
@@ -167,6 +167,9 @@ done
 
 
 %changelog
+* Wed May 03 2017 Sergey V Turchin <zerg@altlinux.org> 17.4.2.8540-alt1%ubt
+- new version
+
 * Tue Mar 21 2017 Sergey V Turchin <zerg@altlinux.org> 17.3.0.8467-alt1%ubt
 - new version
 
