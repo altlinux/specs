@@ -2,7 +2,7 @@
 
 Name: ocaml-fileutils
 Version: 0.5.1
-Release: alt3
+Release: alt3%ubt
 Summary: OCaml library for common file and filename operations
 Group: Development/ML
 
@@ -16,6 +16,7 @@ BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-ocamlbuild
+BuildRequires(pre):rpm-build-ubt
 
 %description
 This library is intended to provide a basic interface to the most
@@ -45,7 +46,7 @@ make
 
 %install
 export DESTDIR=%buildroot
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml/site-lib
+export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
 mkdir -p $OCAMLFIND_DESTDIR $OCAMLFIND_DESTDIR/stublibs
 
 # Set htmldir to current directory, then copy the docs (in api/)
@@ -57,22 +58,26 @@ make test
 
 %files
 %doc COPYING.txt
-%_libdir/ocaml/site-lib/fileutils
-%exclude %_libdir/ocaml/site-lib/fileutils/*.a
-%exclude %_libdir/ocaml/site-lib/fileutils/*.cmx
-%exclude %_libdir/ocaml/site-lib/fileutils/*.cmxa
-%exclude %_libdir/ocaml/site-lib/fileutils/*.ml
-%exclude %_libdir/ocaml/site-lib/fileutils/*.mli
+%_libdir/ocaml/fileutils
+%exclude %_libdir/ocaml/fileutils/*.a
+%exclude %_libdir/ocaml/fileutils/*.cmx
+%exclude %_libdir/ocaml/fileutils/*.cmxa
+%exclude %_libdir/ocaml/fileutils/*.ml
+%exclude %_libdir/ocaml/fileutils/*.mli
 
 %files devel
 %doc COPYING.txt AUTHORS.txt CHANGELOG.txt README.txt TODO.txt
-%_libdir/ocaml/site-lib/fileutils/*.a
-%_libdir/ocaml/site-lib/fileutils/*.cmx
-%_libdir/ocaml/site-lib/fileutils/*.cmxa
-%_libdir/ocaml/site-lib/fileutils/*.ml
-%_libdir/ocaml/site-lib/fileutils/*.mli
+%_libdir/ocaml/fileutils/*.a
+%_libdir/ocaml/fileutils/*.cmx
+%_libdir/ocaml/fileutils/*.cmxa
+%_libdir/ocaml/fileutils/*.ml
+%_libdir/ocaml/fileutils/*.mli
 
 %changelog
+* Thu May 04 2017 Anton Farygin <rider@altlinux.ru> 0.5.1-alt3%ubt
+- moved out from site-lib dir
+- added ubt tag
+
 * Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 0.5.1-alt3
 - rebuild with ocaml 4.04.1
 
