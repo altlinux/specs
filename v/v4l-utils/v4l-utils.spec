@@ -1,6 +1,6 @@
 Name: v4l-utils
-Version: 1.6.0
-Release: alt1.qa1
+Version: 1.12.3
+Release: alt1
 
 Summary: Collection of video4linux support libraries and utilities
 License: GPLv2+
@@ -69,13 +69,12 @@ video/TV viewer application.
 %setup
 
 %build
-%autoreconf
-%configure --with-libudev --disable-static
+[ -x bootstrap.sh ] && ./bootstrap.sh
+%configure --disable-static
 %make_build
 
 %install
 %makeinstall_std
-find %buildroot%_libdir -type f -name \*.la -delete
 
 %files
 %doc ChangeLog COPYING README
@@ -84,10 +83,16 @@ find %buildroot%_libdir -type f -name \*.la -delete
 %_bindir/*
 %exclude %_bindir/ir-keytable
 %exclude %_bindir/qv4l2
+%_man1dir/cec-compliance.1*
+%_man1dir/cec-ctl.1.*
+%_man1dir/cec-follower.1*
+%_man1dir/ir-ctl.1*
 %_man1dir/dvb-fe-tool.1*
 %_man1dir/dvb-format-convert.1*
 %_man1dir/dvbv5-scan.1*
 %_man1dir/dvbv5-zap.1*
+%_man1dir/v4l2-compliance.1*
+%_man1dir/v4l2-ctl.1*
 
 %files -n ir-keytable
 %config(noreplace) %_sysconfdir/rc_maps.cfg
@@ -117,6 +122,12 @@ find %buildroot%_libdir -type f -name \*.la -delete
 %_man1dir/qv4l2.1*
 
 %changelog
+* Thu May 04 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.12.3-alt1
+- 1.12.3 released
+
+* Wed Apr 13 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.10.0-alt1
+- 1.10.0
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.6.0-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
