@@ -1,9 +1,9 @@
-%define ver_major 9.9
+%define ver_major 10.0
 %define gst_api_ver 1.0
 %def_with recording
 
 Name: girl
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Internet Radio Locator
@@ -17,11 +17,10 @@ Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-bad%gst_api_ver
 Requires: gst-plugins-ugly%gst_api_ver
 
-%define gtk_ver 3.6.0
+%define gtk_ver 2.24
 
 BuildRequires: gnome-common intltool yelp-tools gtk-doc
 BuildRequires: libgnomeui-devel libxml2-devel
-BuildRequires: libgtk+3-devel >= %gtk_ver libchamplain-gtk3-devel
 BuildRequires: gst-plugins%gst_api_ver-devel gst-plugins-bad1.0-devel
 
 %description
@@ -46,7 +45,6 @@ on the Internet.
 
 %files -f %name.lang
 %_bindir/%name
-%_bindir/gnome-internet-radio-locator
 %_datadir/applications/%name.desktop
 %_datadir/%name/
 %_iconsdir/hicolor/*x*/apps/%name.png
@@ -56,6 +54,9 @@ on the Internet.
 
 
 %changelog
+* Thu May 04 2017 Yuri N. Sedunov <aris@altlinux.org> 10.0.0-alt1
+- 10.0.0
+
 * Tue Apr 18 2017 Yuri N. Sedunov <aris@altlinux.org> 9.9.6-alt1
 - 9.9.6
 
