@@ -1,7 +1,8 @@
 %define api_ver 1.0
+%def_disable doc
 
 Name: libevdev
-Version: 1.5.6
+Version: 1.5.7
 Release: alt1
 
 Summary: kernel evdev device wrapper library
@@ -11,7 +12,8 @@ Url: http://www.freedesktop.org/wiki/Software/libevdev
 
 Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
 
-BuildRequires: glibc-kernheaders libcheck-devel python-modules python-module-setuptools doxygen
+BuildRequires: glibc-kernheaders libcheck-devel python-modules python-module-setuptools
+%{?_enabled_doc:BuildRequires: doxygen}
 
 %description
 %name is a wrapper library for evdev devices.
@@ -56,6 +58,9 @@ that are needed to write applications that use %name.
 %_man3dir/%name.3.*
 
 %changelog
+* Thu May 04 2017 Yuri N. Sedunov <aris@altlinux.org> 1.5.7-alt1
+- 1.5.7
+
 * Fri Jan 06 2017 Yuri N. Sedunov <aris@altlinux.org> 1.5.6-alt1
 - 1.5.6
 
