@@ -1,12 +1,12 @@
 %define _name gstvalidate
-%define ver_major 1.10
+%define ver_major 1.12
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
-%def_disable python3
+%def_enable python3
 
 Name: gst-validate
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer Validate Tools and Library
@@ -16,7 +16,7 @@ Url: http://cgit.freedesktop.org/gstreamer/gst-devtools/
 
 Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 
-%define gst_ver 1.6.0
+%define gst_ver %ver_major
 
 Requires: lib%name = %version-%release
 Requires: gst-plugins-base%gst_api_ver
@@ -25,7 +25,7 @@ Requires: gst-plugins-base%gst_api_ver
 # use python3
 AutoReqProv: nopython
 %define __python %nil
-%add_python3_compile_include %_libdir/gst-validate-launcher/python
+%add_python3_path %_libdir/%name-launcher/python
 %endif
 
 BuildRequires: gcc-c++ gst-plugins%gst_api_ver-devel >= %gst_ver gst-plugins-base%gst_api_ver libxml2-devel
@@ -111,8 +111,10 @@ GObject introspection devel data for the Gst Validate library.
 %_bindir/gst-validate-transcoding-%api_ver
 %_bindir/%name-images-check-%api_ver
 %_libdir/%name-launcher/
-%_libdir/gstreamer-%gst_api_ver/lib%{_name}plugin-%api_ver.so*
+%_libdir/gstreamer-%gst_api_ver/lib%{_name}tracer.so
 %_datadir/gstreamer-%gst_api_ver/validate/
+
+%exclude %_libdir/gstreamer-%gst_api_ver/*.la
 
 %files -n lib%name -f %name.lang
 %_libdir/lib%_name-%api_ver.so.*
@@ -144,6 +146,9 @@ GObject introspection devel data for the Gst Validate library.
 %_datadir/gtk-doc/html/%name-plugins-%api_ver/
 
 %changelog
+* Thu May 04 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Thu Feb 23 2017 Yuri N. Sedunov <aris@altlinux.org> 1.10.4-alt1
 - 1.10.4
 
