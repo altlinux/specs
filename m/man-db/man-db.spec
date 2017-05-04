@@ -3,7 +3,7 @@
 Summary: Tools for searching and reading man pages
 Name: man-db
 Version: 2.7.6.1
-Release: alt4
+Release: alt4.1
 # GPLv2+ .. man-db
 # GPLv3+ .. gnulib
 License: GPLv2+ and GPLv3+
@@ -23,7 +23,8 @@ Patch0: man-db-2.7.6.1-change-owner-of-man-cache.patch
 Patch1: man-db-2.7.6.1-fix-override-dir-handling.patch
 
 Obsoletes: man < 2.0
-Obsoletes: man-whatis
+Obsoletes: man-whatis < 2.0
+Provides: man-whatis = %version
 
 Provides: man = %version
 Provides: man-pages-reader = %version
@@ -159,6 +160,9 @@ cat %name.lang %name-gnulib.lang > %name.files
 %config(noreplace) %_sysconfdir/sysconfig/man-db
 
 %changelog
+* Thu May 04 2017 Igor Vlasenko <viy@altlinux.ru> 2.7.6.1-alt4.1
+- NMU: added Provides: man-whatis
+
 * Thu May 04 2017 Alexey Gladkov <legion@altlinux.ru> 2.7.6.1-alt4
 - Obsoletes man-whatis.
 
