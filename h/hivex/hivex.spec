@@ -5,8 +5,8 @@
 %def_disable static
 
 Name: hivex
-Version: 1.3.13
-Release: alt4
+Version: 1.3.14
+Release: alt1%ubt
 Summary: Read and write Windows Registry binary hive files
 
 Group: Development/Other
@@ -15,7 +15,7 @@ Url: http://libguestfs.org/
 
 Source: %name-%version.tar
 Source1: gnulib-%name-%version.tar
-Patch1: %name-%version-%release.patch
+Patch1: %name-%version-alt.patch
 
 BuildRequires: perl-Test-Pod
 BuildRequires: perl-Test-Pod-Coverage
@@ -26,6 +26,7 @@ BuildRequires: perl-libintl
 %{?_enable_python:BuildRequires: python-devel}
 BuildRequires: libreadline-devel
 BuildRequires: libxml2-devel
+BuildRequires(pre):rpm-build-ubt
 
 %description
 Hive files are the undocumented binary blobs that Windows uses to
@@ -228,6 +229,9 @@ rm -f %buildroot%python_sitelibdir/libhivexmod.la
 %endif
 
 %changelog
+* Thu May 04 2017 Anton Farygin <rider@altlinux.ru> 1.3.14-alt1%ubt
+- new version
+
 * Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.3.13-alt4
 - rebuild with ocaml 4.04.1
 
