@@ -1,6 +1,6 @@
 Name: ocaml-curses
 Version: 1.0.3
-Release: alt3
+Release: alt3%ubt
 Summary: OCaml bindings for ncurses
 
 Group: System/Libraries
@@ -14,6 +14,7 @@ BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: libncurses-devel
 BuildRequires: gawk
+BuildRequires(pre): rpm-build-ubt
 
 # Doesn't include a configure script, so we have to make one.
 BuildRequires: autoconf, automake, libtool
@@ -41,28 +42,32 @@ make all opt
 
 %install
 export DESTDIR=%buildroot
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml/site-lib
+export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
 mkdir -p $OCAMLFIND_DESTDIR $OCAMLFIND_DESTDIR/stublibs
 ocamlfind install curses META *.cmi *.cmx *.cma *.cmxa *.a *.so *.mli
 
 %files
 %doc COPYING
-%_libdir/ocaml/site-lib/curses
-%exclude %_libdir/ocaml/site-lib/curses/*.a
-%exclude %_libdir/ocaml/site-lib/curses/*.cmxa
-%exclude %_libdir/ocaml/site-lib/curses/*.cmx
-%exclude %_libdir/ocaml/site-lib/curses/*.mli
-%_libdir/ocaml/site-lib/stublibs/*.so
-%_libdir/ocaml/site-lib/stublibs/*.so.owner
+%_libdir/ocaml/curses
+%exclude %_libdir/ocaml/curses/*.a
+%exclude %_libdir/ocaml/curses/*.cmxa
+%exclude %_libdir/ocaml/curses/*.cmx
+%exclude %_libdir/ocaml/curses/*.mli
+%_libdir/ocaml/stublibs/*.so
+%_libdir/ocaml/stublibs/*.so.owner
 
 %files devel
 %doc COPYING
-%_libdir/ocaml/site-lib/curses/*.a
-%_libdir/ocaml/site-lib/curses/*.cmxa
-%_libdir/ocaml/site-lib/curses/*.cmx
-%_libdir/ocaml/site-lib/curses/*.mli
+%_libdir/ocaml/curses/*.a
+%_libdir/ocaml/curses/*.cmxa
+%_libdir/ocaml/curses/*.cmx
+%_libdir/ocaml/curses/*.mli
 
 %changelog
+* Thu May 04 2017 Anton Farygin <rider@altlinux.ru> 1.0.3-alt3%ubt
+- moved out from site-lib dir
+- added ubt tag
+
 * Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.0.3-alt3
 - rebuild with ocaml 4.04.1
 
