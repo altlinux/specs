@@ -1,6 +1,6 @@
 Name: libjson
 Version: 0.12.1
-Release: alt1
+Release: alt2
 
 Summary: JSON implementation in C
 License: MIT
@@ -9,6 +9,8 @@ Url: https://github.com/json-c/json-c/wiki
 
 Source: %name-%version-%release.tar
 # git://github.com/json-c/json-c.git
+Provides: libjson-c = %EVR
+Obsoletes: libjson-c < %EVR
 
 %description
 JSON-C implements a reference counting object model that allows you to
@@ -19,7 +21,9 @@ of JSON objects.
 %package devel
 Summary: header files for libjson
 Group: Development/C
-Requires: libjson = %version-%release
+Requires: libjson = %EVR
+Provides: libjson-c-devel = %EVR
+Obsoletes: libjson-c-devel < %EVR
 
 %description devel
 JSON-C implements a reference counting object model that allows you to
@@ -53,6 +57,9 @@ This package contains development part of JSON-C
 %_pkgconfigdir/json-c.pc
 
 %changelog
+* Thu May 04 2017 Andrey Cherepanov <cas@altlinux.org> 0.12.1-alt2
+- Obsoletes libjson-c
+
 * Tue May 02 2017 Andrey Cherepanov <cas@altlinux.org> 0.12.1-alt1
 - New version
 
