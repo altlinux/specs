@@ -1,12 +1,19 @@
+%define git_commit e2fefd
+
 %def_disable plugins
 
-%def_enable menufile
+%def_disable menufile
 
 %undefine cvs
 
 Name: bzflag
-Version: 2.4.10
-Release: alt1
+Version: 2.4.11
+
+# %%ifndef git_commit
+# Release: alt1
+# %%else
+Release: alt0.git_1_%git_commit
+# %%endif
 
 Summary: A multiplayer 3D tank battle game
 License: LGPLv2.1
@@ -14,27 +21,34 @@ Group: Games/Arcade
 Packager: Motsyo Gennadi <drool@altlinux.ru>
 
 Url: http://www.bzflag.org
+
+# commit e2fefdbb30154605c61fb85315d1d39e9be34689
+%ifdef git_commit
+Source: %name-%version-%release.tar
+%else
 Source: %name-%version.tar
+%endif
+
 
 # Source2:  bzflag_ru_utf8.po
 Source10: %name.16.png
 Source11: %name.32.png
 Source12: %name.48.png
-Source13: %name.menu
+# Source13: %%name.menu
 Source14: bzfs.init
 
 # Patch: bzflag_ru_po.patch
 # PATCH-MISSING-TAG -- See http://wiki.opensuse.org/openSUSE:Packaging_Patches_guidelines
-Patch1:         %name-1.10.4-ncursespollution.patch
+# Patch1:         %name-1.10.4-ncursespollution.patch
 
 Summary(ru_RU.UTF-8): Трехмерная сетевая игра - битва на танках
 Summary(uk_UA.UTF-8): Тривимірна мережева гра на танках
 
 #Requires: %name-server
 
-# Automatically added by buildreq on Sun Jun 05 2016 (-bi)
-# optimized out: elfutils libGL-devel libGLU-devel libICE-devel libX11-devel libgpg-error libjson-c libstdc++-devel libtinfo-devel perl pkg-config python-base termutils xorg-xf86vidmodeproto-devel xorg-xproto-devel xz
-BuildRequires: catdoc gcc-c++ imake libSDL-devel libSM-devel libXext-devel libXxf86vm-devel libcares-devel libcurl-devel libncurses-devel xorg-cf-files zlib-devel
+# Automatically added by buildreq on Thu May 04 2017 (-bi)
+# optimized out: elfutils libGL-devel libGLU-devel libX11-devel libgpg-error libstdc++-devel libtinfo-devel perl pkg-config python-base termutils xorg-xf86vidmodeproto-devel xorg-xproto-devel xz
+BuildRequires: gcc-c++ libSDL-devel libXext-devel libXxf86vm-devel libcares-devel libcurl-devel libncurses-devel zlib-devel
 
 BuildRequires: catdoc iconv
 
@@ -65,9 +79,12 @@ Group: Games/Arcade
 This package contains BZFlags standalone game server.
 
 %prep
-%setup
+%setup -n %name
+#setup -n %name-%version -c
+
+
 #patch -p1
-%patch1 -p1
+#patch1 -p1
 
 # iconv %SOURCE2 -f utf8 -t koi8-r | catdoc -d us-ascii -s koi8-r | tr wW vV | sed \
 #-e 's/T[Zz]/C/g' \
@@ -206,6 +223,9 @@ mkdir -p %buildroot/var/run/%name
 %_initdir/bzfs
 
 %changelog
+* Thu May 04 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2.4.11-alt0.git_1_e2fefd
+- Update from git
+
 * Tue Apr 18 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2.4.10-alt1
 - Version 2.4.10 (Release)
 
