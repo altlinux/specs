@@ -1,6 +1,6 @@
 Name: netxms
 Version: 2.0.8
-Release: alt1
+Release: alt2
 
 Summary: Open source network monitoring system
 License: GPL
@@ -11,6 +11,8 @@ Packager: Eugene Prokopiev <enp@altlinux.ru>
 Source0: %name-%version.tar
 Source1: netxmsd.init
 Source2: nxagentd.init
+Source3: netxmsd.service
+Source4: nxagentd.service
 
 BuildRequires: flex gcc-c++ zlib-devel libexpat-devel libssl-devel libgd2-devel libreadline-devel libsqlite3-devel libMySQL-devel postgresql-devel libunixODBC-devel
 
@@ -74,13 +76,14 @@ Group: System/Servers
 %configure              \
   --localstatedir=/var  \
   --sharedstatedir=/var \
-  --with-server \
-  --with-snmp   \
-  --with-mysql  \
-  --with-pgsql  \
-  --with-sqlite \
-  --with-odbc   \
-  --with-client \
+  --with-unicode \
+  --with-server  \
+  --with-snmp    \
+  --with-mysql   \
+  --with-pgsql   \
+  --with-sqlite  \
+  --with-odbc    \
+  --with-client  \
   --with-agent
 make
 
@@ -89,6 +92,9 @@ make
 mkdir -p %buildroot/%_initdir
 cp %SOURCE1 %buildroot/%_initdir/netxmsd
 cp %SOURCE2 %buildroot/%_initdir/nxagentd
+mkdir -p %buildroot/%systemd_unitdir
+cp %SOURCE3 %buildroot/%systemd_unitdir
+cp %SOURCE4 %buildroot/%systemd_unitdir
 mkdir -p %buildroot/%_sysconfdir
 cp contrib/netxmsd.conf-dist %buildroot/%_sysconfdir/netxmsd.conf
 cp contrib/nxagentd.conf-dist %buildroot/%_sysconfdir/nxagentd.conf
@@ -214,6 +220,9 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_libdir/%name/dbdrv/odbc.ddr
 
 %changelog
+* Thu May 04 2017 Eugene Prokopiev <enp@altlinux.ru> 2.0.8-alt2
+- xxx
+
 * Fri Apr 28 2017 Eugene Prokopiev <enp@altlinux.ru> 2.0.8-alt1
 - new version
 
