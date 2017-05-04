@@ -1,10 +1,9 @@
 %global cache /var/cache/man
-%global gnulib_ver 20140202
 
 Summary: Tools for searching and reading man pages
 Name: man-db
 Version: 2.7.6.1
-Release: alt3
+Release: alt4
 # GPLv2+ .. man-db
 # GPLv3+ .. gnulib
 License: GPLv2+ and GPLv3+
@@ -24,6 +23,8 @@ Patch0: man-db-2.7.6.1-change-owner-of-man-cache.patch
 Patch1: man-db-2.7.6.1-fix-override-dir-handling.patch
 
 Obsoletes: man < 2.0
+Obsoletes: man-whatis
+
 Provides: man = %version
 Provides: man-pages-reader = %version
 
@@ -73,9 +74,12 @@ This package provides periodic update of man-db cache.
 %build
 %configure \
     --with-sections="1 1p 8 2 3 3p 4 5 6 7 9 0p n l p o 1x 2x 3x 4x 5x 6x 7x 8x" \
-    --disable-setuid --enable-cache-owner=root \
-    --with-browser=elinks --with-lzip=lzip \
+    --disable-setuid \
+    --enable-cache-owner=root \
+    --with-browser=elinks \
+    --with-lzip=lzip \
     --with-override-dir=overrides
+
 %make CC="%__cc %optflags" %{?_smp_mflags} V=1
 
 %check
@@ -155,6 +159,9 @@ cat %name.lang %name-gnulib.lang > %name.files
 %config(noreplace) %_sysconfdir/sysconfig/man-db
 
 %changelog
+* Thu May 04 2017 Alexey Gladkov <legion@altlinux.ru> 2.7.6.1-alt4
+- Obsoletes man-whatis.
+
 * Wed May 03 2017 Alexey Gladkov <legion@altlinux.ru> 2.7.6.1-alt3
 - Add conflict on old versions of man-pages-ru-extra.
 
