@@ -1,5 +1,5 @@
 Name:    appstream
-Version: 0.10.6
+Version: 0.11.0
 Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
@@ -10,21 +10,21 @@ URL:     http://www.freedesktop.org/wiki/Distributions/AppStream/Software
 Source0: appstream-%{version}.tar
 # VCS:   https://github.com/ximion/appstream
 
-Patch:   appstream-%version-%release.patch
-
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
-BuildRequires: gettext
-BuildRequires: intltool
-BuildRequires: gobject-introspection-devel
-BuildRequires: libxml2-devel
-BuildRequires: qt5-base-devel
-BuildRequires: libyaml-devel
-BuildRequires: libxapian-devel
-BuildRequires: xmlto
 BuildRequires: ctest
+BuildRequires: gettext
+BuildRequires: gobject-introspection-devel
+BuildRequires: intltool
+BuildRequires: itstool
 BuildRequires: libprotobuf-lite-devel
+BuildRequires: libstemmer-devel
+BuildRequires: libxapian-devel
+BuildRequires: libxml2-devel
+BuildRequires: libyaml-devel
 BuildRequires: protobuf-compiler
+BuildRequires: qt5-base-devel
+BuildRequires: xmlto
 
 #Requires: appstream-data
 
@@ -58,7 +58,6 @@ Requires: %name-qt = %version-%release
 
 %prep
 %setup
-%patch -p1
 
 %build
 %cmake \
@@ -77,6 +76,11 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 
 %find_lang appstream
 
+# move metainfo to right/legacy location, at least until our tools can handle it
+mkdir -p %{buildroot}%{_datadir}/appdata/
+mv %{buildroot}%{_datadir}/metainfo/*.xml \
+   %{buildroot}%{_datadir}/appdata/
+
 %check
 #LDFLAGS=-Lsrc make test -C BUILD ARGS="--output-on-failure --timeout 300"
 
@@ -89,13 +93,14 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 %dir %_datadir/app-info/
 %dir %_datadir/app-info/icons
 %dir %_datadir/app-info/xmls
-%_datadir/app-info/categories.xml
 %ghost %_cachedir/app-info/cache.watch
 %dir %_cachedir/app-info
 %dir %_cachedir/app-info/icons
 %dir %_cachedir/app-info/xapian
 %dir %_cachedir/app-info/xmls
 %_man1dir/appstreamcli.1.*
+%_datadir/gettext/its/metainfo.*
+%_datadir/appdata/org.freedesktop.appstream.cli.*.xml
 
 %files devel
 %_includedir/AppStream/
@@ -104,14 +109,17 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 %_datadir/gir-1.0/AppStream-1.0.gir
 
 %files qt
-%_libdir/libAppstreamQt.so.*
+%_libdir/libAppStreamQt.so.*
 
 %files qt-devel
-%_includedir/AppstreamQt/
-%_libdir/cmake/AppstreamQt/
-%_libdir/libAppstreamQt.so
+%_includedir/AppStreamQt/
+%_libdir/cmake/AppStreamQt/
+%_libdir/libAppStreamQt.so
 
 %changelog
+* Thu May 04 2017 Andrey Cherepanov <cas@altlinux.org> 0.11.0-alt1
+- New version
+
 * Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 0.10.6-alt1
 - new version 0.10.6
 
