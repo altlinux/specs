@@ -1,7 +1,7 @@
 %define oname ocamlbdb
 Name: ocaml-bdb
 Version: 4.3.21
-Release: alt6
+Release: alt6%ubt
 Summary: OCaml interface to Berkeley-DB
 Packager: Boris Savelev <boris@altlinux.org>
 Source: http://www.eecs.harvard.edu/~stein/%oname-%version.tar.gz
@@ -11,6 +11,7 @@ Group: Development/Other
 
 # Automatically added by buildreq on Sat Aug 23 2008
 BuildRequires: libdb4-devel ocaml
+BuildRequires(pre): rpm-build-ubt
 Requires: %name-runtime = %version-%release
 Obsoletes: %name-devel
 Provides: %name-devel = %version-%release
@@ -39,19 +40,23 @@ easy to use interface.
 %make
 
 %install
-mkdir -p %buildroot%_libdir/ocaml/site-lib/bdb
-install -m 644 bdb.cma bdb.cmi libcamlbdb.a %buildroot%_libdir/ocaml/site-lib/bdb/
+mkdir -p %buildroot%_libdir/ocaml/bdb
+install -m 644 bdb.cma bdb.cmi libcamlbdb.a %buildroot%_libdir/ocaml/bdb/
 
 %files runtime
 %doc CREDITS README
-%dir %_libdir/ocaml/site-lib/bdb
-%_libdir/ocaml/site-lib/bdb/*.cmi
+%dir %_libdir/ocaml/bdb
+%_libdir/ocaml/bdb/*.cmi
 
 %files
-%_libdir/ocaml/site-lib/bdb/*
-%exclude %_libdir/ocaml/site-lib/bdb/*.cmi
+%_libdir/ocaml/bdb/*
+%exclude %_libdir/ocaml/bdb/*.cmi
 
 %changelog
+* Thu May 04 2017 Anton Farygin <rider@altlinux.ru> 4.3.21-alt6%ubt
+- added ubt tag
+- moved out from site-lib dir
+
 * Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 4.3.21-alt6
 - rebuild with ocaml 4.04.1
 
