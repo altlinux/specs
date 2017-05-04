@@ -1,3 +1,4 @@
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
@@ -5,7 +6,7 @@
 %def_without cld2
 
 Name: poedit
-Version: 1.8.12
+Version: 2.0.1
 Release: alt1
 
 Summary: Cross-platform translation files editor
@@ -14,14 +15,21 @@ Group: Editors
 License: MIT
 Url: http://www.poedit.net/
 
+%if_disabled snapshot
 Source: https://github.com/vslavik/%name/releases/download/v%version-oss/%name-%version.tar.gz
-
+%else
+# VCS: https://github.com/vslavik/poedit.git
+Source: %name-%version.tar
+%endif
 Requires: gettext-tools
 
 %define cpprest_ver 2.5
+%define wxgtk_ver 3.0.3-alt9
+
+Requires: libwxGTK3.0 >= %wxgtk_ver
 
 BuildPreReq: desktop-file-utils libappstream-glib-devel
-BuildRequires: gcc-c++ libwxGTK3.0-devel libdb4_cxx-devel libgtkspell3-devel
+BuildRequires: gcc-c++ libwxGTK3.0-devel >= %wxgtk_ver libdb4_cxx-devel libgtkspell3-devel
 BuildRequires: libicu-devel liblucene++-devel libexpat-devel
 BuildRequires: boost-locale-devel zlib-devel
 %{?_with_cpprest:BuildRequires: libcpprest-devel >= %cpprest_ver}
@@ -55,17 +63,19 @@ wxLocale библиотеки wxWindows.
 %files -f %name.lang
 %doc AUTHORS NEWS README
 %_bindir/%name
-%_libexecdir/%name-dump-legacy-tm
 %_man1dir/%name.1.*
 %_datadir/%name/
 %_desktopdir/%name.desktop
 %_desktopdir/%name-uri.desktop
 %_pixmapsdir/%name.png
 %_iconsdir/hicolor/*x*/*/*.png
-%_iconsdir/hicolor/scalable/*/*.svg
+#%_iconsdir/hicolor/scalable/*/*.svg
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Mon Apr 17 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Wed Feb 22 2017 Yuri N. Sedunov <aris@altlinux.org> 1.8.12-alt1
 - 1.8.12
 
