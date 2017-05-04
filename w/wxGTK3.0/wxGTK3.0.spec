@@ -2,7 +2,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.3
-Release: alt8.git20160409
+Release: alt9
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -17,7 +17,6 @@ Source: %name-%version.tar
 Source2: ld_shared_wrapper.pl
 
 Patch1: wxGTK3-3.0.2-abicheck.patch
-Patch2: wxGTK3-3.0.2-gstreamer1.0.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libGL-devel libGLU-devel libSDL-devel libSM-devel
@@ -112,7 +111,6 @@ wxGTK example programs.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 
 # patch some installed files to avoid conflicts with 2.8.*
 #sed -i -e 's|aclocal)|aclocal/wxwin3.m4)|' Makefile.in
@@ -221,6 +219,10 @@ cat wxmsw3.lang >> wxstd3.lang
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Thu May 04 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.3-alt9
+- built the recentlly released actual usptream version 3.0.3
+- dropped wxGTK3-3.0.2-gstreamer1.0.patch in favor of upstream GStreamer1.0 port
+
 * Fri Mar 10 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.3-alt8.git20160409
 - Built against GStreamer 1.0.
 - removed old gst1.0 patch.
