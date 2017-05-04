@@ -2,7 +2,7 @@
 
 Name: ocaml-calendar
 Version: 2.04
-Release: alt3
+Release: alt3%ubt
 Summary: Objective Caml library for managing dates and times
 License: LGPLv2
 Group: Development/ML
@@ -17,6 +17,8 @@ Patch1: calendar-2.03.2-enable-debug.patch
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamldoc
+BuildRequires(pre): rpm-build-ubt
+
 
 %description
 Objective Caml library for managing dates and times.
@@ -60,6 +62,9 @@ make install
 %_libdir/ocaml/site-lib/calendar/*.mli
 
 %changelog
+* Thu May 04 2017 Anton Farygin <rider@altlinux.ru> 2.04-alt3%ubt
+- added ubt tag 
+
 * Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 2.04-alt3
 - rebuild with ocaml 4.04.1
 
