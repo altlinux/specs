@@ -2,7 +2,7 @@
 %define otrs_user otrs
 
 Name: otrs
-Version: 5.0.10
+Version: 5.0.17
 Release: alt1
 
 Summary: Open source Ticket Request System
@@ -31,13 +31,14 @@ Patch: otrs-InnoDBLogFileSize.patch
 %add_findreq_skiplist */bin/*
 %add_findreq_skiplist */Kernel/*
 %add_findreq_skiplist */scripts/*
+%add_findreq_skiplist */examples/*
 
 %description
-OTRS is an Open source Ticket Request System (also well known as trouble
-ticket system) with many features to manage customer telephone calls and
-e-mails. The system is built to allow your support, sales, pre-sales,
-billing, internal IT, helpdesk, e.t.c. department to react quickly to
-inbound inquiries.
+OTRS is an Open source Ticket Request System (also well known
+as trouble ticket system) with many features to manage customer
+telephone calls and e-mails. The system is built to allow your
+support, sales, pre-sales, billing, internal IT, helpdesk, e.t.c.
+departments to react quickly to inbound inquiries.
 
 %package apache2
 Summary: Apache 2.x web-server configuration for %name
@@ -150,6 +151,11 @@ cd %installdir/bin/
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %changelog
+* Thu May 04 2017 Sergey Y. Afonin <asy@altlinux.ru> 5.0.17-alt1
+- New version
+- added */examples/* to findreq_skiplist
+- updated description for Apache 2.4 in README.ALT.rus
+
 * Tue May 31 2016 Sergey Y. Afonin <asy@altlinux.ru> 5.0.10-alt1
 - New version
 - added description for Apache 2.4 to README.ALT.rus
