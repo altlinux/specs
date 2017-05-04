@@ -1,5 +1,7 @@
+%def_without gvfs
+
 Name:     gvfs-shares
-Version:  1.1
+Version:  1.2
 Release:  alt1
 
 Summary:  Script for automount specified GIO locations
@@ -12,7 +14,12 @@ BuildArch: noarch
 Source1:   %name
 Source2:   gvfs-automount.desktop
 
-Requires:  fuse-gvfs gvfs-backend-smb gvfs-utils
+Requires:  fuse-gvfs gvfs-backend-smb
+%if_with gvfs
+Requires: gvfs-utils
+%else
+Requires: libgio >= 2.50.0
+%endif
 
 %description
 Script for automount specified GIO locations.
@@ -26,6 +33,9 @@ install -Dm644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/gvfs-automount.desk
 %_sysconfdir/xdg/autostart/gvfs-automount.desktop
 
 %changelog
+* Thu May 04 2017 Andrey Cherepanov <cas@altlinux.org> 1.2-alt1
+- Support gio executable instead of deprecated gvfs (ALT #33445)
+
 * Tue Jan 24 2017 Andrey Cherepanov <cas@altlinux.org> 1.1-alt1
 - Support --help and --version, correct process unknown command
 
