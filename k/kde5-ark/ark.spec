@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 17.04.0
-Release: alt0.1%ubt
+Release: alt1%ubt
 %K5init altplace
 
 Group: Archiving/Compression
@@ -102,6 +102,9 @@ mv %buildroot/%_K5xdgmime/kerfuffle{,5}.xml
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Tue Apr 25 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt0.1%ubt
 - new version
 - fix zip filenames encoding (ALT#33230)

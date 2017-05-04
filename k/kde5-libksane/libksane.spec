@@ -1,7 +1,7 @@
 %define rname libksane
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.0
 Release: alt1%ubt
 %K5init
 
@@ -72,6 +72,9 @@ KF5 library
 %_K5lib/libKF5Sane.so.*
 
 %changelog
+* Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 

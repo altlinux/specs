@@ -6,8 +6,8 @@
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 16.12.3
-Release: alt2%ubt
+Version: 17.04.0
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -22,6 +22,7 @@ Obsoletes: kf5-kio-extras < %EVR
 
 Source: %rname-%version.tar
 Patch1: alt-smb-share.patch
+Patch2: alt-mime-rename.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils glibc-devel-static ilmbase-devel kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libxcbutil-keysyms pkg-config python-base qt5-base-devel ruby ruby-stdlibs samba-libs shared-mime-info xml-common xml-utils
@@ -32,6 +33,7 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-phonon-devel qt5-svg-devel qt5-we
 BuildRequires: libexiv2-devel
 %endif
 BuildRequires: libjpeg-devel libmtp-devel libopenslp-devel libsmbclient-devel libssh-devel openexr-devel
+BuildRequires: gperf libtag-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kactivities-devel
 BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel
@@ -72,6 +74,7 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K5build
@@ -120,6 +123,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libmolletnetwork5.so.%molletnetwork_sover
 
 %changelog
+* Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt2%ubt
 - add application/x-smb-share for smb:/ shares
 
