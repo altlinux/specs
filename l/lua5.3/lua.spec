@@ -2,8 +2,8 @@
 %global major_version 5.3
 
 Name: lua%major_version
-Version: %major_version.3
-Release: alt6
+Version: %major_version.4
+Release: alt1
 Summary: Powerful light-weight programming language
 Group: Development/Other
 License: MIT
@@ -23,10 +23,6 @@ Patch1: %oname-5.3.0-idsize.patch
 #Patch2:         %%{oname}-5.3.0-luac-shared-link-fix.patch
 Patch3: %oname-5.2.2-configure-linux.patch
 Patch4: %oname-5.3.0-configure-compat-module.patch
-# https://www.lua.org/bugs.html#5.3.3-1
-Patch9: lua-5.3.3-upstream-bug-1.patch
-# https://www.lua.org/bugs.html#5.3.3-2
-Patch10: lua-5.3.3-upstream-bug-2.patch
 
 BuildRequires: automake-common autoconf-common libtool-common readline-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 Provides: lua(abi) = %major_version
@@ -112,8 +108,6 @@ mv src/luaconf.h src/luaconf.h.template.in
 #%% patch2 -p1 -z .luac-shared
 %patch3 -p1 -z .configure-linux
 %patch4 -p1 -z .configure-compat-all
-%patch9 -p1 -b .crashfix
-%patch10 -p1 -b .readpast
 
 %build
 %autoreconf
@@ -202,6 +196,9 @@ echo lua-devel-static >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/li
 %config %_sysconfdir/buildreqs/packages/substitute.d/lib%{name}-devel-static
 
 %changelog
+* Thu May 04 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.3.4-alt1
+- 5.3.4
+
 * Thu Feb 09 2017 Igor Vlasenko <viy@altlinux.ru> 5.3.3-alt6
 - added Provides: lua5.3-devel
 - added bin,man for lua-5.3 luac-5.3
