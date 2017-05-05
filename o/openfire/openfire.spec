@@ -1,7 +1,7 @@
 Summary: Openfire XMPP Server
 Name: openfire
-Version: 4.1.3
-Release: alt2
+Version: 4.1.4
+Release: alt1
 
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
@@ -91,6 +91,9 @@ ln -s %_bindir/embedded-db.rc %buildroot%firedir/bin/embedded-db.rc
 %dir %attr(3770,_%name,_%name) %_logdir/%name
 
 %changelog
+* Fri May 05 2017 Alexei Takaseev <taf@altlinux.org> 4.1.4-alt1
+- 4.1.4
+
 * Tue Apr 25 2017 Alexei Takaseev <taf@altlinux.org> 4.1.3-alt2
 - Fix ALT#33415
 
