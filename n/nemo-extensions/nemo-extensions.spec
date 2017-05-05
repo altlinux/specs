@@ -1,7 +1,7 @@
 %define api_ver 3.0
 
 Name: nemo-extensions
-Version: 3.2.3
+Version: 3.4.0
 Release: alt1
 Summary: Extensions for Nemo
 
@@ -289,6 +289,9 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_datadir/applications/nemo-compare-preferences.desktop
 
 %changelog
+* Fri May 5 2017 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
 * Wed Dec 14 2016 Vladimir Didenko <cow@altlinux.org> 3.2.3-alt1
 - 3.2.3
 

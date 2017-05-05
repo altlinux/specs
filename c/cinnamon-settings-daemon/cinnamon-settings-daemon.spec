@@ -1,15 +1,13 @@
-%define ver_major 3.2
+%define ver_major 3.4
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
 %def_enable systemd
-# tests require, as minimum, running colord
-%def_disable check
 
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A program that manages general Cinnamon settings
@@ -64,8 +62,6 @@ BuildRequires: libxklavier-devel >= %xklavier_ver
 BuildRequires: libibus-devel >= %ibus_ver
 BuildRequires: libcom_err-devel
 BuildRequires: libkrb5-devel
-# for check
-%{?_enable_check:BuildRequires: /proc xvfb-run gnome-color-manager}
 
 %description
 Cinnamon Settings Daemon is a program that organizes access to general Cinnamon
@@ -81,14 +77,6 @@ Requires: %name = %version-%release
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
-
-%package tests
-Summary: CSD test programms
-Group: Graphical desktop/GNOME
-Requires: %name = %version-%release
-
-%description tests
-The %name-tests package provides programms for testing CSD plugins.
 
 %prep
 %setup -q
@@ -109,68 +97,21 @@ The %name-tests package provides programms for testing CSD plugins.
 %make_install DESTDIR=%buildroot install
 %find_lang --with-gnome %name
 
-%check
-%{?_enable_check:xvfb-run %make check}
-
 %files -f %name.lang
+%doc AUTHORS NEWS
 %dir %_libdir/%name-%api_ver
-%_libdir/%name-%api_ver/a11y-keyboard.cinnamon-settings-plugin
-%_libdir/%name-%api_ver/a11y-settings.cinnamon-settings-plugin
-%_libdir/%name-%api_ver/clipboard.cinnamon-settings-plugin
-%_libdir/%name-%api_ver/color.cinnamon-settings-plugin
-%_libdir/%name-%api_ver/cursor.cinnamon-settings-plugin
-%_libdir/%name-%api_ver/housekeeping.cinnamon-settings-plugin
-%_libdir/%name-%api_ver/keyboard.cinnamon-settings-plugin
-%_libdir/%name-%api_ver/liba11y-keyboard.so
-%_libdir/%name-%api_ver/liba11y-settings.so
-%_libdir/%name-%api_ver/libcsd.so
-%_libdir/%name-%api_ver/libclipboard.so
-%_libdir/%name-%api_ver/libcolor.so
-%_libdir/%name-%api_ver/libcursor.so
-%_libdir/%name-%api_ver/libhousekeeping.so
-%_libdir/%name-%api_ver/libkeyboard.so
-%_libdir/%name-%api_ver/libmedia-keys.so
-%_libdir/%name-%api_ver/libmouse.so
-%_libdir/%name-%api_ver/liborientation.so
-%_libdir/%name-%api_ver/libpower.so
-%_libdir/%name-%api_ver/libprint-notifications.so
-%_libdir/%name-%api_ver/libscreensaver-proxy.so
-%_libdir/%name-%api_ver/libsmartcard.so
-%_libdir/%name-%api_ver/libsound.so
-%_libdir/%name-%api_ver/libxrandr.so
-%_libdir/%name-%api_ver/libxsettings.so
-%_libdir/%name-%api_ver/libautomount.so
-%_libdir/%name-%api_ver/libbackground.so
-%_libdir/%name-%api_ver/media-keys.cinnamon-settings-plugin
-%_libdir/%name-%api_ver/mouse.cinnamon-settings-plugin
-%_libdir/%name-%api_ver/orientation.cinnamon-settings-plugin
-%_libdir/%name-%api_ver/power.cinnamon-settings-plugin
-%_libdir/%name-%api_ver/print-notifications.cinnamon-settings-plugin
-%_libdir/%name-%api_ver/screensaver-proxy.cinnamon-settings-plugin
-%_libdir/%name-%api_ver/smartcard.cinnamon-settings-plugin
-%_libdir/%name-%api_ver/sound.cinnamon-settings-plugin
-%_libdir/%name-%api_ver/xrandr.cinnamon-settings-plugin
-%_libdir/%name-%api_ver/xsettings.cinnamon-settings-plugin
-%_libdir/%name-%api_ver/automount.cinnamon-settings-plugin
-%_libdir/%name-%api_ver/background.cinnamon-settings-plugin
-%_libexecdir/%name
-%_libexecdir/csd-locate-pointer
-%_libexecdir/csd-printer
-%_libexecdir/csd-backlight-helper
-%_libexecdir/csd-datetime-mechanism
+%_libdir/%name-%api_ver/*.so
+%_libexecdir/csd-*
 %_datadir/%name
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
-%_datadir/applications/%name.desktop
 %_sysconfdir/dbus-1/system.d/org.cinnamon.SettingsDaemon.DateTimeMechanism.conf
-
-
 %config %_datadir/glib-2.0/schemas/*
 %_man1dir/%{name}*
-%doc AUTHORS NEWS
 %_datadir/polkit-1/actions/org.cinnamon.settings-daemon.plugins.power.policy
 %_datadir/polkit-1/actions/org.cinnamon.settingsdaemon.datetimemechanism.policy
 %_datadir/dbus-1/system-services/org.cinnamon.SettingsDaemon.DateTimeMechanism.service
+%_sysconfdir/xdg/autostart/*.desktop
 
 %exclude %_libdir/%name-%api_ver/*.la
 %exclude %_datadir/%name-%api_ver/input-device-example.sh
@@ -179,25 +120,9 @@ The %name-tests package provides programms for testing CSD plugins.
 %_includedir/*
 %_pkgconfigdir/*
 
-%files tests
-%_libexecdir/csd-test-a11y-keyboard
-%_libexecdir/csd-test-a11y-settings
-%_libexecdir/csd-test-input-helper
-%_libexecdir/csd-test-media-keys
-%_libexecdir/csd-test-mouse
-%_libexecdir/csd-test-orientation
-%_libexecdir/csd-test-power
-%_libexecdir/csd-test-print-notifications
-%_libexecdir/csd-test-screensaver-proxy
-%_libexecdir/csd-test-smartcard
-%_libexecdir/csd-test-sound
-%_libexecdir/csd-test-xsettings
-%_libexecdir/csd-test-automount
-%_libexecdir/csd-test-background
-
 %changelog
-* Tue Dec 13 2016 Vladimir Didenko <cow@altlinux.org> 3.2.1-alt1
-- 3.2.1
+* Fri May 5 2017 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt1
+- 3.4.0
 
 * Fri Nov 11 2016 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt1
 - 3.2.0

@@ -1,4 +1,4 @@
-%define ver_major 3.2
+%define ver_major 3.4
 %define api_ver 3.0
 %def_enable introspection
 
@@ -13,7 +13,6 @@ Url: https://github.com/linuxmint/cinnamon-menus
 Packager: Vladimir Didenko <cow@altlinux.org>
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-gnome rpm-build-xdg
 
@@ -77,7 +76,6 @@ GObject introspection devel data for the Cinnamon Desktop Menu Library
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 [ -d m4 ] || mkdir m4
@@ -112,6 +110,9 @@ GObject introspection devel data for the Cinnamon Desktop Menu Library
 
 
 %changelog
+* Fri May 5 2017 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
 * Fri Nov 11 2016 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt1
 - 3.2.0
 
