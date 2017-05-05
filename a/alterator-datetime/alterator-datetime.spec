@@ -3,13 +3,11 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-datetime
-Version: 3.0
+Version: 4.0
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
 
-
-BuildArch:	noarch
 
 Source:%name-%version.tar
 
@@ -33,8 +31,11 @@ Obsoletes: alterator-tzone
 
 BuildPreReq: alterator >= 4.7-alt1
 
-# Automatically added by buildreq on Mon Jul 11 2005 (-bi)
-BuildRequires: alterator
+BuildPreReq: alterator >= 5.0
+BuildRequires: alterator-fbi
+BuildRequires: guile22-devel
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 alterator module for date/time setup
@@ -54,9 +55,23 @@ alterator module for date/time setup
 %_datadir/alterator/applications/*
 %_datadir/alterator/ui/*
 %_alterator_backend3dir/*
+%_alterator_libdir/ui/*
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Fri May 05 2017 Mikhail Efremov <sem@altlinux.org> 4.0-alt1
+- Update spec for guile22.
+- functions: Ensure that guessed timezone is valid.
+- functions: Don't use TLS  if ca-certificates not installed.
+- functions: Wait 2 sec for geoip server.
+- installer: Guess timezone only once.
+- system: Use init_timezone().
+- functions: Use shell_config_get() in read_zone().
+- Add init_timezone() and use it.
+- functions: Add get_timezone* functions.
+- functions: Use argument in read_zone()/write_zone().
+- functions: Use tzupdate.
+
 * Fri Dec 23 2016 Denis Medvedev <nbr@altlinux.org> 3.0-alt1
 - chrony support
 
