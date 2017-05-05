@@ -1,11 +1,11 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.7.0
-%define major 2.4
+%define major 2.7
 
 Name: wine
 Version: %major.1
-Release: alt2
+Release: alt1
 Epoch: 1
 
 Summary: WINE Is Not An Emulator - environment for running MS Windows 16/32/64 bit applications
@@ -25,9 +25,9 @@ Source1: %name-staging-%version.tar
 
 Source2: winetricks
 Source3: %name-%version-desktop.tar
+Source4: %name-%version-icons.tar
 
 Patch1:   0001-enable-linking-with-freetype-and-fontconfig-see-altb.patch
-Patch100: 0001-include-Add-PERF_DATA_BLOCK-struct-definition.patch
 Patch101: 0002-add-fast-hack-for-RegQueryValueEx-HKEY_PERFORMANCE_D.patch
 Patch200: t001-oleaut32-Make-OleLoadPicture-load-DIBs-using-WIC-decoder.patch
 
@@ -164,6 +164,7 @@ Wine meta package. Use it for install all wine subpackages.
 Summary: Wine programs
 Group: Emulators
 Requires: %name = %version-%release
+BuildArch: noarch
 
 Conflicts: wine-vanilla-programs
 
@@ -254,9 +255,8 @@ wine-staging-%version/patches/patchinstall.sh DESTDIR=$(pwd) --all --backend=pat
 %__subst "s|^\(LDRPATH_INSTALL =\).*|\1|" Makefile.in
 
 %patch1 -p2
-%patch100 -p1
 %patch101 -p1
-%patch200 -p1
+#patch200 -p1
 
 %build
 # Workaround for https://bugzilla.altlinux.org/show_bug.cgi?id=31834
@@ -289,6 +289,11 @@ cd %buildroot%_desktopdir/
 tar xvf %SOURCE3
 mkdir -p %buildroot%_datadir/desktop-directories/
 mv *.directory %buildroot%_datadir/desktop-directories/
+
+# unpack icons files
+mkdir -p %buildroot%_iconsdir/
+cd %buildroot%_iconsdir/
+tar xvf %SOURCE4
 
 # Do not pack non english man pages yet
 rm -rf %buildroot%_mandir/*.UTF-8
@@ -333,6 +338,8 @@ rm -f %buildroot%_desktopdir/wine.desktop
 
 #%_initdir/wine
 #%_initdir/wine.outformat
+
+%_iconsdir/*
 
 %_desktopdir/wine-mime-msi.desktop
 %_desktopdir/wine-regedit.desktop
@@ -462,6 +469,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Fri May 05 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.7.1-alt1
+- new version (2.7.1) with rpmgs script
+
 * Sun Apr 09 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.4.1-alt2
 - set Epoche:1 for compatibility
 - fix build requires
