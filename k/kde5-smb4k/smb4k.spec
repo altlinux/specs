@@ -5,7 +5,7 @@
 %define rname smb4k
 Name: kde5-%rname
 Version: 2.0.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Networking/Other
@@ -55,7 +55,7 @@ rm -rf po/*/docs
 
 %install
 %K5install
-%K5install_move data polkit-1 kconf_update
+%K5install_move data kconf_update
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
@@ -71,13 +71,16 @@ rm -rf po/*/docs
 %_K5dbus_sys_srv/org.kde.smb4k.mounthelper.service
 %_K5xmlgui/smb4k/
 %_K5notif/smb4k.*
-%_K5data/polkit-1/actions/org.kde.smb4k.mounthelper.policy
+%_datadir/polkit-1/actions/org.kde.smb4k.mounthelper.policy
 
 %files -n %libsmb4kcore
 %_K5lib/libsmb4kcore.so.%sover
 %_K5lib/libsmb4kcore.so.%sover.*
 
 %changelog
+* Fri May 05 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt2%ubt
+- fix polkit rule placement
+
 * Wed Apr 05 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt1%ubt
 - 2.0.0 release
 
