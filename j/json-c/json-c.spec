@@ -1,5 +1,5 @@
 Name: json-c
-Version: 0.12
+Version: 0.12.1
 Release: alt1
 
 Summary: JSON implementation in C
@@ -64,6 +64,9 @@ This package contains development part of JSON-C
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri May 05 2017 Alexey Shabalin <shaba@altlinux.ru> 0.12.1-alt1
+- 0.12.1
+
 * Tue May 27 2014 Alexey Shabalin <shaba@altlinux.ru> 0.12-alt1
 - 0.12
 - rename to libjson-c
