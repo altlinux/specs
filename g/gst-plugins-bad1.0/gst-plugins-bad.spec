@@ -1,6 +1,6 @@
 %define _name gst-plugins
 %define api_ver 1.0
-%define ver_major 1.10
+%define ver_major 1.12
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
@@ -8,8 +8,8 @@
 %def_enable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -41,7 +41,7 @@ BuildRequires: libvisual0.4-devel openexr-devel libx265-devel
 BuildRequires: libgtk+3-devel libclutter-devel
 BuildRequires: libopencv-devel
 BuildRequires: ladspa_sdk liblrdf-devel
-BuildRequires: libvulkan-devel
+BuildRequires: vulkan-devel
 
 %description
 GStreamer Bad Plug-ins is a set of plug-ins that aren't up to par
@@ -101,6 +101,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_gst_libdir/*.so
 %exclude %_gst_libdir/*.la
 #%_typelibdir/GstEGL-%api_ver.typelib
+%_typelibdir/GstBadAllocators-%api_ver.typelib
 %_typelibdir/GstGL-%api_ver.typelib
 %_typelibdir/GstInsertBin-%api_ver.typelib
 %_typelibdir/GstMpegts-%api_ver.typelib
@@ -118,6 +119,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 #%_girdir/GstEGL-%api_ver.gir
+%_girdir/GstBadAllocators-%api_ver.gir
 %_girdir/GstGL-%api_ver.gir
 %_girdir/GstInsertBin-%api_ver.gir
 %_girdir/GstMpegts-%api_ver.gir
@@ -130,6 +132,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Thu May 04 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Mon Apr 24 2017 Yuri N. Sedunov <aris@altlinux.org> 1.10.4-alt2
 - updated buildreqs for build ladspa, wayland and vulkan plugins
 

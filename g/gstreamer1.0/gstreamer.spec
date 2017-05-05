@@ -1,13 +1,13 @@
 %define _name gstreamer
-%define ver_major 1.10
+%define ver_major 1.12
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
 
-%def_disable gtk_doc
+%def_enable gtk_doc
 
 Name: %_name%api_ver
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer streaming media framework runtime
@@ -23,7 +23,7 @@ Patch: %_name-0.11.94-alt-intltool.patch
 %define glib_ver 2.40.0
 
 BuildRequires: glib2-devel >= %glib_ver
-BuildRequires: docbook-utils flex gcc-c++ ghostscript-utils gtk-doc intltool libcheck-devel libxml2-devel
+BuildRequires: flex gcc-c++ ghostscript-utils gtk-doc intltool libcheck-devel libxml2-devel
 BuildRequires: python-modules sgml-common transfig xml-utils gobject-introspection-devel
 BuildRequires: libcap-utils
 
@@ -76,14 +76,6 @@ BuildArch: noarch
 %description devel-doc
 This package contains development documentation for GStreamer
 
-%package doc
-Summary: Documentation for GStreamer
-Group: Documentation
-BuildArch: noarch
-
-%description doc
-This package contains documentation for GStreamer
-
 %package utils
 Summary: GStreamer utilities
 Group: System/Libraries
@@ -104,7 +96,6 @@ Gstreamer plugins.
 	--with-package-origin=%name \
 	--disable-examples \
 	--disable-valgrind \
-	--enable-docbook \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	--disable-gtk-doc-pdf \
 	--disable-rpath \
@@ -143,9 +134,6 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 
 %files devel
 %_includedir/*
-#%dir %_libdir/%_name-%api_ver/include/
-#%dir %_libdir/%_name-%api_ver/include/gst
-#%_libdir/%_name-%api_ver/include/gst/gstconfig.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_datadir/aclocal/*
@@ -164,10 +152,10 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_bindir/*
 %_man1dir/*
 
-%files doc
-%_datadir/doc/%_name-%api_ver
-
 %changelog
+* Thu May 04 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Thu Feb 23 2017 Yuri N. Sedunov <aris@altlinux.org> 1.10.4-alt1
 - 1.10.4
 
