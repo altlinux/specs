@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.8.1
-Release: alt3
+Release: alt4
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -791,6 +791,11 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Fri May 05 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt4
+- Upstream updates:
+ + multicall: deal with early exit conditions (XSA-213)
+ + x86: discard type information when stealing pages (XSA-214)
+
 * Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 4.8.1-alt3
 - rebuild with ocaml 4.04.1
 
