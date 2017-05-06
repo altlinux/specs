@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.8.1
-Release: alt4
+Release: alt5%ubt
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -43,7 +43,7 @@ Source17: gmp-4.3.2.tar.bz2
 Source49: tmpfiles.d.xen.conf
 
 Patch0: %name-%version-upstream.patch
-Patch1: %name-%version-%release.patch
+Patch1: %name-%version-alt.patch
 
 # Fedora
 Patch5: %name-net-disable-iptables-on-bridge.patch
@@ -87,6 +87,8 @@ Requires: chkconfig
 %else
 %def_disable stubdom
 %endif
+
+BuildRequires(pre): rpm-build-ubt
 
 %{?_with_efi:BuildPreReq: rpm-macros-uefi}
 BuildRequires: zlib-devel libncurses-devel libaio-devel
@@ -791,6 +793,9 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Sat May 06 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt5%ubt
+- added ubt tag
+
 * Fri May 05 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt4
 - Upstream updates:
  + multicall: deal with early exit conditions (XSA-213)
