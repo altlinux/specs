@@ -4,7 +4,8 @@
 
 Name:           mintmenu
 Version:        5.7.8
-Release:        alt2
+Release:        alt3
+Epoch:          1
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
 Summary:        Advanced Menu for the MATE Desktop
@@ -142,6 +143,9 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-baseal
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Sat May 06 2017 Andrey Cherepanov <cas@altlinux.org> 1:5.7.8-alt3
+- New epoch to downgrade version in p8
+
 * Fri May 05 2017 Andrey Cherepanov <cas@altlinux.org> 5.7.8-alt2
 - Bump release for backport in p8
 
