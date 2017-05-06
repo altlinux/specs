@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev 67445
+%define svnrev 67849
 
 %def_with pgsql
 
@@ -10,8 +10,8 @@
 %endif
 
 Name: zabbix
-Version: 3.2.5
-Release: alt2
+Version: 3.2.6
+Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -514,6 +514,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Sat May 06 2017 Alexei Takaseev <taf@altlinux.org> 1:3.2.6-alt1
+- 3.2.6
+
 * Wed Apr 26 2017 Alexei Takaseev <taf@altlinux.org> 1:3.2.5-alt2
 - Change default LOAD_MODULE_PATH from %%_libdir/modules to
   %%_libdir/zabbix/modules (ALT#33418)
