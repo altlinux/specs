@@ -9,7 +9,7 @@
 #
 
 Name: xscreensaver
-Version: 5.34
+Version: 5.36
 Release: alt1
 
 Summary: A screen saver and locker for the X window system
@@ -316,6 +316,9 @@ MkModuleFilelists %_sourcedir/xscreensaver-hacks-gl gl
 %files -n mate-screensaver-modules-xscreensaver-gl -f xscreensaver-mate-gl
 
 %changelog
+* Sat May  6 2017 Terechkov Evgenii <evg@altlinux.org> 5.36-alt1
+- 5.36 (ALT#33444)
+
 * Thu Oct 29 2015 Michael Shigorin <mike@altlinux.org> 5.34-alt1
 - new version 5.34
 
