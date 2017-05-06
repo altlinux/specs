@@ -3,8 +3,8 @@
 # see /usr/share/linuxmint/mintMenu/plugins/applications.py
 
 Name:           mintmenu
-Version:        5.7.8
-Release:        alt3
+Version:        5.7.9
+Release:        alt1
 Epoch:          1
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
@@ -143,6 +143,9 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-baseal
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Sat May 06 2017 Andrey Cherepanov <cas@altlinux.org> 1:5.7.9-alt1
+- New version
+
 * Sat May 06 2017 Andrey Cherepanov <cas@altlinux.org> 1:5.7.8-alt3
 - New epoch to downgrade version in p8
 
