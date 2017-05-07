@@ -1,8 +1,9 @@
-%add_verify_elf_skiplist %python3_sitelibdir/gns3server/modules/docker/resources/bin/busybox
-%add_findreq_skiplist %python3_sitelibdir/gns3server/modules/docker/*
+%add_verify_elf_skiplist %python3_sitelibdir/gns3server/compute/docker/resources/bin/busybox
+%add_findreq_skiplist %python3_sitelibdir/gns3server/compute/docker/*
+%def_with requirements
 
 Name: gns3-server
-Version: 1.5.2
+Version: 2.0.0
 Release: alt1
 
 Summary: GNS3 server manages emulators such as Dynamips, VirtualBox or Qemu/KVM
@@ -17,21 +18,27 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires: python3-devel python3-module-setuptools-tests
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
 Requires: cpulimit
 Requires: dynamips >= 0.2.11
-Requires: python3-module-jinja2
-Requires: python3-module-aiohttp >= 0.21.5
+%if_with requirements
+Requires: python3-module-yarl >= 0.9.8
+Requires: python3-module-yarl < 0.10
+Requires: python3-module-aiohttp-cors == 0.5.1
+Requires: python3-module-jinja2 >= 2.7.3 
+Requires: python3-module-aiohttp >= 1.3.5
+Requires: python3-module-aiohttp <= 1.4.0
 Requires: python3-module-jsonschema >= 2.4.0
-Requires: python3-module-raven >= 5.2.0
+Requires: python3-module-raven >= 5.23.0
 Requires: python3-module-psutil >= 3.0.0
-Requires: python3-module-docker >= 1.4.0
+Requires: python3-module-zipstream >= 1.1.4
+%endif
 Requires: qemu
 Requires: wireshark
 Requires: iouyap
 Requires: ubridge
 Requires: vpcs
-Conflicts: gns3
+Conflicts: gns3 < 1.0.0
 
 %description
 The GNS3 server manages emulators such as Dynamips, VirtualBox or Qemu/KVM.
@@ -39,6 +46,9 @@ Clients like the GNS3 GUI controls the server using a HTTP REST API.
 
 %prep
 %setup
+%if_without requirements
+echo '' > requirements.txt
+%endif
 
 %build
 %python3_build
@@ -51,8 +61,12 @@ Clients like the GNS3 GUI controls the server using a HTTP REST API.
 %_bindir/*
 %python3_sitelibdir/gns3server
 %python3_sitelibdir/gns3_server-*.egg-info
+%exclude %python3_sitelibdir/tests/controller
 
 %changelog
+* Mon May 08 2017 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- New version 2.0.0
+
 * Tue Aug 30 2016 Anton Midyukov <antohami@altlinux.org> 1.5.2-alt1
 - New version 1.5.2
 

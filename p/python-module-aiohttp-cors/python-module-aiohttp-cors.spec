@@ -1,14 +1,14 @@
 %define oname aiohttp-cors
 
 Name: python-module-%oname
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 Summary: CORS support for aiohttp
 License: ASL 2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/aiohttp_cors
 
-Source: https://pypi.python.org/packages/93/e2/794d3933921402c92018f52929a1121b77208bfe9f64844b95825a29fdd5/%oname-%version.tar.gz
+Source: %oname-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -40,5 +40,8 @@ aiohttp asyncio-powered asynchronous HTTP server.
 %python3_sitelibdir/*
 
 %changelog
+* Mon May 08 2017 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt1
+- New version 0.5.1
+
 * Sun Jan 15 2017 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt1
 - Initial build for ALT Linux Sisyphus.

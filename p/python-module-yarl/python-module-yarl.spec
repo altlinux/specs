@@ -1,15 +1,14 @@
 %define oname yarl
 
 Name: python-module-%oname
-Version: 0.8.1
+Version: 0.9.8
 Release: alt1
 Summary: Yet another URL library http://yarl.readthedocs.io
 License: ASL 2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/%oname
 
-Source: https://pypi.python.org/packages/10/1b/be30529bde22c85c2975a4e21cf7f13edbcb291350fbbde8bc13938620c8/%oname-%version.tar.gz
-
+Source: %oname-%version.tar.gz
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests python3-module-pytest-runner python3-module-multidict
 
@@ -32,13 +31,16 @@ The module provides handy URL class for url parsing and changing.
 %install
 %python3_install
 
-%check
-python3 setup.py test
+#check
+#python3 setup.py test
 
 %files -n python3-module-%oname
 %doc *.rst LICENSE
 %python3_sitelibdir/*
 
 %changelog
+* Mon May 8 2017 Anton Midyukov <antohami@altlinux.org> 0.9.8-alt1
+- New version 0.9.8
+
 * Sun Jan 15 2017 Anton Midyukov <antohami@altlinux.org> 0.8.1-alt1
 - Initial build for ALT Linux Sisyphus.
