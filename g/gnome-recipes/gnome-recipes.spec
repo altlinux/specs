@@ -2,7 +2,7 @@
 %define xdg_name org.gnome.Recipes
 
 Name: gnome-recipes
-Version: %ver_major.4
+Version: %ver_major.6
 Release: alt1
 
 Summary: GNOME likes to cook
@@ -47,8 +47,7 @@ This package contains common noarch files needed for Recipes.
 %setup
 
 %build
-%autoreconf
-%configure --disable-static
+%configure
 %make_build
 
 %install
@@ -57,9 +56,7 @@ This package contains common noarch files needed for Recipes.
 %find_lang --with-gnome --output=%name.lang %name %name-data %xdg_name
 
 %check
-#url-not-found  : <screenshot> url not found [https://git.gnome.org/browse/recipes/plain/data/appdata/cook-later.png]
-#...
-#%%make check
+%make check
 
 %files
 %_bindir/%name
@@ -78,6 +75,9 @@ This package contains common noarch files needed for Recipes.
 
 
 %changelog
+* Sun May 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.6-alt1
+- 1.0.6
+
 * Sun Apr 02 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
 - 1.0.4
 
