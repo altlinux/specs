@@ -1,5 +1,5 @@
 Name: fotoxx
-Version: 17.04.1
+Version: 17.04.2
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
@@ -11,13 +11,8 @@ Source: http://www.kornelix.com/downloads/tarballs/%name-%version.tar.gz
 Source1: fotoxx.desktop
 Source2: fotoxx16.png
 Source3: fotoxx32.png
-#Patch1: fotoxx-14.06-alt-install.patch
-#Patch2: fotoxx-12.01-helpdir.patch
 
 Requires: %name-data = %version-%release
-
-# fotoxx is able to use exiftool and ufraw to extend functionality
-Requires: exiftool ufraw dcraw
 
 # fotoxx uses exiv2 executable to read EXIF data:
 Requires: exiv2
@@ -31,7 +26,7 @@ Provides: fotox
 Obsoletes: fotox
 
 BuildRequires: gcc-c++ libgtk+3-devel libtiff-devel liblcms2-devel
-BuildRequires: perl-Image-ExifTool ufraw xdg-utils
+BuildRequires: perl-Image-ExifTool xdg-utils
 BuildRequires: libchamplain-gtk3-devel libclutter-gtk3-devel libappstream-glib-devel
 BuildRequires: libraw-devel
 
@@ -83,6 +78,9 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %doc doc/README* doc/changelog doc/copyright
 
 %changelog
+* Sun May 07 2017 Yuri N. Sedunov <aris@altlinux.org> 17.04.2-alt1
+- 17.04.2
+
 * Mon Apr 17 2017 Yuri N. Sedunov <aris@altlinux.org> 17.04.1-alt1
 - 17.04.1
 

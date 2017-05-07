@@ -5,7 +5,7 @@
 
 Name: lib%_name
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 
 Summary: GObject-based Exiv2 wrapper
 Group: System/Libraries
@@ -13,6 +13,7 @@ License: GPL2
 Url: https://wiki.gnome.org/Projects/gexiv2
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Patch: gexiv2-0.10.5-alt-exiv2_0.26.patch
 
 BuildRequires: gcc-c++ libexiv2-devel libgio-devel gobject-introspection-devel vala-tools
 BuildRequires: python-module-pygobject3-devel rpm-build-python3 python3-module-pygobject3-devel
@@ -79,6 +80,7 @@ This package provides Python3 bindings for the gexiv2 library.
 
 %prep
 %setup -n %_name-%version
+%patch
 # decrease required pkg-config version
 subst 's/0\.26/0.25/' configure*
 # fix typelibdir
@@ -123,6 +125,9 @@ subst 's/\(typelibdir[[:space:]]*=[[:space:]]*\).*/\1$(INTROSPECTION_TYPELIBDIR)
 %endif
 
 %changelog
+* Sun May 07 2017 Yuri N. Sedunov <aris@altlinux.org> 0.10.5-alt2
+- rebuilt against libexiv2.so.26
+
 * Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.10.5-alt1
 - 0.10.5
 

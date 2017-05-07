@@ -1,5 +1,5 @@
 Name: mediainfo
-Version: 0.7.94
+Version: 0.7.95
 Release: alt1
 
 Group: File tools
@@ -16,7 +16,7 @@ BuildRequires: dos2unix
 BuildRequires: zlib-devel
 BuildRequires: libpango-devel
 BuildRequires: libzen-devel >= 0.4.35
-BuildRequires: libmediainfo-devel >= 0.7.94
+BuildRequires: libmediainfo-devel >= %version
 BuildRequires: libwxGTK-devel
 BuildRequires: sgml-common
 
@@ -141,6 +141,9 @@ grep -v '^Encoding=' Project/GNU/GUI/mediainfo-gui.kde4.desktop >%buildroot%_K4s
 %_K4srv/ServiceMenus/%name-gui.desktop
 
 %changelog
+* Sun May 07 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.95-alt1
+- 0.7.95
+
 * Tue Apr 04 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.94-alt1
 - 0.7.94
 
