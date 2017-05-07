@@ -2,7 +2,7 @@
 
 Name: geeqie
 Version: 1.3
-Release: alt1
+Release: alt2
 
 Summary: Graphics file browser utility
 License: GPLv2+
@@ -54,6 +54,9 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %_man1dir/%name.1.*
 
 %changelog
+* Sun May 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt2
+- rebuilt against libexiv2.so.26
+
 * Mon Jun 06 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
 - 1.3
 - removed upstreamed patches

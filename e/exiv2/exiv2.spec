@@ -2,18 +2,19 @@
 %def_enable webready
 
 Name: exiv2
-Version: 0.25
+Version: 0.26
 Release: alt1
 
 Summary: Command line tool to access EXIF data in image files
 License: GPLv2+
 Group: Graphics
-
 Url: http://www.exiv2.org
-Source: %url/exiv2-%version.tar.gz
+
+#VCS: https://github.com/Exiv2/exiv2.git
+Source: %url/builds/%name-%version-trunk.tar.gz
 Patch: %name-0.23-alt-lfs.patch
 
-Requires: libexiv2 = %version-%release
+Requires: lib%name = %version-%release
 
 BuildRequires: gcc-c++ libexpat-devel zlib-devel
 BuildRequires: doxygen xsltproc graphviz
@@ -42,11 +43,14 @@ This package contains all files which one needs to compile programs using the
 exiv2 library.
 
 %prep
-%setup
+%setup -n %name-trunk
 %patch -b .lfs
 
 %build
 %make -C config -f config.make
+# exiv2: embedded copy of exempi should be compiled with BanAllEntityUsage
+# https://bugzilla.redhat.com/show_bug.cgi?id=888769
+export CPPFLAGS="$CPPFLAGS -DBanAllEntityUsage=1"
 %configure \
 	--disable-static \
 	--disable-rpath \
@@ -60,19 +64,22 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %find_lang exiv2
 
 %files
-%_bindir/exiv2
+%_bindir/%name
 %_man1dir/*
 %doc README doc/ChangeLog
 
 %files -n libexiv2 -f exiv2.lang
-%_libdir/libexiv2.so.*
+%_libdir/lib%name.so.*
 
 %files -n libexiv2-devel
-%_libdir/libexiv2.so
-%_includedir/*
-%_pkgconfigdir/*
+%_libdir/lib%name.so
+%_includedir/%name/
+%_pkgconfigdir/%name.pc
 
 %changelog
+* Sun May 07 2017 Yuri N. Sedunov <aris@altlinux.org> 0.26-alt1
+- 0.26
+
 * Sun Jun 28 2015 Yuri N. Sedunov <aris@altlinux.org> 0.25-alt1
 - 0.25
 - explicitly enabled video files and WebReady support

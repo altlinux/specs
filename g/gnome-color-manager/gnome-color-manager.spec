@@ -8,7 +8,7 @@
 
 Name: gnome-color-manager
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Color profile manager for the GNOME desktop
 License: %gpl2plus
@@ -113,6 +113,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %doc README NEWS AUTHORS
 
 %changelog
+* Sun May 07 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt2
+- rebuilt against libexiv2.so.26
+
 * Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 
