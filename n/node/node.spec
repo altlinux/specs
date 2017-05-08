@@ -28,7 +28,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.2
+Version: %major.3
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -211,6 +211,9 @@ chmod 0755 %buildroot%_rpmlibdir/nodejs_native.req
 
 rm -rf %buildroot/usr/lib/dtrace/
 rm -rf %buildroot/usr/share/doc/node/gdbinit
+rm -rf %buildroot/usr/share/doc/node/lldb_commands.py
+rm -rf %buildroot/usr/share/doc/node/lldbinit
+
 
 # drop tapset file
 rm -rf %buildroot%_datadir/systemtap/tapset
@@ -255,6 +258,10 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Mon May 08 2017 Vitaly Lipatov <lav@altlinux.ru> 6.10.3-alt1
+- new version 6.10.3 (with rpmrb script)
+- 2017-05-02, Version 6.10.3 'Boron' (LTS)
+
 * Sat Apr 08 2017 Vitaly Lipatov <lav@altlinux.ru> 6.10.2-alt1
 - new version 6.10.2 (with rpmrb script)
 - 2017-04-04, Version 6.10.2 'Boron' (LTS), @MylesBorins
