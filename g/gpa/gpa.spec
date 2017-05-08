@@ -1,20 +1,23 @@
 Name: gpa
-Version: 0.9.0
-Release: alt4.r1025
+Version: 0.9.10
+Release: alt1
 
 Summary: The GNU Privacy Assistant
-License: GPLv3+
+License: %gpl3plus
 Group: File tools
 
 URL: http://www.gnupg.org/related_software/gpa/
 #Source0: http://wald.intevation.org/frs/download.php/603/gpa-%version.tar.bz2
-Source0: gpa-0.9.0+r1025.tar.bz2
+Source0: %name-%version.tar
 # Downsized icons made from original icon by 'convert -resize'
 Source1: gpa16.png
 Source2: gpa32.png
 Patch1: gpa-0.9.0-desktop.patch
 
 Requires: gnupg
+
+
+BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Wed Mar 09 2011
 BuildRequires: gnupg libassuan-devel libgtk+2-devel subversion zlib-devel
@@ -54,6 +57,10 @@ install -pD -m644 %_sourcedir/gpa32.png %buildroot%_niconsdir/gpa.png
 %_man1dir/*
 
 %changelog
+* Mon May 08 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.9.10-alt1
+- New version
+- Fix work with libgpgme without GPGSM support
+
 * Wed Mar 09 2011 Victor Forsiuk <force@altlinux.org> 0.9.0-alt4.r1025
 - Refresh BuildRequires.
 
