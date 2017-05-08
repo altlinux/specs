@@ -1,5 +1,5 @@
 Name: firejail
-Version: 0.9.44.8
+Version: 0.9.44.10
 Release: alt1
 Summary: Linux namepaces sandbox program
 
@@ -29,7 +29,7 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 %find_lang %name
 
 %files -f %name.lang
-%doc README* RELNOTES
+%doc README* RELNOTES COPYING
 %_bindir/%name
 %_bindir/firecfg
 %_bindir/firemon
@@ -37,7 +37,7 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 %_datadir/bash-completion/completions/%name
 %_datadir/bash-completion/completions/firecfg
 %_datadir/bash-completion/completions/firemon
-%_docdir/%name
+%exclude %_docdir/%name
 %_man1dir/%name.1.*
 %_man1dir/firecfg.1.*
 %_man1dir/firemon.1.*
@@ -47,6 +47,10 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 
 
 %changelog
+* Mon May 08 2017 Anton Midyukov <antohami@altlinux.org> 0.9.44.10-alt1
+- new version 0.9.44.10
+- remove identical files (Closes: 33458)
+
 * Tue Jan 31 2017 Anton Midyukov <antohami@altlinux.org> 0.9.44.8-alt1
 - new version 0.9.44.8
 
