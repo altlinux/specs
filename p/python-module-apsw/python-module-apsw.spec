@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%_name
-Version: 3.17.0
+Version: 3.18.0
 Release: alt1.%rel
 
 Summary: Another Python SQLite Wrapper
@@ -74,6 +74,9 @@ popd
 %endif
 
 %changelog
+* Mon May 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1.r1
+- 3.18.0
+
 * Mon Apr 03 2017 Yuri N. Sedunov <aris@altlinux.org> 3.17.0-alt1.r1
 - 3.17.0-r1
 
