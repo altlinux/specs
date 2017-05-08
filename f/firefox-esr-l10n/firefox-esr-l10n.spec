@@ -5,7 +5,7 @@
 %define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name:		firefox-esr-l10n
-Version:	45.9.0
+Version:	52.1.1
 Release:	alt1
 Summary:	Language Pack for Firefox ESR
 
@@ -28,7 +28,6 @@ BuildRequires: hunspell-ar
 BuildRequires: hunspell-as
 BuildRequires: hunspell-ast
 BuildRequires: hunspell-az
-BuildRequires: hunspell-be
 BuildRequires: hunspell-ber
 BuildRequires: hunspell-bg
 BuildRequires: hunspell-bn
@@ -150,17 +149,17 @@ BuildRequires: hunspell-zu
 Language Pack for Firefox ESR.
 
 # Spell check dictionaries
-%define dictionaries af_NA af_ZA ak_GH am_ET ar_AE ar_BH ar_DJ ar_DZ ar_EG ar_ER ar_IL ar_IN ar_IQ ar_JO ar_KM ar_KW ar_LB ar_LY ar_MA ar_MR ar_OM ar_PS ar_QA ar_SA ar_SD ar_SO ar_SY ar_TD ar_TN ar_YE as_IN ast_ES az_AZ be_BY ber_MA bg_BG bn_IN br_FR bs_BA ca_AD ca_ES ca_FR ca_IT cop_EG csb_PL cv_RU cy_GB da_DK de_BE de_CH de_DE de_LI de_LU dsb_DE el_CY el_GR en_AU en_BS en_BZ en_CA en_GB en_GH en_IE en_IN en_JM en_NA en_NZ en_PH en_TT en_US en_ZA en_ZW eo es_AR es_BO es_CL es_CO es_CR es_CU es_DO es_EC es_ES es_GT es_HN es_MX es_NI es_PA es_PE es_PR es_PY es_SV es_US es_UY es_VE et_EE eu_ES fa_IR fil_PH fj fo_FO fr_BE fr_CA fr_CH fr_FR fr_LU fr_MC fur_IT fy_DE fy_NL ga_IE gd_GB gl_ES grc gu_IN gv_GB haw he_IL hi_IN hil_PH hr_HR hsb_DE ht_HT hu_HU hy_AM ia id_ID is_IS it_CH it_IT kk_KZ km_KH kn_IN ko_KR ku_SY ku_TR ky_KG la lb_LU ln_CD lt_LT mai_IN mg mi_NZ mk_MK ml_IN mn_MN mos_BF mr_IN ms_BN ms_MY mt_MT nb_NO nds_DE nds_NL ne_IN ne_NP nl_AW nl_BE nl_NL nn_NO nr_ZA nso_ZA ny_MW oc_FR om_ET om_KE or_IN pa_IN pl_PL plt pt_BR qu_EC quh_BO ro_RO ru_RU-lebedev rw_RW sc_IT se_FI se_NO se_SE sh_ME sh_RS sh_YU shs_CA si_LK sk_SK sl_SI smj_NO smj_SE so_DJ so_ET so_KE so_SO sq_AL sr_ME sr_RS sr_YU ss_ZA st_ZA sv_FI sv_SE sw_KE sw_TZ ta_IN te_IN tet_ID tet_TL th_TH ti_ER ti_ET tk tl_PH tn_BW tn_ZA tpi_PG ts_ZA tt_RU uk_UA ur_IN ur_PK uz_UZ ve_ZA vi_VN wa_BE xh_ZA yi_US zu
+%define dictionaries af_NA af_ZA ak_GH am_ET ar_AE ar_BH ar_DJ ar_DZ ar_EG ar_ER ar_IL ar_IN ar_IQ ar_JO ar_KM ar_KW ar_LB ar_LY ar_MA ar_MR ar_OM ar_PS ar_QA ar_SA ar_SD ar_SO ar_SY ar_TD ar_TN ar_YE as_IN ast_ES az_AZ ber_MA bg_BG bn_IN br_FR bs_BA ca_AD ca_ES ca_FR ca_IT cop_EG csb_PL cv_RU cy_GB da_DK de_BE de_CH de_DE de_LI de_LU dsb_DE el_CY el_GR en_AU en_BS en_BZ en_CA en_GB en_GH en_IE en_IN en_JM en_NA en_NZ en_PH en_TT en_US en_ZA en_ZW eo es_AR es_BO es_CL es_CO es_CR es_CU es_DO es_EC es_ES es_GT es_HN es_MX es_NI es_PA es_PE es_PR es_PY es_SV es_US es_UY es_VE et_EE eu_ES fa_IR fil_PH fj fo_FO fr_BE fr_CA fr_CH fr_FR fr_LU fr_MC fur_IT fy_DE fy_NL ga_IE gd_GB gl_ES grc gu_IN gv_GB haw he_IL hi_IN hil_PH hr_HR hsb_DE ht_HT hu_HU hy_AM ia id_ID is_IS it_CH it_IT kk_KZ km_KH kn_IN ko_KR ku_SY ku_TR ky_KG la lb_LU ln_CD lt_LT mai_IN mg mi_NZ mk_MK ml_IN mn_MN mos_BF mr_IN ms_BN ms_MY mt_MT nb_NO nds_DE nds_NL ne_IN ne_NP nl_AW nl_BE nl_NL nn_NO nr_ZA nso_ZA ny_MW oc_FR om_ET om_KE or_IN pa_IN pl_PL plt pt_BR qu_EC quh_BO ro_RO ru_RU-lebedev rw_RW sc_IT se_FI se_NO se_SE sh_ME sh_RS sh_YU shs_CA si_LK sk_SK sl_SI smj_NO smj_SE so_DJ so_ET so_KE so_SO sq_AL sr_ME sr_RS sr_YU ss_ZA st_ZA sv_FI sv_SE sw_KE sw_TZ ta_IN te_IN tet_ID tet_TL th_TH ti_ER ti_ET tk tl_PH tn_BW tn_ZA tpi_PG ts_ZA tt_RU uk_UA ur_IN ur_PK uz_UZ ve_ZA vi_VN wa_BE xh_ZA yi_US zu
 
 # Supported l10n language lists
-%define langlist af an ar as ast az be bg bn_IN bn_BD br bs ca cs cy da de el en_GB en_US en_ZA eo es_AR es_CL es_ES es_MX et eu fa ff fi fr fy_NL ga_IE gd gl gu_IN he hi_IN hr hsb hu hy_AM id is it ja kk km kn ko lij lt lv mai mk ml mr ms nb_NO nl nn_NO or pa_IN pl pt_BR pt_PT ro ru si sk sl sq sr sv_SE ta te th tr uk uz vi xh zh_CN zh_TW
+%define langlist af an ar as ast az bg bn_IN bn_BD br bs ca cs cy da de el en_GB en_US en_ZA eo es_AR es_CL es_ES es_MX et eu fa ff fi fr fy_NL ga_IE gd gl gu_IN he hi_IN hr hsb hu hy_AM id is it ja kk km kn ko lij lt lv mai mk ml mr ms nb_NO nl nn_NO or pa_IN pl pt_BR pt_PT ro ru si sk sl sq sr sv_SE ta te th tr uk uz vi xh zh_CN zh_TW cak ka kab
 
 # Disabled l10n languages, for any reason
 # - no locales-XX package (or virtual provides):
 # ach ak dsb rm son uu
 
 # Disabled hunspell dicts, for any reason
-%define disabled_dict_langlist an bn_BD bn_IN cs en_GB en_US en_ZA es_AR es_CL es_ES es_MX ff fi fy_NL ga_IE gu_IN hi_IN hy_AM ja lij lv nb_NO nn_NO pa_IN pt_BR pt_PT sv_SE tr zh_CN zh_TW
+%define disabled_dict_langlist an bn_BD bn_IN cs en_GB en_US en_ZA es_AR es_CL es_ES es_MX ff fi fy_NL ga_IE gu_IN hi_IN hy_AM ja lij lv nb_NO nn_NO pa_IN pt_BR pt_PT sv_SE tr zh_CN zh_TW cak ka kab
 
 # Language descriptions
 %define language_af af
@@ -177,8 +176,6 @@ Language Pack for Firefox ESR.
 %define langname_ast Asturian
 %define language_az az
 %define langname_az Azeri
-%define language_be be
-%define langname_be Belarusian
 %define language_bg bg
 %define langname_bg Bulgarian
 %define language_bn_BD bn-BD
@@ -191,6 +188,8 @@ Language Pack for Firefox ESR.
 %define langname_bs Bosnian
 %define language_ca ca
 %define langname_ca Catalan
+%define language_cak cak
+%define langname_cak Kaqchikel
 %define language_cs cs
 %define langname_cs Czech
 %define language_csb csb
@@ -261,6 +260,10 @@ Language Pack for Firefox ESR.
 %define langname_it Italian
 %define language_ja ja
 %define langname_ja Japanese
+%define language_ka ka
+%define langname_ka Georgian
+%define language_kab kab
+%define langname_kab Taqbaylit
 %define language_kk kk
 %define langname_kk Kazakh
 %define language_ko ko
@@ -402,6 +405,11 @@ for locale in %dictionaries; do
 done
 
 %changelog
+* Mon May 08 2017 Andrey Cherepanov <cas@altlinux.org> 52.1.1-alt1
+- New version
+- Add new language packs: Georgian, Kaqchikel and Taqbaylit
+- Remove language pack for Belarusian
+
 * Thu Apr 20 2017 Andrey Cherepanov <cas@altlinux.org> 45.9.0-alt1
 - New version
 

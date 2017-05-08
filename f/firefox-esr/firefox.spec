@@ -1,20 +1,19 @@
 %define rname firefox
 %set_verify_elf_method unresolved=strict
-%def_without gtk3
 
 %define firefox_cid     \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %define firefox_prefix  %_libdir/firefox
 %define firefox_datadir %_datadir/firefox
 
 %define gst_version 1.0
-%define nspr_version 4.12.0
+%define nspr_version 4.13.1
 %define nss_version 3.28.1
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        45.9.0
+Version:        52.1.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -30,23 +29,19 @@ Source6:        firefox.desktop
 Source7:        firefox.c
 Source8:        firefox-prefs.js
 
-Patch5:         firefox-duckduckgo.patch
-Patch6:         firefox3-alt-disable-werror.patch
+Patch6:         firefox-alt-disable-werror.patch
+#Patch7:         firefox-alt-disable-profiler.patch
 Patch14:        firefox-fix-install.patch
 Patch16:        firefox-cross-desktop.patch
 Patch17:        firefox-mediasource-crash.patch
 
 # Upstream
-Patch200:       mozilla-bug-1205199.patch
-Patch201:       mozilla-bug-1245076.patch
+Patch200:       mozilla-bug-256180.patch
+Patch201:       mozilla-bug-1196777.patch
 
 # Red Hat
-Patch300:       rhbz-1219542-s390-build.patch
 Patch301:       rhbz-1291190-appchooser-crash.patch
 Patch302:       rhbz-966424.patch
-%if_with gtk3
-Patch303:       rh-firefox-gtk3-20.patch
-%endif
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -57,10 +52,7 @@ BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend glibc-kernheaders
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXdamage-devel
-BuildRequires: libcurl-devel libgtk+2-devel libhunspell-devel libjpeg-devel
-%if_with gtk3
-BuildRequires: libgtk+3-devel
-%endif
+BuildRequires: libcurl-devel libgtk+2-devel libgtk+3-devel libhunspell-devel libjpeg-devel
 BuildRequires: xorg-cf-files chrpath alternatives yasm
 BuildRequires: zip unzip
 BuildRequires: bzlib-devel zlib-devel
@@ -80,7 +72,7 @@ BuildRequires: libffi-devel
 BuildRequires: gstreamer%gst_version-devel gst-plugins%gst_version-devel
 BuildRequires: libopus-devel
 BuildRequires: libpulseaudio-devel
-BuildRequires: libicu-devel
+#BuildRequires: libicu-devel
 
 # Python requires
 BuildRequires: python-module-distribute
@@ -104,7 +96,6 @@ Provides:	webclient
 Provides:	firefox = %EVR
 Conflicts:	firefox
 Requires:	mozilla-common
-Requires:	gst-plugins-ugly1.0
 
 # ALT#30732
 Requires:	gst-plugins-ugly%gst_version
@@ -129,8 +120,8 @@ cd mozilla
 tar -xf %SOURCE1
 tar -xf %SOURCE2
 
-%patch5  -p1
 %patch6  -p1
+#patch7  -p1
 %patch14 -p1
 %patch16 -p1
 %patch17 -p2
@@ -138,17 +129,10 @@ tar -xf %SOURCE2
 %patch200 -p1
 %patch201 -p1
 
-%patch300 -p1
 %patch301 -p1
 %patch302 -p1
-%if_with gtk3
-%patch303 -p1
-%endif
 
 cp -f %SOURCE4 .mozconfig
-%if_without gtk3
-subst 's/cairo-gtk3/cairo-gtk2/' .mozconfig
-%endif
 
 %ifnarch %{ix86} x86_64 armh
 echo "ac_add_options --disable-methodjit" >> .mozconfig
@@ -172,16 +156,25 @@ MOZ_EXTENSIONS_DEFAULT=' gio'
 MOZ_CHROME_FILE_FORMAT=jar
 EOF
 
+MOZ_OPT_FLAGS="$RPM_OPT_FLAGS"
+
+# PIE, full relro
+MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fPIC -Wl,-z,relro -Wl,-z,now"
+
+# add -fno-delete-null-pointer-checks and -fno-inline-small-functions for gcc6
+MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fno-delete-null-pointer-checks -fno-inline-small-functions"
+
 # Mozilla builds with -Wall with exception of a few warnings which show up
 # everywhere in the code; so, don't override that.
 #
 # Disable C++ exceptions since Mozilla code is not exception-safe
 #
-MOZ_OPT_FLAGS=$(echo $RPM_OPT_FLAGS -fPIC -Wl,-z,relro -Wl,-z,now | \
+MOZ_OPT_FLAGS=$(echo $MOZ_OPT_FLAGS | \
                 sed \
                     -e 's/-Wall//' \
                     -e 's/-fexceptions/-fno-exceptions/g'
 )
+
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
 # Add fake RPATH
@@ -213,17 +206,21 @@ make -f client.mk \
 	STRIP="/bin/true" \
 	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
 	mozappdir=%buildroot/%firefox_prefix \
+	libdir=%_libdir \
 	build
 
 %__cc %optflags \
 	-Wall -Wextra \
 	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
 	-DMOZ_PROGRAM=\"%firefox_prefix/firefox-bin\" \
+	-DMOZ_DIST_BIN=\"%firefox_prefix\"\
 	%SOURCE7 -o firefox
 
 
 %install
 cd mozilla
+
+export SHELL=/bin/sh
 
 %__mkdir_p \
 	%buildroot/%mozilla_arch_extdir/%firefox_cid \
@@ -231,10 +228,11 @@ cd mozilla
 	#
 
 make -C objdir \
-    DESTDIR=%buildroot \
-    INSTALL="/bin/install -p" \
-    mozappdir=%firefox_prefix \
-    install
+	DESTDIR=%buildroot \
+	INSTALL="/bin/install -p" \
+	mozappdir=%firefox_prefix \
+	libdir=%_libdir \
+	install
 
 # install altlinux-specific configuration
 install -D -m 644 %SOURCE8 %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
@@ -326,6 +324,61 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Mon May 08 2017 Andrey Cherepanov <cas@altlinux.org> 52.1.1-alt1
+- New ESR version (52.1.1)
+- Set plugin.load_flash_only setting to false to allow use all NPAPI plugins
+- Security fixes since 52.0:
+  + CVE-2016-10196: Vulnerabilities in Libevent library
+  + CVE-2017-5031: Use after free in ANGLE
+  + CVE-2017-5428: integer overflow in createImageBitmap()
+  + CVE-2017-5429: Memory safety bugs fixed in Firefox 53, Firefox ESR
+  + CVE-2017-5430: Memory safety bugs fixed in Firefox 53 and Firefox ESR
+  + CVE-2017-5435: Use-after-free during transaction processing in the
+  + CVE-2017-5439: Use-after-free in nsTArray Length() during XSLT
+  + CVE-2017-5440: Use-after-free in txExecutionState destructor during
+  + CVE-2017-5444: Buffer overflow while parsing
+  + CVE-2017-5446: Out-of-bounds read when HTTP/2 DATA frames are sent
+  + CVE-2017-5451: Addressbar spoofing with onblur event
+  + CVE-2017-5454: Sandbox escape allowing file system read access through
+  + CVE-2017-5455: Sandbox escape through internal feed reader APIs
+  + CVE-2017-5456: Sandbox escape allowing local file system access
+  + CVE-2017-5464: Memory corruption with accessibility and DOM
+  + CVE-2017-5466: Origin confusion when reloading isolated data:text/html
+  + CVE-2017-5467: Memory corruption when drawing Skia content
+
+* Mon May 08 2017 Andrey Cherepanov <cas@altlinux.org> 52.0-alt1
+- New release (52.0) based on legion@ build.
+- Built with internal icu.
+- Fixed:
+  + CVE-2017-5400: asm.js JIT-spray bypass of ASLR and DEP
+  + CVE-2017-5401: Memory Corruption when handling ErrorResult
+  + CVE-2017-5402: Use-after-free working with events in FontFace objects
+  + CVE-2017-5403: Use-after-free using addRange to add range to an incorrect root object
+  + CVE-2017-5404: Use-after-free working with ranges in selections
+  + CVE-2017-5406: Segmentation fault in Skia with canvas operations
+  + CVE-2017-5407: Pixel and history stealing via floating-point timing side channel with SVG filters
+  + CVE-2017-5410: Memory corruption during JavaScript garbage collection incremental sweeping
+  + CVE-2017-5411: Use-after-free in Buffer Storage in libGLES
+  + CVE-2017-5409: File deletion via callback parameter in Mozilla Windows Updater and Maintenance Service
+  + CVE-2017-5408: Cross-origin reading of video captions in violation of CORS
+  + CVE-2017-5412: Buffer overflow read in SVG filters
+  + CVE-2017-5413: Segmentation fault during bidirectional operations
+  + CVE-2017-5414: File picker can choose incorrect default directory
+  + CVE-2017-5415: Addressbar spoofing through blob URL
+  + CVE-2017-5416: Null dereference crash in HttpChannel
+  + CVE-2017-5417: Addressbar spoofing by draging and dropping URLs
+  + CVE-2017-5425: Overly permissive Gecko Media Plugin sandbox regular expression access
+  + CVE-2017-5426: Gecko Media Plugin sandbox is not started if seccomp-bpf filter is running
+  + CVE-2017-5427: Non-existent chrome.manifest file loaded during startup
+  + CVE-2017-5418: Out of bounds read when parsing HTTP digest authorization responses
+  + CVE-2017-5419: Repeated authentication prompts lead to DOS attack
+  + CVE-2017-5420: Javascript: URLs can obfuscate addressbar location
+  + CVE-2017-5405: FTP response codes can cause use of uninitialized values for ports
+  + CVE-2017-5421: Print preview spoofing
+  + CVE-2017-5422: DOS attack by using view-source: protocol repeatedly in one hyperlink
+  + CVE-2017-5399: Memory safety bugs fixed in Firefox 52
+  + CVE-2017-5398: Memory safety bugs fixed in Firefox 52 and Firefox ESR 45.8
+
 * Thu Apr 20 2017 Andrey Cherepanov <cas@altlinux.org> 45.9.0-alt1
 - New ESR version
 - Security fixes:
@@ -527,10 +580,10 @@ done
   + MFSA 2015-87 Crash when using shared memory in JavaScript
   + MFSA 2015-85 Out-of-bounds write with Updater and malicious MAR file
   + MFSA 2015-84 Arbitrary file overwriting through Mozilla Maintenance
-    Service with hard links
+                 Service with hard links
   + MFSA 2015-83 Overflow issues in libstagefright
   + MFSA 2015-82 Redefinition of non-configurable JavaScript object
-    properties
+                 properties
   + MFSA 2015-80 Out-of-bounds read with malformed MP3 file
 
 * Sat Aug 08 2015 Andrey Cherepanov <cas@altlinux.org> 38.1.1-alt1
@@ -554,42 +607,6 @@ done
 
 * Mon May 25 2015 Andrey Cherepanov <cas@altlinux.org> 38.0.1-alt1
 - New ESR version
-- Security fixes:
-  + MFSA 2015-58 Mozilla Windows updater can be run outside of application directory
-  + MFSA 2015-57 Privilege escalation through IPC channel messages
-  + MFSA 2015-56 Untrusted site hosting trusted page can intercept webchannel responses
-  + MFSA 2015-55 Buffer overflow and out-of-bounds read while parsing MP4 video metadata
-  + MFSA 2015-54 Buffer overflow when parsing compressed XML
-  + MFSA 2015-53 Use-after-free due to Media Decoder Thread creation during shutdown
-  + MFSA 2015-52 Sensitive URL encoded information written to Android logcat
-  + MFSA 2015-51 Use-after-free during text processing with vertical text enabled
-  + MFSA 2015-50 Out-of-bounds read and write in asm.js validation
-  + MFSA 2015-49 Referrer policy ignored when links opened by middle-click and context menu
-  + MFSA 2015-48 Buffer overflow with SVG content and CSS
-  + MFSA 2015-47 Buffer overflow parsing H.264 video with Linux Gstreamer
-
-* Thu Apr 02 2015 Andrey Cherepanov <cas@altlinux.org> 31.6.0-alt1
-- New ESR version
-- Security fixes:
-  + MFSA 2015-40 Same-origin bypass through anchor navigation
-  + MFSA 2015-37 CORS requests should not follow 30x redirections after
-    preflight
-  + MFSA 2015-33 resource:// documents can load privileged pages
-  + MFSA 2015-31 Use-after-free when using the Fluendo MP3 GStreamer
-    plugin
-
-* Sun Mar 22 2015 Andrey Cherepanov <cas@altlinux.org> 31.5.3-alt1
-- New ESR version
-- Security fixes:
-  + MFSA 2015-28 Privilege escalation through SVG navigation
-  + MFSA 2015-29 Code execution through incorrect JavaScript bounds
-    checking elimination
-
-* Wed Feb 25 2015 Andrey Cherepanov <cas@altlinux.org> 31.5.0-alt1
-- New ESR version
-- Fixed:
-  + 2015-24 Reading of local files through manipulation of form
-    autocomplete
   + 2015-19 Out-of-bounds read and write while rendering SVG content
   + 2015-16 Use-after-free in IndexedDB
   + 2015-12 Invoking Mozilla updater will load locally stored DLL files
