@@ -20,7 +20,7 @@
 %def_enable installed_tests
 
 Name: libgtk+3
-Version: %ver_major.12
+Version: %ver_major.13
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -101,6 +101,7 @@ and programs.
 %package schemas
 Summary: GSettings schemas used by GTK+3/4
 Group: System/Libraries
+Requires: dconf
 BuildArch: noarch
 
 %description schemas
@@ -427,6 +428,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Tue May 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.13-alt1
+- 3.22.13
+
 * Sat Apr 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.12-alt1
 - 3.22.12
 - moved *.gschema to separate subpackage to share it with libgtk+4

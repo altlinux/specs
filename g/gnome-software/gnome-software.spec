@@ -17,8 +17,8 @@
 %def_disable tests
 
 Name: gnome-software
-Version: %ver_major.1
-Release: alt0.2
+Version: %ver_major.2
+Release: alt1
 
 Summary: Software manager for GNOME
 License: GPLv2+
@@ -112,6 +112,9 @@ GNOME Software is for installing, removing and updating software.
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Mon May 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
+- 3.24.2
+
 * Mon Apr 10 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt0.2
 - 3.24.1
 

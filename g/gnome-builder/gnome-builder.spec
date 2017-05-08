@@ -10,7 +10,7 @@
 %def_disable gtk_doc
 
 Name: gnome-builder
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -228,6 +228,9 @@ This package provides noarch data needed for Gnome Builder to work.
 
 
 %changelog
+* Tue May 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
+- 3.24.2
+
 * Tue Apr 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
 - 3.24.1
 

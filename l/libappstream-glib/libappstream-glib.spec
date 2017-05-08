@@ -2,12 +2,16 @@
 %define ver_major 0.6
 %define api_ver 1.0
 %define asb_ver 5
+
+%if "%(rpmvercmp '%{get_version librpm-devel}' '4.13')" >= "0"
 %def_enable rpm
+%endif
+
 %def_enable stemmer
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.12
+Version: %ver_major.13
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -32,7 +36,7 @@ BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel
 BuildRequires: gtk-doc docbook-utils docbook-dtds
 BuildRequires: libyaml-devel gcab libgcab-devel gperf libuuid-devel
 BuildRequires: libjson-glib-devel >= %json_glib_ver
-%{?_enable_rpm:BuildRequires: librpm-devel}
+BuildRequires: librpm-devel
 %{?_enable_stemmer:BuildRequires: libstemmer-devel}
 %description
 This library provides GObjects and helper methods to make it easy to read and
@@ -200,6 +204,9 @@ the functionality of the installed %_name library.
 #%_datadir/gtk-doc/html/appstream-builder/
 
 %changelog
+* Tue May 09 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.13-alt1
+- 0.6.13
+
 * Thu Apr 13 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.12-alt1
 - 0.6.12
 

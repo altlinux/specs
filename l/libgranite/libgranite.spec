@@ -3,16 +3,15 @@
 %define api_ver 1.0
 
 Name: libgranite
-Version: %ver_major.0.1
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Extension of GTK+3 libraries
 Group: System/Libraries
 License: GPLv3+
-Url: https://launchpad.net/granite
+Url: https://github.com/elementary/%_name
 
-Source: https://launchpad.net/%_name/%ver_major/%version/+download/%_name-%version.tar.xz
-Patch: granite-0.4.0.1-up-vala_0.36.patch
+Source: %url/archive/%version/%_name-%version.tar.gz
 
 BuildRequires: cmake rpm-build-gir vala libgtk+3-devel libgee0.8-devel
 BuildRequires: libpixman-devel gobject-introspection-devel libXdmcp-devel
@@ -83,7 +82,6 @@ GObject introspection devel data for the granite library.
 
 %prep
 %setup -n %_name-%version
-%patch
 
 %build
 %cmake_insource -DCMAKE_BUILD_TYPE:STRING="Release"
@@ -95,7 +93,7 @@ GObject introspection devel data for the granite library.
 %find_lang %_name
 
 %files -f %_name.lang
-%doc AUTHORS INSTALL README
+%doc AUTHORS README*
 %_libdir/*.so.*
 
 %files devel
@@ -120,6 +118,9 @@ GObject introspection devel data for the granite library.
 %_datadir/vala/vapi/%_name.vapi
 
 %changelog
+* Wed May 10 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
+- 0.4.1
+
 * Fri Mar 31 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.0.1-alt2
 - fixed build with vala-0.36
 

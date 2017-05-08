@@ -2,7 +2,7 @@
 %define xdg_name org.gnome.Music
 
 Name: gnome-music
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Music playing application for GNOME3
@@ -55,10 +55,10 @@ Music playing application for GNOME3.
 %files -f %name.lang
 %_bindir/%name
 %_datadir/%name/
-%_desktopdir/%xdg_name.desktop
+%_desktopdir/%name.desktop
 %_datadir/glib-2.0/schemas/org.gnome.Music.gschema.xml
-%_datadir/icons/hicolor/*/apps/%name.png
-%_datadir/icons/hicolor/symbolic/apps/%{name}*.svg
+%_iconsdir/hicolor/*/apps/%name.png
+%_iconsdir/hicolor/symbolic/apps/%{name}*.svg
 %_libdir/%name/
 %python3_sitelibdir_noarch/gnomemusic/
 %_datadir/appdata/%name.appdata.xml
@@ -68,6 +68,9 @@ Music playing application for GNOME3.
 %exclude %_libdir/%name/libgd.la
 
 %changelog
+* Tue May 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
+- 3.24.2
+
 * Tue Apr 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
 - 3.24.1
 
