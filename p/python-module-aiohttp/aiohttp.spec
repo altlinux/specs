@@ -5,7 +5,7 @@
 %def_without docs
 
 Name: python-module-%oname
-Version: 1.2.0
+Version: 1.3.5
 Release: alt1
 Summary: http client/server for asyncio
 License: ASLv2.0
@@ -196,6 +196,9 @@ popd
 %endif
 
 %changelog
+* Thu May 04 2017 Anton Midyukov <antohami@altlinux.org> 1.3.5-alt1
+- New version 1.3.5
+
 * Fri Jan 13 2017 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1
 - New version 1.2.0
 - Disabled build documentation

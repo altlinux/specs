@@ -1,12 +1,11 @@
 Name: gns3-gui
-Version: 1.5.2
+Version: 2.0.0
 Release: alt1
 
 Summary: GNS3 Graphical User Interface
 License: GPLv3
 Group: File tools
-Url: http://www.gns3.net
-#Url: https://github.com/GNS3/gns3-gui
+Url: https://github.com/GNS3/gns3-gui
 
 Buildarch: noarch
 
@@ -20,16 +19,18 @@ Source4: gns3.xml
 Source5: gns3.desktop
 
 BuildRequires: python3-devel python3-module-setuptools-tests
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
 Requires: gns3-server = %version
 Requires: gns3-net-converter >= 1.3.0
-Requires: python3-module-jsonschema >= 2.4.0
-Requires: python3-module-raven >= 5.2.0
-Requires: python3-module-psutil >= 3.0.0
-Requires: python3-module-configobj
-Requires: python3-module-sip
-Requires: python3-module-PyQt5
-Conflicts: gns3
+#Requires: python3-module-jsonschema >= 2.4.0
+#Requires: python3-module-raven >= 5.2.0
+#Requires: python3-module-psutil >= 3.0.0
+#Requires: python3-module-configobj
+#Requires: python3-module-sip
+#Requires: python3-module-PyQt5
+Conflicts: gns3 < 1.0.0
+Obsoletes: gns3
+Provides: gns3 == %version
 
 %description
 GNS3 is a excellent complementary tool to real labs for administrators
@@ -69,6 +70,9 @@ install -Dp -m0644 %SOURCE5 %buildroot%_desktopdir/gns3.desktop
 %_datadir/mime/packages/gns3.xml
 
 %changelog
+* Mon May 08 2017 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- New version 2.0.0
+
 * Tue Aug 30 2016 Anton Midyukov <antohami@altlinux.org> 1.5.2-alt1
 - New version 1.5.2
 - added conflict with gns3
