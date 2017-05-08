@@ -1,29 +1,36 @@
 Name: imapsync
-Version: 1.670
+Version: 1.727
 Release: alt1
 
 Summary: Tool to migrate email between IMAP servers
 
-License: GPLv2
-Group: Networking/Mail
-Url: https://fedorahosted.org/imapsync/
+License: NOLIMIT Public License
+Group:   Networking/Mail
+Url:     http://imapsync.lamiral.info/
+#Url:     https://github.com/imapsync/imapsync
 
 Packager: Boris Savelev <boris@altlinux.org>
-Source: https://fedorahosted.org/released/imapsync/%name-%version.tar
+
+Source0: %name-%version.tar
+Patch0:  %name-%version-%release.patch
+
 BuildArch: noarch
 
-BuildRequires: perl-Mail-Box
-BuildRequires: perl-devel
-BuildRequires: perl-Mail-IMAPClient
-BuildRequires: perl-Date-Manip
-BuildRequires: perl-podlators
-BuildRequires: perl(Data/Uniqid.pm)
-BuildRequires: perl(File/Copy/Recursive.pm)
-BuildRequires: perl(IO/Socket/INET6.pm)
-BuildRequires: perl(IO/Tee.pm)
-BuildRequires: perl(Term/ReadKey.pm)
-BuildRequires: perl(Test/Pod.pm)
-BuildRequires: perl(Unicode/String.pm)
+# Manual Requires:
+Requires: perl(IO/Socket/INET6.pm)
+
+# Build requires:
+BuildRequires:  perl(Data/Dumper.pm) perl(Data/Uniqid.pm)
+BuildRequires:  perl(Digest/HMAC.pm) perl(Digest/HMAC_SHA1.pm) perl(Digest/MD5.pm)
+BuildRequires:  perl(File/Copy/Recursive.pm)
+BuildRequires:  perl(IO/Socket/SSL.pm) perl(IO/Socket/INET6.pm)
+BuildRequires:  perl(IO/Tee.pm) perl(IPC/Open3.pm)
+BuildRequires:  perl(JSON/WebToken.pm) perl(LWP/UserAgent.pm)
+BuildRequires:  perl(Mail/IMAPClient.pm)
+BuildRequires:  perl(Parse/RecDescent.pm)
+BuildRequires:  perl(Readonly.pm) perl(Term/ReadKey.pm)
+BuildRequires:  perl(Test/MockObject.pm) perl(Test/More.pm) perl(Test/Pod.pm)
+BuildRequires:  perl(URI/Escape.pm) perl(Unicode/String.pm)
 
 %description
 imapsync is a tool for facilitating incremental recursive IMAP
@@ -35,16 +42,22 @@ optionally be deleted after a successful transfer.
 
 %prep
 %setup
+%patch0 -p1
 
 %install
 %makeinstall_std
 
 %files
-%doc ChangeLog CREDITS TODO README FAQ
+%doc ChangeLog LICENSE CREDITS TODO README FAQ
 %_bindir/%name
 %_man1dir/%name.*
 
 %changelog
+* Mon May 08 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.727-alt1
+- New version
+- Cleanup spec file
+- Fix license
+
 * Mon Dec 28 2015 Lenar Shakirov <snejok@altlinux.ru> 1.670-alt1
 - new version
 
