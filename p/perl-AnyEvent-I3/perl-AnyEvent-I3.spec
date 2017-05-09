@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,12 +7,12 @@ BuildRequires: perl(AnyEvent.pm) perl(AnyEvent/Handle.pm) perl(AnyEvent/Socket.p
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-AnyEvent-I3
-Version:        0.16
-Release:        alt1_6
+Version:        0.17
+Release:        alt1
 Summary:        Communicate with the i3 window manager
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/anyevent-i3/
-Source0:        http://search.cpan.org/CPAN/authors/id/M/MS/MSTPLBG/AnyEvent-I3-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/M/MS/MSTPLBG/AnyEvent-I3-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -25,7 +26,7 @@ IPC interface it provides (if enabled in the configuration file). You can
 then subscribe to events or send messages and receive their replies.
 
 %prep
-%setup -qn AnyEvent-I3-%{version}
+%setup -q -n AnyEvent-I3-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir NO_PACKLIST=1 INSTALLDIRS=vendor
@@ -40,6 +41,9 @@ make pure_install DESTDIR=%{buildroot}
 %{perl_vendor_privlib}/AnyEvent/I3.pm
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- automated CPAN update
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_6
 - update to new release by fcimport
 
