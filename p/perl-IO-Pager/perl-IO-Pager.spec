@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-IO-Pager
-Version: 0.36
+Version: 0.37
 Release: alt1
 
 Summary: Select a pager, optionally pipe it output if destination is a TTY
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/J/JP/JPIERCE/IO-Pager-%{version}.tgz
+Source0: http://www.cpan.org/authors/id/J/JP/JPIERCE/%{module}-%{version}.tgz
 
 # Automatically added by buildreq on Tue Feb 21 2006
 BuildRequires: less perl-devel perl(bignum.pm)
@@ -43,7 +43,7 @@ Subclasses are only required to support filehandle output methods and close,
 namely
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -56,6 +56,9 @@ namely
 %perl_vendor_privlib/IO/
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
+- automated CPAN update
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
 - automated CPAN update
 
