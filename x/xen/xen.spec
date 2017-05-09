@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.8.1
-Release: alt5%ubt
+Release: alt6%ubt
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -731,7 +731,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_datadir/%name
 %_datadir/qemu-%name
 
-%exclude %_datadir/qemu-xen/qemu/s390-ccw.img
+%exclude %_datadir/qemu-%name/qemu/s390-ccw.img
 
 
 %if_with hypervisor
@@ -793,6 +793,14 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Mon May 08 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt6%ubt
+- Upstream updates:
+ + kexec: clear kexec_image slot when unloading kexec image
+ + memory: exit early from memory_exchange() upon write-back error
+ + memory: don't hand MFN info to translated guests
+ + x86/mce: make 'severity_cpu' private to its users
+ + x86/mce: always re-initialize 'severity_cpu' in mcheck_cmn_handler()
+
 * Sat May 06 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt5%ubt
 - added ubt tag
 
