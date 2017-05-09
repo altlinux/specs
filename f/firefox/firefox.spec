@@ -12,7 +12,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        52.0
+Version:        53.0.2
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -48,6 +48,7 @@ BuildRequires(pre): browser-plugins-npapi-devel
 
 BuildRequires: rpm-macros-alternatives
 BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend glibc-kernheaders
+#BuildRequires: rust ruby-stdlibs rust-cargo
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXdamage-devel
@@ -74,6 +75,7 @@ BuildRequires: libpulseaudio-devel
 #BuildRequires: libicu-devel
 
 # Python requires
+BuildRequires: /dev/shm
 BuildRequires: python-module-distribute
 BuildRequires: python-modules-compiler
 BuildRequires: python-modules-logging
@@ -191,6 +193,7 @@ export LIBDIR="%_libdir"
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export srcdir="$PWD"
 export SHELL=/bin/sh
+export RUST_BACKTRACE=1
 
 %__autoconf
 
@@ -198,8 +201,8 @@ export SHELL=/bin/sh
 # however builds tend to fail on other arches when building in parallel.
 MOZ_SMP_FLAGS=-j1
 %ifarch %{ix86} x86_64
-[ "${NPROCS:+0}" -ge 2 ] && MOZ_SMP_FLAGS=-j2
-[ "${NPROCS:+0}" -ge 4 ] && MOZ_SMP_FLAGS=-j4
+[ "${NPROCS:-0}" -ge 2 ] && MOZ_SMP_FLAGS=-j2
+[ "${NPROCS:-0}" -ge 4 ] && MOZ_SMP_FLAGS=-j4
 %endif
 
 make -f client.mk \
@@ -311,6 +314,55 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Sun May 07 2017 Alexey Gladkov <legion@altlinux.ru> 53.0.2-alt1
+- New release (53.0.2).
+- Fixed:
+  + CVE-2017-5031: Use after free in ANGLE
+
+* Mon May 01 2017 Alexey Gladkov <legion@altlinux.ru> 53.0-alt1
+- New release (53.0).
+- Built with internal hunspell.
+- Fixed:
+  + CVE-2017-5433: Use-after-free in SMIL animation functions
+  + CVE-2017-5435: Use-after-free during transaction processing in the editor
+  + CVE-2017-5436: Out-of-bounds write with malicious font in Graphite 2
+  + CVE-2017-5461: Out-of-bounds write in Base64 encoding in NSS
+  + CVE-2017-5459: Buffer overflow in WebGL
+  + CVE-2017-5466: Origin confusion when reloading isolated data:text/html URL
+  + CVE-2017-5434: Use-after-free during focus handling
+  + CVE-2017-5432: Use-after-free in text input selection
+  + CVE-2017-5460: Use-after-free in frame selection
+  + CVE-2017-5438: Use-after-free in nsAutoPtr during XSLT processing
+  + CVE-2017-5439: Use-after-free in nsTArray Length() during XSLT processing
+  + CVE-2017-5440: Use-after-free in txExecutionState destructor during XSLT processing
+  + CVE-2017-5441: Use-after-free with selection during scroll events
+  + CVE-2017-5442: Use-after-free during style changes
+  + CVE-2017-5464: Memory corruption with accessibility and DOM manipulation
+  + CVE-2017-5443: Out-of-bounds write during BinHex decoding
+  + CVE-2017-5444: Buffer overflow while parsing application/http-index-format content
+  + CVE-2017-5446: Out-of-bounds read when HTTP/2 DATA frames are sent with incorrect data
+  + CVE-2017-5447: Out-of-bounds read during glyph processing
+  + CVE-2017-5465: Out-of-bounds read in ConvolvePixel
+  + CVE-2017-5448: Out-of-bounds write in ClearKeyDecryptor
+  + CVE-2016-10196: Vulnerabilities in Libevent library
+  + CVE-2017-5454: Sandbox escape allowing file system read access through file picker
+  + CVE-2017-5455: Sandbox escape through internal feed reader APIs
+  + CVE-2017-5456: Sandbox escape allowing local file system access
+  + CVE-2017-5469: Potential Buffer overflow in flex-generated code
+  + CVE-2017-5445: Uninitialized values used while parsing application/http-index-format content
+  + CVE-2017-5449: Crash during bidirectional unicode manipulation with animation
+  + CVE-2017-5450: Addressbar spoofing using javascript: URI on Firefox for Android
+  + CVE-2017-5451: Addressbar spoofing with onblur event
+  + CVE-2017-5462: DRBG flaw in NSS
+  + CVE-2017-5463: Addressbar spoofing through reader view on Firefox for Android
+  + CVE-2017-5467: Memory corruption when drawing Skia content
+  + CVE-2017-5452: Addressbar spoofing during scrolling with editable content on Firefox for Android
+  + CVE-2017-5453: HTML injection into RSS Reader feed preview page through TITLE element
+  + CVE-2017-5458: Drag and drop of javascript: URLs can allow for self-XSS
+  + CVE-2017-5468: Incorrect ownership model for Private Browsing information
+  + CVE-2017-5430: Memory safety bugs fixed in Firefox 53 and Firefox ESR 52.1
+  + CVE-2017-5429: Memory safety bugs fixed in Firefox 53, Firefox ESR 45.9, and Firefox ESR 52.1
+
 * Wed Mar 15 2017 Alexey Gladkov <legion@altlinux.ru> 52.0-alt1
 - New release (52.0).
 - Built with internal icu.
