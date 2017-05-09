@@ -1,6 +1,6 @@
 Name: mysqldiff
-Version: 0.43
-Release: alt2
+Version: 0.50
+Release: alt1
 
 Summary: Comparing the schema (table structures) of two MySQL databases
 
@@ -38,6 +38,9 @@ CLI script for comparing the schema (table structures) of two MySQL databases.
 %_man1dir/%name.*
 
 %changelog
+* Tue May 09 2017 Vitaly Lipatov <lav@altlinux.ru> 0.50-alt1
+- new version 0.50 (with rpmrb script)
+
 * Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 0.43-alt2
 - fix build
 
