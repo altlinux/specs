@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist HTTP-Cookies
 Name: perl-%dist
-Version: 6.01
+Version: 6.03
 Release: alt1
 
 Summary: HTTP cookie jars
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{dist}-%{version}.tar.gz
 
 Conflicts: perl-libwww < 6
 
@@ -26,7 +27,7 @@ a database of all the HTTP cookies that a given LWP::UserAgent object
 knows about.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,10 +36,13 @@ knows about.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes CONTRIBUTORS README.md
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 6.03-alt1
+- automated CPAN update
+
 * Mon Feb 20 2012 Alexey Tourbin <at@altlinux.ru> 6.01-alt1
 - 6.00 -> 6.01
 
