@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Alien-wxWidgets
 
 Name: perl-%dist
-Version: 0.67
+Version: 0.69
 Release: alt1
 
 Summary: Alien-wxWidgets - building, finding and using wxWidgets binaries
@@ -11,7 +12,7 @@ Group: Development/Perl
 Url: http://www.cpan.org
 
 Packager: Slava Dubrovskiy <dubrsl@altlinux.org>
-Source: http://www.cpan.org/authors/id/M/MD/MDOOTSON/Alien-wxWidgets-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MD/MDOOTSON/%{dist}-%{version}.tar.gz
 
 BuildRequires: gcc-c++ perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage wxGTK-devel wxGTK-contrib-stc-devel perl-autodie perl-Module-Pluggable
 
@@ -22,7 +23,7 @@ wxWidgets versions or configurations (debug, Unicode, etc.). It can also
 build and install a private copy of wxWidgets as part of the build process
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,10 +32,14 @@ build and install a private copy of wxWidgets as part of the build process
 %perl_vendor_install
 
 %files
+%doc Changes README.txt
 %perl_vendor_autolib/Alien/wxWidgets
 %perl_vendor_archlib/Alien/wxWidgets*
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.69-alt1
+- automated CPAN update
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.67-alt1
 - automated CPAN update
 
