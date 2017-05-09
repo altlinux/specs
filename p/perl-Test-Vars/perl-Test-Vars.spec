@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -5,7 +6,7 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-Test-Vars
-Version:	0.013
+Version:	0.014
 Release:	alt1
 Summary:	Detects unused variables
 License:	GPL+ or Artistic
@@ -88,6 +89,9 @@ prove -Ilib $(echo $(find xt/ -name '*.t'))
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1
+- automated CPAN update
+
 * Sat Mar 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1
 - automated CPAN update
 
