@@ -1,26 +1,25 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: libsowing-devel perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/ParseXS.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test/Number/Delta.pm) perl(Test/Requires.pm) perl(Time/HiRes.pm) perl(XSLoader.pm) perl(YAML/Tiny.pm)
 # END SourceDeps(oneline)
-%define module_version 0.41
 %define module_name Time-Moment
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.41
-Release: alt1.1
+Version: 0.42
+Release: alt1
 Summary: Represents a date and time of day with an offset from UTC
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/C/CH/CHANSEN/Time-Moment-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/C/CH/CHANSEN/%{module_name}-%{version}.tar.gz
 
 %description
 From summary: %summary
 
 %prep
-%setup -q -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +33,9 @@ From summary: %summary
 %perl_vendor_autolib/*
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.42-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1.1
 - rebuild with new perl 5.24.1
 
