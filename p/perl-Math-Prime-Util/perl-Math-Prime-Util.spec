@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 0.60
 %define module_name Math-Prime-Util
 %add_findreq_skiplist %perl_vendor_archlib/Math/Prime/Util.pm
 # BEGIN SourceDeps(oneline):
@@ -8,14 +7,14 @@ BuildRequires: libsowing-devel perl(Benchmark.pm) perl(Bytes/Random/Secure.pm) p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.60
-Release: alt1.1
+Version: 0.65
+Release: alt1
 Summary: Utilities related to prime numbers, including fast sieves and factoring
 Group: Development/Perl
 License: perl
 URL: https://github.com/danaj/Math-Prime-Util
 
-Source: http://www.cpan.org/authors/id/D/DA/DANAJ/Math-Prime-Util-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DANAJ/%{module_name}-%{version}.tar.gz
 
 %description
 A set of utilities related to prime numbers.  These include multiple sieving.methods, is_prime, prime_count, nth_prime, approximations and bounds for
@@ -71,7 +70,7 @@ scripts for %module_name
 
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 %ifarch %ix86
 rm -f t/11-clusters.t 
 %endif
@@ -92,6 +91,9 @@ rm -f t/11-clusters.t
 %_bindir/*
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1.1
 - rebuild with new perl 5.24.1
 
