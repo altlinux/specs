@@ -2,7 +2,7 @@
 %define module Geo-GeoNames
 
 Name: perl-%module
-Version: 1.11
+Version: 1.12
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -12,7 +12,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/N/NI/NICOMEN/Geo-GeoNames-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/N/NI/NICOMEN/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -27,7 +27,7 @@ or postalcode. Wikipedia lookups are also supported. If more than one match
 is found, a list of locations will be returned.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 # Module tests will not succeed in current Sisyphus build environment.
@@ -40,9 +40,13 @@ is found, a list of locations will be returned.
 %perl_vendor_install
 
 %files
+%doc LICENSE README.pod Changes examples
 %perl_vendor_privlib/Geo
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1
 - automated CPAN update
 
