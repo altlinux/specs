@@ -16,7 +16,7 @@ BuildRequires: perl(Module/Build.pm) perl(Test/Exception.pm) perl(Module/Build/T
 %define _enable_test 1
 
 Name: perl-Data-ObjectDriver
-Version: 0.14
+Version: 0.15
 Release: alt1
 
 Summary: Simple, transparent data interface, with caching
@@ -28,7 +28,7 @@ Url: http://www.cpan.org
 Packager: Denis Baranov <baraka@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/S/SI/SIXAPART/Data-ObjectDriver-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SI/SIXAPART/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Mar 10 2011
 BuildRequires: libnss-role perl-Class-Accessor perl-Class-Data-Inheritable perl-Class-Trigger perl-DBI perl-Module-Install
@@ -44,7 +44,7 @@ to spread data across multiple physical databases,
 without your application code needing to know where the data is stored.
 
 %prep
-%setup -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -54,10 +54,14 @@ rm -f %buildroot/%perl_vendor_privlib/Data/ObjectDriver/Driver/DBD/Oracle.pm
 rm -f %buildroot/%perl_vendor_privlib/Data/ObjectDriver/Driver/DBD/SQLite.pm
 
 %files
+%doc ToDo LICENSE README.md Changes
 %perl_vendor_privlib/Data/ObjectDriver/*
 %perl_vendor_privlib/Data/ObjectDriver.pm
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- automated CPAN update
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - automated CPAN update
 
