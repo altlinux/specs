@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist DateTime-Format-W3CDTF
 Name: perl-%dist
-Version: 0.06
-Release: alt2
+Version: 0.07
+Release: alt1
 
 Summary: Parse and format W3CDTF datetime strings
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/G/GW/GWILLIAMS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +22,7 @@ defined at http://www.w3.org/TR/NOTE-datetime. This format as the native
 date format of RSS 1.0.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,10 +31,13 @@ date format of RSS 1.0.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README examples
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 0.06-alt2
 - disabled build dependency on perl-Module-Install
 
