@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Wx
-Version: 0.9928
-Release: alt1.1
+Version: 0.9932
+Release: alt1
 
 Summary: wxPerl - Perl bindings for wxWindows
 License: GPL
 Group: System/Libraries
 
 URL: http://wxperl.sourceforge.net/
-Source: http://www.cpan.org/authors/id/M/MD/MDOOTSON/Wx-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MD/MDOOTSON/Wx-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Oct 19 2011
 BuildRequires: gcc-c++ libwxGTK-contrib-stc-devel libwxGTK-devel perl-Alien-wxWidgets perl-Encode perl-ExtUtils-CBuilder perl-ExtUtils-XSpp perl-IO-String perl-autodie perl-threads xvfb-run
@@ -26,7 +26,7 @@ Requires: %name = %version-%release
 Development files useful for building Perl applications depending on Wx.
 
 %prep
-%setup -q -n Wx-%version
+%setup -q -n Wx-%{version}
 
 %ifdef __buildreqs
 # these tests open /usr/share/applications/*.desktop
@@ -49,7 +49,7 @@ xvfb-run -a make test
 %{expand:%%global __find_requires xvfb-run -a %__find_requires}
 
 %files
-%doc README.txt wxpl.ico wxpl.xpm
+%doc README.txt wxpl.ico wxpl.xpm Changes docs
 %perl_vendor_archlib/Wx*
 %perl_vendor_autolib/Wx
 %exclude %perl_vendor_archlib/Wx/Overload
@@ -68,6 +68,9 @@ xvfb-run -a make test
 %perl_vendor_archlib/Wx/typemap
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.9932-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.9928-alt1.1
 - rebuild with new perl 5.24.1
 
