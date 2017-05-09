@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,13 +7,13 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-Test-EOL
-Version:	1.6
-Release:	alt1_4
+Version:	2.00
+Release:	alt1
 Summary:	Check the correct line endings in your project
 Group:		Development/Other
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-EOL/
-Source0:	http://search.cpan.org/CPAN/authors/id/F/FR/FREW/Test-EOL-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-EOL-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
 BuildRequires:	coreutils
@@ -71,14 +72,15 @@ make test
 
 %files
 %if 0%{?_licensedir:1}
-%doc LICENSE
 %else
-%doc LICENSE
 %endif
 %doc Changes README
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
+- automated CPAN update
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_4
 - update to new release by fcimport
 
