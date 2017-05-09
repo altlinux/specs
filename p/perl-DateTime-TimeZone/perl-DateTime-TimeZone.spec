@@ -2,7 +2,7 @@
 %define dist DateTime-TimeZone
 %def_without bootstrap
 Name: perl-%dist
-Version: 2.09
+Version: 2.11
 Release: alt1
 
 Summary: Time zone object base class and factory
@@ -10,7 +10,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-TimeZone-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DR/DROLSKY/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -58,7 +58,7 @@ on the database, and time zones in general, is
 http://www.twinsun.com/tz/tz-link.htm.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 # avoid build dependency on perl-podlators
 sed -i- '/Pod::Man/d' Makefile.PL
@@ -68,7 +68,7 @@ sed -i- '/Pod::Man/d' Makefile.PL
 sed -i- 's/eval "use DateTime/eval "die/' t/check_datetime_version.pl
 %endif
 
-if [ %version != 2.09 ]; then
+if [ %version != 2.11 ]; then
     echo update manual requires due to findreq_skiplist!
     exit 1
 fi
@@ -80,10 +80,13 @@ fi
 %perl_vendor_install
 
 %files
-%doc Changes README.md
+%doc Changes README.md CONTRIBUTING.md
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.11-alt1
+- automated CPAN update
+
 * Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 2.09-alt1
 - automated CPAN update
 
