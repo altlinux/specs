@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist HTML-Tree
 Name: perl-%dist
-Version: 5.03
-Release: alt2
+Version: 5.06
+Release: alt1
 
 Summary: Perl modules for HTML syntax tree processing
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/K/KE/KENTNL/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -20,7 +21,7 @@ This package contains a suite of modules for representing, creating,
 and extracting information from HTML syntax trees
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,7 +31,8 @@ and extracting information from HTML syntax trees
 
 %files
 %doc	Changes README
-	/usr/bin/htmltree
+	%_bindir/htmltree
+	%_man1dir/htmltree.*
 %dir	%perl_vendor_privlib/HTML
 	%perl_vendor_privlib/HTML/*.pm
 %dir	%perl_vendor_privlib/HTML/Element
@@ -39,6 +41,9 @@ and extracting information from HTML syntax trees
 %doc	%perl_vendor_privlib/HTML/Tree/*.pod
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 5.06-alt1
+- automated CPAN update
+
 * Mon Apr 11 2016 Igor Vlasenko <viy@altlinux.ru> 5.03-alt2
 - build w/o HTML-Format
 
