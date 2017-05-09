@@ -1,6 +1,6 @@
 Name: runawfe4-gpd
-Version: 4.2.0
-Release: alt13
+Version: 4.3.0
+Release: alt1
 
 Summary: Runawfe Graphic Process Designer
 
@@ -112,6 +112,9 @@ EOF
 #%attr(755,root,root) %runadir/workspace/
 
 %changelog
+* Tue May 09 2017 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt1
+- Updated to 4.3.0 code
+
 * Wed Jul 08 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt13
 - Change port to 28080 by runtime .settings
 
