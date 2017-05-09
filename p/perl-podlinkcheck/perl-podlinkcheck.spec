@@ -4,13 +4,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(CPAN/SQLite.pm) perl(CPAN/SQLite/Index.pm) perl(Config.pm) perl(Fcntl.pm) perl(File/Find.pm) perl(FindBin.pm) perl(GDBM_File.pm) perl(IO/String.pm) perl(IPC/Open3.pm) perl(IPC/Run3.pm) perl(Pod/Escapes.pm) perl(Pod/ParseLink.pm) perl(Pod/Parser.pm) perl(Pod/Simple/HTML.pm) perl(Pod/Simple/HTMLBatch.pm) perl(Smart/Comments.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-podlinkcheck
-Version:        14
+Version:        15
 Release:        alt1
 Summary:        Check Perl POD L<> link references
 License:        GPLv3+
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/podlinkcheck/
-Source:        http://www.cpan.org/authors/id/K/KR/KRYDE/podlinkcheck-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/podlinkcheck-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
 # The inc/my_pod2html is not executed
@@ -83,6 +83,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 15-alt1
+- automated CPAN update
+
 * Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 14-alt1
 - automated CPAN update
 
