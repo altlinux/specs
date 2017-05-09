@@ -1,5 +1,5 @@
 Name: latex2rtf
-Version: 2.3.11a
+Version: 2.3.15
 Release: alt1
 
 Summary: Convert a LaTeX file to an RTF file
@@ -12,6 +12,7 @@ Url: http://sourceforge.net/projects/latex2rtf/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar
+Patch: latex2rtf-cfg-ukrainian.patch
 
 %description
 This package contains the latex2rtf command converts a LaTeX file 
@@ -25,6 +26,7 @@ information is translated to RTF.
 
 %prep
 %setup
+%patch -p2
 
 %build
 %make_build DESTDIR=%prefix
@@ -33,6 +35,9 @@ make -C doc latex2rtf.html
 %install
 make install DESTDIR=%buildroot%prefix
 
+# hack for 2.3.15
+chmod 755 %buildroot%_bindir/latex2png
+
 %files
 %doc HACKING README
 %_bindir/*
@@ -40,6 +45,10 @@ make install DESTDIR=%buildroot%prefix
 %_man1dir/*
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.15-alt1
+- NMU: new version 2.3.15
+- added latex2rtf-cfg-ukrainian.patch
+
 * Fri Aug 05 2016 Vitaly Lipatov <lav@altlinux.ru> 2.3.11a-alt1
 - new version 2.3.11a (with rpmrb script)
 
