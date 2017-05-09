@@ -2,7 +2,7 @@
 %define dist Mojolicious-Plugin-Authentication
 
 Name: perl-%dist
-Version: 1.29
+Version: 1.31
 Release: alt1
 Summary: A plugin to make authentication a bit easier
 
@@ -11,14 +11,14 @@ License: Perl
 Url: %CPAN %dist
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/M/MA/MADCAT/Mojolicious-Plugin-Authentication-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/J/JJ/JJATRIA/%{dist}-%{version}.tar.gz
 BuildRequires: perl-Module-Build perl-Mojolicious
 
 %description
 %summary
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -28,10 +28,13 @@ BuildRequires: perl-Module-Build perl-Mojolicious
 rm -f %buildroot/%perl_vendor_privlib/Mojolicious/Plugin/README.pod
 
 %files
-%doc README*
+%doc README* Changes
 %perl_vendor_privlib/Mojolicious/Plugin/*.pm
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1
+- automated CPAN update
+
 * Thu Oct 29 2015 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1
 - automated CPAN update
 
