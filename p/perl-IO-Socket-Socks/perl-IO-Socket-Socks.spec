@@ -2,7 +2,7 @@
 %define dist IO-Socket-Socks
 
 Name: perl-%dist
-Version: 0.73
+Version: 0.74
 Release: alt1
 
 Summary: This module seeks to provide a full implementation of the SOCKS protocol
@@ -10,7 +10,7 @@ License: %perl_license
 Group: Development/Perl
 
 Url: %CPAN %dist
-Source: http://www.cpan.org/authors/id/O/OL/OLEG/IO-Socket-Socks-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/O/OL/OLEG/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,7 +24,7 @@ This module seeks to provide a full implementation of the SOCKS protocol
 while behaving like a regular socket as much as possible.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,10 +33,13 @@ while behaving like a regular socket as much as possible.
 %perl_vendor_install
 
 %files
-%doc README Changes
+%doc README Changes examples
 %perl_vendor_privlib/*
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.74-alt1
+- automated CPAN update
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.73-alt1
 - automated CPAN update
 
