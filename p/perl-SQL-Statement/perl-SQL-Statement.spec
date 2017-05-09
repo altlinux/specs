@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist SQL-Statement
 Name: perl-%dist
-Version: 1.410
+Version: 1.412
 Release: alt1
 
 Summary: SQL parsing and processing engine
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/SQL-Statement/
-Source: http://www.cpan.org/authors/id/R/RE/REHSACK/SQL-Statement-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RE/REHSACK/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -64,7 +64,7 @@ functions, implicit and explicit joins, complex nested search conditions,
 and other features.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %ifdef __buildreqs
 # don't check for conflicts under buildreq
@@ -79,10 +79,13 @@ export SQL_STATEMENT_WARN_UPDATE=sure
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README GPL-1 README.md
 %perl_vendor_privlib/SQL
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.412-alt1
+- automated CPAN update
+
 * Wed Apr 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.410-alt1
 - automated CPAN update
 
