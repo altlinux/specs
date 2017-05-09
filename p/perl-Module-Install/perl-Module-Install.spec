@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-Install
 Name: perl-%dist
-Version: 1.17
+Version: 1.18
 Release: alt1
 
 Summary: Standalone, extensible Perl module installer
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/Module-Install-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -27,7 +27,7 @@ http://www.tpj.com/issues/ provides a gentle introduction to how this
 module works.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -48,6 +48,9 @@ EOF
 /etc/buildreqs/files/ignore.d/%name
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
+- automated CPAN update
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1
 - automated CPAN update
 
