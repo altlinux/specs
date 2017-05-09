@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Class-C3
 Name: perl-%dist
-Version: 0.32
+Version: 0.33
 Release: alt1
 
 Summary: A pragma to use the C3 method resolution order algortihm
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/H/HA/HAARG/Class-C3-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ order from depth-first left-to-right (a.k.a - pre-order) to the
 more sophisticated C3 method resolution order.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +35,9 @@ more sophisticated C3 method resolution order.
 %perl_vendor_privlib/Class
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
 - automated CPAN update
 
