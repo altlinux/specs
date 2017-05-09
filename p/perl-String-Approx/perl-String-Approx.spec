@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist String-Approx
 Name: perl-%dist
-Version: 3.27
-Release: alt1.1.1.1
+Version: 3.28
+Release: alt1
 
 Summary: Perl extension for approximate matching (fuzzy matching)
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/J/JH/JHI/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-devel
@@ -22,7 +23,7 @@ NOTE: String::Approx suits the task of string matching, not string
 comparison, and it works for strings, not for text.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,11 +32,14 @@ comparison, and it works for strings, not for text.
 %perl_vendor_install
 
 %files
-%doc ChangeLog PROBLEMS README README.apse
+%doc ChangeLog PROBLEMS README README.apse Artistic COPYRIGHT COPYRIGHT.agrep LGPL
 %perl_vendor_archlib/String/Approx.pm
 %perl_vendor_autolib/String/Approx
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.28-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 3.27-alt1.1.1.1
 - rebuild with new perl 5.24.1
 
