@@ -4,19 +4,18 @@ BuildRequires: libgmp-devel
 BuildRequires: perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Math/BigInt.pm) perl(Math/GMP.pm) perl(overload.pm) perl(subs.pm)
 #BuildRequires: perl(Math/GMPf.pm) perl(Math/GMPz.pm) perl(Math/MPFR.pm)
 # END SourceDeps(oneline)
-%define module_version 0.42
 %define module_name Math-GMPq
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.42
-Release: alt1.1
+Version: 0.45
+Release: alt1
 Summary: perl interface to the GMP library's rational (mpq) functions..
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/S/SI/SISYPHUS/Math-GMPq-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SI/SISYPHUS/%{module_name}-%{version}.tar.gz
 
 %description
 A bigrational module utilising the Gnu MP (GMP) library..
@@ -34,7 +33,7 @@ A bigrational module utilising the Gnu MP (GMP) library..
 
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -48,6 +47,9 @@ A bigrational module utilising the Gnu MP (GMP) library..
 %perl_vendor_autolib/*
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.45-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.42-alt1.1
 - rebuild with new perl 5.24.1
 
