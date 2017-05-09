@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Sub-Identify
 Name: perl-%dist
-Version: 0.13
+Version: 0.14
 Release: alt1
 
 Summary: Retrieve names of code references
@@ -33,6 +33,9 @@ For this, it uses perl's introspection mechanism, provided by the B module.
 %perl_vendor_autolib/Sub
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated CPAN update
+
 * Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - automated CPAN update
 
