@@ -5,13 +5,13 @@ BuildRequires: perl(Config.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define fedora 20
 Name:           perl-Unicode-LineBreak
-Version:        2016.003
-Release:        alt1.1
+Version:        2017.004
+Release:        alt1
 Summary:        UAX #14 Unicode Line Breaking Algorithm
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Unicode-LineBreak/
-Source:        http://www.cpan.org/authors/id/N/NE/NEZUMI/Unicode-LineBreak-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/N/NE/NEZUMI/Unicode-LineBreak-%{version}.tar.gz
 # libthai is not available (yet) on EL5 and earlier.
 %if 0%{?rhel} > 5 || 0%{?fedora}
 BuildRequires:  libthai-devel
@@ -89,6 +89,9 @@ make test
 %{perl_vendor_archlib}/POD2
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 2017.004-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2016.003-alt1.1
 - rebuild with new perl 5.24.1
 
