@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -5,17 +6,13 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-Pg
-Version:        0.16012
-Release:        alt1_3
+Version:        0.16013
+Release:        alt1
 Summary:        Parse and format PostgreSQL dates and times
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/DateTime-Format-Pg/
-Source0:        http://search.cpan.org/CPAN/authors/id/D/DM/DMAKI/DateTime-Format-Pg-%{version}.tar.gz
-# Support durations with fractional seconds again, bug #1377428,
-# <https://github.com/lestrrat/DateTime-Format-Pg/issues/12>, in upstream
-# after 0.16012
-Patch0:         DateTime-Format-Pg-0.16012-Fix-parse_duration-handling.patch
+Source0:        http://www.cpan.org/authors/id/D/DM/DMAKI/DateTime-Format-Pg-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
@@ -48,7 +45,6 @@ it in a format accepted by PostgreSQL.
 
 %prep
 %setup -q -n DateTime-Format-Pg-%{version}
-%patch0 -p1
 
 %build
 perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
@@ -62,11 +58,14 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 ./Build test
 
 %files
-%doc LICENSE
+%doc LICENSE README.md
 %doc Changes
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.16013-alt1
+- automated CPAN update
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.16012-alt1_3
 - update to new release by fcimport
 
