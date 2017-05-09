@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 # network is disabled :(
 %def_disable test
 %define module Mail-DKIM
 
 Name: perl-%module
-Version: 0.40
-Release: alt2
+Version: 0.41
+Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -13,7 +14,7 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://www.cpan.org/authors/id/J/JA/JASLONG/Mail-DKIM-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MB/MBRADSHAW/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -25,7 +26,7 @@ This module implements the various components of the DKIM message-signing and
 verifying standard for Internet mail.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,11 +35,14 @@ verifying standard for Internet mail.
 %perl_vendor_install
 
 %files
-%doc sample_mime_lite.pl
+%doc sample_mime_lite.pl ChangeLog Changes README.md doc
 %perl_vendor_privlib/Mail
 %exclude %perl_vendor_privlib/Mail/sample*
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1
+- automated CPAN update
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.40-alt2
 - NMU: fixed build
 
