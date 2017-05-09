@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-GD
-Version: 2.56
-Release: alt1.1.1
+Version: 2.66
+Release: alt1
 Epoch: 1
 
 Summary: Perl interface to the GD graphics library
@@ -9,15 +9,15 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN GD
-Source: http://www.cpan.org/authors/id/L/LD/LDS/GD-%{version}.tar.gz
-Patch: GD-2.56-GD.t-fonts.patch
+Source0: http://www.cpan.org/authors/id/R/RU/RURBAN/GD-%{version}.tar.gz
+Patch: GD-2.66-GD.t-fonts.patch
 
 Conflicts: perl-GD1
 Provides: perl-GD2 = %version
 Obsoletes: perl-GD2 < %version
 
 # Automatically added by buildreq on Sun Oct 09 2011
-BuildRequires: libgd2-devel perl-Math-Complex perl-devel perl-podlators perl(Module/Build.pm)
+BuildRequires: libgd2-devel perl-Math-Complex perl-devel perl-podlators perl(Module/Build.pm) perl(ExtUtils/PkgConfig.pm)
 
 %description
 This is a autoloadable interface module for GD, a popular library for creating
@@ -25,7 +25,7 @@ and manipulating PNG files. With this library you can create PNG images on the
 fly or modify existing files.
 
 %prep
-%setup -n GD-%version
+%setup -q -n GD-%{version}
 %patch -p1
 
 # do not override default CCFLAGS
@@ -37,21 +37,24 @@ sed -i- '/CCFLAGS/d' Makefile.PL
 %install
 %perl_vendor_install
 
-rm %buildroot%_bindir/README
-rm %buildroot%_bindir/bdf2gdfont.PLS
-rm %buildroot%_man1dir/bdf2gdfont.PLS.*
+#rm %buildroot%_bindir/bdf2gdfont.PLS
+#rm %buildroot%_man1dir/bdf2gdfont.PLS.*
 
 %files
-%doc README* demos bdf_scripts
+%doc README* demos bdf_scripts ChangeLog
 %_bindir/bdf2gdfont.pl
-%_bindir/bdftogd
-%_bindir/cvtbdf.pl
 %_man1dir/bdf2gdfont.*
+# for older libgd - not installed by default
+#%_bindir/bdftogd
+#%_bindir/cvtbdf.pl
 %perl_vendor_archlib/GD*
 %perl_vendor_autolib/GD
 #%perl_vendor_archlib/qd.pl
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.66-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.56-alt1.1.1
 - rebuild with new perl 5.24.1
 
