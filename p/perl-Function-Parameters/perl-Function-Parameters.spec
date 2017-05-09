@@ -6,7 +6,7 @@ BuildRequires: perl(Carp.pm) perl(Dir/Self.pm) perl(ExtUtils/MakeMaker.pm) perl(
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.000003
+Version: 2.000006
 Release: alt1
 Summary: subroutine definitions with parameter lists
 Group: Development/Perl
@@ -40,6 +40,9 @@ rm t/unicode*.t
 %perl_vendor_autolib/*
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.000006-alt1
+- automated CPAN update
+
 * Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.000003-alt1
 - automated CPAN update
 
