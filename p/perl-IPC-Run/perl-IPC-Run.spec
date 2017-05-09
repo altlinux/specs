@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module IPC-Run
 %def_disable test
 
 Name: perl-%module
-Version: 0.94
+Version: 0.95
 Release: alt1
 
 Summary: IPC-Run - system() and background procs w/ piping, redirs, ptys (Unix, Win32)
@@ -10,7 +11,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/T/TO/TODDR/IPC-Run-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TO/TODDR/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,7 +25,7 @@ be mixed. Likewise, functional and OO API styles are both supported and may be
 mixed.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,10 +34,14 @@ mixed.
 %perl_vendor_install
 
 %files
+%doc README LICENSE Changes TODO
 %perl_vendor_privlib/IPC/
 %exclude %perl_vendor_privlib/IPC/Run/Win*
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.95-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.94-alt1
 - automated CPAN update
 
