@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 %define module YAML-Syck
 
 Name: perl-%module
-Version: 1.29
-Release: alt1.1.1
+Version: 1.30
+Release: alt1
 
 Summary: Fast, lightweight YAML loader and dumper
 License: MIT
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://www.cpan.org/authors/id/T/TO/TODDR/YAML-Syck-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TO/TODDR/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011
 BuildRequires: perl-Devel-Leak perl-JSON perl-Pod-Escapes perl-devel
@@ -20,7 +21,7 @@ library. It exports the Dump and Load functions for converting Perl data
 structures to YAML strings, and the other way around.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -29,12 +30,15 @@ structures to YAML strings, and the other way around.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes
 %perl_vendor_archlib/JSON
 %perl_vendor_archlib/YAML
 %perl_vendor_autolib/YAML
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.30-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1.1.1
 - rebuild with new perl 5.24.1
 
