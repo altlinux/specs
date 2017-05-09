@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Glib
 Name: perl-%dist
-Version: 1.324
-Release: alt1.1
+Version: 1.325
+Release: alt1
 
 Summary: Perl module for the glib-2.x library
 License: LGPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/X/XA/XAOC/Glib-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/X/XA/XAOC/%{dist}-%{version}.tar.gz
 Patch: perl-Glib-1.224-alt-glib_version.patch
 
 # Automatically added by buildreq on Fri Oct 07 2011
@@ -41,7 +41,7 @@ This package contains GLib development files and documentation
 for developers (overview of internals and internal API reference).
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch -p1
 
 # disable build dependency on perl-podlators
@@ -54,7 +54,7 @@ sed -i- '/MAN3PODS/d' Makefile.PL
 %perl_vendor_install
 
 %files
-%doc	AUTHORS NEWS README
+%doc	AUTHORS NEWS README ChangeLog.pre-git copyright.pod
 	%perl_vendor_archlib/Glib.pm
 %dir	%perl_vendor_archlib/Glib
 %dir	%perl_vendor_archlib/Glib/Object
@@ -70,6 +70,9 @@ sed -i- '/MAN3PODS/d' Makefile.PL
 	%perl_vendor_archlib/Glib/Install/*
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.325-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.324-alt1.1
 - rebuild with new perl 5.24.1
 
