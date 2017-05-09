@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist File-HomeDir
 Name: perl-%dist
-Version: 1.00
+Version: 1.002
 Release: alt1
 
 Summary: Get the home directory for yourself or other users
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/A/AD/ADAMK/File-HomeDir-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RE/REHSACK/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +23,7 @@ and to solve these problems consistently across a wide variety of
 platforms.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,10 +32,13 @@ platforms.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README.md
 %perl_vendor_privlib/File
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.002-alt1
+- automated CPAN update
+
 * Tue Oct 23 2012 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
 - automated CPAN update
 
