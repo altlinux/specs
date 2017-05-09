@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist XML-SAX-Base
 Name: perl-%dist
-Version: 1.08
+Version: 1.09
 Release: alt1
 
 Summary: Base class for SAX Drivers and Filters
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/G/GR/GRANTM/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -23,7 +24,7 @@ This module is the base class for all SAX Exceptions, those defined in
 the spec as well as those that one may create for one's own SAX errors.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -39,5 +40,8 @@ rm %buildroot%perl_vendor_privlib/XML/SAX/BuildSAXBase.pl
 %perl_vendor_privlib/XML
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
+- automated CPAN update
+
 * Thu Oct 06 2011 Alexey Tourbin <at@altlinux.ru> 1.08-alt1
 - initial revision
