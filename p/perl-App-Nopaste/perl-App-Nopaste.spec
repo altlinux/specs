@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(parent.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-App-Nopaste
-Version:        1.008
+Version:        1.009
 Release:        alt1
 Summary:        Easy access to any pastebin
 License:        GPL+ or Artistic
@@ -102,6 +102,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.009-alt1
+- automated CPAN update
+
 * Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.008-alt1
 - automated CPAN update
 
