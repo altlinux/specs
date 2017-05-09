@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist BSD-Resource
 Name: perl-%dist
-Version: 1.2910
-Release: alt1.1
+Version: 1.2911
+Release: alt1
 
 Summary: BSD process resource limit and priority functions
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/J/JH/JHI/BSD-Resource-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/J/JH/JHI/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Test-Pod
@@ -19,7 +19,7 @@ A module providing an interface for testing and setting process
 limits and priorities.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,6 +33,9 @@ limits and priorities.
 %perl_vendor_autolib/BSD
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2911-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.2910-alt1.1
 - rebuild with new perl 5.24.1
 
