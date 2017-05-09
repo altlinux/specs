@@ -1,5 +1,5 @@
 Name: ostree
-Version: 2017.3
+Version: 2017.5
 Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
@@ -17,9 +17,9 @@ License: LGPLv2+ and GPLv2+ and BSD
 Group: Other
 Url: https://github.com/ostreedev/ostree
 
-# Source-url: https://github.com/ostreedev/ostree/archive/v%version.tar.gz
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# Source-url: https://github.com/ostreedev/ostree/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 # Source1-url: https://git.gnome.org/browse/libglnx/snapshot/libglnx-master.tar.xz
@@ -127,6 +127,9 @@ rm -rf %buildroot%_sysconfdir/grub.d/15_ostree
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue May 09 2017 Vitaly Lipatov <lav@altlinux.ru> 2017.5-alt1
+- new version 2017.5 (with rpmrb script)
+
 * Wed Mar 15 2017 Vitaly Lipatov <lav@altlinux.ru> 2017.3-alt1
 - new version 2017.3 (with rpmrb script)
 
