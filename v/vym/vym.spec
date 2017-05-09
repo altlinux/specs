@@ -1,21 +1,26 @@
 Name: vym
-Version: 2.2.4
+Version: 2.6.0
 Release: alt1
 
 Summary: QT based MindMap editor
-Url: http://sourceforge.net/projects/vym
+Url: http://www.insilmaril.de/vym/
+#Url: http://sourceforge.net/projects/vym
+#Url: https://sourceforge.net/p/vym/code/ci/master/tree/
 Packager: Alex Karpov <karpov@altlinux.ru>
 
-License: GPL
+License: %gpl2only
 Group: Office
 
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
-Provides: vym
+Source1: %name.desktop
 
-# Automatically added by buildreq on Thu Aug 25 2011
-# optimized out: fontconfig libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-xml libstdc++-devel
-BuildRequires: gcc-c++ glibc-devel-static phonon-devel
+BuildRequires(pre): rpm-build-licenses
+
+# Automatically added by buildreq on Mon May 08 2017
+# optimized out: gcc-c++ libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-xml libstdc++-devel python-base python-modules python3 python3-base qt5-base-devel
+BuildRequires: qt5-svg-devel qt5-tools
 
 %description
 VYM (View Your Mind) is a tool to generate and manipulate maps which show your
@@ -25,45 +30,50 @@ over complex contexts.
 
 %prep
 %setup -q
-subst 's,/doc/packages/vym,/doc/%name,g' %name.pro
-subst 's,= tex/vym.pdf,= doc/vym.pdf,g' %name.pro
+%patch0
 
+sed -e 's/QT4/QT5/g' -i CMakeLists.txt
 
 %build
-export QTDIR=%_qt4dir
-export PATH=$PATH:$QTDIR/bin
-qmake PREFIX=%prefix vym.pro -after DESTDIR=%buildroot
-%make_build
+%qmake_qt5 vym.pro PREFIX=%_prefix DATADIR=%_datadir
+%make_build PREFIX=%_prefix DATADIR=%_datadir
+
+pushd lang
+for i in *.ts; do
+    lconvert-qt5 $i -o `basename $i .ts`.qm
+done
+popd
 
 %install
-%make_install INSTALL_ROOT=%buildroot install
-# remove unneeded scripts
-#rm %buildroot%_datadir/%name/scripts/update-bookmarks
-#rm %buildroot%_datadir/%name/scripts/release-mac
+%installqt5 PREFIX=%_prefix DATADIR=%_datadir
+install -D -m0644 doc/%name.1.gz %buildroot%_man1dir/%name.1.gz
+install -D -m0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
-# menu
-mkdir -p %buildroot%_desktopdir
-cat << EOF > %buildroot%_desktopdir/%name.desktop
-[Desktop Entry]
-Name=VYM
-GenericName=MindMap Editor
-Comment=View Your Mind
-Exec=vym
-Terminal=false
-Categories=Application;Office;
-Type=Application
-Icon=%_datadir/%name/icons/%name.png
-EOF
+mkdir %buildroot%_datadir/%name/lang/$i
+pushd lang
+for i in *.qm; do
+    install -D -m0664 $i %buildroot%_datadir/%name/lang/$i
+done
+popd
 
 
 %files
-%_defaultdocdir/%name 
+%doc README.md LICENSE.txt
+
 %_bindir/%name
+%_man1dir/%{name}*
+
 %_datadir/%name/*
 %exclude %_datadir/%name/scripts
+
 %_desktopdir/%name.desktop
 
+
 %changelog
+* Mon May 08 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.6.0-alt1
+- New version
+- Build with Qt5
+
 * Wed Jan 09 2013 Alex Karpov <karpov@altlinux.ru> 2.2.4-alt1
 - new version
 
