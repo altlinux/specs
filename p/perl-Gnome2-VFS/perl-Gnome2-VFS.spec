@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Gnome2-VFS
 
 Name: perl-%dist
-Version: 1.082
-Release: alt1.3
+Version: 1.083
+Release: alt1
 
 Summary: Gnome2-VFS Perl module
 License: LGPLv2.1+
 Group: Development/Perl
 
 Url: %CPAN %dist
-Source: http://www.cpan.org/authors/id/X/XA/XAOC/Gnome2-VFS-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/X/XA/XAOC/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: gnome-vfs-devel perl-ExtUtils-Depends perl-ExtUtils-PkgConfig perl-Glib-devel perl-podlators
@@ -35,7 +36,7 @@ This package contains Gnome2-VFS development files and documentation
 for developers (overview of internals and internal API reference).
 
 %prep
-%setup -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -44,7 +45,7 @@ for developers (overview of internals and internal API reference).
 %perl_vendor_install
 
 %files
-%doc	NEWS README examples
+%doc	NEWS README examples ChangeLog.pre-git copyright.pod
 %dir	%perl_vendor_archlib/Gnome2
 	%perl_vendor_archlib/Gnome2/VFS.pm
 	%perl_vendor_autolib/Gnome2/VFS
@@ -63,6 +64,9 @@ for developers (overview of internals and internal API reference).
 %doc	%perl_vendor_archlib/Gnome2/VFS/Resolve
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.083-alt1
+- automated CPAN update
+
 * Sun Feb 12 2017 Igor Vlasenko <viy@altlinux.ru> 1.082-alt1.3
 - enabled test
 
