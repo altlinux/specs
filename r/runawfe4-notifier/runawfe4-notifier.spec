@@ -1,6 +1,6 @@
 Name: runawfe4-notifier
-Version: 4.2.0
-Release: alt4
+Version: 4.3.0
+Release: alt1
 
 Summary: Runawfe notifier client
 
@@ -17,12 +17,10 @@ Source2: runawfe4-notifier.png
 
 Packager: Danil Mikhailov <danil@altlinux.org>
 
-#PreReq:
 Requires: java libwebkitgtk2
-#runawfe4-server #remove server from deps for clients
 
 BuildPreReq: rpm-build-compat
-#BuildRequires: maven
+BuildRequires: java-devel maven maven-local xmvn maven-clean-plugin maven-install-plugin maven-deploy-plugin maven-site-plugin maven-dependency-plugin maven-release-plugin
 #BuildRequires: 
 #BuildArch: noarch
 
@@ -39,17 +37,10 @@ web interface with tasklist, form player, graphical process designer, bots and m
 %setup
 
 %build
-#Add in build requires runawfe4-server
-#Run runawfe4-server
-#Build and install wfe-web-client
-#mvn clean install
-#Build notifier
-#mvn clean compile assembly:single
+export MAVEN_OPTS="-Dmaven.repo.local=$(pwd)/.m2/repository/"
 
-#or pre puild web-client mvn clean package
-#copy and install
-#mvn install:install-file \
-# -Dfile=wfe-webservice-client-4.0.6.jar -DartifactId=wfe-webservice-client -DgroupId=ru.runa.wfe -Dversion=4.0.6 -Dpackaging=jar -DgeneratePom=true
+xmvn install:install-file -Dfile=wfe-webservice-client.jar -DartifactId=wfe-webservice-client -DgroupId=ru.runa.wfe -Dversion=4.3.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
+xmvn package
 
 %install
 mkdir -p %buildroot/%runadir/
@@ -78,11 +69,7 @@ ln -s /var/log/runawfe4-notifier/rtn.log %buildroot/%runadir/rtn.log
 %endif
 
 #gpd copy path for multi arch
-%ifarch x86_64
-%define rtn_path_arch %{rtn_path}_x86_64.jar
-%else
 %define rtn_path_arch %{rtn_path}.jar
-%endif
 
 #in notifier/ dir
 cp %rtn_path_arch %buildroot/%runadir/rtn.jar
@@ -106,6 +93,9 @@ cp target/classes/*.wav %buildroot/%runadir/
 %attr(766,root,root) /var/log/runawfe4-notifier/rtn.log
 %attr(755,root,root) %_bindir/runawfe4-notifier
 %changelog
+* Tue May 09 2017 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt1
+- Updated to 3.4.0 code
+
 * Fri Jul 03 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt4
 - Update to trunk code@6444 stable 4.2.0
 
