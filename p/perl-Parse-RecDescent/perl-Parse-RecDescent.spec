@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Parse-RecDescent
 Name: perl-%dist
-Version: 1.967014
+Version: 1.967015
 Release: alt1
 
 Summary: Perl module for generating recursive-descent parsers
@@ -35,6 +35,9 @@ parsers from simple yacc(1)-like grammar specifications.
 %perl_vendor_privlib/Parse
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.967015-alt1
+- automated CPAN update
+
 * Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.967014-alt1
 - automated CPAN update
 
