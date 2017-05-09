@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist ExtUtils-PkgConfig
 Name: perl-%dist
-Version: 1.15
+Version: 1.16
 Release: alt1
 
 Summary: Perl interface to the pkg-config(1) command-line utility
@@ -8,7 +9,7 @@ License: LGPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/X/XA/XAOC/ExtUtils-PkgConfig-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/X/XA/XAOC/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -23,7 +24,7 @@ utility, for use in the Makefile.PLs used to build Perl modules which wrap
 the libraries about which pkg-config knows.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -36,6 +37,9 @@ the libraries about which pkg-config knows.
 %perl_vendor_privlib/ExtUtils
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1
+- automated CPAN update
+
 * Mon Sep 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
 - automated CPAN update
 
