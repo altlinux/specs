@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Params-Validate
 Name: perl-%dist
-Version: 1.26
-Release: alt1.1
+Version: 1.28
+Release: alt1
 
 Summary: Validate method/function parameters
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/Params-Validate-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DR/DROLSKY/%{dist}-%{version}.tar.gz
 
 BuildRequires: perl-Attribute-Handlers perl-Module-Build perl-Module-Implementation perl-Test-Fatal perl(Test/Requires.pm)
 
@@ -20,7 +20,7 @@ level, it is capable of validating the required parameters were given
 and that no unspecified additional parameters were passed in.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build --xs
@@ -32,12 +32,15 @@ and that no unspecified additional parameters were passed in.
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_archlib -MParams::Validate'
 
 %files
-%doc Changes README.md
+%doc Changes README.md CONTRIBUTING.md
 %perl_vendor_archlib/Params
 %perl_vendor_autolib/Params
 #%perl_vendor_archlib/Attribute
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1.1
 - rebuild with new perl 5.24.1
 
