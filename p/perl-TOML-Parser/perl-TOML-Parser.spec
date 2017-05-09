@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 0.08
 %define module_name TOML-Parser
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Benchmark.pm) perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Encode.pm) perl(Exporter.pm) perl(JSON.pm) perl(MIME/Base64.pm) perl(Module/Build.pm) perl(Path/Tiny.pm) perl(Storable.pm) perl(TOML.pm) perl(Test/More.pm) perl(Types/Serialiser.pm) perl(constant.pm) perl(parent.pm) perl(Module/Build/Tiny.pm) perl(Test/Deep.pm) perl(Test/Deep/Fuzzy.pm)
@@ -7,21 +6,21 @@ BuildRequires: perl(Benchmark.pm) perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.08
+Version: 0.10
 Release: alt1
 Summary: simple toml parser
 Group: Development/Perl
 License: perl
 URL: https://github.com/karupanerura/TOML-Parser
 
-Source: http://www.cpan.org/authors/id/K/KA/KARUPA/TOML-Parser-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/K/KA/KARUPA/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 From summary: %summary
 
 %prep
-%setup -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +33,9 @@ From summary: %summary
 %perl_vendor_privlib/T*
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 
