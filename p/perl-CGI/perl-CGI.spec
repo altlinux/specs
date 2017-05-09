@@ -2,10 +2,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(Config.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.pm) perl(Encode/KR.pm) perl(Encode/TW.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(HTML/Entities.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Test/NoWarnings.pm) perl(Test/Warn.pm) perl(Text/ParseWords.pm) perl(overload.pm) perl(parent.pm) perl(strict.pm) perl(utf8.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
-%define module_version 4.35
 %define module_name CGI
 Name: perl-CGI
-Version: 4.35
+Version: 4.36
 Release: alt1
 
 Summary: Simple CGI class for Perl
@@ -13,7 +12,7 @@ License: perl
 Group: Development/Perl
 
 URL: https://metacpan.org/module/CGI
-Source: http://www.cpan.org/authors/id/L/LE/LEEJO/CGI-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/L/LE/LEEJO/%{module_name}-%{version}.tar.gz
 Patch0:  CGI-4.15-Make-Test-Deep-and-Test-NoWarnings-tests-optional.patch
 
 BuildArch: noarch
@@ -48,7 +47,7 @@ CGI.pm performs very well in in a vanilla CGI.pm environment and also comes
 with built-in support for mod_perl and mod_perl2 as well as FastCGI.
 
 %prep
-%setup -q -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 #patch0 -p1
 iconv -f iso8859-1 -t utf-8 < Changes > Changes.1
 mv Changes.1 Changes
@@ -67,6 +66,9 @@ chmod -c -x examples/*
 %perl_vendor_privlib/Fh.pm
 
 %changelog
+* Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 4.36-alt1
+- automated CPAN update
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 4.35-alt1
 - automated CPAN update
 
