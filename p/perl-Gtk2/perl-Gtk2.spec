@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Gtk2
 Name: perl-%dist
-Version: 1.2499
-Release: alt1.1
+Version: 1.24992
+Release: alt1
 
 Summary: Perl bindings to the gtk+-2.x library
 License: LGPL
 Group: Development/Perl
 
 URL: http://gtk2-perl.sourceforge.net/
-Source: http://www.cpan.org/authors/id/X/XA/XAOC/Gtk2-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/X/XA/XAOC/%{dist}-%{version}.tar.gz
 
 Patch0: perl-Gtk2-1.224-alt-gtk_version.patch
 Patch1: perl-Gtk2-1.224-alt-gtk_init.patch
@@ -52,7 +52,7 @@ This package contains Gtk2 development files and documentation
 for developers (overview of internals and internal API reference).
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p2
@@ -72,13 +72,11 @@ for developers (overview of internals and internal API reference).
 
 %define pkgdocdir %_docdir/%name-%version
 mkdir -p %buildroot%pkgdocdir
-cp -av AUTHORS NEWS README gtk-demo examples %buildroot%pkgdocdir/
+cp -av gtk-demo examples %buildroot%pkgdocdir/
 
 %files
-%dir	%pkgdocdir
-	%pkgdocdir/AUTHORS
-	%pkgdocdir/NEWS
-	%pkgdocdir/README
+## roboflag: noautoupdate doc
+%doc NEWS AUTHORS README examples
 	%perl_vendor_archlib/Gtk2.pm
 %dir	%perl_vendor_archlib/Gtk2
 %dir	%perl_vendor_archlib/Gtk2/Gdk
@@ -91,9 +89,8 @@ cp -av AUTHORS NEWS README gtk-demo examples %buildroot%pkgdocdir/
 	%perl_vendor_autolib/Gtk2/Gtk2.so
 
 %files devel
-%dir	%pkgdocdir
-	%pkgdocdir/gtk-demo
-	%pkgdocdir/examples
+## roboflag: noautoupdate doc
+%doc examples gtk-demo
 %dir	%perl_vendor_archlib/Gtk2
 	%perl_vendor_archlib/Gtk2/CodeGen.pm
 	%perl_vendor_archlib/Gtk2/TestHelper.pm
@@ -117,6 +114,9 @@ cp -av AUTHORS NEWS README gtk-demo examples %buildroot%pkgdocdir/
 %doc	%perl_vendor_archlib/Gtk2/Pango/Cairo/*.pod
 
 %changelog
+* Wed May 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.24992-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.2499-alt1.1
 - rebuild with new perl 5.24.1
 
