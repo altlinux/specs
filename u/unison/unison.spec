@@ -1,17 +1,19 @@
 Name: unison
-Version: 2.45.28
-Release: alt1
+Version: 2.48.4
+Release: alt1%ubt
 
 Summary: File-synchronization tool
 
 Group: Networking/File transfer
 License: GPLv2+
 Url: http://www.cis.upenn.edu/~bcpierce/unison
+# https://github.com/bcpierce00/unison
 Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Patch0: %name-%version-alt.patch
 
-BuildRequires: ocaml >= 3.09.1
+BuildRequires: ocaml >= 4.04
 BuildRequires: tetex-latex tetex-dvips ghostscript-utils
+BuildRequires(pre):rpm-build-ubt
 
 %description
 Unison is a file-synchronization tool. It allows two replicas of a
@@ -37,6 +39,9 @@ cp -f src/unison $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
+* Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 2.48.4-alt1%ubt
+- new version
+
 * Tue Jun 25 2013 Anton Farygin <rider@altlinux.ru> 2.45.28-alt1
 - new version
 
