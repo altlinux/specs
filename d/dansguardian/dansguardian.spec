@@ -1,20 +1,20 @@
 Name: dansguardian
-Version: 2.10.1.1
-Release: alt3.1.qa1
+Version: 2.12.0.3
+Release: alt1%ubt
 
 Summary: Content filter
 Summary(ru_RU.UTF-8): Фильтр WEB-содержимого
 License: GPLv2
 Url: http://www.dansguardian.org
 Group: System/Servers
-Packager: Avramenko Andrew <liks at altlinux.ru>
 
 Source0: %name-%version.tar
-Patch1: %name-%version-%release.patch
+Patch1: %name-%version-alt.patch
 Patch2: %name-lists-2.9.8.1.patch
 Patch3: %name-2.10.1.1-alt-gcc4.6.patch
 
 BuildRequires: gcc-c++ libpcre-devel zlib-devel
+BuildRequires(pre): rpm-build-ubt
 
 %description
 DansGuardian is a web content filtering proxy that uses Squid to do all the fetching.
@@ -35,7 +35,6 @@ DansGuardian - фильтр WEB содержимого, который испо�
 %patch3 -p2
 
 %build
-%autoreconf
 %configure  --enable-clamd \
 	    --enable-ntlm \
 	    --with-logdir=/var/log/%name \
@@ -79,6 +78,9 @@ rm -rf %buildroot/usr/share/doc/%name
 %attr(2775,root,%name) /var/run/%name
 
 %changelog
+* Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 2.12.0.3-alt1%ubt
+- new version
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 2.10.1.1-alt3.1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
