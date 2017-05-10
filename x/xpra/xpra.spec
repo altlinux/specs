@@ -6,7 +6,7 @@
 
 Name: xpra
 Version: 0.17.6
-Release: alt1
+Release: alt2
 
 Summary: X Persistent Remote Applications
 
@@ -92,6 +92,9 @@ If connecting from a remote machine, you would use something like (or you can al
 mkdir -p %buildroot/%_tmpfilesdir/
 mv -f %buildroot/usr/lib/tmpfiles.d/xpra.conf %buildroot/%_tmpfilesdir/
 
+%pre
+%_sbindir/groupadd -r -f xpra &>/dev/null ||:
+
 %files
 %dir %_sysconfdir/%name/
 %config(noreplace) %_sysconfdir/%name/*
@@ -109,6 +112,9 @@ mv -f %buildroot/usr/lib/tmpfiles.d/xpra.conf %buildroot/%_tmpfilesdir/
 %_cupslibdir/backend/xpraforwarder
 
 %changelog
+* Wed May 10 2017 Vitaly Lipatov <lav@altlinux.ru> 0.17.6-alt2
+- add xpra group creating (ALT bug 33459)
+
 * Sun Dec 25 2016 Vitaly Lipatov <lav@altlinux.ru> 0.17.6-alt1
 - new version 0.17.6 (with rpmrb script)
 
