@@ -1,5 +1,5 @@
 Name: perl-Specio
-Version: 0.35
+Version: 0.37
 Release: alt1
 
 Summary: Type constraints and coercions for Perl
@@ -31,6 +31,9 @@ BuildRequires: perl(List/MoreUtils.pm) perl(Try/Tiny.pm) perl(Moose/Role.pm) per
 %doc Changes LICENSE README* TODO*
 
 %changelog
+* Wed May 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
+- automated CPAN update
+
 * Fri Feb 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
 - automated CPAN update
 
