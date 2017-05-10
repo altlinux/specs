@@ -1,7 +1,7 @@
 
 Name: phpipam
 Version: 1.30.000
-Release: alt0.5
+Release: alt0.6
 Summary: PHP-based virtual machine control tool
 Group: Networking/WWW
 License: GPLv3
@@ -14,7 +14,7 @@ Source11: %name-apache.conf
 # Patch: %name-%version-%release.patch
 
 BuildArch: noarch
-Requires(Pre): webserver-common
+PreReq: webserver-common
 
 BuildPreReq: rpm-macros-webserver-common rpm-macros-apache2
 
@@ -122,6 +122,9 @@ rm -rf %buildroot%webserver_webappsdir/%name/functions/PHPMailer/test
 %files php7
 
 %changelog
+* Wed May 10 2017 Alexey Shabalin <shaba@altlinux.ru> 1.30.000-alt0.6
+- git snapshot of master branch  66d0e19ebea1fd6e670a75a5cfb9897f7010d6e6
+
 * Wed Apr 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.30.000-alt0.5
 - set permitions for upload dirs
 
