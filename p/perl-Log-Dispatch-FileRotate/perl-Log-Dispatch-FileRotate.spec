@@ -2,7 +2,7 @@
 %define dist Log-Dispatch-FileRotate
 
 Name: perl-%dist
-Version: 1.25
+Version: 1.26
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -38,6 +38,9 @@ different constraints.
 %perl_vendor_privlib/Log/
 
 %changelog
+* Wed May 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1
+- automated CPAN update
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.25-alt1
 - automated CPAN update
 
