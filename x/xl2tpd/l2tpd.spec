@@ -1,19 +1,19 @@
 Name: xl2tpd
-Version: 1.3.6
-Release: alt1
+Version: 1.3.9
+Release: alt1%ubt
 
 Summary: Layer 2 Tunnelling Protocol Daemon (RFC 2661)
 License: GPL
 Group: Accessibility
 
-# http://git.openswan.org/cgi-bin/gitweb.cgi?p=xl2tpd
-# git://git.openswan.org/xl2tpd
 Url: http://www.xelerance.com/software/xl2tpd/
+# https://github.com/xelerance/xl2tpd
 Source0: %name-%version.tar
 
 Provides: l2tpd = %version-%release
 Obsoletes: l2tpd =< 0.69-alt2
 BuildRequires: libpcap-devel
+BuildRequires(pre):rpm-build-ubt
 
 %description
 xl2tpd is an implementation of the Layer 2 Tunnelling Protocol (RFC 2661).
@@ -76,6 +76,9 @@ fi
 %config(noreplace) %attr(0640,root,root) %_sysconfdir/%name/l2tp-secrets
 
 %changelog
+* Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 1.3.9-alt1%ubt
+- new version
+
 * Fri Jan 30 2015 Anton Farygin <rider@altlinux.ru> 1.3.6-alt1
 - new version
 
