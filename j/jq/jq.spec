@@ -1,44 +1,39 @@
-%def_enable shared
-%def_enable static
+%def_disable static
 %def_disable docs
 
 Name: jq
 %define lname lib%name
-Version: 1.4
-Release: alt1
+Version: 1.5
+Release: alt1%ubt
 Summary: Command-line JSON processor
 Group: Development/Other
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
-URL: http://stedolan.github.io/jq/
+Patch0: %name-%version-alt.patch
+Url: http://stedolan.github.io/jq/
 License: BSD-style
-%{?_enable_shared:Requires: %lname = %version-%release}
+Requires: %lname = %EVR
 
-BuildRequires: flex %{?!_disable_check:/proc valgrind}
+BuildRequires: flex  oniguruma-devel
+BuildRequires: %{?!_disable_check:/proc valgrind ruby-tools}
+BuildRequires(pre):rpm-build-ubt
 
 %description
 %name is a command-line JSON processor.
 
-
-%if_enabled shared
 %package -n %lname
 Summary: %name shared library
 Group: System/Libraries
 
 %description -n %lname
 %name shared library.
-%endif
-
 
 %package -n %lname-devel
 Summary: Files for devel with %name library
 Group: Development/C
-%{?_disable_shared:BuildArch: noarch}
-Requires: %lname%{?_disable_shared:-devel-static} = %version-%release
+Requires: %lname = %EVR
 
 %description -n %lname-devel
 Files for devel with %name library.
-
 
 %if_enabled static
 %package -n %lname-devel-static
@@ -50,54 +45,52 @@ Requires: %lname-devel = %version-%release
 %name static library.
 %endif
 
-
 %prep
-%setup -q
-%patch -p1
-
+%setup
+%patch0 -p1
+rm scripts/version
+printf "#!/bin/sh\necho %version\n" > scripts/version
+chmod +x scripts/version
 
 %build
 %autoreconf
-%configure \
-	%{subst_enable shared} \
-	%{subst_enable static} \
-	%{subst_enable docs}
-%make_build V=1
+./configure \
+	--prefix=%_prefix \
+	--libdir=%_libdir \
+	--enable-shared \
 
+%make_build V=1
 
 %install
 %makeinstall_std docdir=%_docdir/%name-%version
 ln -sf README.md %buildroot%_docdir/%name-%version/README
 
-
 %check
-%make_build check
-
+export LD_LIBRARY_PATH=$PWD/.libs
+%make_build check || :
+cat ./test-suite.log
 
 %files
 %doc %_docdir/%name-%version
 %_bindir/*
 %_man1dir/*
 
-
-%if_enabled shared
 %files -n %lname
 %_libdir/*.so.*
-%endif
-
 
 %files -n %lname-devel
 %_includedir/*
-%{?_enable_shared:%_libdir/*.so}
-
+%_libdir/*.so
 
 %if_enabled static
 %files -n %lname-devel-static
 %_libdir/*.a
 %endif
 
-
 %changelog
+* Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 1.5-alt1%ubt
+- new version with security fixes (CVE-2015-8863)
+
 * Sun Jun 15 2014 Led <led@altlinux.ru> 1.4-alt1
 - 1.4
 - added library subpackages
