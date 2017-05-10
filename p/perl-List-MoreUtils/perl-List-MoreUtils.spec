@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist List-MoreUtils
 Name: perl-%dist
-Version: 0.416
+Version: 0.419
 Release: alt1
 
 Summary: Provide the stuff missing in List::Util
@@ -10,6 +10,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/R/RE/REHSACK/%{dist}-%{version}.tar.gz
+BuildArch: noarch
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-ExtUtils-CBuilder perl(Exporter/Tiny.pm)
@@ -29,10 +30,14 @@ on lists which is not going to go into List::Util.
 
 %files
 %doc Changes README* GPL-1
-%perl_vendor_archlib/List
-%perl_vendor_autolib/List
+%perl_vendor_privlib/List
+#%perl_vendor_autolib/List
 
 %changelog
+* Wed May 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.419-alt1
+- automated CPAN update
+- changed to noarch
+
 * Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.416-alt1
 - automated CPAN update
 
