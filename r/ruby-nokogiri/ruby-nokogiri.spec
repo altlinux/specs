@@ -1,7 +1,7 @@
 %define Name Nokogiri
 %define bname nokogiri
 Name: ruby-%bname
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 Summary: Ruby libraries for %Name (HTML, XML, SAX, and Reader parser)
 Group: Development/Ruby
@@ -99,6 +99,9 @@ ls -d %buildroot%ruby_ri_sitedir/* | grep -v '/%Name$' | xargs rm -rf
 
 
 %changelog
+* Wed May 10 2017 Andrey Cherepanov <cas@altlinux.org> 1.7.2-alt1
+- New version
+
 * Mon Mar 20 2017 Andrey Cherepanov <cas@altlinux.org> 1.7.1-alt1
 - Nrw version
 
