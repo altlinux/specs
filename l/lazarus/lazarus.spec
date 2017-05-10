@@ -3,7 +3,7 @@
 
 Name:       lazarus
 Version:    1.6.4
-Release:    alt2
+Release:    alt3
 Epoch:      1
 
 Summary:    Lazarus Component Library and IDE
@@ -193,6 +193,9 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 %dir %_datadir/fpcsrc/packages/fcl-base
 
 %changelog
+* Wed May 10 2017 Andrey Cherepanov <cas@altlinux.org> 1:1.6.4-alt3
+- Add Russian localization for desktop file
+
 * Mon Mar 06 2017 Andrey Cherepanov <cas@altlinux.org> 1:1.6.4-alt2
 - Revert regression made in 1.6.4 in customform.inc (ALT #33204)
 
