@@ -1,7 +1,7 @@
 %define         pgb_runtimedir   /var/run/pgbouncer
 Name:		pgbouncer
 Version:	1.7.2
-Release:        alt7
+Release:        alt8
 Summary:	Lightweight connection pooler for PostgreSQL
 License: 	BSD
 Group: 		Databases
@@ -39,9 +39,9 @@ touch lib/mk/install-sh
 
 %files
 %_bindir/pgbouncer
-%_sysconfdir/pgbouncer.ini
+%config(noreplace) %_sysconfdir/pgbouncer.ini
 %attr(750,root,postgres) %dir %_sysconfdir/pgbouncer
-%attr(750,root,postgres)      %_sysconfdir/pgbouncer/users.txt
+%attr(750,root,postgres) %config(noreplace) %_sysconfdir/pgbouncer/users.txt
 %_initdir/pgbouncer
 
 %attr(1770,root,postgres) %dir /var/log/pgbouncer
@@ -73,6 +73,9 @@ This is meant to enforce "autocommit" mode on client, mostly targeted
 for PL/Proxy.
 
 %changelog
+* Wed May 10 2017 Ivan Zakharyaschev <imz@altlinux.org> 1.7.2-alt8
+- %%config(noreplace) modifiers used where needed
+
 * Fri Apr 21 2017 Ivan Zakharyaschev <imz@altlinux.org> 1.7.2-alt7
 - Our own dir (/etc/pgbouncer/) is used to hold the additional conf
   (like in other distros). Less mess in /etc/
