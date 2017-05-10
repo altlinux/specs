@@ -5,7 +5,7 @@
 
 Name:		gambas3
 Version:	3.9.2
-Release:	alt1
+Release:	alt2
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -1562,6 +1562,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/control/gb.form.terminal/
 
 %changelog
+* Wed May 10 2017 Andrey Cherepanov <cas@altlinux.org> 3.9.2-alt2
+- Add Russian GenericName in desktop file
+
 * Fri Dec 30 2016 Andrey Cherepanov <cas@altlinux.org> 3.9.2-alt1
 - New version (http://gambaswiki.org/wiki/doc/release/3.9.2)
 
