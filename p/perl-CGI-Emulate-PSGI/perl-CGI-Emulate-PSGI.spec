@@ -1,5 +1,5 @@
 Name: perl-CGI-Emulate-PSGI
-Version: 0.22
+Version: 0.23
 Release: alt1
 
 Summary: CGI::Emulate::PSGI - PSGI adapter for CGI
@@ -37,6 +37,9 @@ CGI::Parse::PSGI module
 %doc Changes README
 
 %changelog
+* Wed May 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- automated CPAN update
+
 * Fri Jul 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - automated CPAN update
 
