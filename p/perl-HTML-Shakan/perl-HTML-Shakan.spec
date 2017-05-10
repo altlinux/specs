@@ -1,5 +1,5 @@
 Name: perl-HTML-Shakan
-Version: 2.02
+Version: 2.10
 Release: alt1
 
 Summary: HTML::Shakan - form html generator/validator
@@ -11,7 +11,7 @@ Url: %CPAN HTML-Shakan
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl-devel perl-Mouse perl-FormValidator-Lite perl-Test-Requires perl-List-MoreUtils perl-parent perl-Any-Moose perl-CGI perl-HTML-Scrubber perl-Lingua-JA-Regular-Unicode perl-DateTime perl-DateTime-Format-HTTP perl-Module-Build perl(HTML/Escape.pm) perl(Hash/MultiValue.pm)
+BuildRequires: perl-devel perl-Mouse perl-FormValidator-Lite perl-Test-Requires perl-List-MoreUtils perl-parent perl-Any-Moose perl-CGI perl-HTML-Scrubber perl-Lingua-JA-Regular-Unicode perl-DateTime perl-DateTime-Format-HTTP perl-Module-Build-Tiny perl(HTML/Escape.pm) perl(Hash/MultiValue.pm)
 
 %description
 %summary
@@ -26,12 +26,16 @@ BuildRequires: perl-devel perl-Mouse perl-FormValidator-Lite perl-Test-Requires 
 %perl_vendor_install
 
 %files
+%doc README.md Changes TODO LICENSE
 %perl_vendor_privlib/HTML/Shakan*
 # under construction
 %exclude %perl_vendor_privlib/HTML/Shakan/Widgets/jQueryUI.pm
 %doc TODO Changes
 
 %changelog
+* Wed May 10 2017 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1
+- automated CPAN update
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 2.02-alt1
 - automated CPAN update
 
