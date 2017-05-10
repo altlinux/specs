@@ -2,14 +2,13 @@
 %define zmgid_final _webserver
 
 Name: zoneminder
-Version: 1.30.0
-Release: alt1
+Version: 1.30.4
+Release: alt1%ubt
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPL
 Url: http://www.zoneminder.com
-Source: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Source: %name-%version-alt.tar
 Source2: zoneminder.conf
 Source4: README.alt
 Source5: README-nginx-ru.alt
@@ -20,6 +19,7 @@ Conflicts: zm <= 1.22.3
 Requires: libgnutls libgnutls-openssl zlib perl-Class-Date perl-DateTime perl-Date-Manip perl-libwww ffmpeg perl-X10 perl-Sys-Mmap perl-DBD-mysql perl-Storable MySQL-client php5-mysql su perl-Sys-Mmap webserver
 AutoReq: noperl
 BuildRequires: bzlib-devel ffmpeg gcc-c++ libavdevice-devel libavformat-devel libgcrypt-devel libgnutls-openssl-devel libjpeg-devel libmysqlclient-devel libpcre-devel libswscale-devel netpbm perl-Archive-Tar perl-Archive-Zip perl-DBD-mysql perl-Date-Manip perl-MIME-Lite perl-MIME-tools perl-Module-Load perl-Sys-Mmap perl-X10 perl-devel perl-libwww zlib-devel libpolkit-devel cmake libv4l-devel rpm-macros-cmake libvlc-devel libcurl-devel
+BuildRequires(pre): rpm-build-ubt
 
 %description
 ZoneMinder is a set of applications which is intended to provide a complete
@@ -58,8 +58,7 @@ BuildArch: noarch
 Zoneminder configuration file and requires for nginx
 
 %prep
-%setup
-#patch0 -p1
+%setup -n %name-%version-alt
 cp %SOURCE4 README.alt
 cp %SOURCE5 README-nginx-ru.alt
 
@@ -156,6 +155,12 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 1.30.4-alt1%ubt
+- new version
+
+* Mon Jan 16 2017 Anton Farygin <rider@altlinux.ru> 1.30.0-alt1%ubt
+- added ubt tag to facilitate the backporting process
+
 * Mon Jan 16 2017 Anton Farygin <rider@altlinux.ru> 1.30.0-alt1
 - new version
 
