@@ -1,20 +1,20 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(base.pm) perl-podlators
+BuildRequires: perl(base.pm) perl-podlators perl(Mojo/Base.pm)
 # END SourceDeps(oneline)
 %define upstream_name    WebService-MusicBrainz
 %define upstream_version 0.94
 
 Name:       perl-%{upstream_name}
-Version:    0.94
+Version:    1.0.1
 Release:    alt1
 
 Summary:    No summary found
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/B/BF/BFAIST/WebService-MusicBrainz-%{version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/B/BF/BFAIST/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(Class/Accessor.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
@@ -31,7 +31,7 @@ This module will act as a factory using static methods to return specific
 web service objects;
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -54,6 +54,9 @@ web service objects;
 
 
 %changelog
+* Wed May 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.94-alt1
 - automated CPAN update
 
