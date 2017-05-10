@@ -7,7 +7,7 @@ Summary(ru.UTF-8): Программирование для детей на ос�
 
 Group: Education
 Version: 1.4.0.7
-Release: alt2
+Release: alt3
 
 License: Artistic License
 Url: http://scratch.mit.edu/
@@ -181,6 +181,9 @@ mv Projects %buildroot%installdir/
 %installdir/Projects
 
 %changelog
+* Wed May 10 2017 Andrey Cherepanov <cas@altlinux.org> 1.4.0.7-alt3
+- Add Russian GenericName in desktop file
+
 * Thu Sep 05 2013 Andrey Cherepanov <cas@altlinux.org> 1.4.0.7-alt2
 - require new squeak-vm because scratch-plugins was moved to squeak-vm
 - add provides and obsoletes of old version scratch-plugins
