@@ -1,6 +1,6 @@
 Name: libevhtp-seafile
 Version: 1.2.9
-Release: alt3
+Release: alt4
 
 Summary: Libevhtp was created as a replacement API for Libevent's current HTTP API (seafile compatible)
 License: BSD
@@ -18,7 +18,7 @@ Source: %name-%version.tar
 BuildRequires: ccmake gcc-c++ glibc-devel libevent-devel libssl-devel
 
 # need for build with external liboniguruma
-BuildRequires: libOniGuruma-devel >= 5.9.2
+BuildRequires: oniguruma-devel >= 6.2.0
 
 %description
 Libevhtp was created as a replacement API for Libevent's
@@ -64,6 +64,9 @@ mv %buildroot%_includedir/*.h %buildroot%_includedir/%name/
 %_includedir/%name/*.h
 
 %changelog
+* Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 1.2.9-alt4
+- rebuild with new oniguruma
+
 * Tue Aug 30 2016 Vitaly Lipatov <lav@altlinux.ru> 1.2.9-alt3
 - more clean build
 
