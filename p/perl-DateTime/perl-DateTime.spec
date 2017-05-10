@@ -2,20 +2,21 @@
 %def_without bootstrap
 %define dist DateTime
 Name: perl-%dist
-Version: 1.28
-Release: alt1.1.1
+Version: 1.42
+Release: alt1
 
 Summary: DateTime base objects
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DR/DROLSKY/%{dist}-%{version}.tar.gz
+Patch: DateTime-1.42-alt-syntax-check.patch 
 
 # break dependency loop
 Requires: perl-DateTime-TimeZone
 
-BuildRequires: perl-DateTime-Locale perl-Math-Round perl-Module-Build perl-Test-Exception perl-Test-Warn perl-Test-Fatal perl(Test/Warnings.pm)
+BuildRequires: perl-DateTime-Locale perl-Math-Round perl-Module-Build perl-Test-Exception perl-Test-Warn perl-Test-Fatal perl(Test/Warnings.pm) perl(CPAN/Meta/Check.pm)
 
 %if_with bootstrap
 %define _without_test 1
@@ -34,7 +35,8 @@ may help answer many "how do I do X?" questions.  The FAQ is at
 http://datetime.perl.org/faq.html.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
+%patch -p0
 
 %build
 %perl_vendor_build
@@ -43,11 +45,14 @@ http://datetime.perl.org/faq.html.
 %perl_vendor_install
 
 %files
-%doc Changes README.md
+%doc Changes README.md CONTRIBUTING.md CREDITS leaptab.txt
 %perl_vendor_archlib/DateTime*
 %perl_vendor_autolib/DateTime*
 
 %changelog
+* Wed May 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.42-alt1
+- automated CPAN update
+
 * Sun Feb 12 2017 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1.1.1
 - unbootstrap after rebuild with new perl 5.24.1
 
