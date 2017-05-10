@@ -1,5 +1,5 @@
 Name: perl-Moo
-Version: 2.003000
+Version: 2.003002
 Release: alt1
 
 Summary: Moo - Minimalist Object Orientation (with Moose compatiblity)
@@ -28,13 +28,17 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
+%doc Changes README*
 %perl_vendor_privlib/Moo*
 %perl_vendor_privlib/Method/Generate/*
 #perl_vendor_privlib/Method/Inliner.pm
 %perl_vendor_privlib/oo.pm
-%doc Changes README.md
+%doc Changes
 
 %changelog
+* Wed May 10 2017 Igor Vlasenko <viy@altlinux.ru> 2.003002-alt1
+- automated CPAN update
+
 * Thu Jan 05 2017 Igor Vlasenko <viy@altlinux.ru> 2.003000-alt1
 - automated CPAN update
 
