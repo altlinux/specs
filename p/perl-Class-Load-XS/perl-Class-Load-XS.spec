@@ -1,6 +1,6 @@
 Name: perl-Class-Load-XS
-Version: 0.09
-Release: alt1.1.1
+Version: 0.10
+Release: alt1
 
 Summary: XS implementation of parts of Class::Load
 Group: Development/Perl
@@ -9,7 +9,7 @@ License: artistic_2
 Url: %CPAN Class-Load-XS
 Source: %name-%version.tar
 
-BuildRequires: perl(Test/Requires.pm) perl(Class/Load.pm) perl(Test/Fatal.pm) perl-devel perl(Module/Implementation.pm) perl(Module/Build.pm)
+BuildRequires: perl(Test/Requires.pm) perl(Class/Load.pm) perl(Test/Fatal.pm) perl-devel perl(Module/Implementation.pm) perl(Module/Build.pm) perl(Test/Needs.pm)
 
 %description
 %summary
@@ -29,6 +29,9 @@ BuildRequires: perl(Test/Requires.pm) perl(Class/Load.pm) perl(Test/Fatal.pm) pe
 %doc Changes LICENSE README
 
 %changelog
+* Wed May 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1.1.1
 - rebuild with new perl 5.24.1
 
