@@ -1,5 +1,5 @@
 Name:		sway
-Version:	0.12.2
+Version:	0.13.0
 Release:	alt1
 
 Summary:	i3wm drop-in replacement for Wayland
@@ -8,9 +8,8 @@ Url:		http://swaywm.org/
 License:	MIT
 Group:		Graphical desktop/Other
 
-Packager:	Vladimir D. Seleznev <vseleznv@altlinux.org>
-
-Source:		%name-%version.tar.gz
+#		packaged from git release tag
+Source:		%name-%version.tar
 Source1:	README.ALT
 Source2:	pam
 
@@ -50,7 +49,7 @@ cp %SOURCE2 .
 	-DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
 	-DPCRE_INCLUDE_DIR=%_includedir/pcre \
 	#
-%cmake_build
+%cmake_build VERBOSE=1
 
 %install
 %cmakeinstall_std
@@ -85,6 +84,9 @@ install -pm2640 -D pam %buildroot%_sysconfdir/pam.d/swaylock
 %_datadir/%name/*
 
 %changelog
+* Wed May 10 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.13.0-alt1
+- 0.13.0
+
 * Sat Apr 08 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.12.2-alt1
 - 0.12.2
 - set CAP_SYS_TTY_CONFIG to sway binary
