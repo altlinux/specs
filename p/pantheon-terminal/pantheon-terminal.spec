@@ -2,16 +2,16 @@
 %define xdg_name org.pantheon.terminal
 
 Name: pantheon-terminal
-Version: %ver_major.0.4
+Version: %ver_major.1
 Release: alt1
 
 Summary: Pantheon Terminal
 Group: Terminals
 License: GPLv3
 
-Url: https://launchpad.net/pantheon-terminal
+Url: https://github.com/elementary/terminal
 
-Source: https://launchpad.net/%name/%{ver_major}.x/%version/+download/%name-%version.tar.xz
+Source: %url/archive/%version/terminal-%version.tar.gz
 
 BuildRequires: cmake gcc-c++ intltool libappstream-glib-devel libnotify-devel
 BuildRequires: libvte3-devel libgranite-devel libpixman-devel
@@ -35,7 +35,7 @@ This package provides Vala language bindings for the %name.
 
 
 %prep
-%setup
+%setup -n terminal-%version
 
 %build
 %cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
@@ -49,7 +49,7 @@ This package provides Vala language bindings for the %name.
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS HACKING INSTALL README
+%doc AUTHORS README*
 %_bindir/*
 %_datadir/%name/
 %_desktopdir/%xdg_name.desktop
@@ -63,6 +63,9 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Wed May 10 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
+- 0.4.1
+
 * Sat Mar 25 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.0.4-alt1
 - 0.4.0.4
 

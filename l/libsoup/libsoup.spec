@@ -10,7 +10,7 @@
 %def_with gssapi
 
 Name: libsoup
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -226,6 +226,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Mon May 08 2017 Yuri N. Sedunov <aris@altlinux.org> 2.58.1-alt1
+- 2.58.1
+
 * Thu Apr 20 2017 Yuri N. Sedunov <aris@altlinux.org> 2.58.0-alt1
 - 2.58.0
 

@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name aisleriot
 %define ver_major 3.22
@@ -7,7 +7,7 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.2
-Release: alt0.1
+Release: alt1
 
 Summary: A collection of card games
 Group: Games/Cards
@@ -72,12 +72,15 @@ fi
 %_iconsdir/hicolor/*/apps/*.svg
 %_sysconfdir/gconf/schemas/%_name.schemas
 %_datadir/glib-2.0/schemas/org.gnome.Patience.WindowState.gschema.xml
-%_datadir/appdata/sol.appdata.xml
+%_datadir/metainfo/sol.appdata.xml
 %_man6dir/sol.*
 
 %exclude %_libdir/valgrind/aisleriot.supp
 
 %changelog
+* Wed May 10 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
+- 3.22.2
+
 * Tue Apr 18 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt0.1
 - updated to 3.22.1-9-gb30db7a
 - build with guile22

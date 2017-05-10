@@ -1,10 +1,10 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name xf86-input-libinput
 %define _xconfdir %_sysconfdir/X11/xorg.conf.d
 
 Name: xorg-drv-libinput
-Version: 0.25.0
+Version: 0.25.1
 Release: alt1
 
 Summary: Xorg libinput input driver
@@ -71,6 +71,9 @@ Xorg libinput input driver development files.
 %_includedir/xorg/libinput-properties.h
 
 %changelog
+* Wed May 10 2017 Yuri N. Sedunov <aris@altlinux.org> 0.25.1-alt1
+- updated to 0.25.1-1-g8772a59
+
 * Fri Mar 10 2017 Yuri N. Sedunov <aris@altlinux.org> 0.25.0-alt1
 - 0.25.0
 
