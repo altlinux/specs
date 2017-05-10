@@ -7,6 +7,8 @@
 %def_with common
 %def_with client
 %def_with bench
+%def_with mariabackup
+%def_without libarchive
 %def_enable build_test
 %def_disable static
 %define mysqld_user mysql
@@ -26,8 +28,8 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.1.22
-Release: alt1
+Version: 10.1.23
+Release: alt1%ubt
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -72,7 +74,7 @@ Source73: mariadbcheck@.service
 Source74: mariadbcheck.xinetd
 
 
-Patch0: %name-%version-%release.patch
+Patch0: %name-%version.patch
 
 # ALTLinux
 Patch1: mariadb-10.0.21-alt-chroot.patch
@@ -88,8 +90,10 @@ Patch32: mariadb-basedir.patch
 Patch33: mariadb-covscan-signexpr.patch
 Patch34: mariadb-covscan-stroverflow.patch
 
-Requires: %name-server = %EVR %name-client = %EVR
+Requires: %name-server = %EVR
+Requires: %name-client = %EVR
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI libpam-devel libevent-devel cmake ctest bison doxygen groff-base groff-ps dos2unix xsltproc
 BuildRequires: libaio-devel libwrap-devel boost-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
 BuildRequires: liblz4-devel zlib-devel bzlib-devel liblzma-devel liblzo2-devel libsnappy-devel
@@ -99,6 +103,7 @@ BuildRequires: chrooted control
 BuildRequires: libxml2-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libkrb5-devel
+%{?_with_libarchive: BuildRequires: libarchive-devel}
 
 Provides: %name-galera = %EVR
 Obsoletes: %name-galera < %EVR
@@ -219,6 +224,15 @@ Conflicts: MySQL-bench
 
 %description bench
 This package contains MariaDB benchmark scripts and data.
+
+%package backup
+Summary: Backup tool for InnoDB and XtraDB
+Group: Databases
+
+%description backup
+MariaDB Backup is an open source tool provided by MariaDB for performing
+physical online backups of InnoDB, Aria and MyISAM tables.
+For InnoDB, hot online backups are possible.
 
 %package -n libmysqlclient%soname
 Summary: Shared libraries
@@ -342,6 +356,8 @@ export LDFLAGS
 	-DWITHOUT_EXAMPLE_STORAGE_ENGINE=ON \
 	-DWITH_FAST_MUTEXES=ON \
 	-DWITHOUT_DAEMON_EXAMPLE=ON \
+	%{?_without_mariabackup:-DWITH_MARIABACKUP=OFF} \
+	%{?_without_libarchive:-DWITH_LIBARCHIVE=OFF} \
 	-DCOMPILATION_COMMENT="(%distribution)" \
 	-DMYSQL_SERVER_SUFFIX="-%release"
 
@@ -695,6 +711,12 @@ fi
 %_datadir/sql-bench
 %endif
 
+%if_with mariabackup
+%files backup
+%_bindir/mariabackup
+%_bindir/mbstream
+%endif
+
 %if_with libs
 %files -n libmysqlclient%soname
 %_libdir/*.so.*
@@ -732,6 +754,18 @@ fi
 %endif
 
 %changelog
+* Fri May 05 2017 Alexey Shabalin <shaba@altlinux.ru> 10.1.23-alt1%ubt
+- 10.1.23
+- add maria-backup package
+- Fixes for the following security vulnerabilities:
+  + CVE-2017-3302
+  + CVE-2017-3313
+  + CVE-2017-3308
+  + CVE-2017-3309
+  + CVE-2017-3453
+  + CVE-2017-3456
+  + CVE-2017-3464
+
 * Wed Mar 15 2017 Alexey Shabalin <shaba@altlinux.ru> 10.1.22-alt1
 - 10.1.22
 

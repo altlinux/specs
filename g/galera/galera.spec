@@ -1,6 +1,6 @@
 Name: galera
-Version: 25.3.19
-Release: alt1
+Version: 25.3.20
+Release: alt1%ubt
 Summary: Synchronous multi-master wsrep provider (replication engine)
 Group: System/Servers
 License: GPLv2
@@ -12,9 +12,10 @@ Source2: garbd.service
 Source3: garbd.tmpfiles
 Source4: garbd.conf
 
+BuildPreReq: rpm-build-ubt
 BuildRequires: gcc-c++ scons
-BuildRequires: boost-devel boost-program_options-devel
-BuildRequires: libcheck-devel libssl-devel
+BuildRequires: boost-devel boost-program_options-devel boost-asio-devel
+BuildRequires: libcheck-devel libssl-devel zlib-devel
 
 %description
 Galera is a fast synchronous multi-master wsrep provider (replication engine)
@@ -93,6 +94,9 @@ install -D -m 644 scripts/packages/README-MySQL %buildroot%_docdir/galera/README
 %doc %_docdir/galera/README-MySQL
 
 %changelog
+* Fri May 05 2017 Alexey Shabalin <shaba@altlinux.ru> 25.3.20-alt1%ubt
+- 25.3.20
+
 * Mon Dec 26 2016 Alexey Shabalin <shaba@altlinux.ru> 25.3.19-alt1
 - 25.3.19
 
