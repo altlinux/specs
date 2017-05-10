@@ -2,7 +2,7 @@
 
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 2.80.0
+Version: 2.84.0
 Release: alt1
 
 Summary: A e-book library management application
@@ -128,6 +128,10 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %_datadir/appdata/*.appdata.xml
 
 %changelog
+* Wed May 10 2017 Vitaly Lipatov <lav@altlinux.ru> 2.84.0-alt1
+- new version 2.84.0 (with rpmrb script)
+- build with podofo 0.9.5
+
 * Thu Mar 02 2017 Vitaly Lipatov <lav@altlinux.ru> 2.80.0-alt1
 - new version 2.80.0 (with rpmrb script)
 
