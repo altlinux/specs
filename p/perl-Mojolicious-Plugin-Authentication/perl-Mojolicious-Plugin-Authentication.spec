@@ -2,7 +2,7 @@
 %define dist Mojolicious-Plugin-Authentication
 
 Name: perl-%dist
-Version: 1.31
+Version: 1.32
 Release: alt1
 Summary: A plugin to make authentication a bit easier
 
@@ -32,6 +32,9 @@ rm -f %buildroot/%perl_vendor_privlib/Mojolicious/Plugin/README.pod
 %perl_vendor_privlib/Mojolicious/Plugin/*.pm
 
 %changelog
+* Wed May 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1
+- automated CPAN update
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1
 - automated CPAN update
 
