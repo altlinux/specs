@@ -1,6 +1,6 @@
 Name: scribus
-Version: 1.4.5
-Release: alt3
+Version: 1.4.6
+Release: alt1
 Epoch: 1
 
 Summary: DeskTop Publishing application written in Qt
@@ -168,6 +168,10 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Wed May 10 2017 Vitaly Lipatov <lav@altlinux.ru> 1:1.4.6-alt1
+- new version 1.4.6 (with rpmrb script)
+- rebuild with new libpodofo 0.9.5
+
 * Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1:1.4.5-alt3
 - rebuild with new libpodofo 0.9.4
 

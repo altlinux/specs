@@ -2,7 +2,7 @@
 
 Name: gimagereader
 Version: 3.2.1
-Release: alt1
+Release: alt2
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -180,6 +180,9 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Wed May 10 2017 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt2
+- rebuild with podofo 0.9.5
+
 * Sat Feb 18 2017 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt1
 - new version 3.2.1 (with rpmrb script)
 
