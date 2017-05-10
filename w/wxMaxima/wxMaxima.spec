@@ -1,6 +1,6 @@
 Name: wxMaxima
 Version: 16.04.2
-Release: alt1
+Release: alt2
 
 Summary: GUI for the computer algebra system Maxima
 License: GPL
@@ -12,7 +12,6 @@ Source0: wxmaxima-%version.tar.gz
 Source1: %name-16.xpm
 Source2: %name-32.xpm
 Source3: %name-48.xpm
-Source4: %name.desktop
 Source5: wxmaxima-ru.po.bz2
 
 Requires: maxima libwxGTK3.1
@@ -54,8 +53,6 @@ bzcat %SOURCE5 >locales/ru.po
 install -D -m644 %SOURCE1 %buildroot%_miconsdir/%name.xpm
 install -D -m644 %SOURCE2 %buildroot%_niconsdir/%name.xpm
 install -D -m644 %SOURCE3 %buildroot%_liconsdir/%name.xpm
-# menu 
-install -D -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 %makeinstall
 %find_lang %name
 
@@ -77,10 +74,14 @@ install -D -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 %{_datadir}/mime/packages/x-wxmaxima-batch.xml
 %{_docdir}/wxmaxima/
 %{_mandir}/man1/wxmaxima.1*
-
+%{_infodir}/wxmaxima.info*
 
 
 %changelog
+* Wed May 10 2017 Andrey Cherepanov <cas@altlinux.org> 16.04.2-alt2
+- Use upstream desktop file
+- Package info file
+
 * Sun Jul 03 2016 Ilya Mashkin <oddity@altlinux.ru> 16.04.2-alt1
 - 16.04.2
 
