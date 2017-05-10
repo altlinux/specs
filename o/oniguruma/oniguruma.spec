@@ -1,6 +1,6 @@
 Name: oniguruma
 Version: 6.2.0
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Regular expressions library
 
 Group: System/Libraries
@@ -13,6 +13,7 @@ Source0: %name-%version.tar
 Patch0: oniguruma-5.9.2-onig_new-returns-NULL-reg.patch
 BuildRequires(pre):rpm-build-ubt
 
+
 %description
 Oniguruma is a regular expressions library.
 The characteristics of this library is that different character encoding
@@ -23,6 +24,8 @@ for every regular expression object can be specified.
 Summary: Development files for %name
 Group: Development/Other
 Requires: %name = %version-%release
+Provides: libOniGuruma-devel = %EVR
+Obsoletes: libOniGuruma-devel
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -76,5 +79,8 @@ find $RPM_BUILD_ROOT -name '*.la' \
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 6.2.0-alt2%ubt
+- added obsolete for libOniGuruma-devel to devel package
+
 * Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 6.2.0-alt1%ubt
 - first build for ALT, based on RH spec
