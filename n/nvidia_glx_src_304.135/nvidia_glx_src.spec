@@ -14,7 +14,7 @@
 %define nv_version 304
 %define nv_release 135
 %define nv_minor %nil
-%define pkg_rel alt133
+%define pkg_rel alt134
 %def_enable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -83,7 +83,8 @@ Source100: nvidia_create_xinf
 Patch1: disable-mtrr.patch
 Patch2: buildfix_kernel_3.14.patch
 Patch3: ftbfs.patch
-Patch4: buildfix_kernel_4.10.patch
+Patch4: buildfix_kernel_4.9.patch
+Patch5: buildfix_kernel_4.10.patch
 
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 ExclusiveArch: %ix86 x86_64
@@ -162,6 +163,7 @@ pushd kernel/
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 rm -rf precompiled
 popd
 
@@ -283,6 +285,9 @@ fi
 %endif
 
 %changelog
+* Thu May 11 2017 Sergey V Turchin <zerg@altlinux.org> 304.135-alt134
+- add fix against 4.9 kernel
+
 * Tue Mar 14 2017 Sergey V Turchin <zerg@altlinux.org> 304.135-alt133
 - fix kernel module FTBFS
 
