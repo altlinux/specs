@@ -5,7 +5,7 @@
 Name: nginx
 Summary: Fast HTTP server
 Version: 1.12
-Release: alt2%ubt
+Release: alt3%ubt
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel
@@ -25,6 +25,7 @@ BuildRequires: libxml2-devel libxslt-devel
 %def_with xslt
 %def_without debug
 %def_with geoip
+%def_with spnego
 %def_enable cache_purge
 %def_enable rtmp
 Url: http://sysoev.ru/nginx
@@ -84,6 +85,15 @@ Requires(pre): %name
 %description perl
 Perl for nginx
 %endif
+
+%package spnego
+Summary: Simple and Protected GSSAPI Negotiation Mechanism for nginx
+Group: System/Servers
+%def_with spnego
+Requires(pre): %name
+
+%description spnego
+Simple and Protected GSSAPI Negotiation Mechanism for nginx
 
 %package xslt
 Summary: XSLT module for nginx
@@ -156,6 +166,9 @@ CFLAGS="%optflags $CPU" ./configure \
 %endif
 %if_with geoip
 	--with-http_geoip_module=dynamic \
+%endif
+%if_with spnego
+	--add-dynamic-module=spnego-http-auth-nginx-module \
 %endif
 	--with-http_sub_module \
 	--with-http_dav_module \
@@ -313,11 +326,18 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %_libdir/%name/ngx_http_perl_module.so
 %endif
 
+%files spnego
+%config(noreplace) %nginx_etc/modules-available.d/http_auth_spnego.conf
+%_libdir/%name/ngx_http_auth_spnego_module.so
+
 %files xslt
 %config(noreplace) %nginx_etc/modules-available.d/http_xslt_filter.conf
 %_libdir/%name/ngx_http_xslt_filter_module.so
 
 %changelog
+* Thu May 11 2017 Evgeny Bolshedvorsky <jenya@altlinux.org> 1.12-alt3%ubt
+- added spnego dynamic module
+
 * Sun Apr 16 2017 Denis Smirnov <mithraen@altlinux.ru> 1.12-alt2%ubt
 - update rtmp module
 
