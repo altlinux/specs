@@ -1,5 +1,5 @@
 Name:		cpuminer-multi
-Version:	1.3.1
+Version:	1.3.2
 Release:	alt1
 Summary:	Multi-threaded CPU miner
 Url:		https://github.com/tpruvot/cpuminer-multi
@@ -41,5 +41,8 @@ install -Dp -m 644 {%SOURCE1,%SOURCE2,%SOURCE3,%SOURCE4} ./examples/
 %_man1dir/*
 
 %changelog
+* Thu May 11 2017 Motsyo Gennadi <drool@altlinux.ru> 1.3.2-alt1
+- 1.3.2
+
 * Tue Apr 11 2017 Motsyo Gennadi <drool@altlinux.ru> 1.3.1-alt1
 - initial build for ALT Linux
