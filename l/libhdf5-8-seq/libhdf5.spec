@@ -9,7 +9,7 @@
 %define priority 30
 Name: lib%oname-%sover-seq
 Version: 1.8.13
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: Hierarchical Data Format 5 library
 
@@ -164,7 +164,7 @@ includedir=%hdfdir/include
 Name: %oname
 Description: Hierarchical Data Format 5 library
 Version: %version
-Libs: -lhdf5hl_fortran -lhdf5_hl_cpp -lhdf5_hl -lhdf_fortran -lhdf_cpp -lhdf -lgfortran -lstdc++ -lz
+Libs: -lhdf5hl_fortran -lhdf5_hl_cpp -lhdf5_hl -lhdf5_fortran -lhdf5_cpp -lhdf5 -lgfortran -lstdc++ -lz
 Cflags: -I%hdfdir/include
 EOF
 
@@ -194,6 +194,9 @@ echo "%_pkgconfigdir/%oname.pc %_pkgconfigdir/%oname-seq.pc %priority" >> \
 %_docdir/hdf5_examples
 
 %changelog
+* Thu May 11 2017 Andrey Cherepanov <cas@altlinux.org> 1.8.13-alt1.qa2
+- Fix library names in pkgconfig file
+
 * Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.8.13-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
