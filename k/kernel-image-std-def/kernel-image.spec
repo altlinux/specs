@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	4.9
-%define kernel_sublevel .24
+%define kernel_sublevel .27
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -548,6 +548,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed May 10 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.9.27-alt1
+- v4.9.27
+
 * Sat Apr 22 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.9.24-alt1
 - v4.9.24
 
