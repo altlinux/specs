@@ -1,6 +1,6 @@
 Name: libnss-role
 Version: 0.2.8
-Release: alt2
+Release: alt3
 
 Summary: NSS API library and admin tools for roles and privilegies
 
@@ -71,6 +71,9 @@ update_chrooted all
 %_includedir/role
 
 %changelog
+* Tue May 02 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.8-alt3
+- Fixed fgetc and realloc usage.
+
 * Thu Jul 11 2013 Pavel Shilovsky <piastry@altlinux.org> 0.2.8-alt2
 - Merge git.alt branch
 
