@@ -1,6 +1,6 @@
 Name: uim
 Version: 1.8.6
-Release: alt4.git89542ac
+Release: alt4.git89542ac.1
 
 Summary: useful input method metapackage
 
@@ -15,13 +15,9 @@ Source2: UimSystemConfiguration
 Source3: UIMFep
 Source4: UIMEl
 
-# Automatically added by buildreq on Sat Dec 10 2016
-# optimized out: at-spi2-atk fontconfig fontconfig-devel gcc-c++ glib-networking glib2-devel gnu-config libGL-devel libICE-devel libX11-devel libXext-devel libXft-devel libXrender-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libncurses-devel libpango-devel libqt3-settings libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-qt3support libqt4-sql libqt4-xml libqt5-core libqt5-gui libqt5-widgets libqt5-x11extras libstdc++-devel libtinfo-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server perl perl-Encode pkg-config python-base python-modules qt5-base-devel qt5-declarative-devel shared-mime-info xorg-kbproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: asciidoc intltool libanthy-devel libedit-devel libgcroots-devel libgtk+2-devel libgtk+3-devel libm17n-devel libnotify-devel libqt3-devel libqt4-webkit-devel librsvg-utils phonon-devel qt5-tools-devel qt5-wayland-devel qt5-x11extras-devel ruby ruby-stdlibs
-
-# BuildRequires: asciidoc-a2x
-# BuildRequires: ruby-tools ruby-stdlibs ruby-rip
-# BuildRequires: librsvg-utils
+# Automatically added by buildreq on Thu May 11 2017
+# optimized out: at-spi2-atk fontconfig fontconfig-devel gcc-c++ glib-networking glib2-devel gnu-config libGL-devel libICE-devel libX11-devel libXext-devel libXft-devel libXrender-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libm17n-gui libncurses-devel libpango-devel libqt3-settings libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-qt3support libqt4-sql libqt4-xml libqt5-core libqt5-gui libqt5-widgets libqt5-x11extras libstdc++-devel libtinfo-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server perl perl-Encode pkg-config python-base python-modules qt5-base-devel qt5-declarative-devel shared-mime-info xorg-kbproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: asciidoc intltool libanthy-devel libedit-devel libgcroots-devel libgtk+2-devel libgtk+3-devel libm17n-db libm17n-devel libnotify-devel libqt3-devel libqt4-webkit-devel librsvg-utils phonon-devel qt5-tools-devel qt5-wayland-devel qt5-x11extras-devel ruby ruby-stdlibs
 
 Requires: uim-fep   = %version-%release
 Requires: uim-gtk   = %version-%release
@@ -31,6 +27,7 @@ Requires: uim-qt5   = %version-%release
 Requires: uim-utils = %version-%release
 Requires: uim-xim   = %version-%release
 Requires: uim-m17nlib   = %version-%release
+Requires: libuim-plugin = %version-%release
 
 %define common_descr uim is a multilingual input method library and environment. \
 \
@@ -56,7 +53,6 @@ This package contains common files for the uim packages.
 %package -n libuim-devel
 Summary: Development and header files for universal input method library
 Group: Text tools
-Requires: libuim8 = %version-%release
 
 %description -n libuim-devel
 %common_descr
@@ -66,9 +62,7 @@ Development and header files for universal input method.
 %package -n libuim8
 Summary: universal input method library
 Group: Text tools
-Requires: libuim-custom2 = %version-%release
 Requires: libuim-data    = %version-%release
-Requires: libuim-scm0    = %version-%release
 Requires: uim-common     = %version-%release
 
 %description -n libuim8
@@ -88,7 +82,6 @@ This package contains universal input method uim-custom API library.
 %package -n libuim-data
 Summary: universal input method data files
 Group: Text tools
-Requires: libuim-plugin
 BuildArch: noarch
 
 %description -n libuim-data
@@ -117,8 +110,6 @@ This package contains universal input method API uim-scm library.
 %package emacs
 Summary: EMACS module for universal input method
 Group: Text tools
-Requires: libuim8 = %version-%release
-Requires: uim-utils = %version-%release
 
 %description emacs
 %common_descr
@@ -128,8 +119,6 @@ EMACS module for universal input method.
 %package fep
 Summary: fep module for universal input method
 Group: Text tools
-Requires: libuim8 = %version-%release
-Requires: uim-utils = %version-%release
 
 %description fep
 %common_descr
@@ -139,8 +128,6 @@ fep module for universal input method.
 %package gtk
 Summary: GTK+ 2.0 universal input method universal input method
 Group: Text tools
-Requires: libuim8 = %version-%release
-Requires: uim-utils = %version-%release
 
 %description gtk
 %common_descr
@@ -151,8 +138,6 @@ applications.
 %package gtk3
 Summary: GTK+3 module for universal input method
 Group: Text tools
-Requires: libuim8 = %version-%release
-Requires: uim-utils = %version-%release
 
 %description gtk3
 %common_descr
@@ -163,8 +148,6 @@ applications.
 %package m17nlib
 Summary: m17nlib plugin for universal input method
 Group: Text tools
-Requires: libuim8 = %version-%release
-Requires: uim-utils = %version-%release
 
 %description m17nlib
 %common_descr
@@ -174,8 +157,6 @@ m17nlib plugin for universal input method.
 %package qt
 Summary: Qt3 module for universal input method
 Group: Text tools
-Requires: libuim8 = %version-%release
-Requires: uim-utils = %version-%release
 
 %description qt
 %common_descr
@@ -185,8 +166,6 @@ Qt3 module for universal input method.
 %package qt4
 Summary: Qt4 module for universal input method
 Group: Text tools
-Requires: libuim8 = %version-%release
-Requires: uim-utils = %version-%release
 
 %description qt4
 %common_descr
@@ -196,8 +175,6 @@ Qt4 module for universal input method.
 %package qt5
 Summary: Qt5 module for universal input method
 Group: Text tools
-Requires: libuim8 = %version-%release
-Requires: uim-utils = %version-%release
 
 %description qt5
 %common_descr
@@ -207,7 +184,6 @@ Qt5 module for universal input method.
 %package utils
 Summary: universal input method utilities
 Group: Text tools
-Requires: uim-common = %version-%release
 
 %description utils
 %common_descr
@@ -217,8 +193,6 @@ This package contains a shell interpreter, IPC server, etc.
 %package xim
 Summary: XIM module for universal input method
 Group: Text tools
-Requires: libuim8 = %version-%release
-Requires: uim-utils = %version-%release
 
 %description xim
 %common_descr
@@ -265,15 +239,16 @@ export LC_ALL=en_US.UTF-8
 %files
 
 %files common
-%_datadir/applications/uim.desktop
 %_datadir/uim/pixmaps/*
 %_datadir/uim/helperdata/*
 %_datadir/uim/byeoru-data/*
 %_datadir/uim/tables/*
+%dir %_datadir/uim
 %dir %_datadir/uim/pixmaps
 %dir %_datadir/uim/helperdata
 %dir %_datadir/uim/byeoru-data
 %dir %_datadir/uim/tables
+%dir %_datadir/uim/lib
 %doc AUTHORS
 %doc COPYING
 %doc NEWS
@@ -332,6 +307,7 @@ export LC_ALL=en_US.UTF-8
 %_bindir/uim-pref-gtk
 %_bindir/uim-toolbar-gtk
 %_bindir/uim-toolbar-gtk-systray
+%_datadir/applications/uim.desktop
 %_libdir/gtk-2.0/2.10.0/immodules/im-uim.so
 %_libexecdir/uim-candwin-gtk
 %_libexecdir/uim-candwin-horizontal-gtk
@@ -390,6 +366,11 @@ export LC_ALL=en_US.UTF-8
 %_mandir/man1/uim-xim.1.xz
 
 %changelog
+* Thu May 11 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.6-alt4.git89542ac.1
+- rebuilt with libm17n-db
+- moved %%_datadir/applications/uim.desktop to uim-gtk package
+- fixed dependencies
+
 * Sat Dec 10 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.6-alt4.git89542ac
 - import from upsteam git
 
