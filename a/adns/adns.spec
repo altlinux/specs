@@ -1,14 +1,15 @@
 Name: adns
-Version: 1.4
-Release: alt2.qa2
+Version: 1.5.1
+Release: alt1%ubt
 
 Summary: GNU adns, an asynchronous DNS resolver
 License: GPLv2+
 Group: Networking/Other
 URL: http://www.gnu.org/software/adns/
+BuildRequires(pre):rpm-build-ubt
 
-Source: adns-%version-%release.tar
-Packager: Alexey Tourbin <at@altlinux.ru>
+Source: adns-%version.tar
+Patch0: %name-%version-alt.patch
 
 Requires: lib%name = %version-%release
 
@@ -53,7 +54,8 @@ This package contains static library required for
 development of statically linked %name-based software.
 
 %prep
-%setup -n adns-%version-%release
+%setup
+%patch0 -p1
 
 %build
 %configure
@@ -78,6 +80,9 @@ mkdir -p %buildroot{%_bindir,%_libdir,%_includedir}
 %_libdir/lib%name.a
 
 %changelog
+* Thu May 11 2017 Anton Farygin <rider@altlinux.ru> 1.5.1-alt1%ubt
+- new version
+
 * Sun Mar 27 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt2.qa2
 - Rebuilt for debuginfo
 
@@ -86,7 +91,7 @@ mkdir -p %buildroot{%_bindir,%_libdir,%_includedir}
   by request of mithraen@
 
 * Fri Feb 20 2009 Dmitry V. Levin <ldv@altlinux.org> 1.4-alt2
-- Removed obsolete %%post_ldconfig/%%postun_ldconfig calls.
+- Removed obsolete post_ldconfig/postun_ldconfig calls.
 - Updated package descriptions.
 
 * Fri Apr 13 2007 Alexey Tourbin <at@altlinux.ru> 1.4-alt1
