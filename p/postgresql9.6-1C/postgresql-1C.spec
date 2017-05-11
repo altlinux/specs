@@ -7,17 +7,17 @@
 
 %define prog_name            postgresql
 %define postgresql_major     9
-%define postgresql_minor     4
-%define postgresql_subminor  12
+%define postgresql_minor     6
+%define postgresql_subminor  3
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
-%define libpq_minor          7
+%define libpq_minor          9
 
 # Look at: src/interfaces/ecpg/ecpglib/Makefile
 %define libecpg_major        6
-%define libecpg_minor        6
+%define libecpg_minor        8
 
 Name: %prog_name%postgresql_major.%postgresql_minor-1C
 Version: %postgresql_major.%postgresql_minor.%postgresql_subminor
@@ -44,7 +44,6 @@ Source3: postgresql-check-db-dir
 Source4: postgresql.init.in
 Source5: postgresql.service
 
-Patch1: 0001-9.4-Fix-searching-for-autoconf.patch
 Patch2: 0002-Fix-search-for-setproctitle.patch
 Patch3: 0003-Use-terminfo-not-termcap.patch
 Patch4: 0004-Fix-includedirs.patch
@@ -53,11 +52,11 @@ Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
 Patch9: 0008-ALT-SeLinux-user-name.patch
 
 # 1C
-Patch100: 1c_FULL_94-0.23
-Patch101: postgresql-1c-9.4.patch
-Patch102: applock-1c-9.4.patch
-Patch103: online_analyze_94.patch
-Patch104: plantuner.patch
+Patch100: 00001-1c_FULL_96-0.23.patch
+Patch101: 00003-applock.patch
+Patch102: 00004-online_analize.patch
+Patch103: 00005-plantuner.patch
+Patch104: 00006-postgresql-1c-9.6.patch
 
 Requires: libpq%libpq_major >= %version-%release
 
@@ -281,7 +280,6 @@ database.
 %prep
 %setup -q
 
-%patch1 -p1
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
@@ -290,10 +288,10 @@ database.
 
 # 1C
 %patch100 -p1
-%patch101 -p0
-%patch102 -p0
+%patch101 -p1
+%patch102 -p1
 %patch103 -p1
-%patch104 -p0
+%patch104 -p1
 
 
 %build
@@ -604,13 +602,11 @@ fi
 %_libdir/pgsql/sslinfo.so
 %_libdir/pgsql/tablefunc.so
 %_libdir/pgsql/tcn.so
-%_libdir/pgsql/test_parser.so
 %_libdir/pgsql/timetravel.so
 %_libdir/pgsql/tsearch2.so
 %_libdir/pgsql/passwordcheck.so
 %_libdir/pgsql/unaccent.so
 %_libdir/pgsql/auth_delay.so
-%_libdir/pgsql/dummy_seclabel.so
 %_libdir/pgsql/file_fdw.so
 %_libdir/pgsql/sepgsql.so
 %_libdir/pgsql/fasttrun.so
@@ -656,7 +652,6 @@ fi
 %_libdir/%PGSQL/*_and_*.so
 %_libdir/%PGSQL/euc2004_sjis2004.so
 %_libdir/%PGSQL/libpqwalreceiver.so
-%_libdir/pgsql/pg_upgrade_support.so
 %dir %_datadir/%PGSQL
 %dir %_datadir/%PGSQL/timezone
 %_datadir/%PGSQL/timezone/*
@@ -759,42 +754,5 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
-* Wed May 10 2017 Alexei Takaseev <taf@altlinux.org> 9.4.12-alt1
-- 9.4.12
-
-* Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 9.4.11-alt1.qa1
-- NMU: rebuild against Tcl/Tk 8.6
-
-* Sun Feb 12 2017 Alexei Takaseev <taf@altlinux.org> 9.4.11-alt1
-- 9.4.11
-
-* Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 9.4.10-alt1.1
-- rebuild with new perl 5.24.1
-
-* Thu Oct 27 2016 Alexei Takaseev <taf@altlinux.org> 9.4.10-alt1
-- 9.4.10
-
-* Thu Sep 29 2016 Alexei Takaseev <taf@altlinux.org> 9.4.9-alt2
-- Add conflicts to 9.4, 9.5, 9.6
-
-* Wed Aug 10 2016 Alexei Takaseev <taf@altlinux.org> 9.4.9-alt1
-- 9.4.9
-
-* Fri May 13 2016 Alexei Takaseev <taf@altlinux.org> 9.4.8-alt1
-- 9.4.8
-
-* Thu Mar 31 2016 Alexei Takaseev <taf@altlinux.org> 9.4.7-alt1
-- 9.4.7
-
-* Wed Feb 10 2016 Alexei Takaseev <taf@altlinux.org> 9.4.6-alt1
-- 9.4.6
-- Drop patch 0001-flex-2.6.0.patch (Fix upstream)
-
-* Mon Jan 11 2016 Alexei Takaseev <taf@altlinux.org> 9.4.5-alt2
-- Fix build with flex 2.6.0
-
-* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 9.4.5-alt1.1
-- rebuild with new perl 5.22.0
-
-* Thu Nov 05 2015 Alexei Takaseev <taf@altlinux.org> 9.4.5-alt1
+* Thu May 11 2017 Alexei Takaseev <taf@altlinux.org> 9.6.3-alt1
 - Initial build for ALT Linux Sisyphus
