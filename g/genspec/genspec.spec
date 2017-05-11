@@ -1,5 +1,7 @@
+%define gname github2spec
+
 Name:     genspec
-Version:  1.0.2
+Version:  1.1.0
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
@@ -20,15 +22,20 @@ Script for generation RPM spec file from template.
 
 %install
 install -Dm755 %name %buildroot%_bindir/%name
+install -Dm755 %gname %buildroot%_bindir/%gname
 mkdir -p %buildroot%_datadir/spectemplates
 cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 
 %files
 %_bindir/%name
+%_bindir/%gname
 %_datadir/spectemplates
 
 %changelog
-* Thu May 2 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.0.2-alt1
+* Thu May 11 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.0-alt1
+- Create script to get repository data from github and generate spec file
+
+* Tue May 2 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.0.2-alt1
 - Upgrade to python3
 
 * Mon Apr 24 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.0.1-alt1
