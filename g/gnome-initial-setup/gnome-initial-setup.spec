@@ -6,7 +6,7 @@
 %def_disable software_sources
 
 Name: gnome-initial-setup
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Bootstrapping your OS
@@ -85,6 +85,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README NEWS
 
 %changelog
+* Wed May 10 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
+- 3.24.2
+
 * Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 

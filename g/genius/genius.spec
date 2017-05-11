@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: genius
-Version: %ver_major.22
+Version: %ver_major.23
 Release: alt1
 
 Summary: Genius Calculator
@@ -18,8 +18,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-Requires: scrollkeeper
-
 %define gtk_ver 2.18.0
 %define glib_ver 2.16.0
 %define vte_ver 0.26.0
@@ -29,7 +27,7 @@ Requires: scrollkeeper
 BuildPreReq: libgio-devel >= %glib_ver libgtk+2-devel >= %gtk_ver
 BuildRequires: libgtksourceview-devel >= %gtksourceview_ver libvte-devel >= %vte_ver
 BuildRequires: libreadline-devel libncurses-devel libgmp-devel libmpfr-devel >= %mpfr_ver
-BuildRequires: gnome-common gnome-doc-utils librarian intltool xsltproc bison flex
+BuildRequires: autoconf-archive intltool xsltproc bison flex
 # for non-UTF korean trnslation
 BuildRequires: perl-Encode-KR
 
@@ -59,12 +57,9 @@ rm -f m4/*
 subst '/GTK_UPDATE_ICON_CACHE/d' pixmaps/Makefile.am
 
 %build
-gnome-doc-prepare --force
 %autoreconf
 %configure --disable-static \
-	--disable-scrollkeeper \
 	--disable-update-mimedb
-
 %make_build
 
 %install
@@ -84,22 +79,25 @@ popd
 %_libexecdir/%name-readline-helper-fifo
 %dir %_libdir/%name
 %_libdir/%name/libtestplugin.so
-%_datadir/application-registry/genius.applications
-%_desktopdir/gnome-genius.desktop
+%_datadir/application-registry/%name.applications
+%_desktopdir/gnome-%name.desktop
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/gnome-%name.svg
-%_datadir/mime/packages/genius.xml
-%_datadir/%name
+%_datadir/mime/packages/%name.xml
+%_datadir/mime-info/%name.keys
+%_datadir/mime-info/%name.mime
+%_datadir/%name/
 %doc AUTHORS NEWS README TODO
 
 %files devel
-%_includedir/genius/
+%_includedir/%name/
 
 %exclude %_libdir/%name/*.la
-%exclude %_datadir/mime-info/genius.keys
-%exclude %_datadir/mime-info/genius.mime
 
 %changelog
+* Thu May 11 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.23-alt1
+- 1.0.23
+
 * Tue Dec 27 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0.22-alt1
 - 1.0.22
 
