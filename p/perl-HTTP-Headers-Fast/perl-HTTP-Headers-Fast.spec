@@ -4,20 +4,19 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(MIME/Base64.pm) perl(Storable.pm) perl(Test.pm) perl(URI.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    HTTP-Headers-Fast
-%define upstream_version 0.20
 
 Name:       perl-%{upstream_name}
-Version:    0.20
+Version:    0.21
 Release:    alt1
 
 Summary:    Faster implementation of HTTP::Headers
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/T/TO/TOKUHIROM/HTTP-Headers-Fast-%{version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/T/TO/TOKUHIROM/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(HTTP/Date.pm)
-BuildRequires: perl(Module/Build.pm)
+BuildRequires: perl(Module/Build/Tiny.pm)
 BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(Test/Requires.pm)
 BuildArch:  noarch
@@ -29,23 +28,22 @@ HTTP::Headers::Fast is a perl class for parsing/writing HTTP headers.
 The interface is the same as HTTP::Headers.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
-%__perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
-./Build CFLAGS="%{optflags}"
-
-%check
-./Build test
+%perl_vendor_build
 
 %install
-./Build install destdir=%{buildroot}
+%perl_vendor_install
 
 %files
-%doc Changes LICENSE META.json META.yml  README.md
+%doc Changes LICENSE META.json META.yml README.md
 %perl_vendor_privlib/*
 
 %changelog
+* Wed May 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- automated CPAN update
+
 * Fri Nov 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - automated CPAN update
 
