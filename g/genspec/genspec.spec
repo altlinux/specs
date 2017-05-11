@@ -2,7 +2,7 @@
 
 Name:     genspec
 Version:  1.1.1
-Release:  alt1
+Release:  alt2
 
 Summary:  Script for generation RPM spec file from template
 License:  GPLv3+
@@ -11,6 +11,8 @@ URL: 	  http://altlinux.org/genspec
 Packager: Andrey Cherepanov <cas@altlinux.org> 
 
 BuildArch: noarch
+
+BuildPrereq: rpm-build-ruby rpm-build-python3
 
 Source:   %name-%version.tar
 
@@ -32,6 +34,9 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_datadir/spectemplates
 
 %changelog
+* Thu May 11 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.1-alt2
+- Add rpm-build-ruby rpm-build-python3 to BuildPrereq
+
 * Thu May 11 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.1-alt1
 - Fix invocation of ./genspec instead of genspec
 
