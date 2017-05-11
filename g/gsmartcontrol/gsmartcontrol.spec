@@ -1,22 +1,18 @@
 Name: gsmartcontrol
-Version: 0.8.7
-Release: alt2
+Version: 0.9.0
+Release: alt1
 
 Summary: GSmartControl is a graphical user interface for smartctl
 Group: Graphical desktop/Other
 License: GPL
 Url: http://gsmartcontrol.sourceforge.net/home/
 
-Source: %name-%version.tar.bz2
-Patch: gsmartcontrol-0.8.6-alt-glibc-2.16.patch
+Source: http://download.sourceforge.net/%name/%name-%version.tar.bz2
 Patch1: gsmartcontrol-0.8.7-alt-lfs.patch
-
-# upstream
-Patch10: gsmartcontrol_parser_crash_fix.diff
 
 Requires: smartmontools
 
-BuildRequires: libgtkmm2-devel gcc-c++ libpcre-devel gksu
+BuildRequires: libgtkmm2-devel gcc-c++ libpcre-devel gksu libappstream-glib-devel
 
 %description
 GSmartControl is a graphical user interface for smartctl (from
@@ -27,12 +23,9 @@ to determine its health, as well as run various tests on it.
 
 %prep
 %setup
-%patch -p2
 %patch1
-%patch10
 
 %build
-%add_optflags -std=c++11
 %configure
 %make_build
 
@@ -43,16 +36,21 @@ to determine its health, as well as run various tests on it.
 %make check
 
 %files
-%_defaultdocdir/%name
-%_bindir/*
-%_datadir/%name/*
+%_bindir/%name
+%_bindir/%name-root
+%_datadir/%name/
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_man1dir/*.1*
 %_desktopdir/%name.desktop
-
-%exclude %_datadir/pixmaps/gsmartcontrol.*
+%_datadir/metainfo/%name.appdata.xml
+%_datadir/pixmaps/gsmartcontrol.*
+%_defaultdocdir/%name/
+%exclude %_defaultdocdir/%name/LICENSE*
 
 %changelog
+* Thu May 11 2017 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Wed Sep 30 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.7-alt2
 - applied gsmartcontrol_parser_crash_fix.diff from upstream
 - built with newer *mm libraries
