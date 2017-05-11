@@ -26,7 +26,7 @@
 %def_without unicore32
 
 %def_disable werror
-%def_enable sdl
+%def_disable sdl
 %def_disable sdl2
 %def_enable curses
 %def_enable bluez
@@ -47,12 +47,12 @@
 %def_enable vhost_net
 %def_enable vhost_scsi
 %def_disable opengl
-%def_enable guest_agent
+%def_disable guest_agent
 %def_enable tools
 %def_enable spice
 %def_enable libiscsi
 %def_enable rbd
-%def_enable libnfs
+%def_disable libnfs
 %def_enable seccomp
 %def_enable glusterfs
 %def_disable gtk
@@ -170,8 +170,8 @@
 # }}}
 
 Name: pve-%rname
-Version: 2.7.1
-Release: alt4
+Version: 2.9.0
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -180,7 +180,7 @@ Requires: %name-system = %version-%release, %name-user = %version-%release
 Conflicts: %rname
 
 URL: http://www.nongnu.org/qemu/
-Source0: qemu-kvm-src.tar.gz
+Source0: qemu-%version.tar
 Source1: qemu.binfmt
 Source2: qemu-kvm.control.in
 Source4: qemu-kvm.rules
@@ -194,7 +194,7 @@ Source12: OVMF_VARS-pure-efi.fd
 
 Source100: Logo.bmp
 
-Patch0: qemu-2.6-alt.patch
+Patch0: qemu-alt.patch
 
 Patch10: 0001-fr-ca-keymap-corrections.patch
 Patch11: 0002-Adjust-network-script-path-to-etc-kvm.patch
@@ -239,59 +239,12 @@ Patch49: 0040-enable-cache-unsafe-for-vma-extract_content-and-qmp_.patch
 Patch50: 0041-savevm-async-updates.patch
 Patch51: 0042-qmp_snapshot_drive-add-aiocontext.patch
 Patch52: 0043-vma-sizes-passed-to-blk_co_preadv-should-be-bytes-no.patch
-Patch53: 0044-glusterfs-daemonize.patch
+Patch53: 0044-glusterfs-no-default-logfile-if-daemonized.patch
 Patch54: 0045-qmp_delete_drive_snapshot-add-aiocontext.patch
 Patch55: 0046-convert-savevm-async-to-threads.patch
 Patch56: 0047-glusterfs-allow-partial-reads.patch
-Patch57: x86-lapic-Load-LAPIC-state-at-post_load.patch
-Patch58: 0001-Revert-target-i386-disable-LINT0-after-reset.patch
-Patch59: 0002-net-vmxnet-initialise-local-tx-descriptor.patch
-Patch60: 0003-net-limit-allocation-in-nc_sendv_compat.patch
-Patch61: CVE-2016-7156-scsi-pvscsi-avoid-infinite-loop-while-building-SG-li.patch
-Patch62: CVE-2016-7170-vmsvga-correct-bitmap-and-pixmap-size-checks.patch
-Patch63: CVE-2016-7422-virtio-add-check-for-descriptor-s-mapped-address.patch
-Patch64: CVE-2016-7466-usb-xhci-fix-memory-leak-in-usb_xhci_exit.patch
-Patch65: CVE-2016-7907-net-imx-limit-buffer-descriptor-count.patch
-Patch66: CVE-2016-7908-net-mcf-limit-buffer-descriptor-count.patch
-Patch67: CVE-2016-7909-net-pcnet-check-rx-tx-descriptor-ring-length.patch
-Patch68: CVE-2016-7994-virtio-gpu-fix-memory-leak-in-virtio_gpu_resource_cr.patch
-Patch69: CVE-2016-7995-usb-ehci-fix-memory-leak-in-ehci_process_itd.patch
-Patch70: CVE-2016-8576-xhci-limit-the-number-of-link-trbs-we-are-willing-to.patch
-Patch71: CVE-2016-8577-9pfs-fix-potential-host-memory-leak-in-v9fs_read.patch
-Patch72: CVE-2016-8578-9pfs-allocate-space-for-guest-originated-empty-strin.patch
-Patch73: CVE-2016-8668-net-rocker-set-limit-to-DMA-buffer-size.patch
-Patch74: CVE-2016-8669-char-serial-check-divider-value-against-baud-base.patch
-Patch75: CVE-2016-8909-audio-intel-hda-check-stream-entry-count-during-tran.patch
-Patch76: CVE-2016-9103-9pfs-fix-information-leak-in-xattr-read.patch
-Patch77: CVE-2016-9101-net-eepro100-fix-memory-leak-in-device-uninit.patch
-Patch78: CVE-2016-9105-9pfs-fix-memory-leak-in-v9fs_link.patch
-Patch79: CVE-2016-9102-9pfs-fix-memory-leak-in-v9fs_xattrcreate.patch
-Patch80: CVE-2016-9106-9pfs-fix-memory-leak-in-v9fs_write.patch
-Patch81: CVE-2016-9104-9pfs-fix-integer-overflow-issue-in-xattr-read-write.patch
-Patch82: CVE-2016-9776-net-mcf-check-receive-buffer-size-register-value.patch
-Patch83: CVE-2016-9845-virtio-gpu-fix-information-leak-in-getting-capset-in.patch
-Patch84: CVE-2016-9846-virtio-gpu-fix-memory-leak-in-update_cursor_data_vir.patch
-Patch85: CVE-2016-9907-usbredir-free-vm_change_state_handler-in-usbredir-de.patch
-Patch86: CVE-2016-9908-virtio-gpu-fix-information-leak-in-capset-get-dispat.patch
-Patch87: CVE-2016-9911-usb-ehci-fix-memory-leak-in-ehci_init_transfer.patch
-Patch88: CVE-2016-9912-virtio-gpu-call-cleanup-mapping-function-in-resource.patch
-Patch89: CVE-2016-9913-9pfs-adjust-the-order-of-resource-cleanup-in-device-.patch
-Patch90: CVE-2016-9914-9pfs-add-cleanup-operation-in-FileOperations.patch
-Patch91: CVE-2016-9915-9pfs-add-cleanup-operation-for-handle-backend-driver.patch
-Patch92: CVE-2016-9916-9pfs-add-cleanup-operation-for-proxy-backend-driver.patch
-Patch93: CVE-2016-9921-display-cirrus-check-vga-bits-per-pixel-bpp-value.patch
-Patch94: 0001-display-cirrus-ignore-source-pitch-value-as-needed-i.patch
-Patch95: 0001-cirrus-handle-negative-pitch-in-cirrus_invalidate_re.patch
-Patch96: 0002-cirrus-allow-zero-source-pitch-in-pattern-fill-rops.patch
-Patch97: 0003-cirrus-fix-blit-address-mask-handling.patch
-Patch98: 0004-cirrus-fix-oob-access-issue-CVE-2017-2615.patch
-Patch99: CVE-2016-10028-display-virtio-gpu-3d-check-virgl-capabilities-max_s.patch
-Patch100: CVE-2016-10155-watchdog-6300esb-add-exit-function.patch
-Patch101: 0003-sd-sdhci-check-transfer-mode-register-in-multi-block.patch
-Patch102: 0004-sd-sdhci-block-count-enable-not-relevant-in-single-b.patch
-Patch103: 0001-cirrus-fix-patterncopy-checks.patch
-Patch104: 0002-Revert-cirrus-allow-zero-source-pitch-in-pattern-fil.patch
-Patch105: CVE-2017-2620_cirrus_add_blit_is_unsafe_call_to_cirrus_bitblt_cputovideo.patch
+Patch57: 0048-vma-don-t-use-O_DIRECT-on-pipes.patch
+Patch58: 0049-block-zeroinit-request-child-permissions.patch
 
 %set_verify_elf_method fhs=relaxed
 
@@ -467,7 +420,7 @@ Group: Emulators
 This package provides client and server tools for QEMU's ivshmem device.
 
 %prep
-%setup -n %rname-kvm
+%setup -n %rname-%version
 %patch -p1
 
 %patch10 -p1
@@ -519,53 +472,6 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch56 -p1
 %patch57 -p1
 %patch58 -p1
-%patch59 -p1
-%patch60 -p1
-%patch61 -p1
-%patch62 -p1
-%patch63 -p1
-%patch64 -p1
-%patch65 -p1
-%patch66 -p1
-%patch67 -p1
-%patch68 -p1
-%patch69 -p1
-%patch70 -p1
-%patch71 -p1
-%patch72 -p1
-%patch73 -p1
-%patch74 -p1
-%patch75 -p1
-%patch76 -p1
-%patch77 -p1
-%patch78 -p1
-%patch79 -p1
-%patch80 -p1
-%patch81 -p1
-%patch82 -p1
-%patch83 -p1
-%patch84 -p1
-%patch85 -p1
-%patch86 -p1
-%patch87 -p1
-%patch88 -p1
-%patch89 -p1
-%patch90 -p1
-%patch91 -p1
-%patch92 -p1
-%patch93 -p1
-%patch94 -p1
-%patch95 -p1
-%patch96 -p1
-%patch97 -p1
-%patch98 -p1
-%patch99 -p1
-%patch100 -p1
-%patch101 -p1
-%patch102 -p1
-%patch103 -p1
-%patch104 -p1
-%patch105 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -604,7 +510,7 @@ export CFLAGS="%optflags"
 	--disable-xen \
 	--disable-brlapi \
 	--enable-curl \
-	--enable-fdt \
+	--disable-fdt \
 	--enable-kvm \
 	%{subst_enable virglrenderer} \
 	%{subst_enable tpm} \
@@ -753,8 +659,6 @@ fi
 %post common
 %post_control -s vmusers kvm
 
-%files
-
 %files common
 %_datadir/qemu
 %_datadir/kvm
@@ -773,15 +677,15 @@ fi
 %_bindir/qemu*system*
 %_bindir/vma
 
-%files user
-%_bindir/qemu-*
-/lib/binfmt.d/qemu-*.conf
-%exclude %_bindir/qemu*system*
-%exclude %_bindir/qemu-kvm
-%exclude %_bindir/qemu-img
-%exclude %_bindir/qemu-io
-%exclude %_bindir/qemu-nbd
-%exclude %_bindir/qemu-ga
+#%files user
+#%_bindir/qemu-*
+#/lib/binfmt.d/qemu-*.conf
+#%exclude %_bindir/qemu*system*
+#%exclude %_bindir/qemu-kvm
+#%exclude %_bindir/qemu-img
+#%exclude %_bindir/qemu-io
+#%exclude %_bindir/qemu-nbd
+#%exclude %_bindir/qemu-ga
 
 %files img
 %_bindir/qemu-img
@@ -791,17 +695,25 @@ fi
 %_man1dir/virtfs-proxy-helper.*
 %_libexecdir/qemu-bridge-helper
 
+%if_enabled guest_agent
 %files guest-agent
 %_bindir/qemu-ga
 /lib/udev/rules.d/%rulenum-%rname-guest-agent.rules
 %_unitdir/%rname-guest-agent.service
 %_initdir/%rname-guest-agent
+%endif
 
 %files aux
 %dir %docdir/
 %docdir/LICENSE
 
 %changelog
+* Thu May 11 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.9.0-alt1
+- 2.9.0-1
+
+* Wed Apr 05 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.7.1-alt3.M80P.1
+- backport to p8 branch
+
 * Wed Apr 05 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.7.1-alt4
 - 2.7.1-4
 
