@@ -2,7 +2,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.912
+Version: 0.913
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -79,6 +79,9 @@ mkdir -p %buildroot%_datadir/srpmtools/hooks
 %_man1dir/hashertarbuild*
 
 %changelog
+* Thu May 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.913-alt1
+- %%ubt changelog bugfixes (closes: #33442)
+
 * Sat May 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.912-alt1
 - proper %%ubt support in changelog (closes: #33442)
 
