@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 4.4.1
-Release: alt10
+Release: alt11
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -36,6 +36,9 @@ Patch11: pve-manager-install_vzdump_cron_config.patch
 Patch12: qemu-server-lsi.patch
 Patch13: pve-manager-lsi.patch
 Patch14: pve-container-lxc.patch
+Patch15: pve-manager-ceph.patch
+Patch16: qemu-server-some-ID.patch
+Patch17: 0001-remove-netcat6-dependency.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -76,7 +79,7 @@ HA Manager PVE
 Summary: Qemu Server Tools
 Version: 4.0.101
 Group: System/Servers
-Requires: nc6 socat pve-qemu-system >= 2.6.1-alt4
+Requires: socat pve-qemu-system >= 2.6.1-alt4
 Provides: qemu-server = %version-%release
 Obsoletes: qemu-server < %version-%release
 
@@ -103,6 +106,9 @@ This package contains the Qemu Server tools used by PVE
 %patch12 -p0 -b .megasas-gen2
 %patch13 -p0 -b .megasas-gen2
 %patch14 -p0 -b .lxc
+%patch15 -p0 -b .ceph
+%patch16 -p0 -b .some-ID
+%patch17 -p0
 
 %build
 for d in pve-manager pve-firewall/src pve-ha-manager/src qemu-server; do
@@ -370,6 +376,9 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Thu May 11 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt11
+- various fixes
+
 * Thu Apr 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt10
 - fixed create/start unprivileged container
 
