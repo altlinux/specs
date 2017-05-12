@@ -12,7 +12,7 @@
 
 Name: cyrus-imapd
 Version: 2.5.11
-Release: alt1
+Release: alt2
 
 Summary: A high-performance mail store with IMAP and POP3 support
 License: CMU License
@@ -451,6 +451,10 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Fri May 12 2017 Sergey Y. Afonin <asy@altlinux.ru> 2.5.11-alt2
+- removed forgotten files from /var/lib/imap/socket/
+  in stop() function in init script
+
 * Fri May 12 2017 Sergey Y. Afonin <asy@altlinux.ru> 2.5.11-alt1
 - 2.5.11
 
