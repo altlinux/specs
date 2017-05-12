@@ -1,5 +1,5 @@
 Name: guile22
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: A GNU implementation of Scheme
@@ -75,6 +75,9 @@ install -pm0644 -D guile.macros %buildroot%_rpmmacrosdir/guile
 %_infodir/*.info*
 
 %changelog
+* Fri May 12 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.2-alt1
+- 2.2.2 released
+
 * Thu Apr 20 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.1-alt1
 - 2.2.1 released
 
