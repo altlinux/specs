@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define ver_major 1.26
 
 %def_enable x11_backend
@@ -17,8 +17,8 @@
 %def_enable wayland_compositor
 
 Name: clutter
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: Clutter Core Library
 License: LGPLv2+
@@ -187,6 +187,9 @@ gtkdocize
 
 
 %changelog
+* Fri May 12 2017 Yuri N. Sedunov <aris@altlinux.org> 1.26.2-alt1
+- 1.26.2
+
 * Sun Oct 02 2016 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt2
 - updated to 1.26.0-26-g7ab085c
 
