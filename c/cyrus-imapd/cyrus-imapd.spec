@@ -11,8 +11,8 @@
 %def_without unit_tests
 
 Name: cyrus-imapd
-Version: 2.5.9
-Release: alt2.1
+Version: 2.5.11
+Release: alt1
 
 Summary: A high-performance mail store with IMAP and POP3 support
 License: CMU License
@@ -62,6 +62,9 @@ BuildRequires: libsasl2-devel libssl-devel libnet-snmp-devel libnl-devel libsens
 BuildRequires: libjansson-devel libical-devel libxml2-devel libsqlite3-devel
 
 BuildRequires: perl-devel perl-Pod-Parser perl-Term-ReadLine-Gnu perl-Net-Server perl-Unix-Syslog
+
+# 2.5.11
+BuildRequires: perl-Pod-POM-View-Restructured python-module-sphinx
 
 #BuildRequires: groff-extra groff-ps transfig
 
@@ -135,6 +138,16 @@ BuildArch: noarch
 %description doc
 The %name-doc package contains Here the documentation about
 Cyrus IMAP server.
+
+%package doc-full
+Group: System/Servers
+Summary: Cyrus documentation
+BuildArch: noarch
+
+%description doc-full
+The %name-doc-full package contains complete Cyrus documentation
+for IMAP server and SASL library
+
 
 %prep
 %setup
@@ -318,6 +331,14 @@ touch %buildroot%_vardata/ssl/cyrus.key
 
 %add_findreq_skiplist /usr/bin/cyradm
 
+# big doc section
+%add_findreq_skiplist %_cyrexecdir/perl2rst
+pushd docsrc
+    make html
+    mkdir -p %buildroot%_defaultdocdir/%name-doc-full-%version
+    cp -r build/html/* %buildroot%_defaultdocdir/%name-doc-full-%version
+popd
+
 %pre
 /usr/sbin/groupadd -r -f %_cyrusgroup ||:
 /usr/sbin/useradd -g %_cyrusgroup -G sasl -c "Cyrus IMAP Server" -d %_vardata \
@@ -393,6 +414,9 @@ done
 %doc $RPM_SOURCE_DIR/%name-procmail+cyrus.mc
 %doc doc/*
 
+%files doc-full
+%_defaultdocdir/%name-doc-full-%version
+
 %files murder
 %config(noreplace) %_sysconfdir/pam.d/mupdate
 %_cyrexecdir/lmtpproxyd
@@ -427,6 +451,9 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Fri May 12 2017 Sergey Y. Afonin <asy@altlinux.ru> 2.5.11-alt1
+- 2.5.11
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.5.9-alt2.1
 - rebuild with new perl 5.24.1
 
