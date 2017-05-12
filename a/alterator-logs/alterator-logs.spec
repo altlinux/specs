@@ -1,6 +1,6 @@
 Name: alterator-logs
-Version: 0.9.0
-Release: alt3
+Version: 0.9.1
+Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.ru>
 
@@ -21,6 +21,7 @@ Conflicts: alterator-fbi < 5.20-alt3
 Conflicts: alterator-lookout < 2.1-alt1
 
 BuildPreReq: alterator >= 4.10-alt6
+BuildRequires: guile22-devel alterator-fbi
 
 %description
 System logs alterator module
@@ -44,6 +45,9 @@ System logs alterator module
 touch /var/log/journald
 
 %changelog
+* Fri May 12 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.9.1-alt1
+- possibility to pass desktop file names with path blocked
+
 * Tue Oct 25 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.9.0-alt3
 - first time journald logs processing fixed
 
