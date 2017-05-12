@@ -1,8 +1,8 @@
 %define gimpplugindir %(gimptool-2.0 --gimpplugindir)
-%def_enable zart
+%def_disable zart
 
 Name: gmic
-Version: 1.7.2
+Version: 1.7.9.1
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -10,6 +10,7 @@ License: CeCILL v.2.0
 Group: Graphics
 Url: http://gmic.sourceforge.net/
 
+# VCS: https://github.com/dtschump/gmic.git
 Source: http://gmic.eu/files/source/%{name}_%version.tar.gz
 
 Requires: lib%name = %version-%release
@@ -108,13 +109,10 @@ popd
 
 %files -n lib%name
 %_libdir/lib%name.so.*
-%_libdir/libc%name.so.*
 
 %files -n lib%name-devel
 %_includedir/gmic.h
-%_includedir/gmic_libc.h
 %_libdir/lib%name.so
-%_libdir/libc%name.so
 
 %if_enabled zart
 %files zart
@@ -126,6 +124,12 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Fri May 12 2017 Yuri N. Sedunov <aris@altlinux.org> 1.7.9.1-alt1
+- 1.7.9.1
+
+* Thu Nov 17 2016 Yuri N. Sedunov <aris@altlinux.org> 1.7.8-alt1
+- 1.7.8
+
 * Wed Jun 08 2016 Yuri N. Sedunov <aris@altlinux.org> 1.7.2-alt1
 - 1.7.2
 
