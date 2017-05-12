@@ -1,5 +1,5 @@
 Name: asunder
-Version: 2.8.1
+Version: 2.9
 Release: alt1
 
 Summary: Audio CD ripper and encoder for Linux
@@ -14,6 +14,7 @@ Patch1: %name-2.4-alt-lfs.patch
 Requires: cdparanoia
 Requires: vorbis-tools
 Requires: lame
+Requires: flac
 
 BuildPreReq: rpm-build-licenses >= 0.7 intltool
 
@@ -60,6 +61,9 @@ cp %buildroot%_pixmapsdir/%name.png %buildroot%_liconsdir/
 %_liconsdir/%name.png
 
 %changelog
+* Fri May 12 2017 Yuri N. Sedunov <aris@altlinux.org> 2.9-alt1
+- 2.9
+
 * Mon Feb 13 2017 Yuri N. Sedunov <aris@altlinux.org> 2.8.1-alt1
 - 2.8.1
 
