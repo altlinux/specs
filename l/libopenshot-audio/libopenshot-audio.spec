@@ -4,7 +4,7 @@
 %define libopenshot_ver %ver_major.3
 
 Name: %_name-audio
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: OpenShot Audio Library
@@ -12,6 +12,7 @@ Group: System/Libraries
 License: GPLv3
 Url: https://launchpad.net/%_name
 
+#VCS: https://github.com/OpenShot/libopenshot-audio.git
 Source: %url/%ver_major/%libopenshot_ver/+download/%name-%version.tar.gz
 
 BuildRequires: gcc-c++ cmake libalsa-devel libfreetype-devel
@@ -31,7 +32,7 @@ This package contains development libraries and header files
 that are needed to write applications that use %name.
 
 %prep
-%setup -D -c -n %name-%version
+%setup
 
 %build
 %cmake
@@ -51,6 +52,9 @@ that are needed to write applications that use %name.
 %_libdir/%name.so
 
 %changelog
+* Fri May 12 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.4-alt1
+- 0.1.4
+
 * Fri Jan 27 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.2-alt1
 - first build for Sisyphus
 
