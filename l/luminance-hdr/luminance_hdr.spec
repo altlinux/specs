@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _name luminance
 Name: %_name-hdr
-Version: 2.5.0
+Version: 2.5.1
 Release: alt1
 
 Summary: A graphical tool for creating and processing HDR images
@@ -63,6 +63,9 @@ provide a workflow for HDR imaging.
 %doc AUTHORS Changelog README* TODO BUGS
 
 %changelog
+* Fri May 12 2017 Yuri N. Sedunov <aris@altlinux.org> 2.5.1-alt1
+- 2.5.1
+
 * Mon Apr 17 2017 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
 - 2.5.0
 
