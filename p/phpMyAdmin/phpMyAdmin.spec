@@ -1,5 +1,5 @@
 Name: phpMyAdmin
-Version: 4.6.6
+Version: 4.7.0
 Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
@@ -28,6 +28,8 @@ BuildPreReq: rpm-build-apache2 rpm-macros-webserver-common
 BuildRequires: apache2-base >= 2.4
 BuildRequires: control
 
+AutoReq:yes,noshell,nomingw32
+
 %description
 phpMyAdmin can administer a whole MySQL-server (needs a super-user)
 but also a single database. To accomplish the latter you'll need a
@@ -46,7 +48,7 @@ manual. Currently phpMyAdmin can:
   - communicate in more than 20 different languages
 
 %package apache2
-Summary: phpMyAdmin - web-based MySQL administration (for apache 2.0 and php5)
+Summary: phpMyAdmin - web-based MySQL administration (for apache 2.x and php5)
 Group: System/Servers
 Requires: %name = %version-%release
 Requires: apache2-mod_php5 >= 5.2.0
@@ -55,8 +57,40 @@ Requires: php5-mysqli
 Requires: php5-mcrypt
 Requires: php5-mbstring
 Requires: php5-gd2
+Conflicts: %name-apache2-php7
 
 %description apache2
+phpMyAdmin can administer a whole MySQL-server (needs a super-user)
+but also a single database. To accomplish the latter you'll need a
+properly set up MySQL-user who can read/write only the desired
+database. It's up to you to look up the appropiate part in the MySQL
+manual. Currently phpMyAdmin can:
+  - create and drop databases
+  - create, copy, drop and alter tables
+  - delete, edit and add fields
+  - execute any SQL-statement, even batch-queries
+  - manage keys on fields
+  - load text files into tables
+  - create (*) and read dumps of tables
+  - export (*) and import data to CSV values
+  - administer multiple servers and single databases
+  - communicate in more than 20 different languages
+
+Install this package if you need phpMyAdmin for apache 2.0 and php5.
+
+%package apache2-php7
+Summary: phpMyAdmin - web-based MySQL administration (for apache 2.x and php7)
+Group: System/Servers
+Requires: %name = %version-%release
+Requires: apache2-mod_php7 >= 7.0.0
+Requires: apache2-base
+Requires: php7-mysqli
+Requires: php7-mcrypt
+Requires: php7-mbstring
+Requires: php7-gd2
+Conflicts: %name-apache2
+
+%description apache2-php7
 phpMyAdmin can administer a whole MySQL-server (needs a super-user)
 but also a single database. To accomplish the latter you'll need a
 properly set up MySQL-user who can read/write only the desired
@@ -125,7 +159,15 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 %apache2_extra_enabled/%name.conf
 #attr(755,root,root) %_controldir/%name-apache2
 
+%files apache2-php7
+%config(noreplace) %apache2_extra_available/%name.conf
+%apache2_extra_enabled/%name.conf
+#attr(755,root,root) %_controldir/%name-apache2
+
 %changelog
+* Sat May 13 2017 Vitaly Lipatov <lav@altlinux.ru> 4.7.0-alt1
+- new version 4.7.0 (with rpmrb script)
+
 * Sat Mar 04 2017 Vitaly Lipatov <lav@altlinux.ru> 4.6.6-alt1
 - new version 4.6.6 (with rpmrb script)
 
