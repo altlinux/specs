@@ -16,7 +16,7 @@
 %define _without_test 1
 
 Name: perl-Amazon-SQS-Simple
-Version: 2.04
+Version: 2.06
 Release: alt1
 
 Summary: OO API for accessing the Amazon Simple Queue
@@ -28,10 +28,10 @@ Url: http://www.cpan.org
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/P/PE/PENFOLD/Amazon-SQS-Simple-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PENFOLD/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Sep 04 2010
-BuildRequires: perl-Digest-HMAC perl-XML-Simple perl-devel perl-libwww perl(Test/Warn.pm)
+BuildRequires: perl-Digest-HMAC perl-XML-Simple perl-devel perl-libwww perl(Test/Warn.pm) perl(AWS/Signature4.pm) perl(VM/EC2/Security/CredentialCache.pm)
 
 %description
 use Amazon::SQS::Simple;
@@ -59,7 +59,7 @@ use Amazon::SQS::Simple;
     $q->Delete();
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -68,9 +68,13 @@ use Amazon::SQS::Simple;
 rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
+%doc README Changes LICENSE
 %perl_vendor_privlib/Amazon/*
 
 %changelog
+* Wed May 10 2017 Igor Vlasenko <viy@altlinux.ru> 2.06-alt1
+- automated CPAN update
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1
 - automated CPAN update
 
