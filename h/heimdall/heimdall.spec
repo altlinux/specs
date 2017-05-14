@@ -1,17 +1,15 @@
 # SPEC file for heimdall package
 
-%def_without gui
-
 Name:    heimdall
-Version: 1.4.1
-Release: alt2
+Version: 1.4.2
+Release: alt1
 
 Summary: tool suite to flash firmware onto Samsung smartphones
 
 License: %bsdstyle
 Group:   Other
 URL:     https://github.com/Benjamin-Dobell/Heimdall
-#URL:    http://www.glassechidna.com.au/
+#URL:    http://www.glassechidna.com.au/heimdall
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
@@ -20,13 +18,9 @@ Patch0:  %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Fri Sep 07 2012
-# optimized out: fontconfig libqt4-core libqt4-devel libqt4-gui libqt4-xml libstdc++-devel pkg-config zlib-devel
-BuildRequires: gcc-c++ libusb-devel
-
-%if_with gui
-BuildRequires: phonon-devel
-%endif
+# Automatically added by buildreq on Sun May 14 2017
+# optimized out: cmake-modules gcc-c++ libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-widgets libstdc++-devel python-base python-modules python3 python3-base
+BuildRequires: cmake libusb-devel qt5-base-devel zlib-devel
 
 %description
 Heimdall is a cross-platform open-source tool suite used to flash
@@ -38,7 +32,6 @@ nature of flashing is dangerous. As with all flashing software,
 Heimdall has the potential to damage (brick) your phone if not
 used carefully. If you're concerned, don't use this software.
 
-%if_with gui
 %package frontend
 Summary: graphic fronted to the Heimdall
 Group: Other
@@ -51,7 +44,7 @@ firmware (aka ROMs) onto Samsung Galaxy S devices and some other
 Samsung smartphones.
 
 This package contains graphic frontend to the Heimdall utility.
-%endif
+
 
 %prep
 %setup
@@ -59,52 +52,31 @@ This package contains graphic frontend to the Heimdall utility.
 
 
 %build
-cd libpit
-%autoreconf
-%configure
-%make_build
-cd ..
-
-cd heimdall
-%autoreconf
-%configure
-%make_build
-cd ..
-
-%if_with gui
-cd heimdall-frontend
-%_qt4dir/bin/qmake heimdall-frontend.pro OUTPUTDIR=%_bindir
-%make_build
-%endif
+%cmake
+%cmake_build
 
 %install
-cd heimdall
-%make_install DESTDIR=%buildroot install
+mkdir -p -- %buildroot%_bindir
+install -m 0755 BUILD/bin/* %buildroot%_bindir/
 
 mkdir -p -- %buildroot%_udevrulesdir
-mv -- %buildroot%_libdir/udev/rules.d/* %buildroot%_udevrulesdir
-cd ..
+install -m 0664 %name/60-%name.rules %buildroot%_udevrulesdir/
 
-%if_with gui
-cd heimdall-frontend
-install -m 755 -p "../Linux/heimdall-frontend" "%buildroot%_bindir/heimdall-frontend"
-cd ..
-%endif
 
 %files
-%doc README
-%doc LICENSE
+%doc README.md LICENSE Linux/README
 
 %_bindir/%name
 
 %_udevrulesdir/60-heimdall.rules
 
-%if_with gui
 %files frontend
 %_bindir/%name-frontend
-%endif
 
 %changelog
+* Sun May 14 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.4.2-alt1
+- New version (Closes: 33468)
+
 * Sat Sep 20 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.4.1-alt2
 - New version (release 1.4.1)
 
