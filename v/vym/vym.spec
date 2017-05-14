@@ -1,5 +1,5 @@
 Name: vym
-Version: 2.6.0
+Version: 2.6.8
 Release: alt1
 
 Summary: QT based MindMap editor
@@ -70,6 +70,9 @@ popd
 
 
 %changelog
+* Sun May 14 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.6.8-alt1
+- New version
+
 * Mon May 08 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.6.0-alt1
 - New version
 - Build with Qt5
