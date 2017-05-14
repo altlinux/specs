@@ -1,7 +1,7 @@
 # SPEC file for Video DownloadHelper Firefox extension
 
 %define rname	video_downloadhelper
-%define version 6.2.0
+%define version 6.3.1
 %define release alt1
 %define cid	\{b9db16a4-6edc-47ec-a1f4-b86292ed211d\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -56,6 +56,9 @@ fi
 %ciddir
 
 %changelog
+* Sun May 14 2017 Nikolay A. Fetisov <naf@altlinux.org> 6.3.1-alt1
+- New version
+
 * Sun Feb 19 2017 Nikolay A. Fetisov <naf@altlinux.org> 6.2.0-alt1
 - New version (Closes: 31398)
 
