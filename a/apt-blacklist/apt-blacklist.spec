@@ -1,5 +1,5 @@
 Name: apt-blacklist
-Version: 0.01.1
+Version: 0.01.2
 Release: alt1
 
 Summary: Forbids installation of packages based on some criteria
@@ -41,6 +41,9 @@ install -pD -m644 apt.conf %buildroot/etc/apt/apt.conf.d/10-%name.conf
 %config(noreplace) %_sysconfdir/%name/watch
 
 %changelog
+* Sun May 14 2017 Terechkov Evgenii <evg@altlinux.org> 0.01.2-alt1
+- Fix for rpm installation without pubkey
+
 * Wed Dec 28 2016 Terechkov Evgenii <evg@altlinux.org> 0.01.1-alt1
 - Fix for new rpm python module.
 
