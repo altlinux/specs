@@ -1,4 +1,4 @@
-%define mainline_ver 4.2.5
+%define mainline_ver 4.2.8
 
 Name: eid-mw
 Version: %mainline_ver
@@ -136,6 +136,8 @@ rm -f *.xpi
 popd
 
 %find_lang eid-viewer
+%find_lang dialogs-beid
+cat eid-viewer.lang dialogs-beid.lang > all.lang
 
 %postun -n firefox-beid
 if [ "$1" = 0 ]; then
@@ -145,12 +147,14 @@ fi
 %files
 
 %files -n libbeidpkcs11
-%_libdir/libbeidpkcs11.so*
+%_libdir/libbeidpkcs11.so.*
 %_libdir/pkcs11/*.so
+%_datadir/p11-kit/modules/beid.module
 
 %files -n libbeidpkcs11-devel
 %_includedir/beid
 %_libdir/pkgconfig/libbeidpkcs11.pc
+%_libdir/libbeidpkcs11.so
 
 %files -n libbeidpkcs11-bin
 %_libexecdir/beid*
@@ -159,7 +163,7 @@ fi
 %files -n firefox-beid
 %ciddir
 
-%files -n eid-viewer -f eid-viewer.lang
+%files -n eid-viewer -f all.lang
 %_bindir/eid-viewer
 %_desktopdir/eid-viewer.desktop
 %_datadir/eid-mw
@@ -167,13 +171,19 @@ fi
 %_iconsdir/eid-viewer.png
 
 %files -n libeidviewer
-%_libdir/libeidviewer.so*
+%_libdir/libeidviewer.so.*
 
 %files -n libeidviewer-devel
 %_includedir/eid-viewer
 %_includedir/eid-util
+%_libdir/libeidviewer.so
 
 %changelog
+* Sun May 14 2017 Pavel Nakonechnyi <zorg@altlinux.org> 4.2.8-alt1
+- updated to version 4.2.8
+- add localized messages for dialogs
+- fix sharedlibs policy draft violation
+
 * Sun Apr 08 2017 Pavel Nakonechnyi <zorg@altlinux.org> 4.2.5-alt1
 - updated to version 4.2.5
 
