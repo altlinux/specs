@@ -3,8 +3,8 @@
 %define real_name Dist-Zilla-Plugin-Git
 
 Name: perl-Dist-Zilla-Plugin-Git
-Version: 2.041
-Release: alt2
+Version: 2.042
+Release: alt1
 
 Summary: Dist:Zilla plugin to Update git repository after release
 
@@ -45,5 +45,8 @@ work.
 %perl_vendor_privlib/Dist/Zilla/*
 
 %changelog
+* Sun May 14 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.042-alt1
+- New version
+
 * Sun Jan 22 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.041-alt2
 - Initial build for ALT Linux Sisyphus
