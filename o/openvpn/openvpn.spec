@@ -14,7 +14,7 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.4.1
+Version: 2.4.2
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
@@ -328,6 +328,12 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %changelog
+* Sun May 14 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.4.2-alt1
+- New version
+- Security fixes:
+  + CVE-2017-7478  Don't assert out on receiving too-large control packets
+  + CVE-2017-7479  Drop packets instead of assert out if packet id rolls over
+
 * Thu Mar 23 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.4.1-alt1
 - New version
 
