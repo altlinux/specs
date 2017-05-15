@@ -17,7 +17,7 @@
 %def_disable tests
 
 Name: gnome-software
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Software manager for GNOME
@@ -112,6 +112,9 @@ GNOME Software is for installing, removing and updating software.
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Mon May 15 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.3-alt1
+- 3.24.3
+
 * Mon May 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
 - 3.24.2
 
