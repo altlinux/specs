@@ -2,7 +2,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20170318
+Version: 20170511
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -37,6 +37,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Thu May 11 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 20170511-alt1
+- Fixed errors found by cppcheck.
+
 * Sat Mar 18 2017 Michael Shigorin <mike@altlinux.org> 20170318-alt1
 - tools.c: why on Earth make *that* a nested function??
 
