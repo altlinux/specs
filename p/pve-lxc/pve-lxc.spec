@@ -2,7 +2,7 @@
 
 Name: pve-%rname
 Version: 2.0.7
-Release: alt4.2
+Release: alt6
 Summary: Linux containers usersapce tools
 Group: System/Configuration/Other
 License: LGPL
@@ -27,6 +27,7 @@ Patch8: 0009-CVE-2017-5985-Ensure-target-netns-is-caller-owned.patch
 Patch10: lxc-io.patch
 Patch20: lxc-alt.patch
 Patch21: lxc-altlinux-lxc.patch
+Patch22: lxc-run-lxcnetdelbr.patch
 
 BuildRequires: docbook2X libcap-devel libdbus-devel libgnutls-devel libseccomp-devel libselinux-devel
 
@@ -53,6 +54,7 @@ an applications or a system.
 %patch10 -p1
 %patch20 -p1
 %patch21 -p1
+%patch22 -p1
 
 %build
 %autoreconf
@@ -96,6 +98,12 @@ rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 %_man7dir/*.7*
 
 %changelog
+* Mon May 15 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.7-alt6
+- run lxcnetdelbr when deleting veths
+
+* Fri Apr 21 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.7-alt2.M80P.4
+- backport to p8 branch
+
 * Fri Apr 21 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.7-alt4.2
 - disable cgmanager
 
