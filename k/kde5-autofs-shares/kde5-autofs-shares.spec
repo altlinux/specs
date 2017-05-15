@@ -1,5 +1,5 @@
 Name: kde5-autofs-shares
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1%ubt
 %K5init
 
@@ -43,6 +43,9 @@ done
 %_bindir/kde5-autofs-shares-*
 
 %changelog
+* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 0.2.1-alt1%ubt
+- fix autostart
+
 * Fri May 12 2017 Sergey V Turchin <zerg@altlinux.org> 0.2.0-alt1%ubt
 - using autofs
 
