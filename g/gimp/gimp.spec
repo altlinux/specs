@@ -3,7 +3,7 @@
 
 Name: gimp
 Version: %ver_major.20
-Release: alt1
+Release: alt2
 
 Summary: The GNU Image Manipulation Program
 License: GPLv3, LGPL
@@ -117,6 +117,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/aclocal/*
 
 %changelog
+* Mon May 15 2017 Anton Farygin <rider@altlinux.ru> 2.8.20-alt2
+- NMU: rebuild with new libmng
+
 * Wed Feb 01 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.8.20-alt1
 - 2.8.20
 

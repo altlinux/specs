@@ -6,7 +6,7 @@
 
 Name: qt5-imageformats
 Version: 5.7.1
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtImageFormats component
@@ -64,6 +64,7 @@ rm -rf  config.tests/libmng
 %build
 %qmake_qt5
 %make_build
+export QT_HASH_SEED=0
 %make docs
 
 %install
@@ -80,6 +81,9 @@ rm -rf  config.tests/libmng
 %_qt5_docdir/*
 
 %changelog
+* Fri May 12 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt2%ubt
+- rebuild with new libmng
+
 * Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
 - new version
 

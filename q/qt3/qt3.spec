@@ -24,7 +24,7 @@
 %define qsa_major 1
 %define qsa_minor 1
 %define qsa_bugfix 5
-%define rlz alt9
+%define rlz alt10
 Name: %rname%major
 Version: %major.%minor.%bugfix
 Release: %rlz
@@ -1285,6 +1285,9 @@ install -m 644 %SOURCE103 %buildroot/%_iconsdir/hicolor/48x48/apps/%rname.png
 %_rpmmacrosdir/*
 
 %changelog
+* Fri May 12 2017 Sergey V Turchin <zerg@altlinux.org> 3.3.8d-alt10
+- rebuild with new libmng
+
 * Thu Nov 05 2015 Michael Shigorin <mike@altlinux.org> 3.3.8d-alt9
 - Hardwire "CXX3" for any gcc not just 4.x (thx glebfm@ for suggestion).
 

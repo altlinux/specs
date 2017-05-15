@@ -36,7 +36,7 @@ BuildRequires:	rpm-macros-cmake
 
 Name: trinity-tqt3
 Version: 3.5.0
-Release: alt4_14.0.4_1
+Release: alt5_14.0.4_1
 Summary: TQt GUI Library, Version 3
 Group: Graphical desktop/Other
 Url: http://www.trinitydesktop.org/
@@ -1483,6 +1483,9 @@ install -D -m644 "tqt3-examples.tar.gz" "%{?buildroot}%_docdir/tqt3-examples/tqt
 chmod 644 "%{?buildroot}%_datadir/tqt3/mkspecs/"*/*
 
 %changelog
+* Fri May 12 2017 Hihin Ruslan <ruslandh@altlinux.ru> 3.5.0-alt5_14.0.4_1
+- Rebuild version
+
 * Tue Dec 13 2016 Hihin Ruslan <ruslandh@altlinux.ru> 3.5.0-alt4_14.0.4_1
 - Correct BuildRequires
 
