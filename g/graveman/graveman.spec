@@ -1,7 +1,7 @@
 Name: graveman
 %define fver 0.3.12-5
 Version: 0.3.12.5
-Release: alt3.qa1
+Release: alt4.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -55,6 +55,9 @@ rm -rf %buildroot%_mandir/{fr,nl}/
 %_man1dir/*
 
 %changelog
+* Mon May 15 2017 Anton Farygin <rider@altlinux.ru> 0.3.12.5-alt4.qa1
+- NMU: rebuild with new libmng
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.12.5-alt3.qa1
 - NMU: rebuilt for debuginfo.
 

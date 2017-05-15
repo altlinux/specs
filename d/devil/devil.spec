@@ -2,7 +2,7 @@
 
 Name: devil
 Version: 1.7.8
-Release: alt1.qa4
+Release: alt2.qa4
 
 Summary: Cross-platform image loading and manipulation toolkit
 Group: System/Libraries
@@ -107,6 +107,9 @@ rm -rf %buildroot%_infodir/*
 %doc README Libraries.txt TODO CREDITS AUTHORS
 
 %changelog
+* Mon May 15 2017 Anton Farygin <rider@altlinux.ru> 1.7.8-alt2.qa4
+- NMU: rebuild with new libmng
+
 * Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.7.8-alt1.qa4
 - NMU: imported patches from Debian to fix FTBFS.
 

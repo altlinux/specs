@@ -1,6 +1,6 @@
 Name: stratagus
 Version: 2.4.1
-Release: alt1
+Release: alt2
 
 Summary: A free real time strategy game engine
 License: GPLv2+
@@ -87,6 +87,9 @@ install -pD -m644 %SOURCE3 %buildroot%_liconsdir/%name.png
 %_docdir/%name
 
 %changelog
+* Mon May 15 2017 Anton Farygin <rider@altlinux.ru> 2.4.1-alt2
+- NMU: rebuild with new libmng
+
 * Fri Nov 11 2016 Anton Midyukov <antohami@altlinux.org> 2.4.1-alt1
 - New version 2.4.1
 

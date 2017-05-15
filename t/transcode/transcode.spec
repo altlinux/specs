@@ -32,7 +32,7 @@
 
 Name: transcode
 Version: 1.1.7
-Release: alt4
+Release: alt5%ubt
 
 Summary: A linux video stream processing utility
 
@@ -58,6 +58,7 @@ Patch16: transcode-1.1.7-ffmpeg2.patch
 Patch17: transcode-1.1.7-freetype251.patch
 # ALTLinux patches
 Patch18: transcode-1.1.7-libav-10.patch
+Patch19: transcode-1.1.7-av_set-string3.patch
 Patch98: transcode-1.1.5-textrel.patch
 Patch99: subtitleripper-0.3-4-alt-makefile.patch
 
@@ -78,6 +79,7 @@ BuildRequires: libmjpegtools-devel libmpeg2-devel libnetpbm-devel libpostproc-de
 BuildRequires: libquicktime-devel libtheora-devel libv4l-devel libx264-devel libxml2-devel
 BuildRequires: libavresample-devel libxvid-devel >= %xvid_ver xorg-cf-files
 BuildPreReq: libpng-devel
+BuildRequires(pre):rpm-build-ubt
 
 %description
 transcode  is a linux text-console utility for video stream
@@ -137,6 +139,7 @@ sed -i s/getline/get_line/ contrib/subrip/subtitleripper/vobsub.c
 %patch17 -p1
 #
 %patch18 -p1
+%patch19 -p2
 %patch98 -p2
 %patch99 -p1
 install -m644 %SOURCE2 filter/
@@ -239,6 +242,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %doc contrib/subrip/subtitleripper/{README*,ChangeLog}
 
 %changelog
+* Mon May 15 2017 Anton Farygin <rider@altlinux.ru> 1.1.7-alt5%ubt
+- rebuild in new environment
+
 * Wed Mar 09 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.7-alt4
 - rebuilt with recent libav and libx264
 

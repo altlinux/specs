@@ -1,8 +1,8 @@
 %set_automake_version 1.11
 
 Name: libmng
-Version: 1.0.10
-Release: alt3
+Version: 2.0.3
+Release: alt1%ubt
 
 Summary: A library for handling MNG files
 License: Distributable (see LICENSE)
@@ -13,10 +13,12 @@ Url: http://www.libmng.com/
 Source: libmng-%version.tar
 Patch1: libmng-1.0.10-alt-build-fixes.patch
 Patch2: libmng-1.0.10-alt-player-build.patch
-Patch3: libmng-1.0.10-debian-support-lcms2.patch
+Patch3: libmng-2.0.3-debian-linux-makefile.patch
 
 # Automatically added by buildreq on Tue Sep 23 2008
 BuildRequires: gcc-c++ libSDL-devel libXext-devel libXt-devel libjpeg-devel liblcms2-devel openmotif-devel xorg-printproto-devel xorg-xextproto-devel zlib-devel
+
+BuildRequires(pre):rpm-build-ubt
 
 %package devel
 Summary: Include files for development with %name
@@ -58,10 +60,9 @@ This package contains various %name-based utilities.
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p2
+%patch3 -p1
 
 %build
-ln -s makefiles/{acinclude.m4,Makefile.am,configure.in} .
 %autoreconf
 %configure --enable-shared --disable-static \
 	--with-zlib --with-jpeg --with-lcms
@@ -99,12 +100,16 @@ popd
 %files devel
 %_libdir/*.so
 %_includedir/*
+%_pkgconfigdir/*.pc
 %_mandir/man3/*
 
 %files -n mng-utils
 %_bindir/*
 
 %changelog
+* Thu May 11 2017 Anton Farygin <rider@altlinux.ru> 2.0.3-alt1%ubt
+- new version
+
 * Thu Oct 20 2016 Anton Farygin <rider@altlinux.ru> 1.0.10-alt3
 - Build with lcms2
 

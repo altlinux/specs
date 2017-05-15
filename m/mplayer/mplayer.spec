@@ -22,7 +22,6 @@
 %def_enable lame
 %def_disable lame_lavc
 %def_enable gui
-%def_disable gtk1
 %def_enable termcap
 %def_enable termios
 %def_enable iconv
@@ -46,12 +45,11 @@
 %def_enable network
 %def_disable winsock2
 %def_enable smb
-%def_disable live
+%def_enable live
 %def_enable vcd
 %def_enable bluray
 %def_enable dvdnav
 %def_enable dvdread
-%def_disable dvdread_int
 %def_enable cdparanoia
 %def_enable bitmap_font
 %def_enable freetype
@@ -96,8 +94,6 @@
 %def_disable vf_lavfi
 %def_disable libavcodec_mpegaudio_hp
 %def_enable faad
-%def_disable tremor_internal
-%def_disable tremor_low
 %def_disable tremor
 %def_enable vorbis
 %def_enable speex
@@ -113,7 +109,6 @@
 %def_disable toolame
 %def_disable twolame
 %def_disable xmms
-%def_enable mp3lib
 %def_enable liba52
 %def_enable libmpeg2
 %def_disable libmpeg2_int
@@ -121,7 +116,6 @@
 %def_disable dirac
 %def_disable nut
 %def_disable libschroedinger_lavc
-%def_disable libdvdcss_internal
 %def_enable libgsm
 %def_enable amrnb
 %def_enable amrwb
@@ -166,8 +160,6 @@
 %def_enable pnm
 %def_enable md5sum
 %def_enable vdpau
-%def_enable vaapi
-%def_enable xrender
 %def_disable matrixview
 %def_enable mpg123
 %def_enable yuv4mpeg
@@ -292,8 +284,6 @@
 %set_disable xf86keysym
 %set_disable vm
 %set_disable vdpau
-%set_disable vaapi
-%set_disable xrender
 %set_disable dga1
 %set_disable dga2
 %endif
@@ -305,16 +295,16 @@
 
 
 Name: %lname
-Version: 1.1.1
-Release: alt16
+Version: 1.3.0
+Release: alt1
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
 %define pkgver %version%prerel
 %endif
 Summary: Media player
-Summary(uk_UA.CP1251): Медіаплейер
-Summary(ru_RU.CP1251): Медиаплейер
+Summary(uk_UA.UTF-8): РњРµРґС–Р°РїР»РµР№РµСЂ
+Summary(ru_RU.UTF-8): РњРµРґРёР°РїР»РµР№РµСЂ
 License: GPLv2+
 Group: Video
 URL: http://www.mplayerhq.hu
@@ -338,7 +328,6 @@ Source4: standard-1.9.tar
 Source5: %lname.conf.in
 Patch0: %name-%version-%release.patch
 Patch1: %name-%version-nls.patch
-Patch2: %name-%version-vaapi.patch
 
 %if_enabled gui
 Provides: %name-gui = %version-%release
@@ -375,7 +364,6 @@ BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
 %endif
 
 %{?_enable_vdpau:BuildRequires: libvdpau-devel}
-%{?_enable_vaapi:BuildRequires: pkgconfig(libva) pkgconfig(libva-glx) %{?_enable_xrender:libXrender-devel}}
 %{?_enable_gif:BuildRequires: libungif-devel}
 %{?_enable_mng:BuildRequires: libmng-devel}
 %{?_enable_png:BuildRequires: libpng-devel}
@@ -443,7 +431,7 @@ BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
 %{?_enable_openal:BuildRequires: libopenal-devel}
 %{?_enable_nas:BuildRequires: libaudio-devel}
 
-%{?_enable_gui:BuildRequires: ImageMagick-tools desktop-file-utils gtk+%{?_disable_gtk1:2}-devel}
+%{?_enable_gui:BuildRequires: ImageMagick-tools desktop-file-utils gtk+2-devel}
 %endif
 
 %{?_enable_nls:BuildRequires: gettext-tools}
@@ -465,26 +453,26 @@ Radeon, Mach64, Permedia3), hardware AC3 decoding and few hardware MPEG decoding
 boards such as DVB and DXR3/Hollywood+.
 It also supports video grabbing from V4L devices.
 
-%description -l ru_RU.CP1251
-%Name - это видеопроигрыватель, который поддерживает широкий спектр форматов
-файлов, в том числе AVI, MPEG и Quicktime. В него включено множество аудио- и
-видеокодеков, оптимизированных для MMX, SSE, 3DNow! и.т.п. Кроме этого, имеется
-возможность использования внешних кодеков: XAnim, RealPlayer и Win32. Реализованы
-основные функции для проигрывания VCD/DVD, включая субтитры DVD, а также
-множества других текстовых форматов субтитров.
-Поддерживаются практически все способы вывода изображения и звука в
-юниксоподобных системах. Имеются низкоуровневые специализированные драйвера для
-некоторых видеокарт: Matrox, Nvidia, 3Dfx, Radeon, Mach64, Permedia3, аппаратного
-декодирования AC3, а также нескольких плат, аппаратно декодирующих MPEG, таких
-как DVB и DXR3/Hollywood+.
-Кроме этого, %Name способен захватывать сигнал с устройств V4L.
+%description -l ru_RU.UTF-8
+%Name - СЌС‚Рѕ РІРёРґРµРѕРїСЂРѕРёРіСЂС‹РІР°С‚РµР»СЊ, РєРѕС‚РѕСЂС‹Р№ РїРѕРґРґРµСЂР¶РёРІР°РµС‚ С€РёСЂРѕРєРёР№ СЃРїРµРєС‚СЂ С„РѕСЂРјР°С‚РѕРІ
+С„Р°Р№Р»РѕРІ, РІ С‚РѕРј С‡РёСЃР»Рµ AVI, MPEG Рё Quicktime. Р’ РЅРµРіРѕ РІРєР»СЋС‡РµРЅРѕ РјРЅРѕР¶РµСЃС‚РІРѕ Р°СѓРґРёРѕ- Рё
+РІРёРґРµРѕРєРѕРґРµРєРѕРІ, РѕРїС‚РёРјРёР·РёСЂРѕРІР°РЅРЅС‹С… РґР»СЏ MMX, SSE, 3DNow! Рё.С‚.Рї. РљСЂРѕРјРµ СЌС‚РѕРіРѕ, РёРјРµРµС‚СЃСЏ
+РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РІРЅРµС€РЅРёС… РєРѕРґРµРєРѕРІ: XAnim, RealPlayer Рё Win32. Р РµР°Р»РёР·РѕРІР°РЅС‹
+РѕСЃРЅРѕРІРЅС‹Рµ С„СѓРЅРєС†РёРё РґР»СЏ РїСЂРѕРёРіСЂС‹РІР°РЅРёСЏ VCD/DVD, РІРєР»СЋС‡Р°СЏ СЃСѓР±С‚РёС‚СЂС‹ DVD, Р° С‚Р°РєР¶Рµ
+РјРЅРѕР¶РµСЃС‚РІР° РґСЂСѓРіРёС… С‚РµРєСЃС‚РѕРІС‹С… С„РѕСЂРјР°С‚РѕРІ СЃСѓР±С‚РёС‚СЂРѕРІ.
+РџРѕРґРґРµСЂР¶РёРІР°СЋС‚СЃСЏ РїСЂР°РєС‚РёС‡РµСЃРєРё РІСЃРµ СЃРїРѕСЃРѕР±С‹ РІС‹РІРѕРґР° РёР·РѕР±СЂР°Р¶РµРЅРёСЏ Рё Р·РІСѓРєР° РІ
+СЋРЅРёРєСЃРѕРїРѕРґРѕР±РЅС‹С… СЃРёСЃС‚РµРјР°С…. РРјРµСЋС‚СЃСЏ РЅРёР·РєРѕСѓСЂРѕРІРЅРµРІС‹Рµ СЃРїРµС†РёР°Р»РёР·РёСЂРѕРІР°РЅРЅС‹Рµ РґСЂР°Р№РІРµСЂР° РґР»СЏ
+РЅРµРєРѕС‚РѕСЂС‹С… РІРёРґРµРѕРєР°СЂС‚: Matrox, Nvidia, 3Dfx, Radeon, Mach64, Permedia3, Р°РїРїР°СЂР°С‚РЅРѕРіРѕ
+РґРµРєРѕРґРёСЂРѕРІР°РЅРёСЏ AC3, Р° С‚Р°РєР¶Рµ РЅРµСЃРєРѕР»СЊРєРёС… РїР»Р°С‚, Р°РїРїР°СЂР°С‚РЅРѕ РґРµРєРѕРґРёСЂСѓСЋС‰РёС… MPEG, С‚Р°РєРёС…
+РєР°Рє DVB Рё DXR3/Hollywood+.
+РљСЂРѕРјРµ СЌС‚РѕРіРѕ, %Name СЃРїРѕСЃРѕР±РµРЅ Р·Р°С…РІР°С‚С‹РІР°С‚СЊ СЃРёРіРЅР°Р» СЃ СѓСЃС‚СЂРѕР№СЃС‚РІ V4L.
 
 
 %if_enabled mencoder
 %package -n mencoder
 Group: Video
 Summary: Movie encoder for Unix.
-Summary(ru_RU.CP1251): Кодировщик фильмов для Unix.
+Summary(ru_RU.UTF-8): РљРѕРґРёСЂРѕРІС‰РёРє С„РёР»СЊРјРѕРІ РґР»СЏ Unix.
 Provides: MEncoder = %version-%release
 Conflicts: %Name < 1.0-alt28
 
@@ -629,7 +617,6 @@ Ukrainian language support for %Name.
 %setup -q -n %Name-%pkgver
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %{?svnrev:subst 's/UNKNOWN/%svnrev/' version.sh}
 
@@ -653,6 +640,9 @@ export CFLAGS="%optflags"
 	--libdir=%_libdir \
 	--datadir=%_datadir/%name \
 	--confdir=%_sysconfdir/%name \
+%ifarch i586
+	--disable-relocatable \
+%endif
 	--extra-cflags="%optflags %{?_enable_smb:$(pkg-config --cflags smbclient)}" \
 	%{subst_enable mplayer} \
 	--extra-libs-mplayer="-lvorbisenc" \
@@ -662,10 +652,8 @@ export CFLAGS="%optflags"
 	%{subst_enable_to lame mp3lame} \
 	%{subst_enable_to lame mp3lame-lavc} \
 	%{subst_enable gui} \
-	%{subst_enable gtk1} \
 	%{subst_enable termcap} \
 	%{subst_enable termios} \
-	%{subst_enable nls} \
 	%{subst_enable iconv} \
 	%{subst_enable shm} \
 	%{subst_enable langinfo} \
@@ -690,7 +678,6 @@ export CFLAGS="%optflags"
 	%{subst_enable dvdnav} \
 	%{subst_enable dvdread} \
 	%{subst_enable vdpau} \
-	%{subst_enable vaapi} \
 	%{subst_enable xrender} \
 	%{subst_enable_to dvdread_int dvdread-internal} \
 	%{subst_enable cdparanoia} \
@@ -744,8 +731,6 @@ export CFLAGS="%optflags"
 	%{subst_enable postproc} \
 	%{subst_enable_to vf_lavfi vf-lavfi} \
 	%{subst_enable libavcodec_mpegaudio_hp} \
-	%{subst_enable_to tremor_internal tremor-internal} \
-	%{subst_enable_to tremor_low tremor-low} \
 	%{subst_enable tremor} \
 	%{subst_enable_to vorbis libvorbis} \
 	%{subst_enable speex} \
@@ -762,7 +747,6 @@ export CFLAGS="%optflags"
 	%{subst_enable toolame} \
 	%{subst_enable twolame} \
 	%{subst_enable xmms} \
-	%{subst_enable mp3lib} \
 	%{subst_enable liba52} \
 	%{subst_enable libmpeg2} \
 	%{subst_enable_to libmpeg2_int libmpeg2-internal} \
@@ -770,7 +754,6 @@ export CFLAGS="%optflags"
 	%{subst_enable musepack} \
 	%{subst_enable_to nut libnut} \
 	%{subst_enable_to libschroedinger_lavc libschroedinger-lavc} \
-	%{subst_enable_to libdvdcss_internal libdvdcss-internal} \
 	%{subst_enable libgsm} \
 	%{subst_enable_to amrnb libopencore_amrnb} \
 	%{subst_enable_to amrwb libopencore_amrwb} \
@@ -1084,8 +1067,8 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 %if_enabled nls
 %lang(bg) %_datadir/locale/bg/LC_MESSAGES/*
 %lang(cs) %_datadir/locale/cs/LC_MESSAGES/*
+%lang(de) %_datadir/locale/da/LC_MESSAGES/*
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*
-%lang(dk) %_datadir/locale/dk/LC_MESSAGES/*
 %lang(el) %_datadir/locale/el/LC_MESSAGES/*
 %lang(es) %_datadir/locale/es/LC_MESSAGES/*
 %lang(fr) %_datadir/locale/fr/LC_MESSAGES/*
@@ -1108,6 +1091,12 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Fri Mar 17 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.3.0-alt1
+- 1.3.0 (ALT#32975)
+- rebuilt with live555 (ALT#30778)
+- dropped non-upstream vaapi support
+- converted all the descriptions from CP1251 to UTF-8
+
 * Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt16
 - hide menu items from KDE (ALT#31522)
 
