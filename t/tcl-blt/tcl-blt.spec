@@ -3,7 +3,7 @@
 
 Name: tcl-%teaname
 Version: 2.5
-Release: alt3
+Release: alt4
 
 Summary: A Tk toolkit extension, including widgets, geometry managers etc.
 License: MIT
@@ -97,6 +97,9 @@ rm -f %buildroot%_mandir/mann/{bitmap,graph,tabset,watch}.n*
 %_tcldatadir/%teaname%major/demos
 
 %changelog
+* Tue May 16 2017 Vladislav Zavjalov <slazav@altlinux.org> 2.5-alt4
+- fix for tcl/tk 8.6.6
+
 * Tue Apr 04 2017 Vladislav Zavjalov <slazav@altlinux.org> 2.5-alt3
 - devel package: install bltOldConfig.h which is used in blt.h
 
