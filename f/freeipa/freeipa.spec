@@ -11,7 +11,7 @@
 
 Name: freeipa
 Version: 4.3.3
-Release: alt2
+Release: alt3
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -19,6 +19,7 @@ License: GPLv3+
 Url: http://www.freeipa.org/
 Source: %name-%version.tar
 Source1: nss.conf
+Source2: ipa_configured
 Patch: %name-%version-%release.patch
 
 BuildRequires: 389-ds-devel >= 1.3.1.3
@@ -91,6 +92,7 @@ Requires: krb5-kinit >= %krb5_version
 Requires: openntpd
 Requires: pki-server >= %pki_core_version
 Requires: pki-ca >= %pki_core_version
+Requires: pki-kra >= %pki_core_version
 Requires: java-1.8.0-openjdk
 Requires: apache2-mod_nss
 Requires: apache2-mod_auth_gssapi
@@ -300,6 +302,7 @@ This package contains tests that verify IPA functionality.
 %patch -p1
 
 %build
+export JAVA_STACK_SIZE="8m"
 export CFLAGS="$CFLAGS %optflags -I/usr/include/krb5"
 export CPPFLAGS="$CPPFLAGS %optflags -I/usr/include/krb5"
 export SUPPORTED_PLATFORM=altlinux
@@ -335,6 +338,7 @@ export SUPPORTED_PLATFORM=altlinux
 rm -f ipapython/services.py
 %makeinstall_std SKIP_API_VERSION_CHECK="yes" PYTHON="python"
 install -Dm0644 %SOURCE1 %buildroot%_sysconfdir/httpd2/conf/extra-available/ipa-nss.conf
+install -Dm0755 %SOURCE2 %buildroot%_sbindir/ipa_configured
 %find_lang ipa
 
 # [ "/usr/lib/python2.7/site-packages" != "%python_sitelibdir" ] && mv %buildroot/usr/lib/python2.7/site-packages/* %buildroot/%python_sitelibdir/
@@ -564,6 +568,27 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 %exclude %_datadir/ipa/opendnssec_conf.template
 %exclude %_datadir/ipa/opendnssec_kasp.template
 
+# This should be run from posttrans actually (or from filetrigger if posttrans
+# is not available).
+# But for now just run it in post, this shouldn't cause any damage.
+#posttrans server
+%post server
+# don't execute upgrade and restart of IPA when server is not installed
+if  [ "$1" -eq 2 ] && ipa_configured; then
+    # This must be run in posttrans so that updates from previous
+    # execution that may no longer be shipped are not applied.
+    /usr/sbin/ipa-server-upgrade --quiet >/dev/null || :
+
+    # Restart IPA processes. This must be also run in postrans so that plugins
+    # and software is in consistent state
+    # NOTE: systemd specific section
+    if systemctl is-enabled ipa.service >/dev/null 2>&1; then
+        systemctl try-restart ipa.service >/dev/null 2>&1 || :
+    fi
+fi
+# END
+
+
 %files server-dns
 %_sbindir/ipa-dns-install
 %_man1dir/ipa-dns-install.1.*
@@ -637,6 +662,13 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 %_man1dir/ipa-test-task.1.*
 
 %changelog
+* Tue May 16 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt3
+- server: Require pki-kra.
+- Run ipa-server-upgrade at package update.
+- Add ipa_configured script.
+- Fix ipa-server-upgrade (closes: #33463).
+- Set JAVA_STACK_SIZE to 8m.
+
 * Wed Apr 26 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt2
 - Fix build with 389-ds-1.3.6.4.
 
