@@ -10,7 +10,7 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       %{repo}-io
-Version:    17.04.0
+Version:    17.05.0
 Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
@@ -172,6 +172,9 @@ exit 0
 %{gopath}/src/%{import_path}/
 
 %changelog
+* Tue May 16 2017 Vladimir Didenko <cow@altlinux.org> 17.05.0-alt1
+- New version
+
 * Fri Apr 7 2017 Vladimir Didenko <cow@altlinux.org> 17.04.0-alt1
 - New version
 
