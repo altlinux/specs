@@ -7,7 +7,7 @@
 %define cid_lightning_dir  %tbird_noarch_extensionsdir/langpack-ru@lightning.mozilla.org
 
 Name:		thunderbird-ru
-Version:	52.1.0
+Version:	52.1.1
 Release:	alt1
 Summary:	Russian (RU) Language Pack for Thunderbird (with Lightning support)
 
@@ -84,6 +84,9 @@ patch -p2 < %PATCH0
 %cid_lightning_dir
 
 %changelog
+* Tue May 16 2017 Andrey Cherepanov <cas@altlinux.org> 52.1.1-alt1
+- New version
+
 * Tue May 02 2017 Andrey Cherepanov <cas@altlinux.org> 52.1.0-alt1
 - New version
 
