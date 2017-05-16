@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.2
+%define ver_major 3.4
 %define api_ver 3.0
 %define gnome_distributor "%vendor"
 %define gnome_date "%(date "+%%B %%e %%Y"), Moscow"
@@ -8,7 +8,7 @@
 %def_enable introspection
 
 Name: cinnamon-desktop
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library with common API for various Cinnamon modules
@@ -41,6 +41,7 @@ BuildRequires: libSM-devel libXrandr-devel libXext-devel xkeyboard-config-devel 
 BuildRequires: hwdatabase >= 0.3.31-alt1
 BuildRequires: libpulseaudio-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel}
+BuildRequires: libaccountsservice-devel
 
 %description
 Cinnamon is a Linux desktop which provides advanced innovative features
@@ -154,6 +155,9 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Thu May 4 2017 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
 * Wed Dec 14 2016 Vladimir Didenko <cow@altlinux.org> 3.2.4-alt1
 - 3.2.4
 

@@ -1,11 +1,11 @@
-%define ver_major 3.2
+%define ver_major 3.4
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 %define _name cinnamon
 
 Name: %{_name}-session
 Version: %ver_major.0
-Release: alt4
+Release: alt1
 
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
 License: GPLv2+
@@ -127,6 +127,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Fri May 5 2017 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt1
+- 3.4.0-2-g33f6def
+
 * Wed Apr 26 2017 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt4
 - add g-s-d stuff to autostart blacklist
 

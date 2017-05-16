@@ -1,7 +1,7 @@
 %def_enable gtk_doc
 
 Name: cinnamon
-Version: 3.2.8
+Version: 3.4.0
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -193,7 +193,6 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %_datadir/dbus-1/services/org.Cinnamon.Melange.service
 %_datadir/dbus-1/services/org.Cinnamon.Slideshow.service
 %_mandir/man1/*.1.*
-%doc README
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -201,6 +200,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Fri May 5 2017 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
 * Mon Jan 9 2017 Vladimir Didenko <cow@altlinux.org> 3.2.8-alt1
 - 3.2.8
 
