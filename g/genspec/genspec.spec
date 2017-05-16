@@ -1,8 +1,8 @@
 %define gname github2spec
 
 Name:     genspec
-Version:  1.1.1
-Release:  alt2
+Version:  1.1.2
+Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
 License:  GPLv3+
@@ -34,6 +34,9 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_datadir/spectemplates
 
 %changelog
+* Tue May 16 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.2-alt1
+- Fix several issues
+
 * Thu May 11 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.1-alt2
 - Add rpm-build-ruby rpm-build-python3 to BuildPrereq
 
