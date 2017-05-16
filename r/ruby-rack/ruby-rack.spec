@@ -3,7 +3,7 @@
 %define pkgname rack
 
 Name: ruby-%pkgname
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Summary: Modular Ruby webserver interface
@@ -80,6 +80,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Rack*
 
 %changelog
+* Tue May 16 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.3-alt1
+- New version
+
 * Mon May 08 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt1
 - New version
 
