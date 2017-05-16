@@ -1,6 +1,6 @@
 Name: connector
-Version: 1.4.0
-Release: alt3
+Version: 1.4.1
+Release: alt1
 
 Summary: Remote desktop chooser
 License: GPL
@@ -42,6 +42,9 @@ install -pDm644 %name.man %buildroot%_man1dir/%name.1
 %_man1dir/*
 
 %changelog
+* Tue May 16 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.4.1-alt1
+- Added more shared folders
+
 * Tue Apr 18 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.4.0-alt3
 - Fixed build - remove vmware-view-userinstall from requires
 - Added checking the installation of the VMware Horizon Client (or vmware-view-userinstall)
