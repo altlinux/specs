@@ -1,14 +1,15 @@
 Name: basic256
 Version: 0.9.6
-Release: alt6.1.qa1
+Release: alt7
 URL: http://kidbasic.sourceforge.net
 Source: http://ovh.dl.sourceforge.net/sourceforge/kidbasic/%name-%version.tar.gz
 Source1: basic256.desktop
 Source2: basic256_32.png
 Patch0: basic256-0.9.6-alt-fix-say-function.patch
 Patch1: basic256-0.9.6-alt-glibc-2.16.patch
+Patch2: basic256-alt-fix-ambiguous-array.patch
 
-License: GPL
+License: GPLv2
 Group: Development/Other
 Packager: Sergey Irupin <lamp@altlinux.org>
 
@@ -28,6 +29,7 @@ and interpreter, a debugger, easy to use graphical and text output, and an edito
 cd trunk
 %patch0 -p1
 %patch1 -p3
+%patch2 -p3
 
 %build
 cd trunk
@@ -56,6 +58,11 @@ cp -r ./../doc/ru/ %buildroot%_datadir/%name/help/
 %_niconsdir/%name.png
 
 %changelog
+* Mon May 15 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.6-alt7
+- Fix localization of desktop file
+- Fix license
+- Fix build with new gcc
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.9.6-alt6.1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
