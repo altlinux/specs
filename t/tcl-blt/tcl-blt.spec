@@ -3,7 +3,7 @@
 
 Name: tcl-%teaname
 Version: 2.5
-Release: alt4
+Release: alt5
 
 Summary: A Tk toolkit extension, including widgets, geometry managers etc.
 License: MIT
@@ -97,6 +97,9 @@ rm -f %buildroot%_mandir/mann/{bitmap,graph,tabset,watch}.n*
 %_tcldatadir/%teaname%major/demos
 
 %changelog
+* Tue May 16 2017 Vladislav Zavjalov <slazav@altlinux.org> 2.5-alt5
+- one more fix for tcl 8.6.6: add missing TkCopyAndGlobalEval()
+
 * Tue May 16 2017 Vladislav Zavjalov <slazav@altlinux.org> 2.5-alt4
 - fix for tcl/tk 8.6.6
 
