@@ -1,5 +1,5 @@
 Name: rpm-build-ocaml
-Version: 1.2
+Version: 1.3
 Release: alt1
 BuildArch: noarch
 
@@ -25,12 +25,20 @@ RPM macros and reqprov helpers to be used in OCaml packages.
 
 %install
 mkdir -p %buildroot%_rpmlibdir
+install -pD -m644 ocaml %buildroot%_rpmmacrosdir/ocaml
+install -pD -m644 ocaml.env %buildroot%_rpmmacrosdir/ocaml.env
 install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions %buildroot%_rpmlibdir/
 
 %files
+%_rpmmacrosdir/ocaml
+%_rpmmacrosdir/ocaml.env
 %_rpmlibdir/ocaml*
 
 %changelog
+* Tue May 16 2017 Anton Farygin <rider@altlinux.ru> 1.3-alt1
+- added %%add_ocaml_req_skip macros
+- added %%ocamldir
+
 * Tue Apr 18 2017 Anton Farygin <rider@altlinux.ru> 1.2-alt1
 - added stublibs path to search shared libraries in cmxi archives
 - resolve .so path for avoid requires to devel packages in runtime ocaml libraries
