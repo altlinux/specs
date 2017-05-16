@@ -2,7 +2,7 @@
 
 Name: rpm-build-ruby
 Epoch: 1
-Version: 0.2.4
+Version: 0.3.0
 Release: alt1
 Summary: RPM helper scripts to calculate Ruby dependencies
 License: GPLv2
@@ -67,6 +67,12 @@ install -D -m 0755 testrb %buildroot%_bindir/testrb
 %_bindir/testrb
 
 %changelog
+* Tue May 16 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1:0.3.0-alt1
+- Revert "ruby.req.files: clean ups" (from 0.1.2-alt1) because non-*.rb
+  executable scripts were lost.
+- ruby.req.files: parse file output case insensitive because now
+  file prints Ruby capitalized.
+
 * Mon Mar 13 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.2.4-alt1
 - exclude Ruby version from %%ruby_sitearchdir provided pathes
 - force newline to Ruby files to prevent output without newline ended
