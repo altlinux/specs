@@ -1,5 +1,5 @@
 Name: iproute2
-Version: 4.4.0
+Version: 4.11.0
 Release: alt1
 
 Summary: Advanced IP routing and network devices configuration tools
@@ -61,6 +61,7 @@ This package contains libnetlink dynamic library headers.
 %prep
 %setup -n %name-%version-%release
 sed -i 's,/sbin/arping,/usr/sbin/arping,g' examples/dhcp-client-script
+sed -i 's/\[hidelinks\]//' doc/tc-filters.tex
 
 %build
 %make_build DBM_INCLUDE=%_includedir/db4 LIBDIR=%_libdir CCOPTS='%optflags'
@@ -84,7 +85,7 @@ install -p -m644 include/{libnetlink.h,ll_map.h} %buildroot%_includedir
 install -p -m644 man/man3/libnetlink.3 %buildroot%_man3dir/
 ln -s ../../%_lib/libnetlink.so %buildroot%_libdir/libnetlink.so
 
-# Symlinks for unpriviledge users
+# symlinks for unprivileged users
 for prg in ip rtmon tc; do
 	ln -s ../../sbin/$prg %buildroot%_bindir
 done
@@ -119,6 +120,9 @@ done
 %_man3dir/*
 
 %changelog
+* Mon May 01 2017 Dmitry V. Levin <ldv@altlinux.org> 4.11.0-alt1
+- 4.4.0 -> 4.11.0.
+
 * Tue Jan 19 2016 Dmitry V. Levin <ldv@altlinux.org> 4.4.0-alt1
 - Updated to 4.4.0.
 
