@@ -1,12 +1,12 @@
 %def_disable snapshot
-%define rev r1
+%define rev %nil
 %if_enabled snapshot
 %define git_distance 1175
 %endif
 
 Name: rawtherapee
-Version: 5.0%{?_enable_snapshot:.%git_distance}
-Release: alt1.%rev
+Version: 5.1%{?_enable_snapshot:.%git_distance}
+Release: alt1
 
 Summary: THe Experimental RAw Photo Editor
 License: GPLv3+
@@ -17,7 +17,7 @@ URL: http://www.rawtherapee.com/
 # use full archive not git-archive to avoid dancing around version
 Source: rawtherapee-%version.tar
 %else
-Source: http://rawtherapee.com/shared/source/%name-%version-%rev-gtk3.tar.xz
+Source: http://rawtherapee.com/shared/source/%name-%version.tar.xz
 %endif
 
 Requires: %name-data = %version-%release
@@ -41,7 +41,7 @@ BuildArch: noarch
 This package provides noarch data needed for Raw Therapee to work.
 
 %prep
-%setup -n %name-%version-%rev-gtk3
+%setup
 # Do not install useless rtstart:
 subst "s|install (PROGRAMS rtstart|\#install (PROGRAMS rtstart|" CMakeLists.txt
 
@@ -58,6 +58,7 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 
 %files
 %_bindir/%name
+%_bindir/%name-cli
 %doc AUTHORS.txt LICENSE.txt RELEASE_NOTES.txt
 
 %files data
@@ -68,6 +69,9 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Wed May 17 2017 Yuri N. Sedunov <aris@altlinux.org> 5.1-alt1
+- 5.1
+
 * Wed Feb 08 2017 Yuri N. Sedunov <aris@altlinux.org> 5.0-alt1.r1
 - 5.0-r1
 
