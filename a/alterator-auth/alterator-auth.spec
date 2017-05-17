@@ -1,11 +1,8 @@
-%define _altdata_dir %_datadir/alterator
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.34
+Version: 0.35
 Release: alt1
-
-BuildArch: noarch
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d
 
@@ -30,7 +27,8 @@ Conflicts: alterator-lookout < 1.6-alt6
 Provides: alterator-nsswitch = %version
 Obsoletes: alterator-nsswitch
 
-BuildPreReq: alterator >= 4.7-alt4
+BuildPreReq: alterator >= 5.0 alterator-lookout
+BuildRequires: guile22-devel
 
 %description
 Alterator module for system wide auth settings
@@ -46,7 +44,6 @@ Requires: krb5-kinit
 Requires: pam_mount
 Requires: libnss-role
 Requires: alterator-datetime
-Requires: gvfs-shares
 
 %description -n task-auth-ad-winbind
 Metapackage to authenticate in Active Directory domain by Winbind.
@@ -61,7 +58,6 @@ Requires: krb5-kinit
 Requires: pam_mount
 Requires: libnss-role
 Requires: alterator-datetime
-Requires: gvfs-shares
 
 Provides:  task-auth-ad = %EVR
 Obsoletes: task-auth-ad < %EVR
@@ -78,7 +74,6 @@ Requires: krb5-kinit
 Requires: pam_mount
 Requires: libnss-role
 Requires: alterator-datetime
-Requires: gvfs-shares
 
 %description -n task-auth-freeipa
 Metapackage to authenticate in FreeIPA domain.
@@ -90,6 +85,7 @@ Metapackage to authenticate in FreeIPA domain.
 %make_build libdir=%_libdir
 
 %install
+export GUILE_LOAD_PATH=/usr/share/alterator/lookout
 %makeinstall
 install -Dpm644 etc/user-groups %buildroot%_sysconfdir/alterator/auth/user-groups
 install -Dpm644 etc/admin-groups %buildroot%_sysconfdir/alterator/auth/admin-groups
@@ -99,8 +95,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files
 %config(noreplace) %_sysconfdir/alterator/auth/user-groups
 %config(noreplace) %_sysconfdir/alterator/auth/admin-groups
-%_datadir/alterator/applications/*
-%_datadir/alterator/ui/*/
+%_alterator_datadir/applications/*
+%_alterator_datadir/ui/*/
+%_alterator_libdir/ui/auth/*.go
 %_sbindir/system-auth
 %_hooksdir/90-auth
 %_alterator_backend3dir/*
@@ -112,6 +109,11 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Wed May 17 2017 Andrey Cherepanov <cas@altlinux.org> 0.35-alt1
+- Remove gvfs-shares from task-auth-* metapackages (ALT #33481)
+- Hide non-existing services list (ALT #33371)
+- Hide roleadd warnings about non-existing groups (ALT #33372)
+
 * Thu Apr 06 2017 Andrey Cherepanov <cas@altlinux.org> 0.34-alt1
 - task-auth-ad now is provided by task-auth-ad-sssd
 - Samba config cleanup, disable wins support
