@@ -1,6 +1,6 @@
 Name: pcsc-lite-ccid
 Version: 1.4.26
-Release: alt1
+Release: alt2
 
 Summary: USB CCID IFD Handler
 Group: System/Libraries
@@ -12,6 +12,7 @@ Requires: pcsc-lite
 Source: %name-%version.tar
 Source1: PCSC.tar
 Patch1: ccid-disable-examples-build.patch
+Patch3: pcsc-lite-alt-fix-realloc-usage.patch
 
 BuildRequires: flex libpcsclite-devel libusb-devel
 
@@ -30,6 +31,9 @@ Devices) driver for PC/SC Lite.
 %patch1 -p1
 # Copy pcsc-lite
 tar xf %SOURCE1
+cd PCSC
+%patch3 -p1
+cd -
 
 %build
 %autoreconf
@@ -50,6 +54,9 @@ cp -a src/92_pcscd_ccid.rules %buildroot/lib/udev/rules.d/
 /lib/udev/rules.d/92_pcscd_ccid.rules
 
 %changelog
+* Thu May 11 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.26-alt2
+- pcsc: fixed realloc usage.
+
 * Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 1.4.26-alt1
 - new version 1.4.26
 
