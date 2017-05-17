@@ -1,6 +1,6 @@
 Name: 	  nagwad
 Version:  0.8
-Release:  alt2%ubt
+Release:  alt3%ubt
 
 Summary:  Nagios watch daemon
 License:  GPLv3
@@ -50,6 +50,9 @@ Group:   System/Servers
 %description server
 These are examples of configuration of Nagios for the controlling machine.
 
+%pre
+/usr/sbin/groupadd -r -f osec
+/usr/sbin/useradd -r -g osec -d /dev/null -s /dev/null -n osec >/dev/null 2>&1 ||:
 
 
 
@@ -88,6 +91,7 @@ mkdir -p %buildroot/var/lib/nagwad/device
 mkdir -p %buildroot/var/lib/nagwad/device_archived
 
 mkdir -p %buildroot/var/lib/osec
+chmod 775 %buildroot/var/lib/osec
 mkdir -p %buildroot/etc/osec
 mkdir -p %buildroot/%_datadir/osec
 install -Dm 0755 osec.cron  %buildroot/%_datadir/osec/
@@ -111,12 +115,15 @@ install -Dm 0755 osec/* %buildroot/etc/osec/
 
 %files -n osec-timerunit
 /etc/osec/*
-%dir /var/lib/osec/
+%attr(770,root,osec) /var/lib/osec/
 %_datadir/osec/*
 %_unitdir/osec.service
 %_unitdir/osec.timer
 
 %changelog
+* Wed May 17 2017 Denis Medvedev <nbr@altlinux.org> 0.8-alt3%ubt
+- fix permissions for /var/lib/osec
+
 * Mon Apr 24 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.8-alt2%ubt
 - move provides/conflicts for osec-timerunit from description
 
