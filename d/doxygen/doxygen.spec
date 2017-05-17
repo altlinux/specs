@@ -1,5 +1,5 @@
 Name: doxygen
-Version: 1.7.6.1
+Version: 1.8.13
 Release: alt1
 Epoch: 1
 
@@ -9,11 +9,12 @@ Group: Development/Other
 Url: http://www.doxygen.org/
 
 # ftp://ftp.stack.nl/pub/users/dimitri/doxygen-%version.src.tar.gz
-Source: doxygen-%version.src.tar
+Source: %name-%{version}.src.tar.gz
 Patch: doxygen-1.7.5-rh-timestamp.patch
 
-# Automatically added by buildreq on Sun Aug 02 2009
-BuildRequires: flex gcc-c++ graphviz libqt4-devel python-modules-xml texlive-extra-utils texlive-generic-recommended texlive-publishers
+# Automatically added by buildreq on Wed May 10 2017
+# optimized out: cmake-modules fontconfig fonts-type1-urw ghostscript-classic libgpg-error libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-webkit-devel libqt4-xml libstdc++-devel libwayland-client libwayland-server perl python-base python-modules tex-common texlive-base texlive-base-bin texlive-common texlive-extra-utils texlive-fonts-recommended texlive-generic-recommended texlive-latex-base texlive-latex-extra texlive-latex-recommended texlive-xetex texmf-latex-xcolor xml-utils
+BuildRequires: cmake flex gcc-c++ ghostscript-common graphviz phonon-devel python-modules-xml texlive-publishers texmf-latex-tabu
 
 %description
 Doxygen is a documentation system for C, C++ and IDL.  It can generate
@@ -48,61 +49,82 @@ pdf formats.
 
 %prep
 %setup
-%patch -p1
 
-find -name unistd.h -delete -print
-perl -pi -e '
-	s|^(TMAKE_CFLAGS\s*=\s*).*|$1\$(RPM_OPT_FLAGS)|;
-	s|^(TMAKE_CFLAGS_WARN_ON\s*=).*|$1|;
-	s|^(TMAKE_CFLAGS_WARN_OFF\s*=).*|$1|;
-	s|^(TMAKE_CFLAGS_RELEASE\s*=).*|$1|;
-	s|^(TMAKE_CFLAGS_DEBUG\s*=).*|$1|;
-	s|^(TMAKE_CFLAGS_SHLIB\s*=\s*).*|$1%optflags_shared|;
-	s|/usr/X11R6/lib|/usr/X11R6/%_lib|;
-	' tmake/lib/linux-g++/tmake.conf
+# XXX Waiting for newer TeXlive
+sed -i 's/subinputfrom/subimport/g' doc/doxygen_manual.tex
+
+##patch -p1
+
+##find -name unistd.h -delete -print
+##perl -pi -e '
+##	s|^(TMAKE_CFLAGS\s*=\s*).*|$1\$(RPM_OPT_FLAGS)|;
+##	s|^(TMAKE_CFLAGS_WARN_ON\s*=).*|$1|;
+##	s|^(TMAKE_CFLAGS_WARN_OFF\s*=).*|$1|;
+##	s|^(TMAKE_CFLAGS_RELEASE\s*=).*|$1|;
+##	s|^(TMAKE_CFLAGS_DEBUG\s*=).*|$1|;
+##	s|^(TMAKE_CFLAGS_SHLIB\s*=\s*).*|$1%optflags_shared|;
+##	s|/usr/X11R6/lib|/usr/X11R6/%_lib|;
+##	' tmake/lib/linux-g++/tmake.conf
 
 %build
-# Exceptions and RTTI are used only in addon/xmlread, which is not built.
-%add_optflags %optflags_nocpp
-
 export QTDIR=%_libdir/qt4
 export PATH="$QTDIR/bin:$PATH"
-./configure --prefix %prefix --release --with-doxywizard
-make
-make pdf
+#./configure --prefix %prefix --release --with-doxywizard
+#make_build
+#make pdf
+%cmake -G "Unix Makefiles" \
+	-Dbuild_doc=ON -Dbuild_wizard=ON -Dbuild_xmlparser=ON \
+	-Dbuild_search=OFF \
+	-DMAN_INSTALL_DIR=%{_mandir}/man1 \
+	-DDOC_INSTALL_DIR=share/doc/%name-%version \
+	-DCMAKE_INSTALL_PREFIX:PATH=%{_prefix}
+#cmake_build docs
+%cmake_build VERBOSE=1
+%cmake_build docs VERBOSE=1
+#cmake_build pdf
 
 %install
-mkdir -p %buildroot{%_bindir,%_man1dir}
-install -pm755 bin/* %buildroot%_bindir/
-install -pm644 doc/*.1 %buildroot%_man1dir/
+##cd BUILD
+##mkdir -p %buildroot{%_bindir,%_man1dir}
+##install -pm755 bin/* %buildroot%_bindir/
+##install -pm644 doc/*.1 %buildroot%_man1dir/
+##
+##%define docdir %_docdir/%name-%version
+##mkdir -p %buildroot%docdir/pdf
+##install -pm644 latex/*.pdf %buildroot%docdir/pdf/
+##cp -a html examples %buildroot%docdir/
+##find %buildroot%docdir/ -type f -name Makefile.\* -delete
+##find %buildroot%docdir/ -type f -name Makefile -print0 |
+##	xargs -r0 perl -pi -e '
+##	s|/bin/doxygen||g;
+##	s|^(DOXYGEN\s*=\s*).*|$1%_bindir/doxygen|;
+##	s|^(TMAKE\s*=\s*).*|$1%_bindir/tmake|;
+##	s/^(TMAKEPATH|INST|DOXYDOCS).*//g;
+##	' --
+%cmakeinstall_std
 
-%define docdir %_docdir/%name-%version
-mkdir -p %buildroot%docdir/pdf
-install -pm644 latex/*.pdf %buildroot%docdir/pdf/
-cp -a html examples %buildroot%docdir/
-find %buildroot%docdir/ -type f -name Makefile.\* -delete
-find %buildroot%docdir/ -type f -name Makefile -print0 |
-	xargs -r0 perl -pi -e '
-	s|/bin/doxygen||g;
-	s|^(DOXYGEN\s*=\s*).*|$1%_bindir/doxygen|;
-	s|^(TMAKE\s*=\s*).*|$1%_bindir/tmake|;
-	s/^(TMAKEPATH|INST|DOXYDOCS).*//g;
-	' --
+%check
+cd BUILD && make tests
 
 %files
+%doc README.md
 %_bindir/doxygen
-%_bindir/doxytag
 %_man1dir/doxygen.*
-%_man1dir/doxytag.*
 
 %files wizard
 %_bindir/doxywizard
 %_man1dir/doxywizard.*
 
 %files doc
-%docdir
+%_defaultdocdir/%name-%version
+#exclude %_defaultdocdir/%name-%version/html
+%exclude %_defaultdocdir/%name-%version/README.md
+%exclude %_man1dir/doxy[is]*
 
 %changelog
+* Mon Apr 17 2017 Fr. Br. George <george@altlinux.ru> 1:1.8.13-alt1
+- Autobuild version bump to 1.8.13
+
 * Fri Jan 13 2012 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.6.1-alt1
 - Updated to 1.7.6.1.
 
