@@ -1,17 +1,15 @@
 Name: ocamldsort
-Version: 0.14.4
-Release: alt1.qa1
-Packager: Grigory Batalov <bga@altlinux.ru>
-
+Version: 0.16.0
+Release: alt1%ubt
 Summary: Makefile helper for OCaml
 License: GPL
 Group: Development/ML
-Url: http://dimitri.mutu.net/ocaml.html
+Url: http://www.normalesup.org/~ara/informatique.html
+# ftp://quatramaran.salle-s.org/pub/ara/ocamldsort
+Source: %name-%version.tar
 
-Source: ftp://quatramaran.ens.fr/pub/ara/ocamldsort/%name-%version.tar.gz
-Patch: ocamldsort-0.14.3-alt-sed.patch
-
-BuildRequires: ocaml >= 3.07, camlp4
+BuildRequires: ocaml >= 4.04, ocaml-camlp4-devel
+BuildRequires(pre):rpm-build-ubt
 
 %description
 
@@ -20,12 +18,11 @@ BuildRequires: ocaml >= 3.07, camlp4
 their corresponding .cmo files.
 
 %prep
-%setup -q
-%patch0 -p0
+%setup
 
 %build
 %configure
-%make_build opt
+make
 mv ocamldsort.opt ocamldsort
 
 %install
@@ -37,6 +34,9 @@ mv ocamldsort.opt ocamldsort
 %doc README
 
 %changelog
+* Wed May 17 2017 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1%ubt
+- new version
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.14.4-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
