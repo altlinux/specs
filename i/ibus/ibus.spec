@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
@@ -6,10 +6,11 @@
 %def_enable dconf
 %def_disable gconf
 %def_enable wayland
+%def_enable appindicator
 %def_disable emoji_dict
 
 Name: ibus
-Version: 1.5.15
+Version: 1.5.16
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -60,7 +61,8 @@ BuildRequires: libGConf-devel
 # gsettings-schema-convert
 BuildRequires: GConf
 # since 1.5.14
-%{?_enable_emoji_dict:BuildRequires: libjson-glib-devel nodejs-emojione-json}
+%{?_enable_emoji_dict:BuildRequires: cldr-emoji-annotation unicode-emoji}
+%{?_enable_appindicator:BuildRequires: qt5-base-devel}
 
 %define _xinputconf %_sysconfdir/X11/xinit/xinput.d/ibus.conf
 
@@ -167,7 +169,8 @@ override some functions in GObject-Introspection.
     %{subst_enable wayland} \
     --enable-surrounding-text \
     --enable-introspection \
-    %{?_disable_emoji_dict:--disable-emoji-dict}
+    %{?_disable_emoji_dict:--disable-emoji-dict} \
+    %{subst_enable appindicator}
 %make_build
 
 %install
@@ -179,8 +182,8 @@ install -pm 644 -D %SOURCE1 %buildroot%_xinputconf
 %find_lang %{name}10
 
 %check
-# FAIL: test-stress
-#%%make check
+#FAIL: ibus-compose (x-server or xvfb-run required)
+##%make check
 
 %if_enabled gconf
 %post
@@ -263,6 +266,9 @@ fi
 %python_sitelibdir/gi/overrides/IBus.py*
 
 %changelog
+* Wed May 17 2017 Yuri N. Sedunov <aris@altlinux.org> 1.5.16-alt1
+- 1.5.16
+
 * Wed Mar 08 2017 Yuri N. Sedunov <aris@altlinux.org> 1.5.15-alt1
 - 1.5.15
 
