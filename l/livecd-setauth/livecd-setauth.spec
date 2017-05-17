@@ -1,6 +1,6 @@
 Name: livecd-setauth
-Version: 0.7
-Release: alt4
+Version: 0.8
+Release: alt1
 
 Summary: Setup krb5 and cifs homes in livecd
 License: GPL
@@ -11,12 +11,16 @@ Source0: %name.tar
 BuildArch: noarch
 PreReq: service chkconfig
 Requires: alterator-auth alterator-net-shares netcat
+Requires: livecd-timezone
 
 %description
 Setup krb5 auth and cifs homes if there is 'krb5' in /proc/cmdline
 
 %prep
 %setup -c
+
+%post
+%post_service %name
 
 %preun
 %preun_service %name
@@ -33,6 +37,12 @@ install -pD -m0644 livecd-setauth/livecd-setauth.service %buildroot%_unitdir/liv
 
 
 %changelog
+* Wed May 17 2017 Mikhail Efremov <sem@altlinux.org> 0.8-alt1
+- Replace prefdm.service -> dm.service.
+- Use post_service.
+- Start after network-online.target.
+- Use livecd-timezone.
+
 * Tue Mar 04 2014 Mikhail Efremov <sem@altlinux.org> 0.7-alt4
 - Use preun_service.
 
