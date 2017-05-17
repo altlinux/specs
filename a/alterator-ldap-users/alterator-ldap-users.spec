@@ -2,7 +2,7 @@
 
 Name: alterator-ldap-users
 Version: 0.8.4
-Release: alt1
+Release: alt2
 
 Source: %name-%version.tar
 
@@ -49,6 +49,9 @@ Alterator module for local and LDAP user administration
 %_alterator_datadir/design/images/ldap-users/*
 
 %changelog
+* Wed May 17 2017 Paul Wolneykien <manowar@altlinux.org> 0.8.4-alt2
+- Fixed "netcmdplus" package detection.
+
 * Wed May 17 2017 Paul Wolneykien <manowar@altlinux.org> 0.8.4-alt1
 - Support local Samba DC user administration with the help of netcmdplus package.
 
