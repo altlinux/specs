@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-ldap-users
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 
 Source: %name-%version.tar
@@ -11,19 +11,24 @@ Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 Summary: Alterator module for ldap users administration
 License: GPL
 Group: System/Configuration/Other
-BuildArch: noarch
 
-Requires: alterator >= 4.11-alt1 ldap-user-tools >= 0.2 alterator-openldap-functions >= 0.2-alt2 alterator-auth >= 0.20-alt1
+Requires: alterator >= 5.0 ldap-user-tools >= 0.2
+Requires: alterator-openldap-functions >= 0.2-alt2
+Requires: alterator-auth >= 0.20-alt1
 Requires: alterator-sh-functions >= 0.11-alt2
 Requires: alterator-l10n >= 2.7-alt2
 Requires: passwdqc-utils >= 1.2.2-alt1
 
+# Have to be optional: depens on Samba-DC.
+#Requires: netcmdplus
+
 Conflicts: alterator-fbi < 5.18-alt1
 
-BuildPreReq: alterator >= 4.11-alt1
+BuildRequires: guile22-devel rpm-build >= 4.0.4-alt103
+BuildRequires: alterator >= 5.0 alterator-fbi >= 5.33-alt1
 
 %description
-Alterator module for local and ldap users administration
+Alterator module for local and LDAP user administration
 
 %prep
 %setup -q
@@ -35,13 +40,18 @@ Alterator module for local and ldap users administration
 %makeinstall
 
 %files
-%_datadir/alterator/applications/*
-%_datadir/alterator/ui/*
-%_datadir/alterator/design/images/ldap-users/*
+%_alterator_datadir/applications/*
+%_alterator_datadir/ui/*/
+%_alterator_libdir/ui/*/
+%_alterator_datadir/type/*
+%_alterator_libdir/type/*
 %_alterator_backend3dir/*
-%_datadir/alterator/type/*
+%_alterator_datadir/design/images/ldap-users/*
 
 %changelog
+* Wed May 17 2017 Paul Wolneykien <manowar@altlinux.org> 0.8.4-alt1
+- Support local Samba DC user administration with the help of netcmdplus package.
+
 * Wed Nov 19 2014 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt1
 - Fix email list.
 
