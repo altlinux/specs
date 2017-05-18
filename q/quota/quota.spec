@@ -1,5 +1,5 @@
 Name: quota
-Version: 4.03
+Version: 4.03.0.39.251c
 Release: alt1
 Epoch: 2
 
@@ -105,6 +105,9 @@ gzip -c9n Changelog > %buildroot%docdir/Changelog.gz
 %_man3dir/*
 
 %changelog
+* Thu May 18 2017 Dmitry V. Levin <ldv@altlinux.org> 2:4.03.0.39.251c-alt1
+- v4.03-3-g861154e -> v4.03-39-g251c393 (closes: #33488).
+
 * Mon Jan 18 2016 Dmitry V. Levin <ldv@altlinux.org> 2:4.03-alt1
 - v4.00 -> v4.03-3-g861154e.
 - Moved rpc.rquotad to %name-rpc subpackage.
