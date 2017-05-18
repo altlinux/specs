@@ -1,6 +1,6 @@
 Name: netxms
 Version: 2.0.8
-Release: alt2
+Release: alt3
 
 Summary: Open source network monitoring system
 License: GPL
@@ -14,7 +14,7 @@ Source2: nxagentd.init
 Source3: netxmsd.service
 Source4: nxagentd.service
 
-BuildRequires: flex gcc-c++ zlib-devel libexpat-devel libssl-devel libgd2-devel libreadline-devel libsqlite3-devel libMySQL-devel postgresql-devel libunixODBC-devel
+BuildRequires: flex gcc-c++ zlib-devel libexpat-devel libssl-devel libgd2-devel libreadline-devel libsqlite3-devel libMySQL-devel postgresql-devel libunixODBC-devel libsensors-devel
 
 %description
 NetXMS is an enterprise grade multi-platform open source network management and monitoring system.
@@ -76,14 +76,14 @@ Group: System/Servers
 %configure              \
   --localstatedir=/var  \
   --sharedstatedir=/var \
-  --with-unicode \
-  --with-server  \
-  --with-snmp    \
-  --with-mysql   \
-  --with-pgsql   \
-  --with-sqlite  \
-  --with-odbc    \
-  --with-client  \
+  --enable-unicode      \
+  --with-server \
+  --with-snmp   \
+  --with-mysql  \
+  --with-pgsql  \
+  --with-sqlite \
+  --with-odbc   \
+  --with-client \
   --with-agent
 make
 
@@ -100,6 +100,7 @@ cp contrib/netxmsd.conf-dist %buildroot/%_sysconfdir/netxmsd.conf
 cp contrib/nxagentd.conf-dist %buildroot/%_sysconfdir/nxagentd.conf
 subst 's|^# LogFile = {syslog}|LogFile = {syslog}|g' %buildroot/%_sysconfdir/*.conf
 subst 's|/var/nxagentd|/var/lib/netxms|g' %buildroot/%_sysconfdir/nxagentd.conf
+subst "s|'\\\015\\\012'|chr(10)|g" %buildroot/%_datadir/%name/sql/dbinit_pgsql.sql
 mkdir -p %buildroot/%_localstatedir/%name/agent
 
 %files common
@@ -158,6 +159,7 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %dir %_localstatedir/%name/images
 %_localstatedir/%name/images/*
 %_initdir/netxmsd
+%systemd_unitdir/netxmsd.service
 %config(noreplace) %_sysconfdir/netxmsd.conf
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README THANKS TODO doc/manuals/*.odt doc/manuals/*.doc
 
@@ -172,11 +174,13 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_bindir/nxapush
 %_bindir/nxagentd
 %_initdir/nxagentd
+%systemd_unitdir/nxagentd.service
 %_libdir/libnxagent.so*
 %_libdir/libappagent.so*
 %_libdir/libnsm_ecs.so*
 %_libdir/libnsm_linux.so
 %_libdir/libnsm_logwatch.so
+%_libdir/libnsm_lmsensors.so
 %_libdir/libnsm_ping.so
 %_libdir/libnsm_portcheck.so
 %_libdir/libnsm_sms.so
@@ -189,6 +193,7 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_libdir/%name/ecs.nsm
 %_libdir/%name/linux.nsm
 %_libdir/%name/logwatch.nsm
+%_libdir/%name/lmsensors.nsm
 %_libdir/%name/dbquery.nsm
 %_libdir/%name/devemu.nsm
 %_libdir/%name/ping.nsm
@@ -220,8 +225,13 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_libdir/%name/dbdrv/odbc.ddr
 
 %changelog
+* Thu May 18 2017 Eugene Prokopiev <enp@altlinux.ru> 2.0.8-alt3
+- enable lmsensors
+- fast fix for pgsql metadata (thanks to Vadim Illarionov <gbIMoBou@gmail.com>)
+
 * Thu May 04 2017 Eugene Prokopiev <enp@altlinux.ru> 2.0.8-alt2
-- xxx
+- add systemd units (thanks to Vadim Illarionov <gbIMoBou@gmail.com>)
+- enable unicode
 
 * Fri Apr 28 2017 Eugene Prokopiev <enp@altlinux.ru> 2.0.8-alt1
 - new version
