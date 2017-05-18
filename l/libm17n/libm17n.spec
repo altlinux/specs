@@ -1,17 +1,17 @@
 %define oname m17n-lib
 Name: libm17n
-Version: 1.6.2
-Release: alt2
+Version: 1.7.0
+Release: alt1
 
 Summary: Multilingual text processing library
 
 Group: Text tools
 License: LGPL
-Url: http://www.m17n.org/
+Url: http://www.nongnu.org/m17n/
 
-Packager: Alexey Gladkov <legion@altlinux.ru>
-
-Source: http://www.m17n.org/m17n-lib-download/%oname-%version.tar.bz2
+# repacked http://download.savannah.gnu.org/releases/m17n/m17n-lib-%version.tar.gz
+Source: %oname-%version.tar
+Source1: %oname.watch
 
 # $ freetype-config --libs
 # -lfreetype -lz
@@ -85,6 +85,9 @@ Libraries/include files for development with %name.
 %_pkgconfigdir/*
 
 %changelog
+* Thu May 18 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Mon Sep 12 2011 Alexey Gladkov <legion@altlinux.ru> 1.6.2-alt2
 - Fix buildrequires (workaround).
 
