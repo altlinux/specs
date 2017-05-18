@@ -1,13 +1,13 @@
 %set_verify_elf_method relaxed
 
 %def_enable bat
-%def_disable readline
+%def_enable readline
 %def_disable debug
 
 
 Name: bacula7
 Version: 7.4.7
-Release: alt1%ubt
+Release: alt2%ubt
 
 License: AGPLv3
 Summary: Network based backup program
@@ -26,12 +26,16 @@ Source11: tmpfiles.conf
 Source12: bacula-fd.service
 Source13: bacula-sd.service
 Source14: bacula-dir.service
+Patch0: %name-alt.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: dvd+rw-tools gcc-c++ groff-base libMySQL-devel libssl-devel libncurses-devel libsqlite3-devel libssl libacl-devel libcap-devel python-devel zlib-devel iputils bc postgresql-devel
 
 %filter_from_requires /libbaccats-%version\.so/d
 
+%if_enabled readline
+BuildRequires: libreadline-devel
+%endif
 %if_enabled bat
 # bat buildrequires
 BuildRequires: imake libICE-devel libX11-devel libqwt-devel xorg-cf-files
@@ -211,12 +215,9 @@ The check_bacula plugin for nagios.
 %setup -b 0
 %setup -b 8
 %setup -b 9
+%patch0 -p1
 
 mv ../%name-icons-%version icons
-
-sed -i 's|qmake|qmake-qt4|g' autoconf/configure.in
-sed -i 's|-lreadline -lhistory -ltermcap|-lreadline -lhistory|g' autoconf/configure.in
-
 
 %build
 export MTX=%_sbindir/mtx
@@ -334,7 +335,6 @@ echo "%_libdir/libbaccats-%version.so %_libdir/libbaccats-sqlite3-%version.so   
 echo "%_libdir/libbaccats-%version.so %_libdir/libbaccats-mysql-%version.so          20" > %buildroot/%_altdir/bacula-dir.mysql
 
 mkdir -p %buildroot/%_logdir/bacula/
-sed -i "s|/var/lib/bacula/log|/var/log/bacula/log|g" %buildroot/%_sysconfdir/logrotate.d/bacula
 
 %pre common
 %_sbindir/groupadd -r -f bacula
@@ -538,6 +538,9 @@ fi
 %files
 
 %changelog
+* Thu May 18 2017 Boris Gulay <boresexpress@altlinux.org> 7.4.7-alt2%ubt
+- Use readline instead of conio.
+- Update initscripts to use common style and check config before load.
 * Wed Apr 19 2017 Boris Gulay <boresexpress@altlinux.org> 7.4.7-alt1%ubt
 - Initial build of branch 7.X (spec based on v5).
 - Change folder names for config files.
