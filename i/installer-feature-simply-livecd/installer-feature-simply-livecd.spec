@@ -1,5 +1,5 @@
 Name: installer-feature-simply-livecd
-Version: 0.8.9
+Version: 0.8.10
 Release: alt1
 
 Summary: LiveCD install hooks for Simply Linux.
@@ -55,6 +55,9 @@ cp -ar alterator-menu/ %buildroot%_datadir/livecd-install
 %_datadir/livecd-install/
 
 %changelog
+* Thu May 18 2017 Mikhail Efremov <sem@altlinux.org> 0.8.10-alt1
+- Disable light-locker during install.
+
 * Fri Mar 31 2017 Mikhail Efremov <sem@altlinux.org> 0.8.9-alt1
 - i-f-sudo-enable-by-default moved stage2 -> stage3.
 - lightdm: Setup indicators.
