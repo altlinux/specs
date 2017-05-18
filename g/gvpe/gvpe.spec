@@ -1,20 +1,17 @@
 # spec file for package GVPE
 #
 
-%define version 2.22
-%define release alt1
-
 Name: gvpe
-Version: %version
-Release: alt1.1.qa1.1
+Version: 3.0
+Release: alt1
 
 Summary: virtual ethernet SSL VPN
 
 License: %gpl3plus
 Group: System/Servers
-Url: http://savannah.gnu.org/projects/gvpe
+Url: http://software.schmorp.de/pck/gvpe.html
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source0: %name-%version.tar
 Source1: %name.init
@@ -22,14 +19,16 @@ Source2: %name.sysconfig
 Source3: %name.if-up
 Source4: %name.conf
 Source5: README.ALT.utf-8
+Source6: %name.service
 
 Patch0:  %name-2.22-alt-using_ip.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sun Jul 19 2009
-BuildRequires: cvs gcc-c++ libssl-devel
-# explicitly added texinfo for info files
+# Automatically added by buildreq on Thu May 18 2017
+# optimized out: glib2-devel libstdc++-devel perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl python-base python-modules python3 python3-base xz zlib-devel
+BuildRequires: gcc-c++ libssl-devel zlib-devel makeinfo perl-unicore perl-Pod-Usage
+
 BuildRequires: texinfo
 
 %description
@@ -57,6 +56,9 @@ ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING) COPYING
 
 %make_build
 
+# GVPE 2.25 had an empty gvpe.conf.5 file, generete it from gvpe.conf.5.pod:
+[ -s doc/gvpe.conf.5 ] || pod2man doc/gvpe.conf.5.pod  doc/gvpe.conf.5
+
 %install
 %make_install DESTDIR=%buildroot install
 
@@ -64,10 +66,15 @@ install -p -D -m 0755 -- %SOURCE1 %buildroot/%_initdir/%name
 install -p -D -m 0640 -- %SOURCE2 %buildroot/%_sysconfdir/sysconfig/%name
 
 install -d -m 0750 -- %buildroot%_sysconfdir/%name
+install -d -m 0755 -- %buildroot%_sysconfdir/%name/hostkeys
+install -d -m 0755 -- %buildroot%_sysconfdir/%name/pubkey
 install -p -m 0755 -- %SOURCE3 %buildroot%_sysconfdir/%name/if-up
 install -p -m 0644 -- %SOURCE4 %buildroot%_sysconfdir/%name/%name.conf.sample
 
 cp -- %SOURCE5 README.ALT.utf-8
+
+install -D -m 0644 -- %SOURCE6 %buildroot%_unitdir/%name.service
+
 
 %post
 %post_service %name
@@ -81,6 +88,8 @@ cp -- %SOURCE5 README.ALT.utf-8
 %doc doc/complex-example
 
 %dir %attr(0750,root,root) %_sysconfdir/%name
+%dir                       %_sysconfdir/%name/pubkey
+%dir                       %_sysconfdir/%name/hostkeys
 %config                    %_sysconfdir/%name/%name.conf.sample
 %config(noreplace)         %_sysconfdir/%name/if-up
 
@@ -92,7 +101,18 @@ cp -- %SOURCE5 README.ALT.utf-8
 %_mandir/man?/*
 %_infodir/*
 
+%_unitdir/%{name}*.service
+
 %changelog
+* Thu May 18 2017 Nikolay A. Fetisov <naf@altlinux.org> 3.0-alt1
+- New version
+  + UNCOMPATIBLE changes: new protocol version
+  + UNCOMPATIBLE changes: regeneration of the RSA keys is needed
+
+* Mon May 16 2017 Nikolay A. Fetisov <naf@altlinux.ru> 2.25-alt1
+- New version
+- some UNCOMPATIBLE changes from previous versions; see NEWS for details
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.22-alt1.1.qa1.1
 - NMU: added BR: texinfo
 
