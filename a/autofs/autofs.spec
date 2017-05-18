@@ -1,17 +1,18 @@
 Name: autofs
 Version: 5.1.2
-Release: alt1
+Release: alt2%ubt
 
 Summary: A tool for automatically mounting and unmounting filesystems
 License: GPL
 Group: System/Kernel and hardware
 Url: ftp://ftp.kernel.org/pub/linux/daemons/autofs/v4/
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 Requires(post): %post_service
 Requires(preun): %preun_service
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: bison flex
 BuildRequires: libkrb5-devel libldap-devel libsasl2-devel
 BuildRequires: libssl-devel libxml2-devel libtirpc-devel >= 1.0.1-alt1
@@ -119,6 +120,10 @@ fi
 %_libdir/%name/lookup_ldap.so
 
 %changelog
+* Thu May 18 2017 Oleg Solovyov <mcpain@altlinux.org> 5.1.2-alt2%ubt
+- fixed mounting through kerberos auth
+- added %ubt tag
+
 * Wed Jun 15 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.2-alt1
 - 5.1.2 released
 
