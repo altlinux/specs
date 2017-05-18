@@ -1,6 +1,6 @@
 Name: e2fsprogs
-Version: 1.42.13
-Release: alt2
+Version: 1.43.4.0.36.e251
+Release: alt1
 
 Summary: The filesystem utilities for the ext2/ext3 filesystems
 License: GPLv2
@@ -388,6 +388,9 @@ mv tests/m_no_opt/expect.1{.ext2,}
 %endif # libuuid
 
 %changelog
+* Thu May 18 2017 Dmitry V. Levin <ldv@altlinux.org> 1.43.4.0.36.e251-alt1
+- v1.42.13-18-g19961cd -> v1.43.4-36-ge251f35 (closes: #33489).
+
 * Wed Dec 02 2015 Dmitry V. Levin <ldv@altlinux.org> 1.42.13-alt2
 - Updated to maint v1.42.13-18-g19961cd.
 
