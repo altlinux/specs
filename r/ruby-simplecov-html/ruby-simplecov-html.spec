@@ -1,7 +1,7 @@
 %define  pkgname simplecov-html
  
 Name: 	 ruby-%pkgname
-Version: 0.10.0 
+Version: 0.10.1
 Release: alt1
  
 Summary: HTML formatter for SimpleCov code coverage tool for Ruby
@@ -55,5 +55,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Thu May 18 2017 Andrey Cherepanov <cas@altlinux.org> 0.10.1-alt1
+- New version
+
 * Tue Oct 25 2016 Andrey Cherepanov <cas@altlinux.org> 0.10.0-alt1
 - Initial build in Sisyphus
