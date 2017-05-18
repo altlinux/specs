@@ -1,4 +1,4 @@
-# 5.3.2.2
+# 5.3.3.2
 %def_without forky
 %def_without python
 %def_with parallelism
@@ -7,7 +7,7 @@
 
 Name: LibreOffice
 %define hversion 5.3
-%define urelease 2.2
+%define urelease 3.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -57,13 +57,9 @@ Patch8: FC-0001-Resolves-tdf-105998-distort-hairline-borders-to-fall.patch
 Patch9: FC-0001-Related-rhbz-1422353-make-writer-behave-like-calc-an.patch
 Patch10: FC-0001-right-click-to-insert-image.patch
 Patch11: FC-0001-Related-tdf-106100-recover-mangled-svg-in-presentati.patch
-Patch12: FC-0001-Resolves-tdf-106645-gtk3-scrollbar-is-too-wide.patch
-Patch13: FC-0001-Related-rhbz-1334915-tdf-100158-hack-using-startcent.patch
-Patch14: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
-Patch15: FC-0001-disable-libe-book-support.patch
-Patch16: FC-0001-fix-build-of-bundled-libzmf-with-boost-1.56.patch
-Patch17: FC-0001-allow-to-build-bundled-libzmf-on-aarch64.patch
-Patch18: FC-0001-impl.-missing-function.patch
+Patch12: FC-0001-Related-rhbz-1334915-tdf-100158-hack-using-startcent.patch
+Patch13: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
+Patch14: FC-0001-disable-libe-book-support.patch
 
 ## Long-term FC patches
 
@@ -74,6 +70,7 @@ Patch403: alt-002-tmpdir.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
+%add_findreq_skiplist %lodir/sdk/examples/python/toolpanel/toolpanel.py 
 
 # Automatically added by buildreq on Mon Nov 10 2014
 # optimized out: ant-testutil apache-commons-codec apache-commons-logging boost-devel boost-devel-headers boost-interprocess-devel boost-intrusive-devel cppunit flute fontconfig fontconfig-devel fonts-type1-xorg glib2-devel gstreamer1.0-devel icu-utils java java-devel jpackage-utils junit4 kde4libs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcloog-isl4 libclucene-contribs-lib libclucene-core libclucene-shared libcurl-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-xlib libgio-devel libgpg-error libgraphite2-devel libgst-plugins1.0 libharfbuzz-icu libicu-devel libnspr-devel libpango-devel libpng-devel libpoppler-devel libpq-devel libqt4-core libqt4-devel libqt4-gui libqt4-network librasqal-devel librevenge-devel libsasl2-3 libssl-devel libstdc++-devel libunixODBC-devel libwayland-client libwayland-server libxml2-devel pentaho-libxml perl-Compress-Raw-Zlib pkg-config poppler-data python-base python-devel python-modules python3 python3-base raptor2-devel sac tzdata tzdata-java xerces-j2 xml-common xml-commons-jaxp-1.4-apis xml-utils xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel xsltproc xz zlib-devel
@@ -90,6 +87,8 @@ BuildRequires: libgtk+3-gir-devel
 BuildRequires: libCoinMP-devel
 # 5.3.0
 BuildRequires: libzmf-devel libstaroffice-devel libepoxy-devel libmysqlcppconn-devel libmysqlclient-devel libtelepathy-devel
+# 5.3.3
+BuildRequires: doxygen e2fsprogs
 
 %if_without python
 BuildRequires: python3-dev
@@ -182,6 +181,26 @@ Obsoletes: LibreOffice4-mimetypes
 %name is distributed along with some mimetype settings and files.
 This package installs them.
 
+%package sdk
+Group: Development/Other
+Summary: Software Development Kit for LibreOffice
+
+%description sdk
+The SDK is a development kit for LibreOffice 5.3, which
+eases the development of office components. It provides a set of
+libraries, binaries, header, and IDL files which have final API's
+and can only be extended with new functionality. This set of libraries
+and binaries is the minimum set of functions needed to use system
+abstraction for base functionality and for using UNO (Universal
+Network Objects) component technology. The UNO component model is the
+base of the whole Office API. The SDK provides everything necessary
+to use the Office API from external programs (e.g. Java, C++) or to
+extend the Office functionality with new components (e.g. new filter
+components, CalcAddin functions). It is compatible over several
+versions because the API remains unaffected and will only be extended
+with new functions.
+
+
 # TODO redefine %%lang adding corr langpack
 # define macro for quick langpack description
 %define langpack(l:n:mh) \
@@ -224,11 +243,7 @@ echo Direct build
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-%patch14 -p1
-#patch15 -p1
-#patch16 -p1
-#patch17 -p1
-#patch18 -p1
+#patch14 -p1
 
 ## Long-term FC patches applying
 
@@ -238,7 +253,10 @@ echo Direct build
 %patch403 -p1
 
 # Hack in proper LibreOffice PATH in libreofficekit
-sed -i 's@/libreoffice/@/LibreOffice/@' libreofficekit/Library_libreofficekitgtk.mk
+sed -i 's@/libreoffice/@/LibreOffice/@g' libreofficekit/Library_libreofficekitgtk.mk
+
+# Hack hardcoded lsattr path
+for f in `grep -rl '/usr/sbin/lsattr' *`; do sed -i 's@/usr/sbin/lsattr@/usr/bin/lsattr@g' $f; done
 
 rm -fr %name-tnslations/git-hooks
 
@@ -275,7 +293,7 @@ export CXX=%_target_platform-g++
 	--libdir=%_libdir \
 	--disable-lto \
         --with-vendor="ALT Linux Team" \
-        --disable-odk \
+        --enable-odk \
         --enable-systray \
 	--disable-firebird-sdbc \
 	--disable-gltf \
@@ -393,7 +411,7 @@ find %buildroot%lodir -name -o -name "*gtk3*" | sed 's@^%buildroot@@' > files.gt
 find %buildroot%lodir -name "*kde4*" | sed 's@^%buildroot@@' > files.kde4
 
 # Generate base filelist by removing files from  separated packages
-{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gnome files.gtk3 files.kde4; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | grep -v '/share/extensions/.' > files.nolang
+{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gnome files.gtk3 files.kde4; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
 
 unset RPM_PYTHON
 
@@ -437,6 +455,9 @@ mkdir -p %buildroot%_includedir/LibreOfficeKit
 install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 
 %files
+
+%files sdk
+%lodir/sdk
 
 %files common -f files.nolang
 %exclude /gid_Module*
@@ -488,6 +509,10 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed May 17 2017 Fr. Br. George <george@altlinux.ru> 5.3.3.2-alt1
+- Update to 5.3.3.2
+- Build SDK
+
 * Wed Apr 12 2017 Fr. Br. George <george@altlinux.ru> 5.3.2.2-alt1
 - Update to 5.3.2.2
 
