@@ -1,5 +1,5 @@
 Name: installer-distro-simply-linux
-Version: 8.0
+Version: 8.1
 Release: alt1
 
 Summary: Installer common files
@@ -33,7 +33,8 @@ Requires: fonts-ttf-google-droid-sans
 Requires: alterator-sysconfig
 Requires: alterator-license
 #Requires: alterator-auth
-Requires: alterator-datetime openntpd
+Requires: alterator-datetime >= 4.0
+Requires: openntpd
 Requires: alterator-vm
 Requires: alterator-pkg
 Requires: alterator-luks
@@ -46,7 +47,6 @@ Requires: installer-feature-desktop-other-fs-stage2
 Requires: installer-feature-desktop-suspend-stage2
 Requires: installer-feature-desktop-disable-remote-stage2
 Requires: installer-feature-hwtweaks-stage2
-Requires: installer-feature-set-tz
 Requires: installer-feature-runlevel5-stage2
 Requires: installer-feature-xdg-user-dirs
 Requires: installer-feature-slideshow
@@ -119,6 +119,9 @@ Installer stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Thu May 18 2017 Mikhail Efremov <sem@altlinux.org> 8.1-alt1
+- stage2: Drop installer-feature-set-tz.
+
 * Fri Mar 31 2017 Mikhail Efremov <sem@altlinux.org> 8.0-alt1
 - Replace prefdm.service with lightdm.service.
 - i-f-sudo-enable-by-default moved stage2 -> stage3.
