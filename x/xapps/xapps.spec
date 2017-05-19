@@ -1,5 +1,5 @@
 Name: xapps
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: Libraries and common resources for XApps
@@ -123,6 +123,9 @@ GObject introspection devel data for the %name library
 %_girdir/*
 
 %changelog
+* Thu May 18 2017 Vladimir Didenko <cow@altlinux.org> 1.0.3-alt1
+- 1.0.3
+
 * Wed Nov 23 2016 Vladimir Didenko <cow@altlinux.org> 1.0.2-alt1
 - 1.0.2-3-g4b700fe
 
