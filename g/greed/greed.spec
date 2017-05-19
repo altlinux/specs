@@ -1,5 +1,5 @@
 Name: greed
-Version: 4.1
+Version: 4.2
 Release: alt1
 Source: %name-%version.tar.gz
 License: BSD-like
@@ -31,6 +31,9 @@ install /dev/null %buildroot%_localstatedir/games/%name.hs
 %attr(2711,root,games) %_gamesbindir/%name
 
 %changelog
+* Fri May 19 2017 Fr. Br. George <george@altlinux.ru> 4.2-alt1
+- Autobuild version bump to 4.2
+
 * Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 4.1-alt1
 - Autobuild version bump to 4.1
 
