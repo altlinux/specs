@@ -1,6 +1,6 @@
 Name: dropbear
 Summary: Relatively small SSH 2 server
-Version: 2016.74
+Version: 2017.75
 Release: alt1
 License: MIT-style
 Group: System/Servers
@@ -76,6 +76,9 @@ install -D dropbearconvert.1 %buildroot%_man1dir/dropbearconvert.1
 %_bindir/scp
 
 %changelog
+* Fri May 19 2017 Fr. Br. George <george@altlinux.ru> 2017.75-alt1
+- Autobuild version bump to 2017.75
+
 * Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 2016.74-alt1
 - Autobuild version bump to 2016.74
 
