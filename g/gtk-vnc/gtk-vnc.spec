@@ -10,7 +10,7 @@
 %def_disable vapi
 
 Name: gtk-vnc
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: VNC viewer widget
@@ -325,6 +325,9 @@ popd
 %endif
 
 %changelog
+* Fri May 19 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
+- 0.7.1
+
 * Thu Feb 09 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - 0.7.0 (fixed CVE-2017-5884, CVE-2017-5885)
 
