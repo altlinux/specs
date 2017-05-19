@@ -4,7 +4,7 @@
 %def_enable python
 
 Name: xed
-Version: 1.2.2
+Version: 1.4.1
 Release: alt1
 
 Summary: xed is a small and lightweight text editor.
@@ -13,7 +13,6 @@ Group: Editors
 Url: https://github.com/linuxmint/xed
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 %define pkglibdir %_libdir/%name
 %define pkgdatadir %_datadir/%name
@@ -29,6 +28,8 @@ Requires: %name-data = %version-%release
 Requires: dconf gnome-icon-theme gvfs zenity
 %{?_enable_zeitgeist:Requires: zeitgeist}
 
+Provides: typelib(Xed)
+
 BuildPreReq: rpm-build-gnome >= 0.6
 
 # From configure.ac
@@ -43,6 +44,10 @@ BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgtksourceview3-devel >= %gtksourceview_ver
 BuildRequires: libattr-devel gnome-common libxml2-devel libsoup-devel gsettings-desktop-schemas-devel
 BuildRequires: libSM-devel
+BuildRequires: libpeas-devel
+BuildRequires: python3-dev
+BuildRequires: libgtk+3-gir-devel
+BuildRequires: libgtksourceview3-gir-devel
 
 %description
 xed is a small and lightweight text editor.
@@ -69,7 +74,6 @@ Libraries needed to develop plugins for xed.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %autoreconf
@@ -118,15 +122,17 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-mime-type=text/x-tex \
 	%buildroot%_desktopdir/%name.desktop
 
+rm -f %buildroot%_libdir/%name/*.la
+
 %find_lang --with-gnome %name
 
 %files
 %_bindir/*
 %dir %pkglibdir
-%_libdir/%name/plugin-loaders
 %dir %pluginsdir
 %pluginsdir/*
 %exclude %_libexecdir/%name/xed-bugreport.sh
+%_libdir/%name
 
 %files data -f %name.lang
 %pkgdatadir/
@@ -134,6 +140,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_mandir/man?/*
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/appdata/%name.appdata.xml
+%_datadir/dbus-1/services/org.x.editor.*service
 %doc README AUTHORS NEWS
 
 %files devel
@@ -141,6 +148,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pkgconfigdir/*
 
 %changelog
+* Thu May 18 2017 Vladimir Didenko <cow@altlinux.org> 1.4.1-alt1
+- New version
+
 * Wed Dec 14 2016 Vladimir Didenko <cow@altlinux.org> 1.2.2-alt1
 - New version
 
