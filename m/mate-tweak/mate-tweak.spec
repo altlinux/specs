@@ -1,6 +1,7 @@
 Name: mate-tweak
-Version: 16.10.5
-Release: alt3
+Version: 17.10.2
+Release: alt1
+Epoch:   1
 
 Summary: Mate desktop configuration tool
 License: GPLv2+
@@ -56,6 +57,10 @@ Settings that can be handled via MATE Tweak:
 %exclude %_man1dir/metacity*
 
 %changelog
+* Fri May 19 2017 Andrey Cherepanov <cas@altlinux.org> 1:17.10.2-alt1
+- New version
+- New Epoch to downgrade version in p8
+
 * Wed Mar 15 2017 Anton Midyukov <antohami@altlinux.org> 16.10.5-alt3
 - Added buildrequires rpm-build-gir.
 
