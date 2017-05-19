@@ -1,5 +1,5 @@
 Name: 	 qcad
-Version: 3.16.5.0
+Version: 3.17.0.0
 Release: alt1
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
@@ -22,12 +22,13 @@ BuildRequires: libGL-devel
 BuildRequires: libGLU-devel
 BuildRequires: libssl-devel
 BuildRequires: qt5-designer
+BuildRequires: qt5-imageformats
 BuildRequires: qt5-script-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-tools-devel-static
-BuildRequires: qt5-webkit-devel
 BuildRequires: qt5-webengine-devel
+BuildRequires: qt5-webkit-devel
 BuildRequires: qt5-xmlpatterns-devel
 BuildRequires: zlib-devel
 
@@ -59,6 +60,7 @@ if [ ! -e src/3rdparty/qt-labs-qtscriptgenerator-%_qt5_version ] ; then
 fi
 
 %build
+export NPROCS=1
 %make_build
 
 %install
@@ -120,6 +122,15 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Fri May 19 2017 Andrey Cherepanov <cas@altlinux.org> 3.17.0.0-alt1
+- New version
+
+* Wed Mar 22 2017 Andrey Cherepanov <cas@altlinux.org> 3.16.7.0-alt1
+- New version
+
+* Wed Mar 01 2017 Andrey Cherepanov <cas@altlinux.org> 3.16.5.3-alt1
+- New version
+
 * Sat Feb 04 2017 Andrey Cherepanov <cas@altlinux.org> 3.16.5.0-alt1
 - new version 3.16.5.0
 
