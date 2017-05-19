@@ -1,28 +1,28 @@
 Name: alterator-updates
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
 Source:%name-%version.tar
 
-Summary: dialog based interface for alterator
+Summary: Module to configure automatic system updates
 License: GPL
 Group: System/Configuration/Other
-Requires: alterator >= 4.10-alt1
+Requires: alterator >= 5.0
 Requires: sisyphus-updates >= 0.1-alt4 avahi-tools
 Requires: alterator-l10n >= 2.1-alt7
 Requires: altlinux-repos
-Conflicts: alterator-lookout < 1.6-alt4
-Conflicts: alterator-fbi < 5.17-alt3
 
-BuildArch: noarch
+Conflicts: alterator-lookout < 1.6-alt6
+Conflicts: alterator-fbi < 5.18-alt1
 
-BuildPreReq: alterator >= 4.10-alt1
+BuildRequires: guile22-devel rpm-build >= 4.0.4-alt103
+BuildRequires: alterator >= 5.0 alterator-fbi >= 5.33-alt1
 
 
 %description
-dialog based interface for alterator
+Module to configure automatic, schedule-based system updates.
 
 %prep
 %setup -q
@@ -34,12 +34,17 @@ dialog based interface for alterator
 %makeinstall DESTDIR=%buildroot
 
 %files
-%_datadir/alterator/ui/*
-%_datadir/alterator/type/*
+%_alterator_datadir/ui/*
+%_alterator_libdir/ui/*
+%_alterator_datadir/type/*
+%_alterator_libdir/type/*
 %_alterator_backend3dir/*
-%_datadir/alterator/applications/*
+%_alterator_datadir/applications/*
 
 %changelog
+* Fri May 19 2017 Paul Wolneykien <manowar@altlinux.org> 0.2.2-alt1
+- Enable and start crond when a new schedule is written (closes: 33450).
+
 * Wed Mar 11 2015 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt1
 - Replace shell-regexp with shell-quote.
 
