@@ -1,5 +1,5 @@
 Name: octave
-Version: 4.0.3
+Version: 4.2.1
 Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
@@ -20,6 +20,7 @@ BuildRequires: texlive-base-bin texlive-generic-recommended
 BuildRequires: libarpack-ng-devel
 BuildRequires: libqt4-devel
 BuildRequires: libqscintilla2-qt4-devel
+BuildRequires: icoutils librsvg-utils
 BuildPreReq: libqhull-devel fontconfig-devel libfltk-devel
 BuildPreReq: libqrupdate-devel libsuitesparse-devel gperf libXft-devel
 BuildPreReq: libpixman-devel libcairo-devel libXinerama-devel
@@ -31,6 +32,8 @@ Source0: %name-%version-%release.tar
 Source1: octave.filetrigger
 
 Patch0: octave-include-pcre.patch
+Patch1: octave-4.0.3-alt-desktop-l10n.patch
+Patch2: octave-alt-fix-build.patch
 
 Requires: gnuplot
 
@@ -82,20 +85,24 @@ This package contains extra documentation for GNU Octave.
 %prep
 %setup
 %patch0 -p2
+%patch1 -p2
+#patch2 -p2
 
 %build
 %add_optflags $(pkg-config hdf5-seq --cflags) $(pcre-config --cflags)
-%add_optflags $(pkg-config fontconfig --cflags) -fpermissive
+%add_optflags $(pkg-config fontconfig --cflags) -fpermissive -lm
+%undefine _configure_gettext
 %autoreconf
 %configure --with-blas=openblas \
     --enable-dl --enable-shared \
-    --disable-static --disable-rpath \
-    --enable-lite-kernel --enable-picky-flags
+    --disable-static 
+#    --disable-rpath \
+#    --enable-lite-kernel --enable-picky-flags
 #smp-unaware
 %make
 
 %install
-%makeinstall
+%makeinstall_std
 
 mkdir -p %buildroot%_datadir/octave/packages
 mkdir -p %buildroot%_libdir/octave/packages
@@ -158,6 +165,10 @@ EOF
 %doc doc/interpreter/octave.html doc/liboctave/liboctave.html doc/interpreter/octave.pdf doc/liboctave/liboctave.pdf doc/refcard/refcard*.pdf
 
 %changelog
+* Thu May 11 2017 Andrey Cherepanov <cas@altlinux.org> 4.2.1-alt1
+- New version
+- Add Russian localization to desktop file
+
 * Sun Jul 03 2016 Cronbuild Service <cronbuild@altlinux.org> 4.0.3-alt1
 - repocop cronbuild 20160703. At your service.
 
