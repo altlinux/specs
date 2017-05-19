@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name udisks
 %define api_ver 2.0
@@ -13,8 +13,8 @@
 %def_disable fhs_media
 
 Name: %{_name}2
-Version: 2.6.4
-Release: alt3
+Version: 2.6.5
+Release: alt1
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
@@ -112,7 +112,6 @@ This package contains development documentation for lib%name.
 %setup -n %_name-%version
 %patch -b .isohibryd
 subst 's/mkfs.vfat/mkfs.fat/' src/udiskslinuxfsinfo.c
-subst 's|udisksprivdir|udisksdprivdir|' data/Makefile.*
 
 %build
 %autoreconf
@@ -192,6 +191,9 @@ fi
 %endif
 
 %changelog
+* Fri May 19 2017 Yuri N. Sedunov <aris@altlinux.org> 2.6.5-alt1
+- 2.6.5
+
 * Mon Apr 10 2017 Yuri N. Sedunov <aris@altlinux.org> 2.6.4-alt3
 - data/Makefile.am fixed bad substitution (ALT #33346)
 
