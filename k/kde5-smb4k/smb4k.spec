@@ -4,8 +4,8 @@
 
 %define rname smb4k
 Name: kde5-%rname
-Version: 2.0.0
-Release: alt2%ubt
+Version: 2.0.1
+Release: alt1%ubt
 %K5init altplace
 
 Group: Networking/Other
@@ -78,6 +78,9 @@ rm -rf po/*/docs
 %_K5lib/libsmb4kcore.so.%sover.*
 
 %changelog
+* Fri May 19 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.1-alt1%ubt
+- security fixes: CVE-2017-8849
+
 * Fri May 05 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt2%ubt
 - fix polkit rule placement
 
