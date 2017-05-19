@@ -1,7 +1,7 @@
 %define rname kjsembed
 
 Name: kf5-%rname
-Version: 5.33.0
+Version: 5.34.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -74,6 +74,9 @@ KF5 library
 %_K5lib/libKF5JsEmbed.so.*
 
 %changelog
+* Fri May 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt1%ubt
+- new version
+
 * Mon Apr 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.33.0-alt1%ubt
 - new version
 
