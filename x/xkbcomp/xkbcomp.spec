@@ -1,5 +1,5 @@
 Name: xkbcomp
-Version: 1.3.1
+Version: 1.4.0
 Release: alt1
 Summary: Compile XKB keyboard description
 License: MIT/X11
@@ -39,6 +39,9 @@ a single file which contains a complete description of the keymap.
 %_man1dir/*
 
 %changelog
+* Fri May 19 2017 Fr. Br. George <george@altlinux.ru> 1.4.0-alt1
+- Autobuild version bump to 1.4.0
+
 * Mon Apr 18 2016 Fr. Br. George <george@altlinux.ru> 1.3.1-alt1
 - Autobuild version bump to 1.3.1
 
