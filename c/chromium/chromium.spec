@@ -9,8 +9,8 @@
 
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
 
-#global gcc_version 4.8
-#set_gcc_version %gcc_version
+#global gcc_version 5
+#set_gcc_version #gcc_version
 
 %set_verify_elf_method rpath=relaxed textrel=relaxed lfs=relaxed lint=relaxed
 
@@ -25,7 +25,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        57.0.2987.110
+Version:        58.0.3029.110
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -33,7 +33,7 @@ License:        BSD-3-Clause and LGPL-2.1+
 Group:          Networking/WWW
 Url:            http://www.chromium.org
 
-Source0:        chromium.tar.gz
+Source0:        chromium.tar.zst
 Source1:        depot_tools.tar
 Source2:        libchromiumcontent.tar
 
@@ -71,6 +71,7 @@ Patch019: 0019-ALT-gzip-does-not-support-the-rsyncable-option.patch
 Patch020: 0020-GENTOO-Enable-VA-API-on-linux.patch
 Patch021: 0021-UBUNTU-Specify-max-resolution.patch
 Patch022: 0022-ALT-Use-rpath-link-and-absolute-rpath.patch
+Patch023: 0023-ALT-Hack-compile-error.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -81,49 +82,13 @@ BuildRequires:  flex
 BuildRequires:  chrpath
 BuildRequires:  gcc-c++
 %if_enabled clang
-BuildRequires:  clang
+BuildRequires:  clang4.0
+BuildRequires:  clang4.0-devel
+BuildRequires:  clang4.0-devel-static
 %endif
 BuildRequires:  gperf
-BuildRequires:  gst-plugins-devel
-BuildRequires:  jsoncpp-devel
-BuildRequires:  libalsa-devel
-BuildRequires:  libavcodec-devel
-BuildRequires:  libavformat-devel
-BuildRequires:  libavutil-devel
-BuildRequires:  libcap-devel
 BuildRequires:  libcups-devel
-BuildRequires:  libdbus-glib-devel
-BuildRequires:  libelf-devel
-BuildRequires:  libexif-devel
-BuildRequires:  libevent1.4-devel
-BuildRequires:  libexpat-devel
-BuildRequires:  libflac-devel
-BuildRequires:  libffi-devel
-BuildRequires:  libglew-devel
-BuildRequires:  libgcrypt-devel
-BuildRequires:  libgnome-keyring-devel
-BuildRequires:  libhunspell-devel
-BuildRequires:  libharfbuzz-devel
-BuildRequires:  libicu-devel
-BuildRequires:  libjpeg-devel
-BuildRequires:  libkrb5-devel
-BuildRequires:  libnspr-devel
-BuildRequires:  libnss-devel
-BuildRequires:  libpam-devel
-BuildRequires:  libpci-devel
-BuildRequires:  libspeechd-devel >= 0.8
-BuildRequires:  libsqlite3-devel
-BuildRequires:  libssl-devel
-BuildRequires:  libudev-devel
-BuildRequires:  libvpx-devel
-BuildRequires:  libwebp-devel
-BuildRequires:  libx264-devel
-BuildRequires:  libxslt-devel
-BuildRequires:  libXdamage-devel
-BuildRequires:  libXrandr-devel
-BuildRequires:  libXtst-devel
 BuildRequires:  libyasm-devel
-BuildRequires:  libpulseaudio-devel
 %if_enabled wayland
 BuildRequires:  libwayland-server-devel
 BuildRequires:  libwayland-client-devel
@@ -131,40 +96,40 @@ BuildRequires:  libwayland-cursor-devel
 %endif
 BuildRequires:  perl-Switch
 BuildRequires:  pkg-config
+BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(atk)
 BuildRequires:  pkgconfig(cairo) >= 1.6
 BuildRequires:  pkgconfig(dbus-1)
+BuildRequires:  pkgconfig(dbus-glib-1)
 BuildRequires:  pkgconfig(gconf-2.0)
 BuildRequires:  pkgconfig(glib-2.0)
+BuildRequires:  pkgconfig(gnome-keyring-1)
 BuildRequires:  pkgconfig(gtk+-2.0)
 %if_enabled gtk3
 BuildRequires:  pkgconfig(gtk+-3.0)
 %endif
+BuildRequires:  pkgconfig(expat)
+BuildRequires:  pkgconfig(libffi)
 BuildRequires:  pkgconfig(libpulse)
-BuildRequires:  pkgconfig(libxml-2.0)
+BuildRequires:  pkgconfig(libpci)
+BuildRequires:  pkgconfig(krb5-gssapi)
+BuildRequires:  pkgconfig(nspr)
+BuildRequires:  pkgconfig(nss)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xcomposite)
 BuildRequires:  pkgconfig(xcursor)
+BuildRequires:  pkgconfig(xdamage)
 BuildRequires:  pkgconfig(xext)
 BuildRequires:  pkgconfig(xfixes)
 BuildRequires:  pkgconfig(xi)
+BuildRequires:  pkgconfig(xtst)
 BuildRequires:  pkgconfig(xkbcommon)
+BuildRequires:  pkgconfig(xrandr)
 BuildRequires:  pkgconfig(xrender)
 BuildRequires:  pkgconfig(xscrnsaver)
 BuildRequires:  pkgconfig(xt)
-BuildRequires:  python-devel
-BuildRequires:  python-module-PyXML
-BuildRequires:  python-modules-compiler
-BuildRequires:  python-modules-email
-BuildRequires:  python-modules-encodings
+BuildRequires:  python
 BuildRequires:  python-modules-json
-BuildRequires:  python-modules-logging
-BuildRequires:  python-module-jinja2
-BuildRequires:  python-module-markupsafe
-BuildRequires:  python-module-ply
-BuildRequires:  python-module-protobuf
-BuildRequires:  subversion
-BuildRequires:  wdiff
 BuildRequires:  yasm
 BuildRequires:  usbids
 BuildRequires:  xdg-utils
@@ -245,6 +210,7 @@ cp -a libchromiumcontent/chromiumcontent .
 %patch020 -p1
 %patch021 -p1
 %patch022 -p1
+%patch023 -p1
 ### Finish apply patches
 
 # Enable support for the Widevine CDM plugin
@@ -270,23 +236,6 @@ export RANLIB="ranlib"
 export PATH="$PWD/.rpm/depot_tools:$PATH"
 export CHROMIUM_RPATH="%_libdir/%name"
 
-CHROMIUM_SYSTEM_LIBS="\
- flac \
- libevent \
- libjpeg \
- libwebp \
- libxml \
- libxslt \
- libusb \
-%if 0
- libpng \
- opus \
- zlib \
- re2 \
-%endif
- yasm \
-"
-
 # gn args --list <builddir>
 CHROMIUM_GN_DEFINES="\
  is_debug=false \
@@ -294,6 +243,7 @@ CHROMIUM_GN_DEFINES="\
  use_sysroot=false \
  use_gio=true \
  use_gconf=false \
+ use_glib=true \
  use_libpci=true \
  use_pulseaudio=true \
  use_aura=true \
@@ -301,6 +251,7 @@ CHROMIUM_GN_DEFINES="\
  use_kerberos=true \
  use_gold=false \
  use_pulseaudio=true \
+ use_vulcanize=false \
  link_pulseaudio=true \
  ffmpeg_branding=\"ChromeOS\" \
  proprietary_codecs=true \
@@ -310,7 +261,7 @@ CHROMIUM_GN_DEFINES="\
  treat_warnings_as_errors=false \
  fatal_linker_warnings=false \
  system_libdir=\"%_lib\" \
- use_allocator=\"none\" \
+ use_allocator=\"tcmalloc\" \
  symbol_level=0 \
  remove_webcore_debug_symbols=true \
  is_clang=%{is_enabled clang} \
@@ -327,9 +278,6 @@ CHROMIUM_GN_DEFINES="\
 %endif
 "
 
-#build/linux/unbundle/replace_gn_files.py \
-#	--system-libraries $CHROMIUM_SYSTEM_LIBS
-
 tools/gn/bootstrap/bootstrap.py -v \
 	--gn-gen-args "$CHROMIUM_GN_DEFINES"
 
@@ -339,7 +287,7 @@ tools/gn/bootstrap/bootstrap.py -v \
 
 ninja \
 	-v \
-	-j 2 \
+	-j 3 \
 	-C %target \
 	chrome \
 	chrome_sandbox \
@@ -371,7 +319,6 @@ ln -s -- %_libdir/%name/chromedriver %buildroot/%_bindir/chromedriver
 
 cp -at %buildroot%_libdir/%name -- \
  *.bin *.so *.pak \
- Packages \
  locales \
  icudtl.dat \
 #
@@ -462,6 +409,9 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Wed May 10 2017 Alexey Gladkov <legion@altlinux.ru> 58.0.3029.110-alt1
+- New version (58.0.3029.110).
+
 * Mon Mar 27 2017 Alexey Gladkov <legion@altlinux.ru> 57.0.2987.110-alt1
 - New version (57.0.2987.110).
 - Security fixes:
