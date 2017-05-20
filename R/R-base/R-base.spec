@@ -1,6 +1,6 @@
 Name: R-base
-Version: 3.3.2
-Release: alt2
+Version: 3.4.0
+Release: alt1
 
 Summary: A language for data analysis and graphics
 License: GPL
@@ -12,7 +12,7 @@ Source: R-%version.tar
 Patch: R-%version-%release.patch
 
 # Automatically added by buildreq on Thu Mar 03 2011
-BuildRequires: bzlib-devel gcc-c++ gcc-fortran libXmu-devel libjpeg-devel liblzma-devel libpango-devel libpcre-devel libpng-devel libreadline-devel libtiff-devel texlive-fonts-recommended texlive-generic-recommended texlive-xetex tk-devel zlib-devel makeinfo texi2dvi libcurl-devel libcairo-devel libtre-devel
+BuildRequires: bzlib-devel gcc-c++ gcc-fortran libXmu-devel libjpeg-devel liblzma-devel libpango-devel libpcre-devel libpng-devel libreadline-devel libtiff-devel texlive-fonts-recommended texlive-generic-recommended texlive-xetex tk-devel zlib-devel makeinfo texi2dvi libcurl-devel libcairo-devel libtre-devel rpm-build-java java-devel-default
 
 BuildPreReq: liblapack-devel libicu-devel
 
@@ -85,10 +85,6 @@ mv %buildroot%Rhome/etc/* %buildroot/etc/R/
 rmdir %buildroot%Rhome/etc
 ln -s `relative /etc/R %Rhome/etc` %buildroot%Rhome/etc
 
-# libR is relocated, nuke LD_LIBRARY_PATH
-[ -f %buildroot/etc/R/ldpaths ]
-: >%buildroot/etc/R/ldpaths
-
 mkdir -p %buildroot%_desktopdir
 cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
 [Desktop Entry]
@@ -112,7 +108,7 @@ ln -snfv `relative %_bindir/libtool %Rhome/bin/libtool` %buildroot%Rhome/bin/lib
 rm -fv %buildroot%_infodir/dir*
 
 %check
-export TZ="GMT"
+export TZ=""
 make check
 
 %files
@@ -322,6 +318,12 @@ classification, clustering, ...).
 %_infodir/R-*.info*
 
 %changelog
+* Thu May 04 2017 Kirill Maslinsky <kirill@altlinux.org> 3.4.0-alt1
+- Version 3.4.0
+
+* Wed Mar 29 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.3.3-alt1
+- Version 3.3.3
+
 * Thu Mar 23 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.3.2-alt2
 - NMU: rebuilt against Tcl/Tk 8.6
 - Dropped a test which could not be passed from time to time
