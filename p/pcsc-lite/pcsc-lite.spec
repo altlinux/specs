@@ -5,8 +5,8 @@
 %def_enable systemd
 
 Name: pcsc-lite
-Version: 1.8.20
-Release: alt3
+Version: 1.8.21
+Release: alt1
 
 Summary: PC/SC Lite smart card framework and applications
 License: %bsd
@@ -154,6 +154,9 @@ install -pDm644 %SOURCE3 %buildroot/lib/tmpfiles.d/pcsc-lite.conf
 %endif
 
 %changelog
+* Sun May 21 2017 Andrey Cherepanov <cas@altlinux.org> 1.8.21-alt1
+- New version
+
 * Thu May 11 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.8.20-alt3
 - Fixed realloc usage.
 
