@@ -1,14 +1,14 @@
 Name: faust
-Version: 0.9.9.4
-Release: alt2.qa1
+Version: 0.9.90
+Release: alt1
 
 Summary: FAUST is a compiled language for real-time audio signal processing
-License: GPL
+License: GPLv2+
 Group: Sound
 Url: http://faust.grame.fr/
 
-Packager: Timur Batyrshin <erthad@altlinux.org>
-Source: %name-%version.tar.bz2
+Packager: Anton Midyukov <antohami@altlinux.org>
+Source: %name-%version.tar
 #Patch: %name-1.0-alt-makefile-fixes.patch
 
 BuildRequires(pre): gcc-c++
@@ -35,6 +35,7 @@ compile its mathematical meaning (what it actually computes).
 Summary: Documentation for FAUST, a compiled language for real-time audio signal processing
 Group: Sound
 BuildArch: noarch
+Requires: %name = %version-%release
 
 %description doc
 FAUST is a compiled language for real-time audio signal processing.
@@ -55,11 +56,21 @@ compile its mathematical meaning (what it actually computes).
 
 This package contains documentation for FAUST
 
+%package examples
+Summary: Examples for FAUST, a compiled language for real-time audio signal processing
+Group: Sound
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description examples
+Examples for FAUST, a compiled language for real-time audio signal processing.
+
 
 %package -n faust2appls
 Summary: Useful scripts that combines faust and g++ to generates executable binary
 Group: Sound
-Requires: %name
+Requires: %name = %version-%release
+BuildArch: noarch
 
 %description -n faust2appls
 FAUST is a compiled language for real-time audio signal processing.
@@ -80,6 +91,14 @@ compile its mathematical meaning (what it actually computes).
 
 This package contains some useful scripts for FAUST
 
+%package devel
+Summary: Development files for FAUST, a compiled language for real-time audio signal processing
+Group: Development/C++
+Requires: %name = %version-%release
+BuildArch: noarch
+
+%description devel
+Development files for FAUST, a compiled language for real-time audio signal processing.
 
 %prep
 %setup
@@ -96,7 +115,8 @@ mkdir -p %buildroot/%_bindir/
 
 mkdir -p %buildroot/%_docdir/%name-%version/
 cp -ar README COPYING documentation/*.pdf %buildroot%_docdir/%name-%version/
-install -pD -m0644 documentation/additional\ documentation %buildroot%_docdir/%name-%version/additional_documentation
+mkdir -p %buildroot%_docdir/%name-%version/additional_documentation
+install -pD -m0644 documentation/misc/*.pdf %buildroot%_docdir/%name-%version/additional_documentation
 cp -ar examples/ %buildroot%_docdir/%name-%version/
 install -pD -m0644 tools/README %buildroot%_docdir/%name-%version/README.tools
 
@@ -109,19 +129,31 @@ popd
 %dir %doc %_docdir/%name-%version/
 %doc %_docdir/%name-%version/README
 %doc %_docdir/%name-%version/COPYING
-%doc %_docdir/%name-%version/README.tools
 %_bindir/%name
-%_datadir/%name/
 
 %files doc
 %doc %_docdir/%name-%version/*.pdf
 %doc %_docdir/%name-%version/additional_documentation
 
+%files examples
+%doc %_docdir/%name-%version/examples
+
 %files -n faust2appls
-%_bindir/faust2*
-%doc %_docdir/%name-%version/README.faust2appls
+%_bindir/*
+%exclude %_bindir/%name
+%_docdir/%name-%version/README.faust2appls
+%_docdir/%name-%version/README.tools
+
+%files devel
+%_includedir/%name
+%_libexecdir/%name
+%exclude %_libexecdir/%name/android
+%exclude %_libexecdir/%name/iOS*
 
 %changelog
+* Mon May 29 2017 Anton Midyukov <antohami@altlinux.org> 0.9.90-alt1
+- New version 0.9.90
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.9.4-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
