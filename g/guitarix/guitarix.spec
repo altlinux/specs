@@ -1,9 +1,12 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %global altname gx_head
 %global altname2 guitarix2
 
 Name: guitarix
-Version: 0.36.1
-Release: alt1.1
+Version: 0.37.3
+Release: alt1
 Summary: Mono amplifier to JACK
 Group: Sound
 License: GPLv2+
@@ -33,9 +36,10 @@ BuildRequires: lilv-devel
 BuildRequires: gperf
 BuildRequires: libavahi-gobject-devel
 BuildRequires: eigen3
+BuildRequires: libcurl-devel
 Requires: jack_capture
 Requires: jconvolver
-Requires: ladspa-%name-plugins = %version-%release
+Requires: ladspa-%name-plugins = %EVR
 Requires: qjackctl
 Requires: vorbis-tools
 #Requires: google-roboto-condensed-fonts
@@ -78,7 +82,7 @@ This package contains the Guitarix GTK C++ widget library
 Summary: Development files for libgxw
 Group: Development/Other
 License: GPLv2+
-Requires: libgxw = %version-%release
+Requires: libgxw = %EVR
 
 %description -n libgxw-devel
 This package contains files required to use the libgxw C Guitarix
@@ -88,7 +92,7 @@ widget library
 Summary: Development files for libgxwmm
 Group: Development/Other
 License: GPLv2+
-Requires: libgxwmm = %version-%release
+Requires: libgxwmm = %EVR
 
 %description -n libgxwmm-devel
 This package contains files required to use the libgxwmm C++ Guitarix widget
@@ -99,7 +103,7 @@ Summary: Guitarix GTK library glade support
 Group: Development/Other
 License: GPLv2+
 Requires: glade
-Requires: libgxw-devel = %version-%release
+Requires: libgxw-devel = %EVR
 
 %description -n gxw-glade
 This package contains support for using the Guitarix GTK widget library
@@ -125,14 +129,14 @@ Group: Sound
 # The rest of ladspa/* is GPLv+
 License: GPLv2+
 Requires: lv2
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n lv2-%name-plugins
 This package contains the guitarix amp plug-ins that come together with
 guitarix, but can also be used by any other ladspa host.
 
 %prep
-%setup -n %name-%version
+%setup
 
 #fix PATH include to Eigen
 for i in `grep -r '<Eigen' * | cut -d ':' -f1`; do
@@ -153,7 +157,7 @@ rm -fr src/zita-convolver src/zita-resampler
 %endif
       %optflags" \
       --shared-lib --lib-dev \
-      --ladspadir=%_libdir/ladspa --lv2dir=%_libdir/lv2 \
+      --ladspa --ladspadir=%_libdir/ladspa --lv2dir=%_libdir/lv2 \
       --glade-support --glade-catalog-dir=%_datadir/glade/catalogs \
       --glade-modules-dir=%_libdir/glade/modules
 ./waf -vv build %{?_smp_mflags}
@@ -175,7 +179,6 @@ ln -s %_libdir/libgxw.so.0.1 %buildroot%_libdir/libgxw.so
 %doc changelog COPYING README
 %_bindir/%name
 %_datadir/%altname/
-%_datadir/ladspa/rdf/%name.rdf
 %_pixmapsdir/*
 %_desktopdir/%name.desktop
 
@@ -205,12 +208,14 @@ ln -s %_libdir/libgxw.so.0.1 %buildroot%_libdir/libgxw.so
 %files -n ladspa-%name-plugins
 %_libdir/ladspa/*.so
 %_datadir/ladspa
-%exclude %_datadir/ladspa/rdf/%name.rdf
 
 %files -n lv2-%name-plugins
 %_libdir/lv2/*
 
 %changelog
+* Sun Nov 25 2018 Anton Midyukov <antohami@altlinux.org> 0.37.3-alt1
+- new version 0.37.3
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.36.1-alt1.1
 - NMU: rebuilt with boost-1.67.0
 

@@ -2,7 +2,7 @@
 
 Name: zam-plugins
 Version: 3.10
-Release: alt1.1
+Release: alt2
 
 Summary: A collection of LV2/LADSPA/JACK audio plugins
 Group: Sound
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 # https://github.com/zamaudio/zam-plugins/pull/62
 Patch: %name-unbundle-zita-convolver.patch
 Patch1: dpf-generate-ttl.sh.patch
+Patch10: %name-3.10-up+alt-zc_4.0.0.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libjack-devel liblo-devel
@@ -55,12 +56,13 @@ This is the LADSPA version.
 %setup
 %patch -p1 -b .unbundle-zita
 %patch1 -b "~"
+%patch10 -p1
 
 %build
 %add_optflags %optflags_fastmath
 
 %ifarch %ix86
-%add_optflags -msse -mfpmath=sse
+%add_optflags -msse -mfpmath=sse -D_FILE_OFFSET_BITS=64
 %endif
 
 %ifarch x86_64
@@ -90,6 +92,9 @@ rm -rf %buildroot%_libdir/vst %buildroot/*-dssi*
 %doc README.md
 
 %changelog
+* Sun Nov 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.10-alt2
+- rebuilt against libzita-convolver.so.4
+
 * Sat Jun 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.10-alt1.1
 - rebuilt for aarch64
 

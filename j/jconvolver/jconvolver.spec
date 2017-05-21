@@ -1,28 +1,28 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define _localstatedir %_var
 Summary: Real-time Convolution Engine
 Name: jconvolver
-Version: 0.9.2
+Version: 1.0.0
 Release: alt1
 License: GPLv2+
-Group: Graphics
+Group: Sound
 Url: http://www.kokkinizita.net/linuxaudio/
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: http://www.kokkinizita.net/linuxaudio/downloads/%name-%version.tar.bz2
 
 Obsoletes: jace <= 0.2.0
-Provides: jace = %version-%release
+Provides: jace = %EVR
 Obsoletes: jconv <= 0.8.1
-Provides: jconv = %version-%release
+Provides: jconv = %EVR
 
 BuildRequires: gcc-c++
 BuildRequires: clthreads-devel
-BuildRequires: libfftw3-devel
 BuildRequires: jackit-devel
 BuildRequires: libsndfile-devel
-BuildRequires: zita-convolver-devel >= 3.0.2
-
-Requires: zita-convolver >= 3.0.2
+BuildRequires: zita-convolver-devel >= 4.0.0
 
 %description
 Jconvolver is a real-time convolution engine. It can execute up to a 64 by 64
@@ -39,11 +39,10 @@ find config-files/ -name \*.conf \
   -exec sed -i -e "s|^#/cd |/cd |g" {} \;
 
 %build
-%make_build PREFIX=%prefix LIBDIR=%_lib -C source
+%make_build -C source
 
 %install
-mkdir -p %buildroot%_bindir
-make install PREFIX=%buildroot%prefix LIBDIR=%_lib -C source
+%makeinstall_std PREFIX=%prefix -C source
 
 # install configuration files and demo reverbs
 mkdir -p %buildroot%_datadir/%name
@@ -55,5 +54,8 @@ cp -a config-files/* %buildroot%_datadir/%name
 %_datadir/%name/
 
 %changelog
+* Sun Nov 25 2018 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
+- new version 1.0.0
+
 * Sun May 21 2017 Anton Midyukov <antohami@altlinux.org> 0.9.2-alt1
 - Initial build for ALT Linux Sisyphus.
