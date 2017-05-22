@@ -2,7 +2,7 @@
 
 Name: alterator-ldap-users
 Version: 0.8.4
-Release: alt2
+Release: alt3
 
 Source: %name-%version.tar
 
@@ -30,6 +30,15 @@ BuildRequires: alterator >= 5.0 alterator-fbi >= 5.33-alt1
 %description
 Alterator module for local and LDAP user administration
 
+%package -n alterator-usersource-functions
+Summary: Common functions for user and group account data source management
+License: GPL
+Group: Development/Other
+BuildArch: noarch
+
+%description -n alterator-usersource-functions
+Common functions for user and group account data source management.
+
 %prep
 %setup -q
 
@@ -48,7 +57,15 @@ Alterator module for local and LDAP user administration
 %_alterator_backend3dir/*
 %_alterator_datadir/design/images/ldap-users/*
 
+%files -n alterator-usersource-functions
+%_bindir/alterator-*-functions
+
 %changelog
+* Mon May 22 2017 Paul Wolneykien <manowar@altlinux.org> 0.8.4-alt3
+- Extract common functions for user and group account data source
+  management in the separate package.
+- Fixed: Pass the remote host when is listing remote bases.
+
 * Wed May 17 2017 Paul Wolneykien <manowar@altlinux.org> 0.8.4-alt2
 - Fixed "netcmdplus" package detection.
 

@@ -1,6 +1,6 @@
 Name:    alterator-net-domain
 Version: 0.7.0
-Release: alt5
+Release: alt6
 Source:  %name-%version.tar
 
 Summary: Alterator module to provision system network domain
@@ -39,6 +39,10 @@ and FreeIPA domain.
 %_bindir/*-sh-functions
 
 %changelog
+* Mon May 22 2017 Paul Wolneykien <manowar@altlinux.org> 0.7.0-alt6
+- Fixed: Cleanup smb.conf before activating ALT Domain.
+- Fix: Stop extra services for the simple DNS mode.
+
 * Fri May 05 2017 Paul Wolneykien <manowar@altlinux.org> 0.7.0-alt5
 - Fixed DNS-only domain update.
 - Fixed ALT-domain configuration parsing.
