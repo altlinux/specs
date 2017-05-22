@@ -1,10 +1,11 @@
 # vim: set ft=spec: -*- rpm-spec -*-
+%def_with tests
 
 %define pkgname ruby-locale
 
 Name: %pkgname
-Version: 2.0.6
-Release: alt1.1
+Version: 2.1.2
+Release: alt1
 
 Summary: Pure ruby library which provides basic APIs for localization
 Group: Development/Ruby
@@ -16,8 +17,8 @@ BuildArch: noarch
 Source: %pkgname-%version.tar
 Patch1: ruby-locale-2.0.6-alt-Do-not-call-locale-charmap-if-LC_-variables-unset.patch
 Patch2: ruby-locale-2.0.6-alt-Fix-Array-vs-String-clash.patch
+Patch3: alt-gemspec.patch
 
-# Automatically added by buildreq on Wed May 06 2009 (-bi)
 BuildRequires: rpm-build-ruby ruby-stdlibs ruby-test-unit ruby-tool-rdoc ruby-tool-setup
 
 %description
@@ -39,6 +40,7 @@ Documentation files for %name
 %setup -n %pkgname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 %update_setup_rb
 
 rm -f test/test_driver_jruby.rb
@@ -47,25 +49,35 @@ rm -f test/test_driver_win32.rb
 %build
 %ruby_config
 %ruby_build
-for t in test/test_*.rb; do
-%ruby_test_unit -Ilib:test "$t"
-done
 
 %install
 %ruby_install
+# Install gemspec
+export rbVersion=`ruby -e "puts RbConfig::CONFIG[\"ruby_version\"]"`
+install -Dm 0644 locale.gemspec %buildroot%ruby_libdir/gems/$rbVersion/specifications/locale.gemspec
 %rdoc lib/
+
+%check
+%if_with tests
+%ruby_test_unit -Ilib:test test
+%endif
 
 %files
 %doc README.rdoc
 %ruby_sitelibdir/*
 %exclude %ruby_sitelibdir/locale/driver/jruby.rb
 %exclude %ruby_sitelibdir/locale/driver/win32*.rb
+%ruby_libdir/gems/*/specifications/*.gemspec
 
 %files doc
 %doc samples ChangeLog
 %ruby_ri_sitedir/Locale*
 
 %changelog
+* Sun May 21 2017 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt1
+- New version
+- Package with gemspec
+
 * Wed Dec 05 2012 Led <led@altlinux.ru> 2.0.6-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 
