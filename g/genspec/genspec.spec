@@ -1,7 +1,5 @@
-%define gname github2spec
-
 Name:     genspec
-Version:  1.1.2
+Version:  1.2.0
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
@@ -12,7 +10,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildArch: noarch
 
-BuildPrereq: rpm-build-ruby rpm-build-python3
+BuildPrereq: rpm-build-python3
 
 Source:   %name-%version.tar
 
@@ -24,16 +22,17 @@ Script for generation RPM spec file from template.
 
 %install
 install -Dm755 %name %buildroot%_bindir/%name
-install -Dm755 %gname %buildroot%_bindir/%gname
 mkdir -p %buildroot%_datadir/spectemplates
 cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 
 %files
 %_bindir/%name
-%_bindir/%gname
 %_datadir/spectemplates
 
 %changelog
+* Tue May 16 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.0-alt1
+- Split in two packages: genspec and github2spec
+
 * Tue May 16 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.2-alt1
 - Fix several issues
 
