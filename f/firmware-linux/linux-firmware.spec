@@ -1,6 +1,6 @@
 Name: firmware-linux
-Version: 20170314
-Release: alt1
+Version: 20170517
+Release: alt2
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -24,6 +24,9 @@ Provides: firmware-amd-ucode
 Obsoletes: firmware-amd-ucode <= 2.0
 
 Requires: udev
+AutoReqProv: no
+
+%add_verify_elf_skiplist /lib/firmware/*
 
 %description
 Kernel-firmware includes firmware files
@@ -60,6 +63,12 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 %exclude /lib/firmware/carl9170fw
 
 %changelog
+* Mon May 22 2017 Michael Shigorin <mike@altlinux.org> 20170517-alt2
+- disable attempts to find R:/P: or ELF bugs automatically
+
+* Mon May 22 2017 Michael Shigorin <mike@altlinux.org> 20170517-alt1
+- updated from git
+
 * Wed Mar 22 2017 Michael Shigorin <mike@altlinux.org> 20170314-alt1
 - updated from git
 
