@@ -1,18 +1,19 @@
 Name: xdg-utils
-Version: 1.1.0
-Release: alt12
+Version: 1.1.2
+Release: alt1
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
+
 License: MIT
 Group: System/Base
+Url: https://www.freedesktop.org/wiki/Software/xdg-utils/
 
-Url: http://portland.freedesktop.org/wiki/XdgUtils
+# Source-url: https://portland.freedesktop.org/download/xdg-utils-%version.tar.gz
 Source: %name-%version.tar
+
 Patch0: added-xdg-su-1.1.0rc1-alt.patch
 Patch1: xdg-open-opera.patch
-Patch2: xdg-su-added-lxde-and-gksu-support.patch
-Patch3: detect-mate.patch
-Patch4: mate-screensaver.patch
+Patch2: xdg-su-added-lxde-and-gksu-support-1.1.2.patch
 Patch5: xdg-open-generic-mimeapps.patch
 Patch6: xdg-su-use-gnomesu-for-xfce-if-available.patch
 Patch7: xdg-open-fix-ifs-use.patch
@@ -59,15 +60,13 @@ pushd scripts
 ls *.in | sed -e 's,\(.*\)\.in$,\1,' | xargs rm -f
 popd
 %patch0 -p2
-%patch1 -p1
+#patch1 -p1
 %patch2 -p2
-%patch3 -p2
-%patch4 -p2
 %patch5 -p1
 %patch6 -p2
-%patch7 -p2
-%patch8 -p1
-%patch9 -p1
+#patch7 -p2
+#patch8 -p1
+#patch9 -p1
 
 %build
 %autoreconf
@@ -92,6 +91,9 @@ popd
 %doc ChangeLog README LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Mon May 22 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
+- new version 1.1.2 (with rpmrb script) (ALT bug 33159)
+
 * Tue Aug 04 2015 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt12
 - add KDE5 support to xdg-su and xdg-open (ALT#31161)
 
