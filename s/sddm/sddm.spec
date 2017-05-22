@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.14.0
-Release: alt12%ubt
+Release: alt13%ubt
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -29,6 +29,11 @@ Source21: Xstop
 # upstream
 # SuSE
 Patch10: create_pid_file.patch
+# github issues
+Patch80: 701.patch
+Patch81: 708.patch
+Patch82: 725.patch
+Patch83: 735.patch
 # ALT
 Patch100: alt-defaults.patch
 Patch101: alt-branding-faces.patch
@@ -63,6 +68,10 @@ ability to create smooth, animated user interfaces.
 %prep
 %setup -n %name-%version
 %patch10 -p1
+%patch80 -p1
+%patch81 -p1
+%patch82 -p1
+%patch83 -p1
 %patch100 -p1 -b .defaults
 #%patch101 -p1
 %patch102 -p1 -b .wmsession
@@ -143,6 +152,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Mon May 22 2017 Sergey V Turchin <zerg@altlinux.org> 0.14.0-alt13%ubt
+- add fixes for github issues: 701,708,725,735
+
 * Thu Apr 20 2017 Oleg Solovyov <mcpain@altlinux.org> 0.14.0-alt12%ubt
 - /etc/sysconfig/i18n is now used instead /etc/locale.conf if latter is missing
 - ru and en locales are supported locales only, others are being ignored
