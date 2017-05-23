@@ -1,13 +1,13 @@
 Name: mysqltuner
-Version: 1.7.0
-Release: alt3
+Version: 1.7.2
+Release: alt1
 
 Summary: High Performance MySQL Tuning Script
 License: GPLv3+
 Group: Databases
 
 Url: https://github.com/major/MySQLTuner-perl
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tar
 
 BuildArch: noarch
 
@@ -34,16 +34,19 @@ that is on the level of what you would receive from a MySQL DBA.
 install -pD -m755 %name.pl %buildroot%_bindir/%name
 install -pD -m644 vulnerabilities.csv %buildroot%basedir/vulnerabilities.csv
 install -p -m644 basic_passwords.txt %buildroot%basedir/
-install -p -m644 LICENSE %buildroot%basedir/
 pod2man %name.pl > %name.1
 install -pD -m644 %name.1 %buildroot%_man1dir/%name.1
 
 %files
 %_bindir/%name
-%basedir/*
-%_man1dir/*
+%basedir
+%_man1dir/%name.1.*
+%doc *.md *.png
 
 %changelog
+* Tue May 23 2017 Terechkov Evgenii <evg@altlinux.org> 1.7.2-alt1
+- 1.7.2 (build from upstream git repo)
+
 * Fri Feb 03 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.7.0-alt3
 - Fixed man (use pod2man).
 
