@@ -1,10 +1,12 @@
 %define oname subunit
 
+%add_python3_req_skip gtk.gdk
+
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.0
-Release: alt1.1
+Version: 1.2.0
+Release: alt1
 Summary: Python implementation of subunit test streaming protocol
 License: Apache or BSD
 Group: Development/Python
@@ -134,7 +136,7 @@ popd
 %endif
 
 %files
-%doc NEWS README
+%doc NEWS README.rst
 %_bindir/*
 %exclude %_bindir/py3_*
 %python_sitelibdir/*
@@ -145,7 +147,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc NEWS README
+%doc NEWS README.rst
 %_bindir/py3_*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test*
@@ -157,6 +159,9 @@ popd
 %endif
 
 %changelog
+* Tue May 23 2017 Lenar Shakirov <snejok@altlinux.ru> 1.2.0-alt1
+- Version 1.2.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.0-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
