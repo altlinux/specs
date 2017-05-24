@@ -1,19 +1,35 @@
+%def_enable drm
+%def_enable glx
+%def_enable egl
+%def_enable x11
+
 Name: libva
-Version: 1.7.2
-Release: alt1
+Version: 1.7.3
+Release: alt2
 
 Summary: Video Acceleration (VA) API for Linux
 License: MIT
 Group: System/Libraries
-Url: http://www.splitted-desktop.com/~gbeauchesne/
+Url: https://github.com/01org/libva
 
 Obsoletes: libva1 < %version-%release vainfo < %version-%release
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ libGL-devel libEGL-devel libXext-devel libXfixes-devel
-BuildRequires: libwayland-client-devel libwayland-server-devel libdrm-devel
+%if_enabled drm
+BuildRequires: libdrm-devel
+%endif
+%if_enabled glx
+BuildRequires: libGL-devel
+%endif
+%if_enabled egl
+BuildRequires: libEGL-devel
+%endif
+%if_enabled x11
+BuildRequires: libXext-devel libXfixes-devel
+%endif
+BuildRequires: gcc-c++ libwayland-client-devel libwayland-server-devel
 
 %description
 Video Acceleration (VA) API for Linux - runtime
@@ -39,6 +55,10 @@ This package provides the development environment for libva
 %build
 %autoreconf
 %configure \
+	%{subst_enable drm} \
+	%{subst_enable glx} \
+	%{subst_enable egl} \
+	%{subst_enable x11} \
 	--disable-static
 %make_build
 
@@ -57,6 +77,14 @@ This package provides the development environment for libva
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed May 24 2017 L.A. Kostis <lakostis@altlinux.ru> 1.7.3-alt2
+- Re-enabled glx/egl back (transition to GLVND is over).
+
+* Tue May 23 2017 L.A. Kostis <lakostis@altlinux.ru> 1.7.3-alt1
+- 1.7.3.
+- Added fix for libva in case of GLVND setup (taken from Fedora).
+- Updated radeonsi patch.
+
 * Fri Oct 28 2016 L.A. Kostis <lakostis@altlinux.ru> 1.7.2-alt1
 - 1.7.2.
 
