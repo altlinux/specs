@@ -45,7 +45,7 @@
 %def_with libcephfs
 
 Name:    samba-DC
-Version: 4.6.3
+Version: 4.6.4
 Release: alt1%ubt
 
 Group:   System/Servers
@@ -1331,6 +1331,12 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Wed May 24 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.4-alt1%ubt
+- Update to second spring security release
+- Fix longtime initialization bug in ldb proxy
+- Security fixes:
+  + CVE-2017-7494 Remote code execution from a writable share
+
 * Tue Apr 25 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.3-alt1%ubt
 - Udpate to second spring release
 - Remove conflict winbind with libwbclient-sssd due upgrade problems
