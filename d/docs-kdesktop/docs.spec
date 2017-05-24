@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 7.0.5
-Release: alt4
+Release: alt5
 
 Summary: %Variant documentation
 License: %fdl
@@ -43,6 +43,9 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Wed May 24 2017 Elena Mishina <lepata@altlinux.org> 7.0.5-alt5
+- closes bug: #31741
+
 * Fri Feb 17 2017 Elena Mishina <lepata@altlinux.org> 7.0.5-alt4
 - update Conflicts list
 

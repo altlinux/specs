@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 8.1
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -43,6 +43,10 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Wed May 24 2017 Elena Mishina <lepata@altlinux.org> 8.1-alt4
+- fix typo
+- update doc
+
 * Fri Feb 10 2017 Elena Mishina <lepata@altlinux.org> 8.1-alt3
 - update Conflicts list
 
