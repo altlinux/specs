@@ -1,20 +1,26 @@
 %define oname pyparsing
+%def_with python3
 
 Name: python-module-%oname
-Version: 2.0.3
+Version: 2.1.10
 Release: alt1
 
 Summary: Python parsing module
 
-License: MIT License
+License: MIT
 Group: Development/Python
 URL: http://pyparsing.wikispaces.com/
-
+Packager: Python Development Team <python at packages.altlinux.org>
 BuildArch: noarch
 
-%setup_python_module %oname
+BuildPreReq: python-devel
+BuildRequires: python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
+%endif
 
-Source: http://prdownloads.sourceforge.net/%oname/%modulename-%version.tar.gz
+Source: http://prdownloads.sourceforge.net/%oname/%oname-%version.tar.gz
 
 %description
 The parsing module is an alternative approach to creating and executing
@@ -22,21 +28,56 @@ simple grammars, vs. the traditional lex/yacc approach, or the use of
 regular expressions.  The parsing module provides a library of classes
 that client code uses to construct the grammar directly in Python code.
 
+%package -n python3-module-%oname
+Summary: Python 3 parsing module
+Group: Development/Python3
+
+%description -n python3-module-%oname
+The parsing module is an alternative approach to creating and executing
+simple grammars, vs. the traditional lex/yacc approach, or the use of
+regular expressions.  The parsing module provides a library of classes
+that client code uses to construct the grammar directly in Python code.
+
 %prep
-%setup -n %modulename-%version
+%setup -n %oname-%version
+
+%if_with python3
+cp -fR . ../python3
+%endif
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
 
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
 %files
-%doc CHANGES examples HowToUsePyparsing.html docs/*.pdf
+%doc CHANGES examples docs/*
 %doc pyparsingClassDiagram.JPG pyparsingClassDiagram.PNG README
 %python_sitelibdir/*
 
+%files -n python3-module-%oname
+%doc CHANGES examples docs/*
+%doc pyparsingClassDiagram.JPG pyparsingClassDiagram.PNG README
+%python3_sitelibdir/*
+
 %changelog
+* Wed May 24 2017 Alexey Shabalin <shaba@altlinux.ru> 2.1.10-alt1
+- 2.1.10
+- build python and python3 packages from one spec
+
 * Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt1
 - Version 2.0.3
 
