@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-ldap-groups
-Version: 0.6.5
+Version: 0.6.6
 Release: alt1
 
 Source: %name-%version.tar
@@ -11,19 +11,21 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Summary: Alterator module for LDAP groups administration
 License: GPL
 Group: System/Configuration/Other
-BuildArch: noarch
 
-Requires: alterator >= 2.9 ldap-user-tools >= 0.8.3 alterator-auth >= 0.9-alt3
+Requires: alterator >= 5.0 ldap-user-tools >= 0.2
+Requires: alterator-auth >= 0.9-alt3
 Requires: alterator-sh-functions >= 0.11-alt2
 Requires: shadow-groups >= 4.0.4.1-alt9
 Requires: alterator-l10n >= 2.7-alt6
 
-Conflicts: alterator-fbi < 0.16-alt2
+Conflicts: alterator-fbi < 5.18-alt1
+Conflicts: netcmdplus < 0.1.1
+
 Obsoletes: alterator-ldap-groups-school-server < %version
 Provides:  alterator-ldap-groups-school-server = %version-%release
 
-BuildPreReq: alterator >= 3.2-alt3 
-BuildRequires: alterator-l10n alterator-fbi
+BuildRequires: guile22-devel rpm-build >= 4.0.4-alt103
+BuildRequires: alterator >= 5.0 alterator-fbi >= 5.33-alt1
 
 %description
 Alterator module for LDAP groups administration
@@ -39,13 +41,18 @@ Alterator module for LDAP groups administration
 
 %files
 %config(noreplace) %_sysconfdir/alterator/ldap-groups
-%_datadir/alterator/applications/*
-%_datadir/alterator/ui/*/
+%_alterator_datadir/applications/*
+%_alterator_datadir/ui/*/
+%_alterator_libdir/ui/*/
+%_alterator_datadir/type/*
+%_alterator_libdir/type/*
 %_alterator_backend3dir/*
-%_datadir/alterator/type/*
 %_hooksdir/91-ldap-groups
 
 %changelog
+* Mon May 22 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.6-alt1
+- Support Samba DC group management.
+
 * Tue Jul 08 2014 Mikhail Efremov <sem@altlinux.org> 0.6.5-alt1
 - Fix addition/removal local groups.
 
