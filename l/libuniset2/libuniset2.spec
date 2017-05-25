@@ -16,7 +16,7 @@
 
 Name: libuniset2
 Version: 2.6
-Release: alt14
+Release: alt19
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -508,6 +508,24 @@ rm -f %buildroot%_libdir/*.la
 # history of current unpublished changes
 
 %changelog
+* Thu May 25 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt19
+- MBSlave: Now does not terminate when socket is not open
+- Configuration: Now does not terminate when endPoint is not available
+- minor fixes
+
+* Tue May 09 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt18
+- DBInterface refactoring (setbug #12672)
+
+* Sun May 07 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt17
+- IOC:askSensor() refactoring N2
+
+* Wed May 03 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt16
+- IOC:askSensor() refactoring
+
+* Mon May 01 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt15
+- (codegen): add msg statistic for getInfo()
+- (http): minor fixes format for help
+
 * Thu Apr 20 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt14
 - IOBase: added support 'precision < 0'
 - LogicProcessor: add "A2D" element (analog to discrete)
