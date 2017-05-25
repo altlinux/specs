@@ -61,8 +61,8 @@ License:	%gpl2only
 URL:		http://xymon.sourceforge.net/
 
 %if_disabled trunk
-Version:	4.3.27
-Release:	alt2
+Version:	4.3.28
+Release:	alt1
 Source0:	http://prdownloads.sourceforge.net/xymon/Xymon/%{version}/%{name}-%{version}.tar.gz
 %else
 %define		trunkVersion	%(svn info ~/svn/xymon/trunk/ | grep ^Revision | awk '{print $2}')
@@ -474,7 +474,7 @@ the Xymon server in NCV format.
 %patch503 -p1
 %patch504 -p1
 
-sed "s/define MAXCHECK   102400/define MAXCHECK   2048000/" -i client/logfetch.c
+sed "s/define MAXCHECK   102400/define MAXCHECK   4194303/" -i client/logfetch.c
 
 %if_disabled trunk
   PROTOFILE="xymond/etcfiles/protocols.cfg.DIST"
@@ -1254,6 +1254,10 @@ done
 ################ end extra clients ################
 
 %changelog
+* Tue May 23 2017 Sergey Y. Afonin <asy@altlinux.ru> 4.3.28-alt1
+- new version
+- increased logfetch's buffer size from 2048000 to 4194303
+
 * Fri Apr 22 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.3.27-alt2
 - dropped patch for config of logrotate, changed permissions for
   %{logDirectory} instead; permissions for %{runDirectory} changed
