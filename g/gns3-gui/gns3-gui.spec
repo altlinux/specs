@@ -1,5 +1,5 @@
 Name: gns3-gui
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: GNS3 Graphical User Interface
@@ -70,6 +70,9 @@ install -Dp -m0644 %SOURCE5 %buildroot%_desktopdir/gns3.desktop
 %_datadir/mime/packages/gns3.xml
 
 %changelog
+* Tue May 23 2017 Anton Midyukov <antohami@altlinux.org> 2.0.1-alt1
+- new version 2.0.1
+
 * Mon May 08 2017 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
 - New version 2.0.0
 
