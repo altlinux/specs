@@ -1,6 +1,6 @@
 Name: man-pages
-Version: 4.10
-Release: alt2
+Version: 4.11
+Release: alt1
 
 Summary: Man (manual) pages from the Linux Documentation Project
 Summary(ru_RU.UTF8): Руководства пользователя Linux Documentation Project
@@ -116,6 +116,9 @@ find %buildroot%_mandir -type f -print0 |
 %_datadir/%name/
 
 %changelog
+* Thu May 25 2017 Dmitry V. Levin <ldv@altlinux.org> 4.11-alt1
+- 4.10 -> 4.11.
+
 * Mon Mar 20 2017 Dmitry V. Levin <ldv@altlinux.org> 4.10-alt2
 - Conflicts: keyutils < 1.5.10 (closes: #33254).
 
