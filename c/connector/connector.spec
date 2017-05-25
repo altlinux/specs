@@ -1,6 +1,6 @@
 Name: connector
-Version: 1.4.1
-Release: alt2
+Version: 1.4.3
+Release: alt3
 
 Summary: Remote desktop chooser
 License: GPL
@@ -13,7 +13,7 @@ Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 BuildArch: noarch
 Requires: python3 python3-module-pygobject3 libgtk+3 libgtk+3-gir
 Requires: remmina remmina-plugins tigervnc xfreerdp
-Requires: control
+Requires: control xdg-utils
 
 %define basedir %_datadir/%name
 
@@ -42,6 +42,18 @@ install -pDm644 %name.man %buildroot%_man1dir/%name.1
 %_man1dir/*
 
 %changelog
+* Tue May 23 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.4.3-alt3
+- Added switching to the default tab after save properties
+
+* Tue May 23 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.4.3-alt2
+- Changed the command to open the wiki
+
+* Fri May 19 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.4.3-alt1
+- The code is optimized: now the program works equally in both AltLinux and Linux Mint
+- Startup command of connection added to the log
+- Update vncviewer's keys
+- Changed command of web-connection
+
 * Wed May 17 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.4.1-alt2
 - Fixed save shortcut of connections
 - Minor fixes in changelog
@@ -80,7 +92,7 @@ install -pDm644 %name.man %buildroot%_man1dir/%name.1
 * Wed Aug 24 2016 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.3.23-alt3
 - Update requires - added remmina-plugins
 
-* Fri Aug 22 2016 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.3.23-alt2
+* Mon Aug 22 2016 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.3.23-alt2
 - Update requires - added xfreerdp
 
 * Fri Aug 12 2016 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.3.23-alt1
