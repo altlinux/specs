@@ -1,20 +1,13 @@
 # vir: set ft=spec: -*- rpm-spec -*-
 
-# %%branch_switch set %%branch_release use
-#%%define branch_switch Mxx
-
-%define apache_version 2.4.23
+%define apache_version 2.4.25
 
 %define mmn 20120211
 
 # do we use native apr/apu ?
 %def_disable static
 
-# name pkg-config pakage
-%define n_pkgconfig pkg-config
-
 # %%alternatives_* set
-%define alternatives_name alternatives
 %define alternatives_min_ver %nil
 %define alternatives_filetrigger yes
 %define alternatives_macros yes
@@ -22,7 +15,7 @@
 %define alternatives_min_ver 0.4
 %endif
 %if "%alternatives_macros" == "yes"
-%define alternatives_macros_name rpm-macros-%alternatives_name
+%define alternatives_macros_name rpm-macros-alternatives
 %endif
 
 %define apache_configs_branch 2
@@ -37,9 +30,10 @@
 %define docdir %apache2_docdir_prefix-%version
 %define macrosname %name-build
 
-Name:    %apache2_name
+Name:    apache2
 Version: %apache_version
 Release: alt1
+Epoch: 1
 
 License: %asl
 Group: System/Servers
@@ -49,7 +43,6 @@ Summary: The most widely used Web server on the Internet
 Summary(ru_RU.UTF-8): Самый популярный веб-сервер Internet
 Summary(uk_UA.UTF-8): Найбільш популярний веб-сервер Internet
 
-# SVN URL: http://svn.apache.org/repos/asf/httpd/httpd/tags/2.2.4
 Source0: httpd-%version.tar
 
 #Source10: apache2.favour
@@ -92,15 +85,10 @@ Source63: server-condstart-rpm.sh
 Source70: apache2-cert-sh-functions.sh
 Source71: apache2-cert-sh.sh
 
-# ALT patchs and:
-# + http://mpm-itk.sesse.net/apache2.2-mpm-itk-2.2.17-01/*.patch
-# + http://www.telana.com/files/httpd-2.2.3-peruser-0.3.0.patch
-# + http://www.peruser.org/trac/projects/peruser/attachment/wiki/PeruserAttachments/httpd-2.2.3-peruser-0.3.0-dc3.patch
-Patch1: apache2-2.4.18-alt-all-0.2.patch
-Patch2: Makefile.in.patch
-Patch3: apachectl.patch
-Patch4: configure.in.patch
-Patch5: httpd.conf.patch
+# ALT patches:
+Patch1: apache2-2.4.25-alt-all-0.3.patch
+Patch2: apache2-2.4.25-alt-apachectl.patch
+Patch3: apache2-2.4.25-alt-httpd.conf.patch
 
 BuildRequires(pre): rpm-macros-branch
 BuildRequires(pre): rpm-macros-apache2 >= 3.12
@@ -132,9 +120,9 @@ BuildRequires: zlib-devel
 %if "%alternatives_macros_name" != ""
 BuildPreReq: %alternatives_macros_name
 %else
-BuildPreReq: %alternatives_name
+BuildPreReq: alternatives
 %endif
-BuildPreReq: %n_pkgconfig
+BuildPreReq: pkg-config
 %if_enabled static
 BuildPreReq: %apache2_libaprutil_name-devel-static
 BuildPreReq: libssl-devel-static
@@ -217,9 +205,9 @@ Conflicts: apache-mod_perl < 1.3.41rusPL30.23-alt4.2
 Conflicts: apache2-htcacheclean <= 2.2.22-alt11
 
 Obsoletes: %name-init
-Obsoletes: %name-common <= 2.2.22-alt15
+Obsoletes: %name-common < %EVR
 PreReq: webserver-common
-Requires: %name-mods > 2.2.22-alt15
+Requires: %name-mods >= %version-%release
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
 Requires: %apache2_sbindir/%apache2_dname
@@ -248,9 +236,9 @@ Group: System/Servers
 BuildArch: noarch
 
 Requires: %name = %EVR
-Requires: %name-cgi-bin >= 2.2.9-alt12
-Requires: %name-html >= 2.2.12-alt1
-Requires: %name-icons >= 2.2.9-alt10
+Requires: %name-cgi-bin >= %EVR
+Requires: %name-html >= %EVR
+Requires: %name-icons >= %EVR
 
 %description full
 Apache is a powerful, full-featured, efficient and freely-available
@@ -270,7 +258,7 @@ Summary(ru_RU.UTF-8): Модули для инсталляции %name
 Group: System/Servers
 Conflicts: apache2 < 2.2.4-alt17
 Conflicts: apache2-base <= 2.2.22-alt15
-PreReq: %name-base > 2.2.22-alt15
+PreReq: %name-base >= %EVR
 Requires: %name-mmn = %mmn
 Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
 Requires: %apache2_libapr_name >= %apache2_libapr_evr
@@ -302,9 +290,9 @@ This is a hack to run proxified Apache2 in case Apache1 is running.
 Summary: High speed threaded model for Apache HTTPD 2.1
 Summary(ru_RU.UTF-8): Высокоскоростная нитевая модель для Apache HTTPD 2.1
 Group: System/Servers
-PreReq: %name-base > 2.2.22-alt15
+PreReq: %name-base >= %EVR
 %if "%alternatives_min_ver" != ""
-PreReq: %alternatives_name >= %alternatives_min_ver
+PreReq: alternatives >= %alternatives_min_ver
 %endif
 Provides: %name-mmn = %mmn
 Provides: %apache2_sbindir/%apache2_dname
@@ -321,9 +309,9 @@ has a smaller memory footprint than the prefork MPM.
 Summary: Traditional model for Apache HTTPD 2.1
 Summary(ru_RU.UTF-8): Традиционная модель для Apache HTTPD 2.1
 Group: System/Servers
-PreReq: %name-base > 2.2.22-alt15
+PreReq: %name-base = %EVR
 %if "%alternatives_min_ver" != ""
-PreReq: %alternatives_name >= %alternatives_min_ver
+PreReq: alternatives >= %alternatives_min_ver
 %endif
 Provides: %name-mmn = %mmn
 Provides: %apache2_sbindir/%apache2_dname
@@ -344,9 +332,9 @@ It is not as fast, but is considered to be more stable.
 Summary: Event driven model for Apache HTTPD 2.1
 Summary(ru_RU.UTF-8): Событийная модель для Apache HTTPD 2.1
 Group: System/Servers
-PreReq: %name-base > 2.2.22-alt15
+PreReq: %name-base = %EVR
 %if "%alternatives_min_ver" != ""
-PreReq: %alternatives_name >= %alternatives_min_ver
+PreReq: alternatives >= %alternatives_min_ver
 %endif
 Provides: %name-mmn = %mmn
 Provides: %apache2_sbindir/%apache2_dname
@@ -360,44 +348,6 @@ new requests.
 
 This MPM is especially suitable for sites that see extensive KeepAlive traffic
 
-#%package httpd-itk
-#Summary: Experimental Multi-Processing Module for the Apache 2 (itk-mpm)
-#Group: System/Servers
-#PreReq: %name-base > 2.2.22-alt15
-#%if "%alternatives_min_ver" != ""
-#PreReq: %alternatives_name >= %alternatives_min_ver
-#%endif
-#Provides: %name-mmn = %mmn
-#Provides: %apache2_sbindir/%apache2_dname
-#Provides: %name-httpd = %EVR
-#Provides: %name-httpd-prefork-like = %EVR
-
-#%description httpd-itk
-#The ITK Multi-Processing Module (MPM) works in about the same way as
-#the classical "prefork" module (that is, without threads), except that it
-#allows you to constrain each individual vhost to a particular system user.
-#This allows you to run several different web sites on a single server without
-#worrying that they will be able to read each others' files.
-
-#%package httpd-peruser
-#Summary: Experimental Multi-Processing Module for the Apache 2 (peruser-mpm)
-#Group: System/Servers
-#PreReq: %name-base > 2.2.22-alt15
-#%if "%alternatives_min_ver" != ""
-#PreReq: %alternatives_name >= %alternatives_min_ver
-#%endif
-#Provides: %name-mmn = %mmn
-#Provides: %apache2_sbindir/%apache2_dname
-#Provides: %name-httpd = %EVR
-#Provides: %name-httpd-prefork-like = %EVR
-
-#%description httpd-peruser
-#Peruser is an Apache 2 module based on metuxmpm, a working implementation of
-#the perchild MPM. The fundamental concept behind all of them is to run each
-#apache child process as its own user and group, each handling its own set of
-#virtual hosts. Peruser and recent metuxmpm releases can also chroot()
-#apache processes. The result is a sane and secure web server environment
-#for your users, without kludges like PHP's safe_mode.
 
 %package -n rpm-build-%name
 Summary: RPM helper to rebuild Web servers and apps packages
@@ -466,7 +416,7 @@ This package contains the Apache server documentation in HTML format.
 Summary: Apache Manual for www
 Summary(ru_RU.UTF-8): Документация по Apache для www
 Group: Books/Other
-PreReq: %name-base > 2.2.22-alt15
+PreReq: %name-base = %EVR
 Requires: %docdir/manual
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
@@ -555,8 +505,8 @@ Summary(ru_RU.UTF-8): cgi-bin для Apache
 Group: System/Servers
 BuildArch: noarch
 Provides: webserver-cgi-bin
-Requires: %name-cgi-bin-test-cgi >= 2.2.9-alt12
-Requires: %name-cgi-bin-printenv >= 2.2.9-alt12
+Requires: %name-cgi-bin-test-cgi = %EVR
+Requires: %name-cgi-bin-printenv = %EVR
 Conflicts: apache-common < 1.3.41rusPL30.23-alt4.2
 Conflicts: apache-cgi-bin
 
@@ -601,8 +551,7 @@ This package contains the Apache server icons dir.
 %package mod_ssl
 Group: System/Servers
 Summary: SSL/TLS module for the Apache HTTP server
-Serial: 1
-PreReq: %name-base > 2.2.22-alt15
+PreReq: %name-base = %EVR
 Requires: %name-mmn = %mmn
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
@@ -621,7 +570,7 @@ Security (TLS) protocols.
 %package mod_ldap
 Group: System/Servers
 Summary: Modules LDAP support for the Apache HTTP server
-PreReq: %name-base > 2.2.22-alt15
+PreReq: %name-base = %EVR
 Requires: %name-mmn = %mmn
 Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
 Requires: %apache2_libapr_name >= %apache2_libapr_evr
@@ -637,7 +586,7 @@ mod_authnz_ldap -- Allows an LDAP directory to be used to store the database
 %package mod_cache_disk
 Group: System/Servers
 Summary: Module supported content cache storage for the Apache HTTP server
-PreReq: %name-base > 2.2.22-alt15
+PreReq: %name-base = %EVR
 Requires: %name-mmn = %mmn
 Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
 Requires: %apache2_libapr_name >= %apache2_libapr_evr
@@ -664,7 +613,7 @@ See control(8) for details.
 Summary: Clean up the cache disk for Apache
 Group: System/Servers
 Requires: %apache2_htcacheclean_cachepath
-Requires: %name-base > 2.2.22-alt15
+Requires: %name-base = %EVR
 Requires: %_controldir/htcacheclean-run
 Requires: %_controldir/htcacheclean-mode
 
@@ -700,7 +649,7 @@ Summary: Suexec binary for Apache
 Summary(ru_RU.UTF-8): Программа suexec для Apache
 Summary(uk_UA.UTF-8): Програма suexec для Apache
 Group: System/Servers
-PreReq: %name-base > 2.2.22-alt15
+PreReq: %name-base = %EVR
 Requires: %name-mmn = %mmn
 Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
 Requires: %apache2_libapr_name >= %apache2_libapr_evr
@@ -728,7 +677,7 @@ Summary: Set DocumentRoot in %apache2_serverdatadir
 Summary(ru_RU.UTF-8): Установка DocumentRoot в %apache2_serverdatadir
 Group: System/Servers
 BuildArch: noarch
-Requires: %name-base > 2.2.22-alt15
+Requires: %name-base = %EVR
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= 0.1.2
 
@@ -748,8 +697,8 @@ Summary: Set DocumentRoot in %apache2_serverdatadir (for https)
 Summary(ru_RU.UTF-8): Установка DocumentRoot в %apache2_serverdatadir (для https)
 Group: System/Servers
 BuildArch: noarch
-Requires: %name-compat > 2.2.22-alt15
-Requires: %name-mod_ssl > 2.2.22-alt14
+Requires: %name-compat = %EVR
+Requires: %name-mod_ssl = %EVR
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
 
@@ -763,14 +712,10 @@ Set DocumentRoot in %apache2_serverdatadir (for https) to support the old config
 %add_findprov_lib_path %apache2_libdir
 
 %prep
-# We dont need to expand builddir yet
-
 %setup -q -n httpd-%version
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 # generate ALTLinux Apache layout
 echo "
@@ -914,10 +859,10 @@ s|%%apache2_sslcertsh|%apache2_sslcertsh|g
 pushd docs/man
 
 %if "%apache2_branch" != ""
-MANS="ab.1 apachectl.8 apxs.1 dbmmanage.1 htdigest.1 htpasswd.1 httpd.8 rotatelogs.8 logresolve.1 suexec.8"
-for manpage in $MANS; do
-    mv ${manpage} `echo ${manpage}|sed -e "s/\./%apache2_branch./"`
-done
+#MANS="ab.1 apachectl.8 apxs.1 dbmmanage.1 htdigest.1 htpasswd.1 httpd.8 rotatelogs.8 logresolve.1 suexec.8"
+#for manpage in $MANS; do
+#    mv ${manpage} `echo ${manpage}|sed -e "s/\./%apache2_branch./"`
+#done
 %endif
 popd
 
@@ -1070,16 +1015,12 @@ mv %buildroot%apache2_confdir/original %buildroot%docdir/original
 ln -snf $(relative %buildroot%docdir/original %buildroot%apache2_confdir/original) %buildroot%apache2_confdir/original
 
 # docroot
-#rm -r %buildroot%apache2_manualdir/style
-##rm %buildroot%apache2_manualdir/*/*.xml
 # Move %%apache2_manualdir to %%docdir/manual
 mv %buildroot%apache2_manualdir %buildroot%docdir/manual
 ln -snf $(relative %buildroot%docdir/manual %buildroot%apache2_manualdir) %buildroot%apache2_manualdir
 
 # install docs to %%docdir/
-#cp -r ABOUT_APACHE README CHANGES LICENSE README.ALT* README-itk.* README-peruser.* %buildroot%docdir/
 cp -r ABOUT_APACHE README CHANGES LICENSE README.ALT* %buildroot%docdir/
-#cp server/mpm/experimental/itk/CHANGES %buildroot%docdir/CHANGES-itk
 
 # install the daemon start script
 install -pD -m755 %SOURCE18 \
@@ -1317,7 +1258,7 @@ fi
 %triggerun_apache2_rpmhttpdstartfile
 exit 0
 
-#%triggerun base -- %name-base < 2.2.17-alt3, %name-httpd-worker < 2.2.17-alt3, %name-httpd-prefork < 2.2.17-alt3, %name-httpd-event < 2.2.17-alt3, %name-httpd-itk < 2.2.17-alt3, %name-httpd-peruser < 2.2.17-alt3, %name-configs-A1PROXIED < 2.2.17-alt3, %name-mod_ssl-compat < 2.2.17-alt3, %name-mod_ssl < 2.2.17-alt3, %name-mod_ldap < 2.2.17-alt3, %name-suexec < 2.2.17-alt3, %name-compat < 2.2.17-alt3, %name-manual < 2.2.17-alt3
+#triggerun base -- %name-base < 2.2.17-alt3, %name-httpd-worker < 2.2.17-alt3, %name-httpd-prefork < 2.2.17-alt3, %name-httpd-event < 2.2.17-alt3, %name-httpd-itk < 2.2.17-alt3, %name-httpd-peruser < 2.2.17-alt3, %name-configs-A1PROXIED < 2.2.17-alt3, %name-mod_ssl-compat < 2.2.17-alt3, %name-mod_ssl < 2.2.17-alt3, %name-mod_ldap < 2.2.17-alt3, %name-suexec < 2.2.17-alt3, %name-compat < 2.2.17-alt3, %name-manual < 2.2.17-alt3
 %triggerun base -- %name-base < 2.2.17-alt3, %name-httpd-worker < 2.2.17-alt3, %name-httpd-prefork < 2.2.17-alt3, %name-httpd-event < 2.2.17-alt3, %name-configs-A1PROXIED < 2.2.17-alt3, %name-mod_ssl-compat < 2.2.17-alt3, %name-mod_ssl < 2.2.17-alt3, %name-mod_ldap < 2.2.17-alt3, %name-suexec < 2.2.17-alt3, %name-compat < 2.2.17-alt3, %name-manual < 2.2.17-alt3
 %triggerun_apache2_rpmhttpdstartfile
 exit 0
@@ -1364,23 +1305,6 @@ exit 0
 %postun httpd-event
 %unregister_alternatives %name-httpd-event
 
-#%post -n %name-httpd-itk
-#%register_alternatives %name-httpd-itk
-
-#%triggerpostun -n %name-httpd-itk -- apache2 < 2.2.4-alt18
-#%register_alternatives %name-httpd-itk
-
-#%postun -n %name-httpd-itk
-#%unregister_alternatives %name-httpd-itk
-
-#%post httpd-peruser
-#%register_alternatives %name-httpd-peruser
-
-#%triggerpostun httpd-peruser -- apache2 < 2.2.4-alt18
-#%register_alternatives %name-httpd-peruser
-
-#%postun httpd-peruser
-#%unregister_alternatives %name-httpd-peruser
 %endif
 
 %pre manual
@@ -1476,21 +1400,14 @@ exit 0
 %exclude %apache2_mods_available/ssl.load
 %exclude %apache2_mods_available/ssl.conf
 %exclude %apache2_mods_available/*ldap.load
-#%exclude %apache2_mods_available/suexec.load
 %exclude %apache2_mods_available/cache_disk.*
 %exclude %apache2_mods_enabled/ssl.load
 %exclude %apache2_mods_enabled/ssl.conf
-#%exclude %apache2_mods_enabled/*ldap.load
-#%exclude %apache2_mods_enabled/*ldap.conf
-#%exclude %apache2_mods_enabled/suexec.load
-#%exclude %apache2_mods_enabled/cache_disk.*
 
 %doc %docdir/original/mods-available/*.load
 %doc %docdir/original/mods-available/*.conf
 %exclude %docdir/original/mods-available/ssl.load
 %exclude %docdir/original/mods-available/ssl.conf
-#%exclude %docdir/original/mods-available/*ldap.load
-#%exclude %docdir/original/mods-available/suexec.load
 %exclude %docdir/original/mods-available/cache_disk.*
 
 # everything but mod_ssl.so:
@@ -1511,17 +1428,6 @@ exit 0
 %files httpd-event
 %apache2_sbindir/%apache2_dname.event
 %_altdir/%name-httpd-event
-
-#%files httpd-itk
-#%doc %docdir/README-itk.*
-#%doc %docdir/CHANGES-itk
-#%apache2_sbindir/%apache2_dname.itk
-#%_altdir/%name-httpd-itk
-
-#%files httpd-peruser
-#%doc %docdir/README-peruser.*
-#%apache2_sbindir/%apache2_dname.peruser
-#%_altdir/%name-httpd-peruser
 
 %files
 
@@ -1582,16 +1488,11 @@ exit 0
 %config(noreplace) %apache2_ports_available/*.conf
 %ghost %apache2_ports_enabled/*.conf
 %config(noreplace) %apache2_ports_start/*.conf
-#%exclude %apache2_ports_available/https.conf
 %exclude %apache2_ports_available/http-A1PROXIED.conf
-#%exclude %apache2_ports_enabled/https.conf
 %exclude %apache2_ports_enabled/http-A1PROXIED.conf
 %exclude %apache2_ports_start/020-A1PROXIED.conf
 %config(noreplace) %apache2_sites_available/*.conf
-#%ghost %apache2_sites_enabled/*.conf
 %config(noreplace) %apache2_sites_start/*.conf
-#%exclude %apache2_sites_available/default_https.conf
-#%exclude %apache2_sites_available/vhosts-A1PROXIED.conf
 %exclude %apache2_sites_available/default-compat.conf
 %exclude %apache2_sites_available/default_https-compat.conf
 %exclude %apache2_sites_enabled/default_https.conf
@@ -1606,7 +1507,6 @@ exit 0
 %config(noreplace) %apache2_extra_available/*.conf
 %ghost %apache2_extra_enabled/*.conf
 %exclude %apache2_extra_available/httpd-manual*.conf
-#%exclude %apache2_extra_available/httpd-*-compat.conf
 %exclude %apache2_extra_enabled/httpd-manual*.conf
 %exclude %apache2_extra_enabled/httpd-*-compat.conf
 %config(noreplace) %apache2_extra_start/*.conf
@@ -1644,7 +1544,6 @@ exit 0
 
 %condstopstart_webdir/%apache2_dname-cond*
 
-#%%dir %apache2_datadir/
 %dir %apache2_serverdatadir/
 %dir %apache2_errordir/
 %dir %apache2_errordir/include/
@@ -1720,12 +1619,6 @@ exit 0
 %attr(0644,root,root) %apache2_sslcertshfunctions
 %apache2_moduledir/mod_ssl.so
 %attr(0600,root,root) %config(noreplace) %apache2_mods_available/ssl.load
-#%attr(0600,root,root) %config(noreplace) %apache2_mods_available/ssl.conf
-#%ghost %apache2_mods_enabled/ssl.load
-#%ghost %apache2_mods_enabled/ssl.conf
-#%attr(0600,root,root) %config(noreplace) %apache2_ports_available/https.conf
-#%attr(0600,root,root) %config(noreplace) %apache2_sites_available/default_https.conf
-#%ghost %apache2_ports_enabled/https.conf
 %ghost %apache2_sites_enabled/default_https.conf
 %ghost %apache2_sites_enabled/000-default_https.conf
 %ghost %apache2_confdir/ssl.crt/server.crt
@@ -1735,18 +1628,13 @@ exit 0
 %attr(0600,%apache2_user,%apache2_group) %ghost %apache2_proxycachedir/mod_ssl/scache.pag
 %attr(0600,%apache2_user,%apache2_group) %ghost %apache2_proxycachedir/mod_ssl/scache.sem
 %doc %docdir/original/mods-available/ssl.load
-#%doc %docdir/original/mods-available/ssl.conf
 
 %files mod_ldap
 %apache2_moduledir/mod_*ldap.so
-#%attr(0600,root,root) %config(noreplace) %apache2_mods_available/*ldap.load
-#%ghost %apache2_mods_enabled/*ldap.load
-#%doc %docdir/original/mods-available/*ldap.load
 
 %files mod_cache_disk
 %apache2_moduledir/mod_cache_disk.so
 %config(noreplace) %apache2_mods_available/cache_disk.*
-#%ghost %apache2_mods_enabled/cache_disk.*
 %attr(2770,root,%apache2_group) %dir %apache2_htcacheclean_cachepath/
 %doc %docdir/original/mods-available/cache_disk.*
 
@@ -1765,7 +1653,6 @@ exit 0
 
 %files ab
 %apache2_bindir/ab*
-#%apache2_mandir/man8/ab*
 
 %files htpasswd
 %apache2_bindir/htpasswd*
@@ -1784,12 +1671,7 @@ exit 0
 %apache2_includedir/apache_noprobes.h
 %apache2_includedir/cache_common.h
 
-#%apache2_moduledir/httpd.exp
-#%apache2_installbuilddir/config.nice
-
-
 %apache2_bindir/apxs*
-#%apache2_mandir/man8/apxs*
 %dir %apache2_installbuilddir/
 %apache2_installbuilddir/[clprs]*.mk
 %apache2_installbuilddir/instdso.sh
@@ -1797,19 +1679,15 @@ exit 0
 %apache2_sbindir/envvars*
 
 %files suexec
-#%config(noreplace) %apache2_mods_available/suexec.load
-#%ghost %apache2_mods_enabled/suexec.load
 %apache2_moduledir/mod_suexec.so
 %attr(4510,root,%apache2_group) %apache2_sbindir/suexec*
 %apache2_mandir/man8/suexec*
-#%doc %docdir/original/mods-available/suexec.load
 
 %files compat
 %config(noreplace) %apache2_sites_available/default-compat.conf
 %ghost %apache2_sites_enabled/default-compat.conf
 %ghost %apache2_sites_enabled/000-default-compat.conf
 %config(noreplace) %apache2_sites_start/*-default-compat.conf
-#%config(noreplace) %apache2_extra_available/httpd-*-compat.conf
 %ghost %apache2_extra_enabled/httpd-*-compat.conf
 %config(noreplace) %apache2_extra_start/*-default-compat.conf
 %dir %apache2_compat_htdocsdir/
@@ -1818,11 +1696,19 @@ exit 0
 %dir %apache2_compat_manualaddonsdir/
 
 %files mod_ssl-compat
-#%config(noreplace) %apache2_sites_available/default_https-compat.conf
 %ghost %apache2_sites_enabled/default_https-compat.conf
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Thu May 18 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.25-alt1
+- updated to 2.4.25 witch security fixes:
+    + CVE-2016-8740 mod_http2: Mitigate DoS memory exhaustion via endless CONTINUATION frames.
+    + CVE-2016-5387 core: Mitigate [f]cgi "httpoxy" issues
+    + CVE-2016-2161 mod_auth_digest: Prevent segfaults during client entry allocation when the shared memory space is exhausted.
+    + CVE-2016-0736 mod_session_crypto: Authenticate the session data/cookie with a MAC (SipHash) to prevent deciphering or tampering with a padding oracle attack.
+- increased service startup time (closes: #33491)
+- cleanup spec and patches
+
 * Tue Aug 23 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.4.23-alt1
 - updated to 2.4.23
 
