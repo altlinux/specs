@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: gammu
-Version: 1.38.1
+Version: 1.38.3
 Release: alt1
 
 Summary: Mobile phones management utility
@@ -184,6 +184,12 @@ cp -R contrib/bash-completion %buildroot%_gammu_docdir/other/
 %_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Tue May 23 2017 Michael Shigorin <mike@altlinux.org> 1.38.3-alt1
+- new version (watch file uupdate)
+
+* Tue Mar 28 2017 Michael Shigorin <mike@altlinux.org> 1.38.2-alt1
+- new version (watch file uupdate)
+
 * Thu Jan 05 2017 Michael Shigorin <mike@altlinux.org> 1.38.1-alt1
 - new version (watch file uupdate)
 
