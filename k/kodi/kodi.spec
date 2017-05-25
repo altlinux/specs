@@ -1,5 +1,5 @@
 Name: kodi
-Version: 17.1
+Version: 17.3
 Release: alt1
 
 Summary: Kodi Media Center
@@ -139,6 +139,12 @@ E_O_F
 %_libdir/kodi/*.cmake
 
 %changelog
+* Thu May 25 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.3-alt1
+- 17.3 Krypton released
+
+* Wed May 24 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.2-alt1
+- 17.2 Krypton released
+
 * Wed Mar 22 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.1-alt1
 - 17.1 Krypton released
 
