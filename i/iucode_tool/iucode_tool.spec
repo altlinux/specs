@@ -1,5 +1,5 @@
 Name: iucode_tool
-Version: 2.1
+Version: 2.1.2
 Release: alt1
 Summary: Intel(r) 64 and IA-32 processor microcode tool 
 
@@ -28,6 +28,9 @@ make install DESTDIR=%buildroot INSTALL="install -p"
 %_sbindir/%name
 
 %changelog
+* Thu May 25 2017 L.A. Kostis <lakostis@altlinux.ru> 2.1.2-alt1
+- Updated to 2.1.2.
+
 * Fri Jan 06 2017 L.A. Kostis <lakostis@altlinux.ru> 2.1-alt1
 - Updated to 2.1.
 
