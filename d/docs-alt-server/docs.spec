@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 8.0
-Release: alt5
+Release: alt6
 
 Summary: %Variant documentation
 License: %fdl
@@ -43,6 +43,10 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Wed May 24 2017 Elena Mishina <lepata@altlinux.org> 8.0-alt6
+- update documentation
+- fix typo
+
 * Thu Mar 20 2017 Elena Mishina <lepata@altlinux.org> 8.0-alt5
 - update documentation
 - fix typo
