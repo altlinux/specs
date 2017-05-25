@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 Name: brisk-menu
-Version: 0.3.5
+Version: 0.4.0
 Release: alt1
 
 Summary: An efficient menu for the MATE Desktop
@@ -44,7 +44,7 @@ Features:
 - Поддержка Drag & drop для лаунчера
 - GTK3
 - Полностью корректная интеграция с X11 WM (grab policy and window types)
-- Не требует для своей раоты Python.
+- Не требует для своей работы Python.
 
 %prep
 %setup
@@ -67,6 +67,9 @@ Features:
 %_libexecdir/%name
 
 %changelog
+* Tue May 23 2017 Anton Midyukov <antohami@altlinux.org> 0.4.0-alt1
+- new version 0.4.0
+
 * Fri Mar 31 2017 Anton Midyukov <antohami@altlinux.org> 0.3.5-alt1
 - new version 0.3.5
 
