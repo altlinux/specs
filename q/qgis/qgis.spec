@@ -3,7 +3,7 @@
 %define grass_version 7.2.0
 
 Name:    qgis
-Version: 2.18.8
+Version: 2.18.9
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -330,6 +330,9 @@ echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
 %_libexecdir/%name
 
 %changelog
+* Fri May 26 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.9-alt1
+- New version
+
 * Sat May 20 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.8-alt1
 - New version
 
