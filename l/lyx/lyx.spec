@@ -1,5 +1,5 @@
 Name: lyx
-Version: 2.1.4
+Version: 2.2.3
 Release: alt1
 
 Summary: LyX - a WYSIWYM word processor for the Desktop Environment.
@@ -15,13 +15,13 @@ Source3: %{name}32.xpm
 Source4: %{name}48.xpm
 Source5: lyxcat
 
-Patch1: 0001-Work-around-a-gcc5-bug.patch
 Patch2: lyx-2.1.2-xdg_open.patch
 
-BuildPreReq: desktop-file-utils kde-common-devel
+BuildPreReq: desktop-file-utils
 BuildRequires: gcc-c++ imake libaspell-devel libSM-devel python-devel bc
 BuildRequires: libaiksaurus-devel boost-signals-devel boost-devel boost-filesystem-devel
 BuildRequires: libqt4-devel >= 4.3
+BuildRequires: libenchant-devel libhunspell-devel
 
 Requires: python >= 2.4 
 Requires: texlive-latex-recommended
@@ -60,11 +60,14 @@ Virtual package that install required set of tex packages for LyX.
 
 %prep
 %setup
-%patch1 -p1
 %patch2 -p1
 
 %build
-%configure --without-included-boost
+%configure \
+	--without-included-boost \
+	--with-enchant \
+	--with-hunspell \
+	#
 %make_build
 
 %install
@@ -115,6 +118,10 @@ python configure.py
 %files -n lyx-tex
 
 %changelog
+* Fri May 26 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.2.3-alt1
+- Updated to 2.2.3.
+- Built with enchant and hunspell instead of aspell (ALT#22053).
+
 * Fri Oct 09 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.1.4-alt1
 - Updated to 2.1.4.
 
