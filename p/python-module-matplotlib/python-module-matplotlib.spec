@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt1
+Release: alt2
 
 Summary: Matlab(TM) style python plotting package
 
@@ -27,6 +27,7 @@ Source1: setup.cfg
 BuildRequires(pre): rpm-build-gir
 BuildRequires: gcc-c++ git-core libnumpy-devel time pkgconfig(tk) libgtk+3-gir-devel libpng-devel libfreetype-devel
 BuildRequires: python-module-setuptools-tests python-module-PyQt4 python-module-PyQt5 python-module-numpy-testing python-module-pycairo python-module-pygobject3 python-module-setuptools-tests python-modules-tkinter python-module-cycler python-module-pyparsing python-module-pytz python-module-dateutil python-module-wx
+Requires: %name-gtk3
 
 %if_with docs
 BuildRequires(pre): rpm-macros-sphinx
@@ -58,6 +59,7 @@ charts, or embedded in GTK or WX applications; see backends.
 Summary: Matlab(TM) style python 3 plotting package
 Group: Development/Python3
 Requires: dvipng
+Requires: python3-module-%oname-gtk3
 %add_python3_req_skip AppKit Foundation PyObjCTools numarray paint _Py
 %add_python3_req_skip _winreg builtins distutils
 #add_python3_req_skip IPython.display  #needed matplotlib.backends.backend_nbagg
@@ -93,19 +95,10 @@ Requires: python3-module-%oname = %version-%release
 %description -n python3-module-%oname-nbagg
 Interactive figures in the IPython notebook.
 
-%package -n python3-module-%oname-pylab
-Summary: Procedural interface to the %oname object-oriented plotting library
-Group: Development/Python3
-Requires: python3-module-%oname-gtk3 = %version-%release
-
-%description -n python3-module-%oname-pylab
-Procedural interface to the %oname object-oriented plotting library.
-
 %package -n python3-module-%oname-tests
 Summary: Tests for %oname (Python 3)
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
-Requires: python3-module-%oname-pylab = %version-%release
 
 %description -n python3-module-%oname-tests
 Tests for %oname.
@@ -163,7 +156,7 @@ gtk backend for %oname.
 %package -n python3-module-%oname-gtk3
 Summary: gtk3 backend for %oname (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname-cairo = %version-%release
+#Requires: python3-module-%oname-cairo = %version-%release
 Requires: typelib(Gtk) = 3.0
 Requires: python3-module-pygobject3
 
@@ -216,7 +209,6 @@ Tests for mpl_toolkits.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %version-%release
-Requires: %name-pylab = %version-%release
 
 %description tests
 Tests for %oname.
@@ -317,14 +309,6 @@ Requires: %name = %version-%release
 %description nbagg
 Interactive figures in the IPython notebook.
 
-%package pylab
-Summary: Procedural interface to the %oname object-oriented plotting library
-Group: Development/Python
-Requires: python-module-%oname-gtk3 = %version-%release
-
-%description pylab
-Procedural interface to the %oname object-oriented plotting library.
-
 %package gtk
 Summary: gtk backend for %oname
 Group: Development/Python
@@ -337,7 +321,7 @@ gtk backend for %oname.
 %package gtk3
 Summary: gtk3 backend for %oname
 Group: Development/Python
-Requires: %name-cairo = %version-%release
+#Requires: %name-cairo = %version-%release
 Requires: typelib(Gtk) = 3.0
 Requires: python-module-pygobject3
 
@@ -575,20 +559,12 @@ done
 #python_sitelibdir/matplotlib/externals
 %exclude %python_sitelibdir/mpl_toolkits
 %exclude %python_sitelibdir/*/*/test*
-%exclude %python_sitelibdir/pylab.*
-%exclude %python_sitelibdir/matplotlib/pylab.*
-%exclude %python_sitelibdir/matplotlib/pyplot.*
 
 %files cairo
 %python_sitelibdir/matplotlib/backends/backend_cairo*
 
 %files nbagg
 %python_sitelibdir/matplotlib/backends/backend_nbagg*
-
-%files pylab
-%python_sitelibdir/pylab.*
-%python_sitelibdir/matplotlib/pylab.*
-%python_sitelibdir/matplotlib/pyplot.*
 
 #files fltk
 #python_sitelibdir/matplotlib/backends/backend_fltk*
@@ -722,12 +698,6 @@ rm -fR %_docdir/%name/pdf
 %exclude %python3_sitelibdir/mpl_toolkits
 %exclude %python3_sitelibdir/*/*/test*
 %exclude %python3_sitelibdir/*/*/*/test*
-%exclude %python3_sitelibdir/pylab.*
-%exclude %python3_sitelibdir/__pycache__/pylab.*
-%exclude %python3_sitelibdir/matplotlib/pylab.*
-%exclude %python3_sitelibdir/matplotlib/__pycache__/pylab.*
-%exclude %python3_sitelibdir/matplotlib/pyplot.*
-%exclude %python3_sitelibdir/matplotlib/__pycache__/pyplot.*
 
 %files -n python3-module-%oname-cairo
 %python3_sitelibdir/matplotlib/backends/backend_cairo*
@@ -736,14 +706,6 @@ rm -fR %_docdir/%name/pdf
 %files -n python3-module-%oname-nbagg
 %python3_sitelibdir/matplotlib/backends/backend_nbagg*
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_nbagg*
-
-%files -n python3-module-%oname-pylab
-%python3_sitelibdir/pylab.*
-%python3_sitelibdir/__pycache__/pylab.*
-%python3_sitelibdir/matplotlib/pylab.*
-%python3_sitelibdir/matplotlib/__pycache__/pylab.*
-%python3_sitelibdir/matplotlib/pyplot.*
-%python3_sitelibdir/matplotlib/__pycache__/pyplot.*
 
 #files -n python3-module-%oname-fltk
 #python3_sitelibdir/matplotlib/backends/backend_fltk*
@@ -815,6 +777,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Fri May 26 2017 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt2
+- Remove subpackages python-module-matplotlib-pylab and python3-module-matplotlib-pylab
+
 * Thu Apr 27 2017 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
 - New version 2.0.0
 - Disable convert python 2 to python3 script
