@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.7.0
-%define major 2.7
+%define major 2.8
 
 Name: wine
 Version: %major.1
@@ -204,6 +204,8 @@ Requires: lib%name = %version-%release
 Conflicts: libwine-vanilla-gl
 
 Requires: libGL
+# wine-staging only
+Requires: libtxc_dxtn
 
 %description -n lib%name-gl
 This package contains the libraries for DirectX/OpenGL support in Wine.
@@ -469,6 +471,10 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Fri May 26 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.8.1-alt1
+- new version 2.8.1 (with rpmrb script)
+- update winetricks to 20170517-next
+
 * Fri May 05 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.7.1-alt1
 - new version (2.7.1) with rpmgs script
 
