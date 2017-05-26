@@ -1,40 +1,43 @@
 Name: wmctrl
 Version: 1.07
-Release: alt5
+Release: alt6
 
 Summary: Tool to interact with an EWMH/NetWM compatible X Window Manager
-Summary(ru_RU.UTF-8): Утилита для взаимодействия с оконными менеджерами, соответствующими стандартам EWMH/NetWM
 License: GPLv2
 Group: System/X11
+
 Url: http://tomas.styblo.name/wmctrl/
-
-Packager: Igor Zubkov <icesik@altlinux.org>
-
 Source0: %name-%version.tar.gz
-
 Patch0: 01_64-bit-data.patch
 Patch1: 02_manpage-fixes.patch
+Patch2: wmctrl-sticky-workspace.patch
+Packager: Igor Zubkov <icesik@altlinux.org>
 
 # Automatically added by buildreq on Sat Sep 21 2013
 BuildRequires: glib2-devel imake libXmu-devel xorg-cf-files
+
+Summary(ru_RU.UTF-8): Утилита для взаимодействия с EWMH/NetWM-совместимым оконным менеджером
 
 %description
 A command line tool to interact with an EWMH/NetWM compatible
 X Window Manager.
 
 %description -l ru_RU.UTF-8
-Утилита коммандной строки для взаимодействия с оконными менеджерами,
-соответствующими стандартам EWMH/NetWM.
+Утилита коммандной строки для взаимодействия с оконным менеджером,
+соответствующим стандартам EWMH/NetWM.
 
 %prep
-%setup -q
+%setup
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %configure
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %doc AUTHORS ChangeLog README
@@ -42,6 +45,10 @@ X Window Manager.
 %_man1dir/*
 
 %changelog
+* Fri May 26 2017 Michael Shigorin <mike@altlinux.org> 1.07-alt6
+- add fedora patch to allow stick to all workspaces (rhbz#524023)
+- actually apply both of the other patches
+
 * Sat Sep 21 2013 Igor Zubkov <icesik@altlinux.org> 1.07-alt5
 - Sync with wmctrl_1.07-7.debian
 - Update Url
