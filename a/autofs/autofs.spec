@@ -1,6 +1,6 @@
 Name: autofs
-Version: 5.1.2
-Release: alt2%ubt
+Version: 5.1.3
+Release: alt1%ubt
 
 Summary: A tool for automatically mounting and unmounting filesystems
 License: GPL
@@ -120,6 +120,9 @@ fi
 %_libdir/%name/lookup_ldap.so
 
 %changelog
+* Fri May 26 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.3-alt1%ubt
+- 5.1.3 released
+
 * Thu May 18 2017 Oleg Solovyov <mcpain@altlinux.org> 5.1.2-alt2%ubt
 - fixed mounting through kerberos auth
 - added %ubt tag
