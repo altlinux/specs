@@ -3,12 +3,12 @@
 # numbers change, otherwise the NEVR of the library may cause a package not to
 # be updated even if it should be.
 %global srcname tqsl
-%global tqslver 2.3
+%global tqslver 2.3.1
 %global libtqslver 2.5
 
 Name:           trustedqsl
-Version:        2.3
-Release:        alt4
+Version:        2.3.1
+Release:        alt5
 Summary:        TrustedQSL ham-radio applications
 
 Group:		Communications
@@ -21,6 +21,7 @@ Patch0:         tqsl-2.0-rpath.patch
 Patch1:         tqsl-tqsllib.patch
 Patch2:         tqsl-fix-undefined-macro.patch
 Patch3:         tqsl-ssl-md5.patch
+Patch4:		trustedqsl-alt-fix-install-dest.patch
 
 BuildRequires(pre): cmake
 BuildRequires:  gcc-c++
@@ -67,6 +68,7 @@ contains the to develop with tqsllib.
 %patch1 -p1
 %patch2 -p2
 %patch3 -p1
+%patch4 -p1
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo
@@ -108,6 +110,9 @@ rm -f %buildroot%_datadir/locale/*/LC_MESSAGES/wxstd.mo
 %_libdir/libtqsllib.so
 
 %changelog
+* Fri May 26 2017 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt5
+- New version
+
 * Thu Nov 17 2016 Andrey Cherepanov <cas@altlinux.org> 2.3-alt4
 - new version 2.3
 
