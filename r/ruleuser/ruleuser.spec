@@ -2,8 +2,8 @@
 %define _ruleuserdir %buildroot%_datadir/ruleuser
 
 Name: ruleuser
-Version: 1.0.3
-Release: alt5
+Version: 1.1.0
+Release: alt1
 Summary: RuleUser - Management program.
 Group: Networking/Remote access
 License: GPLv2
@@ -15,6 +15,7 @@ Obsoletes: RuleUser
 AutoReqProv: no
 BuildArch: noarch
 Url: http://www.altlinux.org/LTSP
+# DVCS: https://github.com/temaps/ruleuser
 Source0: ruleuser.tar
 Source1: ChangeLog.ru
 
@@ -42,7 +43,7 @@ install -m 0644 locale/ru/LC_MESSAGES/*.mo %_ruleuserdir/locale/ru/LC_MESSAGES/
 install -D -m 0644 ruleuser-client %{_ruleuserdir}-client/ruleuser-client
 
 %files
-%doc ChangeLog.ru
+%doc ChangeLog.ru README LICENSE
 %_bindir/ruleuser
 %_datadir/ruleuser
 %_desktopdir/ruleuser.desktop
@@ -63,5 +64,8 @@ Client side.
 %_datadir/ruleuser-client/ruleuser-client
 
 %changelog
+* Fri May 26 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
+- New version (thanks Artem <tema@>)
+
 * Wed May 29 2013 Andrey Cherepanov <cas@altlinux.org> 1.0.3-alt5
 - Initial import to Sisyphus
