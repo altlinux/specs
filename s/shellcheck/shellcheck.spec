@@ -3,9 +3,10 @@
 %def_disable getsource
 
 Name: shellcheck
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1
 License: %gpl3only
+Url: https://github.com/koalaman/shellcheck
 Group: Development/Tools
 
 BuildRequires(pre): rpm-build-licenses
@@ -57,5 +58,8 @@ cp bin/shellcheck %buildroot%_bindir
 %_bindir/shellcheck
 
 %changelog
+* Thu May 25 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.6-alt1
+- Updated to 0.4.6.
+
 * Tue Nov 22 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.5-alt1
 - Initial build.
