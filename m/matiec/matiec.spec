@@ -1,5 +1,5 @@
 Name: matiec
-Version: 20170416
+Version: 20170510
 Release: alt1
 
 Summary: IEC 61131-3 compiler
@@ -82,5 +82,8 @@ cp -r lib/* %buildroot/%_libexecdir/%name
 %exclude %_libdir/*.a
 
 %changelog
+* Sat May 27 2017 Anton Midyukov <antohami@altlinux.org> 20170510-alt1
+- New snapshot.
+
 * Fri Apr 28 2017 Anton Midyukov <antohami@altlinux.org> 20170416-alt1
 - Initial build for ALT Linux Sisyphus.
