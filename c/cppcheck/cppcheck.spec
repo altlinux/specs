@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 1.78
-Release: alt1
+Version: 1.79
+Release: alt1.1
 
 Summary: A tool for static C/C++ code analysis
 
@@ -16,7 +16,6 @@ Patch1: cppcheck-makefile-docbook_xsl-1.70.patch
 Patch2: cppcheck-1.78-norebuild.patch
 Patch3: cppcheck-1.67-appPath.patch
 Patch4: cppcheck-1.72-test_32.patch
-
 
 BuildRequires(pre): rpm-macros-qt4
 
@@ -120,6 +119,12 @@ install -D gui/%name-gui.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name-gu
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat May 27 2017 Hihin Ruslan <ruslandh@altlinux.ru> 1.79-alt1.1
+- Version 1.79
+
+* Fri May 19 2017 Fr. Br. George <george@altlinux.ru> 1.79-alt1
+- Autobuild version bump to 1.79
+
 * Thu Apr 27 2017 Hihin Ruslan <ruslandh@altlinux.ru> 1.78-alt1
 - Version 1.78
 
