@@ -1,7 +1,7 @@
 %define gst_api_ver 1.0
 
 Name: pulseeffects
-Version: 1.3.6
+Version: 1.4.3
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -49,6 +49,9 @@ cp -r share %buildroot%_prefix
 %doc README*
 
 %changelog
+* Sun May 28 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4.3-alt1
+- 1.4.3
+
 * Mon May 22 2017 Yuri N. Sedunov <aris@altlinux.org> 1.3.6-alt1
 - 1.3.6
 
