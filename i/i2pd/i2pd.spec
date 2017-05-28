@@ -2,29 +2,31 @@
 %define _i2pd_root %_localstatedir/%name
 
 Name: i2pd
+Version: 2.13.0
+Release: alt1
+
 Summary: Full C++ implementation of I2P router
-Version: 2.3.0
-Release: alt4
+
 License: BSD-3-Clause
 Group: System/Servers
 Url: https://github.com/PurpleI2P/i2pd
 
-Source0:%name-%version.tar
+# Source0-git: https://github.com/PurpleI2P/i2pd.git
+Source0: %name-%version.tar
 Patch: %name-%version-upstream.patch
 Source1: %name.service
 Source2: %name.logrotate
 Source3: i2p.conf
 Source4: tunnels.conf
 
-BuildRequires: gcc-c++ cmake libssl-devel boost-devel boost-filesystem-devel boost-program_options-devel boost-asio-devel libminiupnpc-devel zlib-devel
+BuildRequires: gcc-c++ cmake libssl-devel boost-devel boost-filesystem-devel boost-program_options-devel boost-asio-devel libminiupnpc-devel zlib-devel rpm-macros-cmake
 
 BuildRequires: /proc
 
 %description
-I2P router written in C++
+I2P router written in C++.
 
-# See https://github.com/PurpleI2P/i2pd/issues/342
-Recommends: libminiupnpc-devel
+See documentation at https://i2pd.readthedocs.io/en/latest/
 
 %prep
 %setup
@@ -33,6 +35,7 @@ Recommends: libminiupnpc-devel
 %build
 export CXXFLAGS="%optflags"
 pushd build
+#cmake_insource
 cmake \
       -DCMAKE_BUILD_TYPE=Debug \
       -DWITH_BINARY=ON \
@@ -44,6 +47,7 @@ cmake \
       -DWITH_PCH=OFF \
       -DCMAKE_INSTALL_PREFIX=%prefix \
       .
+
 %make_build
 popd
 
@@ -52,7 +56,10 @@ pushd build
 %makeinstall_std
 popd
 
-install -pDm 644 debian/subscriptions.txt %buildroot%_sysconfdir/%name/subscriptions.txt
+# fix strange install 
+rm -rf %buildroot/%prefix/{LICENSE,lib/lib*.a,src/}
+
+install -pDm 644 contrib/subscriptions.txt %buildroot%_sysconfdir/%name/subscriptions.txt
 install -pDm 644 debian/%name.1 %buildroot%_man1dir/%name.1
 install -pDm 644 %SOURCE1 %buildroot%_unitdir/%name.service
 install -pDm 644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/%name
@@ -82,9 +89,9 @@ touch %buildroot%_logdir/%name/%name.log
 %preun_service %name
 
 %files
-%doc LICENSE README.md docs/configuration.md
+%doc LICENSE README.md
 %_bindir/%name
-%_datadir/%name
+%_datadir/%name/
 %_unitdir/%name.service
 %_man1dir/%name.1.*
 %ghost %attr(640,%i2pduser,adm) %_logdir/%name/%name.log
@@ -92,18 +99,21 @@ touch %buildroot%_logdir/%name/%name.log
 
 # configs:
 %defattr(640,root,%i2pduser,710)
-%dir %_sysconfdir/%name
+%dir %_sysconfdir/%name/
 %config(noreplace) %_sysconfdir/%name/i2p.conf
 %config(noreplace) %_sysconfdir/%name/tunnels.conf
 %config(noreplace) %_sysconfdir/%name/subscriptions.txt
 
 %defattr(640,root,%i2pduser,3770)
 # root dir:
-%_i2pd_root
+%_i2pd_root/
 # log dir:
-%_logdir/%name
+%dir %_logdir/%name/
 
 %changelog
+* Sun May 28 2017 Vitaly Lipatov <lav@altlinux.ru> 2.13.0-alt1
+- new version (2.13.0) with rpmgs script
+
 * Thu Jan 28 2016 Terechkov Evgenii <evg@altlinux.org> 2.3.0-alt4
 - git-20160128
 
