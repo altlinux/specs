@@ -8,8 +8,8 @@
 %def_with unique
 
 Name: gnome-commander
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: A Gnome file manager similar to the Norton Commander (TM)
 License: GPL
@@ -75,6 +75,9 @@ and some extra features like FTP support.
 
 
 %changelog
+* Sun May 28 2017 Yuri N. Sedunov <aris@altlinux.org> 1.6.4-alt1
+- 1.6.4
+
 * Sun May 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt2
 - rebuilt against libexiv2.so.26
 
