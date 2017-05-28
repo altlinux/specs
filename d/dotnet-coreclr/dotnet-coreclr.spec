@@ -1,10 +1,11 @@
 %def_with bootstrap
 
+%define corerelease 2.0.0-preview1-002111-00
 %define pre -preview1
 
 Name: dotnet-coreclr
 Version: 2.0.0
-Release: alt0.preview1
+Release: alt1.preview1
 
 Summary: .NET Core runtime, called CoreCLR, and the base library, called mscorlib
 
@@ -65,30 +66,24 @@ cross platform applications that work on Linux, Mac and Windows.
 # temp. disable lldb using
 %__subst "s|add_subdirectory(src/ToolBox/SOS/lldbplugin)||" CMakeLists.txt
 
-#mkdir Tools/dotnetcli
-#ln -s %_libdir/dotnet-bootstrap Tools/dotnetcli
-
 %build
 DOTNET_TOOL_DIR=%_libdir/dotnet-bootstrap ./build.sh x64 release verbose skipnuget
 
 %install
-mkdir -p %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%version%pre/
-cp -a bin/Product/Linux.x64.Release/* %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%version%pre/
+mkdir -p %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
+cp -a bin/Product/Linux.x64.Release/* %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
 
 # verify-elf: ERROR: ./usr/lib64/dotnet/shared/Microsoft.NETCore.App/2.0.0/createdump: RPATH contains illegal entry "/tmp/.private/lav/RPM/BUILD": /tmp/.private/lav/RPM/BUILD/dotnet-coreclr-2.0.0/bin/obj/Linux.x64.Release/src/dlls/mscordac
-rm -f %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%version%pre/createdump
-
-# TODO:
-# Replace libuv with our own version. Note, there's also another copy of this
-# same libuv, bundled, in the nuget package archive.
-#rm shared/Microsoft.NETCore.App/%version/libuv.so
-#ln -s %_libdir/libuv.so.1 shared/Microsoft.NETCore.App/%version/libuv.so
+rm -f %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/createdump
 
 %files
 %doc *.TXT THIRD-PARTY-NOTICES README.md CONTRIBUTING.md
-%_libdir/dotnet/shared/Microsoft.NETCore.App/%version%pre/*
+%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/*
 
 %changelog
+* Thu May 25 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1.preview1
+- fix packing
+
 * Mon May 22 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt0.preview1
 - .NET Core 2.0.0 Preview 1
 
