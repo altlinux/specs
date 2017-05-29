@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: geoipupdate
-Version: 2.3.1
+Version: 2.4.0
 Release: alt1
 
 Summary: GeoIP Database Update program
@@ -37,6 +37,9 @@ binary databases.
 %exclude %_datadir/doc/%name/
 
 %changelog
+* Mon May 29 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Sat Jan 07 2017 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
 - 2.3.1
 
