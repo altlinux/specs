@@ -3,15 +3,17 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.11.1
-Release: alt1.1.1
-Summary: Project documentation with Markdown
+Version: 0.16.1
+Release: alt1
+Summary: Python tool to create HTML documentation from markdown sources
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/mkdocs/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+#https://github.com/mkdocs/mkdocs/pull/687
+Source1:        mkdocs.1
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -82,9 +84,14 @@ This package contains tests for %oname.
 
 %if_with python3
 cp -fR . ../python3
-sed -i 's|ghp-import|ghp-import.py3|' \
-	../python3/%oname/gh_deploy.py
 %endif
+
+rm -rf mkdocs/themes/*/fonts/fontawesome-webfont.*
+
+rm -rf mkdocs/themes/*/js/highlight.pack.js
+
+sed -i 1d mkdocs/utils/ghp_import.py
+
 
 %build
 %python_build_debug
@@ -109,44 +116,35 @@ popd
 
 %python_install
 
-%check
-export PYTHONPATH=$PWD
-python setup.py test
-python %oname/test.py
-%if_with python3
-pushd ../python3
-export PYTHONPATH=$PWD
-python3 setup.py test
-python3 %oname/test.py
-popd
-%endif
+mkdir -p %buildroot/%_man1dir/
+install -p -m 0644 %SOURCE1 %buildroot/%_man1dir/
 
 %files
-%doc PKG-INFO
 %_bindir/*
+%_man1dir/*
 %if_with python3
 %exclude %_bindir/*.py3
 %endif
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/test*
+%exclude %python_sitelibdir/%oname/tests
 
 %files tests
 %python_sitelibdir/*/test*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc PKG-INFO
 %_bindir/*.py3
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test*
-%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
-%python3_sitelibdir/*/test*
-%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/%oname/tests
 %endif
 
 %changelog
+* Mon May 29 2017 Lenar Shakirov <snejok@altlinux.ru> 0.16.1-alt1
+- 0.16.1
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.11.1-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
