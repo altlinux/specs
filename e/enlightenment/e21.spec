@@ -5,7 +5,7 @@
 %define snapshot 2015-10-28
 %define cvs_date 5469c3b6
 %undefine cvs_date
-%define rel alt2
+%define rel alt1
 
 %def_disable static
 # only bluez4 supported
@@ -19,7 +19,7 @@
 %def_with pam_helper
 
 Name: enlightenment
-Version: %ver_major.7
+Version: %ver_major.8
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -209,6 +209,9 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Sat May 27 2017 Yuri N. Sedunov <aris@altlinux.org> 1:0.21.8-alt1
+- 0.21.8
+
 * Sun Apr 23 2017 Yuri N. Sedunov <aris@altlinux.org> 1:0.21.7-alt2
 - rebuilt against efl-1.19.0 libraries
 

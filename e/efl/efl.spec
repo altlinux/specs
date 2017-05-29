@@ -22,9 +22,10 @@
 %def_disable egl
 # currently with GLES only
 %def_disable gl_drm
+%def_enable lua
 
 Name: efl
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Enlightenment Foundation Libraries
@@ -38,6 +39,7 @@ Source: http://download.enlightenment.org/rel/libs/%name/%name-%version%beta.tar
 Source: %name-%version.tar
 %endif
 Patch: efl-1.15.0-alt-ecore_fb.patch
+Patch1: efl-1.19.1-luajitfix.patch
 
 # to skip libreoffice dependency for evas_generic_loaders
 %add_findreq_skiplist %_libdir/evas/utils/evas_generic_pdf_loader.libreoffice
@@ -48,13 +50,14 @@ BuildRequires: gcc-c++ glibc-kernheaders glib2-devel libcheck-devel lcov doxygen
 BuildRequires: libpng-devel libjpeg-devel libopenjpeg2.0-devel libtiff-devel libgif-devel libwebp-devel
 BuildRequires: fontconfig-devel libfreetype-devel libfribidi-devel libharfbuzz-devel
 BuildRequires: libpulseaudio-devel libsndfile-devel libbullet-devel zlib-devel liblz4-devel
-BuildRequires: libluajit-devel libssl-devel libcurl-devel libdbus-devel
+BuildRequires: libssl-devel libcurl-devel libdbus-devel
 BuildRequires: libmount-devel libblkid-devel
 BuildRequires: libudev-devel systemd-devel libsystemd-journal-devel libsystemd-daemon-devel
 BuildRequires: libX11-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXext-devel
 BuildRequires: libXfixes-devel libXinerama-devel libXrandr-devel libXrender-devel libXScrnSaver-devel
 BuildRequires: libXtst-devel libXcursor-devel libXp-devel libXi-devel
 BuildRequires: libGL-devel
+%{?_enable_lua:BuildRequires: libluajit-devel}
 %{?_enable_ibus:BuildRequires: libibus-devel}
 %{?_enable_tslib:BuildRequires: libts-devel}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-server-devel libwayland-cursor-devel wayland-protocols libxkbcommon-devel >= 0.6.0 libuuid-devel}
@@ -204,6 +207,7 @@ developing applications that use Elementary libraries.
 %prep
 %setup -n %name-%version%beta
 %patch -p1
+%patch1 -p1
 # fix path to soffice.bin
 subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.libreoffice
 
@@ -224,6 +228,7 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 	%{subst_enable egl} \
 	%{subst_enable elput} \
 	%{subst_enable drm} \
+	%{subst_enable lua} \
 	%{?_enable_gl_drm:--enable-gl-drm} \
 	%{subst_enable ibus} \
 	%{subst_enable gstreamer1}
@@ -257,7 +262,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_bindir/efreetd
 %_bindir/eina-bench-cmp
 %_bindir/eina_modinfo
-%_bindir/elua
+%{?_enable_lua:%_bindir/elua}
 %_bindir/ethumb
 %_bindir/ethumbd
 %_bindir/ethumbd_client
@@ -292,7 +297,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_datadir/ethumb/
 %_datadir/ethumb_client/
 %_datadir/evas/
-%_datadir/elua/
+%{?_enable_lua:%_datadir/elua/}
 %_datadir/mime/packages/edje.xml
 %_prefix/lib/systemd/user/ethumb.service
 %doc AUTHORS README NEWS COMPLIANCE
@@ -351,7 +356,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_pkgconfigdir/eldbus.pc
 %_pkgconfigdir/elocation.pc
 %{?_enable_elput:%_pkgconfigdir/elput.pc}
-%_pkgconfigdir/elua.pc
+%{?_enable_lua:%_pkgconfigdir/elua.pc}
 %_pkgconfigdir/embryo.pc
 %_pkgconfigdir/emile.pc
 %_pkgconfigdir/emotion.pc
@@ -413,6 +418,9 @@ find %buildroot%_libdir -name "*.la" -delete
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Sat May 27 2017 Yuri N. Sedunov <aris@altlinux.org> 1.19.1-alt1
+- 1.19.1
+
 * Thu Apr 13 2017 Yuri N. Sedunov <aris@altlinux.org> 1.19.0-alt1
 - 1.19.0
 
