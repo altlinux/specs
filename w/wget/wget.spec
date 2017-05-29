@@ -1,8 +1,8 @@
 %define beta %nil
 
 Name: wget
-Version: 1.19
-Release: alt2
+Version: 1.19.1
+Release: alt1
 
 Summary: An utility for retrieving files using the HTTP, HTTPS or FTP protocols
 License: GPLv3
@@ -135,6 +135,9 @@ find doc -type f -print0 |
 %doc AUTHORS MAILING-LIST NEWS README*
 
 %changelog
+* Mon May 29 2017 Michael Shigorin <mike@altlinux.org> 1.19.1-alt1
+- 1.19.1
+
 * Mon Mar 20 2017 Denis Smirnov <mithraen@altlinux.ru> 1.19-alt2
 - rebuild with IDN/IRI support
 
