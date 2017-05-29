@@ -4,7 +4,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 17.0.5
+Version: 17.1.1
 Release: alt1
 Epoch: 4
 License: MIT
@@ -22,7 +22,7 @@ BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel l
 BuildRequires: libdrm-devel libexpat-devel xorg-glproto-devel xorg-dri2proto-devel python-modules libselinux-devel libxcb-devel libSM-devel
 BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libwayland-client-devel libwayland-server-devel libffi-devel libelf-devel
 BuildRequires: libva-devel libvdpau-devel libXvMC-devel xorg-dri3proto-devel xorg-presentproto-devel libxshmfence-devel libnettle-devel
-BuildRequires: libelf-devel python-module-mako python-module-argparse
+BuildRequires: libelf-devel python-module-mako python-module-argparse zlib-devel
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -219,6 +219,9 @@ framerate information to stdout
 	--enable-xvmc \
 	--enable-dri3 \
 %endif
+%ifarch x86_64
+	--with-vulkan-drivers=intel \
+%endif
 	--enable-texture-float \
 	--enable-shared-glapi \
 	%{subst_enable egl} \
@@ -368,6 +371,10 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %files -n xorg-dri-intel
 %config(noreplace) %_sysconfdir/drirc
 %_libdir/X11/modules/dri/i9?5_dri.so
+%ifarch x86_64
+%_libdir/libvulkan_intel.so
+%_datadir/vulkan
+%endif
 
 %files -n xorg-dri-nouveau
 %_libdir/X11/modules/dri/nouveau_*dri.so
@@ -395,6 +402,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Mon May 29 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:17.1.1-alt1
+- 17.1.1
+
 * Fri May 05 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:17.0.5-alt1
 - 17.0.5
 
