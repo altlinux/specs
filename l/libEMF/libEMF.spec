@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: libEMF
-Version: 1.0.7
+Version: 1.0.9
 Release: alt1
 
 Summary: A library for generating Enhanced Metafiles
@@ -9,7 +9,7 @@ License: LGPLv2+ and GPLv2+
 Group: System/Libraries
 
 Url: http://libemf.sourceforge.net
-Source0: http://downloads.sourceforge.net/libemf/%name-%version.tar.gz
+Source0: http://downloads.sourceforge.net/libemf/libemf-%version.tar.gz
 Source1: libEMF.watch
 Patch: libEMF-aarch64.patch
 Packager: Michael Shigorin <mike@altlinux.org>
@@ -65,7 +65,7 @@ libEMF static files.
 %endif
 
 %prep
-%setup
+%setup -n libemf-%version
 %patch -p1 -b .aarch64
 
 %build
@@ -98,6 +98,9 @@ make check
 %endif
 
 %changelog
+* Mon May 29 2017 Michael Shigorin <mike@altlinux.org> 1.0.9-alt1
+- 1.0.9
+
 * Tue Aug 05 2014 Michael Shigorin <mike@altlinux.org> 1.0.7-alt1
 - added watch file
 - new version (watch file uupdate)
