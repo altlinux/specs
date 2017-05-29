@@ -1,5 +1,5 @@
 Name: ranger
-Version: 1.7.0
+Version: 1.8.1
 Release: alt1
 
 Summary(ru_RU.UTF-8): Консольный файл-менеджер
@@ -53,6 +53,9 @@ sed -i 's@#!/usr/bin/python -O@#!/usr/bin/python@' ranger.py
 %python_sitelibdir/*
 
 %changelog
+* Mon May 22 2017 Fr. Br. George <george@altlinux.ru> 1.8.1-alt1
+- Autobuild version bump to 1.8.1
+
 * Tue Apr 21 2015 Fr. Br. George <george@altlinux.ru> 1.7.0-alt1
 - Autobuild version bump to 1.7.0
 
