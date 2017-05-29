@@ -1,6 +1,6 @@
 Name: dstat
-Version: 0.7.2
-Release: alt1.1
+Version: 0.7.3
+Release: alt1
 
 Summary: Versatile vmstat, iostat and ifstat replacement
 License: GPL
@@ -49,7 +49,7 @@ interprete real-time data as easy as possible.
 %makeinstall
 
 %files
-%doc AUTHORS ChangeLog README TODO 
+%doc AUTHORS ChangeLog README* TODO
 %doc %_man1dir/*
 #%config(noreplace) %_sysconfdir/dstat.conf
 %_bindir/*
@@ -59,6 +59,9 @@ interprete real-time data as easy as possible.
 # - dstat -dfncl bails out with division by zero!
 
 %changelog
+* Mon May 29 2017 Michael Shigorin <mike@altlinux.org> 0.7.3-alt1
+- 0.7.3
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.7.2-alt1.1
 - Rebuild with Python-2.7
 
