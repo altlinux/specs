@@ -2,7 +2,7 @@
 %define api_ver 0.1
 
 Name: libopenraw
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Decode camera RAW files
@@ -81,6 +81,9 @@ applications that use %name-gnome.
 %_pkgconfigdir/%name-gnome-%api_ver.pc
 
 %changelog
+* Mon May 29 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.2-alt1
+- 0.1.2
+
 * Mon Apr 17 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.1-alt1
 - 0.1.1
 
