@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8
-Release: alt1.git20141120.1
+Version: 1.1
+Release: alt1
 Summary: Extensible validation for Python dictionaries
 License: ISCL
 Group: Development/Python
@@ -100,10 +100,11 @@ popd
 %endif
 
 %check
-python setup.py test
+py.test -v %oname/tests
+
 %if_with python3
 pushd ../python3
-python3 setup.py test
+py.test3 -v %oname/tests
 popd
 %endif
 
@@ -126,6 +127,9 @@ popd
 %endif
 
 %changelog
+* Tue May 23 2017 Lenar Shakirov <snejok@altlinux.ru> 1.1-alt1
+- New version
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8-alt1.git20141120.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
