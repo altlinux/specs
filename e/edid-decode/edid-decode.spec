@@ -1,6 +1,6 @@
 Name:		edid-decode
-Version:	20100205
-Release:	alt1.qa1
+Version:	20170207
+Release:	alt1
 Summary:	EDID decoder and conformance tester
 Source:		%name-%version.tar
 Group:		System/X11
@@ -22,9 +22,13 @@ cp -a data %buildroot/%_datadir/
 
 %files
 %_bindir/*
-%_datadir/*
+%_datadir/data
+%_man1dir/edid-decode.1*
 
 %changelog
+* Mon May 29 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 20170207-alt1
+- updated from git.cb0ee55
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20100205-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
