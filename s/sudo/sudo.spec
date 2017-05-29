@@ -1,6 +1,6 @@
 Name: sudo
-Version: 1.8.19p1
-Release: alt6%ubt
+Version: 1.8.20
+Release: alt1%ubt
 Epoch: 1
 
 Summary: Allows command execution as another user
@@ -74,7 +74,9 @@ configure_options='
 --with-sudoers-mode=0400
 --with-editor=/bin/vitmp
 --with-sendmail=/usr/sbin/sendmail
+%if %ubt_id >= "M70P"
 --with-sssd
+%endif
 --docdir=%_datadir/doc/%name-%version
 --with-plugindir=%_libdir/sudo
 --libexecdir=%_libdir
@@ -99,6 +101,8 @@ bzip2 -9 %buildroot%_datadir/doc/%name-%version/ChangeLog
 cat sudo.lang sudoers.lang > sudo_all.lang
 rm sudo.lang sudoers.lang
 rm -f %buildroot%_libdir/sudo/*.la
+
+mv %buildroot%_sysconfdir/sudoers.dist %buildroot%_datadir/doc/%name-%version/
 
 %pre
 %pre_control sudo
@@ -167,6 +171,9 @@ fi
 %_man8dir/sudo_plugin.8*
 
 %changelog
+* Mon May 29 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.20-alt1%ubt
+- Update to latest spring release
+
 * Tue Jan 10 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.19p1-alt6%ubt
 - Add compatibility trigger for /etc/sudoers.d and /etc/sudo.d
 - Avoid sudoreplay pre and post control warnings
