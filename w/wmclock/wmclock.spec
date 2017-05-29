@@ -1,21 +1,18 @@
-# vim: set ft=spec: -*- mode: rpm-spec; -*-
-# $Id: wmclock,v 1.3 2006/02/06 07:50:11 raorn Exp $
-
 Name: wmclock
-Version: 1.0.14
+Version: 1.0.16
 Release: alt1
 
 Summary: Dockable clock applet for Window Maker
 License: GPL
 Group: Graphical desktop/Window Maker
 
-Url: http://www.jmknoble.net/WindowMaker/wmclock
-Source: %url/%name-%version.tar.gz
+Url: http://www.dockapps.net/wmclock
+Source: %name-%version.tar.gz
 Source100: %name.watch
-Packager: Sir Raorn <raorn@altlinux.ru>
 
-# Automatically added by buildreq on Mon Feb 06 2006
-BuildRequires: gccmakedep imake libX11-devel libXext-devel libXpm-devel xorg-cf-files xorg-proto-devel
+# Automatically added by buildreq on Mon May 29 2017
+# optimized out: libX11-devel perl pkg-config python-base python-modules xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: libXext-devel libXpm-devel
 
 %description
 %name is an applet which displays the date and time in a dockable
@@ -27,15 +24,18 @@ can run a user-specified program on a mouse click.  %name is derived
 from asclock, a similar clock for the AfterStep window manager.
 
 %prep
-%setup
+%setup -c
 
 %build
-./configure --lang english
+cd dockapps-*
+%autoreconf
+%configure --with-lang=english
 %make_build
 
 %install
-%makeinstall_std install.man
-make install.share DESTDIR=%buildroot%prefix
+cd dockapps-*
+%makeinstall_std
+cp -a README COPYING ..
 
 mkdir -p %buildroot%_menudir
 cat <<__EOF >%buildroot%_menudir/%name
@@ -45,6 +45,7 @@ cat <<__EOF >%buildroot%_menudir/%name
 __EOF
 
 %files
+%doc README COPYING
 %_bindir/%name
 %_man1dir/%name.1*
 %dir %_datadir/%name
@@ -56,6 +57,13 @@ __EOF
 #   (should WindowMaker cope with that)
 
 %changelog
+* Mon May 29 2017 Michael Shigorin <mike@altlinux.org> 1.0.16-alt1
+- new version (watch file uupdate)
+  + bits from fedora 1.0.16 spec
+- updated Url:
+- dropped Packager:
+- buildreq
+
 * Mon Jun 23 2014 Michael Shigorin <mike@altlinux.org> 1.0.14-alt1
 - new version (watch file uupdate)
 - dropped patch (merged upstream)
