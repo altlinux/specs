@@ -1,5 +1,5 @@
 Name: mikmod
-Version: 3.2.6
+Version: 3.2.7
 Release: alt1
 
 Summary: A MOD music file player
@@ -8,6 +8,7 @@ Group: Sound
 
 Url: http://mikmod.sf.net
 Source: %name-%version.tar.gz
+Source100: %name.watch
 Patch: %name-3.1.6-tmpfile.patch
 
 # Automatically added by buildreq on Tue Aug 31 2004
@@ -63,6 +64,10 @@ lha, lzh, rar, zip).
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon May 29 2017 Michael Shigorin <mike@altlinux.org> 3.2.7-alt1
+- 3.2.7
+- added debian watch file
+
 * Wed Sep 10 2014 Michael Shigorin <mike@altlinux.org> 3.2.6-alt1
 - 3.2.6
 - disabled patch
