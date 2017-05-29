@@ -1,8 +1,9 @@
 %define _name graphite2
-%def_enable docs
+# since 1.3.10 newer latex required
+%def_disable docs
 
 Name: lib%_name
-Version: 1.3.9
+Version: 1.3.10
 Release: alt1
 
 Summary: Font rendering capabilities for complex non-Roman writing systems
@@ -19,7 +20,7 @@ Provides: %_name = %version-%release
 Patch1: graphite2-1.2.0-cmakepath.patch
 
 BuildRequires: gcc-c++ cmake ctest libfreetype-devel
-%{?_enable_docs:BuildRequires: doxygen asciidoc-a2x}
+%{?_enable_docs:BuildRequires: doxygen asciidoc-a2x texmf-latex-tabu}
 # for tests
 BuildRequires: python-modules-json python-module-fonttools
 
@@ -74,6 +75,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %{?_enable_docs:%doc BUILD/doc/manual.html}
 
 %changelog
+* Mon May 29 2017 Yuri N. Sedunov <aris@altlinux.org> 1.3.10-alt1
+- 1.3.10
+
 * Mon Dec 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3.9-alt1
 - 1.3.9
 
