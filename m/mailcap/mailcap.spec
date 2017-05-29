@@ -1,5 +1,5 @@
 Name: mailcap
-Version: 2.1.46
+Version: 2.1.48
 Release: alt1
 
 Summary: Associates helper applications with particular file types
@@ -8,7 +8,7 @@ Group: System/Configuration/Networking
 
 # https://fedorahosted.org/released/mailcap/%{name}-%{version}.tar.xz
 Source: %name-%version.tar.gz
-Patch: %name-%version-alt.patch
+Patch: %name-2.1.46-alt.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: perl
@@ -47,6 +47,9 @@ make check
 # - add nginx-mimetypes?
 
 %changelog
+* Mon May 29 2017 Michael Shigorin <mike@altlinux.org> 2.1.48-alt1
+- 2.1.48 (sync with F27)
+
 * Mon Aug 15 2016 Michael Shigorin <mike@altlinux.org> 2.1.46-alt1
 - 2.1.46 (sync with F26) (closes: #32375)
 - License: s/Public Domain/& and MIT/ according to fedora spec
