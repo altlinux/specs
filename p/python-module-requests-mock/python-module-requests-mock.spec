@@ -3,16 +3,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.0
-Release: alt1.git20141216.1
+Version: 1.3.0
+Release: alt1
 Summary: Mock out responses from the requests package
 License: ASLv2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/requests-mock/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/stackforge/requests-mock.git
-Source: %name-%version.tar
+Source: %oname-%version.tar.gz
+Patch: requests-mock-alt-fix-urllib3.patch
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -22,7 +21,7 @@ BuildPreReq: python-module-wheel python-module-discover
 BuildPreReq: python-module-fixtures python-module-mock
 BuildPreReq: python-module-testrepository python-module-testtools
 BuildPreReq: python-module-urllib3 python-module-mimeparse
-BuildPreReq: python-module-sphinx-devel git
+BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -96,22 +95,9 @@ return known responses from HTTP requests without making actual calls.
 
 This package contains tests for %oname.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python
-
-%description pickles
-The requests-mock library at its core is simply a transport adapter that
-can be preloaded with responses that are returned if certain URIs are
-requested. This is particularly useful in unit tests where you want to
-return known responses from HTTP requests without making actual calls.
-
-This package contains pickles for %oname.
-
 %package docs
 Summary: Documentation for %oname
 Group: Development/Documentation
-BuildArch: noarch
 
 %description docs
 The requests-mock library at its core is simply a transport adapter that
@@ -122,30 +108,26 @@ return known responses from HTTP requests without making actual calls.
 This package contains documentation for %oname.
 
 %prep
-%setup
-
-git config --global user.email "real at altlinux.org"
-git config --global user.name "REAL"
-git init-db
-git add . -A
-git commit -a -m "%version"
-git tag %version -m "%version"
+%setup -n %oname-%version
+%patch -p1
 
 %if_with python3
 cp -fR . ../python3
 %endif
 
-%prepare_sphinx .
-ln -s ../objects.inv docs/
-
 %build
-%python_build_debug
+%python_build
 
 %if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
 %endif
+
+# generate html docs
+python setup.py build_sphinx
+# remove the sphinx-build leftovers
+rm -rf doc/build/html/.{doctrees,buildinfo}
 
 %install
 %python_install
@@ -155,12 +137,6 @@ pushd ../python3
 %python3_install
 popd
 %endif
-
-%make -C docs pickle
-%make -C docs html
-
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 python setup.py test
@@ -173,17 +149,13 @@ popd
 %files
 %doc *.rst
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/*/tests
 
 %files tests
 %python_sitelibdir/*/tests
 
-%files pickles
-%python_sitelibdir/*/pickle
-
 %files docs
-%doc docs/_build/html/*
+%doc doc/build/html
 
 %if_with python3
 %files -n python3-module-%oname
@@ -196,6 +168,10 @@ popd
 %endif
 
 %changelog
+* Mon May 29 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.0-alt1
+- 1.3.0
+- drop pickle package
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.0-alt1.git20141216.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
