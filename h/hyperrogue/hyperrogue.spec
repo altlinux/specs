@@ -1,11 +1,12 @@
 Name: hyperrogue
-Version: 83j
-Release: alt2
-Source: %name-%version.zip
+Version: 9.4g
+Release: alt1
+Source: v%version.tar.gz
 Url: http://www.roguetemple.com/z/hyper.php
 License: GPLv2
 Group: Games/Adventure
 Summary: Roguelike in non-euclidian world
+Epoch: 1
 
 BuildPreReq: rpm-macros-fonts
 
@@ -13,9 +14,8 @@ Requires: fonts-ttf-dejavu
 
 # Automatically added by buildreq on Tue Oct 15 2013
 # optimized out: fontconfig libSDL-devel libstdc++-devel
-BuildRequires: ImageMagick-tools gcc-c++ libSDL_gfx-devel libSDL_mixer-devel libSDL_ttf-devel libpng-devel unzip
+BuildRequires: ImageMagick-tools gcc-c++ libSDL_gfx-devel libSDL_mixer-devel libSDL_ttf-devel libpng-devel
 Requires: %name-music = %version
-Group: Games/Adventure
 
 %description
 You are a lone outsider in a strange, non-Euclidean world. You can move
@@ -41,17 +41,18 @@ to teleport back to the Euclidean world to survive by pressing Escape
 Buildarch: noarch
 Summary: Music for %summary
 Group: Games/Adventure
+License: CC BY-SA 3.0
 
 %description music
 Music for %name
 
 %prep
 %setup
-sed -i 's@"DejaVuSans-Bold.ttf"@"%_ttffontsdir/dejavu/DejaVuSans-Bold.ttf"@g' src/graph.cpp
+sed -i 's@"DejaVuSans-Bold.ttf"@"%_ttffontsdir/dejavu/DejaVuSans-Bold.ttf"@g' graph.cpp
 
 %define sizes 16 24 32 48 64 96
 for s in %sizes; do
-	convert src/hr-icon.ico $s.png
+	convert hr-icon.ico $s.png
 done
 cat > %name.desktop <<@@@
 [Desktop Entry]
@@ -67,20 +68,20 @@ Comment[ru]=Roguelike-ÉÇÒÁ × ÎÅÅ×ËÌÉÄÏ×ÏÍ ÐÒÏÓÔÒÁÎÓÔ�
 @@@
 
 %build
-%make_build -C src
+%autoreconf
+%configure
+%make_build LDFLAGS=-lm CXXFLAGS="-O0 -g"
 
 %install
-install -d %buildroot%_datadir/%name
-install -D src/hyper %buildroot%_gamesbindir/%name
+%makeinstall
 for s in %sizes; do
 	install -D $s.png %buildroot%_iconsdir/hicolor/${s}x${s}/apps/%name.png
 done
 install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 
-install *.ogg *.txt %buildroot%_datadir/%name/
-
 %files
-%_gamesbindir/%name
+%doc %_defaultdocdir/%name
+%_bindir/%name
 %_iconsdir/hicolor/*/apps/%name.png
 %_desktopdir/%name.desktop
 
@@ -88,6 +89,9 @@ install *.ogg *.txt %buildroot%_datadir/%name/
 %_datadir/%name
 
 %changelog
+* Mon May 29 2017 Fr. Br. George <george@altlinux.ru> 1:9.4g-alt1
+- Autobuild version bump to 9.4g
+
 * Mon Jan 23 2017 Fr. Br. George <george@altlinux.ru> 83j-alt2
 - Package game music
 
