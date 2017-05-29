@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.10.0
-Release: alt6
+Release: alt7
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
 Group: Development/Python
@@ -14,10 +14,14 @@ Url: http://pypi.python.org/pypi/six
 Packager: Python Development Team <python at packages.altlinux.org>
 
 Source: %name-%version.tar
+Source2: move.list
 BuildArch: noarch
 
-BuildPreReq: python-devel
+%define move_list %(echo `cat %{SOURCE2}`)
 
+%py_provides %move_list
+
+BuildPreReq: python-devel
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: python-module-setuptools-tests}}
 BuildRequires: python-module-setuptools
@@ -35,20 +39,10 @@ with the goal of writing Python code that is compatible on both Python
 versions. See the documentation for more information on what is
 provided.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Python 2 and 3 compatibility utilities
 Group: Development/Python3
-%py3_provides six.moves
-%py3_provides six.moves.urllib
-%py3_provides six.moves.urllib.parse
-%py3_provides six.moves.urllib.error
-%py3_provides six.moves.urllib.request
-%py3_provides six.moves.urllib.response
-%py3_provides six.moves.urllib.robotparser
-%py3_provides six.moves.urllib_robotparser
-%py3_provides six.moves.xmlrpc_client
-%py3_provides six.moves.xmlrpc_server
+%py3_provides %move_list
 
 %description -n python3-module-%oname
 Six is a Python 2 and 3 compatibility library. It provides utility
@@ -56,7 +50,6 @@ functions for smoothing over the differences between the Python versions
 with the goal of writing Python code that is compatible on both Python
 versions. See the documentation for more information on what is
 provided.
-%endif
 
 %prep
 %setup
@@ -102,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Mon May 29 2017 Alexey Shabalin <shaba@altlinux.ru> 1.10.0-alt7
+- update provides from documentation
+
 * Fri May 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.10.0-alt6
 - add python3 provides six.moves.urllib_robotparser, six.moves.xmlrpc_client, six.moves.xmlrpc_server
 
