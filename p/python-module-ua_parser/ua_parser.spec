@@ -1,9 +1,11 @@
 %define oname ua_parser
 %def_disable check
 
+%def_with python3
+
 Name: python-module-%oname
 Version: 0.3.4
-Release: alt2.git20141025
+Release: alt3.git20141025
 Summary: Python port of Browserscope's user agent parser
 License: ASLv2.0
 Group: Development/Python
@@ -27,17 +29,49 @@ reusable as is by implementations in other programming languages.
 
 ua-parser is just a small wrapper around this data.
 
+%if_with python3
+%package -n python3-module-%oname
+Summary:        %summary
+Group:          Development/Python
+BuildRequires: python3-module-pytest python3-module-yaml
+
+%description -n python3-module-%oname
+The crux of the original parser--the data collected by Steve Souders
+over the years--has been extracted into a separate YAML file so as to be
+reusable as is by implementations in other programming languages.
+
+ua-parser is just a small wrapper around this data.
+%endif
+
 %prep
 %setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
 
 %build
 %python_build_debug
 python setup.py sdist
 
+%if_with python3
+pushd ../python3
+%python3_build_debug
+python3 setup.py sdist
+popd
+%endif
+
 %install
 %python_install
 
 install -m644 py/%oname/regexes.* %buildroot%python_sitelibdir/%oname/
+
+%if_with python3
+pushd ../python3
+%python3_install
+install -m644 py/%oname/regexes.* %buildroot%python3_sitelibdir/%oname/
+popd
+%endif
 
 %check
 python setup.py test
@@ -45,11 +79,29 @@ rm -fR build
 export PYTHONPATH=%buildroot%python_sitelibdir
 py.test
 
+
+%if_with python3
+pushd ../python3
+python3 setup.py test
+rm -fR build
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test
+popd
+%endif
+
 %files
 %doc *.md *.txt *.markdown
 %python_sitelibdir/*
 
+%if_with python3
+%files -n python3-module-%oname
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Mon May 29 2017 Lenar Shakirov <snejok@altlinux.ru> 0.3.4-alt3.git20141025
+- Enable python3
+
 * Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 0.3.4-alt2.git20141025
 - Rebuild with "def_disable check"
 - Cleanup buildreq
