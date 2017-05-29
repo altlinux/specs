@@ -1,7 +1,7 @@
 %define  pkgname pkg-config
  
 Name: 	 ruby-%pkgname
-Version: 1.2.0
+Version: 1.2.2
 Release: alt1
  
 Summary: pkg-config implemented by pure Ruby
@@ -56,6 +56,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Mon May 29 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt1
+- New version
+
 * Tue Apr 25 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
 - New version
 
