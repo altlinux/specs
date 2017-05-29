@@ -2,7 +2,7 @@
 %define fname mozilla-fira
 
 Name: fonts-otf-%fname
-Version: 3.111
+Version: 4.202
 Release: alt1
 Serial: 1
 
@@ -33,6 +33,9 @@ cp -a %SOURCE1 .
 %doc LICENSE
 
 %changelog
+* Mon May 29 2017 Michael Shigorin <mike@altlinux.org> 1:4.202-alt1
+- 4.202 (upstream tag, yay!)
+
 * Sun Aug 31 2014 Michael Shigorin <mike@altlinux.org> 1:3.111-alt1
 - 3.111 (wish upstream used tags though)
 
