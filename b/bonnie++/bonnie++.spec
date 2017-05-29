@@ -1,5 +1,5 @@
 Name: bonnie++
-Version: 1.97.1
+Version: 1.97.3
 Release: alt1
 
 Summary: A program for benchmarking hard drives and filesystems
@@ -7,21 +7,21 @@ License: GPL v2
 Group: Monitoring
 
 Url: http://www.coker.com.au/bonnie++/
-Source: %name-1.97.tgz
+Source: %name-%version.tgz
 Source100: bonnie++.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Fri Apr 23 2004
 BuildRequires: gcc-c++ libstdc++-devel
 
-Summary(ru_RU.KOI8-R): Тест скорости работы жестких дисков и файловых систем
+Summary(ru_RU.UTF-8): п╒п╣я│я┌ я│п╨п╬я─п╬я│я┌п╦ я─п╟п╠п╬я┌я▀ п╤п╣я│я┌п╨п╦я┘ п╢п╦я│п╨п╬п╡ п╦ я└п╟п╧п╩п╬п╡я▀я┘ я│п╦я│я┌п╣п╪
 
 %description
 Bonnie++ is a benchmark suite that is aimed at performing a number
 of simple tests of hard drive and file system performance.
 
-%description -l ru_RU.KOI8-R
-Bonnie++ - тест скорости работы вашей дисковой подсистемы
+%description -l ru_RU.UTF-8
+Bonnie++ - я┌п╣я│я┌ я│п╨п╬я─п╬я│я┌п╦ я─п╟п╠п╬я┌я▀ п╡п╟я┬п╣п╧ п╢п╦я│п╨п╬п╡п╬п╧ п©п╬п╢я│п╦я│я┌п╣п╪я▀
 
 %prep
 %setup
@@ -43,6 +43,9 @@ ln -s ../sbin/%name %buildroot/%_bindir/
 %doc copyright.txt credits.txt readme.html
 
 %changelog
+* Mon May 29 2017 Michael Shigorin <mike@altlinux.org> 1.97.3-alt1
+- new version (watch file uupdate)
+
 * Sat Sep 21 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.97.1-alt1
 - New version (watch file uupdate).
 
