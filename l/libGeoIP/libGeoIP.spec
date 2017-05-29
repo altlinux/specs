@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: 1.6.9
+Version: 1.6.11
 Release: alt1
 
 Summary: GeoIP is a C library find what country an IP address or hostname originates from
@@ -87,6 +87,9 @@ autoupdate.
 %_man1dir/*
 
 %changelog
+* Mon May 29 2017 Yuri N. Sedunov <aris@altlinux.org> 1.6.11-alt1
+- 1.6.11
+
 * Tue Jan 26 2016 Yuri N. Sedunov <aris@altlinux.org> 1.6.9-alt1
 - 1.6.9
 
