@@ -1,5 +1,5 @@
 Name: libp11
-Version: 0.4.0
+Version: 0.4.6
 Release: alt1
 
 Summary: Library for using PKCS#11 modules
@@ -91,6 +91,9 @@ rm -rf %buildroot%_datadir/doc/%name/
 %_includedir/*
 
 %changelog
+* Mon May 29 2017 Michael Shigorin <mike@altlinux.org> 0.4.6-alt1
+- 0.4.6
+
 * Wed Jun 15 2016 Alexey Shabalin <shaba@altlinux.ru> 0.4.0-alt1
 - 0.4.0
 - merge engine_pkcs11
