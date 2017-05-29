@@ -1,6 +1,6 @@
 Name: icebreaker
-Version: 1.9.7
-Release: alt2.3.qa1
+Version: 1.9.8
+Release: alt1
 Epoch: 1
 
 Summary: An addictive action-puzzle game involving bouncing penguins
@@ -58,6 +58,9 @@ install -pDm644 %SOURCE4 %buildroot/%_liconsdir/%name.xpm
 %_liconsdir/icebreaker.xpm
 
 %changelog
+* Mon May 29 2017 Michael Shigorin <mike@altlinux.org> 1:1.9.8-alt1
+- 1.9.8
+
 * Mon Apr 18 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1:1.9.7-alt2.3.qa1
 - Removed libaudio fron BR.
 - Updated BR with buildreq.
