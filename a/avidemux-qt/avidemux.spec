@@ -5,7 +5,7 @@
 
 Name: avidemux-qt
 Version: 2.6.15
-Release: alt1
+Release: alt1%ubt
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
@@ -50,6 +50,7 @@ BuildRequires: libxml2-devel libxvid-devel
 BuildRequires: perl-podlators perl-IO-Compress texi2html
 BuildRequires: qt5-base-devel qt5-script-devel qt5-tools
 BuildRequires: xml-utils xsltproc yasm kde-common-devel libalsa-devel zlib-devel
+BuildRequires(pre): rpm-build-ubt
 
 %description
 Avidemux is a graphical tool to edit AVI. It allows you to multiplex and
@@ -179,6 +180,9 @@ ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 %exclude %_includedir/avidemux
 
 %changelog
+* Tue May 30 2017 Anton Farygin <rider@altlinux.ru> 2.6.15-alt1%ubt
+- rebuild with new x265
+
 * Wed Nov 30 2016 Sergey V Turchin <zerg@altlinux.org> 2.6.15-alt1
 - new version
 

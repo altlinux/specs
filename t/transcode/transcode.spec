@@ -1,5 +1,4 @@
 %define subver %nil
-%set_verify_elf_method textrel=relaxed
 
 %def_enable a52
 %def_enable imagemagick
@@ -32,7 +31,7 @@
 
 Name: transcode
 Version: 1.1.7
-Release: alt5%ubt
+Release: alt7%ubt
 
 Summary: A linux video stream processing utility
 
@@ -40,7 +39,7 @@ License: GPL
 Group: Video
 Url: http://bitbucket.org/france/transcode-tcforge/
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar
 Source1: subtitleripper-0.3-4.tar
 Source2: export_dvraw.c
 Patch0: %name-subtitleripper.patch
@@ -56,21 +55,21 @@ Patch14: transcode-1.1.7-libav-9.patch
 Patch15: transcode-1.1.7-preset-force.patch
 Patch16: transcode-1.1.7-ffmpeg2.patch
 Patch17: transcode-1.1.7-freetype251.patch
+# rpmfusion
+Patch18: transcode-1.1.7-ffmpeg29.patch
+# Debian
+Patch19: transcode-1.7.7-debian-underlinkage.patch
 # ALTLinux patches
-Patch18: transcode-1.1.7-libav-10.patch
-Patch19: transcode-1.1.7-av_set-string3.patch
+Patch96: transcode-1.1.7-libav-10.patch
 Patch98: transcode-1.1.5-textrel.patch
 Patch99: subtitleripper-0.3-4-alt-makefile.patch
+Patch100: transcode-1.1.7-alt-fix-plugin-import_ac3-undefined-symbol.patch
 
 %define ffmpeg_ver 0.6
 %define avifile_ver 0.737
 %define xvid_ver 1.2.2
 %define exif_ver 0.6.17
 
-#BuildRequires(pre): xvid-devel >= %xvid_ver
-#BuildRequires(pre): libexif-devel >= %exif_ver
-# Automatically added by buildreq on Mon Sep 05 2011 (-bi)
-# optimized out: elfutils fontconfig libICE-devel libSM-devel libX11-devel libXext-devel libXmu-devel libXt-devel libavcodec-devel libavutil-devel libdv-devel libjpeg-devel libogg-devel libopencore-amrnb0 libopencore-amrwb0 libpng-devel libquicktime111-core libvorbis-devel pkg-config python-base ruby xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: glibc-devel-static imake libImageMagick-devel libSDL-devel libXaw-devel libXpm-devel libXv-devel liba52-devel libalsa-devel libavformat-devel libdvdread-devel libfreetype-devel liblame-devel liblzo2-devel libmjpegtools-devel libmpeg2-devel libnetpbm-devel libpostproc-devel libquicktime-devel libtheora-devel libv4l-devel libx264-devel libxml2-devel libxvid-devel rpm-build-ruby xorg-cf-files
 BuildRequires: glibc-devel imake libImageMagick-devel libSDL-devel libXaw-devel libXpm-devel
 BuildRequires: libXv-devel liba52-devel libalsa-devel
@@ -137,15 +136,20 @@ sed -i s/getline/get_line/ contrib/subrip/subtitleripper/vobsub.c
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
-#
 %patch18 -p1
-%patch19 -p2
+%patch19 -p1
+#
+%patch96 -p1
 %patch98 -p2
 %patch99 -p1
+%patch100 -p1
 install -m644 %SOURCE2 filter/
-%autoreconf
 
 %build
+%autoreconf
+%add_optflags -fpie
+export LDFLAGS=-pie
+export CFLAGS="$RPM_OPT_FLAGS -D_LARGEFILE_SOURCE -D__USE_LARGEFILE -D_FILE_OFFSET_BITS=64"
 %configure \
 --enable-experimental \
 --enable-deprecated \
@@ -195,7 +199,7 @@ install -m644 %SOURCE2 filter/
 %make_build
 
 pushd contrib/subrip/subtitleripper
-%make "CC=gcc $RPM_OPT_FLAGS"
+%make 
 popd
 
 %install
@@ -220,6 +224,10 @@ find $RPM_BUILD_ROOT -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -
 # the find below is useful in case those CVS/.svn/.git/.hg/.bzr/_MTN directory is added as %%doc
 find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o -name '.bzr' -o -name '_MTN' \) -print -exec rm -rf {} \; ||:
 
+export RPM_LD_PRELOAD_transcode='%buildroot%_bindir/transcode %buildroot%_bindir/tcdecode'
+export RPM_FILES_TO_LD_PRELOAD_transcode='%_libdir/%name/*.so'
+%set_verify_elf_method strict
+
 %files
 %_bindir/%name
 %_bindir/avi*
@@ -242,6 +250,12 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %doc contrib/subrip/subtitleripper/{README*,ChangeLog}
 
 %changelog
+* Tue May 30 2017 Anton Farygin <rider@altlinux.ru> 1.1.7-alt7%ubt
+- rebuild with new ffmpeg
+
+* Mon May 15 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.7-alt6%ubt
+- Fixed import_ac3 plugin linking.
+
 * Mon May 15 2017 Anton Farygin <rider@altlinux.ru> 1.1.7-alt5%ubt
 - rebuild in new environment
 

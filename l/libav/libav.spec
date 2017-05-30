@@ -16,7 +16,6 @@
 %def_enable libmp3lame
 %def_enable libvorbis
 %def_enable libcdio
-%def_disable libfaac
 %def_enable libfreetype
 %def_enable libpulse
 %def_disable nonfree
@@ -74,7 +73,7 @@
 
 Name: libav
 Version: 11.8
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Hyper fast MPEG1/MPEG4/H263/RV and AC3/MPEG audio encoder
@@ -122,24 +121,18 @@ BuildRequires: perl-podlators
 Summary: Documentation files for libav project.
 Group: Video
 BuildArch: noarch
-Provides: ffmpeg-doc = %epoch:%version-%release
-Obsoletes: ffmpeg-doc
 
 %package -n avplay
 Summary: A very simple media player using the libav and SDL libraries
 Group: Video
 Requires: libavcodec56 = %epoch:%version-%release
 Requires: libavformat56 = %epoch:%version-%release
-Provides: ffplay = %epoch:%version-%release
-Obsoletes: ffplay
 
 %package -n avprobe
 Summary:  Multimedia streams analyzer
 Group: Video
 Requires: libavcodec56 = %epoch:%version-%release
 Requires: libavformat56 = %epoch:%version-%release
-Provides: ffprobe = %epoch:%version-%release
-Obsoletes: ffprobe
 
 %package -n avconv
 Summary: Hyper fast MPEG1/MPEG4/H263/RV and AC3/MPEG audio encoder
@@ -149,25 +142,12 @@ Requires: libavformat56 = %epoch:%version-%release
 Requires: libavutil54 = %epoch:%version-%release
 Requires: libavdevice55 = %epoch:%version-%release
 Requires: libavfilter5 = %epoch:%version-%release
-Provides: ffmpeg = %epoch:%version-%release
-Obsoletes: ffmpeg
 
 %package -n libavcodec56
 Summary: libav codec library
 Group: System/Libraries
 Provides: libavcodec = %epoch:%version-%release
 Obsoletes: libavcodec < %epoch:%version-%release
-
-%package -n libavcodec-devel
-Summary: Development files for libavcodec
-Group: Development/C
-Requires: libavcodec56 = %epoch:%version-%release
-Requires: libavutil-devel = %epoch:%version-%release
-
-%package -n libavcodec-devel-static
-Summary: Static development files for libavcodec
-Group: Development/C
-Requires: libavcodec-devel = %epoch:%version-%release
 
 %package -n libavformat56
 Summary: libav file format library
@@ -176,89 +156,27 @@ Requires: libavcodec56 = %epoch:%version-%release
 Provides: libavformat = %epoch:%version-%release
 Obsoletes: libavformat < %epoch:%version-%release
 
-%package -n libavformat-devel
-Summary: Development files for libavcodec
-Group: Development/C
-Requires: libavformat56 = %epoch:%version-%release
-Requires: libavcodec-devel = %epoch:%version-%release
-
-%package -n libavformat-devel-static
-Summary: Static development files for libavformat
-Group: Development/C
-Requires: libavformat-devel = %epoch:%version-%release
-
 %package -n libavutil54
 Summary: libav utility library
 Group: System/Libraries
 Provides: libavutil = %epoch:%version-%release
 
-%package -n libavutil-devel
-Summary: Development files for libavutil
-Group: Development/C
-Requires: libavutil54 = %epoch:%version-%release
-
-%package -n libavutil-devel-static
-Summary: Static development files for libavutil
-Group: Development/C
-Requires: libavutil-devel = %epoch:%version-%release
-
 %package -n libavresample2
 Summary: libav video postprocessing library
 Group: System/Libraries
-
-%package -n libavresample-devel
-Summary: Development files for libavresample
-Group: Development/C
-Requires: libavresample2 = %epoch:%version-%release
-Requires: libavutil-devel = %epoch:%version-%release
-
-%package -n libavresample-devel-static
-Summary: Static development files for libavresample
-Group: Development/C
-Requires: libavresample-devel = %epoch:%version-%release
 
 %package -n libswscale3
 Summary: libav image rescaling library
 Group: System/Libraries
 
-%package -n libswscale-devel
-Summary: Development files for libswscale
-Group: Development/C
-Requires: libswscale3 = %epoch:%version-%release
-Requires: libavutil-devel = %epoch:%version-%release
-
-%package -n libswscale-devel-static
-Summary: Static development files for libswscale
-Group: Development/C
-Requires: libswscale-devel = %epoch:%version-%release
-
 %package -n libavdevice55
 Summary: libav device handling library
 Group: System/Libraries
-
-%package -n libavdevice-devel
-Summary: Development files for libavdevice
-Group: Development/C
-Requires: libavdevice55 = %epoch:%version-%release
-
-%package -n libavdevice-devel-static
-Summary: Static development files for libavdevice
-Group: Development/C
-Requires: libavdevice-devel = %epoch:%version-%release
 
 %package -n libavfilter5
 Summary: libav filter handling library
 Group: System/Libraries
 
-%package -n libavfilter-devel
-Summary: Development files for libavfilter
-Group: Development/C
-Requires: libavfilter5 = %epoch:%version-%release
-
-%package -n libavfilter-devel-static
-Summary: Static development files for libavfilter
-Group: Development/C
-Requires: libavfilter-devel = %epoch:%version-%release
 
 # }}}
 
@@ -297,65 +215,23 @@ stream.
 %description -n libavcodec56
 This package contains libavcodec, the libav project codec library.
 
-%description -n libavcodec-devel
-This package contains development files for libavcodec.
-
 %description -n libavformat56
 This package contains libavformat, the libav project file format library.
-
-%description -n libavformat-devel
-This package contains development files for libavformat.
 
 %description -n libavutil54
 This package contains libavutil, the libav project utility library.
 
-%description -n libavutil-devel
-This package contains development files for libavutil.
-
 %description -n libavresample2
 This package contains libavresample, the libav project video postprocessing library.
-
-%description -n libavresample-devel
-This package contains development files for libpostproc
 
 %description -n libswscale3
 This package contains libswscale, the libav project image rescaling library.
 
-%description -n libswscale-devel
-This package contains development files for libswscale.
-
 %description -n libavdevice55
 This package contains libavdevice, the libav project device handling library.
 
-%description -n libavdevice-devel
-This package contains development files for libavdevice.
-
 %description -n libavfilter5
 This package contains libavfilter, the libav project filter handling library.
-
-%description -n libavfilter-devel
-This package contains development files for libavfilter.
-
-%description -n libavformat-devel-static
-This package contains static development files for libavformat.
-
-%description -n libavcodec-devel-static
-This package contains static development files for libavcodec.
-
-%description -n libavresample-devel-static
-This package contains static development files for libavresample
-
-%description -n libswscale-devel-static
-This package contains static development files for libswscale
-
-%description -n libavutil-devel-static
-This package contains static development files for libavutil.
-
-%description -n libavdevice-devel-static
-This package contains static development files for libavdevice.
-
-%description -n libavfilter-devel-static
-This package contains static development files for libavfilter.
 
 # }}}
 
@@ -463,81 +339,24 @@ bzip2 --best --force --keep -- Changelog
 %files -n libavcodec56
 %_libdir/libavcodec.so.*
 
-%files -n libavcodec-devel
-%_includedir/libavcodec
-%_libdir/libavcodec.so
-%_pkgconfigdir/libavcodec.pc
-
 %files -n libavformat56
 %_libdir/libavformat.so.*
-
-%files -n libavformat-devel
-%_includedir/libavformat
-%_pkgconfigdir/libavformat.pc
-%_libdir/libavformat.so
 
 %files -n libavutil54
 %_libdir/libavutil.so.*
 
-%files -n libavutil-devel
-%_includedir/libavutil
-%_libdir/libavutil.so
-%_pkgconfigdir/libavutil.pc
-
 %files -n libavdevice55
 %_libdir/libavdevice.so.*
-
-%files -n libavdevice-devel
-%_includedir/libavdevice
-%_libdir/libavdevice.so
-%_pkgconfigdir/libavdevice.pc
 
 %files -n libavfilter5
 %_libdir/libavfilter.so.*
 
-%files -n libavfilter-devel
-%_includedir/libavfilter
-%_libdir/libavfilter.so
-%_pkgconfigdir/libavfilter.pc
-
 %files -n libavresample2
 %_libdir/libavresample.so.*
-
-%files -n libavresample-devel
-%_pkgconfigdir/libavresample.pc
-%_includedir/libavresample
-%_libdir/libavresample.so
 
 %files -n libswscale3
 %_libdir/libswscale.so.*
 
-%files -n libswscale-devel
-%_includedir/libswscale
-%_pkgconfigdir/libswscale.pc
-%_libdir/libswscale.so
-
-%if_enabled static
-%files -n libavformat-devel-static
-%_libdir/libavformat.a
-
-%files -n libavcodec-devel-static
-%_libdir/libavcodec.a
-
-%files -n libavutil-devel-static
-%_libdir/libavutil.a
-
-%files -n libavresample-devel-static
-%_libdir/libavresample.a
-
-%files -n libswscale-devel-static
-%_libdir/libswscale.a
-
-%files -n libavdevice-devel-static
-%_libdir/libavdevice.a
-
-%files -n libavfilter-devel-static
-%_libdir/libavfilter.a
-%endif
 
 %files -n avconv
 %doc doc/avconv.html
@@ -563,6 +382,10 @@ bzip2 --best --force --keep -- Changelog
 
 # {{{ Changelog
 %changelog
+* Thu May 25 2017 Anton Farygin <rider@altlinux.ru> 1:11.8-alt2
+- rebuild with new x265
+- removed devel packages
+
 * Wed Sep 07 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:11.8-alt1
 - 11.8 released
 
