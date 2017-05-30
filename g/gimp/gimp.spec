@@ -2,8 +2,8 @@
 %define oldver 2.0
 
 Name: gimp
-Version: %ver_major.20
-Release: alt2
+Version: %ver_major.22
+Release: alt1
 
 Summary: The GNU Image Manipulation Program
 License: GPLv3, LGPL
@@ -117,8 +117,14 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/aclocal/*
 
 %changelog
+* Mon May 29 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.8.22-alt1
+- 2.8.22
+
 * Mon May 15 2017 Anton Farygin <rider@altlinux.ru> 2.8.20-alt2
 - NMU: rebuild with new libmng
+
+* Wed Feb 08 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.8.20-alt0.M80P.1
+- backport to p8 branch
 
 * Wed Feb 01 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.8.20-alt1
 - 2.8.20
