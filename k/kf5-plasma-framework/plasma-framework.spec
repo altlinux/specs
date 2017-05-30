@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.34.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -75,7 +75,7 @@ KF5 library
 
 %install
 %K5install
-%K5install_move data locale kdevappwizard plasma
+%K5install_move data locale kdevappwizard
 %find_lang %name --all-name
 %K5find_qtlang %name --all-name
 
@@ -121,6 +121,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Tue May 30 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt2%ubt
+- fix plasma packages install directory
+
 * Fri May 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt1%ubt
 - new version
 
