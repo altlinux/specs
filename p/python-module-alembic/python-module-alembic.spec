@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-alembic
-Version: 0.8.8
+Version: 0.8.10
 Release: alt1
 
 Summary: Database migration tool for SQLAlchemy
@@ -15,31 +15,32 @@ Url: http://pypi.python.org/pypi/alembic
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pypi.python.org/packages/source/a/%modname/%modname-%version.tar
+Source: http://pypi.python.org/packages/source/a/%modname/%modname-%version.tar.gz
 
 BuildArch: noarch
 
+%py_provides alembic.migration alembic.environment
+
 BuildRequires(pre): rpm-build-python
 
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: perl-Encode perl-Locale-gettext python-base python-devel python-module-PyStemmer python-module-Pygments python-module-SQLAlchemy python-module-babel python-module-beaker python-module-cssselect python-module-ecdsa python-module-ed25519 python-module-genshi python-module-jinja2 python-module-lingua python-module-markupsafe python-module-nss python-module-polib python-module-pycrypto python-module-pytest python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python3 python3-base python3-module-Pygments python3-module-babel python3-module-beaker python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-lingua python3-module-polib python3-module-pycrypto python3-module-pytest python3-module-pytz python3-module-setuptools python3-module-snowballstemmer python3-module-zope python3-module-zope.interface xz
-BuildRequires: help2man python-module-docutils python-module-html5lib python-module-mako python-module-nose python-module-setuptools-tests python3-module-html5lib python3-module-mako python3-module-nose python3-module-setuptools-tests python3-module-sphinx rpm-build-python3
+BuildRequires: help2man
+BuildRequires: python-devel
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-mako
+BuildRequires: python-module-argparse
+BuildRequires: python-module-SQLAlchemy >= 0.7.6
+BuildRequires: python-module-editor >= 0.3
 
-#BuildRequires: help2man
-#BuildRequires: python-devel
-#BuildRequires: python-module-mako
-#BuildRequires: python-module-setuptools-tests
-
-#BuildRequires: python-module-nose
-#BuildRequires: python-module-SQLAlchemy >= 0.7.4
+BuildRequires: python-module-nose
+BuildRequires: python-module-mock
+BuildRequires: python-module-SQLAlchemy-tests
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-mako python3-module-nose
-#BuildPreReq: python3-module-SQLAlchemy python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-mako python3-module-nose
+BuildRequires: python3-module-SQLAlchemy python3-module-setuptools-tests
+BuildRequires: python3-module-argparse
 %endif
-
-%py_requires markupsafe
 
 %description
 Alembic is a new database migrations tool, written by the author of
@@ -56,10 +57,18 @@ similarly, doing the same steps in reverse.
 
 Documentation and status of Alembic is at http://readthedocs.org/docs/alembic/
 
+%package tests
+Summary: Tests for %modname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+This package contains tests for %modname.
+
 %package -n python3-module-%modname
 Summary: Database migration tool for SQLAlchemy
 Group: Development/Python3
-%py3_requires markupsafe
+%py3_provides alembic.migration alembic.environment
 
 %description -n python3-module-%modname
 Alembic is a new database migrations tool, written by the author of
@@ -75,6 +84,14 @@ similarly, doing the same steps in reverse.
 * Allows the scripts to execute in some sequential manner.
 
 Documentation and status of Alembic is at http://readthedocs.org/docs/alembic/
+
+%package -n python3-module-%modname-tests
+Summary: Tests for %modname
+Group: Development/Python3
+Requires: python3-module-%modname = %EVR
+
+%description -n python3-module-%modname-tests
+This package contains tests for %modname.
 
 %prep
 %setup -n %modname-%version
@@ -116,22 +133,37 @@ popd
 mkdir -p %buildroot%_man1dir/
 install -m 0644 alembic.1 %buildroot%_man1dir/alembic.1
 
+%check
+python setup.py test
+
 %files
 %doc README.rst LICENSE CHANGES docs
-%python_sitelibdir_noarch/%modname/
-%python_sitelibdir_noarch/%modname-%{version}*
 %_bindir/%modname
 %_man1dir/alembic.1*
+%python_sitelibdir/*
+%exclude %python_sitelibdir/*/testing
+
+%files tests
+%python_sitelibdir/*/testing
 
 %if_with python3
 %files -n python3-module-%modname
 %doc README.rst LICENSE CHANGES docs
-%python3_sitelibdir_noarch/%modname/
-%python3_sitelibdir_noarch/%modname-%{version}*
 %_bindir/%modname.py3
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/testing
+
+%files -n python3-module-%modname-tests
+%python3_sitelibdir/*/testing
 %endif
 
 %changelog
+* Tue May 30 2017 Alexey Shabalin <shaba@altlinux.ru> 0.8.10-alt1
+- 0.8.10
+- add test packages
+- add alembic.migration alembic.environment to provides
+- add %%check
+
 * Mon Nov 14 2016 Lenar Shakirov <snejok@altlinux.ru> 0.8.8-alt1
 - new version 0.8.8
 
