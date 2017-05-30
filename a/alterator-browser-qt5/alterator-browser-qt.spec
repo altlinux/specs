@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 2.91.0
+Version: 2.91.1
 Release: alt1%ubt
 
 Source:%name-%version.tar
@@ -79,6 +79,9 @@ __EOF__
 
 
 %changelog
+* Tue May 30 2017 Sergey V Turchin <zerg at altlinux dot org> 2.91.1-alt1%ubt
+- enable high-DPI scaling by default
+
 * Thu Apr 20 2017 Sergey V Turchin <zerg at altlinux dot org> 2.91.0-alt1%ubt
 - add virtual keyboard support
 
