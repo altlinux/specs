@@ -4,15 +4,17 @@
 %define cpro_arch ia32
 %endif
 
+%define rev 1143028
+
 Name:    token-manager
 Version: 0.12
-Release: alt1
+Release: alt2.git%rev
 Summary: Certificate manager for CryptoPro CSP
 
 License: MIT
 Packager: Andrey Cherepanov <cas@altlinux.org>
 Group:   Security/Networking
-Source:  %name-%version.tar
+Source:  %name.tar
 Source1: cpconfig-pam.alt
 
 BuildPreReq: libpam-devel
@@ -46,6 +48,13 @@ install -Dm 0644 cpconfig-%cpro_arch %buildroot%_sysconfdir/security/console.app
 %config(noreplace) %_sysconfdir/security/console.apps/cpconfig-%cpro_arch
 
 %changelog
+* Mon May 29 2017 Andrey Cherepanov <cas@altlinux.org> 0.12-alt2.git1143028
+- Build from upstream tag
+- Upstream fixes:
+  + fix parse compound certificate fields
+  + fix for card without s/n
+  + fix run with missing backend
+
 * Fri Apr 14 2017 Andrey Cherepanov <cas@altlinux.org> 0.12-alt1
 - New version with CryptoPro 4.0 support (ALT #33375)
 

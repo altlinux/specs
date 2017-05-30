@@ -1,8 +1,8 @@
-%define gitrev 5d1e7ad
+%define gitrev a283bf5
 
 Name: gostcryptogui
-Version: 0.2
-Release: alt1.git%gitrev
+Version: 0.3
+Release: alt0.1.a.git%gitrev
 Summary: A PyQt GUI for performing cryptographic operations over files using GOST algorithms
 
 License: MIT
@@ -19,7 +19,7 @@ Requires: nautilus-python
 
 BuildArch: noarch
 
-Source0: %name-%version.tar
+Source0: %name.tar
 
 %description
 A PyQt GUI for performing cryptographic operations over files using GOST
@@ -30,19 +30,29 @@ algorithms. Requires CryproPro (http://www.cryptopro.ru).
 
 %build
 %python_build
-chmod +x gost-crypto-gui-emblem.py
-python -m py_compile gost-crypto-gui-menu.py
-python -m py_compile gost-crypto-gui-emblem.py
+for dir in nautilus caja; do
+  pushd "$dir"
+  chmod +x gost-crypto-gui-emblem.py
+  python -m py_compile gost-crypto-gui-menu.py
+  python -m py_compile gost-crypto-gui-emblem.py
+  popd
+done
 
 %install
 %python_install
 install -Dm 0755 gost-crypto-gui.py %buildroot%_bindir/gost-crypto-gui.py
-mkdir -p %buildroot%_datadir/nautilus-python/extensions
-cp gost-crypto-gui-menu.py* gost-crypto-gui-emblem.py* %buildroot%_datadir/nautilus-python/extensions
+
+for dir in nautilus caja; do
+  pushd "$dir"
+  mkdir -p %buildroot%_datadir/$dir-python/extensions
+  cp gost-crypto-gui-menu.py* gost-crypto-gui-emblem.py* %buildroot%_datadir/$dir-python/extensions
+  popd
+done
+
 install -Dm 0644 gost-crypto-gui.png %buildroot%_pixmapsdir/gost-crypto-gui.png
 install -Dm 0644 gost-crypto-gui.desktop %buildroot%_desktopdir/gost-crypto-gui.desktop
-install -Dm 0644 x-extension-enc.xml %buildroot%_xdgmimedir/applications/x-extension-enc.xml
-install -Dm 0644 x-extension-sig.xml %buildroot%_xdgmimedir/applications/x-extension-sig.xml
+mkdir -p %buildroot%_xdgmimedir/application
+cp x-extension-*.xml %buildroot%_xdgmimedir/application
 mkdir -p %buildroot%_iconsdir
 cp -av *.png %buildroot%_iconsdir
 rm -f %buildroot%_iconsdir/gost-crypto-gui.png
@@ -52,12 +62,17 @@ rm -f %buildroot%_iconsdir/gost-crypto-gui.png
 %python_sitelibdir_noarch/*
 %_bindir/gost-crypto-gui.py
 %_datadir/nautilus-python/extensions/*.py*
+%_datadir/caja-python/extensions/*.py*
 %_pixmapsdir/gost-crypto-gui.png
 %_desktopdir/gost-crypto-gui.desktop
-%_xdgmimedir/applications/*.xml
+%_xdgmimedir/application/*.xml
 %_iconsdir/*.png
 
 %changelog
+* Tue May 30 2017 Andrey Cherepanov <cas@altlinux.org> 0.3-alt0.1.a.gita283bf5
+- New version
+- Fix mime type location
+
 * Tue Dec 20 2016 Andrey Cherepanov <cas@altlinux.org> 0.2-alt1.git5d1e7ad
 - New version
 
