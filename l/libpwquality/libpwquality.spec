@@ -1,15 +1,15 @@
 %define _name pwquality
 
 Name: lib%_name
-Version: 1.3.0
-Release: alt1.1
+Version: 1.4.0
+Release: alt1
 
 Summary: A library for password generation and password quality checking
 License: BSD or GPL+
 Group: System/Libraries
-Url: https://fedorahosted.org/%name/
+Url: https://github.com/%name/%name/
 
-Source: http://fedorahosted.org/releases/l/i/%name/%name-%version.tar.bz2
+Source: %url/releases/download/%name-%version/%name-%version.tar.bz2
 
 Provides: pam_%_name = %version-%release
 Requires: cracklib-words pam
@@ -119,6 +119,9 @@ ln -sf ../../%_lib/%name.so.1 %buildroot%_libdir/%name.so
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue May 30 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.0-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
