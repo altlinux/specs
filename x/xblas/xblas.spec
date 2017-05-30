@@ -1,14 +1,16 @@
 %define sover 0
+
 Name: xblas
 Version: 1.0.248
-Release: alt1
+Release: alt1.1
+
 Summary: Extended and Mixed Precision version of BLAS
 License: MIT
 Group: Sciences/Mathematics
-Url: http://www.netlib.org/xblas/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+Url: http://www.netlib.org/xblas/
 Source: http://www.netlib.org/xblas/xblas.tar.gz
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Requires: lib%name = %version-%release
 BuildPreReq: gcc-fortran
@@ -85,14 +87,14 @@ install -d %buildroot%_libdir
 install -d %buildroot%_includedir
 install -d %buildroot%_docdir/lib%name-devel
 
-install -m644 *.a %buildroot%_libdir
-install -m644 src/*.h %buildroot%_includedir
-install -p -m644 doc/report.ps %buildroot%_docdir/lib%name-devel
+install -pm644 *.a %buildroot%_libdir
+install -pm644 src/*.h %buildroot%_includedir
+install -pm644 doc/report.ps %buildroot%_docdir/lib%name-devel
 
 # shared library
 
 pushd %buildroot%_libdir
-g77 -shared -Wl,--whole-archive lib%name.a -Wl,--no-whole-archive \
+g77 -shared -lm -Wl,--whole-archive lib%name.a -Wl,--no-whole-archive \
 	-o lib%name.so.%sover -Wl,-soname,lib%name.so.%sover -Wl,-z,defs
 ln -s lib%name.so.%sover lib%name.so
 popd
@@ -114,6 +116,10 @@ popd
 %_docdir/lib%name-devel
 
 %changelog
+* Tue May 30 2017 Michael Shigorin <mike@altlinux.org> 1.0.248-alt1.1
+- E2K: link lib%name.so against libm explicitly
+- minor spec cleanup in memoriam
+
 * Fri Nov 18 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.248-alt1
 - Version 1.0.248
 
