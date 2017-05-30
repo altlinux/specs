@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.7.0
-%define major 2.8
+%define major 2.9
 
 Name: wine
 Version: %major.1
@@ -471,6 +471,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Tue May 30 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.9.1-alt1
+- new version (2.9.1) with rpmgs script
+
 * Fri May 26 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.8.1-alt1
 - new version 2.8.1 (with rpmrb script)
 - update winetricks to 20170517-next
