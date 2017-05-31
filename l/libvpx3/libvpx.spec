@@ -7,14 +7,18 @@
 %ifarch armh
 %define platform armv7-linux-gcc
 %else
+%ifarch e2k
+%define platform generic-gnu
+%else
 %define platform %_arch-linux-gcc
+%endif
 %endif
 %endif
 %endif
 
 Name: libvpx3
 Version: 1.5.0
-Release: alt2
+Release: alt2.1
 Summary: VP8 video codec
 Group: Video
 License: BSD
@@ -43,7 +47,7 @@ Requires: %name = %version-%release
 develop programs which make use of %name
 
 %prep
-%setup -q
+%setup
 %patch -p1
 %ifarch armh
 sed -i -e 's,softfp,hard,' build/make/configure.sh
@@ -65,7 +69,7 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %doc AUTHORS LICENSE PATENTS CHANGELOG
@@ -77,6 +81,10 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed May 31 2017 Michael Shigorin <mike@altlinux.org> 1.5.0-alt2.1
+- E2K: generic build
+- minor spec cleanup
+
 * Wed Mar 09 2016 Anton Farygin <rider@altlinux.ru> 1.5.0-alt2
 - renamed to libvpx3
 
