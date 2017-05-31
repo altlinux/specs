@@ -1,15 +1,19 @@
 # TODO: fix dest on x86_64
 # TODO: Move mpl-data to share?
+# TODO: gtk3 knob too?
 
 %define oname matplotlib
 %define major 2.0
 
 %def_disable docs
 %def_with python3
+%def_with qt4
+%def_with qt5
+%def_with wx
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt2
+Release: alt2.1
 
 Summary: Matlab(TM) style python plotting package
 
@@ -25,8 +29,12 @@ Source1: setup.cfg
 %setup_python_module pylab
 
 BuildRequires(pre): rpm-build-gir
-BuildRequires: gcc-c++ git-core libnumpy-devel time pkgconfig(tk) libgtk+3-gir-devel libpng-devel libfreetype-devel
-BuildRequires: python-module-setuptools-tests python-module-PyQt4 python-module-PyQt5 python-module-numpy-testing python-module-pycairo python-module-pygobject3 python-module-setuptools-tests python-modules-tkinter python-module-cycler python-module-pyparsing python-module-pytz python-module-dateutil python-module-wx
+BuildRequires: gcc-c++ git-core libnumpy-devel time tk-devel libgtk+3-gir-devel libpng-devel libfreetype-devel
+BuildRequires: python-module-pycairo python-module-pygobject3 python-modules-tkinter python-module-cycler python-module-pyparsing python-module-pytz python-module-dateutil
+%{?!_without_check:BuildRequires: python-module-setuptools-tests python-module-numpy-testing python-module-setuptools-tests}
+%{?_with_qt4:BuildRequires: python-module-PyQt4}
+%{?_with_qt5:BuildRequires: python-module-PyQt5}
+%{?_with_wx:BuildRequires: python-module-wx}
 Requires: %name-gtk3
 
 %if_with docs
@@ -36,7 +44,9 @@ BuildRequires: python-module-html5lib
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3 python3-devel 
-BuildRequires: python3-module-setuptools-tests python3-module-numpy-testing python3-module-pycairo python3-module-pygobject3 python3-module-setuptools-tests python3-module-PyQt4 python3-module-PyQt5 python3-modules-tkinter python3-module-cycler python3-module-pyparsing python3-module-pytz python3-module-dateutil
+BuildRequires: python3-module-setuptools-tests python3-module-numpy-testing python3-module-pycairo python3-module-pygobject3 python3-module-setuptools-tests python3-modules-tkinter python3-module-cycler python3-module-pyparsing python3-module-pytz python3-module-dateutil
+%{?_with_qt4:BuildRequires: python3-module-PyQt4}
+%{?_with_qt5:BuildRequires: python3-module-PyQt5}
 %endif #python3
 
 # hack for unknown deps
@@ -409,7 +419,9 @@ popd
 %endif #python3
 
 #sed -i 's|^\(gtk3agg\).*|\1 = False|' setup.cfg
-#sed -i 's|^\(wxagg\).*|\1 = False|' setup.cfg
+%if_without wx
+sed -i 's|^\(wxagg\).*|\1 = False|' setup.cfg
+%endif
 %python_build_debug
 
 %install
@@ -582,9 +594,11 @@ done
 #python_sitelibdir/matplotlib/backends/backend_qt.*
 #python_sitelibdir/matplotlib/backends/backend_qtagg*
 
+%if_with wx
 %files wx
 %python_sitelibdir/matplotlib/backends/backend_wx*
 %python_sitelibdir/matplotlib/backends/wx*
+%endif
 
 # problem with checking?
 %files tk
@@ -592,13 +606,17 @@ done
 %python_sitelibdir/matplotlib/backends/tk*
 %python_sitelibdir/matplotlib/backends/_tkagg*
 
+%if_with qt5
 %files qt5
 %python_sitelibdir/matplotlib/backends/backend_qt5*
+%endif
 
+%if_with qt4
 %files qt4
 %python_sitelibdir/matplotlib/backends/backend_qt4*
 %python_sitelibdir/matplotlib/backends/qt*_compat.*
 %python_sitelibdir/matplotlib/backends/qt_editor
+%endif
 
 %files examples
 %doc %dir %_docdir/%name
@@ -777,6 +795,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Wed May 31 2017 Michael Shigorin <mike@altlinux.org> 2.0.0-alt2.1
+- BOOTSTRAP: introduce qt4, qt5, wx knobs (on by default)
+
 * Fri May 26 2017 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt2
 - Remove subpackages python-module-matplotlib-pylab and python3-module-matplotlib-pylab
 
