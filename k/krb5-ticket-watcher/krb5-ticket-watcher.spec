@@ -1,13 +1,11 @@
 BuildRequires: desktop-file-utils
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt3
+Release: alt4%ubt
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
 Url: http://sourceforge.net/projects/krb5ticketwatch
 License: %gpl2plus
 Group: System/X11
-
-Packager: Andriy Stepanov <stanv@altlinux.ru>
 
 Source: %name-%version.tar
 Patch1: 0001-made-default-realm-the-first-one-in-list.patch
@@ -15,6 +13,7 @@ Patch2: krb5-ticket-watcher-1.0-alt-date-fix.patch
 Patch3: krb5-ticket-watcher-1.0.3-alt-fix-includes.patch
 Patch4: krb5-ticket-watcher-1.0.3-alt-fix-desktop-category.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: kde-common-devel rpm-build-licenses libkrb5-devel libkeyutils-devel
 BuildRequires: cmake gcc-c++ libcom_err-devel libqt4-devel
 
@@ -31,21 +30,27 @@ tickets.
 
 %build
 %add_optflags -I%_includedir/krb5
-%K4build
+%Kbuild
 
 %install
-%K4install
+%Kinstall
 desktop-file-install --dir %buildroot%_desktopdir \
 	%buildroot%_desktopdir/krb5-ticket-watcher.desktop
+desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
+	%buildroot/%_desktopdir/krb5-ticket-watcher.desktop
 
 %files
 %_bindir/krb5-ticket-watcher
 %_pixmapsdir/krb5-ticket-watcher.png
 %_desktopdir/krb5-ticket-watcher.desktop
+%_xdgconfigdir/autostart/krb5-ticket-watcher.desktop
 %{_datadir}/locale/*/*/*.mo
 %doc COPYING Changes News TODO
 
 %changelog
+* Tue May 30 2017 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt4%ubt
+- Add XDG autostart entry
+
 * Fri Mar 22 2013 Andrey Cherepanov <cas@altlinux.org> 1.0.3-alt3
 - Traslate desktop file into Russian
 
