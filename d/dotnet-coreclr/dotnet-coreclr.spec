@@ -1,11 +1,12 @@
-%def_with bootstrap
+%def_without bootstrap
 
 %define corerelease 2.0.0-preview1-002111-00
 %define pre -preview1
+%define shareddir %_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease
 
 Name: dotnet-coreclr
 Version: 2.0.0
-Release: alt1.preview1
+Release: alt3.preview1
 
 Summary: .NET Core runtime, called CoreCLR, and the base library, called mscorlib
 
@@ -28,7 +29,7 @@ ExclusiveArch: x86_64
 # verify-elf: ERROR: ./usr/lib64/dotnet/shared/Microsoft.NETCore.App/1.1.1/Linux.x64.Release/libcoreclr.so: TEXTREL entry found: 0x0000000000000000
 #set_verify_elf_method relaxed
 
-BuildRequires: clang = 3.8.0
+BuildRequires: clang
 
 BuildRequires: cmake llvm libstdc++-devel libunwind-devel liblttng-ust-devel liblwp-devel
 #BuildRequires: lldb-devel
@@ -37,8 +38,10 @@ BuildRequires: python-modules-xml
 
 %if_with bootstrap
 BuildRequires: dotnet-bootstrap
+%define bootstrapdir %_libdir/dotnet-bootstrap
 %else
 BuildRequires: dotnet
+%define bootstrapdir %_libdir/dotnet
 %endif
 
 
@@ -67,20 +70,37 @@ cross platform applications that work on Linux, Mac and Windows.
 %__subst "s|add_subdirectory(src/ToolBox/SOS/lldbplugin)||" CMakeLists.txt
 
 %build
-DOTNET_TOOL_DIR=%_libdir/dotnet-bootstrap ./build.sh x64 release verbose skipnuget
+DOTNET_TOOL_DIR=%bootstrapdir ./build.sh x64 release verbose skipnuget
 
 %install
-mkdir -p %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
-cp -a bin/Product/Linux.x64.Release/* %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
+mkdir -p %buildroot%shareddir/
+# TODO: some publish use?
+cp -a bin/Product/Linux.x64.Release/{System.Globalization.Native.so,libSystem.Globalization.Native.a,lib*.so,corerun,coreconsole,sosdocsunix.txt} %buildroot%shareddir/
 
+# superpmi mcs
+# https://github.com/dotnet/coreclr/tree/master/src/ToolBox/superpmi
+
+# createdump
 # verify-elf: ERROR: ./usr/lib64/dotnet/shared/Microsoft.NETCore.App/2.0.0/createdump: RPATH contains illegal entry "/tmp/.private/lav/RPM/BUILD": /tmp/.private/lav/RPM/BUILD/dotnet-coreclr-2.0.0/bin/obj/Linux.x64.Release/src/dlls/mscordac
-rm -f %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/createdump
+# ldd: libmscordaccore.so => /tmp/.private/lav/RPM/BUILD/dotnet-coreclr-2.0.0/bin/obj/Linux.x64.Release/src/dlls/mscordac/libmscordaccore.so
+#rm -f %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/createdump
 
 %files
 %doc *.TXT THIRD-PARTY-NOTICES README.md CONTRIBUTING.md
-%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/*
+%shareddir/System.Globalization.Native.so
+%shareddir/libSystem.Globalization.Native.a
+%shareddir/lib*.so
+%shareddir/corerun
+%shareddir/coreconsole
+%shareddir/sosdocsunix.txt
 
 %changelog
+* Wed May 31 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt3.preview1
+- strict packing
+
+* Sun May 28 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt2.preview1
+- rebuild without bootstrap with RID linux.x64
+
 * Thu May 25 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1.preview1
 - fix packing
 
