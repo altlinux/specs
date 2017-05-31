@@ -1,6 +1,6 @@
 Name: basic256
 Version: 0.9.6
-Release: alt7
+Release: alt8
 URL: http://kidbasic.sourceforge.net
 Source: http://ovh.dl.sourceforge.net/sourceforge/kidbasic/%name-%version.tar.gz
 Source1: basic256.desktop
@@ -58,6 +58,9 @@ cp -r ./../doc/ru/ %buildroot%_datadir/%name/help/
 %_niconsdir/%name.png
 
 %changelog
+* Wed May 31 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.6-alt8
+- Fix executable name in dekstop file
+
 * Mon May 15 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.6-alt7
 - Fix localization of desktop file
 - Fix license
