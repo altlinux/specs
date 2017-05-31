@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt4%ubt
+Release: alt5%ubt
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
 Url: http://sourceforge.net/projects/krb5ticketwatch
 License: %gpl2plus
@@ -12,10 +12,12 @@ Patch1: 0001-made-default-realm-the-first-one-in-list.patch
 Patch2: krb5-ticket-watcher-1.0-alt-date-fix.patch
 Patch3: krb5-ticket-watcher-1.0.3-alt-fix-includes.patch
 Patch4: krb5-ticket-watcher-1.0.3-alt-fix-desktop-category.patch
+Patch5: alt-qt5-1.patch
+Patch6: alt-tray-icon.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: kde-common-devel rpm-build-licenses libkrb5-devel libkeyutils-devel
-BuildRequires: cmake gcc-c++ libcom_err-devel libqt4-devel
+BuildRequires: cmake gcc-c++ libcom_err-devel qt5-base-devel qt5-tools
 
 %description
 A tray applet for watching, renewing, and reinitializing Kerberos
@@ -27,6 +29,8 @@ tickets.
 %patch2 -p1
 %patch3 -p2
 %patch4 -p2
+%patch5 -p1
+%patch6 -p1
 
 %build
 %add_optflags -I%_includedir/krb5
@@ -48,6 +52,9 @@ desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 %doc COPYING Changes News TODO
 
 %changelog
+* Wed May 31 2017 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt5%ubt
+- port to Qt5
+
 * Tue May 30 2017 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt4%ubt
 - Add XDG autostart entry
 
