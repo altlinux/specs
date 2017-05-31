@@ -10,7 +10,7 @@
 
 Name: sbcl
 Summary: Steel Bank Common Lisp
-Version: 1.3.16
+Version: 1.3.18
 Release: alt1
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: Development/Lisp
@@ -252,7 +252,7 @@ popd
 %_bindir/sbcl
 %dir %_libdir/sbcl/
 %_libdir/sbcl/contrib/
-#_libdir/sbcl/site-systems/
+%_libdir/sbcl/sbcl.mk
 %_man1dir/sbcl.1*
 %if 0%{?docs}
 %doc doc/manual/sbcl.html
@@ -271,6 +271,9 @@ popd
 %endif
 
 %changelog
+* Wed May 31 2017 Ilya Mashkin <oddity@altlinux.ru> 1.3.18-alt1
+- 1.3.18
+
 * Tue Mar 28 2017 Ilya Mashkin <oddity@altlinux.ru> 1.3.16-alt1
 - 1.3.16
 
