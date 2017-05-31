@@ -1,5 +1,5 @@
 Name: sudo
-Version: 1.8.20
+Version: 1.8.20p1
 Release: alt1%ubt
 Epoch: 1
 
@@ -45,6 +45,7 @@ Sudo - программа, разработанная в помощь систе
 Summary: Development files for %name
 Group: Development/C
 Requires: %name = %epoch:%version-%release
+BuildArch: noarch
 
 %description devel
 The %name-devel package contains header files developing sudo
@@ -171,6 +172,9 @@ fi
 %_man8dir/sudo_plugin.8*
 
 %changelog
+* Wed May 31 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.20p1-alt1%ubt
+- Update to spring security release ((Fixes: CVE-2017-1000367)
+
 * Mon May 29 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.20-alt1%ubt
 - Update to latest spring release
 
