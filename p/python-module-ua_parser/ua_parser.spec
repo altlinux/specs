@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.4
-Release: alt3.git20141025
+Version: 0.4.1
+Release: alt1
 Summary: Python port of Browserscope's user agent parser
 License: ASLv2.0
 Group: Development/Python
@@ -46,18 +46,21 @@ ua-parser is just a small wrapper around this data.
 %prep
 %setup
 
+cp -v regexes.* uap-core/
+cp -v regexes.* py/ua_parser/
+
 %if_with python3
 cp -fR . ../python3
 %endif
 
 %build
 %python_build_debug
-python setup.py sdist
+#python setup.py sdist
 
 %if_with python3
 pushd ../python3
 %python3_build_debug
-python3 setup.py sdist
+#python3 setup.py sdist
 popd
 %endif
 
@@ -99,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Tue May 30 2017 Lenar Shakirov <snejok@altlinux.ru> 0.4.1-alt1
+- 0.4.1
+
 * Mon May 29 2017 Lenar Shakirov <snejok@altlinux.ru> 0.3.4-alt3.git20141025
 - Enable python3
 
