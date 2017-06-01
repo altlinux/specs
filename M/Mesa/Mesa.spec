@@ -5,7 +5,7 @@
 
 Name: Mesa
 Version: 17.1.1
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -160,6 +160,14 @@ Requires: libvdpau
 %description -n xorg-dri-nouveau
 DRI driver for nVidia
 
+%package -n xorg-dri-virgl
+Summary: Virtio DRI driver
+Group: System/X11
+Requires: libGL = %epoch:%version-%release
+
+%description -n xorg-dri-virgl
+DRI driver for Virtio
+
 %package -n glxinfo
 Summary: display info about a GLX extension and OpenGL renderer
 Group: System/X11
@@ -213,7 +221,7 @@ framerate information to stdout
 %endif
 %endif
 %ifarch %ix86 x86_64
-	--with-gallium-drivers=swrast,r300,r600,nouveau,radeonsi \
+	--with-gallium-drivers=swrast,r300,r600,nouveau,radeonsi,virgl \
 	--enable-llvm-shared-libs=no \
 	--enable-vdpau \
 	--enable-xvmc \
@@ -395,6 +403,11 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %endif
 %endif
 
+%ifarch %ix86 x86_64
+%files -n xorg-dri-virgl
+%_libdir/X11/modules/dri/virtio_gpu_dri.so
+%endif
+
 %files -n glxinfo
 %_bindir/glxinfo
 
@@ -402,6 +415,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Thu Jun 01 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:17.1.1-alt2
+- new subpackage xorg-dri-virgl
+
 * Mon May 29 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:17.1.1-alt1
 - 17.1.1
 

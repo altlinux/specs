@@ -22,7 +22,7 @@
 
 Name: xorg-server
 Version: 1.19.3
-Release: alt2
+Release: alt3
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -326,6 +326,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Thu Jun 01 2017 Valery Inozemtsev <shrek@altlinux.ru> 2:1.19.3-alt3
+- use va_gl as vdpau_driver for Intel i965 GPUS (closes: #33517)
+
 * Tue May 30 2017 Valery Inozemtsev <shrek@altlinux.ru> 2:1.19.3-alt2
 - don't force 96dpi
 
