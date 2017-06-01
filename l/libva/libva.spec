@@ -4,8 +4,8 @@
 %def_enable x11
 
 Name: libva
-Version: 1.7.3
-Release: alt2
+Version: 1.8.2
+Release: alt1
 
 Summary: Video Acceleration (VA) API for Linux
 License: MIT
@@ -66,7 +66,6 @@ This package provides the development environment for libva
 %make DESTDIR=%buildroot install
 
 %files
-%_bindir/vainfo
 %_libdir/*.so.*
 %dir %_libdir/dri
 %_libdir/dri/*.so
@@ -77,6 +76,9 @@ This package provides the development environment for libva
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jun 01 2017 Anton Farygin <rider@altlinux.ru> 1.8.2-alt1
+- new version 
+
 * Wed May 24 2017 L.A. Kostis <lakostis@altlinux.ru> 1.7.3-alt2
 - Re-enabled glx/egl back (transition to GLVND is over).
 
