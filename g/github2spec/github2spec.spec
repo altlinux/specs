@@ -1,5 +1,5 @@
 Name:     github2spec
-Version:  1.2.0
+Version:  1.3.1
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from github using genspec
@@ -33,5 +33,10 @@ install -Dm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Thu Jun 01 2017 Gordeev Mikhail <obirvalger@altlinux.org> 1.3.1-alt1
+- Add command line options to control interactive level
+- Fix issue with nil license
+- Fix issue with quoting in data from github
+
 * Tue May 16 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.0-alt1
 - Initial build as separate package (before it was part of genspec)
