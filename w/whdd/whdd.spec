@@ -1,20 +1,18 @@
 Name: whdd
-Version: 2.2
-Release: alt4
+Version: 3.0
+Release: alt1
 
 Summary: Diagnostic and recovery tool for block devices
 License: GNU GPL
 Group: System/Kernel and hardware
-Url: https://github.com/krieger-od/whdd
+Url: https://github.com/whdd/whdd
 
 Packager: Pavel Isopenko <pauli@altlinux.org>
 Summary: HDD diagnostic and data recovery tool for Linux
 Summary(ru_RU.UTF-8): Инструмент диагностики HDD и восстановления данных под Linux
 Source: %name-%version.tar
-BuildRequires(pre): cmake
-# Automatically added by buildreq on Tue Nov 27 2012
-# optimized out: cmake-modules libncurses-devel libstdc++-devel libtinfo-devel
-BuildRequires: cmake gcc-c++ libdialog-devel libncursesw-devel
+
+BuildRequires: gcc-c++ libdialog-devel libncursesw-devel
 
 %description
 WHDD is a HDD diagnostic and data recovery tool for Linux.
@@ -26,31 +24,35 @@ WHDD may work with your hard drives on low level, sending ATA commands to device
 - better timing precision
 
 %description -l ru_RU.UTF-8
-WHDD - инструмент диагностики HDD и восстановления данных под Linux.
-Предназначен для тестирования накопителей на чтение и запись, даёт наглядное представление процесса.
-Визуализация тестов очень похожа на MHDD. Кроме прочего есть также функция копирования данных.
+WHDD - инструмент диагностики HDD и восстановления данных для Linux.
+Предназначен для тестирования накопителей на чтение и запись. Даёт наглядное представление процесса,
+визуализация тестов весьма похожа на MHDD. Кроме прочего, имеется функция копирования данных.
 Алгоритм процедуры копирования оптимизирован на минимизацию вреда для уже имеющего дефекты устройства.
-WHDD может работать с жёстким диском на низком уровне, отправляя устройству ATA-команды, это:
-- исключает подвисания при доступе к повреждённому устройству (мягкий сброс по таймауту);
-- лучшая точность по времени.
+WHDD может работать с жёстким диском на низком уровне, отправляя устройству ATA-команды, что:
+- исключает подвисания при доступе к повреждённому устройству (сброс устройства по таймауту);
+- даёт лучшую точность по времени.
 
 %prep
 %setup
 
 %build
-%cmake_insource
 %make_build
 
 %install
-%makeinstall_std
+%make_install install DESTDIR=%buildroot/usr
 %find_lang %name
 
-%files -f %name.lang
-%attr(4711, root, root) %_sbindir/whdd*
+%files  -f %name.lang
+%attr(4711, root, root) %_bindir/%name
 
 %changelog
-* Wed Nov 23 2016 Pavel Isopenko <pauli@altlinux.org> 2.2-alt4
-- Fix crash caused by async call to nested function
+* Mon May 29 2017 Pavel Isopenko <pauli@altlinux.org> 3.0-alt1
+- new version 3.0
+- change destination directory to /usr/bin
+- change build system to automake
+
+* Tue Nov 08 2016 Pavel Isopenko <pauli@altlinux.org> 2.2-alt4
+- Upstream update (Add back explicit def of _GNU_SOURCE)
 
 * Sun Oct 16 2016 Pavel Isopenko <pauli@altlinux.org> 2.2-alt3
 - Description fix (ALT #32556)
