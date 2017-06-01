@@ -1,17 +1,18 @@
 Name: ryu
-Version: 4.5
+Version: 4.14
 Release: alt1
 Summary: Component-based Software-defined Networking Framework
 Group: Development/Python
 License: ASL 2.0
 Url: http://osrg.github.io/ryu/
-Source: %name-%version.tar
+Source: %name-%version.tar.gz
 
 BuildArch: noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
+BuildRequires: python-module-setuptools-tests
 BuildRequires: python-module-pbr >= 0.6
+BuildRequires: python-module-pip
 BuildRequires: python-module-sphinx python-module-sphinx_rtd_theme
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-eventlet >= 0.15
@@ -19,6 +20,7 @@ BuildRequires: python-module-msgpack >= 0.3.0
 BuildRequires: python-module-netaddr
 BuildRequires: python-module-oslo.config >= 1.15.0
 BuildRequires: python-module-routes
+BuildRequires: python-module-tinyrpc
 BuildRequires: python-module-six >= 1.4.0
 BuildRequires: python-module-webob >= 1.2
 
@@ -77,6 +79,7 @@ Tests for Software-defined Networking Framework
 %python_build
 
 # generate html docs
+export PYTHONPATH="$( pwd ):$PYTHONPATH"
 sphinx-build doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
@@ -108,6 +111,9 @@ install -m 644 debian/log.conf %buildroot%_logrotatedir/%name
 %doc html
 
 %changelog
+* Tue Jun 06 2017 Alexey Shabalin <shaba@altlinux.ru> 4.14-alt1
+- 4.14
+
 * Tue Aug 30 2016 Alexey Shabalin <shaba@altlinux.ru> 4.5-alt1
 - 4.5
 

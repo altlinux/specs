@@ -1,53 +1,65 @@
+%define oname glanceclient
 %def_with python3
 
-Name: python-module-glanceclient
-Version: 2.5.0
-Release: alt2
+Name: python-module-%oname
+Version: 2.6.0
+Release: alt1
 Summary: Python API and CLI for OpenStack Glance
 
 Group: Development/Python
 License: ASL 2.0
-Url: http://docs.openstack.org/developer/python-glanceclient
-Source: %name-%version.tar
+Url: http://docs.openstack.org/developer/python-%oname
+Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
+
 Patch: workaround-requests.patch
 
 BuildArch: noarch
 
 Requires: python-module-requests >= 2.12.0
+%py_requires urllib3
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
+BuildRequires: python-module-setuptools-tests
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-reno >= 1.8.0
 BuildRequires: python-module-babel >= 2.3.4
-BuildRequires: python-module-prettytable >= 0.7
-BuildRequires: python-module-keystoneclient >= 2.0.0
+BuildRequires: python-module-prettytable >= 0.7.1
+BuildRequires: python-module-keystoneauth1 >= 2.18.0
 BuildRequires: python-module-requests >= 2.10.0
 BuildRequires: python-module-OpenSSL >= 0.11
 BuildRequires: python-module-warlock >= 1.0.1
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-oslo.utils >= 3.16.0
+BuildRequires: python-module-oslo.utils >= 3.18.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
-%py_requires urllib3
+BuildRequires: python-module-wrapt >= 1.7.0
+
+BuildRequires: python-module-mock >= 2.0
+BuildRequires: python-module-subunit python-module-subunit-tests
+BuildRequires: python-module-os-client-config >= 1.22.0
+BuildRequires: python-module-testrepository >= 0.0.18
+BuildRequires: python-module-testtools >= 1.4.0
+BuildRequires: python-module-testscenarios >= 0.4
+BuildRequires: python-module-fixtures >= 3.0.0
+BuildRequires: python-module-requests-mock >= 1.1
+BuildRequires: python-module-pbr-tests
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools-tests
 BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-babel >= 2.3.4
-BuildRequires: python3-module-prettytable
-BuildRequires: python3-module-keystoneclient >= 2.0.0
+BuildRequires: python3-module-prettytable >= 0.7.1
+BuildRequires: python3-module-keystoneauth1 >= 2.18.0
 BuildRequires: python3-module-OpenSSL >= 0.11
 BuildRequires: python3-module-requests >= 2.10.0
 BuildRequires: python3-module-warlock >= 1.0.1
 BuildRequires: python3-module-six >= 1.9.0
+BuildRequires: python3-module-oslo.utils >= 3.18.0
 BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.utils >= 3.16.0
+BuildRequires: python3-module-wrapt >= 1.7.0
 %endif
 
 %description
@@ -55,17 +67,31 @@ This is a client for the OpenStack Glance API. There's a Python API (the
 glanceclient module), and a command-line script (glance). Each implements
 100 percent of the OpenStack Glance API.
 
-%if_with python3
-%package -n python3-module-glanceclient
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+This package contains tests for %oname.
+
+%package -n python3-module-%oname
 Summary: Python API and CLI for OpenStack Glance
 Group: Development/Python3
 %py3_requires urllib3
 
-%description -n python3-module-glanceclient
+%description -n python3-module-%oname
 This is a client for the OpenStack Glance API. There's a Python API (the
 glanceclient module), and a command-line script (glance). Each implements
 100 percent of the OpenStack Glance API.
-%endif
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+This package contains tests for %oname.
 
 %package doc
 Summary: Documentation for OpenStack Glance API Client
@@ -79,7 +105,7 @@ glanceclient module), and a command-line script (glance). Each implements
 This package contains auto-generated documentation.
 
 %prep
-%setup
+%setup -n python-%oname-%version
 %patch -p1
 
 # Remove bundled egg-info
@@ -118,29 +144,35 @@ mv %buildroot%_bindir/glance %buildroot%_bindir/python3-glance
 sphinx-build -b man doc/source man
 install -p -D -m 644 man/glance.1 %buildroot%_mandir/man1/glance.1
 
-# Delete tests
-rm -fr %buildroot%python_sitelibdir/tests
-rm -fr %buildroot%python_sitelibdir/*/tests
-rm -fr %buildroot%python3_sitelibdir/tests
-rm -fr %buildroot%python3_sitelibdir/*/tests
-
 %files
 %doc README.rst
 %doc LICENSE
 %_bindir/glance
 %python_sitelibdir/*
 %_man1dir/glance*
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
 
 %if_with python3
-%files -n python3-module-glanceclient
+%files -n python3-module-%oname
 %_bindir/python3-glance
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
 %endif
 
 %files doc
 %doc doc/build/html
 
 %changelog
+* Tue May 30 2017 Alexey Shabalin <shaba@altlinux.ru> 2.6.0-alt1
+- 2.6.0
+- add test packages
+
 * Tue Feb 21 2017 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt2
 - add patch for workaround requests >= 2.12
 

@@ -1,29 +1,30 @@
-%define sname tooz
+%define oname tooz
 
 %def_with python3
 
-Name: python-module-%sname
-Version: 1.43.0
+Name: python-module-%oname
+Version: 1.48.0
 Release: alt1
 Summary: Coordination library for distributed systems
 Group: Development/Python
 License: ASL 2.0
-Url: https://github.com/openstack/%sname
-Source: %name-%version.tar
-
+Url: http://docs.openstack.org/developer/%oname
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+BuildArch: noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
+BuildRequires: python-module-setuptools-tests
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-stevedore >= 1.16.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-reno >= 1.8.0
 BuildRequires: python-module-enum34
 BuildRequires: python-module-voluptuous >= 0.8.9
 BuildRequires: python-module-msgpack >= 0.4.0
 BuildRequires: python-module-fasteners >= 0.7
-BuildRequires: python-module-retrying >= 1.2.3
+BuildRequires: python-module-tenacity >= 3.2.1
 BuildRequires: python-module-futures >= 3.0
 BuildRequires: python-module-futurist >= 0.11.0
 BuildRequires: python-module-oslo.utils >= 3.15.0
@@ -36,41 +37,53 @@ BuildRequires: python-module-sysv_ipc
 BuildRequires: python-module-psycopg2
 BuildRequires: python-module-redis-py
 BuildRequires: python-module-kazoo
+BuildRequires: python-module-zake
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools-tests
 BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-stevedore >= 1.5.0
 BuildRequires: python3-module-voluptuous >= 0.8.9
 BuildRequires: python3-module-msgpack >= 0.4.0
 BuildRequires: python3-module-fasteners >= 0.7
-BuildRequires: python3-module-retrying >= 1.2.3
+BuildRequires: python3-module-tenacity >= 3.2.1
 BuildRequires: python3-module-futurist >= 0.11.0
 BuildRequires: python3-module-oslo.utils >= 3.15.0
 BuildRequires: python3-module-oslo.serialization >= 1.10.0
 %endif
-
-BuildArch: noarch
 
 %description
 The Tooz project aims at centralizing the most common distributed
 primitives like group membership protocol, lock service and leader
 election by providing a coordination API helping developers to build distributed applications.
 
-%if_with python3
-%package -n python3-module-%sname
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+This package contains tests for %oname.
+
+%package -n python3-module-%oname
 Summary:    Coordination library for distributed systems
 Group: Development/Python3
 
-%description -n python3-module-%sname
+%description -n python3-module-%oname
 The Tooz project aims at centralizing the most common distributed
 primitives like group membership protocol, lock service and leader
 election by providing a coordination API helping developers to build distributed applications.
-%endif
 
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+This package contains tests for %oname.
 
 %package doc
 Summary: Documentation for Coordination library
@@ -80,10 +93,10 @@ Group: Development/Documentation
 Documentation for Coordination library.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
-rm -rf %sname.egg-info
+rm -rf %oname.egg-info
 
 %if_with python3
 rm -rf ../python3
@@ -113,26 +126,31 @@ pushd ../python3
 popd
 %endif
 
-# Delete tests
-rm -fr %buildroot%python_sitelibdir/tests
-rm -fr %buildroot%python_sitelibdir/*/tests
-rm -fr %buildroot%python3_sitelibdir/tests
-rm -fr %buildroot%python3_sitelibdir/*/tests
-
-
 %files
 %doc AUTHORS ChangeLog LICENSE PKG-INFO README.rst
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
 
 %if_with python3
-%files -n python3-module-%sname
+%files -n python3-module-%oname
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
 %endif
 
 %files doc
 %doc doc/build/html
 
 %changelog
+* Fri May 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.48.0-alt1
+- 1.48.0
+- add test packages
+
 * Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1.43.0-alt1
 - 1.43.0
 

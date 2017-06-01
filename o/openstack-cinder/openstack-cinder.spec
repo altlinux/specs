@@ -1,16 +1,16 @@
-
+%define oname cinder
 %add_python_req_skip hp3parclient
 
-Name: openstack-cinder
-Version: 9.1.3
+Name: openstack-%oname
+Version: 10.0.2
 Release: alt1
 Epoch: 1
 Summary: OpenStack Volume service
 
 Group: System/Servers
 License: ASL 2.0
-Url:  http://docs.openstack.org/developer/cinder/
-Source0: %name-%version.tar
+Url: http://docs.openstack.org/developer/%oname
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 Source1: cinder-dist.conf
 Source2: cinder.logrotate
 Source3: cinder-tgt.conf
@@ -35,12 +35,12 @@ BuildRequires: /proc
 BuildRequires: webserver-common rpm-build-webserver-common rpm-macros-apache2
 BuildRequires: crudini
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-pbr >= 1.6
+BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno >= 0.1.1
-BuildRequires: python-module-setuptools
+BuildRequires: python-module-reno >= 1.8.0
+BuildRequires: python-module-setuptools-tests
 BuildRequires: graphviz
 BuildRequires: python-module-babel >= 2.3.4
 BuildRequires: python-module-decorator >= 3.4.0
@@ -50,52 +50,53 @@ BuildRequires: python-module-greenlet >= 0.3.2
 BuildRequires: python-module-httplib2 >= 0.7.5
 BuildRequires: python-module-iso8601 >= 0.1.11
 BuildRequires: python-module-ipaddress >= 1.0.7
-BuildRequires: python-module-keystoneauth1 >= 2.10.0
-BuildRequires: python-module-keystonemiddleware >= 4.0.0
+BuildRequires: python-module-keystoneauth1 >= 2.18.0
+BuildRequires: python-module-keystonemiddleware >= 4.12.0
 BuildRequires: python-module-lxml >= 2.3
 BuildRequires: python-module-oauth2client >= 1.5.0
 BuildRequires: python-module-oslo.config >= 3.14.0
 BuildRequires: python-module-oslo.concurrency >= 3.8.0
 BuildRequires: python-module-oslo.context >= 2.9.0
-BuildRequires: python-module-oslo.db >= 4.10.0
-BuildRequires: python-module-oslo.log >= 1.14.0
-BuildRequires: python-module-oslo.messaging >= 5.2.0
+BuildRequires: python-module-oslo.db >= 4.15.0
+BuildRequires: python-module-oslo.log >= 3.11.0
+BuildRequires: python-module-oslo.messaging >= 5.14.0
 BuildRequires: python-module-oslo.middleware >= 3.0.0
-BuildRequires: python-module-oslo.policy >= 1.9.0
+BuildRequires: python-module-oslo.policy >= 1.17.0
 BuildRequires: python-module-oslo.privsep >= 1.9.0
 BuildRequires: python-module-oslo.reports >= 0.6.0
 BuildRequires: python-module-oslo.rootwrap >= 5.0.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
 BuildRequires: python-module-oslo.service >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.16.0
-BuildRequires: python-module-oslo.versionedobjects >= 1.13.0
+BuildRequires: python-module-oslo.utils >= 3.18.0
+BuildRequires: python-module-oslo.versionedobjects >= 1.17.0
 BuildRequires: python-module-osprofiler >= 1.4.0
 BuildRequires: python-module-paramiko >= 2.0
 BuildRequires: python-module-paste
 BuildRequires: python-module-PasteDeploy >= 1.5.0
+BuildRequires: python-module-psutil >= 3.0.1
 BuildRequires: python-module-pycrypto >= 2.6
-BuildRequires: python-module-pyparsing >= 2.0.1
+BuildRequires: python-module-pyparsing >= 2.1.0
 BuildRequires: python-module-barbicanclient >= 4.0.0
-BuildRequires: python-module-glanceclient >= 2.3.0
-BuildRequires: python-module-keystoneclient >= 2.0.0
-BuildRequires: python-module-novaclient >= 2.29.0
-BuildRequires: python-module-swiftclient >= 2.2.0
+BuildRequires: python-module-glanceclient >= 2.5.0
+BuildRequires: python-module-keystoneclient >= 3.8.0
+BuildRequires: python-module-novaclient >= 6.0.0
+BuildRequires: python-module-swiftclient >= 3.2.0
 BuildRequires: python-module-pytz >= 2013.6
 BuildRequires: python-module-requests >= 2.10.0
 BuildRequires: python-module-retrying >= 1.2.3
 BuildRequires: python-module-routes >= 1.12.3
-BuildRequires: python-module-taskflow >= 1.26.0
+BuildRequires: python-module-taskflow >= 2.7.0
 BuildRequires: python-module-simplejson >= 2.2.0
 BuildRequires: python-module-SQLAlchemy >= 1.0.10
 BuildRequires: python-module-migrate >= 0.9.6
-BuildRequires: python-module-stevedore >= 1.16.0
+BuildRequires: python-module-stevedore >= 1.17.1
 BuildRequires: python-module-suds-jurko >= 0.6
-BuildRequires: python-module-webob >= 1.2.3
+BuildRequires: python-module-webob >= 1.6.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.vmware >= 2.11.0
-BuildRequires: python-module-os-brick >= 1.6.1
-BuildRequires: python-module-os-win >= 0.2.3
-BuildRequires: python-module-tooz >= 1.28.0
+BuildRequires: python-module-oslo.vmware >= 2.17.0
+BuildRequires: python-module-os-brick >= 1.8.0
+BuildRequires: python-module-os-win >= 1.4.0
+BuildRequires: python-module-tooz >= 1.47.0
 BuildRequires: python-module-google-api-client >= 1.4.2
 BuildRequires: python-module-castellan >= 0.4.0
 
@@ -105,8 +106,8 @@ BuildRequires: python-module-testtools
 BuildRequires: python-module-testrepository
 BuildRequires: python-module-oslotest
 BuildRequires: python-module-networkx-drawing
+BuildRequires: python-module-subunit-tests
 
-Requires: openstack-utils
 Requires: python-module-cinder = %EVR
 Requires: python-module-PasteDeploy
 
@@ -124,15 +125,23 @@ Requires: qemu-img
 OpenStack Volume (codename Cinder) provides services to manage and
 access block storage volumes for use by Virtual Machine instances.
 
-%package -n       python-module-cinder
+%package -n python-module-%oname
 Summary: OpenStack Volume Python libraries
 Group: System/Servers
 
-%description -n   python-module-cinder
+%description -n python-module-%oname
 OpenStack Volume (codename Cinder) provides services to manage and
 access block storage volumes for use by Virtual Machine instances.
 
 This package contains the cinder Python library.
+
+%package -n python-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description -n python-module-%oname-tests
+This package contains tests for %oname.
 
 %package doc
 Summary: Documentation for OpenStack Volume
@@ -145,7 +154,7 @@ access block storage volumes for use by Virtual Machine instances.
 This package contains documentation files for cinder.
 
 %prep
-%setup
+%setup -n %oname-%version
 %patch1 -p1
 
 find . \( -name .gitignore -o -name .placeholder \) -delete
@@ -182,9 +191,10 @@ install -d -m 775 %buildroot%_logdir/cinder
 
 # Install config files
 install -d -m 755 %buildroot%_sysconfdir/cinder
+install -d -m 755 %buildroot%_sysconfdir/cinder/cinder.conf.d
+install -d -m 755 %buildroot%_sysconfdir/cinder/cinder-volume.conf.d
 install -p -D -m 640 etc/cinder/cinder.conf.sample %buildroot%_sysconfdir/cinder/cinder.conf
 install -p -D -m 644 etc/cinder/{api-paste.ini,policy.json,rootwrap.conf} %buildroot%_sysconfdir/cinder/
-cp -a etc/cinder/rootwrap.d %buildroot%_sysconfdir/cinder/
 install -d -m 755 %buildroot%_sysconfdir/cinder/volumes
 install -p -D -m 644 %SOURCE3 %buildroot%_sysconfdir/tgt/conf.d/cinder.conf
 install -d -m 755 %buildroot%_sysconfdir/cinder/rootwrap.d
@@ -226,41 +236,18 @@ touch %buildroot%apache2_sites_enabled/openstack-cinder-api.conf
 mkdir -p %buildroot%webserver_cgibindir
 ln -s %_datadir/cinder/cinder.wsgi %buildroot%webserver_cgibindir/cinder-osapi_volume
 
-
-# Remove unneeded in production stuff
-rm -f %buildroot%_bindir/cinder-debug
-rm -fr %buildroot%python_sitelibdir/cinder/tests
-rm -f %buildroot%python_sitelibdir/cinder/openstack/common/test.*
-rm -f %buildroot%python_sitelibdir/cinder/test.*
-rm -fr %buildroot%python_sitelibdir/run_tests.*
-rm -f %buildroot/usr/share/doc/cinder/README*
-
 ### set default configuration (mostly applies to package-only setups and quickstart, i.e. not generally crowbar)
-%define cinder_conf %buildroot%_sysconfdir/cinder/cinder.conf
+%define cinder_conf %buildroot%_sysconfdir/cinder/cinder.conf.d/010-cinder.conf
 crudini --set %cinder_conf DEFAULT log_dir /var/log/cinder
 crudini --set %cinder_conf DEFAULT state_path /var/lib/cinder
 crudini --set %cinder_conf oslo_concurrency lock_path /var/run/cinder
-crudini --set %cinder_conf DEFAULT volumes_dir /etc/cinder/volumes
-crudini --set %cinder_conf DEFAULT iscsi_helper lioadm
-crudini --set %cinder_conf database connection mysql://cinder:cinder@localhost/cinder
-crudini --set %cinder_conf DEFAULT rootwrap_config /etc/cinder/rootwrap.conf
-crudini --set %cinder_conf DEFAULT auth_strategy keystone
-#NOTE(saschpe): Can't hurt to set the default volume_group, only the LVM driver has a it otherwise:
-crudini --set %cinder_conf DEFAULT volume_group cinder-volumes
-crudini --set %cinder_conf DEFAULT lvm_type thin
 crudini --set %cinder_conf keystone_authtoken signing_dir /var/cache/cinder/keystone-signing
-crudini --set %cinder_conf keystone_authtoken admin_tenant_name %%SERVICE_TENANT_NAME%%
-crudini --set %cinder_conf keystone_authtoken admin_user %%SERVICE_USER%%
-crudini --set %cinder_conf keystone_authtoken admin_password %%SERVICE_PASSWORD%%
-crudini --set %cinder_conf keystone_authtoken auth_uri http://localhost:5000/v2.0
-crudini --set %cinder_conf keystone_authtoken identity_uri http://localhost:35357
 
 %pre
 # 165:165 for ceilometer (openstack-cinder)
 %_sbindir/groupadd -r -g 165 -f cinder 2>/dev/null ||:
 %_sbindir/useradd -r -u 165 -g cinder -G cinder,nobody,wheel  -c 'OpenStack Cinder Daemons' \
         -s /sbin/nologin  -d %_sharedstatedir/cinder cinder 2>/dev/null ||:
-
 
 %post
 %post_service %name-volume
@@ -277,8 +264,10 @@ crudini --set %cinder_conf keystone_authtoken identity_uri http://localhost:3535
 %files
 %doc LICENSE
 %dir %_sysconfdir/cinder
+%dir %_sysconfdir/cinder/cinder.conf.d
 %dir %_sysconfdir/cinder/rootwrap.d
 %config(noreplace) %attr(0640, root, cinder) %_sysconfdir/cinder/cinder.conf
+%config(noreplace) %attr(0640, root, cinder) %_sysconfdir/cinder/cinder.conf.d/010-cinder.conf
 %config %attr(0640, root, cinder) %_sysconfdir/cinder/api-paste.ini
 %config %_sysconfdir/cinder/rootwrap.conf
 %config %_sysconfdir/cinder/policy.json
@@ -306,13 +295,23 @@ crudini --set %cinder_conf keystone_authtoken identity_uri http://localhost:3535
 %dir %attr(0775, root, cinder) %_sharedstatedir/cinder
 %dir %attr(0775, root, cinder) %_cachedir/cinder
 
-%files -n python-module-cinder
+%files -n python-module-%oname
 %python_sitelibdir/*
+%exclude %python_sitelibdir/%oname/tests
+%exclude %python_sitelibdir/%oname/test.*
+
+%files -n python-module-%oname-tests
+%python_sitelibdir/%oname/tests
+%python_sitelibdir/%oname/test.*
 
 %files doc
 %doc doc/build/html
 
 %changelog
+* Thu Jun 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.2-alt1
+- 10.0.2 Ocata release
+- add tests package
+
 * Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 1:9.1.3-alt1
 - 9.1.3
 

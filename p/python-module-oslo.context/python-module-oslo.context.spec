@@ -1,37 +1,38 @@
-%define sname oslo.context
+%define oname oslo.context
 
 %def_with python3
 
-Name: python-module-%sname
-Version: 2.9.0
+Name: python-module-%oname
+Version: 2.12.1
 Release: alt1
 Summary: OpenStack oslo.context library
 Group: Development/Python
 License: ASL 2.0
-Url: http://launchpad.net/oslo
-Source: %name-%version.tar
+Url: http://docs.openstack.org/developer/%oname
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
 BuildArch: noarch
 
 Provides: python-module-oslo-context = %EVR
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-sphinx >= 1.1.2
 BuildRequires: python-module-oslosphinx >= 2.5.0
 BuildRequires: python-module-fixtures
-BuildRequires: python-module-positional >= 1.0.1
+BuildRequires: python-module-debtcollector >= 1.2.0
+BuildRequires: python-module-positional >= 1.1.1
+BuildRequires: python-module-reno >= 1.8.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.6
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
+BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-fixtures
-BuildRequires: python3-module-positional >= 1.0.1
+BuildRequires: python3-module-debtcollector >= 1.2.0
+BuildRequires: python3-module-positional >= 1.1.1
 %endif
 
 %description
@@ -39,29 +40,31 @@ The Oslo context library has helpers to maintain useful information
 about a request context. The request context is usually populated in
 the WSGI pipeline and used by various modules such as logging.
 
-* License: Apache License, Version 2.0
-* Documentation: http://docs.openstack.org/developer/oslo.context
-* Source: http://git.openstack.org/cgit/openstack/oslo.context
-* Bugs: http://bugs.launchpad.net/oslo
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
 
+%description tests
+This package contains tests for %oname.
 
-%if_with python3
-%package -n python3-module-oslo.context
+%package -n python3-module-%oname
 Summary: OpenStack oslo.context library
 Group: Development/Python3
 Provides: python3-module-oslo-context = %EVR
 
-%description -n python3-module-oslo.context
+%description -n python3-module-%oname
 The Oslo context library has helpers to maintain useful information
 about a request context. The request context is usually populated in
 the WSGI pipeline and used by various modules such as logging.
 
-* License: Apache License, Version 2.0
-* Documentation: http://docs.openstack.org/developer/oslo.context
-* Source: http://git.openstack.org/cgit/openstack/oslo.context
-* Bugs: http://bugs.launchpad.net/oslo
-%endif
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
 
+%description -n python3-module-%oname-tests
+This package contains tests for %oname.
 
 %package doc
 Summary: Documentation for the Oslo context handling library
@@ -72,10 +75,10 @@ Provides: python-module-oslo-context-doc = %EVR
 Documentation for the Oslo context handling library.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
-rm -rf %sname.egg-info
+rm -rf %oname.egg-info
 
 %if_with python3
 rm -rf ../python3
@@ -103,25 +106,31 @@ pushd ../python3
 popd
 %endif
 
-# Delete tests
-rm -fr %buildroot%python_sitelibdir/tests
-rm -fr %buildroot%python_sitelibdir/*/tests
-rm -fr %buildroot%python3_sitelibdir/tests
-rm -fr %buildroot%python3_sitelibdir/*/tests
-
 %files
 %doc CONTRIBUTING.rst HACKING.rst LICENSE PKG-INFO README.rst
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
 
 %if_with python3
-%files -n python3-module-oslo.context
+%files -n python3-module-%oname
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
 %endif
 
 %files doc
 %doc html
 
 %changelog
+* Wed May 24 2017 Alexey Shabalin <shaba@altlinux.ru> 2.12.1-alt1
+- 2.12.1
+- add test packages
+
 * Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 2.9.0-alt1
 - 2.9.0
 

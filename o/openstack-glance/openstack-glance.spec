@@ -1,14 +1,15 @@
+%define oname glance
 
-Name: openstack-glance
-Version: 13.0.0
-Release: alt4
+Name: openstack-%oname
+Version: 14.0.0
+Release: alt1
 Epoch: 1
 Summary: OpenStack Image Service
 
 Group: System/Servers
 License: ASL 2.0
-Url: http://glance.openstack.org
-Source0: %name-%version.tar
+Url: http://docs.openstack.org/developer/%oname
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 Source1: %name-api.service
 Source2: %name-registry.service
 Source3: %name-scrubber.service
@@ -23,38 +24,40 @@ Source46: %name-glare.init
 
 BuildArch: noarch
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
+BuildRequires: crudini
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-SQLAlchemy >= 1.0.10
 BuildRequires: python-module-eventlet >= 0.18.2
 BuildRequires: python-module-PasteDeploy >= 1.5.0
 BuildRequires: python-module-routes >= 1.12.3
 BuildRequires: python-module-migrate >= 0.9.6
+BuildRequires: python-module-sqlparse >= 0.2.2
+BuildRequires: python-module-alembic >= 0.8.10
 BuildRequires: python-module-httplib2 >= 0.7.5
 BuildRequires: python-module-pycrypto >= 2.6
 BuildRequires: python-module-oslo.config >= 3.14.0
 BuildRequires: python-module-oslo.concurrency >= 3.8.0
 BuildRequires: python-module-oslo.context >= 0.2.9
-BuildRequires: python-module-oslo.service >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.16.0
-BuildRequires: python-module-stevedore >= 1.16.0
+BuildRequires: python-module-oslo.utils >= 3.18.0
+BuildRequires: python-module-stevedore >= 1.17.1
 BuildRequires: python-module-futurist >= 0.11.0
-BuildRequires: python-module-taskflow >= 1.26.0
-BuildRequires: python-module-keystoneauth1 >= 2.10.0
-BuildRequires: python-module-keystonemiddleware >= 4.0.0
+BuildRequires: python-module-taskflow >= 2.7.0
+BuildRequires: python-module-keystoneauth1 >= 2.18.0
+BuildRequires: python-module-keystonemiddleware >= 4.12.0
 BuildRequires: python-module-wsme >= 0.8
-BuildRequires: python-module-prettytable >= 0.7
+BuildRequires: python-module-prettytable >= 0.7.1
 BuildRequires: python-module-paste
 BuildRequires: python-module-jsonschema >= 2.0.0
-BuildRequires: python-module-keystoneclient >= 2.0.0
+BuildRequires: python-module-keystoneclient >= 3.8.0
 BuildRequires: python-module-OpenSSL >= 0.14
-BuildRequires: python-module-oslo.db >= 4.10.0
+BuildRequires: python-module-oslo.db >= 4.15.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.log >= 1.14.0
-BuildRequires: python-module-oslo.messaging >= 5.2.0
+BuildRequires: python-module-oslo.log >= 3.11.0
+BuildRequires: python-module-oslo.messaging >= 5.14.0
 BuildRequires: python-module-oslo.middleware >= 3.0.0
-BuildRequires: python-module-oslo.policy >= 1.9.0
+BuildRequires: python-module-oslo.policy >= 1.17.0
 BuildRequires: python-module-retrying >= 1.2.3
 BuildRequires: python-module-osprofiler >= 1.4.0
 
@@ -68,21 +71,21 @@ BuildRequires: python-module-monotonic >= 0.6
 
 # Required to build module documents
 BuildRequires: python-module-boto
-BuildRequires: python-module-webob
+BuildRequires: python-module-webob >= 1.6.0
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-elasticsearch
 BuildRequires: python-module-reno >= 1.8.0
 BuildRequires: python-modules-sqlite3
 BuildRequires: python-module-networkx-drawing
+BuildRequires: python-module-glance_store-tests
+BuildRequires: python-module-dns
 
 Requires(pre): shadow-utils
 Requires: python-module-glance = %EVR
 Requires: python-module-glanceclient
 Requires: python-module-PasteDeploy
 Requires: /usr/bin/qemu-img
-
-Requires: openstack-utils
 
 %description
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -95,28 +98,35 @@ Service's client library for streaming virtual disk images.
 
 This package contains the API and registry servers.
 
-%package -n python-module-glance
+%package -n python-module-%oname
 Summary: Glance Python libraries
 Group: Development/Python
-Requires: python-module-keystoneclient >= 1.6.0
-Requires: python-module-keystonemiddleware >= 4.0.0
-Requires: python-module-oslo.config >= 3.7.0
+Requires: python-module-keystoneclient >= 3.8.0
+Requires: python-module-keystonemiddleware >= 4.12.0
+Requires: python-module-oslo.config >= 3.14.0
 Requires: python-module-oslo.concurrency >= 3.5.0
 Requires: python-module-oslo.context >= 0.2.0
-Requires: python-module-oslo.service >= 1.0.0
-Requires: python-module-oslo.utils >= 3.5.0
-Requires: python-module-oslo.log >= 1.14.0
-Requires: python-module-oslo.db >= 4.1.0
+Requires: python-module-oslo.utils >= 3.18.0
+Requires: python-module-oslo.log >= 3.11.0
+Requires: python-module-oslo.db >= 4.15.0
 Requires: python-module-oslo.i18n >= 2.1.0
-Requires: python-module-oslo.messaging >= 4.0.0
-Requires: python-module-oslo.policy >= 0.5.0
+Requires: python-module-oslo.messaging >= 5.14.0
+Requires: python-module-oslo.policy >= 1.17.0
 Requires: python-module-oslo.serialization >= 1.10.0
 
-%description -n python-module-glance
+%description -n python-module-%oname
 OpenStack Image Service (code-named Glance) provides discovery, registration,
 and delivery services for virtual disk images.
 
 This package contains the glance Python library.
+
+%package -n python-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description -n python-module-%oname-tests
+This package contains tests for %oname.
 
 %package doc
 Summary: Documentation for OpenStack Image Service
@@ -130,7 +140,7 @@ and delivery services for virtual disk images.
 This package contains documentation files for glance.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
 #rm -rf glance.egg-info
@@ -145,28 +155,37 @@ rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 # disabling git call for last modification date from git repo
 sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
 python setup.py build_sphinx
+python setup.py build_sphinx -b man
 # Fix hidden-file-or-dir warnings
 rm -fr doc/build/html/.buildinfo
 
 %install
 %python_install
 
-# Delete tests
-rm -fr %buildroot%python_sitelibdir/glance/tests
-rm -f  %buildroot%python_sitelibdir/glance/openstack/common/test*
-
-# Drop old glance CLI it has been deprecated
-# and replaced glanceclient
-rm -f %buildroot%_bindir/glance
-
 mkdir -p %buildroot%_man1dir
 install -p -D -m 644 doc/build/man/*.1 %buildroot%_man1dir/
 
 install -d -m 0755 %buildroot%_sysconfdir/glance
 install -d -m 0755 %buildroot%_sysconfdir/glance/metadefs
+
+### configuration files
+install -d -m 755 %buildroot%_sysconfdir/glance
+install -d -m 755 %buildroot%_sysconfdir/glance/glance.conf.d/
+install -d -m 755 %buildroot%_sysconfdir/glance/glance-api.conf.d/
+install -d -m 755 %buildroot%_sysconfdir/glance/glance-registry.conf.d/
+
+# regenerate the sample config files
+for service in api registry scrubber cache manage glare; do
+    PYTHONPATH=. oslo-config-generator --config-file etc/oslo-config-generator/glance-$service.conf
+done
+
 cp -pr etc/* %buildroot%_sysconfdir/glance
+
+for service in api registry scrubber cache manage glare swift; do
+    mv %buildroot%_sysconfdir/glance/glance-$service.conf{.sample,}
+done
+
 rm -rf %buildroot%_sysconfdir/glance/oslo-config-generator
-mv %buildroot%_sysconfdir/glance/glance-swift.conf{.sample,}
 
 install -d -m 755 %buildroot%_sharedstatedir/glance/images
 
@@ -193,8 +212,19 @@ install -d -m 755 %buildroot%_runtimedir/glance
 # Install log directory
 install -d -m 770 %buildroot%_logdir/glance
 
+# documentation
+install -d %buildroot%_mandir/man1
+install -m 644 doc/build/man/*.1 %buildroot%_mandir/man1
+
 # Delete unneeded files
 rm -rf %buildroot/usr/etc/glance
+
+### set default configuration
+%define glance_conf %buildroot%_sysconfdir/glance/glance.conf.d/010-glance.conf
+crudini --set %glance_conf DEFAULT log_dir /var/log/glance
+crudini --set %glance_conf DEFAULT lock_path /var/run/glance
+crudini --set %glance_conf keystone_authtoken signing_dir /var/cache/glance/keystone-signing
+crudini --set %glance_conf paste_deploy flavor keystone
 
 %pre
 # 161:161 for glance (openstack-glance)
@@ -223,7 +253,9 @@ rm -rf %buildroot/usr/etc/glance
 
 %_man1dir/*
 %dir %_sysconfdir/glance
+%dir %_sysconfdir/glance/glance.conf.d
 %config(noreplace) %attr(640, root, glance) %_sysconfdir/glance/*.conf
+%config(noreplace) %attr(640, root, glance) %_sysconfdir/glance/glance.conf.d/010-glance.conf
 %config %_sysconfdir/glance/*.ini
 %config %_sysconfdir/glance/*.json
 %config %_sysconfdir/glance/*.sample
@@ -236,15 +268,22 @@ rm -rf %buildroot/usr/etc/glance
 %dir %attr(0770, root, glance) %_logdir/glance
 %dir %attr(0775, root, glance) %_runtimedir/glance
 
-%files -n python-module-glance
+%files -n python-module-%oname
 %doc README.rst
-%python_sitelibdir/glance
-%python_sitelibdir/*.egg-info
+%python_sitelibdir/*
+%exclude %python_sitelibdir/%oname/tests
+
+%files -n python-module-%oname-tests
+%python_sitelibdir/%oname/tests
 
 %files doc
 %doc doc/build/html
 
 %changelog
+* Fri Jun 02 2017 Alexey Shabalin <shaba@altlinux.ru> 1:14.0.0-alt1
+- 14.0.0 Ocata release
+- add tests package
+
 * Tue Nov 22 2016 Alexey Shabalin <shaba@altlinux.ru> 1:13.0.0-alt4
 - fix logrotate
 

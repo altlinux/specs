@@ -1,15 +1,15 @@
 %def_with python3
 
-%define pypi_name futurist
+%define oname futurist
 
-Name: python-module-%pypi_name
-Version: 0.18.0
+Name: python-module-%oname
+Version: 0.21.0
 Release: alt1
 Summary: Useful additions to futures, from the future
 Group: Development/Python
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/futurist
-Source: %name-%version.tar
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 BuildArch: noarch
 
 #Requires: python-module-six >= 1.9.0
@@ -18,27 +18,26 @@ Requires: python-module-futures >= 3.0
 Requires: python-module-contextlib2 >= 0.4.0
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-monotonic >= 0.6
 BuildRequires: python-module-futures >= 3.0
 BuildRequires: python-module-contextlib2 >= 0.4.0
+BuildRequires: python-module-prettytable >= 0.7.1
 BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-oslosphinx >= 4.7.0
+BuildRequires: python-module-reno >= 1.8.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.6
+BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-monotonic >= 0.6
 BuildRequires: python3-module-contextlib2 >= 0.4.0
-
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
-
+BuildRequires: python3-module-prettytable >= 0.7.1
 %endif
 
 %description
@@ -51,8 +50,15 @@ Group: Development/Documentation
 %description doc
 Documentation for futurist library.
 
-%if_with python3
-%package -n python3-module-%pypi_name
+%package tests
+Summary: Tests for futurist library
+Group: Development/Python
+BuildArch: noarch
+
+%description tests
+Tests for futurist library.
+
+%package -n python3-module-%oname
 Summary: Useful additions to futures, from the future
 Group: Development/Python3
 
@@ -60,12 +66,19 @@ Group: Development/Python3
 Requires: python3-module-monotonic
 Requires: python3-module-contextlib2 >= 0.4.0
 
-%description -n python3-module-%pypi_name
+%description -n python3-module-%oname
 Code from the future, delivered to you in the now.
-%endif
+
+%package -n python3-module-%oname-tests
+Summary: Tests for futurist library
+Group: Development/Python3
+BuildArch: noarch
+
+%description -n python3-module-%oname-tests
+Tests for futurist library.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %if_with python3
 rm -rf ../python3
@@ -96,24 +109,32 @@ pushd ../python3
 popd
 %endif
 
-rm -fr %buildroot%python_sitelibdir/*/tests
-rm -fr %buildroot%python3_sitelibdir/*/tests
-
 %files
 %doc README.rst
 %python_sitelibdir/*
-
+%exclude %python_sitelibdir/*/tests
 
 %files doc
 %doc doc/build/html
 
+%files tests
+%python_sitelibdir/*/tests
+
 %if_with python3
-%files -n python3-module-%pypi_name
+%files -n python3-module-%oname
 %doc README.rst
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Fri Apr 28 2017 Alexey Shabalin <shaba@altlinux.ru> 0.21.0-alt1
+- 0.21.0
+- add tests package
+
 * Wed Feb 01 2017 Alexey Shabalin <shaba@altlinux.ru> 0.18.0-alt1
 - 0.18.0
 

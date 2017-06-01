@@ -1,6 +1,7 @@
+%define oname neutron
 
-Name: openstack-neutron
-Version: 9.3.0
+Name: openstack-%oname
+Version: 10.0.2
 Release: alt1
 Epoch: 1
 Provides: openstack-quantum = %EVR
@@ -9,9 +10,9 @@ Summary: OpenStack Networking Service
 
 Group: System/Servers
 License: ASL 2.0
-Url: http://launchpad.net/neutron/
+Url: http://docs.openstack.org/developer/%oname
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
-Source0: %name-%version.tar
 Source1: neutron.logrotate
 Source2: neutron-sudoers
 Source3: %name.tmpfiles
@@ -48,8 +49,8 @@ BuildArch: noarch
 
 BuildRequires: crudini
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
@@ -60,41 +61,43 @@ BuildRequires: python-module-routes >= 1.12.3
 BuildRequires: python-module-debtcollector >= 1.2.0
 BuildRequires: python-module-eventlet >= 0.18.2
 BuildRequires: python-module-pecan >= 1.0.0
-BuildRequires: python-module-greenlet >= 0.3.2
 BuildRequires: python-module-httplib2 >= 0.7.5
 BuildRequires: python-module-requests >= 2.10.0
 BuildRequires: python-module-jinja2 >= 2.8
-BuildRequires: python-module-keystonemiddleware >= 4.0.0
+BuildRequires: python-module-keystonemiddleware >= 4.12.0
 BuildRequires: python-module-netaddr >= 0.7.13
 BuildRequires: python-module-netifaces >= 0.10.4
-BuildRequires: python-module-neutron-lib >= 0.4.0
+BuildRequires: python-module-neutron-lib >= 1.1.0
 BuildRequires: python-module-neutronclient >= 5.1.0
-BuildRequires: python-module-retrying >= 1.2.3
-BuildRequires: python-module-ryu >= 3.30
+BuildRequires: python-module-tenacity >= 3.2.1
+BuildRequires: python-module-ryu >= 4.9
 BuildRequires: python-module-SQLAlchemy >= 1.0.10
-BuildRequires: python-module-webob >= 1.2.3
-BuildRequires: python-module-keystoneauth1 >= 2.10.0
-BuildRequires: python-module-alembic >= 0.8.4
-BuildRequires: python-module-stevedore >= 1.16.0
+BuildRequires: python-module-webob >= 1.6.0
+BuildRequires: python-module-keystoneauth1 >= 2.18.0
+BuildRequires: python-module-alembic >= 0.8.10
+BuildRequires: python-module-stevedore >= 1.17.1
 BuildRequires: python-module-oslo.cache >= 1.5.0
 BuildRequires: python-module-oslo.concurrency >= 3.8.0
 BuildRequires: python-module-oslo.config >= 3.14.0
 BuildRequires: python-module-oslo.context >= 2.9.0
-BuildRequires: python-module-oslo.db >= 4.10.0 python-module-oslo.db-tests
+BuildRequires: python-module-oslo.db >= 4.15.0 python-module-oslo.db-tests
 BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.log >= 1.14.0
-BuildRequires: python-module-oslo.messaging >= 5.2.0
+BuildRequires: python-module-oslo.log >= 3.11.0
+BuildRequires: python-module-oslo.messaging >= 5.14.0
 BuildRequires: python-module-oslo.middleware >= 3.0.0
-BuildRequires: python-module-oslo.policy >= 1.9.0
+BuildRequires: python-module-oslo.policy >= 1.17.0
 BuildRequires: python-module-oslo.reports >= 0.6.0
+BuildRequires: python-module-oslo.privsep >= 1.9.0
 BuildRequires: python-module-oslo.rootwrap >= 5.0.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
 BuildRequires: python-module-oslo.service >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.16.0
-BuildRequires: python-module-oslo.versionedobjects >= 1.13.0
+BuildRequires: python-module-oslo.utils >= 3.18.0
+BuildRequires: python-module-oslo.versionedobjects >= 1.17.0
 BuildRequires: python-module-osprofiler >= 1.4.0
-BuildRequires: python-module-openvswitch >= 2.5.0
-BuildRequires: python-module-novaclient >= 2.28.1
+BuildRequires: python-module-openvswitch >= 2.6.1
+BuildRequires: python-module-pyroute2 >= 0.4.12
+BuildRequires: python-module-weakrefmethod >= 1.0.2
+BuildRequires: python-module-novaclient >= 6.0.0
 BuildRequires: python-module-designateclient >= 1.5.0
 
 Requires: python-module-neutron = %EVR
@@ -114,7 +117,7 @@ other OpenStack services (e.g., virtual NICs from Nova VMs). The
 Neutron API supports extensions to provide advanced network
 capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
-%package -n python-module-neutron
+%package -n python-module-%oname
 Summary: Neutron Python libraries
 Group: Development/Python
 
@@ -122,18 +125,27 @@ Provides: python-module-quantum = %EVR
 Obsoletes: python-module-quantum < 2013.2-0.4.b3
 
 Requires: python-module-PasteDeploy
-Requires: python-module-keystoneauth1 >= 2.1.0
-Requires: python-module-keystonemiddleware >= 4.0.0
+Requires: python-module-keystoneauth1 >= 2.18.0
+Requires: python-module-keystonemiddleware >= 4.12.0
 Requires: python-module-oslo.config >= 3.7.0
 Requires: python-module-neutronclient >= 5.1.0
-Requires: python-module-novaclient >= 2.22.0
+Requires: python-module-novaclient >= 6.0.0
+Requires: python-module-weakrefmethod
 Requires: sudo conntrack-tools
 
-%description -n python-module-neutron
+%description -n python-module-%oname
 Neutron provides an API to dynamically request and configure virtual
 networks.
 
 This package contains the neutron Python library.
+
+%package -n python-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description -n python-module-%oname-tests
+This package contains tests for %oname.
 
 %package server
 Summary: OpenStack Network Neutron Server
@@ -251,7 +263,7 @@ This package contains the Neutron agent to support advanced features of
 SR-IOV network cards.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -279,9 +291,6 @@ PYTHONPATH=. tools/generate_config_file_samples.sh
 rm -rf %buildroot%python_sitelibdir/bin
 rm -rf %buildroot%python_sitelibdir/doc
 rm -rf %buildroot%python_sitelibdir/tools
-rm -rf %buildroot%python_sitelibdir/neutron/tests
-rm -rf %buildroot%python_sitelibdir/neutron/plugins/*/tests
-rm -f %buildroot%python_sitelibdir/neutron/plugins/*/run_tests.*
 rm -f %buildroot/etc/init.d/neutron-server
 
 # Install logrotate
@@ -337,30 +346,27 @@ install -d -m 750 %buildroot%_cachedir/neutron
 for c in neutron.conf dhcp_agent.ini l3_agent.ini metadata_agent.ini metering_agent.ini ; do
     install -p -D -m 644 etc/$c.sample %buildroot%_sysconfdir/neutron/$c
 done
-for c in linuxbridge_agent.ini ml2_conf.ini ml2_conf_sriov.ini openvswitch_agent.ini sriov_agent.ini macvtap_agent.ini ; do
+for c in linuxbridge_agent.ini ml2_conf.ini openvswitch_agent.ini sriov_agent.ini macvtap_agent.ini ; do
     install -p -D -m 644 etc/neutron/plugins/ml2/$c.sample %buildroot%_sysconfdir/neutron/plugins/ml2/$c
 done
 
+### extra config dirs
+install -d -m 755 %buildroot%_sysconfdir/neutron/neutron.conf.d/
+install -d -m 755 %buildroot%_sysconfdir/neutron/neutron-server.conf.d/
+install -d -m 755 %buildroot%_sysconfdir/neutron/neutron-l3-agent.conf.d/
+install -d -m 755 %buildroot%_sysconfdir/neutron/neutron-dhcp-agent.conf.d/
+install -d -m 755 %buildroot%_sysconfdir/neutron/neutron-metadata-agent.conf.d/
+install -d -m 755 %buildroot%_sysconfdir/neutron/neutron-linuxbridge-agent.conf.d/
+install -d -m 755 %buildroot%_sysconfdir/neutron/neutron-openvswitch-agent.conf.d/
+
 ## ALTLinux configuration defaults
-%define neutron_conf %buildroot/etc/neutron/neutron.conf
-%define plugin_dir %buildroot/etc/neutron/plugins/
-crudini --set %neutron_conf DEFAULT core_plugin neutron.plugins.ml2.plugin.Ml2Plugin
-crudini --set %neutron_conf DEFAULT service_plugins "neutron.services.l3_router.l3_router_plugin.L3RouterPlugin"
+%define neutron_conf %buildroot%_sysconfdir/neutron/neutron.conf.d/010-neutron.conf
+%define plugin_dir %buildroot%_sysconfdir/neutron/plugins/
 crudini --set %neutron_conf DEFAULT state_path /var/lib/neutron
-crudini --set %neutron_conf agent root_helper "sudo neutron-rootwrap /etc/neutron/rootwrap.conf"
 crudini --set %neutron_conf DEFAULT log_dir /var/log/neutron
+crudini --set %neutron_conf agent root_helper "sudo neutron-rootwrap /etc/neutron/rootwrap.conf"
 crudini --set %neutron_conf oslo_concurrency lock_path /var/run/neutron
 crudini --set %neutron_conf keystone_authtoken signing_dir /var/cache/neutron/keystone-signing
-for i in dhcp_agent.ini l3_agent.ini ; do
-  crudini --set %buildroot/etc/neutron/$i DEFAULT interface_driver neutron.agent.linux.interface.BridgeInterfaceDriver
-done
-crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespaces True
-
-#crudini --set %buildroot/etc/neutron/l3_agent.ini DEFAULT external_network_bridge "br-ex"
-#crudini --set %buildroot/etc/neutron/l3_agent.ini DEFAULT external_network_bridge ""
-#crudini --set %plugin_dir/ml2/ml2_conf.ini ml2 mechanism_drivers linuxbridge
-#crudini --set %plugin_dir/ml2/ml2_conf.ini securitygroup firewall_driver neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
-#crudini --set %plugin_dir/linuxbridge/linuxbridge_conf.ini securitygroup firewall_driver neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
 
 %pre
 %_sbindir/groupadd -r -f neutron 2>/dev/null ||:
@@ -449,9 +455,17 @@ fi
 
 %config(noreplace) %_sysconfdir/sysconfig/neutron
 %dir %_sysconfdir/neutron
+%dir %_sysconfdir/neutron/neutron.conf.d/
+%dir %_sysconfdir/neutron/neutron-server.conf.d/
+%dir %_sysconfdir/neutron/neutron-l3-agent.conf.d/
+%dir %_sysconfdir/neutron/neutron-dhcp-agent.conf.d/
+%dir %_sysconfdir/neutron/neutron-metadata-agent.conf.d/
+%dir %_sysconfdir/neutron/neutron-linuxbridge-agent.conf.d/
+%dir %_sysconfdir/neutron/neutron-openvswitch-agent.conf.d/
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/policy.json
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/api-paste.ini
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/neutron.conf
+%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/neutron.conf.d/010-neutron.conf
 %config(noreplace) %_sysconfdir/neutron/rootwrap.conf
 %dir %_sysconfdir/neutron/plugins
 %dir %_sysconfdir/neutron/plugins/ml2
@@ -470,12 +484,16 @@ fi
 %exclude %_sysconfdir/neutron/rootwrap.d/dhcp.filters
 %exclude %_sysconfdir/neutron/rootwrap.d/l3.filters
 
-%files -n python-module-neutron
+%files -n python-module-%oname
 %doc LICENSE
 %doc README.rst
-%python_sitelibdir/neutron
-%python_sitelibdir/*.egg-info
+%python_sitelibdir/*
 %exclude %python_sitelibdir/neutron/plugins/ml2/drivers/openvswitch/agent/xenapi
+%exclude %python_sitelibdir/%oname/tests
+
+%files -n python-module-%oname-tests
+%python_sitelibdir/%oname/tests
+%exclude %python_sitelibdir/*/tests/contrib
 
 %files server
 %_bindir/neutron-server
@@ -540,6 +558,10 @@ fi
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Mon Jun 05 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.2-alt1
+- 10.0.2 Ocata release
+- add test package
+
 * Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 1:9.3.0-alt1
 - 9.3.0
 

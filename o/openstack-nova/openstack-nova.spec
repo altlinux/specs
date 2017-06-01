@@ -1,15 +1,16 @@
+%define oname nova
 %add_findreq_skiplist %python_sitelibdir/nova/cloudpipe/*.template
 
-Name: openstack-nova
-Version: 14.0.5
+Name: openstack-%oname
+Version: 15.0.5
 Release: alt1
 Epoch: 1
 Summary: OpenStack Compute (nova)
 
 Group: System/Servers
 License: ASL 2.0
-Url: http://openstack.org/projects/compute/
-Source: %name-%version.tar
+Url: http://docs.openstack.org/developer/%oname
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
 Source6: nova.logrotate
 
@@ -61,62 +62,66 @@ BuildArch: noarch
 BuildRequires: /proc
 BuildRequires: crudini
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-SQLAlchemy >= 1.0.10
+BuildRequires: python-module-decorator >= 3.4.0
 BuildRequires: python-module-eventlet >= 0.18.2
-BuildRequires: python-module-migrate >= 0.9.6
-BuildRequires: python-module-iso8601 >= 0.1.11
-BuildRequires: python-module-keystonemiddleware >= 4.0.0
+BuildRequires: python-module-jinja2 >= 2.8
+BuildRequires: python-module-keystonemiddleware >= 4.12.0
 BuildRequires: python-module-lxml >= 2.3
 BuildRequires: python-module-routes >= 1.12.3
 BuildRequires: python-module-cryptography >= 1.0
+BuildRequires: python-module-webob >= 1.6.0
+BuildRequires: python-module-greenlet >= 0.3.2
 BuildRequires: python-module-PasteDeploy >= 1.5.0
+BuildRequires: python-module-prettytable >= 0.7.1
+BuildRequires: python-module-migrate >= 0.9.6
 BuildRequires: python-module-numpy
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-netaddr >= 0.7.13
 BuildRequires: python-module-netifaces >= 0.10.4
 BuildRequires: python-module-paramiko >= 2.0
+BuildRequires: python-module-enum34
+BuildRequires: python-module-iso8601 >= 0.1.11
 BuildRequires: python-module-jsonschema >= 2.0.0
 BuildRequires: python-module-cinderclient >= 1.6.0
-BuildRequires: python-module-keystoneauth1 >= 2.10.0
+BuildRequires: python-module-keystoneauth1 >= 2.18.0
 BuildRequires: python-module-neutronclient >= 5.1.0
-BuildRequires: python-module-glanceclient >= 2.3.0
+BuildRequires: python-module-glanceclient >= 2.5.0
 BuildRequires: python-module-requests >= 2.10.0
-BuildRequires: python-module-stevedore >= 1.16.0
+BuildRequires: python-module-stevedore >= 1.17.1
 BuildRequires: python-module-websockify >= 0.8.0
 BuildRequires: python-module-oslo.cache >= 1.5.0
 BuildRequires: python-module-oslo.concurrency >= 3.8.0
 BuildRequires: python-module-oslo.config >= 3.14.0
 BuildRequires: python-module-oslo.context >= 2.9.0
-BuildRequires: python-module-oslo.log >= 1.14.0
+BuildRequires: python-module-oslo.log >= 3.11.0
 BuildRequires: python-module-oslo.reports >= 0.6.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.16.0
-BuildRequires: python-module-oslo.db >= 4.10.0
+BuildRequires: python-module-oslo.utils >= 3.18.0
+BuildRequires: python-module-oslo.db >= 4.15.0
 BuildRequires: python-module-oslo.rootwrap >= 5.0.0
-BuildRequires: python-module-oslo.messaging >= 5.2.0
-BuildRequires: python-module-oslo.policy >= 1.9.0
+BuildRequires: python-module-oslo.messaging >= 5.14.0
+BuildRequires: python-module-oslo.policy >= 1.17.0
 BuildRequires: python-module-oslo.privsep >= 1.9.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
 BuildRequires: python-module-oslo.service >= 1.10.0
-BuildRequires: python-module-rfc3986 >= 0.2.2
+BuildRequires: python-module-rfc3986 >= 0.3.1
 BuildRequires: python-module-oslo.middleware >= 3.0.0
-BuildRequires: python-module-psutil >= 1.1.1
-BuildRequires: python-module-oslo.versionedobjects >= 1.13.0
-BuildRequires: python-module-os-brick >= 1.6.1
-BuildRequires: python-module-os-vif >= 1.1.0
-BuildRequires: python-module-os-win >= 0.2.3
+BuildRequires: python-module-psutil >= 3.0.1
+BuildRequires: python-module-oslo.versionedobjects >= 1.17.0
+BuildRequires: python-module-os-brick >= 1.8.0
+BuildRequires: python-module-os-vif >= 1.4.0
+BuildRequires: python-module-os-win >= 1.4.0
 BuildRequires: python-module-castellan >= 0.4.0
 BuildRequires: python-module-microversion-parse >= 0.1.2
-BuildRequires: python-module-wsgi_intercept >= 0.6.1
+BuildRequires: python-module-os-xenapi >= 0.1.1
 BuildRequires: python-module-barbicanclient
 BuildRequires: python-module-oslo.vmware >= 2.11.0
 # Required to build module documents
-BuildRequires: python-module-boto
-BuildRequires: python-module-webob
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-babel
 BuildRequires: python-module-reno
 
@@ -147,8 +152,8 @@ Summary: Components common to all OpenStack Nova services
 Group: System/Servers
 
 Requires: python-module-nova = %EVR
-Requires: python-module-oslo.rootwrap >= 2.0.0
-Requires: python-module-oslo.messaging >= 4.0.0
+Requires: python-module-oslo.rootwrap >= 5.0.0
+Requires: python-module-oslo.messaging >= 5.14.0
 Requires(pre): shadow-utils
 
 %description common
@@ -206,7 +211,8 @@ Requires: radvd
 Requires: bridge-utils
 Requires: dnsmasq
 Requires: dnsmasq-utils
-Requires: ebtables
+Requires: ebtables iptables
+Requires: conntrack-tools
 
 %description network
 OpenStack Compute (codename Nova) is open source software designed to
@@ -355,7 +361,6 @@ standard hardware configurations and seven major hypervisors.
 This package contains the Nova noVNC Proxy service that can proxy
 VNC traffic over browser websockets connections.
 
-
 %package placement-api
 Summary: OpenStack Nova Placement Service
 Group: System/Servers
@@ -414,7 +419,7 @@ standard hardware configurations and seven major hypervisors.
 This package contains the Nova services providing the
 serial console access service to Virtual Machines.
 
-%package -n python-module-nova
+%package -n python-module-%oname
 Summary: Nova Python libraries
 Group: Development/Python
 
@@ -426,12 +431,21 @@ Requires: sudo
 Requires: python-module-SQLAlchemy
 Requires: python-module-PasteDeploy
 
-%description -n python-module-nova
+%description -n python-module-%oname
 OpenStack Compute (codename Nova) is open source software designed to
 provision and manage large networks of virtual machines, creating a
 redundant and scalable cloud computing platform.
 
 This package contains the nova Python library.
+
+
+%package -n python-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description -n python-module-%oname-tests
+This package contains tests for %oname.
 
 %package doc
 Summary: Documentation for OpenStack Compute
@@ -445,7 +459,7 @@ redundant and scalable cloud computing platform.
 This package contains documentation files for nova.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 find . \( -name .gitignore -o -name .placeholder \) -delete
 
@@ -467,6 +481,7 @@ sphinx-build -b html doc/source doc/build/html
 rm -rf doc/build/html/.{doctrees,buildinfo}
 
 oslo-config-generator --config-file=etc/nova/nova-config-generator.conf
+oslopolicy-sample-generator --config-file=etc/nova/nova-policy-generator.conf
 
 %install
 %python_install
@@ -495,10 +510,11 @@ touch %buildroot%_sharedstatedir/nova/CA/private/cakey.pem
 
 # Install config files
 install -d -m 755 %buildroot%_sysconfdir/nova
+install -d -m 755 %buildroot%_sysconfdir/nova/nova.conf.d
 install -p -D -m 640 etc/nova/nova.conf.sample  %buildroot%_sysconfdir/nova/nova.conf
 install -p -D -m 640 etc/nova/rootwrap.conf %buildroot%_sysconfdir/nova/
 install -p -D -m 640 etc/nova/api-paste.ini %buildroot%_sysconfdir/nova/
-install -p -D -m 640 etc/nova/policy.json %buildroot%_sysconfdir/nova/
+install -p -D -m 640 etc/nova/policy.yaml.sample %buildroot%_sysconfdir/nova/policy.yaml
 mkdir -p %buildroot%_sysconfdir/nova/rootwrap.d/
 install -p -D -m 644 etc/nova/rootwrap.d/* %buildroot%_sysconfdir/nova/rootwrap.d/
 
@@ -572,47 +588,21 @@ install -p -m 0644 %SOURCE30 %buildroot%_sysconfdir/sysconfig/openstack-nova-nov
 
 # Remove unneeded in production stuff
 rm -f %buildroot%_bindir/nova-debug
-rm -fr %buildroot%python_sitelibdir/nova/tests/
-rm -f %buildroot%python_sitelibdir/nova/test.*
-rm -fr %buildroot%python_sitelibdir/run_tests.*
 rm -f %buildroot%_bindir/nova-combined
 rm -f %buildroot/usr/share/doc/nova/README*
 
 ### set default configuration (mostly applies to package-only setups and quickstart, i.e. not generally crowbar)
-%define nova_conf %buildroot%_sysconfdir/nova/nova.conf
+%define nova_conf %buildroot%_sysconfdir/nova/nova.conf.d/010-nova.conf
 crudini --set %nova_conf DEFAULT log_dir /var/log/nova
 crudini --set %nova_conf DEFAULT state_path /var/lib/nova
-crudini --set %nova_conf DEFAULT connection_type libvirt
 crudini --set %nova_conf oslo_concurrency lock_path %_runtimedir/nova
-crudini --set %nova_conf DEFAULT compute_driver libvirt.LibvirtDriver
-crudini --set %nova_conf DEFAULT image_service nova.image.glance.GlanceImageService
-crudini --set %nova_conf DEFAULT volume_api_class nova.volume.cinder.API
-crudini --set %nova_conf DEFAULT auth_strategy keystone
-crudini --set %nova_conf DEFAULT network_api_class nova.network.neutronv2.api.API
-crudini --set %nova_conf DEFAULT service_neutron_metadata_proxy True
-crudini --set %nova_conf DEFAULT security_group_api neutron
-crudini --set %nova_conf DEFAULT injected_network_template /usr/share/nova/interfaces.template
-crudini --set %nova_conf neutron admin_username neutron
-crudini --set %nova_conf neutron admin_password '%%SERVICE_PASSWORD%%'
-crudini --set %nova_conf neutron admin_tenant_name '%%SERVICE_TENANT_NAME%%'
-crudini --set %nova_conf neutron url http://localhost:9696
-crudini --set %nova_conf neutron auth_strategy keystone
-crudini --set %nova_conf neutron admin_auth_url http://localhost:35357/v2.0
-crudini --set %nova_conf database connection mysql://nova:nova@localhost/nova
 crudini --set %nova_conf keystone_authtoken signing_dir /var/cache/nova/keystone-signing
-crudini --set %nova_conf keystone_authtoken admin_tenant_name '%%SERVICE_TENANT_NAME%%'
-crudini --set %nova_conf keystone_authtoken admin_user nova
-crudini --set %nova_conf keystone_authtoken admin_password '%%SERVICE_PASSWORD%%'
-crudini --set %nova_conf keystone_authtoken auth_uri http://localhost:5000/v2.0
-crudini --set %nova_conf keystone_authtoken identity_uri http://localhost:35357
-
 
 %pre common
 # 162:162 for nova (openstack-nova)
 %_sbindir/groupadd -r -g 162 -f nova 2>/dev/null ||:
 %_sbindir/useradd -r -u 162 -g nova -G nova,nobody,wheel -c 'OpenStack Nova Daemons' \
         -s /sbin/nologin  -d %_sharedstatedir/nova nova 2>/dev/null ||:
-
 
 %pre compute
 usermod -a -G vmusers nova 2>/dev/null ||:
@@ -687,20 +677,19 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %preun serialproxy
 %preun_service %name-serialproxy
 
-
 %files
-%doc LICENSE
-%_bindir/nova-all
 
 %files common
 %doc LICENSE
 %dir %_sysconfdir/nova
+%dir %_sysconfdir/nova/nova.conf.d
 %_sysconfdir/nova/release
 %config(noreplace) %attr(0640, root, nova) %_sysconfdir/nova/nova.conf
+%config(noreplace) %attr(0640, root, nova) %_sysconfdir/nova/nova.conf.d/010-nova.conf
 %config(noreplace) %attr(0640, root, nova) %_sysconfdir/nova/api-paste.ini
 %config %_sysconfdir/nova/rootwrap.conf
 %dir %_sysconfdir/nova/rootwrap.d
-%config %attr(0640, root, nova) %_sysconfdir/nova/policy.json
+%config %attr(0640, root, nova) %_sysconfdir/nova/policy.yaml
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %config(noreplace) %_sysconfdir/sudoers.d/nova
 %config(noreplace) %_sysconfdir/polkit-1/rules.d/50-nova.rules
@@ -713,6 +702,7 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %_bindir/nova-rootwrap
 %_bindir/nova-rootwrap-daemon
 %_bindir/nova-policy
+%_bindir/nova-status
 
 %_datadir/nova
 %_man1dir/nova*.1.*
@@ -816,15 +806,24 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %_unitdir/%name-serialproxy.service
 %_initdir/%name-serialproxy
 
-%files -n python-module-nova
+%files -n python-module-%oname
 %doc LICENSE
-%python_sitelibdir/nova
-%python_sitelibdir/nova-*.egg-info
+%python_sitelibdir/*
+%exclude %python_sitelibdir/%oname/tests
+%exclude %python_sitelibdir/%oname/test.*
+
+%files -n python-module-%oname-tests
+%python_sitelibdir/%oname/tests
+%python_sitelibdir/%oname/test.*
+%exclude %python_sitelibdir/%oname/tests/live_migration/hooks
 
 %files doc
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Jun 05 2017 Alexey Shabalin <shaba@altlinux.ru> 1:15.0.5-alt1
+- 15.0.5 Ocata release
+
 * Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 1:14.0.5-alt1
 - 14.0.5
 

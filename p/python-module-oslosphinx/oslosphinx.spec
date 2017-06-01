@@ -3,39 +3,38 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.7.0
+Version: 4.10.0
 Release: alt1
 Summary: OpenStack Sphinx Extensions and Theme
 License: ASLv2.0
 Group: Development/Python
-Url: https://pypi.python.org/pypi/oslosphinx/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: http://docs.openstack.org/developer/oslosphinx
 
 # https://github.com/openstack/oslosphinx.git
-Source: %name-%version.tar
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-devel python-module-setuptools-tests
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-requests >= 2.10.0
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-sphinx-devel >= 1.1.2
+BuildRequires: python-module-sphinx-devel >= 1.2.1
 BuildRequires: python-module-hacking >= 0.10.0
-
+BuildRequires: python-module-reno >= 1.8.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools-tests
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-requests >= 2.10.0
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-sphinx-devel >= 1.1.2
+BuildRequires: python3-module-sphinx-devel >= 1.2.1
 BuildRequires: python3-module-hacking >= 0.10.0
+BuildRequires: python3-module-reno >= 1.8.0
 %endif
 
 %py_provides %oname
-
-BuildRequires(pre): rpm-macros-sphinx
 
 %description
 Theme and extension support for Sphinx documentation from the OpenStack
@@ -73,7 +72,7 @@ project.
 This package contains documentation for %oname.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -125,6 +124,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Apr 28 2017 Alexey Shabalin <shaba@altlinux.ru> 4.10.0-alt1
+- 4.10.0
+
 * Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 4.7.0-alt1
 - 4.7.0
 

@@ -1,14 +1,14 @@
-%define oname os-win
+%define oname os-xenapi
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.1
+Version: 0.1.1
 Release: alt1
-Summary: Windows Hyper-V library for OpenStack projects
+Summary: XenAPI library for OpenStack projects
 Group: Development/Python
 License: ASL 2.0
-Url: http://docs.openstack.org/developer/%oname
+Url: http://www.citrix.com
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
 BuildArch: noarch
@@ -23,7 +23,6 @@ BuildRequires: python-module-reno >= 0.1.1
 BuildRequires: python-module-babel >= 2.3.4
 BuildRequires: python-module-eventlet >= 0.18.2
 BuildRequires: python-module-oslo.concurrency >= 3.8.0
-BuildRequires: python-module-oslo.config >= 3.14.0
 BuildRequires: python-module-oslo.log >= 3.11.0
 BuildRequires: python-module-oslo.utils >= 3.18.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
@@ -34,22 +33,16 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools-tests
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
-BuildRequires: python3-module-reno >= 0.1.1
 BuildRequires: python3-module-babel >= 2.3.4
 BuildRequires: python3-module-eventlet >= 0.18.2
 BuildRequires: python3-module-oslo.concurrency >= 3.8.0
-BuildRequires: python3-module-oslo.config >= 3.14.0
 BuildRequires: python3-module-oslo.log >= 3.11.0
 BuildRequires: python3-module-oslo.utils >= 3.18.0
 BuildRequires: python3-module-oslo.i18n >= 2.1.0
 %endif
 
 %description
-Library contains Windows / Hyper-V code commonly used in the OpenStack
-projects: nova, cinder, networking-hyperv. The library can be used in any
-other OpenStack projects where it is needed.
+XenAPI library for OpenStack projects.
 
 %package tests
 Summary: Tests for %oname
@@ -71,9 +64,7 @@ Summary: Windows Hyper-V library for OpenStack projects
 Group: Development/Python3
 
 %description -n python3-module-%oname
-Library contains Windows / Hyper-V code commonly used in the OpenStack
-projects: nova, cinder, networking-hyperv. The library can be used in any
-other OpenStack projects where it is needed.
+XenAPI library for OpenStack projects.
 
 %package -n python3-module-%oname-tests
 Summary: Tests for %oname
@@ -108,13 +99,14 @@ rm -fr doc/build/html/.buildinfo
 
 %install
 %python_install
+rm -rf %buildroot%python_sitelibdir/*/dom0
 
 %if_with python3
 pushd ../python3
 %python3_install
+rm -rf %buildroot%python3_sitelibdir/*/dom0
 popd
 %endif
-
 
 %files
 %python_sitelibdir/*
@@ -136,12 +128,5 @@ popd
 %endif
 
 %changelog
-* Mon May 29 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.1-alt1
-- 1.4.1
-- add test packages
-
-* Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1.2.1-alt1
-- 1.2.1
-
-* Wed Apr 13 2016 Alexey Shabalin <shaba@altlinux.ru> 0.4.1-alt1
+* Tue Jun 06 2017 Alexey Shabalin <shaba@altlinux.ru> 0.1.1-alt1
 - Initial packaging

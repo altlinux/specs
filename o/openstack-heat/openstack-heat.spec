@@ -1,15 +1,16 @@
 %def_disable doc
 %add_python_req_skip senlinclient
+%define oname heat
 
-Name: openstack-heat
+Name: openstack-%oname
 Summary: OpenStack Orchestration (heat)
-Version: 7.0.2
+Version: 8.0.2
 Release: alt1
 Epoch: 1
 License: ASL 2.0
 Group: System/Servers
-Url: http://www.openstack.org
-Source0: %name-%version.tar
+Url: http://docs.openstack.org/developer/%oname
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
 Source1: heat.logrotate
 Source2: openstack-heat-api.service
@@ -28,8 +29,9 @@ Patch0: %name-6.1.0-remove-bash3-header.patch
 
 BuildArch: noarch
 BuildRequires: git
-BuildRequires: python-devel
-BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: crudini
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-oslo.cache >= 0.4.0
 BuildRequires: python-module-oslo.context >= 0.2.0
 BuildRequires: python-module-oslo.middleware >= 2.8.0
@@ -37,39 +39,42 @@ BuildRequires: python-module-oslo.policy >= 0.5.0
 BuildRequires: python-module-oslo.messaging >= 1.16.0
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-reno >= 1.8.0
 BuildRequires: python-module-oslo.config >= 3.14.0
 BuildRequires: python-module-oslo.concurrency >= 3.8.0
 BuildRequires: python-module-oslo.context >= 2.9.0
-BuildRequires: python-module-oslo.db >= 4.10.0
+BuildRequires: python-module-oslo.db >= 4.15.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.log >= 1.14.0
-BuildRequires: python-module-oslo.messaging >= 5.2.0
-BuildRequires: python-module-oslo.policy >= 1.9.0
+BuildRequires: python-module-oslo.log >= 3.11.0
+BuildRequires: python-module-oslo.messaging >= 5.14.0
+BuildRequires: python-module-oslo.policy >= 1.17.0
 BuildRequires: python-module-oslo.reports >= 0.6.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
 BuildRequires: python-module-oslo.service >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.16.0
+BuildRequires: python-module-oslo.utils >= 3.18.0
 BuildRequires: python-module-osprofiler >= 1.4.0
-BuildRequires: python-module-oslo.versionedobjects >= 1.13.0
+BuildRequires: python-module-oslo.versionedobjects >= 1.17.0
 BuildRequires: python-module-argparse
 BuildRequires: python-module-eventlet >= 0.17.4
-BuildRequires: python-module-greenlet >= 0.3.2
-BuildRequires: python-module-keystoneauth1 >= 2.10.0
-BuildRequires: python-module-keystonemiddleware >= 4.0.0
+BuildRequires: python-module-keystoneauth1 >= 2.18.0
+BuildRequires: python-module-keystonemiddleware >= 4.12.0
+BuildRequires: python-module-lxml >= 2.3
 BuildRequires: python-module-httplib2
 BuildRequires: python-module-iso8601
 BuildRequires: python-module-kombu >= 3.0.7
-BuildRequires: python-module-lxml >= 2.3
 BuildRequires: python-module-netaddr >= 0.7.13
 BuildRequires: python-module-memcached
 BuildRequires: python-module-migrate >= 0.9.6
 BuildRequires: python-module-osprofiler >= 1.2.0
 BuildRequires: python-module-qpid
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-yaml
+BuildRequires: python-module-yaml >= 3.10.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-paramiko
 BuildRequires: python-module-dogpile.cache
+BuildRequires: python-module-requests >= 2.10.0
+BuildRequires: python-module-tenacity >= 3.2.1
+BuildRequires: python-module-stevedore >= 1.17.1
 
 # These are required to build due to the requirements check added
 BuildRequires: python-module-PasteDeploy
@@ -86,14 +91,16 @@ BuildRequires: python-module-keystoneclient >= 1.6.0
 BuildRequires: python-module-yaql >= 1.1.0
 
 %if_enabled doc
+BuildRequires: python-module-aodhclient >= 0.7.0
 BuildRequires: python-module-cinderclient >= 1.3.1
-BuildRequires: python-module-novaclient >= 2.28.1
-BuildRequires: python-module-saharaclient >= 0.10.0
+BuildRequires: python-module-novaclient >= 6.0.0
+BuildRequires: python-module-saharaclient >= 1.1.0
 BuildRequires: python-module-neutronclient >= 2.6.0
-BuildRequires: python-module-swiftclient >= 2.2.0
-BuildRequires: python-module-heatclient >= 0.3.0
+BuildRequires: python-module-swiftclient >= 3.2.0
+BuildRequires: python-module-heatclient >= 1.6.1
+BuildRequires: python-module-keystoneclient >= 3.8.0
 BuildRequires: python-module-ceilometerclient >= 1.5.0
-BuildRequires: python-module-glanceclient >= 0.18.0
+BuildRequires: python-module-glanceclient >= 2.5.0
 BuildRequires: python-module-troveclient >= 1.2.0
 %endif
 
@@ -130,8 +137,16 @@ Requires: python-module-saharaclient
 Requires: python-module-swiftclient
 Requires: python-module-troveclient
 
-%description -n python-module-heat
+%description -n python-module-%oname
 This package contains the core Python module of OpenStack Heat.
+
+%package -n python-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description -n python-module-%oname-tests
+This package contains tests for %oname.
 
 %package engine
 Summary: The Heat engine
@@ -178,17 +193,8 @@ Requires: %name-engine = %EVR
 %description plugin-heat_docker
 This plugin enables using Docker containers as resources in a Heat template.
 
-%package -n python-module-heat-tests
-Summary:        Heat tests
-Group:   Development/Python
-Requires: %name = %EVR
-
-%description -n python-module-heat-tests
-Heat provides AWS CloudFormation and CloudWatch functionality for OpenStack.
-This package contains the Heat test files.
-
 %prep
-%setup
+%setup -n %oname-%version
 %patch0 -p2
 
 # Remove the requirements file so that pbr hooks don't add it
@@ -254,11 +260,19 @@ rm -rf %buildroot/var/lib/heat/.dummy
 rm -f %buildroot/usr/bin/cinder-keystone-setup
 
 install -d -m 755 %buildroot%_sysconfdir/heat
+install -d -m 755 %buildroot%_sysconfdir/heat/heat.conf.d
+
 mv etc/heat/heat.conf{.sample,}
 install -p -m 644 etc/heat/*.{conf,json,ini} %buildroot%_sysconfdir/heat/
 install -d -m 755  %buildroot%_sysconfdir/heat/{environment.d,templates}
 install -p -m 644 etc/heat/environment.d/*.yaml %buildroot%_sysconfdir/heat/environment.d
 install -p -m 644 etc/heat/templates/*.yaml %buildroot%_sysconfdir/heat/templates
+
+### set default configuration
+%define heat_conf %buildroot%_sysconfdir/heat/heat.conf.d/010-heat.conf
+crudini --set %heat_conf DEFAULT log_dir /var/log/heat
+crudini --set %heat_conf oslo_concurrency lock_path %_runtimedir/heat
+crudini --set %heat_conf keystone_authtoken signing_dir /var/cache/heat/keystone-signing
 
 %pre
 # 187:187 for heat (openstack-heat)
@@ -291,13 +305,16 @@ install -p -m 644 etc/heat/templates/*.yaml %buildroot%_sysconfdir/heat/template
 %_bindir/heat-manage
 %_bindir/heat-keystone-setup
 %_bindir/heat-keystone-setup-domain
+%_bindir/heat-all
 %dir %attr(0775,root,heat) %_logdir/heat
 %dir %attr(0775,root,heat) %_runtimedir/heat
 %dir %attr(0775,root,heat) %_sharedstatedir/heat
 %_tmpfilesdir/%name.conf
 %config(noreplace) %_sysconfdir/logrotate.d/openstack-heat
 %dir %attr(0755,root,heat) %_sysconfdir/heat
+%dir %attr(0755,root,heat) %_sysconfdir/heat/heat.conf.d
 %config(noreplace) %attr(0640, root, heat) %_sysconfdir/heat/heat.conf
+%config(noreplace) %attr(0640, root, heat) %_sysconfdir/heat/heat.conf.d/010-heat.conf
 %config(noreplace) %attr(0640, root, heat) %_sysconfdir/heat/api-paste.ini
 %config(noreplace) %_sysconfdir/heat/policy.json
 %config %_sysconfdir/heat/environment.d
@@ -308,14 +325,14 @@ install -p -m 644 etc/heat/templates/*.yaml %buildroot%_sysconfdir/heat/template
 %_man1dir/heat-manage.1*
 %endif
 
-%files -n python-module-heat
+%files -n python-module-%oname
 %python_sitelibdir/*
-%exclude %python_sitelibdir/heat/tests
 %exclude %python_sitelibdir/heat_integrationtests
+%exclude %python_sitelibdir/%oname/tests
 
-#%files -n python-module-heat-tests
-#%python_sitelibdir/heat/tests
-#%python_sitelibdir/heat_integrationtests
+%files -n python-module-%oname-tests
+%python_sitelibdir/%oname/tests
+%python_sitelibdir/heat_integrationtests
 
 %files engine
 %doc README.rst LICENSE
@@ -364,6 +381,12 @@ install -p -m 644 etc/heat/templates/*.yaml %buildroot%_sysconfdir/heat/template
 %_prefix/lib/heat/docker
 
 %changelog
+* Tue Jun 13 2017 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.2-alt1
+- 8.0.2
+
+* Tue Jun 13 2017 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.1-alt1
+- 8.0.1 Ocata release
+
 * Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.2-alt1
 - 7.0.2
 

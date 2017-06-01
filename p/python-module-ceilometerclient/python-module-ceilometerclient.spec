@@ -1,21 +1,20 @@
+%define oname ceilometerclient
 %def_with python3
 
-Name: python-module-ceilometerclient
-Version: 2.6.2
+Name: python-module-%oname
+Version: 2.8.1
 Release: alt1
 Summary: Python API and CLI for OpenStack Ceilometer
-
 Group: Development/Python
 License: ASL 2.0
-Url: https://github.com/openstack/%name
-Source: %name-%version.tar
-
+Url: http://docs.openstack.org/developer/python-%oname
+Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
 
 BuildArch: noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-reno
@@ -23,7 +22,7 @@ BuildRequires: python-module-iso8601 >= 0.1.11
 BuildRequires: python-module-keystoneauth1 >= 2.1.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-oslo.utils >= 3.17.0
 BuildRequires: python-module-prettytable >= 0.7
 BuildRequires: python-module-requests >= 2.8.1
 BuildRequires: python-module-six >= 1.9.0
@@ -32,36 +31,49 @@ BuildRequires: python-module-keystoneauth1
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.6
+BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-iso8601 >= 0.1.11
 BuildRequires: python3-module-prettytable >= 0.7
 BuildRequires: python3-module-keystoneauth1 >= 2.1.0
 BuildRequires: python3-module-oslo.i18n >= 2.1.0
 BuildRequires: python3-module-oslo.serialization >= 1.10.0
-BuildRequires: python3-module-oslo.utils >= 3.5.0
+BuildRequires: python3-module-oslo.utils >= 3.17.0
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-requests >= 2.5.2
 BuildRequires: python3-module-stevedore >= 1.10.0
 BuildRequires: python3-module-keystoneauth1
 %endif
 
-
 %description
 This is a client library for Ceilometer built on the Ceilometer API. It
 provides a Python API (the ceilometerclient module) and a command-line tool
 (ceilometer).
 
-%if_with python3
-%package -n python3-module-ceilometerclient
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+This package contains tests for %oname.
+
+%package -n python3-module-%oname
 Summary:  Python API and CLI for OpenStack Ceilometer
 Group: Development/Python3
 
-%description -n python3-module-ceilometerclient
+%description -n python3-module-%oname
 This is a client library for Ceilometer built on the Ceilometer API. It
 provides a Python API (the ceilometerclient module) and a command-line tool
 (ceilometer).
-%endif
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+This package contains tests for %oname.
 
 %package doc
 Summary: Documentation for OpenStack Ceilometer API Client
@@ -75,7 +87,7 @@ provides a Python API (the ceilometerclient module) and a command-line tool
 This package contains auto-generated documentation.
 
 %prep
-%setup
+%setup -n python-%oname-%version
 
 # Remove bundled egg-info
 rm -rf python_ceilometerclient.egg-info
@@ -106,13 +118,7 @@ mv %buildroot%_bindir/ceilometer %buildroot%_bindir/python3-ceilometer
 
 %python_install
 
-# Delete tests
-rm -fr %buildroot%python_sitelibdir/*/tests
-rm -fr %buildroot%python3_sitelibdir/*/tests
-
-
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
-sphinx-build -b html doc/source html
+python setup.py build_sphinx
 
 # Fix hidden-file-or-dir warnings
 rm -rf html/.doctrees html/.buildinfo
@@ -122,17 +128,29 @@ rm -rf html/.doctrees html/.buildinfo
 %doc LICENSE
 %_bindir/ceilometer
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
 
 %if_with python3
-%files -n python3-module-ceilometerclient
+%files -n python3-module-%oname
 %_bindir/python3-ceilometer
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
 %endif
 
 %files doc
-%doc html
+%doc doc/build/html
 
 %changelog
+* Tue May 30 2017 Alexey Shabalin <shaba@altlinux.ru> 2.8.1-alt1
+- 2.8.1
+- add test packages
+
 * Wed Feb 01 2017 Alexey Shabalin <shaba@altlinux.ru> 2.6.2-alt1
 - 2.6.2
 

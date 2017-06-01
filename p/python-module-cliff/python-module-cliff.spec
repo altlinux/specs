@@ -1,58 +1,56 @@
-%global modname cliff
+%global oname cliff
 
 %def_with python3
 
-Name:             python-module-%modname
-Version:          2.2.0
-Release:          alt1
-Summary:          Command Line Interface Formulation Framework
+Name: python-module-%oname
+Version: 2.4.0
+Release: alt1
+Summary: Command Line Interface Formulation Framework
 
-Group:            Development/Python
-License:          ASL 2.0
-URL:              http://pypi.python.org/pypi/cliff
-Source:          %name-%version.tar
+Group: Development/Python
+License: ASL 2.0
+Url: http://docs.openstack.org/developer/%oname
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
-BuildArch:        noarch
+BuildArch: noarch
 
-Requires:    python-module-unicodecsv >= 0.8.0
-Requires:    python-module-argparse
-Requires:    python-module-prettytable >= 0.7
-Requires:    python-module-yaml >= 3.1.0
+Requires: python-module-unicodecsv >= 0.8.0
+Requires: python-module-argparse
+Requires: python-module-prettytable >= 0.7.1
+Requires: python-module-yaml >= 3.10.0
 
-BuildRequires:    python-devel
-BuildRequires:    python-module-setuptools
-BuildRequires:    python-module-pbr >= 1.6
-BuildRequires:    python-module-prettytable >= 0.7
-BuildRequires:    python-module-argparse
-BuildRequires:    python-module-cmd2 >= 0.6.7
-BuildRequires:    python-module-stevedore >= 1.16.0
-BuildRequires:    python-module-unicodecsv >= 0.8.0
-BuildRequires:    python-module-yaml >= 3.1.0
-BuildRequires:    python-module-six >= 1.9.0
+BuildRequires: python-devel
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-pbr >= 1.8
+BuildRequires: python-module-prettytable >= 0.7.1
+BuildRequires: python-module-pyparsing >= 2.0.7
+BuildRequires: python-module-argparse
+BuildRequires: python-module-cmd2 >= 0.6.7
+BuildRequires: python-module-stevedore >= 1.17.1
+BuildRequires: python-module-unicodecsv >= 0.8.0
+BuildRequires: python-module-yaml >= 3.10.0
+BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-sphinx >= 1.1.2
+BuildRequires: python-module-oslosphinx >= 2.5.0
 
 # Required for the test suite
-BuildRequires:    python-module-nose
-BuildRequires:    python-module-mock
-
-BuildRequires:    bash
-BuildRequires:    bash-completion
-BuildRequires:    python-module-argparse
-
-BuildPreReq: python-module-sphinx-devel python-module-oslosphinx
+BuildRequires: python-module-nose
+BuildRequires: python-module-mock
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires:    python3-devel
-BuildRequires:    python3-module-setuptools
-BuildRequires:    python3-module-pbr >= 1.6
-BuildRequires:    python3-module-prettytable >= 0.7
-BuildRequires:    python3-module-cmd2 >= 0.6.7
-BuildRequires:    python3-module-stevedore  >= 1.5.0
-BuildRequires:    python3-module-six  >= 1.9.0
-BuildRequires:    python3-module-yaml >= 3.1.0
-BuildRequires:    python3-module-nose
-BuildRequires:    python3-module-mock
-BuildRequires:    python3-module-argparse
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-pbr >= 1.8
+BuildRequires: python3-module-prettytable >= 0.7.1
+BuildRequires: python3-module-pyparsing >= 2.0.7
+BuildRequires: python3-module-argparse
+BuildRequires: python3-module-cmd2 >= 0.6.7
+BuildRequires: python3-module-stevedore  >= 1.17.1
+BuildRequires: python3-module-six >= 1.9.0
+BuildRequires: python3-module-yaml >= 3.10.0
+BuildRequires: python3-module-nose
+BuildRequires: python3-module-mock
 %endif
 
 %description
@@ -60,23 +58,41 @@ cliff is a framework for building command line programs. It uses setuptools
 entry points to provide subcommands, output formatters, and other
 extensions.
 
-Documentation for cliff is hosted on readthedocs.org at
-http://readthedocs.org/docs/cliff/en/latest/
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
 
-%package -n python3-module-%modname
-Summary:          Command Line Interface Formulation Framework
-Group:            Development/Python3
+%description tests
+This package contains tests for %oname.
 
-%description -n python3-module-%modname
+%package -n python3-module-%oname
+Summary: Command Line Interface Formulation Framework
+Group: Development/Python3
+
+%description -n python3-module-%oname
 cliff is a framework for building command line programs. It uses setuptools
 entry points to provide subcommands, output formatters, and other
 extensions.
 
-Documentation for cliff is hosted on readthedocs.org at
-http://readthedocs.org/docs/cliff/en/latest/
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+This package contains tests for %oname.
+
+%package doc
+Summary: Documentation for the Command Line Interface Formulation Framework
+Group: Development/Documentation
+
+%description doc
+Documentation for the Command Line Interface Formulation Framework.
+
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Let RPM handle the dependencies
 rm -f test-requirements.txt requirements.txt
@@ -91,9 +107,6 @@ rm -rf *.egg-info
 cp -fR . ../python3
 %endif
 
-%prepare_sphinx doc
-ln -s ../objects.inv doc/source/
-
 %build
 %python_build
 
@@ -103,6 +116,11 @@ pushd ../python3
 popd
 %endif
 
+# generate html docs
+sphinx-build doc/source html
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+
 %install
 %python_install
 
@@ -111,10 +129,6 @@ pushd ../python3
 %python3_install
 popd
 %endif
-
-export PYTHONPATH=$PWD
-%make -C doc html
-
 
 %check
 PYTHONPATH=. nosetests
@@ -126,18 +140,32 @@ PYTHONPATH=. nosetests
 #%endif
 
 %files
-%doc AUTHORS ChangeLog *.rst doc/build/html
+%doc AUTHORS ChangeLog *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
+%files tests
+%python_sitelibdir/*/tests
+
 %if_with python3
-%files -n python3-module-%modname
-%doc AUTHORS ChangeLog *.rst doc/build/html
+%files -n python3-module-%oname
+%doc AUTHORS ChangeLog *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
 %endif
 
+%files doc
+%doc html
+
 %changelog
+* Mon May 29 2017 Alexey Shabalin <shaba@altlinux.ru> 2.4.0-alt1
+- 2.4.0
+- add test packages
+- add doc package
+
 * Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 2.2.0-alt1
 - 2.2.0
 

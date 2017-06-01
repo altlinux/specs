@@ -1,52 +1,51 @@
-%define sname neutron-lbaas
+%define oname neutron-lbaas
 
-Name: openstack-%sname
-Version: 9.2.0
+Name: openstack-%oname
+Version: 10.0.0
 Release: alt1
 Epoch: 1
 Summary: OpenStack Networking LBaaS
 
 Group: System/Servers
 License: ASL 2.0
-Url: http://launchpad.net/neutron/
-
-Source0: %name-%version.tar
+Url: http://docs.openstack.org/developer/%oname
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 Source1: neutron-lbaasv2-agent.init
 Source2: neutron-lbaasv2-agent.service
 
 BuildArch: noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
+BuildRequires: python-module-setuptools-tests
 BuildRequires: python-module-reno
-BuildRequires: python-module-pbr >= 1.6
+BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-eventlet >= 0.18.2
 BuildRequires: python-module-requests >= 2.10.0
 BuildRequires: python-module-netaddr >= 0.7.13
-BuildRequires: python-module-neutron-lib >= 0.4.0
+BuildRequires: python-module-neutron-lib >= 1.1.0
 BuildRequires: python-module-SQLAlchemy >= 1.0.10
-BuildRequires: python-module-alembic >= 0.8.4
+BuildRequires: python-module-alembic >= 0.8.10
 BuildRequires: python-module-oslo.config >= 3.14.0
-BuildRequires: python-module-oslo.db >= 4.10.0
-BuildRequires: python-module-oslo.log >= 1.14.0
-BuildRequires: python-module-oslo.messaging >= 5.2.0
+BuildRequires: python-module-oslo.db >= 4.15.0
+BuildRequires: python-module-oslo.log >= 3.11.0
+BuildRequires: python-module-oslo.messaging >= 5.14.0
 BuildRequires: python-module-oslo.reports >= 0.6.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
 BuildRequires: python-module-oslo.service >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.16.0
+BuildRequires: python-module-oslo.utils >= 3.18.0
 BuildRequires: python-module-barbicanclient >= 4.0.0
 BuildRequires: python-module-pyasn1
 BuildRequires: python-module-pyasn1-modules
 BuildRequires: python-module-OpenSSL >= 0.14
-BuildRequires: python-module-stevedore >= 1.16.0
+BuildRequires: python-module-stevedore >= 1.17.1
 BuildRequires: python-module-cryptography >= 1.0
-BuildRequires: python-module-keystoneauth1 >= 2.10.0
+BuildRequires: python-module-keystoneauth1 >= 2.18.0
 BuildRequires: python-module-neutron >= 1:9.0.0
 BuildRequires: python-module-neutron-lib  >= 0.4.0
 
-Requires: openstack-neutron >= 1:9.0.0-alt1
-Requires: python-module-%sname = %EVR
+Requires: openstack-neutron >= 1:10.0.0-alt1
+Requires: python-module-%oname = %EVR
 Requires: haproxy
 
 %description
@@ -54,7 +53,7 @@ This package contains the code for the Neutron Load Balancer as a
 Service (LBaaS) service. This includes third-party drivers. This package
 requires Neutron to run.
 
-%package -n python-module-%sname
+%package -n python-module-%oname
 Summary: Neutron LBaaS Python libraries
 Group: Development/Python
 Requires: python-module-neutron >= 1:8.0.0-alt1
@@ -65,15 +64,23 @@ Requires: python-module-neutron-lib
 %add_python_req_skip kemptech_openstack_lbaas
 %add_python_req_skip f5lbaasdriver
 
-%description -n python-module-%sname
+%description -n python-module-%oname
 This package contains the code for the Neutron Load Balancer as a
 Service (LBaaS) service. This includes third-party drivers. This package
 requires Neutron to run.
 
 This package contains the neutron Python library.
 
+%package -n python-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description -n python-module-%oname-tests
+This package contains tests for %oname.
+
 %prep
-%setup
+%setup -n %oname-%version
 
 # Let's handle dependencies ourseleves
 #rm -f requirements.txt
@@ -113,14 +120,19 @@ install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/neutron-lbaasv2-agent.service
 %_initdir/neutron-lbaasv2-agent
 %_unitdir/neutron-lbaasv2-agent.service
 
-%files -n python-module-%sname
+%files -n python-module-%oname
 %doc LICENSE
-%python_sitelibdir/neutron_lbaas
-%python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/neutron_lbaas/tests
+%python_sitelibdir/*
+%exclude %python_sitelibdir/*/tests
+
+%files -n python-module-%oname-tests
+%python_sitelibdir/*/tests
 
 
 %changelog
+* Wed Jun 07 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.0-alt1
+- 10.0.0
+
 * Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 1:9.2.0-alt1
 - 9.2.0
 

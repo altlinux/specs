@@ -1,56 +1,50 @@
-%define sname saharaclient
+%define oname saharaclient
 %def_with python3
 
-Name: python-module-%sname
-Version: 0.18.0
+Name: python-module-%oname
+Version: 1.1.0
 Release: alt1
 Summary: Python API and CLI for OpenStack  Sahara
 
 Group: Development/Python
 License: ASL 2.0
-Url: http://github.com/openstack/python-%sname
-Source: %name-%version.tar
+Url: http://docs.openstack.org/developer/python-%oname
+Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
 
 BuildArch: noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-reno
+BuildRequires: python-module-reno >= 1.8.0
 BuildRequires: python-module-babel >= 2.3.4
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-keystoneauth1 >= 2.10.0
-BuildRequires: python-module-osc-lib >= 1.0.2
-BuildRequires: python-module-oslo.log >= 1.14.0
+BuildRequires: python-module-keystoneauth1 >= 2.18.0
+BuildRequires: python-module-osc-lib >= 1.2.0
+BuildRequires: python-module-oslo.log >= 3.11.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.utils >= 3.16.0
-BuildRequires: python-module-keystoneclient >= 2.0.0
-BuildRequires: python-module-openstackclient >= 2.1.0
+BuildRequires: python-module-oslo.utils >= 3.18.0
+BuildRequires: python-module-openstackclient >= 3.3.0
 BuildRequires: python-module-requests >= 2.10.0
-BuildRequires: python-module-prettytable >= 0.7
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.6
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
+BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-babel >= 1.3
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-keystoneauth1 >= 2.10.0
-BuildRequires: python3-module-osc-lib >= 1.0.2
-BuildRequires: python3-module-oslo.log >= 1.14.0
+BuildRequires: python3-module-keystoneauth1 >= 2.18.0
+BuildRequires: python3-module-osc-lib >= 1.2.0
+BuildRequires: python3-module-oslo.log >= 3.11.0
 BuildRequires: python3-module-oslo.serialization >= 1.10.0
 BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.utils >= 3.16.0
-BuildRequires: python3-module-keystoneclient >= 2.0.0
-BuildRequires: python3-module-openstackclient >= 2.1.0
+BuildRequires: python3-module-oslo.utils >= 3.18.0
+BuildRequires: python3-module-openstackclient >= 3.3.0
 BuildRequires: python3-module-requests >= 2.10.0
-BuildRequires: python3-module-prettytable >= 0.7
 %endif
 
 %description
@@ -58,16 +52,30 @@ This is a client for the OpenStack Sahara API. There's a Python API (the
 saharaclient module), and a command-line script (sahara). Each implements
 100 percent of the OpenStack Sahara API.
 
-%if_with python3
-%package -n python3-module-%sname
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+This package contains tests for %oname.
+
+%package -n python3-module-%oname
 Summary: Python API and CLI for OpenStack Sahara
 Group: Development/Python3
 
-%description -n python3-module-%sname
+%description -n python3-module-%oname
 This is a client for the OpenStack Sahara API. There's a Python API (the
 saharaclient module), and a command-line script (sahara). Each implements
 100 percent of the OpenStack Sahara API.
-%endif
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+This package contains tests for %oname.
 
 %package doc
 Summary: Documentation for OpenStack Sahara API Client
@@ -81,7 +89,7 @@ saharaclient module), and a command-line script (sahara). Each implements
 This package contains auto-generated documentation.
 
 %prep
-%setup
+%setup -n python-%oname-%version
 
 rm -rf *.egg-info
 
@@ -108,7 +116,6 @@ popd
 pushd ../python3
 %python3_install
 popd
-mv %buildroot%_bindir/sahara %buildroot%_bindir/python3-sahara
 %endif
 
 %python_install
@@ -116,28 +123,32 @@ mv %buildroot%_bindir/sahara %buildroot%_bindir/python3-sahara
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 sphinx-build -b html doc/source html
 
-# Delete tests
-rm -fr %buildroot%python_sitelibdir/tests
-rm -fr %buildroot%python_sitelibdir/*/tests
-rm -fr %buildroot%python3_sitelibdir/tests
-rm -fr %buildroot%python3_sitelibdir/*/tests
-
 %files
 %doc README.rst
 %doc LICENSE
-%_bindir/sahara
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
 
 %if_with python3
-%files -n python3-module-%sname
-%_bindir/python3-sahara
+%files -n python3-module-%oname
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
 %endif
 
 %files doc
 %doc html
 
 %changelog
+* Wed May 31 2017 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt1
+- 1.1.0
+- add test packages
+
 * Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 0.18.0-alt1
 - 0.18.0
 

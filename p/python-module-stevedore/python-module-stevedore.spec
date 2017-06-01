@@ -3,20 +3,20 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.17.1
+Version: 1.20.0
 Release: alt1
 Summary: Manage dynamic plugins for Python applications
 Group: Development/Python
 License: ASL 2.0
 URL: http://docs.openstack.org/developer/stevedore/
-Source: %name-%version.tar
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
 
 BuildRequires: python-devel python-module-argparse
 BuildRequires: python-module-setuptools-tests
-BuildRequires: python-module-pbr >= 1.6 python-module-six >= 1.9
+BuildRequires: python-module-pbr >= 1.8 python-module-six >= 1.9
 BuildRequires: python-module-argparse
 BuildRequires: python-module-Pillow python-module-oslotest
 BuildRequires: python-module-discover python-module-testrepository
@@ -24,18 +24,17 @@ BuildRequires: python-module-coverage python-module-mock
 BuildRequires: python-module-mox3 python-module-mimeparse
 BuildRequires: python-module-sphinx-devel
 BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-reno
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-argparse
 BuildRequires: python3-module-setuptools-tests
-BuildRequires: python3-module-pbr >= 1.6 python3-module-six >= 1.9
+BuildRequires: python3-module-pbr >= 1.8 python3-module-six >= 1.9
 BuildRequires: python3-module-argparse
 BuildRequires: python3-module-Pillow python3-module-oslotest
 BuildRequires: python3-module-discover python3-module-testrepository
 BuildRequires: python3-module-coverage python3-module-mock
 BuildRequires: python3-module-mox3 python3-module-mimeparse
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
 %endif
 
 %py_provides %oname
@@ -91,7 +90,7 @@ Manage dynamic plugins for Python applications
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -170,6 +169,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Apr 28 2017 Alexey Shabalin <shaba@altlinux.ru> 1.20.0-alt1
+- 1.20.0
+
 * Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 1.17.1-alt1
 - 1.17.1
 
