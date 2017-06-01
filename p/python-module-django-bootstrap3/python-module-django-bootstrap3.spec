@@ -4,7 +4,7 @@
 
 Name:           python-module-django-%pypi_name
 Version:        8.2.3
-Release:        alt1
+Release:        alt2
 Summary:        Bootstrap support for Django projects
 Group:          Development/Python
 
@@ -71,6 +71,9 @@ popd
 %endif
 
 %changelog
+* Thu Jun 01 2017 Lenar Shakirov <snejok@altlinux.ru> 8.2.3-alt2
+- Pack correct sources
+
 * Mon May 29 2017 Lenar Shakirov <snejok@altlinux.ru> 8.2.3-alt1
 - Initial build for ALT
 
