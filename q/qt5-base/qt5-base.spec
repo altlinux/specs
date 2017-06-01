@@ -24,7 +24,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.7.1
-Release: alt3%ubt
+Release: alt4%ubt
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -40,6 +40,7 @@ Patch2: qtbase-opensource-src-5.7.1-QT_VERSION_CHECK.patch
 Patch3: qtbase-opensource-src-5.6.0-arm.patch
 Patch4: qtbase-opensource-src-5.7.1-moc_macros.patch
 Patch5: qt5-qtbase-5.7.1-libpng.patch
+Patch6: qtbase-hidpi_scale_at_192.patch
 Patch11: QTBUG-35459.patch
 Patch12: QTBUG-55583.patch
 # upstream
@@ -146,6 +147,7 @@ This package contains documentation and sources for example programs.
 %package -n qt5-qtbase
 Summary: qt5-qtbase compatibility package
 Group: System/Libraries
+BuildArch: noarch
 Requires: lib%{gname}-concurrent
 Requires: lib%{gname}-core
 Requires: lib%{gname}-dbus
@@ -159,6 +161,7 @@ qt5-qtbase compatibility package
 %package -n qt5-qtbase-gui
 Summary: qt5-qtbase-gui compatibility package
 Group: System/Libraries
+BuildArch: noarch
 Requires: lib%{gname}-gui
 Requires: lib%{gname}-opengl
 Requires: lib%{gname}-printsupport
@@ -348,6 +351,7 @@ EGL integration library for the Qt%major toolkit
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 %patch11 -p1 -b .QTBUG
 %patch12 -p1 -b .QTBUG
 %patch100 -p1
@@ -452,6 +456,7 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
 
 %make_build
 %if_disabled bootstrap
+export QT_HASH_SEED=0
 [ -d doc/qtcore ] || %make docs
 %endif
 
@@ -463,7 +468,7 @@ sed -i "s|^\s*QMAKE_CFLAGS_OPTIMIZE_FULL\s*=.*$|QMAKE_CFLAGS_OPTIMIZE_FULL = -O3
 make install INSTALL_ROOT=%buildroot
 %if_disabled bootstrap
 [ -d doc/qtcore ] && %make INSTALL_ROOT=%buildroot install_docs ||:
-rm -rf %buildroot/%_qt5_docdir/qtwidgets/*tutorials-addressbook*
+#rm -rf %buildroot/%_qt5_docdir/qtwidgets/*tutorials-addressbook*
 %endif
 
 # create/own dirs
@@ -753,6 +758,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Thu Jun 01 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt4%ubt
+- calculate pixel density like GNOME
+
 * Wed Mar 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt3%ubt
 - disable debug output by default
 - update SuSE patches
