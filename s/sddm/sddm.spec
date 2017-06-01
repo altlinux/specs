@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.14.0
-Release: alt13%ubt
+Release: alt14%ubt
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -47,6 +47,7 @@ Patch108: alt-show-avatars.patch
 Patch109: alt-expired-password-handling.patch
 Patch110: alt-sddm-etc.locale.conf.patch
 Patch111: alt-sddm-ignore-locales.patch
+Patch112: alt-sddm-etc.sysconfig.i18n.patch
 Patch200: alt-fix-unable-handle-request.patch
 
 # Automatically added by buildreq on Thu Apr 02 2015 (-bi)
@@ -84,6 +85,7 @@ ability to create smooth, animated user interfaces.
 %patch109 -p1
 %patch110 -p1
 %patch111 -p1
+%patch112 -p1
 
 %patch200 -p1
 
@@ -152,6 +154,10 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Thu Jun 01 2017 Oleg Solovyov <mcpain@altlinux.org> 0.14.0-alt14%ubt
+- elarun, maldives: renewal dialogs are replacing login dialogs
+- /etc/sysconfig/i18n is now primary locale config
+
 * Mon May 22 2017 Sergey V Turchin <zerg@altlinux.org> 0.14.0-alt13%ubt
 - add fixes for github issues: 701,708,725,735
 
