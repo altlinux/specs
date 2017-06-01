@@ -1,13 +1,15 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20150422.1.1.1
 %define module_name celery
+
+%add_python3_req_skip celery.utils.nodenames
+%add_python3_req_skip celery.utils.time
+%add_python3_req_skip kombu.utils.objects
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%module_name
-Version: 3.1.18
-#Release: alt1.git20150422.1.1
+Version: 3.1.24
+Release: alt1
 Group: Development/Python
 License: BSD License
 Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
@@ -194,6 +196,10 @@ popd
 %endif
 
 %changelog
+* Thu Jun 01 2017 Lenar Shakirov <snejok@altlinux.ru> 3.1.24-alt1
+- Version 3.1.24
+- Revert real@ patches
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.1.18-alt1.git20150422.1.1.1
 - (AUTO) subst_x86_64.
 
