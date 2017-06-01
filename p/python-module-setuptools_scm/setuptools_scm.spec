@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.15.0
-Release: alt1
+Release: alt1.1
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %py_provides %oname
-Requires: git mercurial
+Requires: git-core mercurial
 %py_requires setuptools
 
 BuildRequires: python-module-setuptools-tests git-core mercurial
@@ -40,7 +40,7 @@ It falls back to PKG-INFO/.hg_archival.txt when necessary.
 Summary: The blessed package to manage your versions by scm tags
 Group: Development/Python3
 %py3_provides %oname
-Requires: git mercurial
+Requires: git-core mercurial
 %py3_requires setuptools
 
 %description -n python3-module-%oname
@@ -96,7 +96,7 @@ py.test -vv
 pushd ../python3
 python3 setup.py test
 export PYTHONPATH=$PWD
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
@@ -111,6 +111,10 @@ popd
 %endif
 
 %changelog
+* Thu Jun 01 2017 Michael Shigorin <mike@altlinux.org> 1.15.0-alt1.1
+- R: git-core instead of full-blown git metapackage
+- fix build --with python3 (actually the test)
+
 * Mon Jan 02 2017 Anton Midyukov <antohami@altlinux.org> 1.15.0-alt1
 - Version 1.15.0
 
