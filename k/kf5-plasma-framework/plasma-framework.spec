@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.34.0
-Release: alt3%ubt
+Release: alt4%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -121,6 +121,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Thu Jun 01 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt4%ubt
+- revert previous changes
+
 * Tue May 30 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt3%ubt
 - fix plasma packages install directory
 
