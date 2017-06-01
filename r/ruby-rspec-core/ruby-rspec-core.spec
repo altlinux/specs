@@ -1,7 +1,7 @@
 %define  pkgname rspec-core
  
 Name: 	 ruby-%pkgname
-Version: 3.4.1
+Version: 3.6.0
 Release: alt1
  
 Summary: RSpec runner and formatters
@@ -41,6 +41,7 @@ Documentation files for %{name}.
  
 %install
 %ruby_install
+install -Dm 0755 exe/rspec %buildroot%_bindir/rspec
 %rdoc lib/
 # Remove unnecessary files
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
@@ -50,12 +51,17 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
  
 %files
 %doc README*
+%_bindir/rspec
 %ruby_sitelibdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
+* Thu Jun 01 2017 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt1
+- New version
+- Package rspec executable
+
 * Mon Jan 18 2016 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt1
 - New version
 
