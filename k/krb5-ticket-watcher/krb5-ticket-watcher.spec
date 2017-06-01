@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt5%ubt
+Release: alt6%ubt
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
 Url: http://sourceforge.net/projects/krb5ticketwatch
 License: %gpl2plus
@@ -14,6 +14,7 @@ Patch3: krb5-ticket-watcher-1.0.3-alt-fix-includes.patch
 Patch4: krb5-ticket-watcher-1.0.3-alt-fix-desktop-category.patch
 Patch5: alt-qt5-1.patch
 Patch6: alt-tray-icon.patch
+Patch7: alt-wait-for-tray.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: kde-common-devel rpm-build-licenses libkrb5-devel libkeyutils-devel
@@ -31,6 +32,7 @@ tickets.
 %patch4 -p2
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 %add_optflags -I%_includedir/krb5
@@ -52,6 +54,9 @@ desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 %doc COPYING Changes News TODO
 
 %changelog
+* Thu Jun 01 2017 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt6%ubt
+- wait for system tray (ALT#33518)
+
 * Wed May 31 2017 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt5%ubt
 - port to Qt5
 
