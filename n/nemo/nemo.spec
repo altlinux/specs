@@ -8,8 +8,8 @@
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: default file manager for Cinnamon
 License: GPLv2+
@@ -210,6 +210,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Thu Jun 8 2017 Vladimir Didenko <cow@altlinux.org> 3.4.2-alt1
+- 3.4.2-4-g83812fd
+
 * Sat May 20 2017 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt2
 - set default desktop font (closes: #33485)
 
