@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.33
+Version: 5.34
 Release: alt1
 
 Source:%name-%version.tar
@@ -141,6 +141,10 @@ fi ||:
 
 
 %changelog
+* Fri Jun 02 2017 Ivan Zakharyaschev <imz@altlinux.org> 5.34-alt1
+- Made /logout work with a (correct) CSRF token. And disallowed it to work
+  without a (correct) CSRF token (which used to be a small vulnerability).
+
 * Thu Apr 6 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.33-alt1
 - rebuilt with alterator-5.0
 
