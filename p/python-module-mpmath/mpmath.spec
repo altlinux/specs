@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.19
-Release: alt1.git20150621.1.1.1
+Release: alt1.git20150621.1.1.1.1
 Summary: Python library for arbitrary-precision floating-point arithmetic
 License: New BSD License
 Group: Development/Python
@@ -23,7 +23,8 @@ BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: at-spi2-atk at-spi2-core colord dbus dbus-tools-gui fakeroot fontconfig fonts-bitmap-misc glib-networking gobject-introspection gobject-introspection-x11 libat-spi2-core libatk-gir libcairo-gobject libcap-ng libgdk-pixbuf libgdk-pixbuf-gir libgpg-error libgtk+3-gir libpango-gir libwayland-client libwayland-cursor libwayland-egl libwayland-server python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-cycler python-module-dateutil python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-matplotlib-gtk3 python-module-numpy python-module-pyparsing python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base shared-mime-info xauth xkbcomp xkeyboard-config xorg-server-common xorg-xvfb
-BuildRequires: fonts-type1-urw python-module-alabaster python-module-docutils python-module-gmpy python-module-html5lib python-module-matplotlib python-module-numpy-testing python-module-pycairo python-module-pygobject3 rpm-build-python3 time xvfb-run
+BuildRequires: fonts-type1-urw python-module-alabaster python-module-docutils python-module-gmpy python-module-html5lib python-module-matplotlib python-module-numpy-testing python-module-pycairo python-module-pygobject3 rpm-build-python3 time
+%{?!_disable_check:BuildRequires: xvfb-run}
 
 #BuildRequires: python3-devel python3-module-gmpy python-tools-2to3
 #BuildPreReq: python3-module-matplotlib python3-module-pycairo
@@ -214,6 +215,9 @@ popd
 %endif
 
 %changelog
+* Fri Jun 02 2017 Michael Shigorin <mike@altlinux.org> 0.19-alt1.git20150621.1.1.1.1
+- BOOTSTRAP: put xvfb-run under check knob
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.19-alt1.git20150621.1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
