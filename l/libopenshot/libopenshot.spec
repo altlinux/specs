@@ -5,7 +5,7 @@
 %def_disable doc
 
 Name: lib%_name
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: OpenShot Video Library
@@ -69,6 +69,9 @@ This package provides Python3 bindings for OpenShot Video Library.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jun 02 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.7-alt1
+- 0.1.7
+
 * Mon May 29 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.6-alt1
 - 0.1.6
 
