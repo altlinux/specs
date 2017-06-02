@@ -24,7 +24,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.7.1
-Release: alt4%ubt
+Release: alt5%ubt
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -40,7 +40,7 @@ Patch2: qtbase-opensource-src-5.7.1-QT_VERSION_CHECK.patch
 Patch3: qtbase-opensource-src-5.6.0-arm.patch
 Patch4: qtbase-opensource-src-5.7.1-moc_macros.patch
 Patch5: qt5-qtbase-5.7.1-libpng.patch
-Patch6: qtbase-hidpi_scale_at_192.patch
+#
 Patch11: QTBUG-35459.patch
 Patch12: QTBUG-55583.patch
 # upstream
@@ -56,6 +56,7 @@ Patch1002: alt-dont-require-plugin-file.patch
 Patch1003: alt-ca-certificates-path.patch
 Patch1004: alt-timezone.patch
 Patch1005: alt-no-debug.patch
+Patch1006: alt-hidpi_scale_at_192.patch
 
 # macros
 %define _qt5 %gname
@@ -351,7 +352,7 @@ EGL integration library for the Qt%major toolkit
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
+#
 %patch11 -p1 -b .QTBUG
 %patch12 -p1 -b .QTBUG
 %patch100 -p1
@@ -364,6 +365,7 @@ EGL integration library for the Qt%major toolkit
 %patch1003 -p1 -b .ca-bundle
 %patch1004 -p1 -b .timezone
 %patch1005 -p1 -b .no-debug
+%patch1006 -p1
 bin/syncqt.pl -version %version -private
 [ -e include/QtCore/QtCoreDepends ] || >include/QtCore/QtCoreDepends
 
@@ -758,6 +760,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Fri Jun 02 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt5%ubt
+- fix calculate pixel density
+
 * Thu Jun 01 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt4%ubt
 - calculate pixel density like GNOME
 
