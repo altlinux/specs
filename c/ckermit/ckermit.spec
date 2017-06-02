@@ -1,12 +1,12 @@
-%define archiv_name cku302
+%define archiv_name x
 Name: ckermit
 License: BSD-3-Clause
 Group: System/Kernel and hardware
 Summary: A Combined Serial and Network Communication Software Package
 Provides: kermit
-Version: 9.0.302
+Version: 9.0.304
 Release: alt1
-Url: http://www.columbia.edu/kermit/
+Url: http://www.kermitproject.org/
 Source: %archiv_name.tar.gz
 Source1: skel.kermrc
 Patch0: cku302-fmt.diff
@@ -17,16 +17,23 @@ Patch4: cku211-EMrename.diff
 Patch5: cku211-debug.diff
 Patch6: cku211-uninitialized.diff
 Patch7: cku211-string_comparison.diff
-Packager: Boris Savelev <boris@altlinux.org>
 
 # Automatically added by buildreq on Fri Jul 25 2008
 BuildRequires: libncurses-devel libssl-devel zlib-devel libpam0-devel
+
+%package doc
+Summary: A Combined Serial and Network Communication Software Package - documentation
+Group: Documentation
+BuildArch: noarch
 
 %description
 C-Kermit is a combined serial and network communication software
 package offering a consistent, medium-independent, and cross-platform
 approach to connection establishment, terminal sessions, file transfer,
 character-set translation, and automation of communication tasks.
+
+%description doc
+Documentation package for %name
 
 %prep
 %setup -q -c -n %archiv_name
@@ -51,12 +58,21 @@ install -m 644 ckuker.nr %buildroot%_man1dir/kermit.1
 install -D -m 644 %{S:1} %buildroot%_sysconfdir/skel/.kermrc
 
 %files
-%doc COPYING.TXT *.txt *.ini
+%doc COPYING.TXT
 %doc %_man1dir/*
 %config(noreplace) %_sysconfdir/skel/.kermrc
 %_bindir/*
 
+%files doc
+%doc *.txt *.TXT
+
 %changelog
+* Fri Jun  2 2017 Terechkov Evgenii <evg@altlinux.org> 9.0.304-alt1
+- Update Url:
+- 9.0.304dev22
+- Drop (non)Packager:
+- Separate documentation to ckermit-doc subpackage (ALT#33521)
+
 * Fri Jul 15 2016 Terechkov Evgenii <evg@altlinux.org> 9.0.302-alt1
 - 9.0.302
 - Patch4, Patch8 dropped (not needed anymore)
