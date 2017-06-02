@@ -2,11 +2,11 @@
 
 %def_with python3
 #def_disable check
-%def_with docs
+%def_with doc
 
 Name: python-module-%oname
 Version: 4.0.4
-Release: alt3
+Release: alt3.1
 Summary: Jupyter Interactive Notebook
 License: BSD
 Group: Development/Python
@@ -133,7 +133,7 @@ pushd ../python3
 popd
 %endif
 
-%if_with docs
+%if_with doc
 export PYTHONPATH=$PWD
 %make -C docs pickle
 %make -C docs html
@@ -156,13 +156,17 @@ popd
 %exclude %python_sitelibdir/*/tests
 %exclude %python_sitelibdir/*/*/tests
 %exclude %python_sitelibdir/*/*/*/tests
+%if_with doc
 %exclude %python_sitelibdir/*/pickle
+%endif
 
+%if_with doc
 %files pickles
 %python_sitelibdir/*/pickle
 
 %files docs
 %doc docs/build/html/*
+%endif
 
 %files tests
 %python_sitelibdir/*/tests
@@ -184,6 +188,10 @@ popd
 %endif
 
 %changelog
+* Fri Jun 02 2017 Michael Shigorin <mike@altlinux.org> 4.0.4-alt3.1
+- BOOTSTRAP: fixed build --without doc
+  + renamed the docs knob for consistency
+
 * Mon Mar 27 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.4-alt3
 - (NMU) Fixed build
 
