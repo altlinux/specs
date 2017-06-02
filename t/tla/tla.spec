@@ -1,6 +1,6 @@
 Name: tla
 Version: 1.3.5
-Release: alt1.1.qa1
+Release: alt1.1.qa2
 #define subver -fix-1
 %define subver %nil
 
@@ -49,6 +49,8 @@ find -type f -name \*.html -print0 |
 	xargs -r0 grep -lZ '<!--[^>]*>' -- |
 	xargs -r0 subst -p '/^[[:space:]]*<!--[^>]*>[[:space:]]*$/ d' --
 
+cp -a /usr/share/gnu-config/config.guess src/build-tools/gnu/
+
 %build
 cd src
 mkdir build
@@ -76,6 +78,9 @@ install -pm644 %_sourcedir/tla{,-gpg-check}.1 %buildroot%_man1dir/
 %doc %_docdir/%name-%version/
 
 %changelog
+* Fri Jun 02 2017 Michael Shigorin <mike@altlinux.org> 1.3.5-alt1.1.qa2
+- E2K: update config.guess.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.5-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
