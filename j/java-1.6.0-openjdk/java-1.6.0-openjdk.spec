@@ -26,10 +26,10 @@ BuildRequires: jpackage-1.6.0-compat
 # If runtests is 0 test suites will not be run.
 %define runtests 0
 
-%define icedteaver 1.11
+%define icedteaver 1.13.13
 %define icedteasnapshot %{nil}
-%define openjdkver b24
-%define openjdkdate 14_nov_2011
+%define openjdkver b41
+%define openjdkdate 04_jan_2017
 
 %define genurl http://cvs.fedoraproject.org/viewcvs/devel/java-1.6.0-openjdk/
 
@@ -44,7 +44,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 %define openjdkurlbase http://www.java.net/download/openjdk/jdk6/promoted/
 %define openjdkurl %{openjdkurlbase}%{openjdkver}/
-%define fedorazip  openjdk-6-src-%{openjdkver}-%{openjdkdate}-fedora.tar.gz
+%define fedorazip  openjdk-6-src-%{openjdkver}-%{openjdkdate}.tar.gz
 
 %define mauvedate 2008-10-22
 
@@ -158,7 +158,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{buildver}
-Release: alt23_65.1.11jpp6
+Release: alt24.b41
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -193,7 +193,6 @@ Patch2:   java-1.6.0-openjdk-java-access-bridge-idlj.patch
 Patch3:	  java-1.6.0-openjdk-java-access-bridge-security.patch
 Patch4:   java-1.6.0-openjdk-accessible-toolkit.patch
 
-Patch33: icedtea-native-vsyscall.patch
 Patch34: java-1.6.0-openjdk-old-times.patch
 
 BuildRequires: libalsa-devel
@@ -207,6 +206,9 @@ BuildRequires: libXt-devel
 BuildRequires: libXtst-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libpng-devel
+BuildRequires: liblcms2-devel
+BuildRequires: libkrb5-devel
+BuildRequires: libXcomposite-devel
 BuildRequires: wget
 #BuildRequires: xalan-j2
 #BuildRequires: xerces-j2
@@ -449,7 +451,6 @@ make MEMORY_LIMIT=-J-Xmx512m patch REQUIRED_ALSA_VERSION=1
 patch -l -p0 < %{PATCH3}
 patch -l -p0 < %{PATCH4}
 
-patch -l -p0 < %{PATCH33}
 patch -l -p0 < %{PATCH34}
 
 
@@ -868,6 +869,8 @@ done
 %{_mandir}/man1/servertool-%{name}.1*
 %{_mandir}/man1/tnameserv-%{name}.1*
 %{_mandir}/man1/unpack200-%{name}.1*
+%{_jvmdir}/%{jredir}/lib/security/US_export_policy.jar
+%{_jvmdir}/%{jredir}/lib/security/local_policy.jar
 %{_jvmdir}/%{jredir}/lib/security/nss.cfg
 %{_sysconfdir}/.java/
 %{_sysconfdir}/.java/.systemPrefs
@@ -947,6 +950,10 @@ done
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri May 26 2017 Andrey Cherepanov <cas@altlinux.org> 0:1.6.0.0-alt24.b41
+- Build 41 (04_jan_2017) (ALT #33467)
+- Package local_policy.jar and US_export_policy.jar
+
 * Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.0-alt23_65.1.11jpp6
 - fixed build
 
