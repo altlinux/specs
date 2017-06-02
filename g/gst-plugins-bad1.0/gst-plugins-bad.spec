@@ -9,7 +9,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -132,6 +132,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Fri May 26 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt2
+- rebuilt against libx265.so.116
+
 * Thu May 04 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
 - 1.12.0
 

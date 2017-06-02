@@ -2,7 +2,7 @@
 
 Name: libxine2
 Version: 1.2.6
-Release: alt4
+Release: alt5
 
 Summary: Free libraries for play video and audio
 License: GPLv2+
@@ -103,6 +103,9 @@ mv %buildroot%_man5dir/xine.5 %buildroot%_man5dir/xine2.5
 %_libdir/xine/plugins/%plugin_version/xineplug_inp_smb.so
 
 %changelog
+* Tue May 30 2017 Anton Farygin <rider@altlinux.ru> 1.2.6-alt5
+- rebuild with new ffmpeg
+
 * Fri May 12 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.6-alt4
 - rebuilt with libmng-2.0.3
 
