@@ -1,21 +1,20 @@
 Name: nethogs
-Version: 0.8.0
-Release: alt3
+Version: 0.8.5
+Release: alt1
 
 Summary: net top
 License: GPL
 Group: Monitoring
 
-Url: http://nethogs.sourceforge.net
-Source0: http://nethogs.sourceforge.net/%name-%version.tar.gz
+Url: https://github.com/raboof/nethogs
+Source0: %name-%version.tar
 Source1: nethogs.control
-Patch0: nethogs-0.8.0-debian-makefile.patch
-Patch1: nethogs-0.8.0-debian-geteuid.patch
-Patch2: nethogs-0.8.0-alt-pid32.patch
+#Patch2: nethogs-0.8.0-alt-pid32.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Tue Apr 07 2009
 BuildRequires: gcc-c++ libncurses-devel libpcap-devel
+BuildRequires: /proc
 
 Summary(pl.UTF-8): Sieciowy top
 
@@ -36,17 +35,15 @@ uruchomić NetHogs i od razu zobaczyć, który PID to powoduje i
 ewentualnie go zabić.
 
 %prep
-%setup -n %name
-%patch0 -p0
-%patch1 -p0
-%patch2 -p1
+%setup -n %name-%version
+#%patch2 -p1
 
 %build
-%make GCC="g++" CFLAGS="%optflags -I%_includedir/ncurses"
+%make PREFIX=%_usr GCC="g++" CFLAGS="%optflags -I%_includedir/ncurses"
 
 %install
-install -pDm755 %name %buildroot%_sbindir/%name
-install -pDm644 %name.8 %buildroot%_man8dir/%name.8
+install -pDm755 src/%name %buildroot%_sbindir/%name
+install -pDm644 doc/%name.8 %buildroot%_man8dir/%name.8
 install -pDm755 %SOURCE1 %buildroot%_controldir/%name
 
 %pre
@@ -57,12 +54,20 @@ install -pDm755 %SOURCE1 %buildroot%_controldir/%name
 %post_control -s netadmin %name
 
 %files
-%doc Changelog README
+%doc Changelog README.md
 %_sbindir/*
 %_man8dir/*
 %config %_controldir/%name
 
 %changelog
+* Fri Jun 02 2017 Michael Shigorin <mike@altlinux.org> 0.8.5-alt1
+- built for sisyphus (closes: #33524), thanks Oleg!
+- BR: /proc for tests
+
+* Thu Jun 01 2017 Oleg Zenin <zenin_o@ihep.ru> 0.8.5-alt0
+- Makefile and get(e)uid patches (cf. 0.8.0-alt3) appear
+  to have been merged into the upstream.
+
 * Fri Oct 14 2011 Michael Shigorin <mike@altlinux.org> 0.8.0-alt3
 - replaced my kludge with a patch by vx8400/gmail.com (thx!)
 
