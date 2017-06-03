@@ -34,7 +34,7 @@
 %def_enable libschroedinger
 %def_disable avisynth
 %def_enable libtheora
-%def_disable debug
+%def_enable debug
 %def_enable bzlib
 %def_enable vaapi
 %def_enable vdpau
@@ -57,7 +57,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	3.3.1
-Release:	alt1
+Release:	alt2
 
 Url:		http://ffmpeg.org
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
@@ -481,10 +481,10 @@ xz Changelog
 	%{subst_enable vdpau} \
 %if_enabled debug
 	--enable-debug \
-	--disable-stripping \
 %else
 	--disable-debug \
 %endif
+	--disable-stripping \
 	--enable-pic \
 	--extra-cflags="%optflags" \
 	--extra-version='%release' \
@@ -650,6 +650,9 @@ mkdir -p %buildroot
 %endif
 
 %changelog
+* Sat Jun 03 2017 Anton Farygin <rider@altlinux.ru> 2:3.3.1-alt2
+- enabled debuginfo
+
 * Thu May 25 2017 Anton Farygin <rider@altlinux.ru> 2:3.3.1-alt1
 - updated to 3.3.1
 - cleanup spec
