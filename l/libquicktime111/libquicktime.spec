@@ -25,7 +25,7 @@
 %define corename %libname-core
 Name: %libname
 Version: 1.2.4
-Release: alt3
+Release: alt4
 
 Summary: A library for manipulating QuickTime files
 %if_with gpl
@@ -334,6 +334,10 @@ rm -f %buildroot%pluginsdir/*.la
 %endif
 
 %changelog
+* Sat Jun 03 2017 Anton Farygin <rider@altlinux.ru> 1.2.4-alt4
+- rebuilt with  ffmpeg-3.3.1
+- fixed integer overflow in the quicktime_read_pascal (Fixes: CVE-2016-2399)
+
 * Wed Mar 09 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.4-alt3
 - rebuilt with recent libav/libx264
 
