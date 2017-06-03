@@ -3,7 +3,7 @@
 %define oname audacious
 Name: audacious-plugins
 Version: 3.8.2
-Release: alt2
+Release: alt3
 
 Summary: Plugins for Audacious
 
@@ -66,6 +66,9 @@ This package contains the base I/O plugins:
 %_libdir/%oname/*
 
 %changelog
+* Sat Jun 03 2017 Anton Farygin <rider@altlinux.ru> 3.8.2-alt3
+- rebuilt with debuginfo-enabled ffmpeg
+
 * Sat Jun 03 2017 Anton Farygin <rider@altlinux.ru> 3.8.2-alt2
 - rebuilt with recent ffmpeg-3.3.1
 
