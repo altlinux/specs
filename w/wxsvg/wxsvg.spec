@@ -1,6 +1,6 @@
 Name: wxsvg
-Version: 1.5
-Release: alt3
+Version: 1.5.12
+Release: alt1
 Epoch: 1
 
 Summary: wxSVG is viewer SVG files
@@ -11,7 +11,7 @@ Source: %name-%version.tar.bz2
 
 BuildRequires: gcc-c++ libart_lgpl-devel libpango-devel
 BuildRequires: libwxGTK3.1-devel libavformat-devel libswscale-devel
-BuildRequires: libexpat-devel libagg-devel
+BuildRequires: libexpat-devel libagg-devel libexif-devel
 
 %description
 wxSVG is viewer SVG files
@@ -71,6 +71,9 @@ rm -f ./configure
 %_libdir/pkgconfig/*
 
 %changelog
+* Sat Jun 03 2017 Anton Farygin <rider@altlinux.ru> 1:1.5.12-alt1
+- new version
+
 * Sun Oct 04 2015 Anton Midyukov <antohami@altlinux.org> 1:1.5-alt3
 - Rebuilt for new gcc5 C++11 ABI.
 
