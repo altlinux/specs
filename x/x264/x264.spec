@@ -1,6 +1,6 @@
 Name: x264
 Version: 148
-Release: alt3
+Release: alt4
 
 Summary: CLI H.264 encoder
 License: GPL
@@ -83,6 +83,9 @@ install -pm0755 tools/countquant_x264.pl %buildroot%_bindir
 %_bindir/countquant_x264.pl
 
 %changelog
+* Sat Jun 03 2017 Anton Farygin <rider@altlinux.ru> 148-alt4
+- rebuild with debuginfo-enabled ffmpeg
+
 * Sat Jun 03 2017 Anton Farygin <rider@altlinux.ru> 148-alt3
 - rebuild in new environment
 
