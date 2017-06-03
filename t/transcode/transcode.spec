@@ -31,7 +31,7 @@
 
 Name: transcode
 Version: 1.1.7
-Release: alt7%ubt
+Release: alt8%ubt
 
 Summary: A linux video stream processing utility
 
@@ -250,6 +250,9 @@ export RPM_FILES_TO_LD_PRELOAD_transcode='%_libdir/%name/*.so'
 %doc contrib/subrip/subtitleripper/{README*,ChangeLog}
 
 %changelog
+* Sat Jun 03 2017 Anton Farygin <rider@altlinux.ru> 1.1.7-alt8%ubt
+- rebuild with debuginfo-enabled ffmpeg
+
 * Tue May 30 2017 Anton Farygin <rider@altlinux.ru> 1.1.7-alt7%ubt
 - rebuild with new ffmpeg
 
