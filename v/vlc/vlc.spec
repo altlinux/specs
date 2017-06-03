@@ -2,7 +2,7 @@
 
 Name: vlc
 Version: 3.0.0
-Release: alt1.git7b57ce6
+Release: alt2.git5149ccb
 
 Summary: VLC media player
 License: GPLv2
@@ -1364,6 +1364,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Sat Jun 03 2017 Anton Farygin <rider@altlinux.ru> 3.0.0-alt2.git5149ccb
+- move forward to git 5149ccb
+
 * Wed May 31 2017 Anton Farygin <rider@altlinux.ru> 3.0.0-alt1.git7b57ce6
 - updated to 7b57ce6 git snapshot
 - build libarchive plugin
