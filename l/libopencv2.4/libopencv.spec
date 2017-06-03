@@ -29,26 +29,16 @@
 %define Name OpenCV
 %define sover 2.4
 Name: lib%bname%sover
-Version: 2.4.9.1
-Release: alt2.1
+Version: 2.4.13.2
+Release: alt1
 Epoch: 1
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
 URL: http://opencv.org
 # git://code.opencv.org/opencv.git
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %bname-%version.tar
-# Debian
-Patch50: libav10.patch
-# FC, GStreamer1 releted patches
-Patch100: 0550-bomb-commit-of-gstreamer-videocapture-and-videowrite.patch
-Patch101: 0552-eliminated-warnings.patch
-Patch102: 0587-Fix-build-with-gstreamer-0.10.28.patch
-Patch103: 0865-gstreamer-cleaning-up-resources.patch
-Patch104: 0871-allow-for-arbitraty-number-of-sources-and-sinks.patch
-
 BuildPreReq: chrpath libcvmser
 BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
 BuildRequires: openexr-devel graphviz libpng-devel libpixman-devel
@@ -199,12 +189,6 @@ This package contains %Name examples.
 
 %prep
 %setup
-%patch50 -p1
-%patch100 -p1
-%patch101 -p1
-%patch102 -p1
-%patch103 -p1
-%patch104 -p1
 
 rm -fR 3rdparty/{ffmpeg,lib,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib}
 
@@ -287,6 +271,9 @@ sed -i \
 %_datadir/*/samples
 
 %changelog
+* Sat Jun 03 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.13.2-alt1
+- new version
+
 * Mon Jun 22 2015 Sergey V Turchin <zerg@altlinux.org> 1:2.4.9.1-alt2.1
 - rebuild with gcc5
 
