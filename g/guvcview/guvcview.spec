@@ -5,7 +5,7 @@
 
 Name: guvcview
 Version: %ver_major.0.5
-Release: alt1
+Release: alt2
 
 Summary: A GTK UVC video viewer
 License: GPLv3+
@@ -106,6 +106,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/doc/%name
 
 %changelog
+* Sun Jun 04 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.5-alt2
+- rebuilt against libavcodec.so.57/libavutil.so.55
+
 * Sun Feb 19 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.5-alt1
 - 2.0.5
 
