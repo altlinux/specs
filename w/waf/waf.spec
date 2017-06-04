@@ -1,8 +1,8 @@
 %def_with python3
 
 Name: waf
-Version: 1.7.10
-Release: alt2
+Version: 1.9.12
+Release: alt1
 
 Summary: A Python-based build system
 License: BSD
@@ -14,7 +14,8 @@ URL: http://code.google.com/p/waf/
 # We remove:
 # - /docs/book, licensed CC BY-NC-ND
 # - Waf logos, licensed CC BY-NC
-Source:         waf-%{version}.stripped.tar.bz2
+# git https://github.com/waf-project/waf
+Source:         waf-%{version}.tar
 Patch0: waf-1.6.2-libdir.patch
 Patch1: waf-1.6.9-logo.patch
 
@@ -121,6 +122,9 @@ rm -f docs/sphinx/build/html/.buildinfo
 
 
 %changelog
+* Sun Jun 04 2017 Anton Farygin <rider@altlinux.ru> 1.9.12-alt1
+- updated to 1.9.12
+
 * Tue Mar 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.7.10-alt2
 - python3 support
 
