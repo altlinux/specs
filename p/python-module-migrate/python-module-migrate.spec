@@ -1,13 +1,13 @@
 %def_with python3
 
 Name:		python-module-migrate
-Version:	0.10.0
-Release:	alt1.1.1
+Version:	0.11.0
+Release:	alt1
 Summary:	Schema migration tools for SQLAlchemy
 
 Group:		Development/Python
 License:	MIT
-URL:		http://github.com/stackforge/sqlalchemy-migrate
+URL:		https://github.com/openstack/sqlalchemy-migrate
 
 Source0:	%name-%version.tar.gz
 
@@ -22,7 +22,7 @@ Patch100: python-migrate-sqlalchemy-migrate.patch
 BuildArch:	noarch
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-extras python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-linecache2 python-module-markupsafe python-module-mimeparse python-module-numpy python-module-pbr python-module-pyasn1 python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-subunit python-module-testtools python-module-traceback2 python-module-twisted-core python-module-unittest2 python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-Pygments python3-module-babel python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-docutils python3-module-enum34 python3-module-genshi python3-module-jinja2 python3-module-markupsafe python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer
-BuildRequires: python-module-docutils python-module-html5lib python-module-mox python-module-nose python-module-pysqlite2 python-module-testrepository python3-module-html5lib python3-module-jinja2-tests python3-module-nose python3-module-pbr python3-module-sphinx rpm-build-python3 time
+BuildRequires: python-module-docutils python-module-html5lib python-module-mox python-module-nose python-module-pysqlite2 python-module-testrepository python3-module-html5lib python3-module-jinja2-tests python3-module-nose python3-module-pbr python3-module-sphinx rpm-build-python3 time python-module-subunit-tests python-module-setuptools-tests python3-module-setuptools-tests
 
 #BuildRequires:	python-devel
 #BuildRequires:	python-module-SQLAlchemy >= 0.7.8
@@ -108,21 +108,22 @@ Tests for Schema migration tools for SQLAlchemy.
 %prep
 %setup
 #%patch0 -p1 -b .db2
-echo '' > migrate/tests/changeset/databases/test_ibmdb2.py
+#echo '' > migrate/tests/changeset/databases/test_ibmdb2.py
 #%patch1 -p1 -b .py27
 %patch100 -p1 -b .rename
 
 # use real unittest in python 2.7 and up
-sed -i "s/import unittest2/import unittest as unittest2/g" \
-    migrate/tests/fixture/__init__.py \
-    migrate/tests/fixture/base.py
+#sed -i "s/import unittest2/import unittest as unittest2/g" \
+#    migrate/tests/fixture/__init__.py \
+#    migrate/tests/fixture/base.py
 
 %if_with python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+#find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
+export PBR_VERSION=%version
 %python_build
 
 %if_with python3
@@ -132,6 +133,7 @@ popd
 %endif
 
 %install
+export PBR_VERSION=%version
 %if_with python3
 pushd ../python3
 %python3_install
@@ -150,14 +152,14 @@ echo 'sqlite:///__tmp__' > test_db.cfg
 # Disable temporarily until tests are adjusted to support testtools >= 0.9.36
 # PATH=/usr/bin/:%{buildroot}%{_bindir} PYTHONPATH=`pwd` nosetests
 
-%add_findreq_skiplist %python_sitelibdir/migrate/versioning/templates/*
-%add_findreq_skiplist %python3_sitelibdir/migrate/versioning/templates/*
-%add_findreq_skiplist %python_sitelibdir/migrate/changeset/databases/ibmdb2.py
-%add_findreq_skiplist %python3_sitelibdir/migrate/changeset/databases/ibmdb2.py
+#%add_findreq_skiplist %python_sitelibdir/migrate/versioning/templates/*
+#%add_findreq_skiplist %python3_sitelibdir/migrate/versioning/templates/*
+#%add_findreq_skiplist %python_sitelibdir/migrate/changeset/databases/ibmdb2.py
+#%add_findreq_skiplist %python3_sitelibdir/migrate/changeset/databases/ibmdb2.py
 
 %files
 %defattr(-,root,root,-)
-%doc README.rst doc/
+%doc README.rst TODO doc/
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -170,7 +172,7 @@ echo 'sqlite:///__tmp__' > test_db.cfg
 
 %if_with python3
 %files -n python3-module-migrate
-%doc README.rst doc/
+%doc README.rst TODO doc/
 %_bindir/*.py3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/migrate/tests
@@ -180,6 +182,9 @@ echo 'sqlite:///__tmp__' > test_db.cfg
 %endif
 
 %changelog
+* Sun Jun 04 2017 Lenar Shakirov <snejok@altlinux.ru> 0.11.0-alt1
+- 0.11.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.0-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
