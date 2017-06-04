@@ -1,6 +1,6 @@
 Name: wvstreams
 Version: 4.6.1
-Release: alt2
+Release: alt3
 
 %define soffix .so.4.6
 %def_disable kdoc
@@ -9,7 +9,7 @@ Release: alt2
 Summary: C++ libraries for rapid application development
 License: LGPL
 Group: Development/C++
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 URL: http://alumnit.ca/wiki/index.php?page=WvStreams
 # git pull http://github.com/wlach/wvstreams master:upstream
@@ -29,6 +29,7 @@ Patch5: wvstreams-4.6.1-gcc.patch
 # fix missing unistd.h header for gcc 4.7
 Patch6: wvstreams-4.6.1-gcc47.patch
 Patch7: wvstreams-4.6.1-magic.patch
+Patch8: 0001-Use-explicit-cast-and-prevent-compiler-error.patch
 
 BuildPreReq: gcc-c++
 BuildPreReq: OpenSP /proc
@@ -67,7 +68,6 @@ Summary: %summary
 Group: Development/Documentation
 Requires: lib%name-devel = %version-%release
 Provides: %name-doxy-manual = %version-%release
-BuildArch: noarch
 %description -n lib%name-devel-doc
 WvStreams aims to be an efficient, secure, and easy-to-use library
 for doing network applications development.
@@ -181,6 +181,7 @@ install -m644 %SOURCE1 .
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %build
 %autoreconf
@@ -276,6 +277,10 @@ mv %buildroot%_localstatedir/lib/uniconf/uniconfd.ini \
 %_libdir/pkgconfig/libwvqt.pc
 
 %changelog
+* Sun Jun 04 2017 Andrey Cherepanov <cas@altlinux.org> 4.6.1-alt3
+- Use explicit cast and prevent compiler error (patch from Fedora)
+- Disable noarch for doc package
+
 * Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 4.6.1-alt2
 - rebuilt against gcc5-built qt3
 
