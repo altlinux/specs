@@ -1,5 +1,5 @@
 Name: mediainfo
-Version: 0.7.95
+Version: 0.7.96
 Release: alt1
 
 Group: File tools
@@ -141,6 +141,9 @@ grep -v '^Encoding=' Project/GNU/GUI/mediainfo-gui.kde4.desktop >%buildroot%_K4s
 %_K4srv/ServiceMenus/%name-gui.desktop
 
 %changelog
+* Sun Jun 04 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.96-alt1
+- 0.7.96
+
 * Sun May 07 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.95-alt1
 - 0.7.95
 
