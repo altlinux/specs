@@ -1,5 +1,8 @@
+%define module_name scripttest
+%def_with python3
+
 Name:		python-module-scripttest
-Version:	1.0.4
+Version:	1.3
 Release:	alt1
 Summary:	Helper to test command-line scripts
 
@@ -8,12 +11,13 @@ License:	MIT
 URL:		http://pypi.python.org/pypi/ScriptTest/
 Source0:	%{name}-%{version}.tar.gz
 # Issue preventing build and usage on ext4.
-Patch0:		python-module-scripttest-1.0.4-files_updated.patch
 BuildArch:	noarch
 
-BuildRequires:	python-devel
-BuildRequires:	python-module-sphinx
-BuildRequires:	python-module-nose
+BuildRequires:	python-devel python-module-setuptools-tests
+
+%if_with python3
+BuildRequires(pre): rpm-build-python3 python3-module-setuptools-tests
+%endif
 
 %description
 ScriptTest is a library to help you test your interactive
@@ -22,34 +26,57 @@ command-line applications.
 With it you can easily run the command (in a subprocess) and see
 the output (stdout, stderr) and any file modifications.
 
+%if_with python3
+%package -n python3-module-%module_name
+Summary: Helper to test command-line scripts
+Group: Development/Python3
+
+%description -n python3-module-%module_name
+ScriptTest is a library to help you test your interactive
+command-line applications.
+
+With it you can easily run the command (in a subprocess) and see
+the output (stdout, stderr) and any file modifications.
+%endif
+
 %prep
-%setup -q
-%patch0 -p2 -b .files_updated
+%setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
 
 %build
-%{__python} setup.py build
+%python_build
 
-# generate docs
-PYTHONPATH=./build/lib:$PYTHONPATH ./regen-docs
-rm docs/_build/objects.inv
-rm -rf docs/_build/.doctrees
-rm docs/_build/.buildinfo
-mv docs/_build docs/html
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
-rm -rf %{buildroot}
-%{__python} setup.py install --skip-build --root %{buildroot}
+%python_install
 
-%check
-./test
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
-%defattr(-,root,root,-)
-%doc docs/html
-%doc docs/license.txt
-%{python_sitelibdir}/scripttest/
-%{python_sitelibdir}/ScriptTest*.egg-info
+%python_sitelibdir/*
+
+
+%if_with python3
+%files -n python3-module-%module_name
+%python3_sitelibdir/*
+%endif
 
 %changelog
+* Sun Jun 04 2017 Lenar Shakirov <snejok@altlinux.ru> 1.3-alt1
+- Version 1.3
+- Python3 enabled
+
 * Sat Sep 15 2012 Pavel Shilovsky <piastry@altlinux.org> 1.0.4-alt1
 - Initial release for Sisyphus (based on Fedora)
