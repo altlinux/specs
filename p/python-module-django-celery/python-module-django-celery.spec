@@ -1,13 +1,14 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.a1.git20150124.1.1.1
 %define module_name django-celery
+
+%add_python3_req_skip celery.registry
+%add_python3_req_skip celery.task.control
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%module_name
-Version: 3.2.0
-#Release: alt1.a1.git20150124.1.1
+Version: 3.2.1
+Release: alt1
 Group: Development/Python
 License: BSD License
 Summary: django-celery provides Celery integration for Django
@@ -79,18 +80,21 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 python setup.py test
 
 %files
-%doc AUTHORS Changelog FAQ LICENSE README.rst THANKS TODO
+%doc AUTHORS Changelog FAQ LICENSE README.rst THANKS
 %python_sitelibdir/djcelery*
 %python_sitelibdir/django_celery*
 
 %if_with python3
 %files -n python3-module-%module_name
-%doc AUTHORS Changelog FAQ LICENSE README.rst THANKS TODO
+%doc AUTHORS Changelog FAQ LICENSE README.rst THANKS
 %python3_sitelibdir/djcelery*
 %python3_sitelibdir/django_celery*
 %endif
 
 %changelog
+* Sat Jun 03 2017 Lenar Shakirov <snejok@altlinux.ru> 3.2.1-alt1
+- Version 3.2.1
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.2.0-alt1.a1.git20150124.1.1.1
 - (AUTO) subst_x86_64.
 
