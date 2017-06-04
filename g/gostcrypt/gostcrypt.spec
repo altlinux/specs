@@ -1,6 +1,6 @@
 Name: 	  gostcrypt
 Version:  1.3
-Release:  alt1
+Release:  alt2
 
 Summary:  Fork of the (late) Truecrypt project
 License:  GPLv3
@@ -10,6 +10,7 @@ Url: 	  http://www.gostcrypt.org/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   GostCrypt_Linux_%version.tar.gz
+Patch:    gostcrypt-fix-conversion.patch
 
 BuildRequires: gcc-c++ libfuse-devel libwxGTK-devel
 
@@ -27,9 +28,10 @@ and richness of encryption solutions is THE solution.
 
 %prep
 %setup -n GostCrypt_Linux_%version
+%patch -p2
 
 %build
-%make_build NOTEST=1
+%make_build NOTEST=1 VERBOSE=1
 
 %install
 install -Dm0755 Main/%name %buildroot%_bindir/%name
@@ -42,6 +44,10 @@ install -Dm0755 Main/%name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sun Jun 04 2017 Andrey Cherepanov <cas@altlinux.org> 1.3-alt2
+- Ignore narrowing conversion warnings
+- Fix some conversion errors
+
 * Sat Jul 09 2016 Andrey Cherepanov <cas@altlinux.org> 1.3-alt1
 - New version
 
