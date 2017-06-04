@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.2.6
+Version: 2.2.7
 Release: alt1%ubt
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -279,6 +279,24 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Sun Jun 04 2017 Anton Farygin <rider@altlinux.ru> 2.2.7-alt1%ubt
+- new version with these security fixes:
+     * wnpa-sec-2017-22 Bazaar dissector infinite loop CVE-2017-9352
+     * wnpa-sec-2017-23 DOF dissector read overflow CVE-2017-9348
+     * wnpa-sec-2017-24 DHCP dissector read overflow CVE-2017-9351
+     * wnpa-sec-2017-25 SoulSeek dissector infinite loop CVE-2017-9346
+     * wnpa-sec-2017-26 DNS dissector infinite loop CVE-2017-9345
+     * wnpa-sec-2017-27 DICOM dissector infinite loop CVE-2017-9349
+     * wnpa-sec-2017-28 openSAFETY dissector memory exhaustion CVE-2017-9350
+     * wnpa-sec-2017-29 BT L2CAP dissector divide by zero CVE-2017-9344
+     * wnpa-sec-2017-30 MSNIP dissector crash CVE-2017-9343
+     * wnpa-sec-2017-31 ROS dissector crash CVE-2017-9347
+     * wnpa-sec-2017-32 RGMP dissector crash CVE-2017-9354
+     * wnpa-sec-2017-30 MSNIP dissector crash CVE-2017-9343
+     * wnpa-sec-2017-31 ROS dissector crash CVE-2017-9347
+     * wnpa-sec-2017-32 RGMP dissector crash CVE-2017-9354
+     * wnpa-sec-2017-33 IPv6 dissector crash CVE-2017-9353
+
 * Fri Apr 14 2017 Anton Farygin <rider@altlinux.ru> 2.2.6-alt1%ubt
 - new version with these security fixes:
      * wnpa-sec-2017-12 IMAP dissector crash CVE-2017-7703
