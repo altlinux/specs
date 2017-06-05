@@ -1,6 +1,6 @@
 Name: libmediastreamer
 Version: 2.15.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Audio/Video real-time streaming
@@ -59,8 +59,8 @@ develop programs using the mediastreamer2 library.
 %configure \
     --datadir=%_datadir/mediastreamer \
     --disable-static \
+    --disable-documentation \
     --enable-shared
-#    --enable-gtk-doc=no \
 %make_build CFLAGS="%optflags" CXXFLAGS="%optflags"
 
 %install
@@ -79,13 +79,17 @@ mkdir -p %buildroot/%_libdir/mediastreamer/plugins
 %_datadir/mediastreamer
 
 %files devel
-%doc help/doc/html
+# TODO remove if unneeded
+#%%doc help/doc/html
 %_libdir/*.so
 %_libdir/pkgconfig/*.pc
 %_libdir/mediastreamer
 %_includedir/*
 
 %changelog
+* Mon Jun 05 2017 Alexei Takaseev <taf@altlinux.org> 2.15.1-alt2
+- Rebuild with ffmpeg
+
 * Fri Mar 03 2017 Alexei Takaseev <taf@altlinux.org> 2.15.1-alt1
 - 2.15.1
 
