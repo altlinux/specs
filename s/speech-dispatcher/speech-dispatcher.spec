@@ -1,5 +1,5 @@
 Name: speech-dispatcher
-Version: 0.8.6
+Version: 0.8.7
 Release: alt1
 
 Summary: A speech output processing service
@@ -180,6 +180,9 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%{name}d.service
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Jun 02 2017 Yuri N. Sedunov <aris@altlinux.org> 0.8.7-alt1
+- 0.8.7
+
 * Fri Feb 10 2017 Yuri N. Sedunov <aris@altlinux.org> 0.8.6-alt1
 - 0.8.6
 
