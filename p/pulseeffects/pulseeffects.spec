@@ -1,7 +1,8 @@
 %define gst_api_ver 1.0
+%define gst_ver 1.12
 
 Name: pulseeffects
-Version: 1.4.3
+Version: 1.5.1
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -14,7 +15,8 @@ Source: %name-%version.tar.gz
 BuildArch: noarch
 
 Requires: pulseaudio-daemon dconf
-Requires: gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
+Requires: gst-plugins-good%gst_api_ver >= %gst_ver
+Requires: gst-plugins-bad%gst_api_ver >= %gst_ver
 Requires: ladspa-swh-plugins
 
 # python3 used
@@ -49,6 +51,9 @@ cp -r share %buildroot%_prefix
 %doc README*
 
 %changelog
+* Mon Jun 05 2017 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Sun May 28 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4.3-alt1
 - 1.4.3
 
