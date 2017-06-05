@@ -1,14 +1,6 @@
 Name: parole
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
-
-# '1' for gstreamer-1.0
-# '0' or undefined for gstreamer-0.10
-%ifnarch %arm
-%define gstreamer1 1
-%else
-%define gstreamer1 0
-%endif
 
 %def_enable clutter
 
@@ -29,22 +21,13 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4ui-gtk3-devel libxfce4util-devel libxfconf-devel
 BuildRequires: libgtk+3-devel libnotify-devel libtag-devel
-%if %{?gstreamer1}%{!?gstreamer1:0}
 BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
-%else
-BuildRequires: gstreamer-devel gst-plugins-devel
-%endif
 BuildRequires: libdbus-glib-devel libdbus-devel
 %{?_enable_clutter:BuildRequires: libclutter-devel libclutter-gtk3-devel}
 BuildRequires: intltool gtk-doc
 
-%if %{?gstreamer1}%{!?gstreamer1:0}
 Requires: gstreamer1.0
 Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-plugins-ugly1.0 gst-libav
-%else
-Requires: gstreamer
-Requires: gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-ffmpeg
-%endif
 
 %description
 Parole is a modern simple media player based on the GStreamer framework
@@ -73,11 +56,6 @@ mkdir m4
 	--disable-static \
 	--enable-maintainer-mode \
 	--enable-taglib \
-%if %{?gstreamer1}%{!?gstreamer1:0}
-	--with-gstreamer=1.0 \
-%else
-	--with-gstreamer=0.10 \
-%endif
 	%{subst_enable clutter} \
 	--enable-gtk-doc \
 	--enable-debug=minimal
@@ -102,6 +80,10 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Jun 05 2017 Mikhail Efremov <sem@altlinux.org> 0.9.2-alt1
+- Drop gtreamer-0.10 build support.
+- Updated to 0.9.2.
+
 * Mon Feb 27 2017 Mikhail Efremov <sem@altlinux.org> 0.9.1-alt1
 - Updated to 0.9.1.
 
