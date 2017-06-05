@@ -2,7 +2,7 @@
 
 Name: libgegl
 Version: 0.2.0
-Release: alt4
+Release: alt5
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
 Group: System/Libraries
@@ -62,6 +62,9 @@ developing with %name.
 %endif
 
 %changelog
+* Mon Jun 05 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.2.0-alt5
+- rebuild with ffmpeg 3.3.1
+
 * Mon Jan 23 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.2.0-alt4
 - rebuild with libopenraw 0.1.0
 
