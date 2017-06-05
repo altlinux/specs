@@ -11,7 +11,7 @@
 Name: motion
 Version: 4.0.1
 
-Release: %branch_point.1
+Release: %branch_point.2
 
 
 Summary: %name - Detect motion using a video4linux device
@@ -81,6 +81,9 @@ rename -- -dist.conf .conf %buildroot%_sysconfdir/%name/*.conf
 %_man1dir/*
 
 %changelog
+* Mon Jun 05 2017 Hihin Ruslan <ruslandh@altlinux.ru> 4.0.1-alt1.2
+- Rebuild with new ffnpeg
+
 * Thu Feb 23 2017 Hihin Ruslan <ruslandh@altlinux.ru> 4.0.1-alt1.1
 - Version 4.0.1 (ALT #33157)
 
