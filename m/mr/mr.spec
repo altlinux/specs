@@ -1,5 +1,5 @@
 Name: mr
-Version: 1.20160123
+Version: 1.20170129
 Release: alt1
 
 Summary: A tool to manage all your version control repos
@@ -79,6 +79,9 @@ install -d %buildroot%_docdir/%name-%version
 %_man1dir/webcheckout*
 
 %changelog
+* Mon Jun 05 2017 Pavel Nakonechnyi <zorg@altlinux.org> 1.20170129-alt1
+- updated to 1.20170129
+
 * Tue Nov 01 2016 Pavel Nakonechnyi <zorg@altlinux.org> 1.20160123-alt1
 - updated to 1.20160123
 - mr: create temporary file with '.mrconfig' suffix
