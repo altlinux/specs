@@ -1,5 +1,5 @@
 Name: iso-codes
-Version: 3.74
+Version: 3.75
 Release: alt1
 
 Group: System/Internationalization
@@ -53,6 +53,9 @@ ln -sf %_licensedir/LGPL-2.1 LICENSE
 %_datadir/pkgconfig/iso-codes.pc
 
 %changelog
+* Fri Jun 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.75-alt1
+- 3.75
+
 * Sun Jan 22 2017 Yuri N. Sedunov <aris@altlinux.org> 3.74-alt1
 - 3.74
 
