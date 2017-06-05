@@ -1,17 +1,17 @@
 Name: alterator-zabbix-node
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 
 Summary: Deployment tool for a Zabbix node
 License: GPL
 Group: System/Configuration/Other
-BuildArch: noarch
 
 Source: %name-%version.tar.gz
 
 BuildPreReq: help2man alterator-service-functions alterator-php-functions
-
-BuildRequires: alterator
+BuildPreReq: alterator >= 5.0
+BuildRequires: alterator-fbi
+BuildRequires: guile22-devel
 
 Requires:  zabbix-phpfrontend-php5 zabbix-phpfrontend-engine zabbix-agent
 Requires: alterator-service-functions >= 2.0.0-alt1
@@ -24,6 +24,7 @@ on offline prepared configuration packages.
 %package common
 Summary: Library files for Zabbix node configuration programs
 Group: System/Configuration/Other
+BuildArch: noarch
 
 %description common
 Library files for Zabbix node configuration programs.
@@ -31,6 +32,7 @@ Library files for Zabbix node configuration programs.
 %package -n zabbix-mysql-data-altlinux
 Summary: Base dump with ALT linux templates to grow from (MySQL version)
 Group: System/Configuration/Other
+BuildArch: noarch
 
 %description -n zabbix-mysql-data-altlinux
 Base dump with ALT linux templates to grow from.
@@ -41,6 +43,7 @@ This pacakge contains the MySQL version of the dump.
 Summary: Alterator module for the Zabbix agent configuration
 Group: System/Configuration/Other
 Requires: zabbix-agent
+Requires: alterator >= 5.0
 Requires: alterator-l10n >= 2.9-alt21
 
 %description -n alterator-zabbix-agent
@@ -51,6 +54,7 @@ Summary: IVK ChainMail configuration files for Zabbix agent
 Group: System/Configuration/Other
 Requires: zabbix-agent
 Requires: alterator-l10n >= 2.9-alt21
+BuildArch: noarch
 
 %description -n zabbix-chainmail-parameters
 IVK ChainMail configuration files for Zabbix agent
@@ -75,11 +79,16 @@ IVK ChainMail configuration files for Zabbix agent
 %_alterator_datadir/applications/zabbix-agent.desktop
 %_alterator_datadir/ui/zabbix-agent
 %_alterator_backend3dir/zabbix-agent
+%_alterator_libdir/ui/*
 
 %files -n zabbix-chainmail-parameters
 %_sysconfdir/zabbix/zabbix_agentd.conf.d/Chainmail.conf
 
 %changelog
+* Mon Jun 05 2017 Mikhail Efremov <sem@altlinux.org> 1.3.3-alt1
+- Update spec for guile22.
+- Don't allow some symbols in hostname.
+
 * Mon May 25 2015 Anton Farygin <rider@altlinux.ru> 1.3.2-alt1
 - simplified creation of zabbix node
 - fixed zabbix_agent restart, when button "apply" was used in WEB-interface
