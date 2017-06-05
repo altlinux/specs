@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-snort
-Version: 0.5.3
+Version: 0.5.4
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -9,17 +9,21 @@ Summary: Alterator module for snort administration
 Packager: Mikhail Efremov <sem@altlinux.org>
 Source: %name-%version.tar
 
-Requires: alterator >= 4.10-alt8 alterator-sh-functions >= 0.6-alt5 libshell >= 0.0.1-alt4
+Requires: alterator >= 5.0
+Requires: alterator-sh-functions >= 0.6-alt5 libshell >= 0.0.1-alt4
 Requires: alterator-service-functions
 Requires: snort barnyard2-mysql snort-rules
 Requires: oinkmaster wget
 Requires: alterator-l10n >= 2.8-alt4
 Requires: fail2ban >= 0.8.13
 
-BuildPreReq: alterator >= 4.10-alt8
+BuildPreReq: alterator >= 5.0
+BuildRequires: alterator-fbi
+BuildRequires: guile22-devel
+
 BuildPreReq: rpm-build-licenses
 
-BuildArch: noarch
+%define _unpackaged_files_terminate_build 1
 
 %description
 Alterator module for snort administration.
@@ -45,6 +49,7 @@ install -m644 tools/base_conf.php %buildroot/%_datadir/alterator-snort/
 %_altdata_dir/desktop-directories/*
 %_altdata_dir/ui/*/
 %_alterator_backend3dir/*
+%_alterator_libdir/ui/*
 %_libexecdir/%name/
 %ghost %_sysconfdir/cron.d/%name
 %ghost %_sysconfdir/cron.d/%name-notifications
@@ -53,6 +58,10 @@ install -m644 tools/base_conf.php %buildroot/%_datadir/alterator-snort/
 %_datadir/alterator-snort/base_conf.php
 
 %changelog
+* Mon Jun 05 2017 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt1
+- Update spec for guile22.
+- Validate input fields.
+
 * Tue Jan 20 2015 Mikhail Efremov <sem@altlinux.org> 0.5.3-alt1
 - Rename button: "Reload fail2ban" -> "Reload".
 
