@@ -1,6 +1,6 @@
 Name: grub2
-Version: 2.00
-Release: alt21
+Version: 2.02
+Release: alt1
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -23,24 +23,17 @@ Source9: update-grub.8
 
 Source10: grub-efi-autoupdate
 
-Patch0: grub-2.00-gnulib-gets.patch
-Patch1: grub-2.00-os-alt.patch
-Patch2: grub-2.00-sysconfig-path-alt.patch
-Patch3: grub-2.00-altlinux-theme.patch
-Patch4: grub-2.00-debian-uefi-os-prober.patch
-Patch5: grub-2.00-os-alt-xen.patch
-Patch6: grub-1.99-debian-disable_floppies.patch
-Patch7: grub-2.00-grubinstall-evms-sync-alt.patch
-Patch8: grub-1.99-efibootmgr-req.patch
-Patch9: grub2-fix-locale-en.mo.gz-not-found-error-message.patch
-Patch10: grub-2.00-r4586-one-by-off.patch
-Patch11: grub-2.00-install-uefi-signed.patch
-Patch12: grub2-stfu.patch
-Patch13: grub-2.00-fedora-unrestricted.patch
-Patch14: grub-2.00-texinfo.patch
-Patch15: 0001-Fix-CVE-2015-8370-Grub2-user-pass-vulnerability.patch
-
-Packager: Michael Shigorin <mike@altlinux.org>
+Patch0: grub-2.02-os-alt.patch
+Patch1: grub-2.00-sysconfig-path-alt.patch
+Patch2: grub-2.02-altlinux-theme.patch
+Patch3: grub-2.00-debian-uefi-os-prober.patch
+Patch4: grub-2.02-os-alt-xen.patch
+Patch5: grub-2.02-debian-disable_floppies.patch
+Patch6: grub-2.02-add-fw_path-variable.patch
+Patch7: grub-2.02-efibootmgr-check.patch
+Patch8: grub-2.02-debian-install_signed.patch
+Patch9: grub-2.00-fedora-unrestricted.patch
+Patch10: grub2-stfu.patch
 
 BuildRequires: flex fonts-bitmap-misc fonts-ttf-dejavu libfreetype-devel python-modules ruby autogen
 BuildRequires: liblzma-devel help2man zlib-devel
@@ -65,34 +58,22 @@ BuildRequires: fonts-bitmap-univga
 
 ## see also fonts-bitmap-ucs-miscfixed; efont-unicode doesn't fit
 
-Exclusivearch: %ix86 x86_64
-
 Requires: gettext
 
 # NB: not a fashion but the critical need to fit into 62 sectors
 %define _optlevel s
 
-# build efi bootloader on some platforms only:
-%if ! 0%{?efi}
-%define efi %ix86 x86_64 ia64
-%endif
-
 %ifarch %ix86
 %global grubefiarch i386-efi
 %global grubefiname grubia32.efi
-%global grubeficdname gcdia32.efi
 %endif
 %ifarch x86_64
 %global grubefiarch x86_64-efi
 %global grubefiname grubx64.efi
-%global grubeficdname gcdx64.efi
 %endif
-
-# OLPC is rumoured to use IEEE1275 either
-%ifarch ppc ppc64
-%define platform ieee1275
-%else
-%define platform pc
+%ifarch aarch64
+%global grubefiarch arm64-efi
+%global grubefiname grubaa64.efi
 %endif
 
 %package common
@@ -103,20 +84,17 @@ Group: System/Kernel and hardware
 Summary: GRand Unified Bootloader (PC BIOS variant)
 Group: System/Kernel and hardware
 Requires: %name-common = %version-%release
-
-Conflicts: grub
-Obsoletes: grub < %version-%release
-
 Provides: grub2 = %version-%release
-Obsoletes: grub2 < %version-%release
 
 %package efi
 Summary: GRand Unified Bootloader (UEFI variant)
 Group: System/Kernel and hardware
 Requires: %name-common = %version-%release
-%ifarch x86_64
+%ifarch aarch64 x86_64
 Requires: efibootmgr
-Obsoletes: %name-efi-unsigned
+%endif
+%ifarch aarch64
+Provides: grub2 = %version-%release
 %endif
 
 %define desc_generic \
@@ -155,48 +133,40 @@ when one can't disable it easily, doesn't want to, or needs not to.
 
 %prep
 %setup -b 5
-%patch0 -p1
+%patch0 -p2
 %patch1 -p1
-%patch2 -p1
+%patch2 -p2
 %patch3 -p1
-%patch4 -p1
+%patch4 -p2
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-#patch8 -p1
+%patch8 -p1
 %patch9 -p1
-%patch10 -p0
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
+%patch10 -p1
 
-sed -i "/^AC_INIT(\[GRUB\]/ s/%version/%version-%release/" configure.ac
+sed -i 's,@GRUB_EFI_NAME@,%grubefiname,' %SOURCE10
+sed -i "/^AC_INIT(\[GRUB\]/ s/%version[^]]\+/%version-%release/" configure.ac
 
-mv ../grub-extras-%version ./grub-extras
-
-%ifarch %efi
+%ifarch %ix86 x86_64
 cd ..
-rm -rf %name-efi-%version
-cp -a %name-%version %name-efi-%version
-cd %name-efi-%version
+rm -rf %name-pc-%version
+cp -a %name-%version %name-pc-%version
 %endif
 
 %build
-export GRUB_CONTRIB=`pwd`/grub-extras
+%ifarch %ix86 x86_64
+pushd ../%name-pc-%version
 ./autogen.sh
 %configure \
 	TARGET_LDFLAGS=-static \
-	--with-platform=%platform \
+	--with-platform=pc \
 	--disable-werror
 
 %make_build
-# NB: make unicode.pf2 results in a broken font file, argh
+popd
+%endif
 
-%ifarch %efi
-cd ../%name-efi-%version
-export GRUB_CONTRIB=`pwd`/grub-extras
 ./autogen.sh
 %configure \
 	TARGET_LDFLAGS=-static \
@@ -205,22 +175,14 @@ export GRUB_CONTRIB=`pwd`/grub-extras
 
 %make_build
 
-# NB: 32-bit operation NOT tested at all (things are quite 64-bittish, btw)
-%ifarch %ix86
-%define grubefiarch i386-efi
-%else
-%define grubefiarch %_arch-efi
-%endif
-
-# NB: this isn't tested all too well, might be broken or lacking;
-#     grub-install --target=x86_64-efi will assemble another one
 ./grub-mkimage -O %grubefiarch -o grub.efi -d grub-core -p "" \
 	part_gpt hfsplus fat ext2 btrfs normal chain boot configfile linux \
-	appleldr minicmd loadbios reboot halt search font gfxterm
-%endif
+	minicmd reboot halt search search_fs_uuid all_video font gfxmenu gfxterm
 
 %install
-export GRUB_CONTRIB=`pwd`/grub-extras
+%ifarch %ix86 x86_64
+%makeinstall_std -C ../%name-pc-%version
+%endif
 %makeinstall_std
 
 install -pDm644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/%name
@@ -255,12 +217,7 @@ ln -s ../boot/grub/grub.cfg %buildroot%_sysconfdir/grub.cfg
 mkdir -p %buildroot%_sysconfdir/default
 ln -s ../sysconfig/%name %buildroot%_sysconfdir/default/grub
 
-%ifarch %efi
-cd ../%name-efi-%version
-%makeinstall_std
-
 install -pDm644 grub.efi %buildroot%_efi_bindir/grub.efi
-cd -
 
 # NB: UEFI GRUB2 image gets signed when build environment is set up that way
 %ifarch x86_64
@@ -269,7 +226,6 @@ cd -
 
 # Remove headers
 rm -f %buildroot%_libdir/grub-efi/*/*.h
-%endif
 
 %files common -f grub.lang
 %dir %_sysconfdir/grub.d
@@ -291,7 +247,6 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %_sbindir/grub-bios-setup
 %_sbindir/grub-install
 %_sbindir/grub-mkconfig
-%_sbindir/grub-mknetdir
 %_sbindir/grub-ofpathname
 %_sbindir/grub-probe
 %_sbindir/grub-reboot
@@ -299,48 +254,46 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %_sbindir/grub-sparc64-setup
 %_sbindir/update-grub
 %_bindir/grub-editenv
+%_bindir/grub-file
 %_bindir/grub-fstest
+%_bindir/grub-glue-efi
 %_bindir/grub-kbdcomp
 %_bindir/grub-menulst2cfg
+%_bindir/grub-mknetdir
 %_bindir/grub-mkstandalone
 %_bindir/grub-mkfont
 %_bindir/grub-mklayout
 %_bindir/grub-mkimage
 %_bindir/grub-mkpasswd-pbkdf2
 %_bindir/grub-mkrelpath
-%_bindir/grub-script-check
-%ifnarch ppc ppc64
 %_bindir/grub-mkrescue
-%endif
+%_bindir/grub-render-label
+%_bindir/grub-script-check
+%_bindir/grub-syslinux2cfg
 %_datadir/grub/grub-mkconfig_lib
 %_man1dir/*
 %_man8dir/*
 %_infodir/grub.info.*
 %_infodir/grub-dev.info.*
 
+%ifarch %ix86 x86_64
 %files pc
-%_libdir/grub/*-%platform/
-%config(noreplace) %_sysconfdir/grub.cfg
 %ghost %config(noreplace) /boot/grub/grub.cfg
+%_sysconfdir/grub.cfg
 %_sbindir/grub-autoupdate
 %_rpmlibdir/%name.filetrigger
-
-%ifarch %efi
-%ifarch x86_64
-%files efi
-%_efi_bindir/grub.efi
-%else
-%files efi
+%_libdir/grub/*-pc/
 %endif
+
+%files efi
+%ghost %config(noreplace) /boot/grub/grub.cfg
+%_sysconfdir/grub.cfg
+%_sbindir/grub-efi-autoupdate
+%_rpmlibdir/%name.filetrigger
 %_efi_bindir/grub.efi
 %_libdir/grub/%grubefiarch
-%_sbindir/grub-efi-autoupdate
-%endif
 
-# see #27935: grub1 would have /usr/lib/grub -> /boot/grub symlink
-%pre common
-[ -L %_libdir/grub ] && rm -f %_libdir/grub ||:
-
+%ifarch %ix86 x86_64
 %post pc
 grub-autoupdate || {
 	echo "** WARNING: grub-autoupdate failed, NEXT BOOT WILL LIKELY FAIL NOW"
@@ -348,6 +301,7 @@ grub-autoupdate || {
 	echo "** WARNING: make sure you have bootable rescue CD/flash media handy"
 	echo "** WARNING: and try \`grub-install /dev/sdX' manually"
 } >&2
+%endif
 
 %post efi
 modprobe efivars
@@ -364,6 +318,12 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Mon Jun 05 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.02-alt1
+- 2.02 released
+
+* Tue May 10 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.02-alt0.3
+- 2.02 beta3
+
 * Wed Dec 02 2015 Michael Shigorin <mike@altlinux.org> 2.00-alt21
 - CVE-2015-8370: those who have set up GRUB passwords MUST
   upgrade or find their use of this "protection" inefficient:
