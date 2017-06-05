@@ -24,7 +24,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.7.1
-Release: alt5%ubt
+Release: alt6%ubt
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -61,6 +61,8 @@ Patch1006: alt-hidpi_scale_at_192.patch
 # macros
 %define _qt5 %gname
 %include %SOURCE1
+
+%add_findreq_skiplist %_qt5_plugindir/platformthemes/libqgtk*.so
 
 # Automatically added by buildreq on Fri Sep 20 2013 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static gstreamer-devel libEGL-devel libGL-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcom_err-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins libkrb5-devel libpango-devel libpng-devel libpq-devel libssl-devel libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxml2-devel pkg-config python-base python3 python3-base ruby ruby-stdlibs xorg-fixesproto-devel xorg-inputproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
@@ -760,6 +762,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Mon Jun 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt6.S1
+- ignore GTK3 dependencies
+
 * Fri Jun 02 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt5%ubt
 - fix calculate pixel density
 
