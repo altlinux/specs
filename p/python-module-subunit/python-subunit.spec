@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 1.2.0
-Release: alt1
+Release: alt2
 Summary: Python implementation of subunit test streaming protocol
 License: Apache or BSD
 Group: Development/Python
@@ -140,25 +140,26 @@ popd
 %_bindir/*
 %exclude %_bindir/py3_*
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/test*
+%exclude %python_sitelibdir/*/tests
 
 %files tests
-%python_sitelibdir/*/test*
+%python_sitelibdir/*/tests
 
 %if_with python3
 %files -n python3-module-%oname
 %doc NEWS README.rst
 %_bindir/py3_*
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test*
-%exclude %python3_sitelibdir/*/__pycache__/test*
+%exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
-%python3_sitelibdir/*/test*
-%python3_sitelibdir/*/__pycache__/test*
+%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Mon Jun 05 2017 Lenar Shakirov <snejok@altlinux.ru> 1.2.0-alt2
+- Fix test_results packaging
+
 * Tue May 23 2017 Lenar Shakirov <snejok@altlinux.ru> 1.2.0-alt1
 - Version 1.2.0
 
