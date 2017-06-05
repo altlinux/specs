@@ -1,6 +1,6 @@
 Name: rpm-build-mingw64
 Version: 23
-Release: alt3
+Release: alt4%ubt
 
 Summary: MinGW RPM build helper files and macros
 
@@ -13,6 +13,8 @@ BuildArch: noarch
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-ubt
 
 %description
 This package contains the RPM macros and
@@ -63,6 +65,10 @@ install -m 0644 Makefile.mingw64 %buildroot%_datadir/mingw64/
 %_libexecdir/mingw64-scripts
 
 %changelog
+* Mon Jun 05 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 23-alt4.S1
+- drop macros: %%_mingw64_c++, %%_mingw64_c++filt
+  https://bugzilla.redhat.com/show_bug.cgi?id=974773
+
 * Mon Apr 18 2011 Vitaly Lipatov <lav@altlinux.ru> 23-alt3
 - drop out sysroot using (use /usr/x86_64-mc-mingw32 only)
 
