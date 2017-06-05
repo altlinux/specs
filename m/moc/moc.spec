@@ -19,7 +19,7 @@
 
 Name: moc
 Version: 2.6.0
-Release: alt0.3
+Release: alt0.4
 
 Summary: Console player
 Group: Sound
@@ -325,6 +325,9 @@ EOF
 %endif
 
 %changelog
+* Mon Jun 05 2017 Alexey Gladkov <legion@altlinux.ru> 2.6.0-alt0.4
+- Rebuilt with ffmpeg.
+
 * Wed Jan 18 2017 Alexey Gladkov <legion@altlinux.ru> 2.6.0-alt0.3
 - New version (2.6.0-alpha3)
 
