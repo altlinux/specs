@@ -1,6 +1,6 @@
 Name: pqiv
-Version: 2.4.1
-Release: alt3
+Version: 2.8.5
+Release: alt1
 
 Summary: Minimalist Image Viewer
 License: GPL3+
@@ -74,7 +74,7 @@ Backend for %name
 %setup -n %name
 %patch -p1
 %ifarch x86_64
-subst 's|lib/%name|lib64/%name|' GNUmakefile
+subst 's|^LIBDIR=\$(PREFIX)/lib$|LIBDIR=%_libdir|' GNUmakefile
 %endif
 
 %build
@@ -135,6 +135,10 @@ _EOF_
 %_libdir/%name/%name-backend-wand.so
 
 %changelog
+* Mon Jun  5 2017 Terechkov Evgenii <evg@altlinux.org> 2.8.5-alt1
+- 2.8.5
+- Build with ffmpeg
+
 * Sun Dec  6 2015 Terechkov Evgenii <evg@altlinux.org> 2.4.1-alt3
 - Subpackages for gtk2/gtk3
 
