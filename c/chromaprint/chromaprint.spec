@@ -3,7 +3,7 @@
 
 Name: chromaprint
 Version: 1.2
-Release: alt1
+Release: alt2%ubt
 Summary: Library implementing the AcoustID fingerprinting
 
 Group: Sound
@@ -17,6 +17,7 @@ Patch2: chromaprint-1.1-alt-libav10.patch
 # Automatically added by buildreq on Mon May 21 2012 (-bi)
 # optimized out: boost-devel cmake-modules elfutils libavcodec-devel libavutil-devel libopencore-amrnb0 libopencore-amrwb0 libstdc++-devel pkg-config python-base
 #BuildRequires: boost-devel-headers cmake gcc-c++ libavdevice-devel libavformat-devel libfftw3-devel libswscale-devel libtag-devel
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: boost-devel cmake gcc-c++ libavdevice-devel libavformat-devel libfftw3-devel libswscale-devel libtag-devel
 BuildRequires: cmake kde-common-devel
 
@@ -78,6 +79,9 @@ applications which will use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Jun 05 2017 Sergey V Turchin <zerg@altlinux.org> 1.2-alt2%ubt
+- rebuild with ffmpeg
+
 * Wed Jul 01 2015 Sergey V Turchin <zerg@altlinux.org> 1.2-alt1
 - new version
 
