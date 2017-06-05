@@ -1,16 +1,16 @@
 Name: vamp-aubio-plugins
-Version: 0.4.0
-Release: alt1.hg20131231
+Version: 0.5.1
+Release: alt1
 Summary: A set of Vamp plugins
 License: GPLv2
 Group: Sound
-Url: https://code.soundsoftware.ac.uk/projects/vamp-aubio-plugins/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
+Url: https://aubio.org/vamp-aubio-plugins/ 
+# git git://git.aubio.org/git/vamp-aubio-plugins 
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-macros-make
-BuildPreReq: libvamp-devel libaubio4-devel gcc-c++
+BuildRequires(pre): rpm-macros-make 
+BuildPreReq: libvamp-devel libaubio4-devel gcc-c++ waf >= 1.9.12
 
 %description
 A set of Vamp plugins (http://www.sonicvisualiser.org/vamp.html) for
@@ -26,21 +26,23 @@ file extension may vary depending on your platform).
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-#add_optflags -I%_includedir/aubio
-%make_build_ext
+waf configure --prefix=%prefix --libdir=%_libdir
+waf build -vv
 
 %install
-install -d %buildroot%_libdir/vamp
-install -m644 vamp-aubio.* vamp-plugin.* \
-	%buildroot%_libdir/vamp/
+waf install --destdir=%buildroot
 
 %files
-%doc README
+%doc README.md
 %_libdir/vamp
 
 %changelog
+* Sun Jun 04 2017 Anton Farygin <rider@altlinux.ru> 0.5.1-alt1
+- new version
+
 * Sat Sep 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.hg20131231
 - Snapshot from mercurial
 

@@ -1,12 +1,11 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.git20140312.1
+Release: alt1
 %define origname aubio
 %define sover 4
 %def_enable python
 
 Name: libaubio%sover
-Version: 0.4.1
-#Release: alt2.git20140312
+Version: 0.4.5
 Summary: Aubio is a library for real time audio labelling
 Url: http://www.aubio.org/
 License: GPL
@@ -18,8 +17,8 @@ Source: %origname-%version.tar
 # Automatically added by buildreq on Thu Nov 06 2008
 BuildRequires: docbook-to-man jackit-devel libfftw3-devel libsamplerate-devel libsndfile-devel
 
-BuildPreReq: python-modules waf libavcodec-devel libavformat-devel
-BuildPreReq: libavresample-devel txt2man doxygen python-devel
+BuildPreReq: python-modules waf >= 1.9.12 libavcodec-devel libavformat-devel
+BuildPreReq: libavresample-devel txt2man doxygen python-devel libswresample-devel
 BuildPreReq: libnumpy-devel
 
 %description
@@ -107,23 +106,14 @@ waf configure --prefix=%prefix --libdir=%_libdir
 waf build -vv
 
 %if_enabled python
-pushd python
-%add_optflags -fno-strict-aliasing
 %python_build_debug
-popd
 %endif
 
 %install
 waf install --destdir=%buildroot
 
 %if_enabled python
-pushd python
 %python_install
-popd
-%endif
-
-%if "%_libexecdir" != "%_libdir"
-mv %buildroot%_libexecdir/* %buildroot%_libdir/
 %endif
 
 %files
@@ -132,7 +122,7 @@ mv %buildroot%_libexecdir/* %buildroot%_libdir/
 
 %if_enabled python
 %files -n python-module-%origname
-%doc python/README python/demos
+%doc python/README.md python/demos
 %python_sitelibdir/*
 %endif
 
@@ -150,6 +140,9 @@ mv %buildroot%_libexecdir/* %buildroot%_libdir/
 %_docdir/lib%origname-doc
 
 %changelog
+* Sun Jun 04 2017 Anton Farygin <rider@altlinux.ru> 0.4.5-alt1
+- 0.4.5
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.1-alt2.git20140312.1
 - (AUTO) subst_x86_64.
 
