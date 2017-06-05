@@ -1,6 +1,6 @@
 Name: firmware-linux
-Version: 20170517
-Release: alt2
+Version: 20170531
+Release: alt1
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -63,6 +63,9 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 %exclude /lib/firmware/carl9170fw
 
 %changelog
+* Mon Jun 05 2017 Michael Shigorin <mike@altlinux.org> 20170531-alt1
+- updated from git
+
 * Mon May 22 2017 Michael Shigorin <mike@altlinux.org> 20170517-alt2
 - disable attempts to find R:/P: or ELF bugs automatically
 
