@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 8.1
-Release: alt4
+Release: alt5
 
 Summary: %Variant documentation
 License: %fdl
@@ -20,6 +20,9 @@ BuildArch: noarch
 Source: %name-%version-%release.tar
 
 Conflicts: %(for n in %variants ; do [ "$n" = %name ] || echo -n "$n "; done)
+
+Provides: docs-kworkstation = 8.0-alt1
+Obsoletes: docs-kworkstation <= 8.0
 
 BuildRequires(pre):rpm-build-licenses
 BuildRequires: publican
@@ -43,6 +46,9 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Wed May 31 2017 Elena Mishina <lepata@altlinux.org> 8.1-alt5
+- renamed docs-kworkstation->docs-alt-kworkstation
+
 * Wed May 24 2017 Elena Mishina <lepata@altlinux.org> 8.1-alt4
 - fix typo
 - update doc
