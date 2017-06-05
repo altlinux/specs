@@ -2,12 +2,13 @@
 %define _name gegl
 %define ver_major 0.3
 %define api_ver %ver_major
+%def_with libavformat
 %def_disable docs
 %def_enable gtk_doc
 
 Name: lib%_name%api_ver
 Version: %ver_major.16
-Release: alt1
+Release: alt2
 
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
@@ -30,8 +31,7 @@ BuildRequires: libexiv2-devel libjasper-devel libpng-devel liblensfun-devel
 BuildRequires: liblcms2-devel libwebp-devel  libv4l-devel libpoly2tri-c-devel
 BuildRequires: libgexiv2-devel
 BuildRequires: libjson-glib-devel gobject-introspection-devel vala-tools
-# ffmpeg version of this libraries required
-#BuildRequires: libavformat-devel libavcodec-devel libswscale-devel
+%{?_with_libavformat:BuildRequires: libavformat-devel libavcodec-devel libswscale-devel}
 
 %description
 GEGL (Generic Graphics Library) is a graph based image processing framework.
@@ -74,6 +74,7 @@ GObject introspection devel data for the GEGL library.
 %autoreconf
 %configure \
 	%{subst_enable docs} \
+	%{subst_with libavformat} \
 	--disable-static \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
 %make_build
@@ -118,6 +119,9 @@ GObject introspection devel data for the GEGL library.
 %_girdir/Gegl-%api_ver.gir
 
 %changelog
+* Mon Jun 05 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt2
+- enabled libavformat support
+
 * Mon May 15 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt1
 - 0.3.16
 
