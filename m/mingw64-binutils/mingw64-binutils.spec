@@ -1,6 +1,6 @@
 Name: mingw64-binutils
 Version: 2.27
-Release: alt1
+Release: alt2%ubt
 
 Summary: MinGW Windows binutils
 
@@ -8,7 +8,9 @@ License: GPLv2+ and LGPLv2+ and GPLv3+ and LGPLv3+
 Group: Development/Other
 Url: http://www.gnu.org/software/binutils/
 
-Source: %name-%version.tar
+Source: binutils-%version.tar
+
+BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: flex
 BuildRequires: bison
@@ -25,7 +27,7 @@ MinGW Windows binutils (utilities like 'strip', 'as', 'ld') which
 understand Windows executables and DLLs.
 
 %prep
-%setup
+%setup -n binutils-%version
 
 %build
 # without -O0 gnu as doesnt works
@@ -64,6 +66,9 @@ ln -sf ../../..%_bindir/%_mingw64_target-dllwrap \
 %exclude %_man5dir/x86_64-pc-mingw32-gdbinit.5.xz
 
 %changelog
+* Mon Jun 05 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.27-alt2%ubt
+- rebuild
+
 * Sat Dec 24 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.27-alt1
 - 2.27 release
 
