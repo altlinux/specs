@@ -1,7 +1,7 @@
 %define  pkgname mini_portile2
  
 Name: 	 ruby-%pkgname
-Version: 2.1.0 
+Version: 2.2.0
 Release: alt1
  
 Summary: Simple autoconf builder for developers
@@ -57,5 +57,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Mon Jun 05 2017 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt1
+- New version
+
 * Mon Sep 26 2016 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1
 - Initial build for ALT Linux
