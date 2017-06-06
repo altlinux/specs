@@ -2,7 +2,7 @@
 %define gtkver 3
 Name:		deadbeef
 Version:	0.7.1
-Release:	alt1.20160419.1
+Release:	alt2.20160419.1
 Summary:	DeaDBeeF is an audio player
 Url:		http://deadbeef.sf.net
 #https://github.com/Alexey-Yakovenko/deadbeef
@@ -18,11 +18,7 @@ Patch5:		deadbeef-0.5.1-using-tt.patch
 Patch6:		deadbeef-0.5.4-alt-categories-desktop-file.patch
 Patch7:		deadbeef-0.5.6-alt-gdk-threads.patch
 
-# Automatically added by buildreq on Mon Sep 22 2014 (-bi)
-# optimized out: elfutils fontconfig fontconfig-devel glib2-devel gnu-config libX11-devel libatk-devel libavcodec-devel libavutil-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libogg-devel libopencore-amrnb0 libopencore-amrwb0 libpango-devel libpng-devel libsndfile-devel libstdc++-devel libwayland-client libwayland-server perl-XML-Parser pkg-config python-base xorg-xproto-devel zlib-devel
-BuildRequires: gcc-c++ intltool libalsa-devel libavformat-devel libcddb-devel libcdio-devel libcurl-devel libdbus-devel libfaad-devel libflac-devel libgtk+%gtkver-devel libjpeg-devel libmad-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel libwavpack-devel yasm libpng-devel swig
-#Added by a buildreq-src:
-BuildPreReq: swig libcdparanoia-devel imlib2-devel libmpg123-devel libsndfile-devel libpango-devel libjansson-devel
+BuildRequires: /usr/bin/yasm gcc-c++ intltool glib2-devel libX11-devel libatk-devel libcairo-devel libcddb-devel libcdio-devel libcdparanoia-devel libcurl-devel libfaad-devel libflac-devel libgdk-pixbuf-devel libgtk+2-devel libjpeg-devel libmad-devel libmpg123-devel libogg-devel libpango-devel libpng-devel libsndfile-devel libvorbis-devel libwavpack-devel perl(Exporter.pm) perl(FindBin.pm) perl(IO/Handle.pm) perl(IPC/Open2.pm) perl(IPC/Open3.pm) perl(Locale/Country.pm) perl(Locale/Language.pm) perl(base.pm) pkgconfig(alsa) pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(gtk+-3.0) pkgconfig(imlib2) pkgconfig(jansson) pkgconfig(libavcodec) pkgconfig(libavformat) pkgconfig(libavutil) pkgconfig(libpulse-simple) pkgconfig(libzip) pkgconfig(samplerate) swig zlib-devel
 
 Requires:	%name-out-alsa %name-gtk%gtkver
 
@@ -482,13 +478,9 @@ SC68 player (Atari ST SNDH YM2149)
 %patch6 -p2
 #patch7 -p2
 
-
-
 sed -i '/m4/ d' Makefile.am
 
 %build
-export CFLAGS="%optflags"
-export CXXFLAGS="%optflags"
 #%%autoreconf 
 ./autogen.sh
 %configure --enable-notify --docdir=%_docdir/%name-%version --disable-static \
@@ -659,6 +651,9 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-incomplete
 
 %changelog
+* Tue Jun 06 2017 Anton Midyukov <antohami@altlinux.org> 0.7.1-alt2.20160419.1
+- Rebuild with ffmpeg.
+
 * Thu Apr 21 2016 Anton Midyukov <antohami@altlinux.org> 0.7.1-alt1.20160419.1
 - version update to 0.7.1-alt1.20160419.1 (Closes: 31763)
 - build with gtk3
