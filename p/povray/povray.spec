@@ -1,6 +1,7 @@
+%define mjversion 3.7
 Name: povray
-Version: 3.6
-Release: alt4
+Version: %mjversion.0.2
+Release: alt1
 
 Summary: Persistence of Vision Ray Tracer (POV-Ray)
 Summary(ru_RU.UTF-8): Трассировщик лучей POV-Ray
@@ -8,17 +9,16 @@ Summary(ru_RU.UTF-8): Трассировщик лучей POV-Ray
 License: povray
 Group: Graphics
 Url: http://www.povray.org
-
-Source: ftp://ftp.povray.org/pub/povray/Official/Unux/%name-%version.tar.bz2
-Patch1: povray-debian-15_PNG.patch
-Patch2: povray-debian-20_glass.patch
+# git https://github.com/POV-Ray/povray
+Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 Requires: %name-common
-#Obsoletes: megapovplus
 
 # Automatically added by buildreq on Wed Apr 03 2013
 # optimized out: gnu-config libICE-devel libSM-devel libstdc++-devel libX11-devel xorg-xproto-devel zlib-devel
 BuildRequires: gcc-c++ imake libjpeg-devel libpng12-devel libtiff-devel libXpm-devel libXt-devel
+BuildRequires: boost-devel boost-flyweight-devel
 
 %description
 POV-Ray is a free, full-featured ray tracer, written and
@@ -40,7 +40,6 @@ POV-Ray - это свободный, полнофункциональный тр
 Group: Graphics
 Summary: POV-Ray common files
 Summary(ru_RU.UTF-8): Общие файлы для POV-Ray
-#Obsoletes: megapovplus-common
 
 %description common
 Common files for POV-Ray: docs, textures, color maps,
@@ -50,68 +49,43 @@ scenes, scripts etc.
 Общие файлы для разных версий POV-Ray: документация,
 текстуры, цветовые карты, сцены, скрипты и т.д.
 
-#---------------------------------------------------------
-#%package mpi
-#Group: Graphics
-#Summary: An unofficial MPI-version of POV-Ray
-#Requires: %name-common
-#Url: http://www.verrall.demon.co.uk/mpipov/
-#
-#%description mpi
-#A parrallel version of POV-Ray using MPI (mpich).
-#POV-Ray is a free, full-featured ray tracer,  written  and
-#maintained  by  a  team of volunteers on the Internet.  On
-#the Unix platform POV-Ray can be compiled with support for
-#preview  capabilities  using  the  X Window System.  Under
-#Linux, POV-Ray can optionally use the SVGA library to pre-
-#view renderings.
-#
-#---------------------------------------------------------
 %prep
-%setup -q -n %name-3.6.1
-%patch1 -p1
-%patch2 -p1
+%setup 
+%patch0 -p1
 
 %build
+pushd unix
+./prebuild.sh
+popd
 %configure COMPILED_BY='ALT Linux Team (http://www.altlinux.ru, mailto:community@lists.altlinux.org)' --with-x --without-svga
 %make_build CFLAGS=-Wno-multichar CXXFLAGS=-Wno-multichar
-#LDFLAGS=-L%_libdir
+# Adjust bogus paths
+sed -i \
+  -e '/DEFAULT_DIR=/d' \
+  -e 's,SYSCONFDIR=\$DEFAULT_DIR/etc,SYSCONFDIR=%{_sysconfdir},' \
+  scripts/{allanim,allscene,portfolio}.sh
 
 %install
 %make_install install DESTDIR=%buildroot
-# \
-# docdir=%_defaultdocdir/%name-%version \
-# htmldir=%_defaultdocdir/%name-%version/html \
-# imagesdir=%_defaultdocdir/%name-%version/html/images \
-# vfaqdir=%_defaultdocdir/%name-%version/html/images/vfaq
-
 # remove carriage return symbols
-find %buildroot%_datadir/povray-3.6/scripts/ -type f -print0 |\
+find %buildroot%_datadir/povray-%mjversion/scripts/ -type f -print0 |\
 	xargs -r0 sed -i -e 's,\r$,,g'
-
-#%__mkdir_p %buildroot/%_sysconfdir
-#%__mv %buildroot/%_datadir/%name-%version/povray.ini %buildroot/%_sysconfdir/povray.ini
-#cat <<EOF > %buildroot/%_sysconfdir/povray.conf
-#[File I/O Security]
-#none
-#EOF
-
 %files
 %_bindir/povray
 
-#%files mpi
-#%_bindir/povray
-
 %files common
-%config(noreplace) %_sysconfdir/%name/%version/*
-%dir %_datadir/%name-%version
-%_datadir/%name-%version/*
-%docdir %_defaultdocdir/%name-%version
-%dir %_defaultdocdir/%name-%version
-%_defaultdocdir/%name-%version/*
+%config(noreplace) %_sysconfdir/%name/%mjversion/*
+%dir %_datadir/%name-%mjversion
+%_datadir/%name-%mjversion/*
+%docdir %_defaultdocdir/%name-%mjversion
+%dir %_defaultdocdir/%name-%mjversion
+%_defaultdocdir/%name-%mjversion/*
 %doc %_man1dir/*
 
 %changelog
+* Tue Jun 06 2017 Anton Farygin <rider@altlinux.ru> 3.7.0.2-alt1
+- 3.0.7.2 from git
+
 * Wed Apr 03 2013 Fr. Br. George <george@altlinux.ru> 3.6-alt4
 - Build with legacy libpng12
 
