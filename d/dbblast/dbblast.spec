@@ -1,8 +1,6 @@
 Name: dbblast
 Version: 0.1.8
-Release: alt11
-
-Packager: Victor Forsiuk <force@altlinux.org>
+Release: alt12
 
 Summary: Dust bunny blaster
 License: GPLv2+
@@ -46,6 +44,9 @@ cp helpdocs/* %buildroot/usr/share/dbblast
 %_datadir/*
 
 %changelog
+* Tue Jun 06 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.8-alt12
+- rebuilt against libexiv2.so.26
+
 * Sun Jun 28 2015 Yuri N. Sedunov <aris@altlinux.org> 0.1.8-alt11
 - rebuilt against libexiv2.so.14
 
