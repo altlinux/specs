@@ -3,7 +3,7 @@
 
 %define rname kid3
 Name: kde5-%rname
-Version: 3.4.4
+Version: 3.4.5
 Release: alt1%ubt
 %K5init altplace
 
@@ -91,6 +91,7 @@ Package contains KDE5 UI.
 Summary: ID3 tagger Qt5 UI
 Group: Sound
 Requires: %name-core = %EVR
+Conflicts: kid3-ui-qt4
 %description -n %rname-ui-qt5
 Package contains Qt5 UI.
 %{description}
@@ -197,6 +198,9 @@ done
 #%_K5dbus_iface/*id3*
 
 %changelog
+* Tue Jun 06 2017 Sergey V Turchin <zerg@altlinux.org> 3.4.5-alt1%ubt
+- new version
+
 * Mon Jan 09 2017 Sergey V Turchin <zerg@altlinux.org> 3.4.4-alt1%ubt
 - new version
 
