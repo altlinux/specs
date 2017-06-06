@@ -33,6 +33,7 @@
 %endif
 
 %if_with dc
+%def_with ldb_modules
 # Samba Active Directory Domain Controller implementation is not available with MIT Kereberos
 %def_without mitkrb5
 %else
@@ -45,8 +46,8 @@
 %def_with libcephfs
 
 Name:    samba-DC
-Version: 4.6.4
-Release: alt1%ubt
+Version: 4.6.5
+Release: alt2%ubt
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -167,7 +168,6 @@ packages of Samba.
 %package libs
 Summary: Samba libraries
 Group: System/Libraries
-Conflicts: %rname-libs
 Conflicts: %rname-dc-libs
 
 %if_with libnetapi
@@ -179,9 +179,20 @@ Requires: libwbclient-DC = %version-%release
 %if_with libsmbclient
 Requires: libsmbclient-DC = %version-%release
 %endif
+%if_with ldb_modules
+Requires: libldb-modules-DC = %version-%release
+%endif
 
 %description libs
 The %rname-libs package contains the libraries needed by programs that
+link against the SMB, RPC and other protocols provided by the Samba suite.
+
+%package common-libs
+Summary: Samba common libraries
+Group: System/Libraries
+
+%description common-libs
+The %rname-common-libs package contains the common libraries needed by modules that
 link against the SMB, RPC and other protocols provided by the Samba suite.
 
 %package -n libsmbclient-DC
@@ -191,6 +202,13 @@ Conflicts: libsmbclient
 
 %description -n libsmbclient-DC
 The libsmbclient contains the SMB client library from the Samba suite.
+
+%package -n libldb-modules-DC
+Summary: The LDB domain controller modules
+Group: System/Libraries
+
+%description -n libldb-modules-DC
+The libldb-modules-DC contains the ldb library modules from the Samba domain controller.
 
 %package -n libsmbclient-DC-devel
 Summary: Developer tools for the SMB client library
@@ -240,7 +258,8 @@ Samba netapi development files
 %package -n python-module-%name
 Summary: Samba Python libraries
 Group: Networking/Other
-Requires: %name-libs = %version-%release
+Requires: %name-common-libs = %version-%release
+Conflicts: python-module-%rname
 
 %add_python_req_skip Tdb
 
@@ -965,6 +984,8 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %files libs
+
+%files common-libs
 %_samba_libdir/libdcerpc-binding.so.*
 %_samba_libdir/libdcerpc-samr.so.*
 %_samba_libdir/libdcerpc.so.*
@@ -1036,7 +1057,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/libnpa-tstream-samba4.so
 %_samba_mod_libdir/libprinting-migrate-samba4.so
 %_samba_mod_libdir/libregistry-samba4.so
-%_samba_mod_libdir/libreplace-samba4.so
 %_samba_mod_libdir/libsamba-cluster-support-samba4.so
 %_samba_mod_libdir/libsamba-debug-samba4.so
 %_samba_mod_libdir/libsamba-modules-samba4.so
@@ -1083,7 +1103,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/libdfs-server-ad-samba4.so
 %_samba_mod_libdir/libdsdb-module-samba4.so
 %_samba_mod_libdir/libdsdb-garbage-collect-tombstones-samba4.so
+%if_without ldb_modules
 %_samba_mod_libdir/ldb
+%endif
 %_samba_mod_libdir/gensec
 %_samba_mod_libdir/libdb-glue-samba4.so
 %_samba_mod_libdir/libHDB-SAMBA4-samba4.so
@@ -1132,11 +1154,17 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/libsmbclient.so.*
 %endif
 %if_without libwbclient
+%_samba_mod_libdir/libreplace-samba4.so
 %_samba_mod_libdir/libwbclient.so.*
 %_samba_mod_libdir/libwinbind-client-samba4.so
 %endif
 %if_without libnetapi
 %_samba_mod_libdir/libnetapi.so.*
+%endif
+
+%if_with ldb_modules
+%files -n libldb-modules-DC
+%_samba_mod_libdir/ldb
 %endif
 
 %if_with libsmbclient
@@ -1157,6 +1185,7 @@ TDB_NO_FSYNC=1 %make_build test
 %ghost %_libdir/libwbclient.so.*
 %_samba_libdir/libwbclient.so.*
 %_samba_mod_libdir/libwinbind-client-samba4.so
+%_samba_mod_libdir/libreplace-samba4.so
 %_altdir/libwbclient-samba-dc
 
 %files -n libwbclient-DC-devel
@@ -1331,6 +1360,20 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Tue Jun 20 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.5-alt2%ubt
+- Remove conflict samba-DC-libs with samba-libs
+- Adjust python module requirement to samba-DC-common-libs
+- Add conflict python-module-samba-DC with python-module-samba
+
+* Tue Jun 06 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.5-alt1%ubt
+- Udpate to first summer release
+
+* Mon Jun 05 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.4-alt2%ubt
+- Add libldb-modules-DC package with domain controller ldb modules for ldb-tools
+- Add samba-DC-common-libs with libraries for common modules
+- Append list of libraries consists in libwbclient-DC to not require
+  samba-DC-common-libs
+
 * Wed May 24 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.4-alt1%ubt
 - Update to second spring security release
 - Fix longtime initialization bug in ldb proxy
