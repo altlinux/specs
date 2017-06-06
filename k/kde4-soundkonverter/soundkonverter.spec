@@ -1,5 +1,6 @@
 
 %define mp3gain_ver %{get_version mp3gain}
+%define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
 
 %define sover 0
 %define libsoundkonvertercore libsoundkonvertercore%sover
@@ -8,7 +9,7 @@
 %define tname soundkonverter
 Name: kde4-soundkonverter
 Version: 2.2.2
-Release: alt1
+Release: alt2%ubt
 
 Summary: A frontend to various audio converters
 License: GPLv2
@@ -24,12 +25,18 @@ Source: %tname-%version.tar
 Patch1: alt-mp3gain1.4.patch
 Patch2: alt-lib-sover.patch
 
-Requires: /usr/bin/avconv vorbis-tools vorbisgain flac lame mp3gain cdparanoia speex wavpack faad mppenc sox
+%if %is_ffmpeg
+Requires: /usr/bin/ffmpeg
+%else
+Requires: /usr/bin/avconv
+%endif
+Requires: vorbis-tools vorbisgain flac lame mp3gain cdparanoia speex wavpack faad mppenc sox
 #Requires: faac
 
 # Automatically added by buildreq on Mon Mar 15 2010 (-bi)
 #BuildRequires: gcc-c++ glib2-devel glibc-devel-static kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libcdparanoia-devel libqt3-devel libtag-devel libxkbfile-devel qt4-assistant qt4-designer rpm-build-ruby xorg-xf86vidmodeproto-devel
-BuildRequires(pre): kde4libs-devel mp3gain
+BuildRequires(pre): rpm-build-ubt kde4libs-devel mp3gain
+BuildRequires(pre): libavformat-devel
 BuildRequires: gcc-c++ libcdparanoia-devel libtag-devel
 BuildRequires: libkcddb4-devel
 #BuildRequires: kde4multimedia-devel
@@ -102,6 +109,9 @@ popd
 %_K4libdir/libsoundkonvertercore.so.*
 
 %changelog
+* Tue Jun 06 2017 Sergey V Turchin <zerg@altlinux.org> 2.2.2-alt2%ubt
+- rebuild with ffmpeg
+
 * Mon Aug 01 2016 Sergey V Turchin <zerg@altlinux.org> 2.2.2-alt1
 - new version
 
