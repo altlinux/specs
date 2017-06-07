@@ -1,6 +1,6 @@
 Name: dolphin-emu
 Version: 5.0
-Release: alt3.1
+Release: alt4%ubt
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -13,9 +13,11 @@ ExclusiveArch: x86_64
 
 #https://github.com/%name/dolphin/archive/%version.tar.gz
 Source: dolphin-%version.tar.gz
-Patch0: %name-%version-alt-git.patch
+Patch0: %name-git-alt.patch
+Patch1: %name-gcc-alt.patch
 
-BuildPreReq: libavresample-devel
+BuildPreReq: libswresample-devel
+BuildPreReq: rpm-build-ubt
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -58,6 +60,7 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %prep
 %setup -n dolphin-%version
 %patch0 -p1
+%patch1 -p1
 
 %build
 %__mkdir_p %_target_platform
@@ -89,6 +92,10 @@ popd
 %_man6dir/%{name}*
 
 %changelog
+* Wed Jun 07 2017 Nazarov Denis <nenderus@altlinux.org> 5.0-alt4%ubt
+- Rebuilt with ffmpeg instead libav
+- Add gcc fix patch
+
 * Tue Nov 01 2016 Nazarov Denis <nenderus@altlinux.org> 5.0-alt3.1
 - Rebuilt with SFML 2.4.0
 
