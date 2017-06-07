@@ -1,6 +1,6 @@
 Name: rpm-build-mingw64
 Version: 23
-Release: alt4%ubt
+Release: alt5%ubt
 
 Summary: MinGW RPM build helper files and macros
 
@@ -65,7 +65,10 @@ install -m 0644 Makefile.mingw64 %buildroot%_datadir/mingw64/
 %_libexecdir/mingw64-scripts
 
 %changelog
-* Mon Jun 05 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 23-alt4.S1
+* Wed Jun 07 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 23-alt5%ubt
+- fix ubt-macro usage in changelog
+
+* Mon Jun 05 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 23-alt4%ubt
 - drop macros: %%_mingw64_c++, %%_mingw64_c++filt
   https://bugzilla.redhat.com/show_bug.cgi?id=974773
 
