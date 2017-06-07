@@ -13,8 +13,8 @@
 %define nagios_grp nagios
 
 Name: nagios-%realname
-Version: 2.12
-Release: alt3%rev.qa2
+Version: 3.1.1
+Release: alt1
 
 Summary: NRPE -- Nagios(R) Remote Plug-ins Execution daemon.
 Summary(ru_RU.UTF-8): NRPE -- Сервер выполнения команд Nagios(R) на удаленном хосте.
@@ -161,6 +161,9 @@ install -m 0644 contrib/README.nrpe_check_control %buildroot/%plugin_docdir/
 %exclude %plugin_docdir/nrpe.xinetd
 
 %changelog
+* Wed Jun 07 2017 Denis Medvedev <nbr@altlinux.org> 3.1.1-alt1
+- upgraded to upstream  version 3.1.1
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.12-alt3.qa2
 - NMU: rebuilt for debuginfo.
 
