@@ -2,7 +2,7 @@
 
 Name: vcmi
 Version: 0.99
-Release: alt1
+Release: alt2
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
 Summary(ru_RU.UTF-8): Open-source движок для игры HMM3:WoG
@@ -11,9 +11,12 @@ Group: Games/Strategy
 URL: http://wiki.vcmi.eu/index.php?title=Main_Page
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
+Patch: remove_avconv_requires.patch
 BuildPreReq: cmake rpm-macros-cmake gcc-c++
 
 BuildRequires: doxygen boost-devel boost-filesystem-devel boost-locale-devel boost-program_options-devel boost-asio-devel boost-interprocess-devel gcc-c++ libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel libminizip-devel pkgconfig(libavcodec) pkgconfig(libavdevice) pkgconfig(libavformat) pkgconfig(libavutil) pkgconfig(libpostproc) pkgconfig(libswscale) pkgconfig(libavresample) qt5-base-devel zlib-devel
+
+Requires: ffmpeg
 
 %description
 The purpose of VCMI project is to rewrite entire HOMM 3: WoG engine from
@@ -46,6 +49,7 @@ VCMI это фанатский проект с открытым исходным
 
 %prep
 %setup -q
+%patch -p1
 
 %cmake_insource \
 	-DCMAKE_SKIP_RPATH=OFF \
@@ -70,6 +74,9 @@ mv %buildroot/%_libdir/%name/libvcmi.so %buildroot/%_libdir/
 %exclude %_includedir/fl
 
 %changelog
+* Wed Jun 07 2017 Anton Midyukov <antohami@altlinux.org> 0.99-alt2
+- Rebuild with ffmpeg.
+
 * Wed Nov 02 2016 Anton Midyukov <antohami@altlinux.org> 0.99-alt1
 - New version 0.99
 
