@@ -2,7 +2,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.9
-Release: alt3
+Release: alt4
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -17,6 +17,7 @@ Patch3: %name-%version-ru.po.patch
 Patch4: %name-%version-buffer.patch
 Patch5: %name-%version-ask-pin-later.patch
 Patch6: %name-%version-option-ask_pin.patch
+Patch7: eventmgr-init-from-token.patch
 
 BuildRequires: docbook-style-xsl flex libldap-devel libpam-devel libpcsclite-devel libssl-devel xsltproc
 BuildRequires: doxygen
@@ -71,6 +72,7 @@ as a separate package.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 # fixup configs
 sed -i -e '
@@ -153,6 +155,9 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ldap_mapper.so
 
 %changelog
+* Wed Jun 07 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt4
+- Fix: Initialize the event manager state value from token (closes: 33534).
+
 * Mon Nov 21 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.9-alt3
 - ask_pin (by default: true) option added (thx cas@);
   the corresponding PAM options are: ask_pin, dont_ask_pin.
