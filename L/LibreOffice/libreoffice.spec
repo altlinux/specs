@@ -13,7 +13,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -316,7 +316,7 @@ export CXX=%_target_platform-g++
 	--enable-ext-numbertext \
 	--enable-ext-wiki-publisher \
 	--enable-ext-ct2n \
-	--disable-ext-languagetool \
+	--enable-ext-languagetool \
 	--enable-ext-mariadb-connector \
   \
 	--enable-release-build \
@@ -509,6 +509,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Jun 07 2017 Fr. Br. George <george@altlinux.ru> 5.3.3.2-alt2
+- Enable languagetool extension
+
 * Wed May 17 2017 Fr. Br. George <george@altlinux.ru> 5.3.3.2-alt1
 - Update to 5.3.3.2
 - Build SDK
