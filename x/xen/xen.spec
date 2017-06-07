@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.8.1
-Release: alt7%ubt
+Release: alt8%ubt
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -793,13 +793,16 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
-* Wed Jun 07 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt7.S1
+* Wed Jun 07 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt8%ubt
+- fix ubt-macro usage in changelog
+
+* Wed Jun 07 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt7%ubt
 - Upstream updates:
  + ibxc: fix segfault on uninitialized xch->fmem
  + tools/libxc: Tolerate specific zero-content records in migration v2 streams
  + tools: ocaml: In configure, check for ocamlopt
 
-* Mon May 08 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt6.S1
+* Mon May 08 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt6%ubt
 - Upstream updates:
  + kexec: clear kexec_image slot when unloading kexec image
  + memory: exit early from memory_exchange() upon write-back error
@@ -807,7 +810,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
  + x86/mce: make 'severity_cpu' private to its users
  + x86/mce: always re-initialize 'severity_cpu' in mcheck_cmn_handler()
 
-* Sat May 06 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt5.S1
+* Sat May 06 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt5%ubt
 - added ubt tag
 
 * Fri May 05 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt4

@@ -1,6 +1,6 @@
 Name: mingw64-binutils
 Version: 2.28
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: MinGW Windows binutils
 
@@ -66,10 +66,13 @@ ln -sf ../../..%_bindir/%_mingw64_target-dllwrap \
 %exclude %_man5dir/x86_64-pc-mingw32-gdbinit.5.xz
 
 %changelog
-* Mon Jun 05 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.28-alt1.S1
+* Wed Jun 07 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.28-alt2%ubt
+- fix ubt-macro usage in changelog
+
+* Mon Jun 05 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.28-alt1%ubt
 - 2.28 release
 
-* Mon Jun 05 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.27-alt2.S1
+* Mon Jun 05 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.27-alt2%ubt
 - rebuild
 
 * Sat Dec 24 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 2.27-alt1
