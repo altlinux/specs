@@ -2,10 +2,11 @@
 %define hdf5_version 1.8.9
 # TODO problem with package freehep-util
 %def_without freehep
+%def_without docs
 
 Name:     scilab
-Version:  5.5.2
-Release:  alt1.qa1
+Version:  6.0.0
+Release:  alt1
 Summary:  A high-level language and system for numerical computations
 
 License:  CeCILL
@@ -24,15 +25,9 @@ Patch1:  scilab-find-jhall.patch
 Patch2:  scilab-find-jgoodies-looks.patch
 Patch3:  scilab-find-xml-apis-ext.patch
 Patch4:	 scilab-fix-make-doc-ja_JP.patch
-Patch5:  scilab-5.5.2-jogl-2.3.patch
-Patch6:  scilab-5.5.2-batik-1.8.patch
-Patch7:  scilab-5.5.2-fop-2.0.patch
-Patch8:  scilab-5.5.2-xmlgraphics-commons-2.0.patch
-Patch9:  scilab-5.5.2-disable-doclint.patch
-
-Patch10: scilab-0001-fix-asan-issues.patch
-Patch11: scilab-0002-disable-scirenderer-build.patch
-Patch12: scilab-0003-fix-javadocs-br.patch
+Patch5:  scilab-6.0.0-jogl-2.3.patch
+Patch8:  scilab-5.5.2-disable-doclint.patch
+Patch9:  scilab-alt-cxx-flags.patch
 
 Patch13: scilab-find-jrosetta-API.patch
 
@@ -69,6 +64,9 @@ BuildRequires: javahelp2
 BuildRequires: jlatexmath >= 1.0.2
 BuildRequires: jlatexmath-fop >= 1.0.2
 BuildRequires: jgraphx
+BuildRequires: lucene
+BuildRequires: lucene-analysis
+BuildRequires: lucene-queryparser
 BuildRequires: fop
 BuildRequires: jeuclid
 BuildRequires: batik
@@ -79,6 +77,9 @@ BuildRequires: freehep-graphics2d
 BuildRequires: freehep-util
 %endif
 BuildRequires: objectweb-asm3
+
+Requires:      java-1.8.0-openjdk
+Requires:      lucene lucene-analysis lucene-queryparser
 
 # TCL/TK features
 BuildRequires: tcl-devel
@@ -109,6 +110,7 @@ BuildRequires: libgomp-devel
 BuildRequires: libatlas-devel
 BuildRequires: libpcre-devel
 BuildRequires: libcurl-devel
+BuildRequires: eigen3
 
 # For generated documentation
 BuildRequires: fonts-ttf-liberation
@@ -145,20 +147,15 @@ structures, 2-D and 3-D graphical functions.
 
 %prep
 %setup -q
+cd scilab
 tar xf %SOURCE1
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
 %patch4 -p1
-%patch5 -p2
-%patch6 -p2
-%patch7 -p2
+%patch5 -p1
 %patch8 -p2
 %patch9 -p2
-%patch10 -p1
-#patch11 -p1
-%patch12 -p2
-%patch13 -p2
 
 # Update saxon dependency
 # http://bugzilla.scilab.org/show_bug.cgi?id=8479
@@ -171,8 +168,8 @@ sed -i '/name="Class-Path"/d' build.incl.xml
 iconv -f ISO_8859-1 -t UTF-8 COPYING >COPYING.utf8
 mv COPYING.utf8 COPYING
 
-
 %build
+cd scilab
 #%%define _configure_target %{_arch}-pc-linux-gnu
 %undefine _configure_gettext
 export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
@@ -188,13 +185,17 @@ aclocal
 %if_without freehep
 	   --without-emf \
 %endif
+           --without-modelica \
 	   --disable-static-system-lib \
            --enable-build-help
 
 %make
-%make doc
+%if_with docs
+%make doc SCIVERBOSE=1
+%endif
 
 %install
+cd scilab
 %makeinstall_std
 %find_lang %name
 
@@ -205,8 +206,8 @@ rm -fr %buildroot%_libdir/%name/*.la
 # Remove MIME package
 rm -f %buildroot%_xdgmimedir/packages/scilab.xml
 
-%files -f %name.lang
-%doc README_Unix COPYING license.txt
+%files -f scilab/%name.lang
+%doc scilab/README.md scilab/ACKNOWLEDGEMENTS scilab/CHANGES.md scilab/COPYING scilab/COPYING-BSD
 %_bindir/*
 %_libdir/pkgconfig/*
 %_libdir/%name
@@ -218,6 +219,9 @@ rm -f %buildroot%_xdgmimedir/packages/scilab.xml
 %_datadir/mime/packages/scilab.xml
 
 %changelog
+* Wed Jun 07 2017 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt1
+- New version
+
 * Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.5.2-alt1.qa1
 - NMU: rebuild against Tcl/Tk 8.6
 
