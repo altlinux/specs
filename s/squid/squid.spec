@@ -8,7 +8,7 @@
 %def_with gnutls
 
 Name: squid
-Version: 3.5.25
+Version: 3.5.26
 Release: alt1
 %define langpack_ver 20150704
 Summary: The Squid proxy caching server
@@ -102,11 +102,10 @@ This package contains Squid helpers for different kinds of authentication.
 
 sed -i -r '1s|^(#!/usr/)local(/bin/perl)|\1\2|' {contrib,scripts}/*.pl
 
-RELEASE_TIME=`date +%s`
-%define RELEASE_TIME %(date +%s)
+RELEASE_TIME="$(date +%%s)"
 
 sed -i -e "s|%version-BZR|%version|" configure.ac
-sed -i -e "s|squid_curtime|%RELEASE_TIME|" include/version.h
+sed -i -e "s|squid_curtime|$RELEASE_TIME|" include/version.h
 
 %build
 %define _localstatedir %_var
@@ -306,6 +305,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Tue Jun 06 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.5.26-alt1
+- Updated to 3.5.26.
+
 * Wed Apr 12 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.5.25-alt1
 - Updated to 3.5.25.
 
