@@ -1,6 +1,6 @@
 Name: retroshare
 Version: 0.6.2
-Release: alt1
+Release: alt2
 
 Summary: Secure communication with friends
 
@@ -102,6 +102,9 @@ ln -s RetroShare06-nogui %buildroot%_bindir/%name-cli
 %_libdir/retroshare/extensions6/libFeedReader.so*
 
 %changelog
+* Thu Jun 08 2017 Vitaly Lipatov <lav@altlinux.ru> 0.6.2-alt2
+- rebuild with ffmpeg
+
 * Tue Mar 14 2017 Vitaly Lipatov <lav@altlinux.ru> 0.6.2-alt1
 - new version 0.6.2 (with rpmrb script)
 
