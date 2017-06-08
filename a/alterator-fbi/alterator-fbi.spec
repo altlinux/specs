@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.36
+Version: 5.37
 Release: alt1
 
 Source:%name-%version.tar
@@ -141,6 +141,9 @@ fi ||:
 
 
 %changelog
+* Thu Jun 08 2017 Denis Medvedev <nbr@altlinux.org> 5.37-alt1
+- Fix help url for non-root users.
+
 * Thu Jun 08 2017 Denis Medvedev <nbr@altlinux.org> 5.36-alt1
 - Fix help url handling.
 
