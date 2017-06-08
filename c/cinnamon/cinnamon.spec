@@ -1,7 +1,7 @@
 %def_enable gtk_doc
 
 Name: cinnamon
-Version: 3.4.0
+Version: 3.4.1
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -165,6 +165,8 @@ install -m 0755 -d $RPM_BUILD_ROOT/%{_datadir}/polkit-1/actions/
 install -D -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT/%{_datadir}/polkit-1/actions/
 install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 
+%filter_from_requires /typelib[(]CDesktopEnums.MediaKeyType[)]/d
+
 %files
 %exclude %_bindir/%{name}-launcher
 %_bindir/*
@@ -200,6 +202,12 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Mon Jun 5 2017 Vladimir Didenko <cow@altlinux.org> 3.4.1-alt1
+- 3.4.1-9-ge9fcf47
+
+* Mon May 15 2017 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt2
+- fix cinnamon-settings-users
+
 * Fri May 5 2017 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt1
 - 3.4.0
 
