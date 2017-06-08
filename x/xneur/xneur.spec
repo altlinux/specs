@@ -1,5 +1,5 @@
 Name: xneur
-Version: 0.19.0
+Version: 0.20.0
 Release: alt1
 
 Summary: X Neural Switcher
@@ -10,9 +10,9 @@ Url: http://xneur.ru/
 
 Source: %{name}_%version.orig.tar.gz
 
-# Automatically added by buildreq on Thu Nov 17 2016
-# optimized out: glib2-devel libX11-devel libXext-devel libXfixes-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libxml2-devel pkg-config python-base python-modules xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-xproto-devel xz zlib-devel
-BuildRequires: glibc-devel-static gstreamer-devel libXi-devel libXinerama-devel libaspell-devel libgtk+3-devel libnotify-devel libpcre-devel libxosd-devel
+# Automatically added by buildreq on Mon May 29 2017
+# optimized out: glib2-devel libX11-devel libXext-devel libXfixes-devel libXi-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libxml2-devel perl perl-XML-Parser pkg-config python-base python-modules xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: glibc-devel-static gstreamer-devel intltool libXinerama-devel libXtst-devel libaspell-devel libgtk+3-devel libnotify-devel libpcre-devel libxosd-devel
 
 BuildPreReq: zlib-devel
 
@@ -49,8 +49,8 @@ sed -i 's/loKg_message/log_message/' lib/main/program.c
 %make_build
 
 # Hack for X-linking
-make -C lib/lib clean
-sed -i 's@^libxneur_la_LIBADD = ../misc/libxnmisc.la@libxneur_la_LIBADD = -L../config/.libs ../misc/libxnmisc.la ../config/libxnconfig.la@' lib/lib/Makefile
+##make -C lib/lib clean
+##sed -i 's@^libxneur_la_LIBADD = ../misc/libxnmisc.la@libxneur_la_LIBADD = -L../config/.libs ../misc/libxnmisc.la ../config/libxnconfig.la@' lib/lib/Makefile
 %make
 
 %install
@@ -81,6 +81,9 @@ rm -f %buildroot%_libdir/%name/*.so %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon May 29 2017 Fr. Br. George <george@altlinux.ru> 0.20.0-alt1
+- Autobuild version bump to 0.20.0
+
 * Thu Nov 17 2016 Fr. Br. George <george@altlinux.ru> 0.19.0-alt1
 - Autobuild version bump to 0.19.0
 

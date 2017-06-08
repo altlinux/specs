@@ -1,7 +1,7 @@
 Name: xneurchecker
 Version: 0.4
-Release: alt4
-Summary: LibXNeur commandline ool
+Release: alt5
+Summary: LibXNeur commandline tool
 
 License: GPL
 Group: Office
@@ -33,6 +33,9 @@ sed -i 's/ = 0.12.0//' configure.in
 %_bindir/*
 
 %changelog
+* Thu Jun 08 2017 Fr. Br. George <george@altlinux.ru> 0.4-alt5
+- Rebuild with new libxneur
+
 * Thu Nov 17 2016 Fr. Br. George <george@altlinux.ru> 0.4-alt4
 - Rebuild with new libxneur
 
