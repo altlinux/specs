@@ -1,5 +1,5 @@
 Name: kdeneur
-Version: 0.19.0
+Version: 0.20.0
 Release: alt1
 
 Summary: KDE frontend for X Neural Switcher
@@ -41,6 +41,9 @@ functionality and features for configuring.
 %_iconsdir/hicolor/scalable/apps/%name.*
 
 %changelog
+* Thu Jun 08 2017 Fr. Br. George <george@altlinux.ru> 0.20.0-alt1
+- Autobuild version bump to 0.20.0
+
 * Thu Nov 17 2016 Fr. Br. George <george@altlinux.ru> 0.19.0-alt1
 - Autobuild version bump to 0.19.0
 

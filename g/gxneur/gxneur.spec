@@ -2,7 +2,7 @@ BuildRequires: desktop-file-utils
 %define oname gXNeur
 
 Name: gxneur
-Version: 0.19.0
+Version: 0.20.0
 Release: alt1
 
 Summary: GTK frontend for X Neural Switcher
@@ -15,7 +15,7 @@ Source1: %name.png
 
 # Automatically added by buildreq on Sun May 22 2011
 # optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libaspell-devel libatk-devel libcairo-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libpango-devel libpcre-devel pkg-config xorg-kbproto-devel xorg-xproto-devel
-BuildRequires: libGConf libGConf-devel libglade-devel libxneur-devel
+BuildRequires: libGConf libGConf-devel libglade-devel libxneur-devel intltool
 
 Requires: xneur >= %version
 
@@ -86,6 +86,9 @@ done
 %flagsdir/??.png
 
 %changelog
+* Mon May 29 2017 Fr. Br. George <george@altlinux.ru> 0.20.0-alt1
+- Autobuild version bump to 0.20.0
+
 * Thu Nov 17 2016 Fr. Br. George <george@altlinux.ru> 0.19.0-alt1
 - Autobuild version bump to 0.19.0
 
