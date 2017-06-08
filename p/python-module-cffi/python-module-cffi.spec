@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-cffi
-Version: 1.4.2
-Release: alt1.1
+Version: 1.10.0
+Release: alt1
 
 Summary: Foreign Function Interface for Python calling C code
 
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Thu Jun 8 2017 Vladimir Didenko <cow@altlinux.ru> 1.10.0-alt1
+- Version 1.10.0
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.4.2-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
