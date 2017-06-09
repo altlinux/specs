@@ -25,7 +25,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        58.0.3029.110
+Version:        59.0.3071.86
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -55,23 +55,22 @@ Patch003: 0003-ALT-Fix-krb5-includes-path.patch
 Patch004: 0004-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
 Patch005: 0005-DEBIAN-manpage-updates-fixes.patch
 Patch006: 0006-DEBIAN-change-icon.patch
-Patch007: 0007-DEBIAN-fix-gcc4.7.patch
-Patch008: 0008-ALT-gcc6-fixes.patch
-Patch009: 0009-DEBIAN-disable-third-party-cookies-by-default.patch
-Patch010: 0010-DEBIAN-add-ps-printing-capability-gtk2.patch
-Patch011: 0011-ALT-fix-shrank-by-one-character.patch
-Patch012: 0012-DEBIAN-10-seconds-may-not-be-enough-so-do-not-kill-t.patch
-Patch013: 0013-FEDORA-path-max.patch
-Patch014: 0014-FEDORA-Ignore-broken-nacl-open-fd-counter.patch
-Patch015: 0015-FEDORA-Use-libusb_interrupt_event_handler-from-curre.patch
-Patch016: 0016-FEDORA-Enable-ARM-CPU-detection-for-webrtc-from-arch.patch
-Patch017: 0017-FEDORA-Fix-last-commit-position-issue.patch
-Patch018: 0018-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
-Patch019: 0019-ALT-gzip-does-not-support-the-rsyncable-option.patch
-Patch020: 0020-GENTOO-Enable-VA-API-on-linux.patch
-Patch021: 0021-UBUNTU-Specify-max-resolution.patch
-Patch022: 0022-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch023: 0023-ALT-Hack-compile-error.patch
+Patch007: 0007-ALT-gcc6-fixes.patch
+Patch008: 0008-DEBIAN-disable-third-party-cookies-by-default.patch
+Patch009: 0009-DEBIAN-add-ps-printing-capability-gtk2.patch
+Patch010: 0010-ALT-fix-shrank-by-one-character.patch
+Patch011: 0011-DEBIAN-10-seconds-may-not-be-enough-so-do-not-kill-t.patch
+Patch012: 0012-FEDORA-path-max.patch
+Patch013: 0013-FEDORA-Ignore-broken-nacl-open-fd-counter.patch
+Patch014: 0014-FEDORA-Use-libusb_interrupt_event_handler-from-curre.patch
+Patch015: 0015-FEDORA-Enable-ARM-CPU-detection-for-webrtc-from-arch.patch
+Patch016: 0016-FEDORA-Fix-last-commit-position-issue.patch
+Patch017: 0017-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
+Patch018: 0018-ALT-gzip-does-not-support-the-rsyncable-option.patch
+Patch019: 0019-UBUNTU-Specify-max-resolution.patch
+Patch020: 0020-ALT-Use-rpath-link-and-absolute-rpath.patch
+Patch021: 0021-ALT-Fix-build-with-system-dma-buf.patch
+Patch022: 0022-GENTOO-Enable-VA-API-on-linux.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -81,6 +80,7 @@ BuildRequires:  bzlib-devel
 BuildRequires:  flex
 BuildRequires:  chrpath
 BuildRequires:  gcc-c++
+BuildRequires:  glibc-kernheaders
 %if_enabled clang
 BuildRequires:  clang4.0
 BuildRequires:  clang4.0-devel
@@ -210,7 +210,6 @@ cp -a libchromiumcontent/chromiumcontent .
 %patch020 -p1
 %patch021 -p1
 %patch022 -p1
-%patch023 -p1
 ### Finish apply patches
 
 # Enable support for the Widevine CDM plugin
@@ -409,6 +408,26 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Fri Jun 09 2017 Alexey Gladkov <legion@altlinux.ru> 59.0.3071.86-alt1
+- New version (59.0.3071.86).
+- Security fixes:
+  - CVE-2017-5070: Type confusion in V8. Reported by Zhao Qixun(@S0rryMybad) of Qihoo 360 Vulcan Team on 2017-05-16
+  - CVE-2017-5071: Out of bounds read in V8. Reported by Choongwoo Han on 2017-04-26
+  - CVE-2017-5072: Address spoofing in Omnibox. Reported by Rayyan Bijoora on 2017-04-07
+  - CVE-2017-5073: Use after free in print preview. Reported by Khalil Zhani on 2017-04-28
+  - CVE-2017-5074: Use after free in Apps Bluetooth. Reported by anonymous on 2017-03-09
+  - CVE-2017-5075: Information leak in CSP reporting. Reported by Emmanuel Gil Peyrot on 2017-01-05
+  - CVE-2017-5086: Address spoofing in Omnibox. Reported by Rayyan Bijoora on 2017-05-16
+  - CVE-2017-5076: Address spoofing in Omnibox. Reported by Samuel Erb on 2017-05-06
+  - CVE-2017-5077: Heap buffer overflow in Skia. Reported by Sweetchip on 2017-04-28
+  - CVE-2017-5078: Possible command injection in mailto handling. Reported by Jose Carlos Exposito Bueno on 2017-04-12
+  - CVE-2017-5079: UI spoofing in Blink. Reported by Khalil Zhani on 2017-04-20
+  - CVE-2017-5080: Use after free in credit card autofill. Reported by Khalil Zhani on 2017-04-05
+  - CVE-2017-5081: Extension verification bypass. Reported by Andrey Kovalev (@L1kvID) Yandex Security Team on 2016-12-07
+  - CVE-2017-5082: Insufficient hardening in credit card editor. Reported by Nightwatch Cybersecurity Research on 2017-05-11
+  - CVE-2017-5083: UI spoofing in Blink. Reported by Khalil Zhani on 2017-04-24
+  - CVE-2017-5085: Inappropriate javascript execution on WebUI pages. Reported by Zhiyang Zeng of Tencent security platform department on 2017-02-15
+
 * Wed May 10 2017 Alexey Gladkov <legion@altlinux.ru> 58.0.3029.110-alt1
 - New version (58.0.3029.110).
 
