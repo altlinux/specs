@@ -3,7 +3,7 @@
 
 Name: gnome-music
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Music playing application for GNOME3
 Group: Sound
@@ -26,6 +26,9 @@ Requires: tracker
 %define mediaart_ver 1.9
 %define tracker_ver 1.11.1
 %define pygobject_ver 3.21.1
+
+# gir-python.req doesn't recognize multiline expressions (see gnomemusic/albumartcache.py)
+Requires: typelib(MediaArt) = 2.0 typelib(GstTag)
 
 Requires: gst-plugins-base1.0 grilo-tools >= %grilo_ver tracker >= %tracker_ver
 
@@ -68,6 +71,9 @@ Music playing application for GNOME3.
 %exclude %_libdir/%name/libgd.la
 
 %changelog
+* Fri Jun 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt2
+- fixed reqs (ALT #32594)
+
 * Tue May 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
 - 3.24.2
 
