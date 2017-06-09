@@ -1,4 +1,4 @@
-%define		svn 8442
+%define		svn 8588
 
 %define		rel alt1
 
@@ -9,12 +9,12 @@ Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer/MPV (QT4
 License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
-Version:	17.2
+Version:	17.6.0
 Release:	%rel.%svn
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source0:	http://downloads.sourceforge.net/smplayer/%name-%version.tar.bz2
 Patch0:		smplayer-paths-fix-alt.patch
-Patch1:		smplayer-16.4.0-disable_update_autoshutdown.patch
+Patch1:		smplayer-17.6.0-disable_update_autoshutdown.patch
 
 BuildRequires:	gcc-c++ libqt4-devel >= 4.2
 Provides: %name
@@ -135,6 +135,9 @@ export OPTFLAGS="%optflags"
 %endif
 
 %changelog
+* Fri Jun 09 2017 Motsyo Gennadi <drool@altlinux.ru> 17.6.0-alt1.8588
+- 17.6.0 version (svn8588)
+
 * Sun Feb 12 2017 Motsyo Gennadi <drool@altlinux.ru> 17.2-alt1.8442
 - 17.2 version (svn8442)
 
