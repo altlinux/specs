@@ -1,9 +1,9 @@
 # Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
-%define release_commit 3bd41a09fccccbc6b095805556d3009b9ebf6213
+%define release_commit f5fa346a188e906a8f2cce3c2cf32a88ce81c666
 
 Name: netdata
-Version: 1.5.0
-Release: alt3
+Version: 1.6.0
+Release: alt1
 
 Summary: Real-time performance monitoring, done right!
 
@@ -135,6 +135,9 @@ getent passwd netdata > /dev/null || useradd -r -g netdata -c netdata -s /sbin/n
 %_libexecdir/%name/python.d/postgres.chart.py
 
 %changelog
+* Fri Jun 09 2017 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
+- build new version
+
 * Tue Mar 07 2017 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt3
 - replace shell to /bin/bash4 only on ALT
 - fill version.txt with commit id for the release
