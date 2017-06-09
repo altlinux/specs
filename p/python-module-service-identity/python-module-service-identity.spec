@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%package_name
-Version: 16.0.0
+Version: 17.0.0
 Release: alt1
 
 Summary: Service identity verification for pyOpenSSL
@@ -89,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Fri Jun 9 2017 Vladimir Didenko <cow@altlinux.org> 17.0.0-alt1
+- new version
+
 * Fri Jul 22 2016 Vladimir Didenko <cow@altlinux.org> 16.0.0-alt1
 - new version
 
