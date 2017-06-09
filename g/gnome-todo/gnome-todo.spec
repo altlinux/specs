@@ -6,7 +6,7 @@
 %define xdg_name org.gnome.Todo
 
 Name: gnome-todo
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Todo manager for GNOME
@@ -90,6 +90,7 @@ GObject introspection devel data for the GNOME Todo.
 %_datadir/glib-2.0/schemas/org.gnome.todo.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.todo.background.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.todo.enums.xml
+%_datadir/glib-2.0/schemas/org.gnome.todo.txt.gschema.xml
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %_datadir/appdata/%xdg_name.appdata.xml
@@ -107,6 +108,9 @@ GObject introspection devel data for the GNOME Todo.
 %_girdir/Gtd-%api_ver.gir
 
 %changelog
+* Fri Jun 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
+- 3.24.2
+
 * Tue May 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
 - 3.24.1
 
