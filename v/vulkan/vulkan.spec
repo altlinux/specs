@@ -1,26 +1,28 @@
+%define git 115665a
+
 Name: vulkan
-Version: 1.0.37
-Release: alt0.3
+Version: 1.0.51
+Release: alt0.2.%git
 Summary: Vulkan loader and validation layers
 
 Group: System/Libraries
-License: MIT
+License: ASL 2.0
 Url: http://www.khronos.org/
 
-# https://github.com/KhronosGroup/Vulkan-LoaderAndValidationLayers/tree/sdk-1.0.37
+# https://github.com/KhronosGroup/Vulkan-LoaderAndValidationLayers
 Source0: vulkan.tar.xz
 # https://github.com/KhronosGroup/glslang
 Source1: glslang.tar.xz
-# git clone https://github.com/KhronosGroup/SPIRV-Tools.git
+# https://github.com/KhronosGroup/SPIRV-Tools.git
 Source2: SPIRV-Tools.tar.xz
+Patch1: spirv-tools-alt-use-python3.patch
+Patch2: 0003-layers-Don-t-set-an-rpath.patch
 
-BuildRequires: bison
-BuildRequires(pre): cmake gcc-c++
+BuildRequires: bison chrpath
+BuildRequires(pre): cmake gcc-c++ rpm-build-python3
 BuildRequires: libImageMagick-devel libpciaccess-devel libsystemd-devel
-BuildRequires: python-modules python-modules-json python3-dev libxcb-devel libXau-devel libXdmcp-devel libX11-devel
+BuildRequires: python3-devel libxcb-devel libXau-devel libXdmcp-devel libX11-devel libXrandr-devel
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
-
-Requires: vulkan-filesystem
 
 %description
 Vulkan is a new generation graphics and compute API that provides
@@ -28,27 +30,63 @@ high-efficiency, cross-platform access to modern GPUs used in a wide
 variety of devices from PCs and consoles to mobile phones and embedded
 platforms.
 
-This package contains the reference ICD loader and validation layers for
-Vulkan.
+This package contains the reference ICD loader and validation layers for Vulkan.
 
-%package devel
-Summary: vulkan development package
+%package -n lib%{name}1
+Summary: Vulkan loader libraries
+Group: System/Libraries
+Requires: vulkan-filesystem = %version-%release
+Provides: %name = %version-%release
+Obsoletes: %name
+
+%description -n lib%{name}1
+Vulkan is a new generation graphics and compute API that provides
+high-efficiency, cross-platform access to modern GPUs used in a wide
+variety of devices from PCs and consoles to mobile phones and embedded
+platforms.
+
+This package contains the reference ICD loader for Vulkan.
+
+%package validation-layers
+Summary: Vulkan API validation layers
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: lib%{name}1 = %version-%release
 
-%description devel
-Development headers for vulkan applications.
+%description validation-layers
+Vulkan API validation layer for developers.
+
+%package -n lib%name-devel
+Summary: Vulkan development package
+Group: Development/C++
+Requires: lib%{name}1 = %version-%release
+Provides: %name-devel = %version-%release
+Obsoletes: %name-devel
+
+%description -n lib%name-devel
+Development headers for Vulkan applications.
 
 %package filesystem
-Summary: vulkan filesystem package
+Summary: Vulkan filesystem package
 Group: System/Base
 BuildArch: noarch
 
 %description filesystem
-Filesystem for vulkan.
+Filesystem for Vulkan API.
+
+%package demos
+Summary: Vulkan demos
+Group: System/X11
+Requires: lib%{name}1 = %version-%release
+
+%description demos
+Vulkan API demos.
 
 %prep
 %setup -n %name -b1 -b2
+pushd ../SPIRV-Tools
+%patch1 -p2
+popd
+%patch2 -p1
 
 # sigh inttypes
 sed -i 's/inttypes.h/cinttypes/' layers/*.{cpp,h}
@@ -57,7 +95,7 @@ sed -i 's/inttypes.h/cinttypes/' layers/*.{cpp,h}
 # first, glslang and SPIRV-Tools
 for dir in glslang SPIRV-Tools; do
 pushd %_builddir/$dir
-%cmake
+%cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 %cmake_build
 %cmakeinstall_std DESTDIR=$(pwd)/install
 pushd install
@@ -68,38 +106,79 @@ done
 
 # and finally, loader, layers, and demo clients
 %cmake \
-	   -DCMAKE_INSTALL_SYSCONFDIR=%_datadir \
+ 	   -DCMAKE_BUILD_TYPE=Release \
            -DEXTERNAL_SOURCE_ROOT=%_builddir \
 	   -DBUILD_TESTS=OFF \
+	   -DBUILD_VKJSON=OFF \
 	   -DCUSTOM_GLSLANG_BIN_ROOT=ON \
 	   -DCUSTOM_SPIRV_TOOLS_BIN_ROOT=ON \
 	   -DGLSLANG_BINARY_ROOT=%_builddir/glslang/BUILD \
 	   -DSPIRV_TOOLS_BINARY_ROOT=%_builddir/SPIRV-Tools/BUILD \
 	   -DBUILDTGT_DIR=BUILD \
+	   -DCMAKE_INSTALL_SYSCONFDIR:PATH=%_sysconfdir \
 	   -DBUILD_WSI_MIR_SUPPORT=OFF
 %cmake_build
 
 %install
 %cmakeinstall_std
+install -T BUILD/demos/smoketest %buildroot%_bindir/vulkan-smoketest
+mkdir -p %buildroot%_datadir/vulkan/{explicit,implicit}_layer.d/
+mv %buildroot%_sysconfdir/vulkan/explicit_layer.d/*.json %buildroot%_datadir/vulkan/explicit_layer.d/
 mkdir -p %buildroot%_datadir/vulkan/icd.d
 
-%files
-%doc README.md LICENSE.txt
+# remove RPATH
+chrpath -d %buildroot%_bindir/vulkaninfo
+
+%files demos
 %_bindir/*
-%_datadir/vulkan/explicit_layer.d/*.json
-%_libdir/libVkLayer*.so
+
+%files -n lib%{name}1
+%doc README.md LICENSE.txt
 %_libdir/libvulkan.so.1*
 
-%files devel
+%files -n lib%name-devel
+%dir %_includedir/vulkan
 %_includedir/vulkan
 %_libdir/libvulkan.so
+%_pkgconfigdir/vulkan.pc
+
+%files validation-layers
+%dir %_sysconfdir/vulkan/explicit_layer.d
+%dir %_datadir/vulkan/explicit_layer.d
+%dir %_datadir/vulkan/implicit_layer.d
+%_datadir/vulkan/explicit_layer.d/*.json
+%_libdir/libVkLayer*.so
 
 %files filesystem
+%dir %_sysconfdir/vulkan
 %dir %_datadir/vulkan
 %dir %_datadir/vulkan/icd.d
-%dir %_datadir/vulkan/explicit_layer.d
 
 %changelog
+* Wed Jun 07 2017 L.A. Kostis <lakostis@altlinux.ru> 1.0.51-alt0.2.115665a
+- Fix Obsoletes.
+- libvulkan->libvulkan1 in accordance with ALT Shared Libs Policy.
+
+* Wed Jun 07 2017 L.A. Kostis <lakostis@altlinux.ru> 1.0.51-alt0.1.115665a
+- Bumped to vulkan sdk GIT 115665a:
+  + glslang 136b1e2.
+  + spirv-tools e7aff80.
+  + spirv-headers 63e1062.
+
+* Tue Jun 06 2017 L.A. Kostis <lakostis@altlinux.ru> 1.0.42-alt0.2
+- .spec re-write:
+  + sync with Fedora packaging.
+  + remove rpath from vk (patch taken from debian.org).
+  + split libvulkan and validation layers.
+  + move demos to separate package (as for Mesa).
+
+* Sun Mar 19 2017 L.A. Kostis <lakostis@altlinux.ru> 1.0.42-alt0.1
+- Updated to vulkan sdk-1.0.42:
+  + glslang dfbdd9.
+  + spirv-tools c3caa5.
+  + spirv-headers f61848.
+- SPIRV-Tools: use python3 by default.
+
 * Wed Dec 28 2016 L.A. Kostis <lakostis@altlinux.ru> 1.0.37-alt0.3
 - .spec: use cmake macros instead of ugly hacks.
 

@@ -22,7 +22,7 @@
 
 Name: libgtk+4
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -84,7 +84,7 @@ BuildRequires: libXrender-devel libXt-devel
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel wayland-protocols >= %wayland_protocols_ver}
 %{?_enable_cloudprint:BuildRequires: librest-devel libjson-glib-devel}
-%{?_enable_vulkan:BuildRequires: vulkan-devel}
+%{?_enable_vulkan:BuildRequires: libvulkan-devel}
 # for examples
 BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel
 # for check
@@ -352,6 +352,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Thu Jun 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.90.0-alt2
+- rebuilt for new vulkan release (ALT #33536)
+
 * Fri Mar 31 2017 Yuri N. Sedunov <aris@altlinux.org> 3.90.0-alt1
 - 3.90.0
 
