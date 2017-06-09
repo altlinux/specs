@@ -8,7 +8,7 @@
 %def_disable doc
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Library to use HTTPSEverywhere in desktop applications
@@ -83,7 +83,6 @@ This package contains development documentation for %name
 #...
 
 %check
-#ninja-build -C mesonbuild test
 %meson_test
 
 %files
@@ -113,6 +112,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Fri Jun 09 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.5-alt1
+- 0.4.5
+
 * Tue Jun 06 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.4-alt1
 - 0.4.4
 
