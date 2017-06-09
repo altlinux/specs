@@ -1,7 +1,6 @@
-# TODO: build with ffmpeg
 Name: qtox
-Version: 1.4.1.1
-Release: alt2
+Version: 1.6.0
+Release: alt1
 
 Summary: Powerful Tox client that follows the Tox design guidelines
 
@@ -11,7 +10,8 @@ Url: https://github.com/tux3/qTox
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-git: https://github.com/tux3/qTox
+# #Source-git: https://github.com/tux3/qTox
+# Source-url: https://github.com/qTox/qTox/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildPreReq: rpm-macros-qt5
@@ -19,7 +19,9 @@ BuildPreReq: rpm-macros-qt5
 # manually removed: i586-libxcb ruby ruby-stdlibs 
 # Automatically added by buildreq on Sat Jun 13 2015
 # optimized out: fontconfig glib2-devel glibc-devel-static libGL-devel libX11-devel libatk-devel libavcodec-devel libavutil-devel libcairo-devel libcloog-isl4 libdc1394-22 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libjson-c libopencore-amrnb0 libopencore-amrwb0 libp11-kit libpango-devel libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-sql libqt5-svg libqt5-widgets libqt5-xml libraw1394-11 libsodium-devel libstdc++-devel libswscale-devel libvpx-devel libwayland-client libwayland-server python3-base qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-tools xorg-scrnsaverproto-devel xorg-xproto-devel
-BuildRequires: gcc-c++ git-core libXScrnSaver-devel libavdevice-devel libavformat-devel libdb4-devel libfilteraudio-devel libgtk+2-devel libopenal-devel libswscale-devel qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel
+BuildRequires: gcc-c++ git-core libXScrnSaver-devel libdb4-devel libfilteraudio-devel libgtk+2-devel libopenal-devel qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel
+
+BuildRequires: libavdevice-devel libavformat-devel libswscale-devel libswresample-devel
 
 # no upstream info
 #BuildPreReq: libopenal-devel >= 1.16.0
@@ -59,6 +61,10 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri Jun 09 2017 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
+- new version (1.6.0) with rpmgs script
+- rebuild with ffmpeg
+
 * Mon Mar 27 2017 Denis Smirnov <mithraen@altlinux.ru> 1.4.1.1-alt2
 - rebuild with new toxcore and libsodium
 
