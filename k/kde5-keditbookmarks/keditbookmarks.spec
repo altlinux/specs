@@ -4,7 +4,7 @@
 %define libkbookmarkmodel_private libkbookmarkmodel_private%kbookmarkmodel_private_sover
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -73,5 +73,11 @@ Requires: %name-common = %EVR
 %_K5lib/libkbookmarkmodel_private.so.*
 
 %changelog
+* Fri Jun 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Thu May 04 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Thu Mar 16 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - initial build
