@@ -1,41 +1,43 @@
 Name: card-actions
-Version: 1.7
-Release: alt1
+Version: 1.8
+Release: alt2
 
 Summary: Smart card action handler scripts
-License: GPLv2
+License: GPLv3+
 Group: Monitoring
 
-Source0: card_inserted
-Source1: card_removed
-Source2: pkcs11_eventmgr.sh
-Source3: pkcs11_eventmgr.init
+Source0: card-inserted-default
+Source1: card-removed-default
+Source2: card-actions-default
 
 BuildArch: noarch
+
+Requires: pam_pkcs11 >= 0.6.9-alt5
 
 %description
 %summary
 
 %install
-install -pDm755 %SOURCE0 %buildroot%_bindir/card_inserted
-install -pDm755 %SOURCE1 %buildroot%_bindir/card_removed
-install -pDm755 %SOURCE2 %buildroot%_x11sysconfdir/profile.d/pkcs11_eventmgr.sh
-install -pDm755 %SOURCE3 %buildroot%_initdir/pkcs11_eventmgr
-mkdir -p %buildroot%_localstatedir/smartcard
-
-%post
-%post_service pkcs11_eventmgr
-
-%preun
-%preun_service pkcs11_eventmgr
+install -pDm755 %SOURCE0 %buildroot%_bindir/card-inserted-default
+install -pDm755 %SOURCE1 %buildroot%_bindir/card-removed-default
+install -pDm644 %SOURCE2 %buildroot%_altdir/card-actions-default
 
 %files
-%_bindir/*
-%_initdir/pkcs11_eventmgr
-%_x11sysconfdir/profile.d/*.sh
-%dir %_localstatedir/smartcard/
+%_bindir/card-*-default
+%_altdir/*-default
 
 %changelog
+* Fri Jun 09 2017 Paul Wolneykien <manowar@altlinux.org> 1.8-alt2
+- Moved the event manager service to the pam_pkcs11 package.
+- Start a new session if the user isn\'t known to loginctl.
+
+* Tue Jun 06 2017 Paul Wolneykien <manowar@altlinux.org> 1.8-alt1
+- Use pklogin_finder to get the username of the currently inserted token.
+- Use loginctl to activete an existing session.
+- Systemd-only event-manager service.
+- Make /usr/bin/card-inserted and /usr/bin/card-removed an alternative
+  (for use with pkcs11-events control).
+
 * Fri Feb 10 2017 Andrey Cherepanov <cas@altlinux.org> 1.7-alt1
 - Initial build in Sisyphus
 

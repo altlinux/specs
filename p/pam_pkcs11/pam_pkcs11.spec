@@ -2,7 +2,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.9
-Release: alt4
+Release: alt5
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -18,6 +18,12 @@ Patch4: %name-%version-buffer.patch
 Patch5: %name-%version-ask-pin-later.patch
 Patch6: %name-%version-option-ask_pin.patch
 Patch7: eventmgr-init-from-token.patch
+Patch8: ignore-no-card.patch
+Patch9: config-control.patch
+Patch10: systemd.patch
+
+%add_findreq_skiplist %_sysconfdir/pam.d/*
+Requires: pam-config PAM(pam_mkhomedir.so) PAM(pam_pkcs11.so) PAM(pam_succeed_if.so)
 
 BuildRequires: docbook-style-xsl flex libldap-devel libpam-devel libpcsclite-devel libssl-devel xsltproc
 BuildRequires: doxygen
@@ -31,7 +37,7 @@ BuildPreReq: libpcsclite-devel >= 1.7.4
 This Linux-PAM login module allows a X.509 certificate based user login.
 The certificate and its dedicated private key are thereby accessed by
 means of an appropriate PKCS #11 module. For the verification of the
-users' certificates, locally stored CA certificates as well as either
+user certificates, locally stored CA certificates as well as either
 online or locally accessible CRLs are used.
 
 Adittional included pam_pkcs11 related tools:
@@ -73,6 +79,9 @@ as a separate package.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
 
 # fixup configs
 sed -i -e '
@@ -125,6 +134,7 @@ rm %buildroot/%_lib/*/*.la
 %_bindir/pkcs11_inspect
 %_bindir/pkcs11_listcerts
 %_bindir/pkcs11_setup
+%_bindir/pkcs11_make_hash_link
 %dir /%_lib/%name
 /%_lib/%name/openssh_mapper.so
 /%_lib/%name/opensc_mapper.so
@@ -134,6 +144,7 @@ rm %buildroot/%_lib/*/*.la
 %_man1dir/pkcs11_listcerts.1*
 %_man1dir/pkcs11_setup.1*
 %_man1dir/pklogin_finder.1*
+%_man1dir/pkcs11_make_hash_link.1*
 %_man8dir/pam_pkcs11.8*
 %dir %_datadir/%name
 %_datadir/%name/pam_pkcs11.conf.example
@@ -142,6 +153,14 @@ rm %buildroot/%_lib/*/*.la
 %_datadir/%name/mail_mapping.example
 %_datadir/%name/digest_mapping.example
 %_datadir/%name/pkcs11_eventmgr.conf.example
+%dir %_sysconfdir/security/%name/profiles
+%config(noreplace) %_sysconfdir/security/%name/profiles/*
+%dir %_sysconfdir/security/%name/modules.avail
+%config(noreplace) %_sysconfdir/security/%name/modules.avail/*
+%_controldir/pam-*
+%_controldir/*event*
+%config(noreplace) %_sysconfdir/pam.d/*
+%_unitdir/*
 
 %files pcsc
 %doc doc/README.eventmgr
@@ -155,6 +174,16 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ldap_mapper.so
 
 %changelog
+* Fri Jun 09 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt5
+- Fix: Initialize the event manager state value from token (closes: 33534).
+- Add configuration control scripts: support "profiles" and "modules.avail"
+  configuration directories.
+- Add pkcs11_strict system-auth PAM configuration.
+- Fix: Don\'t stuck if wait_for_card=false.
+- Fix: Ignore the token not found error when the auth isn\'t restricted to
+  card only login.
+- Add systemd service unit for pkcs11_eventmgr.
+
 * Wed Jun 07 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt4
 - Fix: Initialize the event manager state value from token (closes: 33534).
 
