@@ -8,7 +8,7 @@
 
 Name: python-module-%{_name}3
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for GObject
 Group: Development/Python
@@ -38,10 +38,10 @@ Source: %_name-%version.tar
 BuildRequires: gnome-common
 BuildRequires(pre): rpm-build-gir
 BuildPreReq: glib2-devel >= %glib_ver libgio-devel libffi-devel
-BuildPreReq: python-devel  python-modules-encodings python-module-pycairo-devel libcairo-gobject-devel gtk-doc
+BuildPreReq: python-devel python-modules-encodings python-module-pycairo-devel libcairo-gobject-devel gtk-doc
 BuildPreReq: gobject-introspection-devel >= %gi_ver
 # python3
-BuildPreReq: rpm-build-python3  python3-devel python3-module-pycairo-devel
+BuildPreReq: rpm-build-python3 python3-devel python3-module-pycairo-devel
 # for tests
 BuildRequires: dbus-tools-gui libgtk+3-gir-devel xvfb-run
 BuildRequires: glibc-i18ndata
@@ -204,6 +204,9 @@ popd
 %endif
 
 %changelog
+* Fri Jun 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt2
+- rebuilt for ALT #33541
+
 * Mon Apr 10 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
 - 3.24.1
 
