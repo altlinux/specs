@@ -4,7 +4,7 @@
 Name: jabber-jit
 
 Version: 1.2.1
-Release: alt0.4
+Release: alt0.5
 
 Summary: Jabber ICQ Transport
 
@@ -23,14 +23,16 @@ Source4: %name.adapter
 Patch1:  %name-1.1.5-no-thanks-we-have-logrotate.patch
 Patch2:  %name-1.2.1-alt-headers_fix.patch
 Patch3:  %name-1.2.1-alt-time_header.patch
+Patch4:  %name-1.2.1-alt-istream.patch
 
 Obsoletes: ejabberd-jit
 #Requires(post): jabber-common
 Requires(post): rpm-macros-jabber
 
 BuildRequires(pre): rpm-build-licenses jabber-common
-# Automatically added by buildreq on Fri Dec 12 2008
-BuildRequires: gcc-c++ libmhash-devel
+# Automatically added by buildreq on Mon Jan 23 2017
+# optimized out: libstdc++-devel python-base python-modules python3
+BuildRequires: gcc-c++ libmhash-devel python-module-distribute python-module-google python3-base ruby ruby-stdlibs
 
 %description
 Jabber ICQ Transport is a Jabber component which provides interoperability
@@ -43,6 +45,7 @@ core with pthreads.
 
 %patch2
 %patch3
+%patch4
 
 pushd jit/jit
 ../../makeversion.sh
@@ -109,6 +112,9 @@ subst 's#@configfile@#%_sysconfdir/%name/%name.xml#g' %buildroot%_jabber_compone
 %_jabber_component_dir/%name
 
 %changelog
+* Sat Jun 10 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.2.1-alt0.5
+- Fix build with GCC 6.3
+
 * Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.2.1-alt0.4
 - Fix build with GCC 4.7
 
