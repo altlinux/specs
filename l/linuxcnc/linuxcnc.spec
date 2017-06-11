@@ -3,8 +3,8 @@
 %def_without static
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
-Version: 2.7.8
-Release: alt1.qa1
+Version: 2.7.9
+Release: alt1
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -15,7 +15,6 @@ Url: https://github.com/LinuxCNC/linuxcnc
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 Patch: fix_build_with_libmodbus3.1.4.patch
-Patch1: fix_build_for_i586.patch
 Buildrequires(pre): rpm-build-tcl rpm-build-python
 # Automatically added by buildreq on Thu Feb 02 2017
 # optimized out: ImageMagick-tools asciidoc boost-python-headers dblatex docbook-dtds fontconfig fontconfig-devel fonts-type1-urw ghostscript-classic glib2-devel groff-base libGL-devel libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel libart_lgpl-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgnomecanvas-devel libgnomeprint-devel libgpg-error libgtk+2-devel libncurses-devel libpango-devel libstdc++-devel libtinfo-devel libwayland-client libwayland-server libxml2-devel perl pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python-modules-xml sysvinit-utils tcl tcl-devel tex-common texlive-base texlive-base-bin texlive-bibtex-extra texlive-common texlive-fonts-recommended texlive-generic-recommended texlive-latex-base texlive-latex-extra texlive-latex-recommended texlive-pictures texlive-xetex tk xml-common xorg-xproto-devel xsltproc zlib-devel
@@ -108,7 +107,6 @@ Spanish documementation for %name
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 #fix make install
 sed 's/ -o root//g' -i src/Makefile
 
@@ -240,6 +238,10 @@ popd
 %endif
 
 %changelog
+* Sun Jun 11 2017 Anton Midyukov <antohami@altlinux.org> 2.7.9-alt1
+- New version 2.7.9
+- Remove fix_build_for_i586.patch
+
 * Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.8-alt1.qa1
 - Rebuilt against Tcl/Tk 8.6
 
