@@ -31,6 +31,9 @@
 %def_without lustre
 %global use_fsal_lustre %{on_off_switch lustre}
 
+%def_without mem
+%global use_fsal_mem %{on_off_switch mem}
+
 %def_without shook
 %global use_fsal_shook %{on_off_switch shook}
 
@@ -67,7 +70,7 @@
 %global use_system_ntirpc %{on_off_switch system_ntirpc}
 
 Name: nfs-ganesha
-Version: 2.4.1
+Version: 2.5.0
 Release: alt1
 
 Summary: NFS-Ganesha is a NFS Server running in user space
@@ -158,10 +161,10 @@ be used with NFS-Ganesha to support PROXY based filesystems
 Summary: The NFS-GANESHA's util scripts
 Group: System/Servers
 Requires: dbus-python, pygobject2
-%if_with gui_utils
-BuildRequires: PyQt4-devel
-Requires: PyQt4
-%endif
+#if_with gui_utils
+#BuildRequires: PyQt4-devel
+#Requires: PyQt4
+#endif
 Requires: nfs-ganesha = %version-%release, python
 
 %description utils
@@ -316,6 +319,7 @@ be used with NFS-Ganesha to support Gluster
 %prep
 %setup
 rm -rf contrib/libzfswrapper
+%__subst "s|-Werror||g" src/cmake/maintainer_mode.cmake
 
 %build
 cd src && %cmake_insource -DCMAKE_BUILD_TYPE=Debug		\
@@ -325,6 +329,7 @@ cd src && %cmake_insource -DCMAKE_BUILD_TYPE=Debug		\
 	-DUSE_FSAL_XFS=%use_fsal_xfs			\
 	-DUSE_FSAL_CEPH=%use_fsal_ceph		\
 	-DUSE_FSAL_LUSTRE=%use_fsal_lustre		\
+	-DUSE_FSAL_MEM=%use_fsal_mem			\
 	-DUSE_FSAL_SHOOK=%use_fsal_shook		\
 	-DUSE_FSAL_GPFS=%use_fsal_gpfs		\
 	-DUSE_FSAL_HPSS=%use_fsal_hpss		\
@@ -398,10 +403,10 @@ install -m 644 config_samples/gpfs.ganesha.nfsd.conf %buildroot%_sysconfdir/gane
 install -m 644 config_samples/gpfs.ganesha.main.conf %buildroot%_sysconfdir/ganesha
 install -m 644 config_samples/gpfs.ganesha.log.conf %buildroot%_sysconfdir/ganesha
 install -m 644 config_samples/gpfs.ganesha.exports.conf	%buildroot%_sysconfdir/ganesha
-%if_without systemd
-mkdir -p %buildroot%_sysconfdir/init.d
-install -m 755 scripts/init.d/nfs-ganesha.gpfs		%buildroot%_sysconfdir/init.d/nfs-ganesha-gpfs
-%endif
+#if_without systemd
+#mkdir -p %buildroot%_sysconfdir/init.d
+#install -m 755 scripts/init.d/nfs-ganesha.gpfs		%buildroot%_sysconfdir/init.d/nfs-ganesha-gpfs
+#endif
 %endif
 
 %makeinstall_std
@@ -458,9 +463,9 @@ install -m 644 ChangeLog	%buildroot%_docdir/ganesha
 %config(noreplace) %_sysconfdir/ganesha/gpfs.ganesha.main.conf
 %config(noreplace) %_sysconfdir/ganesha/gpfs.ganesha.log.conf
 %config(noreplace) %_sysconfdir/ganesha/gpfs.ganesha.exports.conf
-%if_with systemd
-%_sysconfdir/init.d/nfs-ganesha-gpfs
-%endif
+#if_without systemd
+#%_sysconfdir/init.d/nfs-ganesha-gpfs
+#endif
 %endif
 
 %if_with xfs
@@ -516,15 +521,15 @@ install -m 644 ChangeLog	%buildroot%_docdir/ganesha
 %files utils
 %python_sitelibdir/Ganesha/*
 %python_sitelibdir/ganeshactl-*-info
-%if_with gui_utils
-%_bindir/ganesha-admin
-%_bindir/manage_clients
-%_bindir/manage_exports
-%_bindir/manage_logger
-%_bindir/ganeshactl
-%_bindir/client_stats_9pOps
-%_bindir/export_stats_9pOps
-%endif
+#%if_with gui_utils
+#%_bindir/ganesha-admin
+#%_bindir/manage_clients
+#%_bindir/manage_exports
+#%_bindir/manage_logger
+#%_bindir/ganeshactl
+#%_bindir/client_stats_9pOps
+#%_bindir/export_stats_9pOps
+#%endif
 %_bindir/fake_recall
 %_bindir/get_clientids
 %_bindir/grace_period
@@ -535,6 +540,9 @@ install -m 644 ChangeLog	%buildroot%_docdir/ganesha
 %endif
 
 %changelog
+* Sun Jun 11 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1
+- new version 2.5.0
+
 * Mon Dec 05 2016 Vitaly Lipatov <lav@altlinux.ru> 2.4.1-alt1
 - new version 2.4.1 (with rpmrb script)
 
