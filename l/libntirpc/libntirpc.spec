@@ -1,7 +1,5 @@
-%define dev_version 1.4.0pre2
-
 Name: libntirpc
-Version: 1.4.1
+Version: 1.5.2
 Release: alt1
 
 Summary: New Transport Independent RPC Library
@@ -12,7 +10,7 @@ Url: https://github.com/nfs-ganesha/ntirpc
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/nfs-ganesha/ntirpc/archive/v%dev_version/ntirpc-%dev_version.tar.gz
+# Source-url: https://github.com/nfs-ganesha/ntirpc/archive/v%version/ntirpc-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires: cmake
@@ -54,6 +52,8 @@ Development headers and auxiliary files for developing with %name.
 
 %install
 %makeinstall_std -C BUILD
+
+rm -f %buildroot%_includedir/ntirpc/misc/winpthreads.h
 ln -s %name.so.%version %buildroot%_libdir/%name.so.1
 
 %files
@@ -67,6 +67,9 @@ ln -s %name.so.%version %buildroot%_libdir/%name.so.1
 %_pkgconfigdir/libntirpc.pc
 
 %changelog
+* Sun Jun 11 2017 Vitaly Lipatov <lav@altlinux.ru> 1.5.2-alt1
+- new version 1.5.2 (with rpmrb script)
+
 * Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
 - new version 1.4.1 (with rpmrb script)
 
