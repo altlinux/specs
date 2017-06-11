@@ -1,29 +1,30 @@
 %define oname Pyro4
 
 %def_with python3
+%def_with docs
 
 Name:           python-module-%oname
 Version:        4.39
-Release:        alt1.1
+Release:        alt2
 Summary:        Python Remote Objects
 Group:          Development/Python
 License:        LGPLv2+
 URL:            https://pypi.python.org/pypi/Pyro4/
 Source:         Pyro4-%version.tar.gz
 BuildArch:      noarch
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Python Development Team <python@packages.altlinux.org>
 
 BuildPreReq: python-devel python-module-sphinx-devel
 BuildPreReq: python-module-setuptools-tests
+%if_with docs
 BuildPreReq: python-module-serpent python3-module-sphinx-devel
+%endif #docs
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-serpent
+#BuildPreReq: python3-module-serpent
 %endif
 
-Provides: python-module-Pyro = %version-%release
-Obsoletes: python-module-Pyro < %version-%release
 %py_requires json wsgiref
 
 %description
@@ -137,8 +138,10 @@ rm -rf ../python3
 cp -a . ../python3
 %endif
 
+%if_with docs
 %prepare_sphinx docs
 ln -s ../objects.inv docs/source
+%endif
 
 %build
 %python_build
@@ -162,6 +165,7 @@ popd
 
 %python_install
 
+%if_with docs
 export PYTHONPATH=%buildroot%python_sitelibdir
 ln -s $PWD/docs/objects.inv %buildroot%python_sitelibdir
 pushd docs
@@ -170,6 +174,7 @@ pushd docs
 popd
 rm -f %buildroot%python_sitelibdir/objects.inv
 cp -fR build/sphinx/pickle %buildroot%python_sitelibdir/%oname/
+%endif
 
 %check
 python setup.py test
@@ -186,7 +191,9 @@ popd
 %exclude %_bindir/*.py3
 %endif
 %python_sitelibdir/*
+%if_with docs
 %exclude %python_sitelibdir/%oname/pickle
+%endif #docs
 %exclude %python_sitelibdir/%oname/test
 
 %files tests
@@ -196,11 +203,13 @@ popd
 %doc examples
 %doc tests
 
+%if_with docs
 %files docs
 %doc build/sphinx/html/*
 
 %files pickles
 %python_sitelibdir/%oname/pickle
+%endif #docs
 
 %if_with python3
 %files -n python3-module-%oname
@@ -214,6 +223,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 11 2017 Anton Midyukov <antohami@altlinux.org> 4.39-alt2
+- Remove obsoletes and provides python-module-Pyro 
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.39-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
