@@ -1,5 +1,5 @@
 Name: mate-tweak
-Version: 17.10.2
+Version: 17.10.4
 Release: alt1
 Epoch:   1
 
@@ -57,6 +57,9 @@ Settings that can be handled via MATE Tweak:
 %exclude %_man1dir/metacity*
 
 %changelog
+* Sun Jun 11 2017 Andrey Cherepanov <cas@altlinux.org> 1:17.10.4-alt1
+- New version
+
 * Fri May 19 2017 Andrey Cherepanov <cas@altlinux.org> 1:17.10.2-alt1
 - New version
 - New Epoch to downgrade version in p8
