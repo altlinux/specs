@@ -1,7 +1,7 @@
 %define post 35
 Name: 	  omi
 Version:  1.2.0
-Release:  alt1
+Release:  alt2
 
 Summary:  Open Management Infrastructure
 License:  MIT
@@ -51,6 +51,15 @@ Requires: lib%name = %version-%release
 %description -n lib%name-devel
 Development files for %name.
 
+%package -n lib%name-internal-devel
+
+Summary: Open Management Infrastructure
+Group: Development/C
+Requires: lib%name-devel = %version-%release
+
+%description -n lib%name-internal-devel
+Internal development files for %name.
+
 
 %prep
 %setup
@@ -64,7 +73,7 @@ export OMI_BUILDVERSION_PATCH=0
 export OMI_BUILDVERSION_BUILDNR=%post
 cd Unix
 ./configure --prefix=%prefix --localstatedir=/var/omi --sysconfdir=/etc/omi \
-	--libdir=%_libdir --includedir=%_includedir --datadir=%_datadir/%name \
+	--libdir=%_libdir --includedir=%_includedir/omi --datadir=%_datadir/%name \
 	--certsdir=/etc/omi/ssl
 #	 --credsdir=/etc/omi/creds
 
@@ -73,6 +82,26 @@ cd Unix
 %install
 cd Unix
 %makeinstall_std
+mkdir -p %buildroot%_includedir/omi/{pal,base,sock,oi,nits/base}/
+cp base/*.h %buildroot%_includedir/omi/base/
+cp sock/*.h %buildroot%_includedir/omi/sock/
+cp oi/*.h %buildroot%_includedir/omi/oi/
+cp nits/base/nits.h %buildroot%_includedir/omi/nits/base/
+cp common/common.h %buildroot%_includedir/omi/
+cp common/localizestr.h %buildroot%_includedir/omi/
+cp output/include/config.h %buildroot%_includedir/omi/
+cp -a pal/*.h %buildroot%_includedir/omi/pal/
+subst "s|common/linux/sal.h|linux/sal.h|g" %buildroot%_includedir/omi/pal/palcommon.h
+rm -f %buildroot%_includedir/omi/pal/{strlcat.h,strlcpy.h}
+mkdir -p %buildroot%_includedir/omi/linux/
+cp -a common/linux/sal.h %buildroot%_includedir/omi/linux/
+
+mkdir -p %buildroot%_libdir/%name/{bin,lib}/
+cp output/bin/{chkshlib,mkdep,oigenc,strhash} %buildroot%_libdir/%name/bin/
+ln -sr %buildroot%_bindir/omireg %buildroot%_libdir/%name/bin/omireg
+ln -sr %buildroot%_bindir/omigen %buildroot%_libdir/%name/bin/omigen
+cp output/lib/*.a %buildroot%_libdir/%name/lib/
+#cp output/lib/libnits.so %buildroot%_libdir/%name/lib/
 
 #%check
 #%make_build check
@@ -91,8 +120,26 @@ cd Unix
 %_datadir/%name/
 
 %files -n lib%name-devel
-%_includedir/*
+%dir %_includedir/omi/
+%_includedir/omi/MI.h
+%_includedir/omi/micxx/
+%_includedir/omi/omiclient/
+
+%files -n lib%name-internal-devel
+%_libdir/%name/
+%_includedir/omi/common.h
+%_includedir/omi/config.h
+%_includedir/omi/localizestr.h
+%_includedir/omi/linux/
+%_includedir/omi/pal/
+%_includedir/omi/base/
+%_includedir/omi/sock/
+%_includedir/omi/oi/
+%_includedir/omi/nits/
 
 %changelog
+* Fri Jun 09 2017 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt2
+- add internal pal headers
+
 * Fri Jun 02 2017 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
 - initial build for ALT Sisyphus
