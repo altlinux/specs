@@ -1,6 +1,6 @@
 Name: dvdstyler
-Version: 2.8
-Release: alt3.rc3
+Version: 3.0.3
+Release: alt1%ubt
 Summary: %name is a crossplatform DVD Authoring System
 Summary(ru_RU.UTF-8): %name - это программа для создания DVD дисков
 License: GPL
@@ -19,6 +19,7 @@ BuildRequires: libavcodec-devel libavformat-devel libavutil-devel
 BuildRequires: libavfilter-devel libswscale-devel avconv
 BuildRequires: dvdauthor mjpegtools genisoimage dvd+rw-tools
 BuildRequires: cdrecord-classic dvdrecord xmlto zip bison flex mpgtx
+BuildRequires(pre): rpm-build-ubt
 
 Requires: mjpegtools dvdauthor dvd+rw-tools genisoimage dvdisaster
 
@@ -92,6 +93,9 @@ install -p -m 644 data/%name.png %buildroot%_liconsdir/%name.png
 
 
 %changelog
+* Sun Jun 11 2017 Anton Farygin <rider@altlinux.ru> 3.0.3-alt1%ubt
+- new version
+
 * Sun Oct 04 2015 Anton Midyukov <antohami@altlinux.org> 2.8-alt3.rc3
 - Rebuilt for new gcc5 C++11 ABI.
 
