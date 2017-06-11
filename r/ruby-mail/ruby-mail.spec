@@ -1,7 +1,7 @@
 %define  pkgname mail
  
 Name: 	 ruby-%pkgname
-Version: 2.6.4
+Version: 2.6.6
 Release: alt1
  
 Summary: A really Ruby Mail handler
@@ -19,6 +19,8 @@ BuildRequires: ruby-tool-setup
 BuildRequires: ruby-mime-types
 BuildRequires: ruby-treetop
  
+%filter_from_requires /^ruby(\(ftools\|tlsmail\))/d
+
 %description
 Mail is an internet library for Ruby that is designed to handle emails
 generation, parsing and sending in a simple, rubyesque manner.
@@ -58,6 +60,12 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Sat Jun 10 2017 Andrey Cherepanov <cas@altlinux.org> 2.6.6-alt1
+- New version
+
+* Thu Apr 27 2017 Andrey Cherepanov <cas@altlinux.org> 2.6.5-alt1
+- New version
+
 * Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 2.6.4-alt1
 - New version
 - Disable test because they require network connections
