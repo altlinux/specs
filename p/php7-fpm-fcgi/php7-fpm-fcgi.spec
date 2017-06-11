@@ -2,7 +2,7 @@
 
 Name: php7-fpm-fcgi
 Version: %php7_version
-Release: %php7_release.1
+Release: %php7_release
 Summary: The PHP7 HTML-embedded scripting language as a php-fpm (FastCGI) binary.
 Group: System/Servers
 Url: http://www.php.net/
