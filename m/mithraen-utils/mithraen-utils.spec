@@ -2,7 +2,7 @@ BuildArch: noarch
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Name: mithraen-utils
-Version: 0.0.12
+Version: 0.0.13
 Release: alt1
 
 Summary: Utilites for SVN
@@ -35,6 +35,9 @@ install -m 755 * %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Tue Jun 13 2017 Denis Smirnov <mithraen@altlinux.ru> 0.0.13-alt1
+- vfast: use ffmpeg instead of avconv
+
 * Wed Jun 10 2015 Denis Smirnov <mithraen@altlinux.ru> 0.0.12-alt1
 - cleanup (remove old unneeded utilites)
 
