@@ -1,19 +1,15 @@
 Name: unpaper
 Version: 6.1
-Release: alt1
+Release: alt2
 
 Summary: unpaper is a post-processing tool for scanned sheets of paper
-Summary(ru_RU.UTF-8): unpaper есть программа для обработки страниц после сканирования
+Summary(ru_RU.UTF-8): программа для обработки страниц после сканирования
 
 License: GPLv2
 Group: Publishing
-# URL: http://unpaper.berlios.de
-
 Url: http://www.flameeyes.eu/projects/unpaper
 
-Packager: Yury Aliaev <mutabor@altlinux.ru>
-
-# Git: https://github.com/Flameeyes/unpaper.git
+# Source-url: https://github.com/Flameeyes/unpaper/archive/unpaper-%version.tar.gz
 Source: http://www.flameeyes.eu/files/%name-%version.tar
 
 BuildPreReq: docbook-style-xsl
@@ -34,7 +30,7 @@ of pages and will automatically straighten each page by rotating it
 to the correct angle.
 
 %description -l ru_RU.UTF-8
-unpaper есть программа для обработки страниц после сканирования,
+unpaper — это программа для обработки страниц после сканирования,
 особенно в тех случаях, когда была отсканирована фотокопия книги.
 Основная её цель есть улучшить читаемость с экрана после преобразования
 в форматы PDF и DJVU. Программа unpaper пытается убрать тёмное
@@ -60,6 +56,9 @@ unpaper есть программа для обработки страниц п�
 %doc AUTHORS NEWS README.md
 
 %changelog
+* Mon Jun 12 2017 Vitaly Lipatov <lav@altlinux.ru> 6.1-alt2
+- rebuild with ffmpeg
+
 * Sat Aug 22 2015 Vitaly Lipatov <lav@altlinux.ru> 6.1-alt1
 - new version 6.1 (with rpmrb script)
 
@@ -76,5 +75,5 @@ unpaper есть программа для обработки страниц п�
 * Thu Jun 26 2008 Yury Aliaev <mutabor@altlinux.org> 0.3-alt1
 - version 0.3
 
-* Sun Jun 01 2007 Yury Aliaev <mutabor@altlinux.org> 0.2-alt1
+* Fri Jun 01 2007 Yury Aliaev <mutabor@altlinux.org> 0.2-alt1
 - Initial build
