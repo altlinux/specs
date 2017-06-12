@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Facebook::Graph
 
 Name: perl-Facebook-Graph
-Version: 1.1202
+Version: 1.1203
 Release: alt1
 
 Summary: Perl interface to the Facebook Graph API
@@ -16,8 +16,6 @@ BuildArch: noarch
 %define real_name Facebook-Graph
 Source: %real_name-%version.tar
 Patch0: %real_name-%version-%release.patch
-
-Patch1: perl-Facebook-Graph-1.1202-alt-obsolete_module.patch
 
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses
@@ -46,8 +44,6 @@ Facebook data, and build a privileged Facebook application.
 %setup  -n %real_name-%version
 %patch0 -p1
 
-%patch1
-
 # Fix version tag
 sed -e 's/version = .*/version = %version/' -i dist.ini
 
@@ -71,6 +67,9 @@ cp README Changes ..
 %perl_vendor_privlib/Facebook/Graph*
 
 %changelog
+* Mon Jun 12 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.1203-alt1
+- New version
+
 * Thu May 04 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.1202-alt1
 - New version
 
