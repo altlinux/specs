@@ -1,7 +1,7 @@
 %define libname libqtav
 Name: QtAV
 Version: 1.11.0
-Release: alt2
+Release: alt3
 
 Summary: A cross-platform multimedia framework based on Qt and FFmpeg
 License: LGPL v2.1
@@ -18,8 +18,8 @@ BuildRequires: gcc-c++
 # optimized out: fontconfig gcc-c++ libGL-devel libX11-devel libXext-devel libavcodec-devel libavutil-devel libcdio-paranoia libdc1394-22 libgpg-error libjson-c libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-qml libqt5-quick libqt5-sql libqt5-svg libqt5-widgets libraw1394-11 libstdc++-devel python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-xmlpatterns-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel
 BuildRequires: libXv-devel libass-devel libuchardet-devel libva-devel
 BuildRequires: qt5-base-devel qt5-multimedia-devel qt5-phonon-devel qt5-websockets-devel qt5-quick1-devel qt5-declarative-devel
-BuildRequires: libavdevice-devel libavfilter-devel libavformat-devel libavresample-devel libswscale-devel
-BuildRequires: libopenal-devel libpulseaudio-devel
+BuildRequires: libavdevice-devel libavfilter-devel libavformat-devel libswscale-devel
+BuildRequires: libopenal-devel libpulseaudio-devel libswresample-devel
 
 
 %description
@@ -77,10 +77,13 @@ Development files for %name qml.
 %setup
 
 %build
+# broken build with gnu++14 (gcc6's default)
+%add_optflags -std=gnu++11
 %qmake_qt5 -config no_rpath
 %make_build
 
 %install
+# TODO: use install_qt5
 %installqt5
 # drop Player / QML Player
 rm -rf %buildroot/{%_desktopdir,%_docdir,%_iconsdir,%_qt5_prefix/bin,%_bindir}
@@ -108,6 +111,9 @@ rm -rf %buildroot/{%_desktopdir,%_docdir,%_iconsdir,%_qt5_prefix/bin,%_bindir}
 %doc doc/UseQtAVinYourProjects.md
 
 %changelog
+* Mon Jun 12 2017 Vitaly Lipatov <lav@altlinux.ru> 1.11.0-alt3
+- rebuild with ffmpeg
+
 * Tue Jan 24 2017 Vitaly Lipatov <lav@altlinux.ru> 1.11.0-alt2
 - drop unneeded qml subpackage (ALT bug #33012), thanks, @zerg
 
