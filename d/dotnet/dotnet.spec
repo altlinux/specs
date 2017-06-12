@@ -1,9 +1,10 @@
+%def_without bootstrap
 %define corerelease 2.0.0-preview1-002111-00
 %define pre -preview1
 
 Name: dotnet
 Version: 2.0.0
-Release: alt1.preview1
+Release: alt2.preview1
 
 Summary: Installer packages for the .NET Core runtime and libraries
 
@@ -16,7 +17,7 @@ Source: %name-%version.tar
 
 ExclusiveArch: x86_64
 
-BuildRequires: clang = 3.8.0
+BuildRequires: clang
 
 BuildRequires: cmake llvm libstdc++-devel
 
@@ -26,6 +27,15 @@ Requires: dotnet-common >= %version
 Requires: dotnet-coreclr >= %version
 Requires: dotnet-corefx >= %version
 #Requires: dotnet-sdk >= %version
+
+%if_with bootstrap
+BuildRequires: dotnet-bootstrap
+%define bootstrapdir %_libdir/dotnet-bootstrap
+%else
+BuildRequires: dotnet
+%define bootstrapdir %_libdir/dotnet
+%endif
+
 
 %description
 This repo contains the code to build the .NET Core runtime,
@@ -42,7 +52,7 @@ find -type f -name "*.sh" | xargs subst "s|/etc/os-release|%_libdir/dotnet/fake-
 %build
 #DOTNET_TOOL_DIR=%_libdir/dotnet-bootstrap ./build.sh x64 release verbose
 cd src/corehost
-DOTNET_TOOL_DIR=%_libdir/dotnet-bootstrap sh -x ./build.sh --arch x64 --hostver %corerelease --apphostver %corerelease --fxrver %corerelease --policyver %corerelease --commithash 0
+DOTNET_TOOL_DIR=%bootstrapdir sh -x ./build.sh --arch x64 --hostver %corerelease --apphostver %corerelease --fxrver %corerelease --policyver %corerelease --commithash 0
 
 %install
 mkdir -p %buildroot%_libdir/dotnet/
@@ -68,6 +78,9 @@ ln -sr %buildroot%_libdir/dotnet/dotnet %buildroot%_bindir/dotnet
 %_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/libhostfxr.so
 
 %changelog
+* Sun May 28 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt2.preview1
+- rebuild without bootstrap with RID linux.x64
+
 * Thu May 25 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1.preview1
 - fix packaging
 
