@@ -1,8 +1,8 @@
 Name: mkimage-profiles
-Version: 1.1.108
+Version: 1.1.109
 Release: alt1
 
-Summary: ALT Linux based distribution metaprofile
+Summary: ALT based distribution metaprofile
 License: GPLv2+
 Group: Development/Other
 
@@ -26,11 +26,7 @@ Requires: mkimage-preinstall
 %def_with doc
 %define docs $HOME/docs
 
-%package doc
-Summary: %name documentation
-Group: Development/Documentation
-%{?_with_doc:BuildRequires: java /proc}
-%{?_with_doc:BuildRequires: asciidoc-a2x fop fonts-ttf-dejavu}
+Summary(ru_RU.UTF-8): метапрофиль дистрибутивов на базе Альт
 
 %description
 mkimage-profiles is a collection of bits and pieces useful for
@@ -41,12 +37,13 @@ to choose from, and some ready-made image recipes as well.
 Make no mistake: constructing distributions isn't just fun, it takes
 a lot of passion and knowledge to produce a non-trivial one.  So m-p
 (the short alias for mkimage-profiles) is complex too.  If you need
--- or want -- to make just a few tweaks to an existing recipe, it might
+-- or want -- to make a few tweaks to an existing recipe, it might
 be easier to comprehend the generated profile (aka builddir) which
 contains only the needed subprofiles, script hooks and package lists
 and is way more compact.
 
-Virtual environment template caches (OpenVZ/LXC) can be made either.
+The main deliverable form for x86 is a (hybrid) ISO; virtual environment
+template caches (OpenVZ/LXC) can be made either as well as VM disk images.
 
 In short, setup hasher (http://en.altlinux.org/hasher) and here we go:
   cd %mpdir
@@ -56,11 +53,51 @@ In short, setup hasher (http://en.altlinux.org/hasher) and here we go:
 But if you're into regular distro hacking and are not afraid of make
 and modest metaprogramming (some code generation and introspection),
 welcome to the metaprofile itself; read the docs and get the git:
+%url (NB: these are mostly in Russian with translation on demand).
+
+%description -l ru_RU.UTF-8
+mkimage-profiles является собранием всего необходимого для
+построения дистрибутивов и содержит списки пакетов, особенности
+и целые субпрофили (вроде "кирпичика" rescue), из которых можно
+выбирать требуемое; также включены и описания готовых образов.
+
+Поймите правильно: создание дистрибутивов является занятием
+не только интересным, но и требующим вдохновения и знаний
+для получения нетривиального результата.  Если хочется или же
+необходимо чуток поправить уже существующий "рецепт", может
+быть проще разобраться в сгенерированном профиле (builddir),
+который содержит только необходимые субпрофили, скрипты
+и списки пакетов, являясь намного более компактным.
+
+Основной формой результата на x86 является (гибридный) ISO-образ;
+также возможно создавать шаблоны контейнеров OpenVZ/LXC и образы
+дисков виртуальных машин.
+
+Короче говоря, настройте hasher (http://altlinux.org/hasher) и:
+  cd %mpdir
+  head README
+  make syslinux.iso
+
+Но если разработка дистрибутивов становится обыденным делом
+и не страшитесь make и чуточки метапрограммирования (немного
+генерирования кода и интроспекции), добро пожаловать в сам
+метапрофиль; гляньте документацию и забирайте git:
 %url
+
+%package doc
+Summary: %name documentation
+Group: Development/Documentation
+%{?_with_doc:BuildRequires: java /proc}
+%{?_with_doc:BuildRequires: asciidoc-a2x fop fonts-ttf-dejavu}
+Summary(ru_RU.UTF-8): документация %name
 
 %description doc
 This package holds developer docs for %name
 as a book in HTML and PDF formats.
+
+%description -l ru_RU.UTF-8 doc
+Этот пакет содержит документацию разработчика
+для %name в форме книжки (HTML, PDF).
 
 %prep
 %setup
@@ -91,6 +128,9 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Jun 12 2017 Michael Shigorin <mike@altlinux.org> 1.1.109-alt1
+- starterkits-20170612
+
 * Mon Apr 24 2017 Michael Shigorin <mike@altlinux.org> 1.1.108-alt1
 - yandex.mirror
 
