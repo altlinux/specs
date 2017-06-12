@@ -1,8 +1,9 @@
 %define ver_major 1.4
 %def_enable glx
+%def_enable egl
 
 Name: libepoxy
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Direct Rendering Manager runtime library
@@ -13,8 +14,9 @@ Url: http://github.com/anholt/libepoxy
 #Source: %url/releases/download/v%version/%name-%version.tar.bz2
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-BuildRequires: python3 libGL-devel libEGL-devel
+BuildRequires: python3 libGL-devel
 %{?_enable_glx:BuildRequires: libX11-devel xorg-util-macros}
+%{?_enable_egl:BuildRequires: libEGL-devel}
 
 %description
 A library for handling OpenGL function pointer management.
@@ -35,7 +37,8 @@ developing applications that use %name
 %autoreconf
 %configure \
 	--disable-static \
-	%{subst_enable glx}
+	%{subst_enable glx}\
+	%{subst_enable egl}
 %make_build
 
 %install
@@ -55,6 +58,9 @@ developing applications that use %name
 %doc ChangeLog
 
 %changelog
+* Mon Jun 12 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4.3-alt1
+- 1.4.3
+
 * Sun Apr 30 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
 - 1.4.2
 
