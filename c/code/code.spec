@@ -1,11 +1,11 @@
 Name: code
-Version: 1.12.2
+Version: 1.13.0
 Release: alt1
 
 Summary: Visual Studio Code
 
 License: Multiple, see https://code.visualstudio.com/license
-Url: https://github.com/dotnet
+Url: https://code.visualstudio.com/
 Group: Development/Other
 
 # Get from https://code.visualstudio.com/Download
@@ -51,15 +51,20 @@ mkdir -p %buildroot%_libdir/%name/
 cp -a * %buildroot%_libdir/%name/
 mkdir -p %buildroot%_bindir/
 ln -rs %buildroot%_libdir/%name/bin/code %buildroot/%_bindir/code
+ln -rs %buildroot%_libdir/%name/bin/code %buildroot/%_bindir/vscode
 install -m644 -D %SOURCE2 %buildroot%_desktopdir/%name.desktop
 install -m644 -D %SOURCE3 %buildroot%_pixmapsdir/code.png
 
 %files
 %_bindir/code
+%_bindir/vscode
 %_libdir/%name/
 %_desktopdir/%name.desktop
 %_pixmapsdir/code.png
 
 %changelog
+* Tue Jun 13 2017 Vitaly Lipatov <lav@altlinux.ru> 1.13.0-alt1
+- new version 1.13.0
+
 * Thu Jun 01 2017 Vitaly Lipatov <lav@altlinux.ru> 1.12.2-alt1
 - initial release for ALT Sisyphus
