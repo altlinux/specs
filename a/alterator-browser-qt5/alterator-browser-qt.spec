@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 2.91.1
+Version: 2.92.0
 Release: alt1%ubt
 
 Source:%name-%version.tar
@@ -79,6 +79,9 @@ __EOF__
 
 
 %changelog
+* Tue Jun 13 2017 Sergey V Turchin <zerg at altlinux dot org> 2.92.0-alt1%ubt
+- handle closing main window
+
 * Tue May 30 2017 Sergey V Turchin <zerg at altlinux dot org> 2.91.1-alt1%ubt
 - enable high-DPI scaling by default
 
