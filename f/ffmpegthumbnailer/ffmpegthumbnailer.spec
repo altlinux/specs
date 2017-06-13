@@ -1,16 +1,15 @@
 Name: ffmpegthumbnailer
 Summary: Lightweight video thumbnailer that can be used by file managers
-Version: 2.0.8
-Release: alt4.1
+Version: 2.2.0
+Release: alt1
 
 License: GPLv2
 Group: Graphics
 Url: http://code.google.com/p/ffmpegthumbnailer/
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source0: http://ffmpegthumbnailer.googlecode.com/files/%name-%version.tar.gz
 
-BuildRequires: gcc-c++ libavformat-devel libjpeg-devel libpng-devel libswscale-devel
+BuildRequires: gcc-c++ libavformat-devel libjpeg-devel libpng-devel libswscale-devel cmake libswresample-devel libavfilter-devel libavresample-devel libpostproc-devel
 
 %description
 Lightweight video thumbnailer that can be used by file managers.
@@ -38,7 +37,7 @@ This package includes a shared libraries for ffmpegthumbnailer
 Summary: Include Files and Libraries mandatory for Development
 Group: Development/C++
 Requires: libffmpegthumbnailer = %version-%release
-Requires: libavutil-devel libavformat-devel libavcodec-devel libswscale-devel
+Requires: libavutil-devel libavformat-devel libavcodec-devel libswscale-devel cmake
 
 %description -n lib%name-devel
 This package includes C/C++ libraries that can be used by
@@ -46,18 +45,18 @@ developers to generate thumbnails in their projects
 
 %prep
 %setup
-%autoreconf
 
 %build
-%configure --disable-static
-%make_build
+%cmake -DCMAKE_BUILD_TYPE=Release -DENABLE_GIO=ON -DENABLE_THUMBNAILER=ON
+%cmake_build
 
 %install
-%make DESTDIR=%buildroot install
+%make -C BUILD install DESTDIR=%buildroot
 
 %files
 %doc AUTHORS ChangeLog README
 %_bindir/%name
+%_datadir/thumbnailers
 %_man1dir/*
 
 %files -n lib%name
@@ -69,6 +68,9 @@ developers to generate thumbnails in their projects
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Jun 13 2017 Anton Farygin <rider@altlinux.ru> 2.2.0-alt1
+- new version
+
 * Wed Dec 09 2015 Sergey V Turchin <zerg@altlinux.org> 2.0.8-alt4.1
 - rebuild with gcc5
 
