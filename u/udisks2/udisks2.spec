@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name udisks
 %define api_ver 2.0
@@ -11,14 +11,21 @@
 # in /media instead of /run/media but we use own control-based mechanism,
 # so this option should never be enabled
 %def_disable fhs_media
+%def_enable lvm2
+%def_enable lvmcache
+%def_disable iscsi
+%def_enable btrfs
+%def_enable zram
+%def_disable lsm
+%def_enable bcache
 
 Name: %{_name}2
-Version: 2.6.5
+Version: 2.7.0
 Release: alt1
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
-Group: System/Libraries
+Group: System/Servers
 Url: https://github.com/storaged-project/udisks
 
 %if_disabled snapshot
@@ -38,6 +45,7 @@ Obsoletes: %_name
 %define udev_ver 165
 %define libatasmart_ver 0.17
 %define dbus_ver 1.4.0
+%define blockdev_ver 2.0
 
 Requires(pre): control
 Requires: lib%name = %version-%release
@@ -53,9 +61,16 @@ BuildRequires: libpolkit-devel >= %polkit_ver
 BuildRequires: libatasmart-devel >= %libatasmart_ver
 BuildRequires: libudev-devel libgudev-devel >= %udev_ver
 BuildRequires: systemd-devel libsystemd-login-devel libsystemd-daemon-devel
+BuildRequires: libblockdev-devel >= %blockdev_ver libblockdev-loop-devel
+BuildRequires: libblockdev-mdraid-devel libblockdev-fs-devel libblockdev-crypto-devel
+BuildRequires: libblockdev-kbd-devel libblockdev-part-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
 %{?_enable_acl:BuildRequires: libacl-devel}
-
+%{?_enable_lvm2:BuildRequires: libdevmapper-devel liblvm2-devel libblockdev-lvm-devel}
+%{?_enable_iscsi:BuildRequires: iscsi-initiator-utils-devel}
+%{?_enable_btrfs:BuildRequires: libblockdev-btrfs-devel}
+%{?_enable_zram:BuildRequires: libblockdev-kbd-devel libblockdev-swap-devel}
+%{?_enable_lsm:BuildRequires: libstoragemgmt-devel libconfig-devel}
 
 %description
 The udisks project provides a daemon, tools and libraries to access
@@ -107,18 +122,74 @@ BuildArch: noarch
 %description -n lib%name-devel-doc
 This package contains development documentation for lib%name.
 
+%package module-lvm2
+Summary: UDisks module for LVM2
+Group: System/Servers
+Requires: %name = %version-%release
+
+%description module-lvm2
+This package contains UDisks module for LVM2 configuration.
+
+%package module-zram
+Summary: UDisks module for Zram
+Group: System/Servers
+Requires: %name = %version-%release
+
+%description module-zram
+This package contains UDisks module for Zram configuration.
+
+%package module-bcache
+Summary: UDisks module for Bcache
+Group: System/Servers
+Requires: %name = %version-%release
+
+%description module-bcache
+This package contains UDisks module for Bcache configuration.
+
+%package module-btrfs
+Summary: UDisks module for BTRFS
+Group: System/Servers
+Requires: %name = %version-%release
+
+%description module-btrfs
+This package contains UDisks module for BTRFS configuration.
+
+%package module-lsm
+Summary: UDisks module for LSM
+Group: System/Servers
+Requires: %name = %version-%release
+
+%description module-lsm
+This package contains UDisks module for LibStorageMgmt configuration.
+
+%package module-iscsi
+Summary: UDisks module for iSCSI
+Group: System/Servers
+Requires: %name = %version-%release
+
+%description module-iscsi
+This package contains UDisks module for iSCSI configuration.
+
 
 %prep
 %setup -n %_name-%version
 %patch -b .isohibryd
-subst 's/mkfs.vfat/mkfs.fat/' src/udiskslinuxfsinfo.c
+subst 's/mkfs\.vfat/mkfs.fat/' src/udiskslinuxfsinfo.c
 
 %build
 %autoreconf
 %configure --disable-static \
 	--enable-gtk-doc \
 	%{subst_enable acl} \
-	%{?_enable_fhs_media:--enable-fhs-media}
+	%{?_enable_fhs_media:--enable-fhs-media} \
+	%{subst_enable lvm2} \
+	%{subst_enable lvmcache} \
+	%{subst_enable iscsi} \
+	%{subst_enable btrfs} \
+	%{subst_enable zram} \
+	%{subst_enable lsm} \
+	%{subst_enable bcache}
+
 %make_build
 
 %install
@@ -157,6 +228,8 @@ fi
 %_sysconfdir/udev/rules.d/99-alt-%name-media-mount-point.rules
 %dir %_libexecdir/%name
 %_libexecdir/%name/udisksd
+%dir %_libdir/%name
+%dir %_libdir/%name/modules
 %_datadir/polkit-1/actions/org.freedesktop.UDisks2.policy
 %_datadir/dbus-1/system-services/org.freedesktop.UDisks2.service
 %_sysconfdir/dbus-1/system.d/org.freedesktop.UDisks2.conf
@@ -190,7 +263,50 @@ fi
 %_girdir/UDisks-%api_ver.gir
 %endif
 
+%if_enabled lvm2
+%files module-lvm2
+%_libdir/%name/modules/lib%{name}_lvm2.so
+%_datadir/polkit-1/actions/org.freedesktop.UDisks2.lvm2.policy
+%endif
+
+%if_enabled zram
+%files module-zram
+%_libdir/%name/modules/lib%{name}_zram.so
+%_datadir/polkit-1/actions/org.freedesktop.UDisks2.zram.policy
+%_unitdir/zram-setup@.service
+%endif
+
+%if_enabled bcache
+%files module-bcache
+%_libdir/%name/modules/lib%{name}_bcache.so
+%_datadir/polkit-1/actions/org.freedesktop.UDisks2.bcache.policy
+%endif
+
+%if_enabled btrfs
+%files module-btrfs
+%_libdir/%name/modules/lib%{name}_btrfs.so
+%_datadir/polkit-1/actions/org.freedesktop.UDisks2.btrfs.policy
+%endif
+
+%if_enabled lsm
+%files module-lsm
+%_libdir/%name/modules/lib%{name}_lsm.so
+%_datadir/polkit-1/actions/org.freedesktop.UDisks2.lsm.policy
+%endif
+
+%if_enabled iscsi
+%files module-iscsi
+%_libdir/%name/modules/lib%{name}_iscsi.so
+%_datadir/polkit-1/actions/org.freedesktop.UDisks2.iscsi.policy
+%endif
+
+%exclude %_libdir/%name/modules/*.la
+
 %changelog
+* Tue Jun 13 2017 Yuri N. Sedunov <aris@altlinux.org> 2.7.0-alt1
+- updated to 2.7.0-13-ga26424b
+- new *-module-{lvm2,bcache,zram,btrfs} subpackages
+
 * Fri May 19 2017 Yuri N. Sedunov <aris@altlinux.org> 2.6.5-alt1
 - 2.6.5
 
