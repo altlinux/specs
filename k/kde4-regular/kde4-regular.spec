@@ -1,6 +1,6 @@
 Name:    kde4-regular
 Version: 4.14
-Release: alt4
+Release: alt5
 
 Group: Graphical desktop/KDE
 Summary: KDE4 common collection
@@ -50,7 +50,6 @@ Requires: konversation
 Requires: kde4-smb4k
 Requires: choqok
 Requires: kde4-telepathy
-Requires: sflphone-client-kde4
 Requires: kde4-ktorrent
 Requires: bluedevil
 Requires: kde4-webkitpart
@@ -83,6 +82,9 @@ K Desktop Environment 4 сборный пакет,
 %files
 
 %changelog
+* Tue Jun 13 2017 Sergey V Turchin <zerg@altlinux.org> 4.14-alt5
+- remove sflphone-client-kde4
+
 * Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 4.14-alt4
 - update requires
 
