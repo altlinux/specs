@@ -17,7 +17,7 @@
 
 Name: kf5-%rname
 Version: 5.9.5
-Release: alt3%ubt
+Release: alt4%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -303,6 +303,9 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Tue Jun 13 2017 Oleg Solovyov <mcpain@altlinux.org> 5.9.5-alt4%ubt
+- fix autoupdate username
+
 * Wed Jun 07 2017 Oleg Solovyov <mcpain@altlinux.org> 5.9.5-alt3%ubt
 - new look for breeze theme
 
