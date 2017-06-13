@@ -1,6 +1,6 @@
 Name: simplescreenrecorder
 Version: 0.3.8
-Release: alt1
+Release: alt2
 Summary: Simple Screen Recording with OpenGL capture
 
 Group: Video
@@ -34,9 +34,14 @@ sed -i '/#define SSR_USE_AVFRAME_CHANNELS/s/TEST_AV_VERSION.*/TEST_AV_VERSION(LI
 %_libdir/lib*
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
+%_man1dir/*.1.*
 %_datadir/%name
 
 %changelog
+* Tue Jun 13 2017 Anton Farygin <rider@altlinux.ru> 0.3.8-alt2
+- rebuilt with ffmpeg
+- added man pages
+
 * Mon Mar 13 2017 Fr. Br. George <george@altlinux.ru> 0.3.8-alt1
 - Autobuild version bump to 0.3.8
 
