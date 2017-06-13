@@ -1,10 +1,10 @@
 %define		php5_extension	dbase
 %define 	real_name	dbase
-%define		real_version	5.1.0
+%define		real_version	5.1.1
 
 Name:	 	php5-%php5_extension
 Version:	%php5_version
-Release:	%php5_release
+Release:	%php5_release.1
 
 Summary:	PHP5 dBase database file access functions
 
@@ -74,6 +74,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%version-%release
+
+* Mon Jun 12 2017 Nikolay A. Fetisov <naf@altlinux.ru> 5.6.30.20170119-alt2.S1.1
+- New version 5.1.1
 
 * Tue Nov 05 2013 Nikolay A. Fetisov <naf@altlinux.ru> 5.4.17.20130704-alt1
 - Initial build for ALT Linux Sisyphus
