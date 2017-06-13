@@ -1,5 +1,5 @@
 Name: blender
-Version: 2.78a
+Version: 2.78c
 Release: alt1
 
 Summary: 3D modeling, animation, rendering and post-production
@@ -36,11 +36,18 @@ BuildRequires(pre): rpm-build-python3
 %add_python3_req_skip blf
 %add_python3_req_skip enchant
 %add_python3_req_skip mathutils
+%add_python3_req_skip mathutils.geometry
+%add_python3_req_skip mathutils.noise
 
 %py3_provides BPyMesh
 %py3_provides Blender
 %py3_provides bmesh
 %py3_provides bpy
+%py3_provides bpy.props
+%py3_provides bpy.types
+%py3_provides bpy.app.translations
+%py3_provides bpy.app.handlers
+%py3_provides bpy.app
 
 
 Requires: libopenCOLLADA >= 0-alt3
@@ -153,6 +160,9 @@ install -d release/plugins/include
 %files i18n -f %name.lang
 
 %changelog
+* Tue Jun 13 2017 Anton Farygin <rider@altlinux.ru> 2.78c-alt1
+- Updated to 2.78c.
+
 * Mon Oct 31 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.78a-alt1
 - Updated to 2.78a.
 
