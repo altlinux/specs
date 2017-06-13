@@ -1,7 +1,7 @@
 %define oname RandomPages
 
 Name: mediawiki-extensions-%oname
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: RandomPages adds a new MediaWiki wiki parser for get random pages
@@ -38,6 +38,9 @@ Available options:
 %files -f %oname.files
 
 %changelog
+* Tue Jun 13 2017 Vitaly Lipatov <lav@altlinux.ru> 0.3-alt1
+- update version
+
 * Sat Jun 05 2010 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt1
 - initial build for ALT Linux Sisyphus
 
