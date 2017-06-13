@@ -1,7 +1,9 @@
+%def_with python3
+
 %define modulename ly
 Name: python-module-ly
 Version: 0.9.5
-Release: alt2
+Release: alt3
 
 Summary: Tool and library for manipulating LilyPond files
 
@@ -24,7 +26,7 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
-%setup_python_module %modulename
+#setup_python_module %modulename
 
 %description
 This package provides a Python library `ly` containing various Python
@@ -88,17 +90,24 @@ popd
 %endif
 
 %files
+%if_without python3
 %_bindir/ly
 %_bindir/ly-server
+%endif
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-ly
+%_bindir/ly
+%_bindir/ly-server
 %python3_sitelibdir/*
 %endif
 
 
 %changelog
+* Wed Jun 14 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.5-alt3
+- real build with python3
+
 * Wed Jun 14 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.5-alt2
 - build python3 module
 
