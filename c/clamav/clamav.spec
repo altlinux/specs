@@ -13,7 +13,7 @@
 
 Name: clamav
 Version: 0.99.2
-Release: alt1
+Release: alt2
 %define abiversion 7
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -141,6 +141,8 @@ database automatically. It uses the freshclam(1) utility for this task.
 # fixed RPATH issue (0.97.3 tarball built with wrong libtool)
 %{!?snap: aclocal --force -I m4}
 %{!?snap: %autoreconf}
+
+%add_optflags -std=gnu++98
 
 # --disable-clamav: Disable test for clamav user/group
 %configure \
@@ -319,6 +321,9 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Tue Jun 13 2017 Sergey Novikov <sotor@altlinux.org> 0.99.2-alt2
+- Fix build using -std=gnu++98
+
 * Fri May 13 2016 Sergey Y. Afonin <asy@altlinux.ru> 0.99.2-alt1
 - 0.99.2
 
