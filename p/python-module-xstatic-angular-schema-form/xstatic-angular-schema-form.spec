@@ -1,22 +1,29 @@
 %define mname xstatic
 %define oname %mname-angular-schema-form
+%define pypi_name XStatic-Angular-Schema-Form
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 0.8.13.0
-Release: alt1
+Release: alt2
 Summary: Angular-Schema-Form (XStatic packaging standard)
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/XStatic-Angular-Schema-Form
-Source: %name-%version.tar
+Url: https://pypi.python.org/pypi/%pypi_name/
+Source: %pypi_name-%version.tar.gz
+BuildArch: noarch
+
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-%mname
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-%mname
+%endif
 
 %py_provides %mname.pkg.angular_schema_form
 %py_requires %mname.pkg
-
-BuildRequires: python-module-setuptools-tests python-module-xstatic python3-module-setuptools-tests python3-module-xstatic
-BuildRequires(pre): rpm-build-python3
 
 %description
 Schema Form is a set of AngularJS directives (and a couple of services)
@@ -33,7 +40,7 @@ Schema Form is a set of AngularJS directives (and a couple of services)
 to generate Bootstrap 3 ready forms from a JSON Schema.
 
 %prep
-%setup
+%setup -n %pypi_name-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -57,10 +64,6 @@ pushd ../python3
 popd
 %endif
 
-%if "%_libexecdir" != "%_libdir"
-mv %buildroot%_libexecdir %buildroot%_libdir
-%endif
-
 %check
 python setup.py test
 %if_with python3
@@ -71,15 +74,22 @@ popd
 
 %files
 %doc *.txt
-%python_sitelibdir/*
+%python_sitelibdir/%mname/pkg/*
+%python_sitelibdir/*.egg-info
+%exclude %python_sitelibdir/*.pth
 
 %if_with python3
 %files -n python3-module-%oname
 %doc *.txt
-%python3_sitelibdir/*
+%python3_sitelibdir/%mname/pkg/*
+%python3_sitelibdir/*.egg-info
+%exclude %python3_sitelibdir/*.pth
 %endif
 
 %changelog
+* Wed Jun 14 2017 Alexey Shabalin <shaba@altlinux.ru> 0.8.13.0-alt2
+- build as noarch
+
 * Mon Oct 24 2016 Alexey Shabalin <shaba@altlinux.ru> 0.8.13.0-alt1
 - Initial build for Sisyphus
 

@@ -1,32 +1,29 @@
 %define mname xstatic
 %define oname %mname-mdi
+%define pypi_name XStatic-mdi
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 1.4.57.0
-Release: alt1
+Release: alt2
 Summary: mdi (XStatic packaging standard)
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/XStatic-mdi
+Url: https://pypi.python.org/pypi/%pypi_name/
+Source: %pypi_name-%version.tar.gz
+BuildArch: noarch
 
-Source: %name-%version.tar
-
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-%mname
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-%mname
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-%mname
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-%mname
 %endif
 
 %py_provides %mname.pkg.mdi
 %py_requires %mname.pkg
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-setuptools-tests python-module-xstatic python3-module-setuptools-tests python3-module-xstatic rpm-build-python3
 
 %description
 mdi javascript library packaged for setuptools (easy_install) / pip.
@@ -45,7 +42,7 @@ mdi javascript library packaged for setuptools (easy_install) / pip.
 This package is intended to be used by any project that needs these files.
 
 %prep
-%setup
+%setup -n %pypi_name-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -69,10 +66,6 @@ pushd ../python3
 popd
 %endif
 
-%if "%_libexecdir" != "%_libdir"
-mv %buildroot%_libexecdir %buildroot%_libdir
-%endif
-
 %check
 python setup.py test
 %if_with python3
@@ -83,17 +76,24 @@ popd
 
 %files
 %doc *.txt
-%python_sitelibdir/*
+%python_sitelibdir/%mname/pkg/*
+%python_sitelibdir/*.egg-info
+%exclude %python_sitelibdir/*.pth
 
 %if_with python3
 %files -n python3-module-%oname
 %doc *.txt
-%python3_sitelibdir/*
+%python3_sitelibdir/%mname/pkg/*
+%python3_sitelibdir/*.egg-info
+%exclude %python3_sitelibdir/*.pth
 %endif
 
 %changelog
+* Wed Jun 14 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.57.0-alt2
+- build as noarch
+
 * Mon Oct 24 2016 Alexey Shabalin <shaba@altlinux.ru> 1.4.57.0-alt1
-- 1.4.47.0
+- 1.4.57.0
 
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.70.1-alt1.1.1.1
 - (AUTO) subst_x86_64.

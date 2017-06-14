@@ -1,47 +1,45 @@
 %define mname xstatic
-%define oname %mname-mathjax
-%define pypi_name XStatic-MathJax
+%define oname %mname-angular-lrdragndrop
+%define pypi_name XStatic-Angular-lrdragndrop
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0.0
+Version: 1.0.2.2
 Release: alt2
-Summary: MathJax (XStatic packaging standard)
-License: ASLv2.0
+Summary: Angular-lrdragndrop (XStatic packaging standard)
+License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/%pypi_name/
 Source: %pypi_name-%version.tar.gz
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools-tests
-BuildRequires: python-module-%mname
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-%mname
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
-BuildRequires: python3-module-%mname
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-%mname
 %endif
 
-%py_provides %mname.pkg.mathjax
+%py_provides %mname.pkg.angular_lrdragndrop
 %py_requires %mname.pkg
 
 %description
-MathJax javascript library packaged for setuptools (easy_install) / pip.
+lrDragNDrop javascript library packaged for setuptools (easy_install) / pip.
 
-This package is intended to be used by any project that needs these
-files.
+This package is intended to be used by any project that needs these files.
 
 %package -n python3-module-%oname
-Summary: MathJax (XStatic packaging standard)
+Summary: Angular-lrdragndrop (XStatic packaging standard)
 Group: Development/Python3
-%py3_provides %mname.pkg.mathjax
+%py3_provides %mname.pkg.angular_lrdragndrop
 %py3_requires %mname.pkg
 
 %description -n python3-module-%oname
-MathJax javascript library packaged for setuptools (easy_install) / pip.
+lrDragNDrop javascript library packaged for setuptools (easy_install) / pip.
 
-This package is intended to be used by any project that needs these
-files.
+This package is intended to be used by any project that needs these files.
 
 %prep
 %setup -n %pypi_name-%version
@@ -90,20 +88,14 @@ popd
 %exclude %python3_sitelibdir/*.pth
 %endif
 
+
 %changelog
-* Wed Jun 14 2017 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt2
-- build as noarch
+* Wed Jun 14 2017 Alexey Shabalin <shaba@altlinux.ru> 1.0.2.2-alt2
+- rebuild
 
-* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.0-alt1.1.1.1
-- (AUTO) subst_x86_64.
-
-* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.0-alt1.1.1
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.2.2-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
 
-* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.0.0-alt1.1
-- NMU: Use buildreq for BR.
-
-* Mon Nov 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1
-- Initial build for Sisyphus
-
+* Wed Sep 09 2015 Lenar Shakirov <snejok@altlinux.ru> 1.0.2.2-alt1
+- First build for ALT (based on Fedora 1.0.2.2-2.fc23.src)

@@ -1,35 +1,28 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1.1
 %define mname xstatic
 %define oname %mname-browser-update
-
+%define pypi_name XStatic-browser-update
 %def_with python3
 
 Name: python-module-%oname
 Version: 1.0.1
-#Release: alt1.1.1
-Summary: browser-update 1.0 (XStatic packaging standard)
+Release: alt2
+Summary: browser-update (XStatic packaging standard)
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/XStatic-browser-update/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://pypi.python.org/pypi/%pypi_name/
+Source: %pypi_name-%version.tar.gz
+BuildArch: noarch
 
-Source: %name-%version.tar
-
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-%mname-jquery
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-%mname
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-%mname-jquery
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-%mname
 %endif
 
 %py_provides %mname.pkg.browser_update
 %py_requires %mname.pkg %mname.pkg.jquery
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-module-xstatic python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools python3-module-xstatic
-BuildRequires: python-module-setuptools-tests python-module-xstatic-jquery python3-module-setuptools-tests python3-module-xstatic-jquery rpm-build-python3
 
 %description
 jquery-ui javascript library packaged for setuptools (easy_install) /
@@ -39,7 +32,7 @@ This package is intended to be used by **any** project that needs these
 files.
 
 %package -n python3-module-%oname
-Summary: browser-update 1.0 (XStatic packaging standard)
+Summary: browser-update (XStatic packaging standard)
 Group: Development/Python3
 %py3_provides %mname.pkg.browser_update
 %py3_requires %mname.pkg %mname.pkg.jquery
@@ -52,7 +45,7 @@ This package is intended to be used by **any** project that needs these
 files.
 
 %prep
-%setup
+%setup -n %pypi_name-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -76,10 +69,6 @@ pushd ../python3
 popd
 %endif
 
-%if "%_libexecdir" != "%_libdir"
-mv %buildroot%_libexecdir %buildroot%_libdir
-%endif
-
 %check
 python setup.py test
 %if_with python3
@@ -90,17 +79,22 @@ popd
 
 %files
 %doc *.txt
-%python_sitelibdir/%mname/*
+%python_sitelibdir/%mname/pkg/*
 %python_sitelibdir/*.egg-info
+%exclude %python_sitelibdir/*.pth
 
 %if_with python3
 %files -n python3-module-%oname
 %doc *.txt
-%python3_sitelibdir/%mname/*
+%python3_sitelibdir/%mname/pkg/*
 %python3_sitelibdir/*.egg-info
+%exclude %python3_sitelibdir/*.pth
 %endif
 
 %changelog
+* Wed Jun 14 2017 Alexey Shabalin <shaba@altlinux.ru> 1.0.1-alt2
+- build as noarch
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.1-alt1.1.1.1
 - (AUTO) subst_x86_64.
 
