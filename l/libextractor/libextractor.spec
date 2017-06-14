@@ -1,6 +1,6 @@
 Name: libextractor
-Version: 1.3
-Release: alt3
+Version: 1.4
+Release: alt1
 
 Summary: libextractor is a simple library for keyword extraction
 
@@ -9,8 +9,6 @@ License: GPLv2+
 Url: http://www.gnu.org/software/%name/
 
 Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
-# fc
-Patch: libextractor-1.3_exiv2_026.patch
 
 BuildRequires: gcc-c++ zlib-devel bzlib-devel glib2-devel libexiv2-devel libflac-devel
 BuildRequires: libgsf-devel libltdl7-devel libgtk+3-devel
@@ -51,7 +49,6 @@ This package contains the files needed to build packages that depend on %name.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -94,6 +91,9 @@ export LIBEXTRACTOR_PREFIX=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Wed Jun 14 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt1
+- 1.4
+
 * Tue Jun 06 2017 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt3
 - rebuilt against libexiv2.so.26
 
