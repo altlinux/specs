@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-snort
-Version: 0.5.4
+Version: 0.5.5
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -58,6 +58,9 @@ install -m644 tools/base_conf.php %buildroot/%_datadir/alterator-snort/
 %_datadir/alterator-snort/base_conf.php
 
 %changelog
+* Wed Jun 07 2017 Mikhail Efremov <sem@altlinux.org> 0.5.5-alt1
+- Really validate rule name.
+
 * Mon Jun 05 2017 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt1
 - Update spec for guile22.
 - Validate input fields.
