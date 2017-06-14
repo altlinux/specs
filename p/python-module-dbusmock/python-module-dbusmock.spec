@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: python-module-dbusmock
-Version: 0.16.7
+Version: 0.16.8
 Release: alt1
 
 Summary: mock D-Bus objects for tests
@@ -83,6 +83,9 @@ popd
 
 
 %changelog
+* Wed Jun 14 2017 Yuri N. Sedunov <aris@altlinux.org> 0.16.8-alt1
+- 0.16.8
+
 * Tue Nov 01 2016 Yuri N. Sedunov <aris@altlinux.org> 0.16.7-alt1
 - 0.16.7
 
