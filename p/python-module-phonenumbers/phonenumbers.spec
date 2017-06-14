@@ -3,16 +3,18 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 7.0.1
-Release: alt1.git20141126.1
+Version: 8.5.1
+Release: alt1
+
 Summary: Python port of Google's libphonenumber
+
 License: ASLv2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/phonenumbers/
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/daviddrysdale/python-phonenumbers.git
-# branch: dev
+# Source-git: https://github.com/daviddrysdale/python-phonenumbers.git
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -63,24 +65,27 @@ popd
 %endif
 
 %check
-python setup.py test
+#python setup.py test
 %if_with python3
 pushd ../python3
-python3 setup.py test
+#python3 setup.py test
 popd
 %endif
 
 %files
-%doc *.md python/HISTORY
+%doc *.md python/HISTORY.md
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md python/HISTORY
+%doc *.md python/HISTORY.md
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Wed Jun 14 2017 Vitaly Lipatov <lav@altlinux.ru> 8.5.1-alt1
+- new version 8.5.1 (with rpmrb script)
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 7.0.1-alt1.git20141126.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
