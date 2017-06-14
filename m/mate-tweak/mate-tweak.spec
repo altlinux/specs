@@ -1,5 +1,5 @@
 Name: mate-tweak
-Version: 17.10.4
+Version: 17.10.6
 Release: alt1
 Epoch:   1
 
@@ -50,13 +50,18 @@ Settings that can be handled via MATE Tweak:
 %_libexecdir/%name
 %python3_sitelibdir/*egg-info
 %exclude %_datadir/mate
-%_datadir/%name
 %_desktopdir/%name.desktop
 %_man1dir/%name.1.*
 %exclude %_man1dir/marco*
 %exclude %_man1dir/metacity*
 
 %changelog
+* Wed Jun 14 2017 Andrey Cherepanov <cas@altlinux.org> 1:17.10.6-alt1
+- New version
+
+* Tue Jun 13 2017 Andrey Cherepanov <cas@altlinux.org> 1:17.10.5-alt1
+- New version
+
 * Sun Jun 11 2017 Andrey Cherepanov <cas@altlinux.org> 1:17.10.4-alt1
 - New version
 
