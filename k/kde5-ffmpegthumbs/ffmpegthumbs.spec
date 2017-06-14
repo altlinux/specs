@@ -1,8 +1,8 @@
 %define rname ffmpegthumbs
 
 Name: kde5-%rname
-Version: 17.04.0
-Release: alt2%ubt
+Version: 17.04.2
+Release: alt1%ubt
 %K5init
 
 Group: Video
@@ -41,6 +41,9 @@ Video thumbnail generator for KDE.
 %_K5srv/ffmpegthumbs.desktop
 
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
 * Tue Jun 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt2%ubt
 - rebuild with ffmpeg
 

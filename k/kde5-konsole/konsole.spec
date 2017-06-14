@@ -4,7 +4,7 @@
 %define libkonsoleprivate libkonsoleprivate%sover
 
 Name: kde5-%rname
-Version: 17.04.0
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -83,7 +83,7 @@ KF5 library
 %install
 %K5install
 %K5install_move data konsole
-%find_lang %name --with-kde --without-mo --all-name
+%find_lang %name --with-kde --all-name
 
 # install alternatives
 install -d %buildroot/%_sysconfdir/alternatives/packages.d
@@ -116,6 +116,9 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
 * Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
 - new version
 

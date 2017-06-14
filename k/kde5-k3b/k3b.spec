@@ -19,7 +19,7 @@
 
 %define rname k3b
 Name: kde5-%rname
-Version: 17.04.0
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -173,6 +173,9 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
 * Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
 - new version
 

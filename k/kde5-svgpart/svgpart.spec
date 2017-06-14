@@ -1,7 +1,7 @@
 %define rname svgpart
 
 Name: kde5-%rname
-Version: 17.04.0
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -40,6 +40,9 @@ KDE SVG Part.
 
 
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
 * Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
 - new version
 
