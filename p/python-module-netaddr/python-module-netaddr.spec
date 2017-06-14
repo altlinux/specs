@@ -3,13 +3,14 @@
 %def_disable check
 
 Name:		python-module-%{pypi_name}
-Version:	0.7.13
-Release:	alt1.1.1
+Version:	0.7.19
+Release:	alt1
 Summary:	A pure Python network address representation and manipulation library
 
 Group:		Development/Python
 License:	BSD
 URL:		http://github.com/drkjam/netaddr
+# Source0-url: https://github.com/drkjam/netaddr/archive/netaddr-%version.tar.gz
 Source0:	%{name}-%{version}.tar
 
 BuildArch:	noarch
@@ -100,7 +101,7 @@ find netaddr -name "*.py" | \
   xargs %{__perl} -ni -e 'print unless /usr\/bin\/python|env\s+python/'
 
 # Make rpmlint happy, fix permissions on documentation files
-chmod 0644 README AUTHORS CHANGELOG COPYRIGHT INSTALL LICENSE REFERENCES THANKS
+chmod 0644 AUTHORS CHANGELOG COPYRIGHT INSTALL LICENSE REFERENCES THANKS
 
 %if_with python3
 rm -rf ../python3
@@ -127,6 +128,7 @@ popd
 pushd ../python3
 %python3_install
 mv %{buildroot}%{_bindir}/netaddr %{buildroot}%{_bindir}/netaddr3
+%__subst "s|env python|env python3|g" %{buildroot}%{_bindir}/netaddr3
 popd
 %endif
 
@@ -137,20 +139,23 @@ popd
 LANG=en_US.UTF-8 %{__python3} netaddr/tests/__init__.py
 
 %files
-%doc AUTHORS CHANGELOG COPYRIGHT INSTALL LICENSE REFERENCES THANKS
-%doc README docs/html
+%doc AUTHORS CHANGELOG COPYRIGHT LICENSE REFERENCES THANKS
+%doc README.md docs/html
 %{python_sitelibdir}/*
 %{_bindir}/netaddr
 
 %if_with python3
 %files -n python3-module-%{pypi_name}
-%doc AUTHORS CHANGELOG COPYRIGHT INSTALL LICENSE REFERENCES THANKS
-%doc README docs/python3/html
+%doc AUTHORS CHANGELOG COPYRIGHT LICENSE REFERENCES THANKS
+%doc README.md docs/python3/html
 %{python3_sitelibdir}/*
 %{_bindir}/netaddr3
 %endif
 
 %changelog
+* Wed Jun 14 2017 Vitaly Lipatov <lav@altlinux.ru> 0.7.19-alt1
+- new version 0.7.19 (with rpmrb script)
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.13-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
