@@ -1,7 +1,7 @@
 %define confdir ext/redhat
 
 Name:    puppet
-Version: 4.10.1
+Version: 4.10.2
 Release: alt1
 
 Summary: A network tool for managing many disparate systems
@@ -193,6 +193,9 @@ install -d %buildroot%_localstatedir/puppet/ssl/private_keys
 %config(noreplace) %_sysconfdir/sysconfig/puppetmaster
 
 %changelog
+* Tue Jun 13 2017 Andrey Cherepanov <cas@altlinux.org> 4.10.2-alt1
+- New version
+
 * Sun May 21 2017 Andrey Cherepanov <cas@altlinux.org> 4.10.1-alt1
 - New version
 
