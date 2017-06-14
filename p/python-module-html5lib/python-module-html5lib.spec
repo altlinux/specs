@@ -5,8 +5,8 @@
 
 Name: python-module-%module_name
 Epoch: 1
-Version: 0.999999
-Release: alt1.1.1.2
+Version: 0.999999999
+Release: alt1
 
 Summary: Library for working with HTML5 documents
 
@@ -15,22 +15,20 @@ Group: Development/Python
 BuildArch: noarch
 Url: https://github.com/html5lib/html5lib-python
 
+# Source-url: https://github.com/html5lib/html5lib-python/archive/%version.tar.gz
 Source: %module_name-%version.tar
 
 %{?_with_doc:BuildRequires(pre): rpm-macros-sphinx}
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
 BuildRequires: python-devel python-tools-2to3 rpm-build-python3 time
-
-#BuildRequires: python-module-setuptools
-#BuildPreReq: python-module-sphinx-devel
+BuildRequires: python-module-setuptools >= 18.5
 
 %setup_python_module %module_name
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-distribute
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-module-setuptools >= 18.5
 %endif
 
 %description
@@ -122,7 +120,7 @@ popd
 %endif
 
 %install
-%python_install --record=INSTALLED_FILES
+%python_install
 %if_with python3
 pushd ../python3
 %python3_install
@@ -133,9 +131,10 @@ popd
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%module_name/
 %endif
 
-%files -f INSTALLED_FILES
+%files
 %doc README.rst
 #exclude %python_sitelibdir/*/tests
+%python_sitelibdir/*
 %if_with doc
 %exclude %python_sitelibdir/*/pickle
 %endif
@@ -161,6 +160,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%module_name/
 %endif
 
 %changelog
+* Wed Jun 14 2017 Vitaly Lipatov <lav@altlinux.ru> 1:0.999999999-alt1
+- new version (0.999999999) with rpmgs script
+
 * Mon Jan 02 2017 Michael Shigorin <mike@altlinux.org> 1:0.999999-alt1.1.1.2
 - BOOTSTRAP:
   + renamed docs knob to doc for consistency; see http://altlinux.org/bootstrap
