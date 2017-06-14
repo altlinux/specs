@@ -56,8 +56,8 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	3.3.1
-Release:	alt2
+Version:	3.3.2
+Release:	alt1
 
 Url:		http://ffmpeg.org
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
@@ -650,6 +650,9 @@ mkdir -p %buildroot
 %endif
 
 %changelog
+* Wed Jun 14 2017 Anton Farygin <rider@altlinux.ru> 2:3.3.2-alt1
+- 3.3.2
+
 * Sat Jun 03 2017 Anton Farygin <rider@altlinux.ru> 2:3.3.1-alt2
 - enabled debuginfo
 
