@@ -1,7 +1,10 @@
 %define rname akonadiconsole
 
+%define sover 5
+%define libakonadiconsole libakonadiconsole%sover
+
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -26,6 +29,21 @@ BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-deve
 %description
 Akonadi Management and Debugging Console.
 
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
+%name common package
+
+%package -n %libakonadiconsole
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common = %version-%release
+%description -n %libakonadiconsole
+%name library
+
 %prep
 %setup -n %rname-%version
 
@@ -43,7 +61,9 @@ desktop-file-install \
     --remove-category=Development \
     %buildroot/%_K5xdgapp/org.kde.akonadiconsole.desktop
 
-%files -f %name.lang
+%files common -f %name.lang
+
+%files
 %doc COPYING*
 %config(noreplace) %_K5xdgconf/*akonadiconsole*
 %_K5bin/*akonadiconsole*
@@ -51,6 +71,19 @@ desktop-file-install \
 %_K5conf_up/*akonadiconsole*
 %_K5icon/*/*/apps/*akonadiconsole*
 
+%files -n %libakonadiconsole
+%_K5lib/libakonadiconsole.so.%sover
+%_K5lib/libakonadiconsole.so.*
+
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
+* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Thu Mar 16 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - initial build

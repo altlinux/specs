@@ -2,9 +2,10 @@
 
 %define sover 5
 %define libkf5mailimporter libkf5mailimporter%sover
+%define libkf5mailimporterakonadi libkf5mailimporterakonadi%sover
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -54,6 +55,13 @@ Requires: %name-common = %version-%release
 %description -n %libkf5mailimporter
 KF5 library
 
+%package -n %libkf5mailimporterakonadi
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n %libkf5mailimporterakonadi
+KF5 library
+
 
 %prep
 %setup -n %rname-%version
@@ -71,17 +79,29 @@ KF5 library
 
 %files devel
 %_K5inc/mailimporter_version.h
-%_K5inc/MailImporter/
-%_K5inc/mailimporter/
+%_K5inc/?ail?mporter*/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5MailImporter/
-%_K5archdata/mkspecs/modules/qt_MailImporter.pri
+%_K5lib/cmake/KF5MailImporter*/
+%_K5archdata/mkspecs/modules/qt_MailImporter*.pri
 
 %files -n %libkf5mailimporter
 %_K5lib/libKF5MailImporter.so.%sover
 %_K5lib/libKF5MailImporter.so.*
 
+%files -n %libkf5mailimporterakonadi
+%_K5lib/libKF5MailImporterAkonadi.so.%sover
+%_K5lib/libKF5MailImporterAkonadi.so.*
+
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
+* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Wed Mar 15 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 

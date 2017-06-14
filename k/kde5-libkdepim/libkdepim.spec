@@ -2,9 +2,10 @@
 
 %define sover 5
 %define libkf5libkdepim libkf5libkdepim%sover
+%define libkf5libkdepimakonadi libkf5libkdepimakonadi%sover
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -56,6 +57,13 @@ Requires: %name-common = %version-%release
 %description -n %libkf5libkdepim
 KF5 library
 
+%package -n %libkf5libkdepimakonadi
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n %libkf5libkdepimakonadi
+KF5 library
+
 
 %prep
 %setup -n %rname-%version
@@ -76,12 +84,12 @@ KF5 library
 %files devel
 %_K5plug/designer/*.so
 %_K5inc/libkdepim_version.h
-%_K5inc/libkdepim/
-%_K5inc/Libkdepim/
+%_K5inc/libkdepim*/
+%_K5inc/Libkdepim*/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5Libkdepim/
+%_K5lib/cmake/KF5Libkdepim*/
 %_K5lib/cmake/MailTransportDBusService/
-%_K5archdata/mkspecs/modules/qt_Libkdepim.pri
+%_K5archdata/mkspecs/modules/qt_Libkdepim*.pri
 %_K5dbus_iface/org.kde.*.service.xml
 
 %files -n %libkf5libkdepim
@@ -90,7 +98,20 @@ KF5 library
 %_K5plug/kcm_ldap.so
 %_K5srv/kcmldap.desktop
 
+%files -n %libkf5libkdepimakonadi
+%_K5lib/libKF5LibkdepimAkonadi.so.%sover
+%_K5lib/libKF5LibkdepimAkonadi.so.*
+
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
+* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Wed Mar 15 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 

@@ -8,8 +8,8 @@
 %define libadblocklibprivate libadblocklibprivate%sover
 
 Name: kde5-pim-addons
-Version: 16.12.3
-Release: alt2%ubt
+Version: 17.04.2
+Release: alt1%ubt
 %K5init
 
 %add_findreq_skiplist %_K5bin/kmail_*.sh
@@ -34,12 +34,12 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-webengine-devel
 BuildRequires: kf5-libkgapi-devel libsasl2-devel libgpgme-devel libassuan-devel
 BuildRequires: kde5-akonadi-calendar-devel kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-notes-devel
-BuildRequires: kde5-calendarsupport-devel kde5-eventviews-devel kde5-grantleetheme-devel kde5-incidenceeditor-devel
+BuildRequires: kde5-calendarsupport-devel kde5-eventviews-devel kde5-grantleetheme-devel kde5-incidenceeditor-devel kde5-libksieve-devel
 BuildRequires: kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kidentitymanagement-devel
 BuildRequires: kde5-kimap-devel kde5-kmailtransport-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-ktnef-devel kde5-libgravatar-devel
 BuildRequires: kde5-libkdepim-devel kde5-mailcommon-devel kde5-messagelib-devel kde5-pim-apps-libs-devel kde5-pimcommon-devel
 BuildRequires: kf5-kdeclarative-devel kf5-kdelibs4support-devel kf5-kdewebkit-devel kf5-kdoctools-devel-static kf5-kio-devel kf5-kpackage-devel
-BuildRequires: kf5-kwallet-devel
+BuildRequires: kf5-kwallet-devel kf5-syntax-highlighting-devel
 
 %description
 %summary.
@@ -154,6 +154,7 @@ Requires: %name-common
 %_K5qml/org/kde/plasma/PimCalendars/
 
 %files plugins
+%_K5plug/libksieve/*.so
 %_K5plug/pimcommon/
 %_K5plug/messageviewer/
 %_K5plug/messageviewer_*.so
@@ -181,6 +182,15 @@ Requires: %name-common
 %_K5lib/libadblocklibprivate.so.*
 
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
+* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Wed Apr 12 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt2%ubt
 - fix build requires
 

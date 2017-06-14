@@ -1,7 +1,10 @@
 %define rname pim-sieve-editor
 
+%define sover 5
+%define libsieveeditor libsieveeditor%sover
+
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -23,11 +26,32 @@ BuildRequires: boost-devel libsasl2-devel
 BuildRequires: kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-kcontacts-devel kde5-kimap-devel kde5-kmailtransport-devel
 BuildRequires: kde5-kmime-devel kde5-kpimtextedit-devel kde5-libksieve-devel kde5-messagelib-devel kde5-pimcommon-devel
 BuildRequires: kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools-devel-static kf5-kiconthemes-devel kf5-kio-devel
-BuildRequires: kf5-kitemmodels-devel kf5-ktextwidgets-devel kf5-kwallet-devel
+BuildRequires: kf5-kitemmodels-devel kf5-ktextwidgets-devel kf5-kwallet-devel kf5-syntax-highlighting-devel
 
 %description
 Sieve Editor is an editor for Sieve scripts used for email filtering on a mail server.
 
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
+%name common package
+
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
+%package -n %libsieveeditor
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common = %version-%release
+%description -n %libsieveeditor
+%name library
 
 %prep
 %setup -n %rname-%version
@@ -40,7 +64,9 @@ Sieve Editor is an editor for Sieve scripts used for email filtering on a mail s
 %K5install_move data kconf_update
 %find_lang %name --with-kde --all-name
 
-%files -f %name.lang
+%files common -f %name.lang
+
+%files
 %doc COPYING*
 %config(noreplace) %_K5xdgconf/*sieveeditor*
 %_K5bin/*sieveeditor*
@@ -48,6 +74,19 @@ Sieve Editor is an editor for Sieve scripts used for email filtering on a mail s
 %_K5xdgapp/*sieveeditor*.desktop
 %_K5cfg/*sieveeditor*
 
+%files -n %libsieveeditor
+%_K5lib/libsieveeditor.so.%sover
+%_K5lib/libsieveeditor.so.*
+
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
+* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Thu Mar 16 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - initial build

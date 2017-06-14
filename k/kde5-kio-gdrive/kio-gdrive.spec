@@ -7,7 +7,7 @@
 
 Name: kde5-%rname
 Version: 1.1.1
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group:     Networking/File transfer
@@ -48,6 +48,9 @@ in the application launcher (which will open Dolphin with the `gdrive:/` URL) or
 %_K5plug/kf5/kio/*gdrive*.so
 
 %changelog
+* Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt2%ubt
+- rebuild with new libkgapi
+
 * Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt1%ubt
 - new version
 

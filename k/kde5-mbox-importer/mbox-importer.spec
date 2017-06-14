@@ -1,7 +1,7 @@
 %define rname mbox-importer
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -23,7 +23,7 @@ BuildRequires: boost-devel libassuan-devel libdb4-devel libsasl2-devel
 BuildRequires: kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-kcontacts-devel kde5-kidentitymanagement-devel
 BuildRequires: kde5-kimap-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-mailcommon-devel kde5-mailimporter-devel kde5-messagelib-devel
 BuildRequires: kde5-pimcommon-devel
-BuildRequires: kf5-kcrash-devel kf5-kio-devel kf5-kitemmodels-devel kf5-ktextwidgets-devel
+BuildRequires: kf5-kcrash-devel kf5-kio-devel kf5-kitemmodels-devel kf5-ktextwidgets-devel kf5-karchive-devel
 
 %description
 PIM Mailbox importer.
@@ -77,5 +77,14 @@ KF5 library
 #%_K5lib/libmbox-importer.so.*
 
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
+* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Thu Mar 16 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - initial build

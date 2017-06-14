@@ -1,7 +1,7 @@
 %define rname kmailtransport
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init altplace
 
@@ -53,6 +53,13 @@ Requires: %name-common = %version-%release
 %description -n libkf5mailtransport
 KF5 library
 
+%package -n libkf5mailtransportakonadi
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5mailtransportakonadi
+KF5 library
+
 
 %prep
 %setup -n %rname-%version
@@ -72,10 +79,10 @@ KF5 library
     
 %files devel
 %_K5inc/mailtransport_version.h
-%_K5inc/MailTransport/
+%_K5inc/?ail?ransport*/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5MailTransport/
-%_K5archdata/mkspecs/modules/qt_KMailTransport.pri
+%_K5lib/cmake/KF5MailTransport*/
+%_K5archdata/mkspecs/modules/qt_KMailTransport*.pri
 
 %files -n libkf5mailtransport
 %_K5lib/libKF5MailTransport.so.*
@@ -83,8 +90,19 @@ KF5 library
 %_K5plug/kf5/kio/smtp*.so
 %_K5srv/*mailtransport.desktop
 %_K5srv/smtp*.protocol
+%files -n libkf5mailtransportakonadi
+%_K5lib/libKF5MailTransportAkonadi.so.*
 
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
+* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Wed Mar 15 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 
