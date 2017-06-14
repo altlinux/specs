@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 4.4.1
-Release: alt12
+Release: alt13
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -40,6 +40,7 @@ Patch15: pve-manager-ceph.patch
 Patch16: qemu-server-some-ID.patch
 Patch17: 0001-remove-netcat6-dependency.patch
 Patch18: pve-container-lxcnetdelbr.patch
+Patch19: pve-manager-snapshot-resize.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -111,6 +112,7 @@ This package contains the Qemu Server tools used by PVE
 %patch16 -p0 -b .some-ID
 %patch17 -p0
 %patch18 -p0 -b .lxcnetdelbr
+%patch19 -p0 -b .resize
 
 %build
 for d in pve-manager pve-firewall/src pve-ha-manager/src qemu-server; do
@@ -378,6 +380,9 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Wed Jun 14 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt13
+- fixed date/time column resize in snapshots (closes: #33528)
+
 * Mon May 15 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt12
 - pve-container: added lxcnetdelbr script
 
