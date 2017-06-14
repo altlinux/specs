@@ -1,8 +1,8 @@
 %define oname wt
 
 Name: libwt
-Version: 3.3.6
-Release: alt0.2
+Version: 3.3.7
+Release: alt1
 Summary: Wt (pronounced as witty) is a C++ library for developing web applications.
 License: GPL
 Group: Development/C++
@@ -184,6 +184,9 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir
 #files docs
 
 %changelog
+* Wed Jun 14 2017 Pavel Vainerman <pv@altlinux.ru> 3.3.7-alt1
+- new version 3.3.7 (with rpmrb script)
+
 * Thu Jan 05 2017 Pavel Vainerman <pv@altlinux.ru> 3.3.6-alt0.2
 - fixed unment dependencies
 
