@@ -4,15 +4,20 @@
 
 Name: python-module-%modulename
 Epoch: 1
-Version: 18.1
-Release: alt4
+Version: 18.5
+Release: alt1
 
 Summary: Python Distutils Enhancements
 License: PSF/ZPL
 Group: Development/Python
 URL: http://pypi.python.org/pypi/setuptools
 
-Source0: %modulename.tar
+# Source-url: https://pypi.io/packages/source/s/%modulename/%modulename-%version.tar.gz
+Source: %modulename.tar
+
+Patch0: 0001-Don-t-remove-setuptools.tests-from-the-installed-pac.patch
+Patch1: 0001-command-test.py-skip-install_requires-and-tests_requ.patch
+Patch2: 0002-dist.py-skip-checking-the-existence-of-system-PKG-IN.patch
 
 BuildArch: noarch
 
@@ -23,6 +28,9 @@ BuildPreReq: python-devel
 
 Provides: python-module-distribute = %epoch:%version-%release
 
+Provides: %name-tests = %epoch:%version-%release
+Obsoletes: %name-tests <= 1:18.1-alt4
+Obsoletes: python-module-distribute <= 0.6.35-alt1
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel
@@ -34,18 +42,6 @@ BuildPreReq: python3-devel
 Setuptools is a collection of enhancements to the Python distutils
 that allow you to more easily build and distribute Python packages,
 especially ones that have dependencies on other packages.
-
-%package tests
-Summary: Tests for Setuptools
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-Setuptools is a collection of enhancements to the Python distutils
-that allow you to more easily build and distribute Python packages,
-especially ones that have dependencies on other packages.
-
-This package contains tests for Setuptools.
 
 %package docs
 Summary: Documentation for Setuptools
@@ -64,31 +60,20 @@ Summary: Python Distutils Enhancements
 Group: Development/Python3
 Provides: python3-module-distribute = %epoch:%version-%release
 
+Provides: python3-module-%modulename-tests = %epoch:%version-%release
+Obsoletes: python3-module-%modulename-tests <= 1:18.1-alt4
+
 %description -n python3-module-%modulename
 Setuptools is a collection of enhancements to the Python distutils
 that allow you to more easily build and distribute Python packages,
 especially ones that have dependencies on other packages.
-
-%package  -n python3-module-%modulename-tests
-Summary: Tests for Setuptools
-Group: Development/Python3
-Requires: python3-module-%modulename = %EVR
-
-%description  -n python3-module-%modulename-tests
-Setuptools is a collection of enhancements to the Python distutils
-that allow you to more easily build and distribute Python packages,
-especially ones that have dependencies on other packages.
-
-This package contains tests for Setuptools.
 %endif
 
 %prep
 %setup -n %modulename
-
-#mv "setuptools/script template.py" \
-#	setuptools/script_template.py
-#mv "setuptools/script template (dev).py" \
-#	"setuptools/script_template_(dev).py"
+%patch0 -p2
+%patch1 -p2
+%patch2 -p2
 
 %if_with python3
 rm -rf ../python3
@@ -107,7 +92,7 @@ popd
 
 %install
 mkdir -p %buildroot%python_sitelibdir
-%python_install --optimize=2 --record=INSTALLED_FILES
+%python_install
 
 %if_with python3
 pushd ../python3
@@ -125,13 +110,14 @@ ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
 %doc *.txt
 %_bindir/easy_install
 %_bindir/easy_install-%_python_version
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%modulename/command/test.py*
-%exclude %python_sitelibdir/*/tests
-
-%files tests
-%python_sitelibdir/%modulename/command/test.py*
-%python_sitelibdir/*/tests
+%python_sitelibdir/_markerlib/
+%python_sitelibdir/pkg_resources/
+%dir %python_sitelibdir/%modulename/
+%python_sitelibdir/%modulename/*.*
+%python_sitelibdir/%modulename/command/
+%python_sitelibdir/%modulename/tests/
+%python_sitelibdir/easy_install.*
+%python_sitelibdir/%modulename-%version-*.egg-info
 
 %files docs
 %doc docs/*.txt
@@ -140,18 +126,29 @@ ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
 %files -n python3-module-%modulename
 %_bindir/easy_install3
 %_bindir/easy_install-%_python3_version
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/%modulename/command/test.py*
-%exclude %python3_sitelibdir/%modulename/command/*/test.*
-%exclude %python3_sitelibdir/*/tests
-
-%files -n python3-module-%modulename-tests
-%python3_sitelibdir/%modulename/command/test.py*
-%python3_sitelibdir/%modulename/command/*/test.*
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/__pycache__/*
+%python3_sitelibdir/_markerlib/
+%python3_sitelibdir/pkg_resources/
+%dir %python3_sitelibdir/%modulename/
+%python3_sitelibdir/%modulename/__pycache__/
+%python3_sitelibdir/%modulename/*.*
+%python3_sitelibdir/%modulename/command/
+%python3_sitelibdir/%modulename/tests/
+%python3_sitelibdir/easy_install.*
+%python3_sitelibdir/%modulename-%version-*.egg-info
 %endif
 
 %changelog
+* Wed Jun 14 2017 Vitaly Lipatov <lav@altlinux.ru> 1:18.5-alt1
+- new version 18.5 (with rpmrb script)
+- add obsoletes python-module-distribute (ALT bug #32546)
+
+* Wed Jun 14 2017 Vitaly Lipatov <lav@altlinux.ru> 1:18.4-alt1
+- new version 18.4 (with rpmrb script)
+
+* Wed Jun 14 2017 Lenar Shakirov <snejok@altlinux.ru> 1:18.1-alt5
+- Merge %name-tests into %name (pbr new version requires it)
+
 * Thu Jul 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:18.1-alt4
 - %%python{,3}_req_hier for more precise safer reqs
 
