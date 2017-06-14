@@ -1,7 +1,9 @@
-Name: dnsmasq
-Version: 2.76
+%def_without libidn2
 
-Release: alt3
+Name: dnsmasq
+Version: 2.77
+
+Release: alt1
 Summary: A lightweight caching nameserver
 License: %gpl2plus
 Group: System/Servers
@@ -13,18 +15,16 @@ Source2: %name.sysconfig
 Source3: %name-helper
 Source4: %name.service
 Patch: %name-%version-%release.patch
-# Patch from Fedora based on upstream's commits.
-# Changes will be included in the next release
-# and this patch must be dropped.
-# https://bugzilla.redhat.com/show_bug.cgi?id=1367772
-# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=834722
-Patch1: dnsmasq-2.76-fedora-dns-sleep-resume.patch
 
 BuildPreReq: glibc-kernheaders
 BuildRequires(pre): rpm-build-licenses
 
 # IDN
+%if_with libidn2
+BuildRequires: libidn2-devel
+%else
 BuildRequires: libidn-devel
+%endif
 
 # DNSSEC
 BuildRequires: libnettle-devel libgmp-devel
@@ -32,7 +32,7 @@ BuildRequires: libnettle-devel libgmp-devel
 %define sysconfig_file %_sysconfdir/sysconfig/%name
 %define _unpackaged_files_terminate_build 1
 
-Summary(ru_RU.KOI8-R): Компактный сервер DNS и DHCP для локальных сетей
+Summary(ru_RU.UTF-8): п п╬п╪п©п╟п╨я┌п╫я▀п╧ я│п╣я─п╡п╣я─ DNS п╦ DHCP п╢п╩я▐ п╩п╬п╨п╟п╩я▄п╫я▀я┘ я│п╣я┌п╣п╧
 
 %description
 Dnsmasq is lightweight, easy to configure DNS forwarder and DHCP server. It
@@ -43,18 +43,15 @@ addresses to appear in the DNS with names configured either in each host or
 in a central configuration file. Dnsmasq supports static and dynamic DHCP
 leases and BOOTP for network booting of diskless machines.
 
-%description -l ru_RU.KOI8-R
-Dnsmasq - это компактный, простой в настройке сервер DNS и DHCP,
-разработанный для использования в небольших сетях.
-По умолчанию он использует общесистемные файлы /etc/hosts и /etc/resolv.conf,
-поэтому может использоваться без настройки сразу после установки.
+%description -l ru_RU.UTF-8
+Dnsmasq - я█я┌п╬ п╨п╬п╪п©п╟п╨я┌п╫я▀п╧, п©я─п╬я│я┌п╬п╧ п╡ п╫п╟я│я┌я─п╬п╧п╨п╣ я│п╣я─п╡п╣я─ DNS п╦ DHCP,
+я─п╟п╥я─п╟п╠п╬я┌п╟п╫п╫я▀п╧ п╢п╩я▐ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦я▐ п╡ п╫п╣п╠п╬п╩я▄я┬п╦я┘ я│п╣я┌я▐я┘.
+п÷п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ п╬п╫ п╦я│п©п╬п╩я▄п╥я┐п╣я┌ п╬п╠я┴п╣я│п╦я│я┌п╣п╪п╫я▀п╣ я└п╟п╧п╩я▀ /etc/hosts п╦ /etc/resolv.conf,
+п©п╬я█я┌п╬п╪я┐ п╪п╬п╤п╣я┌ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄я│я▐ п╠п╣п╥ п╫п╟я│я┌я─п╬п╧п╨п╦ я│я─п╟п╥я┐ п©п╬я│п╩п╣ я┐я│я┌п╟п╫п╬п╡п╨п╦.
 
-Очень удобными функциями являются прозрачное переопределение внешних имён
-через /etc/hosts и трансляция имени в наиболее подходящий клиенту IP-адрес,
-если для имени определено несколько адресов из разных подсетей.
-
-Dnsmasq не поддерживает пересылку DNS-зон и поэтому не может использоваться
-в качестве авторитативного. Для этой цели вам понадобится PowerDNS или BIND.
+п·я┤п╣п╫я▄ я┐п╢п╬п╠п╫я▀п╪п╦ я└я┐п╫п╨я├п╦я▐п╪п╦ я▐п╡п╩я▐я▌я┌я│я▐ п©я─п╬п╥я─п╟я┤п╫п╬п╣ п©п╣я─п╣п╬п©я─п╣п╢п╣п╩п╣п╫п╦п╣ п╡п╫п╣я┬п╫п╦я┘ п╦п╪я▒п╫
+я┤п╣я─п╣п╥ /etc/hosts п╦ я┌я─п╟п╫я│п╩я▐я├п╦я▐ п╦п╪п╣п╫п╦ п╡ п╫п╟п╦п╠п╬п╩п╣п╣ п©п╬п╢я┘п╬п╢я▐я┴п╦п╧ п╨п╩п╦п╣п╫я┌я┐ IP-п╟п╢я─п╣я│,
+п╣я│п╩п╦ п╢п╩я▐ п╦п╪п╣п╫п╦ п╬п©я─п╣п╢п╣п╩п╣п╫п╬ п╫п╣я│п╨п╬п╩я▄п╨п╬ п╟п╢я─п╣я│п╬п╡ п╦п╥ я─п╟п╥п╫я▀я┘ п©п╬п╢я│п╣я┌п╣п╧.
 
 %package        utils
 Summary:        Utilities for manipulating DHCP server leases
@@ -67,13 +64,16 @@ query/remove a DHCP server's leases.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 
 # Setup version
 sed -r -i "s;-DVERSION=.+;-DVERSION='\\\\\"%version\\\\\"';" Makefile
 
 #enable IDN support
+%if_with libidn2
+sed -i 's;/\* #define HAVE_LIBIDN2 \*/;#define HAVE_LIBIDN2;' src/config.h
+%else
 sed -i 's;/\* #define HAVE_IDN \*/;#define HAVE_IDN;' src/config.h
+%endif
 
 #enable DNSSEC support
 sed -i 's;/\* #define HAVE_DNSSEC \*/;#define HAVE_DNSSEC;' src/config.h
@@ -136,6 +136,14 @@ fi
 %_man1dir/dhcp_*
 
 %changelog
+* Wed Jun 14 2017 Mikhail Efremov <sem@altlinux.org> 2.77-alt1
+- Patch from upstream:
+  + Fix logic of appending ".<layer>" to PXE basename.
+- Add libidn2 support, but disable it by default.
+- Drop obsoleted patch.
+- Convert Russian description to UTF-8.
+- Updated to 2.77.
+
 * Tue May 02 2017 Mikhail Efremov <sem@altlinux.org> 2.76-alt3
 - dnsmasq.{init,service}: Don't use dnsmasq-helper prestart.
 - dnsmasq-helper: Don't rely on AUTO_LOCAL_RESOLVER in
