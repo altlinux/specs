@@ -1,7 +1,7 @@
 %define rname ktp-desktop-applets
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init altplace
 
@@ -20,7 +20,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-declarative-devel
 BuildRequires: kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kpackage-devel kf5-kservice-devel kf5-kwindowsystem-devel
-BuildRequires: kf5-plasma-framework-devel
+BuildRequires: kf5-plasma-framework-devel kf5-ki18n-devel
 
 %description
 %summary
@@ -61,7 +61,7 @@ KF5 library
 
 %files -f %name.lang
 %doc COPYING*
-%_K5qml/org/kde/ktpchat/
+%_K5qml/org/kde/*/
 %_K5data/plasma/plasmoids/org.kde.*/
 %_K5srv/plasma-applet-*.desktop
 
@@ -76,6 +76,12 @@ KF5 library
 #%_K5lib/libktp-desktop-applets.so.*
 
 %changelog
+* Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Tue Jun 06 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
 * Tue Apr 04 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 
