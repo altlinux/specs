@@ -1,7 +1,7 @@
 %define rname umbrello
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -25,6 +25,7 @@ BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
 BuildRequires: kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf5-kcrash-devel
 
 %description
 Umbrello UML Modeller is a UML diagramming tool for KDE.
@@ -42,21 +43,28 @@ standard language.
 
 %install
 %K5install
-%K5install_move data umbrello
+%K5install_move data umbrello umbrello5
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc COPYING*
-%_K5bin/umbrello
+%_bindir/*
+%_K5bin/*
 %_K5bin/*xmi*
-%_K5data/umbrello/
+%_K5data/umbrello*/
 %_K5icon/hicolor/*/apps/umbrello.*
 %_K5icon/hicolor/*/mimetypes/application-x-uml.*
-%_K5xdgapp/org.kde.umbrello.desktop
+%_K5xdgapp/org.kde.umbrello*.desktop
 #%_K5xmlgui/umbrello/
 
 
 %changelog
+* Fri Jun 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Thu May 04 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Tue Apr 04 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 

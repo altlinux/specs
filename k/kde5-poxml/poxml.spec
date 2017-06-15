@@ -1,7 +1,7 @@
 %define rname poxml
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -17,7 +17,7 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static qt5-base-devel rpm-build-python3 ruby ruby-stdlibs
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
-BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
+BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static kf5-ki18n-devel
 
 %description
 %summary.
@@ -37,6 +37,12 @@ BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
 %_K5bin/*
 
 %changelog
+* Fri Jun 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Thu May 04 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Tue Apr 04 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 

@@ -1,7 +1,7 @@
 %define rname kcharselect
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init altplace
 
@@ -20,6 +20,7 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
 BuildRequires: kf5-ki18n-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-kbookmarks-devel
+BuildRequires: kf5-kcrash-devel
 
 %description
 %summary.
@@ -60,10 +61,16 @@ KF5 library
 %files -f %name.lang
 %doc COPYING*
 %_K5bin/kcharselect
-%_K5xdgapp/org.kde.KCharSelect.desktop
+%_K5xdgapp/org.kde.kcharselect.desktop
 %_K5xmlgui/kcharselect/
 
 %changelog
+* Fri Jun 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Thu May 04 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Tue Apr 04 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 

@@ -2,9 +2,10 @@
 
 %add_findreq_skiplist %_K5bin/kdedoc
 %add_findreq_skiplist %_K5bin/package_crystalsvg
+%add_findreq_skiplist %_K5bin/kde-systemsettings-tree.py
 
 Name: kde5-dev-scripts
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init altplace
 
@@ -36,6 +37,7 @@ BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
 
 %install
 %K5install
+%K5install_move data uncrustify
 
 # fix scripts for strong /usr/lib/rpm/find-requires
 pushd %buildroot/%_K5bin
@@ -53,9 +55,17 @@ popd
 
 %files -f %name.lang
 %doc COPYING* README
+%_bindir/*
 %_K5bin/*
+%_K5data/*/
 
 %changelog
+* Fri Jun 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Thu May 04 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Tue Apr 04 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 
