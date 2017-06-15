@@ -21,7 +21,7 @@
 
 Name: %{_name}2
 Version: 2.7.0
-Release: alt1
+Release: alt2
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
@@ -54,6 +54,14 @@ Requires: /usr/sbin/cryptsetup
 Requires: dbus >= %dbus_ver dbus-tools-gui
 Requires: mdadm ntfsprogs parted gdisk dosfstools
 %{?_enable_acl:Requires: acl}
+
+Requires: libblockdev-fs
+Requires: libblockdev-crypto
+Requires: libblockdev-loop
+Requires: libblockdev-mdraid
+Requires: libblockdev-part
+Requires: libblockdev-swap
+
 
 BuildRequires: intltool gtk-doc gnome-common
 BuildRequires: libgio-devel >= %glib_ver
@@ -126,6 +134,7 @@ This package contains development documentation for lib%name.
 Summary: UDisks module for LVM2
 Group: System/Servers
 Requires: %name = %version-%release
+Requires: libblockdev-lvm
 
 %description module-lvm2
 This package contains UDisks module for LVM2 configuration.
@@ -134,6 +143,7 @@ This package contains UDisks module for LVM2 configuration.
 Summary: UDisks module for Zram
 Group: System/Servers
 Requires: %name = %version-%release
+Requires: libblockdev-kbd
 
 %description module-zram
 This package contains UDisks module for Zram configuration.
@@ -142,6 +152,7 @@ This package contains UDisks module for Zram configuration.
 Summary: UDisks module for Bcache
 Group: System/Servers
 Requires: %name = %version-%release
+Requires: libblockdev-kbd
 
 %description module-bcache
 This package contains UDisks module for Bcache configuration.
@@ -150,6 +161,7 @@ This package contains UDisks module for Bcache configuration.
 Summary: UDisks module for BTRFS
 Group: System/Servers
 Requires: %name = %version-%release
+Requires: libblockdev-btrfs
 
 %description module-btrfs
 This package contains UDisks module for BTRFS configuration.
@@ -158,6 +170,7 @@ This package contains UDisks module for BTRFS configuration.
 Summary: UDisks module for LSM
 Group: System/Servers
 Requires: %name = %version-%release
+Requires: libstoragemgmt
 
 %description module-lsm
 This package contains UDisks module for LibStorageMgmt configuration.
@@ -166,6 +179,7 @@ This package contains UDisks module for LibStorageMgmt configuration.
 Summary: UDisks module for iSCSI
 Group: System/Servers
 Requires: %name = %version-%release
+Requires: iscsi-initiator-utils
 
 %description module-iscsi
 This package contains UDisks module for iSCSI configuration.
@@ -303,6 +317,9 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Thu Jun 15 2017 Yuri N. Sedunov <aris@altlinux.org> 2.7.0-alt2
+- updated dependencies
+
 * Tue Jun 13 2017 Yuri N. Sedunov <aris@altlinux.org> 2.7.0-alt1
 - updated to 2.7.0-13-ga26424b
 - new *-module-{lvm2,bcache,zram,btrfs} subpackages
