@@ -4,6 +4,7 @@
 %def_disable mmcount
 # GuardTime KSI
 %def_disable gt_ksi
+%def_disable ksi_ls12
 %def_disable omamqp1
 %def_enable omhiredis
 %def_enable ommongodb
@@ -11,7 +12,7 @@
 %def_enable elasticsearch
 
 Name: rsyslog
-Version: 8.25.0
+Version: 8.27.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -37,13 +38,15 @@ BuildRequires: libuuid-devel
 %{?_enable_liblogging_stdlog:BuildRequires: liblogging-devel >= 1.0.3}
 %{?_enable_rfc3195:BuildRequires: liblogging-devel >= 1.0.1}
 %{?_enable_gt_ksi:BuildRequires: libksi-devel >= 3.4.0.2}
+%{?_enable_ksi_ls12:BuildRequires: libksi-devel >= 3.13.0}
 %{?_enable_omamqp1:BuildRequires: libqpid-proton-devel >= 0.9}
-BuildRequires: liblognorm-devel >= 1.1.2
+BuildRequires: liblognorm-devel >= 2.0.3
 %{?_enable_ommongodb:BuildRequires: libmongo-client-devel >= 0.1.4}
 %{?_enable_elasticsearch:BuildRequires: libcurl-devel}
 %{?_enable_omhttpfs:BuildRequires: libcurl-devel >= 7.0.0}
 %{?_enable_omhiredis:BuildRequires: libhiredis-devel >= 0.10.1}
 BuildRequires: libsystemd-devel >= 209
+BuildRequires: iproute2
 BuildRequires: /usr/bin/rst2man
 BuildRequires: /usr/bin/lsb_release
 
@@ -350,6 +353,7 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-largefile \
 	--enable-libdbi \
 	%{?_enable_gt_ksi:--enable-gt-ksi} \
+	%{?_enable_ksi_ls12:--enable-ksi-ls12} \
 	%{?_enable_liblogging_stdlog:--enable-liblogging-stdlog} \
 	%{subst_enable rfc3195} \
 	--enable-mail \
@@ -551,6 +555,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/mmsnmptrapd.so
 
 %changelog
+* Thu Jun 15 2017 Alexey Shabalin <shaba@altlinux.ru> 8.27.0-alt1
+- 8.27.0
+
 * Wed Feb 22 2017 Alexey Shabalin <shaba@altlinux.ru> 8.25.0-alt1
 - 8.25.0
 

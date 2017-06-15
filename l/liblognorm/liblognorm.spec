@@ -3,7 +3,7 @@
 %def_enable regexp
 
 Name: liblognorm
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Summary: liblognorm is a tool to normalize log data.
@@ -67,6 +67,9 @@ Static libs for building statically linked software that uses %name
 %endif
 
 %changelog
+* Thu Jun 15 2017 Alexey Shabalin <shaba@altlinux.ru> 2.0.3-alt1
+- 2.0.3
+
 * Tue Jan 17 2017 Alexey Shabalin <shaba@altlinux.ru> 2.0.2-alt1
 - 2.0.2
 
