@@ -1,7 +1,7 @@
 %define major 9
 
 Name: owncloud%major
-Version: 9.1.5
+Version: 9.1.6
 Release: alt1
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
@@ -107,6 +107,9 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf 
 
 %changelog
+* Thu Jun 15 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.6-alt1
+- 9.1.6
+
 * Tue Apr 25 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.5-alt1
 - 9.1.5
 
