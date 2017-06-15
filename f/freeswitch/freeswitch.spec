@@ -1,6 +1,6 @@
 Name: freeswitch
 Version: 1.6.17
-Release: alt1%ubt
+Release: alt2%ubt
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -448,6 +448,7 @@ fi
 %_libdir/%name/mod_redis.so
 %_libdir/%name/mod_reference.so
 %_libdir/%name/mod_rss.so
+%_libdir/%name/mod_rtc.so
 %_libdir/%name/mod_rtmp.so
 %_libdir/%name/mod_shell_stream.so
 %_libdir/%name/mod_shout.so
@@ -534,11 +535,9 @@ fi
 
 %files lang-de
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/de
-#dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/de/dir
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/de/demo
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/de/vm
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/de/*.xml
-#config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/de/dir/*.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/de/demo/*.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/de/vm/*.xml
 %_libdir/%name/mod_say_de.so*
@@ -547,12 +546,10 @@ fi
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/es
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/es/demo
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/es/dir
-#dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/es/ivr
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/es/vm
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/es/*.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/es/dir/*.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/es/demo/*.xml
-#config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/es/ivr/*.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/es/vm/*.xml
 %_libdir/%name/mod_say_es.so*
 
@@ -589,18 +586,15 @@ fi
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/he/dir/*.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/he/demo/*.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/he/vm/*.xml
-#_libdir/%name/mod_say_he.so*
 
 %files lang-pt
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/pt
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/pt/demo
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/pt/dir
-#dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/pt/ivr
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/pt/vm
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/pt/*.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/pt/dir/*.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/pt/demo/*.xml
-#config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/pt/ivr/*.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/pt/vm/*.xml
 %_libdir/%name/mod_say_pt.so*
 
@@ -620,6 +614,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Thu Jun 15 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.17-alt2%ubt
+- enable mod_rtc build and cleanup modules.conf
+
 * Tue Apr 25 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.17-alt1%ubt
 - new version
 
