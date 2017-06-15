@@ -106,14 +106,15 @@
 
 
 Name: libvirt
-Version: 3.2.0
-Release: alt2
+Version: 3.4.0
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
-Url: http://libvirt.org/
+Url: https://libvirt.org/
 Source0: %name-%version.tar
 Source1: gnulib-%name-%version.tar
+Source2: keycodemapdb-%name-%version.tar
 Patch1: %name-%version-%release.patch
 
 
@@ -715,6 +716,9 @@ Libvirt plugin for NSS for translating domain names into IP addresses.
 
 %prep
 %setup -a1
+mkdir -p src/keycodemapdb
+tar -xf %SOURCE2 -C src/keycodemapdb --strip-components 1
+
 %patch1 -p1
 # git and rsync aren't needed for build.
 sed -i '/^\(git\|rsync\)[[:space:]]/d' bootstrap.conf
@@ -977,6 +981,7 @@ fi
 %_datadir/augeas/lenses/virtlockd.aug
 %_datadir/augeas/lenses/tests/test_virtlockd.aug
 %_man8dir/virtlockd.*
+%_man7dir/virkey*
 
 #virtlogd
 %config(noreplace) %_sysconfdir/libvirt/virtlogd.conf
@@ -1247,6 +1252,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Jun 14 2017 Alexey Shabalin <shaba@altlinux.ru> 3.4.0-alt1
+- 3.4.0
+
 * Tue Apr 25 2017 Alexey Shabalin <shaba@altlinux.ru> 3.2.0-alt2
 - backport fixes from upstream master (ALT#33413)
 
