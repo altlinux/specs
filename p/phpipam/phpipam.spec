@@ -1,7 +1,7 @@
 
 Name: phpipam
 Version: 1.30.000
-Release: alt0.6
+Release: alt1%ubt
 Summary: PHP-based virtual machine control tool
 Group: Networking/WWW
 License: GPLv3
@@ -16,6 +16,7 @@ Source11: %name-apache.conf
 BuildArch: noarch
 PreReq: webserver-common
 
+BuildRequires(pre): rpm-build-ubt
 BuildPreReq: rpm-macros-webserver-common rpm-macros-apache2
 
 %description
@@ -60,7 +61,7 @@ BuildArch: noarch
 Summary: php5 virtual package for %name
 Provides: %name-php
 Requires: %name = %version-%release
-Requires: php5-gmp php5-ldap php5-sockets php5-openssl php5-pdo php5-pdo_mysql php5-pcntl php5-mbstring php5-mcrypt php5-snmp pear-core
+Requires: php5-gmp php5-ldap php5-sockets php5-openssl php5-pdo php5-pdo_mysql php5-pcntl php5-mbstring php5-mcrypt php5-snmp php5-gd2 pear-core
 
 %description php5
 %summary
@@ -71,7 +72,7 @@ BuildArch: noarch
 Summary: php7 virtual package  for %name
 Provides: %name-php
 Requires: %name = %version-%release
-Requires: php7-gmp php7-ldap php7-sockets php7-openssl php7-pdo php7-pdo_mysql php7-mbstring php7-mcrypt php7-snmp pear-core
+Requires: php7-gmp php7-ldap php7-sockets php7-openssl php7-pdo php7-pdo_mysql php7-pcntl php7-mbstring php7-mcrypt php7-snmp php7-gd2 pear-core
 
 %description php7
 %summary
@@ -122,6 +123,9 @@ rm -rf %buildroot%webserver_webappsdir/%name/functions/PHPMailer/test
 %files php7
 
 %changelog
+* Thu Jun 15 2017 Alexey Shabalin <shaba@altlinux.ru> 1.30.000-alt1%ubt
+- 1.3 release
+
 * Wed May 10 2017 Alexey Shabalin <shaba@altlinux.ru> 1.30.000-alt0.6
 - git snapshot of master branch  66d0e19ebea1fd6e670a75a5cfb9897f7010d6e6
 
