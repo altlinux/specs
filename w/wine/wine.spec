@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.7.0
-%define major 2.9
+%define major 2.10
 
 Name: wine
 Version: %major.1
@@ -257,7 +257,7 @@ wine-staging-%version/patches/patchinstall.sh DESTDIR=$(pwd) --all --backend=pat
 %__subst "s|^\(LDRPATH_INSTALL =\).*|\1|" Makefile.in
 
 %patch1 -p2
-%patch101 -p1
+#patch101 -p1
 #patch200 -p1
 
 %build
@@ -471,6 +471,10 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Thu Jun 15 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.10.1-alt1
+- new version (2.10.1) with rpmgs script
+- replace RegQueryValueEx HKEY_PERFORMANCE hack with wine-staging one
+
 * Tue May 30 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.9.1-alt1
 - new version (2.9.1) with rpmgs script
 
