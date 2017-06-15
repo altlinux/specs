@@ -17,7 +17,7 @@
 
 Name: kf5-%rname
 Version: 5.9.5
-Release: alt4%ubt
+Release: alt5%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -303,6 +303,9 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Tue Jun 13 2017 Oleg Solovyov <mcpain@altlinux.org> 5.9.5-alt5%ubt
+- fix: unable to handle auth request
+
 * Tue Jun 13 2017 Oleg Solovyov <mcpain@altlinux.org> 5.9.5-alt4%ubt
 - fix autoupdate username
 
