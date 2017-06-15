@@ -5,7 +5,7 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 17.04.0
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -80,7 +80,7 @@ KF5 library
 
 %install
 %K5install
-%find_lang %name --with-kde --without-mo --all-name
+%find_lang %name --with-kde --all-name
 
 desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
     --add-mime-type=x-scheme-handler/ftp \
@@ -123,6 +123,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
 * Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
 - new version
 

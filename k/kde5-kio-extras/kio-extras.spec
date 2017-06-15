@@ -6,8 +6,8 @@
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 17.04.0
-Release: alt2%ubt
+Version: 17.04.2
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -123,6 +123,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libmolletnetwork5.so.%molletnetwork_sover
 
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
 * Thu May 04 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt2%ubt
 - update icon for smb:/ shares
 

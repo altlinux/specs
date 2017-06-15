@@ -4,7 +4,7 @@
 %define libkateinterfaces libkateinterfaces%sover
 
 Name: kde5-%rname
-Version: 17.04.0
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -83,7 +83,7 @@ KF5 library
 %install
 %K5install
 %K5install_move data kateproject katexmltools
-%find_lang %name --with-kde --without-mo --all-name
+%find_lang %name --with-kde --all-name
 
 kde5_add_text_mimes() {
 desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
@@ -166,6 +166,9 @@ kde5_add_text_mimes %buildroot/%_K5xdgapp/org.kde.kwrite.desktop
 #%_K5link/lib*.so
 
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
 * Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
 - new version
 
