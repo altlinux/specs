@@ -1,35 +1,29 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.1.1.1
 %define mname xstatic
 %define oname %mname-html5shiv
+%define pypi_name XStatic-html5shiv
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 3.6.1
-#Release: alt2.1.1
-Summary: html5shiv 3.6 (XStatic packaging standard)
+Release: alt3
+Summary: html5shiv (XStatic packaging standard)
 License: MIT & GPLv2
 Group: Development/Python
-Url: https://pypi.python.org/pypi/XStatic-html5shiv/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://pypi.python.org/pypi/%pypi_name/
+Source: %pypi_name-%version.tar.gz
+BuildArch: noarch
 
-Source: %name-%version.tar
-
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-%mname
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-%mname
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-%mname
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-%mname
 %endif
 
 %py_provides %mname.pkg.html5shiv
 %py_requires %mname.pkg
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-setuptools-tests python-module-xstatic python3-module-setuptools-tests python3-module-xstatic rpm-build-python3
 
 %description
 html5shiv packaged for setuptools (easy_install) / pip.
@@ -38,7 +32,7 @@ This package is intended to be used by any project that needs these
 files.
 
 %package -n python3-module-%oname
-Summary: html5shiv 3.6 (XStatic packaging standard)
+Summary: html5shiv (XStatic packaging standard)
 Group: Development/Python3
 %py3_provides %mname.pkg.html5shiv
 %py3_requires %mname.pkg
@@ -50,7 +44,7 @@ This package is intended to be used by any project that needs these
 files.
 
 %prep
-%setup
+%setup -n %pypi_name-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -74,10 +68,6 @@ pushd ../python3
 popd
 %endif
 
-%if "%_libexecdir" != "%_libdir"
-mv %buildroot%_libexecdir %buildroot%_libdir
-%endif
-
 # There is a file in the package named .DS_Store or .DS_Store.gz, 
 # the file name used by Mac OS X to store folder attributes.  
 # Such files are generally useless in packages and were usually accidentally 
@@ -94,17 +84,20 @@ popd
 
 %files
 %doc *.txt
-%python_sitelibdir/%mname/pkg/html5shiv
+%python_sitelibdir/%mname/pkg/*
 %python_sitelibdir/*.egg-info
 
 %if_with python3
 %files -n python3-module-%oname
 %doc *.txt
-%python3_sitelibdir/%mname/pkg/html5shiv
+%python3_sitelibdir/%mname/pkg/*
 %python3_sitelibdir/*.egg-info
 %endif
 
 %changelog
+* Wed Jun 14 2017 Alexey Shabalin <shaba@altlinux.ru> 3.6.1-alt3
+- build as noarch
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.6.1-alt2.1.1.1
 - (AUTO) subst_x86_64.
 

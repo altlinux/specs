@@ -1,19 +1,17 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1
 %define oname xstatic
+%define pypi_name XStatic
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 1.0.1
-#Release: alt1.1
+Release: alt2
 Summary: XStatic base package with minimal support code
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/XStatic/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source: %name-%version.tar
+Url: https://pypi.python.org/pypi/%pypi_name/
+Source: %pypi_name-%version.tar.gz
+BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
@@ -45,38 +43,29 @@ XStatic has some minimal support code for working with the XStatic-*
 packages.
 
 %prep
-%setup
+%setup -n %pypi_name-%version
 
 %if_with python3
 cp -fR . ../python3
 %endif
 
 %build
-%python_build_debug
+%python_build
 
 %if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
 %endif
 
 %install
 %python_install
+install -p -m644 %oname/__init__.py %buildroot%python_sitelibdir/%oname/
+cp -fR %oname/pkg %buildroot%python_sitelibdir/%oname/
 
 %if_with python3
 pushd ../python3
 %python3_install
-popd
-%endif
-
-%if "%_libexecdir" != "%_libdir"
-mv %buildroot%_libexecdir %buildroot%_libdir
-%endif
-
-install -p -m644 %oname/__init__.py %buildroot%python_sitelibdir/%oname/
-cp -fR %oname/pkg %buildroot%python_sitelibdir/%oname/
-%if_with python3
-pushd ../python3
 install -p -m644 %oname/__init__.py %buildroot%python3_sitelibdir/%oname/
 cp -fR %oname/pkg %buildroot%python3_sitelibdir/%oname/
 popd
@@ -103,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Tue Jun 13 2017 Alexey Shabalin <shaba@altlinux.ru> 1.0.1-alt2
+- build as noarch
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.1-alt1.1.1
 - (AUTO) subst_x86_64.
 
