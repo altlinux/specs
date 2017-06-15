@@ -2,8 +2,8 @@
 %define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
 
 Name: kdenlive
-Version: 16.12.3
-Release: alt2%ubt
+Version: 17.04.2
+Release: alt1%ubt
 %K5init no_altplace man
 
 Summary: KDE Non Linear Video Editor
@@ -66,7 +66,10 @@ mkdir %buildroot/%_xdgconfigdir
 mv %buildroot/%_K5xdgconf/* %buildroot/%_xdgconfigdir/
 sed -i 's|^Exec=\(.*\)|Exec=kde5 \1|' %buildroot/%_K5xdgapp/org.kde.kdenlive.desktop
 
-%files
+%find_lang %name --with-kde --all-name
+sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
+
+%files -f %name.lang
 %config(noreplace) %_xdgconfigdir/*kdenlive*
 %_K5bin/*
 %_K5plug/mltpreview.so
@@ -78,10 +81,12 @@ sed -i 's|^Exec=\(.*\)|Exec=kde5 \1|' %buildroot/%_K5xdgapp/org.kde.kdenlive.des
 %_K5notif/*rc
 %_K5xmlgui/kdenlive/
 %_K5xdgmime/*.xml
-%_K5doc/en/%name/
 %_man1dir/kdenlive*
 
 %changelog
+* Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
 * Tue Jun 06 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt2%ubt
 - rebuild with ffmpeg
 
