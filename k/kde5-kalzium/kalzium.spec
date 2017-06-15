@@ -1,12 +1,13 @@
 %define rname kalzium
 
 %def_disable avogadro
+%def_disable facile
 
 %define sover 5
 %define libscience libscience%sover
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -27,10 +28,13 @@ Source: %rname-%version.tar
 #BuildRequires: eigen3 extra-cmake-modules facile kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-khtml-devel kf5-kio-devel kf5-kjs-devel kf5-knewstuff-devel kf5-kplotting-devel libopenbabel-devel llvm-devel openbabel python-module-google python3-dev qt5-declarative-devel qt5-script-devel qt5-svg-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-svg-devel
-BuildRequires: eigen3 facile
+BuildRequires: eigen3 ocaml
 BuildRequires: libopenbabel-devel llvm-devel openbabel
 %if_enabled avogadro
 BuildRequires: libopenbabel-devel openbabel avogadro-devel
+%endif
+%if_enabled facile
+BuildRequires: facile
 %endif
 BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-khtml-devel kf5-kio-devel kf5-kjs-devel kf5-knewstuff-devel kf5-kplotting-devel
 
@@ -97,5 +101,11 @@ KF5 library
 %_K5lib/libscience.so.*
 
 %changelog
+* Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Wed Jun 07 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
 * Thu Mar 16 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - initial build

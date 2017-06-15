@@ -1,13 +1,13 @@
 %define rname analitza
 
-%define sover 7
+%define sover 8
 %define libanalitzaplot libanalitzaplot%sover
 %define libanalitzagui libanalitzagui%sover
 %define libanalitzawidgets libanalitzawidgets%sover
 %define libanalitza libanalitza%sover
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -22,7 +22,8 @@ Source: %rname-%version.tar
 # optimized out: cmake cmake-modules elfutils gcc-c++ libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-qml libqt5-quick libqt5-svg libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base python-modules python3 qt5-base-devel rpm-build-python3 ruby ruby-stdlibs
 #BuildRequires: eigen3 extra-cmake-modules libGLU-devel python-module-google python3-base qt5-declarative-devel qt5-svg-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: eigen3 extra-cmake-modules libGLU-devel qt5-declarative-devel qt5-svg-devel
+BuildRequires: eigen3 extra-cmake-modules libGLU-devel qt5-declarative-devel qt5-svg-devel qt5-tools-devel
+BuildRequires: kf5-ki18n-devel
 
 %description
 The analitza library will let you add mathematical features to your program.
@@ -109,6 +110,12 @@ KF5 library
 %_K5lib/libAnalitza.so.*
 
 %changelog
+* Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Wed Jun 07 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
 * Thu Apr 06 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 
