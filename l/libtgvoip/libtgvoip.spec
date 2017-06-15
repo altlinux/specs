@@ -1,6 +1,6 @@
 Name: libtgvoip
 Version: 0.4.1
-Release: alt1
+Release: alt2
 
 Summary: VoIP library for Telegram clients
 
@@ -16,9 +16,6 @@ Source: %name-%version.tar
 BuildRequires: gyp gcc-c++ libopus-devel libssl-devel libalsa-devel libpulseaudio-devel
 
 %add_optflags -fPIC
-
-# https://bugzilla.altlinux.org/show_bug.cgi?id=33544
-%add_debuginfo_skiplist %_libdir
 
 %description
 VoIP library for Telegram clients
@@ -63,5 +60,8 @@ cp -a audio/*.h %buildroot%_includedir/tgvoip/audio/
 %_includedir/tgvoip/audio/
 
 %changelog
+* Thu Jun 15 2017 Vitaly Lipatov <lav@altlinux.ru> 0.4.1-alt2
+- rebuild with debuginfo (ALT bug 33544)
+
 * Mon Jun 12 2017 Vitaly Lipatov <lav@altlinux.ru> 0.4.1-alt1
 - initial build for ALT Sisyphus
