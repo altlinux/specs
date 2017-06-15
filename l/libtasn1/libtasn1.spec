@@ -1,5 +1,5 @@
 Name: libtasn1
-Version: 4.10
+Version: 4.12
 Release: alt1
 
 Summary: The ASN.1 library used in GNUTLS
@@ -115,6 +115,10 @@ install -pm644 doc/reference/html/* %buildroot%docdir/reference/html/
 %docdir/reference/
 
 %changelog
+* Thu Jun 15 2017 Mikhail Efremov <sem@altlinux.org> 4.12-alt1
+- Updated fix-for-werror.patch.
+- Updated to 4.12.
+
 * Thu Feb 02 2017 Mikhail Efremov <sem@altlinux.org> 4.10-alt1
 - Set -Werror explicitly.
 - Fix build with -Werror.
