@@ -1,8 +1,9 @@
 %define origname TwistedCore
+%define major 17.5
 
 %define prefx python-module-twisted
 Name: %prefx-core
-Version: 15.3.0
+Version: %major.0
 Release: alt1
 %setup_python_module twisted-core
 Summary: An asynchronous networking framework written in Python
@@ -10,11 +11,15 @@ Summary: An asynchronous networking framework written in Python
 Group: Development/Python
 License: MIT
 Url: http://twistedmatrix.com/trac/wiki/TwistedCore
-Source: http://tmrc.mit.edu/mirror/twisted/Core/14.0/%origname-%version.tar.bz2
+
+# Source-url: https://twistedmatrix.com/Releases/Twisted/%major/Twisted-%version.tar.bz2
+Source: %name-%version.tar
 Source1: README.ALT-ru_RU.UTF-8
 
-BuildRequires: python-devel python-modules-compiler
-BuildPreReq: python-module-zope.interface
+BuildRequires: python-devel python-modules-compiler python-module-setuptools
+BuildPreReq: python-module-zope.interface python-module-incremental
+BuildRequires: python-module-pydoctor
+
 Requires: %prefx-logger = %EVR
 Obsoletes: %prefx-lore <= %EVR
 Provides: %prefx-lore = %EVR
@@ -41,6 +46,7 @@ netnews, IRC, RDBMSs, desktop environments, and your toaster.
 Summary: GUI for Twisted Core
 Group: Development/Python
 Requires: python-module-twisted-core = %version-%release
+Provides: python-module-twisted-core-gui-gnome = %version-%release
 ####add_python_req_skip pyui wx wxPython gtk Tkinter gnome tkFileDialog tkMessageBox tkSimpleDialog
 %add_python_req_skip pyui
 
@@ -264,7 +270,7 @@ Twisted is an event-based framework for internet applications.
 This package contains classes and functions to do granular logging.
 
 %prep
-%setup -n %origname-%version
+%setup
 
 # Generate a brief README.zsh
 #awk '/^Zsh Notes:/,/^Have fun!/' twisted/python/zshcomp.py > README.zsh
@@ -288,11 +294,11 @@ rm -rf %buildroot%python_sitelibdir/twisted/internet/iocpreactor
 # Man pages
 mkdir -p %buildroot%_man1dir/
 #cp -a doc/core/man/*.1 doc/lore/man/*.1 doc/mail/man/*.1 \
-cp -a doc/core/man/*.1 doc/mail/man/*.1 \
-	doc/conch/man/*.1 \
+cp -a docs/core/man/*.1 docs/mail/man/*.1 \
+	docs/conch/man/*.1 \
 	%buildroot%_man1dir/
-rm -rf doc/core/man doc/lore/man doc/mail/man doc/conch/man \
-	doc/words/man
+rm -rf docs/core/man docs/lore/man docs/mail/man docs/conch/man \
+	docs/words/man
 
 # Zsh tab complete stub
 #mkdir -p %buildroot%_datadir/zsh/Completion/Python
@@ -303,14 +309,15 @@ rm -rf doc/core/man doc/lore/man doc/mail/man doc/conch/man \
 touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 
 %files
-%doc LICENSE NEWS README
+%doc LICENSE NEWS.rst README.rst
 %doc README.ALT-ru_RU.UTF-8
-%doc %python_sitelibdir/twisted/topfiles
-%_bindir/manhole
-%_bindir/tap2deb
-%_bindir/tap2rpm
+#doc %python_sitelibdir/twisted/topfiles
+#_bindir/manhole
+#_bindir/tap2deb
+#_bindir/tap2rpm
 #_bindir/tapconvert
 #_bindir/mktap
+%_bindir/twist
 %_bindir/twistd
 %_bindir/pyhtmlizer
 
@@ -327,11 +334,14 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %dir %python_sitelibdir/twisted/
 %python_sitelibdir/twisted/*.py*
 %python_sitelibdir/twisted/python/*.c
+%python_sitelibdir/twisted/python/_pydoctortemplates/
 #python_sitelibdir/twisted/protocols/_c_urlarg.c
 
 %python_sitelibdir/twisted/application/
 %exclude %python_sitelibdir/twisted/application/test
 %python_sitelibdir/twisted/cred/
+%python_sitelibdir/twisted/_threads/
+%exclude %python_sitelibdir/twisted/_threads/test/
 %python_sitelibdir/twisted/enterprise/
 %python_sitelibdir/twisted/internet/
 %exclude %python_sitelibdir/twisted/internet/test
@@ -340,13 +350,13 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %exclude %python_sitelibdir/twisted/internet/wxsupport.py*
 %exclude %python_sitelibdir/twisted/internet/gtk2reactor.py*
 %exclude %python_sitelibdir/twisted/internet/glib2reactor.py*
-%exclude %python_sitelibdir/twisted/internet/gtkreactor.py*
+#exclude %python_sitelibdir/twisted/internet/gtkreactor.py*
 %exclude %python_sitelibdir/twisted/internet/tksupport.py*
 
-%dir %python_sitelibdir/twisted/manhole/
-%python_sitelibdir/twisted/manhole/*.py*
-%exclude %python_sitelibdir/twisted/manhole/gladereactor.py*
-%exclude %python_sitelibdir/twisted/manhole/_inspectro.py*
+#%dir %python_sitelibdir/twisted/manhole/
+#%python_sitelibdir/twisted/manhole/*.py*
+#exclude %python_sitelibdir/twisted/manhole/gladereactor.py*
+#exclude %python_sitelibdir/twisted/manhole/_inspectro.py*
 
 %python_sitelibdir/twisted/persisted/
 %exclude %python_sitelibdir/twisted/persisted/test
@@ -367,8 +377,10 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %python_sitelibdir/twisted/protocols/*.py*
 #python_sitelibdir/twisted/protocols/*.so
 
-%python_sitelibdir/twisted/protocols/gps/
+#python_sitelibdir/twisted/protocols/gps/
 %python_sitelibdir/twisted/protocols/mice/
+%python_sitelibdir/twisted/protocols/haproxy/
+%exclude %python_sitelibdir/twisted/protocols/haproxy/test/
 
 %dir %python_sitelibdir/twisted/python/
 %python_sitelibdir/twisted/python/*.py*
@@ -391,38 +403,38 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 
 %files doc
 #doc doc/core doc/fun
-%doc doc/core
+%doc docs/core
 
 %files gui
 %python_sitelibdir/twisted/internet/pyuisupport.py*
 %python_sitelibdir/twisted/internet/gtk2reactor.py*
 %python_sitelibdir/twisted/internet/glib2reactor.py*
-%python_sitelibdir/twisted/internet/gtkreactor.py*
-%dir %python_sitelibdir/twisted/manhole/ui
-%python_sitelibdir/twisted/manhole/ui/*
-%exclude %python_sitelibdir/twisted/manhole/ui/test
-%python_sitelibdir/twisted/manhole/*.glade
-%exclude %python_sitelibdir/twisted/manhole/inspectro.glade
-%python_sitelibdir/twisted/manhole/gladereactor.py*
+#python_sitelibdir/twisted/internet/gtkreactor.py*
+#dir %python_sitelibdir/twisted/manhole/ui
+#python_sitelibdir/twisted/manhole/ui/*
+#exclude %python_sitelibdir/twisted/manhole/ui/test
+#python_sitelibdir/twisted/manhole/*.glade
+#exclude %python_sitelibdir/twisted/manhole/inspectro.glade
+#python_sitelibdir/twisted/manhole/gladereactor.py*
 
-%dir %python_sitelibdir/twisted/spread/ui/
-%python_sitelibdir/twisted/spread/ui/*.py*
-%exclude %python_sitelibdir/twisted/spread/ui/tkutil.py*
-%exclude %python_sitelibdir/twisted/spread/ui/tktree.py*
-%python_sitelibdir/twisted/spread/ui/*.glade
+#dir %python_sitelibdir/twisted/spread/ui/
+#python_sitelibdir/twisted/spread/ui/*.py*
+#exclude %python_sitelibdir/twisted/spread/ui/tkutil.py*
+#exclude %python_sitelibdir/twisted/spread/ui/tktree.py*
+#python_sitelibdir/twisted/spread/ui/*.glade
 
 %files gui-wx
 %python_sitelibdir/twisted/internet/wxreactor.py*
 %python_sitelibdir/twisted/internet/wxsupport.py*
 
-%files gui-gnome
-%python_sitelibdir/twisted/manhole/inspectro.glade
-%python_sitelibdir/twisted/manhole/_inspectro.py*
+#files gui-gnome
+#python_sitelibdir/twisted/manhole/inspectro.glade
+#python_sitelibdir/twisted/manhole/_inspectro.py*
 
 %files gui-tk
 %python_sitelibdir/twisted/internet/tksupport.py*
-%python_sitelibdir/twisted/spread/ui/tkutil.py*
-%python_sitelibdir/twisted/spread/ui/tktree.py*
+#python_sitelibdir/twisted/spread/ui/tkutil.py*
+#python_sitelibdir/twisted/spread/ui/tktree.py*
 #python_sitelibdir/twisted/scripts/tkunzip.py*
 
 %files zsh
@@ -435,12 +447,13 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %files test
 %_bindir/trial
 %python_sitelibdir/twisted/test
-%python_sitelibdir/twisted/manhole/ui/test
-%python_sitelibdir/twisted/manhole/test
+#python_sitelibdir/twisted/manhole/ui/test
+#python_sitelibdir/twisted/manhole/test
 %python_sitelibdir/twisted/python/test
 %python_sitelibdir/twisted/scripts/test
 %python_sitelibdir/twisted/internet/test
 %python_sitelibdir/twisted/protocols/test
+%python_sitelibdir/twisted/protocols/haproxy/test
 %python_sitelibdir/twisted/trial
 %python_sitelibdir/twisted/plugins/twisted_trial.py*
 %python_sitelibdir/twisted/scripts/trial.py*
@@ -453,8 +466,10 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %python_sitelibdir/twisted/conch/test
 %python_sitelibdir/twisted/names/test
 %python_sitelibdir/twisted/pair/test
+%python_sitelibdir/twisted/_threads/test
 %python_sitelibdir/twisted/persisted/test
 %python_sitelibdir/twisted/positioning/test
+%python_sitelibdir/twisted/spread/test
 %python_sitelibdir/twisted/logger/test
 
 %files -n %prefx-news
@@ -476,7 +491,7 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %python_sitelibdir/twisted/plugins/twisted_runner.py*
 
 %files -n %prefx-mail
-%doc doc/mail/*
+%doc docs/mail/*
 %_bindir/mailmail
 %python_sitelibdir/twisted/mail/
 %exclude %python_sitelibdir/twisted/mail/test
@@ -484,7 +499,7 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %_man1dir/mailmail.1*
 
 %files -n %prefx-web
-%doc doc/web/*
+%doc docs/web/*
 %python_sitelibdir/twisted/web
 %python_sitelibdir/twisted/plugins/twisted_web.py*
 # There are no SOAPpy in ALT Linux Sisyphus - remove it support
@@ -492,7 +507,7 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %exclude %python_sitelibdir/twisted/web/test
 
 %files -n %prefx-conch
-%doc doc/conch/*
+%doc docs/conch/*
 %_bindir/cftp
 %_bindir/ckeygen
 %_bindir/conch
@@ -512,20 +527,20 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %python_sitelibdir/twisted/conch/scripts/tkconch.py
 
 %files -n %prefx-names
-%doc doc/names/*
+%doc docs/names/*
 %python_sitelibdir/twisted/names/
 %exclude %python_sitelibdir/twisted/names/test
 %python_sitelibdir/twisted/plugins/twisted_names.py*
 
 %files -n %prefx-words
-%doc doc/words/*
+%doc docs/words/*
 #_man1dir/im.1*
 %python_sitelibdir/twisted/words/
 %exclude %python_sitelibdir/twisted/words/test
 %python_sitelibdir/twisted/plugins/twisted_words.py*
 
 %files -n %prefx-pair
-%doc doc/pair/*
+%doc docs/pair/*
 %python_sitelibdir/twisted/pair/
 %exclude %python_sitelibdir/twisted/pair/test
 
@@ -538,6 +553,9 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %exclude %python_sitelibdir/twisted/logger/test
 
 %changelog
+* Wed Jun 14 2017 Vitaly Lipatov <lav@altlinux.ru> 17.5.0-alt1
+- new version (17.5.0) with rpmgs script
+
 * Thu Aug 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 15.3.0-alt1
 - Version 15.3.0
 - Added requirement on logger for core (ALT #31188)
