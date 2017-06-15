@@ -2,7 +2,7 @@
 %define rname k9copy
 Name: kde4-%rname
 Version: 2.3.8
-Release: alt6%ubt
+Release: alt7%ubt
 
 Group: Video
 Summary: Copy, split and shrink DVDs
@@ -27,6 +27,7 @@ Patch100: alt-libav9.patch
 Patch101: alt-libav10.patch
 Patch102: alt-findexe.patch
 Patch103: alt-gcc6.patch
+Patch104: alt-ffmpeg3.patch
 
 # Automatically added by buildreq on Mon Jul 20 2009 (-bi)
 #BuildRequires: gcc-c++ kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libavformat-devel libmpeg2-devel libqt3-devel libswscale-devel libxine-devel libxkbfile-devel xorg-xf86vidmodeproto-devel
@@ -74,6 +75,7 @@ K9Copy - маленькая программа для копирования DVD
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
+%patch104 -p1
 
 %build
 %K4build
@@ -93,6 +95,9 @@ K9Copy - маленькая программа для копирования DVD
 
 
 %changelog
+* Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 2.3.8-alt7%ubt
+- fix to build with ffmpeg
+
 * Mon Jan 30 2017 Sergey V Turchin <zerg@altlinux.org> 2.3.8-alt6%ubt
 - fix for gcc6
 
