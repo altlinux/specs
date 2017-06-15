@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 16.12.2
+Version: 17.04.0
 Release: alt1%ubt
 
 Group: Graphical desktop/KDE
@@ -156,7 +156,7 @@ Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5-akonadiconsole kde5-akonadi-calendar-tools kde5-akonadi-import-wizard kde5-kmail-account-wizard
 Requires: kde5-akregator kde5-blogilo kde5-kaddressbook kde5-kalarm kde5-kmail kde5-knotes kde5-kontact kde5-korganizer
-Requires: kde5-mbox-importer kde5-pim-data-exporter kde5-pim-sieve-editor kde5-pim-storage-service-manager kde5-grantlee-editor
+Requires: kde5-mbox-importer kde5-pim-data-exporter kde5-pim-sieve-editor kde5-grantlee-editor
 %description -n kde5-pim
 %summary
 
@@ -176,6 +176,9 @@ Requires: kde5-mbox-importer kde5-pim-data-exporter kde5-pim-sieve-editor kde5-p
 %files -n kde5-pim
 
 %changelog
+* Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- update PIM requires
+
 * Thu Apr 13 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.2-alt1%ubt
 - update requires
 
