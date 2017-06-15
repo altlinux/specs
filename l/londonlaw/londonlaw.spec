@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install
 
 Name:           londonlaw
 Version:        0.3.0
-Release:        alt1_0.3.pre2
+Release:        alt2_0.3.pre2
 Summary:        Online multiplayer version of a well known detective boardgame
 License:        GPLv2
 Group:          Games/Other
@@ -17,7 +17,7 @@ Source2:        %{name}-server.desktop
 BuildRequires:  python-devel python-module-wx ghostscript-utils ghostscript ImageMagick
 BuildRequires: /usr/bin/latex texlive-latex-recommended texlive-latex-recommended desktop-file-utils
 BuildArch:      noarch
-Requires:       python-module-wx python-module-twisted-core python-module-twisted-core-gui python-module-twisted-core-gui-gnome python-module-twisted-core-gui-tk python-module-twisted-core-gui-wx icon-theme-hicolor
+Requires:       python-module-wx python-module-twisted-core python-module-twisted-core-gui python-module-twisted-core-gui-tk python-module-twisted-core-gui-wx
 Source44: import.info
 
 %description
@@ -63,6 +63,9 @@ desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE2}
 
 
 %changelog
+* Thu Jun 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt2_0.3.pre2
+- drop Req: python-module-twisted-core-gui-gnome
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_0.3.pre2
 - update to new release by fcimport
 
