@@ -1,7 +1,7 @@
 %define rname kdeedu-data
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 
 # Automatically added by buildreq on Fri Mar 18 2016 (-bi)
 # optimized out: cmake cmake-modules gcc-c++ gtk-update-icon-cache libqt5-core libstdc++-devel python-base python3 python3-base rpm-build-python3
-BuildRequires: extra-cmake-modules qt5-base-devel
+BuildRequires: extra-cmake-modules qt5-base-devel kf5-ki18n-devel
 
 %description
 %summary
@@ -41,6 +41,12 @@ BuildRequires: extra-cmake-modules qt5-base-devel
 %_K5icon/*/*/actions/*.*
 
 %changelog
+* Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Wed Jun 07 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
 * Thu Apr 06 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 

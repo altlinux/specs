@@ -2,8 +2,9 @@
 
 %def_enable python2
 %def_enable python3
+%def_disable luajit
 
-%define cantor_sover 16
+%define cantor_sover 17
 %define libcantorlibs libcantorlibs%cantor_sover
 %define cantor_pythonbackend_sover 0
 %define libcantor_pythonbackend libcantor_pythonbackend%cantor_pythonbackend_sover
@@ -11,8 +12,8 @@
 %define libcantor_config libcantor_config%cantor_config_sover
 
 Name: kde5-%rname
-Version: 16.12.3
-Release: alt2%ubt
+Version: 17.04.2
+Release: alt1%ubt
 %K5init
 
 Group: Education
@@ -31,9 +32,10 @@ Patch2: alt-find-luajit.patch
 #BuildRequires: extra-cmake-modules kde5-analitza-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdelibs4support kf5-kdoctools-devel-static kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libcln-devel liblua5-devel libluajit-devel libspectre-devel python-module-google python3-dev qt5-svg-devel qt5-xmlpatterns-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-svg-devel qt5-xmlpatterns-devel
-BuildRequires: libcln-devel liblua5-devel libluajit-devel libspectre-devel
+BuildRequires: libcln-devel libspectre-devel
 %{?_enable_python2:BuildRequires: python-devel}
 %{?_enable_python3:BuildRequires: python3-devel}
+%{?_enable_luajit:BuildRequires: liblua5-devel libluajit-devel}
 BuildRequires: kde5-analitza-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdelibs4support kf5-kdoctools-devel-static
@@ -86,14 +88,14 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch2 -p1
+#patch2 -p1
 
-pushd src/backends/lua
-for f in *.{h,cpp} ; do
-    LUA_BASE_VER=`echo "%{get_version libluajit-devel}" | sed -E 's|^([[:digit:]]+\.[[:digit:]]).*|\1|'`
-    sed -i "s|luajit-2.0/lua.hpp|luajit-${LUA_BASE_VER}/lua.hpp|" $f
-done
-popd
+#LUA_BASE_VER=`echo "%{get_version libluajit-devel}" | sed -E 's|^([[:digit:]]+\.[[:digit:]]).*|\1|'`
+#pushd src/backends/lua
+#for f in *.{h,cpp} ; do
+#    sed -i "s|luajit-2.0/lua.hpp|luajit-${LUA_BASE_VER}/lua.hpp|" $f
+#done
+#popd
 
 %build
 %K5build \
@@ -138,6 +140,13 @@ popd
 %_K5lib/libcantor_config.so.*
 
 %changelog
+* Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Wed Jun 07 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+- don't build lua backend
+
 * Thu Apr 13 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt2%ubt
 - fix to build with luajit-2.0
 

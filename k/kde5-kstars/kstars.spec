@@ -1,7 +1,7 @@
 %define rname kstars
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -59,6 +59,12 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 %_K5cfg/kstars.kcfg
 
 %changelog
+* Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Wed Jun 07 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
 * Thu Apr 06 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 
