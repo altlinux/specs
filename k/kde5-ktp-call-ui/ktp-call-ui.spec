@@ -1,7 +1,7 @@
 %define rname ktp-call-ui
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -48,5 +48,11 @@ GUI VoIP client software which uses the telepathy framework underneath.
 %_K5dbus_srv/org.freedesktop.Telepathy.Client.KTp.CallUi.service
 
 %changelog
+* Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Tue Jun 06 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
 * Thu Mar 16 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - initial build

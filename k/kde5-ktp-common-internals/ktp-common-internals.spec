@@ -8,7 +8,7 @@
 %define libktpwidgets libktpwidgets%sover
 
 Name: kde5-ktp-common-internals
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init altplace
 
@@ -109,8 +109,9 @@ developing applications that use %name.
 
 %install
 %K5install
+%find_lang %name --with-kde --all-name
 
-%files common
+%files common -f %name.lang
 %dir %_datadir/telepathy/clients
 %_K5icon/hicolor/*/actions/im-*.*
 %_K5icon/hicolor/*/actions/sort-*.*
@@ -161,6 +162,12 @@ developing applications that use %name.
 %_libdir/cmake/KTp/
 
 %changelog
+* Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Tue Jun 06 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
 * Tue Apr 04 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 
