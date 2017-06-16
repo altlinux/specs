@@ -1,8 +1,8 @@
 
 %define rname kid3
 Name: kde4-%rname
-Version: 3.3.0
-Release: alt1
+Version: 3.4.5
+Release: alt1%ubt
 
 Group: Sound
 Summary: ID3 tagger
@@ -20,7 +20,10 @@ BuildRequires(pre): kde4libs-devel
 # Automatically added by buildreq on Mon May 21 2012 (-bi)
 # optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static id3lib kde-common-devel kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libavcodec-devel libavutil-devel libdbus-devel libdbusmenu-qt2 libflac-devel libfreetype-devel libgpg-error libogg-devel libopencore-amrnb0 libopencore-amrwb0 libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: gcc-c++ glib2-devel id3lib-devel kde4libs-devel libavdevice-devel libavformat-devel libchromaprint-devel libflac++-devel libicu libmpeg4ip-devel libqt3-devel libswscale-devel libtag-devel libvorbis-devel zlib-devel-static
-BuildRequires: gcc-c++ glib2-devel id3lib-devel libavdevice-devel libavformat-devel libchromaprint-devel libflac++-devel libswscale-devel libtag-devel libvorbis-devel
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: gcc-c++ glib2-devel id3lib-devel
+BuildRequires: libavdevice-devel libavformat-devel libavresample-devel libswscale-devel
+BuildRequires: libchromaprint-devel libflac++-devel libtag-devel libvorbis-devel
 # libmpeg4ip-devel
 BuildRequires: libqt4-devel phonon-devel libreadline-devel /usr/bin/xsltproc
 
@@ -136,7 +139,6 @@ Requires: %rname-common = %EVR
 %find_lang --with-kde --with-qt %rname
 
 %files -n %rname-common -f %rname.lang
-%_K4dbus_interfaces/*id3*
 
 %files -n %rname-core
 %_libdir/kid3/plugins/lib*.so
@@ -166,6 +168,9 @@ Requires: %rname-common = %EVR
 %_libdir/libkid3-gui.so.*
 
 %changelog
+* Fri Jun 16 2017 Sergey V Turchin <zerg@altlinux.org> 3.4.5-alt1%ubt
+- new version
+
 * Mon Oct 19 2015 Sergey V Turchin <zerg@altlinux.org> 3.3.0-alt1
 - new version
 
