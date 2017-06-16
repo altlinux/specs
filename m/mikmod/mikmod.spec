@@ -1,5 +1,5 @@
 Name: mikmod
-Version: 3.2.7
+Version: 3.2.8
 Release: alt1
 
 Summary: A MOD music file player
@@ -64,6 +64,9 @@ lha, lzh, rar, zip).
 %doc AUTHORS NEWS README
 
 %changelog
+* Fri Jun 16 2017 Michael Shigorin <mike@altlinux.org> 3.2.8-alt1
+- new version (watch file uupdate)
+
 * Mon May 29 2017 Michael Shigorin <mike@altlinux.org> 3.2.7-alt1
 - 3.2.7
 - added debian watch file

@@ -2,8 +2,8 @@
 %def_with pulse
 
 Name: libmikmod
-Version: 3.3.10
-Release: alt3
+Version: 3.3.11
+Release: alt1
 
 Summary: A portable sound library for Unix
 License: GPLv2 and LGPLv2+
@@ -78,6 +78,9 @@ will use the %name library.
 # - consider --enable-simd (marked unstable as of 3.3.7)
 
 %changelog
+* Fri Jun 16 2017 Michael Shigorin <mike@altlinux.org> 3.3.11-alt1
+- 3.3.11
+
 * Thu Mar 16 2017 Michael Shigorin <mike@altlinux.org> 3.3.10-alt3
 - amend devel subpackage deps accordingly
 
