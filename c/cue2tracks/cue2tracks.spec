@@ -1,22 +1,21 @@
 Name: cue2tracks
-Version: 0.2.16
+Version: 0.2.17
 Release: alt1
 
 Summary: Tool for splitting audio CD image to tracks with cue sheet info
 
 License: GPLv2
 Group: File tools
-Url: http://code.google.com/p/cue2tracks/
+Url: https://github.com/ar-lex/cue2tracks
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-# FIXME:
-# /usr/bin/cue2tracks: line 1798: syntax error near unexpected token `}'
 Autoreq: yes, noshell
 
-Source: https://cue2tracks.googlecode.com/files/%name-%version.tar
+# Source-url: https://github.com/ar-lex/cue2tracks/archive/v%version.tar.gz
+Source: %name-%version.tar
 
 %description
 Tool for splitting audio CD image to tracks with cue sheet info.
@@ -32,5 +31,8 @@ install -D %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri Jun 16 2017 Vitaly Lipatov <lav@altlinux.ru> 0.2.17-alt1
+- new version 0.2.17 (with rpmrb script)
+
 * Mon Mar 31 2014 Vitaly Lipatov <lav@altlinux.ru> 0.2.16-alt1
 - initial build for ALT Linux Sisyphus
