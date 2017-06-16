@@ -1,6 +1,6 @@
 Name: nextcloud
 Version: 12.0.0
-Release: alt1
+Release: alt2
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 %define installdir %webserver_webappsdir/%name
@@ -37,7 +37,7 @@ calendars, bookmarks and files across all your devices.
 %package apache2
 Summary: Apache 2.x web-server default configuration for %name
 Group: Networking/WWW
-Requires: %name = %version-%release apache2-mod_php5 apache2-mod_ssl
+Requires: %name >= 12.0.0 apache2-mod_php5 apache2-mod_ssl
 
 %description apache2
 Apache 2.x web-server default configuration for %name.
@@ -45,7 +45,7 @@ Apache 2.x web-server default configuration for %name.
 %package nginx
 Summary: nginx web-server default configuration for %name
 Group: Networking/WWW
-Requires: %name = %version-%release nginx
+Requires: %name >= 12.0.0 nginx
 #Requires: php5-cgi php5-fpm-fcgi php5-apcu
 
 %description nginx
@@ -57,6 +57,8 @@ nginx web-server default configuration for %name.
 %install
 mkdir -p %buildroot%installdir
 cp -rp %name/* %buildroot%installdir/
+cp %name/.htaccess %buildroot%installdir/
+cp %name/.user.ini %buildroot%installdir/
 
 find %buildroot%installdir/ -name tests -type d | xargs rm -fr
 rm -f %buildroot%installdir/l10n/l10n.pl
@@ -103,6 +105,10 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf 
 
 %changelog
+* Fri Jun 16 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 12.0.0-alt2
+- added missing files
+- fixed requires for subpackages
+
 * Thu Jun 15 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 12.0.0-alt1
 - version 12.0.0 (May 22 2017)
 - initial build
