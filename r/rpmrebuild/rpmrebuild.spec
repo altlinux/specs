@@ -1,12 +1,13 @@
 Name: rpmrebuild
 Version: 2.11
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: Development/Other
 Summary: A tool to build rpm file from rpm database
 Source: %name-%version.tar.gz
 Patch: rpmrebuild-2.9-alt-tmpdir.patch
 Patch1: rpmrebuild-2.11-alt-toonewtags.patch
+Patch2: rpmrebuild-2.11-correctly-quote-rpmargs.patch
 Url: http://rpmrebuild.sourceforge.net/
 BuildArch: noarch
 
@@ -32,6 +33,7 @@ Rpmrebuild plugin for automatically un-prelinking package content.
 %setup -c %name-%version
 %patch -p2
 %patch1 -p1
+%patch2 -p2
 
 %build
 %make
@@ -56,7 +58,12 @@ Rpmrebuild plugin for automatically un-prelinking package content.
 %_man1dir/un_prelink.plug*
 %_mandir/*/*/un_prelink.plug*
 %prefix/lib/%name/plugins/un_prelink*
+
 %changelog
+* Mon May 15 2017 Ivan Zakharyaschev <imz@altlinux.org> 2.11-alt2
+- Correctly quote the values passed to --define
+- Rebuild to get correct deps on prelink-tools (without prelink cronjob)
+
 * Thu Apr 10 2014 Fr. Br. George <george@altlinux.ru> 2.11-alt1
 - Autobuild version bump to 2.11
 - ALT-unsupported tags removel updated

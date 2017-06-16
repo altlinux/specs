@@ -1,10 +1,12 @@
 Name: prelink
 Version: 0.4.4
-Release: alt2
+Release: alt3
 
-Summary: An ELF prelinking utility
+Summary: The configuration and cronjob for system-wide ELF prelinking
 License: GPLv2+
 Group: System/Base
+
+Requires: %name-tools
 
 # http://pkgs.fedoraproject.org/repo/pkgs/prelink/prelink-20101123.tar.bz2/f207dafd3f87f9ffc9cf2c6f8016e3b9/prelink-20101123.tar.bz2
 Source: prelink-20101123.tar
@@ -17,10 +19,31 @@ BuildRequires: gcc-c++ libelf-devel
 
 ExclusiveArch: %ix86 alpha sparc sparc64 s390 s390x x86_64 ppc ppc64
 
-%description
-This package contains a utility which modifies ELF shared libraries and
-executables, so that far less relocations need to be resolved at runtime
+%global _unpackaged_files_terminate_build 1
+
+%package tools
+Summary: An ELF prelinking utility and the execstack tool
+Group: Development/Other
+
+# Before the split of subpkg:
+Conflicts: %name < 0.4.4-alt3
+
+%global long_desc prelink is a utility which modifies ELF shared libraries and\
+executables, so that far less relocations need to be resolved at runtime\
 and thus programs come up faster.
+
+%description
+Caution: if this package is installed, it will modify your system (by cron)!
+
+%long_desc
+
+This package contains the configuration to apply prelink to the whole
+system and a cronjob to do this daily.
+
+%description tools
+%long_desc
+
+This package contains just the plain tools: prelink and execstack.
 
 %prep
 %setup -n prelink
@@ -42,19 +65,21 @@ make -k -C testsuite check-cycle ||:
 mkdir -p %buildroot%_man5dir
 ln -s ../man8/prelink.8 %buildroot%_man5dir/prelink.conf.5
 
-mkdir -p %buildroot/etc/{sysconfig,prelink.conf.d,cron.daily,rpm/macros.d}
+mkdir -p %buildroot/etc/{sysconfig,prelink.conf.d,cron.daily}
 install -pm644 %_sourcedir/prelink.conf %buildroot/etc/
+touch %buildroot/etc/prelink.cache
 install -pm700 %_sourcedir/prelink.cron %buildroot/etc/cron.daily/prelink
 install -pm644 %_sourcedir/prelink.sysconfig %buildroot/etc/sysconfig/prelink
 
-cat > %buildroot/etc/rpm/macros.d/prelink <<"EOF"
+mkdir -p %buildroot%_rpmmacrosdir
+cat > %buildroot%_rpmmacrosdir/prelink <<"EOF"
 # rpm verifies prelinked libraries using a prelink undo helper.
 #     Note: The 2nd token is used as argv[0] and "library" is a
 #     placeholder that will be deleted and replaced with the appropriate
 #     library file path.
 %%__prelink_undo_cmd     %_sbindir/prelink prelink -y library
 EOF
-chmod 644 %buildroot/etc/rpm/macros.d/prelink
+chmod 644 %buildroot%_rpmmacrosdir/prelink
 
 mkdir -p %buildroot/var/{lib,log}/prelink
 touch %buildroot/var/lib/prelink/full
@@ -66,17 +91,8 @@ touch %buildroot/var/log/prelink/prelink.log
 touch /var/lib/prelink/force
 
 %files
-%doc AUTHORS doc/prelink.pdf
-%verify(not md5 size mtime) %config(noreplace) /etc/prelink.conf
 %verify(not md5 size mtime) %config(noreplace) /etc/sysconfig/prelink
-/etc/rpm/macros.d/prelink
-%dir %_sysconfdir/prelink.conf.d/
 /etc/cron.daily/prelink
-%_sbindir/prelink
-%_bindir/execstack
-%_man5dir/prelink.*
-%_man8dir/prelink.*
-%_man8dir/execstack.*
 %dir /var/lib/prelink/
 %attr(0644,root,root) %verify(not md5 size mtime) %ghost %config(missingok,noreplace) /var/lib/prelink/full
 %attr(0644,root,root) %verify(not md5 size mtime) %ghost %config(missingok,noreplace) /var/lib/prelink/quick
@@ -84,7 +100,26 @@ touch /var/lib/prelink/force
 %attr(0750,root,adm) %dir /var/log/prelink/
 %attr(0644,root,root) %verify(not md5 size mtime) %ghost %config(missingok,noreplace) /var/log/prelink/prelink.log
 
+%files tools
+%_rpmmacrosdir/prelink
+%doc AUTHORS doc/prelink.pdf
+%_sbindir/prelink
+%_bindir/execstack
+%_man5dir/prelink.*
+%_man8dir/prelink.*
+%_man8dir/execstack.*
+# Read by prelink -a:
+%config(noreplace) /etc/prelink.conf
+%dir %_sysconfdir/prelink.conf.d/
+# Created (with this mode) & used by plain prelink:
+%attr(0644,root,root) %verify(not md5 size mtime) %ghost %config(missingok,noreplace) /etc/prelink.cache
+
 %changelog
+* Thu Jun 15 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.4.4-alt3
+- prelink-tools subpackage separated from the "intruding" cronjob.
+  (To be used by rpmrebuild etc.)
+- Moved the RPM macros into %%_rpmmacrosdir.
+
 * Wed Feb 16 2011 Dmitry V. Levin <ldv@altlinux.org> 0.4.4-alt2
 - Made /etc/sysconfig/prelink readable for everyone.
 
