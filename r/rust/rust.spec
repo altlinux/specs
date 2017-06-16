@@ -1,5 +1,5 @@
 Name: rust
-Version: 1.14.0
+Version: 1.15.1
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -74,6 +74,7 @@ cp %SOURCE7 %SOURCE8 dl
 
 %build
 ./configure --disable-manage-submodules \
+    --disable-rustbuild \
 %if_disabled bootstrap
     --enable-local-rust \
     --local-rust-root=%prefix \
@@ -116,6 +117,9 @@ cp %SOURCE7 %SOURCE8 dl
 %_libdir/rustlib/etc/*
 
 %changelog
+* Thu Jun 15 2017 Vladimir Lettiev <crux@altlinux.org> 1.15.1-alt1
+- 1.15.1
+
 * Fri Dec 23 2016 Vladimir Lettiev <crux@altlinux.ru> 1.14.0-alt1
 - 1.14.0
 
