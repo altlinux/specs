@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.10.0
-Release: alt7
+Release: alt8
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
 Group: Development/Python
@@ -95,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Fri Jun 16 2017 Alexey Shabalin <shaba@altlinux.ru> 1.10.0-alt8
+- add six.moves.urllib_parse and six.moves.urllib_error to provides
+
 * Mon May 29 2017 Alexey Shabalin <shaba@altlinux.ru> 1.10.0-alt7
 - update provides from documentation
 
