@@ -17,7 +17,7 @@
 
 Name: kf5-%rname
 Version: 5.9.5
-Release: alt5%ubt
+Release: alt6%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -303,6 +303,10 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Fri Jun 16 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt6%ubt
+- apply fix against KDE bugs 348390, 251222
+- create ~/.local/share/kf5
+
 * Tue Jun 13 2017 Oleg Solovyov <mcpain@altlinux.org> 5.9.5-alt5%ubt
 - fix: unable to handle auth request
 
