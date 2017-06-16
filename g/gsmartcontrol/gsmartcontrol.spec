@@ -1,5 +1,5 @@
 Name: gsmartcontrol
-Version: 0.9.0
+Version: 1.0.0
 Release: alt1
 
 Summary: GSmartControl is a graphical user interface for smartctl
@@ -10,9 +10,9 @@ Url: http://gsmartcontrol.sourceforge.net/home/
 Source: http://download.sourceforge.net/%name/%name-%version.tar.bz2
 Patch1: gsmartcontrol-0.8.7-alt-lfs.patch
 
-Requires: smartmontools
+Requires: smartmontools gksu
 
-BuildRequires: libgtkmm2-devel gcc-c++ libpcre-devel gksu libappstream-glib-devel
+BuildRequires: libgtkmm3-devel >= 3.4.0 gcc-c++ libpcre-devel gksu libappstream-glib-devel
 
 %description
 GSmartControl is a graphical user interface for smartctl (from
@@ -48,6 +48,9 @@ to determine its health, as well as run various tests on it.
 %exclude %_defaultdocdir/%name/LICENSE*
 
 %changelog
+* Fri Jun 16 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0 (ported to GTK+3)
+
 * Thu May 11 2017 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
 - 0.9.0
 
