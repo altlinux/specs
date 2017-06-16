@@ -11,7 +11,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: libproxy
-Version: 0.4.14
+Version: 0.4.15
 Release: alt1
 Summary: A library handling all the details of proxy configuration
 
@@ -35,7 +35,7 @@ BuildPreReq: cmake ctest gcc-c++ zlib-devel
 # kde4
 %{?_with_kde:BuildPreReq: /usr/bin/kreadconfig5}
 # libmozjs
-%{?_with_mozjs:BuildRequires: pkgconfig(mozjs185)}
+%{?_with_mozjs:BuildRequires: pkgconfig(mozjs-38)}
 # webkit (gtk)
 %{?_with_webkit:BuildRequires: pkgconfig(webkit-1.0)}
 %{?_with_webkit3:BuildRequires: pkgconfig(javascriptcoregtk-4.0)}
@@ -257,6 +257,9 @@ popd
 %_datadir/cmake/Modules/Findlibproxy.cmake
 
 %changelog
+* Fri Jun 16 2017 Alexey Shabalin <shaba@altlinux.ru> 0.4.15-alt1
+- 0.4.15
+
 * Fri Jan 20 2017 Alexey Shabalin <shaba@altlinux.ru> 0.4.14-alt1
 - 0.4.14
 - add python3 package
