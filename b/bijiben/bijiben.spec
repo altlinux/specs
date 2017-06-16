@@ -1,10 +1,12 @@
-%define ver_major 3.21
+%def_enable snapshot
+
+%define ver_major 3.24
 %define xdg_name org.gnome.bijiben
 %define _libexecdir %_prefix/libexec
 %def_enable zeitgeist
 
 Name: bijiben
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Note editor for GNOME
@@ -12,17 +14,21 @@ License: LGPLv3+
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Bijiben
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %define glib_ver 2.28
 %define gtk_ver 3.11.4
-%define tracker_ver 0.17
+%define tracker_ver 0.18
 %define eds_ver 3.19.90
 
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: tracker-devel >= %tracker_ver
-BuildRequires: libxml2-devel libclutter-gtk3-devel libwebkitgtk3-devel
+BuildRequires: libxml2-devel libwebkit2gtk-devel
 BuildRequires: libgnome-online-accounts-devel libuuid-devel
 BuildRequires: evolution-data-server-devel >= %eds_ver libical-devel libicu-devel
 BuildRequires: rpm-build-xdg gnome-common intltool yelp-tools libappstream-glib-devel
@@ -36,6 +42,7 @@ desktop integration.
 %setup
 
 %build
+%autoreconf
 %configure \
 	--disable-static \
 	--disable-schemas-compile \
@@ -62,6 +69,9 @@ desktop integration.
 %doc README AUTHORS NEWS
 
 %changelog
+* Fri Jun 16 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- updated to 3_24_0-9-g5ce5172
+
 * Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.21.2-alt1
 - 3.21.2
 
