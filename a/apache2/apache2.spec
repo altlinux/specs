@@ -1,23 +1,5 @@
 # vir: set ft=spec: -*- rpm-spec -*-
-
-%define apache_version 2.4.25
-
 %define mmn 20120211
-
-# do we use native apr/apu ?
-%def_disable static
-
-# %%alternatives_* set
-%define alternatives_min_ver %nil
-%define alternatives_filetrigger yes
-%define alternatives_macros yes
-%if "%alternatives_filetrigger" == "yes"
-%define alternatives_min_ver 0.4
-%endif
-%if "%alternatives_macros" == "yes"
-%define alternatives_macros_name rpm-macros-alternatives
-%endif
-
 %define apache_configs_branch 2
 %define apache_configs_dirs_name %apache2_name-configs-dirs%apache_configs_branch
 %define apache_configs_dirs_version %apache_configs_branch.2.0
@@ -26,13 +8,12 @@
 %define apache_config_tool_branch 0
 %define apache_config_tool_name %apache2_name-config-tools
 %define apache_config_tool_version %apache_config_tool_branch.1.2
-
 %define docdir %apache2_docdir_prefix-%version
 %define macrosname %name-build
 
 Name:    apache2
-Version: %apache_version
-Release: alt1
+Version: 2.4.25
+Release: alt2%ubt
 Epoch: 1
 
 License: %asl
@@ -45,7 +26,6 @@ Summary(uk_UA.UTF-8): Найбільш популярний веб-сервер 
 
 Source0: httpd-%version.tar
 
-#Source10: apache2.favour
 Source11: apache2-alt-configs-3.0.tar
 Source12: README.ALT.ru_RU.KOI8-R
 Source13: apache2-alt-alternatives-0.3.0.tar
@@ -90,15 +70,14 @@ Patch1: apache2-2.4.25-alt-all-0.3.patch
 Patch2: apache2-2.4.25-alt-apachectl.patch
 Patch3: apache2-2.4.25-alt-httpd.conf.patch
 
-BuildRequires(pre): rpm-macros-branch
 BuildRequires(pre): rpm-macros-apache2 >= 3.12
 BuildRequires(pre): libssl-devel
 BuildRequires(pre): rpm-macros-condstopstart
 BuildRequires(pre): libaprutil1-devel 
+BuildRequires(pre): rpm-build-licenses
 BuildPreReq: %_datadir/rpm-build-rpm-eval/rpm-eval.sh
 BuildPreReq: rpm-macros-webserver-cgi-bin-control
 BuildPreReq: rpm >= 4.0.4-alt100.62
-BuildPreReq: rpm-build-licenses
 # For use -z sed option
 BuildPreReq: sed >= 1:4.2.2-alt1
 
@@ -110,24 +89,16 @@ Requires: webserver-html
 Requires: webserver-icons
 
 # Modules by default
-Requires: %name-mod_cache_disk >= 2.4.18-alt1
+Requires: %name-mod_cache_disk >= %EVR
 
 BuildPreReq: webserver-common
+BuildRequires(pre): rpm-build-ubt
 
 # Automatically added by buildreq on Fri Mar 31 2006
 BuildRequires: zlib-devel
 
-%if "%alternatives_macros_name" != ""
-BuildPreReq: %alternatives_macros_name
-%else
-BuildPreReq: alternatives
-%endif
+BuildPreReq: rpm-macros-alternatives
 BuildPreReq: pkg-config
-%if_enabled static
-BuildPreReq: %apache2_libaprutil_name-devel-static
-BuildPreReq: libssl-devel-static
-BuildPreReq: libsasl2-devel-static
-%endif
 BuildPreReq: libgdbm-devel
 BuildPreReq: libexpat-devel
 BuildPreReq: libpcre-devel
@@ -194,14 +165,9 @@ Provides: %apache2_runtimedir
 Provides: %apache2_lockdir
 Provides: %docdir
 
-%if "%apache2_branch" == ""
-Conflicts: apache-common apache apache-mod_perl
-Conflicts: apache-base apache-mod_perl-base
-%else
 Conflicts: apache-common < 1.3.41rusPL30.23-alt4.2
 Conflicts: apache < 1.3.41rusPL30.23-alt4.2
 Conflicts: apache-mod_perl < 1.3.41rusPL30.23-alt4.2
-%endif
 Conflicts: apache2-htcacheclean <= 2.2.22-alt11
 
 Obsoletes: %name-init
@@ -291,9 +257,7 @@ Summary: High speed threaded model for Apache HTTPD 2.1
 Summary(ru_RU.UTF-8): Высокоскоростная нитевая модель для Apache HTTPD 2.1
 Group: System/Servers
 PreReq: %name-base >= %EVR
-%if "%alternatives_min_ver" != ""
-PreReq: alternatives >= %alternatives_min_ver
-%endif
+PreReq: alternatives >= 0.4
 Provides: %name-mmn = %mmn
 Provides: %apache2_sbindir/%apache2_dname
 Provides: %name-httpd = %EVR
@@ -310,9 +274,7 @@ Summary: Traditional model for Apache HTTPD 2.1
 Summary(ru_RU.UTF-8): Традиционная модель для Apache HTTPD 2.1
 Group: System/Servers
 PreReq: %name-base = %EVR
-%if "%alternatives_min_ver" != ""
-PreReq: alternatives >= %alternatives_min_ver
-%endif
+PreReq: alternatives >= 0.4
 Provides: %name-mmn = %mmn
 Provides: %apache2_sbindir/%apache2_dname
 Provides: %name-httpd = %EVR
@@ -333,9 +295,7 @@ Summary: Event driven model for Apache HTTPD 2.1
 Summary(ru_RU.UTF-8): Событийная модель для Apache HTTPD 2.1
 Group: System/Servers
 PreReq: %name-base = %EVR
-%if "%alternatives_min_ver" != ""
-PreReq: alternatives >= %alternatives_min_ver
-%endif
+PreReq: alternatives >= 0.4
 Provides: %name-mmn = %mmn
 Provides: %apache2_sbindir/%apache2_dname
 Provides: %name-httpd = %EVR
@@ -545,9 +505,6 @@ Conflicts: apache-icons
 %description icons
 This package contains the Apache server icons dir.
 
-%description icons
-This package contains the Apache server icons dir.
-
 %package mod_ssl
 Group: System/Servers
 Summary: SSL/TLS module for the Apache HTTP server
@@ -719,7 +676,7 @@ Set DocumentRoot in %apache2_serverdatadir (for https) to support the old config
 
 # generate ALTLinux Apache layout
 echo "
-# ALTLinux layout
+# ALT layout
 <Layout ALTLinux>
     prefix:		%apache2_basedir
     exec_prefix:	%apache2_exec_prefix
@@ -806,16 +763,10 @@ mpmbuild worker --enable-mods-shared=all  --with-program-name=%apache2_dname
 
 mpmbuild event --enable-mods-shared=all  --with-program-name=%apache2_dname
 
-#mpmbuild itk --enable-mods-shared=all --with-program-name=%apache2_dname
-
-#mpmbuild peruser --enable-mods-shared=all --with-program-name=%apache2_dname
-
 # Verify that the same modules were built into the two httpd binaries
 ./prefork/%apache2_dname -l | grep -v prefork > prefork.mods
 ./worker/%apache2_dname -l | grep -v worker > worker.mods
 ./event/%apache2_dname -l | grep -v event > event.mods
-#./itk/%apache2_dname -l | grep -v itk > itk.mods
-#./peruser/%apache2_dname -l | grep -v peruser > peruser.mods
 if ( ! diff -u prefork.mods worker.mods ) \
 	|| ( ! diff -u prefork.mods event.mods ) \
 #	|| ( ! diff -u prefork.mods itk.mods ) \
@@ -855,16 +806,6 @@ s|%%apache2_sslcertshfunctions|%apache2_sslcertshfunctions|g
 s|%%apache2_sslcertsh|%apache2_sslcertsh|g
 ' >> SetMacros.sed
 
-# Classify ab and logresolve as section 1 commands, as they are in /usr/bin
-pushd docs/man
-
-%if "%apache2_branch" != ""
-#MANS="ab.1 apachectl.8 apxs.1 dbmmanage.1 htdigest.1 htpasswd.1 httpd.8 rotatelogs.8 logresolve.1 suexec.8"
-#for manpage in $MANS; do
-#    mv ${manpage} `echo ${manpage}|sed -e "s/\./%apache2_branch./"`
-#done
-%endif
-popd
 
 pushd prefork
 make DESTDIR=%buildroot install
@@ -879,14 +820,6 @@ install -m 755 $WDIR/%apache2_dname %buildroot%apache2_sbindir/%apache2_dname.wo
 WDIR=event
 install -m 755 $WDIR/%apache2_dname %buildroot%apache2_sbindir/%apache2_dname.event
 
-# install itk binary
-#WDIR=itk
-#install -m 755 $WDIR/%apache2_dname %buildroot%apache2_sbindir/%apache2_dname.itk
-
-# install peruser binary
-#WDIR=peruser
-#install -m 755 $WDIR/%apache2_dname %buildroot%apache2_sbindir/%apache2_dname.peruser
-
 #-----------------------------------------------------------------------------------
 # Tune up executibles to co-exist with apache-ru
 #
@@ -900,15 +833,9 @@ mv suexec suexec%apache2_branch
 # rename tools
 # Maybe it's better to push ru-apache-devel before installing devel package
 rm envvars-std
-#for tool in apachectl apxs checkgid dbmmanage envvars rotatelogs httxt2dbm; do
 for tool in apachectl checkgid envvars rotatelogs fcgistarter htcacheclean; do
     mv ${tool} ${tool}%apache2_branch
 done
-#fix apachectl and apxs
-#sed -i -e 's|\(\/envvars\)"|\1%apache2_branch"|
-#s|\(apachectl\)|\1%apache2_branch|
-#' %apache2_apachectl_name %apache2_apxs_name
-%endif
 # move&rename utilities to /usr/bin
 pushd %buildroot%apache2_bindir
 TOOLS="ab htdbm logresolve htpasswd apxs dbmmanage httxt2dbm htdigest check_forensic"
@@ -916,6 +843,7 @@ for tool in $TOOLS; do
     mv ${tool} %buildroot%apache2_bindir/${tool}%apache2_branch
 done
 popd
+%endif
 popd
 #
 #-----------------------------------------------------------------------------------
@@ -936,13 +864,6 @@ done
 # create a prototype server.{crt,key}
 touch %buildroot%apache2_confdir/ssl.crt/server.crt
 touch %buildroot%apache2_confdir/ssl.key/server.key
-
-# Makefiles for certificate management
-#for ext in crt crl; do
-#  install -m 644 ./build/rpm/mod_ssl-Makefile.${ext} \
-#	$RPM_BUILD_ROOT%_sysconfdir/httpd/conf/ssl.${ext}/Makefile.${ext}
-#done
-#ln -s ../../../usr/share/ssl/certs/Makefile $RPM_BUILD_ROOT/etc/httpd/conf
 
 # for holding mod_dav lock database
 mkdir -p %buildroot%apache2_localstatedir/lib/dav
@@ -1224,88 +1145,7 @@ if [ $1 -eq 1 ]; then
 fi
 exit 0
 
-%triggerun base -- %name-base < 2.2.16, %name < 2.2.9-alt10
-if [ $2 -gt 0 ]; then
-	pushd %apache2_confdir
-	for conffile in `egrep -Rsm1 '^[[:space:]]*[Ii][Nn][Cc][Ll][Uu][Dd][Ee][[:space:]]+(%apache2_basedir/|)%apache2_confdir_name/extra-available/Directory_(root|html|cgibin)_default\.conf' *-available/*.conf|cut -sd: -f1`
-	do
-		echo "Warning: configuration files %apache2_confdir$conffile"
-		echo "    uses %apache2_extra_available/Directory_(root|html|cgibin)_default.conf,"
-		echo "    moved to the %apache2_confdir_inc!"
-		echo "    The original file is saved as %apache2_confdir$conffile.rpmold"
-		cp -fa --backup=t "$conffile" "$conffile.rpmold"
-		sed -ri 's@^([[:space:]]*[Ii][Nn][Cc][Ll][Uu][Dd][Ee][[:space:]]+(%apache2_basedir/|)%apache2_confdir_name)/extra-available/(Directory_(root|html|cgibin)_default\.conf([[:space:]].*|)$)@\1/include/\3@' "$conffile"
-	done
-	for conffile in `cd %apache2_extra_available/ && \
-			find -maxdepth 1 -regextype posix-egrep -regex '\./Directory_(root|html|cgibin)_default.conf$' -printf '%%f\n'`
-	do
-		diff -q "%apache2_extra_available/$conffile" "%apache2_confdir_inc/$conffile" >/dev/null || {
-			echo "Warning: config files %apache2_extra_available/$conffile"
-			echo "    and %apache2_confdir_inc/$conffile are different!"
-			echo "    %apache2_confdir_inc/$conffile file is saved as"
-			echo "    %apache2_confdir_inc/$conffile.rpmnew and replaced by"
-			echo "    %apache2_extra_available/$conffile."
-			cp -fa --backup=t "%apache2_confdir_inc/$conffile" "%apache2_confdir_inc/$conffile.rpmnew"
-			cp -fa "%apache2_extra_available/$conffile" "%apache2_confdir_inc/$conffile"
-		}
-		echo "Warning: config file %apache2_extra_available/$conffile"
-		echo "    saved as %apache2_extra_available/$conffile.rpmold!"
-		cp -fa --backup=t "%apache2_extra_available/$conffile" "%apache2_extra_available/$conffile.rpmold"
-		rm -f "%apache2_extra_available/$conffile"
-	done
-	popd
-fi
-%triggerun_apache2_rpmhttpdstartfile
-exit 0
 
-#triggerun base -- %name-base < 2.2.17-alt3, %name-httpd-worker < 2.2.17-alt3, %name-httpd-prefork < 2.2.17-alt3, %name-httpd-event < 2.2.17-alt3, %name-httpd-itk < 2.2.17-alt3, %name-httpd-peruser < 2.2.17-alt3, %name-configs-A1PROXIED < 2.2.17-alt3, %name-mod_ssl-compat < 2.2.17-alt3, %name-mod_ssl < 2.2.17-alt3, %name-mod_ldap < 2.2.17-alt3, %name-suexec < 2.2.17-alt3, %name-compat < 2.2.17-alt3, %name-manual < 2.2.17-alt3
-%triggerun base -- %name-base < 2.2.17-alt3, %name-httpd-worker < 2.2.17-alt3, %name-httpd-prefork < 2.2.17-alt3, %name-httpd-event < 2.2.17-alt3, %name-configs-A1PROXIED < 2.2.17-alt3, %name-mod_ssl-compat < 2.2.17-alt3, %name-mod_ssl < 2.2.17-alt3, %name-mod_ldap < 2.2.17-alt3, %name-suexec < 2.2.17-alt3, %name-compat < 2.2.17-alt3, %name-manual < 2.2.17-alt3
-%triggerun_apache2_rpmhttpdstartfile
-exit 0
-
-%triggerpostun base -- apache2-manual < 2.2.4-alt12, apache2-common < 2.2.22-alt12
-if [ -e %_docdir/apache2-manual-2.2.4/manual ] && \
-		[ -L %_docdir/apache2-manual-2.2.4/manual ]; then
-	echo "Delete old symlink %_docdir/apache2-manual-2.2.4/manual"
-	rm -f %_docdir/apache2-manual-2.2.4/manual 2>/dev/null ||:
-fi
-if [ -d %apache2_runtimedir ]; then
-	echo "Set owner root:%apache2_group for %apache2_runtimedir"
-	chown root:%apache2_group %apache2_runtimedir
-	echo "Set 2775 attr for %apache2_runtimedir"
-	chmod 2775 %apache2_runtimedir
-fi
-exit 0
-
-%if "%alternatives_filetrigger" != "yes"
-%post httpd-worker
-%register_alternatives %name-httpd-worker
-
-%triggerpostun httpd-worker -- apache2 < 2.2.4-alt18
-%register_alternatives %name-httpd-worker
-
-%postun httpd-worker
-%unregister_alternatives %name-httpd-worker
-
-%post httpd-prefork
-%register_alternatives %name-httpd-prefork
-
-%triggerpostun httpd-prefork -- apache2 < 2.2.4-alt18
-%register_alternatives %name-httpd-prefork
-
-%postun httpd-prefork
-%unregister_alternatives %name-httpd-prefork
-
-%post httpd-event
-%register_alternatives %name-httpd-event
-
-%triggerpostun httpd-event -- apache2 < 2.2.4-alt18
-%register_alternatives %name-httpd-prefork
-
-%postun httpd-event
-%unregister_alternatives %name-httpd-event
-
-%endif
 
 %pre manual
 if [ $1 -eq 2 ] && \
@@ -1314,27 +1154,6 @@ if [ $1 -eq 2 ] && \
 	echo 'Warning: original %apache2_manualdir not symlink!'
 	echo '    Saved as %apache2_manualdir.rpmold'
 	mv %apache2_manualdir %apache2_manualdir.rpmold
-fi
-exit 0
-
-%triggerun mod_ssl -- %name-mod_ssl <= 2.2.22-alt14, %name-mod_ssl-compat <= 2.2.22-alt14
-if [ -e %apache2_confdir/ssl.crt/server.crt ] && \
-		[ -e %apache2_confdir/ssl.key/server.key ]; then
-	for conffile in %apache2_sites_available/default_https.conf %apache2_sites_available/default_https-compat.conf
-	do
-		if [ -e "$conffile" ] && \
-				grep -qs -m1 '^[[:space:]]*SSLCertificateFile[[:space:]]\+"%apache2_sslcertificatefile"[[:space:]]*$' "$conffile" && \
-				grep -qs -m1 '^[[:space:]]*SSLCertificateKeyFile[[:space:]]\+"%apache2_sslcertificatekeyfile"[[:space:]]*$' "$conffile" && \
-				! egrep -qs -m1 '^[[:space:]]*(SSLCertificateChainFile|SSLCA(Certificate|Revocation)(Path|File))[[:space:]]' "$conffile" ; then
-			echo "Warning: the file $conffile saved settings:"
-			echo '    SSLCertificateFile "%apache2_confdir/ssl.crt/server.crt"'
-			echo '    SSLCertificateKeyFile "%apache2_confdir/ssl.key/server.key"'
-			sed -ri '
-s@^([[:space:]]*)(SSLCertificateFile[[:space:]]+"%apache2_sslcertificatefile"[[:space:]]*)$@\1# New certificate file\n\1#\2\n\1# Old certificate file\n\1SSLCertificateFile "%apache2_confdir/ssl.crt/server.crt"@
-s@^([[:space:]]*)(SSLCertificateKeyFile[[:space:]]+"%apache2_sslcertificatekeyfile"[[:space:]]*)$@\1# New certificate key file\n\1#\2\n\1# Old certificate key file\n\1SSLCertificateKeyFile "%apache2_confdir/ssl.key/server.key"@
-' "$conffile"
-		fi
-	done
 fi
 exit 0
 
@@ -1437,8 +1256,6 @@ exit 0
 %exclude %docdir/original/mods-available/*
 %doc %docdir/ABOUT_APACHE
 %doc %docdir/README*
-#%exclude %docdir/README-peruser.*
-#%exclude %docdir/README-itk.*
 %doc %docdir/CHANGES
 %doc %docdir/LICENSE
 
@@ -1568,7 +1385,6 @@ exit 0
 %config(noreplace) %apache2_ports_available/http-A1PROXIED.conf
 %ghost %apache2_ports_enabled/http-A1PROXIED.conf
 %config(noreplace) %apache2_ports_start/020-A1PROXIED.conf
-#%config(noreplace) %apache2_sites_available/vhosts-A1PROXIED.conf
 %ghost %apache2_sites_enabled/vhosts-A1PROXIED.conf
 %config(noreplace) %apache2_sites_start/020-A1PROXIED.conf
 
@@ -1700,6 +1516,11 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Mon May 29 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.25-alt2%ubt
+- added ubt tag
+- deep cleaning of the specfile (remove oldest trigger* macros, commented code, 
+	garbage defined macros and etc..)
+
 * Thu May 18 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.25-alt1
 - updated to 2.4.25 witch security fixes:
     + CVE-2016-8740 mod_http2: Mitigate DoS memory exhaustion via endless CONTINUATION frames.
