@@ -4,7 +4,7 @@
 %def_with pam
 
 Name: monit
-Version: 5.20.0
+Version: 5.23.0
 Release: alt1
 
 Summary: Process monitor and restart utility
@@ -182,6 +182,15 @@ fi
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Fri Jun 16 2017 Michael Shigorin <mike@altlinux.org> 5.23.0-alt1
+- new version (watch file uupdate)
+
+* Fri Apr 21 2017 Michael Shigorin <mike@altlinux.org> 5.22.0-alt1
+- new version (watch file uupdate)
+
+* Thu Mar 09 2017 Michael Shigorin <mike@altlinux.org> 5.21.0-alt1
+- new version (watch file uupdate)
+
 * Sat Oct 22 2016 Michael Shigorin <mike@altlinux.org> 5.20.0-alt1
 - new version (watch file uupdate)
 
