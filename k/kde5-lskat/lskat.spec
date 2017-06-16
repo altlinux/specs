@@ -1,8 +1,8 @@
 %define rname lskat
 
 Name: kde5-%rname
-Version: 1.40
-Release: alt5%ubt
+Version: 17.04.2
+Release: alt1%ubt
 %K5init
 
 Group: Games/Cards
@@ -54,6 +54,9 @@ where the second player is either live opponent, or built in artificial intellig
 %_K5xmlgui/lskat/
 
 %changelog
+* Fri Jun 16 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
 * Tue Apr 11 2017 Sergey V Turchin <zerg@altlinux.org> 1.40-alt5%ubt
 - update from frameworks branch
 
