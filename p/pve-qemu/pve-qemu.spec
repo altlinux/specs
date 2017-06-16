@@ -26,7 +26,7 @@
 %def_without unicore32
 
 %def_disable werror
-%def_disable sdl
+%def_enable sdl
 %def_disable sdl2
 %def_enable curses
 %def_enable bluez
@@ -171,7 +171,7 @@
 
 Name: pve-%rname
 Version: 2.9.0
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -245,6 +245,21 @@ Patch55: 0046-convert-savevm-async-to-threads.patch
 Patch56: 0047-glusterfs-allow-partial-reads.patch
 Patch57: 0048-vma-don-t-use-O_DIRECT-on-pipes.patch
 Patch58: 0049-block-zeroinit-request-child-permissions.patch
+Patch59: 0001-Revert-target-i386-disable-LINT0-after-reset.patch
+Patch60: 0002-qemu-img-wait-for-convert-coroutines-to-complete.patch
+Patch61: 0003-block-Do-not-unref-bs-file-on-error-in-BD-s-open.patch
+Patch62: 0004-9pfs-local-fix-unlink-of-alien-files-in-mapped-file-.patch
+Patch63: 0005-blockdev-use-drained_begin-end-for-qmp_block_resize.patch
+Patch64: 0006-aio-add-missing-aio_notify-to-aio_enable_external.patch
+Patch65: 0007-virtio-serial-bus-Unset-hotplug-handler-when-unreali.patch
+Patch66: 0008-virtio-serial-fix-segfault-on-disconnect.patch
+Patch67: 0009-e1000e-Fix-ICR-Other-causes-clear-logic.patch
+Patch68: 0010-mirror-Drop-permissions-on-s-target-on-completion.patch
+Patch69: 0011-vmw_pvscsi-check-message-ring-page-count-at-initiali.patch
+Patch70: 0012-audio-release-capture-buffers.patch
+Patch71: 0013-input-limit-kbd-queue-depth.patch
+Patch72: 0014-scsi-avoid-an-off-by-one-error-in-megasas_mmio_write.patch
+Patch73: 0015-9pfs-local-forbid-client-access-to-metadata-CVE-2017.patch
 
 %set_verify_elf_method fhs=relaxed
 
@@ -472,6 +487,21 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch56 -p1
 %patch57 -p1
 %patch58 -p1
+%patch59 -p1
+%patch60 -p1
+%patch61 -p1
+%patch62 -p1
+%patch63 -p1
+%patch64 -p1
+%patch65 -p1
+%patch66 -p1
+%patch67 -p1
+%patch68 -p1
+%patch69 -p1
+%patch70 -p1
+%patch71 -p1
+%patch72 -p1
+%patch73 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -708,6 +738,12 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Fri Jun 16 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.9.0-alt2
+- merge various stable fixes
+
+* Thu May 11 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.9.0-alt0.M80P.1
+- backport to p8 branch
+
 * Thu May 11 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.9.0-alt1
 - 2.9.0-1
 
