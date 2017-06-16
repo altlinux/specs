@@ -2,22 +2,25 @@
 
 %def_without python3
 
-Name:           python-module-%oname
-Version:        2.0.18
-Release:        alt2.git20150813
-Summary:        A Python module for accessing online Google services
-Group:          Development/Python
-License:        Apache-2.0
-URL:            http://code.google.com/p/gdata-python-client/
-# https://github.com/google/gdata-python-client.git
-Source0:	%name-%version-%release.tar
-Packager:	Mikhail A Pokidko <pma@altlinux.org>
+Name: python-module-gdata
+Version: 2.0.18
+Release: alt3.git20160102
 
-BuildArch:      noarch
-BuildRequires:  python-devel
+Summary: A Python module for accessing online Google services
+
+Group: Development/Python
+License: Apache-2.0
+Url: https://github.com/google/gdata-python-client
+
+# Source0-git:	https://github.com/google/gdata-python-client.git
+Source: %name-%version-%release.tar
+
+BuildArch: noarch
+
+BuildRequires: python-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires:  python3-devel python-tools-2to3
+BuildRequires: python3-devel python-tools-2to3
 %endif
 
 %description
@@ -85,7 +88,7 @@ popd
 %endif
 
 %install
-%python_install --record=INSTALLED_FILES
+%python_install
 
 %if_with python3
 pushd ../python3
@@ -96,8 +99,11 @@ rm -rf src/gdata/Crypto/Util/test.py
 popd
 %endif
 
-%files -f INSTALLED_FILES
+%files
 %doc *.txt
+%python_sitelibdir/atom/
+%python_sitelibdir/gdata/
+%python_sitelibdir/*.egg-info
 
 %files docs
 %doc pydocs/*
@@ -105,10 +111,16 @@ popd
 %if_with python3
 %files -n python3-module-%oname
 %doc *.txt
-%python3_sitelibdir/*
+%python3_sitelibdir/atom/
+%python3_sitelibdir/gdata/
+%python3_sitelibdir/*.egg-info
 %endif
 
 %changelog
+* Fri Jun 16 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.18-alt3.git20160102
+- update to the latest commit
+- cleanup spec, fix dir packing
+
 * Mon Aug 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.18-alt2.git20150813
 - New snapshot
 
