@@ -2,9 +2,10 @@
 
 %define sover 5
 %define libkf5pimcommon libkf5pimcommon%sover
+%define libkf5pimcommonakonadi libkf5pimcommonakonadi%sover
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -56,6 +57,13 @@ Requires: %name-common = %version-%release
 %description -n %libkf5pimcommon
 KF5 library
 
+%package -n %libkf5pimcommonakonadi
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n %libkf5pimcommonakonadi
+KF5 library
+
 
 %prep
 %setup -n %rname-%version
@@ -73,18 +81,31 @@ KF5 library
 
 %files devel
 %_K5inc/pimcommon_version.h
-%_K5inc/pimcommon/
-%_K5inc/PimCommon/
+%_K5inc/pimcommon*/
+%_K5inc/PimCommon*/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5PimCommon/
-%_K5archdata/mkspecs/modules/qt_PimCommon.pri
+%_K5lib/cmake/KF5PimCommon*/
+%_K5archdata/mkspecs/modules/qt_PimCommon*.pri
 %_K5plug/designer/*.so
 
 %files -n %libkf5pimcommon
 %_K5lib/libKF5PimCommon.so.%sover
 %_K5lib/libKF5PimCommon.so.*
 
+%files -n %libkf5pimcommonakonadi
+%_K5lib/libKF5PimCommonAkonadi.so.%sover
+%_K5lib/libKF5PimCommonAkonadi.so.*
+
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
+* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Wed Mar 15 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 

@@ -3,7 +3,7 @@
 %def_enable tools
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init altplace
 
@@ -174,6 +174,8 @@ for f in %buildroot/%_datadir/akonadi5/*.xs* ; do
     ln -s `relative %_datadir/akonadi5/$fname %_K5data/akonadi/$fname` %buildroot/%_K5data/akonadi/$fname
 done
 
+%find_lang %name --with-kde --all-name
+
 
 %files
 %_K5dbus_srv/org.freedesktop.Akonadi.Control.service
@@ -203,7 +205,7 @@ done
 %config(noreplace) %_K5xdgconf/akonadi/mysql-*.conf
 %_K5bin/akonadi5_mysql_install_db
 
-%files common
+%files common -f %name.lang
 %dir %_K5lib/akonadi5/
 %dir %_K5lib/akonadi5/contact/
 %dir %_K5xdgconf/akonadi/
@@ -252,6 +254,15 @@ done
 %endif
 
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
+* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Wed Mar 15 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 

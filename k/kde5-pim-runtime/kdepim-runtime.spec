@@ -8,7 +8,7 @@
 %define libakonadi_singlefileresource libakonadi-singlefileresource%pim_sover
 
 Name: kde5-pim-runtime
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init altplace
 
@@ -33,7 +33,7 @@ BuildRequires: xsltproc libsasl2-devel boost-devel
 #BuildRequires: libkolab-devel
 BuildRequires: kde5-akonadi-calendar-devel kde5-kalarmcal-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kholidays-devel
 BuildRequires: kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmailtransport-devel kde5-kmbox-devel kde5-kmime-devel kde5-kpimtextedit-devel
-BuildRequires: kde5-syndication-devel
+BuildRequires: kde5-syndication-devel kde5-kdav-devel
 BuildRequires: kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel
 BuildRequires: kf5-libkgapi-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
@@ -107,6 +107,15 @@ KF5 library
 
 %install
 %K5install
+# workaround against sasl plugins dir
+for sffx in 3 4 5 6 ; do
+    mkdir -p  %buildroot/%_libdir/sasl2-$sffx
+    for f in %buildroot/%_libdir/sasl2/*.so* ; do
+	fname=`basename "$f"`
+	ln -s ../sasl2/"$fname" %buildroot/%_libdir/sasl2-$sffx/"$fname"
+    done
+done
+
 %find_lang %name --with-kde --all-name
 
 mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
@@ -120,6 +129,7 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %files
 %_K5bin/gidmigrator
 %_K5bin/akonadi_*
+%_libdir/sasl2*/*.so*
 %_K5plug/kf5/kio/akonadi.so
 %_K5plug/*akonadi*.so
 %_K5plug/kf5/kio/pop3.so
@@ -155,6 +165,15 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %_K5lib/libakonadi-singlefileresource.so.*
 
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
+* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Wed Mar 15 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 

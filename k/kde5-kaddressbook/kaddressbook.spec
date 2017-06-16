@@ -1,7 +1,7 @@
 %define rname kaddressbook
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -29,7 +29,7 @@ BuildRequires: kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-
 BuildRequires: kde5-kcalcore-devel kde5-kcontacts-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmime-devel
 BuildRequires: kde5-kontactinterface-devel kde5-kpimtextedit-devel kde5-libkdepim-devel kde5-mailcommon-devel kde5-messagelib-devel
 BuildRequires: kde5-pim-apps-libs-devel kde5-pimcommon-devel
-BuildRequires: kf5-kcmutils-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel
+BuildRequires: kf5-kcmutils-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel kf5-prison-devel
 
 %description
 Contact manager.
@@ -82,7 +82,7 @@ Requires: %name-common = %version-%release
 %_K5xdgapp/org.kde.kaddressbook.desktop
 %_K5conf_up/*kaddressbook*
 %_K5data/kaddressbook/
-%_K5xmlgui/kaddressbook/
+#%_K5xmlgui/kaddressbook/
 %_K5srv/kontact/kaddressbookplugin.desktop
 %_K5srv/*kaddressbook*.desktop
 %_K5icon/*/*/apps/kaddressbook.*
@@ -108,6 +108,15 @@ Requires: %name-common = %version-%release
 %_K5lib/libkaddressbookprivate.so.*
 
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
+* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Thu Mar 16 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 

@@ -1,7 +1,7 @@
 %define rname kcalutils
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init altplace
 
@@ -61,10 +61,9 @@ KF5 library
 %install
 %K5install
 %K5install_move data kcalendar
-#find_lang %name --with-kde --all-name
+%find_lang %name --with-kde --all-name
 
-#files common -f %name.lang
-%files common
+%files common -f %name.lang
 %doc COPYING*
 #%_K5data/kcalendar/
 
@@ -80,6 +79,15 @@ KF5 library
 %_K5lib/libKF5CalendarUtils.so.*
 
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
+* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Wed Mar 15 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 

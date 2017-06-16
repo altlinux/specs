@@ -6,7 +6,7 @@
 %define libkleopatraclientgui libkleopatraclientgui%kleopatraclientgui_sover
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -20,6 +20,7 @@ Obsoletes: kde5-pim-kleopatra < %EVR
 Requires: gnupg2 dirmngr pinentry-x11
 
 Source: %rname-%version.tar
+Patch1: alt-gpgme17.patch
 
 # Automatically added by buildreq on Fri Apr 29 2016 (-bi)
 # optimized out: boost-devel-headers cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ glibc-devel-static gtk-update-icon-cache kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libgpg-error-devel libjson-c libkf5gpgmepp-pthread libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils
@@ -53,20 +54,21 @@ developing applications that use %name.
 
 %package -n %libkleopatraclientcore
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common = %version-%release
 %description -n %libkleopatraclientcore
-KF5 library
+%name library
 
 %package -n %libkleopatraclientgui
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common = %version-%release
 %description -n %libkleopatraclientgui
-KF5 library
+%name library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -100,6 +102,15 @@ KF5 library
 %_K5lib/libkleopatraclientgui.so.*
 
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
+* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Wed Mar 15 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 

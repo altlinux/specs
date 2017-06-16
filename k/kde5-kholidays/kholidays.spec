@@ -1,8 +1,8 @@
 %define rname kholidays
 
 Name: kde5-%rname
-Version: 16.12.3
-Release: alt2%ubt
+Version: 17.04.2
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -61,10 +61,9 @@ KF5 library
 
 %install
 %K5install
-#%find_lang %name --with-kde --all-name
+%find_lang %name --with-kde --all-name
 
-#%files common -f %name.lang
-%files common
+%files common -f %name.lang
 #%doc COPYING*
 %_K5data/libkholidays/
 
@@ -81,6 +80,15 @@ KF5 library
 %_K5qml/org/kde/kholidays/
 
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
+* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Fri Mar 31 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt2%ubt
 - fix compile flags
 

@@ -1,8 +1,18 @@
 %define rname libkgapi
 
+%define sover 5
+%define libkpimgapidrive libkpimgapidrive%sover
+%define libkpimgapilatitude libkpimgapilatitude%sover
+%define libkpimgapicore libkpimgapicore%sover
+%define libkpimgapicalendar libkpimgapicalendar%sover
+%define libkpimgapiblogger libkpimgapiblogger%sover
+%define libkpimgapimaps libkpimgapimaps%sover
+%define libkpimgapicontacts libkpimgapicontacts%sover
+%define libkpimgapitasks libkpimgapitasks%sover
+
 Name: kf5-%rname
-Version: 5.3.1
-Release: alt2%ubt
+Version: 17.04.2
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -16,7 +26,7 @@ Source: %rname-%version.tar
 # optimized out: cmake cmake-modules elfutils gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libgst-plugins1.0 libical-devel libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-sensors libqt5-sql libqt5-svg libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules kde5-kcalcore-devel kde5-kcontacts-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel python-module-google python3-dev qt5-webkit-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules  qt5-webkit-devel
+BuildRequires: extra-cmake-modules qt5-webengine-devel
 BuildRequires: kde5-kcalcore-devel kde5-kcontacts-devel
 BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel
 
@@ -39,60 +49,60 @@ Requires: kf5-kcoreaddons-devel kde5-kcalcore-devel kde5-kcontacts-devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package -n libkf5gapidrive
+%package -n %libkpimgapilatitude
 Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
-%description -n libkf5gapidrive
+%description -n %libkpimgapilatitude
 KF5 library
 
-%package -n libkf5gapilatitude
+%package -n %libkpimgapidrive
 Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
-%description -n libkf5gapilatitude
+%description -n %libkpimgapidrive
 KF5 library
 
-%package -n libkf5gapicore
+%package -n %libkpimgapicore
 Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
-%description -n libkf5gapicore
+%description -n %libkpimgapicore
 KF5 library
 
-%package -n libkf5gapicalendar
+%package -n %libkpimgapicalendar
 Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
-%description -n libkf5gapicalendar
+%description -n %libkpimgapicalendar
 KF5 library
 
-%package -n libkf5gapiblogger
+%package -n %libkpimgapiblogger
 Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
-%description -n libkf5gapiblogger
+%description -n %libkpimgapiblogger
 KF5 library
 
-%package -n libkf5gapimaps
+%package -n %libkpimgapimaps
 Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
-%description -n libkf5gapimaps
+%description -n %libkpimgapimaps
 KF5 library
 
-%package -n libkf5gapicontacts
+%package -n %libkpimgapicontacts
 Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
-%description -n libkf5gapicontacts
+%description -n %libkpimgapicontacts
 KF5 library
 
-%package -n libkf5gapitasks
+%package -n %libkpimgapitasks
 Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
-%description -n libkf5gapitasks
+%description -n %libkpimgapitasks
 KF5 library
 
 
@@ -100,42 +110,56 @@ KF5 library
 %setup -n %rname-%version
 
 %build
-%K5build
+%K5build \
+    -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
+    #
 
 %install
 %K5install
-#%find_lang %name --all-name
+%find_lang %name --all-name
 
-#files common -f %name.lang
-%files common
+%files common -f %name.lang
 %doc LICENSE*
-%config(noreplace) %_K5xdgconf/*.categories
+%config(noreplace) %_K5xdgconf/*.*categories
 
 %files devel
-%_K5inc/kgapi_version.h
-%_K5inc/KGAPI/
+%_K5inc/KPim/kgapi_version.h
+%_K5inc/KPim/KGAPI/
 %_K5link/lib*.so
+%_K5lib/cmake/KPimGAPI/
 %_K5lib/cmake/KF5GAPI/
 %_K5archdata/mkspecs/modules/qt_KGAPI*.pri
 
-%files -n libkf5gapidrive
-%_K5lib/libKF5GAPIDrive.so.*
-%files -n libkf5gapilatitude
-%_K5lib/libKF5GAPILatitude.so.*
-%files -n libkf5gapicore
-%_K5lib/libKF5GAPICore.so.*
-%files -n libkf5gapicalendar
-%_K5lib/libKF5GAPICalendar.so.*
-%files -n libkf5gapiblogger
-%_K5lib/libKF5GAPIBlogger.so.*
-%files -n libkf5gapimaps
-%_K5lib/libKF5GAPIMaps.so.*
-%files -n libkf5gapicontacts
-%_K5lib/libKF5GAPIContacts.so.*
-%files -n libkf5gapitasks
-%_K5lib/libKF5GAPITasks.so.*
+%files -n %libkpimgapidrive
+%_K5lib/libKPimGAPIDrive.so.*
+%files -n %libkpimgapilatitude
+%_K5lib/libKPimGAPILatitude.so.*
+%files -n %libkpimgapicore
+%_K5lib/libKPimGAPICore.so.*
+%files -n %libkpimgapicalendar
+%_K5lib/libKPimGAPICalendar.so.*
+%files -n %libkpimgapiblogger
+%_K5lib/libKPimGAPIBlogger.so.*
+%files -n %libkpimgapimaps
+%_K5lib/libKPimGAPIMaps.so.*
+%files -n %libkpimgapicontacts
+%_K5lib/libKPimGAPIContacts.so.*
+%files -n %libkpimgapitasks
+%_K5lib/libKPimGAPITasks.so.*
 
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
+* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
+* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.03.90-alt1%ubt
+- new version
+
 * Thu Mar 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt2%ubt
 - rebuild with new kcontacts
 

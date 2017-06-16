@@ -1,7 +1,7 @@
 %define rname akonadi-contacts
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: boost-devel extra-cmake-modules qt5-base-devel qt5-webengine-devel
 BuildRequires: grantlee5-devel
 BuildRequires: kde5-akonadi-devel kde5-akonadi-mime-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-kmime-devel
-BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel
+BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel kf5-prison-devel
 
 %description
 Libraries and daemons to implement Contact Management in Akonadi.
@@ -82,6 +82,15 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
+* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Wed Mar 15 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 

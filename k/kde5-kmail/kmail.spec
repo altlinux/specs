@@ -4,7 +4,7 @@
 %define libkmailprivate libkmailprivate%pim_sover
 
 Name: kde5-%rname
-Version: 16.12.3
+Version: 17.04.2
 Release: alt1%ubt
 %K5init
 
@@ -31,7 +31,7 @@ BuildRequires: kde5-kmailtransport-devel kde5-kmime-devel kde5-kontactinterface-
 BuildRequires: kde5-libgravatar-devel kde5-libkdepim-devel kde5-libksieve-devel kde5-mailcommon-devel kde5-messagelib-devel
 BuildRequires: kde5-pim-apps-libs-devel kde5-pimcommon-devel
 BuildRequires: kf5-kcmutils-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel
-BuildRequires: kf5-knotifyconfig-devel kf5-kwallet-devel
+BuildRequires: kf5-knotifyconfig-devel kf5-kwallet-devel kf5-syntax-highlighting-devel
 
 %description
 EMail client
@@ -75,6 +75,7 @@ Requires: %name-common = %version-%release
 %doc COPYING*
 %config(noreplace) %_K5xdgconf/*.*categories
 %_K5icon/*/*/actions/*.*
+%_K5icon/*/*/emblems/*.*
 %_K5cfg/*.kcfg
 %_K5srvtyp/*.desktop
 
@@ -125,6 +126,15 @@ Requires: %name-common = %version-%release
 %_K5lib/libkmailprivate.so.*
 
 %changelog
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+- new version
+
+* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+- new version
+
+* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+- new version
+
 * Thu Mar 16 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
 - new version
 
