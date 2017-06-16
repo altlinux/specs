@@ -1,5 +1,5 @@
 Name: rust
-Version: 1.16.0
+Version: 1.17.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -21,6 +21,8 @@ Source4: hoedown.tar
 Source5: rust-installer.tar
 # Cloned from https://github.com/rust-lang-nursery/libc
 Source6: liblibc.tar
+# Crates to build rust
+Source7: crates.tar
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
@@ -30,22 +32,14 @@ BuildRequires: curl gcc-c++ python-devel rust cmake
 # Since 1.12.0: striping debuginfo damages *.so files
 %add_debuginfo_skiplist %_libdir %_bindir
 
-%def_disable bootstrap
-
-%if_enabled bootstrap
-
-Patch: rust-1.11.0-bootstrap.py.patch
+%ifarch %ix86
+%define cargo build/cargo-nightly-i686-unknown-linux-gnu/cargo/bin/cargo
+Source9: https://s3.amazonaws.com/rust-lang-ci/cargo-builds/6b05583d71f982bcad049b9fa094c637c062e751/cargo-nightly-i686-unknown-linux-gnu.tar.gz
+%endif
 
 %ifarch x86_64
-Source7: https://static.rust-lang.org/dist/2016-08-16/rustc-1.11.0-x86_64-unknown-linux-gnu.tar.gz
-Source8: https://static.rust-lang.org/dist/2016-08-16/rustc-1.11.0-x86_64-unknown-linux-gnu.tar.gz.sha256
-%endif
-
-%ifarch %ix86
-Source7: https://static.rust-lang.org/dist/2016-08-16/rustc-1.11.0-i686-unknown-linux-gnu.tar.gz
-Source8: https://static.rust-lang.org/dist/2016-08-16/rustc-1.11.0-i686-unknown-linux-gnu.tar.gz.sha256
-%endif
-
+%define cargo %_bindir/cargo
+BuildRequires: rust-cargo
 %endif
 
 %description
@@ -61,42 +55,67 @@ Requires: %name = %version-%release
 %summary
 
 %prep
-%setup -a1 -a2 -a3 -a4 -a5 -a6
+%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7
 mv llvm jemalloc compiler-rt rust-installer liblibc src
 mv hoedown src/rt
 
-%if_enabled bootstrap
-%patch -p1
+rm -rf %_tmpdir/cargo
+mkdir %_tmpdir/cargo
+mv crates %_tmpdir/cargo/crates
 
-mkdir dl
-cp %SOURCE7 %SOURCE8 dl
+cat <<EOF > %_tmpdir/cargo/config
+[source.offline]
+local-registry = "%_tmpdir/cargo/crates"
+
+[source.crates-io]
+replace-with = "offline"
+EOF
+
+%ifarch %ix86
+mkdir -p build
+pushd build
+    tar xf %SOURCE9
+popd
+%endif
+
+%ifarch x86_64
+# Old cargo hack
+sed -i '/build = false/d' src/librustc_plugin/Cargo.toml
+
+# Hack around libdir bug
+sed -i '/let _ = fs::remove_dir_all(&sysroot);/d' src/bootstrap/compile.rs
+mkdir -p build/x86_64-unknown-linux-gnu/stage0-sysroot
+pushd build/x86_64-unknown-linux-gnu/stage0-sysroot
+    ln -s lib lib64
+popd
 %endif
 
 %build
-./configure --disable-manage-submodules \
-    --disable-rustbuild \
-%if_disabled bootstrap
-    --enable-local-rust \
-    --local-rust-root=%prefix \
-%endif
-    --release-channel=stable \
-    --disable-docs \
-    --enable-dist-host-only \
-    --prefix=%prefix \
-    --libdir=%_libdir
+export CARGO_HOME=%_tmpdir/cargo
+export SSL_CERT_FILE=/usr/share/ca-certificates/ca-bundle.crt
 
-%ifarch x86_64
-%make_build RUSTFLAGS_STAGE0="-L x86_64-unknown-linux-gnu/stage0/lib/rustlib/x86_64-unknown-linux-gnu/lib"
-%endif
+cat <<EOF > config.toml
+[build]
+cargo = "%cargo"
+rustc = "%_bindir/rustc"
+submodules = false
+docs = false
+verbose = 0
+[install]
+prefix = "%prefix"
+libdir = "%_lib"
+[rust]
+channel = "stable"
+EOF
 
-%ifarch %ix86
-%make_build RUSTFLAGS_STAGE0="-L i686-unknown-linux-gnu/stage0/lib/rustlib/i686-unknown-linux-gnu/lib"
-%endif
+./x.py build
 
 %install
-%makeinstall_std
+export CARGO_HOME=%_tmpdir/cargo
+DESTDIR=%buildroot ./x.py dist --install
 
 %files
+%exclude %_datadir/doc/rust
 %doc COPYRIGHT LICENSE-APACHE LICENSE-MIT README.md
 %_bindir/rustc
 %_bindir/rustdoc
@@ -114,9 +133,15 @@ cp %SOURCE7 %SOURCE8 dl
 
 %files gdb
 %_bindir/rust-gdb
+%exclude %_bindir/rust-lldb
 %_libdir/rustlib/etc/*
+%exclude %_libdir/rustlib/etc/lldb_*
 
 %changelog
+* Fri Jun 16 2017 Vladimir Lettiev <crux@altlinux.org> 1.17.0-alt1
+- 1.17.0
+- switched to cargo-based build
+
 * Fri Jun 16 2017 Vladimir Lettiev <crux@altlinux.org> 1.16.0-alt1
 - 1.16.0
 
