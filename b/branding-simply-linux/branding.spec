@@ -8,7 +8,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 7.98.0
+Version: 7.98.1
 Release: alt1
 BuildArch: noarch
 
@@ -161,7 +161,7 @@ Distribution license and release notes
 %package xfce-settings
 
 Summary: default settings for Xfce for Simply linux distribution
-License: Distributable
+License: GPLv2+
 Group: Graphical desktop/XFce
 Requires: PolicyKit-gnome
 Requires: etcskel
@@ -169,17 +169,31 @@ Requires: gtk3-theme-clearlooks-phenix
 Requires: gnome-themes-standard
 Requires: gnome-icon-theme icon-theme-simple-sl >= 2.7-alt3
 Requires: branding-simply-linux-graphics
+Requires: branding-simply-linux-backgrounds8
 Obsoletes: xfce-settings-lite xfce-settings-school-lite
 %branding_add_conflicts simply-linux xfce-settings
 Conflicts: xfce-settings-simply-linux
 
+# NOTE: Drop this requires when SL-9 will be released:
+# at that point these packages will be installed already.
+Requires: branding-simply-linux-backgrounds-legacy branding-simply-linux-backgrounds-vladstudio
+
 %description xfce-settings
 This package contains default settings for Xfce for Simply linux distribution.
+
+%package backgrounds8
+Group: Graphics
+Summary: Backgrounds for SL-8
+License: CC-BY-NC-SA-3.0+
+%branding_add_conflicts simply-linux backgrounds8
+
+%description backgrounds8
+This package contains backgrounds for Simply Linux 8.
 
 %package slideshow
 Summary: Slideshow for Simply Linux %version installer.
 Summary(ru_RU.UTF-8): Изображения для организации "слайдшоу" в установщике дистрибутива "Просто Линукс"
-License: Distributable
+License: CC-BY-NC-SA-3.0+
 Group: System/Configuration/Other 
 %branding_add_conflicts simply-linux slideshow
 
@@ -308,22 +322,18 @@ mkdir -p %buildroot%_datadir/themes/SimplyLinux/balou/
 install -m644 xfce-settings/balou/themerc %buildroot%_datadir/themes/SimplyLinux/balou/
 install -m644 images/wallpaper.png %buildroot%_datadir/themes/SimplyLinux/balou/logo.png
 
-mkdir -p %buildroot/usr/share/backgrounds/xfce/vladstudio.com/1600x1200
-mkdir -p %buildroot/usr/share/backgrounds/xfce/vladstudio.com/1680x1050
-cp -P xfce-settings/backgrounds/*.jpg %buildroot/usr/share/backgrounds/xfce
-install -m 644 xfce-settings/backgrounds/vladstudio.com/LICENSE.txt %buildroot/usr/share/backgrounds/xfce/vladstudio.com/
-install -m 644 xfce-settings/backgrounds/vladstudio.com/1600x1200/* %buildroot/usr/share/backgrounds/xfce/vladstudio.com/1600x1200/
-install -m 644 xfce-settings/backgrounds/vladstudio.com/1680x1050/* %buildroot/usr/share/backgrounds/xfce/vladstudio.com/1680x1050/
-install -m 644 xfce-settings/backgrounds/slinux*.{jpg,png} %buildroot/usr/share/backgrounds/xfce/
+# backgrounds
+mkdir -p %buildroot%_datadir/backgrounds/xfce/
+install -m 644 xfce-settings/backgrounds/slinux*.jpg %buildroot%_datadir/backgrounds/xfce/
 
 install -pDm0755 xfce-settings/scripts/zdg-move-templates.sh %buildroot%_sysconfdir/X11/profile.d/zdg-move-templates.sh
 
 #slideshow
 mkdir -p %buildroot/usr/share/install2/slideshow
 mkdir -p %buildroot/etc/alterator
-cp -a slideshow/slides-*  %buildroot/usr/share/install2/slideshow/
+cp -a slideshow/slides*/  %buildroot/usr/share/install2/slideshow/
 # Set English slideshow as default
-ln -s slides-en %buildroot/usr/share/install2/slideshow/slides
+#ln -s slides-en %buildroot/usr/share/install2/slideshow/slides
 install slideshow/slideshow.conf %buildroot/etc/alterator/
 
 #indexhtml
@@ -432,8 +442,10 @@ fi
 /etc/skel/.local
 /etc/skel/.vimrc
 /etc/skel/.gtkrc-2.0
-/usr/share/backgrounds/xfce/*
 %_datadir/themes/SimplyLinux/
+
+%files backgrounds8
+/usr/share/backgrounds/xfce/*
 
 %files slideshow
 /etc/alterator/slideshow.conf
@@ -457,6 +469,25 @@ fi
 %config %_sysconfdir/polkit-1/rules.d/*.rules
 
 %changelog
+* Mon Jun 19 2017 Mikhail Efremov <sem@altlinux.org> 7.98.1-alt1
+- slideshow: Change License to CC-BY-NC-SA-3.0+.
+- xfce-settings: Require backgrounds8 subpackage.
+- Drop legacy backgrounds.
+- menu: Add ppracer.desktop.
+- menu: Add freeciv-*.desktop files.
+- menu: Add Russian Comment.
+- menu: Add Russian comment for Ri-li.
+- menu: Add openttd.desktop.
+- menu: Fix fusion-icon.desktop.
+- menu: Add blender-win.desktop.
+- menu: Drop synfigstudio.desktop.
+- New slideshow.
+- xfce-settings: Use 1920x1080 backgrounds as default.
+- xfce4-settings: Change style for background.
+- steps: Add luks step icon.
+- xfce-settings: Set slinux_june_2017 background as default.
+- xfce-settings: Add slinux_june_2017* backgrounds.
+
 * Thu May 18 2017 Mikhail Efremov <sem@altlinux.org> 7.98.0-alt1
 - menu: Add gnome-chess.desktop.
 - menu: Add Russian comment to dropbox.desktop.
