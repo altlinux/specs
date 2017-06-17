@@ -1,5 +1,5 @@
 Name: rust
-Version: 1.15.1
+Version: 1.16.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -117,6 +117,9 @@ cp %SOURCE7 %SOURCE8 dl
 %_libdir/rustlib/etc/*
 
 %changelog
+* Fri Jun 16 2017 Vladimir Lettiev <crux@altlinux.org> 1.16.0-alt1
+- 1.16.0
+
 * Thu Jun 15 2017 Vladimir Lettiev <crux@altlinux.org> 1.15.1-alt1
 - 1.15.1
 
