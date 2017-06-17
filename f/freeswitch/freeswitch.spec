@@ -1,6 +1,6 @@
 Name: freeswitch
 Version: 1.6.17
-Release: alt2%ubt
+Release: alt3%ubt
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -141,6 +141,10 @@ Group: Development/Other
 Summary: VLC support for the FreeSWITCH open source telephony platform
 Group: System/Servers
 
+%package av
+Summary: FFMpeg support for the FreeSWITCH open source telephony platform
+Group: System/Servers
+
 %package webui
 Summary: Web-based UI for FreeSWITCH
 Group: System/Servers
@@ -189,6 +193,9 @@ JavaScript support for the FreeSWITCH open source telephony platform
 
 %description vlc
 VLC support for the FreeSWITCH open source telephony platform
+
+%description av
+FFMpeg support for the FreeSWITCH open source telephony platform
 
 %description lang-de
 German language phrases module and directory structure for
@@ -261,7 +268,6 @@ export ASFLAGS='-Ox'
     --disable-static \
     #
 make
-make -C src/mod/formats/mod_vlc
 
 pushd libs/freetdm
 %configure --with-modinstdir=%_libdir/freeswitch --with-libpri --with-libisdn --with-pic
@@ -275,7 +281,6 @@ PERL_ARCHLIB=%perl_vendorarch %make_install sysconfdir=%_sysconfdir/freeswitch D
 (cd conf && find dialplan directory -type f | cpio -pmd %buildroot%_sysconfdir/%name)
 install -pm0644 src/mod/endpoints/mod_gsmopen/configs/gsmopen.conf.xml \
 	%buildroot%_sysconfdir/%name/autoload_configs/
-%make_install -C src/mod/formats/mod_vlc sysconfdir=%_sysconfdir/freeswitch DESTDIR=%buildroot install
 pushd libs/freetdm
 %make_install sysconfdir=%_sysconfdir/freeswitch DESTDIR=%buildroot install
 popd
@@ -533,6 +538,9 @@ fi
 %files vlc
 %_libdir/%name/mod_vlc.so*
 
+%files av
+%_libdir/%name/mod_av.so
+
 %files lang-de
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/de
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/de/demo
@@ -614,6 +622,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Sat Jun 17 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.17-alt3%ubt
+- build mod_av.so as freeswitch-av subpackage
+
 * Thu Jun 15 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.17-alt2%ubt
 - enable mod_rtc build and cleanup modules.conf
 
