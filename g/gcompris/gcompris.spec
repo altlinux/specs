@@ -1,7 +1,7 @@
 
 Name:    gcompris
 Version: 15.10
-Release: alt3
+Release: alt4
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
 
@@ -599,6 +599,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gcompris/boards/voices/sk
 
 %changelog
+* Sat Jun 17 2017 Anton Farygin <rider@altlinux.ru> 15.10-alt4
+- rebuild with ffmpeg-3.3.2
+
 * Thu Apr 13 2017 Andrey Cherepanov <cas@altlinux.org> 15.10-alt3
 - Use gst-plugins-base1.0 from gstreamer1.0
 
