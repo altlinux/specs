@@ -1,6 +1,6 @@
 Name: grub2
 Version: 2.02
-Release: alt1
+Release: alt1%ubt
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -41,6 +41,7 @@ BuildRequires: libdevmapper-devel
 BuildRequires: texinfo
 BuildRequires: pesign >= 0.109-alt4
 BuildRequires: rpm-macros-uefi
+BuildRequires(pre): rpm-build-ubt
 
 # fonts: choose one
 
@@ -318,6 +319,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Sat Jun 17 2017 Anton Farygin <rider@altlinux.ru> 2.02-alt1%ubt
+- add %%ubt for backporting process
+
 * Mon Jun 05 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.02-alt1
 - 2.02 released
 
