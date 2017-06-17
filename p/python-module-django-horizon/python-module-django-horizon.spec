@@ -1,9 +1,9 @@
 %add_findreq_skiplist %_datadir/openstack-dashboard/openstack_dashboard/management/commands/horizon.wsgi.template
-
+%define oname horizon
 %def_with compression
 
-Name: python-module-django-horizon
-Version: 10.0.3
+Name: python-module-django-%oname
+Version: 11.0.2
 Release: alt1
 Epoch: 1
 Summary: Django application for talking to Openstack
@@ -11,8 +11,8 @@ Summary: Django application for talking to Openstack
 Group: System/Servers
 # Code in horizon/horizon/utils taken from django which is BSD
 License: ASL 2.0 and BSD
-Url: http://horizon.openstack.org/
-Source0: %name-%version.tar
+Url: http://docs.openstack.org/developer/%oname
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 Source1: openstack-dashboard-httpd-2.2.conf
 Source11: openstack-dashboard-httpd-2.2-ssl.conf
 
@@ -39,7 +39,7 @@ BuildRequires: python-module-django-tests
 BuildRequires: python-module-greenlet
 BuildRequires: python-module-pint >= 0.5
 BuildRequires: python-module-django-dbbackend-sqlite3
-BuildRequires: python-module-django-openstack-auth >= 2.4.0
+BuildRequires: python-module-django-openstack-auth >= 3.1.0
 BuildRequires: python-module-django-compressor >= 2.0
 BuildRequires: python-module-django-appconf
 BuildRequires: python-module-django-pyscss >= 2.0.2
@@ -47,8 +47,8 @@ BuildRequires: python-module-django-pyscss >= 2.0.2
 BuildRequires: python-module-babel >= 2.3.4
 BuildRequires: gettext-tools
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-django-nose
 BuildRequires: python-module-coverage
@@ -66,49 +66,50 @@ BuildRequires: python-module-netaddr >= 0.7.13
 BuildRequires: python-module-oslo.concurrency >= 3.8.0
 BuildRequires: python-module-oslo.config >= 3.14.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.policy >= 1.9.0
+BuildRequires: python-module-oslo.policy >= 1.17.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.16.0
+BuildRequires: python-module-oslo.utils >= 3.18.0
+BuildRequires: python-module-osprofiler >= 1.4.0
+BuildRequires: python-module-pymongo >= 3.0.2
 BuildRequires: python-module-pyScss >= 1.3.4
 BuildRequires: python-module-anyjson
-BuildRequires: python-module-ceilometerclient >= 2.5.0
 BuildRequires: python-module-cinderclient >= 1.6.0
-BuildRequires: python-module-glanceclient >= 2.3.0
-BuildRequires: python-module-heatclient >= 1.4.0
-BuildRequires: python-module-keystoneclient >= 2.0.0
+BuildRequires: python-module-glanceclient >= 2.5.0
+BuildRequires: python-module-heatclient >= 1.6.1
+BuildRequires: python-module-keystoneclient >= 3.8.0
 BuildRequires: python-module-neutronclient >= 5.1.0
-BuildRequires: python-module-novaclient >= 2.29.0
-BuildRequires: python-module-swiftclient >= 2.2.0
+BuildRequires: python-module-novaclient >= 6.0.0
+BuildRequires: python-module-swiftclient >= 3.2.0
 BuildRequires: python-module-pytz
-BuildRequires: python-module-yaml >= 3.1.0
+BuildRequires: python-module-yaml >= 3.10.0
 
 BuildRequires: python-module-xstatic >= 1.0.0
-BuildRequires: python-module-xstatic-angular >= 1.3.7
-BuildRequires: python-module-xstatic-angular-bootstrap >= 0.11.0.2
+BuildRequires: python-module-xstatic-angular >= 1.5.8.0
+BuildRequires: python-module-xstatic-angular-bootstrap >= 2.2.0.0
 BuildRequires: python-module-xstatic-angular-fileupload >= 12.0.4.0
-BuildRequires: python-module-xstatic-angular-gettext >= 2.1.0.2
+BuildRequires: python-module-xstatic-angular-gettext >= 2.3.8.0
 BuildRequires: python-module-xstatic-angular-lrdragndrop >= 1.0.2.2
 BuildRequires: python-module-xstatic-angular-schema-form >= 0.8.13.0
 BuildRequires: python-module-xstatic-bootstrap-datepicker >= 1.3.1.0
-BuildRequires: python-module-xstatic-bootstrap-scss >= 3
-BuildRequires: python-module-xstatic-bootswatch >= 3.3.5.3
-BuildRequires: python-module-xstatic-d3 >= 3.1.6.2
+BuildRequires: python-module-xstatic-bootstrap-scss >= 3.3.7.1
+BuildRequires: python-module-xstatic-bootswatch >= 3.3.7.0
+BuildRequires: python-module-xstatic-d3 >= 3.5.17.0
 BuildRequires: python-module-xstatic-hogan >= 2.0.0.2
-BuildRequires: python-module-xstatic-font-awesome >= 4.3.0
-BuildRequires: python-module-xstatic-jasmine >= 2.1.2.0
-BuildRequires: python-module-xstatic-jquery >= 1.7.2
+BuildRequires: python-module-xstatic-font-awesome >= 4.7.0
+BuildRequires: python-module-xstatic-jasmine >= 2.4.1.1
+BuildRequires: python-module-xstatic-jquery >= 1.8.2.1
 BuildRequires: python-module-xstatic-jquery-migrate >= 1.2.1.1
 BuildRequires: python-module-xstatic-jquery.quicksearch >= 2.0.3.1
 BuildRequires: python-module-xstatic-jquery.tablesorter >= 2.14.5.1
-BuildRequires: python-module-xstatic-jquery-ui >= 1.10.1
-BuildRequires: python-module-xstatic-jsencrypt >= 2.0.0.2
+BuildRequires: python-module-xstatic-jquery-ui >= 1.10.4.1
+BuildRequires: python-module-xstatic-jsencrypt >= 2.3.1.1
 BuildRequires: python-module-xstatic-mdi >= 1.4.57.0
 BuildRequires: python-module-xstatic-objectpath >= 1.2.1.0
-BuildRequires: python-module-xstatic-rickshaw >= 1.5.0
-BuildRequires: python-module-xstatic-roboto-fontface >= 0.4.3.2
-BuildRequires: python-module-xstatic-smart-table >= 1.4.5.3
+BuildRequires: python-module-xstatic-rickshaw >= 1.5.0.0
+BuildRequires: python-module-xstatic-roboto-fontface >= 0.5.0.0
+BuildRequires: python-module-xstatic-smart-table >= 1.4.13.2
 BuildRequires: python-module-xstatic-spin >= 1.2.5.2
-BuildRequires: python-module-xstatic-term.js >= 0.0.4
+BuildRequires: python-module-xstatic-term.js >= 0.0.7.0
 BuildRequires: python-module-xstatic-tv4 >= 1.2.7.0
 
 %description
@@ -117,6 +118,14 @@ It allows performing site administrator (viewing account resource usage,
 configuring users, accounts, quotas, flavors, etc.) and end user
 operations (start/stop/delete instances, create/restore snapshots, view
 instance VNC console, etc.)
+
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+This package contains tests for %oname.
 
 %package -n openstack-dashboard
 Summary: Openstack web user interface reference implementation
@@ -131,7 +140,7 @@ Obsoletes: openstack-dashboard-theme < %EVR
 Requires: apache2-base
 Requires: apache2-mod_wsgi
 Requires: python-module-django-horizon = %EVR
-Requires: python-module-django-openstack-auth >= 2.4.0
+Requires: python-module-django-openstack-auth >= 3.1.0
 Requires: python-module-django-compressor >= 2.0
 Requires: python-module-django-appconf
 Requires: python-module-django-pyscss >= 2.0.2
@@ -141,49 +150,50 @@ Requires: python-module-netaddr >= 0.7.13
 Requires: python-module-oslo.concurrency >= 3.8.0
 Requires: python-module-oslo.config >= 3.14.0
 Requires: python-module-oslo.i18n >= 2.1.0
-Requires: python-module-oslo.policy >= 1.9.0
+Requires: python-module-oslo.policy >= 1.17.0
 Requires: python-module-oslo.serialization >= 1.10.0
-Requires: python-module-oslo.utils >= 3.16.0
+Requires: python-module-oslo.utils >= 3.18.0
+Requires: python-module-osprofiler >= 1.4.0
+Requires: python-module-pymongo >= 3.0.2
 Requires: python-module-pyScss >= 1.3.4
 Requires: python-module-anyjson
-Requires: python-module-ceilometerclient >= 2.5.0
 Requires: python-module-cinderclient >= 1.6.0
-Requires: python-module-glanceclient >= 2.3.0
-Requires: python-module-heatclient >= 1.4.0
-Requires: python-module-keystoneclient >= 2.0.0
+Requires: python-module-glanceclient >= 2.5.0
+Requires: python-module-heatclient >= 1.6.1
+Requires: python-module-keystoneclient >= 3.8.0
 Requires: python-module-neutronclient >= 2.6.0
-Requires: python-module-novaclient >= 2.29.0
-Requires: python-module-swiftclient >= 2.2.0
+Requires: python-module-novaclient >= 6.0.0
+Requires: python-module-swiftclient >= 3.2.0
 Requires: python-module-pytz
-Requires: python-module-yaml >= 3.1.0
+Requires: python-module-yaml >= 3.10.0
 
 Requires: python-module-xstatic >= 1.0.0
-Requires: python-module-xstatic-angular >= 1.3.7
-Requires: python-module-xstatic-angular-bootstrap >= 0.11.0.2
+Requires: python-module-xstatic-angular >= 1.5.8.0
+Requires: python-module-xstatic-angular-bootstrap >= 2.2.0.0
 Requires: python-module-xstatic-angular-fileupload >= 12.0.4.0
-Requires: python-module-xstatic-angular-gettext >= 2.1.0.2
+Requires: python-module-xstatic-angular-gettext >= 2.3.8.0
 Requires: python-module-xstatic-angular-lrdragndrop >= 1.0.2.2
 Requires: python-module-xstatic-angular-schema-form >= 0.8.13.0
 Requires: python-module-xstatic-bootstrap-datepicker >= 1.3.1.0
-Requires: python-module-xstatic-bootstrap-scss >= 3
-Requires: python-module-xstatic-bootswatch >= 3.3.5.3
-Requires: python-module-xstatic-d3 >= 3.1.6.2
+Requires: python-module-xstatic-bootstrap-scss >= 3.3.7.1
+Requires: python-module-xstatic-bootswatch >= 3.3.7.0
+Requires: python-module-xstatic-d3 >= 3.5.17.0
 Requires: python-module-xstatic-hogan >= 2.0.0.2
-Requires: python-module-xstatic-font-awesome >= 4.3.0
-Requires: python-module-xstatic-jasmine >= 2.1.2.0
-Requires: python-module-xstatic-jquery >= 1.7.2
+Requires: python-module-xstatic-font-awesome >= 4.7.0
+Requires: python-module-xstatic-jasmine >= 2.4.1.1
+Requires: python-module-xstatic-jquery >= 1.8.2.1
 Requires: python-module-xstatic-jquery-migrate >= 1.2.1.1
 Requires: python-module-xstatic-jquery.quicksearch >= 2.0.3.1
 Requires: python-module-xstatic-jquery.tablesorter >= 2.14.5.1
-Requires: python-module-xstatic-jquery-ui >= 1.10.1
-Requires: python-module-xstatic-jsencrypt >= 2.0.0.2
+Requires: python-module-xstatic-jquery-ui >= 1.10.4.1
+Requires: python-module-xstatic-jsencrypt >= 2.3.1.1
 Requires: python-module-xstatic-mdi >= 1.4.57.0
 Requires: python-module-xstatic-objectpath >= 1.2.1.0
-Requires: python-module-xstatic-rickshaw >= 1.5.0
-Requires: python-module-xstatic-roboto-fontface >= 0.4.3.2
-Requires: python-module-xstatic-smart-table >= 1.4.5.3
+Requires: python-module-xstatic-rickshaw >= 1.5.0.0
+Requires: python-module-xstatic-roboto-fontface >= 0.5.0.0
+Requires: python-module-xstatic-smart-table >= 1.4.13.2
 Requires: python-module-xstatic-spin >= 1.2.5.2
-Requires: python-module-xstatic-term.js >= 0.0.4
+Requires: python-module-xstatic-term.js >= 0.0.7.0
 Requires: python-module-xstatic-tv4 >= 1.2.7.0
 
 Requires: python-module-django-tests
@@ -206,7 +216,7 @@ Group: Development/Documentation
 Documentation for the Django Horizon application for talking with Openstack
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # remove precompiled egg-info
 rm -rf horizon.egg-info
@@ -334,6 +344,12 @@ sed -i "/^SECRET_KEY.*$/{N;s/^.*$/SECRET_KEY='`openssl rand -hex 10`'/}" /etc/op
 %exclude %python_sitelibdir/horizon/test/tests
 %exclude %python_sitelibdir/horizon/test/test_dashboards
 
+%files tests
+%python_sitelibdir/horizon/test/tests
+%python_sitelibdir/horizon/test/test_dashboards
+%_datadir/openstack-dashboard/openstack_dashboard/karma.conf.js
+%_datadir/openstack-dashboard/openstack_dashboard/test/tests
+
 %files -n openstack-dashboard
 %doc LICENSE README.rst openstack-dashboard-httpd-logging.conf
 %_datadir/openstack-dashboard
@@ -352,6 +368,10 @@ sed -i "/^SECRET_KEY.*$/{N;s/^.*$/SECRET_KEY='`openssl rand -hex 10`'/}" /etc/op
 %doc html
 
 %changelog
+* Thu Jun 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1:11.0.2-alt1
+- 11.0.2
+- add tests package
+
 * Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.3-alt1
 - 10.0.3
 

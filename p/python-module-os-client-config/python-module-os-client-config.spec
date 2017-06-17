@@ -1,52 +1,52 @@
-%define pypi_name os-client-config
+%define oname os-client-config
 
 %def_with python3
 
-Name: python-module-%pypi_name
-Version: 1.21.1
+Name: python-module-%oname
+Version: 1.26.0
 Release: alt1
 Summary: OpenStack Client Configuration Library
 Group: Development/Python
 License: ASL 2.0
-Url: https://github.com/openstack/%pypi_name
-Source: %name-%version.tar
+Url: http://docs.openstack.org/developer/%oname
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
 BuildArch: noarch
 
 Provides: os-client-config
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools python-module-setuptools-tests
+BuildRequires: python-module-setuptools-tests
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-reno >= 0.1.1
 
 BuildRequires: python-module-pbr
 BuildRequires: python-module-fixtures
-BuildRequires: python-module-appdirs >= 1.3.0
 BuildRequires: python-module-oslotest
 BuildRequires: python-module-testtools python-module-testscenarios python-module-testrepository
+BuildRequires: python-module-subunit python-module-subunit-tests
+BuildRequires: python-module-extras
+BuildRequires: python-module-jsonschema
+BuildRequires: python-module-glanceclient
 
 BuildRequires: python-module-yaml >= 3.1.0
+BuildRequires: python-module-appdirs >= 1.3.0
 BuildRequires: python-module-keystoneauth1 >= 2.1.0
 BuildRequires: python-module-requestsexceptions >= 1.1.1
-
-
-#Requires: python-module-setuptools
-#Requires: python-module-fixtures
-#Requires: python-module-appdirs
-# TODO soft-deps
-#Requires:       python-module-keystoneauth1
-#Requires:       python-module-keystoneclient >= 1.6.0
-#Requires: python-module-yaml
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools-tests
 BuildRequires: python3-module-pbr
-BuildRequires: python3-module-yaml
+BuildRequires: python3-module-yaml >= 3.1.0
+BuildRequires: python3-module-appdirs >= 1.3.0
+BuildRequires: python3-module-keystoneauth1 >= 2.1.0
+BuildRequires: python3-module-requestsexceptions >= 1.1.1
 BuildRequires: python3-module-testtools python3-module-testscenarios python3-module-testrepository
+BuildRequires: python3-module-subunit python3-module-subunit-tests
+BuildRequires: python3-module-extras
 %endif
 
 
@@ -62,6 +62,15 @@ have to know extra info to use OpenStack
 * If you have environment variables, you will get a cloud named `envvars`
 * If you have neither, you will get a cloud named `defaults` with base defaults
 
+
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+This package contains tests for %oname.
+
 %package doc
 Summary: Documentation for OpenStack os-client-config library
 Group: Development/Documentation
@@ -69,12 +78,11 @@ Group: Development/Documentation
 %description doc
 Documentation for the os-client-config library.
 
-%if_with python3
-%package -n python3-module-%pypi_name
+%package -n python3-module-%oname
 Summary: OpenStack Client Configuation Library
 Group: Development/Python3
 
-%description -n python3-module-%pypi_name
+%description -n python3-module-%oname
 The os-client-config is a library for collecting client configuration for
 using an OpenStack cloud in a consistent and comprehensive manner. It
 will find cloud config for as few as 1 cloud and as many as you want to
@@ -86,10 +94,17 @@ have to know extra info to use OpenStack
 * If you have environment variables, you will get a cloud named `envvars`
 * If you have neither, you will get a cloud named `defaults` with base defaults
 
-%endif
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+This package contains tests for %oname.
+
 
 %prep
-%setup
+%setup -n %oname-%version
 # Let RPM handle the dependencies
 rm -f test-requirements.txt requirements.txt
 
@@ -124,12 +139,6 @@ pushd ../python3
 popd
 %endif
 
-# Delete tests
-rm -fr %buildroot%python_sitelibdir/tests
-rm -fr %buildroot%python_sitelibdir/*/tests
-rm -fr %buildroot%python3_sitelibdir/tests
-rm -fr %buildroot%python3_sitelibdir/*/tests
-
 %check
 python setup.py test
 
@@ -142,17 +151,29 @@ popd
 %files
 %doc ChangeLog CONTRIBUTING.rst PKG-INFO README.rst
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
 
 #%files doc
 #%doc doc/build/html
 
 %if_with python3
-%files -n python3-module-%pypi_name
+%files -n python3-module-%oname
 %doc ChangeLog CONTRIBUTING.rst PKG-INFO README.rst
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Tue May 30 2017 Alexey Shabalin <shaba@altlinux.ru> 1.26.0-alt1
+- 1.26.0
+- add test packages
+
 * Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1.21.1-alt1
 - 1.21.1
 

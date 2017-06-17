@@ -1,17 +1,17 @@
-%define service ceilometer
+%define oname ceilometer
 %def_without doc
 
-Name: openstack-ceilometer
-Version: 7.0.0
-Release: alt2
+Name: openstack-%oname
+Version: 8.0.1
+Release: alt1
 Epoch: 1
 Summary: OpenStack measurement collection service
 
 Group: System/Servers
 License: ASL 2.0
-Url: http://docs.openstack.org/developer/ceilometer/
-Source: %name-%version.tar
-Source2: %service.logrotate
+Url: http://docs.openstack.org/developer/%oname
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Source2: ceilometer.logrotate
 Source4: ceilometer-rootwrap-sudoers
 Source5: openstack-ceilometer-polkit.rules
 Source6: ceilometer.conf
@@ -33,12 +33,6 @@ Source116: %name-notification.init
 Source117: %name-ipmi.init
 Source118: %name-polling.init
 
-Patch101: Add_http_proxy_to_wsgi_to_api-paste.patch
-Patch102: Add_http_proxy_to_wsgi_to_config-generator.patch
-Patch103: fix_graceful_shutdown.patch
-Patch104: fix_perf_when_libvirt-1.patch
-Patch105: fix_perf_when_libvirt-2.patch
-
 Provides: %name-common = %EVR
 Obsoletes: %name-common < %EVR
 
@@ -54,8 +48,8 @@ BuildArch: noarch
 BuildRequires: crudini
 BuildRequires: webserver-common rpm-build-webserver-common rpm-macros-apache2
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-reno >= 0.1.1
@@ -64,13 +58,15 @@ BuildRequires: python-module-SQLAlchemy >= 0.9.9
 BuildRequires: python-module-webob >= 1.2.3
 BuildRequires: python-module-migrate >= 0.9.6
 BuildRequires: python-module-iso8601 >= 0.1.9
-BuildRequires: python-module-cotyledon
+BuildRequires: python-module-cachetools >= 1.1.0
+BuildRequires: python-module-cotyledon >= 1.3.0
 BuildRequires: python-module-futures >= 3.0
 BuildRequires: python-module-futurist >= 0.11.0
 BuildRequires: python-module-debtcollector >= 1.2.0
+BuildRequires: python-module-tenacity >= 3.1.0
 BuildRequires: python-module-jsonpath-rw-ext >= 0.1.9
 BuildRequires: python-module-jsonschema >= 2.0.0
-#BuildRequires: python-module-kafka >= 0.9.5
+BuildRequires: python-module-kafka >= 1.3.1
 BuildRequires: python-module-keystonemiddleware >= 4.0.0
 BuildRequires: python-module-lxml >= 2.3
 BuildRequires: python-module-msgpack >= 0.4.0
@@ -99,6 +95,7 @@ BuildRequires: python-module-keystoneauth1 >= 2.1.0
 BuildRequires: python-module-neutronclient >= 4.2.0
 BuildRequires: python-module-novaclient >= 2.29.0
 BuildRequires: python-module-swiftclient >= 2.2.0
+BuildRequires: python-module-cinderclient >= 1.6.0
 BuildRequires: python-module-yaml >= 3.1.0
 BuildRequires: python-module-requests >= 2.8.1
 BuildRequires: python-module-stevedore >= 1.9.0
@@ -111,7 +108,7 @@ BuildRequires: python-module-gnocchiclient
 OpenStack ceilometer provides services to measure and
 collect metrics from OpenStack components.
 
-%package -n python-module-ceilometer
+%package -n python-module-%oname
 Summary: OpenStack ceilometer python libraries
 Group: Development/Python
 Requires: python-module-PasteDeploy
@@ -119,11 +116,19 @@ Requires: python-module-ceilometerclient
 Requires: python-module-keystoneclient
 Requires: python-module-keystonemiddleware
 
-%description -n python-module-ceilometer
+%description -n python-module-%oname
 OpenStack ceilometer provides services to measure and
 collect metrics from OpenStack components.
 
 This package contains the ceilometer python library.
+
+%package -n python-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description -n python-module-%oname-tests
+This package contains tests for %oname.
 
 %package compute
 Summary: OpenStack ceilometer compute agent
@@ -256,12 +261,7 @@ collect metrics from OpenStack components.
 This package contains documentation files for ceilometer.
 
 %prep
-%setup
-%patch101 -p1
-%patch102 -p1
-%patch103 -p1
-%patch104 -p1
-%patch105 -p1
+%setup -n %oname-%version
 
 find . \( -name .gitignore -o -name .placeholder \) -delete
 
@@ -303,6 +303,7 @@ install -d -m 770 %buildroot%_logdir/ceilometer
 
 # Install config files
 install -d -m 755 %buildroot%_sysconfdir/ceilometer
+install -d -m 755 %buildroot%_sysconfdir/ceilometer/ceilometer.conf.d
 install -d -m 755 %buildroot%_sysconfdir/ceilometer/rootwrap.d
 install -d -m 755 %buildroot%_sysconfdir/sudoers.d
 install -p -D -m 440 %SOURCE4 %buildroot%_sysconfdir/sudoers.d/ceilometer
@@ -311,7 +312,6 @@ install -p -D -m 644 etc/ceilometer/{api_paste.ini,event_definitions.yaml,event_
 install -p -D -m 644 etc/ceilometer/rootwrap.conf %buildroot%_sysconfdir/ceilometer/rootwrap.conf
 install -p -D -m 644 etc/ceilometer/rootwrap.d/ipmi.filters %buildroot%_sysconfdir/ceilometer/rootwrap.d/ipmi.filters
 install -p -D -m 640 ceilometer/meter/data/meters.yaml %buildroot%_sysconfdir/ceilometer/meters.yaml
-install -p -D -m 640 etc/ceilometer/gnocchi_resources.yaml %buildroot%_sysconfdir/ceilometer/gnocchi_resources.yaml
 
 # Install initscripts for services
 install -p -D -m 644 %SOURCE10 %buildroot%_unitdir/%name-api.service
@@ -360,19 +360,14 @@ ln -s %_datadir/ceilometer/ceilometer.wsgi %buildroot%webserver_cgibindir/ceilom
 
 # Remove unneeded in production stuff
 rm -f %buildroot%_bindir/ceilometer-debug
-rm -fr %buildroot%python_sitelibdir/tests
-rm -fr %buildroot%python_sitelibdir/*/tests
-rm -fr %buildroot%python_sitelibdir/run_tests.*
 rm -f %buildroot/usr/share/doc/ceilometer/README*
 rm -fr %buildroot/usr/etc
 
-%define ceilometer_conf %buildroot%_sysconfdir/ceilometer/ceilometer.conf
+%define ceilometer_conf %buildroot%_sysconfdir/ceilometer/ceilometer.conf.d/010-ceilometer.conf
 crudini --set %ceilometer_conf DEFAULT log_dir %_logdir/ceilometer
 crudini --set %ceilometer_conf DEFAULT policy_file %_sysconfdir/ceilometer/policy.json
 crudini --set %ceilometer_conf DEFAULT lock_path %_runtimedir/ceilometer
 crudini --set %ceilometer_conf keystone_authtoken signing_dir %_cachedir/ceilometer/keystone-signing
-crudini --set %ceilometer_conf database connection mongodb://localhost:27017/ceilometer
-
 
 %pre
 # 166:166 for ceilometer (openstack-ceilometer)
@@ -426,17 +421,17 @@ crudini --set %ceilometer_conf database connection mongodb://localhost:27017/cei
 %files -f ceilometer.lang
 %doc LICENSE
 %dir %_sysconfdir/ceilometer
+%dir %_sysconfdir/ceilometer/ceilometer.conf.d
 %config(noreplace) %attr(0640, root, ceilometer) %_sysconfdir/ceilometer/ceilometer.conf
+%config(noreplace) %attr(0640, root, ceilometer) %_sysconfdir/ceilometer/ceilometer.conf.d/010-ceilometer.conf
 %config(noreplace) %attr(0640, root, ceilometer) %_sysconfdir/ceilometer/policy.json
 %config(noreplace) %attr(0640, root, ceilometer) %_sysconfdir/ceilometer/pipeline.yaml
 %config(noreplace) %attr(0640, root, ceilometer) %_sysconfdir/ceilometer/api_paste.ini
-%config(noreplace) %attr(0640, root, ceilometer) %_sysconfdir/ceilometer/gnocchi_resources.yaml
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %dir %attr(0770, root, ceilometer) %_logdir/ceilometer
 %dir %attr(0775, root, ceilometer) %_runtimedir/ceilometer
 %_tmpfilesdir/%name.conf
 
-%_bindir/ceilometer-dbsync
 %_bindir/ceilometer-db-legacy-clean
 %_bindir/ceilometer-expirer
 %_bindir/ceilometer-send-sample
@@ -444,8 +439,12 @@ crudini --set %ceilometer_conf database connection mongodb://localhost:27017/cei
 %dir %attr(0755, ceilometer, ceilometer) %_sharedstatedir/ceilometer
 %dir %attr(0755, ceilometer, ceilometer) %_cachedir/ceilometer
 
-%files -n python-module-ceilometer
+%files -n python-module-%oname
 %python_sitelibdir/*
+%exclude %python_sitelibdir/%oname/tests
+
+%files -n python-module-%oname-tests
+%python_sitelibdir/%oname/tests
 
 %if_with doc
 %files doc
@@ -499,6 +498,15 @@ crudini --set %ceilometer_conf database connection mongodb://localhost:27017/cei
 %_initdir/%name-polling
 
 %changelog
+* Fri Jun 09 2017 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.1-alt1
+- 8.0.1 Ocata release
+
+* Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.3-alt1
+- 7.0.3
+
+* Fri Jan 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.1-alt1
+- 7.0.1
+
 * Fri Nov 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.0-alt2
 - backport patches from stable/newton
 - fix logrotate

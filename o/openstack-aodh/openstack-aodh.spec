@@ -1,16 +1,17 @@
-%global pypi_name aodh
+%global oname aodh
 
-Name: openstack-aodh
-Version: 3.0.2
+Name: openstack-%oname
+Version: 4.0.0
 Release: alt1
 Summary: OpenStack Telemetry Alarming
 Group: System/Servers
 License: ASL 2.0
-Url: https://github.com/openstack/aodh.git
+Url: http://docs.openstack.org/developer/%oname
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 BuildArch: noarch
-Source: %name-%version.tar
 
-Source2: %pypi_name.logrotate
+Source2: aodh.logrotate
+Source6: aodh.conf
 Source9: %name.tmpfiles
 Source10: %name-api.service
 Source11: %name-evaluator.service
@@ -27,8 +28,10 @@ Source114: %name-listener.init
 Requires: python-module-PasteDeploy
 Requires(pre):    shadow-utils
 
+BuildRequires: crudini
+BuildRequires: webserver-common rpm-build-webserver-common rpm-macros-apache2
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
+BuildRequires: python-module-setuptools-tests
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
@@ -37,7 +40,7 @@ BuildRequires: python-module-d2to1
 BuildRequires: python-module-SQLAlchemy >= 0.9.9
 BuildRequires: python-module-webob >= 1.2.3
 BuildRequires: python-module-migrate >= 0.9.6
-BuildRequires: python-module-retrying >= 1.2.3
+BuildRequires: python-module-tenacity >= 3.2.1
 BuildRequires: python-module-croniter >= 0.3.4
 BuildRequires: python-module-futures >= 3.0
 BuildRequires: python-module-futurist >= 0.11.0
@@ -45,7 +48,7 @@ BuildRequires: python-module-jsonschema >= 2.0.0
 BuildRequires: python-module-keystonemiddleware >= 2.2.0
 BuildRequires: python-module-gnocchiclient >= 2.1.0
 BuildRequires: python-module-lxml >= 2.3
-BuildRequires: python-module-oslo.db >= 1.12.0
+BuildRequires: python-module-oslo.db >= 4.8.0
 BuildRequires: python-module-oslo.config >= 2.6.0
 BuildRequires: python-module-oslo.i18n >= 1.5.0
 BuildRequires: python-module-oslo.log >= 1.2.0
@@ -54,7 +57,7 @@ BuildRequires: python-module-PasteDeploy >= 1.5.0
 BuildRequires: python-module-pbr >= 0.11
 BuildRequires: python-module-pecan >= 0.8.0
 BuildRequires: python-module-oslo.messaging >= 5.2.0
-BuildRequires: python-module-oslo.middleware >= 3.0.0
+BuildRequires: python-module-oslo.middleware >= 3.22.0
 BuildRequires: python-module-oslo.serialization >= 1.4.0
 BuildRequires: python-module-oslo.utils >= 3.5.0
 BuildRequires: python-module-ceilometerclient >= 1.5.0
@@ -66,6 +69,7 @@ BuildRequires: python-module-stevedore >= 1.5.0
 BuildRequires: python-module-tooz >= 1.28.0
 BuildRequires: python-module-webob >= 1.2.3
 BuildRequires: python-module-wsme >= 0.8
+BuildRequires: python-module-cachetools >= 1.1.6
 BuildRequires: python-module-cotyledon
 
 %description
@@ -91,12 +95,12 @@ This package only exists to help transition openstack-ceilometer-alarm users
 to the new package split. It will be removed after one distribution release
 cycle, please do not reference it or depend on it in any way.
 
-%package -n python-module-aodh
+%package -n python-module-%oname
 Summary: OpenStack aodh python libraries
 Group: Development/Python
 Requires: python-module-PasteDeploy
 
-%description -n python-module-aodh
+%description -n python-module-%oname
 OpenStack aodh provides API and services for managing alarms.
 
 This package contains the aodh python library.
@@ -167,18 +171,18 @@ OpenStack aodh provides API and services for managing alarms.
 
 This package contains the aodh expirer service.
 
-%package -n python-module-aodh-tests
+%package -n python-module-%oname-tests
 Summary: Aodh tests
 Group: Development/Python
 Requires: python-module-aodh = %version-%release
 
-%description -n python-module-aodh-tests
+%description -n python-module-%oname-tests
 OpenStack aodh provides API and services for managing alarms.
 
 This package contains the Aodh test files.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 find . \( -name .gitignore -o -name .placeholder \) -delete
 
@@ -194,7 +198,7 @@ PYTHONPATH=. oslo-config-generator --config-file=etc/aodh/aodh-config-generator.
 
 %python_build
 # Generate i18n files
-#python setup.py compile_catalog -d build/lib/%pypi_name/locale
+#python setup.py compile_catalog -d build/lib/%oname/locale
 
 
 %install
@@ -202,9 +206,9 @@ PYTHONPATH=. oslo-config-generator --config-file=etc/aodh/aodh-config-generator.
 
 # Install config files
 install -d -m 755 %buildroot%_sysconfdir/aodh
+install -d -m 755 %buildroot%_sysconfdir/aodh/aodh.conf.d
 install -p -D -m 640 etc/aodh/aodh.conf %buildroot%_sysconfdir/aodh/aodh.conf
-install -p -D -m 640 etc/aodh/policy.json %buildroot%_sysconfdir/aodh/policy.json
-install -p -D -m 640 etc/aodh/api_paste.ini %buildroot%_sysconfdir/aodh/api_paste.ini
+install -p -D -m 640 aodh/api/policy.json %buildroot%_sysconfdir/aodh/policy.json
 
 # Setup directories
 install -d -m 755 %buildroot%_sharedstatedir/aodh
@@ -231,14 +235,27 @@ install -p -D -m 755 %SOURCE112 %buildroot%_initdir/%name-notifier
 install -p -D -m 755 %SOURCE113 %buildroot%_initdir/%name-expirer
 install -p -D -m 755 %SOURCE114 %buildroot%_initdir/%name-listener
 
+# Install sample HTTPD integration files
+install -p -D -m 644 aodh/api/app.wsgi %buildroot%_datadir/aodh/aodh.wsgi
+
+install -m 0644 -D -p %SOURCE6 %buildroot%apache2_sites_available/openstack-aodh.conf
+mkdir -p %buildroot%apache2_sites_enabled
+touch %buildroot%apache2_sites_enabled/openstack-aodh.conf
+mkdir -p %buildroot%webserver_cgibindir
+ln -s %_datadir/aodh/aodh.wsgi %buildroot%webserver_cgibindir/aodh-wsgi
+
+### set default configuration
+%define aodh_conf %buildroot%_sysconfdir/aodh/aodh.conf.d/010-aodh.conf
+crudini --set %aodh_conf DEFAULT log_dir /var/log/aodh
+
 # Install i18n .mo files (.po and .pot are not required)
 #install -d -m 755 %buildroot%_datadir
-#rm -f %buildroot%python_sitelibdir/%pypi_name/locale/*/LC_*/%{pypi_name}*po
-#rm -f %buildroot%python_sitelibdir/%pypi_name/locale/*pot
-#mv %buildroot%python_sitelibdir/%pypi_name/locale %buildroot%_datadir/locale
+#rm -f %buildroot%python_sitelibdir/%oname/locale/*/LC_*/%{oname}*po
+#rm -f %buildroot%python_sitelibdir/%oname/locale/*pot
+#mv %buildroot%python_sitelibdir/%oname/locale %buildroot%_datadir/locale
 
 # Find language files
-#%find_lang %pypi_name --all-name
+#%find_lang %oname --all-name
 
 # Remove unused files
 rm -fr %buildroot/usr/etc
@@ -288,12 +305,13 @@ rm -fr %buildroot/usr/etc
 %python_sitelibdir/*/tests
 
 %files common
-#-f %pypi_name.lang
+#-f %oname.lang
 %doc README.rst
 %dir %_sysconfdir/aodh
+%dir %_sysconfdir/aodh/aodh.conf.d
 %config(noreplace) %attr(640, root, aodh) %_sysconfdir/aodh/aodh.conf
+%config(noreplace) %attr(640, root, aodh) %_sysconfdir/aodh/aodh.conf.d/010-aodh.conf
 %config(noreplace) %attr(640, root, aodh) %_sysconfdir/aodh/policy.json
-%config(noreplace) %attr(640, root, aodh) %_sysconfdir/aodh/api_paste.ini
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %_tmpfilesdir/%name.conf
 
@@ -305,10 +323,14 @@ rm -fr %buildroot/usr/etc
 %files api
 %_bindir/aodh-dbsync
 %_bindir/aodh-api
-%_bindir/aodh-data-migration
 %_bindir/aodh-combination-alarm-conversion
 %_unitdir/%name-api.service
 %_initdir/%name-api
+%dir %_datadir/aodh
+%_datadir/aodh/*
+%config(noreplace) %apache2_sites_available/*.conf
+%ghost %apache2_sites_enabled/*.conf
+%webserver_cgibindir/*
 
 %files evaluator
 %_bindir/aodh-evaluator
@@ -331,6 +353,9 @@ rm -fr %buildroot/usr/etc
 %_initdir/%name-expirer
 
 %changelog
+* Tue Jun 13 2017 Alexey Shabalin <shaba@altlinux.ru> 4.0.0-alt1
+- 4.0.0
+
 * Wed Apr 12 2017 Alexey Shabalin <shaba@altlinux.ru> 3.0.2-alt1
 - 3.0.2
 

@@ -1,20 +1,21 @@
-%define pypi_name neutron-lib
+%define oname neutron-lib
 
 %def_with python3
 
-Name: python-module-%pypi_name
-Version: 0.4.0
+Name: python-module-%oname
+Version: 1.1.0
 Release: alt1
 Summary: OpenStack Neutron shared routines and utilities
 Group: Development/Python
 License: ASL 2.0
-Url: http://launchpad.net/%pypi_name
-Source: %name-%version.tar
+Url: http://docs.openstack.org/developer/%oname
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+
 BuildArch: noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
@@ -22,49 +23,65 @@ BuildRequires: python-module-reno >= 1.8.0
 BuildRequires: python-module-babel >= 2.3.4
 BuildRequires: python-module-SQLAlchemy >= 1.0.10
 BuildRequires: python-module-debtcollector >= 1.2.0
+BuildRequires: python-module-oslo.concurrency >= 3.8.0
 BuildRequires: python-module-oslo.config >= 3.14.0
 BuildRequires: python-module-oslo.context >= 2.9.0
-BuildRequires: python-module-oslo.db >= 4.10.0
+BuildRequires: python-module-oslo.db >= 4.15.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.log >= 1.14.0
-BuildRequires: python-module-oslo.messaging >= 5.2.0
-BuildRequires: python-module-oslo.policy >= 1.9.0
+BuildRequires: python-module-oslo.log >= 3.11.0
+BuildRequires: python-module-oslo.messaging >= 5.14.0
+BuildRequires: python-module-oslo.policy >= 1.17.0
 BuildRequires: python-module-oslo.service >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.16.0
+BuildRequires: python-module-oslo.utils >= 3.18.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr
+BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-babel >= 1.3
 BuildRequires: python3-module-SQLAlchemy >= 1.0.10
 BuildRequires: python3-module-debtcollector >= 1.2.0
+BuildRequires: python3-module-oslo.concurrency >= 3.8.0
 BuildRequires: python3-module-oslo.config >= 3.14.0
 BuildRequires: python3-module-oslo.context >= 2.9.0
-BuildRequires: python3-module-oslo.db >= 4.10.0
+BuildRequires: python3-module-oslo.db >= 4.15.0
 BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.log >= 1.14.0
-BuildRequires: python3-module-oslo.messaging >= 5.2.0
-BuildRequires: python3-module-oslo.policy >= 1.9.0
+BuildRequires: python3-module-oslo.log >= 3.11.0
+BuildRequires: python3-module-oslo.messaging >= 5.14.0
+BuildRequires: python3-module-oslo.policy >= 1.17.0
 BuildRequires: python3-module-oslo.service >= 1.10.0
-BuildRequires: python3-module-oslo.utils >= 3.16.0
+BuildRequires: python3-module-oslo.utils >= 3.18.0
 %endif
 
 %description
 Neutron-lib is an OpenStack library project used by Neutron, Advanced Services,
 and third-party projects to provide common functionality and remove duplication.
 
-%if_with python3
-%package -n python3-module-%pypi_name
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+This package contains tests for %oname.
+
+%package -n python3-module-%oname
 Summary: OpenStack Neutron shared routines and utilities
 Group: Development/Python3
 
-%description -n python3-module-%pypi_name
+%description -n python3-module-%oname
 Neutron-lib is an OpenStack library project used by Neutron, Advanced Services,
 and third-party projects to provide common functionality and remove duplication.
-%endif
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+This package contains tests for %oname.
 
 %package doc
 Summary: Documentation for OpenStack Neutron shared routines and utilities
@@ -74,7 +91,7 @@ Group: Development/Documentation
 Documentation for OpenStack Neutron shared routines and utilities
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %if_with python3
 rm -rf ../python3
@@ -105,25 +122,31 @@ pushd ../python3
 popd
 %endif
 
-# Delete tests
-rm -fr %buildroot%python_sitelibdir/tests
-rm -fr %buildroot%python_sitelibdir/*/tests
-rm -fr %buildroot%python3_sitelibdir/tests
-rm -fr %buildroot%python3_sitelibdir/*/tests
-
 %files
 %doc AUTHORS ChangeLog README.rst
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
 
 %if_with python3
-%files -n python3-module-%pypi_name
+%files -n python3-module-%oname
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
 %endif
 
 %files doc
 %doc doc/build/html
 
 %changelog
+* Tue May 30 2017 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt1
+- 1.1.0
+- add test packages
+
 * Fri Oct 21 2016 Alexey Shabalin <shaba@altlinux.ru> 0.4.0-alt1
 - 0.4.0
 

@@ -1,32 +1,33 @@
-%define sname oslo.middleware
+%define oname oslo.middleware
 
 %def_with python3
 
-Name: python-module-%sname
-Version: 3.19.0
+Name: python-module-%oname
+Version: 3.23.1
 Release: alt1
 Summary: OpenStack oslo.middleware library
 Group: Development/Python
 License: ASL 2.0
-Url: http://launchpad.net/oslo
-Source: %name-%version.tar
+Url: http://docs.openstack.org/developer/%oname
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
 BuildArch: noarch
 
 Provides: python-module-oslo-middleware = %EVR
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-jinja2 >= 2.8
 BuildRequires: python-module-oslo.config >= 3.14.0
 BuildRequires: python-module-oslo.context >= 2.9.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.utils >= 3.16.0
+BuildRequires: python-module-oslo.utils >= 3.18.0
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-stevedore >= 1.16.0
+BuildRequires: python-module-stevedore >= 1.17.1
 BuildRequires: python-module-webob >= 1.2.3
 BuildRequires: python-module-debtcollector >= 1.2.0
+BuildRequires: python-module-statsd >= 3.2.1
 
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
@@ -34,19 +35,20 @@ BuildRequires: python-module-oslosphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.6
+BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-stevedore >= 1.16.0
+BuildRequires: python3-module-stevedore >= 1.17.1
 BuildRequires: python3-module-jinja2 >= 2.8
 BuildRequires: python3-module-webob >= 1.2.3
 BuildRequires: python3-module-debtcollector >= 1.2.0
-BuildRequires: python3-module-oslo.utils >= 3.16.0
+BuildRequires: python3-module-oslo.utils >= 3.18.0
 BuildRequires: python3-module-oslo.config >= 3.14.0
 BuildRequires: python3-module-oslo.context >= 2.9.0
 BuildRequires: python3-module-oslo.i18n >= 2.1.0
+BuildRequires: python3-module-statsd >= 3.2.1
 %endif
 
 %description
@@ -55,30 +57,32 @@ wsgi pipelines to intercept request/response flows. The base class can be
 enhanced with functionality like add/delete/modification of http headers
 and support for limiting size/connection etc.
 
-* Free software: Apache license
-* Documentation: http://docs.openstack.org/developer/oslo.middleware
-* Source: http://git.openstack.org/cgit/openstack/oslo.middleware
-* Bugs: http://bugs.launchpad.net/oslo.middleware
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
 
+%description tests
+This package contains tests for %oname.
 
-%if_with python3
-%package -n python3-module-oslo.middleware
+%package -n python3-module-%oname
 Summary: OpenStack oslo.middleware library
 Group: Development/Python3
 Provides: python3-module-oslo-middleware = %EVR
 
-%description -n python3-module-oslo.middleware
+%description -n python3-module-%oname
 Oslo middleware library includes components that can be injected into
 wsgi pipelines to intercept request/response flows. The base class can be
 enhanced with functionality like add/delete/modification of http headers
 and support for limiting size/connection etc.
 
-* Free software: Apache license
-* Documentation: http://docs.openstack.org/developer/oslo.middleware
-* Source: http://git.openstack.org/cgit/openstack/oslo.middleware
-* Bugs: http://bugs.launchpad.net/oslo.middleware
-%endif
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
 
+%description -n python3-module-%oname-tests
+This package contains tests for %oname.
 
 %package doc
 Summary: Documentation for the Oslo middleware handling library
@@ -89,10 +93,9 @@ Provides: python-module-oslo-middleware-doc = %EVR
 Documentation for the Oslo middleware handling library.
 
 %prep
-%setup
-
+%setup -n %oname-%version
 # Remove bundled egg-info
-rm -rf %sname.egg-info
+rm -rf %oname.egg-info
 
 %if_with python3
 rm -rf ../python3
@@ -120,25 +123,31 @@ pushd ../python3
 popd
 %endif
 
-# Delete tests
-rm -fr %buildroot%python_sitelibdir/tests
-rm -fr %buildroot%python_sitelibdir/*/tests
-rm -fr %buildroot%python3_sitelibdir/tests
-rm -fr %buildroot%python3_sitelibdir/*/tests
-
 %files
 %doc CONTRIBUTING.rst HACKING.rst LICENSE PKG-INFO README.rst
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
 
 %if_with python3
-%files -n python3-module-oslo.middleware
+%files -n python3-module-%oname
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
 %endif
 
 %files doc
 %doc html
 
 %changelog
+* Thu May 25 2017 Alexey Shabalin <shaba@altlinux.ru> 3.23.1-alt1
+- 3.23.1
+- add test packages
+
 * Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 3.19.0-alt1
 - 3.19.0
 

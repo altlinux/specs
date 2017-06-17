@@ -1,35 +1,35 @@
 
 Name:           python-module-django-openstack-auth
-Version:        2.4.2
+Version:        3.1.1
 Release:        alt1
 Summary:        Django authentication backend for OpenStack Keystone
 Group:          Development/Python
 
 License:        BSD
 URL:            http://pypi.python.org/pypi/django_openstack_auth/
-Source0:        %name-%version.tar
+Source0:        django_openstack_auth-%version.tar.gz
 
 BuildArch:      noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
+BuildRequires: python-module-setuptools-tests
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-pbr >= 1.6
+BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-django >= 1.8
 BuildRequires: python-module-oslo.config >= 3.14.0
-BuildRequires: python-module-oslo.policy >= 1.9.0
-BuildRequires: python-module-keystoneclient >= 2.0.0
-BuildRequires: python-module-keystoneauth1 >= 2.10.0
+BuildRequires: python-module-oslo.policy >= 1.17.0
+BuildRequires: python-module-keystoneclient >= 3.8.0
+BuildRequires: python-module-keystoneauth1 >= 2.18.0
 
 BuildRequires: python-module-django-dbbackend-sqlite3
 
 Requires: python-module-django
 Requires: python-module-oslo.config >= 3.14.0
-Requires: python-module-oslo.policy >= 1.9.0
-Requires: python-module-keystoneclient >= 2.0.0
-Requires: python-module-keystoneauth1 >= 2.10.0
+Requires: python-module-oslo.policy >= 1.17.0
+Requires: python-module-keystoneclient >= 3.8.0
+Requires: python-module-keystoneauth1 >= 2.18.0
 
 %description
 Django OpenStack Auth is a pluggable Django authentication backend that
@@ -39,8 +39,17 @@ OpenStack's Keystone Identity API.
 The current version is designed to work with the
 Keystone V2 API.
 
+
+%package tests
+Summary: Tests for Django authentication backend for OpenStack Keystone
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+This package contains tests for Django authentication backend for OpenStack Keystone.
+
 %prep
-%setup
+%setup -n django_openstack_auth-%version
 
 # Remove the requirements file so that pbr hooks don't add it
 # to distutils requires_dist config
@@ -65,17 +74,22 @@ cp -r openstack_auth/locale %buildroot%python_sitelibdir/openstack_auth
 
 %find_lang django
 
-# don't include tests in the RPM
-rm -rf %buildroot/%python_sitelibdir/openstack_auth/tests
-# 
 # %check
 # %{__python} setup.py test
 
 %files -f django.lang
 %doc LICENSE
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
 
 %changelog
+* Thu Jun 01 2017 Alexey Shabalin <shaba@altlinux.ru> 3.1.1-alt1
+- 3.1.1
+- add tests package
+
 * Wed Feb 01 2017 Alexey Shabalin <shaba@altlinux.ru> 2.4.2-alt1
 - 2.4.2
 

@@ -1,57 +1,56 @@
-%define sname oslo.versionedobjects
+%define oname oslo.versionedobjects
 
 %def_with python3
 
-Name: python-module-%sname
-Version: 1.17.0
+Name: python-module-%oname
+Version: 1.21.0
 Release: alt1
 Summary: OpenStack oslo.versionedobjects library
 Group: Development/Python
 License: ASL 2.0
-Url: http://launchpad.net/oslo
-Source: %name-%version.tar
+Url: http://docs.openstack.org/developer/%oname
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
 BuildArch: noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-reno >= 1.8.0
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-oslo.concurrency >= 3.8.0
 BuildRequires: python-module-oslo.config >= 3.14.0
-BuildRequires: python-module-oslo.context >= 2.6.0
-BuildRequires: python-module-oslo.messaging >= 5.2.0
+BuildRequires: python-module-oslo.context >= 2.9.0
+BuildRequires: python-module-oslo.messaging >= 5.14.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
-BuildRequires: python-module-oslo.utils >= 3.16.0
+BuildRequires: python-module-oslo.utils >= 3.18.0
 BuildRequires: python-module-iso8601 >= 0.1.11
-BuildRequires: python-module-oslo.log >= 1.14.0
+BuildRequires: python-module-oslo.log >= 3.11.0
 BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-webob >= 1.2.3
-BuildRequires: python-module-netaddr >= 0.7.12
+BuildRequires: python-module-webob >= 1.6.0
+BuildRequires: python-module-netaddr >= 0.7.13
 BuildRequires: python-module-fixtures >= 1.3.1
-
+BuildRequires: python-module-jsonschema >= 2.0.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.6
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
+BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-oslo.concurrency >= 3.8.0
 BuildRequires: python3-module-oslo.config >= 3.14.0
-BuildRequires: python3-module-oslo.context >= 2.6.0
-BuildRequires: python3-module-oslo.messaging >= 5.2.0
+BuildRequires: python3-module-oslo.context >= 2.9.0
+BuildRequires: python3-module-oslo.messaging >= 5.14.0
 BuildRequires: python3-module-oslo.serialization >= 1.10.0
-BuildRequires: python3-module-oslo.utils >= 3.16.0
+BuildRequires: python3-module-oslo.utils >= 3.18.0
 BuildRequires: python3-module-iso8601 >= 0.1.11
-BuildRequires: python3-module-oslo.log >= 1.14.0
+BuildRequires: python3-module-oslo.log >= 3.11.0
 BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-webob >= 1.2.3
-BuildRequires: python3-module-netaddr >= 0.7.12
+BuildRequires: python3-module-webob >= 1.6.0
+BuildRequires: python3-module-netaddr >= 0.7.13
 BuildRequires: python3-module-fixtures >= 1.3.1
 %endif
 
@@ -63,17 +62,19 @@ allows us to support SQL and NoSQL Databases. oslo.versionedobjects is also
 used in RPC APIs, to ensure upgrades happen without spreading version dependent
 code across different services and projects.
 
-* Free software: Apache license
-* Documentation: http://docs.openstack.org/developer/oslo.versionedobjects
-* Source: http://git.openstack.org/cgit/openstack/oslo.versionedobjects
-* Bugs: http://bugs.launchpad.net/oslo.versionedobjects
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
 
-%if_with python3
-%package -n python3-module-%sname
+%description tests
+This package contains tests for %oname.
+
+%package -n python3-module-%oname
 Summary: OpenStack oslo.versionedobjects library
 Group: Development/Python3
 
-%description -n python3-module-%sname
+%description -n python3-module-%oname
 oslo.versionedobjects library deals with DB schema being at different versions
 than the code expects, allowing services to be operated safely during upgrades.
 It enables DB independent schema by providing an abstraction layer, which
@@ -81,12 +82,13 @@ allows us to support SQL and NoSQL Databases. oslo.versionedobjects is also
 used in RPC APIs, to ensure upgrades happen without spreading version dependent
 code across different services and projects.
 
-* Free software: Apache license
-* Documentation: http://docs.openstack.org/developer/oslo.versionedobjects
-* Source: http://git.openstack.org/cgit/openstack/oslo.versionedobjects
-* Bugs: http://bugs.launchpad.net/oslo.versionedobjects
-%endif
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
 
+%description -n python3-module-%oname-tests
+This package contains tests for %oname.
 
 %package doc
 Summary: Documentation for the Oslo versionedobjects library
@@ -96,10 +98,10 @@ Group: Development/Documentation
 Documentation for the Oslo versionedobjects library.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
-rm -rf %sname.egg-info
+rm -rf %oname.egg-info
 
 %if_with python3
 rm -rf ../python3
@@ -127,25 +129,31 @@ pushd ../python3
 popd
 %endif
 
-# Delete tests
-rm -fr %buildroot%python_sitelibdir/tests
-rm -fr %buildroot%python_sitelibdir/*/tests
-rm -fr %buildroot%python3_sitelibdir/tests
-rm -fr %buildroot%python3_sitelibdir/*/tests
-
 %files
 %doc CONTRIBUTING.rst HACKING.rst LICENSE PKG-INFO README.rst
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
 
 %if_with python3
-%files -n python3-module-%sname
+%files -n python3-module-%oname
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
 %endif
 
 %files doc
 %doc html
 
 %changelog
+* Fri May 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.21.0-alt1
+- 1.21.0
+- add test packages
+
 * Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1.17.0-alt1
 - 1.17.0
 

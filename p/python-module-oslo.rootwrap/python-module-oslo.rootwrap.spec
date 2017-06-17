@@ -1,24 +1,25 @@
-%define pypi_name oslo.rootwrap
+%define oname oslo.rootwrap
 
 %def_with python3
 
-Name: python-module-%pypi_name
-Version: 5.1.1
+Name: python-module-%oname
+Version: 5.4.1
 Release: alt1
 Summary: Oslo Rootwrap
 
 Group: Development/Python
 License: ASL 2.0
-URL: https://launchpad.net/oslo
-Source: %name-%version.tar
+Url: http://docs.openstack.org/developer/%oname
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+
 BuildArch:      noarch
 
 Provides: python-module-oslo-rootwrap = %EVR
 Obsoletes: python-module-oslo-rootwrap < %EVR
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
@@ -26,41 +27,39 @@ BuildRequires: python-module-oslosphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.6
+BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
-
 %endif
 
 %description
-
 The Oslo Rootwrap allows fine filtering of shell commands to run as `root`
 from OpenStack services.
 
-* License: Apache License, Version 2.0
-* Documentation: http://docs.openstack.org/developer/oslo.rootwrap
-* Source: http://git.openstack.org/cgit/openstack/oslo.rootwrap
-* Bugs: http://bugs.launchpad.net/oslo.rootwrap
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
 
+%description tests
+This package contains tests for %oname.
 
-%if_with python3
-%package -n python3-module-oslo.rootwrap
+%package -n python3-module-%oname
 Summary: OpenStack oslo.rootwrap library
 Group: Development/Python3
 Provides: python3-module-oslo-rootwrap = %EVR
 
-%description -n python3-module-oslo.rootwrap
-
+%description -n python3-module-%oname
 The Oslo Rootwrap allows fine filtering of shell commands to run as `root`
 from OpenStack services.
 
-* License: Apache License, Version 2.0
-* Documentation: http://docs.openstack.org/developer/oslo.rootwrap
-* Source: http://git.openstack.org/cgit/openstack/oslo.rootwrap
-* Bugs: http://bugs.launchpad.net/oslo.rootwrap
-%endif
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+This package contains tests for %oname.
 
 %package doc
 Summary: Documentation for the Oslo rootwrap handling library
@@ -72,10 +71,10 @@ Documentation for the Oslo rootwrap handling library.
 
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
-rm -rf %pypi_name.egg-info
+rm -rf %oname.egg-info
 
 %if_with python3
 rm -rf ../python3
@@ -110,29 +109,35 @@ popd
 
 %python_install
 
-# Delete tests
-rm -fr %buildroot%python_sitelibdir/tests
-rm -fr %buildroot%python_sitelibdir/*/tests
-rm -fr %buildroot%python3_sitelibdir/tests
-rm -fr %buildroot%python3_sitelibdir/*/tests
-
 %files
 %doc README.rst LICENSE
 %python_sitelibdir/*
 %_bindir/oslo-rootwrap
 %_bindir/oslo-rootwrap-daemon
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
 
 %if_with python3
-%files -n python3-module-oslo.rootwrap
+%files -n python3-module-%oname
 %python3_sitelibdir/*
 %_bindir/python3-oslo-rootwrap
 %_bindir/python3-oslo-rootwrap-daemon
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
 %endif
 
 %files doc
 %doc html
 
 %changelog
+* Fri May 26 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.1-alt1
+- 5.4.1
+- add test packages
+
 * Wed Feb 01 2017 Alexey Shabalin <shaba@altlinux.ru> 5.1.1-alt1
 - 5.1.1
 

@@ -1,22 +1,21 @@
 %def_with python3
 
-%define pypi_name os-testr
+%define oname os-testr
 
 Name: python-module-os-testr
-Version: 0.6.0
+Version: 0.8.2
 Release: alt1
 Summary: A testr wrapper to provide functionality for OpenStack projects
 Group: Development/Python
 License: ASL 2.0
-Url: http://git.openstack.org/cgit/openstack/%pypi_name
+Url: http://docs.openstack.org/developer/%oname
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 Packager: Lenar Shakirov <snejok@altlinux.ru>
-
-Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires: rpm-build-python
 BuildRequires: python-module-pbr
-BuildRequires: python-module-setuptools
+BuildRequires: python-module-setuptools-tests
 
 Requires: python-module-pbr
 Requires: python-module-babel
@@ -29,8 +28,16 @@ Requires: python-module-setuptools
 ostestr is a testr wrapper that uses subunit-trace for output and builds
 some helpful extra functionality around testr.
 
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+This package contains tests for %oname.
+
 %if_with python3
-%package -n python3-module-%pypi_name
+%package -n python3-module-%oname
 Summary: A testr wrapper to provide functionality for OpenStack projects
 Group: Development/Python
 BuildArch: noarch
@@ -38,7 +45,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-pbr
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools-tests
 
 Requires: python3-module-pbr
 Requires: python3-module-babel
@@ -47,9 +54,17 @@ Requires: python3-module-subunit
 Requires: python3-module-testtools
 Requires: python3-module-setuptools
 
-%description -n python3-module-%pypi_name
+%description -n python3-module-%oname
 ostestr is a testr wrapper that uses subunit-trace for output and builds
 some helpful extra functionality around testr.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+This package contains tests for %oname.
 %endif
 
 %package doc
@@ -62,14 +77,13 @@ BuildRequires: python-module-oslosphinx
 Documentation for ostestr module
 
 %prep
-%setup
+%setup -n %oname-%version
 
 rm -f test-requirements.txt requirements.txt
 
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
-find ../python3/ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -105,24 +119,34 @@ popd
 %_bindir/ostestr
 %_bindir/subunit-trace
 %_bindir/subunit2html
-%python_sitelibdir/os_testr
-%python_sitelibdir/os_testr-*.egg-info
+%python_sitelibdir/*
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
 
 %if_with python3
-%files -n python3-module-%pypi_name
+%files -n python3-module-%oname
 %doc README.rst
 %_bindir/python3-generate-subunit
 %_bindir/python3-ostestr
 %_bindir/python3-subunit-trace
 %_bindir/python3-subunit2html
-%python3_sitelibdir/os_testr
-%python3_sitelibdir/os_testr-*.egg-info
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
 %endif
 
 %files doc
 %doc doc/build/html
 
 %changelog
+* Wed May 31 2017 Alexey Shabalin <shaba@altlinux.ru> 0.8.2-alt1
+- 0.8.2
+- add test packages
+
 * Mon Nov 14 2016 Lenar Shakirov <snejok@altlinux.ru> 0.6.0-alt1
 - Initial build for ALT (based on CentOS 0.6.0-1.el7.src)
 
