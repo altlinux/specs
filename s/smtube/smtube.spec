@@ -1,6 +1,6 @@
 Name:		smtube
 Version:	17.5.0
-Release:	alt1
+Release:	alt2
 Summary:	Youtube Browser for SMPlayer
 Summary(ru_RU.UTF8):	Браузер YouTube для SMPlayer
 Summary(uk_UA.UTF8):	Переглядач YouTube для SMPlayer
@@ -10,6 +10,8 @@ License:	GPLv2+
 Group:		Video
 Url:		http://smtube.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/project/smtube/SMTube/%version/%name-%version.tar.bz2
+
+Patch0:		smtube-fixed-trash-in-the-title-of-the-mpv-ON-SCREEN-CONTROLLER.patch
 
 BuildRequires:	gcc-c++ libqt4-devel
 
@@ -33,6 +35,7 @@ SMTube є утилітою для пошуку та завантаження в�
 
 %prep
 %setup -n %name-%version
+%patch -p1
 
 %build
 subst 's|share/doc/smtube|share/doc/smtube-%version|g' Makefile
@@ -55,6 +58,12 @@ cd ./src && qmake "QMAKE_CXXFLAGS+=%optflags -DTRANSLATION_PATH=%_datadir/%name/
 %_datadir/%name/translations/*.qm
 
 %changelog
+* Sat Jun 17 2017 Motsyo Gennadi <drool@altlinux.ru> 17.5.0-alt2
+- (#33552) fixed trash in the title of the mpv ON SCREEN CONTROLLER
+
+* Sat Jun 03 2017 Motsyo Gennadi <drool@altlinux.ru> 17.5.0-alt0.M51.1
+- build for M51
+
 * Sat Jun 03 2017 Motsyo Gennadi <drool@altlinux.ru> 17.5.0-alt1
 - 17.5.0 (#33505)
 
