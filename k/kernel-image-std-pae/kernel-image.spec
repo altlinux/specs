@@ -2,7 +2,7 @@ Name: kernel-image-std-pae
 Release: alt1
 epoch:1 
 %define kernel_base_version	4.4
-%define kernel_sublevel .71
+%define kernel_sublevel .72
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -563,6 +563,9 @@ grep -q 'reboot: Power down' boot.log || ( cat boot.log && false )
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Thu Jun 15 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.72-alt1
+- v4.4.72
+
 * Thu Jun 08 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.71-alt1
 - v4.4.71
 
