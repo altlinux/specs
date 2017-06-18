@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Facebook::Graph
 
 Name: perl-Facebook-Graph
-Version: 1.1203
+Version: 1.1204
 Release: alt1
 
 Summary: Perl interface to the Facebook Graph API
@@ -67,6 +67,9 @@ cp README Changes ..
 %perl_vendor_privlib/Facebook/Graph*
 
 %changelog
+* Sun Jun 18 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.1204-alt1
+- New version
+
 * Mon Jun 12 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.1203-alt1
 - New version
 
