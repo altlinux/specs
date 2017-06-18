@@ -3,7 +3,7 @@
 %define real_name Test-Moose-More
 
 Name: perl-Test-Moose-More
-Version: 0.047
+Version: 0.048
 Release: alt1
 
 Summary: more tools for testing Moose packages
@@ -21,9 +21,9 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sat Jun 06 2015
-# optimized out: perl-B-Hooks-EndOfScope perl-CPAN-Meta perl-CPAN-Meta-Check perl-CPAN-Meta-Requirements perl-Class-Load perl-Data-OptList perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Encode perl-Eval-Closure perl-Exporter-Tiny perl-JSON-PP perl-List-MoreUtils perl-MRO-Compat perl-Module-Implementation perl-Module-Metadata perl-Module-Runtime perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Parse-CPAN-Meta perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Try-Tiny perl-Variable-Magic perl-devel perl-namespace-clean perl-parent
-BuildRequires: perl-Moose perl-Perl-Version perl-Syntax-Keyword-Junction perl-TAP-SimpleOutput perl-Test-CheckDeps perl-aliased perl-namespace-autoclean
+# Automatically added by buildreq on Sun Jun 18 2017
+# optimized out: perl perl-B-Hooks-EndOfScope perl-CPAN-Meta perl-CPAN-Meta-Check perl-CPAN-Meta-Requirements perl-Class-Load perl-Data-OptList perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Encode perl-Eval-Closure perl-Exporter-Tiny perl-JSON-PP perl-MRO-Compat perl-Module-Implementation perl-Module-Metadata perl-Module-Runtime perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Parse-CPAN-Meta perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Try-Tiny perl-Variable-Magic perl-devel perl-namespace-clean perl-parent python-base python-modules python3 python3-base
+BuildRequires: perl-List-MoreUtils perl-Moose perl-Perl-Version perl-Syntax-Keyword-Junction perl-TAP-SimpleOutput perl-Test-CheckDeps perl-namespace-autoclean
 
 %description
 Perl module Test::Moose::More contains a number of additional
@@ -46,6 +46,9 @@ any tests that it has and we do not, yet.
 %perl_vendor_privlib/Test*
 
 %changelog
+* Sun Jun 18 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.048-alt1
+- New version
+
 * Mon May 01 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.047-alt1
 - New version
 
