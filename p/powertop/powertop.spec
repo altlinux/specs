@@ -1,6 +1,6 @@
 Name: powertop
-Version: 2.8
-Release: alt1
+Version: 2.9
+Release: alt1%ubt
 Serial: 1
 
 Summary: Tool that helps you find what software is using the most power
@@ -8,7 +8,7 @@ License: GPLv2 only
 Group: System/Kernel and hardware
 
 Url: https://01.org/powertop/
-Source0: https://01.org/powertop/sites/default/files/downloads/%name-%version.tar.gz
+Source0: %name-%version.tar
 Source1: %name.service
 Source2: %name.init
 Source100: %name.watch
@@ -17,6 +17,7 @@ Source100: %name.watch
 # optimized out: libncurses-devel libstdc++-devel libtinfo-devel pkg-config xz
 BuildRequires: gcc-c++ libncursesw-devel libnl-devel libpci-devel zlib-devel
 
+BuildRequires(pre):rpm-build-ubt
 %define cachedir %_cachedir/%name
 
 %description
@@ -65,6 +66,9 @@ touch %cachedir/saved_{parameters,results}.powertop
 %_initdir/%name
 
 %changelog
+* Sun Jun 18 2017 Anton Farygin <rider@altlinux.ru> 1:2.9-alt1%ubt
+- new version (closes: #32459)
+
 * Tue Nov 10 2015 Michael Shigorin <mike@altlinux.org> 1:2.8-alt1
 - new version (watch file uupdate)
 
