@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Net::IMAP::Simple
 
 Name: perl-Net-IMAP-Simple
-Version: 1.2207
+Version: 1.2209
 Release: alt1
 
 Summary: Perl extension for simple IMAP account handling
@@ -45,6 +45,9 @@ IMAP accounts.
 %perl_vendor_privlib/Net/IMAP/Simple*
 
 %changelog
+* Sun Jun 18 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.2209-alt1
+- New version
+
 * Sun Jan 22 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.2207-alt1
 - New version
 
