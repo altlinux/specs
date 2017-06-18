@@ -10,7 +10,7 @@
 %def_disable systemd
 
 Name: lib%_name
-Version: 0.23.5
+Version: 0.23.7
 Release: alt1
 
 Summary: Library for loading and sharing PKCS#11 modules
@@ -156,6 +156,9 @@ EOF
 %_datadir/gtk-doc/html/%_name
 
 %changelog
+* Sun Jun 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.23.7-alt1
+- 0.23.7
+
 * Mon Mar 06 2017 Yuri N. Sedunov <aris@altlinux.org> 0.23.5-alt1
 - 0.23.5
 
