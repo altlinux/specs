@@ -1,13 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1
 %define oname selenium
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 3.0.2
-#Release: alt1.1
+Release: alt2
 Summary: Python bindings for Selenium
 License: ASL
 Group: Development/Python
@@ -15,6 +13,7 @@ Url: https://pypi.python.org/pypi/selenium/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source0: https://pypi.python.org/packages/0c/42/20c235e604bf736bc970c1275a78c4ea28c6453a0934002f95df9c49dad0/%{oname}-%{version}.tar.gz
+Patch: selenium-use-without-bundled-libs.patch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
@@ -40,6 +39,7 @@ Python.
 
 %prep
 %setup -q -n %{oname}-%{version}
+%patch -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Mon Jun 19 2017 Lenar Shakirov <snejok@altlinux.ru> 3.0.2-alt2
+- selenium-use-without-bundled-libs.patch added
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt1
 - automated PyPI update
 
