@@ -24,7 +24,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.7.1
-Release: alt6%ubt
+Release: alt7%ubt
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -72,6 +72,7 @@ BuildRequires: gcc-c++ libcups-devel libdbus-devel libicu-devel libjpeg-devel li
 BuildRequires: libpcre-devel libudev-devel libEGL-devel libdrm-devel libgbm-devel zlib-devel libgtk+3-devel
 BuildRequires: libmtdev-devel libinput-devel libts-devel
 BuildRequires: pkgconfig(gl) pkgconfig(glesv2) pkgconfig(egl)
+BuildRequires: libSM-devel libICE-devel
 BuildRequires: libX11-devel libXi-devel libxkbcommon-devel libxkbcommon-x11-devel
 BuildRequires: libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel
 BuildRequires: libalsa-devel libpulseaudio-devel
@@ -454,7 +455,7 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     -system-pcre \
     -system-zlib \
     -system-harfbuzz \
-    -xcb -system-xcb \
+    -sm -xcb -system-xcb \
     -xkb -system-xkbcommon \
     #
 
@@ -762,6 +763,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Mon Jun 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt7%ubt
+- fix to build with session management
+
 * Mon Jun 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt6.S1
 - ignore GTK3 dependencies
 
