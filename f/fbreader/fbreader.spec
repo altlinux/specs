@@ -1,6 +1,6 @@
 Name: fbreader
 Version: 0.99.5
-Release: alt1
+Release: alt2
 Summary: E-Book Reader
 Summary (ru_RU.UTF-8): Программа для чтения электронных книг (E-Book, Ebook)
 License: GPL
@@ -12,6 +12,7 @@ Source2: %{name}16.png
 Source3: %{name}32.png
 Source4: %{name}48.png
 Source5: x-fb2.desktop
+Patch1: fbreader-alt-gcc6.patch
 
 # Automatically added by buildreq on Wed Nov 11 2015
 # optimized out: fontconfig libqt4-core libqt4-gui libqt4-network libstdc++-devel pkg-config
@@ -25,6 +26,7 @@ E-Book Reader. Supports several e-book formats: fb2 (fictionbook), html, plucker
 
 %prep
 %setup -n FBReader-%version
+%patch1 -p1
 
 %build
 %make ZLSHARED=no TARGET_ARCH=desktop UI_TYPE=qt4 TARGET_STATUS=release
@@ -54,6 +56,9 @@ ln -s FBReader %buildroot%_bindir/fbreader
 %_liconsdir/%name.png
 
 %changelog
+* Mon Jun 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.99.5-alt2
+- fix build with gcc6
+
 * Wed Nov 11 2015 Mikhail Kolchin <mvk@altlinux.org> 0.99.5-alt1
 - new version
 
