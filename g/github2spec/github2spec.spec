@@ -1,5 +1,5 @@
 Name:     github2spec
-Version:  1.3.2
+Version:  1.3.4
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from github using genspec
@@ -12,7 +12,7 @@ BuildArch: noarch
 
 BuildPrereq: rpm-build-ruby
 
-Requires: genspec
+Requires: genspec >= 1.2.2
 
 Source:   %name-%version.tar
 
@@ -33,6 +33,9 @@ install -Dm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Mon Jun 19 2017 Gordeev Mikhail <obirvalger@altlinux.org> 1.3.4-alt1
+- Pass tag to genspec
+
 * Wed Jun 14 2017 Gordeev Mikhail <obirvalger@altlinux.org> 1.3.2-alt1
 - Fix faults with missing description and tags
 
