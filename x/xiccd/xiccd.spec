@@ -1,6 +1,6 @@
 Name: xiccd
-Version: 0.2.2
-Release: alt2
+Version: 0.2.4
+Release: alt1
 
 Summary: X color profile daemon
 License: %gpl3plus
@@ -9,7 +9,6 @@ Group: Graphics
 URL: https://github.com/agalakhov/xiccd
 # https://github.com/agalakhov/xiccd.git
 Source: %name-%version.tar
-Source1: xiccd.desktop
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
@@ -17,6 +16,8 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires: libX11-devel libXrandr-devel glib2-devel libcolord-devel
 
 Requires: colord
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 xiccd is a simple bridge between colord and X.
@@ -37,13 +38,19 @@ It does the following tasks:
 
 %install
 %makeinstall_std
-install -Dm0644 %SOURCE1 %buildroot%_sysconfdir/xdg/autostart/xiccd.desktop
+mkdir -p %buildroot%_sysconfdir/xdg/autostart/
+mv %buildroot%_desktopdir/xiccd.desktop %buildroot%_sysconfdir/xdg/autostart/
 
 %files
 %config(noreplace) %_sysconfdir/xdg/autostart/*.desktop
 %_bindir/%name
+%_man8dir/*
 
 %changelog
+* Mon Jun 19 2017 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt1
+- Use upstream's desktop file.
+- Updated to 0.2.4.
+
 * Mon Jun 09 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt2
 - rebuilt against libcolord.so.2
 
