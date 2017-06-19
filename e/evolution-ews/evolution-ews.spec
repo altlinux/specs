@@ -2,7 +2,7 @@
 %define ver_major 3.24
 
 Name: evolution-ews
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Group: Networking/Mail
@@ -15,9 +15,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define ver_base 3.24
 %define evo_ver_base %ver_base
 
-%define evolution_ver 3.24.0
+%define evolution_ver 3.24.3
 # from configure.ac
-%define eds_ver 3.24.0
+%define eds_ver 3.24.3
 %define glib_ver 2.40
 %define libmspack_ver 0.4
 %define soup_ver 2.42
@@ -50,9 +50,11 @@ versions 2007 and later, through its Exchange Web Services (EWS) interface.
 %setup
 
 %build
-# reenable INSTALL_RPATH to link against private libraries
+# reenable RPATH* to link against private libraries
 %cmake \
-	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF
+	-DCMAKE_SKIP_RPATH:BOOL=OFF \
+	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+	-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON
 %cmake_build
 
 %install
@@ -78,6 +80,9 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_datadir/appdata/evolution-ews.metainfo.xml
 
 %changelog
+* Mon Jun 19 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.3-alt1
+- 3.24.3
+
 * Mon May 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
 - 3.24.2
 

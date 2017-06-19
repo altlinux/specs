@@ -28,7 +28,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Evolution Data Server
@@ -164,6 +164,7 @@ the functionality of the installed EDS libraries.
 %cmake \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
 	-DCMAKE_SKIP_RPATH:BOOL=OFF \
+	-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON \
 	-DCAMEL_LOCK_HELPER_GROUP:STRING=mail \
 	-DSENDMAIL_PATH:STRING=%_sbindir/sendmail \
 	-DENABLE_FILE_LOCKING:STRING=fcntl \
@@ -264,6 +265,9 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Mon Jun 19 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.3-alt1
+- 3.24.3
+
 * Mon May 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
 - 3.24.2
 
