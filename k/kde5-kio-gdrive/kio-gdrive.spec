@@ -1,13 +1,13 @@
 
+%def_disable qtkeychain
+
 %define rname kio-gdrive
 %define sover 16
 %define libktcore libktcore%sover
 
-%add_findreq_skiplist %_K4apps/%rname/scripts/*.py
-
 Name: kde5-%rname
-Version: 1.1.1
-Release: alt2%ubt
+Version: 1.2.0.1
+Release: alt1%ubt
 %K5init
 
 Group:     Networking/File transfer
@@ -24,7 +24,11 @@ BuildRequires(pre): rpm-build-kf5
 #BuildRequires: extra-cmake-modules kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel kf5-libkgapi-devel libqtkeychain-qt5-devel python-module-google python3-dev rpm-build-ruby
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: extra-cmake-modules
+%if_enabled qtkeychain
 BuildRequires: libqtkeychain-qt5-devel
+%else
+BuildRequires: intltool signon-devel accounts-qt5-devel kde5-kaccounts-integration-devel
+%endif
 BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel kf5-libkgapi-devel
 
 %description
@@ -44,10 +48,16 @@ in the application launcher (which will open Dolphin with the `gdrive:/` URL) or
 %find_lang --with-kde --all-name %rname
 
 %files -f %rname.lang
-%_K5data/remoteview/*gdrive*.desktop
-%_K5plug/kf5/kio/*gdrive*.so
+%_K5data/remoteview/*drive*.desktop
+%_K5plug/kf5/kio/*drive*.so
+%_K5plug/kaccounts/daemonplugins/*drive*.so
+%_datadir/accounts/services/kde/*drive*.service
+%_K5notif/*drive*.notifyrc
 
 %changelog
+* Mon Jun 19 2017 Sergey V Turchin <zerg@altlinux.org> 1.2.0.1-alt1%ubt
+- new version
+
 * Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt2%ubt
 - rebuild with new libkgapi
 
