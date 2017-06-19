@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt2
+Release: alt3
 epoch:1 
 %define kernel_base_version	4.9
 %define kernel_sublevel .33
@@ -548,6 +548,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Mon Jun 19 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.9.33-alt3
+- (Fixes: CVE-2017-1000364)
+
 * Sat Jun 17 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.9.33-alt2
 - v4.9.33
 
