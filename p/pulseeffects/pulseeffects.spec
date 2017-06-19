@@ -2,7 +2,7 @@
 %define gst_ver 1.12
 
 Name: pulseeffects
-Version: 1.6.0
+Version: 1.6.2
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -10,7 +10,7 @@ License: GPLv3
 Group: Sound
 Url: https://github.com/wwmm/pulseeffects
 
-Source: %name-%version.tar.gz
+Source: https://github.com/wwmm/pulseeffects/archive/%name-%version.tar.gz
 
 BuildArch: noarch
 
@@ -18,6 +18,8 @@ Requires: pulseaudio-daemon dconf
 Requires: gst-plugins-good%gst_api_ver >= %gst_ver
 Requires: gst-plugins-bad%gst_api_ver >= %gst_ver
 Requires: ladspa-swh-plugins
+# for CubicSpline
+Requires: python3-module-scipy >= 0.19
 
 # python3 used
 AutoReqProv: nopython
@@ -51,6 +53,9 @@ cp -r share %buildroot%_prefix
 %doc README*
 
 %changelog
+* Sun Jun 18 2017 Yuri N. Sedunov <aris@altlinux.org> 1.6.2-alt1
+- 1.6.2
+
 * Fri Jun 16 2017 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 
