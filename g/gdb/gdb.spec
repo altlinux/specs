@@ -1,6 +1,6 @@
 Name: gdb
 Version: 7.9
-Release: alt3
+Release: alt4
 
 Summary: A GNU source-level debugger for C, C++ and other languages
 License: GPLv3+
@@ -17,6 +17,7 @@ Source3: gdb-gstack.man
 Patch1: gdb-alt-testsuite-version.patch
 Patch2: gdb-alt-readline.patch
 Patch3: gdb-alt-bfd.patch
+Patch4: gdb-alt-header-const.patch
 
 ### Debian patches
 Patch11: dwarf2-cfi-warning.patch
@@ -511,6 +512,7 @@ mv readline/doc readline-doc
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p2
 
 # We don't need these subdirs.
 rm -r gdb/gdbserver readline
@@ -632,6 +634,9 @@ popd
 %_libdir/lib*.a
 
 %changelog
+* Mon Jun 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 7.9-alt4
+- Fix build with modern glibc by syncing header definitions
+
 * Mon Aug 29 2016 Andrey Cherepanov <cas@altlinux.org> 7.9-alt3
 - Do not distribute desktop file for console program
 
