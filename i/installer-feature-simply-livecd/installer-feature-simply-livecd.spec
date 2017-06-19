@@ -1,5 +1,5 @@
 Name: installer-feature-simply-livecd
-Version: 0.8.10
+Version: 0.8.11
 Release: alt1
 
 Summary: LiveCD install hooks for Simply Linux.
@@ -55,6 +55,10 @@ cp -ar alterator-menu/ %buildroot%_datadir/livecd-install
 %_datadir/livecd-install/
 
 %changelog
+* Mon Jun 19 2017 Mikhail Efremov <sem@altlinux.org> 0.8.11-alt1
+- 05-vm-profile.sh from i-d-simply-linux.
+- Disable thunar automount during install.
+
 * Thu May 18 2017 Mikhail Efremov <sem@altlinux.org> 0.8.10-alt1
 - Disable light-locker during install.
 
