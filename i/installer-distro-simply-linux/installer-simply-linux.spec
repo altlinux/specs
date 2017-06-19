@@ -1,5 +1,5 @@
 Name: installer-distro-simply-linux
-Version: 8.1
+Version: 8.2
 Release: alt1
 
 Summary: Installer common files
@@ -28,7 +28,8 @@ Group: System/Configuration/Other
 Requires: %name = %version-%release
 Requires: installer-stage2
 #fonts
-Requires: fonts-ttf-google-droid-sans
+# Not needed, will be added by m-p profile itself
+#Requires: fonts-ttf-google-droid-sans
 #modules
 Requires: alterator-sysconfig
 Requires: alterator-license
@@ -105,7 +106,6 @@ Installer stage3
 %find_lang alterator-simply-linux
 
 %files -f alterator-simply-linux.lang
-%_datadir/install2/help/*
 
 %files stage2
 %_datadir/install2/installer-steps
@@ -116,9 +116,17 @@ Installer stage3
 %_datadir/install2/systemd-disabled
 
 %files stage3
-%_datadir/alterator/ui/simply-linux
+%_datadir/alterator/steps/*
 
 %changelog
+* Mon Jun 19 2017 Mikhail Efremov <sem@altlinux.org> 8.2-alt1
+- vm-profile: New profile.
+- Drop help.
+- Drop files ui/simply-linux.
+- Drop unused steps.
+- Use custom luks step.
+- stage2: Don't require fonts-ttf-google-droid-sans.
+
 * Thu May 18 2017 Mikhail Efremov <sem@altlinux.org> 8.1-alt1
 - stage2: Drop installer-feature-set-tz.
 
