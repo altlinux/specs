@@ -1,21 +1,20 @@
 %define ver_major 0.4
 
 Name: libepc
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.6
+Release: alt1
 Summary: Easy Publish and Consume library
 
 Group: System/Libraries
 License: LGPLv2+
 URL: http://live.gnome.org/libepc
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.bz2
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 %define avahi_ver 0.6
 %define soup_ver 2.3
-%define gtk2_ver 2.10
-%define glib2_ver 2.15.1
+%define gtk_ver 3.0
+%define glib2_ver 2.36
 %define gnutls_ver 1.4
 %define uuid_ver 1.36
 
@@ -26,7 +25,7 @@ BuildPreReq: libavahi-ui-gtk3-devel >= %avahi_ver
 BuildPreReq: glib2-devel >= %glib2_ver
 BuildPreReq: libgnutls-devel >= %gnutls_ver
 BuildPreReq: libuuid-devel >= %uuid_ver
-BuildPreReq: libgtk+2-devel >= %gtk2_ver
+BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libsoup-devel >= %soup_ver
 BuildPreReq: libgio-devel >= %glib2_ver
 
@@ -69,9 +68,10 @@ BuildArch: noarch
 This package provides development documentation for %name.
 
 %prep
-%setup -q
+%setup
 
 %build
+%autoreconf
 %configure --enable-static=no
 %make_build
 
@@ -80,12 +80,12 @@ This package provides development documentation for %name.
 #%%make check
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%doc AUTHORS COPYING NEWS README
+%doc AUTHORS NEWS README
 %_libdir/%name-1.0.so.*
 
 %files ui
@@ -100,6 +100,9 @@ This package provides development documentation for %name.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Jun 19 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.6-alt1
+- 0.4.6
+
 * Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1.1
 - NMU: Rebuild with libgnutls30.
 
