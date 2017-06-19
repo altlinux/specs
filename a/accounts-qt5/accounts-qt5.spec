@@ -3,8 +3,8 @@
 %define sover 1
 %define libname libaccounts-qt5%sover
 Name: accounts-qt5
-Version: 1.13
-Release: alt4
+Version: 1.15
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Accounts framework Qt 5 bindings
@@ -14,13 +14,11 @@ License: LGPLv2
 # https://drive.google.com/#folders/0B8fX9XOwH_g4alFsYV8tZTI4VjQ
 # https://groups.google.com/forum/#!forum/accounts-sso-announce
 Source: %name-%version.tar
-# FC
-Patch2: 0002-Fix-memory-leaks-found-by-valgrind.patch
-Patch3: 0005-Use-gboolean-instead-of-bool.patch
 
 # Automatically added by buildreq on Mon May 25 2015 (-bi)
 # optimized out: elfutils fontconfig fonts-bitmap-misc glib2-devel kf5-attica-devel kf5-kjs-devel libaccounts-glib libgio-devel libqt5-core libqt5-xml libstdc++-devel libwayland-client libwayland-server pkg-config python-base python3 python3-base qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-webkit-devel ruby ruby-stdlibs
 #BuildRequires: doxygen fonts-bitmap-terminus fonts-otf-stix fonts-ttf-dejavu fonts-ttf-google-droid-kufi fonts-ttf-google-droid-sans fonts-ttf-google-droid-serif fonts-type1-urw gcc-c++ glibc-devel-static graphviz kf5-bluez-qt-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdesu-devel kf5-kdewebkit-devel kf5-kdnssd-devel kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-khtml-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kidletime-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjsembed-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kpeople-devel kf5-kpty-devel kf5-kross-devel kf5-krunner-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-kxmlrpcclient-devel kf5-libkscreen-devel kf5-networkmanager-qt-devel kf5-solid-devel kf5-sonnet-devel libaccounts-glib-devel libdb4-devel qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel rpm-build-python3 rpm-build-ruby
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: graphviz doxygen qt5-base-devel gcc-c++
 BuildRequires: libaccounts-glib-devel
 
@@ -42,8 +40,6 @@ Headers, development libraries and documentation for %name.
 
 %prep
 %setup -n %name-%version
-%patch2 -p1
-%patch3 -p1
 sed -i '/^SUBDIRS/s|tests||'  accounts-qt.pro
 
 %build
@@ -64,23 +60,27 @@ rm -f %buildroot/%_datadir/doc/accounts-qt/html/installdox
 
 # move docs
 mkdir %buildroot/%_qt5_docdir
-mv %buildroot/%_docdir/accounts-qt/html %buildroot/%_qt5_docdir/accounts
-mv %buildroot/%_docdir/accounts-qt/qch/accounts.qch %buildroot/%_qt5_docdir/
+#mv %buildroot/%_docdir/accounts-qt/html %buildroot/%_qt5_docdir/accounts
+#mv %buildroot/%_docdir/accounts-qt/qch/accounts.qch %buildroot/%_qt5_docdir/
 
 %files -n %libname
 %_libdir/libaccounts-qt5.so.%sover
 %_libdir/libaccounts-qt5.so.*
 
 %files devel
+%doc doc/html
 %_qt5_libdir/libaccounts-qt5.so
 %_qt5_libdatadir/libaccounts-qt5.so
 %_includedir/accounts-qt5/
 %_pkgconfigdir/accounts-qt5.pc
 %_libdir/cmake/AccountsQt5/
-%_qt5_docdir/accounts/
-%_qt5_docdir/accounts.qch
+#%_qt5_docdir/accounts/
+#%_qt5_docdir/accounts.qch
 
 %changelog
+* Mon Jun 19 2017 Sergey V Turchin <zerg@altlinux.org> 1.15-alt1%ubt
+- new version
+
 * Thu Jan 21 2016 Sergey V Turchin <zerg@altlinux.org> 1.13-alt4
 - clean build options
 
