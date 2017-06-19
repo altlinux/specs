@@ -1,4 +1,5 @@
 %def_disable snapshot
+%set_verify_elf_method unresolved=relaxed
 # Some plugins/extensions link with others, resulting in multiple rpath entries
 %set_verify_elf_method rpath=relaxed
 
@@ -19,7 +20,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -43,7 +44,7 @@ Provides: camel
 %define glib_ver 2.40.0
 %define gtk_ver 3.10
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.24.0
+%define eds_ver 3.24.3
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define libsoup_ver 2.42.0
@@ -177,7 +178,9 @@ rm -f data/*.desktop{,.in}
 %build
 # reenable INSTALL_RPATH to link against private libraries
 %cmake \
+	-DCMAKE_SKIP_RPATH:BOOL=OFF \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+	-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON \
 	-DVERSION_SUBSTRING:STRING=%version-%release \
 	-DKILL_PROCESS_COMMAND:STRING=%_bindir/killall \
 	-DENABLE_SCHEMAS_COMPILE:BOOL=OFF \
@@ -196,7 +199,7 @@ rm -f data/*.desktop{,.in}
 
 # evolution command name
 mv %buildroot%_bindir/evolution %buildroot%_bindir/evolution-%ver_major
-ln -s evolution-%ver_major %buildroot%_bindir/evolution
+ln -s %name-%ver_major %buildroot%_bindir/%name
 
 # remove non-packaged files
 find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
@@ -206,8 +209,6 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 %files
 %_bindir/*
 %_libdir/%name/
-#%_libexecdir/%name/csv2vcard
-#%_libexecdir/%name/evolution-addressbook-export
 %_libexecdir/%name/evolution-alarm-notify
 %_libexecdir/%name/evolution-backup
 %_libexecdir/%name/killev
@@ -266,6 +267,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Mon Jun 19 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.3-alt1
+- 3.24.3
+
 * Mon May 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
 - 3.24.2
 
