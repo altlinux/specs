@@ -38,7 +38,7 @@
 %def_with libcephfs
 
 Name: samba
-Version: 4.6.4
+Version: 4.6.5
 Release: alt1%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1396,6 +1396,9 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Tue Jun 06 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.5-alt1%ubt
+- Udpate to first summer release
+
 * Wed May 24 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.4-alt1%ubt
 - Update to second spring security release
 - Fix longtime initialization bug in ldb proxy
