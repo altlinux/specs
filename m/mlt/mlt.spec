@@ -5,6 +5,8 @@
 %define mIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 %define mIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
+%define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
+
 %def_disable debug
 %def_disable vdpau
 
@@ -16,7 +18,7 @@
 
 Name: mlt
 Version: 6.4.1
-Release: alt2%ubt
+Release: alt3%ubt
 
 Summary: Multimedia framework designed for television broadcasting
 License: GPLv3
@@ -33,6 +35,8 @@ Patch2: mlt-0.9.0-alt-no-version-script.patch
 Patch10: libmlt-0.8.2-vdpau.patch
 # Debian
 Patch20: 01-changed-preset-path.diff
+Patch21: 01-crash-affine.diff
+Patch22: 02-crash-clipinfo-update.diff
 # ALT
 Patch100: alt-freetype-include.patch
 
@@ -105,7 +109,12 @@ This module allows to work with %Name using python..
 %patch1 -p1
 %patch2 -p1
 %patch10 -p0
+%if %is_ffmpeg
+%else
 %patch20 -p1
+%endif
+%patch21 -p1
+%patch22 -p1
 %patch100 -p1
 
 [ -f src/mlt++/config.h ] || \
@@ -181,6 +190,10 @@ install -pm 0755 src/swig/python/_%name.so %buildroot%python_sitelibdir/
 %_pkgconfigdir/mlt++.pc
 
 %changelog
+* Tue Jun 20 2017 Sergey V Turchin <zerg@altlinux.org> 6.4.1-alt3%ubt
+- fix find ffmpeg presets
+- update Debian patches
+
 * Tue Jun 06 2017 Sergey V Turchin <zerg@altlinux.org> 6.4.1-alt2%ubt
 - rebuild with ffmpeg
 
