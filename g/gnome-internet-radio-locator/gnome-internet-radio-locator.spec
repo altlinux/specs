@@ -1,4 +1,4 @@
-%define ver_major 0.2
+%define ver_major 0.3
 %define gst_api_ver 1.0
 %def_with recording
 
@@ -53,6 +53,9 @@ with the help of a map.
 
 
 %changelog
+* Tue Jun 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Fri Jun 16 2017 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - first build for Sisyphus
 
