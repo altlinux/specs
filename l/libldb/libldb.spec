@@ -2,14 +2,14 @@
 
 Name: libldb
 Version: 1.1.29
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
 Url: http://ldb.samba.org/
 
 Source: http://samba.org/ftp/ldb/ldb-%{version}.tar.gz
-Source1: ldb-modules.sh
+Patch: ldb-samba-modules.patch
 
 BuildRequires: python-devel python-module-tdb libpytalloc-devel python-module-tevent
 BuildRequires: libtalloc-devel libtdb-devel libtevent-devel libpopt-devel libldap-devel xsltproc docbook-style-xsl docbook-dtds
@@ -55,6 +55,7 @@ Development files for the Python bindings for the LDB library
 
 %prep
 %setup -n ldb-%version
+%patch -p2
 
 %build
 %undefine _configure_gettext
@@ -64,14 +65,12 @@ Development files for the Python bindings for the LDB library
 		--bundled-libraries=NONE \
 		--builtin-libraries=replace \
 		--with-modulesdir=%_libdir/ldb/modules \
+		--with-samba-modulesdir=%_libdir/samba-dc \
 		--with-privatelibdir=%_libdir/ldb
 %make
 
 %install
 %makeinstall_std
-
-install -D -m755 %SOURCE1 %buildroot%_sysconfdir/bashrc.d/ldb-modules.sh
-sed -i s,@libdir@,%_libdir,g %buildroot%_sysconfdir/bashrc.d/ldb-modules.sh
 
 rm -f %buildroot%_libdir/*.a
 rm -f %buildroot/%_man3dir/_*
@@ -100,7 +99,6 @@ make test
 %exclude %_libdir/libpyldb-util.so
 
 %files -n ldb-tools
-%_sysconfdir/bashrc.d/ldb-modules.sh
 %_bindir/*
 %_man1dir/*
 %_libdir/ldb/libldb-cmdline.so
@@ -116,6 +114,10 @@ make test
 %_pkgconfigdir/pyldb-util.pc
 
 %changelog
+* Tue Jun 20 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.1.29-alt2%ubt
+- Remove hacks with ldb samba modules path search via LDB_LIBRARY_PATH
+  by additional --with-samba-modulesdir configure option (closes: #33427)
+
 * Tue Mar 07 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.1.29-alt1%ubt
 - Update to new release for samba-4.6.0
 
