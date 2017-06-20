@@ -11,7 +11,7 @@
 
 Name: zabbix
 Version: 3.2.6
-Release: alt1
+Release: alt2
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -107,12 +107,6 @@ Group: Monitoring
 Requires: php5-gd2 php5-mysqli php5-pgsql php5-sockets php5-mbstring php5-dom
 BuildArch: noarch
 
-%package phpfrontend-apache
-Summary: %name-phpfrontend's apache config files
-Group: Monitoring
-Requires: %name-phpfrontend-engine = %epoch:%version-%release, apache-base
-BuildArch: noarch
-
 %package phpfrontend-apache2
 Summary: %name-phpfrontend's apache2 config files
 Group: Monitoring
@@ -193,9 +187,6 @@ configure different types of notifications for pre-defined events.
 
 %description agent-sudo
 Sudo entry for zabbix agent.
-
-%description phpfrontend-apache
-zabbix's apache config files
 
 %description phpfrontend-apache2
 zabbix's apache2 config files
@@ -333,9 +324,6 @@ install -Dpm 644 sources/%name-tmpfiles.conf %buildroot/lib/tmpfiles.d/%name.con
 mv frontends/php/locale/*.sh .
 cp -r frontends %buildroot%webserver_webappsdir/%name/
 
-# apache config
-install -pDm0644 sources/%name.conf %buildroot%_sysconfdir/httpd/conf/addon-modules.d/%name.conf
-
 # apache2 config
 install -pDm0644 sources/%name.conf %buildroot%_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
@@ -431,11 +419,6 @@ fi
 
 %preun agent
 %preun_service zabbix_agentd
-%post phpfrontend-apache
-%_initdir/httpd reload >/dev/null 2>&1 ||:
-
-%postun phpfrontend-apache
-%_initdir/httpd reload >/dev/null 2>&1 ||:
 
 %files common
 %dir %attr(1775,root,%zabbix_group) %_logdir/%name
@@ -497,8 +480,6 @@ fi
 %doc add_new_language.sh make_mo.sh update_po.sh
 
 %files phpfrontend-php5
-%files phpfrontend-apache
-%config(noreplace) %_sysconfdir/httpd/conf/addon-modules.d/%name.conf
 
 %files phpfrontend-apache2
 %config(noreplace) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
@@ -514,6 +495,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Mon Jun 19 2017 Alexei Takaseev <taf@altlinux.org> 1:3.2.6-alt2
+- Remove phpfrontend-apache subpackage
+
 * Sat May 06 2017 Alexei Takaseev <taf@altlinux.org> 1:3.2.6-alt1
 - 3.2.6
 
