@@ -18,7 +18,7 @@
 
 Name: libwebkitgtk3
 Version: 2.4.11
-Release: alt2
+Release: alt3
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -335,6 +335,9 @@ chrpath --delete %buildroot%_libexecdir/%_name/MiniBrowser
 
 
 %changelog
+* Tue Jun 20 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt3
+- rebuilt against libwebp.so.7
+
 * Sun Jan 29 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt2
 - fixed build with gcc6
 
