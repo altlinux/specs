@@ -3,8 +3,9 @@
 %define pkgname rack
 
 Name: ruby-%pkgname
-Version: 2.0.3
+Version: 1.6.8
 Release: alt1
+Epoch:   1
 
 Summary: Modular Ruby webserver interface
 Group: Development/Ruby
@@ -14,10 +15,9 @@ Url: http://rubyforge.org/projects/rack/
 BuildArch: noarch
 
 Source: %pkgname-%version.tar
-Patch: %name-%version-%release.patch
 
-# Automatically added by buildreq on Sat Nov 01 2008 (-bi)
-BuildRequires: rpm-build-ruby ruby-tool-rdoc ruby-tool-setup
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: ruby-tool-setup
 
 %description
 Rack provides a minimal, modular and adaptable interface for developing
@@ -58,7 +58,6 @@ Documentation files for %name
 
 %prep
 %setup -n %pkgname-%version
-%patch -p1
 %update_setup_rb
 
 %build
@@ -67,19 +66,28 @@ Documentation files for %name
 
 %install
 %ruby_install
+# Install gemspec
+export rbVersion=`ruby -e "puts RbConfig::CONFIG[\"ruby_version\"]"`
+install -Dm 0644 %pkgname.gemspec %buildroot%ruby_libdir/gems/$rbVersion/specifications/%pkgname.gemspec
 %rdoc lib/
 
 %files
-%doc README.rdoc *.md
+%doc README* KNOWN-ISSUES
 %_bindir/rackup
 %ruby_sitelibdir/*
 %exclude %ruby_sitelibdir/rack/handler/*
+%ruby_libdir/gems/*/specifications/*.gemspec
 
 %files doc
 %doc example
 %ruby_ri_sitedir/Rack*
 
 %changelog
+* Fri Jun 16 2017 Andrey Cherepanov <cas@altlinux.org> 1:1.6.8-alt1
+- Decrease version for pcs-pcsd
+- Package gemspec
+- Spec cleanup
+
 * Tue May 16 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.3-alt1
 - New version
 
