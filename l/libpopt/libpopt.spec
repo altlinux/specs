@@ -1,6 +1,6 @@
 Name: libpopt
-Version: 1.14
-Release: alt10
+Version: 1.16
+Release: alt1
 Epoch: 1
 
 %def_with apidocs
@@ -12,14 +12,15 @@ Url: http://www.rpm5.org/
 
 Source: popt.tar
 
-Patch1: popt-1.14-alt-automake.patch
-Patch2: popt-1.14-alt-alloc-checks.patch
-Patch3: popt-1.14-alt-context-checks.patch
+Patch1: popt-1.16-alt-automake.patch
+Patch2: popt-1.16-alt-alloc-checks.patch
+Patch3: popt-1.16-alt-context-checks.patch
 Patch4: popt-1.14-alt-man.patch
 Patch5: popt-1.14-alt-poptBadOption.patch
-Patch6: popt-1.14-alt-doxygen.patch
-Patch7: popt-1.14-alt-vers.patch
-Patch8: popt-1.14-alt-secure_getenv.patch
+Patch6: popt-1.16-alt-vers.patch
+Patch7: popt-1.16-alt-secure_getenv.patch
+Patch8: popt-1.16-alt-automake-tests.patch
+Patch9: popt-1.16-pkgconfig.patch
 
 Provides: popt = %version-%release
 Obsoletes: popt
@@ -74,13 +75,14 @@ This package contains developement documentation for libpopt.
 %prep
 %setup -n popt
 %patch1 -p1
-%patch2 -p2
-%patch3 -p2
+%patch2 -p1
+%patch3 -p1
 %patch4 -p2
 %patch5 -p2
 %patch6 -p2
-%patch7 -p2
+%patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 %build
 %add_optflags -DHAVE_MCHECK_H
@@ -119,6 +121,7 @@ xz -9 %buildroot%docdir/*.ps
 
 %files devel
 %_libdir/*.so
+%_pkgconfigdir/*.pc
 %_includedir/*
 %_mandir/man?/*
 %dir %docdir
@@ -134,6 +137,9 @@ xz -9 %buildroot%docdir/*.ps
 %docdir/*.ps.xz
 
 %changelog
+* Tue Jun 20 2017 Anton Farygin <rider@altlinux.ru> 1:1.16-alt1
+- 1.16 (closes: 32186).
+
 * Tue Feb 09 2016 Michael Shigorin <mike@altlinux.org> 1:1.14-alt10
 - BOOTSTRAP: fixed --without apidocs build.
 - Replaced bzip2 with xz while at that.
