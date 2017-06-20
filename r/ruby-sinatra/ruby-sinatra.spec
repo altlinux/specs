@@ -2,8 +2,9 @@
 %define  sdir    %ruby_sitelibdir/%pkgname
 
 Name: 	 ruby-%pkgname
-Version: 2.0.0 
+Version: 1.4.8
 Release: alt1
+Epoch:   1
 
 Summary: Classy web-development dressed in a DSL
 License: MIT/Ruby
@@ -14,9 +15,13 @@ Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
 
 Source:  %pkgname-%version.tar
+Source1: rack-protection.tar
+Source2: sinatra-contrib.tar
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
+
+%filter_from_requires \,^ruby(rack/show_exceptions)$,d
 
 %description
 %summary
@@ -68,6 +73,8 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
+tar xf %SOURCE1
+tar xf %SOURCE2
 for dir in . rack-protection sinatra-contrib; do
 	pushd "$dir"
 	%update_setup_rb
@@ -91,7 +98,7 @@ for dir in . rack-protection sinatra-contrib; do
 done
 
 # Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+rm -f %buildroot%ruby_ri_sitedir/{Rack/cdesc-Rack.ri,Rack/Builder/cdesc-Builder.ri,Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
 %ruby_test_unit -Ilib:test test
@@ -106,12 +113,12 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %exclude %sdir/cookies*
 %exclude %sdir/engine_tracking*
 %exclude %sdir/json*
-%exclude %sdir/link_header*
-%exclude %sdir/multi_route*
-%exclude %sdir/namespace*
-%exclude %sdir/respond_with*
-%exclude %sdir/custom_logger*
-%exclude %sdir/required_params*
+#exclude %sdir/link_header*
+#exclude %sdir/multi_route*
+#exclude %sdir/namespace*
+#exclude %sdir/respond_with*
+#exclude %sdir/custom_logger*
+#exclude %sdir/required_params*
 
 %files -n ruby-rack-protection
 %doc rack-protection/*.md
@@ -126,16 +133,22 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %sdir/cookies*
 %sdir/engine_tracking*
 %sdir/json*
-%sdir/link_header*
-%sdir/multi_route*
-%sdir/namespace*
-%sdir/respond_with*
-%sdir/custom_logger*
-%sdir/required_params*
+#sdir/link_header*
+#sdir/multi_route*
+#sdir/namespace*
+#sdir/respond_with*
+#sdir/custom_logger*
+#sdir/required_params*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Jun 20 2017 Andrey Cherepanov <cas@altlinux.org> 1:1.4.8-alt1
+- Downgrade version to work with old ruby-rack
+
+* Mon Jun 19 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt2
+- Build with ruby-rack 1.x
+
 * Tue Jun 13 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
 - Initial build for Sisyphus
