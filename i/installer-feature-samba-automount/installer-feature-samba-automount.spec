@@ -2,7 +2,7 @@
 %define hookdir %_datadir/install2/postinstall.d
 
 Name: installer-feature-samba-automount
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1%ubt
 
 Summary: Installer stage3 for Samba automounting
@@ -38,5 +38,8 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Jun 20 2017 Sergey V Turchin <zerg@altlinux.org> 0.1.1-alt1%ubt
+- check for files first
+
 * Tue May 16 2017 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt1%ubt
 - initial build
