@@ -1,5 +1,5 @@
 Name:     genspec
-Version:  1.2.2
+Version:  1.2.4
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
@@ -30,6 +30,10 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_datadir/spectemplates
 
 %changelog
+* Tue Jun 20 2017 Gordeev Mikhail <obirvalger@altlinux.org> 1.2.4-alt1
+- Add git command line option to clone from url, clear repo and configure
+  gear remotes update
+
 * Mon Jun 19 2017 Gordeev Mikhail <obirvalger@altlinux.org> 1.2.2-alt1
 - Add tag command line option (uses in .gear/rules)
 
