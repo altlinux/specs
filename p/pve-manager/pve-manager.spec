@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 4.4.1
-Release: alt13
+Release: alt14
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -64,7 +64,7 @@ Tool to manage Linux Containers on PVE
 Summary: PVE Firewall
 Version: 2.0.33
 Group: System/Servers
-Requires: ipset iptables iptables-ipv6
+Requires: ipset iptables iptables-ipv6 shorewall shorewall6
 
 %description -n pve-firewall
 This package contains the PVE Firewall
@@ -145,6 +145,11 @@ d /var/run/pveproxy 0700 www-data www-data -
 f /var/lock/pveproxy.lck 0644 www-data www-data
 f /var/lock/spiceproxy.lck 0644 www-data www-data
 __EOF__
+
+mkdir -p %buildroot%_sysconfdir/modules-load.d
+cat << __EOF__ > %buildroot%_sysconfdir/modules-load.d/pve-firewall.conf
+br_netfilter
+__EOF
 
 %post
 %post_service pvedaemon
@@ -297,7 +302,8 @@ __EOF__
 %files -n pve-firewall
 %_sysconfdir/bash_completion.d/pve-firewall
 %_sysconfdir/logrotate.d/pve-firewall
-#_sysconfdir/sysctl.d/pve-firewall.conf
+%config(noreplace) %_sysconfdir/sysctl.d/pve-firewall.conf
+%config(noreplace) %_sysconfdir/modules-load.d/pve-firewall.conf
 %systemd_unitdir/pve-firewall.service
 %systemd_unitdir/pvefw-logger.service
 %_sbindir/pve-firewall
@@ -380,6 +386,9 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Tue Jun 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt14
+- firewall now works
+
 * Wed Jun 14 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt13
 - fixed date/time column resize in snapshots (closes: #33528)
 
