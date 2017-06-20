@@ -14,7 +14,7 @@
 %define rname k3b
 Name: kde4-%rname
 Version: 2.0.3
-Release: alt6%ubt
+Release: alt7%ubt
 
 Group: Archiving/Cd burning
 Summary: The CD Kreator (Complete set)
@@ -158,6 +158,9 @@ KDE 4 library.
 %_K4includedir/*.h
 
 %changelog
+* Tue Jun 20 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt7%ubt
+- rebuild with ffmpeg
+
 * Fri Feb 03 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt6%ubt
 - build with gcc6
 
