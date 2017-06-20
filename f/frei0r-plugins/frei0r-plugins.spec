@@ -1,15 +1,16 @@
 %define bname frei0r
 %define major_ver 1
-%define minor_ver 5
+%define minor_ver 6
 
 Name: %bname-plugins
-Version: %major_ver.%minor_ver
+Version: %major_ver.%minor_ver.1
 Release: alt1
 Summary: Frei0r - a minimalistic plugin API for video effects
 License: %lgpl2plus
 Group: Video
-URL: http://www.piksel.org/frei0r
-Source: http://propirate.net/frei0r/%name-%version.tar
+URL: https://frei0r.dyne.org
+# git https://github.com/dyne/frei0r.git
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Packager: Alexey Shabalin <shaba@altlinux.ru>
 
@@ -86,6 +87,9 @@ mkdir -p m4
 %_libdir/%bname-%major_ver/facedetect.so
 
 %changelog
+* Tue Jun 20 2017 Alexey Shabalin <shaba@altlinux.ru> 1.6.1-alt1
+- 1.6.1
+
 * Thu Jul 07 2016 Alexey Shabalin <shaba@altlinux.ru> 1.5-alt1
 - 1.5
 
