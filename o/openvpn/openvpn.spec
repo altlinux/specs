@@ -14,7 +14,7 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
@@ -28,6 +28,8 @@ Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
 Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
+
+Patch1:  %name-2.4.2-alt-pkcs11_pin_prompt.patch
 
 Source1: %name.init
 Source2: %name-startup
@@ -130,6 +132,8 @@ for third-party plugin development.
 %prep
 %setup -n %name-%version
 %patch0 -p1
+
+%patch1
 
 cp -- %SOURCE7 README.ALT.utf-8
 cp -- %SOURCE8 server.conf
@@ -328,6 +332,19 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %changelog
+* Wed Jun 21 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.4.3-alt1
+- New version
+- Security fixes:
+  + CVE-2017-7522 Post-authentication --x509-track remote DoS
+  + CVE-2017-7521 Post-authentication remote-triggerable memory leaks
+  + CVE-2017-7521 Potential post-authentication remote code execution
+                  on servers that use the --x509-username-field option
+  + CVE-2017-7520 Pre-authentication remote crash / information disclosure
+                  for clients
+  + CVE-2017-7508 Remotely-triggerable ASSERT() on malformed IPv6 packet
+- Force to use built-in PIN prompt with PKCS11 regardless
+  of systemd presence (OpenVPN bug 538)
+
 * Sun May 14 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.4.2-alt1
 - New version
 - Security fixes:
