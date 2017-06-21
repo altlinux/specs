@@ -1,5 +1,5 @@
 
-%def_disable qtkeychain
+%def_enable qtkeychain
 
 %define rname kio-gdrive
 %define sover 16
@@ -7,7 +7,7 @@
 
 Name: kde5-%rname
 Version: 1.2.0.1
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group:     Networking/File transfer
@@ -50,11 +50,17 @@ in the application launcher (which will open Dolphin with the `gdrive:/` URL) or
 %files -f %rname.lang
 %_K5data/remoteview/*drive*.desktop
 %_K5plug/kf5/kio/*drive*.so
+%if_enabled qtkeychain
+%else
 %_K5plug/kaccounts/daemonplugins/*drive*.so
 %_datadir/accounts/services/kde/*drive*.service
 %_K5notif/*drive*.notifyrc
+%endif
 
 %changelog
+* Wed Jun 21 2017 Sergey V Turchin <zerg@altlinux.org> 1.2.0.1-alt2%ubt
+- build without kaccounts and with qtkeychain
+
 * Mon Jun 19 2017 Sergey V Turchin <zerg@altlinux.org> 1.2.0.1-alt1%ubt
 - new version
 
