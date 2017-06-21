@@ -6,7 +6,7 @@
 
 Name: lightdm
 Version: 1.16.7
-Release: alt1
+Release: alt2
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -244,6 +244,9 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Jun 20 2017 Paul Wolneykien <manowar@altlinux.org> 1.16.7-alt2
+- Fixed "Error writing to daemon: Broken pipe".
+
 * Thu Mar 03 2016 Alexey Shabalin <shaba@altlinux.ru> 1.16.7-alt1
 - 1.16.7
 

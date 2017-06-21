@@ -3,7 +3,7 @@
 
 Name: lightdm-gtk-greeter
 Version: 2.0.1
-Release: alt5
+Release: alt6
 Summary: LightDM GTK+ Greeter
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -68,6 +68,14 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Tue Jun 20 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt6
+- Make the greeter resettable. On reset, select the provided username
+  and start authentication.
+- Trying to workaround the weird bug in GTK+3 #710888 related to
+  the info_bar.
+- Workaround possible race with message label cleanup.
+- Hide the message label when it is NULL or empty.
+
 * Mon Feb 20 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.0.1-alt5
 - fixed showing messages after empty message showing
 
