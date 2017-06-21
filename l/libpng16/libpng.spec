@@ -1,5 +1,5 @@
-Name: libpng
-Version: 1.5.28
+Name: libpng16
+Version: 1.6.29
 Release: alt1
 
 Summary: A library of functions for manipulating PNG image format files
@@ -7,60 +7,41 @@ License: zlib
 Group: System/Libraries
 Url: http://www.libpng.org/pub/png/
 
+Provides: libpng = %version
+Conflicts: libpng15 < 1.5.28-alt2
+
 # git://git.altlinux.org/gears/l/%name.git
 Source: %name-%version-%release.tar
 
-%def_disable static
-
-# Automatically added by buildreq on Tue Feb 08 2011
 BuildRequires: zlib-devel
 
-%package -n libpng15
-Summary: PNG runtime library
-Group: System/Libraries
-Provides: libpng = %version
-# due to %_man5dir/*
-Conflicts: libpng12 < 1.2.50-alt2
-
-%package devel
+%package -n libpng-devel
 Summary: PNG development library
 Group: Development/C
-Requires: libpng15 = %version-%release, zlib-devel
+Requires: libpng16 = %version-%release, zlib-devel
+Conflicts: libpng15-devel
 Conflicts: libpng12-devel
 
-%package devel-static
-Summary: PNG static library
-Group: Development/C
-Requires: %name-devel = %version-%release, zlib-devel-static
-
 %description
-libpng is a library implementing an interface for reading and writing
-PNG (Portable Network Graphics) format files.
-
-%description -n libpng15
 libpng is a library implementing an interface for reading and writing
 PNG (Portable Network Graphics) format files.
 
 This package contains the runtime library files needed to run software
 using libpng.
 
-%description devel
+%description -n libpng-devel
 libpng is a library implementing an interface for reading and writing
 PNG (Portable Network Graphics) format files.
 
 This package contains the header and development files needed to build
 programs and packages using libpng.
 
-%description devel-static
-This package contains static library necessary for developing statically
-linked programs using the PNG (Portable Network Graphics) library.
-
 %prep
-%setup -n %name-%version-%release
+%setup
 
 %build
 %autoreconf
-%configure %{subst_enable static}
+%configure --disable-static
 %make_build
 
 %install
@@ -77,13 +58,13 @@ xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 %check
 %make_build -k check
 
-%files -n libpng15
+%files
 %_libdir/*.so.*
 %_man5dir/*
 %dir %docdir
 %docdir/[CLR]*
 
-%files devel
+%files -n libpng-devel
 %_bindir/*-config
 %_libdir/*.so
 %_includedir/*
@@ -92,12 +73,10 @@ xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 %docdir
 %exclude %docdir/[CLR]*
 
-%if_enabled static
-%files devel-static
-%_libdir/*.a
-%endif
-
 %changelog
+* Tue Jun 20 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.29-alt1
+- 1.6.29
+
 * Thu Dec 29 2016 Dmitry V. Levin <ldv@altlinux.org> 1.5.28-alt1
 - 1.5.27 -> 1.5.28.
 
