@@ -1,5 +1,6 @@
 
 %add_findpackage_path %_kde4_bindir
+%def_disable build_ffmpegthumbs
 
 %define rname kdemultimedia
 Name: kde4multimedia
@@ -7,7 +8,7 @@ Name: kde4multimedia
 %define minor 08
 %define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2%ubt
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Multimedia
@@ -33,7 +34,7 @@ Patch1: alt-kmix-plasma.patch
 # ALT
 #
 
-BuildRequires(pre): kde4base-workspace-devel
+BuildRequires(pre): rpm-build-ubt kde4base-workspace-devel
 BuildRequires: gcc-c++ libcdparanoia-devel
 BuildRequires: libmusicbrainz3-devel libtunepimp-devel libflac-devel
 BuildRequires: libmad-devel libvorbis-devel libtheora-devel libspeex-devel
@@ -89,6 +90,7 @@ audio files, and manage your collection and playlists.
 Group: Sound
 Summary: KDE audiocd ioslave
 Requires: %name-core = %version-%release
+Requires: lame
 %description audiocd
 Audiocd ioslave
 
@@ -150,6 +152,10 @@ based on %name.
 
 %prep
 %setup -q -cT -n %rname-%version -a0 -a1 -a2 -a3 -a4 -a5
+%if_enabled build_ffmpegthumbs
+%else
+    rm -rf ffmpegthumbs*
+%endif
 ls -d1 * | \
 while read d
 do
@@ -219,8 +225,10 @@ done
 %_K4iconsdir/hicolor/*/*/*.*
 
 %files videothumbnail
+%if_enabled build_ffmpegthumbs
 %_K4lib/ffmpegthumbs.so
 %_K4srv/ffmpegthumbs.desktop
+%endif
 
 %files dragonplayer
 %_K4bindir/dragon
@@ -288,6 +296,9 @@ done
 %_K4dbus_interfaces/*.xml
 
 %changelog
+* Tue Jun 20 2017 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2%ubt
+- don't build video thumbnail plugin
+
 * Tue Sep 15 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
 - new version
 
