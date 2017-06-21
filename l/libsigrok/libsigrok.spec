@@ -1,6 +1,6 @@
 Name: libsigrok
 Version: 0.5.0
-Release: alt1
+Release: alt2
 
 Summary: sigrok -- signal analysis software suite
 License: GPLv3
@@ -72,8 +72,13 @@ this package provides development part of libsigrokcxx.
 
 %install
 %makeinstall_std
+install -pm0644 -D contrib/z60_libsigrok.rules %buildroot%_udevrulesdir/70-sigrok.rules
+
+%pre
+%_sbindir/groupadd -r -f plugdev &> /dev/null
 
 %files
+%_udevrulesdir/70-sigrok.rules
 %_libdir/libsigrok.so.*
 
 %files devel
@@ -90,5 +95,8 @@ this package provides development part of libsigrokcxx.
 %_pkgconfigdir/libsigrokcxx.pc
 
 %changelog
+* Wed Jun 21 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.0-alt2
+- added udev rules file, uaccess and group based
+
 * Mon Jun 19 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.0-alt1
 - initial
