@@ -1,7 +1,7 @@
 Name: pve-common
 Summary: PVE base library
 Version: 4.0.83
-Release: alt2
+Release: alt3
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -54,6 +54,9 @@ install -pD -m0755 pve-etcnet-to-network %buildroot%_sbindir/pve-etcnet-to-netwo
 %perl_vendor_privlib/PVE
 
 %changelog
+* Wed Jun 21 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.0.83-alt3
+- PVE::Tools::run_command: fixed exit code
+
 * Wed Mar 15 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.0.83-alt2
 - ovs fixes for ovsport
 
