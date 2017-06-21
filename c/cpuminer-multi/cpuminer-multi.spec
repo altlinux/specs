@@ -1,5 +1,5 @@
 Name:		cpuminer-multi
-Version:	1.3.2
+Version:	1.3.3
 Release:	alt1
 Summary:	Multi-threaded CPU miner
 Url:		https://github.com/tpruvot/cpuminer-multi
@@ -13,7 +13,7 @@ Source4:	cpuminer-conf.json.scryptjanenf16
 
 # Automatically added by buildreq on Tue Apr 11 2017 (-bi)
 # optimized out: elfutils gnu-config libstdc++-devel python-base python-modules xz
-BuildRequires: gcc-c++ libcurl-devel libssl-devel zlib-devel
+BuildRequires: gcc-c++ libcurl-devel libssl-devel zlib-devel /usr/bin/xz
 
 %description
 This is a multi-threaded CPU miner,
@@ -41,6 +41,9 @@ install -Dp -m 644 {%SOURCE1,%SOURCE2,%SOURCE3,%SOURCE4} ./examples/
 %_man1dir/*
 
 %changelog
+* Wed Jun 21 2017 Motsyo Gennadi <drool@altlinux.ru> 1.3.3-alt1
+- 1.3.3 (handle a new tribus algo)
+
 * Thu May 11 2017 Motsyo Gennadi <drool@altlinux.ru> 1.3.2-alt1
 - 1.3.2
 
