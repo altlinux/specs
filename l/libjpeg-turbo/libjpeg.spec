@@ -1,6 +1,6 @@
 Name: libjpeg-turbo
-Version: 1.3.1
-Release: alt0.1
+Version: 1.5.1
+Release: alt1
 Epoch: 2
 
 Summary: A SIMD-accelerated library for manipulating JPEG image format files
@@ -14,12 +14,10 @@ Source2: http://jpegclub.org/jpegexiforient.c
 Source3: exifautotran
 Source4: jpeginfo.c
 
-Patch1: libjpeg-6b-suse-int32.patch
 Patch2: libjpeg-turbo-fedora-noinst.patch
 Patch3: libjpeg-turbo-alt-rdjpgcom-i18n.patch
 Patch4: libjpeg-turbo-alt-versioning.patch
 Patch5: libjpeg-turbo-alt-libturbojpeg.patch
-Patch6: libjpeg-turbo-alt-warnings.patch
 
 %def_enable static
 
@@ -101,12 +99,10 @@ This package contains development files for the turbojpeg library.
 
 %prep
 %setup -n %name-%version-%release
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 
 install -pm644 %_sourcedir/{jpegexiforient,jpeginfo}.c .
 install -pm755 %_sourcedir/exifautotran .
@@ -119,6 +115,9 @@ sed -n 's/^EXTERN([^()]*)[[:space:]]*\([^[:space:]]\+\).*/\1/p' jpegint.h \
 # extra symbols required by packages
 cat >> libjpeg.sym <<'EOF'
 jinit_c_master_control
+jinit_color_converter
+jinit_master_decompress
+jinit_downsampler
 jpeg_std_message_table
 EOF
 sort -u -o libjpeg.sym{,}
@@ -145,7 +144,7 @@ find %buildroot -name 'libturbojpeg.*a' -delete
 %define docdir %_docdir/%name
 rm -rf %buildroot%docdir
 mkdir -p %buildroot%docdir
-install -pm644 README* ChangeLog.txt change.log example.c \
+install -pm644 README* change.log example.c \
 	coderules.txt libjpeg.txt.bz2 structure.txt.bz2 usage.txt.bz2 wizard.txt \
 	%buildroot%docdir/
 
@@ -163,6 +162,7 @@ install -pm644 README* ChangeLog.txt change.log example.c \
 %_includedir/j*
 %dir %docdir
 %docdir/[^CLR]*
+%_pkgconfigdir/libjpeg.pc
 
 %if_enabled static
 %files -n libjpeg-devel-static
@@ -175,8 +175,12 @@ install -pm644 README* ChangeLog.txt change.log example.c \
 %files -n libturbojpeg-devel
 %_libdir/libturbojpeg.so
 %_includedir/turbojpeg.h
+%_pkgconfigdir/libturbojpeg.pc
 
 %changelog
+* Wed Jun 21 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:1.5.1-alt1
+- 1.5.1 released
+
 * Thu Dec 26 2013 Dmitry V. Levin <ldv@altlinux.org> 2:1.3.1-alt0.1
 - Updated to 1.3.1 r1092 (fixes CVE-2013-6629, CVE-2013-6630).
 
