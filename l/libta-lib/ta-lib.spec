@@ -1,7 +1,7 @@
 %define sourcename ta-lib
 Name: libta-lib
 Version: 0.4.0
-Release: alt1
+Release: alt2
 Summary: TA LIB
 
 Group: Development/Other
@@ -21,6 +21,13 @@ Open-source API for C/C++, Java, Perl, Python and 100% Managed .NET
 %prep
 %setup -n %sourcename-%version
 
+%package devel
+Summary: devel package fot libta-lib
+Group: Development/Other
+Requires: %name
+%description devel
+%summary
+
 %build
 #./autogen.sh
 #libtoolize -f
@@ -34,9 +41,14 @@ Open-source API for C/C++, Java, Perl, Python and 100% Managed .NET
 %doc HISTORY.TXT CHANGELOG.TXT
 %_bindir/ta-lib-config
 %_libdir/libta_lib*
+
+%files devel
 %_includedir/ta-lib
 
 %changelog
+* Wed Jun 21 2017 Konstantin Artyushkin <akv@altlinux.org> 0.4.0-alt2
+- split a devel pack
+
 * Wed Jun 21 2017 Konstantin Artyushkin <akv@altlinux.org> 0.4.0-alt1
 - initial build
 
