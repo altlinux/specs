@@ -3,7 +3,7 @@
 
 Name: zoneminder
 Version: 1.30.4
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPL
@@ -29,14 +29,6 @@ support the Video For Linux (V4L) interface and has been tested with cameras
 attached to BTTV cards, various USB cameras and IP network cameras. It is
 designed to support as many cameras as you can attach to your computer without
 too much degradation of performance. This package includes cambozola.jar.
-
-%package apache
-Summary: Zoneminder configuration file and requires for apache
-Group: Networking/WWW
-Requires: apache apache-mod_php5 apache-mod_perl
-BuildArch: noarch
-%description apache
-Zoneminder configuration file and requires for apache
 
 %package api
 Summary: Zoneminder Web API
@@ -112,12 +104,6 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %post
 %post_service zoneminder
 
-%post apache
-%post_service httpd
-
-%preun apache
-%preun_service httpd
-
 %preun
 %preun_service zoneminder
 
@@ -143,10 +129,6 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/polkit-1/*/*
 %exclude %_datadir/%name/www/api
 
-
-%files apache
-%config(noreplace) %_sysconfdir/httpd/conf/addon-modules.d/zoneminder.conf
-
 %files nginx
 %doc README-nginx-ru.alt
 %config(noreplace) %_sysconfdir/nginx/sites-enabled.d/*
@@ -155,6 +137,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Wed Jun 21 2017 Anton Farygin <rider@altlinux.ru> 1.30.4-alt2%ubt
+- removed apache subpackage
+
 * Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 1.30.4-alt1%ubt
 - new version
 
