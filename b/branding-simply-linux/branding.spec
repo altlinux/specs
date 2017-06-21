@@ -9,7 +9,7 @@
 
 Name: branding-simply-linux
 Version: 7.98.1
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
@@ -469,6 +469,10 @@ fi
 %config %_sysconfdir/polkit-1/rules.d/*.rules
 
 %changelog
+* Wed Jun 21 2017 Mikhail Efremov <sem@altlinux.org> 7.98.1-alt2
+- menu: Add wesnoth.desktop.
+- xfce-settings: Force DPI 96.
+
 * Mon Jun 19 2017 Mikhail Efremov <sem@altlinux.org> 7.98.1-alt1
 - slideshow: Change License to CC-BY-NC-SA-3.0+.
 - xfce-settings: Require backgrounds8 subpackage.
