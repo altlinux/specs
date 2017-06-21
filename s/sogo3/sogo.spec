@@ -4,7 +4,7 @@
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo3
 Version:      3.2.9
-Release:      alt2
+Release:      alt2%ubt
 
 License:      GPL
 URL:          http://www.inverse.ca/contributions/sogo.html
@@ -14,7 +14,9 @@ Packager:     Andrey Cherepanov <cas@altlinux.org>
 
 Source:       SOGo-%version.tar.gz
 Source1:      sogo.init
-Patch:        %name-%version-%release.patch
+Patch:        %name-%version-alt.patch
+
+BuildRequires(pre): rpm-build-ubt
 
 BuildPreReq:   gnustep-make-devel rpm-build-apache2
 BuildRequires: gcc-objc
@@ -398,6 +400,9 @@ fi
 %preun_service sogo
 
 %changelog
+* Wed Jun 21 2017 Evgeny Sinelnikov <sin@altlinux.ru> 3.2.9-alt2%ubt
+- Add universal build tag (aka ubt macros)
+
 * Fri Jun 09 2017 Evgeny Sinelnikov <sin@altlinux.ru> 3.2.9-alt2
 - Rebuild with splited samba-DC-libs
 
