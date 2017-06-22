@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.37
+Version: 5.38
 Release: alt1
 
 Source:%name-%version.tar
@@ -141,6 +141,12 @@ fi ||:
 
 
 %changelog
+* Thu Jun 22 2017 Ivan Zakharyaschev <imz@altlinux.org> 5.38-alt1
+- form.js: fix arbitrary HTML+JS injection by constructing new HTML
+  elements "structurally".
+- workflow/none.scm: made SCRIPT external to fix the injection of
+  arbitrary HTML+JS (from initial values).
+
 * Thu Jun 08 2017 Denis Medvedev <nbr@altlinux.org> 5.37-alt1
 - Fix help url for non-root users.
 
