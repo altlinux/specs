@@ -4,7 +4,7 @@
 
 Name:       python-module-%oname
 Epoch:      1
-Version:    5.17.1
+Version:    5.17.2
 Release:    alt1
 Summary:    OpenStack common messaging library
 
@@ -192,6 +192,9 @@ popd
 %doc html LICENSE
 
 %changelog
+* Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1:5.17.2-alt1
+- 5.17.2
+
 * Thu May 25 2017 Alexey Shabalin <shaba@altlinux.ru> 1:5.17.1-alt1
 - 5.17.1
 - add test packages
