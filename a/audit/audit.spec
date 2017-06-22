@@ -1,5 +1,5 @@
 Name: audit
-Version: 2.7.6
+Version: 2.7.7
 Release: alt1%ubt
 
 Packager: Anton Farygin <rider@altlinux.com>
@@ -174,6 +174,9 @@ install -pD -m644 rules/10-base-config.rules %buildroot%_sysconfdir/%name/rules.
 %python_sitelibdir/*
 
 %changelog
+* Thu Jun 22 2017 Anton Farygin <rider@altlinux.ru> 2.7.7-alt1%ubt
+- new version
+
 * Mon Apr 24 2017 Anton Farygin <rider@altlinux.ru> 2.7.6-alt1%ubt
 - new version
 
