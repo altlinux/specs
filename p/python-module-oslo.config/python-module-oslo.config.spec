@@ -3,7 +3,7 @@
 %def_with python3
 
 Name:       python-module-%oname
-Version:    3.22.0
+Version:    3.22.1
 Release:    alt1
 Summary:    OpenStack common configuration library
 
@@ -160,6 +160,9 @@ popd
 %doc LICENSE doc/build/html
 
 %changelog
+* Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 3.22.1-alt1
+- 3.22.1
+
 * Fri Apr 28 2017 Alexey Shabalin <shaba@altlinux.ru> 3.22.0-alt1
 - 3.22.0
 - add test package
