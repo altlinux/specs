@@ -5,7 +5,7 @@
 Name: openstack-%oname
 Summary: OpenStack Orchestration (heat)
 Version: 8.0.2
-Release: alt1
+Release: alt2
 Epoch: 1
 License: ASL 2.0
 Group: System/Servers
@@ -272,7 +272,6 @@ install -p -m 644 etc/heat/templates/*.yaml %buildroot%_sysconfdir/heat/template
 %define heat_conf %buildroot%_sysconfdir/heat/heat.conf.d/010-heat.conf
 crudini --set %heat_conf DEFAULT log_dir /var/log/heat
 crudini --set %heat_conf oslo_concurrency lock_path %_runtimedir/heat
-crudini --set %heat_conf keystone_authtoken signing_dir /var/cache/heat/keystone-signing
 
 %pre
 # 187:187 for heat (openstack-heat)
@@ -381,6 +380,9 @@ crudini --set %heat_conf keystone_authtoken signing_dir /var/cache/heat/keystone
 %_prefix/lib/heat/docker
 
 %changelog
+* Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.2-alt2
+- drop signing_dir from default config
+
 * Tue Jun 13 2017 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.2-alt1
 - 8.0.2
 
