@@ -3,7 +3,7 @@
 
 Name: lightdm-gtk-greeter
 Version: 2.0.1
-Release: alt6
+Release: alt7
 Summary: LightDM GTK+ Greeter
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -68,6 +68,10 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Thu Jun 22 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt7
+- Fix: Don\'t claim the greeter as resettable leaving the "reset"
+  callback registered.
+
 * Tue Jun 20 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt6
 - Make the greeter resettable. On reset, select the provided username
   and start authentication.

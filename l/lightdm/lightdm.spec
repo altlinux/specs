@@ -6,7 +6,7 @@
 
 Name: lightdm
 Version: 1.16.7
-Release: alt2
+Release: alt3
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -244,6 +244,10 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Jun 22 2017 Paul Wolneykien <manowar@altlinux.org> 1.16.7-alt3
+- When is switching to the greeter, unconditionally use an existing
+  one, if any, trying to reset it to the new user name.
+
 * Tue Jun 20 2017 Paul Wolneykien <manowar@altlinux.org> 1.16.7-alt2
 - Fixed "Error writing to daemon: Broken pipe".
 
