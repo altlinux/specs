@@ -2,13 +2,15 @@
 
 Name: openstack-%oname
 Version: 4.0.0
-Release: alt1
+Release: alt2
 Summary: OpenStack Telemetry Alarming
 Group: System/Servers
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 BuildArch: noarch
+
+Patch1: aodh-Fix-migration-alarm_history.patch
 
 Source2: aodh.logrotate
 Source6: aodh.conf
@@ -183,6 +185,7 @@ This package contains the Aodh test files.
 
 %prep
 %setup -n %oname-%version
+%patch1 -p1
 
 find . \( -name .gitignore -o -name .placeholder \) -delete
 
@@ -247,6 +250,8 @@ ln -s %_datadir/aodh/aodh.wsgi %buildroot%webserver_cgibindir/aodh-wsgi
 ### set default configuration
 %define aodh_conf %buildroot%_sysconfdir/aodh/aodh.conf.d/010-aodh.conf
 crudini --set %aodh_conf DEFAULT log_dir /var/log/aodh
+crudini --set %aodh_conf DEFAULT state_path /var/lib/aodh
+crudini --set %aodh_conf oslo_concurrency lock_path /var/run/aodh
 
 # Install i18n .mo files (.po and .pot are not required)
 #install -d -m 755 %buildroot%_datadir
@@ -353,6 +358,10 @@ rm -fr %buildroot/usr/etc
 %_initdir/%name-expirer
 
 %changelog
+* Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 4.0.0-alt2
+- update default config
+- Fix the migration to use alarm_history
+
 * Tue Jun 13 2017 Alexey Shabalin <shaba@altlinux.ru> 4.0.0-alt1
 - 4.0.0
 
