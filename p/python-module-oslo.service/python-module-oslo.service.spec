@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.19.0
+Version: 1.19.1
 Release: alt1
 Summary: Oslo service library
 Group: Development/Python
@@ -139,6 +139,9 @@ popd
 %doc html
 
 %changelog
+* Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1.19.1-alt1
+- 1.19.1
+
 * Thu May 25 2017 Alexey Shabalin <shaba@altlinux.ru> 1.19.0-alt1
 - 1.19.0
 
