@@ -13,7 +13,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        52.1.1
+Version:        52.2.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -199,6 +199,7 @@ MOZ_SMP_FLAGS=-j1
 %ifarch %{ix86} x86_64
 [ "${NPROCS:+0}" -ge 2 ] && MOZ_SMP_FLAGS=-j2
 [ "${NPROCS:+0}" -ge 4 ] && MOZ_SMP_FLAGS=-j4
+[ "${NPROCS:+0}" -ge 6 ] && MOZ_SMP_FLAGS=-j6
 %endif
 
 make -f client.mk \
@@ -324,6 +325,30 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Wed Jun 21 2017 Andrey Cherepanov <cas@altlinux.org> 52.2.0-alt1
+- New ESR version (52.2.0)
+- Security fixes:
+  + CVE-2017-5472: Use-after-free using destroyed node when regenerating trees
+  + CVE-2017-7749: Use-after-free during docshell reloading
+  + CVE-2017-7750: Use-after-free with track elements
+  + CVE-2017-7751: Use-after-free with content viewer listeners
+  + CVE-2017-7752: Use-after-free with IME input
+  + CVE-2017-7754: Out-of-bounds read in WebGL with ImageInfo object
+  + CVE-2017-7755: Privilege escalation through Firefox Installer with same directory DLL files
+  + CVE-2017-7756: Use-after-free and use-after-scope logging XHR header errors
+  + CVE-2017-7757: Use-after-free in IndexedDB
+  + CVE-2017-7778: Vulnerabilities in the Graphite 2 library
+  + CVE-2017-7758: Out-of-bounds read in Opus encoder
+  + CVE-2017-7760: File manipulation and privilege escalation via callback parameter in Mozilla Windows Updater and Maintenance Service
+  + CVE-2017-7761: File deletion and privilege escalation through Mozilla Maintenance Service helper.exe application
+  + CVE-2017-7763: Mac fonts render some unicode characters as spaces
+  + CVE-2017-7764: Domain spoofing with combination of Canadian Syllabics and other unicode blocks
+  + CVE-2017-7765: Mark of the Web bypass when saving executable files
+  + CVE-2017-7766: File execution and privilege escalation through updater.ini, Mozilla Windows Updater, and Mozilla Maintenance Service
+  + CVE-2017-7767: Privilege escalation and arbitrary file overwrites through Mozilla Windows Updater and Mozilla Maintenance Service
+  + CVE-2017-7768: 32 byte arbitrary file read through Mozilla Maintenance Service
+  + CVE-2017-5470: Memory safety bugs fixed in Firefox 54 and Firefox ESR 52.2
+
 * Mon May 08 2017 Andrey Cherepanov <cas@altlinux.org> 52.1.1-alt1
 - New ESR version (52.1.1)
 - Set plugin.load_flash_only setting to false to allow use all NPAPI plugins
