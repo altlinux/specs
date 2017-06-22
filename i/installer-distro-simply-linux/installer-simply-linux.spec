@@ -1,5 +1,5 @@
 Name: installer-distro-simply-linux
-Version: 8.2
+Version: 8.3
 Release: alt1
 
 Summary: Installer common files
@@ -119,6 +119,9 @@ Installer stage3
 %_datadir/alterator/steps/*
 
 %changelog
+* Thu Jun 22 2017 Mikhail Efremov <sem@altlinux.org> 8.3-alt1
+- initinstall: Force 96 DPI.
+
 * Mon Jun 19 2017 Mikhail Efremov <sem@altlinux.org> 8.2-alt1
 - vm-profile: New profile.
 - Drop help.
