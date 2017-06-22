@@ -1,4 +1,4 @@
-%define ver_major 1.0
+%define ver_major 1.4
 %define xdg_name org.gnome.Recipes
 
 Name: gnome-recipes
@@ -19,9 +19,9 @@ Requires: %name-data = %EVR
 
 %define gtk_ver 3.20
 
-BuildRequires: autoconf-archive libappstream-glib-devel rpm-build-xdg yelp-tools
+BuildRequires: meson git-core libappstream-glib-devel rpm-build-xdg yelp-tools
 BuildRequires: libgtk+3-devel >= %gtk_ver libjson-glib-devel
-BuildRequires: libgspell-devel libgnome-autoar-devel
+BuildRequires: libgspell-devel libgnome-autoar-devel libsoup-devel
 BuildRequires: libcanberra-gtk3-devel
 BuildRequires: vala-tools gobject-introspection-devel
 
@@ -47,20 +47,20 @@ This package contains common noarch files needed for Recipes.
 %setup
 
 %build
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 %find_lang --with-gnome --output=%name.lang %name %name-data %xdg_name
 
 %check
-%make check
+%meson_test
 
 %files
 %_bindir/%name
-%doc NEWS
+%doc README.md
 
 %files data -f %name.lang
 %_datadir/%name/
@@ -75,6 +75,9 @@ This package contains common noarch files needed for Recipes.
 
 
 %changelog
+* Thu Jun 22 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4.6-alt1
+- 1.4.6
+
 * Sun May 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.6-alt1
 - 1.0.6
 
