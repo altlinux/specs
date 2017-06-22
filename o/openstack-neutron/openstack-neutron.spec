@@ -2,7 +2,7 @@
 
 Name: openstack-%oname
 Version: 10.0.2
-Release: alt1
+Release: alt2
 Epoch: 1
 Provides: openstack-quantum = %EVR
 Obsoletes: openstack-quantum < 2013.2-0.4.b3
@@ -366,7 +366,6 @@ crudini --set %neutron_conf DEFAULT state_path /var/lib/neutron
 crudini --set %neutron_conf DEFAULT log_dir /var/log/neutron
 crudini --set %neutron_conf agent root_helper "sudo neutron-rootwrap /etc/neutron/rootwrap.conf"
 crudini --set %neutron_conf oslo_concurrency lock_path /var/run/neutron
-crudini --set %neutron_conf keystone_authtoken signing_dir /var/cache/neutron/keystone-signing
 
 %pre
 %_sbindir/groupadd -r -f neutron 2>/dev/null ||:
@@ -558,6 +557,9 @@ fi
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.2-alt2
+- drop signing_dir from default config
+
 * Mon Jun 05 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.2-alt1
 - 10.0.2 Ocata release
 - add test package
