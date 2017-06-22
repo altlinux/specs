@@ -2,7 +2,7 @@
 %add_python_req_skip hp3parclient
 
 Name: openstack-%oname
-Version: 10.0.2
+Version: 10.0.3
 Release: alt1
 Epoch: 1
 Summary: OpenStack Volume service
@@ -241,7 +241,6 @@ ln -s %_datadir/cinder/cinder.wsgi %buildroot%webserver_cgibindir/cinder-osapi_v
 crudini --set %cinder_conf DEFAULT log_dir /var/log/cinder
 crudini --set %cinder_conf DEFAULT state_path /var/lib/cinder
 crudini --set %cinder_conf oslo_concurrency lock_path /var/run/cinder
-crudini --set %cinder_conf keystone_authtoken signing_dir /var/cache/cinder/keystone-signing
 
 %pre
 # 165:165 for ceilometer (openstack-cinder)
@@ -308,6 +307,10 @@ crudini --set %cinder_conf keystone_authtoken signing_dir /var/cache/cinder/keys
 %doc doc/build/html
 
 %changelog
+* Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.3-alt1
+- 10.0.3
+- drop signing_dir from default config
+
 * Thu Jun 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.2-alt1
 - 10.0.2 Ocata release
 - add tests package
