@@ -3,7 +3,7 @@
 
 Name: openstack-%oname
 Version: 8.0.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: OpenStack measurement collection service
 
@@ -365,9 +365,8 @@ rm -fr %buildroot/usr/etc
 
 %define ceilometer_conf %buildroot%_sysconfdir/ceilometer/ceilometer.conf.d/010-ceilometer.conf
 crudini --set %ceilometer_conf DEFAULT log_dir %_logdir/ceilometer
-crudini --set %ceilometer_conf DEFAULT policy_file %_sysconfdir/ceilometer/policy.json
-crudini --set %ceilometer_conf DEFAULT lock_path %_runtimedir/ceilometer
-crudini --set %ceilometer_conf keystone_authtoken signing_dir %_cachedir/ceilometer/keystone-signing
+crudini --set %ceilometer_conf DEFAULT state_path /var/lib/ceilometer
+crudini --set %ceilometer_conf oslo_concurrency lock_path %_runtimedir/ceilometer
 
 %pre
 # 166:166 for ceilometer (openstack-ceilometer)
@@ -498,6 +497,9 @@ crudini --set %ceilometer_conf keystone_authtoken signing_dir %_cachedir/ceilome
 %_initdir/%name-polling
 
 %changelog
+* Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.1-alt2
+- drop signing_dir from default config
+
 * Fri Jun 09 2017 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.1-alt1
 - 8.0.1 Ocata release
 
