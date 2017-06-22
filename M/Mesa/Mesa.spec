@@ -4,8 +4,8 @@
 %def_enable xa
 
 Name: Mesa
-Version: 17.1.1
-Release: alt2
+Version: 17.1.3
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -17,7 +17,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: llvm-devel >= 3.4.2 llvm-devel-static >= 3.4.2
+BuildRequires: llvm-devel >= 3.8.0 llvm-devel-static >= 3.8.0
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
 BuildRequires: libdrm-devel libexpat-devel xorg-glproto-devel xorg-dri2proto-devel python-modules libselinux-devel libxcb-devel libSM-devel
 BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libwayland-client-devel libwayland-server-devel libffi-devel libelf-devel
@@ -415,6 +415,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Thu Jun 22 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:17.1.3-alt1
+- 17.1.3
+
 * Thu Jun 01 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:17.1.1-alt2
 - new subpackage xorg-dri-virgl
 
