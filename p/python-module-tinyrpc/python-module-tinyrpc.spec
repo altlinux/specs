@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5
-Release: alt1
+Release: alt2
 Summary: Modular RPC library
 Group: Development/Python
 License: MIT
@@ -46,6 +46,8 @@ and providing clever syntactic sugar for writing dispatchers.
 
 %prep
 %setup -n %oname-%version
+# Remove bundled egg-info
+rm -rf %oname.egg-info
 
 %if_with python3
 rm -rf ../python3
@@ -80,5 +82,8 @@ popd
 %endif
 
 %changelog
+* Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 0.5-alt2
+- fix permitions inside egg-info dir
+
 * Tue Jun 06 2017 Alexey Shabalin <shaba@altlinux.ru> 0.5-alt1
 - Initial package.
