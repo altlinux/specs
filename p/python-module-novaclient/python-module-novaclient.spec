@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 7.1.1
+Version: 7.1.2
 Release: alt1
 Summary: Python API and CLI for OpenStack Nova
 
@@ -173,6 +173,9 @@ install -p -D -m 644 doc/build/man/nova.1 %buildroot%_man1dir/nova.1
 %doc doc/build/html
 
 %changelog
+* Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 7.1.2-alt1
+- 7.1.2
+
 * Tue May 30 2017 Alexey Shabalin <shaba@altlinux.ru> 7.1.1-alt1
 - 7.1.1
 
