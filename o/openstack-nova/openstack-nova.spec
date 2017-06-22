@@ -2,7 +2,7 @@
 %add_findreq_skiplist %python_sitelibdir/nova/cloudpipe/*.template
 
 Name: openstack-%oname
-Version: 15.0.5
+Version: 15.0.6
 Release: alt1
 Epoch: 1
 Summary: OpenStack Compute (nova)
@@ -596,7 +596,6 @@ rm -f %buildroot/usr/share/doc/nova/README*
 crudini --set %nova_conf DEFAULT log_dir /var/log/nova
 crudini --set %nova_conf DEFAULT state_path /var/lib/nova
 crudini --set %nova_conf oslo_concurrency lock_path %_runtimedir/nova
-crudini --set %nova_conf keystone_authtoken signing_dir /var/cache/nova/keystone-signing
 
 %pre common
 # 162:162 for nova (openstack-nova)
@@ -821,6 +820,10 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %doc LICENSE doc/build/html
 
 %changelog
+* Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1:15.0.6-alt1
+- 15.0.6
+- drop signing_dir from default config
+
 * Mon Jun 05 2017 Alexey Shabalin <shaba@altlinux.ru> 1:15.0.5-alt1
 - 15.0.5 Ocata release
 
