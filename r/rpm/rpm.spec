@@ -16,8 +16,8 @@
 
 Summary: The RPM package management system
 Name: rpm
-Version: 4.13.0
-Release: alt7
+Version: 4.13.0.1
+Release: alt1
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -50,7 +50,6 @@ BuildRequires: nss-devel
 BuildRequires: popt-devel >= 1.10.2
 BuildRequires: libmagic-devel
 BuildRequires: gettext-devel
-BuildRequires: ncurses-devel
 BuildRequires: bzip2-devel
 BuildRequires: python-devel >= 2.6
 BuildRequires: python3-devel >= 3.2
@@ -113,6 +112,9 @@ License: GPLv2+ and LGPLv2+ with exceptions
 Provides: rpm-plugin-selinux = %EVR
 Obsoletes: rpm-plugin-selinux < %EVR
 Conflicts: librpm < 4.0.4-alt100.97
+# due to liblua update
+# libapt 0.5.15lorg2-alt56 was rebuilt with lua 5.3.
+Conflicts: libapt < 0.5.15lorg2-alt56
 
 %description -n librpm%sover
 This package contains the RPM shared libraries.
@@ -254,17 +256,8 @@ for i in $(find . -name ltmain.sh) ; do
      sed -i.backup -e 's~compiler_flags=$~compiler_flags="%optflags"~' $i
 done;
 
-# Using configure macro has some unwanted side-effects on rpm platform
-# setup, use the old-fashioned way for now only defining minimal paths.
-./configure \
-	--prefix=%_usr \
-	--libexecdir=%_libexecdir \
-	--sysconfdir=%_sysconfdir \
-	--localstatedir=%_var/lib \
-	--sharedstatedir=%_var/lib \
-	--libdir=%_libdir \
-	--build=%_target_platform \
-	--host=%_target_platform \
+%define _configure_target --build=%_target_platform --host=%_target_platform
+%configure \
 	--with-vendor=alt \
 	--with-external-db \
 	%{subst_enable plugins} \
@@ -274,7 +267,7 @@ done;
 	--with-cap \
 	--with-acl \
 	--enable-python \
-#
+	#
 
 %make_build
 
@@ -510,6 +503,21 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Wed Jun 21 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0.1-alt1
+- Rebased on 4.13.0.1.
+- Disabled signature checking.
+- librpm7: added C: libapt < 0.5.15lorg2-alt56.
+- Restored 4.0.4-alt98.8 read ahead hack (package.c (rpmReadPackageFile): Use
+  posix_fadvise(2) to disable readahead.  When scanning a large number of
+  packages (with e.g. rpmquery), readahead might cause negative effects on the
+  buffer cache).
+- Disabled %%pretrans scriptlets DURING_INSTALL.
+- Fixed comparison of deps with empty or undefinded EVRs: overlap only
+  if both are empty or undefinded.
+- Restored good old rpm{RangesOverlap,CheckRpmlibProvides} functions to librpm.
+- Added SHA{256,512} apt tags.
+- Fixed set:versions support in rpmdsCompareEVR.
+
 * Tue Dec 20 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0-alt7
 - rpmquery: added -i alias for --info (ALT#32872).
 - librpmbuild7: removed C: librpm < 4.0.4-alt100.97.
