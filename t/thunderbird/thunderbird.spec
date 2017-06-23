@@ -6,7 +6,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	52.1.1
+Version:	52.2.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -435,6 +435,24 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Thu Jun 22 2017 Andrey Cherepanov <cas@altlinux.org> 52.2.0-alt1
+- New version (52.2.0)
+- Security fixes:
+  + CVE-2017-5472: Use-after-free using destroyed node when regenerating trees
+  + CVE-2017-7749: Use-after-free during docshell reloading
+  + CVE-2017-7750: Use-after-free with track elements
+  + CVE-2017-7751: Use-after-free with content viewer listeners
+  + CVE-2017-7752: Use-after-free with IME input
+  + CVE-2017-7754: Out-of-bounds read in WebGL with ImageInfo object
+  + CVE-2017-7756: Use-after-free and use-after-scope logging XHR header errors
+  + CVE-2017-7757: Use-after-free in IndexedDB
+  + CVE-2017-7778: Vulnerabilities in the Graphite 2 library
+  + CVE-2017-7758: Out-of-bounds read in Opus encoder
+  + CVE-2017-7763: Mac fonts render some unicode characters as spaces
+  + CVE-2017-7764: Domain spoofing with combination of Canadian Syllabics and other unicode blocks
+  + CVE-2017-7765: Mark of the Web bypass when saving executable files
+  + CVE-2017-5470: Memory safety bugs fixed in Firefox 54 and Firefox ESR 52.2, and Thunderbird 52.2
+
 * Tue May 16 2017 Andrey Cherepanov <cas@altlinux.org> 52.1.1-alt1
 - New version (52.1.1)
 - New Enigmail 1.9.7
