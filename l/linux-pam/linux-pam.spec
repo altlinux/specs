@@ -1,12 +1,12 @@
 Name: linux-pam
-Version: 1.3.0
+Version: 1.3.0.0.17.7d0c
 Release: alt1
 
 Summary: Pluggable Authentication Modules
 # The library is BSD-style *without* advertising clause, with option to relicense as GPLv2+.
 License: BSD-style or GPLv2+
 Group: System/Base
-Url: https://fedorahosted.org/linux-pam/
+Url: https://github.com/linux-pam
 
 %def_disable static
 %def_enable nls
@@ -165,7 +165,7 @@ cp -p alt/pam_listfile.c modules/pam_listfile/
 find -type f \( -name .cvsignore -o -name \*~ -o -name \*.orig \) -delete
 
 # Unlink unwanted modules.
-for d in cracklib keyinit radius tty_audit unix \
+for d in cracklib radius tty_audit unix \
 		%{?!_enable_selinux:selinux sepermit}; do
 	sed -i "s,modules/pam_$d/Makefile,," configure.ac
 	sed -i "s/pam_$d //" modules/Makefile.am
@@ -336,6 +336,10 @@ make check
 %docdir/Linux-PAM*
 
 %changelog
+* Tue Jun 20 2017 Dmitry V. Levin <ldv@altlinux.org> 1.3.0.0.17.7d0c-alt1
+- v1.3.0-4-gdce30cd -> v1.3.0-17-g7d0c508.
+- Enabled pam_keyinit module (closes: #33558).
+
 * Tue Jun 14 2016 Dmitry V. Levin <ldv@altlinux.org> 1.3.0-alt1
 - v1.1.8-54-g5df44a3 -> v1.3.0-4-gdce30cd.
 
