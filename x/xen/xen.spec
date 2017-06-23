@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.8.1
-Release: alt8%ubt
+Release: alt9%ubt
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -793,6 +793,48 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Fri Jun 23 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt9%ubt
+- Upstream updates:
+ + xen/test/Makefile: Fix clean target, broken by pattern rule (thx Ian Jackson).
+ + x86: avoid leaking PKRU and BND* between vCPU-s (thx Jan Beulich). XSA-220
+ + xen/arm: vgic: Sanitize target mask used to send SGI (thx Julien Grall).
+ + gnttab: __gnttab_unmap_common_complete() is all-or-nothing (thx Jan Beulich). XSA-224
+ + gnttab: correct logic to get page references during map requests (thx George Dunlap). XSA-224
+ + gnttab: never create host mapping unless asked to (thx Jan Beulich). XSA-224
+ + gnttab: fix handling of dev_bus_addr during unmap (thx George Dunlap). XSA-224
+ + arm: vgic: Don't update the LR when the IRQ is not enabled (thx Julien Grall). XSA-223
+ + guest_physmap_remove_page() needs its return value checked (thx Jan Beulich). XSA-222
+ + memory: fix return value handing of guest_remove_page() (thx Andrew Cooper). XSA-222
+ + evtchn: avoid NULL derefs (thx Jan Beulich). XSA-221
+ + x86/shadow: hold references for the duration of emulated writes (thx Andrew Cooper). XSA-219
+ + gnttab: correct maptrack table accesses (thx Jan Beulich). XSA-218
+ + gnttab: Avoid potential double-put of maptrack entry (thx George Dunlap). XSA-218
+ + gnttab: fix unmap pin accounting race (thx Jan Beulich). XSA-218
+ + x86/mm: disallow page stealing from HVM domains (thx Jan Beulich). XSA-217
+ + Makefile: Provide way to ship livepatch test files (thx Ian Jackson).
+ + xen/test/livepatch: Add xen_nop.livepatch to .gitignore (thx Ian Jackson).
+ + xen/test/livepatch: Regularise Makefiles (thx Ian Jackson).
+ + xen/test/livepatch/Makefile: Install in
+   DESTDIR/usr/lib/debug/xen-livepatch (thx Ian Jackson).
+ + xen/arm: p2m: Fix incorrect mapping of superpages (thx Julien Grall).
+ + vgic: refuse irq migration when one is already in progress (thx Stefano Stabellini).
+ + arm: remove irq from inflight, then change physical affinity (thx Stefano Stabellini).
+ + xen/arm: Survive unknown traps from guests (thx Julien Grall).
+ + xen/arm: do_trap_hypervisor: Separate hypervisor and guest traps (thx Julien Grall).
+ + xen/arm: Save ESR_EL2 to avoid using mismatched value in syndrome
+   check (thx Wei Chen).
+ + stop_machine: fill fn_result only in case of error (thx Gregory Herrero).
+ + hvmloader: avoid tests when they would clobber used memory (thx Jan Beulich).
+ + arm: fix build with gcc 7 (thx Jan Beulich).
+ + x86: fix build with gcc 7 (thx Jan Beulich).
+ + x86/mm: fix incorrect unmapping of 2MB and 1GB pages (thx Igor Druzhinin).
+ + x86/pv: Align %rsp before pushing the failsafe stack frame (thx Andrew Cooper).
+ + x86/pv: Fix bugs with the handling of int80_bounce (thx Andrew Cooper).
+ + x86/vpmu_intel: fix hypervisor crash by masking PC bit in
+   MSR_P6_EVNTSEL (thx Mohit Gambhir).
+ + hvm: fix hypervisor crash in hvm_save_one() (thx Jan Beulich).
+ + x86/32on64: properly honor add-to-physmap-batch's size (thx Jan Beulich).
+
 * Wed Jun 07 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt8%ubt
 - fix ubt-macro usage in changelog
 
