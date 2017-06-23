@@ -1,6 +1,6 @@
 Name: nmap
 Version: 5.51
-Release: alt1.1.qa1
+Release: alt1.2
 Epoch: 20020501
 
 Summary: Network exploration tool and security scanner
@@ -39,7 +39,7 @@ Patch14: nmap-5.51-rh-zenmap-locale.patch
 Requires: chrooted-resolv, libdnet >= 0:1.12-alt1
 BuildRequires: gcc-c++, libcap-devel, libdnet-devel >= 0:1.12-alt1
 BuildRequires: libpcap-devel >= 2:0.8, libpcre-devel, libssl-devel
-%{?_with_liblua:BuildRequires: liblua5-devel}
+%{?_with_liblua:BuildRequires: liblua5.1-devel}
 %{?_with_ndiff:BuildRequires: python-devel}
 %{?_with_zenmap:BuildRequires: libpam-devel python-devel}
 
@@ -159,6 +159,9 @@ rm %buildroot%_datadir/zenmap/su-to-zenmap.sh
 %endif
 
 %changelog
+* Fri Jun 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 20020501:5.51-alt1.2
+- Updated dependencies to explicitly require lua-5.1
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 20020501:5.51-alt1.1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
