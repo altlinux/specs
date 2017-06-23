@@ -1,5 +1,5 @@
 Name: phpMyAdmin
-Version: 4.7.0
+Version: 4.7.1
 Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
@@ -28,7 +28,7 @@ BuildPreReq: rpm-build-apache2 rpm-macros-webserver-common
 BuildRequires: apache2-base >= 2.4
 BuildRequires: control
 
-AutoReq:yes,noshell,nomingw32
+AutoReq:yes,noshell,nomingw32,nopython
 
 %description
 phpMyAdmin can administer a whole MySQL-server (needs a super-user)
@@ -165,6 +165,9 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 #attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Fri Jun 23 2017 Vitaly Lipatov <lav@altlinux.ru> 4.7.1-alt1
+- new version 4.7.1 (with rpmrb script)
+
 * Sat May 13 2017 Vitaly Lipatov <lav@altlinux.ru> 4.7.0-alt1
 - new version 4.7.0 (with rpmrb script)
 
