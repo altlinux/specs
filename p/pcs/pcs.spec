@@ -1,6 +1,6 @@
 Name: 	  pcs
 Version:  0.9.158
-Release:  alt1
+Release:  alt2
 Epoch:    1
 
 Summary:  Pacemaker/Corosync configuration system
@@ -86,6 +86,9 @@ rm -rf %buildroot/%ruby_sitelibdir/pcsd/*{.service,.logrotate,debian,orig}*
 %ruby_sitelibdir/pcsd/test/*
 
 %changelog
+* Fri Jun 23 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.9.158-alt2
+- Fix pathes to pcsd and pacemaker data (ALT #33580)
+
 * Tue Jun 20 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.9.158-alt1
 - New version
 - Build from upstream tag
