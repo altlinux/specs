@@ -9,7 +9,7 @@
 
 Name: branding-simply-linux
 Version: 7.98.1
-Release: alt2
+Release: alt3
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
@@ -469,6 +469,9 @@ fi
 %config %_sysconfdir/polkit-1/rules.d/*.rules
 
 %changelog
+* Thu Jun 22 2017 Mikhail Efremov <sem@altlinux.org> 7.98.1-alt3
+- menu: Don't show java-*-policytool menu entry.
+
 * Wed Jun 21 2017 Mikhail Efremov <sem@altlinux.org> 7.98.1-alt2
 - menu: Add wesnoth.desktop.
 - xfce-settings: Force DPI 96.
