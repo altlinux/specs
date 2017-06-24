@@ -1,14 +1,15 @@
 %define _name nice
 %define ver_major 0.1
 %define api_ver %ver_major
-%def_disable static
-%def_disable gtk_doc
-
 %define gst_api_ver 1.0
 %define old_gst_api_ver 0.10
 
+%def_disable static
+%def_disable gtk_doc
+%def_without old_gstreamer
+
 Name: libnice
-Version: %ver_major.13
+Version: %ver_major.14
 Release: alt1
 
 Summary: Connectivity Establishment standard (ICE) library
@@ -18,10 +19,14 @@ URL: http://nice.freedesktop.org
 
 Source: http://nice.freedesktop.org/releases/%name-%version.tar.gz
 
-BuildRequires: glib2-devel gtk-doc libgupnp-igd-devel
-BuildRequires: gst-plugins-devel
+%define glib_ver 2.44
+%define tls_ver 2.12
+
+BuildRequires: glib2-devel >= %glib_ver gtk-doc libgupnp-igd-devel
+%{?_with_old_gstreamer:BuildRequires: gst-plugins-devel}
 BuildRequires: gst-plugins%gst_api_ver-devel
 BuildRequires: gobject-introspection-devel
+BuildRequires: libgnutls-devel
 
 %description
 Nice is an implementation of the IETF's draft Interactice Connectivity
@@ -108,8 +113,9 @@ for Gstreamer (1.0 API version)
 
 %build
 %configure \
+	%{subst_enable static} \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{subst_enable static}
+	%{?_without_old_gstreamer:--without-gstreamer-0.10}
 
 %make_build
 
@@ -139,8 +145,10 @@ for Gstreamer (1.0 API version)
 %files gir-devel
 %_girdir/Nice-%api_ver.gir
 
+%if_with old_gstreamer
 %files -n gst-plugins-nice
 %_libdir/gstreamer-%old_gst_api_ver/libgstnice010.so
+%endif
 
 %files -n gst-plugins-nice%gst_api_ver
 %_libdir/gstreamer-%gst_api_ver/libgstnice.so
@@ -154,6 +162,12 @@ for Gstreamer (1.0 API version)
 
 
 %changelog
+* Mon Apr 17 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.14-alt1
+- 0.1.14
+
+* Wed Nov 18 2015 Yuri N. Sedunov <aris@altlinux.org> 0.1.13-alt2
+- disabled build of GStreamer-0.10 plugin
+
 * Wed May 06 2015 Yuri N. Sedunov <aris@altlinux.org> 0.1.13-alt1
 - 0.1.13
 
