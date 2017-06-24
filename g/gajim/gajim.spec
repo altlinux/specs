@@ -1,6 +1,6 @@
 Name: gajim
-Version: 0.16.7
-Release: alt3
+Version: 0.16.8
+Release: alt1
 
 Summary: a Jabber client written in PyGTK
 License: GPLv3
@@ -19,6 +19,9 @@ BuildRequires: intltool libgtk+2-devel python-module-pygtk-devel python-modules-
 BuildRequires: libfarstream0.2-devel gst-plugins-bad1.0-devel libnice-devel libgupnp-igd-devel
 
 BuildArch: noarch
+
+%add_python_req_skip farstream
+
 
 %description
 Gajim is a Jabber client written in PyGTK. The goal of Gajim's developers
@@ -51,6 +54,9 @@ it nicely.
 %_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Sat Jun 24 2017 Ilya Mashkin <oddity@altlinux.ru> 0.16.8-alt1
+- 0.16.8
+
 * Fri Mar 24 2017 Ilya Mashkin <oddity@altlinux.ru> 0.16.7-alt3
 - spec cleanup, updated buildreqs (thanks to Yuri Sedunov)
 
