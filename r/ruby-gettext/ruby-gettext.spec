@@ -1,5 +1,5 @@
 Name:    ruby-gettext
-Version: 3.2.2
+Version: 3.2.3
 Release: alt1
 
 Summary: Native Language Support Library for Ruby
@@ -101,6 +101,9 @@ find . -name 'test_*.rb' -print0 | xargs -r0 -n 1 %ruby_test_unit -I../lib -I./
 %ruby_ri_sitedir/GetText*
 
 %changelog
+* Sat Jun 24 2017 Andrey Cherepanov <cas@altlinux.org> 3.2.3-alt1
+- New version
+
 * Fri May 19 2017 Andrey Cherepanov <cas@altlinux.org> 3.2.2-alt1
 - New version
 - Fix project homepage, license and cleanup spec
