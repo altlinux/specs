@@ -13,7 +13,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt2.1
+Release: alt3
 
 Summary: Matlab(TM) style python plotting package
 
@@ -166,7 +166,7 @@ gtk backend for %oname.
 %package -n python3-module-%oname-gtk3
 Summary: gtk3 backend for %oname (Python 3)
 Group: Development/Python3
-#Requires: python3-module-%oname-cairo = %version-%release
+Requires: python3-module-%oname-cairo = %version-%release
 Requires: typelib(Gtk) = 3.0
 Requires: python3-module-pygobject3
 
@@ -331,7 +331,7 @@ gtk backend for %oname.
 %package gtk3
 Summary: gtk3 backend for %oname
 Group: Development/Python
-#Requires: %name-cairo = %version-%release
+Requires: %name-cairo = %version-%release
 Requires: typelib(Gtk) = 3.0
 Requires: python-module-pygobject3
 
@@ -795,6 +795,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Sat Jun 24 2017 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt3
+- Added missing requires.
+
 * Wed May 31 2017 Michael Shigorin <mike@altlinux.org> 2.0.0-alt2.1
 - BOOTSTRAP: introduce qt4, qt5, wx knobs (on by default)
 
