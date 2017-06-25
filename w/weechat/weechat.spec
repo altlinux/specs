@@ -1,6 +1,6 @@
 Name: weechat
-Version: 1.4
-Release: alt1.4
+Version: 1.9
+Release: alt1
 
 Summary: fast, light & extensible IRC client
 License: GPLv3
@@ -9,6 +9,8 @@ Group: Networking/IRC
 URL: http://www.weechat.org/
 Source: %name-%version.tar
 Patch0: weechat-alt-python.patch
+
+Packager: Alexey Gladkov <legion@altlinux.ru>
 
 # Automatically added by buildreq on Thu Oct 20 2011
 BuildRequires: asciidoc asciidoc-a2x
@@ -125,8 +127,8 @@ find ./src/plugins -name "Makefile*" -print0 | xargs -r0 subst 's,\(\-module\),\
 %_libdir/%name/plugins/relay.so
 %_libdir/%name/plugins/xfer.so
 %_libdir/%name/plugins/trigger.so
-%_mandir/man*/*
-%_defaultdocdir/%name
+#_mandir/man*/*
+#_defaultdocdir/%name
 
 %files plugin-aspell
 %_libdir/%name/plugins/aspell.so
@@ -147,6 +149,9 @@ find ./src/plugins -name "Makefile*" -print0 | xargs -r0 subst 's,\(\-module\),\
 %_libdir/%name/plugins/tcl.so
 
 %changelog
+* Sun Jun 25 2017 Alexey Gladkov <legion@altlinux.ru> 1.9-alt1
+- New version (1.9)
+
 * Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt1.4
 - NMU: rebuild against Tcl/Tk 8.6
 
