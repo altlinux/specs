@@ -17,7 +17,7 @@
 
 Name: kf5-%rname
 Version: 5.9.5
-Release: alt6%ubt
+Release: alt7%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -303,6 +303,9 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Mon Jun 26 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt7.S1
+- update from 5.9 branch
+
 * Fri Jun 16 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt6%ubt
 - apply fix against KDE bugs 348390, 251222
 - create ~/.local/share/kf5
