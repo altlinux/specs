@@ -3,8 +3,8 @@
 %def_enable  systemd
 
 Name: 	 nss-ldapd
-Version: 0.9.7
-Release: alt2
+Version: 0.9.8
+Release: alt1
 
 Summary: An nsswitch module which uses directory servers
 License: LGPLv2+
@@ -175,6 +175,9 @@ exit 0
 %endif
 
 %changelog
+* Mon Jun 26 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.8-alt1
+- New version
+
 * Thu Dec 29 2016 Andrey Cherepanov <cas@altlinux.org> 0.9.7-alt2
 - Remove executable flag from service file
 
