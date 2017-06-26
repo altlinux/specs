@@ -13,7 +13,7 @@
 
 Name: kf5-%rname
 Version: 5.9.5
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -174,6 +174,9 @@ KF5 library
 
 
 %changelog
+* Mon Jun 26 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt2%ubt
+- update from 5.9 branch
+
 * Wed Apr 26 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
 - new version
 
