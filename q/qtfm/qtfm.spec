@@ -1,6 +1,6 @@
 Name:		qtfm
 Version:	5.5
-Release:	alt1
+Release:	alt2
 Summary:	qtFM is a small, lightweight file manager
 License:	GPLv2
 Group:		File tools
@@ -49,6 +49,9 @@ convert -resize 16x16 images/%name.png %buildroot%_miconsdir/%name.png
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Jun 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.5-alt2
+- Fix build with gcc-6
+
 * Sun Jun 17 2012 Motsyo Gennadi <drool@altlinux.ru> 5.5-alt1
 - 5.5
 
