@@ -14,7 +14,7 @@
 
 Name: %{engine_prefix}s-default
 Version: %ver_major.2
-Release: alt2.qa2.1
+Release: alt3
 Epoch: 1
 
 Summary: Default GTK+2 theme engines
@@ -242,6 +242,8 @@ This package contains development files for %_name
 %define engines_dir %_libdir/gtk-2.0/%gtk_binary_ver/engines/
 %define engines_data_dir %_datadir/%_name/
 
+ln -s gtk-2.0/%gtk_binary_ver/engines/libclearlooks.so %buildroot%_libdir/libclearlooks.so
+
 %files
 
 %files -n %name-common -f %_name.lang
@@ -274,6 +276,7 @@ This package contains development files for %_name
 %files -n %gtk_theme_prefix-clearlooks
 %engines_dir/*clearlooks.so
 %engines_data_dir/clearlooks.xml
+%_libdir/*clearlooks.so
 %dir %_datadir/themes/Clearlooks
 %dir %_datadir/themes/Clearlooks/gtk-2.0
 %_datadir/themes/Clearlooks/gtk-2.0/gtkrc
@@ -312,6 +315,9 @@ This package contains development files for %_name
 %exclude %engines_dir/*.la
 
 %changelog
+* Mon Jun 26 2017 Andrey Cherepanov <cas@altlinux.org> 1:2.20.2-alt3
+- provide libclearlooks.so for bricscadv17
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.20.2-alt2.qa2.1
 - rebuild with new lua 5.3
 
