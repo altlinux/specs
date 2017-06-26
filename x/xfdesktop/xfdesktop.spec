@@ -1,5 +1,5 @@
 Name: xfdesktop
-Version: 4.12.3
+Version: 4.12.4
 Release: alt1
 
 Summary: Desktop manager for the Xfce Desktop Environment
@@ -16,9 +16,11 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libThunar-devel libgarcon-devel libxfce4panel-devel libxfconf-devel libexo-devel libxfce4ui-devel
+BuildPreReq: libthunar-devel libgarcon-devel libxfce4panel-devel libxfconf-devel libexo-devel libxfce4ui-devel
 BuildRequires: intltool libSM-devel libglade-devel libwnck-devel time xorg-cf-files
 BuildRequires: libICE-devel libnotify-devel libdbus-glib-devel
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 %name contains a desktop manager for the Xfce Desktop Environment.
@@ -41,7 +43,7 @@ BuildRequires: libICE-devel libnotify-devel libdbus-glib-devel
 	--enable-thunarx \
 	--enable-desktop-icons \
 	--enable-file-icons \
-	--enable-debug=no
+	--enable-debug=minimum
 
 %make_build
 
@@ -61,6 +63,10 @@ BuildRequires: libICE-devel libnotify-devel libdbus-glib-devel
 %_datadir/backgrounds/xfce
 
 %changelog
+* Mon Jun 26 2017 Mikhail Efremov <sem@altlinux.org> 4.12.4-alt1
+- Enabled debug (minimum level).
+- Updated to 4.12.4.
+
 * Mon Jul 20 2015 Mikhail Efremov <sem@altlinux.org> 4.12.3-alt1
 - Updated to 4.12.3.
 
