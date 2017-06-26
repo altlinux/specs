@@ -1,6 +1,6 @@
 Name: volumes-profile-kdesktop
-Version: 0.7.0
-Release: alt1
+Version: 0.7.1
+Release: alt1%ubt
 
 Summary: Volumes description for Desktop KDE distribution
 License: GPL
@@ -8,6 +8,8 @@ Group: System/Configuration/Other
 Url: http://www.altlinux.org/Installer/beans
 BuildArch: noarch
 Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-ubt
 
 %description
 Volumes description for Desktop KDE distribution
@@ -28,6 +30,9 @@ install -pm755 10-*.sh %buildroot%hook1dir/
 #%hook2dir/*
 
 %changelog
+* Mon Jun 26 2017 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt1%ubt
+- decrease space requires to fit 32GB-drive
+
 * Fri Apr 15 2016 Sergey V Turchin <zerg@altlinux.org> 0.7.0-alt1
 - don't separate home
 
