@@ -2,7 +2,7 @@
 %def_with tests
 
 Name:           python3-module-markups
-Version:        2.0.0
+Version:        2.0.1
 Release:        alt1
 License:        MIT
 Summary:        Wrapper around various text markups
@@ -50,6 +50,9 @@ python3 setup.py test
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Mon Jun 26 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
+- New version
+
 * Mon Jun 06 2016 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
 - new version 2.0.0
 
