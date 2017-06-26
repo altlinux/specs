@@ -16,7 +16,7 @@
 
 Name: mono
 Version: 2.10.11
-Release: alt3
+Release: alt4
 License: %gpllgpl2only %mit %mpl
 Url: http://www.mono-project.com/
 Group: Development/Other
@@ -44,7 +44,7 @@ BuildPreReq: libgc-devel
 %endif
 
 # Automatically added by buildreq on Sun Dec 20 2009
-BuildRequires: gcc-c++ glib2-devel imake libX11-devel libattr-devel libncurses-devel xorg-cf-files zlib-devel
+BuildRequires: gcc4.8-c++ glib2-devel imake libX11-devel libattr-devel libncurses-devel xorg-cf-files zlib-devel
 
 BuildRequires: libgdiplus-devel >= 2.10
 # BuildRequires: libgluezilla
@@ -985,6 +985,9 @@ export with_sigaltstack=no
 %add_optflags -fno-strict-aliasing
 export CFLAGS="%optflags"
 
+export CC=gcc-4.8
+export CXX=g++-4.8
+
 NOCONFIGURE=1 ./autogen.sh
 # %autoreconf
 
@@ -1044,6 +1047,9 @@ deps=$(pkg-config --print-{errors,requires} %buildroot%_pkgconfigdir/mono.pc)
 [ -z "$deps" ]
 
 %changelog
+* Mon Jun 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10.11-alt4
+- Forced build with gcc-4.8
+
 * Wed Apr 24 2013 Alexey Shabalin <shaba@altlinux.ru> 2.10.11-alt3
 - fixed dllmap for libgdiplus
 
