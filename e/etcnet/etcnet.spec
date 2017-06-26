@@ -1,5 +1,5 @@
 Name:		etcnet
-Version:	0.9.11
+Version:	0.9.12
 Release:	alt1
 
 Summary:	/etc/net network configuration system
@@ -139,6 +139,13 @@ fi
 %files full
 
 %changelog
+* Mon Jun 26 2017 Anton Farygin <rider@altlinux.ru> 0.9.12-alt1
+- added network@.service for manage interfaces via systemctl
+  (for example - systemctl enable network@eth0) (closes: #33588)
+- bonding: avoid autocreated bond0 iface by dshadrinov (closes: #33273)
+- efw: walk fw type list backward on stop by sbolshakov (closes: #33011)
+- weakening checks to enable empty bridge interfaces creation by naf (closes: #33295)
+
 * Tue Feb 28 2017 Anton Farygin <rider@altlinux.ru> 0.9.11-alt1
 - version up
 - fixed using ifrename for renaming interfaces without MODULE in options
