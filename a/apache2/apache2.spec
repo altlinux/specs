@@ -12,8 +12,8 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.25
-Release: alt2%ubt
+Version: 2.4.26
+Release: alt1%ubt
 Epoch: 1
 
 License: %asl
@@ -1516,6 +1516,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Sat Jun 24 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.26-alt1%ubt
+- 2.4.26
+
 * Mon May 29 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.25-alt2%ubt
 - added ubt tag
 - deep cleaning of the specfile (remove oldest trigger* macros, commented code, 
