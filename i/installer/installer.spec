@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.36
+Version: 1.8.37
 Release: alt1
 
 Summary: Installer common parts
@@ -110,6 +110,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Tue Jun 27 2017 Michael Shigorin <mike@altlinux.org> 1.8.37-alt1
+- 10-disk.sh: ignore sed exit code (see also #30239).
+
 * Wed Mar 29 2017 Michael Shigorin <mike@altlinux.org> 1.8.36-alt1
 - 40-autohostname.sh: Don't setup /etc/HOSTNAME.
 
