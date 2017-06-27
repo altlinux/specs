@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Ouch
 
 Name: perl-Ouch
-Version: 0.0410
+Version: 0.0500
 Release: alt1
 
 Summary: Perl class for exception handling
@@ -53,6 +53,9 @@ cp README ..
 %perl_vendor_privlib/Ouch*
 
 %changelog
+* Tue Jun 27 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.0500-alt1
+- New version
+
 * Sun Nov 06 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.0410-alt1
 - New version
 
