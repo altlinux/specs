@@ -1,5 +1,5 @@
 Name: libmatroska
-Version: 1.4.5
+Version: 1.4.7
 Release: alt1
 
 Summary: an extensible open standard Audio/Video container format
@@ -67,6 +67,9 @@ HTML)
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Jun 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.7-alt1
+- Updated to 1.4.7
+
 * Fri Sep 02 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.5-alt1
 - 1.4.5 released
 
