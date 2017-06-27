@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 17.04.2
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -82,6 +82,9 @@ KF5 library
 #%_K5lib/libktp-kded-module.so.*
 
 %changelog
+* Tue Jun 27 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt2%ubt
+- treat unknown autoconnect state as enabled
+
 * Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
 - new version
 
