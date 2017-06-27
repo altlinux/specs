@@ -7,7 +7,7 @@
 
 Name: %{_name}-compat%{soversion}
 Version: 2.4.1
-Release: alt4
+Release: alt5
 Summary: Protocol Buffers - Google's data interchange format
 License: Apache License 2.0
 Group: System/Libraries
@@ -17,6 +17,7 @@ Packager: Mikhail A Pokidko <pma@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Patch2: protobuf-2.4.1-java-fixes.patch
+Patch3: protobuf-alt-build.patch
 
 # Automatically added by buildreq on Wed Nov 19 2008
 BuildRequires: gcc-c++ python-devel libnumpy-devel zlib-devel
@@ -67,6 +68,8 @@ rm -rf gtest
 rm -rf java/src/test
 %endif
 
+%patch3 -p1
+
 %build
 iconv -f iso8859-1 -t utf-8 CONTRIBUTORS.txt > CONTRIBUTORS.txt.utf8
 mv CONTRIBUTORS.txt.utf8 CONTRIBUTORS.txt
@@ -89,6 +92,9 @@ export PTHREAD_LIBS="-lpthread"
 %_libdir/libprotobuf-lite.so.*
 
 %changelog
+* Mon Jun 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.1-alt5
+- Fixed build with gcc-6
+
 * Thu Jul 31 2014 Alexey Shabalin <shaba@altlinux.ru> 2.4.1-alt4
 - fixed package name
 
