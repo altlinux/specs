@@ -13,7 +13,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt3
+Release: alt4
 
 Summary: Matlab(TM) style python plotting package
 
@@ -395,8 +395,8 @@ git config --global user.email "<python@packages.altlinux.org>"
 git config --global user.name "Python Development Team"
 git init-db
 git add . -A
-git commit -a -m "%version"
-git tag -m "%version" %version
+git commit -a -m "REL: v%version"
+git tag -m "v%version" v%version
 
 %if_with python3
 rm -rf ../python3
@@ -795,6 +795,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Tue Jun 27 2017 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt4
+- Fix version egg-info (Closes: 33574)
+
 * Sat Jun 24 2017 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt3
 - Added missing requires.
 
