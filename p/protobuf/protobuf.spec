@@ -9,7 +9,7 @@
 
 Name: protobuf
 Version: 2.6.1
-Release: alt1.1
+Release: alt1.2
 Summary: Protocol Buffers - Google's data interchange format
 License: Apache License 2.0
 Group: System/Libraries
@@ -235,6 +235,9 @@ popd
 %endif
 
 %changelog
+* Mon Jun 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.1-alt1.2
+- Fixed build with gcc-6
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.6.1-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
