@@ -2,7 +2,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.9
-Release: alt6
+Release: alt7
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -21,6 +21,7 @@ Patch7: pam_pkcs11-0.6.9-eventmgr-init-from-token.patch
 Patch8: pam_pkcs11-0.6.9-ignore-no-card.patch
 Patch9: pam_pkcs11-0.6.9-config-control.patch
 Patch10: pam_pkcs11-0.6.9-systemd.patch
+Patch11: pam_pkcs11-0.6.9-gost-support.patch
 
 %add_findreq_skiplist %_sysconfdir/pam.d/*
 Requires: pam-config PAM(pam_mkhomedir.so) PAM(pam_pkcs11.so) PAM(pam_succeed_if.so)
@@ -82,6 +83,7 @@ as a separate package.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 # fixup configs
 sed -i -e '
@@ -174,6 +176,10 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ldap_mapper.so
 
 %changelog
+* Tue Jun 27 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt7
+- Add support for GOST certificates (thx cas@ and Max Kosmach).
+- Complete Russian translation of pam_pkcs11 (thx cas@ and Max Kosmach).
+
 * Thu Jun 22 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt6
 - Allow to pass to the next module if the auth isn\'t restricted to
   card only.
