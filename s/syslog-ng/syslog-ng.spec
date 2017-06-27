@@ -12,7 +12,7 @@
 
 Name: syslog-ng
 Version: 3.8.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
@@ -41,7 +41,7 @@ BuildRequires: flex autoconf-archive glib2-devel libcap-devel libdbi-devel libev
 BuildRequires: libGeoIP-devel
 %endif
 %if_enabled json
-BuildRequires: libjson-devel
+BuildRequires: libjson-c-devel
 %endif
 %if_enabled smtp
 BuildRequires: libesmtp-devel
@@ -389,6 +389,9 @@ fi
 %_libdir/pkgconfig/%name-test.pc
 
 %changelog
+* Fri Jun 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.8.1-alt1.2
+- Update syslong-ng-json dependencies
+
 * Tue May 02 2017 Andrey Cherepanov <cas@altlinux.org> 3.8.1-alt1.1
 - Rebuild with new version of libjson
 
