@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 17.04.2
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Requires: telepathy-mission-control
@@ -16,6 +16,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch1: alt-autoconnect.patch
 
 # Automatically added by buildreq on Wed Jun 03 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libaccounts-glib libaccounts-qt51 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsignon-qt51 libstdc++-devel libtelepathy-qt5 libtelepathy-qt5-devel perl-Encode perl-XML-Parser pkg-config python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs
@@ -57,6 +58,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -89,6 +91,9 @@ KF5 library
 %_K5lib/libktpaccountskcminternal.so.*
 
 %changelog
+* Tue Jun 27 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt2%ubt
+- automatically connect by default
+
 * Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
 - new version
 
