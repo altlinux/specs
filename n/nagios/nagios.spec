@@ -13,7 +13,7 @@
 
 Name: nagios
 Version: 3.0.6
-Release: alt3.1.1.1
+Release: alt4
 
 Summary: Services and network monitoring system
 License: GPL
@@ -114,14 +114,6 @@ of different ways (email, instant message, SMS, etc.). Current status
 information, historical logs, and reports can all be accessed via a web
 browser.
 
-%package www-apache
-Summary: Apache 1.x web-server configuration for Nagios(R) web-interface
-Group: Monitoring
-PreReq: %name-www = %version-%release apache
-
-%description www-apache
-Web-server settings and environment tuning for run Nagios(R) web-interface
-with Apache 1.x.
 
 %package www-apache2
 Summary: Apache 2.x web-server configuration for Nagios(R) web-interface
@@ -237,8 +229,6 @@ install -m 0644 OutputTrap.pm %buildroot/%_docdir/%name-%version/
 # install Nagios(R) .htusers default file
 install -m 0640 %SOURCE2 %buildroot/%_sysconfdir/%name/
 
-# apache1 configs
-install -pDm0644 %SOURCE10 %buildroot/%_sysconfdir/httpd/conf/addon-modules.d/nagios.conf
 
 # apache2 configs
 install -pDm0644 %SOURCE11 %buildroot/%_sysconfdir/httpd2/conf/mods-start.d/100-nagios.conf
@@ -263,17 +253,10 @@ echo
 echo "By default this package contains only CGI binary and HTML pages."
 echo "Web-server specific settings for Nagios(R) web-interface exists"
 echo "in the follow packages:"
-echo "  nagios-www-apache   -- Apache 1.x configs"
 echo "  nagios-www-apache2  -- Apache 1.x configs"
 echo "  nagios-www-lighttpd -- Lighttpd configs"
 echo
 
-%post www-apache
-gpasswd -a apache %nagios_grp
-%_initdir/httpd condrestart
-%postun www-apache
-gpasswd -d apache %nagios_grp
-%_initdir/httpd condrestart
 
 %post www-apache2
 gpasswd -a apache2 %nagios_grp
@@ -375,8 +358,6 @@ subst 's|# Nagios(R) web-interface settings||' /etc/lighttpd/lighttpd.conf
 %_libexecdir/%name/cgi/tac.cgi
 %_libexecdir/%name/cgi/trends.cgi
 
-%files www-apache
-%config(noreplace) %_sysconfdir/httpd/conf/addon-modules.d/nagios.conf
 
 %files www-apache2
 %config(noreplace) %_sysconfdir/httpd2/conf/mods-start.d/100-nagios.conf
@@ -392,6 +373,9 @@ subst 's|# Nagios(R) web-interface settings||' /etc/lighttpd/lighttpd.conf
 %files full
 
 %changelog
+* Tue Jun 27 2017 Denis Medvedev <nbr@altlinux.org> 3.0.6-alt4
+- removed apache1 as unsupported
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.6-alt3.1.1.1
 - rebuild with new perl 5.24.1
 
