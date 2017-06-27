@@ -1,5 +1,5 @@
 Name: livecd-evms
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: Tune EVMS config to run from LiveCD
@@ -37,6 +37,9 @@ install -pDm644 %SOURCE1 %buildroot%_unitdir/livecd-evms.service
 %_unitdir/%name.service
 
 %changelog
+* Tue Jun 27 2017 Michael Shigorin <mike@altlinux.org> 0.2.4-alt1
+- ignore MMC BOOT partitions as well (closes: #32171)
+
 * Thu Feb 26 2015 Michael Shigorin <mike@altlinux.org> 0.2.3-alt1
 - ignore MMC RPMB
 
