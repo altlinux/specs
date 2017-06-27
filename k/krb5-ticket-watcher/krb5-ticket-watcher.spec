@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt6%ubt
+Release: alt8%ubt
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
 Url: http://sourceforge.net/projects/krb5ticketwatch
 License: %gpl2plus
@@ -15,9 +15,10 @@ Patch4: krb5-ticket-watcher-1.0.3-alt-fix-desktop-category.patch
 Patch5: alt-qt5-1.patch
 Patch6: alt-tray-icon.patch
 Patch7: alt-wait-for-tray.patch
+Patch8: alt-force-kinit.patch
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: kde-common-devel rpm-build-licenses libkrb5-devel libkeyutils-devel
+BuildRequires: kde-common-devel rpm-build-licenses rpm-build-xdg libkrb5-devel libkeyutils-devel
 BuildRequires: cmake gcc-c++ libcom_err-devel qt5-base-devel qt5-tools
 
 %description
@@ -33,9 +34,10 @@ tickets.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %build
-%add_optflags -I%_includedir/krb5
+%add_optflags -DDEBUG -I%_includedir/krb5
 %Kbuild
 
 %install
@@ -54,6 +56,12 @@ desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 %doc COPYING Changes News TODO
 
 %changelog
+* Tue Jun 27 2017 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt8%ubt
+- more check before force kinit at start
+
+* Tue Jun 27 2017 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt7%ubt
+- force kinit at start
+
 * Thu Jun 01 2017 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt6%ubt
 - wait for system tray (ALT#33518)
 
