@@ -1,6 +1,6 @@
 Name: libspf2
 Version: 1.2.10
-Release: alt2
+Release: alt3
 
 Summary: Implementation of the SPF specification
 License: LGPLv2.1+
@@ -8,6 +8,8 @@ Group: System/Libraries
 
 URL: http://www.libspf2.org/
 Source0: http://libspf2.org/spf/libspf2-%version.tar.gz
+
+Patch1: libspf2-alt-newgcc.patch
 
 # Automatically added by buildreq on Mon Nov 03 2008
 BuildRequires: gcc-c++
@@ -35,6 +37,7 @@ Development files for libspf2 library.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 # The configure script checks for the existence of __ns_get16 and uses the
@@ -70,6 +73,9 @@ subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %exclude %_libdir/*.a
 
 %changelog
+* Mon Jun 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.10-alt3
+- Fix build with gcc-6
+
 * Tue Nov 04 2014 Anton Gorlov <stalker@altlinux.ru> 1.2.10-alt2
 - replace draft with rfc in description
 
