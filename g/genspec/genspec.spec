@@ -1,5 +1,5 @@
 Name:     genspec
-Version:  1.2.4
+Version:  1.2.5
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
@@ -11,6 +11,8 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 BuildArch: noarch
 
 BuildPrereq: rpm-build-python3
+
+Requires: git-core gear perl-Gear-Remotes
 
 Source:   %name-%version.tar
 
@@ -30,9 +32,13 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_datadir/spectemplates
 
 %changelog
+* Tue Jun 27 2017 Gordeev Mikhail <obirvalger@altlinux.org> 1.2.5-alt1
+- Fix #33596: wrong syntax for building from tag
+
 * Tue Jun 20 2017 Gordeev Mikhail <obirvalger@altlinux.org> 1.2.4-alt1
 - Add git command line option to clone from url, clear repo and configure
-  gear remotes update
+  gear remotes update (currently doesn't handle git error: no internet
+  connection and not configured git)
 
 * Mon Jun 19 2017 Gordeev Mikhail <obirvalger@altlinux.org> 1.2.2-alt1
 - Add tag command line option (uses in .gear/rules)
