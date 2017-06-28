@@ -1,7 +1,7 @@
 %define confdir ext/redhat
 
 Name:    puppet
-Version: 4.10.4
+Version: 5.0.0
 Release: alt1
 
 Summary: A network tool for managing many disparate systems
@@ -74,7 +74,7 @@ rm -rf \
 echo "require 'rdoc'" > lib/puppet/util/rdoc.rb
 
 # Unbundle
-rm -r lib/puppet/vendor/*{pathspec,rgen,deep_merge}*
+rm -r lib/puppet/vendor/*{pathspec,deep_merge}*
 
 %build
 
@@ -107,17 +107,6 @@ install -Dp -m0644 conf/fileserver.conf %buildroot%_sysconfdir/puppet/fileserver
 install -d %buildroot%_datadir/%name
 cp -a ext/ %buildroot%_datadir/%name
 
-# Install emacs mode files
-emacsdir=%buildroot%_datadir/emacs/site-lisp
-install -Dp -m0644 ext/emacs/puppet-mode.el $emacsdir/puppet-mode.el
-install -Dp -m0644 ext/emacs/puppet-mode-init.el \
-    $emacsdir/site-start.d/puppet-mode-init.el
-
-# Install vim syntax files
-vimdir=%buildroot%_datadir/vim/vimfiles
-install -Dp -m0644 ext/vim/ftdetect/puppet.vim $vimdir/ftdetect/puppet.vim
-install -Dp -m0644 ext/vim/syntax/puppet.vim $vimdir/syntax/puppet.vim
-
 # Setup tmpfiles.d config
 mkdir -p %buildroot%_sysconfdir/tmpfiles.d
 echo "D /var/run/%name 0755 _%name %name -" > \
@@ -133,8 +122,6 @@ mkdir -p %buildroot{%_localstatedir,%_logdir,%_var/run}/puppet
 install -Dpv %SOURCE5 \
     %buildroot%_sysconfdir/NetworkManager/dispatcher.d/98-%{name}
 
-# emacs and vim bits are installed elsewhere
-rm -rf %buildroot%_datadir/%name/ext/{emacs,vim}
 # remove misc packaging artifacts in source not applicable to rpm
 rm -rf %buildroot%_datadir/%name/ext/{gentoo,freebsd,solaris,suse,windows,osx,ips,debian}
 rm -rf %buildroot%_datadir/%name/ext/{redhat,systemd}
@@ -172,14 +159,11 @@ install -d %buildroot%_localstatedir/puppet/ssl/private_keys
 %config(noreplace) %_sysconfdir/sysconfig/puppet
 %config(noreplace) %_sysconfdir/logrotate.d/puppet
 %_bindir/puppet
-%_bindir/extlookup2hiera
 %ruby_sitelibdir/*
 %_datadir/%name
 %_sysconfdir/NetworkManager/dispatcher.d/98-%{name}
 %_man8dir/*
 %_man5dir/puppet.conf.5*
-%_datadir/emacs
-%_datadir/vim
 %attr(1770,_puppet,puppet) %dir %_localstatedir/puppet
 %_localstatedir/puppet/*
 %attr(1770,_puppet,puppet) %dir %_localstatedir/puppet/ssl/private_keys
@@ -193,6 +177,9 @@ install -d %buildroot%_localstatedir/puppet/ssl/private_keys
 %config(noreplace) %_sysconfdir/sysconfig/puppetmaster
 
 %changelog
+* Wed Jun 28 2017 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt1
+- New version
+
 * Mon Jun 19 2017 Andrey Cherepanov <cas@altlinux.org> 4.10.4-alt1
 - New version
 
