@@ -1,6 +1,6 @@
 Name: BASE
 Version: 1.4.5
-Release: alt8
+Release: alt9
 
 Summary: BASE - Basic Analysis and Security Engine
 License: GPLv2
@@ -10,9 +10,11 @@ Url: http://secureideas.sourceforge.net/
 
 Source0: base-%version.tar
 Source1: nginx.conf
+Source2: readme.txt
 
 Patch1: base-1.4.5-alt-font-path.patch
 Patch2: base-1.4.5-alt-urlpath.patch
+Patch3: base-1.4.5-alt-inputfilter.patch
 
 BuildArch: noarch
 
@@ -55,9 +57,12 @@ BASE with nginx support.
 
 %prep
 %setup -n base-%version
+mkdir -p docs
+cp %SOURCE2 docs/README.Inputfilter
 
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 
 %define _worldmap_target_dir usr/share/pear/Image/Graph/Images/Maps
 %define _php_files_target_dir var/www/webapps/BASE/base
@@ -106,6 +111,9 @@ install -Dpm 644 %SOURCE1 %buildroot/%_sysconfdir/nginx/webapps-available.d/%nam
 %_sysconfdir/nginx/webapps-available.d/%name.conf
 
 %changelog
+* Wed Jun 28 2017 Denis Medvedev <nbr@altlinux.org> 1.4.5-alt9
+- Filter input fields for JS tags.
+
 * Wed Dec 17 2014 Mikhail Efremov <sem@altlinux.org> 1.4.5-alt8
 - Require more pear-* packages.
 
