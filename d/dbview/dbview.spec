@@ -1,6 +1,6 @@
 Name: dbview
 Version: 1.0.4
-Release: alt1.qa1
+Release: alt2%ubt
 
 License: GPL
 Url: ftp://metalab.unc.edu/pub/Linux/apps/database/proprietary/
@@ -12,6 +12,8 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source: %name-%version.tar.gz
 Patch0: %name-makefile.patch.gz
 Patch1: %name-fixes.patch.gz
+
+BuildRequires(pre): rpm-build-ubt
 
 %description
 Dbview is a little tool that will display dBase III and IV files.
@@ -39,9 +41,12 @@ install -m 644 %name.1 $RPM_BUILD_ROOT%_man1dir
 %files
 %doc README dBASE
 %_bindir/%name
-%_man1dir/%name.1.gz
+%_man1dir/%name.1*
 
 %changelog
+* Wed Jun 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.4-alt2%ubt
+- Updated spec to include man files with any compression
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.4-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
