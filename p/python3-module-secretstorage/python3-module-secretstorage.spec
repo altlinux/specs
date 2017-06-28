@@ -2,14 +2,16 @@
 
 Name:    python3-module-%modulename
 Version: 2.3.1
-Release: alt1
+Release: alt2
 
 Summary: Python bindings to Freedesktop.org Secret Service API
 License: BSD-3-Clause
-Group:   Development/Python
+Group:   Development/Python3
 URL:     https://github.com/mitya57/secretstorage
 
 Packager: Gordeev Mikhail <obirvalger@altlinux.org>
+
+BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Wed Jun 28 2017
 # optimized out: python-base python-modules python3 python3-base python3-module-setuptools
@@ -49,5 +51,8 @@ The documentation can be found on secretstorage.readthedocs.io.
 %python3_sitelibdir_noarch/*.egg-info
 
 %changelog
+* Wed Jun 28 2017 Gordeev Mikhail <obirvalger@altlinux.org> 2.3.1-alt2
+- Add rpm-build-python3 to BuildRequires(pre)
+
 * Wed Jun 28 2017 Gordeev Mikhail <obirvalger@altlinux.org> 2.3.1-alt1
 - Initial build for Sisyphus
