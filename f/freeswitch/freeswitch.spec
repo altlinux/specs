@@ -1,6 +1,6 @@
 Name: freeswitch
-Version: 1.6.17
-Release: alt3%ubt
+Version: 1.6.18
+Release: alt1%ubt
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -29,7 +29,7 @@ BuildRequires: libpcap-devel perl-devel python-devel
 BuildRequires: libcelt-devel libmpg123-devel liblame-devel libshout2-devel
 BuildRequires: libisdn-devel libpri-devel libopenr2.3-devel
 BuildRequires: libnet-snmp-devel libnl-devel libsensors3-devel zlib-devel
-BuildRequires: libuuid-devel erlang-devel postgresql-devel
+BuildRequires: libuuid-devel postgresql-devel
 BuildRequires: java-common java-1.8.0-openjdk-devel /proc libavformat-devel libavutil-devel libavresample-devel libswscale-devel
 BuildRequires: libmemcached-devel libopus-devel libv8-3.24-devel libbroadvoice-devel libcodec2-devel libImageMagick-devel 
 BuildRequires: flite-devel libyuv-devel libfreetype-devel libvpx-devel libsilk-devel libg7221-devel libvlc-devel libavcodec-devel libx264-devel
@@ -133,10 +133,6 @@ Summary: Python support for the FreeSWITCH open source telephony platform
 Group: Development/Python
 Requires: %name-daemon = %version-%release
 
-%package v8
-Summary: JavaScript support for the FreeSWITCH open source telephony platform
-Group: Development/Other
-
 %package vlc
 Summary: VLC support for the FreeSWITCH open source telephony platform
 Group: System/Servers
@@ -187,9 +183,6 @@ Perl support for the FreeSWITCH open source telephony platform
 
 %description python
 Python support for the FreeSWITCH open source telephony platform
-
-%description v8
-JavaScript support for the FreeSWITCH open source telephony platform
 
 %description vlc
 VLC support for the FreeSWITCH open source telephony platform
@@ -262,7 +255,6 @@ export ASFLAGS='-Ox'
     --enable-core-pgsql-support \
     --enable-core-odbc-support \
     --enable-zrtp \
-    --with-erlang=%_bindir/erl \
     --with-libcurl \
     --with-openssl \
     --disable-static \
@@ -414,7 +406,6 @@ fi
 %_libdir/%name/mod_dptools.so
 %_libdir/%name/mod_easyroute.so
 %_libdir/%name/mod_enum.so
-%_libdir/%name/mod_erlang_event.so
 %_libdir/%name/mod_esl.so
 %_libdir/%name/mod_esf.so
 %_libdir/%name/mod_event_multicast.so
@@ -433,7 +424,6 @@ fi
 %_libdir/%name/mod_httapi.so
 %_libdir/%name/mod_http_cache.so
 %_libdir/%name/mod_ilbc.so
-%_libdir/%name/mod_isac.so
 %_libdir/%name/mod_json_cdr.so
 %_libdir/%name/mod_lcr.so
 %_libdir/%name/mod_ldap.so
@@ -531,10 +521,6 @@ fi
 %_libdir/%name/mod_python.so*
 %python_sitelibdir/freeswitch.py*
 
-%files v8
-%_libdir/%name/mod_v8.so*
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/v8.conf.xml
-
 %files vlc
 %_libdir/%name/mod_vlc.so*
 
@@ -622,6 +608,11 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Wed Jun 28 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.18-alt1%ubt
+- 1.6.18
+- build without erlang
+- disabled javascript support
+
 * Sat Jun 17 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.17-alt3%ubt
 - build mod_av.so as freeswitch-av subpackage
 
