@@ -1,5 +1,5 @@
 Name:     github2spec
-Version:  1.3.6
+Version:  1.3.8
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from github using genspec
@@ -12,7 +12,7 @@ BuildArch: noarch
 
 BuildPrereq: rpm-build-ruby
 
-Requires: genspec >= 1.2.4
+Requires: genspec >= 1.2.6
 
 Source:   %name-%version.tar
 
@@ -33,6 +33,9 @@ install -Dm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Wed Jun 28 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.8-alt1
+- Change default python type to python3
+
 * Tue Jun 20 2017 Gordeev Mikhail <obirvalger@altlinux.org> 1.3.6-alt1
 - Pass git to genspec
 
