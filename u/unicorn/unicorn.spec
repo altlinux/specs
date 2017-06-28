@@ -1,8 +1,8 @@
 %define pkgname unicorn
 
 Name: %pkgname
-Version: 5.2.0
-Release: alt2
+Version: 5.3.0
+Release: alt1
 Summary: Unicorn: Rack HTTP server for fast clients and Unix
 License: GPL2
 Group: System/Servers
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/Unicorn*
 
 %changelog
+* Wed Jun 28 2017 Andrey Cherepanov <cas@altlinux.org> 5.3.0-alt1
+- New version
+
 * Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt2
 - Rebuild with new %%ruby_sitearchdir location
 
