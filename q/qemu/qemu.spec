@@ -170,7 +170,7 @@
 
 Name: qemu
 Version: 2.9.0
-Release: alt1
+Release: alt1.1
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -716,6 +716,9 @@ fi
 %_bindir/ivshmem-server
 
 %changelog
+* Wed Jun 28 2017 Yuri N. Sedunov <aris@altlinux.org> 2.9.0-alt1.1
+- rebuild against libnfs.so.11
+
 * Fri Apr 21 2017 Alexey Shabalin <shaba@altlinux.ru> 2.9.0-alt1
 - 2.9.0
 

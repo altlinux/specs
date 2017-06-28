@@ -30,7 +30,7 @@
 
 Name: gvfs
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -535,6 +535,9 @@ killall -USR1 gvfsd >&/dev/null || :
 
 
 %changelog
+* Sun Jun 25 2017 Yuri N. Sedunov <aris@altlinux.org> 1.32.1-alt2
+- rebuilt against libnfs.so.11
+
 * Mon Apr 10 2017 Yuri N. Sedunov <aris@altlinux.org> 1.32.1-alt1
 - 1.32.1
 

@@ -2,7 +2,7 @@
 
 Name: vlc
 Version: 3.0.0
-Release: alt2.git5149ccb
+Release: alt3.git236b4f3
 
 Summary: VLC media player
 License: GPLv2
@@ -1248,9 +1248,12 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 
 %files plugin-xcb
 %dir %vlc_plugindir/vdpau
+%dir %vlc_plugindir/vaapi
 %_libdir/vlc/libvlc_vdpau.so*
+%_libdir/vlc/libvlc_vaapi_instance.so*
 %vlc_plugindir/access/libxcb_screen_plugin.so
 %vlc_plugindir/codec/libvaapi_drm_plugin.so
+%vlc_plugindir/codec/libvaapi_dr_plugin.so
 %vlc_plugindir/codec/libvaapi_x11_plugin.so
 %vlc_plugindir/control/libxcb_hotkeys_plugin.so
 %vlc_plugindir/services_discovery/libxcb_apps_plugin.so
@@ -1260,6 +1263,8 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/vdpau/libvdpau_avcodec_plugin.so
 %vlc_plugindir/vdpau/libvdpau_adjust_plugin.so
 %vlc_plugindir/vdpau/libvdpau_chroma_plugin.so
+%vlc_plugindir/vaapi/libvaapi_chroma_plugin.so
+%vlc_plugindir/vaapi/libvaapi_filters_plugin.so
 %vlc_plugindir/video_output/libxcb_window_plugin.so
 %vlc_plugindir/video_output/libxcb_x11_plugin.so
 %vlc_plugindir/video_output/libxcb_xv_plugin.so
@@ -1364,6 +1369,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Wed Jun 28 2017 Anton Farygin <rider@altlinux.ru> 3.0.0-alt3.git236b4f3
+- 5149ccb -> 236b4f3
+
 * Sat Jun 03 2017 Anton Farygin <rider@altlinux.ru> 3.0.0-alt2.git5149ccb
 - move forward to git 5149ccb
 
