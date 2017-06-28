@@ -1,6 +1,6 @@
 Name: net-tools
 Version: 1.60
-Release: alt18
+Release: alt19
 
 Summary: The basic tools for setting up networking
 License: GPLv2+
@@ -79,6 +79,8 @@ Patch81: net-tools-1.60-berlios-makefile.patch
 Patch82: net-tools-1.60-rh-slattach-fchown.patch
 Patch83: net-tools-1.60-rh-mii-refactor.patch
 Patch84: net-tools-1.60-deb-large-indexes.patch
+
+Patch85: net-tools-1.60-alt-iptunnel-includes.patch
 
 # due to hostname
 Requires: coreutils >= 0:5.3.1-alt0.2
@@ -162,6 +164,7 @@ Most of them are obsolete.  For replacement check iproute2 package.
 %patch82 -p1
 %patch83 -p1
 %patch84 -p1
+%patch85 -p1
 
 find -type f -name \*.orig -delete
 
@@ -209,6 +212,9 @@ rm -r %buildroot%_mandir/*_*
 %doc README* TODO
 
 %changelog
+* Fri Jun 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.60-alt19
+- Update to build with recent glibc headers
+
 * Sat Mar 23 2013 Terechkov Evgenii <evg@altlinux.org> 1.60-alt18
 - Drop Metricom radio support
 
