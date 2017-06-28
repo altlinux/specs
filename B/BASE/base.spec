@@ -1,6 +1,6 @@
 Name: BASE
 Version: 1.4.5
-Release: alt9
+Release: alt10
 
 Summary: BASE - Basic Analysis and Security Engine
 License: GPLv2
@@ -10,7 +10,6 @@ Url: http://secureideas.sourceforge.net/
 
 Source0: base-%version.tar
 Source1: nginx.conf
-Source2: readme.txt
 
 Patch1: base-1.4.5-alt-font-path.patch
 Patch2: base-1.4.5-alt-urlpath.patch
@@ -57,8 +56,6 @@ BASE with nginx support.
 
 %prep
 %setup -n base-%version
-mkdir -p docs
-cp %SOURCE2 docs/README.Inputfilter
 
 %patch1 -p2
 %patch2 -p2
@@ -89,6 +86,7 @@ cp -dpR styles %buildroot/%{_php_files_target_dir}/
 # Install the files in the top level directory
 install -m 0644 index.php %{buildroot}/%{_php_files_target_dir}/
 install -m 0644 base* %{buildroot}/%{_php_files_target_dir}/
+install -m 0644 class* %{buildroot}/%{_php_files_target_dir}/
 
 # These two files have to go in a PEAR specific direction
 install -m 0644 world_map6.txt %{buildroot}/%{_worldmap_target_dir}/
@@ -103,7 +101,7 @@ cp -dpR docs/* %{buildroot}%{_docdir}/%name-%version/
 install -Dpm 644 %SOURCE1 %buildroot/%_sysconfdir/nginx/webapps-available.d/%name.conf
 
 %files
-/var/www/webapps/BASE/
+/var/www/webapps/BASE/*
 %_docdir/*
 /%_worldmap_target_dir
 
@@ -111,6 +109,9 @@ install -Dpm 644 %SOURCE1 %buildroot/%_sysconfdir/nginx/webapps-available.d/%nam
 %_sysconfdir/nginx/webapps-available.d/%name.conf
 
 %changelog
+* Wed Jun 28 2017 Denis Medvedev <nbr@altlinux.org> 1.4.5-alt10
+- Fix filter input fields and add nginx conf change.
+
 * Wed Jun 28 2017 Denis Medvedev <nbr@altlinux.org> 1.4.5-alt9
 - Filter input fields for JS tags.
 
