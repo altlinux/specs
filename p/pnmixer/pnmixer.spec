@@ -1,5 +1,5 @@
 Name: pnmixer
-Version: 0.7
+Version: 0.7.2
 Release: alt1
 
 %def_without	gtk3
@@ -11,8 +11,8 @@ Url: https://github.com/nicklan/pnmixer
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
-BuildRequires: intltool libalsa-devel libnotify-devel
+BuildRequires(pre): rpm-build-licenses rpm-macros-cmake
+BuildRequires: cmake gettext libalsa-devel libnotify-devel
 %if_without gtk3
 BuildRequires: libgtk+2-devel
 %else
@@ -41,15 +41,21 @@ Feel free to try and to give some feedback.
 %patch -p1
 
 %build
-%autoreconf
-%configure \
-	--with-libnotify \
-	%subst_with gtk3
+%cmake \
+	%if_without gtk3
+	-DWITH_GTK3=OFF \
+	%else
+	-DWITH_GTK3=ON \
+	%endif
+	-DWITH_LIBNOTIFY=ON \
+	-DENABLE_NLS=ON \
+	-DBUILD_DOCUMENTATION=OFF \
+	-DCMAKE_CXX_COMPILER=/bin/true
 
-%make_build
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 # Don't show PNMixer in the menu,
 # just autostart it instead.
@@ -67,6 +73,10 @@ mv %buildroot%_desktopdir/%name.desktop %buildroot%_sysconfdir/xdg/autostart/
 %_man1dir/*
 
 %changelog
+* Mon Jun 19 2017 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt1
+- Ensure that card is not NULL.
+- Updated to 0.7.2.
+
 * Tue Sep 20 2016 Mikhail Efremov <sem@altlinux.org> 0.7-alt1
 - Updated description.
 - Updated to 0.7.
