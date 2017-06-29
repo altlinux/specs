@@ -4,7 +4,7 @@
 %define pear_name Spreadsheet_Excel_Writer
 
 Name: pear-%pear_name
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: PHP/PEAR class for generating Excel spreadsheets
@@ -14,9 +14,10 @@ Group: Development/Other
 Url: http://pear.php.net/package/Spreadsheet_Excel_Writer
 #Url: https://github.com/pear/Spreadsheet_Excel_Writer
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source: %pear_name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildArch: noarch
 
@@ -32,12 +33,10 @@ versions is not yet available.
 
 %prep
 %setup -n %pear_name-%version
+%patch0 -p1
 
 mkdir %pear_name-%version
 mv -- Spreadsheet %pear_name-%version/
-
-# Fix md5 sums
-sed -e 's/bb1da4cd0465c92dab8c49a79b86f896/83ba5964e40266ca8563617a9428fb73/' -i package.xml
 
 %build
 %pear_build
@@ -52,10 +51,13 @@ sed -e 's/bb1da4cd0465c92dab8c49a79b86f896/83ba5964e40266ca8563617a9428fb73/' -i
 %unregister_pear_module
 
 %files
-%doc README CHANGELOG
+%doc README.md CHANGELOG
 %pear_xmldir/%pear_name.xml
 %pear_dir/Spreadsheet*
 
 %changelog
+* Thu Jun 29 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.9.4-alt1
+- New version
+
 * Fri Jun 01 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.9.3-alt1
 - initial build for ALT Linux Sisyphus
