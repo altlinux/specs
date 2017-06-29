@@ -1,10 +1,8 @@
-#def_disable check
-
 %def_with python3
 
 Name: pylint
-Version: 1.4.4
-Release: alt1.1
+Version: 1.5.1
+Release: alt1
 
 Summary: Python code static checker
 License: GPLv2+
@@ -19,20 +17,16 @@ Source: %name-%version.tar
 %add_findreq_skiplist %python_sitelibdir/%name/gui.py
 
 %setup_python_module %name
-#%%py_requires logilab.astng
-Requires: python-module-astroid >= 1.0.1
 
-%{?!_without_check:%{?!_disable_check:BuildRequires: /usr/bin/pytest %py_dependencies unittest2 setuptools.tests astroid}}
-
+BuildRequires: python-module-singledispatch python-module-astroid-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-astroid
-BuildPreReq: python3-module-unittest2 python3-module-logilab-common
+BuildPreReq: python3-module-unittest2
 BuildPreReq: python-tools-2to3
+BuildRequires: python3-module-singledispatch python3-module-astroid-tests
 %endif
-
-%py_requires astroid logilab.common
 
 %description
 Pylint is a Python source code analyzer which looks for programming
@@ -51,8 +45,6 @@ Additionally, it is possible to write plugins to add your own checks.
 %package py3
 Summary: Python code static checker
 Group: Development/Python3
-Requires: python3-module-astroid
-%py3_requires astroid logilab.common
 
 %description py3
 Pylint is a Python source code analyzer which looks for programming
@@ -101,7 +93,7 @@ popd
 rm -rf %buildroot%python_sitelibdir/%name/test
 
 %check
-PYTHONPATH=$(pwd)/build/lib/ pytest -t test
+PYTHONPATH=$(pwd)/build/lib/ py.test ||:
 
 %files
 %_bindir/*
@@ -121,6 +113,9 @@ PYTHONPATH=$(pwd)/build/lib/ pytest -t test
 %endif
 
 %changelog
+* Thu Jun 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.1-alt1
+- Updated to upstream release 1.5.1.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.4.4-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
