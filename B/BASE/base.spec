@@ -1,6 +1,6 @@
 Name: BASE
 Version: 1.4.5
-Release: alt10
+Release: alt11
 
 Summary: BASE - Basic Analysis and Security Engine
 License: GPLv2
@@ -101,7 +101,7 @@ cp -dpR docs/* %{buildroot}%{_docdir}/%name-%version/
 install -Dpm 644 %SOURCE1 %buildroot/%_sysconfdir/nginx/webapps-available.d/%name.conf
 
 %files
-/var/www/webapps/BASE/*
+/var/www/webapps/BASE/
 %_docdir/*
 /%_worldmap_target_dir
 
@@ -109,6 +109,9 @@ install -Dpm 644 %SOURCE1 %buildroot/%_sysconfdir/nginx/webapps-available.d/%nam
 %_sysconfdir/nginx/webapps-available.d/%name.conf
 
 %changelog
+* Thu Jun 29 2017 Denis Medvedev <nbr@altlinux.org> 1.4.5-alt11
+- Fix ownership of BASE webapps dir.
+
 * Wed Jun 28 2017 Denis Medvedev <nbr@altlinux.org> 1.4.5-alt10
 - Fix filter input fields and add nginx conf change.
 
