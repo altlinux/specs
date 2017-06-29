@@ -1,13 +1,14 @@
 Name:           uisp
 Version:        20050207
-Release:        alt1.qa1
+Release:        alt2
 Summary:        Universal In-System Programmer for Atmel AVR and 8051
 
 
 Group:          System/Kernel and hardware
 License:        GPL
 URL:            http://www.nongnu.org/uisp
-Source0:        http://savannah.nongnu.org/download/%{name}/%{name}-%{version}.tar.gz
+# http://savannah.nongnu.org/download/%%{name}/%%{name}-%%{version}.tar.gz
+Source0:        %{name}-%{version}.tar.gz
 Packager:       Evgeny Sinelnikov <sin@altlinux.ru>
 
 # Automatically added by buildreq on Wed Mar 12 2008
@@ -46,10 +47,13 @@ make install DESTDIR=%buildroot
 %files
 %doc AUTHORS CHANGES CHANGES.old COPYING ChangeLog* TODO
 %_bindir/%name
-%_man1dir/%name.1.gz
+%_man1dir/%name.1*
 
 
 %changelog
+* Thu Jun 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 20050207-alt2
+- Updated spec to allow any compression of man page
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20050207-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
