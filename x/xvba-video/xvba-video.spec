@@ -4,7 +4,7 @@
 
 Name: xvba-video
 Version: 0.8.0
-Release: alt2
+Release: alt3
 Summary: XvBA-based backend for VA-API
 Group: System/Libraries
 License: GPLv2+
@@ -15,7 +15,7 @@ Patch2: %name-GL_GLEXT_VERSION-85-fix.patch
 Patch3: %name-%version-glx-fix.patch
 Patch4: %name-%version-va-0.34.0.patch
 
-BuildRequires: pkgconfig(libva) libX11-devel libXext-devel libGL-devel libxvba-devel python-base
+BuildRequires: pkgconfig(libva) libX11-devel libXext-devel libGL-devel libxvba-devel python-base libdrm-devel
 %{?_enable_valgrind:BuildRequires: pkgconfig(valgrind)}
 
 %description
@@ -53,6 +53,9 @@ This is the XvBA-based backend for VA-API to use the hardware acceleration.
 
 
 %changelog
+* Thu Jun 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.0-alt3
+- Updated build dependencies
+
 * Tue Feb 04 2014 Led <led@altlinux.ru> 0.8.0-alt2
 - add compat to va 0.34.0 API
 
