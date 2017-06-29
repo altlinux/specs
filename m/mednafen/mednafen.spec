@@ -1,5 +1,5 @@
 Name: mednafen
-Version: 0.9.38.5
+Version: 0.9.45.1
 Release: alt1
 
 Summary: Multi-consoles Emulator
@@ -8,7 +8,8 @@ License: GPLv2+
 Url: http://mednafen.sourceforge.net/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-Source: http://downloads.sourceforge.net/%name/%name-%version.tar.bz2
+# http://downloads.sourceforge.net/%%name/%%name-%%version.tar.bz2
+Source: %name-%version.tar.bz2
 
 BuildRequires: gcc-c++
 BuildRequires: libcdio-devel libvorbis-devel libSDL_net-devel
@@ -60,10 +61,12 @@ reasons.
 %files -f %name.lang
 %doc AUTHORS ChangeLog TODO README* Documentation/*
 %_bindir/%name
-%_datadir/%name/
 
 
 %changelog
+* Thu Jun 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.45.1-alt1
+- Updated to 0.9.45.1
+
 * Thu Aug 06 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.38.5-alt1
 - 0.9.38.5
 - built against libcdio.so.16
