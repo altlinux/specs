@@ -1,6 +1,6 @@
 Name: 	  pcs
 Version:  0.9.158
-Release:  alt2
+Release:  alt3
 Epoch:    1
 
 Summary:  Pacemaker/Corosync configuration system
@@ -54,12 +54,19 @@ mkdir -p %buildroot/%_initdir
 mv %buildroot/%_sysconfdir/init.d/pcsd %buildroot/%_initdir
 install -Dm 0644 pcsd/pcsd.logrotate %buildroot%_logrotatedir/pcsd.logrotate
 mkdir -p %buildroot/var/lib/pcsd
+mkdir -p %buildroot/lib/systemd/system
+install -Dm 0644 pcsd/pcsd.service %buildroot/lib/systemd/system
+
+mkdir -p %buildroot/usr/sbin/
+mv  pcsd/pcsd.service-runner %buildroot/usr/sbin/pcsd
+chmod 750 %buildroot/usr/sbin/pcsd
 
 # Remove unnecessary stuff
 rm -rf %buildroot/%ruby_sitelibdir/pcsd/*{.service,.logrotate,debian,orig}*
 
 %post pcsd
 %post_service pcsd
+
 
 %preun pcsd
 %preun_service pcsd
@@ -81,11 +88,16 @@ rm -rf %buildroot/%ruby_sitelibdir/pcsd/*{.service,.logrotate,debian,orig}*
 %dir %_logdir/pcsd
 %dir /var/lib/pcsd
 %_logrotatedir/pcsd.logrotate
+/lib/systemd/system/pcsd.service
+/usr/sbin/pcsd
 
 %files pcsd-tests
 %ruby_sitelibdir/pcsd/test/*
 
 %changelog
+* Thu Jun 29 2017 Denis Medvedev <nbr@altlinux.org> 1:0.9.158-alt3
+- Added systemd unit (ALT #33590).
+
 * Fri Jun 23 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.9.158-alt2
 - Fix pathes to pcsd and pacemaker data (ALT #33580)
 
