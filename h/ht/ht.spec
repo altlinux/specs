@@ -1,12 +1,13 @@
 Name: ht
 Version: 2.0.22
-Release: alt1.1
+Release: alt1.2
 Summary: Disassembler, object dumper and hex editor
 License: GPLv2
 Group: Development/Tools
 Url: http://http://hte.sourceforge.net/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: %name-%version-alt-gcc6.patch
 
 BuildRequires: flex gcc-c++ liblzo2-devel libncursesw-devel libX11-devel xorg-xproto-devel
 # explicitly added texinfo for info files
@@ -20,6 +21,7 @@ the low-level functionality of a debugger and the usability of IDEs.
 %prep
 %setup -q
 %patch -p1
+%patch1 -p1
 
 
 %build
@@ -40,6 +42,9 @@ install -pD -m 0644 {doc,%buildroot%_infodir}/%name.info
 
 
 %changelog
+* Thu Jun 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.22-alt1.2
+- Fix build with gcc6
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.22-alt1.1
 - NMU: added BR: texinfo
 
