@@ -1,7 +1,7 @@
 Name: corosync
 Summary: The Corosync Cluster Engine and Application Programming Interfaces
 Version: 2.4.1
-Release: alt1
+Release: alt2
 License: BSD
 Group: System/Base
 Url: http://corosync.github.io/corosync/
@@ -16,6 +16,8 @@ Source4: corosync-qnetd-init
 #fixed systemd units
 Source11: corosync.service
 Source12: corosync-qdevice.service
+
+Patch1: %name-%version-alt-build.patch
 
 Provides: corosync2 = %version-%release
 Obsoletes: corosync2 < %version-%release
@@ -86,6 +88,7 @@ the remaining acting as TTNs.
 
 %prep
 %setup
+%patch1 -p1
 
 echo %version > .version
 #if release version (= tarball)
@@ -259,6 +262,9 @@ sed -i -e 's/^COROSYNC_QNETD_RUNAS=""$/COROSYNC_QNETD_RUNAS="coroqnetd"/' %build
 %_bindir/*_test_agent
 
 %changelog
+* Thu Jun 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.1-alt2
+- Fixed build for new toolchain
+
 * Wed Sep 14 2016 Alexey Shabalin <shaba@altlinux.ru> 2.4.1-alt1
 - 2.4.1
 - rename to corosync
