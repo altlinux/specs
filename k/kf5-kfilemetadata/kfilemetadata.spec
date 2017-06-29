@@ -3,8 +3,8 @@
 %def_enable exiv2
 
 Name: kf5-%rname
-Version: 5.34.0
-Release: alt2%ubt
+Version: 5.35.0
+Release: alt1%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -80,6 +80,9 @@ KF5 library
 %_K5plug/kf5/kfilemetadata/
 
 %changelog
+* Thu Jun 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.35.0-alt1%ubt
+- new version
+
 * Thu Jun 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt2%ubt
 - rebuild with ffmpeg
 

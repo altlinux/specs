@@ -1,7 +1,7 @@
 %define rname kcodecs
 
 Name: kf5-%rname
-Version: 5.34.0
+Version: 5.35.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -17,6 +17,7 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules gcc-c++ python-module-google qt5-tools-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-tools-devel
+BuildRequires: /usr/bin/gperf
 
 %description
 KCodecs provide a collection of methods to manipulate strings using various encodings.
@@ -69,6 +70,9 @@ KF5 library
 %_K5lib/libKF5Codecs.so.*
 
 %changelog
+* Thu Jun 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.35.0-alt1%ubt
+- new version
+
 * Fri May 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt1%ubt
 - new version
 

@@ -1,7 +1,7 @@
 %define rname khtml
 
 Name: kf5-%rname
-Version: 5.34.0
+Version: 5.35.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -18,6 +18,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: qt5-phonon-devel qt5-x11extras-devel
+BuildRequires: /usr/bin/gperf
 BuildRequires: libgif-devel libjpeg-devel libpng-devel libssl-devel zlib-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel
@@ -83,6 +84,9 @@ KF5 library
 #%_K5xmlgui/khtml/
 
 %changelog
+* Thu Jun 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.35.0-alt1%ubt
+- new version
+
 * Fri May 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt1%ubt
 - new version
 
