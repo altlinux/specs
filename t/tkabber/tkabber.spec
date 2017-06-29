@@ -1,20 +1,22 @@
 Name: tkabber
-Version: 1.0
+Version: 1.1.2
 Release: alt1
 
 Summary: Tkabber is an open source Jabber Client.
 License: GPL
 Group: Networking/Instant messaging
-Url: http://tkabber.jabber.ru/ru/
+Url: http://tkabber.jabber.ru/
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-tcl >= 0.2.1-alt2
-BuildRequires: cpio tcl
+BuildRequires: cpio tcl tcllib
 
-Requires: tcl-gpg tcl-udp tcl-tktray tcl-xmpp >= 1.0
+Requires: tcl-gpg tcl-udp tcl-tktray tcl-xmpp = %EVR
 Conflicts: tkabber-plugins < 0.11.1-alt2
 
+# http://git.altlinux.org/gears/t/tkabber.git
 Source0: %name-%version-%release.tar
+Source1: %name.watch
 
 %description
 Tkabber provides a Tcl/Tk interface to the Jabber instant messaging
@@ -22,9 +24,22 @@ and presence service.
 Wtiting in Tcl/Tk, used TclLib and BWidget, working on Linux, FreeBSD,
 NetBSD, Solaris and Windows 98/2000/XP.
 
+%package -n tcl-xmpp
+Summary: XMPP library for Tcl
+BuildArch: noarch
+License: BSD
+Group: Development/Tcl
+
+%description -n tcl-xmpp
+This project implements an XMPP (RFC-3920 and RFC-3921) library
+which is to be used for clients, bots and components written in Tcl.
+
 %prep
 %setup
 sed -i 's,@version@,%version-%release,' tkabber.tcl
+
+%build
+dtplite -o . -ext n nroff tclxmpp/doc
 
 %install
 mkdir -p %buildroot%_bindir %buildroot%_datadir/%name
@@ -46,9 +61,19 @@ find . -type f -not '(' -name \*..\* \
     -o -regex \./\[A-Z\]\[^/\.\]\+ \
     -o -regex \./doc/.\+ \
     -o -regex \./contrib/.\+ \
+    -o -regex \./tclxmpp/.\+ \
     -o -regex \./examples/.\+ ')' | cpio -pmd %buildroot%_datadir/%name
 
 gzip -9nf ChangeLog
+
+# tcl-xmpp
+mkdir -p %buildroot%_tcldatadir/xmpp
+cp -a tclxmpp/xmpp %buildroot%_tcldatadir
+
+mkdir -p %buildroot%_mandir/mann
+install -pm0644 files/*.n %buildroot%_mandir/mann
+
+gzip -9nf tclxmpp/ChangeLog
 
 %files
 %doc INSTALL ChangeLog.* COPYING README doc/* contrib examples 
@@ -59,7 +84,16 @@ gzip -9nf ChangeLog
 %_niconsdir/*
 %_desktopdir/%name.desktop
 
+%files -n tcl-xmpp
+%doc tclxmpp/ChangeLog* tclxmpp/examples tclxmpp/license.terms
+%_tcldatadir/xmpp
+%_mandir/mann/xmpp*
+
 %changelog
+* Mon Jun 26 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.2-alt1
+- 1.1.2 released
+- added tcl-xmpp subpackage
+
 * Mon Jan 27 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0-alt1
 - 1.0 released
 
