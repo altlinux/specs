@@ -1,14 +1,17 @@
 Name: fritzing
 Version: 0.8.7b
-Release: alt2
+Release: alt3
 
 Summary: Intuitive EDA platform featuring from prototype to product
 License: GPLv3+
 Group: Engineering
 
 Url: http://fritzing.org
-Source: http://fritzing.org/download/%version/source-tarball/%name-%version.source.tar.bz2
+# http://fritzing.org/download/%%version/source-tarball/%%name-%%version.source.tar.bz2
+Source: %name-%version.source.tar.bz2
 #Packager: Konstantin Kogan <ALT Linux Active Users Club>
+
+Patch1: %name-%version-alt-build.patch
 
 # Automatically added by buildreq on Sat Apr 19 2014 (-bi)
 # optimized out: elfutils fontconfig libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-sql libqt4-svg libqt4-xml libstdc++-devel python-base python3 python3-base zlib-devel
@@ -43,6 +46,7 @@ This package contains shared data files for Fritzing.
 
 %prep
 %setup -n %name-%version.source
+%patch1 -p2
 sed -i 's/\r$//' README.txt LICENSE.CC-BY-SA
 
 %build
@@ -71,6 +75,9 @@ find %buildroot%_datadir/%name/parts \
 %_datadir/%name/
 
 %changelog
+* Thu Jun 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.7b-alt3
+- Updated build for new toolchain
+
 * Tue Apr 22 2014 Michael Shigorin <mike@altlinux.org> 0.8.7b-alt2
 - rebuilt for Sisyphus
 - minor spec cleanup
