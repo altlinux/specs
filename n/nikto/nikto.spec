@@ -1,11 +1,9 @@
 # SPEC file for nikto web server scanner
 
-%define version    2.1.5
-%define release    alt1
-
 Name: nikto
-Version: %version
-Release: %release
+Version: 2.1.6
+Release: alt1.git6f8c472
+
 Epoch: 1
 
 Summary: web server vulnerability scaner
@@ -13,19 +11,20 @@ Summary(ru_RU.UTF-8): сканер уязвимостей веб-серверо�
 
 License: %gpl2only
 Group: Security/Networking
-URL: http://www.cirt.net/nikto2
+#URL: http://www.cirt.net/nikto2
+URL: https://github.com/sullo/nikto
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source0: %name-%version.tar
-Source1: updates.tar
+Patch0:  %name-%version-%release.patch
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-licenses
 
 AutoReqProv: perl, yes
 
-Requires: perl-Net-SSLeay openssl
+Requires: perl-Net-SSLeay openssl perl-bignum
 
 %description
 Nikto is an Open Source (GPL) web server scanner which performs
@@ -47,29 +46,34 @@ CGI-скриптов для более чем 900 версий серверов,
 
 %prep
 %setup
-
-# Updating sources to current databases
-tar xvf %SOURCE1
-#mv -f -- updates/CHANGES.txt docs/
-mv -f -- updates/* plugins/
+%patch0 -p1
 
 %build
+pushd program
+
 # Fix location of config file
 sed -e 's@"nikto.conf"@"%_sysconfdir/%name/nikto.conf"@' -i nikto.pl
 
 # Fix pathes in config.txt
-sed -e 's@NIKTODTD=docs/nikto.dtd@NIKTODTD=%_sysconfdir/%name/nikto.dtd@' -i nikto.conf
-sed -e 's@# EXECDIR=/usr/local/nikto@EXECDIR=%execdir@' -i nikto.conf
-sed -e 's@# DOCDIR=/opt/nikto/docs@# DOCUMENTDIR=/opt/nikto/docs@' -i nikto.conf
+sed -e 's@NIKTODTD=.*/nikto.dtd@NIKTODTD=%_sysconfdir/%name/nikto.dtd@' -i nikto.conf
+sed -e 's@# EXECDIR=.*/nikto@EXECDIR=%execdir@' -i nikto.conf
 
+sed -e 's@# PLUGINDIR=.*/plugins@# PLUGINDIR=%execdir/plugins@'         -i nikto.conf
+sed -e 's@# DBDIR=.*/databases@# DBDIR=%execdir/databases@'             -i nikto.conf
+sed -e 's@# TEMPLATEDIR=.*/templates@# TEMPLATEDIR=%execdir/templates@' -i nikto.conf
+sed -e 's@# DOCDIR=.*/docs@# DOCDIR=%execdir/docs@'                     -i nikto.conf
+
+popd
 
 %install
+pushd program
+
 install -m 0755 -d -- %buildroot%_sysconfdir/%name
 install -m 0644 -- nikto.conf     %buildroot%_sysconfdir/%name/nikto.conf
 install -m 0644 -- docs/%name.dtd %buildroot%_sysconfdir/%name/%name.dtd
 
 install -m 0755 -d -- %buildroot/%_bindir
-install -m 0755 -- %name.pl       %buildroot%_bindir/%name
+install -D -m 0755 -- %name.pl    %buildroot%_bindir/%name
 
 install -m 0755 -d -- %buildroot/%execdir/plugins
 install -m 0644 -- plugins/* %buildroot%execdir/plugins/
@@ -77,9 +81,13 @@ install -m 0644 -- plugins/* %buildroot%execdir/plugins/
 install -m 0755 -d -- %buildroot/%execdir/templates
 install -m 0644 -- templates/* %buildroot%execdir/templates/
 
+install -m 0755 -d -- %buildroot/%execdir/databases
+install -m 0644 -- databases/* %buildroot%execdir/databases/
+
+popd
 
 %files
-%doc docs/CHANGES.txt docs/LICENSE.txt docs/nikto_manual.html
+%doc README.md program/docs/CHANGES.txt program/docs/LICENSE.txt program/docs/nikto_manual.html
 
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/nikto.conf
@@ -90,6 +98,9 @@ install -m 0644 -- templates/* %buildroot%execdir/templates/
      %_datadir/%name/*
 
 %changelog
+* Thu Jun 29 2017 Nikolay A. Fetisov <naf@altlinux.org> 1:2.1.6-alt1.git6f8c472
+- New version (Closes: 33319)
+
 * Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1:2.1.5-alt1
 - New version 2.1.5
 
