@@ -1,10 +1,10 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.7.0
-%define major 2.10
+%define major 2.11
 
 Name: wine
-Version: %major.1
+Version: %major.0
 Release: alt1
 Epoch: 1
 
@@ -471,6 +471,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Thu Jun 29 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.11.0-alt1
+- new version (2.11.0) with rpmgs script
+
 * Thu Jun 15 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.10.1-alt1
 - new version (2.10.1) with rpmgs script
 - replace RegQueryValueEx HKEY_PERFORMANCE hack with wine-staging one
