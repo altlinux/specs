@@ -8,8 +8,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 7.98.1
-Release: alt3
+Version: 7.99.0
+Release: alt1
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
@@ -469,6 +469,12 @@ fi
 %config %_sysconfdir/polkit-1/rules.d/*.rules
 
 %changelog
+* Fri Jun 30 2017 Mikhail Efremov <sem@altlinux.org> 7.99.0-alt1
+- menu: Add xfce4-clipman.desktop.
+- indexhtml.desktop: Split part of Name to Comment.
+- xfce-settings: Enlarge whiskermenu height.
+- release-notes.ru: Fix style (thanks mike@).
+
 * Thu Jun 22 2017 Mikhail Efremov <sem@altlinux.org> 7.98.1-alt3
 - menu: Don't show java-*-policytool menu entry.
 
