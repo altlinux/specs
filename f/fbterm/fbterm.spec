@@ -5,18 +5,20 @@ BuildRequires: termutils-devel terminfo-extra
 %define fedora 21
 Name: fbterm
 Version: 1.7
-Release: alt2
+Release: alt3
 License: GPLv2+
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: File tools
 Url: http://code.google.com/p/fbterm/
-Source0: http://fbterm.googlecode.com/files/%name-%version.tar.gz
+#http://fbterm.googlecode.com/files/%%name-%%version.tar.gz
+Source0: %name-%version.tar.gz
 
 #Patch0:    %name-1.2-kernel-header.patch
 #Patch1:    %name-1.3-setcap.patch
 #Patch2:    %name-1.4-iminput.patch
 #Patch3:    %name-1.6-rpmpack.patch
 #Patch4:    %name-1.6-el5.patch
+Patch5:    %name-%version-alt-build.patch
 
 Summary: A frame-buffer terminal emulator
 Summary(zh_CN): 运行在帧缓冲的快速终端仿真器
@@ -70,6 +72,7 @@ This sub-package enables regular user for such access.
 #%else
 #%patch4 -p0 -b .el5
 #%endif
+%patch5 -p2
 
 %build
 autoreconf -iv
@@ -110,6 +113,9 @@ EOF
 %endif
 
 %changelog
+* Fri Jun 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7-alt3
+- Updated build for gcc-6
+
 * Fri Sep 05 2014 Ilya Mashkin <oddity@altlinux.ru> 1.7-alt2
 - build for Sisyphus
 
