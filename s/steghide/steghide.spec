@@ -1,6 +1,6 @@
 Name: steghide
 Version: 0.5.1
-Release: alt5
+Release: alt6
 
 Summary: A steganography program
 
@@ -45,7 +45,7 @@ support for jpeg, bmp, wav and au files.
 %build
 %autoreconf
 %configure
-%make_build CXXFLAGS="$RPM_OPT_FLAGS"
+%make_build CXXFLAGS="$RPM_OPT_FLAGS -fpermissive"
 
 %install
 %makeinstall_std
@@ -63,6 +63,9 @@ rm -rf %buildroot%_docdir/%name/*
 %doc ABOUT-NLS BUGS CREDITS HISTORY README TODO
 
 %changelog
+* Fri Jun 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.1-alt6
+- Updated build to gcc-6
+
 * Wed Oct 23 2013 Vitaly Lipatov <lav@altlinux.ru> 0.5.1-alt5
 - build to ALT Linux Sisyphus
 
