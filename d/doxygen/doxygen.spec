@@ -1,6 +1,6 @@
 Name: doxygen
 Version: 1.8.13
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Doxygen is a documentation system for C, C++ and IDL
@@ -11,6 +11,7 @@ Url: http://www.doxygen.org/
 # ftp://ftp.stack.nl/pub/users/dimitri/doxygen-%version.src.tar.gz
 Source: %name-%{version}.src.tar.gz
 Patch: doxygen-1.7.5-rh-timestamp.patch
+Patch1: %name-%version-upstream-crash.patch
 
 # Automatically added by buildreq on Wed May 10 2017
 # optimized out: cmake-modules fontconfig fonts-type1-urw ghostscript-classic libgpg-error libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-webkit-devel libqt4-xml libstdc++-devel libwayland-client libwayland-server perl python-base python-modules tex-common texlive-base texlive-base-bin texlive-common texlive-extra-utils texlive-fonts-recommended texlive-generic-recommended texlive-latex-base texlive-latex-extra texlive-latex-recommended texlive-xetex texmf-latex-xcolor xml-utils
@@ -49,6 +50,7 @@ pdf formats.
 
 %prep
 %setup
+%patch1 -p1
 
 # XXX Waiting for newer TeXlive
 sed -i 's/subinputfrom/subimport/g' doc/doxygen_manual.tex
@@ -122,6 +124,9 @@ cd BUILD && make tests
 %exclude %_man1dir/doxy[is]*
 
 %changelog
+* Fri Jun 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.8.13-alt2
+- Applied upstream patch to fix some crash cases
+
 * Mon Apr 17 2017 Fr. Br. George <george@altlinux.ru> 1:1.8.13-alt1
 - Autobuild version bump to 1.8.13
 
