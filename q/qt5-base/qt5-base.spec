@@ -24,7 +24,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.7.1
-Release: alt7%ubt
+Release: alt8%ubt
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -55,8 +55,7 @@ Patch1001: alt-enable-ft-lcdfilter.patch
 Patch1002: alt-dont-require-plugin-file.patch
 Patch1003: alt-ca-certificates-path.patch
 Patch1004: alt-timezone.patch
-Patch1005: alt-no-debug.patch
-Patch1006: alt-hidpi_scale_at_192.patch
+Patch1005: alt-hidpi_scale_at_192.patch
 
 # macros
 %define _qt5 %gname
@@ -367,8 +366,7 @@ EGL integration library for the Qt%major toolkit
 %patch1002 -p1 -b .plugin-file
 %patch1003 -p1 -b .ca-bundle
 %patch1004 -p1 -b .timezone
-%patch1005 -p1 -b .no-debug
-%patch1006 -p1
+%patch1005 -p1 -b .dpi
 bin/syncqt.pl -version %version -private
 [ -e include/QtCore/QtCoreDepends ] || >include/QtCore/QtCoreDepends
 
@@ -480,6 +478,14 @@ make install INSTALL_ROOT=%buildroot
 mkdir -p %buildroot/{%_qt5_archdatadir/mkspecs/modules,%_qt5_importdir,%_qt5_qmldir,%_qt5_libexecdir,%_qt5_translationdir,%_qt5_docdir}
 mkdir -p %buildroot/%_qt5_plugindir/{accessible,iconengines,script,styles}/
 
+# debug logging config
+mkdir -p %buildroot/%_sysconfdir/qt5/
+cat >%buildroot/%_sysconfdir/qt5/qtlogging.ini <<__EOF__
+[Rules]
+*.debug=false
+__EOF__
+ln -s `relative %_sysconfdir/qt5/qtlogging.ini %_qt5_datadir/qtlogging.ini` %buildroot/%_qt5_datadir/qtlogging.ini
+
 # remove .la files
 rm -rf %buildroot/%_qt5_libdir/*.la
 
@@ -582,6 +588,7 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 %files common
 %doc LICENSE.* LGPL_EXCEPTION.txt
+%dir %_sysconfdir/qt5/
 %dir %_qt5_docdir/
 %dir %_qt5_archdatadir/
 %dir %_qt5_importdir/
@@ -612,6 +619,8 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 %dir %_qt5_plugindir/sqldrivers/
 %dir %_qt5_plugindir/styles/
 %dir %_qt5_plugindir/xcbglintegrations/
+%config(noreplace) %_sysconfdir/qt5/qtlogging.ini
+%_qt5_datadir/qtlogging.ini
 
 %files doc
 %if_disabled bootstrap
@@ -763,6 +772,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Fri Jun 30 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt8%ubt
+- disable debug messages via /usr/share/qt5/qtlogging.ini by default
+
 * Mon Jun 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt7%ubt
 - fix to build with session management
 
