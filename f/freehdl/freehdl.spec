@@ -5,7 +5,7 @@
 Name: freehdl
 Summary: VHDL simulator
 Version: 0.0.8
-Release: alt3
+Release: alt4
 License: GPL
 Group: Development/Other
 BuildRequires: flex gcc-c++
@@ -16,6 +16,7 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 Requires: lib%name-devel = %version-%release
 Requires: lib%name = %version-%release
 Source: %name-%version.tar
+Patch1: %name-%version-alt-gcc6.patch
 
 %package -n libfreehdl
 Summary: VHDL simulator
@@ -46,6 +47,7 @@ VHDL simulator
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 sed -i 's!FREEHDL/lib!%_libdir!g' v2cc/gvhdl.in
@@ -118,6 +120,9 @@ sed -i 's!FREEHDL/lib!%_libdir!g' v2cc/gvhdl.in
 %_libdir/libfreehdl-vaul.a
 
 %changelog
+* Fri Jun 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.8-alt4
+- Fixed build with gcc-6
+
 * Tue Jan 26 2016 Denis Smirnov <mithraen@altlinux.ru> 0.0.8-alt3
 - fix build
 
