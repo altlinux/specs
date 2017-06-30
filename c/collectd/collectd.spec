@@ -30,7 +30,7 @@
 
 Name: collectd
 Version: 5.5.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -39,6 +39,7 @@ Group: Monitoring
 Url: http://collectd.org
 Source0: %url/files/%name-%version.tar
 Patch0: %name-%version-%release.patch
+Patch1: %name-%version-alt-build.patch
 
 ### NB: part of BRs is conditional (see subpackages below)
 # Automatically added by buildreq on Thu May 14 2009 (-bi)
@@ -493,6 +494,7 @@ from collectd into nagios to avoid extra sensor-caused load
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 sed -i 's/ -Werror//' src/Makefile.*
 mkdir libltdl
 
@@ -836,6 +838,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Fri Jun 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.5.2-alt1.2
+- Updated build to support new toolchain
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 5.5.2-alt1.1
 - rebuild with new perl 5.24.1
 
