@@ -6,7 +6,7 @@
 
 Name: lib%_name
 Version: 1.12.0
-Release: alt2.git20140427
+Release: alt3.git20140427
 Summary: A library for using PKCS#11 providers
 
 Group: Development/Other
@@ -21,7 +21,7 @@ Provides: %_name = %version-%release
 Obsoletes: %_name < %version-%release
 
 BuildRequires: doxygen graphviz
-%{?_enable_openssl:BuildRequires: pkgconfig(libcrypto) >= 0.9.7 pkgconfig(openssl) >= 0.9.7}
+%{?_enable_openssl:BuildRequires: libssl-devel}
 %{?_enable_gnutls:BuildRequires: pkgconfig(gnutls) >= 1.4}
 %{?_enable_nss:BuildRequires: pkgconfig(nss) >= 3.11}
 %{?_enable_polarssl:BuildRequires: libpolarssl-devel}
@@ -86,6 +86,9 @@ rm -f %buildroot%_libdir/*.la
 %_man8dir/pkcs11-helper-1.8*
 
 %changelog
+* Fri Jun 30 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.12.0-alt3.git20140427
+- build with openssl, prevent acidental rebuilds with libressl
+
 * Mon Dec 28 2015 Alexey Shabalin <shaba@altlinux.ru> 1.12.0-alt2.git20140427
 - fix build (drop BR: libpolarssl-devel)
 - rename to libpkcs11-helper
