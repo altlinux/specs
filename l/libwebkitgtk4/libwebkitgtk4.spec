@@ -15,7 +15,7 @@
 %def_enable wayland
 
 Name: libwebkitgtk4
-Version: 2.16.4
+Version: 2.16.5
 Release: alt1
 
 Summary: Web browser engine
@@ -29,7 +29,7 @@ Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav
 Requires: hyphen-en hyphen-ru
 
 BuildPreReq: rpm-build-licenses
-BuildRequires: gcc-c++ cmake ccache libicu-devel >= 5.6.1 bison perl-Switch perl-JSON-PP zlib-devel
+BuildRequires: /proc gcc-c++ cmake ccache libicu-devel >= 5.6.1 bison perl-Switch perl-JSON-PP zlib-devel
 %ifarch x86_64
 BuildRequires: llvm-devel >= 3.7
 %endif
@@ -289,6 +289,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Fri Jun 30 2017 Yuri N. Sedunov <aris@altlinux.org> 2.16.5-alt1
+- 2.16.5
+
 * Thu Jun 22 2017 Yuri N. Sedunov <aris@altlinux.org> 2.16.4-alt1
 - 2.16.4 (fixed CVE-2017-2538)
 
