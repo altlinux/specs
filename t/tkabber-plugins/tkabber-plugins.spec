@@ -1,15 +1,18 @@
 Name: tkabber-plugins
-Version: 1.0
+Version: 1.1.2
 Release: alt1
 
 Summary: Set of plugins for Tkabber.
 License: GPL
 Group: Networking/Instant messaging
-Url: http://www.jabber.ru/projects/tkabber/
+Url: http://tkabber.jabber.ru/tkabber-plugins
 
 BuildArch: noarch
 BuildRequires: tcl
+%add_findreq_skiplist %_datadir/%name/otr/*
+# http://git.altlinux.org/gears/t/tkabber-plugins.git
 Source: %name-%version-%release.tar
+Source1: %name.watch
 
 %description
 %name contains some addons for open-source jabber client - Tkabber.
@@ -30,6 +33,9 @@ find . -mindepth 2 -type f -not -name ChangeLog | cpio -pmd %buildroot%_datadir/
 %_datadir/%name
 
 %changelog
+* Fri Jun 30 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.2-alt1
+- 1.1.2 released
+
 * Mon Jan 27 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0-alt1
 - 1.0 released
 
