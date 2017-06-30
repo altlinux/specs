@@ -1,13 +1,9 @@
-%global import_path golang.org/x/net
+%global import_path github.com/mattn/go-isatty
 
-%global commit 1f9224279e98554b6a6432d4dd998a739f8b2b7c
-%global abbrev %(c=%{commit}; echo ${c:0:8})
-
-
-Name: golang-golang-x-net
-Version: 0
-Release: alt3.git%abbrev
-Summary: Go supplementary network libraries
+Name: golang-github-mattn-go-isatty
+Version: 0.0.2
+Release: alt1
+Summary: isatty for golang
 License: MIT
 Group: Development/Other
 Url: https://godoc.org/%import_path
@@ -22,16 +18,17 @@ BuildArch: noarch
 BuildRequires: golang-tools
 
 %description
-Go supplementary network libraries
+%summary
 
 %package devel
-Summary: golang-golang-x-net
+Summary: isatty for golang
 Group: Development/Other
 Requires: golang
+Requires:	golang(github.com/mattn/go-isatty)
 Provides: golang(%import_path) = %version-%release
 
 %description devel
-Go supplementary network libraries
+%summary
 
 %prep
 %setup -q
@@ -49,16 +46,10 @@ export GOPATH="%go_path"
 %golang_install
 
 %files devel
-%doc AUTHORS README LICENSE PATENTS
+%doc README.md LICENSE
 %go_path/src/*
 
 %changelog
-* Fri Jun 30 2017 Denis Pynkin <dans@altlinux.org> 0-alt3.git1f922427
-- Update
-
-* Mon Mar 13 2017 Denis Pynkin <dans@altlinux.org> 0-alt2.gita6577fac
-- Update
-
-* Fri Nov 25 2016 Denis Pynkin <dans@altlinux.org> 0-alt1.git4971afdc
+* Fri Jun 30 2017 Denis Pynkin <dans@altlinux.org> 0.0.2-alt1
 - Initial package
 

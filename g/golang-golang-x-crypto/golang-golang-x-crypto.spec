@@ -1,12 +1,12 @@
 %global import_path golang.org/x/crypto
 
-%global commit 728b753d0135da6801d45a38e6f43ff55779c5c2
+%global commit 5ef0053f77724838734b6945dd364d3847e5de1d
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-golang-x-crypto
 Version: 0
-Release: alt7.git%abbrev
+Release: alt8.git%abbrev
 Summary: Supplementary Go cryptography libraries
 License: MIT
 Group: Development/Other
@@ -53,6 +53,9 @@ export GOPATH="%go_path"
 %go_path/src/*
 
 %changelog
+* Fri Jun 30 2017 Denis Pynkin <dans@altlinux.org> 0-alt8.git5ef0053f
+- Update
+
 * Mon Mar 13 2017 Denis Pynkin <dans@altlinux.org> 0-alt7.git728b753d
 - Update
 - Removed "Provides" for separate packages due updated automatic calculation
