@@ -1,6 +1,6 @@
 Name: BASE
 Version: 1.4.5
-Release: alt12
+Release: alt13
 
 Summary: BASE - Basic Analysis and Security Engine
 License: GPLv2
@@ -15,6 +15,7 @@ Patch1: base-1.4.5-alt-font-path.patch
 Patch2: base-1.4.5-alt-urlpath.patch
 Patch3: base-1.4.5-alt-inputfilter.patch
 Patch4: base-1.4.5-remove-payload-filtering.patch
+Patch5: base-1.4.5-remove-excessive-filtering.patch
 
 BuildArch: noarch
 
@@ -62,6 +63,7 @@ BASE with nginx support.
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p2
 
 %define _worldmap_target_dir usr/share/pear/Image/Graph/Images/Maps
 %define _php_files_target_dir var/www/webapps/BASE/base
@@ -111,6 +113,9 @@ install -Dpm 644 %SOURCE1 %buildroot/%_sysconfdir/nginx/webapps-available.d/%nam
 %_sysconfdir/nginx/webapps-available.d/%name.conf
 
 %changelog
+* Fri Jun 30 2017 Denis Medvedev <nbr@altlinux.org> 1.4.5-alt13
+- remove additional excessive filtering
+
 * Fri Jun 30 2017 Denis Medvedev <nbr@altlinux.org> 1.4.5-alt12
 - remove binary payload filtering
 
