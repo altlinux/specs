@@ -1,6 +1,6 @@
 Name: florence
 Version: 0.6.0
-Release: alt1
+Release: alt2
 
 Summary: Extensible scalable virtual keyboard for GNOME
 Url: http://florence.sourceforge.net/  
@@ -47,9 +47,12 @@ although it can be used on any desktop environment.
 %_datadir/pixmaps/florence.svg
 %_man1dir/*.1.*
 
-%exclude %_man1dir/florence_applet.1.gz
+%exclude %_man1dir/florence_applet.1.*
 
 %changelog
+* Fri Jun 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.0-alt2
+- Updated build spec to support any man page compression
+
 * Fri Mar 29 2013 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt1
 - Drop obsoleted patch.
 - Updated to 0.6.0.
