@@ -1,6 +1,6 @@
 Name: audacity
 Version: 2.1.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: Cross-platform audio editor
 License: GPL
@@ -15,6 +15,7 @@ Source3: %name-32x32.xpm
 Source4: %name-16x16.xpm
 Source6: %name-%version-help-en.tar
 Patch0: %name-installmo.patch
+Patch1: %name-%version-alt-build.patch
 
 Packager: Alex Karpov <karpov@altlinux.ru>
 
@@ -56,6 +57,7 @@ For the most up to date manual content, use the on-line manual.
 %prep
 %setup -n %name-src-%version
 #patch0
+%patch1 -p2
 grep -Irl "libmp3lame.so" . | xargs sed -i "s/libmp3lame.so/libmp3lame.so.0.0/"
 
 %build
@@ -120,6 +122,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/%name/help
 
 %changelog
+* Fri Jun 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.1-alt1.2
+- Updated build to support gcc-6
+
 * Sat Feb 20 2016 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1.1
 - rebuilt against libSoundTouch.so.1
 
