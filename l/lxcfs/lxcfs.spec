@@ -1,5 +1,5 @@
 Name:		lxcfs
-Version:	2.0.5
+Version:	2.0.7
 Release:	alt1
 Summary:	FUSE filesystem for LXC
 
@@ -74,6 +74,9 @@ mkdir -p %buildroot%_localstatedir/%name
 %_pam_modules_dir/*
 
 %changelog
+* Fri Jun 30 2017 Denis Pynkin <dans@altlinux.org> 2.0.7-alt1
+- Update
+
 * Fri Nov 25 2016 Denis Pynkin <dans@altlinux.org> 2.0.5-alt1
 - Update
 

@@ -1,7 +1,7 @@
 %global import_path     github.com/gorilla/mux
 
 Name: golang-github-gorilla-mux
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 Summary: Package `gorilla/mux` implements a request router and dispatcher.
 License: BSD
@@ -51,6 +51,9 @@ export GOPATH="%go_path"
 %go_path/src/*
 
 %changelog
+* Fri Jun 30 2017 Denis Pynkin <dans@altlinux.org> 1.4.0-alt1
+- Update
+
 * Mon Mar 13 2017 Denis Pynkin <dans@altlinux.org> 1.3.0-alt1
 - Update
 

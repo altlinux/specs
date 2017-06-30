@@ -26,8 +26,8 @@
 %define init_script systemd
 
 Name: lxc
-Version: 2.0.7
-Release: alt4
+Version: 2.0.8
+Release: alt1
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -168,6 +168,9 @@ mkdir -p %buildroot%_cachedir/%name
 
 
 %changelog
+* Thu Jun 29 2017 Denis Pynkin <dans@altlinux.org> 2.0.8-alt1
+- Version updated
+
 * Wed Apr 26 2017 Denis Pynkin <dans@altlinux.org> 2.0.7-alt4
 - Fixes #33399
 

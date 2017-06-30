@@ -1,7 +1,7 @@
 %global import_path github.com/mattn/go-colorable
 
 Name: golang-github-mattn-go-colorable
-Version: 0.0.7
+Version: 0.0.8
 Release: alt1
 Summary: Colorable writer for windows.
 License: MIT
@@ -24,6 +24,7 @@ This package is possible to handle escape sequence for ansi color on windows.
 Summary: Colorable writer for windows.
 Group: Development/Other
 Requires: golang
+Requires:	golang(github.com/mattn/go-isatty)
 Provides: golang(%import_path) = %version-%release
 
 %description devel
@@ -51,6 +52,9 @@ rm -rf -- %buildroot/%go_path/src/%import_path/_example
 %go_path/src/*
 
 %changelog
+* Fri Jun 30 2017 Denis Pynkin <dans@altlinux.org> 0.0.8-alt1
+- Update
+
 * Mon Mar 13 2017 Denis Pynkin <dans@altlinux.org> 0.0.7-alt1
 - Update
 

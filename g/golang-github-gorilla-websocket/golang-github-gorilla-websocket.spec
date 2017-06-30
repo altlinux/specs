@@ -1,7 +1,7 @@
 %global import_path     github.com/gorilla/websocket
 
 Name: golang-github-gorilla-websocket
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 Summary: The Gorilla WebSocket package provides an implementation of rfc6455 protocol.
 License: BSD
@@ -56,6 +56,9 @@ rm -rf -- %buildroot/%go_path/src/%import_path/examples
 %go_path/src/*
 
 %changelog
+* Fri Jun 30 2017 Denis Pynkin <dans@altlinux.org> 1.2.0-alt1
+- Update
+
 * Mon Mar 13 2017 Denis Pynkin <dans@altlinux.org> 1.1.0-alt1
 - Update
 
