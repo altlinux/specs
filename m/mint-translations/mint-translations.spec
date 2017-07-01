@@ -1,5 +1,5 @@
 Name:           mint-translations
-Version:        2017.05.23
+Version:        2017.06.28
 Release:        alt1
 License:        GPLv2+ and MIT
 Summary:        Translation files for Linux Mint applications
@@ -30,6 +30,9 @@ cp -a usr/share/linuxmint/locale %buildroot%_datadir
 %_datadir/locale/*/LC_MESSAGES/*.mo
 
 %changelog
+* Sat Jul 01 2017 Andrey Cherepanov <cas@altlinux.org> 2017.06.28-alt1
+- New version
+
 * Thu May 25 2017 Andrey Cherepanov <cas@altlinux.org> 2017.05.23-alt1
 - New version
 
