@@ -1,6 +1,6 @@
 Name: id3lib
 Version: 3.8.3
-Release: alt9.qa1
+Release: alt10
 
 Summary: A software library for manipulating ID3v1 and ID3v2 tags
 License: LGPL
@@ -14,6 +14,7 @@ Patch2: %name-3.8.2-doxygen.patch
 Patch3: id3lib-3.8.3-libadd.patch
 Patch4: id3lib-3.8.3-SA26536-fix.diff
 Patch5: id3lib-3.8.3-gcc-4.3.patch
+Patch6: id3lib-3.8.3-utf16.patch
 
 %def_disable static
 %{?_enable_static:BuildPreReq: glibc-devel-static}
@@ -86,6 +87,7 @@ rm -rfv zlib
 %patch3 -p1
 %patch4 -p2
 %patch5 -p1
+%patch6 -p1
 
 %build
 autoconf
@@ -120,6 +122,9 @@ gzip ChangeLog
 %endif
 
 %changelog
+* Sat Jul 01 2017 Ildar Mulyukov <ildar@altlinux.ru> 3.8.3-alt10
+- add id3lib-3.8.3-utf16.patch (fixes #33607)
+
 * Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 3.8.3-alt9.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
