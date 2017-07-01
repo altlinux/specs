@@ -30,7 +30,7 @@
 
 Name: collectd
 Version: 5.5.2
-Release: alt1.2
+Release: alt1.3
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -509,7 +509,7 @@ mkdir libltdl
 # rrdcached.so: underlinked libraries: /lib64/libpthread.so.0
 # rrdtool.so: underlinked libraries: /lib64/libpthread.so.0
 # notify_desktop.so: underlinked libraries: /usr/lib64/libgobject-2.0.so.0
-%add_optflags -lpthread -lgobject-2.0
+%add_optflags -lpthread -lgobject-2.0 -std=gnu99
 
 # seems like mainstream uses /var for localstatedir, ALT uses /var/lib
 %configure \
@@ -838,6 +838,11 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Sat Jul 01 2017 Michael Shigorin <mike@altlinux.org> 5.5.2-alt1.3
+- E2K: insist it's -std=c99, see e.g. cpu.c::cpu_commit_one();
+  thanks imz@ and MCST guys for investigation
+- fixed collectd.conf.pod for older pod2man (reported upstream)
+
 * Fri Jun 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.5.2-alt1.2
 - Updated build to support new toolchain
 
