@@ -6,11 +6,11 @@
 
 # we need newlib to compile complete gcc, but we need gcc to compile newlib,
 # so compile minimal gcc first
-%def_with bootstrap
+%def_without bootstrap
 
 Name: arm-none-eabi-gcc
 Version: 6.3.0
-Release: alt1
+Release: alt2
 Summary: GNU GCC for cross-compilation for %target target
 Group: Development/Tools
 
@@ -35,12 +35,12 @@ Source1: README.alt
 Source2: bootstrapexplain
 Patch1: enable-with-multilib-list-for-arm.patch
 
-BuildRequires: gcc-c++ %target-binutils >= 2.21, zlib-devel libgmp-devel libmpc-devel
-#flex autogen mpfr-devel 
+BuildRequires: gcc-c++ %target-binutils >= 2.21, zlib-devel libgmp-devel libmpc-devel autogen rpm-build-python
 %if_without bootstrap
 BuildRequires: %target-newlib
 %endif
 Requires: %target-binutils >= 2.21
+%add_python_req_skip libstdcxx
 
 %description
 This is a Cross Compiling version of GNU GCC, which can be used to
@@ -66,26 +66,6 @@ compile c++ code for the %target platform, instead of for the native
 
 contrib/gcc_update --touch
 cp -a %SOURCE1 .
-
-## Extract %%__os_install_post into os_install_post~
-#cat << \EOF > os_install_post~
-#__os_install_post
-#EOF
-
-# Generate customized brp-*scripts
-#cat os_install_post~ | while read a x y; do
-#case $a in
-# Prevent brp-strip* from trying to handle foreign binaries
-#*/brp-strip*)
-#  b=$(basename $a)
-#  sed -e 's,find "*%buildroot"*,find "%buildroot%_bindir" "%buildroot%_libexecdir",' $a > $b
-#  chmod a+x $b
-#  ;;
-#esac
-#done
-
-#sed -e 's,^[ ]*%_libexecdir/rpm.*/brp-strip,./brp-strip,' \
-#< os_install_post~ > os_install_post
 
 %build
 mkdir -p gcc-%target gcc-nano-%target
@@ -261,9 +241,6 @@ popd
 %doc COPYING* README README.alt
 %_bindir/%target-*
 %exclude %_bindir/%target-?++
-#dir %prefix/lib/gcc
-#dir %prefix/lib/gcc/%target
-#prefix/lib/gcc/%target/%gcc_ver
 %dir %_libexecdir/gcc
 %dir %_libexecdir/gcc/%target
 %_libexecdir/gcc/%target/%gcc_ver
@@ -287,5 +264,8 @@ popd
 %endif
 
 %changelog
+* Sat Jul 01 2017 Anton Midyukov <antohami@altlinux.org> 6.3.0-alt2
+- Rebuild with newlib (without bootstrap).
+
 * Fri Jun 30 2017 Anton Midyukov <antohami@altlinux.org> 6.3.0-alt1
 - Initial build for ALT Sisyphus.
