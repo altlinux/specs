@@ -4,13 +4,13 @@
 %define api_ver 1.0
 %define gst_api_ver 1.0
 
-%define gst_ver 1.8.2
+%define gst_ver 1.10.2
 %define gtk_ver 3.20
 %define gi_ver 1.32
 
 Name: pitivi
-Version: %ver_major
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: PiTiVi allows users to easily edit audio/video projects
 License: LGPLv2.1+
@@ -83,11 +83,11 @@ newbies and professionals alike.
 #%_man1dir/%name.1*
 %_datadir/appdata/%name.appdata.xml
 
-#gst-transcoder-1.8.1.1 ?!
+#gst-transcoder-1.12.0 ?!
 %_bindir/gst-transcoder-%api_ver
 %_libdir/libgsttranscoder-%api_ver.so.0
 %_typelibdir/GstTranscoder-%api_ver.typelib
-%_libdir/gstreamer-%api_ver/libgsttranscoderplugin.so
+%_libdir/gstreamer-%api_ver/libgsttranscode.so
 %doc AUTHORS NEWS RELEASE
 
 # devel
@@ -97,6 +97,9 @@ newbies and professionals alike.
 %exclude %_girdir/GstTranscoder-%api_ver.gir
 
 %changelog
+* Sat Jul 01 2017 Yuri N. Sedunov <aris@altlinux.org> 0.98.1-alt1
+- 0.98.1 (ALT #33586)
+
 * Thu Apr 13 2017 Yuri N. Sedunov <aris@altlinux.org> 0.98-alt1.1
 - exclude gst-transcoder development files (ALT #33373)
 
