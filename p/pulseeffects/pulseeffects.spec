@@ -2,7 +2,7 @@
 %define gst_ver 1.12
 
 Name: pulseeffects
-Version: 1.6.7
+Version: 2.0.1
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -49,10 +49,15 @@ cp -r share %buildroot%_prefix
 %python3_sitelibdir_noarch/*
 %_desktopdir/%name.desktop
 %_datadir/glib-2.0/schemas/com.github.wwmm.pulseeffects.gschema.xml
+%_datadir/glib-2.0/schemas/com.github.wwmm.pulseeffects.sinkinputs.gschema.xml
+%_datadir/glib-2.0/schemas/com.github.wwmm.pulseeffects.sourceoutputs.gschema.xml
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %doc README*
 
 %changelog
+* Sat Jul 01 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Tue Jun 27 2017 Yuri N. Sedunov <aris@altlinux.org> 1.6.7-alt1
 - 1.6.7
 
