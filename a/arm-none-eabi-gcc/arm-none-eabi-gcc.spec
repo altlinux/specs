@@ -10,7 +10,7 @@
 
 Name: arm-none-eabi-gcc
 Version: 6.3.0
-Release: alt2
+Release: alt3
 Summary: GNU GCC for cross-compilation for %target target
 Group: Development/Tools
 
@@ -36,9 +36,14 @@ Source2: bootstrapexplain
 Patch1: enable-with-multilib-list-for-arm.patch
 
 BuildRequires: gcc-c++ %target-binutils >= 2.21, zlib-devel libgmp-devel libmpc-devel autogen rpm-build-python
-%if_without bootstrap
+
+%if_with bootstrap
+
+%else
 BuildRequires: %target-newlib
+Requires: %target-newlib
 %endif
+
 Requires: %target-binutils >= 2.21
 %add_python_req_skip libstdcxx
 
@@ -116,8 +121,9 @@ make INHIBIT_LIBC_CFLAGS='-DUSE_TM_CLONE_REGISTRY=0'
 popd
 
 ######### nano version build part (only relevant if not bootstrap)
-%if_without bootstrap
+%if_with bootstrap
 
+%else
 mkdir -p gcc-nano-%target
 pushd gcc-nano-%target
 
@@ -170,7 +176,9 @@ popd
 
 ##### nano version (only relevant non-bootstrap)
 
-%if_without bootstrap
+%if_with bootstrap
+
+%else
 # everybody needs to end up built with the One True DESTDIR
 # to arrange for that, move the non-nano DESTDIR out of the way
 # temporarily, and make an empty one for the nano build to
@@ -247,7 +255,9 @@ popd
 %_libexecdir/%target
 %_man1dir/%target-*.1*
 
-%if_without bootstrap
+%if_with bootstrap
+
+%else
 %exclude %_man1dir/%target-?++.1*
 %exclude %_libexecdir/gcc/%target/%gcc_ver/cc1plus
 %exclude %_libexecdir/%target/include/c++/
@@ -256,7 +266,9 @@ popd
 
 %files c++
 %_bindir/%target-?++
-%if_without bootstrap
+%if_with bootstrap
+
+%else
 %_man1dir/%target-g++.1*
 %_libexecdir/gcc/%target/%gcc_ver/cc1plus
 %_libexecdir/%target/include/c++/
@@ -264,6 +276,10 @@ popd
 %endif
 
 %changelog
+* Sun Jul 02 2017 Anton Midyukov <antohami@altlinux.org> 6.3.0-alt3
+- Replace if_without to if_with
+- Added requires arm-none-eabi-newlib.
+
 * Sat Jul 01 2017 Anton Midyukov <antohami@altlinux.org> 6.3.0-alt2
 - Rebuild with newlib (without bootstrap).
 
