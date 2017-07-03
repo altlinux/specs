@@ -2,7 +2,7 @@
 %define rev 779627cb
 Name: assaultcube
 Version: 1.2.0.2
-Release: alt2.%rev
+Release: alt3.%rev
 Summary: Free first-person-shooter based on the game Cube
 Group: Games/Arcade
 License: Creative Commons
@@ -13,6 +13,7 @@ Source1: assaultcube_client.sh
 Source2: assaultcube_server.sh
 Source3: %name.desktop
 Source4: %name.png
+Patch1: %name-%version-alt-gcc6.patch
 
 # Automatically added by buildreq on Sun Mar 23 2014
 # optimized out: libGL-devel libGLU-devel libSDL-devel libX11-devel libcloog-isl4 libogg-devel llvm xorg-xproto-devel
@@ -28,6 +29,7 @@ game is all about team oriented multiplayer fun.
 
 %prep
 %setup -q -n %origname
+%patch1 -p2
 
 %build
 %make_build -C source/src CFLAGS="%optflags" CXXOPTFLAGS="%optflags" 
@@ -59,6 +61,9 @@ mv %_builddir/%origname/README.html %buildroot/%_docdir/%name/
 %_liconsdir/*.png
 
 %changelog
+* Mon Jul 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0.2-alt3.779627cb
+- Updated build with gcc-6
+
 * Fri Jan 2 2015 Andrew Clark <andyc@altlinux.org> 1.2.0.2-alt2.779627cb
 - version update to 1.2.0.2-alt2.779627cb
 
