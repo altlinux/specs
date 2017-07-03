@@ -1,5 +1,5 @@
 Name: thunar
-Version: 1.6.11
+Version: 1.6.12
 Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
@@ -76,6 +76,7 @@ mkdir -p m4/
 	--enable-exif \
 	--enable-pcre \
 	--enable-gio-unix \
+	--disable-silent-rules \
 	--enable-debug=minimum
 %make_build
 
@@ -121,9 +122,14 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Mon Jul 03 2017 Mikhail Efremov <sem@altlinux.org> 1.6.12-alt1
+- Disable silent rules.
+- Fix changelog entry.
+- Updated to 1.6.12.
+
 * Tue Feb 14 2017 Mikhail Efremov <sem@altlinux.org> 1.6.11-alt1
 - Drop obsoleted patch.
-- Updated to 1.6.10.
+- Updated to 1.6.11.
 
 * Fri Jul 22 2016 Mikhail Efremov <sem@altlinux.org> 1.6.10-alt3
 - Patch from Xfce bugzilla (Xfce bug #12264, ALT bug #32271):
