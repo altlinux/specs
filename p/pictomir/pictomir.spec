@@ -1,6 +1,6 @@
 Name:		pictomir
 Version:	0.16.2
-Release:	alt1
+Release:	alt2
 
 Summary:	PictoMir education system
 License:	GPL / CC BY
@@ -10,7 +10,7 @@ Packager:	Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires:	qt4-devel >= 4.6.0
 BuildRequires:  gcc-c++
-BuildRequires:  libqt4-webkit >= 4.6.0
+BuildRequires:  libqt4-webkit >= 1:2.3.4-alt3
 BuildRequires:  phonon-devel
 Requires:	icon-theme-hicolor
 
@@ -51,6 +51,9 @@ install -m 644 *.desktop %buildroot/%_desktopdir
 %_desktopdir/*.desktop
 
 %changelog
+* Mon Jul 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.16.2-alt2
+- Updated build dependencies
+
 * Sat Jan 24 2015 Andrey Cherepanov <cas@altlinux.org> 0.16.2-alt1
 - New version
 
