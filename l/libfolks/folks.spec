@@ -12,8 +12,8 @@
 %def_enable zeitgeist
 
 Name: lib%_name
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: GObject contact aggregation library
 Group: System/Libraries
@@ -37,7 +37,7 @@ Source: %_name-%version.tar
 BuildRequires: gnome-common intltool libgio-devel >= %glib_ver libdbus-glib-devel
 BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver libgee0.8-devel >= %gee_ver
 BuildRequires: evolution-data-server-devel >= %eds_ver
-BuildRequires: vala-tools
+BuildRequires: vala-tools valadoc
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel >= %zeitgeist_ver}
 %{?_enable_tracker:BuildRequires: tracker-devel >= %tracker_ver}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgee0.8-gir-devel libtelepathy-glib-gir-devel evolution-data-server-gir-devel libgee0.8-gir-devel libtracker-gir-devel}
@@ -180,6 +180,9 @@ the functionality of the Folks library.
 
 
 %changelog
+* Mon Jul 03 2017 Yuri N. Sedunov <aris@altlinux.org> 0.11.4-alt1
+- 0.11.4
+
 * Thu Feb 16 2017 Yuri N. Sedunov <aris@altlinux.org> 0.11.3-alt2
 - rebuilt with new eds-3.23 libraries
 
