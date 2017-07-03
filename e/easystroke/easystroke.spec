@@ -3,7 +3,7 @@
 
 Name:     easystroke
 Version:  0.6.0
-Release:  alt2.1.1
+Release:  alt3
 
 Summary: a gesture-recognition application for X11
 
@@ -18,6 +18,8 @@ Patch0:  %name-%version-%release.patch
 
 Patch1:  %name-0.5.5.1-alt-desktop.patch
 Patch2:  %name-0.5.5.1-alt-debuginfo.patch
+Patch3:  %name-%version-fedora-lambda.patch
+Patch4:  %name-%version-fedora-abs.patch
 
 BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Sun Apr 14 2013
@@ -40,6 +42,8 @@ with a mouse.
 
 %patch1
 %patch2 -p2
+%patch3 -p1
+%patch4 -p1
 
 %build
 %make PREFIX=%_exec_prefix
@@ -73,6 +77,9 @@ mkdir -p -- %buildroot%_miconsdir %buildroot%_niconsdir %buildroot%_liconsdir
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Jul 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.0-alt3
+- Fixed build
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.0-alt2.1.1
 - Rebuilt for gcc5 C++11 ABI.
 
