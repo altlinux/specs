@@ -1,7 +1,7 @@
 %define rname kcoreaddons
 
 Name: kf5-%rname
-Version: 5.34.0
+Version: 5.35.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -18,6 +18,7 @@ Patch1: alt-simplify-kde4home.patch
 #BuildRequires: extra-cmake-modules gcc-c++ python-module-google qt5-tools-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: gcc-c++ extra-cmake-modules qt5-base-devel qt5-tools-devel
+BuildRequires: shared-mime-info
 
 %description
 KCoreAddons provides classes built on top of QtCore to perform various tasks
@@ -81,6 +82,9 @@ KF5 library
 %_K5lib/libKF5CoreAddons.so.*
 
 %changelog
+* Thu Jun 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.35.0-alt1%ubt
+- new version
+
 * Fri May 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt1%ubt
 - new version
 
