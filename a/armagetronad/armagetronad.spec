@@ -1,6 +1,6 @@
 Name: armagetronad
-Version: 0.2.8.3.2
-Release: alt1.1
+Version: 0.2.8.3.4
+Release: alt1
 Summary: 3D Tron-like high speed game
 
 Group: Games/Arcade
@@ -8,7 +8,6 @@ License: GPL
 Url: http://armagetronad.sourceforge.net
 
 Source: %name-%version.tar
-Patch: armagetronad-0.2.8.3.2-alt-libpng.patch
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 BuildRequires: libxml2-devel libSDL-devel libGL-devel libGLU-devel zlib-devel libpng-devel libSDL_image-devel gcc-c++ libjpeg-devel
@@ -29,7 +28,6 @@ Summary: 3D Tron-like high speed game. Dedicated server
 
 %prep
 %setup -q
-%patch -p2
 
 %build
 # Build client
@@ -71,6 +69,9 @@ cp %buildroot%_datadir/games/%name/desktop/%name.desktop %buildroot%_desktopdir
 %exclude %_datadir/games/%name-dedicated/language/update.py
 
 %changelog
+* Mon Jul 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.8.3.4-alt1
+- Updated to upstream version 0.2.8.3.4
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.8.3.2-alt1.1
 - Rebuilt with libpng15
 
