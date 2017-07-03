@@ -1,13 +1,13 @@
 %define Name QXmlEdit
 Name: qxmledit
-Version: 0.8.10
+Version: 0.9.7.1
 Release: alt1
 Summary: Simple XML editor and XSD viewer
 Group: Editors
 License: GPLv2+
-URL: http://code.google.com/p/%name
-Source: https://googledrive.com/host/0B4p7QlvKSOF1RXI4alN6dWxYa1k/%name-%version.tar
-Patch: %name-%version-%release.patch
+URL: https://github.com/lbellonda/%name
+Source: %name-%version.tar
+#Patch: %%name-%%version-%%release.patch
 Provides: %Name = %version-%release
 
 BuildRequires: gcc-c++ libqt4-devel rpm-macros-qt4
@@ -38,7 +38,7 @@ Main features:
 
 %prep
 %setup -q
-%patch -p1
+#patch -p1
 
 
 %build
@@ -53,26 +53,13 @@ Main features:
 
 %install
 %make_install INSTALL_ROOT=%buildroot install
-ln -sf %Name %buildroot%_bindir/%name
 install -m 0644 AUTHORS NEWS README ROADMAP TODO %buildroot%_docdir/%name-%version/
 
 install -pD -m 0644 src/images/icon.png %buildroot%_niconsdir/%name.png
 install -pD -m 0644 ./src/images/icon.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 
 install -d -m 0755 %buildroot%_desktopdir
-cat > %buildroot%_desktopdir/%name.desktop <<__EOF__
-[Desktop Entry]
-Name=%Name
-GenericName=%Name
-Comment=%summary
-Type=Application
-Exec=QXmlEdit %%u
-Icon=%name
-Categories=Qt;Utility;TextEditor;
-MimeType=text/xml;application/xml;
-StartupNotify=true
-Terminal=false
-__EOF__
+mv %buildroot%_datadir/%name/%Name.desktop %buildroot%_desktopdir/%Name.desktop
 
 
 %files
@@ -87,5 +74,8 @@ __EOF__
 
 
 %changelog
+* Mon Jul 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.7.1-alt1
+- Update to upstream version 0.9.7-1
+
 * Sun Mar 30 2014 Led <led@altlinux.ru> 0.8.10-alt1
 - initial build
