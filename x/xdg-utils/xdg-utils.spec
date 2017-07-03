@@ -1,6 +1,6 @@
 Name: xdg-utils
 Version: 1.1.2
-Release: alt1
+Release: alt2
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 
@@ -66,7 +66,7 @@ popd
 %patch6 -p2
 #patch7 -p2
 #patch8 -p1
-#patch9 -p1
+%patch9 -p1
 
 %build
 %autoreconf
@@ -91,6 +91,9 @@ popd
 %doc ChangeLog README LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Mon Jul 03 2017 Sergey V Turchin <zerg@altlinux.org> 1.1.2-alt2
+- restore KDE5 support for xdg-su (ALT#33581)
+
 * Mon May 22 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
 - new version 1.1.2 (with rpmrb script) (ALT bug 33159)
 
