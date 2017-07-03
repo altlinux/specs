@@ -26,7 +26,7 @@ Name: parted
 Version: 3.2
 %define prerel %nil
 %define git_version %{version}.46-e4ae
-Release: alt3
+Release: alt4
 
 Summary: Flexible partitioning tool
 Summary(uk_UA.CP1251): Универсальний інструмент для роботи з разділами диску
@@ -55,6 +55,9 @@ BuildRequires: libcheck-devel
 BuildRequires: e2fsprogs xfsprogs dosfstools perl-Digest-CRC bc
 # explicitly added texinfo for info files
 BuildRequires: texinfo
+
+# configure.ac has such requirements:
+BuildPreReq: autoconf >= 2.63 automake >= 1.11.6
 
 %description
 GNU %Name is a program that allows you to create, destroy, resize,
@@ -232,6 +235,10 @@ __MENU__
 
 
 %changelog
+* Mon Jul 03 2017 Ivan Zakharyaschev <imz@altlinux.org> 3.2-alt4
+- (.spec) BuildPreReq: autoconf >= 2.63 automake >= 1.11.6
+  (due to configure.ac).
+
 * Thu Aug 04 2016 Yuri N. Sedunov <aris@altlinux.org> 3.2-alt3
 - updated to v3.2-46-ge4ae433
 
