@@ -1,8 +1,8 @@
 %define rname lxc
 
 Name: pve-%rname
-Version: 2.0.7
-Release: alt6
+Version: 2.0.8
+Release: alt1
 Summary: Linux containers usersapce tools
 Group: System/Configuration/Other
 License: LGPL
@@ -22,9 +22,14 @@ Patch4: 0005-separate-the-limiting-from-the-namespaced-cgroup-roo.patch
 Patch5: 0006-start-initutils-make-cgroupns-separation-level-confi.patch
 Patch6: 0007-rename-cgroup-namespace-directory-to-ns.patch
 Patch7: 0008-possibility-to-run-lxc-monitord-as-a-regular-daemon.patch
-Patch8: 0009-CVE-2017-5985-Ensure-target-netns-is-caller-owned.patch
+Patch8: 0009-conf-implement-resource-limits.patch
+Patch9: 0010-doc-add-lxc.limit-to-lxc.container.conf.patch
+Patch10: 0011-test-resource-limit-config-entries.patch
+Patch11: 0012-start-fix-error-handling-when-limits-fail-to-apply.patch
+Patch12: 0013-start-don-t-call-lxc_map_ids-without-id-map.patch
+Patch13: 0014-Fix-the-bug-of-ts-stdoutfd-did-not-fill-with-paramet.patch
+Patch14: 0015-fix-segfault-in-lxc-attach.patch
 
-Patch10: lxc-io.patch
 Patch20: lxc-alt.patch
 Patch21: lxc-altlinux-lxc.patch
 Patch22: lxc-run-lxcnetdelbr.patch
@@ -50,8 +55,13 @@ an applications or a system.
 %patch5 -p1
 %patch7 -p1
 %patch8 -p1
-
+%patch9 -p1
 %patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
@@ -98,6 +108,12 @@ rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 %_man7dir/*.7*
 
 %changelog
+* Mon Jul 03 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.8-alt1
+- 2.0.8-3
+
+* Mon May 15 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.7-alt5.M80P.1
+- backport to p8 branch
+
 * Mon May 15 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.7-alt6
 - run lxcnetdelbr when deleting veths
 
