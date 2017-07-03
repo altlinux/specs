@@ -1,6 +1,6 @@
 Name: afce
 Version: 0.9.8
-Release: alt1
+Release: alt2
 License: GPL
 Group: Development/Other
 Source: v%version.tar.gz
@@ -10,6 +10,7 @@ Summary: %summary_en
 Summary(ru_RU.UTF-8):	Редактор блок-схем с генерацией исходных текстов и векторных диаграмм
 
 
+BuildRequires(pre): rpm-build-xdg
 # Automatically added by buildreq on Mon Oct 19 2015
 # optimized out: libGL-devel libqt5-core libqt5-gui libqt5-printsupport libqt5-svg libqt5-widgets libqt5-xml libstdc++-devel qt5-base-devel
 BuildRequires: gcc-c++ qt5-svg-devel qt5-tools qt5-translations
@@ -71,6 +72,9 @@ install -D %name.png %buildroot%_liconsdir/%name.png
 %_xdgmimedir/packages/*
 
 %changelog
+* Mon Jul 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.8-alt2
+- Updated build dependencies
+
 * Mon Oct 19 2015 Fr. Br. George <george@altlinux.ru> 0.9.8-alt1
 - Autobuild version bump to 0.9.8
 - Rebuild with Qt5
