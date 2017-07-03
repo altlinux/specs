@@ -1,5 +1,5 @@
 Name: xorg-conf-synaptics
-Version: 0.3
+Version: 1.0
 Release: alt1
 Summary: Config file for Synaptics touchpads
 License: %pubdomain
@@ -17,12 +17,16 @@ with some frequently used options.
 Left mouse button by tapping is enabled by default.
 
 %install
-install -Dm0644 %SOURCE0 %buildroot/%_sysconfdir/X11/xorg.conf.d/20-synaptics.conf
+install -Dm0644 %SOURCE0 %buildroot/%_sysconfdir/X11/xorg.conf.d/75-synaptics-extra.conf
 
 %files
-%config(noreplace) %_sysconfdir/X11/xorg.conf.d/20-synaptics.conf
+%config(noreplace) %_sysconfdir/X11/xorg.conf.d/75-synaptics-extra.conf
 
 %changelog
+* Mon Jul 03 2017 Mikhail Efremov <sem@altlinux.org> 1.0-alt1
+- Rename config and move it to 75 position (closes: #33611).
+- Drop MaxTapTime option.
+
 * Sat Nov 14 2015 Ivan Zakharyaschev <imz@altlinux.org> 0.3-alt1
 - added an example how to disable the tap.
 
