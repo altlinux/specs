@@ -2,7 +2,7 @@
 
 Name: vlc
 Version: 3.0.0
-Release: alt3.git236b4f3
+Release: alt5.git39e0d63
 
 Summary: VLC media player
 License: GPLv2
@@ -1369,6 +1369,12 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Mon Jul 03 2017 Anton Farygin <rider@altlinux.ru> 3.0.0-alt5.git39e0d63
+- up to 39e0d63
+
+* Thu Jun 29 2017 Anton Farygin <rider@altlinux.ru> 3.0.0-alt4.git67dcb71
+- up to 67dcb71
+
 * Wed Jun 28 2017 Anton Farygin <rider@altlinux.ru> 3.0.0-alt3.git236b4f3
 - 5149ccb -> 236b4f3
 
