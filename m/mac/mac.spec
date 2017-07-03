@@ -8,7 +8,7 @@
 
 Name: mac
 Version: 3.99.u4
-Release: alt6.b5.3
+Release: alt6.b5.4
 
 Summary: Monkey's Audio Codec
 License: Distributable (see License.htm)
@@ -19,6 +19,7 @@ Source0: %name-%version.tar
 Source1: MAC-ALTLinux-permission.html
 
 Patch1: %name-%version-alt-gcc6.patch
+Patch2: %name-%version-alt-error-details.patch
 
 Packager: Vladimir V Kamarzin <vvk@altlinux.ru>
 Requires: libmac = %version-%release
@@ -116,6 +117,7 @@ Monkey's Audio Codec SDK
 %prep
 %setup
 %patch1 -p2
+%patch2 -p2
 install -p -m644 %SOURCE1 .
 mv src/License.htm .
 
@@ -148,6 +150,9 @@ mv src/License.htm .
 %endif
 
 %changelog
+* Mon Jul 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.99.u4-alt6.b5.4
+- Patch console application to print error code descriptions
+
 * Fri Jun 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.99.u4-alt6.b5.3
 - Fix building with gcc-6
 
