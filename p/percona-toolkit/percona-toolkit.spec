@@ -1,17 +1,17 @@
 Name: percona-toolkit
-Version: 2.2.14
+Version: 2.2.19
 Release: alt1
 
-Summary: Percona Toolkit for MySQL
+Summary: Advanced MySQL and system command-line tools
 
-License: GPL2
+License: GPLv2
 Group: Databases
 Url: http://www.percona.com/software/percona-toolkit
 
 Packager: Evgenii Terechkov <evg@altlinux.org>
 
 BuildArch: noarch
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires: perl-devel perl-podlators
 AutoReq: yes, noperl
@@ -19,10 +19,18 @@ AutoReq: yes, noperl
 Requires: perl-DBI, perl-DBD-mysql
 
 %description
-Percona Toolkit for MySQL is a collection of advanced command-line
-tools used by Percona MySQL Support staff to perform a variety of
-MySQL server and system tasks that are too difficult or complex to
-perform manually.
+Percona Toolkit is a collection of advanced command-line tools used by
+Percona (http://www.percona.com/) support staff to perform a variety of
+MySQL and system tasks that are too difficult or complex to perform manually.
+
+These tools are ideal alternatives to private or "one-off" scripts because
+they are professionally developed, formally tested, and fully documented.
+They are also fully self-contained, so installation is quick and easy and
+no libraries are installed. 
+
+Percona Toolkit is developed and supported by Percona.  For more
+information and other free, open-source software developed by Percona,
+visit http://www.percona.com/software/.
 
 %prep
 %setup -n %name-%version
@@ -43,6 +51,10 @@ cp -p blib/man1/*.1p %buildroot%_man1dir
 %doc Changelog README
 
 %changelog
+* Sun Nov  6 2016 Terechkov Evgenii <evg@altlinux.org> 2.2.19-alt1
+- 2.2.19
+- Build from upstream git repo
+
 * Sat Apr 25 2015 Terechkov Evgenii <evg@altlinux.org> 2.2.14-alt1
 - 2.2.14
 
