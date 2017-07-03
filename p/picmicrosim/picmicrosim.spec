@@ -1,6 +1,6 @@
 Name:		picmicrosim
 Version:	1.0
-Release:	alt2
+Release:	alt3
 Summary:	PIC Microprocessor Simulator on Linux
 
 License:	GPLv2+
@@ -14,6 +14,7 @@ Source:		microsim_v1.0.tar.gz
 Patch1:		picmicrosim-fix-permissive.patch
 Patch2:		picmicrosim-fix-missing-includes.patch
 Patch3:		picmicrosim-use-stuff-from-app-dir.patch
+Patch4:		%name-%version-alt-gcc6.patch
 
 BuildRequires:  gcc-c++ libqt3-devel
 
@@ -28,6 +29,7 @@ parallel port for real world interfacing.
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
 
 qmake-qt3 "QMAKE_CXXFLAGS+=%optflags `pkg-config --cflags qt-mt`" "DEFINES+=APPSDIR=\\\"%_datadir/apps/microsim/\\\"" microsim.pro
 
@@ -46,6 +48,9 @@ cp -a documentation images %buildroot%_datadir/apps/microsim
 %_datadir/apps/microsim
 
 %changelog
+* Mon Jul 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt3
+- Updated to build with gcc-6
+
 * Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 1.0-alt2
 - rebuilt against gcc5-built qt3
 
