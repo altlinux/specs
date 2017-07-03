@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt56
+Release: alt57
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -38,16 +38,15 @@ BuildPreReq: setproctitle-devel
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
 # should be same version in rpm.spec
-# BuildPreReq: liblua5.3-devel
-# Unfortunately, liblua5-devel doesn't provide liblua5.3-devel.
+BuildPreReq: liblua5.3-devel
 
-# Automatically added by buildreq on Sun Mar 30 2008
-BuildRequires: bzlib-devel cvs docbook-utils gcc-c++ liblua5-devel libreadline-devel librpm-devel setproctitle-devel zlib-devel
+BuildRequires: bzlib-devel cvs docbook-utils gcc-c++ libreadline-devel librpm-devel setproctitle-devel zlib-devel
 
 %package -n libapt
 Summary: APT's core libraries
 Group: System/Libraries
-PreReq: librpm >= 4.0.4-alt28
+# rpm built with liblua5.3
+PreReq: librpm7 >= 4.13.0-alt7
 
 %package -n libapt-devel
 Summary: Development files and documentation for APT's core libs
@@ -280,6 +279,11 @@ unset RPM_PYTHON
 # Probably %%doc with README.rsync?
 
 %changelog
+* Mon Jul 03 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt57
+- Fixed script_slot variable (vseleznv@; ALT#32941).
+- Used recently restored librpm rpmRangesOverlap, and
+  rpmCheckRpmlibProvides functions.
+
 * Wed Dec 21 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt56
 - Added support of lua 5.3.
 - Rebuilt with liblua5.3.
