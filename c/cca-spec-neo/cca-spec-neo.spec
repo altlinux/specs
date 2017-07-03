@@ -1,6 +1,6 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt12.1
-%define mpiimpl openmpi
+Release: alt12.2
+%define mpiimpl openmpi-compat
 %define mpidir %_libdir/%mpiimpl
 %define babelver 2.0.0
 
@@ -20,6 +20,7 @@ Requires: babel lib%name-devel = %version-%release
 BuildPreReq: %mpiimpl-devel libgraphviz-devel doxygen boost-devel tcl-devel
 BuildPreReq: babel gcc-c++ libxml2-devel graphviz
 BuildPreReq: python-devel
+BuildRequires: openmpi-compat-devel libnuma-devel
 
 %description
 Neoclassic binding of the CCA specification and design pattern.
@@ -125,6 +126,9 @@ install doc/README.NEO %buildroot%_docdir/%name-%version
 %_docdir/*
 
 %changelog
+* Mon Jul 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.8-alt12.2
+- Updated build dependencies
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.8-alt12.1
 - (AUTO) subst_x86_64.
 
