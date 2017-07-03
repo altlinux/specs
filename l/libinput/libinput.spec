@@ -1,9 +1,10 @@
 %define _libexecdir %_prefix/libexec
 %def_enable libwacom
-%def_disable gui
+%def_enable debug_gui
+%def_disable documentation
 
 Name: libinput
-Version: 1.7.3
+Version: 1.8.0
 Release: alt1
 
 Summary: Input devices library
@@ -17,11 +18,12 @@ Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
 %define evdev_ver 0.4
 
 BuildRequires: gcc-c++ libmtdev-devel >= %mtdev_ver libevdev-devel >= %evdev_ver
-BuildRequires: libudev-devel libcheck-devel
+BuildRequires: libudev-devel libcheck-devel libunwind-devel
 %{?_enable_libwacom:BuildRequires: libwacom-devel}
-%{?_enable_gui:BuildRequires: libgtk+3-devel}
+%{?_enable_debug_gui:BuildRequires: libgtk+3-devel}
+%{?_enable_documentation:BuildRequires: doxygen}
 # for check
-#BuildRequires: libunwind-devel valgrind
+#BuildRequires: valgrind
 
 %description
 libinput is a library that handles input devices for display servers and
@@ -46,12 +48,21 @@ that are needed to write applications that use %name.
 
 
 %package tools
-Summary: libinput GUI event viewer
+Summary: tools for %name
 Group: Development/Tools
 Requires: %name = %version-%release
 
 %description tools
-This package contains GUI event viewer from %name.
+This package contains commandline tools from %name package.
+
+%package tools-gui
+Summary: libinput visual debug helper
+Group: Development/Tools
+Requires: %name = %version-%release
+Requires: %name-tools = %version-%release
+
+%description tools-gui
+This package contains visual debug helper for %name.
 
 %prep
 %setup
@@ -60,7 +71,8 @@ This package contains GUI event viewer from %name.
 %autoreconf
 %configure --disable-static \
            %{subst_enable libwacom} \
-           %{?_enable_gui:--enable-event-gui} \
+           %{?_enable_debug_gui:--enable-debug-gui} \
+           %{subst_enable documentation} \
            --with-udev-dir=/lib/udev
 %make_build
 
@@ -85,14 +97,30 @@ This package contains GUI event viewer from %name.
 %_pkgconfigdir/%name.pc
 
 %files tools
+%_bindir/%name
 %_bindir/%name-list-devices
 %_bindir/%name-debug-events
-%{?_enable_gui%_bindir/event-gui}
+%dir %_libexecdir/%name
+%_libexecdir/%name/*
+%{?_enable_debug_gui:%exclude %_libexecdir/%name/%name-debug-gui}
+%_man1dir/%name.1.*
 %_man1dir/%name-list-devices.1.*
 %_man1dir/%name-debug-events.1.*
+%_man1dir/%name-measure.1.*
+%_man1dir/%name-measure-touchpad-tap.1.*
+
+%if_enabled debug_gui
+%files tools-gui
+%_libexecdir/%name/%name-debug-gui
+%_man1dir/%name-debug-gui.1.*
+%endif
 
 
 %changelog
+* Mon Jul 03 2017 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+- new tools-gui subpackage
+
 * Fri Jun 09 2017 Yuri N. Sedunov <aris@altlinux.org> 1.7.3-alt1
 - 1.7.3
 
