@@ -1,6 +1,6 @@
 Summary: Openfire XMPP Server
 Name: openfire
-Version: 4.1.4
+Version: 4.1.5
 Release: alt1
 
 Source0: %name-%version.tar
@@ -91,6 +91,9 @@ ln -s %_bindir/embedded-db.rc %buildroot%firedir/bin/embedded-db.rc
 %dir %attr(3770,_%name,_%name) %_logdir/%name
 
 %changelog
+* Mon Jul 03 2017 Alexei Takaseev <taf@altlinux.org> 4.1.5-alt1
+- 4.1.5
+
 * Fri May 05 2017 Alexei Takaseev <taf@altlinux.org> 4.1.4-alt1
 - 4.1.4
 
