@@ -1,14 +1,16 @@
 Name: crrcsim
 Version: 0.9.12
-Release: alt1
+Release: alt2
 
 Summary: A Model-Airplane Flight Simulation Program
 License: GPLv2
 Group: Games/Other
 
 Url: http://crrcsim.berlios.de/wiki
-Source0: http://download.berlios.de/crrcsim/%name-%version.tar.gz
+# http://download.berlios.de/crrcsim/%%name-%%version.tar.gz
+Source0: %name-%version.tar.gz
 Source1: CRRCsim.desktop
+Patch1: %name-%version-alt-build.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libjpeg-devel
@@ -34,6 +36,7 @@ such as joystick, mouse, keyboard ...
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 %configure
@@ -57,5 +60,8 @@ desktop-file-install --vendor="" \
 %_man1dir/%name.1*
 
 %changelog
+* Mon Jul 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.12-alt2
+- Fixed build with new toolchain
+
 * Wed Apr 01 2015 Michael Shigorin <mike@altlinux.org> 0.9.12-alt1
 - built for ALT Linux (based on rosa's 0.9.12-2 package)
