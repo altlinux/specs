@@ -1,6 +1,6 @@
 Name: intel-gpu-tools
-Version: 1.17
-Release: alt2
+Version: 1.19
+Release: alt1
 
 Summary: tools for debugging the Intel graphics driver
 License: MIT
@@ -91,6 +91,9 @@ in the 2d driver.
 %doc assembler/README assembler/TODO assembler/doc/examples/
 
 %changelog
+* Tue Jul 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.19-alt1
+- Updated to upstream version 1.19
+
 * Thu Dec 08 2016 Michael Shigorin <mike@altlinux.org> 1.17-alt2
 - moved intel-gen4asm into a subpackage of its own
   (replacing the pre-existing standalone one);
