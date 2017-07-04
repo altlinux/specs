@@ -1,17 +1,16 @@
 # Spec file for pv - Pipe Viewer 
 
 Name: pv
-Version: 1.6.0
+Version: 1.6.6
 Release: alt1
 
 Summary: Pipe Viewer
 
-#%%gpl2plus 
 License: %artistic_license
 Group: Text tools
 URL: http://www.ivarch.com/programs/pv.shtml
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source0: %name-%version.tar
 
@@ -54,13 +53,16 @@ make dep
 %find_lang %name
 
 %files -f %name.lang
-%doc doc/NEWS doc/TODO 
+%doc doc/NEWS doc/TODO
 %doc --no-dereference doc/COPYING
 
 %_bindir/%name
 %_man1dir/%name.*
 
 %changelog
+* Tue Jul 04 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.6.6-alt1
+- New version
+
 * Sat May 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.6.0-alt1
 - New version
 
