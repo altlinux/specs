@@ -3,7 +3,7 @@
 Name: mISDN
 Summary: %name library utilites
 Version: 1.1.5
-Release: alt2
+Release: alt3
 License: LGPL
 Group: System/Servers
 Url: http://www.misdn.org/
@@ -137,6 +137,9 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 %_usrsrc/kernel/sources/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Tue Jul 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.5-alt3
+- Fixed build with gcc-6
+
 * Wed Apr 24 2013 Denis Smirnov <mithraen@altlinux.ru> 1.1.5-alt2
 - repocop fixes
 
