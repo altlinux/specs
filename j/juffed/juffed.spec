@@ -1,6 +1,6 @@
 Name:		juffed
 Version:	0.10
-Release:	alt1.2
+Release:	alt1.3
 License:	GPL
 Packager:	Andrey Cherepanov <cas@altlinux.org>
 Group:		Editors
@@ -33,7 +33,7 @@ See http://code.google.com/p/juffed-plugins/wiki/JuffEd_Plugins_Tutorial for det
 #%%patch0 -p2
 
 %build
-cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=release -DCMAKE_CXX_FLAGS:STRING='%optflags'
+cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS_RELEASE:STRING='%optflags -Wno-error=misleading-indentation'
 make VERBOSE=1
 
 %install
@@ -58,6 +58,9 @@ mkdir -p %buildroot/%_libdir/%name/plugins
 %_includedir/%name
 
 %changelog
+* Tue Jul 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10-alt1.3
+- Update spec to build with new toolchain
+
 * Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10-alt1.2
 - Rebuilt with qscintilla2 2.9
 
