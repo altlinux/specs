@@ -2,7 +2,7 @@
 
 Name: expect-lite
 Version: 4.2.2
-Release: alt1
+Release: alt2
 
 Summary: Quick and easy command line automation tool
 License: BSD-style
@@ -25,9 +25,12 @@ install -p -m644 man/%name.1.gz %buildroot%_man1dir
 
 %files
 %_bindir/%name
-%_man1dir/%{name}.1.gz
+%_man1dir/%{name}.1.*
 %doc Examples Docs Tools README COPYING ChangeLog bashrc
 
 %changelog
+* Tue Jul 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.2-alt2
+- Updated spec to allow any man page compression
+
 * Sat Mar  3 2012 Terechkov Evgenii <evg@altlinux.org> 4.2.2-alt1
 - Initial build for ALT Linux Sisyphus
