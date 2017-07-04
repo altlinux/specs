@@ -4,8 +4,8 @@
 #============================================================================
 Name: toxcore
 Summary: All-in-one secure communication platform
-Version: 0.0.1
-Release: alt2.20170327
+Version: 0.1.9
+Release: alt1
 License: ISC license
 Group: System/Libraries
 BuildRequires: libopus-devel libsodium-devel libvpx-devel libcheck-devel
@@ -13,34 +13,34 @@ BuildPreReq: libconfig-devel >= 1.4
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Url: https://github.com/irungentoo/toxcore/
+Url: https://github.com/TokTok/c-toxcore
 
-%package -n libtoxav0
+%package -n libtoxav1
 Summary: %summary
 Group: System/Libraries
 
-%description -n libtoxav0
+%description -n libtoxav1
 %summary
 
-%package -n libtoxcore0
+%package -n libtoxcore1
 Summary: %summary
 Group: System/Libraries
 
-%description -n libtoxcore0
+%description -n libtoxcore1
 %summary
 
-%package -n libtoxdns0
+%package -n libtoxdns1
 Summary: %summary
 Group: System/Libraries
 
-%description -n libtoxdns0
+%description -n libtoxdns1
 %summary
 
-%package -n libtoxencryptsave0
+%package -n libtoxencryptsave1
 Summary: %summary
 Group: System/Libraries
 
-%description -n libtoxencryptsave0
+%description -n libtoxencryptsave1
 %summary
 
 %package bootstrapd
@@ -93,21 +93,21 @@ install -D -m644 other/bootstrap_daemon/tox-bootstrapd.service %buildroot%_unitd
 /usr/sbin/groupadd -r -f tox-bootstrapd
 /usr/sbin/useradd -r -d /var/lib/tox-bootstrapd -s /dev/null -c 'TOX DHT bootstrap daemon' -g tox-bootstrapd tox-bootstrapd >/dev/null 2>&1 ||:
 
-%files -n libtoxav0
-%_libdir/libtoxav.so.0
-%_libdir/libtoxav.so.0.0.0
+%files -n libtoxav1
+%_libdir/libtoxav.so.1
+%_libdir/libtoxav.so.1.*
 
-%files -n libtoxcore0
-%_libdir/libtoxcore.so.0
-%_libdir/libtoxcore.so.0.0.0
+%files -n libtoxcore1
+%_libdir/libtoxcore.so.1
+%_libdir/libtoxcore.so.1.*
 
-%files -n libtoxdns0
-%_libdir/libtoxdns.so.0
-%_libdir/libtoxdns.so.0.0.0
+%files -n libtoxdns1
+%_libdir/libtoxdns.so.1
+%_libdir/libtoxdns.so.1.*
 
-%files -n libtoxencryptsave0
-%_libdir/libtoxencryptsave.so.0
-%_libdir/libtoxencryptsave.so.0.0.0
+%files -n libtoxencryptsave1
+%_libdir/libtoxencryptsave.so.1
+%_libdir/libtoxencryptsave.so.1.*
 
 %files bootstrapd
 %doc other/bootstrap_daemon/README.md
@@ -132,6 +132,9 @@ install -D -m644 other/bootstrap_daemon/tox-bootstrapd.service %buildroot%_unitd
 %_libdir/libtoxencryptsave.a
 
 %changelog
+* Wed Jun 14 2017 Denis Smirnov <mithraen@altlinux.ru> 0.1.9-alt1
+- update from upstream git (ALT #33283)
+
 * Mon Mar 27 2017 Denis Smirnov <mithraen@altlinux.ru> 0.0.1-alt2.20170327
 - update from upstream git
 
