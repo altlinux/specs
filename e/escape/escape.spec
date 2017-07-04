@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:		escape
 Version:	200912250
-Release:	alt3_12
+Release:	alt3_13
 Summary:	Extensible block-pushing puzzle game
 
 Group:		Games/Other
@@ -14,6 +14,7 @@ Source0:	http://escape.spacebar.org/source/%{name}-src-%{version}.tar.bz2
 Source1:	%{name}.desktop
 
 Patch0:		escape-200912250-update-remove.patch
+Patch1:     %name-%version-alt-gcc6.patch
 
 
 BuildRequires:	libSDL-devel libSDL_image-devel libSDL_net-devel
@@ -38,6 +39,7 @@ puzzles with other players.
 
 # fix update bug
 %patch0 -p1 -b .update-remove
+%patch1 -p2
 
 # fix permissions for debuginfo packages
 find . \( -name '*.h' -o -name '*.cpp' \) -type f -print0 | xargs -0 chmod 0644
@@ -122,6 +124,9 @@ EOF
 
 
 %changelog
+* Tue Jul 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 200912250-alt3_13
+- Fixed build with gcc-6
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 200912250-alt3_12
 - update to new release by fcimport
 
