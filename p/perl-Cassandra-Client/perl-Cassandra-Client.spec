@@ -3,7 +3,7 @@
 %define real_name Cassandra-Client
 
 Name: perl-Cassandra-Client
-Version: 0.11
+Version: 0.12
 Release: alt1
 
 Summary: Perl interface to Cassandra's native protocol
@@ -17,13 +17,11 @@ Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
 Source: %real_name-%version.tar
 
-BuildArch: noarch
-
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sun Jun 18 2017
-# optimized out: perl perl-AnyEvent perl-Data-OptList perl-EV perl-Encode perl-Math-BigInt perl-Module-Runtime perl-Net-SSLeay perl-Params-Util perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Install perl-devel perl-parent python-base python-modules python3 python3-base
-BuildRequires: perl-Clone perl-Compress-LZ4 perl-Compress-Snappy perl-Devel-GlobalDestruction perl-Promises perl-Ref-Util perl-Ref-Util-XS perl-Sub-Current
+# Automatically added by buildreq on Tue Jul 04 2017
+# optimized out: perl perl-AnyEvent perl-Data-OptList perl-EV perl-Encode perl-Math-BigInt perl-Module-Runtime perl-Net-SSLeay perl-PadWalker perl-Params-Util perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Install perl-devel perl-parent python-base python-modules python3 python3-base ruby ruby-stdlibs
+BuildRequires: perl-Clone perl-Compress-LZ4 perl-Compress-Snappy perl-Devel-Cycle perl-Devel-GlobalDestruction perl-Promises perl-Ref-Util perl-Ref-Util-XS perl-Sub-Current
 
 %description
 Perl module Cassandra::Client is a library providing access to
@@ -43,9 +41,13 @@ rm -f t/03-types.t
 
 %files
 %doc README Changes
-%perl_vendor_privlib/Cassandra/Client*
+%perl_vendor_archlib/Cassandra/Client*
+%perl_vendor_autolib/Cassandra/Client*
 
 %changelog
+* Tue Jul 04 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.12-alt1
+- New version
+
 * Sun Jun 18 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.11-alt1
 - New version
 
