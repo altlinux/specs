@@ -1,5 +1,5 @@
 Name: percona-toolkit
-Version: 2.2.19
+Version: 3.0.3
 Release: alt1
 
 Summary: Advanced MySQL and system command-line tools
@@ -51,6 +51,9 @@ cp -p blib/man1/*.1p %buildroot%_man1dir
 %doc Changelog README
 
 %changelog
+* Tue Jul  4 2017 Terechkov Evgenii <evg@altlinux.org> 3.0.3-alt1
+- 3.0.3
+
 * Sun Nov  6 2016 Terechkov Evgenii <evg@altlinux.org> 2.2.19-alt1
 - 2.2.19
 - Build from upstream git repo
