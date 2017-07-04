@@ -1,6 +1,6 @@
 Name: mcl
 Version: 1.008.09.149
-Release: alt1.qa1
+Release: alt2
 
 Summary: Markov cluster algorithm for graphs
 License: GPLv3
@@ -9,6 +9,7 @@ Url: http://www.micans.org/mcl
 
 Packager: Kirill Maslinsky <kirill@altlinux.org>
 Source0: %name-%version.tar
+Patch1: %name-%version-alt-build.patch
 
 %description
 The MCL algorithm is short for the Markov Cluster Algorithm, a fast and scalable 
@@ -19,6 +20,7 @@ Netherlands.
 
 %prep 
 %setup %name-%version.tar
+%patch1 -p1
 
 %build
 autoreconf -fisv
@@ -37,6 +39,9 @@ mv %buildroot/%_datadir/doc/%name install-doc
 %_man7dir/*
 
 %changelog
+* Tue Jul 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.008.09.149-alt2
+- Update build for new toolchain
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.008.09.149-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
