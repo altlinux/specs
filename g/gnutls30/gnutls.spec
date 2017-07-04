@@ -4,7 +4,7 @@
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.5.13
+Version: 3.5.14
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -293,6 +293,9 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %endif
 
 %changelog
+* Tue Jul 04 2017 Mikhail Efremov <sem@altlinux.org> 3.5.14-alt1
+- Updated to 3.5.14.
+
 * Tue Jun 13 2017 Mikhail Efremov <sem@altlinux.org> 3.5.13-alt1
 - Updated test-hash-large patch.
 - Updated to 3.5.13.
