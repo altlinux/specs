@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt152
+Release: alt154
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -581,6 +581,13 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Tue Jul 04 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt154
+- Updated to 042stab123.9 (Updated fix for CVE-2017-1000364).
+
+* Tue Jun 27 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt153
+- Updated to 042stab123.8 (Fixes: CVE-2017-9077 CVE-2017-9076 CVE-2017-9075
+  CVE-2017-9074 CVE-2017-8890 CVE-2017-1000364).
+
 * Thu May 18 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt152
 - Updated to 042stab123.3.
 
