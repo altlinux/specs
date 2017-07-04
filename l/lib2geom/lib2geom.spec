@@ -1,6 +1,6 @@
 Name: lib2geom
 Version: 20081103
-Release: alt1.4
+Release: alt1.5
 
 Summary: A robust computational geometry framework for Inkscape
 
@@ -38,7 +38,7 @@ in development of the %name-based applications.
 %patch1 -p2
 # fix target lib dir
 sed -i "s| lib| %_lib|g" src/2geom/CMakeLists.txt
-sed -i 's,^SET(CMAKE_CXX_FLAGS ",SET(CMAKE_CXX_FLAGS "%optflags -fno-inline ,' CMakeLists.txt
+sed -i 's,^SET(CMAKE_CXX_FLAGS ",SET(CMAKE_CXX_FLAGS "%optflags -fno-inline -fpermissive ,' CMakeLists.txt
 
 %build
 cmake \
@@ -61,6 +61,9 @@ cmake \
 %_libdir/lib2geom.so
 
 %changelog
+* Tue Jul 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 20081103-alt1.5
+- Fixed build with gcc-6
+
 * Tue Jun 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20081103-alt1.4
 - Fixed build with gcc 4.6
 
