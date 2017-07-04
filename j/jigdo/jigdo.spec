@@ -1,6 +1,6 @@
 Name: jigdo
 Version: 0.7.3
-Release: alt5
+Release: alt6
 Summary: Jigsaw Download
 Group: Networking/WWW
 License: GPL
@@ -9,6 +9,7 @@ Url: http://atterer.org/jigdo
 Source: http://atterer.net/jigdo/%name-%version.tar.bz2
 Patch1: jigdo-0.7.3-string_h.patch
 Patch2: jigdo-0.7.3-curl_h.patch
+Patch3: %name-%version-alt-toolchain.patch
 Requires: wget
 
 # Automatically added by buildreq on Thu May 30 2013
@@ -31,6 +32,7 @@ recreate the CD image.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 cat > %name.desktop <<EOF
 [Desktop Entry]
@@ -72,6 +74,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Tue Jul 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.3-alt6
+- Fix build to support new toolchain
+
 * Mon Jul 25 2016 Fr. Br. George <george@altlinux.ru> 0.7.3-alt5
 - Introduce curl.h patch
 
