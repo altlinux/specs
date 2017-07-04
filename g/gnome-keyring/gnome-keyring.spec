@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 3.20
 %def_disable static
@@ -10,8 +10,8 @@
 %def_disable ssh
 
 Name: gnome-keyring
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: %name is a password keeper for GNOME
 License: LGPL
@@ -125,6 +125,9 @@ setcap cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 
 
 %changelog
+* Tue Jul 04 2017 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
+- 3.20.1
+
 * Wed Dec 07 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt2
 - updated to 3.20.0-16-gbf8aa97
 - disabled ssh-agent (ALT #32860)
