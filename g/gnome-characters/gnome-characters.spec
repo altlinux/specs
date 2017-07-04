@@ -1,5 +1,5 @@
 %define _name org.gnome.Characters
-%define ver_major 3.22
+%define ver_major 3.24
 %define _libexecdir %_prefix/libexec
 %def_with included_libunistring
 
@@ -74,6 +74,9 @@ characters.
 %exclude %_libdir/%_name/libgc.la
 
 %changelog
+* Tue Jul 04 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
