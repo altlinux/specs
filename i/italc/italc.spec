@@ -36,7 +36,7 @@
 
 Name: italc
 Version: 1.0.13
-Release: %branch_release alt2
+Release: %branch_release alt3
 
 Summary: Didactical software for teachers etc
 Summary(de_DE.UTF-8): Didaktische Software fuer Lehrer usw
@@ -232,7 +232,7 @@ find %buildroot%keysdir -mindepth 2 -maxdepth 2 -type d -print0 \
 %files client
 %_bindir/ica
 %_libdir/italc/libitalc_core.so
-%_man1dir/ica.1.gz
+%_man1dir/ica.1.*
 %_bindir/ica-launcher
 %xinitdir/ica-launcher
 %dir %confdir
@@ -259,7 +259,7 @@ find %buildroot%keysdir -mindepth 2 -maxdepth 2 -type d -print0 \
 %files master
 %_bindir/italc
 %_bindir/italc-launcher
-%_man1dir/italc.1.gz
+%_man1dir/italc.1.*
 %_desktopdir/italc.desktop
 %icons128x128dir/italc.png
 %icons64x64dir/italc.png
@@ -268,6 +268,9 @@ find %buildroot%keysdir -mindepth 2 -maxdepth 2 -type d -print0 \
 %icons16x16dir/italc.png
 
 %changelog
+* Tue Jul 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.13-alt3
+- Update spec to allow any compression of man pages
+
 * Tue Oct 16 2012 Aleksey Avdeev <solo@altlinux.ru> 1.0.13-alt2
 - Fix build with gcc4.7
 
