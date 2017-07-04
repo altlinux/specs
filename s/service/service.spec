@@ -1,12 +1,13 @@
 Name: service
-Version: 0.5.26
-Release: alt2
+Version: 0.5.27
+Release: alt1
 
 Summary: The service start/stop scripts
 License: GPLv2+
 Group: System/Base
 
 Source: %name-%version.tar
+Source1: list.functions-compat
 
 Requires: /bin/tput
 # due to start-stop-daemon (Conflicts: SysVinit < 0:2.85-alt5)
@@ -70,31 +71,24 @@ print_function_names()
         sed -ne 's/^\([A-Za-z][A-Za-z_0-9]*[[:space:]]*\)()$/\1/pg' "$1"
 }
 
-# in order to skip it:
-chmod a-x %buildroot%_initdir/functions-compat
-
 for f in %buildroot%_initdir/*; do
         [ -x "$f" ] || continue
         print_function_names "$f"
 done | sort -u \
 >%buildroot%_initdir/.list.functions
 
-print_function_names %buildroot%_initdir/functions-compat |
-sort -u \
->%buildroot%_initdir/.list.functions-compat
-
 (
         echo '# shell functions provides list'
         comm -1 -3 \
         %buildroot%_initdir/.list.functions \
-        %buildroot%_initdir/.list.functions-compat
+        %SOURCE1
 ) >%buildroot%_initdir/.provides.sh.compat
 
 (
         echo '# shell functions provides list'
         sort -u \
         %buildroot%_initdir/.list.functions \
-        %buildroot%_initdir/.list.functions-compat
+        %SOURCE1
 ) >%buildroot%_initdir/.provides.sh
 # In other pkgs, Requires will be generated for all functions listed here.
 
@@ -109,6 +103,7 @@ if [ ! -f "$f" ]; then
 fi
 
 %files
+%exclude %_initdir/.provides.sh.compat
 /sbin/*
 /bin/*
 %_sbindir/*
@@ -123,6 +118,11 @@ fi
 %config(noreplace) %_sysconfdir/sysconfig/limits
 
 %changelog
+* Thu Jul 27 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.5.27-alt1
+- functions: new *warning() funcs (as in Fedora).
+- Drop functions-compat from our pkg; it'll be external.
+- The list of functions-compat saved from initscripts-compat-fedora-9.72-alt1.
+
 * Tue Jul 25 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.5.26-alt2
 - Unprovide functions defined only in functions-compat, but still
   make the corresponding Requires be generated in other pkgs.
