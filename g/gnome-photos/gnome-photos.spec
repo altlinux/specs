@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.Photos
 %define ver_major 3.24
@@ -6,14 +8,18 @@
 
 Name: gnome-photos
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Photos - access, organize and share your photos on GNOME
 License: %gpl2plus
 Group: Graphics
 Url: https://wiki.gnome.org/Apps/Photos
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %define glib_ver 2.44
 %define gtk_ver 3.20.0
@@ -21,7 +27,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define gdata_ver 0.15.2
 %define gegl_ver 0.3.14
 %define grilo_ver 0.3
-%define png_ver 1.5
+%define png_ver 1.6
 
 Requires: grilo-plugins >= %grilo_ver
 
@@ -41,7 +47,6 @@ BuildRequires: libgnome-desktop3-devel libgnome-online-accounts-devel zlib-devel
 BuildRequires: libgeocode-glib-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 
-
 %description
 Photos, like Documents, Music and Videos, is one of the core GNOME
 applications meant for find and reminding the user about her content.
@@ -51,8 +56,7 @@ patterns and objectives.
 
 %prep
 %setup
-# downgrade required libpng
-subst 's|libpng16|libpng15|' configure.ac
+%{?_enable_snapshot:touch AUTHORS}
 
 %build
 %autoreconf
@@ -79,6 +83,9 @@ rm -rf %buildroot/%_datadir/doc/%name
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Tue Jul 04 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt2
+- updated to 3.24.2-4-g9d70654
+
 * Wed May 10 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
 - 3.24.2
 

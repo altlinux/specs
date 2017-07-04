@@ -7,8 +7,8 @@
 %def_enable gtk_doc
 
 Name: lib%_name%api_ver
-Version: %ver_major.16
-Release: alt2
+Version: %ver_major.18
+Release: alt1
 
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
@@ -30,6 +30,7 @@ BuildRequires: ruby w3m liblua5-devel libgtk+3-devel enscript
 BuildRequires: libexiv2-devel libjasper-devel libpng-devel liblensfun-devel
 BuildRequires: liblcms2-devel libwebp-devel  libv4l-devel libpoly2tri-c-devel
 BuildRequires: libgexiv2-devel
+BuildRequires: libgdk-pixbuf-devel
 BuildRequires: libjson-glib-devel gobject-introspection-devel vala-tools
 %{?_with_libavformat:BuildRequires: libavformat-devel libavcodec-devel libswscale-devel}
 
@@ -119,6 +120,9 @@ GObject introspection devel data for the GEGL library.
 %_girdir/Gegl-%api_ver.gir
 
 %changelog
+* Tue Jul 04 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.18-alt1
+- 0.3.18
+
 * Mon Jun 05 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt2
 - enabled libavformat support
 
