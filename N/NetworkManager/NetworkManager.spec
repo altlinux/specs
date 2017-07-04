@@ -1,5 +1,5 @@
-#define git_date .git20170206
-%define git_date %nil
+%define git_date .git20170629
+#define git_date %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
@@ -31,11 +31,12 @@
 
 %define _name %name-daemon
 %define dispatcherdir %_sysconfdir/NetworkManager/dispatcher.d
+%define nmlibdir %_prefix/lib/NetworkManager
 
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.7.91
+Version: 1.8.1
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -398,9 +399,11 @@ GObject introspection devel data for the NetworkManager.
 %if_enabled systemd
 	--with-session-tracking=systemd \
 	--with-suspend-resume=systemd \
+	--with-config-logging-backend-default=journal \
 %else
 	--with-session-tracking=ck \
 	--with-suspend-resume=upower \
+	--with-config-logging-backend-default=syslog \
 %endif
 	--with-udev-dir=/lib/udev \
 	--enable-polkit=yes \
@@ -429,7 +432,11 @@ GObject introspection devel data for the NetworkManager.
 	%{subst_enable vala} \
 	--with-libaudit=yes-disabled-by-default \
 	--with-ofono=no \
+%if_enabled teamdctl
+	--enable-json-validation \
+%else
 	--disable-json-validation \
+%endif
 	--with-libpsl=yes \
 %if_enabled sanitizers
 	--enable-address-sanitizer \
@@ -453,12 +460,13 @@ mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_sysconfdir/NetworkManager/VPN
 mkdir -p %buildroot%_sysconfdir/NetworkManager/system-connections
 mkdir -p %buildroot%_sysconfdir/NetworkManager/conf.d
+mkdir -p %buildroot%nmlibdir/conf.d
 mkdir -p %buildroot/%_var/log/
 touch %buildroot/%_var/log/NetworkManager
 mkdir -p %buildroot/%_var/lib/NetworkManager
 touch %buildroot/%_var/lib/NetworkManager/timestamps
 touch %buildroot/%_var/lib/NetworkManager/NetworkManager.state
-mkdir -p %buildroot/%_libexecdir/NetworkManager/VPN/
+mkdir -p %buildroot%nmlibdir/VPN/
 install -m 0644 %SOURCE1 %buildroot%_sysconfdir/NetworkManager/
 install -m 0755 %SOURCE2 %buildroot%dispatcherdir/
 install -m 0755 %SOURCE5 %buildroot%dispatcherdir/
@@ -480,6 +488,15 @@ install -Dm0755 %SOURCE9 %buildroot%_sbindir/NetworkManager-prestart
 
 # Install functions file for nm-dispather scripts
 install -Dm0644 %SOURCE10 %buildroot%_libexecdir/NetworkManager/nm-dispatcher-sh-functions
+
+# Install example configs
+mkdir -p %buildroot%_defaultdocdir/%name-%version/examples/conf.d/
+cp -a examples/nm-conf.d/* %buildroot%_defaultdocdir/%name-%version/examples/conf.d/
+
+# Use 31-mac-addr-change.conf
+# See https://bugzilla.altlinux.org/32467
+# https://bugzilla.gnome.org/show_bug.cgi?id=777523
+mv %buildroot%_defaultdocdir/%name-%version/examples/conf.d/31-mac-addr-change.conf %buildroot%nmlibdir/conf.d/
 
 %check
 make check
@@ -537,8 +554,9 @@ fi
 %doc %_man8dir/*.*
 %doc %_defaultdocdir/%name-%version/
 %dir %_libexecdir/NetworkManager/
-%dir %_libexecdir/NetworkManager/VPN/
 %dir %_libdir/NetworkManager/
+%dir %nmlibdir/
+%dir %nmlibdir/VPN/
 %_libdir/NetworkManager/libnm-settings-plugin-*.so
 %_libexecdir/NetworkManager/nm-*
 %_sbindir/*
@@ -549,6 +567,8 @@ fi
 %dir %_sysconfdir/NetworkManager/VPN
 %dir %_sysconfdir/NetworkManager/system-connections
 %dir %_sysconfdir/NetworkManager/conf.d
+%dir %nmlibdir/conf.d/
+%config %nmlibdir/conf.d/31-mac-addr-change.conf
 %dir %_var/lib/NetworkManager
 %dispatcherdir/
 %ghost %config(noreplace) %_var/log/NetworkManager
@@ -668,6 +688,20 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Jul 05 2017 Mikhail Efremov <sem@altlinux.org> 1.8.1-alt1.git20170629
+- sysconfig: Set NM_DOWN_CONTROLLED and NM_STOP_ONEXIT to 'no'.
+- NetworkManager.conf: Drop note about MAC randomization.
+- Disable changing MAC for broken drivers by default (closes: #32467).
+- Explicitly set logging backend to journal if built with systemd.
+- Enable json-validation if built with teamd.
+- Package example config files.
+- Use %%nmlibdir macro to package VPN directory.
+- Package /usr/lib/NetworkManager/conf.d/ directory.
+- Upstream git snapshot (nm-1-8 branch).
+
+* Mon Apr 24 2017 Mikhail Efremov <sem@altlinux.org> 1.7.92-alt1
+- Updated to 1.7.92 (1.8-rc3).
+
 * Tue Apr 11 2017 Mikhail Efremov <sem@altlinux.org> 1.7.91-alt1
 - NetworkManager.conf: Add note about Wi-Fi MAC rondomization.
 - etcnet-alt: Don't print error if ipv4address doesn't exist.
