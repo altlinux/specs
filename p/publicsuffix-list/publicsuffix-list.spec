@@ -1,8 +1,8 @@
 %def_enable dafsa
 
 Name: publicsuffix-list
-Version: 20170404
-Release: alt2
+Version: 20170704
+Release: alt1
 Summary: Cross-vendor public domain suffix database
 License: MPL-2.0
 Group: Networking/DNS
@@ -67,6 +67,9 @@ install -pDm644 public_suffix_list.dafsa %buildroot%_datadir/publicsuffix/public
 %endif
 
 %changelog
+* Tue Jul 04 2017 Mikhail Efremov <sem@altlinux.org> 20170704-alt1
+- New snapshot.
+
 * Sun Apr 09 2017 Mikhail Efremov <sem@altlinux.org> 20170404-alt2
 - Add changlog from old fcimport spec.
 
