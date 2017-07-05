@@ -1,4 +1,4 @@
-%define mpiimpl openmpi
+%define mpiimpl openmpi-compat
 %define mpidir %_libdir/%mpiimpl
 %ifarch %ix86
 %define barch IA32
@@ -11,7 +11,7 @@
 %define sover %somver.3.3
 Name: mpip
 Version: 3.3
-Release: alt5.svn20140313
+Release: alt6.svn20140313
 Summary: Lightweight profiling library for MPI applications
 License: BSD
 Group: Development/Tools
@@ -171,6 +171,9 @@ install -m644 mpip_timers/linux_posix.h %buildroot%_includedir/mpip_timers
 %_libdir/libfarg.so
 
 %changelog
+* Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3-alt6.svn20140313
+- Updated build dependencies
+
 * Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt5.svn20140313
 - New snapshot
 
