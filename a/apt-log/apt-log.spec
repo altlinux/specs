@@ -1,13 +1,13 @@
 Name: apt-log
 Version: 0.1
-Release: alt2
+Release: alt3
 
 Summary: Log support for APT
 License: GPL
 Group: System/Configuration/Packaging
 Packager: Evgenii Terechkov <evg@altlinux.ru>
 
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tar
 
 Requires: apt-scripts
 BuildRequires: apt
@@ -40,6 +40,9 @@ install -pD -m644 %name.logrotate %buildroot%_sysconfdir/logrotate.d/apt-log
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 
 %changelog
+* Wed Jul  5 2017 Terechkov Evgenii <evg@altlinux.org> 0.1-alt3
+- Patch from glebfm@ to work with new rpm/lua (ALT#33074)
+
 * Thu Mar 20 2008 Terechkov Evgenii <evg@altlinux.ru> 0.1-alt2
 - Logrotate file added (#14922)
 - Packager tag added to spec
