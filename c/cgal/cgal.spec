@@ -1,8 +1,6 @@
-%define somver 11
-%define sover %somver.0.0
 Name: cgal
-Version: 4.6
-Release: alt2.2
+Version: 4.10
+Release: alt1
 Summary: Easy access to efficient and reliable geometric algorithms
 License: Free for non-commertial using
 Group: Sciences/Mathematics
@@ -10,17 +8,21 @@ Url: http://www.cgal.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: CGAL-%version.tar.gz
-Source1: https://gforge.inria.fr/frs/download.php/file/34700/CGAL-4.6-doc_html.tar.gz
-Source2: https://gforge.inria.fr/frs/download.php/32357/cgal_manual.pdf
+# https://gforge.inria.fr/frs/download.php/file/34700/CGAL-4.6-doc_html.tar.gz
+Source1: CGAL-%version-doc_html.tar.gz
+# https://gforge.inria.fr/frs/download.php/32357/cgal_manual.pdf
+Source2: cgal_manual.pdf
 Source4: cmk.txt
 Source5: %name.pc
 
+Patch1: %name-%version-alt-build.patch
+
 Requires: lib%name = %version-%release
 
-BuildPreReq: gcc-c++ gcc-fortran cmake libqt4-devel qt4-devel
+BuildPreReq: gcc-c++ gcc-fortran cmake qt5-base-devel qt5-svg-devel
 BuildPreReq: boost-devel libgmp-devel libgmpxx-devel eigen3
 BuildPreReq: libGLU-devel libGL-devel libmpfr-devel libtbb-devel
-BuildPreReq: zlib-devel qt3-devel libX11 phonon-devel
+BuildPreReq: zlib-devel libX11 phonon-devel
 BuildPreReq: liblapack-devel libtaucs-devel
 
 %description
@@ -39,29 +41,17 @@ library.
 
 This Package contains shared libraries of CGAL.
 
-%package -n lib%name-qt3
-Summary: Shared libraries of CGAL (Qt3 interface)
+%package -n lib%name-qt5
+Summary: Shared libraries of CGAL (Qt5 interface)
 Group: System/Libraries
 Requires: lib%name = %version-%release
 
-%description -n lib%name-qt3
+%description -n lib%name-qt5
 The goal of the CGAL Open Source Project is to provide easy access to
 efficient and reliable geometric algorithms in the form of a C++
 library.
 
-This Package contains shared libraries of CGAL (Qt3 interface).
-
-%package -n lib%name-qt4
-Summary: Shared libraries of CGAL (Qt4 interface)
-Group: System/Libraries
-Requires: lib%name = %version-%release
-
-%description -n lib%name-qt4
-The goal of the CGAL Open Source Project is to provide easy access to
-efficient and reliable geometric algorithms in the form of a C++
-library.
-
-This Package contains shared libraries of CGAL (Qt4 interface).
+This Package contains shared libraries of CGAL (Qt5 interface).
 
 %package -n lib%name-devel
 Summary: Development files of CGAL
@@ -75,31 +65,18 @@ library.
 
 This Package contains developemnt files of CGAL.
 
-%package -n lib%name-qt3-devel
-Summary: Development files of CGAL (Qt3 interface)
+%package -n lib%name-qt5-devel
+Summary: Development files of CGAL (Qt5 interface)
 Group: Development/C++
 Requires: lib%name-devel = %version-%release
-Requires: lib%name-qt3 = %version-%release
+Requires: lib%name-qt5 = %version-%release
 
-%description -n lib%name-qt3-devel
+%description -n lib%name-qt5-devel
 The goal of the CGAL Open Source Project is to provide easy access to
 efficient and reliable geometric algorithms in the form of a C++
 library.
 
-This Package contains developemnt files of CGAL (Qt3 interface).
-
-%package -n lib%name-qt4-devel
-Summary: Development files of CGAL (Qt4 interface)
-Group: Development/C++
-Requires: lib%name-devel = %version-%release
-Requires: lib%name-qt4 = %version-%release
-
-%description -n lib%name-qt4-devel
-The goal of the CGAL Open Source Project is to provide easy access to
-efficient and reliable geometric algorithms in the form of a C++
-library.
-
-This Package contains developemnt files of CGAL (Qt4 interface).
+This Package contains developemnt files of CGAL (Qt5 interface).
 
 %package devel-doc
 Summary: Documentation for CGAL
@@ -115,6 +92,7 @@ Thid package contains development documentation for CGAL.
 
 %prep
 %setup
+%patch1 -p2
 install -p -m644 %SOURCE1 %SOURCE2 %SOURCE4 ./
 mv cmk.txt CMakeCache.txt
 
@@ -141,11 +119,6 @@ pushd %buildroot%_docdir/%name
 tar -xf %SOURCE1
 popd
 
-%if "%_libexecdir" != "%_libdir"
-install -d %buildroot%_libdir
-mv %buildroot%_libexecdir/* %buildroot%_libdir/
-%endif
-
 install -d %buildroot%_pkgconfigdir
 install -p -m644 %name.pc %buildroot%_pkgconfigdir
 
@@ -157,11 +130,8 @@ install -p -m644 %name.pc %buildroot%_pkgconfigdir
 %_libdir/*.so.*
 %exclude %_libdir/*_Qt?.so.*
 
-%files -n lib%name-qt3
-%_libdir/*_Qt3.so.*
-
-%files -n lib%name-qt4
-%_libdir/*_Qt4.so.*
+%files -n lib%name-qt5
+%_libdir/*_Qt5.so.*
 
 %files -n lib%name-devel
 %_includedir/*
@@ -170,17 +140,19 @@ install -p -m644 %name.pc %buildroot%_pkgconfigdir
 %_libdir/CGAL
 %_pkgconfigdir/*
 
-%files -n lib%name-qt3-devel
-%_libdir/*_Qt3.so
-
-%files -n lib%name-qt4-devel
-%_libdir/*_Qt4.so
+%files -n lib%name-qt5-devel
+%_libdir/*_Qt5.so
 
 %files devel-doc
 %doc AUTHORS CHANGES* LICENSE* README examples
 %doc %_docdir/%{name}*
 
 %changelog
+* Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.10-alt1
+- Updated to upstream version 4.10
+- Qt3 and Qt4 libraries are no longer provided by upstream
+- Packaged Qt5 libraries
+
 * Fri Apr 08 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.6-alt2.2
 - fix packaging on 64-bit arches other than x86_64
 
