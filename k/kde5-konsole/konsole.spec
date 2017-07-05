@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 17.04.2
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Terminals
@@ -15,7 +15,7 @@ License: GPLv2+ / LGPLv2+
 
 PreReq(post,preun): alternatives >= 0.2
 Provides: xvt, %_x11bindir/xvt
-Requires: fonts-bitmap-misc
+#Requires: fonts-bitmap-misc
 
 Source: %rname-%version.tar
 Patch10: alt-no-transparency.patch
@@ -116,6 +116,10 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Wed Jul 05 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt2%ubt
+- set Monospace font by default to scale with hi resolution
+- intense bold fonts by default
+
 * Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
 - new version
 
