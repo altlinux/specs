@@ -1,5 +1,5 @@
 Name: iproute2
-Version: 4.11.0
+Version: 4.12.0
 Release: alt1
 
 Summary: Advanced IP routing and network devices configuration tools
@@ -120,6 +120,9 @@ done
 %_man3dir/*
 
 %changelog
+* Wed Jul 05 2017 Dmitry V. Levin <ldv@altlinux.org> 4.12.0-alt1
+- 4.11.0 -> 4.12.0.
+
 * Mon May 01 2017 Dmitry V. Levin <ldv@altlinux.org> 4.11.0-alt1
 - 4.4.0 -> 4.11.0.
 
