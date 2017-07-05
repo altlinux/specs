@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 4.4.1
-Release: alt14
+Release: alt15
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -41,6 +41,7 @@ Patch16: qemu-server-some-ID.patch
 Patch17: 0001-remove-netcat6-dependency.patch
 Patch18: pve-container-lxcnetdelbr.patch
 Patch19: pve-manager-snapshot-resize.patch
+Patch20: pve-manager-rem-package-ver-btn.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -113,6 +114,7 @@ This package contains the Qemu Server tools used by PVE
 %patch17 -p0
 %patch18 -p0 -b .lxcnetdelbr
 %patch19 -p0 -b .resize
+%patch20 -p0 -b .rembtn
 
 %build
 for d in pve-manager pve-firewall/src pve-ha-manager/src qemu-server; do
@@ -149,7 +151,7 @@ __EOF__
 mkdir -p %buildroot%_sysconfdir/modules-load.d
 cat << __EOF__ > %buildroot%_sysconfdir/modules-load.d/pve-firewall.conf
 br_netfilter
-__EOF
+__EOF__
 
 %post
 %post_service pvedaemon
@@ -386,6 +388,9 @@ __EOF
 %_man5dir/*m.conf.5*
 
 %changelog
+* Wed Jul 05 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt15
+- removed "Package version" button (closes: #33615)
+
 * Tue Jun 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt14
 - firewall now works
 
