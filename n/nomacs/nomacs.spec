@@ -1,6 +1,6 @@
 Name: nomacs
 Version: 2.4.6
-Release: alt3
+Release: alt4
 
 License: GPLv3
 Group: Graphics
@@ -11,7 +11,7 @@ Source: https://github.com/%name/%name/archive/%name-%version.tar.bz2
 
 BuildRequires: cmake gcc-c++ libqt4-devel libexiv2-devel libgomp-devel
 BuildRequires: libtiff-devel libopencv-devel libraw-devel libgomp-devel
-BuildRequires: zlib-devel libwebp-devel libquazip-devel
+BuildRequires: zlib-devel libwebp-devel libquazip-devel libtbb-devel
 #BuildRequires: libqpsd-devel
 
 %description
@@ -47,6 +47,9 @@ or via LAN is possible. It allows to compare images and spot the differences
 %_pixmapsdir/%name.png
 
 %changelog
+* Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.6-alt4
+- Updated build dependencies
+
 * Thu Dec 29 2016 Yuri N. Sedunov <aris@altlinux.org> 2.4.6-alt3
 - rebuilt against libraw.so.16
 
