@@ -1,5 +1,5 @@
 Name: connector
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: Remote desktop chooser
@@ -33,6 +33,7 @@ install -p *.png *.glade %buildroot%basedir/data/
 install -p *.py %buildroot%basedir/
 install -pDm644 %name.man %buildroot%_man1dir/%name.1
 %find_lang --with-man %name
+install -pDm644 kiosk.access %buildroot%_sysconfdir/%name/kiosk.access
 
 %files -f %name.lang
 %_bindir/%name
@@ -40,8 +41,14 @@ install -pDm644 %name.man %buildroot%_man1dir/%name.1
 %basedir/data
 %basedir/*.py
 %_man1dir/*
+%config(noreplace) %_sysconfdir/%name/kiosk.access
 
 %changelog
+* Wed Jul 05 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.5.1-alt1
+- Changes in mode 'kiosk'
+ + removed notifications about enable/disable
+ + added config for access to the settings
+
 * Tue May 23 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.5.0-alt1
 - Added mode 'kiosk'
 
