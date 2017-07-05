@@ -1,8 +1,9 @@
 %define gst_api_ver 1.0
 %define gst_ver 1.12
+%define gtk_ver 3.18
 
 Name: pulseeffects
-Version: 2.0.1
+Version: 2.0.3
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -14,12 +15,14 @@ Source: https://github.com/wwmm/pulseeffects/archive/%name-%version.tar.gz
 
 BuildArch: noarch
 
+Requires: libgtk+3-gir >= %gtk_ver
 Requires: pulseaudio-daemon dconf
 Requires: gst-plugins-good%gst_api_ver >= %gst_ver
 Requires: gst-plugins-bad%gst_api_ver >= %gst_ver
 Requires: ladspa-swh-plugins
 # for CubicSpline
 Requires: python3-module-scipy >= 0.19
+
 
 # python3 used
 AutoReqProv: nopython
@@ -55,6 +58,9 @@ cp -r share %buildroot%_prefix
 %doc README*
 
 %changelog
+* Wed Jul 05 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
+- 2.0.3
+
 * Sat Jul 01 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - 2.0.1
 
