@@ -1,6 +1,6 @@
 Name: mysql-workbench-community
 Version: 6.3.4
-Release: alt2
+Release: alt3
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
 Summary: A MySQL visual database modeling tool
@@ -13,6 +13,7 @@ Source0: %name-%version.tar.gz
 Patch1: mysql-workbench-mariadb-build.patch
 Patch2: mysql-workbench-mariadb-check.patch
 Patch3: mysql-workbench-6.3.4-c++11.patch
+Patch4: %name-%version-alt-gcc6.patch
 
 Provides: mysql-workbench-oss = %version-%release
 Obsoletes: mysql-workbench-oss < %version-%release
@@ -85,6 +86,7 @@ Architecture independent files for %name
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p2
 
 sed -i "s|pcre.h|pcre/pcre.h|" library/base/util_functions.cpp
 
@@ -141,6 +143,9 @@ cp %_builddir/%name-%version/images/icons/MySQLWorkbenchDocIcon32x32.png %buildr
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.3.4-alt3
+- Updated build with gcc-6
+
 * Fri Oct 23 2015 Sergey Y. Afonin <asy@altlinux.ru> 6.3.4-alt2
 - updated mysql-workbench-6.3.4-c++11.patch from http://bugs.mysql.com/78668
 
