@@ -1,6 +1,6 @@
-%define _name gtef
-%define ver_major 2.0
-%define api_ver 2
+%define _name tepl
+%define ver_major 2.99
+%define api_ver 3
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
@@ -12,12 +12,12 @@ Release: alt1
 Summary: GTK+ Text Editor Framework
 License: %lgpl2plus
 Group: System/Libraries
-Url:  https://wiki.gnome.org/Projects/Gtef
+Url:  https://wiki.gnome.org/Projects/Tepl
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 Source1: pkg.m4
 
-%define glib_ver 2.51.5
+%define glib_ver 2.52
 %define gtk_doc_ver 1.0
 %define gtksource_ver 3.22
 
@@ -28,58 +28,57 @@ BuildRequires: vala-tools
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.6.7 libgtk+3-gir-devel libgtksourceview3-gir-devel}
 
 %description
-Gtef is a library that eases the development of GtkSourceView-based
-text editors and IDEs. Gtef is the acronym for "GTK+ Text Editor
-Framework".
+Tepl is a library that eases the development of GtkSourceView-based text
+editors and IDEs.
 
 %package devel
-Summary: Development environment for Gtef
+Summary: Development environment for Tepl
 Group: Development/C
 Requires: %name = %version-%release
 
 %description devel
-This package contains the necessary components to develop for Gtef,
+This package contains the necessary components to develop for Tepl,
 GTK+ Text Editor Framework.
 
 %package devel-doc
-Summary: Development documentation for Gtef
+Summary: Development documentation for Tepl
 Group: Development/C
 BuildArch: noarch
 Conflicts: %name < %version-%release
 
 %description devel-doc
-Gtef is a library that eases the development of GtkSourceView-based
-text editors and IDEs. Gtef is the acronym for "TK+ Text Editor
+Tepl is a library that eases the development of GtkSourceView-based
+text editors and IDEs. Tepl is the acronym for "TK+ Text Editor
 Framework"
 
-This package contains development documentation for Gtef.
+This package contains development documentation for Tepl.
 
 %package devel-static
-Summary: Stuff for developing with Gtef
+Summary: Stuff for developing with Tepl
 Group: Development/C
 Requires: %name-devel = %version-%release
 
 %description devel-static
 This package contains the necessary components to develop statically
-linked software for Gtef, GTK+ Text Editor Framework
+linked software for Tepl, GTK+ Text Editor Framework
 
 %package gir
-Summary: GObject introspection data for the Gtef library
+Summary: GObject introspection data for the Tepl library
 Group: System/Libraries
 Requires: %name = %version-%release
 
 %description gir
-GObject introspection data for the Gtef library
+GObject introspection data for the Tepl library
 
 %package gir-devel
-Summary: GObject introspection devel data for the Gtef library
+Summary: GObject introspection devel data for the Tepl library
 Group: Development/Other
 BuildArch: noarch
 Requires: %name-devel = %version-%release
 Requires: %name-gir = %version-%release
 
 %description gir-devel
-GObject introspection devel data for the Gtef library
+GObject introspection devel data for the Tepl library
 
 %prep
 %setup -n %_name-%version
@@ -99,7 +98,7 @@ rm -rf missing aclocal.m4 /m4/libtool.m4 m4/lt*.m4
 %install
 %makeinstall_std
 
-%find_lang --output=%_name.lang %_name %{_name}-2
+%find_lang --output=%_name.lang %_name %{_name}-%api_ver
 
 %files -f %_name.lang
 %_libdir/*.so.*
@@ -128,9 +127,8 @@ rm -rf missing aclocal.m4 /m4/libtool.m4 m4/lt*.m4
 %endif
 
 %changelog
-* Fri Apr 21 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
-- 2.0.1
-
-* Sun Mar 19 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+* Wed Jul 05 2017 Yuri N. Sedunov <aris@altlinux.org> 2.99.1-alt1
 - first build for Sisyphus
+
+
 
