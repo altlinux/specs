@@ -4,7 +4,7 @@ Group:          Monitoring
 Summary:        `nfstrace` is an NFS tracing/monitoring/capturing/analyzing tool.
 
 Version:        0.4.0
-Release:        alt2.1
+Release:        alt2.2
 
 Packager:	Denis Pynkin <dans@altlinux.org>
 
@@ -15,7 +15,7 @@ BuildRequires: clang-devel
 BuildRequires: gcc-c++
 BuildRequires: libpcap-devel
 #BuildRequires: libgmock-devel
-BuildRequires: libjson-devel
+BuildRequires: libjson-c-devel
 BuildRequires: libncurses-devel
 BuildRequires: ctest
 BuildRequires: python
@@ -74,6 +74,9 @@ The %{name}-devel package contains development part of %{name}.
 %{_includedir}/%name/api/*.h
 
 %changelog
+* Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.0-alt2.2
+- Updated build dependencies
+
 * Tue May 02 2017 Andrey Cherepanov <cas@altlinux.org> 0.4.0-alt2.1
 - Rebuild with new version of libjson
 
