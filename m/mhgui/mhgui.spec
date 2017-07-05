@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           mhgui
 Version:        0.2
-Release:        alt2
+Release:        alt2.1
 Summary:        A simple GUI library for MakeHuman
 
 Group:          System/Libraries
@@ -77,6 +77,9 @@ rm -rf $RPM_BUILD_ROOT%{_prefix}/doc
 
 
 %changelog
+* Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2-alt2.1
+- Rebuild with new dependencies
+
 * Wed Mar 19 2014 Ilya Mashkin <oddity@altlinux.ru> 0.2-alt2
 - Build for Sisyphus
 

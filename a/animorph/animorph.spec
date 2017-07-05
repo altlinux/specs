@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name: animorph
 Version: 0.3
-Release: alt3
+Release: alt3.1
 Summary: 3D Animation and Morph Library
 
 Group: System/Libraries
@@ -69,6 +69,9 @@ rm -rf $RPM_BUILD_ROOT%prefix/doc
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3-alt3.1
+- Rebuild for new gcc ABI
+
 * Wed Mar 19 2014 Ilya Mashkin <oddity@altlinux.ru> 0.3-alt3
 - Build for Sisyphus
 
