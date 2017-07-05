@@ -1,9 +1,9 @@
-%define kernel_base_version 4.11
+%define kernel_base_version 4.12
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
 Version: %kernel_base_version
-Release: alt0.rc7
+Release: alt1
 
 Summary: Linux kernel C header files for use by glibc and other userspace software
 License: GPLv2
@@ -14,31 +14,44 @@ Url: http://www.kernel.org/
 #Patch: %name-%version-%release.patch
 
 Patch1: 0001-uapi-fix-linux-sysctl.h-userspace-compilation-errors.patch
-Patch2: 0002-uapi-fix-linux-nfsd-cld.h-userspace-compilation-erro.patch
-Patch3: 0003-uapi-move-struct-reiserfs_security_handle-out-from-l.patch
-Patch4: 0004-uapi-fix-linux-dlm_netlink.h-userspace-compilation-e.patch
-Patch5: 0005-uapi-fix-linux-nfc.h-userspace-compilation-errors.patch
-Patch6: 0006-uapi-fix-linux-vm_sockets.h-userspace-compilation-er.patch
-Patch7: 0007-uapi-fix-linux-sctp.h-userspace-compilation-errors.patch
-Patch8: 0008-uapi-fix-scsi-scsi_netlink.h-userspace-compilation-e.patch
-Patch9: 0009-uapi-fix-scsi-scsi_netlink_fc.h-userspace-compilatio.patch
-Patch10: 0010-uapi-fix-scsi-scsi_bsg_fc.h-userspace-compilation-er.patch
-Patch11: 0011-uapi-fix-asm-ipcbuf.h-userspace-compilation-errors.patch
-Patch12: 0012-uapi-fix-asm-msgbuf.h-userspace-compilation-errors.patch
-Patch13: 0013-uapi-fix-asm-sembuf.h-userspace-compilation-errors.patch
-Patch14: 0014-uapi-fix-asm-shmbuf.h-userspace-compilation-errors.patch
-Patch15: 0015-uapi-fix-another-asm-shmbuf.h-userspace-compilation-.patch
-Patch16: 0016-uapi-fix-asm-signal.h-userspace-compilation-errors.patch
-Patch17: 0017-uapi-introduce-__kernel_uapi_size_t.patch
-Patch18: 0018-x86-uapi-fix-asm-signal.h-userspace-compilation-erro.patch
-Patch19: 0019-uapi-fix-linux-kexec.h-userspace-compilation-errors.patch
-Patch20: 0020-uapi-fix-linux-ncp_fs.h-userspace-compilation-errors.patch
-Patch21: 0021-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
+Patch2: 0002-uapi-move-struct-reiserfs_security_handle-out-from-l.patch
+Patch3: 0003-uapi-fix-linux-dlm_netlink.h-userspace-compilation-e.patch
+Patch4: 0004-uapi-fix-linux-nfc.h-userspace-compilation-errors.patch
+Patch5: 0005-uapi-fix-linux-vm_sockets.h-userspace-compilation-er.patch
+Patch6: 0006-uapi-fix-linux-sctp.h-userspace-compilation-errors.patch
+Patch7: 0007-uapi-fix-scsi-scsi_netlink.h-userspace-compilation-e.patch
+Patch8: 0008-uapi-fix-scsi-scsi_netlink_fc.h-userspace-compilatio.patch
+Patch9: 0009-uapi-fix-scsi-scsi_bsg_fc.h-userspace-compilation-er.patch
+Patch10: 0010-uapi-fix-asm-ipcbuf.h-userspace-compilation-errors.patch
+Patch11: 0011-uapi-fix-asm-msgbuf.h-userspace-compilation-errors.patch
+Patch12: 0012-uapi-fix-asm-sembuf.h-userspace-compilation-errors.patch
+Patch13: 0013-uapi-fix-asm-shmbuf.h-userspace-compilation-errors.patch
+Patch14: 0014-uapi-fix-another-asm-shmbuf.h-userspace-compilation-.patch
+Patch15: 0015-uapi-fix-asm-signal.h-userspace-compilation-errors.patch
+Patch16: 0016-uapi-introduce-__kernel_uapi_size_t.patch
+Patch17: 0017-x86-uapi-fix-asm-signal.h-userspace-compilation-erro.patch
+Patch18: 0018-uapi-fix-linux-kexec.h-userspace-compilation-errors.patch
+Patch19: 0019-uapi-fix-linux-ncp_fs.h-userspace-compilation-errors.patch
+Patch20: 0020-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
 
-BuildArch: noarch
 BuildRequires: rpm-build-kernel
-BuildRequires: %kernel_source = 0.7.0
+BuildRequires: %kernel_source = 1.0.0
 
+%define base_arch %_target_cpu
+%ifarch %ix86 x86_32 x86_64
+%define base_arch x86
+%endif
+%ifarch %arm
+%define base_arch arm
+%endif
+%ifarch aarch64
+%define base_arch arm64
+%endif
+%ifarch ppc ppc64
+%define base_arch powerpc
+%endif
+
+Requires: %name-%base_arch = %version-%release
 Provides: kernel-headers = %version-%release
 Provides: linux-libc-headers = %version-%release
 Obsoletes: linux-libc-headers < %version
@@ -46,6 +59,30 @@ Obsoletes: linux-libc-headers < %version
 %description
 This package includes the C header files that specify the interface
 between the Linux kernel and userspace libraries and programs.
+The header files define structures and constants that are needed for
+building most standard programs and are also needed to build glibc.
+
+%package generic
+Summary: Generic Linux kernel C header files
+Group: Development/Kernel
+BuildArch: noarch
+Conflicts: %name < %version
+
+%description generic
+This package contains generic C header files that specify the interface
+between the Linux kernel and userspace libraries and programs.
+The header files define structures and constants that are needed for
+building most standard programs and are also needed to build glibc.
+
+%package %base_arch
+Summary: %base_arch-specific Linux kernel C header files
+Group: Development/Kernel
+BuildArch: noarch
+Requires: %name-generic = %version-%release
+
+%description %base_arch
+This package contains %base_arch-specific C header files that specify
+the interface between the Linux kernel and userspace libraries and programs.
 The header files define structures and constants that are needed for
 building most standard programs and are also needed to build glibc.
 
@@ -75,7 +112,6 @@ cd %kernel_source
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
-%patch21 -p1
 
 sed -i 's/^headers_install:.*/&\n\t@echo hdr-arch=$(hdr-arch)/' Makefile
 
@@ -86,6 +122,10 @@ make -C %kernel_source headers_install \
 cat out
 [ -z "$rc" ] || exit $rc
 hdr_arch="$(sed '/^hdr-arch=/!d;s///;q' out)"
+[ %base_arch = "$hdr_arch" ] || {
+	echo >&2 "%%base_arch=%base_arch != \$hdr_arch=$hdr_arch"
+	exit 1
+}
 mv %buildroot%hdr_dir/include/asm{,-$hdr_arch}
 ln -s asm-$hdr_arch %buildroot%hdr_dir/include/asm
 find %buildroot%_includedir -name "*.install*" -delete
@@ -105,10 +145,32 @@ if [ -s "$d"/fail.list ]; then
 fi
 cd - > /dev/null
 
+%define _unpackaged_files_terminate_build 1
+
+%files generic
+%hdr_dir/
+%exclude %hdr_dir/include/asm
+%exclude %hdr_dir/include/asm-%base_arch/
+
+%files %base_arch
+%dir %hdr_dir/
+%dir %hdr_dir/include/
+%hdr_dir/include/asm-%base_arch/
+
 %files
-%hdr_dir
+%dir %hdr_dir/
+%dir %hdr_dir/include/
+%hdr_dir/include/asm
 
 %changelog
+* Wed Jul 05 2017 Dmitry V. Levin <ldv@altlinux.org> 4.12-alt1
+- v4.11-rc7 -> v4.12.
+- Split out -generic and -%base_arch noarch subpackages:
+  moved arch-independent files to -generic noarch subpackage,
+  asm-* directory to -%base_arch noarch subpackage,
+  the only thing that remains in the main package
+  (which is no longer noarch) is the asm symlink.
+
 * Sun Apr 16 2017 Dmitry V. Levin <ldv@altlinux.org> 4.11-alt0.rc7
 - v4.10 -> v4.11-rc7.
 - Dropped %hdr_dir/include/asm-%_target_cpu symlink.
