@@ -3,7 +3,7 @@
 %define pkgname ruby-gpgme
 
 Name: %pkgname
-Version: 2.0.12
+Version: 2.0.13
 Release: alt1
 
 Summary: Ruby interface to GnuPG Made Easy
@@ -50,6 +50,12 @@ ruby -rvendor-specific ext/gpgme/extconf.rb
 %ruby_ri_sitedir/GPGME*
 
 %changelog
+* Wed Jul 05 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.13-alt1
+- New version
+
+* Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.12-alt2
+- Rebuild with new %%ruby_sitearchdir location
+
 * Fri Sep 23 2016 Andrey Cherepanov <cas@altlinux.org> 2.0.12-alt1
 - new version 2.0.12
 
