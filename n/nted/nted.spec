@@ -1,6 +1,6 @@
 Name: nted
 Version: 1.10.18
-Release: alt1
+Release: alt2
 
 Summary: A new musical score editor for Linux
 
@@ -11,6 +11,7 @@ Url: http://vsr.informatik.tu-chemnitz.de/staff/jan/nted/nted.xhtml
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://vsr.informatik.tu-chemnitz.de/staff/jan/nted/sources/%name-%version.tar
+Patch1: %name-%version-alt-gcc6.patch
 
 # manually removed: kdesdk-misc 
 # Automatically added by buildreq on Wed Mar 10 2010
@@ -22,6 +23,7 @@ NtEd is a new musical score editor for Linux.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 %add_optflags -fpermissive
@@ -50,6 +52,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_man1dir/*
 
 %changelog
+* Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.10.18-alt2
+- Updated build with gcc-6
+
 * Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.10.18-alt1
 - new version 1.10.18 (with rpmrb script)
 
