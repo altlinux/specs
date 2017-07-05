@@ -10,7 +10,7 @@ Name: oprofile
 %define lname lib%name
 Summary: System wide profiler
 Version: 0.9.9
-Release: alt2
+Release: alt3
 License: GPLv2+
 Group: Development/Tools
 URL: http://%name.sourceforge.net
@@ -176,6 +176,9 @@ useradd -r -g _%name -d %_localstatedir/%name -r -u 16 -s /sbin/nologin \
 
 
 %changelog
+* Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.9-alt3
+- Fix build with new toolchain
+
 * Sun Nov 03 2013 Led <led@altlinux.ru> 0.9.9-alt2
 - Fix handling of default named unit masks longer than 11 chars
 
