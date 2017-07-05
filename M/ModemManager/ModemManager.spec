@@ -10,7 +10,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.6.4
+Version: 1.6.8
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -236,6 +236,16 @@ fi
 %endif
 
 %changelog
+* Wed Jul 05 2017 Mikhail Efremov <sem@altlinux.org> 1.6.8-alt1
+- Patches from upstream:
+  + libmm-glib,voice: fix object unref in
+    list_call_context_complete_and_free.
+  + libmm-glib,modem: fix object unref in
+    list_bearers_context_complete_and_free.
+  + libmm-glib,messaging: fix object unref in
+    list_sms_context_complete_and_free.
+- Updated to 1.6.8.
+
 * Tue Nov 15 2016 Mikhail Efremov <sem@altlinux.org> 1.6.4-alt1
 - Updated to 1.6.4.
 
