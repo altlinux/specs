@@ -1,6 +1,6 @@
 Name: netsurf
 Version: 3.5
-Release: alt1
+Release: alt2
 
 Summary: Lightweight Web Browser With Good HTML 4 And CSS Support
 License: GNU General Public License v2 (GPL v2)
@@ -12,6 +12,7 @@ Source1: netsurf.desktop
 Source2: netsurf.png
 # перевод (дополнительно см.  netsurf-all/netsurf/resources/FatMessages)
 Source3: netsurf_Messages
+Patch1: %name-%version-alt-gperf.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gtk2-devel libglade2-devel libjpeg-devel libpng-devel libmng-devel
@@ -48,6 +49,7 @@ and comprehensive Web browsing solution.
 
 %prep
 %setup -c %name-%version
+%patch1 -p2
 
 mkdir -p netsurf/!NetSurf/Resources/ru
 cp -a %SOURCE3 netsurf/!NetSurf/Resources/ru/Messages
@@ -124,6 +126,9 @@ export RPM_FIXUP_METHOD="binconfig pkgconfig libtool"
 %_datadir/pixmaps/*
 
 %changelog
+* Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5-alt2
+- Fixed build with new gperf
+
 * Mon Jun 27 2016 Andrey Cherepanov <cas@altlinux.org> 3.5-alt1
 - New version
 
