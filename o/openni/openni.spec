@@ -17,7 +17,7 @@ BuildRequires: python-modules-xml python-devel
 
 Name:           openni
 Version:        1.5.7.10
-Release:        alt1_6
+Release:        alt2_6
 Summary:        Library for human-machine Natural Interaction
 
 Group:          System/Libraries
@@ -39,6 +39,7 @@ Patch3:         openni-1.3.2.1-silence-assert.patch
 Patch4:         openni-1.3.2.1-fedora-java.patch
 Patch5:         openni-1.5.2.23-disable-softfloat.patch
 Patch6:         openni-1.5.2.23-armsamples.patch
+Patch7:         %name-%version-alt-gcc6.patch
 
 ExclusiveArch:  %{ix86} x86_64 %{arm}
 
@@ -107,6 +108,7 @@ The %{name}-examples package contains example programs for OpenNI.
 %patch4 -p1 -b .fedora-java
 %patch5 -p1 -b .disable-softfloat
 %patch6 -p1 -b .armsamples
+%patch7 -p2
 rm -rf Source/External
 rm -rf Platform/Linux/Build/Prerequisites/*
 find Samples -name GL -prune -exec rm -rf {} \;
@@ -218,6 +220,9 @@ fi
 
 
 %changelog
+* Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.7.10-alt2_6
+- Fixed build with gcc-6
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.5.7.10-alt1_6
 - update to new release by fcimport
 
