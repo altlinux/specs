@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ libGLU-devel libblas-devel libkyotocabinet-devel libode-d
 Summary:	A system for processing and editing unstructured 3D triangular meshes
 Name:		meshlab
 Version:	1.3.3
-Release:	alt2.1
+Release:	alt2.2
 URL:		http://meshlab.sourceforge.net/
 License:	GPLv2+ and BSD and Public Domain
 Group:		Graphics
@@ -50,6 +50,9 @@ Patch6:		meshlab-1.3.2-noctm.patch
 # a problem for debugedit, used by rpmbuild to extract debuginfo.
 Patch11:	meshlab-1.3.2-include-path-double-slash.patch
 
+# Fix errors found by gcc-6
+Patch12:    %name-%version-alt-gcc6.patch
+
 BuildRequires:	bzip2-devel
 BuildRequires:	libglew-devel
 BuildRequires:	levmar-devel
@@ -90,6 +93,7 @@ rm -rf meshlab-snapshot-svn3524
 #%patch -P 9 -p1 -b .vert-swap
 #%patch -P 10 -p1 -b .gcc47
 %patch -P 11 -p1 -b .include-path-double-slash
+%patch12 -p2
 
 # Turn of execute permissions on source files to avoid rpmlint
 # errors and warnings for the debuginfo package
@@ -215,6 +219,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/meshlab.desktop
 %{_datadir}/pixmaps/meshlab.png
 
 %changelog
+* Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.3-alt2.2
+- Updated build with gcc-6
+
 * Tue Jan 19 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.3-alt2.1
 - rebuild with new version of libmuparser
 
