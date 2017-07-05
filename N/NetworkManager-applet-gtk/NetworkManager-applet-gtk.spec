@@ -1,5 +1,5 @@
 %define nm_version 1.4.1-alt1.git20160914
-%define git_date .git20170410
+%define git_date .git20170703
 #define git_date %nil
 
 %define _unpackaged_files_terminate_build 1
@@ -10,7 +10,7 @@
 %def_with gcr
 
 Name: NetworkManager-applet-gtk
-Version: 1.7.1
+Version: 1.8.3
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -230,6 +230,9 @@ make check
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Tue Jul 04 2017 Mikhail Efremov <sem@altlinux.org> 1.8.3-alt1.git20170703
+- Upstream git snapshot.
+
 * Tue Apr 11 2017 Mikhail Efremov <sem@altlinux.org> 1.7.1-alt1.git20170410
 - Upstream git snapshot.
 
