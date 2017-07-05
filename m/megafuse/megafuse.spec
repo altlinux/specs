@@ -1,6 +1,6 @@
 Name: megafuse
 Version: 1.0.0
-Release: alt2
+Release: alt3
 
 # commit 50bc488cb54826b452b54a960efc25181519b3ba
 
@@ -59,6 +59,9 @@ cp %SOURCE3 %buildroot/etc/
 
 
 %changelog
+* Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt3
+- Fixed build with new toolchain
+
 * Wed Aug 12 2015 Danil Mikhailov <danil@altlinux.org> 1.0.0-alt2
 - added MegaFuse link
 
