@@ -8,7 +8,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 7.99.0
+Version: 8.2.0
 Release: alt1
 BuildArch: noarch
 
@@ -469,6 +469,10 @@ fi
 %config %_sysconfdir/polkit-1/rules.d/*.rules
 
 %changelog
+* Thu Jul 06 2017 Mikhail Efremov <sem@altlinux.org> 8.2.0-alt1
+- Bump version to 8.2.
+- xfce-settings: Fix menu on window key.
+
 * Fri Jun 30 2017 Mikhail Efremov <sem@altlinux.org> 7.99.0-alt1
 - menu: Add xfce4-clipman.desktop.
 - indexhtml.desktop: Split part of Name to Comment.
