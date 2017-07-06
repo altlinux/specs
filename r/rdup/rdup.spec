@@ -1,7 +1,7 @@
 # TODO: send patches to mainstream
 Name: rdup
 Version: 0.6.3
-Release: alt1.1
+Release: alt1.2
 
 Summary: prints filenames for backup
 
@@ -13,6 +13,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://www.miek.nl/projects/%name/%name-%version.tar.bz2
 Patch: %name-0.6.2.patch
+Patch1: %name-%version-alt-build.patch
 #AutoReq: yes, noperl
 
 # manually removed: rpm-build-java rpm-build-mono rpm-build-seamonkey rpm-macros-fillup xorg-sdk
@@ -28,6 +29,7 @@ this list and implement the backup strategy.
 %prep
 %setup -q
 %patch
+%patch1 -p2
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -46,6 +48,9 @@ mkdir -p %buildroot%_bindir
 
 
 %changelog
+* Thu Jul 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.3-alt1.2
+- Fixed build with new toolchain
+
 * Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.3-alt1.1
 - Fixed build
 
