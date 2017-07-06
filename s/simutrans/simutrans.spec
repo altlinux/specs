@@ -4,8 +4,8 @@
 #%%define branch_switch Mxx
 
 Name: simutrans
-Version: 0.111.2.1
-Release: %branch_release alt1.1
+Version: 0.120.2.2
+Release: %branch_release alt1
 
 Summary: Transport and Economic Simulation Game
 License: Artistic
@@ -18,11 +18,8 @@ Source2: simutrans.run
 Source3: simutrans.desktop
 Source4: simutrans.png
 Source5: simutrans_langtabs-99-17.tar.bz2
-Patch10: simutrans-alt-ru.patch
-Patch20: simutrans-no-x86-specifics.patch
-Patch21: simutrans-0.111.2.1-alt-zlib-1.2.7.patch
 
-Requires: simutrans-pak >= 0.111.2
+Requires: simutrans-pak >= 0.120.2
 
 BuildRequires(pre): rpm-macros-branch
 BuildPreReq: bzlib-devel
@@ -63,11 +60,6 @@ Transport Tycoon, Transport Tycoon Deluxe и Transport Giant.
 
 %prep
 %setup -a 5
-%patch10 -p1
-%ifnarch %ix86
-%patch20 -p1
-%endif
-%patch21 -p0
 cp -pr %SOURCE1 .
 
 %build
@@ -77,7 +69,7 @@ make
 mkdir -p %buildroot{%_libexecdir/simutrans,%_bindir,%_iconsdir,%_desktopdir}
 
 install -m 0755 build/default/sim %buildroot%_libexecdir/simutrans/simutrans.bin
-cp -pr simutrans/{config,font,music,text} %buildroot%_libexecdir/simutrans/
+cp -pr simutrans/* %buildroot%_libexecdir/simutrans/
 
 sed -e 's,@LIBEXECDIR@,%_libexecdir,g' %SOURCE2 > %buildroot%_bindir/simutrans
 chmod 0755 %buildroot%_bindir/simutrans
@@ -92,6 +84,11 @@ install -m 0644 %SOURCE4 %buildroot%_iconsdir/
 %_desktopdir/*
 
 %changelog
+* Thu Jul 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.120.2.2-alt1
+- New version
+- Drop old patches, it looks like upstream applied similar fixes
+- Improve debug info
+
 * Sat Nov 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.111.2.1-alt1.1
 - Fixed build with zlib 1.2.7
 

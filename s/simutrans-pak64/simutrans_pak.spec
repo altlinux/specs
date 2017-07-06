@@ -1,4 +1,4 @@
-%define src_ver 111-2
+%define src_ver 120-2
 %define pkg_ver %(echo %src_ver | sed -e 's,-,.,g')
 %define simutrans_ver 0.%pkg_ver
 
@@ -48,6 +48,9 @@ cp -pr simutrans/pak %buildroot%_libexecdir/simutrans/pak64
 #%_altdir/%name
 
 %changelog
+* Thu Jul 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 120.2-alt1
+- New version
+
 * Sun Mar 25 2012 Aleksey Avdeev <solo@altlinux.ru> 111.2-alt1
 - New version
 - Rename %%_libexecdir/simutrans/pak to %%_libexecdir/simutrans/pak64
