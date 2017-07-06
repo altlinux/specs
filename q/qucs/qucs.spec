@@ -1,6 +1,6 @@
 Name: qucs
 Version: 0.0.18
-Release: alt1
+Release: alt2
 Summary: Circuit simulator
 License: GPL
 Group: Education
@@ -11,6 +11,7 @@ Source1: %name.desktop
 Source2: qucs-tango-icons.tar.bz2
 Source3: qucs-icons.tar.bz2
 Patch: qucs-0.0.17-norecode.patch
+Patch1: %name-%version-alt-build.patch
 
 # WTF libqt4-devel
 BuildRequires: libqt4-devel
@@ -42,6 +43,7 @@ tar -xjf %SOURCE2 -C qucs
 touch qucs-core/deps/adms/README
 ##sed -i '\@<tr1/complex>@d' qucs-core/configure
 ##patch -p1
+%patch1 -p2
 
 %build
 %autoreconf
@@ -95,6 +97,9 @@ done > %name.lang
 %_includedir/qucs-core
 
 %changelog
+* Thu Jul 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.18-alt2
+- Fixed build with new toolchain
+
 * Tue Sep 30 2014 Fr. Br. George <george@altlinux.ru> 0.0.18-alt1
 - Autobuild version bump to 0.0.18
 - Separate lib packages
