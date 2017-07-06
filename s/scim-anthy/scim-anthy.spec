@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 Name: scim-anthy
 Version: 1.2.7
-Release: alt2.qa1
+Release: alt3
 
 License: GPLv2+
 Url: http://scim-imengine.sourceforge.jp/
@@ -12,6 +12,7 @@ BuildRequires: scim-devel
 BuildRequires: libanthy-devel >= 6700b-1 gettext-devel
 Source0: http://osdn.dl.sourceforge.jp/scim-imengine/37309/%name-%version.tar.gz
 Patch0: %name-aarch64.patch
+Patch1: %name-%version-alt-build.patch
 
 Summary: SCIM IMEngine for anthy for Japanese input
 Group: System/Libraries
@@ -29,6 +30,7 @@ Scim-anthy is a SCIM IMEngine module for anthy to support Japanese input.
 %prep
 %setup
 %patch0 -p1 -b .0-aarch64
+%patch1 -p2
 
 %build
 %configure --disable-static
@@ -50,6 +52,9 @@ rm $RPM_BUILD_ROOT%_libdir/scim-1.0/*/*/*.la
 %_datadir/scim/icons/*png
 
 %changelog
+* Thu Jul 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.7-alt3
+- Fixed build with new toolchain
+
 * Sat Oct 17 2015 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.2.7-alt2.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
