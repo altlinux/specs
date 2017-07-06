@@ -7,7 +7,7 @@
 
 Name: libgcrypt
 Version: 1.6.6
-Release: alt1
+Release: alt2%ubt
 
 %define soname %{name}%{soversion}
 
@@ -15,8 +15,15 @@ Group: System/Libraries
 Summary: The GNU crypto library
 License: LGPL
 URL: http://www.gnupg.org/
-Source: %name-%version.tar.bz2
 
+Source: %name-%version.tar.bz2
+Patch1: CVE-2017-7526_1-mpi-Simplify-mpi_powm.patch
+Patch2: CVE-2017-7526_2-Same-computation-for-square-and-multiply.patch
+Patch3: CVE-2017-7526_3-rsa-Add-exponent-blinding.patch
+Patch4: CVE-2017-7526_4-rsa-Fix-exponent-blinding.patch
+Patch5: CVE-2017-7526_5-rsa-More-fix.patch
+
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: libgpg-error-devel >= %req_gpgerror_ver
 %if_enabled static
 BuildRequires: glibc-devel-static
@@ -100,6 +107,11 @@ Static libraries for the %name-devel package
 
 %prep
 %setup -q
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 %if_enabled info_nogen
 sed -i "s|^info_TEXINFOS|#info_TEXINFOS|" doc/Makefile.am
 sed -i "s|^gcrypt_TEXINFOS|#gcrypt_TEXINFOS|" doc/Makefile.am
@@ -167,6 +179,9 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 %endif
 
 %changelog
+* Thu Jul 06 2017 Sergey V Turchin <zerg@altlinux.org> 1.6.6-alt2%ubt
+- security fixes: CVE-2017-7526
+
 * Thu Aug 18 2016 Sergey V Turchin <zerg@altlinux.org> 1.6.6-alt1
 - new version
 
