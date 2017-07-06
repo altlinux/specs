@@ -1,6 +1,6 @@
 Name: libva-driver-intel
-Version: 1.8.2
-Release: alt1
+Version: 1.8.3
+Release: alt1%ubt
 
 Summary: VDPAU-based backend for VA API
 License: GPLv2
@@ -9,11 +9,12 @@ Url: http://cgit.freedesktop.org/vaapi/intel-driver/
 
 Conflicts: libva < 1.1.0
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires: intel-gen4asm
 BuildRequires: libdrm-devel libX11-devel libGL-devel libEGL-devel
 BuildRequires: libva-devel >= 1.7.0
+BuildRequires(pre): rpm-build-ubt
 
 %description
 Video decode driver for Intel chipsets.
@@ -37,6 +38,9 @@ Note that contents of this package were previously in libva package.
 %_libdir/dri/*.so
 
 %changelog
+* Thu Jul 06 2017 Anton Farygin <rider@altlinux.ru> 1.8.3-alt1%ubt
+- 1.8.3
+
 * Thu Jun 01 2017 Anton Farygin <rider@altlinux.ru> 1.8.2-alt1
 - new version
 
