@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libqt4-devel
 # END SourceDeps(oneline)
 Name:           puzzle-master
 Version:        2.0.0
-Release:        alt2_8
+Release:        alt3_8
 Summary:        Fun and addictive jigsaw puzzle game
 
 Group:          Games/Other
@@ -20,6 +20,7 @@ Source0:        %{name}-%{version}.tar.gz
 BuildRequires: pkgconfig(QtCore) pkgconfig(QtGui) pkgconfig(QtOpenGL) pkgconfig(QtDeclarative)
 BuildRequires: desktop-file-utils
 Source44: import.info
+Patch1:     %name-%version-alt-build.patch
 
 %description
 %{name} is a jigsaw puzzle game that lets you use your own
@@ -28,6 +29,7 @@ You can decide the size and the difficulty of the puzzle.
 
 %prep
 %setup -q
+%patch1 -p2
 
 %build
 # This ensures that the files will be placed to the correct location
@@ -51,6 +53,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 %doc LICENSE-DOCS
 
 %changelog
+* Thu Jul 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt3_8
+- Fixed build with new toolchain
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2_8
 - update to new release by fcimport
 
