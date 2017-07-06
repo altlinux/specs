@@ -6,7 +6,7 @@ BuildRequires: boost-filesystem-devel boost-program_options-devel cmake
 Name:           openscad
 Version:        2015.03.2
 %global upversion 2015.03-2
-Release:        alt1_4
+Release:        alt2_4
 Summary:        The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 # Appdata file is CC0
@@ -143,14 +143,11 @@ rm src/polyclipping -rf
 %{qmake_qt4} PREFIX=%{_prefix}
 make %{?_smp_mflags}
 
-# 'No rule to make target /usr/lib/libCGAL.so' on x86_64
-%if 0
 # tests
 cd tests
 cmake .
 make %{?_smp_mflags}
 cd -
-%endif
 
 %install
 make install INSTALL_ROOT=%{buildroot}
@@ -164,12 +161,10 @@ rm %{buildroot}%{_datadir}/%{name}/libraries/MCAD/TODO
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
-%if 0
 # tests
 cd tests
 ctest %{?_smp_mflags} || : # let the tests fail, as they probably won't work in Koji
 cd -
-%endif
 
 %files -f %{name}.lang
 %doc COPYING
@@ -192,6 +187,10 @@ cd -
 %{_datadir}/%{name}/libraries/MCAD
 
 %changelog
+* Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2015.03.2-alt2_4
+- Rebuilt with CGAL 4.10
+- Enabled tests
+
 * Fri Feb 26 2016 Igor Vlasenko <viy@altlinux.ru> 2015.03.2-alt1_4
 - new version
 - TODO: disabled tests - need fixes for x86_64
