@@ -4,8 +4,8 @@
 %def_enable x11
 
 Name: libva
-Version: 1.8.2
-Release: alt1
+Version: 1.8.3
+Release: alt1%ubt
 
 Summary: Video Acceleration (VA) API for Linux
 License: MIT
@@ -15,7 +15,7 @@ Url: https://github.com/01org/libva
 Obsoletes: libva1 < %version-%release vainfo < %version-%release
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version-alt.patch
 
 %if_enabled drm
 BuildRequires: libdrm-devel
@@ -30,6 +30,7 @@ BuildRequires: libEGL-devel
 BuildRequires: libXext-devel libXfixes-devel
 %endif
 BuildRequires: gcc-c++ libwayland-client-devel libwayland-server-devel
+BuildRequires(pre): rpm-build-ubt
 
 %description
 Video Acceleration (VA) API for Linux - runtime
@@ -67,8 +68,6 @@ This package provides the development environment for libva
 
 %files
 %_libdir/*.so.*
-%dir %_libdir/dri
-%_libdir/dri/*.so
 
 %files devel
 %_includedir/*
@@ -76,6 +75,10 @@ This package provides the development environment for libva
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jul 06 2017 Anton Farygin <rider@altlinux.ru> 1.8.3-alt1%ubt
+- 1.8.3
+- dummy_drv_video.so removed by upstream
+
 * Thu Jun 01 2017 Anton Farygin <rider@altlinux.ru> 1.8.2-alt1
 - new version 
 
