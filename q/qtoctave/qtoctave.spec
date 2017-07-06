@@ -1,6 +1,6 @@
 Name: qtoctave
 Version: 0.10.1
-Release: alt2
+Release: alt3
 Summary: Frontend for Octave
 
 Group: Sciences/Mathematics
@@ -14,6 +14,7 @@ Requires: octave octave-devel
 
 #Patch0: qtoctave-includes.patch
 Patch: qtoctave-0.10.1-qtinfo.patch
+Patch1: %name-%version-alt-build.patch
 
 Packager: Fr. Br. George <george@altlinux.ru>
 
@@ -27,6 +28,7 @@ QtOctave is a frontend for Octave based on Qt4.
 %setup
 #patch0 -p1 -b .includes
 %patch -p0
+%patch1 -p2
 
 find xmlwidget/qt4/src/ -type f -exec chmod a-x {} \;
 find easy_plot/src/ -type f -exec chmod a-x {} \;
@@ -63,6 +65,9 @@ install qtoctave/src/config_files/pkg-commands.list %buildroot%_datadir/%name/
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Thu Jul 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.1-alt3
+- Fixed build with new toolchain
+
 * Fri Aug 26 2011 Fr. Br. George <george@altlinux.ru> 0.10.1-alt2
 - Fix cmake-unaware build configuration part (closes: #26149)
 
