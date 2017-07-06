@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1
+Release: alt1.2
 Name:		refal-plus
 # `svnversion`
 Version:	4137
@@ -12,6 +12,8 @@ Source1:	http://rfp.botik.ru/rfp/RefalPlusReferenceManual.pdf
 License:	GPLv2
 Group:		Development/Functional
 URL:		http://rfp.botik.ru/
+
+Patch1:     %name-%version-alt-build.patch
 
 # Automatically added by buildreq on Tue Sep 28 2010
 BuildRequires: gcc-c++ libgmp-devel unzip
@@ -110,6 +112,7 @@ Sample applications for %name
 
 %prep
 %setup -n refal-r%{version}-src
+%patch1 -p2
 touch c++/rules.mk
 
 %build
@@ -142,6 +145,9 @@ mv %buildroot%_prefix/lib/lib* %buildroot%_libdir/
 %doc compiler rfp rfpfilt samples RfpUpgrader
 
 %changelog
+* Thu Jul 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4137-alt1.2
+- Fixed build with new toolchain
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 4137-alt1.1
 - (AUTO) subst_x86_64.
 
