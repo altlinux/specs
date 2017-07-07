@@ -1,12 +1,11 @@
 Name: renpy
-Version: 6.99.2
+Version: 6.99.12.4
 Release: alt1
 Summary: A visual novel engine
 Group: Games/Adventure
 License: LGPL
 Source: %name-%version-source.tar.bz2
 Url: http://www.renpy.org/
-Patch: renpy-old-avformat.patch
 
 %setup_python_module %name
 %add_python_req_skip jnius
@@ -18,6 +17,7 @@ Requires: %packagename = %version
 # Automatically added by buildreq on Thu Apr 23 2015
 # optimized out: fontconfig ipython libGL-devel libGLU-devel libavcodec-devel libavutil-devel libcloog-isl4 pkg-config python-base python-devel python-module-BeautifulSoup python-module-PyStemmer python-module-docutils python-module-enum34 python-module-matplotlib python-module-ndg-httpsclient python-module-numpy python-module-ptyprocess python-module-pyasn1 python-module-pycares python-module-pycurl python-module-pyglet python-module-pygobject3 python-module-pyparsing python-module-setuptools python-module-snowballstemmer python-module-terminado python-module-tornado_xstatic python-module-xstatic python-module-xstatic-term.js python-module-zope.interface python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json python-modules-wsgiref python-modules-xml zlib-devel
 BuildRequires: ImageMagick-tools libSDL2-devel libavformat-devel libavresample-devel libfreetype-devel libfribidi-devel libglew-devel libpng-devel libswscale-devel python-module-Cython python-module-cssselect python-module-html5lib python-module-pygame python-module-pygame_sdl2-devel time
+BuildRequires: libswresample-devel
 
 BuildRequires: rpm-build-fonts
 
@@ -55,7 +55,6 @@ Example game for %name, %summary
 
 %prep
 %setup
-#patch -p2
 
 touch $(find . -name \*.pyx)
 
@@ -66,7 +65,7 @@ sed -i 's@os.path.join(i, "lib")@os.path.join(i, "lib64")@g' module/setuplib.py
 
 for s in 16 24 32 48 256; do
   convert launcher/game/images/logo.png -crop '200x200+0+0!' -resize ${s}x${s} $s.png
-  convert tutorial/game/eileen_happy.png -crop '266x266+0+0!' -resize ${s}x${s} tutorial$s.png
+  convert "tutorial/game/images/eileen happy.png" -crop '266x266+0+0!' -resize ${s}x${s} tutorial$s.png
   convert the_question/game/sylvie_normal.png -crop '391x391+0+0!' -resize ${s}x${s} the_question$s.png
 done
 
@@ -139,7 +138,6 @@ cd module
 %files -n %packagename
 %python_sitelibdir/%{name}*
 %python_sitelibdir/_%{name}*
-%python_sitelibdir/pysdlsound
 
 %files tutorial
 %_gamesbindir/%name-tutorial
@@ -154,6 +152,10 @@ cd module
 %_iconsdir/hicolor/*/apps/%name-the_question.*
 
 %changelog
+* Thu Jun 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.99.12.4-alt1
+- Update to 6.99.12.4
+- Clean up unused patches and add required dependencies
+
 * Thu Apr 23 2015 Fr. Br. George <george@altlinux.ru> 6.99.2-alt1
 - Autobuild version bump to 6.99.2
 - Fix build (project switched to pygame_sld2)
