@@ -8,7 +8,7 @@
 %define oname netgen
 Name: %oname
 Version: 6.1
-Release: alt1.dev.git20150306.qa2
+Release: alt1.dev.git20150306.qa3
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPL
 Group: Graphics
@@ -441,6 +441,9 @@ done
 %endif
 
 %changelog
+* Fri Jul 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1-alt1.dev.git20150306.qa3
+- Fixed build with new ffmpeg
+
 * Thu Mar 23 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.1-alt1.dev.git20150306.qa2
 - NMU: fixed build and rebuilt against Tcl/Tk 8.6.
 
