@@ -12,7 +12,7 @@
 
 Name: zarafa
 Version: 7.1.15
-Release: alt14%ubt
+Release: alt15%ubt
 License: AGPLv3
 Group: Networking/Mail
 Summary: Server program for the Zarafa Collaboration Platform
@@ -693,6 +693,9 @@ export LDFLAGS=-lphp-%_php5_version
 # end noarch files
 
 %changelog
+* Fri Jul 07 2017 Anton Farygin <rider@altlinux.ru> 7.1.15-alt15%ubt
+- rebuild with php-5.6.31
+
 * Mon Jan 30 2017 Anton Farygin <rider@altlinux.ru> 7.1.15-alt14%ubt
 - rebuild with php-5.6.30
 - fixed build with GCC 6.x
