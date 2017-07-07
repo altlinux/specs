@@ -1,4 +1,4 @@
-Name: supertuxkart
+Name: supertuxkart-data
 Version: 0.9.2
 Release: alt1
 
@@ -6,42 +6,24 @@ License: GPL
 Url: http://supertuxkart.sourceforge.net
 Summary: SuperTuxKart is a kart racing game
 Group: Games/Arcade
-Packager: Ilya Mashkin <oddity@altlinux.ru>
+BuildArch: noarch
 
-# https://github.com/supertuxkart/stk-code
-Source: %name-%version-src.tar.bz2
+# svn checkout https://svn.code.sf.net/p/supertuxkart/code/stk-assets stk-assets
+Source: %name-%version.tar
 
-## Automatically added by buildreq on Wed Jul 01 2009
-#BuildRequires: gcc-c++ libGL-devel libSDL-devel libfreeglut-devel libopenal-devel libvorbis-devel plib-devel subversion
-
-# Automatically added by buildreq on Tue Dec 25 2012
-# optimized out: cmake cmake-modules libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libogg-devel libstdc++-devel xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
-BuildRequires: cmake cmake-modules libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel
-BuildRequires: libXrender-devel libXt-devel libogg-devel libstdc++-devel xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
-BuildRequires: ctest gcc-c++ libXxf86misc-devel libXxf86vm-devel libcurl-devel libfribidi-devel libopenal-devel libvorbis-devel libxkbfile-devel ruby ruby-stdlibs libbluez-devel
-#ccmake ctest gcc-c++ glibc-devel-static libGLU-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcurl-devel libfribidi-devel libopenal-devel libvorbis-devel libxkbfile-devel ruby ruby-stdlibs
-BuildRequires: zlib-devel libpng-devel libjpeg-devel libfreetype-devel libXrandr-devel libharfbuzz-devel
-
-Requires: %name-data >= %version
+Requires: supertuxkart >= %version
 
 %description
 SuperTuxCart is a kart racing game
 
-%prep
-%setup -qn %name-%version
+This package contains game data assets
 
+%prep
+%setup
 
 %build
-mkdir cmake_build
-cd cmake_build
-cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/usr -DCHECK_ASSETS=off ..
-make
 
 %install
-install -d %buildroot%_niconsdir
-cd cmake_build
-%makeinstall DESTDIR=%buildroot
-
 # The package contains a CVS/.svn/.git/.hg/.bzr/_MTN directory of revision control system.
 # It was most likely included by accident since CVS/.svn/.hg/... etc. directories 
 # usually don't belong in releases. 
@@ -50,17 +32,23 @@ find $RPM_BUILD_ROOT -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -
 # the find below is useful in case those CVS/.svn/.git/.hg/.bzr/_MTN directory is added as %%doc
 find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o -name '.bzr' -o -name '_MTN' \) -print -exec rm -rf {} \; ||:
 
-install -pm 644 ../data/supertuxkart_32.png %buildroot%_niconsdir/supertuxkart.png
-install -pm 644 ../data/supertuxkart_128.png %buildroot%_iconsdir/hicolor/128x128/apps/supertuxkart.png
+# fix permissions
+find . -type f -exec chmod 644 {} \' ||:
+find . -type d -exec chmod 755 {} \' ||:
+
+install -d %buildroot%_datadir/supertuxkart/data
+cp -pr ./* %buildroot%_datadir/supertuxkart/data
+
+rm %buildroot%_datadir/supertuxkart/data/licenses.txt
+rm %buildroot%_datadir/supertuxkart/data/SVN-CONFIG
+
+# remove these assets because supertuxkart-0.9.2 fails to load with them
+rm -rf %buildroot%_datadir/supertuxkart/data/karts/sara_the_racer
+rm -rf %buildroot%_datadir/supertuxkart/data/karts/sara_the_wizard
 
 %files
-#doc README TODO ChangeLog
-%_bindir/*
-%_desktopdir/%name.desktop
-%_datadir/%name
-%_pixmapsdir/*
-%_niconsdir/*
-%_iconsdir/hicolor/128x128/apps/*
+%doc licenses.txt
+%_datadir/supertuxkart/data
 
 %changelog
 * Fri Jul 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.2-alt1
