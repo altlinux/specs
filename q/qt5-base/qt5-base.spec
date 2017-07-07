@@ -24,7 +24,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.7.1
-Release: alt8%ubt
+Release: alt9%ubt
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -40,9 +40,12 @@ Patch2: qtbase-opensource-src-5.7.1-QT_VERSION_CHECK.patch
 Patch3: qtbase-opensource-src-5.6.0-arm.patch
 Patch4: qtbase-opensource-src-5.7.1-moc_macros.patch
 Patch5: qt5-qtbase-5.7.1-libpng.patch
+Patch6: 0001-Merge-the-QDBusMetaType-s-custom-information-to-QDBu.patch
+Patch7: 0053-QMimeXMLProvider-add-missing-out-of-line-destructor.patch
 #
 Patch11: QTBUG-35459.patch
 Patch12: QTBUG-55583.patch
+Patch13: QTBUG-56140.patch
 # upstream
 # SuSE
 Patch100: disable-rc4-ciphers-bnc865241.diff
@@ -354,9 +357,12 @@ EGL integration library for the Qt%major toolkit
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 #
 %patch11 -p1 -b .QTBUG
 %patch12 -p1 -b .QTBUG
+%patch13 -p1 -b .QTBUG
 %patch100 -p1
 %patch101 -p1
 %patch102 -p1
@@ -772,6 +778,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Fri Jul 07 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt9%ubt
+- sync patches with FC
+
 * Fri Jun 30 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt8%ubt
 - disable debug messages via /usr/share/qt5/qtlogging.ini by default
 
