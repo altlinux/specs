@@ -2,7 +2,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.9
-Release: alt7
+Release: alt8
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -22,6 +22,7 @@ Patch8: pam_pkcs11-0.6.9-ignore-no-card.patch
 Patch9: pam_pkcs11-0.6.9-config-control.patch
 Patch10: pam_pkcs11-0.6.9-systemd.patch
 Patch11: pam_pkcs11-0.6.9-gost-support.patch
+Patch12: pam_pkcs11-0.6.9-oid-mapper.patch
 
 %add_findreq_skiplist %_sysconfdir/pam.d/*
 Requires: pam-config PAM(pam_mkhomedir.so) PAM(pam_pkcs11.so) PAM(pam_succeed_if.so)
@@ -84,6 +85,7 @@ as a separate package.
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 # fixup configs
 sed -i -e '
@@ -176,6 +178,12 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ldap_mapper.so
 
 %changelog
+* Fri Jul 07 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt8
+- Added post-processing options to the generic mapper (prefix,
+  postfix, scrambling).
+- The generic mapper is now able to search for OID values both
+  in the the main subject and subject extensions.
+
 * Tue Jun 27 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt7
 - Add support for GOST certificates (thx cas@ and Max Kosmach).
 - Complete Russian translation of pam_pkcs11 (thx cas@ and Max Kosmach).
