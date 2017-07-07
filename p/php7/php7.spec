@@ -3,7 +3,7 @@
 
 Summary: The PHP7 scripting language
 Name:	 php7
-Version: 7.1.6
+Version: 7.1.7
 Release: alt1%ubt
 
 %define php7_name      %name
@@ -409,6 +409,9 @@ subst 's,@php7_release@,%php7_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %doc tests run-tests.php 
 
 %changelog
+* Fri Jul 07 2017 Anton Farygin <rider@altlinux.ru> 7.1.7-alt1%ubt
+- new version
+
 * Sun Jun 11 2017 Anton Farygin <rider@altlinux.ru> 7.1.6-alt1%ubt
 - new version
 
