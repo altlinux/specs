@@ -3,13 +3,13 @@
 
 Summary: The PHP5 scripting language
 Name:	 php5
-Version: 5.6.30
-Release: alt2%ubt
+Version: 5.6.31
+Release: alt1%ubt
 
 %define php5_name      %name
 %define _php5_version  %version
 %define _php5_major  5.6
-%define _php5_snapshot 20170119
+%define _php5_snapshot 20170607
 %define php5_release   %release
 %define rpm_build_version %_php5_version%([ -z "%_php5_snapshot" ] || echo ".%_php5_snapshot")
 
@@ -423,6 +423,9 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %doc tests run-tests.php 
 
 %changelog
+* Fri Jul 07 2017 Anton Farygin <rider@altlinux.ru> 5.6.31-alt1%ubt
+- new version with security fixes for mbstring (CVE-2017-9224, CVE-2017-9226, CVE-2017-9227, CVE-2017-9228, CVE-2017-9229)
+
 * Wed Feb 01 2017 Anton Farygin <rider@altlinux.ru> 5.6.30-alt2%ubt
 - added %%sapi/php.d directory
 - added alternatives-update to postinstall script
