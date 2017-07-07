@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.34
+Version: %ver_major.35
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -31,7 +31,7 @@ Provides: %name-light = %version-%release
 %define gsf_ver 1.14.40
 %define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.34
+%define goffice_ver 0.10.35
 %if_with python
 # Provided by python_loader.so
 Provides: python%__python_version(Gnumeric)
@@ -180,6 +180,9 @@ subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jul 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.35-alt1
+- 1.12.35
+
 * Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.34-alt1
 - 1.12.34
 
