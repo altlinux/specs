@@ -1,7 +1,7 @@
 %define realname stg
 Name: stargazer
 Version: 2.407.cvs20100811
-Release: alt5
+Release: alt6
 License: GPLv2
 Group: System/Servers
 Source0: %realname-%version.src.tgz
@@ -22,6 +22,7 @@ Patch7: %name-rscriptd-install.patch
 Patch8: %name-wildcards_dotconfpp.patch
 Patch9: %name-2.407-alt-DSO.patch
 Patch10: %name-alt-without_ipq.diff
+Patch11: %name-2.407-alt-gcc6.patch
 
 Summary: Stargazer billing system
 Summary(ru_RU.UTF8): Биллинг-система Stargazer
@@ -416,6 +417,7 @@ tar -xjf %SOURCE4
 %patch8 -p1
 %patch9 -p2
 %patch10 -p2
+%patch11 -p2
 
 find -name 'Makefile*' -print0 | xargs -r0 -- sed -i 's@-rpath.*@-rpath,%_libdir/%realname -Wl,-rpath-link,'`pwd`'/lib@'
 
@@ -479,6 +481,9 @@ cp projects/stargazer/inst/var/00-base-00.sql %buildroot%_localstatedir/%name/fi
 cp -R mod_store_files/* %buildroot%_localstatedir/%name/
 
 %changelog
+* Fri Jul 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.407.cvs20100811-alt6
+- Fixed build with gcc-6
+
 * Sat Aug 03 2013 Motsyo Gennadi <drool@altlinux.ru> 2.407.cvs20100811-alt5
 - cleanup sgauth init-script
 
