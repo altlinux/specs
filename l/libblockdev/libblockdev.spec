@@ -1,5 +1,5 @@
 %define _name blockdev
-%define ver_major 2.9
+%define ver_major 2.10
 %define rev 1
 
 Name: lib%_name
@@ -533,6 +533,9 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 
 
 %changelog
+* Sat Jul 08 2017 Yuri N. Sedunov <aris@altlinux.org> 2.10.1-alt1
+- 2.10-1
+
 * Tue Jun 13 2017 Yuri N. Sedunov <aris@altlinux.org> 2.9.1-alt1
 - first build for Sisyphus
 

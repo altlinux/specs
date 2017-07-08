@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name udisks
 %define api_ver 2.0
@@ -20,8 +20,8 @@
 %def_enable bcache
 
 Name: %{_name}2
-Version: 2.7.0
-Release: alt2
+Version: 2.7.1
+Release: alt1
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
@@ -45,14 +45,14 @@ Obsoletes: %_name
 %define udev_ver 165
 %define libatasmart_ver 0.17
 %define dbus_ver 1.4.0
-%define blockdev_ver 2.0
+%define blockdev_ver 2.10
 
 Requires(pre): control
 Requires: lib%name = %version-%release
 Requires: /lib/udev/rules.d
 Requires: /usr/sbin/cryptsetup
 Requires: dbus >= %dbus_ver dbus-tools-gui
-Requires: mdadm ntfsprogs parted gdisk dosfstools
+Requires: mdadm ntfsprogs parted gdisk dosfstools xfsprogs
 %{?_enable_acl:Requires: acl}
 
 Requires: libblockdev-fs
@@ -61,7 +61,6 @@ Requires: libblockdev-loop
 Requires: libblockdev-mdraid
 Requires: libblockdev-part
 Requires: libblockdev-swap
-
 
 BuildRequires: intltool gtk-doc gnome-common
 BuildRequires: libgio-devel >= %glib_ver
@@ -317,6 +316,10 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Sat Jul 08 2017 Yuri N. Sedunov <aris@altlinux.org> 2.7.1-alt1
+- 2.7.1
+- reqs: xfsprogs (ALT #33608)
+
 * Thu Jun 15 2017 Yuri N. Sedunov <aris@altlinux.org> 2.7.0-alt2
 - updated dependencies
 
