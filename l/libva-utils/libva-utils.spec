@@ -1,5 +1,5 @@
 Name: libva-utils
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 Summary: Tools for VAAPI (including vainfo)
 License: MIT and BSD
@@ -55,6 +55,9 @@ autoreconf -fisv
 %_bindir/putsurface_wayland
 
 %changelog
+* Sat Jul 08 2017 Anton Farygin <rider@altlinux.ru> 1.8.3-alt1
+- new version
+
 * Sat Jun 03 2017 Anton Farygin <rider@altlinux.ru> 1.8.2-alt1
 - first build for ALT , based on RH spec
 
