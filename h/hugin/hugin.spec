@@ -1,6 +1,6 @@
 Name: hugin
-Version: 2016.2.0
-Release: alt2
+Version: 2017.0.0
+Release: alt1
 
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
 Group: Graphics
@@ -9,19 +9,19 @@ Url: http://hugin.sourceforge.net/
 
 Source: %name-%version.tar
 
-BuildPreReq: libpano13-devel boost-devel >= 1.34 wxGTK-devel >= 2.8.0
-BuildPreReq: libgtk+2-devel >= 2.0.3 boost-thread-devel >= 1.34 gcc-c++ gcc-fortran
+BuildPreReq: libpano13-devel boost-devel >= 1.34 libwxGTK3.0-devel >= 3.0.0
+BuildPreReq: boost-thread-devel >= 1.34 gcc-c++ gcc-fortran
 BuildRequires: boost-devel boost-thread-devel boost-datetime-devel boost-regex-devel
 BuildRequires: boost-filesystem-devel boost-iostreams-devel boost-system-devel
 BuildRequires: boost-signals-devel libglew-devel libXi-devel libXmu-devel
 BuildRequires: glib-devel libgtk+2-devel libjpeg-devel libpano13-devel perl-podlators
-BuildRequires: libpng-devel libstdc++-devel libtiff-devel wxGTK-devel
+BuildRequires: libpng-devel libstdc++-devel libtiff-devel
 BuildRequires: zlib-devel libpango-devel zip cmake openexr-devel libexiv2-devel libtclap-devel
 BuildRequires: liblensfun-devel libvigra-devel libgomp-devel libfftw3-devel libsqlite3-devel swig
 BuildRequires: desktop-file-utils
 BuildRequires: liblcms2-devel
 
-Requires: enblend >= 3.2 libpano13 wxGTK >= 2.8.0  autopano-sift-C perl-Image-ExifTool make
+Requires: enblend >= 3.2 libpano13 libwxGTK3.0 >= 3.0.0  autopano-sift-C perl-Image-ExifTool make
 
 %description
 With hugin you can assemble a mosaic of photographs into a complete immersive
@@ -66,6 +66,9 @@ done
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Sat Jul 08 2017 Yuri N. Sedunov <aris@altlinux.org> 2017.0.0-alt1
+- 2017.0.0
+
 * Wed Feb 01 2017 Yuri N. Sedunov <aris@altlinux.org> 2016.2.0-alt2
 - rebuilt with boost-1.63
 
