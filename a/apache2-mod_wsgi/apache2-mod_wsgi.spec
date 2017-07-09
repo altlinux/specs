@@ -6,7 +6,7 @@
 
 %define python_bindir %apache2_htdocsdir/%module_name
 Name: apache2-mod_wsgi
-Version: 4.5.15
+Version: 4.5.17
 Release: alt1
 
 Summary: Python WSGI module for Apache2
@@ -104,6 +104,9 @@ fi
 %config            %apache2_mods_start/100-%module_name.conf
 
 %changelog
+* Sun Jul 09 2017 Andrey Cherepanov <cas@altlinux.org> 4.5.17-alt1
+- New version
+
 * Tue Mar 14 2017 Andrey Cherepanov <cas@altlinux.org> 4.5.15-alt1
 - New version
 
