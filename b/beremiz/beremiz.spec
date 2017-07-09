@@ -1,7 +1,7 @@
 %def_with docs
 Name: beremiz
 Version: 1.2
-Release: alt1.20170628
+Release: alt1.20170705
 
 Summary: Integrated development environment for machine automation
 Summary(ru_RU.UTF-8): Интегрированная среда разработки для ПЛК
@@ -31,7 +31,7 @@ BuildRequires(pre): rpm-macros-sphinx python-module-sphinx
 %add_python_req_skip __pyjamas__ canfestival_config commondialogs eds_utils gen_cfile gluon gnosis networkeditortemplate nodeeditortemplate nodelist nodemanager subindextable
 Requires: python-module-%name = %version-%release
 Requires: matiec
-Requires: gcc
+Requires: gcc-c++
 Requires: git-core
 Requires: zenity
 
@@ -64,6 +64,7 @@ Beremiz опирается на открытые стандарты, котор�
 %package -n python-module-%name
 Summary: Integrated development environment for machine automation
 Group: Development/Python
+%py_requires matplotlib.backends.backend_wx
 
 %description -n python-module-%name
 Integrated development environment for machine automation
@@ -219,5 +220,9 @@ desktop-file-install --dir=%buildroot%_desktopdir PLCOpenEditor.desktop
 %python_sitelibdir/%name/tests
 
 %changelog
+* Sun Jul 09 2017 Anton Midyukov <antohami@altlinux.org> 1.2-alt1.20170705
+- New snapshot
+- Added missing requires.
+
 * Sat Jul 01 2017 Anton Midyukov <antohami@altlinux.org> 1.2-alt1.20170628
 - Initial build for ALT Linux Sisyphus.
