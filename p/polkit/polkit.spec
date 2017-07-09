@@ -1,6 +1,6 @@
 Name: polkit
 Version: 0.113
-Release: alt2
+Release: alt3
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -15,8 +15,8 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Patch1: %name-0.109-alt-helper_path.patch
 
-BuildRequires: gobject-introspection-devel gtk-doc intltool libexpat-devel libpam-devel
-BuildRequires: libmozjs17-devel libsystemd-devel systemd-devel
+BuildRequires: gcc-c++ gobject-introspection-devel gtk-doc intltool libexpat-devel libpam-devel
+BuildRequires: libmozjs24-devel libsystemd-devel systemd-devel
 # for check
 BuildRequires: /proc dbus-tools-gui
 
@@ -138,6 +138,9 @@ touch ChangeLog
 %exclude %_datadir/polkit-1/actions/org.freedesktop.policykit.examples.pkexec.policy
 
 %changelog
+* Sun Jul 09 2017 Yuri N. Sedunov <aris@altlinux.org> 0.113-alt3
+- updated to 0.113-32-g766a2ea (ported to mozjs24)
+
 * Wed Jul 27 2016 Yuri N. Sedunov <aris@altlinux.org> 0.113-alt2
 - updated to 0.113-24-g2cc5ed5
 
