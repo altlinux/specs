@@ -1,6 +1,6 @@
 Name: yaplc-ide
 Version: 0.0
-Release: alt1.20170629
+Release: alt2.20170629
 
 Summary: Extensions for Beremiz, allowing to create applications YAPLC/RTE
 Summary(ru_RU.UTF-8): Расширения для Beremiz, позволяющие создавать приложения YAPLC/RTE
@@ -16,7 +16,9 @@ Buildarch: noarch
 BuildPreReq: rpm-build-python desktop-file-utils
 %add_python_req_skip Beremiz CodeFileTreeNode ConfigTreeNode PLCControler controls editors targets util xmlclass
 Requires: python-module-beremiz
+Requires: matiec
 Requires: yapyserial
+Requires: gcc-c++
 Requires: arm-none-eabi-gcc-c++
 Requires: stm32flash
 Requires: git-core
@@ -114,5 +116,8 @@ desktop-file-install --dir=%buildroot%_desktopdir %name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Jul 09 2017 Anton Midyukov <antohami@altlinux.org> 0.0-alt2.20170629
+- Added missing requires.
+
 * Sun Jul 02 2017 Anton Midyukov <antohami@altlinux.org> 0.0-alt1.20170629
 - Initial build for ALT Linux Sisyphus.
