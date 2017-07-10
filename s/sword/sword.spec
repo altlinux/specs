@@ -1,7 +1,7 @@
 %define major 1.7
 Name: sword
 Version: %major.5a1
-Release: alt1
+Release: alt2
 
 Summary: The SWORD Project framework for manipulating Bible texts
 Summary(ru_RU.UTF-8): Проект SWORD - оболочка для работы с текстами Библии
@@ -18,7 +18,7 @@ Source2: sword_icons.tar
 
 Requires: lib%name = %version
 
-BuildRequires: bc cppunit-devel gcc-c++ glibc-devel libclucene-devel libcurl-devel libicu-devel zlib-devel
+BuildRequires: bc cppunit-devel gcc-c++ glibc-devel libclucene-core-devel libcurl-devel libicu-devel zlib-devel
 
 %description
 The SWORD Project is an effort to create an ever expanding software package
@@ -50,7 +50,7 @@ will need to develop applications which will use the SWORD Bible Framework.
 %setup
 
 %build
-%add_optflags -fpermissive
+%add_optflags -fpermissive -ftemplate-depth=100
 %autoreconf
 %configure --with-lucene --with-icu --with-curl --disable-static
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
@@ -80,6 +80,10 @@ popd
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jul 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.5a1-alt2
+- Fixed build with new toolchain
+- Migrated to clucene-core
+
 * Fri Feb 26 2016 Vitaly Lipatov <lav@altlinux.ru> 1.7.5a1-alt1
 - new version 1.7.5a1 (with rpmrb script)
 - cleanup build (drop obsoleted saphire files)
