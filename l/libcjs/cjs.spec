@@ -1,9 +1,9 @@
-%define ver_major 3.2
+%define ver_major 3.4
 %define _name cjs
 %define api_ver 1.0
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.3
 Release: alt1
 
 Summary: Javascript Bindings for Cinnamon
@@ -16,15 +16,16 @@ License: MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
 Url: https://github.com/linuxmint/cjs
 
 Source: %_name-%version.tar
+Source1: pkg.m4
 
 %define glib_ver 2.33.14
 %define gi_ver 1.33.14
 
-BuildRequires: gcc-c++ libmozjs-devel >= 1.8.5 libcairo-devel
+BuildRequires: gcc-c++ libcairo-devel
 BuildRequires: glib2-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libdbus-glib-devel libreadline-devel libcairo-gobject-devel
 BuildRequires: gnome-common
-BuildRequires: libmozjs24-devel
+BuildRequires: libmozjs38-devel
 
 # for check
 BuildRequires: /proc dbus-tools-gui
@@ -47,6 +48,8 @@ Files for development with %name.
 
 %prep
 %setup -q -n %_name-%version
+[ ! -d m4 ] && mkdir m4
+cp %SOURCE1 m4/
 
 %build
 %autoreconf
@@ -74,11 +77,22 @@ Files for development with %name.
 %_includedir/%_name-%api_ver/
 %_libdir/*.so
 %_libdir/pkgconfig/%_name-%api_ver.pc
-%_libdir/pkgconfig/%_name-internals-%api_ver.pc
 
 %doc examples/*
 
 %changelog
+* Fri Jul 7 2017 Vladimir Didenko <cow@altlinux.org> 3.4.3-alt1
+- 3.4.3
+
+* Thu Jun 29 2017 Vladimir Didenko <cow@altlinux.org> 3.4.2-alt1
+- 3.4.2-2-g10805ea
+
+* Mon Jun 5 2017 Vladimir Didenko <cow@altlinux.org> 3.4.1-alt1
+- 3.4.1-1-gc7cb693
+
+* Thu May 4 2017 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
 * Fri Nov 11 2016 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt1
 - 3.2.0
 
