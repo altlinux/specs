@@ -1,6 +1,6 @@
-%def_without bootstrap
+%def_with bootstrap
 Name: rust-cargo
-Version: 0.14.0
+Version: 0.19.0
 Release: alt1
 Summary: The Rust package manager
 
@@ -12,57 +12,62 @@ URL: http://crates.io
 Source: %name-%version.tar
 
 %ifarch x86_64 
-%define registry "github.com-1ecc6299db9ec823"
 Source1: https://static.rust-lang.org/cargo-dist/2016-03-21/cargo-nightly-x86_64-unknown-linux-gnu.tar.gz
 %endif
 
 %ifarch %ix86
-%define registry "github.com-48ad6e4054423464"
 Source1: https://static.rust-lang.org/cargo-dist/2016-03-21/cargo-nightly-i686-unknown-linux-gnu.tar.gz
 %endif
 
 Source2: crates.tar
 Source3: rust-installer.tar
 
-# Cloned from https://github.com/rust-lang/crates.io-index
-Source4: crates.io-index.tar
-
-Packager: Vladimir Lettiev <crux@altlinux.ru>
+Packager: Vladimir Lettiev <crux@altlinux.org>
 
 BuildPreReq: /proc
 BuildRequires: curl openssl-devel cmake rust python-devel libssh2-devel libgit2-devel zlib-devel libcurl-devel
 
-%if_without bootstrap
+#if_without bootstrap
+%ifarch x86_64
 BuildRequires: rust-cargo
 %endif
-
-# x86 build failed with TEXTREL entry in cargo
-ExclusiveArch: x86_64
 
 %description
 %summary
 
 %prep
-%setup -a2 -a3 -a4
-
-%if_with bootstrap
-mkdir -p target/dl
-cp %SOURCE1 target/dl
-%endif
+%setup -a2 -a3
+mv rust-installer src
 
 rm -rf %_tmpdir/cargo
-mkdir -p %_tmpdir/cargo/registry/{index,cache,src}
-mv crates.io-index %_tmpdir/cargo/registry/index/%registry
-touch %_tmpdir/cargo/registry/index/%registry/.cargo-index-lock
-mv crates %_tmpdir/cargo/registry/cache/%registry
-mv rust-installer src
+mkdir %_tmpdir/cargo
+
+%if_with bootstrap
+tar xf %SOURCE1
+%endif
+
+mv crates %_tmpdir/cargo/crates
+cat <<EOF > %_tmpdir/cargo/config
+[source.offline]
+local-registry = "%_tmpdir/cargo/crates"
+
+[source.crates-io]
+replace-with = "offline"
+EOF
 
 %build
 ./configure --prefix=%prefix --libdir=%_libdir \
 %if_without bootstrap
-    --local-cargo=%_bindir/cargo \
+    --cargo=%_bindir/cargo \
+%else
+    %ifarch %ix86
+        --cargo=cargo-nightly-i686-unknown-linux-gnu/cargo/bin/cargo \
+    %endif
+    %ifarch x86_64
+        --cargo=%_bindir/cargo \
+    %endif
 %endif
-    --local-rust-root=%prefix 
+    --local-rust-root=%prefix
 export CARGO_HOME=%_tmpdir/cargo
 %make_build
 
@@ -78,6 +83,10 @@ rm -rf %_tmpdir/cargo
 %_man1dir/cargo*
 
 %changelog
+* Mon Jul 10 2017 Vladimir Lettiev <crux@altlinux.org> 0.19.0-alt1
+- 0.19.0
+- bootstrap x86 arch
+
 * Tue Nov 15 2016 Vladimir Lettiev <crux@altlinux.ru> 0.14.0-alt1
 - 0.14.0
 
