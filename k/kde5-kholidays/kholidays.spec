@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 17.04.2
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -80,6 +80,9 @@ KF5 library
 %_K5qml/org/kde/kholidays/
 
 %changelog
+* Mon Jul 10 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt2%ubt
+- update to fix Turkish Holiday File
+
 * Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
 - new version
 
