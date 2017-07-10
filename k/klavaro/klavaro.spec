@@ -1,5 +1,5 @@
 Name: klavaro
-Version: 3.02
+Version: 3.03
 Release: alt1
 
 Summary: Yet another touch typing tutor
@@ -43,6 +43,9 @@ subst 's/Education/Education;Science;ComputerScience/' data/klavaro.desktop.in
 
 
 %changelog
+* Mon Jul 10 2017 Yuri N. Sedunov <aris@altlinux.org> 3.03-alt1
+- 3.03
+
 * Fri Dec 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.02-alt1
 - 3.02
 
