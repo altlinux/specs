@@ -1,4 +1,4 @@
-%define git_commit 88954fe
+%define git_commit d2b9f74
 
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
@@ -7,16 +7,16 @@ Name: palemoon
 Version: 27.4.0
 
 # %%ifndef git_commit
-# Release: alt2
+Release: alt0.pre
 # %%else
-Release: alt0.git_2_%git_commit
+#Release: alt0.git_3_%git_commit
 # %%endif
 
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 
 
-# git commit 88954fe39705269da876fc25f9d2470fae980ae8
+# git commit d2b9f74ba8fd962bb4ef8b0c6cc56bb75d784fdc
 Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
@@ -70,12 +70,11 @@ Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
 Patch21: palemoon-build-el5-nss.patch
 Patch22: palemoon_rpath-27.0.2.patch
 #Patch22: palemoon_version-26.4.0.1.patch
-Patch24: palemoon-27.0.2-ui_picker_false.patch
 Patch23: palemoon_version-27.0.3.patch
-
+Patch24: palemoon-27.0.2-ui_picker_false.patch
+Patch25: palemoon-27.4.0-blocklist.patch
 
 # Patch from Rosa
-
 Patch101: firefox-6.0-lang.patch
 Patch103: firefox-22.0-disable-check-default-browser.patch
 Patch105: firefox-3.5.3-default-mail-handler.patch
@@ -92,12 +91,13 @@ Patch113: mozilla-kde-background.patch
 %set_autoconf_version 2.13
 %set_gcc_version 4.9
 
-# Automatically added by buildreq on Mon May 01 2017
-# optimized out: alternatives ca-certificates fontconfig fontconfig-devel glib2-devel libICE-devel libSM-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcloog-isl4 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstartup-notification libstdc++-devel libxcb-devel perl pkg-config python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python3 xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: doxygen gcc-c++ glibc-devel-static imake java-devel libGConf-devel libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel libjpeg-devel libnspr-devel 
+# Automatically added by buildreq on Thu Jun 15 2017
+# optimized out: alternatives ca-certificates fontconfig fontconfig-devel glib2-devel libICE-devel libSM-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcloog-isl4 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstartup-notification libstdc++-devel libxcb-devel perl pkg-config python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-xml python3 xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: doxygen gcc-c++ glibc-devel-static imake java-devel libGConf-devel libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel libjpeg-devel libnspr-devel
 BuildRequires: libpixman-devel libproxy-devel libpulseaudio-devel libsocket libsqlite3-devel libstartup-notification-devel libvpx-devel
-BuildRequires: python-module-future python-module-yaml python-modules-json python-modules-wsgiref python3-base
+BuildRequires: python-module-future python-module-yaml python-modules-wsgiref python3-base 
 BuildRequires: unzip wget xorg-cf-files xsltproc yasm zip
+
 
 
 # BuildRequires: libhunspell-devel
@@ -206,6 +206,7 @@ export RPATH_PATH="$rpath"
 %setup -T -D -a 2
 %setup -T -D -a 11
 
+
 %patch20 -p1
 %patch24 -p1
 #patch26 -p1
@@ -213,6 +214,8 @@ export RPATH_PATH="$rpath"
 
 %patch21 -p1
 %patch22 -p1
+
+%patch25 -p1 -b .block
 
 cd %sname
 
@@ -230,16 +233,17 @@ tar -xf %SOURCE1
 #patch18 -p1
 
 #Pach from Rosa
-%patch101 -p1 -b .lang
-%patch103 -p1 -b .disable-software-update
+#patch101 -p1 -b .lang
+#patch103 -p1 -b .disable-software-update
+
 %patch105 -p1 -b .default-mail-handler
-%patch106 -p1 -b .addons
+#patch106 -p1 -b .addons
 %patch107 -p1 -b .ua
 
 # KDE integration
-%patch111 -p1 -b .kdepatch
-%patch112 -p1 -b .kdemoz
-%patch113 -p1 -b .kdebackground
+#patch111 -p1 -b .kdepatch
+#patch112 -p1 -b .kdemoz
+#patch113 -p1 -b .kdebackground
 
 
 
@@ -525,7 +529,7 @@ mv %buildroot/%palemoon_prefix/*.chk %buildroot%palemoon_bindir/
 
 
 ln -s %palemoon_prefix/{defaults,dictionaries,hyphenation,modules,res} %buildroot/%palemoon_bindir/
-ln -s %palemoon_prefix/{dependentlibs.list,greprefs.js,platform.ini} %buildroot/%palemoon_bindir/
+ln -s %palemoon_prefix/{dependentlibs.list,platform.ini,goanna.js} %buildroot/%palemoon_bindir/
 ln -s %palemoon_prefix/browser/{application.ini,blocklist.xml,chrome.manifest,defaults,extensions,icons,modules,searchplugins} %buildroot/%palemoon_bindir/browser/
 
 
@@ -608,7 +612,6 @@ install -D -m 644 README.md ../
 %palemoon_prefix/res/*
 
 %palemoon_prefix/dependentlibs.list
-%palemoon_prefix/greprefs.js
 %palemoon_prefix/platform.ini
 
 %_desktopdir/%bname.desktop
@@ -634,6 +637,14 @@ install -D -m 644 README.md ../
 %exclude %_datadir/idl/*
 
 %changelog
+* Mon Jul 10 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.4.0-alt0.pre
+- Pre Release 27.4.0
+- add palemoon-27.4.0-blocklist.patch
+- Update from github commit d2b9f74ba8fd962bb4ef8b0c6cc56bb75d784fdc
+
+* Sat Jun 17 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.4.0-alt0.git_3_7556ee3
+- Update from github commit 7556ee3e53e5ce9c14dfc7982068af6beb86da32
+
 * Thu May 11 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.4.0-alt0.git_2_88954fe
 - Update from github commit 88954fe39705269da876fc25f9d2470fae980ae8
 
@@ -902,3 +913,4 @@ install -D -m 644 README.md ../
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
+
