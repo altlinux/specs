@@ -1,7 +1,7 @@
 %define modname rawkit
 
 Name: python-module-%modname
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: CTypes based LibRaw bindings
@@ -64,6 +64,9 @@ popd
 
 
 %changelog
+* Mon Jul 10 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Thu Jul 06 2017 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - first build for Sisyphus
 
