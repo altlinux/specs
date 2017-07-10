@@ -2,13 +2,13 @@
 %def_enable mpv
 
 %define rname smplayer
-%define svn 8540
+%define svn 8599
 %define xde kde5
 %define XDE KDE5
 %define xapp kf5
 Name: %xde-%rname
-Version: 17.4.2.%svn
-Release: alt2%ubt
+Version: 17.7.0.%svn
+Release: alt1%ubt
 
 %define qt_bin_dir %_qt5_bindir
 %define configure_qmake %qmake_qt5
@@ -24,7 +24,7 @@ Url: http://smplayer.sourceforge.net
 License: GPLv2
 
 Requires: %name-backend %name-common = %EVR
-#Provides: %xde-video-player
+Provides: smplayer-kde5 = %EVR
 
 Source: %rname-%version.tar
 Patch1: alt-defines.patch
@@ -32,7 +32,6 @@ Patch2: alt-defaults.patch
 Patch3: alt-ui-defaults.patch
 Patch4: alt-paths.patch
 Patch5: alt-youtube-browser.patch
-Patch6: alt-fix-drop-url.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ qt5-base-devel qt5-tools-devel qt5-script-devel
@@ -99,7 +98,6 @@ MPlayer %name backend
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 
 sed -i 's|@APP_PREFIX@|%xde|' src/paths.cpp
 sed -i 's|@APP_PREFIX@|%xde|' src/chromecast.cpp
@@ -169,6 +167,9 @@ done
 
 
 %changelog
+* Mon Jul 10 2017 Sergey V Turchin <zerg@altlinux.org> 17.7.0.8599-alt1%ubt
+- new version
+
 * Wed May 03 2017 Sergey V Turchin <zerg@altlinux.org> 17.4.2.8540-alt2%ubt
 - fix drop url to player window
 
