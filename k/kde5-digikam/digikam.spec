@@ -10,7 +10,7 @@
 
 Name: kde5-%rname
 %define lname lib%name
-Version: 5.5.0
+Version: 5.6.0
 Release: alt1%ubt
 %K5init
 
@@ -38,12 +38,12 @@ BuildRequires: doxygen eigen3 extra-cmake-modules flex graphviz
 BuildRequires: qt5-multimedia-devel qt5-webkit-devel qt5-x11extras-devel
 BuildRequires: libqtav-devel
 BuildRequires: libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjasper-devel libjpeg-devel libpng-devel
-BuildRequires: liblcms2-devel liblensfun-devel liblqr-devel libopencv-devel libtiff-devel libusb-devel
+BuildRequires: liblcms2-devel liblensfun-devel liblqr-devel libopencv-devel libtiff-devel libusb-devel libtbb-devel libxml2-devel libxslt-devel
 BuildRequires: libEGL-devel libGL-devel libGLU-devel
 BuildRequires: sqlite3 zlib-devel
 BuildRequires: kde5-marble-devel
 BuildRequires: kde5-akonadi-devel kde5-akonadi-mime-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-kmime-devel kde5-kcalcore-devel
-BuildRequires: kde5-libkipi-devel kde5-libksane-devel
+BuildRequires: kde5-libkipi-devel kde5-libksane-devel kde5-akonadi-contacts-devel
 BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-ki18n-devel kf5-kinit-devel
 BuildRequires: kf5-kio-devel kf5-kitemmodels-devel kf5-knotifyconfig-devel kf5-sonnet-devel kf5-threadweaver-devel
 %if_enabled baloo
@@ -229,6 +229,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Mon Jul 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1%ubt
+- new version
+
 * Thu Apr 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1%ubt
 - new version
 
