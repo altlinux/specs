@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 17.04.2
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -14,6 +14,7 @@ Requires: qca-qt5-ossl
 Requires: signon-plugin-oauth2
 
 Source: %rname-%version.tar
+Patch1: alt-oauth2-only-google.patch
 
 # Automatically added by buildreq on Wed Jun 17 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libaccounts-glib libaccounts-qt51 libdbusmenu-qt52 libgpg-error libjson-c libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-svg libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libsignon-qt51 libstdc++-devel libtelepathy-logger-qt5 libtelepathy-qt5 libtelepathy-qt5-devel libxcbutil-keysyms python-base python-module-google python3 python3-base qt5-base-devel qt5-webkit-devel telepathy-logger-qt5-devel
@@ -54,6 +55,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build \
@@ -81,6 +83,9 @@ KF5 library
 #%_K5lib/libktp-auth-handler.so.*
 
 %changelog
+* Mon Jul 10 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt2%ubt
+- use oauth2 only with google
+
 * Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
 - new version
 
