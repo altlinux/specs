@@ -2,7 +2,7 @@
 Summary: Popular freecell card game for X
 Name: xfreecell
 Version: 1.0.5b
-Release: alt7.%bsdver
+Release: alt8.%bsdver
 License: free
 Group: Games/Cards
 Url: http://www2.giganet.net/~nakayama/
@@ -19,6 +19,7 @@ Patch5: http://mirror.vmmatrix.net/NetBSD/packages/pkgsrc/games/xfreecell/patche
 Patch10: xfreecell-1.0.5b-alt-makefile-optflags.patch
 Patch11: xfreecell-1.0.5b-alt-datadir.patch
 Patch12: xfreecell-1.0.5b-alt-gcc4.3.patch
+Patch13: %name-%version-alt-gcc6.patch
 
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 Prefix: /usr
@@ -39,8 +40,10 @@ Popular freecell card game for X
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p2
 
 %build
+%add_optflags -fpermissive
 export OPTFLAGS="$RPM_OPT_FLAGS"
 make X11BASE=%{_x11dir} GMAKE=make
 
@@ -81,6 +84,9 @@ EOF
 %_liconsdir/%name.png
 
 %changelog
+* Mon Jul 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.5b-alt8.nb2
+- Fixed build with gcc-6
+
 * Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.5b-alt7.nb2
 - fixed build
 
