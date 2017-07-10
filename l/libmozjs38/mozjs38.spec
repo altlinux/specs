@@ -1,7 +1,7 @@
 Summary:	JavaScript interpreter and libraries
 Name:		libmozjs38
 Version:	38.2.1
-Release:	alt2
+Release:	alt3
 Group:		System/Libraries
 License:	MPL/GPL/LGPL
 Packager:	Alexey Gladkov <legion@altlinux.ru>
@@ -59,7 +59,7 @@ cd js/src
 %add_optflags %optflags_shared
 
 # Need -fpermissive due to some macros using nullptr as bool false
-export CFLAGS="%optflags"
+export CFLAGS="%optflags -fno-tree-vrp -fno-strict-aliasing"
 export CXXFLAGS="$CFLAGS -fpermissive"
 export SHELL=/bin/sh
 export PYTHON=/usr/bin/python
@@ -71,7 +71,7 @@ export PYTHON=/usr/bin/python
 	--enable-xterm-updates \
 	--enable-shared-js \
 	--enable-gcgenerational \
-	--enable-optimize \
+	--disable-optimize \
 	--with-system-zlib \
 	--enable-system-ffi \
 	--with-system-icu \
@@ -119,6 +119,11 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-38
 %_libdir/*.a
 
 %changelog
+* Wed Jul 5 2017 Vladimir Didenko <cow@altlinux.org> 38.2.1-alt3
+- Disable two optimizations which cause regressions with new gcc
+- Use -O2 instead of mozjs -O3
+- Fix build with new version of sed
+
 * Wed Feb 22 2017 Alexey Gladkov <legion@altlinux.ru> 38.2.1-alt2
 - Rebuilt with Internationalization API.
 
