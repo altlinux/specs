@@ -1,6 +1,6 @@
 Name: wbar
 Version: 2.3.4
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: Accessibility
 Summary: A quick launch bar
@@ -12,6 +12,7 @@ Source2: chromium.png
 Source3: computer.png
 Source4: exit.png
 Source5: terminal.png
+Patch1: %name-%version-alt-build.patch
 
 # Automatically added by buildreq on Sun Jan 12 2014 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel imlib2 libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libpango-devel libstdc++-devel perl-Encode perl-XML-Parser pkg-config sysvinit-utils xorg-xproto-devel
@@ -26,6 +27,7 @@ wbar is a quick launch bar.
 
 %prep
 %setup -n %name
+%patch1 -p2
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -52,6 +54,9 @@ install -D -m 0644 %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 %buildroot%_datadir/pixma
 %_pixmapsdir/wbar
 
 %changelog
+* Mon Jul 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.4-alt2
+- Fixed build with gcc-6
+
 * Sun Jan 12 2014 Motsyo Gennadi <drool@altlinux.ru> 2.3.4-alt1
 - 2.3.4 (based on src.rpm by Muhammad Shaban)
 
