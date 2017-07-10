@@ -1,5 +1,5 @@
 Name: putty
-Version: 0.69
+Version: 0.70
 Release: alt1
 
 Summary: Free SSH, Telnet and Rlogin client
@@ -12,7 +12,6 @@ Source1: %name-icons.tar.bz2
 Source2: http://the.earth.li/~sgtatham/putty/latest/%name-%version.tar.gz.gpg
 Source3: putty.desktop
 Source4: %name.watch
-Patch: putty-0.69-gtk2-compile-fix.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: libgtk+2-devel
@@ -26,7 +25,6 @@ other interesting things not provided by ssh in an xterm.
 %prep
 %setup
 %setup -T -D -a1 -n %name-%version
-%patch -p1
 sed -i 's|g_strncasecmp|g_ascii_strncasecmp|g' unix/gtkfont.c
 sed -i 's|g_strcasecmp|g_ascii_strcasecmp|g' unix/gtkfont.c
 
@@ -56,6 +54,10 @@ install -pDm644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Mon Jul 10 2017 Michael Shigorin <mike@altlinux.org> 0.70-alt1
+- new version (watch file uupdate)
+- dropped patch (fixed in upstream release)
+
 * Mon May 22 2017 Michael Shigorin <mike@altlinux.org> 0.69-alt1
 - new version (watch file uupdate)
 - added upstream patch to fix FTBFS against gtk2 (via fedora)
