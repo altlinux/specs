@@ -1,6 +1,6 @@
 Name: tux3
 Version: 0.0
-Release: alt1.1
+Release: alt2
 Summary: Tux3 versioning filesystem
 License: GPLv3
 Group: System/Kernel and hardware
@@ -79,6 +79,9 @@ done
 
 
 %changelog
+* Mon Jul 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0-alt2
+- Fixed build with gcc-6
+
 * Thu Mar 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0-alt1.1
 - Disabled -Werror flag
 
