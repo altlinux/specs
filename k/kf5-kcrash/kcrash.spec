@@ -1,7 +1,7 @@
 %define rname kcrash
 
 Name: kf5-%rname
-Version: 5.35.0
+Version: 5.36.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -74,6 +74,9 @@ KF5 library
 %_K5lib/libKF5Crash.so.*
 
 %changelog
+* Mon Jul 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.36.0-alt1%ubt
+- new version
+
 * Thu Jun 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.35.0-alt1%ubt
 - new version
 
