@@ -9,7 +9,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-ssh
-Version: 1.2.1
+Version: 1.2.6
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -66,6 +66,7 @@ NetworkManager panel applet.
 %if_without libnm_glib
 	--without-libnm-glib \
 %endif
+	--disable-silent-rules \
 	--enable-more-warnings=error
 %make_build
 
@@ -97,6 +98,12 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Tue Jul 11 2017 Mikhail Efremov <sem@altlinux.org> 1.2.6-alt1
+- Disable silent rules.
+- Fix from upstream:
+  + Update README.md.
+- Updated to 1.2.6.
+
 * Wed Oct 05 2016 Mikhail Efremov <sem@altlinux.org> 1.2.1-alt1
 - Updated to 1.2.1.
 

@@ -9,7 +9,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-openvpn
-Version: 1.2.8
+Version: 1.2.10
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -66,6 +66,7 @@ NetworkManager panel applet.
 %if_without libnm_glib
 	--without-libnm-glib \
 %endif
+	--disable-silent-rules \
 	--enable-more-warnings=error
 %make_build
 
@@ -99,6 +100,10 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Tue Jul 11 2017 Mikhail Efremov <sem@altlinux.org> 1.2.10-alt1
+- Disable silent rules.
+- Updated to 1.2.10.
+
 * Mon Feb 06 2017 Mikhail Efremov <sem@altlinux.org> 1.2.8-alt1
 - Updated to 1.2.8.
 
