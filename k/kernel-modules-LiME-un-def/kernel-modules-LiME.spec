@@ -1,5 +1,5 @@
 %define module_name	LiME
-%define module_version	1.7.5
+%define module_version	1.7.8
 
 %define module_release alt1
 
