@@ -1,5 +1,5 @@
 Name: screen
-Version: 4.5.1
+Version: 4.6.1
 Release: alt1
 
 Summary: A screen manager that supports multiple sessions on one terminal
@@ -120,6 +120,9 @@ ln -f %_libexecdir/utempter/utempter %_libexecdir/screen/
 %doc src/NEWS src/README src/FAQ src/doc/README.DOTSCREEN src/doc/*.ps.*
 
 %changelog
+* Tue Jul 11 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.6.1-alt1
+- Updated to v.4.6.1.
+
 * Thu Mar 09 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.5.1-alt1
 - Updated to v.4.5.1.
 
