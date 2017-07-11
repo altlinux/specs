@@ -1,5 +1,5 @@
 Name:     github2spec
-Version:  1.3.8
+Version:  1.3.10
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from github using genspec
@@ -33,6 +33,9 @@ install -Dm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Tue Jul 11 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.10-alt1
+- Refactor code and add opportunity to pass arguments to genspec
+
 * Wed Jun 28 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.8-alt1
 - Change default python type to python3
 
