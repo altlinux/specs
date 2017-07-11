@@ -14,7 +14,7 @@
 %define nv_version 375
 %define nv_release 66
 %define nv_minor %nil
-%define pkg_rel alt170
+%define pkg_rel alt171%ubt
 %def_enable kernelsource
 %def_disable glvnd
 
@@ -82,6 +82,7 @@ Source100: nvidia_create_xinf
 Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 BuildRequires: libXext-devel libEGL-devel
 BuildRequires: libwayland-client-devel libwayland-server-devel
@@ -245,6 +246,11 @@ mkdir -p %buildroot/%_datadir/glvnd/egl_vendor.d/
 install -m 0644 10_nvidia.json %buildroot/%_datadir/glvnd/egl_vendor.d/%{version}_nvidia.json
 mkdir -p %buildroot/%_datadir/vulkan/icd.d/
 install -m 0644 nvidia_icd.json %buildroot/%_datadir/vulkan/icd.d/%{version}_nvidia_icd.json
+%if_enabled glvnd
+sed -i '/\"library_path\"/s|\"library_path\".*:.*\".*\"|"library_path": "libGLX_nvidia.so.0"|' %buildroot/%_datadir/vulkan/icd.d/%{version}_nvidia_icd.json
+%else
+sed -i '/\"library_path\"/s|\"library_path\".*:.*\".*\"|"library_path": "libGL.so.1"|' %buildroot/%_datadir/vulkan/icd.d/%{version}_nvidia_icd.json
+%endif
 
 # kernel-source install
 %__rm -rf kernel-source-%module_name-%module_version/
@@ -315,6 +321,9 @@ fi
 %endif
 
 %changelog
+* Tue Jul 11 2017 Sergey V Turchin <zerg@altlinux.org> 375.66-alt171%ubt
+- fix nvidia_icd.json library_path
+
 * Wed May 10 2017 Sergey V Turchin <zerg@altlinux.org> 375.66-alt170
 - new version
 
