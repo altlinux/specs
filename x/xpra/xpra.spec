@@ -6,7 +6,7 @@
 
 Name: xpra
 Version: 0.17.6
-Release: alt2
+Release: alt3
 
 Summary: X Persistent Remote Applications
 
@@ -15,9 +15,6 @@ License: GPLv2
 Url: http://xpra.org/
 
 Source: https://xpra.org/src/xpra-%version.tar
-
-# thanks, Debian
-Patch: libav-no0RGB.patch
 
 # Automatically added by buildreq on Sat Dec 08 2012
 # optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libXfixes-devel libXi-devel libXrender-devel libatk-devel libavutil-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libpango-devel pkg-config python-base python-devel python-module-distribute python-module-peak python-module-pygobject-devel python-module-zope python-modules python-modules-compiler python-modules-email python-modules-encodings xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
@@ -79,11 +76,6 @@ If connecting from a remote machine, you would use something like (or you can al
 %__subst "s|\(.*AV_CODEC_ID_H265.*\)|#\1|g" xpra/codecs/dec_avcodec2/decoder.pyx
 %__subst 's|\(.*"h265".*\)|#\1|g' xpra/codecs/dec_avcodec2/decoder.pyx
 
-# Fix error: implicit declaration of function 'avcodec_free_frame'
-#patch -p1 <patches/old-libav.patch
-#patch -p1 <patches/old-libav-pixfmtconsts.patch
-#patch -p1 <patches/old-libav-no0RGB.patch
-
 %build
 %python_build --without-sound --without-opengl
 
@@ -112,6 +104,9 @@ mv -f %buildroot/usr/lib/tmpfiles.d/xpra.conf %buildroot/%_tmpfilesdir/
 %_cupslibdir/backend/xpraforwarder
 
 %changelog
+* Mon Jul 10 2017 Konstantin Kondratyuk <kondratyuk@altlinux.org> 0.17.6-alt3
+- rebuild with ffmpeg
+
 * Wed May 10 2017 Vitaly Lipatov <lav@altlinux.ru> 0.17.6-alt2
 - add xpra group creating (ALT bug 33459)
 
