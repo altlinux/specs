@@ -9,7 +9,7 @@
 %remove_optflags -fomit-frame-pointer
 
 Name: ocaml
-Version: 4.04.1
+Version: 4.04.2
 Release: alt1%ubt
 
 Summary: The Objective Caml compiler and programming environment
@@ -213,6 +213,10 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_libdir/ocaml/ocamldoc/
 
 %changelog
+* Tue Jul 04 2017 Anton Farygin <rider@altlinux.ru> 4.04.2-alt1%ubt
+- new version with security fixes:
+   + CVE-2017-9772 Local privilege escalation issue with ocaml binaries
+
 * Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 4.04.1-alt1%ubt
 - new version
 

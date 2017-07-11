@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-type-conv
 Version: 113.00.02
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: OCaml base library for type conversion
 License: LGPLv2+ with exceptions and BSD
 Group: Development/ML
@@ -49,6 +49,9 @@ ocaml setup.ml -install
 %ocamldir/type_conv
 
 %changelog
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 113.00.02-alt2%ubt
+- rebuild with ocaml 4.04.2
+
 * Wed May 17 2017 Anton Farygin <rider@altlinux.ru> 113.00.02-alt1%ubt
 - first build for ALT
 

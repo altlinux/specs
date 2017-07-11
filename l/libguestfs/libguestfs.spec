@@ -15,8 +15,8 @@
 
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.36.3
-Release: alt3%ubt
+Version: 1.36.5
+Release: alt1%ubt
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -641,6 +641,9 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %endif
 
 %changelog
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.36.5-alt1%ubt
+- new version
+
 * Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.36.3-alt3%ubt
 - rebuild with ocaml 4.04.1
 

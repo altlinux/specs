@@ -8,7 +8,7 @@
 
 Name: ocaml-%pkgname
 Version: 1.11
-Release: alt2%ubt
+Release: alt3%ubt
 Group: Development/ML
 Summary: OCaml library of cryptographic and hash functions
 License: LGPLv2 with exceptions
@@ -78,6 +78,9 @@ make install
 %pkgsitelib/*.mli
 
 %changelog
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.11-alt3%ubt
+- rebuild with ocaml 4.04.2
+
 * Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.11-alt2%ubt
 - rebuild with ocaml 4.04.1
 

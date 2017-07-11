@@ -2,7 +2,7 @@
 
 Name: ocaml-ocamlgraph
 Version: 1.8.7
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: OCaml library for arc and node graphs
 Group: Development/ML
 License: LGPLv2 with exceptions
@@ -105,5 +105,8 @@ install -m 0755 -p view_graph/viewgraph.opt \
 %_bindir/*
 
 %changelog
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.8.7-alt2%ubt
+- rebuild with ocaml 4.04.2
+
 * Mon May 15 2017 Anton Farygin <rider@altlinux.ru> 1.8.7-alt1%ubt
 - first build for ALT

@@ -2,7 +2,7 @@
 
 Name: ocaml-csv
 Version: 1.3.3
-Release: alt2%ubt
+Release: alt3%ubt
 Summary: OCaml library for reading and writing CSV files
 License: LGPLv2+
 Group: Development/ML
@@ -73,6 +73,9 @@ make test
 %_libdir/ocaml/site-lib/csv/*.mli
 
 %changelog
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.3.3-alt3%ubt
+- rebuild with ocaml 4.04.2
+
 * Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.3.3-alt2%ubt
 - rebuild with ocaml 4.04.1
 

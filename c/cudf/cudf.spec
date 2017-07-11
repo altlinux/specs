@@ -1,7 +1,7 @@
 Summary: CUDF (Common Upgradeability Description Format) tools and libraries
 Name: cudf
 Version: 0.9
-Release: alt1%ubt
+Release: alt2%ubt
 # https://scm.gforge.inria.fr/anonscm/git/cudf/cudf.git
 Source: %name-%version.tar
 Url: http://www.mancoosi.org/cudf/
@@ -94,5 +94,8 @@ make test
 %_libdir/ocaml/cudf
 
 %changelog
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 0.9-alt2%ubt
+- rebuild with ocaml 4.04.2
+
 * Mon May 15 2017 Anton Farygin <rider@altlinux.ru> 0.9-alt1%ubt
 - first build for ALT
