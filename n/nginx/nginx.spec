@@ -4,8 +4,8 @@
 #============================================================================
 Name: nginx
 Summary: Fast HTTP server
-Version: 1.12
-Release: alt3%ubt
+Version: 1.12.1
+Release: alt1%ubt
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel
@@ -335,6 +335,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %_libdir/%name/ngx_http_xslt_filter_module.so
 
 %changelog
+* Tue Jul 11 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.12.1-alt1%ubt
+- Updated to 1.12.1 (Fixes CVE-2017-7529).
+
 * Thu May 11 2017 Evgeny Bolshedvorsky <jenya@altlinux.org> 1.12-alt3%ubt
 - added spnego dynamic module
 
