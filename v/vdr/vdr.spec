@@ -1,6 +1,6 @@
 Name: vdr
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Summary: Digital satellite receiver box with advanced features
 License: GPL
@@ -9,16 +9,15 @@ Url: http://www.tvdr.de
 
 Source: %name-%version-%release.tar
 
-BuildRequires: gcc-c++
+BuildRequires: gcc5-c++
 BuildRequires: fontconfig-devel libalsa-devel libcap-devel libfreetype-devel libjpeg-devel
 BuildRequires: libncursesw-devel libssl-devel libbluray-devel libalsa-devel libudev-devel
-BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libswscale-devel libpostproc-devel
 BuildRequires: libGraphicsMagick-c++-devel libvdpau-devel libxine2-devel libzvbi-devel
 BuildRequires: libGL-devel libGLU-devel libglut-devel libX11-devel libXext-devel
 BuildRequires: libXinerama-devel libXrandr-devel libXrender-devel libXv-devel
 BuildRequires: boost-devel libupnp-devel libtntnet-devel libtntdb-devel libdbus-glib-devel perl-Date-Manip
-BuildRequires: libvdpau-devel libxcb-devel libxcbutil-devel libxcbutil-icccm-devel
-BuildRequires: libavresample-devel libcurl-devel libcxxtools-devel libpcrecpp-devel
+BuildRequires: libxcb-devel libxcbutil-devel libxcbutil-icccm-devel
+BuildRequires: libcurl-devel libcxxtools-devel libpcrecpp-devel
 
 %description
 VDR, Video Disc Recorder, enables you to build a powerful set-top box on your own
@@ -290,8 +289,8 @@ cp -p PLUGINS/src/remoteosd/README %buildroot%docdir/remoteosd
 mkdir -p %buildroot%docdir/remotetimers
 cp -p PLUGINS/src/remotetimers/README %buildroot%docdir/remotetimers
 
-mkdir -p %buildroot%docdir/softhddevice %buildroot%confdir/plugins/softhddevice
-cp -p PLUGINS/src/softhddevice/README.txt %buildroot%docdir/softhddevice/README
+#mkdir -p %buildroot%docdir/softhddevice %buildroot%confdir/plugins/softhddevice
+#cp -p PLUGINS/src/softhddevice/README.txt %buildroot%docdir/softhddevice/README
 
 mkdir -p %buildroot%docdir/streamdev
 cp -p PLUGINS/src/streamdev/{README,PROTOCOL} %buildroot%docdir/streamdev
@@ -315,9 +314,9 @@ cp -a PLUGINS/src/vnsiserver/vnsiserver %buildroot%confdir/plugins
 mkdir -p %buildroot%docdir/wirbelscan
 cp -p PLUGINS/src/wirbelscan/README %buildroot%docdir/wirbelscan
 
-make install -C PLUGINS/src/xineliboutput DESTDIR=%buildroot
-mkdir -p %buildroot%docdir/xineliboutput
-cp -p PLUGINS/src/xineliboutput/{README,examples/remote.conf.example} %buildroot%docdir/xineliboutput
+#make install -C PLUGINS/src/xineliboutput DESTDIR=%buildroot
+#mkdir -p %buildroot%docdir/xineliboutput
+#cp -p PLUGINS/src/xineliboutput/{README,examples/remote.conf.example} %buildroot%docdir/xineliboutput
 
 touch %buildroot%confdir/setup.conf
 install -pD -m0755 vdr.init %buildroot%_initdir/vdr
@@ -342,7 +341,7 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %find_lang --output=live.lang vdr-live
 %find_lang --output=manager.lang vdr-manager
 %find_lang --output=pvrinput.lang vdr-pvrinput
-%find_lang --output=softhddevice.lang vdr-softhddevice
+#find_lang --output=softhddevice.lang vdr-softhddevice
 %find_lang --output=streamdev.lang --append vdr-streamdev-server vdr-streamdev-client
 %find_lang --output=text2skin.lang vdr-text2skin
 %find_lang --output=ttxtsubs.lang vdr-ttxtsubs
@@ -351,7 +350,7 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %find_lang --output=upnp.lang vdr-upnp
 %find_lang --output=vnsiserver.lang vdr-vnsiserver
 %find_lang --output=wirbelscan.lang vdr-wirbelscan
-%find_lang --output=xineliboutput.lang vdr-xineliboutput
+#find_lang --output=xineliboutput.lang vdr-xineliboutput
 
 mkdir -p %buildroot%_libexecdir/rpm
 cat << __EOF__ > %buildroot%_libexecdir/rpm/vdr.filetrigger
@@ -506,10 +505,12 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %docdir/remotetimers
 %plugindir/libvdr-remotetimers.so.%version
 
+%if 0
 %files plugin-softhddevice -f softhddevice.lang
 %docdir/softhddevice
 %dir %attr(0770,root,_vdr) %confdir/plugins/softhddevice
 %plugindir/libvdr-softhddevice.so.%version
+%endif
 
 %files plugin-streamdev -f streamdev.lang
 %docdir/streamdev
@@ -551,6 +552,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %docdir/wirbelscan
 %plugindir/libvdr-wirbelscan.so.%version
 
+%if 0
 %files plugin-xineliboutput -f xineliboutput.lang
 %docdir/xineliboutput
 %dir %attr(0770,root,_vdr) %confdir/plugins/xineliboutput
@@ -575,8 +577,12 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %_libdir/xine/plugins/*/post/xineplug_post_autocrop.so
 %_libdir/xine/plugins/*/post/xineplug_post_swscale.so
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
+%endif
 
 %changelog
+* Tue Jul 11 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt2
+- rebuilt without ffmpeg
+
 * Sun Mar 06 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt1
 - 2.2.0 released
 
