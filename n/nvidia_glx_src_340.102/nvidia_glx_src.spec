@@ -14,7 +14,7 @@
 %define nv_version 340
 %define nv_release 102
 %define nv_minor %nil
-%define pkg_rel alt148
+%define pkg_rel alt149%ubt
 %def_enable egl
 %def_enable kernelsource
 
@@ -84,7 +84,10 @@ Source100: nvidia_create_xinf
 Patch1: buildfix_kernel_3.14.patch
 Patch2: buildfix_kernel_4.9.patch
 Patch3: buildfix_kernel_4.10.patch
+Patch4: buildfix_kernel_4.11.patch
+Patch5: buildfix_kernel_4.12.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 BuildRequires: libXext-devel
 ExclusiveArch: %ix86 x86_64
@@ -162,6 +165,8 @@ pushd kernel/
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 rm -rf precompiled
 popd
 
@@ -304,6 +309,9 @@ fi
 %endif
 
 %changelog
+* Tue Jul 11 2017 Sergey V Turchin <zerg@altlinux.org> 340.102-alt149%ubt
+- add fix against 4.11, 4.12 kernels
+
 * Thu May 11 2017 Sergey V Turchin <zerg@altlinux.org> 340.102-alt148
 - add fix against 4.9 kernel
 
