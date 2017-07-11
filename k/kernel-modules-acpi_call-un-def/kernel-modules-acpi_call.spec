@@ -1,7 +1,7 @@
 %define module_name	acpi_call
 %define module_version	0.1
 
-%define module_release alt3
+%define module_release alt5
 
 %define flavour		un-def
 BuildRequires(pre): rpm-build-kernel
@@ -19,6 +19,8 @@ License: GPL
 Group: System/Kernel and hardware
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
+
+Patch0: acpi_call-4.12.patch
 
 ExclusiveOS: Linux
 Url: https://github.com/mkottman/acpi_call
@@ -43,6 +45,7 @@ This package contains acpi_call module
 rm -rf %module_name-%{module_version}*
 tar xf %kernel_src/%module_name-%module_version.tar.*
 %setup -D -T -n %module_name-%module_version
+%patch0 -p0
 
 %build
 . %_usrsrc/linux-%kversion-%flavour-%krelease/gcc_version.inc
