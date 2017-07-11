@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20140822.1.1.1
+Release: alt2.git20140822.1.1.1
 %define oname wrapt
 
 %def_with python3
@@ -113,7 +113,7 @@ py.test
 %if_with python3
 pushd ../python3
 export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-%_python3_version
+py.test3
 popd
 %endif
 
@@ -135,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.0-alt2.git20140822.1.1.1
+- Fixed build spec
+
 * Mon May 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.9.0-alt1.git20140822.1.1.1
 - BR: sphinx_rtd_theme (the theme is optional since sphinx-1.4.1).
 
