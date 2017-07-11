@@ -1,5 +1,5 @@
 Name:     genspec
-Version:  1.2.6
+Version:  1.2.8
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
@@ -32,6 +32,12 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_datadir/spectemplates
 
 %changelog
+* Thu Jul 06 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.8-alt1
+- Add test option
+
+* Wed Jul 05 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.7-alt1
+- Fix using gear post operations without --git option
+
 * Wed Jun 28 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.6-alt1
 - Create python3 spectemplate
 
