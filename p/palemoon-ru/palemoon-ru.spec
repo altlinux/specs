@@ -14,7 +14,7 @@
 
 Name: palemoon-ru
 Version: 27.4.0
-Release: alt1
+Release: alt3
 
 Summary: Russian (RU) Language Pack for Pale Moon
 License: MPL/GPL/LGPL
@@ -124,6 +124,12 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %search_dir
 
 %changelog
+* Tue Jul 11 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.4.0-alt3
+- Update for release 27.4
+
+* Sat Jun 17 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.4.0-alt2
+- Version 27.4.0-RC5
+
 * Sun May 07 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.4.0-alt1
 - Version 27.4.0-RC1
 
