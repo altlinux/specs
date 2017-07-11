@@ -260,7 +260,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt6_1.b15jpp8
+Release: alt7_1.b15jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -329,6 +329,8 @@ Patch511: rh1214835.patch
 # Turn off strict overflow on IndicRearrangementProcessor{,2}.cpp following 8140543: Arrange font actions
 Patch512: no_strict_overflow.patch
 
+Patch900: gcc6.patch
+
 # Arch-specific upstreamable patches
 # JVM heap size changes for s390 (thanks to aph)
 Patch100: %{name}-s390-java-opts.patch
@@ -336,6 +338,10 @@ Patch100: %{name}-s390-java-opts.patch
 Patch102: %{name}-size_t.patch
 # Use "%z" for size_t on s390 as size_t != intptr_t
 Patch103: s390-size_t_format_flags.patch
+
+# AArch64-specific upstreamable patches
+# Remove template in AArch64 port which causes issues with GCC 6
+Patch106: remove_aarch64_template_for_gcc6.patch
 
 # Patches which need backporting to 8u
 # S8073139, RH1191652; fix name of ppc64le architecture
@@ -673,6 +679,9 @@ sh %{SOURCE12}
 %patch103
 %endif
 
+# aarch64 build fixes
+%patch106
+
 # Zero PPC fixes.
 %patch403
 
@@ -688,6 +697,8 @@ sh %{SOURCE12}
 %patch505
 %patch511
 %patch512
+
+%patch900
 
 # Extract systemtap tapsets
 %if_enabled systemtap
@@ -1419,6 +1430,9 @@ fi
 %endif
 
 %changelog
+* Tue Jul 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0:1.8.0.71-alt7_1.b15jpp8
+- Fixed build with gcc-6
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.71-alt6_1.b15jpp8
 - dropped dependency on maven-local in javadoc
 
