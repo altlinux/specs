@@ -1,18 +1,15 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20150814.1.1.1
 %define oname ipwhois
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.10.3
-#Release: alt1.git20150814.1.1
+Version: 0.15.1
+Release: alt1
 Summary: Retrieve and parse whois data for IPv4 and IPv6 addresses
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/ipwhois
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/secynic/ipwhois.git
 Source: %name-%version.tar
@@ -142,6 +139,7 @@ popd
 %endif
 
 %files
+%_bindir/ipwhois*.py
 %doc *.rst ipwhois-docs/html
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
@@ -156,6 +154,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 11 2017 Terechkov Evgenii <evg@altlinux.org> 0.15.1-alt1
+- 0.15.1
+
 * Mon May 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.3-alt1.git20150814.1.1.1
 - BR: sphinx_rtd_theme (the theme is optional since sphinx-1.4.1).
 
