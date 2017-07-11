@@ -1,15 +1,16 @@
 Name: libnghttp2
-Version: 1.15.0
+Version: 1.24.0
 Release: alt1
 
 Summary: HTTP/2.0 C Library
 Group: System/Libraries
 License: MIT
 
-Url: http://tatsuhiro-t.github.io/nghttp2/
+Url: https://github.com/nghttp2/nghttp2
 Source: %name-%version.tar
 
-BuildRequires: zlib-devel libev-devel libevent-devel libxml2-devel libjansson-devel libssl-devel gcc-c++ CUnit-devel libjemalloc-devel
+BuildRequires: zlib-devel libev-devel libevent-devel libxml2-devel libjansson-devel libssl-devel gcc-c++ CUnit-devel libjemalloc-devel libcares-devel
+BuildRequires: libsystemd-devel
 
 %description
 %summary
@@ -67,6 +68,9 @@ Requires: %name = %version-%release
 %exclude %_datadir/nghttp2/fetch-ocsp-response
 
 %changelog
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.24.0-alt1
+- 1.24.0
+
 * Tue Sep 27 2016 Vladimir Lettiev <crux@altlinux.ru> 1.15.0-alt1
 - 1.15.0
 
