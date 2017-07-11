@@ -1,7 +1,7 @@
 %define libname libpci
 
 Name: pciutils
-Version: 3.5.4
+Version: 3.5.5
 Release: alt1%ubt
 
 Summary: Linux PCI utilities
@@ -9,8 +9,8 @@ License: GPL
 Group: System/Kernel and hardware
 
 Url: http://mj.ucw.cz/sw/pciutils/
-Source: ftp://atrey.karlin.mff.cuni.cz/pub/linux/pci/%name-%version.tar.gz
-Packager: Michael Shigorin <mike@altlinux.org>
+# git://git.kernel.org/pub/scm/utils/pciutils/pciutils.git
+Source: %name-%version.tar
 
 Requires: pciids
 Requires: %libname = %version-%release
@@ -94,6 +94,9 @@ mv %buildroot%_sbindir %buildroot%_bindir
 %_man7dir/pcilib*
 
 %changelog
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 3.5.5-alt1%ubt
+- new version
+
 * Tue Mar 14 2017 Anton Farygin <rider@altlinux.ru> 3.5.4-alt1%ubt
 - new version
 
