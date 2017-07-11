@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1.6
-Release: alt1
+Release: alt2
 Summary: Python 3.4 Enum backported to 3.3, 3.2, 3.1, 2.7, 2.6, 2.5, and 2.4
 License: BSD
 Group: Development/Python
@@ -97,7 +97,7 @@ py.test --fixtures enum
 %if_with python3
 pushd ../python3
 rm -fR build
-py.test-%_python3_version --fixtures enum
+py.test3 --fixtures enum
 popd
 %endif
 
@@ -120,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.6-alt2
+- Fixed build spec
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1
 - automated PyPI update
 
