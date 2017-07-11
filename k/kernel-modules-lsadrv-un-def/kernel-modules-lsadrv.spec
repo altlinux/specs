@@ -1,6 +1,6 @@
 %define module_name             lsadrv
 %define module_version          1.2.3
-%define module_release alt2
+%define module_release alt3
 
 %define flavour		un-def
 BuildRequires(pre): rpm-build-kernel
@@ -24,6 +24,7 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 Patch1: ioctl_and_mutex.patch
 Patch2: lsadrv-build-3.10.patch
+Patch12: lsadrv-4.12.patch
 
 ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel
@@ -53,6 +54,7 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 
 %patch1 -p1
 %patch2
+%patch12
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
