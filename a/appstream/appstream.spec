@@ -1,6 +1,6 @@
 Name:    appstream
-Version: 0.11.0
-Release: alt1
+Version: 0.11.1
+Release: alt1.gita6f9e55
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
 # lib LGPLv2+, tools GPLv2+
@@ -117,6 +117,9 @@ mv %{buildroot}%{_datadir}/metainfo/*.xml \
 %_libdir/libAppStreamQt.so
 
 %changelog
+* Tue Jul 11 2017 Andrey Cherepanov <cas@altlinux.org> 0.11.1-alt1.gita6f9e55
+- New version
+
 * Thu May 04 2017 Andrey Cherepanov <cas@altlinux.org> 0.11.0-alt1
 - New version
 
