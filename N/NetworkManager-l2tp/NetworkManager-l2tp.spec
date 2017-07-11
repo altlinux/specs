@@ -1,8 +1,8 @@
 %define nm_version 1.1.90
 %define nm_applet_version 1.1.90
 %define nm_applet_name NetworkManager-applet-gtk
-%define git_date .git20170115
-#define git_date %nil
+#define git_date .git20170115
+%define git_date %nil
 %define ppp_version 2.4.7
 
 %def_with libnm_glib
@@ -10,8 +10,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-l2tp
-Version: 1.2.4
-Release: alt2%git_date
+Version: 1.2.6
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for l2tp
@@ -73,6 +73,7 @@ NetworkManager panel applet.
 %if_without libnm_glib
 	--without-libnm-glib \
 %endif
+	--disable-silent-rules \
 	--enable-more-warnings=yes
 %make_build
 
@@ -104,6 +105,10 @@ NetworkManager panel applet.
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Jul 11 2017 Mikhail Efremov <sem@altlinux.org> 1.2.6-alt1
+- Disable silent rules.
+- Updated to 1.2.6.
+
 * Mon Feb 06 2017 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt2.git20170115
 - Spec cleanup.
 - Require NetworkManager-ppp.

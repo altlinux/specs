@@ -1,5 +1,5 @@
-%define git_date .git20170629
-#define git_date %nil
+#define git_date .git20170629
+%define git_date %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
@@ -36,7 +36,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -445,6 +445,7 @@ GObject introspection devel data for the NetworkManager.
 	--disable-address-sanitizer \
 	--disable-undefined-sanitizer \
 %endif
+	--with-dist-version=%version-%release \
 	--disable-silent-rules \
 	--enable-more-warnings=error
 
@@ -688,6 +689,13 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Jul 11 2017 Mikhail Efremov <sem@altlinux.org> 1.8.2-alt1
+- Use --with-dist-version configure option.
+- Fixes from upstream:
+  + add test parsing dhclient config.
+  + improve "interface" statement parsing.
+- Updated to 1.8.2.
+
 * Wed Jul 05 2017 Mikhail Efremov <sem@altlinux.org> 1.8.1-alt1.git20170629
 - sysconfig: Set NM_DOWN_CONTROLLED and NM_STOP_ONEXIT to 'no'.
 - NetworkManager.conf: Drop note about MAC randomization.
