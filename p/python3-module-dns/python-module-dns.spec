@@ -4,8 +4,8 @@
 %def_without check
 
 Name: python3-module-%modulename
-Version: 1.12.0
-Release: alt1.git20150613.1.1
+Version: 1.15.0
+Release: alt1
 
 Summary: DNS toolkit (Python 3)
 License: BSD-like
@@ -24,7 +24,7 @@ Source: %name-%version.tar
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-module-PyStemmer python-module-Pygments python-module-cssselect python-module-docutils python-module-pytz python-module-setuptools python-module-snowballstemmer python-modules python-modules-compiler python-modules-email python-modules-encodings python3 python3-base
-BuildRequires: python-module-epydoc python-module-html5lib rpm-build-python3 time
+BuildRequires: python-module-epydoc python-module-html5lib rpm-build-python3 time python3-module-setuptools
 
 %description
 dnspython is a DNS toolkit for Python. It supports almost all
@@ -59,6 +59,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jul 12 2017 Terechkov Evgenii <evg@altlinux.org> 1.15.0-alt1
+- 1.15.0
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.12.0-alt1.git20150613.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

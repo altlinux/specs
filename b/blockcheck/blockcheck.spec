@@ -1,5 +1,5 @@
 Name: blockcheck
-Version: 0.0.8.5
+Version: 0.0.9.5
 Release: alt1
 Summary: Checks Russian ISP blocking type
 License: MIT
@@ -11,7 +11,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Requires: python3-module-dns
+Requires: python3-module-dns python3-module-ipwhois
 
 %description
 Checks Russian ISP blocking type
@@ -25,9 +25,15 @@ install -Dp -m 755 %name.py %buildroot%_bindir/%name.py
 
 %files
 %_bindir/%name.py
-%doc README.md
+%doc README.md we_need_your_help_isp_list.txt
 
 %changelog
+* Tue Jul 11 2017 Terechkov Evgenii <evg@altlinux.org> 0.0.9.5-alt1
+- 0.0.9.5
+
+* Thu May 25 2017 Terechkov Evgenii <evg@altlinux.org> 0.0.9.3-alt1
+- 0.0.9.3-7-g1d6ef26
+
 * Wed Feb 15 2017 Terechkov Evgenii <evg@altlinux.org> 0.0.8.5-alt1
 - 0.0.8.5-1-g9bfa19b
 
