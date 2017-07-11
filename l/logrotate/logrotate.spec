@@ -1,6 +1,6 @@
 Name: logrotate
 Version: 3.9.1
-Release: alt2
+Release: alt3
 
 Summary: Rotates, compresses, and mails system logs
 License: GPLv2+
@@ -15,6 +15,7 @@ Patch1: logrotate-alt-config.patch
 Patch2: logrotate-alt-file_type.patch
 Patch3: logrotate-alt-taboo.patch
 Patch4: logrotate-alt-insecure-permissions.patch
+Patch5: %name-%version-upstream-gcc6.patch
 
 Provides: /etc/logrotate.d
 
@@ -37,6 +38,7 @@ a daily cron job.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 touch AUTHORS ChangeLog NEWS README
@@ -71,6 +73,9 @@ fi
 %doc CHANGES
 
 %changelog
+* Tue Jul 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.9.1-alt3
+- Fixed build with gcc-6
+
 * Tue Dec 15 2015 Dmitry V. Levin <ldv@altlinux.org> 3.9.1-alt2
 - Apply ALT Secure Packaging Policy (closes: #31623).
 
