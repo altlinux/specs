@@ -2,8 +2,8 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml-easy-format
-Version: 1.0.2
-Release: alt2%ubt
+Version: 1.2.0
+Release: alt1%ubt
 Summary: High-level and functional interface to the Format module
 License: BSD
 Group: Development/ML
@@ -70,6 +70,9 @@ make install
 %_libdir/ocaml/*/*.mli
 
 %changelog
+* Mon Jul 10 2017 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1%ubt
+- new version
+
 * Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.0.2-alt2%ubt
 - rebuild with ocaml 4.04.1
 

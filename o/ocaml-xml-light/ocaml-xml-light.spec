@@ -1,6 +1,6 @@
 Name: ocaml-xml-light
 Version: 2.4
-Release: alt2%ubt
+Release: alt3%ubt
 Summary: Minimal XML parser and printer for OCaml
 
 Group: Development/ML
@@ -57,6 +57,9 @@ ocamlfind install xml-light META *.mli *.cmi *.cma *.a *.cmxa *.cmx
 %_libdir/ocaml/xml-light/*.mli
 
 %changelog
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 2.4-alt3%ubt
+- rebuild with ocaml 4.04.2
+
 * Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 2.4-alt2%ubt
 - rebuild with ocaml 4.04.1
 

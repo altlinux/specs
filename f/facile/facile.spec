@@ -1,6 +1,6 @@
 Name: facile
 Version: 1.1.3
-Release: alt3%ubt
+Release: alt4%ubt
 
 Group: System/Libraries
 Summary: Constraint programming library
@@ -32,6 +32,9 @@ make DESTDIR=%buildroot install
 %_libdir/ocaml/facile
 
 %changelog
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.1.3-alt4%ubt
+- rebuild with ocaml 4.04.2
+
 * Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.1.3-alt3%ubt
 - rebuild with ocaml 4.04.1
 

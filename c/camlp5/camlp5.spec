@@ -1,6 +1,6 @@
 Name: camlp5
-Version: 6.17
-Release: alt2%ubt
+Version: 7.00
+Release: alt1%ubt
 
 Summary: preprocessor-pretty-printer of OCaml
 License: BSD-style
@@ -46,6 +46,9 @@ install -pD -m644 META %buildroot%_libdir/ocaml/site-lib/%name/META
 %_man1dir/*5*.1*
 
 %changelog
+* Tue Jul 04 2017 Anton Farygin <rider@altlinux.ru> 7.00-alt1%ubt
+- 7.00
+
 * Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 6.17-alt2%ubt
 - rebuild with ocaml 4.04.1
 

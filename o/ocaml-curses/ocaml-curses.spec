@@ -1,6 +1,6 @@
 Name: ocaml-curses
 Version: 1.0.3
-Release: alt3%ubt
+Release: alt4%ubt
 Summary: OCaml bindings for ncurses
 
 Group: System/Libraries
@@ -64,6 +64,9 @@ ocamlfind install curses META *.cmi *.cmx *.cma *.cmxa *.a *.so *.mli
 %_libdir/ocaml/curses/*.mli
 
 %changelog
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.0.3-alt4%ubt
+- rebuild with ocaml 4.04.2
+
 * Thu May 04 2017 Anton Farygin <rider@altlinux.ru> 1.0.3-alt3%ubt
 - moved out from site-lib dir
 - added ubt tag

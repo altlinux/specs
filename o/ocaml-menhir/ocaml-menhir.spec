@@ -1,6 +1,6 @@
 Name: ocaml-menhir
-Version: 20170101
-Release: alt2%ubt
+Version: 20170607
+Release: alt1%ubt
 Summary: LR(1) parser generator for the OCaml programming language.
 
 Group: Development/ML
@@ -39,9 +39,11 @@ make PREFIX=%buildroot/usr all
 %install
 %define ocamlsitelib %_libdir/ocaml/site-lib
 mkdir -p %buildroot%ocamlsitelib/menhirLib
+mkdir -p %buildroot%ocamlsitelib/menhirSdk
 make OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml PREFIX=%buildroot/usr install
 
 mv %buildroot%_libdir/ocaml/menhirLib/META %buildroot%ocamlsitelib/menhirLib
+mv %buildroot%_libdir/ocaml/menhirSdk/META %buildroot%ocamlsitelib/menhirSdk
 mkdir -p %buildroot%_datadir/doc/%name-%version
 mv %buildroot%_datadir/doc/menhir/* %buildroot%_datadir/doc/%name-%version/
 rm -rf %buildroot%_datadir/doc/menhir
@@ -55,20 +57,27 @@ bzip2 -z9 %buildroot%_man1dir/menhir.1
 %dir %_datadir/menhir
 %_datadir/menhir/*
 
-%doc AUTHORS
-%doc CHANGES
+%doc CHANGES.md
 %doc demos
-%doc INSTALLATION
+%doc INSTALLATION.md
+%doc README.md
 %doc LICENSE
 %doc Makefile
 %doc manual.pdf
 
 %dir %ocamlsitelib/menhirLib
+%dir %ocamlsitelib/menhirSdk
+%ocamlsitelib/menhirSdk/META
 %ocamlsitelib/menhirLib/META
 %dir %_libdir/ocaml/menhirLib
+%dir %_libdir/ocaml/menhirSdk
 %_libdir/ocaml/menhirLib/*
+%_libdir/ocaml/menhirSdk/*
 
 %changelog
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 20170607-alt1%ubt
+- updated to 20170607
+
 * Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 20170101-alt2%ubt
 - rebuild with ocaml 4.04.1
 

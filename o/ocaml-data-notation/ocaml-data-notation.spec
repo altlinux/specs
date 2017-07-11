@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-data-notation
 Version: 0.0.11
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Store data using OCaml notation
 License: LGPL-2.1 with OCaml linking exception
 Group: Development/ML
@@ -69,5 +69,8 @@ make install
 %ocamldir/odn/*.cmx
 
 %changelog
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 0.0.11-alt2%ubt
+- rebuild with ocaml 4.04.2
+
 * Wed May 17 2017 Anton Farygin <rider@altlinux.ru> 0.0.11-alt1%ubt
 - first build for ALT

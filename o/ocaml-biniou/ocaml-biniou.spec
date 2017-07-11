@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml-biniou
-Version: 1.0.9
+Version: 1.0.13
 Release: alt2%ubt
 Summary: Safe and fast binary data format
 Group: Development/ML
@@ -77,6 +77,9 @@ mv %buildroot%_bindir/{,ocaml-}bdump
 %_libdir/ocaml/*/*.mli
 
 %changelog
+* Thu Jul 06 2017 Anton Farygin <rider@altlinux.ru> 1.0.13-alt2%ubt
+- new version
+
 * Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.0.9-alt2%ubt
 - rebuild with ocaml 4.04.1
 

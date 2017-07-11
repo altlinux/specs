@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.8.1
-Release: alt9%ubt
+Release: alt10%ubt
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -793,6 +793,9 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 4.8.1-alt10%ubt
+- rebuild with ocaml 4.04.2
+
 * Fri Jun 23 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.1-alt9%ubt
 - Upstream updates:
  + xen/test/Makefile: Fix clean target, broken by pattern rule (thx Ian Jackson).
