@@ -1,7 +1,7 @@
 
 %define rname kaffeine
 Name: kde5-%rname
-Version: 2.0.9
+Version: 2.0.10
 Release: alt1%ubt
 %K5init
 
@@ -41,7 +41,7 @@ BuildRequires: libXres-devel
 BuildRequires: libv4l-devel libvlc-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kdoctools-devel-static kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel
-BuildRequires: kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
+BuildRequires: kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-kwindowsystem-devel
 
 %description
 Kaffeine provides fast access to the most important media sources.
@@ -75,6 +75,9 @@ mv .gear/po ./
 %_K5xdgapp/org.kde.kaffeine.desktop
 
 %changelog
+* Tue Jul 11 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.10-alt1%ubt
+- new version
+
 * Mon Mar 13 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.9-alt1%ubt
 - new version
 
