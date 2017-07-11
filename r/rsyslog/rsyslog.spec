@@ -12,7 +12,7 @@
 %def_enable elasticsearch
 
 Name: rsyslog
-Version: 8.27.0
+Version: 8.28.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -28,7 +28,7 @@ BuildRequires: libdbi-devel
 BuildRequires: libmysqlclient-devel
 BuildRequires: postgresql-devel
 BuildRequires: libkrb5-devel
-BuildRequires: librelp-devel >= 1.2.12
+BuildRequires: librelp-devel >= 1.2.14
 BuildRequires: libgnutls-devel libgcrypt-devel
 BuildRequires: libnet-snmp-devel
 BuildRequires: libnet-devel
@@ -555,6 +555,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/mmsnmptrapd.so
 
 %changelog
+* Tue Jul 11 2017 Alexey Shabalin <shaba@altlinux.ru> 8.28.0-alt1
+- 8.28.0
+
 * Thu Jun 15 2017 Alexey Shabalin <shaba@altlinux.ru> 8.27.0-alt1
 - 8.27.0
 
