@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.7.0
-%define major 2.11
+%define major 2.12
 
 Name: wine
 Version: %major.0
@@ -471,6 +471,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Wed Jul 12 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.12.0-alt1
+- new version 2.12.0 (with rpmrb script)
+
 * Thu Jun 29 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.11.0-alt1
 - new version (2.11.0) with rpmgs script
 
