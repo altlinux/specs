@@ -7,7 +7,7 @@ Name: palemoon
 Version: 27.4.0
 
 # %%ifndef git_commit
-Release: alt0.pre
+Release: alt1
 # %%else
 #Release: alt0.git_3_%git_commit
 # %%endif
@@ -215,7 +215,7 @@ export RPATH_PATH="$rpath"
 %patch21 -p1
 %patch22 -p1
 
-%patch25 -p1 -b .block
+#patch25 -p1 -b .block
 
 cd %sname
 
@@ -637,6 +637,9 @@ install -D -m 644 README.md ../
 %exclude %_datadir/idl/*
 
 %changelog
+* Wed Jul 12 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.4.0-alt1
+- New Version - Release 27.4.0
+
 * Mon Jul 10 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.4.0-alt0.pre
 - Pre Release 27.4.0
 - add palemoon-27.4.0-blocklist.patch
