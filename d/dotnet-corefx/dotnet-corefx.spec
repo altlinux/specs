@@ -1,10 +1,10 @@
 %def_with bootstrap
-%define corerelease 2.0.0-preview1-002111-00
-%define pre -preview1
+%define corerelease 2.0.0-preview2-25407-01
+%define pre preview2
 
 Name: dotnet-corefx
 Version: 2.0.0
-Release: alt1.preview1
+Release: alt2.%pre
 
 Summary: .NET Core foundational libraries, called CoreFX
 
@@ -12,7 +12,7 @@ License: MIT
 Url: https://github.com/dotnet/corefx
 Group: Development/Other
 
-# Source-url: https://github.com/dotnet/corefx/archive/v%version%pre.tar.gz
+# Source-url: https://github.com/dotnet/corefx/archive/v%{version}-%pre.tar.gz
 Source: %name-%version.tar
 
 ExclusiveArch: x86_64
@@ -21,10 +21,13 @@ AutoReq: yes,nomingw32,nomingw64,nomono,nomonolib
 AutoProv: no
 
 %if_with bootstrap
-BuildRequires: dotnet-bootstrap
+BuildRequires: dotnet-bootstrap >= %version-alt0.%pre
+%define bootstrapdir %_libdir/dotnet-bootstrap
 %else
 BuildRequires: dotnet
+%define bootstrapdir %_libdir/dotnet
 %endif
+
 
 Requires: dotnet-common >= %version
 
@@ -44,22 +47,24 @@ Just copied binaries now.
 %build
 %if_with bootstrap
 #
+%else
+#DOTNET_TOOL_DIR=%bootstrapdir ./build.sh x64 release managed verbose
+#DOTNET_TOOL_DIR=%bootstrapdir ./build-native.sh x64 release verbose
 %endif
-
-#DOTNET_TOOL_DIR=%_libdir/dotnet-bootstrap ./build.sh x64 release managed verbose
-#DOTNET_TOOL_DIR=%_libdir/dotnet-bootstrap ./build-native.sh x64 release verbose
 
 %install
 mkdir -p %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
-cp -a %_libdir/dotnet-bootstrap/shared/Microsoft.NETCore.App/%version-*/{System*.so,*.dll} %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
+%if_with bootstrap
+cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%version-*/{System*.so,*.dll} %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
 # read during dotnet --version
-cp -a %_libdir/dotnet-bootstrap/shared/Microsoft.NETCore.App/%version-*/System.Native.a %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
+cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%version-*/System.Native.a %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
 
 # FIXME: possible hack
-cp -a %_libdir/dotnet-bootstrap/shared/Microsoft.NETCore.App/%version-*/Microsoft.NETCore.App.deps.json %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
+cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%version-*/Microsoft.NETCore.App.deps.json %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
 
 # already in coreclr
 rm -f %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/System.Globalization.Native.so
+%endif
 
 # FIXME: possible hack
 cat <<EOF >%buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/.version
@@ -75,6 +80,12 @@ EOF
 %_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/*.dll
 
 %changelog
+* Thu Jul 13 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt2.preview2
+- .NET Core Runtime 2.0.0 Preview 2 build 25407-01
+
+* Sun May 28 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt2.preview1
+- rebuild without bootstrap with RID linux.x64
+
 * Thu May 25 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1.preview1
 - fix packing
 

@@ -1,10 +1,10 @@
 %def_without bootstrap
-%define corerelease 2.0.0-preview1-002111-00
-%define pre -preview1
+%define corerelease 2.0.0-preview2-25407-01
+%define pre -preview2
 
 Name: dotnet
 Version: 2.0.0
-Release: alt2.preview1
+Release: alt2.preview2
 
 Summary: Installer packages for the .NET Core runtime and libraries
 
@@ -68,7 +68,7 @@ mkdir -p %buildroot%_bindir/
 ln -sr %buildroot%_libdir/dotnet/dotnet %buildroot%_bindir/dotnet
 
 %files
-%doc THIRD-PARTY-NOTICES README.md CONTRIBUTING.md LICENSE
+%doc THIRD-PARTY-NOTICES.TXT README.md CONTRIBUTING.md LICENSE.TXT
 %_bindir/dotnet
 %_libdir/dotnet/dotnet
 
@@ -78,6 +78,9 @@ ln -sr %buildroot%_libdir/dotnet/dotnet %buildroot%_bindir/dotnet
 %_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/libhostfxr.so
 
 %changelog
+* Thu Jul 13 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt2.preview2
+- .NET Core Runtime 2.0.0 Preview 2 build 25407-01
+
 * Sun May 28 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt2.preview1
 - rebuild without bootstrap with RID linux.x64
 

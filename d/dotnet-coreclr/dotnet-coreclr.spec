@@ -1,12 +1,12 @@
 %def_without bootstrap
 
-%define corerelease 2.0.0-preview1-002111-00
-%define pre -preview1
+%define corerelease 2.0.0-preview2-25407-01
+%define pre -preview2
 %define shareddir %_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease
 
 Name: dotnet-coreclr
 Version: 2.0.0
-Release: alt3.preview1
+Release: alt3.preview2
 
 Summary: .NET Core runtime, called CoreCLR, and the base library, called mscorlib
 
@@ -36,6 +36,9 @@ BuildRequires: cmake llvm libstdc++-devel libunwind-devel liblttng-ust-devel lib
 BuildRequires: libicu-devel libuuid-devel zlib-devel libcurl-devel libkrb5-devel openssl-devel
 BuildRequires: python-modules-xml
 
+# it is not linked directly (the same like in libicu-devel)
+Requires: libicu56
+
 %if_with bootstrap
 BuildRequires: dotnet-bootstrap
 %define bootstrapdir %_libdir/dotnet-bootstrap
@@ -61,7 +64,7 @@ cross platform applications that work on Linux, Mac and Windows.
 %setup
 
 # make strange error if uncomment due isMSBuildOnNETCoreSupported initialized
-#find -type f -name "*.sh" | xargs subst "s|/etc/os-release|%_libdir/dotnet/fake-os-release|g"
+find -type f -name "*.sh" | xargs subst "s|/etc/os-release|%_libdir/dotnet/fake-os-release|g"
 
 # TODO: CMake Error: CMake can not determine linker language for target: System.Globalization.Native
 %__subst "s|__isMSBuildOnNETCoreSupported=0|__isMSBuildOnNETCoreSupported=1|" build.sh
@@ -70,12 +73,12 @@ cross platform applications that work on Linux, Mac and Windows.
 %__subst "s|add_subdirectory(src/ToolBox/SOS/lldbplugin)||" CMakeLists.txt
 
 %build
-DOTNET_TOOL_DIR=%bootstrapdir ./build.sh x64 release verbose skipnuget
+DOTNET_TOOL_DIR=%bootstrapdir sh -x ./build.sh x64 release verbose skipnuget
 
 %install
 mkdir -p %buildroot%shareddir/
 # TODO: some publish use?
-cp -a bin/Product/Linux.x64.Release/{System.Globalization.Native.so,libSystem.Globalization.Native.a,lib*.so,corerun,coreconsole,sosdocsunix.txt} %buildroot%shareddir/
+cp -a bin/Product/Linux.x64.Release/{System.Globalization.Native.so,libSystem.Globalization.Native.a,lib*.so,corerun,coreconsole,createdump,sosdocsunix.txt} %buildroot%shareddir/
 
 # superpmi mcs
 # https://github.com/dotnet/coreclr/tree/master/src/ToolBox/superpmi
@@ -86,15 +89,20 @@ cp -a bin/Product/Linux.x64.Release/{System.Globalization.Native.so,libSystem.Gl
 #rm -f %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/createdump
 
 %files
-%doc *.TXT THIRD-PARTY-NOTICES README.md CONTRIBUTING.md
+%doc CODE_OWNERS.TXT LICENSE.TXT PATENTS.TXT THIRD-PARTY-NOTICES.TXT README.md CONTRIBUTING.md
 %shareddir/System.Globalization.Native.so
 %shareddir/libSystem.Globalization.Native.a
 %shareddir/lib*.so
 %shareddir/corerun
+%shareddir/createdump
 %shareddir/coreconsole
 %shareddir/sosdocsunix.txt
 
 %changelog
+* Wed Jul 12 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt3.preview2
+- .NET Core 2.0.0 Preview 2 (2.0.0-preview2-25407-01)
+- pack missed createdump
+
 * Wed May 31 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt3.preview1
 - strict packing
 
