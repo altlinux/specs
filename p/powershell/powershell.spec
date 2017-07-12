@@ -3,7 +3,7 @@
 
 Name: powershell
 Version: 6.0.0
-Release: alt2
+Release: alt3
 
 Summary: PowerShell for every system!
 
@@ -23,6 +23,8 @@ ExclusiveArch: x86_64
 
 AutoReq:yes,nonodejs,nonodejs_native,nomono,nomonolib,nopython,nomingw32,nomingw64,noshebang
 AutoProv: no
+
+Requires: dotnet >= 2.0.0
 
 BuildRequires: cmake gcc-c++ dotnet >= 2.0.0 dotnet-sdk >= 2.0.0
 # for libpsl-native build
@@ -107,7 +109,10 @@ rm -f %buildroot%_libdir/%name/DELETE_ME_TO_DISABLE_CONSOLEHOST_TELEMETRY
 %endif
 
 mkdir -p %buildroot%_bindir/
-echo 'exec dotnet %_libdir/%name/powershell.dll "$@"' >%buildroot%_bindir/%name
+cat <<EOF >%buildroot%_bindir/%name
+#!/bin/sh
+exec dotnet %_libdir/%name/powershell.dll "$@"
+EOF
 chmod 0755 %buildroot%_bindir/%name
 
 # replace downloaded libs with system versions
@@ -124,6 +129,9 @@ cp %SOURCE2 %buildroot%_man1dir/
 %doc docs/*
 
 %changelog
+* Wed Jul 12 2017 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt3
+- add dotnet requires
+
 * Sun Jun 11 2017 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt2
 - only pack prebuild binaries
 
