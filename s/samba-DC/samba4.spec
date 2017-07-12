@@ -46,8 +46,8 @@
 %def_with libcephfs
 
 Name:    samba-DC
-Version: 4.6.5
-Release: alt2%ubt
+Version: 4.6.6
+Release: alt1%ubt
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -1360,6 +1360,11 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Wed Jul 12 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.6-alt1%ubt
+- Update to summer security release
+- Security fixes:
+  + CVE-2017-11103 Orpheus' Lyre KDC-REP service name validation
+
 * Tue Jun 20 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.5-alt2%ubt
 - Remove conflict samba-DC-libs with samba-libs
 - Adjust python module requirement to samba-DC-common-libs

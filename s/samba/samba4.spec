@@ -38,7 +38,7 @@
 %def_with libcephfs
 
 Name: samba
-Version: 4.6.5
+Version: 4.6.6
 Release: alt1%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1396,6 +1396,12 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Wed Jul 12 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.6-alt1%ubt
+- Update to summer security release
+- Security fixes:
+  + CVE-2017-11103 Orpheus' Lyre KDC-REP service name validation
+  (Samba binaries built against MIT Kerberos are not vulnerable.)
+
 * Tue Jun 06 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.5-alt1%ubt
 - Udpate to first summer release
 
