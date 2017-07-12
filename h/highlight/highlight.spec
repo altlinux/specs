@@ -1,6 +1,6 @@
 Name:    highlight
 Summary: Universal source code to formatted text converter
-Version: 3.13
+Version: 3.38
 Release: alt1
 Group:   Development/Tools
 License: GPLv3
@@ -9,8 +9,6 @@ URL:     http://www.andre-simon.de/
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
 Source0: %name-%version.tar
-
-Patch0: highlight-lua-pkgconfig.patch
 
 BuildRequires: boost-devel-headers gcc-c++ liblua5-devel libstdc++-devel pkg-config
 
@@ -24,7 +22,6 @@ It is easily possible to create new language definitions and colour themes.
 
 %prep
 %setup -q -n highlight
-%patch0 -p2
 
 %build
 %make cli
@@ -41,6 +38,9 @@ rm -rf -- %buildroot/%_datadir/doc/%name
 %_man1dir/%name.*
 
 %changelog
+* Tue Jul 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.38-alt1
+- Updated to upstream version 3.38
+
 * Sun Mar 03 2013 Alexey Gladkov <legion@altlinux.ru> 3.13-alt1
 - New version (3.13).
 
