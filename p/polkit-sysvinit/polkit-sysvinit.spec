@@ -1,5 +1,5 @@
 Name: polkit-sysvinit
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Summary: Allow media/network changes to xgrp users
@@ -11,6 +11,7 @@ Source0: 60-sysvinit-mount.rules
 Source1: 60-sysvinit-nm.rules
 Source2: 60-xfsm-shutdown-helper.rules
 Source3: 60-sysvinit-console-kit.rules
+Source4: 60-xfce4-pm-helper.rules
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildArch: noarch
@@ -27,12 +28,15 @@ on SysVinit-based systems.
 
 %install
 mkdir -p %buildroot%pkdir
-install -pm644 %SOURCE0 %SOURCE1 %SOURCE2 %SOURCE3 %buildroot%pkdir
+install -pm644 %SOURCE0 %SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4 %buildroot%pkdir
 
 %files
 %pkdir/*
 
 %changelog
+* Wed Jul 12 2017 Anton Midyukov <antohami@altlinux.org> 0.3.4-alt1
+- Added rules for xfce4-pm-helper (thx Speccyfighter)
+
 * Mon Feb 06 2017 Anton Midyukov <antohami@altlinux.org> 0.3.3-alt1
 - Added rules for ConsoleKit2
 
