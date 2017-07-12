@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.4
+%define ver_major 0.5
 %define api_ver %ver_major
 %def_enable introspection
 %def_disable gtk_doc
@@ -20,7 +20,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-BuildRequires: gcc-c++ gtk-doc libwebkit2gtk-devel libarchive-devel libxml2-devel
+BuildRequires: meson gcc-c++ gtk-doc libwebkit2gtk-devel libarchive-devel libxml2-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libwebkit2gtk-gir-devel}
 
 %description
@@ -67,17 +67,15 @@ This package contains development documentation for %name
 %setup
 
 %build
-%autoreconf
-%configure --disable-static \
-	%{?_enable_introspection:--enable-introspection=yes}
+%meson %{?_enable_introspection:-Denable-introspection=true}
 
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+%meson_test
 
 %files
 %_libdir/%name.so.*
@@ -102,6 +100,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Wed Jul 12 2017 Yuri N. Sedunov <aris@altlinux.org> 0.5-alt1
+- 0.5
+
 * Wed Aug 31 2016 Yuri N. Sedunov <aris@altlinux.org> 0.4-alt1
 - 0.4
 
