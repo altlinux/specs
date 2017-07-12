@@ -3,8 +3,8 @@
 #%%def_enable nautilus-syncthing-gtk
 
 Name: syncthing-gtk
-Version: 0.9.2.4
-Release: alt4
+Version: 0.9.2.5
+Release: alt1
 Summary: Syncthing Gtk-based graphical interface
 Summary(ru_RU.UTF-8): Основанный на GTK графический интерфейс для Syncthing
 License: GPLv2+
@@ -199,6 +199,9 @@ done
 %endif
 
 %changelog
+* Wed Jul 12 2017 Cronbuild Service <cronbuild@altlinux.org> 0.9.2.5-alt1
+- new version 0.9.2.5
+
 * Sun Mar 19 2017 Anton Midyukov <antohami@altlinux.org> 0.9.2.4-alt4
 - Exclude requires: typelib(Caja) typelib(Nautilus) typelib(Nemo).
 
