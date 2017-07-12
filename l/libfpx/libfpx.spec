@@ -1,7 +1,7 @@
 # based on PLD libfpx $Revision: 1.35 $, $Date: 2003/11/12 18:36:15 $
 Name: libfpx
-Version: 1.3.0
-Release: alt1
+Version: 1.3.1
+Release: alt1.9
 Summary: FlashPIX OpenSource Toolkit
 License: distributable (see COPYING)
 Group: System/Libraries
@@ -47,7 +47,7 @@ FlashPIX header files and programmer's documentation.
 
 %files
 %_libdir/lib*.so.*
-%doc AUTHORS COPYING ChangeLog README
+%doc AUTHORS ChangeLog README
 
 %files devel
 %_libdir/lib*.so
@@ -55,6 +55,9 @@ FlashPIX header files and programmer's documentation.
 %doc doc/*.pdf doc/readme.txt
 
 %changelog
+* Wed Jul 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.1-alt1.9
+- Updated to upstream version 1.3.1-9
+
 * Tue Apr 26 2011 Dmitry V. Levin <ldv@altlinux.org> 1.3.0-alt1
 - Updated to 1.3.0.
 - Cleaned up specfile.
