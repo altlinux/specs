@@ -1,6 +1,6 @@
 Name: oniguruma
-Version: 6.2.0
-Release: alt2%ubt
+Version: 6.4.0
+Release: alt1%ubt
 Summary: Regular expressions library
 
 Group: System/Libraries
@@ -79,6 +79,9 @@ find $RPM_BUILD_ROOT -name '*.la' \
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Wed Jul 12 2017 Anton Farygin <rider@altlinux.ru> 6.4.0-alt1%ubt
+- new version with security fixes (CVE-2017-9224, CVE-2017-9225, CVE-2017-9226, CVE-2017-9227, CVE-2017-9228, CVE-2017-9229)
+
 * Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 6.2.0-alt2%ubt
 - added obsolete for libOniGuruma-devel to devel package
 
