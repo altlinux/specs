@@ -1,7 +1,7 @@
 Name: pve-storage
 Summary: PVE storage management library
 Version: 4.0.70
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -9,9 +9,8 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64
 
-Requires: nfs-utils open-iscsi clvm glusterfs3-client smartmontools gdisk parted hdparm
+Requires: nfs-utils open-iscsi clvm glusterfs3-client smartmontools gdisk parted hdparm ceph
 Requires: zfs-utils >= 0.6.5.8-alt1.M80P.1
-Requires: ceph < 10.0.0
 
 Source: pve-storage.tar.xz
 Patch: pve-storage-alt.patch
@@ -42,6 +41,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Wed Jul 12 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.0.70-alt2
+- update requires
+
 * Mon Dec 05 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.70-alt1
 - 4.0-70
 
