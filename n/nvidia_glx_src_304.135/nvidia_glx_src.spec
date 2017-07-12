@@ -14,7 +14,7 @@
 %define nv_version 304
 %define nv_release 135
 %define nv_minor %nil
-%define pkg_rel alt134
+%define pkg_rel alt135%ubt
 %def_enable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -85,7 +85,10 @@ Patch2: buildfix_kernel_3.14.patch
 Patch3: ftbfs.patch
 Patch4: buildfix_kernel_4.9.patch
 Patch5: buildfix_kernel_4.10.patch
+Patch6: buildfix_kernel_4.11.patch
+Patch7: buildfix_kernel_4.12.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 ExclusiveArch: %ix86 x86_64
 #ExcludeArch: ppc64 x86_64 ppc s390 s390x ia64
@@ -164,6 +167,8 @@ pushd kernel/
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 rm -rf precompiled
 popd
 
@@ -285,6 +290,9 @@ fi
 %endif
 
 %changelog
+* Wed Jul 12 2017 Sergey V Turchin <zerg@altlinux.org> 304.135-alt135%ubt
+- add fixes against 4.11 and 4.12 kernels
+
 * Thu May 11 2017 Sergey V Turchin <zerg@altlinux.org> 304.135-alt134
 - add fix against 4.9 kernel
 
