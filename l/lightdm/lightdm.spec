@@ -6,7 +6,7 @@
 
 Name: lightdm
 Version: 1.16.7
-Release: alt3
+Release: alt4
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -212,6 +212,7 @@ fi
 %attr(775,_ldm,_ldm) %dir %_localstatedir/run/%name
 /lib/tmpfiles.d/%name.conf
 %_datadir/polkit-1/rules.d/%name.rules
+%_datadir/bash-completion/completions/*
 
 %files -n liblightdm-gobject
 %_libdir/liblightdm-gobject-?.so.*
@@ -244,6 +245,10 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Jul 12 2017 Paul Wolneykien <manowar@altlinux.org> 1.16.7-alt4
+- Add the 'login-unknown' configuration option.
+- Package the bash completion scripts.
+
 * Thu Jun 22 2017 Paul Wolneykien <manowar@altlinux.org> 1.16.7-alt3
 - When is switching to the greeter, unconditionally use an existing
   one, if any, trying to reset it to the new user name.

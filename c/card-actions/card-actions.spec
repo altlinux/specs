@@ -1,6 +1,6 @@
 Name: card-actions
 Version: 1.8
-Release: alt2
+Release: alt3
 
 Summary: Smart card action handler scripts
 License: GPLv3+
@@ -27,6 +27,9 @@ install -pDm644 %SOURCE2 %buildroot%_altdir/card-actions-default
 %_altdir/*-default
 
 %changelog
+* Wed Jul 12 2017 Paul Wolneykien <manowar@altlinux.org> 1.8-alt3
+- Try to switch even if the username is unknown yet.
+
 * Fri Jun 09 2017 Paul Wolneykien <manowar@altlinux.org> 1.8-alt2
 - Moved the event manager service to the pam_pkcs11 package.
 - Start a new session if the user isn\'t known to loginctl.
