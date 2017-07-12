@@ -1,20 +1,18 @@
 Name: davfs2
-Version: 1.4.7
-Release: alt2
+Version: 1.5.4
+Release: alt1%ubt
 
 Summary: Linux file system driver that allows you to mount a WebDAV server as a local file system.
 License: GPLv3+
 Group: Networking/Other
 Url: http://savannah.nongnu.org/projects/%name/
 
-Packager: Sergey Kurakin <kurakin@altlinux.org>
-
 Source: %name-%version.tar
-
-patch1: %name-1.4.7-neon_configure.patch
 
 # Automatically added by buildreq on Mon May 25 2009
 BuildRequires: libexpat-devel libneon-devel libssl-devel zlib-devel libkeyutils-devel
+
+BuildRequires(pre):rpm-build-ubt
 
 %description
 WebDAV is an extension to HTTP that allows remote collaborative
@@ -31,8 +29,7 @@ Neon supports TLS/SSL (using OpenSSL or GnuTLS) and access
 via proxy server.
 
 %prep
-%setup -n %name-%version
-%patch1 -p2
+%setup
 
 %build
 %autoreconf
@@ -63,6 +60,10 @@ ln -sf %_sbindir/umount.davfs %buildroot/sbin/umount.davfs
 %exclude %_mandir/es
 
 %changelog
+* Wed Jul 12 2017 Anton Farygin <rider@altlinux.ru> 1.5.4-alt1%ubt
+- new version with security fixes:
+	+ CVE-2013-4362 Unsecure use of system()
+
 * Sun Nov  3 2013 Sergey Kurakin <kurakin@altlinux.org> 1.4.7-alt2
 - allow building with libneon v.30
 
