@@ -1,6 +1,6 @@
 %define module_name     vhba
 %define module_version  20161009
-%define module_release alt1
+%define module_release alt2
 
 %define flavour         un-def
 BuildRequires(pre): rpm-build-kernel
@@ -20,6 +20,8 @@ Group: System/Kernel and hardware
 
 Url: http://cdemu.sourceforge.net/
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
+
+Patch: vhba-4.12.patch
 
 ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel
@@ -44,6 +46,7 @@ userspace-cdemu suite.
 rm -rf kernel-source-%module_name-%module_version
 tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
+%patch
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -60,6 +63,9 @@ cp -a %module_name.ko %buildroot/%module_dir/
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Jul 11 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 20161009-alt2
+- fixed build with kernel 4.12
 
 * Thu Oct 13 2016 Nazarov Denis <nenderus@altlinux.org> 20161009-alt1
 - Version 20161009
