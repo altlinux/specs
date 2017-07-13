@@ -1,7 +1,7 @@
 %define rname kdoctools
 
 Name: kf5-%rname
-Version: 5.35.0
+Version: 5.36.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -12,6 +12,7 @@ License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
 Patch1: alt-find-docbookxml.patch
+Patch2: alt-doc-dirs-fallback-kde4.patch
 
 # Automatically added by buildreq on Wed Feb 11 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds elfutils libcloog-isl4 libgpg-error libqt5-core libstdc++-devel libxml2-devel pkg-config python-base xml-common xml-utils
@@ -59,6 +60,7 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K5build
@@ -89,6 +91,9 @@ KF5 library
 %_K5lib/libKF5DocTools.so.*
 
 %changelog
+* Mon Jul 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.36.0-alt1%ubt
+- new version
+
 * Thu Jun 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.35.0-alt1%ubt
 - new version
 

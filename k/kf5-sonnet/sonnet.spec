@@ -1,7 +1,7 @@
 %define rname sonnet
 
 Name: kf5-%rname
-Version: 5.35.0
+Version: 5.36.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -66,6 +66,7 @@ sed -i -E 's|^FIND_LIBRARY\(HUNSPELL_LIBRARIES[[:space:]]+NAMES[[:space:]]+hunsp
 
 %files common -f %name.lang
 %doc COPYING.LIB README.md
+%config(noreplace) %_K5xdgconf/*
 %dir %_K5plug/kf5/sonnet/
 %_K5data/sonnet/
 
@@ -85,6 +86,9 @@ sed -i -E 's|^FIND_LIBRARY\(HUNSPELL_LIBRARIES[[:space:]]+NAMES[[:space:]]+hunsp
 %_K5lib/libKF5SonnetUi.so.*
 
 %changelog
+* Mon Jul 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.36.0-alt1%ubt
+- new version
+
 * Thu Jun 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.35.0-alt1%ubt
 - new version
 

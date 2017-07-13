@@ -3,7 +3,7 @@
 %def_enable exiv2
 
 Name: kf5-%rname
-Version: 5.35.0
+Version: 5.36.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -18,7 +18,7 @@ Source: %rname-%version.tar
 # optimized out: cmake cmake-modules elfutils fontconfig libavcodec-devel libavutil-devel libcloog-isl4 libopencore-amrnb0 libopencore-amrwb0 libpoppler1-qt5 libqt5-core libqt5-gui libqt5-xml libstdc++-devel pkg-config python-base ruby ruby-stdlibs
 #BuildRequires: ebook-tools-devel extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-ki18n-devel libavdevice-devel libavformat-devel libexiv2-devel libpoppler-qt5-devel libpostproc-devel libswscale-devel libtag-devel python-module-google qt5-base-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
+BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-multimedia-devel
 BuildRequires: kf5-karchive-devel kf5-ki18n-devel
 BuildRequires: ebook-tools-devel libpoppler-qt5-devel libtag-devel
 %if_enabled exiv2
@@ -80,6 +80,9 @@ KF5 library
 %_K5plug/kf5/kfilemetadata/
 
 %changelog
+* Mon Jul 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.36.0-alt1%ubt
+- new version
+
 * Thu Jun 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.35.0-alt1%ubt
 - new version
 
