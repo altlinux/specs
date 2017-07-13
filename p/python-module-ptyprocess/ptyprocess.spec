@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5
-Release: alt1.git20150617.1
+Release: alt1.git20150617.2
 Summary: Run a subprocess in a pseudo terminal
 License: ISCL
 Group: Development/Python
@@ -116,7 +116,7 @@ popd
 py.test
 %if_with python3
 pushd ../python3
-py.test-%_python3_version
+py.test3
 popd
 %endif
 
@@ -139,6 +139,9 @@ popd
 %endif
 
 %changelog
+* Thu Jul 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5-alt1.git20150617.2
+- Fixed build spec with py.test3
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5-alt1.git20150617.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
