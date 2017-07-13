@@ -2,7 +2,7 @@
 
 Name: owncloud%major
 Version: 9.1.6
-Release: alt1
+Release: alt2
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 %define installdir %webserver_webappsdir/%name
@@ -39,7 +39,7 @@ calendars, bookmarks and files across all your devices.
 %package apache2
 Summary: Apache 2.x web-server default configuration for %name
 Group: Networking/WWW
-Requires: %name = %version-%release apache2-mod_php5 apache2-mod_ssl
+Requires: %name >= 9.1.0 apache2-mod_php5 apache2-mod_ssl
 
 %description apache2
 Apache 2.x web-server default configuration for %name.
@@ -47,7 +47,7 @@ Apache 2.x web-server default configuration for %name.
 %package nginx
 Summary: nginx web-server default configuration for %name
 Group: Networking/WWW
-Requires: %name = %version-%release nginx
+Requires: %name >= 9.1.0 nginx
 #Requires: php5-cgi php5-fpm-fcgi php5-apcu
 
 %description nginx
@@ -78,9 +78,6 @@ install -pD -m0644 apache2/default.conf %buildroot%_sysconfdir/httpd2/conf/sites
 #install nginx
 install -pD -m0644 nginx/default.conf %buildroot%_sysconfdir/nginx/sites-available.d/%name.conf
 
-%post
-chmod -R 777 %installdir
-
 %post apache2
 chown -R apache2:apache2 %installdir
 a2ensite %name
@@ -93,6 +90,9 @@ a2enmod headers
 
 %postun apache2
 %_initdir/httpd2 condreload
+
+%post nginx
+chown -R _nginx:_nginx %installdir
 
 %files
 %installdir/
@@ -107,6 +107,10 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf 
 
 %changelog
+* Thu Jul 13 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.6-alt2
+- [major] Fixed permissions for installdir
+- Fixed requires for subpackages
+
 * Thu Jun 15 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.6-alt1
 - 9.1.6
 
