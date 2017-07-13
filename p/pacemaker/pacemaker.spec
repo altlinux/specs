@@ -2,8 +2,8 @@
 
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
-Version: 1.1.16
-Release: alt3
+Version: 1.1.17
+Release: alt1
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
 # VCS:   https://github.com/ClusterLabs/pacemaker.git
@@ -321,6 +321,9 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Jul 13 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.17-alt1
+- New version
+
 * Thu Jun 29 2017 Denis Medvedev <nbr@altlinux.org> 1.1.16-alt3
 - Fix initscript,(ALT #33598).
 
