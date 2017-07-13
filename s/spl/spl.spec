@@ -1,5 +1,5 @@
 Name: spl
-Version: 0.6.5.9
+Version: 0.6.5.11
 Release: alt1
 Summary: Solaris Porting Layer (SPL)
 License: GPLv2+
@@ -65,8 +65,17 @@ install -pD -m0644 %name-%version.tar.xz %kernel_srcdir/%name-%version.tar.xz
 %_usrsrc/kernel
 
 %changelog
+* Thu Jul 13 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.6.5.11-alt1
+- 0.6.5.11
+
+* Thu Jun 15 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.6.5.10-alt1
+- 0.6.5.10
+
+* Tue Feb 07 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.6.5.9-alt0.M80P.1
+- backport to p8 branch
+
 * Mon Feb 06 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.6.5.9-alt1
-- 0.6.5.8
+- 0.6.5.9
 
 * Tue Oct 11 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.6.5.8-alt0.M80P.1
 - backport to p8 branch

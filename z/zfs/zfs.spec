@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: zfs
-Version: 0.6.5.9
+Version: 0.6.5.11
 Release: alt1
 Summary: ZFS on Linux
 License: GPLv2+
@@ -188,6 +188,15 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Thu Jul 13 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.6.5.11-alt1
+- 0.6.5.11
+
+* Thu Jun 15 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.6.5.10-alt1
+- 0.6.5.10
+
+* Tue Feb 07 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.6.5.9-alt0.M80P.1
+- backport to p8 branch
+
 * Mon Feb 06 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.6.5.9-alt1
 - 0.6.5.9
 
