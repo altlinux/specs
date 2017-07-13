@@ -1,6 +1,6 @@
 Name: octave
 Version: 4.2.1
-Release: alt1
+Release: alt2
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -165,6 +165,9 @@ EOF
 %doc doc/interpreter/octave.html doc/liboctave/liboctave.html doc/interpreter/octave.pdf doc/liboctave/liboctave.pdf doc/refcard/refcard*.pdf
 
 %changelog
+* Wed Jul 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.1-alt2
+- Rebuilt with new libsuitesparse
+
 * Thu May 11 2017 Andrey Cherepanov <cas@altlinux.org> 4.2.1-alt1
 - New version
 - Add Russian localization to desktop file

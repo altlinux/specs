@@ -1,5 +1,5 @@
 Name: libsuitesparse
-Version: 4.2.1
+Version: 4.5.5
 Release: alt1
 
 Summary: Shared libraries for sparse matrix calculations
@@ -13,10 +13,13 @@ Source1: cholmod.pc
 Source2: prepare_versions.sh
 Source3: umfpack.pc
 
+Patch1: %name-%version-alt-rpath.patch
+
 BuildPreReq: libmetis-devel gcc-c++ libtbb-devel
 
 # Automatically added by buildreq on Sun Sep 14 2008
 BuildRequires: gcc-fortran liblapack-devel texlive-latex-base
+BuildRequires: libgomp6-devel
 
 %package devel
 Summary: Development files of SuiteSparse
@@ -65,13 +68,15 @@ Examples for SuiteSparse.
 %setup
 install -m644 %SOURCE1 %SOURCE3 .
 install -m755 %SOURCE2 .
+%patch1 -p2
 
 %build
 ./prepare_versions.sh
 
-%make -C CCOLAMD
-%make TOPDIR=$PWD
-%make docs
+%make -C SuiteSparse_config MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis
+%make -C CCOLAMD MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis
+%make TOPDIR=$PWD MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis
+%make docs MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis
 
 %install
 install -d %buildroot%_libdir
@@ -80,8 +85,8 @@ install -d %buildroot%_includedir/suitesparse
 %ifarch x86_64
 LIB_SUFFIX=64
 %endif
-%makeinstall_std LIB_SUFFIX=${LIB_SUFFIX} NAME=%name VERSION=%version
-%makeinstall_std INSTALL_LIB=%buildroot%_libdir
+%makeinstall_std MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis LIB_SUFFIX=${LIB_SUFFIX} NAME=%name VERSION=%version INSTALL=%buildroot%_exec_prefix INSTALL_LIB=%buildroot%_libdir INSTALL_DOC=%buildroot%_docdir/%name-%version INSTALL_INCLUDE=%buildroot%_includedir/suitesparse
+%makeinstall_std MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis INSTALL=%buildroot%_exec_prefix INSTALL_LIB=%buildroot%_libdir INSTALL_DOC=%buildroot%_docdir/%name-%version INSTALL_INCLUDE=%buildroot%_includedir/suitesparse
 
 install -p -m644 CXSparse/Include/cs.h \
 	%buildroot%_includedir/suitesparse/cx_cs.h
@@ -105,7 +110,6 @@ do
 		%buildroot%_docdir/%name-%version/ChangeLogs/ChangeLog.$i
 done
 
-mv CHOLMOD/Doc/UserGuide.pdf CHOLMOD/Doc/CHOLMOD_UserGuide.pdf
 pushd UMFPACK/Doc
 for i in *.pdf; do
 	mv $i UMFPACK_$i
@@ -116,6 +120,8 @@ for i in AMD CAMD CHOLMOD KLU LDL SPQR UMFPACK
 do
 	install -p -m644 $i/Doc/*.pdf %buildroot%_docdir/%name-%version/pdf
 done
+
+mv %buildroot%_docdir/%name-%version/*.pdf %buildroot%_docdir/%name-%version/pdf/
 
 %files
 %_libdir/*.so.*
@@ -136,6 +142,9 @@ done
 %_libdir/%name/demos
 
 %changelog
+* Wed Jul 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.5.5-alt1
+- Updated to upstream version 4.5.5
+
 * Thu Nov 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1
 - Version 4.2.1
 

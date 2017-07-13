@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.2
-Release: alt2.dev.git20140718.1.1
+Release: alt2.dev.git20140718.1.2
 Summary: Scikits sparse matrix package
 License: GPL
 Group: Development/Python
@@ -181,6 +181,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2-alt2.dev.git20140718.1.2
+- Rebuilt with new libsuitesparse
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2-alt2.dev.git20140718.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
