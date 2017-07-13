@@ -2,7 +2,7 @@
 
 Name: libid3tag
 Version: 0.15.1b
-Release: alt7.2
+Release: alt8
 
 Summary: ID3 Tag manipulation library
 Summary(ru_RU.UTF-8): Библиотека для работы с тегами ID3
@@ -15,6 +15,7 @@ Source: http://download.sourceforge.net/%name/%name-%version.tar.bz2
 Patch1: %name-0.15.0b-alt-pkgconfig.patch
 Patch2: libid3tag-0.15.1b-fix-CVE-2008-2109.patch
 Patch3: libid3tag-0.15.1b-ds-rcc.patch
+Patch4: %name-%version-alt-gcc6.patch
 
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
@@ -62,6 +63,7 @@ statically linked %name-based software.
 %patch1 -p1
 %patch2 -p0
 %patch3 -p1
+%patch4 -p2
 touch NEWS AUTHORS ChangeLog
 
 %build
@@ -91,6 +93,9 @@ touch NEWS AUTHORS ChangeLog
 %endif
 
 %changelog
+* Thu Jul 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.15.1b-alt8
+- Fixed build with gcc-6
+
 * Fri Apr 22 2011 Dmitry V. Levin <ldv@altlinux.org> 0.15.1b-alt7.2
 - Rebuilt for debuginfo.
 
