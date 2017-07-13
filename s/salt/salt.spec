@@ -1,6 +1,6 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 2017.7
+Version: 2017.7.0
 Release: alt1
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
@@ -33,7 +33,7 @@ BuildArch: noarch
 %global to_filter_moves %py_dependencies salt\.ext\.six\.moves.*
 # {0} is to strip a space at the end:
 %filter_from_requires s:%to_filter_moves\{0\}::g
-%filter_from_requires \,\(/sbin/chkconfig\|/usr/bin/pip\|apt\|curl\|erlang\|ftp\|gawk\|git-core\|grep\|initctl\|local/s*bin\|lxc\|make\|perl-Package\|python-base\|python-module-setuptools\|python-module-virtualenv\|rpm\|salt-minion\|service\|sudo\|systemctl\|systemd\|wget\|yum-config-manager\),d
+%filter_from_requires \,\(/sbin/chkconfig\|/usr/bin/pip\|apt\|curl\|erlang\|ftp\|gawk\|git-core\|grep\|initctl\|local/s*bin\|lxc\|make\|perl-Package\|python-base\|python-module-setuptools\|python-module-virtualenv\|rpm\|salt-minion\|service\|sudo\|systemctl\|systemd\|wget\|yum-config-manager\|rc-update\),d
 
 %description
 Salt is a distributed remote execution system used to execute commands
@@ -267,6 +267,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Thu Jul 13 2017 Andrey Cherepanov <cas@altlinux.org> 2017.7.0-alt1
+- New version
+
 * Thu Jun 15 2017 Andrey Cherepanov <cas@altlinux.org> 2017.7-alt1
 - New version
 
