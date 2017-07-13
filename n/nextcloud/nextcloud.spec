@@ -1,6 +1,6 @@
 Name: nextcloud
 Version: 12.0.0
-Release: alt2
+Release: alt3
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 %define installdir %webserver_webappsdir/%name
@@ -76,9 +76,6 @@ install -pD -m0644 apache2/default.conf %buildroot%_sysconfdir/httpd2/conf/sites
 #install nginx
 install -pD -m0644 nginx/default.conf %buildroot%_sysconfdir/nginx/sites-available.d/%name.conf
 
-%post
-chmod -R 777 %installdir
-
 %post apache2
 chown -R apache2:apache2 %installdir
 a2ensite %name
@@ -91,6 +88,9 @@ a2enmod headers
 
 %postun apache2
 %_initdir/httpd2 condreload
+
+%post nginx
+chown -R _nginx:_nginx %installdir
 
 %files
 %installdir/
@@ -105,6 +105,9 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf 
 
 %changelog
+* Thu Jul 13 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 12.0.0-alt3
+- [major] Fixed permissions for installdir
+
 * Fri Jun 16 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 12.0.0-alt2
 - added missing files
 - fixed requires for subpackages
