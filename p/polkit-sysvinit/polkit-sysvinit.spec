@@ -1,6 +1,6 @@
 Name: polkit-sysvinit
 Version: 0.3.4
-Release: alt1
+Release: alt2
 
 Summary: Allow media/network changes to xgrp users
 License: public domain
@@ -34,6 +34,9 @@ install -pm644 %SOURCE0 %SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4 %buildroot%pkdir
 %pkdir/*
 
 %changelog
+* Thu Jul 13 2017 Anton Midyukov <antohami@altlinux.org> 0.3.4-alt2
+- Added missing empty string to the end of xfce4-pm-helper
+
 * Wed Jul 12 2017 Anton Midyukov <antohami@altlinux.org> 0.3.4-alt1
 - Added rules for xfce4-pm-helper (thx Speccyfighter)
 
