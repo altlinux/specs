@@ -7,7 +7,7 @@
 %def_with python3
 
 Name: openvswitch
-Version: 2.7.0
+Version: 2.7.1
 Release: alt1
 
 Summary: An open source, production quality, multilayer virtual switch
@@ -511,6 +511,12 @@ fi
 %endif
 
 %changelog
+* Thu Jul 13 2017 Anton Farygin <rider@altlinux.ru> 2.7.1-alt1
+- 2.7.1 with security fixes:
+  + CVE-2017-9214 Buffer overrread in ofputil_pull_queue_get_config_reply10().
+  + CVE-2017-9263 remote DoS attack by a malicious switch.
+  + CVE-2017-9265 buffer over-read while parsing the group mod OpenFlow message sent from the controller
+
 * Tue Apr 25 2017 Alexey Shabalin <shaba@altlinux.ru> 2.7.0-alt1
 - 2.7.0
 - build python3 package
