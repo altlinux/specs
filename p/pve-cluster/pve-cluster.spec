@@ -1,7 +1,7 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
-Version: 4.0.49
-Release: alt9
+Version: 5.0.12
+Release: alt1
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -31,7 +31,7 @@ on all nodes.
 
 %package -n pve-access-control
 Summary: PVE access control library
-Version: 4.0.19
+Version: 5.0.5
 Group: Development/Perl
 
 %description -n pve-access-control
@@ -117,6 +117,7 @@ fi
 %perl_vendor_autolib/PVE/IPCC
 %dir %perl_vendor_privlib/PVE
 %perl_vendor_privlib/PVE/Cluster.pm
+%perl_vendor_privlib/PVE/Corosync.pm
 %perl_vendor_privlib/PVE/IPCC.pm
 %dir %perl_vendor_privlib/PVE/CLI
 %perl_vendor_privlib/PVE/CLI/pvecm.pm
@@ -142,6 +143,13 @@ fi
 %_man1dir/pveum.1*
 
 %changelog
+* Thu Jul 13 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.12-alt1
+- 5.0-12
+- pve-access-control 5.0-5
+
+* Thu Apr 13 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.0.49-alt8.M80P.1
+- backport to p8 branch
+
 * Fri Apr 07 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.0.49-alt9
 - 4.0-49
 
