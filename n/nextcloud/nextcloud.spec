@@ -1,6 +1,6 @@
 Name: nextcloud
 Version: 12.0.0
-Release: alt3
+Release: alt4
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 %define installdir %webserver_webappsdir/%name
@@ -77,7 +77,6 @@ install -pD -m0644 apache2/default.conf %buildroot%_sysconfdir/httpd2/conf/sites
 install -pD -m0644 nginx/default.conf %buildroot%_sysconfdir/nginx/sites-available.d/%name.conf
 
 %post apache2
-chown -R apache2:apache2 %installdir
 a2ensite %name
 a2enmod ssl
 a2enport https
@@ -89,14 +88,31 @@ a2enmod headers
 %postun apache2
 %_initdir/httpd2 condreload
 
-%post nginx
-chown -R _nginx:_nginx %installdir
-
 %files
-%installdir/
+%installdir/3rdparty
+%dir %attr(0775,root,_webserver) %installdir/apps
+%installdir/apps/*
+%installdir/core
+%installdir/l10n
+%installdir/lib
+%installdir/ocs*
+%installdir/resources
+%installdir/settings
+%installdir/themes
+%installdir/updater
 %dir %attr(0770,root,_webserver) %_sysconfdir/%name/config/
 %_sysconfdir/%name
+%installdir/config
 %dir %attr(0770,root,_webserver) %_localstatedir/%name
+%installdir/data
+%installdir/*.php
+%installdir/.htaccess
+%installdir/.user.ini
+%doc %installdir/AUTHORS
+%installdir/*.xml
+%installdir/index.html
+%installdir/robots.txt
+%installdir/occ
 
 %files apache2
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
@@ -105,8 +121,11 @@ chown -R _nginx:_nginx %installdir
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf 
 
 %changelog
+* Thu Jul 13 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 12.0.0-alt4
+- fixed permissions - addition to previous release
+
 * Thu Jul 13 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 12.0.0-alt3
-- [major] Fixed permissions for installdir
+- [major] fixed permissions for installdir
 
 * Fri Jun 16 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 12.0.0-alt2
 - added missing files
