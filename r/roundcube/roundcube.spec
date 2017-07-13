@@ -1,6 +1,6 @@
 %define oname roundcubemail
 Name: roundcube
-Version: 1.2.5
+Version: 1.3.0
 Release: alt1
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
@@ -9,8 +9,8 @@ License: GPL2
 Group: Networking/Mail
 Url: http://roundcube.net/
 
-#Source0: http://prdownloads.sf.net/%oname/%oname-%version.tar
-Source0: https://github.com/roundcube/roundcubemail/releases/download/%version/roundcubemail-%version.tar
+# Source-url: https://github.com/roundcube/roundcubemail/releases/download/%version/roundcubemail-%{version}-complete.tar.gz
+Source: %name-%version.tar
 Source1: %name.apache.conf
 Source2: composer.json-dist
 Patch0: roundcube-1.2.4-sso-alt.patch
@@ -23,7 +23,7 @@ BuildRequires: php5
 Requires: composer >= 1.1.3
 
 # check it with composer.json or on http://trac.roundcube.net/wiki/Howto_Requirements
-Requires: php5 >= 5.3.7
+Requires: php5 >= 5.4.1
 Requires: webserver-common php-engine
 Requires: pear-Mail_Mime >= 1.10.0
 Requires: pear-Net_SMTP >= 1.7.1
@@ -39,6 +39,8 @@ Requires: pear-Mail_mimeDecode
 Requires: php5-dom php5-mcrypt php5-openssl
 Requires: php5-pdo_mysql
 Requires: php5-mbstring php5-fileinfo php5-mcrypt php5-zip php5-pspell
+# for endroid/qrcode
+Requires: php5-gd2
 
 Provides: roundcube-plugin-acl
 Obsoletes: roundcube-plugin-acl
@@ -66,19 +68,27 @@ BuildArch: noarch
 %name's apache config file
 
 %prep
-%setup -n %oname-%version
+%setup
 %patch0 -p2
 sed -i 's,php_,php5_,' .htaccess
 
 # disable Reply button
 %__subst 's|\(command="reply"\)|\1 style="display:none"|g' skins/larry/includes/mailtoolbar.html skins/classic/includes/messagetoolbar.html
 
+# disable SymLinksIfOwnerMatch
+%__subst 's|\(.*SymLinksIfOwnerMatch.*\)|#\1|g' .htaccess
+
+#if [ ! -s program/js/jquery.min.js ] ; then
+#    echo "run bin/install-jsdeps.sh after download new build"
+#fi
+
 %install
 mkdir -p %buildroot%_datadir/%name/
 install -Dpm 0644 index.php %buildroot%_datadir/%name/index.php
 install -Dpm 0644 .htaccess %buildroot%_datadir/%name/.htaccess
-install -Dpm 0644 robots.txt %buildroot%_datadir/%name/robots.txt
-cp -ar SQL bin program installer plugins skins %buildroot%_datadir/%name/
+#install -Dpm 0644 jsdeps.json %buildroot%_datadir/%name/jsdeps.json
+#install -Dpm 0644 robots.txt %buildroot%_datadir/%name/robots.txt
+cp -ar SQL bin program installer plugins skins public_html %buildroot%_datadir/%name/
 
 cat > %buildroot%_datadir/%name/installer/.htaccess << EOF
 # deny webserver access to this directory
@@ -128,12 +138,16 @@ service httpd2 condreload
 %_localstatedir/%name/enigma/.htaccess
 %dir %attr(0750,root,%webserver_group) %_sysconfdir/%name/
 %config(noreplace) %attr(0640,root,%webserver_group) %_sysconfdir/%name/*
-%doc CHANGELOG LICENSE README.md UPGRADING SQL/
+%doc CHANGELOG INSTALL LICENSE README.md UPGRADING SQL/
 
 %files apache2
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Thu Jul 13 2017 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
+- new version (1.3.0) with rpmgs script
+- use roundcubemail-1.3.0-complete tarball (with js-scripts)
+
 * Thu Jun 08 2017 Vitaly Lipatov <lav@altlinux.ru> 1.2.5-alt1
 - new version 1.2.5 (with rpmrb script)
 
