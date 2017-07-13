@@ -1,5 +1,5 @@
 Name: rpm-macros-lua
-Version: 1.1
+Version: 1.2
 Release: alt1
 Summary: RPM helper macros to build Lua packages
 License: GPL
@@ -23,6 +23,10 @@ install -pD -m644 %SOURCE0 %buildroot%_rpmlibdir/macros.d/lua
 %_rpmlibdir/macros.d/lua
 
 %changelog
+* Tue Jun 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2-alt1
+- Added macro %lua_version
+  Update other macros to depend on it
+
 * Mon Aug 06 2012 Ildar Mulyukov <ildar@altlinux.ru> 1.1-alt1
 - add macros:
   +%lua_path_add_buildroot

@@ -4,7 +4,7 @@
 %define rockspec lua-parser-loose-scm-1.rockspec
 Name: lua-module-%oname
 Version: 0.1
-Release: alt3_lr1.git.g67f9007
+Release: alt4_lr1.git.g67f9007
 Summary: loose parsing of Lua code, ignoring syntax errors
 License: MIT/X11
 Group: Development/Other
@@ -17,7 +17,7 @@ BuildArch: noarch
 Source: lua-parser-loose.tar
 Source1: https://rocks.moonscript.org/manifests/luarocks/lua-parser-loose-scm-1.rockspec
 
-BuildPreReq: rpm-macros-lua >= 1.1
+BuildPreReq: rpm-macros-lua >= 1.2
 # Automatically added by buildreq on ...
 BuildRequires: liblua5-devel luarocks
 
@@ -63,6 +63,9 @@ done
 %exclude %luarocks_dbdir/manifest
 
 %changelog
+* Thu Jul 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1-alt4_lr1.git.g67f9007
+- Rebuild with new luarocks and lua-5.3
+
 * Wed Oct 29 2014 Ildar Mulyukov <ildar@altlinux.ru> 0.1-alt3_lr1.git.g67f9007
 - real new version (previous had wrong tag)
 

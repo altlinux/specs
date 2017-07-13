@@ -5,8 +5,8 @@
 #   2. fix install = { bin = {} } package.path
 
 Name: luarocks
-Version: 2.2.0
-Release: alt1.rc1
+Version: 2.4.2
+Release: alt1
 Summary: A deployment and management system for Lua modules
 License: MIT
 Group: Development/Tools
@@ -19,12 +19,12 @@ Source: http://luarocks.org/releases/%name-%version.tar
 #.gz
 Source1: %name.filetrigger
 Source2: %name-files.req.list
-Patch: %name-alt-build.patch
+Patch: %name-%version-alt-build.patch
 
-Requires: wget p7zip
-BuildPreReq: rpm-macros-lua
+Requires: wget p7zip unzip
+BuildPreReq: rpm-macros-lua >= 1.2
 # Automatically added by buildreq on Wed Dec 15 2010
-BuildRequires: liblua5-devel lua5 lua5.1-alt-compat wget p7zip
+BuildRequires: liblua5-devel lua5 wget p7zip unzip
 
 %description
 LuaRocks allows you to install Lua modules as self-contained
@@ -40,7 +40,7 @@ local and remote repositories, and multiple local rocks trees.
 %patch0 -p1
 
 %build
-./configure --prefix=%prefix
+./configure --prefix=%prefix --lua-version=%lua_version
 make
 
 %install
@@ -86,6 +86,9 @@ install -m644 %SOURCE2 %buildroot%_rpmlibdir/
 %doc COPYING README*
 
 %changelog
+* Thu Jul 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.2-alt1
+- Updated to upstream version 2.4.2
+
 * Mon Oct 06 2014 Ildar Mulyukov <ildar@altlinux.ru> 2.2.0-alt1.rc1
 - fix rpath for builtin biulds
 
