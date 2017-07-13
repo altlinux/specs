@@ -6,7 +6,7 @@
 %define sover %somver.8.0
 Name: lib%origname
 Version: 1.8.0
-Release: alt17
+Release: alt18
 Summary: Scalable LAPACK library
 License: LGPL
 Group: Sciences/Mathematics
@@ -377,6 +377,9 @@ popd
 #_includedir/%origname
 
 %changelog
+* Thu Jul 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.0-alt18
+- Rebuilt with new mpi and toolchain
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt17
 - Built with OpenBLAS instead of GotoBLAS2
 
