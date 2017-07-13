@@ -1,6 +1,6 @@
 Name: apt-scripts
-Version: 0.1.2
-Release: alt2
+Version: 0.1.3
+Release: alt1
 
 Summary: Lua scripts for APT
 License: GPL
@@ -46,6 +46,9 @@ ls *.conf |sed 's:^:^/etc/apt/apt.conf.d/:;s:[.]:[.]:g' >%buildroot/etc/buildreq
 %config /etc/buildreqs/files/ignore.d/%name
 
 %changelog 
+* Thu Jul 13 2017 Mikhail Efremov <sem@altlinux.org> 0.1.3-alt1
+- list-nodeps: Only use "depends" and "depends"-like dependences.
+
 * Fri Dec 23 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.1.2-alt2
 - fixed list-extras and list-unreleased scripts (closes: #32938)
 
