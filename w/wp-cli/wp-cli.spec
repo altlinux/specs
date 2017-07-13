@@ -1,5 +1,7 @@
+# TODO pack in phar archive with https://github.com/clue/phar-composer
+
 Name: wp-cli
-Version: 0.24.1
+Version: 1.2.1
 Release: alt1
 
 Summary: WP-CLI is a set of command-line tools for managing WordPress installations.
@@ -33,7 +35,6 @@ WP-CLI is a set of command-line tools for managing WordPress installations.
 
 #!!! Create new vendor cache for new wp-cli version by get_vendor_cache.sh !!!
 
-# TODO pack in phar archive with https://github.com/clue/phar-composer
 
 #composer install --no-interaction
 # --prefer-source
@@ -43,7 +44,8 @@ rm -rf %buildroot/%wpcli/vendor/
 
 mkdir -p %buildroot/%wpcli/
 cp -a ./ %buildroot/%wpcli/
-rm -rf %buildroot/%wpcli/.gear/ %buildroot/usr/share/wp-cli/{.editorconfig,.gitattributes,.mailmap,.travis.yml}
+rm -rf %buildroot/%wpcli/.gear/ %buildroot/%wpcli/{.editorconfig,.gitattributes,.mailmap,.travis.yml}
+rm -rf %buildroot/%wpcli/{tests,utils}/
 
 # TODO: do not working after it
 echo "Generating PHAR ..."
@@ -55,18 +57,22 @@ cat >%buildroot/%_bindir/%name <<EOF
 #!/bin/sh
 %wpcli/bin/wp "\$@"
 EOF
-
+chmod 0755 %buildroot/%_bindir/%name
 ln -s %name %buildroot/%_bindir/wp
 
 %check
 test "$(%buildroot%wpcli/bin/wp cli version)" = "WP-CLI %version"
 
 %files
-%attr(755,root,root) %_bindir/%name
-%attr(755,root,root) %_bindir/wp
-%wpcli/*
+%_bindir/%name
+%_bindir/wp
+%wpcli/
 
 %changelog
+* Thu Jul 13 2017 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
+- new version (1.2.1) with rpmgs script
+- update vendor dir
+
 * Fri Aug 19 2016 Vitaly Lipatov <lav@altlinux.ru> 0.24.1-alt1
 - new version (0.24.1) with rpmgs script
 - switch to build from tarball
