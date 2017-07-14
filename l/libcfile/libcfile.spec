@@ -14,7 +14,7 @@
 
 Name: libcfile
 Version: 20130809
-Release: alt1
+Release: alt2
 
 Summary: Library for cross-platform C file functions
 License: LGPLv3+
@@ -25,6 +25,8 @@ Url: http://code.google.com/p/libcfile/
 #DL-URL: https://googledrive.com/host/0B3fBvzttpiiSem41RXpvQkIyZlU/libcfile-alpha-20130809.tar.gz
 Source: %name-alpha-%version.tar.gz
 Packager: Michael Shigorin <mike@altlinux.org>
+
+Patch1: %name-%version-alt-gcc6.patch
 
 BuildRequires: pkg-config
 BuildRequires: pkgconfig(libcerror) >= 20130609
@@ -51,6 +53,7 @@ applications that want to make use of libcfile.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 %configure \
@@ -72,6 +75,9 @@ applications that want to make use of libcfile.
 %_man3dir/*
 
 %changelog
+* Fri Jul 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 20130809-alt2
+- Fixed build with gcc-6
+
 * Fri May 09 2014 Michael Shigorin <mike@altlinux.org> 20130809-alt1
 - initial build for ALT Linux Sisyphus
 
