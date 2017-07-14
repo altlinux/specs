@@ -5,7 +5,7 @@
 
 Name: python-module-%modulename
 Version: 15.0.3
-Release: alt1
+Release: alt2
 
 Summary: Virtual Python Environment builder
 License: MIT
@@ -108,7 +108,7 @@ rm -rf build && ln -sf build2 build
 py.test
 
 %if_with python3
-py.test-%_python3_version
+py.test3
 %endif
 %endif
 
@@ -126,6 +126,9 @@ py.test-%_python3_version
 %endif
 
 %changelog
+* Fri Jul 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 15.0.3-alt2
+- Fixed build spec with py.test3
+
 * Thu Sep 01 2016 Fr. Br. George <george@altlinux.ru> 15.0.3-alt1
 - Autobuild version bump to 15.0.3
 - Fix build/tests
