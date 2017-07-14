@@ -2,7 +2,7 @@
 %define theme client_theming
 Name: nextcloud-client
 Version: 2.3.2
-Release: alt2
+Release: alt3
 
 Group: Networking/File transfer
 Summary: Nextcloud Desktop Client
@@ -82,6 +82,12 @@ desktop-file-install \
 %_K5srv/*nextcloud*.desktop
 
 %changelog
+* Fri Jul 14 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.3.2-alt3
+- updated "client_theming" (beta1->release)
+
+* Fri Jun 16 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.3.2-alt1.M80P.1
+- build for M80P
+
 * Fri Jun 16 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.3.2-alt2
 - build "nextcloud-client"
 
