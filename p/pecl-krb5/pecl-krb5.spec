@@ -2,7 +2,7 @@
 %define pecl_name krb5
 
 Name: pecl-%pecl_name
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1.%php5_version.%php5_release
 
 Summary: PHP module for authentication via GSSAPI
