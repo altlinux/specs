@@ -1,9 +1,10 @@
 # check deps/npm/package.json for it
 %define npmver 3.10.9
+# separate build npm
 %def_without npm
-# note: we will npm-@npmver-@release package! fix release if npmver is unchanged
+# in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 6.10
+%define major 6.11
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -28,7 +29,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.3
+Version: %major.1
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -258,6 +259,10 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Fri Jul 14 2017 Vitaly Lipatov <lav@altlinux.ru> 6.11.1-alt1
+- new version 6.11.1 (with rpmrb script)
+- 2017-07-11 v6.11.1 'Boron' (LTS) Release
+
 * Mon May 08 2017 Vitaly Lipatov <lav@altlinux.ru> 6.10.3-alt1
 - new version 6.10.3 (with rpmrb script)
 - 2017-05-02, Version 6.10.3 'Boron' (LTS)
