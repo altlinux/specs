@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1.1.1
+Release: alt2
 Summary: Object-oriented filesystem paths
 License: MIT
 Group: Development/Python
@@ -84,7 +84,7 @@ popd
 py.test
 %if_with python3
 pushd ../python3
-py.test-%_python3_version
+py.test3
 popd
 %endif
 
@@ -99,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt2
+- Fixed build spec with py.test3
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.1-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
