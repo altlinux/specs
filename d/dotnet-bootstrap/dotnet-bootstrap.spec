@@ -4,7 +4,7 @@
 
 Name: dotnet-bootstrap
 Version: 2.0.0
-Release: alt1.%pre
+Release: alt2.%pre
 
 Summary: .NET Core SDK binaries
 
@@ -21,15 +21,23 @@ ExclusiveArch: x86_64
 #BuildPreReq: /proc
 
 %set_verify_elf_method textrel=relaxed
-AutoReq: no
+AutoReq: no,lib,shell
 AutoProv: no
 
-BuildRequires: libunwind
+BuildRequires: libunwind >= 1.1
+BuildRequires: liblttng-ust >= 2.8.0
+BuildRequires: libcurl
+BuildRequires: libkrb5
 
-Requires: libcrypto10 libssl10 libunwind liblttng-ust
+# for System.Security.Cryptography.Native.OpenSsl.so
+# but already required by libkrb5
+#Requires: libcrypto10 libssl10
 
-Provides: dotnet-bootstrap-runtime-%coreversion
-Provides: dotnet-bootstrap-sdk-%sdkversion
+# it is not linked directly (need the same version like in libicu-devel)
+Requires: libicu56
+
+Provides: dotnet-bootstrap-runtime = %coreversion
+Provides: dotnet-bootstrap-sdk = %sdkversion
 
 %description
 This package contains full .NET Core SDK binaries, needed for bootstrap build.
@@ -51,6 +59,10 @@ rm -f %buildroot%_libdir/%name/shared/Microsoft.NETCore.App/*/libsosplugin.so
 %_libdir/%name/
 
 %changelog
+* Fri Jul 14 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt2.preview2
+- enable autoreq for libs, shell
+- fix buildreqs to correct generated requires
+
 * Fri Jul 14 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1.preview2
 - add provides with .NET Core runtime/SDK versions
 
