@@ -1,7 +1,7 @@
 %define rname kaccounts-providers
 
 Name: kde5-%rname
-Version: 17.04.2
+Version: 17.04.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -46,9 +46,9 @@ Requires: kf5-filesystem
 %install
 %K5install
 %K5install_move data kpackage
-#%find_lang %name --with-kde --all-name
+%find_lang %name --with-kde --all-name
 
-%files
+%files -f %name.lang
 %config(noreplace) /etc/signon-ui/webkit-options.d/*.conf
 %_K5plug/kaccounts/ui/*.so
 %_datadir/accounts/providers/kde/
@@ -56,6 +56,9 @@ Requires: kf5-filesystem
 
 
 %changelog
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+- new version
+
 * Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
 - new version
 

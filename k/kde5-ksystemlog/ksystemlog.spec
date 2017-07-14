@@ -1,7 +1,7 @@
 %define rname ksystemlog
 
 Name: kde5-%rname
-Version: 17.04.2
+Version: 17.04.3
 Release: alt1%ubt
 %K5init
 
@@ -50,6 +50,9 @@ who want to quickly see problems occuring on their server.
 %_K5xmlgui/ksystemlog/
 
 %changelog
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+- new version
+
 * Fri Jun 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
 - new version
 

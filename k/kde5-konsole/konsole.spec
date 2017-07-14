@@ -4,8 +4,8 @@
 %define libkonsoleprivate libkonsoleprivate%sover
 
 Name: kde5-%rname
-Version: 17.04.2
-Release: alt2%ubt
+Version: 17.04.3
+Release: alt1%ubt
 %K5init
 
 Group: Terminals
@@ -116,6 +116,9 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+- new version
+
 * Wed Jul 05 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt2%ubt
 - set Monospace font by default to scale with hi resolution
 - intense bold fonts by default

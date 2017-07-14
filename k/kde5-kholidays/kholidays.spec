@@ -1,8 +1,8 @@
 %define rname kholidays
 
 Name: kde5-%rname
-Version: 17.04.2
-Release: alt2%ubt
+Version: 17.04.3
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -62,6 +62,7 @@ KF5 library
 %install
 %K5install
 %find_lang %name --with-kde --all-name
+%K5find_qtlang %name --all-name
 
 %files common -f %name.lang
 #%doc COPYING*
@@ -80,6 +81,9 @@ KF5 library
 %_K5qml/org/kde/kholidays/
 
 %changelog
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+- new version
+
 * Mon Jul 10 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt2%ubt
 - update to fix Turkish Holiday File
 
