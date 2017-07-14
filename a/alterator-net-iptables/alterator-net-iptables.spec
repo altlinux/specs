@@ -1,5 +1,5 @@
 Name: alterator-net-iptables
-Version: 4.19.6
+Version: 4.19.7
 Release: alt1
 
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
@@ -11,19 +11,21 @@ Url: http://wiki.sisyphus.ru/Alterator
 
 Source: %name-%version.tar
 
-BuildArch: noarch
-
-Requires: alterator >= 4.17-alt2 iptables etcnet
-
+Requires: alterator >= 5.0-alt4
+Requires: alterator-l10n >= 2.0-alt2
+Requires: iptables etcnet
 Requires: alterator-sh-functions >= 0.10-alt1
 Requires: alterator-net-functions >= 1.3.1-alt1
 Requires: alterator-net-common >= 0.4-alt1
 Conflicts: alterator-fbi < 5.23-alt1
 
-BuildPreReq: alterator >= 3.9-alt3
+BuildPreReq: alterator >= 5.0
+
+BuildRequires: guile22-devel rpm-build >= 4.0.4-alt103
+BuildRequires: alterator >= 5.0 alterator-fbi >= 5.33-alt1
 
 %description
-alterator module for simple iptables configuration
+Alterator module for simple iptables configuration
 
 %prep
 %setup -q
@@ -48,8 +50,12 @@ touch -- %buildroot%_logdir/%name
 %_sysconfdir/alterator/net-ip6tables/List
 %_sysconfdir/alterator/net-ip6tables/*.desktop
 %_alterator_backend3dir/*
-%_datadir/alterator/applications/*
-%_datadir/alterator/ui/*
+%_alterator_datadir/applications/*
+%_alterator_datadir/ui/*/*.scm
+%_alterator_datadir/ui/*/*.html
+%_alterator_libdir/ui/*/*.go
+%_alterator_datadir/type/*.scm
+%_alterator_libdir/type/*.go
 %_bindir/*
 %_mandir/man?/*
 %dir %_libexecdir/alterator/hooks/net-iptables.d/
@@ -58,6 +64,11 @@ touch -- %buildroot%_logdir/%name
 %_logdir/alterator-net-iptables
 
 %changelog
+* Fri Jul 14 2017 Paul Wolneykien <manowar@altlinux.org> 4.19.7-alt1
+- Build with new alterator (guile2).
+- Use quote_shell_var instead of plain eval (closes: #33646).
+- Use typed params everywhere it is possible.
+
 * Tue Feb 24 2015 Mikhail Efremov <sem@altlinux.org> 4.19.6-alt1
 - Set restart_network to 'on' by default.
 - net-iptables.conf: Add restart_network option.
