@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define _libexecdir %_prefix/libexec
 %define ver_major 3.24
 %define api_ver 3
@@ -10,15 +12,18 @@
 
 Name: evince
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A document viewer
 Group: Office
 License: GPL
 Url: http://www.gnome.org/projects/evince/
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 
 Requires: lib%name = %version-%release
 Requires: gnome-icon-theme gnome-icon-theme-symbolic icon-theme-adwaita
@@ -205,6 +210,10 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Fri Jul 14 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt2
+- updated to 3.24.0-12-g717df38 (fixed BGO ##691448, 779614,
+  784630 (CVE-2017-1000083))
+
 * Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 
