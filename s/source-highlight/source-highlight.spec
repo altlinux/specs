@@ -1,6 +1,6 @@
 Name: source-highlight
 Version: 3.1.8
-Release: alt1.git20121231.qa2
+Release: alt2
 
 Summary: syntax highlighting for source documents
 License: GPL
@@ -90,6 +90,9 @@ BuildArch: noarch
 %_sysconfdir/bash_completion.d/*
 
 %changelog
+* Fri Jul 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.8-alt2
+- Updated to upstream release version 3.1.8
+
 * Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.1.8-alt1.git20121231.qa2
 - NMU: rebuilt with boost 1.57.0 -> 1.58.0.
 
