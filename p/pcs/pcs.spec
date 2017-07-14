@@ -1,6 +1,6 @@
 Name: 	  pcs
-Version:  0.9.158
-Release:  alt3
+Version:  0.9.159
+Release:  alt1
 Epoch:    1
 
 Summary:  Pacemaker/Corosync configuration system
@@ -95,6 +95,9 @@ rm -rf %buildroot/%ruby_sitelibdir/pcsd/*{.service,.logrotate,debian,orig}*
 %ruby_sitelibdir/pcsd/test/*
 
 %changelog
+* Fri Jul 14 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.9.159-alt1
+- New version
+
 * Thu Jun 29 2017 Denis Medvedev <nbr@altlinux.org> 1:0.9.158-alt3
 - Added systemd unit (ALT #33590).
 
