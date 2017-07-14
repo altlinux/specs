@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1.1
-Release: alt1
+Release: alt2
 Summary: SubRip (.srt) subtitle parser and writer
 License: GPLv3
 Group: Development/Python
@@ -77,7 +77,7 @@ py.test
 %if_with python3
 pushd ../python3
 python3 setup.py test
-py.test-%_python3_version
+py.test3
 popd
 %endif
 
@@ -97,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt2
+- Fixed build spec with py.test3
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1
 - automated PyPI update
 
