@@ -3,7 +3,7 @@
 
 Name: openstack-%oname
 Version: 10.0.3
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: OpenStack Volume service
 
@@ -110,6 +110,8 @@ BuildRequires: python-module-subunit-tests
 
 Requires: python-module-cinder = %EVR
 Requires: python-module-PasteDeploy
+Requires: python-module-osprofiler >= 1.1.0
+Requires: python-module-keystonemiddleware
 
 Requires(pre): shadow-utils
 
@@ -307,6 +309,11 @@ crudini --set %cinder_conf oslo_concurrency lock_path /var/run/cinder
 %doc doc/build/html
 
 %changelog
+* Fri Jul 14 2017 Lenar Shakirov <snejok@altlinux.ru> 1:10.0.3-alt2
+- Requires added:
+  * python-module-osprofile
+  * python-module-keystonemiddleware
+
 * Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.3-alt1
 - 10.0.3
 - drop signing_dir from default config
