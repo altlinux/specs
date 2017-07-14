@@ -2,7 +2,7 @@
 
 Name: php5-fpm-fcgi
 Version: %php5_version
-Release: %php5_release
+Release: %php5_release.1
 Summary: The PHP5 HTML-embedded scripting language as a fpm-fcgi binary.
 Group: System/Servers
 Url: http://www.php.net/
@@ -35,13 +35,13 @@ also offers built-in database integration for several commercial
 and non-commercial database management systems, so writing a
 database-enabled web page with PHP is fairly simple.  The most
 common use of PHP coding is probably as a replacement for CGI
-scripts.  
-Using PHP as a CGI binary is an option for setups that for some reason 
-do not wish to integrate PHP as a module into server software (like Apache), 
-or will use PHP with different kinds of CGI wrappers to create safe 
-chroot and setuid environments for scripts. 
-This setup usually involves installing executable PHP binary to the 
-web server cgi-bin directory. CERT advisory CA-96.11 recommends 
+scripts.
+Using PHP as a CGI binary is an option for setups that for some reason
+do not wish to integrate PHP as a module into server software (like Apache),
+or will use PHP with different kinds of CGI wrappers to create safe
+chroot and setuid environments for scripts.
+This setup usually involves installing executable PHP binary to the
+web server cgi-bin directory. CERT advisory CA-96.11 recommends
 against placing any interpreters into cgi-bin.
 
 %prep
@@ -71,7 +71,7 @@ FPM_BUILD_VARS=" \
     BUILD_DIR=. \
 "
 
-phpize 
+phpize
 %configure \
 	--disable-static \
 	--enable-fpm  \
@@ -80,7 +80,7 @@ phpize
 	--with-php-config=%_bindir/php-config \
 	--localstatedir=/var \
 	EXTRA_LIBS="-lphp-%_php5_version -lrt" \
-	$FPM_BUILD_VARS 
+	$FPM_BUILD_VARS
 
 %php5_make sapi/fpm/php-fpm
 
@@ -89,7 +89,7 @@ mkdir -p \
 	%buildroot/%_bindir \
 	%buildroot/%php5_servicedir/%php5_sapi \
 	%buildroot/%php5_sysconfdir/%php5_sapi/php.d
-	
+
 %php5_make_install install-fpm program_suffix=-%_php5_version
 
 ln -s php-fpm-%_php5_version %buildroot%_sbindir/php5-fpm
@@ -125,7 +125,7 @@ mkdir -p %buildroot%_runtimedir/php5-fpm
 install -pD -m644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/php5-fpm
 
 mkdir -p  %buildroot%_sysconfdir/tmpfiles.d
-echo 'd /var/run/php5-fpm 0775 root root' >> %buildroot%_sysconfdir/tmpfiles.d/php5-fpm.conf
+echo 'd /var/run/php5-fpm 0750 root _webserver' >> %buildroot%_sysconfdir/tmpfiles.d/php5-fpm.conf
 
 mkdir -p  %buildroot%_unitdir
 install -m 0644 %SOURCE5 %buildroot%_unitdir/php5-fpm.service
@@ -161,13 +161,13 @@ fi
 %config %_initdir/php5-fpm
 %_sbindir/php-fpm-%_php5_version
 %_sbindir/php5-fpm
-%_altdir/php5-fpm 
+%_altdir/php5-fpm
 %dir %php5_sysconfdir/%php5_sapi
 %dir %php5_sysconfdir/%php5_sapi/php.d
 %dir %_sysconfdir/fpm/
 %dir %_sysconfdir/fpm/fpm.d
 %dir %_logdir/php5-fpm
-%dir  %attr(775,root,_php_fpm) %verify(not mode) %_runtimedir/php5-fpm
+%dir %attr(750, root, _webserver) %_runtimedir/php5-fpm
 %config(noreplace) %_sysconfdir/fpm/php5-fpm.conf
 %config(noreplace) %php5_sysconfdir/%php5_sapi/php.ini
 %config(noreplace) %php5_sysconfdir/%php5_sapi/browscap.ini
@@ -182,14 +182,17 @@ fi
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%version-%release
 
+* Thu Jul 13 2017 Elvira Khabirova <lineprinter@altlinux.org> 5.6.31.20170607-alt0
+- Fixed %%_runtimedir/php5-fpm directory permissions.
+
 * Mon Jan 26 2015 Anton Farygin <rider@altlinux.ru> 5.5.20.20141217-alt2
 - SAPI name revert to upstream fpm-fcgi (closes: #30496)
 - configuration files moved from /etc/php/5.5/fpm to /etc/php/5.5/fpm-fcgi
 - add legacy script for logs rotate under systemd
-- php.ini now is version-free 
+- php.ini now is version-free
 
 * Wed Jun 18 2014 Anton Farygin <rider@altlinux.ru> 5.5.13.20140626-alt1.1
-- fixed unix socket permissions in default php5-fpm.conf 
+- fixed unix socket permissions in default php5-fpm.conf
 
 * Fri Jul 19 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.4.17.20130704-alt0
 - patches fixed
