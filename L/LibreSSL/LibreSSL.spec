@@ -1,5 +1,5 @@
 Name: LibreSSL
-Version: 2.5.4
+Version: 2.5.5
 Release: alt1
 
 %define oname libressl
@@ -259,6 +259,9 @@ gzip -9 %buildroot%docdir/RELNOTES
 %_man1dir/netcat.*
 
 %changelog
+* Fri Jul 14 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.5.5-alt1
+- 2.5.5
+
 * Wed May 03 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.5.4-alt1
 - 2.5.4
 - Fixes:
