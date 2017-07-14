@@ -1,6 +1,6 @@
 Name: gnulib
 Version: 0.1.1213.683b6
-Release: alt1
+Release: alt2
 
 Summary: GNU Portability Library
 License: Freely distributable
@@ -10,6 +10,7 @@ Url: http://www.gnu.org/software/gnulib/
 Source: %name-%version.tar
 Patch1: gnulib-alt-utimens.patch
 Patch2: gnulib-alt-mktime-internal.patch
+Patch3: gnulib-upstream-parse-datetime-make-it-standalone-no-changelog.patch
 AutoReqProv: no
 BuildRequires: gnu-config makeinfo
 
@@ -26,6 +27,7 @@ source repository.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 install -pm755 %_datadir/gnu-config/config.{guess,sub} build-aux/
 # Thanks to USE_POSIX_THREADS_WEAK feature, we have to link
@@ -53,6 +55,9 @@ mv %buildroot%_datadir/%name/doc/*.info %buildroot%_infodir/
 %_datadir/%name/
 
 %changelog
+* Tue Jul 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.1213.683b6-alt2
+- Fixed includes for new toolchain
+
 * Sun Mar 26 2017 Dmitry V. Levin <ldv@altlinux.org> 0.1.1213.683b6-alt1
 - v0.1-1209-g24b3216 -> v0.1-1213-g683b607.
 

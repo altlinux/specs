@@ -1,6 +1,6 @@
 Name: faketime
 Version: 0.2.5
-Release: alt2
+Release: alt3
 
 Summary: Execute program with changed notion of system time
 License: GPLv3+
@@ -48,6 +48,9 @@ diff exp out
 %_man1dir/*
 
 %changelog
+* Wed Jun 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.5-alt3
+- Fix build with new toolchain
+
 * Wed Oct 07 2015 Dmitry V. Levin <ldv@altlinux.org> 0.2.5-alt2
 - Built with gnulib v0.1-585-g2fda85e.
 
