@@ -1,10 +1,11 @@
+# FIXME: build from sources
 %def_with bootstrap
 %define corerelease 2.0.0-preview2-25407-01
 %define pre preview2
 
 Name: dotnet-corefx
 Version: 2.0.0
-Release: alt2.%pre
+Release: alt3.%pre
 
 Summary: .NET Core foundational libraries, called CoreFX
 
@@ -21,7 +22,7 @@ AutoReq: yes,nomingw32,nomingw64,nomono,nomonolib
 AutoProv: no
 
 %if_with bootstrap
-BuildRequires: dotnet-bootstrap >= %version-alt0.%pre
+BuildRequires: dotnet-bootstrap-runtime = %corerelease
 %define bootstrapdir %_libdir/dotnet-bootstrap
 %else
 BuildRequires: dotnet
@@ -55,7 +56,10 @@ Just copied binaries now.
 %install
 mkdir -p %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
 %if_with bootstrap
-cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%version-*/{System*.so,*.dll} %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
+# native
+cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%version-*/System*.so %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
+# managed
+cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%version-*/*.dll %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
 # read during dotnet --version
 cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%version-*/System.Native.a %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
 
@@ -80,6 +84,9 @@ EOF
 %_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/*.dll
 
 %changelog
+* Fri Jul 14 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt3.preview2
+- build with strict dotnet-bootstrap require
+
 * Thu Jul 13 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt2.preview2
 - .NET Core Runtime 2.0.0 Preview 2 build 25407-01
 
