@@ -1,13 +1,15 @@
 
 Name: libvisio
 Version: 0.1.3
-Release: alt1.2
+Release: alt1.3
 Summary: A library providing ability to interpret and import visio diagrams
 
 Group: System/Libraries
 License: GPLv2+ or LGPLv2+ or MPLv1.1
 Url: http://www.freedesktop.org/wiki/Software/libvisio
 Source: %name-%version.tar
+
+Patch1: %name-%version-alt-fix-linking.patch
 
 BuildRequires: gcc-c++
 BuildRequires: boost-devel-headers
@@ -20,6 +22,8 @@ BuildRequires: pkgconfig(cppunit)
 
 BuildRequires: doxygen
 BuildRequires: gperf
+# autoconf-archive required for AX_BOOST_BASE and AX_BOOST_SYSTEM autoconf macros
+BuildRequires: autoconf-archive
 
 %description
 Libvisio is library providing ability to interpret and import visio
@@ -55,6 +59,7 @@ Currently supported: XHTML, raw, plain text.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 mkdir -p m4
@@ -82,6 +87,9 @@ mkdir -p m4
 %_bindir/*
 
 %changelog
+* Fri Jul 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.3-alt1.3
+- Fixed broken linking
+
 * Sat Feb 13 2016 Sergey V Turchin <zerg@altlinux.org> 0.1.3-alt1.2
 - NMU: fix build requires
 
