@@ -1,8 +1,10 @@
+%define sdkversion 2.0.0-preview2-006497
+%define coreversion 2.0.0-preview2-25407-01
 %define pre preview2
 
 Name: dotnet-bootstrap
 Version: 2.0.0
-Release: alt0.%pre
+Release: alt1.%pre
 
 Summary: .NET Core SDK binaries
 
@@ -10,7 +12,7 @@ License: MIT
 Url: https://github.com/dotnet
 Group: Development/Other
 
-# Source-url: https://download.microsoft.com/download/F/A/A/FAAE9280-F410-458E-8819-279C5A68EDCF/dotnet-sdk-2.0.0-preview2-006497-linux-x64.tar.gz
+# Source-url: https://download.microsoft.com/download/F/A/A/FAAE9280-F410-458E-8819-279C5A68EDCF/dotnet-sdk-%sdkversion-linux-x64.tar.gz
 Source: %name-%version.tar
 
 ExclusiveArch: x86_64
@@ -26,10 +28,13 @@ BuildRequires: libunwind
 
 Requires: libcrypto10 libssl10 libunwind liblttng-ust
 
+Provides: dotnet-bootstrap-runtime-%coreversion
+Provides: dotnet-bootstrap-sdk-%sdkversion
+
 %description
 This package contains full .NET Core SDK binaries, needed for bootstrap build.
 
-https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.0.0-%pre-download.md
+https://github.com/dotnet/core/blob/master/release-notes/download-archives/%version-%pre-download.md
 
 %prep
 %setup
@@ -46,6 +51,9 @@ rm -f %buildroot%_libdir/%name/shared/Microsoft.NETCore.App/*/libsosplugin.so
 %_libdir/%name/
 
 %changelog
+* Fri Jul 14 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1.preview2
+- add provides with .NET Core runtime/SDK versions
+
 * Thu Jul 13 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt0.preview2
 - .NET Core Runtime 2.0.0 Preview 2 build 25407-01
 - .NET Core SDK 2.0.0 Preview 2 build 006497
