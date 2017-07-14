@@ -1,9 +1,10 @@
+# TODO: build from sources
 %define sdkrelease 2.0.0-preview2-006497
 %define pre preview2
 
 Name: dotnet-sdk
 Version: 2.0.0
-Release: alt2.%pre
+Release: alt3.%pre
 
 Summary: SDK for the .NET Core runtime and libraries
 
@@ -14,7 +15,7 @@ Source: %name-%version.tar
 
 ExclusiveArch: x86_64
 
-BuildRequires: dotnet-bootstrap >= %version-alt0.%pre
+BuildRequires: dotnet-bootstrap-sdk = %sdkrelease
 
 Requires: dotnet-common >= %version
 
@@ -40,6 +41,9 @@ cp -a %_libdir/dotnet-bootstrap/sdk/%version-*/.version %buildroot%_libdir/dotne
 %_libdir/dotnet/sdk/%sdkrelease/
 
 %changelog
+* Fri Jul 14 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt3.preview2
+- use dotnet-bootstrap-sdk buildreq
+
 * Thu Jul 13 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt2.preview2
 - .NET Core SDK 2.0.0 Preview 2 build 006497
 
