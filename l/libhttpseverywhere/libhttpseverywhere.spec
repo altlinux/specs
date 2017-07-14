@@ -8,7 +8,7 @@
 %def_disable doc
 
 Name: lib%_name
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Library to use HTTPSEverywhere in desktop applications
@@ -112,6 +112,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Fri Jul 14 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.7-alt1
+- 0.4.7
+
 * Wed Jun 21 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.6-alt1
 - 0.4.6
 
