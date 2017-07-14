@@ -12,7 +12,7 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.26
+Version: 2.4.27
 Release: alt1%ubt
 Epoch: 1
 
@@ -68,22 +68,21 @@ Source71: apache2-cert-sh.sh
 # ALT patches:
 Patch1: apache2-2.4.25-alt-all-0.3.patch
 Patch2: apache2-2.4.25-alt-apachectl.patch
-Patch3: apache2-2.4.25-alt-httpd.conf.patch
+Patch3: apache2-2.4.27-alt-httpd.conf.patch
 
 BuildRequires(pre): rpm-macros-apache2 >= 3.12
 BuildRequires(pre): libssl-devel
 BuildRequires(pre): rpm-macros-condstopstart
 BuildRequires(pre): libaprutil1-devel 
 BuildRequires(pre): rpm-build-licenses
-BuildPreReq: %_datadir/rpm-build-rpm-eval/rpm-eval.sh
 BuildPreReq: rpm-macros-webserver-cgi-bin-control
 BuildPreReq: rpm >= 4.0.4-alt100.62
 # For use -z sed option
 BuildPreReq: sed >= 1:4.2.2-alt1
 
 Requires: %name-base = %EVR
-Requires: %apache2_bindir/ab2
-Requires: %apache2_bindir/htpasswd2
+Requires: %_bindir/ab2
+Requires: %_bindir/htpasswd2
 Requires: webserver-cgi-bin
 Requires: webserver-html
 Requires: webserver-icons
@@ -136,7 +135,7 @@ Provides: %apache2_addonconfdir
 Provides: %apache2_serverdatadir
 Provides: %apache2_errordir
 Provides: %apache2_errordir/include
-Provides: %apache2_localstatedir/lib/dav
+Provides: %_var/lib/dav
 Provides: %apache2_proxycachedir
 Provides: %apache2_spooldir
 Provides: %apache2_spooldir/tmp
@@ -165,9 +164,9 @@ Provides: %apache2_runtimedir
 Provides: %apache2_lockdir
 Provides: %docdir
 
-Conflicts: apache-common < 1.3.41rusPL30.23-alt4.2
-Conflicts: apache < 1.3.41rusPL30.23-alt4.2
-Conflicts: apache-mod_perl < 1.3.41rusPL30.23-alt4.2
+Conflicts: apache-common <= 1.3.42rusPL30.24-alt9
+Conflicts: apache <= 1.3.42rusPL30.24-alt9
+Conflicts: apache-mod_perl < 1.3.42rusPL30.24-alt9
 Conflicts: apache2-htcacheclean <= 2.2.22-alt11
 
 Obsoletes: %name-init
@@ -176,7 +175,7 @@ PreReq: webserver-common
 Requires: %name-mods >= %version-%release
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
-Requires: %apache2_sbindir/%apache2_dname
+Requires: %_sbindir/%apache2_dname
 Requires: %condstopstart_webdir
 Requires: %condstopstart_webrundir
 
@@ -259,7 +258,7 @@ Group: System/Servers
 PreReq: %name-base >= %EVR
 PreReq: alternatives >= 0.4
 Provides: %name-mmn = %mmn
-Provides: %apache2_sbindir/%apache2_dname
+Provides: %_sbindir/%apache2_dname
 Provides: %name-httpd = %EVR
 
 %description httpd-worker
@@ -276,7 +275,7 @@ Group: System/Servers
 PreReq: %name-base = %EVR
 PreReq: alternatives >= 0.4
 Provides: %name-mmn = %mmn
-Provides: %apache2_sbindir/%apache2_dname
+Provides: %_sbindir/%apache2_dname
 Provides: %name-httpd = %EVR
 Provides: %name-httpd-prefork-like = %EVR
 
@@ -297,7 +296,7 @@ Group: System/Servers
 PreReq: %name-base = %EVR
 PreReq: alternatives >= 0.4
 Provides: %name-mmn = %mmn
-Provides: %apache2_sbindir/%apache2_dname
+Provides: %_sbindir/%apache2_dname
 Provides: %name-httpd = %EVR
 
 %description httpd-event
@@ -467,7 +466,7 @@ BuildArch: noarch
 Provides: webserver-cgi-bin
 Requires: %name-cgi-bin-test-cgi = %EVR
 Requires: %name-cgi-bin-printenv = %EVR
-Conflicts: apache-common < 1.3.41rusPL30.23-alt4.2
+Conflicts: apache-common <= 1.3.42rusPL30.24-alt9
 Conflicts: apache-cgi-bin
 
 %description cgi-bin
@@ -483,7 +482,7 @@ Group: System/Servers
 BuildArch: noarch
 PreReq: webserver-common
 Provides: webserver-html
-Conflicts: apache-common < 1.3.41rusPL30.23-alt4.2
+Conflicts: apache-common <= 1.3.42rusPL30.24-alt9
 Conflicts: apache-html
 
 %description html
@@ -499,7 +498,7 @@ Group: System/Servers
 BuildArch: noarch
 PreReq: webserver-common
 Provides: webserver-icons
-Conflicts: apache-common < 1.3.41rusPL30.23-alt4.2
+Conflicts: apache-common <= 1.3.42rusPL30.24-alt9
 Conflicts: apache-icons
 
 %description icons
@@ -547,7 +546,7 @@ PreReq: %name-base = %EVR
 Requires: %name-mmn = %mmn
 Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
 Requires: %apache2_libapr_name >= %apache2_libapr_evr
-Requires: %apache2_sbindir/%apache2_htcacheclean_dname
+Requires: %_sbindir/%apache2_htcacheclean_dname
 Provides: %apache2_htcacheclean_cachepath
 
 Conflicts: apache2-common < 2.2.19-alt1.1
@@ -582,6 +581,7 @@ a certain limit. This tool can run either manually or in daemon mode.
 Summary: Apache HTTP server benchmarking tool
 Group: System/Servers
 Conflicts: apache2-base < 2.2.22-alt9
+Conflicts: apache-common <= 1.3.42rusPL30.24-alt9
 
 %description ab
 Ab is a tool for benchmarking your Apache Hypertext Transfer Protocol
@@ -593,6 +593,7 @@ requests per second your Apache installation is capable of serving.
 Summary: Manage user files for basic authentication
 Group: System/Servers
 Conflicts: apache2-base < 2.2.22-alt9
+Conflicts: apache-common <= 1.3.42rusPL30.24-alt9
 
 %description htpasswd
 Htpasswd is used to create and update the flat-files used to store
@@ -672,19 +673,19 @@ Set DocumentRoot in %apache2_serverdatadir (for https) to support the old config
 %setup -q -n httpd-%version
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+%patch3 -p1 -b .orig
 
 # generate ALTLinux Apache layout
 echo "
 # ALT layout
 <Layout ALTLinux>
     prefix:		%apache2_basedir
-    exec_prefix:	%apache2_exec_prefix
-    bindir:		%apache2_bindir
-    sbindir:		%apache2_sbindir
+    exec_prefix:	%prefix
+    bindir:		%_bindir
+    sbindir:		%_sbindir
     libdir:		%apache2_libdir
     libexecdir:		%apache2_moduledir
-    mandir:		%apache2_mandir
+    mandir:		%_mandir
     sysconfdir:		%apache2_confdir
     datadir:		%apache2_datadir
     iconsdir:		%apache2_iconsdir
@@ -692,11 +693,11 @@ echo "
     manualdir:		%apache2_manualdir
     cgidir:		%apache2_cgibindir
     includedir:		%apache2_includedir
-    localstatedir:	%apache2_localstatedir
+    localstatedir:	%_var
     runtimedir:		%apache2_runtimedir
     logfiledir:		%apache2_logfiledir
     proxycachedir:	%apache2_proxycachedir
-    infodir:		%apache2_infodir
+    infodir:		%_infodir
     installbuilddir:	%apache2_installbuilddir
     errordir:		%apache2_errordir
 </Layout>
@@ -729,7 +730,7 @@ EOF
 	--with-suexec-caller=%apache2_user \
 	--with-suexec-docroot=%apache2_suexec_docroot \
 	--with-suexec-logfile=%apache2_logfiledir/suexec.log \
-	--with-suexec-bin=%apache2_sbindir/suexec%apache2_branch \
+	--with-suexec-bin=%_sbindir/suexec%apache2_branch \
 	--with-suexec-uidmin=500 --with-suexec-gidmin=500 \
 	--with-suexec-userdir=public_html \
 	--enable-so \
@@ -810,37 +811,37 @@ s|%%apache2_sslcertsh|%apache2_sslcertsh|g
 pushd prefork
 make DESTDIR=%buildroot install
 popd
-mv %buildroot%apache2_sbindir/%apache2_dname %buildroot%apache2_sbindir/%apache2_dname.prefork
+mv %buildroot%_sbindir/%apache2_dname %buildroot%_sbindir/%apache2_dname.prefork
 
 # install worker binary
 WDIR=worker
-install -m 755 $WDIR/%apache2_dname %buildroot%apache2_sbindir/%apache2_dname.worker
+install -m 755 $WDIR/%apache2_dname %buildroot%_sbindir/%apache2_dname.worker
 
 # install event binary
 WDIR=event
-install -m 755 $WDIR/%apache2_dname %buildroot%apache2_sbindir/%apache2_dname.event
+install -m 755 $WDIR/%apache2_dname %buildroot%_sbindir/%apache2_dname.event
 
 #-----------------------------------------------------------------------------------
 # Tune up executibles to co-exist with apache-ru
 #
-pushd %buildroot%apache2_sbindir
+pushd %buildroot%_sbindir
 #fix attributes of suexec for rpm build
 chmod 755 suexec
 %if "%apache2_branch" != ""
 #rename suexec binary to be named that apache is expect it to be
-mv suexec suexec%apache2_branch
+ln -s suexec suexec%apache2_branch
 #
-# rename tools
+# compatability symlinks for tools in /usr/sbin
 # Maybe it's better to push ru-apache-devel before installing devel package
 rm envvars-std
 for tool in apachectl checkgid envvars rotatelogs fcgistarter htcacheclean; do
-    mv ${tool} ${tool}%apache2_branch
+    ln -s ${tool} ${tool}%apache2_branch
 done
-# move&rename utilities to /usr/bin
-pushd %buildroot%apache2_bindir
+# compatability symlinks for tools in /usr/bin 
+pushd %buildroot%_bindir
 TOOLS="ab htdbm logresolve htpasswd apxs dbmmanage httxt2dbm htdigest check_forensic"
 for tool in $TOOLS; do
-    mv ${tool} %buildroot%apache2_bindir/${tool}%apache2_branch
+    ln -s ${tool} %buildroot%_bindir/${tool}%apache2_branch
 done
 popd
 %endif
@@ -866,7 +867,7 @@ touch %buildroot%apache2_confdir/ssl.crt/server.crt
 touch %buildroot%apache2_confdir/ssl.key/server.key
 
 # for holding mod_dav lock database
-mkdir -p %buildroot%apache2_localstatedir/lib/dav
+mkdir -p %buildroot%_var/lib/dav
 
 # create a prototype session cache
 mkdir -p %buildroot%apache2_proxycachedir/mod_ssl
@@ -945,7 +946,7 @@ cp -r ABOUT_APACHE README CHANGES LICENSE README.ALT* %buildroot%docdir/
 
 # install the daemon start script
 install -pD -m755 %SOURCE18 \
-	%buildroot%apache2_sbindir/%apache2_htcacheclean_dname-daemon-start
+	%buildroot%_sbindir/%apache2_htcacheclean_dname-daemon-start
 
 # install the init scripts
 install -pD -m755 %SOURCE35 \
@@ -1031,13 +1032,8 @@ install -pD -m 644 %SOURCE70 %buildroot%apache2_sslcertshfunctions
 install -pD -m 755 %SOURCE71 %buildroot%apache2_sslcertsh
 
 # Substitute the real paths in configs
-find %buildroot%_sysconfdir original %buildroot%_rpmlibdir %buildroot%condstopstart_webdir %buildroot%apache2_sbindir/apachectl* \
-		%buildroot%_unitdir %buildroot%apache2_sbindir/%apache2_htcacheclean_dname-daemon-start \
-		%buildroot%{apache2_sslcertsh}* \
-		-type f -print0 \
-	| xargs -r0i %_datadir/rpm-build-rpm-eval/rpm-eval.sh "{}"
-find %buildroot%_sysconfdir original %buildroot%_rpmlibdir %buildroot%condstopstart_webdir %buildroot%apache2_sbindir/apachectl* \
-		%buildroot%_unitdir %buildroot%apache2_sbindir/%apache2_htcacheclean_dname-daemon-start \
+find %buildroot%_sysconfdir original %buildroot%_rpmlibdir %buildroot%condstopstart_webdir %buildroot%_sbindir/apachectl* \
+		%buildroot%_unitdir %buildroot%_sbindir/%apache2_htcacheclean_dname-daemon-start \
 		%buildroot%{apache2_sslcertsh}* \
 		-type f -print0 \
 	| xargs -r0 sed -i -f SetMacros.sed
@@ -1049,7 +1045,7 @@ cat <<\EOF >%buildroot%_rpmlibdir/%name-files.req.list
 %apache2_serverdatadir/	%name-base
 %apache2_errordir/	%name-base
 %apache2_errordir/include/	%name-base
-%apache2_localstatedir/lib/dav	%name-base
+%_var/lib/dav	%name-base
 %apache2_proxycachedir/	%name-base
 %apache2_spooldir/	%name-base
 %apache2_spooldir/tmp/	%name-base
@@ -1237,15 +1233,15 @@ exit 0
 %exclude %apache2_moduledir/mod_cache_disk.so
 
 %files httpd-worker
-%apache2_sbindir/%apache2_dname.worker
+%_sbindir/%apache2_dname.worker
 %_altdir/%name-httpd-worker
 
 %files httpd-prefork
-%apache2_sbindir/%apache2_dname.prefork
+%_sbindir/%apache2_dname.prefork
 %_altdir/%name-httpd-prefork
 
 %files httpd-event
-%apache2_sbindir/%apache2_dname.event
+%_sbindir/%apache2_dname.event
 %_altdir/%name-httpd-event
 
 %files
@@ -1332,8 +1328,8 @@ exit 0
 %dir %apache2_addonconfdir/
 %attr(0755,root,root) %apache2_sslcertsh
 %config %_initdir/%apache2_dname
-%apache2_sbindir/a2*
-%apache2_sbindir/apachectl*
+%_sbindir/a2*
+%_sbindir/apachectl*
 %attr(0600,root,root) %config(noreplace) %apache2_envconf
 %_unitdir/%apache2_dname.service
 
@@ -1341,19 +1337,19 @@ exit 0
 
 %attr(0644,root,root) %config(noreplace) %_sysconfdir/logrotate.d/%apache2_name
 
-%apache2_bindir/ht*
+%_bindir/ht*
 %exclude %apache2_sslcertshfunctions
-%exclude %apache2_bindir/htpasswd*
-%apache2_bindir/logresolve*
-%apache2_sbindir/rotatelogs*
-%exclude %apache2_sbindir/htcacheclean*
+%exclude %_bindir/htpasswd*
+%_bindir/logresolve*
+%_sbindir/rotatelogs*
+%exclude %_sbindir/htcacheclean*
 
-%apache2_sbindir/checkgid*
-%apache2_bindir/check_forensic*
-%apache2_bindir/dbmmanage*
-%apache2_sbindir/fcgistarter*
+%_sbindir/checkgid*
+%_bindir/check_forensic*
+%_bindir/dbmmanage*
+%_sbindir/fcgistarter*
 
-%apache2_bindir/httxt2dbm*
+%_bindir/httxt2dbm*
 
 %_rpmlibdir/*-%apache2_name.filetrigger
 %_rpmlibdir/*-%apache2_name-base.filetrigger
@@ -1368,16 +1364,16 @@ exit 0
 %config(noreplace) %apache2_errordir/*.var
 %config(noreplace) %apache2_errordir/include/*.html
 
-%attr(0700,%apache2_user,%apache2_group) %dir %apache2_localstatedir/lib/dav
+%attr(0700,%apache2_user,%apache2_group) %dir %_var/lib/dav
 
-%apache2_mandir/man1/*
-%exclude %apache2_mandir/man1/htpasswd*
-%exclude %apache2_mandir/man1/ab*
-%exclude %apache2_mandir/man1/apxs*
+%_mandir/man1/*
+%exclude %_mandir/man1/htpasswd*
+%exclude %_mandir/man1/ab*
+%exclude %_mandir/man1/apxs*
 
-%apache2_mandir/man8/*
-%exclude %apache2_mandir/man8/htcacheclean*
-%exclude %apache2_mandir/man8/suexec*
+%_mandir/man8/*
+%exclude %_mandir/man8/htcacheclean*
+%exclude %_mandir/man8/suexec*
 
 %files full
 
@@ -1458,8 +1454,8 @@ exit 0
 %_controldir/htcacheclean-*
 
 %files htcacheclean
-%apache2_sbindir/htcacheclean*
-%apache2_mandir/man8/htcacheclean*
+%_sbindir/htcacheclean*
+%_mandir/man8/htcacheclean*
 %attr(0644,root,root) %config(noreplace) %_sysconfdir/sysconfig/%apache2_htcacheclean_dname
 %_unitdir/%apache2_htcacheclean_dname.service
 %config %_initdir/%apache2_htcacheclean_dname
@@ -1468,11 +1464,11 @@ exit 0
 %_rpmlibdir/*-%apache2_name-htcacheclean.filetrigger
 
 %files ab
-%apache2_bindir/ab*
+%_bindir/ab*
 
 %files htpasswd
-%apache2_bindir/htpasswd*
-%apache2_mandir/man1/htpasswd*
+%_bindir/htpasswd*
+%_mandir/man1/htpasswd*
 
 %files -n rpm-build-%name
 %_rpmlibdir/%name-files.req.list
@@ -1487,17 +1483,17 @@ exit 0
 %apache2_includedir/apache_noprobes.h
 %apache2_includedir/cache_common.h
 
-%apache2_bindir/apxs*
+%_bindir/apxs*
 %dir %apache2_installbuilddir/
 %apache2_installbuilddir/[clprs]*.mk
 %apache2_installbuilddir/instdso.sh
 
-%apache2_sbindir/envvars*
+%_sbindir/envvars*
 
 %files suexec
 %apache2_moduledir/mod_suexec.so
-%attr(4510,root,%apache2_group) %apache2_sbindir/suexec*
-%apache2_mandir/man8/suexec*
+%attr(4510,root,%apache2_group) %_sbindir/suexec*
+%_mandir/man8/suexec*
 
 %files compat
 %config(noreplace) %apache2_sites_available/default-compat.conf
@@ -1516,6 +1512,12 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Fri Jul 14 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.27-alt1%ubt
+- 2.4.27
+- removed use of rpm-eval.sh from spec
+- removed use of some apache2_*dir macroses from spec
+- dropped apache branch suffix from utils and created compatability symlinks
+
 * Sat Jun 24 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.26-alt1%ubt
 - 2.4.26
 
