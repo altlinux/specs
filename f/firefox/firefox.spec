@@ -12,7 +12,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        53.0.2
+Version:        54.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -48,7 +48,7 @@ BuildRequires(pre): browser-plugins-npapi-devel
 
 BuildRequires: rpm-macros-alternatives
 BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend glibc-kernheaders
-#BuildRequires: rust ruby-stdlibs rust-cargo
+BuildRequires: rust rust-cargo
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXdamage-devel
@@ -81,6 +81,9 @@ BuildRequires: python-modules-compiler
 BuildRequires: python-modules-logging
 BuildRequires: python-modules-sqlite3
 BuildRequires: python-modules-json
+
+# Rust requires
+BuildRequires: /proc
 
 # Mozilla requires
 BuildRequires: pkgconfig(nspr) >= %nspr_version
@@ -314,6 +317,37 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Wed Jul 12 2017 Alexey Gladkov <legion@altlinux.ru> 54.0.1-alt1
+- New release (54.0.1).
+
+* Sun Jun 25 2017 Alexey Gladkov <legion@altlinux.ru> 54.0-alt1
+- New release (54.0).
+- Fixed:
+  + CVE-2017-5472: Use-after-free using destroyed node when regenerating trees
+  + CVE-2017-7749: Use-after-free during docshell reloading
+  + CVE-2017-7750: Use-after-free with track elements
+  + CVE-2017-7751: Use-after-free with content viewer listeners
+  + CVE-2017-7752: Use-after-free with IME input
+  + CVE-2017-7754: Out-of-bounds read in WebGL with ImageInfo object
+  + CVE-2017-7755: Privilege escalation through Firefox Installer with same directory DLL files
+  + CVE-2017-7756: Use-after-free and use-after-scope logging XHR header errors
+  + CVE-2017-7757: Use-after-free in IndexedDB
+  + CVE-2017-7778: Vulnerabilities in the Graphite 2 library
+  + CVE-2017-7758: Out-of-bounds read in Opus encoder
+  + CVE-2017-7759: Android intent URLs can cause navigation to local file system
+  + CVE-2017-7760: File manipulation and privilege escalation via callback parameter in Mozilla Windows Updater and Maintenance Service
+  + CVE-2017-7761: File deletion and privilege escalation through Mozilla Maintenance Service helper.exe application
+  + CVE-2017-7762: Addressbar spoofing in Reader mode
+  + CVE-2017-7763: Mac fonts render some unicode characters as spaces
+  + CVE-2017-7764: Domain spoofing with combination of Canadian Syllabics and other unicode blocks
+  + CVE-2017-7765: Mark of the Web bypass when saving executable files
+  + CVE-2017-7766: File execution and privilege escalation through updater.ini, Mozilla Windows Updater, and Mozilla Maintenance Service
+  + CVE-2017-7767: Privilege escalation and arbitrary file overwrites through Mozilla Windows Updater and Mozilla Maintenance Service
+  + CVE-2017-7768: 32 byte arbitrary file read through Mozilla Maintenance Service
+  + CVE-2017-7770: Addressbar spoofing with JavaScript events and fullscreen mode
+  + CVE-2017-5471: Memory safety bugs fixed in Firefox 54
+  + CVE-2017-5470: Memory safety bugs fixed in Firefox 54 and Firefox ESR 52.2
+
 * Sun May 07 2017 Alexey Gladkov <legion@altlinux.ru> 53.0.2-alt1
 - New release (53.0.2).
 - Fixed:
