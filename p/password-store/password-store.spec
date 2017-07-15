@@ -1,7 +1,7 @@
 # SPEC file for password-store package
 
 Name:    password-store
-Version: 1.6.5
+Version: 1.7.1
 Release: alt1
 
 Summary: a simple password manager using standard Unix tools
@@ -21,7 +21,7 @@ Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
 
 Patch1:  %name-alt-1.6.5-shebang.patch
-Patch2:  %name-alt-1.6.5-dirtree.patch
+Patch2:  %name-alt-1.7-dirtree.patch
 
 BuildRequires(pre): rpm-build-licenses rpm-build-vim
 
@@ -29,7 +29,7 @@ BuildRequires(pre): rpm-build-licenses rpm-build-vim
 # optimized out: libgpg-error python-base python-modules python3 tzdata
 BuildRequires: dirtree git-core gnupg gnupg2 pwgen
 
-#Requires: xclip gnupg2 /usr/bin/qdbus
+Requires: gnupg2 /usr/bin/qdbus
 
 %description
 A simple console password manager that follows Unix philosophy.
@@ -71,15 +71,20 @@ mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %build
-# This can't be run inside hasher
+# This can't be run inside hasher - some problems with /dev/urandom (?)
 %ifdef __BTE
+   rm -f tests/t0010-generate-tests.sh
+   rm -f tests/t0020-show-tests.sh
    rm -f tests/t0300-reencryption.sh
    rm -f tests/t0400-grep.sh
+   rm -f tests/t0060-rm-tests.sh
+   rm -f tests/t0200-edit-tests.sh
+   rm -f tests/t0500-find.sh
 %endif
 LC_ALL=C %make test
 
 %install
-%make_install DESTDIR=%buildroot FORCE_ALL=1 install
+%make_install DESTDIR=%buildroot FORCE_ALL=1 WITH_ALLCOMP=yes install
 
 install -dp %buildroot%_sysconfdir/bash_completion.d/
 mv -f -- %buildroot%_datadir/bash-completion/completions/pass %buildroot%_sysconfdir/bash_completion.d/pass
@@ -103,6 +108,10 @@ rmdir -- contrib/vim/
 %exclude %_datadir/fish*
 %exclude %_datadir/zsh*
 
+
 %changelog
+* Sat Jul 15 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.7.1-alt1
+- New version
+
 * Thu Jan 26 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.6.5-alt1
 - Initial build for ALT Linux Sisyphus
