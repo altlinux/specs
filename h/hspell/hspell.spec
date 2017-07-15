@@ -1,13 +1,14 @@
 Name: hspell
-Version: 1.3
+Version: 1.4
 Release: alt1
 Summary: A Hebrew spell checker
-License: AGPLv3
+License: AGPL-3.0-only
 Group: Text tools
 Url: http://hspell.ivrix.org.il/
 # http://hspell.ivrix.org.il/%name-%version.tar.gz
 Source: %name-%version.tar
-Patch: hspell-1.3-alt-fixes.patch
+Patch0: hspell-1.4-alt-fixes.patch
+Patch1: hspell-1.4-rh-perl.patch
 Requires: lib%name = %version-%release
 BuildRequires: libhunspell-devel hunspell-utils zlib-devel
 %{?!_without_check:%{?!_disable_check:BuildRequires: aspell-he}}
@@ -68,7 +69,8 @@ Hebrew hunspell dictionaries.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 iconv -f hebrew -t utf8 -o WHATSNEW.new WHATSNEW
 mv WHATSNEW.new WHATSNEW
 
@@ -117,6 +119,9 @@ fi
 %_datadir/myspell/*
 
 %changelog
+* Sat Jul 15 2017 Dmitry V. Levin <ldv@altlinux.org> 1.4-alt1
+- 1.3 -> 1.4.
+
 * Sun Jan 17 2016 Dmitry V. Levin <ldv@altlinux.org> 1.3-alt1
 - 1.2 -> 1.3.
 
