@@ -1,7 +1,7 @@
 ## SPEC file for Perl module XML::Tidy
 
 Name: perl-XML-Tidy
-Version: 1.16
+Version: 1.20
 Release: alt1
 
 Summary: Perl module for tidy indenting of XML documents 
@@ -58,6 +58,9 @@ document object.
 
 
 %changelog
+* Sat Jul 15 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.20-alt1
+- New version
+
 * Tue Jun 21 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.16-alt1
 - New version
 
