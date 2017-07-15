@@ -1,15 +1,17 @@
 %define teaname tktreectrl
+%define major 2.4
 
 Name: tcl-%teaname
-Version: 2.2
-Release: alt1.qa1
+Version: %major.1
+Release: alt1
 
 Summary: TkTreeCtrl is a multi-column hierarchical listbox widget for the Tk GUI toolkit
 License: BSD
 Group: Development/Tcl
-Url: http://www.sf.net/projects/%teaname
+Url: http://tktreectrl.sourceforge.net/
 
-Source: %name-%version.tar.bz2
+# http://git.altlinux.org/gears/t/tcl-tktreectrl.git
+Source: %name-%version-%release.tar
 
 Requires: tk >= 8.4.0-alt1
 BuildRequires: rpm-build >= 4.0.4-alt41 rpm-build-tcl >= 0.2-alt1 tk-devel >= 8.4.0-alt1
@@ -33,12 +35,15 @@ cat doc/man.macros doc/treectrl.n |grep -v '^.so man.macros' > treectrl.n
 install -m0644 -D treectrl.n %buildroot%_mandir/mann/treectrl.n
 
 %files
-%doc ChangeLog doc/manual.txt demos htmldoc
-%_tcllibdir/libtreectrl%version.so
+%doc ChangeLog demos htmldoc
+%_tcllibdir/libtreectrl%major.so
 %_tcldatadir/treectrl%version
 %_mandir/mann/*
 
 %changelog
+* Tue Jul 04 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4.1-alt1
+- 2.4.1 released (ALT#30850)
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
