@@ -3,7 +3,7 @@
 %define real_name Dist-Zilla-Plugin-OurPkgVersion
 
 Name: perl-Dist-Zilla-Plugin-OurPkgVersion
-Version: 0.11
+Version: 0.12
 Release: alt1
 
 Summary: Dist::Zilla plugin for package version management
@@ -50,6 +50,9 @@ specify your version.
 %perl_vendor_privlib/Dist/Zilla/Plugin/OurPkgVersion*
 
 %changelog
+* Sat Jul 15 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.12-alt1
+- New version
+
 * Tue Jul 04 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.11-alt1
 - New version
 
