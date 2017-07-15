@@ -7,7 +7,7 @@ Name: palemoon
 Version: 27.4.0
 
 # %%ifndef git_commit
-Release: alt1
+Release: alt2
 # %%else
 #Release: alt0.git_3_%git_commit
 # %%endif
@@ -637,6 +637,9 @@ install -D -m 644 README.md ../
 %exclude %_datadir/idl/*
 
 %changelog
+* Sat Jul 15 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.4.0-alt2
+- enable-system-sqlite
+
 * Wed Jul 12 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.4.0-alt1
 - New Version - Release 27.4.0
 
