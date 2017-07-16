@@ -1,5 +1,5 @@
 Name: texmaker
-Version: 4.5
+Version: 5.0
 Release: alt1
 
 Summary: free cross-platform LaTeX editor with a Qt interface
@@ -12,7 +12,7 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source: %name-%version.tar.bz2
 
 # Automatically added by buildreq on Thu Apr 24 2008
-BuildRequires: fontconfig gcc-c++ libqt4-devel qt4-settings libpoppler-devel libpoppler-qt4-devel
+BuildRequires: fontconfig gcc-c++ qt5-base-devel qt5-tools-devel libpoppler-devel libpoppler-qt5-devel qt5-script-devel
 
 %description
 Texmaker is a LaTeX editor that integrates many tools
@@ -22,7 +22,7 @@ needed to develop documents with LaTeX.
 %setup
 
 %build
-%_libdir/qt4/bin/qmake -unix PREFIX=%prefix %name.pro
+/usr/share/qt5/bin/qmake -unix PREFIX=%prefix %name.pro
 %make
 
 %install
@@ -33,8 +33,13 @@ needed to develop documents with LaTeX.
 %_datadir/%name
 %_datadir/applications/%name.desktop
 %_datadir/pixmaps/%name.png
+%_datadir/metainfo/%name.appdata.xml
+
 
 %changelog
+* Sun Jul 16 2017 Ilya Mashkin <oddity@altlinux.ru> 5.0-alt1
+- 5.0
+
 * Thu Nov 05 2015 Ilya Mashkin <oddity@altlinux.ru> 4.5-alt1
 - 4.5
 
