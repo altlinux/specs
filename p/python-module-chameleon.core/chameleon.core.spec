@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname.core
-Version: 2.19
-Release: alt1.dev.git20141103.1.1
+Version: 3.1
+Release: alt1
 Summary: Chameleon Template Compiler
 License: BSD
 Group: Development/Python
@@ -144,6 +144,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1-alt1
+- Updated to upstream version 3.1
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.19-alt1.dev.git20141103.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
