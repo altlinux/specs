@@ -1,12 +1,15 @@
 Name: libetonyek
 Version: 0.1.6
-Release: alt2
+Release: alt3
 Summary: A library for import of Apple Keynote presentations
 
 Group: System/Libraries
 License: MPLv2.0
+# https://gerrit.libreoffice.org/#/admin/projects/libetonyek
 Url: http://www.freedesktop.org/wiki/Software/libetonyek/
 Source: %name-%version.tar.xz
+Patch1: %name-%version-fedora-test.patch
+Patch2: %name-%version-fedora-test-i686.patch
 
 BuildRequires: cppunit-devel
 
@@ -46,6 +49,8 @@ Currently supported: XHTML, raw, text.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
 # XXX hack out mdds=1.0 (too lower)
 sed -i 's/mdds-1.0/mdds/' configure.ac
 
@@ -86,6 +91,9 @@ make check
 %_bindir/*
 
 %changelog
+* Mon Jul 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.6-alt3
+- Fix build
+
 * Mon Jul 25 2016 Fr. Br. George <george@altlinux.ru> 0.1.6-alt2
 - Fix build
 
