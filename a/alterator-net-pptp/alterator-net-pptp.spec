@@ -1,19 +1,16 @@
-%define _altdata_dir %_datadir/alterator
-
 Name: alterator-net-pptp
-Version: 0.10.3
+Version: 0.10.4
 Release: alt1
 
 Url: http://www.altlinux.org/Alterator
 Source: %name-%version.tar
 Packager: Mikhail Efremov <sem@altlinux.org>
-BuildArch: noarch
 
-Summary: alterator module for pptp connections configuration
+Summary: Alterator module to configure PPTP connections
 License: GPL
 Group: System/Configuration/Other
 
-Requires: alterator >= 4.9-alt2
+Requires: alterator >= 5.0-alt5
 Requires: alterator-sh-functions >= 0.3-alt2
 Requires: alterator-net-functions >= 0.8-alt1
 Requires: alterator-hw-functions
@@ -21,13 +18,13 @@ Requires: pptp-client
 Conflicts: alterator-fbi < 5.10-alt1
 Conflicts: alterator-lookout < 1.6-alt8
 
-BuildPreReq: alterator >= 4.9-alt2
+BuildPreReq: alterator >= 5.0
 
-# Automatically added by buildreq on Mon Jul 11 2005 (-bi)
-BuildRequires: alterator
+BuildRequires: guile22-devel rpm-build >= 4.0.4-alt103
+BuildRequires: alterator >= 5.0 alterator-fbi >= 5.33-alt1
 
 %description
-alterator module for pptp connections configuration
+Alterator module to configure PPTP connections
 
 %prep
 %setup
@@ -39,8 +36,10 @@ alterator module for pptp connections configuration
 %makeinstall
 
 %files
-%_altdata_dir/applications/*
-%_altdata_dir/ui/*
+%_alterator_datadir/applications/*
+%_alterator_datadir/ui/*/*.scm
+%_alterator_datadir/ui/*/*.html
+%_alterator_libdir/ui/*/*.go
 %_alterator_backend3dir/*
 
 # TODO:
@@ -48,6 +47,10 @@ alterator module for pptp connections configuration
 # - cleanup PPTP-over-PPP hasty fix
 
 %changelog
+* Mon Jul 17 2017 Paul Wolneykien <manowar@altlinux.org> 0.10.4-alt1
+- Use typed parameters (closes: #33657).
+- Build with guile2.0.
+
 * Thu Jul 10 2014 Timur Aitov <timonbl4@altlinux.org> 0.10.3-alt1
 - add maxfail, holdoff, lcp-echo-interval, lcp-echo-failure options
 

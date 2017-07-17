@@ -1,6 +1,6 @@
 Name: alterator
 Version: 5.0
-Release: alt3
+Release: alt5
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -65,6 +65,8 @@ Install this package if you want to create RPM packages that use %name.
 
 %build
 %make_build GUILE_VERSION=%guile_version
+
+%check
 %make check-api
 
 %install
@@ -143,6 +145,15 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Mon Jul 17 2017 Paul Wolneykien <manowar@altlinux.org> 5.0-alt5
+- Add iface-name and keyword types (with *-list versions).
+- Add proc to simplify making of *-list types.
+- Fix: allow empty strings for integer and number types.
+
+* Thu Jul 13 2017 Paul Wolneykien <manowar@altlinux.org> 5.0-alt4
+- New types: integer, number, ip-proto, mac-address, tcp-port-list.
+- Always validate the parameter values against their types.
+
 * Thu Apr 27 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0-alt3
 - do not recompile ui index files
 
