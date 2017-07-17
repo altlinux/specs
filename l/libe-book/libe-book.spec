@@ -3,12 +3,13 @@
 
 Name: libe-book
 Version: 0.1.2
-Release: alt1.1
+Release: alt2
 Summary: A library for reading and converting reflowable e-book formats
 License: LGPL
 Url: http://sourceforge.net/projects/libebook/
 Group: System/Libraries
 Source: %name-%version.tar.xz
+Patch1: %name-%version-alt-build.patch
 
 BuildRequires: gcc-c++
 BuildRequires: boost-devel-headers
@@ -26,6 +27,8 @@ BuildRequires: pkgconfig(libmspack)
 
 BuildRequires: doxygen
 BuildRequires: gperf
+# autoconf-archive required for AX_BOOST_BASE and AX_BOOST_SYSTEM autoconf macros
+BuildRequires: autoconf-archive
 
 %description
 libe-book is a library and a set of tools for reading and converting
@@ -68,6 +71,7 @@ Currently supported are:
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 %autoreconf
@@ -91,6 +95,9 @@ Currently supported are:
 %_pkgconfigdir/*
 
 %changelog
+* Mon Jul 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.2-alt2
+- Fixed build with new toolchain
+
 * Thu Feb 25 2016 Yuri N. Sedunov <aris@altlinux.org> 0.1.2-alt1.1
 - rebuild against libicu*.so.56
 
