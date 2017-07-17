@@ -1,6 +1,6 @@
 Name: skinlf
 Version: 6.7
-Release: alt2
+Release: alt3
 Summary: Skin look and feel Skinning library for java
 
 Group: Development/Java
@@ -31,6 +31,7 @@ Patch2: skinlf-common-xml-patch.patch
 Patch3: skinlf-sun-jdk1.5-xpath-patch.patch
 
 BuildRequires: laf-plugin ant ant-nodeps rpm-build-java dos2unix
+BuildRequires: java-devel-default
 
 %description
 Skin Look And Feel is a java framework that is  able to read GTK (The
@@ -53,7 +54,7 @@ Textures, Regular Windows.
 #dos2unix Doc files
 for i in "CHANGES README LICENSE LICENSE_nanoxml" ;
 do
-	dos2unix -d2u $i;
+	dos2unix $i;
 done
 
 #Remove jar files
@@ -97,6 +98,10 @@ ln -s %name-%version.jar %name.jar
 %_javadir/%name-%version.jar
 
 %changelog
+* Mon Jul 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.7-alt3
+- Removed obsolete dos2unix options
+- Updated build dependencies
+
 * Thu Sep 10 2009 Vitaly Kuznetsov <vitty@altlinux.ru> 6.7-alt2
 - Fix BuildRequires (ALT #21520)
 
