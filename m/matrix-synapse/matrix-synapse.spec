@@ -1,5 +1,5 @@
 Name: matrix-synapse
-Version: 0.21.0
+Version: 0.22.1
 Release: alt1
 
 Summary: Synapse: Matrix reference homeserver
@@ -47,6 +47,14 @@ BuildRequires: python-module-jsonschema >= 2.5.1
 BuildRequires: python-module-phonenumbers >= 8.2.0
 
 Requires: python-module-twisted-conch >= 17.5.0
+Requires: python-module-twisted-names >= 17.5.0
+Requires: python-module-twisted-web >= 17.5.0
+Requires: python-module-service-identity >= 1.0.0
+Requires: python-module-pysaml2 >= 3.0.0
+Requires: python-module-pysaml2 < 4.0.0
+
+# python-modules-sqlite3
+Requires: python-module-matrix-angular-sdk
 
 BuildArch: noarch
 
@@ -86,6 +94,7 @@ fi
 
 %files
 %doc README.rst UPGRADE.rst CHANGES.rst AUTHORS.rst docs/
+%dir %_libexecdir/%name/
 %_libexecdir/%name/hash_password
 %_libexecdir/%name/register_new_matrix_user
 %_libexecdir/%name/synapse_port_db
@@ -101,5 +110,8 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Mon Jul 17 2017 Vitaly Lipatov <lav@altlinux.ru> 0.22.1-alt1
+- new version 0.22.1 (with rpmrb script)
+
 * Thu Jun 15 2017 Vitaly Lipatov <lav@altlinux.ru> 0.21.0-alt1
 - initial build for ALT Sisyphus
