@@ -1,6 +1,6 @@
 Name: kyotocabinet
 Version: 1.2.76
-Release: alt2
+Release: alt3
 Summary: library of routines for managing a database
 
 Group: Databases
@@ -8,6 +8,7 @@ License: GPLv3
 Url: http://fallabs.com/kyotocabinet/
 
 Source: %name-%version.tar
+Patch1: %name-%version-alt-gcc6.patch
 
 BuildRequires: gcc-c++ zlib-devel
 
@@ -58,6 +59,7 @@ BuildArch: noarch
 
 %prep
 %setup -q
+%patch1 -p2
 
 %build
 %configure
@@ -87,6 +89,9 @@ rm %buildroot%_libdir/lib%name.a
 %_defaultdocdir/%name-%version
 
 %changelog
+* Mon Jul 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.76-alt3
+- Fixed build with gcc6
+
 * Tue Dec 22 2015 Anton Farygin <rider@altlinux.ru> 1.2.76-alt2
 - rebuild with new gcc
 
