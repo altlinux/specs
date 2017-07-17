@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.26.1
-Release: alt1.git20141030.1.1
+Release: alt1.git20141030.2
 Summary: An unobtrusive argparse wrapper with natural syntax
 License: LGPLv3
 Group: Development/Python
@@ -111,7 +111,7 @@ export LC_ALL=en_US.UTF-8
 ./coverage.sh
 %if_with python3
 pushd ../python3
-sed -i 's|py.test|py.test-%_python3_version|' coverage.sh \
+sed -i 's|py.test|py.test3|' coverage.sh \
 	test/test_integration.py
 ./coverage.sh
 popd
@@ -135,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.26.1-alt1.git20141030.2
+- Fixed build spec with pytest3
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.26.1-alt1.git20141030.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
