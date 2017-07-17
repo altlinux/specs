@@ -8,7 +8,7 @@
 %define libakonadi_singlefileresource libakonadi-singlefileresource%pim_sover
 
 Name: kde5-pim-runtime
-Version: 17.04.2
+Version: 17.04.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -165,6 +165,9 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %_K5lib/libakonadi-singlefileresource.so.*
 
 %changelog
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+- new version
+
 * Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
 - new version
 

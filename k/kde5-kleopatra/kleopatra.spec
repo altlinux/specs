@@ -6,7 +6,7 @@
 %define libkleopatraclientgui libkleopatraclientgui%kleopatraclientgui_sover
 
 Name: kde5-%rname
-Version: 17.04.2
+Version: 17.04.3
 Release: alt1%ubt
 %K5init
 
@@ -102,6 +102,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkleopatraclientgui.so.*
 
 %changelog
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+- new version
+
 * Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
 - new version
 

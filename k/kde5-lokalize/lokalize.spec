@@ -3,7 +3,7 @@
 %add_findreq_skiplist %_K5data/lokalize/scripts/*.py
 
 Name: kde5-%rname
-Version: 17.04.2
+Version: 17.04.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -59,6 +59,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5notif/lokalize*
 
 %changelog
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+- new version
+
 * Fri Jun 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
 - new version
 

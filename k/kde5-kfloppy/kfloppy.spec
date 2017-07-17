@@ -1,7 +1,7 @@
 %define rname kfloppy
 
 Name: kde5-%rname
-Version: 17.04.2
+Version: 17.04.3
 Release: alt1%ubt
 %K5init
 
@@ -36,11 +36,15 @@ Format a floppy disks.
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
+%config(noreplace) %_K5xdgconf/kfloppy.*categories
 %_K5bin/kfloppy
 %_K5xdgapp/org.kde.kfloppy.desktop
 %_K5icon/*/*/apps/kfloppy.*
 
 %changelog
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+- new version
+
 * Fri Jun 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
 - new version
 
