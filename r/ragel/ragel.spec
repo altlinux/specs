@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: ragel
-Version: 6.8
+Version: 6.10
 Release: alt1
 
 Summary: Ragel State Machine Compiler
@@ -10,7 +10,6 @@ License: GPLv2
 Url: http://www.complang.org/ragel/
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Fri Jul 25 2008
 BuildRequires: gcc-c++ ghostscript-classic tetex-context tetex-latex transfig vim-devel
@@ -34,19 +33,18 @@ Vim syntax for Ragel.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %add_optflags -fpermissive
 export CPPFLAGS="%optflags"
-%configure
+%configure --docdir=%_docdir/%name-%version
 %make_build
 %make_build -C doc
 
 %install
 mkdir -p %buildroot{%vim_syntax_dir,%vim_ftdetect_dir}
 %makeinstall_std
-%makeinstall_std docdir=%_docdir/%name-%version -C doc
+%makeinstall_std -C doc
 cp CREDITS README TODO %buildroot%_docdir/%name-%version
 
 install -p -m644 ragel.vim %buildroot%vim_syntax_dir/
@@ -67,6 +65,9 @@ EOF
 %vim_ftdetect_dir/ragel.vim
 
 %changelog
+* Mon Jul 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.10-alt1
+- Updated to stable upstream version 6.10
+
 * Tue Sep 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.8-alt1
 - Version 6.8
 
