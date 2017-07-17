@@ -1,7 +1,7 @@
 %define oname userspace-rcu
 Name: libuserspace-rcu
-Version: 0.9.3
-Release: alt3
+Version: 0.9.4
+Release: alt1
 
 Summary: RCU (read-copy-update) implementation in user space
 
@@ -84,13 +84,17 @@ make check || true
 /%_lib/liburcu*.so.*
 
 %files devel
-%doc README.md doc/*.md doc/examples/
+%doc README.md doc/*.md
 %_includedir/urcu/
 %_includedir/urcu*.h
 %_libdir/*.so
 %_pkgconfigdir/liburcu*.pc
 
 %changelog
+* Mon Jul 17 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.4-alt1
+- new version 0.9.4 (with rpmrb script)
+- drop doc/examples (use source git for it)
+
 * Tue Mar 28 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt3
 - override NMU: move libs to %_lib (ALT bug #33268)
 - enable tests
