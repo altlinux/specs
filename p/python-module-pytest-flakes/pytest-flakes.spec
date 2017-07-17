@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1
+Release: alt2
 Summary: pytest plugin to check source code with pyflakes
 License: MIT
 Group: Development/Python
@@ -67,7 +67,7 @@ py.test
 %if_with python3
 pushd ../python3
 export PYTHONPATH=$PWD
-py.test-%_python3_version
+py.test3
 popd
 %endif
 
@@ -82,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt2
+- Fixed build spec with pytest3
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1
 - automated PyPI update
 
