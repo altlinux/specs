@@ -1,6 +1,6 @@
 Name: qstat
 Version: 2.11
-Release: alt1.qa1
+Release: alt2
 Summary: Game server browsing utility
 License: Artistic
 Group: Networking/Other
@@ -8,6 +8,7 @@ URL: http://sourceforge.net/projects/qstat
 
 Packager: Pavlov Konstantin <thresh@altlinux.ru>
 Source: %name-%version.tar.gz
+Patch1: %name-%version-alt-build.patch
 
 %description 
 QStat is a command-line program that displays information about
@@ -24,6 +25,7 @@ Terminous, Wheel of Time, and Daikatana.
 
 %prep
 %setup -q
+%patch1 -p2
 
 %build
 %configure --enable-dump
@@ -43,6 +45,9 @@ Terminous, Wheel of Time, and Daikatana.
 %_bindir/qstat
 
 %changelog
+* Mon Jul 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.11-alt2
+- Fixed build with new toolchain
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.11-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
