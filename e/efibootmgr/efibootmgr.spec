@@ -1,24 +1,17 @@
 Name: efibootmgr
-Version: 0.6.0
-Release: alt2
+Version: 15
+Release: alt1%ubt
 
 Summary: EFI Boot Manager
 Group: System/Kernel and hardware
 License: GPLv2+
-URL: http://linux.dell.com/efibootmgr/
+URL: https://github.com/rhboot/efibootmgr
 
-# EFI/UEFI don't exist on PPC
-ExclusiveArch: i386 i586 i686 x86_64 ia64
-
-Source0: http://linux.dell.com/efibootmgr/permalink/%name-%version.tar.gz
-Source1: http://linux.dell.com/efibootmgr/permalink/%name-%version.tar.gz.sign
-
-Packager: Igor Zubkov <icesik@altlinux.org>
-
-# Automatically added by buildreq on Tue Feb 05 2013
-BuildRequires: libpci-devel zlib-devel
-
-%set_gcc_version 4.7
+ExclusiveArch: %ix86 x86_64 aarch64
+#git https://github.com/rhboot/efibootmgr
+Source0: %name-%version.tar
+BuildRequires: libpci-devel zlib-devel libefivar-devel libpopt-devel
+BuildRequires(pre): rpm-build-ubt
 
 %description
 efibootmgr displays and allows the user to edit the Intel Extensible
@@ -30,19 +23,20 @@ http://developer.intel.com/technology/efi/efi.htm and http://uefi.org/.
 %setup
 
 %build
-%make_build EXTRA_CFLAGS="%optflags"
+%make_build EXTRA_CFLAGS="%optflags" EFIDIR='altlinux'
 
 %install
-mkdir -p %buildroot%_sbindir/ %buildroot%_man8dir/
-install -p -m755 src/%name/%name %buildroot%_sbindir/
-install -p -m644 src/man/man8/%name.8 %buildroot%_man8dir/
+%makeinstall EFIDIR='altlinux'
 
 %files
-%doc AUTHORS README doc/ChangeLog doc/TODO
-%_sbindir/%name
-%_man8dir/%name.*
+%doc AUTHORS README
+%_sbindir/*
+%_man8dir/*.*
 
 %changelog
+* Tue Jun 20 2017 Anton Farygin <rider@altlinux.ru> 15-alt1%ubt
+- new version from new upstream
+
 * Wed Mar 01 2017 Michael Shigorin <mike@altlinux.org> 0.6.0-alt2
 - FTBFS workaround: use gcc4.7
 
