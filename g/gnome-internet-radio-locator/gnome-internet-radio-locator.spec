@@ -1,4 +1,4 @@
-%define ver_major 0.3
+%define ver_major 0.5
 %define gst_api_ver 1.0
 %def_with recording
 
@@ -30,6 +30,7 @@ with the help of a map.
 
 %prep
 %setup
+subst '/#include <geoclue\/geoclue-geocode.h>/d'  src/gnome-internet-radio-locator-radius.c
 
 %build
 %autoreconf
@@ -53,6 +54,9 @@ with the help of a map.
 
 
 %changelog
+* Mon Jul 17 2017 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Tue Jun 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - 0.3.0
 
