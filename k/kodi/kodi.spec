@@ -1,6 +1,6 @@
 Name: kodi
 Version: 17.3
-Release: alt1
+Release: alt2
 
 Summary: Kodi Media Center
 License: GPL
@@ -139,6 +139,9 @@ E_O_F
 %_libdir/kodi/*.cmake
 
 %changelog
+* Mon Jul 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 17.3-alt2
+- Fixed build with gcc-6
+
 * Thu May 25 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.3-alt1
 - 17.3 Krypton released
 
