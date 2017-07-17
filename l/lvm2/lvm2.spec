@@ -1,5 +1,5 @@
-%define lvm2version 2.02.168
-%define dmversion 1.02.137
+%define lvm2version 2.02.172
+%define dmversion 1.02.141
 
 %define _sbindir /sbin
 %define _runtimedir /run
@@ -14,11 +14,12 @@
 %def_disable lvmlockd
 %def_enable blkid_wiping
 %def_disable lvmdbusd
+%def_enable dmfilemapd
 
 %if_enabled lvmlockd
- %def_enable lockd_sanlock
+ %def_enable lvmlockd_sanlock
   %if_enabled cluster
-   %def_enable lockd_dlm
+   %def_enable lvmlockd_dlm
   %endif
 %endif
 
@@ -51,7 +52,7 @@ BuildRequires: gcc-c++
 BuildRequires: libreadline-devel libtinfo-devel libudev-devel CUnit-devel
 BuildRequires: libudev-devel >= 205
 BuildRequires: systemd-devel
-BuildRequires: thin-provisioning-tools >= 0.5.4
+BuildRequires: thin-provisioning-tools >= 0.7.0
 BuildRequires: python-devel python-module-setuptools
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -61,7 +62,7 @@ BuildRequires: autoconf-archive
 %{?_enable_cluster:BuildRequires: libcorosync2-devel libdlm-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel libsepol-devel}
 %{?_enable_blkid_wiping:BuildRequires: libblkid-devel >= 2.24}
-%{?_enable_lockd_sanlock:BuildRequires: sanlock-devel >= 3.3.0}
+%{?_enable_lvmlockd_sanlock:BuildRequires: sanlock-devel >= 3.3.0}
 
 %description
 LVM2 includes all of the support for handling read/write operations
@@ -186,10 +187,6 @@ License: LGPLv2
 Group: Development/Python3
 Requires: liblvm2 = %lvm2version-%release
 
-%description
-This package contains the library and set of utilites for creating and
-managing of device-mapper logical volumes.
-
 %description -n libdevmapper
 Library of routines for device-mapper management.
 
@@ -298,10 +295,11 @@ mv libdm/ioctl/libdevmapper.a .
 	%{?_disable_udev_systemd_background_jobs:--disable-udev-systemd-background-jobs} \
 %endif
 	%{subst_enable lvmpolld} \
+	%{subst_enable dmfilemapd} \
 	--enable-udev_sync \
 	%{subst_enable blkid_wiping} \
-	%{?_enable_lockd_dlm:--enable-lockd-dlm} \
-	%{?_enable_lockd_sanlock:--enable-lockd-sanlock} \
+	%{?_enable_lvmlockd_dlm:--enable-lvmlockd-dlm} \
+	%{?_enable_lvmlockd_sanlock:--enable-lvmlockd-sanlock} \
 	%{?_enable_lvmdbusd:--enable-dbus-service} \
 	--with-dmeventd-path="%_sbindir/dmeventd" \
 	--with-systemdsystemunitdir=%_unitdir \
@@ -558,6 +556,9 @@ __EOF__
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jul 13 2017 Alexey Shabalin <shaba@altlinux.ru> 2.02.172-alt1
+- 2.02.172
+
 * Wed Dec 07 2016 Alexey Shabalin <shaba@altlinux.ru> 2.02.168-alt1
 - 2.02.168
 
