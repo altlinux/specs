@@ -14,6 +14,7 @@
 %def_enable gnutls
 %def_enable libcurl
 %def_enable libidn
+%def_disable libidn2
 %def_enable libiptc
 %def_enable polkit
 %def_enable efi
@@ -55,8 +56,8 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 233
-Release: alt2
+Version: 234
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -165,7 +166,8 @@ BuildRequires: pkgconfig(xkbcommon) >= 0.3.0
 %{?_enable_microhttpd:BuildRequires: pkgconfig(libmicrohttpd) >= 0.9.33}
 %{?_enable_gnutls:BuildRequires: pkgconfig(gnutls) >= 3.1.4}
 %{?_enable_libcurl:BuildRequires: pkgconfig(libcurl) >= 7.32.0}
-%{?_enable_libidn:BuildRequires: pkgconfig(libidn) }
+%{?_enable_libidn:BuildRequires: pkgconfig(libidn)}
+%{?_enable_libidn2:BuildRequires: pkgconfig(libidn2) >= 2.0.0}
 %{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
 %{?_enable_gnuefi:BuildRequires: gnu-efi}
 
@@ -423,6 +425,7 @@ Summary: Network Time Synchronization
 Conflicts: %name < 1:214-alt13
 Requires: %name-networkd = %EVR
 Provides: ntp-client
+Provides: ntp-server
 
 %description timesyncd
 systemd-timesyncd is a system service that may be used
@@ -739,6 +742,7 @@ intltoolize --force --automake
 	%{subst_enable utmp} \
 	--without-kill-user-processes \
 	--with-default-hierarchy=%hierarchy \
+	--with-rpmmacrosdir=no \
 	--disable-static
 
 %make_build GCC_COLORS="" V=1
@@ -1345,6 +1349,7 @@ fi
 /lib/systemd/systemd-volatile-root
 /lib/systemd/altlinux-save-dmesg
 /lib/systemd/systemd-sysv-install
+/lib/systemd/systemd-sulogin-shell
 
 %dir /lib/environment.d
 /lib/environment.d/99-environment.conf
@@ -1659,7 +1664,8 @@ fi
 /sbin/networkctl
 %dir %_sysconfdir/systemd/network
 %config(noreplace) %_sysconfdir/systemd/resolved.conf
-%_sysconfdir/systemd/system/dbus-org.freedesktop.resolve1.service
+%config(noreplace) %_sysconfdir/systemd/system/dbus-org.freedesktop.resolve1.service
+%config(noreplace) %_sysconfdir/systemd/system/dbus-org.freedesktop.network1.service
 %_datadir/dbus-1/system.d/org.freedesktop.resolve1.conf
 %_datadir/dbus-1/system.d/org.freedesktop.network1.conf
 %_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
@@ -1803,8 +1809,8 @@ fi
 %if_enabled ldconfig
 %_unitdir/ldconfig.service
 %_unitdir/sysinit.target.wants/ldconfig.service
-%endif
-%endif
+%endif #ldconfig
+%endif #sysuser
 
 %files -n bash-completion-%name
 %_sysconfdir/bash_completion.d/*
@@ -1914,6 +1920,9 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Thu Jul 13 2017 Alexey Shabalin <shaba@altlinux.ru> 1:234-alt1
+- 234
+
 * Thu Apr 27 2017 Anton Farygin <rider@altlinux.ru> 1:233-alt2
 - added /lib/systemd/systemd-machined provides to systemd-container
 
