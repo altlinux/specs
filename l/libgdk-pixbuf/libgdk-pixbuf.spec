@@ -13,7 +13,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -240,6 +240,9 @@ echo : >>%_name/abicheck.sh
 
 
 %changelog
+* Tue Jul 18 2017 Yuri N. Sedunov <aris@altlinux.org> 2.36.7-alt1
+- 2.36.7
+
 * Sun Mar 26 2017 Yuri N. Sedunov <aris@altlinux.org> 2.36.6-alt1
 - 2.36.6
 
