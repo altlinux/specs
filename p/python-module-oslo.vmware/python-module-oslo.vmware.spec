@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.17.0
+Version: 2.17.1
 Release: alt1
 Summary: Oslo VMware library for OpenStack projects
 Group: Development/Python
@@ -148,6 +148,9 @@ popd
 %doc html
 
 %changelog
+* Tue Jul 18 2017 Alexey Shabalin <shaba@altlinux.ru> 2.17.1-alt1
+- 2.17.1
+
 * Mon May 29 2017 Alexey Shabalin <shaba@altlinux.ru> 2.17.0-alt1
 - 2.17.0
 - add test packages
