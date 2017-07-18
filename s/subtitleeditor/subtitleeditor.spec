@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 0.53
+%define ver_major 0.54
 %define gst_api_ver 1.0
 
 Name: subtitleeditor
@@ -9,15 +9,13 @@ Release: alt1
 Summary: Graphical subtitle editor with sound waves representation
 Group: Video
 License: GPLv3+
-URL: http://home.gna.org/subtitleeditor/
+Url: https://github.com/kitone/%name
 
 %if_disabled snapshot
-Source: http://download.gna.org/%name/%ver_major/%name-%version.tar.gz
+Source: https://github.com/kitone/%name/releases/download/%version//%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
-# rev.982
-Patch: subtitleeditor-0.53.0-up-gstreamermm-1.8.patch
 
 Requires: gstreamer%gst_api_ver
 Requires: gst-plugins-base%gst_api_ver
@@ -38,7 +36,7 @@ waves, which makes it easier to synchronise subtitles to voices.
 
 %prep
 %setup
-%patch
+
 %build
 %configure --disable-debug \
            --disable-gl
@@ -64,6 +62,9 @@ waves, which makes it easier to synchronise subtitles to voices.
 %exclude %_libdir/*.so
 
 %changelog
+* Tue Jul 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.54.0-alt1
+- 0.54.0 (new url)
+
 * Sat Feb 04 2017 Yuri N. Sedunov <aris@altlinux.org> 0.53.0-alt1
 - 0.53.0
 
