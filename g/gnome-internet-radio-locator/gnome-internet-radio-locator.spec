@@ -3,7 +3,7 @@
 %def_with recording
 
 Name: gnome-internet-radio-locator
-Version: %ver_major.0
+Version: %ver_major.3
 Release: alt1
 
 Summary: GNOME Internet Radio Locator
@@ -30,7 +30,6 @@ with the help of a map.
 
 %prep
 %setup
-subst '/#include <geoclue\/geoclue-geocode.h>/d'  src/gnome-internet-radio-locator-radius.c
 
 %build
 %autoreconf
@@ -54,6 +53,9 @@ subst '/#include <geoclue\/geoclue-geocode.h>/d'  src/gnome-internet-radio-locat
 
 
 %changelog
+* Tue Jul 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.5.3-alt1
+- 0.5.3
+
 * Mon Jul 17 2017 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - 0.5.0
 
