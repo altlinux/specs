@@ -28,7 +28,7 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.1.23
+Version: 10.1.25
 Release: alt1%ubt
 
 Summary: A very fast and reliable SQL database engine
@@ -294,7 +294,7 @@ version.
 #%patch5 -p1
 %patch7 -p1
 %patch30 -p1
-%patch31 -p1
+#%patch31 -p1
 %patch32 -p1
 #%patch33 -p1
 %patch34 -p1
@@ -754,6 +754,9 @@ fi
 %endif
 
 %changelog
+* Mon Jul 17 2017 Alexey Shabalin <shaba@altlinux.ru> 10.1.25-alt1%ubt
+- 10.1.25
+
 * Fri May 05 2017 Alexey Shabalin <shaba@altlinux.ru> 10.1.23-alt1%ubt
 - 10.1.23
 - add maria-backup package
