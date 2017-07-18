@@ -3,7 +3,7 @@
 %def_with compression
 
 Name: python-module-django-%oname
-Version: 11.0.2
+Version: 11.0.3
 Release: alt1
 Epoch: 1
 Summary: Django application for talking to Openstack
@@ -368,6 +368,9 @@ sed -i "/^SECRET_KEY.*$/{N;s/^.*$/SECRET_KEY='`openssl rand -hex 10`'/}" /etc/op
 %doc html
 
 %changelog
+* Tue Jul 18 2017 Alexey Shabalin <shaba@altlinux.ru> 1:11.0.3-alt1
+- 11.0.3
+
 * Thu Jun 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1:11.0.2-alt1
 - 11.0.2
 - add tests package
