@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.22.0
+Version: 3.22.1
 Release: alt1
 Summary: OpenStack Oslo Utility library
 Group: Development/Python
@@ -139,6 +139,9 @@ popd
 %doc doc/build/html LICENSE
 
 %changelog
+* Tue Jul 18 2017 Alexey Shabalin <shaba@altlinux.ru> 3.22.1-alt1
+- 3.22.1
+
 * Tue May 02 2017 Alexey Shabalin <shaba@altlinux.ru> 3.22.0-alt1
 - 3.22.0
 
