@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.17.0
+Version: 1.17.1
 Release: alt1
 Summary: Openstack common reports library
 
@@ -147,6 +147,9 @@ popd
 %doc README.rst LICENSE
 
 %changelog
+* Tue Jul 18 2017 Alexey Shabalin <shaba@altlinux.ru> 1.17.1-alt1
+- 1.17.1
+
 * Fri May 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.17.0-alt1
 - 1.17.0
 - add test packages
