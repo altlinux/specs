@@ -1,6 +1,6 @@
 Name: libchewing
 Version: 0.4.0
-Release: alt1
+Release: alt2
 Summary: Intelligent phonetic input method library for Traditional Chinese
 
 Group: System/Libraries
@@ -14,7 +14,7 @@ Source1:         https://raw.githubusercontent.com/chewing/%{name}/v%{version}/c
 %{!?python_sitearch: %define python_sitearch %(%__python -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 %define libchewing_python_dir %python_sitearch/%name
 
-BuildRequires: autoconf automake libtool pkgconfig 
+BuildRequires: autoconf automake libtool pkgconfig makeinfo
 BuildRequires:  libsqlite3-devel
 Requires: libsqlite3
 
@@ -87,6 +87,9 @@ touch $RPM_BUILD_ROOT%libchewing_python_dir/__init__.py
 %libchewing_python_dir
 
 %changelog
+* Tue Jul 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.0-alt2
+- Updated build dependencies
+
 * Wed Aug 27 2014 Ilya Mashkin <oddity@altlinux.ru> 0.4.0-alt1
 - 0.4.0
 
