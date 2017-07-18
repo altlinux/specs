@@ -2,8 +2,8 @@
 %def_without doc
 
 Name: openstack-%oname
-Version: 8.0.1
-Release: alt2
+Version: 8.0.2
+Release: alt1
 Epoch: 1
 Summary: OpenStack measurement collection service
 
@@ -497,6 +497,9 @@ crudini --set %ceilometer_conf oslo_concurrency lock_path %_runtimedir/ceilomete
 %_initdir/%name-polling
 
 %changelog
+* Tue Jul 18 2017 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.2-alt1
+- 8.0.2
+
 * Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.1-alt2
 - drop signing_dir from default config
 
