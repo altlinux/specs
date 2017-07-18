@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 Summary: Windows Hyper-V library for OpenStack projects
 Group: Development/Python
@@ -136,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 18 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.2-alt1
+- 1.4.2
+
 * Mon May 29 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.1-alt1
 - 1.4.1
 - add test packages
