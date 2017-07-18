@@ -3,7 +3,7 @@
 %define gtk_ver 3.18
 
 Name: pulseeffects
-Version: 2.0.9
+Version: 2.1.0
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -58,6 +58,9 @@ cp -r share %buildroot%_prefix
 %doc README*
 
 %changelog
+* Tue Jul 18 2017 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Sun Jul 16 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.9-alt1
 - 2.0.9
 
