@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.23.1
+Version: 3.23.2
 Release: alt1
 Summary: OpenStack oslo.middleware library
 Group: Development/Python
@@ -144,6 +144,9 @@ popd
 %doc html
 
 %changelog
+* Tue Jul 18 2017 Alexey Shabalin <shaba@altlinux.ru> 3.23.2-alt1
+- 3.23.2
+
 * Thu May 25 2017 Alexey Shabalin <shaba@altlinux.ru> 3.23.1-alt1
 - 3.23.1
 - add test packages
