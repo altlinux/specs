@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.48.0
+Version: 1.48.1
 Release: alt1
 Summary: Coordination library for distributed systems
 Group: Development/Python
@@ -147,6 +147,9 @@ popd
 %doc doc/build/html
 
 %changelog
+* Tue Jul 18 2017 Alexey Shabalin <shaba@altlinux.ru> 1.48.1-alt1
+- 1.48.1
+
 * Fri May 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.48.0-alt1
 - 1.48.0
 - add test packages
