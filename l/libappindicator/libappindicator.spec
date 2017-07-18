@@ -1,9 +1,11 @@
 %define ver_major 12.10
 %define api_ver 0.1
 
+%def_without mono
+
 Name: libappindicator
 Version: %ver_major.0
-Release: alt4
+Release: alt5
 Summary: Application indicators library
 
 Group: System/Libraries
@@ -12,7 +14,7 @@ Url: https://launchpad.net/%name
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version.tar.gz
-BuildRequires(pre): rpm-build-mono gcc
+BuildRequires(pre): rpm-build-mono4 gcc
 BuildRequires: gtk-doc vala-tools
 BuildRequires: libdbus-glib-devel libdbusmenu-devel
 BuildRequires: libdbusmenu-gtk2-devel libdbusmenu-gtk3-devel
@@ -21,8 +23,10 @@ BuildRequires: libgtk+2-devel libgtk+2-gir-devel
 BuildRequires: libgtk+3-devel libgtk+3-gir-devel
 BuildRequires: libindicator-devel libindicator-gtk3-devel
 BuildRequires: python-devel python-module-pygtk-devel
-BuildRequires: libgtk-sharp2-devel libgtk-sharp2-gapi
-BuildRequires: mono-devel mono-nunit-devel
+%if_with mono
+BuildRequires: libgtk-sharp2-mono4-devel libgtk-sharp2-mono4-gapi
+BuildRequires: mono4-devel
+%endif
 
 %description
 A library to allow applications to export a menu into the Unity Menu bar. Based
@@ -206,6 +210,7 @@ popd
 %doc %_datadir/gtk-doc/html/*
 %doc AUTHORS README COPYING COPYING.LGPL.2.1
 
+%if_with mono
 %files sharp
 %dir %_libdir/cli/appindicator-sharp-%api_ver/
 %_libdir/cli/appindicator-sharp-%api_ver/appindicator-sharp.dll
@@ -228,8 +233,12 @@ popd
 
 %files sharp-devel
 %_pkgconfigdir/appindicator-sharp-0.1.pc
+%endif
 
 %changelog
+* Tue Jul 18 2017 Anton Midyukov <antohami@altlinux.org> 12.10.0-alt5
+- Disable build with mono.
+
 * Mon Jul 18 2016 Anton Midyukov <antohami@altlinux.org> 12.10.0-alt4
 - Fix buildrequires.
 
