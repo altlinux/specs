@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.20.0
+Version: 1.20.1
 Release: alt1
 Summary: Manage dynamic plugins for Python applications
 Group: Development/Python
@@ -169,6 +169,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Jul 18 2017 Alexey Shabalin <shaba@altlinux.ru> 1.20.1-alt1
+- 1.20.1
+
 * Fri Apr 28 2017 Alexey Shabalin <shaba@altlinux.ru> 1.20.0-alt1
 - 1.20.0
 
