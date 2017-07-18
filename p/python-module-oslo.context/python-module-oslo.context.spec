@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.12.1
+Version: 2.12.2
 Release: alt1
 Summary: OpenStack oslo.context library
 Group: Development/Python
@@ -127,6 +127,9 @@ popd
 %doc html
 
 %changelog
+* Tue Jul 18 2017 Alexey Shabalin <shaba@altlinux.ru> 2.12.2-alt1
+- 2.12.2
+
 * Wed May 24 2017 Alexey Shabalin <shaba@altlinux.ru> 2.12.1-alt1
 - 2.12.1
 - add test packages
