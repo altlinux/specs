@@ -1,6 +1,6 @@
 Name: hlsl2glsl
-Version: 2014.09
-Release: alt2.git20140912
+Version: 2016.11
+Release: alt1.git20161116
 Summary: HLSL to GLSL shader language translator
 License: BSD
 Group: Development/Tools
@@ -52,6 +52,9 @@ install -m644 *.a %buildroot%_libdir/
 %_libdir/*.a
 
 %changelog
+* Tue Jul 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2016.11-alt1.git20161116
+- Updated to latest upstream version
+
 * Thu Sep 18 2014 Nazarov Denis <nenderus@altlinux.org> 2014.09-alt2.git20140912
 - Rebuilt with libGLEW 1.11.0
 
