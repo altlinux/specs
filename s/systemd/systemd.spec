@@ -57,7 +57,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 234
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1920,6 +1920,10 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Tue Jul 18 2017 Alexey Shabalin <shaba@altlinux.ru> 1:234-alt2
+- merge with v234-stable branch
+- avoid plymouth requires
+
 * Thu Jul 13 2017 Alexey Shabalin <shaba@altlinux.ru> 1:234-alt1
 - 234
 
