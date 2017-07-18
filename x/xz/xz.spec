@@ -1,8 +1,11 @@
 Name: xz
-Version: 5.0.7
+Version: 5.2.3
 Release: alt1
 
 Summary: LZMA/XZ compression programs
+# We don't package scripts to grep, diff, and view compressed files here
+# because they are already packaged in gzip-utils.
+# see COPYING
 License: Public Domain
 Group: Archiving/Compression
 URL: http://tukaani.org/xz/
@@ -92,6 +95,9 @@ for f in %buildroot%_libdir/liblzma.so; do
 done
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
+# GPL'ed files are not packaged.
+rm %buildroot%docdir/COPYING.GPL*
+
 %find_lang xz
 
 %check
@@ -122,6 +128,9 @@ make -k check
 %_libdir/liblzma.a
 
 %changelog
+* Sat Jul 15 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.2.3-alt1
+- 5.0.7 -> 5.2.3.
+
 * Sat Nov 15 2014 Dmitry V. Levin <ldv@altlinux.org> 5.0.7-alt1
 - 5.0.5 -> 5.0.7.
 
