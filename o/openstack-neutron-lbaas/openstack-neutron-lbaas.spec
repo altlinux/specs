@@ -1,7 +1,7 @@
 %define oname neutron-lbaas
 
 Name: openstack-%oname
-Version: 10.0.0
+Version: 10.0.1
 Release: alt1
 Epoch: 1
 Summary: OpenStack Networking LBaaS
@@ -130,6 +130,9 @@ install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/neutron-lbaasv2-agent.service
 
 
 %changelog
+* Wed Jul 19 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.1-alt1
+- 10.0.1
+
 * Wed Jun 07 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.0-alt1
 - 10.0.0
 
