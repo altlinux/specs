@@ -1,5 +1,5 @@
 Name: freeswitch
-Version: 1.6.18
+Version: 1.6.19
 Release: alt1%ubt
 Epoch: 1
 
@@ -608,6 +608,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Wed Jul 19 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.19-alt1.S1
+- 1.6.19
+
 * Wed Jun 28 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.18-alt1%ubt
 - 1.6.18
 - build without erlang
