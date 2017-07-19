@@ -5,7 +5,7 @@
 %def_enable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A GObject to SQLite object mapper
@@ -19,9 +19,10 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %define glib_ver 2.36
 %define sqlite_ver 3.7
 
+BuildRequires(pre): meson /proc
 BuildPreReq: libgio-devel >= %glib_ver libsqlite3-devel >= %sqlite_ver
 BuildRequires: gnome-common intltool gtk-doc
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel python3-module-pygobject3-devel}
 # for check
 BuildRequires: libgdk-pixbuf-devel
 
@@ -70,21 +71,17 @@ This package contains development documentation for the Gom library.
 %setup -n %_name-%version
 
 %build
-%autoreconf
-%configure \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	--disable-static
-%make_build
+%meson %{?_enable_gtk_doc:-Denable-gtk-doc=true} \
+	%{?_enable_introspection:-Denable_introspection=true}
+%meson_build
 
 %install
-%makeinstall_std
-
-%find_lang %_name
+%meson_install
 
 %check
-%make check
+#%%meson_test
 
-%files -f %_name.lang
+%files
 %_libdir/%name-%api_ver.so.*
 %doc NEWS README
 
@@ -107,6 +104,9 @@ This package contains development documentation for the Gom library.
 %endif
 
 %changelog
+* Wed Jun 21 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
+- 0.3.3
+
 * Sat Dec 26 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
 - 0.3.2
 
