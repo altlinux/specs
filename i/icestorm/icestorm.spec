@@ -1,5 +1,5 @@
 Name: icestorm
-Version: 0.0.0.292.gce4e1bc
+Version: 0.0.0.357.g3c42bdb
 Release: alt1
 
 Summary: Tools for working with Lattice iCE40 bitstream files
@@ -9,9 +9,9 @@ Url: http://www.clifford.at/icestorm/
 
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Mon Jan 23 2017
-# optimized out: libstdc++-devel libusb-compat libusb-compat-devel pkg-config python-base python3
-BuildRequires: gcc-c++ libftdi-devel python3-base
+# Automatically added by buildreq on Mon Jul 17 2017
+# optimized out: glibc-kernheaders-x86 libstdc++-devel libusb-compat libusb-compat-devel pkg-config python-base python3
+BuildRequires: gcc-c++ glibc-kernheaders-generic libftdi-devel python3-base
 
 %description
 Project IceStorm aims at reverse engineering and documenting the bitstream
@@ -39,9 +39,13 @@ chmod a+x %buildroot%_bindir/icebox.py
 %files
 %_bindir/ice*
 %_datadir/icebox
+%_man1dir/iceprog.1*
 %python3_sitelibdir/iceboxdb.py*
 %python3_sitelibdir/__pycache__/iceboxdb*
 
 %changelog
+* Mon Jul 17 2017 Elvira Khabirova <lineprinter@altlinux.org> 0.0.0.357.g3c42bdb-alt1
+- New version
+
 * Mon Jan 23 2017 Elvira Khabirova <lineprinter@altlinux.org> 0.0.0.292.gce4e1bc-alt1
 - Initial build
