@@ -1,5 +1,5 @@
 Name: gnupg
-Version: 1.4.21
+Version: 1.4.22
 Release: alt1
 
 Summary: The GNU Privacy Guard
@@ -69,7 +69,7 @@ find -type f -print0 |
 find -type f -print0 |
 	xargs -r0 grep -FlZ docbook-to-man -- |
 	xargs -r0 %__subst -p s/docbook-to-man/docbook2man/g --
-bzip2 -9k NEWS doc/{DETAILS,FAQ,samplekeys.asc}
+xz -9k NEWS doc/{DETAILS,FAQ,samplekeys.asc}
 
 %build
 rm aclocal.m4
@@ -117,8 +117,8 @@ rm -rv %buildroot%_datadir/%name
 %config(noreplace) %_sysconfdir/
 %_mandir/man?/*
 %_infodir/*.info*
-%doc AUTHORS BUGS NEWS.bz2 PROJECTS README THANKS TODO
-%doc doc/{HACKING,OpenPGP,highlights-1.4.txt,*.bz2,*.html}
+%doc AUTHORS BUGS NEWS.xz PROJECTS README THANKS TODO
+%doc doc/{HACKING,OpenPGP,highlights-1.4.txt,*.xz,*.html}
 %doc tools/ring-a-party
 
 %if_enabled ldap
@@ -128,6 +128,9 @@ rm -rv %buildroot%_datadir/%name
 %endif #enabled ldap
 
 %changelog
+* Wed Jul 19 2017 Dmitry V. Levin <ldv@altlinux.org> 1.4.22-alt1
+- 1.4.21 -> 1.4.22 (fixes CVE-2017-7526).
+
 * Wed Aug 17 2016 Dmitry V. Levin <ldv@altlinux.org> 1.4.21-alt1
 - 1.4.20 -> 1.4.21 (fixes CVE-2016-6313).
 
