@@ -4,7 +4,7 @@
 
 Name: lib%_name%ver_major
 Version: %ver_major.23
-Release: alt1
+Release: alt2
 
 Summary: MIME library
 License: LGPLv2+
@@ -14,13 +14,11 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: rpm-build-mono rpm-build-gnome
+BuildPreReq: rpm-build-gnome
 BuildRequires: glib2-devel >= 2.32.0 libgio-devel
 BuildRequires: libgpgme-devel
 BuildRequires: zlib-devel
-BuildRequires: libgtk-sharp2-devel >= 2.4.0 libgtk-sharp2-gapi
 BuildRequires: gtk-doc >= 1.8 docbook-utils
-BuildRequires: gcc-c++ mono-mcs mono-devel
 BuildRequires: gobject-introspection-devel >= 1.30.0
 BuildRequires: libvala-devel vala vala-tools
 BuildRequires: /proc
@@ -64,22 +62,6 @@ BuildArch: noarch
 %description -n lib%_name-devel-doc
 This package provides development documentation for %name.
 
-%package sharp
-Summary: C# bindings
-Group: Development/Other
-PreReq: %name = %version-%release
-
-%description sharp
-C# bindings for %_name
-
-%package -n lib%_name-sharp-devel
-Summary: Development files for libgmime-sharp
-Group: Development/Other
-PreReq: %name-sharp = %version-%release
-
-%description -n lib%_name-sharp-devel
-Development files for libgmime-sharp
-
 %package -n lib%_name-devel-static
 Summary: Static libraries for libgmime
 Group: Development/C
@@ -100,7 +82,7 @@ gtkdocize --copy
 %autoreconf
 %configure  %{subst_enable static} \
 	    --disable-rpath \
-	    --enable-mono \
+	    --disable-mono \
 	    --enable-introspection \
 	    --enable-vala \
 	    --enable-largefile \
@@ -131,20 +113,15 @@ gtkdocize --copy
 %files -n lib%_name-devel-doc
 %_gtk_docdir/*
 
-%files sharp
-%_monogacdir/gmime-sharp
-%_monodir/gmime-sharp-*
-
-%files -n lib%_name-sharp-devel
-%_pkgconfigdir/gmime-sharp-*.pc
-%_datadir/gapi-2.0/*.xml
-
 %if_enabled static
 %files -n lib%_name-devel-static
 %_libdir/*.a
 %endif
 
 %changelog
+* Wed Jul 19 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.6.23-alt2
+- rebuilt without mono
+
 * Fri Mar 03 2017 Alexey Shabalin <shaba@altlinux.ru> 2.6.23-alt1
 - 2.6.23
 
