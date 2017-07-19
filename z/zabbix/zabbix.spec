@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev 67849
+%define svnrev		70298
 
 %def_with pgsql
 
@@ -10,8 +10,8 @@
 %endif
 
 Name: zabbix
-Version: 3.2.6
-Release: alt2
+Version: 3.2.7
+Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -495,6 +495,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Wed Jul 19 2017 Alexei Takaseev <taf@altlinux.org> 1:3.2.7-alt1
+- 3.2.7
+
 * Mon Jun 19 2017 Alexei Takaseev <taf@altlinux.org> 1:3.2.6-alt2
 - Remove phpfrontend-apache subpackage
 
