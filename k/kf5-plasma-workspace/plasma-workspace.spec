@@ -16,8 +16,8 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.9.5
-Release: alt8%ubt
+Version: 5.10.4
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -44,8 +44,8 @@ Patch107: alt-freespacenotifier.patch
 #Patch108: alt-breeze-background.patch
 Patch108: alt-def-background.patch
 Patch109: alt-def-start-empty-session.patch
-Patch110: alt-breeze-pw-renew.patch
-Patch111: alt-breeze-one-screen.patch
+Patch110: alt-breeze-one-screen.patch
+Patch111: alt-breeze-pw-renew.patch
 Patch112: alt-breeze-autoupdate-username.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
@@ -152,9 +152,9 @@ KF5 library
 %patch107 -p1
 %patch108 -p1
 %patch109 -p1
-%patch111 -p1
-pushd sddm-theme
 %patch110 -p1
+pushd sddm-theme
+%patch111 -p1
 popd
 %patch112 -p1
 
@@ -303,6 +303,12 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Wed Jul 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt1%ubt
+- new version
+
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.3-alt1%ubt
+- new version
+
 * Tue Jun 27 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt8%ubt
 - fix package release
 

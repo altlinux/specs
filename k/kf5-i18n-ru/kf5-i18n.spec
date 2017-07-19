@@ -3,7 +3,7 @@
 %define lngg Russian
 
 Name: kf5-i18n-%lng
-Version: 5.9.4
+Version: 5.10.4
 Release: alt1%ubt
 
 Group: Graphical desktop/KDE
@@ -90,6 +90,9 @@ done
 #%lang(%lng) %_K5data/autocorrect/%{lng}_*.xml
 
 %changelog
+* Wed Jul 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt1%ubt
+- new version
+
 * Tue Apr 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
 - new version
 

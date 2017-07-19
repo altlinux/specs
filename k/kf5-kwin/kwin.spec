@@ -2,18 +2,18 @@
 
 %define kwin4_effect_builtins_sover 1
 %define libkwin4_effect_builtins libkwin4_effect_builtins%kwin4_effect_builtins_sover
-%define kwineffects_sover 10
+%define kwineffects_sover 11
 %define libkwineffects libkwineffects%kwineffects_sover
-%define kwinglutils_sover 10
+%define kwinglutils_sover 11
 %define libkwinglutils libkwinglutils%kwinglutils_sover
 %define kwin_sover 5
 %define libkwin libkwin%kwin_sover
-%define kwinxrenderutils_sover 10
+%define kwinxrenderutils_sover 11
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: kf5-%rname
-Version: 5.9.5
-Release: alt2%ubt
+Version: 5.10.4
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -174,6 +174,15 @@ KF5 library
 
 
 %changelog
+* Wed Jul 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt1%ubt
+- new version
+
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.3-alt1%ubt
+- new version
+
+* Mon Jul 03 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt2%ubt.1
+- rebuild
+
 * Mon Jun 26 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt2%ubt
 - update from 5.9 branch
 

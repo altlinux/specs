@@ -4,7 +4,7 @@
 %define libqpulseaudioprivate libqpulseaudioprivate%sover
 
 Name: kf5-%rname
-Version: 5.9.5
+Version: 5.10.4
 Release: alt1%ubt
 %K5init altplace
 
@@ -15,8 +15,10 @@ License: GPLv2+ / LGPLv2+
 
 Requires: pulseaudio-daemon
 
+Provides: kf5-plasma-pa-common = %EVR
+Obsoletes: kf5-plasma-pa-common < %EVR
+
 Source: %rname-%version.tar
-Patch1: alt-lib-sover.patch
 
 # Automatically added by buildreq on Mon Aug 24 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils glib2-devel libEGL-devel libGL-devel libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base python3 python3-base qt5-base-devel rpm-build-gir ruby ruby-stdlibs
@@ -57,7 +59,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K5build
@@ -67,10 +68,8 @@ KF5 library
 %K5install_move data kpackage kconf_update
 %find_lang %name --with-kde --all-name
 
-%files common -f %name.lang
+%files  -f %name.lang
 %doc COPYING*
-
-%files
 %_K5plug/kcms/kcm_pulseaudio.so
 %_K5qml/org/kde/plasma/private/volume/
 %_K5data/plasma/plasmoids/org.kde.plasma.volume/
@@ -85,11 +84,17 @@ KF5 library
 #%_K5lib/cmake/plasma-pa
 #%_K5archdata/mkspecs/modules/qt_plasma-pa.pri
 
-%files -n %libqpulseaudioprivate
-%_K5lib/libQPulseAudioPrivate.so.%sover
-%_K5lib/libQPulseAudioPrivate.so.*
+#%files -n %libqpulseaudioprivate
+#%_K5lib/libQPulseAudioPrivate.so.%sover
+#%_K5lib/libQPulseAudioPrivate.so.*
 
 %changelog
+* Wed Jul 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt1%ubt
+- new version
+
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.3-alt1%ubt
+- new version
+
 * Wed Apr 26 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
 - new version
 
