@@ -1,6 +1,5 @@
 %def_with mdns
 %def_with python
-%def_with mono
 
 %ifndef _qt3dir
 %define _qt3dir %_libdir/qt3
@@ -12,8 +11,8 @@
 %define systemdsystemunitdir /lib/systemd/system
 
 Name: avahi
-Version: 0.6.31
-Release: alt7
+Version: 0.6.32
+Release: alt1
 
 Summary: Local network service discovery
 License: LGPL
@@ -31,12 +30,10 @@ Requires: %name-dnsconfd = %version-%release
 Obsoletes: mdnsresponder
 %endif
 
-BuildPreReq: /proc
 BuildRequires: doxygen gcc-c++ glib2-devel graphviz intltool libcap-devel libdaemon-devel >= 0.13-alt2
 BuildRequires: libdbus-devel libexpat-devel libgdbm-devel libgtk+2-devel
 BuildRequires: libgtk+3-devel libqt3-devel libtqt-devel libqt4-devel xmltoman
 %{?_with_python:BuildRequires: python-devel python-module-pygtk python-module-dbus}
-%{?_with_mono:BuildRequires: libgtk-sharp2-devel mono-devel mono-mcs monodoc-devel rpm-build-mono >= 1.3.2-alt2}
 BuildRequires: desktop-file-utils
 
 %description
@@ -177,34 +174,6 @@ Requires: lib%name-glib-devel = %version-%release
 Requires: lib%name-ui-gtk3 = %version-%release
 Requires: lib%name-ui-common-devel = %version-%release
 
-%package -n lib%name-sharp
-Summary: Mono bindings for avahi
-Group: Development/Other
-Requires: lib%name = %version-%release
-
-%package -n lib%name-sharp-doc
-Summary: Mono bindings for avahi -- monodoc
-Group: Development/Other
-Requires: lib%name-sharp = %version-%release
-BuildArch: noarch
-
-%package -n lib%name-ui-sharp
-Summary: GTK/Sharp bindings for avahi
-Group: Development/Other
-Requires: lib%name-ui = %version-%release
-
-%package -n lib%name-ui-sharp-doc
-Summary: GTK/Sharp bindings for avahi -- monodoc
-Group: Development/Other
-Requires: lib%name-ui-sharp = %version-%release
-BuildArch: noarch
-
-%package -n lib%name-sharp-devel
-Summary: Mono bindings for avahi
-Group: Development/Other
-Requires: lib%name-sharp = %version-%release
-Requires: lib%name-ui-sharp = %version-%release
-
 %package -n python-module-%name
 Summary: Python bindings for Avahi
 Group: Development/Python
@@ -336,21 +305,6 @@ command-line utilitiesthat use avahi to browse and publish mDNS services and hos
 %description ui
 Various UI tools that use avahi to discover and use mDNS services and hosts.
 
-%description -n lib%name-sharp
-Mono bindings for Avahi.
-
-%description -n lib%name-sharp-doc
-Mono bindings for Avahi -- monodoc
-
-%description -n lib%name-ui-sharp
-GTK/Sharp bindings for Avahi.
-
-%description -n lib%name-ui-sharp-doc
-GTK/Sharp bindings for Avahi -- monodoc
-
-%description -n lib%name-sharp-devel
-Mono bindings for Avahi.
-
 %description -n python-module-%name
 Python bindings for Avahi.
 
@@ -366,13 +320,8 @@ touch config.rpath
     --localstatedir=%_var \
     --with-distro=altlinux \
     --enable-core-docs \
-%if_with mono
-    --enable-mono \
-    --enable-monodoc \
-%else
     --disable-mono \
     --disable-monodoc \
-%endif
     --disable-compat-howl \
     --disable-static \
 %if_with python
@@ -639,32 +588,15 @@ fi
 %_libdir/libavahi-ui-gtk3.so
 %_pkgconfigdir/avahi-ui-gtk3.pc
 
-%if_with mono
-%files -n lib%name-sharp
-%_monodir/avahi-sharp/avahi-sharp.dll
-%_monogacdir/avahi-sharp
-
-%files -n lib%name-sharp-doc
-%_monodocdir/avahi-sharp-docs.*
-
-%files -n lib%name-ui-sharp
-%_monodir/avahi-ui-sharp/avahi-ui-sharp.dll
-%_monogacdir/avahi-ui-sharp
-
-%files -n lib%name-ui-sharp-doc
-%_monodocdir/avahi-ui-sharp-docs.*
-
-%files -n lib%name-sharp-devel
-%_pkgconfigdir/avahi-sharp.pc
-%_pkgconfigdir/avahi-ui-sharp.pc
-%endif # mono
-
 %if_with python
 %files -n python-module-%name
 %python_sitelibdir/%name
 %endif		    
 
 %changelog
+* Wed Jul 19 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.32-alt1
+- 0.6.32
+
 * Fri Feb 12 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.31-alt7
 - upstream PR#352 (closes: #31788)
 
