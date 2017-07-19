@@ -2,7 +2,7 @@
 
 Name: openstack-%oname
 Version: 14.0.0
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: OpenStack Image Service
 
@@ -222,7 +222,7 @@ rm -rf %buildroot/usr/etc/glance
 ### set default configuration
 %define glance_conf %buildroot%_sysconfdir/glance/glance.conf.d/010-glance.conf
 crudini --set %glance_conf DEFAULT log_dir /var/log/glance
-crudini --set %glance_conf DEFAULT oslo_concurrency /var/run/glance
+crudini --set %glance_conf oslo_concurrency lock_path /var/run/glance
 crudini --set %glance_conf paste_deploy flavor keystone
 
 %pre
@@ -279,6 +279,9 @@ crudini --set %glance_conf paste_deploy flavor keystone
 %doc doc/build/html
 
 %changelog
+* Wed Jul 19 2017 Alexey Shabalin <shaba@altlinux.ru> 1:14.0.0-alt3
+- fix lock_path in default config
+
 * Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1:14.0.0-alt2
 - drop signing_dir from default config
 
