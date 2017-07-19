@@ -1,6 +1,6 @@
 Name: psi-plus-l10n
-Version: 1.0.116
-Release: alt1
+Version: 1.0.133
+Release: alt2
 
 Summary: Translations for Psi+
 License: GPLv2
@@ -14,7 +14,7 @@ Source: %name-%version.tar.gz
 
 BuildArch: noarch
 
-BuildPreReq: libqt4-devel
+BuildPreReq: qt5-tools
 
 Requires: psi-plus >= %version
 
@@ -25,7 +25,7 @@ Translations for Psi+
 %setup
 
 %build
-lrelease-qt4 translations/*.ts
+lrelease-qt5 translations/*.ts
 
 %install
 %__mkdir_p %buildroot%_datadir/psi-plus
@@ -37,6 +37,12 @@ lrelease-qt4 translations/*.ts
 %_datadir/psi-plus/*.qm
 
 %changelog
+* Tue Jul 18 2017 Oleg Solovyov <mcpain@altlinux.org> 1.0.133-alt2
+- Build with Qt5
+
+* Thu Jul 14 2017 Oleg Solovyov <mcpain@altlinux.org> 1.0.133-alt1
+- Version 1.0.133
+
 * Thu Jun 29 2017 Oleg Solovyov <mcpain@altlinux.org> 1.0.116-alt1
 - Version 1.0.116
 

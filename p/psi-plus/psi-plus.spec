@@ -1,5 +1,5 @@
 Name: psi-plus
-Version: 1.0.116
+Version: 1.0.140
 Release: alt1
 
 Summary: Psi+ Jabber client
@@ -13,20 +13,23 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 # https://github.com/%name/%name-snapshots/archive/%version.tar.gz
 Source: %name-snapshots-%version.tar.gz
 Patch0: %name-qca2-alt.patch
+Patch1: %name-disable-sm-alt.patch
 
-BuildRequires(pre): libqt4-devel
-
-Requires: libqt4-core >= %{get_version libqt4-core}
-Requires: qca2-ossl
-Requires: qca2-gnupg
+Requires: qt5-base-common qt5-webkit-common qt5-multimedia-common qt5-x11extras-common
+Requires: qca-qt5-ossl
+Requires: qca-qt5-gnupg
 
 BuildRequires: gcc-c++
 BuildRequires: glibc-devel-static
 BuildRequires: libXScrnSaver-devel
 BuildRequires: libaspell-devel
 BuildRequires: libidn-devel
-BuildRequires: libqca2-devel
-BuildRequires: phonon-devel
+BuildRequires: libqca-qt5-devel
+BuildRequires: qt5-multimedia-devel
+BuildRequires: qt5-phonon-devel
+BuildRequires: libqt5-webkit qt5-webkit-devel
+BuildRequires: qt5-x11extras-devel
+BuildRequires: zlib-devel
 
 %description
 Psi is a Jabber Instant Messaging client based on Qt.  Jabber supports
@@ -50,11 +53,11 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-attention
-This plugin is designed to send and receive special messages such as Attentions. 
+This plugin is designed to send and receive special messages such as Attentions.
 To work correctly, the plugin requires that the client of the other party supports XEP-0224 (for example: Pidgin, Miranda IM with Nudge plugin).
 
 %description plugin-attention -l ru_RU.UTF-8
-Данный плагин предназначен для отправки и приёма сообщений типа Attention. 
+Данный плагин предназначен для отправки и приёма сообщений типа Attention.
 Для работы необходимо, чтобы клиент собеседника поддерживал XEP-0224 (например: Pidgin, Miranda IM с плагином Nudge).
 
 # Autoreply plugin
@@ -64,7 +67,7 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-autoreply
-This plugin acts as an auto-answering machine. It has a number of simple configuration options, which you can use to: 
+This plugin acts as an auto-answering machine. It has a number of simple configuration options, which you can use to:
 
  - set a text message for auto-answer
  - exclude specified jids, including conferences, from the objects for auto-answer (if a jid conference is set, the exception will include all private messages)
@@ -74,13 +77,13 @@ This plugin acts as an auto-answering machine. It has a number of simple configu
  - disable the auto-responder for the active tab
  - disable the auto-responder for contacts that are not in your roster
 
-The list of exceptions for jids has two operating modes: 
+The list of exceptions for jids has two operating modes:
 
  - auto-responder is _switched off_ for the list of exceptions, for the others is _switched on_ (Disable mode)
  - auto-responder is _switched on_ for the list of exceptions, for the others is _switched off_ (Enable mode)
 
 %description plugin-autoreply -l ru_RU.UTF-8
-Данный плагин выполняет роль автоответчика. Имеет ряд несложных настроек, с помощью которых можно: 
+Данный плагин выполняет роль автоответчика. Имеет ряд несложных настроек, с помощью которых можно:
 
  - задать текст сообщения для автоответа
  - исключить определённые jid'ы, включая конференции, из объектов для автоответа (если задан jid конференции, то в исключения попадают все приватные сообщения)
@@ -90,7 +93,7 @@ The list of exceptions for jids has two operating modes:
  - отключить автоответчик для активной вкладки/таба
  - отключить автоответчик для контактов не из вашего ростера
 
-Список исключений для jid'ов имеет два режима работы: 
+Список исключений для jid'ов имеет два режима работы:
 
  - автоответчик выключен для списка исключений, для остальных - включён (Disable mode)
  - автоответчик включён для списка исключений, для остальных - выключен (Enable mode)
@@ -116,11 +119,11 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-captchaforms
-This plugin is designed to pass of captcha directly from the Psi+. 
+This plugin is designed to pass of captcha directly from the Psi+.
 At the moment the functional is very limited. It only works if the image is sent directly to the body of the message (download content from Internet does not work).
 
 %description plugin-captchaforms -l ru_RU.UTF-8
-Данный плагин предназначен для прохождения капчи непосредственно из Psi+. 
+Данный плагин предназначен для прохождения капчи непосредственно из Psi+.
 В данный момент функционал весьма ограничен. Работает только в случае, если картинка посылается непосредственно в теле сообщения (загрузка контента из интернета пока не поддерживается).
 
 # Chess plugin
@@ -130,15 +133,15 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-chess
-This plugin allows you to play chess with your friends. 
-The plugin is compatible with a similar plugin for Tkabber. 
-For sending commands, normal messages are used, so this plugin will always work wherever you are able to log in. 
+This plugin allows you to play chess with your friends.
+The plugin is compatible with a similar plugin for Tkabber.
+For sending commands, normal messages are used, so this plugin will always work wherever you are able to log in.
 To invite a friend for a game, you can use contact menu item or the button on the toolbar in a chat window.
 
 %description plugin-chess -l ru_RU.UTF-8
-Данный плагин позволяет играть в шахматы с пользователями из ростера. 
-Плагин совместим с аналогичным плагином в jabber-клиенте Tkabber. 
-Для передачи команд используются обычные сообщения, поэтому плагин будет работать везде, где у Вас есть возможность выйти в «онлайн». 
+Данный плагин позволяет играть в шахматы с пользователями из ростера.
+Плагин совместим с аналогичным плагином в jabber-клиенте Tkabber.
+Для передачи команд используются обычные сообщения, поэтому плагин будет работать везде, где у Вас есть возможность выйти в «онлайн».
 Чтобы пригласить друга в игру, можно воспользоваться пунктом меню контакта или кнопкой на тулбаре в окне чата.
 
 # Cleaner plugin
@@ -148,11 +151,11 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-cleaner
-This plugin is designed to clear the avatar cache, saved local copies of vCards and history logs. 
+This plugin is designed to clear the avatar cache, saved local copies of vCards and history logs.
 You can preview items before deleting them from your hard drive.
 
 %description plugin-cleaner -l ru_RU.UTF-8
-Данный плагин предназначен для очистки кэша аватар, сохранённых локальных копий vCard, а также логов истории переписки. 
+Данный плагин предназначен для очистки кэша аватар, сохранённых локальных копий vCard, а также логов истории переписки.
 Имеется возможность предварительного просмотра элементов перед их удалением с локального диска.
 
 # Client switcher plugin
@@ -162,11 +165,11 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-clientswitcher
-This plugin is intended to spoof version of the Jabber client, the name and type of operating system. It is possible to manually specify the version of the client and the operating system or choose from a predefined list. 
+This plugin is intended to spoof version of the Jabber client, the name and type of operating system. It is possible to manually specify the version of the client and the operating system or choose from a predefined list.
 Note: It is recommended to use the plugin only when really necessary. Keep in mind that the substitution of the name and version of the client may have a negative impact on support in their respective conferences.
 
 %description plugin-clientswitcher -l ru_RU.UTF-8
-Данный плагин предназначен для подмены версии Jabber-клиента, его названия и типа операционной системы. Имеется возможность вручную указать версию клиента и операционной системы или выбрать их из заданного списка. 
+Данный плагин предназначен для подмены версии Jabber-клиента, его названия и типа операционной системы. Имеется возможность вручную указать версию клиента и операционной системы или выбрать их из заданного списка.
 Примечание: Рекомендуется использовать плагин только в случае реальной необходимости. Следует помнить, что подмена имени и версии клиента может негативно сказаться на поддержке в соответствующих конференциях.
 
 # Conference logger plugin
@@ -176,13 +179,13 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-conferencelogger
-This plugin is designed to save conference logs in which the Psi+ user sits. 
-Conferences logs can be viewed from the plugin settings or by clicking on the appropriate button on the toolbar in the active window/tab with conference. 
+This plugin is designed to save conference logs in which the Psi+ user sits.
+Conferences logs can be viewed from the plugin settings or by clicking on the appropriate button on the toolbar in the active window/tab with conference.
 Note: To work correctly, the option options.ui.chat.central-toolbar must be set to true.
 
 %description plugin-conferencelogger -l ru_RU.UTF-8
-Данный плагин предназначен для записи (сохранения) логов конференций, в которых находится пользователь Psi+. 
-Логи конференций можно просмотреть из настроек плагина, либо нажав соответствующую кнопку на тулбаре в активном окне/табе конференции. 
+Данный плагин предназначен для записи (сохранения) логов конференций, в которых находится пользователь Psi+.
+Логи конференций можно просмотреть из настроек плагина, либо нажав соответствующую кнопку на тулбаре в активном окне/табе конференции.
 Примечание: Для корректной работы опция options.ui.chat.central-toolbar должна быть установлена в положение true.
 
 # Content downloader plugin
@@ -192,11 +195,11 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-contentdownloader
-This plugin is designed to make it easy to download and install iconsets and other resources for Psi+. 
+This plugin is designed to make it easy to download and install iconsets and other resources for Psi+.
 This plugin can currently be used to download and install roster iconsets and emoticons.
 
 %description plugin-contentdownloader -l ru_RU.UTF-8
-Данный плагин предназначен для скачивания из Интернет наборов иконок и прочих дополнительных ресурсов для Psi+. 
+Данный плагин предназначен для скачивания из Интернет наборов иконок и прочих дополнительных ресурсов для Psi+.
 Примечание: В настоящее время плагин умеет скачивать и устанавливать наборы иконок для ростера и смайлпаки.
 
 # Extended menu
@@ -218,13 +221,13 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-extendedoptions
-This plugin is designed to allow easy configuration of some advanced options in Psi+. 
-This plugin gives you access to advanced application options, which do not have a graphical user interface. 
+This plugin is designed to allow easy configuration of some advanced options in Psi+.
+This plugin gives you access to advanced application options, which do not have a graphical user interface.
 Importantly: A large part of the options are important system settings. These require extra attention and proper understanding of the results when changing the option.
 
 %description plugin-extendedoptions -l ru_RU.UTF-8
-Данный плагин предназначен для более удобной настройки дополнительных параметров Psi+. 
-Плагин предоставляет доступ к дополнительным настройкам приложения, которые не имеют своего графического интерфейса. 
+Данный плагин предназначен для более удобной настройки дополнительных параметров Psi+.
+Плагин предоставляет доступ к дополнительным настройкам приложения, которые не имеют своего графического интерфейса.
 Важно: бОльшая часть настроек имеет системный характер и требует внимания и понимания смысла изменяемых функций.
 
 # GMail service plugin
@@ -234,11 +237,11 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-gmailservice
-Shows notifications of new messages in your Gmailbox. 
+Shows notifications of new messages in your Gmailbox.
 Note: The plugin only checks the root of your Inbox folder in your Gmailbox for new messages. When using server side mail filtering, you may not be notified about all new messages.
 
 %description plugin-gmailservice -l ru_RU.UTF-8
-Данный плагин предназначен для работы с уведомлениями о поступлении новых писем в почтовый ящик Gmail, а также с прочими дополнительными сервисами. 
+Данный плагин предназначен для работы с уведомлениями о поступлении новых писем в почтовый ящик Gmail, а также с прочими дополнительными сервисами.
 Примечание: Плагин проверяет корень почтового каталога Inbox в Gmailbox на предмет наличия новых писем. Если фильтрация (пересортировка) писем осуществляется непосредственно на сервере Gmail, то нотификаций о новой почте не будет.
 
 # Gnome 3 support plugin
@@ -269,7 +272,7 @@ Requires: %name = %version-%release
 Gomoku game support plugin for %name
 
 %description plugin-gomokugame -l ru_RU.UTF-8
-Данный плагин позволяет играть с контактами ростера и конференции в игру Гомоку. Реализована разновидность правил «Международное гомоку». 
+Данный плагин позволяет играть с контактами ростера и конференции в игру Гомоку. Реализована разновидность правил «Международное гомоку».
 Для передачи команд используются обычные сообщения, поэтому плагин будет работать везде, где есть возможность выйти в онлайн.
 
 # History keeper plugin
@@ -279,11 +282,11 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-historykeeper
-This plugin is designed to remove the history of selected contacts when the Psi+ is closed. 
+This plugin is designed to remove the history of selected contacts when the Psi+ is closed.
 You can select or deselect a contact for history removal from the context menu of a contact or via the plugin options.
 
 %description plugin-historykeeper -l ru_RU.UTF-8
-Данный плагин предназначен для удаления истории переписки с отмеченными контактами при выходе из Psi+. 
+Данный плагин предназначен для удаления истории переписки с отмеченными контактами при выходе из Psi+.
 Отметить контакт или удалить отметку можно из контекстного меню контакта, либо через окно с настройками плагина.
 
 # ICQ die plugin
@@ -293,25 +296,25 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-icqdie
-This plugin is designed to help you transfer as many contacts as possible from ICQ to Jabber. 
-The plugin has a number of simple settings that can help you: 
+This plugin is designed to help you transfer as many contacts as possible from ICQ to Jabber.
+The plugin has a number of simple settings that can help you:
 
  - Set a special message text
  - Exclude specific ICQ numbers
  - Set the time interval after which the message will be repeated
  - Disable the message for the active window/tab
  - Disable messages for contacts that are not in your roster
- 
+
 %description plugin-icqdie -l ru_RU.UTF-8
-Данный плагин призван помочь Вам перевести как можно бОльшее количество Ваших контактов с ICQ на Jabber. 
-Плагин имеет ряд несложных настроек, с помощью которых можно: 
+Данный плагин призван помочь Вам перевести как можно бОльшее количество Ваших контактов с ICQ на Jabber.
+Плагин имеет ряд несложных настроек, с помощью которых можно:
 
  - Задать текст сообщения
  - Исключить определённые ICQ номера
  - Задать интервал времени, по истечении которого сообщение будет повторено
  - Отключить сообщения для активного окна/таба
  - Отключить сообщения для контактов не из Вашего ростера
- 
+
 # Image plugin
 %package plugin-image
 Summary: Image support for %name
@@ -319,13 +322,13 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-image
-This plugin is designed to send images to roster contacts. 
-Your contact's client must be support XEP-0071: XHTML-IM and support the data:URI scheme. 
+This plugin is designed to send images to roster contacts.
+Your contact's client must be support XEP-0071: XHTML-IM and support the data:URI scheme.
 Note: To work correctly, the option options.ui.chat.central-toolbar must be set to true.
 
 %description plugin-image -l ru_RU.UTF-8
-Данный плагин предназначен для отправки собеседнику графического изображения. 
-Клиент собеседника должен поддерживать XEP-0071: XHTML-IM и поддерживать схему data:URI. 
+Данный плагин предназначен для отправки собеседнику графического изображения.
+Клиент собеседника должен поддерживать XEP-0071: XHTML-IM и поддерживать схему data:URI.
 Примечание: Для корректной работы плагина опция options.ui.chat.central-toolbar должна быть установлена в положение true.
 
 # Jabber disk plugin
@@ -338,9 +341,9 @@ Requires: %name = %version-%release
 Jabber disk support plugin for %name
 
 %description plugin-jabberdisk -l ru_RU.UTF-8
-Данный плагин предназначен для комфортной работы с файловыми хранилищами Jabber Disk. 
-Реализовано через соответствующую команду в контекстном меню контакта ростера. 
-Работа с файлами представлена в виде графического интерфейса. 
+Данный плагин предназначен для комфортной работы с файловыми хранилищами Jabber Disk.
+Реализовано через соответствующую команду в контекстном меню контакта ростера.
+Работа с файлами представлена в виде графического интерфейса.
 Добавлять/удалять/редактировать глобальные настройки плагина можно на вкладке Plugins в настройках приложения.
 
 # Juick plugin
@@ -350,8 +353,8 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-juick
-This plugin is designed to work efficiently and comfortably with the Juick microblogging service. 
-Currently, the plugin is able to: 
+This plugin is designed to work efficiently and comfortably with the Juick microblogging service.
+Currently, the plugin is able to:
 
  - Coloring @nick, *tag and #message_id in messages from the juick@juick.com bot
  - Detect >quotes in messages
@@ -359,8 +362,8 @@ Currently, the plugin is able to:
  - Note: To work correctly, the option options.html.chat.render must be set to true.
 
 %description plugin-juick -l ru_RU.UTF-8
-Плагин предназначен для эффективной и комфортной работы с сервисом микроблогов Juick. 
-На данный момент плагин умеет: 
+Плагин предназначен для эффективной и комфортной работы с сервисом микроблогов Juick.
+На данный момент плагин умеет:
 
  - Раскрашивать @ники, *тэги, #id_сообщений в сообщениях от бота juick@juick.com
  - Распознавать >цитаты в сообщениях
@@ -416,8 +419,8 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-screenshot
-This plugin allows you to make a snapshot (screenshot) of the screen, edit the visible aria to make a screenshot and save the image to a local drive or upload to HTTP/FTP server. 
-The plugin has the following settings: 
+This plugin allows you to make a snapshot (screenshot) of the screen, edit the visible aria to make a screenshot and save the image to a local drive or upload to HTTP/FTP server.
+The plugin has the following settings:
 
  - Shortcut - Hotkey to call the plugin (Ctrl + Alt + P by default)
  - Format - type of image file, which will save a snapshot of the screen (png by default)
@@ -426,14 +429,14 @@ The plugin has the following settings:
 The address of FTP server is specified as ftp://ftp.domain.tld/path1/path2.
 
 %description plugin-screenshot -l ru_RU.UTF-8
-Данный плагин позволяет делать снимок (скриншот) экрана, редактировать видимую область на сделанном скриншоте и сохранять снимок на локальный диск или загружать на HTTP/FTP-сервер. 
-Плагин имеет следующие настройки: 
+Данный плагин позволяет делать снимок (скриншот) экрана, редактировать видимую область на сделанном скриншоте и сохранять снимок на локальный диск или загружать на HTTP/FTP-сервер.
+Плагин имеет следующие настройки:
 
  - Shortcut - горячая клавиша для вызова плагина (по умолчанию, Ctrl+Alt+P)
  - Format - тип графического файла, в котором будет сохранён снимок экрана (по умолчанию, png)
  - File Name - формат имени графического файла (по умолчанию, pic-yyyyMMdd-hhmmss, где yyyyMMdd=ГГГГММДД, hhmmss=ччммсс - текущая дата в формате годмесяцдень-часминутасекунда; например, pic-20100711-135132.png)
 
-Адрес FTP-сервера задаётся в виде ftp://ftp.domain.tld/path1/path2. 
+Адрес FTP-сервера задаётся в виде ftp://ftp.domain.tld/path1/path2.
 Примечание: Для работы со скриншотами также можно использовать отдельное (самостоятельное) приложение qScreenshot. Доступно на различных платформах (в т.ч. и под MS Windows).
 
 # Skins plugin
@@ -443,39 +446,39 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-skins
-This plugin is designed to create, store and apply skins to Psi+. 
-Skin - a set of custom settings. 
-In order to apply a new skin for Psi+ you can use different methods: 
+This plugin is designed to create, store and apply skins to Psi+.
+Skin - a set of custom settings.
+In order to apply a new skin for Psi+ you can use different methods:
 
  - Create in the PsiData folder skins directory and position it previously downloaded skin (by default the plugin looks in the directory PsiData)
  - Open a file from anywhere on the skin of a local disk using the Open command in the plugin settings
 
-Each skin must be in a separate directory. You can also add a screenshot to the skin file. 
-In most cases, to be sure that the skin is applied correctly, you must perform a sequence of actions: 
+Each skin must be in a separate directory. You can also add a screenshot to the skin file.
+In most cases, to be sure that the skin is applied correctly, you must perform a sequence of actions:
 
  - Apply the skin
  - Restart the application
  - Apply the same skin again
 
 This will enable all settings (icons, toolbars, status) to pick up correctly.
- 
+
 %description plugin-skins -l ru_RU.UTF-8
-Данный плагин предназначен для создания и использования скинов в Psi+. 
-Скин - это набор пользовательских настроек. 
-Для того, чтобы применить новый скин для Psi+, можно использовать различные способы: 
+Данный плагин предназначен для создания и использования скинов в Psi+.
+Скин - это набор пользовательских настроек.
+Для того, чтобы применить новый скин для Psi+, можно использовать различные способы:
 
  - Создать в каталоге PsiData папку skins и расположить в ней предварительно скачанный скин (по умолчанию плагин «смотрит» в папку PsiData).
  - Открыть файл скина из любого места локального диска при помощи команды Open в настройках плагина.
 
-Каждый скин должен лежать в отдельной папке. Рядом с файлом скина можно также положить скриншот скина. 
-В большинстве случаев для того, чтобы быть уверенным, что скин применился правильно, необходимо выполнить следующую последовательность действий: 
+Каждый скин должен лежать в отдельной папке. Рядом с файлом скина можно также положить скриншот скина.
+В большинстве случаев для того, чтобы быть уверенным, что скин применился правильно, необходимо выполнить следующую последовательность действий:
 
  - Применить скин
  - Перезапустить Psi+
  - Применить этот же скин повторно
 
 Такая последовательность действий позволит всем настройкам (иконкам, положению панелей инструментов) примениться правильно и до конца.
- 
+
 # Stop spam plugin
 %package plugin-stopspam
 Summary: Stop spam support for %name
@@ -483,9 +486,9 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-stopspam
-This plugin is designed to block spam messages and other unwanted information from Psi+ users. 
-The functionality of the plugin is based on the principle of "question - answer". 
-With the plugin settings you can: 
+This plugin is designed to block spam messages and other unwanted information from Psi+ users.
+The functionality of the plugin is based on the principle of "question - answer".
+With the plugin settings you can:
 
  - Define a security question and the answer
  - Define the set of rules that define whether to the trigger plugin for a contact
@@ -498,17 +501,17 @@ With the plugin settings you can:
  - Choose for which ranks and roles of conference participants blocking messages will be disabled
  - Enable deadlocks in private messages to participants who do not fall into the exceptions list for the roles and ranks which include blocking.
 
-The rules are checked from top to bottom. If the rule is Enabled - stopspam is triggered, otherwise - stopspam is not triggered. In the case where none of the rules triggered stopspam for roster messages, you can specify whether the plugin will activate or not. For private messages from the same conference, it will always work. 
-Question and answer as well as a list of rules is common for ordinary messages and for private messages in conferences. 
-When a user has passed, the test will send a re-authorization request. It should be noted in the messages that are sent back the security question was correctly answered. 
-The plugin keeps a log of blocked messages, which you can view through the plugin settings. 
-The Reset button deletes the log and resets the counter of blocked messages. 
+The rules are checked from top to bottom. If the rule is Enabled - stopspam is triggered, otherwise - stopspam is not triggered. In the case where none of the rules triggered stopspam for roster messages, you can specify whether the plugin will activate or not. For private messages from the same conference, it will always work.
+Question and answer as well as a list of rules is common for ordinary messages and for private messages in conferences.
+When a user has passed, the test will send a re-authorization request. It should be noted in the messages that are sent back the security question was correctly answered.
+The plugin keeps a log of blocked messages, which you can view through the plugin settings.
+The Reset button deletes the log and resets the counter of blocked messages.
 WARNING!!! Before registering a new transport, it is recommended to add its jid to transport exceptions. This is due to the fact that after the transport registration, authorization requests for all contacts will be sent and if the transport was not added to as an exception, the plugin will block all the requests.
 
 %description plugin-stopspam -l ru_RU.UTF-8
-Данный плагин предназначен для блокировки получения в ростер пользователя Psi+ рассылок спама и другой нежелательной информации. 
-Функционал плагина основан на принципе «вопрос - ответ». 
-С помощью настроек плагина можно: 
+Данный плагин предназначен для блокировки получения в ростер пользователя Psi+ рассылок спама и другой нежелательной информации.
+Функционал плагина основан на принципе «вопрос - ответ».
+С помощью настроек плагина можно:
 
  - Ввести контрольный вопрос и ответ на него
  - Задать набор правил, определяющих, будет ли срабатывать плагин для данного контакта
@@ -521,12 +524,12 @@ WARNING!!! Before registering a new transport, it is recommended to add its jid 
  - Выбрать для каких рангов и ролей участников конференции блокировка сообщений будет отключена
  - Включить полную блокировку приватных сообщений для участников конференции, которые не попадают в список исключений и для ролей и рангов которых включена блокировка.
 
-Правила проверяются сверху вниз. Если напротив правила стоит галочка Enabled, то стоп-спам сработает, в противном случае - не сработает. 
-В случае когда ни одно из правил не сработало, для сообщений из ростера можно задать, сработает ли плагин или нет. Для приватных сообщений из конференций - всегда сработает. 
-Контрольный вопрос и ответ, а также список правил является общим, как для обычных сообщений, так и для приватных сообщений в конференциях. 
-Также пользователю, успешно прошедшему тест, придётся заново запрашивать авторизацию. Это стОит отметить в сообщении, отсылаемом в случае правильного ответа на контрольный вопрос. 
-Плагин ведёт лог заблокированных сообщений, который можно просмотреть командой View log. 
-Команда Reset позволяет удалить этот лог и сбросить счётчик заблокированных сообщений. 
+Правила проверяются сверху вниз. Если напротив правила стоит галочка Enabled, то стоп-спам сработает, в противном случае - не сработает.
+В случае когда ни одно из правил не сработало, для сообщений из ростера можно задать, сработает ли плагин или нет. Для приватных сообщений из конференций - всегда сработает.
+Контрольный вопрос и ответ, а также список правил является общим, как для обычных сообщений, так и для приватных сообщений в конференциях.
+Также пользователю, успешно прошедшему тест, придётся заново запрашивать авторизацию. Это стОит отметить в сообщении, отсылаемом в случае правильного ответа на контрольный вопрос.
+Плагин ведёт лог заблокированных сообщений, который можно просмотреть командой View log.
+Команда Reset позволяет удалить этот лог и сбросить счётчик заблокированных сообщений.
 ВНИМАНИЕ!!! Перед регистрацией на новом транспорте рекомендуется добавить JID транспорта в исключения. Это связано с тем, что после регистрации транспорт запрашивает авторизацию для всех контактов и если его не добавить в исключения, то плагин заблокирует все запросы.
 
 # Storage notes plugin
@@ -536,15 +539,15 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-storagenotes
-This plugin is an implementation of XEP-0049: Private XML Storage. 
-The plugin is fully compatible with notes saved using Miranda IM. 
+This plugin is an implementation of XEP-0049: Private XML Storage.
+The plugin is fully compatible with notes saved using Miranda IM.
 The plugin is designed to keep notes on the jabber server with the ability to access them from anywhere using Psi+ or Miranda IM.
- 
+
 %description plugin-storagenotes -l ru_RU.UTF-8
-Данный плагин представляет собой реализацию XEP-0049: Private XML Storage. 
-Плагин полностью совместим с заметками, сохранёнными из клиента Miranda IM. 
+Данный плагин представляет собой реализацию XEP-0049: Private XML Storage.
+Плагин полностью совместим с заметками, сохранёнными из клиента Miranda IM.
 Плагин предназначен для хранения заметок на jabber-сервере с возможностью доступа к ним из любого места через клиент Psi+ или Miranda IM.
- 
+
 # Translate plugin
 %package plugin-translate
 Summary: Translation support for %name
@@ -564,25 +567,25 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-videostatus
-This plugin is designed to set the custom status when you see the video in selected video player. 
-Communication with players made by D-Bus. 
-Note: This plugin is designed to work in Linux family operating systems ONLY. 
+This plugin is designed to set the custom status when you see the video in selected video player.
+Communication with players made by D-Bus.
+Note: This plugin is designed to work in Linux family operating systems ONLY.
 
  - To work with Totem player you need to enable appropriate plugin in this player (Edit\Plugins\D-Bus)
  - To work with VLC player you need to enable the option "Control Interface D-Bus" in the Advanced Settings tab on "Interface\Control Interface" section of the player settings
  - To work with Kaffeine player you must have player version (>= 1.0), additional configuration is not needed
  - To work with GNOME MPlayer additional configuration is not needed
- 
+
 %description plugin-videostatus -l ru_RU.UTF-8
-Плагин предназначен для установки заданного статуса во время просмотра видео в указанном видеопроигрывателе. 
-Связь с проигрывателями осуществляется посредством D-Bus. 
-Важно: Работа с видеопроигрывателями осуществляется ТОЛЬКО в операционных системах семейства Linux/BSD. В MS Windows реализовано ТОЛЬКО определение полноэкранного режима работы другого приложения на машине пользователя. 
+Плагин предназначен для установки заданного статуса во время просмотра видео в указанном видеопроигрывателе.
+Связь с проигрывателями осуществляется посредством D-Bus.
+Важно: Работа с видеопроигрывателями осуществляется ТОЛЬКО в операционных системах семейства Linux/BSD. В MS Windows реализовано ТОЛЬКО определение полноэкранного режима работы другого приложения на машине пользователя.
 
  - Для работы с Totem необходимо в самом проигрывателе включить соответствующий плагин (Правка\Модули\Служба D-Bus);
  - Для работы с VLC необходимо в расширенных настройках проигрывателя на вкладке «Интерфейс\Интерфейсы управления» включить опцию «Интерфейс управления D-Bus»;
  - Для работы с Kaffeine необходимо иметь плеер версии (>=1.0), дополнительных настроек не нужно;
  - Для работы с GNOME MPlayer дополнительных настроек не нужно.
- 
+
 # Watcher plugin
 %package plugin-watcher
 Summary: Watcher support for %name
@@ -590,40 +593,26 @@ Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
 %description plugin-watcher
-This plugin is designed to monitor the status of specific roster contacts, as well as for substitution of standard sounds of incoming messages. 
-On the first tab set up a list of contacts for the status of which is monitored. When the status of such contacts changes a popup window will be shown and when the status changes to online a custom sound can be played.  
+This plugin is designed to monitor the status of specific roster contacts, as well as for substitution of standard sounds of incoming messages.
+On the first tab set up a list of contacts for the status of which is monitored. When the status of such contacts changes a popup window will be shown and when the status changes to online a custom sound can be played.
 On the second tab is configured list of items, the messages are being monitored.
 Each element can contain a regular expression to check for matches with JID, from which the message arrives, a list of regular expressions to check for matches with the text of an incoming message, the path to sound file which will be played in case of coincidence, as well as the setting, whether the sound is played always, even if the global sounds off.
- 
+
 %description plugin-watcher -l ru_RU.UTF-8
-Данный плагин предназначен для наблюдения за статусом определённых пользователей в ростере, а также для подмены стандартных звуковых событий входящих сообщений. 
-На первой вкладке настраивается список контактов, за статусом которых осуществляется наблюдение. При смене статуса таких контактов будет показываться всплывающее окно, а при смене статуса на «онлайн» - ещё и проигрываться указанный звук. 
-На второй вкладке настраивается список элементов, за сообщениями которых ведётся наблюдение. 
-Каждый элемент может содержать: 
+Данный плагин предназначен для наблюдения за статусом определённых пользователей в ростере, а также для подмены стандартных звуковых событий входящих сообщений.
+На первой вкладке настраивается список контактов, за статусом которых осуществляется наблюдение. При смене статуса таких контактов будет показываться всплывающее окно, а при смене статуса на «онлайн» - ещё и проигрываться указанный звук.
+На второй вкладке настраивается список элементов, за сообщениями которых ведётся наблюдение.
+Каждый элемент может содержать:
 
  - Регулярное выражение для проверки на совпадение с JID, от которого приходит сообщение;
  - Список регулярных выражений для проверки на совпадение с текстом входящего сообщения;
  - Путь к звуковому файлу, который будет проигран в случае совпадения;
  - Настройку для воспроизведения звукового файла всегда, даже если глобальные звуки выключены.
- 
-# Yandex.Narod plugin
-%package plugin-yandexnarod
-Summary: Yandex.Narod support for %name
-Group: Networking/Instant messaging
-Requires: %name = %version-%release
 
-%description plugin-yandexnarod
-Yandex.Narod support for %name
-
-%description plugin-yandexnarod -l ru_RU.UTF-8
-Данный плагин является портированной версией соответсвующего плагина для QutIM. 
-Плагин позволяет передавать файлы с помощью сервиса Яндекс.Диск (через пункт меню контакта). 
-Также плагин позволяет управлять файлами, загруженными на данных сервис (пункт меню аккаунта). 
-В версиии плагина для Psi+ (по сравнению с оригиналом) добавлена поддержка proxy-серверов, исправлено удаление файлов и некоторые другие исправления и улучшения.
- 
 %prep
 %setup -n %name-snapshots-%version
 %patch0 -p1
+%patch1 -p2
 
 %build
 ./configure \
@@ -631,207 +620,203 @@ Yandex.Narod support for %name
 	--bindir=%_bindir \
 	--libdir=%_libdir \
 	--datadir=%_datadir \
-	--qtdir=%_qt4dir \
 	--enable-plugins \
 	--enable-webkit \
-	--release
+	--release \
+	--qtselect=5
 
-%make_build
+%make
 
 # Attention plugin
 pushd src/plugins/generic/attentionplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" attentionplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" attentionplugin.pro
+%make
 popd
 
 # Autoreply plugin
 pushd src/plugins/generic/autoreplyplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" autoreplyplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" autoreplyplugin.pro
+%make
 popd
 
 # Birthday reminder plugin
 pushd src/plugins/generic/birthdayreminderplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" birthdayreminderplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" birthdayreminderplugin.pro
+%make
 popd
 
 # Capthcha forms plugin
 pushd src/plugins/generic/captchaformsplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" captchaformsplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" captchaformsplugin.pro
+%make
 popd
 
 # Chess plugin
 pushd src/plugins/generic/chessplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" chessplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" chessplugin.pro
+%make
 popd
 
 # Cleaner plugin
 pushd src/plugins/generic/cleanerplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" cleanerplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" cleanerplugin.pro
+%make
 popd
 
 # Client switcher plugin
 pushd src/plugins/generic/clientswitcherplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" clientswitcherplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" clientswitcherplugin.pro
+%make
 popd
 
 # Conference logger plugin
 pushd src/plugins/generic/conferenceloggerplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" conferenceloggerplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" conferenceloggerplugin.pro
+%make
 popd
 
 # Content downloader plugin
 pushd src/plugins/generic/contentdownloaderplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" contentdownloaderplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" contentdownloaderplugin.pro
+%make
 popd
 
 # Extended menu plugin
 pushd src/plugins/generic/extendedmenuplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" extendedmenuplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" extendedmenuplugin.pro
+%make
 popd
 
 # Extended options plugin
 pushd src/plugins/generic/extendedoptionsplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" extendedoptionsplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" extendedoptionsplugin.pro
+%make
 popd
 
 # GMail service plugin
 pushd src/plugins/generic/gmailserviceplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" gmailserviceplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" gmailserviceplugin.pro
+%make
 popd
 
 # Gnome 3 support plugin
 pushd src/plugins/unix/gnome3supportplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" gnome3supportplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" gnome3supportplugin.pro
+%make
 popd
 
 # GnuPG plugin
 pushd src/plugins/generic/gnupgplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" gnupgplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" gnupgplugin.pro
+%make
 popd
 
 # Gomoku game plugin
 pushd src/plugins/generic/gomokugameplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" gomokugameplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" gomokugameplugin.pro
+%make
 popd
 
 # History keeper plugin
 pushd src/plugins/generic/historykeeperplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" historykeeperplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" historykeeperplugin.pro
+%make
 popd
 
 # ICQ die plugin
 pushd src/plugins/generic/icqdieplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" icqdieplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" icqdieplugin.pro
+%make
 popd
 
 # Image plugin
 pushd src/plugins/generic/imageplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" imageplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" imageplugin.pro
+%make
 popd
 
 # Jabber disk plugin
 pushd src/plugins/generic/jabberdiskplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" jabberdiskplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" jabberdiskplugin.pro
+%make
 popd
 
 # Juick plugin
 pushd src/plugins/generic/juickplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" juickplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" juickplugin.pro
+%make
 popd
 
 # PEP change notify plugin
 pushd src/plugins/generic/pepchangenotifyplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" pepchangenotifyplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" pepchangenotifyplugin.pro
+%make
 popd
 
 # Pstop plugin
 pushd src/plugins/dev/pstoplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" pstoplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" pstoplugin.pro
+%make
 popd
 
 # QIP X-Statuses plugin
 pushd src/plugins/generic/qipxstatusesplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" qipxstatusesplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" qipxstatusesplugin.pro
+%make
 popd
 
 # Redirector plugin
 pushd src/plugins/dev/redirectorplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" redirectorplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" redirectorplugin.pro
+%make
 popd
 
 # Screenshot plugin
 pushd src/plugins/generic/screenshotplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" screenshotplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" screenshotplugin.pro
+%make
 popd
 
 # Skins plugin
 pushd src/plugins/generic/skinsplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" skinsplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" skinsplugin.pro
+%make
 popd
 
 # Stopspam plugin
 pushd src/plugins/generic/stopspamplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" stopspamplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" stopspamplugin.pro
+%make
 popd
 
 # Storagenotes plugin
 pushd src/plugins/generic/storagenotesplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" storagenotesplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" storagenotesplugin.pro
+%make
 popd
 
 # Translate plugin
 pushd src/plugins/generic/translateplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" translateplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" translateplugin.pro
+%make
 popd
 
 # Video status plugin
 pushd src/plugins/generic/videostatusplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" videostatusplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" videostatusplugin.pro
+%make
 popd
 
 # Watcher plugin
 pushd src/plugins/generic/watcherplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" watcherplugin.pro
-%make_build
-popd
-
-# Yandex.Narod plugin
-pushd src/plugins/deprecated/yandexnarodplugin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" yandexnarodplugin.pro
-%make_build
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" watcherplugin.pro
+%make
 popd
 
 %install
 %makeinstall INSTALL_ROOT=%buildroot
+%__mkdir_p %buildroot%_libdir/%name/themes
+cp -f -r themes %buildroot%_datadir/%name/themes/
 
 %__mkdir_p %buildroot%_libdir/%name/plugins
 
@@ -843,9 +828,6 @@ popd
 
 # Redirector plugin
 %__install -Dp -m 0644 src/plugins/dev/redirectorplugin/libredirectplugin.so %buildroot%_libdir/%name/plugins
-
-# Yandex.Narod plugin
-%__install -Dp -m 0644 src/plugins/deprecated/yandexnarodplugin/libyandexnarodplugin.so %buildroot%_libdir/%name/plugins
 
 # Generic plugins
 pushd src/plugins/generic
@@ -1022,11 +1004,25 @@ popd
 %files plugin-watcher
 %_libdir/%name/plugins/libwatcherplugin.so
 
-# Yandex.Narod plugin
-%files plugin-yandexnarod
-%_libdir/%name/plugins/libyandexnarodplugin.so
-
 %changelog
+* Tue Jul 18 2017 Oleg Solovyov <mcpain@altlinux.org> 1.0.140-alt1
+- Version 1.0.140
+
+* Tue Jul 18 2017 Oleg Solovyov <mcpain@altlinux.org> 1.0.134-alt3
+- Build with Qt5
+
+* Thu Jul 14 2017 Oleg Solovyov <mcpain@altlinux.org> 1.0.134-alt2
+- New patch for disabling stream management
+
+* Thu Jul 14 2017 Oleg Solovyov <mcpain@altlinux.org> 1.0.134-alt1
+- Version 1.0.134
+
+* Thu Jul 06 2017 Oleg Solovyov <mcpain@altlinux.org> 1.0.127-alt1
+- Version 1.0.127
+
+* Tue Jul 04 2017 Oleg Solovyov <mcpain@altlinux.org> 1.0.120-alt1
+- Version 1.0.120
+
 * Thu Jun 29 2017 Oleg Solovyov <mcpain@altlinux.org> 1.0.116-alt1
 - Version 1.0.116
 
@@ -1171,7 +1167,7 @@ popd
 * Mon Jul 18 2011 Nazarov Denis <nenderus@altlinux.org> 0.15.5062-alt1.svn4122
 - Version 0.15.5062
 - SVN revision 4122
-- Change profile location from ~/.psi to ~/.config/Psi+ 
+- Change profile location from ~/.psi to ~/.config/Psi+
 
 * Tue Jul 05 2011 Nazarov Denis <nenderus@altlinux.org> 0.15.5031-alt0.M60T.1.svn4120
 - Build for branch t6
@@ -1189,7 +1185,7 @@ popd
 * Tue Jun 21 2011 Nazarov Denis <nenderus@altlinux.org> 0.15-alt4.svn4062
 - SVN revision 4062
 - Add plugins:
-  - captcha forms  
+  - captcha forms
   - chess
   - client switcher
   - content downloader
