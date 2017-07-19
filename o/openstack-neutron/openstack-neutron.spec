@@ -2,7 +2,7 @@
 
 Name: openstack-%oname
 Version: 10.0.2
-Release: alt2
+Release: alt3
 Epoch: 1
 Provides: openstack-quantum = %EVR
 Obsoletes: openstack-quantum < 2013.2-0.4.b3
@@ -557,6 +557,9 @@ fi
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Wed Jul 19 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.2-alt3
+- fix neutron-ovs-cleanup.service
+
 * Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.2-alt2
 - drop signing_dir from default config
 
