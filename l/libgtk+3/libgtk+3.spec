@@ -20,7 +20,7 @@
 %def_enable installed_tests
 
 Name: libgtk+3
-Version: %ver_major.16
+Version: %ver_major.17
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -428,6 +428,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Wed Jul 19 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.17-alt1
+- 3.22.17
+
 * Wed Jun 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.16-alt1
 - 3.22.16
 
