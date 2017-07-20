@@ -1,5 +1,5 @@
 Name: lcov
-Version: 1.12
+Version: 1.13
 Release: alt1
 
 Summary: LTP GCOV extension code coverage tool
@@ -14,6 +14,7 @@ Source: %name-%version-%release.tar
 
 Requires: gcc-common perl-GD
 
+%{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
 %define _unpackaged_files_terminate_build 1
 
 %description
@@ -32,7 +33,10 @@ FULL=%version
 EOF
 
 %install
-make install PREFIX=%buildroot
+%makeinstall_std PREFIX=%_prefix CFG_DIR=%_sysconfdir
+
+%check
+make test
 
 %files
 %_bindir/*
@@ -41,6 +45,9 @@ make install PREFIX=%buildroot
 %config(noreplace) %_sysconfdir/lcovrc
 
 %changelog
+* Thu Jul 20 2017 Dmitry V. Levin <ldv@altlinux.org> 1.13-alt1
+- v1.12-1-g79e9f28 -> v1.13-11-gb6a1136.
+
 * Wed Feb 03 2016 Dmitry V. Levin <ldv@altlinux.org> 1.12-alt1
 - 1.10 -> v1.12-1-g79e9f28.
 
