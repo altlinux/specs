@@ -2,7 +2,7 @@
 
 Name: libgpod4
 Version: 0.8.3
-Release: alt5
+Release: alt6
 
 Summary: iPod access library
 Group: Sound
@@ -22,7 +22,9 @@ BuildRequires: libsgutils-devel libusb-devel zlib-devel libimobiledevice-devel
 BuildRequires: libtag-devel libxml2-devel libgdk-pixbuf-devel
 BuildRequires: python-module-pygobject-devel python-module-mutagen swig
 BuildRequires: rpm-build-licenses
+%if 0
 BuildRequires: /proc mono-devel libgtk-sharp2-devel
+%endif
 
 %description
 libgpod is a library meant to abstract access to an iPod content. It
@@ -94,6 +96,7 @@ chmod -x bindings/python/examples/*.py
 	--enable-gtk-doc \
 	--enable-pygobject \
 	--without-hal \
+	--without-mono \
 	--enable-udev \
 	--with-libimobiledevice \
 	--with-temp_mount_dir="%MOUNT_DIR" \
@@ -111,6 +114,7 @@ popd
 rm -rf bindings/python/examples/Makefile*
 
 rm -f %buildroot%python_sitelibdir/gpod/*.la
+rm -f %buildroot%_pkgconfigdir/libgpod-sharp.pc
 
 %find_lang libgpod
 
@@ -132,13 +136,18 @@ rm -f %buildroot%python_sitelibdir/gpod/*.la
 %doc COPYING bindings/python/README bindings/python/examples
 %python_sitelibdir/gpod
 
+%if 0
 %files -n libgpod-sharp
 %_libdir/libgpod
 
 %files -n libgpod-sharp-devel
 %_pkgconfigdir/libgpod-sharp.pc
+%endif
 
 %changelog
+* Thu Jul 20 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.3-alt6
+- rebuilt without mono
+
 * Mon Jul 20 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt5
 - fixed build with newer swig
 
