@@ -6,12 +6,12 @@
 %define fakebrand xalt
 
 %define major 8
-%define minor 1
+%define minor 2
 %define bugfix 0
 %define altversion %major.%minor
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt4%ubt
+Release: alt1%ubt
 BuildArch: noarch
 
 %define theme %name
@@ -26,9 +26,9 @@ BuildRequires: design-bootloader-source >= 5.0-alt2
 BuildRequires: cpio gfxboot >= 4
 %endif
 
-BuildRequires(pre): rpm-build-ubt libqt4-core
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: libalternatives-devel
-BuildRequires: libqt4-devel
+BuildRequires: qt5-base-devel
 
 BuildRequires: ImageMagick fontconfig bc libGConf-devel
 
@@ -458,6 +458,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Jul 20 2017 Sergey V Turchin <zerg at altlinux dot org> 8.2.0-alt1%ubt
+- new version
+
 * Tue Mar 07 2017 Sergey V Turchin <zerg at altlinux dot org> 8.1.0-alt4%ubt
 - require pam-limits-desktop; don't use own limits
 
