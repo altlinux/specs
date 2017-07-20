@@ -3,19 +3,15 @@
 
 Name: pve-%sname
 Summary: HTML5 VNC client
-Version: 0.5.8
+Version: 0.6.4
 Release: alt1
 License: MPL 2.0
 Group: Networking/WWW
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source0: %sname.tgz
-
-Patch1: pveui.patch
-Patch2: fix-base-css.patch
-Patch3: fix-ie11-resize.patch
-Patch4: fix-CtrlAltDel-button-mobile.patch
+Source0: %pname.tar.xz
+Source1: %sname.tar.xz
 
 BuildArch: noarch
 
@@ -24,46 +20,28 @@ VNC client using HTML5 (WebSockets, Canvas). This packet is use by
 Proxmox VE to provide HTML VM console
 
 %prep
-%setup -q -n %sname
-cp include/ui.js pveui.js
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%setup -q -n %pname -a1
+
+cd %sname
+ls ../debian/patches/*.patch | while read p; do patch -p1 < $p; done
 
 %install
-mkdir -p %buildroot%_datadir/%pname
-cp -a images %buildroot%_datadir/%pname/
-cp -a include %buildroot%_datadir/%pname/
-install -m0644 pveui.js %buildroot%_datadir/%pname/include/pveui.js
+mkdir -p %buildroot%_datadir/%pname/app
+cp -a %sname/app/images %buildroot%_datadir/%pname/app/
+cp -a %sname/app/locale %buildroot%_datadir/%pname/app/
+cp -a %sname/app/sounds %buildroot%_datadir/%pname/app/
+cp -a %sname/app/styles %buildroot%_datadir/%pname/app/
+install -m0644 %sname/app/error-handler.js %buildroot%_datadir/%pname/app/
+install -m0644 %sname/app/ui.js %buildroot%_datadir/%pname/app.js
+install -m0644 %sname/vnc.html %buildroot%_datadir/%pname/index.html.tpl
 
 %files
-%dir %_datadir/%pname
-%dir %_datadir/%pname/include
-%_datadir/%pname/include/playback.js
-%_datadir/%pname/include/keyboard.js
-%_datadir/%pname/include/blue.css
-%_datadir/%pname/include/jsunzip.js
-%_datadir/%pname/include/keysym.js
-%_datadir/%pname/include/Orbitron700.woff
-%_datadir/%pname/include/pveui.js
-%_datadir/%pname/include/webutil.js
-%_datadir/%pname/include/black.css
-%_datadir/%pname/include/keysymdef.js
-%_datadir/%pname/include/logo.js
-%_datadir/%pname/include/websock.js
-%_datadir/%pname/include/des.js
-%_datadir/%pname/include/display.js
-%_datadir/%pname/include/inflator.js
-%_datadir/%pname/include/base.css
-%_datadir/%pname/include/base64.js
-%_datadir/%pname/include/rfb.js
-%_datadir/%pname/include/Orbitron700.ttf
-%_datadir/%pname/include/input.js
-%_datadir/%pname/include/util.js
-%_datadir/%pname/images
+%_datadir/%pname
 
 %changelog
+* Tue Jul 18 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.6.4-alt1
+- 0.6-4
+
 * Mon Aug 22 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.5.8-alt1
 - 0.5-8
 
