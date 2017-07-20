@@ -4,8 +4,8 @@
 %def_without   	jit
 
 Name:		gambas3
-Version:	3.9.2
-Release:	alt2
+Version:	3.10.0
+Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -263,6 +263,7 @@ Requires:      %name-gb-qt5-opengl = %version-%release
 Requires:      %name-gb-qt5-webkit = %version-%release
 Requires:      %name-gb-qt5-ext = %version-%release
 Requires:      %name-gb-form-terminal = %version-%release
+Requires:      %name-gb-term = %version-%release
 
 %description full
 Gambas3 with all components.
@@ -987,6 +988,15 @@ Requires:	%name-runtime = %version-%release
 %description gb-form-terminal
 This package contains the Gambas3 component for terminal in form.
 
+%package gb-term
+Summary:	Gambas3 component package for making the GUI of terminal applications
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+
+%description gb-term
+This package contains the Gambas3 component for making the GUI of
+terminal applications.
+
 
 %prep
 %setup -q
@@ -1561,7 +1571,15 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.form.terminal.*
 %appdir/control/gb.form.terminal/
 
+%files gb-term
+%_libdir/%name/gb.term.*
+%appdir/info/gb.term.*
+
 %changelog
+* Thu Jul 20 2017 Andrey Cherepanov <cas@altlinux.org> 3.10.0-alt1
+- New version (http://gambaswiki.org/wiki/doc/release/3.10.0)
+- New component gambas3-gb-term
+
 * Wed May 10 2017 Andrey Cherepanov <cas@altlinux.org> 3.9.2-alt2
 - Add Russian GenericName in desktop file
 
