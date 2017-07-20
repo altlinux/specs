@@ -1,6 +1,6 @@
 Name: LibreSSL
 Version: 2.5.5
-Release: alt1
+Release: alt2
 
 %define oname libressl
 %define libtls_abi 15
@@ -48,6 +48,8 @@ This package contains openssl(1) utility.
 Summary: Headers for %name
 Group: Development/C
 Conflicts: libcrypto-devel libssl-devel
+%filter_from_provides /^pkgconfig/d
+%filter_from_requires /^pkgconfig/d
 
 %description devel
 %common_descr
@@ -259,6 +261,10 @@ gzip -9 %buildroot%docdir/RELNOTES
 %_man1dir/netcat.*
 
 %changelog
+* Thu Jul 20 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.5.5-alt2
+- fixed LibreSSL-devel provides and requires to avoid collision with openssl
+- make watchfile to watch for the stable releases
+
 * Fri Jul 14 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.5.5-alt1
 - 2.5.5
 
