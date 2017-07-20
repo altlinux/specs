@@ -1,56 +1,46 @@
 Name: valgrind
-Version: 3.11.0
+Version: 3.13.0
 Release: alt1
 
 Summary: Valgrind, an open-source memory debugger for GNU/Linux
 License: GPLv2+
 Group: Development/Other
 URL: http://www.valgrind.org/
-
-%ifdef cvsdate
-Source: %name-%cvsdate.tar
-%else
-Source: http://www.valgrind.org/downloads/%name-%version.tar
-%endif
+Source: https://sourceware.org/pub/valgrind/%name-%version.tar
 
 Patch0: valgrind-alt-arm.patch
 Patch1: valgrind-rh-cachegrind-improvements.patch
 Patch2: valgrind-rh-helgrind-race-supp.patch
 Patch3: valgrind-rh-ldso-supp.patch
-Patch4: valgrind-rh-arm64-xattr.patch
-Patch5: valgrind-rh-arm64-sigpending.patch
-Patch6: valgrind-rh-no-rdrand.patch
-Patch7: valgrind-rh-rexw-cvtps2pd.patch
-Patch8: valgrind-rh-s390-hwcap.patch
-Patch9: valgrind-rh-wrapmalloc.patch
+Patch4: valgrind-rh-ppc64-check-no-vsx.patch
+Patch5: valgrind-rh-epoll_pwait.patch
+Patch6: valgrind-rh-ppc64-diag.patch
+Patch7: valgrind-rh-arm64-hwcap.patch
+Patch8: valgrind-rh-arm-index-hardwire.patch
+Patch9: valgrind-rh-ucontext_t.patch
+Patch10: valgrind-rh-gdb-8-testfix.patch
+Patch11: valgrind-rh-disable-vgdb-child.patch
 
 # valgrind needs /proc to work
 Requires: /proc
 %{?!_disable_check:BuildRequires: /proc gdb}
 
-# Automatically added by buildreq on Fri Dec 12 2008
-BuildRequires: gcc-c++ libX11-devel
+BuildRequires: gcc-c++
 
 
 %description
-Valgrind is a GPL'd tool to help you find memory-management problems in
-your programs.  When a program is run under Valgrind's supervision, all
-reads and writes of memory are checked, and calls to
-malloc/new/free/delete are intercepted.  As a result, Valgrind can
-detect problems such as:
-
-    * Use of uninitialised memory
-    * Reading/writing memory after it has been free'd
-    * Reading/writing off the end of malloc'd blocks
-    * Reading/writing inappropriate areas on the stack
-    * Memory leaks -- where pointers to malloc'd blocks are lost forever
-    * Passing of uninitialised and/or unaddressible memory to system calls
-    * Mismatched use of malloc/new/new [] vs free/delete/delete []
-    * Overlaps of arguments to strcpy() and related functions
-    * Some abuses of the POSIX pthread API
+Valgrind is an instrumentation framework for building dynamic analysis
+tools.  There are Valgrind tools that can automatically detect many
+memory management and threading bugs, and profile your programs in
+detail.  You can also use Valgrind to build new tools.  The Valgrind
+distribution currently includes six production-quality tools: a memory
+error detector (memcheck, the default tool), two thread error
+detectors (helgrind and drd), a cache and branch-prediction profiler
+(cachegrind), a call-graph generating cache and branch-prediction
+profiler (callgrind), and a heap profiler (massif).
 
 %package devel
-Summary: Header files for embedding Valgrind calls into other applications
+Summary: Development files for %name
 License: BSD-style
 Group: Development/Other
 Requires: %name = %version-%release
@@ -78,8 +68,7 @@ needed to compile Valgrind tools separately from the Valgrind core.
 
 
 %prep
-%setup %{?cvsdate:-n %name}
-
+%setup
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -90,9 +79,10 @@ needed to compile Valgrind tools separately from the Valgrind core.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
+%patch11 -p1
 
 %build
-#%{?cvsdate:./autogen.sh}
 autoreconf -vi
 
 # Filter out some flags that cause lots of valgrind test failures.
@@ -127,7 +117,7 @@ if [ ! -r /proc/self/exe ]; then
 fi
 
 # Make sure a basic binary runs.
-./vg-in-place /bin/echo
+./vg-in-place --error-exitcode=1 /bin/echo
 
 %make_build CFLAGS= check ||:
 
@@ -150,7 +140,7 @@ EOF
 gcc %optflags -o close_fds close_fds.c
 
 echo "===============TESTING==================="
-./close_fds make regtest ||:
+./close_fds make nonexp-regtest ||:
 find -type f -name '*.diff' |sort
 echo "===============END TESTING==============="
 
@@ -181,6 +171,10 @@ echo "===============END TESTING==============="
 
 
 %changelog
+* Thu Jul 20 2017 Dmitry V. Levin <ldv@altlinux.org> 3.13.0-alt1
+- Updated to 3.13.0.
+- Merged with valgrind-3.13.0-4 from Fedora.
+
 * Mon Nov 16 2015 Dmitry V. Levin <ldv@altlinux.org> 3.11.0-alt1
 - Updated to 3.11.0.
 - Merged with valgrind-3.11.0-5 from Fedora.
