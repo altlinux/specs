@@ -1,6 +1,6 @@
 
 Name: memcached
-Version: 1.4.36
+Version: 1.4.39
 Release: alt1
 
 Summary: memcached - memory caching daemon
@@ -92,6 +92,12 @@ fi
 %exclude %_datadir/%name/scripts/memcached.sysv
 
 %changelog
+* Thu Jul 20 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.39-alt1
+- 1.4.39
+
+* Wed Jun 14 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.37-alt1
+- 1.4.37
+
 * Wed Mar 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.36-alt1
 - 1.4.36
 
