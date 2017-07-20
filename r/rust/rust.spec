@@ -1,5 +1,5 @@
 Name: rust
-Version: 1.17.0
+Version: 1.18.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -9,8 +9,6 @@ URL: http://www.rust-lang.org/
 
 # Cloned from https://github.com/rust-lang/rust
 Source: %name-%version.tar
-# Cloned from https://github.com/rust-lang/llvm
-Source1: llvm.tar
 # Cloned from https://github.com/rust-lang/jemalloc
 Source2: jemalloc.tar
 # Cloned from https://github.com/rust-lang/compiler-rt
@@ -22,25 +20,16 @@ Source5: rust-installer.tar
 # Cloned from https://github.com/rust-lang-nursery/libc
 Source6: liblibc.tar
 # Crates to build rust
-Source7: crates.tar
+Source7: vendor.tar
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 BuildPreReq: /proc
-BuildRequires: curl gcc-c++ python-devel rust cmake
+BuildRequires: curl gcc-c++ python-devel rust cmake llvm4.0-devel libffi-devel
+BuildRequires: rust-cargo
 
 # Since 1.12.0: striping debuginfo damages *.so files
 %add_debuginfo_skiplist %_libdir %_bindir
-
-%ifarch %ix86
-%define cargo build/cargo-nightly-i686-unknown-linux-gnu/cargo/bin/cargo
-Source9: https://s3.amazonaws.com/rust-lang-ci/cargo-builds/6b05583d71f982bcad049b9fa094c637c062e751/cargo-nightly-i686-unknown-linux-gnu.tar.gz
-%endif
-
-%ifarch x86_64
-%define cargo %_bindir/cargo
-BuildRequires: rust-cargo
-%endif
 
 %description
 Rust is a systems programming language that runs blazingly fast, prevents
@@ -55,33 +44,11 @@ Requires: %name = %version-%release
 %summary
 
 %prep
-%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7
-mv llvm jemalloc compiler-rt rust-installer liblibc src
+%setup -a2 -a3 -a4 -a5 -a6 -a7
+mv vendor jemalloc compiler-rt rust-installer liblibc src
 mv hoedown src/rt
 
-rm -rf %_tmpdir/cargo
-mkdir %_tmpdir/cargo
-mv crates %_tmpdir/cargo/crates
-
-cat <<EOF > %_tmpdir/cargo/config
-[source.offline]
-local-registry = "%_tmpdir/cargo/crates"
-
-[source.crates-io]
-replace-with = "offline"
-EOF
-
-%ifarch %ix86
-mkdir -p build
-pushd build
-    tar xf %SOURCE9
-popd
-%endif
-
 %ifarch x86_64
-# Old cargo hack
-sed -i '/build = false/d' src/librustc_plugin/Cargo.toml
-
 # Hack around libdir bug
 sed -i '/let _ = fs::remove_dir_all(&sysroot);/d' src/bootstrap/compile.rs
 mkdir -p build/x86_64-unknown-linux-gnu/stage0-sysroot
@@ -91,27 +58,30 @@ popd
 %endif
 
 %build
-export CARGO_HOME=%_tmpdir/cargo
-export SSL_CERT_FILE=/usr/share/ca-certificates/ca-bundle.crt
-
-cat <<EOF > config.toml
+cat > config.toml <<EOF
 [build]
-cargo = "%cargo"
+cargo = "%_bindir/cargo"
 rustc = "%_bindir/rustc"
 submodules = false
 docs = false
 verbose = 0
+vendor = true
 [install]
 prefix = "%prefix"
 libdir = "%_lib"
 [rust]
 channel = "stable"
+codegen-tests = false
+rpath = false
+[target.x86_64-unknown-linux-gnu]
+llvm-config = "%_bindir/llvm-config"
+[target.i686-unknown-linux-gnu]
+llvm-config = "%_bindir/llvm-config"
 EOF
 
-./x.py build
+LLVM_LINK_SHARED=1 ./x.py build
 
 %install
-export CARGO_HOME=%_tmpdir/cargo
 DESTDIR=%buildroot ./x.py dist --install
 
 %files
@@ -138,6 +108,10 @@ DESTDIR=%buildroot ./x.py dist --install
 %exclude %_libdir/rustlib/etc/lldb_*
 
 %changelog
+* Wed Jul 19 2017 Vladimir Lettiev <crux@altlinux.org> 1.18.0-alt1
+- 1.18.0
+- built with shared llvm4.0
+
 * Fri Jun 16 2017 Vladimir Lettiev <crux@altlinux.org> 1.17.0-alt1
 - 1.17.0
 - switched to cargo-based build
