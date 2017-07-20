@@ -60,7 +60,7 @@
 %endif
 
 Name: virtualbox
-Version: 5.1.18
+Version: 5.1.24
 Release: alt1%ubt
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -783,6 +783,10 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Thu Jul 20 2017 Denis Medvedev <nbr@altlinux.org> 5.1.24-alt1%ubt
+- new version 5.1.24
+(Fixes: CVE-2017-10129, CVE-2017-10187, CVE-2017-10204, CVE-2017-10209, CVE-2017-10210, CVE-2017-10233, CVE-2017-10235, CVE-2017-10236, CVE-2017-10237, CVE-2017-10238, CVE-2017-10239, CVE-2017-10240, CVE-2017-10241, CVE-2017-10242)
+
 * Thu Mar 16 2017 Denis Medvedev <nbr@altlinux.org> 5.1.18-alt1%ubt
 - new version 5.1.18
 
