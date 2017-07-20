@@ -1,6 +1,6 @@
-Name: grub2
+Name: grub
 Version: 2.02
-Release: alt1%ubt
+Release: alt2
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -8,11 +8,11 @@ Group: System/Kernel and hardware
 
 Url: http://www.gnu.org/software/grub
 
-Source0: grub2-%version.tar
+Source0: %name-%version.tar
 Source1: grub2-sysconfig
 
 Source3: 39_memtest
-Source4: grub2.filetrigger
+Source4: grub.filetrigger
 
 Source5: grub-extras-%version.tar
 
@@ -80,22 +80,30 @@ Requires: gettext
 %package common
 Summary: GRand Unified Bootloader (common part)
 Group: System/Kernel and hardware
+Provides: grub2-common = %EVR
+Obsoletes: grub2-common < %EVR
 
 %package pc
 Summary: GRand Unified Bootloader (PC BIOS variant)
 Group: System/Kernel and hardware
 Requires: %name-common = %version-%release
-Provides: grub2 = %version-%release
+%ifarch %ix86 x86_64
+Provides: grub2 = %EVR
+Provides: grub = %EVR
+%endif
+Provides: grub2-pc = %EVR
+Obsoletes: grub2-pc < %EVR
 
 %package efi
 Summary: GRand Unified Bootloader (UEFI variant)
 Group: System/Kernel and hardware
-Requires: %name-common = %version-%release
-%ifarch aarch64 x86_64
-Requires: efibootmgr
-%endif
+Requires: %name-common = %EVR
+Provides: grub2-efi = %EVR
+Obsoletes: grub2-efi < %EVR
+PreReq: efibootmgr >= 15
 %ifarch aarch64
-Provides: grub2 = %version-%release
+Provides: grub2 = %EVR
+Provides: grub = %EVR
 %endif
 
 %define desc_generic \
@@ -186,7 +194,7 @@ popd
 %endif
 %makeinstall_std
 
-install -pDm644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/%name
+install -pDm644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/grub2
 
 %find_lang grub
 
@@ -205,7 +213,7 @@ install -pDm755 %SOURCE3 %buildroot%_sysconfdir/grub.d/
 sed -i 's,^libdir=,libdir=%_libdir,g' %buildroot%_sysconfdir/grub.d/39_memtest
 sed -i 's,@LOCALEDIR@,%_datadir/locale,g' %buildroot%_sysconfdir/grub.d/*
 
-install -pDm755 %SOURCE4  %buildroot%_rpmlibdir/grub2.filetrigger
+install -pDm755 %SOURCE4  %buildroot%_rpmlibdir/grub.filetrigger
 install -pDm755 %SOURCE6  %buildroot%_sbindir/grub-autoupdate
 install -pDm755 %SOURCE10 %buildroot%_sbindir/grub-efi-autoupdate
 
@@ -216,7 +224,7 @@ ln -s ../boot/grub/grub.cfg %buildroot%_sysconfdir/grub.cfg
 
 # Docs/habits compat symlink
 mkdir -p %buildroot%_sysconfdir/default
-ln -s ../sysconfig/%name %buildroot%_sysconfdir/default/grub
+ln -s ../sysconfig/grub2 %buildroot%_sysconfdir/default/grub
 
 install -pDm644 grub.efi %buildroot%_efi_bindir/grub.efi
 
@@ -242,7 +250,7 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %_sysconfdir/grub.d/30_os-prober
 %_sysconfdir/grub.d/39_memtest
 %config(noreplace) %_sysconfdir/grub.d/40_custom
-%config(noreplace) %_sysconfdir/sysconfig/%name
+%config(noreplace) %_sysconfdir/sysconfig/grub2
 %_sysconfdir/default/grub
 %_sysconfdir/bash_completion.d/grub
 %_sbindir/grub-bios-setup
@@ -306,19 +314,23 @@ grub-autoupdate || {
 
 %post efi
 modprobe efivars
-grep -q '^GRUB_DISTRIBUTOR=' %_sysconfdir/sysconfig/%name ||
-	echo 'GRUB_DISTRIBUTOR="ALT Linux"' >> %_sysconfdir/sysconfig/%name
+grep -q '^GRUB_DISTRIBUTOR=' %_sysconfdir/sysconfig/grub2 ||
+	echo 'GRUB_DISTRIBUTOR="ALT Linux"' >> %_sysconfdir/sysconfig/grub2
 
 grep -q '^GRUB_BOOTLOADER_ID=' %_sysconfdir/sysconfig/%name ||
-	echo 'GRUB_BOOTLOADER_ID="altlinux"' >> %_sysconfdir/sysconfig/%name
+	echo 'GRUB_BOOTLOADER_ID="altlinux"' >> %_sysconfdir/sysconfig/grub2
 
 grub-efi-autoupdate || {
 	echo "** WARNING: grub-efi-autoupdate failed, NEXT BOOT WILL LIKELY FAIL NOW"
-	echo "** WARNING: please run it by hand, record the output offline,"
-	echo "** WARNING: make sure you have e.g. rEFInd bootable media handy"
+	echo "** WARNING: please run grub-efi-autoupdate by hand, record the output offline,"
+	echo "** WARNING: make sure you have e.g. rEFInd bootable media handy."
 } >&2
 
 %changelog
+* Tue Jul 18 2017 Anton Farygin <rider@altlinux.ru> 2.02-alt2
+- renamed from grub2 to grub
+- added strong requires to efibootmgr >= 15
+
 * Sat Jun 17 2017 Anton Farygin <rider@altlinux.ru> 2.02-alt1%ubt
 - add %%ubt for backporting process
 
