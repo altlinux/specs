@@ -2,7 +2,7 @@
 
 Name: php5-fpm-fcgi
 Version: %php5_version
-Release: %php5_release.1
+Release: %php5_release.2
 Summary: The PHP5 HTML-embedded scripting language as a fpm-fcgi binary.
 Group: System/Servers
 Url: http://www.php.net/
@@ -181,6 +181,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%version-%release
+
+* Thu Jul 20 2017 Anton Farygin <rider@altlinux.ru> 5.6.31.20170607-alt0.2
+- fixed log rotation under systemd (closes: #25030)
 
 * Thu Jul 13 2017 Elvira Khabirova <lineprinter@altlinux.org> 5.6.31.20170607-alt0
 - Fixed %%_runtimedir/php5-fpm directory permissions.
