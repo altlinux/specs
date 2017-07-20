@@ -7,8 +7,8 @@
 
 
 Name: kf5-%rname
-Version: 5.9.5
-Release: alt2%ubt
+Version: 5.10.4
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -204,6 +204,15 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Wed Jul 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt1%ubt
+- new version
+
+* Wed Jul 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.3-alt2%ubt
+- apply fix against KDEBUG-378262 (ALT#33663)
+
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.3-alt1%ubt
+- new version
+
 * Fri Jun 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt2%ubt
 - add application generic name to kikoff menu search results
 
