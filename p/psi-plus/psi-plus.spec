@@ -1,6 +1,6 @@
 Name: psi-plus
 Version: 1.0.140
-Release: alt1
+Release: alt2
 
 Summary: Psi+ Jabber client
 Summary(ru_RU.UTF-8): Jabber клиент Psi+
@@ -15,7 +15,7 @@ Source: %name-snapshots-%version.tar.gz
 Patch0: %name-qca2-alt.patch
 Patch1: %name-disable-sm-alt.patch
 
-Requires: qt5-base-common qt5-webkit-common qt5-multimedia-common qt5-x11extras-common
+Requires: qt5-translations
 Requires: qca-qt5-ossl
 Requires: qca-qt5-gnupg
 
@@ -629,193 +629,193 @@ Each element can contain a regular expression to check for matches with JID, fro
 
 # Attention plugin
 pushd src/plugins/generic/attentionplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" attentionplugin.pro
+%qmake_qt5 attentionplugin.pro
 %make
 popd
 
 # Autoreply plugin
 pushd src/plugins/generic/autoreplyplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" autoreplyplugin.pro
+%qmake_qt5 autoreplyplugin.pro
 %make
 popd
 
 # Birthday reminder plugin
 pushd src/plugins/generic/birthdayreminderplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" birthdayreminderplugin.pro
+%qmake_qt5 birthdayreminderplugin.pro
 %make
 popd
 
 # Capthcha forms plugin
 pushd src/plugins/generic/captchaformsplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" captchaformsplugin.pro
+%qmake_qt5 captchaformsplugin.pro
 %make
 popd
 
 # Chess plugin
 pushd src/plugins/generic/chessplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" chessplugin.pro
+%qmake_qt5 chessplugin.pro
 %make
 popd
 
 # Cleaner plugin
 pushd src/plugins/generic/cleanerplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" cleanerplugin.pro
+%qmake_qt5 cleanerplugin.pro
 %make
 popd
 
 # Client switcher plugin
 pushd src/plugins/generic/clientswitcherplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" clientswitcherplugin.pro
+%qmake_qt5 clientswitcherplugin.pro
 %make
 popd
 
 # Conference logger plugin
 pushd src/plugins/generic/conferenceloggerplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" conferenceloggerplugin.pro
+%qmake_qt5 conferenceloggerplugin.pro
 %make
 popd
 
 # Content downloader plugin
 pushd src/plugins/generic/contentdownloaderplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" contentdownloaderplugin.pro
+%qmake_qt5 contentdownloaderplugin.pro
 %make
 popd
 
 # Extended menu plugin
 pushd src/plugins/generic/extendedmenuplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" extendedmenuplugin.pro
+%qmake_qt5 extendedmenuplugin.pro
 %make
 popd
 
 # Extended options plugin
 pushd src/plugins/generic/extendedoptionsplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" extendedoptionsplugin.pro
+%qmake_qt5 extendedoptionsplugin.pro
 %make
 popd
 
 # GMail service plugin
 pushd src/plugins/generic/gmailserviceplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" gmailserviceplugin.pro
+%qmake_qt5 gmailserviceplugin.pro
 %make
 popd
 
 # Gnome 3 support plugin
 pushd src/plugins/unix/gnome3supportplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" gnome3supportplugin.pro
+%qmake_qt5 gnome3supportplugin.pro
 %make
 popd
 
 # GnuPG plugin
 pushd src/plugins/generic/gnupgplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" gnupgplugin.pro
+%qmake_qt5 gnupgplugin.pro
 %make
 popd
 
 # Gomoku game plugin
 pushd src/plugins/generic/gomokugameplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" gomokugameplugin.pro
+%qmake_qt5 gomokugameplugin.pro
 %make
 popd
 
 # History keeper plugin
 pushd src/plugins/generic/historykeeperplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" historykeeperplugin.pro
+%qmake_qt5 historykeeperplugin.pro
 %make
 popd
 
 # ICQ die plugin
 pushd src/plugins/generic/icqdieplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" icqdieplugin.pro
+%qmake_qt5 icqdieplugin.pro
 %make
 popd
 
 # Image plugin
 pushd src/plugins/generic/imageplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" imageplugin.pro
+%qmake_qt5 imageplugin.pro
 %make
 popd
 
 # Jabber disk plugin
 pushd src/plugins/generic/jabberdiskplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" jabberdiskplugin.pro
+%qmake_qt5 jabberdiskplugin.pro
 %make
 popd
 
 # Juick plugin
 pushd src/plugins/generic/juickplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" juickplugin.pro
+%qmake_qt5 juickplugin.pro
 %make
 popd
 
 # PEP change notify plugin
 pushd src/plugins/generic/pepchangenotifyplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" pepchangenotifyplugin.pro
+%qmake_qt5 pepchangenotifyplugin.pro
 %make
 popd
 
 # Pstop plugin
 pushd src/plugins/dev/pstoplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" pstoplugin.pro
+%qmake_qt5 pstoplugin.pro
 %make
 popd
 
 # QIP X-Statuses plugin
 pushd src/plugins/generic/qipxstatusesplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" qipxstatusesplugin.pro
+%qmake_qt5 qipxstatusesplugin.pro
 %make
 popd
 
 # Redirector plugin
 pushd src/plugins/dev/redirectorplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" redirectorplugin.pro
+%qmake_qt5 redirectorplugin.pro
 %make
 popd
 
 # Screenshot plugin
 pushd src/plugins/generic/screenshotplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" screenshotplugin.pro
+%qmake_qt5 screenshotplugin.pro
 %make
 popd
 
 # Skins plugin
 pushd src/plugins/generic/skinsplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" skinsplugin.pro
+%qmake_qt5 skinsplugin.pro
 %make
 popd
 
 # Stopspam plugin
 pushd src/plugins/generic/stopspamplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" stopspamplugin.pro
+%qmake_qt5 stopspamplugin.pro
 %make
 popd
 
 # Storagenotes plugin
 pushd src/plugins/generic/storagenotesplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" storagenotesplugin.pro
+%qmake_qt5 storagenotesplugin.pro
 %make
 popd
 
 # Translate plugin
 pushd src/plugins/generic/translateplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" translateplugin.pro
+%qmake_qt5 translateplugin.pro
 %make
 popd
 
 # Video status plugin
 pushd src/plugins/generic/videostatusplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" videostatusplugin.pro
+%qmake_qt5 videostatusplugin.pro
 %make
 popd
 
 # Watcher plugin
 pushd src/plugins/generic/watcherplugin
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" watcherplugin.pro
+%qmake_qt5 watcherplugin.pro
 %make
 popd
 
 %install
 %makeinstall INSTALL_ROOT=%buildroot
-%__mkdir_p %buildroot%_libdir/%name/themes
+%__mkdir_p %buildroot%_datadir/%name/themes
 cp -f -r themes %buildroot%_datadir/%name/themes/
 
 %__mkdir_p %buildroot%_libdir/%name/plugins
@@ -1005,6 +1005,9 @@ popd
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Thu Jul 20 2017 Oleg Solovyov <mcpain@altlinux.org> 1.0.140-alt2
+- Fix: no themes
+
 * Tue Jul 18 2017 Oleg Solovyov <mcpain@altlinux.org> 1.0.140-alt1
 - Version 1.0.140
 
