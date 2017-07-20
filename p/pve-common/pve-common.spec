@@ -1,7 +1,7 @@
 Name: pve-common
 Summary: PVE base library
-Version: 4.0.83
-Release: alt3
+Version: 5.0.16
+Release: alt1
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -10,6 +10,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 
 BuildArch: noarch
+BuildRequires: perl-ph
 BuildRequires: perl(IO/Socket/IP.pm)
 BuildRequires: perl(Filesys/Df.pm)
 BuildRequires: perl(URI/Escape.pm)
@@ -25,6 +26,9 @@ BuildRequires: perl(Clone.pm)
 BuildRequires: perl(File/Basename.pm)
 BuildRequires: perl(Linux/Inotify2.pm)
 BuildRequires: perl(JSON.pm)
+BuildRequires: perl(MIME/Base32.pm)
+BuildRequires: perl(Crypt/OpenSSL/Random.pm)
+BuildRequires: perl(Crypt/OpenSSL/RSA.pm)
 # alt regressive tests
 #BuildRequires: perl(TAP/Harness.pm)
 #BuildRequires: perl(RPM/Source/Tools/SourceBundle.pm)
@@ -54,6 +58,9 @@ install -pD -m0755 pve-etcnet-to-network %buildroot%_sbindir/pve-etcnet-to-netwo
 %perl_vendor_privlib/PVE
 
 %changelog
+* Thu Jul 13 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.16-alt1
+- 5.0-16
+
 * Wed Jun 21 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.0.83-alt3
 - PVE::Tools::run_command: fixed exit code
 

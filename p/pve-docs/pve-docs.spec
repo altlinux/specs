@@ -1,6 +1,6 @@
 Name: pve-docs
 Summary: PVE Documentation
-Version: 4.4.1
+Version: 5.0.9
 Release: alt1
 License: GPLv3
 Group: Documentation
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 
 ExclusiveArch: x86_64
 BuildArch: noarch
-BuildRequires: asciidoc-a2x source-highlight xmlto inkscape mailcap pve-common pve-ha-manager
+BuildRequires: asciidoc-a2x source-highlight xmlto librsvg-utils mailcap pve-common
 BuildRequires: perl(MediaWiki/API.pm) perl(JSON.pm)
 
 %description
@@ -58,6 +58,9 @@ install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screensho
 %_datadir/pve-doc-generator
 
 %changelog
+* Thu Jul 13 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.9-alt1
+- 5.0-9
+
 * Mon Dec 12 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.4.1-alt1
 - 4.4-1
 
