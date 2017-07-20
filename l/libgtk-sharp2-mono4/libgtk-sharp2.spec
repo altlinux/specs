@@ -4,7 +4,7 @@
 Summary: GTK+ and GNOME bindings for Mono
 Name: lib%{realname}2-mono4
 Version: 2.12.11
-Release: alt2
+Release: alt3
 License: LGPLv2+
 Group: Development/Other
 Packager: Konstantin Artyushkin <akv@altlinux.org> 
@@ -21,7 +21,7 @@ BuildPreReq: libpango-devel
 BuildPreReq: libatk-devel
 BuildPreReq: libgtk+2-devel >= 2.12.0
 BuildPreReq: libglade-devel >= 2.3.6
-BuildPreReq: rpm-build-mono perl-XML-LibXML
+BuildPreReq: rpm-build-mono4 perl-XML-LibXML
 
 BuildRequires: gcc-c++ mono4-devel 
 %{?_enable_doc:BuildRequires: mono4-monodoc-devel}
@@ -112,6 +112,9 @@ NOCONFIGURE=1 ./bootstrap-2.12
 %endif
 
 %changelog
+* Thu Jul 20 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.12.11-alt3
+- actually rebuild with mono4
+
 * Mon Jul 25 2016 Konstantin Artyushkin <akv@altlinux.org> 2.12.11-alt2
 - rebuild for mono4
 
