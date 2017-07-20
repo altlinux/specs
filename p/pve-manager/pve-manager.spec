@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 5.0.23
-Release: alt1
+Version: 5.0.24
+Release: alt2
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -50,6 +50,7 @@ Patch21: pve-http-server-alt.patch
 Patch22: extjs-alt.patch
 Patch23: pve-manager-font-awesome.patch
 Patch24: pve-manager-postfix-3.patch
+Patch25: pve-manager-gettext.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -72,7 +73,7 @@ Tool to manage Linux Containers on PVE
 
 %package -n pve-firewall
 Summary: PVE Firewall
-Version: 3.0.1
+Version: 3.0.2
 Group: System/Servers
 Requires: ipset iptables iptables-ipv6 shorewall shorewall6 iproute2 >= 4.10.0
 
@@ -143,6 +144,7 @@ This is used to implement the PVE REST API
 %patch22 -p0 -b .alt
 %patch23 -p0 -b .font-awesome
 %patch24 -p0 -b .postfix-3
+%patch25 -p0 -b .gettext
 
 install -m0644 %SOURCE5 pve-manager/po/ru.po
 
@@ -438,6 +440,13 @@ __EOF__
 %_datadir/libpve-http-server-perl
 
 %changelog
+* Thu Jul 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.24-alt2
+- pve-manager 5.0-24
+- pve-firewall 3.0-2
+
+* Thu Jul 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.23-alt0.M80P.1
+- backport to p8 branch
+
 * Mon Jul 17 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.23-alt1
 - pve-manager 5.0-23
 - pve-container 2.0-14
