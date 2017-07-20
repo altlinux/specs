@@ -75,7 +75,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %{pybasever}.1
-Release: alt8
+Release: alt9
 License: Python
 Group: Development/Python3
 
@@ -635,7 +635,7 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 %patch1002 -p2
 %endif
 %patch1003 -p2
-%patch1004 -p2
+%patch1004 -p1
 
 %patch1006 -p1
 
@@ -1183,6 +1183,9 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %tool_dir/scripts/run_tests.py
 
 %changelog
+* Mon Jul 10 2017 Fr. Br. George <george@altlinux.ru> 3.5.1-alt9
+- Add PLATFORM_TRIPLET suffix for binary module search
+
 * Tue Apr 11 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.5.1-alt8
 - Fixed interpreter breakage caused by rebuild with glibc >= 2.25
   (closes: #33356).
