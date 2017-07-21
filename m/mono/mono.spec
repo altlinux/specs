@@ -4,7 +4,7 @@
 
 Name: mono
 Version: 5.0.1.1
-Release: alt2
+Release: alt3
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -125,12 +125,14 @@ Requires: %name-locale-extras
 Requires: %name-reactive
 Requires: %name-reactive-winforms
 Requires: %name-wcf
+Requires: %name-winforms
 Requires: %name-data-oracle
 Requires: %name-data-sqlite
 %if_enabled ibmlibs
 Requires: %name-ibm-data-db2
 %endif
 Requires: %name-monodoc
+Requires: %name-mono2-compat
 Conflicts: mono4-full < %version-%release
 
 %description full
@@ -145,6 +147,8 @@ Requires: %name-web-devel
 Requires: %name-mvc-devel
 Requires: %name-monodoc-devel
 Requires: %name-nunit
+Requires: %name-winforms
+Requires: %name-mono2-compat-devel
 Conflicts: mono4-devel-full < %version-%release
 
 %description devel-full
@@ -338,6 +342,35 @@ take advantage of many .NET language		 features, for example
 custom attributes and other reflection related capabilities. NUnit
 brings xUnit to all .NET languages.
 
+%package mono2-compat
+Summary:        A Library for embedding Mono in your Application
+Requires:       %name-core = %version
+Group:          Development/Other
+
+%description mono2-compat
+The Mono Project is an open development initiative that is working to
+develop an open source, Unix version of the .NET development platform.
+Its objective is to enable Unix developers to build and deploy
+cross-platform .NET applications. The project will implement various
+technologies that have been submitted to the ECMA for standardization.
+
+A Library for embedding Mono in your Application.
+
+%package mono2-compat-devel
+Summary:        Development files for libmono
+Group:          Development/Other
+Requires:       %name-mono2-compat = %version
+Requires:       %name-core = %version
+
+%description mono2-compat-devel
+The Mono Project is an open development initiative that is working to
+develop an open source, Unix version of the .NET development platform.
+Its objective is to enable Unix developers to build and deploy
+cross-platform .NET applications. The project will implement various
+technologies that have been submitted to the ECMA for standardization.
+
+Development files for libmono.
+
 %define gac_dll(dll)  %_monogacdir/%1 \
 %_monodir/4.5/%1.dll \
 %nil
@@ -395,6 +428,7 @@ NOCONFIGURE=yes sh ./autogen.sh
 %configure --disable-rpath \
            --with-moonlight=no \
            --enable-dynamic-btls
+
 # Profiler gives undef symbols, so it is temporarily disabled.
 
 ##__subst 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -446,7 +480,7 @@ rm -rf %buildroot%_mandir/man?/mono-configuration-crypto*
 #temporarily remove profiler iomap -bad symbols
 #rm -rf %buildroot%_libdir/libmono-profiler-iomap.so.0.0.0
 
-#mkdir -p  %buildroot%_sysconfdir/mono-2.0/
+mkdir -p  %buildroot%_sysconfdir/mono-2.0/
 mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 mkdir -p  %buildroot%_sysconfdir/mono-4.0/
 mkdir -p  %buildroot%_monodir/3.5-api/
@@ -458,7 +492,6 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 
 %files core -f mcs.lang
 %doc  CONTRIBUTING.md LICENSE COPYING.LIB  NEWS README.md PATENTS.TXT
-#%_sysconfdir/mono-2.0/
 %_sysconfdir/mono-4.5/
 %_sysconfdir/mono-4.0/
 %dir %_sysconfdir/mono/4.5/
@@ -469,7 +502,9 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 %_bindir/mono
 %_bindir/mono-test-install
 %_bindir/mono-gdb.py
+%ifarch %ix86 x86_64 armh
 %_bindir/mono-boehm
+%endif
 %_bindir/mono-service2
 %_bindir/mono-sgen
 %_bindir/mono-sgen-gdb.py
@@ -509,7 +544,9 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 %_libdir/*profiler*.so*
 %_libdir/*profiler*.a
 %_libdir/libikvm-native.a
+%ifarch %ix86 x86_64
 %_libdir/libmono-btls-shared.so*
+%endif
 %_monodir/4.0/Mono.Posix.dll
 %_monodir/4.0/mscorlib.dll
 
@@ -548,9 +585,6 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 %dir %_sysconfdir/mono
 %dir %_sysconfdir/mono/mconfig
 %config (noreplace) %_sysconfdir/mono/config
-#%config (noreplace) %_sysconfdir/mono/2.0/machine.config
-#%config (noreplace) %_sysconfdir/mono/2.0/settings.map
-#%_libdir/libmono*-2.0.so.*
 %config (noreplace) %_sysconfdir/mono/4.5/settings.map
 %config (noreplace) %_sysconfdir/mono/4.0/DefaultWsdlHelpGenerator.aspx
 %config (noreplace) %_sysconfdir/mono/4.5/DefaultWsdlHelpGenerator.aspx
@@ -560,7 +594,6 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 %config (noreplace) %_sysconfdir/mono/4.0/web.config
 %config (noreplace) %_sysconfdir/mono/4.0/settings.map
 %dir %_sysconfdir/mono/4.0
-#%dir %_sysconfdir/mono/2.0
 %_bindir/dmcs
 %mono_bin ccrewrite
 %_man1dir/ccrewrite.1*
@@ -579,8 +612,8 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 
 %dir %_monodir/mono-configuration-crypto/
 %dir %_monodir/mono-configuration-crypto/4.5/
-#%_monodir/2.0/*
-#%_monodir/4.0/*
+#%%_monodir/2.0/*
+#%%_monodir/4.0/*
 %_monodir/mono-configuration-crypto/4.5/*
 %gac_dll CustomMarshalers
 %gac_dll I18N.West
@@ -602,13 +635,26 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 %exclude %_monogacdir/System.Runtime.Caching/*
 %exclude %_monogacdir/System.Xaml/*
 %exclude %_sysconfdir/mono/4.0/Browsers/Compat.browser
+%ifarch %ix86 x86_64
 %dir %_monodir/gac/Mono.Btls.Interface
 %_monodir/gac/Mono.Btls.Interface/*
 %_monodir/4.5/Mono.Btls.Interface.dll
+%endif
 %dll_so Microsoft.CodeAnalysis
 %dll_so Microsoft.CodeAnalysis.CSharp
 %dll_so System.Collections.Immutable
 %dll_so System.Reflection.Metadata
+
+%_libdir/libmonosgen-2.0.so.*
+%ifarch %ix86 x86_64 armh
+%_libdir/libmonoboehm-2.0.so.*
+%endif
+%dir %_monodir/4.0-api
+%dir %_monodir/4.5-api
+%dir %_monodir/4.6-api
+%_monodir/4.0-api/*
+%_monodir/4.5-api/*
+%_monodir/4.6-api/*
 
 %files dyndata
 %gac_dll System.Web.DynamicData
@@ -620,20 +666,16 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 
 %files devel
 %_sysconfdir/pki/mono/
-%_bindir/mono-api-info
+%mono_bin mono-api-info
 %_bindir/mono-package-runtime
 %_bindir/monograph
 %_bindir/sgen-grep-binprot
-%_monodir/4.5/mono-api-info.exe
 %_monodir/4.5/mono-symbolicate.exe
 %_monodir/4.5/mono-symbolicate.pdb
 %_monodir/2.0-api/*
 %_monodir/3.5-api/*
-%_monodir/4.0-api/*
-%_monodir/4.5-api/*
 %_monodir/4.5.1-api/*
 %_monodir/4.5.2-api/*
-%_monodir/4.6-api/*
 %_monodir/4.6.1-api/*
 %_monodir/4.6.2-api/*
 %_bindir/mono-symbolicate
@@ -725,14 +767,15 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 %_monodir/xbuild-frameworks/
 %_libdir/libikvm-native.so
 # disabled profiler right now
-#%_libdir/libmono-profiler-*.so
-#%_libdir/libmono*-2.0.so
-%_libdir/libmonosgen*
-%_libdir/libmonoboehm*
+#%%_libdir/libmono-profiler-*.so
+#%%_libdir/libmono*-2.0.so
+%_libdir/libmonosgen-2.0.so
+%ifarch %ix86 x86_64 armh
+%_libdir/libmonoboehm-2.0.so
+%endif
 %_pkgconfigdir/dotnet.pc
 %_pkgconfigdir/mono-cairo.pc
 %_pkgconfigdir/mono.pc
-#%_pkgconfigdir/mono-2.pc
 %_pkgconfigdir/monosgen-2.pc
 %_pkgconfigdir/cecil.pc
 %_pkgconfigdir/dotnet35.pc
@@ -740,10 +783,6 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 %_pkgconfigdir/mono-options.pc
 %_pkgconfigdir/wcf.pc
 %_pkgconfigdir/xbuild12.pc
-%_includedir/mono-2.0/mono/jit/jit.h
-%_includedir/mono-2.0/mono/metadata/*.h
-%_includedir/mono-2.0/mono/utils/*.h
-%_includedir/mono-2.0/mono/cil/opcode.def
 
 %files locale-extras
 %gac_dll I18N.CJK
@@ -803,7 +842,6 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 %_bindir/wsdl2
 %mono_bin xsd
 %mono_bin mono-api-html
-%mono_bin mono-api-info
 %gac_dll Microsoft.Web.Infrastructure
 %gac_dll Mono.Http
 %gac_dll System.ComponentModel.DataAnnotations
@@ -840,7 +878,6 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 %config (noreplace) %_sysconfdir/mono/4.5/Browsers/Compat.browser
 %config (noreplace) %_sysconfdir/mono/2.0/DefaultWsdlHelpGenerator.aspx
 %config (noreplace) %_sysconfdir/mono/mconfig/config.xml
-#%config (noreplace) %_sysconfdir/mono/2.0/web.config
 
 %files web-devel
 %_pkgconfigdir/aspnetwebstack.pc
@@ -913,12 +950,11 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 %_man1dir/monodocer.1*
 %_man5dir/mdoc.5*
 %_man1dir/mdoc-*
-%_man1dir/mdoc*
+%_man1dir/mdoc.1.*
 %_man1dir/mdassembler*
 %_man1dir/monodocs2html.1*
 %_man1dir/mdvalidater.1*
 %_man1dir/mono-symbolicate.1*
-
 
 %files  monodoc-devel
 %_pkgconfigdir/monodoc.pc
@@ -939,7 +975,24 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 %gac_dll nunit.mocks
 %gac_dll nunit.util
 
+%files mono2-compat
+%_sysconfdir/mono-2.0/
+%dir %_sysconfdir/mono/2.0
+%config (noreplace) %_sysconfdir/mono/2.0/machine.config
+%config (noreplace) %_sysconfdir/mono/2.0/settings.map
+%config (noreplace) %_sysconfdir/mono/2.0/web.config
+%_libdir/libmono-2.0.so.1*
+
+%files mono2-compat-devel
+%_includedir/mono-2.0
+%_libdir/libmono-2.0.so
+%_pkgconfigdir/mono-2.pc
+
 %changelog
+* Mon Jul 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt3
+- Fixed circular dependency between mono-core and mono-devel
+- Packaged mono-2 parts
+
 * Mon Jul 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt2
 - Updated package metadata
 
