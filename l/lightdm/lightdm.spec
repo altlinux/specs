@@ -6,7 +6,7 @@
 
 Name: lightdm
 Version: 1.16.7
-Release: alt4
+Release: alt5
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -22,6 +22,7 @@ Source6: %name-tmpfiles.conf
 Source7: %name-greeter.pam
 Source8: %name.rules
 Source9: %name.service
+Source10: %name-login-unknown.control
 
 Patch1: %name-%version-%release.patch
 
@@ -168,6 +169,8 @@ install -m644 -p -D %SOURCE8 %buildroot%_datadir/polkit-1/rules.d/%name.rules
 install -m644 -p -D %SOURCE9 %buildroot%_unitdir/%name.service
 echo "GDK_CORE_DEVICE_EVENTS=true" > %buildroot%_localstatedir/lib/ldm/.pam_environment
 
+install -m0755 -p -D %SOURCE10 %buildroot%_controldir/%name-login-unknown
+
 %find_lang --with-gnome %name
 
 %pre
@@ -213,6 +216,7 @@ fi
 /lib/tmpfiles.d/%name.conf
 %_datadir/polkit-1/rules.d/%name.rules
 %_datadir/bash-completion/completions/*
+%_controldir/*
 
 %files -n liblightdm-gobject
 %_libdir/liblightdm-gobject-?.so.*
@@ -245,6 +249,9 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Jul 21 2017 Paul Wolneykien <manowar@altlinux.org> 1.16.7-alt5
+- Added control script 'lightdm-login-unknown'.
+
 * Wed Jul 12 2017 Paul Wolneykien <manowar@altlinux.org> 1.16.7-alt4
 - Add the 'login-unknown' configuration option.
 - Package the bash completion scripts.

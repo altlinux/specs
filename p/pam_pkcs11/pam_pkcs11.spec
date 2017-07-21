@@ -2,7 +2,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.9
-Release: alt8
+Release: alt9
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -23,6 +23,7 @@ Patch9: pam_pkcs11-0.6.9-config-control.patch
 Patch10: pam_pkcs11-0.6.9-systemd.patch
 Patch11: pam_pkcs11-0.6.9-gost-support.patch
 Patch12: pam_pkcs11-0.6.9-oid-mapper.patch
+Patch13: pam_pkcs11-0.6.9-oid-mapper-profiles.patch
 
 %add_findreq_skiplist %_sysconfdir/pam.d/*
 Requires: pam-config PAM(pam_mkhomedir.so) PAM(pam_pkcs11.so) PAM(pam_succeed_if.so)
@@ -86,6 +87,7 @@ as a separate package.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 # fixup configs
 sed -i -e '
@@ -161,6 +163,8 @@ rm %buildroot/%_lib/*/*.la
 %config(noreplace) %_sysconfdir/security/%name/profiles/*
 %dir %_sysconfdir/security/%name/modules.avail
 %config(noreplace) %_sysconfdir/security/%name/modules.avail/*
+%dir %_sysconfdir/security/%name/mapping.profiles
+%config(noreplace) %_sysconfdir/security/%name/mapping.profiles/*
 %_controldir/pam-*
 %_controldir/*event*
 %config(noreplace) %_sysconfdir/pam.d/*
@@ -178,6 +182,14 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ldap_mapper.so
 
 %changelog
+* Fri Jul 21 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt9
+- Don\'t include 'debug' settings in the profiles.
+- Support nested module configuration in 'pam-pkcs11-profile' control
+  profiles.
+- Independently select the cert mapping scheme using 'pam-pkcs11-mapping'
+  control.
+- Add SNILS (OID 1.2.643.100.3) mapping profiles.
+
 * Fri Jul 07 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt8
 - Added post-processing options to the generic mapper (prefix,
   postfix, scrambling).
