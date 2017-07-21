@@ -5,7 +5,7 @@
 Name: nginx
 Summary: Fast HTTP server
 Version: 1.12.1
-Release: alt1%ubt
+Release: alt2%ubt
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel
@@ -14,6 +14,7 @@ BuildRequires: google-perftools-devel
 %endif
 BuildRequires: libGeoIP-devel
 BuildRequires: libgd2-devel
+BuildRequires: libpam-devel
 BuildRequires: libxml2-devel libxslt-devel
 %define pcre_version 4.5
 %def_with perl
@@ -28,6 +29,7 @@ BuildRequires: libxml2-devel libxslt-devel
 %def_with spnego
 %def_enable cache_purge
 %def_enable rtmp
+%define modpath %_libdir/%name
 Url: http://sysoev.ru/nginx
 Source: %url/%name-%version.tar
 Source1: %name.conf.in
@@ -40,6 +42,7 @@ Source9: %name.service
 Source10: nginx-rtmp-module.tar
 Source11: mime.types
 Source12: nginx.filetrigger
+Source13: ngx_http_auth_pam_module.tar
 Source100: %name.watch
 Patch1: nginx-0.8-syslog.patch
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -61,7 +64,7 @@ Summary: GeoIP module for nginx
 Group: System/Servers
 %def_with geoip
 Requires: GeoIP-Lite-City GeoIP-Lite-Country
-Requires(pre): %name
+Requires: %name = %EVR
 
 %description geoip
 GeoIP module for nginx
@@ -70,17 +73,26 @@ GeoIP module for nginx
 %package image_filter
 Summary: image_filter module for nginx
 Group: System/Servers
-Requires(pre): %name
+Requires: %name = %EVR
 
 %description image_filter
 image_filter module for nginx
 %endif
 
+%package pam
+Summary: auth_pam module for nginx.
+Group: System/Servers
+%def_with auth_pam
+Requires: %name = %EVR
+
+%description pam
+auth_pam module for nginx.
+
 %if_with perl
 %package perl
 Summary: Perl for nginx
 Group: System/Servers
-Requires(pre): %name
+Requires: %name = %EVR
 
 %description perl
 Perl for nginx
@@ -90,7 +102,7 @@ Perl for nginx
 Summary: Simple and Protected GSSAPI Negotiation Mechanism for nginx
 Group: System/Servers
 %def_with spnego
-Requires(pre): %name
+Requires: %name = %EVR
 
 %description spnego
 Simple and Protected GSSAPI Negotiation Mechanism for nginx
@@ -99,7 +111,7 @@ Simple and Protected GSSAPI Negotiation Mechanism for nginx
 Summary: XSLT module for nginx
 Group: System/Servers
 %def_with xslt
-Requires(pre): %name
+Requires: %name = %EVR
 
 %description xslt
 XSLT module for nginx
@@ -109,7 +121,7 @@ Fast HTTP server, extremely useful as an Apache frontend
 
 
 %prep
-%setup -a 7 -a 10
+%setup -a 7 -a 10 -a 13
 %if_with syslog
 %patch1 -p2
 %endif
@@ -132,7 +144,7 @@ CFLAGS="%optflags $CPU" ./configure \
 	--prefix=/ \
 	--conf-path=%nginx_etc/nginx.conf \
 	--sbin-path=%_sbindir \
-        --modules-path=%_libdir/%name \
+        --modules-path=%modpath \
 	--error-log-path=%nginx_log/nginx.error.log \
 	--http-log-path=%nginx_log/nginx.log \
 	--http-client-body-temp-path=%nginx_spool/tmp/client \
@@ -169,6 +181,9 @@ CFLAGS="%optflags $CPU" ./configure \
 %endif
 %if_with spnego
 	--add-dynamic-module=spnego-http-auth-nginx-module \
+%endif
+%if_with auth_pam
+	--add-dynamic-module=ngx_http_auth_pam_module \
 %endif
 	--with-http_sub_module \
 	--with-http_dav_module \
@@ -235,12 +250,12 @@ install -pD -m644 uwsgi/uwsgi_params %buildroot%nginx_etc/
 rm -rf %buildroot/html/
 mkdir -p %buildroot%nginx_etc/modules-available.d
 mkdir -p %buildroot%nginx_etc/modules-enabled.d
-for s in %buildroot/%_libdir/%name/*.so; do
+for s in %buildroot/%modpath/*.so; do
     fn=${s##*/}
     module=${fn%.so}
     module=${module#ngx_}
     module=${module%_module}
-    echo "load_module %_libdir/%name/$fn;" >> %buildroot%nginx_etc/modules-available.d/$module.conf
+    echo "load_module %modpath/$fn;" >> %buildroot%nginx_etc/modules-available.d/$module.conf
 done
 echo "# load dynamic nginx modules" > %buildroot%nginx_etc/nginx.conf.tmp
 echo -e "include /etc/nginx/modules-enabled.d/*.conf;\n" >> %buildroot%nginx_etc/nginx.conf.tmp
@@ -304,37 +319,45 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %if_with uwsgi
 %config(noreplace) %nginx_etc/uwsgi_params
 %endif
-%dir %_libdir/%name
-%_libdir/%name/ngx_mail_module.so
-%_libdir/%name/ngx_stream_module.so
+%dir %modpath
+%modpath/ngx_mail_module.so
+%modpath/ngx_stream_module.so
 
 %files geoip
 %config(noreplace) %nginx_etc/modules-available.d/http_geoip.conf
-%_libdir/%name/ngx_http_geoip_module.so
+%modpath/ngx_http_geoip_module.so
 
 %if_with image_filter
 %files image_filter
 %config(noreplace) %nginx_etc/modules-available.d/http_image_filter.conf
-%_libdir/%name/ngx_http_image_filter_module.so
+%modpath/ngx_http_image_filter_module.so
 %endif
+
+%files pam
+%config(noreplace) %nginx_etc/modules-available.d/http_auth_pam.conf
+%modpath/ngx_http_auth_pam_module.so
 
 %if_with perl
 %files perl
 %config(noreplace) %nginx_etc/modules-available.d/http_perl.conf
 %perl_vendor_archlib/nginx.pm
 %perl_vendor_autolib/nginx
-%_libdir/%name/ngx_http_perl_module.so
+%modpath/ngx_http_perl_module.so
 %endif
 
 %files spnego
 %config(noreplace) %nginx_etc/modules-available.d/http_auth_spnego.conf
-%_libdir/%name/ngx_http_auth_spnego_module.so
+%modpath/ngx_http_auth_spnego_module.so
 
 %files xslt
 %config(noreplace) %nginx_etc/modules-available.d/http_xslt_filter.conf
-%_libdir/%name/ngx_http_xslt_filter_module.so
+%modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Wed Jul 19 2017 Elvira Khabirova <lineprinter@altlinux.org> 1.12.1-alt2%ubt
+- Added ngx_http_auth_pam_module.
+- Fixed dependencies of module packages.
+
 * Tue Jul 11 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.12.1-alt1%ubt
 - Updated to 1.12.1 (Fixes CVE-2017-7529).
 
