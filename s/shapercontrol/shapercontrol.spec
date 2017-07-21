@@ -1,7 +1,6 @@
-
 Name: shapercontrol
 Version: 1.5.7
-Release: alt1
+Release: alt2
 License: GPLv2+
 Summary: Administration tool for Linux-based ISP traffic shaper 
 Group: Security/Networking
@@ -10,7 +9,7 @@ Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildArch: noarch
-Requires: iproute2 perl-DBD-SQLite perl-AppConfig
+Requires: iproute2 >= 4.12.0 perl-DBD-SQLite perl-AppConfig
 
 # Automatically added by buildreq on Fri Feb 04 2011
 BuildRequires: perl-Pod-Parser perl-DBD-SQLite perl-AppConfig
@@ -46,6 +45,9 @@ echo "SC_OPTS=" > %buildroot%_sysconfdir/sysconfig/sc
 %_man8dir/*
 
 %changelog
+* Fri Jul 21 2017 Anton Farygin <rider@altlinux.ru> 1.5.7-alt2
+- fixed work with recent iproute2 
+
 * Thu Jul 13 2017 Anton Farygin <rider@altlinux.ru> 1.5.7-alt1
 - new version
 
