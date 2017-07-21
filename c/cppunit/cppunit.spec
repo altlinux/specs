@@ -1,18 +1,17 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
-%def_disable doc
+%def_disable docs
 
 Name: cppunit
-Version: 1.12.1
-Release: alt2.svn20130422.1
+Version: 1.14.0
+Release: alt1
 
 Summary: C++ port of the famous JUnit framework for unit testing
 License: LGPL
 Group: Development/C++
-Url: http://sourceforge.net/projects/cppunit
+Url: https://www.freedesktop.org/wiki/Software/cppunit/
 
-# svn://svn.code.sf.net/p/cppunit/code/trunk
-Source: %name-%version.tar
+Source: %name-%version.tar.gz
 
 # Automatically added by buildreq on Thu Oct 05 2006
 BuildRequires: doxygen gcc-c++ graphviz
@@ -48,8 +47,8 @@ This package contains development documentation for CppUnit.
 %setup
 
 %build
-#autoreconf
-./autogen.sh
+%autoreconf
+#./autogen.sh
 %configure \
 	--disable-static \
 	--docdir=%_docdir/%name-%version
@@ -58,23 +57,32 @@ This package contains development documentation for CppUnit.
 %install
 %makeinstall_std
 
+%check
+make check
+
 %files
 %_libdir/lib*.so.*
 
 %files devel
+%doc %_docdir/%name-%version/*
 %_bindir/*
 %_includedir/cppunit/
 %_libdir/lib*.so
-%_datadir/aclocal/*
-%_man1dir/*
+#_datadir/aclocal/*
+#_man1dir/*
 %_pkgconfigdir/%name.pc
 
 %if_enabled docs
 %files devel-docs
-%doc %_docdir/%name-%version/*
+%_datadir/%name
 %endif
 
 %changelog
+* Thu Jul 20 2017 Fr. Br. George <george@altlinux.ru> 1.14.0-alt1
+- Upstream switch to LO/FD
+- Autobuild version bump to 1.14.0
+- Resurrect docs package
+
 * Mon Jun 01 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.12.1-alt2.svn20130422.1
 - Rebuilt for gcc5 C++11 ABI.
 
@@ -106,7 +114,7 @@ This package contains development documentation for CppUnit.
 - new version (1.10.2)
 
 * Sat May 08 2004 Alexey Voinov <voins@altlinux.ru> 1.8.0-alt6
-- remove requirements on gcc3.2 
+- remove requirements on gcc3.2
 - buildreqs fixed
 
 * Mon Mar 15 2004 Alexey Voinov <voins@altlinux.ru> 1.8.0-alt5
@@ -143,5 +151,5 @@ This package contains development documentation for CppUnit.
 - support for alternatives
 
 * Thu Dec 13 2001 Alexey Voinov <voins@voins.program.ru> 1.6.2-alt0.1
-- initial build 
+- initial build
 
