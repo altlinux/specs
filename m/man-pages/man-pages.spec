@@ -1,5 +1,5 @@
 Name: man-pages
-Version: 4.11
+Version: 4.12
 Release: alt1
 
 Summary: Man (manual) pages from the Linux Documentation Project
@@ -116,6 +116,9 @@ find %buildroot%_mandir -type f -print0 |
 %_datadir/%name/
 
 %changelog
+* Fri Jul 21 2017 Dmitry V. Levin <ldv@altlinux.org> 4.12-alt1
+- 4.11 -> 4.12.
+
 * Thu May 25 2017 Dmitry V. Levin <ldv@altlinux.org> 4.11-alt1
 - 4.10 -> 4.11.
 
