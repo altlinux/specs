@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.2.7
+Version: 2.2.8
 Release: alt1%ubt
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -279,6 +279,14 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Fri Jul 21 2017 Anton Farygin <rider@altlinux.ru> 2.2.8-alt1%ubt
+- new version:
+     * wnpa-sec-2017-13 WBMXL dissector infinite loop CVE-2017-7702, CVE-2017-11410
+     * wnpa-sec-2017-28 openSAFETY dissector memory exhaustion CVE-2017-9350, CVE-2017-11411
+     * wnpa-sec-2017-34 AMQP dissector crash CVE-2017-11408
+     * wnpa-sec-2017-35 MQ dissector crash CVE-2017-11407
+     * wnpa-sec-2017-36 DOCSIS infinite loop CVE-2017-11406
+
 * Sun Jun 04 2017 Anton Farygin <rider@altlinux.ru> 2.2.7-alt1%ubt
 - new version with these security fixes:
      * wnpa-sec-2017-22 Bazaar dissector infinite loop CVE-2017-9352
