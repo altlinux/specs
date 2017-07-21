@@ -1,5 +1,5 @@
 Name: google-drive-ocamlfuse
-Version: 0.6.19
+Version: 0.6.20
 Release: alt1%ubt
 License: BSD-2-Clause
 Summary: FUSE filesystem for Google Drive
@@ -56,6 +56,9 @@ cp gdfuse.native %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri Jul 21 2017 Anton Farygin <rider@altlinux.ru> 0.6.20-alt1%ubt
+- new version
+
 * Thu May 04 2017 Anton Farygin <rider@altlinux.ru> 0.6.19-alt1%ubt
 - new version
 
