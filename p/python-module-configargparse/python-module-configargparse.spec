@@ -1,7 +1,7 @@
 %global srcname ConfigArgParse
 
 Name: python-module-configargparse
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 
 Summary: A Python module with support for argparse, config files, and env variables
@@ -70,6 +70,9 @@ argparse to add these features.
 %python3_sitelibdir/__pycache__/configargparse*
 
 %changelog
+* Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 0.12.0-alt1
+- new version 0.12.0 (with rpmrb script)
+
 * Thu Jan 05 2017 Vitaly Lipatov <lav@altlinux.ru> 0.11.0-alt1
 - new version 0.11.0 (with rpmrb script)
 
