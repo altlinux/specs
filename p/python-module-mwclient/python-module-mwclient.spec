@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-mwclient
-Version: 0.7
-Release: alt1.dev.git20140622
+Version: 0.8.0
+Release: alt1
 
 Summary: mwclient is a framework to MediaWiki's API
 
@@ -78,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 0.8.0-alt1
+- new version 0.8.0 (with rpmrb script)
+
 * Sun Aug 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1.dev.git20140622
 - Version 0.7dev
 
