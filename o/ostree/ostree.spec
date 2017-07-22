@@ -1,5 +1,5 @@
 Name: ostree
-Version: 2017.5
+Version: 2017.8
 Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
@@ -22,6 +22,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/ostreedev/ostree/archive/v%version.tar.gz
 Source: %name-%version.tar
 
+# TODO: https://github.com/GNOME/libglnx
 # Source1-url: https://git.gnome.org/browse/libglnx/snapshot/libglnx-master.tar.xz
 Source1: libglnx.tar
 
@@ -52,7 +53,7 @@ BuildRequires: %_bindir/xsltproc pkgconfig(libarchive)
 BuildRequires: pkgconfig(gio-unix-2.0)
 BuildRequires: pkgconfig(libsoup-2.4)
 
-BuildPreReq: libgpgme-devel liblzma-devel
+BuildPreReq: libgpgme-devel liblzma-devel libmount-devel
 
 Source44: import.info
 
@@ -96,6 +97,7 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 
 rm -rf %buildroot/etc/dracut.conf.d/ %buildroot/usr/lib/dracut/
 rm -rf %buildroot%_sysconfdir/grub.d/15_ostree
+rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 
 %files
 %doc COPYING README.md
@@ -108,7 +110,6 @@ rm -rf %buildroot%_sysconfdir/grub.d/15_ostree
 %_datadir/%name/
 %_unitdir/ostree-prepare-root.service
 %_unitdir/ostree-remount.service
-
 # due missed buildreqs
 #    /usr/lib64/girepository-1.0/OSTree-1.0.typelib
 #    /usr/share/gir-1.0/OSTree-1.0.gir
@@ -127,6 +128,9 @@ rm -rf %buildroot%_sysconfdir/grub.d/15_ostree
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 2017.8-alt1
+- new version 2017.8 (with rpmrb script)
+
 * Tue May 09 2017 Vitaly Lipatov <lav@altlinux.ru> 2017.5-alt1
 - new version 2017.5 (with rpmrb script)
 

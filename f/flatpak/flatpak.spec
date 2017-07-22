@@ -1,7 +1,7 @@
 %define _userunitdir /usr/lib/systemd/user
 
 Name: flatpak
-Version: 0.9.3
+Version: 0.9.7
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -27,9 +27,10 @@ BuildRequires: pkgconfig(libarchive) >= 2.8.0
 #BuildRequires: pkgconfig(libelf) >= 0.8.12
 BuildRequires: pkgconfig(libgsystem) >= 2015.1
 BuildRequires: pkgconfig(libsoup-2.4)
-BuildRequires: pkgconfig(ostree-1) >= 2016.7
+BuildRequires: pkgconfig(ostree-1) >= 2017.8
 BuildRequires: pkgconfig(polkit-gobject-1)
 BuildRequires: pkgconfig(libseccomp)
+BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(xau)
 BuildRequires: docbook-dtds
 BuildRequires: docbook-style-xsl
@@ -37,6 +38,7 @@ BuildRequires: intltool
 BuildRequires: libattr-devel
 BuildRequires: libcap-devel
 BuildRequires: libdwarf-devel
+BuildRequires: libgpgme-devel
 BuildRequires: udev-rules
 BuildRequires: %_bindir/bwrap
 BuildRequires: %_bindir/xmlto
@@ -170,6 +172,9 @@ rm -rf %buildroot%_docdir/%name/
 %_libdir/libflatpak.so.*
 
 %changelog
+* Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt1
+- new version (0.9.7) with rpmgs script
+
 * Tue May 09 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt1
 - new version 0.9.3 (with rpmrb script)
 
