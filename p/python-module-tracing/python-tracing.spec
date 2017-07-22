@@ -2,8 +2,8 @@
 %global pkgname tracing
 
 Name: python-module-tracing
-Version: 0.8
-Release: alt3
+Version: 0.9
+Release: alt1
 
 Summary: Python debug logging helper
 
@@ -65,6 +65,9 @@ make -C doc html
 %doc doc/_build/html/* example.py
 
 %changelog
+* Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
+- new version 0.9 (with rpmrb script)
+
 * Thu Aug 13 2015 Vitaly Lipatov <lav@altlinux.ru> 0.8-alt3
 - human build for ALT Linux Sisyphus
 
