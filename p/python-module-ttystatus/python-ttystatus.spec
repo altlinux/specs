@@ -2,7 +2,7 @@
 %global pkgname ttystatus
 
 Name: python-module-ttystatus
-Version: 0.32
+Version: 0.34
 Release: alt1
 
 Summary: Progress and status updates on terminals for Python
@@ -73,6 +73,9 @@ make check
 %doc doc/_build/html/*
 
 %changelog
+* Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 0.34-alt1
+- new version 0.34 (with rpmrb script)
+
 * Sat Apr 23 2016 Vitaly Lipatov <lav@altlinux.ru> 0.32-alt1
 - new version 0.32 (with rpmrb script)
 
