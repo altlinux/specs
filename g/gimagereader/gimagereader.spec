@@ -1,8 +1,8 @@
 %def_without qt4
 
 Name: gimagereader
-Version: 3.2.1
-Release: alt2
+Version: 3.2.3
+Release: alt1
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -36,7 +36,6 @@ BuildRequires: libqt4-devel libqtspell-qt4-devel libpoppler-qt4-devel
 
 # qt5
 BuildRequires: libqtspell-qt5-devel libpoppler-qt5-devel qt5-base-devel qt5-imageformats
-
 
 # for compatibility
 Requires: %name-gtk
@@ -107,6 +106,8 @@ Group: Office
 Summary: Common files for %name
 BuildArch: noarch
 Conflicts: %name < 3.1.2
+Requires: iso-codes
+
 
 %description common
 Common files for %name.
@@ -180,6 +181,9 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 3.2.3-alt1
+- new version 3.2.3 (with rpmrb script)
+
 * Wed May 10 2017 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt2
 - rebuild with podofo 0.9.5
 
