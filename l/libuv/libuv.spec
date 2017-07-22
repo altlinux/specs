@@ -1,5 +1,5 @@
 Name: libuv
-Version: 1.11.0
+Version: 1.13.1
 Release: alt1
 
 Summary: Evented I/O for NodeJS
@@ -26,7 +26,7 @@ License: GPL
 Requires: %name = %version-%release
 
 %description devel
-libuv header and build tools
+libuv header and build tools.
 
 %prep
 %setup
@@ -57,6 +57,9 @@ rm -f %buildroot%_libdir/%name.a
 
 
 %changelog
+* Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 1.13.1-alt1
+- new version 1.13.1 (with rpmrb script)
+
 * Sat Apr 08 2017 Vitaly Lipatov <lav@altlinux.ru> 1.11.0-alt1
 - new version 1.11.0 (with rpmrb script)
 
