@@ -1,5 +1,5 @@
 Name: python-module-dateutil
-Version: 2.4.2
+Version: 2.6.0
 Release: alt1
 
 Summary: Extensions to the standard datetime module
@@ -53,6 +53,9 @@ python setup.py test
 
 
 %changelog
+* Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 2.6.0-alt1
+- new version 2.6.0 (with rpmrb script)
+
 * Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.2-alt1
 - Version 2.4.2
 
