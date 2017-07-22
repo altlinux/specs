@@ -26,7 +26,7 @@
 %{?_without_ocf:%global _without_ocf --without-ocf}
 
 Name: glusterfs3
-Version: %major.3
+Version: %major.4
 Release: alt1
 
 Summary: Cluster File System
@@ -560,6 +560,9 @@ rm -rf %buildroot%_sbindir/conf.py
 %preun server
 %preun_service glusterd
 %changelog
+* Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 3.10.4-alt1
+- new version 3.10.4 (with rpmrb script)
+
 * Sun Jun 11 2017 Vitaly Lipatov <lav@altlinux.ru> 3.10.3-alt1
 - new version 3.10.3 (with rpmrb script)
 
