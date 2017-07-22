@@ -1,6 +1,6 @@
 %define oname odfpy
 Name: python-module-%oname
-Version: 1.3.3
+Version: 1.3.4
 Release: alt1
 Summary: Python library for manipulating OpenDocument files
 
@@ -8,15 +8,15 @@ Group: Development/Python
 License: GPLv2+
 Url: https://joinup.ec.europa.eu/software/odfpy/home
 
-# This changes every time, most recent downloads are at http://forge.osor.eu/frs/?group_id=33
-Source: odfpy-%version.tar.gz
+# Source-url: https://pypi.io/packages/source/o/%oname/%oname-%version.tar.gz
+Source: odfpy-%version.tar
 
 %setup_python_module %oname
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Feb 02 2010
-BuildRequires: python-devel
+BuildRequires: python-devel python-module-setuptools
 
 %description
 Odfpy aims to be a complete API for OpenDocument in Python. Unlike
@@ -50,6 +50,9 @@ understanding of data types.
 %python_sitelibdir/odf/
 
 %changelog
+* Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 1.3.4-alt1
+- new version 1.3.4 (with rpmrb script)
+
 * Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 1.3.3-alt1
 - Autobuild version bump to 1.3.3
 
