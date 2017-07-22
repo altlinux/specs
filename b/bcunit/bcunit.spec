@@ -1,5 +1,5 @@
 Name: bcunit
-Version: 3.0
+Version: 3.0.2
 Release: alt1
 Summary: Utilities library used by Belledonne Communications softwares
 
@@ -52,5 +52,8 @@ Libraries and headers required to develop software with belle-sip, mediastreamer
 %_datadir/BCUnit
 
 %changelog
+* Sat Jul 22 2017 Alexei Takaseev <taf@altlinux.org> 3.0.2-alt1
+- 3.0.2
+
 * Thu Mar 02 2017 Alexei Takaseev <taf@altlinux.org> 3.0-alt1
 - Initial build for ALT Sisyphus

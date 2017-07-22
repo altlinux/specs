@@ -1,6 +1,6 @@
 Name: libmediastreamer
-Version: 2.15.1
-Release: alt2
+Version: 2.16.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Audio/Video real-time streaming
@@ -87,6 +87,9 @@ mkdir -p %buildroot/%_libdir/mediastreamer/plugins
 %_includedir/*
 
 %changelog
+* Sat Jul 22 2017 Alexei Takaseev <taf@altlinux.org> 2.16.1-alt1
+- 2.16.1
+
 * Mon Jun 05 2017 Alexei Takaseev <taf@altlinux.org> 2.15.1-alt2
 - Rebuild with ffmpeg
 

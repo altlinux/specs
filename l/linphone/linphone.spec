@@ -1,5 +1,5 @@
 Name: linphone
-Version: 3.11.1
+Version: 3.12.0
 Release: alt1
 License: GPLv2+
 Url: http://www.linphone.org/
@@ -103,7 +103,6 @@ This package contains development files for %name.
 %files common
 %doc AUTHORS ChangeLog NEWS README.md TODO
 %_libdir/*.so.*
-%exclude %_docdir/%name-%version
 %exclude %_datadir/gnome
 %exclude %_mandir/cs
 %exclude %_man1dir/sipomatic.1*
@@ -126,18 +125,16 @@ This package contains development files for %name.
 %_bindir/linphone-daemon
 %_bindir/lp-sendmsg
 %_bindir/lp-autoanswer
-%_bindir/lp-gen-wrappers
 %_man1dir/linphonec.1*
 %_man1dir/linphonecsh.1*
 
 %files devel
-%doc coreapi/help/doc/html/*
-%doc coreapi/help/*.c
-%doc coreapi/help/java
+#%%doc coreapi/help/doc/html/*
+#%%doc coreapi/help/*.c
+#%%doc coreapi/help/java
 %_pkgconfigdir/*
 %_includedir/*
 %_libdir/*.so
-%_datadir/tutorials/%name
 
 %files tester
 %doc tester/README
@@ -150,6 +147,9 @@ This package contains development files for %name.
 
 
 %changelog
+* Tue Jul 25 2017 Alexei Takaseev <taf@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Fri Mar 03 2017 Alexei Takaseev <taf@altlinux.org> 3.11.1-alt1
 - 3.11.1
 
