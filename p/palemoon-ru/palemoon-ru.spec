@@ -13,8 +13,8 @@
 %define search_dir 	%newmoon_dir%sdir
 
 Name: palemoon-ru
-Version: 27.4.0
-Release: alt3
+Version: 27.5.0
+Release: alt1
 
 Summary: Russian (RU) Language Pack for Pale Moon
 License: MPL/GPL/LGPL
@@ -31,7 +31,7 @@ Source2: searchplugins.tar
 Patch:   %name-27.1.1-search.patch
 Patch2:	 %name-27.3.0-advanced.patch
 
-Requires: palemoon >= %version
+Requires: palemoon >= 27.4.0
 Requires: hunspell-ru
 Obsoletes: palemoon-ru_yo-dictionary palemoon-ru_ie-dictionary
 Provides: palemoon-ru_yo-dictionary palemoon-ru_ie-dictionary
@@ -47,7 +47,7 @@ The Palemoon Russian translation and dictionary.
 Summary: The Palemoon Russian translation and dictionary.
 Group:   Networking/WWW
 BuildArch: noarch
-Conflicts:  palemoon-ru < %EVR
+Conflicts:  palemoon-ru < 27.4.0
 
 %description -n palemoon-searchplugins
 The set of search plugins for Palemoon
@@ -124,6 +124,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %search_dir
 
 %changelog
+* Sat Jul 22 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.5.0-alt1
+- Update for release 27.5-RC2
+
 * Tue Jul 11 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.4.0-alt3
 - Update for release 27.4
 
