@@ -1,7 +1,7 @@
 %define oname cryfs
 Name: fuse-cryfs
 Version: 0.9.7
-Release: alt1
+Release: alt2
 
 Summary: Cryptographic filesystem for the cloud
 
@@ -24,6 +24,9 @@ BuildRequires: libcurl-devel
 BuildRequires: libfuse-devel
 BuildRequires: libssl-devel
 
+# instead builtin
+BuildRequires: libspdlog-devel
+
 BuildRequires: python-modules-json
 
 %description
@@ -34,6 +37,13 @@ See https://www.cryfs.org.
 
 %prep
 %setup
+
+# conflicts with CHAR_WIDTH macro
+%__subst "s|CHAR_WIDTH|SPDLOG_CHAR_WIDTH|g" vendor/spdlog/spdlog/fmt/bundled/format.h
+# replaced with libspdlog-devel
+rm -rf vendor/spdlog/
+%__subst "s|.*spdlog.*||" vendor/CMakeLists.txt
+%__subst "s|spdlog||" src/cpp-utils/CMakeLists.txt
 
 %build
 %cmake -DBUILD_TESTING=off -DCMAKE_BUILD_TYPE=RELEASE
@@ -46,5 +56,8 @@ See https://www.cryfs.org.
 %_bindir/cryfs
 
 %changelog
+* Sun Jul 23 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt2
+- fix build, build with external spdlog
+
 * Wed Mar 08 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt1
 - initial build for ALT Linux Sisyphus
