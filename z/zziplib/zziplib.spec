@@ -2,7 +2,7 @@
 %def_with manpages
 
 Name: zziplib
-Version: 0.13.62
+Version: 0.13.66
 Release: alt1
 
 Summary: Lightweight library to easily extract data from zip files
@@ -10,7 +10,7 @@ License: LGPL/MPL
 Group: System/Libraries
 
 URL: http://zziplib.sourceforge.net/
-Source: http://downloads.sourceforge.net/zziplib/zziplib-%version.tar.bz2
+Source: http://downloads.sourceforge.net/zziplib/zziplib-%version.tar
 
 # Automatically added by buildreq on Fri Nov 26 2010
 BuildRequires: libSDL-devel python-modules xmlto zip zlib-devel
@@ -78,6 +78,9 @@ subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' */libtool
 %_bindir/*
 
 %changelog
+* Sun Jul 23 2017 Anton Farygin <rider@altlinux.ru> 0.13.66-alt1
+- 0.13.66
+
 * Fri Mar 16 2012 Victor Forsiuk <force@altlinux.org> 0.13.62-alt1
 - 0.13.62
 
