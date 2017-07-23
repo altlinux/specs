@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.6.3
+Version: 2.7.0
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -23,8 +23,8 @@ BuildArchitectures: noarch
 BuildRequires: rpm-build-compat >= %altcompat_ver
 
 Requires: giter >= 1.10
-Requires: eepm >= 1.7.2
-Requires: erc >= 0.8
+Requires: eepm >= 2.1.0
+Requires: erc >= 0.9.2
 
 Requires: rpm-build
 Requires: rpm-build-compat >= %altcompat_ver
@@ -68,6 +68,14 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sun Jul 23 2017 Vitaly Lipatov <lav@altlinux.ru> 2.7.0-alt1
+- support comments in .gear/rules
+- fix initial fetching branch during backporting
+- fix rpmbsh options order handling
+- use erc type for get file extensions
+- add realpath only if missed and always use it
+- rpmgs: do fatal error if we had no downloaded anything
+
 * Thu Jun 08 2017 Vitaly Lipatov <lav@altlinux.ru> 2.6.3-alt1
 - srpms: update for Fedora rawhide
 - rpmbs: force name,version,release for tag
