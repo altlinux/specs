@@ -4,8 +4,8 @@
 %def_with ffmpeg
 
 Name: telegram-desktop
-Version: 1.1.7
-Release: alt2
+Version: 1.1.14
+Release: alt1
 
 Summary: Telegram is a messaging app with a focus on speed and security
 
@@ -22,11 +22,12 @@ Source2: CMakeLists.txt
 Patch1: 0001_add-cmake.patch
 Patch3: 0003_qt-plugins.patch
 Patch4: 0004_API-ID.patch
+Patch5: 0005_Downgrade-Qt-version.patch
 Patch6: 0006_fix-static-qt-functions.patch
 Patch8: 0008_add_locales.patch
 Patch9: 0001-use-correct-executable-path.patch
 Patch14: 0014-get-language-name-and-country-name-from-QLocale.patch
-Patch21: 0001-Fix-crash-in-video-player-seeking.patch
+Patch15: 0015-disable-resource-fonts.patch
 
 BuildRequires(pre): rpm-build-licenses rpm-macros-qt5 rpm-macros-cmake
 BuildRequires(pre): rpm-macros-kde-common-devel
@@ -46,7 +47,7 @@ BuildRequires: libgtk+3-devel libappindicator-gtk3-devel
 BuildRequires: libopenal-devel >= 1.17.2 libopus-devel libportaudio2-devel
 BuildRequires: libwebp-devel libva-devel libdrm-devel 
 
-BuildRequires: libtgvoip-devel >= 0.4.1
+BuildRequires: libtgvoip-devel >= 0.4.1.1
 # C++ sugar
 BuildRequires: libmicrosoft-gsl-devel libvariant-devel
 
@@ -93,16 +94,25 @@ $ XDG_CURRENT_DESKTOP=NONE tdesktop
 %setup -a1
 %patch1 -p1
 %patch3 -p1
-%patch4 -p1
+%patch5 -p1
 %patch6 -p1
 %patch8 -p1
 %patch9 -p1
 %patch14 -p1
-%patch21 -p1
+%patch15 -p1
 
 cp %SOURCE2 Telegram/
-# MacOS things will conflicts with binary name
+# MacOS things will conflicts with binary name, so delete Telegram dir
 rm -rf Telegram/Telegram/
+
+# set App ID
+subst "s|../../../TelegramPrivate/|../../|" Telegram/SourceFiles/config.h
+cat <<EOF >custom_api_id.h
+// Telegram Desktop - altdesktop
+// got from https://core.telegram.org/api/obtaining_api_id
+static const int32 ApiId = 182015;
+static const char *ApiHash = "bb6c3f8fffd8fe6804fc5131a08e1c44";
+EOF
 
 %build
 cd Telegram
@@ -140,6 +150,12 @@ ln -s %name %buildroot%_bindir/telegram
 %doc README.md
 
 %changelog
+* Fri Jul 21 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.14-alt1
+- new version 1.1.14 (with rpmrb script)
+- build with custom API ID
+- update translations
+- language list now downloading from cloud
+
 * Mon Jun 12 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.7-alt2
 - use correct executable path (fix restart)
 - open localized FAQ for ru/uk/be

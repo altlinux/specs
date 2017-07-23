@@ -1,6 +1,7 @@
+%define soname 0.0
 Name: libtgvoip
-Version: 0.4.1
-Release: alt2
+Version: 0.4.1.1
+Release: alt1
 
 Summary: VoIP library for Telegram clients
 
@@ -33,8 +34,14 @@ developing applications that use %name.
 %prep
 %setup
 %__subst "s|-msse2|-msse2 -I%_includedir/pulse|g" libtgvoip.gyp
-%__subst "s|static_library|shared_library|g" libtgvoip.gyp
+%__subst "s|static_library',|shared_library',\n'product_extension': 'so.%soname',|" libtgvoip.gyp
 %__subst "s|.*dependencies.*|'link_settings': { 'libraries': ['-ldl', '-lpthread', '-lopus', '-lcrypto'], },|g" libtgvoip.gyp
+
+# TODO
+%if_with webrtc
+rm -rf webrtc_dsp/
+%__subst "s|<(tgvoip_src_loc)/webrtc_dsp|/usr/include/webrtc_audio_processing|" libtgvoip.gyp
+%endif
 
 %build
 # --no-parallel due gyp in hasher:
@@ -45,13 +52,14 @@ gyp --depth=. --no-parallel \
 %make_build CXXFLAGS="%optflags -std=gnu++14" CFLAGS="%optflags" V=1
 
 %install
-install -m644 -D out/Debug/lib.target/libtgvoip.so %buildroot%_libdir/libtgvoip.so.0
+install -m644 -D out/Debug/lib.target/libtgvoip.so.%soname %buildroot%_libdir/libtgvoip.so.%soname
+ln -s libtgvoip.so.%soname %buildroot%_libdir/libtgvoip.so
 mkdir -p %buildroot%_includedir/tgvoip/audio/
 cp -a *.h %buildroot%_includedir/tgvoip/
 cp -a audio/*.h %buildroot%_includedir/tgvoip/audio/
 
 %files
-%_libdir/libtgvoip.so.0
+%_libdir/libtgvoip.so.%soname
 
 %files devel
 %_libdir/libtgvoip.so
@@ -60,6 +68,10 @@ cp -a audio/*.h %buildroot%_includedir/tgvoip/audio/
 %_includedir/tgvoip/audio/
 
 %changelog
+* Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 0.4.1.1-alt1
+- update to last git commit
+- fix soname
+
 * Thu Jun 15 2017 Vitaly Lipatov <lav@altlinux.ru> 0.4.1-alt2
 - rebuild with debuginfo (ALT bug 33544)
 
