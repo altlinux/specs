@@ -1,5 +1,5 @@
 Name: MySQL
-Version: 5.5.54
+Version: 5.5.57
 Release: alt1
 
 %def_without debug
@@ -42,6 +42,7 @@ Patch5: mysql-5.5.28-alt-load_defaults.patch
 Patch6: mysql-5.1.50-alt-fPIC-innodb.patch
 Patch7: mysql-5.5.25-alt-mysql_config-libs.patch
 Patch8: mysql-5.5.43-alt-aarch64-lib64.patch
+Patch9: mysql-5.5.57-alt-bugfix.patch
 
 # Fedora
 Patch100: mysql-versioning.patch
@@ -289,6 +290,9 @@ This package contains MySQL benchmark scripts and data.
 %patch5 -p1
 %patch7 -p1
 %patch8 -p1
+pushd ..
+%patch9 -p1
+popd
 
 %patch100 -p1
 %patch101 -p1
@@ -648,6 +652,10 @@ fi
 %_datadir/sql-bench
 
 %changelog
+* Mon Jul 24 2017 Denis Medvedev <nbr@altlinux.org> 5.5.57-alt1
+- 5.5.57 (Fixes: CVE-2017-3653, CVE-2017-3651, CVE-2017-3652, CVE-2017-3648, CVE-2017-3641, CVE-2017-3636, CVE-2017-3635)
+- Fixes various memory and pointer mishandlings.
+
 * Mon Apr 03 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.5.54-alt1
 - 5.5.54 (Fixes: CVE-2017-3318, CVE-2017-3317, CVE-2017-3313, CVE-2017-3312, CVE-2017-3291, CVE-2017-3265, CVE-2017-3258, CVE-2017-3244, CVE-2017-3243, CVE-2017-3238)
 
