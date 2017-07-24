@@ -6,7 +6,7 @@
 
 Name: kde5-%rname
 Version: 17.04.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: File tools
@@ -125,6 +125,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Mon Jul 24 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt2%ubt
+- Fix: crash after closing left panel + changing tab
+
 * Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
 - new version
 
