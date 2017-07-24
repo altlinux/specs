@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/telegraf
-%global commit a2d445326984b39ebb6f7c110384901448e101d9
+%global commit 7bbd3daa98d5931c6e9025a98105092b0722de0d
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -10,7 +10,7 @@
 
 Name:		telegraf
 Version:	1.3.4
-Release:	alt1
+Release:	alt2
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
 Group:		Development/Other
@@ -20,6 +20,11 @@ URL:		https://github.com/influxdata/telegraf
 Packager:	Alexey Gladkov <legion@altlinux.ru>
 
 Source0:	%name-%version.tar
+
+Source101: telegraf.logrotate
+Source102: telegraf.init
+Source103: telegraf.service
+Source104: telegraf.tmpfiles
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang
@@ -61,6 +66,7 @@ export BRANCH=altlinux
 
 go install -ldflags "-X main.version=$VERSION -X main.commit=$COMMIT -X main.branch=$BRANCH" ./...
 
+
 %install
 export BUILDDIR="$PWD/.gopath"
 export GOPATH="%go_path"
@@ -69,9 +75,47 @@ export GOPATH="%go_path"
 
 rm -rf -- %buildroot/%_datadir
 
+# Install config files
+install -p -D -m 640 etc/telegraf.conf %buildroot%_sysconfdir/%name/%name.conf
+install -d -m 750 %buildroot%_sysconfdir/%name/%name.d
+# Setup directories
+install -d -m 755 %buildroot%_logdir/%name
+# Install pid directory
+install -d -m 775 %buildroot%_runtimedir/%name
+# Install logrotate
+install -p -D -m 644 %SOURCE101 %buildroot%_logrotatedir/%name
+# Install sysv init scripts
+install -p -D -m 755 %SOURCE102 %buildroot%_initdir/%name
+# Install systemd unit services
+install -p -D -m 644 %SOURCE103 %buildroot%_unitdir/%name.service
+install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
+
+%pre
+%_sbindir/groupadd -r -f %name 2>/dev/null ||:
+%_sbindir/useradd -r -g %name -G %name  -c 'Telegraf Agent Daemon' \
+        -s /sbin/nologin  -d %_sharedstatedir/%name %name 2>/dev/null ||:
+%post
+%post_service %name
+
+%preun
+%preun_service %name
+
 %files
+%doc docs/*
 %_bindir/%name
+%_initdir/%name
+%_unitdir/%name.service
+%_tmpfilesdir/%name.conf
+%dir %attr(0750, root, %name) %_sysconfdir/%name
+%dir %attr(0750, root, %name) %_sysconfdir/%name/%name.d
+%config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/%name.conf
+%config(noreplace) %_logrotatedir/%name
+%dir %attr(0770, root, %name) %_logdir/%name
+%dir %attr(0775, root, %name) %_runtimedir/%name
 
 %changelog
+* Mon Jul 24 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.4-alt2
+- add sysv init, systemd unit, logrotate config, tmpfiles
+
 * Sun Jul 23 2017 Alexey Gladkov <legion@altlinux.ru> 1.3.4-alt1
 - First build for ALTLinux.
