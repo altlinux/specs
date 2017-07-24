@@ -1,5 +1,5 @@
 Name: rpm-build-mono
-Version: 1.3.2.1
+Version: 2.0.0
 Release: alt1
 
 Summary: RPM helper macros and dependency utils to build Mono packages
@@ -11,11 +11,12 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: rpm >= 4.0.4-alt96.13
-Requires: /usr/bin/monodis
+Conflicts: rpm-build-mono4
 
 %description
-These helper macros and dependency calculation utils facilitate creation of 
-RPM packages containing Mono bytecode archives etc.
+These helper macros and dependency calculation utils facilitate creation
+of RPM packages containing Mono bytecode archives etc.
+Based on rpm-build-mono4, but for mono-5.x.
 
 %prep
 %setup
@@ -34,6 +35,9 @@ install -pD -m755 mono.prov.files %buildroot%_rpmlibdir/mono.prov.files
 %_rpmlibdir/mono*
 
 %changelog
+* Mon Jul 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt1
+- Imported files from rpm-build-mono4 and updated for mono-5
+
 * Wed Apr 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.2.1-alt1
 - mono.req: re-written the suffix (e.g.: ()(64bit)) computation in
   non-lib64-centric way. (For easier porting to other platforms.)
