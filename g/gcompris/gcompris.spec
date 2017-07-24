@@ -1,7 +1,7 @@
 
 Name:    gcompris
 Version: 15.10
-Release: alt4
+Release: alt5
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
 
@@ -17,6 +17,7 @@ Source6: %name-48x48.png
 Source10: voices-%version.tar
 
 Patch1:  01_gstreamer-1.0.patch
+Patch2:  gcompris-use-ffmpeg.patch
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -391,15 +392,14 @@ sed -i "s|LIBADD =|LIBADD = -lgnomecanvas-2 \$(GCOMPRIS_LIBS) \$(XML_LIBS)|g"  s
 #add_optflags -UGTK_DISABLE_DEPRECATED -UGDK_DISABLE_DEPRECATED
 sed -i 's|\-Werror||g' configure
 %configure
-#	--enable-binreloc
-
-make
+%make_build
 
 %install
-make DESTDIR=%buildroot install
+%makeinstall_std
 
 mkdir -p %buildroot%_datadir/gcompris/boards/voices
 tar -xf %SOURCE10 -C %buildroot%_datadir/gcompris/boards/voices
+patch -p1 -d %buildroot%_datadir/gcompris/boards/voices < %PATCH2
 
 mkdir -p %buildroot%_miconsdir
 mkdir -p %buildroot%_liconsdir
@@ -599,6 +599,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gcompris/boards/voices/sk
 
 %changelog
+* Mon Jul 24 2017 Andrey Cherepanov <cas@altlinux.org> 15.10-alt5
+- Remove avconv dependency
+
 * Sat Jun 17 2017 Anton Farygin <rider@altlinux.ru> 15.10-alt4
 - rebuild with ffmpeg-3.3.2
 
