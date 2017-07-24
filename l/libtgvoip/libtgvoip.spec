@@ -1,6 +1,6 @@
 %define soname 0.0
 Name: libtgvoip
-Version: 0.4.1.1
+Version: 0.4.1.2
 Release: alt1
 
 Summary: VoIP library for Telegram clients
@@ -19,7 +19,8 @@ BuildRequires: gyp gcc-c++ libopus-devel libssl-devel libalsa-devel libpulseaudi
 %add_optflags -fPIC
 
 %description
-VoIP library for Telegram clients
+VoIP library for Telegram clients.
+Dinamically loads libalsa or libpulse.
 
 
 %package devel
@@ -51,8 +52,23 @@ gyp --depth=. --no-parallel \
 	-Dlinux_path_opus_include=%_includedir/opus/
 %make_build CXXFLAGS="%optflags -std=gnu++14" CFLAGS="%optflags" V=1
 
+cat <<EOF >%name.pc
+includedir=%_includedir
+
+Name: %name
+Description: %summary
+URL: %url
+Version: %version
+Requires: opus
+Conflicts:
+Libs: -ltgvoip
+Libs.private: -ldl -lpthread -lopus -lcrypto
+Cflags: -I\${includedir}/tgvoip
+EOF
+
 %install
 install -m644 -D out/Debug/lib.target/libtgvoip.so.%soname %buildroot%_libdir/libtgvoip.so.%soname
+install -m644 -D %name.pc %buildroot%_pkgconfigdir/%name.pc
 ln -s libtgvoip.so.%soname %buildroot%_libdir/libtgvoip.so
 mkdir -p %buildroot%_includedir/tgvoip/audio/
 cp -a *.h %buildroot%_includedir/tgvoip/
@@ -62,12 +78,17 @@ cp -a audio/*.h %buildroot%_includedir/tgvoip/audio/
 %_libdir/libtgvoip.so.%soname
 
 %files devel
+%doc UNLICENSE
 %_libdir/libtgvoip.so
 %dir %_includedir/tgvoip/
 %_includedir/tgvoip/*.h
 %_includedir/tgvoip/audio/
+%_pkgconfigdir/%name.pc
 
 %changelog
+* Sun Jul 23 2017 Vitaly Lipatov <lav@altlinux.ru> 0.4.1.2-alt1
+- add pkgconfig file
+
 * Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 0.4.1.1-alt1
 - update to last git commit
 - fix soname
