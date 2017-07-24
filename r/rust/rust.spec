@@ -1,5 +1,5 @@
 Name: rust
-Version: 1.18.0
+Version: 1.19.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -9,6 +9,8 @@ URL: http://www.rust-lang.org/
 
 # Cloned from https://github.com/rust-lang/rust
 Source: %name-%version.tar
+# Cloned from https://github.com/rust-lang/cargo
+Source1: cargo.tar
 # Cloned from https://github.com/rust-lang/jemalloc
 Source2: jemalloc.tar
 # Cloned from https://github.com/rust-lang/compiler-rt
@@ -44,18 +46,10 @@ Requires: %name = %version-%release
 %summary
 
 %prep
-%setup -a2 -a3 -a4 -a5 -a6 -a7
-mv vendor jemalloc compiler-rt rust-installer liblibc src
+%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7
+mv vendor jemalloc compiler-rt liblibc src
 mv hoedown src/rt
-
-%ifarch x86_64
-# Hack around libdir bug
-sed -i '/let _ = fs::remove_dir_all(&sysroot);/d' src/bootstrap/compile.rs
-mkdir -p build/x86_64-unknown-linux-gnu/stage0-sysroot
-pushd build/x86_64-unknown-linux-gnu/stage0-sysroot
-    ln -s lib lib64
-popd
-%endif
+mv rust-installer cargo src/tools
 
 %build
 cat > config.toml <<EOF
@@ -73,6 +67,8 @@ libdir = "%_lib"
 channel = "stable"
 codegen-tests = false
 rpath = false
+debuginfo = false
+debuginfo-lines = false
 [target.x86_64-unknown-linux-gnu]
 llvm-config = "%_bindir/llvm-config"
 [target.i686-unknown-linux-gnu]
@@ -82,7 +78,10 @@ EOF
 LLVM_LINK_SHARED=1 ./x.py build
 
 %install
-DESTDIR=%buildroot ./x.py dist --install
+DESTDIR=%buildroot ./x.py install
+
+%check
+./x.py test --no-fail-fast || :
 
 %files
 %exclude %_datadir/doc/rust
@@ -108,6 +107,9 @@ DESTDIR=%buildroot ./x.py dist --install
 %exclude %_libdir/rustlib/etc/lldb_*
 
 %changelog
+* Fri Jul 21 2017 Vladimir Lettiev <crux@altlinux.org> 1.19.0-alt1
+- 1.19.0
+
 * Wed Jul 19 2017 Vladimir Lettiev <crux@altlinux.org> 1.18.0-alt1
 - 1.18.0
 - built with shared llvm4.0
