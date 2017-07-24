@@ -7,15 +7,34 @@ BuildRequires: gcc-c++
 
 Summary: An Atari ST emulator suitable for playing games
 Name: hatari
-Version: 1.8.0
+Version: 2.0.0
 Release: alt1
 License: GPLv2+
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Url: http://hatari.tuxfamily.org/
 Source0: http://download.tuxfamily.org/%name/%version/%name-%version.tar.bz2
 Source1: hatari.desktop
+# Take DESTDIR into consideration when installing symlinks
+# https://hg.tuxfamily.org/mercurialroot/hatari/hatari/rev/35281f58daab
+Patch0: %{name}-2.0.0-symlinks.patch
+# Compile on aarch64
+# https://listengine.tuxfamily.org/lists.tuxfamily.org/hatari-devel/2016/12/msg00013.html
+Patch1: %{name}-2.0.0-aarch64.patch
+# Compile on s390(x)
+Patch2: %{name}-2.0.0-s390.patch
+# PythonUI: Support both Hatari config file locations
+# https://hg.tuxfamily.org/mercurialroot/hatari/hatari/raw-rev/7b3bcc42bc81
+Patch3: %{name}-2.0.0-hatariui_conf.patch
+# PythonUI: Support for Hatari v2.0 option changes
+# https://hg.tuxfamily.org/mercurialroot/hatari/hatari/raw-rev/d1668fda4200
+Patch4: %{name}-2.0.0-hatariui_options.patch
+# Fix X11 window embedding with SDL2
+# https://hg.tuxfamily.org/mercurialroot/hatari/hatari/raw-rev/2b82cd9e99d1
+Patch5: %{name}-2.0.0-window_embedding.patch
+
+
 BuildRequires: ctest cmake rpm-macros-cmake
-BuildRequires: libSDL-devel >= 1.2.0
+BuildRequires: libSDL2-devel libSDL2_image-devel
 BuildRequires: zlib-devel
 BuildRequires: libpng-devel
 BuildRequires: readline-devel
@@ -60,6 +79,12 @@ built-in debugger which can (optionally) embed the Hatari emulator window.
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
 %setup
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 # Remove shebang from non executable scripts
 for pyfile in dialogs.py hatari.py uihelpers.py config.py
@@ -100,11 +125,17 @@ desktop-file-install \
 icns2png -x src/gui-osx/Hatari.icns
 
 # Install icons
-for i in 16 32 48 128; do
-  install -d -m 755 %buildroot%_datadir/icons/hicolor/${i}x${i}/apps
-  install -m 644 Hatari_${i}x${i}x32.png \
-    %buildroot%_datadir/icons/hicolor/${i}x${i}/apps/hatari.png
-done
+#for i in 16 32 48 128; do
+#for i in 32 48 128; do
+#  install -d -m 755 %buildroot%_datadir/icons/hicolor/${i}x${i}/apps
+#  install -m 644 Hatari_${i}x${i}x32.png \
+#    %buildroot%_datadir/icons/hicolor/${i}x${i}/apps/hatari.png
+#done
+
+
+install -m 644 python-ui/hatari-icon.png \
+    %buildroot%_datadir/icons/hicolor/32x32/apps/hatari-icon.png
+
 
 # Install hatari-ui desktop file
 desktop-file-install \
@@ -129,6 +160,9 @@ install -p -m 644 gpl.txt %buildroot%_pkgdocdir
 %_datadir/applications/%name.desktop
 %endif
 %_datadir/icons/hicolor/*/apps/%name.png
+%_datadir/icons/hicolor/*/apps/%name.svg
+%_datadir/icons/hicolor/*/mimetypes/*
+%_datadir/mime/packages/hatari.xml
 %doc %_pkgdocdir
 %exclude %_bindir/hatariui
 %exclude %_datadir/%name/hatariui
@@ -151,6 +185,9 @@ install -p -m 644 gpl.txt %buildroot%_pkgdocdir
 %exclude %_datadir/%name/hconsole/release-notes.txt
 
 %changelog
+* Tue Jul 25 2017 Ilya Mashkin <oddity@altlinux.ru> 2.0.0-alt1
+- 2.0.0
+
 * Fri Aug 15 2014 Ilya Mashkin <oddity@altlinux.ru> 1.8.0-alt1
 - 1.8.0
 
