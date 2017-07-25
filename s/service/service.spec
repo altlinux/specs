@@ -1,6 +1,6 @@
 Name: service
 Version: 0.5.26
-Release: alt1
+Release: alt2
 
 Summary: The service start/stop scripts
 License: GPLv2+
@@ -20,6 +20,8 @@ Conflicts: startup < 0.0.2-alt1
 Conflicts: crontabs < 0:1.8-alt1
 # due to start-stop-daemon.8
 Conflicts: dpkg <= 0:1.6.15-alt3
+
+%global __find_provides_filter fgrep -x -v -e "$(/usr/lib/rpm/shell.prov %buildroot%_initdir/.provides.sh.compat)"
 
 # This is required for shell function provides autogeneration.
 BuildPreReq: rpm-build >= 4.0.4-alt16
@@ -53,7 +55,7 @@ ln -s rc.d/init.d %buildroot%_sysconfdir/
 # This is a LSB compatibility symlink.  We hope that some day
 # the actual files will be here instead of symlinks.
 for i in `seq 0 6`; do
-	ln -s rc.d/rc$i.d %buildroot%_sysconfdir/rc$i.d
+        ln -s rc.d/rc$i.d %buildroot%_sysconfdir/rc$i.d
 done
 
 mkdir -p %buildroot%_sysconfdir/rc.d/rc{0,1,2,3,4,5,6}.d
@@ -61,13 +63,40 @@ mkdir -p %buildroot%_sysconfdir/sysconfig/limits.d
 mkdir -p %buildroot/usr/libexec/service/legacy-actions
 
 # Generate shell functions provides list.
+export LC_COLLATE=C
+
+print_function_names()
+{
+        sed -ne 's/^\([A-Za-z][A-Za-z_0-9]*[[:space:]]*\)()$/\1/pg' "$1"
+}
+
+# in order to skip it:
+chmod a-x %buildroot%_initdir/functions-compat
+
+for f in %buildroot%_initdir/*; do
+        [ -x "$f" ] || continue
+        print_function_names "$f"
+done | sort -u \
+>%buildroot%_initdir/.list.functions
+
+print_function_names %buildroot%_initdir/functions-compat |
+sort -u \
+>%buildroot%_initdir/.list.functions-compat
+
 (
-	echo '# shell functions provides list'
-	for f in %buildroot%_initdir/*; do
-		[ -x "$f" ] || continue
-		sed -ne 's/^\([A-Za-z][A-Za-z_0-9]*[[:space:]]*\)()$/\1/pg' "$f"
-	done |LC_COLLATE=C sort -u
+        echo '# shell functions provides list'
+        comm -1 -3 \
+        %buildroot%_initdir/.list.functions \
+        %buildroot%_initdir/.list.functions-compat
+) >%buildroot%_initdir/.provides.sh.compat
+
+(
+        echo '# shell functions provides list'
+        sort -u \
+        %buildroot%_initdir/.list.functions \
+        %buildroot%_initdir/.list.functions-compat
 ) >%buildroot%_initdir/.provides.sh
+# In other pkgs, Requires will be generated for all functions listed here.
 
 %triggerpostun -- initscripts < 1:5.49.1-alt1
 f=%_sysconfdir/initlog.conf
@@ -94,6 +123,12 @@ fi
 %config(noreplace) %_sysconfdir/sysconfig/limits
 
 %changelog
+* Tue Jul 25 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.5.26-alt2
+- Unprovide functions defined only in functions-compat, but still
+  make the corresponding Requires be generated in other pkgs.
+- functions: innocent checkpid() copied from functions-compat,
+  because there are some scripts in Sisyphus which use it.
+
 * Tue Sep 09 2014 Dmitry V. Levin <ldv@altlinux.org> 0.5.26-alt1
 - preun_service: added chkconfig call in systemd case (closes: #30165).
 - service: added legacy-actions support (closes: #29925).
