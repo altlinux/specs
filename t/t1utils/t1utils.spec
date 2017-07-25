@@ -1,8 +1,8 @@
 Name: t1utils
-Version: 1.39
+Version: 1.40
 Release: alt1
 
-Summary: Programs for manipulating PostScript Type 1 fonts
+Summary: Programs for manipulating type1 fonts
 License: freely modifiable and distributable
 Group: Publishing
 
@@ -11,10 +11,10 @@ Source0: %url/%name-%version.tar.gz
 Source1: %name.watch
 
 %description
-The t1utils package is a set of programs for manipulating PostScript Type 1
-fonts. It contains programs to change between binary PFB format (for storage),
-ASCII PFA format (for printing), a human-readable and -editable ASCII format,
-and Macintosh resource forks.
+The t1utils package is a set of programs for manipulating PostScript
+Type 1 fonts. It contains programs to change between binary PFB format
+(for storage), ASCII PFA format (for printing), a human-readable and
+-editable ASCII format, and Macintosh resource forks.
 
 %prep
 %setup
@@ -31,6 +31,10 @@ and Macintosh resource forks.
 %_man1dir/*
 
 %changelog
+* Tue Jul 25 2017 Michael Shigorin <mike@altlinux.org> 1.40-alt1
+- new version (watch file uupdate)
+- slightly changed summary/description to include "type1" keyword
+
 * Mon Aug 10 2015 Michael Shigorin <mike@altlinux.org> 1.39-alt1
 - added debian watch file
 - new version (watch file uupdate)
