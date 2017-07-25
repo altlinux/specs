@@ -11,7 +11,7 @@
 %define altversion %major.%minor
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt1%ubt
+Release: alt2%ubt
 BuildArch: noarch
 
 %define theme %name
@@ -458,6 +458,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Jul 25 2017 Sergey V Turchin <zerg at altlinux dot org> 8.2.0-alt2%ubt
+- update steps/sysconfig-base.png
+
 * Thu Jul 20 2017 Sergey V Turchin <zerg at altlinux dot org> 8.2.0-alt1%ubt
 - new version
 
