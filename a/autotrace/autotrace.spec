@@ -3,14 +3,13 @@
 
 Name: autotrace
 Version: 0.31.1
-Release: alt6
+Release: alt7%ubt
 
 Summary: Bitmap to vector graphics converter
 Summary(ru_RU.UTF-8): Программа трассировки растровых изображений.
 Group: Graphics
 License: GPLv2+ and LGPLv2+
 Url: http://%name.sourceforge.net/
-Packager: Yury Aliaev <mutabor@altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-0.31.1-configure_in-deb-alt.patch
@@ -21,10 +20,12 @@ Patch4: %name-0.31.1-pc_in-deb.patch
 Patch5: %name-0.31.1-unneeded_libs-alt.patch
 Patch6: %name-0.31.1-libpng-1.5.patch
 Patch7: %name-0.31.1-CVE-2013-1953-deb.patch
+Patch8: %name-0.31.1-CVE-2016-7392.patch
 
 %define pstoedit_ver 3.32
 
 Requires: lib%name = %version-%release
+BuildRequires(pre):rpm-build-ubt
 
 %if_with pstoedit
 BuildPreReq: libpstoedit-devel >= %pstoedit_ver
@@ -90,6 +91,9 @@ linked software using lib%name.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p0
+%patch7 -p1
+%patch8 -p1
+
 
 %build
 %ifdef cvs_date
@@ -132,6 +136,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Tue Jul 25 2017 Anton Farygin <rider@altlinux.ru> 0.31.1-alt7%ubt
+- fixed CVE-2016-7392
+
 * Fri May 06 2016 Anton Farygin <rider@altlinux.ru> 0.31.1-alt6
 - fixed CVE-2013-1953
 
