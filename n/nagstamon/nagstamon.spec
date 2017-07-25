@@ -1,27 +1,23 @@
-# BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python rpm-build-python3
-BuildRequires: /usr/bin/desktop-file-install python-devel python3-devel
-# END SourceDeps(oneline)
+BuildRequires: python3-module-setuptools
+BuildRequires: desktop-file-utils
+# Automatically added by buildreq on Tue Jun 27 2017
+# optimized out: libqt5-core python-base python-modules python3 python3-base python3-module-setuptools
+BuildRequires: python3-dev python3-module-PyQt5 python3-module-sip
+
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           nagstamon
-Version:        2.0.1
-Release:        alt5
+Version:        2.1
+Release:        alt0.20170723.1
 Summary:        Nagios status monitor for the desktop
 License:        GPLv2
 Group:          Monitoring
 Url:            http://nagstamon.ifw-dresden.de/
 Source:         http://sourceforge.net/projects/nagstamon/files/nagstamon/nagstamon%%200.9.9/Nagstamon-%{version}.tar.gz
-BuildRequires:  python3-devel
-BuildRequires:  python3-module-PyQt5-devel
-BuildRequires:  python3-module-setuptools
-BuildRequires:  python3-module-sip
-Requires:       python3-module-BeautifulSoup4
-Requires:       python3-module-psutil
-Requires:	python3-module-sip
-Requires:	python3-module-requests
+Requires:       python3-module-secretstorage
 BuildArch:      noarch
-Source44: import.info
+Source44:       import.info
 
 %description
 Nagstamon is a Nagios status monitor which takes place in systray or on desktop
@@ -41,7 +37,6 @@ python3 setup.py install \
     --root=%{buildroot} \
     --install-lib=%{python3_sitelibdir_noarch}
 
-#chmod +x %{buildroot}/%{python_sitelibdir_noarch}/Nagstamon/Server/Multisite.py
 mv %{buildroot}/%{_bindir}/nagstamon.py %{buildroot}/%{_bindir}/nagstamon
 #i18n ru_RU
 install -D -m 644 Nagstamon/QUI/all.qm %{buildroot}/%{python3_sitelibdir_noarch}/Nagstamon/translate/ru_RU.qm
@@ -66,10 +61,13 @@ desktop-file-install \
 %{python3_sitelibdir_noarch}/Nagstamon/translate/*.qm
 %{_bindir}/nagstamon
 %{_mandir}/man1/nagstamon.1*
-%{python3_sitelibdir_noarch}/%{name}-%{version}-py%{__python3_version}.egg-info
+%{python3_sitelibdir_noarch}/*.egg-info
 
 
 %changelog
+* Mon Jul 24 2017 Mikhail Gordeev <obirvalger@altlinux.org> 2.1-alt0.20170723.1
+- new version 2.1
+
 * Wed Mar 01 2017 Denis Medvedev <nbr@altlinux.org> 2.0.1-alt5
 - More strings translated
 
