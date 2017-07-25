@@ -1,6 +1,6 @@
-%def_with bootstrap
+%def_without bootstrap
 Name: rust-cargo
-Version: 0.19.0
+Version: 0.20.0
 Release: alt1
 Summary: The Rust package manager
 
@@ -11,6 +11,7 @@ URL: http://crates.io
 # Cloned from https://github.com/rust-lang/cargo
 Source: %name-%version.tar
 
+%if_with bootstrap
 %ifarch x86_64 
 Source1: https://static.rust-lang.org/cargo-dist/2016-03-21/cargo-nightly-x86_64-unknown-linux-gnu.tar.gz
 %endif
@@ -18,17 +19,16 @@ Source1: https://static.rust-lang.org/cargo-dist/2016-03-21/cargo-nightly-x86_64
 %ifarch %ix86
 Source1: https://static.rust-lang.org/cargo-dist/2016-03-21/cargo-nightly-i686-unknown-linux-gnu.tar.gz
 %endif
+%endif
 
-Source2: crates.tar
-Source3: rust-installer.tar
+Source2: vendor.tar
 
 Packager: Vladimir Lettiev <crux@altlinux.org>
 
 BuildPreReq: /proc
 BuildRequires: curl openssl-devel cmake rust python-devel libssh2-devel libgit2-devel zlib-devel libcurl-devel
 
-#if_without bootstrap
-%ifarch x86_64
+%if_without bootstrap
 BuildRequires: rust-cargo
 %endif
 
@@ -36,46 +36,31 @@ BuildRequires: rust-cargo
 %summary
 
 %prep
-%setup -a2 -a3
-mv rust-installer src
-
-rm -rf %_tmpdir/cargo
-mkdir %_tmpdir/cargo
+%setup -a2
 
 %if_with bootstrap
 tar xf %SOURCE1
 %endif
 
-mv crates %_tmpdir/cargo/crates
-cat <<EOF > %_tmpdir/cargo/config
+mkdir .cargo
+cat <<EOF > .cargo/config
 [source.offline]
-local-registry = "%_tmpdir/cargo/crates"
+directory = "%_builddir/%name-%version/vendor"
 
 [source.crates-io]
 replace-with = "offline"
 EOF
 
 %build
-./configure --prefix=%prefix --libdir=%_libdir \
-%if_without bootstrap
-    --cargo=%_bindir/cargo \
-%else
-    %ifarch %ix86
-        --cargo=cargo-nightly-i686-unknown-linux-gnu/cargo/bin/cargo \
-    %endif
-    %ifarch x86_64
-        --cargo=%_bindir/cargo \
-    %endif
-%endif
-    --local-rust-root=%prefix
-export CARGO_HOME=%_tmpdir/cargo
-%make_build
+cargo build --release
 
 %install
-%makeinstall_std
+cargo install --root=%buildroot%prefix
+mkdir -p %buildroot%_man1dir
+cp src/etc/man/*.1 %buildroot%_man1dir
 
-%clean
-rm -rf %_tmpdir/cargo
+%check
+CFG_DISABLE_CROSS_TESTS=1 cargo test || :
 
 %files
 %doc LICENSE-APACHE LICENSE-MIT LICENSE-THIRD-PARTY README.md
@@ -83,6 +68,9 @@ rm -rf %_tmpdir/cargo
 %_man1dir/cargo*
 
 %changelog
+* Sun Jul 23 2017 Vladimir Lettiev <crux@altlinux.org> 0.20.0-alt1
+- 0.20.0
+
 * Mon Jul 10 2017 Vladimir Lettiev <crux@altlinux.org> 0.19.0-alt1
 - 0.19.0
 - bootstrap x86 arch
