@@ -3,7 +3,7 @@
 %def_without static
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
-Version: 2.7.9
+Version: 2.7.10
 Release: alt1
 
 Summary: LinuxCNC controls CNC machines
@@ -238,6 +238,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 25 2017 Anton Midyukov <antohami@altlinux.org> 2.7.10-alt1
+- new version 2.7.10
+
 * Sun Jun 11 2017 Anton Midyukov <antohami@altlinux.org> 2.7.9-alt1
 - New version 2.7.9
 - Remove fix_build_for_i586.patch
