@@ -2,10 +2,11 @@
 
 %def_with python3
 %def_disable check
+%add_python3_req_skip future.standard_library.email._policybase future.standard_library.email.headerregistry future.standard_library.email.utils
 
 Name: python-module-%oname
-Version: 0.15.0
-Release: alt1.git20150725.1.1
+Version: 0.16.0
+Release: alt2
 Summary: Clean single-source support for Python 3 and 2
 License: MIT
 Group: Development/Python
@@ -167,6 +168,12 @@ popd
 %endif
 
 %changelog
+* Tue Jul 25 2017 Terechkov Evgenii <evg@altlinux.org> 0.16.0-alt2
+- Skip findreq on some carried modules
+
+* Wed Jun 21 2017 Terechkov Evgenii <evg@altlinux.org> 0.16.0-alt1
+- 0.16.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.15.0-alt1.git20150725.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
