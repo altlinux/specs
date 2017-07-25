@@ -4,7 +4,7 @@
 
 Name: libringclient
 Version: 1.0.0
-Release: alt3%ubt
+Release: alt4%ubt
 
 Group: System/Libraries
 Summary: Ring voice, video and chat client library
@@ -83,6 +83,9 @@ mv %buildroot/usr/lib %buildroot/usr/lib64
 %_libdir/libringclient.so
 
 %changelog
+* Tue Jul 25 2017 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt4%ubt
+- update from master branch
+
 * Mon Feb 27 2017 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt3%ubt
 - update from master branch
 

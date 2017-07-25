@@ -11,14 +11,15 @@
 %define libring libring%sover
 
 Name: ring-daemon
-Version: 3.0.0
-Release: alt0.1%ubt
+Version: 4.0.0
+Release: alt1%ubt
 
 Group: System/Servers
 Summary: SIP and IAX2 compatible softphone - Core
 Url: http://ring.cx/
 License: GPLv3
 
+PreReq(post,preun): alternatives >= 0.2
 #Conflicts: sflphone sflphone-common
 #Requires: %name-common >= %EVR
 
@@ -108,8 +109,8 @@ argon2    phc-winner-argon2-1eea0104e7cb2a38c617cf90ffa46ce5db6aceda argon2-1eea
 gmp       gmp-6.1.0                                                  gmp-6.1.0.tar.bz2
 gnutls    gnutls-3.5.10                                              gnutls-3.5.10.tar.xz
 pjproject pjproject-2.6                                              pjproject-2.6.tar.bz2
-opendht   opendht-2ed99db9b1ec167327ef8fd7bfa2603b4f1ea009           opendht-2ed99db9b1ec167327ef8fd7bfa2603b4f1ea009.tar.gz
-msgpack   msgpack-c-1df97bc37b363a340c5ad06c5cbcc53310aaff80         msgpack-c-1df97bc37b363a340c5ad06c5cbcc53310aaff80.tar.gz
+opendht   opendht-6f3eafc5eea1b456a625bdf473419464eb0b202a           opendht-6f3eafc5eea1b456a625bdf473419464eb0b202a.tar.gz
+msgpack   msgpack-c-cpp-2.1.3                                        msgpack-c-cpp-2.1.3.tar.gz
 asio      asio-28d9b8d6df708024af5227c551673fdb2519f5bf              asio-28d9b8d6df708024af5227c551673fdb2519f5bf.tar.gz
 boost     boost_1_61_0                                               boost_1_61_0.tar.bz2
 cryptopp  cryptopp-54557b18275053bbfc34594f7e65808dd92dd1a6          cryptopp-54557b18275053bbfc34594f7e65808dd92dd1a6.tar.gz
@@ -148,8 +149,25 @@ echo "Contribs built"
 
 chrpath --delete %buildroot/%_libdir/ring/dring
 
+# install alternative
+mkdir %buildroot/%_bindir/
+echo >%buildroot/%_bindir/ring-client-dummy <<__EOF__
+#!/bin/sh
+echo "ring-client not found"
+exit 1
+__EOF__
+chmod 0755 %buildroot/%_bindir/ring-client-dummy
+ln -s /bin/true %buildroot/%_bindir/ring
+install -d %buildroot/%_sysconfdir/alternatives/packages.d
+cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
+%_bindir/ring       %_bindir/ring-client-dummy      1
+__EOF__
+
 %files
 %doc AUTHORS COPYING README
+%config /%_sysconfdir/alternatives/packages.d/%name
+%ghost %_bindir/ring
+%_bindir/ring-client-dummy
 %_libdir/ring/
 %_datadir/dbus-1/services/cx.ring.*
 
@@ -170,6 +188,10 @@ chrpath --delete %buildroot/%_libdir/ring/dring
 #%_libdir/libring.a
 
 %changelog
+* Tue Jul 25 2017 Sergey V Turchin <zerg@altlinux.org> 4.0.0-alt1%ubt
+- new version
+- add dummy client alternative
+
 * Wed Feb 22 2017 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt0.1%ubt
 - new beta
 
