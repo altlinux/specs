@@ -1,6 +1,6 @@
 Name: keepass
 Version: 2.36
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Password manager
 
@@ -28,13 +28,12 @@ BuildRequires: archmage
 BuildRequires: python-module-pychm
 BuildRequires: desktop-file-utils
 BuildRequires: libgdiplus-devel
-BuildRequires: mono4-devel
-BuildRequires: mono4-winforms
-BuildRequires: mono4-web
+BuildRequires: mono-devel
+BuildRequires: mono-winforms
+BuildRequires: mono-web
 BuildRequires: python-devel
 BuildRequires: xorg-xvfb xvfb-run
-#Requires: mono4(System.Windows.Forms) >= 4.0.0.0
-Requires: mono4-winforms >= 4.0.0.0
+Requires: mono-winforms >= 5.0.0.0
 
 # The debuginfo package would be empty if created.
 %global debug_package %nil
@@ -67,7 +66,7 @@ find -name \*.png -print0 | xargs -0 mogrify -define png:format=png32
 %build
 ( cd Build && sh PrepMonoDev.sh )
 find . -name "*.sln" -print -exec sed -i 's/Format Version 10.00/Format Version 11.00/g' {} \;
-find . -name "*.csproj" -print -exec sed -i 's#ToolsVersion="3.5"#ToolsVersion="4.0"#g; s#<TargetFrameworkVersion>.*</TargetFrameworkVersion>##g; s#<PropertyGroup>#<PropertyGroup><TargetFrameworkVersion>v4.5</TargetFrameworkVersion>#g' {} \;
+find . -name "*.csproj" -print -exec sed -i 's#ToolsVersion="3.5"#ToolsVersion="5.0"#g; s#<TargetFrameworkVersion>.*</TargetFrameworkVersion>##g; s#<PropertyGroup>#<PropertyGroup><TargetFrameworkVersion>v4.5</TargetFrameworkVersion>#g' {} \;
 xbuild /target:KeePass /property:Configuration=Release
 for subdir in Images_App_HighRes Images_Client_16 Images_Client_HighRes; do
     xvfb-run -a mono Build/KeePass/Release/KeePass.exe -d:`pwd`/Ext/$subdir --makexspfile `pwd`/KeePass/Resources/Data/$subdir.bin
@@ -119,6 +118,9 @@ cp -pr Docs/Chm %buildroot/%_docdir/%name/
 %doc %_docdir/%name/Chm/
 
 %changelog
+* Tue Jul 25 2017 Oleg Solovyov <mcpain@altlinux.org> 2.36-alt2%ubt
+- Build with mono 5
+
 * Tue Jun 13 2017 Oleg Solovyov <mcpain@altlinux.org> 2.36-alt1%ubt
 - new version: 2.36
 
