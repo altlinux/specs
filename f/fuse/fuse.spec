@@ -1,6 +1,6 @@
 Name: fuse
 Version: 2.9.7
-Release: alt1
+Release: alt2
 
 Summary: a tool for creating virtual filesystems
 License: GPL
@@ -9,11 +9,8 @@ Group: System/Kernel and hardware
 Url: https://github.com/libfuse/
 
 Source: %name-%version.tar
-Source1: fusermount-control
-Source2: fuserumount
 
 Patch0: %name.Makefile.patch
-Patch1: %name.udev.patch
 Patch2: %name.link.patch
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -21,6 +18,7 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 Requires: mount >= 2.11
 Provides: avfs-fuse = %version
 Obsoletes: avfs-fuse < %version
+Requires(pre): fuse-common
 
 %description
 FUSE (Filesystem in USErspace), an excellent tool
@@ -56,7 +54,6 @@ This package contains development headers.
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 %patch2 -p0
 
 %build
@@ -74,18 +71,9 @@ mkdir -p %buildroot/%_lib
 mv %buildroot%_libdir/lib%name.so.* %buildroot/%_lib/
 ln -sf ../../%_lib/lib%name.so.%version %buildroot%_libdir/lib%name.so
 
-install -pD %SOURCE1 %buildroot%_sysconfdir/control.d/facilities/fusermount
-rm -fr %buildroot%_sysconfdir/init.d
-
-# sysconf/udev policy - /etc is for user
-mkdir -p %buildroot%_udevrulesdir/
-mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
-
-install -pD %SOURCE2 %buildroot%_bindir/fuserumount
+rm -f %buildroot%_sysconfdir/udev/rules.d/*
 
 %pre
-%_sbindir/groupadd -r -f fuse
-%_sbindir/groupadd -r -f cuse
 %pre_control fusermount
 
 %post
@@ -93,12 +81,9 @@ install -pD %SOURCE2 %buildroot%_bindir/fuserumount
 
 %files
 %doc AUTHORS NEWS README.md README.NFS doc/how-fuse-works doc/kernel.txt doc/html
-%_sysconfdir/control.d/facilities/fusermount
-%_udevrulesdir/*
 /sbin/mount.fuse
 %attr(4710,root,fuse) %_bindir/fusermount
 %_bindir/ulockmgr_server
-%attr(0755,root,root) %_bindir/fuserumount
 %_man1dir/*
 %_man8dir/*
 
@@ -112,6 +97,9 @@ install -pD %SOURCE2 %buildroot%_bindir/fuserumount
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Jul 25 2017 Denis Smirnov <mithraen@altlinux.ru> 2.9.7-alt2
+- split fuse-common to separate package (for fuse3 compatibility)
+
 * Sat Aug 13 2016 Denis Smirnov <mithraen@altlinux.ru> 2.9.7-alt1
 - 2.9.7
 
