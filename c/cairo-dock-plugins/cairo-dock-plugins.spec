@@ -5,7 +5,7 @@ Summary: Plugins for cairo-dock
 Summary(ru_RU.UTF-8): Плагины для cairo-dock
 Name: cairo-dock-plugins
 Version: 3.4.1
-Release: alt7
+Release: alt8
 License: GPLv3+
 Group: Graphical desktop/Other
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -22,7 +22,7 @@ Requires: cairo-dock >= %version
 BuildPreReq: cmake rpm-macros-cmake rpm-build-python3 python3-devel
 # Automatically added by buildreq on Fri Mar 18 2016
 # optimized out: cmake-modules glib2-devel libGL-devel libGLU-devel libX11-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcurl-devel libdb4-devel libdbus-devel libdbus-glib libdbus-glib-devel libdbusmenu-devel libdbusmenu-gtk3 libgcrypt-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgnome-menus libgnutls-devel libgpg-error libgpg-error-devel libgtk+3-devel libindicator-gtk3 libjavascriptcoregtk3-devel liblockfile-devel libpango-devel librsvg-devel libsasl2-3 libsasl2-devel libsoup-devel libstdc++-devel libwayland-client libwayland-client-devel libxml2-devel pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email python3 vala xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: cairo-dock-devel cmake gcc-c++ libXrandr-devel libXxf86vm-devel libalsa-devel libdbusmenu-gtk3-devel libetpan-devel libexif-devel libfftw3-devel libgnome-menus-devel libical-devel libindicator-gtk3-devel libpulseaudio-devel libsensors3-devel libupower-devel libvte3-devel libwebkitgtk3-devel libxklavier-devel libzeitgeist2.0-devel lsb-release mono-mcs python3-base
+BuildRequires: cairo-dock-devel cmake gcc-c++ libXrandr-devel libXxf86vm-devel libalsa-devel libdbusmenu-gtk3-devel libetpan-devel libexif-devel libfftw3-devel libgnome-menus-devel libical-devel libindicator-gtk3-devel libpulseaudio-devel libsensors3-devel libupower-devel libvte3-devel libwebkitgtk3-devel libxklavier-devel libzeitgeist2.0-devel lsb-release python3-base
 BuildRequires: cairo-dock-devel >= %version
 Requires: %packagename-common
 Requires: %packagename-clock
@@ -1107,6 +1107,9 @@ binding for Cairo-Dock.
 %find_lang %name
 
 %changelog
+* Tue Jul 25 2017 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt8
+- Rebuilt without mono-mcs.
+
 * Sun Jul 02 2017 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt7
 - Workaround for time.h related conflict with 2.25 glibc
 - Pull in upstream patch to update URL on weather plugin
