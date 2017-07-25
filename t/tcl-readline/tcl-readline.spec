@@ -7,29 +7,48 @@
 
 Name: tcl-%teaname
 Version: 2.1.1
-Release: alt7.qa1
+Release: alt8
 
 Summary: GNU readline for the Tcl scripting language
 License: BSD
 Group: Shells
 Url: http://tclreadline.sourceforge.net
 
-Source0: ftp://tclreadline.sourceforge.net/pub/%srcname/%srcname-%srcver.tar.bz2
+# repacked ftp://tclreadline.sourceforge.net/pub/%srcname/%srcname-%srcver.tar.bz2
+Source0: %srcname-%srcver.tar
 Source1: sample.tclshrc
-Patch0: %srcname-211.patch.gz
+Patch0: %srcname-211.patch
 Patch1: %srcname-2.1.0-interp.patch
 Patch2: %srcname-2.1.0-init.patch
 Patch3: %srcname-2.1.0-sf-completer.patch
 Patch4: %srcname-2.1.0-x86_64.patch
+Patch5: %srcname-2.1.0-rl_ding.patch
+Patch6: %srcname-2.1.0-rl_completion_func_t.patch
+# Debian patches
+Patch10: %srcname-2.1.0-memuse.patch
+Patch11: %srcname-2.1.0-rl_completion.patch
+Patch12: %srcname-2.1.0-man-page.patch
 
 BuildRequires: libreadline-devel libtinfo-devel rpm-build >= 4.0.4-alt41 tcl-devel >= 8.4.0-alt1
 Requires: tcl >= 8.4.0-alt1
- 
+
+%package devel
+Summary: development files for %srcname
+Group: Development/C
+
 %description
 %name makes the gnu readline available to the scripting language tcl.
 The primary purpose of the package is to facilitate the interactive
 script development by the means of word and file name completion
 as well as history expansion (well known from shells like bash).
+
+%description devel
+%name makes the gnu readline available to the scripting language tcl.
+The primary purpose of the package is to facilitate the interactive
+script development by the means of word and file name completion
+as well as history expansion (well known from shells like bash).
+
+This pacakge contains development files.
 
 %prep
 %setup -q -n %srcname-%srcver
@@ -38,7 +57,13 @@ as well as history expansion (well known from shells like bash).
 %patch2 -p1
 %patch3 -p0
 %patch4 -p1
+%patch5 -p2
+%patch6 -p2
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
 sed -i 's/@lib@/%_lib/' pkgIndex.tcl.in
+sed -i 's/lib%srcname.so/lib%srcname-%version.so/' pkgIndex.tcl.in
 
 %build
 autoreconf -fisv -Iaux
@@ -53,11 +78,21 @@ autoreconf -fisv -Iaux
 
 %files
 %doc AUTHORS COPYING ChangeLog README TODO sample.tclshrc
-%_tcllibdir/lib%{srcname}*.so
+%_tcllibdir/lib%{srcname}-*.so
 %_tcldatadir/%teaname
 %_mandir/mann/%srcname.n.*
 
+%files devel
+%_includedir/%{srcname}.h
+%_tcllibdir/lib%{srcname}.so
+
 %changelog
+* Tue Jul 25 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.1.1-alt8
+- Fixed working with threaded Tcl (Debian #175192).
+- Fixed implicit declaration (Debian #226565).
+- Fixed typos in man page (Debian #242369).
+- Built devel subpackage.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.1-alt7.qa1
 - NMU: rebuilt for debuginfo.
 
