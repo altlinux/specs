@@ -3,7 +3,7 @@
 
 Name: tcl
 Version: 8.6.6
-Release: alt2
+Release: alt3
 
 Summary: A Tool Command Language (TCL)
 License: BSD
@@ -17,6 +17,8 @@ BuildRequires(pre): rpm-build-tcl >= 0.4-alt1
 %{?_with_test:BuildConflicts: tcl-vfs}
 
 Requires: lib%name = %version-%release
+
+Conflicts: tcl-readline < 2.1.1-alt8
 
 %package -n lib%name
 Summary: A Tool Command Language (TCL) - shared library
@@ -123,6 +125,9 @@ install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 %_man3dir/*
 
 %changelog
+* Tue Jul 25 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.6-alt3
+- added conflict to tcl-readline < 2.1.1-alt8
+
 * Wed Apr 26 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.6-alt2
 - added more extra headers
 
