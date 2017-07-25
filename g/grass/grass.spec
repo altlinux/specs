@@ -1,5 +1,5 @@
 Name:    grass
-Version: 7.2.0
+Version: 7.2.1
 Release: alt1
 
 %def_with mysql
@@ -302,6 +302,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Tue Jul 25 2017 Andrey Cherepanov <cas@altlinux.org> 7.2.1-alt1
+- New version
+
 * Fri Jan 27 2017 Andrey Cherepanov <cas@altlinux.org> 7.2.0-alt1
 - New version
 
