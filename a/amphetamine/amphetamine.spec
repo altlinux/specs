@@ -1,6 +1,6 @@
 Name: amphetamine
 Version: 0.8.10
-Release: alt5
+Release: alt6
 
 %define dataver 0.8.6
 
@@ -8,7 +8,6 @@ Summary: Amphetamine is a cool Jump'n Run game
 License: GPL
 Group: Games/Arcade
 
-Url: http://n.ethz.ch/student/loehrerl/amph/amph.html
 Source0: %name-%version.tar.bz2
 Source1: %name-data-%dataver.tar.bz2
 Source2: %name-icons.tar.bz2
@@ -19,8 +18,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 # Automatically added by buildreq on Sun Oct 05 2008
 BuildRequires: gcc-c++ libSDL-devel libXpm-devel libXt-devel
 
-Summary(ru_RU.KOI8-R): Amphetamine -- забавная бродилка
-Summary(uk_UA.KOI8-U): Amphetamine -- забавна бродилка
+Summary(ru_RU.UTF-8): Amphetamine -- п╥п╟п╠п╟п╡п╫п╟я▐ п╠я─п╬п╢п╦п╩п╨п╟
 
 %description
 Amphetamine is a 2D jump'n'run shooter in the tradition of Super Mario Bros
@@ -33,34 +31,23 @@ and other classics. But it has unique features:
      several killing powers.
    - Cryptic labyrinths - definitely not boring shoot'em'up!
 
-%description -l ru_RU.KOI8-R
-Amphetamine -- двумерная бродилка в стиле Super Mario Bros и подобной классики.
-Уникальные особенности:
-   - Быстрая 256-цветная графика
-   - Семь видов оружия
-   - Невиданные (для этого жанра) эффекты вроде сияния (помните Unreal?),
-     динамического освещения, дымки, полупрозрачности и многого другого...
-   - Схватки с 11-ю видами противников, которые и сами способны уложить вас
-     более чем одним способом
-   - Загадочные лабиринты -- определенно не тупая стрелялка!
-
-%description -l uk_UA.KOI8-U
-Amphetamine -- двовим╕рна бродилка у стил╕ Super Mario Bros та схожо╖ класики.
-Ун╕кальн╕ особливост╕:
-   - Швидка 256-кольорова граф╕ка
-   - С╕м вид╕в збро╖
-   - Небачен╕ (для цього жанру) ефекти на кшталт сяйва (пам'ята╓те Unreal?),
-     динам╕чного осв╕тлення, туману, нап╕впрозорост╕ й багато чого ╕ншого...
-   - Б╕йки ╕з 11-ма видами супротивник╕в, котор╕ й сам╕ здатн╕ покласти вас
-     б╕льш н╕ж одним способом
-   - Загадков╕ лаб╕ринти -- вже напевне не тупа стр╕лялка!
+%description -l ru_RU.UTF-8
+Amphetamine -- п╢п╡я┐п╪п╣я─п╫п╟я▐ п╠я─п╬п╢п╦п╩п╨п╟ п╡ я│я┌п╦п╩п╣ Super Mario Bros п╦ п©п╬п╢п╬п╠п╫п╬п╧ п╨п╩п╟я│я│п╦п╨п╦.
+пёп╫п╦п╨п╟п╩я▄п╫я▀п╣ п╬я│п╬п╠п╣п╫п╫п╬я│я┌п╦:
+   - п▒я▀я│я┌я─п╟я▐ 256-я├п╡п╣я┌п╫п╟я▐ пЁя─п╟я└п╦п╨п╟
+   - п║п╣п╪я▄ п╡п╦п╢п╬п╡ п╬я─я┐п╤п╦я▐
+   - п²п╣п╡п╦п╢п╟п╫п╫я▀п╣ (п╢п╩я▐ я█я┌п╬пЁп╬ п╤п╟п╫я─п╟) я█я└я└п╣п╨я┌я▀ п╡я─п╬п╢п╣ я│п╦я▐п╫п╦я▐ (п©п╬п╪п╫п╦я┌п╣ Unreal?),
+     п╢п╦п╫п╟п╪п╦я┤п╣я│п╨п╬пЁп╬ п╬я│п╡п╣я┴п╣п╫п╦я▐, п╢я▀п╪п╨п╦, п©п╬п╩я┐п©я─п╬п╥я─п╟я┤п╫п╬я│я┌п╦ п╦ п╪п╫п╬пЁп╬пЁп╬ п╢я─я┐пЁп╬пЁп╬...
+   - п║я┘п╡п╟я┌п╨п╦ я│ 11-я▌ п╡п╦п╢п╟п╪п╦ п©я─п╬я┌п╦п╡п╫п╦п╨п╬п╡, п╨п╬я┌п╬я─я▀п╣ п╦ я│п╟п╪п╦ я│п©п╬я│п╬п╠п╫я▀ я┐п╩п╬п╤п╦я┌я▄ п╡п╟я│
+     п╠п╬п╩п╣п╣ я┤п╣п╪ п╬п╢п╫п╦п╪ я│п©п╬я│п╬п╠п╬п╪
+   - п≈п╟пЁп╟п╢п╬я┤п╫я▀п╣ п╩п╟п╠п╦я─п╦п╫я┌я▀ -- п╬п©я─п╣п╢п╣п╩п╣п╫п╫п╬ п╫п╣ я┌я┐п©п╟я▐ я│я┌я─п╣п╩я▐п╩п╨п╟!
 
 %prep
-%setup -q -a 2
+%setup -a2
 %patch -p1
 
-sed -i 's,/usr/local,%_datadir,g' Makefile
-sed -i 's,/usr/local,%_datadir,g' src/System.hpp
+sed -i -e 's,/usr/local,%_datadir,g' -e 's,-O9,-O3,' Makefile
+sed -i -e 's,/usr/local,%_datadir,g' src/System.hpp
 
 %build
 %make_build
@@ -86,6 +73,11 @@ install -pD %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_desktopdir/*
 
 %changelog
+* Wed Jul 26 2017 Michael Shigorin <mike@altlinux.org> 0.8.10-alt6
+- E2K: -O9 is an error
+- dropped stale Url: (looks like there's none by now)
+- converted spec to UTF-8
+
 * Sun Jul 26 2009 Michael Shigorin <mike@altlinux.org> 0.8.10-alt5
 - applied repocop patch
 
