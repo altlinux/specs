@@ -1,6 +1,6 @@
 Name: installer-sdk
 Version: 0.1.3
-Release: alt1
+Release: alt2
 
 Summary: Installer feature simple development kit ;)
 License: GPL
@@ -12,6 +12,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildArch: noarch
 AutoReq: no
+Requires: rpm-utils sed findutils coreutils
 
 %define featurist init-installer-feature
 
@@ -47,6 +48,9 @@ cp -a template %buildroot%_datadir/%name/
 #   both installer-sdk and alterator-sdk
 
 %changelog
+* Wed Jul 26 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.3-alt2
+- Explicitly depend on rpm-utils, sed, findutils and coreutils.
+
 * Thu Mar 17 2016 Michael Shigorin <mike@altlinux.org> 0.1.3-alt1
 - fixed template spec
 
