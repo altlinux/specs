@@ -11,7 +11,7 @@
 
 Name:		grafana
 Version:	4.4.1
-Release:	alt1
+Release:	alt2
 Summary:	Metrics dashboard and graph editor
 
 Group:		Development/Other
@@ -114,14 +114,14 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 
 %pre
 %_sbindir/groupadd -r -f %name 2>/dev/null ||:
-%_sbindir/useradd -r -g %name -G %name  -c 'Kapacitor Daemon' \
+%_sbindir/useradd -r -g %name -G %name  -c 'Grafana Daemon' \
         -s /sbin/nologin  -d %_sharedstatedir/%name %name 2>/dev/null ||:
 
 %post
-%post_service %name
+%post_service %name-server
 
 %preun
-%preun_service %name
+%preun_service %name-server
 
 %files
 %doc CHANGELOG.md LICENSE.md README.md
@@ -140,5 +140,8 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Thu Jul 27 2017 Alexey Shabalin <shaba@altlinux.ru> 4.4.1-alt2
+- fix service name in post and preun
+
 * Tue Jul 25 2017 Alexey Shabalin <shaba@altlinux.ru> 4.4.1-alt1
 - First build for ALTLinux.
