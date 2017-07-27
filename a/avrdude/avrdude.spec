@@ -7,21 +7,21 @@
 
 Summary: AVRDUDE is software for programming Atmel AVR Microcontrollers.
 Name: avrdude
-Version: 6.2
-Release: alt1
+Version: 6.3
+Release: alt1%ubt
 License: GPL
 Group: Development/Other
-URL: http://savannah.nongnu.org/projects/avrdude
-Source0: %name-%version.tar.gz
-Patch0: flip2.patch
+URL: http://www.nongnu.org/avrdude/
+Source0: http://download.savannah.gnu.org/releases/avrdude/%name-%version.tar.gz
+Patch: avrdude-install-header.patch
 
-BuildRequires: gnu-config libtinfo-devel libusb-compat libusb-compat-devel libusb-devel ruby makeinfo texi2dvi
-BuildRequires: flex libelf-devel libftdi-devel libftdi1-devel libncurses-devel libreadline-devel ruby-stdlibs
+BuildRequires(pre): rpm-build-ubt
 
-BuildRequires: flex libncurses-devel libreadline-devel libusb-compat-devel
+BuildRequires: gnu-config libtinfo-devel libusb-devel makeinfo
+BuildRequires: flex libelf-devel libftdi1-devel libncurses-devel libreadline-devel
 
 %if_enabled doc
-BuildRequires: tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texi2html
+BuildRequires: tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texi2html texi2dvi
 %endif
 
 %package docs
@@ -29,23 +29,35 @@ Summary: Documentation for AVRDUDE.
 Group: Development/Other
 BuildArch: noarch
 
+%package devel
+Summary: The AVRDUDE static library with API for other tools.
+Group: Development/C
+Provides: lib%name-devel = %version-%release
+Provides: lib%name-static = %version-%release
+
 %description
 AVRDUDE is software for programming Atmel AVR Microcontrollers.
 
 %description docs
 Documentation for avrdude in html, postscript and pdf formats.
 
+%description devel
+AVRDUDE static library provides API integration for programming Atmel AVR Microcontrollers.
+
 %prep
 %setup -q
-#patch0 -p1
+%patch -p2
 
 %build
 %autoreconf
-%configure %{subst_enable doc} --enable-parport --enable-linuxgpio LIBS="-lpthread -lusb -lftdi -lelf"
+%configure %{subst_enable doc} --enable-parport --enable-linuxgpio
 %make
 
 %install
 %makeinstall
+sed -i 's/^#include "ac_cfg\.h"$/#include <libavrdude_cfg.h>/' %buildroot%_includedir/libavrdude.h
+install -T ac_cfg.h %buildroot%_includedir/libavrdude_cfg.h
+rm -f %buildroot%_libdir/*.so*
 
 %if_enabled doc
 %post
@@ -66,7 +78,16 @@ Documentation for avrdude in html, postscript and pdf formats.
 %doc doc/avrdude-html/*.html doc/avrdude.ps doc/avrdude.pdf
 %endif
 
+%files devel
+%_includedir/*.h
+%_libdir/*.a
+
 %changelog
+* Thu Jul 27 2017 Evgeny Sinelnikov <sin@altlinux.ru> 6.3-alt1%ubt
+- Update to last version with nonstandard speeds on port support (ALT #33688)
+- Add avrdude-devel with static development library
+- Build with universal build tag (aka ubt macros)
+
 * Sat Jan 09 2016 Grigory Milev <week@altlinux.ru> 6.2-alt1
 - new version released
 
