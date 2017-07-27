@@ -9,8 +9,8 @@
 %brp_strip_none %_bindir/*
 
 Name:		telegraf
-Version:	1.3.4
-Release:	alt2
+Version:	1.3.5
+Release:	alt1
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
 Group:		Development/Other
@@ -80,6 +80,7 @@ install -p -D -m 640 etc/telegraf.conf %buildroot%_sysconfdir/%name/%name.conf
 install -d -m 750 %buildroot%_sysconfdir/%name/%name.d
 # Setup directories
 install -d -m 755 %buildroot%_logdir/%name
+install -d -m 750 %buildroot%_sharedstatedir/%name
 # Install pid directory
 install -d -m 775 %buildroot%_runtimedir/%name
 # Install logrotate
@@ -112,8 +113,14 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %config(noreplace) %_logrotatedir/%name
 %dir %attr(0770, root, %name) %_logdir/%name
 %dir %attr(0775, root, %name) %_runtimedir/%name
+%dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Thu Jul 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt1
+- 1.3.5
+- upadte init script
+- add user home dir to files
+
 * Mon Jul 24 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.4-alt2
 - add sysv init, systemd unit, logrotate config, tmpfiles
 
