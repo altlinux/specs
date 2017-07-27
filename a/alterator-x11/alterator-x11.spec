@@ -1,5 +1,7 @@
+%define guile22 1
+
 Name: alterator-x11
-Version: 1.98.12
+Version: 1.98.13
 Release: alt1
 
 Url: http://www.altlinux.com
@@ -21,9 +23,13 @@ Requires: xinit >= 1.0.1-alt1
 Requires: xorg-server >= 1.4.2-alt4
 
 Requires: alterator-backend-x11 = %version-%release
-BuildPreReq: alterator >= 3.2-alt5
 
+BuildPreReq: alterator >= 3.2-alt5
 BuildRequires: libXft-devel libxorgconfig-devel libXt-devel xorg-sdk
+%if %guile22
+BuildRequires: guile22-devel
+BuildRequires: alterator-lookout
+%endif
 
 %description
 alterator module for Xorg setup and configuration
@@ -54,6 +60,9 @@ Scripts which creates simple configuration files in
 %make_build
 
 %install
+%if %guile22
+export GUILE_LOAD_PATH=/usr/share/alterator/lookout/
+%endif
 %makeinstall
 
 %post -n alterator-backend-x11
@@ -85,6 +94,10 @@ Scripts which creates simple configuration files in
 %_bindir/xsetup*
 
 %changelog
+* Thu Jul 27 2017 Oleg Solovyov <mcpain@altlinux.org> 1.98.13-alt1
+- Fallback to /usr/share/alterator-x11/xorg.conf
+  if default xorg.conf does not exist (closes: #32510)
+
 * Mon Dec 05 2016 Michael Shigorin <mike@altlinux.org> 1.98.12-alt1
 - suppress sed's stderr noise (missing videoaliases aren't a problem)
 
