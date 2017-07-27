@@ -3,7 +3,7 @@ Url: http://go-mono.com/
 License: X11/MIT
 Group: System/Servers
 Version: 4.4
-Release: alt1
+Release: alt2
 Summary: Small Web Server Hosting ASP.NET
 
 Source: %name-%version.tar.bz2
@@ -14,6 +14,8 @@ BuildRequires(pre): rpm-build-mono  sqlite3 mono-devel-full mono-full pkg-config
 %define xspEnabledApps %xspConfigsLocation/applications-enabled
 
 Conflicts: mono4-xsp
+Obsoletes: mono4-xsp
+Provides: mono4-xsp = %version-%release
 
 %description
 The XSP server is a small Web server that hosts the Mono System.Web
@@ -72,6 +74,9 @@ install -m 755 tools/mono-asp-apps/mono-asp-apps %buildroot%_bindir/mono-asp-app
 %_mandir/*/*
 
 %changelog
+* Thu Jul 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4-alt2
+- Obsoleted mono4-xsp.
+
 * Fri Jul 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4-alt1
 - Based on mono4-xsp.
 - Rebuilt with mono-5.

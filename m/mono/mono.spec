@@ -4,7 +4,7 @@
 
 Name: mono
 Version: 5.0.1.1
-Release: alt3
+Release: alt4
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -69,6 +69,8 @@ Conflicts: mono < 3.0
 Conflicts: mono-mscorlib  < 3.0
 Conflicts: monodis < 3.0
 Conflicts: libmono < 3.0
+Obsoletes: mono4-core
+Provides: mono4-core = %version-%release
 
 %description core
 This package contains the core of the Mono runtime including its
@@ -81,6 +83,8 @@ Summary: Mono implementation of core WinFX APIs
 Group: Development/Other
 Requires: %name-core = %version-%release
 Conflicts: mono4-winfx < %version-%release
+Obsoletes: mono4-winfx
+Provides: mono4-winfx = %version-%release
 
 %description winfx
 Open source implementation of core WinFX APIs
@@ -90,6 +94,8 @@ Summary: Mono implementation of ASP.NET MVC
 Group: Development/Other
 Requires: %name-dyndata = %version-%release
 Conflicts: mono4-mvc < %version-%release
+Obsoletes: mono4-mvc
+Provides: mono4-mvc = %version-%release
 
 %description mvc
 This is the Mono implementation of ASP.NET MVC
@@ -99,6 +105,8 @@ Summary: Development files for  ASP.NET MVC
 Group: Development/Other
 Requires: %name-core = %version-%release
 Conflicts: mono4-mvc-devel < %version-%release
+Obsoletes: mono4-mvc-devel
+Provides: mono4-mvc-devel = %version-%release
 
 
 %description mvc-devel
@@ -109,6 +117,8 @@ Summary: Dynamic data dll for both web and mvc
 Group: Development/Other
 Requires: %name-core = %version-%release
 Conflicts: mono4-dyndata < %version-%release
+Obsoletes: mono4-dyndata
+Provides: mono4-dyndata = %version-%release
 
 %description dyndata
 This is dll needed for implementation of ASP.NET MVC and for web services too
@@ -134,6 +144,8 @@ Requires: %name-ibm-data-db2
 Requires: %name-monodoc
 Requires: %name-mono2-compat
 Conflicts: mono4-full < %version-%release
+Obsoletes: mono4-full
+Provides: mono4-full = %version-%release
 
 %description full
 Virtual package containing all non-devel packages from mono
@@ -150,6 +162,8 @@ Requires: %name-nunit
 Requires: %name-winforms
 Requires: %name-mono2-compat-devel
 Conflicts: mono4-devel-full < %version-%release
+Obsoletes: mono4-devel-full
+Provides: mono4-devel-full = %version-%release
 
 %description devel-full
 Virtual package containing all devel packages from mono
@@ -161,6 +175,8 @@ Requires: %name-core = %version-%release
 Requires: pkg-config
 Requires: glib2-devel
 Conflicts: mono4-devel < %version-%release
+Obsoletes: mono4-devel
+Provides: mono4-devel = %version-%release
 
 %description devel
 This package completes the Mono developer toolchain with the mono profiler,
@@ -171,6 +187,8 @@ Summary: Extra locale information for Mono
 Group: Development/Other
 Requires: %name-core = %version-%release
 Conflicts: mono4-locale-extras < %version-%release
+Obsoletes: mono4-locale-extras
+Provides: mono4-locale-extras = %version-%release
 
 %description locale-extras
 This package contains assemblies to support I18N applications for
@@ -181,6 +199,8 @@ Summary: Provides the infrastructure for running and building daemons and servic
 Group: Development/Other
 Requires: %name-core = %version-%release
 Conflicts: mono4-extras < %version-%release
+Obsoletes: mono4-extras
+Provides: mono4-extras = %version-%release
 
 %description extras
 This package provides the library and application to run services
@@ -194,6 +214,8 @@ Summary: Reactive Extensions for Mono core libraries
 Group: Development/Other
 Requires: %name-core = %version-%release
 Conflicts: mono4-reactive < %version-%release
+Obsoletes: mono4-reactive
+Provides: mono4-reactive = %version-%release
 
 %description reactive
 Reactive Extensions for Mono, this packages don't depend on
@@ -206,6 +228,8 @@ Group: Development/Other
 Requires: %name-core = %version-%release
 Requires: %name-reactive = %version-%release
 Conflicts: mono4-reactive-winforms < %version-%release
+Obsoletes: mono4-reactive-winforms
+Provides: mono4-reactive-winforms = %version-%release
 
 %description reactive-winforms
 Reactive Extensions for Mono, desktop-specific packages (winforms,
@@ -217,6 +241,8 @@ Group: Development/Other
 Requires: %name-core = %version-%release
 Requires: %name-reactive = %version-%release pkg-config
 Conflicts: mono4-reactive-devel < %version-%release
+Obsoletes: mono4-reactive-devel
+Provides: mono4-reactive-devel = %version-%release
 
 %description reactive-devel
 This package provides the .pc file for %name-rx
@@ -226,6 +252,8 @@ Summary: Windows Forms implementation for Mono
 Group: Development/Other
 Requires: %name-core = %version-%release
 Conflicts: mono4-winforms < %version-%release
+Obsoletes: mono4-winforms
+Provides: mono4-winforms = %version-%release
 
 %description winforms
 This package provides a fully managed implementation of
@@ -237,6 +265,8 @@ Summary: Mono implementation of Windows Communication Foundation
 Group: Development/Other
 Requires: %name-core = %version-%release
 Conflicts: mono4-wcf < %version-%release
+Obsoletes: mono4-wcf
+Provides: mono4-wcf = %version-%release
 
 %description wcf
 This package provides an implementation of WCF, the Windows Communication
@@ -247,6 +277,8 @@ Summary: ASP.NET, Remoting, and Web Services for Mono
 Group: Development/Other
 Requires: %name-dyndata = %version-%release
 Conflicts: mono4-web < %version-%release
+Obsoletes: mono4-web
+Provides: mono4-web = %version-%release
 
 %description web
 This package provides the ASP.NET libraries and runtime for
@@ -258,6 +290,8 @@ Group: Development/Other
 Requires: %name-core = %version-%release
 Requires: %name-web = %version-%release pkg-config
 Conflicts: mono4-web-devel < %version-%release
+Obsoletes: mono4-web-devel
+Provides: mono4-web-devel = %version-%release
 
 %description web-devel
 This package provides the .pc file for %name-web
@@ -267,6 +301,8 @@ Summary: Database connectivity for Mono
 Group: Development/Other
 Requires: %name-core = %version-%release
 Conflicts: mono4-data < %version-%release
+Obsoletes: mono4-data
+Provides: mono4-data = %version-%release
 
 %description data
 This package provides a Mono assembly to facilitate data access
@@ -282,6 +318,8 @@ Group: Development/Other
 Requires: %name-core = %version-%release
 Requires: sqlite
 Conflicts: mono4-data-sqlite < %version-%release
+Obsoletes: mono4-data-sqlite
+Provides: mono4-data-sqlite = %version-%release
 
 %description data-sqlite
 This package contains the ADO.NET Data provider for the sqlite
@@ -292,6 +330,8 @@ Summary: Oracle database connectivity for Mono
 Group: Development/Other
 Requires: %name-core = %version-%release
 Conflicts: mono4-data-oracle < %version-%release
+Obsoletes: mono4-data-oracle
+Provides: mono4-data-oracle = %version-%release
 
 %description data-oracle
 This package contains the ADO.NET Data provider for the Oracle
@@ -303,6 +343,8 @@ Summary: IBM DB2 database connectivity for Mono
 Group: Development/Other
 Requires: %name-core = %version-%release
 Conflicts: mono4-ibm-data-db2 < %version-%release
+Obsoletes: mono4-ibm-data-db2
+Provides: mono4-ibm-data-db2 = %version-%release
 
 %description  ibm-data-db2
 This package contains the ADO.NET Data provider for the IBM DB2
@@ -314,6 +356,8 @@ Summary: The %name documentation system
 Group: Documentation
 Requires: %name-core = %version-%release
 Conflicts: mono4-monodoc < %version-%release
+Obsoletes: mono4-monodoc
+Provides: mono4-monodoc = %version-%release
 
 %description  monodoc
 monodoc is the documentation package for the mono .NET environment
@@ -324,6 +368,8 @@ Group: Documentation
 Requires: %name-monodoc = %version-%release pkg-config
 Requires: %name-core = %version-%release
 Conflicts: mono4-monodoc-devel < %version-%release
+Obsoletes: mono4-monodoc-devel
+Provides: mono4-monodoc-devel = %version-%release
 
 %description  monodoc-devel
 Development file for monodoc
@@ -473,7 +519,6 @@ rm -f %buildroot%_monodir/*/culevel.*
 rm -f %buildroot%_monodir/*/mscorlib.dll.so
 rm -f %buildroot%_monodir/*/mcs.exe.so
 rm -f %buildroot%_monodir/*/gmcs.exe.so
-rm -rf %buildroot%_monodir/xbuild/Microsoft
 rm -f %buildroot%_monodir/4.0/dmcs.exe.so
 rm -rf %buildroot%_bindir/mono-configuration-crypto
 rm -rf %buildroot%_mandir/man?/mono-configuration-crypto*
@@ -989,6 +1034,9 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Wed Jul 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt4
+- Installed msbuild config files
+
 * Mon Jul 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt3
 - Fixed circular dependency between mono-core and mono-devel
 - Packaged mono-2 parts

@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/pkg-config pkgconfig(glade-sharp-2.0) pkgconfig(glib-sharp-2.0) pkgconfig(gtk-sharp-2.0)
+#BuildRequires: /usr/bin/pkg-config pkgconfig(glade-sharp-2.0) pkgconfig(glib-sharp-2.0) pkgconfig(gtk-sharp-2.0)
 # END SourceDeps(oneline)
 #this is to prevent empty debuginfo failur
 %global debug_package %{nil}
 
 Name:           monobristol
 Version:        0.60.3.1
-Release:        alt3
+Release:        alt4
 Summary:        GUI launcher for Bristol in Mono
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group:          Sound
@@ -18,11 +18,11 @@ Source:         http://www.dacr.hu/monobristol/%{name}-%{version}.tar.gz
 # The patch removes shebang from the top and removes .png extension from icon key
 Patch1:         %{name}-0.60.3-desktop.patch
 Requires:       bristol
-Requires:       mono4-core
+Requires:       mono-core
 Requires:       icon-theme-hicolor
 
-#BuildRequires:  libgtk-sharp2-devel
-BuildRequires:  mono4-devel /proc
+BuildRequires:  libgtk-sharp2-devel
+BuildRequires:  mono-devel /proc
 BuildRequires:  desktop-file-utils
 
 ##ExclusiveArch:  #{mono_arches}
@@ -38,10 +38,7 @@ synthesizers including additive and subtractive and a few organs.
 %setup -q
 %patch1 -p1
 
-sed -i "s#gmcs#mcs#g" configure*
-sed -i "s#gmcs#mcs#g" Makefile.in
-sed -i "s#gmcs#mcs#g" monoBristol.make
-
+sed -i "s#gmcs#mcs#g" configure* Makefile.in monoBristol.make
 
 %build
 %configure
@@ -73,6 +70,9 @@ desktop-file-install    \
 %{_datadir}/appdata/monoBristol.appdata.xml
 
 %changelog
+* Thu Jul 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.60.3.1-alt4
+- Rebuilt with mono-5.
+
 * Sat Jul 22 2017 Ilya Mashkin <oddity@altlinux.ru> 0.60.3.1-alt3
 - rebuild
 
