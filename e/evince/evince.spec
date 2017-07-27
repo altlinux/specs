@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 3.24
@@ -11,8 +11,8 @@
 %def_enable multimedia
 
 Name: evince
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: A document viewer
 Group: Office
@@ -210,6 +210,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Thu Jul 27 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
+- 3.24.1
+
 * Fri Jul 14 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt2
 - updated to 3.24.0-12-g717df38 (fixed BGO ##691448, 779614,
   784630 (CVE-2017-1000083))
