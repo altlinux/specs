@@ -4,7 +4,7 @@
 
 Summary: 389 Directory Server (base)
 Name: 	 389-ds-base
-Version: 1.3.7.0
+Version: 1.3.7.1
 Release: alt1
 License: GPLv3+ with exceptions
 Url: 	 http://port389.org
@@ -18,6 +18,7 @@ Patch2:  alt-bash3-support.patch
 Patch3:  alt-fix-sasl2.patch
 Patch4:  alt-fix-const-declatations.patch
 Patch5:  alt-link-libsds-with-pthread.patch
+Patch6:  alt-link-ldaputil-with-libslapd.patch
 
 BuildRequires: 389-adminutil-devel gcc-c++ libdb4-devel libicu-devel 
 BuildRequires: libldap-devel libnet-snmp-devel libnl-devel libpam-devel 
@@ -95,6 +96,7 @@ and without the main package.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %autoreconf
 # Install SysVInit scripts anyway
@@ -175,6 +177,8 @@ subst 's,%_bindir/systemctl,/bin/systemctl,' %buildroot%_sbindir/*-dirsrv
 %_libdir/%pkgname/perl
 %_libdir/%pkgname/python
 %_libdir/%pkgname/plugins/*.so
+%_datadir/gdb/auto-load/*
+%_libexecdir/sysctl.d/*
 %dir %_libdir/%pkgname/plugins
 %dir %_localstatedir/%pkgname
 %dir %_logdir/%pkgname
@@ -198,6 +202,7 @@ subst 's,%_bindir/systemctl,/bin/systemctl,' %buildroot%_sbindir/*-dirsrv
 %_libdir/libnunc-stans.so.*
 %_libdir/libsds.so.*
 %_libdir/libslapd.so.*
+%_libdir/libldaputil.so.*
 
 %triggerpostun -- 389-ds < 1.2.10.0-alt1
 echo "Upgrading 389-ds < 1.2.10.0, manual Offline upgrade is required!
@@ -212,6 +217,9 @@ Turn 389-ds off and make 'setup-ds -u' then"
 %preun_service %pkgname-snmp
 
 %changelog
+* Wed Jul 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.7.1-alt1
+- New version
+
 * Wed Apr 26 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.7.0-alt1
 - New version
 
