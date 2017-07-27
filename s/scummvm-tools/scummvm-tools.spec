@@ -1,5 +1,5 @@
 Name: scummvm-tools
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 
 Summary: Utilities for the SCUMM graphic adventure game interpreter
@@ -7,7 +7,7 @@ Group: Games/Adventure
 License: GPL
 Url: http://www.scummvm.org
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 
 # Automatically added by buildreq on Thu Mar 12 2009
 BuildRequires: gcc-c++ libflac-devel libpng-devel libvorbis-devel wxGTK-devel
@@ -33,6 +33,9 @@ mkdir -p %buildroot%_bindir
 %_datadir/scummvm-tools
 
 %changelog
+* Thu Jul 27 2017 Fr. Br. George <george@altlinux.ru> 1.9.0-alt1
+- Autobuild version bump to 1.9.0
+
 * Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 1.8.0-alt1
 - Autobuild version bump to 1.8.0
 

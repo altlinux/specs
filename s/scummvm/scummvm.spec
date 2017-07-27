@@ -1,5 +1,5 @@
 Name: scummvm
-Version: 1.8.1
+Version: 1.9.0
 Release: alt1
 
 Summary: Graphic adventure game interpreter
@@ -7,7 +7,7 @@ Group: Games/Adventure
 License: GPL
 Url: http://www.scummvm.org
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 Patch: scummvm-1.3.0-mp2player.patch
 
 Provides: %_gamesdatadir/%name
@@ -39,7 +39,8 @@ LucasArts games such as Monkey Island, Day of the Tentacle, and others.
 	--enable-release \
 	--enable-plugins --default-dynamic \
 	--disable-nasm --disable-tremor \
-	--enable-text-console --enable-opengl
+	--enable-text-console \
+	--enable-engine-dynamic=fullpipe,mohawk,saga,sci,wage
 %make_build
 
 %install
@@ -63,6 +64,7 @@ install -D icons/scummvm.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.sv
 %_man6dir/scummvm.6*
 %_datadir/pixmaps/scummvm.xpm
 %_datadir/applications/%name.desktop
+%_datadir/appdata/*
 %_iconsdir/hicolor/*/apps/*
 %dir %_libdir/%name
 %_libdir/%name/*
@@ -70,6 +72,9 @@ install -D icons/scummvm.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.sv
 %_datadir/%name/*
 
 %changelog
+* Thu Jul 27 2017 Fr. Br. George <george@altlinux.ru> 1.9.0-alt1
+- Autobuild version bump to 1.9.0
+
 * Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 1.8.1-alt1
 - Autobuild version bump to 1.8.1
 
