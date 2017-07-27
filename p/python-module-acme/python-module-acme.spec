@@ -4,7 +4,7 @@
 
 Name: python-module-acme
 Version: 0.14.1
-Release: alt1
+Release: alt2
 
 Summary: Python library for the ACME protocol
 
@@ -21,11 +21,14 @@ BuildRequires: python-devel python-module-setuptools
 #BuildRequires: python-sphinx
 #BuildRequires: python-sphinxcontrib-programoutput
 #BuildRequires: python-sphinx_rtd_theme
-#BuildRequires: python-cryptography
-BuildRequires: python-module-OpenSSL >= 0.13
-#BuildRequires: python-requests
 #BuildRequires: python-pyrfc3339
 #BuildRequires: python-werkzeug
+
+# requests[security] is requests with extra pyOpenSSL cryptography idna
+BuildRequires: python-module-OpenSSL >= 0.13
+BuildRequires: python-module-cryptography >= 0.8
+BuildRequires: python-module-idna
+BuildRequires: python-module-requests >= 2.10
 
 Requires: python-module-cryptography >= 0.8
 
@@ -34,9 +37,12 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools python3-module-setuptools-tests
 #BuildRequires: python3-sphinx
 #BuildRequires: python3-sphinxcontrib-programoutput
-#BuildRequires: python3-cryptography
+
+# requests[security] is requests with extra pyOpenSSL cryptography idna
 BuildRequires: python3-module-OpenSSL >= 0.13
-#BuildRequires: python3-requests
+BuildRequires: python3-module-cryptography >= 0.8
+BuildRequires: python3-module-idna
+BuildRequires: python3-module-requests >= 2.10
 #BuildRequires: python3-pyrfc3339
 #BuildRequires: python3-werkzeug
 %endif
@@ -165,6 +171,9 @@ grep -q python %buildroot%_bindir/jws
 #%doc docs/_build/html
 
 %changelog
+* Fri Jul 28 2017 Vitaly Lipatov <lav@altlinux.ru> 0.14.1-alt2
+- improve require requires[security]
+
 * Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 0.14.1-alt1
 - new version 0.14.1 (with rpmrb script)
 
