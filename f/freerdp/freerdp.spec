@@ -4,7 +4,7 @@
 
 Name: freerdp
 Version: 2.0.0
-Release: alt0.git20170109.2
+Release: alt0.git20170724
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -44,6 +44,7 @@ BuildRequires: pkgconfig(libpulse)
 BuildRequires: libcups-devel libjpeg-devel zlib-devel
 %{?_with_ffmpeg:BuildRequires: libavcodec-devel libavutil-devel}
 %{?_with_x264:BuildRequires: libx264-devel}
+BuildRequires: libkrb5-devel
 
 %description
 freerdp implements Remote Desktop Protocol (RDP), used in a number of Microsoft
@@ -231,9 +232,11 @@ ln -s freerdp2.pc %buildroot%_pkgconfigdir/freerdp.pc
 %_bindir/xfreerdp
 %_man1dir/xfreerdp*
 %_bindir/winpr-*
+%_man1dir/winpr-*
 
 %files -n wlfreerdp
 %_bindir/wlfreerdp
+%_man1dir/wlfreerdp*
 
 %if_with directfb
 %files -n dfreerdp
@@ -242,40 +245,41 @@ ln -s freerdp2.pc %buildroot%_pkgconfigdir/freerdp.pc
 
 %files server
 %_bindir/freerdp-shadow-cli
+%_man1dir/freerdp-shadow-cli.*
 
 %files -n lib%name
 %doc LICENSE README ChangeLog
-%_libdir/lib%{name}.so.*
-%_libdir/lib%{name}-client.so.*
+%_libdir/lib%{name}2.so.*
+%_libdir/lib%{name}-client2.so.*
 %dir %_libdir/freerdp*
 %_man7dir/wlog*
 
 %files -n lib%name-server
-%_libdir/lib%{name}-server.so.*
-%_libdir/lib%{name}-shadow-subsystem.so.*
-%_libdir/lib%{name}-shadow.so.*
+%_libdir/lib%{name}-server2.so.*
+%_libdir/lib%{name}-shadow-subsystem2.so.*
+%_libdir/lib%{name}-shadow2.so.*
 
 %files plugins-standard
 %_libdir/freerdp*/*.so
 
 %files -n libwinpr
-%_libdir/libwinpr.so.*
-%_libdir/libwinpr-tools.so.*
+%_libdir/libwinpr2.so.*
+%_libdir/libwinpr-tools2.so.*
 
 %files -n libwinpr-devel
 %_libdir/cmake/WinPR*
 %_includedir/winpr*
-%_libdir/libwinpr.so
-%_libdir/libwinpr-tools.so
+%_libdir/libwinpr2.so
+%_libdir/libwinpr-tools2.so
 %_pkgconfigdir/winpr*.pc
 
 %files -n libuwac
-%_libdir/libuwac.so.*
+%_libdir/libuwac0.so.*
 
 %files -n libuwac-devel
 %_libdir/cmake/uwac*
 %_includedir/uwac*
-%_libdir/libuwac.so
+%_libdir/libuwac0.so
 %_pkgconfigdir/uwac*.pc
 
 %files -n lib%name-devel
@@ -285,6 +289,9 @@ ln -s freerdp2.pc %buildroot%_pkgconfigdir/freerdp.pc
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Wed Jul 26 2017 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt0.git20170724
+- First release candidate for 2.0.0
+
 * Wed Jan 11 2017 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt0.git20170109.2
 - move libfreerdp-shadow.so.* to libfreerdp-server package
 

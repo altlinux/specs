@@ -2,7 +2,7 @@
 
 Name: remmina
 Version: 1.2.0
-Release: alt0.rc17
+Release: alt0.rc19
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -124,6 +124,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Wed Jul 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt0.rc19
+- 1.2.0-rcgit.19
+
 * Tue Jan 10 2017 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt0.rc17
 - 1.2.0-rcgit.17
 
