@@ -1,10 +1,10 @@
-%define _name Cython
+%define modname Cython
 %def_disable debugger
 
 %def_with python3
 
-Name: python-module-%_name
-Version: 0.25.2
+Name: python-module-%modname
+Version: 0.26
 Release: alt1
 
 Summary: C-extensions for Python
@@ -12,9 +12,9 @@ Group: Development/Python
 License: Python
 Url: http://www.cython.org
 
-Source: http://cython.org/release/Cython-%version.tar.gz
+Source: https://pypi.io/packages/source/C/%modname/%modname-%version.tar.gz
 
-Provides: %_name = %version-%release
+Provides: %modname = %version-%release
 Conflicts: python-module-Cython0.18
 
 %if_with  python3
@@ -85,7 +85,7 @@ code.
 This package provides modules for debugging Cython programms.
 
 %if_with python3
-%package -n python3-module-%_name
+%package -n python3-module-%modname
 Summary: C-extensions for Python3
 Group: Development/Python3
 # since 0.20.1
@@ -94,7 +94,7 @@ Conflicts: python3-module-Cython0.18
 BuildRequires: rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
 
-%description -n python3-module-%_name
+%description -n python3-module-%modname
 Cython is a language that makes writing C extensions for the Python3
 language as easy as Python3 itself. Cython is based on the well-known
 Pyrex, but supports more cutting edge functionality and optimizations.
@@ -108,13 +108,13 @@ This makes Cython the ideal language for wrapping for external C
 libraries, and for fast C modules that speed up the execution of Python3
 code.
 
-%package -n python3-module-%_name-tests
+%package -n python3-module-%modname-tests
 Summary: Cython test suit for Python3
 Group: Development/Python3
 Conflicts: python3-module-Cython0.18-tests
-Requires: python3-module-%_name = %version-%release
+Requires: python3-module-%modname = %version-%release
 
-%description -n python3-module-%_name-tests
+%description -n python3-module-%modname-tests
 Cython is a language that makes writing C extensions for the Python3
 language as easy as Python3 itself. Cython is based on the well-known
 Pyrex, but supports more cutting edge functionality and optimizations.
@@ -130,13 +130,13 @@ code.
 
 This package provides modules for testing Cython using unittest.
 
-%package -n python3-module-%_name-debugger
+%package -n python3-module-%modname-debugger
 Summary: Cython debugger for Python3
 Group: Development/Python3
-Requires: python3-module-%_name = %version-%release
+Requires: python3-module-%modname = %version-%release
 Requires: gdb
 
-%description -n python3-module-%_name-debugger
+%description -n python3-module-%modname-debugger
 Cython is a language that makes writing C extensions for the Python3
 language as easy as Python3 itself. Cython is based on the well-known
 Pyrex, but supports more cutting edge functionality and optimizations.
@@ -154,7 +154,7 @@ This package provides modules for debugging Cython programms.
 %endif
 
 %prep
-%setup -n %_name-%version
+%setup -n %modname-%version
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -183,46 +183,49 @@ mv %buildroot/%_bindir/cygdb %buildroot/%_bindir/cygdb3
 %_bindir/cython
 %_bindir/cythonize
 %python_sitelibdir/pyximport/
-%python_sitelibdir/%_name/
-%python_sitelibdir/%_name-*egg-info
+%python_sitelibdir/%modname/
+%python_sitelibdir/%modname-*egg-info
 %python_sitelibdir/cython.py*
-%doc *.txt Demos Doc Tools
+%doc *.txt Demos Tools docs
 
-%exclude %python_sitelibdir/%_name/Tests
-%exclude %python_sitelibdir/%_name/Debugger
+%exclude %python_sitelibdir/%modname/Tests
+%exclude %python_sitelibdir/%modname/Debugger
 
 %files tests
-%python_sitelibdir/%_name/Tests
+%python_sitelibdir/%modname/Tests
 
 %if_enabled debugger
 %files debugger
-%python_sitelibdir/%_name/Debugger
+%python_sitelibdir/%modname/Debugger
 %_bindir/cygdb
 %endif
 
 %if_with python3
-%files -n python3-module-%_name
+%files -n python3-module-%modname
 %_bindir/cython3
-%python3_sitelibdir/%_name/
+%python3_sitelibdir/%modname/
 %python3_sitelibdir/pyximport/
 %python3_sitelibdir/cython.py
 %python3_sitelibdir/__pycache__/cython.*
 %python3_sitelibdir/*egg-info
 
-%exclude %python3_sitelibdir/%_name/Tests
-%exclude %python3_sitelibdir/%_name/Debugger
+%exclude %python3_sitelibdir/%modname/Tests
+%exclude %python3_sitelibdir/%modname/Debugger
 
-%files -n python3-module-%_name-tests
-%python3_sitelibdir/%_name/Tests
+%files -n python3-module-%modname-tests
+%python3_sitelibdir/%modname/Tests
 
 %if_enabled debugger
-%files -n python3-module-%_name-debugger
-%python3_sitelibdir/%_name/Debugger
+%files -n python3-module-%modname-debugger
+%python3_sitelibdir/%modname/Debugger
 %_bindir/cygdb3
 %endif
 %endif
 
 %changelog
+* Thu Jul 27 2017 Yuri N. Sedunov <aris@altlinux.org> 0.26-alt1
+- 0.26
+
 * Sun Dec 11 2016 Yuri N. Sedunov <aris@altlinux.org> 0.25.2-alt1
 - 0.25.2
 
