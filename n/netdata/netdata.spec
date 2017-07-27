@@ -1,8 +1,8 @@
 # Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
-%define release_commit f5fa346a188e906a8f2cce3c2cf32a88ce81c666
+%define release_commit 4016e2d9e3c2fcf5f6d59827bf5f81083d6645ba
 
 Name: netdata
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: Real-time performance monitoring, done right!
@@ -115,6 +115,8 @@ getent passwd netdata > /dev/null || useradd -r -g netdata -c netdata -s /sbin/n
 %dir %_sysconfdir/%name/python.d/
 %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/python.d/*.conf
 %dir %_sysconfdir/%name/charts.d/
+%config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/statsd.d/*.conf
+%dir %_sysconfdir/%name/statsd.d/
 %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/charts.d/*.conf
 %config(noreplace) %_logrotatedir/%name
 %_sbindir/%name
@@ -135,6 +137,9 @@ getent passwd netdata > /dev/null || useradd -r -g netdata -c netdata -s /sbin/n
 %_libexecdir/%name/python.d/postgres.chart.py
 
 %changelog
+* Thu Jul 27 2017 Vitaly Lipatov <lav@altlinux.ru> 1.7.0-alt1
+- new version (1.7.0) with rpmgs script
+
 * Fri Jun 09 2017 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
 - build new version
 
