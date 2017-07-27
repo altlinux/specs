@@ -5,7 +5,7 @@
 %endif
 
 Name: rawtherapee
-Version: 5.1%{?_enable_snapshot:.%git_distance}
+Version: 5.2%{?_enable_snapshot:.%git_distance}
 Release: alt1
 
 Summary: THe Experimental RAw Photo Editor
@@ -69,6 +69,9 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Thu Jul 27 2017 Yuri N. Sedunov <aris@altlinux.org> 5.2-alt1
+- 5.2
+
 * Wed May 17 2017 Yuri N. Sedunov <aris@altlinux.org> 5.1-alt1
 - 5.1
 
