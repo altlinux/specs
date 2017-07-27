@@ -1,5 +1,5 @@
 Name: gsmartcontrol
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: GSmartControl is a graphical user interface for smartctl
@@ -48,6 +48,9 @@ to determine its health, as well as run various tests on it.
 %exclude %_defaultdocdir/%name/LICENSE*
 
 %changelog
+* Thu Jul 27 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Mon Jun 19 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1
 
