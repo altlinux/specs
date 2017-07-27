@@ -1,5 +1,5 @@
 Name: chess
-Version: 6.2.4
+Version: 6.2.5
 Release: alt1
 
 %define real_name gnu%name
@@ -55,6 +55,9 @@ install -pm644 src/book.bin %buildroot%_datadir/%real_name/
 %_infodir/%real_name.info.*
 
 %changelog
+* Thu Jul 27 2017 Yuri N. Sedunov <aris@altlinux.org> 6.2.5-alt1
+- 6.2.5
+
 * Mon Jan 30 2017 Yuri N. Sedunov <aris@altlinux.org> 6.2.4-alt1
 - 6.2.4
 
@@ -129,7 +132,7 @@ install -pm644 src/book.bin %buildroot%_datadir/%real_name/
 * Sun Mar 21 1999 Cristian Gafton <gafton@redhat.com>
 - auto rebuild in the new build environment (release 3)
 
-* Mon Jan 23 1999 Michael Maher <mike@redhat.com>
+* Sat Jan 23 1999 Michael Maher <mike@redhat.com>
 - changed group name
 
 * Thu Dec 17 1998 Michael Maher <mike@redhat.com>
