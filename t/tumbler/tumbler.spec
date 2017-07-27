@@ -3,10 +3,12 @@
 
 Name: tumbler
 Version: 0.1.90
-Release: alt1
+Release: alt1.1
+
 Summary: A thumbnail D-Bus service
 License: %gpl2plus, %lgpl2plus
 Group: Graphical desktop/XFce
+
 Url: http://git.xfce.org/xfce/tumbler/
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
@@ -19,7 +21,8 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: gtk-doc intltool libfreetype-devel libgio-devel libgtk+2-devel libjpeg-devel libpng-devel
-BuildRequires: libpoppler-glib-devel libgsf-devel libopenraw-gnome-devel libcurl-devel
+BuildRequires: libpoppler-glib-devel libgsf-devel libcurl-devel
+%{?!_with_bootstrap:BuildRequires: libopenraw-gnome-devel}
 %{?_enable_ffmpeg:BuildRequires: libffmpegthumbnailer-devel}
 %{?_enable_gstreamer:BuildRequires: libgdk-pixbuf-devel gstreamer1.0-devel gst-plugins1.0-devel}
 
@@ -50,7 +53,7 @@ Requires: lib%name = %version-%release
 Development files and headers for %name
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
@@ -85,6 +88,9 @@ Development files and headers for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jul 27 2017 Michael Shigorin <mike@altlinux.org> 0.1.90-alt1.1
+- BOOTSTRAP: avoid libopenraw for hefty BRs (boost).
+
 * Tue May 16 2017 Mikhail Efremov <sem@altlinux.org> 0.1.90-alt1
 - Updated to 0.1.90.
 
