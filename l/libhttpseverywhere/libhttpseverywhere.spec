@@ -5,10 +5,10 @@
 %define api_ver 0.4
 
 %def_enable introspection
-%def_disable doc
+%def_disable valadoc
 
 Name: lib%_name
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: Library to use HTTPSEverywhere in desktop applications
@@ -27,6 +27,7 @@ BuildRequires: meson >= 0.36.0 vala-tools valadoc
 BuildRequires: libgio-devel libsoup-devel libarchive-devel libxml2-devel
 BuildRequires: libjson-glib-devel libgee0.8-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgee0.8-gir-devel}
+%{?_enable_valadoc:BuildRequires: valadoc}
 
 %description
 %name is a GObject based library enables to leverage the power of
@@ -73,7 +74,7 @@ This package contains development documentation for %name
 %setup
 
 %build
-%meson
+%meson %{?_enable_valadoc:-Denable-valadoc=true}
 %meson_build
 
 %install
@@ -112,6 +113,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Thu Jul 27 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.8-alt1
+- 0.4.8
+
 * Fri Jul 14 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.7-alt1
 - 0.4.7
 
