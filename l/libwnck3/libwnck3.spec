@@ -7,7 +7,7 @@
 %def_disable debug
 
 Name: %{_name}3
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: libwnck is a Window Navigator Construction Kit
@@ -130,6 +130,9 @@ libraries and objects.
 %endif
 
 %changelog
+* Thu Jul 27 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
+- 3.24.1
+
 * Thu Jun 29 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 
