@@ -1,8 +1,6 @@
-%define beta beta-7
-
 Name: lbreakout2
 Version: 2.6.5
-Release: alt1
+Release: alt2
 
 Summary: Breakout-style arcade game
 License: GPL
@@ -11,21 +9,37 @@ Group: Games/Arcade
 Url: http://lgames.sourceforge.net
 Source0: http://ftp1.sourceforge.net/lgames/%name-%version.tar.gz
 Source1: %name.desktop
+Source2: %name.watch
 Source5: %name.16.xpm
 Source6: %name.32.xpm
 Source7: %name.48.xpm
+Source8: lbreakout2.6
+Source9: lbreakout2server.6
+Patch0: 10-ball-turbo-key-pref.patch
+Patch1: spelling-fixes.patch
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 Requires: %name-data = %version-%release
 
+Summary(ru_RU.UTF-8): игра отбивай-и-разбивай со стильной графикой
+
 # Automatically added by buildreq on Tue Sep 09 2008 (-bi)
-BuildRequires: libSDL-devel libSDL_mixer-devel libpng-devel rpm-build-haskell
+BuildRequires: libSDL-devel libSDL_mixer-devel libpng-devel
 
 %description
 LBreakout is a classical Breakout game and this means (if you like Breakout ;-)
 it is a lot of fun to play!
 If you never ever played such a game you can check out the manual for more
 information, take a look at the screenshots and last but not least... play it!
+
+%description -l ru_RU.UTF-8
+lbreakout2 -- игра, подобная классическим играм жанра breakout и xboing,
+с улучшенными графическими эффектами. В нижней части экрана вы управляете
+битой и вам нужно отбивать шарики так, чтобы они попали в находящиеся
+сверху блоки и разбили их.
+
+Код lbreakout2 отличается от lbreakout. Те, кто играл в lbreakout,
+возможно, захотят установить и эту версию.
 
 %package data
 Summary: %name levels
@@ -37,7 +51,9 @@ BuildArch: noarch
 This package contains levels for %name
 
 %prep
-%setup -n %name-%version
+%setup
+%patch0 -p1
+%patch1 -p1
 
 %build
 %configure \
@@ -48,9 +64,7 @@ This package contains levels for %name
 %make_build
 
 %install
-%make install \
-    DESTDIR=%buildroot \
-    doc_dir=%_docdir/%name-%version/
+%makeinstall_std doc_dir=%_docdir/%name-%version/
 
 rm -rf %buildroot/%_docdir/%name
 rm -f %buildroot%_bindir/%name{,server}
@@ -59,10 +73,12 @@ rm -rf html
 cp -ar docs html
 rm -f html/Makefile*
 
-install -pD -m644 %SOURCE5 %buildroot/%_miconsdir/%name.xpm
-install -pD -m644 %SOURCE6 %buildroot/%_niconsdir/%name.xpm
-install -pD -m644 %SOURCE7 %buildroot/%_liconsdir/%name.xpm
-install -pD -m644 %SOURCE1 %buildroot/%_desktopdir/%name.desktop
+install -pDm644 %SOURCE1 %buildroot/%_desktopdir/%name.desktop
+install -pDm644 %SOURCE5 %buildroot/%_miconsdir/%name.xpm
+install -pDm644 %SOURCE6 %buildroot/%_niconsdir/%name.xpm
+install -pDm644 %SOURCE7 %buildroot/%_liconsdir/%name.xpm
+install -pDm644 %SOURCE8 %buildroot/%_man6dir/lbreakout2.6
+install -pDm644 %SOURCE9 %buildroot/%_man6dir/lbreakout2server.6
 
 mkdir -p %buildroot%_datadir/locale
 mv %buildroot%_gamesdatadir/locale/* %buildroot%_datadir/locale/
@@ -80,6 +96,7 @@ mv %buildroot%_gamesdatadir/locale/* %buildroot%_datadir/locale/
 %_liconsdir/%name.xpm
 %_datadir/games/applications/%name.desktop
 %_datadir/games/icons/*48.gif
+%_man6dir/*
 
 %files data
 %_datadir/games/%name
@@ -88,6 +105,12 @@ mv %buildroot%_gamesdatadir/locale/* %buildroot%_datadir/locale/
 # - add .desktop for server (NB: http://secunia.com/advisories/9134/)
 
 %changelog
+* Thu Jul 27 2017 Michael Shigorin <mike@altlinux.org> 2.6.5-alt2
+- dropped weird auto BR: rpm-build-haskell
+- dropped beta macro (looks like there gonna be none)
+- added debian patches, manpages, watch file, and Russian description
+- minor spec cleanup
+
 * Sun Dec 20 2015 Ilya Mashkin <oddity@altlinux.ru> 2.6.5-alt1
 - 2.6.5
 
