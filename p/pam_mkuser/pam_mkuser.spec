@@ -1,6 +1,6 @@
 Name: pam_mkuser
 Version: 0.1.0
-Release: alt3
+Release: alt4
 
 Summary: A pluggable authentication module that adds the new user account if it doesn\'t exist
 License: GPLv2+
@@ -54,6 +54,9 @@ doesn\'t exist.
 %_controldir/*
 
 %changelog
+* Fri Jul 28 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt4
+- Fix: Resolve the links because sed -i replaces the files.
+
 * Fri Jul 28 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt3
 - Provide the versioned "pam_mkuser" name.
 
