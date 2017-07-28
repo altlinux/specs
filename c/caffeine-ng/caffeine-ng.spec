@@ -1,7 +1,7 @@
 %define oname caffeine
 Name: %oname-ng
 Version: 3.4.0
-Release: alt2
+Release: alt3
 Summary: Prevent screensaving and powersaving
 Group: Graphical desktop/Other
 License: GPLv3 and LGPLv3
@@ -15,11 +15,11 @@ BuildArch: noarch
 Obsoletes: %oname
 Provides: %oname
 Requires: icon-theme-hicolor
-#Requires: python3-module-docopt >= 0.6.2
-#Requires: python3-module-ewmh >= 0.1.4
-#Requires: python3-module-pyxdg >= 0.25
-#Requires: python3-module-setproctitle >= 1.1.10
-#Requires: python3-module-wheel >= 0.29.0
+Requires: python3-module-docopt >= 0.6.2
+Requires: python3-module-ewmh >= 0.1.4
+Requires: python3-module-pyxdg >= 0.25
+Requires: python3-module-setproctitle >= 1.1.10
+Requires: python3-module-wheel >= 0.29.0
 %add_python3_req_skip gi.repository.Notify
 
 %description
@@ -87,6 +87,9 @@ git tag -m "%version" %version
 %_datadir/glib-2.0/schemas/*
 
 %changelog
+* Fri Jul 28 2017 Anton Midyukov <antohami@altlinux.org> 3.4.0-alt3
+- Added missing requires.
+
 * Sun Mar 12 2017 Anton Midyukov <antohami@altlinux.org> 3.4.0-alt2
 - Added buildrequires rpm-build-gir.
 
