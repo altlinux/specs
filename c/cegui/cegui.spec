@@ -1,15 +1,16 @@
 %def_without python
 Name: cegui
 Version: 0.8.4
-Release: alt2.qa4
+Release: alt3
 Summary: Free library providing windowing and widgets for graphics APIs / engines
 Group: System/Libraries
 License: MIT
 Url: http://www.cegui.org.uk
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
 Source: https://bitbucket.org/cegui/cegui/get/v0-8-4.tar.gz
 Source1: http://downloads.sourceforge.net/crayzedsgui/CEGUI-DOCS-%version.tar.gz
+
+Patch1: %name-%version-alt-build.patch
 
 BuildRequires: SILLY-devel gcc-c++ libGLU-devel libSM-devel libexpat-devel libfreetype-devel libpcre-devel libxerces-c-devel libxml2-devel tinyxml-devel tolua++-devel tzdata libogre-devel libdirectfb-devel
 
@@ -60,6 +61,7 @@ Requires: %name = %version-%release
 
 %prep
 %setup -qb1 -qn CEGUI
+%patch1 -p2
 
 # Permission fixes for debuginfo RPM
 #chmod -x include/falagard/*.h
@@ -118,6 +120,9 @@ find %buildroot -name '*.la' -exec rm -f {} ';'
 %endif
 
 %changelog
+* Fri Jul 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.4-alt3
+- Fixed build with new toolchain
+
 * Tue Jun 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt2.qa4
 - NMU: rebuild with irrlicht
 - TODO: update to a fresh version
