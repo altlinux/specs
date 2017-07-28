@@ -8,7 +8,7 @@
 %define xapp kf5
 Name: %xde-%rname
 Version: 17.7.0.%svn
-Release: alt1%ubt
+Release: alt2%ubt
 
 %define qt_bin_dir %_qt5_bindir
 %define configure_qmake %qmake_qt5
@@ -128,6 +128,7 @@ export QMAKE=%qt_qmake
 
 # renames
 mv %buildroot/%_bindir/smplayer %buildroot/%_bindir/%name
+ln -s %name %buildroot/%_bindir/smplayer-%{xde}
 mv %buildroot/%_bindir/simple_web_server %buildroot/%_bindir/%{xde}-simple_web_server
 mkdir -p %buildroot/%_desktopdir/%xapp/
 mv %buildroot/%_desktopdir/*.desktop %buildroot/%_desktopdir/%xapp/
@@ -158,6 +159,7 @@ done
 
 %files
 %_bindir/%name
+%_bindir/smplayer-%{xde}
 %_bindir/%{xde}-simple_web_server
 %_desktopdir/%xapp/*.desktop
 %_docdir/%name-%version
@@ -167,6 +169,9 @@ done
 
 
 %changelog
+* Fri Jul 28 2017 Sergey V Turchin <zerg@altlinux.org> 17.7.0.8599-alt2%ubt
+- add alternate symlink to main binary
+
 * Mon Jul 10 2017 Sergey V Turchin <zerg@altlinux.org> 17.7.0.8599-alt1%ubt
 - new version
 
