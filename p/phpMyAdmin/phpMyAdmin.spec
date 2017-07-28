@@ -1,5 +1,5 @@
 Name: phpMyAdmin
-Version: 4.7.2
+Version: 4.7.3
 Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
@@ -165,6 +165,9 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 #attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Fri Jul 28 2017 Vitaly Lipatov <lav@altlinux.ru> 4.7.3-alt1
+- new version 4.7.3 (with rpmrb script)
+
 * Thu Jul 13 2017 Vitaly Lipatov <lav@altlinux.ru> 4.7.2-alt1
 - new version 4.7.2 (with rpmrb script)
 
@@ -556,6 +559,6 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 - built for ALT Linux
 - spec adapted from PLD
 
-* Mon Oct  1 2002 PLD Team <feedback@pld.org.pl> 2.3.1-1
+* Mon Oct 01 2002 PLD Team <feedback@pld.org.pl> 2.3.1-1
 All persons listed below can be reached at <cvs_login>@pld.org.pl
 ppv, blues, kloczek, orzech, pioklo, qboosh, tiwek
