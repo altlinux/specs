@@ -1,18 +1,24 @@
+%def_enable snapshot
+
 %define ver_major 2.50
 %define _libexecdir %_prefix/libexec
 %def_enable installed_tests
+%def_with libproxy
 
 Name: glib-networking
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Networking support for GIO
 Group: System/Libraries
 License: LGPLv2+
 Url: http://www.gnome.org
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 
 Requires: ca-certificates gsettings-desktop-schemas >= 3.2.0
 
@@ -21,10 +27,11 @@ Requires: ca-certificates gsettings-desktop-schemas >= 3.2.0
 %define p11kit_ver 0.8
 %define libproxy_ver 0.3.1
 
-BuildRequires: libgio-devel >= %glib_ver libproxy-devel >= %libproxy_ver
+BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgnutls-devel >= %gnutls_ver libgcrypt-devel
 BuildRequires: libp11-kit-devel >= %p11kit_ver ca-certificates
 BuildRequires: gsettings-desktop-schemas-devel
+%{?_with_libproxy:BuildRequires: libproxy-devel >= %libproxy_ver}
 
 %description
 This package contains modules that extend the networking support in GIO.
@@ -43,12 +50,15 @@ the functionality of the installed %name package.
 
 %prep
 %setup
+%ifarch e2k
+sed -i 's,-Werror=missing-include-dirs,,' configure*
+%endif
 
 %build
 %autoreconf
 %configure \
 	--disable-static \
-	--with-libproxy \
+	%{subst_with libproxy} \
 	%{?_enable_installed_tests:--enable-installed-tests} \
 	--with-ca-certificates=%_datadir/ca-certificates/ca-bundle.crt
 
@@ -63,12 +73,14 @@ the functionality of the installed %name package.
 #%%make check
 
 %files -f %name.lang
-%_libexecdir/glib-pacrunner
-%_libdir/gio/modules/libgiolibproxy.so
 %_libdir/gio/modules/libgiognutls.so
 %_libdir/gio/modules/libgiognomeproxy.so
+%if_with libproxy
+%_libdir/gio/modules/libgiolibproxy.so
+%_libexecdir/glib-pacrunner
 %_datadir/dbus-1/services/org.gtk.GLib.PACRunner.service
 %_prefix/lib/systemd/user/glib-pacrunner.service
+%endif
 %doc NEWS README
 
 %exclude %_libdir/gio/modules/*.la
@@ -80,6 +92,13 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Fri Jul 28 2017 Yuri N. Sedunov <aris@altlinux.org> 2.50.0-alt2
+- updated to 2.50.0-15-gb10e225 (fixed BGO #782218)
+
+* Sat Feb 25 2017 Michael Shigorin <mike@altlinux.org> 2.50.0-alt1.1
+- BOOTSTRAP: introduce libproxy knob (on by default)
+- E2K: drop -Werror=missing-include-dirs (lcc)
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 2.50.0-alt1
 - 2.50.0
 
