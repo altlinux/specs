@@ -3,13 +3,13 @@ Url: http://go-mono.com/
 License: X11/MIT
 Group: System/Servers
 Version: 4.4
-Release: alt1
+Release: alt2
 Summary: Small Web Server Hosting ASP.NET
 Packager: Denis Medvedev <nbr@altlinux.org>
 
 Source: %name-%version.tar.bz2
 
-BuildRequires(pre): rpm-build-mono4  sqlite3 mono4-devel-full mono4-full pkg-config /proc
+BuildRequires(pre): rpm-build-mono4  sqlite3 mono-devel-full mono-full pkg-config /proc
 %define xspConfigsLocation %_sysconfdir/xsp/4.0
 %define xspAvailableApps %xspConfigsLocation/applications-available
 %define xspEnabledApps %xspConfigsLocation/applications-enabled
@@ -71,6 +71,9 @@ install -m 755 tools/mono-asp-apps/mono-asp-apps %buildroot%_bindir/mono-asp-app
 %_mandir/*/*
 
 %changelog
+* Fri Jul 28 2017 Denis Medvedev <nbr@altlinux.org> 4.4-alt2
+- recompile for mono5
+
 * Thu Nov 17 2016 Denis Medvedev <nbr@altlinux.org> 4.4-alt1
 - new upstream version
 
