@@ -1,6 +1,6 @@
 Name: pam_mkuser
 Version: 0.1.0
-Release: alt2
+Release: alt3
 
 Summary: A pluggable authentication module that adds the new user account if it doesn\'t exist
 License: GPLv2+
@@ -23,7 +23,7 @@ doesn\'t exist.
 Summary: A pluggable authentication module that adds the new user account if it doesn\'t exist
 License: GPLv2+
 Group: System/Base
-Provides: %name
+Provides: %name = %version-%release
 
 Requires: shadow-utils
 
@@ -54,6 +54,9 @@ doesn\'t exist.
 %_controldir/*
 
 %changelog
+* Fri Jul 28 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt3
+- Provide the versioned "pam_mkuser" name.
+
 * Fri Jul 21 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt2
 - Add pam_mkuser on/off control script.
 
