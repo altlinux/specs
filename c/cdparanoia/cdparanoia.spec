@@ -1,17 +1,18 @@
 Name: cdparanoia
 Version: 10.2
-Release: alt5
+Release: alt6
 Serial: 1
+
 Summary: Utility to copy digital audio cd's.
 License: GPL
 Group: Sound
+
 Url: http://www.xiph.org/paranoia
-
-Requires: lib%name = %{?serial:%serial:}%version-%release
-
 Source: %url/download/%name-III-%version.src.tgz
 Patch0: cdparanoia-10.2-#463009.patch
 Patch1: cdparanoia-10.2-endian.patch
+
+Requires: lib%name = %{?serial:%serial:}%version-%release
 
 %description
 This CDDA reader distribution ('%name') reads audio from the CDROM
@@ -58,6 +59,7 @@ This package contains development libraries and header files for %name.
 install -pm755 -- /usr/share/gnu-config/config.{sub,guess} .
 ln -sf config.sub configure.sub
 ln -sf config.guess configure.guess
+%autoreconf
 %configure
 %make OPT="$RPM_OPT_FLAGS"
 
@@ -82,6 +84,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Fri Jul 28 2017 Michael Shigorin <mike@altlinux.org> 1:10.2-alt6
+- E2K: autoreconf
+
 * Wed Sep 23 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:10.2-alt5
 - Switched to system config.{sub,guess} scripts.
 
