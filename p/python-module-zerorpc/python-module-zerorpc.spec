@@ -2,7 +2,7 @@
 %define oname zerorpc-python
 
 Name: python-module-zerorpc
-Version: 0.5.2
+Version: 0.6.1
 Release: alt1
 
 Summary: An easy to use, intuitive, and cross-language RPC
@@ -20,7 +20,7 @@ BuildArch: noarch
 
 BuildRequires: python-devel python-module-distribute
 
-BuildPreReq(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3
 
 %description
 Zerorpc is a light-weight, reliable and language-agnostic library
@@ -87,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 28 2017 Vitaly Lipatov <lav@altlinux.ru> 0.6.1-alt1
+- new version 0.6.1
+
 * Sun Oct 18 2015 Vitaly Lipatov <lav@altlinux.ru> 0.5.2-alt1
 - new version 0.5.2 (with rpmrb script)
 
