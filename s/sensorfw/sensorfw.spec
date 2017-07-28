@@ -2,7 +2,7 @@ Name:       sensorfw
 Summary:    Sensor Framework
 Version:    0.7.2
 Group:      System/Kernel and hardware
-Release:    alt2
+Release:    alt3
 License:    LGPLv2+
 URL:        http://gitorious.org/sensorfw
 Source0:    %{name}-%{version}.tar
@@ -27,6 +27,7 @@ Patch7:     fix-initctl.patch
 Patch8:     fix-missing-unistd.h.patch
 Patch9:     fix-method-call.patch
 Patch10:    fix-project-libs.patch
+Patch20:    %name-%version-alt-gcc6.patch
 #Requires:   qt
 #Requires:   GConf-dbus
 Requires:   %{name}-configs
@@ -135,6 +136,7 @@ Sensorfw configuration files.
 %patch9 -p1
 # fix-project-libs.patch
 %patch10
+%patch20 -p2
 # >> setup
 # << setup
 find . -type f -name \*.pr\? | while read f; do sed -i 's|/usr/lib|%_libdir|' $f; done
@@ -256,6 +258,9 @@ install -D -m644 %{SOURCE9} %buildroot%_sysconfdir/sysconfig/sensord
 # << files configs
 
 %changelog
+* Fri Jul 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.2-alt3
+- Fixed build with gcc-6.
+
 * Thu Jan 16 2014 Paul Wolneykien <manowar@altlinux.org> 0.7.2-alt2
 - Fix the systemd unit.
 - Use autodetect script for both systemd and SysV-init.
