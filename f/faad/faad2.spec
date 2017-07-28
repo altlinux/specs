@@ -1,19 +1,19 @@
 %define soversion 2
+%def_with xmms
 
 Name: faad
 Version: 2.7
-Release: alt4
+Release: alt5
 
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
 Summary: FAAD is a Freeware Advanced Audio Decoder
 License: GPL
 Group: Sound
-Url: http://www.audiocoding.com
 
+Url: http://www.audiocoding.com
+Source: http://prdownloads.sourceforge.net/faac/%{name}2-%version.tar.bz2
 Patch1: faad2-alt-fix-no-ext-segfault.patch
 Patch2: faad2-alt-make-mp4ff-shared.patch
-
-Source: http://prdownloads.sourceforge.net/faac/%{name}2-%version.tar.bz2
+Packager: Pavlov Konstantin <thresh@altlinux.ru>
 
 %define libsndfile_ver 1.0.5
 
@@ -21,8 +21,8 @@ Requires: lib%name%soversion = %version-%release
 
 BuildPreReq: libsndfile >= %libsndfile_ver
 
-BuildRequires: gcc-c++ glib-devel gtk+-devel id3lib-devel
-BuildRequires: libstdc++-devel libxmms-devel zlib-devel
+BuildRequires: gcc-c++ id3lib-devel libstdc++-devel zlib-devel
+%{?_with_xmms:BuildRequires: libxmms-devel glib-devel gtk+-devel}
 
 %description
 FAAD is a LC, MAIN and LTP profile MPEG2 and MPEG-4 AAC decoder.
@@ -59,37 +59,39 @@ This package provides input plugin allowing XMMS to read .aac and .mp4
 files.
 
 %prep
-%setup -q -n %{name}2-%version
+%setup -n %{name}2-%version
 
 %patch1 -p2
 %patch2 -p2
 
 find ./ -type f -name "Makefile*" -print0 | \
-xargs -r0 %__subst 's,^\(CFLAGS\),AM_\1,g
+xargs -r0 subst 's,^\(CFLAGS\),AM_\1,g
 		    s,^\(LDFLAGS\),AM_\1,g
 		    s,^[[:blank:]*],\t,' --
 
+%if_with xmms
 %define _xmms_input_plugin_dir %(xmms-config --input-plugin-dir)
+%endif
 
 %build
 %add_optflags %optflags_shared
-#%_buildshell ./bootstrap
-autoreconf -isfv
+#_buildshell ./bootstrap
+%autoreconf
 %configure --disable-static \
 	    --without-drm \
-	    --with-xmms
+	    %{subst_with xmms}
 
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 # remove non-packaged files
 rm -f %buildroot%_libdir/*.la
 
 %files
 %_bindir/*
-#%_man1dir/*
+#_man1dir/*
 
 %files -n lib%name%soversion
 %_libdir/*.so.*
@@ -99,11 +101,16 @@ rm -f %buildroot%_libdir/*.la
 %_includedir/*
 %_libdir/*.so
 
+%if_with xmms
 %files -n xmms-in-faad
 %_xmms_input_plugin_dir/*
 %doc plugins/xmms/{AUTHORS,ChangeLog,NEWS,README,TODO}
+%endif
 
 %changelog
+* Fri Jul 28 2017 Michael Shigorin <mike@altlinux.org> 2.7-alt5
+- BOOTSTRAP: introduced xmms knob (still on by default)
+
 * Sun Mar 20 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7-alt4
 - Rebuilt for debuginfo
 
