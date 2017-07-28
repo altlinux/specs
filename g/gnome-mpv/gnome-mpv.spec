@@ -1,6 +1,8 @@
+%define fullname io.github.GnomeMpv
+
 Name: gnome-mpv
-Version: 0.7
-Release: alt2
+Version: 0.12
+Release: alt1
 
 Summary: GNOME MPV is a simple GTK+ frontend for mpv
 License: GPLv3
@@ -9,11 +11,10 @@ Group: Video
 Url: https://github.com/gnome-mpv/gnome-mpv.git
 Source: %name-%version.tar
 Packager: Konstantin Artyushkin <akv@altlinux.org>
+Patch1: %name-%version-alt-meson-version.patch
 
 BuildRequires: libappstream-glib-devel
-BuildRequires: gcc5
-BuildRequires: autoconf-archive
-BuildRequires: intltool
+BuildRequires: meson
 BuildRequires: python-dev
 BuildRequires: glib2-devel
 BuildRequires: libgtk+3-devel
@@ -26,23 +27,29 @@ allowing access to mpv's powerful playback capabilities.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
-./autogen.sh
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall
+%meson_install
 
-%files
+%find_lang %name
+
+%files -f %name.lang
 %doc COPYING README.md
 %_bindir/%name
-%_datadir/appdata/%name.appdata.xml
-%_desktopdir/%name.desktop
+%_datadir/appdata/%fullname.appdata.xml
+%_desktopdir/%fullname.desktop
 %_datadir/glib-2.0/schemas/*
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Fri Jul 28 2017 Vladimir Didenko <cow@altlinux.org> 0.12-alt1
+- new version
+- switch to meson build
+
 * Fri Mar 11 2016 Konstantin Artyushkin <akv@altlinux.org> 0.7-alt2
 - initial build for ALT Linux Sisyphus
-
