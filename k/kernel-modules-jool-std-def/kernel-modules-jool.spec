@@ -1,6 +1,6 @@
 %define module_name             jool
-%define module_version          3.4.5
-%define module_release          alt2
+%define module_version          3.5.4
+%define module_release          alt1
 
 %define flavour		std-def
 BuildRequires(pre): rpm-build-kernel
@@ -59,6 +59,9 @@ install -m644 -D mod/stateless/jool_siit.ko %buildroot/%module_dir/jool_siit.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Jul 28 2017 Alexei Takaseev <taf@altlinux.org> 3.5.4-alt1
+- 3.5.4
 
 * Tue Sep 20 2016 Alexei Takaseev <taf@altlinux.org> 3.4.5-alt1
 - 3.4.5
