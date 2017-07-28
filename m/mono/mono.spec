@@ -4,7 +4,7 @@
 
 Name: mono
 Version: 5.0.1.1
-Release: alt4
+Release: alt5
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -19,6 +19,8 @@ Source1: external.tar.gz
 Source2: mono.snk
 Source3: monolite.tar.gz
 # ALT: for packaging, manually pack all external/* subpackage stuff into external.tar.gz because those are submodules and cannot be added normally to git tree without losing history.
+Patch1: %name-%version-alt-linking1.patch
+Patch2: %name-%version-alt-linking2.patch
 
 BuildRequires(pre): rpm-build-mono >= 2.0
 BuildRequires(pre): gcc-c++
@@ -434,6 +436,8 @@ Development files for libmono.
 
 %prep
 %setup -n %name-%version
+%patch1 -p1
+%patch2 -p1
 
 tar xzf %SOURCE1
 %if_enabled bootstrap
@@ -700,6 +704,9 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 %_monodir/4.0-api/*
 %_monodir/4.5-api/*
 %_monodir/4.6-api/*
+
+%post core
+cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 
 %files dyndata
 %gac_dll System.Web.DynamicData
@@ -1034,6 +1041,10 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Fri Jul 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt5
+- Fixed unresolved symbols
+- Added post-install action for mono-core to import certificates
+
 * Wed Jul 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt4
 - Installed msbuild config files
 
