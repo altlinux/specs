@@ -2,7 +2,7 @@
 
 Name: lib%oname
 Version: 2.1.0
-Release: alt9.qa1
+Release: alt10
 
 License: LGPLv2.1
 Group: System/Libraries
@@ -15,6 +15,7 @@ Packager: Motsyo Gennadi <drool@altlinux.ru>
 Source0: http://freefr.dl.sourceforge.net/project/projectm/2.0.1/%oname-complete-%version-Source.tar.gz
 Patch1: %name-complete-2.1.0-doxy.patch
 Patch2: %name-complete-2.1.0-link.patch
+Patch3: %name-%version-alt-gcc6.patch
 
 Requires: fonts-ttf-dejavu
 
@@ -89,6 +90,7 @@ Static projectM library.
 %setup -n %oname-complete-%version-Source
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 %build
 cmake \
@@ -155,6 +157,9 @@ ln -s /usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf %buildroot/%_datadir/%oname
 #%_libdir/libprojectM.a
 
 %changelog
+* Fri Jul 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt10
+- Fixed build with gcc-6
+
 * Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 2.1.0-alt9.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
