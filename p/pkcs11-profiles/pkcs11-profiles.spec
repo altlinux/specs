@@ -1,6 +1,6 @@
 Name: pkcs11-profiles
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 Summary: Set of profiles for PAM PKCS11 configuration
 License: GPLv3+
@@ -15,7 +15,7 @@ Source0: %name-%version.tar
 Summary: RuToken ECP PAM PKCS11 module configuration
 License: GPLv3+
 Group: System/Configuration/Other
-Requires: pam_pkcs11 >= 0.6.9-alt5
+Requires: pam_pkcs11 >= 0.6.9-alt9
 Requires: librtpkcs11ecp
 
 %description rutokenecp
@@ -39,5 +39,8 @@ install -pDm644 profiles/rutokenecp %buildroot%_sysconfdir/security/pam_pkcs11/p
 %_sysconfdir/security/pam_pkcs11/profiles/rutokenecp
 
 %changelog
+* Fri Jul 28 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt2
+- Fix: Exclude the mapping settings from the profiles.
+
 * Fri Jun 09 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt1
 - Initial build.
