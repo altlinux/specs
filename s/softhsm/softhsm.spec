@@ -4,7 +4,7 @@
 Name: softhsm
 Version: 2.1.0
 
-Release: alt2
+Release: alt3
 Summary: Software version of a PKCS#11 Hardware Security Module
 License: BSD
 Group: System/Configuration/Other
@@ -23,7 +23,7 @@ Patch1: softhsm2-1378800-openssl.patch
 # optimized out: libcom_err-devel libkrb5-devel libnspr-devel libstdc++-devel perl pkg-config python-base python-modules
 BuildRequires: gcc-c++ libnss-devel libsqlite3-devel libssl-devel sqlite3 zlib-devel
 
-%{?!_without_check:%{?!_disable_check:BuildRequires: cppunit-devel}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: cppunit-devel pkg-config}}
 
 Requires: lib%name = %EVR
 
@@ -52,6 +52,11 @@ The devel package contains the libsofthsm include files.
 %prep
 %setup -n %name-%version
 %patch1 -p1
+
+find . -iname '*.am' -print0 | xargs -0 \
+    sed -i \
+        -e 's:cppunit-config --cflags:pkg-config --cflags cppunit:g' \
+        -e 's:cppunit-config --libs:pkg-config --libs cppunit:g'
 
 %build
 %autoreconf
@@ -136,6 +141,9 @@ fi
 %_includedir/softhsm
 
 %changelog
+* Fri Jul 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt3
+- Fix build with new cppunit
+
 * Thu Nov 03 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.1.0-alt2
 - Fixed tokendir in softhsm2.conf.
 - Moved softhsm2.conf.5 manpage to lib%name subpackage.
