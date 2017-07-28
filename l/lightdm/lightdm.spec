@@ -6,7 +6,7 @@
 
 Name: lightdm
 Version: 1.16.7
-Release: alt5
+Release: alt6
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -249,6 +249,10 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Jul 28 2017 Paul Wolneykien <manowar@altlinux.org> 1.16.7-alt6
+- Fix the control script: Resolve the links because sed -i replaces
+  the files.
+
 * Fri Jul 21 2017 Paul Wolneykien <manowar@altlinux.org> 1.16.7-alt5
 - Added control script 'lightdm-login-unknown'.
 
