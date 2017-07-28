@@ -1,11 +1,10 @@
 Name: libmusicbrainz
 Version: 2.1.5
-Release: alt5.qa2
+Release: alt6
 Summary: A software library for accesing MusicBrainz servers
 Group: System/Libraries
 License: LGPL
 Url: http://www.musicbrainz.org
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar.gz
 
@@ -35,6 +34,7 @@ applications which will use lib%name.
 %patch1 -p1
 
 %build
+%add_optflags -Wno-error=narrowing
 %autoreconf
 %configure \
     --disable-static
@@ -54,6 +54,9 @@ applications which will use lib%name.
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jul 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.5-alt6
+- Fixed build with new toolchain.
+
 * Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 2.1.5-alt5.qa2
 - Rebuilt for gcc5 C++11 ABI.
 
