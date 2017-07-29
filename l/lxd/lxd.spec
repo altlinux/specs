@@ -11,7 +11,7 @@
 %define lxduser lxd
 
 Name:		lxd
-Version:	2.15
+Version:	2.16
 Release:	alt1
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
@@ -172,6 +172,9 @@ cp -av scripts/lx* %buildroot/%_bindir/
 %go_path/src/*
 
 %changelog
+* Sat Jul 29 2017 Denis Pynkin <dans@altlinux.org> 2.16-alt1
+- new version 2.16
+
 * Fri Jun 30 2017 Denis Pynkin <dans@altlinux.org> 2.15-alt1
 - new version 2.15
 

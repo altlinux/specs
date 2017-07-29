@@ -1,13 +1,12 @@
-%global import_path golang.org/x/net
+%global import_path golang.org/x/sys
 
-%global commit f5079bd7f6f74e23c4d65efa0f4ce14cbd6a3c0f
+%global commit 0f826bdd13b500be0f1d4004938ad978fcc6031e
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
-
-Name: golang-golang-x-net
+Name: golang-golang-x-sys
 Version: 0
-Release: alt4.git%abbrev
-Summary: Go supplementary network libraries
+Release: alt1.git%abbrev
+Summary: Go packages for low-level interaction with the operating system
 License: MIT
 Group: Development/Other
 Url: https://godoc.org/%import_path
@@ -22,16 +21,16 @@ BuildArch: noarch
 BuildRequires: golang-tools
 
 %description
-Go supplementary network libraries
+Go packages for low-level interaction with the operating system
 
 %package devel
-Summary: golang-golang-x-net
+Summary: golang-golang-x-sys
 Group: Development/Other
 Requires: golang
 Provides: golang(%import_path) = %version-%release
 
 %description devel
-Go supplementary network libraries
+Go packages for low-level interaction with the operating system
 
 %prep
 %setup -q
@@ -53,15 +52,6 @@ export GOPATH="%go_path"
 %go_path/src/*
 
 %changelog
-* Sat Jul 29 2017 Denis Pynkin <dans@altlinux.org> 0-alt4.gitf5079bd7
-- Update
-
-* Fri Jun 30 2017 Denis Pynkin <dans@altlinux.org> 0-alt3.git1f922427
-- Update
-
-* Mon Mar 13 2017 Denis Pynkin <dans@altlinux.org> 0-alt2.gita6577fac
-- Update
-
-* Fri Nov 25 2016 Denis Pynkin <dans@altlinux.org> 0-alt1.git4971afdc
+* Sat Jul 29 2017 Denis Pynkin <dans@altlinux.org> 0-alt1.git0f826bdd
 - Initial package
 
