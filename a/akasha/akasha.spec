@@ -1,6 +1,6 @@
 Name: akasha
 Version: 0.5.2
-Release: alt1
+Release: alt2
 
 Summary: Advanced Knowledge Architecture for Social Human Advocacy
 
@@ -8,15 +8,10 @@ License: Apache 2.0
 Url: https://github.com/AkashaProject/node-app#readme
 Group: Networking/Instant messaging
 
-ExclusiveArch: x86_64
 # Source-url: https://github.com/AkashaProject/Alpha/releases/download/%version/AKASHA-linux-x64-%version.deb
 Source: %name-%version.tar
 
-AutoReq:yes,nonodejs,nonodejs_native,nomono,nopython,nomingw32,nomingw64,noshebang
-AutoProv: no
-
-# electron based requiries
-BuildRequires: libgtk+2 libxkbfile libnss libnspr libXtst libalsa libcups libXScrnSaver libGConf
+BuildArch: noarch
 
 %description
 A Next-Generation Social Media Network.
@@ -29,27 +24,30 @@ At this point, you can obtain AETH tokens by creating an identity on AKASHA.
 
 %prep
 %setup
-# replace strange missed functions with exit
-sed -E -i -e "s@(_ZN10crash_keys17SetVari|_ZN15MersenneTwister12in|_ZN15MersenneTwister13ge|_ZN15MersenneTwisterC1Ev|_ZN15MersenneTwisterD1Ev)@exit\x0MersenneTwisterD1Ev@g" opt/AKASHA/akasha
 %__subst "s|/opt/AKASHA/akasha|%_bindir/%name|g" usr/share/applications/akasha.desktop
 
+cat <<EOF >%name
+#!/bin/sh
+electron %_datadir/%name/resources/app.asar
+EOF
+
 %install
-mkdir -p %buildroot%_libdir/%name/
-cp -a opt/AKASHA/* %buildroot%_libdir/%name/
-mkdir -p %buildroot%_bindir/
-ln -rs %buildroot%_libdir/%name/akasha %buildroot/%_bindir/%name
+install -m755 -D %name %buildroot%_bindir/%name
+install -m644 -D opt/AKASHA/resources/app.asar %buildroot%_datadir/%name/resources/app.asar
 
 mkdir -p %buildroot%_iconsdir/
 cp -a usr/share/icons/hicolor/ %buildroot%_iconsdir/
-mkdir -p %buildroot%_desktopdir/
-cp -a usr/share/applications/akasha.desktop %buildroot%_desktopdir/%name.desktop
+install -m755 -D usr/share/applications/akasha.desktop %buildroot%_desktopdir/%name.desktop
 
 %files
-%_bindir/akasha
-%_libdir/%name/
+%_bindir/%name
+%_datadir/%name/
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Jul 29 2017 Vitaly Lipatov <lav@altlinux.ru> 0.5.2-alt2
+- build with external electron
+
 * Fri Jun 09 2017 Vitaly Lipatov <lav@altlinux.ru> 0.5.2-alt1
 - initial release for ALT Sisyphus
