@@ -1,6 +1,6 @@
 Name: flatcam
 Version: 8.5
-Release: alt1.20170702
+Release: alt2.20170702
 Summary: 2D Computer-Aided PCB Manufacturing
 Group: Engineering
 License: MIT
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 Buildrequires(pre): rpm-build-python
 Buildrequires: python-module-setuptools desktop-file-utils
 Requires: python-module-svg-path
+Requires: python-module-matplotlib-qt4
 
 %description
 FlatCAM is a program for preparing CNC jobs for making PCBs on
@@ -57,5 +58,8 @@ desktop-file-install --dir=%buildroot%_desktopdir %name.desktop
 %python_sitelibdir/*
 
 %changelog
+* Sat Jul 29 2017 Anton Midyukov <antohami@altlinux.org> 8.5-alt2.20170702
+- Added missing requires: python-module-matplotlib-qt4.
+
 * Wed Jul 26 2017 Anton Midyukov <antohami@altlinux.org> 8.5-alt1.20170702
 - Initial build for ALT Sisyphus.
