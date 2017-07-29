@@ -1,6 +1,6 @@
 Name: pycam
 Version: 0.5.1
-Release: alt1
+Release: alt2
 Summary: Open Source CAM - Toolpath Generation for 3-Axis CNC machining
 Group: Engineering
 License: GPLv3+
@@ -15,6 +15,7 @@ BuildRequires: python-devel
 BuildRequires: ccache
 BuildRequires: desktop-file-utils
 %add_python_req_skip ode
+Requires: python-module-pygtkglext
 
 # Needed because it owns the icon directories
 Requires: icon-theme-hicolor
@@ -78,5 +79,8 @@ install -pD -m 0644 man/pycam.1 %buildroot%_man1dir/pycam.1
 %python_sitelibdir/*
 
 %changelog
+* Sat Jul 29 2017 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt2
+- Added missing requires: python-module-pygtkglext.
+
 * Wed Jul 26 2017 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt1
 - Initial build for ALT Sisyphus.
