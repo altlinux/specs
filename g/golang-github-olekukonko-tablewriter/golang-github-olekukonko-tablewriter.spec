@@ -1,12 +1,12 @@
 %global import_path github.com/olekukonko/tablewriter
 
-%global commit febf2d34b54a69ce7530036c7503b1c9fbfdf0bb
+%global commit be5337e7b39e64e5f91445ce7e721888dbab7387
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-github-olekukonko-tablewriter
 Version: 0
-Release: alt3.git%abbrev
+Release: alt4.git%abbrev
 Summary: Generate ASCII table on the fly...
 License: MIT
 Group: Development/Other
@@ -65,6 +65,9 @@ rm -rf -- %buildroot/%go_path/src/%import_path/csv2table
 %go_path/src/*
 
 %changelog
+* Sat Jul 29 2017 Denis Pynkin <dans@altlinux.org> 0-alt4.gitbe5337e7
+- Update
+
 * Mon Mar 13 2017 Denis Pynkin <dans@altlinux.org> 0-alt3.gitfebf2d34
 - Update
 
