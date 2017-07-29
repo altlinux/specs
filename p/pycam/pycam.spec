@@ -1,6 +1,6 @@
 Name: pycam
 Version: 0.5.1
-Release: alt2
+Release: alt3
 Summary: Open Source CAM - Toolpath Generation for 3-Axis CNC machining
 Group: Engineering
 License: GPLv3+
@@ -10,6 +10,7 @@ BuildArch: noarch
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: http://downloads.sourceforge.net/project/%name/%name/%version/%name-%version.tar.gz
+Patch: desktop-categories.patch
 Buildrequires(pre): rpm-build-python
 BuildRequires: python-devel
 BuildRequires: ccache
@@ -30,6 +31,7 @@ PyCAM supports a wide range of toolpath strategies for 3D models and
 
 %prep
 %setup
+%patch -p2
 
 for f in ./*.{txt,TXT} ./Changelog ./PKG-INFO; do
     iconv -f iso-8859-1 -t utf-8 $f |sed 's|\r||g' > $f.utf8
@@ -79,6 +81,9 @@ install -pD -m 0644 man/pycam.1 %buildroot%_man1dir/pycam.1
 %python_sitelibdir/*
 
 %changelog
+* Sat Jul 29 2017 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt3
+- Fix desktop categories.
+
 * Sat Jul 29 2017 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt2
 - Added missing requires: python-module-pygtkglext.
 
