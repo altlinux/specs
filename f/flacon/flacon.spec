@@ -1,6 +1,6 @@
 Name: flacon
-Version: 2.1.1
-Release: alt1
+Version: 3.0.0
+Release: alt1%ubt
 
 Summary: Audio File Encoder
 Summary(ru_RU.UTF-8): Конвертер аудиофайлов
@@ -11,15 +11,16 @@ Group: Sound
 Url: http://%name.github.io/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-#https://github.com/%name/%name/archive/v%version.tar.gz
-Source0: %name-%version.tar.gz
+Source: https://github.com/%name/%name/archive/v%version/%name-%version.tar.gz
 
-Requires: shntool
+BuildPreReq: rpm-build-ubt
 
 BuildRequires: cmake
-BuildRequires: gcc-c++
 BuildRequires: libuchardet-devel
-BuildRequires: phonon-devel
+BuildRequires: qt5-tools-devel
+
+Provides: %name-qt5 = %version
+Obsoletes: %name-qt5
 
 %description
 Extracts audio tracks from audio CD image to separate tracks.
@@ -39,11 +40,13 @@ pushd %_target_platform
 
 cmake .. \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_CXX_FLAGS:STRING='%optflags'
+	-DCMAKE_C_FLAGS:STRING='%optflags' \
+	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
+	-DCMAKE_BUILD_TYPE:STRING="Release"
 
 popd
 
-%make_build -C %_target_platform	
+%make_build -C %_target_platform
 	
 %install
 %makeinstall_std -C %_target_platform
@@ -59,6 +62,12 @@ popd
 %_man1dir/%name.1.*
 
 %changelog
+* Sun Jul 30 2017 Nazarov Denis <nenderus@altlinux.org> 3.0.0-alt1%ubt
+- Version 3.0.0
+
+* Thu Jan 05 2017 Nazarov Denis <nenderus@altlinux.org> 2.1.1-alt0.M80P.1
+- Build for branch p8
+
 * Tue Jan 03 2017 Nazarov Denis <nenderus@altlinux.org> 2.1.1-alt1
 - Versiob 2.1.1
 
