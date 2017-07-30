@@ -4,7 +4,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.7.10
-Release: alt1
+Release: alt2
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -142,11 +142,17 @@ cp debian/extras/usr/share/applications/linuxcnc-latency.desktop %buildroot%_des
 cp debian/extras/usr/share/applications/linuxcnc-pncconf.desktop %buildroot%_desktopdir
 cp debian/extras/usr/share/applications/linuxcnc-stepconf.desktop %buildroot%_desktopdir
 
+#fix desktop Name
+pushd %buildroot%_desktopdir
+sed 's/Name=/Name=LinuxCNC /g' -i linuxcnc-pncconf.desktop \
+    linuxcnc-stepconf.desktop linuxcnc-latency.desktop
+popd
+
 #fix desktop categories
 desktop-file-install --dir %buildroot%_desktopdir \
         --remove-key=Version \
         --remove-category=X-CNC \
-        --add-category=Science \
+        --add-category=Development \
         --add-category=Engineering \
         %buildroot%_desktopdir/*.desktop
 
@@ -154,12 +160,12 @@ desktop-file-install --dir %buildroot%_desktopdir \
 cat>%buildroot%_desktopdir/%name-documentation.desktop<<END
 [Desktop Entry]
 Name=LinuxCNC Documentation
-Name[ru_RU]= Документация LinuxCNC 
+Name[ru_RU]= LinuxCNC Документация 
 Exec=%_bindir/xdg-open %_docdir/%name
 Icon=linuxcncicon
 Terminal=false
 Type=Application
-Categories=Science;Engineering;
+Categories=Development;Engineering;
 END
 
 #install rules
@@ -238,6 +244,9 @@ popd
 %endif
 
 %changelog
+* Sun Jul 30 2017 Anton Midyukov <antohami@altlinux.org> 2.7.10-alt2
+- Fix desktop categories.
+
 * Tue Jul 25 2017 Anton Midyukov <antohami@altlinux.org> 2.7.10-alt1
 - new version 2.7.10
 
