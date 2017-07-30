@@ -2,12 +2,12 @@
 
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.Photos
-%define ver_major 3.24
+%define ver_major 3.26
 %define _libexecdir %_prefix/libexec
 %define gegl_api_ver 0.3
 
 Name: gnome-photos
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Photos - access, organize and share your photos on GNOME
@@ -23,7 +23,7 @@ Source: %name-%version.tar
 
 %define glib_ver 2.44
 %define gtk_ver 3.20.0
-%define tracker_ver 0.18
+%define tracker_ver 1.99.1
 %define gdata_ver 0.15.2
 %define gegl_ver 0.3.14
 %define grilo_ver 0.3
@@ -33,7 +33,7 @@ Requires: grilo-plugins >= %grilo_ver
 
 BuildPreReq: rpm-build-gnome rpm-build-licenses
 # From configure.ac
-BuildRequires: gnome-common intltool yelp-tools desktop-file-utils
+BuildRequires: yelp-tools desktop-file-utils
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: tracker-devel >= %tracker_ver
@@ -83,6 +83,9 @@ rm -rf %buildroot/%_datadir/doc/%name
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Sat Aug 26 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.3-alt1
 - 3.24.3
 

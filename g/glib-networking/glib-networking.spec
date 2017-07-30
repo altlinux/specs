@@ -1,13 +1,13 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 2.50
+%define ver_major 2.54
 %define _libexecdir %_prefix/libexec
 %def_enable installed_tests
 %def_with libproxy
 
 Name: glib-networking
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Networking support for GIO
 Group: System/Libraries
@@ -92,6 +92,9 @@ sed -i 's,-Werror=missing-include-dirs,,' configure*
 %endif
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 2.54.0-alt1
+- 2.54.0
+
 * Fri Jul 28 2017 Yuri N. Sedunov <aris@altlinux.org> 2.50.0-alt2
 - updated to 2.50.0-15-gb10e225 (fixed BGO #782218)
 

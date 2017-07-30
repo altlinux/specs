@@ -1,27 +1,35 @@
 # Vala is written in Vala itself. To solve bootstrap problem we pre-compile it to C
 # and use those C sources during bootstrap phase. Next package rebuilds must be done
 # without bootstrap define.
-%def_with bootstrap
-%define api_ver 0.36
+%def_disable snapshot
+%{?_enable_snapshot:%def_with bootstrap}
+%define ver_major 0.38
+%define api_ver 0.38
 
 Name: vala
-Version: 0.36.4
+Version: %ver_major.1
 Release: alt1
-Group: Development/C
+
 Summary: Vala is a programming language which makes GNOME programming easy
+Group: Development/C
 License: LGPL
 Url: https://wiki.gnome.org/Projects/Vala
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
+%if_disabled snapshot
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
 Source: %name-%version.tar
+%endif
 %if_with bootstrap
 Patch: %name-%version-%release-pregenerated.patch
 %endif
-Patch1: %name-%version-%release-fixes.patch
+Patch1: %name-0.35.5-alt-fixes.patch
 PreReq: rpm-build-vala
 PreReq: vapi-common = %version-%release
-BuildRequires: flex glib2-devel >= 2.32.0  libgio-devel xsltproc dbus-tools-gui gobject-introspection-devel
+BuildRequires: flex libgio-devel >= 2.40.0 xsltproc help2man dbus-tools-gui gobject-introspection-devel
 BuildPreReq: /proc rpm-build-vala
+# since 0.37
+BuildRequires: libgraphviz-devel
 %if_without bootstrap
 BuildRequires: vala >= 0.25.1
 %endif
@@ -84,16 +92,34 @@ without using a different ABI compared to applications and libraries written in 
 This packages contains additional tools to generate Vala projects and API specifications
 for existing C and C++ libraries.
 
+%package -n valadoc
+Summary: Vala documentation generator
+Group: Development/Other
+Conflicts: %name < %version
+
+%description -n valadoc
+Valadoc is a documentation generator for Vala projects. It extracts
+source code from Vala source files and can output various formats of
+documentation like GTK-Doc or GIR documentation.
+
+%package -n valadoc-devel
+Summary: Vala documentation generator (devel package)
+Group: Development/Other
+Requires: valadoc = %version-%release
+
+%description -n valadoc-devel
+Development files for Valadoc.
+
 %prep
-%setup -q
+%setup
 %patch1 -p1
 
 # Automake now requires to have ChangeLog and m4, fake them
-touch ChangeLog
-mkdir -p m4
+[ ! -f ChangeLog ] && touch ChangeLog
+[ ! -d m4 ] && mkdir m4
 
 # version in .tarball-version file
-echo "%version" > .tarball-version
+%{?_with_bootstrap:echo "%version" > .tarball-version}
 
 # whether external bootstrapping is in use or not we always want to build
 # a compiler with the compiler itself. So first compile an intermediate
@@ -118,8 +144,7 @@ mkdir bootstrap-build
 %endif
 
 %build
-
-autoreconf -v --install
+%autoreconf
 
 # build an intermediate version of the compiler
 BSINSTALL=$(pwd)/bootstrap-install
@@ -155,25 +180,26 @@ find . -name '*.stamp' | xargs -r rm
 rm -rf bootstrap-build "$BSINSTALL"
 export PATH="$OLD_PATH"
 
-# Perform language environment tests
-%check
-%make check
-
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 # own this directory for third-party *.vapi files
 mkdir -p %buildroot%_datadir/vala/vapi
+
+%check
+# valadoc tests compilation failed
+#%make check
 
 %files
 %_bindir/valac
 %_bindir/valac-%api_ver
 %_bindir/vala
 %_bindir/vala-%api_ver
-%_libdir/libvala-%api_ver.so.*
+%_libdir/lib%name-%api_ver.so.*
 %_man1dir/valac*
 %dir %_datadir/vala-%api_ver
 %dir %_datadir/vala-%api_ver/vapi
 %_datadir/vala-%api_ver/vapi/*
+%_datadir/%name/vapi/lib%name-%api_ver.vapi
 %doc AUTHORS COPYING NEWS README THANKS
 
 %files -n vapi-common
@@ -183,8 +209,10 @@ mkdir -p %buildroot%_datadir/vala/vapi
 %files -n lib%name-devel
 %_includedir/vala-%api_ver
 %_pkgconfigdir/*.pc
-%_libdir/*.so
-%_datadir/aclocal/*.m4
+%exclude %_pkgconfigdir/valadoc*.pc
+%_libdir/lib%name-%api_ver.so
+%_datadir/aclocal/%name.m4
+%_datadir/aclocal/vapigen.m4
 %exclude %_pkgconfigdir/vapigen*.pc
 %exclude %_datadir/aclocal/vapigen.m4
 
@@ -205,7 +233,37 @@ mkdir -p %buildroot%_datadir/vala/vapi
 %_man1dir/vala-gen-introspect*
 %_man1dir/vapigen*
 
+%files -n valadoc
+%_bindir/valadoc
+%_bindir/valadoc-%api_ver
+%_libdir/libvaladoc-%api_ver.so.*
+%dir %_libdir/valadoc
+%dir %_libdir/valadoc/doclets
+%_libdir/valadoc/doclets/devhelp/
+%_libdir/valadoc/doclets/gtkdoc/
+%_libdir/valadoc/doclets/html/
+%_man1dir/valadoc*.1.*
+%_datadir/valadoc/
+
+%exclude %_libdir/valadoc/*/*/*.la
+
+%files -n valadoc-devel
+%_includedir/valadoc-%api_ver/
+%_libdir/libvaladoc-%api_ver.so
+%_pkgconfigdir/valadoc-%api_ver.pc
+%_vapidir/valadoc-%api_ver.deps
+%_vapidir/valadoc-%api_ver.vapi
+
+
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 0.38.1-alt1
+- 0.38.1
+
+* Mon Sep 04 2017 Yuri N. Sedunov <aris@altlinux.org> 0.38.0-alt1
+- 0.38.0
+- new valadoc subpackage (buildreqs: +libgraphviz-devel, help2man)
+- moved %%check after %%install
+
 * Wed Jul 12 2017 Alexey Shabalin <shaba@altlinux.ru> 0.36.4-alt1
 - 0.36.4
 

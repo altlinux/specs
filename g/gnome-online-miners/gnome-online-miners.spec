@@ -1,4 +1,4 @@
-%define ver_major 3.24
+%define ver_major 3.26
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %def_enable facebook
@@ -32,7 +32,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 BuildRequires: gnome-common
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgnome-online-accounts-devel >= %goa_ver
-BuildPreReq: tracker-devel >= %tracker_ver
+BuildRequires: pkgconfig(tracker-miner-2.0) pkgconfig(tracker-sparql-2.0)
 %{?_enable_google:BuildPreReq: libgdata-devel >= %gdata_ver}
 %{?_enable_flickr:BuildPreReq: libgrilo-devel >= %grilo_ver}
 %{?_enable_facebook:BuildPreReq: libgfbgraph-devel >= %gfbgraph_ver}
@@ -81,6 +81,9 @@ Flickr, Google, SkyDrive and ownCloud.
 %exclude %_datadir/doc/%name
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Tue Aug 15 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 

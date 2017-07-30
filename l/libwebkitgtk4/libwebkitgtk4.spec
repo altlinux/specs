@@ -15,7 +15,7 @@
 %def_enable wayland
 
 Name: libwebkitgtk4
-Version: 2.16.6
+Version: 2.18.0
 Release: alt1
 
 Summary: Web browser engine
@@ -192,6 +192,10 @@ GObject introspection devel data for the JavaScriptCore library
 
 %prep
 %setup -n %_name-%version
+# quick fix for build WebCore/platform/graphics/cairo/BackingStoreBackendCairoImpl with NPROCS=1
+subst 's|\(<WebCore\/\)\(HysteresisActivity.h>\)|\1platform/\2|' \
+Source/WebCore/platform/graphics/cairo/BackingStoreBackendCairoImpl.h
+
 # Remove bundled libraries
 rm -rf Source/ThirdParty/leveldb/
 rm -rf Source/ThirdParty/gtest/
@@ -234,13 +238,14 @@ rm -rf Source/ThirdParty/qunit/
 %find_lang WebKit2GTK-%api_ver
 
 %files -n libwebkit2gtk -f WebKit2GTK-%api_ver.lang
+%_bindir/WebKitWebDriver
 %_libdir/libwebkit2gtk-%api_ver.so.*
 %dir %pkglibexecdir
 %pkglibexecdir/WebKitNetworkProcess
 %pkglibexecdir/WebKitPluginProcess
 %pkglibexecdir/WebKitPluginProcess2
 %pkglibexecdir/WebKitWebProcess
-%pkglibexecdir/WebKitDatabaseProcess
+%pkglibexecdir/WebKitStorageProcess
 %dir %_libdir/webkit2gtk-%api_ver
 %dir %_libdir/webkit2gtk-%api_ver/injected-bundle
 %_libdir/webkit2gtk-%api_ver/injected-bundle/libwebkit2gtkinjectedbundle.so
@@ -289,6 +294,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 2.18.0-alt1
+- 2.18.0
+
 * Thu Jul 27 2017 Yuri N. Sedunov <aris@altlinux.org> 2.16.6-alt1
 - 2.16.6 (fixed CVE-2017-7039, CVE-2017-7018, CVE-2017-7030,
   CVE-2017-7037, CVE-2017-7034, CVE-2017-7055, CVE-2017-7056,

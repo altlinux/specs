@@ -6,7 +6,7 @@
 
 Name: grilo-plugins
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -96,6 +96,9 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %endif
 
 %changelog
+* Fri Aug 25 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt2
+- rebuilt against tracker-sparql-2.0
+
 * Fri Aug 25 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt1
 - 0.3.5
 

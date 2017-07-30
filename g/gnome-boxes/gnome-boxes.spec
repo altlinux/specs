@@ -1,17 +1,19 @@
 %define _libexecdir %_prefix/libexec
+%define ver_major 3.26
 %def_disable ovirt
 
 Name: gnome-boxes
-Version: 3.24.0
+Version: %ver_major.0
 Release: alt1
+
 Summary: A simple GNOME 3 application to access remote or virtual systems
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Group: Emulators
 License: LGPLv2+
 Url: https://wiki.gnome.org/Apps/Boxes
 
-Source: %name-%version.tar
-Source2: libgd.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source2: libgd.tar
 
 # From configure.ac
 %define govirt_ver 0.3.4
@@ -29,7 +31,6 @@ Source2: libgd.tar
 %define libsoup_ver 2.38
 %define libarchive_ver 3.0.0
 
-BuildRequires: intltool >= 0.40.0
 BuildRequires: yelp-tools
 BuildRequires: gobject-introspection-devel >= 0.9.6
 BuildRequires: libvala-devel >= 0.28.0.16
@@ -50,7 +51,6 @@ BuildRequires: libuuid-devel >= %uuid_ver
 BuildRequires: libsoup-devel >= %libsoup_ver
 BuildRequires: libarchive-devel >= %libarchive_ver
 %{?_enable_ovirt:BuildRequires: pkgconfig(govirt-1.0) >= %govirt_ver}
-
 
 # Need libvirtd and an hypervisor to do anything useful
 Requires: libvirt-daemon
@@ -73,15 +73,13 @@ gnome-boxes lets you easily create, setup, access, and use:
 
 %prep
 %setup
-tar -xf %SOURCE2 -C libgd
-echo %version > .tarball-version
+#tar -xf %SOURCE2 -C libgd
+#echo %version > .tarball-version
 
 %build
 %autoreconf
-intltoolize -f
 %configure \
 	--enable-vala
-
 %make_build
 
 %install
@@ -101,6 +99,9 @@ intltoolize -f
 %_datadir/appdata/*.xml
 
 %changelog
+* Sun Sep 17 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Tue Mar 21 2017 Alexey Shabalin <shaba@altlinux.ru> 3.24.0-alt1
 - 3.24.0
 

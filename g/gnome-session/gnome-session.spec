@@ -1,11 +1,11 @@
-%define ver_major 3.24
+%define ver_major 3.26
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 %def_enable session_selector
 %def_disable consolekit
 
 Name: gnome-session
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -152,6 +152,9 @@ This package permits to log into GNOME using Wayland.
 
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Wed Apr 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
 - 3.24.1
 

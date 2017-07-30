@@ -2,7 +2,7 @@
 
 %define _name baobab
 %define __name org.gnome.baobab
-%define ver_major 3.24
+%define ver_major 3.26
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
 Name: gnome-disk-usage
@@ -57,6 +57,9 @@ popd
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 

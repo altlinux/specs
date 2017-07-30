@@ -1,14 +1,15 @@
 %def_disable snapshot
-%define _libexecdir %prefix/libexec
 
-%define ver_major 1.48
+%define _libexecdir %prefix/libexec
+%define ver_major 1.50
 %define _name gjs
 %define api_ver 1.0
+%define mozjs_ver_major 52
 
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
@@ -28,12 +29,12 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source1: pkg.m4
 
 %define glib_ver 2.50.0
-%define gi_ver 1.51.2
+%define gi_ver 1.53.4
 
 Requires: gobject-introspection
 
-BuildRequires: gnome-common gcc-c++ libffi-devel libmozjs38-devel libcairo-devel
-BuildRequires: libmozjs38-devel libmozjs38-tools
+BuildRequires: gnome-common gcc-c++ libffi-devel libcairo-devel
+BuildRequires: libmozjs%mozjs_ver_major-devel
 BuildRequires: libgio-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libreadline-devel libcairo-gobject-devel
 BuildRequires: libgtk+3-devel libgtk+3-gir-devel
@@ -71,7 +72,6 @@ the functionality of the installed Gjs library package.
 cp %SOURCE1 m4/
 
 %build
-export ac_cv_path_JS_INTERP=%_bindir/js
 %autoreconf
 %configure \
     --disable-static \
@@ -116,6 +116,9 @@ export ac_cv_path_JS_INTERP=%_bindir/js
 
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 1.50.0-alt1
+- 1.50.0
+
 * Fri Sep 08 2017 Yuri N. Sedunov <aris@altlinux.org> 1.48.7-alt1
 - 1.48.7
 

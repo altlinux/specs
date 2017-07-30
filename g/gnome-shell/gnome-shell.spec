@@ -1,13 +1,13 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
-%define ver_major 3.24
+%define ver_major 3.26
 %define gst_api_ver 1.0
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -20,9 +20,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
-Patch1: gnome-shell-3.11.90-alt-gir.patch
 Patch3: %name-3.8.4-alt-invalid_user_shell.patch
-Patch4: gnome-shell-3.9.92-alt-makefile.patch
 
 Obsoletes: gnome-shell-extension-per-window-input-source
 
@@ -30,12 +28,12 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 AutoReqProv: nopython
 %define __python %nil
 
-%define session_ver 3.16
+%define session_ver 3.25
 %define clutter_ver 1.21.5
-%define gjs_ver 1.40.0
-%define mutter_ver 3.24.4
+%define gjs_ver 1.47.0
+%define mutter_ver 3.26.0
 %define gtk_ver 3.16.0
-%define gio_ver 2.46.0
+%define gio_ver 2.53.0
 %define gstreamer_ver 1.0
 %define eds_ver 3.17.2
 %define telepathy_ver 0.17.5
@@ -79,6 +77,7 @@ Requires: typelib(GDesktopEnums)
 Requires: typelib(Gdk)
 Requires: typelib(GdkPixbuf)
 Requires: typelib(Gdm)
+Requires: typelib(Geoclue)
 Requires: typelib(Gio)
 Requires: typelib(GLib)
 Requires: typelib(GnomeBluetooth)
@@ -105,13 +104,13 @@ Requires: typelib(TelepathyLogger)
 Requires: typelib(UPowerGlib)
 Requires: typelib(WebKit2)
 
-BuildRequires: gcc-c++ gnome-common intltool gtk-doc
+BuildRequires: meson gcc-c++ gnome-common intltool gtk-doc
 BuildRequires: python3-devel rpm-build-python3
 BuildRequires: libX11-devel libXfixes-devel
 BuildRequires: libclutter-devel >= %clutter_ver libclutter-gir-devel
 BuildRequires: libdbus-glib-devel
 BuildRequires: libgjs-devel >= %gjs_ver
-BuildRequires: glib2-devel libgio-devel >= %gio_ver
+BuildRequires: libgio-devel >= %gio_ver
 BuildRequires: at-spi2-atk-devel >= %atspi_ver
 BuildRequires: libxml2-devel
 BuildRequires: libgnome-menus-devel >= %menus_ver libgnome-menus-gir-devel
@@ -124,7 +123,7 @@ BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver
 BuildRequires: libcroco-devel
 BuildRequires: libcanberra-devel
-BuildRequires: libpulseaudio-devel
+BuildRequires: libalsa-devel libpulseaudio-devel
 %{?_enable_gnome_bluetooth:BuildRequires: libgnome-bluetooth-devel >= %bluetooth_ver libgnome-bluetooth-gir-devel gnome-bluetooth}
 BuildRequires: evolution-data-server-devel >= %eds_ver libicu-devel
 # for screencast recorder functionality
@@ -179,27 +178,23 @@ GNOME Shell.
 
 %prep
 %setup
-#%%patch1 -p1 -b .gir
 %patch3 -b .shells
-%patch4
-
+# fix rpath
+subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
+# browser plugin dir
+subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %build
-NOCONFIGURE=1 ./autogen.sh
-%configure \
-	--enable-gtk-doc \
-    --disable-schemas-compile
-%make_build
+%meson \
+	-Denable-documentation=true \
+	-Denable-schemas-compile=false
+%meson_build
 
 %install
-%makeinstall_std \
-	mozillalibdir=%browser_plugins_path install
-
-rm -f %buildroot%_libdir/%name/*.la
-
+%meson_install
 %find_lang %name
 
 %check
-%make check
+%meson_test
 
 %files
 %_bindir/*
@@ -209,12 +204,12 @@ rm -f %buildroot%_libdir/%name/*.la
 %_libexecdir/%name-portal-helper
 %dir %_libdir/%name
 %_libdir/%name/libgnome-shell.so
-#%_libdir/%name/libgnome-shell-js.so
 %_libdir/%name/libgnome-shell-menu.so
+%_libdir/%name/libgvc.so
+%_libdir/%name/libst-1.0.so
 %_libdir/%name/*.typelib
 # browser plugin
 %browser_plugins_path/libgnome-shell-browser-plugin.so
-%exclude %browser_plugins_path/libgnome-shell-browser-plugin.la
 
 %files data -f %name.lang
 %_desktopdir/%xdg_name.desktop
@@ -242,6 +237,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0-5-ge5ed0ab
+
 * Thu Jul 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.3-alt1
 - 3.24.3
 

@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define _name pygobject
-%define ver_major 3.24
+%define ver_major 3.26
 %define api_ver 3.0
 %define gtk_api_ver 2.0
 %def_disable devel_doc
 
 Name: python-module-%{_name}3
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Python bindings for GObject
 Group: Development/Python
@@ -34,14 +34,16 @@ Source: %_name-%version.tar
 
 %define glib_ver 2.46.0
 %define gi_ver 1.46.0
+%define pycairo_ver 1.11.1
 
-BuildRequires: gnome-common
+BuildRequires: gnome-common gtk-doc
 BuildRequires(pre): rpm-build-gir
-BuildPreReq: glib2-devel >= %glib_ver libgio-devel libffi-devel
-BuildPreReq: python-devel python-modules-encodings python-module-pycairo-devel libcairo-gobject-devel gtk-doc
-BuildPreReq: gobject-introspection-devel >= %gi_ver
+BuildRequires: glib2-devel >= %glib_ver libgio-devel libffi-devel
+BuildRequires: python-devel python-modules-encodings
+BuildRequires: python-module-pycairo-devel >= %pycairo_ver libcairo-gobject-devel
+BuildRequires: gobject-introspection-devel >= %gi_ver
 # python3
-BuildPreReq: rpm-build-python3 python3-devel python3-module-pycairo-devel
+BuildRequires: rpm-build-python3 python3-devel python3-module-pycairo-devel
 # for tests
 BuildRequires: dbus-tools-gui libgtk+3-gir-devel xvfb-run
 BuildRequires: glibc-i18ndata
@@ -170,7 +172,6 @@ popd
 %files
 %python_sitelibdir/gi/
 %exclude %python_sitelibdir/gi/pygtkcompat.py*
-%python_sitelibdir/*.egg-info/
 
 %exclude %python_sitelibdir/*/*.la
 
@@ -188,7 +189,6 @@ popd
 %files -n python3-module-%{_name}3
 %python3_sitelibdir/gi/
 %exclude %python3_sitelibdir/gi/pygtkcompat.py*
-%python3_sitelibdir/*.egg-info/
 
 %files -n python3-module-%{_name}3-pygtkcompat
 %python3_sitelibdir/pygtkcompat/
@@ -204,6 +204,9 @@ popd
 %endif
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Fri Jun 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt2
 - rebuilt for ALT #33541
 

@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 3.24
+%define ver_major 3.26
 %define api_ver 1.0
 %def_enable python
 
@@ -35,7 +35,7 @@ AutoReqProv: nopython
 %define glib_ver 2.38
 %define gtk_ver 3.20
 %define gtksourceview_ver 3.10
-%define git2_ver 0.25.0
+%define git2_ver 0.26.0
 %define webkit_ver 2.6.0
 %define gtkspell_ver 3.0.3
 %define peas_ver 1.5.0
@@ -165,6 +165,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Sun Apr 30 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 

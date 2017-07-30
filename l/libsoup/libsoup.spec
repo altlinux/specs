@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define api_ver 2.4
-%define ver_major 2.58
+%define ver_major 2.60
 %def_disable static
 %def_enable gtk_doc
 %def_with gnome
@@ -10,7 +10,7 @@
 %def_with gssapi
 
 Name: libsoup
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -226,6 +226,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 2.60.0-alt1
+- 2.60.0
+
 * Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 2.58.2-alt1
 - 2.58.2 (fixed CVE-2017-2885)
 

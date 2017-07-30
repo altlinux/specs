@@ -1,4 +1,4 @@
-%define ver_major 3.24
+%define ver_major 3.26
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
@@ -6,7 +6,7 @@
 %def_disable software_sources
 
 Name: gnome-initial-setup
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Bootstrapping your OS
@@ -17,13 +17,13 @@ Url: https://live.gnome.org/GnomeOS/Design/Whiteboards/InitialSetup
 Source: http://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define nm_ver 0.9
-%define glib_ver 2.46.0
+%define glib_ver 2.53.0
 %define gtk_ver 3.12.0
 %define secret_ver 0.18
 %define geoclue_ver 2.4.3
 %define packagekit_ver 1.1.4
 
-Requires: gnome-shell gdm dconf geoclue2 >= %geoclue_ver
+Requires: gnome-shell >= %ver_major gdm dconf geoclue2 >= %geoclue_ver
 Requires: ibus gnome-keyring gnome-getting-started-docs
 
 BuildRequires: intltool
@@ -85,6 +85,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README NEWS
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Wed May 10 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
 - 3.24.2
 

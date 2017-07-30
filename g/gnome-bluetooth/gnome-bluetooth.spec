@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.20
+%define ver_major 3.26
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
@@ -29,7 +29,7 @@ Source: %name-%version.tar
 
 %define gtk_ver 3.12.0
 
-BuildRequires: gnome-common gtk-doc intltool yelp-tools itstool
+BuildRequires: meson gtk-doc yelp-tools
 BuildRequires: libgio-devel libgtk+3-devel >= %gtk_ver libudev-devel libnotify-devel
 BuildRequires: libcanberra-gtk3-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
@@ -80,21 +80,19 @@ Requires: lib%name-gir = %version-%release
 GObject introspection devel data for the GNOME Bluetooth library
 
 %prep
-%setup -q
-[ ! -d m4 ] && mkdir m4
+%setup
 
 %build
-%autoreconf
-%configure \
-	--disable-schemas-compile \
-	--disable-icon-update \
-	--disable-desktop-update \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{subst_enable introspection}
-%make_build
+%meson \
+	-Denable-schemas-compile=false \
+	-Denable-icon-update=false \
+	-Denable-desktop-update=false \
+	%{?_enable_gtk_doc:-Denable-gtk-doc=true} \
+	%{?_enable_introspection:-Denable-introspection=true}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 mv %buildroot%_bindir/bluetooth-sendto %buildroot%_bindir/%name-sendto
 mkdir -p %buildroot%_altdir
@@ -102,7 +100,6 @@ cat > %buildroot%_altdir/%name <<EOF
 %_bindir/bluetooth-sendto	%_bindir/%name-sendto	10
 EOF
 
-find %buildroot -name "*.la" -delete
 
 %find_lang --with-gnome --output=global.lang %name gnome-bluetooth2
 
@@ -136,6 +133,12 @@ find %buildroot -name "*.la" -delete
 %endif
 
 %changelog
+* Fri Sep 15 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
+- 3.26.1
+
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Mon Feb 13 2017 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 

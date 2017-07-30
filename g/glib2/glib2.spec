@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.52
+%define ver_major 2.54
 %define pcre_ver 8.13
 
 %set_verify_elf_method strict
@@ -20,7 +20,7 @@
 %endif
 
 Name: glib2
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -46,8 +46,8 @@ Source11: glib2.csh
 
 Patch: glib-2.35.9-alt-compat-version-script.patch
 # stop spam about deprecated paths in schemas
-Patch1: glib-2.36.1-alt-deprecated_paths-nowarning.patch
-Patch2: glib-2.39.3-alt-add-xvt.patch
+Patch1: glib-2.53.5-alt-deprecated_paths-nowarning.patch
+Patch2: glib-2.53.7-alt-add-xvt.patch
 Patch3: glib-2.38.2-alt-lfs.patch
 Patch4: glib-2.50.1-alt-dbus_socket_path.patch
 Patch5: glib-2.51.3-alt-configure.patch
@@ -216,7 +216,7 @@ the functionality of the installed glib2/libgio packages.
 %setup -n glib-%version
 %patch
 %patch1
-%patch2
+%patch2 -p1
 %patch3 -p1
 %patch4
 %patch5
@@ -419,6 +419,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 2.54.0-alt1
+- 2.54.0
+
 * Thu Jun 22 2017 Yuri N. Sedunov <aris@altlinux.org> 2.52.3-alt1
 - 2.52.3
 

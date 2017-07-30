@@ -13,7 +13,7 @@
 
 Name: gnome-applets
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Small applications for the GNOME panel
 License: GPLv2+
@@ -366,6 +366,8 @@ window title.
 %patch -p1
 %patch1
 
+subst 's/\(tracker-sparql-\)1.0/\12.0/g' configure.ac
+
 %build
 %autoreconf
 %configure \
@@ -568,6 +570,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %gnome_appletsdir/*.la
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt2
+- rebuilt against libgtop-2.0.so.11/tracker-2.0
+
 * Tue Apr 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
 - 3.24.1
 

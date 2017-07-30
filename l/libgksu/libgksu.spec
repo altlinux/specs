@@ -1,6 +1,6 @@
 Name: libgksu
 Version: 2.0.12
-Release: alt8
+Release: alt9
 
 Summary: A 'su' and 'sudo' wrapper library for GTK+/GNOME applications
 License: %lgpl2plus
@@ -111,6 +111,9 @@ fi
 %_datadir/gtk-doc/html/%name/*
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.12-alt9
+- rebuilt against libgtop-2.0.so.11
+
 * Mon Apr 06 2015 Yuri N. Sedunov <aris@altlinux.org> 2.0.12-alt8
 - applied %%name-2.0.12-alt-drop-n.patch (ALT #27073)
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.24
+%define ver_major 3.26
 %define api_ver 3.0
 %define xdg_name org.gnome.Nautilus
 
@@ -11,7 +11,7 @@
 %def_enable selinux
 
 Name: nautilus
-Version: %ver_major.2.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -33,7 +33,7 @@ Source: %name-%version.tar
 %define glib_ver 2.49.1
 %define desktop_ver 3.3.3
 %define pango_ver 1.28.3
-%define gtk_ver 3.22.0
+%define gtk_ver 3.22.6
 %define libxml2_ver 2.4.7
 %define exif_ver 0.5.12
 %define exempi_ver 2.1.0
@@ -49,7 +49,7 @@ Requires: shared-mime-info
 Requires: common-licenses
 Requires: gvfs >= 1.26.1.1
 
-BuildRequires: autoconf-archive pkgconfig >= %pkgconfig_ver
+BuildRequires: meson pkgconfig >= %pkgconfig_ver
 BuildRequires: desktop-file-utils >= %desktop_file_utils_ver
 BuildRequires: rpm-build-gnome rpm-build-licenses
 # for %%check
@@ -71,7 +71,7 @@ BuildRequires: libgnome-autoar-devel >= %autoar_ver
 BuildRequires: libX11-devel xorg-xproto-devel
 BuildRequires: docbook-utils gtk-doc
 %{?_enable_exempi:BuildRequires: libexempi-devel >= %exempi_ver}
-%{?_enable_tracker:BuildRequires: tracker-devel >= %tracker_ver}
+%{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-2.0)}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 
@@ -134,18 +134,17 @@ GObject introspection devel data for the nautilus-extension library
 rm -f data/*.desktop
 
 %build
-%autoreconf
-%configure \
-    --disable-update-mimedb \
-    --disable-schemas-compile \
-    --enable-gtk-doc \
-    %{subst_enable tracker} \
-    %{subst_enable packagekit}
-
-%make_build
+%meson \
+    -Denable-update-mimedb=false \
+    -Denable-schemas-compile=false \
+    -Denable-gtk-doc=true \
+    -Denable-nst-extension=true \
+    %{?_enable_tracker:-Denable-tracker=true} \
+    %{?_disable_packagekit:-Denable-packagekit=false}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 mkdir -p %buildroot%_libdir/%name-%api_ver/components
 bzip2 -9fk NEWS
 
@@ -175,7 +174,7 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 %_datadir/appdata/%xdg_name.appdata.xml
 # docs
 %doc --no-dereference COPYING
-%doc AUTHORS MAINTAINERS NEWS.bz2 README THANKS
+%doc NEWS.bz2 README*
 %_man1dir/*
 
 #%exclude %_libdir/%name/libgd.la
@@ -184,7 +183,6 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 %_libdir/libnautilus-extension.so.*
 %dir %_libdir/%name/extensions-%api_ver
 %_libdir/%name/extensions-%api_ver/libnautilus-sendto.so
-%exclude %_libdir/%name/extensions-3.0/libnautilus-sendto.la
 
 %files -n lib%name-devel
 %_includedir/*
@@ -193,7 +191,6 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 %files -n lib%name-devel-doc
 %_gtk_docdir/*
-%doc docs/*.{txt,pdf,sxw,html} README.commits
 
 %if_enabled introspection
 %files -n lib%name-gir
@@ -205,6 +202,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Mon Jul 17 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2.1-alt1
 - 3.24.2.1
 

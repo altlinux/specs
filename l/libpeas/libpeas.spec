@@ -1,4 +1,4 @@
-%define ver_major 1.20
+%define ver_major 1.22
 %define api_ver 1.0
 %define gtk_api_ver 3.0
 
@@ -12,7 +12,7 @@
 
 Name: libpeas
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: A gobject-based plugins engine
 Group: System/Libraries
@@ -31,6 +31,7 @@ BuildRequires: gobject-introspection-devel >= 1.31.10 libgtk+3-gir-devel
 BuildRequires: python-module-pygobject3-devel >= 3.1.1
 # for python3 support
 BuildRequires: python3-devel python3-module-pygobject3-devel >= 3.1.1
+BuildRequires: libgladeui2.0-devel
 
 # for Javascript support
 %{?_enable_js:BuildRequires: libseed-devel >= 3.2.0}
@@ -180,6 +181,7 @@ This package contains %name demonstration programs
 %_libdir/%{name}*-%api_ver.so
 %_includedir/%name-%api_ver/
 %_libdir/pkgconfig/*.pc
+%_datadir/glade/catalogs/%name-gtk.xml
 
 %files devel-doc
 %_datadir/gtk-doc/html/*
@@ -198,6 +200,9 @@ This package contains %name demonstration programs
 
 
 %changelog
+* Sun Sep 10 2017 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
+- 1.22.0
+
 * Sun Oct 23 2016 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt2
 - disabled lua loader (not ready for lua-5.3)
 

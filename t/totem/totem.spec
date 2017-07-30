@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.24
+%define ver_major 3.26
 %define xdg_name org.gnome.Totem
 %define nautilus_extdir %_libdir/nautilus/extensions-3.0
 
@@ -19,11 +19,14 @@
 
 %def_disable static
 %def_enable vala
+
 %if_enabled vala
 %def_enable rotation
 %def_enable zeitgeist
 %endif
+
 %def_enable introspection
+%def_enable gtk_doc
 %def_enable nautilus
 %def_enable lirc
 %def_disable tracker
@@ -72,7 +75,8 @@ AutoReqProv: nopython
 %define __python %nil
 %add_python3_compile_include %_libdir/%name/plugins
 
-BuildPreReq: rpm-build-gnome gnome-common gtk-doc
+BuildPreReq: meson gcc-c++ rpm-build-gnome gtk-doc perl-podlators
+BuildRequires: desktop-file-utils db2latex-xsl yelp-tools
 BuildPreReq: intltool >= 0.40.0
 BuildRequires: libappstream-glib-devel
 %{?_enable_nvtv:BuildRequires: libnvtv-devel >= 0.4.5}
@@ -101,8 +105,6 @@ BuildRequires: libdbus-devel gsettings-desktop-schemas-devel
 %{?_enable_nautilus:BuildRequires: libnautilus-devel}
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
 %{?_enable_introspection:BuildRequires: libtotem-pl-parser-gir-devel libgtk+3-gir-devel libclutter-gtk3-gir-devel libpeas-gir-devel}
-
-BuildRequires: desktop-file-utils db2latex-xsl yelp-tools gcc-c++
 BuildRequires: libX11-devel libXext-devel libXi-devel
 
 %description
@@ -234,7 +236,7 @@ with Brasero
 
 %package devel-doc
 Summary: Development documentation for Totem
-Group: Development/GNOME and GTK+
+Group: Development/Documentation
 BuildArch: noarch
 Conflicts: %name < %version
 
@@ -275,24 +277,19 @@ used by other applications like filemanagers.
 
 %prep
 %setup
-[ ! -d m4 ] && mkdir m4
+subst "s|'pylint'|'pylint.py3'|" meson.build
 
 %build
-export ac_cv_path_PYLINT=%_bindir/pylint.py3
-%autoreconf
-%configure \
-	%{subst_enable static} \
-	--disable-schemas-compile \
-	%{subst_enable python} \
-	%{subst_enable vala} \
-	%{?_enable_nautilus:--enable-nautilus=yes} \
-	--disable-static \
-	%{?_enable_snapshot:--enable-gtk-doc}
-
-%make_build
+%meson \
+	-Denable-schemas-compile=false \
+	%{?_enable_python:-Denable-python=yes} \
+	%{?_disable_vala:-Denable-vala=no} \
+	%{?_enable_nautilus:-Denable-nautilus=yes} \
+	%{?_enable_gtk_doc:-Denable-gtk-doc=true}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 find %buildroot%_libdir -name \*.la -delete
 
 %find_lang --with-gnome %name
@@ -313,7 +310,7 @@ find %buildroot%_libdir -name \*.la -delete
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.enums.xml
 %_datadir/GConf/gsettings/totem.convert
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc AUTHORS NEWS README TODO COPYING
 
 %files -n lib%name
@@ -403,10 +400,14 @@ find %buildroot%_libdir -name \*.la -delete
 
 %files video-thumbnailer
 %_bindir/%name-video-thumbnailer
+%_libexecdir/%name-gallery-thumbnailer
 %_man1dir/%name-video-thumbnailer.1.*
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 

@@ -1,10 +1,12 @@
-%define ver_major 2.24
+%def_enable snapshot
+
+%define ver_major 2.26
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
 
 Name: at-spi2-atk
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GTK+ module that bridges ATK to D-Bus at-spi
@@ -12,16 +14,20 @@ Group: Accessibility
 License: LGPLv2+
 Url: http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %define glib_ver 2.32
-%define core_ver 2.24.0
-%define atk_ver 2.18.0
+%define core_ver 2.26.0
+%define atk_ver 2.26.0
 
 Requires: at-spi2-core >= %core_ver
 
-BuildRequires: libdbus-devel libgio-devel >= %glib_ver libatk-devel >= %atk_ver
-BuildRequires: libat-spi2-core-devel >= %core_ver libX11-devel libICE-devel libSM-devel
+BuildRequires: meson libdbus-devel libgio-devel >= %glib_ver libatk-devel >= %atk_ver
+BuildRequires: libat-spi2-core-devel >= %core_ver libxml2-devel libX11-devel libICE-devel libSM-devel
 BuildRequires: intltool
 
 %description
@@ -47,18 +53,20 @@ This package provides development files for atk-bridge library.
 
 %prep
 %setup
+# quick fix for pc-file
+subst 's|\(@libdir@\)|@prefix@/\1|
+       s|\(@includedir@\)|@prefix@/\1|' atk-bridge-2.0.pc.in
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %check
-#%make check
+#%%meson_test
 
 %files -f %name.lang
 %_libdir/libatk-bridge-%api_ver.so.*
@@ -66,7 +74,7 @@ This package provides development files for atk-bridge library.
 %_libdir/gnome-settings-daemon-3.0/gtk-modules/at-spi2-atk.desktop
 %doc AUTHORS README NEWS
 
-%exclude %_libdir/gtk-*/modules/libatk-bridge.la
+#%%exclude %_libdir/gtk-*/modules/libatk-bridge.la
 
 %files devel
 %dir %_includedir/%name
@@ -76,6 +84,9 @@ This package provides development files for atk-bridge library.
 %_pkgconfigdir/atk-bridge-%api_ver.pc
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 2.26.0-alt1
+- 2.26.0
+
 * Tue May 09 2017 Yuri N. Sedunov <aris@altlinux.org> 2.24.1-alt1
 - 2.24.1
 

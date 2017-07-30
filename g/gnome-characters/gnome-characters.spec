@@ -1,10 +1,10 @@
 %define _name org.gnome.Characters
-%define ver_major 3.24
+%define ver_major 3.25
 %define _libexecdir %_prefix/libexec
 %def_with included_libunistring
 
 Name: gnome-characters
-Version: %ver_major.0
+Version: %ver_major.92
 Release: alt1
 
 Summary: Character map application for GNOME
@@ -74,6 +74,9 @@ characters.
 %exclude %_libdir/%_name/libgc.la
 
 %changelog
+* Mon Sep 04 2017 Yuri N. Sedunov <aris@altlinux.org> 3.25.92-alt1
+- 3.25.92
+
 * Tue Jul 04 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 

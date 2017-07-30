@@ -2,7 +2,7 @@
 
 %define _name mines
 %define __name gnome-%_name
-%define ver_major 3.24
+%define ver_major 3.26
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -57,6 +57,9 @@ NOME Mines is a variation of the popular logic puzzle minesweeper.
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 

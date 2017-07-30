@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.24
+%define ver_major 3.26
 %define api_ver 3
 %define so_ver 4
 
@@ -11,7 +11,7 @@
 %def_enable multimedia
 
 Name: evince
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document viewer
@@ -38,7 +38,7 @@ BuildPreReq: libpoppler-glib-devel >= %poppler_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildRequires: gcc-c++ gnome-common gtk-doc
 BuildRequires: intltool yelp-tools itstool
-BuildRequires: icon-theme-adwaita libdjvu-devel libgnome-keyring-devel libnautilus-devel  libspectre-devel libtiff-devel
+BuildRequires: icon-theme-adwaita libdjvu-devel libgnome-keyring-devel libnautilus-devel libspectre-devel libtiff-devel
 BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel zlib-devel libsecret-devel
 BuildRequires: libarchive-devel
 BuildRequires: libgnome-desktop3-devel
@@ -210,6 +210,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Thu Jul 27 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
 - 3.24.1
 

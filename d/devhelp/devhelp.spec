@@ -1,4 +1,4 @@
-%define ver_major 3.24
+%define ver_major 3.26
 %define api_ver 3.0
 %define xdg_name org.gnome.Devhelp
 
@@ -14,8 +14,7 @@ Url: https://wiki.gnome.org/Apps/Devhelp
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-# From configure.ac
-%define gtk_ver 3.20.0
+%define gtk_ver 3.22.0
 
 Requires: lib%name = %version-%release
 
@@ -24,16 +23,14 @@ BuildPreReq: rpm-build-licenses
 BuildPreReq: gtk-doc libappstream-glib-devel
 
 # From configure.ac
-BuildPreReq: intltool >= 0.40.0
 BuildRequires: pkgconfig(gthread-2.0) >= 2.10.0
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.19.3
-# build with webkit2gtk-3.0 or webkit2gtk-4.0
-# BuildRequires: pkgconfig(webkit2gtk-3.0) >= 2.0.0
 BuildRequires: pkgconfig(webkit2gtk-4.0) >= 2.6.0
 BuildRequires: pkgconfig(gio-2.0) >= 2.40
 BuildRequires: zlib-devel
 # since 3.23.x
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libwebkit2gtk-gir-devel
+BuildRequires: gsettings-desktop-schemas-devel
 
 %description
 A developers help program.
@@ -98,7 +95,8 @@ This plugin for GEdit enables using DevHelp from inside the editor.
 %setup
 
 %build
-%autoreconf
+# newer libtool required
+#%%autoreconf
 %configure --disable-static
 
 %make_build
@@ -146,6 +144,9 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Sun Sep 10 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Sun Mar 19 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 

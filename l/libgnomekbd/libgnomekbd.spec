@@ -1,11 +1,11 @@
 %def_disable snapshot
 
-%define ver_major 3.22
+%define ver_major 3.26
 %define api_ver 3.0
 %def_enable introspection
 
 Name: libgnomekbd
-Version: %ver_major.0.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME keyboard shared library
@@ -112,6 +112,9 @@ GObject introspection devel data for the GNOME keyboard library
 %endif
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0.1-alt1
 - 3.22.0.1
 

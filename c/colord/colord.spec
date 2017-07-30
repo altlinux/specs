@@ -7,13 +7,15 @@
 %def_disable bash_completion
 %def_enable installed_tests
 %def_enable libcolordcompat
+%def_enable systemd
+%def_enable docs
 
 %define _libexecdir %_prefix/libexec
 %define _icccolordir %_datadir/color/icc
 %define _localstatedir %_var
 
 Name: colord
-Version: 1.3.5
+Version: 1.4.1
 Release: alt1
 
 Summary: Color daemon
@@ -33,10 +35,11 @@ Source: http://www.freedesktop.org/software/%name/releases/colord-%version.tar.x
 
 Requires: lib%name = %version-%release
 
-BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: meson glib2-devel >= %glib_ver
 BuildRequires: docbook-utils gtk-doc intltool libdbus-devel libgudev-devel libudev-devel
 BuildRequires: liblcms2-devel >= %lcms_ver libpolkit-devel >= %polkit_ver
-BuildRequires: libsqlite3-devel libusb-devel libgusb-devel >= %gusb_ver systemd-devel libsystemd-devel
+BuildRequires: libsqlite3-devel libusb-devel libgusb-devel >= %gusb_ver 
+%{?_enable_systemd:BuildRequires: libsystemd-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgusb-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_print_profiles:BuildRequires: argyllcms}
@@ -114,26 +117,36 @@ Requires: lib%name = %version-%release
 This package provides tests programs that can be used to verify
 the functionality of the installed Golord.
 
+%package devel-doc
+Summary: Development documentation for Colord
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: %name < %version
+
+%description devel-doc
+This package provides Colord reference manual
+
 %prep
 %setup
 
 %build
-%configure --disable-static \
-	--disable-rpath \
-	%{subst_enable daemon} \
-	%{?_enable_session_helper:--enable-session-helper} \
-	%{subst_enable reverse} \
-	%{subst_enable vala} \
-	--with-daemon-user=%colord_user \
-	%{?_enable_print_profiles:--enable-print-profiles} \
-	%{?_disable_bash_completion:--disable-bash-completion} \
-	%{?_enable_installed_tests:--enable-installed-tests} \
-	%{subst_enable libcolordcompat}
-
-%make_build
+%meson -Denable-static=false \
+	-Denable-rpath=false \
+	%{?_enable_daemon:-Denable-daemon=true} \
+	%{?_enable_session_helper:-Denable-session-helper=true} \
+	%{?_disable_reverse:-Denable-reverse=false} \
+	%{?_enable_vala:-Denable-vala=true} \
+	-Dwith-daemon-user=%colord_user \
+	%{?_enable_print_profiles:-Denable-print-profiles=true} \
+	%{?_disable_bash_completion:-Denable-bash-completion=false} \
+	%{?_enable_installed_tests:-Denable-installed-tests=true} \
+	%{?_enable_libcolordcompat:-Denable-libcolordcompat=true} \
+	%{?_disable_systemd:-Denable-systemd=false} \
+	%{?_disable_docs:-Denable-docs=false}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 mkdir -p %buildroot%_localstatedir/lib/{%name,color}/icc
 
@@ -144,7 +157,7 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %find_lang %name
 
 %check
-#%make check
+#%%meson_test
 
 %pre
 %_sbindir/groupadd -r -f %colord_group 2>/dev/null ||:
@@ -157,7 +170,7 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_datadir/glib-2.0/schemas/org.freedesktop.ColorHelper.gschema.xml
 %_libexecdir/%name
 %_libexecdir/colord-session
-%_sysconfdir/dbus-1/system.d/org.freedesktop.ColorManager.conf
+%_datadir/dbus-1/system.d/org.freedesktop.ColorManager.conf
 %_datadir/dbus-1/interfaces/org.freedesktop.ColorManager*.xml
 %_datadir/dbus-1/system-services/org.freedesktop.ColorManager.service
 %_datadir/polkit-1/actions/org.freedesktop.color.policy
@@ -177,14 +190,14 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_libdir/colord-sensors/libcolord_sensor_argyll.so
 %_libdir/colord-sensors/libcolord_sensor_dtp94.so
 %_libdir/colord-sensors/libcolord_sensor_spark.so
-%_libdir/colord-sensors/libdtp94-private.so
-%_libdir/colord-sensors/libhuey-private.so
-%_libdir/colord-sensors/libmunki-private.so
-%_libdir/colord-sensors/libospark-private.so
+#%_libdir/colord-sensors/libdtp94-private.so
+#%_libdir/colord-sensors/libhuey-private.so
+#%_libdir/colord-sensors/libmunki-private.so
+#%_libdir/colord-sensors/libospark-private.so
 
 %dir %_libdir/colord-plugins
-%_libdir/colord-plugins/libcd_plugin_camera.so
-%_libdir/colord-plugins/libcd_plugin_scanner.so
+%_libdir/colord-plugins/libcolord_sensor_camera.so
+%_libdir/colord-plugins/libcolord_sensor_scanner.so
 %_datadir/%name/
 %_man1dir/cd-create-profile.1.*
 %_man1dir/colormgr.*
@@ -199,9 +212,6 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %systemd_unitdir/*.service
 %{?_enable_bash_completion:%_datadir/bash-completion/completions/colormgr}
 
-%exclude %_libdir/%name-sensors/*.la
-%exclude %_libdir/colord-plugins/*.la
-
 # common colorspaces from shared-color-profiles
 %dir %_icccolordir/colord
 %_icccolordir/colord/AdobeRGB1998.icc
@@ -211,6 +221,7 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_icccolordir/colord/NTSC-RGB.icc
 %_icccolordir/colord/PAL-RGB.icc
 %_icccolordir/colord/ProPhotoRGB.icc
+%_icccolordir/colord/Rec709.icc
 %_icccolordir/colord/SMPTE-C-RGB.icc
 %_icccolordir/colord/sRGB.icc
 
@@ -272,16 +283,17 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %if_enabled introspection
 %files -n lib%name-gir
 %_typelibdir/Colord-1.0.typelib
-%_typelibdir/ColorHug-1.0.typelib
+%_typelibdir/Colorhug-1.0.typelib
 
 %files -n lib%name-gir-devel
 %_girdir/Colord-1.0.gir
-%_girdir/ColorHug-1.0.gir
+%_girdir/Colorhug-1.0.gir
 %endif
 
 %if_enabled vala
 %files -n lib%name-vala
 %_datadir/vala/vapi/%name.vapi
+%_datadir/vala/vapi/%name.deps
 %endif
 
 %if_enabled installed_tests
@@ -290,8 +302,15 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_datadir/installed-tests/%name/
 %endif
 
+%if_enabled docs
+%files devel-doc
+%_datadir/gtk-doc/html/%name
+%endif
 
 %changelog
+* Tue Aug 22 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
+- 1.4.1
+
 * Wed Mar 01 2017 Yuri N. Sedunov <aris@altlinux.org> 1.3.5-alt1
 - 1.3.5
 

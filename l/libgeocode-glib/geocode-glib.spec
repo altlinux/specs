@@ -1,12 +1,14 @@
 %define _libexecdir %_prefix/libexec
 %define _name geocode-glib
-%define ver_major 3.24
+%define ver_major 3.25
 %define api_ver 1.0
+%def_enable gtk_doc
 %def_enable introspection
 %def_enable installed_tests
+%def_disable check
 
 Name: lib%{_name}
-Version: %ver_major.0
+Version: %ver_major.4.1
 Release: alt1
 
 Summary: Convenience library for the Yahoo! Place Finder APIs
@@ -20,9 +22,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %define soup_ver 2.42
 %define json_glib_ver 1.0
 
-BuildPreReq: gnome-common libjson-glib-devel >= %json_glib_ver
+BuildPreReq: meson libjson-glib-devel >= %json_glib_ver
 BuildRequires: libgio-devel >= %glib_ver libsoup-devel >= %soup_ver
-BuildRequires: gtk-doc
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_introspection:BuildRequires: libsoup-gir-devel libjson-glib-gir-devel}
 
 %description
@@ -81,18 +83,18 @@ the functionality of the installed %_name library.
 %setup -n %_name-%version
 
 %build
-%autoreconf
-%configure --enable-gtk-doc \
-	%{?_enable_installed_tests:--enable-installed-tests}
-%make_build
+%meson %{?_enable_gtk_doc:-Denable-gtk-doc=true} \
+	%{?_enable_introspection:-Denable-introspection=true} \
+	%{?_enable_installed_tests:-Denable-installed-tests=true}
+%meson_build
 
 %install
-%makeinstall_std
-
-%check
-#%make check
+%meson_install
 
 %find_lang %_name
+
+%check
+%{?_enable_check:%meson_test}
 
 %files -f %_name.lang
 %_libdir/*.so.*
@@ -105,7 +107,7 @@ the functionality of the installed %_name library.
 %_libdir/pkgconfig/%_name-%api_ver.pc
 
 %files devel-doc
-%_datadir/gtk-doc/html/%_name-%api_ver/
+%_datadir/gtk-doc/html/%_name/
 
 %if_enabled introspection
 %files gir
@@ -117,11 +119,14 @@ the functionality of the installed %_name library.
 
 %if_enabled installed_tests
 %files tests
-%_libexecdir/installed-tests/%_name-%api_ver/
-%_datadir/installed-tests/%_name-%api_ver/
+%_libexecdir/installed-tests/%_name/
+#%_datadir/installed-tests/%_name-%api_ver/
 %endif
 
 %changelog
+* Wed Aug 16 2017 Yuri N. Sedunov <aris@altlinux.org> 3.25.4.1-alt1
+- 3.25.4.1
+
 * Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 

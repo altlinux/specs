@@ -1,55 +1,23 @@
-%define ver_major 1.12
-%define ver_api 1.0
+%define ver_major 2.0
+%define api_ver 2.0
 
 # since 1.0.3 (see https://bugzilla.gnome.org/show_bug.cgi?id=733857)
 %set_verify_elf_method unresolved=relaxed
 
+%def_with bootstrap
 %def_enable introspection
 %def_disable hal
 %def_enable upower
-%def_enable libxml2
 %def_enable network_manager
-%def_enable libmediaart
-%def_disable evolution
-%def_enable rss
-%def_enable preferences
-%def_enable poppler
-%def_enable libgxps
-%def_enable libexif
-%def_enable libiptcdata
-%def_enable libgsf
-%def_enable libjpeg
-%def_enable libtiff
-%def_enable libpng
-%def_enable libvorbis
-%def_enable libflac
-%def_enable exempi
-%def_enable nautilus_extension
 %def_enable gtk_doc
-%def_enable taglib
-%def_enable needle
-%def_enable libgif
-%def_enable libcue
-%def_enable abiword
-%def_enable dvi
-%def_enable mp3
-%def_enable ps
-%def_enable text
-%def_enable icon
-%def_enable artwork
-%def_enable libosinfo
-%def_enable playlist
 
 # Unicode support library? (libunistring|libicu)
 %define unicode_support libicu
 
-# mediaextractor (gstreamer|libav|mplayer|external)
-%define generic_media_extractor gstreamer
-
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -60,81 +28,47 @@ Url: http://wiki.gnome.org/Projects/Tracker
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 Obsoletes: lib%name-client
+Obsoletes: %name-search-tool < 1.99.0
+Obsoletes: nautilus-%name < 1.99.0
+
 Requires: lib%name = %version-%release
+%{?_without_bootstrap:Requires: %name-miners >= %version}
 
 %define dbus_ver 1.3.1
-%define glib_ver 2.40.0
+%define glib_ver 2.44.0
 %define pango_ver 1.0.0
 %define gtk_ver 3.0.0
-%define libxml2_ver 2.6
 %define hal_ver 0.5
 %define upower_ver 0.9.0
-%define poppler_ver 0.16.0
-%define cairo_ver 1.0
-%define gdk_ver 1.0
-%define vorbis_ver 0.22
-%define flac_ver 1.2.1
-%define libexif_ver 0.6
-%define libgsf_ver 1.14.24
-%define exempi_ver 2.1.0
-%define evo_ver 2.32.0
-%define eds_ver 2.32.0
-%define gee_ver 0.3
-%define taglib_ver 1.6
-%define libgrss_ver 0.7
-%define rest_ver 0.7
 %define nm_ver 0.8
-%define gst_ver 0.10.31
+%define gst_ver 1.0
+%define sqlite_ver 3.20.1-alt2
+%define soup_ver 2.40.0
 %define gupnp_dlna_ver 0.9.4
-%define libosinfo_ver 0.2.9
-%define libpng_ver 0.89
-%define libmediaart_ver 1.9
-%define sqlite_ver 3.11.0
 
-BuildPreReq: gcc-c++ gnome-common rpm-build-gnome gtk-doc docbook-utils
-BuildPreReq: glibc-devel
+Requires: libsqlite3 >= %sqlite_ver
+
+BuildPreReq: gcc-c++ gnome-common rpm-build-gnome
+BuildPreReq: gtk-doc docbook-utils python3
+BuildPreReq: libxml2-devel
 BuildPreReq: libdbus-devel >= %dbus_ver
-BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %glib_ver
-%{?_enable_libmediaart:BuildPreReq: libmediaart2.0-devel >= %libmediaart_ver}
 BuildPreReq: libicu-devel libunistring-devel
 BuildPreReq: libpango-devel >= %pango_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildRequires: libsoup-devel libjson-glib-devel
+BuildRequires: libsoup-devel >= %soup_ver libjson-glib-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.9.5}
 %{?_enable_hal:BuildPreReq: libhal-devel >= %hal_ver}
 %{?_enable_upower:BuildPreReq: libupower-devel >= %upower_ver}
-%{?_enable_network_manager:BuildPreReq: NetworkManager-glib-devel >= %nm_ver}
-%{?_enable_libxml2:BuildPreReq: libxml2-devel >= %libxml2_ver}
-%{?_enable_libpng:BuildPreReq: libpng-devel >= %libpng_ver}
+%{?_enable_network_manager:BuildPreReq: NetworkManager-glib-devel >= %nm_ver libnm-devel}
+BuildRequires: libstemmer-devel
+
 BuildPreReq: libuuid-devel
-BuildPreReq: libenca-devel >= 1.9
 BuildPreReq: vala >= 0.18.0
 BuildPreReq: intltool >= 0.35.0
 BuildPreReq: sqlite3 libsqlite3-devel >= %sqlite_ver
 BuildRequires: gstreamer1.0-devel >= %gst_ver gst-plugins1.0-devel >= %gst_ver
 BuildRequires: libgupnp-dlna-devel >= %gupnp_dlna_ver
-BuildRequires: libavformat-devel >= 0.8.4 libavcodec-devel >= 0.8.4  libavutil-devel >= 0.8.4
-%{?_enable_rss:BuildPreReq: libgrss-devel >= %libgrss_ver}
-BuildPreReq: libgee0.8-devel >= %gee_ver
-%{?_enable_poppler:BuildPreReq: libpoppler-glib-devel >= %poppler_ver}
-%{?_enable_libgxps:BuildPreReq: libgxps-devel}
-%{?_enable_libexif:BuildPreReq: libexif-devel >= %libexif_ver}
-%{?_enable_libiptcdata:BuildPreReq: libiptcdata-devel}
-%{?_enable_libgsf:BuildPreReq: libgsf-devel >= %libgsf_ver}
-%{?_enable_libjpeg:BuildPreReq: libjpeg-devel}
-%{?_enable_libtiff:BuildPreReq: libtiff-devel}
-%{?_enable_libvorbis:BuildPreReq: libvorbis-devel >= %vorbis_ver}
-%{?_enable_libvorbis:BuildPreReq: libflac-devel >= %flac_ver}
-%{?_enable_exempi:BuildPreReq: libexempi-devel >= %exempi_ver}
-%{?_enable_evolution:BuildPreReq: evolution-devel >= %evo_ver evolution-data-server-devel >= %eds_ver}
-%{?_enable_nautilus_extension:BuildPreReq: libnautilus-devel}
-%{?_enable_taglib:BuildPreReq: libtag-devel >= %taglib_ver}
-%{?_enable_gtk_doc:BuildPreReq: gtk-doc docbook-utils graphviz}
-%{?_enable_libgif:BuildPreReq: libgif-devel}
-%{?_enable_libcue:BuildPreReq: libcue-devel}
-%{?_enable_libosinfo:BuildPreReq: libosinfo-devel >= %libosinfo_ver}
-%{?_enable_playlist:BuildPreReq: libtotem-pl-parser-devel}
 BuildRequires: systemd-devel libseccomp-devel
 
 %description
@@ -183,6 +117,7 @@ Summary: GObject introspection devel data for the Tracker library
 Group: System/Libraries
 BuildArch: noarch
 Requires: lib%name-gir = %version-%release
+Provides: gir(Tracker) = 2.0
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Tracker library
@@ -212,27 +147,6 @@ Included utilities for Tracker:
   * tracker-sparql: allows  the caller to run an RDF query on the database.
   * tracker-tag: tool to manage tags on files.
 
-%package -n evolution-%name
-Summary: Tracker plugin for Evolution
-Group: Office
-Requires: %name = %version-%release
-Provides: %name-plugin-evolution = %version-%release
-Obsoletes: %name-plugin-evolution
-
-%description -n evolution-%name
-Tracker is a powerfull desktop-oriented search tool and indexer.
-This package contains plugin for Evolution.
-
-%package -n nautilus-%name
-Summary: Nautilus extension for managing tags
-Group: Graphical desktop/GNOME
-Requires: %name = %version-%release
-Provides: %name-nautilus = %version-%release
-Obsoletes: %name-nautilus
-
-%description -n nautilus-%name
-Nautilus extension for managing tags
-
 %prep
 %setup
 
@@ -244,38 +158,8 @@ Nautilus extension for managing tags
 	%{subst_enable hal} \
 	%{subst_enable upower} \
 	--with-unicode-support=%unicode_support \
-	--enable-generic-media-extractor=%generic_media_extractor \
 	%{?_enable_network_manager:--enable-network-manager} \
-	%{subst_enable libxml2} \
 	%{subst_enable unac} \
-	%{?_enable_rss:--enable-miner-rss} \
-	%{?_enable_evolition:--enable-miner-evolution} \
-	%{?_enable_nautilus_extension:--enable-nautilus-extension} \
-	%{subst_enable taglib} \
-	%{?_enable_needle:--enable-tracker-needle} \
-	%{?_enable_preferences:--enable-tracker-preferences} \
-	%{subst_enable poppler} \
-	%{subst_enable libgxps} \
-	%{subst_enable libexif} \
-	%{subst_enable libiptcdata} \
-	%{subst_enable libgsf} \
-	%{subst_enable libjpeg} \
-	%{subst_enable libtiff} \
-	%{subst_enable libgif} \
-	%{subst_enable libpng} \
-	%{subst_enable libvorbis} \
-	%{subst_enable libflac} \
-	%{subst_enable exempi} \
-	%{subst_enable libcue} \
-	%{subst_enable abiword} \
-	%{subst_enable dvi} \
-	%{subst_enable mp3} \
-	%{subst_enable ps} \
-	%{subst_enable text} \
-	%{subst_enable icon} \
-	%{subst_enable artwork} \
-	%{subst_enable libosinfo} \
-	%{subst_enable playlist} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
 
 #	--enable-guarantee-metadata \
@@ -295,45 +179,22 @@ rm -rf %buildroot%_datadir/tracker-tests
 %doc src/libtracker-common/COPYING.LIB
 %config(noreplace) %_sysconfdir/xdg/autostart/*
 %_datadir/glib-2.0/schemas/*
-%dir %_libdir/%name-%ver_api
-%_libdir/%name-%ver_api/extract-modules
-%_libdir/%name-%ver_api/writeback-modules
-
-%_libexecdir/tracker-extract
-%_libexecdir/tracker-miner-fs
+%dir %_libdir/%name-%api_ver
 %_libexecdir/tracker-store
-%_libexecdir/tracker-writeback
-%_libexecdir/tracker-miner-apps
-%_libexecdir/tracker-miner-user-guides
-%{?_enable_rss:%_libexecdir/%name-miner-rss}
-
 %_datadir/dbus-1/services/*.service
-%_man1dir/tracker-miner-fs.*
-%{?_enable_rss:%_man1dir/%name-miner-rss.1.*}
-
 %dir %_datadir/%name
 %_datadir/%name/*.xml
 %_datadir/%name/stop-words/
-%_datadir/%name/miners/
 %_datadir/%name/ontologies/
-%_datadir/%name/extract-rules/
-%_prefix/lib/systemd/user/tracker-extract.service
-%_prefix/lib/systemd/user/tracker-miner-apps.service
-%_prefix/lib/systemd/user/tracker-miner-fs.service
-%_prefix/lib/systemd/user/tracker-miner-rss.service
-%_prefix/lib/systemd/user/tracker-miner-user-guides.service
+%_datadir/%name/domain-ontologies/
 %_prefix/lib/systemd/user/tracker-store.service
-%_prefix/lib/systemd/user/tracker-writeback.service
-
-%_man1dir/tracker-extract.*
 %_man1dir/tracker-store.*
-%_man1dir/tracker-writeback.*
 
 %exclude %_datadir/bash-completion/completions/%name
 
 %files -n lib%name
 %_libdir/*.so.*
-%_libdir/%name-%ver_api/*.so.*
+%_libdir/%name-%api_ver/*.so.*
 
 %files utils
 %_bindir/%name
@@ -347,21 +208,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 %_man1dir/tracker-sql.*
 %_man1dir/tracker-status.*
 
-%files search-tool
-%_bindir/tracker-preferences
-%_bindir/tracker-needle
-%_datadir/applications/*.desktop
-%_datadir/icons/*/*/apps/tracker.*
-%_datadir/%name/tracker-preferences.ui
-%_datadir/%name/tracker-needle.ui
-%_datadir/appdata/tracker-needle.appdata.xml
-%_datadir/appdata/tracker-preferences.appdata.xml
-%_man1dir/tracker-preferences.*
-%_man1dir/tracker-needle.*
-
 %files devel
-%_libdir/%name-%ver_api/*.so
-%_includedir/%name-%ver_api
+%_libdir/%name-%api_ver/*.so
+%_includedir/%name-%api_ver/
 %_pkgconfigdir/*.pc
 %_libdir/*.so
 %_datadir/vala/vapi/*
@@ -369,30 +218,28 @@ rm -rf %buildroot%_datadir/tracker-tests
 %if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
-# temporary delete radio-overview.png, dia have bug - generated image different size on i586 and x86_84
-# %exclude %_datadir/gtk-doc/html/ontology/radio-overview.png
-%endif
-
-%if_enabled evolution
-%files -n evolution-%name
-%_libdir/evolution/*/plugins/*
-%endif
-
-
-%if_enabled nautilus_extension
-%files -n nautilus-%name
-%nautilus_extdir/libnautilus-tracker-tags.so
 %endif
 
 %if_enabled introspection
 %files -n lib%name-gir
-%_typelibdir/*.typelib
+%_typelibdir/Tracker-%api_ver.typelib
+%_typelibdir/TrackerControl-%api_ver.typelib
+%_typelibdir/TrackerMiner-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%_girdir/*.gir
+%_girdir/Tracker-%api_ver.gir
+%_girdir/TrackerControl-%api_ver.gir
+%_girdir/TrackerMiner-%api_ver.gir
 %endif
 
+
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
+* Tue Aug 22 2017 Yuri N. Sedunov <aris@altlinux.org> 1.99.3-alt1
+- 1.99.3
+
 * Tue Aug 22 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.3-alt1
 - 1.12.3
 

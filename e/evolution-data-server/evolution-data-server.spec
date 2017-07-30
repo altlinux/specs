@@ -7,7 +7,7 @@
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.24
+%define ver_major 3.26
 %define ver_base 3.24
 %define ver_lib 1.2
 
@@ -28,7 +28,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -188,10 +188,8 @@ the functionality of the installed EDS libraries.
 %cmakeinstall_std
 # if unstable
 ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
-# temporarily symlink for %_libdir/%name/libedbus-private.so in %_libdir to link evolution-3.23.90
-#ln -s %name/libedbus-private.so %buildroot%_libdir/libedbus-private.so
 
-%find_lang --with-gnome --output=%name.lang %name-%ver_base
+%find_lang --with-gnome --output=%name.lang %name %name-%ver_base
 
 %files -f %name.lang
 %_libexecdir/*
@@ -225,8 +223,6 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %files devel
 %_includedir/*
 %_libdir/*.so
-# symlink to private library
-#%exclude %_libdir/libedbus-private.so
 %_pkgconfigdir/*.pc
 
 %if_enabled gtk_doc
@@ -265,6 +261,9 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Thu Sep 07 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.6-alt1
 - 3.24.6
 
