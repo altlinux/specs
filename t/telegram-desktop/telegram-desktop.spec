@@ -4,8 +4,8 @@
 %def_with ffmpeg
 
 Name: telegram-desktop
-Version: 1.1.14
-Release: alt2
+Version: 1.1.18
+Release: alt1
 
 Summary: Telegram is a messaging app with a focus on speed and security
 
@@ -44,6 +44,8 @@ BuildRequires: qt5-base-devel-static
 
 # for SourceFiles/mtproto/connection.cpp
 BuildRequires: libzip-devel
+
+BuildRequires: zlib-devel >= 1.2.8
 
 BuildRequires: libminizip-devel libpcre-devel libexpat-devel libssl-devel bison
 #BuildRequires: libexif-devel libpixman-devel libz3-devel liblzma-devel
@@ -159,6 +161,10 @@ ln -s %name %buildroot%_bindir/telegram
 %doc README.md
 
 %changelog
+* Sun Jul 30 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.18-alt1
+- new version 1.1.18 (with rpmrb script)
+- update translations
+
 * Sun Jul 23 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.14-alt2
 - cleanup build requires (drop opus, pulseaudio, webp, xcb, exif, X*)
 
