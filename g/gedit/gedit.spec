@@ -11,7 +11,7 @@
 %{?_enable_snapshot:%def_enable gtk_doc}
 
 Name: gedit
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: gEdit is a small but powerful text editor for GNOME
@@ -222,6 +222,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Sun Jul 30 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
+- 3.22.1
+
 * Sun Sep 18 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
@@ -732,7 +735,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	  it will either open a new doc if there arent any more, or print hola! to
 	  stdout.. as i said, its not fully implemented yet.
 
-* Tue May 11 1999 Bernhard Rosenkr‰nzer <bero@mandrakesoft.com>
+* Tue May 11 1999 Bernhard Rosenkr√§nzer <bero@mandrakesoft.com>
 - Mandrake adaptions
 
 * Sat Feb 06 1999 Michael Johnson <johnsonm@redhat.com>
