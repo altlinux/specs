@@ -2,8 +2,8 @@
 %def_disable static
 
 Name: mbedtls
-Version: 2.4.2
-Release: alt1
+Version: 2.5.1
+Release: alt1%ubt
 
 Summary: Light-weight cryptographic and SSL/TLS library
 License: Apache
@@ -12,6 +12,8 @@ Group: System/Libraries
 Url: https://tls.mbed.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 Source: https://tls.mbed.org/download/%name-%version-apache.tgz
+
+BuildPreReq: rpm-build-ubt
 
 BuildRequires: cmake
 BuildRequires: pkcs11-helper-devel
@@ -27,7 +29,6 @@ applications with as little hassle as possible.
 Summary: Light-weight cryptographic and SSL/TLS library
 Group: System/Libraries
 Conflicts: hiawatha
-Provides: lib%name = %version-%release
 
 %description -n lib%name%soversion
 mbed TLS is a light-weight open source cryptographic and SSL/TLS
@@ -48,7 +49,6 @@ developing applications that use mbed TLS
 %package -n lib%name-devel-static
 Summary: Static libraries for mbed TLS
 Group: Development/C
-Requires: lib%name-devel = %version-%release
 
 %description -n lib%name-devel-static
 Static libraries for developing applications
@@ -58,7 +58,6 @@ that use mbed TLS
 %package utils
 Summary: Utilities for PolarSSL
 Group: Development/Tools
-Requires: lib%name = %version-%release
 
 %description utils
 Cryptographic utilities based on mbed TLS 
@@ -114,6 +113,12 @@ popd
 %_libexecdir/%name/*
 
 %changelog
+* Sun Jul 30 2017 Nazarov Denis <nenderus@altlinux.org> 2.5.1-alt1%ubt
+- Version 2.5.1
+
+* Thu Apr 20 2017 Nazarov Denis <nenderus@altlinux.org> 2.4.2-alt0.M80P.1
+- Build for branch p8
+
 * Sun Mar 26 2017 Nazarov Denis <nenderus@altlinux.org> 2.4.2-alt1
 - Version 2.4.2
 
@@ -121,7 +126,7 @@ popd
 - Version 2.4.0
 
 * Sun Jul 17 2016 Nazarov Denis <nenderus@altlinux.org> 2.3.0-alt0.M80P.1
-- Build for branc p8
+- Build for branch p8
 
 * Wed Jul 13 2016 Nazarov Denis <nenderus@altlinux.org> 2.3.0-alt1
 - Version 2.3.0
