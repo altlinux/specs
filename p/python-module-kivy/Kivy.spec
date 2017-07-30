@@ -1,5 +1,5 @@
 Name: python-module-kivy
-Version: 1.9.1
+Version: 1.10.0
 Release: alt1
 Summary: Open source library for rapid development of applications
 License: LGPLv3
@@ -22,6 +22,9 @@ Source: %version.tar.gz
 # optimized out: libEGL-devel python-base python-devel python-module-BeautifulSoup python-module-Pygments python-module-docutils python-module-html5lib python-module-jinja2 python-module-markupsafe python-module-numpy python-module-numpy-testing python-module-protobuf python-module-setuptools python-module-simplejson python-module-six python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-unittest
 BuildRequires: ctags libGL-devel libGLES-devel python-module-Cython python-module-Pyrex python-module-jinja2-tests python-module-nss python-module-pygame python-module-pytz python-module-sphinx python-modules-json time
 BuildRequires: xvfb-run
+BuildRequires(pre): gstreamer1.0-devel
+BuildRequires(pre): libSDL2_mixer-devel libSDL2_ttf-devel libSDL2-devel libSDL2_image-devel
+BuildRequires(pre): git
 
 %description
 Kivy - Open source library for rapid development of applications
@@ -70,6 +73,8 @@ cd doc &&
 
 %install
 %python_install
+mkdir -p %buildroot/%_docdir
+mv %buildroot/%_datadir/kivy-examples %buildroot/%_docdir
 
 %files
 %doc doc/README.md
@@ -78,10 +83,13 @@ cd doc &&
 
 %files devel
 %doc doc/build/html
-%_datadir/kivy-examples
+%_docdir/kivy-examples
 ## XXX garden binary is moved to separate module
 
 %changelog
+* Sun Jul 30 2017 Denis Medvedev <nbr@altlinux.org> 1.10.0-alt1
+- version bump to 1.10.0
+
 * Mon Apr 11 2016 Fr. Br. George <george@altlinux.ru> 1.9.1-alt1
 - Autobuild version bump to 1.9.1
 - Fix documentation build
