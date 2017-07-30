@@ -1,5 +1,5 @@
 Name: camotics
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Open-Source Simulation and Computer Aided Machining - A 3-axis CNC GCode simulator
@@ -69,7 +69,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
         --remove-key=Encoding \
         --set-icon=camotics \
         --remove-category=Science \
-        --add-category=Science \
+        --add-category=Development \
         --add-category=Engineering \
         %buildroot%_desktopdir/CAMotics.desktop
 
@@ -91,6 +91,10 @@ done
 %_datadir/%name
 
 %changelog
+* Sun Jul 30 2017 Anton Midyukov <antohami@altlinux.org> 1.1.1-alt1
+- New version 1.1.1
+- Fix desktop categories.
+
 * Wed Feb 08 2017 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
 - New version 1.1.0
 
