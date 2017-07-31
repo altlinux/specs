@@ -3,7 +3,7 @@
 
 Name:		libv
 Version:	1.90
-Release:	alt9.1
+Release:	alt9.2
 Summary:	V is a free, multiple platform C++ graphical user interface framework
 License:	LGPL
 Group:		Development/C++
@@ -37,7 +37,7 @@ Libraries, include files and other resources you can use to develop
 
 %build
 perl -pi -e "s|^HOMEV\s*=.*|HOMEV=`pwd`|" Config.mk
-CFLAGS=-I. make
+CFLAGS="-I. -Wno-error=narrowing -fpermissive" make
 
 %install
 mkdir -p %buildroot%_libdir
@@ -69,6 +69,9 @@ find %buildroot \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
 %_libdir/*.so
 
 %changelog
+* Mon Jul 31 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.90-alt9.2
+- Fixed build with new toolchain.
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.90-alt9.1
 - Fixed build with make 3.82
 
