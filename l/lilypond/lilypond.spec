@@ -5,7 +5,7 @@
 
 Name: lilypond
 Version: %ver_major.%ver_minor
-Release: alt0.1
+Release: alt0.2
 
 Group: Publishing
 Summary: A program for printing sheet music
@@ -21,7 +21,8 @@ Requires: ghostscript
 BuildRequires: texi2html >= 1.82 
 BuildRequires: dblatex convert zip rsync zlib-devel fontforge guile-devel
 BuildRequires: perl-Math-Complex perl-podlators
-BuildRequires: emacs-devel emacs24
+BuildRequires: emacs-devel emacs
+BuildRequires: makeinfo texi2dvi
 
 # Automatically added by buildreq on Tue Mar 17 2009
 BuildRequires: flex fontforge fonts-type1-urw gcc-c++ guile18-devel libpango-devel python-devel python-modules-compiler python-modules-encodings t1utils texlive-metapost
@@ -156,6 +157,9 @@ done
 #%_datadir/omf/*
 
 %changelog
+* Mon Jul 31 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.18.2-alt0.2
+- Updated build dependencies
+
 * Thu Nov 06 2014 Michael Pozhidaev <msp@altlinux.ru> 2.18.2-alt0.1
 - New version: 2.18.2
 
