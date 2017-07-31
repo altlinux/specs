@@ -1,5 +1,5 @@
 Name: libwps
-Version: 0.4.6
+Version: 0.4.7
 Release: alt1
 Summary: Library for reading and converting Microsoft Works word processor documents
 License: LGPL
@@ -74,6 +74,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %doc docs/doxygen/html
 
 %changelog
+* Mon Jul 31 2017 Fr. Br. George <george@altlinux.ru> 0.4.7-alt1
+- Autobuild version bump to 0.4.7
+
 * Mon Mar 13 2017 Fr. Br. George <george@altlinux.ru> 0.4.6-alt1
 - Autobuild version bump to 0.4.6
 
