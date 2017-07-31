@@ -12,11 +12,11 @@
 %def_disable cdrtools
 %def_enable cdrdao
 %def_disable libburnia
-%def_disable introspection
+%def_enable introspection
 
 Name: brasero
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: CD/DVD burning tool for GNOME.
 Group: Archiving/Cd burning
@@ -42,15 +42,13 @@ Requires: dvdauthor vcdimager gst-plugins-bad%gst_api_ver
 
 BuildPreReq: gnome-common rpm-build-gnome rpm-build-licenses
 
-# From configure.in
-BuildPreReq: glib2-devel >= 2.28.0
-BuildPrereq: libgio-devel >= 2.28.0
+# From configure.ac
+BuildPrereq: libgio-devel >= 2.30.0
 BuildPreReq: libgtk+3-devel >= 3.0.0
 BuildPreReq: gstreamer%gst_api_ver-devel >= 0.11.99
 BuildPreReq: gst-plugins%gst_api_ver-devel >= 0.11.99
 BuildPreReq: libxml2-devel >= 2.6.0
-%{?_enable_libburnia:BuildPreReq: libburn-devel >= 0.4.0}
-BuildPreReq: libisofs-devel >= 0.6.4
+%{?_enable_libburnia:BuildPreReq: libburn-devel >= 0.4.0 libisofs-devel >= 0.6.4}
 BuildPreReq: libnotify-devel >= 0.7
 %{?_enable_search:BuildPreReq: tracker-devel >= 1.0}
 %{?_enable_playlist:BuildPreReq: libtotem-pl-parser-devel >= 2.30.2}
@@ -216,22 +214,25 @@ GObject introspection devel data for the Brasero
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*
 
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/*
 
 %if_enabled introspection
 %files -n lib%name-gir
-%_libdir/girepository-1.0/*
+%_typelibdir/*.typelib
 
 %files -n lib%name-gir-devel
-%_datadir/gir-1.0/*
+%_girdir/*.gir
 %endif
 
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la
 
 %changelog
+* Mon Jul 31 2017 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
+- 3.12.2
+
 * Sun Jan 24 2016 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt2
 - fixed files list
 
