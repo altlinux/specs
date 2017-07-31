@@ -6,8 +6,8 @@ BuildRequires: gcc4.9
 %def_disable static
 
 Name: owfs
-Version: 2.9p5
-Release: alt2.1.1
+Version: 3.2p1
+Release: alt1
 
 Summary: 1-Wire Virtual File System
 License: GPL
@@ -15,12 +15,16 @@ Group: System/Kernel and hardware
 
 Url: http://sourceforge.net/projects/owfs
 Source: %name-%version.tar.gz
-Patch: owfs-2.9-alt-gcc5.patch
+#Patch: owfs-2.9-alt-gcc5.patch
+Patch0: owfs-tcl-req.patch
+Patch1: owfs-initscript.patch
 
 BuildRequires: chrpath
+BuildRequires: service
 
-# Automatically added by buildreq on Tue Oct 18 2011
-BuildRequires: libfuse-devel libusb-compat-devel perl-devel python-devel swig
+# Automatically added by buildreq on Tue Jul 25 2017
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libcloog-isl4 libusb-devel perl perl-Encode perl-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python3 python3-base ruby-stdlibs swig-data
+BuildRequires: glibc-devel-static groff-base libftdi1-devel libfuse-devel mt-st python-devel python-module-google python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-locale selinux-policy swig
 
 %description
 OWFS is a userspace virtual filesystem providing access to 1-Wire
@@ -82,6 +86,7 @@ Development files for libownet library.
 Summary: Virtual filesystem on top of lib%name providing access to 1-Wire networks
 Group: System/Kernel and hardware
 Requires: lib%name = %version-%release
+Requires: service
 
 %description fs
 %name-fs is a virtual filesystem on top of lib%name providing access
@@ -91,6 +96,7 @@ to 1-Wire networks.
 Summary: HTTP daemon providing access to 1-Wire networks
 Group: Networking/WWW
 Requires: lib%name = %version-%release
+Requires: service
 
 %description httpd
 %name-httpd is a HTTP daemon on top of %name providing access to
@@ -100,6 +106,7 @@ Requires: lib%name = %version-%release
 Summary: FTP daemon providing access to 1-Wire networks
 Group: Networking/File transfer
 Requires: lib%name = %version-%release
+Requires: service
 
 %description ftpd
 %name-ftpd is a FTP daemon on top of %name providing access to 1-Wire
@@ -109,6 +116,7 @@ networks.
 Summary: Backend server (daemon) for 1-wire control
 Group: System/Kernel and hardware
 Requires: lib%name = %version-%release
+Requires: service
 
 %description server
 %name-server is the backend component of the OWFS 1-wire bus control system.
@@ -167,13 +175,16 @@ owserver, owftpd, owshell, owperl, owtcl) and also all the supported
 
 %prep
 %setup
-%patch -p2
+#patch -p2
+%patch0 -p1
+%patch1 -p1
 sed -i- 's/) Makefile.PL/& INSTALLDIRS=vendor/' module/*/perl5/Makefile.am
 
 %build
 %autoreconf
 %configure \
 	%{subst_enable static} \
+	--with-systemdsystemunitdir=%_unitdir \
 	--enable-usb \
 	--enable-cache \
 	--enable-mt \
@@ -219,6 +230,14 @@ install -d -m 755 %buildroot%_sbindir
 mv -f %buildroot%_bindir/owserver %buildroot%_sbindir
 
 chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
+
+# Remove tcl man files, till we build owfs without tcl support
+%__rm -f %buildroot%_mandir/mann/*
+
+# Clean up unused parts in man dirs
+%__rm -f %buildroot%_man1dir/*.1so.*
+%__rm -f %buildroot%_man3dir/*.3so.*
+%__rm -f %buildroot%_man5dir/*.5so.*
 
 %post fs
 %post_service owfs
@@ -267,11 +286,14 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 %_libdir/libownet.so
 
 %files fs
+%_unitdir/owfs.service
 %_initdir/owfs
+
 %config(noreplace) %_sysconfdir/sysconfig/owfs
 %_sbindir/owfs
 
 %files httpd
+%_unitdir/owhttpd.service
 %_initdir/owhttpd
 %config(noreplace) %_sysconfdir/sysconfig/owhttpd
 %_sbindir/owhttpd
@@ -284,6 +306,7 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 #_bindir/owside
 %_bindir/owget
 %_bindir/owexist
+%_bindir/owusbprobe
 
 %files man
 %_man1dir/*.1.*
@@ -292,11 +315,14 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 #_mandir/mann/*.n.*
 
 %files ftpd
+%_unitdir/owftpd.service
 %_initdir/owftpd
 %config(noreplace) %_sysconfdir/sysconfig/owftpd
 %_sbindir/owftpd
 
 %files server
+%_unitdir/owserver.service
+%_unitdir/owserver.socket
 %_initdir/owserver
 %config(noreplace) %_sysconfdir/sysconfig/owserver
 %_sbindir/owserver
@@ -317,6 +343,11 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 %python_sitelibdir/*
 
 %changelog
+* Mon Jul 24 2017 Grigory Milev <week@altlinux.ru> 3.2p1-alt1
+- New version released
+- Init.d scripts fixed
+- Added systemd scripts
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.9p5-alt2.1.1
 - rebuild with new perl 5.24.1
 
