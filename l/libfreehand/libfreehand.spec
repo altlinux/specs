@@ -1,12 +1,16 @@
 Name: libfreehand
-Version: 0.1.0
-Release: alt1.qa1
+Version: 0.1.1
+Release: alt1
 Summary: A library for import of Macromedia/Adobe FreeHand documents
 
 Group: System/Libraries
 License: MPLv2.0
 Url: http://www.freedesktop.org/wiki/Software/libfreehand/
-Source: http://dev-www.libreoffice.org/src/%name-%version.tar.xz
+Source: %name-%version.tar.xz
+
+# Automatically added by buildreq on Mon Jul 31 2017
+# optimized out: glibc-kernheaders-x86 libstdc++-devel perl pkg-config python-base xz
+BuildRequires: doxygen gcc-c++ glibc-kernheaders-generic gperf libicu-devel liblcms2-devel librevenge-devel zlib-devel
 
 BuildRequires: gcc-c++
 BuildRequires: boost-devel-headers
@@ -77,6 +81,10 @@ rm -rf %buildroot/%_docdir/%name
 %_bindir/*
 
 %changelog
+* Mon Jul 31 2017 Fr. Br. George <george@altlinux.ru> 0.1.1-alt1
+- Autobuild version bump to 0.1.1
+- Fix buildreqs
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.1.0-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
