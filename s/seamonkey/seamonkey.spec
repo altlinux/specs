@@ -14,7 +14,7 @@
 %define sm_develdir     %sm_prefix-devel
 
 Name: 	 seamonkey
-Version: 2.46
+Version: 2.48
 Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
@@ -160,7 +160,7 @@ tar -xf %SOURCE6 -C mailnews/extensions/
 %patch6 -p2
 %patch7 -p2
 #%%patch8 -p2
-%patch9 -p2
+#patch9 -p2
 
 # https://bugzilla.altlinux.org/30322
 %ifarch %{ix86}
@@ -233,6 +233,7 @@ cd -
 %endif
 
 %install
+export SHELL=/bin/sh
 dir="$PWD/objdir"
 
 mkdir -p \
@@ -394,6 +395,11 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Mon Jul 31 2017 Michael Shigorin <mike@altlinux.org> 1:2.48-alt1
+- 2.48
+- dropped patch9
+- %%install: set SHELL environment variable explicitly too
+
 * Wed Dec 28 2016 Michael Shigorin <mike@altlinux.org> 1:2.46-alt1
 - 2.46 released
 
