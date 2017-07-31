@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.109
+Version: 1.1.110
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,9 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Jul 31 2017 Michael Shigorin <mike@altlinux.org> 1.1.110-alt1
+- lxde-sysv
+
 * Mon Jun 12 2017 Michael Shigorin <mike@altlinux.org> 1.1.109-alt1
 - starterkits-20170612
 
