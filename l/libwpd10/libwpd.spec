@@ -1,6 +1,6 @@
 Name: libwpd10
-Version: 0.10.0
-Release: alt2
+Version: 0.10.1
+Release: alt1
 
 Summary: Library for reading and converting WordPerfect(tm) documents
 
@@ -10,7 +10,7 @@ Url: http://libwpd.sf.net/
 
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: libwpd-%version.tar.bz2
+Source: libwpd-%version.tar.xz
 
 BuildRequires: gcc-c++
 BuildRequires: doxygen
@@ -51,7 +51,7 @@ Group: Documentation
 BuildArch: noarch
 
 %description doc
-The %name-doc package contains API documentation for %{name}.
+The %name-doc package contains API documentation for %name.
 
 %prep
 %setup -n libwpd-%version
@@ -98,6 +98,9 @@ LD_LIBRARY_PATH=../lib/.libs make check
 %doc docs/*.png
 
 %changelog
+* Mon Jul 31 2017 Fr. Br. George <george@altlinux.ru> 0.10.1-alt1
+- Autobuild version bump to 0.10.1
+
 * Tue May 10 2016 Sergey Y. Afonin <asy@altlinux.ru> 0.10.0-alt2
 - NMU
 - added "Obsoletes: libwpd9 >= 0.10.0" (ALT #31956)
