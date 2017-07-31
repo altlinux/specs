@@ -6,7 +6,7 @@
 
 Name: libsmi
 Version: 0.4.8
-Release: alt2.1
+Release: alt2.2
 
 Summary: A library to access SMI MIB information
 License: BSD
@@ -22,6 +22,8 @@ Patch2: %name-man.patch
 Patch3: %name-smistrip.patch
 Patch4: %name-fix-parallel-build.patch
 Patch5: %name-0.4.8-alt-yyleng.patch
+Patch6: %name-%version-debian-bison-follow-parameter-handling-changes.patch
+Patch7: %name-%version-alt-bison.patch
 
 Requires: snmp-mibs
 BuildRequires: flex gcc-c++ wget
@@ -91,6 +93,8 @@ This package contains the LibSMI tools.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p0
+%patch6 -p1
+%patch7 -p1
 
 %build
 %autoreconf
@@ -145,6 +149,9 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/smi.conf
 %_man1dir/*
 
 %changelog
+* Mon Jul 31 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.8-alt2.2
+- Fixed build.
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt2.1
 - Fixed build
 
