@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.2.8
+Version: 2.4.0
 Release: alt1%ubt
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -22,9 +22,19 @@ Patch: %name-%version-alt.patch
 # Automatically added by buildreq on Sun Dec 23 2007
 BuildRequires: control doxygen flex gcc-c++ libadns-devel libcap-devel libcom_err-devel libgnutls-openssl-devel libgcrypt-devel zlib-devel
 BuildRequires: libkrb5-devel libpcap-devel libpcre-devel libportaudio2-devel libssl-devel python unzip xml-utils xsltproc perl-Pod-Parser perl-devel
-BuildRequires: liblua5-devel < 5.3.0
+BuildRequires: liblua5-devel < 5.3
+BuildRequires: libssh-devel
+BuildRequires: libnl-devel
+BuildRequires: libnghttp2-devel
+BuildRequires: liblz4-devel
+BuildRequires: libxml2-devel
+BuildRequires: libspandsp6-devel
+BuildRequires: libsnappy-devel
 BuildRequires: libgtk+3-devel
-BuildRequires: qt5-base-devel qt5-tools
+BuildRequires: libcares-devel
+BuildRequires: libsmi-devel
+BuildRequires: libGeoIP-devel
+BuildRequires: qt5-base-devel qt5-tools qt5-multimedia-devel
 BuildRequires(pre):rpm-build-ubt
 
 %package base
@@ -144,7 +154,7 @@ chmod ugo+rx configure
    --enable-shared \
    --disable-warnings-as-errors \
    --with-qt=5 \
-   --with-gtk3=yes \
+   --with-gtk=yes \
    --enable-wireshark \
    --enable-tshark \
    --enable-editcap \
@@ -156,13 +166,10 @@ chmod ugo+rx configure
    --enable-dumpcap \
    --enable-rawshark \
    --disable-androiddump \
-   --enable-ipv6 \
    --disable-setuid-install \
-   \
    --with-gnu-ld \
    --with-pic \
    --with-gnutls \
-   --with-gcrypt \
    --without-libsmi \
    --with-pcap \
    --with-pcap-remote \
@@ -172,7 +179,6 @@ chmod ugo+rx configure
    --with-libcap \
    --with-ssl \
    --with-krb5 \
-   --with-adns \
    --with-plugins=%_libdir/%name/plugins/%version \
    \
    CPPFLAGS="$CPPFLAGS -I%_includedir/pcre"
@@ -226,6 +232,7 @@ _EOF_
 %_bindir/text2pcap
 %_bindir/reordercap
 %_man1dir/capinfos.*
+%_man1dir/sshdump.*
 %_man1dir/randpkt.*
 %_man1dir/randpktdump.*
 %_man1dir/dftest.*
@@ -279,6 +286,9 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Sun Jul 30 2017 Anton Farygin <rider@altlinux.ru> 2.4.0-alt1%ubt
+- 2.4.0
+
 * Fri Jul 21 2017 Anton Farygin <rider@altlinux.ru> 2.2.8-alt1%ubt
 - new version:
      * wnpa-sec-2017-13 WBMXL dissector infinite loop CVE-2017-7702, CVE-2017-11410
