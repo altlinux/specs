@@ -1,6 +1,6 @@
 Name: pnmixer
 Version: 0.7.2
-Release: alt1
+Release: alt2
 
 %def_without	gtk3
 
@@ -73,6 +73,10 @@ mv %buildroot%_desktopdir/%name.desktop %buildroot%_sysconfdir/xdg/autostart/
 %_man1dir/*
 
 %changelog
+* Mon Jul 31 2017 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt2
+- Patch from upstream:
+  + Clip volume between 0 and 100.
+
 * Mon Jun 19 2017 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt1
 - Ensure that card is not NULL.
 - Updated to 0.7.2.
