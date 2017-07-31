@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.37
+Version: 1.8.38
 Release: alt1
 
 Summary: Installer common parts
@@ -110,6 +110,10 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon Jul 31 2017 Michael Shigorin <mike@altlinux.org> 1.8.38-alt1
+- 90-date.sh: force distro birth date if system one reads "before"
+  (closes: #33705)
+
 * Tue Jun 27 2017 Michael Shigorin <mike@altlinux.org> 1.8.37-alt1
 - 10-disk.sh: ignore sed exit code (see also #30239).
 
