@@ -1,4 +1,4 @@
-%define ver_major 0.96
+%define ver_major 0.97
 %define libname libmsi
 %define api_ver 1.0
 
@@ -116,6 +116,9 @@ This package provides GObject introspection devel data for the %libname.
 %_girdir/Libmsi-%api_ver.gir
 
 %changelog
+* Mon Jul 31 2017 Yuri N. Sedunov <aris@altlinux.org> 0.97-alt1
+- 0.97
+
 * Wed Nov 09 2016 Yuri N. Sedunov <aris@altlinux.org> 0.96-alt1
 - 0.96
 
