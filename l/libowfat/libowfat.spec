@@ -1,6 +1,6 @@
 Name: libowfat
-Version: 0.28
-Release: alt3.1
+Version: 0.31
+Release: alt1
 
 Summary: Reimplementation of libdjb
 
@@ -8,12 +8,10 @@ License: GPLv2
 Group: System/Libraries
 Url: http://www.fefe.de/libowfat/
 
-Packager: Ilya Shpigor <elly@altlinux.org>
-
-Source: http://dl.fefe.de/%name-%version.tar.bz2
-Patch0: %name-0.28-shared.patch
-Patch1: %name-0.28-no-dietlibc.patch
-Patch2: %name-0.28-no-man.patch
+Source: %name-%version.tar.bz2
+Patch0: %name-%version-alt-shared.patch
+Patch1: %name-%version-alt-no-dietlibc.patch
+Patch2: %name-%version-alt-no-man.patch
 
 %package devel
 Summary: Headers and static lib for libowfat development
@@ -36,9 +34,9 @@ Install this package if you want do compile applications using the
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch0 -p2
+%patch1 -p2
+%patch2 -p2
 
 %build
 %add_optflags %optflags_shared
@@ -63,6 +61,9 @@ ln -s libowfat.so.0 %buildroot%_libdir/libowfat.so
 %_includedir/%name/
 
 %changelog
+* Mon Jul 31 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.31-alt1
+- Updated to upstream version 0.31.
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.28-alt3.1
 - Fixed build
 
