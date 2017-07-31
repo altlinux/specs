@@ -1,6 +1,6 @@
 Name: liborcus
 Version: 0.12.1
-Release: alt1
+Release: alt2
 Summary: Standalone file import filter library for spreadsheet documents
 
 Group: System/Libraries
@@ -80,6 +80,9 @@ ln -s %name-%libver.pc %buildroot%_pkgconfigdir/%name.pc
 %_bindir/orcus-*
 
 %changelog
+* Mon Jul 31 2017 Fr. Br. George <george@altlinux.ru> 0.12.1-alt2
+- Rebuild with new boost
+
 * Mon Oct 17 2016 Fr. Br. George <george@altlinux.ru> 0.12.1-alt1
 - Autobuild version bump to 0.12.1
 
