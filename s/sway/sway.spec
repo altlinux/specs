@@ -1,5 +1,5 @@
 Name:		sway
-Version:	0.13.0
+Version:	0.14.0
 Release:	alt1
 
 Summary:	i3wm drop-in replacement for Wayland
@@ -15,6 +15,8 @@ Source2:	pam
 
 PreReq:		/etc/tcb
 BuildRequires(pre): rpm-macros-cmake
+BuildPreReq: libwlc-devel >= 0.0.10
+BuildPreReq: libdbus-devel
 # Automatically added by buildreq on Tue Feb 28 2017
 # optimized out: asciidoc cmake-modules docbook-dtds docbook-style-xsl fontconfig glib2-devel libcairo-devel libgdk-pixbuf libgio-devel libgpg-error libinput-devel libjson-c libudev-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-server libwayland-server-devel libxcbutil-image libxkbcommon-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml wayland-devel xml-common xsltproc
 BuildRequires: asciidoc-a2x cmake libcap-devel libgdk-pixbuf-devel libjson-c-devel libpam-devel libpango-devel libpcre-devel libwayland-cursor-devel libwayland-egl-devel libwlc0-devel time
@@ -56,8 +58,7 @@ cp %SOURCE2 .
 install -pm2640 -D pam %buildroot%_sysconfdir/pam.d/swaylock
 
 %post
-/sbin/setcap cap_sys_ptrace=eip %_bindir/%name
-/sbin/setcap cap_sys_tty_config=eip %_bindir/%name
+/sbin/setcap cap_sys_ptrace,cap_sys_tty_config=eip %_bindir/%name
 
 %files
 %doc LICENSE
@@ -84,6 +85,10 @@ install -pm2640 -D pam %buildroot%_sysconfdir/pam.d/swaylock
 %_datadir/%name/*
 
 %changelog
+* Mon Jul 31 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.14.0-alt1
+- 0.14.0
+- fixed capabilities setting
+
 * Wed May 10 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.13.0-alt1
 - 0.13.0
 
