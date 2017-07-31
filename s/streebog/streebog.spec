@@ -2,7 +2,7 @@
 
 Name: 	  streebog
 Version:  0.11
-Release:  alt1.git%gitrev
+Release:  alt2.git%gitrev
 
 Summary:  GOST R 34.11-2012: Streebog Hash Function
 License:  BSD
@@ -26,6 +26,9 @@ Systems" (InfoTeCS JSC).
 %setup
 
 %build
+%ifarch x86_64
+export CFLAGS="-march=core2 -mtune=sandybridge -mssse3"
+%endif
 %make_build
 
 %install
@@ -36,6 +39,9 @@ install -Dm 0755 gost3411-2012 %buildroot%_bindir/gost3411-2012
 %_bindir/gost3411-2012
 
 %changelog
+* Mon Jul 31 2017 Andrey Cherepanov <cas@altlinux.org> 0.11-alt2.git8de633e
+- Set compatibility flags (ALT #33592) Solution is supplied by gremlin@
+
 * Fri Jun 02 2017 Andrey Cherepanov <cas@altlinux.org> 0.11-alt1.git8de633e
 - Initial package in Sisyphus
 
