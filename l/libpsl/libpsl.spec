@@ -1,8 +1,8 @@
 %def_disable bootstrap
 
 Name: libpsl
-Version: 0.17.0
-Release: alt2
+Version: 0.18.0
+Release: alt1
 
 Summary: C library for the Public Suffix List
 License: %mit
@@ -99,6 +99,9 @@ from a plain text Public Suffix List.
 %configure \
 	--disable-silent-rules \
 	--disable-static \
+	--disable-cfi \
+	--disable-ubsan \
+	--disable-asan \
 	--enable-man \
 	--enable-gtk-doc \
 	--enable-builtin=libicu \
@@ -113,6 +116,7 @@ from a plain text Public Suffix List.
 # the script is noinst but the manpage is installed
 install -Dm0755 src/psl-make-dafsa %buildroot%_bindir/psl-make-dafsa
 %else # bootstrap
+install -Dm0755 src/psl-make-dafsa %buildroot%_bindir/psl-make-dafsa
 install -Dm0644 src/psl-make-dafsa.1 %buildroot%_man1dir/psl-make-dafsa.1
 %endif # bootstrap
 
@@ -145,6 +149,11 @@ make check
 %_man1dir/psl-make-dafsa.1*
 
 %changelog
+* Mon Jul 31 2017 Mikhail Efremov <sem@altlinux.org> 0.18.0-alt1
+- Explicitly disable sanitizers.
+- Fix bootstrap.
+- New version.
+
 * Fri Apr 07 2017 Mikhail Efremov <sem@altlinux.org> 0.17.0-alt2
 - Initail build.
 - Patch from upstream:
