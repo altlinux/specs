@@ -1,5 +1,4 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.qa3.1
+Release: alt2
 Name: libeo
 Version: 1.3.1
 #Release: alt1.qa3
@@ -94,6 +93,9 @@ mv %buildroot%prefix/lib/* %buildroot%_libdir/
 #_libexecdir/eo/test
 
 %changelog
+* Mon Jul 31 2017 Fr. Br. George <george@altlinux.ru> 1.3.1-alt2
+- Rebuilt win boost 1.63.0
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.1-alt1.qa3.1
 - (AUTO) subst_x86_64.
 
@@ -106,7 +108,7 @@ mv %buildroot%prefix/lib/* %buildroot%_libdir/
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.1-alt1.qa1
 - NMU: rebuilt with libboost_*.so.1.53.0.
 
-* Tue Dec 30 2012 Fr. Br. George <george@altlinux.ru> 1.3.1-alt1
+* Sun Dec 30 2012 Fr. Br. George <george@altlinux.ru> 1.3.1-alt1
 - Autobuild version bump to 1.3.1
 
 * Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt2.2
