@@ -1,5 +1,5 @@
 Name:    light-locker
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 Summary: A simple session-locker for lightdm 
 
@@ -47,6 +47,9 @@ sed -e "/XDT_I18N/d" configure.ac.in > configure.ac
 %_man1dir/*.1*
 
 %changelog
+* Mon Jul 31 2017 Andrey Cherepanov <cas@altlinux.org> 1.8.0-alt1
+- New version
+
 * Tue Feb 16 2016 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt1
 - Initial build in Sisyphus (ALT #31807)
 
