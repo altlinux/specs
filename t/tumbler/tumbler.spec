@@ -2,8 +2,8 @@
 %def_disable gstreamer
 
 Name: tumbler
-Version: 0.1.90
-Release: alt1.1
+Version: 0.2.0
+Release: alt1
 
 Summary: A thumbnail D-Bus service
 License: %gpl2plus, %lgpl2plus
@@ -88,6 +88,10 @@ Development files and headers for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jul 31 2017 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1
+- Drop obsoleted patch.
+- Updated to 0.2.0.
+
 * Thu Jul 27 2017 Michael Shigorin <mike@altlinux.org> 0.1.90-alt1.1
 - BOOTSTRAP: avoid libopenraw for hefty BRs (boost).
 
