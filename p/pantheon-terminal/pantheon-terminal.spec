@@ -2,7 +2,7 @@
 %define xdg_name org.pantheon.terminal
 
 Name: pantheon-terminal
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Pantheon Terminal
@@ -63,6 +63,9 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Mon Jul 31 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
+- 0.4.3
+
 * Thu May 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
 - 0.4.2
 
