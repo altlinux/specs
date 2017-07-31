@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 Name: libsidplay
 Summary: SID chip music module playing library
 Version: 1.36.60
-Release: alt2_5
+Release: alt3_5
 Source: http://home.arcor.de/ms2002sep/bak/%{name}-%{version}.tar.bz2
 Patch0: libsidplay-1.36.57-opts.patch
 Group: System/Libraries
@@ -41,6 +41,7 @@ Developers should consider switching to libsidplay version 2 or newer.
 
 
 %build
+%add_optflags -Wno-error=narrowing
 %configure --disable-static
 make %{_smp_mflags}
 
@@ -62,6 +63,9 @@ make DESTDIR=%{buildroot} INSTALL="install -p" install
 
 
 %changelog
+* Mon Jul 31 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.36.60-alt3_5
+- Fixed build with new toolchain.
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.36.60-alt2_5
 - update to new release by fcimport
 
