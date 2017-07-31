@@ -1,4 +1,4 @@
-# 5.3.3.2
+# 5.4.0.3
 %def_without forky
 %def_without python
 %def_with parallelism
@@ -6,14 +6,14 @@
 %def_without lto
 
 Name: LibreOffice
-%define hversion 5.3
-%define urelease 3.2
+%define hversion 5.4
+%define urelease 0.3
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt1
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -46,20 +46,12 @@ Source200:	key.gpg
 Source300:	libreoffice.unused
 
 ## FC patches
-Patch1: FC-0001-installation-fix.patch
-Patch2: FC-0001-never-run-autogen.sh.patch
-Patch3: FC-0001-add-X-TryExec-entries-to-desktop-files.patch
-Patch4: FC-0001-don-t-suppress-crashes.patch
-Patch5: FC-0001-change-from-glew-to-epoxy.patch
-Patch6: FC-0001-gtk3-implement-opengl-support-for-slideshow.patch
-Patch7: FC-0001-lower-the-system-epoxy-requirement.patch
-Patch8: FC-0001-Resolves-tdf-105998-distort-hairline-borders-to-fall.patch
-Patch9: FC-0001-Related-rhbz-1422353-make-writer-behave-like-calc-an.patch
-Patch10: FC-0001-right-click-to-insert-image.patch
-Patch11: FC-0001-Related-tdf-106100-recover-mangled-svg-in-presentati.patch
-Patch12: FC-0001-Related-rhbz-1334915-tdf-100158-hack-using-startcent.patch
-Patch13: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
-Patch14: FC-0001-disable-libe-book-support.patch
+Patch1: FC-0001-don-t-suppress-crashes.patch
+Patch2: FC-0001-Related-tdf-106100-recover-mangled-svg-in-presentati.patch
+Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
+Patch4: FC-0001-rename-IsAutoCapitalizeWordDelim-to-NonFieldWordDeli.patch
+Patch5: FC-0002-consider-field-marks-as-text-for-auto-quotes.patch
+Patch6: FC-0001-disable-libe-book-support.patch
 
 ## Long-term FC patches
 
@@ -89,6 +81,8 @@ BuildRequires: libCoinMP-devel
 BuildRequires: libzmf-devel libstaroffice-devel libepoxy-devel libmysqlcppconn-devel libmysqlclient-devel libtelepathy-devel
 # 5.3.3
 BuildRequires: doxygen e2fsprogs
+# 5.4.0
+BuildRequires: libxmlsec1-nss-devel libgpgme-devel
 
 %if_without python
 BuildRequires: python3-dev
@@ -235,15 +229,7 @@ echo Direct build
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-#patch14 -p1
+#patch6 -p1
 
 ## Long-term FC patches applying
 
@@ -311,7 +297,6 @@ export CXX=%_target_platform-g++
         --with-lang="en-US %with_lang" \
         --with-external-tar=`pwd`/ext_sources \
 	\
-	--enable-ext-google-docs \
 	--enable-ext-nlpsolver \
 	--enable-ext-numbertext \
 	--enable-ext-wiki-publisher \
@@ -327,7 +312,6 @@ export CXX=%_target_platform-g++
 	--disable-gstreamer-0-10 \
   \
   	--enable-avahi \
-	--enable-telepathy \
 %if_with lto
   	--enable-lto \
 %endif
@@ -509,6 +493,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Jul 31 2017 Fr. Br. George <george@altlinux.ru> 5.4.0.3-alt1
+- Update to 5.4.0.3
+
 * Wed Jun 07 2017 Fr. Br. George <george@altlinux.ru> 5.3.3.2-alt2
 - Enable languagetool extension
 
