@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 5.0.24
-Release: alt2
+Release: alt4
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -48,7 +48,6 @@ Patch19: pve-manager-snapshot-resize.patch
 Patch20: pve-manager-rem-package-ver-btn.patch
 Patch21: pve-http-server-alt.patch
 Patch22: extjs-alt.patch
-Patch23: pve-manager-font-awesome.patch
 Patch24: pve-manager-postfix-3.patch
 Patch25: pve-manager-gettext.patch
 
@@ -63,7 +62,7 @@ This package contains the PVE management tools
 
 %package -n pve-container
 Summary: PVE Container management tool
-Version: 2.0.14
+Version: 2.0.15
 Group: Development/Perl
 PreReq: shadow-submap
 Requires: pve-lxc >= 2.0.7-alt5 dtach perl-Crypt-Eksblowfish >= 0.009-alt5_15
@@ -90,7 +89,7 @@ HA Manager PVE
 
 %package -n pve-qemu-server
 Summary: Qemu Server Tools
-Version: 5.0.13
+Version: 5.0.14
 Group: System/Servers
 Requires: socat pve-qemu-system >= 2.6.1-alt4
 Provides: qemu-server = %version-%release
@@ -111,7 +110,7 @@ This package contains a common code base used by pve-container and qemu-server
 Summary: PVE Asynchrounous HTTP Server Implementation
 Version: 2.0.5
 Group: System/Servers
-Requires: fonts-ttf-fontawesome-web
+Requires: fonts-font-awesome
 
 %description -n pve-http-server
 This is used to implement the PVE REST API
@@ -142,7 +141,6 @@ This is used to implement the PVE REST API
 %patch20 -p0 -b .rembtn
 %patch21 -p0 -b .alt
 %patch22 -p0 -b .alt
-%patch23 -p0 -b .font-awesome
 %patch24 -p0 -b .postfix-3
 %patch25 -p0 -b .gettext
 
@@ -440,6 +438,13 @@ __EOF__
 %_datadir/libpve-http-server-perl
 
 %changelog
+* Tue Aug 01 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.24-alt4
+- fixed FontAwesome path
+
+* Tue Jul 25 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.24-alt3
+- pve-container 2.0-15
+- qemu-server 5.0-14
+
 * Thu Jul 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.24-alt2
 - pve-manager 5.0-24
 - pve-firewall 3.0-2
