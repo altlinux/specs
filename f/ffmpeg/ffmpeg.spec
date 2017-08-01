@@ -56,7 +56,7 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	3.3.2
+Version:	3.3.3
 Release:	alt1
 
 Url:		http://ffmpeg.org
@@ -650,6 +650,12 @@ mkdir -p %buildroot
 %endif
 
 %changelog
+* Tue Aug 01 2017 Anton Farygin <rider@altlinux.ru> 2:3.3.3-alt1
+- 3.3.3 with fixes for following vulnerabilities:
+	* CVE-2017-11399 remote DoS via crafted APE file
+	* CVE-2017-11665 remote DoS via crafted RTMP stream
+	* CVE-2017-11719 remote DoS via crafted crafted DNxHD file
+
 * Wed Jun 14 2017 Anton Farygin <rider@altlinux.ru> 2:3.3.2-alt1
 - 3.3.2
 
