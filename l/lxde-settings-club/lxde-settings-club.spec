@@ -2,7 +2,7 @@
 %define theme_virt_dir lxde
 %define theme_fullname lxde-settings-%theme_name
 Name: %theme_fullname
-Version: 0.2
+Version: 0.3
 Release: alt1
 Packager: LXDE Development Team <lxde at packages.altlinux.org>
 BuildArch: noarch
@@ -18,6 +18,7 @@ Provides: lxde-settings
 Requires: icon-theme-faenza-blue gtk3-theme-clearlooks-phenix
 Requires: fonts-ttf-google-droid-sans-mono fonts-ttf-google-droid-sans fonts-ttf-google-droid-serif
 Requires: pulseaudio pavucontrol
+Requires: screengrab
 
 %description
 ALT Linux Active User Club theme for LXDE.
@@ -46,6 +47,10 @@ cp -r * %buildroot%_datadir/%theme_fullname
 %_sysconfdir/skel/.config/*
 
 %changelog
+* Tue Aug 01 2017 Anton Midyukov <antohami@altlinux.org> 0.3-alt1
+- Fix command screenlock
+- Added requires screengrab.
+
 * Sun Jul 30 2017 Anton Midyukov <antohami@altlinux.org> 0.2-alt1
 - Sound mixer set pavucontrol
 - Added hotkeys for volume control.
