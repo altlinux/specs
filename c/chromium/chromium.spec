@@ -25,7 +25,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        59.0.3071.86
+Version:        60.0.3112.78
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -69,8 +69,8 @@ Patch017: 0017-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
 Patch018: 0018-ALT-gzip-does-not-support-the-rsyncable-option.patch
 Patch019: 0019-UBUNTU-Specify-max-resolution.patch
 Patch020: 0020-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch021: 0021-ALT-Fix-build-with-system-dma-buf.patch
-Patch022: 0022-GENTOO-Enable-VA-API-on-linux.patch
+Patch021: 0021-ARCHLINUX-Enable-VA-API-on-linux.patch
+Patch022: 0022-ARCHLINUX-Fix-gn-bootstrap.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -251,6 +251,8 @@ CHROMIUM_GN_DEFINES="\
  use_gold=false \
  use_pulseaudio=true \
  use_vulcanize=false \
+ use_system_freetype=false \
+ use_system_harfbuzz=false \
  link_pulseaudio=true \
  ffmpeg_branding=\"ChromeOS\" \
  proprietary_codecs=true \
@@ -317,10 +319,13 @@ cp -a chromedriver   %buildroot%_libdir/%name/chromedriver
 ln -s -- %_libdir/%name/chromedriver %buildroot/%_bindir/chromedriver
 
 cp -at %buildroot%_libdir/%name -- \
- *.bin *.so *.pak \
+ *.bin *.so* *.pak \
  locales \
  icudtl.dat \
 #
+
+# Remove garbage
+rm -f -- *.TOC
 
 cp -a chrome.1 %buildroot/%_man1dir/%name.1
 ln -s %name.1  %buildroot/%_man1dir/chrome.1
@@ -408,6 +413,31 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Tue Aug 01 2017 Alexey Gladkov <legion@altlinux.ru> 60.0.3112.78-alt1
+- New version (60.0.3112.78).
+- Security fixes:
+  - CVE-2017-5091: Use after free in IndexedDB. Reported by Ned Williamson on 2017-06-02
+  - CVE-2017-5092: Use after free in PPAPI. Reported by Yu Zhou, Yuan Deng of Ant-financial Light-Year Security Lab on 2017-06-15
+  - CVE-2017-5093: UI spoofing in Blink. Reported by Luan Herrera on 2015-10-31
+  - CVE-2017-5094: Type confusion in extensions. Reported by Anonymous on 2017-03-19
+  - CVE-2017-5095: Out-of-bounds write in PDFium. Reported by Anonymous on 2017-06-13
+  - CVE-2017-5096: User information leak via Android intents. Reported by Takeshi Terada on 2017-04-23
+  - CVE-2017-5097: Out-of-bounds read in Skia. Reported by Anonymous on 2017-07-11
+  - CVE-2017-5098: Use after free in V8. Reported by Jihoon Kim on 2017-07-11
+  - CVE-2017-5099: Out-of-bounds write in PPAPI. Reported by Yuan Deng, Yu Zhou of Ant-financial Light-Year Security Lab on 2017-06-15
+  - CVE-2017-5100: Use after free in Chrome Apps. Reported by Anonymous on 2017-05-04
+  - CVE-2017-5101: URL spoofing in OmniBox. Reported by Luan Herrera on 2017-01-17
+  - CVE-2017-5102: Uninitialized use in Skia. Reported by Anonymous on 2017-05-30
+  - CVE-2017-5103: Uninitialized use in Skia. Reported by Anonymous on 2017-05-25
+  - CVE-2017-5104: UI spoofing in browser. Reported by Khalil Zhani on 2017-06-02
+  - CVE-2017-7000: Pointer disclosure in SQLite. Reported by Chaitin Security Research Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
+  - CVE-2017-5105: URL spoofing in OmniBox. Reported by Rayyan Bijoora on 2017-06-06
+  - CVE-2017-5106: URL spoofing in OmniBox. Reported by Jack Zac on 2017-04-24
+  - CVE-2017-5107: User information leak via SVG. Reported by David Kohlbrenner of UC San Diego on 2017-01-27
+  - CVE-2017-5108: Type confusion in PDFium. Reported by Guang Gong of Alpha Team, Qihoo 360 on 2017-02-24
+  - CVE-2017-5109: UI spoofing in browser. Reported by Jose Maria Acuna Morgado on 2017-04-11
+  - CVE-2017-5110: UI spoofing in payments dialog. Reported by xisigr of Tencent's Xuanwu Lab on 2017-05-02
+
 * Fri Jun 09 2017 Alexey Gladkov <legion@altlinux.ru> 59.0.3071.86-alt1
 - New version (59.0.3071.86).
 - Security fixes:
