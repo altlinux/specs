@@ -1,10 +1,10 @@
-%define modulename  acme
+%define modulename acme
 
 %def_with python3
 
 Name: python-module-acme
 Version: 0.14.1
-Release: alt2
+Release: alt3
 
 Summary: Python library for the ACME protocol
 
@@ -25,12 +25,15 @@ BuildRequires: python-devel python-module-setuptools
 #BuildRequires: python-werkzeug
 
 # requests[security] is requests with extra pyOpenSSL cryptography idna
-BuildRequires: python-module-OpenSSL >= 0.13
-BuildRequires: python-module-cryptography >= 0.8
-BuildRequires: python-module-idna
+BuildRequires: python-module-OpenSSL >= 0.14
+BuildRequires: python-module-cryptography >= 1.3.4
+BuildRequires: python-module-idna >= 2.0.0
 BuildRequires: python-module-requests >= 2.10
 
-Requires: python-module-cryptography >= 0.8
+Requires: python-module-OpenSSL >= 0.14
+Requires: python-module-cryptography >= 1.3.4
+Requires: python-module-idna >= 2.0.0
+Requires: python-module-requests >= 2.10
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -39,9 +42,9 @@ BuildPreReq: python3-devel python3-module-setuptools python3-module-setuptools-t
 #BuildRequires: python3-sphinxcontrib-programoutput
 
 # requests[security] is requests with extra pyOpenSSL cryptography idna
-BuildRequires: python3-module-OpenSSL >= 0.13
-BuildRequires: python3-module-cryptography >= 0.8
-BuildRequires: python3-module-idna
+BuildRequires: python3-module-OpenSSL >= 0.14
+BuildRequires: python3-module-cryptography >= 1.3.4
+BuildRequires: python3-module-idna >= 2.0.0
 BuildRequires: python3-module-requests >= 2.10
 #BuildRequires: python3-pyrfc3339
 #BuildRequires: python3-werkzeug
@@ -93,7 +96,11 @@ Python libraries implementing the Automatic Certificate Management Environment
 %package -n python3-module-acme
 Group: Development/Python
 Summary: %summary
-Requires: python3-module-cryptography >= 0.8
+
+Requires: python3-module-OpenSSL >= 0.14
+Requires: python3-module-cryptography >= 1.3.4
+Requires: python3-module-idna >= 2.0.0
+Requires: python3-module-requests >= 2.10
 #Requires: python3-ndg_httpsclient
 #Requires: python3-pyasn1
 #Requires: python3-pyOpenSSL
@@ -171,6 +178,9 @@ grep -q python %buildroot%_bindir/jws
 #%doc docs/_build/html
 
 %changelog
+* Wed Aug 02 2017 Vitaly Lipatov <lav@altlinux.ru> 0.14.1-alt3
+- improve requires according to new python module requires
+
 * Fri Jul 28 2017 Vitaly Lipatov <lav@altlinux.ru> 0.14.1-alt2
 - improve require requires[security]
 
