@@ -8,7 +8,7 @@
 %define gtkver 2
 Name: lxde-common
 Version: 0.99.2
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 Summary: Basic infrastructure for LXDE.
@@ -20,6 +20,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: lxde.wm
 Source2: panel
+Patch: keybinding.patch
 
 AutoReq: yes,nosymlinks
 
@@ -39,6 +40,7 @@ Pprovides infrastructure for LXDE components
 Summary: provides unmodified LXDE configuration from upstream
 Group: Graphical desktop/Other
 Provides: lxde-settings
+Requires: screengrab
 
 ### GRRRR!!! for appliance-desktop-lxde
 Provides: lxde-default-theme
@@ -49,7 +51,8 @@ Default graphics theme for LXDE.
 This package contains unmodified configuration from upstream.
 
 %prep
-%setup 
+%setup
+%patch -p1
 
 %build
 sed -i 's,lxde.conf,LXDE.conf,' Makefile.am
@@ -124,6 +127,10 @@ rm -fR %_sysconfdir/xdg/lxsession/LXDE/desktop.conf \
 #_iconsdir/nuoveXT2
 
 %changelog
+* Tue Aug 01 2017 Anton Midyukov <antohami@altlinux.org> 0.99.2-alt2
+- Added keybinding.patch
+- Added requires screengrab.
+
 * Wed Jan 11 2017 Anton Midyukov <antohami@altlinux.org> 0.99.2-alt1
 - New version 0.99.2
 
