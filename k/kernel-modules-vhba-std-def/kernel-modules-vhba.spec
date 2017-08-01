@@ -1,5 +1,5 @@
 %define module_name     vhba
-%define module_version  20161009
+%define module_version  20170610
 %define module_release alt1
 
 %define flavour         std-def
@@ -23,14 +23,15 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel
+BuildPreReq: rpm-build-ubt
 
 BuildRequires: module-init-tools
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 
-Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
-Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
-Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
+Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %EVR
+Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %EVR
+Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %EVR
 
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 Requires: vhba-udev-rules
@@ -58,8 +59,14 @@ cp -a %module_name.ko %buildroot/%module_dir/
 %module_dir/%module_name.ko
 
 %changelog
-* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %EVR
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Jul 31 2017 Nazarov Denis <nenderus@altlinux.org> 20170610-alt1
+- Version 20170610
+
+* Tue Jul 11 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 20161009-alt2
+- fixed build with kernel 4.12
 
 * Thu Oct 13 2016 Nazarov Denis <nenderus@altlinux.org> 20161009-alt1
 - Version 20161009
