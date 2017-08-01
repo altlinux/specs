@@ -3,17 +3,17 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.7
-Release: alt1.git20141111.1
+Version: 4.13
+Release: alt1
 Summary: Translation toolset
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/lingua/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/wichert/lingua.git
 Source: %name-%version.tar
 BuildArch: noarch
+Patch1: %oname-%version-alt-build.patch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-polib python-module-chameleon.core
@@ -44,6 +44,7 @@ xgettext command from gettext, or pybabel from Babel.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -96,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.13-alt1
+- Updated to upstream release 4.13
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.7-alt1.git20141111.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
