@@ -1,4 +1,4 @@
-%define git_commit 9a0d28e
+%define git_commit 0505aac
 		    
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
@@ -9,14 +9,14 @@ Version: 27.5.0
 # %%ifndef git_commit
 # Release: alt2
 # %%else
-Release: alt0.git_1_%git_commit
+Release: alt0.git_2_%git_commit
 # %%endif
 
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 
 
-# git commit 9a0d28e130fb4d2fb48d5acfac2b80c3cea35ba7
+# git commit 0505aac66844b9579d1c1a53e00ba6147dfbdfd1
 Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
@@ -122,7 +122,8 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 Group: Networking/WWW
 
 Obsoletes: palemoon  <= 26.2.2
-Provides: palemoon = %EVR
+Provides:  palemoon = %EVR
+Provides:  webclient
 
 Conflicts: newmoon < 27.1.2
 Obsoletes: newmoon < 27.1.2
@@ -588,8 +589,12 @@ install -D -m 644 README.md ../
 %exclude %_datadir/idl/*
 
 %changelog
+* Tue Aug 01 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.5.0-alt0.git_2_0505aac
+- Update from github commit 0505aac66844b9579d1c1a53e00ba6147dfbdfd1
+
 * Sun Jul 23 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.5.0-alt0.git_1_9a0d28e
 - Update from github commit 9a0d28e130fb4d2fb48d5acfac2b80c3cea35ba7
+- add  provides webclient ( Bug #33709 )
 
 * Sat Jul 15 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.4.0-alt2
 - enable-system-sqlite
