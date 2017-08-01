@@ -3,13 +3,12 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.14.0.0
-Release: alt2.git20140715.1
+Version: 2.16.0.0
+Release: alt1
 Summary: Use version control tags to discover version numbers
 License: ISCL
 Group: Development/Python
 Url: https://pypi.python.org/pypi/vcversioner/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/habnabit/vcversioner.git
 Source: %name-%version.tar
@@ -92,7 +91,7 @@ py.test -vv
 %if_with python3
 pushd ../python3
 python3 setup.py test
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
@@ -107,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.16.0.0-alt1
+- Updated to upstream version 2.16.0.0.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.14.0.0-alt2.git20140715.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

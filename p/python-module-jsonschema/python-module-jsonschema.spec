@@ -3,8 +3,8 @@
 %def_with python3
 
 Name:		python-module-%oname
-Version:	2.5.1
-Release:	alt1.1
+Version:	2.6.0
+Release:	alt1
 Summary:	An implementation of JSON Schema validation for Python
 
 License:	MIT
@@ -92,11 +92,9 @@ popd
 %python_install
 
 %check
-python setup.py test -v
 nosetests -v
 %if_with python3
 pushd ../python3
-python3 setup.py test -v
 nosetests3 -v
 popd
 %endif
@@ -125,6 +123,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.0-alt1
+- Updated to upstream release 2.6.0.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.5.1-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
