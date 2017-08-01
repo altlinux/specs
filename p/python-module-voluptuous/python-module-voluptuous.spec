@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.11
+Version: 0.10.5
 Release: alt1
 Summary: Voluptuous is a Python data validation library
 License: BSD
@@ -76,16 +76,19 @@ popd
 
 
 %files
-%doc COPYING README.md README.rst
+%doc COPYING README.md
 %python_sitelibdir/*
 
 
 %if_with python3
 %files -n python3-module-%oname
-%doc COPYING README.md README.rst
+%doc COPYING README.md
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Aug 01 2017 Mikhail Gordeev <obirvalger@altlinux.org> 0.10.5-alt1
+- new version 0.10.5
+
 * Thu Apr 14 2016 Alexey Shabalin <shaba@altlinux.ru> 0.8.11-alt1
 - Initial build for Sisyphus
