@@ -3,7 +3,7 @@
 %def_without qt5
 
 Name:     libgwenhywfar
-Version:  4.17.0
+Version:  4.18.0
 Release:  alt1
 
 Summary:  A multi-platform helper library for other libraries
@@ -147,6 +147,9 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_libdir/cmake/*
 
 %changelog
+* Tue Aug 01 2017 Andrey Cherepanov <cas@altlinux.org> 4.18.0-alt1
+- New version
+
 * Thu Mar 02 2017 Andrey Cherepanov <cas@altlinux.org> 4.17.0-alt1
 - New version
 
