@@ -4,16 +4,16 @@
 
 Name: python-module-%oname
 Version: 1.0.0
-Release: alt1.git20150306.1.1
+Release: alt1.git20150306.2
 Summary: Backports of the linecache module
 License: Python
 Group: Development/Python
 Url: https://pypi.python.org/pypi/linecache2
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/testing-cabal/linecache2.git
 Source: %name-%version.tar
 BuildArch: noarch
+Patch1: %oname-%version-alt-build.patch
 
 #BuildPreReq: python-devel python-module-setuptools-tests git
 #BuildPreReq: python-module-fixtures python-module-unittest2
@@ -31,7 +31,11 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-enum34 python-module-mimeparse python-module-pbr python-module-pyasn1 python-module-pytest python-module-serial python-module-setuptools python-module-testtools python-module-traceback2 python-module-twisted-core python-module-unittest2 python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-mimeparse python3-module-ntlm python3-module-pbr python3-module-pip python3-module-pycparser python3-module-pytest python3-module-setuptools python3-module-testtools python3-module-traceback2 python3-module-unittest2
-BuildRequires: git-core python-module-fixtures python-module-setuptools-tests python3-module-fixtures python3-module-html5lib python3-module-setuptools-tests rpm-build-python3
+BuildRequires: git-core
+BuildRequires: python-module-fixtures  python-module-setuptools-tests  python-module-pbr  python-module-unittest2
+%if_with python3
+BuildRequires: python3-module-fixtures python3-module-setuptools-tests python3-module-pbr python3-module-unittest2 python3-module-html5lib
+%endif
 
 %description
 A backport of linecache to older supported Pythons.
@@ -68,6 +72,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 git config --global user.email "real at altlinux.org"
 git config --global user.name "REAL"
@@ -99,10 +104,10 @@ popd
 %endif
 
 %check
-python setup.py test
+python -m unittest2 -v
 %if_with python3
 pushd ../python3
-python3 setup.py test
+python3 -m unittest2 -v
 popd
 %endif
 
@@ -125,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt1.git20150306.2
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.0-alt1.git20150306.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
