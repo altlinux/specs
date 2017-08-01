@@ -3,7 +3,7 @@
 
 %define oname astroid
 Name: python-module-%oname
-Version: 1.4.4
+Version: 1.5.3
 Release: alt1
 
 Summary: Python Abstract Syntax Tree New Generation
@@ -24,6 +24,15 @@ Requires: python-module-lazy_object_proxy
 
 %setup_python_module %oname
 %python_module_declare %python_sitelibdir/logilab
+
+%add_findreq_skiplist %python_sitelibdir/%oname/tests/testdata/python*/data/invalid_encoding.py
+%add_findreq_skiplist %python3_sitelibdir/%oname/tests/testdata/python*/data/invalid_encoding.py
+%add_findreq_skiplist %python_sitelibdir/%oname/tests/testdata/python*/data/namespace_pep_420/module.py
+%add_findreq_skiplist %python3_sitelibdir/%oname/tests/testdata/python*/data/namespace_pep_420/module.py
+%add_findreq_skiplist %python_sitelibdir/%oname/tests/testdata/python*/data/module.py
+%add_findreq_skiplist %python3_sitelibdir/%oname/tests/testdata/python*/data/module.py
+%add_findreq_skiplist %python_sitelibdir/%oname/tests/testdata/python*/data/module2.py
+%add_findreq_skiplist %python3_sitelibdir/%oname/tests/testdata/python*/data/module2.py
 
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: python-base python-devel python-module-egenix-mx-base python-module-kerberos python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools python3-module-six xz
@@ -145,24 +154,24 @@ popd
 %endif
 
 %check
-#PYTHONPATH=%buildroot%python_sitelibdir pytest -vv
+#PYTHONPATH=%buildroot%python_sitelibdir python -m unittest discover -p "unittest*.py"
 
 %if_with python3
-PYTHONPATH=%buildroot%python3_sitelibdir pytest3 -vv
+PYTHONPATH=%buildroot%python3_sitelibdir python3 -m unittest discover -p "unittest*.py"
 %endif
 
 %files
 %python_sitelibdir/astroid/
 %exclude %python_sitelibdir/astroid/test*
 %python_sitelibdir/*.egg-info
-%doc ChangeLog README
+%doc ChangeLog README.rst
 
 %files tests
 %python_sitelibdir/astroid/test*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc ChangeLog README
+%doc ChangeLog README.rst
 %python3_sitelibdir/astroid/
 %exclude %python3_sitelibdir/astroid/test*
 %exclude %python3_sitelibdir/astroid/*/test*
@@ -174,6 +183,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir pytest3 -vv
 %endif
 
 %changelog
+* Tue Aug 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.3-alt1
+- Updated to upstream version 1.5.3.
+
 * Mon Mar 14 2016 Denis Medvedev <nbr@altlinux.org> 1.4.4-alt1
 - Upstream switched to git. New version 1.4.4
 
