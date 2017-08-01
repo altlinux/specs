@@ -1,7 +1,7 @@
 %define oname iceB
 
 Name:    iceb
-Version: 17.13
+Version: 17.14
 Release: alt1
 
 Summary: Free financial accounting system (console)
@@ -52,6 +52,9 @@ cp desktop/pixmaps/*.png %buildroot%_pixmapsdir
 %_pixmapsdir/*.png
 
 %changelog
+* Tue Aug 01 2017 Cronbuild Service <cronbuild@altlinux.org> 17.14-alt1
+- new version 17.14
+
 * Sun Jul 02 2017 Cronbuild Service <cronbuild@altlinux.org> 17.13-alt1
 - new version 17.13
 
