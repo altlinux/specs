@@ -5,8 +5,8 @@
 #def_disable check
 
 Name:    python-module-%oname
-Version: 2.3.4
-Release: alt1.1
+Version: 2.4.0
+Release: alt1
 Epoch:   1
 
 Summary: a collection of tools for internationalizing Python applications
@@ -113,14 +113,14 @@ popd
 %files
 %_bindir/pybabel
 %python_sitelibdir/*
-%doc AUTHORS CHANGES README.md
+%doc AUTHORS CHANGES README.rst
 %if_with doc
 %doc docs/_build/html
 %endif
 
 %if_with python3
 %files -n python3-module-%oname
-%doc AUTHORS CHANGES README.md
+%doc AUTHORS CHANGES README.rst
 %if_with doc
 %doc docs/_build/html
 %endif
@@ -129,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.4.0-alt1
+- Updated to upstream version 2.4.0
+
 * Sat Jan 14 2017 Michael Shigorin <mike@altlinux.org> 1:2.3.4-alt1.1
 - BOOTSTRAP:
   + avoid even more extra BRs when requested to
