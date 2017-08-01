@@ -10,8 +10,8 @@
 
 
 Name:		grafana
-Version:	4.4.1
-Release:	alt2
+Version:	4.4.2
+Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
 Group:		Development/Other
@@ -94,6 +94,7 @@ cp -pr %name-%version %buildroot%_datadir/%name
 # Cleanup
 rm -rf -- %buildroot%_datadir/%name/scripts
 rm -f -- %buildroot%_datadir/%name/*.md
+rm -f -- %buildroot%_datadir/%name/vendor/phantomjs/phantomjs
 
 # Install config files
 install -p -D -m 640 conf/sample.ini %buildroot%_sysconfdir/%name/%name.ini
@@ -140,6 +141,11 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Tue Aug 01 2017 Alexey Shabalin <shaba@altlinux.ru> 4.4.2-alt1
+- 4.4.2
+- fix systemd unit
+- rm phantomjs blob
+
 * Thu Jul 27 2017 Alexey Shabalin <shaba@altlinux.ru> 4.4.1-alt2
 - fix service name in post and preun
 
