@@ -4,13 +4,14 @@
 Summary: A simple lightweight interface to Amazon Web Services
 Name: python-module-%{pkgname}
 Version: 2.38.0
-Release: alt1.1
+Release: alt2
 License: MIT
 Group: Development/Python
 Url: https://github.com/boto/boto
 
 Source: %name-%version.tar
 Patch0: python-boto.vendored.six-remove.patch
+Patch1: %name-%version-fedora-test.patch
 
 BuildRequires: python-devel
 BuildRequires: python-module-nose
@@ -18,6 +19,9 @@ BuildRequires: python-module-mock
 BuildRequires: python-module-httpretty
 BuildRequires: python-module-requests
 BuildArch: noarch
+
+%add_findreq_skiplist %python_sitelibdir/%{pkgname}/mashups/order.py
+%add_findreq_skiplist %python3_sitelibdir/%{pkgname}/mashups/order.py
 
 %description
 Boto is a Python package that provides interfaces to Amazon Web Services.
@@ -51,6 +55,7 @@ use, lightweight wrapper around the Amazon services.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %if_with python3
 rm -rf ../python3
@@ -117,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.38.0-alt2
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.38.0-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
