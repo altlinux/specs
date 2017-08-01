@@ -1,8 +1,10 @@
 %define _libexecdir %_prefix/libexec/upower
+%def_enable gtk_doc
+%def_disable check
 
 Name: upower
-Version: 0.99.4
-Release: alt2
+Version: 0.99.5
+Release: alt1
 
 Summary: Power Management Service
 License: GPLv2+
@@ -22,7 +24,8 @@ Patch: %name-%version-%release.patch
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: gtk-doc intltool libusb-devel libgudev-devel
 BuildRequires: libpolkit1-devel libudev-devel gobject-introspection-devel
-BuildRequires: libimobiledevice-devel systemd-devel libsystemd-daemon-devel
+BuildRequires: libimobiledevice-devel libsystemd-devel
+%{?_enable_check:BuildRequires: /proc python3 python3-module-dbusmock libumockdev-gir}
 
 %description
 UPower provides a daemon, API and command line tools for
@@ -70,18 +73,17 @@ GObject introspection devel data for the UPower library
 
 %prep
 %setup
-%patch -p1
+##%patch -p1
 
 rm -f acinclude.m4
 
 %build
 %autoreconf
 %configure \
-	--enable-gtk-doc \
+	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	--libexecdir=%_libexecdir \
 	--localstatedir=%_var \
 	--disable-static
-#	--enable-deprecated
 %make_build
 
 %install
@@ -90,8 +92,7 @@ rm -f acinclude.m4
 %find_lang %name
 
 %check
-# system bus wanted
-#%make check
+%{?_enable_check:%make check}
 
 %files -f %name.lang
 %doc AUTHORS NEWS README
@@ -123,6 +124,9 @@ rm -f acinclude.m4
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Tue Aug 01 2017 Yuri N. Sedunov <aris@altlinux.org> 0.99.5-alt1
+- 0.99.5
+
 * Tue Aug 02 2016 Yuri N. Sedunov <aris@altlinux.org> 0.99.4-alt2
 - updated to 0.99.4-alt1-11-gee27a4c (ALT #32335)
 
