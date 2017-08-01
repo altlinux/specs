@@ -4,7 +4,7 @@
 Summary: SSH2 protocol for python
 Packager: Andriy Stepanov <stanv@altlinux.ru>
 Name: python-module-%oname
-Version: 2.0.2
+Version: 2.2.1
 Release: alt1
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -16,10 +16,12 @@ BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests
 BuildPreReq: python-module-ecdsa python-module-pycrypto python-module-pyasn1
+BuildPreReq: python-module-cryptography python-module-bcrypt python-module-pynacl
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-ecdsa python3-module-pycrypto python3-module-pyasn1
+BuildPreReq: python3-module-cryptography python3-module-bcrypt python3-module-pynacl
 %endif
 
 %description
@@ -76,10 +78,10 @@ popd
 %endif
 
 %check
-python setup.py test
+python ./test.py --no-sftp --no-big-file
 %if_with python3
 pushd ../python3
-python3 setup.py test
+python3 ./test.py --no-sftp --no-big-file
 popd
 %endif
 
@@ -97,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.1-alt1
+- Updated to upstream version 2.2.1.
+
 * Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0.2-alt1
 - 2.0.2
 
