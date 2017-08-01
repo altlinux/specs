@@ -29,7 +29,7 @@ Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet
 Name: hplip
 Epoch: 1
 Version: 3.16.11
-Release: alt3
+Release: alt4
 %if_without ernie
 License: GPL/MIT/BSD
 %else
@@ -99,6 +99,10 @@ BuildRequires: python%{pysuffix}-devel
 BuildPreReq: perl cups-common %{cups_filters}
 %endif
 
+%if_enabled policykit
+BuildRequires: polkit libpolkit-devel
+%endif
+
 Source: http://dl.sourceforge.net/hplip/%name-%version.tar
 Source2: %name.init
 Source4: 80-hpmud.perms
@@ -136,6 +140,7 @@ Patch9: hplip-3.16.11-alt-auth.patch
 Patch10: http://www.linuxprinting.org/download/printing/hpijs/hpijs-1.4.1-rss.1.patch
 # it is patch 10 rediffed
 Patch11: hpijs-1.4.1-rss-alt-for-2.7.7.patch
+Patch12: hplip-3.16.11-alt-fax-setup.patch
 
 # fedora patches
 Patch101: hplip-pstotiff-is-rubbish.patch
@@ -166,6 +171,10 @@ Patch125: hplip-badwhitespace.patch
 Patch126: hplip-noernie.patch
 %endif
 # end fedora patches
+
+# ubuntu patches
+Patch201: hp-plugin-download-fix.patch
+# end ubuntu patches
 
 %description
 This is the HP driver package to supply Linux support for most
@@ -533,6 +542,8 @@ mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
 rm prnt/hpcups/ErnieFilter.{cpp,h} prnt/hpijs/ernieplatform.h
 %endif
 
+%patch201 -p1 -b .download-plugin
+
 # from fedora 3.9.12-3/3.10.9-9
 sed -i.duplex-constraints \
     -e 's,\(UIConstraints.* \*Duplex\),//\1,' \
@@ -546,6 +557,7 @@ tar -xf %SOURCE6
 #popd
 # it is patch 10 rediffed
 %patch11 -p1
+%patch12 -p1
 
 fgrep -lZr '#!/usr/bin/env python' . | xargs -r0 sed -i 's,#!/usr/bin/env python,#!/usr/bin/python%{pysuffix},'
 
@@ -900,7 +912,7 @@ fi
 %{_datadir}/hplip/wificonfig.py*
 %if_enabled policykit
 %{_datadir}/hplip/pkservice.py*
-%{_datadir}/PolicyKit/policy/com.hp.hplip.policy
+%{_datadir}/polkit-1/actions/com.hp.hplip.policy
 %{_unitdir}/hplip-printer@.service
 %endif
 # global dbus service
@@ -1049,6 +1061,11 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Tue Aug 01 2017 Sergey V Turchin <zerg@altlinux.org> 1:3.16.11-alt4
+- fix download plugin
+- fix fax setup
+- fix polkit action placement
+
 * Thu Feb 23 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.16.11-alt3
 - added hplip-3.16.11-alt-auth.patch
 - disabled noernie patch
