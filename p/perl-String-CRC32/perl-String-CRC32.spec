@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist String-CRC32
 Name: perl-%dist
-Version: 1.5
-Release: alt1.1.1.1
+Version: 1.6
+Release: alt1
 
 Summary: Cyclic redundency check generation
 License: Public Domain
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SO/SOENKE/String-CRC32-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/L/LE/LEEJO/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-devel
@@ -18,7 +19,7 @@ This packages provides a perl module to generate checksums from strings
 and from files.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -27,13 +28,16 @@ and from files.
 %perl_vendor_install
 
 %files
-%doc	README
+%doc README.md Changes LICENSE
 %dir	%perl_vendor_archlib/String
 	%perl_vendor_archlib/String/CRC32.pm
 %doc	%perl_vendor_archlib/String/CRC32.pod
 	%perl_vendor_autolib/String
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1.1.1.1
 - rebuild with new perl 5.24.1
 
