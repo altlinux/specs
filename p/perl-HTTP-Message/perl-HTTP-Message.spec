@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTTP-Message
 Name: perl-%dist
-Version: 6.11
+Version: 6.13
 Release: alt1
 
 Summary: HTTP style messages
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/HTTP-Message-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{dist}-%{version}.tar.gz
 
 Conflicts: perl-libwww < 6
 Provides: perl(HTTP/Request/Common.pm) = 6.060
@@ -17,14 +17,14 @@ Provides: perl(HTTP/Request/Common.pm) = 6.060
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Feb 20 2012
-BuildRequires: perl-Encode-Locale perl-HTML-Parser perl-HTTP-Date perl-IO-Compress perl-LWP-MediaTypes perl-devel perl(IO/HTML.pm)
+BuildRequires: perl-Encode-Locale perl-HTML-Parser perl-HTTP-Date perl-IO-Compress perl-LWP-MediaTypes perl-devel perl(IO/HTML.pm) perl(Try/Tiny.pm)
 
 %description
 An HTTP::Message object contains some headers and a content body.
 The following methods are available:
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,10 +33,13 @@ The following methods are available:
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes CONTRIBUTORS README.md
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 6.13-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 6.11-alt1
 - automated CPAN update
 
