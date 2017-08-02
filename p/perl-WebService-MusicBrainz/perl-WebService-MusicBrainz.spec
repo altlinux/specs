@@ -7,7 +7,7 @@ BuildRequires: perl(base.pm) perl-podlators perl(Mojo/Base.pm)
 %define upstream_version 0.94
 
 Name:       perl-%{upstream_name}
-Version:    1.0.1
+Version:    1.0.2
 Release:    alt1
 
 Summary:    No summary found
@@ -54,6 +54,9 @@ web service objects;
 
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1
+- automated CPAN update
+
 * Wed May 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1
 - automated CPAN update
 
