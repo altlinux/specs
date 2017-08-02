@@ -1,6 +1,6 @@
 Name: wsjtx
 Version: 1.7.0
-Release: alt1
+Release: alt2
 Summary: WSJT-X implements communication protocols or "modes" called JT4, JT9, JT65, and WSPR
 License: GPLv3
 Group: Engineering
@@ -9,8 +9,8 @@ Source: %name-%version.tar
 # Source-url: http://physics.princeton.edu/pulsar/k1jt/%name-%version.tgz
 
 Buildrequires(pre): cmake rpm-macros-cmake
-BuildRequires: gcc-c++ ctags hamlib-devel openmpi-devel python-devel pkgconfig(libxslt) libfftw3-devel libgomp-devel qt5-base-devel pkgconfig(Qt5Concurrent) pkgconfig(Qt5Multimedia) pkgconfig(Qt5OpenGL) pkgconfig(Qt5SerialPort) ImageMagick-tools makeinfo asciidoc-a2x
-#libfftw3-devel 
+BuildRequires: gcc-c++ ctags hamlib-devel openmpi-devel python-devel pkgconfig(libxslt) libfftw3-devel libgomp-devel qt5-base-devel pkgconfig(Qt5Concurrent) pkgconfig(Qt5Multimedia) pkgconfig(Qt5OpenGL) pkgconfig(Qt5SerialPort) ImageMagick-tools makeinfo asciidoc-a2x 
+Requires: %name-data = %version-%release
 
 %description
 WSJT-X implements communication protocols or "modes" called JT4, JT9, JT65, and
@@ -56,7 +56,7 @@ done
 
 %files -f %name.lang
 %_bindir/*
-%_desktopdir/%name.desktop
+%_desktopdir/*.desktop
 
 %files data
 %_man1dir/*
@@ -68,6 +68,9 @@ done
 %_docdir/%name
 
 %changelog
+* Wed Aug 02 2017 Anton Midyukov <antohami@altlinux.org> 1.7.0-alt2
+- Fix requires
+
 * Tue Jan 31 2017 Anton Midyukov <antohami@altlinux.org> 1.7.0-alt1
 - new version (1.7.0) with rpmgs script
 
