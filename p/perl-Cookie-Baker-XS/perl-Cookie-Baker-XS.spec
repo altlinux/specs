@@ -2,25 +2,24 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: libsowing-devel perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Exporter.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(base.pm)
 # END SourceDeps(oneline)
-%define module_version 0.07
 %define module_name Cookie-Baker-XS
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.07
-Release: alt1.1
+Version: 0.08
+Release: alt1
 Summary: boost Cookie::Baker's crush_cookie
 Group: Development/Perl
 License: perl
 URL: https://github.com/kazeburo/Cookie-Baker-XS
 
-Source: http://www.cpan.org/authors/id/K/KA/KAZEBURO/Cookie-Baker-XS-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/K/KA/KAZEBURO/%{module_name}-%{version}.tar.gz
 
 %description
 %summary
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +33,9 @@ Source: http://www.cpan.org/authors/id/K/KA/KAZEBURO/Cookie-Baker-XS-%{version}.
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1.1
 - rebuild with new perl 5.24.1
 
