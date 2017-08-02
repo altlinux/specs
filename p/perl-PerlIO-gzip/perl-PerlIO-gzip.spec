@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist PerlIO-gzip
 Name: perl-%dist
-Version: 0.19
-Release: alt1.1.1
+Version: 0.20
+Release: alt1
 
 Summary: A layer for the PerlIO system to transparently gzip/gunzip files
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/N/NW/NWCLARK/PerlIO-gzip-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/N/NW/NWCLARK/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-devel zlib-devel
@@ -20,7 +20,7 @@ in the format used by the C<gzip> program.  Compression and
 decompression are implemented, but not together.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +34,9 @@ decompression are implemented, but not together.
 %perl_vendor_autolib/PerlIO
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1.1.1
 - rebuild with new perl 5.24.1
 
