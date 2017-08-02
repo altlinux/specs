@@ -3,7 +3,7 @@
 
 Name: python-module-dbusmock
 Version: 0.16.9
-Release: alt1
+Release: alt2
 
 Summary: mock D-Bus objects for tests
 License: LGPLv3
@@ -18,6 +18,7 @@ BuildArch: noarch
 
 Requires: dbus
 
+BuildRequires: rpm-build-gir
 BuildRequires: python-devel python-module-setuptools
 # for python3
 BuildRequires: rpm-build-python3 python3-devel python3-module-setuptools
@@ -83,6 +84,9 @@ popd
 
 
 %changelog
+* Wed Aug 02 2017 Yuri N. Sedunov <aris@altlinux.org> 0.16.9-alt2
+- rebuilt with rpm-build-gir
+
 * Tue Jun 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.16.9-alt1
 - 0.16.9
 
