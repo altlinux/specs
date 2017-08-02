@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-B-Debug
-Version: 1.24
+Version: 1.25
 Release: alt1
 Summary: B::Debug - Walk Perl syntax tree, printing debug info about ops
 
@@ -8,7 +8,7 @@ Group: Development/Perl
 License: Perl
 Url: %CPAN B-Debug
 
-Source: http://www.cpan.org/authors/id/R/RU/RURBAN/B-Debug-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RU/RURBAN/B-Debug-%{version}.tar.gz
 BuildArch: noarch
 BuildRequires: perl-devel
 
@@ -16,7 +16,7 @@ BuildRequires: perl-devel
 %summary
 
 %prep
-%setup -q -n B-Debug-%version
+%setup -q -n B-Debug-%{version}
 
 %build
 %perl_vendor_build
@@ -29,6 +29,9 @@ BuildRequires: perl-devel
 %doc Changes README Artistic Copying
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.25-alt1
+- automated CPAN update
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 1.24-alt1
 - automated CPAN update
 
