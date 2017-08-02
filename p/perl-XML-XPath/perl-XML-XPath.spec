@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-XPath
 Name: perl-%dist
-Version: 1.40
+Version: 1.42
 Release: alt1
 
 Summary: A set of modules for parsing and evaluating XPath statements
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MA/MANWAR/XML-XPath-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MANWAR/%{dist}-%{version}.tar.gz
 # rewrite it if it is still needed
 Patch: perl-XML-XPath-1.18-alt-fixes.patch
 
@@ -25,7 +25,7 @@ in the form of functions. Modules such as XSLT and XPointer may
 need to do this as they support functionality beyond XPath.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 # examples should not be installed into /usr/bin
 sed -i- '/EXE_FILES/d' Makefile.PL
@@ -37,10 +37,13 @@ sed -i- '/EXE_FILES/d' Makefile.PL
 %perl_vendor_install
 
 %files
-%doc README examples
+%doc README examples Changes
 %perl_vendor_privlib/XML
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.42-alt1
+- automated CPAN update
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.40-alt1
 - automated CPAN update
 
