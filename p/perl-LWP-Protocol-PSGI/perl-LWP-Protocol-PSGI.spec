@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Test/Pod.pm) perl-Module-Build perl-podlators
@@ -8,14 +9,14 @@ BuildRequires: perl(Test/Pod.pm) perl-Module-Build perl-podlators
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_2
+Version:    0.10
+Release:    alt1
 
 Summary:    Override LWP's HTTP/HTTPS backend with your own PSGI applciation
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/LWP/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/M/MI/MIYAGAWA/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(HTTP/Message/PSGI.pm)
 BuildRequires: perl(LWP.pm)
@@ -40,7 +41,7 @@ without modifying the calling code or its internals.
   use LWP::Protocol::PSGI;
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %__perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
@@ -54,10 +55,13 @@ without modifying the calling code or its internals.
 ./Build install --destdir=%{buildroot}
 
 %files
-%doc Changes LICENSE META.json META.yml  README
+%doc Changes LICENSE META.json META.yml README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_2
 - update by mgaimport
 
