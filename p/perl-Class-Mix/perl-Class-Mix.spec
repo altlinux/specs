@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl-podlators
@@ -6,11 +7,11 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Class-Mix
 Summary:        Dynamic class mixing
-Version:        0.005
-Release:        alt2_15
+Version:        0.006
+Release:        alt1
 License:        GPL+ or Artistic
 Group:          Development/Other
-Source0:        http://search.cpan.org/CPAN/authors/id/Z/ZE/ZEFRAM/Class-Mix-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Class-Mix-%{version}.tar.gz
 URL:            http://search.cpan.org/dist/Class-Mix/
 BuildArch:      noarch
 
@@ -61,6 +62,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1
+- automated CPAN update
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.005-alt2_15
 - update to new release by fcimport
 
