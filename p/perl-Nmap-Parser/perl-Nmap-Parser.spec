@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Nmap-Parser
 
 Name: perl-%module_name
-Version: 1.33
+Version: 1.36
 Release: alt1
 
 Summary: Parse nmap scan data with perl
@@ -10,7 +11,7 @@ Group: Development/Perl
 
 URL: %CPAN %module_name
 # See also: http://code.google.com/p/nmap-parser/
-Source: http://www.cpan.org/authors/id/A/AP/APERSAUD/Nmap-Parser-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/A/AP/APERSAUD/%{module_name}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Aug 13 2011
 BuildRequires: nmap perl-XML-Twig perl-devel
@@ -24,7 +25,7 @@ This will enable anyone who utilizes nmap to quickly create fast and robust
 security scripts that utilize the powerful port scanning abilities of nmap.
 
 %prep
-%setup -n %module_name-%version
+%setup -q -n %{module_name}-%{version}
 
 %build
 rm -f ._*
@@ -34,10 +35,13 @@ rm -f ._*
 %perl_vendor_install
 
 %files
-%doc tools/*
+%doc tools/* Changes.md README.md
 %perl_vendor_privlib/Nmap/
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.36-alt1
+- automated CPAN update
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1
 - automated CPAN update
 
