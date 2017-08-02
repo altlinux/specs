@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Test/PerlTidy.pm) perl(Test/Pod.pm) perl-podlators
@@ -5,8 +6,8 @@ BuildRequires: perl(Test/PerlTidy.pm) perl(Test/Pod.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Log-Contextual
-Version:        0.007000
-Release:        alt1_2
+Version:        0.007001
+Release:        alt1
 Summary:        Simple logging interface with a contextual log
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -75,6 +76,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.007001-alt1
+- automated CPAN update
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.007000-alt1_2
 - update to new release by fcimport
 
