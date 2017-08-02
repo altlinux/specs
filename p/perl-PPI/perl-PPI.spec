@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist PPI
 Name: perl-%dist
-Version: 1.220
+Version: 1.236
 Release: alt1
 
 Summary: Parse, Analyze and Manipulate Perl (without perl)
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MI/MITHALDU/PPI-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MI/MITHALDU/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -17,7 +17,7 @@ BuildArch: noarch
 %add_findreq_skiplist */PPI/XSAccessor.pm
 
 # Automatically added by buildreq on Wed Nov 16 2011
-BuildRequires: perl-Class-Inspector perl-Clone perl-File-Remove perl-IO-String perl-List-MoreUtils perl-Params-Util perl-Pod-Escapes perl-Task-Weaken perl-Test-NoWarnings perl-Test-Object perl-Test-SubCalls perl(Encode.pm)
+BuildRequires: perl-Class-Inspector perl-Clone perl-File-Remove perl-IO-String perl-List-MoreUtils perl-Params-Util perl-Pod-Escapes perl-Task-Weaken perl-Test-NoWarnings perl-Test-Object perl-Test-SubCalls perl(Encode.pm) perl(Test/Deep.pm)
 
 %description
 PPI is an acronym for the longer original module name
@@ -26,7 +26,7 @@ played by certain unnamed Open Source projects you may have heard of,
 it's also a reverse acronym for "I Parse Perl".
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,10 +35,13 @@ it's also a reverse acronym for "I Parse Perl".
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README README.md
 %perl_vendor_privlib/PPI*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.236-alt1
+- automated CPAN update
+
 * Thu Nov 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.220-alt1
 - automated CPAN update
 
