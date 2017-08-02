@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Params-Classify
 Name: perl-%dist
-Version: 0.013
-Release: alt3.1.1.1
+Version: 0.015
+Release: alt1
 
 Summary: Argument type classification
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Oct 25 2011
 BuildRequires: perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-parent
@@ -21,7 +22,7 @@ depending on the type of their arguments (like overloaded functions
 in C++).
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +36,9 @@ in C++).
 %perl_vendor_autolib/Params
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.015-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.013-alt3.1.1.1
 - rebuild with new perl 5.24.1
 
