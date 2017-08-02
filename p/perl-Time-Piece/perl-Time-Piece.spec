@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Time-Piece
 Name: perl-%dist
-Version: 1.31
-Release: alt1.1.1
+Version: 1.3201
+Release: alt1
 
 Summary: Object Oriented time objects
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/E/ES/ESAYM/Time-Piece-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ES/ESAYM/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-devel
@@ -25,7 +25,7 @@ Larry Wall on the perl5-porters mailing list here:
 http://www.xray.mpe.mpg.de/mailing-lists/perl5-porters/2000-01/msg00241.html
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,11 +34,14 @@ http://www.xray.mpe.mpg.de/mailing-lists/perl5-porters/2000-01/msg00241.html
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README reverse_deps.txt
 %perl_vendor_archlib/Time
 %perl_vendor_autolib/Time
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.3201-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1.1.1
 - rebuild with new perl 5.24.1
 
