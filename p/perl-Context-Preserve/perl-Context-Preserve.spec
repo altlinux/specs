@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Context-Preserve
 Name: perl-%dist
-Version: 0.01
+Version: 0.02
 Release: alt1
 
 Summary: run code after a subroutine call, preserving the context the subroutine would have seen if it were the last statement in the caller
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -26,7 +27,7 @@ call the function in that context.  This results in 3 code paths,
 which is a pain to type in (and maintain).
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -39,5 +40,8 @@ which is a pain to type in (and maintain).
 %perl_vendor_privlib/Context*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
+- automated CPAN update
+
 * Tue Apr 13 2010 Alexey Tourbin <at@altlinux.ru> 0.01-alt1
 - initial revision, for DBIx::Class
