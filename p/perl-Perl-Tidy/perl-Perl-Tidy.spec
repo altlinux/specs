@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Perl-Tidy
 Name: perl-%dist
-Version: 20160302
+Version: 20170521
 Release: alt1
 
 Summary: Parses and beautifies perl source
@@ -9,7 +9,7 @@ License: GPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SH/SHANCOCK/Perl-Tidy-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SH/SHANCOCK/%{dist}-%{version}.tar.gz
 Patch: perl-Perl-Tidy-20120714-alt-deps.patch
 
 BuildArch: noarch
@@ -25,7 +25,7 @@ Perltidy is a tool to indent and reformat perl scripts. It can also
 write scripts in html format.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch -p1
 
 %build
@@ -35,12 +35,15 @@ write scripts in html format.
 %perl_vendor_install
 
 %files
-%doc CHANGES README BUGS examples docs/tutorial.pod docs/stylekey.pod
+%doc CHANGES README BUGS examples docs/tutorial.pod docs/stylekey.pod docs
 %perl_vendor_privlib/Perl*
 %_bindir/perltidy
 %_man1dir/*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 20170521-alt1
+- automated CPAN update
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 20160302-alt1
 - automated CPAN update
 
