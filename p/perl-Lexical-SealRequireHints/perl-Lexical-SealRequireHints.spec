@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl-podlators
@@ -5,8 +6,8 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Lexical-SealRequireHints
-Version:        0.010
-Release:        alt1_3
+Version:        0.011
+Release:        alt1
 Summary:        Prevent leakage of lexical hints
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -58,11 +59,14 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -delete
 ./Build test
 
 %files
-%doc Changes
+%doc Changes README
 %{perl_vendor_archlib}/auto/*
 %{perl_vendor_archlib}/Lexical*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1
+- automated CPAN update
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1_3
 - update to new release by fcimport
 
