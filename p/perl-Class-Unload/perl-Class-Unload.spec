@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Class-Unload
-Version: 0.09
+Version: 0.11
 Release: alt1
 
 Summary: Unload a class
@@ -27,10 +27,10 @@ Url: http://search.cpan.org/dist/Class-Unload/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/I/IL/ILMARI/Class-Unload-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/I/IL/ILMARI/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Apr 27 2010
-BuildRequires: perl-Class-Inspector perl-devel
+BuildRequires: perl-Class-Inspector perl-devel perl(Test/Requires.pm)
 
 %description
 Unloads the given class by clearing out its symbol table and removing it
@@ -38,7 +38,7 @@ from %%INC. If it has no sub-namespaces, also deletes the reference from
 the parent namespace.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -46,10 +46,14 @@ the parent namespace.
 %perl_vendor_install
 
 %files
+%doc LICENSE Changes README
 %perl_vendor_privlib/*
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - automated CPAN update
 
