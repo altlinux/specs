@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-ShareDir
 Name: perl-%dist
-Version: 1.102
+Version: 1.104
 Release: alt1
 
 Summary: Locate per-dist and per-module shared files
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RE/REHSACK/File-ShareDir-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RE/REHSACK/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,7 +35,7 @@ aware that it exists. As a result, module authors often go through some
 very strange ways to make the data available to their code.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -44,11 +44,14 @@ very strange ways to make the data available to their code.
 %perl_vendor_install
 
 %files
-%doc Changes
+%doc Changes README.md
 %perl_vendor_privlib/File
 %perl_vendor_privlib/auto/share/*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.104-alt1
+- automated CPAN update
+
 * Mon May 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.102-alt1
 - automated CPAN update
 
