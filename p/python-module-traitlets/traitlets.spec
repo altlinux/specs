@@ -3,35 +3,28 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.0
-Release: alt1.1.2
+Version: 4.3.2
+Release: alt1
 Summary: Traitlets Python config system
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/traitlets
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-ipython_genutils-tests python-module-decorator
-#BuildPreReq: python-module-nose
-#BuildPreReq: python-module-sphinx-devel
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: time python-module-alabaster python-module-decorator python-module-docutils python-module-html5lib
+BuildRequires: python-module-ipython_genutils-tests python-module-objects.inv python-module-pytest
+BuildRequires: python-module-sphinx_rtd_theme python-module-enum34 python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-ipython_genutils-tests python3-module-decorator
-#BuildPreReq: python3-module-nose
+BuildRequires: python3-module-decorator python3-module-ipython_genutils-tests python3-module-pytest
+BuildRequires: python3-module-sphinx_rtd_theme python3-module-enum34 python3-module-mock
 %endif
 
 %py_provides %oname
 %py_requires ipython_genutils decorator
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-ipython_genutils python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-nose python-module-pluggy python-module-py python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-ipython_genutils python3-module-nose python3-module-pluggy python3-module-py python3-module-setuptools xz
-BuildRequires: python-module-alabaster python-module-decorator python-module-docutils python-module-html5lib python-module-ipython_genutils-tests python-module-objects.inv python-module-pytest python3-module-decorator python3-module-ipython_genutils-tests python3-module-pytest rpm-build-python3 time
 
 %description
 A configuration system for Python applications.
@@ -146,6 +139,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.2-alt1
+- Updated to upstream version 4.3.2.
+
 * Thu Jul 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0-alt1.1.2
 - Fixed build spec with py.test3
 
