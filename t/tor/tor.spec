@@ -10,7 +10,7 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.3.0.9
+Version: 0.3.0.10
 Release: alt1%ubt
 
 Summary: Anonymizing overlay network for TCP (The onion router)
@@ -139,6 +139,9 @@ fi
 %_var/cache/%name
 
 %changelog
+* Wed Aug 2 2017 Vladimir Didenko <cow@altlinux.ru> 0.3.0.10-alt1%ubt
+- new version
+
 * Fri Jun 30 2017 Vladimir Didenko <cow@altlinux.ru> 0.3.0.9-alt1%ubt
 - new version (Fixes: CVE-2017-0377)
 
