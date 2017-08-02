@@ -2,26 +2,25 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Config.pm) perl(Exporter.pm) perl(FindBin.pm) perl(Math/BigInt.pm) perl(Math/BigRat.pm) perl(Math/Complex.pm) perl(Math/Symbolic.pm) perl(Math/Symbolic/Derivative.pm) perl(Test.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(overload.pm)
 # END SourceDeps(oneline)
-%define module_version 1.011
 %define module_name Math-Polynomial
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.011
+Version: 1.013
 Release: alt1
 Summary: Perl class for polynomials in one variable
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/M/MH/MHASCH/Math-Polynomial-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MH/MHASCH/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/M*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.013-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.011-alt1
 - automated CPAN update
 
