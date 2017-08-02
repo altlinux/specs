@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module MIME-Base32
 
 Name: perl-%module
-Version: 1.301
+Version: 1.303
 Release: alt1
 
 Summary: Base32 encoder/decoder
@@ -9,7 +10,7 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://www.cpan.org/authors/id/R/RE/REHSACK/MIME-Base32-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RE/REHSACK/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +22,7 @@ Encode data similar way like MIME::Base64 does. Main purpose is to create
 encrypted text used as id or key entry typed-or-submitted by user.
 
 %prep
-%setup -n MIME-Base32-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,10 +31,14 @@ encrypted text used as id or key entry typed-or-submitted by user.
 %perl_vendor_install
 
 %files
+%doc GPL-1 Changes LICENSE README.md
 %perl_vendor_privlib/MIME
 #exclude %perl_vendor_privlib/MIME/test1.pl
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.303-alt1
+- automated CPAN update
+
 * Wed Apr 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.301-alt1
 - automated CPAN update
 
