@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -7,13 +8,13 @@ BuildRequires: perl(Moose.pm)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Config-GitLike
-Version:        1.16
-Release:        alt1_6
+Version:        1.17
+Release:        alt1
 Summary:        Git-compatible config file parsing
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/Config-GitLike/
-Source0:        http://search.cpan.org/CPAN/authors/id/A/AL/ALEXMV/Config-GitLike-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/A/AL/ALEXMV/Config-GitLike-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  perl
@@ -52,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1
+- automated CPAN update
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1_6
 - update to new release by fcimport
 
