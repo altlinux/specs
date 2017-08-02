@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN/Meta/Requirements.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-Kwalitee
-Version:	1.25
+Version:	1.26
 Release:	alt1
 Summary:	Test the Kwalitee of a distribution before you release it
 License:	GPL+ or Artistic
@@ -67,6 +67,9 @@ make test
 %{_mandir}/man1/kwalitee-metrics.1*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1
+- automated CPAN update
+
 * Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.25-alt1
 - automated CPAN update
 
