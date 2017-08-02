@@ -9,7 +9,7 @@ Version: 27.5.0
 # %%ifndef git_commit
 # Release: alt2
 # %%else
-Release: alt0.git_2_%git_commit
+Release: alt0.git_3_%git_commit
 # %%endif
 
 License: MPL/GPL/LGPL
@@ -276,9 +276,10 @@ echo "ac_add_options --enable-release" >> .mozconfig
 echo "ac_add_options --with-pthreads" >> .mozconfig
 echo "ac_add_options --enable-shared-js"  >> .mozconfig
 echo "ac_add_options --enable-jemalloc --enable-jemalloc-lib" >> .mozconfig
-echo "ac_add_options --x-libraries=/usr/lib/X11" >> .mozconfig
+echo "ac_add_options --x-libraries=%_libexecdir/X11" >> .mozconfig
 # echo "ac_add_options --sharedstatedir=%_datadir" >> .mozconfig
 # echo "ac_add_options --datadir=%_datadir" >> .mozconfig
+echo "ac_add_options --enable-release" >> .mozconfig
 
 # echo "ac_add_options --with-system-nss"  >> .mozconfig
 
@@ -589,12 +590,14 @@ install -D -m 644 README.md ../
 %exclude %_datadir/idl/*
 
 %changelog
+* Wed Aug 02 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.5.0-alt0.git_3_0505aac
+- add  provides webclient ( Bug #33709 )
+
 * Tue Aug 01 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.5.0-alt0.git_2_0505aac
 - Update from github commit 0505aac66844b9579d1c1a53e00ba6147dfbdfd1
 
 * Sun Jul 23 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.5.0-alt0.git_1_9a0d28e
 - Update from github commit 9a0d28e130fb4d2fb48d5acfac2b80c3cea35ba7
-- add  provides webclient ( Bug #33709 )
 
 * Sat Jul 15 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.4.0-alt2
 - enable-system-sqlite
