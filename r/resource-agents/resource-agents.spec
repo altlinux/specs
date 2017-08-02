@@ -3,8 +3,8 @@
 
 Name: resource-agents
 Summary: Open Source HA Reusable Cluster Resource Scripts
-Version: 3.9.7
-Release: alt3%ubt
+Version: 4.0.1
+Release: alt1%ubt
 License: GPLv2+ and LGPLv2+
 Url: https://github.com/ClusterLabs/resource-agents
 Group: System/Base
@@ -358,6 +358,9 @@ mkdir -p %buildroot%_var/run/resource-agents
 %_mandir/man8/ldirectord.8*
 
 %changelog
+* Wed Aug 02 2017 Anton Farygin <rider@altlinux.ru> 4.0.1-alt1%ubt
+- new version
+
 * Thu Apr 20 2017 Sergey Novikov <sotor@altlinux.org> 3.9.7-alt3%ubt
 - fix CTDB start function, add ubt tag (closes: #33353)
 
