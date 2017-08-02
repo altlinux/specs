@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Regexp-Assemble
-Version: 0.37
+Version: 0.38
 Release: alt1
 
 Summary: Assemble multiple Regular Expressions into a single RE
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RS/RSAVAGE/Regexp-Assemble-%{version}.tgz
+Source0: http://www.cpan.org/authors/id/R/RS/RSAVAGE/%{module}-%{version}.tgz
 
 # Automatically added by buildreq on Wed May 30 2012
 # optimized out: perl-Devel-Symdump perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel
@@ -63,7 +63,7 @@ http://search.cpan.org/dist/Regexp-Assemble/README or
 http://cpan.uwinnipeg.ca/htdocs/Regexp-Assemble/README.html.
 
 %prep
-%setup -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 #sed -i -e 's,^=item \([1-8]\)$,=item NUMBER is \1,' Assemble.pm
 %build
 %perl_vendor_build
@@ -72,9 +72,13 @@ http://cpan.uwinnipeg.ca/htdocs/Regexp-Assemble/README.html.
 %perl_vendor_install
 
 %files
+%doc LICENSE Changelog.ini Changes README TODO examples
 %perl_vendor_privlib/Regexp/*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1
+- automated CPAN update
+
 * Wed Apr 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
 - automated CPAN update
 
