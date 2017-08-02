@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(AptPkg/Policy.pm) perl(B/Concise.pm) perl(Devel/Mallinfo.pm) perl(Digest/MD5.pm) perl(Encode.pm) perl(Fcntl.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Perl-Critic-Pulp
-Version:        93
+Version:        94
 Release:        alt1
 Summary:        Some add-on perlcritic policies
 License:        GPLv3+
@@ -113,6 +113,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 94-alt1
+- automated CPAN update
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 93-alt1
 - automated CPAN update
 
