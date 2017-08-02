@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl-podlators
@@ -5,8 +6,8 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Data-Float
-Version:        0.012
-Release:        alt2_10
+Version:        0.013
+Release:        alt1
 Summary:        Details of the floating point data type
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -58,6 +59,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1
+- automated CPAN update
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.012-alt2_10
 - update to new release by fcimport
 
