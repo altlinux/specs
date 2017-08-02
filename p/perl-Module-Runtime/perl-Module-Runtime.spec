@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Module-Runtime
 Name: perl-%dist
-Version: 0.014
+Version: 0.015
 Release: alt1
 
 Summary: Runtime module handling
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Module-Runtime-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -20,7 +21,7 @@ The functions exported by this module deal with runtime handling of Perl
 modules, which are normally handled at compile time.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,6 +34,9 @@ modules, which are normally handled at compile time.
 %perl_vendor_privlib/Module
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.015-alt1
+- automated CPAN update
+
 * Sat Feb 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1
 - automated CPAN update
 
