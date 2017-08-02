@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist URI
 Name: perl-%dist
-Version: 1.71
+Version: 1.72
 Release: alt1
 
 Summary: A Perl interface for URI objects
@@ -9,14 +9,14 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/URI-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
 %add_findreq_skiplist */isbn.pm
 
 # Automatically added by buildreq on Wed Sep 26 2012
-BuildRequires: perl-Encode perl-devel perl-libnet
+BuildRequires: perl-Encode perl-devel perl-libnet perl(Test/Needs.pm)
 
 %description
 This package contains the URI.pm module with friends.  The module
@@ -24,7 +24,7 @@ implements the URI class.  Objects of this class represent Uniform
 Resource Identifier (URI) references as specified in RFC 2396.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,10 +33,13 @@ Resource Identifier (URI) references as specified in RFC 2396.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes CONTRIBUTING.md
 %perl_vendor_privlib/URI*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.72-alt1
+- automated CPAN update
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.71-alt1
 - automated CPAN update
 
