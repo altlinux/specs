@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Module/Build.pm) perl(Test/CPAN/Changes.pm) perl-podlators
@@ -5,8 +6,8 @@ BuildRequires: perl(Module/Build.pm) perl(Test/CPAN/Changes.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Test-WWW-Mechanize-PSGI
-Version:        0.36
-Release:        alt2_2
+Version:        0.37
+Release:        alt1
 Summary:        Test PSGI programs using WWW::Mechanize
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -51,11 +52,14 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 make test
 
 %files
-%doc Changes
+%doc Changes CONTRIBUTORS README.md
 %doc LICENSE
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
+- automated CPAN update
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.36-alt2_2
 - update to new release by fcimport
 
