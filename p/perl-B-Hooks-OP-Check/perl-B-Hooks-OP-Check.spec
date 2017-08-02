@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist B-Hooks-OP-Check
 Name: perl-%dist
-Version: 0.19
-Release: alt3.1.1.1
+Version: 0.22
+Release: alt1
 
 Summary: Wrap OP check callbacks
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Nov 20 2011
 BuildRequires: perl-ExtUtils-Depends perl-Pod-Escapes perl-devel perl-parent
@@ -18,7 +19,7 @@ This module provides a C api for XS modules to hook into the callbacks
 of PL_check.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -32,6 +33,9 @@ of PL_check.
 %perl_vendor_autolib/B
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.19-alt3.1.1.1
 - rebuild with new perl 5.24.1
 
