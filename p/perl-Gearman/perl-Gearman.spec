@@ -5,7 +5,7 @@ BuildRequires: perl-devel perl-podlators perl(Perl/OSType.pm) perl(Test/Exceptio
 # END SourceDeps(oneline)
 %add_findreq_skiplist %perl_vendor_privlib/Gearman/Task.pm
 Name:           perl-Gearman
-Version:        2.004.004
+Version:        2.004.008
 Release:        alt1
 Summary:        Distributed job system
 License:        GPL+ or Artistic
@@ -71,6 +71,9 @@ make test
 %{perl_vendor_privlib}/Gearman
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.004.008-alt1
+- automated CPAN update
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.004.004-alt1
 - automated CPAN update
 
