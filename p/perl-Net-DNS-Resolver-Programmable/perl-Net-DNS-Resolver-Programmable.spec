@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 %define module Net-DNS-Resolver-Programmable
 
 Name: perl-%module
-Version: 0.003
-Release: alt1.1
+Version: 0.009
+Release: alt1
 
 Summary: Perl module that implements a programmable DNS resolver class for offline emulation of DNS
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://www.cpan.org/modules/by-module/Net/%module-v%version.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BI/BIGPRESH/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +22,7 @@ Net-DNS-Resolver-Programmable is a Perl module that implements a programmable
 DNS resolver class for offline emulation of DNS.
 
 %prep
-%setup -n %module-v%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,9 +31,13 @@ DNS resolver class for offline emulation of DNS.
 %perl_vendor_install
 
 %files
+%doc LICENSE CHANGES TODO README
 %perl_vendor_privlib/Net/DNS/*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.009-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.003-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
