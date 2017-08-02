@@ -1,6 +1,6 @@
 Name: bind-dyndb-ldap
 Version: 10.1
-Release: alt2
+Release: alt3
 
 Summary: LDAP back-end plug-in for BIND
 License: %gpl2plus
@@ -48,6 +48,9 @@ mkdir -p %buildroot%_localstatedir/bind/zone/dyndb-ldap/
 %exclude %_libdir/bind/*.la
 
 %changelog
+* Wed Aug 02 2017 Dmitry V. Levin <ldv@altlinux.org> 10.1-alt3
+- Built with bind-devel-9.10.6.
+
 * Wed Dec 28 2016 Mikhail Efremov <sem@altlinux.org> 10.1-alt2
 - Fix spec.
 - packaging typos fixed (by Sergey Bolshakov).

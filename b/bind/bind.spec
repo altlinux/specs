@@ -1,6 +1,6 @@
 Name: bind
-Version: 9.10.4.P8
-%define src_version 9.10.4-P8
+Version: 9.10.6
+%define src_version 9.10.6
 Release: alt1
 
 Summary: ISC BIND - DNS server
@@ -45,9 +45,8 @@ Patch0006: 0006-alt-man.patch
 Patch0007: 0007-alt-nofile.patch
 Patch0008: 0008-alt-ads-remove.patch
 Patch0009: 0009-Minimize-linux-capabilities.patch
-Patch0010: 0010-Link-libirs-with-libdns-and-libisccfg.patch
-Patch0011: 0011-Move-named-rrchecker-from-sbindir-to-bindir.patch
-Patch0012: 0012-rh-dyndb.patch
+Patch0010: 0010-Link-libirs-with-libdns-libisc-and-libisccfg.patch
+Patch0011: 0011-rh-dyndb.patch
 
 # root directory for chrooted environment.
 %define _chrootdir %_localstatedir/bind
@@ -179,7 +178,6 @@ rather than the DNS protocol.
 %patch0009 -p2
 %patch0010 -p2
 %patch0011 -p2
-%patch0012 -p2
 
 install -D -pm644 %_sourcedir/rfc1912.txt doc/rfc/rfc1912.txt
 install -pm644 %_sourcedir/bind.README.bind-devel README.bind-devel
@@ -289,12 +287,12 @@ touch %buildroot/var/run/{named,lwresd}.pid
 
 # Package documentation files
 mkdir -p %buildroot%docdir
-cp -a CHANGES COPYRIGHT FAQ README* \
+cp -a CHANGES COPYRIGHT README* \
 	doc/{arm,misc,rfc} \
 	%buildroot%docdir/
 install -pm644 contrib/queryperf/README %buildroot%docdir/README.queryperf
 
-xz -9 %buildroot%docdir/{*/*.txt,FAQ,CHANGES}
+xz -9 %buildroot%docdir/{*/*.txt,CHANGES}
 rm -fv %buildroot%docdir/*/{Makefile*,README-SGML,*.dsl*,*.sh*,*.xml}
 
 %define _unpackaged_files_terminate_build 1
@@ -366,6 +364,7 @@ fi
 %endif
 
 %files
+%_bindir/arpaname
 %_bindir/named-rrchecker
 %exclude %_sbindir/lwresd
 %exclude %_man8dir/lwresd*
@@ -385,7 +384,6 @@ fi
 
 %dir %docdir
 %docdir/README*
-%docdir/FAQ*
 %docdir/misc
 %exclude %docdir/README.bind-devel
 
@@ -431,11 +429,17 @@ fi
 %files doc
 %docdir
 %exclude %docdir/README*
-%exclude %docdir/FAQ.xz
 %exclude %docdir/misc
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Fri Jul 28 2017 Dmitry V. Levin <ldv@altlinux.org> 9.10.6-alt1
+- 9.10.5-P3 -> 9.10.6.
+
+* Tue Jul 11 2017 Dmitry V. Levin <ldv@altlinux.org> 9.10.5.P3-alt1
+- 9.10.4-P8 -> 9.10.5-P3
+  (fixes: CVE-2017-3140, CVE-2017-3141, CVE-2017-3142, CVE-2017-3143).
+
 * Wed Apr 12 2017 Dmitry V. Levin <ldv@altlinux.org> 9.10.4.P8-alt1
 - 9.10.4-P6 -> 9.10.4-P8 (fixes: CVE-2017-3136, CVE-2017-3137, CVE-2017-3138).
 - bind.service: pass $CHROOT to named-checkconf (closes: #33239).
