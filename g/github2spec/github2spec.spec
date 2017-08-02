@@ -1,5 +1,5 @@
 Name:     github2spec
-Version:  1.3.10
+Version:  1.3.11
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from github using genspec
@@ -12,7 +12,7 @@ BuildArch: noarch
 
 BuildPrereq: rpm-build-ruby
 
-Requires: genspec >= 1.2.6
+Requires: genspec >= 1.2.9
 
 Source:   %name-%version.tar
 
@@ -33,6 +33,9 @@ install -Dm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sun Aug 06 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.11-alt1
+- Add command line option to pack stand alone programs
+
 * Tue Jul 11 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.10-alt1
 - Refactor code and add opportunity to pass arguments to genspec
 

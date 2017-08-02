@@ -1,5 +1,5 @@
 Name:     genspec
-Version:  1.2.8
+Version:  1.2.9
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
@@ -32,6 +32,9 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_datadir/spectemplates
 
 %changelog
+* Wed Aug 02 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.9-alt1
+- Add new spectemplates for executables
+
 * Thu Jul 06 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.8-alt1
 - Add test option
 
