@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Data-Dumper-Concise
 Name: perl-%dist
-Version: 2.022
+Version: 2.023
 Release: alt1
 
 Summary: Less indentation and newlines plus sub deparsing
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/F/FR/FREW/Data-Dumper-Concise-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +22,7 @@ with an array of values to dump those values or with no arguments to
 return the Data::Dumper object it's created.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,11 +31,14 @@ return the Data::Dumper object it's created.
 %perl_vendor_install
 
 %files
-%doc Changes
+%doc Changes README
 %perl_vendor_privlib/Data*
 %perl_vendor_privlib/Devel*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.023-alt1
+- automated CPAN update
+
 * Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 2.022-alt1
 - automated CPAN update
 
