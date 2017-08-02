@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist XML-SAX-Writer
 Name: perl-%dist
-Version: 0.56
+Version: 0.57
 Release: alt1
 
 Summary: SAX2 XML Writer
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/P/PE/PERIGRIN/XML-SAX-Writer-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PERIGRIN/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -19,7 +20,7 @@ BuildRequires: perl-Encode perl-Pod-Escapes perl-XML-Filter-BufferText perl-XML-
 Yet Another SAX2 XML Writer.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -28,10 +29,13 @@ Yet Another SAX2 XML Writer.
 %perl_vendor_install
 
 %files 
-%doc Changes README
+%doc Changes README README.md
 %perl_vendor_privlib/XML
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.57-alt1
+- automated CPAN update
+
 * Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.56-alt1
 - automated CPAN update
 
