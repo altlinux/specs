@@ -2,20 +2,19 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Math/BigFloat.pm) perl(Math/BigInt.pm) perl(Time/Piece.pm) perl(Types/Serialiser.pm) perl(URI.pm) perl(XSLoader.pm) perl(common/sense.pm) perl(Canary/Stability.pm) perl(Math/BigRat.pm)
 # END SourceDeps(oneline)
-%define module_version 1.6
 %define module_name CBOR-XS
 Epoch: 2
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.6
-Release: alt1.1
+Version: 1.7
+Release: alt1
 Summary: unknown
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/CBOR-XS-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{module_name}-%{version}.tar.gz
 
 %description
 This module converts Perl data structures to the Concise Binary Object
@@ -50,7 +49,7 @@ is to be *fast*. To reach the latter goal it was written in C.
 See MAPPING, below, on how CBOR::XS maps perl values to CBOR values and
 vice versa.
 %prep
-%setup -q -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -64,6 +63,9 @@ vice versa.
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 2:1.7-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2:1.6-alt1.1
 - rebuild with new perl 5.24.1
 
