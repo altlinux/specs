@@ -1,20 +1,19 @@
-%define module_version 1.01
+%define _unpackaged_files_terminate_build 1
 %define module_name Crypt-OpenSSL-EC
 # BEGIN SourceDeps(oneline):
 BuildRequires: libsowing-devel libssl-devel perl(AutoLoader.pm) perl(Config.pm) perl(Crypt/OpenSSL/Bignum.pm) perl(Crypt/OpenSSL/Bignum/CTX.pm) perl(Exporter.pm) perl(ExtUtils/Constant.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(XSLoader.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.01
-Release: alt2.1.1
+Version: 1.31
+Release: alt1
 Summary: Perl extension for OpenSSL EC (Elliptic Curves) library
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/M/MI/MIKEM/%{module_name}-%{module_version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MI/MIKEM/%{module_name}-%{version}.tar.gz
 
 %description
 This module provides a standard (non-OO) interface to the OpenSSL EC (Elliptic Curve) library.
@@ -644,7 +643,7 @@ Verifies that a private and/or public key is valid.
 
 
 %prep
-%setup -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -658,6 +657,9 @@ Verifies that a private and/or public key is valid.
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2.1.1
 - rebuild with new perl 5.24.1
 
