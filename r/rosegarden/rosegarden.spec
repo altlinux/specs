@@ -1,7 +1,7 @@
 #define status beta
 Name: rosegarden
-Version: 13.02
-Release: alt1.1
+Version: 17.04
+Release: alt1
 
 Summary: MIDI and audio seqencer and musical notation editor
 License: GPL
@@ -11,48 +11,48 @@ Url: http://www.rosegardenmusic.com
 Source: %name-%version.tar.bz2
 Packager: Alex Karpov <karpov@altlinux.ru>
 
-# Automatically added by buildreq on Thu Mar 04 2010
-BuildRequires: dssi-devel gcc-c++ imake jackit-devel ladspa_sdk libSM-devel libX11-devel libalsa-devel libfftw3-devel liblirc-devel liblo-devel liblrdf-devel libqt4-devel libsamplerate-devel libsndfile-devel makedepend xorg-cf-files
-
-BuildRequires: perl-XML-Twig desktop-file-utils shared-mime-info
-
 Requires: libsndfile-utils
-
-Provides: rosegarden = %version
 Obsoletes: rosegarden-alsa rosegarden-arts rosegarden-common librosegarden-alsa librosegarden-arts
 
+# Automatically added by buildreq on Mon Jul 31 2017
+# optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 ladspa_sdk libEGL-devel libGL-devel libICE-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libalsa-devel libqt5-core libqt5-gui libqt5-network libqt5-printsupport libqt5-test libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python-modules qt5-base-common qt5-base-devel qt5-tools raptor2-devel shared-mime-info xorg-kbproto-devel xorg-xproto-devel
+BuildRequires: cmake dssi-devel libSM-devel libXcursor-devel libXinerama-devel libXrandr-devel libXtst-devel libXv-devel libfftw3-devel libjack-devel liblirc-devel liblo-devel liblrdf-devel libsamplerate-devel libsndfile-devel qt5-tools-devel zlib-devel
+
 %description
-Rosegarden is a professional audio and MIDI seqencer, score editor, and 
+Rosegarden is a professional audio and MIDI seqencer, score editor, and
 general-purpose music composition and editing environement.
 
-Rosegarden is an easy-to-learn, attractive application that runs on 
+Rosegarden is an easy-to-learn, attractive application that runs on
 Linux, ideal for composers, musicians, music students, and small studio
 or home recording environments.
 
 %prep
-%setup -n %name-%version
+%setup
 
 %build
-%configure --with-qtdir=%_libdir/qt4
-%make
+%cmake
+%make_build -C BUILD
 
 %install
-%make DESTDIR="%buildroot" install
+%make DESTDIR="%buildroot" install -C BUILD
 %find_lang --with-kde %name
 
+%check
+# doesn't work yet
+#make test -C BUILD
+
 %files -f %name.lang
-%doc README AUTHORS COPYING
+%doc AUTHORS CONTRIBUTING README
 %_bindir/*
-%_datadir/applications/*
-%_datadir/icons/hicolor/16x16/mimetypes/*
-%_datadir/icons/hicolor/32x32/apps/*
-%_datadir/icons/hicolor/32x32/mimetypes/*
-%_datadir/icons/hicolor/64x64/apps/*
-%_datadir/icons/hicolor/64x64/mimetypes/*
-%_datadir/icons/hicolor/128x128/apps/*
+%_desktopdir/*
+%_iconsdir/hicolor/*/*/*
+%_datadir/appdata/%name.*
 %_datadir/mime/packages/*
 
 %changelog
+* Mon Jul 31 2017 Ildar Mulyukov <ildar@altlinux.ru> 17.04-alt1
+- new version 17.04
+
 * Thu Jun 20 2013 Andrey Cherepanov <cas@altlinux.org> 13.02-alt1.1
 - Rebuild with new version liblo
 
