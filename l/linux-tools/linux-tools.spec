@@ -1,4 +1,4 @@
-%define kernel_base_version 4.9
+%define kernel_base_version 4.12
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/traceevent_%kernel_base_version/plugins/*
 %add_findreq_skiplist %_datadir/perf_%kernel_base_version-core/tests/*.py
@@ -6,7 +6,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt4
+Release: alt2
 
 Summary: Performance analysis tools for Linux
 License: GPLv2
@@ -16,7 +16,10 @@ URL: http://www.kernel.org/
 BuildRequires: libaudit-devel elfutils-devel libnuma-devel perl-devel libslang2-devel libunwind-devel bison flex binutils-devel asciidoc xmlto libssl-devel liblzma-devel
 BuildRequires: rpm-build-kernel
 BuildRequires: %kernel_source = 1.0.0
-BuildRequires: python-dev
+BuildRequires: python-devel
+
+# Broken in upstream, waiting for fix...
+ExclusiveArch: x86_64
 
 Patch1: linux-tools-alt.patch
 Patch2: python-linking.patch
@@ -53,6 +56,7 @@ cd %kernel_source
 pushd %kernel_source/tools/perf
 sed -i 's|\(perfexecdir[[:blank:]]*=[[:blank:]]*\).*$|\1share/perf_%kernel_base_version-core|' Makefile.config
 sed -i 's|\(plugindir[[:blank:]]*=[[:blank:]]*\).*$|\1%_libexecdir/traceevent_%kernel_base_version/plugins|' Makefile.config
+sed -i 's|\(STRACE_GROUPS_DIR[[:blank:]]*=[[:blank:]]*\).*$|\1share/perf_%kernel_base_version-core/strace/groups|' Makefile.config
 make VERSION=%kernel_base_version \
      VF=1 \
      WERROR=0 \
@@ -99,6 +103,16 @@ popd
 %python_sitelibdir/perf*
 
 %changelog
+* Wed Aug  2 2017 Terechkov Evgenii <evg@altlinux.org> 4.12-alt2
+- Build exclusively for x86_64 for now, waiting for upstream fix...
+
+* Thu Jul 13 2017 Terechkov Evgenii <evg@altlinux.org> 4.12-alt1
+- Update for kernel-4.12
+
+* Wed Mar 29 2017 Terechkov Evgenii <evg@altlinux.org> 4.10-alt1
+- Update for kernel-4.10
+- Fix minor repocop warning about python-dev
+
 * Wed Feb  8 2017 Terechkov Evgenii <evg@altlinux.org> 4.9-alt4
 - Add python-module-perf subpackage
 
