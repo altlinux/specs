@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Daemon-Generic
-Version: 0.84
+Version: 0.85
 Release: alt1
 
 Summary: Daemon-Generic - Perl module
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Denis Baranov <baraka@altlinux.org>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/M/MU/MUIR/modules/Daemon-Generic-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MU/MUIR/modules/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Nov 30 2010
 BuildRequires: libnss-role perl-devel perl-File-Flock perl-File-Slurp perl-Pod-Parser perl(Eval/LineNumbers.pm) perl(File/Flock/Forking.pm)
@@ -36,7 +36,7 @@ BuildRequires: libnss-role perl-devel perl-File-Flock perl-File-Slurp perl-Pod-P
 None.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -44,9 +44,13 @@ None.
 %perl_vendor_install
 
 %files
+%doc Changes README
 %perl_vendor_privlib/Daemon/*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.85-alt1
+- automated CPAN update
+
 * Wed Oct 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.84-alt1
 - automated CPAN update
 
