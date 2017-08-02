@@ -4,7 +4,7 @@
 %def_with ffmpeg
 
 Name: telegram-desktop
-Version: 1.1.18
+Version: 1.1.19
 Release: alt1
 
 Summary: Telegram is a messaging app with a focus on speed and security
@@ -161,6 +161,9 @@ ln -s %name %buildroot%_bindir/telegram
 %doc README.md
 
 %changelog
+* Wed Aug 02 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.19-alt1
+- new version 1.1.19 (with rpmrb script)
+
 * Sun Jul 30 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.18-alt1
 - new version 1.1.18 (with rpmrb script)
 - update translations
