@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,14 +7,14 @@ BuildRequires: perl-podlators
 %define upstream_version 1.017
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt2_6
+Version:    1.019
+Release:    alt1
 
 Summary:    %{upstream_name} perl module
 License:    GPL or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    ftp://ftp.cpan.org/pub/CPAN/modules/by-module/Math/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/K/KW/KWILLIAMS/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(Carp.pm)
 BuildRequires: perl(Config.pm)
@@ -32,7 +33,7 @@ number bases.  You may define your own digit sets, or use any of
 several predefined digit sets.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 
@@ -48,6 +49,9 @@ make PREFIX=$RPM_BUILD_ROOT%{_prefix} install DESTDIR=$RPM_BUILD_ROOT
 %{perl_vendor_privlib}/Math/*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.019-alt1
+- automated CPAN update
+
 * Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 1.017-alt2_6
 - update by mgaimport
 
