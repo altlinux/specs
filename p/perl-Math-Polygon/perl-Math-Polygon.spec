@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Math-Polygon
-Version: 1.05
+Version: 1.06
 Release: alt1
 
 Summary: Polygon calculations
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/M/MA/MARKOV/Math-Polygon-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MARKOV/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 10 2008
 BuildRequires: perl-Test-Pod
@@ -37,7 +37,7 @@ BuildRequires: perl-Math-Complex
 This class provides an OO interface around Math::Polygon::Calc and Math::Polygon::Clip.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -46,9 +46,13 @@ This class provides an OO interface around Math::Polygon::Calc and Math::Polygon
 %perl_vendor_install
 
 %files
+%doc ChangeLog README
 %perl_vendor_privlib/Math/*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1
+- automated CPAN update
+
 * Thu Dec 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
 - automated CPAN update
 
