@@ -17,7 +17,7 @@
 
 Name: kf5-%rname
 Version: 5.10.4
-Release: alt3%ubt
+Release: alt4%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -27,7 +27,7 @@ License: GPLv2+ / LGPLv2+
 
 Requires: /usr/share/design/current xdg-user-dirs
 Requires: iso-codes
-Requires: qt5-dbus qt5-tools qt5-quickcontrols dbus-tools-gui
+Requires: qt5-dbus qt5-tools qt5-quickcontrols qt5-virtualkeyboard dbus-tools-gui
 Requires: kf5-kinit kf5-kconfig kf5-kded kf5-kglobalaccel kf5-kactivitymanagerd kf5-kdeclarative
 Requires: kf5-kwallet kf5-solid kf5-kimageformats kf5-kdbusaddons kf5-kio kf5-kio-extras
 Requires: kf5-polkit-kde-agent kf5-kwin kf5-kdeclarative
@@ -307,6 +307,9 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Wed Aug 02 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt4%ubt
+- require qt5-virtualkeyboard
+
 * Wed Jul 26 2017 Oleg Solovyov <mcpain@altlinux.org> 5.10.4-alt3%ubt
 - fix focus behavior on login screen
 
