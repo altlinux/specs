@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 0.07
 %define module_name ExtUtils-MakeMaker-CPANfile
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Path.pm) perl(File/Spec/Functions.pm) perl(FindBin.pm) perl(Module/CPANfile.pm) perl(Test/More.pm) perl(version.pm)
@@ -7,14 +6,14 @@ BuildRequires: perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Path.pm) perl(
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.07
+Version: 0.08
 Release: alt1
 Summary: cpanfile support for EUMM
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/I/IS/ISHIGAKI/ExtUtils-MakeMaker-CPANfile-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/I/IS/ISHIGAKI/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -29,7 +28,7 @@ ExtUtils::MakeMaker doesn't know, to avoid warnings.
 
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -42,6 +41,9 @@ ExtUtils::MakeMaker doesn't know, to avoid warnings.
 %perl_vendor_privlib/E*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Tue Dec 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
 - automated CPAN update
 
