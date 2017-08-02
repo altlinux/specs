@@ -1,15 +1,17 @@
+%define _unpackaged_files_terminate_build 1
+Epoch: 1
 %define module	Parse-Yapp
 
 Name: perl-%module
-Version: 1.05
-Release: alt4
+Version: 1.2
+Release: alt4.1
 
 Summary: %module module for perl
 License: distributable
 Group: Development/Perl
 
 Url: http://www.cpan.org
-Source: http://cpan.valueclick.com/modules/by-module/Parse/%module-%version.tar.bz2
+Source0: http://www.cpan.org/authors/id/W/WB/WBRASWELL/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Nov 06 2002
 BuildRequires: perl-devel
@@ -25,7 +27,7 @@ Provides: perl(Parse/Yapp.pm) = 1.050
 %module module for perl
 
 %prep
-%setup -q -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -36,11 +38,15 @@ cd $RPM_BUILD_ROOT%perl_vendor_privlib/Parse
 find . -type f -name '*.pm'|xargs chmod 644
 
 %files
+%doc Changes README.md README docs
 %perl_vendor_privlib/Parse*
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt4.1
+- automated CPAN update
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.05-alt4
 - added provides
 
