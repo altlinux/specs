@@ -1,9 +1,9 @@
-%define ver_major 2.2
+%define ver_major 2.3
 %define api_ver 2.0
 
 Name: switchboard
 %define xdg_name org.pantheon.%name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Modular Desktop Settings Hub for elementary OS
@@ -59,7 +59,7 @@ subst 's@\(\/include\)\/@\1@' lib/%name.pc.cmake
 %_bindir/%name
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/org.pantheon.%name.gschema.xml
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 
 %files -n lib%name
 %_libdir/lib%name-%api_ver.so.*
@@ -72,6 +72,9 @@ subst 's@\(\/include\)\/@\1@' lib/%name.pc.cmake
 %_vapidir/%name-%api_ver.vapi
 
 %changelog
+* Wed Aug 02 2017 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
+- 2.3.0
+
 * Tue Feb 07 2017 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
 - 2.2.1
 
