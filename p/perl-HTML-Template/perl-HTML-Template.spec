@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist HTML-Template
 Name: perl-%dist
-Version: 2.95
+Version: 2.97
 Release: alt1
 
 Summary: Perl module to use HTML Templates from CGI scripts
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/W/WO/WONKO/HTML-Template-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SA/SAMTREGAR/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -27,7 +28,7 @@ you to seperate design - the HTML - from the data, which you generate
 in the Perl script.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -40,6 +41,9 @@ in the Perl script.
 %perl_vendor_privlib/HTML
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.97-alt1
+- automated CPAN update
+
 * Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.95-alt1
 - automated CPAN update
 
