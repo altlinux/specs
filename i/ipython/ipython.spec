@@ -2,7 +2,7 @@
 
 Name: ipython
 Version: 4.0.0
-Release: alt3.1.1
+Release: alt4
 
 %setup_python_module IPython
 
@@ -19,6 +19,9 @@ Source0: %name-%version.tar
 Source1: components.tar
 Patch0: %name-0.10-alt-bindings-fix.patch
 
+%add_findreq_skiplist %python_sitelibdir/IPython/utils/eventful.py
+%add_findreq_skiplist %python3_sitelibdir/IPython/utils/eventful.py
+
 BuildPreReq: python3-module-tornado python-module-setuptools pyjsdoc
 BuildPreReq: python-module-sphinx-devel python-module-zmq
 BuildPreReq: python-module-tornado python-modules-sqlite3
@@ -27,6 +30,7 @@ BuildPreReq: python-module-jsonschema python-module-traitlets
 BuildPreReq: python-module-pexpect python-module-pickleshare
 BuildPreReq: python-module-simplegeneric python-module-ipykernel
 BuildPreReq: python-module-ipyparallel
+BuildPreReq: python-module-pathlib2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -34,6 +38,7 @@ BuildRequires: python3-module-traitlets
 BuildPreReq: python3-module-pexpect python3-module-pickleshare
 BuildPreReq: python3-module-simplegeneric python3-module-ipykernel
 BuildPreReq: python3-module-ipyparallel
+BuildPreReq: python3-module-pathlib2
 %endif
 
 %add_python_req_skip Gnuplot Numeric bzrlib foolscap nose setuptools twisted msvcrt oct2py rpy2 System builtins clr
@@ -199,6 +204,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 
 
 %changelog
+* Wed Aug 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0-alt4
+- Fixed build.
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.0-alt3.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
