@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist IO-All
 Name: perl-%dist
-Version: 0.86
+Version: 0.87
 Release: alt1
 
 Summary: IO::All of it to Graham and Damian!
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/I/IN/INGY/IO-All-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/F/FR/FREW/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -26,7 +26,7 @@ idioms. It exports a single function called io, which returns a new
 IO::All object.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 # File::Spec::Win32:
 #Can't locate object method "catfile" via package "File::Spec::Win32" at /usr/src/RPM/BUILD/IO-All-0.48/blib/lib/IO/All/Filesys.pm line 22.                     
 rm t/os.t 
@@ -38,10 +38,13 @@ rm t/os.t
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README example
 %perl_vendor_privlib/IO
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.87-alt1
+- automated CPAN update
+
 * Sat Jan 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.86-alt1
 - automated CPAN update
 
