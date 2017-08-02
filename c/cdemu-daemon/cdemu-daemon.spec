@@ -1,6 +1,6 @@
 Name: cdemu-daemon
-Version: 3.0.5
-Release: alt1
+Version: 3.1.0
+Release: alt1%ubt
 
 Summary: CDEmu daemon
 License: GPLv2+
@@ -13,9 +13,13 @@ Source0: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
 Source1: vhba.init
 Source2: vhba.service
 
+BuildPreReq: rpm-build-ubt
+
 BuildRequires: cmake
+BuildRequires: glibc-kernheaders-generic
+BuildRequires: intltool
 BuildRequires: libao-devel >= 0.8.0
-BuildRequires: libmirage-devel >= 3.0.5
+BuildRequires: libmirage-devel >= 3.1.0
 
 %description
 This is CDEmu daemon, the userspace daemon part of the userspace-cdemu suite, a 
@@ -52,6 +56,7 @@ popd
 %makeinstall_std -C %_target_platform
 %__install -Dp -m0755 %SOURCE1 %buildroot%_initdir/vhba
 %__install -Dp -m0644 %SOURCE2 %buildroot%_unitdir/vhba.service
+%find_lang %name
 
 %preun
 %preun_service vhba
@@ -61,7 +66,7 @@ popd
 %post_service vhba
 /sbin/service vhba condrestart ||:
 
-%files
+%files -f %name.lang
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README
 %_bindir/%name
 %dir %_libexecdir/%name
@@ -76,6 +81,9 @@ popd
 %_unitdir/vhba.service
 
 %changelog
+* Wed Aug 02 2017 Nazarov Denis <nenderus@altlinux.org> 3.1.0-alt1%ubt
+- Version 3.1.0
+
 * Thu Oct 13 2016 Nazarov Denis <nenderus@altlinux.org> 3.0.5-alt1
 - Version 3.0.5
 

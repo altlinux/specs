@@ -1,8 +1,8 @@
-%define soversion 10
+%define soversion 11
 
 Name: libmirage
-Version: 3.0.5
-Release: alt2
+Version: 3.1.0
+Release: alt1%ubt
 
 Summary: A CD-ROM image access library
 License: GPLv2+
@@ -11,13 +11,17 @@ Group: System/Libraries
 URL: http://cdemu.sourceforge.net
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source0: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
+Source: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
+
+BuildPreReq: rpm-build-ubt
 
 BuildRequires: bzlib-devel
 BuildRequires: cmake
 BuildRequires: glib-networking
+BuildRequires: glibc-kernheaders-generic
 BuildRequires: gobject-introspection-devel
 BuildRequires: gtk-doc
+BuildRequires: intltool
 BuildRequires: libGConf
 BuildRequires: liblzma-devel
 BuildRequires: libsamplerate-devel
@@ -37,8 +41,8 @@ file, which is based on GObjects.
 %package -n %name%soversion
 Summary: A CD-ROM image access library
 Group: System/Libraries
-Provides: %name = %EVR
-Obsoletes: %name < %EVR
+Provides: %name = %version
+Obsoletes: %name
 
 %description -n %name%soversion
 This is libMirage library, a CD-ROM image access library, and part of the 
@@ -79,27 +83,31 @@ popd
 
 %install
 %makeinstall_std -C %_target_platform
+%find_lang %name
 
-%files -n %name%soversion
+%files -n %name%soversion -f %name.lang
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README
 %_libdir/libmirage.so.*
-%dir %_libdir/libmirage-3.0
-%_libdir/libmirage-3.0/*.so
+%dir %_libdir/libmirage-3.1
+%_libdir/libmirage-3.1/*.so
 %_datadir/mime/packages/*.xml
 
 %files devel
 %_libdir/libmirage.so
 %_libdir/girepository-1.0/*
 %_pkgconfigdir/%name.pc
-%dir %_includedir/%name-3.0
-%dir %_includedir/%name-3.0/mirage
-%_includedir/%name-3.0/mirage/*.h
+%dir %_includedir/%name-3.1
+%dir %_includedir/%name-3.1/mirage
+%_includedir/%name-3.1/mirage/*.h
 %_datadir/gir-1.0/*
 %dir %_datadir/gtk-doc
 %dir %_datadir/gtk-doc/html
 %doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Wed Aug 02 2017 Nazarov Denis <nenderus@altlinux.org> 3.1.0-alt1%ubt
+- Version 3.1.0
+
 * Sat Oct 15 2016 Nazarov Denis <nenderus@altlinux.org> 3.0.5-alt2
 - Add provides/obsoletes on libmirage (ALT #32614)
 
