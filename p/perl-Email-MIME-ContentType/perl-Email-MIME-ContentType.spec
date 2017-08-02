@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Email-MIME-ContentType
 Name: perl-%dist
-Version: 1.018
+Version: 1.020
 Release: alt1
 
 Summary: Parse a MIME Content-Type Header
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-MIME-ContentType-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -23,7 +23,7 @@ entries for the discrete type, the composite type, and a hash of
 attributes.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -36,6 +36,9 @@ attributes.
 %perl_vendor_privlib/Email
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.020-alt1
+- automated CPAN update
+
 * Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 1.018-alt1
 - automated CPAN update
 
