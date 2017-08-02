@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %def_without bootstrap
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -17,12 +18,12 @@ BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(ExtUtils/MM_Unix.pm) perl(E
 
 Name:		perl-Test-LeakTrace
 Summary:	Trace memory leaks
-Version:	0.15
-Release:	alt2.2.1.1
+Version:	0.16
+Release:	alt1
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Test-LeakTrace/
-Source:	http://www.cpan.org/authors/id/G/GF/GFUJI/Test-LeakTrace-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/L/LE/LEEJO/Test-LeakTrace-%{version}.tar.gz
 # Module Build
 BuildRequires:	perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
@@ -116,11 +117,14 @@ rm lib/Test/LeakTrace/JA.pod
 mv ./JA.pod lib/Test/LeakTrace/
 
 %files
-%doc Changes README benchmark/ example/ %{?perl_default_filter:t/ xt/}
+%doc Changes README benchmark/ example/ %{?perl_default_filter:t/ xt/} example
 %{perl_vendor_archlib}/auto/Test/
 %{perl_vendor_archlib}/Test/
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Sun Feb 12 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2.2.1.1
 - unbootstrap after rebuild with new perl 5.24.1
 
