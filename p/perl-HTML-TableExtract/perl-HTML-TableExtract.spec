@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 BuildRequires: perl(Module/Build.pm)
 %define dist HTML-TableExtract
 Name: perl-%dist
-Version: 2.13
+Version: 2.15
 Release: alt1
 
 Summary: %dist module for perl
@@ -9,7 +10,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MS/MSISK/HTML-TableExtract-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MS/MSISK/%{dist}-%{version}.tar.gz
 Patch: %name-2.10-alt1.patch
 
 BuildArch: noarch
@@ -22,7 +23,7 @@ HTML::TableExtract is a module that simplifies the extraction
 of information contained in tables within HTML documents.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch -p1
 
 %build
@@ -37,6 +38,9 @@ of information contained in tables within HTML documents.
 %perl_vendor_privlib/HTML/TableExtract.pm
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.15-alt1
+- automated CPAN update
+
 * Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1
 - automated CPAN update
 
