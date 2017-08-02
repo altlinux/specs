@@ -1,27 +1,26 @@
-%define module_version 0.76
+%define _unpackaged_files_terminate_build 1
 %define module_name Inline-C
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Copy/Recursive.pm) perl(File/Path.pm) perl(File/ShareDir/Install.pm) perl(File/Spec.pm) perl(FindBin.pm) perl(IO/All.pm) perl(IPC/Cmd.pm) perl(Inline.pm) perl(Inline/MakeMaker.pm) perl(Parse/RecDescent.pm) perl(Pegex.pm) perl(Pegex/Base.pm) perl(Pegex/Parser.pm) perl(Test/More.pm) perl(Test/Pod.pm) perl(Test/Warn.pm) perl(YAML/XS.pm) perl(autodie.pm) perl(base.pm) perl(diagnostics.pm) perl(if.pm) perl(version.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.76
-Release: alt1.1
+Version: 0.78
+Release: alt1
 Summary: C Language Support for Inline
 Group: Development/Perl
 License: perl
 URL: https://github.com/ingydotnet/inline-c-pm
 
-Source0: http://cpan.org.ua/authors/id/I/IN/INGY/%{module_name}-%{module_version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TI/TINITA/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 From summary: %summary
 
 %prep
-%setup -q -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +34,9 @@ From summary: %summary
 %perl_vendor_privlib/auto/*
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.78-alt1
+- automated CPAN update
+
 * Tue Dec 08 2015 Igor Vlasenko <viy@altlinux.ru> 0.76-alt1.1
 - to Sisyphus
 
