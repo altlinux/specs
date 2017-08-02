@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist IPC-Cmd
 Name: perl-%dist
-Version: 0.96
+Version: 0.98
 Release: alt1
 
 Summary: Finding and running system commands made easy
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BI/BINGOS/IPC-Cmd-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BI/BINGOS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +21,7 @@ IPC::Cmd allows you to run commands platform independently,
 interactively if desired, but have them still work.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +34,9 @@ interactively if desired, but have them still work.
 %perl_vendor_privlib/IPC
 
 %changelog
+* Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.96-alt1
 - automated CPAN update
 
