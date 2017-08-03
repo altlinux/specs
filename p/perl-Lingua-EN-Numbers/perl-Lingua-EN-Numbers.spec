@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Lingua-EN-Numbers
 Version:        2.03
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Turn "407" into "four hundred and seven", etc
 License:        GPLv2
 Group:          Development/Other
@@ -24,6 +24,7 @@ BuildRequires:  perl(Test.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(vars.pm)
 BuildRequires:  perl(warnings.pm)
+Source44: import.info
 
 %description
 Lingua::EN::Numbers turns numbers into English text. It exports (upon
@@ -55,6 +56,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1_5
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1_4
 - update to new release by fcimport
 
