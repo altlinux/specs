@@ -8,7 +8,7 @@ BuildRequires: perl(Sub/Uplevel.pm) perl-podlators
 Name:           perl-Scope-Upper
 Summary:        Act on upper scopes
 Version:        0.29
-Release:        alt2_2
+Release:        alt2_3
 License:        GPL+ or Artistic
 Source0:        http://search.cpan.org/CPAN/authors/id/V/VP/VPIT/Scope-Upper-%{version}.tar.gz
 URL:            http://search.cpan.org/dist/Scope-Upper
@@ -41,6 +41,7 @@ Requires:       perl(Exporter.pm)
 Requires:       perl(XSLoader.pm)
 
 
+Source44: import.info
 
 %description
 This module lets you defer actions that will take place when the control
@@ -72,6 +73,9 @@ make test
 %exclude %dir %{perl_vendor_archlib}/auto
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.29-alt2_3
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.29-alt2_2
 - update to new release by fcimport
 
