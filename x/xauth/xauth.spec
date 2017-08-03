@@ -1,12 +1,11 @@
 Name: xauth
-Version: 1.0.9
+Version: 1.0.10
 Release: alt1
 Epoch: 1
 Summary: X authority file utility
 License: MIT/X11
 Group: System/X11
 Url: http://xorg.freedesktop.org
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -45,6 +44,10 @@ does that.
 %_man1dir/*
 
 %changelog
+* Thu Aug 03 2017 Fr. Br. George <george@altlinux.ru> 1:1.0.10-alt1
+- Autobuild version bump to 1.0.10
+- Introduce *:0 for FamilyWild
+
 * Tue May 19 2015 Valery Inozemtsev <shrek@altlinux.ru> 1:1.0.9-alt1
 - 1.0.9
 
