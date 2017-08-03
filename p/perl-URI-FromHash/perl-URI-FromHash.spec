@@ -7,7 +7,7 @@ BuildRequires: perl(Carp.pm) perl(Exporter.pm) perl(IO/Handle.pm) perl(IPC/Open3
 %define _localstatedir %{_var}
 Name:          perl-URI-FromHash 
 Version:       0.05
-Release:       alt1_4
+Release:       alt1_5
 Summary:       Build a URI from a set of named parameters 
 # see lib/URI/FromHash.pm
 License:       GPL+ or Artistic
@@ -25,6 +25,7 @@ BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(URI.pm)
 
 
+Source44: import.info
 
 %description
 This module provides a simple one-subroutine "named parameters" style
@@ -60,6 +61,9 @@ make test
 %{perl_vendor_privlib}/URI*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1_5
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1_4
 - update to new release by fcimport
 
