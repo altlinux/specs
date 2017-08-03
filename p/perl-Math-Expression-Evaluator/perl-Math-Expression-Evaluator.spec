@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Math-Expression-Evaluator
 Version:        0.3.2
-Release:        alt2_13
+Release:        alt2_14
 Summary:        Parses, compiles and evaluates mathematics expressions
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -24,6 +24,7 @@ BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(POSIX.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
+Source44: import.info
 
 %description
 Math::Expression::Evaluator is a parser, compiler and interpreter for
@@ -52,6 +53,9 @@ find %{buildroot} -type f -name '*.pm' -exec chmod -x {} 2>/dev/null ';'
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt2_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt2_13
 - update to new release by fcimport
 
