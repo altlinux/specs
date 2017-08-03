@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Data-Rmap
 Version:        0.65
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Recursive map, apply a block to a data structure
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -24,6 +24,7 @@ BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Test/Exception.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(warnings.pm)
+Source44: import.info
 
 %description
 This perl module evaluates a BLOCK over a list of data structures
@@ -52,6 +53,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1_3
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1_2
 - update to new release by fcimport
 
