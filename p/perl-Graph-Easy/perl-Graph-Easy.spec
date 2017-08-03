@@ -13,7 +13,7 @@ BuildRequires: perl(Devel/Size.pm) perl(File/Find/Object.pm) perl(HTML/TokeParse
 %define _localstatedir %{_var}
 Name:           perl-Graph-Easy
 Version:        0.76
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Convert or render graphs as ASCII, HTML, SVG or via Graphviz
 License:        GPLv2+ and ASL 1.1
 Group:          Development/Other
@@ -53,12 +53,13 @@ Requires:       perl(Data/Dumper.pm)
 BuildRequires:  perl(Graph/Easy/As_svg.pm)
 Requires:       perl(Graph/Easy/As_svg.pm) >= 0.230
 %endif
-%filter_from_provides /perl\\(Graph.Easy.pm\\)$/d
-%filter_from_provides /perl\\(Graph.Easy.(Edge|Edge.Cell|Group|Node).pm\\)$/d
 
 # filter unversioned provides
 
 
+Source44: import.info
+%filter_from_provides /perl\\(Graph.Easy.pm\\)$/d
+%filter_from_provides /perl\\(Graph.Easy.(Edge|Edge.Cell|Group|Node).pm\\)$/d
 
 %description
 Graph::Easy lets you generate graphs consisting of various shaped nodes
@@ -92,6 +93,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.76-alt1_3
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.76-alt1_2
 - update to new release by fcimport
 
