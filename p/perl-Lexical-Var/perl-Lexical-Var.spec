@@ -6,7 +6,7 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Lexical-Var
 Version:        0.009
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Static variables without name space pollution
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -31,6 +31,7 @@ BuildRequires:  perl(Test/Pod/Coverage.pm)
 Conflicts:      perl(B/Hooks/OP/Check.pm) < 0.190
 
 
+Source44: import.info
 
 %description
 This module implements lexical scoping of static variables and subroutines.
@@ -59,6 +60,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Lexical*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.009-alt2_11
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.009-alt2_10
 - update to new release by fcimport
 
