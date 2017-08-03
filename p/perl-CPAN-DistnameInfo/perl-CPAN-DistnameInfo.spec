@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-CPAN-DistnameInfo
 Version:        0.12
-Release:        alt2_8
+Release:        alt2_9
 Summary:        Extract distribution name and version from a distribution filename
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -18,6 +18,7 @@ BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Tests:
 BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(Test/More.pm)
+Source44: import.info
 
 %description
 Many online services that are centered around CPAN attempt to
@@ -52,6 +53,9 @@ make test
 %{perl_vendor_privlib}/CPAN/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2_9
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2_8
 - update to new release by fcimport
 
