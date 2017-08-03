@@ -9,7 +9,7 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/CPAN/Changes.pm) perl(Te
 
 Name:           perl-Test-Portability-Files
 Version:        0.07
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Check file names portability
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -38,6 +38,7 @@ BuildRequires:  perl(File/Temp.pm)
 BuildRequires:  perl(IO/Handle.pm)
 BuildRequires:  perl(IPC/Open3.pm)
 BuildRequires:  perl(Test/More.pm)
+Source44: import.info
 
 %description
 This module is used to check the portability across operating systems of
@@ -71,6 +72,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_3
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_2
 - update to new release by fcimport
 
