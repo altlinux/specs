@@ -6,7 +6,7 @@ BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.
 %define _localstatedir %{_var}
 Name:           perl-HTML-Quoted
 Version:        0.04
-Release:        alt1_11
+Release:        alt1_12
 Summary:        Extract structure of quoted HTML mail message
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -24,6 +24,7 @@ BuildRequires:  perl(warnings.pm)
 
 BuildRequires:  perl(inc/Module/Install.pm)
 BuildRequires:  perl(Module/Install/ReadmeFromPod.pm)
+Source44: import.info
 
 
 %description
@@ -51,6 +52,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1_12
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1_11
 - update to new release by fcimport
 
