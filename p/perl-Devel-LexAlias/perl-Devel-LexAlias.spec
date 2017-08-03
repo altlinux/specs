@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Devel-LexAlias
 Version:        0.05
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Alias lexical variables
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -29,6 +29,7 @@ BuildRequires:  perl(Test/More.pm)
 # Dependencies
 
 
+Source44: import.info
 
 %description
 Devel::LexAlias provides the ability to alias a lexical variable in a
@@ -56,6 +57,9 @@ make test
 %{perl_vendor_archlib}/Devel/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_13
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_12
 - update to new release by fcimport
 
