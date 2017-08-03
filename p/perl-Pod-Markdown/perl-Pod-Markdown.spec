@@ -6,7 +6,7 @@ BuildRequires: perl(Pod/Usage.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Pod-Markdown
 Version:        3.005
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Convert POD to Markdown
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -37,6 +37,7 @@ BuildRequires:  perl(Test/Differences.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(utf8.pm)
 BuildRequires:  perl(version.pm)
+Source44: import.info
 
 %description
 This module subclasses Pod::Parser and converts POD to Markdown.
@@ -64,6 +65,9 @@ make test
 %{_bindir}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 3.005-alt1_4
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 3.005-alt1_3
 - update to new release by fcimport
 
