@@ -6,12 +6,14 @@ BuildRequires: perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Exporter.pm) perl
 %define _localstatedir %{_var}
 Name:           perl-Test-YAML-Valid
 Version:        0.04
-Release:        alt2_19
+Release:        alt2_21
 Summary:        Lets you test the validity of YAML files in unit tests
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/Test-YAML-Valid/
 Source0:        http://www.cpan.org/authors/id/J/JR/JROCKWAY/Test-YAML-Valid-%{version}.tar.gz
+# Fix building on Perl without "." in @INC, CPAN RT#120438
+Patch0:         Test-YAML-Valid-0.04-Fix-building-on-Perl-without-.-in-INC.patch
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -27,6 +29,7 @@ BuildRequires:  perl(Test/Builder.pm)
 BuildRequires:  perl(Test/Builder/Tester.pm)
 Requires:       perl(YAML.pm)
 Requires:       perl(YAML/Syck.pm)
+Source44: import.info
 
 %description
 Lets you test the validity of YAML files inside your
@@ -34,6 +37,7 @@ Lets you test the validity of YAML files inside your
 
 %prep
 %setup -q -n Test-YAML-Valid-%{version}
+%patch0 -p1
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -58,6 +62,9 @@ make test
 %{perl_vendor_privlib}/Test/YAML/Valid.pm
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_21
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_19
 - update to new release by fcimport
 
