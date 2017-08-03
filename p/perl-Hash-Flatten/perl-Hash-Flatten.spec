@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Hash-Flatten
 Version:        1.19
-Release:        alt3_18
+Release:        alt3_19
 Summary:        Flatten/unflatten complex data hashes
 License:        GPLv2
 URL:            http://search.cpan.org/dist/Hash-Flatten/
@@ -33,6 +33,7 @@ BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 Requires:     perl(overload.pm)
+Source44: import.info
 
 %description
 Converts back and forth between a nested hash structure and a flat hash of
@@ -62,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.19-alt3_19
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.19-alt3_18
 - update to new release by fcimport
 
