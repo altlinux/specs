@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Modern-Perl
 Version:        1.20170117
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Enable all of the features of Modern Perl with one command
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -31,6 +31,7 @@ BuildRequires:  perl(warnings.pm)
 BuildRequires:  perl(Test/More.pm)
 # Runtime
 Requires:       perl(autodie.pm) >= 2.220
+Source44: import.info
 Provides: perl(Modern/Perl.pm) = 2012.0
 
 %description
@@ -57,6 +58,9 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 %{perl_vendor_privlib}/Modern/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.20170117-alt1_3
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.20170117-alt1_2
 - update to new release by fcimport
 
