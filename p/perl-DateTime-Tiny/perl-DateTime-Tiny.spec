@@ -6,7 +6,7 @@ BuildRequires: perl(DateTime.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Tiny
 Version:        1.06
-Release:        alt2_2
+Release:        alt2_3
 Summary:        Date object, with as little code as possible
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -18,6 +18,7 @@ BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/More.pm)
 Requires:       perl(DateTime.pm)
+Source44: import.info
 
 %description
 DateTime::Tiny implements an extremely lightweight object that represents a
@@ -46,6 +47,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.06-alt2_3
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.06-alt2_2
 - update to new release by fcimport
 
