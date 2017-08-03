@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Test-MinimumVersion
 Version:	0.101082
-Release:	alt1_5
+Release:	alt1_6
 Summary:	Check whether your code requires a newer perl
 License:	GPL+ or Artistic
 Group:		Development/Other
@@ -30,6 +30,7 @@ BuildRequires:	perl(Test/Tester.pm)
 BuildRequires:	perl(YAML/Tiny.pm)
 BuildRequires:	perl(version.pm)
 BuildRequires:	perl(warnings.pm)
+Source44: import.info
 
 %description
 Check whether your code requires a newer perl than you think.
@@ -55,6 +56,9 @@ make test
 %{perl_vendor_privlib}/Test
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.101082-alt1_6
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.101082-alt1_5
 - update to new release by fcimport
 
