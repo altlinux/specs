@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Math-Libm
 Version:        1.00
-Release:        alt3_17
+Release:        alt3_18
 Summary:        Perl extension for the C math library, libm
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -21,6 +21,7 @@ BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Exporter.pm)
 
  # Filters (not)shared c libs
+Source44: import.info
 
 %description
 This module is a translation of the C math.h file. It exports the following
@@ -56,6 +57,9 @@ make test
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_18
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_17
 - update to new release by fcimport
 
