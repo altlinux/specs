@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Term-Size-Any
 Version:        0.002
-Release:        alt2_20
+Release:        alt2_21
 Summary:        Retrieve terminal size
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -24,6 +24,7 @@ BuildRequires:  perl(Test/Pod/Coverage.pm)
 Requires:       perl(Term/Size/Perl.pm)
 
 
+Source44: import.info
 
 %description
 This is a unified interface to retrieve terminal size. It loads one module
@@ -53,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.002-alt2_21
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.002-alt2_20
 - update to new release by fcimport
 
