@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Paper-Specs
 Version:        0.10
-Release:        alt2_13
+Release:        alt2_14
 Summary:        Size and layout information for paper stock, forms, and labels
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -21,6 +21,7 @@ BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
+Source44: import.info
 
 %description
 This package provides features such as:
@@ -52,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt2_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt2_13
 - update to new release by fcimport
 
