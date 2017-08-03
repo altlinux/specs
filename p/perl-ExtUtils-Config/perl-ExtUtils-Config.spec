@@ -9,7 +9,7 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/Pod.pm) perl(Test/Pod/Co
 
 Name:		perl-ExtUtils-Config
 Version:	0.008
-Release:	alt1_7
+Release:	alt1_8
 Summary:	A wrapper for perl's configuration
 Group:		Development/Other
 License:	GPL+ or Artistic
@@ -28,6 +28,7 @@ BuildRequires:	perl(Data/Dumper.pm)
 BuildRequires:	perl(File/Find.pm)
 BuildRequires:	perl(File/Temp.pm)
 BuildRequires:	perl(Test/More.pm)
+Source44: import.info
 # Runtime
 
 %description
@@ -58,6 +59,9 @@ make test
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_8
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_7
 - update to new release by fcimport
 
