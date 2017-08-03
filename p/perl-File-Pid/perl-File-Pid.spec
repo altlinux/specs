@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-File-Pid
 Version:        1.01
-Release:        alt3_22
+Release:        alt3_23
 Summary:        Pid File Manipulation
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/File-Pid/
@@ -28,9 +28,10 @@ BuildRequires:  perl(vars.pm)
 # Tests only
 BuildRequires:  perl(Test/More.pm)
 Requires:       perl(Class/Accessor/Fast.pm) >= 0.190
+
+
+Source44: import.info
 %filter_from_requires /^perl\\(Class.Accessor.Fast.pm\\)$/d
-
-
 
 %description
 This software manages a pid file for you. It will create a pid file,
@@ -57,6 +58,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_23
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_22
 - update to new release by fcimport
 
