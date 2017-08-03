@@ -9,7 +9,7 @@ BuildRequires: perl-podlators
 
 Name:           perl-Module-CPANTS-Analyse
 Version:        0.96
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Generate Kwalitee ratings for a distribution
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Module-CPANTS-Analyse/
@@ -82,15 +82,6 @@ Requires:       perl(Module/Pluggable.pm) >= 2.960
 Requires:       perl(Software/License.pm) >= 0.103.008
 Requires:       perl(Software/License/CC_BY_SA_3_0.pm)
 Requires:       perl(version.pm) >= 0.730
-%filter_from_requires /:__requires_exclude|}^perl\\(Archive.Any.Lite.pm\\)$/d
-%filter_from_requires /^perl\\(Array.Diff.pm\\)$/d
-%filter_from_requires /^perl\\(Class.Accessor.pm\\)$/d
-%filter_from_requires /^perl\\(CPAN.DistnameInfo.pm\\)$/d
-%filter_from_requires /^perl\\(CPAN.Meta.Validator.pm\\)$/d
-%filter_from_requires /^perl\\(CPAN.Meta.YAML.pm\\)$/d
-%filter_from_requires /^perl\\(File.Find.Object.pm\\)$/d
-%filter_from_requires /^perl\\(Module.Pluggable.pm\\)$/d
-%filter_from_requires /^perl\\(version.pm\\)$/d
 
 # Filter underspecified dependencies
 
@@ -102,6 +93,16 @@ Requires:       perl(version.pm) >= 0.730
 
 
 
+Source44: import.info
+%filter_from_requires /:__requires_exclude|}^perl\\(Archive.Any.Lite.pm\\)$/d
+%filter_from_requires /^perl\\(Array.Diff.pm\\)$/d
+%filter_from_requires /^perl\\(Class.Accessor.pm\\)$/d
+%filter_from_requires /^perl\\(CPAN.DistnameInfo.pm\\)$/d
+%filter_from_requires /^perl\\(CPAN.Meta.Validator.pm\\)$/d
+%filter_from_requires /^perl\\(CPAN.Meta.YAML.pm\\)$/d
+%filter_from_requires /^perl\\(File.Find.Object.pm\\)$/d
+%filter_from_requires /^perl\\(Module.Pluggable.pm\\)$/d
+%filter_from_requires /^perl\\(version.pm\\)$/d
 
 %description
 CPANTS is an acronym for CPAN Testing Service. The goals of the CPANTS project
@@ -130,6 +131,9 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 %{perl_vendor_privlib}/Module/CPANTS/Kwalitee/*.pm
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.96-alt1_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.96-alt1_6
 - update to new release by fcimport
 
