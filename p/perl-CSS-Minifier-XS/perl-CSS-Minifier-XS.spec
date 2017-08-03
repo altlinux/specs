@@ -6,7 +6,7 @@ BuildRequires: perl(Benchmark.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(IO/
 %define _localstatedir %{_var}
 Name:       perl-CSS-Minifier-XS
 Version:    0.09
-Release:    alt4_9
+Release:    alt4_10
 # lib/CSS/Minifier/XS.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic
 Group:      Development/Other
@@ -24,6 +24,7 @@ BuildRequires: perl(Test/Pod.pm)
 BuildRequires: perl(Test/Pod/Coverage.pm)
 
 
+Source44: import.info
 
 %description
 'CSS::Minifier::XS' is a CSS "minifier". It's designed to remove
@@ -57,6 +58,9 @@ make test
 %exclude %dir %{perl_vendor_archlib}/auto
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt4_10
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt4_9
 - update to new release by fcimport
 
