@@ -2,7 +2,7 @@
 %define _xorgmoduledir %_libdir/X11/modules
 
 Name: tigervnc
-Version: 1.7.0
+Version: 1.8.0
 Release: alt2
 Summary: A TigerVNC remote display system
 
@@ -20,7 +20,7 @@ Source1: vncserver.init
 Source2: vncserver.service
 Source6: vncviewer.desktop
 
-Source100: xorg-server-source-1.18.2.tar.bz2
+Source100: xorg-server-source-1.19.3.tar.bz2
 Source101: tightpasswd.tar.gz
 Source200: repatch_spec.sh
 Source201: repatch_spec.unused
@@ -45,11 +45,13 @@ Patch501: tigervnc-1.3.1-stdinpasswd.patch
 
 # Automatically added by buildreq on Mon Apr 25 2016
 # optimized out: cmake-modules fontconfig libGL-devel libICE-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libgpg-error libgpg-error-devel libp11-kit libstdc++-devel perl pkg-config python-base xorg-fixesproto-devel xorg-fontsproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-recordproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: ImageMagick-tools cmake doxygen flex gcc-c++ libSM-devel libXdmcp-devel libXfont-devel libXtst-devel libdrm-devel libfltk-devel libgcrypt-devel libgnutls-devel libjpeg-devel libpam-devel libpixman-devel libssl-devel libxkbfile-devel libxshmfence-devel xorg-bigreqsproto-devel xorg-damageproto-devel xorg-dri2proto-devel xorg-dri3proto-devel xorg-glproto-devel xorg-presentproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcmiscproto-devel xorg-xtrans-devel zlib-devel
+BuildRequires: ImageMagick-tools cmake doxygen flex gcc-c++ libSM-devel libXdmcp-devel libXfont2-devel libXtst-devel libdrm-devel libfltk-devel libgcrypt-devel libgnutls-devel libjpeg-devel libpam-devel libpixman-devel libssl-devel libxkbfile-devel libxshmfence-devel xorg-bigreqsproto-devel xorg-damageproto-devel xorg-dri2proto-devel xorg-dri3proto-devel xorg-glproto-devel xorg-presentproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcmiscproto-devel xorg-xtrans-devel zlib-devel
 
 BuildRequires: libfltk-devel >= 1.3.3
 
 BuildRequires: xorg-sdk xorg-font-utils
+
+BuildRequires: libXrender-devel
 
 %ifarch %ix86 x86_64
 BuildRequires: nasm
@@ -98,7 +100,7 @@ TigerVNC extension for Xorg server
 
 ## FC apply patches
 #%patch1 -p1 -b .cookie
-%patch2 -p1 -b .libvnc-os
+#%patch2 -p1 -b .libvnc-os
 %patch3 -p1 -b .rh692048
 %patch4 -p1 -b .xserver116-rebased
 #%patch5 -p1 -b .inetd-nowait
@@ -251,6 +253,15 @@ popd
 %_xorgmoduledir/extensions/*.so
 
 %changelog
+* Wed Aug 02 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.8.0-alt2
+- Rebuild with new xorg-server (1.19.3) - fix discrepancy of ABI vnc-module and server
+- Update FC-xserver116-rebased.patch
+
+* Wed Aug 02 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.8.0-alt1
+- New version
+- Removed FC patch (.libvnc-os)
+- Updated buildrequires
+
 * Fri Jan 27 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.7.0-alt2
 - vncserver.init: added ability to specify the display settings
 - default "xstartup": added exporting environment variable LANG
