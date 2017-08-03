@@ -6,7 +6,7 @@ BuildRequires: perl(Module/Build/Tiny.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-experimental
 Version:        0.016
-Release:        alt1_366
+Release:        alt1_393
 Summary:        Experimental features made easy
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -29,6 +29,7 @@ BuildRequires:  perl(version.pm)
 BuildRequires:  perl(warnings.pm)
 # Tests:
 BuildRequires:  perl(Test/More.pm)
+Source44: import.info
 
 %description
 This pragma provides an easy and convenient way to enable or disable
@@ -56,6 +57,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1_393
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1_366
 - update to new release by fcimport
 
