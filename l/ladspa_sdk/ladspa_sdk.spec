@@ -1,12 +1,12 @@
 Name: ladspa_sdk
 Version: 1.13
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: The Linux Audio Developer's Simple Plugin API (LADSPA)
 License: LGPL
 Group: Sound
-Url: http://www.ladspa.org
 
+Url: http://www.ladspa.org
 Source: http://www.ladspa.org/download/%name.tgz
 Patch0: %name-1.11-alt-makefile.patch
 Patch1: %name-1.11-alt-silent.build.patch
@@ -18,7 +18,7 @@ Requires: common-licenses
 
 # Automatically added by buildreq on Tue Dec 02 2008
 BuildRequires: gcc-c++ time
-Requires: rpm-macros-%{name} = %{version}-%{release}
+Requires: rpm-macros-%name = %version-%release
 
 %description
 The Linux Audio Developer's Simple Plugin API (LADSPA) attempts
@@ -29,21 +29,20 @@ host applications.
 %define _ladspa_path %_libdir/ladspa
 %define _ladspa_datadir %_datadir/ladspa
 
-
-%package -n rpm-macros-%{name}
+%package -n rpm-macros-%name
 Summary: Set of RPM macros for packaging %name-based applications
 Group: Development/Other
-# uncomment if macroses are platform-neutral
+# uncomment if macros are platform-neutral
 #BuildArch: noarch
 # helps old apt to resolve file conflict at dist-upgrade (thanks to Stanislav Ievlev)
 Conflicts: ladspa_sdk <= 1.13-alt1
 
-%description -n rpm-macros-%{name}
+%description -n rpm-macros-%name
 Set of RPM macros for packaging %name-based applications for ALT Linux.
 Install this package if you want to create RPM packages that use %name.
 
 %prep
-%setup -q -n %name
+%setup -n %name
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -54,23 +53,28 @@ sed -i 's,mkdirhier,mkdir -p,' src/makefile
 
 %build
 %define _optlevel 3
+%ifarch e2k
+export LIBS=-lcxa
+# lcc: "analyseplugin.c", line 353: error: nonstandard first parameter
+#   "const int" of "main", expected "int" [-Werror=main]
+%else
+%add_optflags -Werror
+%endif
 pushd src
-%make_build CFLAGS="\$(INCLUDES) -Werror -fPIC $RPM_OPT_FLAGS"
+%make_build CFLAGS="\$(INCLUDES) -fPIC %optflags $LIBS"
 popd
 
 %install
 mkdir -p %buildroot%_datadir/ladspa/rdf
 pushd src
-%make_install PREFIX=%prefix DESTDIR=%buildroot \
-	INSTALL_PLUGINS_DIR=%_ladspa_path \
-	install
+%makeinstall_std PREFIX=%prefix INSTALL_PLUGINS_DIR=%_ladspa_path
 popd
 
 # install docs and license
 rm -f doc/COPYING
-ln -s -f %_licensedir/LGPL-2 COPYING
-ln -s -f %_includedir/ladspa.h doc/ladspa.h.txt
-ln -s -f doc/index.html index.html
+ln -sf %_licensedir/LGPL-2 COPYING
+ln -sf %_includedir/ladspa.h doc/ladspa.h.txt
+ln -sf doc/index.html index.html
 
 # Applications using LADSPA-plugins needs environment variable LADSPA_PATH.
 cat << __SH__ >ladspa.sh
@@ -85,7 +89,7 @@ setenv LADSPA_PATH "%_ladspa_path"
 __CSH__
 
 install -d %buildroot%_sysconfdir/profile.d
-install -m755 ladspa.{sh,csh} %buildroot%_sysconfdir/profile.d
+install -pm755 ladspa.{sh,csh} %buildroot%_sysconfdir/profile.d
 
 # Creating ladspa_sdk buildreq filter
 cat <<__BUILDREQS__ > %name.buildreq
@@ -93,7 +97,7 @@ cat <<__BUILDREQS__ > %name.buildreq
 ^%_ladspa_path
 __BUILDREQS__
 
-install -pD -m644 %name.buildreq %buildroot%_sysconfdir/buildreqs/files/ignore.d/ladspa
+install -pDm644 %name.buildreq %buildroot%_sysconfdir/buildreqs/files/ignore.d/ladspa
 
 # rpm macros for ladspa related software
 cat <<__RPM_MACROS__ >ladspa.rpm_macros
@@ -101,7 +105,7 @@ cat <<__RPM_MACROS__ >ladspa.rpm_macros
 %%_ladspa_datadir %%_datadir/ladspa
 __RPM_MACROS__
 
-install -pD -m644 ladspa.rpm_macros %buildroot%_rpmlibdir/macros.d/%name
+install -pDm644 ladspa.rpm_macros %buildroot%_rpmlibdir/macros.d/%name
 
 %files
 %_bindir/*
@@ -115,11 +119,14 @@ install -pD -m644 ladspa.rpm_macros %buildroot%_rpmlibdir/macros.d/%name
 %doc --no-dereference index.html doc README COPYING
 %exclude %_rpmmacrosdir/*
 
-%files -n rpm-macros-%{name}
+%files -n rpm-macros-%name
 %_rpmmacrosdir/*
 
-
 %changelog
+* Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 1.13-alt1.qa2
+- E2K: avoid -Werror with implicit -Wmain
+- minor spec cleanup
+
 * Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1.13-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
