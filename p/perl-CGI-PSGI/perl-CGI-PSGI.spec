@@ -6,20 +6,37 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 %define _localstatedir %{_var}
 Name:           perl-CGI-PSGI
 Version:        0.15
-Release:        alt1_15
+Release:        alt1_17
 Summary:        Enable your CGI.pm aware applications to adapt PSGI protocol
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/CGI-PSGI/
 Source0:        http://www.cpan.org/authors/id/M/MI/MIYAGAWA/CGI-PSGI-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  findutils
 BuildRequires:  perl
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl(inc/Module/Install.pm)
+BuildRequires:  perl(Module/Install/AuthorTests.pm)
+BuildRequires:  perl(Module/Install/Metadata.pm)
+BuildRequires:  perl(Module/Install/Repository.pm)
+BuildRequires:  perl(Module/Install/WriteAll.pm)
+BuildRequires:  sed
+# Run-time
+BuildRequires:  perl(base.pm)
 BuildRequires:  perl(CGI.pm)
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(strict.pm)
+# Tests
+BuildRequires:  perl(CGI/Cookie.pm)
+BuildRequires:  perl(CGI/Util.pm)
+BuildRequires:  perl(Config.pm)
+BuildRequires:  perl(IO/Handle.pm)
+BuildRequires:  perl(POSIX.pm)
 BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(warnings.pm)
 
 
+Source44: import.info
 
 %description
 This module is for web application framework developers who currently uses
@@ -31,6 +48,9 @@ to STDOUT.
 
 %prep
 %setup -q -n CGI-PSGI-%{version}
+# Remove bundled libraries
+rm -r inc
+sed -i -e '/^inc\// d' MANIFEST
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -38,10 +58,7 @@ to STDOUT.
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
+find $RPM_BUILD_ROOT -type f -name .packlist -delete
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -52,6 +69,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_17
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_15
 - update to new release by fcimport
 
