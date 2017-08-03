@@ -6,7 +6,7 @@ BuildRequires: perl(B.pm) perl(Module/Build.pm) perl(Scalar/Util.pm) perl(Symbol
 %define _localstatedir %{_var}
 Name:           perl-Test-Refcount
 Version:        0.08
-Release:        alt1_8
+Release:        alt1_9
 Summary:        Assert reference counts on objects
 
 Group:          Development/Other
@@ -24,6 +24,7 @@ BuildRequires:  perl(Test/Builder.pm)
 BuildRequires:  perl(Test/Builder/Tester.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
+Source44: import.info
 
 %description
 The Perl garbage collector uses simple reference counting during the normal
@@ -59,6 +60,9 @@ make test
 
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_9
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_8
 - update to new release by fcimport
 
