@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip zlib-devel
 %define _localstatedir %{_var}
 Name:           raidem
 Version:        0.3.1
-Release:        alt2_29
+Release:        alt2_32
 Summary:        2d top-down shoot'em up
 Group:          Games/Other
 License:        zlib
@@ -20,10 +20,14 @@ Patch1:         raidem-0.3.1-zziplib.patch
 Patch2:         raidem-libpng15.patch
 Patch3:         raidem-gcc4.7-stdio.patch
 Patch4:         raidem-new-api.patch
+Patch5:         raidem-0.3.1-format-security.patch
+Patch6:         raidem-0.3.1-system-flags.patch
+Patch7:         raidem-0.3.1-Makefile-race-condition.patch
 BuildRequires:  gcc-objc glyph-keeper-allegro-devel libfreetype-devel libadime-devel
 BuildRequires:  zziplib-devel libpng-devel libAllegroOGG-devel
 BuildRequires:  automake-common desktop-file-utils gnustep-base-devel
 Requires:       icon-theme-hicolor
+Source44: import.info
 
 %description
 Raid'em is a 2d top-down shoot'em up. It began as a remake of Raid II
@@ -41,6 +45,9 @@ fun.
 %patch2 -z .libpng
 %patch3 -p0 -z .gcc47
 %patch4 -p0 -z .newapi
+%patch5 -p1 -z .format-security
+%patch6 -p1 -z .system-flags
+%patch7 -p1 -z .race-condition
 # remove all included system libs, to avoid using the included system headers.
 mv lib/loadpng .
 rm -fr lib/*
@@ -74,7 +81,8 @@ install -p -m 644 %{SOURCE1} \
 
 
 %files
-%doc ChangeLog docs/LICENCE.txt docs/README.txt docs/damages.txt
+%doc ChangeLog docs/README.txt docs/damages.txt
+%doc docs/LICENCE.txt
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
@@ -82,6 +90,9 @@ install -p -m 644 %{SOURCE1} \
 
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_32
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_29
 - update to new release by fcimport
 
