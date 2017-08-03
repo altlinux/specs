@@ -7,7 +7,7 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 %define _localstatedir %{_var}
 Name:           perl-File-Find-Rule-VCS
 Version:        1.08
-Release:        alt3_17
+Release:        alt3_18
 Summary:        Exclude files/directories for Version Control Systems
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/File-Find-Rule-VCS/
@@ -26,6 +26,7 @@ BuildRequires:  perl(Text/Glob.pm)
 BuildRequires:  perl(vars.pm)
 # Tests
 BuildRequires:  perl(Test/More.pm)
+Source44: import.info
 
 %description
 Many tools need to be equally useful both on ordinary files, and on code
@@ -57,6 +58,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.08-alt3_18
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.08-alt3_17
 - update to new release by fcimport
 
