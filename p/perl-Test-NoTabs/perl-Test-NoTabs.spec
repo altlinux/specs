@@ -1,47 +1,39 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-Test-NoTabs
 Version:	2.00
-Release:	alt1
+Release:	alt1_2
 Summary:	Check the presence of tabs in your project
-Group:		Development/Other
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-NoTabs/
-Source0:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-NoTabs-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Test-NoTabs-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
+BuildRequires:	coreutils
+BuildRequires:	findutils
 BuildRequires:	perl
 BuildRequires:	rpm-build-perl
-BuildRequires:	perl(Carp.pm)
-BuildRequires:	perl(Config.pm)
-BuildRequires:	perl(Cwd.pm)
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
-BuildRequires:	perl(ExtUtils/Manifest.pm)
-BuildRequires:	perl(Fcntl.pm)
-BuildRequires:	perl(File/Path.pm)
-BuildRequires:	perl(FileHandle.pm)
-BuildRequires:	perl(Parse/CPAN/Meta.pm)
-BuildRequires:	perl(YAML/Tiny.pm)
-BuildRequires:	tar > 1.15.1
 # Module Runtime
 BuildRequires:	perl(File/Find.pm)
 BuildRequires:	perl(File/Spec.pm)
 BuildRequires:	perl(FindBin.pm)
 BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(Test/Builder.pm)
-BuildRequires:	perl(vars.pm)
 BuildRequires:	perl(warnings.pm)
 # Test Suite
 BuildRequires:	perl(File/Temp.pm)
 BuildRequires:	perl(Test/More.pm)
 # Optional Tests
-BuildRequires:	perl(Test/Pod.pm)
-BuildRequires:	perl(Test/Pod/Coverage.pm)
+%if "%{?rhel}" != "6"
+BuildRequires:	perl(CPAN/Meta.pm)
+%endif
+Source44: import.info
 # Runtime
 
 %description
@@ -52,22 +44,30 @@ modules, etc.) for the presence of tabs.
 %setup -q -n Test-NoTabs-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir --skip INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 %make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-# %{_fixperms} %{buildroot}
+find %{buildroot} -type f -name .packlist -delete
+# %{_fixperms} -c %{buildroot}
 
 %check
 make test
 
 %files
+%if 0%{?_licensedir:1}
+%doc LICENSE
+%else
+%doc LICENSE
+%endif
 %doc Changes README
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1_2
+- update to new release by fcimport
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
 - automated CPAN update
 
