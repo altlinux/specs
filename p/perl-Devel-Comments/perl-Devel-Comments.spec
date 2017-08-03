@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Devel-Comments
 Version:        1.1.4
-Release:        alt2_14
+Release:        alt2_15
 Summary:        Debug with executable smart comments to logs
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -35,10 +35,11 @@ BuildRequires:  perl(IO/Capture/Stdout/Extended.pm)
 Requires:       perl(Filter/Simple.pm) >= 0.800
 Requires:       perl(Test/More.pm) >= 0.940
 Requires:       perl(Text/Balanced.pm) >= 2
-%filter_from_requires /^perl\\(Filter.Simple|Text.Balanced.pm\\)\\s*$/d
 
 # Remove under-specifed dependencies
 
+Source44: import.info
+%filter_from_requires /^perl\\(Filter.Simple|Text.Balanced.pm\\)\\s*$/d
 
 %description
 Devel::Comments is a source filter for your Perl code, intended to be used
@@ -69,6 +70,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.4-alt2_15
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.4-alt2_14
 - update to new release by fcimport
 
