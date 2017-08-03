@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-MooseX-MarkAsMethods
 Version:        0.15
-Release:        alt1_12
+Release:        alt1_13
 Summary:        Mark overload code symbols as methods
 License:        LGPLv2+
 Group:          Development/Other
@@ -26,6 +26,7 @@ BuildRequires:  perl(File/Find.pm)
 BuildRequires:  perl(File/Temp.pm)
 BuildRequires:  perl(Test/Moose.pm)
 BuildRequires:  perl(Test/More.pm)
+Source44: import.info
 
 %description
 MooseX::MarkAsMethods allows one to easily mark certain functions as Moose
@@ -56,6 +57,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_13
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_12
 - update to new release by fcimport
 
