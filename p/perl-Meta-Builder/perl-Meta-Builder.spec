@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Meta-Builder
 Version:        0.003
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Tools for creating Meta objects to track custom metrics
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -19,6 +19,7 @@ BuildRequires:  perl(Fennec/Lite.pm)
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Test/Exception.pm)
 BuildRequires:  perl(Test/More.pm)
+Source44: import.info
 
 %description
 Meta programming is becoming more and more popular. The popularity of Meta
@@ -45,6 +46,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.003-alt2_11
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.003-alt2_10
 - update to new release by fcimport
 
