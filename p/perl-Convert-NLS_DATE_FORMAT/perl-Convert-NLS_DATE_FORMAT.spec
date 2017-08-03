@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Convert-NLS_DATE_FORMAT
 Version:        0.06
-Release:        alt1_13
+Release:        alt1_14
 Summary:        Convert Oracle NLS_DATE_FORMAT <-> strftime Format Strings
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Convert-NLS_DATE_FORMAT/
@@ -23,6 +23,7 @@ BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(warnings.pm)
 # Tests only
 BuildRequires:  perl(Test/More.pm)
+Source44: import.info
 
 %description
 Convert Oracle's NLS_DATE_FORMAT string into a strptime format string, or
@@ -48,6 +49,9 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_13
 - update to new release by fcimport
 
