@@ -6,7 +6,7 @@ BuildRequires: perl(CGI/Simple.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Captcha-reCAPTCHA
 Version:        0.98
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Perl implementation of the reCAPTCHA API
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -35,11 +35,12 @@ BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 Requires:       perl(HTML/Tiny.pm) >= 0.904
-%filter_from_requires /^perl\\(HTML.Tiny.pm\\)$/d
 
 
 # Filter under-specified dependencies
 
+Source44: import.info
+%filter_from_requires /^perl\\(HTML.Tiny.pm\\)$/d
 
 %description
 reCAPTCHA is a hybrid mechanical Turk and captcha that allows visitors who
@@ -68,6 +69,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1_3
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1_2
 - update to new release by fcimport
 
