@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Test-Warnings
 Version:	0.026
-Release:	alt1_4
+Release:	alt1_5
 Summary:	Test for warnings and the lack of them
 License:	GPL+ or Artistic
 Group:		Development/Other
@@ -44,6 +44,7 @@ BuildRequires:	perl(CPAN/Meta/Requirements.pm)
 BuildRequires:	perl(PadWalker.pm)
 # Runtime
 Requires:	perl(Carp.pm)
+Source44: import.info
 
 %description
 If you've ever tried to use Test::NoWarnings to confirm there are no warnings
@@ -88,6 +89,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.026-alt1_5
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.026-alt1_4
 - update to new release by fcimport
 
