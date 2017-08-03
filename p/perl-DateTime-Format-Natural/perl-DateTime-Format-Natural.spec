@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Term/ReadLine.pm) perl-podlators
@@ -7,7 +6,7 @@ BuildRequires: perl(Term/ReadLine.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-Natural
 Version:        1.05
-Release:        alt1
+Release:        alt1_2
 Summary:        Create machine readable date/time with natural parsing logic
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -45,6 +44,7 @@ BuildRequires:  perl(Test/MockTime.pm)
 BuildRequires:  perl(Test/More.pm)
 
 
+Source44: import.info
 
 %description
 DateTime::Format::Natural takes a string with a human readable date/time
@@ -87,6 +87,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1_2
+- update to new release by fcimport
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
 - automated CPAN update
 
