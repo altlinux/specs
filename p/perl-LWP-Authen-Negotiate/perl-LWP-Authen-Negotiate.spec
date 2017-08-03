@@ -6,7 +6,7 @@ BuildRequires: perl(AutoLoader.pm) perl(Exporter.pm) perl(MIME/Base64.pm) perl-p
 %define _localstatedir %{_var}
 Name:           perl-LWP-Authen-Negotiate
 Version:        0.08
-Release:        alt2_11
+Release:        alt2_12
 Summary:        GSSAPI based Authentication Plugin for LWP
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -20,6 +20,7 @@ BuildRequires:  perl(LWP/Debug.pm)
 BuildRequires:  perl(Test/More.pm)
 Requires:       perl(GSSAPI.pm) >= 0.180
 Requires:       perl(LWP/Debug.pm)
+Source44: import.info
 
 %description
 WWW-Negotiate supporting Webservers are IIS or Apache with 
@@ -50,6 +51,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt2_12
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt2_11
 - update to new release by fcimport
 
