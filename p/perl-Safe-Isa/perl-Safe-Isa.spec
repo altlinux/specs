@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Safe-Isa
 Version:        1.000006
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Call isa, can, does and DOES safely on things that may not be objects
 Group:          Development/Other
 License:        GPL+ or Artistic
@@ -26,6 +26,7 @@ BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
 # Test Suite
 BuildRequires:  perl(Test/More.pm)
+Source44: import.info
 # Dependencies
 
 %description
@@ -52,6 +53,9 @@ make test
 %{perl_vendor_privlib}/Safe/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.000006-alt1_3
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.000006-alt1_2
 - update to new release by fcimport
 
