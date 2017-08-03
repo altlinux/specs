@@ -1,19 +1,17 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
-%define fedora 25
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-Test-EOL
 Version:	2.00
-Release:	alt1
+Release:	alt1_2
 Summary:	Check the correct line endings in your project
-Group:		Development/Other
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-EOL/
-Source0:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-EOL-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Test-EOL-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
 BuildRequires:	coreutils
@@ -27,24 +25,17 @@ BuildRequires:	perl(File/Find.pm)
 BuildRequires:	perl(File/Spec.pm)
 BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(Test/Builder.pm)
-BuildRequires:	perl(vars.pm)
 BuildRequires:	perl(warnings.pm)
 # Test Suite
 BuildRequires:	perl(Config.pm)
 BuildRequires:	perl(File/Temp.pm)
-BuildRequires:	perl(FindBin.pm)
-BuildRequires:	perl(IO/Handle.pm)
-BuildRequires:	perl(IPC/Open3.pm)
 BuildRequires:	perl(Test/More.pm)
 # Optional Tests
-%if 0%{?fedora} || 0%{?rhel} > 6
-BuildRequires:	perl(Pod/Coverage/TrustPod.pm)
-BuildRequires:	perl(Test/More.pm)
-BuildRequires:	perl(Test/NoTabs.pm)
-BuildRequires:	perl(Test/Pod.pm)
-BuildRequires:	perl(Test/Pod/Coverage.pm)
+%if "%{?rhel}" != "6"
+BuildRequires:	perl(CPAN/Meta.pm)
 %endif
-# Runtime
+Source44: import.info
+# Dependencies
 
 %description
 This module scans your project/distribution for any perl files (scripts,
@@ -60,24 +51,25 @@ perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-# %{_fixperms} %{buildroot}
+find %{buildroot} -type f -name .packlist -delete
+# %{_fixperms} -c %{buildroot}
 
 %check
-%if 0%{?fedora} || 0%{?rhel} > 6
-make test AUTHOR_TESTING=1 RELEASE_TESTING=1
-%else
 make test
-%endif
 
 %files
 %if 0%{?_licensedir:1}
+%doc LICENCE
 %else
+%doc LICENCE
 %endif
-%doc Changes README
+%doc Changes CONTRIBUTING README
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1_2
+- update to new release by fcimport
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
 - automated CPAN update
 
