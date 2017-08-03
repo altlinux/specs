@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/doxygen gcc-c++ libGL-deve
 
 Name:           widelands
 Version:        0
-Release:        alt6_0.56.%{buildid}
+Release:        alt6_0.57.%{buildid}
 Summary:        Open source realtime-strategy game
 
 Group:          Games/Other
@@ -48,6 +48,7 @@ Requires:      fonts-otf-drehatlas-widelands
 Requires:      fonts-ttf-gnu-freefont-serif
 Requires:      fonts-ttf-gnu-freefont-sans
 Requires:      icon-theme-hicolor
+Source44: import.info
 
 %description
 Widelands is an open source (GPLed), realtime-strategy game, using SDL and
@@ -141,6 +142,9 @@ EOF
 
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:0-alt6_0.57.build18
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1:0-alt6_0.56.build18
 - update to new release by fcimport
 
