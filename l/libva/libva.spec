@@ -2,10 +2,11 @@
 %def_enable glx
 %def_enable egl
 %def_enable x11
+%def_enable wayland
 
 Name: libva
 Version: 1.8.3
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Video Acceleration (VA) API for Linux
 License: MIT
@@ -29,7 +30,10 @@ BuildRequires: libEGL-devel
 %if_enabled x11
 BuildRequires: libXext-devel libXfixes-devel
 %endif
-BuildRequires: gcc-c++ libwayland-client-devel libwayland-server-devel
+%if_enabled wayland
+BuildRequires: libwayland-client-devel libwayland-server-devel
+%endif
+BuildRequires: gcc-c++
 BuildRequires(pre): rpm-build-ubt
 
 %description
@@ -60,11 +64,12 @@ This package provides the development environment for libva
 	%{subst_enable glx} \
 	%{subst_enable egl} \
 	%{subst_enable x11} \
+	%{subst_enable wayland} \
 	--disable-static
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_libdir/*.so.*
@@ -75,12 +80,18 @@ This package provides the development environment for libva
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 1.8.3-alt2%ubt
+- bump release to jump over p8
+
+* Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 1.8.3-alt1.1%ubt
+- BOOTSTRAP: introduce wayland knob (on by default)
+
 * Thu Jul 06 2017 Anton Farygin <rider@altlinux.ru> 1.8.3-alt1%ubt
 - 1.8.3
 - dummy_drv_video.so removed by upstream
 
 * Thu Jun 01 2017 Anton Farygin <rider@altlinux.ru> 1.8.2-alt1
-- new version 
+- new version
 
 * Wed May 24 2017 L.A. Kostis <lakostis@altlinux.ru> 1.7.3-alt2
 - Re-enabled glx/egl back (transition to GLVND is over).
