@@ -6,7 +6,7 @@ BuildRequires: perl(base.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-Email
 Version:        0.07
-Release:        alt2_9
+Release:        alt2_10
 Summary:        Test Email Contents
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -20,6 +20,7 @@ BuildRequires:  perl(Mail/Sendmail.pm)
 BuildRequires:  perl(MIME/Entity.pm)
 BuildRequires:  perl(MIME/Parser.pm)
 BuildRequires:  perl(Test/Builder.pm)
+Source44: import.info
 
 %description
 Test::Email is a subclass of MIME::Entity, with the above methods.
@@ -47,6 +48,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2_10
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2_9
 - update to new release by fcimport
 
