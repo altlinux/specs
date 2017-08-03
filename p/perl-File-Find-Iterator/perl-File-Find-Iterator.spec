@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-File-Find-Iterator
 Version:        0.4
-Release:        alt3_13
+Release:        alt3_14
 Summary:        Iterator interface for search files
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -25,10 +25,11 @@ BuildRequires:  perl(Storable.pm)
 BuildRequires:  perl(Test/More.pm)
 Requires:       perl(Class/Iterator.pm) >= 0.100
 Requires:       perl(Storable.pm) >= 2.040
-%filter_from_requires /^perl\\((Class.Iterator|Storable).pm\\)$/d
 
 # Remove under-specified dependencies
 
+Source44: import.info
+%filter_from_requires /^perl\\((Class.Iterator|Storable).pm\\)$/d
 
 %description
 Find::File::Iterator is an iterator object for searching through directory
@@ -57,6 +58,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_13
 - update to new release by fcimport
 
