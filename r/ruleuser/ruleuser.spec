@@ -3,7 +3,7 @@
 
 Name: ruleuser
 Version: 1.1.0
-Release: alt1
+Release: alt2.git935e687
 Summary: RuleUser - Management program.
 Group: Networking/Remote access
 License: GPLv2
@@ -64,6 +64,9 @@ Client side.
 %_datadir/ruleuser-client/ruleuser-client
 
 %changelog
+* Thu Aug 03 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt2.git935e687
+- Fix timeout in popen_sub
+
 * Fri May 26 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - New version (thanks Artem <tema@>)
 
