@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 Name:		perl-CPAN-Changes
 Summary:	Read and write Changes files
 Version:	0.400002
-Release:	alt1_4
+Release:	alt1_5
 License:	GPL+ or Artistic
 Group:		Development/Other
 URL:		http://search.cpan.org/dist/CPAN-Changes/
@@ -37,6 +37,7 @@ BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
 # Runtime
 Requires:	perl(version.pm) >= 0.99.06
+Source44: import.info
 
 %description
 It is standard practice to include a Changes file in your distribution. The
@@ -74,6 +75,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{_mandir}/man1/tidy_changelog.1*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.400002-alt1_5
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.400002-alt1_4
 - update to new release by fcimport
 
