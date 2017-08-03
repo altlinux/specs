@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 Summary:	A tiny replacement for Module::Build
 Name:		perl-Module-Build-Tiny
 Version:	0.039
-Release:	alt1_6
+Release:	alt1_7
 License:	GPL+ or Artistic
 Group:		Development/Other
 URL:		https://github.com/Leont/module-build-tiny
@@ -53,6 +53,7 @@ Requires:	perl(ExtUtils/CBuilder.pm)
 Requires:	perl(ExtUtils/ParseXS.pm)
 Requires:	perl(Pod/Man.pm)
 Requires:	perl(TAP/Harness/Env.pm)
+Source44: import.info
 
 %description
 Many Perl distributions use a Build.PL file instead of a Makefile.PL file to
@@ -83,6 +84,9 @@ AUTHOR_TESTING=1 RELEASE_TESTING=1 ./Build test
 %{perl_vendor_privlib}/Module/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.039-alt1_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.039-alt1_6
 - update to new release by fcimport
 
