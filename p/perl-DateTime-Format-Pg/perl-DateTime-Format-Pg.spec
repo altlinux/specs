@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -7,12 +6,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-Pg
 Version:        0.16013
-Release:        alt1
+Release:        alt1_2
 Summary:        Parse and format PostgreSQL dates and times
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/DateTime-Format-Pg/
-Source0:        http://www.cpan.org/authors/id/D/DM/DMAKI/DateTime-Format-Pg-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/D/DM/DMAKI/DateTime-Format-Pg-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
@@ -35,6 +34,7 @@ BuildRequires:  perl(warnings.pm)
 # Optional tests only
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
+Source44: import.info
 
 %description
 This module understands the formats used by PostgreSQL for its DATE, TIME,
@@ -58,11 +58,14 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 ./Build test
 
 %files
-%doc LICENSE README.md
+%doc LICENSE
 %doc Changes
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.16013-alt1_2
+- update to new release by fcimport
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.16013-alt1
 - automated CPAN update
 
