@@ -1,8 +1,8 @@
 %define gecko_version 2.47
-%define mono_version 4.7.0
+%define mono_version 4.7.1
 
 Name: wine-vanilla
-Version: 2.13
+Version: 2.14
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -80,15 +80,12 @@ BuildRequires: desktop-file-utils
 # Use it instead proprietary MS Core Fonts
 # Requires: fonts-ttf-liberation
 
-# not linked directly
-Requires: libncurses
-
 # For menu/MIME subsystem
 Requires: desktop-file-utils
 
 Requires: lib%name = %version-%release
 Conflicts: wine
-Provides: wine = %version-%release
+#Provides: wine = %version-%release
 
 Provides: winetricks
 Requires: cabextract
@@ -153,6 +150,7 @@ Requires: libcups libncurses
 Requires: libXrender libXi libXext libX11 libICE
 Requires: libssl
 Requires: fontconfig libfreetype
+Requires: libpng16 libjpeg
 
 %description -n lib%name
 This package contains the library needed to run programs dynamically
@@ -188,7 +186,7 @@ Summary: Headers for lib%name-devel
 Group: Development/C
 Requires: lib%name = %version-%release
 Obsoletes: wine-devel
-Provides: wine-devel
+#Provides: wine-devel
 Conflicts: libwine-devel
 Provides: libwine-devel = %version-%release
 
@@ -418,6 +416,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Thu Aug 03 2017 Vitaly Lipatov <lav@altlinux.ru> 2.14-alt1
+- new version 2.14
+
 * Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 2.13-alt1
 - new version 2.13
 
