@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-MooseX-Aliases
 Version:        0.11
-Release:        alt1_8
+Release:        alt1_9
 Summary:        Easy aliasing of methods and attributes in Moose
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -37,6 +37,7 @@ BuildRequires:  perl(warnings.pm)
 Requires:       perl(Moose.pm) >= 1.090
 
 
+Source44: import.info
 
 %description
 The MooseX::Aliases module will allow you to quickly alias methods in
@@ -67,6 +68,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/MooseX/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_9
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_8
 - update to new release by fcimport
 
