@@ -7,7 +7,7 @@ BuildRequires: perl(Module/Build.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-Epoch
 Version:        0.16
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Convert DateTimes to/from epoch seconds
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/DateTime-Format-Epoch/
@@ -33,11 +33,12 @@ BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 Requires:       perl(DateTime.pm) >= 0.310
 Requires:       perl(Math/BigInt.pm) >= 1.660
+
+
+
+Source44: import.info
 %filter_from_requires /^perl\\(Math.BigInt.pm\\)$/d
 %filter_from_requires /^perl\\(DateTime.pm\\)/d
-
-
-
 
 %description
 This module can convert a DateTime object (or any object that can be
@@ -65,6 +66,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_6
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_5
 - update to new release by fcimport
 
