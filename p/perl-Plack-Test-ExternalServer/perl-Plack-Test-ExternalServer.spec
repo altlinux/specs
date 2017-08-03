@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Plack-Test-ExternalServer
 Version:        0.02
-Release:        alt1_5
+Release:        alt1_7
 Summary:        Run HTTP tests on external live servers
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -31,6 +31,7 @@ BuildRequires:  perl(Test/Pod/Coverage.pm)
 Requires:       perl(Plack/Test.pm)
 
 
+Source44: import.info
 
 %description
 This module allows you to run your Plack::Test tests against an external
@@ -57,6 +58,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/Plack*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_5
 - update to new release by fcimport
 
