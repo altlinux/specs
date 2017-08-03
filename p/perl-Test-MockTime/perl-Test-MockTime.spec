@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-MockTime
 Version:        0.15
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Replaces actual time with simulated time
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -27,6 +27,7 @@ BuildRequires:  perl(warnings.pm)
 BuildRequires:  perl(Test/Pod.pm)
 
 Requires:       perl(Time/Piece.pm) >= 1.080
+Source44: import.info
 
 %description
 This module was created to enable test suites to test code at specific
@@ -57,6 +58,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_6
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_5
 - update to new release by fcimport
 
