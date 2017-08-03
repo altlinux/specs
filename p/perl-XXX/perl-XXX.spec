@@ -6,7 +6,7 @@ BuildRequires: perl(Test/Pod.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-XXX
 Version:        0.31
-Release:        alt1_2
+Release:        alt1_3
 Summary:        See Your Data in the Nude
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -27,6 +27,7 @@ BuildRequires:  perl(warnings.pm)
 BuildRequires:  perl(YAML.pm)
 Requires:       perl(Data/Dumper.pm)
 Requires:       perl(YAML.pm)
+Source44: import.info
 
 %description
 XXX.pm exports a function called XXX that you can put just about
@@ -62,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1_3
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1_2
 - update to new release by fcimport
 
