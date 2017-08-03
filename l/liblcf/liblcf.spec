@@ -1,13 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define shortname lcf
 %define major   0
 %define libname lib%{shortname}%{major}
 %define devname lib%{shortname}-devel
 
 Name:           liblcf
-Version:        0.5.0
+Version:        0.5.2
 Release:        alt1_1
 Summary:        Library to handle RPG Maker 2000/2003 and EasyRPG projects
 Group:          System/Libraries
@@ -44,7 +46,7 @@ liblcf is part of the EasyRPG Project. More information is available
 at the project website: easy-rpg.org
 
 %files -n       %{libname}
-%doc AUTHORS COPYING README
+%doc AUTHORS.md COPYING README.md
 %{_libdir}/%{name}.so.%{major}
 %{_libdir}/%{name}.so.%{major}.*
 
@@ -53,7 +55,7 @@ at the project website: easy-rpg.org
 %package -n     %{devname}
 Summary:        Development headers and library for %{name}
 Group:          Development/C++
-Requires:       %{libname} = %{version}
+Requires:       %{libname} = %{version}-%{release}
 
 %description -n %{devname}
 This package contains development headers and library for %{name},
@@ -82,6 +84,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt1_1
+- update by mgaimport
+
 * Tue Nov 01 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1_1
 - update by mgaimport
 
