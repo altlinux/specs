@@ -6,19 +6,19 @@ BuildRequires: gcc-c++
 # Ick!  This is only a temporary hack until I have more time
 # to rebase the affected patches (#4, and possibly more)
 
+%global wtf_ver 20170512
+
 Summary: Collection of text-based games
 Name: bsd-games
 Version: 2.17
-Release: alt2_51
+Release: alt2_53
 License: BSD and BSD with advertising
 Group: Games/Other
 URL: ftp://metalab.unc.edu/pub/Linux/games/
 Source0: ftp://metalab.unc.edu/pub/Linux/games/bsd-games-%{version}.tar.gz
 Source1: config.params
-# Updated acronym databases
-Source2: http://cvsweb.netbsd.org/cgi-bin/cvsweb.cgi/~checkout~/src/share/misc/acronyms
-Source3: http://cvsweb.netbsd.org/cgi-bin/cvsweb.cgi/~checkout~/src/share/misc/acronyms.comp
-Source4: http://cvsweb.netbsd.org/cgi-bin/cvsweb.cgi/~checkout~/src/share/misc/acronyms-o.real
+# Updated acronym databases and all bsd-wtf
+Source2: https://downloads.sourceforge.net/bsdwtf/wtf-%{wtf_ver}.tar.gz
 # A collection of patches from Debian.
 Patch0: bsd-games-2.17-debian.patch
 # Patches from Fedora Core 1
@@ -38,7 +38,6 @@ Patch11: bsd-games-2.17-nolibtermcap.patch
 Patch12: bsd-games-2.17-tetris-rename.patch
 Patch13: bsd-games-2.17-gcc43.patch
 Patch14: bsd-games-2.17-bogglewords.patch
-Patch15: bsd-games-2.17-wtfupdate.patch
 Patch16: bsd-games-2.17-backgammonsize.patch
 Patch17: bsd-games-2.17-adventurecrc.patch
 Patch18: bsd-games-2.17-wtfrpm.patch
@@ -46,8 +45,10 @@ Patch19: bsd-games-2.17-adventureinit.patch
 Patch20: bsd-games-2.17-backgammonrecursion.patch
 Patch21: bsd-games-2.17-huntversion.patch
 Patch22: bsd-games-2.17-getrandom.patch
+Patch23: bsd-games-2.17-printf.patch
 BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel words flex flex bison
 Requires(pre): shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
+Source44: import.info
 
 %description
 Bsd-games includes adventure, arithmetic, atc, backgammon, battlestar,
@@ -57,7 +58,7 @@ quiz, rain, random, robots, rot13, sail, snake, snscore, teachgammon,
 bsd-fbg, trek, worm, worms and wump.
 
 %prep
-%setup -q
+%setup -q -a2
 install -p -m 755 %{SOURCE1} .
 %patch0 -p1 -b .debian
 %patch1 -p1 -b .ospeed
@@ -74,14 +75,16 @@ install -p -m 755 %{SOURCE1} .
 %patch12 -p0 -b .tetris.rename
 %patch13 -p1 -b .gcc43
 %patch14 -p0 -b .wordlimit
-%patch15 -p0 -b .wtfupdate
 %patch16 -p0 -b .backgammonsize
 %patch17 -p0 -b .adventurecrc
+pushd wtf-%{wtf_ver}
 %patch18 -p1 -b .wtfrpm
+popd
 %patch19 -p0 -b .adventureinit
 %patch20 -p1 -b .backgammonrecursion
 %patch21 -p1 -b .huntversion
 %patch22 -p1 -b .getrandom
+%patch23 -p1 -b .printf
 
 %build
 # We include a templatized configuration settings file to set
@@ -128,9 +131,12 @@ mv $RPM_BUILD_ROOT/%{_mandir}/man6/tetris-bsd.6.gz $RPM_BUILD_ROOT/%{_mandir}/ma
 rm -f $RPM_BUILD_ROOT/%{_docdir}/trek.me
 
 # Updated acronym databases
-install -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/misc/
-install -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/misc/
-install -p -m 0644 %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/misc/
+pushd wtf-%{wtf_ver}
+install -p -m 0755 wtf $RPM_BUILD_ROOT%{_bindir}/
+gzip wtf.6
+install -p -m 0644 wtf.6.gz $RPM_BUILD_ROOT%{_mandir}/man6/
+install -p -m 0644 acronyms* $RPM_BUILD_ROOT%{_datadir}/misc/
+popd
 
 %pre
 for group in gamehack gamesail gamephant; do
@@ -185,6 +191,7 @@ exit 0
 %{_datadir}/misc/acronyms
 %{_datadir}/misc/acronyms-o.real
 %{_datadir}/misc/acronyms.comp
+%{_datadir}/misc/acronyms-o.fake
 %{_mandir}/man6/*
 %{_sbindir}/huntd
 %config(noreplace) %attr(664,root,games) %{_var}/games/atc_score
@@ -204,6 +211,9 @@ exit 0
 %doc AUTHORS COPYING ChangeLog ChangeLog.0 THANKS YEAR2000 README.hunt trek/USD.doc/trek.me
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.17-alt2_53
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.17-alt2_51
 - update to new release by fcimport
 
