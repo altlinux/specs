@@ -9,7 +9,7 @@ BuildRequires: perl-podlators
 
 Name:		perl-Test-Synopsis
 Version:	0.15
-Release:	alt1_4
+Release:	alt1_6
 Summary:	Test your SYNOPSIS code
 Group:		Development/Other
 License:	GPL+ or Artistic
@@ -59,6 +59,7 @@ BuildRequires:	perl(Test/Version.pm)
 %endif
 # Runtime
 Requires:	perl(Test/Builder/Module.pm)
+Source44: import.info
 
 %description
 Test::Synopsis is an (author) test module to find .pm or .pod files under your
@@ -96,6 +97,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_6
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_4
 - update to new release by fcimport
 
