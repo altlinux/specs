@@ -6,7 +6,7 @@ BuildRequires: perl(Imager.pm) perl(Math/Complex.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Math-Symbolic
 Version:        0.612
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Symbolic calculations
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -29,10 +29,11 @@ BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(vars.pm)
 BuildRequires:  perl(warnings.pm)
 Requires:       perl(Memoize.pm) >= 1.010
-%filter_from_requires /perl\\(Memoize.pm\\)$/d
 
 # RPM 4.9 style:
 
+Source44: import.info
+%filter_from_requires /perl\\(Memoize.pm\\)$/d
 
 %description
 Math::Symbolic is intended to offer symbolic calculation capabilities to
@@ -64,6 +65,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.612-alt2_11
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.612-alt2_10
 - update to new release by fcimport
 
