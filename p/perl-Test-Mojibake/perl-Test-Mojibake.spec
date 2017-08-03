@@ -14,7 +14,7 @@ BuildRequires: perl(Encode.pm) perl-podlators
 
 Name:		perl-Test-Mojibake
 Version:	1.3
-Release:	alt1_1
+Release:	alt1_3
 Summary:	Check your source for encoding misbehavior
 Group:		Development/Other
 License:	GPL+ or Artistic
@@ -94,6 +94,7 @@ BuildRequires:	perl(Test/Pod/LinkCheck.pm)
 # Unicode::CheckUTF8 is an optional requirement that significantly speeds up
 # this module
 Requires:	perl(Unicode/CheckUTF8.pm)
+Source44: import.info
 
 %description
 Many modern text editors automatically save files using UTF-8 codification.
@@ -167,6 +168,9 @@ make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1} \
 %{_mandir}/man1/scan_mojibake.1*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_3
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_1
 - update to new release by fcimport
 
