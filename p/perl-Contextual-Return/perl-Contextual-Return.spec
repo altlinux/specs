@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -8,11 +7,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Contextual-Return
 Version:        0.004014
-Release:        alt1
+Release:        alt1_2
 Summary:        Create context-sensitive return values
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Contextual-Return
-Source0:        http://www.cpan.org/authors/id/D/DC/DCONWAY/Contextual-Return-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/D/DC/DCONWAY/Contextual-Return-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  coreutils
@@ -33,9 +32,10 @@ BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 # Dependencies
 Requires:       perl(Data/Dumper.pm)
+
+
+Source44: import.info
 %filter_from_provides /^perl\\(DB.pm\\)$/d
-
-
 
 %description
 This module allows you to define return values of a perl sub that are
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_privlib}/Contextual/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.004014-alt1_2
+- update to new release by fcimport
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.004014-alt1
 - automated CPAN update
 
