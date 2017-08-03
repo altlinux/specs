@@ -3,24 +3,23 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.3
+Version: 3.4.2
 Release: alt1
 Summary: Pure-Python RSA implementation
 License: ASLv2
 Group: Development/Python
 Url: https://pypi.python.org/pypi/rsa/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests python-module-pyasn1
-BuildPreReq: python-module-unittest2
+BuildPreReq: python-module-unittest2 python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-setuptools-tests python3-module-pyasn1
 BuildPreReq: python3-module-unittest2 python3-devel
-BuildPreReq: python-tools-2to3
+BuildPreReq: python-tools-2to3 python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -77,16 +76,16 @@ popd
 
 %check
 python setup.py test
-python run_tests.py
+py.test
 %if_with python3
 pushd ../python3
 python3 setup.py test
-python3 run_tests.py
+py.test3
 popd
 %endif
 
 %files
-%doc *.rst
+%doc LICENSE README.md
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -95,12 +94,15 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst
+%doc LICENSE README.md
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Thu Aug 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.2-alt1
+- Updated to upstream releases 3.4.2.
+
 * Mon Nov 14 2016 Lenar Shakirov <snejok@altlinux.ru> 3.3-alt1
 - Version 3.3
 
