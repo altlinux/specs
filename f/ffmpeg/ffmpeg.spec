@@ -6,6 +6,7 @@
 %define subst_enable_with() %{expand:%%{?_enable_%{1}:--enable-%{2}} } %{expand:%%{?_disable_%{1}:--disable-%{2}} }
 
 # Enable/Disable stuff
+%def_enable doc
 %def_enable gpl
 %def_enable version3
 %def_enable ffplay
@@ -57,20 +58,24 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	3.3.3
-Release:	alt1
+Release:	alt2
 
-Url:		http://ffmpeg.org
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
-
 Group:		Video
+
+Url:		http://ffmpeg.org
 
 Source:		%name-%version.tar
 BuildRequires:	libX11-devel libXext-devel libXvMC-devel libXfixes-devel
-BuildRequires:	yasm
-BuildRequires:	libalsa-devel libpulseaudio-devel
+BuildRequires:	libalsa-devel
 BuildRequires:	libbluray-devel libass-devel
+%if_with doc
 BuildRequires:	perl-podlators texi2html
+%endif
+%ifarch %ix86 x86_64
+BuildRequires:	yasm
+%endif
 
 %{?_enable_ffplay:BuildRequires: libSDL2-devel}
 %{?_enable_gnutls:BuildRequires: libgnutls-devel}
@@ -492,11 +497,7 @@ xz Changelog
 %make_build
 
 %install
-mkdir -p %buildroot
-%make_install \
-	DESTDIR=%buildroot \
-	install \
-	#
+%makeinstall_std
 
 %files
 %doc README.md
@@ -504,10 +505,11 @@ mkdir -p %buildroot
 %doc Changelog*
 %doc LICENSE.md
 %_bindir/ffmpeg
-%_man1dir/ffmpeg*
+%{?_with_doc:%_man1dir/ffmpeg*}
 %_datadir/ffmpeg
 %exclude %_datadir/ffmpeg/examples
 
+%if_with doc
 %files doc
 %doc doc/ffmpeg*.html
 %doc doc/faq.html
@@ -518,32 +520,39 @@ mkdir -p %buildroot
 %doc doc/nut.html
 %doc doc/platform.html
 %_man3dir/*
+%endif
 
 %if_enabled ffplay
 %files -n ffplay
 %_bindir/ffplay
-%_man1dir/ffplay*
+%{?_with_doc:%_man1dir/ffplay*}
 
+%if_with doc
 %files -n ffplay-doc
 %doc doc/ffplay*.html
+%endif
 %endif
 
 %if_enabled ffprobe
 %files -n ffprobe
 %_bindir/ffprobe
-%_man1dir/ffprobe*
+%{?_with_doc:%_man1dir/ffprobe*}
 
+%if_with doc
 %files -n ffprobe-doc
 %doc doc/ffprobe*.html
+%endif
 %endif
 
 %if_enabled ffserver
 %files -n ffserver
 %_bindir/ffserver
-%_man1dir/ffserver*
+%{?_with_doc:%_man1dir/ffserver*}
 
+%if_with doc
 %files -n ffserver-doc
 %doc doc/ffserver*.html
+%endif
 %endif
 
 %files -n libavcodec57
@@ -650,6 +659,12 @@ mkdir -p %buildroot
 %endif
 
 %changelog
+* Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 2:3.3.3-alt2
+- x86-only BR: yasm
+- fix libpulse knob
+- add doc knob
+- minor spec cleanup
+
 * Tue Aug 01 2017 Anton Farygin <rider@altlinux.ru> 2:3.3.3-alt1
 - 3.3.3 with fixes for following vulnerabilities:
 	* CVE-2017-11399 remote DoS via crafted APE file
