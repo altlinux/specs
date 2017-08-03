@@ -1,24 +1,45 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(AnyEvent.pm) perl(AnyEvent/Handle.pm) perl(AnyEvent/Socket.pm) perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(Encode.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(JSON/XS.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(base.pm) perl-podlators
+BuildRequires: perl(AnyEvent.pm) perl(AnyEvent/Handle.pm) perl(AnyEvent/Socket.pm) perl(CPAN.pm) perl(Encode.pm) perl(ExtUtils/CBuilder.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(JSON.pm) perl(JSON/XS.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Test/More.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-AnyEvent-I3
 Version:        0.17
-Release:        alt1
+Release:        alt1_2
 Summary:        Communicate with the i3 window manager
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/anyevent-i3/
-Source0:        http://www.cpan.org/authors/id/M/MS/MSTPLBG/AnyEvent-I3-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/M/MS/MSTPLBG/AnyEvent-I3-%{version}.tar.gz
 BuildArch:      noarch
+# Build
+BuildRequires:  coreutils
+BuildRequires:  findutils
+BuildRequires:  perl
 BuildRequires:  rpm-build-perl
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(Module/Install.pm)
+BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(inc/Module/Install.pm)
+BuildRequires:  perl(Module/Install/Metadata.pm)
+BuildRequires:  perl(Module/Install/WriteAll.pm)
+BuildRequires:  sed
+# Run-time
+#BuildRequires:  perl(AnyEvent)
+#BuildRequires:  perl(AnyEvent::Handle)
+#BuildRequires:  perl(AnyEvent::Socket)
+#BuildRequires:  perl(base)
+#BuildRequires:  perl(constant)
+#BuildRequires:  perl(Encode)
+#BuildRequires:  perl(Exporter)
+#BuildRequires:  perl(JSON::XS)
+#BuildRequires:  perl(Scalar::Util)
+#BuildRequires:  perl(strict)
+#BuildRequires:  perl(warnings)
+# Tests
+#BuildRequires:  perl(Test::More)
 
 
+Source44: import.info
 
 %description
 This module connects to the i3 window manager using the UNIX socket based
@@ -26,21 +47,30 @@ IPC interface it provides (if enabled in the configuration file). You can
 then subscribe to events or send messages and receive their replies.
 
 %prep
-%setup -q -n AnyEvent-I3-%{version}
+%setup -qn AnyEvent-I3-%{version}
+rm -rf inc
+sed -i -e '/^inc\//d' MANIFEST
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir NO_PACKLIST=1 INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 %make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name .packlist -delete
 # %{_fixperms} %{buildroot}/*
+
+#%%check
+#make test
 
 %files
 %doc Changes README
 %{perl_vendor_privlib}/AnyEvent/I3.pm
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_2
+- update to new release by fcimport
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - automated CPAN update
 
