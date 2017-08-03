@@ -7,7 +7,7 @@ BuildRequires: gcc-c++ pkgconfig(glib-2.0)
 %define _localstatedir %{_var}
 Name:           liberis
 Version:        1.3.23
-Release:        alt1_7
+Release:        alt1_10
 Summary:        Client-side session layer for Atlas-C++
 
 Group:          Development/Other
@@ -23,6 +23,7 @@ BuildRequires: libwfmath-devel >= 0.3.2
 BuildRequires: libskstream-devel >= 0.3.5
 
 BuildRequires:  libsigc++2-devel glib-devel
+Source44: import.info
 Provides: eris = %{version}-%{release}
 
 %description
@@ -69,6 +70,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib%{oldname}-1.3.la
 
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.23-alt1_10
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.23-alt1_7
 - update to new release by fcimport
 
