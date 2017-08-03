@@ -1,20 +1,23 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/EOL.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define upstream_name    Tapper-Remote
 %define upstream_version 5.0.0
 
+%{?perl_default_filter}
+
 Name:       perl-%{upstream_name}
-Version:    5.0.0
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Tapper - Common functionality for remote automation libs
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Remote-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(File/Temp.pm)
@@ -47,7 +50,7 @@ project.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%__perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -59,9 +62,12 @@ project.
 
 %files
 %doc Changes LICENSE META.json META.yml  README
-%perl_vendor_privlib/*
+%{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1_1
+- update by mgaimport
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1
 - automated CPAN update
 
