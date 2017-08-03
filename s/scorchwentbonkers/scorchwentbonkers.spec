@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 %define _localstatedir %{_var}
 Name:           scorchwentbonkers
 Version:        1.3
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Realtime remake of Scorched Earth
 Group:          Games/Other
 License:        zlib
@@ -21,6 +21,7 @@ Patch3:         %{name}-gcc6.patch
 BuildRequires:  liballegro-devel liballegro-devel dumb-devel libAllegroOGG-devel 
 BuildRequires:  libGLU-devel desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor
+Source44: import.info
 
 %description
 As the name suggests, Scorch Went Bonkers is a remake of the old PC classic.
@@ -68,6 +69,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_5
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_4
 - update to new release by fcimport
 
