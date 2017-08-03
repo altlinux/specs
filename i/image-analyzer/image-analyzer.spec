@@ -1,5 +1,5 @@
 Name: image-analyzer
-Version: 3.0.1
+Version: 3.1.0
 Release: alt1
 Summary: Simple Gtk+ application that displays tree structure of disc image
 Summary(ru_RU.UTF-8): Простое GTK+ приложение для просмотра структуры образа диска
@@ -45,6 +45,9 @@ libMirage, тем не менее он может также использов�
 %_pixmapsdir/*.svg
 
 %changelog
+* Thu Aug 03 2017 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt1
+- new version (3.1.0) with rpmgs script
+
 * Fri Oct 14 2016 Anton Midyukov <antohami@altlinux.org> 3.0.1-alt1
 - New version.
 
