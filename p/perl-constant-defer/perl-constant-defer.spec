@@ -6,7 +6,7 @@ BuildRequires: perl(Attribute/Handlers.pm) perl(B/Utils.pm) perl(Devel/FindRef.p
 %define _localstatedir %{_var}
 Name:           perl-constant-defer
 Version:        6
-Release:        alt2_6
+Release:        alt2_7
 Summary:        Constant subs with deferred value calculation
 License:        GPLv3+
 Group:          Development/Other
@@ -32,6 +32,7 @@ BuildRequires:  perl(Data/Dumper.pm)
 # Devel::StackTrace not used
 # Test::More not used
 Requires:       perl(Carp.pm)
+Source44: import.info
 
 %description
 constant::defer creates a subroutine which on the first call runs given
@@ -61,6 +62,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 6-alt2_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 6-alt2_6
 - update to new release by fcimport
 
