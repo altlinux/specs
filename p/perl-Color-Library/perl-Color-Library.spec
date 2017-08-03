@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Color-Library
 Version:        0.021
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Easy-to-use and comprehensive named-color library
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -31,6 +31,7 @@ BuildRequires:  perl(overload.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Most.pm)
 Requires:       perl(overload.pm)
+Source44: import.info
 
 %description
 Color::Library is an easy-to-use and comprehensive named-color
@@ -58,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.021-alt2_11
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.021-alt2_10
 - update to new release by fcimport
 
