@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-ConsistentVersion
 Version:        0.3.0
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Ensures a CPAN distribution has consistent versioning
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -35,6 +35,7 @@ BuildRequires:  perl(Test/Perl/Critic.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 BuildRequires:  perl(Test/Pod.pm)
 Requires:       perl(Test/Pod/Content.pm)
+Source44: import.info
 
 %description
 The purpose of this module is to make it easy for other distribution
@@ -62,6 +63,9 @@ TEST_AUTHOR=1 ./Build test
 %{perl_vendor_privlib}/Test*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_6
 - update to new release by fcimport
 
