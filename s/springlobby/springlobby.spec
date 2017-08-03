@@ -1,15 +1,17 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/cppcheck /usr/bin/desktop-file-install /usr/bin/doxygen /usr/bin/msgfmt /usr/bin/msgmerge /usr/bin/pkg-config /usr/bin/xgettext /usr/bin/xsltproc gcc-c++ libX11-devel libminizip-devel perl(FileHandle.pm) perl(Text/Wrap.pm) pkgconfig(glib-2.0) pkgconfig(libnotify) zlib-devel
+BuildRequires: /usr/bin/cppcheck /usr/bin/desktop-file-install /usr/bin/doxygen /usr/bin/xsltproc gcc-c++ libX11-devel libminizip-devel perl(FileHandle.pm) perl(Text/Wrap.pm) pkgconfig(glib-2.0) pkgconfig(libnotify) zlib-devel
 # END SourceDeps(oneline)
 # undefined symbol: L_*, LOG_*, parse32 in libFileSystem
 # those are from static libUtil, in main binary
 %set_verify_elf_method unresolved=relaxed
 BuildRequires: boost-devel boost-filesystem-devel boost-signals-devel libpng-devel
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:			springlobby
 Version:		0.195
-Release:		alt1_9
+Release:		alt1_11
 Summary:		A lobby client for the spring RTS game engine
 
 # License clarification: http://springlobby.info/issues/show/810
@@ -17,14 +19,14 @@ License:		GPLv2
 URL:			http://springlobby.info
 Source0:		http://www.springlobby.info/tarballs/springlobby-%{version}.tar.bz2
 
-BuildRequires: ctest cmake
-BuildRequires:	wxGTK-devel, libtorrent-rasterbar-devel
-BuildRequires:	libSDL-devel, SDL_sound-devel, libSDL_mixer-devel
-BuildRequires:, desktop-file-utils, gettext
-BuildRequires:	libopenal-devel, libcurl-devel
+BuildRequires:	ctest cmake
+BuildRequires:	libwxGTK-contrib-gizmos-devel libwxGTK-contrib-ogl-devel libwxGTK-contrib-stc-devel libwxGTK-devel, libtorrent-rasterbar-devel
+BuildRequires:	libSDL-devel, libSDL_sound-devel, libSDL_mixer-devel
+BuildRequires:	desktop-file-utils gettext gettext-tools
+BuildRequires:	libopenal-devel libopenal1, libcurl-devel
 BuildRequires:	libalure-devel
 BuildRequires:	dumb-devel
-BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
 
 # There are other "lobbies" for spring, make a virtual-provides
 Provides:		spring-lobby = %{version}-%{release}
@@ -33,7 +35,7 @@ Requires:		icon-theme-hicolor
 Requires:		springrts
 ExclusiveArch:	%{ix86} x86_64
 Source44: import.info
-Patch33: springlobby-0.195-alt-as-needed.patch
+Patch33: springlobby-0.195-alt-linkage.patch
 
 %description
 SpringLobby is a free cross-platform lobby client for the Spring RTS project.
@@ -44,7 +46,7 @@ SpringLobby is a free cross-platform lobby client for the Spring RTS project.
 
 %build
 %{fedora_cmake}
-make %{?_smp_mflags}
+%make_build
 
 %install
 %makeinstall_std
@@ -105,6 +107,9 @@ EOF
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.195-alt1_11
+- update to new release by fcimport
+
 * Tue Feb 23 2016 Igor Vlasenko <viy@altlinux.ru> 0.195-alt1_9
 - fixed build
 
