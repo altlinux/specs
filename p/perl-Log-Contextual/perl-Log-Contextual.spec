@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Test/PerlTidy.pm) perl(Test/Pod.pm) perl-podlators
@@ -7,7 +6,7 @@ BuildRequires: perl(Test/PerlTidy.pm) perl(Test/Pod.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Log-Contextual
 Version:        0.007001
-Release:        alt1
+Release:        alt1_2
 Summary:        Simple logging interface with a contextual log
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -42,12 +41,13 @@ BuildRequires:  perl(Test/More.pm)
 # Test::Pod 1.41 not used
 Requires:       perl(Exporter/Declare.pm) >= 0.111
 Requires:       perl(Moo.pm) >= 1.003.0
-%filter_from_requires /^perl\\(Exporter.Declare.pm\\)\\s*$/d
-%filter_from_requires /^perl\\(Moo.pm\\)\\s*$/d
 
 # Filter under-specified depenedencies
 
 
+Source44: import.info
+%filter_from_requires /^perl\\(Exporter.Declare.pm\\)\\s*$/d
+%filter_from_requires /^perl\\(Moo.pm\\)\\s*$/d
 
 %description
 This module is a simple interface to extensible logging. It is bundled with
@@ -76,6 +76,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.007001-alt1_2
+- update to new release by fcimport
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.007001-alt1
 - automated CPAN update
 
