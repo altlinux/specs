@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-IBeat
 Version:        0.161
-Release:        alt2_27
+Release:        alt2_28
 Summary:        Format times in .beat notation 
 Group:          Development/Other
 License:        GPL+ or Artistic 
@@ -29,6 +29,7 @@ BuildRequires:  perl(warnings.pm)
 BuildRequires:  perl(Test/More.pm)
 # Optional Tests
 BuildRequires:  perl(Test/Pod.pm)
+Source44: import.info
 # Dependencies
 
 %description
@@ -60,6 +61,9 @@ make test
 %{perl_vendor_privlib}/DateTime/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.161-alt2_28
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.161-alt2_27
 - update to new release by fcimport
 
