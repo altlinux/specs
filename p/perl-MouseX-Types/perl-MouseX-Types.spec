@@ -7,7 +7,7 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 Name:           perl-MouseX-Types
 Summary:        Organize your Mouse types in libraries
 Version:        0.06
-Release:        alt2_14
+Release:        alt2_16
 License:        GPL+ or Artistic
 Group:          Development/Other
 Source0:        http://search.cpan.org/CPAN/authors/id/G/GF/GFUJI/MouseX-Types-%{version}.tar.gz
@@ -16,12 +16,25 @@ BuildArch:      noarch
 
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Any/Moose.pm)
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(base.pm)
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(constant.pm)
+BuildRequires:  perl(FindBin.pm)
+BuildRequires:  perl(inc/Module/Install.pm)
+BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(Module/Install/AuthorTests.pm)
+BuildRequires:  perl(Module/Install/Metadata.pm)
+BuildRequires:  perl(Module/Install/Repository.pm)
+BuildRequires:  perl(Module/Install/WriteAll.pm)
 BuildRequires:  perl(Mouse.pm)
+BuildRequires:  perl(Mouse/Exporter.pm)
+BuildRequires:  perl(Mouse/Util/TypeConstraints.pm)
 BuildRequires:  perl(Scalar/Util.pm)
+BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Sub/Exporter.pm)
 BuildRequires:  perl(Test/Exception.pm)
 BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(warnings.pm)
 
 Requires:       perl(Mouse.pm) >= 0.410
 
@@ -31,6 +44,7 @@ Obsoletes:      %{name}-tests < 0.06-2
 Provides:       %{name}-tests = %{version}-%{release}
 
 
+Source44: import.info
 
 %description
 Organize your Mouse types; much as MooseX::Types does for your Moose types.
@@ -41,6 +55,9 @@ This library was split off from Mouse as of Mouse 0.15.
 
 %prep
 %setup -q -n MouseX-Types-%{version}
+# Remove bundled libraries
+rm -r inc
+sed -i -e '/^inc\// d' MANIFEST
 
 find lib -type f -name '*.pm' -print0 | xargs -0 chmod 0644
 chmod 0644 t/*.t
@@ -64,6 +81,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_16
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_14
 - update to new release by fcimport
 
