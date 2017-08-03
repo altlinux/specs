@@ -28,7 +28,7 @@
 
 Name: libcogl
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 Group: System/Libraries
@@ -180,6 +180,9 @@ Contains developer documentation for %oname.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Aug 03 2017 Yuri N. Sedunov <aris@altlinux.org> 1.22.2-alt3
+- updated to 1.22.2-11-g811f285
+
 * Sun Oct 02 2016 Yuri N. Sedunov <aris@altlinux.org> 1.22.2-alt2
 - updated to 1.22.2-4-ge20d81b
 
