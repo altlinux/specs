@@ -6,7 +6,7 @@ BuildRequires: perl(Devel/TimeThis.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Math-Prime-XS
 Version:        0.27
-Release:        alt1.1_2
+Release:        alt1.1_3
 Summary:        Detect and calculate prime numbers with deterministic tests
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -36,6 +36,7 @@ BuildRequires:  perl(warnings.pm)
 BuildRequires:  perl(XSLoader.pm)
 
  # Filters (not)shared c libs
+Source44: import.info
 
 %description
 Math::Prime::XS detects and calculates prime numbers by either applying
@@ -65,6 +66,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -delete
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1.1_3
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1.1_2
 - update to new release by fcimport
 
