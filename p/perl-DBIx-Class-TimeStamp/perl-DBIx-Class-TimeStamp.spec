@@ -7,11 +7,12 @@ BuildRequires: perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/
 %define _localstatedir %{_var}
 Name:           perl-DBIx-Class-TimeStamp
 Version:        0.14
-Release:        alt2_17
+Release:        alt2_19
 Summary:        DBIx::Class extension to update and create date and time based fields
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/DBIx-Class-TimeStamp/
 Source0:        http://search.cpan.org/CPAN/authors/id/R/RI/RIBASUSHI/DBIx-Class-TimeStamp-%{version}.tar.gz
+Patch0:         DBIx-Class-TimeStamp-0.14-Fix-building-on-Perl-without-dot-in-INC.patch
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
@@ -57,11 +58,12 @@ Requires:       perl(DateTime.pm) >= 0.550
 Requires:       perl(DBIx/Class.pm) >= 0.080.090
 Requires:       perl(DBIx/Class/DynamicDefault.pm) >= 0.030
 Requires:       perl(DBIx/Class/InflateColumn/DateTime.pm)
+
+
+
+Source44: import.info
 %filter_from_requires /^perl\\(DateTime.pm\\)$/d
 %filter_from_requires /^perl\\(DBIx.Class.pm\\)$/d
-
-
-
 
 %description
 Works in conjunction with InflateColumn::DateTime to automatically set
@@ -69,6 +71,7 @@ update and create date and time based fields in a table.
 
 %prep
 %setup -q -n DBIx-Class-TimeStamp-%{version}
+%patch0 -p1
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
@@ -86,6 +89,9 @@ TEST_POD=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_19
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_17
 - update to new release by fcimport
 
