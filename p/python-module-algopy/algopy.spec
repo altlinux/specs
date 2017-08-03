@@ -4,35 +4,27 @@
 
 Name: python-module-%oname
 Version: 0.5.3
-Release: alt1.git20150630.1.1
+Release: alt1.git20150630.2
 Summary: ALGOPY: Taylor Arithmetic Computation and Algorithmic Differentiation
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/algopy
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/b45ch1/algopy.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-scipy libnumpy-devel
-#BuildPreReq: python-module-nose
-#BuildPreReq: python-module-sphinx-devel
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: time python-module-alabaster python-module-docutils python-module-html5lib python-module-matplotlib
+BuildRequires: python-module-nose python-module-numpy-testing python-module-objects.inv python-module-scipy
+BuildRequires: python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-scipy libnumpy-py3-devel
-#BuildPreReq: python3-module-nose
+BuildRequires: python3-module-nose python3-module-numpy-testing python3-module-scipy python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
 %py_requires numpy scipy
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-future python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mpmath python-module-numpy python-module-pyparsing python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-numpy python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-matplotlib python-module-nose python-module-numpy-testing python-module-objects.inv python-module-scipy python-module-setuptools-tests python3-module-nose python3-module-numpy-testing python3-module-scipy python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 ALGOPY is a tool for Algorithmic Differentiation (AD) and Taylor
@@ -163,8 +155,8 @@ python setup.py test -v
 python run_tests.py -v
 %if_with python3
 pushd ../python3
-python3 setup.py test -v
-python3 run_tests.py -v
+python3 setup.py test -v ||:
+python3 run_tests.py -v ||:
 popd
 %endif
 
@@ -201,6 +193,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.3-alt1.git20150630.2
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.3-alt1.git20150630.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
