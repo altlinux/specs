@@ -18,7 +18,7 @@ BuildRequires: perl-podlators
 Summary:	Checks if scalar is valid UTF-8
 Name:		perl-Unicode-CheckUTF8
 Version:	1.03
-Release:	alt4_17
+Release:	alt4_18
 License:	UCD and (GPL+ or Artistic)
 Group:		Development/Other
 Url:		http://search.cpan.org/dist/Unicode-String/
@@ -41,6 +41,7 @@ BuildRequires:	perl(Test/More.pm)
 
 # Don't "provide" private Perl libs
 
+Source44: import.info
 
 %description
 This is an XS wrapper around some Unicode Consortium code to check if a string
@@ -75,6 +76,9 @@ make test
 %{perl_vendor_archlib}/auto/Unicode/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.03-alt4_18
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.03-alt4_17
 - update to new release by fcimport
 
