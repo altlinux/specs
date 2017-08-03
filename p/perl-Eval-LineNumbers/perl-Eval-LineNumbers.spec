@@ -6,7 +6,7 @@ BuildRequires: perl(Exporter.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Eval-LineNumbers
 Version:        0.34
-Release:        alt1_8
+Release:        alt1_9
 Summary:        Add line numbers to hereis blocks that contain perl source code
 License:        Artistic 2.0 or LGPLv2+
 Group:          Development/Other
@@ -18,6 +18,7 @@ BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/More.pm)
 
 
+Source44: import.info
 
 %description
 This module adds a line number to hereis text that is going to be
@@ -47,6 +48,9 @@ make test
 %{perl_vendor_privlib}/Eval
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1_9
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1_8
 - update to new release by fcimport
 
