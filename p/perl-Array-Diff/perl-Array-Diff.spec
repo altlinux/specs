@@ -9,7 +9,7 @@ BuildRequires: perl(CPAN.pm) perl(Filter/Util/Call.pm) perl(JSON.pm) perl(LWP/Si
 
 Name:           perl-Array-Diff
 Version:        0.07
-Release:        alt2_22
+Release:        alt2_24
 # Because 0.07 compares newer than 0.05002 in Perl world
 # but not in RPM world :-(
 Epoch:          1
@@ -18,6 +18,7 @@ License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/Array-Diff/
 Source0:        http://www.cpan.org/authors/id/T/TY/TYPESTER/Array-Diff-%{version}.tar.gz
+Patch0:         Array-Diff-0.07-Fix-building-on-Perl-without-dot-in-INC.patch
 BuildArch:      noarch
 # Module Build
 BuildRequires:  coreutils
@@ -55,6 +56,7 @@ BuildRequires:  perl(Text/Diff.pm)
 %if ! %{rpm49}
 Requires:       perl(Class/Accessor/Fast.pm)
 %endif
+Source44: import.info
 
 %description
 This module compares two arrays and returns the added or deleted elements in
@@ -64,6 +66,7 @@ If you need more complex array tools, check Array::Compare.
 
 %prep
 %setup -q -n Array-Diff-%{version}
+%patch0 -p1
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -88,6 +91,9 @@ make test
 %{perl_vendor_privlib}/Array/Diff.pm
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.07-alt2_24
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.07-alt2_22
 - update to new release by fcimport
 
