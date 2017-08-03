@@ -8,7 +8,7 @@ BuildRequires: perl(DBD/SQLite.pm) perl-podlators
 Name:           perl-DateTime-Format-SQLite 
 Summary:        Parse and format SQLite dates and times 
 Version:        0.11
-Release:        alt2_20
+Release:        alt2_21
 License:        GPL+ or Artistic 
 Source0:        http://search.cpan.org/CPAN/authors/id/C/CF/CFAERBER/DateTime-Format-SQLite-%{version}.tar.gz
 URL:            http://search.cpan.org/dist/DateTime-Format-SQLite/
@@ -26,9 +26,10 @@ BuildRequires:  perl(warnings.pm)
 BuildRequires:  perl(DateTime.pm)
 BuildRequires:  perl(Test/More.pm)
 Requires:       perl(DateTime/Format/Builder.pm) >= 0.600
+
+
+Source44: import.info
 %filter_from_requires /^perl\\(DateTime.Format.Builder.pm\\)$/d
-
-
 
 %description
 This module understands the formats used by SQLite for its 'date',
@@ -61,6 +62,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt2_21
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt2_20
 - update to new release by fcimport
 
