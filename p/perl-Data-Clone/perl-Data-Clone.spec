@@ -6,7 +6,7 @@ BuildRequires: perl(CPAN.pm) perl(Clone.pm) perl(JSON.pm) perl(Module/Build.pm) 
 %define _localstatedir %{_var}
 Name:           perl-Data-Clone
 Version:        0.004
-Release:        alt1_8
+Release:        alt1_9
 Summary:        Polymorphic data cloning
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -33,6 +33,7 @@ BuildRequires:  perl(XSLoader.pm)
 Requires:       perl(Exporter.pm)
 
 
+Source44: import.info
 
 %description
 Data::Clone does data cloning, i.e. copies things recursively. This is
@@ -67,6 +68,9 @@ make test
 %{perl_vendor_archlib}/Data*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1_9
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1_8
 - update to new release by fcimport
 
