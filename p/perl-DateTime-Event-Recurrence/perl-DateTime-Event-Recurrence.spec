@@ -1,19 +1,21 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-DateTime-Event-Recurrence
 Version:        0.19
-Release:        alt1
+Release:        alt1_2
 Summary:        DateTime::Set extension for create basic recurrence sets
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            http://search.cpan.org/dist/DateTime-Event-Recurrence/
 Source0:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Event-Recurrence-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
 # Runtimea
@@ -28,7 +30,7 @@ BuildRequires:  perl(vars.pm)
 BuildRequires:  perl(DateTime/SpanSet.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(warnings.pm)
-Requires:       perl(DateTime.pm) >= 0.27
+Requires:       perl(DateTime.pm) >= 0.270
 Requires:       perl(DateTime/Set.pm) >= 0.360.0
 
 
@@ -48,7 +50,7 @@ DateTime::Set objects for various recurrences, such as "once a month" or
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -63,6 +65,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_2
+- update to new release by fcimport
+
 * Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - automated CPAN update
 
