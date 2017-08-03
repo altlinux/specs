@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Carp-Always
 Version:        0.13
-Release:        alt2_9
+Release:        alt2_10
 Summary:        Warn and die in Perl noisily with stack backtraces
 License:        GPL+ or Artistic
 
@@ -26,6 +26,7 @@ BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 
 
+Source44: import.info
 
 %description
 This module is meant as a debugging aid. It can be used to make a script
@@ -61,6 +62,9 @@ make test
 
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2_10
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2_9
 - update to new release by fcimport
 
