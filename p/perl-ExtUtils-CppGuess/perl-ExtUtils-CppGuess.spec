@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           perl-ExtUtils-CppGuess
 Version:        0.11
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Guess C++ compiler and flags
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -25,6 +25,7 @@ BuildRequires:  perl(File/Path.pm)
 BuildRequires:  perl(File/Spec/Functions.pm)
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Test/More.pm)
+Source44: import.info
 
 %description
 ExtUtils::CppGuess attempts to guess the system's C++ compiler that is
@@ -53,6 +54,9 @@ make test
 %{perl_vendor_privlib}/ExtUtils*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_5
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_4
 - update to new release by fcimport
 
