@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Set-Infinite
 Version:        0.65
-Release:        alt2_19
+Release:        alt2_20
 Summary:        Sets of intervals
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Set-Infinite/
@@ -31,6 +31,7 @@ BuildRequires:  perl(vars.pm)
 # Tests only
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(warnings.pm)
+Source44: import.info
 
 %description
 Set::Infinite is a Set Theory module for infinite sets.
@@ -55,6 +56,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.65-alt2_20
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.65-alt2_19
 - update to new release by fcimport
 
