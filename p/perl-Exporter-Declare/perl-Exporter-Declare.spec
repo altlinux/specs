@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Exporter-Declare
 Version:        0.114
-Release:        alt2_4
+Release:        alt2_5
 Summary:        Exporting done right
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -31,10 +31,11 @@ BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Simple.pm)
 BuildRequires:  perl(warnings.pm)
 Requires:       perl(Meta/Builder.pm) >= 0.003
-%filter_from_requires /^perl\\(Meta.Builder.pm\\)\s*$/d
 
 # Remove underspecified dependencies
 
+Source44: import.info
+%filter_from_requires /^perl\\(Meta.Builder.pm\\)\s*$/d
 
 
 %description
@@ -63,6 +64,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.114-alt2_5
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.114-alt2_4
 - update to new release by fcimport
 
