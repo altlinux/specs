@@ -1,16 +1,23 @@
+%def_with nas
+%def_with pulse
+%def_with sdl
+
+# list of audio output modules
+%define mods alsa oss %{?_with_nas:nas} %{?_with_pulse:pulse} %{?_with_sdl:sdl}
+
 Name: mpg123
 Version: 1.25.4
-Release: alt1
+Release: alt1.2
 
 Summary: MPEG audio player
 Group: Sound
-License: distributable
+License: LGPLv2.1
 Url: http://www.%name.org
 
 Source: http://downloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source1: mp3license
 
-ExclusiveArch: %ix86 x86_64 %arm
+ExclusiveArch: %ix86 x86_64 %arm e2k
 
 Requires: libmpg123 = %version-%release
 
@@ -24,9 +31,10 @@ Requires: libmpg123 = %version-%release
 %endif
 %endif
 
-BuildRequires: libalsa-devel libaudio-devel
-BuildRequires: libSDL_sound-devel libSDL-devel
-BuildRequires: libpulseaudio-devel
+BuildRequires: libalsa-devel
+%{?_with_nas:BuildRequires: libaudio-devel}
+%{?_with_sdl:BuildRequires: libSDL_sound-devel libSDL-devel}
+%{?_with_pulse:BuildRequires: libpulseaudio-devel}
 
 %description
 Mpg123 is a fast, free and portable MPEG audio player for Unix.
@@ -63,7 +71,8 @@ install -p -m644 %SOURCE1 .
 %build
 %autoreconf
 %add_optflags %optflags_shared
-%configure --with-audio='alsa oss sdl pulse' \
+%configure \
+	--with-audio="%mods" \
 	--with-optimization=0 \
 	--enable-network=yes \
 	--with-cpu=%{wcpu}
@@ -100,6 +109,13 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Tue Aug 01 2017 Yuri N. Sedunov <aris@altlinux.org> 1.25.4-alt1.2
+- fixed license tag
+
+* Tue Aug 01 2017 Michael Shigorin <mike@altlinux.org> 1.25.4-alt1.1
+- BOOTSTRAP: introduce nas, pulse, sdl knobs (on by default)
+- E2K: added to ExclusiveArch:
+
 * Mon Jul 31 2017 Yuri N. Sedunov <aris@altlinux.org> 1.25.4-alt1
 - 1.25.4
 
