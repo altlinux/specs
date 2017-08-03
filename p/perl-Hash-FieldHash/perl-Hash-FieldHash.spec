@@ -6,12 +6,13 @@ BuildRequires: perl(Hash/Util/FieldHash/Compat.pm) perl(Mouse.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Hash-FieldHash
 Version:        0.15
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Lightweight field hash implementation
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/Hash-FieldHash/
 Source0:        http://www.cpan.org/modules/by-module/Hash/Hash-FieldHash-%{version}.tar.gz
+Patch0:         Hash-FieldHash-0.15-Fix-building-on-Perl-without-dot-in-INC.patch
 # Module Build
 BuildRequires:  coreutils
 BuildRequires:  findutils
@@ -51,6 +52,7 @@ BuildRequires:  perl(Test/Synopsis.pm)
 
 # Avoid provides from private shared objects
 
+Source44: import.info
 
 %description
 Hash::FieldHash provides the field hash mechanism, which supports the inside-
@@ -58,6 +60,7 @@ out technique.
 
 %prep
 %setup -q -n Hash-FieldHash-%{version}
+%patch0 -p1
 
 %build
 RELEASE_TESTING=1 perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor --optimize="%{optflags}"
@@ -82,6 +85,9 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 %{perl_vendor_archlib}/Hash/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_3
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_1
 - update to new release by fcimport
 
