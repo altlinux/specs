@@ -7,10 +7,12 @@
 %define _gtk_docdir %_datadir/gtk-doc/html
 
 %def_enable gtk_doc
+%def_enable jack
+%def_enable pulse
 
 Name: %_name-good%api_ver
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: A set of GStreamer plugins considered good
 Group: System/Libraries
@@ -22,9 +24,11 @@ Patch: gst-plugins-good-0.11.94-alt-intltool.patch
 
 BuildRequires: bzlib-devel gcc-c++ gst-plugins%api_ver-devel gtk-doc intltool libSM-devel libXdamage-devel libXext-devel libXfixes-devel
 BuildRequires: libXv-devel libavc1394-devel libcairo-devel libdv-devel libflac-devel libiec61883-devel libjpeg-devel
-BuildRequires: liboil-devel libpulseaudio-devel libshout2-devel libsoup-devel libtag-devel libv4l-devel libwavpack-devel
+BuildRequires: liboil-devel libshout2-devel libsoup-devel libtag-devel libv4l-devel libwavpack-devel
 BuildRequires: python-module-PyXML python-modules-email python-modules-encodings liborc-devel orc libgdk-pixbuf-devel
-BuildRequires: libjack-devel libpng-devel libcairo-gobject-devel libgudev-devel libspeex-devel zlib-devel libvpx-devel
+BuildRequires: libpng-devel libcairo-gobject-devel libgudev-devel libspeex-devel zlib-devel libvpx-devel
+%{?_enable_jack:BuildRequires: libjack-devel}
+%{?_enable_pulse:BuildRequires: libpulseaudio-devel}
 
 %description
 GStreamer Good Plug-ins is is a set of plug-ins that the developers consider
@@ -72,6 +76,9 @@ This package contains development documentation for GStreamer Good Plugins
 %_gtk_docdir/*
 
 %changelog
+* Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 1.12.2-alt2
+- BOOTSTRAP: introduce jack, pulse knobs (on by default)
+
 * Fri Jul 14 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1
 - 1.12.2
 
