@@ -3,16 +3,16 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.2
-Release: alt1.dev0.git10150605.1
+Version: 4.2.0
+Release: alt1
 Summary: Zope 3 Template Application Languate (TAL)
 License: ZPL
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.tal/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/zopefoundation/zope.tal.git
 Source: %name-%version.tar
+Patch1: %oname-%version-alt-fix-test-for-unicode-for-python3.patch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-zope.testing
@@ -90,6 +90,7 @@ This package contains tests for Zope 3 Template Application Languate.
 
 %prep
 %setup
+%patch1 -p1
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -164,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.0-alt1
+- Updated to upstream version 4.2.0.
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.2-alt1.dev0.git10150605.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
