@@ -7,7 +7,7 @@ BuildRequires: perl(Test/Run/CmdLine/Iface.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-String-Random
 Version:        0.29
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Perl module to generate random strings based on a pattern
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/String-Random/
@@ -25,6 +25,7 @@ BuildRequires:  perl(vars.pm)
 BuildRequires:  perl(warnings.pm)
 
 
+Source44: import.info
 
 %description
 This module makes it trivial to generate random strings.
@@ -56,6 +57,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1_6
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1_5
 - update to new release by fcimport
 
