@@ -7,8 +7,8 @@
 %def_with python3
 
 Name: openvswitch
-Version: 2.7.1
-Release: alt1
+Version: 2.7.2
+Release: alt1%ubt
 
 Summary: An open source, production quality, multilayer virtual switch
 License: ASL 2.0 and LGPLv2+ and SISSL
@@ -28,13 +28,14 @@ Source10: setup-ovsbr
 Source11: %name.service
 Source12: %name.tmpfiles
 
-Patch1: %name-%version-%release.patch
+Patch1: %name-%version-alt.patch
 Patch2: openvswitch-2.0_alt_fix_function.patch
 Patch3: openvswitch-2.5.0-fix-link.patch
 
 Obsoletes: %name-controller <= %name-%version
 Obsoletes: %name-ovsdbmonitor <= %name-%version
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: graphviz libssl-devel openssl groff
 BuildRequires: libcap-ng-devel
 BuildRequires: glibc-kernheaders
@@ -511,6 +512,9 @@ fi
 %endif
 
 %changelog
+* Thu Aug 03 2017 Anton Farygin <rider@altlinux.ru> 2.7.2-alt1%ubt
+- 2.7.2
+
 * Thu Jul 13 2017 Anton Farygin <rider@altlinux.ru> 2.7.1-alt1
 - 2.7.1 with security fixes:
   + CVE-2017-9214 Buffer overrread in ofputil_pull_queue_get_config_reply10().
