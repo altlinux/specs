@@ -2,7 +2,7 @@
 
 Name: libmirage
 Version: 3.1.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: A CD-ROM image access library
 License: GPLv2+
@@ -43,6 +43,7 @@ Summary: A CD-ROM image access library
 Group: System/Libraries
 Provides: %name = %version
 Obsoletes: %name
+Conflicts: %{name}10
 
 %description -n %name%soversion
 This is libMirage library, a CD-ROM image access library, and part of the 
@@ -105,6 +106,9 @@ popd
 %doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Thu Aug 03 2017 Nazarov Denis <nenderus@altlinux.org> 3.1.0-alt2%ubt
+- Add conflicts on libmirage10 (ALT #33724)
+
 * Wed Aug 02 2017 Nazarov Denis <nenderus@altlinux.org> 3.1.0-alt1%ubt
 - Version 3.1.0
 
