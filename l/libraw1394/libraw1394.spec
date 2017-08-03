@@ -1,9 +1,10 @@
 %def_disable static
+%def_with doc
 %define abiversion 11
 
 Name: libraw1394
 Version: 2.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: FireWire interface library
 
@@ -19,9 +20,11 @@ Patch1: libraw1394-0.10.0-alt-doc.patch
 BuildPreReq: glibc-devel-static
 %endif
 
+%if_with doc
 # manually removed: gcc-g77 libg2c-devel
 # Automatically added by buildreq on Mon Jul 06 2009
 BuildRequires: docbook-utils w3c-markup-validator-libs
+%endif
 
 %description
 libraw1394 is the only supported interface to the kernel side raw1394 of
@@ -105,12 +108,16 @@ This package contains the static libraries.
 
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
+%if_with doc
 make -C doc htmldoc || echo "Fix me if possible"
+%endif
 
 %install
 %makeinstall_std
 
+%if_with doc
 mv doc/%name doc/html
+%endif
 
 # remove non-packaged files
 rm -f %buildroot%_libdir/*.la
@@ -123,7 +130,9 @@ rm -f %buildroot%_libdir/*.la
 %_includedir/%name/
 %_libdir/*.so
 %_pkgconfigdir/*
+%if_with doc
 %doc doc/html
+%endif
 
 %files tools
 %_bindir/*
@@ -136,6 +145,9 @@ rm -f %buildroot%_libdir/*.la
 %endif
 
 %changelog
+* Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 2.1.0-alt1.1
+- BOOTSTRAP: introduce doc knob (on by default)
+
 * Mon Oct 22 2012 Fr. Br. George <george@altlinux.ru> 2.1.0-alt1
 - Autobuild version bump to 2.1.0
 
