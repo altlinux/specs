@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
@@ -6,34 +7,47 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 %define _localstatedir %{_var}
 Name:       perl-Text-Password-Pronounceable 
 Version:    0.30
-Release:    alt1_13
+Release:    alt1_15
 # lib/Text/Password/Pronounceable.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
-Group:      Development/Other
 Summary:    Generate pronounceable passwords 
 Source0:    http://search.cpan.org/CPAN/authors/id/T/TS/TSIBLEY/Text-Password-Pronounceable-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/Text-Password-Pronounceable
 BuildArch:  noarch
+BuildRequires: coreutils
+BuildRequires: perl
 BuildRequires: rpm-build-perl
+BuildRequires: perl(inc/Module/Install.pm)
+BuildRequires: perl(Module/Install/Metadata.pm)
+BuildRequires: perl(Module/Install/WriteAll.pm)
+BuildRequires: sed
+# Run-time:
 BuildRequires: perl(Carp.pm)
-BuildRequires: perl(ExtUtils/MakeMaker.pm)
+BuildRequires: perl(strict.pm)
+BuildRequires: perl(warnings.pm)
+# Tests:
 BuildRequires: perl(Test/More.pm)
+# Optional tests:
+BuildRequires: perl(Test/Pod.pm)
+BuildRequires: perl(Test/Pod/Coverage.pm)
+Source44: import.info
 
 %description
-This module generates pronuceable passwords, based on the English
+This module generates pronounceable passwords, based on the English
 digraphs by D. Edwards.
 
 %prep
 %setup -q -n Text-Password-Pronounceable-%{version}
+# Remove bundled modules
+rm -r ./inc/*
+sed -i -e '/^inc\//d' MANIFEST
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
+make pure_install DESTDIR=%{buildroot}
 # %{_fixperms} %{buildroot}/*
 
 %check
@@ -44,6 +58,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1_15
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1_13
 - update to new release by fcimport
 
