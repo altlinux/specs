@@ -1,3 +1,13 @@
+%def_enable ladspa
+%def_enable libdc1394
+%def_enable libkate
+%def_enable mjpegtools
+%def_enable opencv
+%def_enable timidity
+%def_enable vulkan
+%def_enable wayland
+%def_enable zbar
+
 %define _name gst-plugins
 %define api_ver 1.0
 %define ver_major 1.12
@@ -9,12 +19,12 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
 License: LGPL
-URL: http://gstreamer.freedesktop.org/
+Url: http://gstreamer.freedesktop.org/
 
 Requires: lib%_name%api_ver >= %ver_major
 Requires: gstreamer%api_ver >= %ver_major
@@ -25,23 +35,27 @@ Patch: gst-plugins-bad-0.11.94-alt-intltool.patch
 BuildRequires: gst-plugins%api_ver-devel gst-plugins%api_ver-gir-devel
 BuildRequires: bzlib-devel gcc-c++ gtk-doc intltool libSDL-devel libX11-devel
 BuildRequires: libalsa-devel libcdaudio-devel libdca-devel libdirac-devel libdvdnav-devel libexif-devel
-BuildRequires: libfaad-devel libgio-devel libgsm-devel libjasper-devel libmjpegtools-devel libmms-devel
+BuildRequires: libfaad-devel libgio-devel libgsm-devel libjasper-devel libmms-devel
+%{?_enable_mjpegtools:BuildRequires: libmjpegtools-devel}
 BuildRequires: libmpcdec-devel libneon-devel liboil-devel libsoundtouch-devel libssl-devel libmodplug-devel
-BuildRequires: libtimidity-devel libxvid-devel python-module-PyXML python-modules-email python-modules-encodings
-BuildRequires: timidity-instruments libcelt-devel libdc1394-devel libkate-devel libtiger-devel
+BuildRequires: libcelt-devel libxvid-devel python-module-PyXML python-modules-email python-modules-encodings
+%{?_enable_timidity:BuildRequires: libtimidity-devel timidity-instruments}
+%{?_enable_libkate:BuildRequires: libkate-devel libtiger-devel}
+%{?_enable_libdc1394:BuildRequires: libdc1394-devel}
 BuildRequires: libvpx-devel librtmp-devel liborc-devel orc libofa-devel libmusicbrainz-devel libass-devel
-BuildRequires: libzbar-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel wayland-protocols
+%{?_enable_wayland:BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel wayland-protocols}
+%{?_enable_zbar:BuildRequires: libzbar-devel}
 BuildRequires: libEGL-devel libwebp-devel libopenjpeg2.0-devel libbluez-devel
-BuildRequires: libfluidsynth-devel libdbus-devel libxml2-devel libgnutls-devel libvdpau-devel
+BuildRequires: libdbus-devel libxml2-devel libgnutls-devel libvdpau-devel
 BuildRequires: libsbc-devel libschroedinger-devel libusb-devel libgudev-devel libopus-devel
 BuildRequires: libcurl-devel libssh2-devel
 BuildRequires: libvo-amrwbenc-devel librsvg-devel libvo-aacenc-devel libgcrypt-devel
 BuildRequires: gobject-introspection-devel libgstreamer1.0-gir-devel
 BuildRequires: libvisual0.4-devel openexr-devel libx265-devel
 BuildRequires: libgtk+3-devel libclutter-devel
-BuildRequires: libopencv-devel
-BuildRequires: ladspa_sdk liblrdf-devel
-BuildRequires: vulkan-devel
+%{?_enable_opencv:BuildRequires: libopencv-devel}
+%{?_enable_ladspa:BuildRequires: ladspa_sdk liblrdf-devel libfluidsynth-devel}
+%{?_enable_vulkan:BuildRequires: vulkan-devel}
 
 %description
 GStreamer Bad Plug-ins is a set of plug-ins that aren't up to par
@@ -76,8 +90,10 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %build
 %autoreconf
 
+%if_enabled opencv
 # broken opencv.pc
 %define opencv_libs %(pkg-config --libs opencv |sed -e 's|%_libdir/lib|-l|g' |sed -e 's|\.so||g')
+%endif
 
 %configure \
     --disable-examples \
@@ -85,7 +101,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
     %{subst_enable gtk_doc} \
     --disable-static \
     --with-html-dir=%_gtk_docdir \
-    OPENCV_LIBS="%opencv_libs"
+    %{?_enable_opencv:OPENCV_LIBS="%opencv_libs"}
 
 %make_build
 
@@ -108,8 +124,10 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_typelibdir/GstPlayer-%api_ver.typelib
 %_datadir/gstreamer-%api_ver/presets/GstVoAmrwbEnc.prs
 %_datadir/gstreamer-%api_ver/presets/GstFreeverb.prs
+%if_enabled opencv
 %_datadir/gst-plugins-bad/%api_ver/opencv_haarcascades/fist.xml
 %_datadir/gst-plugins-bad/%api_ver/opencv_haarcascades/palm.xml
+%endif
 #%_datadir/gstreamer-%api_ver/presets/GstVP8Enc.prs
 #%_datadir/glib-2.0/schemas/*.xml
 
@@ -132,6 +150,11 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Thu Aug 03 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt2
+- mike@:
+  BOOTSTRAP: ladspa, libdc1394, libkate, mjpegtools, opencv,
+  timidity, vulkan, wayland, zbar knobs (on by default)
+
 * Fri Jul 14 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1
 - 1.12.2
 
@@ -287,4 +310,5 @@ This package contains documentation for GStreamer Bad Plug-ins.
 
 * Sat Sep 15 2012 Yuri N. Sedunov <aris@altlinux.org> 0.11.94-alt1
 - first build for Sisyphus
+
 
