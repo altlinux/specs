@@ -6,7 +6,7 @@ BuildRequires: perl(Exporter.pm) perl(Fcntl.pm) perl(FindBin.pm) perl(Pod/Usage.
 %define _localstatedir %{_var}
 Name:           perl-App-Daemon
 Version:        0.22
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Start an Application as a Daemon
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -22,6 +22,7 @@ BuildRequires:  perl(Sysadm/Install.pm)
 BuildRequires:  perl(Test/More.pm)
 
 
+Source44: import.info
 
 %description
 App::Daemon helps running an application as a daemon.
@@ -47,6 +48,9 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1_6
 - update to new release by fcimport
 
