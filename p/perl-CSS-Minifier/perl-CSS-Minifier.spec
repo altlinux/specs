@@ -6,7 +6,7 @@ BuildRequires: perl(Exporter.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:       perl-CSS-Minifier 
 Version:    0.01 
-Release:    alt2_22
+Release:    alt2_23
 # lib/CSS/Minifier.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Group:      Development/Other
@@ -21,6 +21,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(Test/More.pm)
 
 
+Source44: import.info
 
 %description
 This module removes unnecessary whitespace from CSS. The primary
@@ -58,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_23
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_22
 - update to new release by fcimport
 
