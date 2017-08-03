@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-PerlIO-Layers
 Version:        0.011
-Release:        alt1_9
+Release:        alt1_10
 Summary:        Querying your file handle capabilities
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -32,6 +32,7 @@ BuildRequires:  perl(IPC/Open3.pm)
 BuildRequires:  perl(Test/More.pm)
 
 
+Source44: import.info
 
 %description
 Perl file handles are implemented as a stack of layers, with the bottom-most
@@ -60,6 +61,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/PerlIO*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_10
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_9
 - update to new release by fcimport
 
