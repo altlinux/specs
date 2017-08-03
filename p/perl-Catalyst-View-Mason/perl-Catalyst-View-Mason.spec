@@ -7,7 +7,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(Fcntl.pm) perl(Fi
 %define _localstatedir %{_var}
 Name:           perl-Catalyst-View-Mason
 Version:        0.19
-Release:        alt1_7
+Release:        alt1_8
 Summary:        Mason View Class
 License:        GPL+ or Artistic
 
@@ -32,6 +32,7 @@ BuildRequires:  perl(Test/More.pm)
 Requires:       perl(Catalyst.pm) >= 5.500
 Requires:       perl(Catalyst/View.pm)
 Requires:       perl(parent.pm)
+Source44: import.info
 
 %description
 Want to use a Mason component in your Catalyst views? No problem!
@@ -60,6 +61,9 @@ make test
 %{perl_vendor_privlib}/Catalyst*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_8
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_7
 - update to new release by fcimport
 
