@@ -1,10 +1,10 @@
+Group: Sound
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           gt
 Version:        0.4
-Release:        alt1_23
+Release:        alt1_24
 Summary:        Modified Timidity which supportes enhanced gus format patches
-Group:          Sound
 License:        GPLv2+
 URL:            http://alsa.opensrc.org/GusSoundfont
 # This is ftp://ling.lll.hawaii.edu/pub/greg/gt-0.4.tar.gz
@@ -21,6 +21,7 @@ Patch5:         gt-0.4-unsf-bigendian-fix.patch
 Patch6:         gt-0.4-unsf-tremolo.patch
 BuildRequires:  libalsa-devel libvorbis-devel flex
 Requires:       timidity-instruments
+Source44: import.info
 
 %description
 Modified timidity midi player which supportes enhanced gus format patches and
@@ -28,8 +29,8 @@ surround audio output.
 
 
 %package -n soundfont-utils
+Group: Sound
 Summary:        Utilities for converting from / to various soundfont formats
-Group:          Sound
 
 %description -n soundfont-utils
 Utilities for converting from / to various soundfont formats and a midi file
@@ -51,11 +52,11 @@ cp -p src/README README.timidity
 %build
 export CFLAGS="$RPM_OPT_FLAGS -fsigned-char"
 %configure
-%make_build
+make
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 # rename somewhat genericly named dim to midi-disasm
 mv $RPM_BUILD_ROOT%{_bindir}/dim $RPM_BUILD_ROOT%{_bindir}/midi-disasm
 mv $RPM_BUILD_ROOT%{_mandir}/man1/dim.1 \
@@ -78,6 +79,9 @@ touch -r utils/midifile.c $RPM_BUILD_ROOT%{_mandir}/man1/midi-disasm.1
 
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_24
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_23
 - update to new release by fcimport
 
