@@ -6,7 +6,7 @@ BuildRequires: perl(Exporter.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Regexp-IPv6
 Version:        0.03
-Release:        alt1_17
+Release:        alt1_18
 Summary:        Regular expression for IPv6 addresses
 License:        GPLv2+ or Artistic
 Group:          Development/Other
@@ -16,6 +16,7 @@ BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/More.pm)
+Source44: import.info
 
 %description
 This module exports the $IPv6_re regular expression that matches any valid
@@ -43,6 +44,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_18
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_17
 - update to new release by fcimport
 
