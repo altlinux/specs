@@ -6,7 +6,7 @@ BuildRequires: gcc-c++ perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Modu
 %define _localstatedir %{_var}
 Name:           perl-Syntax-Highlight-Engine-Kate
 Version:        0.10
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Port to Perl of the syntax highlight engine of the Kate text editor
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -48,6 +48,7 @@ BuildRequires:  perl(Time/HiRes.pm)
 # Optional tests:
 # Test::Pod 1.00 not used
 Requires:       perl(base.pm)
+Source44: import.info
 
 %description
 Syntax::Highlight::Engine::Kate is a port to perl of the syntax highlight
@@ -77,6 +78,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_5
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_4
 - update to new release by fcimport
 
