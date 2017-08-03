@@ -7,7 +7,7 @@ BuildRequires: perl(Cwd.pm) perl(Data/Dumper.pm) perl(File/Spec/Functions.pm) pe
 %define _localstatedir %{_var}
 Name:           perl-MooseX-Daemonize
 Version:        0.21
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Role for daemonizing your Moose based application
 License:        GPL+ or Artistic
 
@@ -28,6 +28,7 @@ BuildRequires:  perl(Test/Moose.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 
 
+Source44: import.info
 
 %description
 Often you want to write a persistent daemon that has a pid file, and
@@ -55,6 +56,9 @@ roles as an infrastructure to do that.
 %{perl_vendor_privlib}/Test*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_4
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_3
 - update to new release by fcimport
 
