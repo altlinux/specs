@@ -1,46 +1,64 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(base.pm) perl-podlators
+BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:       perl-DBIx-Class-DynamicDefault 
 Version:    0.04
-Release:    alt2_12
+Release:    alt2_16
 # lib/DBIx/Class/DynamicDefault.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
-Group:      Development/Other
 Summary:    Automatically set and update fields 
-Source:     http://search.cpan.org/CPAN/authors/id/M/MS/MSTROUT/DBIx-Class-DynamicDefault-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/DBIx-Class-DynamicDefault
+Source:     http://search.cpan.org/CPAN/authors/id/M/MS/MSTROUT/DBIx-Class-DynamicDefault-%{version}.tar.gz
 BuildArch:  noarch
+BuildRequires:  coreutils
+BuildRequires:  perl
+BuildRequires:  rpm-build-perl
+BuildRequires:  perl(inc/Module/Install.pm)
+BuildRequires:  perl(Module/Install/ExtraTests.pm)
+BuildRequires:  perl(Module/Install/Makefile.pm)
+BuildRequires:  perl(Module/Install/Metadata.pm)
+BuildRequires:  perl(Module/Install/WriteAll.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+BuildRequires:  sed
+# Run-time:
+BuildRequires:  perl(base.pm)
+BuildRequires:  perl(DBIx/Class.pm)
+# Tests:
+BuildRequires:  perl(DBICx/TestDatabase.pm)
+BuildRequires:  perl(DBIx/Class/Schema.pm)
+BuildRequires:  perl(FindBin.pm)
+BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(parent.pm)
+BuildRequires:  perl(Test/More.pm)
+Requires:       perl(DBIx/Class.pm) >= 0.081.270
 
-BuildRequires: rpm-build-perl
-BuildRequires: perl(DBICx/TestDatabase.pm)
-BuildRequires: perl(DBIx/Class.pm)
-BuildRequires: perl(ExtUtils/MakeMaker.pm)
-BuildRequires: perl(parent.pm)
-BuildRequires: perl(Test/More.pm)
 
-Requires: perl(DBIx/Class.pm)
+# Remove under-specified dependencies
 
-
+Source44: import.info
+%filter_from_requires /^perl\\(DBIx.Class.pm\\)$/d
 
 %description
-Automatically set and update fields with values calculated at runtime.
+Automatically set and update fields with values calculated at run time.
 
 
 %prep
 %setup -q -n DBIx-Class-DynamicDefault-%{version}
+# Remove bundled libraries
+rm -r inc
+sed -i -e '/^inc\// d' MANIFEST
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
-
 # %{_fixperms} %{buildroot}/*
 
 %check
@@ -51,6 +69,9 @@ make test
 %{perl_vendor_privlib}/DBIx/Class/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_16
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_12
 - update to new release by fcimport
 
