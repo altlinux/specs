@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Gearman-Server
 Version:        1.130.1
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Function call router and load balancer
 License:        GPL+ or Artistic
 Group:          System/Servers
@@ -44,9 +44,10 @@ BuildRequires:  perl(warnings.pm)
 # Tests:
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Script.pm)
+
+
+Source44: import.info
 %filter_from_requires /^perl\\(Danga.Socket.pm\\)$/d
-
-
 
 %description
 You run a Gearman server (or more likely, many of them for both high-
@@ -80,6 +81,9 @@ make test
 %{_mandir}/man1/gearmand.*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.130.1-alt1_4
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.130.1-alt1_3
 - update to new release by fcimport
 
