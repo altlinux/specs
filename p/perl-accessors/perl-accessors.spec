@@ -6,7 +6,7 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-accessors
 Version:        1.01
-Release:        alt1_21
+Release:        alt1_22
 Summary:        Create accessor methods in caller's package
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -17,6 +17,7 @@ BuildRequires:  perl
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Test/More.pm)
+Source44: import.info
 
 %description
 The accessors pragma lets you create simple accessors at compile-time.
@@ -46,6 +47,9 @@ find $RPM_BUILD_ROOT%{perl_vendor_privlib} -name *.pm | xargs chmod a-x
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_22
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_21
 - update to new release by fcimport
 
