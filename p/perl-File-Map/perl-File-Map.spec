@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-File-Map
 Version:        0.64
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Memory mapping made simple and safe
 License:        GPL+ or Artistic
 
@@ -47,6 +47,7 @@ BuildRequires:  perl(Time/HiRes.pm)
 BuildRequires:  perl(utf8.pm)
 
 
+Source44: import.info
 
 %description
 File::Map maps files or anonymous memory into perl variables.
@@ -82,6 +83,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1_5
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1_4
 - update to new release by fcimport
 
