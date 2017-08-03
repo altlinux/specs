@@ -6,7 +6,7 @@ BuildRequires: perl(DynaLoader.pm) perl(Encode.pm) perl(Exporter.pm) perl(utf8.p
 %define _localstatedir %{_var}
 Name:           perl-String-Similarity
 Version:        1.04
-Release:        alt4_18
+Release:        alt4_19
 Summary:        Calculates the similarity of two strings
 License:        GPLv2+
 Group:          Development/Other
@@ -17,6 +17,7 @@ BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 
 
+Source44: import.info
 
 %description
 The similarity function calculates the similarity index of its two arguments. 
@@ -49,6 +50,9 @@ make test
 %{perl_vendor_archlib}/String*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.04-alt4_19
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.04-alt4_18
 - update to new release by fcimport
 
