@@ -1,14 +1,17 @@
 %define version 1.0.2
-%define release alt1
+%define release alt2
 %define oname south
 %setup_python_module %oname
 %add_python_req_skip cx_Oracle
+%add_python_req_skip django.db.backends.creation
+%add_python3_req_skip django.db.backends.creation
 
 %def_with python3
+%def_disable tests
 
 Name: python-module-%oname
-Version:%version
-Release: alt1.1.1
+Version: %version
+Release: %release
 BuildArch: noarch
 
 Summary: Migrations for Django
@@ -21,16 +24,11 @@ Url: http://south.aeracode.org
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-psycopg2 python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-psycopg2 python3-module-pytest python3-module-setuptools python3-module-yaml
-BuildRequires: python-module-alabaster python-module-django python-module-docutils python-module-html5lib python-module-objects.inv python-module-setuptools-tests python3-module-django python3-module-setuptools-tests rpm-build-python3 time
-
-#BuildPreReq: python-module-sphinx-devel python-module-setuptools-tests
-#BuildPreReq: python-module-django
+BuildRequires: time python-module-alabaster python-module-django python-module-docutils python-module-html5lib
+BuildRequires: python-module-objects.inv python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-django
+BuildRequires: python3-module-django python3-module-setuptools-tests
 %endif
 
 %description
@@ -122,12 +120,14 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
+%if_enabled tests
 %check
 python setup.py test
 %if_with python3
 pushd ../python3
 python3 setup.py test
 popd
+%endif
 %endif
 
 %files
@@ -164,6 +164,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.2-alt2
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.2-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
