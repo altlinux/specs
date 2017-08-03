@@ -1,5 +1,5 @@
 Name: dlm
-Version: 4.0.5
+Version: 4.0.6
 Release: alt1
 Summary: dlm control daemon and tool
 License: GPLv2 and GPLv2+ and LGPLv2+
@@ -9,7 +9,8 @@ URL: https://fedorahosted.org/cluster
 Requires: corosync2
 
 Source0: %name-%version.tar.gz
-Patch0: dlm-4.0.5-alt.patch
+Patch0: 0001-dlm_controld-libsystemd-broke-itself.patch
+Patch1: dlm-4.0.5-alt.patch
 
 BuildRequires: libpacemaker-devel libsystemd-devel
 
@@ -36,6 +37,7 @@ developing applications that use %name.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %make
@@ -46,17 +48,16 @@ developing applications that use %name.
 %make -C fence DESTDIR=%buildroot install
 
 install -Dm 0644 init/dlm.service %buildroot%_unitdir/dlm.service
-install -Dm 0644 init/dlm.sysconfig %buildroot/etc/sysconfig/dlm
+install -Dm 0644 init/dlm.sysconfig %buildroot%_sysconfdir/sysconfig/dlm
 
-%post
-%post_service dlm
-
-%preun
-%preun_service dlm
+mkdir -p %buildroot%_sysconfdir/dlm
+touch %buildroot%_sysconfdir/dlm/dlm.conf
 
 %files
 %doc README.license
 %config(noreplace) %_sysconfdir/sysconfig/dlm
+%dir %_sysconfdir/dlm
+%ghost %_sysconfdir/dlm/dlm.conf
 %_unitdir/dlm.service
 %_sbindir/dlm_controld
 %_sbindir/dlm_tool
@@ -75,6 +76,9 @@ install -Dm 0644 init/dlm.sysconfig %buildroot/etc/sysconfig/dlm
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Aug 02 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.0.6-alt1
+- 4.0.6
+
 * Wed Sep 14 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.5-alt1
 - 4.0.5
 
