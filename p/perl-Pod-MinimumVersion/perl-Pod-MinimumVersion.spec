@@ -6,7 +6,7 @@ BuildRequires: perl(Pod/Simple/HTML.pm) perl(Smart/Comments.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Pod-MinimumVersion
 Version:        50
-Release:        alt3_17
+Release:        alt3_18
 Summary:        Perl version for POD directives used
 License:        GPLv3+
 Group:          Development/Other
@@ -39,6 +39,7 @@ BuildRequires:  perl(Test.pm)
 Requires:       perl(IO/String.pm) >= 1.020
 # This module has been divided from perl-Perl-Critic-Pulp
 Conflicts:      perl-Perl-Critic-Pulp < 49
+Source44: import.info
 
 %description
 Pod::MinimumVersion parses the POD in a Perl script, module, or document,
@@ -68,6 +69,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 50-alt3_18
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 50-alt3_17
 - update to new release by fcimport
 
