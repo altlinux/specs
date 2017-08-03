@@ -1,14 +1,18 @@
+%def_with opencv
+
 %define bname frei0r
 %define major_ver 1
 %define minor_ver 6
 
 Name: %bname-plugins
 Version: %major_ver.%minor_ver.1
-Release: alt1
+Release: alt1.1
+
 Summary: Frei0r - a minimalistic plugin API for video effects
 License: %lgpl2plus
 Group: Video
-URL: https://frei0r.dyne.org
+
+Url: https://frei0r.dyne.org
 # git https://github.com/dyne/frei0r.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -17,9 +21,9 @@ Packager: Alexey Shabalin <shaba@altlinux.ru>
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: gcc-c++
 BuildRequires: libgavl-devel >= 0.2.3
-BuildRequires: libopencv-devel
 BuildRequires: doxygen fonts-ttf-dejavu graphviz
 BuildRequires: libcairo-devel >= 1.0.0
+%{?_with_opencv:BuildRequires: libopencv-devel}
 
 %description
 It is a minimalistic plugin API for video sources and filters. The behaviour of
@@ -62,18 +66,20 @@ mkdir -p m4
 %configure --disable-static
 
 # workaround cvconfig.h
-/bin/ln -s -- config.h include/cvconfig.h
+ln -s config.h include/cvconfig.h
 
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %dir %_libdir/%bname-%major_ver
 %_libdir/%bname-%major_ver/*.so
+%if_with opencv
 %exclude %_libdir/%bname-%major_ver/facebl0r.so
 %exclude %_libdir/%bname-%major_ver/facedetect.so
+%endif
 
 %files -n frei0r-devel
 %_includedir/frei0r.h
@@ -82,11 +88,17 @@ mkdir -p m4
 %files -n frei0r-devel-doc
 %_defaultdocdir/%name/*
 
+%if_with opencv
 %files facedetect
 %_libdir/%bname-%major_ver/facebl0r.so
 %_libdir/%bname-%major_ver/facedetect.so
+%endif
 
 %changelog
+* Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 1.6.1-alt1.1
+- BOOTSTRAP: introduce opencv knob (on by default)
+- minor spec cleanup
+
 * Tue Jun 20 2017 Alexey Shabalin <shaba@altlinux.ru> 1.6.1-alt1
 - 1.6.1
 
