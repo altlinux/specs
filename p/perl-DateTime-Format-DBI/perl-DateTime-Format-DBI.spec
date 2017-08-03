@@ -6,7 +6,7 @@ BuildRequires: perl(Module/Build.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-DBI
 Version:        0.041
-Release:        alt1_8
+Release:        alt1_9
 Summary:        Find a parser class for a database connection
 License:        GPL+ or Artistic 
 Group:          Development/Other
@@ -32,6 +32,7 @@ BuildRequires:  perl(warnings.pm)
 Requires:       perl(DateTime/Format/MySQL.pm)
 Requires:       perl(DateTime/Format/Pg.pm)
 Requires:       perl(DateTime/Format/DB2.pm)
+Source44: import.info
 
 %description
 This module finds a DateTime::Format::* class that is suitable for the use
@@ -64,6 +65,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.041-alt1_9
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.041-alt1_8
 - update to new release by fcimport
 
