@@ -6,7 +6,7 @@ BuildRequires: perl(threads.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Tie-RefHash-Weak
 Version:	0.09
-Release:	alt3_22
+Release:	alt3_23
 Summary:	Tie::RefHash subclass with weakened references in the keys
 License:	GPL+ or Artistic
 Group:		Development/Other
@@ -22,6 +22,7 @@ BuildRequires:	perl(Task/Weaken.pm)
 BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Tie/RefHash.pm)
 BuildRequires:	perl(Variable/Magic.pm)
+Source44: import.info
 
 %description
 The Tie::RefHash module can be used to access hashes by reference. This is
@@ -47,6 +48,9 @@ make test
 %{perl_vendor_privlib}/Tie/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt3_23
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt3_22
 - update to new release by fcimport
 
