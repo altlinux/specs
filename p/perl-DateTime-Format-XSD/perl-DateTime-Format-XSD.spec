@@ -6,7 +6,7 @@ BuildRequires: perl(base.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-XSD
 Version:        0.2
-Release:        alt2_14
+Release:        alt2_15
 Summary:        Format DateTime according to xsd:dateTime
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -21,6 +21,7 @@ Requires:       perl(DateTime/Format/ISO8601.pm)
 
 #Not autodetermined.
 Provides:       perl(DateTime/Format/XSD.pm) = %{version}
+Source44: import.info
 
 %description
 XML Schema defines a usage profile which is a subset of the ISO8601
@@ -53,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_15
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_14
 - update to new release by fcimport
 
