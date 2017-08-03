@@ -1,6 +1,6 @@
 Name: alterator-service-functions
-Version: 2.0.3
-Release: alt2
+Version: 2.0.4
+Release: alt1
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
@@ -8,7 +8,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar.gz
 
-Summary: Helpers for common service management
+Summary: Helper functions for common service management
 License: GPLv3
 Group: System/Base
 
@@ -25,6 +25,10 @@ Helpers for common service management
 %_bindir/*
 
 %changelog
+* Thu Aug 03 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.4-alt1
+- Enable and disable services in all available subsystems.
+- Get rid of eval.
+
 * Tue Apr 25 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.3-alt2
 - Fix: Do not call SysV by accident when 'systemctl' fails.
 
