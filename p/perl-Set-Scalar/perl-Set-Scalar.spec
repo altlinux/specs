@@ -6,7 +6,7 @@ BuildRequires: perl(Exporter.pm) perl(overload.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Set-Scalar
 Version:        1.29
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Basic set operations
 Group:          Development/Other
 License:        GPL+ or Artistic
@@ -15,6 +15,7 @@ Source0:        http://search.cpan.org/CPAN/authors/id/D/DA/DAVIDO/Set-Scalar-%{
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+Source44: import.info
 
 %description
 %{summary}.
@@ -40,6 +41,9 @@ make test
 %{perl_vendor_privlib}/Set/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1_6
 - update to new release by fcimport
 
