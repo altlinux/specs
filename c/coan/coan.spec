@@ -1,25 +1,35 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/python /usr/bin/time
+BuildRequires: /usr/bin/python /usr/bin/time gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/pod2man /usr/bin/pod2html
-%define fedora 23
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		coan
 Version:	6.0.1
-Release:	alt1_8
+Release:	alt1_11
 Summary:	A command line tool for simplifying the pre-processor conditionals in source code
-Group:		Development/Tools
+Group:		Development/Other
 License:	BSD
 URL:		http://coan2.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/coan2/%{name}-%{version}.tar.gz
-BuildRequires:  gcc-c++
+BuildRequires:  gcc-c++-common
 BuildRequires:	python
 # For pod2man:
 BuildRequires:  perl-podlators
 # On Fedora 23 pod2html is included in the perl package, whereas in 24
 # and later it's split out into perl-Pod-Html.
 %if 0%{fedora} > 23
-BuildRequires:  perl-Pod-Html
+BuildRequires:  perl-devel
 %endif
+
+# Regression on other arches with F26 mass rebuild (big endian systems)
+# Temporarily exclude them
+# https://bugzilla.redhat.com/show_bug.cgi?id=1423293
+# checking for big-endian host... yes
+# RPM build errors:
+# configure: error: Sorry. Coan is buggy on big-endian systems
+ExcludeArch:	ppc64 s390x
 Source44: import.info
 
 
@@ -46,7 +56,7 @@ done
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 %check
 #some tests are broken in armv7hl - disable until upstream fixes the issue
@@ -65,6 +75,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 %{_mandir}/man1/%{name}.1.*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_11
+- update to new release by fcimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_8
 - update to new release by fcimport
 
