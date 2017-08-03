@@ -8,7 +8,7 @@ BuildRequires: perl(Encode/JP.pm)
 %define _localstatedir %{_var}
 Name:           perl-HTML-FormFu
 Version:        2.05
-Release:        alt1_2
+Release:        alt1_3
 Summary:        HTML Form Creation, Rendering and Validation Framework
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/HTML-FormFu/
@@ -94,6 +94,7 @@ Requires:       perl(YAML/XS.pm) >= 0.320
 %filter_from_requires /perl.Catalyst/d; /perl(default/d; /perl(model_config.pm./d;
 
 }
+Source44: import.info
 
 %description
 HTML::FormFu is a HTML form framework which aims to be as easy as possible
@@ -127,6 +128,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.05-alt1_3
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.05-alt1_2
 - update to new release by fcimport
 
