@@ -1,13 +1,13 @@
 Name: libmusicbrainz
 Version: 2.1.5
-Release: alt6
+Release: alt7
+
 Summary: A software library for accesing MusicBrainz servers
-Group: System/Libraries
 License: LGPL
+Group: System/Libraries
+
 Url: http://www.musicbrainz.org
-
 Source: %name-%version.tar.gz
-
 Patch0: libmusicbrainz-2.1.5-alt-comsocket.patch
 Patch1: libmusicbrainz-2.1.5-alt-gcc43.patch
 
@@ -28,21 +28,21 @@ This package contains the headers that programmers will need to develop
 applications which will use lib%name.
 
 %prep
-%setup -q
+%setup
 
 %patch0 -p1
 %patch1 -p1
 
 %build
+%ifnarch e2k
 %add_optflags -Wno-error=narrowing
+%endif
 %autoreconf
-%configure \
-    --disable-static
-
+%configure --disable-static
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %doc docs/*.txt
@@ -54,6 +54,11 @@ applications which will use lib%name.
 %_pkgconfigdir/*
 
 %changelog
+* Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 2.1.5-alt7
+- E2K: avoid lcc-unsupported option
+- minor spec cleanup
+- NB: this package should be dropped, service reportedly offline
+
 * Fri Jul 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.5-alt6
 - Fixed build with new toolchain.
 
