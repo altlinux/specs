@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-IO-Capture-Extended
 Version:        0.13
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Extend functionality of IO::Capture
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -29,6 +29,7 @@ BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Simple.pm)
 Requires:       perl(IO/Capture.pm) >= 0.050
+Source44: import.info
 
 %description
 IO::Capture::Extended is a distribution consisting of two classes, each of
@@ -58,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_6
 - update to new release by fcimport
 
