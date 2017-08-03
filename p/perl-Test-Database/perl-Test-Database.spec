@@ -6,7 +6,7 @@ BuildRequires: perl(DBD/mysql.pm) perl(Pod/Coverage/TrustPod.pm) perl(SQL/Statem
 %define _localstatedir %{_var}
 Name:           perl-Test-Database
 Version:        1.113
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Database handles ready for testing
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -42,11 +42,12 @@ BuildRequires:  perl(Test/More.pm)
 # Test::Pod 1.41 not used
 # Test::Pod::Coverage 1.08 not used
 Requires:       perl(YAML/Tiny.pm) >= 1.620
-%filter_from_requires /^perl\\(YAML.Tiny.pm\\)$/d
 
 
 # Remove under-specified dependencies
 
+Source44: import.info
+%filter_from_requires /^perl\\(YAML.Tiny.pm\\)$/d
 
 %description
 Test::Database Perl module provides a simple way for test authors to request
@@ -74,6 +75,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.113-alt1_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.113-alt1_6
 - update to new release by fcimport
 
