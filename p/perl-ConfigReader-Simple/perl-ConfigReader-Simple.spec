@@ -1,20 +1,23 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(File/Spec/Functions.pm) perl(Test/More.pm) perl(subs.pm) perl-podlators
+BuildRequires: perl(File/Spec.pm) perl(File/Spec/Functions.pm) perl(Test/More.pm) perl(subs.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define upstream_name    ConfigReader-Simple
 %define upstream_version 1.291
 
+%{?perl_default_filter}
+
 Name:       perl-%{upstream_name}
-Version:    1.291
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Summary:    Read simple configuration file formats
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/B/BD/BDFOY/ConfigReader-Simple-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/ConfigReader/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Test/Output.pm)
 BuildRequires: perl(Test/Warn.pm)
@@ -42,7 +45,7 @@ The configuration file format
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%__perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 %make
 
 %check
@@ -52,10 +55,14 @@ make test
 %makeinstall_std
 
 %files
-%doc Changes README* LICENSE META.yml
-%perl_vendor_privlib/*
+%doc Changes README.pod LICENSE META.yml
+%{perl_vendor_privlib}/*
+
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.291-alt1_1
+- update by mgaimport
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 1.291-alt1
 - automated CPAN update
 
