@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-IO-Null
 Version:        1.01
-Release:        alt2_26
+Release:        alt2_27
 Summary:        Class for null filehandles
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/IO-Null/
@@ -23,6 +23,7 @@ BuildRequires:  perl(IO/Handle.pm)
 BuildRequires:  perl(vars.pm)
 # Tests only
 BuildRequires:  perl(Test.pm)
+Source44: import.info
 
 %description
 IO::Null is a class for null filehandles.  Calling a constructor of
@@ -50,6 +51,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2_27
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2_26
 - update to new release by fcimport
 
