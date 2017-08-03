@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           libpar2
 Version:        0.2       
-Release:        alt2_24
+Release:        alt2_25
 Summary:        Library for performing comman tasks related to PAR recovery sets
      
 Group:          System/Libraries
@@ -18,6 +18,7 @@ Patch1:         libpar2-0.2-bugfixes.patch
   
 BuildRequires:  libsigc++2-devel libtool-common
 BuildRequires:  sed
+Source44: import.info
 
 %description
 LibPar2 allows for the generation, modification, verification,
@@ -77,6 +78,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/%{name}/include/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_25
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_24
 - update to new release by fcimport
 
