@@ -6,7 +6,7 @@ BuildRequires: perl(Data/Show.pm) perl(IO/Prompter.pm) perl(Smart/Comments.pm) p
 %define _localstatedir %{_var}
 Name:		perl-Regexp-Grammars
 Version:	1.045
-Release:	alt1_4
+Release:	alt1_6
 Summary:	Add grammatical parsing features to perl regular expressions
 License:	GPL+ or Artistic
 Group:		Development/Other
@@ -25,9 +25,10 @@ BuildRequires:	perl(Moose.pm)
 BuildRequires:	perl(Moose/Util/TypeConstraints.pm)
 
 %filter_from_provides /perl.Regexp.pm./d
+
+
+Source44: import.info
 %add_findprov_skiplist %{_docdir}
-
-
 
 
 %description
@@ -57,6 +58,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/Regexp/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.045-alt1_6
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.045-alt1_4
 - update to new release by fcimport
 
