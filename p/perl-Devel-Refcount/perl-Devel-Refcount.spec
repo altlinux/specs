@@ -6,7 +6,7 @@ BuildRequires: perl(B.pm) perl(Exporter.pm) perl(Scalar/Util.pm) perl(Symbol.pm)
 %define _localstatedir %{_var}
 Name:           perl-Devel-Refcount
 Version:        0.10
-Release:        alt3_11
+Release:        alt3_12
 Summary:        Obtain the REFCNT value of a referent
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -20,6 +20,7 @@ BuildRequires:  perl(Test/Exception.pm)
 BuildRequires:  perl(Test/Fatal.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
+Source44: import.info
 
 %description
 This module provides a single function which obtains the reference count of
@@ -49,6 +50,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_archlib}/Devel*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_12
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_11
 - update to new release by fcimport
 
