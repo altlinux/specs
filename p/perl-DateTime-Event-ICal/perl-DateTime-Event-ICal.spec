@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Event-ICal
 Version:        0.13
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Perl DateTime extension for computing rfc2445 recurrences
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -32,6 +32,7 @@ BuildRequires:  perl(vars.pm)
 # Test suite
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(warnings.pm)
+Source44: import.info
 # Runtime
 
 %description
@@ -58,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_5
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_4
 - update to new release by fcimport
 
