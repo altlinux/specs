@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Sort-Key
 Version:        1.33
-Release:        alt1.1_6
+Release:        alt1.1_7
 Summary:        Fastest way to sort anything in Perl
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -30,6 +30,7 @@ BuildRequires:  perl(integer.pm)
 BuildRequires:  perl(Test/More.pm)
 
 
+Source44: import.info
 
 %description
 Sort::Key provides a set of functions to sort lists of values by some
@@ -55,6 +56,9 @@ make test
 %{perl_vendor_archlib}/Sort*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1.1_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1.1_6
 - update to new release by fcimport
 
