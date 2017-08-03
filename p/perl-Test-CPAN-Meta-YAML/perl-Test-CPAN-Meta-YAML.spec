@@ -6,7 +6,7 @@ BuildRequires: perl(YAML.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Test-CPAN-Meta-YAML
 Version:	0.25
-Release:	alt1_6
+Release:	alt1_7
 Summary:	Validate a META.yml file within a CPAN distribution
 Group:		Development/Other
 License:	Artistic 2.0
@@ -36,6 +36,7 @@ BuildRequires:	perl(Test/Pod/Coverage.pm)
 # Runtime
 # Explicitly requests the YAML::Syck backend for Test::YAML::Valid
 Requires:	perl(YAML/Syck.pm)
+Source44: import.info
 
 %description
 This module was written to ensure that a META.yml file, provided with a
@@ -73,6 +74,9 @@ make test AUTOMATED_TESTING=1
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_6
 - update to new release by fcimport
 
