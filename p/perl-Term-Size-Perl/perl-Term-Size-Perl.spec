@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Term-Size-Perl
 Version:        0.029
-Release:        alt3_23
+Release:        alt3_24
 Summary:        Perl extension for retrieving terminal size (Perl version)
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Term-Size-Perl/
@@ -30,6 +30,7 @@ BuildRequires:  perl(Test/Pod/Coverage.pm)
 # although the resulting rpm appears to be noarch, the build is arch-dependent
 # and produces different code for ppc and x86
 %global  debug_package %nil
+Source44: import.info
 BuildArch: noarch
 
 %description
@@ -55,6 +56,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.029-alt3_24
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.029-alt3_23
 - update to new release by fcimport
 
