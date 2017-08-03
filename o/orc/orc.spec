@@ -1,8 +1,9 @@
 %define ver_major 0.4
+%def_enable check
 
 Name: orc
 Version: %ver_major.27
-Release: alt1
+Release: alt2
 
 Summary: The Oil Runtime Compiler
 Group: Development/Other
@@ -13,8 +14,9 @@ URL: http://code.entropywave.com/projects/orc/
 Source: https://gstreamer.freedesktop.org/src/orc/%name-%version.tar.xz
 #Source: %name-%version.tar
 
-BuildRequires: gtk-doc valgrind-devel
+BuildRequires: gtk-doc
 BuildRequires: glib2-devel >= 2.10.0
+%{?_with_valgrind:BuildRequires: valgrind-devel}
 
 %description
 Orc is a library and set of tools for compiling and executing very
@@ -106,7 +108,7 @@ This package contains documentation for Orc.
 %makeinstall_std
 
 %check
-#%make check
+%{?_enable_check:%make check}
 
 %files
 %_bindir/orc-bugreport
@@ -133,6 +135,10 @@ This package contains documentation for Orc.
 %_datadir/gtk-doc/html/orc
 
 %changelog
+* Thu Aug 03 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.27-alt2
+- mike@: BOOTSTRAP: introduce valgrind knob (on by default)
+- enabled %%check
+
 * Mon Jul 17 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.27-alt1
 - 0.4.27
 
@@ -181,3 +187,5 @@ This package contains documentation for Orc.
 * Thu Sep 23 2010 Paul Wolneykien <manowar@altlinux.ru> 0.4.9-alt1
 - Initial build for ALT Linux.
 - Version 0.4.9.
+
+
