@@ -8,7 +8,6 @@
 %def_with client
 %def_with bench
 %def_with mariabackup
-%def_without libarchive
 %def_enable build_test
 %def_disable static
 %define mysqld_user mysql
@@ -16,6 +15,9 @@
 %define ROOT %_localstatedir/mysql
 
 %def_with pcre
+%def_with systemd
+%def_with krb5
+%def_without libarchive
 
 %ifarch x86_64
 %def_with tokudb
@@ -25,11 +27,15 @@
 %def_without mroonga
 %endif
 
+%def_with galera
+%def_with cassandra
+%def_with oqgraph
+
 %def_with jemalloc
 
 Name: mariadb
 Version: 10.1.25
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -95,18 +101,22 @@ Requires: %name-client = %EVR
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI libpam-devel libevent-devel cmake ctest bison doxygen groff-base groff-ps dos2unix xsltproc
-BuildRequires: libaio-devel libwrap-devel boost-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
+BuildRequires: libaio-devel libwrap-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
 BuildRequires: liblz4-devel zlib-devel bzlib-devel liblzma-devel liblzo2-devel libsnappy-devel
 BuildRequires: chrooted control
+BuildRequires: libxml2-devel
+%{?_with_cassandra:BuildRequires: boost-devel}
+%{?_with_oqgraph:BuildRequires: boost-devel}
 %{?_with_jemalloc:BuildRequires: libjemalloc-devel}
 %{?_with_pcre:BuildRequires: libpcre-devel >= 8.35}
-BuildRequires: libxml2-devel
-BuildRequires: libsystemd-devel
-BuildRequires: libkrb5-devel
+%{?_with_systemd:BuildRequires: libsystemd-devel}
+%{?_with_krb5:BuildRequires: libkrb5-devel}
 %{?_with_libarchive: BuildRequires: libarchive-devel}
 
+%if_with galera
 Provides: %name-galera = %EVR
 Obsoletes: %name-galera < %EVR
+%endif
 
 %define soname 18
 
@@ -134,7 +144,9 @@ The mariadb server is compiled with the following storage engines:
 The following extra storage engines are provided by the
 mariadb-extra package:
 
+%if_with oqgraph
  - OQGraph Storage Engine
+%endif
  - Sphinx Storage Engine
 
 The following storage engines are provided in the
@@ -157,10 +169,12 @@ Obsoletes: %name-engine-obsolete < %EVR
 Provides: %name-engine-tokudb = %EVR
 Obsoletes: %name-engine-tokudb < %EVR
 %endif
+Conflicts: MySQL-server
+%if_with galera
 Provides: %name-galera-server = %EVR
 Obsoletes: %name-galera-server < %EVR
-Conflicts: MySQL-server
 Requires: libgalera_smm rsync lsof
+%endif
 PreReq: chrooted %name-server-control
 
 %description server
@@ -184,8 +198,10 @@ Requires: %name-server = %EVR
 Conflicts: %name-server < %EVR
 Conflicts: MySQL-server-perl
 Conflicts: mytop
+%if_with galera
 Provides: %name-galera-server-perl = %EVR
 Obsoletes: %name-galera-server-perl < %EVR
+%endif
 BuildArch: noarch
 
 %description server-perl
@@ -311,6 +327,13 @@ chmod -R a-s,go-w sql-bench
 #fix shebang.req: ERROR: /usr/src/tmp/mariadb-buildroot/usr/share/mysql/sql-bench/innotest1: trailing <CR> in interpreter: #!/usr/bin/perl<CR>
 find sql-bench -type f -name 'innotest*' | xargs dos2unix
 
+%ifarch e2k
+# just like libzio
+sed -i 's,makecontext,makecontext_e2k,' mysys/my_context.c
+# FIXME: fails
+:> cmake/do_abi_check.cmake
+%endif
+
 %build
 CFLAGS="%optflags -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE"
 # force PIC mode so that we can build libmysqld.so
@@ -407,8 +430,10 @@ install -pD -m644 %SOURCE26 %buildroot%_sysconfdir/my.cnf.d/server.cnf
 install -pD -m644 %SOURCE27 %buildroot%_sysconfdir/my.cnf.d/mysql-clients.cnf
 install -pD -m644 %SOURCE28 %buildroot%_sysconfdir/my.cnf.server/server-chroot.cnf
 install -pD -m644 %SOURCE29 %buildroot%_sysconfdir/my.cnf.server/server-no-chroot.cnf
+%if_with galera
 # install galera config file
 install -p -m 0644 BUILD/support-files/wsrep.cnf %buildroot%_sysconfdir/my.cnf.d/galera.cnf
+%endif
 
 %if_with tokudb
 install -pD -m644 storage/tokudb/tokudb.cnf %buildroot%_sysconfdir/my.cnf.d/tokudb.cnf
@@ -421,9 +446,11 @@ install -pD -m644 %SOURCE23 %buildroot%_sysconfdir/systemd/system/mysqld.service
 install -pD -m644 %SOURCE24 %buildroot%_sysconfdir/systemd/system/mysqld.service.d/notify-chroot.conf
 
 ln -s mysqld.service %buildroot%_unitdir/mariadb.service
+%if_with galera
 # rm upstream script
 rm -f %buildroot%_bindir/galera_new_cluster
 install -pD -m755 %SOURCE19 %buildroot%_bindir/galera_new_cluster
+%endif
 
 # install the clustercheck script
 install -pD -m755 %SOURCE70 %buildroot%_bindir/clustercheck
@@ -582,7 +609,9 @@ fi
 %config %_sysconfdir/chroot.d/*
 %config(noreplace) %_sysconfdir/my.cnf
 %config(noreplace) %_sysconfdir/my.cnf.d/server.cnf
+%if_with galera
 %config(noreplace) %_sysconfdir/my.cnf.d/galera.cnf
+%endif
 %config(noreplace) %_sysconfdir/my.cnf.server/*.cnf
 %if_with tokudb
 %config(noreplace) %_sysconfdir/my.cnf.d/tokudb.cnf
@@ -609,8 +638,10 @@ fi
 %_datadir/mysql/mroonga
 %endif
 
+%if_with galera
 %_bindir/wsrep_*
 %_bindir/galera_new_cluster
+%endif
 
 %_bindir/clustercheck
 %_unitdir/mariadbcheck.socket
@@ -629,7 +660,9 @@ fi
 %attr(710,root,mysql) %dir %ROOT/%_libdir
 %attr(710,root,mysql) %dir %ROOT/%_libdir/mysql
 %attr(710,root,mysql) %dir %ROOT/%_libdir/mysql/plugin
+%if_with galera
 %attr(710,root,mysql) %dir %ROOT/%_libdir/galera
+%endif
 %attr(710,root,mysql) %dir %ROOT%_sysconfdir
 %ghost %ROOT%_sysconfdir/hosts
 %ghost %ROOT%_sysconfdir/services
@@ -754,6 +787,11 @@ fi
 %endif
 
 %changelog
+* Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 10.1.25-alt2%ubt
+- BOOTSTRAP: introduced systemd, krb5, galera, cassandra, oqgraph knobs
+  (on by default)
+- E2K: avoid ABI check for now (fails)
+
 * Mon Jul 17 2017 Alexey Shabalin <shaba@altlinux.ru> 10.1.25-alt1%ubt
 - 10.1.25
 
