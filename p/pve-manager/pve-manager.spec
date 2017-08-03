@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 5.0.24
-Release: alt4
+Release: alt5
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -48,6 +48,7 @@ Patch19: pve-manager-snapshot-resize.patch
 Patch20: pve-manager-rem-package-ver-btn.patch
 Patch21: pve-http-server-alt.patch
 Patch22: extjs-alt.patch
+Patch23: qemu-server-migrate-local-devices.patch
 Patch24: pve-manager-postfix-3.patch
 Patch25: pve-manager-gettext.patch
 
@@ -141,6 +142,7 @@ This is used to implement the PVE REST API
 %patch20 -p0 -b .rembtn
 %patch21 -p0 -b .alt
 %patch22 -p0 -b .alt
+%patch23 -p0 -b .local-devices
 %patch24 -p0 -b .postfix-3
 %patch25 -p0 -b .gettext
 
@@ -438,6 +440,12 @@ __EOF__
 %_datadir/libpve-http-server-perl
 
 %changelog
+* Thu Aug 03 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.24-alt5
+- do not use force when migrating vm uses local device
+
+* Tue Aug 01 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.24-alt1.M80P.1
+- backport to p8 branch
+
 * Tue Aug 01 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.24-alt4
 - fixed FontAwesome path
 
