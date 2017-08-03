@@ -6,7 +6,7 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/CPAN/Changes.pm) perl(Te
 %define _localstatedir %{_var}
 Name:           perl-MooseX-Attribute-Chained
 Version:        1.0.3
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Attribute that returns the instance to allow for chaining
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -36,6 +36,7 @@ BuildRequires:  perl(Try/Tiny.pm)
 Obsoletes:      perl-MooseX-ChainedAccessors <= 0.02-3.fc17
 
 
+Source44: import.info
 
 %description
 MooseX::Attribute::Chained is a Moose Trait which allows for method
@@ -62,6 +63,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_3
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_2
 - update to new release by fcimport
 
