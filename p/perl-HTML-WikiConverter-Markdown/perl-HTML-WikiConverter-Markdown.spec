@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-HTML-WikiConverter-Markdown
 Version:        0.06
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Convert HTML to Markdown markup
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -27,6 +27,7 @@ BuildRequires:  perl(URI.pm)
 BuildRequires:  perl(warnings.pm)
 # not automatically detected
 Requires:       perl(HTML/WikiConverter.pm) >= 0.670
+Source44: import.info
 
 %description
 This module contains rules for converting HTML into Markdown markup. You
@@ -56,6 +57,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_6
 - update to new release by fcimport
 
