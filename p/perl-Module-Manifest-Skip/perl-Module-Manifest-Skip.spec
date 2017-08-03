@@ -6,7 +6,7 @@ BuildRequires: perl(Test/Pod.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Module-Manifest-Skip
 Version:        0.23
-Release:        alt1_7
+Release:        alt1_8
 Summary:        MANIFEST.SKIP Manangement for Modules
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -33,10 +33,11 @@ Requires:       perl(File/ShareDir.pm)
 Requires:       perl(File/Spec.pm)
 Requires:       perl(Moo.pm) >= 0.091.013
 Requires:       perl(warnings.pm)
-%filter_from_requires /^perl\\(Moo.pm\\)$/d
 
 # Remove under-speficied dependencies
 
+Source44: import.info
+%filter_from_requires /^perl\\(Moo.pm\\)$/d
 
 %description
 CPAN module authors use a MANIFEST.SKIP file to exclude certain well known
@@ -69,6 +70,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_8
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_7
 - update to new release by fcimport
 
