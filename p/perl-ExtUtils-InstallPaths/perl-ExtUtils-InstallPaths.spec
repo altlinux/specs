@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-ExtUtils-InstallPaths
 Version:	0.011
-Release:	alt1_8
+Release:	alt1_10
 Summary:	Build.PL install path logic made easy
 Group:		Development/Other
 License:	GPL+ or Artistic
@@ -39,6 +39,7 @@ BuildRequires:	perl(Pod/Coverage/TrustPod.pm)
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
 %endif
+Source44: import.info
 # Runtime
 
 %description
@@ -82,6 +83,9 @@ make test
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_10
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_8
 - update to new release by fcimport
 
