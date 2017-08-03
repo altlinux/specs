@@ -3,8 +3,8 @@
 %def_with python3
 
 Name:           python-module-%oname
-Version:        2.4.4
-Release:        alt1.dev0.git20150815.1.1
+Version:        2.6.2
+Release:        alt1
 Epoch: 1
 Summary:        Fast numerical array expression evaluator for Python and NumPy
 Group:          Development/Python
@@ -13,22 +13,17 @@ URL:            https://github.com/pydata/numexpr
 # https://github.com/pydata/numexpr.git
 Source:         %oname-%version.tar.gz
 Source1: site.cfg
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Patch1: %oname-%version-alt-config.patch
 
-#BuildPreReq: python-devel gcc-c++ /proc liblapack-devel
-#BuildPreReq: libnumpy-devel python-module-setuptools-tests
+BuildRequires: gcc-c++ time libnumpy-devel liblapack-devel python-module-html5lib python-module-numpy-testing python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel
-#BuildPreReq: libnumpy-py3-devel python3-module-setuptools-tests
+BuildRequires: libnumpy-py3-devel python3-module-numpy-testing python3-module-setuptools-tests
 %endif
 
 Requires: %name-tests = %epoch:%version-%release /proc
 %py_requires numpy
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils libnumpy-devel libopenblas-devel libstdc++-devel python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-genshi python-module-jinja2 python-module-matplotlib python-module-numpy python-module-pluggy python-module-py python-module-pyparsing python-module-pytest python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base python3-dev python3-module-numpy python3-module-pytest python3-module-setuptools
-BuildRequires: gcc-c++ liblapack-devel libnumpy-py3-devel python-module-html5lib python-module-numpy-testing python-module-setuptools-tests python3-module-numpy-testing python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 The numexpr package evaluates multiple-operator array expressions many
@@ -108,6 +103,7 @@ This package contains tests for numexpr.
 
 %prep
 %setup
+%patch1 -p1
 install -p -m644 %SOURCE1 ./
 sed -i 's|@LIBDIR@|%_libdir|' site.cfg
 
@@ -140,16 +136,14 @@ popd
 %endif
 
 %check
-python setup.py test
-rm -fR build
-python setup.py build_ext -i
-py.test -vv
+pushd build/lib.linux*
+python -c 'import numexpr; numexpr.test()'
+popd
 %if_with python3
 pushd ../python3
-python3 setup.py test
-#rm -fR build
-#python3 setup.py build_ext -i
-#py.test-%_python3_version -vv
+pushd build/lib.linux*
+PYTHONPATH=%buildroot%python3_sitelibdir python3 -c 'import numexpr; numexpr.test()'
+popd
 popd
 %endif
 
@@ -172,6 +166,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.6.2-alt1
+- Updated to upstream release 2.6.2
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:2.4.4-alt1.dev0.git20150815.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
