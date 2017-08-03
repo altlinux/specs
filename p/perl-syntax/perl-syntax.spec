@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-syntax
 Version:        0.004
-Release:        alt2_13
+Release:        alt2_14
 Summary:        Activate syntax extensions
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -22,6 +22,7 @@ BuildRequires:  perl(namespace/clean.pm)
 BuildRequires:  perl(FindBin.pm)
 BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(Test/More.pm)
+Source44: import.info
 
 %description
 This module activates community provided syntax extensions to Perl. You
@@ -49,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.004-alt2_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.004-alt2_13
 - update to new release by fcimport
 
