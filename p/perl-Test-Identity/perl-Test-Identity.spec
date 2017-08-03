@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-Identity
 Version:        0.01
-Release:        alt2_13
+Release:        alt2_14
 Summary:        Assert the referential identity of a reference
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -19,6 +19,7 @@ BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(Test/Builder/Tester.pm)
 BuildRequires:  perl(Test/More.pm)
+Source44: import.info
 
 %description
 This module provides a single testing function, identical. It asserts that
@@ -48,6 +49,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_13
 - update to new release by fcimport
 
