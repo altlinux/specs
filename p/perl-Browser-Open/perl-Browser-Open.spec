@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Browser-Open
 Version:        0.04
-Release:        alt2_15
+Release:        alt2_16
 Summary:        Open a browser in a given URL
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -28,6 +28,7 @@ BuildRequires:  perl(parent.pm)
 BuildRequires:  perl(Test/More.pm)
 
 
+Source44: import.info
 
 %description
 The functions optionally exported by this module allows you to open URLs in
@@ -53,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_16
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_15
 - update to new release by fcimport
 
