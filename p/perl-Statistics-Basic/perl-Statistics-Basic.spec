@@ -6,7 +6,7 @@ BuildRequires: perl(Test/Perl/Critic.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Statistics-Basic
 Version:        1.6611
-Release:        alt1_6
+Release:        alt1_7
 Summary:        A collection of very basic statistics modules
 License:        LGPLv2+
 Group:          Development/Other
@@ -29,10 +29,11 @@ BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(Test.pm)
 BuildRequires:  perl(Test/More.pm)
 Requires:       perl(Number/Format.pm) >= 1.420
-%filter_from_requires /perl\\(Number.Format.pm\\)$/d
 
 # Remove underspecified dependecies
 
+Source44: import.info
+%filter_from_requires /perl\\(Number.Format.pm\\)$/d
 
 %description
 use Statistics::Basic qw(:all);
@@ -65,6 +66,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.6611-alt1_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.6611-alt1_6
 - update to new release by fcimport
 
