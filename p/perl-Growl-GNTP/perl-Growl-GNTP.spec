@@ -6,7 +6,7 @@ BuildRequires: perl(Encode.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Growl-GNTP
 Version:        0.21
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Perl implementation of GNTP Protocol (Client Part)
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -22,6 +22,7 @@ BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Filter/Util/Call.pm)
 BuildRequires:  perl(Module/Build/Tiny.pm)
 BuildRequires:  perl(Test/More.pm)
+Source44: import.info
 
 %description
 Growl::GNTP is Perl implementation of GNTP Protocol (Client Part)
@@ -48,6 +49,9 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_4
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_3
 - update to new release by fcimport
 
