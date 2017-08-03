@@ -6,17 +6,24 @@ BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.
 %define _localstatedir %{_var}
 Name:           perl-Test-utf8
 Version:        1.01
-Release:        alt1_6
+Release:        alt1_8
 Summary:        Handy utf8 tests
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/Test-utf8/
 Source0:        http://www.cpan.org/authors/id/M/MA/MARKF/Test-utf8-%{version}.tar.gz
+# Do not require author's dependencies
+Patch0:         Test-utf8-1.01-Drop-useless-build-time-dependencies.patch
 BuildArch:      noarch
 # Module Build
+BuildRequires:  coreutils
 BuildRequires:  perl
 BuildRequires:  rpm-build-perl
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(inc/Module/Install.pm)
+BuildRequires:  perl(Module/Install/Metadata.pm)
+BuildRequires:  perl(Module/Install/ReadmeFromPod.pm)
+BuildRequires:  perl(Module/Install/WriteAll.pm)
+BuildRequires:  sed
 # Module Runtime
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(charnames.pm)
@@ -31,6 +38,7 @@ BuildRequires:  perl(Test/More.pm)
 # Runtime
 
 
+Source44: import.info
 
 %description
 This module is a collection of tests that's useful when dealing with utf8
@@ -38,14 +46,17 @@ strings in Perl.
 
 %prep
 %setup -q -n Test-utf8-%{version}
+%patch0 -p1
+# Remove bundled modules
+rm -rf ./inc/*
+sed -i -e '/^inc\//d' MANIFEST
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 %make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 # %{_fixperms} %{buildroot}
 
 %check
@@ -56,6 +67,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_8
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_6
 - update to new release by fcimport
 
