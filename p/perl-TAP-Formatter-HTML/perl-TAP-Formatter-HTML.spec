@@ -6,7 +6,7 @@ BuildRequires: perl(Alien/SeleniumRC.pm) perl(CPAN.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-TAP-Formatter-HTML
 Version:        0.11
-Release:        alt1_11
+Release:        alt1_12
 Summary:        TAP Test Harness output delegate for html output
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -25,6 +25,7 @@ Requires:       perl(accessors.pm) >= 0.020
 Requires:       perl(TAP/Parser.pm) >= 3.100
 Requires:       perl(Template.pm) >= 2.140
 Requires:       perl(URI.pm) >= 1.350
+Source44: import.info
 
 %description
 This module provides HTML output formatting for TAP::Harness (a replacement
@@ -54,6 +55,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_12
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_11
 - update to new release by fcimport
 
