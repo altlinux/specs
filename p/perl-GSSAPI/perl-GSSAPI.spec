@@ -2,6 +2,8 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 #
 # Rebuild option:
 #
@@ -10,10 +12,10 @@ BuildRequires: perl-podlators
 
 Name:           perl-GSSAPI
 Version:        0.28
-Release:        alt5_17.1
+Release:        alt5_19
 Summary:        Perl extension providing access to the GSSAPIv2 library
 License:        GPL+ or Artistic
-Group:          Development/Perl
+Group:          Development/Other
 URL:            http://search.cpan.org/dist/GSSAPI/
 Source0:        http://www.cpan.org/authors/id/A/AG/AGROLMS/GSSAPI-%{version}.tar.gz
 BuildRequires:  libkrb5-devel
@@ -21,11 +23,13 @@ BuildRequires:  which
 %{?_with_testsuite:BuildRequires: perl(constant.pm)}
 %{?_with_testsuite:BuildRequires: perl(Carp.pm)}
 %{?_with_testsuite:BuildRequires: perl(Exporter.pm)}
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 %{?_with_testsuite:BuildRequires: perl(ExtUtils/testlib.pm)}
 BuildRequires:  perl(Getopt/Long.pm)
 %{?_with_testsuite:BuildRequires: perl(Test/More.pm)}
-%{?_with_testsuite:BuildRequires: perl(Test/Pod.pm) >= 1.00}
+%{?_with_testsuite:BuildRequires: perl(Test/Pod.pm)}
 %{?_with_testsuite:BuildRequires: perl(XSLoader.pm)}
 Source44: import.info
 
@@ -40,7 +44,7 @@ chmod -c a-x examples/*.pl
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -59,6 +63,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_archlib}/GSSAPI*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt5_19
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt5_17.1
 - rebuild with new perl 5.24.1
 
