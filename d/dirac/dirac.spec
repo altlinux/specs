@@ -1,14 +1,19 @@
-Summary: Video Codec based on Wavelets
 Name: dirac
 Version: 1.0.2
-Release: alt1.1.qa1
-Packager: Ilya Mashkin <oddity@altlinux.ru>
-Source0: http://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
+Release: alt2
+
+Summary: Video Codec based on Wavelets
 License: MPL/GPL/LGPL
 Group: Video
-Url: http://sf.net/projects/dirac
+
+Url: http://diracvideo.org
+Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
+Patch0: http://pkgs.fedoraproject.org/cgit/rpms/dirac.git/plain/dirac-1.0.2-backports.patch
+Patch1: http://pkgs.fedoraproject.org/cgit/rpms/dirac.git/plain/0001-Fix-uninitialised-memory-read-that-causes-the-encode.patch
+Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 BuildRequires: doxygen gcc-c++ graphviz libstdc++-devel tetex-core tetex-latex
+BuildRequires: chrpath
 
 %description
 Dirac is an open source video codec. It uses a traditional hybrid
@@ -76,16 +81,31 @@ be set for the encoder to work, such as block sizes and temporal
 prediction structures, which must otherwise be set by hand.
 
 %prep
-%setup -q
+%setup
+%patch0 -p0
+%patch1 -p1
+find doc unit_tests util libdirac_encoder libdirac_byteio \
+	-type f -name \* -exec chmod 644 {} \;
+sed -i 's/-Werror//g' configure*
 
 %build
 #autoreconf
-%configure --disable-static
+%configure \
+	--disable-static \
+%ifarch x86_64
+	--enable-mmx=yes \
+%endif
+	#
+
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
-%make
+
+%make_build
 
 %install
-%make_install DESTDIR="%buildroot" install
+%makeinstall_std
+
+# FIXME: should not be there in the first place
+chrpath -d %buildroot%_bindir/dirac*
 
 %files utils
 %doc README TODO AUTHORS
@@ -106,6 +126,12 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_libdir/pkgconfig/dirac.pc
 
 %changelog
+* Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 1.0.2-alt2
+- applied fedora patches
+- enable MMX on x86_64
+- spec cleanup
+- drop rpath
+
 * Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.0.2-alt1.1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
