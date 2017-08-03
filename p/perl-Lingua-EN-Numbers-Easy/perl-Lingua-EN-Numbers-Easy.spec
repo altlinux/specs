@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Lingua-EN-Numbers-Easy
 Version:        2014120401
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Hash access to Lingua::EN::Numbers objects
 License:        MIT
 URL:            http://search.cpan.org/dist/Lingua-EN-Numbers-Easy/
@@ -25,6 +25,7 @@ BuildRequires:  perl(Lingua/EN/Numbers.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
+Source44: import.info
 
 %description
 Lingua::EN::Numbers is a module that translates numbers to English words.
@@ -51,6 +52,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 2014120401-alt1_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2014120401-alt1_6
 - update to new release by fcimport
 
