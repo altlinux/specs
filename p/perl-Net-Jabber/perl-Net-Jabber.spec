@@ -6,7 +6,7 @@ BuildRequires: perl(threads.pm) perl(threads/shared.pm) perl-pod perl-podlators 
 %define _localstatedir %{_var}
 Name:           perl-Net-Jabber
 Version:        2.0
-Release:        alt3_30
+Release:        alt3_31
 Summary:        Net::Jabber - Jabber Perl Library
 Group:          Development/Other
 License:        (GPL+ or Artistic) or LGPLv2+
@@ -34,6 +34,7 @@ BuildRequires:  perl(Time/Timezone.pm)
 # file requires for prep
 BuildRequires:  %{_bindir}/perldoc
 Requires:  perl(Time/Timezone.pm)
+Source44: import.info
 
 %description
 Net::Jabber provides a Perl user with access to the Jabber Instant
@@ -78,6 +79,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_31
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_30
 - update to new release by fcimport
 
