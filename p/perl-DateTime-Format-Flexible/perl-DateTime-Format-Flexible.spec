@@ -1,18 +1,20 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:       perl-DateTime-Format-Flexible
 Version:    0.28
-Release:    alt1
+Release:    alt1_2
 License:    GPL+ or Artistic
-Group:      Development/Other
 Summary:    Flexibly parse strings and turn them into DateTime objects
-Source0:     http://www.cpan.org/authors/id/T/TH/THINC/DateTime-Format-Flexible-%{version}.tar.gz
+Source:     http://search.cpan.org/CPAN/authors/id/T/TH/THINC/DateTime-Format-Flexible-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/DateTime-Format-Flexible/
 BuildArch:  noarch
 BuildRequires:  perl
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time:
 BuildRequires:  perl(base.pm)
@@ -25,8 +27,9 @@ BuildRequires:  perl(List/MoreUtils.pm)
 BuildRequires:  perl(Module/Pluggable.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
-# Tests only:
+# Tests:
 BuildRequires:  perl(File/Spec/Functions.pm)
+BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(Test/MockTime.pm)
 BuildRequires:  perl(Test/More.pm)
 # Optional tests:
@@ -46,22 +49,25 @@ it into a DateTime object.
 %setup -q -n DateTime-Format-Flexible-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 # %{_fixperms} %{buildroot}/*
 
 %check
 TEST_POD=1 make test
 
 %files
-%doc Changes example/ LICENSE README TODO example
+%doc LICENSE
+%doc Changes example/ README TODO
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1_2
+- update to new release by fcimport
+
 * Sat Mar 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
 - automated CPAN update
 
