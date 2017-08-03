@@ -6,7 +6,7 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 %define _localstatedir %{_var}
 Name:           perl-lib-abs
 Version:        0.93
-Release:        alt2_8
+Release:        alt2_9
 Summary:        Module lib that makes relative path absolute to caller
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -37,6 +37,7 @@ BuildRequires:  perl(XSLoader.pm)
 BuildRequires:  perl(Test/NoWarnings.pm)
 BuildRequires:  perl(Test/Pod.pm)
 Requires:       perl(Carp.pm)
+Source44: import.info
 
 %description
 The main reason of this library is to transform relative paths to absolute
@@ -65,6 +66,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.93-alt2_9
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.93-alt2_8
 - update to new release by fcimport
 
