@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Const-Fast
 Version:        0.014
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Facility for creating read-only scalars, arrays, and hashes
 License:        GPL+ or Artistic
 
@@ -32,6 +32,7 @@ BuildRequires:  perl(Sub/Exporter/Progressive.pm)
 BuildRequires:  perl(Test/Script.pm)
 
 
+Source44: import.info
 
 %description
 This the only function of this module and it is exported by default. It takes
@@ -68,6 +69,9 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
 
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.014-alt2_11
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.014-alt2_10
 - update to new release by fcimport
 
