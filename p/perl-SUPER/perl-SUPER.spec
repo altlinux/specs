@@ -7,7 +7,7 @@ BuildRequires: perl(Module/Build.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-SUPER
 Version:	1.20141117
-Release:	alt2_7
+Release:	alt2_8
 Summary:	Sane superclass method dispatcher
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/SUPER/
@@ -32,6 +32,7 @@ BuildRequires:	perl(Test/More.pm)
 # =============== Module Runtime ===============
 Requires:	perl(Scalar/Util.pm) >= 1.200
 Requires:	perl(Sub/Identify.pm) >= 0.030
+Source44: import.info
 
 %description
 When subclassing a class, you occasionally want to dispatch control to the
@@ -64,6 +65,9 @@ make test
 %{perl_vendor_privlib}/SUPER.pm
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.20141117-alt2_8
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.20141117-alt2_7
 - update to new release by fcimport
 
