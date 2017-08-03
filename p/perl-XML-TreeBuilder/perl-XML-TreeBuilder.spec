@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 Summary:	Parser that builds a tree of XML::Element objects
 Name:		perl-XML-TreeBuilder
 Version:	5.4
-Release:	alt1_7
+Release:	alt1_8
 License:	GPL+ or Artistic
 Group:		Development/Other
 URL:		http://search.cpan.org/dist/XML-TreeBuilder/
@@ -33,6 +33,7 @@ BuildRequires:	perl(vars.pm)
 BuildRequires:	perl(warnings.pm)
 BuildRequires:	perl(XML/Catalog.pm)
 BuildRequires:	perl(XML/Parser.pm)
+Source44: import.info
 
 %description
 perl-XML-TreeBuilder is a Perl module that implements a parser
@@ -57,6 +58,9 @@ find $RPM_BUILD_ROOT -type d -depth -exec rmdir {} 2>/dev/null ';'
 %{perl_vendor_privlib}/XML/
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 5.4-alt1_8
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 5.4-alt1_7
 - update to new release by fcimport
 
