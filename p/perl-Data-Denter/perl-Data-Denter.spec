@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Data-Denter
 Version:        0.15
-Release:        alt2_21
+Release:        alt2_22
 License:        GPL+ or Artistic
 Summary:        An alternative to Data::Dumper and Storable
 Source:         http://search.cpan.org/CPAN/authors/id/I/IN/INGY/Data-Denter-%{version}.tar.gz
@@ -26,6 +26,7 @@ BuildRequires:  perl(vars.pm)
 BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(diagnostics.pm)
 BuildRequires:  perl(Test.pm)
+Source44: import.info
 
 %description
 The main problem with Data::Dumper (one of my all-time favorite modules)
@@ -60,6 +61,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_22
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_21
 - update to new release by fcimport
 
