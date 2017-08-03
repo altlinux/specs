@@ -1,21 +1,25 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Class/Load.pm) perl(Compress/Zlib.pm) perl(Config.pm) perl(Cwd.pm) perl(Encode.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(HTML/Entities.pm) perl(HTTP/Request/Common.pm) perl(IO/Socket/INET.pm) perl(JSON.pm) perl(MIME/Base64.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(POSIX.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(URI.pm) perl(YAML/Tiny.pm) perl(base.pm) perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Compress/Zlib.pm) perl(JSON.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Test-WWW-Mechanize-Catalyst
 Summary:        Test::WWW::Mechanize for Catalyst
 Version:        0.60
-Release:        alt1_8
+Release:        alt1_11
 License:        GPL+ or Artistic
 
 Source0:        http://search.cpan.org/CPAN/authors/id/I/IL/ILMARI/Test-WWW-Mechanize-Catalyst-%{version}.tar.gz
 URL:            http://search.cpan.org/dist/Test-WWW-Mechanize-Catalyst/
 BuildArch:      noarch
 
+BuildRequires:  findutils
+BuildRequires:  perl
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl(base.pm)
+BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Catalyst.pm)
 # Catalyst::Plugin::Session::State::Cookie and Test::WWW::Mechanize::Catalyst
 # use each other in their test suites
@@ -23,16 +27,32 @@ BuildRequires:  perl(Catalyst.pm)
 BuildRequires:  perl(Catalyst/Plugin/Session/State/Cookie.pm)
 %endif
 BuildRequires:  perl(Catalyst/Plugin/Session/Store/Dummy.pm)
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(Catalyst/Test.pm)
+BuildRequires:  perl(Class/Load.pm)
+BuildRequires:  perl(Encode.pm)
+BuildRequires:  perl(HTML/Entities.pm)
+BuildRequires:  perl(HTTP/Request/Common.pm)
+BuildRequires:  perl(inc/Module/Install.pm)
+BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(LWP.pm)
+BuildRequires:  perl(MIME/Base64.pm)
+BuildRequires:  perl(Module/Install/Metadata.pm)
+BuildRequires:  perl(Module/Install/WriteAll.pm)
 BuildRequires:  perl(Moose.pm)
+BuildRequires:  perl(Moose/Object.pm)
 BuildRequires:  perl(namespace/clean.pm)
+BuildRequires:  perl(POSIX.pm)
+BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Test/Exception.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/utf8.pm)
 BuildRequires:  perl(Test/WWW/Mechanize.pm)
+BuildRequires:  perl(URI.pm)
+BuildRequires:  perl(utf8.pm)
+BuildRequires:  perl(warnings.pm)
 BuildRequires:  perl(WWW/Mechanize.pm)
+BuildRequires:  sed
 
 Requires:       perl(Catalyst.pm) >= 5.0
 Requires:       perl(LWP.pm) >= 5.816
@@ -47,6 +67,7 @@ Obsoletes:      %{name}-tests < 0.56-3
 Provides:       %{name}-tests = %{version}-%{release}
 
 
+Source44: import.info
 
 %description
 Catalyst is an elegant MVC Web Application Framework. Test::WWW::Mechanize
@@ -57,6 +78,9 @@ web server.
 
 %prep
 %setup -q -n Test-WWW-Mechanize-Catalyst-%{version}
+# Remove bundled libraries
+rm -r inc
+sed -i -e '/^inc\// d' MANIFEST
 
 # silence rpmlint warning
 sed -i '1s,#!.*perl,#!%{__perl},' t/*.t
@@ -81,6 +105,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1_11
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1_8
 - update to new release by fcimport
 
