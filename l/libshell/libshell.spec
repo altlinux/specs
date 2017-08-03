@@ -1,5 +1,5 @@
 Name: libshell
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: A library of shell functions
@@ -64,6 +64,16 @@ sed -i -e 's,^#!/bin/ash,#!/bin/sh,' \
 %_man1dir/*
 
 %changelog
+* Thu Aug 03 2017 Alexey Gladkov <legion@altlinux.ru> 0.4.3-alt1
+- New version (0.4.3).
+- shell-ini-config changes:
+  + Do not add new line after deletion (ALT#33714).
+  + Preserve spaces in comments.
+- shell-git-config changes:
+  + Add includeIf support.
+- shell-var changes:
+  + Add shell_var_is_number.
+
 * Fri Nov 18 2016 Alexey Gladkov <legion@altlinux.ru> 0.4.2-alt1
 - New version (0.4.2).
 - Add more docs (ALT#17927).
