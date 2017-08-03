@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-UseAllModules
 Version:        0.17
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Do use_ok() for all the MANIFESTed modules
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -33,10 +33,11 @@ BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 Requires:       perl(Test/Builder.pm) >= 0.300
 Requires:       perl(Test/More.pm) >= 0.600
-%filter_from_requires /perl\\(Test.More.pm\\)/d
 
 # Remove underspecifies dependencies
 
+Source44: import.info
+%filter_from_requires /perl\\(Test.More.pm\\)/d
 
 %description
 I'm sick of writing 00_load.t (or something like that) that will do use_ok()
@@ -70,6 +71,9 @@ TEST_POD=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_6
 - update to new release by fcimport
 
