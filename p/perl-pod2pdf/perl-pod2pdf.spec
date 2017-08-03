@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-pod2pdf
 Version:        0.42
-Release:        alt2_13
+Release:        alt2_14
 Summary:        Converts Pod to PDF format
 License:        Artistic 2.0
 Group:          Development/Other
@@ -33,6 +33,7 @@ BuildRequires:  perl(Test/Pod.pm)
 Requires:       perl(File/Type.pm)
 Requires:       perl(Image/Size.pm)
 Requires:       perl(Paper/Specs.pm) >= 0.100
+Source44: import.info
 
 %description
 pod2pdf converts documents written in Perl's POD (Plain Old Documentation)
@@ -64,6 +65,9 @@ make test
 %{_bindir}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.42-alt2_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.42-alt2_13
 - update to new release by fcimport
 
