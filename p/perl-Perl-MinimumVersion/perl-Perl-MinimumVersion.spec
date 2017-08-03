@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Perl-MinimumVersion
 Version:        1.38
-Release:        alt1_12
+Release:        alt1_14
 Summary:        Find a minimum required version of perl for Perl code
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -38,14 +38,15 @@ BuildRequires: perl(Getopt/Long.pm)
 BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(Test/Script.pm)
 %endif
-%filter_from_requires /^perl\\(version.pm\\)$/d
-%filter_from_requires /^perl\\(Params.Util.pm\\)$/d
-%filter_from_requires /^perl >= 0:5.005$/d
 
 # Remove under-specified dependencies
 
 
 
+Source44: import.info
+%filter_from_requires /^perl\\(version.pm\\)$/d
+%filter_from_requires /^perl\\(Params.Util.pm\\)$/d
+%filter_from_requires /^perl >= 0:5.005$/d
 
 %description
 Find a minimum required version of perl for Perl code
@@ -74,6 +75,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1_12
 - update to new release by fcimport
 
