@@ -1,15 +1,17 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-mageia-compat
-BuildRequires: gcc-c++
+BuildRequires: /usr/bin/icu-config /usr/bin/signtool gcc-c++
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define	major 7
 %define libname libmysqlcppconn%{major}
 %define develname libmysqlcppconn-devel
 
 Summary:	A MySQL database connector for C++
 Name:		mysql-connector-c++
-Version:	1.1.6
-Release:	alt2_2
+Version:	1.1.8
+Release:	alt1_1
 Group:		System/Libraries
 License:	GPLv2
 URL:		http://dev.mysql.com/downloads/connector/cpp/
@@ -18,8 +20,8 @@ Source0:	http://cdn.mysql.com/Downloads/Connector-C++/%{name}-%{version}.tar.gz
 Patch0:		mysql_cxx_linkage.patch
 Patch1:		mariadb_api.patch
 BuildRequires:	cmake
-BuildRequires:	mysql-devel
-BuildRequires: boost-devel boost-filesystem-devel boost-locale-devel boost-math-devel boost-program_options-devel boost-python-devel boost-signals-devel boost-wave-devel
+BuildRequires:	libmysqlclient-devel
+BuildRequires:	boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-python3-devel boost-signals-devel boost-wave-devel
 Source44: import.info
 
 %description
@@ -131,6 +133,9 @@ rm -f %{buildroot}%{_libdir}/libmysqlcppconn-static.a
 
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.8-alt1_1
+- update by mgaimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt2_2
 - update by mgaimport
 
