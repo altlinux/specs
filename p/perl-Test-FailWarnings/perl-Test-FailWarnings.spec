@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-FailWarnings
 Version:        0.008
-Release:        alt1_9
+Release:        alt1_10
 Summary:        Add test failures if warnings are caught
 License:        ASL 2.0 
 
@@ -36,6 +36,7 @@ BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(List/Util.pm)
 
 
+Source44: import.info
 
 %description
 This module hooks $SIG{__WARN__} and converts warnings to Test::More's
@@ -64,6 +65,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_10
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_9
 - update to new release by fcimport
 
