@@ -1,49 +1,66 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators perl(Perl/OSType.pm) perl(Test/Exception.pm) perl(Test/Timer.pm) perl(File/Which.pm) perl(IO/Socket/IP.pm) perl(Net/EmptyPort.pm) perl(Ref/Util.pm) perl(Test/Differences.pm) perl(IO/Socket/SSL.pm) perl(List/MoreUtils.pm) perl(Proc/Guard.pm)
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 %add_findreq_skiplist %perl_vendor_privlib/Gearman/Task.pm
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Gearman
 Version:        2.004.008
-Release:        alt1
-Summary:        Distributed job system
+Release:        alt1_1
+Summary:        Perl interface for Gearman distributed job system
 License:        GPL+ or Artistic
-Group:          Development/Perl
 URL:            http://danga.com/gearman/
-Source0:        http://www.cpan.org/authors/id/P/PA/PALIK/Gearman-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/P/PA/PALIK/Gearman-%{version}.tar.gz
 BuildArch:      noarch
-
-
+BuildRequires:  perl
+BuildRequires:  rpm-build-perl
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+# Run-time:
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(constant.pm)
-BuildRequires:  perl(Errno.pm)
-BuildRequires:  perl(Exporter.pm)
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(fields.pm)
-BuildRequires:  perl(File/Basename.pm)
-BuildRequires:  perl(FindBin.pm)
-BuildRequires:  perl(Getopt/Long.pm)
-BuildRequires:  perl(IO/Handle.pm)
-BuildRequires:  perl(IO/Socket/INET.pm)
-BuildRequires:  perl(lib.pm)
-BuildRequires:  perl(List/Util.pm)
+BuildRequires:  perl(IO/Select.pm)
+BuildRequires:  perl(IO/Socket/IP.pm)
+BuildRequires:  perl(IO/Socket/SSL.pm)
+BuildRequires:  perl(List/MoreUtils.pm)
 BuildRequires:  perl(POSIX.pm)
 BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(Socket.pm)
 BuildRequires:  perl(Storable.pm)
-BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(String/CRC32.pm)
-BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Time/HiRes.pm)
+BuildRequires:  perl(version.pm)
+# Tests:
+BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(File/Which.pm)
+BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(List/Util.pm)
+BuildRequires:  perl(Net/EmptyPort.pm)
+BuildRequires:  perl(Perl/OSType.pm)
+BuildRequires:  perl(Proc/Guard.pm)
+BuildRequires:  perl(Test/Exception.pm)
+BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(Test/TCP.pm)
+BuildRequires:  perl(Test/Timer.pm)
 BuildRequires:  perl(vars.pm)
-BuildRequires:  perl(warnings.pm)
+# Optional tests:
+%if !%{defined perl_bootstrap}
+# Break build cycle: perl-Gearman a.. perl-Gearman-Server a.. perl-Gearman
+# perl-Gearman-Server for %%{_bindir}/gearmand
+BuildRequires:  perl-Gearman-Server
+%endif
+# Devel::Gladiator not yet packaged
+Requires:       perl(version.pm) >= 0.770
 
-
+# Remove under-specifed dependencies
 
 Source44: import.info
-%filter_from_provides /^perl\\(Gearman.Client.pm\\)$/d
+%filter_from_requires /^perl\\(version.pm\\)$/d
 
 %description
 Gearman provides a generic application framework to farm out work to other
@@ -55,22 +72,24 @@ between languages.
 %setup -q -n Gearman-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+%make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
 
 %files
-%doc CHANGES TODO README
+%doc CHANGES README TODO
 %{perl_vendor_privlib}/Gearman
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.004.008-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.004.008-alt1
 - automated CPAN update
 
