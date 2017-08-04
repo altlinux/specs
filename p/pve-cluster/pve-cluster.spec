@@ -1,14 +1,14 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
 Version: 5.0.12
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64
-Requires: bridge-utils openntpd ntpdate corosync2 fuse rrd-cached ksmtuned openvswitch
+Requires: bridge-utils ntp-server ntpdate corosync2 fuse rrd-cached ksmtuned openvswitch
 Requires: sqlite3 vixie-cron faketime tzdata openssh-server openssh-clients
 
 Source0: %name.tar.xz
@@ -143,6 +143,12 @@ fi
 %_man1dir/pveum.1*
 
 %changelog
+* Fri Aug 04 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.12-alt2
+- replace requires openntpd to ntp-server
+
+* Thu Jul 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.12-alt0.M80P.1
+- backport to p8 branch
+
 * Thu Jul 13 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.12-alt1
 - 5.0-12
 - pve-access-control 5.0-5
