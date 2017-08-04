@@ -7,7 +7,7 @@
 
 Name: mpg123
 Version: 1.25.4
-Release: alt1.2
+Release: alt2
 
 Summary: MPEG audio player
 Group: Sound
@@ -16,8 +16,6 @@ Url: http://www.%name.org
 
 Source: http://downloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source1: mp3license
-
-ExclusiveArch: %ix86 x86_64 %arm e2k
 
 Requires: libmpg123 = %version-%release
 
@@ -109,6 +107,9 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Fri Aug 04 2017 Yuri N. Sedunov <aris@altlinux.org> 1.25.4-alt2
+- removed obsolete ExclusiveArch tag
+
 * Tue Aug 01 2017 Yuri N. Sedunov <aris@altlinux.org> 1.25.4-alt1.2
 - fixed license tag
 
