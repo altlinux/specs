@@ -2,7 +2,7 @@
 
 Name: custodia
 Version: 0.1.0
-Release: alt2
+Release: alt3
 Summary:  A service to manage, retrieve and store secrets for other processes
 
 Group: System/Configuration/Other
@@ -65,6 +65,9 @@ mv %buildroot%_bindir %buildroot%_sbindir
 %exclude %python_sitelibdir/tests/
 
 %changelog
+* Fri Aug 04 2017 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt3
+- Fix SimpleCreds authenticator.
+
 * Thu Oct 06 2016 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt2
 - Mive binary to %%_sbindir.
 
