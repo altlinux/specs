@@ -2,7 +2,7 @@
 
 Name: ipython
 Version: 4.0.0
-Release: alt4
+Release: alt5
 
 %setup_python_module IPython
 
@@ -18,6 +18,7 @@ Source0: %name-%version.tar
 # https://github.com/ipython/ipython-components.git
 Source1: components.tar
 Patch0: %name-0.10-alt-bindings-fix.patch
+Patch1: 9040.patch
 
 %add_findreq_skiplist %python_sitelibdir/IPython/utils/eventful.py
 %add_findreq_skiplist %python3_sitelibdir/IPython/utils/eventful.py
@@ -124,6 +125,7 @@ This package contains examples for IPython.
 %prep
 %setup
 #patch0 -p1
+%patch1 -p1
 
 mkdir -p pushd IPython/html/static
 pushd IPython/html/static
@@ -204,6 +206,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 
 
 %changelog
+* Fri Aug 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0-alt5
+- Applied upstream patches to fix test failures.
+
 * Wed Aug 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0-alt4
 - Fixed build.
 
