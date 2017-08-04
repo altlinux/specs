@@ -3,35 +3,28 @@ BuildRequires: /usr/bin/perl
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name ddccontrol-db
-%define version 20061014
-%global git_commit e8cc385a6321e7c99783150001193ec6e9e0c436
-%global git_date 20120904
+#%global git_commit 9dd986fb8609fac856b5cad46f5e13894cb3ff77
+#%global git_date 20170623
 
-%global git_short_commit %(echo %{git_commit} | cut -c -8)
-%global git_suffix %{git_date}git%{git_short_commit}
-
-# git clone git://ddccontrol.git.sourceforge.net/gitroot/ddccontrol/ddccontrol-db
-# cd ddccontrol-db
-# git archive --format=tar --prefix=%%{name}-%%{version}/ %%{git_commit} | \
-# bzip2 > ../%%{name}-%%{version}-%%{git_suffix}.tar.bz2
+#%global git_short_commit %(c=%{git_commit}; echo ${c:0:8})
+#%global git_suffix %{git_date}git%{git_short_commit}
 
 Name:             ddccontrol-db
 URL:              http://ddccontrol.sourceforge.net/
-Version:          20061014
-Release:          alt1_9.%{git_suffix}
+Version:          20170716
+Release:          alt1_1
+#.%{git_suffix}%{?dist}
 # Agreed by usptream to be GPLv2+
 # http://sourceforge.net/mailarchive/message.php?msg_id=29762202
 License:          GPLv2+
 Group:            System/Base
 Summary:          DDC/CI control database for ddccontrol
-#Source0:          http://downloads.sourceforge.net/ddccontrol/%{name}-%{version}.tar.bz2
-Source0:          %{name}-%{version}-%{git_suffix}.tar.bz2
+#Source0:          https://github.com/ddccontrol/%{name}/archive/%{git_commit}.tar.gz#/%{name}-%{version}-%{git_suffix}.tar.gz
+Source0:          https://github.com/ddccontrol/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 # use autopoint instead of gettextize that is interactive tool
-Patch0:           %{name}-autopoint.patch
-BuildRequires:    gettext gettext-tools gettext-tools libasprintf-devel, libtool-common, perl(XML/Parser.pm)
+BuildRequires:    gettext gettext-tools gettext-tools libasprintf-devel, libtool-common, intltool, perl(XML/Parser.pm)
 BuildArch:        noarch
+Source44: import.info
 Patch33: ddccontrol-db-0.4.2-russian.patch
 Conflicts: ddccontrol < 0.4.2-alt15
 
@@ -39,8 +32,8 @@ Conflicts: ddccontrol < 0.4.2-alt15
 DDC/CU control database for DDCcontrol.
 
 %prep
+#%setup -q -n %{name}-%{git_commit}
 %setup -q
-%patch0 -p1 -b .autopoint
 
 ./autogen.sh
 %patch33 -p2
@@ -54,10 +47,14 @@ make install DESTDIR=%{buildroot}
 %find_lang %{name}
 
 %files -f %{name}.lang
-%doc AUTHORS COPYING NEWS README
+%doc COPYING
+%doc AUTHORS NEWS README.md
 %{_datadir}/%{name}
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 20170716-alt1_1
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 20061014-alt1_9.20120904gite8cc385a
 - update to new release by fcimport
 
