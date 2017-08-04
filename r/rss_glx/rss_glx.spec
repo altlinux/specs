@@ -1,22 +1,24 @@
 # vim: set ft=spec: -*- spec -*-
-
+%def_with kde
+%def_disable sound
 %define program_prefix rss-
 
 Name: rss_glx
 Version: 0.9.1
-Release: alt4.qa1
+Release: alt5
 
 Summary: Really Slick Screensavers
 License: GNU GPL
 Group: Graphical desktop/Other
 
-Url: http://rss-glx.sourceforge.net/
+Url: http://rss-glx.sourceforge.net
 Source: %name-%version-%release.tar.bz2
 Patch0: rss-glx-0.9.1-alt-DSO.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 # git://git.altlinux.org/people/mike/packages/rss_glx.git
 
-BuildRequires(pre): rpm-build-xscreensaver kde-common-devel
+BuildRequires(pre): rpm-build-xscreensaver
+%{?_with_kde:BuildRequires(pre): kde-common-devel}
 
 # Automatically added by buildreq on Sun Nov 09 2008 (-bi)
 BuildRequires: bzlib-devel gcc-c++ libImageMagick-devel libXt-devel libglew-devel
@@ -62,8 +64,10 @@ This package contains KDE menu entries.
 %configure \
 	--program-prefix=%program_prefix \
 	--with-configdir=%xss_conf_dir \
+%if_with kde
 	--with-kdessconfigdir=%_Kapplnk/System/ScreenSavers \
-	--disable-sound \
+%endif
+	%{subst_enable sound} \
 	#
 %make_build
 
@@ -78,7 +82,7 @@ find . -name '*.desktop' -print0 |
 
 %install
 mkdir -p %buildroot%xss_ad_dir
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 rm -f %buildroot%_bindir/*_install.pl
 
 for i in %buildroot%xss_conf_dir/*.xml; do
@@ -87,7 +91,7 @@ for i in %buildroot%xss_conf_dir/*.xml; do
 	mv "$i" "$d/%program_prefix$f"
 done
 
-mkdir -p %buildroot/usr/share/applications/screensavers
+mkdir -p %buildroot%_desktopdir/screensavers
 
 install -pm644 %name.xss %buildroot%xss_ad_dir/%name.xss
 
@@ -101,10 +105,16 @@ install -pm644 %name.xss %buildroot%xss_ad_dir/%name.xss
 %config %xss_ad_dir/%name.xss
 %config %xss_conf_dir/*.xml
 
+%if_with kde
 %files kde
 %_Kapplnk/System/ScreenSavers/*.desktop
+%endif
 
 %changelog
+* Fri Aug 04 2017 Michael Shigorin <mike@altlinux.org> 0.9.1-alt5
+- BOOTSTRAP: introduced kde knob (on by default),
+  sound knob (off by default just as it was)
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.9.1-alt4.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
