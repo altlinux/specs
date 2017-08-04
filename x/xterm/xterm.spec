@@ -25,11 +25,11 @@
   --enable-toolbar
 
 Name: xterm
-Version: 327
+Version: 330
 Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
-Summary(ru_RU.KOI8-R): Стандартный эмулятор терминала для X Window System
+Summary(ru_RU.UTF8): п║я┌п╟п╫п╢п╟я─я┌п╫я▀п╧ я█п╪я┐п╩я▐я┌п╬я─ я┌п╣я─п╪п╦п╫п╟п╩п╟ п╢п╩я▐ X Window System
 Url: http://invisible-island.net/xterm/
 License: MIT
 Group: Terminals
@@ -166,6 +166,9 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Fri Aug 04 2017 Fr. Br. George <george@altlinux.ru> 330-alt1
+- Autobuild version bump to 330
+
 * Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 327-alt1
 - Autobuild version bump to 327
 
