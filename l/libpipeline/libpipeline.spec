@@ -5,8 +5,8 @@
 
 Summary: A pipeline manipulation library
 Name: libpipeline
-Version: 1.4.1
-Release: alt1_3
+Version: 1.4.2
+Release: alt1_1
 License: GPLv3+
 Group: Development/Other
 URL: http://libpipeline.nongnu.org/
@@ -16,6 +16,7 @@ BuildRequires: libtool-common, libcheck-devel
 
 # FPC exception for gnulib - copylib - https://fedorahosted.org/fpc/ticket/174
 Provides: bundled(gnulib) = %{gnulib_ver}
+Source44: import.info
 
 %description
 libpipeline is a C library for setting up and running pipelines of
@@ -61,6 +62,9 @@ rm $RPM_BUILD_ROOT/%{_libdir}/libpipeline.la
 %{_mandir}/man3/*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1_1
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt1_3
 - update to new release by fcimport
 
