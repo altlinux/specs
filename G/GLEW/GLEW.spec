@@ -3,7 +3,7 @@
 
 Name: GLEW
 Version: 2.1.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: The OpenGL Extension Wrangler library
 License: BSD, MIT
@@ -75,7 +75,7 @@ operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solari
 %make_build
 
 %install
-%makeinstall_std BINDIR=%_bindir LIBLIR=%_libdir INCDIR=%_includedir/GL PKGDIR=%_pkgconfigdir
+%makeinstall_std BINDIR=%_bindir LIBDIR=%_libdir INCDIR=%_includedir/GL PKGDIR=%_pkgconfigdir
 
 %files -n lib%name%soversion
 %doc doc/*
@@ -93,6 +93,9 @@ operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solari
 %endif
 
 %changelog
+* Fri Aug 04 2017 Nazarov Denis <nenderus@altlinux.org> 2.1.0-alt2%ubt
+- Fix libdir param (thanks Sergey Bolshakov)
+
 * Thu Aug 03 2017 Nazarov Denis <nenderus@altlinux.org> 2.1.0-alt1%ubt
 - Version 2.1.0
 
