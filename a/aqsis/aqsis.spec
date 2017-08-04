@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/swig gcc-c++ ilmbase-devel
 %define _localstatedir %{_var}
 Name:		aqsis
 Version:	1.8.2
-Release:	alt2_25
+Release:	alt2_26
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 Group:		Video
 
@@ -45,6 +45,7 @@ BuildRequires:  zlib-devel >= 1.1.4
 Requires: libqt4-core libqt4-dbus libqt4-network libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-test libqt4-xml libqt4-xmlpatterns
 Requires: aqsis-core = %{version}-%{release}
 Requires: aqsis-data = %{version}-%{release}
+Source44: import.info
 
 
 %description
@@ -235,6 +236,9 @@ desktop-file-install --vendor "" --delete-original \
 
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_26
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_25
 - update to new release by fcimport
 
