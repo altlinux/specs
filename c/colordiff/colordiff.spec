@@ -2,8 +2,8 @@ Group: Text tools
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           colordiff
-Version:        1.0.16
-Release:        alt1_3
+Version:        1.0.18
+Release:        alt1_1
 Summary:        Color terminal highlighter for diff files
 
 License:        GPLv2+
@@ -11,7 +11,7 @@ URL:            http://www.colordiff.org/
 Source0:        http://www.colordiff.org/%{name}-%{version}.tar.gz
 
 BuildArch:      noarch
-BuildRequires:      rpm-build-perl
+BuildRequires:  rpm-build-perl
 Requires:       diffutils
 Requires:       less
 Requires:     bzip2 gzip-utils less
@@ -19,6 +19,7 @@ Requires:     gzip gzip-utils less
 Requires:     gzip-utils less xz
 Requires:       curl
 Provides:       cdiff
+Source44: import.info
 
 %description
 Colordiff is a wrapper for diff and produces the same output but with
@@ -52,6 +53,9 @@ sed -i -e 's/banner=yes/banner=no/' colordiffrc-*
 
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.18-alt1_1
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.16-alt1_3
 - update to new release by fcimport
 
