@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 5.4
-Release: alt1.2
+Release: alt2
 
 Summary: Store and access your passwords safely
 License: PSF
@@ -22,6 +22,7 @@ BuildPreReq: python-module-mock python-module-nose
 BuildPreReq: python-module-keyczar python-module-gdata
 BuildPreReq: python-module-pytest-runner
 BuildPreReq: python-modules-logging python-modules-json
+BuildRequires: python-module-appdirs
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -29,6 +30,7 @@ BuildPreReq: python3-module-fs python3-module-pycrypto
 BuildPreReq: python3-module-mock python3-module-nose
 BuildPreReq: python3-module-keyczar
 BuildPreReq: python3-module-pytest-runner
+BuildRequires: python3-module-appdirs
 %endif
 
 %setup_python_module %oname
@@ -130,6 +132,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.4-alt2
+- Updated build dependencies.
+
 * Fri Jul 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.4-alt1.2
 - Updated build spec
 

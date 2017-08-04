@@ -3,13 +3,12 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.1
-Release: alt1.git20150722.1
+Version: 1.4.3
+Release: alt1
 Summary: Determining appropriate platform-specific dirs, e.g. a "user data dir"
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/appdirs/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/ActiveState/appdirs.git
 Source: %name-%version.tar
@@ -80,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.3-alt1
+- Updated to upstream version 1.4.3.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.4.1-alt1.git20150722.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
