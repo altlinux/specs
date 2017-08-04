@@ -1,27 +1,28 @@
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libuninameslist
-Version:        20160701
-Release:        alt1_2
+Version:        20170701
+Release:        alt1_1
 
 Summary:        A library providing Unicode character names and annotations
 
-Group:          System/Libraries
 License:        BSD
 URL:            https://github.com/fontforge/libuninameslist
-Source0:        https://github.com/fontforge/libuninameslist/archive/20160701.tar.gz
+Source0:        https://github.com/fontforge/libuninameslist/archive/%{version}.tar.gz
 BuildRequires:  autoconf-common
 BuildRequires:  automake-common
 BuildRequires:  libtool-common
+Source44: import.info
 
 %description
 libuninameslist provides applications with access to Unicode name and
 annotation data from the official Unicode Character Database.
 
 %package        devel
+Group: Development/Other
 Summary:        Header files and static libraries for %{name}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 
 %description    devel
@@ -29,22 +30,24 @@ This package contains header files and static libraries for %{name}.
 
 
 %prep
-%setup -q -n libuninameslist-20160701
+%setup -q
+
 
 %build
 autoreconf -i
 automake --foreign -Wall
 %configure --disable-static
-%make_build
+make V=1 %{?_smp_mflags}
 
 
 %install
-%makeinstall incdir=$RPM_BUILD_ROOT%{_includedir}
+%makeinstall_std incdir=$RPM_BUILD_ROOT%{_includedir}
 find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
 
 
 %files
 %doc LICENSE
+%doc ChangeLog README.md
 %{_libdir}/*.so.*
 
 %files devel
@@ -53,6 +56,9 @@ find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
 %{_libdir}/pkgconfig/libuninameslist.pc
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 20170701-alt1_1
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 20160701-alt1_2
 - update to new release by fcimport
 
