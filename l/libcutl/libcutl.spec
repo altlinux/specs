@@ -10,7 +10,7 @@ BuildRequires: gcc-c++
 
 Name:           libcutl
 Version:        %{base_version}.0
-Release:        alt1_6
+Release:        alt1_8
 Summary:        C++ utility library from Code Synthesis
 
 Group:          System/Libraries
@@ -32,6 +32,7 @@ BuildRequires: boost141-devel
 %endif
 # Uses pkgconfig
 BuildRequires: libexpat-devel
+Source44: import.info
 
 
 %description
@@ -90,6 +91,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_8
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_6
 - update to new release by fcimport
 
