@@ -1,7 +1,7 @@
 Name: pve-common
 Summary: PVE base library
 Version: 5.0.16
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -58,6 +58,9 @@ install -pD -m0755 pve-etcnet-to-network %buildroot%_sbindir/pve-etcnet-to-netwo
 %perl_vendor_privlib/PVE
 
 %changelog
+* Fri Aug 04 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.16-alt2
+- fixed check OVSPort
+
 * Thu Jul 13 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.16-alt1
 - 5.0-16
 
