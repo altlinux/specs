@@ -7,7 +7,7 @@ BuildRequires: imake libXt-devel xorg-cf-files
 
 Name:           environment-modules
 Version:        3.2.10
-Release:        alt1_20.qa1
+Release:        alt1_21
 Summary:        Provides dynamic modification of a user's environment
 
 Group:          System/Base
@@ -50,6 +50,7 @@ BuildRequires:  man man-whatis
 #For ps in startup script
 Requires:       procps sysvinit-utils
 Provides:	environment(modules)
+Source44: import.info
 
 %description
 The Environment Modules package provides for the dynamic modification of
@@ -114,14 +115,21 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/modulefiles \
          $RPM_BUILD_ROOT%{_datadir}/modulefiles
 # Install the rpm config file
 install -Dpm 644 %{SOURCE4} %{buildroot}/%{_rpmmacrosdir}/%{name}
+# Prep for man alternatives
+mv $RPM_BUILD_ROOT%{_mandir}/man1/module{,-c}.1
+mv $RPM_BUILD_ROOT%{_mandir}/man4/modulefile{,-c}.4
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/modules.sh_environment-modules<<EOF
 %{_sysconfdir}/profile.d/modules.sh	%{_datadir}/Modules/init/modules.sh	40
 %{_sysconfdir}/profile.d/modules.csh	%{_datadir}/Modules/init/csh	%{_datadir}/Modules/init/modules.sh
+%{_mandir}/man1/module.1.gz	%{_mandir}/man1/module-c.1.gz	%{_datadir}/Modules/init/modules.sh
+%{_mandir}/man4/modulefile.4.gz	%{_mandir}/man4/modulefile-c.4.gz	%{_datadir}/Modules/init/modules.sh
 EOF
 
 
 %post
 [ ! -L %{_bindir}/modules.sh ] && rm -f %{_sysconfdir}/profile.d/modules.sh
+[ ! -L %{_mandir}/man1/module.1.gz ] && rm -f %{_mandir}/man1/module.1.gz
+[ ! -L %{_mandir}/man4/modulefile.4.gz ] && rm -f %{_mandir}/man4/modulefile.4.gz
 :
 
 %files
@@ -137,12 +145,15 @@ EOF
 %config(noreplace) %{_datadir}/Modules/init/.modulespath
 %{_datadir}/Modules/modulefiles
 %{_datadir}/modulefiles
-%{_mandir}/man1/module.1*
-%{_mandir}/man4/modulefile.4*
+%{_mandir}/man1/module-c.1*
+%{_mandir}/man4/modulefile-c.4*
 %{_rpmmacrosdir}/%{name}
 
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_21
+- update to new release by fcimport
+
 * Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.2.10-alt1_20.qa1
 - NMU: rebuilt against Tcl/Tk 8.6
 
