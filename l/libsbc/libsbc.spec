@@ -1,11 +1,12 @@
 Name: libsbc
 Version: 1.2
-Release: alt1
-Summary: Sub Band Codec used by bluetooth A2DP
-Group: System/Libraries
-License: GPLv2 and LGPLv2+
-URL: http://www.bluez.org
+Release: alt1.1
 
+Summary: Sub Band Codec used by bluetooth A2DP
+License: GPLv2 and LGPLv2+
+Group: System/Libraries
+
+Url: http://www.bluez.org
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -34,18 +35,19 @@ Requires: %name = %version-%release
 Bluetooth low-complexity, Sub Band Codec analyzer.
 
 %prep
-%setup -q
+%setup
 %patch -p1
+%ifarch e2k
+sed -i -e 's,-fgcse-after-reload,,' -e 's,-funswitch-loops,,' Makefile.am
+%endif
 
 %build
 %autoreconf
-%configure \
-	--disable-static
-
+%configure --disable-static
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %doc COPYING AUTHORS ChangeLog
@@ -60,6 +62,10 @@ Bluetooth low-complexity, Sub Band Codec analyzer.
 %_bindir/sbc*
 
 %changelog
+* Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 1.2-alt1.1
+- E2K: avoid lcc-unsupported options
+- minor spec cleanup
+
 * Fri Jan 24 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.2-alt1
 - 1.2
 
