@@ -1,7 +1,7 @@
 %define rel 1
 Summary: 2D Platform Game
 Name: edgar
-Version: 1.26
+Version: 1.27
 Release: alt1
 Source: %version.tar.gz
 Url: http://www.parallelrealities.co.uk/p/legend-of-edgar.html
@@ -10,8 +10,10 @@ License: GPL
 Patch: %name-1.26-icons.patch
 Requires: %name-data = %version
 
-# Automatically added by buildreq on Sun Feb 28 2010
-BuildRequires: libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel zlib-devel
+# Automatically added by buildreq on Fri Aug 04 2017
+# optimized out: glibc-kernheaders-x86 libSDL-devel libgpg-error python-base zlib-devel
+BuildRequires: glibc-kernheaders-generic libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libpng-devel
+
 BuildRequires: desktop-file-utils
 
 %description
@@ -61,6 +63,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_gamesdatadir/%name/*
 
 %changelog
+* Fri Aug 04 2017 Fr. Br. George <george@altlinux.ru> 1.27-alt1
+- Autobuild version bump to 1.27
+
 * Wed Mar 15 2017 Fr. Br. George <george@altlinux.ru> 1.26-alt1
 - Autobuild version bump to 1.26
 
