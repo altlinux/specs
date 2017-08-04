@@ -1,8 +1,8 @@
 %define vendorzone ru.
 
 Name: chrony
-Version: 2.2
-Release: alt2%ubt
+Version: 3.1
+Release: alt1%ubt
 
 Summary: Chrony clock synchronization program
 License: GPLv2 only
@@ -10,13 +10,14 @@ Group: System/Configuration/Other
 
 Url: http://chrony.tuxfamily.org
 Source0: http://download.tuxfamily.org/chrony/%name-%version.tar
+Patch0: %name-%version-alt.patch
 Source1: chronyd.init
-Source2: chrony
+Source2: chrony.sh
 
 BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: libcap-devel libncurses-devel libreadline-devel
-BuildRequires: libnss-devel
+BuildRequires: libnss-devel asciidoctor lynx
 BuildRequires: makeinfo control
 
 Provides: ntp-server
@@ -37,15 +38,10 @@ Internet. chronyd can also act as an RFC1305-compatible NTP server.
 
 %prep
 %setup
+%patch0 -p1
 # prepare git sources (make_release)
 # version in version.txt file
 echo %version > version.txt
-mandate=$(date +'%B %Y')
-for m in chronyc.1.in chrony.conf.5.in chronyd.8.in; do
-  sed -e "s|@VERSION@|%version|;s|@MAN_DATE@|${mandate}|" \
-    < $m > ${m}_
-  mv -f ${m}_ $m
-done
 
 # regenerate the file from getdate.y
 rm -f getdate.c
@@ -67,11 +63,12 @@ sed -i -e 's/OPTIONS/CHRONYD_ARGS/' examples/chronyd.service
 	--with-hwclockfile=%_sysconfdir/adjtime \
 	--with-sendmail=%_sbindir/sendmail
 
-%make_build all docs
+%make_build all docs 
+make -C doc txt
 
 %install
 %makeinstall_std
-install -pD -m755 %_sourcedir/chronyd.init %buildroot%_initrddir/chronyd
+install -pD -m755 %SOURCE1 %buildroot%_initrddir/chronyd
 install -pD -m644 chrony.conf %buildroot%_sysconfdir/chrony.conf
 install -pD -m644 chrony.keys %buildroot%_sysconfdir/chrony.keys
 install -pD -m755 examples/chrony.nm-dispatcher %buildroot%_sysconfdir/NetworkManager/dispatcher.d/20-chrony
@@ -79,7 +76,7 @@ install -pD -m644 examples/chrony.logrotate %buildroot%_sysconfdir/logrotate.d/c
 install -pD -m644 chronyd.sysconfig %buildroot%_sysconfdir/sysconfig/chronyd
 install -pD -m644 examples/chronyd.service %buildroot%_unitdir/chronyd.service
 install -pD -m644 examples/chrony-wait.service %buildroot%_unitdir/chrony-wait.service
-install -pD -m755 %_sourcedir/chrony %buildroot%_sysconfdir/control.d/facilities/chrony
+install -pD -m755 %SOURCE2 %buildroot%_sysconfdir/control.d/facilities/chrony
 
 install -d %buildroot/lib/systemd/ntp-units.d
 
@@ -89,8 +86,6 @@ echo 'chronyd.service' > \
 rm -rf %buildroot/usr/doc
 install -d %buildroot%_localstatedir/{lib,log}/%name
 touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
-
-gzip -9 -f -k chrony.txt
 
 %pre
 %_sbindir/groupadd -r -f _chrony 2> /dev/null ||:
@@ -107,7 +102,7 @@ gzip -9 -f -k chrony.txt
 %preun_service chronyd
 
 %files
-%doc COPYING NEWS README chrony.txt.gz
+%doc COPYING NEWS README doc/*.txt
 %_initrddir/chronyd
 %_unitdir/*.service
 /lib/systemd/ntp-units.d/50-chronyd.list
@@ -128,6 +123,9 @@ gzip -9 -f -k chrony.txt
 %_man8dir/*
 
 %changelog
+* Tue Aug 01 2017 Anton Farygin <rider@altlinux.ru> 3.1-alt1%ubt
+- new version
+
 * Sun Mar 12 2017 Evgeny Sinelnikov <sin@altlinux.ru> 2.2-alt2%ubt
 - Build with universal build tag
 
