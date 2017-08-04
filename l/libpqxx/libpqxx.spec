@@ -1,14 +1,16 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/dot /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/xmlto boost-devel-headers gcc-c++ libpq5.8-devel libsocket
+BuildRequires: /usr/bin/dot /usr/bin/doxygen /usr/bin/xmlto boost-devel-headers gcc-c++
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 
 Name:           libpqxx
 Summary:        C++ client API for PostgreSQL
 Epoch:          1
 Version:        4.0.1
-Release:        alt1_6
+Release:        alt1_8
 
 License:        BSD
 URL:            http://pqxx.org/
@@ -16,8 +18,9 @@ Source0:        http://pqxx.org/download/software/libpqxx/libpqxx-%{version}.tar
 Source1:        http://pqxx.org/download/software/libpqxx/libpqxx-%{version}.tar.gz.md5sum
 
 Patch3:         libpqxx-2.6.8-multilib.patch
+Patch4:         libpqxx_configure.patch
 
-BuildRequires:  postgresql-devel
+BuildRequires:  libecpg6.8-devel libpq5.9-devel postgresql9.6-devel
 BuildRequires:  python
 Source44: import.info
 
@@ -29,7 +32,7 @@ Supersedes older libpq++ interface.
 %package devel
 Group: Development/C
 Summary:        Development tools for %{name} 
-Requires:       %{name}%{?_isa} = %{epoch}:%{version}
+Requires:       %{name} = %{epoch}:%{version}-%{release}
 %description devel
 %{summary}.
 
@@ -48,12 +51,13 @@ BuildArch: noarch
 chmod -x COPYING
 
 %patch3 -p1 -b .multilib
+%patch4 -p1
 
 
 %build
 %configure --enable-shared --disable-static
 
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -83,6 +87,9 @@ make %{?_smp_mflags} check ||:
 
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.0.1-alt1_8
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.0.1-alt1_6
 - update to new release by fcimport
 
