@@ -14,8 +14,8 @@ BuildRequires: /usr/bin/splint gcc-c++ pkgconfig(glib-2.0)
 %bcond_without syslog_tests
 
 Name:           libqb
-Version:        1.0.1
-Release:        alt1_2
+Version:        1.0.2
+Release:        alt1_1
 Summary:        An IPC library for high performance servers
 
 Group:          System/Libraries
@@ -26,6 +26,7 @@ Source0:        https://github.com/ClusterLabs/libqb/releases/download/v%{versio
 BuildRequires:  autoconf-common automake-common libtool-common doxygen procps sysvinit-utils libcheck-devel
 # https://fedoraproject.org/wiki/Packaging:C_and_C%2B%2B#BuildRequires_and_Requires
 BuildRequires:  gcc-common
+Source44: import.info
 
 %description
 libqb provides high-performance, reusable features for client-server
@@ -74,6 +75,9 @@ developing applications that use %{name}.
 %{_mandir}/man3/qb*3*
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_1
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_2
 - update to new release by fcimport
 
