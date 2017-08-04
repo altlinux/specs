@@ -1,20 +1,22 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(check) pkgconfig(gdk-2.0) pkgconfig(gio-2.0) pkgconfig(x11)
 # END SourceDeps(oneline)
-BuildRequires: ruby-stdlibs
-Name:		libgxim
-Version:	0.5.0
-Release:	alt2
-License:	LGPLv2+
-URL:		http://tagoh.bitbucket.org/libgxim/
-Packager: Ilya Mashkin <oddity@altlinux.ru>
-BuildRequires:	intltool gettext ruby
-BuildRequires:	glib2-devel >= 2.26 gtk2-devel
-Source0:	http://bitbucket.org/tagoh/%{name}/downloads/%{name}-%{version}.tar.bz2
 
-Summary:	GObject-based XIM protocol library
-Group:		System/Libraries
+Name: libgxim
+Version: 0.5.0
+Release: alt3
+
+Summary: GObject-based XIM protocol library
+License: LGPLv2+
+Group: System/Libraries
+
+Url: http://tagoh.bitbucket.org/libgxim/
+Source0: http://bitbucket.org/tagoh/%name/downloads/%name-%version.tar.bz2
 Source44: import.info
+Packager: Ilya Mashkin <oddity@altlinux.ru>
+
+BuildRequires: intltool gettext ruby ruby-stdlibs
+BuildRequires: glib2-devel >= 2.26 gtk2-devel
 
 %description
 libgxim is a X Input Method protocol library that is implemented by GObject.
@@ -24,12 +26,12 @@ if your application uses GObject-based main loop.
 
 This package contains the shared library.
 
-%package	devel
-Summary:	Development files for libgxim
-Group:		Development/C
-Requires:	%{name} = %{version}-%{release}
+%package devel
+Summary: Development files for libgxim
+Group: Development/C
+Requires: %name = %version-%release
 
-%description	devel
+%description devel
 libgxim is a X Input Method protocol library that is implemented by GObject.
 this library helps you to implement XIM servers or client applications to
 communicate through XIM protocol without using Xlib API directly, particularly
@@ -39,36 +41,32 @@ This package contains the development files to make any applications with
 libgxim.
 
 %prep
-%setup -q
-
+%setup
 
 %build
 %configure --disable-static --disable-rebuilds
-
-make %{?_smp_mflags}
-
+%make_build
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+%makeinstall_std
+rm %buildroot%_libdir/*.la
+%find_lang %name
 
-# clean up the unnecessary files
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
-
-%find_lang %{name}
-
-
-%files -f %{name}.lang
+%files -f %name.lang
 %doc AUTHORS COPYING ChangeLog README
-%{_libdir}/libgxim.so.*
+%_libdir/libgxim.so.*
 
-%files	devel
+%files devel
 %doc AUTHORS COPYING ChangeLog README
-%{_libdir}/libgxim.so
-%{_libdir}/pkgconfig/*.pc
-%{_includedir}/libgxim
-%{_datadir}/gtk-doc/html/libgxim
+%_libdir/libgxim.so
+%_libdir/pkgconfig/*.pc
+%_includedir/libgxim
+%_datadir/gtk-doc/html/libgxim
 
 %changelog
+* Fri Aug 04 2017 Michael Shigorin <mike@altlinux.org> 0.5.0-alt3
+- spec cleanup
+
 * Tue Aug 26 2014 Ilya Mashkin <oddity@altlinux.ru> 0.5.0-alt2
 - build for Sisyphus
 
