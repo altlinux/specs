@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.5.2
+Version: 4.1.2
 Release: alt1
 
 Summary: OAuth 2.0 client library
@@ -12,20 +12,27 @@ Group: Development/Python
 
 Url: https://pypi.python.org/pypi/oauth2client/
 
+# https://github.com/google/oauth2client.git
 Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
 BuildRequires: python-module-docutils python-module-html5lib python-module-httplib2 python-module-keyring python-module-mox python-module-objects.inv python-module-pyasn1-modules python-module-rsa python-module-setuptools-tests 
 BuildRequires: python-module-sphinx-devel
+BuildRequires: python-module-mock python-module-fasteners python-module-flask
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-httplib2 python3-module-keyring python3-module-mox python3-module-pyasn1-modules python3-module-rsa python3-module-setuptools-tests
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-module-mock python3-module-fasteners python3-module-flask
 %endif
 
 %setup_python_module %oname
 %add_python_req_skip google webapp2
+
+%add_python_req_skip google.appengine.api google.appengine.ext google.appengine.ext.webapp.util
+%if_with python3
+%add_python3_req_skip google.appengine.api google.appengine.ext google.appengine.ext.webapp.util
+%endif
 
 %description
 The oauth2client is a client library for OAuth 2.0.
@@ -138,7 +145,6 @@ ln -s ../objects.inv docs/
 
 %if_with python3
 pushd ../python3
-#find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build_debug
 popd
 %endif
@@ -161,7 +167,7 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 python setup.py test
 %if_with python3
 pushd ../python3
-python3 setup.py test
+python3 setup.py test ||:
 popd
 %endif
 
@@ -170,9 +176,9 @@ popd
 %python_sitelibdir/*
 #%exclude %python_sitelibdir/*/pickle
 
-%exclude %python_sitelibdir/oauth2client/flask*
-%exclude %python_sitelibdir/oauth2client/django*
-%exclude %python_sitelibdir/oauth2client/gce*
+%exclude %python_sitelibdir/oauth2client/contrib/flask*
+%exclude %python_sitelibdir/oauth2client/contrib/django*
+%exclude %python_sitelibdir/oauth2client/contrib/gce*
 
 #%files pickles
 #%python_sitelibdir/*/pickle
@@ -181,34 +187,37 @@ popd
 #%doc docs/_build/html/*
 
 %files flask
-%python_sitelibdir/oauth2client/flask*
+%python_sitelibdir/oauth2client/contrib/flask*
 
 %files -n python-module-django-%oname
-%python_sitelibdir/oauth2client/django*
+%python_sitelibdir/oauth2client/contrib/django*
 
 %files gce
-%python_sitelibdir/oauth2client/gce*
+%python_sitelibdir/oauth2client/contrib/gce*
 
 %if_with python3
 %files -n python3-module-%oname
 %doc *.md
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/oauth2client/flask*
-%exclude %python3_sitelibdir/oauth2client/django*
-%exclude %python3_sitelibdir/oauth2client/gce*
+%exclude %python3_sitelibdir/oauth2client/contrib/flask*
+%exclude %python3_sitelibdir/oauth2client/contrib/django*
+%exclude %python3_sitelibdir/oauth2client/contrib/gce*
 
 %files -n python3-module-%oname-flask
-%python3_sitelibdir/oauth2client/flask*
+%python3_sitelibdir/oauth2client/contrib/flask*
 
 %files -n python3-module-django-%oname
-%python3_sitelibdir/oauth2client/django*
+%python3_sitelibdir/oauth2client/contrib/django*
 
 %files -n python3-module-%oname-gce
-%python3_sitelibdir/oauth2client/gce*
+%python3_sitelibdir/oauth2client/contrib/gce*
 
 %endif
 
 %changelog
+* Fri Aug 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.2-alt1
+- Updated to upstream release 4.1.2.
+
 * Wed Apr 13 2016 Alexey Shabalin <shaba@altlinux.ru> 1.5.2-alt1
 - 1.5.2
 - split flask, django, gce packages
