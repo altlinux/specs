@@ -3,7 +3,7 @@
 
 Name:           python-module-%oname
 Version:        2.1.0
-Release:        alt1
+Release:        alt2
 Summary:        Object-oriented filesystem paths
 License:        MIT
 Group: Development/Python
@@ -31,11 +31,13 @@ BuildRequires(pre): python3-module-six
 BuildRequires(pre): python3-module-setuptools
 %endif
 
+%if_with python3
 %package -n python3-module-%oname
 Group: Development/Python
 Summary:        %{summary}
 
 %description -n python3-module-%oname %{_description}
+%endif
 
 %prep
 %setup
@@ -81,14 +83,19 @@ popd
 %python_sitelibdir/%oname.py*
 %python_sitelibdir/%oname-%version-py?.?.egg-info
 
+%if_with python3
 %files -n python3-module-%oname
 %doc README.rst
 %doc LICENSE.rst
 %python3_sitelibdir/%oname.py*
 %python3_sitelibdir/%oname-%version-py?.?.egg-info
 %python3_sitelibdir/__pycache__/*
+%endif
 
 %changelog
+* Fri Aug 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt2
+- Updated build spec.
+
 * Wed Aug 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt1
 - Initial build for ALT.
 
