@@ -2,14 +2,14 @@
 %define gst_api_ver 1.0
 %define _gst_libdir %_libdir/gstreamer-%gst_api_ver
 # switched from libav to ffmpeg since 1.5.90
-%def_without system_libav
+%def_with system_libav
 %if_without system_libav
 %set_verify_elf_method textrel=relaxed
 %endif
 
 Name: gst-libav
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: GStreamer (%gst_api_ver API) streaming media framework plug-in using FFmpeg
 Group: System/Libraries
@@ -18,12 +18,14 @@ Url: http://gstreamer.freedesktop.org/
 
 Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 
-%define libav_ver 11.4
+# was 11.4 for libav fork
+%define libav_ver 3.0
 
 BuildRequires: gst-plugins%gst_api_ver-devel >= %ver_major
 BuildRequires: orc liborc-devel zlib-devel bzlib-devel liblzma-devel gtk-doc
 %if_with system_libav
-BuildRequires: libavformat-devel >= %libav_ver libswscale-devel libavresample-devel
+BuildRequires: libavformat-devel >= %libav_ver
+BuildRequires: libswscale-devel libavresample-devel libavfilter-devel
 %else
 BuildRequires: glibc-devel-static yasm
 BuildRequires: libX11-devel libXext-devel libXvMC-devel libXfixes-devel
@@ -97,6 +99,9 @@ plug-in.
 %_datadir/gtk-doc/html/%name-plugins-%gst_api_ver/
 
 %changelog
+* Fri Aug 04 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt2
+- rebuilt with system libav (ffmpeg-3.3.3)
+
 * Fri Jul 14 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1
 - 1.12.2
 
@@ -222,4 +227,5 @@ plug-in.
 
 * Sun Oct 14 2012 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - first build for Sisyphus
+
 
