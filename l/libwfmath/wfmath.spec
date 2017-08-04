@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           libwfmath
 Version:        1.0.2
-Release:        alt1_7
+Release:        alt1_10
 Summary:        WorldForge client math libraries
 
 Group:          Development/Other
@@ -18,6 +18,7 @@ Source0:        http://downloads.sourceforge.net/sourceforge/worldforge/%{oldnam
 BuildRequires:  doxygen
 # Testing needs
 BuildRequires:  libatlascpp-devel
+Source44: import.info
 Provides: wfmath = %{version}-%{release}
 
 %description
@@ -72,6 +73,7 @@ install -p -m0644 doc/man/man3/*.3 $RPM_BUILD_ROOT%{_mandir}/man3/
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
+
 %check
 # Run tests in debug mode so asserts won't be skipped
 sed -i -e 's/-DNDEBUG/-DDEBUG/' wfmath/Makefile
@@ -91,6 +93,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_10
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_7
 - update to new release by fcimport
 
