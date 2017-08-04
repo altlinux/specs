@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/curl /usr/bin/wget gcc-c++
 %define _localstatedir %{_var}
 Name:           libompl
 Version:        1.0.0
-Release:        alt1_13
+Release:        alt1_15
 Summary:        The Open Motion Planning Library
 
 Group:          System/Libraries
@@ -25,6 +25,7 @@ BuildRequires:  graphviz libgraphviz
 BuildRequires:  libode-devel
 BuildRequires:  python
 BuildRequires:  ruby-tools
+Source44: import.info
 Provides: ompl = %{version}-%{release}
 
 %description
@@ -96,6 +97,9 @@ make -C build test || exit 0
 %{_datadir}/cmake/Modules/FindOMPL.cmake
 
 %changelog
+* Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_15
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_13
 - update to new release by fcimport
 
