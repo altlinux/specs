@@ -4,7 +4,7 @@
 
 Name: python-module-acme
 Version: 0.14.1
-Release: alt3
+Release: alt4
 
 Summary: Python library for the ACME protocol
 
@@ -28,11 +28,13 @@ BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-OpenSSL >= 0.14
 BuildRequires: python-module-cryptography >= 1.3.4
 BuildRequires: python-module-idna >= 2.0.0
+BuildRequires: python-module-cffi >= 1.7
 BuildRequires: python-module-requests >= 2.10
 
 Requires: python-module-OpenSSL >= 0.14
 Requires: python-module-cryptography >= 1.3.4
 Requires: python-module-idna >= 2.0.0
+Requires: python-module-cffi >= 1.7
 Requires: python-module-requests >= 2.10
 
 %if_with python3
@@ -45,6 +47,7 @@ BuildPreReq: python3-devel python3-module-setuptools python3-module-setuptools-t
 BuildRequires: python3-module-OpenSSL >= 0.14
 BuildRequires: python3-module-cryptography >= 1.3.4
 BuildRequires: python3-module-idna >= 2.0.0
+BuildRequires: python3-module-cffi >= 1.7
 BuildRequires: python3-module-requests >= 2.10
 #BuildRequires: python3-pyrfc3339
 #BuildRequires: python3-werkzeug
@@ -100,6 +103,7 @@ Summary: %summary
 Requires: python3-module-OpenSSL >= 0.14
 Requires: python3-module-cryptography >= 1.3.4
 Requires: python3-module-idna >= 2.0.0
+Requires: python3-module-cffi >= 1.7
 Requires: python3-module-requests >= 2.10
 #Requires: python3-ndg_httpsclient
 #Requires: python3-pyasn1
@@ -178,6 +182,9 @@ grep -q python %buildroot%_bindir/jws
 #%doc docs/_build/html
 
 %changelog
+* Sat Aug 05 2017 Vitaly Lipatov <lav@altlinux.ru> 0.14.1-alt4
+- add missed cffi requires
+
 * Wed Aug 02 2017 Vitaly Lipatov <lav@altlinux.ru> 0.14.1-alt3
 - improve requires according to new python module requires
 
