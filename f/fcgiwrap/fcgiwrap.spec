@@ -1,16 +1,18 @@
 Summary: Simple FastCGI wrapper for CGI scripts
 Name: fcgiwrap
 Version: 1.1.0
-Release: alt2
+Release: alt3%ubt
 License: BSD-style
 Group: System/Servers
 URL: http://nginx.localdomain.pl/wiki/FcgiWrap
 Source: %name-%version.tar
 # git://github.com/gnosek/fcgiwrap.git
-Patch0: %name-%version-%release.patch
+Patch0: %name-%version-alt.patch
 
 # Automatically added by buildreq on Tue Oct 19 2010
 BuildRequires: libfcgi-devel
+BuildRequires(pre):rpm-build-ubt
+BuildRequires: libsystemd-devel
 
 %description
 fcgiwrap  is a simple server for running CGI applications over FastCGI.
@@ -25,17 +27,26 @@ that may need it).
 
 %build
 autoreconf -fisv
-%configure
+%configure --with-systemd --with-systemdsystemunitdir=%_unitdir 
 %make
 
 %install
 %makeinstall_std
 
+%pre
+%_sbindir/groupadd -r -f _webserver ||:
+%_sbindir/useradd -r -g _webserver -G _webserver -d /dev/null -s /dev/null -n _fcgiwrap \
+        2> /dev/null > /dev/null ||:
+
 %files
 %_sbindir/fcgiwrap
+%_unitdir/*
 %_man8dir/*
 
 %changelog
+* Sat Aug 05 2017 Anton Farygin <rider@altlinux.ru> 1.1.0-alt3%ubt
+- add systemd support
+
 * Fri Apr 18 2014 Anton Farygin <rider@altlinux.ru> 1.1.0-alt2
 - updated from upstream git
 
