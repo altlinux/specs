@@ -3,8 +3,8 @@
 
 
 Name: accountsservice
-Version: 0.6.43
-Release: alt1
+Version: 0.6.45
+Release: alt1%ubt
 Summary: D-Bus interfaces for querying and manipulating user account information
 
 Group: System/Base
@@ -13,8 +13,9 @@ Url: http://www.fedoraproject.org/wiki/Features/UserAccountDialog
 #VCS: git://anongit.freedesktop.org/accountsservice
 
 Source: %name-%version.tar
-Patch1: %name-%version-%release.patch
+Patch1: %name-%version.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: intltool gtk-doc
 BuildRequires: glib2-devel libgio-devel >= 2.37.3
 BuildRequires: libpolkit-devel
@@ -112,6 +113,9 @@ GObject introspection devel data for the accountsservice library
 %_girdir/*.gir
 
 %changelog
+* Sat Aug 05 2017 Alexey Shabalin <shaba@altlinux.ru> 0.6.45-alt1%ubt
+- 0.6.45
+
 * Mon Dec 26 2016 Alexey Shabalin <shaba@altlinux.ru> 0.6.43-alt1
 - 0.6.43
 
