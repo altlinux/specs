@@ -1,6 +1,6 @@
 Name: catdoc
-Version: 0.94.2
-Release: alt4
+Version: 0.95
+Release: alt1
 
 Summary: Converts MS-Word and MS-Excel files to text
 
@@ -44,6 +44,7 @@ export man1dir=%_man1dir
 %make_build
 
 %install
+mkdir -p %buildroot%_man1dir/
 %make_install install
 install -pD -m755 %SOURCE1 %buildroot%_bindir/xlsview
 
@@ -55,9 +56,12 @@ install -pD -m755 %SOURCE1 %buildroot%_bindir/xlsview
 %_bindir/xls2csv
 %_datadir/%name/
 %_man1dir/*
-%doc README NEWS CREDITS
+%doc README NEWS
 
 %changelog
+* Sat Aug 05 2017 Vitaly Lipatov <lav@altlinux.ru> 0.95-alt1
+- new version 0.95 (with rpmrb script)
+
 * Thu Mar 31 2011 Slava Semushin <php-coder@altlinux.ru> 0.94.2-alt4
 - NMU
 - Updated BuildRequires to get rid of xorg-x11-libs (fixed build)
