@@ -1,7 +1,10 @@
+# TODO
+%define _qt5_mkspecs %_libdir/qt5/mkspecs
+
 %define libname libqtav
 Name: QtAV
-Version: 1.11.0
-Release: alt3
+Version: 1.12.0
+Release: alt1
 
 Summary: A cross-platform multimedia framework based on Qt and FFmpeg
 License: LGPL v2.1
@@ -17,7 +20,7 @@ BuildRequires: gcc-c++
 # Automatically added by buildreq on Mon Dec 12 2016
 # optimized out: fontconfig gcc-c++ libGL-devel libX11-devel libXext-devel libavcodec-devel libavutil-devel libcdio-paranoia libdc1394-22 libgpg-error libjson-c libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-qml libqt5-quick libqt5-sql libqt5-svg libqt5-widgets libraw1394-11 libstdc++-devel python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-xmlpatterns-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel
 BuildRequires: libXv-devel libass-devel libuchardet-devel libva-devel
-BuildRequires: qt5-base-devel qt5-multimedia-devel qt5-phonon-devel qt5-websockets-devel qt5-quick1-devel qt5-declarative-devel
+BuildRequires: qt5-base-devel qt5-multimedia-devel qt5-phonon-devel qt5-websockets-devel qt5-quick1-devel qt5-declarative-devel qt5-svg-devel
 BuildRequires: libavdevice-devel libavfilter-devel libavformat-devel libswscale-devel
 BuildRequires: libopenal-devel libpulseaudio-devel libswresample-devel
 
@@ -99,8 +102,9 @@ rm -rf %buildroot/{%_desktopdir,%_docdir,%_iconsdir,%_qt5_prefix/bin,%_bindir}
 %files -n %libname-devel
 %_qt5_headerdir/QtAV/
 %_qt5_headerdir/QtAVWidgets/
-%_qt5_prefix/mkspecs/features/*.prf
-%_qt5_prefix/mkspecs/modules/*.pri
+
+%_qt5_mkspecs/features/*.prf
+%_qt5_mkspecs/modules/*.pri
 %_libdir/libQtAV.prl
 %_libdir/libQtAVWidgets.prl
 %_libdir/libQtAV.so
@@ -111,6 +115,9 @@ rm -rf %buildroot/{%_desktopdir,%_docdir,%_iconsdir,%_qt5_prefix/bin,%_bindir}
 %doc doc/UseQtAVinYourProjects.md
 
 %changelog
+* Sat Aug 05 2017 Vitaly Lipatov <lav@altlinux.ru> 1.12.0-alt1
+- new version 1.12.0 (with rpmrb script)
+
 * Mon Jun 12 2017 Vitaly Lipatov <lav@altlinux.ru> 1.11.0-alt3
 - rebuild with ffmpeg
 
