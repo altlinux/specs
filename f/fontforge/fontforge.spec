@@ -3,7 +3,7 @@
 
 
 Name: fontforge
-Version: 20161012
+Version: 20170731
 Release: alt1
 Summary: FontForge -- font editor
 
@@ -135,6 +135,9 @@ sed -ri 's/^(runpath_var).*$/\1=/' libtool
 
 
 %changelog
+* Sun Aug 06 2017 Vitaly Lipatov <lav@altlinux.ru> 20170731-alt1
+- new version (20170731) with rpmgs script
+
 * Wed Mar 15 2017 Vitaly Lipatov <lav@altlinux.ru> 20161012-alt1
 - new version 20161012 (with rpmrb script)
 - build with bootstrap script
