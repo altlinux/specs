@@ -1,8 +1,8 @@
-%define major 0.10
+%define major 1.8
 %define oname gstreamermm
 Name: libgstreamermm
-Version: %major.8
-Release: alt2.1.1
+Version: %major.0
+Release: alt1
 
 Summary: C++ wrapper for GStreamer library
 
@@ -13,10 +13,18 @@ Url: http://www.gtkmm.org/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://ftp.gnome.org/pub/GNOME/sources/%oname/%major/%oname-%version.tar
-Patch0: libgstreamermm-0.10.8-alt-glib2-2.32.0.patch
+
+Patch1: 01-disable-tests.patch
+Patch2: 02-do-not-compile-examples.patch
+Patch3: 03-fix-build-with-gstreamer1.10.patch
+Patch4: 04-fix-build-with-gstreamer1.12.patch
+Patch5: 05-fix-build-with-gcc7.patch
 
 # Automatically added by buildreq on Wed Oct 07 2009
-BuildRequires: doxygen gcc-c++ glibc-devel gst-plugins-devel libxml++2-devel mm-common
+BuildRequires: doxygen gcc-c++
+BuildRequires: gst-plugins-bad1.0-devel gst-plugins1.0-devel libxml++2-devel mm-common
+
+%add_optflags -fpermissive
 
 %description
 GStreamermm is a C++ wrapper library for the multimedia library
@@ -34,33 +42,45 @@ developing gstreamermm applications.
 
 %prep
 %setup -n %oname-%version
-%patch0 -p2
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+#patch5 -p1
 
 %build
 export MMDOCTOOLDIR=/usr/share/mm-common/doctool/
-%configure --enable-shared --disable-examples --enable-docs --disable-dependency-tracking
+%autoreconf
+%configure --enable-shared --disable-examples --disable-docs --disable-dependency-tracking \
+    --disable-gl --disable-plugins-bad
 %make_build
 
 %install
 %makeinstall_std
 find %buildroot -type f -name "*.la" -exec rm -f {} ';'
 # Move documentation to gtk-doc directory
-mkdir -p %buildroot%_datadir/gtk-doc/html
-mv %buildroot%_docdir/%oname-0.10/reference/html %buildroot%_datadir/gtk-doc/html/%oname-0.10
+#mkdir -p %buildroot%_datadir/gtk-doc/html
+#mv %buildroot%_docdir/%oname-0.10/reference/html %buildroot%_datadir/gtk-doc/html/%oname-0.10
 # Removing code generation script stuff
-rm -rf %buildroot%_libdir/gstreamermm-0.10
+rm -rf %buildroot%_libdir/gstreamermm-1.0/gen/
 
 %files
 %doc AUTHORS ChangeLog COPYING NEWS README
 %_libdir/*.so.*
 
 %files devel
-%doc %_datadir/gtk-doc/html/%oname-0.10
-%_includedir/gstreamermm-0.10/
+%doc %_docdir/gstreamermm-1.0/
+%_includedir/gstreamermm-1.0/
+%_libdir/gstreamermm-1.0/
+%_datadir/devhelp/books/gstreamermm-1.0/
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Aug 06 2017 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
+- new version 1.8.0 (with rpmrb script) (ALT bug 32596)
+- build with --disable-plugins-bad --disable-gl (do not compiled)
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.10.8-alt2.1.1
 - Rebuilt for gcc5 C++11 ABI.
 
