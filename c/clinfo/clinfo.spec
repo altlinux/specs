@@ -1,5 +1,5 @@
 Name: clinfo
-Version: 2.1.17.02.09
+Version: 2.2.17.06.14
 Release: alt1
 
 Summary: Enumerate OpenCL platforms and devices
@@ -42,6 +42,9 @@ install -Dpm0644 man/%name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Sun Aug 06 2017 Vitaly Lipatov <lav@altlinux.ru> 2.2.17.06.14-alt1
+- new version 2.2.17.06.14 (with rpmrb script)
+
 * Sat Jun 17 2017 Vitaly Lipatov <lav@altlinux.ru> 2.1.17.02.09-alt1
 - initial build for ALT Sisyphus
 
