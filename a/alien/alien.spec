@@ -1,6 +1,6 @@
 Name: alien
 Version: 8.95
-Release: alt3
+Release: alt4
 
 Summary: Install Debian and Slackware Packages with RPM
 
@@ -45,6 +45,9 @@ This is a tool only suitable for binary packages.
 %_man3dir/*
 
 %changelog
+* Sun Aug 06 2017 Vitaly Lipatov <lav@altlinux.ru> 8.95-alt4
+- fix data.tar hack
+
 * Sun Aug 06 2017 Vitaly Lipatov <lav@altlinux.ru> 8.95-alt3
 - add data.tar.xz support (ALT bug 30594)
 
