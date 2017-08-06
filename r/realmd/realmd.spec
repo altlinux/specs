@@ -1,14 +1,15 @@
 
 Name: realmd
-Version: 0.16.2
-Release: alt2
+Version: 0.16.3
+Release: alt1%ubt
 Summary: Kerberos realm enrollment service
 License: LGPLv2+
 Group: Security/Networking
 Url: http://www.freedesktop.org/software/realmd/
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: intltool >= 0.35.0
 BuildRequires: pkgconfig(glib-2.0) >= 2.32.0 pkgconfig(gio-2.0) >= 2.32.0 pkgconfig(gio-unix-2.0)
 BuildRequires: pkgconfig(polkit-gobject-1)
@@ -69,6 +70,9 @@ applications that use %name.
 %doc %_datadir/doc/realmd/
 
 %changelog
+* Sun Aug 06 2017 Alexey Shabalin <shaba@altlinux.ru> 0.16.3-alt1%ubt
+- 0.16.3
+
 * Tue Jun 14 2016 Alexey Shabalin <shaba@altlinux.ru> 0.16.2-alt2
 - build fixed
 
