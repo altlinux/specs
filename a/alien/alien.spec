@@ -1,6 +1,6 @@
 Name: alien
 Version: 8.95
-Release: alt4
+Release: alt5
 
 Summary: Install Debian and Slackware Packages with RPM
 
@@ -19,6 +19,9 @@ Patch1: %name-data-tar.patch
 
 # Automatically added by buildreq on Mon Feb 13 2006
 BuildRequires: perl-devel perl-podlators
+
+# ar from binutils needs for deb unpack
+Requires: /usr/bin/ar
 
 %description
 Alien allows you to convert Debian, Slackware and Stampede Packages
@@ -45,6 +48,9 @@ This is a tool only suitable for binary packages.
 %_man3dir/*
 
 %changelog
+* Sun Aug 06 2017 Vitaly Lipatov <lav@altlinux.ru> 8.95-alt5
+- add /usr/bin/ar requires (ALT bug 30604)
+
 * Sun Aug 06 2017 Vitaly Lipatov <lav@altlinux.ru> 8.95-alt4
 - fix data.tar hack
 
