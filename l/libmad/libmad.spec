@@ -1,6 +1,6 @@
 Name: libmad
 Version: 0.15.1b
-Release: alt8
+Release: alt8.1
 
 Summary: High quality MPEG audio decoder library
 License: GPL
@@ -32,6 +32,12 @@ MAD-based software.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p2
+%ifarch e2k
+# lcc
+sed -i  -e 's,-fthread-jumps,,;s,-fcse-follow-jumps,,;s,-fcse-skip-blocks,,' \
+	-e 's,-fexpensive-optimizations,,;s,-fregmove,,' \
+	configure.ac
+%endif
 
 %build
 touch AUTHORS NEWS ChangeLog
@@ -59,6 +65,9 @@ ln -s libmad.pc %buildroot%_pkgconfigdir/mad.pc
 %_includedir/mad.h
 
 %changelog
+* Wed Mar 15 2017 Michael Shigorin <mike@altlinux.org> 0.15.1b-alt8.1
+- E2K: disable lcc-unsupported options
+
 * Fri Apr 25 2014 Michael Shigorin <mike@altlinux.org> 0.15.1b-alt8
 - NMU: symlink libmad.pc as mad.pc for enhanced compatibility
 
