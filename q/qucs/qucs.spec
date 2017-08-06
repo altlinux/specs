@@ -1,53 +1,66 @@
 Name: qucs
-Version: 0.0.18
-Release: alt2
+Version: 0.0.19
+Release: alt1
 Summary: Circuit simulator
 License: GPL
 Group: Education
 Url: http://qucs.sourceforge.net/
 
-Source0: http://ovh.dl.sourceforge.net/sourceforge/qucs/%name-%version.tar.gz
+Source0: https://sourceforge.net/projects/%name/files/%name/%version/%name-%version.tar.gz
 Source1: %name.desktop
 Source2: qucs-tango-icons.tar.bz2
 Source3: qucs-icons.tar.bz2
 Patch: qucs-0.0.17-norecode.patch
-Patch1: %name-%version-alt-build.patch
+#Patch1: %name-%version-alt-build.patch
 
 # WTF libqt4-devel
 BuildRequires: libqt4-devel
+BuildRequires: mot-adms
+BuildRequires: chrpath
 
 # Automatically added by buildreq on Tue Jan 14 2014
 # optimized out: fontconfig libICE-devel libSM-devel libX11-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-qt3support libqt4-sql libqt4-xml libstdc++-devel xorg-xproto-devel
 BuildRequires: flex gcc-c++ gperf imake xorg-cf-files
+
+Requires: %name-data = %version-%release
 
 %description
 Qucs is a circuit simulator with graphical user interface.  The
 software aims to support all kinds of circuit simulation types,
 e.g. DC, AC, S-parameter and harmonic balance analysis.
 
+%package data
+Group:	 Education
+Summary: Data files for Qucs, a circuit simulator
+Buildarch: noarch
+
+%description data
+Data files  for Qucs, a circuit simulator.
+
 %package -n libqucs
 Group:	 Education
 Summary: Supplemental library for Qucs, a circuit simulator
+
 %description -n libqucs
-Supplemental library for Qucs, a circuit simulator
+Supplemental library for Qucs, a circuit simulator.
 
 %package -n libqucs-devel
 Group:	Development/C++
 Summary: Development environment for Qucs, a circuit simulator
+
 %description -n libqucs-devel
-Development environment for Qucs, a circuit simulator
+Development environment for Qucs, a circuit simulator.
 
 %prep
 %setup
 tar -xjf %SOURCE2 -C qucs
-touch qucs-core/deps/adms/README
 ##sed -i '\@<tr1/complex>@d' qucs-core/configure
 ##patch -p1
-%patch1 -p2
+#patch1 -p2
 
 %build
-%autoreconf
-%configure --disable-asco --disable-adms
+#autoreconf
+%configure --disable-doc
 %make_build RCC=rcc-qt4
 
 %install
@@ -64,10 +77,17 @@ for l in $(find %buildroot%_datadir/%name/lang -name \*.qm); do
     echo $l | sed "s,%buildroot,,"
 done > %name.lang
 
-%files -f %name.lang
-%doc AUTHORS COPYING ChangeLog INSTALL NEWS PLATFORMS README RELEASE THANKS TODO
+chrpath -d %buildroot%_bindir/qucsconv
+chrpath -d %buildroot%_bindir/qucsator
 
+%files -f %name.lang
+%doc NEWS.md README.md
 %_bindir/*
+%_desktopdir/*
+%_iconsdir/hicolor/*/apps/*
+%_man1dir/*
+
+%files data
 %dir %_datadir/%name
 %dir %_datadir/%name/lang
 # XXX GONE?
@@ -76,7 +96,9 @@ done > %name.lang
 %_datadir/%name/tline
 %_datadir/%name/octave
 %dir %_datadir/%name/docs
-%_datadir/%name/docs/???*
+#_datadir/%name/docs/???*
+%_datadir/%name-core
+%_datadir/%name/examples
 %_datadir/%name/docs/en
 %lang(de) %_datadir/%name/docs/de
 %lang(es) %_datadir/%name/docs/es
@@ -85,9 +107,6 @@ done > %name.lang
 %lang(uk) %_datadir/%name/docs/uk
 %lang(cs) %_datadir/%name/docs/cs
 %lang(pt) %_datadir/%name/docs/pt
-%_desktopdir/*
-%_iconsdir/hicolor/*/apps/*
-%_man1dir/*
 
 %files -n libqucs
 %_libdir/*.so.*
@@ -97,6 +116,9 @@ done > %name.lang
 %_includedir/qucs-core
 
 %changelog
+* Sun Aug 06 2017 Anton Midyukov <antohami@altlinux.org> 0.0.19-alt1
+- New version 0.0.19
+
 * Thu Jul 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.18-alt2
 - Fixed build with new toolchain
 
