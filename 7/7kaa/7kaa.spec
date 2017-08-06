@@ -1,5 +1,5 @@
 Name: 7kaa
-Version: 2.14.6
+Version: 2.14.7
 Release: alt1
 Summary: Seven Kingdoms: Ancient Adversaries
 
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Source1: %name.autodlrc
 Source2: %name-data-installer
 
-BuildRequires: gcc-c++ libSDL2-devel libSDL2_net-devel libenet-devel libopenal-devel desktop-file-utils ImageMagick-tools
+BuildRequires: gcc-c++ libSDL2-devel libSDL2_net-devel libenet-devel libopenal-devel pkgconfig(libcurl) desktop-file-utils ImageMagick-tools
 Requires: %name-data = %version-%release
 
 %description
@@ -133,6 +133,9 @@ fi
 %prj_music_dir/%name.autodlrc
 
 %changelog
+* Sun Aug 06 2017 Anton Midyukov <antohami@altlinux.org> 2.14.7-alt1
+- new version (2.14.7) with rpmgs script
+
 * Sun Dec 11 2016 Anton Midyukov <antohami@altlinux.org> 2.14.6-alt1
 - new version (2.14.6) with rpmgs script
 
