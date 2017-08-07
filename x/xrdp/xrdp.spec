@@ -1,5 +1,5 @@
 Name: 	 xrdp
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
@@ -19,24 +19,16 @@ Source4: libpainter.tar
 Source5: librfxcodec.tar
 Source6: xorgxrdp.tar
 
-# patches from Fedora
-#Patch0:  %name-0.9.0-sesman.patch
-#Patch1:  %name-0.9.0-service.patch
-
 # patches from Debian
 Patch1: asm-librfxcodec.diff
 Patch2: asm-xorgxrdp.diff
 Patch3: make-fixes.diff
 Patch4: config.diff
 Patch5: misc-fixes.diff
-Patch6: fix_perms.diff
 Patch7: shutup-daemon.diff
-Patch8: sockpath.diff
-Patch9: systemd.diff
 Patch10: lfs.diff
 
 # Other patches
-#Patch10: xrdp-0.6.1-fix-build.patch
 Patch12: xrdp-alt-startwm.patch
 
 BuildPreReq: rpm-build-intro
@@ -56,7 +48,7 @@ BuildRequires: openssl
 BuildRequires: xorg-sdk
 BuildRequires: nasm
 
-#Requires: tigervnc-server
+Requires: xorg-drv-xrdp = %EVR
 
 Provides: librfxcodec = %EVR
 Obsoletes: librfxcodec < %EVR
@@ -97,10 +89,7 @@ tar xf %SOURCE6
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-#patch6 -p1
 %patch7 -p1
-#patch8 -p1
-#patch9 -p1
 %patch10 -p1
 %patch12 -p1
 
@@ -110,26 +99,13 @@ subst "s|/usr/lib|%_libdir|g" %name-init
 find . -type f -name Makefile.am -exec subst "s|\${localstatedir}\/run|/var/run|g" {} \;
 
 # remove unused modules from xrdp login combobox
-cp xrdp/xrdp.ini xrdp/xrdp.ini.new
-sed -i -e '/\[xrdp1\]/,$d' xrdp/xrdp.ini.new
+subst '/^\[Xvnc\]/,$s/^\([a-z[]\)/#\1/' xrdp/xrdp.ini
 
-echo "
-[xrdp1]
-name=sesman-Xvnc
-lib=libvnc.so
-username=ask
-password=ask
-ip=127.0.0.1
-port=-1
-delay_ms=2000
-" >>  xrdp/xrdp.ini.new
-
-#Low is 40 bit key and everything from client to server is encrypted.
-#Medium is 40 bit key, everything both ways is encrypted.
-#High is 128 bit key everything both ways is encrypted.
-
+# Low is 40 bit key and everything from client to server is encrypted.
+# Medium is 40 bit key, everything both ways is encrypted.
+# High is 128 bit key everything both ways is encrypted.
 # increase encryption to 128 bit's
-sed -i 's/crypt_level=low/crypt_level=high/g' xrdp/xrdp.ini
+subst 's/crypt_level=low/crypt_level=high/g' xrdp/xrdp.ini
 
 # create 'bash -l' based startwm, to pick up PATH etc.
 echo '#!/bin/bash -l
@@ -148,7 +124,8 @@ done
 	   --enable-fuse \
 	   --enable-rfxcodec \
 	   --enable-opus \
-	   --enable-painter
+	   --enable-painter \
+	   --with-systemdsystemunitdir=%systemd_unitdir
 pushd xorgxrdp
 PKG_CONFIG_PATH=../pkgconfig ./configure
 popd
@@ -168,7 +145,6 @@ popd
 %makeinstall_std
 
 mkdir -p %buildroot%_sysconfdir/xrdp
-cp xrdp/xrdp.ini.new %buildroot%_sysconfdir/xrdp
 
 rm -f %buildroot/%_libdir/xrdp/startwm.sh
 rm -f %buildroot/%_libdir/xrdp/xrdp_control.sh
@@ -203,13 +179,26 @@ install -Dp -m 755 sesman/startwm-bash.sh %buildroot%_sysconfdir/xrdp/startwm-ba
 find %buildroot -name *.a -delete -o -name *.la -delete
 rm -rf %buildroot{/usr/local,%_includedir,%_pkgconfigdir}
 
+%pre
+/usr/sbin/groupadd -r -f tsusers ||:
+/usr/sbin/groupadd -r -f tsadmins ||:
+
 %post
 %post_service %name
 # Generate keys if they are missing
-if [ ! grep -s "^pub_mod=" &>/dev/null ]; then
-	xrdp-keygen xrdp %_sysconfdir/xrdp/rsakeys.ini > /dev/null
-	chmod 0600 %_sysconfdir/xrdp/rsakeys.ini
+if [ ! -s %_sysconfdir/xrdp/rsakeys.ini ]; then
+  (umask 377; %_bindir/xrdp-keygen xrdp %_sysconfdir/xrdp/rsakeys.ini >/dev/null)
 fi
+chmod 400 %_sysconfdir/xrdp/rsakeys.ini
+
+if [ ! -s %_sysconfdir/xrdp/cert.pem ]; then
+  (umask 377; openssl req -x509 -newkey rsa:2048 -sha256 -nodes -days 3652 \
+    -keyout %_sysconfdir/xrdp/key.pem \
+    -out %_sysconfdir/xrdp/cert.pem \
+    -config %_sysconfdir/xrdp/openssl.conf >/dev/null 2>&1)
+fi
+chmod 400 %_sysconfdir/xrdp/cert.pem
+chmod 400 %_sysconfdir/xrdp/key.pem
 
 %preun
 %preun_service %name
@@ -217,9 +206,8 @@ fi
 %files
 %config %_sysconfdir/pam.d/xrdp-sesman
 %dir %_sysconfdir/xrdp/
-%_sysconfdir/default/%name
 %_sysconfdir/xrdp/km*.ini
-%_sysconfdir/xrdp/startwm*.sh
+%_sysconfdir/xrdp/*.sh
 %_sysconfdir/xrdp/xrdp.sh
 %dir %_sysconfdir/xrdp/pulse
 %_sysconfdir/xrdp/pulse/default.pa
@@ -231,7 +219,6 @@ fi
 %attr(0600,root,root) %verify(not size md5 mtime) %_sysconfdir/xrdp/rsakeys.ini
 %config %_sysconfdir/xrdp/sesman.ini
 %config %_sysconfdir/xrdp/xrdp.ini
-%_sysconfdir/xrdp/xrdp.ini.new
 %_sysconfdir/xrdp/*.pem
 %_bindir/xrdp*
 %_sbindir/xrdp*
@@ -250,6 +237,11 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Wed Jul 26 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.3-alt1
+- New version (ALT #33674)
+- xrdp requires xorg-drv-xrdp
+- Create keys if they do not exist
+
 * Fri Mar 31 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.2-alt1
 - New version
 
