@@ -1,5 +1,5 @@
 Name: eterbackup
-Version: 1.0
+Version: 1.4
 Release: alt1
 
 Summary: Etersoft backup tools for journaling backup
@@ -15,7 +15,7 @@ Source: ftp://updates.etersoft.ru/pub/Etersoft/Sisyphus/sources/tarball/%name-%v
 
 BuildArchitectures: noarch
 
-Requires: zpaq >= 705
+Requires: zpaq >= 715
 
 %description
 Etersoft Backup Tools intended for resolve typical backup tasks.
@@ -42,11 +42,41 @@ See detailed russian description here: http://wiki.etersoft.ru/Eterbackup
 %_bindir/eterpack
 %_bindir/eterremove
 %_bindir/etertimemachine
+%_bindir/eterattrstore
 #%_datadir/%name/
 %_man1dir/*
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Mon Aug 07 2017 Vitaly Lipatov <lav@altlinux.ru> 1.4-alt1
+- eterpack: add checking if archive is found
+- eterpack: create target dir when create one file archive
+- eterpack: fix script name (eterpack, not eterbackup)
+- eterpack: add zpaq version checking
+- eterpack: user MAXDEPTH/MINDEPTH
+- eterpack: rename list_files to list_rootfiles
+- eterpack: pack extra empty dirs also
+- eterpack: use -index option from zpaq 7.10
+- eterpack: comment out incorrect reldir checking
+- eterpack: use root name for root zpaq archive
+- eterpack: use var for version and need zpaq version
+- implement eterpack status
+- update TODO
+
+* Tue Apr 19 2016 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt1
+- require zpaq 710
+- eterremove: add test for file modified order, fix error (eterbug #10728)
+- eterpack: add warning about only only --exclude is supported
+
+* Fri Apr 01 2016 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt1
+- pack missed eterattrstore
+- eterpack: add echo command
+- eterremove: add shift arg
+
+* Wed Aug 26 2015 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt1
+- eterattrstore: do not pack sockets
+- eterremove: check only files during by size removing
+
 * Tue Aug 18 2015 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - pack eterremove command
 - add eterattrstore: separate command for save&restore special files and file attrs
