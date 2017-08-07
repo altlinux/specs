@@ -9,7 +9,7 @@
 
 Name: usbguard
 Version: 0.7.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Servers
 Summary: A tool for implementing USB device usage policy
@@ -146,8 +146,8 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/usbguard/usbguard-daemon.conf
 %dir %_localstatedir/log/usbguard
 %dir %_sysconfdir/usbguard
 %dir %_sysconfdir/usbguard/IPCAccessControl.d
-%config(noreplace) %attr(0600,-,-) %_sysconfdir/usbguard/usbguard-daemon.conf
-%config(noreplace) %attr(0600,-,-) %_sysconfdir/usbguard/rules.conf
+%config(noreplace) %attr(0600,root,root) %_sysconfdir/usbguard/usbguard-daemon.conf
+%config(noreplace) %attr(0600,root,root) %_sysconfdir/usbguard/rules.conf
 %_unitdir/usbguard.service
 %_man8dir/usbguard-daemon.*
 %_man5dir/usbguard-daemon.conf.*
@@ -184,5 +184,8 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/usbguard/usbguard-daemon.conf
 %endif
 
 %changelog
+* Mon Aug 07 2017 Sergey V Turchin <zerg@altlinux.org> 0.7.0-alt2%ubt
+- fix configs permissions
+
 * Fri Aug 04 2017 Sergey V Turchin <zerg@altlinux.org> 0.7.0-alt1%ubt
 - initial build
