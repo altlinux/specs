@@ -5,14 +5,13 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1
+Release: alt2
 Summary: An implementation of lxml.xmlfile for the standard library
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/et_xmlfile
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: https://pypi.python.org/packages/22/28/a99c42aea746e18382ad9fb36f64c1c1f04216f41797f2f0fa567da11388/%{oname}-%{version}.tar.gz
+Source0: %{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -109,14 +108,10 @@ popd
 
 %check
 export LC_ALL=en_US.UTF-8
-python setup.py test -v
-rm -fR build
 py.test -vv
 %if_with python3
 pushd ../python3
-python3 setup.py test -v
-rm -fR build
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
@@ -139,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt2
+- Fixed build.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1
 - automated PyPI update
 
