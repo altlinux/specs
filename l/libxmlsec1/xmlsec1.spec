@@ -1,6 +1,6 @@
 Name: libxmlsec1
 Version: 1.2.24
-Release: alt1
+Release: alt2
 License: MIT
 Summary: Library providing support for "XML Signature" and "XML Encryption" standards
 Group: System/Libraries
@@ -142,37 +142,40 @@ true || LD_LIBRARY_PATH=%buildroot%_libdir make check
 
 %files openssl
 %_libdir/libxmlsec1-openssl.so.*
+%_libdir/libxmlsec1-openssl.so
 
 %files openssl-devel
 %_includedir/xmlsec1/xmlsec/openssl/
 %_libdir/pkgconfig/xmlsec1-openssl.pc
-%_libdir/libxmlsec1-openssl.so
 
 %files gcrypt
 %_libdir/libxmlsec1-gcrypt.so.*
+%_libdir/libxmlsec1-gcrypt.so
 
 %files gcrypt-devel
 %_includedir/xmlsec1/xmlsec/gcrypt/
 %_libdir/pkgconfig/xmlsec1-gcrypt.pc
-%_libdir/libxmlsec1-gcrypt.so
 
 %files gnutls
 %_libdir/libxmlsec1-gnutls.so.*
+%_libdir/libxmlsec1-gnutls.so
 
 %files gnutls-devel
 %_includedir/xmlsec1/xmlsec/gnutls/
 %_libdir/pkgconfig/xmlsec1-gnutls.pc
-%_libdir/libxmlsec1-gnutls.so
 
 %files nss
 %_libdir/libxmlsec1-nss.so.*
+%_libdir/libxmlsec1-nss.so
 
 %files nss-devel
 %_includedir/xmlsec1/xmlsec/nss/
 %_libdir/pkgconfig/xmlsec1-nss.pc
-%_libdir/libxmlsec1-nss.so
 
 %changelog
+* Mon Aug 07 2017 Alexey Shabalin <shaba@altlinux.ru> 1.2.24-alt2
+- Fix missing links to unversioned shared library files (ALT#33703)
+
 * Fri May 19 2017 Fr. Br. George <george@altlinux.ru> 1.2.24-alt1
 - Autobuild version bump to 1.2.24
 
