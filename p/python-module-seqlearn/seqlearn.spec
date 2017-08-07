@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.2
-Release: alt1
+Release: alt2
 Summary: Sequence learning toolkit for Python
 License: MIT
 Group: Development/Python
@@ -24,6 +24,7 @@ BuildPreReq: python-module-numpy-testing
 BuildPreReq: python-module-pytest
 BuildPreReq: python-module-scikit-learn
 BuildPreReq: python-module-sphinx
+BuildPreReq: python-module-six
 #BuildPreReq: python-devel python-module-setuptools-tests
 #BuildPreReq: python-module-Cython libnumpy-devel
 #BuildPreReq: python-module-scipy python-module-scikit-learn
@@ -35,6 +36,7 @@ BuildPreReq: python3-devel
 BuildPreReq: python3-module-Cython
 BuildPreReq: python3-module-numpy-testing
 BuildPreReq: python3-module-pytest
+BuildPreReq: python3-module-six
 #BuildPreReq: python3-devel python3-module-setuptools-tests
 #BuildPreReq: python3-module-Cython libnumpy-py3-devel
 #BuildPreReq: python3-module-scipy python3-module-scikit-learn
@@ -106,6 +108,10 @@ This package contains documentation for %oname.
 
 %prep
 %setup -q -n %{oname}-%{version}
+
+# Don't depend on sklearn.externals.six, depend on six instead
+find . -name '*.py' -type f -print0 | xargs -0 sed -i \
+	-e 's:from sklearn\.externals ::g'
 
 %if_with python3
 rm -rf ../python3
@@ -180,6 +186,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2-alt2
+- Updated dependencies.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.2-alt1
 - automated PyPI update
 
