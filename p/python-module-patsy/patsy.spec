@@ -4,32 +4,25 @@
 
 Name: python-module-%oname
 Version: 0.4.0
-Release: alt1.1.1
+Release: alt2
 
 Summary: A Python package for describing statistical models and for building design matrices
 License: BSD
 Group: Development/Python
 Url: http://patsy.readthedocs.org/en/latest/
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 %setup_python_module %oname
 
 Source: %name-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools
-#BuildPreReq: python-module-sphinx-devel
-#BuildPreReq: libnumpy-devel python-module-matplotlib ipython
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-module-alabaster python-module-html5lib python-module-ipyparallel python-module-numpy-testing python-module-objects.inv time
+BuildRequires: python-module-pathlib2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: fontconfig ipython python-base python-devel python-module-Pillow python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-cycler python-module-dateutil python-module-decorator python-module-docutils python-module-enum34 python-module-functools32 python-module-future python-module-genshi python-module-greenlet python-module-ipykernel python-module-ipython_genutils python-module-jinja2 python-module-jinja2-tests python-module-jsonschema python-module-jupyter_client python-module-jupyter_core python-module-markupsafe python-module-matplotlib python-module-nbconvert python-module-nbformat python-module-ndg-httpsclient python-module-notebook python-module-ntlm python-module-numpy python-module-path python-module-pexpect python-module-pickleshare python-module-ptyprocess python-module-pyasn1 python-module-pycares python-module-pycurl python-module-pygobject3 python-module-pyparsing python-module-pytz python-module-setuptools python-module-simplegeneric python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-terminado python-module-tornado_xstatic python-module-traitlets python-module-wx3.0 python-module-xstatic python-module-xstatic-term.js python-module-zmq python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-sqlite3 python-modules-unittest python-modules-wsgiref python-tools-2to3 python3 python3-base
-BuildRequires: python-module-alabaster python-module-html5lib python-module-ipyparallel python-module-numpy-testing python-module-objects.inv python3-module-setuptools rpm-build-python3 time
-
-#BuildRequires: python3-devel python3-module-setuptools
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pathlib2
 %endif
 
 %description
@@ -160,6 +153,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Aug 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.0-alt2
+- Updated build dependencies.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.0-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
