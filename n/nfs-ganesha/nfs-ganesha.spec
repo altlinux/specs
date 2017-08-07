@@ -71,7 +71,7 @@
 
 Name: nfs-ganesha
 Version: 2.5.0
-Release: alt1
+Release: alt2
 
 Summary: NFS-Ganesha is a NFS Server running in user space
 
@@ -540,6 +540,9 @@ install -m 644 ChangeLog	%buildroot%_docdir/ganesha
 %endif
 
 %changelog
+* Tue Aug 08 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt2
+- build with new libntirpc 1.5.3
+
 * Sun Jun 11 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1
 - new version 2.5.0
 
