@@ -171,7 +171,7 @@
 
 Name: pve-%rname
 Version: 2.9.0
-Release: alt2
+Release: alt3
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -198,68 +198,55 @@ Patch0: qemu-alt.patch
 
 Patch10: 0001-fr-ca-keymap-corrections.patch
 Patch11: 0002-Adjust-network-script-path-to-etc-kvm.patch
-Patch12: 0003-vnc-altgr-emulation.patch
-Patch13: 0004-qemu-img-return-success-on-info-without-snapshots.patch
-Patch14: 0005-use-kvm-by-default.patch
-Patch15: 0006-virtio-balloon-fix-query.patch
-Patch16: 0007-set-the-CPU-model-to-kvm64-32-instead-of-qemu64-32.patch
-Patch17: 0008-qapi-modify-query-machines.patch
-Patch18: 0009-qapi-modify-spice-query.patch
-Patch19: 0010-ui-spice-default-to-pve-certs-unless-otherwise-speci.patch
-Patch20: 0011-introduce-new-vma-archive-format.patch
-Patch21: 0012-vma-add-verify-command.patch
-Patch22: 0013-vma-add-config-command-to-dump-the-config.patch
-Patch23: 0014-backup-modify-job-api.patch
-Patch24: 0015-backup-add-pve-monitor-commands.patch
-Patch25: 0016-backup-vma-add-dir-format.patch
-Patch26: 0017-backup-do-not-return-errors-in-dump-callback.patch
-Patch27: 0018-backup-vma-correctly-propagate-error.patch
-Patch28: 0019-backup-vma-remove-async-queue.patch
-Patch29: 0020-backup-vma-run-flush-inside-coroutine.patch
-Patch30: 0021-backup-do-not-use-bdrv_drain_all.patch
-Patch31: 0022-internal-snapshot-async.patch
-Patch32: 0023-backup-vma-allow-empty-backups.patch
-Patch33: 0024-qmp-add-get_link_status.patch
-Patch34: 0025-smm_available-false.patch
-Patch35: 0026-use-whitespace-between-VERSION-and-PKGVERSION.patch
-Patch36: 0027-vma-add-firewall.patch
-Patch37: 0028-savevm-async-migration-and-bdrv_open-update.patch
-Patch38: 0029-vnc-make-x509-imply-tls-again.patch
-Patch39: 0030-PVE-VNC-authentication.patch
-Patch40: 0031-vma-writer-don-t-bail-out-on-zero-length-files.patch
-Patch41: 0032-vma-better-driver-guessing-for-bdrv_open.patch
-Patch42: 0033-block-add-the-zeroinit-block-driver-filter.patch
-Patch43: 0034-vma-add-format-option-to-device-mapping.patch
-Patch44: 0035-fix-possible-unitialised-return-value.patch
-Patch45: 0036-vnc-refactor-to-QIOChannelSocket.patch
-Patch46: 0037-vma-use-BlockBackend-on-extract.patch
-Patch47: 0038-vma-byte-based-write-calls.patch
-Patch48: 0039-rbd-disable-rbd_cache_writethrough_until_flush-with-.patch
-Patch49: 0040-enable-cache-unsafe-for-vma-extract_content-and-qmp_.patch
-Patch50: 0041-savevm-async-updates.patch
-Patch51: 0042-qmp_snapshot_drive-add-aiocontext.patch
-Patch52: 0043-vma-sizes-passed-to-blk_co_preadv-should-be-bytes-no.patch
-Patch53: 0044-glusterfs-no-default-logfile-if-daemonized.patch
-Patch54: 0045-qmp_delete_drive_snapshot-add-aiocontext.patch
-Patch55: 0046-convert-savevm-async-to-threads.patch
-Patch56: 0047-glusterfs-allow-partial-reads.patch
-Patch57: 0048-vma-don-t-use-O_DIRECT-on-pipes.patch
-Patch58: 0049-block-zeroinit-request-child-permissions.patch
-Patch59: 0001-Revert-target-i386-disable-LINT0-after-reset.patch
-Patch60: 0002-qemu-img-wait-for-convert-coroutines-to-complete.patch
-Patch61: 0003-block-Do-not-unref-bs-file-on-error-in-BD-s-open.patch
-Patch62: 0004-9pfs-local-fix-unlink-of-alien-files-in-mapped-file-.patch
-Patch63: 0005-blockdev-use-drained_begin-end-for-qmp_block_resize.patch
-Patch64: 0006-aio-add-missing-aio_notify-to-aio_enable_external.patch
-Patch65: 0007-virtio-serial-bus-Unset-hotplug-handler-when-unreali.patch
-Patch66: 0008-virtio-serial-fix-segfault-on-disconnect.patch
-Patch67: 0009-e1000e-Fix-ICR-Other-causes-clear-logic.patch
-Patch68: 0010-mirror-Drop-permissions-on-s-target-on-completion.patch
-Patch69: 0011-vmw_pvscsi-check-message-ring-page-count-at-initiali.patch
-Patch70: 0012-audio-release-capture-buffers.patch
-Patch71: 0013-input-limit-kbd-queue-depth.patch
-Patch72: 0014-scsi-avoid-an-off-by-one-error-in-megasas_mmio_write.patch
-Patch73: 0015-9pfs-local-forbid-client-access-to-metadata-CVE-2017.patch
+Patch12: 0003-qemu-img-return-success-on-info-without-snapshots.patch
+Patch13: 0004-use-kvm-by-default.patch
+Patch14: 0005-virtio-balloon-fix-query.patch
+Patch15: 0006-set-the-CPU-model-to-kvm64-32-instead-of-qemu64-32.patch
+Patch16: 0007-qapi-modify-query-machines.patch
+Patch17: 0008-qapi-modify-spice-query.patch
+Patch18: 0009-ui-spice-default-to-pve-certs-unless-otherwise-speci.patch
+Patch19: 0010-internal-snapshot-async.patch
+Patch20: 0011-convert-savevm-async-to-threads.patch
+Patch21: 0012-qmp-add-get_link_status.patch
+Patch22: 0013-smm_available-false.patch
+Patch23: 0014-use-whitespace-between-VERSION-and-PKGVERSION.patch
+Patch24: 0015-vnc-altgr-emulation.patch
+Patch25: 0016-vnc-make-x509-imply-tls-again.patch
+Patch26: 0017-vnc-PVE-VNC-authentication.patch
+Patch27: 0018-migrate-fix-possible-unitialised-return-value.patch
+Patch28: 0019-block-rbd-disable-rbd_cache_writethrough_until_flush.patch
+Patch29: 0020-block-snapshot-qmp_snapshot_drive-add-aiocontext.patch
+Patch30: 0021-block-snapshot-qmp_delete_drive_snapshot-add-aiocont.patch
+Patch31: 0022-glusterfs-no-default-logfile-if-daemonized.patch
+Patch32: 0023-glusterfs-allow-partial-reads.patch
+Patch33: 0024-block-add-the-zeroinit-block-driver-filter.patch
+Patch34: 0025-qemu-img-dd-add-osize-and-read-from-to-stdin-stdout.patch
+Patch35: 0026-backup-modify-job-api.patch
+Patch36: 0027-backup-introduce-vma-archive-format.patch
+Patch37: 0028-adding-old-vma-files.patch
+Patch38: 0001-Revert-target-i386-disable-LINT0-after-reset.patch
+Patch39: 0002-qemu-img-wait-for-convert-coroutines-to-complete.patch
+Patch40: 0003-block-Do-not-unref-bs-file-on-error-in-BD-s-open.patch
+Patch41: 0004-9pfs-local-fix-unlink-of-alien-files-in-mapped-file-.patch
+Patch42: 0005-blockdev-use-drained_begin-end-for-qmp_block_resize.patch
+Patch43: 0006-aio-add-missing-aio_notify-to-aio_enable_external.patch
+Patch44: 0007-virtio-serial-bus-Unset-hotplug-handler-when-unreali.patch
+Patch45: 0008-virtio-serial-fix-segfault-on-disconnect.patch
+Patch46: 0009-e1000e-Fix-ICR-Other-causes-clear-logic.patch
+Patch47: 0010-mirror-Drop-permissions-on-s-target-on-completion.patch
+Patch48: 0011-vmw_pvscsi-check-message-ring-page-count-at-initiali.patch
+Patch49: 0012-audio-release-capture-buffers.patch
+Patch50: 0013-input-limit-kbd-queue-depth.patch
+Patch51: 0014-scsi-avoid-an-off-by-one-error-in-megasas_mmio_write.patch
+Patch52: 0015-9pfs-local-forbid-client-access-to-metadata-CVE-2017.patch
+Patch53: 0016-megasas-do-not-read-DCMD-opcode-more-than-once-from-.patch
+Patch54: 0017-megasas-always-store-SCSIRequest-into-MegasasCmd.patch
+Patch55: 0018-nbd-Fully-initialize-client-in-case-of-failed-negoti.patch
+Patch56: 0019-nbd-Fix-regression-on-resiliency-to-port-scan.patch
+Patch57: 0020-qemu-nbd-Ignore-SIGPIPE.patch
+Patch58: 0021-usb-redir-fix-stack-overflow-in-usbredir_log_data.patch
+Patch59: 0022-exec-use-qemu_ram_ptr_length-to-access-guest-ram.patch
+Patch60: 0023-slirp-check-len-against-dhcp-options-array-end.patch
 
 %set_verify_elf_method fhs=relaxed
 
@@ -489,19 +476,6 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch58 -p1
 %patch59 -p1
 %patch60 -p1
-%patch61 -p1
-%patch62 -p1
-%patch63 -p1
-%patch64 -p1
-%patch65 -p1
-%patch66 -p1
-%patch67 -p1
-%patch68 -p1
-%patch69 -p1
-%patch70 -p1
-%patch71 -p1
-%patch72 -p1
-%patch73 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -738,6 +712,12 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Mon Aug 07 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.9.0-alt3
+- fix CVE-2017-7539, CVE-2017-11434, CVE-2017-11334, CVE-2017-10806, CVE-2017-10664, CVE-2017-9524, CVE-2017-9503
+
+* Fri Jun 16 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.9.0-alt0.M80P.2
+- backport to p8 branch
+
 * Fri Jun 16 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.9.0-alt2
 - merge various stable fixes
 
