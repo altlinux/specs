@@ -29,8 +29,8 @@
 %def_disable static
 
 Name: collectd
-Version: 5.5.2
-Release: alt1.3
+Version: 5.7.2
+Release: alt1%ubt
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -38,14 +38,14 @@ Group: Monitoring
 
 Url: http://collectd.org
 Source0: %url/files/%name-%version.tar
-Patch0: %name-%version-%release.patch
-Patch1: %name-%version-alt-build.patch
+Patch0: %name-%version-alt.patch
 
 ### NB: part of BRs is conditional (see subpackages below)
 # Automatically added by buildreq on Thu May 14 2009 (-bi)
 #BuildRequires: flex gcc-c++ iptables-devel libMySQL-devel libcurl-devel libdbi-devel libesmtp-devel libgcrypt-devel libnet-snmp-devel libnetlink-devel libnotify-devel liboping-devel libpcap-devel librrd-devel libsensors-devel libvirt-devel libxfs-devel libxml2-devel libxmms-devel nut-devel perl-devel perl-threads perl-Regexp-Common postgresql-devel
 BuildRequires: flex gcc-c++ iptables-devel libgcrypt-devel libpcap-devel libxfs-devel
 BuildRequires: libstatgrab-devel
+BuildRequires(pre):rpm-build-ubt
 
 %if_enabled perl
 BuildRequires: perl-devel perl-threads perl-Regexp-Common perl-Pod-Parser
@@ -494,7 +494,6 @@ from collectd into nagios to avoid extra sensor-caused load
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 sed -i 's/ -Werror//' src/Makefile.*
 mkdir libltdl
 
@@ -577,7 +576,7 @@ libdir: "%_localstatedir/%name"
 EOF
 %endif
 
-install -pDm644 contrib/collectd.service %buildroot%_unitdir/collectd.service
+install -pDm644 contrib/systemd.collectd.service %buildroot%_unitdir/collectd.service
 
 # --disable-monitorus is not working
 %if_disabled monitorus
@@ -622,7 +621,7 @@ service %name condrestart ||:
 service %name condrestart ||:
 
 %files
-%doc AUTHORS ChangeLog README TODO
+%doc AUTHORS ChangeLog README ChangeLog
 %doc contrib/
 %config(noreplace) %_sysconfdir/%name.conf
 %_initdir/%name
@@ -838,6 +837,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Mon Aug 07 2017 Anton Farygin <rider@altlinux.ru> 5.7.2-alt1%ubt
+- 5.7.2
+
 * Sat Jul 01 2017 Michael Shigorin <mike@altlinux.org> 5.5.2-alt1.3
 - E2K: insist it's -std=c99, see e.g. cpu.c::cpu_commit_one();
   thanks imz@ and MCST guys for investigation
