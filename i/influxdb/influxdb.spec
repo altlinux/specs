@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/influxdb
-%global commit 5887e92e8950435ac7e496ff8dada784051284b7
+%global commit 742b9cb3d74ff1be4aff45d69ee7c9ba66c02565
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,8 +9,8 @@
 %brp_strip_none %_bindir/*
 
 Name:		influxdb
-Version:	1.3.1
-Release:	alt1
+Version:	1.3.2
+Release:	alt1%ubt
 Summary:	Distributed time-series database
 
 Group:		Development/Other
@@ -25,7 +25,7 @@ Source103: influxdb.service
 Source104: influxdb.tmpfiles
 
 ExclusiveArch:  %go_arches
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-build-golang rpm-build-ubt
 BuildRequires: xmlto asciidoc
 
 %description
@@ -44,7 +44,11 @@ events, and performing analytics.
 #
 # $ export GOPATH="$PWD/.gopath"
 # $ git rm -rf -- "$GOPATH"
-# $ make
+# $ cd $GOPATH
+# $ go get github.com/sparrc/gdm
+# $ gdm restore -f ../Godeps
+# $ go build github.com/influxdata/influxdb
+# $ rm -rf $GOPATH/src/github.com/influxdata/influxdb
 # $ find $GOPATH -type d -name .git |xargs rm -rf --
 # $ git add "$GOPATH"
 
@@ -109,7 +113,7 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_initdir/%name
 %_unitdir/%name.service
 %_tmpfilesdir/%name.conf
-%dir %attr(0750, root, influxdb) %_sysconfdir/%name
+%dir %attr(0750, root, %name) %_sysconfdir/%name
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/%name.conf
 %config(noreplace) %_logrotatedir/%name
 %dir %attr(0770, root, %name) %_logdir/%name
@@ -117,6 +121,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Mon Aug 07 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.2-alt1%ubt
+- 1.3.2
+
 * Mon Jul 24 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.1-alt1
 - First build for ALTLinux.
 
