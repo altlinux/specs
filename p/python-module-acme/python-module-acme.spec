@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-acme
-Version: 0.14.1
-Release: alt4
+Version: 0.14.2
+Release: alt1
 
 Summary: Python library for the ACME protocol
 
@@ -182,6 +182,9 @@ grep -q python %buildroot%_bindir/jws
 #%doc docs/_build/html
 
 %changelog
+* Tue Aug 08 2017 Vitaly Lipatov <lav@altlinux.ru> 0.14.2-alt1
+- new version 0.14.2 (with rpmrb script)
+
 * Sat Aug 05 2017 Vitaly Lipatov <lav@altlinux.ru> 0.14.1-alt4
 - add missed cffi requires
 
