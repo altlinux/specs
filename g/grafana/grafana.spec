@@ -10,8 +10,8 @@
 
 
 Name:		grafana
-Version:	4.4.2
-Release:	alt1
+Version:	4.4.3
+Release:	alt1%ubt
 Summary:	Metrics dashboard and graph editor
 
 Group:		Development/Other
@@ -30,7 +30,7 @@ Source104: %name.tmpfiles
 
 #ExclusiveArch:  %go_arches
 ExclusiveArch: x86_64
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-build-golang rpm-build-ubt
 BuildRequires: npm yarn
 BuildRequires: fontconfig libfreetype
 BuildRequires: /proc
@@ -56,6 +56,12 @@ tar -xf %SOURCE2
 # $ make
 # $ find $GOPATH -type d -name .git |xargs rm -rf --
 # $ git add "$GOPATH"
+# Build the Front-end Assets
+# $ npm install -g yarn
+# $ yarn install --pure-lockfile
+# $ npm install -g grunt-cli
+# $ grunt release
+# move from dist to .gear/grafana-X.X.X.linux-x64.tar
 
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
@@ -141,6 +147,11 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 4.4.3-alt1%ubt
+- 4.4.3
+- fix pidfile path in systemd unit
+- fix run with sysv init script
+
 * Tue Aug 01 2017 Alexey Shabalin <shaba@altlinux.ru> 4.4.2-alt1
 - 4.4.2
 - fix systemd unit
