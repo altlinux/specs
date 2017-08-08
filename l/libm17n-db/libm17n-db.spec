@@ -1,26 +1,33 @@
 Name: libm17n-db
-Version: 1.6.2
+Version: 1.7.0
 Release: alt1
 
 Summary: Multilingualization datafiles for m17n-lib
 
 Group: System/Libraries
 License: LGPL
-Url: http://www.m17n.org/m17n-lib-en/index.html
+Url: http://www.nongnu.org/m17n/
 
-Packager: Alexey Gladkov <legion@altlinux.ru>
-
-# http://www.m17n.org/m17n-lib-download/m17n-db-%version.tar.bz2
+# repacked http://download.savannah.gnu.org/releases/m17n/m17n-db-%version.tar.gz
 Source: m17n-db-%version.tar
+Source1: m17n-db.watch
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Nov 12 2006
 BuildRequires: glibc-i18ndata
 
+%package devel
+Summary: Development files for m17n-db
+Group: Development/Other
+Requires: %name = %EVR
+
 %description
 This package contains multilingualization (m17n) datafiles for m17n-lib
 which describe input maps, encoding maps, and OpenType font data
 for many languages.
+
+%description devel
+This package contains development files for m17n-db.
 
 %prep
 %setup -q -n m17n-db-%version
@@ -31,13 +38,21 @@ for many languages.
 
 %install
 %makeinstall
+%find_lang m17n-db
 
-%files
+%files -f m17n-db.lang
 %doc AUTHORS COPYING README
-%_bindir/*
 %_datadir/m17n
 
+%files devel
+%_bindir/m17n-db
+%_datadir/pkgconfig/*
+
+
 %changelog
+* Thu May 18 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Sat Dec 18 2010 Alexey Gladkov <legion@altlinux.ru> 1.6.2-alt1
 - New version (1.6.2).
 
