@@ -4,7 +4,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 17.1.5
+Version: 17.1.6
 Release: alt1
 Epoch: 4
 License: MIT
@@ -415,6 +415,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Tue Aug 08 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:17.1.6-alt1
+- 17.1.6
+
 * Mon Jul 24 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:17.1.5-alt1
 - 17.1.5
 
