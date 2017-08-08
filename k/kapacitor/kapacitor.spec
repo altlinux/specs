@@ -10,7 +10,7 @@
 
 Name:		kapacitor
 Version:	1.3.1
-Release:	alt1
+Release:	alt1%ubt
 Summary:	Open source framework for processing, monitoring, and alerting on time series data
 
 Group:		Development/Other
@@ -25,7 +25,7 @@ Source103: %name.service
 Source104: %name.tmpfiles
 
 ExclusiveArch:  %go_arches
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-build-golang rpm-build-ubt
 
 %description
 Open source framework for processing, monitoring, and alerting on time series data.
@@ -109,5 +109,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.1-alt1%ubt
+- rebuild with Universal Branch Tag
+- fix run with sysv init script
+
 * Tue Jul 25 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.1-alt1
 - First build for ALTLinux.
