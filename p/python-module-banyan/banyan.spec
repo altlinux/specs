@@ -6,31 +6,27 @@
 
 Name: python-module-%oname
 Version: 0.1.6
-Release: alt1.git20141121.1.1
+Release: alt1.git20141121.2
 Summary: Backup of Banyan Python module
 License: BSD
 Group: Development/Python
 Url: https://github.com/pyannote/pyannote-banyan
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/pyannote/pyannote-banyan.git
 Source: %name-%version.tar
 
-#BuildPreReq: gcc-c++
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-UnittestRandGenState
+Patch1: %oname-%version-alt-build.patch
+
+BuildRequires: gcc-c++ python-module-UnittestRandGenState python-module-pytest
+BuildRequires: python-module-matplotlib python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-UnittestRandGenState
+BuildRequires: python3-devel python3-module-UnittestRandGenState python3-module-pytest
+BuildRequires: python3-module-matplotlib python3-module-six
 %endif
 
 %py_provides %oname
 %py_provides %{oname}_c
-
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: elfutils libstdc++-devel python-base python-devel python-module-numpy python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-numpy python3-module-setuptools
-BuildRequires: gcc-c++ python-module-UnittestRandGenState python-module-pytest python3-devel python3-module-UnittestRandGenState python3-module-pytest rpm-build-python3
 
 %description
 Highly-optimized search trees (red-black, splay, and sorted-list) with
@@ -59,13 +55,14 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
 %endif
 
 %build
-%add_optflags -fno-strict-aliasing
+%add_optflags -fno-strict-aliasing -fpermissive -std=gnu++11
 %python_build_debug
 
 %if_with python3
@@ -105,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.6-alt1.git20141121.2
+- Fixed build.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.6-alt1.git20141121.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
