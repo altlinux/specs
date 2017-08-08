@@ -5,35 +5,25 @@
 
 Name: python-module-%oname
 Version: 0.17
-Release: alt1.dev0.git20150820.1.1
+Release: alt1.dev0.git20150820.2
 Summary: A set of python modules for machine learning and data mining
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/scikit-learn/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/scikit-learn/scikit-learn.git
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-Cython python-module-coverage
-#BuildPreReq: python-module-nose python-module-scipy
-#BuildPreReq: libnumpy-devel python-module-Pillow liblapack-devel
-#BuildPreReq: gcc-c++ python-module-sphinx-devel python-module-numpydoc
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: gcc-c++ liblapack-devel python-module-numpy-testing python-module-objects.inv python-module-scipy
+BuildRequires: libnumpy-devel python-module-six python-module-joblib
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-Cython python3-module-coverage
-#BuildPreReq: python3-module-nose python3-module-scipy
-#BuildPreReq: libnumpy-py3-devel
+BuildRequires: libnumpy-py3-devel python3-module-numpy-testing python3-module-scipy python3-module-zope python3-module-pytest
+BuildRequires: python3-module-six python3-module-joblib
 %endif
 
 %py_provides sklearn
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils libnumpy-devel libopenblas-devel libstdc++-devel python-base python-devel python-module-numpy python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-dev python3-module-numpy
-BuildRequires: gcc-c++ liblapack-devel libnumpy-py3-devel python-module-numpy-testing python-module-objects.inv python-module-scipy python3-module-numpy-testing python3-module-scipy python3-module-zope rpm-build-python3 python3-module-pytest
 
 %description
 scikit-learn is a Python module for machine learning built on top of
@@ -93,6 +83,21 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+
+# don't use bundled stuff
+rm -rf sklearn/externals
+
+find . -type f -print0 | xargs -0 sed -i \
+	-e 's:import sklearn\.externals\.:import :g' \
+	-e 's:from sklearn\.externals\.:from :g' \
+	-e 's:from sklearn\.externals ::g' \
+	-e 's:from \.\.externals\.:from :g' \
+	-e 's:from \.\.externals ::g' \
+	-e 's:from \.externals\.:from :g' \
+	-e 's:from \.externals ::g'
+
+sed -i -e "s:'externals',::" sklearn/__init__.py
+sed -i -e "/config\.add_subpackage('externals')/d" sklearn/setup.py
 
 %if_with python3
 cp -fR . ../python3
@@ -172,6 +177,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.17-alt1.dev0.git20150820.2
+- Updated build dependencies.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.17-alt1.dev0.git20150820.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
