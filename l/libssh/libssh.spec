@@ -2,8 +2,8 @@
 %def_disable gcrypt
 
 Name: libssh
-Version: 0.7.2
-Release: alt2
+Version: 0.7.5
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: C library to authenticate in a simple manner to one or more SSH servers
@@ -16,6 +16,7 @@ Source1: version-script.libssh
 Source2: compat.lds
 Patch1: version-script.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake doxygen ghostscript-utils graphviz latex2html
 BuildRequires: gcc-c++ %{?_enable_gcrypt: libgcrypt-devel}
 BuildRequires: libssl-devel zlib-devel kde-common-devel
@@ -86,6 +87,13 @@ install -m 0644 %SOURCE2 ./
 %_libdir/*.so
 
 %changelog
+* Tue Aug 08 2017 Sergey V Turchin <zerg@altlinux.org> 0.7.5-alt1%ubt
+- new version
+- security fix: CVE-2016-0739
+
+* Thu Feb 11 2016 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt1.M70P.1
+- build for M70P
+
 * Wed Feb 03 2016 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt2
 - build without libgcrypt
 
