@@ -2,7 +2,7 @@
 %global altname2 guitarix2
 
 Name: guitarix
-Version: 0.35.3
+Version: 0.35.5
 Release: alt1
 Summary: Mono amplifier to JACK
 Group: Sound
@@ -211,5 +211,8 @@ ln -s %_libdir/libgxw.so.0.1 %buildroot%_libdir/libgxw.so
 %_libdir/lv2/*
 
 %changelog
+* Tue Aug 08 2017 Anton Midyukov <antohami@altlinux.org> 0.35.5-alt1
+- new version (0.35.5) with rpmgs script
+
 * Sun May 21 2017 Anton Midyukov <antohami@altlinux.org> 0.35.3-alt1
 - Initial build for ALT Linux Sisyphus
