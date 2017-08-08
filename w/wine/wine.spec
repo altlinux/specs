@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.7.0
-%define major 2.13
+%define major 2.14
 
 Name: wine
 Version: %major.0
@@ -30,6 +30,7 @@ Source4: %name-%version-icons.tar
 Patch1:   0001-enable-linking-with-freetype-and-fontconfig-see-altb.patch
 Patch2:   0001-libs-wine-Fix-debug-output-to-use-utf8-encoding.patch
 Patch3:   0002-libs-wine-Output-unicode-strings-in-UTF-8-encoding.-.patch
+Patch4:   0001-Add-font-smoothing.patch
 Patch101: 0002-add-fast-hack-for-RegQueryValueEx-HKEY_PERFORMANCE_D.patch
 Patch200: t001-oleaut32-Make-OleLoadPicture-load-DIBs-using-WIC-decoder.patch
 
@@ -98,9 +99,6 @@ Requires: wine-gecko = %gecko_version
 BuildRequires: desktop-file-utils
 # Use it instead proprietary MS Core Fonts
 # Requires: fonts-ttf-liberation
-
-# not linked directly
-Requires: libncurses
 
 # For menu/MIME subsystem
 Requires: desktop-file-utils
@@ -187,7 +185,7 @@ Requires: glibc-pthread glibc-nss
 # Runtime linked
 Requires: libcups libncurses
 Requires: libXrender libXi libXext libX11 libICE
-Requires: libssl libgnutls30
+Requires: libssl libgnutls30 libpng16 libjpeg
 # Linked:
 #Requires: fontconfig libfreetype
 
@@ -261,6 +259,7 @@ wine-staging-%version/patches/patchinstall.sh DESTDIR=$(pwd) --all --backend=pat
 %patch1 -p2
 %patch2 -p1
 %patch3 -p1
+%patch4 -p2
 
 %build
 # Workaround for https://bugzilla.altlinux.org/show_bug.cgi?id=31834
@@ -473,6 +472,11 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Tue Aug 08 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.14.0-alt1
+- new version (2.14.0) with rpmgs script
+- enable font smoothing by default
+- add libpng16, libjpeg requires
+
 * Sun Jul 30 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.13.0-alt1
 - new version (2.13.0) with rpmgs script
 - add fix debug output patches
