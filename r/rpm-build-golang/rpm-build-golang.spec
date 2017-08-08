@@ -1,6 +1,6 @@
 Name:      rpm-build-golang
 Version:   1.0
-Release:   alt3
+Release:   alt4
 Summary:   RPM helper macros to rebuild GO packages
 Group:     Development/Other
 License:   GPL
@@ -43,6 +43,9 @@ cp %SOURCE7 %buildroot/%_rpmlibdir/golang.req.files
 %_rpmlibdir/*
 
 %changelog
+* Tue Aug 08 2017 Alexey Gladkov <legion@altlinux.ru> 1.0-alt4
+- golang-build: Add more arguments.
+
 * Sun Jul 23 2017 Alexey Gladkov <legion@altlinux.ru> 1.0-alt3
 - golang-prepare: copy all sources.
 
