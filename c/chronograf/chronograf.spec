@@ -10,7 +10,7 @@
 
 Name:		chronograf
 Version:	1.3.5.0
-Release:	alt1
+Release:	alt1%ubt
 Summary:	Open source framework for processing, monitoring, and alerting on time series data
 
 Group:		Development/Other
@@ -27,7 +27,7 @@ Source104: %name.tmpfiles
 
 #ExclusiveArch:  %go_arches
 ExclusiveArch: x86_64
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-build-golang rpm-build-ubt
 BuildRequires: npm yarn
 BuildRequires: /proc
 
@@ -125,6 +125,10 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.5.0-alt1%ubt
+- rebuild with Universal Branch Tag
+- fix run with sysv init script
+
 * Wed Jul 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.5.0-alt1
 - First build for ALTLinux.
 
