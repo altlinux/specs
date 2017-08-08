@@ -1,12 +1,13 @@
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 %def_enable introspection
+%def_enable systemd
 %def_enable qt
 %def_enable qt5
 
 Name: lightdm
 Version: 1.16.7
-Release: alt7
+Release: alt8
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -127,6 +128,9 @@ manager via D-Bus.
 %prep
 %setup
 %patch1 -p1
+%ifarch e2k
+sed -i 's,-Werror=pointer-arith,,' configure.ac
+%endif
 
 %build
 %autoreconf
@@ -167,6 +171,10 @@ mkdir -p %buildroot%_localstatedir/lib/{lightdm-data,ldm}
 install -p -m 644 %SOURCE2 %buildroot%_sysconfdir/pam.d/%name
 install -p -m 644 %SOURCE3 %buildroot%_sysconfdir/pam.d/%name-autologin
 #install -p -m 644 %SOURCE7 %buildroot%_sysconfdir/pam.d/%name-greeter
+
+%if_disabled systemd
+sed -i '/pam_systemd.so/d' %buildroot%_sysconfdir/pam.d/%name-greeter
+%endif
 
 # install external hook for update_wms
 install -m755 %SOURCE4 %buildroot%_sysconfdir/X11/wms-methods.d/%name
@@ -265,6 +273,10 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Tue Aug 08 2017 Michael Shigorin <mike@altlinux.org> 1.16.7-alt8
+- BOOTSTRAP: introduce systemd knob (on by default).
+- E2K: avoid problematic option.
+
 * Tue Aug 08 2017 Paul Wolneykien <manowar@altlinux.org> 1.16.7-alt7
 - Extract the "dm-tool" utility into a separate package.
 
