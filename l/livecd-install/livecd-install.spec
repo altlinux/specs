@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.9.8
+Version: 0.9.9
 Release: alt1
 
 Summary: Permanently install Live system
@@ -61,6 +61,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Tue Aug 08 2017 Michael Shigorin <mike@altlinux.org> 0.9.9-alt1
+- Umount any udisks-mounted filesystems (as we ask anyways).
+
 * Fri Mar 31 2017 Mikhail Efremov <sem@altlinux.org> 0.9.8-alt1
 - 40-autohostname.sh: Don't setup /etc/HOSTNAME.
 
