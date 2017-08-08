@@ -10,7 +10,7 @@
 
 Name:		telegraf
 Version:	1.3.5
-Release:	alt1
+Release:	alt1%ubt
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
 Group:		Development/Other
@@ -27,7 +27,7 @@ Source103: telegraf.service
 Source104: telegraf.tmpfiles
 
 ExclusiveArch:  %go_arches
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-build-golang rpm-build-ubt
 
 %description
 Telegraf is an agent written in Go for collecting, processing, aggregating, and writing metrics.
@@ -116,6 +116,10 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt1%ubt
+- rebuild with Universal Branch Tag
+- fix run with sysv init script
+
 * Thu Jul 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt1
 - 1.3.5
 - upadte init script
