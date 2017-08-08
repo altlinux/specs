@@ -3,13 +3,25 @@
 
 Name:           python-module-%oname
 Version:        2.1.0
-Release:        alt2
+Release:        alt3
 Summary:        Object-oriented filesystem paths
 License:        MIT
 Group: Development/Python
 URL:            https://github.com/mcmtroffaes/pathlib2
 Source0:        %name-%version.tar.gz
 BuildArch:      noarch
+
+BuildRequires: python-modules
+BuildRequires: python-test
+BuildRequires: python-module-six
+BuildRequires: python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(io)
+BuildRequires: python3-test
+BuildRequires: python3-module-six
+BuildRequires: python3-module-setuptools
+%endif
 
 %global _description \
 The old pathlib module on bitbucket is in bugfix-only mode. The goal of\
@@ -18,18 +30,6 @@ the standard library module, so all the newest features of the standard\
 pathlib can be used also on older Python versions.
 
 %description %{_description}
-
-BuildRequires(pre): python-modules
-BuildRequires(pre): python-test
-BuildRequires(pre): python-module-six
-BuildRequires(pre): python-module-setuptools
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): python3(io)
-BuildRequires(pre): python3-test
-BuildRequires(pre): python3-module-six
-BuildRequires(pre): python3-module-setuptools
-%endif
 
 %if_with python3
 %package -n python3-module-%oname
@@ -74,8 +74,8 @@ pushd ../python3
 for test in test_pathlib2.py test_pathlib2_with_py2_unicode_literals.py; do
     python3 $test
 done
-%endif
 popd
+%endif
 
 %files
 %doc README.rst
@@ -93,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt3
+- Fixed build dependencies.
+
 * Fri Aug 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt2
 - Updated build spec.
 
