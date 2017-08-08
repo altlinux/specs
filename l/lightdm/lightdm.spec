@@ -6,7 +6,7 @@
 
 Name: lightdm
 Version: 1.16.7
-Release: alt6
+Release: alt7
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -29,6 +29,7 @@ Patch1: %name-%version-%release.patch
 # Requires: %name-greeter
 # Requires: accountsservice
 Requires: dbus-tools-gui
+Requires: dm-tool = %version-%release
 
 BuildRequires: gcc-c++ intltool
 BuildRequires: pkgconfig(glib-2.0) >= 2.30 pkgconfig(gio-2.0) >= 2.26  pkgconfig(gio-unix-2.0)  pkgconfig(xdmcp)  pkgconfig(xcb)
@@ -113,6 +114,15 @@ Requires: %name-gir = %version-%release
 
 %description gir-devel
 GObject introspection devel data for the %name
+
+%package -n dm-tool
+Summary: Display Manager control utility
+Group: Graphical desktop/Other
+License: GPLv3+
+
+%description -n dm-tool
+dm-tool utility controls a FreeDesktop.org-compatible display
+manager via D-Bus.
 
 %prep
 %setup
@@ -204,8 +214,8 @@ fi
 %config(noreplace) %_sysconfdir/pam.d/%{name}*
 %_sbindir/%name
 %_unitdir/%name.service
+%exclude %_man1dir/dm-tool.*
 %_man1dir/*
-%_bindir/dm-tool
 %_libexecdir/*
 %attr(775,root,_ldm) %dir %_localstatedir/log/%name
 %attr(775,_ldm,_ldm) %dir %_localstatedir/cache/%name
@@ -215,6 +225,7 @@ fi
 %attr(775,_ldm,_ldm) %dir %_localstatedir/run/%name
 /lib/tmpfiles.d/%name.conf
 %_datadir/polkit-1/rules.d/%name.rules
+%exclude %_datadir/bash-completion/completions/dm-tool
 %_datadir/bash-completion/completions/*
 %_controldir/*
 
@@ -248,7 +259,15 @@ fi
 %files devel-doc
 %_datadir/gtk-doc/html/*
 
+%files -n dm-tool
+%_bindir/dm-tool
+%_datadir/bash-completion/completions/dm-tool
+%_man1dir/dm-tool.*
+
 %changelog
+* Tue Aug 08 2017 Paul Wolneykien <manowar@altlinux.org> 1.16.7-alt7
+- Extract the "dm-tool" utility into a separate package.
+
 * Fri Jul 28 2017 Paul Wolneykien <manowar@altlinux.org> 1.16.7-alt6
 - Fix the control script: Resolve the links because sed -i replaces
   the files.
