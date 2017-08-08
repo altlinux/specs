@@ -1,6 +1,6 @@
 Name: flashrom
 Version: 0.9.9
-Release: alt1
+Release: alt2
 
 Summary: Universal flash programming utility
 License: %gpl2plus
@@ -13,7 +13,7 @@ Source: %name-%version.tar.bz2
 Source100: %name.watch
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: libftdi-devel libpci-devel zlib-devel
+BuildRequires: libftdi1-devel libpci-devel zlib-devel libusb-compat-devel
 
 %description
 flashrom is a tool for identifying, reading, writing,
@@ -52,6 +52,9 @@ install -dm755 %buildroot%_sbindir
 %_man8dir/*
 
 %changelog
+* Tue Aug 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.9-alt2
+- Updated build dependencies.
+
 * Thu Mar 17 2016 Michael Shigorin <mike@altlinux.org> 0.9.9-alt1
 - new version (watch file uupdate)
 
