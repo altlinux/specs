@@ -1,12 +1,13 @@
 Name: libxmlsec1
 Version: 1.2.24
-Release: alt2
+Release: alt3%ubt
 License: MIT
 Summary: Library providing support for "XML Signature" and "XML Encryption" standards
 Group: System/Libraries
 Source0: http://www.aleksey.com/xmlsec/download/xmlsec1-%version.tar.gz
 Url: http://www.aleksey.com/xmlsec/
 
+BuildRequires(pre): rpm-build-ubt
 # Automatically added by buildreq on Fri Jun 08 2012
 # optimized out: libgpg-error libgpg-error-devel libnspr-devel libxml2-devel pkg-config
 BuildRequires: help2man libgcrypt-devel libgnutls-devel libltdl7-devel libnss-devel libssl-devel libxslt-devel man
@@ -173,6 +174,9 @@ true || LD_LIBRARY_PATH=%buildroot%_libdir make check
 %_libdir/pkgconfig/xmlsec1-nss.pc
 
 %changelog
+* Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 1.2.24-alt3%ubt
+- rebuild with Universal Branch Tag
+
 * Mon Aug 07 2017 Alexey Shabalin <shaba@altlinux.ru> 1.2.24-alt2
 - Fix missing links to unversioned shared library files (ALT#33703)
 
