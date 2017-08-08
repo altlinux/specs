@@ -1,6 +1,6 @@
 Name: alterator
-Version: 5.0
-Release: alt5
+Version: 5.1
+Release: alt1
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -145,6 +145,10 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Aug 03 2017 Paul Wolneykien <manowar@altlinux.org> 5.1-alt1
+- New functions to work with URI parameters.
+- Fix/improve: Don\'t trim the values read from a *.desktop file.
+
 * Mon Jul 17 2017 Paul Wolneykien <manowar@altlinux.org> 5.0-alt5
 - Add iface-name and keyword types (with *-list versions).
 - Add proc to simplify making of *-list types.

@@ -1,5 +1,5 @@
 Name: alterator-lookout
-Version: 2.5
+Version: 2.6
 Release: alt1
 
 Source:%name-%version.tar
@@ -7,7 +7,7 @@ Source:%name-%version.tar
 Summary: dialog based interface for alterator
 License: GPL
 Group: System/Configuration/Other
-Requires: alterator >= 5.0-alt1
+Requires: alterator >= 5.1-alt1
 Requires: alterator-l10n >= 1.5-alt1
 Conflicts: alterator-browser-qt < 2.17.0-alt1
 Conflicts: alterator-wizardface < 1.1-alt3
@@ -42,6 +42,10 @@ export GUILE_LOAD_PATH="lookout"
 %_alterator_datadir/ui/*
 
 %changelog
+* Thu Aug 03 2017 Paul Wolneykien <manowar@altlinux.org> 2.6-alt1
+- Added "groupbox" to the set of supported interactive widgets.
+- Put the document URI query part in the \'document:query global.
+
 * Wed Apr 05 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5-alt1
 - rebuilt with alterator 5.0
 
