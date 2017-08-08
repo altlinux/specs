@@ -3,7 +3,7 @@
 %define docdir %_defaultdocdir/%name-%version
 
 Name: freeipmi
-Version: 1.5.5
+Version: 1.5.6
 Release: alt1%ubt
 
 Summary: GNU FreeIPMI - Intelligent Platform Management System
@@ -177,6 +177,9 @@ touch %_localstatedir/%name/ipckey
 %_infodir/%name-faq.info*
 
 %changelog
+* Tue Aug 08 2017 Anton Farygin <rider@altlinux.ru> 1.5.6-alt1%ubt
+- new version 1.5.6
+
 * Tue May 02 2017 Anton Farygin <rider@altlinux.ru> 1.5.5-alt1%ubt
 - new version 1.5.5
 
