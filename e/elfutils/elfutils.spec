@@ -1,5 +1,5 @@
 Name: elfutils
-Version: 0.168
+Version: 0.170
 Release: alt1
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
@@ -106,7 +106,7 @@ cd %buildtarget
 
 %check
 export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
-%make_build -k check -C %buildtarget
+%make_build -k check -C %buildtarget VERBOSE=1
 
 %files
 %_bindir/eu-addr2line
@@ -162,6 +162,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Aug 03 2017 Dmitry V. Levin <ldv@altlinux.org> 0.170-alt1
+- 0.168 -> 0.170.
+
 * Wed Dec 28 2016 Dmitry V. Levin <ldv@altlinux.org> 0.168-alt1
 - 0.167-13-g507e7e2 -> 0.168.
 
