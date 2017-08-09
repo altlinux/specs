@@ -4,7 +4,7 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     4
-%define postgresql_subminor  12
+%define postgresql_subminor  13
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
@@ -53,8 +53,6 @@ Conflicts: %{prog_name}9.2
 Conflicts: %{prog_name}9.3
 Conflicts: %{prog_name}9.5
 Conflicts: %{prog_name}9.6
-# 1C
-Conflicts: %{prog_name}9.4-1C
 
 BuildRequires: OpenSP chrooted docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python-devel setproctitle-devel tcl-devel xsltproc zlib-devel
 BuildRequires: libselinux-devel
@@ -85,8 +83,6 @@ Provides: libpq%libpq_major = %version-%release
 Conflicts: libpq%libpq_major < %version-%release
 Conflicts: libpq%libpq_major > %version-%release
 Obsoletes: libpq5.3 < 8.3.4-alt2
-# 1C
-Conflicts: libpq%libpq_major-1C
 
 %description -n %libpq_name
 C and C++ libraries to enable user programs to communicate with the
@@ -131,8 +127,6 @@ Provides: libecpg = %version-%release
 Provides: libecpg%libecpg_major = %version-%release
 Conflicts: libecpg%libecpg_major < %version-%release
 Conflicts: libecpg%libecpg_major > %version-%release
-# 1C
-Conflicts: libecpg%libecpg_major-1C
 
 %description -n %libecpg_name
 %libecpg_name is used by programs built with ecpg (Embedded PostgreSQL for C)
@@ -173,8 +167,6 @@ Development static library to %libecpg_name
 Summary: Extra documentation for PostgreSQL
 Group: Databases
 BuildArch: noarch
-# 1C
-Conflicts: %prog_name-1C-docs
 
 %description docs
 The postgresql-docs package includes the SGML source for the documentation
@@ -186,8 +178,6 @@ project, or if you want to generate printed documentation.
 Summary: Contributed source and binaries distributed with PostgreSQL
 Group: Databases
 Requires: %name = %version-%release
-# 1C
-Conflicts: %prog_name-1C-contrib
 
 %description contrib
 The postgresql-contrib package includes the contrib tree distributed with
@@ -203,8 +193,6 @@ Requires: glibc-locales
 Provides: %prog_name-server = %version-%release
 Conflicts: %prog_name-server < %version-%release
 Conflicts: %prog_name-server > %version-%release
-# 1C
-Conflicts: %prog_name-1C-server
 
 %description server
 The postgresql-server package includes the programs needed to create
@@ -245,9 +233,6 @@ Summary: The PL/Tcl procedural language for PostgreSQL
 Group: Databases
 Requires: %name = %version-%release tcl >= 8.4.0-alt1
 Provides: postgresql-tcl
-# 1C
-Conflicts: %prog_name-1C-tcl
-
 
 %description tcl
 PostgreSQL is an advanced Object-Relational database management
@@ -259,8 +244,6 @@ Summary: The PL/Perl procedural language for PostgreSQL
 Group: Databases
 Requires: %name = %version-%release
 Provides: postgresql-perl = %version-%release
-# 1C
-Conflicts: %prog_name-1C-perl
 
 %description perl
 PostgreSQL is an advanced Object-Relational database management
@@ -271,8 +254,6 @@ language for the backend.
 Summary: Development module for Python code to access a PostgreSQL DB
 Group: Databases
 Requires: %name = %version-%release
-# 1C
-Conflicts: %prog_name-1C-python
 
 %description python
 PostgreSQL is an advanced Object-Relational database management
@@ -786,6 +767,13 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Wed Aug 09 2017 Alexei Takaseev <taf@altlinux.org> 9.4.13-alt1
+- 9.4.13
+- fix CVE-2017-7547
+
+* Thu May 11 2017 Alexei Takaseev <taf@altlinux.org> 9.4.12-alt2
+- Delete conflict with postgresql for 1C
+
 * Wed May 10 2017 Alexei Takaseev <taf@altlinux.org> 9.4.12-alt1
 - 9.4.12
 
