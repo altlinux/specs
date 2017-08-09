@@ -1,6 +1,6 @@
 Name: alterator-auth-token
 Version: 0.1.0
-Release: alt4
+Release: alt5
 
 Source: %name-%version.tar
 Source1: openssl-gost.control
@@ -22,7 +22,7 @@ Requires: card-actions >= 1.8-alt3
 Requires: lightdm >= 1.16.7-alt6
 Requires: pam_mkuser >= 0.1.0-alt4
 Requires: ca-gost-certificates
-#Requires: openssl-engines >= 1.0.2k-alt2
+Requires: openssl-engines
 # Profiles
 Requires: pkcs11-profiles-rutokenecp >= 0.1.0-alt2
 
@@ -58,6 +58,12 @@ install -D -p -m0755 %_sourcedir/openssl-gost.control \
 %_controldir/openssl-gost
 
 %changelog
+* Wed Aug 09 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt5
+- Fix: Require "openssl-engines" (need libgost.so).
+- Fix/improve: Check for OpenSSL errors while processing GOST
+  certificates.
+- Fix: Display the backend error messages.
+  
 * Wed Aug 09 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt4
 - Add 'openssl-gost.control' (to be moved to openssl-engines).
 
