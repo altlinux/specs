@@ -1,7 +1,7 @@
 %define oname geo
 Name: python-module-%oname
 Version: 1.0.0
-Release: alt1.svn20080909.4.1
+Release: alt1.svn20080909.5
 Summary: Enthought Geophysics Tool Suite
 
 Group: Development/Python
@@ -9,11 +9,12 @@ License: BSD
 URL: http://code.enthought.com
 # https://svn.enthought.com/svn/enthought/Geo
 Source: Geo-%version.tar.gz
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildRequires: python-devel, python-module-setuptools
-BuildPreReq: python-module-scipy gcc-c++ libnumpy-devel
-BuildPreReq: python-module-sphinx python-module-Pygments
+BuildRequires: python-module-scipy gcc-c++ libnumpy-devel
+BuildRequires: python-module-sphinx python-module-Pygments
+BuildRequires: python-module-weave
+
 
 %description
 Enthought Geophysics Tool Suite.
@@ -29,6 +30,10 @@ Documentation for Enthought Geophysics Tool Suite.
 %prep
 %setup
 
+# fix dependencies
+find . -name '*.py' -type f -print0 | xargs -0 sed -i \
+	-e 's:scipy\.weave:weave:g'
+
 %build
 %python_build_debug
 
@@ -43,6 +48,9 @@ Documentation for Enthought Geophysics Tool Suite.
 %doc doc/*
 
 %changelog
+* Wed Aug 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt1.svn20080909.5
+- Fixed build.
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.0-alt1.svn20080909.4.1
 - Rebuild to remove redundant libpython2.7 dependency
 
