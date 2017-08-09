@@ -1,6 +1,6 @@
 Name: lcdproc
 Version: 0.5.7
-Release: alt2
+Release: alt3
 
 Summary: Show info on LCD displays
 License: GPL
@@ -13,9 +13,10 @@ Source2: lcdproc.service
 Source100: lcdproc.watch
 Patch0: lcdproc-fix-return.diff
 Patch1: lcdproc-add-serdisplib.diff
+Patch2: %name-%version-alt-ftdi.patch
 
 BuildRequires: libfreetype-devel
-BuildRequires: libftdi-devel
+BuildRequires: libftdi1-devel
 BuildRequires: libhid-devel
 BuildRequires: liblirc-devel
 BuildRequires: libncurses-devel
@@ -36,6 +37,7 @@ See also %url.
 %prep
 %setup
 #patch1 -p1
+%patch2 -p2
 subst "s#\(DriverPath\)=.*#\1=%_libdir/lcdproc/#" LCDd.conf
 
 %build
@@ -71,6 +73,9 @@ install -pDm644 %SOURCE2 %buildroot%_unitdir/%name.service
 %_unitdir/*
 
 %changelog
+* Wed Aug 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.7-alt3
+- Switched to libftdi1.
+
 * Fri Sep 12 2014 Michael Shigorin <mike@altlinux.org> 0.5.7-alt2
 - added unit file (closes: #30310)
 
