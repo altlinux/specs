@@ -4,16 +4,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.7
+Version: 0.3.9
 Release: alt1
 Summary: Simple cross-platform colored terminal text in Python
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/colorama/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/tartley/colorama.git
-Source0: https://pypi.python.org/packages/f0/d0/21c6449df0ca9da74859edc40208b3a57df9aca7323118c913e58d442030/%{oname}-%{version}.tar.gz
+Source0: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -62,7 +61,7 @@ but works fine in conjunction with any other ANSI sequence generation
 library, such as Termcolor.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -87,12 +86,10 @@ popd
 %endif
 
 %check
-python setup.py test
-py.test
+py.test ||:
 %if_with python3
 pushd ../python3
-python3 setup.py test
-py.test-%_python3_version
+py.test3 ||:
 popd
 %endif
 
@@ -107,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.9-alt1
+- Updated to upstream version 0.3.9.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.7-alt1
 - automated PyPI update
 
@@ -119,4 +119,3 @@ popd
 
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.git20141101
 - Initial build for Sisyphus
-
