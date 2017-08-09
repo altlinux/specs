@@ -4,7 +4,7 @@
 %add_python_req_skip ADM_resize ADM_image
 
 Name: avidemux-qt
-Version: 2.6.15
+Version: 2.6.20
 Release: alt1%ubt
 
 Group: Video
@@ -46,6 +46,7 @@ BuildRequires: liblzma-devel liblzo2-devel libsqlite3-devel libfreetype-devel fo
 BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel libpulseaudio-devel libsamplerate-devel
 BuildRequires: libvdpau-devel libva-devel libxvba-devel libXv-devel libXvMC-devel
 BuildRequires: libvorbis-devel libvpx-devel libx264-devel libx265-devel
+BuildRequires: libass-devel liba52-devel libmad-devel libmp4v2-devel
 BuildRequires: libxml2-devel libxvid-devel
 BuildRequires: perl-podlators perl-IO-Compress texi2html
 BuildRequires: qt5-base-devel qt5-script-devel qt5-tools
@@ -118,7 +119,16 @@ grep -rlw 'amd/amdxvba\.h' | xargs sed -i 's|amd/\(amdxvba\.h\)|\1|g'
 %build
 export QTDIR=%_qt5_prefix
 BUILDDIR=$PWD
-sh bootStrap.bash --with-core --with-cli --without-gtk --with-plugins
+sh bootStrap.bash \
+    --with-core \
+    --with-cli \
+    --with-qt \
+    --with-plugins \
+    --with-system-libass \
+    --with-system-liba52 \
+    --with-system-libmad \
+    --with-system-libmp4v2 \
+    #
 #lrelease-qt5 avidemux/qt4/i18n/*.ts
 #for p in po/*.po ; do
 #    FLNG=`echo "$p" | sed -e 's|\..*||' -e 's|.*\/||'`
@@ -180,8 +190,14 @@ ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 %exclude %_includedir/avidemux
 
 %changelog
+* Wed Aug 09 2017 Sergey V Turchin <zerg@altlinux.org> 2.6.20-alt1%ubt
+- new version
+
 * Tue May 30 2017 Anton Farygin <rider@altlinux.ru> 2.6.15-alt1%ubt
 - rebuild with new x265
+
+* Wed Nov 30 2016 Sergey V Turchin <zerg@altlinux.org> 2.6.15-alt0.M80P.1
+- build for M80P
 
 * Wed Nov 30 2016 Sergey V Turchin <zerg@altlinux.org> 2.6.15-alt1
 - new version
