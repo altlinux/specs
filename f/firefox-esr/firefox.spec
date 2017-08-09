@@ -6,14 +6,14 @@
 %define firefox_datadir %_datadir/firefox
 
 %define gst_version 1.0
-%define nspr_version 4.13.1
-%define nss_version 3.28.1
+%define nspr_version 4.15
+%define nss_version 3.31.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        52.2.1
+Version:        52.3.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -325,6 +325,27 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Tue Aug 08 2017 Andrey Cherepanov <cas@altlinux.org> 52.3.0-alt1
+- New ESR version (52.3.0)
+- Security fixes:
+  + CVE-2017-7798: XUL injection in the style editor in devtools
+  + CVE-2017-7800: Use-after-free in WebSockets during disconnection
+  + CVE-2017-7801: Use-after-free with marquee during window resizing
+  + CVE-2017-7809: Use-after-free while deleting attached editor DOM node
+  + CVE-2017-7784: Use-after-free with image observers
+  + CVE-2017-7802: Use-after-free resizing image elements
+  + CVE-2017-7785: Buffer overflow manipulating ARIA attributes in DOM
+  + CVE-2017-7786: Buffer overflow while painting non-displayable SVG
+  + CVE-2017-7753: Out-of-bounds read with cached style data and pseudo-elements
+  + CVE-2017-7787: Same-origin policy bypass with iframes through page reloads
+  + CVE-2017-7807: Domain hijacking through AppCache fallback
+  + CVE-2017-7792: Buffer overflow viewing certificates with an extremely long OID
+  + CVE-2017-7804: Memory protection bypass through WindowsDllDetourPatcher
+  + CVE-2017-7791: Spoofing following page navigation with data: protocol and modal alerts
+  + CVE-2017-7782: WindowsDllDetourPatcher allocates memory without DEP protections
+  + CVE-2017-7803: CSP containing 'sandbox' improperly applied
+  + CVE-2017-7779: Memory safety bugs fixed in Firefox 55 and Firefox ESR 52.3
+
 * Tue Jul 11 2017 Andrey Cherepanov <cas@altlinux.org> 52.2.1-alt1
 - New ESR version (52.2.1)
 
