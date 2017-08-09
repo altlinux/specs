@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        4.4.0
-Release:        alt1.git20150430
+Release:        alt2
 Summary:        Enthough Tool Suite Application Tools
 
 Group:          Development/Python
@@ -13,18 +13,17 @@ URL:            http://www.enthought.com/
 # https://github.com/enthought/apptools.git
 Source:        AppTools-%version.tar.gz
 Source1:        README.fedora.python-AppTools
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Patch1: %oname-%version-alt-build.patch
 
 BuildArch:      noarch
 BuildRequires:  python-module-setuptools, python-devel
 BuildRequires: unzip python-module-setupdocs python-module-sphinx-devel
-BuildPreReq: python-module-traits python-module-wx2.9
+BuildRequires: python-module-traits-tests python-module-wx python-module-tables-tests xvfb-run
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setupdocs python-tools-2to3
 %endif
-#Requires:       python-module-TraitsGUI, python-module-EnthoughtBase
-Requires: python-module-wx < 3.0
+
 %py_requires %oname.help.help_plugin.examples_preferences
 %add_python_req_skip examples_preferences
 
@@ -113,6 +112,7 @@ This package contains tests for AppTools.
 
 %prep
 %setup -n AppTools-%version
+%patch1 -p1
 #rm -rf AppTools.egg-info
 %if_with python3
 rm -rf ../python3
@@ -149,6 +149,11 @@ popd
 install -d %buildroot%python_sitelibdir/%oname
 cp -fR pickle %buildroot%python_sitelibdir/%oname/
 
+%check
+# remove buggy test
+rm examples/permissions/server/test_client.py
+xvfb-run py.test
+
 %files
 %doc *.txt README.fedora
 %python_sitelibdir/*
@@ -179,6 +184,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Aug 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.0-alt2
+- Updated to upstream release version 4.4.0.
+
 * Sun May 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.0-alt1.git20150430
 - Version 4.4.0
 
