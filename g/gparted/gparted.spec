@@ -2,7 +2,7 @@
 %define Name GParted
 
 Name: gparted
-Version: 0.28.1
+Version: 0.29.0
 Release: alt1
 
 Summary: %Name Partition Editor
@@ -17,6 +17,8 @@ Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
 Source1: %name-pam
 Source2: %name-security
 
+Patch1: %name-0.29.0-alt-dmraid.patch
+
 AutoReq: yes, noshell
 
 Requires: consolehelper
@@ -24,6 +26,8 @@ Requires: hdparm
 # for raid support
 Requires: mdadm dmraid dmsetup lvm2 cryptsetup
 #Requires: ntfs-3g btrfs-progs >= 4.1
+# for UDF filesystems support
+#Requires: udftools
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libparted-devel >= 3.2
@@ -61,6 +65,7 @@ general approach is to keep the GUI as simple as possible.
 
 %prep
 %setup
+%patch1 -p0
 
 %build
 #NOCONFIGURE=1 ./autogen.sh
@@ -94,6 +99,11 @@ sed -i 's|%_sbindir|%_bindir|' %buildroot%_desktopdir/%name.desktop
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Wed Aug 09 2017 Yuri N. Sedunov <aris@altlinux.org> 0.29.0-alt1
+- 0.29.0
+- ekorneechev@:
+  %%name-0.29.0-alt-dmraid.patch (ALT #32338)
+
 * Wed Feb 22 2017 Yuri N. Sedunov <aris@altlinux.org> 0.28.1-alt1
 - 0.28.1
 
