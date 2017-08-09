@@ -1,6 +1,6 @@
 Name: icestorm
 Version: 0.0.0.357.g3c42bdb
-Release: alt1
+Release: alt2
 
 Summary: Tools for working with Lattice iCE40 bitstream files
 License: ISC
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 
 # Automatically added by buildreq on Mon Jul 17 2017
 # optimized out: glibc-kernheaders-x86 libstdc++-devel libusb-compat libusb-compat-devel pkg-config python-base python3
-BuildRequires: gcc-c++ glibc-kernheaders-generic libftdi-devel python3-base
+BuildRequires: gcc-c++ glibc-kernheaders-generic libftdi1-devel python3-base
 
 %description
 Project IceStorm aims at reverse engineering and documenting the bitstream
@@ -26,8 +26,8 @@ Yosys.
 
 %build
 %add_optflags -Wextra
-%make_build CC=gcc CXX=g++ CFLAGS="%optflags $(pkg-config --cflags libftdi)" \
-    CXXFLAGS='%optflags' LDLIBS="$(pkg-config --libs libftdi) -lm"
+%make_build CC=gcc CXX=g++ CFLAGS="%optflags $(pkg-config --cflags libftdi1)" \
+    CXXFLAGS='%optflags' LDLIBS="$(pkg-config --libs libftdi1) -lm"
 
 %install
 %makeinstall_std PREFIX=%prefix
@@ -44,6 +44,9 @@ chmod a+x %buildroot%_bindir/icebox.py
 %python3_sitelibdir/__pycache__/iceboxdb*
 
 %changelog
+* Wed Aug 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.0.357.g3c42bdb-alt2
+- Switched to libftdi1.
+
 * Mon Jul 17 2017 Elvira Khabirova <lineprinter@altlinux.org> 0.0.0.357.g3c42bdb-alt1
 - New version
 
