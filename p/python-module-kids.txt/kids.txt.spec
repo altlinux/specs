@@ -5,30 +5,24 @@
 
 Name: python-module-%oname
 Version: 0.0.2
-Release: alt1.git20150204.1.1
+Release: alt1.git20150204.2
 Summary: Kids text manipulation helpers
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/kids.txt/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/0k/kids.txt.git
 Source: %name-%version.tar
+Patch1: %oname-%version-alt-python3-compat.patch
 
-#BuildPreReq: python-devel python-module-setuptools-tests git
-#BuildPreReq: python-module-d2to1 python-module-nose
+BuildRequires: git-core python-module-d2to1 python-module-nose python-module-setuptools-tests time
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests git
-#BuildPreReq: python3-module-d2to1 python3-module-nose
+BuildRequires: python3-module-d2to1 python3-module-nose python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
 %py_requires %mname
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-pytest python3-module-setuptools xz
-BuildRequires: git-core python-module-d2to1 python-module-nose python-module-setuptools-tests python3-module-d2to1 python3-module-nose python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 kids.txt is a Python library providing helpers to manage text. It's part
@@ -50,6 +44,7 @@ It is, for now, a very humble package.
 
 %prep
 %setup
+%patch1 -p1
 
 git config --global user.email "real at altlinux.org"
 git config --global user.name "REAL"
@@ -109,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.2-alt1.git20150204.2
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.2-alt1.git20150204.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
