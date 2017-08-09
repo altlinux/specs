@@ -1,10 +1,10 @@
-%define module_name GitPython
+%define oname GitPython
 
 %def_with python3
 
 Name: python-module-GitPython
-Version: 0.3.6
-Release: alt1.1
+Version: 2.1.5
+Release: alt1
 
 Summary: GitPython is a python library used to interact with Git repositories
 
@@ -14,32 +14,46 @@ Url: http://pypi.python.org/pypi/GitPython/
 
 # https://github.com/gitpython-developers/GitPython.git
 Source: %name-%version.tar
+Patch1: %oname-%version-alt-build.patch
 
 BuildArch: noarch
 
-%setup_python_module %module_name
+%setup_python_module %oname
 
-BuildRequires: python-module-setuptools-tests python-module-GitDB
+BuildRequires: python-module-setuptools-tests python-module-GitDB python-module-ddt python-module-mock
+BuildRequires: git-core
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
-BuildRequires: python3-module-setuptools-tests python3-module-gitdb
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools-tests python3-module-gitdb python3-module-ddt python3-module-mock
 %endif
+
+Requires: git-core
 
 %description
 A simple, flexible, easy-to-use configfile and command-line parsing library
 built on top of the standard library optparse module.
 
-%package -n python3-module-%module_name
+%package -n python3-module-%oname
 Summary: GitPython is a python library used to interact with Git repositories
 Group: Development/Python3
+Requires: git-core
 
-%description -n python3-module-%module_name
+%description -n python3-module-%oname
 A simple, flexible, easy-to-use configfile and command-line parsing library
 built on top of the standard library optparse module.
 
 %prep
 %setup
+%patch1 -p1
+
+# needed for tests
+git config --global user.email "darktemplar at altlinux.org"
+git config --global user.name "darktemplar"
+git init-db
+git add . -A
+git commit -a -m "%version"
+git tag %version -m "%version"
 
 %if_with python3
 cp -fR . ../python3
@@ -64,10 +78,10 @@ popd
 %endif
 
 %check
-python setup.py test
+py.test ||:
 %if_with python3
 pushd ../python3
-python3 setup.py test
+py.test3 ||:
 popd
 %endif
 
@@ -76,12 +90,15 @@ popd
 %exclude %python_sitelibdir/git/test
 
 %if_with python3
-%files -n python3-module-%module_name
+%files -n python3-module-%oname
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/git/test
 %endif
 
 %changelog
+* Wed Aug 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.5-alt1
+- Updated to upstream version 2.1.5.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.6-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
