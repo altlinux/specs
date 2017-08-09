@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 1.5.10
-Release: alt1.git20150820.1
+Version: 1.5.17
+Release: alt1.post1
 
 Summary: Planar geometries, predicates, and operations
 
@@ -27,12 +27,10 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-Cython libnumpy-py3-devel
 BuildPreReq: python3-module-descartes python3-module-geos
 BuildPreReq: python3-module-packaging
+BuildRequires: xvfb-run
 %endif
 
 %setup_python_module %module_name
-
-%py_provides %module_name
-%py_requires geos
 
 %description
 Planar geometries, predicates, and operations.
@@ -50,8 +48,6 @@ This package contains examples for %module_name.
 %package -n python3-module-%module_name
 Summary: Planar geometries, predicates, and operations
 Group: Development/Python3
-%py3_provides %module_name
-%py3_requires geos
 
 %description -n python3-module-%module_name
 Planar geometries, predicates, and operations.
@@ -133,9 +129,9 @@ python setup.py build_ext -i
 py.test -vv
 %if_with python3
 pushd ../python3
-python3 setup.py test
+xvfb-run python3 setup.py test
 python3 setup.py build_ext -i
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
@@ -163,6 +159,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.17-alt1.post1
+- Updated to upstream version 1.5.17.post1
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5.10-alt1.git20150820.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
