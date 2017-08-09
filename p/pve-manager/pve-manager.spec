@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 5.0.24
-Release: alt6
+Release: alt7
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -56,7 +56,7 @@ BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage 
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
 BuildRequires: perl-IO-Multiplex perl-Locale-PO perl-UUID unzip xmlto
 BuildRequires: perl(File/Sync.pm) perl(Net/DNS/Resolver.pm) perl(Pod/Select.pm) perl(Crypt/Eksblowfish/Bcrypt.pm)
-BuildRequires: perl(Template.pm)
+BuildRequires: perl(Template.pm) perl(IPC/Run.pm)
 
 %description
 This package contains the PVE management tools
@@ -90,7 +90,7 @@ HA Manager PVE
 
 %package -n pve-qemu-server
 Summary: Qemu Server Tools
-Version: 5.0.14
+Version: 5.0.15
 Group: System/Servers
 Requires: socat pve-qemu-system >= 2.6.1-alt4
 Provides: qemu-server = %version-%release
@@ -440,6 +440,13 @@ __EOF__
 %_datadir/libpve-http-server-perl
 
 %changelog
+* Wed Aug 09 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.24-alt7
+- don't uses ssh if install vzdump.cron to localhost (closes: #33746)
+- qemu-server 5.0-15
+
+* Fri Aug 04 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.24-alt3.M80P.1
+- backport to p8 branch
+
 * Fri Aug 04 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.24-alt6
 - updates services list
 
