@@ -1,6 +1,6 @@
 Name: nextcloud
-Version: 12.0.0
-Release: alt4
+Version: 12.0.1
+Release: alt1
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 %define installdir %webserver_webappsdir/%name
@@ -17,7 +17,7 @@ BuildRequires: python3-base
 Requires(pre): webserver-common
 
 #https://docs.nextcloud.com/server/12/admin_manual/installation/source_installation.html
-Requires: php5 >= 5.4 php5-libs php5-dom php5-gd2 php5-mbstring php5-xmlreader php5-zip
+Requires: php5 >= 5.6 php5-libs php5-dom php5-gd2 php5-mbstring php5-xmlreader php5-zip
 #Highly recommended:
 Requires: php5-curl php5-fileinfo php5-openssl
 #For SQLite (minimal installation)
@@ -121,6 +121,10 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf 
 
 %changelog
+* Wed Aug 09 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 12.0.1-alt1
+- version 12.0.1 (Aug 7 2017)
+- update requires (PHP >= 5.6)
+
 * Thu Jul 13 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 12.0.0-alt4
 - fixed permissions - addition to previous release
 
