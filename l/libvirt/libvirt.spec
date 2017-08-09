@@ -106,8 +106,8 @@
 
 
 Name: libvirt
-Version: 3.5.0
-Release: alt1
+Version: 3.6.0
+Release: alt1%ubt
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -115,7 +115,7 @@ Url: https://libvirt.org/
 Source0: %name-%version.tar
 Source1: gnulib-%name-%version.tar
 Source2: keycodemapdb-%name-%version.tar
-Patch1: %name-%version-%release.patch
+Patch1: %name-%version.patch
 
 
 %{?_with_libvirtd:Requires: %name-daemon = %EVR}
@@ -126,6 +126,7 @@ Patch1: %name-%version-%release.patch
 Requires: %name-client = %EVR
 Requires: %name-libs = %EVR
 
+BuildRequires(pre): rpm-build-ubt
 %{?_with_xen:BuildRequires: xen-devel xen-runtime}
 %{?_with_libxl:BuildRequires: xen-devel}
 %{?_with_hal:BuildRequires: libhal-devel}
@@ -1252,6 +1253,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 3.6.0-alt1%ubt
+- 3.6.0
+
 * Tue Jul 11 2017 Alexey Shabalin <shaba@altlinux.ru> 3.5.0-alt1
 - 3.5.0
 

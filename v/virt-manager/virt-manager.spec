@@ -7,7 +7,7 @@
 %define askpass_package "openssh-askpass"
 
 Name: virt-manager
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 Summary: Virtual Machine Manager
 
@@ -154,6 +154,9 @@ done
 %_man1dir/virt-xml.1*
 
 %changelog
+* Wed Aug 09 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.2-alt1
+- 1.4.2
+
 * Thu Mar 09 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.1-alt1
 - 1.4.1
 
