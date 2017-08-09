@@ -4,12 +4,11 @@
 
 Name: python-module-%oname
 Version: 1.1.3
-Release: alt2.git20141002.1
+Release: alt3.git20141002
 Summary: preggy is an assertion library for Python. (What were you ``expect()``ing?)
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/preggy/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/heynemann/preggy.git
 Source: %name-%version.tar
@@ -62,12 +61,10 @@ popd
 %endif
 
 %check
-python setup.py test
 py.test
 %if_with python3
 pushd ../python3
-python3 setup.py test
-py.test-%_python3_version
+py.test3
 popd
 %endif
 
@@ -82,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.3-alt3.git20141002
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.3-alt2.git20141002.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
