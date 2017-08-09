@@ -38,7 +38,7 @@
 %def_with libcephfs
 
 Name: samba
-Version: 4.6.6
+Version: 4.6.7
 Release: alt1%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1250,10 +1250,8 @@ TDB_NO_FSYNC=1 %make_build test
 %files pidl
 %attr(755,root,root) %_bindir/pidl
 %if_with doc
-%if %ubt_id > "M70P"
 %_man1dir/pidl.1.*
 %_man3dir/Parse::Pidl::*
-%endif
 %endif
 %perl_vendor_privlib/*
 
@@ -1396,6 +1394,12 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Wed Aug 09 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.7-alt1%ubt
+- Update to second summer release
+
+* Sat Jul 15 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.6-alt2%ubt
+- Rebuild with universal build tag (aka ubt macros) for p7 and c7
+
 * Wed Jul 12 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.6-alt1%ubt
 - Update to summer security release
 - Security fixes:
