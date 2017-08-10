@@ -3,7 +3,7 @@
 
 Name: pysol
 Version: 4.82
-Release: alt11.1.1
+Release: alt12
 
 Summary: PySol provides several solitaire card games
 Summary(ru_RU.UTF-8): PySol предлагает коллекцию карточных пасьянсов
@@ -22,6 +22,7 @@ Patch0: %name-fix.patch
 Patch1: %name-nosplash.patch
 Patch2: %name-nosound.patch
 Patch3: %name-colorchooser.patch
+Patch4: %name-tcltk8.6.patch
 
 Conflicts: pysol-cardsets <= 4.40-alt1
 Conflicts: pysol-music <= 4.40-alt1
@@ -54,6 +55,7 @@ freecell, spider, golf и многие другие.
 %patch1
 %patch2
 %patch3
+%patch4
 
 %install
 %make_install \
@@ -119,6 +121,9 @@ mv pysol.xpm %buildroot%_niconsdir
 
 
 %changelog
+* Thu Aug 10 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.82-alt12
+- Fixed crash with Tcl/Tk 8.6 (thnx sbolshakov@) (closes: #33419)
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 4.82-alt11.1.1
 - Rebuild with Python-2.7
 
