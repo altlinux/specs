@@ -1,6 +1,6 @@
 Name: alterator-auth-token
 Version: 0.1.0
-Release: alt5
+Release: alt6
 
 Source: %name-%version.tar
 Source1: openssl-gost.control
@@ -16,12 +16,14 @@ BuildPreReq: alterator >= 5.0
 Requires: alterator >= 5.1-alt1
 Requires: alterator-lookout >= 2.6-alt1
 Requires: alterator-sh-functions >= 0.11-alt2
+Requires: alterator-service-functions >= 2.0.5
 # Base
 Requires: pam_pkcs11 >= 0.6.9-alt9
 Requires: card-actions >= 1.8-alt3
 Requires: lightdm >= 1.16.7-alt6
 Requires: pam_mkuser >= 0.1.0-alt4
-Requires: ca-gost-certificates
+# GOST CAs are now optional
+#Requires: ca-gost-certificates
 Requires: openssl-engines
 # Profiles
 Requires: pkcs11-profiles-rutokenecp >= 0.1.0-alt2
@@ -58,6 +60,12 @@ install -D -p -m0755 %_sourcedir/openssl-gost.control \
 %_controldir/openssl-gost
 
 %changelog
+* Thu Aug 10 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt6
+- Check that the pkcs11-evenmgr service is running when not in
+  installer mode.
+- Fix: Support the installer (chroot) mode when installing GOST CAs.
+- Expect pre-c_rehash\'ed GOST CAs.
+
 * Wed Aug 09 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt5
 - Fix: Require "openssl-engines" (need libgost.so).
 - Fix/improve: Check for OpenSSL errors while processing GOST
