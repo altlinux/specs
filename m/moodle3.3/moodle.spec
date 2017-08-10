@@ -1,6 +1,6 @@
 Name: moodle3.3
-Version: 3.3.0
-Release: alt3
+Version: 3.3.1
+Release: alt1
 
 Summary: The world's open source learning platform
 License: GPLv3
@@ -214,6 +214,9 @@ s@%%(\{moodle_datadir\}|moodle_datadir([[:space:]/'\"=]))@%moodle_datadir\2@g
 %moodle_authdir/pam/
 
 %changelog
+* Thu Aug 10 2017 Konstantin Kondratyuk <kondratyuk@altlinux.org> 3.3.1-alt1
+- new version (3.3.1) with rpmgs script
+
 * Thu Jul 13 2017 Konstantin Kondratyuk <kondratyuk@altlinux.org> 3.3.0-alt3
 *- increase limits in httpd2 config
 
