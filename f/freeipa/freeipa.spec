@@ -6,20 +6,22 @@
 %define pki_core_version 10.2.6-alt5_19jpp8
 %define krb5_version 1.14.4-alt2
 %define sssd_version 1.14.2-alt5
+%define apache_conf_dir %_sysconfdir/httpd2/conf
 
 %define _unpackaged_files_terminate_build 1
 
 Name: freeipa
 Version: 4.3.3
-Release: alt3
+Release: alt4
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
 License: GPLv3+
 Url: http://www.freeipa.org/
 Source: %name-%version.tar
-Source1: nss.conf
+Source1: ipa-nss.conf
 Source2: ipa_configured
+Source3: ipa-nss.load
 Patch: %name-%version-%release.patch
 
 BuildRequires: 389-ds-devel >= 1.3.1.3
@@ -337,7 +339,8 @@ export SUPPORTED_PLATFORM=altlinux
 # Force re-generate of platform support
 rm -f ipapython/services.py
 %makeinstall_std SKIP_API_VERSION_CHECK="yes" PYTHON="python"
-install -Dm0644 %SOURCE1 %buildroot%_sysconfdir/httpd2/conf/extra-available/ipa-nss.conf
+install -Dm0644 %SOURCE1 %buildroot%apache_conf_dir/mods-available/ipa-nss.conf
+install -Dm0644 %SOURCE3 %buildroot%apache_conf_dir/mods-available/ipa-nss.load
 install -Dm0755 %SOURCE2 %buildroot%_sbindir/ipa_configured
 %find_lang ipa
 
@@ -363,11 +366,11 @@ ln -s ../../../..%_sysconfdir/ipa/html/browserconfig.html \
     %buildroot%_datadir/ipa/html/browserconfig.html
 
 # So we can own our Apache configuration
-mkdir -p %buildroot%_sysconfdir/httpd2/conf/{sites-available,extra-available}
-touch %buildroot%_sysconfdir/httpd2/conf/sites-available/ipa.conf
-touch %buildroot%_sysconfdir/httpd2/conf/ipa-kdc-proxy.conf
-touch %buildroot%_sysconfdir/httpd2/conf/ipa-pki-proxy.conf
-touch %buildroot%_sysconfdir/httpd2/conf/ipa-rewrite.conf
+mkdir -p %buildroot%apache_conf_dir/{sites-available,extra-available,extra-enabled}
+touch %buildroot%apache_conf_dir/sites-available/ipa.conf
+touch %buildroot%apache_conf_dir/extra-enabled/ipa-kdc-proxy.conf
+touch %buildroot%apache_conf_dir/extra-enabled/ipa-pki-proxy.conf
+touch %buildroot%apache_conf_dir/ipa-rewrite.conf
 mkdir -p %buildroot%_datadir/ipa/html/
 touch %buildroot%_datadir/ipa/html/ca.crt
 touch %buildroot%_datadir/ipa/html/configure.jar
@@ -461,6 +464,7 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 %exclude %_sbindir/ipa-join
 %exclude %_sbindir/ipa-certupdate
 %exclude %_sbindir/ipa-dns-install
+%exclude %_sbindir/ipa_configured
 
 %_libexecdir/certmonger/dogtag-ipa-ca-renew-agent-submit
 %_libexecdir/certmonger/ipa-server-guard
@@ -516,6 +520,7 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 %python_sitelibdir_noarch/ipaserver
 
 %files server-common
+%_sbindir/ipa_configured
 %ghost %verify(not user group) %dir %_sharedstatedir/kdcproxy
 %dir %attr(0755,root,root) %_sysconfdir/ipa/kdcproxy
 %config(noreplace) %_sysconfdir/sysconfig/ipa_memcached
@@ -545,11 +550,12 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 %dir %_sysconfdir/ipa/html
 %config(noreplace) %attr(0644,root,%webserver_group) %_sysconfdir/ipa/html/*
 
-%config(noreplace) %_sysconfdir/httpd2/conf/extra-available/ipa-nss.conf
-%ghost %attr(0644,root,%webserver_group) %config(noreplace) %_sysconfdir/httpd2/conf/ipa-rewrite.conf
-%ghost %attr(0644,root,%webserver_group) %config(noreplace) %_sysconfdir/httpd2/conf/sites-available/ipa.conf
-%ghost %attr(0644,root,%webserver_group) %config(noreplace) %_sysconfdir/httpd2/conf/ipa-pki-proxy.conf
-%ghost %attr(0644,root,%webserver_group) %config(noreplace) %_sysconfdir/httpd2/conf/ipa-kdc-proxy.conf
+%config(noreplace) %apache_conf_dir/mods-available/ipa-nss.conf
+%config %apache_conf_dir/mods-available/ipa-nss.load
+%ghost %attr(0644,root,%webserver_group) %config(noreplace) %apache_conf_dir/ipa-rewrite.conf
+%ghost %attr(0644,root,%webserver_group) %config(noreplace) %apache_conf_dir/sites-available/ipa.conf
+%ghost %attr(0644,root,%webserver_group) %config(noreplace) %apache_conf_dir/extra-enabled/ipa-pki-proxy.conf
+%ghost %attr(0644,root,%webserver_group) %config(noreplace) %apache_conf_dir/extra-enabled/ipa-kdc-proxy.conf
 %ghost %attr(0644,root,apache2) %config(noreplace) %_sysconfdir/ipa/kdcproxy/ipa-kdc-proxy.conf
 #%dir %attr(0755,root,root) %_sysconfdir/ipa/dnssec
 %dir %_localstatedir/lib/ipa
@@ -588,6 +594,29 @@ if  [ "$1" -eq 2 ] && ipa_configured; then
 fi
 # END
 
+%triggerun server-common -- freeipa-server-common <= 4.3.3-alt3
+if ipa_configured; then
+	for A_CONF in ipa-pki-proxy.conf ipa-kdc-proxy.conf; do
+		if [ -f  %apache_conf_dir/"$A_CONF" ] || [ -L  %apache_conf_dir/"$A_CONF" ]; then
+			mv -n %apache_conf_dir/"$A_CONF" %apache_conf_dir/extra-enabled/"$A_CONF" ||:
+		fi
+	done
+	a2enmod proxy_ajp >/dev/null 2>&1 ||:
+	a2enmod proxy_http >/dev/null 2>&1 ||:
+
+	a2disextra ipa-nss >/dev/null 2>&1 ||:
+	mv -f %apache_conf_dir/extra-available/ipa-nss.conf %apache_conf_dir/mods-available/ipa-nss.conf ||:
+fi
+
+%triggerpostun server-common -- freeipa-server-common <= 4.3.3-alt3
+if ipa_configured; then
+	a2dismod nss >/dev/null 2>&1 ||:
+	a2enmod ipa-nss >/dev/null 2>&1 ||:
+
+	if systemctl is-enabled httpd2.service >/dev/null 2>&1; then
+		systemctl try-restart httpd2.service >/dev/null 2>&1 ||:
+	fi
+fi
 
 %files server-dns
 %_sbindir/ipa-dns-install
@@ -662,6 +691,12 @@ fi
 %_man1dir/ipa-test-task.1.*
 
 %changelog
+* Thu Aug 10 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt4
+- Add %%apache_conf_dir macro.
+- Move ipa_configured script to server-common subpackage.
+- Init argument for slapi_pblock_get() (closes: #33538).
+- Fix httpd2 configuration (closes: #33513, #33466).
+
 * Tue May 16 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt3
 - server: Require pki-kra.
 - Run ipa-server-upgrade at package update.
