@@ -1,6 +1,6 @@
 %define module_name             accel-ppp
-%define module_version          1.11.1
-%define module_release          alt4
+%define module_version          1.11.2
+%define module_release          alt1
 
 %define flavour		std-def
 BuildRequires(pre): rpm-build-kernel
@@ -22,7 +22,7 @@ Url: http://sourceforge.net/projects/accel-ppp/
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
-BuildRequires(pre): rpm-build-kernel cmake
+BuildRequires(pre): rpm-build-kernel cmake libpcre-devel libssl-devel
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name
 
@@ -62,6 +62,9 @@ install -m644 -D BUILD/drivers/vlan_mon/driver/vlan_mon.ko %buildroot/%module_di
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Aug 10 2017 Alexei Takaseev <taf@altlinux.org> 1.11.2-alt1
+- 1.11.2
 
 * Thu Mar 23 2017 Alexei Takaseev <taf@altlinux.org> 1.11.1-alt4
 - Add vlan_mon.ko
