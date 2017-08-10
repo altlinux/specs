@@ -1,6 +1,6 @@
 Name: pkcs11-profiles
 Version: 0.1.0
-Release: alt2
+Release: alt3
 
 Summary: Set of profiles for PAM PKCS11 configuration
 License: GPLv3+
@@ -39,6 +39,9 @@ install -pDm644 profiles/rutokenecp %buildroot%_sysconfdir/security/pam_pkcs11/p
 %_sysconfdir/security/pam_pkcs11/profiles/rutokenecp
 
 %changelog
+* Thu Aug 10 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt3
+- Remove the word "profile" from its description.
+
 * Fri Jul 28 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt2
 - Fix: Exclude the mapping settings from the profiles.
 

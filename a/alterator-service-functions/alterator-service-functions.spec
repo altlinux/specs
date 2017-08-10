@@ -1,5 +1,5 @@
 Name: alterator-service-functions
-Version: 2.0.4
+Version: 2.0.5
 Release: alt1
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
@@ -25,6 +25,9 @@ Helpers for common service management
 %_bindir/*
 
 %changelog
+* Thu Aug 10 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.5-alt1
+- Support installer mode (ALTERATOR_DESTDIR env. var.).
+
 * Thu Aug 03 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.4-alt1
 - Enable and disable services in all available subsystems.
 - Get rid of eval.
