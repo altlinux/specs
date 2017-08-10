@@ -2,7 +2,7 @@
 %def_without python3
 
 Name: openstack-%oname
-Version: 11.0.2
+Version: 11.0.3
 Release: alt1
 Epoch: 1
 Summary: OpenStack Identity Service
@@ -357,6 +357,9 @@ fi
 %doc LICENSE doc/build/html
 
 %changelog
+* Thu Aug 10 2017 Alexey Shabalin <shaba@altlinux.ru> 1:11.0.3-alt1
+- 11.0.3
+
 * Thu Jun 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1:11.0.2-alt1
 - 11.0.2 Ocata release
 - add tests packages
