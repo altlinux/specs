@@ -8,7 +8,7 @@
 
 Name: python-module-%oname
 Version: %major.2.0
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 # Enable/disable GLcanvas
@@ -386,6 +386,9 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %endif
 
 %changelog
+* Thu Aug 10 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:3.0.2.0-alt1.1
+- Rebuilt for changed libwxGTK3.0 ABI
+
 * Wed May 04 2016 Alexey Shabalin <shaba@altlinux.ru> 1:3.0.2.0-alt1
 - downgrade to 3.0.2.0 release
 - add patches from fedora

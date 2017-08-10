@@ -2,7 +2,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.3
-Release: alt9
+Release: alt10
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -158,8 +158,6 @@ DEFS="-DUNICODE=1 -DwxUSE_UNICODE=1"
 	--with-xresources \
 	--without-gnomeprint \
 	--enable-graphics_ctx \
-	--enable-utf8=yes \
-	--enable-utf8only=no \
 	--with-libmspack \
 	--enable-stl \
 	--enable-std_containers \
@@ -219,6 +217,9 @@ cat wxmsw3.lang >> wxstd3.lang
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Wed Aug 09 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.3-alt10
+- rebuilt without --enable-utf8 option (ALT#32512)
+
 * Thu May 04 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.3-alt9
 - built the recentlly released actual usptream version 3.0.3
 - dropped wxGTK3-3.0.2-gstreamer1.0.patch in favor of upstream GStreamer1.0 port

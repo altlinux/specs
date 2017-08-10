@@ -7,7 +7,7 @@
 
 Name: poedit
 Version: 2.0.3
-Release: alt1
+Release: alt1.1
 
 Summary: Cross-platform translation files editor
 Summary(ru_RU.UTF-8): Кроссплатформенный редактор файлов переводов
@@ -73,6 +73,9 @@ wxLocale библиотеки wxWindows.
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Thu Aug 10 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.0.3-alt1.1
+- Rebuilt for changed libwxGTK3.0 ABI
+
 * Thu Jul 27 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
 - 2.0.3
 
