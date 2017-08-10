@@ -1,11 +1,13 @@
 %define rname kscreenlocker
 
+%def_disable seccomp
+
 %define sover 5
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: kf5-%rname
 Version: 5.10.4
-Release: alt2%ubt
+Release: alt3%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -23,7 +25,10 @@ Patch2: alt-greeter-path.patch
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kidletime-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel libpam-devel libwayland-client-devel libwayland-server-devel python-module-google qt5-declarative-devel qt5-x11extras-devel rpm-build-python3 rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-declarative-devel qt5-x11extras-devel
-BuildRequires: libpam-devel libseccomp-devel libwayland-client-devel libwayland-server-devel
+BuildRequires: libpam-devel libwayland-client-devel libwayland-server-devel
+%if_enabled seccomp
+BuildRequires: libseccomp-devel
+%endif
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel
 BuildRequires: kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdesignerplugin-devel
@@ -111,6 +116,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Thu Aug 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt3%ubt
+- build without seccomp support
+
 * Mon Aug 07 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt2%ubt
 - build with seccomp support
 
