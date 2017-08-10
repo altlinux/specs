@@ -1,6 +1,6 @@
 %define module_name             accel-ppp
-%define module_version          1.11.1
-%define module_release          alt2
+%define module_version          1.11.2
+%define module_release          alt1
 
 %define flavour		std-pae
 BuildRequires(pre): rpm-build-kernel
@@ -22,7 +22,7 @@ Url: http://sourceforge.net/projects/accel-ppp/
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
-BuildRequires(pre): rpm-build-kernel cmake
+BuildRequires(pre): rpm-build-kernel cmake libpcre-devel libssl-devel
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name
 
@@ -45,14 +45,16 @@ tar -jxvf %kernel_src/%module_name-%module_version.tar.bz2
 %cmake \
       -DKDIR=%_usrsrc/linux-%kversion-%flavour \
       -DBUILD_IPOE_DRIVER=TRUE \
+      -DBUILD_VLAN_MON_DRIVER=TRUE \
       ..
 
 make -C BUILD/drivers/ipoe
+make -C BUILD/drivers/vlan_mon
 
 %install
 install -d %buildroot/%module_dir
 install -m644 -D BUILD/drivers/ipoe/driver/ipoe.ko %buildroot/%module_dir/ipoe.ko
-
+install -m644 -D BUILD/drivers/vlan_mon/driver/vlan_mon.ko %buildroot/%module_dir/vlan_mon.ko
 
 %files
 %module_dir
@@ -60,6 +62,15 @@ install -m644 -D BUILD/drivers/ipoe/driver/ipoe.ko %buildroot/%module_dir/ipoe.k
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Aug 10 2017 Alexei Takaseev <taf@altlinux.org> 1.11.2-alt1
+- 1.11.2
+
+* Thu Mar 23 2017 Alexei Takaseev <taf@altlinux.org> 1.11.1-alt4
+- Add vlan_mon.ko
+
+* Thu Feb 16 2017 Alexei Takaseev <taf@altlinux.org> 1.11.1-alt3
+- update upstream to git:444385f2be198318d6092c049bbebf5cc981eeca
 
 * Tue Nov 29 2016 Alexei Takaseev <taf@altlinux.org> 1.11.1-alt1
 - 1.11.1
