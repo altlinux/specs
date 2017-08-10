@@ -3,13 +3,12 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.11
-Release: alt1.git20150211.1
+Version: 1.12.14
+Release: alt1
 Summary: Python subprocess interface
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/sh/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/amoffat/sh.git
 Source: %name-%version.tar
@@ -55,6 +54,9 @@ sh is not a collection of system commands implemented in python.
 %prep
 %setup
 
+sed -i -e 's:==:>=:g' \
+	requirements*.txt
+
 %if_with python3
 cp -fr . ../python3
 %endif
@@ -78,12 +80,10 @@ popd
 %endif
 
 %check
-#py.test
-nosetests -v
+python sh.py travis
 %if_with python3
 pushd ../python3
-py.test-%_python3_version
-nosetests3 -v
+python3 sh.py travis
 popd
 %endif
 
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.14-alt1
+- Updated to upstream release 1.12.14.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.11-alt1.git20150211.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
