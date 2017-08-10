@@ -1,5 +1,5 @@
 Name: rpm-build-python
-Version: 0.36.8
+Version: 0.36.9
 Release: alt1
 
 # redefine python_libdir for 0.29.alt2 is buggy 
@@ -61,6 +61,10 @@ unset RPM_PYTHON
 %doc python-module-SAMPLE.spec policy notes doc
 
 %changelog
+* Thu Aug 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.36.9-alt1
+- Fix bug when file may be skipped during 'provides' and 'requires' calculations
+  if file is located in %%python_sitelibdir and file name starts with 'python3'.
+
 * Sat Jun 18 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.36.8-alt1
 (Minor backports from rpm-build-python3.)
 - .prov.py: generalize to generate longer provs, too.

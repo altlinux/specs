@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.11
+Version: 0.1.11.1
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -85,6 +85,10 @@ popd
 %_rpmlibdir/python3.prov.files
 
 %changelog
+* Thu Aug 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.11.1-alt1
+- Fix bug when file may be skipped during 'provides' and 'requires' calculations
+  if file is located in %%python3_sitelibdir and file name starts with 'python2'.
+
 * Wed Jan 11 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.1.11-alt1
 - Now: %%python3_req_hier by default (more precise autoreqs like:
   m.sub.subsub instead of m; this often helps to install an otherwise
