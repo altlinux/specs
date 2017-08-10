@@ -4,8 +4,8 @@
 
 Name: openstack-%oname
 Summary: OpenStack Orchestration (heat)
-Version: 8.0.2
-Release: alt2
+Version: 8.0.3
+Release: alt1
 Epoch: 1
 License: ASL 2.0
 Group: System/Servers
@@ -380,6 +380,9 @@ crudini --set %heat_conf oslo_concurrency lock_path %_runtimedir/heat
 %_prefix/lib/heat/docker
 
 %changelog
+* Thu Aug 10 2017 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.3-alt1
+- 8.0.3
+
 * Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.2-alt2
 - drop signing_dir from default config
 
