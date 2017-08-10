@@ -1,17 +1,17 @@
 Name: blosc
-Version: 1.6.1
-Release: alt1.dev.git20150428
+Version: 1.12.1
+Release: alt1
 Summary: Blosc: A blocking, shuffling and lossless compression library
 License: MIT
 Group: System/Libraries
 Url: http://www.blosc.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/Blosc/c-blosc.git
 Source: %name-%version.tar
+Patch1: %name-%version-alt-pkgconfigdir.patch
 
-BuildPreReq: cmake gcc-c++ libhdf5-devel libsnappy-devel zlib-devel
-BuildPreReq: hdf5-8-tools liblz4-devel
+BuildPreReq: cmake gcc-c++ libsnappy-devel zlib-devel
+BuildPreReq: liblz4-devel
 
 %description
 Blosc is a high performance compressor optimized for binary data. It has
@@ -48,41 +48,9 @@ also to accelerate memory-bound computations.
 
 This package contains development files of Blosc library.
 
-%package -n lib%name-hdf5filter
-Summary: Blosc compression filter for the HDF5 library
-Group: System/Libraries
-Requires: lib%name = %EVR
-
-%description -n lib%name-hdf5filter
-Blosc is a high performance compressor optimized for binary data. It has
-been designed to transmit data to the processor cache faster than the
-traditional, non-compressed, direct memory fetch approach via a memcpy()
-OS call. Blosc is the first compressor (that I'm aware of) that is meant
-not only to reduce the size of large datasets on-disk or in-memory, but
-also to accelerate memory-bound computations.
-
-This package contains Blosc compression filter for the HDF5 library.
-
-%package -n lib%name-hdf5filter-devel
-Summary: Development files of Blosc compression filter for the HDF5 library
-Group: Development/C++
-BuildArch: noarch
-Requires: lib%name-devel = %EVR
-Requires: lib%name-hdf5filter = %EVR
-
-%description -n lib%name-hdf5filter-devel
-Blosc is a high performance compressor optimized for binary data. It has
-been designed to transmit data to the processor cache faster than the
-traditional, non-compressed, direct memory fetch approach via a memcpy()
-OS call. Blosc is the first compressor (that I'm aware of) that is meant
-not only to reduce the size of large datasets on-disk or in-memory, but
-also to accelerate memory-bound computations.
-
-This package contains development files of Blosc compression filter for
-the HDF5 library.
-
 %prep
 %setup
+%patch1 -p1
 
 %build
 cmake \
@@ -99,12 +67,14 @@ cmake \
 	-DCMAKE_SKIP_RPATH:BOOL=ON \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
-	-DBUILD_HDF5_FILTER:BOOL=ON \
 	.
 %make_build VERBOSE=1
 
 %install
 %makeinstall_std
+
+# remove unpackaged files
+rm %buildroot%_libdir/libblosc.a
 
 %files -n lib%name
 %doc *.rst
@@ -112,16 +82,14 @@ cmake \
 
 %files -n lib%name-devel
 %_includedir/blosc.h
+%_includedir/blosc-export.h
 %_libdir/libblosc.so
-
-%files -n lib%name-hdf5filter
-%_libdir/libblosc_filter.so
-
-%files -n lib%name-hdf5filter-devel
-%doc hdf5/README.rst
-%_includedir/blosc_filter.h
+%_pkgconfigdir/blosc.pc
 
 %changelog
+* Thu Aug 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.1-alt1
+- Updated to upstream release version 1.12.1.
+
 * Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt1.dev.git20150428
 - Version 1.6.1.dev
 

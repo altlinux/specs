@@ -2,21 +2,22 @@
 %define oname tables
 
 %def_with python3
-%def_disable check
+%def_enable check
 
 Name: py%oname
-Version: 3.2.2
-Release: alt1.dev0.git20150828.1
+Version: 3.4.2
+Release: alt1
 Epoch: 1
 Summary: Managing hierarchical datasets
 License: MIT
 Group: Development/Python
 Url: http://www.pytables.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/PyTables/PyTables.git
-# branch: develop
 Source: %name-%version.tar.gz
+
+%add_findreq_skiplist %python_sitelibdir/%oname/contrib/nctoh5.py
+%add_findreq_skiplist %python3_sitelibdir/%oname/contrib/nctoh5.py
 
 Requires: python-module-%oname = %{?epoch:%epoch:}%version-%release
 
@@ -34,11 +35,14 @@ BuildPreReq: w3c-markup-validator-libs python-module-Cython
 BuildPreReq: python-module-numexpr python-module-setuptools
 #BuildPreReq: texlive-latex-recommended libblosc-devel
 BuildPreReq: libblosc-devel
+BuildRequires: python-module-sphinx_rtd_theme ipython python-module-pathlib2
+BuildRequires: python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel python-tools-2to3
 BuildPreReq: python3-module-distribute python3-module-Cython
 BuildPreReq: python3-module-numexpr-tests
+BuildRequires: python3-module-mock
 %endif
 
 %description
@@ -344,6 +348,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Thu Aug 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.2-alt1
+- Updated to upstream release version 3.4.2.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:3.2.2-alt1.dev0.git20150828.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
