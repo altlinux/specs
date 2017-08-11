@@ -3,27 +3,23 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.0
-Release: alt1.b3.1.1
+Version: 0.11
+Release: alt1
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
 License: BSD
 Group: Development/Python
 Url: http://pypi.python.org/pypi/joblib
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/joblib/joblib.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-nose python-modules-json
+BuildRequires: python-module-nose python-module-pytest python-modules-json time
+BuildRequires: python-module-numpy
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pluggy python-module-py python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-pluggy python3-module-py python3-module-setuptools xz
-BuildRequires: python-module-nose python-module-pytest python-modules-json python3-module-nose python3-module-pytest rpm-build-python3 time
-
-#BuildRequires: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-nose
+BuildRequires: python3-module-nose python3-module-pytest
+BuildRequires: python3-module-numpy
 %endif
 
 %description
@@ -123,12 +119,12 @@ py.test -vv
 %if_with python3
 pushd ../python3
 rm -fR build
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
 %files
-%doc PKG-INFO *.rst
+%doc *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/test*
 
@@ -137,7 +133,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc PKG-INFO *.rst
+%doc *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/test*
 %exclude %python3_sitelibdir/%oname/__pycache__/test*
@@ -148,6 +144,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.11-alt1
+- Update to upstream version 0.11.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.0-alt1.b3.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
