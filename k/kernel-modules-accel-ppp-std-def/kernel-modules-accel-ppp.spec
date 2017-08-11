@@ -1,6 +1,6 @@
 %define module_name             accel-ppp
 %define module_version          1.11.2
-%define module_release          alt1
+%define module_release          alt2
 
 %define flavour		std-def
 BuildRequires(pre): rpm-build-kernel
@@ -62,6 +62,9 @@ install -m644 -D BUILD/drivers/vlan_mon/driver/vlan_mon.ko %buildroot/%module_di
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Aug 11 2017 Alexei Takaseev <taf@altlinux.org> 1.11.2-alt2
+- Fix build with kernels >= 4.10
 
 * Thu Aug 10 2017 Alexei Takaseev <taf@altlinux.org> 1.11.2-alt1
 - 1.11.2
