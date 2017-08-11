@@ -1,5 +1,5 @@
 Name: perl
-Version: 5.24.1
+Version: 5.24.2
 Release: alt1
 Epoch: 1
 
@@ -41,7 +41,7 @@ Patch20: perl-5.24.1-alt-viy-installperl-ExtUtils-MakeMaker-version.patch
 Patch51: cpan-update-Scalar-List-Utils-1.42-to-Scalar-List-Utils-1.46.diff
 
 # ------ inserted with srpm-spec-inject-patches(1) -------
-# BeginPatches(fedora): ------------------------------------
+# BeginPatches(fedora)[shift=300]: -----------------------
 
 # Document Math::BigInt::CalcEmu requires Math::BigInt, rhbz#959096,
 # CPAN RT#85015
@@ -133,10 +133,6 @@ Patch358:        perl-5.24.0-perl-129130-make-chdir-allocate-the-stack-it-needs.
 # Fix crash in Storable when deserializing malformed code reference, RT#68348,
 # RT130098
 Patch359:        perl-5.25.7-Fix-Storable-segfaults.patch
-
-# Fix crash on explicit return from regular expression substitution, RT#130188,
-# in upstream after 5.25.7
-Patch360:        perl-5.24.0-crash-on-explicit-return-from-s-e.patch
 
 # Fix assigning split() return values to an array, in upstream after 5.25.7
 Patch361:        perl-5.24.0-split-was-leaving-PL_sv_undef-in-unused-ary-slots.patch
@@ -360,7 +356,6 @@ equivalent text will have identical binary representations.
 %patch357 -p1
 %patch358 -p1
 %patch359 -p1
-%patch360 -p1
 %patch361 -p1
 %patch362 -p1
 %patch363 -p1
@@ -952,6 +947,9 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%autolib/Unicode
 
 %changelog
+* Wed Aug 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.24.2-alt1
+- 5.24.1 -> 5.24.2 (CVE-2016-1238)
+
 * Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.24.1-alt1
 - 5.22.3 -> 5.24.1
 - build with -Duse64bitint on %%{ix86}
