@@ -4,12 +4,11 @@
 
 Name: python-module-%oname
 Version: 1.1
-Release: alt1.git20150214.1
+Release: alt1.git20150214.2
 Summary: Object-oriented alternative to os/os.path/shutil
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/Unipath/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mikeorr/Unipath.git
 Source: %name-%version.tar
@@ -77,7 +76,7 @@ py.test -vv test.py
 %if_with python3
 pushd ../python3
 python3 setup.py test
-py.test-%_python3_version -vv test.py
+py.test3 -vv test.py
 popd
 %endif
 
@@ -92,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1-alt1.git20150214.2
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1-alt1.git20150214.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
