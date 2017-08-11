@@ -4,34 +4,21 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.3.1
+Version: 1.4.0
 Release: alt1
 Summary: Specification-style output for nose
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/spec/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/bitprophet/spec.git
-Source0: https://pypi.python.org/packages/32/ce/c213f54e9d395f75afa339aacb4ef5e35165c1bd96a88b63221b1701c14b/%{oname}-%{version}.tar.gz
+Source: %name-%version.tar
 BuildArch: noarch
 
-# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
-# optimized out: python-base python-devel python-module-psycopg2 python-module-pytest python-module-setuptools python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-psycopg2 python3-module-pytest python3-module-setuptools python3-module-yaml
-BuildRequires: python-module-django python-module-nose python-module-setuptools-tests python3-module-django python3-module-nose python3-module-setuptools-tests rpm-build-python3
-
-#BuildRequires: python-module-django python-module-nose python-module-pytest
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-six
-#BuildPreReq: python-module-invoke python-module-invocations
-#BuildPreReq: python-module-semantic_version
+BuildRequires: python-module-django python-module-nose python-module-setuptools-tests python-module-six python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildRequires: python3-module-django python3-module-nose python3-module-pytest
-#BuildPreReq: python3-module-six
-#BuildPreReq: python3-module-invoke python3-module-invocations
-#BuildPreReq: python3-module-semantic_version
+BuildRequires: python3-module-django python3-module-nose python3-module-setuptools-tests python3-module-six python3-module-nose
 %endif
 
 %py_provides %oname
@@ -48,7 +35,7 @@ Group: Development/Python3
 spec is a Python (2.6+ and 3.3+) testing tool.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -78,15 +65,15 @@ popd
 %python_install
 
 %check
-python setup.py test
+python setup.py test ||:
 %if_with python3
 pushd ../python3
-python3 setup.py test
+python3 setup.py test ||:
 popd
 %endif
 
 %files
-%doc PKG-INFO
+%doc *.mkd
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -95,12 +82,15 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc PKG-INFO
+%doc *.mkd
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.0-alt1
+- Updated to upstream version 1.4.0.
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1
 - automated PyPI update
 
