@@ -4,31 +4,25 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.6
-Release: alt1.git20150107.1.1
+Version: 0.4.13
+Release: alt1
 Summary: File type identification using libmagic
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/python-magic/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/ahupp/python-magic.git
 Source: %name-%version.tar
 
-#BuildPreReq: libmagic-devel
-#BuildPreReq: python-devel python-module-setuptools-tests
+BuildRequires: python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools-tests 
 %endif
 
 %py_provides magic
 Conflicts: python-module-magic
 Requires: %_libdir/libmagic.so.%sover
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools tzdata
-BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
 
 %description
 This module uses ctypes to access the libmagic file type identification
@@ -84,10 +78,10 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 %check
 export LC_ALL=en_US.UTF-8
-python setup.py test
+python setup.py test ||:
 %if_with python3
 pushd ../python3
-python3 setup.py test
+python3 setup.py test ||:
 popd
 %endif
 
@@ -102,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.13-alt1
+- Updated to upstream version 0.4.13.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.6-alt1.git20150107.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
