@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.14.0
-Release: alt16%ubt
+Release: alt17%ubt
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -34,6 +34,7 @@ Patch80: 701.patch
 Patch81: 708.patch
 Patch82: 725.patch
 Patch83: 735.patch
+Patch84: 786.patch
 # ALT
 Patch100: alt-defaults.patch
 Patch101: alt-branding-faces.patch
@@ -75,6 +76,7 @@ ability to create smooth, animated user interfaces.
 %patch81 -p1
 %patch82 -p1
 %patch83 -p1
+%patch84 -p1
 %patch100 -p1 -b .defaults
 #%patch101 -p1
 %patch102 -p1 -b .wmsession
@@ -158,6 +160,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Fri Aug 11 2017 Sergey V Turchin <zerg@altlinux.org> 0.14.0-alt17%ubt
+- add fix for github issue 786 (ALT#33728)
+
 * Tue Aug 08 2017 Oleg Solovyov <mcpain@altlinux.org> 0.14.0-alt16%ubt
 - support for changing sessions from D-Bus
 
