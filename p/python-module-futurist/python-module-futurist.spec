@@ -3,7 +3,7 @@
 %define oname futurist
 
 Name: python-module-%oname
-Version: 0.21.0
+Version: 0.21.1
 Release: alt1
 Summary: Useful additions to futures, from the future
 Group: Development/Python
@@ -131,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 11 2017 Alexey Shabalin <shaba@altlinux.ru> 0.21.1-alt1
+- 0.21.1
+
 * Fri Apr 28 2017 Alexey Shabalin <shaba@altlinux.ru> 0.21.0-alt1
 - 0.21.0
 - add tests package
