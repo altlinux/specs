@@ -4,15 +4,15 @@
 
 Name: python-module-%oname
 Version: 1.6.6
-Release: alt1.1.1
+Release: alt2
 Summary: parse() is the opposite of format()
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/parse
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/r1chardj0n3s/parse.git
 Source: %name-%version.tar
+Patch1: %oname-python-3.5-test.patch
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -40,6 +40,7 @@ Parse strings using a specification based on the Python format() syntax.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -67,7 +68,7 @@ popd
 py.test
 %if_with python3
 pushd ../python3
-py.test-%_python3_version
+py.test3
 popd
 %endif
 
@@ -82,6 +83,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.6-alt2
+- Fixed tests.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.6.6-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
