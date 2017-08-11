@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.21.0
+Version: 1.21.1
 Release: alt1
 Summary: OpenStack oslo.versionedobjects library
 Group: Development/Python
@@ -150,6 +150,9 @@ popd
 %doc html
 
 %changelog
+* Fri Aug 11 2017 Alexey Shabalin <shaba@altlinux.ru> 1.21.1-alt1
+- 1.21.1
+
 * Fri May 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.21.0-alt1
 - 1.21.0
 - add test packages
