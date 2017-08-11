@@ -4,7 +4,7 @@
 %define rname kid3
 Name: kde5-%rname
 Version: 3.4.5
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Sound
@@ -198,6 +198,9 @@ done
 #%_K5dbus_iface/*id3*
 
 %changelog
+* Thu Aug 10 2017 Sergey V Turchin <zerg@altlinux.org> 3.4.5-alt2%ubt
+- rebuild with new chromaprint
+
 * Tue Jun 06 2017 Sergey V Turchin <zerg@altlinux.org> 3.4.5-alt1%ubt
 - new version
 
