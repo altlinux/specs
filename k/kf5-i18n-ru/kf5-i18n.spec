@@ -4,7 +4,7 @@
 
 Name: kf5-i18n-%lng
 Version: 5.10.4
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: Graphical desktop/KDE
 Summary: %lngg language support for KDE Workspace
@@ -18,6 +18,7 @@ Source0: kf5-l10n-%lng-messages-%version.tar
 Source1: kf5-l10n-%lng-docs-%version.tar
 Source100: template-main
 Source101: template-messages
+Patch1: alt-breeze-tooltips.patch
 
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++
@@ -64,6 +65,7 @@ while read d ; do
     [ -d "$d" ] || continue
     echo "add_subdirectory( $d )" >> CMakeLists.txt
 done
+%patch1 -p1
 
 
 %build
@@ -90,6 +92,9 @@ done
 #%lang(%lng) %_K5data/autocorrect/%{lng}_*.xml
 
 %changelog
+* Fri Aug 11 2017 Oleg Solovyov <mcpain@altlinux.org> 5.10.4-alt2%ubt
+- add tooltips on window decoration buttons translation
+
 * Wed Jul 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt1%ubt
 - new version
 
