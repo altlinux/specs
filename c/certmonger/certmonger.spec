@@ -3,7 +3,7 @@
 
 Name:		certmonger
 Version:	0.78.6
-Release:	alt1
+Release:	alt2
 Summary:	Certificate status monitor and PKI enrollment client
 
 Group:		System/Base
@@ -30,6 +30,8 @@ BuildRequires:	/usr/bin/unix2dos
 BuildRequires:	/usr/bin/which
 
 Requires:	dbus
+
+%define _unpackaged_files_terminate_build 1
 
 %if %{systemd}
 BuildRequires:	systemd-units
@@ -82,6 +84,12 @@ rm -rf tests/007-certsave
 rm -rf tests/018-pembase
 %make check
 
+%post
+%post_service %name
+
+%preun
+%preun_service %name
+
 %files -f %{name}.lang
 %doc README LICENSE STATUS doc/*.txt
 %config(noreplace) %{_sysconfdir}/dbus-1/system.d/*
@@ -100,9 +108,18 @@ rm -rf tests/018-pembase
 %attr(0644,root,root) %config(noreplace) %{_tmpfilesdir}/certmonger.conf
 %if %{systemd}
 %{_unitdir}/*
+%{_datadir}/dbus-1/system-services/*
 %endif
 
 %changelog
+* Fri Aug 11 2017 Mikhail Efremov <sem@altlinux.org> 0.78.6-alt2
+- Use _unpackaged_files_terminate_build.
+- Use post_service/preun_service.
+- Package dbus-1/system-services/*.service.
+- Patch from upstream (fix build):
+  + Fix conversions of bit lengths to byte lengths.
+- Change dogtag port.
+
 * Fri Nov 11 2016 Mikhail Efremov <sem@altlinux.org> 0.78.6-alt1
 - certsave: Fix double free.
 - Updated to 0.78.6.
