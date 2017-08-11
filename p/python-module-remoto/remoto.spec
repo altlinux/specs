@@ -1,7 +1,8 @@
+%define oname remoto
 %def_with python3
 
-Name: python-module-remoto
-Version: 0.0.28
+Name: python-module-%oname
+Version: 0.0.30
 Release: alt1
 Summary: Execute remote commands or processes
 Group: Development/Python
@@ -9,6 +10,7 @@ Group: Development/Python
 License: MIT
 Url: https://github.com/alfredodeza/remoto
 
+# https://github.com/alfredodeza/remoto.git
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -73,11 +75,12 @@ popd
 export REMOTO_NO_VENDOR=1
 export PYTHONPATH=$(pwd)
 
-py.test-%__python_version -v remoto/tests
+py.test -v remoto/tests
 
 %if_with python3
 pushd ../python3
-py.test-%__python3_version -v remoto/tests
+export PYTHONPATH=$(pwd)
+py.test3 -v remoto/tests
 popd
 %endif
 
@@ -92,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.30-alt1
+- Updated to upstream version 0.0.30.
+
 * Mon Jun 20 2016 Lenar Shakirov <snejok@altlinux.ru> 0.0.28-alt1
 - First build for Sisyphus (based on 0.0.28-1.fc25)
 
