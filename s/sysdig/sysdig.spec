@@ -1,5 +1,5 @@
 Name: sysdig
-Version: 0.13.0
+Version: 0.17.0
 Release: alt1
 
 Summary: A system exploration and troubleshooting tool
@@ -23,6 +23,11 @@ An open source system-level exploration and troubleshooting tool.
 %prep
 %setup
 %__subst "s|add_subdirectory(driver)||g" CMakeLists.txt
+
+# fix build with recent curl, see https://github.com/draios/sysdig/issues/895
+sed 's|curl/curlbuild\.h|curl/system.h|' -i \
+	userspace/libsinsp/marathon_http.cpp \
+	userspace/libsinsp/mesos_http.cpp
 
 %build
 # hack for userspace/libscap/scap.c:34:40: fatal error: ../../driver/driver_config.h
@@ -53,6 +58,9 @@ rm -rf %buildroot/usr/etc/
 %_datadir/%name/
 
 %changelog
+* Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.17.0-alt1
+- Updated to upstream version 0.17.0.
+
 * Thu Jan 05 2017 Vitaly Lipatov <lav@altlinux.ru> 0.13.0-alt1
 - new version 0.13.0 (with rpmrb script)
 
