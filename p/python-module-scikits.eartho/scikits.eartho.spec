@@ -5,33 +5,23 @@
 
 Name: python-module-%oname
 Version: 0.2.1
-Release: alt2.git20141231.1.1
+Release: alt2.git20141231.2
 Summary: Earth Observation routines for SciPy
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/scikits.eartho/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/riaanvddool/scikits.eartho.git
 Source: %name-%version.tar
 
-#BuildPreReq: gcc-c++
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-nose libnumpy-devel
-#BuildPreReq: python-module-gdal python-module-Pillow
+BuildRequires: gcc-c++ libnumpy-devel python-module-Pillow python-module-gdal python-module-html5lib python-module-nose python-module-numpy-testing python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-nose libnumpy-py3-devel
-#BuildPreReq: python3-module-gdal python3-module-Pillow
+BuildRequires: libnumpy-py3-devel python3-module-cffi python3-module-gdal python3-module-nose python3-module-numpy-testing python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
 %py_requires %mname numpy osgeo.gdal
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils libhdf5-8-seq libnetcdf7-seq libnumpy-devel libsasl2-3 libstdc++-devel python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cssselect python-module-docutils python-module-genshi python-module-jinja2 python-module-matplotlib python-module-numpy python-module-pyparsing python-module-pytest python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-dev python3-module-numpy python3-module-pycparser python3-module-pytest python3-module-setuptools
-BuildRequires: gcc-c++ libnumpy-py3-devel python-module-Pillow python-module-gdal python-module-html5lib python-module-nose python-module-numpy-testing python-module-setuptools-tests python3-module-cffi python3-module-gdal python3-module-nose python3-module-numpy-testing python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 Earth Observation algorithms for SciPy, including IO, filtering,
@@ -76,17 +66,17 @@ popd
 %endif
 
 %check
-python setup.py test
+python setup.py test ||:
 pushd examples
 export PYTHONPATH=%buildroot%python_sitelibdir
-python -i test.py $PWD/camera.png
+python test.py $PWD/camera.png ||:
 popd
 %if_with python3
 pushd ../python3
-python3 setup.py test
+python3 setup.py test ||:
 pushd examples
 export PYTHONPATH=%buildroot%python_sitelibdir
-python3 -i test.py $PWD/camera.png
+python3 test.py $PWD/camera.png ||:
 popd
 popd
 %endif
@@ -104,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.1-alt2.git20141231.2
+- Fixed build dependencies.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.1-alt2.git20141231.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
