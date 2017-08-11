@@ -3,13 +3,12 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.4
-Release: alt1.git20150413.1
+Version: 0.1.7
+Release: alt1
 Summary: Measures number of Terminal column cells of wide-character codes
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/wcwidth/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/jquast/wcwidth.git
 Source: %name-%version.tar
@@ -106,7 +105,7 @@ py.test -vv \
 pushd ../python3
 export PYTHONPATH=$PWD
 rm -fR build
-py.test-%_python3_version -vv \
+py.test3 -vv \
 	-x --strict --flakes \
 	--cov wcwidth
 popd
@@ -131,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.7-alt1
+- Updated to upstream version 0.1.7.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.4-alt1.git20150413.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
