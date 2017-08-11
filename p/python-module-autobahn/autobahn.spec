@@ -1,47 +1,29 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20150111.1.1.1
 %define oname autobahn
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.5
-#Release: alt1.git20150111.1.1
+Version: 17.7.1
+Release: alt1
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
 Group: Development/Python
 Url: https://github.com/tavendo/AutobahnPython
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/tavendo/AutobahnPython.git
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-trollius python-module-futures
-#BuildPreReq: python-module-six python-module-zope.interface
-#BuildPreReq: python-module-twisted-core-test python-module-twisted-web
-#BuildPreReq: python-module-twisted-words python-module-wsaccel
-#BuildPreReq: python-module-ujson python-module-snappy
-#BuildPreReq: python-module-lz4 python-module-msgpack
-#BuildPreReq: python-module-sphinx-devel scons python-module-boto
-#BuildPreReq: python-module-taschenmesser python-module-scour
-#BuildPreReq: python-module-sphinx-bootstrap-theme
-#BuildPreReq: python-module-sphinxcontrib-spelling libenchant
-#BuildPreReq: inkscape
+BuildRequires: inkscape
+BuildRequires: python-module-alabaster python-module-boto python-module-html5lib python-module-msgpack python-module-objects.inv
+BuildRequires: python-module-scour python-module-setuptools-tests python-module-snappy python-module-sphinx-bootstrap-theme
+BuildRequires: python-module-sphinxcontrib-spelling python-module-taschenmesser python-module-trollius python-module-twisted-logger
+BuildRequires: python-module-twisted-web python-module-ujson python-module-wsaccel
+BuildRequires: python-module-txaio-tests python-module-unittest2 python-module-mock python-module-trollius-tests
+BuildRequires(pre): rpm-macros-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-module-Fabric python-module-OpenSSL python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-docutils python-module-ecdsa python-module-enchant python-module-enum34 python-module-futures python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-ndg-httpsclient python-module-nose python-module-ntlm python-module-pyasn1 python-module-pycrypto python-module-pytest python-module-pytz python-module-serial python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-sphinxcontrib python-module-twisted-core python-module-yaml python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-cffi python3-module-enum34 python3-module-pycparser python3-module-pytest python3-module-setuptools python3-module-zope.interface scons
-BuildRequires: inkscape python-module-alabaster python-module-boto python-module-html5lib python-module-msgpack python-module-objects.inv python-module-scour python-module-setuptools-tests python-module-snappy python-module-sphinx-bootstrap-theme python-module-sphinxcontrib-spelling python-module-taschenmesser python-module-trollius python-module-twisted-logger python-module-twisted-web python-module-ujson python-module-wsaccel python3-module-cryptography python3-module-pygobject3 python3-module-serial python3-module-setuptools-tests python3-module-snappy python3-module-zope rpm-build-python3 time
-
-#BuildRequires: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python-tools-2to3 python3-module-asyncio
-#BuildPreReq: python3-module-six python3-module-zope.interface
-#BuildPreReq: python3-module-twisted-core-test python3-module-twisted-web
-#BuildPreReq: python3-module-twisted-words python3-module-wsaccel
-#BuildPreReq: python3-module-ujson python3-module-snappy
-#BuildPreReq: python3-module-lz4 python3-module-msgpack
+BuildRequires: python3-module-cryptography python3-module-pygobject3 python3-module-serial python3-module-setuptools-tests python3-module-snappy python3-module-zope
+BuildRequires: python3-module-txaio-tests python3-module-unittest2 python3-module-mock python3-module-trollius-tests
 %endif
 
 %py_requires twisted.internet twisted.web twisted.words
@@ -113,40 +95,34 @@ This package contains tests for Autobahn.
 
 %prep
 %setup
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
 %endif
 
 %prepare_sphinx .
-ln -s ../objects.inv doc/
+ln -s ../objects.inv docs/
 
 %build
-pushd %oname
 %python_build_debug
-popd
 
 %if_with python3
-pushd ../python3/%oname
-find -type f -name '*.py' -exec 2to3 -w '{}' +
+pushd ../python3
 %python3_build_debug
 popd
 %endif
 
 export PYTHONPATH=$PWD
-pushd doc
-sphinx-build -b pickle -d build/doctrees . build/pickle
-scons
+pushd docs
+make html pickle
 popd
-mv doc/_build html
 
 %install
-pushd %oname
 %python_install
-popd
 
 %if_with python3
-pushd ../python3/%oname
+pushd ../python3
 %python3_install
 popd
 %endif
@@ -155,21 +131,20 @@ popd
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
-cp -fR doc/build/pickle \
+cp -fR docs/build/pickle \
 	%buildroot%python_sitelibdir/%oname/
 
 %check
-pushd %oname
-python setup.py test
-popd
+PYTHONPATH=$(pwd) py.test --pyargs autobahn
+
 %if_with python3
-pushd ../python3/%oname
-python3 setup.py test
+pushd ../python3
+PYTHONPATH=$(pwd) py.test3 --pyargs autobahn
 popd
 %endif
 
 %files
-%doc *.md
+%doc *.md *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/*/*/test
@@ -182,11 +157,11 @@ popd
 %python_sitelibdir/*/pickle
 
 %files docs
-%doc html examples
+%doc docs/build/html examples
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md
+%doc *.md *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/*/test
 #exclude %python3_sitelibdir/twisted/plugins/__init__.py
@@ -196,6 +171,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 17.7.1-alt1
+- Updated to upstream version 17.7.1.
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.5-alt1.git20150111.1.1.1
 - (AUTO) subst_x86_64.
 
