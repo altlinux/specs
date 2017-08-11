@@ -1,15 +1,15 @@
-%define sover 1
+%define sover 0
 %define libchromaprint libchromaprint%sover
 
-Name: chromaprint
-Version: 1.4.2
-Release: alt1%ubt
+Name: chromaprint0
+Version: 1.2
+Release: alt3%ubt
 Summary: Library implementing the AcoustID fingerprinting
 
 Group: Sound
 License: LGPLv2+
 Url: http://www.acoustid.org/chromaprint
-Source: %name-%version.tar
+Source: chromaprint-%version.tar
 
 Patch1: chromaprint-1.1-alt-libav9.patch
 Patch2: chromaprint-1.1-alt-libav10.patch
@@ -50,7 +50,7 @@ This package contains the headers that programmers will need to develop
 applications which will use %name.
 
 %prep
-%setup
+%setup -qn chromaprint-%version
 #%patch1 -p1
 #%patch2 -p1
 
@@ -73,14 +73,14 @@ applications which will use %name.
 %_libdir/libchromaprint.so.%sover
 %_libdir/libchromaprint.so.%sover.*
 
-%files -n libchromaprint-devel
-%_includedir/chromaprint.h
-%_libdir/lib*.so
-%_libdir/pkgconfig/*.pc
+#%files -n libchromaprint-devel
+#%_includedir/chromaprint.h
+#%_libdir/lib*.so
+#%_libdir/pkgconfig/*.pc
 
 %changelog
-* Thu Aug 10 2017 Sergey V Turchin <zerg@altlinux.org> 1.4.2-alt1%ubt
-- new version
+* Fri Aug 11 2017 Sergey V Turchin <zerg@altlinux.org> 1.2-alt3%ubt
+- build only compat library
 
 * Mon Jun 05 2017 Sergey V Turchin <zerg@altlinux.org> 1.2-alt2%ubt
 - rebuild with ffmpeg
