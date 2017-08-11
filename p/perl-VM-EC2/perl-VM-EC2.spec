@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.28
-Release: alt2
+Release: alt2.1
 Summary: Control the Amazon EC2 and Eucalyptus Clouds
 Group: Development/Perl
 License: perl
@@ -46,6 +46,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Fri Aug 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.28-alt2.1
+- rebuild with new perl
+
 * Sat May 13 2017 Igor Vlasenko <viy@altlinux.ru> 1.28-alt2
 - to Sisyphus
 
