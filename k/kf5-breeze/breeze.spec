@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.10.4
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -13,6 +13,7 @@ License: GPLv2+ / LGPLv2+
 Requires: icon-theme-breeze
 
 Source: %rname-%version.tar
+Patch1: alt-tooltips.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms pkg-config python-base qt5-base-devel ruby ruby-stdlibs
@@ -54,6 +55,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -87,6 +89,9 @@ KF5 library
 %_libdir/cmake/Breeze/
 
 %changelog
+* Fri Aug 11 2017 Oleg Solovyov <mcpain@altlinux.org> 5.10.4-alt2%ubt
+- implemented tooltips on window decoration buttons
+
 * Wed Jul 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt1%ubt
 - new version
 
