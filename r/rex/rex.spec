@@ -1,7 +1,9 @@
 # SPEC file for rex package
 
+%define  version_suffix _01
+
 Name:    rex
-Version: 1.5.0
+Version: 1.5.99
 Release: alt1
 
 Summary: (R)?ex - Remote Execution Framework
@@ -50,15 +52,18 @@ and software deployment.
 
 %patch1 -p0
 
+# Now (1.5.99_01) there are Virtualization::Docker::images.pm file
+sed -e '/^images$/ d' -i MANIFEST.SKIP
+
 # This creates Makefile.PL from dist.ini
 /usr/bin/dzil build
 
 %build
-cd Rex-%{version}
+cd Rex-%{version}%{version_suffix}
 %perl_vendor_build
 
 %install
-cd Rex-%{version}
+cd Rex-%{version}%{version_suffix}
 %perl_vendor_install
 
 install -dp %buildroot%_sysconfdir/bash_completion.d/
@@ -78,6 +83,9 @@ install -p -m 644 ../misc/rex-tab-completion.bash %buildroot%_sysconfdir/bash_co
 %_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Sun Aug 13 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.5.99-alt1
+- New version
+
 * Mon Mar 20 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.5.0-alt1
 - New version
 
