@@ -2,7 +2,7 @@
 %define gtkver 3
 Name:		deadbeef
 Version:	0.7.1
-Release:	alt2.20160419.1
+Release:	alt3.20160419.1
 Summary:	DeaDBeeF is an audio player
 Url:		http://deadbeef.sf.net
 #https://github.com/Alexey-Yakovenko/deadbeef
@@ -439,9 +439,18 @@ DeaDBeeF libsamplerate resampler
 Summary: DeaDBeeF audio format converter
 Group: Sound
 Requires: %name = %version-%release
+Requires: ttaenc
+Requires: faac
+Requires: wavpack
+Requires: musepack
+Requires: lame
+Requires: vorbis-tools
+Requires: opus-tools
+Requires: ffmpeg
 
 %description -n %name-converter
 Allows file conversion between various containers and codecs.
+
 
 #package -n %name-medialib
 #Summary: DeaDBeeF medialib plugin
@@ -651,6 +660,9 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-incomplete
 
 %changelog
+* Mon Aug 14 2017 Anton Midyukov <antohami@altlinux.org> 0.7.1-alt3.20160419.1
+- Added missing requires for deadbeef-converter (Closes: 33755)
+
 * Tue Jun 06 2017 Anton Midyukov <antohami@altlinux.org> 0.7.1-alt2.20160419.1
 - Rebuild with ffmpeg.
 
