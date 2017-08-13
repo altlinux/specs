@@ -1,4 +1,4 @@
-%define git_commit d77a2a4
+%define git_commit 71cf8e6
 		    
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
@@ -9,14 +9,14 @@ Version: 27.5.0
 # %%ifndef git_commit
 # Release: alt2
 # %%else
-Release: alt0.git_4_%git_commit
+Release: alt0.git_5_%git_commit
 # %%endif
 
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 
 
-# git commit d77a2a4c912b843ec320c8899cfc548a3c6bf01b
+# git commit 71cf8e6633388614fe4c4a103d6b2f988ee6cd2e
 Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
@@ -67,13 +67,14 @@ Patch16: firefox-cross-desktop.patch
 # Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
 Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
 Patch21: palemoon-build-el5-nss.patch
-Patch22: palemoon_rpath-27.0.2.patch
+Patch22: palemoon_rpath-27.5.0.patch
 
 Patch23: palemoon_version-27.0.3.patch
 Patch24: palemoon-27.0.2-ui_picker_false.patch
 #Patch25: palemoon-27.4.0-blocklist.patch
+
 # Patch from Rosa
-Patch101: palemoon-27.4.0-lang.patch
+# Patch101: palemoon-27.4.0-lang.patch
 Patch103: palemoon-27.4.0-disable-check-default-browser.patch
 Patch105: firefox-3.5.3-default-mail-handler.patch
 Patch106: palemoon-27.4.0-enable-addons.patch
@@ -202,6 +203,8 @@ export RPATH_PATH="$rpath"
 %patch21 -p1
 %patch22 -p1
 
+
+
 #patch25 -p1 -b .block
 cd %sname
 
@@ -217,7 +220,7 @@ tar -xf %SOURCE1
 #patch18 -p1
 
 #Pach from Rosa
-%patch101 -p1 -b .lang
+#patch101 -p1 -b .lang
 %patch103 -p1 -b .disable-software-update
 %patch105 -p1 -b .default-mail-handler
 %patch106 -p1 -b .addons
@@ -424,10 +427,10 @@ install -D -m 644 %SOURCE8 %buildroot/%palemoon_prefix/browser/defaults/preferen
 
 mv -f %buildroot%palemoon_prefix/application.ini %buildroot%palemoon_prefix/browser/application.ini
 
-cat > %buildroot/%palemoon_prefix/browser/defaults/preferences/%sname-l10n.js <<EOF
-pref("intl.locale.matchOS",		true);
-pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
-EOF
+# cat > %buildroot/%palemoon_prefix/browser/defaults/preferences/%sname-l10n.js <<EOF
+# pref("intl.locale.matchOS",		true);
+# pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
+#EOF
 
 #install -D -m644 browser/app/profile/prefs.js %buildroot%palemoon_datadir/browser/defaults/profile/prefs.js
 
@@ -590,6 +593,9 @@ install -D -m 644 README.md ../
 %exclude %_datadir/idl/*
 
 %changelog
+* Sun Aug 13 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.5.0-alt0.git_5_71cf8e6
+- Update from github commit 71cf8e6633388614fe4c4a103d6b2f988ee6cd2e
+
 * Sat Aug 05 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.5.0-alt0.git_4_d77a2a4
 - Update from github commit d77a2a4c912b843ec320c8899cfc548a3c6bf01b
 
