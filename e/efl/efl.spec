@@ -2,7 +2,7 @@
 
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
-%define ver_major 1.19
+%define ver_major 1.20
 %define beta %nil
 %define gst_api_ver 1.0
 %define wayland_ver 1.11.0
@@ -25,7 +25,7 @@
 %def_enable lua
 
 Name: efl
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Enlightenment Foundation Libraries
@@ -57,6 +57,7 @@ BuildRequires: libX11-devel libXau-devel libXcomposite-devel libXdamage-devel li
 BuildRequires: libXfixes-devel libXinerama-devel libXrandr-devel libXrender-devel libXScrnSaver-devel
 BuildRequires: libXtst-devel libXcursor-devel libXp-devel libXi-devel
 BuildRequires: libGL-devel
+BuildRequires: libunwind-devel
 %{?_enable_lua:BuildRequires: libluajit-devel}
 %{?_enable_ibus:BuildRequires: libibus-devel}
 %{?_enable_tslib:BuildRequires: libts-devel}
@@ -259,6 +260,9 @@ find %buildroot%_libdir -name "*.la" -delete
 %_bindir/eeze_scanner
 %_bindir/eeze_scanner_monitor
 %_bindir/eeze_umount
+%_bindir/efl_wl_test
+%_bindir/efl_wl_test_stack
+
 %_bindir/efreetd
 %_bindir/eina-bench-cmp
 %_bindir/eina_modinfo
@@ -346,6 +350,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_pkgconfigdir/eeze.pc
 %_pkgconfigdir/efl-cxx.pc
 %_pkgconfigdir/efl.pc
+%_pkgconfigdir/%name-wl.pc
 %_pkgconfigdir/efreet-mime.pc
 %_pkgconfigdir/efreet-trash.pc
 %_pkgconfigdir/efreet.pc
@@ -418,6 +423,9 @@ find %buildroot%_libdir -name "*.la" -delete
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 1.20.2-alt1
+- 1.20.2
+
 * Sat May 27 2017 Yuri N. Sedunov <aris@altlinux.org> 1.19.1-alt1
 - 1.19.1
 
