@@ -4,18 +4,18 @@
 #def_disable check
 
 Name: python-module-%oname
-Version: 0.26.0
-Release: alt1.git20150811.1
+Version: 0.36.0
+Release: alt1
 Summary: Fast and direct raster I/O for use with Numpy and SciPy
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/rasterio/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mapbox/rasterio.git
 Source: %name-%version.tar
 Source1: conf.py
 Source2: index.rst
+Patch1: %oname-%version-alt-setup.patch
 
 BuildPreReq: libgdal-devel libproj-nad libproj-devel gcc-c++
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -26,6 +26,8 @@ BuildPreReq: python-module-wheel python-module-click-tests
 BuildPreReq: python-module-snuggs python-module-click-plugins
 BuildPreReq: python-module-pytest-cov
 BuildPreReq: python-module-sphinx-devel
+BuildRequires: xvfb-run
+BuildRequires: python-module-boto3 python-module-packaging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -35,11 +37,11 @@ BuildPreReq: python3-module-enum34 python3-module-coveralls
 BuildPreReq: python3-module-wheel python3-module-click-tests
 BuildPreReq: python3-module-snuggs python3-module-click-plugins
 BuildPreReq: python3-module-pytest-cov
+BuildRequires: python3-module-boto3 python3-module-packaging
 %endif
 
 %py_provides %oname
-Requires: python-module-enum34
-%py_requires affine numpy cligj click snuggs click_plugins IPython
+%py_requires numpy IPython
 
 %description
 Rasterio reads and writes geospatial raster datasets.
@@ -82,8 +84,7 @@ This package contains documentation for %oname.
 Summary: Fast and direct raster I/O for use with Numpy and SciPy
 Group: Development/Python3
 %py3_provides %oname
-Requires: python3-module-enum34
-%py3_requires affine numpy cligj click snuggs click_plugins IPython
+%py3_requires numpy IPython
 
 %description -n python3-module-%oname
 Rasterio reads and writes geospatial raster datasets.
@@ -95,6 +96,7 @@ more fun.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -138,10 +140,12 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 rm -f requirements*
 
 %check
-python setup.py test
+xvfb-run python setup.py test ||:
+xvfb-run py.test ||:
 %if_with python3
 pushd ../python3
-python3 setup.py test
+xvfb-run python3 setup.py test ||:
+xvfb-run py.test3 ||:
 popd
 %endif
 
@@ -168,6 +172,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.36.0-alt1
+- Updated to upstream release 0.36.0.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.26.0-alt1.git20150811.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
