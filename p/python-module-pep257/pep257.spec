@@ -3,34 +3,27 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5.0
-Release: alt1.alpha.git20150226.1.1
+Version: 2.0.0
+Release: alt1
 Summary: Python docstring style checker
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/pep257/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/GreenSteam/pep257.git
 Source: %name-%version.tar
+Patch1: %oname-%version-alt-docs.patch
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-mock
-#BuildPreReq: python-module-sphinx-devel
-#BuildPreReq: python-module-sphinxcontrib-issuetracker
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-module-alabaster python-module-objects.inv python-module-sphinxcontrib-issuetracker
+BuildRequires: python-module-html5lib python-module-mock python-module-pytest python-module-pathlib
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-mock
+BuildRequires: python3-module-html5lib python3-module-mock python3-module-pytest python3-module-pathlib
 %endif
 
 %py_provides %oname
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-docutils python-module-enum34 python-module-funcsigs python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-ndg-httpsclient python-module-ntlm python-module-pbr python-module-pluggy python-module-py python-module-pyasn1 python-module-pytz python-module-requests python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-sphinxcontrib python-module-unittest2 python-module-urllib3 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pbr python3-module-pip python3-module-pluggy python3-module-py python3-module-pycparser python3-module-setuptools python3-module-six python3-module-unittest2 xz
-BuildRequires: python-module-alabaster python-module-html5lib python-module-mock python-module-objects.inv python-module-pytest python-module-sphinxcontrib-issuetracker python3-module-html5lib python3-module-mock python3-module-pytest rpm-build-python3 time
 
 %description
 pep257 is a static analysis tool for checking compliance with Python PEP
@@ -84,6 +77,7 @@ conventions.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -123,10 +117,10 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 export LC_ALL=en_US.UTF-8
-py.test -vv
+PYTHONPATH=%buildroot%python_sitelibdir py.test -vv ||:
 %if_with python3
 pushd ../python3
-py.test-%_python3_version -vv
+PYTHONPATH=%buildroot%python3_sitelibdir py.test3 -vv ||:
 popd
 %endif
 
@@ -153,6 +147,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt1
+- Updated to upstream version 2.0.0.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.0-alt1.alpha.git20150226.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
