@@ -3,13 +3,12 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.12
-Release: alt1.git20150818.1
+Version: 0.1.2
+Release: alt1
 Summary: Hidden alignment conditional random field, discriminative string edit distance
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/pyhacrf
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/dirko/pyhacrf.git
 Source: %name-%version.tar
@@ -24,9 +23,6 @@ BuildPreReq: python3-module-Cython libnumpy-py3-devel
 BuildPreReq: python3-module-pylbfgs
 %endif
 
-%py_provides %oname
-%py_requires numpy pylbfgs
-
 %description
 Hidden alignment conditional random field for classifying string pairs -
 a learnable edit distance.
@@ -39,8 +35,6 @@ examples and score new example.
 %package -n python3-module-%oname
 Summary: Hidden alignment conditional random field, discriminative string edit distance
 Group: Development/Python3
-%py3_provides %oname
-%py3_requires numpy pylbfgs
 
 %description -n python3-module-%oname
 Hidden alignment conditional random field for classifying string pairs -
@@ -89,22 +83,25 @@ py.test -vv
 pushd ../python3
 python3 setup.py test -v
 python3 setup.py build_ext -i
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 %endif
 
 %files
-%doc *.rst *.md examples
+%doc *.rst examples
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst *.md examples
+%doc *.rst examples
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.2-alt1
+- Updated to upstream version 0.1.2.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.12-alt1.git20150818.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
