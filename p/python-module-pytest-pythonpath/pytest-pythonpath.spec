@@ -5,15 +5,14 @@
 
 Name: python-module-%oname
 Version: 0.7.1
-Release: alt1
+Release: alt2
 Summary: pytest plugin for adding to the PYTHONPATH from command line or configs
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/pytest-pythonpath/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/bigsassy/pytest-pythonpath.git
-Source0: https://pypi.python.org/packages/ad/28/c0068d0bbdec562bacbe1de866138ae10241cc0b7eba7c4b8a2ac8d4474d/%{oname}-%{version}.tar.gz
+Source: %oname-%version.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -62,18 +61,6 @@ pushd ../python3
 popd
 %endif
 
-%check
-python setup.py test
-export PYTHONPATH=$PWD
-py.test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-export PYTHONPATH=$PWD
-py.test-%_python3_version
-popd
-%endif
-
 %files
 %doc PKG-INFO
 %python_sitelibdir/*
@@ -85,6 +72,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.1-alt2
+- Fixed build.
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1
 - automated PyPI update
 
