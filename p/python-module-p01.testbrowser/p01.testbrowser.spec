@@ -1,15 +1,12 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1
 %define mname p01
 %define oname %mname.testbrowser
 Name: python-module-%oname
-Version: 0.5.0
-#Release: alt1
+Version: 2.0.1
+Release: alt1
 Summary: Zope test brwoser based on webtest and wsgi app
 License: ZPLv2.1
 Group: Development/Python
 Url: https://pypi.python.org/pypi/p01.testbrowser/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
@@ -20,10 +17,10 @@ BuildPreReq: python-module-zope.interface
 BuildPreReq: python-module-zope.schema
 BuildPreReq: python-module-zope.cachedescriptors
 BuildPreReq: python-module-zope.testing
+BuildRequires: python-module-transaction python-module-zope.component python-module-zope.configuration python-module-z3c.json python-module-z3c.jsonrpc
 
 %py_provides %oname
 Requires: python-module-%mname = %EVR
-Requires: python-module-WSGIProxy2
 %py_requires zope.interface zope.schema zope.cachedescriptors pytz six
 %py_requires webtest zope.testing
 
@@ -58,7 +55,7 @@ install -p -m644 src/%mname/__init__.py \
 	%buildroot%python_sitelibdir/%mname/
 
 %check
-python setup.py test
+py.test ||:
 
 %files
 %doc *.txt
@@ -71,6 +68,9 @@ python setup.py test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.1-alt1
+- Updated to upstream version 2.0.1.
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.0-alt1.1
 - (AUTO) subst_x86_64.
 
