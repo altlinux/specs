@@ -1,6 +1,6 @@
 Name: LibreSSL
 Version: 2.5.5
-Release: alt2
+Release: alt3
 
 %define oname libressl
 %define libtls_abi 15
@@ -15,16 +15,16 @@ Url: http://www.libressl.org/
 Packager: Vladimir D. Seleznev <vseleznv@altlinux.org>
 # repacked http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/%oname-%version.tar.gz
 Source: %oname-%version.tar
-# https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-%version-relnotes.txt
-Source1: %oname-%version-relnotes.txt
-Source2: %name.watch
+Source1: %name.watch
 Patch4: netcat-1.159-alt-usage.patch
 Patch8: netcat-1.159-alt-execcmd.patch
 Patch9: netcat-1.159-alt-proxy_pass.patch
-Patch10: LibreSSL-2.5.3-alt-openssl-manpage.patch
+Patch10: LibreSSL-2.5.5-alt-openssl-manpage.patch
 Patch20: LibreSSL-2.5.3-alt-ocspcheck-truncate.patch
 Patch21: LibreSSL-2.5.3-alt-ssl-warnings.patch
 Patch22: LibreSSL-2.5.3-alt-tests-warnings.patch
+Patch23: LibreSSL-2.5.5-alt-apps-ca-file.patch
+Patch24: LibreSSL-2.5.5-alt-devel-manpages.patch
 
 %define common_descr \
 LibreSSL is a version of the TLS/crypto stack forked from OpenSSL in \
@@ -167,12 +167,13 @@ Common uses include:
 %patch20 -p2
 %patch21 -p2
 %patch22 -p2
-cp %SOURCE1 RELNOTES
+%patch23 -p2
+%patch24 -p2
 
 %build
 %autoreconf
 %configure \
-	--enable-static \
+	--disable-static \
 	--enable-nc \
 	--with-openssldir='%_sysconfdir/%oname/' \
 	#
@@ -201,13 +202,9 @@ popd
 
 %define docdir %_docdir/%name-%version
 mkdir -p %buildroot%docdir
-install -pm 644 ChangeLog COPYING RELNOTES \
+install -pm 644 ChangeLog COPYING \
 	%buildroot%docdir
 gzip -9 %buildroot%docdir/ChangeLog
-gzip -9 %buildroot%docdir/RELNOTES
-
-%check
-%make check
 
 %files -n openssl-LibreSSL
 %dir %docdir
@@ -261,6 +258,12 @@ gzip -9 %buildroot%docdir/RELNOTES
 %_man1dir/netcat.*
 
 %changelog
+* Mon Aug 14 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.5.5-alt3
+- fixed cert.pem lookup location for netcat and ocspcheck
+- fixed manpages
+- removed RELNOTES
+- disabled tests
+
 * Thu Jul 20 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.5.5-alt2
 - fixed LibreSSL-devel provides and requires to avoid collision with openssl
 - make watchfile to watch for the stable releases
