@@ -1,6 +1,6 @@
 Name: pkcs11-profiles
 Version: 0.1.0
-Release: alt3
+Release: alt4
 
 Summary: Set of profiles for PAM PKCS11 configuration
 License: GPLv3+
@@ -17,6 +17,7 @@ License: GPLv3+
 Group: System/Configuration/Other
 Requires: pam_pkcs11 >= 0.6.9-alt9
 Requires: librtpkcs11ecp
+Requires: pcsc-lite-ccid
 
 %description rutokenecp
 RuToken ECP PAM PKCS11 module configuration
@@ -39,6 +40,9 @@ install -pDm644 profiles/rutokenecp %buildroot%_sysconfdir/security/pam_pkcs11/p
 %_sysconfdir/security/pam_pkcs11/profiles/rutokenecp
 
 %changelog
+* Mon Aug 14 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt4
+- Require pcsc-lite-ccid for RuTokenECP.
+
 * Thu Aug 10 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt3
 - Remove the word "profile" from its description.
 

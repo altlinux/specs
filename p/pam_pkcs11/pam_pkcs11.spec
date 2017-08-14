@@ -2,7 +2,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.9
-Release: alt11
+Release: alt12
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -27,6 +27,7 @@ Patch13: pam_pkcs11-0.6.9-oid-mapper-profiles.patch
 
 %add_findreq_skiplist %_sysconfdir/pam.d/*
 Requires: pam-config PAM(pam_mkhomedir.so) PAM(pam_pkcs11.so) PAM(pam_succeed_if.so)
+Requires: pcsc-lite pcsc-lite-ccid
 
 BuildRequires: docbook-style-xsl flex libldap-devel libpam-devel libpcsclite-devel libssl-devel xsltproc
 BuildRequires: doxygen
@@ -182,6 +183,11 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ldap_mapper.so
 
 %changelog
+* Mon Aug 14 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt12
+- Explicitly require pcsc-lite (for pcscd).
+- Also require pcsc-lite-ccid (as related to the default OpenSC
+  profile).
+
 * Mon Aug 14 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt11
 - Drop versioned dependency of alterator-service-functions (chroot
   usage is rare).
