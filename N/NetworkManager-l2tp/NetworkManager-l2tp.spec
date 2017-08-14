@@ -10,7 +10,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-l2tp
-Version: 1.2.6
+Version: 1.2.8
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -105,6 +105,9 @@ NetworkManager panel applet.
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Aug 14 2017 Mikhail Efremov <sem@altlinux.org> 1.2.8-alt1
+- Updated to 1.2.8.
+
 * Tue Jul 11 2017 Mikhail Efremov <sem@altlinux.org> 1.2.6-alt1
 - Disable silent rules.
 - Updated to 1.2.6.
