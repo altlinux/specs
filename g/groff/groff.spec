@@ -1,6 +1,6 @@
 Name: groff
 Version: 1.22.3
-Release: alt1
+Release: alt2
 
 Summary: A document formatting system
 License: GPL
@@ -21,6 +21,7 @@ Patch10: %name-1.20.1-alt-perl.patch
 Patch11: %name-1.19.3-fix-unicode-tmac.patch
 Patch12: %name-1.22.3-add-T8bit.patch
 Patch13: %name-1.20.1-replace-virmf.patch
+Patch14: %name-1.22.3-debian-source-date-epoch.patch
 
 PreReq: %name-base = %version-%release
 Requires: %name-dvi = %version-%release
@@ -133,6 +134,7 @@ This package contains additional %name components.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 
 # Purge self-contained getopt.
 rm -f src/include/getopt.h src/libs/lib%name/getopt*
@@ -333,6 +335,9 @@ fi
 %_docdir/%name-%version/[a-z]*
 
 %changelog
+* Fri Aug 04 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.22.3-alt2
+- Add source-date-epoch.patch from Debian
+
 * Wed Feb 03 2016 Alexey Gladkov <legion@altlinux.ru> 1.22.3-alt1
 - New release (1.22.3).
 
