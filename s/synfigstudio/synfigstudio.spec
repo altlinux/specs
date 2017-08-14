@@ -1,8 +1,8 @@
 %def_without build_docs
 
 Name:    synfigstudio
-Version: 1.3.3
-Release: alt2
+Version: 1.3.4
+Release: alt1
 
 Summary: Synfig studio - animation program
 Group:   Office
@@ -195,6 +195,9 @@ cat synfig.lang >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Aug 14 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.4-alt1
+- New version
+
 * Fri May 12 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.3-alt2
 - Rebuild with new libmng
 
