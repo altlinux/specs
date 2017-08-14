@@ -1,4 +1,4 @@
-%define ver_major 0.6
+%define ver_major 0.8
 %define gst_api_ver 1.0
 %def_with recording
 
@@ -21,7 +21,7 @@ Requires: gst-plugins-ugly%gst_api_ver
 
 BuildRequires: gnome-common intltool yelp-tools gtk-doc
 BuildRequires: libgtk+3-devel >= %gtk_ver libxml2-devel libchamplain-gtk3-devel
-BuildRequires: gst-plugins%gst_api_ver-devel gst-plugins-bad1.0-devel
+BuildRequires: libgeocode-glib-devel gst-plugins%gst_api_ver-devel gst-plugins-bad1.0-devel
 
 %description
 GNOME Internet Radio Locator is a Free Software program that allows
@@ -53,6 +53,9 @@ with the help of a map.
 
 
 %changelog
+* Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Wed Jul 19 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 
