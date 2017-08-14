@@ -2,7 +2,7 @@
 %def_disable doc
 
 Name: wayland
-Version: 1.13.0
+Version: 1.14.0
 Release: alt1
 
 Summary: Wayland protocol libraries
@@ -148,6 +148,9 @@ This package provides development files for Wayland cursor helper library.
 %_pkgconfigdir/%name-cursor.pc
 
 %changelog
+* Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
+- 1.14.0
+
 * Wed Feb 22 2017 Yuri N. Sedunov <aris@altlinux.org> 1.13.0-alt1
 - 1.13.0
 
