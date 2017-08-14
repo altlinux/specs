@@ -3,22 +3,25 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.5.0
+Version: 1.6.2
 Release: alt1
 Summary: Thin-wrapper around the mock package for easier use with py.test
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/%oname
-Packager: Python Development Team <python@packages.altlinux.org>
+Url: https://pypi.python.org/pypi/pytest-mock
 BuildArch: noarch
 
-Source: https://pypi.python.org/packages/00/ee/07a76dada65cbafa1f5c8802a0cdb07b21615be482e587743da6b2aa97a4/%oname-%version.tar.gz
+# https://github.com/pytest-dev/pytest-mock.git
+Source: %name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python
+BuildRequires: git-core
 BuildRequires: python-module-setuptools-tests python-module-setuptools_scm
+BuildRequires: python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools-tests python3-module-setuptools_scm
+BuildRequires: python3-module-mock
 %endif
 
 %description
@@ -40,23 +43,32 @@ patching API provided by the mock package, but with the benefit of not having
 to worry about undoing patches at the end of a test
 
 %prep
-%setup -n %oname-%version
+%setup
+
+# setup version info
+git config --global user.email "darktemplar at altlinux.org"
+git config --global user.name "darktemplar"
+git init-db
+git add . -A
+git commit -a -m "%version"
+git tag %version -m "%version"
+
 %if_with python3
-rm -rf ../python3-module-%oname-%version
-cp -a . ../python3-module-%oname-%version
+cp -a . ../python3
 %endif
 
 %build
 %python_build
+
 %if_with python3
-pushd ../python3-module-%oname-%version
+pushd ../python3
 %python3_build
 popd
 %endif
 
 %install
 %if_with python3
-pushd ../python3-module-%oname-%version
+pushd ../python3
 %python3_install
 popd
 %endif
@@ -64,10 +76,11 @@ popd
 %python_install
 
 %check
-python setup.py test
+PYTHONPATH=$(pwd) py.test ||:
+
 %if_with python3
-pushd ../python3-module-%oname-%version
-python3 setup.py test
+pushd ../python3
+PYTHONPATH=$(pwd) py.test3 ||:
 popd
 %endif
 
@@ -82,5 +95,8 @@ popd
 %endif
 
 %changelog
+* Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.2-alt1
+- Updated to upstream version 1.6.2.
+
 * Sat Jan 21 2017 Anton Midyukov <antohami@altlinux.org> 1.5.0-alt1
 - Initial build for ALT Linux Sisyphus.
