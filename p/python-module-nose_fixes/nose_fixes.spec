@@ -4,12 +4,11 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt1.git20130214.1
+Release: alt1.git20130214.2
 Summary: A plugin to make nose behave better
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/nose_fixes/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/cjw296/nose_fixes.git
 Source: %name-%version.tar
@@ -116,14 +115,10 @@ popd
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
-python setup.py test
-rm -fR build
 py.test
 %if_with python3
 pushd ../python3
-python3 setup.py test
-rm -fR build
-py.test-%_python3_version
+py.test3
 popd
 %endif
 
@@ -151,6 +146,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3-alt1.git20130214.2
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3-alt1.git20130214.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
