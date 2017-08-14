@@ -1,6 +1,6 @@
 Summary: Edward Loper's API Documentation Generation Tool
 Version: 3.0.1
-Release: alt2.1
+Release: alt3
 Epoch: 1
 %setup_python_module epydoc
 Source0: http://downloads.sourceforge.net/epydoc/%modulename-%version.tar.gz
@@ -13,6 +13,7 @@ Packager: Fr. Br. George <george@altlinux.ru>
 
 Patch0: epydoc-docutils-0.6.patch
 Patch1: epydoc-python-2.6.patch
+Patch2: epydoc-source-date-epoch.patch
 
 %description
 Epydoc is a tool for generating API documentation for Python modules, based on their docstrings. For an example of epydoc's output, see the API documentation for epydoc itself (html, pdf). A lightweight markup language called epytext can be used to format docstrings, and to add information about specific fields, such as parameters and instance variables. Epydoc also understands docstrings written in ReStructuredText, Javadoc, and plaintext.
@@ -21,6 +22,7 @@ Epydoc is a tool for generating API documentation for Python modules, based on t
 %setup -q -n %modulename-%version
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 
 %build
 python setup.py build
@@ -35,6 +37,9 @@ install man/*.1 %buildroot/%_man1dir/
 %_man1dir/*
 
 %changelog
+* Fri Aug 04 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:3.0.1-alt3
+- Add timestamps from environment support (Debian #790899)
+
 * Fri Oct 21 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1:3.0.1-alt2.1
 - Rebuild with Python-2.7
 
