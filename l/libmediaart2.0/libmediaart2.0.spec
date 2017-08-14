@@ -4,10 +4,10 @@
 %define ver_major 1.9
 %define api_ver 2.0
 %def_enable introspection
-%def_enable gtk_doc
+%def_enable docs
 
 Name: %_name%api_ver
-Version: %ver_major.1
+Version: %ver_major.4
 Release: alt1
 
 Summary: Library for handling media art (2.0 API)
@@ -24,7 +24,7 @@ Source: %_name-%version.tar
 Obsoletes: %_name < %version
 Provides: %_name = %version-%release
 
-BuildRequires: gcc-c++ libgio-devel >= 2.38 libgdk-pixbuf-devel zlib-devel
+BuildRequires: meson gcc-c++ libgio-devel >= 2.38 libgdk-pixbuf-devel zlib-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
 BuildRequires: libvala-devel vala-tools intltool gtk-doc
 # for check
@@ -83,16 +83,16 @@ This package contains development documentation for LibMediaArt library.
 %{?_enable_snapshot:touch ChangeLog}
 
 %build
-%autoreconf
-%configure --disable-static \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
-%make_build
+%meson \
+	%{?_enable_docs:-Dwith-docs=yes} \
+	-Dimage_library=gdk-pixbuf
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-#%make check
+%meson_test
 
 %files
 %_libdir/%_name-%api_ver.so.*
@@ -103,6 +103,7 @@ This package contains development documentation for LibMediaArt library.
 %_libdir/%_name-%api_ver.so
 %_pkgconfigdir/%_name-%api_ver.pc
 %_vapidir/%_name-%api_ver.vapi
+%_vapidir/%%_name-%api_ver.deps
 
 %if_enabled introspection
 %files gir
@@ -112,12 +113,15 @@ This package contains development documentation for LibMediaArt library.
 %_girdir/MediaArt-%api_ver.gir
 %endif
 
-%if_enabled gtk_doc
+%if_enabled docs
 %files devel-doc
 %_datadir/gtk-doc/html/*
 %endif
 
 %changelog
+* Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 1.9.4-alt1
+- 1.9.4
+
 * Sun Mar 05 2017 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt1
 - 1.9.1
 
