@@ -2,25 +2,15 @@
 %def_without static
 
 Summary: AES encryption for SQLite databases
-Name: sqlcipher
-Version: 3.2.0
-Release: alt2
+Name:    sqlcipher
+Version: 3.4.1
+Release: alt1
 License: BSD
-Group: Databases
-Url: http://sqlcipher.net/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Group:   Databases
+Url:     http://sqlcipher.net/
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: https://github.com/sqlcipher/sqlcipher/archive/v%version.tar.gz
-# Shut up stupid tests depending on system settings of allowed open fd's
-#Patch1: sqlite-3.7.7.1-stupid-openfiles-test.patch
-# Shut up pagecache overflow test whose expected result depends on compile
-# options and whatnot. Dunno why this started failing in 3.7.10 but
-# doesn't seem particularly critical...
-#Patch2: sqlite-3.7.10-pagecache-overflow-test.patch
-# sqlite >= 3.7.10 is buggy if malloc_usable_size() is detected, disable it:
-# https://bugzilla.redhat.com/show_bug.cgi?id=801981
-# http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=665363
-#Patch3: sqlcipher-3.7.15-no-malloc-usable-size.patch
 BuildRequires: ncurses-devel readline-devel glibc-devel
 BuildRequires: libssl-devel
 BuildRequires: %_bindir/tclsh
@@ -133,6 +123,10 @@ make testfixture
 %_tcllibdir/*
 
 %changelog
+* Mon Aug 14 2017 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt1
+- New version
+- Remove obsoleted patches
+
 * Fri Feb 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0-alt2
 - Added tcl subpackage
 
