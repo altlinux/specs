@@ -1,12 +1,12 @@
 %define _libexecdir %_prefix/libexec
 %define _name geocode-glib
-%define ver_major 3.23
+%define ver_major 3.24
 %define api_ver 1.0
 %def_enable introspection
 %def_enable installed_tests
 
 Name: lib%{_name}
-Version: %ver_major.90
+Version: %ver_major.0
 Release: alt1
 
 Summary: Convenience library for the Yahoo! Place Finder APIs
@@ -122,6 +122,9 @@ the functionality of the installed %_name library.
 %endif
 
 %changelog
+* Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
+- 3.24.0
+
 * Tue Feb 07 2017 Yuri N. Sedunov <aris@altlinux.org> 3.23.90-alt1
 - 3.23.90
 
