@@ -2,7 +2,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.9
-Release: alt10
+Release: alt11
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -27,7 +27,6 @@ Patch13: pam_pkcs11-0.6.9-oid-mapper-profiles.patch
 
 %add_findreq_skiplist %_sysconfdir/pam.d/*
 Requires: pam-config PAM(pam_mkhomedir.so) PAM(pam_pkcs11.so) PAM(pam_succeed_if.so)
-Requires: alterator-service-functions >= 2.0.4
 
 BuildRequires: docbook-style-xsl flex libldap-devel libpam-devel libpcsclite-devel libssl-devel xsltproc
 BuildRequires: doxygen
@@ -183,6 +182,11 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ldap_mapper.so
 
 %changelog
+* Mon Aug 14 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt11
+- Drop versioned dependency of alterator-service-functions (chroot
+  usage is rare).
+- Add 'mate-screensaver' to the screen saver list.
+
 * Thu Aug 03 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt10
 - Use alterator-service-functions (need >= 2.0.4) to control the
   service in a chroot.
