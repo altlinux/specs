@@ -20,7 +20,7 @@
 %def_enable bcache
 
 Name: %{_name}2
-Version: 2.7.1
+Version: 2.7.2
 Release: alt1
 
 Summary: Disk Management Service (Second Edition)
@@ -35,6 +35,7 @@ Source: %_name-%version.tar
 %endif
 Source1: %name.control
 # https://bugzilla.altlinux.org/show_bug.cgi?id=33180
+# fixed in 2.7.2 by upstream
 Patch: udisks-2.6.4-alt-rules.patch
 
 Obsoletes: %_name
@@ -186,7 +187,7 @@ This package contains UDisks module for iSCSI configuration.
 
 %prep
 %setup -n %_name-%version
-%patch -b .isohibryd
+#%%patch -b .isohibryd
 subst 's/mkfs\.vfat/mkfs.fat/' src/udiskslinuxfsinfo.c
 
 %build
@@ -316,6 +317,9 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 2.7.2-alt1
+- 2.7.2
+
 * Sat Jul 08 2017 Yuri N. Sedunov <aris@altlinux.org> 2.7.1-alt1
 - 2.7.1
 - reqs: xfsprogs (ALT #33608)
