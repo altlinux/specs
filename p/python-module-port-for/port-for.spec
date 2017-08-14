@@ -3,32 +3,23 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.1
-Release: alt1.git20140827.1.1
+Version: 0.4
+Release: alt1
 Summary: Utility that helps with local TCP ports managment
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/port-for/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/kmike/port-for.git
 Source: %name-%version.tar
+Patch1: %oname-%version-alt-build.patch
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-mock
+BuildRequires: python-module-mock python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-mock
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-module-html5lib python3-module-mock python3-module-pytest
 %endif
-
-%py_provides port_for
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-funcsigs python-module-pbr python-module-pluggy python-module-py python-module-setuptools python-module-six python-module-unittest2 python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pbr python3-module-pip python3-module-pluggy python3-module-py python3-module-pycparser python3-module-setuptools python3-module-six python3-module-unittest2 xz
-BuildRequires: python-module-mock python-module-pytest python3-module-html5lib python3-module-mock python3-module-pytest rpm-build-python3 time
 
 %description
 port-for is a command-line utility and a python library that helps with
@@ -52,7 +43,6 @@ This package contains tests for %oname.
 %package -n python3-module-%oname
 Summary: Utility that helps with local TCP ports managment
 Group: Development/Python3
-%py3_provides port_for
 
 %description -n python3-module-%oname
 port-for is a command-line utility and a python library that helps with
@@ -75,6 +65,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -109,7 +100,7 @@ popd
 py.test port_for/*.py
 %if_with python3
 pushd ../python3
-py.test-%_python3_version port_for/*.py
+py.test3 port_for/*.py
 popd
 %endif
 
@@ -139,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4-alt1
+- Updated to upstream version 0.4.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.1-alt1.git20140827.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
