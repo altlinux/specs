@@ -1,6 +1,6 @@
 %set_verify_elf_method unresolved=relaxed
 Name: volk
-Version: 1.2.1
+Version: 1.3
 Release: alt1
 Summary: Vector-Optimized Library of Kernels
 License: GPLv3
@@ -77,8 +77,9 @@ Python module for VOLK.
 %files -n python-module-%name
 %python_sitelibdir/*
 
-
 %changelog
+* Fri Aug 11 2017 Anton Midyukov <antohami@altlinux.org> 1.3-alt1
+- New version 1.3
+
 * Tue Mar 25 2016 Dmitry Derjavin <dd@altlinux.org> 1.2.1-alt1
 - Initial ALT Linux build.
-
