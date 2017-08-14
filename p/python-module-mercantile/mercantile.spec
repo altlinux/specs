@@ -3,13 +3,12 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.2
-Release: alt1.git20141216.1
+Version: 0.10.0
+Release: alt1
 Summary: Spherical mercator and XYZ tile utilities
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/mercantile/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mapbox/mercantile.git
 Source: %name-%version.tar
@@ -24,9 +23,6 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-click-tests
 %endif
 
-%py_provides %oname
-%py_requires click json logging
-
 %description
 The mercantile module provides ul(xtile, ytile, zoom) and bounds(xtile,
 ytile, zoom) functions that respectively return the upper left corner
@@ -38,8 +34,7 @@ point.
 %package -n python3-module-%oname
 Summary: Spherical mercator and XYZ tile utilities
 Group: Development/Python3
-%py3_provides %oname
-%py3_requires click json logging
+
 
 %description -n python3-module-%oname
 The mercantile module provides ul(xtile, ytile, zoom) and bounds(xtile,
@@ -81,12 +76,10 @@ popd
 
 %check
 export LC_ALL=en_US.UTF-8
-python setup.py test
 py.test -vv
 %if_with python3
 pushd ../python3
-python3 setup.py test
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
@@ -106,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.0-alt1
+- Updated to upstream version 0.10.0.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.2-alt1.git20141216.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
