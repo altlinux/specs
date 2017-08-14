@@ -12,7 +12,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        54.0.1
+Version:        55.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -136,14 +136,14 @@ tar -xf %SOURCE2
 %patch6  -p1
 #patch7  -p1
 %patch14 -p1
-%patch16 -p1
+%patch16 -p2
 %patch17 -p2
 
 %patch200 -p1
 %patch201 -p1
 
 %patch301 -p1
-%patch302 -p1
+#patch302 -p1
 
 cp -f %SOURCE4 .mozconfig
 
@@ -317,6 +317,39 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Sun Aug 13 2017 Alexey Gladkov <legion@altlinux.ru> 55.0.1-alt1
+- New release (55.0.1).
+- Fixed:
+  + CVE-2017-7798: XUL injection in the style editor in devtools
+  + CVE-2017-7800: Use-after-free in WebSockets during disconnection
+  + CVE-2017-7801: Use-after-free with marquee during window resizing
+  + CVE-2017-7809: Use-after-free while deleting attached editor DOM node
+  + CVE-2017-7784: Use-after-free with image observers
+  + CVE-2017-7802: Use-after-free resizing image elements
+  + CVE-2017-7785: Buffer overflow manipulating ARIA attributes in DOM
+  + CVE-2017-7786: Buffer overflow while painting non-displayable SVG
+  + CVE-2017-7806: Use-after-free in layer manager with SVG
+  + CVE-2017-7753: Out-of-bounds read with cached style data and pseudo-elements
+  + CVE-2017-7787: Same-origin policy bypass with iframes through page reloads
+  + CVE-2017-7807: Domain hijacking through AppCache fallback
+  + CVE-2017-7792: Buffer overflow viewing certificates with an extremely long OID
+  + CVE-2017-7804: Memory protection bypass through WindowsDllDetourPatcher
+  + CVE-2017-7791: Spoofing following page navigation with data: protocol and modal alerts
+  + CVE-2017-7808: CSP information leak with frame-ancestors containing paths
+  + CVE-2017-7782: WindowsDllDetourPatcher allocates memory without DEP protections
+  + CVE-2017-7781: Elliptic curve point addition error when using mixed Jacobian-affine coordinates
+  + CVE-2017-7794: Linux file truncation via sandbox broker
+  + CVE-2017-7803: CSP containing 'sandbox' improperly applied
+  + CVE-2017-7799: Self-XSS XUL injection in about:webrtc
+  + CVE-2017-7783: DOS attack through long username in URL
+  + CVE-2017-7788: Sandboxed about:srcdoc iframes do not inherit CSP directives
+  + CVE-2017-7789: Failure to enable HSTS when two STS headers are sent for a connection
+  + CVE-2017-7790: Windows crash reporter reads extra memory for some non-null-terminated registry values
+  + CVE-2017-7796: Windows updater can delete any file named update.log
+  + CVE-2017-7797: Response header name interning leaks across origins
+  + CVE-2017-7780: Memory safety bugs fixed in Firefox 55
+  + CVE-2017-7779: Memory safety bugs fixed in Firefox 55 and Firefox ESR 52.3
+
 * Wed Jul 12 2017 Alexey Gladkov <legion@altlinux.ru> 54.0.1-alt1
 - New release (54.0.1).
 
