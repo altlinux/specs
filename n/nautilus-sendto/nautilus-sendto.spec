@@ -1,7 +1,7 @@
 %define ver_major 3.8
 
 Name: nautilus-sendto
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Nautilus Sendto menu item
@@ -13,7 +13,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %define glib_ver 2.26
 
-BuildRequires: gnome-common intltool libgio-devel >= %glib_ver gobject-introspection-devel
+BuildRequires: meson intltool libgio-devel >= %glib_ver gobject-introspection-devel
+BuildRequires: libappstream-glib-devel
 
 %description
 This application provides integration between nautilus and e-mail agents.
@@ -24,12 +25,11 @@ a dialog for insert the email which you want to send the file/files.
 %setup
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang %name
 
@@ -37,9 +37,12 @@ a dialog for insert the email which you want to send the file/files.
 %_bindir/%name
 %_man1dir/%name.1*
 %_datadir/appdata/*.xml
-%doc NEWS AUTHORS ChangeLog
+%doc NEWS AUTHORS
 
 %changelog
+* Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 3.8.6-alt1
+- 3.8.6
+
 * Thu Jun 22 2017 Yuri N. Sedunov <aris@altlinux.org> 3.8.5-alt1
 - 3.8.5
 
