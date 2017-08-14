@@ -5,7 +5,7 @@
 %define snapshot 2015-10-28
 %define cvs_date 5469c3b6
 %undefine cvs_date
-%define rel alt1
+%define rel alt2
 
 %def_disable static
 # only bluez4 supported
@@ -69,6 +69,8 @@ Provides: e18-default = %EVR
 Requires: terminology
 # default image viewer
 Requires: ephoto
+# default media player
+Requires: rage
 # for menu
 Requires: gnome-icon-theme
 Requires: wm-common-freedesktop
@@ -209,6 +211,9 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 1:0.21.8-alt2
+- rebuilt against efl-libs-1.20.2
+
 * Sat May 27 2017 Yuri N. Sedunov <aris@altlinux.org> 1:0.21.8-alt1
 - 0.21.8
 
