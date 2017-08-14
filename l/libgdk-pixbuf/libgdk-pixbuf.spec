@@ -13,7 +13,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -142,7 +142,8 @@ export LIBS=-lcxa
 	%{subst_with x11} \
 	%{subst_with libjasper} \
 	--with-included-loaders=png \
-	%{?_enable_installed_tests:--enable-installed-tests}
+	%{?_enable_installed_tests:--enable-installed-tests} \
+	LIBTIFF=-ltiff
 
 %make_build LIBTOOL_EXPORT_OPTIONS=-Wl,--version-script=compat.map,compat.lds
 
@@ -240,6 +241,9 @@ echo : >>%_name/abicheck.sh
 
 
 %changelog
+* Mon Aug 07 2017 Yuri N. Sedunov <aris@altlinux.org> 2.36.8-alt1
+- 2.36.8
+
 * Tue Jul 18 2017 Yuri N. Sedunov <aris@altlinux.org> 2.36.7-alt1
 - 2.36.7
 
