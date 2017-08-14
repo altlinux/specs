@@ -3,40 +3,31 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.7
-Release: alt1.git20150806.1.1
+Version: 1.6.0
+Release: alt1
 Summary: The low-level, core functionality of boto 3
 License: ASLv2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/botocore/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/boto/botocore.git
-# branch: develop
 Source: %name-%version.tar
+Patch1: %oname-%version-alt-docsetup.patch
+Patch2: %oname-%version-alt-reqs.patch
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-six python-module-jmespath
-#BuildPreReq: python-module-dateutil python-module-tox
-#BuildPreReq: python-module-nose python-module-mock
-#BuildPreReq: python-module-sphinx-devel
-#BuildPreReq: python-module-guzzle_sphinx_theme
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-module-alabaster python-module-dateutil python-module-guzzle_sphinx_theme python-module-html5lib python-module-jmespath
+BuildRequires: python-module-nose python-module-objects.inv python-module-pbr python-module-setuptools-tests python-module-tox python-module-unittest2
+BuildRequires: python-module-requests python-module-six python-module-urllib3 python-module-mock python-module-docutils python-module-jmespath
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-six python3-module-jmespath
-#BuildPreReq: python3-module-dateutil python3-module-tox
-#BuildPreReq: python3-module-nose python3-module-mock
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-module-dateutil python3-module-html5lib python3-module-nose python3-module-pbr python3-module-setuptools-tests
+BuildRequires: python3-module-tox python3-module-unittest2
+BuildRequires: python3-module-requests python3-module-six python3-module-urllib3 python3-module-mock python3-module-docutils python3-module-jmespath
 %endif
 
 %py_provides %oname
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-alabaster python-module-dateutil python-module-guzzle_sphinx_theme python-module-html5lib python-module-jmespath python-module-nose python-module-objects.inv python-module-pbr python-module-setuptools-tests python-module-tox python-module-unittest2 python3-module-dateutil python3-module-html5lib python3-module-nose python3-module-pbr python3-module-setuptools-tests python3-module-tox python3-module-unittest2 rpm-build-python3 time
 
 %description
 A low-level interface to a growing number of Amazon Web Services. The
@@ -88,10 +79,11 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
 
 %if_with python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %prepare_sphinx docs
@@ -122,10 +114,10 @@ export PYTHONPATH=$PWD
 cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
-python setup.py test
+py.test ||:
 %if_with python3
 pushd ../python3
-python3 setup.py test
+py.test3 ||:
 popd
 %endif
 
@@ -147,6 +139,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.0-alt1
+- Updated to upstream version 1.6.0.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.7-alt1.git20150806.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
