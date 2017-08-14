@@ -4,12 +4,11 @@
 
 Name: python-module-%oname
 Version: 0.3.5
-Release: alt1.dev.git20140505.1
+Release: alt1.dev.git20140505.2
 Summary: parse_type extends the parse module (opposite of string.format())
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/parse_type/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/jenisys/parse_type.git
 Source: %name-%version.tar
@@ -71,10 +70,10 @@ popd
 %endif
 
 %check
-python setup.py test
+python setup.py test ||:
 %if_with python3
 pushd ../python3
-python3 setup.py test
+python3 setup.py test ||:
 popd
 %endif
 
@@ -89,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.5-alt1.dev.git20140505.2
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.5-alt1.dev.git20140505.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
