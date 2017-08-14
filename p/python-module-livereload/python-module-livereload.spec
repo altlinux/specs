@@ -3,7 +3,7 @@
 
 Name:           python-module-%pypi_name
 Version:        2.5.1
-Release:        alt1
+Release:        alt2
 Summary:        Utility for starting a server in a directory
 License:        BSD
 URL:            https://github.com/lepture/python-livereload
@@ -88,10 +88,10 @@ popd
 %endif
 
 %check
-%__python setup.py test
+py.test
 %if_with python3
 pushd ../python3
-%__python3 setup.py test
+py.test3
 popd
 %endif
 
@@ -112,6 +112,9 @@ popd
 %doc docs example LICENSE
 
 %changelog
+* Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5.1-alt2
+- Fixed build.
+
 * Mon May 29 2017 Lenar Shakirov <snejok@altlinux.ru> 2.5.1-alt1
 - Initial build for ALT (based on 2.5.1-2.fc26.src)
 
