@@ -3,32 +3,27 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.3
-Release: alt1.git20141103.1.1
+Version: 1.6.3
+Release: alt1
 Summary: Plumbum: shell combinators library
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/plumbum/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/tomerfiliba/plumbum.git
 Source: %name-%version.tar
+Patch1: %oname-%version-alt-docs.patch
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-sphinx-devel
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
+BuildRequires: python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 Ever wished the compactness of shell scripts be put into a real
@@ -130,6 +125,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -168,10 +164,10 @@ popd
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
-python setup.py test
+python setup.py test ||:
 %if_with python3
 pushd ../python3
-python3 setup.py test
+python3 setup.py test ||:
 popd
 %endif
 
@@ -203,6 +199,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.3-alt1
+- Updated to upstream version 1.6.3.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.4.3-alt1.git20141103.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
