@@ -3,29 +3,30 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2014.3.5
-Release: alt1.1
+Version: 2017.4
+Release: alt1
 Summary: A collection of tools for Python
 License: MIT
 Group: Development/Python
 Url: http://pypi.python.org/pypi/pytools
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/inducer/pytools.git
 Source: %oname-%version.tar
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-appdirs python-module-decorator
 BuildPreReq: python-module-six
+BuildRequires: python-modules-sqlite3
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-appdirs python3-module-decorator
 BuildPreReq: python3-module-six
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-modules-sqlite3
 %endif
 BuildArch: noarch
 
-%py_requires appdirs decorator
+%add_python_req_skip mpi4py.rc
 
 %description
 Pytools is a big bag of things that are "missing" from the Python
@@ -37,7 +38,7 @@ those.
 %package -n python3-module-%oname
 Summary: A collection of tools for Python 3
 Group: Development/Python3
-%py3_requires appdirs decorator
+%add_python3_req_skip mpi4py.rc
 
 %description -n python3-module-%oname
 Pytools is a big bag of things that are "missing" from the Python
@@ -49,7 +50,6 @@ those.
 Summary: Test for Pytools (Python 3)
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
-%py3_requires decorator
 
 %description -n python3-module-%oname-test
 Pytools is a big bag of things that are "missing" from the Python
@@ -75,14 +75,14 @@ This package contains test for Pytools.
 
 %prep
 %setup
+
 %if_with python3
-rm -rf ../python3
 cp -a . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
 %python_build_debug
+
 %if_with python3
 pushd ../python3
 %python3_build_debug
@@ -91,6 +91,7 @@ popd
 
 %install
 %python_install
+
 %if_with python3
 pushd ../python3
 %python3_install
@@ -98,19 +99,16 @@ popd
 %endif
 
 %check
-python setup.py test
-export PYTHONPATH=$PWD
-py.test
+PYTHONPATH=%buildroot%python_sitelibdir py.test
+
 %if_with python3
 pushd ../python3
-python3 setup.py test
-export PYTHONPATH=$PWD
-py.test-%_python3_version
+PYTHONPATH=%buildroot%python3_sitelibdir py.test3
 popd
 %endif
 
 %files
-%doc README
+%doc README.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/test.py*
 
@@ -119,7 +117,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README
+%doc README.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/test.py*
 %exclude %python3_sitelibdir/%oname/__pycache__/test*
@@ -130,6 +128,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2017.4-alt1
+- Updated to upstream version 2017.4.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2014.3.5-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
