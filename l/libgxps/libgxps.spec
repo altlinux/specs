@@ -1,11 +1,11 @@
-%define ver_major 0.2
+%define ver_major 0.3
 %define api_ver 0.1
 %def_enable introspection
 %def_enable man
-%def_disable test
+%def_enable test
 
 Name: libgxps
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: GObject based library for handling and rendering XPS documents
@@ -15,7 +15,7 @@ Url: http://live.gnome.org/libgxps
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-BuildRequires: gtk-doc gnome-common
+BuildRequires: meson gtk-doc gnome-common
 BuildRequires: libgio-devel libcairo-devel libcairo-gobject-devel libfreetype-devel
 BuildRequires: libarchive-devel libjpeg-devel libtiff-devel libpng-devel liblcms2-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
@@ -75,19 +75,19 @@ This package contains development documentation for %name
 %setup
 
 %build
-%autoreconf
-%configure --disable-static \
-	%{?_enable_introspection:--enable-introspection=yes} \
-	%{subst_enable man} \
-	%{subst_enable test}
+%meson \
+	%{?_enable_introspection:-Denable-introspection=true=yes} \
+	%{?_enable_man:-Denable-man=true} \
+	%{?_enable_test:-Denable-test=true} \
+	-Denable-gtk-doc=true
 
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+%meson_test
 
 %files
 %_libdir/*.so.*
@@ -118,6 +118,9 @@ This package contains development documentation for %name
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Sat Feb 25 2017 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt1
 - 0.2.5
 
@@ -143,7 +146,6 @@ This package contains development documentation for %name
 - 0.2.1
 
 * Mon Jan 16 2012 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt2
-- used %%autoreconf to fix RPATH problem
 
 * Sat Nov 19 2011 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - first build for Sisyphus
