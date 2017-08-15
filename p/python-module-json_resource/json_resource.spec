@@ -3,13 +3,12 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.5
-Release: alt1.1
+Version: 0.2.11
+Release: alt1
 Summary: JSON resources are dict, and list, etc. types
 License: Free
 Group: Development/Python
 Url: https://pypi.python.org/pypi/json_resource/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 BuildArch: noarch
@@ -72,12 +71,10 @@ popd
 %endif
 
 %check
-python setup.py test
-py.test %oname/*.py
+py.test json_resource/tests/test_instance.py json_resource/tests/test_resource.py
 %if_with python3
 pushd ../python3
-python3 setup.py test
-py.test-%_python3_version %oname/*.py
+py.test3 json_resource/tests/test_instance.py json_resource/tests/test_resource.py
 popd
 %endif
 
@@ -92,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.11-alt1
+- Updated to upstream version 0.2.11.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.5-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
