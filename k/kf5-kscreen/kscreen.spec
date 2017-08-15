@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.10.4
-Release: alt2%ubt
+Release: alt3%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -88,6 +88,9 @@ sed -i 's|^\(add_subdirectory.*tests.*\)|#\1|' CMakeLists.txt
 #%_K5lib/libKF5Screen.so.*
 
 %changelog
+* Tue Aug 15 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt3%ubt
+- fix enabling per screen scaling setup (by slev@alt)
+
 * Thu Aug 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt2%ubt
 - enable per screen scaling setup
 
