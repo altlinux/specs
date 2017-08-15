@@ -4,12 +4,11 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt1.1
+Release: alt1.2
 Summary: Simple implementation of the json-pointer spec
 License: ASLv2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/json_pointer/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 BuildArch: noarch
@@ -21,8 +20,6 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python-tools-2to3
 %endif
-
-%py_provides %oname
 
 %description
 Simple implementation of the json-pointer spec:
@@ -44,7 +41,6 @@ This package contains tests for %oname.
 %package -n python3-module-%oname
 Summary: Simple implementation of the json-pointer spec
 Group: Development/Python3
-%py3_provides %oname
 
 %description -n python3-module-%oname
 Simple implementation of the json-pointer spec:
@@ -95,7 +91,7 @@ py.test %oname/test.py
 %if_with python3
 pushd ../python3
 python3 setup.py test
-py.test-%_python3_version %oname/test.py
+py.test3 %oname/test.py
 popd
 %endif
 
@@ -120,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.2-alt1.2
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.2-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
