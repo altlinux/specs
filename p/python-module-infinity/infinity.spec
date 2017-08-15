@@ -5,15 +5,14 @@
 
 Name: python-module-%oname
 Version: 1.4
-Release: alt1
+Release: alt2
 Summary: All-in-one infinity value for Python. Can be compared to any object
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/infinity/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/kvesteri/infinity.git
-Source0: https://pypi.python.org/packages/6d/cf/9d301cb8963e5e391da214ee2cedf20cfa7c958e76ea3e577fc77f3eaae0/%{oname}-%{version}.tar.gz
+Source: %oname-%version.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -24,15 +23,12 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-Pygments python3-module-six
 %endif
 
-%py_provides %oname
-
 %description
 All-in-one infinity value for Python. Can be compared to any object.
 
 %package -n python3-module-%oname
 Summary: All-in-one infinity value for Python. Can be compared to any object
 Group: Development/Python3
-%py3_provides %oname
 
 %description -n python3-module-%oname
 All-in-one infinity value for Python. Can be compared to any object.
@@ -68,7 +64,7 @@ py.test
 %if_with python3
 pushd ../python3
 python3 setup.py test
-py.test-%_python3_version
+py.test3
 popd
 %endif
 
@@ -83,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4-alt2
+- Fixed build.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1
 - automated PyPI update
 
