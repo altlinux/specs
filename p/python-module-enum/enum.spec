@@ -1,10 +1,10 @@
-%define module_name enum
+%define oname enum
 
-%def_with python3
+%def_without python3
 
-Name: python-module-%module_name
-Version: 0.4.4
-Release: alt1.1
+Name: python-module-%oname
+Version: 0.4.6
+Release: alt1
 
 Summary: This package provides a module for robust enumerations in Python
 
@@ -12,13 +12,12 @@ License: GPL/Python
 Group: Development/Python
 Url: https://pypi.python.org/pypi/enum/
 
-Packager: Dmitry M. Maslennikov <rlz at altlinux.org>
-Source: %module_name-%version.tar
-Patch: enum-0.4.4-alt-python3.patch
+Source: %oname-%version.tar
+Patch: %oname-%version-alt-python3.patch
 
 BuildArch: noarch
 
-%setup_python_module %module_name
+%setup_python_module %oname
 
 BuildRequires: python-module-setuptools
 %if_with python3
@@ -30,15 +29,15 @@ BuildPreReq: python-tools-2to3
 %description
 This package provides a module for robust enumerations in Python.
 
-%package -n python3-module-%module_name
+%package -n python3-module-%oname
 Summary: This package provides a module for robust enumerations in Python
 Group: Development/Python3
 
-%description -n python3-module-%module_name
+%description -n python3-module-%oname
 This package provides a module for robust enumerations in Python.
 
 %prep
-%setup -n %module_name-%version
+%setup -n %oname-%version
 %patch -p2
 
 %if_with python3
@@ -68,11 +67,15 @@ popd
 %python_sitelibdir/*
 
 %if_with python3
-%files -n python3-module-%module_name
+%files -n python3-module-%oname
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Aug 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.6-alt1
+- Updated to upstream version 0.4.6.
+- Disabled build for Python-3.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.4-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
