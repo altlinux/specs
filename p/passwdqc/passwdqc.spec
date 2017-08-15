@@ -1,5 +1,5 @@
 Name: passwdqc
-Version: 1.3.1
+Version: 1.3.1.1
 Release: alt1
 
 Summary: A passphrase strength checking and policy enforcement toolset
@@ -107,16 +107,19 @@ rebuilding.
 %setup -n %name-%version-%release
 
 %build
-%add_optflags -W -Werror
+%add_optflags -W -Werror -DENABLE_NLS=1
 %make_build \
 	CFLAGS_lib='%optflags %optflags_shared -DLINUX_PAM' \
-	CFLAGS_bin='%optflags'
+	CFLAGS_bin='%optflags' \
+	all locales
 
 %install
-%makeinstall_std \
+%makeinstall_std install_locales \
 	SHARED_LIBDIR=/%_lib DEVEL_LIBDIR=%_libdir SECUREDIR=/%_lib/security
 install -pD -m755 passwdqc.control \
         %buildroot%_controldir/passwdqc-enforce
+
+%find_lang passwdqc
 
 %pre -n lib%name
 %pre_control passwdqc-enforce
@@ -127,7 +130,7 @@ install -pD -m755 passwdqc.control \
 %files control
 %config %_controldir/*
 
-%files -n lib%name
+%files -n lib%name -f passwdqc.lang
 %config(noreplace) /etc/passwdqc.conf
 /%_lib/lib*.so*
 %_man5dir/*
@@ -146,6 +149,11 @@ install -pD -m755 passwdqc.control \
 %_man1dir/*
 
 %changelog
+* Mon Aug 14 2017 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.1-alt1
+- pam_passwdqc:
+  + implemented i18n support (by Oleg Solovyov and me);
+  + added Russian translation (by Oleg Solovyov and Andrey Cherepanov).
+
 * Fri Jul 22 2016 Dmitry V. Levin <ldv@altlinux.org> 1.3.1-alt1
 - Merged with 1.3.1-owl1.
 
