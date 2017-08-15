@@ -2,7 +2,7 @@
 %def_without tests
 
 Name: meson
-Version: 0.41.2
+Version: 0.42.0
 Release: alt1
 
 Summary: High productivity build system
@@ -76,6 +76,9 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 
 
 %changelog
+* Tue Aug 15 2017 Yuri N. Sedunov <aris@altlinux.org> 0.42.0-alt1
+- 0.42.0
+
 * Wed Jul 19 2017 Yuri N. Sedunov <aris@altlinux.org> 0.41.2-alt1
 - 0.41.2
 - meson.macros: set locale to en_US.utf8 to avoid warnings
