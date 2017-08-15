@@ -1,6 +1,6 @@
 Name: installer-distro-token-desktop
 Version: 0.1.0
-Release: alt2
+Release: alt3
 
 Summary: Installer configuration (desktop, h/w token authentication)
 License: GPL
@@ -44,18 +44,13 @@ The stage2 part is included into the live installer system.
 Summary: Installer configuration and scripts (desktop, h/w token authentication, stage3 part)
 License: GPL
 Group: System/Configuration/Other
-Provides: installer-altlinux-generic-stage3 = %name-%version
-#Requires: installer-stage3
-# modules
-# FIXME: grub/lilo
-#Requires: alterator-grub
+
 Requires: alterator-users
 Requires: alterator-root
 Requires: alterator-auth-token
 Requires: alterator-luks
 Requires: alterator-net-eth dhcpcd
 Requires: alterator-net-general
-#Requires: installer-feature-nfs-server-stage3
 Requires: installer-feature-powerbutton-stage3
 
 %description stage3
@@ -65,6 +60,22 @@ token based authentication.
 
 The stage3 part is installed onto the new system\'s root
 and executed off there during installation process.
+
+%package live
+Summary: Installer configuration and scripts (desktop, h/w token authentication, livecd-install part)
+License: GPL
+Group: System/Configuration/Other
+
+Requires: %name-stage3 = %version-%release
+Requires: livecd-install
+
+%description live
+This package contains installer configuration hopefully suitable
+for an ALT Linux based desktop distribution with hardware
+token based authentication.
+
+The live part is installed into the live-bootable system
+and executed off there by the 'livecd-install' process.
 
 %prep
 %setup
@@ -87,7 +98,7 @@ cp -a livecd-installer-steps %buildroot%_sysconfdir/livecd-install/steps.token-d
 mkdir -p %buildroot%_datadir/livecd-install
 cp -a alterator-menu %buildroot%_datadir/livecd-install/
 
-%post stage3
+%post live
 # Work-around the conflict with livecd-install
 mkdir -p %_sysconfdir/livecd-install
 if [ ! -e %_sysconfdir/livecd-install/steps.livecd-install ]; then \
@@ -103,12 +114,17 @@ ln -s steps.token-desktop %_sysconfdir/livecd-install/steps
 %install2dir/*.d/*
 
 %files stage3
+
+%files live
 %_datadir/livecd-install/alterator-menu
 # Conflicts with livecd-install
 %_sysconfdir/livecd-install/steps.token-desktop
 %_datadir/alterator/steps/*.desktop
 
 %changelog
+* Tue Aug 15 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt3
+- Make special '-live' subpackage which requires 'livecd-install'.
+
 * Thu Aug 10 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt2
 - Use special livecd-install set of steps.
 - Work-around the conflict with livecd-install.
