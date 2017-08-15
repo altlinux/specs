@@ -1,6 +1,6 @@
 Name: alterator-service-functions
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
@@ -27,6 +27,11 @@ Helpers for common service management
 %_bindir/*
 
 %changelog
+* Tue Aug 15 2017 Paul Wolneykien <manowar@altlinux.org> 3.0.0-alt2
+- Added 'is_chrooted' function which tests if the program is executed
+  inside a chroot.
+- Updated README.
+
 * Fri Aug 11 2017 Paul Wolneykien <manowar@altlinux.org> 3.0.0-alt1
 - Systemd-first edition.
 - Fixed chrooted operation (ALTERATOR_DESTDIR or process chroot).
