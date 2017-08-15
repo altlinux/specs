@@ -1,7 +1,7 @@
 Summary:   Library to program and control the FTDI USB serial controllers
 Name:      libftdi1
-Version:   1.3
-Release:   alt1
+Version:   1.4
+Release:   alt2%ubt
 License:   LGPL for libftdi and GPLv2+linking exception for the C++ wrapper
 Group:     System/Libraries
 URL:       http://www.intra2net.com/en/developer/libftdi
@@ -15,13 +15,15 @@ BuildRequires: cmake swig
 BuildRequires: python-devel rpm-build-python
 BuildRequires: libconfuse-devel
 
+BuildRequires(pre): rpm-build-ubt
+
 %define    namepp libftdipp1
 %define    pyname python-module-ftdi1
 
 %define    soname libftdi1
 %define    sonamepp libftdipp1
 
-Patch:     %name-%version-%release.patch
+Patch:     %name-%version-alt.patch
 
 %package   -n %namepp
 Summary:   C++ interface for libftdi library
@@ -113,6 +115,9 @@ mkdir -p %buildroot%python_sitelibdir
 mkdir -p %buildroot%_mandir
 cp -a doc/man/* %buildroot%_mandir/
 mv %buildroot%_man3dir/size_and_time.3 %buildroot%_man3dir/ftdi_size_and_time.3
+if test -f %buildroot%_man3dir/Libftdi.3; then
+    mv %buildroot%_man3dir/Libftdi.3 %buildroot%_man3dir/libftdi.3
+fi
 
 %files
 %_libdir/%soname.so.*
@@ -154,6 +159,13 @@ mv %buildroot%_man3dir/size_and_time.3 %buildroot%_man3dir/ftdi_size_and_time.3
 %exclude %_man3dir/ftdi_eeprom*
 
 %changelog
+* Tue Aug 15 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.4-alt2%ubt
+- Fix non-identical noarch with Libftdi.3 man on x86_64 instead of libftdi.3
+
+* Thu Aug 10 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.4-alt1%ubt
+- Update to latest release
+- Build with universal build tag (aka ubt macros)
+
 * Sat May 21 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1.3-alt1
 - Update to latest release
 - Include ftdi_eeprom subpackage
