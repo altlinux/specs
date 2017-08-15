@@ -1,5 +1,5 @@
 Name: astyle
-Version: 3.0
+Version: 3.0.1
 Release: alt1
 
 Summary: A small, fast automatic indentation filter for C/C++/Java code
@@ -67,6 +67,9 @@ install -D src/%name.h %buildroot%_includedir/%name.h
 %_includedir/%name.h
 
 %changelog
+* Tue Aug 15 2017 Fr. Br. George <george@altlinux.ru> 3.0.1-alt1
+- Autobuild version bump to 3.0.1
+
 * Mon May 29 2017 Fr. Br. George <george@altlinux.ru> 3.0-alt1
 - Autobuild version bump to 3.0
 - Fix build
