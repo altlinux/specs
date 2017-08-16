@@ -25,8 +25,8 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        60.0.3112.78
-Release:        alt1
+Version:        60.0.3112.90
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -320,12 +320,13 @@ ln -s -- %_libdir/%name/chromedriver %buildroot/%_bindir/chromedriver
 
 cp -at %buildroot%_libdir/%name -- \
  *.bin *.so* *.pak \
+ swiftshader \
  locales \
  icudtl.dat \
 #
 
 # Remove garbage
-rm -f -- *.TOC
+find -name '*.TOC' -delete
 
 cp -a chrome.1 %buildroot/%_man1dir/%name.1
 ln -s %name.1  %buildroot/%_man1dir/chrome.1
@@ -413,6 +414,12 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Tue Aug 15 2017 Alexey Gladkov <legion@altlinux.ru> 60.0.3112.90-alt2
+- Add missing libraries (ALT#33750).
+
+* Mon Aug 14 2017 Alexey Gladkov <legion@altlinux.ru> 60.0.3112.90-alt1
+- New version (60.0.3112.90).
+
 * Tue Aug 01 2017 Alexey Gladkov <legion@altlinux.ru> 60.0.3112.78-alt1
 - New version (60.0.3112.78).
 - Security fixes:
