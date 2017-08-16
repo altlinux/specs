@@ -4,12 +4,11 @@
 
 Name: python-module-%oname
 Version: 1.3.1
-Release: alt3.1
+Release: alt4
 Summary: Mixing Twisted and ZODB
 License: ZPL
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zc.twist/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
@@ -132,6 +131,9 @@ rm -f %buildroot%python3_sitelibdir/*/__init__.py
 %endif
 
 %changelog
+* Wed Aug 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.1-alt4
+- Rebuilt with new Twist.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.1-alt3.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
