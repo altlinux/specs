@@ -3,13 +3,13 @@
 %define api_ver 1.0
 %define module_ver 1.8.0
 %def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_enable introspection
 %def_enable installed_tests
 %def_enable libthai
 
 Name: lib%_name
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -182,6 +182,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Wed Aug 16 2017 Yuri N. Sedunov <aris@altlinux.org> 1.40.10-alt1
+- 1.40.10
+
 * Fri Aug 11 2017 Yuri N. Sedunov <aris@altlinux.org> 1.40.9-alt1
 - 1.40.9
 
