@@ -5,12 +5,15 @@
 
 Summary: LDAP client API for Python
 Name: python-module-ldap
-Version: 2.4.15
+Version: 2.4.41
 Release: alt1
-Source0: %oname-%version.tar
 License: Python-style license
 Group: Development/Python
 Url: http://python-ldap.sourceforge.net/
+
+Source: %oname-%version.tar
+Patch1: %oname-%version-alt-fix-underlinking.patch
+Patch2: %oname-%version-alt-fix-rpath.patch
 
 BuildPreReq: python-devel libsasl2-devel
 BuildPreReq: rpm-build-python >= 0.8
@@ -108,6 +111,8 @@ This package contains pickles for python-ldap.
 
 %prep
 %setup -n %oname-%version
+%patch1 -p2
+%patch2 -p2
 
 %if_with python3
 cp -fR . ../python3
@@ -173,6 +178,9 @@ cp -fR Doc/.build/pickle %buildroot%python_sitelibdir/ldap/
 %endif
 
 %changelog
+* Wed Aug 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.41-alt1
+- Updated to upstream version 2.4.41.
+
 * Thu Jul 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.15-alt1
 - Version 2.4.15
 
