@@ -1,6 +1,6 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 2017.7.0
+Version: 2017.7.1
 Release: alt1
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
@@ -267,6 +267,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Wed Aug 16 2017 Andrey Cherepanov <cas@altlinux.org> 2017.7.1-alt1
+- New version
+
 * Thu Jul 13 2017 Andrey Cherepanov <cas@altlinux.org> 2017.7.0-alt1
 - New version
 
