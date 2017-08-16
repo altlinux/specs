@@ -1,28 +1,31 @@
+%global _unpackaged_files_terminate_build 1
 %define oname pytest
 
 %def_with python3
 %def_with docs
 
 Name: python-module-%oname
-Version: 3.0.5
-Release: alt3
+Version: 3.2.1
+Release: alt1
 Summary: py.test, a simple and popular testing tool for Python
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/%oname
-Packager: Python Development Team <python@packages.altlinux.org>
+Url: https://pypi.python.org/pypi/pytest
 
 %py_requires py
 
 BuildArch: noarch
 
-Source: https://pypi.python.org/packages/a8/87/b7ca49efe52d2b4169f2bfc49aa5e384173c4619ea8e635f123a0dac5b75/%oname-%version.tar.gz
+# https://github.com/pytest-dev/pytest.git
+Source: %name-%version.tar.gz
+Patch1: %oname-%version-alt-docs.patch
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-module-setuptools python-module-hypothesis
+BuildPreReq: python-module-setuptools python-module-hypothesis python-module-setuptools_scm
+BuildRequires: git-core
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools python3-module-hypothesis
+BuildPreReq: python3-module-setuptools python3-module-hypothesis python3-module-setuptools_scm
 %endif
 %if_with docs
 BuildRequires(pre): rpm-macros-sphinx
@@ -129,10 +132,18 @@ distribute along with your application.
 This package contains pickles for py.test.
 
 %prep
-%setup -n %oname-%version
+%setup
+%patch1 -p1
+
+git config --global user.email "darktemplar at altlinux.org"
+git config --global user.name "darktemplar"
+git init-db
+git add . -A
+git commit -a -m "%version"
+git tag %version -m "%version"
+
 %if_with python3
-rm -rf ../python3-module-%oname-%version
-cp -a . -T ../python3-module-%oname-%version
+cp -a . -T ../python3
 %endif
 
 %if_with docs
@@ -143,7 +154,7 @@ ln -s ../objects.inv doc/en/
 %build
 %python_build
 %if_with python3
-pushd ../python3-module-%oname-%version
+pushd ../python3
 %python3_build
 popd
 %endif
@@ -158,7 +169,7 @@ popd
 
 %install
 %if_with python3
-pushd ../python3-module-%oname-%version
+pushd ../python3
 %python3_install
 mv %buildroot%_bindir/py.test -T %buildroot%_bindir/py.test3
 mv %buildroot%_bindir/pytest -T %buildroot%_bindir/pytest3
@@ -175,12 +186,11 @@ cp -R doc/en/_build/pickle -t %buildroot%python_sitelibdir/%oname/
 %check
 python setup.py test
 %if_with python3
-pushd ../python3-module-%oname-%version
+pushd ../python3
 python3 setup.py test
 popd
 %endif
 
-%global _unpackaged_files_terminate_build 1
 %files
 %doc AUTHORS LICENSE *.rst
 %_bindir/py.test
@@ -215,6 +225,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.1-alt1
+- Updated to upstream version 3.2.1.
+
 * Thu Jan 26 2017 Ivan Zakharyaschev <imz@altlinux.org> 3.0.5-alt3
 - %%check: enabled Python3 tests.
 
