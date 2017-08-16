@@ -6,8 +6,8 @@
 %define mods alsa oss %{?_with_nas:nas} %{?_with_pulse:pulse} %{?_with_sdl:sdl}
 
 Name: mpg123
-Version: 1.25.4
-Release: alt2
+Version: 1.25.6
+Release: alt1
 
 Summary: MPEG audio player
 Group: Sound
@@ -107,6 +107,9 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Wed Aug 16 2017 Yuri N. Sedunov <aris@altlinux.org> 1.25.6-alt1
+- 1.25.6
+
 * Fri Aug 04 2017 Yuri N. Sedunov <aris@altlinux.org> 1.25.4-alt2
 - removed obsolete ExclusiveArch tag
 
