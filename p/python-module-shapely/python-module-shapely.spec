@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 1.5.17
-Release: alt1.post1
+Release: alt1.post1.1
 
 Summary: Planar geometries, predicates, and operations
 
@@ -19,13 +19,13 @@ BuildPreReq: libgeos-devel
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-Cython libnumpy-devel
 BuildPreReq: python-module-descartes python-module-sphinx-devel
-BuildPreReq: python-module-geos python-module-matplotlib-sphinxext
+BuildPreReq: python-module-matplotlib-sphinxext
 BuildPreReq: python-module-packaging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-Cython libnumpy-py3-devel
-BuildPreReq: python3-module-descartes python3-module-geos
+BuildPreReq: python3-module-descartes
 BuildPreReq: python3-module-packaging
 BuildRequires: xvfb-run
 %endif
@@ -159,6 +159,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 16 2017 Andrey Cherepanov <cas@altlinux.org> 1.5.17-alt1.post1.1
+- Build without geos support
+
 * Wed Aug 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.17-alt1.post1
 - Updated to upstream version 1.5.17.post1
 

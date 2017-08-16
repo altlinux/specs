@@ -1,23 +1,25 @@
-%def_with python3
+# Since version 3.0, the Python bindings are unsupported by upstream.
+# See also http://trac.osgeo.org/geos/ticket/228
+%def_without python
+%def_without python3
 
 Name: geos
-Version: 3.6.0
-Release: alt1.dev.git20150816.1
+Version: 3.6.2
+Release: alt1
 
 Summary: Geometry Engine - Open Source
 Group: Sciences/Geosciences
 License: LGPL
-Url: http://geos.refractions.net/
+Url: http://trac.osgeo.org/geos/
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-# https://github.com/libgeos/libgeos.git
-# branch: svn-trunk
+# VCS: https://git.osgeo.org/gogs/geos/geos.git
 Source: %name-%version.tar
+Patch1: %name-fix-lib-destination.patch
 
-# Automatically added by buildreq on Sun Nov 09 2008 (-bi)
+BuildRequires(pre): rpm-build-ruby
 BuildRequires: gcc-c++ python-devel swig
-
 BuildPreReq: cmake doxygen graphviz
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -50,6 +52,8 @@ This package contains documentation for GEOS.
 %package -n lib%name
 Summary: Geometry Engine - Open Source
 Group: Sciences/Geosciences
+Provides:  libgeos1 = %EVR
+Obsoletes: libgeos1 < %EVR
 
 %description -n lib%name
 GEOS (Geometry Engine - Open Source) is a C++ port of the Java
@@ -67,6 +71,7 @@ Requires: lib%name = %version-%release
 %description -n lib%name-devel
 Development files for the Geometry Engine - Open Source
 
+%if_with python
 %package -n python-module-%name
 Summary: Python bindings for the lib%name library
 Group: Development/Python
@@ -74,7 +79,9 @@ Requires: lib%name = %version-%release
 
 %description -n python-module-%name
 Python bindings for the lib%name library.
+%endif
 
+%if_with python3
 %package -n python3-module-%name
 Summary: Python bindings for the lib%name library
 Group: Development/Python3
@@ -82,6 +89,7 @@ Requires: lib%name = %version-%release
 
 %description -n python3-module-%name
 Python bindings for the lib%name library.
+%endif
 
 %package -n ruby-%name
 Summary: Ruby bindings for the lib%name library
@@ -93,6 +101,7 @@ Ruby bindings for the lib%name library.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -100,17 +109,22 @@ cp -fR . ../python3
 
 %build
 ./autogen.sh
+%undefine _configure_gettext
 %configure \
 	--disable-static \
+%if_with python
 	--enable-python \
+%else
+	--disable-python \
+%endif
 	--disable-ruby
 
 %if_with python3
 pushd ../python3
 sed -i 's|\(\-python\)|\1 -py3|' macros/ac_pkg_swig.m4
-sed -i 's|python\${PYTHON_VERSION}|python\${PYTHON_VERSION}m|' \
+sed -i 's|python\$PYTHON_VERSION|python\${PYTHON_VERSION}m|' \
 	macros/ac_python_devel.m4
-export PYTHON=python3
+export PYTHON=/usr/bin/python3
 ./autogen.sh
 %configure \
 	--disable-static \
@@ -124,26 +138,15 @@ popd
 LIB_SUFFIX=64
 %endif
 
-mkdir BUILD
-pushd BUILD
-cmake \
-	-DLIB_SUFFIX=$LIB_SUFFIX \
-	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_C_FLAGS:STRING="%optflags" \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	-DCMAKE_Fortran_FLAGS:STRING="%optflags" \
-	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
-	..
-
+%cmake_insource -DGEOS_BUILD_STATIC:BOOL=OFF
 %make_build VERBOSE=1
-popd
 
+%if_with python
 %make -C swig/python LIB_SUFFIX=$LIB_SUFFIX \
 	ENABLE_PYTHON=1 ENABLE_SWIG=1
+%endif
 
 %if_with python3
-ln -s $PWD/BUILD ../python3/
 %make -C ../python3/swig/python LIB_SUFFIX=$LIB_SUFFIX \
 	ENABLE_PYTHON=1 ENABLE_SWIG=1
 %endif
@@ -151,13 +154,16 @@ ln -s $PWD/BUILD ../python3/
 %make -C doc doxygen-html
 
 %install
-%makeinstall_std -C BUILD
+%makeinstall_std
 
 %if %_lib == lib64
 LIB_SUFFIX=64
 %endif
+
+%if_with python
 %makeinstall_std -C swig/python LIB_SUFFIX=$LIB_SUFFIX \
 	ENABLE_PYTHON=1 ENABLE_SWIG=1
+%endif
 
 rm -f %buildroot%python_sitelibdir/geos/*.la
 rm -f %buildroot%ruby_sitearchdir/*.la
@@ -168,10 +174,11 @@ rm -f %buildroot%ruby_sitearchdir/*.la
 rm -f %buildroot%python3_sitelibdir/geos/*.la
 %endif
 
-bzip2 ChangeLog
+%check
+make check || exit 0
 
 %files -n lib%name
-%doc AUTHORS ChangeLog* COPYING NEWS README TODO
+%doc AUTHORS COPYING NEWS README.md TODO
 %_libdir/lib*.so.*
 
 %files -n lib%name-devel
@@ -179,8 +186,10 @@ bzip2 ChangeLog
 %_libdir/lib*.so
 %_includedir/*
 
+%if_with python
 %files -n python-module-%name
 %python_sitelibdir/*
+%endif
 
 %if_with python3
 %files -n python3-module-%name
@@ -196,6 +205,13 @@ bzip2 ChangeLog
 %doc doc/doxygen_docs/html/*
 
 %changelog
+* Wed Aug 02 2017 Andrey Cherepanov <cas@altlinux.org> 3.6.2-alt1
+- New version
+- Change project URL, packager and repo address
+- Use gear remotes
+- Build from upstream git tag
+- Disable build Python modules because upstream does not support Python bindings since version 3.0
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.6.0-alt1.dev.git20150816.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

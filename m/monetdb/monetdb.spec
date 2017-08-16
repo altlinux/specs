@@ -1,6 +1,6 @@
 Name: monetdb
 Version: 11.19.7
-Release: alt1.qa2
+Release: alt1.qa3
 
 Summary: MonetDB is an open source column-oriented database management system
 License: MonetDB Public License v1.1
@@ -158,6 +158,9 @@ cp %buildroot/%_bindir/malsample.* .
 %doc sqlsample.pl malsample.pl
 
 %changelog
+* Wed Aug 16 2017 Andrey Cherepanov <cas@altlinux.org> 11.19.7-alt1.qa3
+- Rebuild with geos 3.6.2
+
 * Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 11.19.7-alt1.qa2
 - NMU: rebuilt due to libcfitsio.so.3 -> libcfitsio.so.4 soname change.
 
