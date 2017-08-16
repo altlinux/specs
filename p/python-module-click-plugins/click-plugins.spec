@@ -3,13 +3,12 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0
-Release: alt1.git20150720.1
+Version: 1.0.2
+Release: alt1
 Summary: Register CLI commands via setuptools entry-points
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/click-plugins
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/click-contrib/click-plugins.git
 Source: %name-%version.tar
@@ -85,15 +84,13 @@ py.test -vv tests --cov click_plugins --cov-report term-missing
 %if_with python3
 pushd ../python3
 python3 setup.py test -v
-py.test-%_python3_version -vv tests --cov click_plugins \
-	--cov-report term-missing
+py.test3 -vv tests --cov click_plugins --cov-report term-missing
 popd
 %endif
 
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
-%exclude %python_sitelibdir/tests
 
 %files examples
 %doc example/*
@@ -102,10 +99,12 @@ popd
 %files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/tests
 %endif
 
 %changelog
+* Wed Aug 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.2-alt1
+- Updated to upstream version 1.0.2.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0-alt1.git20150720.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
