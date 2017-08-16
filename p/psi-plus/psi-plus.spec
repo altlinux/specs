@@ -1,6 +1,6 @@
 Name: psi-plus
-Version: 1.0.140
-Release: alt2
+Version: 1.2.32
+Release: alt3
 
 Summary: Psi+ Jabber client
 Summary(ru_RU.UTF-8): Jabber клиент Psi+
@@ -14,6 +14,8 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 Source: %name-snapshots-%version.tar.gz
 Patch0: %name-qca2-alt.patch
 Patch1: %name-disable-sm-alt.patch
+Patch2: %name-doubleclick-alt.patch
+Patch3: %name-events-alt.patch
 
 Requires: qt5-translations
 Requires: qca-qt5-ossl
@@ -112,20 +114,6 @@ The first time you install this plugin, you need to log on to all of your accoun
 Данный плагин предназначен для напоминаний о приближающихся днях рождения.
 Если плагин установлен впервые, то необходимо выйти всеми своими аккаунтами в «онлайн», затем зайти в настройки плагина и нажать кнопку Update Birthdays. В результате будет собрана доступная информация о днях рождения пользователей из всех аккаунтов ростера, а если выбрать соответствующую опцию, то и информация о пользователях, vCard'ы которых находятся в кэше на локальном диске.
 
-# Captcha forms plugin
-%package plugin-captchaforms
-Summary: Captcha forms support for %name
-Group: Networking/Instant messaging
-Requires: %name = %version-%release
-
-%description plugin-captchaforms
-This plugin is designed to pass of captcha directly from the Psi+.
-At the moment the functional is very limited. It only works if the image is sent directly to the body of the message (download content from Internet does not work).
-
-%description plugin-captchaforms -l ru_RU.UTF-8
-Данный плагин предназначен для прохождения капчи непосредственно из Psi+.
-В данный момент функционал весьма ограничен. Работает только в случае, если картинка посылается непосредственно в теле сообщения (загрузка контента из интернета пока не поддерживается).
-
 # Chess plugin
 %package plugin-chess
 Summary: Chess forms support for %name
@@ -202,6 +190,20 @@ This plugin can currently be used to download and install roster iconsets and em
 Данный плагин предназначен для скачивания из Интернет наборов иконок и прочих дополнительных ресурсов для Psi+.
 Примечание: В настоящее время плагин умеет скачивать и устанавливать наборы иконок для ростера и смайлпаки.
 
+# Enum messages plugin
+%package plugin-enummessages
+Summary: Enum messages support for %name
+Group: Networking/Instant messaging
+Requires: %name = %version-%release
+
+%description plugin-enummessages
+The plugin is designed to enumerate messages, adding the messages numbers in chat logs and notification of missed messages. 
+Supports per contact on / off message enumeration via the buttons on the chats toolbar.
+
+%description plugin-enummessages -l ru_RU.UTF-8
+Данный плагин предназначен для перечисления сообщений, добавление номера сообщения в журналах чата и уведомления о пропущенных сообщениях.
+Поддерживается вкл / выкл перечисления сообщений для каждого контакта по отдельности с помощью кнопок на панели инструментов чата.
+
 # Extended menu
 %package plugin-extendedmenu
 Summary: Extended menu support for %name
@@ -229,29 +231,6 @@ Importantly: A large part of the options are important system settings. These re
 Данный плагин предназначен для более удобной настройки дополнительных параметров Psi+.
 Плагин предоставляет доступ к дополнительным настройкам приложения, которые не имеют своего графического интерфейса.
 Важно: бОльшая часть настроек имеет системный характер и требует внимания и понимания смысла изменяемых функций.
-
-# GMail service plugin
-%package plugin-gmailservice
-Summary: GMail service support for %name
-Group: Networking/Instant messaging
-Requires: %name = %version-%release
-
-%description plugin-gmailservice
-Shows notifications of new messages in your Gmailbox.
-Note: The plugin only checks the root of your Inbox folder in your Gmailbox for new messages. When using server side mail filtering, you may not be notified about all new messages.
-
-%description plugin-gmailservice -l ru_RU.UTF-8
-Данный плагин предназначен для работы с уведомлениями о поступлении новых писем в почтовый ящик Gmail, а также с прочими дополнительными сервисами.
-Примечание: Плагин проверяет корень почтового каталога Inbox в Gmailbox на предмет наличия новых писем. Если фильтрация (пересортировка) писем осуществляется непосредственно на сервере Gmail, то нотификаций о новой почте не будет.
-
-# Gnome 3 support plugin
-%package plugin-gnome3support
-Summary: Gnome 3 support for %name
-Group: Networking/Instant messaging
-Requires: %name = %version-%release
-
-%description plugin-gnome3support
-Gnome 3 support for %name
 
 # GnuPG plugin
 %package plugin-gnupg
@@ -288,6 +267,18 @@ You can select or deselect a contact for history removal from the context menu o
 %description plugin-historykeeper -l ru_RU.UTF-8
 Данный плагин предназначен для удаления истории переписки с отмеченными контактами при выходе из Psi+.
 Отметить контакт или удалить отметку можно из контекстного меню контакта, либо через окно с настройками плагина.
+
+# Http upload plugin
+%package plugin-httpupload
+Summary: Http upload support for %name
+Group: Networking/Instant messaging
+Requires: %name = %version-%release
+
+%description plugin-httpupload
+This plugin allows uploading images and other files via XEP-0363.
+
+%description plugin-httpupload -l ru_RU.UTF-8
+
 
 # ICQ die plugin
 %package plugin-icqdie
@@ -331,6 +322,18 @@ Note: To work correctly, the option options.ui.chat.central-toolbar must be set 
 Клиент собеседника должен поддерживать XEP-0071: XHTML-IM и поддерживать схему data:URI.
 Примечание: Для корректной работы плагина опция options.ui.chat.central-toolbar должна быть установлена в положение true.
 
+# Image preview plugin
+%package plugin-imagepreview
+Summary: Image preview support for %name
+Group: Networking/Instant messaging
+Requires: %name = %version-%release
+
+%description plugin-imagepreview
+This plugin shows the preview image for an image URL.
+
+%description plugin-imagepreview -l ru_RU.UTF-8
+Этот плагин показывает превью изображений по URL ссылкам.
+
 # Jabber disk plugin
 %package plugin-jabberdisk
 Summary: Jabber disk support for %name
@@ -369,6 +372,18 @@ Currently, the plugin is able to:
  - Распознавать >цитаты в сообщениях
  - Кликабельные @ники, *тэги, #id_сообщений и другие управляющие элементы для подстановки их в строку ввода
  - Примечание: Для корректной работы плагина опция options.html.chat.render («Использовать формат текста отправителя») должна быть установлена в положение true.
+
+# Message filter plugin
+%package plugin-messagefilter
+Summary: Message filter support for %name
+Group: Networking/Instant messaging
+Requires: %name = %version-%release
+
+%description plugin-messagefilter
+Placeholder
+
+%description plugin-messagefilter -l ru_RU.UTF-8
+Placeholder
 
 # PEP change notify plugin
 %package plugin-pepchangenotify
@@ -612,7 +627,9 @@ Each element can contain a regular expression to check for matches with JID, fro
 %prep
 %setup -n %name-snapshots-%version
 %patch0 -p1
-%patch1 -p2
+#%patch1 -p2
+%patch2 -p2
+%patch3 -p2
 
 %build
 ./configure \
@@ -625,192 +642,198 @@ Each element can contain a regular expression to check for matches with JID, fro
 	--release \
 	--qtselect=5
 
-%make
+%make_build
 
 # Attention plugin
 pushd src/plugins/generic/attentionplugin
 %qmake_qt5 attentionplugin.pro
-%make
+%make_build
 popd
 
 # Autoreply plugin
 pushd src/plugins/generic/autoreplyplugin
 %qmake_qt5 autoreplyplugin.pro
-%make
+%make_build
 popd
 
 # Birthday reminder plugin
 pushd src/plugins/generic/birthdayreminderplugin
 %qmake_qt5 birthdayreminderplugin.pro
-%make
-popd
-
-# Capthcha forms plugin
-pushd src/plugins/generic/captchaformsplugin
-%qmake_qt5 captchaformsplugin.pro
-%make
+%make_build
 popd
 
 # Chess plugin
 pushd src/plugins/generic/chessplugin
 %qmake_qt5 chessplugin.pro
-%make
+%make_build
 popd
 
 # Cleaner plugin
 pushd src/plugins/generic/cleanerplugin
 %qmake_qt5 cleanerplugin.pro
-%make
+%make_build
 popd
 
 # Client switcher plugin
 pushd src/plugins/generic/clientswitcherplugin
 %qmake_qt5 clientswitcherplugin.pro
-%make
+%make_build
 popd
 
 # Conference logger plugin
 pushd src/plugins/generic/conferenceloggerplugin
 %qmake_qt5 conferenceloggerplugin.pro
-%make
+%make_build
 popd
 
 # Content downloader plugin
 pushd src/plugins/generic/contentdownloaderplugin
 %qmake_qt5 contentdownloaderplugin.pro
-%make
+%make_build
+popd
+
+# Enum messages plugin
+pushd src/plugins/generic/enummessagesplugin
+%qmake_qt5 enummessagesplugin.pro
+%make_build
 popd
 
 # Extended menu plugin
 pushd src/plugins/generic/extendedmenuplugin
 %qmake_qt5 extendedmenuplugin.pro
-%make
+%make_build
 popd
 
 # Extended options plugin
 pushd src/plugins/generic/extendedoptionsplugin
 %qmake_qt5 extendedoptionsplugin.pro
-%make
-popd
-
-# GMail service plugin
-pushd src/plugins/generic/gmailserviceplugin
-%qmake_qt5 gmailserviceplugin.pro
-%make
-popd
-
-# Gnome 3 support plugin
-pushd src/plugins/unix/gnome3supportplugin
-%qmake_qt5 gnome3supportplugin.pro
-%make
+%make_build
 popd
 
 # GnuPG plugin
 pushd src/plugins/generic/gnupgplugin
 %qmake_qt5 gnupgplugin.pro
-%make
+%make_build
 popd
 
 # Gomoku game plugin
 pushd src/plugins/generic/gomokugameplugin
 %qmake_qt5 gomokugameplugin.pro
-%make
+%make_build
 popd
 
 # History keeper plugin
 pushd src/plugins/generic/historykeeperplugin
 %qmake_qt5 historykeeperplugin.pro
-%make
+%make_build
+popd
+
+# Http upload plugin
+pushd src/plugins/generic/httpuploadplugin
+%qmake_qt5 httpuploadplugin.pro
+%make_build
 popd
 
 # ICQ die plugin
 pushd src/plugins/generic/icqdieplugin
 %qmake_qt5 icqdieplugin.pro
-%make
+%make_build
 popd
 
 # Image plugin
 pushd src/plugins/generic/imageplugin
 %qmake_qt5 imageplugin.pro
-%make
+%make_build
+popd
+
+# Image preview plugin
+pushd src/plugins/generic/imagepreviewplugin
+%qmake_qt5 imagepreviewplugin.pro
+%make_build
 popd
 
 # Jabber disk plugin
 pushd src/plugins/generic/jabberdiskplugin
 %qmake_qt5 jabberdiskplugin.pro
-%make
+%make_build
 popd
 
 # Juick plugin
 pushd src/plugins/generic/juickplugin
 %qmake_qt5 juickplugin.pro
-%make
+%make_build
+popd
+
+# Message filter plugin
+pushd src/plugins/generic/messagefilterplugin
+%qmake_qt5 messagefilterplugin.pro
+%make_build
 popd
 
 # PEP change notify plugin
 pushd src/plugins/generic/pepchangenotifyplugin
 %qmake_qt5 pepchangenotifyplugin.pro
-%make
+%make_build
 popd
 
 # Pstop plugin
 pushd src/plugins/dev/pstoplugin
 %qmake_qt5 pstoplugin.pro
-%make
+%make_build
 popd
 
 # QIP X-Statuses plugin
 pushd src/plugins/generic/qipxstatusesplugin
 %qmake_qt5 qipxstatusesplugin.pro
-%make
+%make_build
 popd
 
 # Redirector plugin
 pushd src/plugins/dev/redirectorplugin
 %qmake_qt5 redirectorplugin.pro
-%make
+%make_build
 popd
 
 # Screenshot plugin
 pushd src/plugins/generic/screenshotplugin
 %qmake_qt5 screenshotplugin.pro
-%make
+%make_build
 popd
 
 # Skins plugin
 pushd src/plugins/generic/skinsplugin
 %qmake_qt5 skinsplugin.pro
-%make
+%make_build
 popd
 
 # Stopspam plugin
 pushd src/plugins/generic/stopspamplugin
 %qmake_qt5 stopspamplugin.pro
-%make
+%make_build
 popd
 
 # Storagenotes plugin
 pushd src/plugins/generic/storagenotesplugin
 %qmake_qt5 storagenotesplugin.pro
-%make
+%make_build
 popd
 
 # Translate plugin
 pushd src/plugins/generic/translateplugin
 %qmake_qt5 translateplugin.pro
-%make
+%make_build
 popd
 
 # Video status plugin
 pushd src/plugins/generic/videostatusplugin
 %qmake_qt5 videostatusplugin.pro
-%make
+%make_build
 popd
 
 # Watcher plugin
 pushd src/plugins/generic/watcherplugin
 %qmake_qt5 watcherplugin.pro
-%make
+%make_build
 popd
 
 %install
@@ -819,9 +842,6 @@ popd
 cp -f -r themes %buildroot%_datadir/%name/themes/
 
 %__mkdir_p %buildroot%_libdir/%name/plugins
-
-# Gnome 3 support plugin
-%__install -Dp -m 0644 src/plugins/unix/gnome3supportplugin/libgnome3supportplugin.so %buildroot%_libdir/%name/plugins
 
 # Pstop plugin
 %__install -Dp -m 0644 src/plugins/dev/pstoplugin/libpstoplugin.so %buildroot%_libdir/%name/plugins
@@ -834,21 +854,23 @@ pushd src/plugins/generic
 for i in attentionplugin/libattentionplugin.so \
 	 autoreplyplugin/libautoreplyplugin.so \
 	 birthdayreminderplugin/libbirthdayreminderplugin.so \
-	 captchaformsplugin/libcaptchaformsplugin.so \
 	 chessplugin/libchessplugin.so \
 	 cleanerplugin/libcleanerplugin.so \
 	 clientswitcherplugin/libclientswitcherplugin.so \
 	 conferenceloggerplugin/libconferenceloggerplugin.so \
 	 contentdownloaderplugin/libcontentdownloaderplugin.so \
+	 enummessagesplugin/libenummessagesplugin.so \
 	 extendedmenuplugin/libextendedmenuplugin.so \
 	 extendedoptionsplugin/libextendedoptionsplugin.so \
-	 gmailserviceplugin/libgmailserviceplugin.so \
 	 gomokugameplugin/libgomokugameplugin.so \
 	 historykeeperplugin/libhistorykeeperplugin.so \
+	 httpuploadplugin/libhttpuploadplugin.so \
 	 icqdieplugin/libicqdieplugin.so \
 	 imageplugin/libimageplugin.so \
+	 imagepreviewplugin/libimagepreviewplugin.so \
 	 jabberdiskplugin/libjabberdiskplugin.so \
 	 juickplugin/libjuickplugin.so \
+	 messagefilterplugin/libmessagefilterplugin.so \
 	 pepchangenotifyplugin/libpepchangenotifyplugin.so \
 	 qipxstatusesplugin/libqipxstatusesplugin.so \
 	 screenshotplugin/libscreenshotplugin.so \
@@ -879,6 +901,7 @@ popd
 %dir %_iconsdir/hicolor/128x128/apps
 %_iconsdir/hicolor/128x128/apps/%name.png
 %dir %_datadir/%name
+%_datadir/%name/client_icons.txt
 %_datadir/%name/certs
 %_datadir/%name/iconsets
 %_datadir/%name/sound
@@ -895,10 +918,6 @@ popd
 # Birthday reminder plugin
 %files plugin-birthdayreminder
 %_libdir/%name/plugins/libbirthdayreminderplugin.so
-
-# Capthcha forms plugin
-%files plugin-captchaforms
-%_libdir/%name/plugins/libcaptchaformsplugin.so
 
 # Chess plugin
 %files plugin-chess
@@ -920,6 +939,10 @@ popd
 %files plugin-contentdownloader
 %_libdir/%name/plugins/libcontentdownloaderplugin.so
 
+# Enum messages plugin
+%files plugin-enummessages
+%_libdir/%name/plugins/libenummessagesplugin.so
+
 # Extended menu plugin
 %files plugin-extendedmenu
 %_libdir/%name/plugins/libextendedmenuplugin.so
@@ -927,14 +950,6 @@ popd
 # Extended options plugin
 %files plugin-extendedoptions
 %_libdir/%name/plugins/libextendedoptionsplugin.so
-
-# Gmail service plugin
-%files plugin-gmailservice
-%_libdir/%name/plugins/libgmailserviceplugin.so
-
-# Gnome 3 support plugin
-%files plugin-gnome3support
-%_libdir/%name/plugins/libgnome3supportplugin.so
 
 # Gomoku game plugin
 %files plugin-gomokugame
@@ -944,6 +959,10 @@ popd
 %files plugin-historykeeper
 %_libdir/%name/plugins/libhistorykeeperplugin.so
 
+# Http upload plugin
+%files plugin-httpupload
+%_libdir/%name/plugins/libhttpuploadplugin.so
+
 # ICQ die plugin
 %files plugin-icqdie
 %_libdir/%name/plugins/libicqdieplugin.so
@@ -952,6 +971,10 @@ popd
 %files plugin-image
 %_libdir/%name/plugins/libimageplugin.so
 
+# Image preview plugin
+%files plugin-imagepreview
+%_libdir/%name/plugins/libimagepreviewplugin.so
+
 # Jabber disk plugin
 %files plugin-jabberdisk
 %_libdir/%name/plugins/libjabberdiskplugin.so
@@ -959,6 +982,10 @@ popd
 # Juick plugin
 %files plugin-juick
 %_libdir/%name/plugins/libjuickplugin.so
+
+# Message filter plugin
+%files plugin-messagefilter
+%_libdir/%name/plugins/libmessagefilterplugin.so
 
 # PEP change notify plugin
 %files plugin-pepchangenotify
@@ -1005,6 +1032,36 @@ popd
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Wed Aug 16 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.32-alt3
+- fix tray
+
+* Tue Aug 15 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.32-alt2
+- fix doubleclick
+
+* Mon Aug 09 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.32-alt1
+- Version 1.2.32
+
+* Mon Aug 07 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.30-alt1
+- Version 1.2.30
+
+* Thu Aug 03 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.27-alt1
+- Version 1.2.27
+
+* Mon Jul 31 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.20-alt1
+- Version 1.2.20
+
+* Fri Jul 28 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.15-alt1
+- Version 1.2.15
+
+* Tue Jul 25 2017 Oleg Solovyov <mcpain@altlinux.org> 1.1.28-alt1
+- Version 1.1.28
+
+* Mon Jul 24 2017 Oleg Solovyov <mcpain@altlinux.org> 1.1.23-alt2
+- Fix: no client icons
+
+* Mon Jul 24 2017 Oleg Solovyov <mcpain@altlinux.org> 1.1.23-alt1
+- Version 1.1.23
+
 * Thu Jul 20 2017 Oleg Solovyov <mcpain@altlinux.org> 1.0.140-alt2
 - Fix: no themes
 
