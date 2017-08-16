@@ -1,17 +1,17 @@
 %def_with python3
+%def_without check
 
 Name: py
-Version: 1.4.32
+Version: 1.4.34
 Release: alt1
 Summary: Testing and distributed programming library
 License: MIT
 Group: Development/Tools
-Url: http://pylib.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://github.com/pytest-dev/py
 BuildArch: noarch
 
-# hg clone https://bitbucket.org/hpk42/py
-Source0: https://%{name}pi.python.org/packages/93/bd/8a90834a287e0c1682eab8e20ada672e4f4cf7d5b99f2833ddbf31ed1a6d/py-%{version}.tar.gz
+# https://github.com/pytest-dev/py.git
+Source: %name-%version.tar.gz
 
 Requires: python-module-%name = %version-%release
 
@@ -22,6 +22,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
+%py_provides py.apipkg py.builtin py.code py.error py.iniconfig py.io py.log py.path py.process py.std py.xmlgen
+
 %description
 The py lib has several namespaces which help with testing, generating
 and distributing code across machines.
@@ -31,6 +33,7 @@ and distributing code across machines.
 Summary: Python 3 module of testing and distributed programming library
 Group: Development/Python3
 %add_python3_req_skip compiler
+%py3_provides py.apipkg py.builtin py.code py.error py.iniconfig py.io py.log py.path py.process py.std py.xmlgen
 
 %description -n python3-module-%name
 The py lib has several namespaces which help with testing, generating
@@ -81,7 +84,7 @@ and distributing code across machines.
 This package contains documentation for py lib.
 
 %prep
-%setup -q 
+%setup
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -123,13 +126,11 @@ done
 %check
 export LC_ALL=en_US.UTF-8
 python setup.py test
-rm -fR build
 #py.test
 %if_with python3
 pushd ../python3
 python3 setup.py test
-rm -fR build
-#py.test-%_python3_version
+#py.test3
 popd
 %endif
 
@@ -163,6 +164,10 @@ popd
 %endif
 
 %changelog
+* Wed Aug 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.34-alt1
+- Updated to upstream version 1.4.34.
+- Disabled tests.
+
 * Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.32-alt1
 - automated PyPI update
 
