@@ -1,5 +1,5 @@
 Name: 		skrooge
-Version: 	2.8.1
+Version: 	2.9.0
 Release: 	alt1
 License: 	%gpl2plus
 Summary: 	Personal finances manager for KF5
@@ -86,7 +86,7 @@ and intuitive.
 %find_lang --with-kde %name
 
 %files -f %name.lang
-%doc AUTHORS CHANGELOG COPYING README TODO
+%doc AUTHORS CHANGELOG COPYING README
 %_K5bin/*
 %_K5xdgconf/%{name}_*.knsrc
 %_K5cfg/*
@@ -106,6 +106,9 @@ and intuitive.
 %_datadir/%name
 
 %changelog
+* Wed Aug 16 2017 Andrey Cherepanov <cas@altlinux.org> 2.9.0-alt1
+- new version 2.9.0
+
 * Mon Jul 24 2017 Andrey Cherepanov <cas@altlinux.org> 2.8.1-alt1
 - new version 2.8.1
 
