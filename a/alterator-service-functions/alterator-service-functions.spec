@@ -1,6 +1,6 @@
 Name: alterator-service-functions
 Version: 3.0.0
-Release: alt2
+Release: alt3
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
@@ -12,7 +12,7 @@ Summary: Helper functions for common service management
 License: GPLv3
 Group: System/Base
 
-Conflicts: systemd < v1:234-alt3
+Conflicts: systemd < 1:234-alt3
 
 %description
 Helpers for common service management
@@ -27,6 +27,9 @@ Helpers for common service management
 %_bindir/*
 
 %changelog
+* Wed Aug 16 2017 Paul Wolneykien <manowar@altlinux.org> 3.0.0-alt3
+- Fixed typo in systemd version.
+
 * Tue Aug 15 2017 Paul Wolneykien <manowar@altlinux.org> 3.0.0-alt2
 - Added 'is_chrooted' function which tests if the program is executed
   inside a chroot.
