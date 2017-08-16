@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.0.0.post1
-Release: alt1
+Release: alt2
 Summary: Affine transformation matrices
 License: BSD
 Group: Development/Python
@@ -13,7 +13,7 @@ Url: https://pypi.python.org/pypi/affine/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/sgillies/affine.git
-Source0: https://pypi.python.org/packages/b0/3c/e1a37f1e92f27f5e32371b572201819c59d5e917d600d46df80f780cab43/%{oname}-%{version}.tar.gz
+Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -60,7 +60,7 @@ This package contains tests for %oname.
 %endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -92,12 +92,12 @@ py.test -vv
 pushd ../python3
 python3 setup.py test
 rm -fR build
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
 %files
-%doc *.rst PKG-INFO
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
@@ -106,7 +106,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst PKG-INFO
+%doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -115,6 +115,10 @@ popd
 %endif
 
 %changelog
+* Wed Jun 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0.post1-alt2
+- Import upstream sources and updated spec
+- Fix build with new python3-module-pytest
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.0.post1-alt1
 - automated PyPI update
 
