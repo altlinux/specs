@@ -1,5 +1,5 @@
 Name: alterator-service-functions
-Version: 2.0.5
+Version: 3.0.0
 Release: alt1
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
@@ -11,6 +11,8 @@ Source: %name-%version.tar.gz
 Summary: Helper functions for common service management
 License: GPLv3
 Group: System/Base
+
+Conflicts: systemd < v1:234-alt3
 
 %description
 Helpers for common service management
@@ -25,6 +27,10 @@ Helpers for common service management
 %_bindir/*
 
 %changelog
+* Fri Aug 11 2017 Paul Wolneykien <manowar@altlinux.org> 3.0.0-alt1
+- Systemd-first edition.
+- Fixed chrooted operation (ALTERATOR_DESTDIR or process chroot).
+
 * Thu Aug 10 2017 Paul Wolneykien <manowar@altlinux.org> 2.0.5-alt1
 - Support installer mode (ALTERATOR_DESTDIR env. var.).
 
@@ -43,7 +49,7 @@ Helpers for common service management
 - Fix output redirection in debug mode.
 
 * Mon Jun 03 2013 Mikhail Efremov <sem@altlinux.org> 2.0.1-alt1
-- Don't use absolute paths for commands (closes: #28977).
+- Don\'t use absolute paths for commands (closes: #28977).
 - Use inittab if runlevel is unknown (closes: #28891).
 
 * Thu Mar 21 2013 Paul Wolneykien <manowar@altlinux.org> 2.0.0-alt1
