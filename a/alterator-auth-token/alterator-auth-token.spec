@@ -1,6 +1,6 @@
 Name: alterator-auth-token
 Version: 0.1.0
-Release: alt6
+Release: alt8
 
 Source: %name-%version.tar
 Source1: openssl-gost.control
@@ -16,17 +16,15 @@ BuildPreReq: alterator >= 5.0
 Requires: alterator >= 5.1-alt1
 Requires: alterator-lookout >= 2.6-alt1
 Requires: alterator-sh-functions >= 0.11-alt2
-Requires: alterator-service-functions >= 2.0.5
-# Base
-Requires: pam_pkcs11 >= 0.6.9-alt9
+Requires: alterator-service-functions >= 3.0.0-alt2
+# PKCS#11
+Requires: pam_pkcs11 >= 0.6.9-alt12
 Requires: card-actions >= 1.8-alt3
 Requires: lightdm >= 1.16.7-alt6
 Requires: pam_mkuser >= 0.1.0-alt4
 # GOST CAs are now optional
 #Requires: ca-gost-certificates
 Requires: openssl-engines
-# Profiles
-Requires: pkcs11-profiles-rutokenecp >= 0.1.0-alt2
 
 Conflicts: alterator-fbi < 5.16-alt1
 Conflicts: alterator-lookout < 2.1-alt1
@@ -60,6 +58,16 @@ install -D -p -m0755 %_sourcedir/openssl-gost.control \
 %_controldir/openssl-gost
 
 %changelog
+* Tue Aug 15 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt8
+- Fixed service start/stop control: make additional check for the
+  chroot environment (requires alterator-service-functions >=
+  3.0.0-alt2).
+
+* Mon Aug 14 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt7
+- Fix: Keep owner and mode of /etc/openssl/openssl.cnf unmodified.
+- Do not ecplicitly require the RuTokenECP profile.
+- Require alterator-service-functions >= 3.0.0.
+
 * Thu Aug 10 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt6
 - Check that the pkcs11-evenmgr service is running when not in
   installer mode.
