@@ -1,10 +1,9 @@
-%def_without check
-%def_without python3
+%def_with python3
 
-%define modulename h2
-Name: python-module-h2
+%define oname h2
+Name: python-module-%oname
 Version: 3.0.1
-Release: alt1
+Release: alt2
 
 Summary: HTTP/2 State-Machine based protocol implementation
 
@@ -12,22 +11,17 @@ Url: http://hyper.rtfd.org
 License: MIT
 Group: Development/Python
 
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-# Source-url: https://pypi.io/packages/source/h/%modulename/%modulename-%version.tar.gz
+# https://github.com/python-hyper/hyper-h2.git
 Source: %name-%version.tar
-
-BuildRequires: python-dev python-module-setuptools
-
 BuildArch: noarch
 
+BuildRequires: python-dev python-module-setuptools
+BuildRequires: python-module-hypothesis python-module-hyperframe python-module-hpack
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-hypothesis python3-module-hyperframe python3-module-hpack
 %endif
-
-#setup_python_module %modulename
 
 %description
 This repository contains a pure-Python implementation of a HTTP/2 protocol
@@ -69,6 +63,15 @@ pushd ../python3
 popd
 %endif
 
+%check
+PYTHONPATH=$(pwd) py.test
+
+%if_with python3
+pushd ../python3
+PYTHONPATH=$(pwd) py.test3
+popd
+%endif
+
 %files
 %python_sitelibdir/*
 
@@ -79,6 +82,10 @@ popd
 
 
 %changelog
+* Wed Aug 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.1-alt2
+- Enabled python-3 build.
+- Enabled tests.
+
 * Thu Jun 15 2017 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt1
 - initial build for ALT Sisyphus
 

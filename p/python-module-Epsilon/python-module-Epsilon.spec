@@ -1,38 +1,32 @@
 %define version 0.7.1
-%define release alt1
+%define release alt2
 %setup_python_module Epsilon
 
 %def_with python3
 
+%define oname Epsilon
 Name: %packagename
-Version:%version
-Release: alt1
+Version: %version
+Release: %release
 BuildArch: noarch
 
 Summary: A set of utility modules used by Divmod projects
 License: MIT
 Group: Development/Python
-Packager: Alexey Shabalin <shaba@altlinux.ru>
 Url: https://pypi.python.org/pypi/Epsilon/
 
-Source: http://divmod.org/trac/attachment/wiki/SoftwareReleases/%modulename-%version.tar.gz
-Patch: Epsilon-0.7.0-alt-python3.patch
+Source: http://divmod.org/trac/attachment/wiki/SoftwareReleases/%oname-%version.tar.gz
+Patch1: %oname-0.7.0-alt-python3.patch
+Patch2: %oname-%version-alt-python3-compat.patch
 
-#BuildPreReq: rpm-build-python
-# Automatically added by buildreq on Mon Feb 01 2016 (-bi)
-# optimized out: python-base python-devel python-module-numpy python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-cffi python3-module-enum34 python3-module-pycparser python3-module-setuptools python3-module-zope.interface
-BuildRequires: python-module-pycrypto python-module-setuptools python-module-wx python3-module-cryptography python3-module-zope rpm-build-python3 time
+BuildRequires: python-module-pycrypto python-module-setuptools python-module-wx
 BuildRequires: python-modules-json
-
-#BuildRequires: python-devel python-module-setuptools
-#BuildPreReq: python-module-twisted python-module-OpenSSL
-#BuildPreReq: python-modules-email
-#BuildPreReq: python-module-zope.interface
+BuildRequires: python-module-twisted-core-test
 %if_with python3
-#BuildPreReq: rpm-build-python3
-#BuildRequires: python3-devel python3-module-setuptools
-#BuildPreReq: python3-module-OpenSSL
-#BuildPreReq: python3-module-zope.interface python-tools-2to3
+BuildPreReq: rpm-build-python3
+BuildRequires: python3-module-cryptography python3-module-zope
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-twisted-core-test
 %endif
 
 %description
@@ -52,11 +46,11 @@ Currently included:
     * A featureful Version class.
     * A formal system for application of monkey-patches. 
 
-%package -n python3-module-%modulename
+%package -n python3-module-%oname
 Summary: A set of utility modules used by Divmod projects
 Group: Development/Python3
 
-%description -n python3-module-%modulename
+%description -n python3-module-%oname
 A small utility package that depends on tools too recent for Twisted
 (like datetime in python2.4) but performs generic enough functions that
 it can be used in projects that don't want to share Divmod's other
@@ -74,9 +68,10 @@ Currently included:
     * A formal system for application of monkey-patches. 
 
 %prep
-%setup -n %modulename-%version
+%setup -n %oname-%version
 
-%patch -p2
+%patch1 -p2
+%patch2 -p2
 
 %if_with python3
 cp -fR . ../python3
@@ -101,6 +96,15 @@ pushd ../python3
 popd
 %endif
 
+%check
+py.test ||:
+
+%if_with python3
+pushd ../python3
+py.test3 ||:
+popd
+%endif
+
 %files
 %python_sitelibdir/Epsilon-*.egg-info
 %python_sitelibdir/epsilon
@@ -110,13 +114,17 @@ popd
 %exclude %_bindir/benchmark
 
 %if_with python3
-%files -n python3-module-%modulename
+%files -n python3-module-%oname
 %python3_sitelibdir/Epsilon-*.egg-info
 %python3_sitelibdir/epsilon
 %doc *.txt LICENSE README
 %endif
 
 %changelog
+* Tue Aug 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.1-alt2
+- Updated build dependencies.
+- Enabled tests.
+
 * Thu Jun 02 2016 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
 - 0.7.1
 

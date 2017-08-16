@@ -4,34 +4,29 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.6.0
+Version: 1.8.0
 Release: alt1
 Summary: Use Twisted anywhere!
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/crochet
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/itamarst/crochet.git
-Source0: https://pypi.python.org/packages/d8/25/97bdfed382ce9087e0d8b4aa0f097774fd8c53c1a76e2310613808c9d8ba/%{oname}-%{version}.tar.gz
+Source: %name-%version.tar
+Patch1: %oname-%version-alt-docs.patch
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests git
-#BuildPreReq: python-module-twisted-core-test
-#BuildPreReq: python-module-sphinx-devel
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: git-core python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
+BuildRequires: python-module-setuptools-tests python-module-twisted-core-test python-module-twisted-logger python-module-wrapt
+BuildRequires: python-module-service-identity
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests git
-#BuildPreReq: python3-module-twisted-core-test
+BuildRequires: python3-module-setuptools-tests python3-module-twisted-core-test python3-module-wrapt
+BuildRequires: python3-module-service-identity
 %endif
 
-%py_provides %oname
 %py_requires twisted.internet
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-module-OpenSSL python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pyasn1 python-module-pytest python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-twisted-core python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-enum34 python3-module-pycparser python3-module-pygobject3 python3-module-pytest python3-module-serial python3-module-setuptools python3-module-zope python3-module-zope.interface
-BuildRequires: git-core python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-setuptools-tests python-module-twisted-core-test python-module-twisted-logger python3-module-setuptools-tests python3-module-twisted-core rpm-build-python3 time
 
 %description
 Crochet is an MIT-licensed library that makes it easier to use Twisted
@@ -71,7 +66,6 @@ This package contains tests for %oname.
 %package -n python3-module-%oname
 Summary: Use Twisted anywhere!
 Group: Development/Python3
-%py3_provides %oname
 %py3_requires twisted.internet
 Requires: python3-module-twisted-core-test
 
@@ -129,8 +123,8 @@ from regular blocking code. Some use cases include:
 This package contains pickles for %oname.
 
 %prep
-%setup -q -n %{oname}-%{version}
-sed -i 's|@VERSION@|%version|' %oname/_version.py
+%setup
+%patch1 -p1
 
 git config --global user.email "real at altlinux.org"
 git config --global user.name "REAL"
@@ -169,12 +163,10 @@ popd
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
-python setup.py test -v
 python -m unittest discover -v
 %if_with python3
 pushd ../python3
-python3 setup.py test -v
-#python3 -m unittest discover -v
+python3 -m unittest discover -v ||:
 popd
 %endif
 
@@ -201,6 +193,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.0-alt1
+- Updated to upstream version 1.8.0.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1
 - automated PyPI update
 
