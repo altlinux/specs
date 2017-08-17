@@ -5,10 +5,10 @@
 
 Summary: Python modules for implementing LDAP clients
 Name: python-module-%oname
-Version: 2.4.25.1
-Release: alt2
+Version: 2.4.37
+Release: alt1
 Source: %name-%version.tar
-Patch: python-pyldap-dirs.patch
+Patch: %oname-%version-alt-build.patch
 License: Python-style license
 Group: Development/Python
 Url:  https://github.com/pyldap/pyldap/
@@ -24,6 +24,7 @@ BuildPreReq: python3-devel
 
 Provides: python-module-ldap = %version-%release
 Conflicts: python-module-ldap < %version-%release
+Obsoletes: python-module-ldap
 
 %description
 pyldap is a fork of python-ldap, and provides an object-oriented API
@@ -39,6 +40,7 @@ Group: Development/Python3
 
 Provides: python3-module-ldap = %version-%release
 Conflicts: python3-module-ldap < %version-%release
+Obsoletes: python3-module-ldap
 
 %description -n python3-module-%oname
 pyldap is a fork of python-ldap, and provides an object-oriented API
@@ -119,7 +121,7 @@ This package contains pickles for python-ldap.
 
 %prep
 %setup -q
-%patch -p1
+%patch -p2
 
 rm -rf Lib/*.egg-info
 
@@ -186,6 +188,9 @@ cp -fR Doc/.build/pickle %buildroot%python_sitelibdir/ldap/
 %endif
 
 %changelog
+* Thu Aug 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.37-alt1
+- Updated to upstream version 2.4.37.
+
 * Wed Oct 26 2016 Alexey Shabalin <shaba@altlinux.ru> 2.4.25.1-alt2
 - add conflicts with python-module-ldap
 
