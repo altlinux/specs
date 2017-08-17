@@ -1,6 +1,6 @@
 %define dist Perl4-CoreLibs
 Name: perl-%dist
-Version: 0.003
+Version: 0.004
 Release: alt1
 
 Summary: Libraries historically supplied with Perl 4
@@ -8,7 +8,10 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
+# http://search.cpan.org/CPAN/authors/id/Z/ZE/ZEFRAM/Perl4-CoreLibs-%version.tar.gz
 Source: %dist-%version.tar.gz
+
+%add_findreq_skiplist %perl_vendor_privlib/chat2.pl
 
 BuildArch: noarch
 
@@ -43,5 +46,8 @@ warning when loaded.  The CPAN version will not emit such a warning.
 %perl_vendor_privlib/*.pl
 
 %changelog
+* Thu Aug 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.004-alt1
+- Updated to upstream version 0.004.
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 0.003-alt1
 - initial revision
