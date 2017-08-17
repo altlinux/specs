@@ -1,5 +1,5 @@
 Name: t1utils
-Version: 1.40
+Version: 1.41
 Release: alt1
 
 Summary: Programs for manipulating type1 fonts
@@ -31,6 +31,9 @@ Type 1 fonts. It contains programs to change between binary PFB format
 %_man1dir/*
 
 %changelog
+* Thu Aug 17 2017 Michael Shigorin <mike@altlinux.org> 1.41-alt1
+- new version (watch file uupdate)
+
 * Tue Jul 25 2017 Michael Shigorin <mike@altlinux.org> 1.40-alt1
 - new version (watch file uupdate)
 - slightly changed summary/description to include "type1" keyword
