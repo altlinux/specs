@@ -1,6 +1,6 @@
 %define module_name             ipt-ratelimit
 %define module_version          0.3
-%define module_release 		alt1
+%define module_release 		alt2
 
 %define flavour		std-def
 BuildRequires(pre): rpm-build-kernel
@@ -46,15 +46,18 @@ chmod +x version.sh
 make KDIR=%_usrsrc/linux-%kversion-%flavour xt_ratelimit.ko
 
 %install
-install -d %buildroot/%module_dir
-install -m644 -D xt_ratelimit.ko %buildroot/%module_dir/xt_ratelimit.ko
+install -pD -m600 xt_ratelimit.ko %buildroot%module_dir/xt_ratelimit.ko
 
 %files
-%module_dir
+%module_dir/xt_ratelimit.ko
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Aug 17 2017 Dmitry V. Levin <ldv@altlinux.org> 0.3-alt2
+- Unpackaged %%module_dir/.
+- Restricted access to %%module_dir/xt_ratelimit.ko (see #5969).
 
 * Tue May 23 2017 Alexei Takaseev <taf@altlinux.org> 0.3-alt1
 - 0.3
