@@ -3,16 +3,15 @@
 %def_with python3
 
 Name: %oname
-Version: 0.36
+Version: 0.38
 Release: alt1
 Summary: Python REPL build on top of prompt_toolkit
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/ptpython
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/jonathanslenders/ptpython.git
-Source0: https://pypi.python.org/packages/00/bf/eca5caf726c8b773dbafeed5bda65e95214bd626b31bbbaae535a7752844/%{name}-%{version}.tar.gz
+Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests ipython
@@ -25,8 +24,7 @@ BuildPreReq: python3-module-prompt_toolkit python3-module-jedi
 BuildPreReq: python3-module-docopt
 %endif
 
-%py_provides %oname
-%py_requires prompt_toolkit jedi docopt IPython
+%py_requires  IPython
 %add_python_req_skip asyncio asyncssh
 
 %description
@@ -37,8 +35,7 @@ library.
 %package -n %{oname}3
 Summary: Python REPL build on top of prompt_toolkit
 Group: Development/Python3
-%py3_provides %oname
-%py3_requires prompt_toolkit jedi docopt IPython
+%py3_requires IPython
 
 %description -n %{oname}3
 ptpython is an advanced Python REPL built on top of the prompt_toolkit
@@ -46,7 +43,7 @@ library.
 %endif
 
 %prep
-%setup -q 
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -76,10 +73,11 @@ popd
 %python_install
 
 %check
-python setup.py test -v
+PYTHONPATH=%buildroot%python_sitelibdir python tests/run_tests.py -v
+
 %if_with python3
 pushd ../python3
-python3 setup.py test -v
+PYTHONPATH=%buildroot%python3_sitelibdir python3 tests/run_tests.py -v
 popd
 %endif
 
@@ -99,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.38-alt1
+- Updated to upstream version 0.38.
+
 * Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
 - automated PyPI update
 
