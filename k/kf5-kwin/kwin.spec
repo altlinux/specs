@@ -1,5 +1,7 @@
 %define rname kwin
 
+%def_enable compositing
+
 %define kwin4_effect_builtins_sover 1
 %define libkwin4_effect_builtins libkwin4_effect_builtins%kwin4_effect_builtins_sover
 %define kwineffects_sover 11
@@ -13,7 +15,7 @@
 
 Name: kf5-%rname
 Version: 5.10.4
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -103,7 +105,9 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
+%if_disabled compositing
+%patch1 -p1 -b .compositing
+%endif
 %patch2 -p1
 
 %build
@@ -174,6 +178,9 @@ KF5 library
 
 
 %changelog
+* Thu Aug 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt2%ubt
+- enable compositing by default
+
 * Wed Jul 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt1%ubt
 - new version
 
