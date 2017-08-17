@@ -1,6 +1,6 @@
 Name: psi-plus
 Version: 1.2.32
-Release: alt3
+Release: alt4
 
 Summary: Psi+ Jabber client
 Summary(ru_RU.UTF-8): Jabber клиент Psi+
@@ -1032,6 +1032,9 @@ popd
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Fri Aug 17 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.32-alt4
+- fix doubleclick patch
+
 * Wed Aug 16 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.32-alt3
 - fix tray
 
