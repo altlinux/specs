@@ -1,6 +1,6 @@
 Name: perl-Plack
 Version: 1.0044
-Release: alt1
+Release: alt2
 
 Summary: Plack - Perl Superglue for Web frameworks and Web Servers (PSGI toolkit)
 License: Perl
@@ -9,22 +9,18 @@ Group: Development/Perl
 Url: %CPAN Plack
 Source: %name-%version.tar
 
-BuildRequires: perl-Apache-LogFormat-Compiler perl-HTTP-Tiny perl-File-ShareDir-Install perl-File-ShareDir perl-unicore perl-devel perl-Hash-MultiValue perl-Devel-StackTrace-AsHTML perl-Try-Tiny perl-libwww perl-Devel-StackTrace perl-Test-TCP perl-HTTP-Body perl-Test-Requires perl-URI perl-Filesys-Notify-Simple perl-parent perl-CGI-Emulate-PSGI perl-CGI-Compile perl-FCGI-Client perl-CGI perl-libapreq apache2-mod_perl perl-FCGI perl-HTTP-Server-Simple-PSGI perl-Moose perl-Net-FastCGI perl-Module-Refresh perl-podlators perl-Stream-Buffered perl(Cookie/Baker.pm) perl(HTTP/Headers/Fast.pm) perl(HTTP/Entity/Parser.pm) perl(HTTP/Entity/Parser/JSON.pm) perl(JSON/PP.pm)
+BuildRequires: perl-Apache-LogFormat-Compiler perl-HTTP-Tiny perl-File-ShareDir-Install perl-File-ShareDir perl-unicore perl-devel
+BuildRequires: perl-Hash-MultiValue perl-Devel-StackTrace-AsHTML perl-Try-Tiny perl-libwww perl-Devel-StackTrace
+BuildRequires: perl-Test-TCP perl-HTTP-Body perl-Test-Requires perl-URI perl-Filesys-Notify-Simple perl-parent
+BuildRequires: perl-CGI-Emulate-PSGI perl-CGI-Compile perl-FCGI-Client perl-CGI apache2-mod_perl perl-FCGI perl-HTTP-Server-Simple-PSGI perl-Moose
+BuildRequires: perl-Net-FastCGI perl-Module-Refresh perl-podlators perl-Stream-Buffered
+BuildRequires: perl(Cookie/Baker.pm) perl(HTTP/Headers/Fast.pm) perl(HTTP/Entity/Parser.pm) perl(HTTP/Entity/Parser/JSON.pm) perl(JSON/PP.pm)
 BuildArch: noarch
 
 %description
 Plack is a set of tools for using the PSGI stack. It contains middleware
 components, a reference server and utilities for Web application
 frameworks. Plack is like Ruby's Rack or Python's Paste for WSGI.
-
-%package Apache1
-Summary: Apache 1.3.x handlers to run PSGI application
-Group: Development/Perl
-Requires: %name = %version-%release
-
-%description Apache1
-This is a handler module to run any PSGI application with mod_perl
-on Apache 1.3.x.
 
 %package Apache2
 Summary: Apache 2.0 handlers to run PSGI application
@@ -50,6 +46,9 @@ FastCGI daemon or a .fcgi script.
 sed -i "/authority/d" Makefile.PL
 sed -i "/author_tests/d" Makefile.PL
 
+# remove apache1 support
+find . -iname 'apache1*' -delete
+
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
 
@@ -66,13 +65,9 @@ sed -i "/author_tests/d" Makefile.PL
 %perl_vendor_privlib/auto/share/dist/Plack/face.jpg
 %perl_vendor_privlib/Plack*
 %doc Changes
-%exclude %perl_vendor_privlib/Plack/Handler/Apache1.pm
 %exclude %perl_vendor_privlib/Plack/Handler/Apache2.pm
 %exclude %perl_vendor_privlib/Plack/Handler/Apache2/Registry.pm
 %exclude %perl_vendor_privlib/Plack/Handler/FCGI.pm
-
-%files Apache1
-%perl_vendor_privlib/Plack/Handler/Apache1.pm
 
 %files Apache2
 %perl_vendor_privlib/Plack/Handler/Apache2.pm
@@ -82,6 +77,10 @@ sed -i "/author_tests/d" Makefile.PL
 %perl_vendor_privlib/Plack/Handler/FCGI.pm
 
 %changelog
+* Thu Aug 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0044-alt2
+- Updated build dependencies.
+- Removed apache1 support.
+
 * Wed May 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.0044-alt1
 - automated CPAN update
 
