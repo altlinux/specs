@@ -4,7 +4,7 @@
 %define oname astroid
 Name: python-module-%oname
 Version: 1.5.3
-Release: alt1
+Release: alt2
 
 Summary: Python Abstract Syntax Tree New Generation
 License: LGPLv2.1+
@@ -33,24 +33,21 @@ Requires: python-module-lazy_object_proxy
 %add_findreq_skiplist %python3_sitelibdir/%oname/tests/testdata/python*/data/module.py
 %add_findreq_skiplist %python_sitelibdir/%oname/tests/testdata/python*/data/module2.py
 %add_findreq_skiplist %python3_sitelibdir/%oname/tests/testdata/python*/data/module2.py
+%add_findreq_skiplist %python_sitelibdir/%oname/tests/testdata/python*/data/all.py
+%add_findreq_skiplist %python3_sitelibdir/%oname/tests/testdata/python*/data/all.py
+%add_findreq_skiplist %python_sitelibdir/%oname/tests/testdata/python*/data/noendingnewline.py
+%add_findreq_skiplist %python3_sitelibdir/%oname/tests/testdata/python*/data/noendingnewline.py
 
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-module-egenix-mx-base python-module-kerberos python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools python3-module-six xz
-BuildRequires: python-module-logilab-common python-module-pytest python3-module-logilab-common python3-module-pytest rpm-build-python3 time
+BuildRequires: python-module-logilab-common python-module-pytest
 BuildRequires: python-module-wrapt
-#BuildRequires: python-module-logilab-common
-#BuildPreReq: python-module-setuptools-tests python-module-six
-
-
+BuildRequires: python-module-lazy_object_proxy python-module-singledispatch
+BuildRequires: python-module-enum34
 %{?!_without_check:%{?!_disable_check:BuildRequires: /usr/bin/pytest}}
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-lazy_object_proxy
+BuildRequires: python3-module-logilab-common python3-module-pytest
+BuildRequires: python3-module-lazy_object_proxy python3-module-singledispatch
 BuildRequires: python3-module-wrapt
-#BuildRequires: python3-devel python3-module-setuptools-tests
-#BuildRequires: python3-module-logilab-common /usr/bin/pytest3
-#BuildPreReq: python3-module-six
-#BuildPreReq: python-tools-2to3
 %endif
 
 %py_requires logilab.common six
@@ -132,7 +129,6 @@ This package contains tests for %oname.
 %prep
 %setup
 %if_with python3
-rm -rf ../python3
 cp -a . ../python3
 %endif
 
@@ -174,15 +170,16 @@ PYTHONPATH=%buildroot%python3_sitelibdir python3 -m unittest discover -p "unitte
 %doc ChangeLog README.rst
 %python3_sitelibdir/astroid/
 %exclude %python3_sitelibdir/astroid/test*
-%exclude %python3_sitelibdir/astroid/*/test*
 %python3_sitelibdir/*.egg-info
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/astroid/test*
-%python3_sitelibdir/astroid/*/test*
 %endif
 
 %changelog
+* Thu Aug 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.3-alt2
+- Fixed build.
+
 * Tue Aug 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.3-alt1
 - Updated to upstream version 1.5.3.
 
