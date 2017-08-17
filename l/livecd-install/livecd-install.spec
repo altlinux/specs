@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.9.9
+Version: 0.9.10
 Release: alt1
 
 Summary: Permanently install Live system
@@ -51,6 +51,7 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 
 %files
 %config(noreplace) %_sysconfdir/%name
+%_altdir/livecd-install.steps
 %_bindir/%name
 %_sbindir/%name
 %config(noreplace) %_sysconfdir/pam.d/%name
@@ -61,6 +62,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Thu Aug 17 2017 Paul Wolneykien <manowar@altlinux.org> 0.9.10-alt1
+- Use /etc/alternatives for the installer steps configuration.
+
 * Tue Aug 08 2017 Michael Shigorin <mike@altlinux.org> 0.9.9-alt1
 - Umount any udisks-mounted filesystems (as we ask anyways).
 

@@ -1,6 +1,6 @@
 Name: installer-distro-token-desktop
-Version: 0.1.0
-Release: alt3
+Version: 0.1.1
+Release: alt1
 
 Summary: Installer configuration (desktop, h/w token authentication)
 License: GPL
@@ -32,6 +32,7 @@ Requires: alterator-vm
 Requires: alterator-notes
 Requires: installer-feature-vm-altlinux-generic-stage2
 Requires: x-cursor-theme-jimmac
+Requires: installer-feature-token-profile
 
 %description stage2
 This package contains installer configuration hopefully suitable
@@ -39,6 +40,25 @@ for an ALT Linux based desktop distribution with hardware
 token based authentication.
 
 The stage2 part is included into the live installer system.
+
+%package -n installer-feature-token-default
+Summary: Auth-token installer step with no profile preselected
+License: GPL
+Group: System/Configuration/Other
+Provides: installer-feature-token-profile = 50
+
+%description -n installer-feature-token-default
+Auth-token installer step with no profile preselected
+
+%package -n installer-feature-token-rutokenecp
+Summary: Auth-token installer step with RuTokenECP profile preselected
+License: GPL
+Group: System/Configuration/Other
+Provides: installer-feature-token-profile = 40
+Requires: pkcs11-profiles-rutokenecp
+
+%description -n installer-feature-token-rutokenecp
+Auth-token installer step with RuTokenECPprofile preselected
 
 %package stage3
 Summary: Installer configuration and scripts (desktop, h/w token authentication, stage3 part)
@@ -67,7 +87,8 @@ License: GPL
 Group: System/Configuration/Other
 
 Requires: %name-stage3 = %version-%release
-Requires: livecd-install
+Requires: livecd-install >= 0.9.10
+Requires: installer-feature-token-profile
 
 %description live
 This package contains installer configuration hopefully suitable
@@ -86,42 +107,53 @@ mkdir -p %buildroot%install2dir
 cp -a alterator-menu %buildroot%install2dir/
 cp -a installer-steps %buildroot%install2dir/
 cp -a *.d %buildroot%install2dir/
-cp -a steps %buildroot%install2dir/
 
 mkdir -p %buildroot%_datadir/alterator
 cp -a steps %buildroot%_datadir/alterator/
 
-# Conflicts with livecd-install
 mkdir -p %buildroot%_sysconfdir/livecd-install
 cp -a livecd-installer-steps %buildroot%_sysconfdir/livecd-install/steps.token-desktop
+install -m0644 -D steps-livecd-token-desktop \
+        %buildroot%_altdir/%name.steps
 
 mkdir -p %buildroot%_datadir/livecd-install
 cp -a alterator-menu %buildroot%_datadir/livecd-install/
 
-%post live
-# Work-around the conflict with livecd-install
-mkdir -p %_sysconfdir/livecd-install
-if [ ! -e %_sysconfdir/livecd-install/steps.livecd-install ]; then \
-    mv %_sysconfdir/livecd-install/steps %_sysconfdir/livecd-install/steps.livecd-install; \
-fi
-rm -f %_sysconfdir/livecd-install/steps
-ln -s steps.token-desktop %_sysconfdir/livecd-install/steps
+# Default
+install -m0644 -D installer-feature-token-default \
+        %buildroot%_altdir/installer-feature-token-default
+
+# RuTokenECP
+install -m0644 -D installer-feature-token-rutokenecp \
+        %buildroot%_altdir/installer-feature-token-rutokenecp
 
 %files stage2
 %install2dir/alterator-menu
 %install2dir/installer-steps
-%install2dir/steps/*.desktop
 %install2dir/*.d/*
 
 %files stage3
 
 %files live
 %_datadir/livecd-install/alterator-menu
-# Conflicts with livecd-install
 %_sysconfdir/livecd-install/steps.token-desktop
-%_datadir/alterator/steps/*.desktop
+%_altdir/%name.steps
+
+%files -n installer-feature-token-default
+%_altdir/installer-feature-token-default
+%_datadir/alterator/steps/*.default.desktop
+
+%files -n installer-feature-token-rutokenecp
+%_altdir/installer-feature-token-rutokenecp
+%_datadir/alterator/steps/*.rutokenecp.desktop
 
 %changelog
+* Thu Aug 17 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.1-alt1
+- Use /etc/alternatives to configure the installer steps.
+- Provide installer-feature-token-* packages with various
+  pre-configurations for the auth-token installer step.
+
+
 * Tue Aug 15 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt3
 - Make special '-live' subpackage which requires 'livecd-install'.
 
