@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define m_distro Perl-Critic
 Name: perl-Perl-Critic
-Version: 1.126
+Version: 1.130
 Release: alt1
 
 Summary: Critique Perl source code for best-practices.  
@@ -11,9 +11,12 @@ Group: Development/Perl
 Url: %CPAN %m_distro
 
 BuildArch: noarch
+# https://github.com/Perl-Critic/Perl-Critic.git
 Source: http://www.cpan.org/authors/id/T/TH/THALJEF/Perl-Critic-%{version}.tar.gz
 
-BuildRequires: perl-B-Keywords perl-Config-Tiny perl-Exception-Class perl-File-HomeDir perl-File-Which perl-HTML-Parser perl-Module-Build perl-PPI perl-Perl-Tidy perl-Pod-Spell perl-Readonly perl-Regexp-Parser perl-String-Format perl-version perl-podlators perl-Module-Pluggable perl-autodie perl-Email-Address perl-PPIx-Utilities perl-PPIx-Regexp perl-Test-Deep
+BuildRequires: perl-B-Keywords perl-Config-Tiny perl-Exception-Class perl-File-HomeDir perl-File-Which perl-HTML-Parser
+BuildRequires: perl-Module-Build perl-PPI perl-Perl-Tidy perl-Pod-Spell perl-Readonly perl-Regexp-Parser perl-String-Format
+BuildRequires: perl-version perl-podlators perl-Module-Pluggable perl-autodie perl-Email-Address perl-PPIx-Utilities perl-PPIx-Regexp perl-Test-Deep
 Requires: perl(Module/Pluggable.pm)
 
 %description
@@ -34,7 +37,8 @@ perlcritic is a Perl::Critic based command line utility for Perl source
 code analysis.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -n %m_distro-%version
+
 %build
 %perl_vendor_build --install_path bindoc=%_man1dir
 
@@ -44,7 +48,7 @@ code analysis.
 %files
 %perl_vendor_privlib/Perl/Critic*
 %perl_vendor_privlib/Test/Perl/Critic/Policy.pm
-%doc examples extras Changes LICENSE INSTALL README
+%doc examples extras Changes LICENSE INSTALL README.*
 %exclude %perl_vendor_archlib
 
 %files -n perlcritic
@@ -53,6 +57,9 @@ code analysis.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Thu Aug 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.130-alt1
+- Updated to upstream version 1.130.
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.126-alt1
 - automated CPAN update
 
