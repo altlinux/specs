@@ -24,7 +24,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.7.1
-Release: alt9%ubt
+Release: alt10%ubt
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -59,6 +59,7 @@ Patch1002: alt-dont-require-plugin-file.patch
 Patch1003: alt-ca-certificates-path.patch
 Patch1004: alt-timezone.patch
 Patch1005: alt-hidpi_scale_at_192.patch
+Patch1006: alt-relax-hidpi-scaling.patch
 
 # macros
 %define _qt5 %gname
@@ -373,6 +374,7 @@ EGL integration library for the Qt%major toolkit
 %patch1003 -p1 -b .ca-bundle
 %patch1004 -p1 -b .timezone
 %patch1005 -p1 -b .dpi
+%patch1006 -p1 -b .relax-scaling
 bin/syncqt.pl -version %version -private
 [ -e include/QtCore/QtCoreDepends ] || >include/QtCore/QtCoreDepends
 
@@ -778,6 +780,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Thu Aug 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt10%ubt
+- fix hidpi scaling when factor == 1
+
 * Fri Jul 07 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt9%ubt
 - sync patches with FC
 
