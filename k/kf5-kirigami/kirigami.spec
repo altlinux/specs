@@ -1,23 +1,24 @@
-%define			rname kirigami
+%define rname kirigami
 
-Name:			kf5-%rname 
-Version:		5.37.0
-Release:		alt1%ubt
+Name: kf5-%rname
+Version: 5.37.0
+Release: alt2%ubt
 %K5init
-Summary:		A QtQuick based components set 
 
-License:		%lgpl2only	
-Group:			System/Libraries	
-Url:			https://techbase.kde.org/Kirigami
-Requires:		%name-common = %version-%release
-Requires:		qt5-quickcontrols2
-Source0:		%rname-%version.tar
-Patch0:			%rname-%version-cmakelist-downgrade-required-version-of-kf5.patch
+Group: System/Libraries
+Summary: A QtQuick based components set
+Url: https://techbase.kde.org/Kirigami
+License: %lgpl2only
+
+Requires: %name-common = %version-%release
+Requires: qt5-quickcontrols2
+
+Source0: %rname-%version.tar
 
 BuildRequires(pre):	rpm-build-kf5 rpm-build-ubt rpm-build-licenses
-BuildRequires:		extra-cmake-modules qt5-quickcontrols2-devel
-BuildRequires:		qt5-svg-devel qt5-tools-devel
-BuildRequires:		kf5-plasma-framework-devel kf5-kpackage-devel
+BuildRequires: extra-cmake-modules qt5-quickcontrols2-devel
+BuildRequires: qt5-svg-devel qt5-tools-devel
+BuildRequires: kf5-plasma-framework-devel kf5-kpackage-devel
 
 %description
 Kirigami is a set of QtQuick components at the moment targeted for mobile use
@@ -33,35 +34,34 @@ dependencies. They work on a variety of platforms, such as Plasma Mobile,
 Desktop Linux, Android and Windows. It will eventually become a Tier-1 KDE
 Framework.
 
-%package		common
-Summary:		%name common package
-Group:			System/Configuration/Other
-BuildArch:		noarch
-Requires:		kf5-filesystem
-%description		common
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
 %name common package
 
-%package		devel
-Group:			Development/KDE and QT
-Summary:		Development files for %name
-Requires:		%name-common = %version-%release
-%description		devel
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+Requires: %name-common = %version-%release
+%description devel
 The %name-devel package contains libraries and header files for developing
 applications that use %name
 
 %prep
-%setup -q -n %rname-%version
-%patch0 -p1
+%setup -n %rname-%version
 
 %build
 %K5build
 
 %install
 %K5install
+%find_lang %name --all-name
 %K5find_qtlang %name --all-name
 
 %files common -f %name.lang
-
 %files
 %_K5qml/org/kde/kirigami.2/
 
@@ -69,8 +69,10 @@ applications that use %name
 %_libdir/cmake/KF5Kirigami2/
 %_K5archdata/mkspecs/modules/qt_Kirigami2.pri
 
-
 %changelog
+* Thu Aug 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt2%ubt
+- cleanup specfile
+
 * Wed Aug 16 2017 Stanislav Levin <slev@altlinux.org> 5.37.0-alt1%ubt
 - Updated to newest upstream version
 
