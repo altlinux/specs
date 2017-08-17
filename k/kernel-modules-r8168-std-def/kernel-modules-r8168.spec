@@ -1,5 +1,5 @@
 %define module_name	r8168
-%define module_release	alt1
+%define module_release	alt2
 %define module_version	8.044.02
 
 %define flavour		std-def
@@ -52,14 +52,18 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %make_build KERNELDIR=%_usrsrc/linux-%kversion-%flavour modules
 
 %install
-install -Dp -m0744 src/%module_name.ko %buildroot/%module_dir/%module_name.ko
+install -Dp -m600 src/%module_name.ko %buildroot/%module_dir/%module_name.ko
 
 %files
-%module_dir
+%module_dir/%module_name.ko
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Aug 17 2017 Dmitry V. Levin <ldv@altlinux.org> 8.044.02-alt2
+- Unpackaged %%module_dir/.
+- Restricted access to %%module_dir/%module_name.ko (see #5969).
 
 * Sun Mar 12 2017 Nazarov Denis <nenderus@altlinux.org> 8.044.02-alt1
 - Version 8.044.02
