@@ -1,9 +1,9 @@
 %define		softver 46.0
-%define		buildver 2556.0
+%define		buildver 2573.0
 
 Name:		opera-dev
 Version:	%softver.%buildver
-Release:	alt1
+Release:	alt4
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Summary:	A fast and secure web browser and Internet suite
 Group:		Networking/WWW
@@ -11,22 +11,13 @@ License:	Distributable
 Vendor:		Opera Software ASA
 Url:		http://www.opera.com/
 Source0:	opera-%softver.%buildver.i386.linux.tar.bz2
-Source10:	opera-%softver.%buildver.x86_64.linux.tar.bz2
 
-ExclusiveArch:	%ix86 x86_64
-
-%ifarch %ix86
-BuildArch:	i586
-%else
-BuildArch:	x86_64
-%endif
+ExclusiveArch:	%ix86
 
 %add_verify_elf_skiplist %_libdir/*-linux-gnu/opera-developer/*.so
 %set_verify_elf_method textrel=relaxed
 
-# Automatically added by buildreq on Thu Jun 11 2015 (-bi)
-# optimized out: elfutils fontconfig libdbus-glib libgdk-pixbuf libwayland-client libwayland-server python-base
-BuildRequires: libGConf libXScrnSaver libXtst libalsa libcurl libgtk+2 libnotify libnss
+BuildRequires: libGConf libXScrnSaver libXtst libalsa libcurl libnotify libnss libgtk+3 libgtk+2
 
 %description
 Opera is a small, fast, customizable, powerful and user-friendly web
@@ -36,31 +27,16 @@ client, web developer tools (Opera Dragonfly), and a personal web server
 
 %prep
 %setup -q -n opera-%softver.%buildver.i386.linux
-%ifarch x86_64
-tar -xf %SOURCE10
-%endif
 
 %install
 mkdir -p %buildroot{%_bindir,%_libdir,%_datadir}
-%ifarch x86_64
-cd opera-%softver.%buildver.x86_64.linux
-%endif
 cp -a ./lib/* %buildroot%_libdir/
 cp -a ./share/* %buildroot%_datadir
-%ifarch %ix86
 ln -s %_libdir/i386-linux-gnu/opera-developer/opera-developer %buildroot%_bindir/opera-developer
-%else
-ln -s %_libdir/x86_64-linux-gnu/opera-developer/opera-developer %buildroot%_bindir/opera-developer
-subst 's|usr/lib/|%_libdir/|g' %buildroot%_datadir/lintian/overrides/opera-developer
-%endif
 subst 's|PepperFlash/libpepflashplayer.so|pepper-plugins/libpepflashplayer.so|g' %buildroot%_libdir/*-linux-gnu/opera-developer/resources/pepper_flash_config.json
 
 %post
-%ifarch %ix86
 chmod 4755 %_libdir/i386-linux-gnu/opera-developer/opera_sandbox
-%else
-chmod 4755 %_libdir/x86_64-linux-gnu/opera-developer/opera_sandbox
-%endif
 
 %files
 %_docdir/opera-developer
@@ -72,6 +48,18 @@ chmod 4755 %_libdir/x86_64-linux-gnu/opera-developer/opera_sandbox
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Fri Aug 18 2017 Motsyo Gennadi <drool@altlinux.ru> 46.0.2573.0-alt4
+- fix build
+
+* Thu Aug 17 2017 Motsyo Gennadi <drool@altlinux.ru> 46.0.2573.0-alt3
+- fix requires
+
+* Tue Aug 08 2017 Motsyo Gennadi <drool@altlinux.ru> 46.0.2573.0-alt2
+- build only x86
+
+* Sun May 21 2017 Motsyo Gennadi <drool@altlinux.ru> 46.0.2573.0-alt1
+- packaged 46.0.2573.0 snapshot
+
 * Mon Apr 17 2017 Motsyo Gennadi <drool@altlinux.ru> 46.0.2556.0-alt1
 - packaged 46.0.2556.0 snapshot
 
