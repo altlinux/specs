@@ -6,7 +6,7 @@
 
 Name: kde5-%rname
 Version: 17.04.3
-Release: alt2%ubt
+Release: alt3%ubt
 %K5init
 
 Group: File tools
@@ -19,7 +19,7 @@ Requires: kf5-kio
 
 Source: %rname-%version.tar
 Patch1: alt-dbus-service.patch
-Patch2: alt-close-inactive-panel.patch
+Patch2: alt-close-panel.patch
 
 # Automatically added by buildreq on Fri Apr 17 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils
@@ -125,6 +125,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Fri Aug 18 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt3%ubt
+- add buttons closing left/right panel
+
 * Mon Jul 24 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt2%ubt
 - Fix: crash after closing left panel + changing tab
 
