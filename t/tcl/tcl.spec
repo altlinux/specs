@@ -2,15 +2,15 @@
 %define major 8.6
 
 Name: tcl
-Version: 8.6.6
-Release: alt3
+Version: 8.6.7
+Release: alt1
 
 Summary: A Tool Command Language (TCL)
 License: BSD
 Group: Development/Tcl
 Url: http://www.tcl.tk/
 
-# http://git.altlinux.org/gears/t/tcl.git
+# git://git.altlinux.org/gears/t/tcl.git
 Source: %name-%version-%release.tar
 
 BuildRequires(pre): rpm-build-tcl >= 0.4-alt1
@@ -67,10 +67,11 @@ This package includes header files and C programming manuals for Tcl.
 %setup
 
 %build
-cd unix
+pushd unix
 %autoreconf
 %configure --disable-rpath --enable-threads
 make all %{?_with_test:test}
+popd
 
 %install
 %define docdir %_defaultdocdir/%name-%version
@@ -125,6 +126,9 @@ install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 %_man3dir/*
 
 %changelog
+* Fri Aug 18 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.7-alt1
+- 8.6.7 released
+
 * Tue Jul 25 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.6-alt3
 - added conflict to tcl-readline < 2.1.1-alt8
 
