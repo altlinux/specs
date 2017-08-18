@@ -1,13 +1,17 @@
-Name: perl-IO-Async
-Version: 0.69
+%global oname IO-Async
+
+Name: perl-%oname
+Version: 0.71
 Release: alt1
 
 Summary: Asynchronous event-driven programming
 Group: Development/Perl
 License: perl
 
-Url: %CPAN IO-Async
-Source: %name-%version.tar
+Url: %CPAN %oname
+# https://cpan.metacpan.org/authors/id/P/PE/PEVANS/%oname-%version.tar.gz
+Source: %oname-%version.tar
+Patch1: %oname-%version-alt-build.patch
 
 BuildArch: noarch
 BuildRequires: /proc perl(IO/Socket/IP.pm) perl(Module/Build.pm) perl(Test/Refcount.pm) perl(Future.pm) perl(Test/Fatal.pm) perl(Future/Utils.pm) perl-devel perl(Test/Identity.pm) perl(Struct/Dumb.pm)
@@ -18,7 +22,8 @@ BuildRequires: /proc perl(IO/Socket/IP.pm) perl(Module/Build.pm) perl(Test/Refco
 %summary
 
 %prep
-%setup -q
+%setup -q -n %oname-%version
+%patch1 -p2
 
 %build
 %perl_vendor_build
@@ -31,6 +36,9 @@ BuildRequires: /proc perl(IO/Socket/IP.pm) perl(Module/Build.pm) perl(Test/Refco
 %doc Changes LICENSE README
 
 %changelog
+* Fri Aug 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.71-alt1
+- Updated to upstream version 0.71.
+
 * Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.69-alt1
 - automated CPAN update
 
