@@ -3,7 +3,7 @@
 %add_tcl_req_skip ttk::theme::default
 
 Name: tk
-Version: 8.6.6
+Version: 8.6.7
 Release: alt1
 
 Summary: A Tk toolkit fot Tcl scripting language
@@ -75,10 +75,11 @@ the features of the Tk toolkit.
 sed -i "s@^\([[:blank:]]\+relative=\)\`[^\`]\+\`\(.\+\)\$@\1'.. .. .. %_lib '\2@" unix/Makefile.in
 
 %build
-cd unix
-autoconf
+pushd unix
+%autoreconf
 %configure --disable-rpath --enable-xft
 %make_build
+popd
 
 %install
 %define docdir %_defaultdocdir/%name-%version
@@ -122,6 +123,9 @@ install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 %_tcldatadir/%name%major/demos
 
 %changelog
+* Fri Aug 18 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.7-alt1
+- 8.6.7 released
+
 * Mon Mar 20 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.6-alt1
 - 8.6.6 released
 
