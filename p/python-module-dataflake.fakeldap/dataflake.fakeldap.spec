@@ -1,30 +1,29 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.dev.git20121018.1
 %define oname dataflake.fakeldap
 
 %def_without python3
 
 Name: python-module-%oname
-Version: 1.2
-#Release: alt2.dev.git20121018
+Version: 2.0
+Release: alt1
 Summary: LDAP connection library
 License: ZPLv2.1
 Group: Development/Python
 Url: https://pypi.python.org/pypi/dataflake.fakeldap/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://git.dataflake.org/git/dataflake.fakeldap
+# https://github.com/dataflake/dataflake.fakeldap.git
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-ldap
 BuildPreReq: python-module-setuptools-tests python-module-dataflake
 BuildPreReq: python-module-nose python-module-coverage
 BuildPreReq: python-module-sphinx-devel python-module-pkginfo
+BuildRequires: python-module-six python-module-pyldap
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-ldap
 BuildPreReq: python3-module-setuptools-tests python3-module-dataflake
 BuildPreReq: python3-module-nose python3-module-coverage
+BuildRequires: python3-module-six python3-module-pyldap
 %endif
 
 %py_provides %oname
@@ -98,6 +97,9 @@ This package contains tests for %oname.
 %prep
 %setup
 
+sed -i 's:../bin/sphinx-build:sphinx-build:g' \
+	docs/Makefile
+
 %if_with python3
 cp -fR . ../python3
 %endif
@@ -169,6 +171,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0-alt1
+- Updated to upstream version 2.0
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2-alt2.dev.git20121018.1
 - (AUTO) subst_x86_64.
 
