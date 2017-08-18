@@ -1,5 +1,5 @@
 Name: augeas
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 Summary: A library for changing configuration files
 
@@ -71,6 +71,9 @@ The libraries for %name.
 %_libdir/pkgconfig/augeas.pc
 
 %changelog
+* Fri Aug 18 2017 Andrey Cherepanov <cas@altlinux.org> 1.8.1-alt1
+- New version
+
 * Thu Apr 06 2017 Andrey Cherepanov <cas@altlinux.org> 1.8.0-alt1
 - new version
 
