@@ -2,7 +2,7 @@
 
 Name: ruby-rmagick
 Version: 2.16.0
-Release: alt2
+Release: alt3
 
 Summary: ImageMagick for Ruby
 Group: Development/Ruby
@@ -47,6 +47,9 @@ ImageMagick for Ruby documentation.
 %ruby_ri_sitedir/Magick*
 
 %changelog
+* Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 2.16.0-alt3
+- Rebuilt for new ImageMagick.
+
 * Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 2.16.0-alt2
 - Rebuild with new %%ruby_sitearchdir location
 

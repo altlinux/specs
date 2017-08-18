@@ -4,7 +4,7 @@
 
 Name:	 	php5-%{php5_extension}2
 Version:	%php5_version
-Release:	%php5_release.1
+Release:	%php5_release.2
 
 Summary:	PHP5 wrapper to the ImageMagick library
 
@@ -71,7 +71,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%php5_version-%php5_release
-- New version 3.2.0RC1
+
+* Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 5.6.31.20170607-alt1.S1.2
+- updated to 3.4.3
 
 * Mon Apr 07 2014 Anton Farygin <rider@altlinux.ru> 5.5.10.20140305-alt1.1
 - rebuild with ImageMagick 6.8.8.10-alt1

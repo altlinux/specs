@@ -3,7 +3,7 @@
 
 Name: autotrace
 Version: 0.31.1
-Release: alt7%ubt
+Release: alt8%ubt
 
 Summary: Bitmap to vector graphics converter
 Summary(ru_RU.UTF-8): Программа трассировки растровых изображений.
@@ -136,6 +136,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Fri Aug 18 2017 Anton Farygin <rider@altlinux.ru> 0.31.1-alt8%ubt
+- Rebuild with new libImageMagick.
+
 * Tue Jul 25 2017 Anton Farygin <rider@altlinux.ru> 0.31.1-alt7%ubt
 - fixed CVE-2016-7392
 

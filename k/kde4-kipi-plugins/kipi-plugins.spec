@@ -5,7 +5,7 @@
 Name: kde4-%rname
 %define beta %nil
 Version: 4.14.0
-Release: alt4
+Release: alt5%ubt
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -31,10 +31,11 @@ Conflicts: kipi-plugins <= 3:0.1.6-alt5
 
 # Automatically added by buildreq on Thu Apr 16 2009 (-bi)
 #BuildRequires: gcc-c++ kde4graphics-devel kde4pimlibs-devel libGL-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libexpat-devel libgio-devel libgpod-devel libgtk+2-common-devel libnss-fallback libopencv-devel libqt3-devel libsane-devel libxkbfile-devel libxslt-devel nvidia_glx_180.44 subversion xorg-xf86vidmodeproto-devel xsltproc
-BuildRequires(pre): kde4libs-devel kde4graphics-devel
+BuildRequires(pre): rpm-build-ubt kde4libs-devel kde4graphics-devel
 BuildRequires: gcc-c++ kde4pimlibs-devel libgomp-devel libkgeomap-devel qjson-devel libqca2-devel
 BuildRequires: libgio-devel libgpod-devel libgtk+2-devel boost-devel
-BuildRequires: libopencv-devel libsane-devel libxslt-devel xsltproc libexpat-devel libxml2-devel libjpeg-devel
+BuildRequires: libtbb-devel libopencv-devel
+BuildRequires: libsane-devel libxslt-devel xsltproc libexpat-devel libxml2-devel libjpeg-devel
 BuildRequires: qoauth-devel libkqoauth-devel qjson-devel herqq-devel qtsoap-devel
 BuildRequires: qt-gstreamer1-devel libImageMagick-devel ImageMagick-tools
 BuildRequires: libkvkontakte-devel libmediawiki-devel libtiff-devel flex
@@ -188,6 +189,10 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Fri Aug 18 2017 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt5%ubt
+- rebuild with new ImageMagick
+- fix build requires
+
 * Fri May 27 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt4
 - hide scangui from menu
 

@@ -1,6 +1,6 @@
 %define mversion	6
-%define dversion	%mversion.9.6
-%define drelease	2
+%define dversion	%mversion.9.9
+%define drelease	7
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		4
@@ -10,7 +10,7 @@
 
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt1.1
+Release: alt1%ubt
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -32,8 +32,7 @@ Requires: ghostscript-classic fonts-type1-urw lib%name = %version-%release
 
 BuildPreReq: libpng-devel
 
-# found by buildreq; this might breaq when building against updated libraries
-#BuildRequires: ImageMagick-tools
+BuildRequires(pre): rpm-build-ubt
 
 # Automatically added by buildreq on Wed Nov 03 2010
 BuildRequires: bzlib-devel curl gcc-c++ glibc-devel-static graphviz groff-base imake libXext-devel libXt-devel libdjvu-devel libjasper-devel libjbig-devel liblcms-devel liblqr-devel librsvg-devel libtiff-devel libwmf-devel libxml2-devel openexr-devel perl-devel transfig xdg-utils xorg-cf-files 
@@ -165,7 +164,6 @@ popd
 %__install -pD -m644 %SOURCE3 %buildroot%_niconsdir/%name.png
 %__install -pD -m644 %SOURCE4 %buildroot%_liconsdir/%name.png
 
-chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick/Magick.so
 chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick//Q16/Q16.so
 
 mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
@@ -226,6 +224,15 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Tue Aug 15 2017 Anton Farygin <rider@altlinux.ru> 6.9.9.7-alt1%ubt
+- new version
+
+* Mon Apr 03 2017 Anton Farygin <rider@altlinux.ru> 6.9.8.3-alt1%ubt
+- new version
+
+* Thu Feb 09 2017 Anton Farygin <rider@altlinux.ru> 6.9.7.6-alt1%ubt
+- new version
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 6.9.6.2-alt1.1
 - rebuild with new perl 5.24.1
 

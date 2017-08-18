@@ -5,7 +5,7 @@
 
 Name: rss_glx
 Version: 0.9.1
-Release: alt5
+Release: alt6
 
 Summary: Really Slick Screensavers
 License: GNU GPL
@@ -111,6 +111,9 @@ install -pm644 %name.xss %buildroot%xss_ad_dir/%name.xss
 %endif
 
 %changelog
+* Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 0.9.1-alt6
+- Rebuilt for ImageMagick.
+
 * Fri Aug 04 2017 Michael Shigorin <mike@altlinux.org> 0.9.1-alt5
 - BOOTSTRAP: introduced kde knob (on by default),
   sound knob (off by default just as it was)

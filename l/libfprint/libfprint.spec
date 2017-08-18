@@ -1,19 +1,16 @@
 Name: libfprint
-Version: 0.4.0
-Release: alt3
+Version: 0.7.0
+Release: alt1
 Summary: Tool kit for fingerprint scanner
 Group: System/Libraries
 License: LGPLv2+
 URL: http://www.freedesktop.org/wiki/Software/fprint/libfprint
 # git://anongit.freedesktop.org/libfprint/libfprint
-Packager: Ivan Ovcherenko <asdus@altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Patch1: %name-%version-alt-build.patch
-Patch2: %name-%version-alt-fixes.patch
 
-BuildRequires: libusb-devel libnss-devel glib2-devel libImageMagick-devel libXv-devel
+BuildRequires: libusb-devel libnss-devel glib2-devel libImageMagick-devel libXv-devel libpixman-devel
 BuildRequires: gcc-c++ doxygen
 
 %description
@@ -32,8 +29,6 @@ developing applications that use %name.
 %prep
 %setup -q
 %patch -p1
-%patch1 -p1
-%patch2 -p1
 mkdir -p m4
 
 %build
@@ -64,6 +59,9 @@ popd
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Aug 18 2017 Anton Farygin <rider@altlinux.ru> 0.7.0-alt1
+- new version 
+
 * Mon Apr 07 2014 Anton Farygin <rider@altlinux.ru> 0.4.0-alt3
 - Rebuild with new libImageMagick
 
