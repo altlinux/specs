@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.54
-Release: alt3
+Release: alt4%ubt
 
 Summary: Launcher for the Steam software distribution service
 License: Proprietary
@@ -14,7 +14,10 @@ ExclusiveArch: %ix86
 
 Source0: http://repo.steampowered.com/%name/pool/%name/s/%name/%{name}_%version.tar.gz
 Patch0: %name-apt-alt.patch
-Patch1: %name-udev-alt.patch
+Patch1: %name-desktop-alt.patch
+Patch2: %name-udev-alt.patch
+
+BuildPreReq: rpm-build-ubt
 
 Requires: curl
 Requires: glibc-pthread >= 2.15
@@ -36,6 +39,7 @@ savegame and screenshot functionality, and many social features.
 %setup -n %name
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %install
 %makeinstall_std
@@ -64,6 +68,12 @@ savegame and screenshot functionality, and many social features.
 %config %_udevrulesdir/60-HTC-Vive-perms.rules
 
 %changelog 
+* Sat Aug 19 2017 Nazarov Denis <nenderus@altlinux.org> 1.0.0.54-alt4%ubt
+- Add patch for desktop-file (ALT #33771)
+
+* Sat Nov 26 2016 Nazarov Denis <nenderus@altlinux.org> 1.0.0.54-alt0.M80P.1
+- Build for branch p8
+
 * Sat Nov 26 2016 Nazarov Denis <nenderus@altlinux.org> 1.0.0.54-alt3
 - Fix udev rules for correctly emulation gamepad with Steam Controller after reconnect
 
