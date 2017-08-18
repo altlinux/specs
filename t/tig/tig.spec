@@ -1,5 +1,5 @@
 Name: tig
-Version: 1.1
+Version: 2.2.2
 Release: alt1
 
 Summary: text-mode interface for git
@@ -30,23 +30,25 @@ Using it as a pager, it will display input from stdin and colorize it.
 %patch -p1
 
 %build
-make sysconfdir=/etc CFLAGS='%optflags' LDLIBS=-lncursesw clean tig \
-	doc-man doc-html
+make V=1 sysconfdir=/etc CFLAGS='%optflags' LDLIBS=-lncursesw src/tig doc-man
 
 %install
-install -pD -m755 tig %buildroot%_bindir/tig
-install -pD -m644 tig.1 %buildroot%_man1dir/tig.1
-install -pD -m644 tigrc.5 %buildroot%_man5dir/tigrc.5
-install -pD -m644 tigmanual.7 %buildroot%_man7dir/tigmanual.7
+install -pD -m755 src/tig %buildroot%_bindir/tig
+install -pD -m644 doc/tig.1 %buildroot%_man1dir/tig.1
+install -pD -m644 doc/tigrc.5 %buildroot%_man5dir/tigrc.5
+install -pD -m644 doc/tigmanual.7 %buildroot%_man7dir/tigmanual.7
 
 %files
-%doc *.html
+%doc NEWS.adoc README.adoc
 %_bindir/tig
 %_man1dir/tig.1*
 %_man5dir/tigrc.5*
 %_man7dir/tigmanual.7*
 
 %changelog
+* Fri Aug 18 2017 Alexey Tourbin <at@altlinux.ru> 2.2.2-alt1
+- 1.1 -> 2.2.2
+
 * Wed Oct 24 2012 Alexey Tourbin <at@altlinux.ru> 1.1-alt1
 - 1.0 -> 1.1
 
