@@ -1,22 +1,28 @@
+%global oname Dancer2
+
 Name: perl-Dancer2
-Version: 0.166001
+Version: 0.205001
 Release: alt1
 
 Summary: Lightweight yet powerful web application framework
 Group: Development/Perl
 License: perl
 
-Url: %CPAN Dancer2
-Source: %name-%version.tar
+Url: %CPAN %oname
+# https://cpan.metacpan.org/authors/id/C/CR/CROMEDOME/Dancer2-%version.tar.gz
+Source: %oname-%version.tar
+Patch1: %oname-%version-alt-downgrade-reqs.patch
 
 BuildArch: noarch
 BuildRequires: perl(Import/Into.pm) perl(Capture/Tiny.pm) perl(YAML.pm) perl(Pod/Usage.pm) perl(Template/Tiny.pm) perl(Encode.pm) perl(HTTP/Headers.pm) perl(Config/Any.pm) perl(Plack/Request.pm) perl(Module/Build.pm) perl-devel perl(HTTP/Body.pm) perl(MooX/Types/MooseLike.pm) perl(URI/Escape.pm) perl(Role/Tiny.pm) perl(Test/MockTime.pm) perl(Test/Fatal.pm) perl(URI.pm) perl-libwww perl(Pod/Simple.pm) perl(Test/TCP.pm) perl(Digest/SHA.pm) perl(parent.pm) perl(HTTP/Request/Common.pm) perl(Hash/Merge/Simple.pm) perl(Moo/Role.pm) perl(Test/Script.pm) perl(YAML/Any.pm) perl(HTTP/Server/Simple/PSGI.pm) perl(Class/Load.pm) perl(Moo.pm) perl(Template.pm) perl(MIME/Types.pm) perl(HTTP/Date.pm) perl(JSON.pm) perl(Return/MultiLevel.pm) perl(App/Cmd/Setup.pm) perl(Safe/Isa.pm) perl(Plack/Middleware/FixMissingBodyInRedirect.pm) perl(Plack/Middleware/RemoveRedundantBody.pm) perl(Test/Memory/Cycle.pm) perl(File/ShareDir/Install.pm) perl(HTTP/Headers/Fast.pm)
+BuildRequires: perl(Type/Library.pm) perl(Ref/Util.pm) perl(Attribute/Handlers.pm)
 
 %description
 %summary
 
 %prep
-%setup -q
+%setup -q -n %oname-%version
+%patch1 -p2
 
 %build
 %perl_vendor_build --install_path bindoc=%_man1dir
@@ -32,6 +38,9 @@ BuildRequires: perl(Import/Into.pm) perl(Capture/Tiny.pm) perl(YAML.pm) perl(Pod
 %doc AUTHORS Changes LICENSE *.md
 
 %changelog
+* Fri Aug 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.205001-alt1
+- Updated to upstream version 0.205001.
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.166001-alt1
 - automated CPAN update
 
