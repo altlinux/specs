@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.2
-Release: alt1
+Release: alt2
 
 Summary: Python network library that uses greenlet and libevent for easy and scalable concurrency
 
@@ -31,6 +31,8 @@ BuildRequires(pre): python3-module-greenlet
 BuildRequires(pre): python3-module-OpenSSL python-tools-2to3
 BuildRequires: python3-module-Cython python3-module-cryptography python3-module-html5lib
 %endif
+
+%py_requires greenlet
 
 %description
 gevent is a coroutine-based Python networking library that uses greenlet
@@ -59,6 +61,7 @@ This package contains tests for %oname.
 %package -n python3-module-%oname
 Summary: Python 3 network library that uses greenlet and libevent for easy and scalable concurrency
 Group: Development/Python3
+%py3_requires greenlet
 
 %description -n python3-module-%oname
 gevent is a coroutine-based Python networking library that uses greenlet
@@ -185,6 +188,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.2-alt2
+- Updated runtime dependencies.
+
 * Wed Aug 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.2-alt1
 - Updated to upstream version 1.1.2.
 
