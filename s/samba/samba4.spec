@@ -39,7 +39,7 @@
 
 Name: samba
 Version: 4.6.7
-Release: alt1%ubt
+Release: alt2%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -584,10 +584,11 @@ Samba suite.
 	--disable-rpath \
 	--disable-rpath-install
 
-%make_build
+[ -n "$NPROCS" ] || NPROCS=%__nprocs; export JOBS=$NPROCS
+%make_build NPROCS=%__nprocs
 
 %install
-make install DESTDIR=%buildroot
+%makeinstall_std
 
 mkdir -p %buildroot/sbin
 mkdir -p %buildroot/usr/{sbin,bin}
@@ -1394,6 +1395,10 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Fri Aug 18 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.7-alt2%ubt
+- Clean code from old merged chunks
+- Enable parallel build
+
 * Wed Aug 09 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.7-alt1%ubt
 - Update to second summer release
 

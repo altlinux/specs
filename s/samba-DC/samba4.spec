@@ -47,7 +47,7 @@
 
 Name:    samba-DC
 Version: 4.6.7
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -577,7 +577,7 @@ popd
 %endif
 
 %install
-%make install DESTDIR=%buildroot
+%makeinstall_std
 
 mkdir -p %buildroot/sbin
 mkdir -p %buildroot/usr/{sbin,bin}
@@ -1358,6 +1358,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri Aug 18 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.7-alt2%ubt
+- Clean code from old merged chunks
+
 * Wed Aug 09 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.7-alt1%ubt
 - Update to second summer release
 
