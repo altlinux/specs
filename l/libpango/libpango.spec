@@ -9,7 +9,7 @@
 %def_enable libthai
 
 Name: lib%_name
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -182,6 +182,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Sat Aug 19 2017 Yuri N. Sedunov <aris@altlinux.org> 1.40.11-alt1
+- 1.40.11
+
 * Wed Aug 16 2017 Yuri N. Sedunov <aris@altlinux.org> 1.40.10-alt1
 - 1.40.10
 
