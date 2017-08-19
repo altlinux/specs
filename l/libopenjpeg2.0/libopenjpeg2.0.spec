@@ -1,12 +1,12 @@
 %def_disable snapshot
 
 %define _name openjpeg
-%define ver_major 2.1
+%define ver_major 2.2
 %define api_ver 2.0
 %define libname libopenjp2
 
 Name: lib%_name%api_ver
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: JPEG 2000 codec library (API version 2.0)
@@ -22,7 +22,7 @@ Source: %_name-%version-%rev.tar
 Source: http://www.openjpeg.org/%_name-%version.tar.gz
 %endif
 
-BuildRequires: cmake libstdc++-devel libtiff-devel liblcms2-devel libpng-devel zlib-devel
+BuildRequires: cmake gcc-c++ libtiff-devel liblcms2-devel libpng-devel zlib-devel
 BuildRequires: doxygen
 
 %description
@@ -87,6 +87,9 @@ mv %buildroot%_man1dir/opj_dump.1 %buildroot%_man1dir/opj2_dump.1
 %exclude %_datadir/doc/html/
 
 %changelog
+* Sat Aug 19 2017 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Sat Oct 01 2016 Yuri N. Sedunov <aris@altlinux.org> 2.1.2-alt1
 - 2.1.2
 
