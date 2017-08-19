@@ -3,7 +3,7 @@
 %define gtk_ver 3.18
 
 Name: pulseeffects
-Version: 2.1.2
+Version: 2.2.1
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -49,15 +49,20 @@ cp -r share %buildroot%_prefix
 
 %files -f %name.lang
 %_bindir/%name
+%_bindir/%{name}_calibration
 %python3_sitelibdir_noarch/*
 %_desktopdir/%name.desktop
-%_datadir/glib-2.0/schemas/com.github.wwmm.pulseeffects.gschema.xml
-%_datadir/glib-2.0/schemas/com.github.wwmm.pulseeffects.sinkinputs.gschema.xml
-%_datadir/glib-2.0/schemas/com.github.wwmm.pulseeffects.sourceoutputs.gschema.xml
+%_desktopdir/%{name}-calibration.desktop
+%_datadir/glib-2.0/schemas/com.github.wwmm.%name.gschema.xml
+%_datadir/glib-2.0/schemas/com.github.wwmm.%name.sinkinputs.gschema.xml
+%_datadir/glib-2.0/schemas/com.github.wwmm.%name.sourceoutputs.gschema.xml
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %doc README*
 
 %changelog
+* Sat Aug 19 2017 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
+- 2.2.1
+
 * Sat Jul 29 2017 Yuri N. Sedunov <aris@altlinux.org> 2.1.2-alt1
 - 2.1.2
 
