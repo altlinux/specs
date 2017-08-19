@@ -1,7 +1,7 @@
 %def_enable x11
 
 Name: libxkbcommon
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -11,6 +11,7 @@ Url: http://www.xkbcommon.org
 
 Source: %url/download/%name-%version.tar.xz
 
+BuildRequires: meson
 BuildRequires: xorg-util-macros bison flex bison
 BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel
 BuildRequires: xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel
@@ -26,7 +27,7 @@ BuildRequires: pkgconfig(xcb)
 BuildRequires: pkgconfig(xcb-xkb) >= 1.10
 BuildRequires: doxygen
 # since 7.0 for wayland utilities
-BuildRequires: wayland-devel >= 1.2.0 libwayland-client-devel wayland-protocols >= 1.0
+BuildRequires: wayland-devel >= 1.14 libwayland-client-devel wayland-protocols >= 1.10
 
 %description
 %name is the X.Org library for compiling XKB maps into formats usable by
@@ -62,16 +63,14 @@ X.Org X11 XKB keymap creation library development package
 %setup
 
 %build
-%autoreconf
-%configure \
-  --disable-silent-rules \
-  --disable-static \
-  %{subst_enable x11}
+%meson \
+	-Ddefault_library=shared \
+	%{?_disable_x11:-Ddisable-x11}
 
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %files
 %doc LICENSE NEWS README*
@@ -99,6 +98,9 @@ X.Org X11 XKB keymap creation library development package
 %endif
 
 %changelog
+* Sat Aug 19 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
+- 0.7.2
+
 * Tue Jan 24 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
 - 0.7.1
 
