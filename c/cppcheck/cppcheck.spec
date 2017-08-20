@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 1.79
-Release: alt1.1
+Version: 1.80
+Release: alt1
 
 Summary: A tool for static C/C++ code analysis
 
@@ -119,6 +119,9 @@ install -D gui/%name-gui.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name-gu
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Aug 20 2017 Hihin Ruslan <ruslandh@altlinux.ru> 1.80-alt1
+- Version 1.80
+
 * Sat May 27 2017 Hihin Ruslan <ruslandh@altlinux.ru> 1.79-alt1.1
 - Version 1.79
 
