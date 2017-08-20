@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.4
 Release: alt1
 
 Summary: GTK+ Text Editor Framework
@@ -28,8 +28,9 @@ BuildRequires: vala-tools
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.6.7 libgtk+3-gir-devel libgtksourceview3-gir-devel}
 
 %description
-Tepl is a library that eases the development of GtkSourceView-based text
-editors and IDEs.
+Tepl is a library that eases the development of GtkSourceView-based
+text editors and IDEs. Tepl is the acronym for "Text editor product
+line".
 
 %package devel
 Summary: Development environment for Tepl
@@ -80,6 +81,63 @@ Requires: %name-gir = %version-%release
 %description gir-devel
 GObject introspection devel data for the Tepl library
 
+%package -n libamtk
+Summary: Actions, Menus and Toolbars Kit
+Group: System/Libraries
+
+%description -n libamtk
+Amtk is a library that eases the development of GtkSourceView-based text
+editors and IDEs.
+
+%package -n libamtk-devel
+Summary: Development environment for Amtk
+Group: Development/C
+Requires: libamtk = %version-%release
+
+%description -n libamtk-devel
+This package contains the necessary components to develop for Amtk,
+Actions, Menus and Toolbars Kit.
+
+%package -n libamtk-devel-doc
+Summary: Development documentation for Amtk
+Group: Development/C
+BuildArch: noarch
+Conflicts: libamtk < %version-%release
+
+%description -n libamtk-devel-doc
+Amtk is a library that eases the development of GtkSourceView-based
+text editors and IDEs.
+
+This package contains development documentation for Amtk.
+
+%package -n libamtk-devel-static
+Summary: Stuff for developing with Amtk
+Group: Development/C
+Requires: libamtk-devel = %version-%release
+
+%description -n libamtk-devel-static
+This package contains the necessary components to develop statically
+linked software for Amtk, Actions, Menus and Toolbars Kit
+
+%package -n libamtk-gir
+Summary: GObject introspection data for the Amtk library
+Group: System/Libraries
+Requires: libamtk = %version-%release
+
+%description -n libamtk-gir
+GObject introspection data for the Amtk library
+
+%package -n libamtk-gir-devel
+Summary: GObject introspection devel data for the Amtk library
+Group: Development/Other
+BuildArch: noarch
+Requires: libamtk-devel = %version-%release
+Requires: libamtk-gir = %version-%release
+
+%description -n libamtk-gir-devel
+GObject introspection devel data for the Amtk library
+
+
 %prep
 %setup -n %_name-%version
 [ ! -d m4 ] && mkdir m4
@@ -101,32 +159,65 @@ rm -rf missing aclocal.m4 /m4/libtool.m4 m4/lt*.m4
 %find_lang --output=%_name.lang %_name %{_name}-%api_ver
 
 %files -f %_name.lang
-%_libdir/*.so.*
+%_libdir/%name-%api_ver.so.*
 %doc AUTHORS NEWS README
 
 %files devel
-%_includedir/*
-%_libdir/*.so
-%_pkgconfigdir/*
-%_vapidir/*
+%_includedir/%_name-%api_ver/
+%_libdir/%name-%api_ver.so
+%_pkgconfigdir/%_name-%api_ver.pc
+#%_vapidir/*
 
 %files devel-doc
-%_datadir/gtk-doc/html/*
+%_datadir/gtk-doc/html/%_name-3.0/
 
 %if_enabled static
 %files devel-static
-%_libdir/*.a
+%_libdir/%name-%api_ver.a
 %endif
 
 %if_enabled introspection
 %files gir
-%_typelibdir/*
+%_typelibdir/Tepl-%api_ver.typelib
 
 %files gir-devel
-%_girdir/*
+%_girdir/Tepl-%api_ver.gir
 %endif
 
+%files -n libamtk
+%_libdir/libamtk-%api_ver.so.*
+%doc AUTHORS NEWS README
+
+%files -n libamtk-devel
+%_includedir/amtk-%api_ver/
+%_libdir/libamtk-%api_ver.so
+%_pkgconfigdir/amtk-%api_ver.pc
+#%_vapidir/*
+
+%files -n libamtk-devel-doc
+#%_datadir/gtk-doc/html/amtk-%api_ver/
+
+%if_enabled static
+%files -n libamtk-devel-static
+%_libdir/%name.a
+%endif
+
+%if_enabled introspection
+%files -n libamtk-gir
+%_typelibdir/Amtk-%api_ver.typelib
+
+%files -n libamtk-gir-devel
+%_girdir/Amtk-%api_ver.gir
+%endif
+
+
 %changelog
+* Sun Aug 20 2017 Yuri N. Sedunov <aris@altlinux.org> 2.99.4-alt1
+- 2.99.4
+
+* Tue Jul 18 2017 Yuri N. Sedunov <aris@altlinux.org> 2.99.2-alt1
+- 2.99.2
+
 * Wed Jul 05 2017 Yuri N. Sedunov <aris@altlinux.org> 2.99.1-alt1
 - first build for Sisyphus
 
