@@ -1,7 +1,7 @@
 # -*- rpm-spec -*-
 
 # for set release
-%define release_pre alt8
+%define release_pre alt9
 
 # for distr selected
 %def_without M24
@@ -104,6 +104,7 @@ Patch107: nut-2.6.5-foreground.patch
 %def_without hal
 %def_with avahi
 %def_with freeipmi
+%def_with systemd
 
 %if_with M24
 %def_with hotplug
@@ -128,7 +129,7 @@ PreReq: libupsclient = %version-%release
 
 BuildRequires: pkgconfig libtool-common
 BuildRequires: libltdl-devel
-BuildRequires: systemd-devel
+%{?_with_systemd:BuildRequires: systemd-devel}
 
 %if_with ssl
 BuildRequires: libssl-devel
@@ -386,7 +387,7 @@ test -f libtool && rm -f libtool && ln -s `which libtool` libtool
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 # Since %drvdir != /sbin, we have to create /sbin/upsdrvctl manually.
 mkdir -p %buildroot/sbin
@@ -454,13 +455,19 @@ test -f scripts/hal/20-ups-nut-device.fdi && cp scripts/hal/20-ups-nut-device.fd
 %endif
 
 # Rename udev rules file
+%if_with usb
 mv %buildroot/lib/udev/rules.d/52-nut-usbups.rules %buildroot/lib/udev/rules.d/98-nut-usbups.rules
+%endif
+%if_with freeipmi
 mv %buildroot/lib/udev/rules.d/52-nut-ipmipsu.rules %buildroot/lib/udev/rules.d/98-nut-ipmipsu.rules
+%endif
 
+%if_with systemd
 # Add symlink for SysV compatibility
 ln -s nut-monitor.service %buildroot%_unitdir/upsmon.service
 ln -s nut-driver.service %buildroot%_unitdir/upsdrv.service
 ln -s nut-server.service %buildroot%_unitdir/upsd.service
+%endif
 
 %pre
 if [ $1 -gt 1 -a -x /sbin/upsmon -a ! -d /etc/nut/certs ]; then
@@ -510,9 +517,11 @@ fi
 %config(noreplace) %attr(640,root,%runas) %confdir/upsmon.conf
 %config(noreplace) %attr(640,root,%runas) %confdir/upssched.conf
 %_initdir/upsmon
+%if_with systemd
 %_unitdir/nut-monitor.service
 %_unitdir/upsmon.service
 /lib/systemd/system-shutdown/nutshutdown
+%endif
 
 %_bindir/upsc
 %_bindir/upscmd
@@ -552,11 +561,13 @@ fi
 /sbin/upsdrvctl
 
 %_initdir/upsd
+%_initdir/upsdrv
+%if_with systemd
 %_unitdir/nut-server.service
 %_unitdir/upsd.service
-%_initdir/upsdrv
 %_unitdir/nut-driver.service
 %_unitdir/upsdrv.service
+%endif
 %dir %confdir
 
 %config(noreplace) %_sysconfdir/sysconfig/upsd
@@ -599,7 +610,9 @@ fi
 %docdir/cables
 
 %config %confdir/driver.list
+%if_with usb
 %attr(644,root,root) /lib/udev/rules.d/98-nut-usbups.rules
+%endif
 
 %drvdir
 %if_with snmp
@@ -695,6 +708,9 @@ fi
 %_man3dir/*
 
 %changelog
+* Thu Aug 17 2017 Michael Shigorin <mike@altlinux.org> 2.6.5-alt9
+- BOOTSTRAP: introduce systemd knob (on by default)
+
 * Thu Jun 16 2016 Anton Farygin <rider@altlinux.ru> 2.6.5-alt8
 - rebuild with new freeipmi
 
