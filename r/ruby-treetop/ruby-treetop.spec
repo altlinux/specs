@@ -1,7 +1,7 @@
 %define  pkgname treetop
  
 Name: 	 ruby-%pkgname
-Version: 1.6.5
+Version: 1.6.8
 Release: alt1
  
 Summary: A Ruby-based text parsing and interpretation DSL
@@ -59,6 +59,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Mon Aug 21 2017 Andrey Cherepanov <cas@altlinux.org> 1.6.8-alt1
+- New version
+
 * Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 1.6.5-alt1
 - New version
 
