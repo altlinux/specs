@@ -2,13 +2,15 @@
 
 Name: kf5-%rname
 Version: 5.10.4
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Development/KDE and QT
 Summary: KDE Workspace 5 Applications useful for Plasma Development
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+Requires: kf5-kirigami
 
 Source: %rname-%version.tar
 
@@ -74,6 +76,9 @@ KF5 library
 %_K5srv/*.desktop
 
 %changelog
+* Mon Aug 21 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt2%ubt
+- fix requires
+
 * Wed Jul 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt1%ubt
 - new version
 
