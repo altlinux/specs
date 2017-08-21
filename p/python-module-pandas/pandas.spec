@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.20.2
-Release: alt2
+Release: alt3
 
 Summary: Python Data Analysis Library
 License: BSD
@@ -34,6 +34,7 @@ BuildRequires(pre): rpm-build-python
 #BuildPreReq: gcc-c++
 %if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
 #BuildPreReq: python3-devel libnumpy-py3-devel python3-module-Cython
 #BuildPreReq: python3-module-pytz python3-module-dateutil
 #BuildPreReq: python3-module-nose python3-module-setuptools-tests
@@ -195,6 +196,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.20.2-alt3
+- Updated build dependencies for python-3 build.
+
 * Tue Jul 25 2017 Terechkov Evgenii <evg@altlinux.org> 0.20.2-alt2
 - Skip findreq on some modules
 
