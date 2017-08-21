@@ -1,5 +1,5 @@
 Name: expat
-Version: 2.1.0
+Version: 2.2.4
 Release: alt1
 
 %def_disable static
@@ -9,7 +9,7 @@ Summary: An XML parser written in C
 License: MIT/X Consortium
 Group: System/Base
 Url: http://www.libexpat.org/
-# http://download.sourceforge.net/%name/%name-%version.tar.gz
+# http://downloads.sourceforge.net/project/expat/expat/%version/expat-%version.tar.bz2
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -69,7 +69,7 @@ rm %buildroot%_libdir/libexpat.so
 ln -s ../../%_lib/libexpat.so.1 %buildroot%_libdir/libexpat.so
 
 install -d -m755 %buildroot%pkgdocdir
-install -p -m644 README COPYING Changes %buildroot%pkgdocdir/
+install -p -m644 README.md COPYING Changes %buildroot%pkgdocdir/
 install -p -m644 doc/*.{html,css,png} %buildroot%pkgdocdir/
 install -d -m755 %buildroot%pkgdocdir/examples
 install -p -m644 examples/*.c %buildroot%pkgdocdir/examples/
@@ -86,7 +86,7 @@ install -p -m644 examples/*.c %buildroot%pkgdocdir/examples/
 %dir %pkgdocdir
 %pkgdocdir/Changes
 %pkgdocdir/COPYING
-%pkgdocdir/README
+%pkgdocdir/README.md
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -104,6 +104,9 @@ install -p -m644 examples/*.c %buildroot%pkgdocdir/examples/
 %endif	# enabled static
 
 %changelog
+* Mon Aug 21 2017 Alexey Tourbin <at@altlinux.ru> 2.2.4-alt1
+- 2.1.0 -> 2.2.4
+
 * Wed Sep 12 2012 Dmitry V. Levin <ldv@altlinux.org> 2.1.0-alt1
 - Updated to 2.1.0.
 - Stopped build and packaging of libexpat-devel-static.
@@ -193,6 +196,6 @@ install -p -m644 examples/*.c %buildroot%pkgdocdir/examples/
 * Mon Jan 10 2000 Dmitry V. Levin <ldv@fandra.org>
 - Fandra adaptions.
 
-* Tue Jul 28 1999 Greg LaPolla <glapolla@earthlink.net>
+* Wed Jul 28 1999 Greg LaPolla <glapolla@earthlink.net>
 - Made spec file
 - Built on redhat 6.0
