@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.37.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -40,6 +40,7 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: kf5-plasma-framework-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -81,6 +82,9 @@ KF5 library
 %_K5qml/org/kde/runnermodel/
 
 %changelog
+* Mon Aug 21 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt2%ubt
+- fix requires
+
 * Wed Aug 16 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt1%ubt
 - new version
 
