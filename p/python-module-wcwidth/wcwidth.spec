@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.7
-Release: alt1
+Release: alt2
 Summary: Measures number of Terminal column cells of wide-character codes
 License: MIT
 Group: Development/Python
@@ -99,14 +99,14 @@ export LC_ALL=en_US.UTF-8
 export PYTHONPATH=$PWD
 rm -fR build
 py.test -vv \
-	-rs --strict --flakes \
+	-rs -W error --flakes \
 	wcwidth/tests
 %if_with python3
 pushd ../python3
 export PYTHONPATH=$PWD
 rm -fR build
 py.test3 -vv \
-	-x --strict --flakes \
+	-x -W error --flakes \
 	--cov wcwidth
 popd
 %endif
@@ -130,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.7-alt2
+- Fixed tests.
+
 * Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.7-alt1
 - Updated to upstream version 0.1.7.
 
