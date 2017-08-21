@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 1.1
-Release: alt2%ubt
+Release: alt3%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -18,11 +18,11 @@ Source1: ru.po
 Patch1: alt-metadata.patch
 Patch2: alt-auto-width.patch
 
-# Automatically added by buildreq on Tue Nov 01 2016 (-bi)
-# optimized out: cmake cmake-modules gcc-c++ kf5-kconfig-devel kf5-kcoreaddons-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3
-#BuildRequires: extra-cmake-modules kf5-ki18n-devel kf5-kpackage-devel kf5-kservice-devel kf5-plasma-framework-devel python-module-google python3-dev ruby ruby-stdlibs
+# Automatically added by buildreq on Mon Aug 21 2017 (-bi)
+# optimized out: cmake cmake-modules gcc-c++ kf5-kconfig-devel kf5-kcoreaddons-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python-modules python3 python3-base qt5-base-common qt5-base-devel rpm-build-python3
+#BuildRequires: extra-cmake-modules kf5-ki18n-devel kf5-kpackage-devel kf5-kservice-devel kf5-kwindowsystem-devel kf5-plasma-framework-devel python-module-google python3-dev python3-module-zope ruby ruby-stdlibs
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules kf5-ki18n-devel kf5-kpackage-devel kf5-kservice-devel kf5-plasma-framework-devel
+BuildRequires: extra-cmake-modules kf5-ki18n-devel kf5-kpackage-devel kf5-kservice-devel kf5-kwindowsystem-devel kf5-plasma-framework-devel
 
 %description
 Plasma 5 widget that gives access to user places.
@@ -53,6 +53,9 @@ __EOF__
 %_K5srv/plasma-applet-org.kde.placesWidget.desktop
 
 %changelog
+* Mon Aug 21 2017 Sergey V Turchin <zerg@altlinux.org> 1.1-alt3%ubt
+- fix build requires
+
 * Wed Jul 05 2017 Sergey V Turchin <zerg@altlinux.org> 1.1-alt2%ubt
 - set automatic widget width
 
