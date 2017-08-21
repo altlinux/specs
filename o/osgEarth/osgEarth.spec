@@ -1,7 +1,7 @@
 %define osg_version %(pkg-config --modversion openscenegraph)
 
 Name: osgEarth
-Version: 2.7
+Version: 2.8
 Release: alt1
 
 Summary: Dynamic map generation toolkit for OpenSceneGraph
@@ -10,7 +10,8 @@ License: LGPL
 Group: Graphics
 
 Url: http://osgearth.org
-Source: %name-%version.tar
+Source: osgearth-%version.tar
+Patch: geos-3.6-compat.patch
 Packager: Dmitry Derjavin <dd@altlinux.org>
 
 # Automatically added by buildreq on Wed Sep 22 2010
@@ -87,7 +88,8 @@ easily.
 This package contains sample data files for osgEarth.
 
 %prep
-%setup
+%setup -n osgearth-%version
+%patch -p1
 
 %build
 mkdir BUILD
@@ -105,7 +107,7 @@ cp -a ../data ../tests %buildroot%_datadir/osgEarth
 popd
 
 %files -n lib%name
-%doc README.txt
+%doc README.md
 %_libdir/libosgEarth*.so.*
 %_libdir/osgPlugins-%osg_version/*
 
@@ -170,6 +172,13 @@ popd
 %_datadir/osgEarth
 
 %changelog
+* Fri Aug 18 2017 Andrey Cherepanov <cas@altlinux.org> 2.8-alt1
+- New version
+- Add GEOS >= 3.6.0 compatibility from upsteam commit
+
+* Wed Aug 16 2017 Andrey Cherepanov <cas@altlinux.org> 2.7-alt2
+- Rebuild with geos 3.6.2
+
 * Thu Oct 01 2015 Michael Shigorin <mike@altlinux.org> 2.7-alt1
 - 2.7 built against OpenSceneGraph 3.4.0
 

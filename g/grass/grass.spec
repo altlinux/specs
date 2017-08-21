@@ -1,6 +1,6 @@
 Name:    grass
 Version: 7.2.1
-Release: alt1
+Release: alt2
 
 %def_with mysql
 %def_with postgres
@@ -302,6 +302,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Wed Aug 16 2017 Andrey Cherepanov <cas@altlinux.org> 7.2.1-alt2
+- Rebuild with geos 3.6.2
+
 * Tue Jul 25 2017 Andrey Cherepanov <cas@altlinux.org> 7.2.1-alt1
 - New version
 
