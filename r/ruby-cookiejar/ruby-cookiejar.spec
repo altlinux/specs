@@ -1,7 +1,7 @@
 %define  pkgname cookiejar
  
 Name: 	 ruby-%pkgname
-Version: 0.3.2 
+Version: 0.3.3 
 Release: alt1
  
 Summary: The Ruby CookieJar is a library to help manage client-side cookies in pure Ruby
@@ -61,5 +61,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Mon Aug 21 2017 Andrey Cherepanov <cas@altlinux.org> 0.3.3-alt1
+- New version
+
 * Tue Apr 22 2014 Andrey Cherepanov <cas@altlinux.org> 0.3.2-alt1
 - Initial build for ALT Linux
