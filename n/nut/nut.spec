@@ -1,7 +1,7 @@
 # -*- rpm-spec -*-
 
 # for set release
-%define release_pre alt9
+%define release_pre alt10
 
 # for distr selected
 %def_without M24
@@ -61,8 +61,7 @@ Release: %package_release
 Summary: Network UPS Tools
 License: GPL
 Group: System/Servers
-Url: http://random.networkupstools.org
-Packager: Yura Kalinichenko <yuk@altlinux.org>
+Url: http://networkupstools.org
 
 %define srcname nut-%version
 # %url/source/2.0/nut-%version.tar.gz
@@ -74,15 +73,10 @@ Source4: upsd.sysconfig
 
 Source104: libs.sh
 
-#Patch1: nut-2.2.2-alt-makefile.patch
-#Patch2: nut-2.2.2-alt-powercom-make.patch
-#Patch3: nut-2.2.0-alt-man.patch
 Patch4: nut-2.6.0-alt-chroot.patch
 Patch5: nut-2.6.0-alt-upsdrvctl-list.patch
 Patch6: nut-2.6.0-alt-upsstats.patch
 Patch7: nut-2.6.0-alt-drivers.patch
-#Patch8: nut-2.2.2-alt-megatec-shutdown.patch
-#Patch9: nut-2.2.2-alt-powercom-drv.patch
 Patch10: nut-2.6.0-alt-usb.patch
 Patch20: nut-2.6.2-snmp-noAES.patch
 Patch21: nut-2.6.0-upsd-listen.patch
@@ -549,11 +543,9 @@ fi
 %docdir/upssched.conf.sample
 %docdir/nut.conf.sample
 %exclude %docdir/*driver*
-#%exclude %docdir/hosts.conf.sample
 %exclude %docdir/ups.conf.sample
 %exclude %docdir/upsd.conf.sample
 %exclude %docdir/upsd.users.sample
-#%exclude %docdir/upsset.conf.sample
 
 %files server
 %_sbindir/upsd
@@ -605,7 +597,6 @@ fi
 %docdir/upsd.conf.sample
 %docdir/upsd.users.sample
 %docdir/ups.conf.sample
-#%docdir/hosts.conf.sample
 %docdir/*driver*
 %docdir/cables
 
@@ -669,7 +660,6 @@ fi
 %htmldir
 %dir %cgidocdir
 %cgidocdir/README
-#%cgidocdir/upsstats*.html.sample
 %_man5dir/hosts.conf.*
 %_man5dir/upsset.conf.*
 %_man5dir/upsstats.html.*
@@ -708,6 +698,9 @@ fi
 %_man3dir/*
 
 %changelog
+* Tue Aug 22 2017 Anton Farygin <rider@altlinux.ru> 2.6.5-alt10
+- rebuilt for freeipmi
+
 * Thu Aug 17 2017 Michael Shigorin <mike@altlinux.org> 2.6.5-alt9
 - BOOTSTRAP: introduce systemd knob (on by default)
 
