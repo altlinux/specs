@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.14.0
-Release: alt17%ubt
+Release: alt18%ubt
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -17,6 +17,7 @@ Url: https://github.com/sddm/sddm
 License: GPLv2+
 
 Requires: xinitrc >= 2.4.43 xauth /usr/share/design/current
+Requires: qt5-quickcontrols
 
 Source: %name-%version.tar
 Source1: sddm.conf
@@ -160,6 +161,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Mon Aug 21 2017 Sergey V Turchin <zerg@altlinux.org> 0.14.0-alt18%ubt
+- fix requires (ALT#33786)
+
 * Fri Aug 11 2017 Sergey V Turchin <zerg@altlinux.org> 0.14.0-alt17%ubt
 - add fix for github issue 786 (ALT#33728)
 
