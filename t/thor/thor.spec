@@ -1,7 +1,7 @@
 %define  pkgname thor
  
 Name: 	 %pkgname
-Version: 0.19.1 
+Version: 0.20.0
 Release: alt1
  
 Summary: Thor is a toolkit for building powerful command-line interfaces.
@@ -60,5 +60,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Mon Aug 21 2017 Andrey Cherepanov <cas@altlinux.org> 0.20.0-alt1
+- New version
+
 * Fri May 22 2015 Andrey Cherepanov <cas@altlinux.org> 0.19.1-alt1
 - Initial build for ALT Linux
