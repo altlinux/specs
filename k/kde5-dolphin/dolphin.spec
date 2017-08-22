@@ -6,7 +6,7 @@
 
 Name: kde5-%rname
 Version: 17.04.3
-Release: alt3%ubt
+Release: alt4%ubt
 %K5init
 
 Group: File tools
@@ -73,7 +73,7 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch2 -p1
+#%patch2 -p1
 
 %build
 %K5build \
@@ -125,6 +125,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Tue Aug 22 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt4%ubt
+- revert previous changes
+
 * Fri Aug 18 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt3%ubt
 - add buttons closing left/right panel
 
