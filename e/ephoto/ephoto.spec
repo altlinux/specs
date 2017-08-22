@@ -2,18 +2,18 @@
 %define beta %nil
 
 Name: ephoto
-Version: 1.0
+Version: 1.5
 Release: alt1
 
 Summary: The Enlightenment Photo Viewer
 Group: Graphical desktop/Enlightenment
 License: GPLv3+
-URL: http://www.smhouston.us/%name/
+Url: http://www.smhouston.us/%name/
 
 # VCS: git://git.enlightenment.org/apps/ephoto.git
 Source: http://www.smhouston.us/stuff/%name-%version%beta.tar.xz
 
-BuildRequires: libelementary-devel >= 1.18.0
+BuildRequires: libelementary-devel >= 1.18.0 libcheck-devel
 
 %description
 Photo Viewer for Enlightenment desktop.
@@ -23,8 +23,7 @@ Photo Viewer for Enlightenment desktop.
 
 %build
 %autoreconf
-%configure \
-	--disable-static
+%configure
 
 %make_build
 
@@ -42,6 +41,9 @@ Photo Viewer for Enlightenment desktop.
 %doc AUTHORS ChangeLog NEWS README TODO
 
 %changelog
+* Tue Aug 22 2017 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt1
+- 1.5
+
 * Tue Apr 18 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
 - 1.0 release
 
