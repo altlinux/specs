@@ -2,7 +2,7 @@
 %define oname %mname.contracts
 Name: python3-module-%oname
 Version: 0.17.0
-Release: alt2
+Release: alt3
 Summary: Function and method call contracts
 License: MIT
 Group: Development/Python3
@@ -14,7 +14,6 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests python3-module-pytest
 
 %py3_provides %oname
-%py3_requires %mname
 
 %description
 This package provides simple but powerful support for contract
@@ -49,6 +48,9 @@ PYTHONPATH=$(pwd) py.test3 -vv
 %python3_sitelibdir/CodeViking.contracts-*.pth
 
 %changelog
+* Tue Aug 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.17.0-alt3
+- Updated dependencies.
+
 * Tue Aug 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.17.0-alt2
 - Fixed build.
 
