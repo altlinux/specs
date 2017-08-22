@@ -1,17 +1,17 @@
 Name: pax
 Version: 3.4
-Release: alt4
+Release: alt5
 
 Summary: POSIX File System Archiver
 License: BSD
 Group: Archiving/Backup
 URL: http://ftp.suse.com/pub/people/kukuk/pax
-Packager: Victor Forsyuk <force@altlinux.org>
 Source: %url/pax-%version.tar.bz2
 Patch1: pax-3.4-rdtruncate.patch
 Patch2: pax-3.4-abs100.patch
 Patch3: pax-3.4-PATHMAX.patch
 Patch4: pax-3.4-rh-gcc46.patch
+Patch5: %name-%version-alt-includes.patch
 
 %description
 'pax' is the POSIX standard archive tool. It supports the two most
@@ -23,6 +23,7 @@ common forms of standard Unix archive (backup) files - CPIO and TAR.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p2
 
 %build
 %configure
@@ -36,6 +37,9 @@ common forms of standard Unix archive (backup) files - CPIO and TAR.
 %_man1dir/*
 
 %changelog
+* Tue Aug 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4-alt5
+- Fixed build with current toolchain.
+
 * Thu Jul 12 2012 Dmitry V. Levin <ldv@altlinux.org> 3.4-alt4
 - Reverted previous change.
 
