@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		70298
+%define svnrev		71467
 
 %def_with pgsql
 
@@ -10,7 +10,7 @@
 %endif
 
 Name: zabbix
-Version: 3.2.7
+Version: 3.4.0
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -31,9 +31,10 @@ BuildPreReq: java-devel-default
 BuildPreReq: libelf-devel
 BuildRequires(pre): rpm-build-webserver-common
 
-# Automatically added by buildreq on Sat Feb 27 2016 (-bi)
-# optimized out: elfutils libcom_err-devel libkrb5-devel libnet-snmp30 libp11-kit libpq-devel libsasl2-3 libssl-devel net-snmp-config pkg-config python-base xz
-BuildRequires: libcurl-devel libelf-devel libiksemel-devel libldap-devel libmysqlclient-devel
+# Automatically added by buildreq on Tue Aug 22 2017 (-bi)
+# optimized out: elfutils glibc-kernheaders-x86 java java-1.8.0-oracle-headless libcom_err-devel libgpg-error libkrb5-devel libnet-snmp30 libp11-kit libpq-devel libsasl2-3 libssl-devel net-snmp-config perl pkg-config python-base python3 python3-base python3-module-javapackages python3-module-lxml python3-module-six rpm-build-python3 xz
+BuildRequires: glibc-kernheaders-generic java-devel libcurl-devel libelf-devel libevent-devel libiksemel-devel libldap-devel libmysqlclient-devel libnet-snmp-devel libopenipmi-devel libpcre-devel libsqlite3-devel libxml2-devel postgresql-devel rpm-build-java
+
 BuildRequires: libnet-snmp-devel libopenipmi-devel libsqlite3-devel libxml2-devel perl-Switch
 
 %if_with pgsql
@@ -235,6 +236,7 @@ sed -i -e "s,{ZABBIX_REVISION},%svnrev," include/version.h src/zabbix_java/src/c
 	--with-jabber \
 	--with-openipmi \
 	--with-openssl \
+	--with-libpcre-include=/usr/include/pcre \
 	--sysconfdir=/etc/zabbix
 %make dbschema
 %make
@@ -253,6 +255,7 @@ mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_mysql
 	--with-jabber \
 	--with-openipmi \
 	--with-openssl \
+	--with-libpcre-include=/usr/include/pcre \
 	--sysconfdir=/etc/zabbix
 %make dbschema
 %make
@@ -273,6 +276,7 @@ mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_pgsql
 	--with-jabber \
 	--with-openipmi \
 	--with-openssl \
+	--with-libpcre-include=/usr/include/pcre \
 	--sysconfdir=/etc/zabbix
 %make
 
@@ -495,6 +499,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Aug 22 2017 Alexei Takaseev <taf@altlinux.org> 1:3.4.0-alt1
+- 3.4.0
+
 * Wed Jul 19 2017 Alexei Takaseev <taf@altlinux.org> 1:3.2.7-alt1
 - 3.2.7
 
