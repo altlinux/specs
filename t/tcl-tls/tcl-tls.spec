@@ -1,41 +1,68 @@
 Name: tcl-tls
-Version: 1.6.1
-Release: alt1.qa1
+Version: 1.7.12
+Release: alt1
 
 Summary: A tcl extension, wich adds SSL ability to any Tcl channel
 License: BSD
 Group: Development/Tcl
-Url: http://tls.sourceforge.net/
+Url: https://core.tcl.tk/tcltls/
 
-Source: %name-%version.tar
+# git://git.altlinux.org/gears/t/tcl-tls.git
+Source: %name-%version-%release.tar
 
 BuildPreReq:  rpm-build-tcl >= 0.2-alt1
 BuildRequires: libssl-devel tcl-devel >= 8.4.0-alt1
 Requires: tcl >= 8.4.0-alt1
 
+%package devel
+Summary: Header files for %name
+Group: Development/C
+Requires: %name = %EVR
+
 %description
 TLS is a Tcl extension, wich adds SSL ability to any Tcl channel.
 Both client and server-side sockets are possible, and this code should work
-on any platform as it uses a generic mechanism for layering on SSL and Tcl. 
+on any platform as it uses a generic mechanism for layering on SSL and Tcl.
+
+%description devel
+TLS is a Tcl extension, wich adds SSL ability to any Tcl channel.
+Both client and server-side sockets are possible, and this code should work
+on any platform as it uses a generic mechanism for layering on SSL and Tcl.
+
+This package contains the development files for %name.
 
 %prep
-%setup
-%teapatch
+%setup -n %name-%version-%release
+sed -i 's/@lib@/%_lib/g' pkgIndex.tcl.in
 
 %build
-autoconf
-%configure --disable-rpath
+%autoreconf
+%configure \
+	--disable-rpath \
+	--with-openssl-dir="%prefix" \
+	#
 make
 
 %install
 %makeinstall
 
+mkdir -p %buildroot%_includedir
+install -m0644 tls.h %buildroot%_includedir
+
 %files
 %doc ChangeLog README.txt license.terms tls.htm
-%_tcllibdir/libtls%version.so
-%_tcldatadir/tls%version
+%_tcllibdir/tcltls.so
+%_tcldatadir/tcltls%version
+
+%files devel
+%_includedir/tls.h
 
 %changelog
+* Mon Aug 21 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.7.12-alt1
+- 1.7.12 released
+- built devel subpackage
+- updated upstream url
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 

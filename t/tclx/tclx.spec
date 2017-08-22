@@ -6,8 +6,8 @@
 
 Name: tclx
 Version: 8.4
-Release: alt6.qa1
-Serial: 1
+Release: alt7
+Epoch: 1
 
 Summary: Tcl extensions for POSIX systems
 License: BSD
@@ -19,9 +19,15 @@ Source: %name-%snapshot.tar.bz2
 %else
 Source: http://download.sourceforge.net/%teaname/%teaname%version.tar.bz2
 %endif
+Patch1: tclx-alt-ftbfs-tcl8.6.patch
 
 Requires: tcl >= 8.4.0-alt1
 BuildRequires: tcl-devel >= 8.4.0-alt1 rpm-build >= 4.0.4-alt41 rpm-build-tcl >= 0.2-alt1
+
+%package devel
+Summary: Header files for %name
+Group: Development/C
+Requires: %name = %EVR
 
 %description
 TclX is a set of extensions which make it easier to use the Tcl
@@ -29,8 +35,17 @@ scripting language for common UNIX/Linux programming tasks.  TclX
 enhances Tcl support for files, network access, debugging, math, lists,
 and message catalogs.
 
+%description devel
+TclX is a set of extensions which make it easier to use the Tcl
+scripting language for common UNIX/Linux programming tasks.  TclX
+enhances Tcl support for files, network access, debugging, math, lists,
+and message catalogs.
+
+This package contains development files.
+
 %prep
 %setup -q %{?snapshot:-c}%{!?snapshot:-n %teaname%version}
+%patch1 -p2
 %teapatch
 
 %build
@@ -46,7 +61,14 @@ and message catalogs.
 %_tcldatadir/%name%version
 %_mandir/mann/*
 
+%files devel
+%_includedir/tclExtend.h
+
 %changelog
+* Tue Aug 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:8.4-alt7
+- Fixed building against Tcl/Tk 8.6
+- Built devel subpackage
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:8.4-alt6.qa1
 - NMU: rebuilt for debuginfo.
 
