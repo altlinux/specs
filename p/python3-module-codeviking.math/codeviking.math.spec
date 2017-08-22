@@ -1,34 +1,22 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1
 %define mname codeviking
 %define oname %mname.math
 Name: python3-module-%oname
-Version: 0.10.1
-#Release: alt1.1
+Version: 0.18.1
+Release: alt1
 Summary: Function and method call math
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/CodeViking.math/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools-tests python3-module-pytest
 
-%py_provides %oname
-Requires: python3-module-%mname = %EVR
+%py3_provides %oname
 
 %description
 A collection of mathematical utility functions.
-
-%package -n python3-module-%mname
-Summary: Core files of %mname
-Group: Development/Python3
-%py3_provides %mname
-
-%description -n python3-module-%mname
-Core files of %mname.
 
 %prep
 %setup
@@ -43,24 +31,19 @@ Core files of %mname.
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
-install -p -m644 %mname/__init__.py \
-	%buildroot%python3_sitelibdir/%mname/
-
 %check
-python3 setup.py test
+PYTHONPATH=$(pwd) py.test3
 
 %files
 %doc *.rst
 %python3_sitelibdir/%mname/math
 %python3_sitelibdir/*.egg-info
-
-%files -n python3-module-%mname
-%dir %python3_sitelibdir/%mname
-%dir %python3_sitelibdir/%mname/__pycache__
-%python3_sitelibdir/%mname/__init__.*
-%python3_sitelibdir/%mname/__pycache__/__init__.*
+%python3_sitelibdir/CodeViking.math-*.pth
 
 %changelog
+* Tue Aug 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.18.1-alt1
+- Updated to upstream version 0.18.1.
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.1-alt1.1.1
 - (AUTO) subst_x86_64.
 
