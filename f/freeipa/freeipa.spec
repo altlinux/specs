@@ -12,7 +12,7 @@
 
 Name: freeipa
 Version: 4.3.3
-Release: alt4
+Release: alt5
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -75,6 +75,9 @@ BuildRequires: rpm-macros-webserver-common
 BuildRequires: libini_config-devel
 
 BuildRequires: rhino
+
+# the following packages are required for tests
+%{?!_without_check:%{?!_disable_check:BuildRequires: libcmocka-devel krb5-kinit python2.7(yubico) python2.7(usb.core) python2.7(qrcode) nss_wrapper}}
 
 %description
 IPA is an integrated solution to provide centrally managed Identity
@@ -454,6 +457,9 @@ touch %buildroot%_localstatedir/lib/ipa/pki-ca/publish
 mkdir -p %buildroot%_sysconfdir/pki/ca-trust/source/
 touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 
+%check
+%make check VERBOSE=yes
+
 %files server
 %doc COPYING README Contributors.txt
 %_sbindir/*
@@ -691,6 +697,9 @@ fi
 %_man1dir/ipa-test-task.1.*
 
 %changelog
+* Mon Aug 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.3-alt5
+- Enabled tests.
+
 * Thu Aug 10 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt4
 - Add %%apache_conf_dir macro.
 - Move ipa_configured script to server-common subpackage.
