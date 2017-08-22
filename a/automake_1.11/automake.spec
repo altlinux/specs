@@ -6,7 +6,7 @@
 
 Name: %realname%dialect
 Version: 1.11.6
-Release: alt6
+Release: alt7
 
 %define mydatadir %_datadir/%realname%suff
 %set_compress_method xz
@@ -31,7 +31,7 @@ Obsoletes: %realname
 PreReq: automake-common, alternatives >= 0:0.4
 Requires: autoconf >= 2:2.62
 
-BuildPreReq: autoconf >= 2:2.58, gnu-config, help2man, makeinfo, perl-threads
+BuildPreReq: autoconf >= 2:2.68, gnu-config, help2man, makeinfo, perl-threads
 %{!?__buildreqs:%{!?_without_check:%{!?_disable_check:BuildRequires: dejagnu expect flex gcc-c++ gcc-fortran makedepend}}}
 
 %description
@@ -105,6 +105,9 @@ install -pm644 AUTHORS README THANKS NEWS.bz2 TODO.bz2 \
 %docdir
 
 %changelog
+* Mon Jul 03 2017 Ivan Zakharyaschev <imz@altlinux.org> 1.11.6-alt7
+- (.spec) Update version in BuildPreReq: autoconf.
+
 * Mon Dec 07 2015 Dmitry V. Levin <ldv@altlinux.org> 1.11.6-alt6
 - automake: fixed perl regexp syntax (gnu#21001).
 - Changed compress method from gzip to xz.
