@@ -1,5 +1,5 @@
 Name: libmediainfo
-Version: 0.7.97
+Version: 0.7.98
 Release: alt1
 
 Group: System/Libraries
@@ -87,6 +87,9 @@ popd
 %_libdir/%name.so
 
 %changelog
+* Tue Aug 22 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.98-alt1
+- 0.7.98
+
 * Sat Jul 08 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.97-alt1
 - 0.7.97
 
