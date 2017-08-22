@@ -1,7 +1,7 @@
 %define oname xlwt
 %def_with python3
 Name: python-module-xlwt
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Library to generate spreadsheet files compatible with Microsoft Excel versions 95 to 2003.
@@ -85,6 +85,9 @@ cp -av README.rst docs examples %buildroot%_defaultdocdir/%name/
 %endif
 
 %changelog
+* Tue Aug 22 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.0-alt1
+- New version
+
 * Fri Jan 06 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
 - new version 1.2.0
 
