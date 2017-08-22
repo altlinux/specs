@@ -1,20 +1,17 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1
 %define mname codeviking
 %define oname %mname.contracts
 Name: python3-module-%oname
 Version: 0.17.0
-#Release: alt1.1
+Release: alt2
 Summary: Function and method call contracts
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/CodeViking.contracts/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source0: https://pypi.python.org/packages/32/d2/a2b70df673dc1132e359f13eea00cd1d36c17cf7b6a6c7715a8b4c533045/CodeViking.contracts-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools-tests python3-module-pytest
 
 %py3_provides %oname
 %py3_requires %mname
@@ -43,7 +40,7 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 %check
 rm -f test/test_make_arg_checker.py
-python3 setup.py test -vv
+PYTHONPATH=$(pwd) py.test3 -vv
 
 %files
 %doc *.rst
@@ -52,6 +49,9 @@ python3 setup.py test -vv
 %python3_sitelibdir/CodeViking.contracts-*.pth
 
 %changelog
+* Tue Aug 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.17.0-alt2
+- Fixed build.
+
 * Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.17.0-alt1
 - automated PyPI update
 
