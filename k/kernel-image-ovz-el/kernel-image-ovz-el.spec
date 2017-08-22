@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt154
+Release: alt155
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -74,6 +74,8 @@ BuildRequires: ccache
 %ifdef use_ccache
 BuildRequires: ccache
 %endif
+
+%{?!_without_check:%{?!_disable_check:BuildRequires: qemu-system glibc-devel-static}}
 
 Requires: bootloader-utils >= 0.4.9-alt1
 Requires: module-init-tools >= 3.1
@@ -510,37 +512,66 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 #rm -rf %buildroot%kbuild_dir/drivers/media
 #rm -fr %buildroot%kbuild_dir/include/linux/video{_decoder,dev,dev2}.h
 
+
+%check
+KernelVer=%kversion-%flavour-%krelease
+mkdir -p test
+cd test
+msg='Booted successfully'
+%__cc %optflags -s -static -xc -o init - <<__EOF__
+#include <unistd.h>
+#include <sys/reboot.h>
+int main()
+{
+	static const char msg[] = "$msg\n";
+	write(2, msg, sizeof(msg) - 1);
+	reboot(RB_POWER_OFF);
+	pause();
+}
+__EOF__
+echo init | cpio -H newc -o | gzip -9n > initrd.img
+timeout 600 qemu -no-kvm -kernel %buildroot/boot/vmlinuz-$KernelVer -nographic -append console=ttyS0 -initrd initrd.img > boot.log
+grep -q "^$msg" boot.log &&
+grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?(reboot: )?Power down' boot.log || {
+	cat >&2 boot.log
+	echo >&2 'Marker not found'
+	exit 1
+}
+
+
 %files
 /boot/vmlinuz-%kversion-%flavour-%krelease
 /boot/System.map-%kversion-%flavour-%krelease
 /boot/config-%kversion-%flavour-%krelease
-%modules_dir
+/lib/firmware/*
+%dir %modules_dir/
+%defattr(0600,root,root,0700)
+%modules_dir/*
 %exclude %modules_dir/build
-%exclude %modules_dir/kernel/sound
+%exclude %modules_dir/kernel/sound/
 %if_enabled v4l
 %exclude %modules_dir/kernel/drivers/media/
 %endif
 %if_enabled staging
 %exclude %modules_dir/kernel/drivers/staging/
 %endif
-%exclude %modules_dir/kernel/drivers/gpu/drm
+%exclude %modules_dir/kernel/drivers/gpu/drm/
 %if_enabled kvm
-%exclude %modules_dir/kernel/arch/x86/kvm
+%exclude %modules_dir/kernel/arch/x86/kvm/
 %endif
 %exclude %modules_dir/kernel/drivers/ide/
-/lib/firmware/*
 
 %files -n kernel-image-domU-%flavour
 /boot/vmlinux-%kversion-%flavour-%krelease
 
 %if_enabled oss
-%exclude %modules_dir/kernel/sound/oss
-
 %files -n kernel-modules-oss-%flavour
-%modules_dir/kernel/sound/oss
+%defattr(0600,root,root,0700)
+%modules_dir/kernel/sound/oss/
 %endif #oss
 
 %files -n kernel-modules-ide-%flavour
+%defattr(0600,root,root,0700)
 %modules_dir/kernel/drivers/ide/
 
 %files -n kernel-headers-%flavour
@@ -549,7 +580,7 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %files -n kernel-headers-modules-%flavour
 %kbuild_dir
 %old_kbuild_dir
-%dir %modules_dir
+%dir %modules_dir/
 %modules_dir/build
 
 %if_enabled docs
@@ -557,30 +588,39 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %doc %_docdir/kernel-doc-%base_flavour-%version
 %endif
 %files -n kernel-modules-alsa-%flavour
+%defattr(0600,root,root,0700)
 %modules_dir/kernel/sound/
 %if_enabled oss
-%exclude %modules_dir/kernel/sound/oss
+%exclude %modules_dir/kernel/sound/oss/
 %endif
 
 %files -n kernel-modules-drm-%flavour
-%modules_dir/kernel/drivers/gpu/drm
+%defattr(0600,root,root,0700)
+%modules_dir/kernel/drivers/gpu/drm/
 
 %if_enabled kvm
 %files -n kernel-modules-kvm-%flavour
-%modules_dir/kernel/arch/x86/kvm
+%defattr(0600,root,root,0700)
+%modules_dir/kernel/arch/x86/kvm/
 %endif # kvm
 
 %if_enabled v4l
 %files -n kernel-modules-v4l-%flavour
+%defattr(0600,root,root,0700)
 %modules_dir/kernel/drivers/media/
 %endif # v4l
 
 %if_enabled staging
 %files -n kernel-modules-staging-%flavour
+%defattr(0600,root,root,0700)
 %modules_dir/kernel/drivers/staging/
 %endif # staging
 
 %changelog
+* Tue Aug 22 2017 Dmitry V. Levin <ldv@altlinux.org> 2.6.32-alt155
+- Added %%check like one found in std-def kernels.
+- Restricted access to %%modules_dir/ (see #5969).
+
 * Tue Jul 04 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt154
 - Updated to 042stab123.9 (Updated fix for CVE-2017-1000364).
 
