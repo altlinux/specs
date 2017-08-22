@@ -1,7 +1,7 @@
 %define  pkgname rr
  
 Name: 	 ruby-%pkgname
-Version: 1.1.2 
+Version: 1.2.1
 Release: alt1
  
 Summary: RR is a test double framework that features a rich selection of double techniques and a terse syntax
@@ -54,5 +54,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Tue Aug 22 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.1-alt1
+- New version
+
 * Wed May 20 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1
 - Initial build for ALT Linux
