@@ -12,7 +12,7 @@
 %define nxml_version 0.2.20041004
 %define cedet_version 2.0
 
-%define cedet_release alt7
+%define cedet_release alt8
 
 # subpackages to build;
 %def_enable nox
@@ -23,7 +23,7 @@
 
 Name: emacs25
 Version: 25.2
-Release: alt5
+Release: alt6
 
 Group: Editors
 Summary: GNU Emacs text editor
@@ -1550,6 +1550,9 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 
 
 %changelog
+* Fri Aug 18 2017 Anton Farygin <rider@altlinux.ru> 25.2-alt6
+- Rebuilt for new libImageMagick.
+
 * Sun Apr 23 2017 Terechkov Evgenii <evg@altlinux.org> 25.2-alt5
 - 25.2
 

@@ -4,7 +4,7 @@
 %define pre %nil
 Name: inkscape
 Version: %major.1
-Release: alt2
+Release: alt3
 
 Summary: A Vector Drawing Application
 
@@ -134,6 +134,9 @@ rm -rf %buildroot%_mandir/zh_TW/
 %_man1dir/inkview*
 
 %changelog
+* Fri Aug 18 2017 Anton Farygin <rider@altlinux.ru> 0.92.1-alt3
+- rebuild with new ImageMagick
+
 * Wed Mar 15 2017 Vitaly Lipatov <lav@altlinux.ru> 0.92.1-alt2
 - build with potrace (ALT bug #33147)
 - fix man build

@@ -1,12 +1,12 @@
 %def_without static
 
 Name: pstoedit
-Version: 3.62
-Release: alt4.1
+Version: 3.70
+Release: alt1
 
 Summary: converts Postscript(TM) and PDF files to other vector graphic formats
 Summary(ru_RU.KOI8-R): преобразует файлы Postscript(TM) и PDF в другие векторные форматы
-Copyright: GPL
+License: GPL
 Group: Graphics
 URL: http://www.pstoedit.net/pstoedit
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -136,7 +136,7 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %files
 %_bindir/pstoedit
 %_man1dir/*
-%doc doc/changelog.htm doc/index.htm doc/readme.txt doc/pstoedit.tex doc/pstoedit.htm doc/pstoedit.trans examples contrib/java
+%doc doc/changelog.htm doc/readme.txt doc/pstoedit.tex doc/pstoedit.htm doc/pstoedit.trans examples contrib/java
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -159,6 +159,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Fri Aug 18 2017 Anton Farygin <rider@altlinux.ru> 3.70-alt1
+- new version
+
 * Mon Jun 15 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.62-alt4.1
 - Rebuilt for gcc5 C++11 ABI.
 

@@ -2,7 +2,7 @@
 
 Name: vips
 Version: 8.4.5
-Release: alt1
+Release: alt2
 
 Summary: Large image processing library
 License: LGPLv2.1
@@ -11,7 +11,6 @@ Group: Graphics
 Url: http://www.vips.ecs.soton.ac.uk
 Source0: %name-%version.tar.gz
 Source100: vips.watch
-Packager: Victor Forsiuk <force@altlinux.org>
 
 BuildPreReq: libxml2-devel
 # Automatically added by buildreq on Sat Oct 08 2011
@@ -113,6 +112,9 @@ find %buildroot \( -name '*.la' -o -name '*.a' \) -exec rm -f {} ';'
 # - package python bindings
 
 %changelog
+* Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 8.4.5-alt2
+- rebuilt for ImageMagick
+
 * Sun Dec 11 2016 Michael Shigorin <mike@altlinux.org> 8.4.5-alt1
 - new version (watch file uupdate)
 
