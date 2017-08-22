@@ -6,6 +6,7 @@
 %def_enable sql_ibase
 %def_disable sql_tds
 %def_disable sql_sqlite2
+%def_enable pulse
 %def_disable journald
 
 %define platform linux-g++
@@ -24,7 +25,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.7.1
-Release: alt11%ubt
+Release: alt12%ubt
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -60,6 +61,7 @@ Patch1003: alt-ca-certificates-path.patch
 Patch1004: alt-timezone.patch
 Patch1005: alt-hidpi_scale_at_192.patch
 #Patch1006: alt-relax-hidpi-scaling.patch
+Patch1007: e2k-qt-5.7.1.patch
 
 # macros
 %define _qt5 %gname
@@ -78,7 +80,8 @@ BuildRequires: pkgconfig(gl) pkgconfig(glesv2) pkgconfig(egl)
 BuildRequires: libSM-devel libICE-devel
 BuildRequires: libX11-devel libXi-devel libxkbcommon-devel libxkbcommon-x11-devel
 BuildRequires: libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel
-BuildRequires: libalsa-devel libpulseaudio-devel
+BuildRequires: libalsa-devel
+%{?_enable_pulse:BuildRequires: libpulseaudio-devel}
 %{?_enable_journald:BuildRequires: pkgconfig(libsystemd-journal)}
 %{?_enable_sql_tds:BuildRequires: libfreetds-devel}
 %{?_enable_sql_ibase:BuildRequires: firebird-devel}
@@ -375,6 +378,9 @@ EGL integration library for the Qt%major toolkit
 %patch1004 -p1 -b .timezone
 %patch1005 -p1 -b .dpi
 #%patch1006 -p1 -b .relax-scaling
+%ifarch e2k
+%patch1007 -p1 -b .e2k
+%endif
 bin/syncqt.pl -version %version -private
 [ -e include/QtCore/QtCoreDepends ] || >include/QtCore/QtCoreDepends
 
@@ -780,6 +786,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Tue Aug 22 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt12%ubt
+- add e2k support
+
 * Fri Aug 18 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt11%ubt
 - revert previous changes
 
