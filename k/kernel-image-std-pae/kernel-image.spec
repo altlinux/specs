@@ -2,7 +2,7 @@ Name: kernel-image-std-pae
 Release: alt1
 epoch:1 
 %define kernel_base_version	4.4
-%define kernel_sublevel .82
+%define kernel_sublevel .83
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -69,8 +69,9 @@ BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeri
 BuildRequires: module-init-tools >= 3.16
 BuildRequires: lzma-utils
 BuildRequires: bc
-BuildRequires: qemu-system glibc-devel-static
 BuildRequires: openssl-devel 
+# for check
+BuildRequires: qemu-system glibc-devel-static
 Provides: kernel-modules-eeepc-%flavour = %version-%release
 Provides: kernel-modules-drbd83-%flavour = %version-%release
 Provides: kernel-modules-igb-%flavour = %version-%release
@@ -302,6 +303,7 @@ directory.
 %package -n kernel-doc-%base_flavour
 Summary: Linux kernel %kversion-%base_flavour documentation
 Group: System/Kernel and hardware
+BuildArch: noarch
 
 %description -n kernel-doc-%base_flavour
 This package contains documentation files for ALT Linux kernel packages:
@@ -483,29 +485,41 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 	-maxdepth 1 -type f -not -name '*.html' -delete
 %endif # if_enabled docs
 
+
 %check
 KernelVer=%kversion-%flavour-%krelease
-mkdir test
+mkdir -p test
 cd test
-gcc -static -xc -o init - <<EOF
+msg='Booted successfully'
+%__cc %optflags -s -static -xc -o init - <<__EOF__
 #include <unistd.h>
 #include <sys/reboot.h>
 int main()
 {
-        write( STDERR_FILENO, "Boot successfull!\n", 18);
-        reboot( RB_POWER_OFF  );
-        sleep(10);
+	static const char msg[] = "$msg\n";
+	write(2, msg, sizeof(msg) - 1);
+	reboot(RB_POWER_OFF);
+	pause();
 }
-EOF
-echo "init" | cpio -H newc -o | gzip > initrd.img
+__EOF__
+echo init | cpio -H newc -o | gzip -9n > initrd.img
 timeout 600 qemu -no-kvm -kernel %buildroot/boot/vmlinuz-$KernelVer -nographic -append console=ttyS0 -initrd initrd.img > boot.log
-grep -q 'reboot: Power down' boot.log || ( cat boot.log && false )
+grep -q "^$msg" boot.log &&
+grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
+	cat >&2 boot.log
+	echo >&2 'Marker not found'
+	exit 1
+}
+
 
 %files
 /boot/vmlinuz-%kversion-%flavour-%krelease
 /boot/System.map-%kversion-%flavour-%krelease
 /boot/config-%kversion-%flavour-%krelease
-%modules_dir
+/lib/firmware/*
+%dir %modules_dir/
+%defattr(0600,root,root,0700)
+%modules_dir/*
 %exclude %modules_dir/build
 %exclude %modules_dir/kernel/drivers/media/
 %exclude %modules_dir/kernel/drivers/staging/
@@ -514,7 +528,6 @@ grep -q 'reboot: Power down' boot.log || ( cat boot.log && false )
 %exclude %modules_dir/kernel/arch/x86/kvm
 %exclude %modules_dir/kernel/net/netfilter/ipset
 %exclude %modules_dir/kernel/net/netfilter/xt_set.ko
-/lib/firmware/*
 %ghost %modules_dir/modules.alias.bin
 %ghost %modules_dir/modules.dep.bin
 %ghost %modules_dir/modules.symbols.bin
@@ -529,7 +542,7 @@ grep -q 'reboot: Power down' boot.log || ( cat boot.log && false )
 %files -n kernel-headers-modules-%flavour
 %kbuild_dir
 %old_kbuild_dir
-%dir %modules_dir
+%dir %modules_dir/
 %modules_dir/build
 
 %if_enabled docs
@@ -563,6 +576,11 @@ grep -q 'reboot: Power down' boot.log || ( cat boot.log && false )
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Mon Aug 21 2017 Dmitry V. Levin <ldv@altlinux.org> 1:4.4.83-alt1
+- v4.4.82 -> 4.4.83.
+- Synced %%check with std-def.
+- Restricted access to %%modules_dir/ (see #5969).
+
 * Sun Aug 13 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.82-alt1
 - v4.4.82
 

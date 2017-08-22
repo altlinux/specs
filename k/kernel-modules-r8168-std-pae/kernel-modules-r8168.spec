@@ -1,5 +1,5 @@
 %define module_name	r8168
-%define module_release	alt1
+%define module_release	alt4
 %define module_version	8.044.02
 
 %define flavour		std-pae
@@ -21,6 +21,8 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
 ExclusiveArch: %karch
+
+Patch0: r8168-kernel-4.11.patch
 
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-std-pae
@@ -46,20 +48,28 @@ Gigabit Ethernet controllers with PCI-Express interface.
 rm -rf kernel-source-%module_name-%module_version
 tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
+%patch0 -p1
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
 %make_build KERNELDIR=%_usrsrc/linux-%kversion-%flavour modules
 
 %install
-install -Dp -m0744 src/%module_name.ko %buildroot/%module_dir/%module_name.ko
+install -Dp -m600 src/%module_name.ko %buildroot/%module_dir/%module_name.ko
 
 %files
-%module_dir
+%module_dir/%module_name.ko
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Aug 17 2017 Dmitry V. Levin <ldv@altlinux.org> 8.044.02-alt4
+- Unpackaged %%module_dir/.
+- Restricted access to %%module_dir/%module_name.ko (see #5969).
+
+* Tue Jul 11 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.042.00-alt3
+- build with kernel 4.11 fixed
 
 * Sun Mar 12 2017 Nazarov Denis <nenderus@altlinux.org> 8.044.02-alt1
 - Version 8.044.02
