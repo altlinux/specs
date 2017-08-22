@@ -1,9 +1,9 @@
 %define webappdir %webserver_webappsdir/mediawiki
-%define major 1.23
+%define major 1.29
 
 Name: mediawiki
-Version: %major.11
-Release: alt3
+Version: %major.0
+Release: alt1
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
 
@@ -25,7 +25,7 @@ Source6: AdminSettings.sample
 Source7: 99-read-user-configs.php
 
 Patch: %name-%major-alt.patch
-Patch1: 0001-disable-skin-using-autodiscovery-mechanism-warning.patch
+#Patch1: 0001-disable-skin-using-autodiscovery-mechanism-warning.patch
 
 BuildRequires(pre): rpm-macros-apache2
 BuildRequires(pre): rpm-build-licenses
@@ -60,8 +60,11 @@ If you wish pure %name, install only %name-common package.
 Summary: Common files for %name
 Group: Networking/WWW
 PreReq: webserver-common
-Requires: php-engine >= 5
+Requires: php-engine >= 5.5.9
 Requires: diffutils
+
+AutoProv:no
+AutoReq:yes,nomingw32,nomingw64,noerlang,noruby
 
 # since 1.20
 Provides: mediawiki-extensions-ParserFunctions
@@ -72,6 +75,10 @@ Obsoletes: mediawiki-extensions-ConfirmEdit
 
 Provides: mediawiki-extensions-SearchSuggest
 Obsoletes: mediawiki-extensions-SearchSuggest
+
+Provides: mediawiki-extensions-Nuke
+Provides: mediawiki-extensions-Renameuser
+Provides: mediawiki-extensions-WikiEditor
 
 # since 1.21
 Provides: mediawiki-extensions-Cite
@@ -88,7 +95,9 @@ Conflicts: mediawiki-extensions-FCKEditor
 Provides: mediawiki-extensions-TitleBlacklist
 Provides: mediawiki-extensions-SpamBlacklist
 Provides: mediawiki-extensions-InputBox
+Provides: mediawiki-extensions-Interwiki
 Provides: mediawiki-extensions-LocalisationUpdate
+Provides: mediawiki-extensions-TitleBlacklist
 
 # since 1.22
 Provides: mediawiki-extensions-SimpleAntiSpam
@@ -98,6 +107,10 @@ Provides: mediawiki-extensions-Vector
 # since 1.23
 Provides: mediawiki-extensions-ExpandTemplates
 Provides: mediawiki-extensions-AssertEdit
+
+# since 1.27?
+Provides: mediawiki-extensions-CiteThisPage
+Provides: mediawiki-extensions-Gadgets
 
 %description -n %name-common
 %summary
@@ -119,7 +132,7 @@ Install this package, if you wish to run %name under apache2 webserver
 Summary: Virtual package for mysql requires for %name
 Group: Networking/WWW
 Requires: %name-common = %version-%release
-Requires: php5-mysql mysql-server >= 4.1
+Requires: php5-mysql mysql-server >= 5.0.3
 
 %description -n %name-mysql
 Install this package, if you wish to run %name with MySQL database
@@ -146,10 +159,10 @@ Requires: %name-common = %version-%release
 %prep
 %setup
 %patch -p2
-%patch1 -p2
+#patch1 -p2
 
 %install
-mkdir -p %buildroot%_mediawikidir
+mkdir -p %buildroot%_mediawikidir/
 
 # Copying to buildroot all files and directories and remove unneeded
 cp -r * %buildroot%_mediawikidir/
@@ -157,12 +170,15 @@ cp -r * %buildroot%_mediawikidir/
 # Not needed in the package (generate extra dependencies)
 rm -rf %buildroot%_mediawikidir/maintenance/dev/
 rm -rf %buildroot%_mediawikidir/maintenance/cssjanus/
+rm -rf %buildroot%_mediawikidir/maintenance/hhvm/
+rm -rf %buildroot%_mediawikidir/maintenance/resources/
 rm -rf %buildroot%_mediawikidir/maintenance/{Makefile,mwjsduck-gen,jsduck/,resources/update-oojs.sh}
 rm -rf %buildroot%_mediawikidir/tests/
 rm -rf %buildroot%_mediawikidir/{*.php5,*.phtml}
 rm -rf %buildroot%_mediawikidir/{COPYING,CREDITS,FAQ,HISTORY,README*,RELEASE-NOTES-*,UPGRADE}
 rm -rf %buildroot%_mediawikidir/resources/lib/oojs-ui/update-oojs-ui.sh
 rm -fr %buildroot%_mediawikidir/includes/zhtable
+rm -rf %buildroot%_mediawikidir/vendor/zordius/lightncandy/build/
 
 find %buildroot%_mediawikidir/ \
   \( -name .htaccess -or -name \*.cmi \) \
@@ -215,8 +231,7 @@ popd
 # config for enable bundled ParserFunctions
 cat > %buildroot%_mediawiki_settings_dir/50-ParserFunctions.php << EOF
 <?php
-
-require_once("\$IP/extensions/ParserFunctions/ParserFunctions.php");
+wfLoadExtension('ParserFunctions');
 
 # enable StringFunctions (like {{#pos, {{#len) by default
 \$wgPFEnableStringFunctions = true;
@@ -260,7 +275,7 @@ exit 0
 %files -n %name-common
 %add_findreq_skiplist %_datadir/%name/config/LocalSettings.php
 %_mediawikidir/
-%exclude %_datadir/%name/maintenance/hiphop/
+#exclude %_datadir/%name/maintenance/hiphop/
 %attr(2750,root,%webserver_group) %dir %webappdir/
 %attr(2770,root,%webserver_group) %dir %webappdir/config/
 %attr(2770,root,%webserver_group) %dir %webappdir/config/LocalSettings.d/
@@ -289,6 +304,15 @@ exit 0
 
 
 %changelog
+* Sun Aug 20 2017 Vitaly Lipatov <lav@altlinux.ru> 1.29.0-alt1
+- new version 1.29.0 (with rpmrb script)
+
+* Tue Jun 13 2017 Vitaly Lipatov <lav@altlinux.ru> 1.28.2-alt1
+- new version 1.28.2 (with rpmrb script)
+
+* Thu Aug 04 2016 Vitaly Lipatov <lav@altlinux.ru> 1.27.0-alt1
+- new version 1.27.0 (with rpmrb script)
+
 * Fri Oct 30 2015 Vitaly Lipatov <lav@altlinux.ru> 1.23.11-alt3
 - cleanup spec, fix error in post install script
 
