@@ -20,7 +20,7 @@
 %def_enable installed_tests
 
 Name: libgtk+3
-Version: %ver_major.18
+Version: %ver_major.19
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -50,7 +50,7 @@ Patch1: gtk+-3.18.3-bgo740554.patch
 %define colord_ver 0.1.9
 %define cups_ver 1.6
 %define wayland_ver 1.10.0
-%define wayland_protocols_ver 1.7
+%define wayland_protocols_ver 1.9
 %define epoxy_ver 1.0
 
 Provides: libgtk3-engine-adwaita = %version-%release
@@ -339,6 +339,7 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %config %_datadir/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gtk.Settings.ColorChooser.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gtk.Settings.Debug.gschema.xml
+%config %_datadir/glib-2.0/schemas/org.gtk.Settings.EmojiChooser.gschema.xml
 
 %files devel
 %_bindir/gtk-builder-tool
@@ -428,6 +429,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Tue Aug 22 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.19-alt1
+- 3.22.19
+
 * Tue Aug 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.18-alt1
 - 3.22.18
 
