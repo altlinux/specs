@@ -6,6 +6,8 @@
 %define snapshot %nil
 
 %def_disable gpsd
+%def_disable connman
+%def_enable networkmanager
 
 # Tarfile created using git
 # git clone git://anongit.freedesktop.org/geoclue
@@ -13,13 +15,14 @@
 
 Name: lib%_name
 Version: 0.12.99
-Release: alt2%snapshot
+Release: alt3%snapshot
 
 Summary: A modular geoinformation service
 Group: System/Libraries
 License: LGPLv2
 Url: http://geoclue.freedesktop.org/
 
+# NB: host unavailable as of 20170823
 Source: http://folks.o-hand.com/jku/geoclue-releases/%_name-%version.tar.gz
 #Source: %tarfile
 
@@ -28,7 +31,8 @@ BuildRequires: glib2-devel
 BuildRequires: libxml2-devel
 BuildRequires: libGConf2-devel
 BuildRequires: libgtk+2-devel
-BuildRequires: NetworkManager-glib-devel
+%{?_enable_connman:BuildRequires: connman-devel}
+%{?_enable_networkmanager:BuildRequires: NetworkManager-glib-devel}
 BuildRequires: libgypsy-devel
 %{?_enable_gpsd:BuildRequires: libgps-devel >= 2.91}
 # for skyhook provider
@@ -90,15 +94,18 @@ A gypsy provider for geoclue
 %autoreconf
 %configure --disable-static \
 	--enable-gtk-doc \
-	%{subst_enable gpsd}
+	%{subst_enable connman} \
+	%{subst_enable gpsd} \
+	%{subst_enable networkmanager} \
+	#
 # SMP-incompatible build
 %make
 
 %install
-make install DESTDIR=%buildroot
+%makeinstall_std
 # Install the test gui as it seems the test isn't installed any more
 mkdir %buildroot%_bindir
-cp test/.libs/geoclue-test-gui %buildroot%_bindir/
+cp -a test/.libs/geoclue-test-gui %buildroot%_bindir/
 
 %files
 %dir %_datadir/geoclue-providers
@@ -164,6 +171,10 @@ cp test/.libs/geoclue-test-gui %buildroot%_bindir/
 %_datadir/dbus-1/services/org.freedesktop.Geoclue.Providers.Gypsy.service
 
 %changelog
+* Wed Aug 23 2017 Michael Shigorin <mike@altlinux.org> 0.12.99-alt3
+- introduced networkmanager knob (on by default)
+- added connman support/knob (off by default)
+
 * Tue May 05 2015 Yuri N. Sedunov <aris@altlinux.org> 0.12.99-alt2
 - disabled gpsd provider (incompatible with libgps >= 3)
 
