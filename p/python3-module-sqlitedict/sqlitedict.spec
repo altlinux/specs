@@ -1,34 +1,29 @@
 %define oname sqlitedict
 Name: python3-module-%oname
-Version: 1.4.2
+Version: 1.5.0
 Release: alt1
 Summary: Persistent dict in Python, backed up by sqlite3 and pickle, multithread-safe
 License: Public domain
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/sqlitedict/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/piskvorky/sqlitedict.git
-Source0: https://pypi.python.org/packages/87/8b/e4aeac8b5341c8e691ada71c8005dbdd041897b049d41415b68ed0bc2a67/sqlitedict-%{version}.tar.gz
+Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-modules-sqlite3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-pytest python3-modules-sqlite3
 
 %py3_provides %oname
 %py3_requires sqlite3
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python3 python3-base python3-module-pluggy python3-module-py python3-module-setuptools xz
-BuildRequires: python3-module-pytest python3-modules-sqlite3 rpm-build-python3 time
 
 %description
 A lightweight wrapper around Python's sqlite3 database, with a dict-like
 interface and multi-thread access support.
 
 %prep
-%setup -q -n sqlitedict-%{version}
+%setup
 
 %build
 %python3_build_debug
@@ -37,14 +32,16 @@ interface and multi-thread access support.
 %python3_install
 
 %check
-export PYTHONPATH=$PWD
-py.test-%_python3_version
+PYTHONPATH=$(pwd) py.test3
 
 %files
 %doc *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Wed Aug 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.0-alt1
+- Updated to upstream version 1.5.0.
+
 * Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1
 - automated PyPI update
 
