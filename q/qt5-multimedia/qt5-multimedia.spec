@@ -1,10 +1,11 @@
 
 %global qt_module qtmultimedia
 %def_disable bootstrap
+%def_enable pulse
 
 Name: qt5-multimedia
 Version: 5.7.1
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Libraries
 Summary: Qt5 - Multimedia support
@@ -23,7 +24,9 @@ BuildRequires: pkgconfig(gstreamer-base-1.0)
 BuildRequires: pkgconfig(gstreamer-pbutils-1.0)
 BuildRequires: pkgconfig(gstreamer-plugins-bad-1.0)
 BuildRequires: pkgconfig(gstreamer-video-1.0)
+%if_enabled pulse
 BuildRequires: pkgconfig(libpulse) pkgconfig(libpulse-mainloop-glib)
+%endif
 BuildRequires: pkgconfig(openal)
 BuildRequires: pkgconfig(xv)
 %if_disabled bootstrap
@@ -72,6 +75,7 @@ This package contains documentation for Qt5 %qt_module
 Summary: Qt5 library
 Group: System/Libraries
 Requires: %name-common = %EVR
+Provides: qt5-multimedia = %EVR
 %description -n libqt5-multimedia
 %summary
 
@@ -83,6 +87,7 @@ syncqt.pl-qt5 -version %version -private
 %qmake_qt5 GST_VERSION=1.0
 %make_build
 %if_disabled bootstrap
+export QT_HASH_SEED=0
 %make docs
 %endif
 
@@ -123,6 +128,9 @@ syncqt.pl-qt5 -version %version -private
 %endif
 
 %changelog
+* Wed Aug 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt2%ubt
+- allow to build without pulseaudio
+
 * Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
 - new version
 
