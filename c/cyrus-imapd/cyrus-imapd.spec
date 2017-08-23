@@ -12,7 +12,7 @@
 
 Name: cyrus-imapd
 Version: 2.5.11
-Release: alt2
+Release: alt3
 
 Summary: A high-performance mail store with IMAP and POP3 support
 License: CMU License
@@ -289,6 +289,9 @@ install -m 644 %SOURCE19 %SOURCE20 %SOURCE5 doc/
 mv -f %buildroot%_cyrexecdir/master	%buildroot%_cyrexecdir/cyrus-master
 mv -f %buildroot%_mandir/man8/master.8 %buildroot%_mandir/man8/cyrus-master.8
 
+# http://bugzilla.altlinux.org/33788
+mv -f %buildroot%_man8dir/httpd.8 %buildroot%_man8dir/cyrus-httpd.8
+
 # Move utilites from /usr/libexec/cyrus to /usr/bin
 for i in arbitronsort.pl cyradm imtest mupdate-loadgen.pl convert-sieve.pl \
 	 mknewsgroups config2header config2man masssievec
@@ -451,6 +454,9 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Wed Aug 23 2017 Sergey Y. Afonin <asy@altlinux.ru> 2.5.11-alt3
+- renamed httpd.8 to cyrus-httpd.8 (Closes: #33788)
+
 * Fri May 12 2017 Sergey Y. Afonin <asy@altlinux.ru> 2.5.11-alt2
 - removed forgotten files from /var/lib/imap/socket/
   in stop() function in init script
