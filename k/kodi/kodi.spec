@@ -1,6 +1,6 @@
 Name: kodi
-Version: 17.3
-Release: alt2
+Version: 17.4
+Release: alt1
 
 Summary: Kodi Media Center
 License: GPL
@@ -78,10 +78,7 @@ export ac_cv_type__Bool=yes
 %install
 %makeinstall_std
 
-rm -rf \
-    %buildroot%_datadir/kodi/addons/library.kodi.* \
-    %buildroot%_datadir/kodi/system/players/dvdplayer/etc \
-    %buildroot%_datadir/kodi/system/players/paplayer
+rm -rf %buildroot%_datadir/kodi/system/players/VideoPlayer/etc
 
 mv %buildroot%_datadir/doc/kodi %buildroot%docdir
 
@@ -133,12 +130,16 @@ E_O_F
 %_datadir/kodi/sounds
 %_datadir/kodi/system
 %_datadir/kodi/userdata
+%_datadir/kodi/privacy-policy.txt
 
 %files devel
 %_includedir/kodi
 %_libdir/kodi/*.cmake
 
 %changelog
+* Wed Aug 23 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.4-alt1
+- 17.4 Krypton released
+
 * Mon Jul 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 17.3-alt2
 - Fixed build with gcc-6
 
