@@ -5,15 +5,17 @@
 
 Name: rss_glx
 Version: 0.9.1
-Release: alt6
+Release: alt7
 
 Summary: Really Slick Screensavers
 License: GNU GPL
 Group: Graphical desktop/Other
 
 Url: http://rss-glx.sourceforge.net
-Source: %name-%version-%release.tar.bz2
-Patch0: rss-glx-0.9.1-alt-DSO.patch
+Source: %name-%version-%release.tar
+Patch0: rss-glx-0.9.1-debian-configure.patch
+Patch1: rss-glx-0.9.1-debian-pixelcity-cpp.patch
+Patch2: rss-glx-0.9.1-debian-readme.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 # git://git.altlinux.org/people/mike/packages/rss_glx.git
 
@@ -57,7 +59,9 @@ This package contains KDE menu entries.
 
 %prep
 %setup -n %name-%version-%release
-%patch0 -p2
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -111,6 +115,10 @@ install -pm644 %name.xss %buildroot%xss_ad_dir/%name.xss
 %endif
 
 %changelog
+* Wed Aug 23 2017 Michael Shigorin <mike@altlinux.org> 0.9.1-alt7
+- replaced our patch with debian's one (adding two more while at that)
+  to fix pixelcity FTBFS
+
 * Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 0.9.1-alt6
 - Rebuilt for ImageMagick.
 
