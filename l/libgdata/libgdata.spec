@@ -9,7 +9,7 @@
 %def_enable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: Library for the GData protocol
@@ -23,7 +23,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.38
+%define glib_ver 2.44
 %define soup_ver 2.42
 %define goa_ver 3.8
 %define uhttpmock_ver 0.5.0
@@ -124,6 +124,9 @@ GObject introspection devel data for the GData library.
 %_girdir/GData-%api_ver.gir
 
 %changelog
+* Wed Aug 23 2017 Yuri N. Sedunov <aris@altlinux.org> 0.17.9-alt1
+- 0.17.9
+
 * Thu Apr 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.17.8-alt1
 - 0.17.8
 
