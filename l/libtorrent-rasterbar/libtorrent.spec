@@ -4,20 +4,19 @@
 %remove_optflags -O2
 %add_optflags -O3
 %endif
-%define abiversion 8
 %define upname libtorrent-rasterbar
 
-Name: libtorrent-rasterbar%{abiversion}
-Version: 0.16.19
+Name: libtorrent-rasterbar
+Version: 1.1.4
 Epoch: 3
-Release: alt1.1
+Release: alt1
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
 License: GPL
 Url: http://www.rasterbar.com/products/libtorrent
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/arvidn/libtorrent.git
 Source: %name-%version.tar
 
 BuildRequires: libssl-devel
@@ -56,7 +55,9 @@ that other clients and libraries suffer from. libTorrent features:
 Summary: Development libraries and header files for libTorrent
 Group: Development/C++
 Requires: %name = %epoch:%version-%release
-Provides: libtorrent-rasterbar7-devel = %epoch:%version-%release
+Provides: libtorrent-rasterbar8-devel = %epoch:%version-%release
+Conflicts: libtorrent-rasterbar8-devel < %epoch:%version-%release
+Obsoletes: libtorrent-rasterbar8-devel < %epoch:%version-%release
 Conflicts: libtorrent-rasterbar7-devel < %epoch:%version-%release
 Obsoletes: libtorrent-rasterbar7-devel < %epoch:%version-%release
 Conflicts: libtorrent-rasterbar-devel < %epoch:%version-%release
@@ -118,7 +119,7 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %files
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS ChangeLog NEWS README.rst
 %doc --no-dereference COPYING
 %_libdir/*.so.*
 
@@ -137,6 +138,9 @@ rm -f %buildroot%_libdir/*.a
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue Aug 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3:1.1.4-alt1
+- Updated to upstream version 1.1.4.
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3:0.16.19-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 

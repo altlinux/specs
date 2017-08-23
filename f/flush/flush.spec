@@ -1,8 +1,7 @@
 Name:		flush
 Summary:	GTK-based BitTorrent client
 Version:	0.9.12
-Release:	alt1.4.qa4.1
-Packager:	Motsyo Gennadi <drool@altlinux.ru>
+Release:	alt1.5
 License:	GPLv3+
 Group:		Networking/File transfer
 Url:		http://flush.sourceforge.net/
@@ -13,6 +12,7 @@ BuildRequires: doxygen gcc-c++ libconfig-c++-devel libexpat-devel
 BuildRequires: libglademm-devel libnotify-devel libssl-devel libtorrent-rasterbar-devel libdbus-devel
 
 Patch0:		%name-0.9.11-magnet_mime_support.patch
+Patch1: %name-%version-alt-build.patch
 
 %description
 Flush is a GTK-based BitTorrent client. You can use it to download files from
@@ -36,6 +36,7 @@ Flush uses Rasterbar's version of libtorrent.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p2
 
 %build
 export CXXFLAGS+="--std=gnu++11 -DBOOST_FILESYSTEM_VERSION=3 -DGLIBMM_INCLUDED_FROM_WRAP_INIT_CC"
@@ -58,8 +59,8 @@ cd ../..
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog COPYING
-%doc %_man1dir/%name.1.gz
-%doc %_mandir/*/*/%name.1.gz
+%doc %_man1dir/%name.1.*
+%doc %_mandir/*/*/%name.1.*
 %_bindir/*
 %dir %_datadir/%name
 %dir %_datadir/%name/ui
@@ -71,6 +72,9 @@ cd ../..
 %_pixmapsdir/*
 
 %changelog
+* Tue Aug 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.12-alt1.5
+- Rebuilt with new libtorrent-rasterbar.
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.12-alt1.4.qa4.1
 - Rebuilt for gcc5 C++11 ABI.
 

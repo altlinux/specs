@@ -1,34 +1,33 @@
 Name: qbittorrent
-Version: 3.1.11
+Version: 3.3.15
 Epoch: 1
-Release: alt1.2.1
+Release: alt1
 
-Summary: qBittorrent is a bittorrent client written in C++ / Qt4 using the good libtorrent library.
-Summary(ru_RU.UTF-8): qBittorrent - bittorrent клиент написанный на C++ / Qt4, использующий библиотеку libtorrent.
-Summary(uk_UA.UTF-8): qBittorrent - bittorrent-клієнт, написаний на C++ / Qt4, використовує бібліотеку libtorrent.
+Summary: qBittorrent is a bittorrent client written in C++ / Qt5 using the good libtorrent library.
+Summary(ru_RU.UTF-8): qBittorrent - bittorrent клиент написанный на C++ / Qt5, использующий библиотеку libtorrent.
+Summary(uk_UA.UTF-8): qBittorrent - bittorrent-клієнт, написаний на C++ / Qt5, використовує бібліотеку libtorrent.
 License: GPLv2
 Group: Networking/File transfer
 Url: http://qbittorrent.org
 
-Packager: Alexey Morsov <swi@altlinux.ru>
 Source: %name-%version.tar.xz
-Patch: qbittorrent-2.9.3-alt-glibc-2.16.patch
 
 %define libtorrent_version 2:0.15.9-alt0.1.svn6292
 
 BuildPreReq: desktop-file-utils
 
 BuildRequires: boost-devel boost-filesystem boost-filesystem-devel boost-datetime boost-program-options-devel boost-asio-devel
-BuildRequires: gcc-c++ libqt4-devel >= 4.4
+BuildRequires: gcc-c++ qt5-base-devel qt5-tools
 BuildRequires: libtorrent-rasterbar-devel >= %libtorrent_version 
 BuildRequires: GeoIP-Lite-Country
 BuildRequires: libnotify-devel
+BuildRequires: zlib-devel
 
 Requires: python-modules-ctypes
 Requires: GeoIP-Lite-Country
 
 %description
-qBittorrent is a bittorrent client written in C++ / Qt4 using the good 
+qBittorrent is a bittorrent client written in C++ / Qt5 using the good 
 libtorrent-rasterbar library (By Arvid Nordberg). qBittorrent is 
 free / open-source software released under the GNU GPL license. 
 qBittorrent aims to be a good alternative to all other bittorrent 
@@ -36,14 +35,14 @@ clients. The Author is Christophe Dumez, French Student in
 computer science (IT).
 
 %description -l ru_RU.UTF8
-qBittorrent - клиент bittorrent написанный на C++ / Qt4, использующий 
+qBittorrent - клиент bittorrent написанный на C++ / Qt5, использующий 
 библиотеку libtorrent-rasterbar (Arvid Nordberg). qBittorrent свободное 
 ПО с открытым исходным кодом, распространяющийся под лицензией GNU GPL. 
 qBittorrent стремится быть хорошей альтернативой всем другим bittorrent 
 клиентам. Автор Christophe Dumez, французский студент в области IT.
 
 %description -l uk_UA.UTF8
-qBittorrent - клієнт bittorrent, написаний на C++ / Qt4, використовує
+qBittorrent - клієнт bittorrent, написаний на C++ / Qt5, використовує
 бібліотеку libtorrent-rasterbar (Arvid Nordberg). qBittorrent є вільне
 ПЗ з відкритим вихідним кодом, розповсюджується під ліцензією GNU GPL.
 qBittorrent прагне бути хорошою альтернативою всім іншим bittorrent
@@ -70,24 +69,15 @@ Default is to listen on tcp/8080 with admin/adminadmin credentials
 
 %prep
 %setup
-%patch -p0
-
-# Adapt to new Boost
-subst 's/BOOST_FILESYSTEM_VERSION=2/BOOST_FILESYSTEM_VERSION=3/' src/src.pro
-
-# Fix use libtorrent-rasterbar >= 1.0.0
-subst 's,^#if LIBTORRENT_VERSION_MINOR > 15,#if LIBTORRENT_VERSION_MAJOR > 0 || LIBTORRENT_VERSION_MINOR > 15,g'   $(find src -name '*.cpp' -o -name '*.h')
-subst 's,^#if LIBTORRENT_VERSION_MINOR <,#if LIBTORRENT_VERSION_MAJOR == 0 \&\& LIBTORRENT_VERSION_MINOR <,g'      $(find src -name '*.cpp' -o -name '*.h')
-subst 's,^#if LIBTORRENT_VERSION_MINOR >= 16,#if LIBTORRENT_VERSION_MAJOR > 0 || LIBTORRENT_VERSION_MINOR >= 16,g' $(find src -name '*.cpp' -o -name '*.h')
 
 %build
-%_configure_script --prefix=%buildroot%_usr --qtdir=%_qt4dir
+%_configure_script --prefix=%buildroot%_usr
 %make_build
 
 %install
 %make_install DESTDIR=%buildroot install
 make clean
-%_configure_script --prefix=%buildroot%_usr --qtdir=%_qt4dir --disable-gui
+%_configure_script --prefix=%buildroot%_usr --disable-gui
 %make_build
 %make_install DESTDIR=%buildroot install
 
@@ -105,6 +95,9 @@ make clean
 %_datadir/icons/hicolor/*/*/*
 
 %changelog
+* Wed Aug 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.3.15-alt1
+- Updated to upstream release 3.3.15.
+
 * Sat Jun 13 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.1.11-alt1.2.1
 - Rebuilt for gcc5 C++11 ABI.
 

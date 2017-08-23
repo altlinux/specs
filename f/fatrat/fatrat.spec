@@ -3,21 +3,23 @@ BuildRequires: desktop-file-utils
 
 Name:		fatrat
 Version:	1.2.0
-Release:	alt1.beta2.%git.1
+Release:	alt1.beta2.%git.2
 Summary:	FatRat is an open source download/upload manager
 License: 	GPLv2
 Group: 		Networking/File transfer
 Url:		http://fatrat.dolezel.info/
-# git://git.dolezel.info/fatrat.git
-Source0:	%name-%version.tar
+# https://github.com/LubosD/fatrat.git
+Source:	%name-%version.tar
+Patch1: %name-%version-alt-build.patch
 
 Requires:	libqt4-core
 
 # Automatically added by buildreq on Wed Mar 16 2011 (-bi)
-BuildRequires: ImageMagick-tools cmake gcc-c++ libcurl-devel libgloox-devel libpion-net-devel libqt4-help libqt4-svg libqt4-webkit libqt4-xmlpatterns phonon-devel
+BuildRequires: ImageMagick-tools cmake gcc-c++ libcurl-devel libgloox-devel libpion-net-devel libqt4-help libqt4-svg libqt4-webkit libqt4-xmlpatterns phonon-devel 
 
 BuildRequires: /usr/bin/qcollectiongenerator-qt4
-BuildPreReq: libtorrent-rasterbar-devel libattr-devel libkqueue-devel
+BuildRequires: libtorrent-rasterbar-devel libattr-devel libkqueue-devel
+BuildRequires: boost-devel boost-asio-devel
 
 %description
 FatRat is an open source download manager for Linux
@@ -37,12 +39,13 @@ programs which make use of FatRat.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 export PATH=$PATH:%_qt4dir/bin
 doc/generate.sh
-%add_optflags -fpermissive -std=gnu++11
-%add_optflags -DBOOST_ASIO_DYN_LINK -DWITH_SFTP
+%add_optflags -fpermissive
+%add_optflags -DWITH_SFTP
 cmake \
 	-DCMAKE_INSTALL_PREFIX=%_prefix \
 	-DCMAKE_INSTALL_LIBDIR=%_libdir \
@@ -74,6 +77,7 @@ ln -s %name %buildroot%_bindir/%name-nogui
 %dir %_datadir/%name
 %_bindir/%name
 %_bindir/%name-nogui
+%_bindir/%name-conf
 %_desktopdir/%name.desktop
 %_datadir/%name
 %_man1dir/%{name}*
@@ -87,6 +91,9 @@ ln -s %name %buildroot%_bindir/%name-nogui
 %_includedir/%name
 
 %changelog
+* Tue Aug 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt1.beta2.20140105.2
+- Updated build with new dependencies and toolchain
+
 * Sat Jun 13 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.0-alt1.beta2.20140105.1
 - Rebuilt for gcc5 C++11 ABI.
 
