@@ -1,16 +1,20 @@
 Name: libsocket
 Version: 2.4.1
-Release: alt1.git20140508
+Release: alt2.git20140508
+
 Summary: The ultimate socket library, supporting TCP, UDP and Unix sockets (DGRAM and STREAM)
 License: BSD
 Group: System/Libraries
+
 Url: https://github.com/dermesser/libsocket
+Source: %name-%version.tar
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/dermesser/libsocket.git
-Source: %name-%version.tar
-
-BuildPreReq: gcc-c++ clang-devel cmake
+BuildRequires: gcc-c++ cmake
+%ifnarch e2k
+# TODO: is it reasonable on x86 either?
+BuildRequires: clang-devel
+%endif
 
 %description
 The ultimate socket library, supporting TCP, UDP and Unix sockets (DGRAM
@@ -44,8 +48,10 @@ cmake \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DCMAKE_Fortran_FLAGS:STRING="%optflags" \
+%ifnarch e2k
 	-DCMAKE_C_COMPILER=clang \
 	-DCMAKE_CXX_COMPILER=clang++ \
+%endif
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	.
 
@@ -62,6 +68,10 @@ cmake \
 %_includedir/*
 
 %changelog
+* Wed Aug 23 2017 Michael Shigorin <mike@altlinux.org> 2.4.1-alt2.git20140508
+- E2K: avoid clang
+- minor spec cleanup
+
 * Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.1-alt1.git20140508
 - Initial build for Sisyphus
 
