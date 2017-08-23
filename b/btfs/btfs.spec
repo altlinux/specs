@@ -1,6 +1,6 @@
 Name: btfs
 Version: 2.13
-Release: alt1
+Release: alt2
 
 Summary: A bittorrent filesystem based on FUSE
 
@@ -41,6 +41,9 @@ Applications like vlc and mplayer can also work without changes.
 %_man1dir/*
 
 %changelog
+* Wed Aug 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.13-alt2
+- Rebuild with new libtorrent-rasterbar.
+
 * Wed Mar 15 2017 Vitaly Lipatov <lav@altlinux.ru> 2.13-alt1
 - new version 2.13 (with rpmrb script)
 
