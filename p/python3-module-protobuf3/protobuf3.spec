@@ -1,7 +1,8 @@
 %define oname protobuf3
 Name: python3-module-%oname
-Version: 0.3.0
-Release: alt1.git20141113.1
+Epoch: 1
+Version: 0.2.1
+Release: alt1
 Summary: Protocol buffers library for Python 3
 License: MIT
 Group: Development/Python3
@@ -10,13 +11,15 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/Pr0Ger/protobuf3.git
 Source: %name-%version.tar
+Patch1: %oname-%version-alt-docs.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-enum34 protobuf-compiler
-BuildPreReq: python-module-sphinx-devel
-BuildPreReq: python-module-sphinx_rtd_theme
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-enum34 protobuf-compiler
+BuildRequires: python-module-sphinx-devel
+BuildRequires: python-module-sphinx_rtd_theme
 
 %py3_provides %oname
 %py3_requires enum34
@@ -28,6 +31,7 @@ currently there is no easy way to use it with Python 3.
 
 %prep
 %setup
+%patch1 -p1
 
 %prepare_sphinx .
 ln -s ../objects.inv docs/
@@ -42,7 +46,7 @@ ln -s ../objects.inv docs/
 
 %check
 python3 setup.py test
-py.test-%_python3_version
+py.test3
 
 %files
 %doc *.rst docs/_build/html
@@ -50,6 +54,9 @@ py.test-%_python3_version
 %python3_sitelibdir/*
 
 %changelog
+* Wed Aug 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.2.1-alt1
+- Updated to upstream release version 0.2.1.
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.0-alt1.git20141113.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
