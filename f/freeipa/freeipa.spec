@@ -12,7 +12,7 @@
 
 Name: freeipa
 Version: 4.3.3
-Release: alt5
+Release: alt6
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -144,7 +144,7 @@ BuildArch: noarch
 Requires: %name-client-common = %version-%release
 Requires: apache2-base webserver-common
 Requires: custodia
-Requires: fonts-ttf-fontawesome-web
+Requires: fonts-font-awesome
 Requires: fonts-ttf-open-sans
 
 %description server-common
@@ -697,6 +697,10 @@ fi
 %_man1dir/ipa-test-task.1.*
 
 %changelog
+* Wed Aug 23 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt6
+- Requires: fonts-ttf-fontawesome-web -> fonts-font-awesome.
+- Change paths to fontawesome.
+
 * Mon Aug 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.3-alt5
 - Enabled tests.
 
