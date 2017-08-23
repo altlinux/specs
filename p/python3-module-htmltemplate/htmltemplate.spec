@@ -1,24 +1,19 @@
 %define oname htmltemplate
 Name: python3-module-%oname
 Version: 2.2.0
-Release: alt1.1.1
+Release: alt1.2
 Summary: A simple, powerful [X]HTML templating library for Python 3
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/htmltemplate/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel
 
 %py3_provides %oname
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python3 python3-base python3-module-pluggy python3-module-py python3-module-setuptools xz
-BuildRequires: python3-module-pytest rpm-build-python3 time
 
 %description
 htmltemplate converts [X]HTML documents into simple template object
@@ -45,9 +40,6 @@ This package contains documentation and samples for %oname.
 %install
 %python3_install
 
-%check
-py.test-%_python3_version
-
 %files
 %python3_sitelibdir/*
 
@@ -55,6 +47,9 @@ py.test-%_python3_version
 %doc doc sample
 
 %changelog
+* Wed Aug 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.0-alt1.2
+- Fixed build.
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.2.0-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
