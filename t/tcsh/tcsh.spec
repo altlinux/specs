@@ -1,148 +1,133 @@
 Name: tcsh
-Version: 6.18.01
-Release: alt2.qa1
-
+Version: 6.20.00
+Release: alt2
 Summary: An enhanced version of csh, the C shell
 License: BSD
 Group: Shells
-
-URL: http://www.tcsh.org/
-Source: ftp://ftp.astron.com/pub/tcsh/tcsh-%version.tar.gz
-
-Patch1: tcsh-6.15.00-closem.patch
-Patch2: tcsh-6.17.00-alt-tinfo.patch
-Patch3: tcsh-6.14.00-unprintable.patch
-
-Patch5: tcsh-6.10.01-config-nodot.patch
-Patch6: tcsh-6.17.00-alt-lscolors.patch
-
-Patch8: tcsh-6.14.00-syntax.patch
-Patch9: tcsh-6.13.00-memoryuse.patch
-Patch10: tcsh-6.14.00-order.patch
-
-Patch14: tcsh-6.17.00-glob-automount.patch
-
-# Don't die on unknown LS_COLORS values
-Patch100: tcsh-6.14.00-unknown_lscolors.patch
-
-Patch101: tcsh-6.10.00-glibc_compat.patch
-
-# To be rediffed, not applied for now
-Patch300: tcsh-6.14.00-suse-owl-alt-shtmp.patch
-Patch301: tcsh-6.10.01-deb-man.patch
-Patch302: tcsh-6.10.01-alt-cleanups.patch
-
-Patch400: tcsh-6.18.01-gcc5-calloc.patch
-Patch401: tcsh-6.18.01-union-wait.patch
-
+URL: http://www.tcsh.org
+Source0: ftp://ftp.astron.com/pub/tcsh/tcsh-%version.tar.gz
+Source1: tcsh.login
+Source2: tcsh.cshrc
+Source3: tcshrc.skel
+Patch0: tcsh-%version-alt-build.diff
+Patch1: tcsh-%version-alt-closem-nosocket.diff
+Patch2: tcsh-%version-alt-maxwidth.diff
+Patch3: tcsh-%version-alt-tinfo.diff
+Patch4: tcsh-%version-owl-config.diff
+Patch5: tcsh-%version-owl-lscolors.diff
+Patch6: tcsh-%version-owl-no-TIOCSTI.diff
+Patch7: tcsh-%version-owl-strnxxx.diff
+Patch8: tcsh-%version-owl-tmp.diff
+Patch9: tcsh-%version-owl-warnings.diff
+Conflicts: setup < 2.2.14-alt2
 Provides: csh = %version
 
 # Automatically added by buildreq on Sun Jan 15 2012
 BuildRequires: groff-base libtinfo-devel
 
 %description
-Tcsh is an enhanced but completely compatible version of csh, the C shell. Tcsh
-is a command language interpreter which can be used both as an interactive login
-shell and as a shell script command processor. Tcsh includes a command line
-editor, programmable word completion, spelling correction, a history mechanism,
-job control and a C language like syntax.
+tcsh is an enhanced but completely compatible version of csh, the C
+shell.  tcsh is a command language interpreter which can be used both
+as an interactive login shell and as a shell script command processor.
+tcsh includes a command line editor, programmable word completion,
+spelling correction, a history mechanism, job control and a C language
+like syntax.
 
 %package doc
-Summary: HTML doc files for tcsh
 Group: Shells
-Requires: tcsh = %version
-
+Summary: Optional documentation for %name
 BuildArch: noarch
+Requires: %name = %EVR
 
 %description doc
-HTML doc files for tcsh.
+This package contains optional documentation for %name.
 
 %prep
 %setup
-
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-
+%patch4 -p1
 %patch5 -p1
 %patch6 -p1
-
+%patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
 
-%patch14 -p1
-
-%patch100 -p1
-%patch101 -p1
-
-# To be rediffed:
-#%patch300 -p1
-#%patch301 -p1
-#%patch302 -p1
-
-%patch400 -p1
-%patch401 -p1
-
-cat > catalogs << _EOF
-de ISO-8859-1 german
-el ISO-8859-7 greek
-en ISO-8859-1 C
-es ISO-8859-1 spanish
-et ISO-8859-1 et
-fi ISO-8859-1 finnish
-fr ISO-8859-1 french
-it ISO-8859-1 italian
-ja eucJP      ja
-pl ISO-8859-2 pl
-ru KOI8-R russian
-uk KOI8-U ukrainian
-_EOF
-
-cat catalogs | while read lang charset language ; do
-	if ! grep -q '^$ codeset=' nls/$language/set1 ; then
-		echo '$ codeset='$charset	>  nls/$language/set1.codeset
-		cat nls/$language/set1		>> nls/$language/set1.codeset
-		cat nls/$language/set1.codeset	>  nls/$language/set1
-		rm  nls/$language/set1.codeset
-	fi
-done
-
-nroff -me eight-bit.me >eight-bit.txt
+%define _bindir	/bin
 
 %build
-# autoreconf needed for alt-tinfo patch
-autoreconf
-%configure --bindir=/bin
-%make_build all
-perl ./tcsh.man2html tcsh.man
-%make_build -C nls catalogs
+%configure \
+  --disable-rpath
+%__make all
+test -x %__perl && %__perl tcsh.man2html tcsh.man || :
+%__make -C nls catalogs
 
 %install
-install -pD -m755 tcsh %buildroot/bin/tcsh
-install -pD -m644 tcsh.man %buildroot%_man1dir/tcsh.1
-ln -s tcsh %buildroot/bin/csh
-ln -s tcsh.1 %buildroot%_man1dir/csh.1
+install -pm 755 -D tcsh %buildroot/bin/tcsh
+install -pm 644 -D tcsh.man %buildroot%_man1dir/tcsh.1
+ln -sf tcsh %buildroot/bin/csh
+ln -sf tcsh.1 %buildroot%_man1dir/csh.1
 
-cat catalogs | while read lang charset language ; do
+install -pm 644 -D %_sourcedir/tcshrc.skel %buildroot/etc/skel/.tcshrc
+install -pm 644 %_sourcedir/tcsh.login %buildroot/etc/csh.login
+install -pm 644 %_sourcedir/tcsh.cshrc %buildroot/etc/csh.cshrc
+
+while read lang language; do
 	dest=%buildroot%_datadir/locale/$lang/LC_MESSAGES
-	if test -f tcsh.$language.cat ; then
-		mkdir -p $dest
-		install -m644 tcsh.$language.cat $dest/tcsh
-		echo "%lang($lang) %_datadir/locale/$lang/LC_MESSAGES/tcsh"
+	if test -f nls/$language.cat; then
+		install -pm 644 -D nls/$language.cat $dest/tcsh.mo
 	fi
-done > tcsh.lang
+done << EOF
+en C
+et et
+fi finnish
+fr french
+de german
+el greek
+it italian
+ja ja
+pl pl
+ru russian
+es spanish
+uk ukrainian
+EOF
+
+%find_lang tcsh
+
+%post
+# do not edit /etc/shells on upgrades
+if [ $1 -eq 1 ]; then
+	grep -Fqx /bin/csh /etc/shells || echo /bin/csh >> /etc/shells
+	grep -Fqx /bin/tcsh /etc/shells || echo /bin/tcsh >> /etc/shells
+fi
+
+%preun
+# do not edit /etc/shells on upgrades
+if [ $1 -eq 0 ]; then
+	sed -i -e '/^\/bin\/t\?csh$/d' /etc/shells
+fi
 
 %files -f tcsh.lang
+%config(noreplace) /etc/csh.*
+%config(noreplace) /etc/skel/.tcshrc
 /bin/csh
 /bin/tcsh
-%_man1dir/*
-%doc NewThings FAQ Fixes complete.tcsh eight-bit.txt
+%_man1dir/*.*
 
 %files doc
-%doc tcsh.html/*
+%doc NewThings FAQ complete.tcsh Fixes tcsh.html
 
 %changelog
+* Thu Aug 24 2017 Dmitry V. Levin <ldv@altlinux.org> 6.20.00-alt2
+- Fixed and cleaned up spec, resurrected %%changelog.
+
+* Tue Jul 25 2017 Alexey V.Vissarionov <gremlin@altlinux.org> 6.20.00-alt1
+- Updated to 6.20.00.
+- Disabled TIOCSTI (avoid CVE-2017-5226 issues).
+- Moved documentation to separate subpackage.
+
 * Thu Nov 17 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.18.01-alt2.qa1
 - Fixed build with glibc >= 2.24.
 
