@@ -3,7 +3,7 @@
 %def_enable gtk_doc
 
 Name: grilo
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Content discovery framework
@@ -24,7 +24,7 @@ BuildRequires: gtk-doc >= 1.10
 BuildRequires: gobject-introspection-devel >= 0.9.0
 BuildRequires: libtotem-pl-parser-devel >= 3.4.1
 BuildRequires: gstreamer1.0-devel
-#BuildRequires: liblua5-devel >= 5.3.0
+
 
 %description
 Grilo is a framework that provides access to different sources of
@@ -150,6 +150,9 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 %endif
 
 %changelog
+* Thu Aug 24 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
+- 0.3.4
+
 * Tue Feb 14 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
 - 0.3.3
 
