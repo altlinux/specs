@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _name p11-kit
 %define _libexecdir %_prefix/libexec
 
@@ -10,7 +10,7 @@
 %def_disable systemd
 
 Name: lib%_name
-Version: 0.23.7
+Version: 0.23.8
 Release: alt1
 
 Summary: Library for loading and sharing PKCS#11 modules
@@ -27,7 +27,7 @@ Source: https://github.com/p11-glue/%_name/releases/download/%version/%_name-%ve
 %endif
 
 Source1: p11-kit-extract-trust
-Patch: %name-0.19.3-alt-lfs.patch
+Patch: %name-0.23.8-alt-lfs.patch
 
 Requires: ca-certificates
 Requires: pkcs11-trust-module = %version-%release
@@ -37,6 +37,7 @@ BuildRequires: libtasn1-devel libffi-devel
 BuildRequires: libnss-devel
 %endif
 %{?_enable_systemd:BuildRequires: systemd-devel}
+%{?_enable_doc:BuildRequires: gtk-doc}
 
 %description
 %_name provides a way to load and enumerate PKCS#11 modules, as well
@@ -94,8 +95,8 @@ This package contains development documentation for %_name library.
 	--with-libtasn1 \
 	--with-trust-paths=%trust_paths \
 %endif
-	--with-hash-impl=%hash_impl
-
+	--with-hash-impl=%hash_impl \
+	%{subst_enable doc}
 %make_build
 
 %install
@@ -150,12 +151,17 @@ EOF
 %files devel
 %_includedir/%_name-1
 %_libdir/lib%_name.so
-%_libdir/pkgconfig/%_name-1.pc
+%_pkgconfigdir/%_name-1.pc
 
+%if_enabled doc
 %files devel-doc
 %_datadir/gtk-doc/html/%_name
+%endif
 
 %changelog
+* Thu Aug 24 2017 Yuri N. Sedunov <aris@altlinux.org> 0.23.8-alt1
+- 0.23.8 (0.23.7-24-g26312a8)
+
 * Sun Jun 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.23.7-alt1
 - 0.23.7
 
