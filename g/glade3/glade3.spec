@@ -2,7 +2,7 @@
 %def_disable gnome
 
 Name: glade3
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: GTK+2%{?_enable_gnome:/GNOME2} widget builder
@@ -20,14 +20,13 @@ Requires: libgladeui = %version-%release
 BuildPreReq: rpm-build-licenses rpm-build-gnome
 
 # From configure.ac
-BuildPreReq: intltool >= 0.35.0
+BuildPreReq: intltool >= 0.35.0 yelp-tools
 BuildPreReq: gnome-common
 BuildPreReq: gtk-doc >= 1.9
 BuildPreReq: libgtk+2-devel >= 2.24.0
 BuildPreReq: libxml2-devel >= 2.4.0
 %{?_enable_gnome:BuildRequires: libbonoboui-devel libgnomeui-devel}
 BuildPreReq: python-module-pygtk-devel >= 2.10.0
-BuildPreReq: gnome-doc-utils >= 0.9.0
 
 %description
 Glade 3 is a Widget builder for Gtk/gnome.
@@ -109,6 +108,9 @@ cat %name.lang glade.lang > lang
 %exclude %_libdir/glade3/modules/*.la
 
 %changelog
+* Thu Aug 24 2017 Yuri N. Sedunov <aris@altlinux.org> 3.8.6-alt1
+- 3.8.6
+
 * Thu Oct 30 2014 Yuri N. Sedunov <aris@altlinux.org> 3.8.5-alt1
 - 3.8.5
 
