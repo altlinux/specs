@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
 %define		branch 0.11
-%define		svn svn7121
+%define		svn svn7388
 
 Version:	%branch.0
 Name:		qmmp-plugin-pack
@@ -26,6 +26,8 @@ Plugins List
  - FFap - enhanced Monkey's Audio (APE) decoder (24-bit samples and embedded cue support)
  - XMP - support for MOD, S3M, IT and others tracker formats
  - SRC - Qmmp Sample Rate Converter Plugin
+ - Goom - Qmmp Goom Visual Plugin
+ - History - Qmmp Listening History Plugin
 
 %description -l ru_RU.UTF8
 Набор дополнительных модулей для Qmmp.
@@ -35,6 +37,8 @@ Plugins List
  - FFap - улучшенный декодер Monkey's Audio (APE) (поддержка 24-х бит и встроенного cue)
  - XMP - поддержка для MOD, S3M, IT и прочих трекерных форматов
  - SRC - модуль конвертера Sample Rate для Qmmp
+ - Goom - Модуль визуализации Goom для Qmmp
+ - History - Модуль журнала прослушиваний для Qmmp
 
 %description -l uk_UA.UTF8
 Набір додаткових модулів для Qmmp.
@@ -44,6 +48,8 @@ Plugins List
  - FFap - покращений декодер Monkey's Audio (APE) (підтримка 24-х біт та вбудованого cue)
  - XMP - підтримка для MOD, S3M, IT та інших трекерних форматів
  - SRC - модуль конвертера Sample Rate для Qmmp
+ - Goom - Модуль візуалізації Goom для Qmmp
+ - History - Модуль  журнала прослуховування для Qmmp
 
 %package -n %name-in-mpg123
 Summary: MPG123 - MPEG v1/2 layer1/2/3 decoder using of libmpg123 library
@@ -125,6 +131,22 @@ Qmmp Goom Visual Plugin
 %description -l uk_UA.UTF8 -n %name-vis-goom
 Модуль візуалізації Goom для Qmmp
 
+%package -n %name-history
+Summary: Qmmp Listening History Plugin
+Summary(ru_RU.UTF8): Модуль журнала прослушиваний для Qmmp
+Summary(uk_UA.UTF8): Модуль  журнала прослуховування для Qmmp
+Group: Sound
+Requires: qmmp >= %version-%release
+
+%description -n %name-history
+Qmmp Listening History Plugin
+
+%description -l ru_RU.UTF8 -n %name-history
+Модуль журнала прослушиваний для Qmmp
+
+%description -l uk_UA.UTF8 -n %name-history
+Модуль  журнала прослуховування для Qmmp
+
 %prep
 %setup -q -n %name-svn
 
@@ -151,7 +173,13 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %
 %files -n %name-vis-goom
 %_libdir/qmmp/Visual/libgoom.so
 
+%files -n %name-history
+%_libdir/qmmp/General/libhistory.so
+
 %changelog
+* Fri Aug 25 2017 Motsyo Gennadi <drool@altlinux.ru> 0.11.0-alt1.svn7388
+- build svn7388
+
 * Mon Apr 17 2017 Motsyo Gennadi <drool@altlinux.ru> 0.11.0-alt1.svn7121
 - build svn7121
 
