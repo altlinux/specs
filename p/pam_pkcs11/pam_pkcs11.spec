@@ -2,7 +2,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.9
-Release: alt13
+Release: alt14
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -187,6 +187,12 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ldap_mapper.so
 
 %changelog
+* Thu Aug 24 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt14
+- Fix/improve: Return PAM_IGNORE if the token isn\'t present and
+  card_only isn\'t set.
+- Fix: Return PAM_IGNORE on PIN change request if the current login
+  is not related to a token.
+
 * Thu Aug 24 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt13
 - Add password (PIN) management steps to the PAM stack.
 - Implement "pam_sm_chauthtok" (the "password" part of PAM).
