@@ -1,9 +1,10 @@
 
 %global qt_module qtquick1
+%def_disable qtwebkit
 
 Name: qt5-quick1
 Version: 5.7.1
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Libraries
 Summary: A declarative language for describing user interfaces in Qt5
@@ -14,7 +15,10 @@ Source: %qt_module-opensource-src-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ glibc-devel
-BuildRequires: qt5-base-devel qt5-script-devel qt5-declarative-devel qt5-webkit-devel qt5-xmlpatterns-devel qt5-tools qt5-tools-devel
+BuildRequires: qt5-base-devel qt5-script-devel qt5-declarative-devel qt5-xmlpatterns-devel qt5-tools qt5-tools-devel
+%if_enabled qtwebkit
+BuildRequires: qt5-webkit-devel
+%endif
 
 %description
 Qt Quick is a collection of technologies that are designed to help
@@ -72,6 +76,7 @@ syncqt.pl-qt5 -version %version -private
 %build
 %qmake_qt5
 %make_build
+#export QT_HASH_SEED=0
 #%make docs
 
 %install
@@ -88,7 +93,9 @@ syncqt.pl-qt5 -version %version -private
 %_qt5_bindir/qml*
 %_bindir/qml*
 %_qt5_importdir/Qt/labs/*
+%if_enabled qtwebkit
 %_qt5_importdir/QtWebKit/
+%endif
 %_qt5_importdir/builtins.qmltypes
 
 %files devel
@@ -108,6 +115,9 @@ syncqt.pl-qt5 -version %version -private
 #%_qt5_docdir/*
 
 %changelog
+* Thu Aug 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt2%ubt
+- build without qtwebkit
+
 * Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
 - new version
 
