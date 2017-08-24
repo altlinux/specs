@@ -2,7 +2,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.9
-Release: alt12
+Release: alt13
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -24,6 +24,8 @@ Patch10: pam_pkcs11-0.6.9-systemd.patch
 Patch11: pam_pkcs11-0.6.9-gost-support.patch
 Patch12: pam_pkcs11-0.6.9-oid-mapper.patch
 Patch13: pam_pkcs11-0.6.9-oid-mapper-profiles.patch
+Patch14: pam_pkcs11-0.6.9-setpin.patch
+Patch15: pam_pkcs11-0.6.9-setpin-config.patch
 
 %add_findreq_skiplist %_sysconfdir/pam.d/*
 Requires: pam-config PAM(pam_mkhomedir.so) PAM(pam_pkcs11.so) PAM(pam_succeed_if.so)
@@ -89,6 +91,8 @@ as a separate package.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
+%patch15 -p1
 
 # fixup configs
 sed -i -e '
@@ -183,6 +187,10 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ldap_mapper.so
 
 %changelog
+* Thu Aug 24 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt13
+- Add password (PIN) management steps to the PAM stack.
+- Implement "pam_sm_chauthtok" (the "password" part of PAM).
+
 * Mon Aug 14 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt12
 - Explicitly require pcsc-lite (for pcscd).
 - Also require pcsc-lite-ccid (as related to the default OpenSC
