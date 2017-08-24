@@ -9,7 +9,7 @@
 
 Name: squid
 Version: 3.5.26
-Release: alt1
+Release: alt2
 %define langpack_ver 20150704
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -305,6 +305,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Fri Jul 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.26-alt2
+- Fixed build with new cppunit
+
 * Tue Jun 06 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.5.26-alt1
 - Updated to 3.5.26.
 
