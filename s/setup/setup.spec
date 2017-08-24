@@ -1,5 +1,5 @@
 Name: setup
-Version: 2.2.14
+Version: 2.2.15
 Release: alt1
 
 Summary: Initial set of configuration files
@@ -52,7 +52,6 @@ find %buildroot%_sysconfdir/profile.d -type l |
 %files -f profile.list
 %config(noreplace) %verify(not md5 size mtime) %_sysconfdir/passwd
 %config(noreplace) %verify(not md5 size mtime) %_sysconfdir/group
-%config(noreplace) %_sysconfdir/csh.*
 %config(noreplace) %_sysconfdir/exports
 %config(noreplace) %_sysconfdir/filesystems
 %config(noreplace) %verify(not md5 size mtime) %_sysconfdir/fstab
@@ -73,6 +72,15 @@ find %buildroot%_sysconfdir/profile.d -type l |
 %_datadir/base-passwd
 
 %changelog
+* Thu Aug 24 2017 Alexey Gladkov <legion@altlinux.ru> 2.2.15-alt1
+- Dropped /etc/csh.* (closes: #33676).
+- /etc/profile.d/proxy.*sh: learned no_proxy env (closes: #33258).
+- Updated /etc/services (closes: #33630).
+- Updated /etc/protocols (closes: #32052).
+- /etc/profile.d/lang.*sh: added /etc/locale.conf as one more source of locale settings (closes: #28527).
+- /etc/profile: do not add /usr/X11R6/bin to $PATH (see ALT#11699).
+- /etc/exports: renamed portmap to rpcbind in the comment (closes: #26000).
+
 * Tue Oct 12 2010 Dmitry V. Levin <ldv@altlinux.org> 2.2.14-alt1
 - /etc/services: added portbind and quotad/rquotad (closes: #24245).
 
