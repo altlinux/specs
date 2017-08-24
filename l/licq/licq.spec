@@ -55,7 +55,7 @@ This version of Licq has SSL support for those plugins that support it.
 
 Name: %rname
 Version: %ver
-Release: %rlz.1.1
+Release: %rlz.2
 
 BuildRequires(pre): kde4libs-devel
 BuildRequires(pre): graphviz
@@ -114,6 +114,8 @@ Patch3: licq-1.7.0-alt-qt4-def-encoding.patch
 Patch17: licq_osd_plugin-1.3.2.1-defaults.patch
 #
 Patch22: licq-1.3.6-alt-qt4-yes-stl.patch
+
+Patch50: %name-%version-alt-gcc6.patch
 
 Patch200: licq-1.2.7-remove-pidfile.patch
 
@@ -403,6 +405,8 @@ pushd plugins/qt4-gui*
 %patch22 -p1
 popd
 
+%patch50 -p2
+
 %if %with_aosd
 %else
     rm -rf plugins/aosd
@@ -641,6 +645,9 @@ popd
 
 ########################################################
 %changelog
+* Thu Aug 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.2-alt1.2
+- Fixed build with gcc-6.
+
 * Sun Jun 14 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.8.2-alt1.1.1
 - Rebuilt for gcc5 C++11 ABI.
 
