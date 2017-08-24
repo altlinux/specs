@@ -4,7 +4,7 @@
 
 Name: qt5-location
 Version: 5.7.1
-Release: alt2%ubt
+Release: alt3%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtLocation component
@@ -86,6 +86,10 @@ Requires: qt5-quickcontrols
 %setup -n %qt_module-opensource-src-%version
 syncqt.pl-qt5 -version %version -private
 
+%ifarch e2k
+sed -i 's|-ftree-vectorize||' src/3rdparty/*/*.pro
+%endif
+
 %build
 %qmake_qt5
 %make_build
@@ -128,6 +132,9 @@ export QT_HASH_SEED=0
 %endif
 
 %changelog
+* Thu Aug 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt3%ubt
+- fix to build with lcc compiler
+
 * Wed Aug 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt2%ubt
 - fix build requires
 
