@@ -1,6 +1,6 @@
 Name:    qt5-gstreamer1
 Version: 1.2.0
-Release: alt5
+Release: alt6%ubt
 
 Summary: C++ bindings for GStreamer with a Qt-style API
 License: LGPLv2+
@@ -16,9 +16,8 @@ Patch2: 002-boost157.patch
 Patch3: 003-gstreamer151.patch
 Patch4: 004-boost160.patch
 
-BuildRequires(pre): cmake
+BuildRequires(pre): cmake rpm-build-ubt
 BuildRequires: gcc-c++
-BuildRequires: automoc
 BuildRequires: flex
 BuildRequires: boost-devel
 BuildRequires: gstreamer1.0-devel
@@ -103,6 +102,9 @@ for %name.
 
 
 %changelog
+* Thu Aug 24 2017 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt6%ubt
+- fix build requires
+
 * Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt5
 - package Qt5Glib separately
 
