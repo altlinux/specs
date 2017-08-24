@@ -1,7 +1,7 @@
 %define _sover 6.1
 Name: libdb%_sover
 Version: %_sover.19
-Release: alt2
+Release: alt3
 %define srcname db-%version
 
 Summary: Berkeley database library
@@ -403,6 +403,9 @@ done
 %endif
 
 %changelog
+* Thu Aug 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.19-alt3
+- Rebuilt with gcc-6.
+
 * Sun Apr 17 2016 Igor Vlasenko <viy@altlinux.ru> 6.1.19-alt2
 - NMU: fixed substitute.d files
 
