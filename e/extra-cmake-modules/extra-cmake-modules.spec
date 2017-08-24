@@ -1,7 +1,11 @@
 
+%ifarch e2k
+%add_python_req_skip clang
+%endif
+
 Name: extra-cmake-modules
 Version: 5.37.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
@@ -20,7 +24,7 @@ Patch1: alt-find-qcollectiongenerator.patch
 #BuildRequires: cmake ctags dblatex gyp libicu56 openbabel python-module-BeautifulSoup python-module-Pillow python-module-Reportlab python-module-alabaster python-module-bzr-fastimport python-module-cups python-module-ecdsa python-module-ed25519 python-module-html5lib python-module-nss python-module-polib python-module-pyExcelerator python-module-pycrypto python-module-pygraphviz python-module-pyparsing python-module-sphinx_rtd_theme python-modules-tkinter python3-dev rpm-build-gir ruby-stdlibs time
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake qt5-tools qt5-tools-devel
-BuildRequires: /usr/bin/sphinx-build
+BuildRequires: /usr/bin/sphinx-build rpm-build-python
 
 
 %description
@@ -47,6 +51,9 @@ Additional modules for CMake build system needed by KDE Frameworks.
 %doc %_man7dir/*
 
 %changelog
+* Thu Aug 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt2%ubt
+- fix requires
+
 * Wed Aug 16 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt1%ubt
 - new version
 
