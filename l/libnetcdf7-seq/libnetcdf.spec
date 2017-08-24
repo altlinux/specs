@@ -6,16 +6,14 @@
 %define hdfdir %_libdir/hdf5-seq
 
 Name: %sname%sover-seq
-Version: %major.3.2
+Version: %major.4.1.1
 Release: alt1
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF)
 
 License: NetCDF
 Group: System/Libraries
-Url: http://www.unidata.ucar.edu/packages/netcdf/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: http://www.unidata.ucar.edu/software/netcdf/
 
 Requires(post,preun): alternatives
 Requires: libhdf5-8-seq
@@ -31,7 +29,9 @@ Provides: %sname.so.%sover()(64bit)
 Provides: %sname.so.%sover
 %endif
 
+# https://github.com/Unidata/netcdf-c.git
 Source: %oname-%version.tar
+Patch1: %oname-%version-alt-build.patch
 
 # Automatically added by buildreq on Sun Jan 18 2009
 BuildRequires: flex gcc-c++ gcc-fortran zlib-devel libhdf5-devel
@@ -122,6 +122,7 @@ Documentation for NetCDF library.
 
 %prep
 %setup
+%patch1 -p1
 
 rm -fR udunits/expat
 
@@ -167,7 +168,7 @@ ln -s %hdfdir/include/netcdf %buildroot%_includedir/netcdf-3
 ln -s %hdfdir/include/netcdf %buildroot%_includedir/netcdf
 rm -f %buildroot%hdfdir/lib/*.la
 
-install -m644 man4/man/man3/* %buildroot%_man3dir
+install -m644 docs/man/man3/* %buildroot%_man3dir
 
 # alternatives
 
@@ -229,13 +230,16 @@ rm -fR %_includedir/netcdf-3 %_includedir/netcdf \
 %_altdir/%name-devel.alternatives
 
 %files doc
-%doc man4/html examples
+%doc docs/html examples
 %_man3dir/*
 %exclude %_man3dir/error.3*
 %exclude %_man3dir/netcdf.3*
-%exclude %_man3dir/index.3*
+#exclude %_man3dir/index.3*
 
 %changelog
+* Thu Aug 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.1.1-alt1
+- Updated to stable upstream version 4.4.1.1.
+
 * Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.2-alt1
 - Version 4.3.2
 
