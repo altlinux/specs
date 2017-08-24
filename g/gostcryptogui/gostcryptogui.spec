@@ -1,8 +1,8 @@
-%define gitrev 0c6d930
+%define gitrev 201ea87
 
 Name: gostcryptogui
 Version: 0.3
-Release: alt0.2.a.git%gitrev
+Release: alt0.3.a.git%gitrev
 Summary: A PyQt GUI for performing cryptographic operations over files using GOST algorithms
 
 License: MIT
@@ -69,6 +69,9 @@ rm -f %buildroot%_iconsdir/gost-crypto-gui.png
 %_iconsdir/*.png
 
 %changelog
+* Thu Aug 24 2017 Andrey Cherepanov <cas@altlinux.org> 0.3-alt0.3.a.git201ea87
+- (upstream fix) Single quote in certificate fields
+
 * Thu Jun 01 2017 Andrey Cherepanov <cas@altlinux.org> 0.3-alt0.2.a.git0c6d930
 - [upstreram fix] 'Open in folder' and 'send via email' buttons on messagebox
 
