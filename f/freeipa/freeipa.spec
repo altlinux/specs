@@ -12,7 +12,7 @@
 
 Name: freeipa
 Version: 4.3.3
-Release: alt6
+Release: alt7
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -624,6 +624,23 @@ if ipa_configured; then
 	fi
 fi
 
+# Update ipa.conf for new fontawesome path.
+%triggerpostun server-common -- freeipa-server-common <= 4.3.3-alt6
+if ipa_configured; then
+	# Create new ipa.conf from template:
+	# this much simpler then edit existing ipa.conf
+	TMP_FILE="$(mktemp /etc/httpd2/conf/sites-available/ipa.conf.XXXXXX)"
+	if [ -n "$TMP_FILE" ]; then
+		cp -Z /usr/share/ipa/ipa.conf "$TMP_FILE" ||:
+		sed -i 's|\$CRL_PUBLISH_PATH|/var/lib/ipa/pki-ca/publish|' "$TMP_FILE" ||:
+		mv -f "$TMP_FILE" /etc/httpd2/conf/sites-available/ipa.conf ||:
+
+		if systemctl is-enabled httpd2.service >/dev/null 2>&1; then
+			systemctl try-restart httpd2.service >/dev/null 2>&1 ||:
+		fi
+	fi
+fi
+
 %files server-dns
 %_sbindir/ipa-dns-install
 %_man1dir/ipa-dns-install.1.*
@@ -697,6 +714,9 @@ fi
 %_man1dir/ipa-test-task.1.*
 
 %changelog
+* Thu Aug 24 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt7
+- httpd2: Update existing ipa.conf for fontawesome path.
+
 * Wed Aug 23 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt6
 - Requires: fonts-ttf-fontawesome-web -> fonts-font-awesome.
 - Change paths to fontawesome.
