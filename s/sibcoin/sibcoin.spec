@@ -2,7 +2,7 @@
 
 Name:		sibcoin
 Version:	0.16.1.1
-Release:	alt1
+Release:	alt2
 Summary:	Siberian Chervonets Wallet
 Url:		http://sibcoin.org/en/
 Group:		Office
@@ -57,5 +57,8 @@ convert -resize 128x128 %SOURCE1 %buildroot%_giconsdir/%name.png
 %_giconsdir/%name.png
 
 %changelog
+* Thu Aug 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.16.1.1-alt2
+- Rebuilt with updated libdb4.8.
+
 * Fri Jul 07 2017 Motsyo Gennadi <drool@altlinux.ru> 0.16.1.1-alt1
 - initial build for ALT Linux

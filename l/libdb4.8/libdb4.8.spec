@@ -1,7 +1,7 @@
 %define _sover 4.8
 Name: libdb%_sover
 Version: %_sover.30
-Release: alt1
+Release: alt2
 %define srcname db-%version
 
 Summary: Berkeley database library
@@ -432,6 +432,9 @@ done
 %_libdir/libdb-[0-9]*.a
 
 %changelog
+* Thu Aug 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.30-alt2
+- Rebuilt with gcc-6.
+
 * Tue Jun 12 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 4.8.30-alt1
 - Updated to 4.8.30.
 - Removed %{name}_int-devel subpackage.
