@@ -3,41 +3,35 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.1
-Release: alt1.git20150807.1.1
+Version: 1.4.6
+Release: alt1
 Summary: The AWS SDK for Python
 License: ASLv2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/boto3/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/boto/boto3.git
-# branch: develop
 Source: %name-%version.tar
+Patch1: %oname-%version-alt-docs.patch
+
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-botocore python-module-bcdoc
-#BuildPreReq: python-module-jmespath python-module-six
-#BuildPreReq: python-module-nose python-module-mock
-#BuildPreReq: python-module-futures
-#BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
-#BuildPreReq: python-module-guzzle_sphinx_theme
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-devel python-module-setuptools-tests python-module-unittest2 python-module-mock
+BuildRequires: python-module-botocore python-module-html5lib python-module-nose python-module-pbr
+BuildRequires: python-module-futures
+BuildRequires: python-module-alabaster python-module-guzzle_sphinx_theme python-module-objects.inv
+BuildRequires: python2.7(s3transfer)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-botocore python3-module-bcdoc
-#BuildPreReq: python3-module-jmespath python3-module-six
-#BuildPreReq: python3-module-nose python3-module-mock
+BuildRequires: python3-devel python3-module-setuptools-tests python3-module-unittest2 python3-module-mock
+BuildRequires: python3-module-botocore python3-module-html5lib python3-module-nose python3-module-pbr
+BuildRequires: python3-module-sphinx
+BuildRequires: python3(s3transfer)
 %endif
 
 %py_provides %oname
 %py_requires concurrent.futures
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-dateutil python-module-docutils python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-jmespath python-module-markupsafe python-module-ntlm python-module-pyasn1 python-module-pytest python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-Pygments python3-module-babel python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-dateutil python3-module-docutils python3-module-enum34 python3-module-genshi python3-module-jinja2 python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-pytest python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
-BuildRequires: python-module-alabaster python-module-botocore python-module-futures python-module-guzzle_sphinx_theme python-module-html5lib python-module-nose python-module-objects.inv python-module-pbr python-module-setuptools-tests python-module-unittest2 python3-module-botocore python3-module-html5lib python3-module-nose python3-module-pbr python3-module-setuptools-tests python3-module-sphinx python3-module-unittest2 rpm-build-python3 time
 
 %description
 Boto is the Amazon Web Services (AWS) Software Development Kit (SDK) for
@@ -87,6 +81,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -120,14 +115,12 @@ export PYTHONPATH=$PWD
 cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
-export PYTHONPATH=$PWD
-python setup.py test
-#py.test
+rm -rf tests/integration
+nosetests-2.7
 %if_with python3
 pushd ../python3
-export PYTHONPATH=$PWD
-python3 setup.py test
-#py.test-%_python3_version
+rm -rf tests/integration
+nosetests-3.5
 popd
 %endif
 
@@ -149,6 +142,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.6-alt1
+- Updated to upstream version 1.4.6.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.1-alt1.git20150807.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
