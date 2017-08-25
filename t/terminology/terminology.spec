@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.0
+%define ver_major 1.1
 
 Name: terminology
 Version: %ver_major.0
@@ -21,8 +21,6 @@ Requires: fonts-bitmap-terminus
 Provides: xvt
 
 BuildRequires: intltool
-# BuildRequires: libevas-devel edje embryo_cc libedje-devel libemotion-devel libethumb-devel
-# for efl >= 1.8.0
 Conflicts: libelementary < 1.8.0
 BuildRequires: efl-libs-devel
 BuildRequires: libelementary-devel >= 1.8.0
@@ -64,6 +62,9 @@ EOF
 %doc AUTHORS ChangeLog COPYING README
 
 %changelog
+* Fri Aug 25 2017 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Thu Jan 19 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
 
