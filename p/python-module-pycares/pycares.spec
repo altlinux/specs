@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python-module-%module_name
-Version: 2.1.1
+Version: 2.3.0
 Release: alt1
 
 Summary: Python interface for c-ares
@@ -87,6 +87,9 @@ rm -f build && ln -sf build3 build && %python3_install
 %endif
 
 %changelog
+* Fri Aug 25 2017 Fr. Br. George <george@altlinux.ru> 2.3.0-alt1
+- Autobuild version bump to 2.3.0
+
 * Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 2.1.1-alt1
 - Autobuild version bump to 2.1.1
 
