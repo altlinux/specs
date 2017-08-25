@@ -1,9 +1,9 @@
 Summary: Twm based window manager for the X Window System
-Summary(ru_RU.KOI8-R): Основанный на twm оконный менеджер для X Window System
+Summary(ru_RU): п·я│п╫п╬п╡п╟п╫п╫я▀п╧ п╫п╟ twm п╬п╨п╬п╫п╫я▀п╧ п╪п╣п╫п╣п╢п╤п╣я─ п╢п╩я▐ X Window System
 Name: ctwm
-Version: 3.8.2
+Version: 4.0.1
 Epoch: 1
-Release: alt2
+Release: alt1
 
 Source: %name-%version.tar.xz
 Url: http://ctwm.free.lp.se
@@ -15,14 +15,13 @@ Source2: %name.wmsession
 Source3: %name.icon64x64.xpm
 #Source4: ctwm-3.7-Imakefile.local-additional
 
-Patch: ctwm-3.8-dirs.patch
-Patch1: ctwm-strlen.patch
-Patch2: ctwm-3.8.2-GetFont.patch
+Patch: ctwm-3.8.2-GetFont.patch
 License: BSD
 Group: Graphical desktop/Other
 
-# Automatically added by buildreq on Mon Mar 14 2011
-BuildRequires: flex imake libXext-devel libXmu-devel libXpm-devel libjpeg-devel xorg-cf-files
+# Automatically added by buildreq on Mon May 29 2017
+# optimized out: asciidoc cmake-modules dblatex docbook-dtds docbook-style-xsl libICE-devel libSM-devel libX11-devel libXau-devel libXt-devel libgpg-error python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml xml-common xml-utils xorg-kbproto-devel xorg-xextproto-devel xorg-xproto-devel xsltproc xz
+BuildRequires: asciidoc-a2x cmake flex libXext-devel libXmu-devel libXpm-devel libjpeg-devel time
 
 %description
 Ctwm is a window manager for the X Window System.  It provides
@@ -38,45 +37,56 @@ Arnaud Le Hors], any format understood by the imconv package [from the
 San Diego Supercomputer Center] and xwd files.  Ctwm can be compiled
 to use both, either or none of the above icon/pixmap formats.
 
-%description -l ru-RU.KOI8-R
-Ctwm -- оконный менеждер для X Windows System, основанный на одном из
-старейших  оконных менеджеров для X11 -- twm (Tab Window Manager) из
-дистрибутива Mit X11. Под влиянием vuewm от Hewlett-Packard в ctwm
-добавлена поддержка "трёхмерных" заголовков, рамоки меню, виртуальные
-экраны и многое другое. Ctwm поддерживает макросы в настройках,
-разнообразные стили перемещения фокуса, заливку фона и т. д., а также
-имеет несколько уникальных функций, например movepush, когда окно,
-перемещаемое по экрану, расталкивает прочие окна в стороны.
+%description -l ru-RU
+Ctwm -- п╬п╨п╬п╫п╫я▀п╧ п╪п╣п╫п╣п╤п╢п╣я─ п╢п╩я▐ X Windows System, п╬я│п╫п╬п╡п╟п╫п╫я▀п╧ п╫п╟ п╬п╢п╫п╬п╪ п╦п╥
+я│я┌п╟я─п╣п╧я┬п╦я┘  п╬п╨п╬п╫п╫я▀я┘ п╪п╣п╫п╣п╢п╤п╣я─п╬п╡ п╢п╩я▐ X11 -- twm (Tab Window Manager) п╦п╥
+п╢п╦я│я┌я─п╦п╠я┐я┌п╦п╡п╟ Mit X11. п÷п╬п╢ п╡п╩п╦я▐п╫п╦п╣п╪ vuewm п╬я┌ Hewlett-Packard п╡ ctwm
+п╢п╬п╠п╟п╡п╩п╣п╫п╟ п©п╬п╢п╢п╣я─п╤п╨п╟ "я┌я─я▒я┘п╪п╣я─п╫я▀я┘" п╥п╟пЁп╬п╩п╬п╡п╨п╬п╡, я─п╟п╪п╬п╨п╦ п╪п╣п╫я▌, п╡п╦я─я┌я┐п╟п╩я▄п╫я▀п╣
+я█п╨я─п╟п╫я▀ п╦ п╪п╫п╬пЁп╬п╣ п╢я─я┐пЁп╬п╣. Ctwm п©п╬п╢п╢п╣я─п╤п╦п╡п╟п╣я┌ п╪п╟п╨я─п╬я│я▀ п╡ п╫п╟я│я┌я─п╬п╧п╨п╟я┘,
+я─п╟п╥п╫п╬п╬п╠я─п╟п╥п╫я▀п╣ я│я┌п╦п╩п╦ п©п╣я─п╣п╪п╣я┴п╣п╫п╦я▐ я└п╬п╨я┐я│п╟, п╥п╟п╩п╦п╡п╨я┐ я└п╬п╫п╟ п╦ я┌. п╢., п╟ я┌п╟п╨п╤п╣
+п╦п╪п╣п╣я┌ п╫п╣я│п╨п╬п╩я▄п╨п╬ я┐п╫п╦п╨п╟п╩я▄п╫я▀я┘ я└я┐п╫п╨я├п╦п╧, п╫п╟п©я─п╦п╪п╣я─ movepush, п╨п╬пЁп╢п╟ п╬п╨п╫п╬,
+п©п╣я─п╣п╪п╣я┴п╟п╣п╪п╬п╣ п©п╬ я█п╨я─п╟п╫я┐, я─п╟я│я┌п╟п╩п╨п╦п╡п╟п╣я┌ п©я─п╬я┤п╦п╣ п╬п╨п╫п╟ п╡ я│я┌п╬я─п╬п╫я▀.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p0
-%patch2 -p1
-cp Imakefile.local-template Imakefile.local
-sed -ri 's/(#define[[:space:]]+MAX_BUTTONS[[:space:]]+).*/\1 24/' twm.h
+#patch -p1
+sed -ri 's/(#define[[:space:]]+MAX_BUTTONS[[:space:]]+).*/\1 24/' ctwm.h
+ln -s build BUILD
+%cmake \
+	-DETCDIR=%_sysconfdir/X11/ctwm \
+	-DDOCDIR=%_defaultdocdir/%name-%version \
+	-DEXAMPLEDIR=%_defaultdocdir/%name-%version
+
+# -DDO_CLIENT=ON
 
 %build
-xmkmf
-%make_build CDEBUGFLAGS="-g -Og"
+%cmake_build
+#xmkmf
+#make_build CDEBUGFLAGS="-g -Og"
 
 %install
-%make install DESTDIR=%buildroot
-install -D %name.man %buildroot/%_mandir/man1/%name.1x
+%cmakeinstall_std
 install -pD -m644 %SOURCE3 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.xpm
 install -pD -m644 %SOURCE2 %buildroot/%_sysconfdir/X11/wmsession.d/07%name
+install -pD -m644 system.ctwmrc %buildroot/%_sysconfdir/X11/%name/system.ctwmrc
 install -Dm 755 %SOURCE1 %buildroot/%_bindir/startctwm
 
 %files
-%doc README CHANGES PROBLEMS TODO*
+%doc %_defaultdocdir/%name-%version
 %_iconsdir/hicolor/64x64/apps/*
 %_bindir/*
 %_mandir/man1/*
 %config(noreplace) %_sysconfdir/X11/%name/system.ctwmrc
 %_sysconfdir/X11/wmsession.d/*
-%_datadir/X11/%name/
+%_datadir/%name/
 
 %changelog
+* Fri Aug 25 2017 Fr. Br. George <george@altlinux.ru> 1:4.0.1-alt1
+- Autobuild version bump to 4.0.1
+
+* Mon May 29 2017 Fr. Br. George <george@altlinux.ru> 1:4.0.0-alt1
+- Autobuild version bump to 4.0.0
+
 * Wed Sep 21 2016 Fr. Br. George <george@altlinux.ru> 1:3.8.2-alt2
 - Fix fonset usage
 
