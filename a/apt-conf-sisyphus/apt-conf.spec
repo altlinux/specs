@@ -3,7 +3,7 @@
 %define Distro Sisyphus
 
 Name: %base_name-%distro
-Version: 7.1.1
+Version: 7.2
 Release: alt1
 
 Summary: A set of apt configuration files for %distribution %Distro
@@ -46,6 +46,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Fri Aug 25 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.2-alt1
+- Rebuilt with altlinux-repos 0.8 (for msu mirror).
+
 * Thu Dec 08 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.1.1-alt1
 - mksourcelists: fixed arepo logic.
 
