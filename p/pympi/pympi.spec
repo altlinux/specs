@@ -6,15 +6,15 @@
 
 Name: pympi
 Version: %ver.b6
-Release: alt17.cvs20141103
+Release: alt18.cvs20141103
 Summary: Implementation of MPI in python
 License: Free for non-commertial using
 Group: Networking/Other
 Url: http://pympi.sourceforge.net/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # cvs -z3 -d:pserver:anonymous@pympi.cvs.sourceforge.net:/cvsroot/pympi co -P pyMPI
 Source: %name-%version.tar.gz
+Patch1: %name-alt-build.patch
 
 Requires: python-module-%Name = %version-%release
 
@@ -97,6 +97,7 @@ This package contains documentation for pyMPI.
 
 %prep
 %setup
+%patch1 -p2
 
 ln -s overview.html docs/index.html
 %prepare_sphinx docs
@@ -111,7 +112,7 @@ INCS="$INCS -I%_includedir/numpy"
 %add_optflags $INCS -DPYMPI_HAS_NUMPY -UPYMPI_HAS_NUMERIC
 
 ADDLIBS="-L%mpidir/lib -Wl,-R%mpidir/lib:%mpidir/lib/%mpiimpl"
-ADDLIBS="$ADDLIBS -lmpi_cxx -lmpi"
+ADDLIBS="$ADDLIBS -lmpi"
 sed -i 's|@LIBDIR@|%_libdir|g' configure.ac
 sed -i 's|@PYDIR@|%python_libdir|g' configure.ac
 sed -i 's|@PYINC@|%_includedir/python%_python_version|g' configure.ac
@@ -264,6 +265,9 @@ popd
 %python_sitelibdir/%Name/pingpong.so
 
 %changelog
+* Fri Aug 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5.b6-alt18.cvs20141103
+- Fixed build.
+
 * Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.b6-alt17.cvs20141103
 - Rebuilt with updated NumPy
 
