@@ -1,6 +1,6 @@
 Name: powdertoy
-Version: 91.5.330
-Release: alt1.1
+Version: 92.1.332
+Release: alt1
 Summary: Classic 'falling sand' physics sandbox game
 Group: Games/Educational
 Epoch: 1
@@ -72,6 +72,9 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri Aug 25 2017 Fr. Br. George <george@altlinux.ru> 1:92.1.332-alt1
+- Autobuild version bump to 92.1.332
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 1:91.5.330-alt1.1
 - NMU: rebuild with new lua 5.1
 
