@@ -5,7 +5,7 @@
 %def_enable lua_factory
 
 Name: grilo-plugins
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Plugins for the Grilo framework
@@ -35,7 +35,7 @@ BuildRequires: libgdata-devel >= 0.9.1
 BuildRequires: libgom-devel >= 0.3.2
 BuildRequires: libsoup-devel
 BuildRequires: libgcrypt-devel
-BuildRequires: libgmime-devel
+BuildRequires: libgmime3.0-devel
 BuildRequires: tracker-devel
 BuildRequires: liboauth-devel
 BuildRequires: libgnome-online-accounts-devel >= 3.18.0
@@ -46,7 +46,7 @@ BuildRequires: libavahi-gobject-devel libavahi-glib-devel libavahi-devel
 BuildRequires: libmediaart2.0-devel
 BuildRequires: librest-devel
 BuildRequires: libarchive-devel
-%{?_enable_lua_factory:BuildRequires: liblua5-devel >= 5.3}
+%{?_enable_lua_factory:BuildRequires: lua-devel >= 5.3}
 
 
 %description
@@ -96,6 +96,9 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %endif
 
 %changelog
+* Fri Aug 25 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt1
+- 0.3.5
+
 * Tue Feb 14 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
 - 0.3.4
 
