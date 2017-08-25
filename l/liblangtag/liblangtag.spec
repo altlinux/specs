@@ -1,6 +1,6 @@
 Name: liblangtag
 Version: 0.6.2
-Release: alt1
+Release: alt2
 Summary: An interface library to access tags for identifying languages
 
 Group: System/Libraries
@@ -46,6 +46,10 @@ developing applications that use %name.
 %setup
 
 %build
+%ifarch e2k
+# TODO: report the problem upstream
+sed -i 's,-Werror=pointer-arith,,g' configure* aclocal.m4
+%endif
 %configure --disable-static --enable-shared --disable-introspection
 sed -i \
     -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
@@ -58,7 +62,7 @@ sed -i \
 LD_LIBRARY_PATH=`pwd`/liblangtag/.libs make check
 
 %install
-make install DESTDIR=%buildroot
+%makeinstall_std
 
 %files
 %doc AUTHORS COPYING NEWS README
@@ -74,6 +78,9 @@ make install DESTDIR=%buildroot
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Fri Aug 25 2017 Michael Shigorin <mike@altlinux.org> 0.6.2-alt2
+- E2K: skip -Werror=pointer-arith (FTBFS)
+
 * Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 0.6.2-alt1
 - Autobuild version bump to 0.6.2
 
