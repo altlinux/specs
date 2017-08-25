@@ -1,8 +1,8 @@
-%define nspr_version 4.13.1-alt1
+%define nspr_version 4.16-alt1
 
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.31.0
+Version:	3.32.0
 Release:	alt1
 License:	MPL/GPL/LGPL
 Group:		System/Libraries
@@ -258,6 +258,9 @@ f="%_libdir/libnssckbi.so.alternatives_save"
 
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Fri Aug 25 2017 Alexey Gladkov <legion@altlinux.ru> 3.32.0-alt1
+- New version (3.32).
+
 * Wed Jul 12 2017 Alexey Gladkov <legion@altlinux.ru> 3.31.0-alt1
 - New version (3.31).
 
