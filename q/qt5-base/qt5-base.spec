@@ -25,7 +25,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.7.1
-Release: alt12%ubt
+Release: alt13%ubt
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -786,6 +786,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Fri Aug 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt13%ubt
+- fix compile qt-based apps with lcc compiler
+
 * Tue Aug 22 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt12%ubt
 - add e2k support
 
