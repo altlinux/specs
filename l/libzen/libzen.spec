@@ -1,5 +1,5 @@
 Name: libzen
-Version: 0.4.35
+Version: 0.4.37
 Release: alt1
 
 Group: System/Libraries
@@ -48,6 +48,9 @@ popd
 %_libdir/*.so
 
 %changelog
+* Fri Aug 25 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.37-alt1
+- 0.4.37
+
 * Tue Apr 04 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.35-alt1
 - 0.4.35
 
