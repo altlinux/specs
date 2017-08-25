@@ -1,10 +1,9 @@
-BuildRequires: desktop-file-utils
 # -*- mode: rpm-spec; coding: utf-8 -*-
 %define _tcl_lib_path %_datadir/%name
 
 Name: gorilla
 Version: 1.5.3.3
-Release: alt1.qa1
+Release: alt2
 
 Summary: Password gorilla is simple but powerful password manager writen in tcl/tk
 License: GPL2
@@ -12,14 +11,14 @@ Group: Databases
 Url: http://github.com/zdia/gorilla
 BuildArch: noarch
 
-Requires: bwidget tcl-incrtcl tcllib
+Requires: bwidget tcl-incrtcl4 tcllib
 Packager: Evgenii Terechkov <evg@altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildPreReq: rpm-build-tcl
-BuildRequires: tk
+BuildRequires: tk desktop-file-utils
 
 %description
 Password gorilla is simple but powerful password manager writen in tcl/tk
@@ -32,9 +31,6 @@ Password gorilla is simple but powerful password manager writen in tcl/tk
 
 %install
 chmod ugo-x sources/blowfish/* sources/pwsafe/* sources/sha1/* sources/twofish/* sources/*.tcl sources/*.txt
-
-mkdir -p %buildroot%_desktopdir
-cp -v %name.desktop %buildroot%_desktopdir
 
 mkdir -p %buildroot%_bindir
 perl -i -walpe's@"LICENSE.txt"@"%_defaultdocdir/%name-%version/LICENSE.txt"@;s@ReadHelpFiles \$::gorillaDir@ReadHelpFiles %_defaultdocdir/%name-%version@' sources/%name.tcl
@@ -57,10 +53,12 @@ mkdir -p %buildroot%_liconsdir
 install sources/pics/%name-32x32.gif %buildroot%_niconsdir/%name.gif
 install sources/pics/%name-16x16.gif %buildroot%_miconsdir/%name.gif
 install sources/pics/%name-48x48.gif %buildroot%_liconsdir/%name.gif
+mkdir -p %buildroot%_desktopdir
+install %name.desktop %buildroot%_desktopdir/%name.desktop
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Utility \
 	--add-category=Security \
-	%buildroot%_desktopdir/gorilla.desktop
+	%buildroot%_desktopdir/%name.desktop
 
 %files
 %_bindir/%name
@@ -73,6 +71,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc README sources/*.txt
 
 %changelog
+* Fri Aug 25 2017 Terechkov Evgenii <evg@altlinux.org> 1.5.3.3-alt2
+- Update to run on current sisyphus
+
 * Tue Jun 07 2011 Repocop Q. A. Robot <repocop@altlinux.org> 1.5.3.3-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
