@@ -1,5 +1,5 @@
 Name: warzone2100
-Version: 3.1.0
+Version: 3.2.3
 Release: alt1
 
 Summary: Warzone 2100 Resurrection Project (RTS 3D game)
@@ -7,14 +7,18 @@ License: GPLv2+ and CC-BY-SA
 Group: Games/Strategy
 
 Url: http://wz2100.net/
-#Source: http://dfn.dl.sourceforge.net/sourceforge/warzone2100/warzone2100-%version.tar.gz
+# https://github.com/Warzone2100/warzone2100.git
 Source: %name-%version.tar
 #Source1: http://www.deviantart.com/download/92153956/Warzone_2100_Tango_Icon_by_Unit66.zip
 Source1: Warzone_2100_Tango_Icon_by_Unit66.tar
+# Regenerate it for each version by running following command on release tag:
+# ./build_tools/autorevision -t sh -o autorevision.cache > autorevision-$version.cache
+Source2: autorevision-%version.cache
 
 BuildRequires: /proc
-BuildRequires: libqt4-devel elfutils fontconfig fontconfig-devel gnu-config libGL-devel libGLU-devel libX11-devel libXrandr-devel libXrender-devel libfreetype-devel libogg-devel libpng-devel libqt4-core libqt4-devel libqt4-network libqt4-script libstdc++-devel pkg-config python-base texlive-latex-base xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: asciidoc-a2x flex gcc-c++ git-core imake libSDL-devel libfribidi-devel libglew-devel libopenal-devel libphysfs-devel libtheora-devel libvorbis-devel subversion unzip xorg-cf-files zip
+BuildRequires: qt5-base-devel qt5-3d-devel qt5-script-devel qt5-x11extras-devel openssl-devel
+BuildRequires: elfutils fontconfig fontconfig-devel gnu-config libGL-devel libGLU-devel libX11-devel libXrandr-devel libXrender-devel libfreetype-devel libogg-devel libpng-devel libstdc++-devel pkg-config python-base texlive-latex-base xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: asciidoc-a2x flex gcc-c++ imake libSDL2-devel libfribidi-devel libglew-devel libopenal-devel libphysfs-devel libtheora-devel libvorbis-devel unzip xorg-cf-files zip
 
 # 'zip -T' called in build process needs unzip to work...
 
@@ -38,8 +42,10 @@ Game data for warzone2100.
 
 %prep
 %setup -a 1
+cp %SOURCE2 ./src/autorevision.cache
 
 %build
+./autogen.sh
 %configure --with-distributor="ALT Linux"
 %make_build
 
@@ -54,7 +60,7 @@ install -pD -m644 warzone2100_16x16.png %buildroot%_miconsdir/warzone2100.png
 %find_lang warzone2100
 
 %files -f warzone2100.lang
-%doc COPYING.README doc/Readme.en
+%doc COPYING* README.md
 %exclude /usr/share/doc
 %_bindir/*
 %_miconsdir/*
@@ -69,6 +75,9 @@ install -pD -m644 warzone2100_16x16.png %buildroot%_miconsdir/warzone2100.png
 %_datadir/warzone2100
 
 %changelog
+* Fri Aug 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.3-alt1
+- Updated to upstream version 3.2.3.
+
 * Wed Jan 30 2013 Denis Smirnov <mithraen@altlinux.ru> 3.1.0-alt1
 - 3.1.0
 - build from git
