@@ -1,5 +1,5 @@
 Name: 	 xrdp
-Version: 0.9.3
+Version: 0.9.3.1
 Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
@@ -30,6 +30,7 @@ Patch10: lfs.diff
 
 # Other patches
 Patch12: xrdp-alt-startwm.patch
+Patch13: alt-add-russian-keyboard.patch
 
 BuildPreReq: rpm-build-intro
 BuildRequires: libjpeg-devel
@@ -92,6 +93,7 @@ tar xf %SOURCE6
 %patch7 -p1
 %patch10 -p1
 %patch12 -p1
+%patch13 -p1
 
 cp %SOURCE3 %name-init
 
@@ -144,8 +146,6 @@ popd
 %install
 %makeinstall_std
 
-mkdir -p %buildroot%_sysconfdir/xrdp
-
 rm -f %buildroot/%_libdir/xrdp/startwm.sh
 rm -f %buildroot/%_libdir/xrdp/xrdp_control.sh
 install -D -m755 %name-init %buildroot%_initdir/%name
@@ -168,40 +168,42 @@ install -Dp -m 644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/xrdp
 mkdir -p %buildroot%_localstatedir/log/
 touch %buildroot%_localstatedir/log/xrdp-sesman.log
 
-# rsakeys.ini
-touch %buildroot%_sysconfdir/xrdp/rsakeys.ini
-chmod 0600 %buildroot%_sysconfdir/xrdp/rsakeys.ini
-
 # install 'bash -l' startwm script
 install -Dp -m 755 sesman/startwm-bash.sh %buildroot%_sysconfdir/xrdp/startwm-bash.sh
+
+# install openssl config for key generation
+install -Dp -m 644 keygen/openssl.conf %buildroot%_sysconfdir/xrdp/openssl.conf
 
 # Clean unnecessary files
 find %buildroot -name *.a -delete -o -name *.la -delete
 rm -rf %buildroot{/usr/local,%_includedir,%_pkgconfigdir}
 
 %pre
-/usr/sbin/groupadd -r -f tsusers ||:
-/usr/sbin/groupadd -r -f tsadmins ||:
+/usr/sbin/groupadd -r -f tsusers 2>/dev/null ||:
+/usr/sbin/groupadd -r -f tsadmins 2>/dev/null ||:
 
 %post
+%post_service %{name}-sesman
 %post_service %name
 # Generate keys if they are missing
 if [ ! -s %_sysconfdir/xrdp/rsakeys.ini ]; then
   (umask 377; %_bindir/xrdp-keygen xrdp %_sysconfdir/xrdp/rsakeys.ini >/dev/null)
+  chmod 400 %_sysconfdir/xrdp/rsakeys.ini
 fi
-chmod 400 %_sysconfdir/xrdp/rsakeys.ini
 
 if [ ! -s %_sysconfdir/xrdp/cert.pem ]; then
   (umask 377; openssl req -x509 -newkey rsa:2048 -sha256 -nodes -days 3652 \
     -keyout %_sysconfdir/xrdp/key.pem \
     -out %_sysconfdir/xrdp/cert.pem \
+    -subj /C=US/ST=CA/L=Sunnyvale/O=xrdp/CN=www.xrdp.org \
     -config %_sysconfdir/xrdp/openssl.conf >/dev/null 2>&1)
+  chmod 400 %_sysconfdir/xrdp/cert.pem
+  chmod 400 %_sysconfdir/xrdp/key.pem
 fi
-chmod 400 %_sysconfdir/xrdp/cert.pem
-chmod 400 %_sysconfdir/xrdp/key.pem
 
 %preun
 %preun_service %name
+%preun_service %{name}-sesman
 
 %files
 %config %_sysconfdir/pam.d/xrdp-sesman
@@ -212,14 +214,13 @@ chmod 400 %_sysconfdir/xrdp/key.pem
 %dir %_sysconfdir/xrdp/pulse
 %_sysconfdir/xrdp/pulse/default.pa
 %_sysconfdir/xrdp/xrdp_keyboard.ini
+%_sysconfdir/xrdp/openssl.conf
 %_initdir/%name
 %config(noreplace) %_sysconfdir/sysconfig/xrdp
 /lib/systemd/system/*.service
 %ghost %_localstatedir/log/xrdp-sesman.log
-%attr(0600,root,root) %verify(not size md5 mtime) %_sysconfdir/xrdp/rsakeys.ini
 %config %_sysconfdir/xrdp/sesman.ini
 %config %_sysconfdir/xrdp/xrdp.ini
-%_sysconfdir/xrdp/*.pem
 %_bindir/xrdp*
 %_sbindir/xrdp*
 %_libdir/%name
@@ -237,6 +238,12 @@ chmod 400 %_sysconfdir/xrdp/key.pem
 %_x11modulesdir/input/*.so
 
 %changelog
+* Thu Aug 24 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.3.1-alt1
+- New version
+- Add Rissian keyboard example to /etc/xrdp/xrdp_keyboard.ini
+- Do not package generated keys to prevent overwrite existing keys
+- Restart both services xrdp and xrdp-sesman
+
 * Wed Jul 26 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.3-alt1
 - New version (ALT #33674)
 - xrdp requires xorg-drv-xrdp
