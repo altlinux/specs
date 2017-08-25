@@ -1,6 +1,6 @@
 Name: libnih
 Version: 1.0.3
-Release: alt1
+Release: alt2
 
 Summary: Lightweight application development library
 License: %gpl2only
@@ -10,6 +10,7 @@ Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
 Patch1: 0001-Fallback-to-lstat-if-dirent.d_type-is-not-available-.patch
+Patch2: %name-%version-debian-test-child-ignore-spurious-sigcont.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -62,6 +63,7 @@ developing applications that use %name-dbus.
 %setup
 %patch -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -97,6 +99,9 @@ make check
 %_libdir/pkgconfig/%name-dbus.pc
 
 %changelog
+* Fri Aug 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.3-alt2
+- Fixed tests with modern glibc.
+
 * Mon Sep 22 2014 Mikhail Efremov <sem@altlinux.org> 1.0.3-alt1
 - Fix pkgconfig directory path.
 - Add "Fallback to lstat" patch from Debian.
