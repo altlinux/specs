@@ -11,7 +11,7 @@
 %endif
 
 Name: warsow
-Version: 1.02
+Version: 2.1
 Release: alt1
 
 Summary: Free online multiplayer competitive FPS based on the Qfusion engine.
@@ -19,18 +19,21 @@ License: GPLv2
 Group: Games/Arcade
 Url: http://warsow.net
 
-Source0: %{name}_%{version}_sdk.tar.gz
+Source0: %{name}_21_sdk.tar
 
 Source1: %name.desktop
 Source2: %name.png
 Source3: %{name}48.png
 
+Patch1: %name-fedora-build.patch
+Patch2: %name-fedora-paths.patch
+
 Requires: warsow-data = %version
 
-# Automatically added by buildreq on Sun Mar 17 2013 (-bi)
-# optimized out: elfutils libGL-devel libX11-devel libXrender-devel libogg-devel libstdc++-devel pkg-config python-base xorg-randrproto-devel xorg-renderproto-devel xorg-xf86dgaproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel zlib-devel
-# WTF??? python-module-distribute python-module-zope
-BuildRequires:  gcc-c++ hd2u libSDL-devel libXext-devel libXinerama-devel libXrandr-devel libXxf86dga-devel libXxf86vm-devel libcurl-devel libfreetype-devel libjpeg-devel libopenal-devel libpng-devel libtheora-devel libvorbis-devel makedepend
+BuildRequires: gcc-c++ hd2u libSDL2-devel libXext-devel libXinerama-devel libXrandr-devel libXxf86dga-devel libXxf86vm-devel libopenal-devel
+BuildRequires: libcurl-devel libfreetype-devel libjpeg-devel libpng-devel libtheora-devel libvorbis-devel
+BuildRequires: libGL-devel
+BuildRequires: cmake /usr/bin/dos2unix
 
 %description
 Warsow is a completely free fast-paced first-person shooter (FPS) for
@@ -39,46 +42,52 @@ rocketlauncher-wielding pigs and lasergun-carrying cyberpunks roam
 the streets.
 
 %prep
-%setup -q -n %{name}_%{version}_sdk
+%setup -q -n %{name}_21_sdk
+%patch1 -p2
+%patch2 -p2
 
 sed -i -e "/fs_basepath =/ s:\.:%_libdir/%name:" source/qcommon/files.c
 
-%build
-pushd libsrcs/angelscript/angelSVN/sdk/angelscript/projects/gnuc
-  %make_build
+# Remove bundled libs
+pushd libsrcs
+rm -rf libcurl libfreetype libjpeg libogg libpng libtheora libvorbis OpenAL-MOB openssl SDL2 zlib
 popd
-
-pushd source
-  make \
-    BUILD_CLIENT=YES \
-    BUILD_SERVER=YES \
-    BUILD_TV_SERVER=YES \
-    BUILD_IRC=YES \
-    BUILD_SND_OPENAL=YES \
-    BUILD_SND_QF=YES \
-    BUILD_CIN=YES \
-    BUILD_ANGELWRAP=YES \
-    DEBUG_BUILD=YES
-popd
-
-%install
-mkdir -p %buildroot%_bindir/
-mkdir -p %buildroot%_libdir/%name/libs
-
-pushd source/debug
-  install -m 755 warsow.* %buildroot/%_bindir/%name
-  install -m 755 wsw_server.* %buildroot/%_bindir/%name-server
-  install -m 755 wswtv_server.* %buildroot/%_bindir/%name-tv-server
-  install -m 755 libs/*.so %buildroot/%_libdir/%name/libs
-popd
-
-install -D -m 0644 %SOURCE1 %buildroot%_desktopdir/warsow.desktop
-
-install -D -m 644 %SOURCE2 %buildroot%_iconsdir/hicolor/256x256/apps/warsow.png
-install -D -m 644 %SOURCE3 %buildroot%_liconsdir/warsow.png
 
 dos2unix docs/license.txt
 dos2unix docs/sourcecode_quickstart.txt
+
+%build
+mkdir -p source/cmake_build
+pushd source/cmake_build
+
+cmake \
+	-DQFUSION_GAME=Warsow \
+	-DUSE_SDL2=YES \
+	-DCMAKE_BUILD_TYPE=Debug \
+	..
+
+%make
+
+popd
+
+%install
+pushd source/build
+
+# Install executables to bindir
+install -Dm 755 warsow.* %buildroot%_bindir/warsow
+install -Dm 755 wsw_server.* %buildroot%_bindir/warsow-server
+install -Dm 755 wswtv_server.* %buildroot%_bindir/warsow-tv-server
+
+# Install private libraries to a private directory
+install -d %buildroot%_libdir/%name/libs
+install -m 755 libs/*.so %buildroot%_libdir/%name/libs/
+
+popd
+
+# Install icons and the desktop file
+install -D -m 0644 %SOURCE1 %buildroot%_desktopdir/warsow.desktop
+install -D -m 644 %SOURCE2 %buildroot%_iconsdir/hicolor/256x256/apps/warsow.png
+install -D -m 644 %SOURCE3 %buildroot%_liconsdir/warsow.png
 
 ln -sf %_datadir/warsow/basewsw %buildroot%_libdir/warsow/basewsw
 
@@ -91,6 +100,9 @@ ln -sf %_datadir/warsow/basewsw %buildroot%_libdir/warsow/basewsw
 %_iconsdir/hicolor/*/apps/warsow.png
 
 %changelog
+* Fri Aug 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1-alt1
+- Updated to upstream version 2.1.
+
 * Sun Mar 17 2013 Igor Zubkov <icesik@altlinux.org> 1.02-alt1
 - 0.61 -> 1.02
 
