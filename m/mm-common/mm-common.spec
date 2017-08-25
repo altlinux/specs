@@ -1,7 +1,7 @@
 %define ver_major 0.9
 
 Name: mm-common
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 
 Summary: Common build files of the C++ bindings
@@ -51,6 +51,9 @@ which could be used as a base for new mm module.
 %_docdir/%name/*
 
 %changelog
+* Fri Aug 25 2017 Yuri N. Sedunov <aris@altlinux.org> 0.9.11-alt1
+- 0.9.11
+
 * Sun Feb 07 2016 Yuri N. Sedunov <aris@altlinux.org> 0.9.10-alt1
 - 0.9.10
 
