@@ -1,6 +1,6 @@
 Name: libwps
 Version: 0.4.7
-Release: alt1
+Release: alt2
 Summary: Library for reading and converting Microsoft Works word processor documents
 License: LGPL
 Group: System/Libraries
@@ -47,6 +47,9 @@ The %name-doc package contains documentation files for %name
 %setup
 
 %build
+%ifarch e2k
+%add_optflags -std=c++11
+%endif
 mkdir -p m4
 %autoreconf
 %configure --disable-silent-rules --disable-static --disable-werror
@@ -74,6 +77,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %doc docs/doxygen/html
 
 %changelog
+* Sat Aug 26 2017 Michael Shigorin <mike@altlinux.org> 0.4.7-alt2
+- E2K: add -std=c++11 explicitly
+
 * Mon Jul 31 2017 Fr. Br. George <george@altlinux.ru> 0.4.7-alt1
 - Autobuild version bump to 0.4.7
 
