@@ -1,6 +1,6 @@
 Name:           sp
 Version:        5.2.1
-Release:        alt20
+Release:        alt21
 Summary:        School Portal
 Summary(ru):    Школьный портал
 License:        Distributable, non-free
@@ -10,7 +10,7 @@ Packager:       Andrey Stroganov <dja@altlinux.org>
 Source:         sp-5.2.1.tar
 BuildRequires:  fpc
 Requires:       perl-base perl-CGI perl-CGI-Session perl-Archive-Zip perl-GD perl-GD-Graph perl-CGI-SpeedyCGI perl-Magick perl-Mail-Sender perl-Text-Iconv perl-DBD-InterBase perl-HTML-TagFilter pwgen perl-IO-Compress xinetd mpg123 perl-libwww
-Requires(post): apache2 firebird-classic squid-server net-tools apache-common
+Requires: 	apache2 firebird-classic squid-server net-tools apache2-base
 Autoprov:       0
 Autoreq:        0
 
@@ -379,6 +379,9 @@ fi
 # a2dissite 000-sp
 
 %changelog
+* Sat Aug 26 2017 Andrey Cherepanov <cas@altlinux.org> 5.2.1-alt21
+- Require apache2-base instead of deprecated apache-common
+
 * Mon May 06 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt20
 add sites.start.d apache config for sp
 
