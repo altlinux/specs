@@ -1,5 +1,7 @@
+%set_verify_elf_method unresolved=relaxed
+
 Name: gpsim
-Version: 0.29.0
+Version: 0.30.0
 Release: alt1
 
 Summary: Software simulator for Microchip PIC microcontrollers
@@ -13,10 +15,10 @@ Source: http://prdownloads.sf.net/%name/%name/%version/%name-%version.tar
 
 Patch3: %name-0.25.0-quit_gui.patch
 Patch4: %name-0.25.0-get_version.patch
-Patch5: %name-0.24.0-exit_gpsim.patch
-
+Patch5: %name-alt-desktop-fix.patch
 # Patches sent to mainstream 02.10.2010:
 # https://sourceforge.net/tracker/?func=detail&aid=3079981&group_id=2341&atid=302341#
+# Updated: cas@ 26.08.2017
 Patch6: 0001-fix-linking-with-libgpsim.patch
 Patch7: 0002-libgpsim-fix-libdl-linking.patch
 
@@ -87,7 +89,7 @@ applications which will use libgpsim
 %setup
 %patch3
 %patch4
-%patch5 -p1
+%patch5 -p2
 %patch6 -p2
 %patch7 -p2
 
@@ -102,27 +104,16 @@ applications which will use libgpsim
 # I really don't know why they are not stripped by rpmbuild
 strip %buildroot%_bindir/%name %buildroot%_libdir/*.so.*
 
-mkdir -p %buildroot%_desktopdir/
-cat <<EOF >%buildroot%_desktopdir/%name.desktop
-[Desktop Entry]
-Name=gpsim
-Comment=Software simulator for Microchip PIC microcontrollers
-Exec=gpsim
-Terminal=false
-Type=Application
-StartupNotify=true
-Encoding=UTF-8
-Categories=Application;Development;X-Red-Hat-Extra;
-EOF
-desktop-file-install --dir %buildroot%_desktopdir \
-	--remove-category=Application \
-	--add-category=Engineering \
-	--add-category=Electronics \
-	%buildroot%_desktopdir/gpsim.desktop
+# install appdata, desktop file and icon
+install -Dm 644 doc/metadata/gpsim.appdata.xml %buildroot%_datadir/appdata/gpsim.appdata.xml
+install -Dm 644 doc/metadata/gpsim.desktop %buildroot%_desktopdir/gpsim.desktop
+install -Dm 644 doc/metadata/gpsim.png %buildroot%_pixmapsdir/gpsim.png
 
 %files
 %_bindir/%name
+%_datadir/appdata/%name.appdata.xml
 %_desktopdir/%name.desktop
+%_pixmapsdir/%name.png
 
 %files -n lib%name
 %doc ANNOUNCE AUTHORS COPYING COPYING.LESSER ChangeLog HISTORY NEWS
@@ -136,6 +127,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_libdir/*.so
 
 %changelog
+* Thu Jul 20 2017 Andrey Cherepanov <cas@altlinux.org> 0.30.0-alt1
+- New version
+- Adapt and use upstream appdata, desktop file and icon
+
 * Wed Sep 30 2015 Andrey Cherepanov <cas@altlinux.org> 0.29.0-alt1
 - New version
 
