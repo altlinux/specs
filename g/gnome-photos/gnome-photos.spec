@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.Photos
@@ -7,8 +7,8 @@
 %define gegl_api_ver 0.3
 
 Name: gnome-photos
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: Photos - access, organize and share your photos on GNOME
 License: %gpl2plus
@@ -83,6 +83,9 @@ rm -rf %buildroot/%_datadir/doc/%name
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Sat Aug 26 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.3-alt1
+- 3.24.3
+
 * Tue Jul 04 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt2
 - updated to 3.24.2-4-g9d70654
 
