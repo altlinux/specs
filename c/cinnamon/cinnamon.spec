@@ -1,7 +1,7 @@
 %def_enable gtk_doc
 
 Name: cinnamon
-Version: 3.4.4
+Version: 3.4.6
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -202,6 +202,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Thu Aug 24 2017 Vladimir Didenko <cow@altlinux.org> 3.4.6-alt1
+- 3.4.6
+
 * Fri Jul 7 2017 Vladimir Didenko <cow@altlinux.org> 3.4.4-alt1
 - 3.4.4
 
