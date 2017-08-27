@@ -1,6 +1,6 @@
 Name: libcmis
 Version: 0.5.0
-Release: alt3
+Release: alt4
 Summary: A C++ client library for the CMIS interface
 Group: System/Libraries
 License: GPLv2+ or LGPLv2+ or MPLv1.1
@@ -44,17 +44,24 @@ command line.
 %prep
 %setup
 %patch -p1
+%ifnarch e2k
 %patch1 -p2
+%endif
 
 %build
 touch ChangeLog
 mkdir -p m4
 %autoreconf
-%configure --disable-static --disable-werror --disable-tests DOCBOOK2MAN='xmlto man'
+%configure --disable-static --disable-werror --disable-tests \
+%ifarch e2k
+	--without-man
+%else
+	DOCBOOK2MAN='xmlto man'
+%endif
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 %files
 %doc AUTHORS COPYING.* NEWS README
@@ -67,9 +74,16 @@ mkdir -p m4
 
 %files tools
 %_bindir/*
+%ifnarch e2k
 %_man1dir/*.1*
+%endif
 
 %changelog
+* Sun Aug 27 2017 Michael Shigorin <mike@altlinux.org> 0.5.0-alt4
+- E2K:
+  + drop boost patch (only spoils things with lcc)
+  + disable manpage build
+
 * Mon Jul 31 2017 Fr. Br. George <george@altlinux.ru> 0.5.0-alt3
 - Rebuild with boost 1.63.0
 
