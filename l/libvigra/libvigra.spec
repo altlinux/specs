@@ -1,9 +1,10 @@
 %define _name vigra
 %def_disable static
+%def_with hdf5
 
 Name: lib%_name
 Version: 1.11.0
-Release: alt1
+Release: alt2
 
 Summary: Generic Programming for Computer Vision
 License: MIT
@@ -17,7 +18,11 @@ Patch: vigra-1.11.0-alt-findexr.patch
 
 # Automatically added by buildreq on Wed Jun 13 2007
 BuildRequires: gcc-c++ cmake libfftw3-devel libjpeg-devel libpng-devel libtiff-devel
-BuildRequires: libhdf5-devel libgomp-devel openexr-devel doxygen
+BuildRequires: openexr-devel doxygen
+%{?_with_hdf5:BuildRequires: libhdf5-devel}
+%ifnarch e2k
+BuildRequires: libgomp-devel
+%endif
 
 Provides: %_name
 Obsoletes: %_name
@@ -52,10 +57,19 @@ Development documentation for vigra library.
 %prep
 %setup -n %_name-%version
 %patch
+%ifarch e2k
+# unsupported as of lcc 1.21.20
+sed -i 's,-ftemplate-depth=900,,' CMakeLists.txt
+%endif
 
 %build
 %cmake -DWITH_VIGRANUMPY:BOOL=OFF \
+%if_with hdf5
 	-DWITH_HDF5:BOOL=ON \
+%endif
+%ifarch e2k
+	-DSUFFICIENT_TEMPLATE_DEPTH:BOOL=TRUE \
+%endif
 	-DWITH_OPENEXR:BOOL=ON \
 	-DDOCINSTALL:STRING=share/doc
 %cmake_build
@@ -79,6 +93,10 @@ Development documentation for vigra library.
 
 
 %changelog
+* Sat Aug 26 2017 Michael Shigorin <mike@altlinux.org> 1.11.0-alt2
+- introduce hdf5 knob (on by default)
+- E2K: avoid libgomp and lcc-unsupported -ftemplate-depth
+
 * Sun Apr 17 2016 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
 - 1.11.0
 
