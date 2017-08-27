@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47
-%define mono_version 4.7.0
-%define major 2.14
+%define mono_version 4.7.1
+%define major 2.15
 
 Name: wine
 Version: %major.0
@@ -472,6 +472,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Sun Aug 27 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.15.0-alt1
+- new version (2.15.0) with rpmgs script
+
 * Tue Aug 08 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.14.0-alt1
 - new version (2.14.0) with rpmgs script
 - enable font smoothing by default
