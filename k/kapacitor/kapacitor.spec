@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		kapacitor
-Version:	1.3.1
+Version:	1.3.3
 Release:	alt1%ubt
 Summary:	Open source framework for processing, monitoring, and alerting on time series data
 
@@ -34,16 +34,6 @@ Open source framework for processing, monitoring, and alerting on time series da
 %setup -q
 
 %build
-# Important!!!
-# The %builddir/.gopath created by the hands. It contains the dependencies required for your project.
-# This is necessary because the gdm cannot work with the vendor directory and always tries to update
-# all dependencies from the external servers. So, we can't use Makefile to compile.
-#
-# $ export GOPATH="$PWD/.gopath"
-# $ git rm -rf -- "$GOPATH"
-# $ make
-# $ find $GOPATH -type d -name .git |xargs rm -rf --
-# $ git add "$GOPATH"
 
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
@@ -109,6 +99,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Mon Aug 28 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.3-alt1%ubt
+- 1.3.3
+
 * Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.1-alt1%ubt
 - rebuild with Universal Branch Tag
 - fix run with sysv init script
