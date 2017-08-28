@@ -2,8 +2,8 @@
 %define rel %nil
 %define oname audacious
 Name: audacious-plugins
-Version: 3.8.2
-Release: alt3
+Version: 3.9
+Release: alt1
 
 Summary: Plugins for Audacious
 
@@ -24,7 +24,7 @@ BuildRequires: gcc-c++ libSDL-devel libXcomposite-devel libaudacious-devel libav
 
 BuildRequires: lib%oname-devel = %version
 
-BuildRequires: libglade-devel libprojectM-devel >= 1.1 libsidplayfp-devel
+BuildRequires: libglade-devel libprojectM-devel >= 1.1 libsidplayfp-devel libsoxr-devel
 
 %description
 Base plugins for Audacious.
@@ -48,12 +48,11 @@ This package contains the base I/O plugins:
 %build
 %configure \
 	--enable-amidiplug --enable-sid \
-	--enable-gio --disable-adplug \
-	--disable-jack --enable-pulse \
+	--disable-jack \
 %ifnarch x86_64
 	--disable-sse2 \
 %endif
-	--disable-esd
+	 --enable-pulse
 %make_build
 
 %install
@@ -66,6 +65,9 @@ This package contains the base I/O plugins:
 %_libdir/%oname/*
 
 %changelog
+* Sun Aug 27 2017 Vitaly Lipatov <lav@altlinux.ru> 3.9-alt1
+- new version 3.9 (with rpmrb script)
+
 * Sat Jun 03 2017 Anton Farygin <rider@altlinux.ru> 3.8.2-alt3
 - rebuilt with debuginfo-enabled ffmpeg
 
