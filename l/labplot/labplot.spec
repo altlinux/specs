@@ -1,28 +1,28 @@
-%define oname LabPlot
-%define pre .beta1
 Name: labplot
-Version: 2.0.1
-Release: alt1.svn20140201
+Version: 2.4.0
+Release: alt1
 
 Summary: Function and Data Plotter
 
-Url: http://labplot.sourceforge.net
+Url: https://labplot.kde.org/
 Group: Sciences/Other
 License: GPL
 
-# https://labplot.svn.sourceforge.net/svnroot/labplot
-Source: %oname-%version.tar.bz2
-Source1: %name-2.0.0.desktop
-Source2: CMakeCache.txt
+# git://anongit.kde.org/labplot
+Source: %name-%version.tar
 
-# Automatically added by buildreq on Sun Jan 18 2009
-BuildRequires: ccmake gcc-c++ kde4base-runtime kde4libs-devel
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: ccmake gcc-c++ extra-cmake-modules
+BuildRequires: qt5-base-devel qt5-svg-devel
+BuildRequires: kf5-karchive-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
+BuildRequires: kf5-kcoreaddons-devel kf5-kdoctools-devel kf5-ki18n-devel kf5-kiconthemes-devel
+BuildRequires: kf5-kdelibs4support-devel kf5-kio-devel kf5-knewstuff-devel kf5-ktextwidgets-devel
+BuildRequires: kf5-kwidgetsaddons-devel kf5-kxmlgui-devel
 BuildRequires: libXScrnSaver-devel libXau-devel libXcomposite-devel
 BuildRequires: libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel
 BuildRequires: libXtst-devel libXv-devel libXxf86misc-devel libcdf-devel
 BuildRequires: libgsl-devel libhdf5-devel libnetcdf-devel
-BuildRequires: libqt4-devel libxkbfile-devel xorg-xf86vidmodeproto-devel
-BuildPreReq: chrpath bison
+BuildRequires: libxkbfile-devel xorg-xf86vidmodeproto-devel
 
 Conflicts: labplot1.6
 Requires: ImageMagick >= 5.4.7 gsl pstoedit
@@ -37,86 +37,37 @@ import over 80 different images formats and export directly to ps, eps or pdf.
 The plots now use double buffering and LabPlot supports scripting using
 QSA.
 
-%package scidavis
-Summary: Function and Data Plotter (experimental Qt frontend)
-Group: Sciences/Other
-Requires: ImageMagick >= 5.4.7 gsl pstoedit
-
-%description scidavis
-This is a program for plotting of functions and data manipulation.
-
-A versatile spreadsheet for data import and editing was added. Also a better
-3 dimensional plot with rotation and colormaps is available.
-Newly supported are data set operations and image manipulations. One can now 
-import over 80 different images formats and export directly to ps, eps or pdf.
-The plots now use double buffering and LabPlot supports scripting using
-QSA.
-
-SciDAVis introduces an abstraction of the application design called
-"aspect framework" or "5 layer model".
-
 %prep
-%setup -n %oname-%version
-#sed -i 's|@LIBDIR@|%_libdir|g' src/qtfrontend/config.pri
-
-install -p -m644 %SOURCE2 .
-sed -i "s|@PWD@|$PWD|g" CMakeCache.txt
-
-%ifarch x86_64
-LIB64=64
-%endif
-sed -i "s|@64@|$LIB64|" CMakeLists.txt
+%setup
 
 %build
-cmake -Wdev --debug-output -DCMAKE_INSTALL_PREFIX=%prefix .
-
-%make_build
-
-# build SciDAvis
-
-#pushd src/qtfrontend
-#qmake-qt4 QMAKE_CFLAGS_RELEASE="%optflags" \
-#	QMAKE_CXXFLAGS_RELEASE="%optflags" scidavis.pro
-#make_build
-#popd
+%K5build \
+    -DINCLUDE_INSTALL_DIR=%_K5inc \
+    -DLIBEXEC_INSTALL_DIR=%_K5exec \
+    -DDATA_INSTALL_DIR=%_K5data
 
 %install
-%makeinstall_std
+%K5install
 
-install -m644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
+%find_lang %name --with-kde
 
-mv %buildroot%_bindir/labplot2 %buildroot%_bindir/%oname
-ln -s %oname %buildroot%_bindir/labplot2
-
-# install SciDAvis
-
-#pushd src/qtfrontend
-#make_install INSTALL_ROOT=%buildroot install
-#install -d %buildroot%_libdir/scidavis
-#mv %buildroot%_bindir/*.so %buildroot%_libdir/scidavis
-#chrpath -r %_libdir/scidavis %buildroot%_bindir/scidavis
-#popd
-
-#
-
-%find_lang %oname --with-kde
-
-%files -f %oname.lang
-%doc AUTHORS README COPYING WISHLIST ChangeLog
-%_bindir/*
-#exclude %_bindir/scidavis
-#_libdir/*so.*
-%_datadir/apps/%{oname}2/
-%_desktopdir/*
-%_K4xdg_mime/*
-%_datadir/icons/hicolor/*/apps/*
-
-#files scidavis
-#doc %_docdir/scidavis
-#_bindir/scidavis
-#_libdir/scidavis
+%files -f %name.lang
+%doc AUTHORS README COPYING ChangeLog
+%config(noreplace) %_K5xdgconf/*.knsrc
+%_K5bin/*
+%_K5data/%{name}2/
+%_K5xdgapp/*
+%_K5icon/hicolor/*/apps/*
+%_K5xmlgui/%{name}2/
+%_K5xdgmime/%{name}2.xml
+%_K5doc/*/%{name}2/
 
 %changelog
+* Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.0-alt1
+- Updated to upstream version 2.4.0.
+- Rebuilt with qt5 and kde5.
+- Cleaned up spec.
+
 * Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt1.svn20140201
 - Version 2.0.1
 
