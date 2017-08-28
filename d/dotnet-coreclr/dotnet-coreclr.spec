@@ -1,12 +1,10 @@
 %def_without bootstrap
 
-%define corerelease 2.0.0-preview2-25407-01
-%define pre -preview2
-%define shareddir %_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease
+%define pre %nil
 
 Name: dotnet-coreclr
 Version: 2.0.0
-Release: alt3.preview2
+Release: alt4
 
 Summary: .NET Core runtime, called CoreCLR, and the base library, called mscorlib
 
@@ -44,9 +42,10 @@ BuildRequires: dotnet-bootstrap
 %define bootstrapdir %_libdir/dotnet-bootstrap
 %else
 BuildRequires: dotnet
-%define bootstrapdir %_libdir/dotnet
+%define bootstrapdir %_dotnetdir
 %endif
 
+BuildRequires: rpm-macros-dotnet >= %version
 
 Requires: dotnet-common >= %version
 
@@ -76,9 +75,9 @@ find -type f -name "*.sh" | xargs subst "s|/etc/os-release|%_libdir/dotnet/fake-
 DOTNET_TOOL_DIR=%bootstrapdir sh -x ./build.sh x64 release verbose skipnuget
 
 %install
-mkdir -p %buildroot%shareddir/
+mkdir -p %buildroot%_dotnet_shared/
 # TODO: some publish use?
-cp -a bin/Product/Linux.x64.Release/{System.Globalization.Native.so,libSystem.Globalization.Native.a,lib*.so,corerun,coreconsole,createdump,sosdocsunix.txt} %buildroot%shareddir/
+cp -a bin/Product/Linux.x64.Release/{System.Globalization.Native.so,libSystem.Globalization.Native.a,lib*.so,corerun,coreconsole,createdump,sosdocsunix.txt} %buildroot%_dotnet_shared/
 
 # superpmi mcs
 # https://github.com/dotnet/coreclr/tree/master/src/ToolBox/superpmi
@@ -86,19 +85,22 @@ cp -a bin/Product/Linux.x64.Release/{System.Globalization.Native.so,libSystem.Gl
 # createdump
 # verify-elf: ERROR: ./usr/lib64/dotnet/shared/Microsoft.NETCore.App/2.0.0/createdump: RPATH contains illegal entry "/tmp/.private/lav/RPM/BUILD": /tmp/.private/lav/RPM/BUILD/dotnet-coreclr-2.0.0/bin/obj/Linux.x64.Release/src/dlls/mscordac
 # ldd: libmscordaccore.so => /tmp/.private/lav/RPM/BUILD/dotnet-coreclr-2.0.0/bin/obj/Linux.x64.Release/src/dlls/mscordac/libmscordaccore.so
-#rm -f %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/createdump
+#rm -f %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%_dotnet_corerelease/createdump
 
 %files
 %doc CODE_OWNERS.TXT LICENSE.TXT PATENTS.TXT THIRD-PARTY-NOTICES.TXT README.md CONTRIBUTING.md
-%shareddir/System.Globalization.Native.so
-%shareddir/libSystem.Globalization.Native.a
-%shareddir/lib*.so
-%shareddir/corerun
-%shareddir/createdump
-%shareddir/coreconsole
-%shareddir/sosdocsunix.txt
+%_dotnet_shared/System.Globalization.Native.so
+%_dotnet_shared/libSystem.Globalization.Native.a
+%_dotnet_shared/lib*.so
+%_dotnet_shared/corerun
+%_dotnet_shared/createdump
+%_dotnet_shared/coreconsole
+%_dotnet_shared/sosdocsunix.txt
 
 %changelog
+* Mon Aug 28 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt4
+- .NET Core 2.0.0 Release
+
 * Wed Jul 12 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt3.preview2
 - .NET Core 2.0.0 Preview 2 (2.0.0-preview2-25407-01)
 - pack missed createdump

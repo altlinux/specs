@@ -1,11 +1,16 @@
+# TODO
+# warning: Macro %_dotnet_corerelease not found
+# error: line 26: Dependency tokens must not contain '%<=>' symbols: BuildRequires: dotnet-bootstrap-runtime = %_dotnet_corerelease
+# hsh-rebuild: pkg.tar: failed to fetch build dependencies.
+%define _dotnet_corerelease 2.0.0
+
 # FIXME: build from sources
 %def_with bootstrap
-%define corerelease 2.0.0-preview2-25407-01
-%define pre preview2
+%define pre %nil
 
 Name: dotnet-corefx
 Version: 2.0.0
-Release: alt3.%pre
+Release: alt4
 
 Summary: .NET Core foundational libraries, called CoreFX
 
@@ -13,7 +18,7 @@ License: MIT
 Url: https://github.com/dotnet/corefx
 Group: Development/Other
 
-# Source-url: https://github.com/dotnet/corefx/archive/v%{version}-%pre.tar.gz
+# Source-url: https://github.com/dotnet/corefx/archive/v%{version}%pre.tar.gz
 Source: %name-%version.tar
 
 ExclusiveArch: x86_64
@@ -21,12 +26,14 @@ ExclusiveArch: x86_64
 AutoReq: yes,nomingw32,nomingw64,nomono,nomonolib
 AutoProv: no
 
+BuildRequires(pre): rpm-macros-dotnet >= %version
+
 %if_with bootstrap
-BuildRequires: dotnet-bootstrap-runtime = %corerelease
+BuildRequires: dotnet-bootstrap-runtime = %_dotnet_corerelease
 %define bootstrapdir %_libdir/dotnet-bootstrap
 %else
 BuildRequires: dotnet
-%define bootstrapdir %_libdir/dotnet
+%define bootstrapdir %_dotnetdir
 %endif
 
 
@@ -54,36 +61,33 @@ Just copied binaries now.
 %endif
 
 %install
-mkdir -p %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
+mkdir -p %buildroot%_dotnet_shared/
 %if_with bootstrap
 # native
-cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%version-*/System*.so %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
+cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System*.so %buildroot%_dotnet_shared/
 # managed
-cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%version-*/*.dll %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
+cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/*.dll %buildroot%_dotnet_shared/
 # read during dotnet --version
-cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%version-*/System.Native.a %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
+cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/System.Native.a %buildroot%_dotnet_shared/
 
 # FIXME: possible hack
-cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%version-*/Microsoft.NETCore.App.deps.json %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
+cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/Microsoft.NETCore.App.deps.json %buildroot%_dotnet_shared/
 
 # already in coreclr
-rm -f %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/System.Globalization.Native.so
+rm -fv %buildroot%_dotnet_shared/System.Globalization.Native.so
 %endif
 
-# FIXME: possible hack
-cat <<EOF >%buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/.version
-0
-%corerelease
-EOF
 
 %files
-%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/.version
-%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/Microsoft.NETCore.App.deps.json
-%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/System*.so
-%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/System.Native.a
-%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/*.dll
+%_dotnet_shared/Microsoft.NETCore.App.deps.json
+%_dotnet_shared/System*.so
+%_dotnet_shared/System.Native.a
+%_dotnet_shared/*.dll
 
 %changelog
+* Mon Aug 28 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt4
+- .NET Core 2.0.0 Release
+
 * Fri Jul 14 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt3.preview2
 - build with strict dotnet-bootstrap require
 
