@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		influxdb
-Version:	1.3.2
+Version:	1.3.4
 Release:	alt1%ubt
 Summary:	Distributed time-series database
 
@@ -47,6 +47,7 @@ events, and performing analytics.
 # $ cd $GOPATH
 # $ go get github.com/sparrc/gdm
 # $ gdm restore -f ../Godeps
+# $ go get github.com/influxdata/influxdb
 # $ go build github.com/influxdata/influxdb
 # $ rm -rf $GOPATH/src/github.com/influxdata/influxdb
 # $ find $GOPATH -type d -name .git |xargs rm -rf --
@@ -121,6 +122,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Mon Aug 28 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.4-alt1%ubt
+- 1.3.4
+
 * Mon Aug 07 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.2-alt1%ubt
 - 1.3.2
 
