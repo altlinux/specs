@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		chronograf
-Version:	1.3.5.0
+Version:	1.3.7.0
 Release:	alt1%ubt
 Summary:	Open source framework for processing, monitoring, and alerting on time series data
 
@@ -125,6 +125,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Mon Aug 28 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.7.0-alt1%ubt
+- 1.3.7.0
+
 * Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.5.0-alt1%ubt
 - rebuild with Universal Branch Tag
 - fix run with sysv init script
