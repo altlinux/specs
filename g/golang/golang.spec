@@ -25,7 +25,7 @@
 %def_disable check
 
 Name:    golang
-Version: 1.8.1
+Version: 1.9
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -36,7 +36,6 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 
 Source0: golang-%version.tar
 Source1: golang-gdbinit
-Patch0:  golang-1.2-verbose-build.patch
 Patch2:  golang-alt-certs-path.patch
 
 ExclusiveArch: %go_arches
@@ -103,8 +102,6 @@ Go sources and documentation.
 %prep
 %setup -q
 
-# increase verbosity of build
-%patch0 -p1
 %patch2 -p1
 
 %build
@@ -279,6 +276,9 @@ mkdir -p -- \
 
 
 %changelog
+* Mon Aug 28 2017 Alexey Gladkov <legion@altlinux.ru> 1.9-alt1
+- New version (1.9).
+
 * Fri Apr 07 2017 Alexey Gladkov <legion@altlinux.ru> 1.8.1-alt1
 - New version (1.8.1).
 
