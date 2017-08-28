@@ -7,12 +7,11 @@
 
 Name: python-module-%oname
 Version: 2.9.3
-Release: alt1
+Release: alt2
 Summary: Collection of Python modules for scientific computing
 License: CeCILL
 Group: Development/Python
 Url: http://sourcesup.cru.fr/projects/scientific-py/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: ScientificPython-%version.tar
 
@@ -278,6 +277,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.9.3-alt2
+- Rebuilt with libnetcdf11.
+
 * Sat Aug 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9.3-alt1
 - Version 2.9.3
 

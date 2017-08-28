@@ -3,12 +3,11 @@
 %define oname pycdf
 Name: python-module-pycdf
 Version: 0.6_0
-Release: alt6.1.1
+Release: alt7
 Summary: Python wrapper around the Unidata netCDF library
 License: Public
 Group: Sciences/Other
 Url: http://sourceforge.net/projects/pysclint/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://pysclint.svn.sourceforge.net/svnroot/pysclint
 Source: %oname-%version.tar.gz
@@ -61,6 +60,9 @@ cp -fR doc/pycdf/examples %buildroot%python_sitelibdir/pycdf/
 %python_sitelibdir/%oname/examples
 
 %changelog
+* Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6_0-alt7
+- Rebuilt with libnetcdf11.
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6_0-alt6.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 

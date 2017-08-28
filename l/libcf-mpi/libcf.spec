@@ -7,7 +7,7 @@
 %define priority 40
 Name: %oname-mpi
 Version: 1.0
-Release: alt1.beta1.2011092223
+Release: alt1.beta1.2011092223.1
 Summary: Manipulating of scientific data files which conform to the CF conventions
 License: Open source
 Group: File tools
@@ -116,6 +116,9 @@ install -m755 examples/.libs/* %buildroot%hdfdir/bin
 %python_sitelibdir/*
 
 %changelog
+* Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt1.beta1.2011092223.1
+- Rebuilt with libnetcdf11-mpi.
+
 * Fri Sep 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.beta1.2011092223
 - Initial build for Sisyphus
 

@@ -1,25 +1,25 @@
 %define major 4
 %define oname netcdf
 %define sname lib%oname
-%define sover 7
+%define sover 11
 %define priority 40
 
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
 Name: %sname%sover-mpi
-Version: %major.3.2
+Version: %major.4.1.1
 Release: alt1
 
 Summary: Parallel libraries to use the Unidata network Common Data Form (netCDF)
 
 License: NetCDF
 Group: System/Libraries
-Url: http://www.unidata.ucar.edu/packages/netcdf/
+Url: http://www.unidata.ucar.edu/software/netcdf/
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
+# https://github.com/Unidata/netcdf-c.git
 Source: %oname-%version.tar
+Patch1: %oname-%version-alt-build.patch
 
 Requires(post,preun): alternatives
 Requires: libhdf5-mpi >= 1.8.3-alt5
@@ -150,6 +150,7 @@ This package contains the netCDF development documentation.
 
 %prep
 %setup
+%patch1 -p1
 
 %ifarch x86_64
 LIB64=64
@@ -276,7 +277,7 @@ rm -fR %mpidir/include/netcdf-3 %mpidir/include/netcdf
 %_altdir/%name-devel.alternatives
 
 %files -n %sname-mpi-devel-doc
-%doc man4/html examples
+%doc docs/html examples
 %_man3dir/*
 %exclude %_man3dir/netcdf.3*
 
@@ -288,6 +289,11 @@ rm -fR %mpidir/include/netcdf-3 %mpidir/include/netcdf
 %_altdir/%oname-mpi-tools.alternatives
 
 %changelog
+* Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.1.1-alt1
+- Updated to stable upstream version 4.4.1.1.
+- Changed sover to 11.
+- Renamed package to libnetcdf11-mpi.
+
 * Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.2-alt1
 - Version 4.3.2
 

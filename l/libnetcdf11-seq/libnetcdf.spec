@@ -1,13 +1,13 @@
 %define major 4
 %define oname netcdf
 %define sname lib%oname
-%define sover 7
+%define sover 11
 %define priority 30
 %define hdfdir %_libdir/hdf5-seq
 
 Name: %sname%sover-seq
 Version: %major.4.1.1
-Release: alt1
+Release: alt2
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF)
 
@@ -237,6 +237,9 @@ rm -fR %_includedir/netcdf-3 %_includedir/netcdf \
 #exclude %_man3dir/index.3*
 
 %changelog
+* Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.1.1-alt2
+- Split into separate package named libnetcdf11-seq.
+
 * Thu Aug 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.1.1-alt1
 - Updated to stable upstream version 4.4.1.1.
 

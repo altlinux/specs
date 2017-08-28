@@ -10,7 +10,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 2.0.2
-Release: alt4.1
+Release: alt5
 Group: Sciences/Geosciences
 
 License: MIT
@@ -257,6 +257,9 @@ sed -i 's|__bool__ = __nonzero__||' \
 %endif
 
 %changelog
+* Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt5
+- Rebuilt with libnetcdf11.
+
 * Wed Aug 16 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt4.1
 - Rebuild with geos 3.6.2
 

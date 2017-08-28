@@ -4,7 +4,7 @@
 
 Name: grace
 Version: 5.1.25
-Release: alt2
+Release: alt3
 
 Summary: WYSIWYG tool to make two-dimensional plots of scientific data
 License: GPL
@@ -145,6 +145,9 @@ GRACE_HOME=%_datadir/grace %_datadir/grace/auxiliary/set_default_enc
 # - look into printing support
 
 %changelog
+* Tue Aug 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.25-alt3
+- Rebuilt with libnetcdf11.
+
 * Mon Jan 09 2017 Michael Shigorin <mike@altlinux.org> 5.1.25-alt2
 - fixed FTBFS (by dropping BR: lprng; default to "lpr")
 
