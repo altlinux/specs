@@ -1,8 +1,9 @@
-%define corerelease 2.0.0-preview2-25407-01
+%define corerelease 2.0.0
+%define sdkrelease 2.0.0
 
 Name: dotnet-common
 Version: 2.0.0
-Release: alt3.preview2
+Release: alt4
 
 Summary: Common dir and files for the .NET Core runtime and libraries
 
@@ -13,6 +14,13 @@ Source: %name-%version.tar
 
 %description
 Common dir and files for the .NET Core runtime and libraries.
+
+%package -n rpm-macros-dotnet
+Summary: RPM macros for build dotnet packages
+Group: Development/Other
+
+%description -n rpm-macros-dotnet
+RPM macros for build dotnet packages.
 
 %prep
 %setup
@@ -27,10 +35,26 @@ EOF
 
 cat <<EOF >fake-os-release-fedora
 NAME="Fedora"
-VERSION="24"
+VERSION="26"
 ID=fedora
-VERSION_ID="24"
+VERSION_ID="26"
 EOF
+
+cat <<EOF >macros
+%%_dotnet_corerelease %corerelease
+%%_dotnet_sdkrelease %sdkrelease
+%%_dotnetdir %_libdir/dotnet
+%%_dotnet_hostfxr %%_dotnetdir/host/fxr/%%_dotnet_corerelease/
+%%_dotnet_shared %%_dotnetdir/shared/Microsoft.NETCore.App/%%_dotnet_corerelease/
+%%_dotnet_sdk %%_dotnetdir/sdk/%%_dotnet_sdkrelease/
+EOF
+
+# FIXME: possible hack
+cat <<EOF >.version
+0
+%_dotnet_corerelease
+EOF
+
 
 %install
 mkdir -p %buildroot%_libdir/dotnet/
@@ -39,6 +63,10 @@ install -m644 fake-os-release-fedora %buildroot%_libdir/dotnet/fake-os-release-f
 
 mkdir -p %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
 mkdir -p %buildroot%_libdir/dotnet/host/fxr/%corerelease/
+
+install -D -m644 macros %buildroot%_rpmmacrosdir/dotnet
+
+install -D -m644 .version %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/.version
 
 %files
 %dir %_libdir/dotnet/
@@ -52,8 +80,16 @@ mkdir -p %buildroot%_libdir/dotnet/host/fxr/%corerelease/
 %dir %_libdir/dotnet/shared/
 %dir %_libdir/dotnet/shared/Microsoft.NETCore.App/
 %dir %_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/
+%_libdir/dotnet/shared/Microsoft.NETCore.App/%corerelease/.version
+
+%files -n rpm-macros-dotnet
+%_rpmmacrosdir/dotnet
 
 %changelog
+* Mon Aug 28 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt4
+- .NET Core 2.0.0 release
+- add subpackage rpm-macros-dotnet
+
 * Wed Jul 12 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt3.preview2
 - .NET Core 2.0.0 Preview 2 (2.0.0-preview2-25407-01)
 
