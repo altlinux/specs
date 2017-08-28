@@ -27,7 +27,7 @@
 
 Name: lxc
 Version: 2.0.8
-Release: alt1
+Release: alt2
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -168,6 +168,10 @@ mkdir -p %buildroot%_cachedir/%name
 
 
 %changelog
+* Mon Aug 28 2017 Denis Pynkin <dans@altlinux.org> 2.0.8-alt2
+- Fixes #33814
+- Fixes #33799
+
 * Thu Jun 29 2017 Denis Pynkin <dans@altlinux.org> 2.0.8-alt1
 - Version updated
 
