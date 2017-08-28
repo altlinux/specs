@@ -11,7 +11,7 @@
 
 Name:		grafana
 Version:	4.4.3
-Release:	alt1%ubt
+Release:	alt2%ubt
 Summary:	Metrics dashboard and graph editor
 
 Group:		Development/Other
@@ -147,6 +147,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Mon Aug 28 2017 Alexey Shabalin <shaba@altlinux.ru> 4.4.3-alt2%ubt
+- fix start options for systemd and sysvinit
+
 * Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 4.4.3-alt1%ubt
 - 4.4.3
 - fix pidfile path in systemd unit
