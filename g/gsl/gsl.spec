@@ -1,16 +1,15 @@
 Name: gsl
-Version: 1.16
-Release: alt1.git20150121.1
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
+Version: 2.4
+Release: alt1
 Summary: The GNU Scientific Library for numerical analysis
 License: GPL
 Group: Development/Other
 URL: http://www.gnu.org/software/gsl/gsl.html
 
-# bzr branch http://bzr.savannah.gnu.org/r/gsl/trunk/
+# git://git.savannah.gnu.org/gsl.git
 Source: %name-%version.tar
+Patch1: %name-%version-alt-build.patch
+
 Requires: lib%name = %version-%release
 Conflicts: lib%name-devel < %version-%release
 
@@ -18,6 +17,7 @@ Conflicts: lib%name-devel < %version-%release
 BuildRequires: ghostscript-module-X ghostscript-utils
 # explicitly added texinfo for info files
 BuildRequires: texinfo
+BuildRequires: python-module-sphinx python-module-sphinx_rtd_theme
 
 #BuildPreReq: texlive-latex-recommended texlive-generic-recommended
 
@@ -91,32 +91,23 @@ Sources of examples for using with GSL
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 ./autogen.sh
 %configure
-sed -i 's|\(GSL_MINOR_VERSION.*\)+|\1|' gsl_version.h
-sed -i 's|\(GSL_VERSION.*\)+"|\1"|' gsl_version.h
+#sed -i 's|\(GSL_MINOR_VERSION.*\)+|\1|' gsl_version.h
+#sed -i 's|\(GSL_VERSION.*\)+"|\1"|' gsl_version.h
 %make_build
 
 pushd doc
     #make ps
     #ps2pdf gsl-ref.ps
-		%make gsl-ref.html
+		%make html
 popd
 
 %install
 %makeinstall
-
-install -d %buildroot%_docdir/lib%name-%version/examples
-#install -m644 doc/gsl-ref.pdf %buildroot%_docdir/lib%name-%version
-cp -fR doc/gsl-ref.html %buildroot%_docdir/lib%name-%version/
-install -p -m644 doc/examples/* %buildroot%_docdir/lib%name-%version/examples
-bzip2 ChangeLog
-bzip2 NEWS
-install -p -m644 ChangeLog.* NEWS.* AUTHORS README THANKS TODO \
-	DONE VOLUNTEERS NOTES \
-	%buildroot%_docdir/lib%name-%version
 
 %files
 %_bindir/*
@@ -125,8 +116,7 @@ install -p -m644 ChangeLog.* NEWS.* AUTHORS README THANKS TODO \
 %exclude %_man1dir/%name-config.1*
 
 %files -n lib%name
-%doc %dir %_docdir/lib%name-%version
-%doc %_docdir/lib%name-%version/AUTHORS
+%doc AUTHORS
 %_libdir/*.so.*
 
 %files -n lib%name-devel
@@ -139,19 +129,19 @@ install -p -m644 ChangeLog.* NEWS.* AUTHORS README THANKS TODO \
 %_man3dir/*
 
 %files -n lib%name-doc
-%doc %dir %_docdir/lib%name-%version
-%doc %_docdir/lib%name-%version/*
-%exclude %_docdir/lib%name-%version/AUTHORS
-%exclude %_docdir/lib%name-%version/examples
+%doc ChangeLog NEWS README THANKS TODO DONE VOLUNTEERS NOTES doc/_build/html
 
 %files -n lib%name-info
 %_infodir/*.info*
 
 %files -n lib%name-examples
-%doc %dir %_docdir/lib%name-%version
-%doc %_docdir/lib%name-%version/examples
+%doc doc/examples
 
 %changelog
+* Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4-alt1
+- Updated to upstream version 2.4.
+- Cleaned up spec.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1.git20150121.1
 - NMU: added BR: texinfo
 

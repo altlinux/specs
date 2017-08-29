@@ -1,16 +1,15 @@
 %define oname pygsl
 Name: python-module-%oname
-Version: 0.9.5
-Release: alt3
+Version: 2.2.0
+Release: alt1
 Summary: Python interface for GNU Scientific Library (GSL)
 License: GPLv2
 Group: Development/Python
 Url: http://pygsl.sourceforge.net/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %oname-%version.tar.gz
 
-BuildPreReq: libgsl90-devel libnumpy-devel swig
+BuildRequires: libgsl-devel libnumpy-devel swig
 
 %description
 This project provides a python interface for the GNU scientific library
@@ -68,6 +67,7 @@ This package contains examples for Python interface for GSL.
 rm -f swig_src/*
 
 %build
+python setup.py config
 %python_build_debug
 
 %install
@@ -85,12 +85,15 @@ rm -f swig_src/*
 %python_sitelibdir/%oname/testing
 
 %files docs
-%doc doc/html doc/paper-a4 doc/pygsl doc/*.html
+%doc doc/*.html
 
 %files examples
 %doc examples/*
 
 %changelog
+* Tue Aug 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.0-alt1
+- Updated to upstream version 2.2.0.
+
 * Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt3
 - Rebuilt with gsl90 instead of gsl
 

@@ -1,8 +1,6 @@
-Name: gsl90
+Name: gsl0.17
 Version: 1.16
-Release: alt2.bzr20131023
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Release: alt2.git20150121
 
 Summary: The GNU Scientific Library for numerical analysis
 License: GPL
@@ -12,10 +10,11 @@ URL: http://www.gnu.org/software/gsl/gsl.html
 # bzr branch http://bzr.savannah.gnu.org/r/gsl/trunk/
 Source: %name-%version.tar
 Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
 
 # Automatically added by buildreq on Wed Jun 06 2007
 BuildRequires: ghostscript-module-X ghostscript-utils
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 #BuildPreReq: texlive-latex-recommended texlive-generic-recommended
 
@@ -23,11 +22,11 @@ BuildRequires: ghostscript-module-X ghostscript-utils
 Summary: Shared librairies for Scientific Library
 Group: System/Legacy libraries
 
+%if 0
 %package -n lib%name-devel
 Summary: Development environment for Scientific Library
 Group: Development/C
 Requires: lib%name = %version-%release
-Conflicts: libgsl-devel
 
 %package -n lib%name-doc
 Summary: book for Scientific Library
@@ -44,6 +43,7 @@ Conflicts: %name < %version-%release
 Summary: Examples sources for using with Scientific Library
 Group: Documentation
 BuildArch: noarch
+%endif
 
 %description
 The %name package is part of the GNU Scientific Library (GSL). The GSL is a
@@ -68,6 +68,7 @@ handle many of the problems encountered in scientific computing.
 
 This package contains shared library required for run GSL-based software.
 
+%if 0
 %description -n lib%name-devel
 The lib%name-devel package is part of the GNU Scientific Library (GSL). The GSL is a
 collection of routines for numerical analysis, written in C.  The GSL is
@@ -87,6 +88,7 @@ Info pages for GSL
 
 %description -n lib%name-examples
 Sources of examples for using with GSL
+%endif
 
 %prep
 %setup
@@ -95,6 +97,7 @@ Sources of examples for using with GSL
 ./autogen.sh
 %configure
 sed -i 's|\(GSL_MINOR_VERSION.*\)+|\1|' gsl_version.h
+sed -i 's|\(GSL_VERSION.*\)+"|\1"|' gsl_version.h
 %make_build
 
 pushd doc
@@ -127,18 +130,18 @@ install -p -m644 ChangeLog.* NEWS.* AUTHORS README THANKS TODO \
 %files -n lib%name
 %doc %dir %_docdir/lib%name-%version
 %doc %_docdir/lib%name-%version/AUTHORS
-%_libdir/*.so.*
+%_libdir/libgsl.so.*
 
+%if 0
 %files -n lib%name-devel
-%_bindir/gsl-config
+%_bindir/%name-config
 %_libdir/*.so
 %_libdir/pkgconfig/*
 %_includedir/*
 %_datadir/aclocal/*
-%_man1dir/gsl-config.1*
+%_man1dir/%name-config.1*
 %_man3dir/*
 
-%if 0
 %files -n lib%name-doc
 %doc %dir %_docdir/lib%name-%version
 %doc %_docdir/lib%name-%version/*
@@ -154,8 +157,17 @@ install -p -m644 ChangeLog.* NEWS.* AUTHORS README THANKS TODO \
 %endif
 
 %changelog
-* Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.16-alt2.bzr20131023
-- Moved this version into System/Legacy libraries
+* Fri Sep 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.16-alt2.git20150121
+- Moved this version into System/Legacy libraries.
+
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1.git20150121.1
+- NMU: added BR: texinfo
+
+* Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.16-alt1.git20150121
+- New snapshot
+
+* Sat Jul 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.16-alt1.git20140602
+- New snapshot
 
 * Wed Nov 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.16-alt1.bzr20131023
 - Version 1.16

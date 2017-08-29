@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gsl-config /usr/bin/msgmerge /usr/bin/nasm libICE-devel libSM-devel pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) 
+BuildRequires: /usr/bin/msgmerge /usr/bin/nasm libICE-devel libSM-devel pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) 
 # END SourceDeps(oneline)
 
 Name: xaos
 Version: 3.6
-Release: alt1.1.1
+Release: alt2
 Summary: A real-time fractal zoomer
 Serial: 1
 
@@ -19,13 +19,17 @@ Source10: %name.16.xpm.bz2
 Source11: %name.32.xpm.bz2
 Source12: %name.48.xpm.bz2
 
-Patch0:	xaos-3.5-fix-conflicting-register-types.patch
+Patch1: xaos-3.6-upstream-desktop.patch
+Patch2: xaos-3.6-upstream-fortify.patch
+Patch3: xaos-3.6-upstream-gcc.patch
+Patch4: xaos-3.6-upstream-parallel-build.patch
+Patch5: xaos-3.6-upstream-qt5.patch
 
 Provides : XaoS = %version, %name-aalib = %version
 Obsoletes: XaoS, %name-aalib
 
 BuildRequires: aalib-devel imake libICE-devel libXxf86dga-devel zlib-devel  gettext
-BuildRequires: libXxf86vm-devel libgpm-devel libXext-devel libX11-devel libXt-devel libgsl90-devel
+BuildRequires: libXxf86vm-devel libgpm-devel libXext-devel libX11-devel libXt-devel libgsl-devel
 BuildRequires: libncurses-devel libpng12-devel libslang-devel nasm xorg-cf-files libgtk+2-devel libXext-devel
 BuildRequires:	texlive-base-bin
 # explicitly added texinfo for info files
@@ -40,7 +44,11 @@ This package holds the binary that runs with X11.
 
 %prep
 %setup -q -n xaos-%version
-%patch0 -p1 -b .proto
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 # disable stripping binaries when installing
 sed -i 's| -s | |' Makefile.in
 sed -i 's,\$x_includes/X11/extensions/XShm.h,/usr/include/X11/extensions/XShm.h,' configure.in configure
@@ -84,20 +92,12 @@ install -m755 xaos-svgalib %buildroot%_bindir
 install -m644 help/xaos.hlp %buildroot%_datadir/XaoS/catalogs
 
 # menu entry
+sed -i 's:Exec=xaos:Exec=xaos -driver "GTK+ Driver":' src/xdg/xaos.desktop
+echo 'Encoding=UTF-8' >> src/xdg/xaos.desktop
+echo 'Version=1.0' >> src/xdg/xaos.desktop
+
 install -m755 -d %buildroot%_desktopdir/
-cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
-[Desktop Entry]
-Encoding=UTF-8
-Version=1.0
-Type=Application
-Name=XaoS
-Comment=Interactive fractal zoomer
-Icon=%{name}
-#Exec=%{name}
-Exec=xaos -driver "GTK+ Driver"
-Terminal=false
-Categories=Education;Science;Math;
-EOF
+install -m644 src/xdg/xaos.desktop %buildroot%_desktopdir/%name.desktop
 
 # icon
 mkdir -p %buildroot%_miconsdir
@@ -125,6 +125,9 @@ cp %SOURCE1 %buildroot%_liconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Tue Aug 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.6-alt2
+- Rebuilt with new libgsl.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1:3.6-alt1.1.1
 - NMU: added BR: texinfo
 
