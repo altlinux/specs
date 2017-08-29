@@ -22,12 +22,11 @@
 #
 # Spec file adapted for ALT Linux.
 
-%global with_systemd 1
-%define init_script systemd
+%define init_script systemd,sysvinit
 
 Name: lxc
 Version: 2.0.8
-Release: alt2
+Release: alt3
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -71,6 +70,13 @@ kernel.
 This package provides the lxc-* tools, which can be used to start a single
 daemon in a container, or to boot an entire "containerized" system, and to
 manage and debug your containers.
+
+%package	sysvinit
+Summary:	%{name} init scripts for SysVinit
+Group:		System/Configuration/Other
+Requires:	%{name}
+%description	sysvinit
+The %{name}-sysvinit package contains init scripts for SysVinit
 
 %package	libs
 Summary:	Shared library files for %{name}
@@ -142,6 +148,9 @@ mkdir -p %buildroot%_cachedir/%name
 %{_unitdir}/lxc@.service
 %{_unitdir}/lxc-net.service
 
+%files sysvinit
+%{_initdir}/*
+
 %files libs
 %defattr(-,root,root)
 %{_sbindir}/*
@@ -168,6 +177,10 @@ mkdir -p %buildroot%_cachedir/%name
 
 
 %changelog
+* Tue Aug 29 2017 Denis Pynkin <dans@altlinux.org> 2.0.8-alt3
+- Build with both init systems sysvinit and systemd
+- new package lxc-sysvinit provided for classic SysVinit boot
+
 * Mon Aug 28 2017 Denis Pynkin <dans@altlinux.org> 2.0.8-alt2
 - Fixes #33814
 - Fixes #33799
