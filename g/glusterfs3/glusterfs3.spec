@@ -26,7 +26,7 @@
 %{?_without_ocf:%global _without_ocf --without-ocf}
 
 Name: glusterfs3
-Version: %major.4
+Version: %major.5
 Release: alt1
 
 Summary: Cluster File System
@@ -560,6 +560,12 @@ rm -rf %buildroot%_sbindir/conf.py
 %preun server
 %preun_service glusterd
 %changelog
+* Tue Aug 29 2017 Vitaly Lipatov <lav@altlinux.ru> 3.10.5-alt1
+- new version 3.10.4 (with rpmrb script)
+
+* Mon Jul 24 2017 Vitaly Lipatov <lav@altlinux.ru> 3.10.4-alt2
+- change the max of rda-cache-limit to INFINITY (RHbug# 1473968)
+
 * Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 3.10.4-alt1
 - new version 3.10.4 (with rpmrb script)
 
