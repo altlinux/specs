@@ -2,14 +2,14 @@
 # vim: set ft=spec:
 # vim600: set fdm=marker:
 
-#define patchlevel %nil
-%define patchlevel -P1
+%define patchlevel %nil
+#define patchlevel -P1
 
 %define _unpackaged_files_terminate_build 1
 
 Name: dhcp
-Version: 4.3.3
-Release: alt5
+Version: 4.3.6
+Release: alt1
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -62,23 +62,21 @@ Patch0014: 0014-dhclient-Check-if-dhclient-already-running.patch
 Patch0015: 0015-dhclient-Request-more-options-by-default.patch
 Patch0016: 0016-Prevent-file-descriptors-leak.patch
 Patch0017: 0017-Drop-garbage-char.patch
-Patch0018: 0018-Do-not-segfault-if-the-ipv6-kernel-module-is-not-loa.patch
-Patch0019: 0019-Fix-segfault-in-case-of-NULL-timeout.patch
-Patch0020: 0020-Ensure-64-bit-platforms-parse-lease-file-dates-times.patch
-Patch0021: 0021-Support-Classless-Static-Route-Option-for-DHCPv4-RFC.patch
-Patch0022: 0022-dhclient-Don-t-confirm-expired-lease.patch
-Patch0023: 0023-Build-dhcp-s-libraries-as-shared-libs-instead-of-sta.patch
-Patch0024: 0024-Don-t-send-log-messages-to-the-stderr-with-f-option.patch
-Patch0025: 0025-Use-getifaddrs-to-scan-for-interfaces.patch
-Patch0026: 0026-dhclient-Don-t-use-fallback_interface-when-releasing.patch
-Patch0027: 0027-Support-DHCPv6-Options-for-Network-Boot-RFC5970.patch
-Patch0028: 0028-Fix-infinite-leases-on-x64.patch
-Patch0029: 0029-Document-ALT-specific-in-the-dhclient-script-manpage.patch
-Patch0030: 0030-Ignore-checksums-on-the-loopback-interface.patch
-Patch0031: 0031-dhcpd-and-dhcrelay-Override-default-user-jail-dir-an.patch
-Patch0032: 0032-examples-dhcpd-dhcpv6.conf-Drop-dhcpv6-lease-file-na.patch
-Patch0033: 0033-fix-segfault-on-x86-64-on-8-network.patch
-Patch0034: 0034-Fix-Makefiles-for-dhcpctl-relay-and-omapip.patch
+Patch0018: 0018-Fix-segfault-in-case-of-NULL-timeout.patch
+Patch0019: 0019-Ensure-64-bit-platforms-parse-lease-file-dates-times.patch
+Patch0020: 0020-Support-Classless-Static-Route-Option-for-DHCPv4-RFC.patch
+Patch0021: 0021-dhclient-Don-t-confirm-expired-lease.patch
+Patch0022: 0022-Build-dhcp-s-libraries-as-shared-libs-instead-of-sta.patch
+Patch0023: 0023-Don-t-send-log-messages-to-the-stderr-with-f-option.patch
+Patch0024: 0024-Document-ALT-specific-in-the-dhclient-script-manpage.patch
+Patch0025: 0025-Ignore-checksums-on-the-loopback-interface.patch
+Patch0026: 0026-dhcpd-and-dhcrelay-Override-default-user-jail-dir-an.patch
+Patch0027: 0027-examples-dhcpd-dhcpv6.conf-Drop-dhcpv6-lease-file-na.patch
+Patch0028: 0028-fix-segfault-on-x86-64-on-8-network.patch
+Patch0029: 0029-Fix-Makefiles-for-dhcpctl-relay-and-omapip.patch
+Patch0030: 0030-Apply-dhcp-4.3.5-bound.diff.patch
+Patch0031: 0031-dhclient-Add-onetime-and-nounicast-options.patch
+Patch0032: 0032-dhclient-rename-timeout-option-to-timeout.patch
 
 # due to copy_resolv_conf/copy_resolv_lib
 BuildPreReq: chrooted >= 0.3
@@ -225,8 +223,6 @@ server
 %patch0030 -p2
 %patch0031 -p2
 %patch0032 -p2
-%patch0033 -p2
-%patch0034 -p2
 
 install -pm644 %_sourcedir/update_dhcp.pl .
 find -type f -print0 |
@@ -243,7 +239,12 @@ find server -type f -not -name Makefile\* -print0 |
 	xargs -r0 sed -i 's,%ROOT/dhcpd/state/dhcpd6,%ROOT/dhcpd6/state/dhcpd6,g' --
 
 %build
-%add_optflags -fpie -fno-strict-aliasing -Wno-unused -Werror -Dlint
+%add_optflags -fpie -fno-strict-aliasing -Wno-unused -Dlint
+%ifnarch e2k
+# lcc: omapi.c:789: -Werror=array-bounds
+%add_optflags -Werror
+%endif
+
 %autoreconf
 %configure --with-libbind=%{_includedir}/bind9 --with-libbind-libs=%{_libdir}
 ## ./configure --copts "%optflags"
@@ -545,6 +546,18 @@ fi
 # }}}
 
 %changelog
+* Tue Aug 29 2017 Mikhail Efremov <sem@altlinux.org> 1:4.3.6-alt1
+- dhclient: rename -timeout option to --timeout.
+- dhclient: Add --onetime and --nounicast options.
+- Added bound.patch.
+- dhclient: rename our -R option to --request-options.
+- dhclient: rename our -I option to -C.
+- Updated patches.
+- Updated to 4.3.6.
+
+* Wed Apr 05 2017 Michael Shigorin <mike@altlinux.org> 1:4.3.3-alt5.1
+- E2K: ignore array bounds warning (lcc).
+
 * Wed Feb 01 2017 Mikhail Efremov <sem@altlinux.org> 1:4.3.3-alt5
 - Use _unpackaged_files_terminate_build.
 - Build with bind-9.9.9 libraries (closes: #33053).
