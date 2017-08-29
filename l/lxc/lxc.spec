@@ -22,11 +22,12 @@
 #
 # Spec file adapted for ALT Linux.
 
+%def_with systemd
 %define init_script systemd,sysvinit
 
 Name: lxc
 Version: 2.0.8
-Release: alt3
+Release: alt4
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -59,7 +60,7 @@ BuildRequires: libgnutls-devel
 Requires: openssl rsync
 BuildRequires: libcap libcap-devel docbook2X graphviz
 
-BuildRequires: systemd-devel
+%{?_with_systemd:BuildRequires: systemd-devel}
 
 %description
 Containers are insulated areas inside a system, which have their own namespace
@@ -77,6 +78,8 @@ Group:		System/Configuration/Other
 Requires:	%{name}
 %description	sysvinit
 The %{name}-sysvinit package contains init scripts for SysVinit
+# Skip automatic dependency to optional lsb scripts
+%add_findreq_skiplist %{_initdir}/*
 
 %package	libs
 Summary:	Shared library files for %{name}
@@ -121,7 +124,7 @@ CFLAGS+=-I%_includedir/linux-default/include/
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 mkdir -p %buildroot%_localstatedir/%name
 mkdir -p %buildroot%_cachedir/%name
 
@@ -177,6 +180,10 @@ mkdir -p %buildroot%_cachedir/%name
 
 
 %changelog
+* Tue Aug 29 2017 Denis Pynkin <dans@altlinux.org> 2.0.8-alt4
+- Based on patch by Michael Shigorin: introduced systemd knob (on by default)
+- Removed dependency to lsb scripts for lxc-sysvinit package
+
 * Tue Aug 29 2017 Denis Pynkin <dans@altlinux.org> 2.0.8-alt3
 - Build with both init systems sysvinit and systemd
 - new package lxc-sysvinit provided for classic SysVinit boot
