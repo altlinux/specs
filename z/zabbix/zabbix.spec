@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		71669
+%define svnrev		71734
 
 %def_with pgsql
 
@@ -11,7 +11,7 @@
 
 Name: zabbix
 Version: 3.4.1
-Release: alt0.rc1
+Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -25,7 +25,7 @@ Url: http://www.zabbix.com
 
 # http://heanet.dl.sourceforge.net/sourceforge/%name/%name-%version.tar.gz
 Source0: %name-%version.tar
-#Patch0: %name-%version-%release.patch
+Patch0: %name-%version-%release.patch
 
 BuildPreReq: java-devel-default
 BuildPreReq: libelf-devel
@@ -213,7 +213,7 @@ zabbix web frontend, edition for php5
 
 %prep
 %setup
-#%%patch0 -p1
+%patch0 -p1
 
 %build
 # fix ZABBIX_REVISION
@@ -499,6 +499,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Aug 29 2017 Alexei Takaseev <taf@altlinux.org> 1:3.4.1-alt1
+- 3.4.1
+
 * Fri Aug 25 2017 Alexei Takaseev <taf@altlinux.org> 1:3.4.1-alt0.rc1
 - 3.4.1rc1
 
