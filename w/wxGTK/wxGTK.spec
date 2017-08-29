@@ -1,6 +1,8 @@
 %define wxbranch 2.8
 %define ucode u
+%def_enable java
 %def_enable unicode
+%def_enable mediactrl
 
 %if_disabled unicode
 %define ucode %{-E}
@@ -8,7 +10,7 @@
 
 Name: wxGTK
 Version: %wxbranch.12
-Release: alt1.svn20131012.4
+Release: alt1.svn20131012.5
 Serial:	2
 
 Summary: The GTK+ port of the wxWidgets library
@@ -25,13 +27,16 @@ Patch2: wxGTK-ftbfs-gcc6.patch
 Patch3: wxGTK-gstreamer1.0.patch
 
 BuildPreReq: gcc-c++ libGL-devel libSDL-devel libSM-devel
-BuildPreReq: libXinerama-devel libesd-devel libexpat-devel
+BuildPreReq: libXt-devel libXinerama-devel libexpat-devel
 BuildPreReq: libgtk+2-devel libjpeg-devel libtiff-devel
-BuildPreReq: rpm-build-java libXt-devel gstreamer1.0-devel
-BuildPreReq: libGConf-devel gst-plugins1.0-devel
+BuildPreReq: gstreamer1.0-devel gst-plugins1.0-devel
+BuildPreReq: libGConf-devel
 
 BuildPreReq: libstdc++-devel libpng-devel bakefile
 BuildPreReq: libxml2-devel
+
+%{?_enabled_java:BuildRequires: rpm-build-java}
+%{?_enabled_mediactrl:BuildRequires: libesd-devel gstreamer-devel gst-plugins-devel}
 
 Requires: lib%name = %{?serial:%serial:}%version-%release
 
@@ -179,7 +184,7 @@ subst "s,bakefile/presets,bakefile/presets-\$(WX_RELEASE),g" Makefile.in
 	 --enable-unicode \
 	 --enable-gtk2=yes \
 	 --enable-soname \
-	 --enable-mediactrl \
+	 %{subst_enable mediactrl} \
 	 --enable-graphics_ctx \
 	 --with-gnomeprint \
 	 --with-sdl \
@@ -236,7 +241,9 @@ cp -fR docs/* %buildroot%_docdir/%name-%version/
 %_libdir/libwx_gtk2%{ucode}_core-%wxbranch.so.*
 %_libdir/libwx_gtk2%{ucode}_html-%wxbranch.so.*
 #_libdir/libwx_gtk2%{ucode}_mmedia-%wxbranch.so.*
+%if_enabled mediactrl
 %_libdir/libwx_gtk2%{ucode}_media-%wxbranch.so.*
+%endif
 %_libdir/libwx_gtk2%{ucode}_xrc-%wxbranch.so.*
 %_libdir/libwx_gtk2%{ucode}_qa-%wxbranch.so.*
 %_libdir/libwx_gtk2%{ucode}_fl-%wxbranch.so.*
@@ -265,7 +272,9 @@ cp -fR docs/* %buildroot%_docdir/%name-%version/
 %_libdir/libwx_gtk2%{ucode}_gl-%wxbranch.so
 %_libdir/wx/%{wxbranch}/sound_sdl-%{wxbranch}.so
 #_libdir/libwx_gtk2%{ucode}_mmedia-%wxbranch.so
+%if_enabled mediactrl
 %_libdir/libwx_gtk2%{ucode}_media-%wxbranch.so
+%endif
 %_libdir/libwx_gtk2%{ucode}_xrc-%wxbranch.so
 %_libdir/libwx_gtk2%{ucode}_qa-%wxbranch.so
 %if_enabled unicode
@@ -327,6 +336,9 @@ cp -fR docs/* %buildroot%_docdir/%name-%version/
 %_datadir/wx/examples
 
 %changelog
+* Tue Aug 29 2017 Michael Shigorin <mike@altlinux.org> 2:2.8.12-alt1.svn20131012.5
+- introduce java, mediactrl knobs (on by default)
+
 * Thu Mar 09 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2:2.8.12-alt1.svn20131012.4
 - Built against GStreamer 1.0 (ALT#33212).
 - Fixed build witn GCC 6.
