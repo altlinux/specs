@@ -2,7 +2,7 @@
 
 Name: PokerTH
 Version: 1.1.1
-Release: alt3
+Release: alt4
 
 Summary: Texas Hold'em poker game
 Group: Games/Cards
@@ -30,6 +30,8 @@ BuildPreReq: libgcrypt-devel zlib-devel libsqlite3-devel phonon-devel tinyxml-de
 BuildPreReq: protobuf-compiler
 
 Requires: %name-data = %version-%release
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 PokerTH is a poker game written in C++/Qt5. You can play the popular
@@ -78,6 +80,10 @@ install -pm755 pokerth bin/pokerth_server %buildroot%_bindir
 %_pixmapsdir/pokerth.png
 
 %changelog
+* Mon Aug 28 2017 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt4
+- Fix build with boost-1.65.0.
+- Rebuilt with boost 1.65.0.
+
 * Mon Apr 04 2016 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt3
 - Fix build: Patches from Fedora.
 - Move data to separate subpackage.
