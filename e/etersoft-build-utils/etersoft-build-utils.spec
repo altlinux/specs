@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.7.0
+Version: 2.7.1
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,13 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue Aug 29 2017 Vitaly Lipatov <lav@altlinux.ru> 2.7.1-alt1
+- rpmgp: fix -l
+- rpmgs: initial support for non archive downloading
+- rpmgs: some step to fix hack with summary
+- pkgrepls: Sisyphus uses libpng16 by default now
+- rpmbb: add directory support
+
 * Sun Jul 23 2017 Vitaly Lipatov <lav@altlinux.ru> 2.7.0-alt1
 - support comments in .gear/rules
 - fix initial fetching branch during backporting
