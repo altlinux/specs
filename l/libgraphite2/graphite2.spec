@@ -4,7 +4,7 @@
 
 Name: lib%_name
 Version: 1.3.10
-Release: alt1
+Release: alt2
 
 Summary: Font rendering capabilities for complex non-Roman writing systems
 Group: System/Libraries
@@ -44,6 +44,11 @@ Includes and definitions for developing with Graphite2.
 %prep
 %setup -n %_name-%version
 %patch1 -p1 -b .cmake
+%ifarch e2k
+# unsupported as of lcc 1.21.20
+sed -i 's,-Wdouble-promotion,,' src/CMakeLists.txt
+%add_optflags -lcxa
+%endif
 
 %build
 %cmake -DGRAPHITE2_COMPARE_RENDERER=OFF
@@ -75,6 +80,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %{?_enable_docs:%doc BUILD/doc/manual.html}
 
 %changelog
+* Sun Aug 27 2017 Michael Shigorin <mike@altlinux.org> 1.3.10-alt2
+- E2K: avoid lcc-unsupported option; explicit -lcxa
+
 * Mon May 29 2017 Yuri N. Sedunov <aris@altlinux.org> 1.3.10-alt1
 - 1.3.10
 
