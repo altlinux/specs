@@ -5,7 +5,7 @@
 %def_enable rdmacm
 
 Name: fio
-Version: 2.12
+Version: 3.0
 Release: alt1
 
 Summary: IO testing tool
@@ -14,6 +14,7 @@ Group: System/Kernel and hardware
 
 Url: http://git.kernel.dk/?p=fio.git;a=summary
 Source0: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: libaio-devel zlib-devel
 
@@ -91,6 +92,9 @@ This package conteon gtk frontend for %name
 %_bindir/gfio
 
 %changelog
+* Tue Aug 29 2017 Terechkov Evgenii <evg@altlinux.org> 3.0-alt1
+- 3.0
+
 * Tue Jun 14 2016 Alexey Shabalin <shaba@altlinux.ru> 2.12-alt1
 - 2.12
 - build with support numa, ceph, gluster, rdmacm
