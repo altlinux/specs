@@ -9,7 +9,7 @@
 # contains binary-like things (ELF data for tests, etc)
 %global _unpackaged_files_terminate_build 1
 
-%global go_arches %ix86 x86_64 %arm
+%global go_arches %ix86 x86_64 aarch64 %arm
 %global go_root %_libdir/golang
 
 %ifarch x86_64
@@ -21,12 +21,15 @@
 %ifarch %arm
 %global go_hostarch  arm
 %endif
+%ifarch aarch64
+%global go_hostarch  arm64
+%endif
 
 %def_disable check
 
 Name:    golang
 Version: 1.9
-Release: alt1
+Release: alt2
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -276,6 +279,9 @@ mkdir -p -- \
 
 
 %changelog
+* Tue Aug 29 2017 Alexey Gladkov <legion@altlinux.ru> 1.9-alt2
+- Enable build for aarch64.
+
 * Mon Aug 28 2017 Alexey Gladkov <legion@altlinux.ru> 1.9-alt1
 - New version (1.9).
 
