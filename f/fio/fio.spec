@@ -6,7 +6,7 @@
 
 Name: fio
 Version: 3.0
-Release: alt1
+Release: alt2
 
 Summary: IO testing tool
 License: GPLv2
@@ -16,7 +16,7 @@ Url: http://git.kernel.dk/?p=fio.git;a=summary
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: libaio-devel zlib-devel
+BuildRequires: libaio-devel zlib-devel python-module-sphinx
 
 %{?_enable_gfio:BuildRequires: libgtk+2-devel}
 %{?_enable_numa:BuildRequires: libnuma-devel }
@@ -69,12 +69,13 @@ This package conteon gtk frontend for %name
 	--extra-cflags="%optflags"
 
 %make_build V=1 EXTFLAGS="%optflags"
+%make_build -C doc html
 
 %install
 %make_install DESTDIR=%buildroot install prefix=%_prefix mandir=%_mandir
 
 %files
-%doc HOWTO README REPORTING-BUGS examples
+%doc HOWTO README REPORTING-BUGS examples doc/output/html
 %_bindir/genfio
 %_bindir/%name
 %_man1dir/%name.1.*
@@ -92,6 +93,9 @@ This package conteon gtk frontend for %name
 %_bindir/gfio
 
 %changelog
+* Tue Aug 29 2017 Terechkov Evgenii <evg@altlinux.org> 3.0-alt2
+- Build documentation
+
 * Tue Aug 29 2017 Terechkov Evgenii <evg@altlinux.org> 3.0-alt1
 - 3.0
 
