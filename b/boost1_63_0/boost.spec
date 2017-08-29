@@ -1,5 +1,5 @@
 %define ver_maj 1
-%define ver_min 65
+%define ver_min 63
 %define ver_rel 0
 
 %define namesuff %{ver_maj}_%{ver_min}_%ver_rel
@@ -7,7 +7,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with jam
 %def_with devel_static
@@ -19,25 +19,12 @@
 %def_with strict_deps
 %def_with python3
 
-# mpi
-%ifarch %arm e2k
-%def_without mpi
-%else
-%def_with mpi
-%endif
-
-# long_double
 %ifarch %arm
+%def_without mpi
 %def_without long_double
 %else
+%def_with mpi
 %def_with long_double
-%endif
-
-# context
-%ifarch e2k
-%def_without context
-%else
-%def_with context
 %endif
 
 %if_with mpi
@@ -45,11 +32,9 @@
 %define mpidir %_libdir/%mpiimpl
 %endif
 
-%define _unpackaged_files_terminate_build 1
-
-Name: boost
+Name: boost%namesuff
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Boost libraries
@@ -202,10 +187,8 @@ Requires: %name-devel-headers = %epoch:%version-%release
 Requires: %name-devel = %epoch:%version-%release
 Requires: %name-asio-devel = %epoch:%version-%release
 Requires: %name-chrono-devel = %epoch:%version-%release
-%if_with context
 Requires: %name-context-devel = %epoch:%version-%release
 Requires: %name-coroutine-devel = %epoch:%version-%release
-%endif
 Requires: %name-filesystem-devel = %epoch:%version-%release
 Requires: %name-flyweight-devel = %epoch:%version-%release
 Requires: %name-geometry-devel = %epoch:%version-%release
@@ -714,9 +697,7 @@ Group: Development/C++
 PreReq: %name-devel = %epoch:%version-%release
 Requires: %name-atomic-devel = %epoch:%version-%release
 Requires: %name-chrono-devel = %epoch:%version-%release
-%if_with context
 Requires: %name-context-devel = %epoch:%version-%release
-%endif
 Requires: %name-filesystem-devel = %epoch:%version-%release
 %if_with mpi
 Requires: %name-graph-parallel-devel = %epoch:%version-%release
@@ -1038,18 +1019,6 @@ Boost.MPI is a library for message passing in high-performance parallel
 applications. This package contains shared library for python bindings.
 %endif
 
-%if_with python3
-%package -n libboost_mpi_python3-%version
-Summary: Boost.MPI python 3 shared library
-Group: Development/C++
-
-%requires_python3_ABI_for_files %_libdir/*_mpi_python3.so.*
-
-%description -n libboost_mpi_python3-%version
-Boost.MPI is a library for message passing in high-performance parallel
-applications. This package contains shared library for python3 bindings.
-%endif
-
 %package -n libboost_program_options%version
 Summary: The Boost Program_options Library (Boost.Program_options)
 Group: Development/C++
@@ -1167,13 +1136,6 @@ are connected to some set of slots, which are callback receivers (also
 called event targets or subscribers), which are called when the signal
 is "emitted."
 
-%package -n libboost_stacktrace%version
-Summary: The Boost Stacktrace Library (Boost.Stacktrace)
-Group: Development/C++
-
-%description -n libboost_stacktrace%version
-Boost.Stacktrace library is a simple C++03 library that provides
-information about call sequence in a human-readable form.
 
 %package -n libboost_system%version
 Summary: Boost System Library
@@ -1303,16 +1265,13 @@ applications. This package contains python module.
 %patch29 -p2
 %patch30 -p1
 
-COMPILER_FLAGS="%optflags -fno-strict-aliasing"
+find ./ -type f -perm /111 -exec chmod a-x '{}' ';'
 
-%ifarch e2k
-COMPILER_FLAGS="$COMPILER_FLAGS -fno-error-always-inline"
-%endif
 
 cat >> ./tools/build/src/user-config.jam << EOF
 # There are many strict aliasing warnings, and it's not feasible to go
 # through them all at this time.
-using gcc : : : <compileflags>"$COMPILER_FLAGS" ;
+using gcc : : : <compileflags>"%optflags -fno-strict-aliasing" ;
 %if_with mpi
 using mpi ;
 %endif
@@ -1331,67 +1290,47 @@ source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 %endif
 
-./bootstrap.sh --with-toolset=gcc --with-icu
+BJAM_DIR="`pwd`/tools/build/src/engine"
 
-# Form Fedora spec:
-# N.B. When we build the following with PCH, parts of boost (math
-# library in particular) end up being built second time during
-# installation.  Unsure why that is, but all sub-builds need to be
-# built with pch=off to avoid this.
+pushd "$BJAM_DIR"
+chmod +x ./build.sh
+./build.sh
+popd
+
+BJAM="${BJAM_DIR}/bjam"
+
 build_boost() {
 	[ -n "$NPROCS" ] || NPROCS=%__nprocs
-	./b2 -d+2 -q \
-	-j$NPROCS \
-	--layout=system \
-	--toolset=gcc \
-	variant=release \
-	threading=multi \
-	link=$LINK_BOOST \
-	optimization=off \
-	debug-symbols=off \
-	pch=off \
-	-sHAVE_ICU=1 \
-	--prefix=%{_prefix} \
-	--libdir=%{_libdir} \
-	"$@" \
-	#
+	$BJAM \
+		-q -j$NPROCS -d2 \
+		--layout=system \
+		--toolset=gcc \
+		variant=release \
+		threading=multi \
+		link=$LINK_BOOST \
+		optimization=off \
+		debug-symbols=off \
+		-sHAVE_ICU=1 \
+		--prefix=%{_prefix} \
+		--libdir=%{_libdir} \
+		"$@" \
+		#
 }
 
-build_boost \
-	--without-python \
-%if_without context
-	--without-context \
-	--without-coroutine \
-	--without-fiber \
-%endif
-	#
+build_boost --without-python
 
 cp ./tools/build/src/user-config.jam user-config-py2.jam
 cat >> user-config-py2.jam <<'@@@'
 using python : %_python_version ;
 @@@
-build_boost \
-	--build-dir=build-py2 \
-	--user-config=$PWD/user-config-py2.jam \
-	--with-python \
-%if_with mpi
-	--with-mpi \
-%endif
-	python=%_python_version
+build_boost --build-dir=build-py2 --user-config=$PWD/user-config-py2.jam --with-python --with-mpi python=%_python_version
 
 %if_with python3
 cp ./tools/build/src/user-config.jam user-config-py3.jam
 cat >> user-config-py3.jam <<'@@@'
 using python : %_python3_version ;
 @@@
-build_boost \
-	--build-dir=build-py3 \
-	--user-config=$PWD/user-config-py3.jam \
-	--with-python \
-%if_with mpi
-	--with-mpi \
-%endif
-	python=%_python3_version
+build_boost --build-dir=build-py3 --user-config=$PWD/user-config-py3.jam --with-python --with-mpi python=%_python3_version
 %endif
 
 %install
@@ -1407,12 +1346,13 @@ source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 %endif
 
+BJAM="`pwd`/tools/build/src/engine/bjam"
 
 #libraries and headers are installed by bjam
 install_boost() {
 	[ -n "$NPROCS" ] || NPROCS=%__nprocs
-	./b2 -d+2 -q \
-	-j$NPROCS \
+	$BJAM \
+	-q -j$NPROCS -d2 \
 	--layout=system \
 	--toolset=gcc \
 	variant=release \
@@ -1420,7 +1360,6 @@ install_boost() {
 	link=$LINK_BOOST \
 	optimization=off \
 	debug-symbols=off \
-	pch=off \
 	-sHAVE_ICU=1 \
 	--prefix=%{buildroot}%{_prefix} \
 	--libdir=%{buildroot}%{_libdir} \
@@ -1429,33 +1368,10 @@ install_boost() {
 	#
 }
 
-install_boost \
-	--without-python \
-%if_without context
-	--without-context \
-	--without-coroutine \
-	--without-fiber \
-%endif
-	#
-
-install_boost \
-       --build-dir=build-py2 \
-       --user-config=$PWD/user-config-py2.jam \
-       --with-python \
-%if_with mpi
-       --with-mpi \
-%endif
-       python=%_python_version
-
+install_boost --without-python
+install_boost --build-dir=build-py2 --user-config=$PWD/user-config-py2.jam --with-python --with-mpi python=%_python_version
 %if_with python3
-install_boost \
-	--build-dir=build-py3 \
-	--user-config=$PWD/user-config-py3.jam \
-	--with-python \
-%if_with mpi
-	--with-mpi \
-%endif
-	python=%_python3_version
+install_boost --build-dir=build-py3 --user-config=$PWD/user-config-py3.jam --with-python --with-mpi python=%_python3_version
 %endif
 
 # install mpi python module
@@ -1542,8 +1458,8 @@ boost_make_linker_script filesystem-st system-st
 
 %if_with jam
 mkdir -p %buildroot%_bindir
-install -Dm755 tools/build/src/engine/bjam %buildroot%_bindir
-ln -s bjam %buildroot%_bindir/boost-jam
+install -Dm755 $BJAM %buildroot%_bindir
+ln -s `basename $BJAM` %buildroot%_bindir/boost-jam
 %endif
 
 %if_without devel_static
@@ -1556,10 +1472,8 @@ rm -f %buildroot%_libdir/*.a || :
 %files devel-headers
 %_includedir/%name
 %exclude %_includedir/%name/asio*
-%if_with context
 %exclude %_includedir/%name/context
 %exclude %_includedir/%name/coroutine
-%endif
 %exclude %_includedir/%name/filesystem*
 %exclude %_includedir/%name/flyweight*
 %exclude %_includedir/%name/geometry*
@@ -1584,10 +1498,8 @@ rm -f %buildroot%_libdir/*.a || :
 
 %files devel
 %_libdir/*.so
-%if_with context
 %exclude %_libdir/*_context*.so
 %exclude %_libdir/*_coroutine*.so
-%endif
 %exclude %_libdir/*_filesystem*.so
 %exclude %_libdir/*_locale*.so
 %exclude %_libdir/*_log*.so
@@ -1609,7 +1521,6 @@ rm -f %buildroot%_libdir/*.a || :
 %files asio-devel
 %_includedir/%name/asio*
 
-%if_with context
 %files context-devel
 %_includedir/%name/context
 %_libdir/*_context*.so
@@ -1617,7 +1528,6 @@ rm -f %buildroot%_libdir/*.a || :
 %files coroutine-devel
 %_includedir/%name/coroutine
 %_libdir/*_coroutine*.so
-%endif
 
 %files filesystem-devel
 %_includedir/%name/filesystem*
@@ -1727,13 +1637,11 @@ rm -f %buildroot%_libdir/*.a || :
 %files -n libboost_container%version
 %_libdir/*_container*.so.*
 
-%if_with context
 %files -n libboost_context%version
 %_libdir/*_context*.so.*
 
 %files -n libboost_coroutine%version
 %_libdir/*_coroutine*.so.*
-%endif
 
 %files -n libboost_date_time%version
 %_libdir/*_date_time*.so.*
@@ -1787,11 +1695,6 @@ rm -f %buildroot%_libdir/*.a || :
 
 %files -n libboost_mpi_python%version
 %_libdir/*_mpi_python.so.*
-
-%if_with python3
-%files -n libboost_mpi_python3-%version
-%_libdir/*_mpi_python3.so.*
-%endif
 %endif
 
 %files -n libboost_program_options%version
@@ -1819,9 +1722,6 @@ rm -f %buildroot%_libdir/*.a || :
 %files -n libboost_signals%version
 %_libdir/*_signals*.so.*
 
-%files -n libboost_stacktrace%version
-%_libdir/*_stacktrace*.so.*
-
 %files -n libboost_system%version
 %_libdir/*_system*.so.*
 
@@ -1838,10 +1738,8 @@ rm -f %buildroot%_libdir/*.a || :
 %files -n libboost_wave%version
 %_libdir/*_wave*.so.*
 
-%if_with context
 %files -n libboost_fiber%version
 %_libdir/*_fiber*.so.*
-%endif
 
 %files -n libboost_type_erasure%version
 %_libdir/*_type_erasure*.so.*
@@ -1886,16 +1784,8 @@ done
 
 
 %changelog
-* Fri Aug 25 2017 Mikhail Efremov <sem@altlinux.org> 1:1.65.0-alt1
-- Fix build without context.
-- Package libboost_stacktrace*.
-- Package libboost_mpi_python3.
-- Use _unpackaged_files_terminate_build.
-- Support build for e2k.
-- Add with/without context switch.
-- Fix build without mpi.
-- Use Boost build system v2.
-- Updated to 1.65.0.
+* Mon Aug 28 2017 Mikhail Efremov <sem@altlinux.org> 1:1.63.0-alt2
+- Rebuilt as compat package without development files.
 
 * Mon Jan 23 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.63.0-alt1
 - Updated to 1.63.0.
