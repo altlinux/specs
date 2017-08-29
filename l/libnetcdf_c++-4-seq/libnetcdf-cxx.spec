@@ -7,18 +7,16 @@
 
 Name: %sname-%sover-seq
 Version: %major.2
-Release: alt2.1
+Release: alt3
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF) v3, C++ interface
 
 License: NetCDF
 Group: System/Libraries
-Url: http://www.unidata.ucar.edu/packages/netcdf/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: http://www.unidata.ucar.edu/software/netcdf/
 
 Requires(post,preun): alternatives
-Requires: libhdf5-8-seq libnetcdf7-seq
+Requires: libhdf5-8-seq libnetcdf11-seq
 Conflicts: %sname-mpi < 4.0.1-alt6
 Provides: %sname = %version-%release
 Provides: %sname-%sover = %version-%release
@@ -173,6 +171,9 @@ popd
 %_infodir/*
 
 %changelog
+* Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2-alt3
+- Rebuilt with libnetcdf11.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 4.2-alt2.1
 - NMU: added BR: texinfo
 

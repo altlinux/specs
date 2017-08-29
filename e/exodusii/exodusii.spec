@@ -5,7 +5,7 @@ Name: exodusii
 Version: 6.09.0
 %define somver 0
 %define sover %somver.%version
-Release: alt1.git20150119
+Release: alt1.git20150119.2
 Summary: A model developed to store and retrieve transient data for finite element analyses
 License: BSD
 Group: Sciences/Mathematics
@@ -17,7 +17,7 @@ Source1: CMakeCache.txt
 
 BuildPreReq: doxygen graphviz
 BuildPreReq: %mpiimpl-devel cmake libnetcdf-mpi-devel imake
-BuildPreReq: netcdf7-mpi-tools slurm-utils libhdf5-mpi-devel
+BuildPreReq: netcdf11-mpi-tools slurm-utils libhdf5-mpi-devel
 BuildPreReq: libcurl-devel
 
 %description
@@ -29,7 +29,7 @@ Includes the nemesis parallel extension.
 %package -n lib%name
 Summary: Shared libraries of EXODUS II
 Group: System/Libraries
-Requires: libnetcdf7-mpi
+Requires: libnetcdf11-mpi
 
 %description -n lib%name
 EXODUS II is a model developed to store and retrieve transient data for
@@ -136,7 +136,7 @@ mv %buildroot%_includedir/*.h %buildroot%_includedir/%name/
 
 mv nemesis/README README.Nemesis
 
-%filter_from_requires /^debug.*(libnetcdf\.so.*/s/^/libnetcdf7-mpi-debuginfo\t/
+%filter_from_requires /^debug.*(libnetcdf\.so.*/s/^/libnetcdf11-mpi-debuginfo\t/
 %filter_from_requires /^debug.*(libhdf5\.so.*/s/^/libhdf5-8-mpi-debuginfo\t/
 
 %files -n lib%name
@@ -155,6 +155,9 @@ mv nemesis/README README.Nemesis
 %python_sitelibdir/*
 
 %changelog
+* Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.09.0-alt1.git20150119.2
+- Rebuilt with libnetcdf11.
+
 * Thu Mar 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.09.0-alt1.git20150119
 - Version 6.09.0
 

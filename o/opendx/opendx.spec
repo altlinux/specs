@@ -1,11 +1,10 @@
 Name: opendx
 Version: 4.4.4
-Release: alt5
+Release: alt6
 Summary: Open Visualization Data Explorer
 License: IBM Public License
 Group: Graphics
 Url: http://www.opendx.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: http://opendx.informatics.jax.org/source/dx-4.4.4.tar.gz
 
@@ -79,6 +78,7 @@ This package contains documentation for OpenDX.
 rm -f aclocal.m4
 
 %build
+%add_optflags -Wno-error=narrowing
 %autoreconf
 INCS="-I%_libexecdir/hdf5-seq/include -I%_libexecdir/hdf5-seq/include/netcdf-3"
 INCS="$INCS -I%_includedir/ImageMagick"
@@ -126,6 +126,9 @@ install -d %buildroot%_mandir/manl
 %_libexecdir/dx/html
 
 %changelog
+* Tue Aug 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.4-alt6
+- Rebuilt with libnetcdf11.
+
 * Thu Apr 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.4-alt5
 - Rebuilt with new ImageMagick
 

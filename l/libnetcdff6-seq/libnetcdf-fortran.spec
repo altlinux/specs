@@ -1,24 +1,22 @@
 %define major 4
 %define oname netcdf-fortran
 %define sname libnetcdff
-%define sover 5
+%define sover 6
 %define priority 30
 %define hdfdir %_libdir/hdf5-seq
 
 Name: %sname%sover-seq
-Version: %major.2
-Release: alt4
+Version: %major.4.4
+Release: alt1
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF), Fortran interface
 
 License: NetCDF
 Group: System/Libraries
-Url: http://www.unidata.ucar.edu/packages/netcdf/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: http://www.unidata.ucar.edu/software/netcdf/
 
 Requires(post,preun): alternatives
-Requires: libhdf5-8-seq libnetcdf7-seq
+Requires: libhdf5-8-seq libnetcdf11-seq
 Conflicts: %sname-mpi < 4.0.1-alt6
 Provides: %sname = %version-%release
 Provides: %sname%sover = %version-%release
@@ -30,7 +28,9 @@ Provides: %sname.so.%sover()(64bit)
 Provides: %sname.so.%sover
 %endif
 
+# https://github.com/Unidata/netcdf-fortran.git
 Source: %name-%version.tar
+Patch1: %oname-%version-alt-build.patch
 
 # Automatically added by buildreq on Sun Jan 18 2009
 BuildRequires: flex gcc-c++ gcc-fortran zlib-devel libhdf5-devel
@@ -125,12 +125,13 @@ Documentation for NetCDF library, Fortran interface.
 
 %prep
 %setup
+%patch1 -p1
 
 sed -i 's|@LIBDIR@|%_libdir|' netcdf-fortran.pc.in nf-config.in
 
 %build
 %add_optflags -I%hdfdir/include -I%hdfdir/include/netcdf
-%add_optflags -fno-strict-aliasing %optflags_shared -DNO_NETCDF_2
+%add_optflags -fno-strict-aliasing %optflags_shared
 %autoreconf
 %configure \
 	--enable-shared \
@@ -168,7 +169,7 @@ echo "%_pkgconfigdir/%oname.pc %hdfdir/lib/pkgconfig/%oname.pc %priority" >> \
 popd
 
 %files
-%doc COPYRIGHT README
+%doc COPYRIGHT README.md
 %ghost %_libdir/%sname.so.*
 %hdfdir/lib/%sname.so.*
 %_altdir/%name.alternatives
@@ -178,14 +179,17 @@ popd
 %hdfdir/include/netcdf
 %hdfdir/lib/*.so
 %hdfdir/lib/pkgconfig/*
-%_infodir/*
 %_man3dir/*
 %_altdir/%name-devel.alternatives
 
 %files doc
-%doc man4/*.pdf man4/*.txt man4/*.html examples
+%doc docs/*.pdf docs/*.txt docs/*.html examples
 
 %changelog
+* Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.4-alt1
+- Updated to upstream version 4.4.4.
+- Changed sover to 6.
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt4
 - Rebuilt with gcc 4.9
 

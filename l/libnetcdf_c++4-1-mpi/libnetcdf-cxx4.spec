@@ -9,19 +9,17 @@
 %define hdfdir %mpidir
 
 Name: %sname-%sover-mpi
-Version: %major.2.1
+Version: %major.3.0
 Release: alt1
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF) v4, C++ interface
 
 License: NetCDF
 Group: System/Libraries
-Url: http://www.unidata.ucar.edu/packages/netcdf/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: http://www.unidata.ucar.edu/software/netcdf/
 
 Requires(post,preun): alternatives
-Requires: libhdf5-8-mpi libnetcdf7-mpi
+Requires: libhdf5-8-mpi libnetcdf11-mpi
 Conflicts: %sname < 4.0.1-alt6
 Provides: %sname-mpi = %version-%release
 Provides: %sname-%sover-mpi = %version-%release
@@ -33,7 +31,9 @@ Provides: %sname.so.%sover()(64bit)
 Provides: %sname.so.%sover
 %endif
 
+# https://github.com/Unidata/netcdf-cxx4.git
 Source: %name-%version.tar
+Patch1: %oname-%version-alt-build.patch
 
 BuildRequires: flex gcc-c++ gcc-fortran zlib-devel libhdf5-mpi-devel
 
@@ -113,6 +113,7 @@ in C++, you'll need to install the %sname-devel package.
 
 %prep
 %setup
+%patch1 -p2
 
 sed -i 's|@LIBDIR@|%_libdir|' netcdf-cxx4.pc.in ncxx4-config.in
 
@@ -180,6 +181,9 @@ popd
 %_altdir/%name-devel.alternatives
 
 %changelog
+* Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.0-alt1
+- Updated to upstream version 4.3.0.
+
 * Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1
 - Version 4.2.1
 

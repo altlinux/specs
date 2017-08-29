@@ -40,7 +40,7 @@ Name: openmpi
 #pkgname
 
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 %define mpi_prefix %_libdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -91,6 +91,7 @@ Group: Development/Other
 Requires: %name = %version-%release
 Requires: gcc-c++ gcc-fortran
 Requires: libibverbs-devel libibumad-devel
+Requires: libnuma-devel
 
 %ifdef udapl
 Requires: libdapl-devel
@@ -325,6 +326,9 @@ EOF
 %endif
 
 %changelog
+* Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.1-alt2
+- Updated 'requires' for openmpi-devel.
+
 * Sat Dec 17 2016 Denis Pynkin <dans@altlinux.org> 2.0.1-alt1
 - New version
 - VampirTrace removed.

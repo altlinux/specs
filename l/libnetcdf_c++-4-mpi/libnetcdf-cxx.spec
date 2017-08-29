@@ -10,18 +10,16 @@
 
 Name: %sname-%sover-mpi
 Version: %major.2
-Release: alt3.1
+Release: alt4
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF) v3, C++ interface
 
 License: NetCDF
 Group: System/Libraries
-Url: http://www.unidata.ucar.edu/packages/netcdf/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: http://www.unidata.ucar.edu/software/netcdf/
 
 Requires(post,preun): alternatives
-Requires: libhdf5-8-mpi libnetcdf7-mpi
+Requires: libhdf5-8-mpi libnetcdf11-mpi
 Conflicts: %sname < 4.0.1-alt6
 Provides: %sname-mpi = %version-%release
 Provides: %sname-%sover-mpi = %version-%release
@@ -167,7 +165,7 @@ for i in $(ls *.so); do
 done
 popd
 
-%filter_from_requires /^debug.*(libnetcdf\.so.*/s/^/libnetcdf7-mpi-debuginfo\t/
+%filter_from_requires /^debug.*(libnetcdf\.so.*/s/^/libnetcdf11-mpi-debuginfo\t/
 
 %files
 %doc COPYRIGHT
@@ -185,6 +183,9 @@ popd
 %_infodir/*
 
 %changelog
+* Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2-alt4
+- Rebuilt with libnetcdf11.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 4.2-alt3.1
 - NMU: added BR: texinfo
 

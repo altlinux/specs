@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.2.9
-Release: alt1
+Release: alt2
 Summary: Python/numpy interface to netCDF library (versions 3 and 4)
 License: BSD / MIT
 Group: Development/Python
@@ -170,6 +170,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.9-alt2
+- Rebuilt with new libnetcdf11.
+
 * Thu Aug 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.9-alt1
 - Updated to upstream version 1.2.9.
 

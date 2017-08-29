@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/octave /usr/bin/octave-config makeinfo
 %define octave_descr_name netcdf
 Name: octave-%octave_pkg_name
 Version: 1.0.11
-Release: alt2
+Release: alt3
 Summary: netcdf
 
 Group: Sciences/Mathematics
@@ -56,6 +56,9 @@ octave -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages 
 %endif
 
 %changelog
+* Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.11-alt3
+- Rebuilt with libnetcdf11.
+
 * Thu May 18 2017 Paul Wolneykien <manowar@altlinux.org> 1.0.11-alt2
 - regenerated from template by package builder
 

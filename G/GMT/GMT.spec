@@ -30,7 +30,7 @@ BuildRequires: chrpath
 
 Name:           GMT
 Version:        5.2.1
-Release:        alt1_3
+Release:        alt2_3
 Summary:        Generic Mapping Tools
 
 License:        LGPLv3+
@@ -219,6 +219,9 @@ done
 
 
 %changelog
+* Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.1-alt2_3
+- Rebuilt with libnetcdf11.
+
 * Wed Mar 02 2016 Igor Vlasenko <viy@altlinux.ru> 5.2.1-alt1_3
 - rebuild with libgdal
 
