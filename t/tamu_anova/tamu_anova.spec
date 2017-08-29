@@ -1,16 +1,16 @@
 %define sover 0
 Name: tamu_anova
 Version: 0.2
-Release: alt2
+Release: alt3
 Summary: ANOVA Extensions to the GNU Scientific Library
 License: GPL v2
 Group: Sciences/Other
 Url: http://www.stat.tamu.edu/~aredd/tamuanova/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: http://www.stat.tamu.edu/~aredd/tamuanova/tamu_anova-0.2.tar.gz
+Patch1: %name-%version-debian-texinfo_5.1.patch
 
-BuildPreReq: libgsl-devel
+BuildRequires: libgsl-devel makeinfo
 
 %description
 ANOVA, or Analysis of Variance, is a method for comparing levels of some
@@ -51,6 +51,7 @@ This package contains development files of TAMU ANOVA.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 ./autogen.sh
@@ -84,6 +85,9 @@ popd
 %_infodir/*
 
 %changelog
+* Tue Aug 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2-alt3
+- Rebuilt with new libgsl.
+
 * Fri Feb 11 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt2
 - Rebuilt for debuginfo
 
