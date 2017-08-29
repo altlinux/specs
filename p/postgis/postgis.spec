@@ -2,7 +2,7 @@
 
 Name: postgis
 Version: 2.3.3
-Release: alt1
+Release: alt2
 
 Summary: Geographic Information Systems Extensions to PostgreSQL
 Summary(ru_RU.UTF-8): Геоинформационные расширения для PostgreSQL
@@ -27,9 +27,7 @@ BuildRequires: libxml2-devel
 BuildRequires: postgresql-devel
 BuildRequires: xsltproc
 
-Provides:  postgresql%pg_ver-%name = %EVR
-Obsoletes: postgresql%pg_ver-%name < %EVR
-Requires: postgresql%pg_ver-server
+Requires: postgresql%pg_ver-%name = %EVR
 
 %description
 PostGIS adds support for geographic objects to the PostgreSQL
@@ -42,6 +40,18 @@ PostGIS добавляет поддержку географических об�
 сущности PostGIS является расширением PostgreSQL сервера,
 позволяющим использовать его для хранения и обработки геоданных в
 геоинформационных системах (ГИС).
+
+%package -n postgresql%pg_ver-%name
+Summary: The PostGIS extension for PostgreSQL
+Group: Databases
+Requires: postgresql%pg_ver-server
+
+%description -n postgresql%pg_ver-%name
+This package contains shared library for PostgreSQL server
+
+%description -n postgresql%pg_ver-%name -l ru_RU.UTF-8
+Подгружаемая postgis библиотека для PostgreSQL сервера
+
 
 %package devel
 Summary:	The development files for PostGIS
@@ -78,21 +88,26 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %_bindir/shp2pgsql*
 %_bindir/raster2pgsql
 %_man1dir/*
-%_bindir/create_template_postgis
 %_libdir/liblwgeom*
+%_datadir/pgsql/applications/shp2pgsql-gui.desktop
+%_datadir/pgsql/icons/hicolor/*/apps/shp2pgsql-gui.png
+
+%files -n postgresql%pg_ver-%name
+%_bindir/create_template_postgis
 %_libdir/pgsql/%{name}*.so
 %_libdir/pgsql/rt%{name}*.so
 %_datadir/pgsql/contrib/postgis-*/*.sql
 %_datadir/pgsql/contrib/postgis-*/*.pl
 %_datadir/pgsql/extension
-%_datadir/pgsql/applications/shp2pgsql-gui.desktop
-%_datadir/pgsql/icons/hicolor/*/apps/shp2pgsql-gui.png
 
 %files devel
 %_includedir/liblwgeom.h
 %_includedir/liblwgeom_topo.h
 
 %changelog
+* Tue Aug 29 2017 Andrey Cherepanov <cas@altlinux.org> 2.3.3-alt2
+- Return postgresql-postgis for Postgis extension
+
 * Sat Aug 26 2017 Andrey Cherepanov <cas@altlinux.org> 2.3.3-alt1
 - 2.3.3
 - Merge postgis and postgresql-postgis, exclude postgis-devel
