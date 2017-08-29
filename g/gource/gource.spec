@@ -1,6 +1,6 @@
 Name: gource
 Version: 0.44
-Release: alt2
+Release: alt3
 
 Summary: OpenGL-based 3D visualisation tool for source control repositories
 License: %gpl3only
@@ -33,6 +33,8 @@ BuildPreReq: zlib-devel
 
 BuildRequires: libpng-devel
 
+%define _unpackaged_files_terminate_build 1
+
 %description
 OpenGL-based 3D visualisation tool for source control repositories. The
 repository is displayed as a tree where the root of the repository is
@@ -60,6 +62,9 @@ tar xf %_sourcedir/%name-core-%version.tar -C src/
 %_man1dir/*
 
 %changelog
+* Mon Aug 28 2017 Mikhail Efremov <sem@altlinux.org> 0.44-alt3
+- Rebuilt with libboost_*.so.1.65.0.
+
 * Mon Jul 31 2017 Mikhail Efremov <sem@altlinux.org> 0.44-alt2
 - Rebuilt with libboost_*.so.1.63.0.
 
