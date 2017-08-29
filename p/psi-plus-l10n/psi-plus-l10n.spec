@@ -1,6 +1,6 @@
 Name: psi-plus-l10n
-Version: 1.0.133
-Release: alt2
+Version: 1.2.39
+Release: alt1
 
 Summary: Translations for Psi+
 License: GPLv2
@@ -37,6 +37,21 @@ lrelease-qt5 translations/*.ts
 %_datadir/psi-plus/*.qm
 
 %changelog
+* Wed Aug 30 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.39-alt1
+- Version 1.2.39
+
+* Mon Aug 07 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.28-alt1
+- Version 1.2.28
+
+* Thu Aug 03 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.27-alt1
+- Version 1.2.27
+
+* Fri Jul 28 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.12-alt3
+- Version 1.2.12
+
+* Tue Jul 25 2017 Oleg Solovyov <mcpain@altlinux.org> 1.0.133-alt3
+- Update translations
+
 * Tue Jul 18 2017 Oleg Solovyov <mcpain@altlinux.org> 1.0.133-alt2
 - Build with Qt5
 
