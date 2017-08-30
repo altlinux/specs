@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Devel-Size
 Name: perl-%dist
-Version: 0.80
-Release: alt1.1.1
+Version: 0.81
+Release: alt1
 
 Summary: Perl extension for finding the memory usage of Perl variables
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/N/NW/NWCLARK/Devel-Size-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/N/NW/NWCLARK/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
@@ -23,7 +23,7 @@ If the variable is a plain scalar it returns the size of this scalar.
 If the variable is a hash or an array, use a reference when calling.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -37,6 +37,9 @@ If the variable is a hash or an array, use a reference when calling.
 %perl_vendor_autolib/Devel
 
 %changelog
+* Wed Aug 30 2017 Igor Vlasenko <viy@altlinux.ru> 0.81-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.80-alt1.1.1
 - rebuild with new perl 5.24.1
 
