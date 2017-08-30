@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(IPC/Cmd.pm) perl-podlators
@@ -6,14 +7,14 @@ BuildRequires: perl(IPC/Cmd.pm) perl-podlators
 %define upstream_version 1.07
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_6
+Version:    1.13
+Release:    alt1
 
 Summary:    Perl extension for starting a text editor
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Proc/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/M/MS/MSTEVENS/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(Carp/Assert.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
@@ -41,7 +42,7 @@ and anything after the editor name will be passed as arguments to your
 editor. A shell is not used but this should cover most simple cases.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -60,6 +61,9 @@ editor. A shell is not used but this should cover most simple cases.
 
 
 %changelog
+* Wed Aug 30 2017 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
+- automated CPAN update
+
 * Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1_6
 - update by mgaimport
 
