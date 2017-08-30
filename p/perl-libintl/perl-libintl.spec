@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist libintl-perl
 Name: perl-libintl
-Version: 1.26
-Release: alt1.1
+Version: 1.27
+Release: alt1
 
 Summary: High-Level Interface to Uniforum Message Translation
 License: LGPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/G/GU/GUIDO/libintl-perl-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/G/GU/GUIDO/%{dist}-%{version}.tar.gz
 
 # avoid rpmdb bloat
 %add_findprov_skiplist */Locale/RecodeData/*
@@ -21,7 +22,7 @@ The module Locale::TextDomain provides a high-level interface
 to Perl message translation.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 # disable linking with -lintl -liconv
 sed -i- '/LIBS/d' gettext_xs/Makefile.PL
@@ -33,7 +34,7 @@ sed -i- '/LIBS/d' gettext_xs/Makefile.PL
 %perl_vendor_install
 
 %files
-%doc	ChangeLog README
+%doc	ChangeLog README FAQ README-oldversions README.md README.solaris README.win32 ReleaseNotes
 %dir	%perl_vendor_privlib/Locale
 	%perl_vendor_privlib/Locale/*.pm
 %doc	%perl_vendor_privlib/Locale/*.pod
@@ -44,6 +45,9 @@ sed -i- '/LIBS/d' gettext_xs/Makefile.PL
 	%perl_vendor_autolib/Locale
 
 %changelog
+* Wed Aug 30 2017 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1.1
 - rebuild with new perl 5.24.1
 
