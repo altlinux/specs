@@ -3,8 +3,8 @@
 %def_without static
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
-Version: 2.7.10
-Release: alt2
+Version: 2.7.11
+Release: alt1
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -27,6 +27,7 @@ BuildPreReq: desktop-file-utils ImageMagick-tools
 Requires: %name-doc = %version
 Requires: %name-data = %version
 Requires: lib%name = %version
+%py_requires gtk.glade
 %add_tcl_req_skip Hal 
 %add_tcl_req_skip Linuxcnc
 %add_tcl_req_skip Ngcgui
@@ -244,6 +245,10 @@ popd
 %endif
 
 %changelog
+* Wed Aug 30 2017 Anton Midyukov <antohami@altlinux.org> 2.7.11-alt1
+- New version 2.7.11
+- Added missing requires 
+
 * Sun Jul 30 2017 Anton Midyukov <antohami@altlinux.org> 2.7.10-alt2
 - Fix desktop categories.
 
