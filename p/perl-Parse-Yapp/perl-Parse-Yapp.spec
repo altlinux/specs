@@ -3,8 +3,8 @@ Epoch: 1
 %define module	Parse-Yapp
 
 Name: perl-%module
-Version: 1.2
-Release: alt4.1
+Version: 1.21
+Release: alt1
 
 Summary: %module module for perl
 License: distributable
@@ -44,6 +44,9 @@ find . -type f -name '*.pm'|xargs chmod 644
 %_man1dir/*
 
 %changelog
+* Wed Aug 30 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.21-alt1
+- automated CPAN update
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt4.1
 - automated CPAN update
 
