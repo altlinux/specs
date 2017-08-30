@@ -1,7 +1,7 @@
 Summary: An open source software for the creation of electronic schematic diagrams
 Summary(ru_RU.UTF-8): Программа с открытым исходным кодом для проектирования электронных схем
 Name: kicad
-Version: 4.0.6
+Version: 4.0.7
 Release: alt1
 Epoch: 1
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -111,6 +111,7 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %files
 %_bindir/*
 %_desktopdir/*.desktop
+%exclude %_desktopdir/cvpcb.desktop
 %_libexecdir/%name
 %_datadir/mimelnk/application/*.desktop
 
@@ -122,6 +123,10 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %_datadir/%name/
 
 %changelog
+* Wed Aug 30 2017 Anton Midyukov <antohami@altlinux.org> 1:4.0.7-alt1
+- New version 4.0.7
+- exclude cvpcb.desktop
+
 * Wed Feb 22 2017 Anton Midyukov <antohami@altlinux.org> 1:4.0.6-alt1
 - New version 4.0.6
 
