@@ -1,10 +1,10 @@
-# TODO: build from sources
-%define sdkrelease 2.0.0-preview2-006497
-%define pre preview2
+# FIXME:
+%define _dotnet_sdkrelease 2.0.0
 
+# TODO: build from sources
 Name: dotnet-sdk
 Version: 2.0.0
-Release: alt3.%pre
+Release: alt4
 
 Summary: SDK for the .NET Core runtime and libraries
 
@@ -15,7 +15,11 @@ Source: %name-%version.tar
 
 ExclusiveArch: x86_64
 
-BuildRequires: dotnet-bootstrap-sdk = %sdkrelease
+BuildRequires: rpm-build-intro
+
+BuildRequires(pre): rpm-macros-dotnet >= %version
+
+BuildRequires: dotnet-bootstrap-sdk = %_dotnet_sdkrelease
 
 Requires: dotnet-common >= %version
 
@@ -31,16 +35,29 @@ Just copying binary now.
 %setup
 
 %install
-mkdir -p %buildroot%_libdir/dotnet/sdk/%sdkrelease/
-cp -a %_libdir/dotnet-bootstrap/sdk/%version-*/* %buildroot%_libdir/dotnet/sdk/%sdkrelease/
+mkdir -p %buildroot%_dotnet_sdk/
+cp -a %_libdir/dotnet-bootstrap/sdk/%_dotnet_sdkrelease/* %buildroot%_dotnet_sdk/
 # dotnet --info get RID string from this .version, line 3
-cp -a %_libdir/dotnet-bootstrap/sdk/%version-*/.version %buildroot%_libdir/dotnet/sdk/%sdkrelease/
+cp -a %_libdir/dotnet-bootstrap/sdk/%_dotnet_sdkrelease/.version %buildroot%_dotnet_sdk/
+
+mkdir -p %buildroot%_cachedir/dotnet/NuGetFallbackFolder/
+ln -sr %buildroot%_cachedir/dotnet/NuGetFallbackFolder %buildroot%_libdir/dotnet/sdk/NuGetFallbackFolder
+
+%pre
+%groupadd dotnet || :
 
 %files
 %dir %_libdir/dotnet/sdk/
-%_libdir/dotnet/sdk/%sdkrelease/
+%_dotnet_sdk/
+%_libdir/dotnet/sdk/NuGetFallbackFolder/
+%dir %_cachedir/dotnet/
+%attr(2775,root,dotnet) %dir %_cachedir/dotnet/NuGetFallbackFolder/
 
 %changelog
+* Mon Aug 28 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt4
+- .NET Core SDK 2.0.0 Release
+- add /var/cache/dotnet/NuGetFallbackFolder for packages common cache
+
 * Fri Jul 14 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt3.preview2
 - use dotnet-bootstrap-sdk buildreq
 
