@@ -4,6 +4,7 @@
 %def_disable qalculate
 %def_enable openbabel
 %def_enable artikulate
+%def_disable facile
 
 %add_findpackage_path %_kde4_bindir
 %add_findreq_skiplist %_K4apps/parley/plugins/*.py
@@ -14,7 +15,7 @@ Name: kde4edu
 %define minor 12
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt5%ubt
+Release: alt6%ubt
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -70,7 +71,10 @@ BuildRequires: libluajit-devel
 %if_enabled artikulate
 BuildRequires: qt-gstreamer1-devel
 %endif
-BuildRequires: ocaml4 facile
+BuildRequires: ocaml4
+%if_enabled facile
+BuildRequires: facile
+%endif
 BuildRequires: xplanet attica-devel libspectre-devel libgps-devel qt4-mobility-devel
 BuildRequires: libxslt-devel xsltproc libglew-devel
 %if_enabled openbabel
@@ -898,6 +902,10 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Aug 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 15.12.3-alt6%ubt
+- Rebuilt with new libgsl.
+- Built without facile.
+
 * Thu Apr 13 2017 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt5%ubt
 - build without avogadro
 
