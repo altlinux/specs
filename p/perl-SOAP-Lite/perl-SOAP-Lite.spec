@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist SOAP-Lite
 Name: perl-%dist
-Version: 1.20
+Version: 1.22
 Release: alt1
 
 Summary: Perl's Web Services Toolkit
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/P/PH/PHRED/SOAP-Lite-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PH/PHRED/%{dist}-%{version}.tar.gz
 Patch0: perl-SOAP-Lite-0.715-IO-modules.patch
 
 BuildArch: noarch
@@ -26,7 +26,7 @@ lightweight interface to the Simple Object Access Protocol (SOAP) both
 on client and server side.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 sed -i '1s@^#!.*/bin/env perl@#!/usr/bin/perl@' bin/*.pl
 %patch0 -p1 -b .IO
 
@@ -43,7 +43,7 @@ sed -i '1s@^#!.*/bin/env perl@#!/usr/bin/perl@' bin/*.pl
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_privlib -MSOAP::Lite'
 
 %files
-%doc Changes README examples
+%doc Changes README examples Debian_CPANTS.txt ReleaseNotes.txt
 %_bindir/*.pl
 %_man1dir/*
 %perl_vendor_privlib/Apache/SOAP.pm
@@ -53,6 +53,9 @@ sed -i '1s@^#!.*/bin/env perl@#!/usr/bin/perl@' bin/*.pl
 %exclude %perl_vendor_privlib/IO/SessionSet*
 
 %changelog
+* Wed Aug 30 2017 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
+- automated CPAN update
+
 * Mon Jun 13 2016 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1
 - automated CPAN update
 
