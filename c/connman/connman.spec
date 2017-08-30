@@ -2,8 +2,8 @@
 %define _localstatedir %_var
 
 Name: connman
-Version: 1.33
-Release: alt1
+Version: 1.35
+Release: alt1%ubt
 
 Summary: ConnMan is a daemon for managing internet connections.
 License: %gpl2only
@@ -22,10 +22,8 @@ Patch1: connman-add-libs.patch
 Patch2: connman-main-conf.patch
 Patch3: connman.tmpfiles.patch
 
-#backported patches
-Patch100: config-Fix-indentation.patch
-
-BuildRequires: rpm-build-licenses gcc-c++ glib2-devel iptables iptables-devel libdbus-devel wpa_supplicant
+BuildRequires(pre): rpm-build-ubt rpm-build-licenses
+BuildRequires: gcc-c++ glib2-devel iptables iptables-devel libdbus-devel wpa_supplicant
 BuildRequires: gtk-doc libgnutls-devel libreadline-devel
 BuildRequires: openconnect openvpn vpnc xl2tpd
 BuildRequires: ppp-devel
@@ -69,7 +67,6 @@ This package contains include files required for development %name-based softwar
 %patch1 -p2
 %patch2 -p2
 %patch3 -p1
-%patch100 -p1
 
 %build
 %autoreconf
@@ -164,6 +161,9 @@ ln -s ../connman-openresolv.path %buildroot%_unitdir/multi-user.target.wants
 %_includedir/*
 
 %changelog
+* Wed Aug 30 2017 Alexey Shabalin <shaba@altlinux.ru> 1.35-alt1%ubt
+- 1.35
+
 * Wed Feb 15 2017 Alexey Shabalin <shaba@altlinux.ru> 1.33-alt1
 - 1.33
 - add systemd unit for update resolv.conf with openresolv
