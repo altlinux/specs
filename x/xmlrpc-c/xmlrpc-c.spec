@@ -1,8 +1,8 @@
 %define libname libxmlrpc
 
 Name: xmlrpc-c
-Version: 1.32.5
-Release: alt2.svn2451
+Version: 1.39.12
+Release: alt1.svn2910
 
 Summary: XML-RPC C library - an implementation of the xmlrpc protocol
 License: BSD-style
@@ -12,17 +12,16 @@ Url: http://xmlrpc-c.sourceforge.net/
 
 Source: %name-%version.tar
 
-BuildPreReq: rpm-macros-cmake
 
-Patch0: %name-cmake.patch
 Patch1: %name-1.12.00-alt-configure-fixes.patch
 Patch2: %name-30x-redirect.patch
 Patch3: %name-uninit-curl.patch
 # Patch4: %name-curl-types.h.patch
-Patch5: %name-longlong.patch
-Patch6: %name-check-vasprintf-return-value.patch
-Patch7: %name-include-string_int.h.patch
+Patch5: 0002-Use-proper-datatypes-for-long-long.patch
+# Patch6: %name-check-vasprintf-return-value.patch
+# Patch7: %name-include-string_int.h.patch
 Patch8: %name-printf-size_t.patch
+Patch9: 0001-xmlrpc_server_abyss-use-va_args-properly.patch
 
 BuildRequires: libcurl-devel libxml2-devel gcc-c++ cmake
 BuildRequires: libncurses-devel libncursesxx-devel
@@ -77,37 +76,34 @@ The header file for developing applications that use
 
 %prep
 %setup
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 # %patch4 -p1
 %patch5 -p1
-%patch6 -p1
-%patch7 -p1
+# %patch6 -p1
+# %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS -Wno-uninitialized -Wno-unknown-pragmas"
 export CXXFLAGS="$RPM_OPT_FLAGS"
 
-%cmake \
-	-D_lib:STRING=%_libdir \
-	-DMUST_BUILD_CURL_CLIENT:BOOL=ON \
-	-DMUST_BUILD_LIBWWW_CLIENT:BOOL=OFF \
-	-DBUILD_SHARED_LIBS:BOOL=ON \
-	-DENABLE_TOOLS:BOOL=ON
-%cmake_build VERBOSE=1
+autoconf
+%configure --enable-libxml2-backend
+%make AR="ar" RANLIB="ranlib"
+%make -C tools AR="ar" RANLIB="ranlib"
 
 %install
-%cmakeinstall_std
+%makeinstall_std AR="ar" RANLIB="ranlib"
+%makeinstall_std -C tools AR="ar" RANLIB="ranlib"
 rm -f %buildroot%_libdir/*.a
-mkdir -p %buildroot%_pkgconfigdir
-mv %buildroot%prefix%_pkgconfigdir/*.pc %buildroot%_pkgconfigdir
+#mkdir -p %buildroot%_pkgconfigdir
+#mv %buildroot%prefix%_pkgconfigdir/*.pc %buildroot%_pkgconfigdir
 
 %files
 %doc README doc/*
-%doc tools/xmlrpc/xmlrpc.html
 %doc tools/xmlrpc_transport/xmlrpc_transport.html
 %_man1dir/*
 %_bindir/xmlrpc
@@ -124,7 +120,7 @@ mv %buildroot%prefix%_pkgconfigdir/*.pc %buildroot%_pkgconfigdir
 %_bindir/xmlrpc-c-config
 %_includedir/xmlrpc-c/
 %_includedir/*.h
-%_pkgconfigdir/*.pc
+#%_pkgconfigdir/*.pc
 %_libdir/*.so
 
 %files -n %libname++
@@ -132,6 +128,9 @@ mv %buildroot%prefix%_pkgconfigdir/*.pc %buildroot%_pkgconfigdir
 
 
 %changelog
+* Wed Aug 30 2017 Alexey Shabalin <shaba@altlinux.ru> 1.39.12-alt1.svn2910
+- 1.39.12
+
 * Tue Jul 21 2015 Vitaly Lipatov <lav@altlinux.ru> 1.32.5-alt2.svn2451
 - use cmake macros
 - rebuild with new libstdc++
