@@ -3,7 +3,7 @@
 
 Name: libe-book
 Version: 0.1.2
-Release: alt3
+Release: alt4
 Summary: A library for reading and converting reflowable e-book formats
 License: LGPL
 Url: http://sourceforge.net/projects/libebook/
@@ -70,7 +70,7 @@ Currently supported are:
 %setup
 
 %build
-%add_optflags -DBOOST_SYSTEM_NO_DEPRECATED
+%add_optflags -DBOOST_SYSTEM_NO_DEPRECATED -DBOOST_ERROR_CODE_HEADER_ONLY
 %autoreconf
 %configure --disable-static --disable-werror
 %make_build
@@ -92,6 +92,9 @@ Currently supported are:
 %_pkgconfigdir/*
 
 %changelog
+* Thu Aug 31 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.2-alt4
+- Fixed build with new boost.
+
 * Mon Jul 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.2-alt3
 - Revert previous update and disable deprecated symbols instead
 
