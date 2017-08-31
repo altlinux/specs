@@ -1,3 +1,4 @@
+%define git %nil
 %define _libexecdir %_prefix/libexec
 %def_enable obex
 # since 5.44 the following tools marked as deprecated:
@@ -5,14 +6,14 @@
 %def_enable deprecated
 
 Name: bluez
-Version: 5.44
-Release: alt1
+Version: 5.46
+Release: alt1.1
 
 Summary: Bluetooth utilities
 License: GPLv2+
 Group: Networking/Other
 URL: http://www.bluez.org/
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
+Packager: L.A. Kostis <lakostis@altlinux.org>
 
 Conflicts: udev-extras < 169
 
@@ -27,6 +28,8 @@ Obsoletes: obex-data-server < 0.4.6-alt3
 BuildRequires: glib2-devel libudev-devel libdbus-devel libreadline-devel
 BuildRequires: systemd-devel gtk-doc
 %{?_enable_obex:BuildRequires: libical-devel libicu-devel}
+# for check
+BuildRequires: /proc
 
 %description
 Bluetooth protocol stack for Linux
@@ -151,6 +154,34 @@ chkconfig bluetoothd on
 %_prefix/lib/cups/backend/bluetooth
 
 %changelog
+* Wed Aug 30 2017 L.A. Kostis <lakostis@altlinux.ru> 5.46-alt1.1
+- unit tests: disable gatt test (doesn't work in VM).
+
+* Mon Aug 28 2017 L.A. Kostis <lakostis@altlinux.ru> 5.46-alt1
+- 5.46.
+- Added patches from GIT master:
+  + core: Fallback to LE if BR/EDR connection fails with EHOSTDOWN.
+  + gatt: Fix crash when cleanup notify_io.
+  + plugins: Fix reconnect_interval for cases of improper main.conf.
+  + hciattach: fix the delay timer for bcm43xx firmware download.
+  + gatt: Don't return to AcquireNotify until it has completed.
+  + core/advertisement: Add specifc error if max instance is reached.
+  + shared/gatt-db: Fix memory comparison error.
+
+* Fri Jul 07 2017 L.A. Kostis <lakostis@altlinux.ru> 5.46-alt0.c896183.1
+- Added patches:
+  + device: Fix crashing when connecting ATT over BR/EDR
+    (kbo#195221 ALT#33623)
+
+* Thu Jul 06 2017 L.A. Kostis <lakostis@altlinux.ru> 5.46-alt0.c896183
+- GIT snapshot c896183.
+
+* Sun Jun 25 2017 Yuri N. Sedunov <aris@altlinux.org> 5.45-alt1.1
+- buildreqs /proc for check
+
+* Mon May 08 2017 Yuri N. Sedunov <aris@altlinux.org> 5.45-alt1
+- 5.45
+
 * Fri Mar 03 2017 Yuri N. Sedunov <aris@altlinux.org> 5.44-alt1
 - 5.44
 
