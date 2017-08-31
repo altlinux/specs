@@ -1,12 +1,13 @@
 Name: libabw
 Version: 0.1.1
-Release: alt2
+Release: alt3
 Summary: A library for import of AbiWord files
 
 Group: System/Libraries
 License: MPLv2.0
 Url: http://www.freedesktop.org/wiki/Software/libabw/
 Source: %name-%version.tar.xz
+Patch1: %name-%version-upstream-boost.patch
 
 BuildRequires: gcc-c++
 BuildRequires: boost-devel-headers
@@ -49,10 +50,10 @@ supported: XHTML, raw, text.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 mkdir -p m4
-%add_optflags -DBOOST_SYSTEM_NO_DEPRECATED
 %autoreconf
 %configure --disable-silent-rules --disable-static --disable-werror
 sed -i \
@@ -98,6 +99,9 @@ install -m 0644 abw2*.1 %buildroot/%_mandir/man1
 %_mandir/man1/abw2html.1*
 
 %changelog
+* Thu Aug 31 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.1-alt3
+- Fixed build with new boost.
+
 * Mon Jul 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.1-alt2
 - Fixed build with new toolchain
 
