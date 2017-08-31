@@ -1,6 +1,6 @@
 Name: apt-file
 Version: 0.1
-Release: alt1
+Release: alt2
 Group: System/Configuration/Packaging
 Summary: Search for a package containing given file
 License: WTFPL
@@ -50,5 +50,8 @@ rm -rf %buildroot
 %dir %_cachedir/%name
 
 %changelog
+* Thu Aug 31 2017 Terechkov Evgenii <evg@altlinux.org> 0.1-alt2
+- Add true quiet mode support (when debug=0)
+
 * Tue Aug 29 2017 Gremlin from Kremlin <gremlin@altlinux.org> 0.1-alt1
 - First public release
