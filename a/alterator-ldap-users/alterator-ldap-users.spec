@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-ldap-users
-Version: 0.8.4
-Release: alt3
+Version: 0.8.5
+Release: alt1
 
 Source: %name-%version.tar
 
@@ -61,6 +61,15 @@ Common functions for user and group account data source management.
 %_bindir/alterator-*-functions
 
 %changelog
+* Thu Aug 31 2017 Paul Wolneykien <manowar@altlinux.org> 0.8.5-alt1
+- Fix: Disallow to modify the user full name fields for "CN=FullName"
+  records.
+- Fixed update of aux parameters for "CN=FullName" AD records.
+- Fix: AD: Read the user patronym properly.
+- Fix: Don\'t overtrim the error messages (closes: #33833).
+- Fix: Output "(Active Directory)" comment when an AD source
+  is selected.
+
 * Mon May 22 2017 Paul Wolneykien <manowar@altlinux.org> 0.8.4-alt3
 - Extract common functions for user and group account data source
   management in the separate package.
