@@ -4,7 +4,7 @@
 
 Name: upower
 Version: 0.99.5
-Release: alt1
+Release: alt2
 
 Summary: Power Management Service
 License: GPLv2+
@@ -73,7 +73,7 @@ GObject introspection devel data for the UPower library
 
 %prep
 %setup
-##%patch -p1
+%patch -p1
 
 rm -f acinclude.m4
 
@@ -124,6 +124,9 @@ rm -f acinclude.m4
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Wed Aug 30 2017 Yuri N. Sedunov <aris@altlinux.org> 0.99.5-alt2
+- updated to UPOWER_0_99_5-2-g6aff8b3
+
 * Tue Aug 01 2017 Yuri N. Sedunov <aris@altlinux.org> 0.99.5-alt1
 - 0.99.5
 
