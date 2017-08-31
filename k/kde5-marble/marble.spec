@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 17.04.2
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Education
@@ -16,6 +16,8 @@ License: GPLv2+ / LGPLv2+
 Source: %rname-%version.tar
 Patch1: alt-astro-static.patch
 Patch2: alt-clean-maps.patch
+Patch3: alt-fix-polmap.patch
+Patch4: alt-fix-missing-countries.patch
 
 # Automatically added by buildreq on Thu Mar 17 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libgst-plugins1.0 libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-location libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sensors libqt5-sql libqt5-svg libqt5-test libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-script-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils zlib-devel
@@ -61,7 +63,9 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch2 -p1
+#%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 sed -i '/add_subdirectory(marble-qt)/d' src/apps/CMakeLists.txt
 
@@ -125,6 +129,9 @@ mv %buildroot/%_includedir/marble %buildroot/%_K5inc/
 %_K5lib/libmarblewidget-qt5.so.*
 
 %changelog
+* Thu Aug 31 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.2-alt2%ubt
+- fix political map
+
 * Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
 - new version
 
