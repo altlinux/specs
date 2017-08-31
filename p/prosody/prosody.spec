@@ -1,6 +1,6 @@
 Name: prosody
 Version: 0.9.10
-Release: alt2
+Release: alt3
 Summary: Modern XMPP communication server
 Group: System/Servers
 License: GPL
@@ -50,6 +50,9 @@ cp %SOURCE2 %buildroot/%systemd_unitdir
 %_man1dir/*
 
 %changelog
+* Thu Aug 31 2017 Eugene Prokopiev <enp@altlinux.ru> 0.9.10-alt3
+- rebuild with lua5.3 fir sisyphus
+
 * Sat Nov 05 2016 Eugene Prokopiev <enp@altlinux.ru> 0.9.10-alt2
 - remove lua-posix dependency
 
