@@ -2,7 +2,7 @@
 
 Name: alterator-ldap-groups
 Version: 0.6.6
-Release: alt1
+Release: alt2
 
 Source: %name-%version.tar
 
@@ -50,6 +50,11 @@ Alterator module for LDAP groups administration
 %_hooksdir/91-ldap-groups
 
 %changelog
+* Thu Aug 31 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.6-alt2
+- Fix: Output "(Active Directory)" comment when an AD source
+  is selected.
+- Fix: Switch to the selected AD database (closes: #33834).
+  
 * Mon May 22 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.6-alt1
 - Support Samba DC group management.
 
