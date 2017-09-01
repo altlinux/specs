@@ -1,5 +1,5 @@
 Name: scribus
-Version: 1.4.6
+Version: 1.5.3
 Release: alt1
 Epoch: 1
 
@@ -17,14 +17,15 @@ Source1: CMakeCache.txt
 Patch0: scribus-1.3.5.1-plugindir-alt.patch
 Patch1: FindFreetype.cmake.diff
 
-# Automatically added by buildreq on Tue Aug 25 2009
-BuildRequires: boost-devel cmake gcc-c++ libXfixes-devel libcairo-devel
-BuildRequires: libcups-devel libhyphen-devel libjpeg-devel liblcms2-devel
-BuildRequires: qt4-devel libxml2-devel python-devel libpixman-devel
-BuildRequires: aspell libaspell-devel hunspell libhunspell-devel desktop-file-utils phonon-devel
-BuildPreReq: lib2geom-devel libpodofo-devel xml-utils fontconfig-devel
-BuildPreReq: kde4base-nsplugins libwmf-devel rpm-macros-kde-common-devel
-BuildPreReq: libtiff-devel zlib-devel chrpath
+# Automatically added by buildreq on Fri Sep 01 2017
+# optimized out: cmake cmake-modules fontconfig fontconfig-devel gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libEGL-devel libGL-devel libX11-devel libfreetype-devel libgpg-error libharfbuzz-devel libharfbuzz-icu libicu-devel libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-widgets libqt5-xml librevenge-devel libstdc++-devel libwayland-client libwayland-server pkg-config python-base python-devel python-modules python3 python3-base qt5-base-common qt5-base-devel qt5-tools sssd-client xml-utils xorg-xproto-devel zlib-devel
+BuildRequires: boost-devel-headers ccmake libcairo-devel libcdr-devel libcups-devel libhunspell-devel libjpeg-devel liblcms2-devel
+BuildRequires: libpodofo-devel libpoppler-devel libtiff-devel libvisio-devel libxml2-devel
+BuildRequires: qt5-imageformats qt5-tools-devel zlib-devel
+
+# FIXME: obsoletes?
+BuildRequires: libhyphen-devel aspell libaspell-devel hunspell desktop-file-utils
+BuildPreReq: lib2geom-devel xml-utils fontconfig-devel libwmf-devel
 
 Requires: %name-doc >= %epoch:%version
 Requires: %name-data >= %epoch:%version
@@ -43,6 +44,7 @@ understand tools, Scribus offers support for professional publishing
 features, such as CMYK color, easy PDF creation, Encapsulated Postscript
 import/export and creation of color separations.
 
+%if 0
 %package devel
 Summary: Header files for Scribus
 Group: Development/C++
@@ -51,6 +53,7 @@ Requires: %name = %epoch:%version-%release
 
 %description devel
 Header files for Scribus.
+%endif
 
 %package data
 Summary: Data files of Scribus
@@ -77,20 +80,20 @@ BuildArch: noarch
 #patch1 -p0
 
 # recode man page to UTF-8
-pushd scribus/manpages
-iconv -f ISO8859-2 -t UTF-8 scribus.1.pl > tmp
-touch -r scribus.1.pl tmp
-mv tmp scribus.1.pl
-popd
+#pushd scribus/manpages
+#iconv -f ISO8859-2 -t UTF-8 scribus.1.pl > tmp
+#touch -r scribus.1.pl tmp
+#mv tmp scribus.1.pl
+#popd
 
 # fix permissions
-chmod a-x scribus/pageitem_latexframe.h
+#chmod a-x scribus/pageitem_latexframe.h
 
 %build
-mkdir -p build
-pushd build
-install -p -m644 %SOURCE1 .
-cmake \
+#mkdir -p build
+#pushd build
+#install -p -m644 %SOURCE1 .
+%cmake \
 %ifarch x86_64
 	-DWANT_LIB64=true \
 %endif
@@ -100,30 +103,27 @@ cmake \
 	-DQT_QTNSPLUGIN_LIBRARY_RELEASE:FILEPATH=%_K4lib/libnsplugin.so \
 	-D2geom_LIB_DEPENDS:FILEPATH=%_libdir/lib2geom.so \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	..
-%make_build VERBOSE=1
-popd
+	-DCMAKE_CXX_FLAGS:STRING="%optflags"
+
+%cmake_build VERBOSE=1
 
 %install
-pushd build
-%makeinstall_std
-popd
+%cmakeinstall_std
 
-install -p -D -m0644 %buildroot%_datadir/scribus/icons/scribus.png %buildroot%_pixmapsdir/scribus.png
-install -p -D -m0644 %buildroot%_datadir/scribus/icons/scribusdoc.png %buildroot%_pixmapsdir/x-scribus.png
+#install -p -D -m0644 %buildroot%_datadir/scribus/icons/scribus.png %buildroot%_pixmapsdir/scribus.png
+#install -p -D -m0644 %buildroot%_datadir/scribus/icons/scribusdoc.png %buildroot%_pixmapsdir/x-scribus.png
 
-find %buildroot -type f -name "*.la" -exec rm -f {} ';'
+#find %buildroot -type f -name "*.la" -exec rm -f {} ';'
 
 # install the global desktop file
-rm -f %buildroot%_datadir/mimelnk/application/*scribus.desktop
-desktop-file-install --dir=%buildroot%_desktopdir scribus.desktop
+#rm -f %buildroot%_datadir/mimelnk/application/*scribus.desktop
+#desktop-file-install --dir=%buildroot%_desktopdir scribus.desktop
 
 # move icons into %%_?iconsdir
-install -d %buildroot%_liconsdir
-install -d %buildroot%_niconsdir
-mv %buildroot%_pixmapsdir/%name.png %buildroot%_liconsdir
-mv %buildroot%_pixmapsdir/x-%name.png %buildroot%_niconsdir
+#install -d %buildroot%_liconsdir
+#install -d %buildroot%_niconsdir
+#mv %buildroot%_pixmapsdir/%name.png %buildroot%_liconsdir
+#mv %buildroot%_pixmapsdir/x-%name.png %buildroot%_niconsdir
 
 pushd %buildroot%_docdir/%name
 for i in $(ls ChangeLog*); do
@@ -137,14 +137,13 @@ popd
 %doc %_docdir/%name/ChangeLog*
 %doc %_docdir/%name/COPYING
 %doc %_docdir/%name/README
-%doc %_docdir/%name/TODO
+#%doc %_docdir/%name/TODO
 %_bindir/%name
 %_desktopdir/scribus.desktop
+%_datadir/metainfo/scribus.appdata.xml
 %_datadir/mime/packages/scribus.xml
-#_pixmapsdir/*
-%_liconsdir/*
-%_niconsdir/*
-%_libdir/%name
+%_iconsdir/hicolor/*/apps/scribus.png
+%_libdir/%name/
 %_man1dir/*
 %exclude %_mandir/de
 %exclude %_mandir/pl
@@ -152,15 +151,15 @@ popd
 %files data
 %_datadir/%name
 
-%files devel
-%doc AUTHORS COPYING
-%_includedir/%name
+#%files devel
+#%doc AUTHORS COPYING
+#%_includedir/%name
 
 %files doc
 %dir %_docdir/%name
-%_docdir/%name/BUILDING
-%_docdir/%name/NEWS
-%_docdir/%name/PACKAGING
+#%_docdir/%name/BUILDING
+#%_docdir/%name/NEWS
+#%_docdir/%name/PACKAGING
 %_docdir/%name/LINKS
 %_docdir/%name/TRANSLATION
 %_docdir/%name/en
@@ -168,6 +167,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Wed Aug 30 2017 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.3-alt1
+- new version (1.5.3) with rpmgs script
+
 * Wed May 10 2017 Vitaly Lipatov <lav@altlinux.ru> 1:1.4.6-alt1
 - new version 1.4.6 (with rpmrb script)
 - rebuild with new libpodofo 0.9.5
@@ -466,7 +468,7 @@ popd
 * Wed Feb 19 2003 Yehuda Ben-Yosef <ilar@altlinux.ru> 0.9.7-alt1
 - 0.9.7
 
-* Sun Jan 23 2003 Yehuda Ben-Yosef <ilar@altlinux.ru> 0.9.6-alt2
+* Thu Jan 23 2003 Yehuda Ben-Yosef <ilar@altlinux.ru> 0.9.6-alt2
 - new requires and buildrequires
 - remove plugins
 
