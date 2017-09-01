@@ -1,6 +1,6 @@
 Name: mediainfo
 Version: 0.7.98
-Release: alt1
+Release: alt2
 
 Group: File tools
 Summary: MediaInfo supplies information about a video or audio file
@@ -8,6 +8,8 @@ License: LGPL
 Url: http://mediainfo.sourceforge.net
 
 Source: https://mediaarea.net/download/source/%name/%version/%{name}_%{version}.tar.xz
+
+Requires: lib%name >= %version
 
 BuildRequires(pre): rpm-macros-kde-common-devel
 
@@ -23,6 +25,7 @@ BuildRequires: sgml-common
 %package gui
 Group: File tools
 Summary: MediaInfo supplies information about a video or audio file
+Requires: lib%name >= %version
 
 %package gui-KDE3
 Group: File tools
@@ -141,6 +144,9 @@ grep -v '^Encoding=' Project/GNU/GUI/mediainfo-gui.kde4.desktop >%buildroot%_K4s
 %_K4srv/ServiceMenus/%name-gui.desktop
 
 %changelog
+* Fri Sep 01 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.98-alt2
+- fixed dependencies (ALT #33839)
+
 * Tue Aug 22 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.98-alt1
 - 0.7.98
 
