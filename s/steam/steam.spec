@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.54
-Release: alt4%ubt
+Release: alt5%ubt
 
 Summary: Launcher for the Steam software distribution service
 License: Proprietary
@@ -14,8 +14,9 @@ ExclusiveArch: %ix86
 
 Source0: http://repo.steampowered.com/%name/pool/%name/s/%name/%{name}_%version.tar.gz
 Patch0: %name-apt-alt.patch
-Patch1: %name-desktop-alt.patch
-Patch2: %name-udev-alt.patch
+Patch1: %name-bash4-alt.patch
+Patch2: %name-desktop-alt.patch
+Patch3: %name-udev-alt.patch
 
 BuildPreReq: rpm-build-ubt
 
@@ -26,9 +27,7 @@ Requires: libGL
 Requires: libnss
 Requires: xz
 
-BuildRequires: python-module-distribute
-BuildRequires: xterm
-BuildRequires: zenity
+BuildRequires: bash4
 
 %description
 Steam is a software distribution service with an online store, automated
@@ -40,12 +39,15 @@ savegame and screenshot functionality, and many social features.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %install
 %makeinstall_std
 %__rm -rf %buildroot%_bindir/%{name}deps
 %__install -Dp -m0644 lib/udev/rules.d/99-%name-controller-perms.rules %buildroot%_udevrulesdir/99-%name-controller-perms.rules
 %__install -Dp -m0644 lib/udev/rules.d/60-HTC-Vive-perms.rules %buildroot%_udevrulesdir/60-HTC-Vive-perms.rules
+%__mkdir_p %buildroot%_libexecdir/%name/bin
+%__ln_s /bin/bash4 %buildroot%_libexecdir/%name/bin/bash
 
 %files
 %_bindir/%name
@@ -68,6 +70,9 @@ savegame and screenshot functionality, and many social features.
 %config %_udevrulesdir/60-HTC-Vive-perms.rules
 
 %changelog 
+* Fri Sep 01 2017 Nazarov Denis <nenderus@altlinux.org> 1.0.0.54-alt5%ubt
+- Fix use bash4
+
 * Sat Aug 19 2017 Nazarov Denis <nenderus@altlinux.org> 1.0.0.54-alt4%ubt
 - Add patch for desktop-file (ALT #33771)
 
