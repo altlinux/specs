@@ -1,5 +1,5 @@
 Name:     github2spec
-Version:  1.3.11
+Version:  1.3.12
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from github using genspec
@@ -33,6 +33,9 @@ install -Dm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri Sep 01 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.12-alt1
+- Fix some issues
+
 * Sun Aug 06 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.11-alt1
 - Add command line option to pack stand alone programs
 
