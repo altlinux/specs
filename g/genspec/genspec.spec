@@ -1,12 +1,12 @@
 Name:     genspec
-Version:  1.2.9
+Version:  1.2.10
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
 License:  GPLv3+
 Group:    System/Configuration/Packaging
 URL: 	  http://altlinux.org/genspec
-Packager: Andrey Cherepanov <cas@altlinux.org> 
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildArch: noarch
 
@@ -32,6 +32,10 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_datadir/spectemplates
 
 %changelog
+* Fri Sep 01 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.10-alt1
+- Add newline to generating .gear/rules
+- Fail if could not get packager
+
 * Wed Aug 02 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.9-alt1
 - Add new spectemplates for executables
 
