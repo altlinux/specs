@@ -2,7 +2,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.9
-Release: alt14
+Release: alt15
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -26,6 +26,7 @@ Patch12: pam_pkcs11-0.6.9-oid-mapper.patch
 Patch13: pam_pkcs11-0.6.9-oid-mapper-profiles.patch
 Patch14: pam_pkcs11-0.6.9-setpin.patch
 Patch15: pam_pkcs11-0.6.9-setpin-config.patch
+Patch16: pam_pkcs11-0.6.9-sslconf.patch
 
 %add_findreq_skiplist %_sysconfdir/pam.d/*
 Requires: pam-config PAM(pam_mkhomedir.so) PAM(pam_pkcs11.so) PAM(pam_succeed_if.so)
@@ -93,6 +94,7 @@ as a separate package.
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 
 # fixup configs
 sed -i -e '
@@ -128,6 +130,10 @@ done
 rm %buildroot/%_lib/*/*.la
 
 %find_lang %name
+
+%post
+[ -e %_sysconfdir/security/%name/openssl.cnf ] || \
+    cp -a %_sysconfdir/openssl/openssl.cnf %_sysconfdir/security/%name/
 
 %files -f %name.lang
 %doc AUTHORS README
@@ -187,6 +193,14 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ldap_mapper.so
 
 %changelog
+* Fri Sep 01 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt15
+- Use local openssl.cnf if it exists.
+- Copy the system-wide openssl.cnf after the package is installed.
+- Add OpenSSL GOST engine control (for local openssl.cnf).
+- Add 'mapfile' entries to SNILS profiles (commented out).
+- Add 'subject', 'mail' and 'cert' mapping profiles and use 'cert'
+  by default.
+
 * Thu Aug 24 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt14
 - Fix/improve: Return PAM_IGNORE if the token isn\'t present and
   card_only isn\'t set.

@@ -1,9 +1,8 @@
 Name: alterator-auth-token
-Version: 0.1.0
-Release: alt8
+Version: 0.1.1
+Release: alt1
 
 Source: %name-%version.tar
-Source1: openssl-gost.control
 
 Packager: Paul Wolneykien <manowar@altlinux.org>
 
@@ -18,7 +17,7 @@ Requires: alterator-lookout >= 2.6-alt1
 Requires: alterator-sh-functions >= 0.11-alt2
 Requires: alterator-service-functions >= 3.0.0-alt2
 # PKCS#11
-Requires: pam_pkcs11 >= 0.6.9-alt12
+Requires: pam_pkcs11 >= 0.6.9-alt15
 Requires: card-actions >= 1.8-alt3
 Requires: lightdm >= 1.16.7-alt6
 Requires: pam_mkuser >= 0.1.0-alt4
@@ -45,19 +44,17 @@ BuildRequires: alterator-fbi >= 5.33-alt1
 %install
 %makeinstall
 
-# Install the control scripts
-install -D -p -m0755 %_sourcedir/openssl-gost.control \
-        %buildroot%_controldir/openssl-gost
-
 %files
 %_alterator_datadir/applications/*
 %_alterator_datadir/ui/*/*.scm
 %_alterator_libdir/ui/*/*.go
 %_alterator_backend3dir/*
-# TO BE MOVED TO openssl-engines
-%_controldir/openssl-gost
 
 %changelog
+* Fri Sep 01 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.1-alt1
+- Control GOST authentication support leaving system-wide OpenSSL
+  configuration untouched.
+
 * Tue Aug 15 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt8
 - Fixed service start/stop control: make additional check for the
   chroot environment (requires alterator-service-functions >=
