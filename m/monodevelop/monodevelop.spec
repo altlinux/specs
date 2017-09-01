@@ -4,7 +4,7 @@
 
 Name: monodevelop
 Version: 6.1.2.44
-Release: alt1
+Release: alt2%ubt
 
 Summary: MonoDevelop is a project to port SharpDevelop to Gtk#
 License: LGPLv2.1
@@ -18,11 +18,12 @@ Source3: buildinfo
 Source4: nuget-core.tar
 Source5: nuget-external-fsharpbinding.tar
 Source6: nuget-external-libgit2sharp.tar
-Patch0: %name-%version-%release.patch
+Patch0: %name-%version-alt-fixes.patch
 
 # Remove missing dependencies
 %define __find_requires sh -c '/usr/lib/rpm/find-requires | sort | uniq | sed "/mono\(System\.Web\.DataVisualization\).*/d"'
 
+BuildRequires(pre): rpm-build-ubt
 BuildPreReq: rpm-build-mono >= 2.0.0
 BuildPreReq: mono-core >= 5.0.0.0
 BuildPreReq: mono-devel >= 5.0.0.0
@@ -153,6 +154,9 @@ NOCONFIGURE=yes sh ./autogen.sh
 %_man1dir/*
 
 %changelog
+* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.2.44-alt2%ubt
+- Rebuilt with support of %%ubt macro.
+
 * Fri Jul 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.2.44-alt1
 - Updated to stable upstream version 6.1.2.44
 
