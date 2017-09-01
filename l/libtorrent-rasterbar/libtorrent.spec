@@ -9,7 +9,7 @@
 Name: libtorrent-rasterbar
 Version: 1.1.4
 Epoch: 3
-Release: alt1
+Release: alt2
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
@@ -18,6 +18,7 @@ Url: http://www.rasterbar.com/products/libtorrent
 
 # https://github.com/arvidn/libtorrent.git
 Source: %name-%version.tar
+Patch1: %name-%version-upstream-boost-config.patch
 
 BuildRequires: libssl-devel
 BuildRequires: gcc-c++ zlib-devel
@@ -95,6 +96,7 @@ python bindings to libTorrent.
 
 %prep
 %setup
+%patch1 -p1
 
 mkdir -p build-aux
 touch build-aux/config.rpath
@@ -138,6 +140,9 @@ rm -f %buildroot%_libdir/*.a
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3:1.1.4-alt2
+- Fixed build with new boost.
+
 * Tue Aug 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3:1.1.4-alt1
 - Updated to upstream version 1.1.4.
 
