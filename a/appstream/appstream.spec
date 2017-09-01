@@ -1,5 +1,5 @@
 Name:    appstream
-Version: 0.11.3
+Version: 0.11.4
 Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
@@ -10,7 +10,6 @@ URL:     http://www.freedesktop.org/wiki/Distributions/AppStream/Software
 Source0: appstream-%{version}.tar
 # VCS:   https://github.com/ximion/appstream
 
-BuildRequires(pre): cmake
 BuildRequires: gcc-c++
 BuildRequires: ctest
 BuildRequires: gettext
@@ -22,9 +21,13 @@ BuildRequires: libstemmer-devel
 BuildRequires: libxapian-devel
 BuildRequires: libxml2-devel
 BuildRequires: libyaml-devel
+BuildRequires: meson
+BuildRequires: ninja-build
 BuildRequires: protobuf-compiler
+BuildRequires: publican
 BuildRequires: qt5-base-devel
 BuildRequires: xmlto
+BuildRequires: gtk-doc
 
 #Requires: appstream-data
 
@@ -56,20 +59,24 @@ Requires: %name-qt = %version-%release
 %description qt-devel
 %{summary}.
 
+%package doc
+Summary:  Documenation for development using %{name}
+Group:	  Development/Documentation
+
+%description doc
+%{summary}.
+
 %prep
 %setup
 
 %build
-%cmake \
-  -DQT:BOOL=ON -DAPPSTREAM_QT_VERSION:STRING="5"\
-  -DTESTS:BOOL=ON \
-  -DVAPI:BOOL=OFF
-%cmake_build
-
+%meson  -Dqt=true \
+	-Ddocumentation=true \
+	-Dstemming=true
+%meson_build
 
 %install
-%makeinstall_std -C BUILD
-
+%meson_install
 mkdir -p %{buildroot}%{_datadir}/app-info/{icons,xmls}
 mkdir -p %{buildroot}/var/cache/app-info/{icons,xapian,xmls}
 touch %{buildroot}/var/cache/app-info/cache.watch
@@ -82,7 +89,7 @@ mv %{buildroot}%{_datadir}/metainfo/*.xml \
    %{buildroot}%{_datadir}/appdata/
 
 %check
-#LDFLAGS=-Lsrc make test -C BUILD ARGS="--output-on-failure --timeout 300"
+%meson_test
 
 %files -f appstream.lang
 %doc AUTHORS LICENSE.GPLv2 LICENSE.LGPLv2.1
@@ -103,7 +110,7 @@ mv %{buildroot}%{_datadir}/metainfo/*.xml \
 %_datadir/appdata/org.freedesktop.appstream.cli.*.xml
 
 %files devel
-%_includedir/AppStream/
+%_includedir/appstream/
 %_libdir/libappstream.so
 %_libdir/pkgconfig/appstream.pc
 %_datadir/gir-1.0/AppStream-1.0.gir
@@ -116,7 +123,16 @@ mv %{buildroot}%{_datadir}/metainfo/*.xml \
 %_libdir/cmake/AppStreamQt/
 %_libdir/libAppStreamQt.so
 
+%files doc
+%_defaultdocdir/%name
+%_datadir/gtk-doc/html/%name
+
 %changelog
+* Fri Sep 01 2017 Andrey Cherepanov <cas@altlinux.org> 0.11.4-alt1
+- New version
+- Use meson and ninja-build for build
+- Package development documentation
+
 * Sun Aug 06 2017 Andrey Cherepanov <cas@altlinux.org> 0.11.3-alt1
 - New version
 
