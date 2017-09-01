@@ -1,7 +1,7 @@
 
 Name: libvisio
 Version: 0.1.3
-Release: alt1.4
+Release: alt2
 Summary: A library providing ability to interpret and import visio diagrams
 
 Group: System/Libraries
@@ -58,7 +58,7 @@ Currently supported: XHTML, raw, plain text.
 
 %build
 mkdir -p m4
-%add_optflags -DBOOST_SYSTEM_NO_DEPRECATED
+%add_optflags -DBOOST_SYSTEM_NO_DEPRECATED -DBOOST_ERROR_CODE_HEADER_ONLY
 %autoreconf
 %configure --disable-static --disable-werror
 %make_build
@@ -83,6 +83,9 @@ mkdir -p m4
 %_bindir/*
 
 %changelog
+* Thu Aug 31 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.3-alt2
+- Fixed build with new boost.
+
 * Mon Jul 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.3-alt1.4
 - Revert previous update and disable deprecated symbols instead
 
