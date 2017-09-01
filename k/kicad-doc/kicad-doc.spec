@@ -1,6 +1,6 @@
 Summary: Documentation and tutorials for kicad
 Name: kicad-doc
-Version: 4.0.6
+Version: 4.0.7
 Epoch: 1
 Release: alt1
 Group: Documentation
@@ -181,6 +181,9 @@ Polish translation.
 %_datadir/doc/kicad/help/pl
 
 %changelog
+* Wed Aug 30 2017 Anton Midyukov <antohami@altlinux.org> 1:4.0.7-alt1
+- new version 4.0.7
+
 * Thu Mar 09 2017 Anton Midyukov <antohami@altlinux.org> 1:4.0.6-alt1
 - new version 4.0.6
 
