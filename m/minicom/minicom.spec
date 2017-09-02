@@ -1,22 +1,19 @@
-%set_automake_version 1.11
+#set_automake_version 1.11
 
 %define my_lockdir /var/lock/serial
 %define my_group uucp
 
 Name: minicom
-Version: 2.5
-Release: alt1.hg.qa2
+Version: 2.7.1
+Release: alt1
 
 Group: Communications
 Summary: A text-menu-driven modem control and terminal emulation program
 License: GPL
 Url: http://alioth.debian.org/projects/minicom/
+# Source-url: https://alioth.debian.org/frs/download.php/file/4215/%name-%version.tar.gz
 
-# old cvs:
-#  git cvsimport -o upstream -v -d :pserver:anonymous@cvs.alioth.debian.org:/cvsroot/minicom minicom
-# new hg repo:
-#  hg clone https://alioth.debian.org/anonscm/hg/minicom/minicom
-Source: %name-%version.tar
+Source: %name-%version.tar.gz
 Source1: %name.sh
 Source2: %name.csh
 Source4: %name.admin
@@ -88,7 +85,7 @@ find extras doc -name 'Makefile*' -print0 |
 install -pD -m644 %SOURCE6 %buildroot%_liconsdir/%name.xpm
 
 # The script to start minicom in an X terminal
-install -pD -m755 %SOURCE7 %buildroot%_libdir/%name/xstart
+#install -pD -m755 %SOURCE7 %buildroot%_libdir/%name/xstart
 
 # menu
 mkdir -p %buildroot%_desktopdir
@@ -98,8 +95,8 @@ Version=1.0
 Type=Application
 Name=%name
 Comment=Terminal Emulator (for modem/other serial lines)
-Icon=%{name}
-Exec=/usr/lib/minicom/xstart
+Icon=%name
+Exec=%_bindir/minicom -s
 Terminal=true
 Categories=Network;Dialup;
 EOF
@@ -111,11 +108,11 @@ EOF
 %_bindir/*
 %_mandir/man?/*
 
-%_desktopdir/%{name}.desktop
+%_desktopdir/%name.desktop
 %_liconsdir/*
 
-%dir %_libdir/%name
-%attr(755,root,root) %_libdir/%name/xstart
+#dir %_libdir/%name
+#attr(755,root,root) %_libdir/%name/xstart
 
 %doc doc extras
 %doc %name.admin
@@ -123,6 +120,10 @@ EOF
 %lang(ru) %doc %name.FAQ.ru
 
 %changelog
+* Sat Sep 02 2017 Anton Midyukov <antohami@altlinux.org> 2.7.1-alt1
+- New version 2.7.1
+- Fix desktop files.
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5-alt1.hg.qa2
 - Fixed build
 
