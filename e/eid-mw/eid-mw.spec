@@ -1,4 +1,4 @@
-%define mainline_ver 4.2.8
+%define mainline_ver 4.2.10
 
 Name: eid-mw
 Version: %mainline_ver
@@ -179,6 +179,9 @@ fi
 %_libdir/libeidviewer.so
 
 %changelog
+* Sat Sep 02 2017 Pavel Nakonechnyi <zorg@altlinux.org> 4.2.10-alt1
+- updated to version 4.2.10
+
 * Sun May 14 2017 Pavel Nakonechnyi <zorg@altlinux.org> 4.2.8-alt1
 - updated to version 4.2.8
 - add localized messages for dialogs
