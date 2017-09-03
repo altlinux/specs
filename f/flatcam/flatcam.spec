@@ -1,6 +1,6 @@
 Name: flatcam
 Version: 8.5
-Release: alt2.20170702
+Release: alt3.20170702
 Summary: 2D Computer-Aided PCB Manufacturing
 Group: Engineering
 License: MIT
@@ -56,8 +56,12 @@ desktop-file-install --dir=%buildroot%_desktopdir %name.desktop
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.*
 %python_sitelibdir/*
+%exclude %python_sitelibdir/descartes
 
 %changelog
+* Sun Sep 03 2017 Anton Midyukov <antohami@altlinux.org> 8.5-alt3.20170702
+- Fix conflict with python-module-descartes.
+
 * Sat Jul 29 2017 Anton Midyukov <antohami@altlinux.org> 8.5-alt2.20170702
 - Added missing requires: python-module-matplotlib-qt4.
 
