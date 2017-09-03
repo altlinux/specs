@@ -1,4 +1,4 @@
-%define git_commit 71cf8e6
+%define git_commit 41fdbc8
 		    
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
@@ -9,14 +9,14 @@ Version: 27.5.0
 # %%ifndef git_commit
 # Release: alt2
 # %%else
-Release: alt0.git_5_%git_commit
+Release: alt0.git_6_%git_commit
 # %%endif
 
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 
 
-# git commit 71cf8e6633388614fe4c4a103d6b2f988ee6cd2e
+# git commit 41fdbc840ff86cdba0240dbab72effbc8e124925
 Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
@@ -24,9 +24,6 @@ Epoch: 2
 %define bname newmoon
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
-
-
-# %%%def_enable gst1   // Enable gstreamer 1.0
 
 
 %define palemoon_cid                    \{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4\}
@@ -67,7 +64,7 @@ Patch16: firefox-cross-desktop.patch
 # Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
 Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
 Patch21: palemoon-build-el5-nss.patch
-Patch22: palemoon_rpath-27.5.0.patch
+Patch22: palemoon_rpath-27.5.0_v2.patch
 
 Patch23: palemoon_version-27.0.3.patch
 Patch24: palemoon-27.0.2-ui_picker_false.patch
@@ -96,9 +93,10 @@ BuildRequires: libpixman-devel libproxy-devel libpulseaudio-devel libsocket libs
 BuildRequires: python-module-future python-module-yaml python-modules-wsgiref python3-base 
 BuildRequires: unzip wget xorg-cf-files xsltproc yasm zip
 
-
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
+
+BuildPreReq:  libsocket 
 
 BuildRequires: gcc%_gcc_version-c++
 
@@ -201,8 +199,6 @@ export RPATH_PATH="$rpath"
 %patch23 -p1
 
 %patch21 -p1
-%patch22 -p1
-
 
 
 #patch25 -p1 -b .block
@@ -216,6 +212,7 @@ tar -xf %SOURCE1
 
 %patch6  -p1
 %patch16 -p1
+%patch22 -p1
 
 #patch18 -p1
 
@@ -268,6 +265,8 @@ echo "ac_add_options --disable-tracejit" >> .mozconfig
 echo "ac_add_options --disable-static" >> .mozconfig
 echo "ac_add_options --enable-media-plugins --disable-elf-hack --enable-media-plugins --enable-media-navigator" >> .mozconfig
 echo "ac_add_options --with-system-libvpx --enable-wave --enable-alsa --enable-pulseaudio" >> .mozconfig
+echo "ac_add_options --enable-raw --enable-webm --enable-ffmpeg" >> .mozconfig
+echo "ac_add_options --enable-sanbox" >> .mozconfig
 
 echo "ac_add_options --with-x" >> .mozconfig
 echo "ac_add_options --enable-release" >> .mozconfig
@@ -280,9 +279,9 @@ echo "ac_add_options --with-pthreads" >> .mozconfig
 echo "ac_add_options --enable-shared-js"  >> .mozconfig
 echo "ac_add_options --enable-jemalloc --enable-jemalloc-lib" >> .mozconfig
 echo "ac_add_options --x-libraries=%_libexecdir/X11" >> .mozconfig
+
 # echo "ac_add_options --sharedstatedir=%_datadir" >> .mozconfig
 # echo "ac_add_options --datadir=%_datadir" >> .mozconfig
-echo "ac_add_options --enable-release" >> .mozconfig
 
 # echo "ac_add_options --with-system-nss"  >> .mozconfig
 
@@ -592,7 +591,11 @@ install -D -m 644 README.md ../
 %exclude %_includedir/*
 %exclude %_datadir/idl/*
 
+# git commit 41fdbc840ff86cdba0240dbab72effbc8e124925
 %changelog
+* Sun Sep 03 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.5.0-alt0.git_6_41fdbc8
+- Update from github commit 41fdbc840ff86cdba0240dbab72effbc8e124925
+
 * Sun Aug 13 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.5.0-alt0.git_5_71cf8e6
 - Update from github commit 71cf8e6633388614fe4c4a103d6b2f988ee6cd2e
 
@@ -890,4 +893,3 @@ install -D -m 644 README.md ../
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
-
