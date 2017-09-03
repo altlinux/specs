@@ -9,7 +9,7 @@
 %def_without libhttpseverywhere
 
 Name: epiphany
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
@@ -120,6 +120,9 @@ rm -rf build-aux aclocal.m4 /m4/libtool.m4 m4/lt*.m4
 %_datadir/appdata/%xdg_name.appdata.xml
 
 %changelog
+* Sun Sep 03 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.4-alt1
+- 3.24.4
+
 * Mon Jul 17 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.3-alt1
 - 3.24.3
 
