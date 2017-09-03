@@ -14,7 +14,7 @@
 
 Name: palemoon-uk
 Version: 27.5.0
-Release: alt3
+Release: alt4
 
 Summary: Ukrainian (UA) Language Pack for Pale Moon
 License: MPL/GPL/LGPL
@@ -107,6 +107,9 @@ ln -s %_datadir/myspell/uk_UA.dic %buildroot/%cid_dict_dir/dictionaries/uk.dic
 %search_dir
 
 %changelog
+* Sun Sep 03 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.5.0-alt4
+- Update Translations
+
 * Mon Aug 21 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.5.0-alt3
 - Update Translations
 
