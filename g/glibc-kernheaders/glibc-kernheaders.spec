@@ -1,4 +1,4 @@
-%define kernel_base_version 4.12
+%define kernel_base_version 4.13
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -33,6 +33,9 @@ Patch17: 0017-x86-uapi-fix-asm-signal.h-userspace-compilation-erro.patch
 Patch18: 0018-uapi-fix-linux-kexec.h-userspace-compilation-errors.patch
 Patch19: 0019-uapi-fix-linux-ncp_fs.h-userspace-compilation-errors.patch
 Patch20: 0020-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
+Patch22: 0021-uapi-fix-linux-fsmap.h-userspace-compilation-error.patch
+Patch23: 0022-uapi-fix-linux-kfd_ioctl.h-userspace-compilation-err.patch
+Patch21: 0023-uapi-fix-drm-armada_drm.h-userspace-compilation-erro.patch
 
 BuildRequires: rpm-build-kernel
 BuildRequires: %kernel_source = 1.0.0
@@ -112,6 +115,9 @@ cd %kernel_source
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
 
 sed -i 's/^headers_install:.*/&\n\t@echo hdr-arch=$(hdr-arch)/' Makefile
 
@@ -163,6 +169,12 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Sun Sep 03 2017 Dmitry V. Levin <ldv@altlinux.org> 4.13-alt1
+- v4.12 -> v4.13.
+
+* Wed Jul 05 2017 Dmitry V. Levin <ldv@altlinux.org> 4.12-alt2
+- Fixed compilation errors in 5 header files.
+
 * Wed Jul 05 2017 Dmitry V. Levin <ldv@altlinux.org> 4.12-alt1
 - v4.11-rc7 -> v4.12.
 - Split out -generic and -%base_arch noarch subpackages:
