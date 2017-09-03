@@ -1,5 +1,5 @@
 Name:    netutils-linux
-Version: 2.3.0
+Version: 2.5.0
 Release: alt1
 
 Summary: A suite of utilities simplilfying linux networking stack performance troubleshooting and tuning.
@@ -35,6 +35,9 @@ Patch: %name-%version-%release.patch
 %python_sitelibdir/netutils_linux*
 
 %changelog
+* Sun Sep  3 2017 Terechkov Evgenii <evg@altlinux.org> 2.5.0-alt1
+- 2.5.0
+
 * Sun Jul 16 2017 Terechkov Evgenii <evg@altlinux.org> 2.3.0-alt1
 - 2.3.0
 
