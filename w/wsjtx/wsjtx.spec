@@ -1,6 +1,6 @@
 Name: wsjtx
-Version: 1.7.0
-Release: alt2
+Version: 1.8.0
+Release: alt1
 Summary: WSJT-X implements communication protocols or "modes" called JT4, JT9, JT65, and WSPR
 License: GPLv3
 Group: Engineering
@@ -65,9 +65,12 @@ done
 %_niconsdir/wsjtx_icon.png
 %_miconsdir/wsjtx_icon.png
 %_datadir/%name
-%_docdir/%name
+%_docdir/WSJT-X
 
 %changelog
+* Mon Sep 04 2017 Anton Midyukov <antohami@altlinux.org> 1.8.0-alt1
+- Release candidate 2
+
 * Wed Aug 02 2017 Anton Midyukov <antohami@altlinux.org> 1.7.0-alt2
 - Fix requires
 
