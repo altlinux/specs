@@ -1,5 +1,5 @@
 Name: shadow
-Version: 4.4
+Version: 4.5
 Release: alt1
 Serial: 1
 
@@ -403,6 +403,12 @@ fi
 %exclude %_man8dir/nologin.8.*
 
 %changelog
+* Mon Sep 04 2017 Mikhail Efremov <sem@altlinux.org> 1:4.5-alt1
+- Don't install files with suid.
+- useradd: Fix lastlog_reset() argument type.
+- Drop unused variables.
+- Updated to 4.5.
+
 * Fri Mar 03 2017 Mikhail Efremov <sem@altlinux.org> 1:4.4-alt1
 - Don't own %%_sysconfdir/default/ (closes: #32541).
 - Fix possible crash if gmtime() returns NULL.
