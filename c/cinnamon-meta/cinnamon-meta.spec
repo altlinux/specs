@@ -1,4 +1,4 @@
-%define ver_major 3.2
+%define ver_major 3.4
 
 Name: cinnamon-meta
 Version: %ver_major.0
@@ -87,7 +87,7 @@ Requires: seahorse
 # Clipboard manager
 Requires: parcellite
 # Display manager
-Requires: lightdm lightdm-gtk-greeter
+Requires: lightdm slick-greeter lightdm-settings
 
 # Default web-browser
 Requires: firefox
@@ -132,6 +132,9 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Mon Sep 4 2017 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt1
+- switch to slick-greeter
+
 * Sun Nov 13 2016 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt1
 - new requirements for cinnamon 3.2
 - switch to xapps

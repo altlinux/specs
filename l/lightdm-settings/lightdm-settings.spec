@@ -1,0 +1,54 @@
+Name: lightdm-settings
+Version: 1.1.1
+Release: alt1
+Summary: Configuration tool for the LightDM display manager
+Group: Graphical desktop/Other
+License: GPLv3+
+Url: https://github.com/linuxmint/lightdm-settings
+Source: %name-%version.tar
+BuildArch: noarch
+
+Requires: slick-greeter
+Requires: python3(xapp)
+Requires: python3(setproctitle)
+Requires: python3-module-pygobject3
+
+%description
+This tool currently lets users configure slick-greeter.
+
+%prep
+%setup
+
+# Force polkit support
+f=".%{_bindir}/%{name}"
+%{__sed} -e 's!support_pkexec=False!support_pkexec=True!g'		\
+	< ${f} > ${f}.new
+/bin/touch -r ${f} ${f}.new
+%{__mv} -f ${f}.new ${f}
+
+%build
+%make_build
+
+%install
+# No install target in Makefile
+install -m755 -pd %{buildroot}
+cp -pr .%{_prefix} %{buildroot}
+
+# Set exec permissions for bin/* files.
+chmod -c 0755 %{buildroot}%{_bindir}/%{name}			\
+	 %{buildroot}%{_prefix}/lib/%{name}/%{name}
+
+%find_lang %{name}
+
+
+%files -f %name.lang
+%doc debian/changelog README.md
+%{_bindir}/%{name}
+%{_prefix}/lib/%{name}
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/icons/hicolor/*/apps/%{name}.*
+%{_datadir}/polkit-1/actions/org.x.%{name}.policy
+
+%changelog
+* Mon Sep 4 2017 Vladimir Didenko <cow@altlinux.org> 1.1.1-alt1
+- Initial build for Sisyphus
