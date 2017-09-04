@@ -2,15 +2,13 @@ Summary: A simple tool to provide site-wide and per-user defaults for which MPI 
 
 Name: mpi-selector
 Version: 1.0.3
-Release: alt2
+Release: alt3
 License: BSD
 Group: System/Base
 
 Source: %name-%version.tar
 Source1: post_mpi_selector
 Source2: preun_mpi_selector
-Source3: mpi-selector-manpath.sh
-Source4: mpi-selector-manpath.csh
 
 BuildArch: noarch
 
@@ -62,11 +60,6 @@ EOF
 install -Dpm755 %SOURCE1 %buildroot%_sbindir/post_mpi_selector
 install -Dpm755 %SOURCE2 %buildroot%_sbindir/preun_mpi_selector
 
-# Environment initialization scripts for Bash and CShell
-install -d -m 755 %buildroot%_sysconfdir/profile.d
-install -p -m 755 %SOURCE3 %buildroot%_sysconfdir/profile.d
-install -p -m 755 %SOURCE4 %buildroot%_sysconfdir/profile.d
-
 %files
 %_bindir/*
 %_sbindir/*
@@ -82,6 +75,9 @@ install -p -m 755 %SOURCE4 %buildroot%_sysconfdir/profile.d
 
 
 %changelog
+* Mon Sep 04 2017 Andrey Cherepanov <cas@altlinux.org> 1.0.3-alt3
+- Do not package mpi-selector-manpath.sh (ALT #33842)
+
 * Wed Nov 17 2010 Andriy Stepanov <stanv@altlinux.ru> 1.0.3-alt2
 - Don't harmfull $MANPATH
 
