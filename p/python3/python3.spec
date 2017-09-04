@@ -75,7 +75,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %{pybasever}.1
-Release: alt9
+Release: alt10
 License: Python
 Group: Development/Python3
 
@@ -396,6 +396,7 @@ Patch1005: python3-site-packages.patch
 
 Patch1006: python-3.5.1-glibc-2.25-getentropy.patch
 
+Patch1007: python-3.5.1-upstream-expat-compat.patch
 
 # ======================================================
 # Additional metadata, and subpackages
@@ -638,6 +639,7 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 %patch1004 -p1
 
 %patch1006 -p1
+%patch1007 -p1
 
 # Currently (2010-01-15), http://docs.python.org/library is for 2.6, and there
 # are many differences between 2.6 and the Python 3 library.
@@ -1183,6 +1185,9 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %tool_dir/scripts/run_tests.py
 
 %changelog
+* Mon Sep 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.1-alt10
+- Fixed tests with new libexpat.
+
 * Mon Jul 10 2017 Fr. Br. George <george@altlinux.ru> 3.5.1-alt9
 - Add PLATFORM_TRIPLET suffix for binary module search
 
