@@ -1,11 +1,13 @@
 Name: violetland
-Version: 0.4.3
-Release: alt2.qa4
+Version: 0.5
+Release: alt2
 Summary: An open source cross-platform game similar to Crimsonland
 Group: Games/Arcade
 License: GPLv3
-Url: http://code.google.com/p/violetland
-Source0: http://%name.googlecode.com/files/%name-v%version-src.zip
+Url: http://violetland.github.io/
+Source: %version.tar.gz
+Source1: GettextTranslate.cmake
+Source2: FindLibintl.cmake
 Patch: violetland-v0.4.3-boost1.51.patch
 
 Requires: %name-data
@@ -42,11 +44,10 @@ night.
 This package contanis data files required for the game
 
 %prep
-%setup -n %name-v%version
-dos2unix     README_EN.TXT
-%patch -p1
-# prevent wrong timestamp unzip
-find . -type f -exec touch {} \;
+%setup
+#patch -p1
+cp %SOURCE1 lib/CMake-Gettext/
+install -D %SOURCE2 lib/fcitx/cmake/FindLibintl.cmake
 
 %build
 %define warns -Wall -Wno-delete-non-virtual-dtor -Wno-narrowing
@@ -63,8 +64,9 @@ pushd build
             -DCMAKE_CXX_FLAGS:STRING='-pipe %warns -O2' \
             -DCMAKE_INSTALL_PREFIX=%prefix \
             -DDATA_INSTALL_DIR=%_gamesdatadir/%name \
-            -DLIB_DESTINATION=lib64 \
-            %if "lib64" == "lib64"
+	    -DLOCALE_INSTALL_DIR=%_datadir/locale \
+            -DLIB_DESTINATION=%_lib \
+            %if "%_lib" == "lib64"
             -DLIB_SUFFIX="64" \
             %else
             -DLIB_SUFFIX="" \
@@ -102,10 +104,10 @@ done
 
 install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 
-#fdupes -s %buildroot
+%find_lang %name
 
-%files
-%doc README_*.TXT
+%files -f %name.lang
+%doc *.TXT *.md
 %_bindir/%name
 %_datadir/pixmaps/%name.png
 %_desktopdir/%{name}*.desktop
@@ -116,6 +118,17 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_gamesdatadir/%name/*
 
 %changelog
+* Mon Sep 04 2017 Fr. Br. George <george@altlinux.ru> 0.5-alt2
+- Rebuild with boost 1.65
+
+* Mon Jul 11 2016 Fr. Br. George <george@altlinux.ru> 0.5-alt1
+- Upstream switched to github
+- Autobuild version bump to 0.5
+- Fix build
+
+* Mon May 30 2016 Fr. Br. George <george@altlinux.ru> 0.4.99-alt1
+- Version up to 0.5-rc1
+
 * Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.3-alt2.qa4
 - NMU: rebuilt with boost 1.57.0 -> 1.58.0.
 
