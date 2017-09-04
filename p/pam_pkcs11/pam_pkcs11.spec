@@ -2,7 +2,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.9
-Release: alt15
+Release: alt16
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -193,6 +193,9 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ldap_mapper.so
 
 %changelog
+* Mon Sep 04 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt16
+- Fix: Pass the OpenSSL config name directly.
+
 * Fri Sep 01 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt15
 - Use local openssl.cnf if it exists.
 - Copy the system-wide openssl.cnf after the package is installed.
