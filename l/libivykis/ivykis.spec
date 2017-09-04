@@ -3,8 +3,8 @@
 
 Summary: Library for asynchronous I/O readiness notification
 Name: libivykis
-Version: 0.39
-Release: alt0.git20130528
+Version: 0.42.1
+Release: alt1
 
 License: LGPLv2+
 Url: http://libivykis.sourceforge.net/
@@ -69,6 +69,10 @@ make DESTDIR=%buildroot install
 %endif
 
 %changelog
+* Mon Sep 04 2017 L.A. Kostis <lakostis@altlinux.ru> 0.42.1-alt1
+- Updated to 0.42.1:
+  + Fix segfault when calling IV_TASK_INIT() before iv_init().
+
 * Tue May 28 2013 L.A. Kostis <lakostis@altlinux.ru> 0.39-alt0.git20130528
 - Updated to 0.39.
 - ivykis->libivykis.
