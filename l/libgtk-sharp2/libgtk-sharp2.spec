@@ -4,17 +4,18 @@
 Summary: GTK+ and GNOME bindings for Mono
 Name: lib%{realname}2
 Version: 2.12.11
-Release: alt4
+Release: alt5%ubt
 License: LGPLv2+
 Group: Development/Other
 Url: http://www.mono-project.com/
 Source: http://ftp.gnome.org/pub/GNOME/sources/%realname/2.12/%name-%version.tar
 
-Patch0: %name-%version-%release.patch
+Patch0: %name-%version-alt-build.patch
 Patch1: %name-2.12.11-alt-glib2.patch
 
 Requires: libglade libgtk+2 >= 2.12.0
 
+BuildRequires(pre): rpm-build-ubt
 BuildPreReq: glib2-devel >= 2.12.0
 BuildPreReq: libpango-devel
 BuildPreReq: libatk-devel
@@ -121,6 +122,9 @@ NOCONFIGURE=1 ./bootstrap-2.12
 %endif
 
 %changelog
+* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.12.11-alt5%ubt
+- Rebuilt with support of %%ubt macro.
+
 * Fri Jul 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.12.11-alt4
 - Rebuild with mono-5
 

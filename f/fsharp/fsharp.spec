@@ -1,6 +1,6 @@
 Name: fsharp
 Version: 4.0.0.4
-Release: alt1
+Release: alt2%ubt
 
 Summary:        F# compiler, core library and core tools
 License:        Apache-2.0
@@ -13,6 +13,7 @@ Patch2: %name-%version-debian-bootstrap.patch
 Patch3: %name-%version-debian-no-nuget.patch
 Patch4: %name-%version-debian-cli-policy.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildPreReq: rpm-build-mono >= 2.0.0
 BuildPreReq: mono-core >= 5.0.0.0
 BuildPreReq: mono-devel >= 5.0.0.0
@@ -57,5 +58,8 @@ rm -rf %buildroot%_monodir/monotouch
 %_monodir/xbuild/Microsoft/VisualStudio/
 
 %changelog
+* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0.4-alt2%ubt
+- Rebuilt with support of %%ubt macro.
+
 * Mon Jul 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0.4-alt1
 - Initial build for ALT

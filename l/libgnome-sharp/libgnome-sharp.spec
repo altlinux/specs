@@ -3,7 +3,7 @@
 Summary: GNOME bindings for Mono
 Name: lib%{realname}
 Version: 2.24.2
-Release: alt2
+Release: alt3%ubt
 License: LGPLv2+
 Group: Development/Other
 Packager: Mono Maintainers Team <mono@packages.altlinux.org>
@@ -13,6 +13,7 @@ Patch12: %realname-%version-alt-build.patch
 
 Url: http://www.mono-project.com/
 
+BuildRequires(pre): rpm-build-ubt
 BuildPreReq: glib2-devel >= 2.13.0
 BuildPreReq: libgtk+2-devel >= 2.13.0
 BuildPreReq: libgtk-sharp2-devel >= 2.12.2
@@ -70,6 +71,9 @@ to parse and bind Gnome libraries.
 %_pkgconfigdir/*
 
 %changelog
+* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.24.2-alt3%ubt
+- Rebuilt with support of %%ubt macro.
+
 * Tue Jul 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.24.2-alt2
 - Rebuilt with mono-5
 

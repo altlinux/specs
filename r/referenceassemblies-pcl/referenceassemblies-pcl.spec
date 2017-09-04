@@ -19,7 +19,7 @@
 
 Name:           referenceassemblies-pcl
 Version:        2014.04.14
-Release:	alt1
+Release:	alt2%ubt
 Url:            http://go-mono.org/
 # https://github.com/mono/linux-packaging-referenceassemblies-pcl/
 Source0:	%name-%version.tar
@@ -30,6 +30,7 @@ Group:          Development/Other
 BuildArch:      noarch
 
 BuildRequires(Pre): rpm-build-mono >= 2.0.0
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: mono-devel >= 5.0.0.0
 BuildRequires: /proc
 
@@ -56,5 +57,8 @@ cp -a v4.6  %buildroot%_monodir/xbuild-frameworks/.NETPortable/
 %doc EULA.rtf
 
 %changelog
+* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2014.04.14-alt2%ubt
+- Rebuilt with support of %%ubt macro.
+
 * Wed Jul 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2014.04.14-alt1
 - Initial build for ALT

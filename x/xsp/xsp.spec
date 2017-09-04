@@ -3,12 +3,13 @@ Url: http://go-mono.com/
 License: X11/MIT
 Group: System/Servers
 Version: 4.4
-Release: alt2
+Release: alt3%ubt
 Summary: Small Web Server Hosting ASP.NET
 
 Source: %name-%version.tar.bz2
 
 BuildRequires(pre): rpm-build-mono  sqlite3 mono-devel-full mono-full pkg-config /proc
+BuildRequires(pre): rpm-build-ubt
 %define xspConfigsLocation %_sysconfdir/xsp/4.0
 %define xspAvailableApps %xspConfigsLocation/applications-available
 %define xspEnabledApps %xspConfigsLocation/applications-enabled
@@ -74,6 +75,9 @@ install -m 755 tools/mono-asp-apps/mono-asp-apps %buildroot%_bindir/mono-asp-app
 %_mandir/*/*
 
 %changelog
+* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4-alt3%ubt
+- Rebuilt with support of %%ubt macro.
+
 * Thu Jul 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4-alt2
 - Obsoleted mono4-xsp.
 

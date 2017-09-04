@@ -4,7 +4,7 @@
 
 Name: mono
 Version: 5.0.1.1
-Release: alt5
+Release: alt6%ubt
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -23,6 +23,7 @@ Patch1: %name-%version-alt-linking1.patch
 Patch2: %name-%version-alt-linking2.patch
 
 BuildRequires(pre): rpm-build-mono >= 2.0
+BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): gcc-c++
 BuildRequires(pre): cmake
 BuildRequires(pre): gettext-devel
@@ -66,6 +67,7 @@ metadata access libraries.
 Summary: The Mono CIL runtime, suitable for running .NET code
 Group: Development/Other
 Requires: libgdiplus
+Requires: /proc
 Conflicts: mono4-core < %version-%release
 Conflicts: mono < 3.0
 Conflicts: mono-mscorlib  < 3.0
@@ -1041,6 +1043,9 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt6%ubt
+- Rebuilt with support of %%ubt macro.
+
 * Fri Jul 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt5
 - Fixed unresolved symbols
 - Added post-install action for mono-core to import certificates
