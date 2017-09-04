@@ -1,6 +1,6 @@
 Name: iceauth
-Version: 1.0.4
-Release: alt1.qa1
+Version: 1.0.7
+Release: alt1
 Summary: ICE authority file utility
 License: MIT/X11
 Group: System/X11
@@ -21,7 +21,7 @@ other users).  Commands (described below) may be entered interactively,
 on the iceauth command line, or in scripts.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
@@ -38,6 +38,9 @@ on the iceauth command line, or in scripts.
 %_man1dir/*
 
 %changelog
+* Mon Sep 04 2017 Fr. Br. George <george@altlinux.ru> 1.0.7-alt1
+- Autobuild version bump to 1.0.7
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.4-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
