@@ -10,7 +10,7 @@
 %def_enable gspell
 
 Name: lib%{_name}4
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -35,6 +35,8 @@ BuildRequires: perl-XML-Parser zlib-devel
 %{?_enable_gspell:BuildRequires: libgspell-devel >= %gspell_ver}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools libvala-devel}
+# for check
+BuildRequires: xvfb-run valgrind
 
 %description
 GtkSourceView is a text widget that extends the standard gtk+ 2.x text
@@ -106,13 +108,12 @@ the functionality of the installed GtkSourceView library.
 
 %make_build
 
-%check
-#%make check
-
 %install
 %makeinstall_std
-
 %find_lang %_name-%api_ver
+
+%check
+xvfb-run %make check
 
 %files -f %_name-%api_ver.lang
 %_libdir/lib%_name-%api_ver.so.*
@@ -148,6 +149,9 @@ the functionality of the installed GtkSourceView library.
 
 
 %changelog
+* Wed Sep 06 2017 Yuri N. Sedunov <aris@altlinux.org> 3.99.5-alt1
+- 3.99.5
+
 * Sun Apr 23 2017 Yuri N. Sedunov <aris@altlinux.org> 3.99.4-alt1
 - 3.99.4
 
