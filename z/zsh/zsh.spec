@@ -1,6 +1,6 @@
 Name: zsh
-Version: 5.3.1
-Release: alt2
+Version: 5.4.2
+Release: alt1
 Epoch: 1
 
 Summary: A shell with lots of features
@@ -111,6 +111,10 @@ make check
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Mon Sep 04 2017 Fr. Br. George <george@altlinux.ru> 1:5.4.2-alt1
+- Autobuild version bump to 5.4.2
+- ALT: improve _hasher completion (thanks to @arseny)
+
 * Wed Apr 05 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:5.3.1-alt2
 - Switched builtin pwd -P to use getcwd(3).
 
@@ -442,7 +446,7 @@ make check
 * Wed Feb 07 2001 Dmitry V. Levin <ldv@fandra.org> 3.1.9-ipl5mdk
 - Fixed invalid dependences on /usr/local/*.
 
-* Thu Jan 26 2001 Peter 'Nidd' Novodvorsky <petya@logic.ru> 3.1.9-ipl4mdk
+* Fri Jan 26 2001 Peter 'Nidd' Novodvorsky <petya@logic.ru> 3.1.9-ipl4mdk
 - IPLabs Linux Team adaptations.
 
 * Sat Aug 26 2000 Chmouel Boudjnah <chmouel@mandrakesoft.com> 3.1.9-4mdk
