@@ -6,8 +6,8 @@
 %def_disable manual
 
 Name: SPICE
-Version: 0.13.3
-Release: alt2
+Version: 0.13.90
+Release: alt1
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
 License: LGPLv2+
@@ -16,7 +16,6 @@ Url: http://www.spice-space.org/
 Source: http://www.spice-space.org/download/releases/%name-%version.tar
 Source2: spice-common.tar
 #Patch1: fix-alt.patch
-Patch1: 0001-spice-deps-Make-LZ4-check-depending-on-function.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=613529
 ExclusiveArch: %ix86 x86_64 armh
@@ -25,9 +24,9 @@ BuildRequires: gcc-c++
 BuildRequires: libjpeg-devel libpixman-devel >= 0.17.7 zlib-devel
 BuildRequires: libssl-devel libsasl2-devel python-module-pyparsing openssl
 BuildRequires: libcacard-devel >= 0.1.2
-BuildRequires: glib2-devel >= 2.22 libgio-devel >= 2.22
-BuildRequires: spice-protocol >= 0.12.12
-BuildRequires: python-module-six
+BuildRequires: glib2-devel >= 2.28 libgio-devel >= 2.28
+BuildRequires: spice-protocol >= 0.12.13
+BuildRequires: python-module-six python-module-pyparsing
 %{?_enable_manual:BuildRequires: asciidoc asciidoc-a2x}
 %{?_enable_celt051:BuildRequires: libcelt051-devel >= 0.5.1.1}
 %{?_enable_opus:BuildRequires: libopus-devel >= 0.9.14}
@@ -68,7 +67,6 @@ using spice-server, you will need to install spice-server-devel.
 %prep
 %setup
 tar -xf %SOURCE2
-%patch1 -p1 -d spice-common
 #%patch1 -p1
 # version in .tarball-version file
 echo "%version" > .tarball-version
@@ -98,6 +96,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Mon Sep 04 2017 Alexey Shabalin <shaba@altlinux.ru> 0.13.90-alt1
+- 0.13.90
+
 * Thu Mar 30 2017 Andrey Cherepanov <cas@altlinux.org> 0.13.3-alt2
 - Fix detect new version of lz4
 

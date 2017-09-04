@@ -1,15 +1,16 @@
 Name: spice-protocol
-Version: 0.12.12
-Release: alt1
+Version: 0.12.13
+Release: alt1%ubt
 Summary: Spice protocol header files
 Group: Development/C
 License: BSD
 Url: http://www.spice-space.org/
 
 Source: http://www.spice-space.org/download/releases/%name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version.patch
 
 BuildArch: noarch
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: python-module-pyparsing python-module-six
 
 %description
@@ -33,6 +34,9 @@ Header files describing the spice protocol and the para-virtual graphics card QX
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Mon Sep 04 2017 Alexey Shabalin <shaba@altlinux.ru> 0.12.13-alt1%ubt
+- 0.12.13
+
 * Mon Nov 28 2016 Alexey Shabalin <shaba@altlinux.ru> 0.12.12-alt1
 - 0.12.12
 

@@ -11,8 +11,8 @@
 #    vmxnet3: 0x15ad 0x07b0
 
 %define qemuroms 10222000 10ec8029 8086100e 10ec8139 1af41000 80861209 808610d3 15ad07b0
-%define date 20161208
-%define hash 26050fd
+%define date 20170830
+%define hash 75acb3c7
 
 Name: ipxe
 Version: %date
@@ -211,6 +211,9 @@ pxe_link 15ad07b0 vmxnet3
 %_datadir/%name.efi/efi-*.rom
 
 %changelog
+* Fri Sep 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1:20170830-alt1.git75acb3c7%ubt
+- update to latest upstream snapshot
+
 * Thu Apr 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1:20161208-alt1.git26050fd%ubt
 - rebuild with ubt macros
 
