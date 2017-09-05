@@ -4,7 +4,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 17.1.6
+Version: 17.2.0
 Release: alt1
 Epoch: 4
 License: MIT
@@ -17,12 +17,12 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: llvm-devel >= 3.8.0 llvm-devel-static >= 3.8.0
+BuildRequires: llvm4.0-devel llvm4.0-devel-static
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
 BuildRequires: libdrm-devel libexpat-devel xorg-glproto-devel xorg-dri2proto-devel python-modules libselinux-devel libxcb-devel libSM-devel
 BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libwayland-client-devel libwayland-server-devel libffi-devel libelf-devel
 BuildRequires: libva-devel libvdpau-devel libXvMC-devel xorg-dri3proto-devel xorg-presentproto-devel libxshmfence-devel libnettle-devel
-BuildRequires: libelf-devel python-module-mako python-module-argparse zlib-devel
+BuildRequires: libelf-devel python-module-mako python-module-argparse zlib-devel wayland-protocols
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -240,7 +240,7 @@ framerate information to stdout
 	--enable-selinux \
 	--with-dri-driverdir=%_libdir/X11/modules/dri \
 %if_enabled wayland_egl
-	--with-egl-platforms=x11,wayland,drm \
+	--with-platforms=x11,wayland,drm \
 	--enable-gbm \
 %endif
 	%{subst_enable xa}
@@ -415,6 +415,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Tue Sep 05 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:17.2.0-alt1
+- 17.2.0
+
 * Tue Aug 08 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:17.1.6-alt1
 - 17.1.6
 
