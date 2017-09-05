@@ -6,7 +6,7 @@
 %define priority 40
 Name: lib%{oname}-%sover-mpi
 Version: 1.8.13
-Release: alt1
+Release: alt2
 
 Summary: Hierarchical Data Format 5 library, parallel version
 
@@ -14,9 +14,8 @@ Group: System/Libraries
 License: Nearly BSD, but changed sources must be marked
 Url: http://www.hdfgroup.org/HDF5/
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 Source: ftp://ftp.hdfgroup.org/HDF5/current/src/%oname-%version.tar.bz2
+Patch1: %oname-%version-alt-mpi.patch
 
 Provides: lib%oname-mpi = %version-%release
 Conflicts: lib%oname < 1.8.3-alt3
@@ -67,6 +66,7 @@ HDF5 tools.
 
 %prep
 %setup -n %oname-%version
+%patch1 -p2
 
 %build
 sed -i -e 's/(SOVER)/%sover/' src/H5detect.c
@@ -165,6 +165,9 @@ echo "%_pkgconfigdir/%oname.pc %_pkgconfigdir/%oname-mpi.pc %priority" >> \
 %_altdir/%oname-mpi-tools.alternatives
 
 %changelog
+* Tue Sep 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.13-alt2
+- Fixed build with current mpi implementation.
+
 * Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.13-alt1
 - Version 1.8.13
 
